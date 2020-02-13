@@ -2,75 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9526115CC74
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 21:39:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6F2015CCF9
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 22:10:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48JSzD0Q7JzDqWh
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 07:39:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48JTgR0FVnzDqW2
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 08:10:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
- helo=mail-oi1-x22a.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=IRQcbmJB; dkim-atps=neutral
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
- [IPv6:2607:f8b0:4864:20::22a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48JSyG1kWTzDqVj
- for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2020 07:38:13 +1100 (AEDT)
-Received: by mail-oi1-x22a.google.com with SMTP id j132so7178785oih.9
- for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 12:38:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=r+0/H6NzHJJdMGDslAW9Eiis77Y8VOMGIy+D66r09Jc=;
- b=IRQcbmJB38PTMH87iD2M8/tDnCl+tnxo+i3bK2OCwJxTXd3Gn4nWdfHgd7Fp6+WJUM
- AqwJEIkTqZiQ85dbFkuh3yg6wLDvJ1x9SqhitWDg/qiAcSD3dzjo86r1bFC9IEERwdZ3
- bUS1KgZ8W3iHlntfGb+ZqZZYos7s1OemfZlrMD+5+XRlslZiE6eHl8P6w01ur1KFN2ie
- ENAqAFHKktgI3Di3BqyZwaVr42inErlYRlMNHrCjfOe4yCbPaozbRcr6xIKCB6X/eKBa
- lQiaGxDYK5WuXUr5/tdEwP4bZvwfmw1jfgl+ifrARPdyNw8SQqFhJx5UnNGivyhB3JRk
- t86Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=r+0/H6NzHJJdMGDslAW9Eiis77Y8VOMGIy+D66r09Jc=;
- b=M9TopMHiN4lomXYQ4BaidSy0BCgz8zU+sZmN6CdGFiTQ+a554oiW1k2XOxRVNpBXgF
- 7nlpdOXkzlPnAhqJdL+C58iisflW5rA4UVHUV0e815VkAzKPC9T/NdUKQy5eoZgU4O0+
- tWZ0seBBT2/8kUwe3T4xXyHFeD5Fpo+Af4jDryDcQCOQZ7o1qfUjffKNH+a35LFjNeho
- PllmhufFRSAaB9ZUsQHyzCtW8Il/EDio9HX15Spumj2nyhS4BqWddd9lmuzjut1/rPmI
- GwKVPtD7nV5Ezhz0JQ0F+CzORaVs9avgrSWU9QIc0loVd5qzQ/Wqvd/82Zft37IUVEM+
- Gw9Q==
-X-Gm-Message-State: APjAAAWEpnqcSf/0RLovoJ4JTOFeXhuHM6zmxR/aGNWnoiXXkXf5miVn
- fYb42I162gjTlVst2LWRy4apgg1+KOY=
-X-Google-Smtp-Source: APXvYqxciDcyila3zkIGbKL27yY+ivXj2WJPvSgK8pXxOYjIHhlJ3o3JLKi56HcTavkKmL3Gag3hOw==
-X-Received: by 2002:aca:3542:: with SMTP id c63mr4261984oia.135.1581626290811; 
- Thu, 13 Feb 2020 12:38:10 -0800 (PST)
-Received: from andrews-mbp-2.austin.ibm.com ([129.41.86.0])
- by smtp.gmail.com with ESMTPSA id w8sm1140932ote.80.2020.02.13.12.38.10
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 13 Feb 2020 12:38:10 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: Enabling OpenBMC Debug
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <c012602f-281a-0cc7-961d-67599cf679be@linux.vnet.ibm.com>
-Date: Thu, 13 Feb 2020 14:38:09 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <89071F06-BF4C-45D4-A5BB-CF184A4CEC79@gmail.com>
-References: <776B4FA1-4427-4FC1-802A-BC4192CA3D2E@gmail.com>
- <27a538db-96e4-f83f-6541-93e974f78ead@linux.ibm.com>
- <c012602f-281a-0cc7-961d-67599cf679be@linux.vnet.ibm.com>
-To: Justin Thaler <thalerj@linux.vnet.ibm.com>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48JTff4YCSzDqRR
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2020 08:09:45 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 01DL8ZZU103868; Thu, 13 Feb 2020 16:09:40 -0500
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2y3yw9nh53-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Feb 2020 16:09:40 -0500
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 01DL5DZv013130;
+ Thu, 13 Feb 2020 21:09:39 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma04dal.us.ibm.com with ESMTP id 2y5bc01ecc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Feb 2020 21:09:39 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 01DL9bWA10879248
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 13 Feb 2020 21:09:37 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C0E6C78064;
+ Thu, 13 Feb 2020 21:09:37 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 56E9E7805E;
+ Thu, 13 Feb 2020 21:09:37 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.252])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Thu, 13 Feb 2020 21:09:37 +0000 (GMT)
+Subject: Re: Functionality vs Security - security assurance methodology
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ "Mihm, James" <james.mihm@intel.com>
+References: <62005ec9-e004-1041-7c5b-9272f8c2d854@linux.intel.com>
+ <6F13EC73-E3F0-43D5-8E3F-1A8585918C2A@fuzziesquirrel.com>
+ <99262b0e-fca2-71c9-ff1f-3526ed26efd0@linux.intel.com>
+ <F59054FF-546F-4728-B569-CF94AB88CC96@fuzziesquirrel.com>
+ <C599FC839619124CAC44E062ABB7DFE2D7BAF2D5@ORSMSX115.amr.corp.intel.com>
+ <C48B413D-C8FD-4FF5-8B3A-7D34FBB15EB6@fuzziesquirrel.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <3fe6eaf9-26ed-774f-ee55-218205f366e9@linux.ibm.com>
+Date: Thu, 13 Feb 2020 15:09:36 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.4.2
+MIME-Version: 1.0
+In-Reply-To: <C48B413D-C8FD-4FF5-8B3A-7D34FBB15EB6@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-02-13_08:2020-02-12,
+ 2020-02-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002130151
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,95 +92,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 2/13/20 10:36 AM, Brad Bishop wrote:
+>
+>> On Feb 13, 2020, at 3:15 AM, Mihm, James <james.mihm@intel.com> wrote:
+>>
+>> Exposing the REST D-Bus APIs via a network interface is bad practice and should be disabled by default.
+> Yeah.  You are right of course.  It isn’t really the what that bothers me here it is the how.  I’m disappointed that Intel was only able to make the Redfish enabled webui work for Intel and not anyone else.
+>
+>> Just because it was done that way in the beginning doesn’t mean that it should remain that way.
+> I don’t remember saying this?
+>
+>> Applications should be configured to be secure by default.
+> This sounds perfectly reasonable of course but I don’t know how to implement it for OpenBMC.  I’m not even sure what it means.  Security isn’t a boolean it is a spectrum.  Show me any security posture, and I will show you one that is slightly more strict/secure.  Clearly, my security posture isn’t strict enough for Intel.  However I know there are organizations out there that have even stricter security postures than Intel.  So in the general case - how does one decide which posture should be the default, and when is ok to “break” existing usage patterns rather than “update” them for the sake of a stricter security posture?  Help me establish some rules so we can avoid this kind of bickering in the future.
 
+Brad,
 
-> On Feb 12, 2020, at 2:28 PM, Justin Thaler =
-<thalerj@linux.vnet.ibm.com> wrote:
->=20
-> This is a really good set of information! I must say I think the =
-obmcutil command is a good idea, for development purposes.
->=20
-> On 2/11/20 11:58 AM, Joseph Reynolds wrote:
->> On 2/11/20 9:51 AM, Andrew Geissler wrote:
->>> I find myself running a lot of different commands to enable a =
-variety of
->>> debug data on OpenBMC when debugging different issues (usually BIOS
->>> communication issues). I also end up giving these commands to a lot =
-of people
->>> when recreating issues for me. Stuff like this:
->>>=20
->>> # enable debug logs in journal
->>> sed -i 's/info/debug/' =
-/lib/systemd/journald.conf.d/journald-maxlevel-policy.conf
->>> systemctl restart systemd-journald.service
->>>=20
->>> # Enable BIOS communication service debug
->>> sed -i 's/mboxd/mboxd -vv/' /lib/systemd/system/mboxd.service
->>> sed -i 's/btbridged/btbridged --vv/' =
-/lib/systemd/system/org.openbmc.HostIpmi.service
->>> sed -i 's/ipmid/ipmid -d 0xff/'  =
-/lib/systemd/system/phosphor-ipmi-host.service
->>> sed -i 's/0/1/' /etc/default/pldmd
->>> systemctl daemon-reload
->>> systemctl restart mboxd.service
->>> systemctl restart org.openbmc.HostIpmi.service
->>> systemctl restart phosphor-ipmi-host.service
->>> systemctl restart pldmd.service
->>>=20
->>> I was contemplating wrapping the above stuff in a obmcutil command =
-so instead
->>> of telling people to do all of the above (and dealing with =
-situations when
->>> those commands change), I could say something like run "obmcutil =
-debugon".
->>>=20
-> What about a REST API command tied to this? It could help when dealing =
-with external to BMC problems.
+Thanks for that introduction.  We're working on a way to answer 
+questions like this in the [OpenBMC security assurance workflow][] which 
+promises to address all security items using world-class practices.
 
-No more generic REST API=E2=80=99s :) But in my response to Joseph I did =
-ponder whether
-we could get something added to Redfish for this. Enabling extra debug =
-on a system
-seems like a fairly normal use case.
+Yes, literally all security items.  There are some excellent references 
+out there that we are trying to use.  (footnote1)
 
->=20
->>> Any thoughts out there? Would finer granularity of the debug be =
-useful?
->>> Are there other forms of debug people would like enabled?
-> Sometimes we have to recreate issues that occur on a system, a rather =
-unfortunate situation in and of itself. I'll have to counter with a =
-question of my own. Do you think this would be good to enable during a =
-recreate, and we don't risk flooding the useful info?
+For example, a key point in the Cloud Security Industry Summit > "[CSIS 
+Secure Firmware Development Best Practices][]" > "BMC" section is to 
+"Document all available interfaces" specifically including Redfish 
+APIs.  A security review would find the D-Bus APIs, and raise suspicion.
 
-Yes, ideally we don=E2=80=99t need the recreate but when we do, having =
-the ability to
-enable extra debug without a lot of work could be quite useful.
+Most security assurance methodologies begin with an architectural review 
+of the system and drill down to all external interfaces.  We need that 
+for OpenBMC.  The hard part is getting the right level of abstraction 
+because the use cases and details are different, so nothing is merged 
+yet.  The current attempt (in review), 
+[architecture/interface-overview][], describes how BMCWeb serves REST 
+APIs (which includes the D-Bus APIs).  I hope we can merge this as a 
+simplified view of the BMC's primary interfaces.
 
->=20
->=20
->> Thank you for the information.  I keep learning all the time.
->> These settings factor into service scenarios and also deployment =
-readiness.  For example:
->> - I want to turn off debug.  For example, I want a debug-off command.
->> - I would want a way to validate (or at least show) these settings =
-when testing firmware image release candidates.  For example, another =
-obmcutil command "debug-show" which uses "grep -H" instead of "sed".
->> - I would want some documentation added the BMC administrator's guide =
-to make them aware of OpenBMC debug support.  Draft: The obmcutil =
-command can control debug settings for a variety of the components =
-running on the BMC.  For more information, see =
-https://github.com/openbmc/phosphor-state-manager/blob/master/obmcutil
->> The obmcutil tool is a shell script, so folks can take just the =
-pieces they need.  That is, don't be more granular at this time.
->> In summary, it seems like a good idea.  It seems like we should ask =
-our service architects to weight in.  I'll go ask mine....
->> - Joseph
->>>=20
->>> Andrew
-> Thanks,
-> Justin
+Anyway, that's how I see the security story playing out for OpenBMC ... 
+using OpenBMC security assurance workflow as the way to organize all 
+OpenBMC security documentation and talk about which pieces are 
+relatively more important.  When these docs are ready, we can refer to 
+them as we continue to bicker and argue in a more sophisticated way.
+
+- Joseph
+
+P.S. I gave my opinion about the D-Bus APIs in a separate email, 
+archived here: 
+https://lists.ozlabs.org/pipermail/openbmc/2020-February/020501.html
+
+(footnote1): Don't expect any miracles though, because following the 
+security assurance methodology is a lot of difficult work and requires 
+cooperation between folks in different disciplines.  And we're just 
+getting started.  And all the big words makes peoples' brains hurt.
+
+[OpenBMC security assurance workflow]: 
+https://github.com/openbmc/openbmc/wiki/Security-working-group#security-assurance-workflow
+
+[CSIS Secure Firmware Development Best Practices]: 
+https://github.com/opencomputeproject/Security/blob/master/SecureFirmwareDevelopmentBestPractices.md#bmc
+
+[architecture/interface-overview]: 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/27969
+
+> thx
+> -brad
 
