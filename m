@@ -1,60 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C22D15BAD9
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 09:36:27 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1623515BAA6
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 09:17:37 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48J8Wc4CWmzDqTF
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 19:17:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48J8xN4tShzDqVB
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 19:36:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=james.mihm@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48J8Vp4vPmzDqT8
- for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 19:16:50 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orsmga105.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 13 Feb 2020 00:15:30 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,436,1574150400"; d="scan'208";a="234049001"
-Received: from orsmsx110.amr.corp.intel.com ([10.22.240.8])
- by orsmga003.jf.intel.com with ESMTP; 13 Feb 2020 00:15:30 -0800
-Received: from orsmsx115.amr.corp.intel.com ([169.254.4.100]) by
- ORSMSX110.amr.corp.intel.com ([169.254.10.107]) with mapi id 14.03.0439.000;
- Thu, 13 Feb 2020 00:15:29 -0800
-From: "Mihm, James" <james.mihm@intel.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>, James Feist
- <james.feist@linux.intel.com>
-Subject: RE: Functionality vs Security
-Thread-Topic: Functionality vs Security
-Thread-Index: AQHV4em12mIZ/evTg0287Es0HymP7agYxO6AgAABpwCAADCPAP//t6xA
-Date: Thu, 13 Feb 2020 08:15:29 +0000
-Message-ID: <C599FC839619124CAC44E062ABB7DFE2D7BAF2D5@ORSMSX115.amr.corp.intel.com>
-References: <62005ec9-e004-1041-7c5b-9272f8c2d854@linux.intel.com>
- <6F13EC73-E3F0-43D5-8E3F-1A8585918C2A@fuzziesquirrel.com>
- <99262b0e-fca2-71c9-ff1f-3526ed26efd0@linux.intel.com>
- <F59054FF-546F-4728-B569-CF94AB88CC96@fuzziesquirrel.com>
-In-Reply-To: <F59054FF-546F-4728-B569-CF94AB88CC96@fuzziesquirrel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: request-justification,no-action
-x-originating-ip: [10.22.254.139]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48J8wb2FbrzDqTC
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 19:35:42 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 01D8ScuK109099
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 03:35:40 -0500
+Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2y3u5291sb-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 03:35:39 -0500
+Received: from localhost
+ by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
+ Thu, 13 Feb 2020 08:35:37 -0000
+Received: from b06cxnps4076.portsmouth.uk.ibm.com (9.149.109.198)
+ by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Thu, 13 Feb 2020 08:35:36 -0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 01D8ZadM49414258
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 13 Feb 2020 08:35:36 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F151D5204E;
+ Thu, 13 Feb 2020 08:35:35 +0000 (GMT)
+Received: from [9.202.12.60] (unknown [9.202.12.60])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 3BBD852050;
+ Thu, 13 Feb 2020 08:35:35 +0000 (GMT)
+Subject: Re: Add OEM Interface in bmcweb
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <98c85219-dc21-8012-09c9-6285c7a7a235@linux.vnet.ibm.com>
+ <20200121215816.GB59535@patrickw3-mbp.dhcp.thefacebook.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Date: Thu, 13 Feb 2020 14:04:58 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <20200121215816.GB59535@patrickw3-mbp.dhcp.thefacebook.com>
+Content-Type: multipart/alternative;
+ boundary="------------F6B06F1E04AB8A89966F6FD8"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+x-cbid: 20021308-0016-0000-0000-000002E662BD
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 20021308-0017-0000-0000-000033496338
+Message-Id: <392a6aa8-384d-6973-fa6e-0ad383497296@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-02-13_01:2020-02-12,
+ 2020-02-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ lowpriorityscore=0 suspectscore=0 phishscore=0 adultscore=0 malwarescore=0
+ bulkscore=0 impostorscore=0 mlxscore=0 clxscore=1015 priorityscore=1501
+ mlxlogscore=414 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002130067
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,62 +89,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Gunnar Mills <gmills@linux.vnet.ibm.com>, Joseph Reynolds <jrey@linux.ibm.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-RXhwb3NpbmcgdGhlIFJFU1QgRC1CdXMgQVBJcyB2aWEgYSBuZXR3b3JrIGludGVyZmFjZSBpcyBi
-YWQgcHJhY3RpY2UgYW5kIHNob3VsZCBiZSBkaXNhYmxlZCBieSBkZWZhdWx0LiBKdXN0IGJlY2F1
-c2UgaXQgd2FzIGRvbmUgdGhhdCB3YXkgaW4gdGhlIGJlZ2lubmluZyBkb2VzbuKAmXQgbWVhbiB0
-aGF0IGl0IHNob3VsZCByZW1haW4gdGhhdCB3YXkuDQpBcHBsaWNhdGlvbnMgc2hvdWxkIGJlIGNv
-bmZpZ3VyZWQgdG8gYmUgc2VjdXJlIGJ5IGRlZmF1bHQuIENvbnN1bWVycyBvZiB0aGUgY29kZSBz
-aG91bGQgaGF2ZSB0byBpbnRlbnRpb25hbGx5IHNlbGVjdCBhbiBpbnNlY3VyZSBjb25maWd1cmF0
-aW9uIC0gaXQgc2hvdWxkbid0IGJlIHByb3ZpZGVkIGJ5IGRlZmF1bHQuIA0KDQpXaXRoIHBob3Nw
-aG9yLXdlYnVpIGJlaW5nIHJlcGxhY2VkIGJ5IHdlYnVpLXZ1ZSwgdGhlcmUncyBub3QgbXVjaCB2
-YWx1ZSBmb3IgdXMgdG8gdXBzdHJlYW0gb3VyIGNoYW5nZXMgdG8gcGhvc3Bob3Itd2VidWkuIFJl
-Z2FyZGluZyB0aGUgcmVzb3VyY2UgaXNzdWVzLCB3ZSdyZSBoYXZpbmcgdG8gcmVzcG9uZCB0byBk
-ZWNpc2lvbnMgdGhhdCB3ZXJlIG91dCBvZiBvdXIgY29udHJvbC4gDQoNCkphbWVzLg0KDQotLS0t
-LU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogQnJhZCBCaXNob3AgPGJyYWRsZXliQGZ1enpp
-ZXNxdWlycmVsLmNvbT4gDQpTZW50OiBXZWRuZXNkYXksIEZlYnJ1YXJ5IDEyLCAyMDIwIDc6MDUg
-UE0NClRvOiBKYW1lcyBGZWlzdCA8amFtZXMuZmVpc3RAbGludXguaW50ZWwuY29tPg0KQ2M6IE9w
-ZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47IEd1bm5hciBNaWxscyA8
-Z21pbGxzQGxpbnV4LnZuZXQuaWJtLmNvbT47IE1paG0sIEphbWVzIDxqYW1lcy5taWhtQGludGVs
-LmNvbT47IEpvc2VwaCBSZXlub2xkcyA8anJleUBsaW51eC5pYm0uY29tPg0KU3ViamVjdDogUmU6
-IEZ1bmN0aW9uYWxpdHkgdnMgU2VjdXJpdHkNCg0KDQoNCj4gT24gRmViIDEyLCAyMDIwLCBhdCA3
-OjExIFBNLCBKYW1lcyBGZWlzdCA8amFtZXMuZmVpc3RAbGludXguaW50ZWwuY29tPiB3cm90ZToN
-Cj4gDQo+IE9uIDIvMTIvMjAgNDowNSBQTSwgQnJhZCBCaXNob3Agd3JvdGU6DQo+Pj4gT24gRmVi
-IDEyLCAyMDIwLCBhdCA0OjE2IFBNLCBKYW1lcyBGZWlzdCA8amFtZXMuZmVpc3RAbGludXguaW50
-ZWwuY29tPiB3cm90ZToNCj4+PiANCj4+PiBJbiBJUkMgeWVzdGVyZGF5IEkgcHJvcG9zZWQgdGhl
-IHF1ZXN0aW9uIG9mIHdoZXRoZXIgdG8gY2hhbmdlIHRoZSBkZWZhdWx0IG9mIGJtY3dlYiB0byBk
-aXNhYmxlIFJFU1QgRC1CdXMsIG9yIHRvIGNoYW5nZSBpdCBpbiBvdXIgbWV0YS1sYXllcnMgb25s
-eS4gSSBjcmVhdGVkIHRoZSBwYXRjaCBoZXJlOiBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2pl
-Y3QueHl6L2Mvb3BlbmJtYy9ibWN3ZWIvKy8yOTM0NCBhbmQgSSBhbSBsb29raW5nIGZvciBmZWVk
-YmFjay4gV2hpbGUgUkVTVCBELUJ1cyBkb2VzIGV4cG9zZSBtYW55IHVzZWZ1bCBBUElzLCBhbmQg
-cGhvc3Bob3Itd2VidWkgZGVwZW5kcyBoZWF2aWx5IG9uIGl0LCBpdCBkb2VzIGxlYWsgaW5mb3Jt
-YXRpb24gdG8gYW55IGxvZ2dlZCBpbiB1c2VyLiBUaGlzIGNvbWVzIHRvIHRoZSBxdWVzdGlvbiwg
-c2hvdWxkIHdlIHByZWZlciBmdW5jdGlvbmFsaXR5IGJ5IGRlZmF1bHQgb3Igc2VjdXJpdHkgYnkg
-ZGVmYXVsdD8gSXQgaXMgYSBjb21waWxlIHN3aXRjaCBlaXRoZXIgd2F5LCBzbyBlYWNoIHVzZXIg
-Y2FuIHN0aWxsIGRlY2lkZSB3aGljaCB0aGV5IHByZWZlci4gSSBoYXZlIHRoZSBvcGluaW9uIHRo
-YXQgdGhlIGRlZmF1bHQgc2hvdWxkIGJlIHRoZSBzYWZlc3QgY29uZmlndXJhdGlvbiwgYW5kIGlm
-IHNvbWVvbmUgd2FudHMgdG8gY2hhbmdlIHRoYXQsIHRoZW4gdGhleSBjYW4gYWNjZXB0IHRoZSBy
-aXNrIGFuZCBjaGFuZ2UgdGhlIGJ1aWxkIGZsYWcuDQo+Pj4gDQo+Pj4gVGhvdWdodHM/DQo+Pj4g
-DQo+Pj4gVGhhbmtzLA0KPj4+IA0KPj4+IEphbWVzDQo+PiBPbmUgaWRlYSBJIGhhdmUgaXMgYWRk
-aW5nIGEgbmV3IGRpc3RybyBjb25maWd1cmF0aW9uLiAgVG9kYXkgd2UgaGF2ZSBvcGVuYm1jLXBo
-b3NwaG9yIC0gd2UgY291bGQgYWRkIGEgRElTVFJPPW9wZW5ibWMtc2VjdXJlLWF0LWFsbC1jb3N0
-cyB0byBtZXRhLXBob3NwaG9yLCBhbmQgdGhlIGxlZ2FjeSBBUEkgY291bGQgYmUgZGlzYWJsZWQg
-YnkgZGVmYXVsdCB0aGVyZSwgYW5kIHJlbWFpbiBlbmFibGVkIGJ5IGRlZmF1bHQgaW4gb3BlbmJt
-Yy1waG9zcGhvci4NCj4gDQo+IEkgd291bGQgcmF0aGVyIHNlZSBPcGVuQk1DIGJ5IGRlZmF1bHQg
-c2VjdXJlLiBJIGRvbid0IHdhbnQgdG8gc2VlIENWRXMgY2F1c2VkIGJ5IGFuIGluc2VjdXJlIGRl
-ZmF1bHQgY29uZmlndXJhdGlvbiBpbiBhbnlib2R5J3MgcGxhdGZvcm0uDQoNCkNhbiB5b3UgdGFs
-ayBtb3JlIGFib3V0IGhvdyB0aGlzIGRvZXNu4oCZdCBtZWV0IHRoZSBnb2Fscz8gIFRoZSB1c2Vy
-IGFsd2F5cyBoYXMgdG8gcGljayBhIGRpc3Rybywgc28gdGhlcmUgaXMgYSBjb25zY2lvdXMgY2hv
-aWNlIGJldHdlZW4gdGhlIHR3by4gIFRoZXJlIHdvdWxkbuKAmXQgYmUgYW55IGRlZmF1bHQgd2l0
-aCBhIHNldHVwIGxpa2UgdGhpcy4NCg0KSSBndWVzcyBpdCBpcyBwb3NzaWJsZSB0byBoYXZlIG5v
-ZGlzdHJvLCB3aGljaCB3b3VsZCBiZSB0aGUgdHJ1ZSBkZWZhdWx0LiAgSSB3b3VsZG7igJl0IGhh
-dmUgYW4gaXNzdWUgd2l0aCB0aGVzZSBzZXR1cHM6DQoNCkRJU1RSTz0gI25vZGlzdHJvIC0+IGZ1
-bGwgcGFyYW5vaWEgYnkgZGVmYXVsdA0KRElTVFJPPW9wZW5ibWMtcGhvc3Bob3IgLT4gZnVsbCBm
-dW5jdGlvbiBieSBkZWZhdWx0DQpESVNUUk89b3BlbmJtYy1sb2NrZG93biAtPiBmdWxsIHBhcmFu
-b2lhIGJ5IGRlZmF1bHQNCg0Kb3IganVzdDoNCkRJU1RSTz0gI25vZGlzdHJvIC0+IGZ1bGwgcGFy
-YW5vaWEgYnkgZGVmYXVsdA0KRElTVFJPPW9wZW5ibWMtcGhvc3Bob3IgLT4gZnVsbCBmdW5jdGlv
-biBieSBkZWZhdWx0DQoNCndvdWxkIGVpdGhlciBvZiB0aGVzZSBtZWV0IHRoZSBnb2Fscz8NCg==
+This is a multi-part message in MIME format.
+--------------F6B06F1E04AB8A89966F6FD8
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+
+
+On 22/01/20 3:28 AM, Patrick Williams wrote:
+> On Mon, Jan 20, 2020 at 12:43:57PM +0530, Ratan Gupta wrote:
+>> 1) Introduce a compile time flag in the bmcweb
+>> 2) Put all the OEM specific interface functionalities in the new files.
+>>
+>> 3) Include the new files under the compile time flag as majority of the code
+>> in bmcweb written in header file.
+>>
+> Do we want OEM commands to be in bmcweb also?
+Yes Redfish has a support for the same, However we want to minimize the 
+need as much as possible by
+1) Put across your need in the community and find out if this is a 
+common requirement
+2) If it is a common requirement across the openBMC community then 
+propose it in the DMTF.
+>   Or more of a plugin
+> nature like the IPMI implementation?
+We tried the same earlier in the community call and discussed that we 
+should avoid it for the following reason.
+
+  * People will start using the Oem here and there and the community
+    will never know the requirement which can be standardized.
+
+
+> It seems to me that there will be OEM commands that are not open source
+> either due to NDAs on certain hardware or secret sauce in data center
+> management software that various cloud vendors have.
+Yes certain OEM cmds would be there which can not be standardized.
+Ratan
+
+--------------F6B06F1E04AB8A89966F6FD8
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=windows-1252">
+  </head>
+  <body text="#000000" bgcolor="#FFFFFF">
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 22/01/20 3:28 AM, Patrick Williams
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20200121215816.GB59535@patrickw3-mbp.dhcp.thefacebook.com">
+      <pre class="moz-quote-pre" wrap="">On Mon, Jan 20, 2020 at 12:43:57PM +0530, Ratan Gupta wrote:
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">1) Introduce a compile time flag in the bmcweb
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">2) Put all the OEM specific interface functionalities in the new files.
+
+3) Include the new files under the compile time flag as majority of the code
+in bmcweb written in header file.
+
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+Do we want OEM commands to be in bmcweb also? </pre>
+    </blockquote>
+    <tt>Yes Redfish has a support for the same, However we want to
+      minimize the need as much as possible by</tt><tt><br>
+    </tt><tt>1) Put across your need in the community and find out if
+      this is a common requirement</tt><tt><br>
+    </tt><tt>2) If it is a common requirement across the openBMC
+      community then propose it in the DMTF.</tt><br>
+    <blockquote type="cite"
+      cite="mid:20200121215816.GB59535@patrickw3-mbp.dhcp.thefacebook.com">
+      <pre class="moz-quote-pre" wrap=""> Or more of a plugin
+nature like the IPMI implementation?</pre>
+    </blockquote>
+    <tt>We tried the same earlier in the community call and discussed
+      that we should avoid it for the following reason</tt><tt>.<br>
+    </tt>
+    <ul>
+      <li><tt>People will start using the Oem here and there and the
+          community will never know the requirement which can be
+          standardized.</tt><br>
+      </li>
+    </ul>
+    <br>
+    <blockquote type="cite"
+      cite="mid:20200121215816.GB59535@patrickw3-mbp.dhcp.thefacebook.com">
+      <pre class="moz-quote-pre" wrap="">
+It seems to me that there will be OEM commands that are not open source
+either due to NDAs on certain hardware or secret sauce in data center
+management software that various cloud vendors have.
+</pre>
+    </blockquote>
+    <tt>Yes certain OEM cmds would be there which can not be
+      standardized.</tt><br>
+    <blockquote type="cite"
+      cite="mid:20200121215816.GB59535@patrickw3-mbp.dhcp.thefacebook.com">
+      <pre class="moz-quote-pre" wrap="">
+</pre>
+    </blockquote>
+    Ratan<br>
+  </body>
+</html>
+
+--------------F6B06F1E04AB8A89966F6FD8--
+
