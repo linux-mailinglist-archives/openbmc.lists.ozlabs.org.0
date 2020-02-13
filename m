@@ -2,66 +2,39 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A0E115CA13
-	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 19:14:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 86ABB15CA93
+	for <lists+openbmc@lfdr.de>; Thu, 13 Feb 2020 19:40:11 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48JPml22pvzDqTy
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 05:14:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48JQL02cxvzDqS5
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 05:40:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::135;
- helo=mail-lf1-x135.google.com; envelope-from=wak@google.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=vA0sv4vf; dkim-atps=neutral
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
- [IPv6:2a00:1450:4864:20::135])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48JPjG4VmRzDqTv
- for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2020 05:11:38 +1100 (AEDT)
-Received: by mail-lf1-x135.google.com with SMTP id f24so4939586lfh.3
- for <openbmc@lists.ozlabs.org>; Thu, 13 Feb 2020 10:11:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=vpcxF6k8cBl1e02Ui5ITLdIExDp0B3jL01TgEfCc+4o=;
- b=vA0sv4vfVl8jrFXhiPjn2oP8rmD+PV7TtJdi1d0RO/86dq5tx5ubCsLVcdV6W6FO1d
- qmLYCX9LX0hLzRuVm02qmh0euDU3wMOK56ZI/MUcwERp6T4DeTepGav5W/aaK6/FGVhb
- 1n4oLNTbZHVVt3xkBI+zJLuuUBSZpDy/RB0EOiqN7D1NVKkeL9OTDh9uy+aKIV8URAQf
- 24qNIzigjNmkHkKEdTwYaAdUTuD1hvdaVlOdBC+L8gCU4eJseCcLIXusGnotD6e+YRmu
- DmuB3FQflKbaPf7UxMLNhKukcC51sS7pKg9fXQuwL+B4+v/EUUhKPrkrjsOS1bopDBPt
- 7dyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=vpcxF6k8cBl1e02Ui5ITLdIExDp0B3jL01TgEfCc+4o=;
- b=kOfftO2A9jBZyGdr+rPl0Pxj/dLTeXMLqutU6fV8KlWJjSshWMsyvtU4tdm+Nb4Vk4
- wIwjo/+PUoa70saDlTzUXP9NmeAo+namyMwFykgLTrGAaL5onWRu40hunLP66C5+jKAY
- 7UYMWcTc1yr7bPsKcO7L05frsvLsI7G4cqWWoRWHjOsx/v1SHvC0FhOlogzLo7V9hqwV
- rxJcrhKTwqIXn3g3mnmIkVXkn18/1BKM/JimYmsgCcHpawWczvTDd61oMbjMFw/gkSdI
- NL5KMSwR8D5qtHWBfX00PHZ1AUIUR0WYHtQzdT0sGbEwlimYByZavS5Lcm9xcRfXlWut
- MrcA==
-X-Gm-Message-State: APjAAAWV/ZNDdqFc+s2BQlZ0zlfwRNsYJh9s8B5doPpCJgaEBFtMZRU0
- lDeqUhQr+ZpOl8LVagyClXSW+Yw++eqNzTqcP4MF5G0P
-X-Google-Smtp-Source: APXvYqz3PEOH0UFOEZDAtaFEEGuAcRgvvLDqid/6VuMbavczPYK27pMkEriUeOcMj76K+2XWmBKS7EvRKhGfjLkT0BE=
-X-Received: by 2002:ac2:4884:: with SMTP id x4mr10276801lfc.92.1581617493845; 
- Thu, 13 Feb 2020 10:11:33 -0800 (PST)
-MIME-Version: 1.0
-References: <CAARXrtkPQWxhC3XdR-7kE8Kj4HC10gPk8=v7gPDVoZa_L7x-6w@mail.gmail.com>
-In-Reply-To: <CAARXrtkPQWxhC3XdR-7kE8Kj4HC10gPk8=v7gPDVoZa_L7x-6w@mail.gmail.com>
-From: William Kennington <wak@google.com>
-Date: Thu, 13 Feb 2020 10:11:22 -0800
-Message-ID: <CAPnigKmNOzKHv2RHo_fdHt7h1EKu_cf+J=-FqmNiiqfqx6A2Kg@mail.gmail.com>
-Subject: Re: [sdbusplus] To generate a common header for public information of
- interfaces
-To: Lei YU <mine260309@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000e49183059e790449"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48JQKD6qdmzDqRZ
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2020 05:39:27 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: skeleton
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+X-Priority: 3
+In-Reply-To: <-3ba5uk-q8utwbge8025-qgehlm-fki8rr7khfu1-p6nczl-6suqdm-6kinuh-56lojropdia6g2uvvm-yjw858-7vs2zw-7n6ouz-c58rf1jalry2-ykhwcn-gv83n533ioofq6fq28-2f5aeoa69232-g6kqx5.1581420554253@email.android.com>
+Date: Thu, 13 Feb 2020 13:39:23 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <2ABDDF61-AF88-4777-9D51-1D5FA65293B6@fuzziesquirrel.com>
+References: <-3ba5uk-q8utwbge8025-qgehlm-fki8rr7khfu1-p6nczl-6suqdm-6kinuh-56lojropdia6g2uvvm-yjw858-7vs2zw-7n6ouz-c58rf1jalry2-ykhwcn-gv83n533ioofq6fq28-2f5aeoa69232-g6kqx5.1581420554253@email.android.com>
+To: =?utf-8?B?4oCq4oCq4oCq4oCqSmVmZiBDaGFu4oCs4oCs4oCs4oCs?=
+ <ckimchan17@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,103 +50,21 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e49183059e790449
-Content-Type: text/plain; charset="UTF-8"
 
-We should have common headers for this because I'd like to see us have a
-typesafe client interface that is autogenerated with the server interface.
-I wrote the code a while back to implement a typesafe sdbusplus client
-interface but never finished the generator code that automatically defines
-the types and DBus strings.
 
-On Thu, Feb 13, 2020 at 6:39 AM Lei YU <mine260309@gmail.com> wrote:
+> On Feb 11, 2020, at 6:29 AM, =E2=80=AA=E2=80=AA=E2=80=AA=E2=80=AAJeff =
+Chan=E2=80=AC=E2=80=AC=E2=80=AC=E2=80=AC <ckimchan17@gmail.com> wrote:
+>=20
+> Hi,
+> As the description in skeleton github, it will be replaced with proper =
+implementation, what's the up to date implementation? where can I find =
+those docs or samples?
+>=20
+> Jeff
 
-> Currently, sdbus++ generates the server code separately, and in
-> phosphor-dbus-interfaces, the separated headers are installed, and the
-> separated cpp files are combined together, and compiled as a library.
-> The public information of the interfaces (e.g, the interface strings,
-> the enum strings) are either in the separated header or in the cpp
-> files.
->
-> The result is, when a phosphor service needs to use an interface, or
-> an enum, it has to define the interface string or the enum string
-> manually, and it happens everywhere.
->
-> How about
-> 1. Making sdbusplus to generate a "common" header for each interface
-> including the public information;
-> 2. Then phosphor-dbus-interfaces could generate a single header file
-> that includes all the public information of the interfaces;
-> 3. Then the phosphor service could include a single header file, and
-> use the interface/enum strings it needs, without manually defining
-> them?
->
-> There is an initial concept implementation:
-> *
-> https://github.com/mine260309/sdbusplus/commit/78cb63fb7e1ceb62165c71e15779f23f7e9f166c
-> *
-> https://github.com/mine260309/phosphor-dbus-interfaces/commit/6079d25547f0143fc7562a1c7ee6beb888a66432
->
-> With the above changes, a service could directly use the generated
-> interface string, e.g.
-> `sdbusplus::xyz::openbmc_project::Software::ApplyTime::interface`.
-> In the future, the enum strings could be put there and thus we do not
-> have to manually write the long full qualified string.
->
-> Ideas and suggestions are welcome.
->
+Hi Jeff
 
---000000000000e49183059e790449
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Most of skeleton has been rewritten.  skeleton covers a lot of BMC =
+functions - which one in particular are you interested in?
 
-<div dir=3D"ltr">We should have common headers for this because I&#39;d lik=
-e to see us have a typesafe client interface that is autogenerated with the=
- server interface. I wrote the code a while back to implement a typesafe sd=
-busplus client interface but never finished the generator code that automat=
-ically defines the types and DBus strings.</div><br><div class=3D"gmail_quo=
-te"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Feb 13, 2020 at 6:39 AM L=
-ei YU &lt;<a href=3D"mailto:mine260309@gmail.com">mine260309@gmail.com</a>&=
-gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Curre=
-ntly, sdbus++ generates the server code separately, and in<br>
-phosphor-dbus-interfaces, the separated headers are installed, and the<br>
-separated cpp files are combined together, and compiled as a library.<br>
-The public information of the interfaces (e.g, the interface strings,<br>
-the enum strings) are either in the separated header or in the cpp<br>
-files.<br>
-<br>
-The result is, when a phosphor service needs to use an interface, or<br>
-an enum, it has to define the interface string or the enum string<br>
-manually, and it happens everywhere.<br>
-<br>
-How about<br>
-1. Making sdbusplus to generate a &quot;common&quot; header for each interf=
-ace<br>
-including the public information;<br>
-2. Then phosphor-dbus-interfaces could generate a single header file<br>
-that includes all the public information of the interfaces;<br>
-3. Then the phosphor service could include a single header file, and<br>
-use the interface/enum strings it needs, without manually defining<br>
-them?<br>
-<br>
-There is an initial concept implementation:<br>
-* <a href=3D"https://github.com/mine260309/sdbusplus/commit/78cb63fb7e1ceb6=
-2165c71e15779f23f7e9f166c" rel=3D"noreferrer" target=3D"_blank">https://git=
-hub.com/mine260309/sdbusplus/commit/78cb63fb7e1ceb62165c71e15779f23f7e9f166=
-c</a><br>
-* <a href=3D"https://github.com/mine260309/phosphor-dbus-interfaces/commit/=
-6079d25547f0143fc7562a1c7ee6beb888a66432" rel=3D"noreferrer" target=3D"_bla=
-nk">https://github.com/mine260309/phosphor-dbus-interfaces/commit/6079d2554=
-7f0143fc7562a1c7ee6beb888a66432</a><br>
-<br>
-With the above changes, a service could directly use the generated<br>
-interface string, e.g.<br>
-`sdbusplus::xyz::openbmc_project::Software::ApplyTime::interface`.<br>
-In the future, the enum strings could be put there and thus we do not<br>
-have to manually write the long full qualified string.<br>
-<br>
-Ideas and suggestions are welcome.<br>
-</blockquote></div>
-
---000000000000e49183059e790449--
+thx -brad=
