@@ -2,72 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F30E215DA53
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 16:08:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FDB215DAD4
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 16:25:15 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Jxbc38dgzDqRX
-	for <lists+openbmc@lfdr.de>; Sat, 15 Feb 2020 02:08:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Jxyc2ywVzDqX9
+	for <lists+openbmc@lfdr.de>; Sat, 15 Feb 2020 02:25:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::235;
- helo=mail-oi1-x235.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Q/meYC80; dkim-atps=neutral
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
- [IPv6:2607:f8b0:4864:20::235])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48JxZw0cZbzDqZP
- for <openbmc@lists.ozlabs.org>; Sat, 15 Feb 2020 02:08:07 +1100 (AEDT)
-Received: by mail-oi1-x235.google.com with SMTP id q84so9688677oic.4
- for <openbmc@lists.ozlabs.org>; Fri, 14 Feb 2020 07:08:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=9QQZvDLQz2IFScaUQfyuWHgx+Dw7q0ynuWIbnwzXlXE=;
- b=Q/meYC80dq/qz8LKMASgykzkkJTHieetR2Meg5c65Ia9F7BfHPv7tQeD+Vqab3k/dx
- nuGOGawQCWQRLXenz1jEtYWe7tcfqbCYswlXKap2sZ+MARjN77ZSU4kRVzj/NWQgNuJN
- +R21Oj6OrMfYYJw/cwRC1gIr5D6Yr9UyiBz45UNRDAA6ozlF2ZZZuqFEokqJkKzW+sZg
- SEjtJPWzoONEf6k5YNgF0DUoIXnqMsJOn3fwy6xqjKmxmmxePcLsMH1r0RtRUi4t8Rgg
- rbn98Ff/azfGgwYv1JxPyMbqeCSJ4hsErggwo4xoVK8YA/vz5XrLG+58/CKdVkjnXV+1
- Kq+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=9QQZvDLQz2IFScaUQfyuWHgx+Dw7q0ynuWIbnwzXlXE=;
- b=Y0uktMgr3eOE5sZjpHtbggOavqnlBr+TyRpQ0I3Pern6B1LJ8iE3I/3xfw+ToXr5J+
- 1HpIxrjIVvBfzo17a+yu9Xmw2dg5Fft4vMFhPW/Xg/Vj/RZ1vIBfe0ua0W9dSIXHfcfu
- nRRRDL331XtJBji2MZU2JxR5IuM9KkBAcuLpdiUDong6uvve1DS+Ly/KQW9qzUNnZ9MI
- XbqKOPYusfJLkQNe6kRd/N4i7uBQv8CJGu1owkcA6PL6eJBc4/PcZjjrwPL+zRoJP1qM
- Rovuzs05M/0AwrlgDhSrmt64SnTnK5bl9OXXt12u+aGUpUBNl+Fnv6HiV3rRPqt//ko8
- glcQ==
-X-Gm-Message-State: APjAAAXzA73N7DZYS6xrDJjXGW48SxZjjTn1TZDzpoXod9OXF7yztnda
- 7i2V8xSoXPVAVG6jDSJ3OeCFudVU+Jc=
-X-Google-Smtp-Source: APXvYqyYCsjNdhrSxOnJeNQpGPy4QmXNvb1O7p5da25YoAHIONdoz6WkIULWdb0NdC1x3zFkEKNhBA==
-X-Received: by 2002:aca:5a04:: with SMTP id o4mr2151652oib.71.1581692883796;
- Fri, 14 Feb 2020 07:08:03 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:44e0:fe24:6c83:10eb])
- by smtp.gmail.com with ESMTPSA id t22sm2228080otq.18.2020.02.14.07.08.03
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 14 Feb 2020 07:08:03 -0800 (PST)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: IPMI_CHASSIS_PWR_DOWNs multiple uses
-Message-Id: <A8318787-86B4-487D-9A7D-4220F3725114@gmail.com>
-Date: Fri, 14 Feb 2020 09:08:02 -0600
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Jxxd6dv5zDqX9
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Feb 2020 02:24:13 +1100 (AEDT)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 14 Feb 2020 07:24:10 -0800
+X-IronPort-AV: E=Sophos;i="5.70,440,1574150400"; 
+ d="asc'?scan'208,217";a="381465552"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
+ by orsmga004-auth.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-SHA;
+ 14 Feb 2020 07:24:10 -0800
+Subject: Re: Community support - where do want to be in a year?
+To: Kurt Taylor <kurt.r.taylor@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <cf55586d-7e66-a3a6-30da-6980deb9be69@intel.com>
+Date: Fri, 14 Feb 2020 07:24:02 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="uCBYQL4dnUVqZc9GCQzve7mKSh5I4QOzi"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,44 +81,109 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We've been working on standardizing our Redfish -> IPMI -> OpenBMC State
-Management mappings[1].
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--uCBYQL4dnUVqZc9GCQzve7mKSh5I4QOzi
+Content-Type: multipart/mixed; boundary="33s6ldBY61tIEyUB5v8rbDmXKHXtCVZpQ"
 
-One issue I'm running into is the dual use of the IPMI_CHASSIS_PWR_DOWN =
-chassis
-control command[2]. This command in its standard use case, is used to =
-indicate
-the chassis power should be removed from the system (non-graceful power =
-down).
-The issue I've been hitting is that it is also used by the BIOS firmware =
-to
-indicate once it has completed it's shutdown. For example in the IPMI =
-Soft Off
-chassis command path, the IPMI Chassis Power Down command is sent once =
-the
-BIOS has completed its shutdown.
+--33s6ldBY61tIEyUB5v8rbDmXKHXtCVZpQ
+Content-Type: multipart/alternative;
+ boundary="------------6CFEE03923FDB4085F05D7D1"
+Content-Language: en-US
 
-The problem with this is that there are use cases for shutting down the =
-host
-but also keeping the chassis power on. For example a GracefulRestart is =
-a
-graceful shutdown of the BIOS and then a reboot of the system without =
-removing
-chassis power.
+This is a multi-part message in MIME format.
+--------------6CFEE03923FDB4085F05D7D1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Is this dual use of IPMI_CHASSIS_PWR_DOWN something specific to our =
-systems?
-Is there a solution to this that doesn't involve special code on the BMC =
-side
-that tracks the current BMC state request and does some special handling
-of the IPMI_CHASSIS_PWR_DOWN?
+Kurt,
 
-Thanks,
-Andrew
+I would like to see a more developer friendly unit test framework.
+I have had only a couple of occasions where I needed to run the test suit=
+e.
+My most recent attempt was not successful because my test repo was out
+of sync with the remainder of the OBMC infrastructure.
+I would like to see:
 
-[1]: =
-https://github.com/openbmc/docs/blob/master/designs/state-management-and-e=
-xternal-interfaces.md=20
-[2]: =
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/29051/1=
-/chassishandler.cpp#1093=
+ 1. A way to test my changes within the framework of more than one repo.
+ 2. A less heavy handed, quicker turn time test sequence
+
+
+--=20
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
+
+
+--------------6CFEE03923FDB4085F05D7D1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    Kurt,<br>
+    <br>
+    I would like to see a more developer friendly unit test framework.<br=
+>
+    I have had only a couple of occasions where I needed to run the test
+    suite.<br>
+    My most recent attempt was not successful because my test repo was
+    out of sync with the remainder of the OBMC infrastructure.<br>
+    I would like to see:<br>
+    <br>
+    <ol>
+      <li>A way to test my changes within the framework of more than one
+        repo.</li>
+      <li>A less heavy handed, quicker turn time test sequence<br>
+      </li>
+    </ol>
+    <br>
+    -- <br>
+    <div class=3D"moz-signature">
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------6CFEE03923FDB4085F05D7D1--
+
+--33s6ldBY61tIEyUB5v8rbDmXKHXtCVZpQ--
+
+--uCBYQL4dnUVqZc9GCQzve7mKSh5I4QOzi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl5Gu5IACgkQ0EfviT3f
+HwnSdAgAgOAgEWXAzWLZDnBHjQqmt8urp0GxuRP/QaIXsQuxPpdwBSvNzg/TlpNQ
+O5r8j8STPskddwApqwSDq+eOjvWZi/a4hAKxOAH8FXxCQ8mZnznS4NlhDur3fNhX
+x8i7y/aknRBqH0ONuyj9XqI85XcvzaUV9PwD4RieYwR4A513Nia7IaBZm7cwaJEv
+/p7jb/ZlKSWV7SojlXmTpXENXbWBZDck1WgEdgwfzqsCSCdKu3Vf2pKxmpj0x3qR
+EBrsnmGUyw0jRglaK3FTgMs+gRuEPsy83T3ZwcnxUdaKb9qpqVeH8OlB7ycctLUb
+rQwe2WpwFNevpB6HnqCqByAGSuBTgA==
+=oApk
+-----END PGP SIGNATURE-----
+
+--uCBYQL4dnUVqZc9GCQzve7mKSh5I4QOzi--
