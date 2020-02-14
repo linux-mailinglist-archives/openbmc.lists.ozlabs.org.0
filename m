@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C33F615F733
-	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 20:55:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 730D615F73A
+	for <lists+openbmc@lfdr.de>; Fri, 14 Feb 2020 20:58:01 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48K3yR6jSZzDqkf
-	for <lists+openbmc@lfdr.de>; Sat, 15 Feb 2020 06:55:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48K41J2lzRzDqHl
+	for <lists+openbmc@lfdr.de>; Sat, 15 Feb 2020 06:57:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -19,8 +19,8 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48JzNp5NhjzDqR5
- for <openbmc@lists.ozlabs.org>; Sat, 15 Feb 2020 03:29:29 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48JzTl2LbgzDqCR
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Feb 2020 03:33:46 +1100 (AEDT)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 Content-Type: text/plain;
 	charset=utf-8
@@ -28,9 +28,9 @@ Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
 Subject: Re: Community support - where do want to be in a year?
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
 In-Reply-To: <cf55586d-7e66-a3a6-30da-6980deb9be69@intel.com>
-Date: Fri, 14 Feb 2020 11:29:22 -0500
+Date: Fri, 14 Feb 2020 11:33:41 -0500
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <23111C94-4A98-4422-A1FC-BDE23C3C2C47@fuzziesquirrel.com>
+Message-Id: <1F7B75A9-56F2-4B90-B799-6F541804F8CE@fuzziesquirrel.com>
 References: <CAG5OiwhNq55Om4=NU8F7SSebDqMQpKhHuhAC-aFz=QKBLM6Wig@mail.gmail.com>
  <cf55586d-7e66-a3a6-30da-6980deb9be69@intel.com>
 To: Johnathan Mantey <johnathanx.mantey@intel.com>
@@ -66,9 +66,6 @@ of sync with the remainder of the OBMC infrastructure.
 >=20
 > 	=E2=80=A2 A way to test my changes within the framework of more =
 than one repo.
+> 	=E2=80=A2 A less heavy handed,
 
-can you elaborate on this?
-
-> 	=E2=80=A2 A less heavy handed, quicker turn time test sequence
-
-What is a rough target for your desired turn time?=
+I assume the heavy-handed part is the need for docker?=
