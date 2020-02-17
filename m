@@ -2,73 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C03C161C33
-	for <lists+openbmc@lfdr.de>; Mon, 17 Feb 2020 21:17:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CAA85161C50
+	for <lists+openbmc@lfdr.de>; Mon, 17 Feb 2020 21:31:04 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48LwHy3DTHzDqg9
-	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 07:17:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Lwc61dW9zDqjn
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 07:31:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72c;
+ helo=mail-qk1-x72c.google.com; envelope-from=bjwyman@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Q9Fd/fP1; dkim-atps=neutral
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com
+ [IPv6:2607:f8b0:4864:20::72c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48LwHJ4xnszDqHn
- for <openbmc@lists.ozlabs.org>; Tue, 18 Feb 2020 07:16:28 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 01HKECtS105477; Mon, 17 Feb 2020 15:16:23 -0500
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2y6dq69r4u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Feb 2020 15:16:23 -0500
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 01HKFCuS026766;
- Mon, 17 Feb 2020 20:16:22 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma02dal.us.ibm.com with ESMTP id 2y68969htp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Feb 2020 20:16:22 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 01HKGL736357724
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Feb 2020 20:16:21 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 644B9124054;
- Mon, 17 Feb 2020 20:16:21 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC87B124052;
- Mon, 17 Feb 2020 20:16:20 +0000 (GMT)
-Received: from ghost4.ibm.com (unknown [9.163.85.232])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon, 17 Feb 2020 20:16:20 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4] fsi: master: Add link_disable function
-Date: Mon, 17 Feb 2020 14:16:19 -0600
-Message-Id: <20200217201619.16713-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.24.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48LwbD47qYzDqZW
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Feb 2020 07:30:11 +1100 (AEDT)
+Received: by mail-qk1-x72c.google.com with SMTP id c20so17456953qkm.1
+ for <openbmc@lists.ozlabs.org>; Mon, 17 Feb 2020 12:30:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=CQZd02d2Sum3mhat4Rosewb3J4uCP9boKi0gwpuxgZ4=;
+ b=Q9Fd/fP1t4P7r0gDF4wPhCyMd5tq6YSEJ9HSJKyXMb2bBS/p6NNBof7u44/q2m6FWW
+ 4U6yZBw98A9dZN/AY6lLPpJf/7/Syw9exH+FCNssOEwaNTD+Bx3bZqUoyZ1jC+aIVXvS
+ RrmKq+NT22OvKrSXaUEjBgN7j1d5eIt8zHh0UikxIEKU9U4FoSEw7i08+YQKzQ+FqUFM
+ srCHiyI5jqJ0vF75NQVlMdTDpfH5HaAJjzZgiET385Qt0mtp6P9Y7ja/+CMxEOARBSow
+ AH+qExSBjn7NyIyPDFQE4u7/DLxn7rxfiiTLveRhabqLLsgn5dPa+OsHBKyvK4z+wfr0
+ M1GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=CQZd02d2Sum3mhat4Rosewb3J4uCP9boKi0gwpuxgZ4=;
+ b=Mw/xRC1HSyE+4BZxsQl+Qbz/iBhXm6O7G9tAbx3ZjGDxkbLxezQpzovlPQiRhTyMOM
+ nBNiaRKgsg3Xk6p/2kzw/AWPUrsINwdveDrlSehFFlCrZmdpaBzy1u0O6eXYrky4GlFi
+ 79yXhEPT59iIHDaC39QMS+unGtzHdFJ7IVwwF+986HmTHeV5nLah33IfzFeT2WmzQgA6
+ xoEkd7KCex81qcOYK+wirr2E+k9XaUhbat9u3M2Dp6bmaSD/MWoyOjzn6e/QtKeONVmu
+ WcGKJg7c3weTr9foTrlRqnauTBs6tbm7KYtby8ZrAEgz0wAqaTzxeRqcQqgQyWihW3H9
+ n5DA==
+X-Gm-Message-State: APjAAAU6WwmQaCmDK2U1lgHs8Y8dZeBxWi47BZQTZdBCAqei4pqLFOoj
+ DdYzTtSEahASvUF3EEbo852V0f1q
+X-Google-Smtp-Source: APXvYqxE85ehX/MkUTEQzrO0lU/KaLsXkA/A7sP952IWRGEQeOviCWf5cLwmZN6Idp5Y17HkYWOnyw==
+X-Received: by 2002:ae9:ed88:: with SMTP id
+ c130mr15041418qkg.299.1581971406693; 
+ Mon, 17 Feb 2020 12:30:06 -0800 (PST)
+Received: from [9.10.255.77] ([129.41.86.5])
+ by smtp.gmail.com with ESMTPSA id f26sm735634qtv.77.2020.02.17.12.30.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Feb 2020 12:30:06 -0800 (PST)
+Subject: Re: Mulit-platform feature
+To: Payne Yang <pyang4@lenovo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <1fb78d4aa9394cf092194b57427251f3@lenovo.com>
+From: Brandon Wyman <bjwyman@gmail.com>
+Message-ID: <b3ea2d1e-e4a7-fdfe-45e5-6d5b50f3f4e3@gmail.com>
+Date: Mon, 17 Feb 2020 14:30:05 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-02-17_12:2020-02-17,
- 2020-02-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=1 impostorscore=0
- spamscore=0 mlxlogscore=999 bulkscore=0 phishscore=0 clxscore=1015
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2002170166
+In-Reply-To: <1fb78d4aa9394cf092194b57427251f3@lenovo.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,156 +84,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The master driver should disable links that don't have slaves or links
-that fail to be accessed. To do this, add a link_disable function and
-use it in the failure path for slave break and init.
+Same idea, slightly different topic?
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/fsi/fsi-core.c          | 13 ++++++++++++-
- drivers/fsi/fsi-master-aspeed.c | 30 ++++++++++++++++++++++++++++++
- drivers/fsi/fsi-master-hub.c    | 22 ++++++++++++++++++++++
- drivers/fsi/fsi-master.h        |  1 +
- 4 files changed, 65 insertions(+), 1 deletion(-)
+"multiple device trees" -> 
+https://lists.ozlabs.org/pipermail/openbmc/2020-January/020171.html
 
-diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
-index 8244da8a7241..d81ee9f582a5 100644
---- a/drivers/fsi/fsi-core.c
-+++ b/drivers/fsi/fsi-core.c
-@@ -1154,6 +1154,14 @@ static int fsi_master_write(struct fsi_master *master, int link,
- 	return rc;
- }
- 
-+static int fsi_master_link_disable(struct fsi_master *master, int link)
-+{
-+	if (master->link_disable)
-+		return master->link_disable(master, link);
-+
-+	return 0;
-+}
-+
- static int fsi_master_link_enable(struct fsi_master *master, int link)
- {
- 	if (master->link_enable)
-@@ -1194,10 +1202,13 @@ static int fsi_master_scan(struct fsi_master *master)
- 		if (rc) {
- 			dev_dbg(&master->dev,
- 				"break to link %d failed: %d\n", link, rc);
-+			fsi_master_link_disable(master, link);
- 			continue;
- 		}
- 
--		fsi_slave_init(master, link, 0);
-+		rc = fsi_slave_init(master, link, 0);
-+		if (rc)
-+			fsi_master_link_disable(master, link);
- 	}
- 
- 	return 0;
-diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index f49742b310c2..7ce5d9eb6c78 100644
---- a/drivers/fsi/fsi-master-aspeed.c
-+++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -299,6 +299,35 @@ static int aspeed_master_write(struct fsi_master *master, int link,
- 	return 0;
- }
- 
-+static int aspeed_master_link_disable(struct fsi_master *master, int link)
-+{
-+	struct fsi_master_aspeed *aspeed = to_fsi_master_aspeed(master);
-+	int idx, bit, ret;
-+	__be32 reg, result;
-+
-+	idx = link / 32;
-+	bit = link % 32;
-+
-+	reg = cpu_to_be32(0x80000000 >> bit);
-+
-+	ret = opb_writel(aspeed, ctrl_base + FSI_MCENP0 + (4 * idx), reg);
-+	if (ret)
-+		return ret;
-+
-+	mdelay(FSI_LINK_ENABLE_SETUP_TIME);
-+
-+	ret = opb_readl(aspeed, ctrl_base + FSI_MENP0 + (4 * idx), &result);
-+	if (ret)
-+		return ret;
-+
-+	if (result & reg) {
-+		dev_err(aspeed->dev, "%s failed: %08x\n", __func__, result);
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
- static int aspeed_master_link_enable(struct fsi_master *master, int link)
- {
- 	struct fsi_master_aspeed *aspeed = to_fsi_master_aspeed(master);
-@@ -491,6 +520,7 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 	aspeed->master.write = aspeed_master_write;
- 	aspeed->master.send_break = aspeed_master_break;
- 	aspeed->master.term = aspeed_master_term;
-+	aspeed->master.link_disable = aspeed_master_link_disable;
- 	aspeed->master.link_enable = aspeed_master_link_enable;
- 
- 	dev_set_drvdata(&pdev->dev, aspeed);
-diff --git a/drivers/fsi/fsi-master-hub.c b/drivers/fsi/fsi-master-hub.c
-index def35cf92571..26617fd5e2de 100644
---- a/drivers/fsi/fsi-master-hub.c
-+++ b/drivers/fsi/fsi-master-hub.c
-@@ -77,6 +77,27 @@ static int hub_master_break(struct fsi_master *master, int link)
- 	return hub_master_write(master, link, 0, addr, &cmd, sizeof(cmd));
- }
- 
-+static int hub_master_link_disable(struct fsi_master *master, int link)
-+{
-+	struct fsi_master_hub *hub = to_fsi_master_hub(master);
-+	int idx, bit;
-+	__be32 reg;
-+	int rc;
-+
-+	idx = link / 32;
-+	bit = link % 32;
-+
-+	reg = cpu_to_be32(0x80000000 >> bit);
-+
-+	rc = fsi_device_write(hub->upstream, FSI_MCENP0 + (4 * idx), &reg, 4);
-+
-+	mdelay(FSI_LINK_ENABLE_SETUP_TIME);
-+
-+	fsi_device_read(hub->upstream, FSI_MENP0 + (4 * idx), &reg, 4);
-+
-+	return rc;
-+}
-+
- static int hub_master_link_enable(struct fsi_master *master, int link)
- {
- 	struct fsi_master_hub *hub = to_fsi_master_hub(master);
-@@ -228,6 +249,7 @@ static int hub_master_probe(struct device *dev)
- 	hub->master.read = hub_master_read;
- 	hub->master.write = hub_master_write;
- 	hub->master.send_break = hub_master_break;
-+	hub->master.link_disable = hub_master_link_disable;
- 	hub->master.link_enable = hub_master_link_enable;
- 
- 	dev_set_drvdata(dev, hub);
-diff --git a/drivers/fsi/fsi-master.h b/drivers/fsi/fsi-master.h
-index 6e8d4d4d5149..7ecb86a678f9 100644
---- a/drivers/fsi/fsi-master.h
-+++ b/drivers/fsi/fsi-master.h
-@@ -130,6 +130,7 @@ struct fsi_master {
- 				uint32_t addr, const void *val, size_t size);
- 	int		(*term)(struct fsi_master *, int link, uint8_t id);
- 	int		(*send_break)(struct fsi_master *, int link);
-+	int		(*link_disable)(struct fsi_master *, int link);
- 	int		(*link_enable)(struct fsi_master *, int link);
- 	int		(*link_config)(struct fsi_master *, int link,
- 				       u8 t_send_delay, u8 t_echo_delay);
--- 
-2.24.0
-
+On 2020-01-09 02:12, Payne Yang wrote:
+>
+> Hi Team,
+>
+> Is there a plan to support mulit-platform feature on OpenBMC in future ?
+>
+> Multi-platform means 1 BMC image could support multiple platform but 
+> only single platform.
+>
+> Best Regards,
+>
+> Payne
+>
