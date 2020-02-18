@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 800351633C6
-	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 22:03:48 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48MYHP57dSzDqLx
-	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 08:03:45 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id C37E91633CC
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 22:04:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48MYJd6798zDqcQ
+	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 08:04:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -19,21 +19,23 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48MYDH63fPzDqdp
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 08:01:03 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48MYFT3XMTzDqdt
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 08:02:04 +1100 (AEDT)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
 Subject: Re: Request for Feedback :: Time Mode setting in timemanager
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <20200218202507.GA2219@patrickw3-mbp.lan.stwcx.xyz>
-Date: Tue, 18 Feb 2020 16:01:00 -0500
+In-Reply-To: <20200218205231.GD2219@patrickw3-mbp.lan.stwcx.xyz>
+Date: Tue, 18 Feb 2020 16:01:58 -0500
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <329B2251-4BA2-425F-A8E1-886C4E2F686F@fuzziesquirrel.com>
+Message-Id: <B85A545E-2557-41AD-AF8E-C516B18B066B@fuzziesquirrel.com>
 References: <68732B2D-EB7D-418A-86D9-3095223A31FB@linux.vnet.ibm.com>
  <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
  <20200218202507.GA2219@patrickw3-mbp.lan.stwcx.xyz>
+ <25B4F046-9688-4F23-909E-A5D929349E84@fuzziesquirrel.com>
+ <20200218205231.GD2219@patrickw3-mbp.lan.stwcx.xyz>
 To: Patrick Williams <patrick@stwcx.xyz>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -51,19 +53,15 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
->>> Please could you help with your thoughts on this ?.. What is the =
-Industry norm on this ?
->>=20
->> FWIW on our (IBM) system designs we usually hook an RTC up to the =
-BMC, and any host software needing a RTC has to get it via some in-band =
-software interface.  I think I heard somewhere though that often in =
-other systems designs the RTC is connected to the host processors and =
-the BMC doesn=E2=80=99t have access to it.
->=20
-> FB's OCP designs all have the RTC to the Host, so I'm not sure any of
-> this is applicable to us.
 
-Are there any down sides to designs like this?  I guess if NTP is not an =
-option on the BMC, you are at the mercy of the host firmware if you want =
-correct time.  If NTP is in use on the BMC does an RTC still do anything =
-for you?=
+> On Feb 18, 2020, at 3:52 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+>> oes this have to do with what is going on, on the BMC?
+>=20
+> When the BMC owns the hardware RTC, { Manual , Host } is the only mode
+> that allows the Host to utilize the RTC hardware without being subject
+> to the provider's time infrastructure.
+
+Would this be in a situation where the lessee can=E2=80=99t run NTP on =
+the host?=
