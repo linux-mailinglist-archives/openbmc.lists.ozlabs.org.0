@@ -1,110 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 18B98170E3D
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 03:11:35 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FA3C170E3B
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 03:10:29 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48SbjZ09VxzDqk9
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 13:10:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Sbkr3BDlzDqjx
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 13:11:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wiwynn.com (client-ip=103.200.3.19; helo=segapp01.wistron.com;
- envelope-from=eli_huang@wiwynn.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a;
+ helo=mail-lf1-x12a.google.com; envelope-from=dipukuet@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=wiwynn.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=Wistron.onmicrosoft.com
- header.i=@Wistron.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-Wistron-onmicrosoft-com header.b=fcKBmoSk; 
- dkim-atps=neutral
-X-Greylist: delayed 311 seconds by postgrey-1.36 at bilbo;
- Mon, 17 Feb 2020 21:25:43 AEDT
-Received: from segapp01.wistron.com (segapp02.wistron.com [103.200.3.19])
- by lists.ozlabs.org (Postfix) with ESMTP id 48Lg9g56RkzDqlg
- for <openbmc@lists.ozlabs.org>; Mon, 17 Feb 2020 21:25:41 +1100 (AEDT)
-Received: from EXCHAPP02.whq.wistron (unverified [10.37.38.25]) by
- TWNHUMSW2.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id
- <Tdd60c9ffe6c0a816701d1c@TWNHUMSW2.wistron.com>; 
- Mon, 17 Feb 2020 18:20:23 +0800
-Received: from EXCHAPP02.whq.wistron (10.37.38.25) by EXCHAPP02.whq.wistron
- (10.37.38.25) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Mon, 17 Feb
- 2020 18:20:22 +0800
-Received: from APC01-HK2-obe.outbound.protection.outlook.com (10.37.38.71) by
- mail.wistron.com (10.37.38.25) with Microsoft SMTP Server
- (version=TLS1_2, 
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5 via Frontend
- Transport; Mon, 17 Feb 2020 18:20:22 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CbJoZK1rUDTkVbi7O2Dfi4eOXf9xemxRK70tA7mFmyjmmByFteB07O1kCSP/BS3jbrnCm51gl4ZFqeWxwOe4WaUk5Gve2X+6pjo86/quFSXu2X6xL7Deg3+AQwG2hW+2MzERnCnarUUFa7cVBw6sLvhq27FrntaeIe6R/sjgKG2No0DbOJG94z8NWwt/dunTkR1iPlipaQ7HKAIp/7SLTGGRhCTivYMZ6A/EAJe+9Uqg6xjZZFMwF66zIT1bXbF/1lZVb8oMQuMJn+3VgynPhNtK5ck5DjclLMlApcuSRT70dMDbqXbUERzyDRJbZMlJU5Iqst4oXOu/IsEMcRhrYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9RQAL/8nAMwyDvHavZ9ip+uOmF2VaO4uHTSWbP95m+Y=;
- b=WWdxuZ5iAD+1ShYEvyuh4VlwXHTCUo7p7bAgG2jc0SYWcgZx/q7gwtGuLxgUPnMwpubd4JxMaYn2C2m2IXJdKXnPSVWp8byfkAm0ylfHwhkJ5lraxAxWMWC5YrTd7HA0940uWZ7quS3RMAIgxKeS0W0RPXNjbqB6LPkNG+9XUNm9ySsHKOThEcTIgCa8DQcnQJb5O4nKprHd99lL8O7Mb1yexUjSg4IePR8HuaHIo88At7Xsrpgo83o73F0AjR7x+xskryzJMrIl4BRQ63avIIwq/v1h0GCSQQQyclAc4YIvCcvEyRnrfZHXB6n7PdgYtEvfpQxVixa64c5fRVkmTg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wiwynn.com; dmarc=pass action=none header.from=wiwynn.com;
- dkim=pass header.d=wiwynn.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=Wistron.onmicrosoft.com; s=selector2-Wistron-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9RQAL/8nAMwyDvHavZ9ip+uOmF2VaO4uHTSWbP95m+Y=;
- b=fcKBmoSkTYpYLZOfH54rlvXjU9ESfkl4tVz/pv4SfDSUY7qUJtAqNE4KY8pMD5rzp79ZSH2Dk7z8Skade6UFsqZhN0QX/ud/lC3zsTsLFBZ4OVHUucdUH0wrQlZLErrWLMPtD8eejET1Jz73Sv9QeGhzKtuGcvr6Llysbfkyi5Y=
-Received: from HK0PR02MB3427.apcprd02.prod.outlook.com (20.177.69.143) by
- HK0PR02MB2513.apcprd02.prod.outlook.com (52.133.210.12) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2729.25; Mon, 17 Feb 2020 10:20:20 +0000
-Received: from HK0PR02MB3427.apcprd02.prod.outlook.com
- ([fe80::ec7f:eae1:69b8:58b8]) by HK0PR02MB3427.apcprd02.prod.outlook.com
- ([fe80::ec7f:eae1:69b8:58b8%6]) with mapi id 15.20.2729.032; Mon, 17 Feb 2020
- 10:20:19 +0000
-From: Eli Huang/WYHQ/Wiwynn <Eli_Huang@wiwynn.com>
-To: "mine260309@gmail.com" <mine260309@gmail.com>
-Subject: Question for phosphor bmc code - BMC update
-Thread-Topic: Question for phosphor bmc code - BMC update
-Thread-Index: AdXleJv2w/5QxgkFTaeRs/B7wzNdaA==
-Date: Mon, 17 Feb 2020 10:20:19 +0000
-Message-ID: <HK0PR02MB3427B226A660C70F479B427EEF160@HK0PR02MB3427.apcprd02.prod.outlook.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Eli_Huang@wiwynn.com; 
-x-originating-ip: [125.227.140.245]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bd525baa-c107-4298-273e-08d7b392fdb2
-x-ms-traffictypediagnostic: HK0PR02MB2513:|HK0PR02MB2513:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK0PR02MB25135E76320EDFC8C16052C8EF160@HK0PR02MB2513.apcprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:1051;
-x-forefront-prvs: 0316567485
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(136003)(366004)(396003)(346002)(376002)(39860400002)(199004)(189003)(71200400001)(186003)(66446008)(66946007)(54906003)(52536014)(5660300002)(64756008)(86362001)(316002)(66476007)(76116006)(478600001)(66556008)(81156014)(8676002)(4744005)(4326008)(8936002)(9686003)(55016002)(15650500001)(26005)(2906002)(6506007)(107886003)(6916009)(33656002)(7696005)(81166006);
- DIR:OUT; SFP:1102; SCL:1; SRVR:HK0PR02MB2513;
- H:HK0PR02MB3427.apcprd02.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; A:1; MX:1; 
-received-spf: None (protection.outlook.com: wiwynn.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: sLck1/ichHpYsWm34SHoFGZ4J2hC0kjnR/TljSsnbbaw3FgMV3oEY7x+hJY1s4HWBS/zbSNUnK0jbzxraF61+L32QgnZjnNspIHksSsOLr5IdjR9i8zzM1wE1+cK/tz1EgGcK5L7bDBY6PqUP8Q9lZ9EGS1uul7aydGDC7Xa2bELMgITZirdnq4OLIv7Gek3PtBUxaFk6Q/tdof4QLgkV6RlkEN2CNGAApMPhecHtox0YusZO/EkKrV1tdiBeHuc06/XRbC1YnI6yYFSnTOM6oAdASnghXoaUzp/v5IwpZK9h6umDcZc7F1RrXry/YHHXj4RsdzamgC6xH/5/JsKKsr5gg4MlppDihxR2qKZxi0TRQfRWavOykMFTYSMQnq0MXoxnvPiECD5kupzYqJ0WjhUoNIZfVPNGZ0DZ6/S8XltyhgqVGUB03BcZrbMsFrD
-x-ms-exchange-antispam-messagedata: PdkVmithNbY3pzLx3q0k4w2PEVVMuVfa1grc4Si0PVUQaKe+kbqoAWx++sDuciS9FU4NitUnyxGh2mLdnsp4gtoCTepQDsvwoUJTQxoA7njhw76UONgfVlbAOK5RLid8mOdXBdOh1lsK7f2Vyljo1Q==
-Content-Type: multipart/alternative;
- boundary="_000_HK0PR02MB3427B226A660C70F479B427EEF160HK0PR02MB3427apcp_"
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=n5aQ0r1w; dkim-atps=neutral
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [IPv6:2a00:1450:4864:20::12a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48MRZt0Tp3zDqY3
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 03:46:40 +1100 (AEDT)
+Received: by mail-lf1-x12a.google.com with SMTP id r14so15014425lfm.5
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Feb 2020 08:46:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=22cdfCcOxfZkvLvepyw1suGGI6/+Yep1lprJoO+Hl88=;
+ b=n5aQ0r1wJozrPy9Tyv0xryPQNZdiqajZTI2dWNNW2RcWgfIEvVRuHI8tjzUtVcL572
+ N9Y2K6JC1YvRist0KKpnB54ivXS1RLOOEKO03Q47iRXfgglP0y/9e3AjD7qjkLNNA+mg
+ 5B4MyD/M5KvOnK2w+uVcnpPDp7BDV9/Rgea5X+Dxkrkb97Ui9izNNznKPVEvHIMBDoOo
+ h89gVJRwacAqXu9YBUnXrR/Nqf/P2xt2yQS9I6byL0ZuQ3KJ2jtkHPCwqTmuBvLujuI6
+ LopTtX3vfaryTnnxCsaKIzuvTMYOgmy7xzV1A4pRsqmfy5ot1SKhyhHP6FSA2lG5UbN2
+ O4lQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=22cdfCcOxfZkvLvepyw1suGGI6/+Yep1lprJoO+Hl88=;
+ b=gGGsMiIDJXn6i6WGxwFOsa7ekjC8of0pP7kVn0Hz9FP0Xor2v1rXV0Gl8elOqOBNCQ
+ N8azwPImWKG4iFtavHGHCDkMAE0u2iok7XMvm+40BRDgj+SbGKDFhSRBW0NChFyT4vYe
+ HUzvGWwLnY5V7g27X0je0r+CwcAcXjGck6pnsGfQXLpgkeWRDlgdSs/Uv535/NWI9I2c
+ PX+c2co1YpdVl/mBKeIs2OwEjRbiFTABSkOJgHXV445UFQskDiQ7ssQtcsbf3msi30dM
+ 0pCp6DJ8hBRGOVPgAmfitO0Ve1ejboeDXeXQwO7l1S4UAfKTSSSS20ffdu5SX6J1y2lh
+ bTtw==
+X-Gm-Message-State: APjAAAVDSC2gS5AQUdNg7azG0DKqk9OSUI0CEES1ul47BcRe/W44ZNGJ
+ zAQX5jLEIfsp963oCzzY9oi/YrJjKx4Ryydbhfs=
+X-Google-Smtp-Source: APXvYqwJiz34WNC0r47THt9EPgRcJzZmPoFa4cQSGx0L2OdPTgvjoDVp+rOkcTp6nfu4AGr7IacYB/aUEIjKmSNkY6Q=
+X-Received: by 2002:a19:94d:: with SMTP id 74mr10780002lfj.144.1582044393810; 
+ Tue, 18 Feb 2020 08:46:33 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: bd525baa-c107-4298-273e-08d7b392fdb2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Feb 2020 10:20:19.7223 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: de0795e0-d7c0-4eeb-b9bb-bc94d8980d3b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: H4wOey5g4VwyEUKC1ZErAesdln6KgepdBUUrzNwOB9yJfwtMoyAt30fnL0CiRhoinAMXxC5vYLSn39+Z7+dTQg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR02MB2513
-X-OriginatorOrg: wiwynn.com
-X-TM-SNTS-SMTP: DB5A7A597C9558174AEF0E382C8ECC8E564B8C97CBC26F5BB296B1C9E1DF1C152000:8
-X-Mailman-Approved-At: Thu, 27 Feb 2020 13:08:41 +1100
+References: <68732B2D-EB7D-418A-86D9-3095223A31FB@linux.vnet.ibm.com>
+ <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
+In-Reply-To: <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
+From: Ryan Arnell <ryan1arnell@gmail.com>
+Date: Tue, 18 Feb 2020 10:46:22 -0600
+Message-ID: <CAJF4KMyJkSaKF=wOgSPLk_zig_vfXWKxhS2oLKBWbV6GN+U8ZA@mail.gmail.com>
+Subject: Re: Request for Feedback :: Time Mode setting in timemanager
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: multipart/alternative; boundary="0000000000001caec6059edc6aea"
+X-Mailman-Approved-At: Thu, 27 Feb 2020 13:08:42 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -116,113 +74,152 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, dadubets@us.ibm.com,
+ ggoldman@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK0PR02MB3427B226A660C70F479B427EEF160HK0PR02MB3427apcp_
-Content-Type: text/plain; charset="us-ascii"
+--0000000000001caec6059edc6aea
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Lei Yu,
-Confirm a question with you.
-When we do the BMC update using phosphor-bmc-code-mgmt,
-The code in the image_manager.cpp will get the version in the manifest file=
-.
-If the version is same as path on d-bus, the BMC will not update and print =
-message "Software Object with the same version already exists".
-We want to know why upstream code can't update the same version image if th=
-e BMC are valid.
-(phosphor-bmc-code-mgmt commit number : a013560f96a9ee5c2db4e1778c7dcee199c=
-3acf1)
-Regards,
-Eli
+Thanks Brad and Vishwa for moving into the direction where we might not
+require a reboot or host power off from moving to Manual to NTP or vise
+versa.
+We had a lot of user feedback who see this as a very inefficient task.
+Goldman and David cc'ed here can also has a lot of customers who needs to
+sync time often and they would not like to power off host every time that
+happens.
 
+Thanks again
+Ryan
 
---_000_HK0PR02MB3427B226A660C70F479B427EEF160HK0PR02MB3427apcp_
-Content-Type: text/html; charset="us-ascii"
+On Tue, Feb 18, 2020 at 8:43 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
+wrote:
+
+>
+>
+> > On Feb 18, 2020, at 7:56 AM, Vishwanatha Subbanna <
+> vishwa@linux.vnet.ibm.com> wrote:
+> >
+> > Hello,
+> >
+> > Sending this email requesting feedback on one of the feature that we
+> currently have in phosphor-timemanager.
+> >
+> > Time manager uses TimeMode setting and can have either [NTP] or [Manual=
+]
+> as the valid options and are provided via xyz/openbmc_projects/settings/
+> for external users.
+> >
+> > When the system power is off and BMC is in ready state, any changes to
+> these settings are readily consumed by time manager daemon.
+> >
+> > However, if the user changes the setting when the Host is booting,
+> timemanager puts them in deferred state. Meaning, timemanager does not ta=
+ke
+> the settings into effect until the Host is powered off.
+>
+> Can you elaborate on why it does this?
+>
+> >
+> > So, if someone wants to move from [Manual] to [NTP] or vice-versa, when
+> the Host is [On], they need to [power-off] the Host and power it back on.
+>
+> This seems less than ideal?  Would you agree?
+>
+> >
+> > This design was chosen because we wanted to give priority to Host.
+>
+> What does it mean to give priority to the Host?  Are you trying to hide
+> time changes in the time from the host?  Why?
+>
+> > Some of us are asking me if we can make a change to take the setting
+> changes in effect immediately, not caring the state of the Host.
+>
+> Without additional background this is what seems intuitive to me.
+>
+> >
+> > Please could you help with your thoughts on this ?.. What is the
+> Industry norm on this ?
+>
+> FWIW on our (IBM) system designs we usually hook an RTC up to the BMC, an=
+d
+> any host software needing a RTC has to get it via some in-band software
+> interface.  I think I heard somewhere though that often in other systems
+> designs the RTC is connected to the host processors and the BMC doesn=E2=
+=80=99t
+> have access to it.
+
+--0000000000001caec6059edc6aea
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Lei Yu,<o:p></o:p></span></p=
->
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Confirm a question with you.<o:=
-p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">When we do the BMC update using=
- phosphor-bmc-code-mgmt,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">The code in the image_manager.c=
-pp will get the version in the manifest file.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">If the version is same as path =
-on d-bus, the BMC will not update and print message &#8220;Software Object =
-with the same version already exists&#8221;.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">We want to know why upstream co=
-de can&#8217;t update the same version image if the BMC are valid.<o:p></o:=
-p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">(phosphor-bmc-code-mgmt commit =
-number : a013560f96a9ee5c2db4e1778c7dcee199c3acf1)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Regards,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Eli<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:arial,he=
+lvetica,sans-serif">Thanks Brad and=C2=A0<span style=3D"font-family:Arial,H=
+elvetica,sans-serif">Vishwa for moving into the direction where we might no=
+t require a reboot or host power off from moving to Manual to NTP or vise v=
+ersa.=C2=A0</span></div><div class=3D"gmail_default" style=3D"">We had a lo=
+t of user feedback who see this as a very inefficient task.=C2=A0</div><div=
+ class=3D"gmail_default" style=3D"">Goldman and David cc&#39;ed here can al=
+so has a lot of customers=C2=A0who needs to sync time often and they=C2=A0w=
+ould not like to power off host every time that happens.=C2=A0</div><div cl=
+ass=3D"gmail_default" style=3D""><br></div><div class=3D"gmail_default" sty=
+le=3D"">Thanks again</div><div class=3D"gmail_default" style=3D"">Ryan=C2=
+=A0</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Tue, Feb 18, 2020 at 8:43 AM Brad Bishop &lt;<a href=3D"mailto:=
+bradleyb@fuzziesquirrel.com">bradleyb@fuzziesquirrel.com</a>&gt; wrote:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
+<br>
+&gt; On Feb 18, 2020, at 7:56 AM, Vishwanatha Subbanna &lt;<a href=3D"mailt=
+o:vishwa@linux.vnet.ibm.com" target=3D"_blank">vishwa@linux.vnet.ibm.com</a=
+>&gt; wrote:<br>
+&gt; <br>
+&gt; Hello,<br>
+&gt; <br>
+&gt; Sending this email requesting feedback on one of the feature that we c=
+urrently have in phosphor-timemanager.<br>
+&gt; <br>
+&gt; Time manager uses TimeMode setting and can have either [NTP] or [Manua=
+l] as the valid options and are provided via xyz/openbmc_projects/settings/=
+ for external users.<br>
+&gt; <br>
+&gt; When the system power is off and BMC is in ready state, any changes to=
+ these settings are readily consumed by time manager daemon.<br>
+&gt; <br>
+&gt; However, if the user changes the setting when the Host is booting, tim=
+emanager puts them in deferred state. Meaning, timemanager does not take th=
+e settings into effect until the Host is powered off.<br>
+<br>
+Can you elaborate on why it does this?<br>
+<br>
+&gt; <br>
+&gt; So, if someone wants to move from [Manual] to [NTP] or vice-versa, whe=
+n the Host is [On], they need to [power-off] the Host and power it back on.=
+<br>
+<br>
+This seems less than ideal?=C2=A0 Would you agree?<br>
+<br>
+&gt; <br>
+&gt; This design was chosen because we wanted to give priority to Host.<br>
+<br>
+What does it mean to give priority to the Host?=C2=A0 Are you trying to hid=
+e time changes in the time from the host?=C2=A0 Why?<br>
+<br>
+&gt; Some of us are asking me if we can make a change to take the setting c=
+hanges in effect immediately, not caring the state of the Host.<br>
+<br>
+Without additional background this is what seems intuitive to me.<br>
+<br>
+&gt; <br>
+&gt; Please could you help with your thoughts on this ?.. What is the Indus=
+try norm on this ?<br>
+<br>
+FWIW on our (IBM) system designs we usually hook an RTC up to the BMC, and =
+any host software needing a RTC has to get it via some in-band software int=
+erface.=C2=A0 I think I heard somewhere though that often in other systems =
+designs the RTC is connected to the host processors and the BMC doesn=E2=80=
+=99t have access to it.</blockquote></div>
 
---_000_HK0PR02MB3427B226A660C70F479B427EEF160HK0PR02MB3427apcp_--
+--0000000000001caec6059edc6aea--
