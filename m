@@ -1,87 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5552916357E
-	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 22:52:11 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48MZMD5HlHzDqRX
-	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 08:52:08 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03AD01635A3
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 23:03:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48MZc268gFzDqfs
+	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 09:03:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.18;
- helo=wnew4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=W49lcLZj; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=grfT8Jt/; 
- dkim-atps=neutral
-Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com
- [64.147.123.18])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48MZLY6yhDzDqVp
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 08:51:33 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.west.internal (Postfix) with ESMTP id 232A3305;
- Tue, 18 Feb 2020 16:51:31 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Tue, 18 Feb 2020 16:51:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=lK+IHpVN2/TZavaxLvOlYwUyf1I
- HGiv1Hf4AaYJ5fEQ=; b=W49lcLZjmlJBf9X9DLai/z+QQFXm1oYwkibcmrnm0wg
- fuIy8nf+GGAaxECGPdrrnD+9ZTWlV5b9M3xKV5wzTagjeVTbToLDELB30Cyj+JUl
- Jm+eL/fC56lfk/3dmuzyN2xgdKJv3QTw/HsQ0zoo5NLxSXWSVMVqcnSpaWkbNiy4
- etWE/5aTuuUIUHpDru0g7gZrfT8UWPcbue40Kx9tteHmqHWo6pu9Yov49s+0Sx3q
- 7ZW4sYA1jVw/VLYvIHm2wWPJRtmOBOiA2OXpP0y3CDNzcP55nRp1Vq6AcS3ZUlB4
- FiaivsdiSec7CshXv+5ygrWp6/pCpLzDAQGTaNY6dFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=lK+IHp
- VN2/TZavaxLvOlYwUyf1IHGiv1Hf4AaYJ5fEQ=; b=grfT8Jt/z3ay5sa4/ETwLe
- 8K/+0sPqAXv6TLQ2pKSo2PnRC4O6Av1vxZuSZS2zvKSN0tZ8zsAFZ6hsZNTQncbH
- ZkTRhMY9n4ssgCOae4cpmc8+t87pBGcPSaN5SLDJKyv14GjiKN46Sh6tMQRLOuZl
- orcmDPTUgB4tu7r1qtpJIOZshk7ckwX9aFkPIugUwFj5IAaoXN+EoA7tv735X5s8
- bXtPtaxYQpTZIP5PptCZAKBrBXxDTbLShhxwd6Ls3pfaKOdzIxtNkn8kY0l+IToa
- AQXNpxAHv4fHesWjoLYnbJCE4ZDzpgS1uhHiwOKy4pK/W+b97V3/KPj1ifnz9x/w
- ==
-X-ME-Sender: <xms:YlxMXu1t0AlzAviFni7PSD-2XlMgMVYM7tdjquPJV5H_ALZYK70thQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrjeekgdduheehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
- fvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
- ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecukfhppeduieefrdduud
- egrddufedvrdefnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhf
- rhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:YlxMXm7OVpJx7ccldM5CfmMb7700g5qwLL3oXPp-Ku9bVfMKd7jvvw>
- <xmx:YlxMXsPyVEXg6SOgRQggocZboV_8HfykADtbTzzkrWatwPOF98ntZQ>
- <xmx:YlxMXqLU5X9fGMJ1I3dcApggeAjokA494uwFXOODDGmGqYYLA-KhHA>
- <xmx:YlxMXhE9q-o3V7kbn41HMmdcdCiaiKol_VHn1k7Ue2UzR8e_uGQkCTGMaF4>
-Received: from localhost (unknown [163.114.132.3])
- by mail.messagingengine.com (Postfix) with ESMTPA id E6B7F328005A;
- Tue, 18 Feb 2020 16:51:29 -0500 (EST)
-Date: Tue, 18 Feb 2020 15:51:28 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: Re: Request for Feedback :: Time Mode setting in timemanager
-Message-ID: <20200218215128.GF2219@patrickw3-mbp.lan.stwcx.xyz>
-References: <68732B2D-EB7D-418A-86D9-3095223A31FB@linux.vnet.ibm.com>
- <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
- <20200218202507.GA2219@patrickw3-mbp.lan.stwcx.xyz>
- <329B2251-4BA2-425F-A8E1-886C4E2F686F@fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48MZbK1VpmzDqWL
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 09:02:36 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2020 14:02:34 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,458,1574150400"; d="scan'208";a="253874264"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga002.jf.intel.com with ESMTP; 18 Feb 2020 14:02:33 -0800
+Subject: Re: Redfish message registries, plus translation
+To: openbmc@lists.ozlabs.org
+References: <a30efe6c-83b2-8f25-5cd6-7a70ab1113f9@linux.ibm.com>
+ <2c599df0-6de4-485c-b5aa-bff816348a09@www.fastmail.com>
+ <d0d215d3-708e-34b7-ba6e-047016b3fd38@linux.ibm.com>
+ <e86e411c-c071-03be-6813-3ec16b38513b@linux.intel.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <6f376642-4054-0d2c-74a5-638cb55e72da@linux.intel.com>
+Date: Tue, 18 Feb 2020 14:02:33 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="3XA6nns4nE4KvaS/"
-Content-Disposition: inline
-In-Reply-To: <329B2251-4BA2-425F-A8E1-886C4E2F686F@fuzziesquirrel.com>
+In-Reply-To: <e86e411c-c071-03be-6813-3ec16b38513b@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,60 +56,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 2/18/20 11:25 AM, Bills, Jason M wrote:
+> 
+> 
+> On 2/17/2020 5:53 PM, Joseph Reynolds wrote:
+>> On 2/16/20 5:37 PM, Andrew Jeffery wrote:
+>>>
+>>> On Sat, 15 Feb 2020, at 06:27, Matt Spinler wrote:
+>>>> Hi James,
+>>>>
+>>>> It's looking like in our future we will have to provide:
+>>>>
+>>>> 1) Redfish logs using multiple message registries that probably 
+>>>> can't be
+>>>>      hardcoded into hpp files and checked in.
+>>>>      - For example, a registry for our host firmware and hypervisor 
+>>>> errors,
+>>>>        as our BMC handles displaying logs for them, that we would 
+>>>> pick up
+>>>>        during our build process.
+>>>> and
+>>>>
+>>>> 2) Message registry text in multiple languages
+>>>>
+>>>> Those being my goals, I have a few questions:
+>>>>
+>>>> In general, is the multi-language strategy to just provide a standalone
+>>>> registry array for each language which the code then selects based 
+>>>> on the
+>>>> Language property?
+>>>>
+>>>> To support both of the above, would you be open to having functionality
+>>>> added
+>>>> to read in registries from data files, including based on language? Or,
+>>>> would you
+>>>> have any other ideas for how to support these items?
+>>> Bit of a drive-by question, but shouldn't we be using GNU gettext[1] to
+>>> handle translation?
+>>
+>> Matt's proposal is for BMCWeb to have two languages:
+>>
+>> 1. The implementation language.  When BMCWeb writes internal log 
+>> entries, these will be in English.  The BMCWeb developers will use 
+>> these to understand what is going on,  and the BMC admin may be able 
+>> to read the, but they are not for BMC users.
+>> We can certainly use gettext to internationalize this. But it is not 
+>> what Matt is asking about.
+>>
+>> 2. The languages used for Redfish messages.  These message are added 
+>> to the HTTP response body.  These are meant to be read by any BMC REST 
+>> API user.  For example, messages from the Redfish "Base" message 
+>> registry Base.1.7.0.json within DSP8011.  BMCWeb has a hard-coded 
+>> version of a subset of these messages, for example, the 
+>> AccountModified message in 
+>> https://github.com/openbmc/bmcweb/blob/master/redfish-core/src/error_messages.cpp 
+>>
+>> These messages are defined in English and meant to be translated. 
+>> That's what Matt is asking about.
+>>
+>>
+>> Here's my drive-by response.
+>>
+>> The current implementation is locked into English-only.  BMCWeb code 
+>> sends messages like this:
+>> 1. #include 
+>> https://github.com/openbmc/bmcweb/blob/master/redfish-core/include/error_messages.hpp 
+>>
+>> 2. Write code like: propertyValueModified(res, "myProperty", 
+>> myModifiedValue);
+>> This calls the function in error_messages.cpp which is hard-coded 
+>> English.
+>>
+>> Having hard-coded function calls and hard-coded implementations helps 
+>> with BMCWeb's goal for performance and startup times.
+>> https://github.com/openbmc/bmcweb/blob/master/DEVELOPING.md
+>>
+>> However, IMHO, the development process to add new Redfish messages to 
+>> BMCWeb is cumbersome.  It should be as easy as copying Redfish's new 
+>> JSON file.
+> To ease this, there is a script in bmcweb that is designed to parse the 
+> JSON message registries into the header file.  I just ran it and it has 
+> a couple minor bugs that were introduced when we changed the format to 
+> fix build warnings.  I'll push a fix.
+> 
+> One possible solution would be to adapt this script to run automatically 
+> at build time.  Then any JSON message registry files that get added 
+> either to bmcweb or as an append could be transparently converted to the 
+> header file.
 
---3XA6nns4nE4KvaS/
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+An added benefit of this is that it could verify JSON is in legal format 
+before it makes it to the BMC.
 
-On Tue, Feb 18, 2020 at 04:01:00PM -0500, Brad Bishop wrote:
->=20
-> >>> Please could you help with your thoughts on this ?.. What is the Indu=
-stry norm on this ?
-> >>=20
-> >> FWIW on our (IBM) system designs we usually hook an RTC up to the BMC,=
- and any host software needing a RTC has to get it via some in-band softwar=
-e interface.  I think I heard somewhere though that often in other systems =
-designs the RTC is connected to the host processors and the BMC doesn=E2=80=
-=99t have access to it.
-> >=20
-> > FB's OCP designs all have the RTC to the Host, so I'm not sure any of
-> > this is applicable to us.
->=20
-> Are there any down sides to designs like this?  I guess if NTP is not an =
-option on the BMC, you are at the mercy of the host firmware if you want co=
-rrect time.  If NTP is in use on the BMC does an RTC still do anything for =
-you?
+> 
+>>
+>> IMHO, the easiest way to to support multiple languages (including 
+>> English) is to keep the prototypes in error_messages.hpp so all the 
+>> existing uses will continue to work.  Then change the implementation 
+>> to select a message from a JSON file based on the hard-coded message 
+>> name (example: AccountNotModified) and language (en-us, zh-cn, or 
+>> whatever).
 
-There are times that the BMC doesn't know what time it is and reverts
-back to 1970.  At least until the network and NTP are up again.  I'm not=20
-sure the history at why we arrived at this design, honestly.
 
---=20
-Patrick Williams
+Is there any reason to have this update-able at runtime? Regardless to 
+limit the possibility of errors I'd like to avoid constant pulling from 
+JSON. I'd rather see the JSON being pulled at application start, so we 
+take any impact (timing or bugs/crashes) early. However I'm not sure I 
+know of a use-case to have this be done at runtime.
 
---3XA6nns4nE4KvaS/
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5MXGAACgkQqwNHzC0A
-wRn45w/+MsxyKzJjG07X6TIZhvX8j4CKLEab1mnQtSVj3CN+Q3pctJBQDECz1vwK
-PTsg3vDaiFPPBMn72IyIoVntXF63lGCpS6t8jDxRduGrEIbsnc3pJRehki7ZApiN
-5jAgqivIm/8n7JRnfbecup5WEeW1J6RkzchSH+Tihn0bInyweLbHguQWR+YEdF+r
-+cQfkLmoXF7dRPg/Sj+AnSjxaOouDG3GJ1YjRI1+6ZOTcO8eg5v5kuP6LaZuhU24
-51AW0JFSH7QiCcbRqOIfwQD8cQL3sn1G8ZCLEEKow4/iteJx9iGahg17tDEHGbm3
-Aok9gLMUTwvRj9ckPbxojHYrqoAXllFDkmJK8BoxrJwX3bO8Zwp28qk7JZY1cMhA
-baFi4VS+/NNdCcEWtpPrRqBrwItVyBO3C81/lkfBEafZpddvmYthkrnjj6aQWvQM
-M/OSZa3Ckl4OFZ/qD/qBdy/C9jGBT0NN5A8OhlKSNAbdCuPlhZqrNdzwRs1aZRmr
-S/a1FQIRunOG2DHitgUFToeduOm5mvO4k7vhsIVEZy1rEIG6IG9HumRfGjJahRq9
-0ouX5cLxCM966z5C0CIi+qR9s5Ky9Bnj8v8Owha6w2u7+Wrmn/NIUOnvbzpDjMi2
-GQHJn9VI/qLdEv8ZOVKJdUOgGUnT6GPn1RJ6KUVTE+t2dpsTRNY=
-=IJK5
------END PGP SIGNATURE-----
-
---3XA6nns4nE4KvaS/--
+>>
+>> All of the usual issues come up with approach:
+>> - Will BMCWeb pre-load or load-on-demand the JSON file would be 
+>> pre-loaded.  It certainly will not be loaded for every message.
+>> - Fallbacks.  For example, if the ja-jp message files does not have 
+>> the AccountNotModified message, format the en-us message instead.
+>> - Need a default message.  For example, if BMCWeb tries to sent the 
+>> message "NotARealMessage" which is not defined in any message file, it 
+>> might be useful to send the raw data instead.
+> bmcweb currently provides the given MessageId with a blank Message field 
+> if it cannot be found in a registry.
+> 
+>> - We use the Redfish "Base" message registry, and I think we also use 
+>> an OpenBMC Oem message registry as well.  So BMCWeb will have to load 
+>> multiple message registries per language.
+>>
+>> More:
+>> - Will a initial set of supported languages be baked into the firmware 
+>> image (on the BMC's file system) in English or some other languages?
+>> - Can the BMC admin add and remove supported languages (by adding or 
+>> deleting JSON message registry files)?
+>> - Will there be REST APIs for that?
+>> - Supported by the Redfish spec?
+>>
+>> So what the the requirements?
+>>
+>> - Joseph
+>>
+>> You can see one open source project's work here: 
+>> http://userguide.icu-project.org/formatparse/messages
+>>
+>>>
+>>> [1] https://www.gnu.org/software/gettext/
+>>>
+>>> Andrew
+>>
