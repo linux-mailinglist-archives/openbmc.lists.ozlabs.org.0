@@ -1,72 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81721162BC5
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 18:11:22 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2E98162A5C
-	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 17:25:40 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48MR6V1W3CzDqc7
-	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 03:25:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48MS7C6yLjzDqdt
+	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 04:11:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d36;
- helo=mail-io1-xd36.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=k8AaY7tc; dkim-atps=neutral
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
- [IPv6:2607:f8b0:4864:20::d36])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48MR5g4BZZzDqWT
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 03:24:54 +1100 (AEDT)
-Received: by mail-io1-xd36.google.com with SMTP id z193so22964388iof.1
- for <openbmc@lists.ozlabs.org>; Tue, 18 Feb 2020 08:24:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=c0KvJe/pbJowtPFHENRRWyMk5LRMHOq7v+RXjUB845k=;
- b=k8AaY7tc2fd+YYWhKT7seOq6kxVFYe45OgFvUJJ89bsDPJzruZcVvWdpQJqCBXAoPE
- VU0OzI8A8BI7JcPmPgQaOw2+P4BWzUzju4QVSq7n0MfRTWN1BHHrPpAuEAxLRiN+9Y0A
- +qi6VAUhK7/UuiCsklbBSyPJNN7H70Hc+znssXuirwuKVzIDcSrNk349NRWcIaxzPe4T
- k3dCbWBZMtgPk82FPdm8XvwtmuxdpkqUvY6fmfGoG3/KnAXN82vrLTQhYCiHDswkz6DO
- 0paB80e3mdl82ucoKWWra3NFP76TZJvPww4kTRi0HfzoS7qGdPP+XiuCVfSXnuEfL9wT
- NOvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=c0KvJe/pbJowtPFHENRRWyMk5LRMHOq7v+RXjUB845k=;
- b=iTZ99BwFJN7W4BrSmd5SShzx2xEa/ilHGnayorDAeTaKIe0tjyh+w8uZdK/URcdXKc
- ADrqhivwI7N/gn6pnC3OOLGB5RedKdkzbMfhBGZCXebiQh/TdGXLQBltwmLbGMk1jaI7
- zdVQEPUpolUh+oJCrGN/QZxZIJ2QwbGyD9sm+mbnMdEwjkaZ31Tt8B5cW16KDWqU1uCh
- Yiv3OxEd6liNUEOrpMYl1pQqJrq+d2NTIwEmD6lohAtzWB/9a2ZDTV1JQPRJBh3Yvu8N
- CCFPVHGeJWJ8H0/lRVUY2c57HYutP65jIgvZsMI9pkST56oPGKh9yFvCiLUKsooqMMEP
- Ex4w==
-X-Gm-Message-State: APjAAAXae0vVwbS+RI8cNeWn7Tbf52h4KkBExB9Vp57qEL0ebKV/nwaU
- blzlthgc8HcBovq/doXxPLmpZG5cMMI=
-X-Google-Smtp-Source: APXvYqzndNFrI2xMVS1DrAmDlm7ILXAkRfa+skoK0BzXuty38OocUZ1srjYU7nlLJGB+WhiK6mdJHA==
-X-Received: by 2002:a6b:3742:: with SMTP id e63mr16175612ioa.303.1582043091359; 
- Tue, 18 Feb 2020 08:24:51 -0800 (PST)
-Received: from andrews-mbp-2.austin.ibm.com ([129.41.86.0])
- by smtp.gmail.com with ESMTPSA id w16sm1447969ilq.5.2020.02.18.08.24.50
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 18 Feb 2020 08:24:50 -0800 (PST)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: termination on hardware errors
-Message-Id: <6FBB6835-036E-4495-B28B-44D1210294DD@gmail.com>
-Date: Tue, 18 Feb 2020 10:24:49 -0600
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.60.0.2.5)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48MS5w2V2SzDqN7
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 04:10:10 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 18 Feb 2020 09:10:07 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,456,1574150400"; d="scan'208";a="253776138"
+Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
+ by orsmga002.jf.intel.com with ESMTP; 18 Feb 2020 09:10:07 -0800
+Subject: Re: Mulit-platform feature
+To: Brandon Wyman <bjwyman@gmail.com>, Payne Yang <pyang4@lenovo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <1fb78d4aa9394cf092194b57427251f3@lenovo.com>
+ <b3ea2d1e-e4a7-fdfe-45e5-6d5b50f3f4e3@gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <415b581c-988c-d060-9563-e192b2ef5b0b@linux.intel.com>
+Date: Tue, 18 Feb 2020 09:10:07 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.7.1
+MIME-Version: 1.0
+In-Reply-To: <b3ea2d1e-e4a7-fdfe-45e5-6d5b50f3f4e3@gmail.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,31 +58,31 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We have a requirement from our manufacturing team that they be able to =
-configure
-the BMC to fail the boot of a system if any error log is generated that =
-calls
-out a piece of hardware. The idea being that if the firmware finds any =
-issue
-with the hardware, manufacturing wants the system to halt and provide a =
-clear
-indication of what that failure is so they can fix it prior to shipping =
-the
-system.
+On 2/17/20 12:30 PM, Brandon Wyman wrote:
+> Same idea, slightly different topic?
+> 
+> "multiple device trees" -> 
+> https://lists.ozlabs.org/pipermail/openbmc/2020-January/020171.html
+> 
+> On 2020-01-09 02:12, Payne Yang wrote:
+>>
+>> Hi Team,
+>>
+>> Is there a plan to support mulit-platform feature on OpenBMC in future ?
+>>
+>> Multi-platform means 1 BMC image could support multiple platform but 
+>> only single platform.
 
-High level this will probably be a phosphor-settings field that =
-phosphor-logging
-code would query when it gets an error log that has a inventory path in =
-it.
-I'd like an external state to indicate when this event occurs. Maybe a =
-new
-BMC state like Quiesce? (Quiesce is used by host when it is in fail =
-state
-and has an easy mapping to the corresponding Redfish Quiesce)
+We currently do this using entity-manager configurations and component 
+detection, however as mentioned it requires similar device trees. We get 
+around this by having most of our designs have similar i2c topology, and 
+using a limited device tree and exporting devices during runtime. I 
+imagine at some point this will break and we'll need one of the 
+solutions in the other email thread as well.
 
-This is just a feeler email to see if anyone else has an interest in =
-this type
-of function or if they have other ideas on how to fulfill this =
-requirement.
 
-Andrew=
+>>
+>> Best Regards,
+>>
+>> Payne
+>>
