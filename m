@@ -2,87 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C2731634A7
-	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 22:19:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2675F163576
+	for <lists+openbmc@lfdr.de>; Tue, 18 Feb 2020 22:49:46 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48MYdP1SZpzDqS1
-	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 08:19:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48MZJR1BqRzDqWT
+	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 08:49:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.18;
+ helo=wnew4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=lqJ/znH3; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=gtKBjvl2; 
+ dkim-atps=neutral
+Received: from wnew4-smtp.messagingengine.com (wnew4-smtp.messagingengine.com
+ [64.147.123.18])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48MYZK1f5nzDqV7;
- Wed, 19 Feb 2020 08:16:41 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 01ILE6da115990; Tue, 18 Feb 2020 16:16:37 -0500
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2y8hwnmt5d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Feb 2020 16:16:37 -0500
-Received: from m0098409.ppops.net (m0098409.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 01ILGAdE153415;
- Tue, 18 Feb 2020 16:16:37 -0500
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2y8hwnmt49-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Feb 2020 16:16:37 -0500
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 01ILDbrF031335;
- Tue, 18 Feb 2020 21:16:35 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma04dal.us.ibm.com with ESMTP id 2y6896mrpw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Feb 2020 21:16:35 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 01ILGYCe46858698
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Feb 2020 21:16:34 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3750678064;
- Tue, 18 Feb 2020 21:16:34 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB55F78060;
- Tue, 18 Feb 2020 21:16:33 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Tue, 18 Feb 2020 21:16:33 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48MZHS1y3pzDqVp
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 08:48:50 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.west.internal (Postfix) with ESMTP id 20AFF640;
+ Tue, 18 Feb 2020 16:48:47 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Tue, 18 Feb 2020 16:48:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=xaZRldY729EvfhT395BeIun8/ST
+ 78dyk38nyMJQsGj0=; b=lqJ/znH3tjKSpdmhIO2UTQRzxZPt4KV9HXJk48psc1O
+ Rne3DfIYWf24mjvzTLL/eaAJ9fyKkkqG10LBjPOwsox9jBNyT90cRIdWidOuAt+L
+ QtHslRn0vyLljbw+1/EEJU/jOPVsVGPN+O8QuDbjp33YC5EPNss6Lobe+IBzGN7O
+ 7qdcU2AVtMlGDWzydExuuArNLCOxep2tWRs4Busx2sHKtkUerh4wkPr9zLzOm3Br
+ 7vLbi8dUqmXjpd3qGhkff5krt7bngqfqeFsvmOQUuYW3NMcfg0gBiPdPE6OsSM+a
+ iTZNrZnkBdRoQiGUyNzsbfDohw7i96d2sTrey+nueHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xaZRld
+ Y729EvfhT395BeIun8/ST78dyk38nyMJQsGj0=; b=gtKBjvl2EnCwyzj4bTb1Ly
+ NwA1ycfgouHYTvTECiKhWMINM2Z7jVBFLsllBj7rJVAwnBOA3Qv/1lmkU2rxPrfM
+ 3PZZvSE5E4tGwNvzn5KMzb1l8hPYDYjMbp0mqCjKbaLXz620c1orVgOeZDaxX3Sq
+ J0JnvICGmP0RbRHOdOYq+PzNUW0DqP60B3Q+PneJxOH5SjFYsEt62I5EQQd7zUsa
+ QpgrbxfYOY/kyx45qEJH6ayjBcIZo7QUX4XMOBvJVCdotQBmr3ZfaPJf706ESrwe
+ 4ak0tO6DfxwTL4zhZcra8Y+JUgyVHMxMcixfVCyUWHfeeb80BGS7Pqqc3KcAgxsw
+ ==
+X-ME-Sender: <xms:vFtMXmzMWk8AFmIeDX0kuyaBRLwS9p14LRbPcE1bnwph5JNR-ZBdxQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrjeekgdduheehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecukfhppeduieefrdduudegrddufedvrdefnecuvehluhhsthgv
+ rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfi
+ gtgidrgiihii
+X-ME-Proxy: <xmx:vFtMXun-jDrw3KX8BUSyS8J_y7GrNZLB3svir-w9cpAdf99YOD2HSg>
+ <xmx:vFtMXrHo2LYFfH--hjvL5VKlcMqmq16he4YyKpSCfpm5pxdKEwGzEg>
+ <xmx:vFtMXuW4KZX3W3uekW5br4-OZ8Ch0e4umsZaDToBII0uRyfKzrHvow>
+ <xmx:vltMXsTE1DTdIO5D6-oKZ8D_6GvcW5bvuDcQiodQrZ8b7iqO3z2-uWacSo8>
+Received: from localhost (unknown [163.114.132.3])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 6A0053060BD1;
+ Tue, 18 Feb 2020 16:48:44 -0500 (EST)
+Date: Tue, 18 Feb 2020 15:48:42 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: Request for Feedback :: Time Mode setting in timemanager
+Message-ID: <20200218214842.GE2219@patrickw3-mbp.lan.stwcx.xyz>
+References: <68732B2D-EB7D-418A-86D9-3095223A31FB@linux.vnet.ibm.com>
+ <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
+ <20200218202507.GA2219@patrickw3-mbp.lan.stwcx.xyz>
+ <25B4F046-9688-4F23-909E-A5D929349E84@fuzziesquirrel.com>
+ <20200218205231.GD2219@patrickw3-mbp.lan.stwcx.xyz>
+ <B85A545E-2557-41AD-AF8E-C516B18B066B@fuzziesquirrel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date: Tue, 18 Feb 2020 15:16:33 -0600
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: Lei YU <mine260309@gmail.com>
-Subject: Re: Question for phosphor bmc code - BMC update
-In-Reply-To: <CAARXrtmGnAj36LgsW=NHBX0GS6FN9gt_g=UKh2n-v-xe1hhq2g@mail.gmail.com>
-References: <HK0PR02MB3427B226A660C70F479B427EEF160@HK0PR02MB3427.apcprd02.prod.outlook.com>
- <CAARXrtmGnAj36LgsW=NHBX0GS6FN9gt_g=UKh2n-v-xe1hhq2g@mail.gmail.com>
-Message-ID: <13533f32d91ba1084488b87c0e7da8d9@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-02-18_07:2020-02-18,
- 2020-02-18 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- impostorscore=0 suspectscore=0 bulkscore=0 adultscore=0 clxscore=1011
- priorityscore=1501 mlxlogscore=999 spamscore=0 malwarescore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2002180139
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="IMjqdzrDRly81ofr"
+Content-Disposition: inline
+In-Reply-To: <B85A545E-2557-41AD-AF8E-C516B18B066B@fuzziesquirrel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,61 +96,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- openbmc@lists.ozlabs.org, Adriana Kobylak <anoo@us.ibm.com>,
- Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>,
- Eli Huang/WYHQ/Wiwynn <Eli_Huang@wiwynn.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2020-02-17 23:24, Lei YU wrote:
-> + Adriana
-> 
-> AFAIK the restriction is added by Adriana, she should know the details.
-> I think it's reasonable in production that if the revision is the same
-> there is no need to do the code update if the running code is already
-> the same version.
-> But it does cause trouble in lab debug that one does want to update
-> the code with the same revision.
 
-Yeah, that's part of the reason, no need to rewrite the same version if 
-it's already running. Also for systems that support dual versions, 
-there's not currently a way to represent that both 'sides' have the same 
-version via D-Bus objects, since the version id would be the same, so if 
-side A is running version X and backup side B is running version Y, if 
-side B is allowed to be updated to version X, there would only be one 
-D-Bus object.
+--IMjqdzrDRly81ofr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Is being able to overwrite the same version something that people would 
-want? Maybe based on a lab vs production setting?
-For configurations that support multiple versions, we'll looking to add 
-the ability to have more than one 'side' have the same version.
+On Tue, Feb 18, 2020 at 04:01:58PM -0500, Brad Bishop wrote:
+>=20
+>=20
+> > On Feb 18, 2020, at 3:52 PM, Patrick Williams <patrick@stwcx.xyz> wrote:
+> >=20
+> >> oes this have to do with what is going on, on the BMC?
+> >=20
+> > When the BMC owns the hardware RTC, { Manual , Host } is the only mode
+> > that allows the Host to utilize the RTC hardware without being subject
+> > to the provider's time infrastructure.
+>=20
+> Would this be in a situation where the lessee can=E2=80=99t run NTP on th=
+e host?
 
-> 
-> On Mon, Feb 17, 2020 at 6:23 PM Eli Huang/WYHQ/Wiwynn
-> <Eli_Huang@wiwynn.com> wrote:
->> 
->> Hi Lei Yu,
->> 
->> Confirm a question with you.
->> 
->> When we do the BMC update using phosphor-bmc-code-mgmt,
->> 
->> The code in the image_manager.cpp will get the version in the manifest 
->> file.
->> 
->> If the version is same as path on d-bus, the BMC will not update and 
->> print message “Software Object with the same version already 
->> exists”.
->> 
->> We want to know why upstream code can’t update the same version 
->> image if the BMC are valid.
->> 
->> (phosphor-bmc-code-mgmt commit number : 
->> a013560f96a9ee5c2db4e1778c7dcee199c3acf1)
->> 
->> Regards,
->> 
->> Eli
->> 
->> 
+IIRC, { NTP, Host } is an invalid combination.  When Owner is Host, we
+allow the IPMI commands to set time.  How the Host got that time, we
+cannot control at that point (NTP vs operator).
+
+--=20
+Patrick Williams
+
+--IMjqdzrDRly81ofr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5MW7gACgkQqwNHzC0A
+wRlEHxAAihzXDtXxnVhuzYgJwuXLztBsO1vEaGY9e1fXWmbozdSj7qm5sd4pS6Fm
+qBEZfqGHvnzoLcX0kkMnyOlMYsQQT75aWb5Qz4lcMfk6Mr1Jy3vGfL26sL6/Hm3A
+JjsupCM5lHSMojWWKdS92471zd0MKu4tpa+uOeFD9cDkeX2lCl1LFxUHrP2qRhkv
+DqnpRQ0SlslQnL8kC6YM3W8JQvb6clbRcNrpo7BSYoVKnoOtWaUlrkJDqUMKrldR
+IvtRSVTsTrQGaas9khasviSejZ0slur46EUtdeBah16DoSo6uKtD73Eij8XqrdaG
+J0ByWZxiSq2XLJqCdQlluL5hvCvAKdeVj4ayxd86ypc5OrvNagu1L15cwPEWDOSw
+WG4CXN3QDmd02VUYb2K0c7pIhzNVSeInB8xTFg28fdVOvESSBu1ksEmHH5n+uspj
+5eOqtcy7VnxYGi6DBqdye6vkmPlgb5JRzbjiVgCnl2rfO5n/IR9+oi6v5ikEtvwX
+2DaJNQ8AwksHWm6lN8pbWCuUmUpZpSApx5WkmCGYy3QGfOSXKYPgENbcJNzXqW/b
+wqEP+7KDEKDn5FIin6hFYbG/B6Eo325yNKawt7ZthgylRCfgCGUXlEJ5jnxfr9QS
+zE7ppPgM9muqPDKgr6ZtRBME3ihd8BUhZEhWQLRJRfLtooNm0bI=
+=lapr
+-----END PGP SIGNATURE-----
+
+--IMjqdzrDRly81ofr--
