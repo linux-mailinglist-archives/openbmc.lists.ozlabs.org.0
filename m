@@ -1,69 +1,95 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FA2A163A9F
-	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 04:00:38 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48MjC71l3ZzDq8X
-	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 14:00:35 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BD1B163D19
+	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 07:38:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Mp344DSvzDqlX
+	for <lists+openbmc@lfdr.de>; Wed, 19 Feb 2020 17:38:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::141;
- helo=mail-lf1-x141.google.com; envelope-from=mine260309@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=O6KsYx5/; dkim-atps=neutral
-Received: from mail-lf1-x141.google.com (mail-lf1-x141.google.com
- [IPv6:2a00:1450:4864:20::141])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48MjBR2JN4zDq7j
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 13:59:56 +1100 (AEDT)
-Received: by mail-lf1-x141.google.com with SMTP id z26so16096334lfg.13
- for <openbmc@lists.ozlabs.org>; Tue, 18 Feb 2020 18:59:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=24Q5Mo8S7J7FH72SQvKOKofg+Ec92gYEcvE+9d1hMug=;
- b=O6KsYx5/YMfBR/Bdti1hWZEgv91v9oSzaz4wA4C7SfRdCd0asbrqWvjvpwxZx8vyoy
- N4Laoevs5Rans8fore3bW7sKL6xfftdV4/R8Hbf4hzfmahsgs7ZVEwVtvDBTSYbE2RuK
- cQ+25yNLl2Uyz0dPGoKYJt31A8IWojG11mt3ZGngp9uIzbZ+YshUnbb9vLgUflFm+2TG
- bjGomiUUuRqqeXNm8M4zlj7wa0HlSt3xmCK2gTIgvh82p358bfqV7Sa17MIt9K01Eky/
- 4T4lZTcrMRXsKtyvOQ5fwjKsWFlHNbZQaccElYJelBrasQWGKuQXGAC/c9M1qp5arsuH
- PWEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=24Q5Mo8S7J7FH72SQvKOKofg+Ec92gYEcvE+9d1hMug=;
- b=nsorJQJIB2ZYr+HoM14aELWW7wQjwJOxfLlhLjWShdHqhy/6SI/1KjAsILZtjzVBpu
- 8iP/YWc3pnNbCqNTdUS1aaaOxAm7MQ1LTLLH7XIai1iulS5z8mGAAxiFb7m0EaMvK0G1
- Ube+kdRfLVMOi0nmI2OGYgEmN6BrXejVCfl1VbgI5ZGyDtSfVlSMt5Me6Y5HMRzAVrR0
- 3WPdaUXzSU7gOxi2a//9ECM9BMkvEefDXYt7lM81xX0E1LJO7+0lkfmB0Fx4d4LBtrSc
- 92F1BPtlye0PjQs8rv8GO/QK+3xtNiEUpqToins3NRXiMyiCnCl61vA0747y3n33YWMA
- 6nwQ==
-X-Gm-Message-State: APjAAAWLeffVPjyCSNzb56Gwya5X/HLfK0UefknGLgmOuhEtHl7VtMVV
- WGohQf+ITbar8xvfQ4RE7y+CXPM/qeqpkoLXq5QJQEjK
-X-Google-Smtp-Source: APXvYqzyGzl1l4bPg6plPMVYHnzU3wCy2qrvRgMl8IVZYVSo348KKiKp1xGsYyRmWQ9ilYZf1axHfa1k0c/wA4wKr9c=
-X-Received: by 2002:a05:6512:1047:: with SMTP id
- c7mr3157858lfb.78.1582081191666; 
- Tue, 18 Feb 2020 18:59:51 -0800 (PST)
-MIME-Version: 1.0
-References: <CAARXrtkPQWxhC3XdR-7kE8Kj4HC10gPk8=v7gPDVoZa_L7x-6w@mail.gmail.com>
- <20200218203934.GB2219@patrickw3-mbp.lan.stwcx.xyz>
-In-Reply-To: <20200218203934.GB2219@patrickw3-mbp.lan.stwcx.xyz>
-From: Lei YU <mine260309@gmail.com>
-Date: Wed, 19 Feb 2020 10:59:40 +0800
-Message-ID: <CAARXrtkwsy3t=bz7wHa=oEG-KwE7dBJ0Upkft-RN9XNgiFdSHA@mail.gmail.com>
-Subject: Re: [sdbusplus] To generate a common header for public information of
- interfaces
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Mp2T6JlZzDqWJ
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 17:38:24 +1100 (AEDT)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 01J6b7ko080997
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 01:38:22 -0500
+Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2y8uckf3me-1
+ (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 01:38:21 -0500
+Received: from localhost
+ by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
+ Violators will be prosecuted
+ for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
+ Wed, 19 Feb 2020 06:38:18 -0000
+Received: from b06cxnps4075.portsmouth.uk.ibm.com (9.149.109.197)
+ by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
+ Authorized Use Only! Violators will be prosecuted; 
+ (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
+ Wed, 19 Feb 2020 06:38:15 -0000
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com
+ (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 01J6cEJR58589226
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Feb 2020 06:38:14 GMT
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD81AA405F;
+ Wed, 19 Feb 2020 06:38:14 +0000 (GMT)
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 237BFA405C;
+ Wed, 19 Feb 2020 06:38:14 +0000 (GMT)
+Received: from [9.109.160.230] (unknown [9.109.160.230])
+ by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+ Wed, 19 Feb 2020 06:38:13 +0000 (GMT)
+Subject: Re: Request for Feedback :: Time Mode setting in timemanager
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Content-Type: text/html;
+	charset=utf-8
+X-Apple-Auto-Saved: 1
+X-Apple-Mail-Plain-Text-Draft: yes
+From: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
+X-Apple-Mail-Remote-Attachments: NO
+X-Apple-Base-Url: x-msg://9/
+In-Reply-To: <20200218215128.GF2219@patrickw3-mbp.lan.stwcx.xyz>
+X-Apple-Windows-Friendly: 1
+Date: Wed, 19 Feb 2020 12:07:06 +0530
+X-Apple-Mail-Signature: SKIP_SIGNATURE
+Content-Transfer-Encoding: quoted-printable
+References: <68732B2D-EB7D-418A-86D9-3095223A31FB@linux.vnet.ibm.com>
+ <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
+ <20200218202507.GA2219@patrickw3-mbp.lan.stwcx.xyz>
+ <329B2251-4BA2-425F-A8E1-886C4E2F686F@fuzziesquirrel.com>
+ <20200218215128.GF2219@patrickw3-mbp.lan.stwcx.xyz>
+X-Uniform-Type-Identifier: com.apple.mail-draft
 To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
+X-TM-AS-GCONF: 00
+x-cbid: 20021906-0016-0000-0000-000002E82935
+X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
+x-cbparentid: 20021906-0017-0000-0000-0000334B400B
+Message-Id: <B09077F7-2752-4C7C-B005-38B00C6DD428@linux.vnet.ibm.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-02-19_01:2020-02-18,
+ 2020-02-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999
+ priorityscore=1501 clxscore=1015 suspectscore=1 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002190048
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,98 +101,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Feb 19, 2020 at 4:39 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> On Thu, Feb 13, 2020 at 10:38:37PM +0800, Lei YU wrote:
-> > Currently, sdbus++ generates the server code separately, and in
-> > phosphor-dbus-interfaces, the separated headers are installed, and the
-> > separated cpp files are combined together, and compiled as a library.
-> > The public information of the interfaces (e.g, the interface strings,
-> > the enum strings) are either in the separated header or in the cpp
-> > files.
-> >
-> > The result is, when a phosphor service needs to use an interface, or
-> > an enum, it has to define the interface string or the enum string
-> > manually, and it happens everywhere.
->
-> I would say any case where this was done should have been fixed.  There
-> were already functions in sdbusplus to convert<Enum>ToString and
-> convertForMessage(<Enum>).  There are lots of cases where these are
-> being used today[1].  You recently made the interface public as well, so
-> we should begin converting these over.
->
-> I've also got commits pending, for merge soon, that make the enums be
-> supported as native types, so code should rarely even need to call the
-> "convert" functions anymore.  Another refactoring once that is merged.
+<html><head></head><body dir=3D"auto" style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D"ApplePlainTextBody"><div class=3D"ApplePlainTextBody">Thanks =
+for the good discussion on this.<br><br>Patrick, I see you mentioned the =
+TimeOwner in your response. TimeOwner was another thing that was =
+disliked by the users and I had sent an email couple months ago asking =
+if anyone still needs it. I did not see anyone saying they need. I then =
+proposed removing TimeOwner feature. <br><br>So, if we want to make it =
+simpler, we would want to:<br><br>- Remove TimeOwner concept<br>- Remove =
+the deferred updates to Manual / NTP settings.<br><br>Please let me know =
+if you see anything that might be affected by this =
+?.<br><br>Thanks,<br>!! Vishwa !!<br><br><blockquote type=3D"cite">On =
+19-Feb-2020, at 3:21 AM, Patrick Williams &lt;patrick@stwcx.xyz&gt; =
+wrote:<br><br>On Tue, Feb 18, 2020 at 04:01:00PM -0500, Brad Bishop =
+wrote:<br><blockquote type=3D"cite"><br><blockquote =
+type=3D"cite"><blockquote type=3D"cite"><blockquote type=3D"cite">Please =
+could you help with your thoughts on this ?.. What is the Industry norm =
+on this ?<br></blockquote><br>FWIW on our (IBM) system designs we =
+usually hook an RTC up to the BMC, and any host software needing a RTC =
+has to get it via some in-band software interface. &nbsp;I think I heard =
+somewhere though that often in other systems designs the RTC is =
+connected to the host processors and the BMC doesn=E2=80=99t have access =
+to it.<br></blockquote><br>FB's OCP designs all have the RTC to the =
+Host, so I'm not sure any of<br>this is applicable to =
+us.<br></blockquote><br>Are there any down sides to designs like this? =
+&nbsp;I guess if NTP is not an option on the BMC, you are at the mercy =
+of the host firmware if you want correct time. &nbsp;If NTP is in use on =
+the BMC does an RTC still do anything for you?<br></blockquote><br>There =
+are times that the BMC doesn't know what time it is and reverts<br>back =
+to 1970. &nbsp;At least until the network and NTP are up again. =
+&nbsp;I'm not <br>sure the history at why we arrived at this design, =
+honestly.<br><br>-- <br>Patrick =
+Williams<br></blockquote><br></div></body></html>=
 
-The idea of my proposal here is not to use "convertXXX" functions,
-instead, it is to provide the constexpr strings that could be used by
-client code.
-E.g. the client code does not need to call any function, but directly use:
-
-* xyz::...::server::MyServer::interface, instead of a user-defined string
-  for the interface.
-* xyz::...::MyServer::MyEnum::Enum1, instead of a user-defined string for
-  the enum.
-
->
-> >
-> > How about
-> > 1. Making sdbusplus to generate a "common" header for each interface
-> > including the public information;
-> > 2. Then phosphor-dbus-interfaces could generate a single header file
-> > that includes all the public information of the interfaces;
-> > 3. Then the phosphor service could include a single header file, and
-> > use the interface/enum strings it needs, without manually defining
-> > them?
->
-> Currently only the 'server' interfaces are generated and some clients
-> are including the server header files even though they are a client.
-> The intention all along was to make proper 'client' bindings but there
-> hasn't been sufficient effort put into that yet.
->
-> I'm not sure if it is better or worse to have an explicit 'common'
-> header rather than the two separate 'server' and 'client' headers.  Is
-> there any reason to not simply get started on the client headers?
->
-> Some pro/cons of 'common':
->     - Have an extra pass we have to run through 'sdbus++'.  This will
->       probably make the templates more complex (3x code paths rather
->       than 2x).
->
->     + Explicitly consistent types between client and server bindings.
-
-Yup, the implementation is actually part of the "client" header, we
-could rename the "common" to "client".
-But preferably, we could combine all the client header into a single
-header, which makes it easier for the client code to use.
-If a client needs to set an enum property to a service, it then does
-not have to include the server header nor the specific client header,
-but include a single header.
-Anyway, this part is done in phosphor-dbus-interface.
-
-So we could say that sdbusplus generates part of the "client" header
-instead of "common" header.
-
->
-> >
-> > There is an initial concept implementation:
-> > * https://github.com/mine260309/sdbusplus/commit/78cb63fb7e1ceb62165c71e15779f23f7e9f166c
-> > * https://github.com/mine260309/phosphor-dbus-interfaces/commit/6079d25547f0143fc7562a1c7ee6beb888a66432
-> >
-> > With the above changes, a service could directly use the generated
-> > interface string, e.g.
-> > `sdbusplus::xyz::openbmc_project::Software::ApplyTime::interface`.
-> > In the future, the enum strings could be put there and thus we do not
-> > have to manually write the long full qualified string.
-> >
-> > Ideas and suggestions are welcome.
->
-> [1] https://github.com/search?q=org%3Aopenbmc+convertForMessage&type=Code
->
-> --
-> Patrick Williams
