@@ -1,86 +1,42 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76F271663C9
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 18:03:02 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A785916635B
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 17:44:20 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48NgR56wHGzDqWn
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 03:44:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Ngrg2jMQzDqXR
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 04:02:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.224;
- helo=new2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=pWJGKhIb; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=3ZEOIJf1; 
- dkim-atps=neutral
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48NgQZ4SkLzDqQq
- for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 03:43:49 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.nyi.internal (Postfix) with ESMTP id 1A9A14C52;
- Thu, 20 Feb 2020 11:43:38 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Thu, 20 Feb 2020 11:43:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=x1L59WY0N071KIF/+/oFwYyVjTn
- QYVentq/GckQiS8c=; b=pWJGKhIb06omVHOWNBr2C1GmYU94AyRZYGn4nnwthCk
- Ed07am9fe1jR/CJ/j8LYwgcUpxL1SuoFy4jzaKRSXKnBo6aAnRnzwXCWGIMBcvib
- v1Hgeu+At7UpwLW61Epohb93rqEW9K7RzoevwoMGG2BEkJz4OEw03ZHEUmDYQSIL
- 0LyfwZUY80dle3iDGEYFsMpdXEZ/4n3HMJ7QSaC0QOiW6HrvesqMx0VjnDsd0Fi2
- bbv+qtysj4OH/8idj0Bk+un9YDK+HcGircQ1FZ8/TTOWr1MhGo1Z0LKUbxlbjv0F
- rSZxMcJfYkuBMH4c3qR0la71tMyka/1/GfR5Q4sjvDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=x1L59W
- Y0N071KIF/+/oFwYyVjTnQYVentq/GckQiS8c=; b=3ZEOIJf1BBLNJIw41TIqOf
- pSLqGJGajh6lmxl94/BzZSZzu5xJmPmX9o0LPcVOkz6LQW0aVvAo6bcdwBNmRliQ
- qFKlq2rtohWlC+q8W455hJPH3zGPu2rjT+P+Ddn7My92QHDUWaMUuXQH7wHW27eW
- Mvws5GQOcDMzSZmKgE1BQPOYjoygm63MPnytcoTtwG4IgOtHBtpqtasNsmXLbDTm
- ZjgKGprprk9WKRW31W+ZnErWCLzkeIZmUjI9T5p7dEB+CjYEUXvtpu26qp5552nx
- uMGIijtOa4ZDi+5YlkzAMZvRgn2gojErTbG4ISq88AesX3kA3D5q+bqyaId7c88A
- ==
-X-ME-Sender: <xms:ObdOXr5oS4mHj5pDxWFc3Zw01vA4fva359rb0PONLEkNGzZGQWDxAg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrkedvgdelgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdej
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeduieef
- rdduudegrddufedtrdduvdeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:ObdOXpFd0Ep8HLO6GH-HWGe7-Vu17OntEbvVXtIKodFuouThZLgnKA>
- <xmx:ObdOXuDe7pd5355aT15tNbI8KuywLk_9JkoH7Clols7uNffXUEqk_Q>
- <xmx:ObdOXmyr6mXPJmEiX5qkHDfNui-KU8dchq095HzoSq-yYEu4DyfpDg>
- <xmx:ObdOXi5BrSZuxVf8tJLa6r0q1sWG5E9wFfdBFh-q0mLkiiJ2NrMxvQ>
-Received: from localhost (unknown [163.114.130.128])
- by mail.messagingengine.com (Postfix) with ESMTPA id 1CFE53060BE4;
- Thu, 20 Feb 2020 11:43:37 -0500 (EST)
-Date: Thu, 20 Feb 2020 10:43:35 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
-Subject: Re: Thoughts on representing the LED groups in Redfish ?
-Message-ID: <20200220164335.GE41328@patrickw3-mbp.dhcp.thefacebook.com>
-References: <BAEE3AD5-8D90-44FD-9111-49AD736EBB0D@linux.vnet.ibm.com>
- <A5C7580C-9577-4023-89E0-F7F715538EFF@linux.vnet.ibm.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="AjmyJqqohANyBN/e"
-Content-Disposition: inline
-In-Reply-To: <A5C7580C-9577-4023-89E0-F7F715538EFF@linux.vnet.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Ngqc6pcHzDqSl
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 04:02:03 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: =?utf-8?B?UmU6IOWbnuimhu+8mnNrZWxldG9u?=
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+X-Priority: 3
+In-Reply-To: <-sifmi5quxtt6-92q1n5-wyg6ssnts50d-w3mxqcpkbefz-35tf4ixc78y0-97rd5o-shjcwj2at2netjz0rthkxa46-tez059-yjezs9-f6thaysp4k1b6xrwf-6pqhrjbvxja7-b3yx80-86m5ir-5rqmyn.1582160771127@email.android.com>
+Date: Thu, 20 Feb 2020 12:01:54 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <8B4E6F11-7BB9-49D7-81B8-83FB2397283D@fuzziesquirrel.com>
+References: <-3ba5uk-q8utwbge8025-qgehlm-fki8rr7khfu1-p6nczl-6suqdm-6kinuh-56lojropdia6g2uvvm-yjw858-7vs2zw-7n6ouz-c58rf1jalry2-ykhwcn-gv83n533ioofq6fq28-2f5aeoa69232-g6kqx5.1581420554253@email.android.com>
+ <2ABDDF61-AF88-4777-9D51-1D5FA65293B6@fuzziesquirrel.com>
+ <-sifmi5quxtt6-92q1n5-wyg6ssnts50d-w3mxqcpkbefz-35tf4ixc78y0-97rd5o-shjcwj2at2netjz0rthkxa46-tez059-yjezs9-f6thaysp4k1b6xrwf-6pqhrjbvxja7-b3yx80-86m5ir-5rqmyn.1582160771127@email.android.com>
+To: =?utf-8?B?4oCq4oCq4oCq4oCqSmVmZiBDaGFu4oCs4oCs4oCs4oCs?=
+ <ckimchan17@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,103 +48,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---AjmyJqqohANyBN/e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 20, 2020 at 02:28:59PM +0530, Vishwanatha Subbanna wrote:
-> Hello,
+> On Feb 19, 2020, at 8:06 PM, =E2=80=AA=E2=80=AA=E2=80=AA=E2=80=AAJeff =
+Chan=E2=80=AC=E2=80=AC=E2=80=AC=E2=80=AC <ckimchan17@gmail.com> wrote:
 >=20
-> Wonder if the community has any thoughts ?
->=20
-> Thanks,
-> !! Vishwa !!
->=20
->=20
->     On 14-Feb-2020, at 4:51 PM, Vishwanatha Subbanna
->     <vishwa@linux.vnet.ibm.com> wrote:
->=20
->     Hello,
->=20
->     Writing this to get your thoughts on representing LED logical groups =
-in
->     Redfish.
->=20
->     OpenBmc LED subsystem has 2 layers
->=20
->     1/. Logical LED group manager
->     2/. Physical LED controller that sets ONE particular LED to On/Off/Bl=
-ink
->=20
->     Logical LED group manager:
->=20
->     This is where we define a group with set of physical LEDs and their
->     respective actions for one use case.
->=20
->     For example: https://github.com/openbmc/phosphor-led-manager/blob/mas=
-ter/
->     led.yaml
->=20
->     When the user wants to turn on the Identify indicators, they don=E2=
-=80=99t target
->     the physical LEDs individually. Instead, they just set the =E2=80=9CA=
-sserted=E2=80=9D
->     property :  =E2=80=9Cxyz/openbmc_project/led/groups/enclosure_identif=
-y/attr/
->     Asserted"
->=20
->     LED manager will then request physical led controllers of those LEDs =
-to
->     take the right action
->=20
->     Current bmcweb actually uses the groups than targeting the physical L=
-EDs.
->     So it=E2=80=99s good. https://github.com/openbmc/bmcweb/blob/
->     1c8fba97b1feb4164e9b54cd66aad530bbfc1826/redfish-core/lib/led.hpp#L33
->=20
->     However, I am not sure if there are ways to express the LED logical g=
-roups
->     in the redfish schema.
->=20
->     Any ideas ?
->=20
->     Thank you,
->     !! Vishwa !!
+> Hi Brad,
+> Thanks for reply, I checked  github.com/openbmc/skeleton, most of them =
+released 2 years ago, and the title said "will be replaced...", is it =
+still good to adopt it?=20
 
-It seems like if BMCWeb is using the logical groups already, this is
-good because this is likely what the administrator is most interested in
-anyhow.  From what you've written here, I'm not sure what the new
-feature is you'd be proposing.  How might logical vs physical LEDs be
-presented in a management interface like Redfish and what advantage does
-it provide to a user (over what we're doing today)?
+No I would not recommend that.  Skeleton covers a lot of BMC functions - =
+which one in particular are you interested in?
 
---=20
-Patrick Williams
-
---AjmyJqqohANyBN/e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5OtzcACgkQqwNHzC0A
-wRl47hAAi/bHOaR8Kq9R29WyTY474oozOXblhbl8UWGhJ7hwqIoSaU8BLRRL+r/c
-YoGzy83jBet4VUPWQVaTt6/d2Ge0OEy6yoUJ3x8qUWsEvNFAuUfjckW9Sxf0lQ+I
-Erd3WocN852vLsllt/LLufPi4LDzVDyc3JbmD+vcOs2Saksqdt3yslzXb7ZgVetF
-4E0YjSeCYhPcBi7UUERqBV6R9Vk3K40DhbVik06JnXzuQbXDLZ72ddQJjd1qK33l
-2a1+ZHre5360e/z7ViZw/zTBKWGkJ/SZYMkg3MBMtBiPoHpBxdVMETqvwEJBZhPq
-LPEgRDnwP50TVKdcydBZipzC7WjIZajAM1QQ7TXiHqUZwnhiXPQ/YBtpaSVB3kbA
-9CLjyvJwch31fJPo9dyckRQBkguS0gtLPGWf1MYwPT9hG4aIu5uq15pjL6bYfHhm
-kFqJhypSe2z+c/oFqLmi3QRcawgmMg0KssN+MM9F5uYSZy1u2ckBjd2XfueU7hZ0
-ONPuLIe5ASKtyZNCCEYXXzrOm6MQCACOqYVen2u2t7M5x/tI463A3WLJBYraKKFz
-WqGjE1fTFZrFBeIJNn0Mm0fyz4V7m/FVSrSTW3AyIG99WfwPIsWi0Ac2HN3nRn8M
-vfFmgnIdB2HUKf87Ovin4zem2YPv193YUdejX1By2b+PjKCakX8=
-=rjc5
------END PGP SIGNATURE-----
-
---AjmyJqqohANyBN/e--
+>=20
+> Jeff
+>=20
+>=20
+> -------- =E5=8E=9F=E5=A7=8B=E9=83=B5=E4=BB=B6 --------
+> =E5=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A Brad Bishop =
+<bradleyb@fuzziesquirrel.com>
+> =E6=97=A5=E6=9C=9F=EF=BC=9A 2020=E5=B9=B42=E6=9C=8814=E6=97=A5 =E9=80=B1=
+=E4=BA=94 02:39
+> =E6=94=B6=E4=BB=B6=E4=BA=BA=EF=BC=9A =E2=80=AA=E2=80=AA=E2=80=AA=E2=80=AA=
+Jeff Chan=E2=80=AC=E2=80=AC=E2=80=AC=E2=80=AC <ckimchan17@gmail.com>
+> =E5=89=AF=E6=9C=AC=EF=BC=9A OpenBMC Maillist =
+<openbmc@lists.ozlabs.org>
+> =E4=B8=BB=E6=97=A8=EF=BC=9A Re: skeleton
+>=20
+>=20
+> > On Feb 11, 2020, at 6:29 AM, =E2=80=AA=E2=80=AA=E2=80=AA=E2=80=AAJeff =
+Chan=E2=80=AC=E2=80=AC=E2=80=AC=E2=80=AC <ckimchan17@gmail.com> wrote:
+> >=20
+> > Hi,
+> > As the description in skeleton github, it will be replaced with =
+proper implementation, what's the up to date implementation? where can I =
+find those docs or samples?
+> >=20
+> > Jeff
+>=20
+> Hi Jeff
+>=20
+> Most of skeleton has been rewritten.  skeleton covers a lot of BMC =
+functions - which one in particular are you interested in?
+>=20
+> thx -brad
