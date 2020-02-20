@@ -2,79 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27C23165333
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 00:51:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EE84165360
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 01:10:31 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48NDyw2Cz4zDqS0
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 10:51:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48NFNN65ZLzDqP6
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 11:10:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=QXgKhxc7; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=XwEaCuYx; 
+ dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48NDyF0NGdzDqQR
- for <openbmc@lists.ozlabs.org>; Thu, 20 Feb 2020 10:51:16 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 01JNnGgE082962
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 18:51:13 -0500
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2y8ubugvnf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 18:51:13 -0500
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 01JNnxFu011259
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 23:51:12 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma02wdc.us.ibm.com with ESMTP id 2y6896qw24-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 23:51:12 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 01JNpCUf51446226
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 23:51:12 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 38991124054
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 23:51:12 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C1FF124053
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 23:51:12 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.252])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 23:51:12 +0000 (GMT)
-Subject: Re: Security Working Group meeting - Wednesday Feb 5 - summary results
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <6cfb1c25-14b6-ca76-b917-3bda22ff1ce1@linux.ibm.com>
-Message-ID: <908dcee2-f7ef-4059-4731-b41c5fde0a35@linux.ibm.com>
-Date: Wed, 19 Feb 2020 17:51:11 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.4.2
-MIME-Version: 1.0
-In-Reply-To: <6cfb1c25-14b6-ca76-b917-3bda22ff1ce1@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-02-19_07:2020-02-19,
- 2020-02-19 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- spamscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0 malwarescore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 mlxscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2001150001
- definitions=main-2002190173
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48NFL651rfzDqSC
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Feb 2020 11:08:30 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 0B24822017;
+ Wed, 19 Feb 2020 19:08:26 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Wed, 19 Feb 2020 19:08:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=9F2m5GLTYjPlxVoBdMxmyb4f0fiQ03Y
+ XliYXpG7cvQA=; b=QXgKhxc70WO17amO+ci2kWB8gUtokVBnmA68zDedj9zy6D3
+ 2JOTxagAYj7JtwXKEIwu2ZyTct4ixkQwmSGJDO0Nd4xW7tRUK7HP9sB0YNAQBGEC
+ VJkoatGfC9rLHSYdA615GDffpLYfWvnB9q+HTPMOTC/CwNiwm336h52IEmiUSZxO
+ vX1Vqpq0t3lZZLcaEx9hl6y6izSlwZXPezkjUjjAZJ1cMJIwnrWF6+waNMor1L5i
+ KVFm6m53v7Vq7jbBxxpbY/QAJc2/Faj1DOaScQUwBGXHpNMpjVOlCHf0/IaapksS
+ etTnc+s2f5JExF+hBR6yOOvK+DIvEdLfIyXurfA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=9F2m5G
+ LTYjPlxVoBdMxmyb4f0fiQ03YXliYXpG7cvQA=; b=XwEaCuYxcd3d8NInf/sKXI
+ Z+wOtKYyC83ESQzuf8rjHgYmnD0QLCE2O2I4tM1TAE8TJG/P3FeTDSve0ArTmhF9
+ mV6o2EPWfmuL3XO0epfL3SL4SYX0x/faDF6r25BIIvgnQMyUZPvp/xUwZk7bSYyl
+ /MYcsSFs7lAYOzuo7uumkRwuwOuRaoZ8YtFh5aaC1wEV/Nab7/Q+r0V2R2uJrasV
+ CfR4iJrRgwzm1QiXIUZ6QJqRYMu80Qs85ZSv9PgJXTzQTYGYUoRzIubWdgvMl+tS
+ LKsZV1LB+9uShan8Y2ALgM3mTlGLe8JOns8pj5Wc4F33CAzjO8iuLrock8IsBYHw
+ ==
+X-ME-Sender: <xms:-M1NXkmxrzkvGrS9RkZdU-1Brh3urPk1ITwwpLNUxJ51AEcwC9ydng>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrkedugddulecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkjghffffhvffutgesthdtredtreer
+ tdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjh
+ drihgurdgruheqnecuffhomhgrihhnpehophgvnhgsmhgtqdhprhhojhgvtghtrdighiii
+ necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnug
+ hrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:-M1NXo2vh2wk9D0wcjGHXDNm-WjHxPTDwGfmcIafGA4UE55TiDGGvw>
+ <xmx:-M1NXjg051Rw2-7bfORDgIVab3_9fC4sI_KbT1Eg3z-Fuzsyvl8PCg>
+ <xmx:-M1NXmXPuWf29g7tDwUaRw6JFJ_Bj4Efi4CErSiutPJpd3mWObJ6SQ>
+ <xmx:-s1NXgt8YFNChQK6QOWjb_2o2N2aXV5ulYPxg1W6uYaVzFhs0jhuxA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 1B418E00B2; Wed, 19 Feb 2020 19:08:24 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-802-g7a41c81-fmstable-20200203v1
+Mime-Version: 1.0
+Message-Id: <f136d4ad-65e6-4e74-8f53-2ca3edaf9288@www.fastmail.com>
+In-Reply-To: <SG2PR04MB3029CF9F520DF543B57B93C2FD100@SG2PR04MB3029.apcprd04.prod.outlook.com>
+References: <SG2PR04MB3029CF9F520DF543B57B93C2FD100@SG2PR04MB3029.apcprd04.prod.outlook.com>
+Date: Thu, 20 Feb 2020 10:38:16 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Kumar Thangavel" <thangavel.k@hcl.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: obmc-console design for multi host support
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,84 +91,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/5/20 10:06 AM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday Feb 5 at 10:00am PDT.
+Hi Kumar,
 
-These are the notes from the previous meeting that was held on 
-2020-02-05 -- 2 weeks ago.
+On Wed, 19 Feb 2020, at 18:24, Kumar Thangavel wrote:
+>  
+> Hi All,
+> 
+> 
+>  Obmc-console application current design may not support multi host or 
+> multiple console. So, we proposed the design to handle multi 
+> host/multiple console in obmc-console client and server applications. 
 
+Thanks for writing a proposal.
 
->
-> We'll discuss current development items, and anything else that comes 
-> up.  The current topics:
->
-> 1. Moving forward with security assurance work at the OpenBMC project 
-> level.  ("How do we know what is most important to work on?")  Review 
-> steps forward.
+> 
+>  Please find the attached design document. 
+> 
+> 
+>  Could you please review and provide your comments on this. 
 
-There was general agreement that the list of assurance schemes in thew 
-security working group wiki is a good start.
+Interesting timing, because I've actually just solved this problem. Please
+review this series in Gerrit:
 
->
-> 2. BMCWeb intermediate site identity certificates.
+https://gerrit.openbmc-project.xyz/q/topic:%22concurrent-servers%22+(status:open%20OR%20status:merged)
 
-https://lists.ozlabs.org/pipermail/openbmc/2020-January/020321.html
-After looking at the code, we figured BMCWeb had no way to present 
-intermediate site identity certificates, but support could be added.
-The next steps areto complete the investigation, push up an enhancement 
-if needed, and document how users can provision the BMC with their 
-intermediate certs. Created https://github.com/openbmc/bmcweb/issues/116
->
-> 3. BMCWeb account management privilege changes (following the latest 
-> Redfish spec) allow account enumeration.
+Regarding the proposal, I have a few thoughts:
 
-This was pursued (see the minutes).  After the meeting, the outcome was 
-learned: Refish did not intend this.  A non admin user will get only 
-their own account.  A Redfish spec change will clarify this.
+1. Please try to keep it to plain-text
+2. If you have code it's best to post it straight away (rather than lead with
+a proposal and no code)
 
->
-> 4. BMCWeb address CWE-307 (unlimited password guessing) via 
-> rate-limiting authentication attempts.
+On point 1, this is an open-source community and sending documents in
+formats like docx might mean that some people can't access them. Plain-
+text always works, especially as emails are generally composed that way,
+which means you can put your proposal directly in an email and people
+can respond to it with ease.
 
-The project currently has no such protection, so this seems like a good 
-approach.
+On point 2, it seems that you've included screenshots of code changes
+that you have made locally - a few sub-points there:
 
-Have we considered blocking by IP address?  Considered progressively 
-longer timeouts? Considered the pam_abl module or PAM modules that 
-require MFA?
+a. Code is text - you can include snippets of it in your document directly,
+which removes the need for rich media formats, which removes the need
+for something like docx.
 
-If an LDAP server is used, it may not allow enumeration of its users, 
-which would make this a non-issue for this use case.  Does this apply 
-only to local users? (ANSWER: Yes).
+b. If you've got code, push it to github or gerrit and we can look at it
+directly!
 
-There are various disparate use cases including: rate-limiting (as 
-proposed here), account lockouts (traditional pam_tally2 solution), 
-password reset required, and notifying the admin … just to name a few 
-use cases.  I (Joseph) am going for a default least-common-denominator 
-solution into the project that the BMC can provide without requiring 
-additional elements such as 2FA servers.
+On point b, given that this proposal largely deals with implementation
+details, it's much more effective if you lead with code and then drive a
+discussion on the list if necessary. At least this way we have something
+concrete to point at and argue about, or in the happy case we can just
+merge it and you've avoided the effort of driving redundant discussion.
 
+Finally, these thoughts are about helping you help us help you to get
+your code merged with the least amount of effort/friction. Hopefully
+they are useful to you :)
 
-This was re-discussed in more depth in the 2020-02-19 meeting.
+Cheers,
 
->
-> 5. Discuss progress in setting up an alternate meeting time.
-
-Joseph will followup in the email list.  I (Joseph) think an early 
-morning (like 2am CDT) would work for Australia, China, India, and 
-Europe.  (See subsequent emails.) The next step is to identify core 
-individuals and set up a meeting time.
-
->
-> Access, agenda, and notes are in the wiki:
->
-> https://github.com/openbmc/openbmc/wiki/Security-working-group
->
-> - Jose 
-
-- Joseph
-
+Andrew
