@@ -1,77 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F706165449
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 02:32:04 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 792CB165407
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 02:06:52 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48NGdM2vQXzDqSG
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 12:06:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48NHBT2wJrzDqSc
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 12:32:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636;
- helo=mail-pl1-x636.google.com; envelope-from=ckimchan17@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
+ helo=mail-pj1-x1042.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=FASA6Atq; dkim-atps=neutral
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
- [IPv6:2607:f8b0:4864:20::636])
+ header.s=20161025 header.b=YnmfKpLl; dkim-atps=neutral
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
+ [IPv6:2607:f8b0:4864:20::1042])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48NGcn4fsqzDqRS
- for <openbmc@lists.ozlabs.org>; Thu, 20 Feb 2020 12:06:17 +1100 (AEDT)
-Received: by mail-pl1-x636.google.com with SMTP id t6so840196plj.5
- for <openbmc@lists.ozlabs.org>; Wed, 19 Feb 2020 17:06:17 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48NH9d5ZLPzDqBg;
+ Thu, 20 Feb 2020 12:31:17 +1100 (AEDT)
+Received: by mail-pj1-x1042.google.com with SMTP id j17so171712pjz.3;
+ Wed, 19 Feb 2020 17:31:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:subject:message-id:references:from:to:cc:mime-version
- :content-transfer-encoding;
- bh=Z2bLuXZyX8EVLOeYbTzoQSpMEBtAX1I3UPoOjLlMcNE=;
- b=FASA6AtqgGlFYew3ppy5s/608WsmrLARlUVyqL1jasVLG1/mpCS6XtISfAJ/I3gnEq
- qbThFXzRfzh+95oeACtGtIG2dY/GclzQw0Y+u2SAsSdZgHIFsqAF6O52wTxgQp4TRC9i
- JgHnuCGh/UjzFuBuelkdklLufNxDJ76NEI/mf/+CTtxMvnZIlDHo2AO+lERHhdvE3Mh+
- uhHaqq+aycSh1pGASxZy4EaDau9RgUoN0lmwQh3CnHp8R8Z8+QU6v+X2WQFrGZqmh7vK
- pdwtahMnoJISbPwaipKVQ1yKiWj3m1IanE3vELO3EuEW5+NEbzqBlYeBZYQIYhfphfdj
- Uaqg==
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=szYg2AQsd4vPQUXlNOTQeaWlhRWbCJD6D1ASNIe6NPQ=;
+ b=YnmfKpLlHDFp/4r9dbH9mYpcYtDzQkvfjIBwgZOS2FTAVbZEvFLZJV5cYEjVMHryDD
+ ZinziWcgxAtkfqZWej/jlk7ErptUcF9zL/uzSUXVV0X8Y/ituH3Puhd62Y94Aby9OSkG
+ 3UbWxTFpyekwXSZdOygXreubDyUmc65byNxSAW4/uIxvOjBoGj1tmYLH0V8Xds/Gg/TB
+ wiCCGBqvOvG9wBmmK/W8WPoO9RMwtjz/i6JLUr2rGsuV4PSe0tqMxW13nlDTwF5PGwPY
+ melwQyeC74boGcoqQU9vlVMFYWCOnAYj9pFLH6QPl1xq/lpWe0zHUKeugY3TkPMfI2ps
+ bZng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:subject:message-id:references:from:to:cc
- :mime-version:content-transfer-encoding;
- bh=Z2bLuXZyX8EVLOeYbTzoQSpMEBtAX1I3UPoOjLlMcNE=;
- b=nUJ3nhY3igM+CgXEtnmQdKvr6CzXJrxugUfevDKMC09dNpqYMrLabkBJTrMt9D6G2w
- e1SwildR6IPFV03ZMcIz0iUCiYNI/rXNRG8hE93kOO0ekE2DOveYq2u4HDxWBVtRD7WX
- x9fuZhQUno1pexSUi40uEqFx4Y/E+UV5BqP9YSG6U1Ne8uDeCi62XE75txE7qOc9jCx8
- kL9PjeKkES3fhAJ6LWlP17ig+t/UUyzYSMM+0Q4h3IUL7KSMSiz9bWoyBQz7wSvY6Gjn
- 1l6iG+rBwfqSLEJoWKm84Gda5YIv1b60Zz62M3HSa0zO2qSpaNuHTZik1WNvyX27QCm6
- fuyQ==
-X-Gm-Message-State: APjAAAWBgTd8irBruyGdt+eWjQ8uqitvZC7vT4ur2WbK/y5YcadrwAzc
- 5ZBuket/zNcMXcj8sE9lpJQ=
-X-Google-Smtp-Source: APXvYqxgIjkU+7Vls+Ww3OtoqOkFiK4k0sSy8H3PLMGb5j8gtsZXLtmvmAXlJ10iFW7rjMFWuu2DwQ==
-X-Received: by 2002:a17:902:bf41:: with SMTP id
- u1mr28098441pls.207.1582160774812; 
- Wed, 19 Feb 2020 17:06:14 -0800 (PST)
-Received: from ?IPv6:2001:b400:e28f:c14e:e48d:ed61:f2ff:4ab7?
- (2001-b400-e28f-c14e-e48d-ed61-f2ff-4ab7.emome-ip6.hinet.net.
- [2001:b400:e28f:c14e:e48d:ed61:f2ff:4ab7])
- by smtp.gmail.com with ESMTPSA id d22sm801574pfo.187.2020.02.19.17.06.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Feb 2020 17:06:13 -0800 (PST)
-Date: Thu, 20 Feb 2020 09:06:11 +0800
-Subject: =?UTF-8?B?5Zue6KaG77yac2tlbGV0b24=?=
-X-Priority: 3
-Message-ID: <-sifmi5quxtt6-92q1n5-wyg6ssnts50d-w3mxqcpkbefz-35tf4ixc78y0-97rd5o-shjcwj2at2netjz0rthkxa46-tez059-yjezs9-f6thaysp4k1b6xrwf-6pqhrjbvxja7-b3yx80-86m5ir-5rqmyn.1582160771127@email.android.com>
-References: <-3ba5uk-q8utwbge8025-qgehlm-fki8rr7khfu1-p6nczl-6suqdm-6kinuh-56lojropdia6g2uvvm-yjw858-7vs2zw-7n6ouz-c58rf1jalry2-ykhwcn-gv83n533ioofq6fq28-2f5aeoa69232-g6kqx5.1581420554253@email.android.com>
- <2ABDDF61-AF88-4777-9D51-1D5FA65293B6@fuzziesquirrel.com>
-From: =?UTF-8?B?4oCq4oCq4oCq4oCqSmVmZiBDaGFu4oCs4oCs4oCs4oCs?=
- <ckimchan17@gmail.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=szYg2AQsd4vPQUXlNOTQeaWlhRWbCJD6D1ASNIe6NPQ=;
+ b=B/KpobiuuEI4d8I3eTYR4hHtvF8iMBcyvHqi2a2Ux0Zd7gZ1PotvoGHM8QvQTtiMnx
+ P6bBsIxOHM6Lc9mGMIydfkKVMdMnRgLUuLo2kizbSck8osQ0USYR7fcaYaThjJssC2cq
+ xtHK8N1TucvkPcEWqzArCOnW4TLSmku1wB0nQRKA7ixyWsJHnusyhRztFw1CYx/Zk5qM
+ +GU6RGMJvhewy5rM2YDWusjyUgcrLT9RI9EWeFiJg3sSYM9fzUwvpqy4glQqs5R7CbVE
+ lIhI7RfzGzJOZXw1S/QepxSNFwXeD2QztbVjgXuh0ZGsm0D8Wu4tr5J8qQgnl4kj23KI
+ 6Gpg==
+X-Gm-Message-State: APjAAAX/5rALGAcDu7tbHveKEaFUdUhNW6sYlISvoDENzhPC49ghdiXt
+ egW5Yh6xIcOe4VsllkTHSkI=
+X-Google-Smtp-Source: APXvYqyzmgvxyBGFHEKtfmbVHh4nsUmpCnOiJOLklUkLLXD00WNKvL2PU2ls8e+TkkBLFHlsbUTTpw==
+X-Received: by 2002:a17:90a:b318:: with SMTP id
+ d24mr687568pjr.142.1582162274835; 
+ Wed, 19 Feb 2020 17:31:14 -0800 (PST)
+Received: from taoren-ubuntuvm (c-24-4-25-55.hsd1.ca.comcast.net. [24.4.25.55])
+ by smtp.gmail.com with ESMTPSA id u13sm957679pjn.29.2020.02.19.17.31.11
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 19 Feb 2020 17:31:14 -0800 (PST)
+Date: Wed, 19 Feb 2020 17:31:04 -0800
+From: Tao Ren <rentao.bupt@gmail.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: [PATCH v3 0/5] aspeed-g6: enable usb support
+Message-ID: <20200220013103.GA4830@taoren-ubuntuvm>
+References: <20200218031315.562-1-rentao.bupt@gmail.com>
+ <5d295199-d0d7-4d58-be29-4621738d7f28@www.fastmail.com>
 MIME-Version: 1.0
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5d295199-d0d7-4d58-be29-4621738d7f28@www.fastmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,28 +81,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
+ linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, Tao Ren <taoren@fb.com>,
+ linux-kernel@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+ Rob Herring <robh+dt@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Chunfeng Yun <chunfeng.yun@mediatek.com>,
+ Colin King <colin.king@canonical.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdiBkaXI9ImF1dG8iPkhpIEJyYWQsPGRpdj5UaGFua3MgZm9yIHJlcGx5LCBJIGNoZWNrZWQm
-bmJzcDsgZ2l0aHViLmNvbS9vcGVuYm1jL3NrZWxldG9uLCBtb3N0IG9mIHRoZW0gcmVsZWFzZWQg
-MiB5ZWFycyBhZ28sIGFuZCB0aGUgdGl0bGUgc2FpZCAid2lsbCBiZSByZXBsYWNlZC4uLiIsIGlz
-IGl0IHN0aWxsIGdvb2QgdG8gYWRvcHQgaXQ/Jm5ic3A7PGJyPjxicj5KZWZmPC9kaXY+PC9kaXY+
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS41Ij48YnI+PGJyPi0tLS0tLS0tIOWOn+Wni+mDteS7
-tiAtLS0tLS0tLTxicj7lr4Tku7bogIXvvJogQnJhZCBCaXNob3AgJmx0O2JyYWRsZXliQGZ1enpp
-ZXNxdWlycmVsLmNvbSZndDs8YnI+5pel5pyf77yaIDIwMjDlubQy5pyIMTTml6Ug6YCx5LqUIDAy
-OjM5PGJyPuaUtuS7tuS6uu+8miDigKrigKrigKrigKpKZWZmIENoYW7igKzigKzigKzigKwgJmx0
-O2NraW1jaGFuMTdAZ21haWwuY29tJmd0Ozxicj7lia/mnKzvvJogT3BlbkJNQyBNYWlsbGlzdCAm
-bHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj7kuLvml6jvvJogUmU6IHNrZWxldG9u
-PGJyPjxibG9ja3F1b3RlPjxicj48YnI+Jmd0OyBPbiBGZWIgMTEsIDIwMjAsIGF0IDY6MjkgQU0s
-IOKAquKAquKAquKAqkplZmYgQ2hhbuKArOKArOKArOKArCAmbHQ7Y2tpbWNoYW4xN0BnbWFpbC5j
-b20mZ3Q7IHdyb3RlOjxicj4mZ3Q7IDxicj4mZ3Q7IEhpLDxicj4mZ3Q7IEFzIHRoZSBkZXNjcmlw
-dGlvbiBpbiBza2VsZXRvbiBnaXRodWIsIGl0IHdpbGwgYmUgcmVwbGFjZWQgd2l0aCBwcm9wZXIg
-aW1wbGVtZW50YXRpb24sIHdoYXQncyB0aGUgdXAgdG8gZGF0ZSBpbXBsZW1lbnRhdGlvbj8gd2hl
-cmUgY2FuIEkgZmluZCB0aG9zZSBkb2NzIG9yIHNhbXBsZXM/PGJyPiZndDsgPGJyPiZndDsgSmVm
-Zjxicj48YnI+SGkgSmVmZjxicj48YnI+TW9zdCBvZiBza2VsZXRvbiBoYXMgYmVlbiByZXdyaXR0
-ZW4uJm5ic3A7IHNrZWxldG9uIGNvdmVycyBhIGxvdCBvZiBCTUMgZnVuY3Rpb25zIC0gd2hpY2gg
-b25lIGluIHBhcnRpY3VsYXIgYXJlIHlvdSBpbnRlcmVzdGVkIGluPzxicj48YnI+dGh4IC1icmFk
-PC9ibG9ja3F1b3RlPjwvZGl2Pg==
+On Thu, Feb 20, 2020 at 10:55:10AM +1030, Andrew Jeffery wrote:
+> 
+> 
+> On Tue, 18 Feb 2020, at 13:43, rentao.bupt@gmail.com wrote:
+> > From: Tao Ren <rentao.bupt@gmail.com>
+> > 
+> > The patch series aims at enabling USB Host and Gadget support on AST2600
+> > platforms.
+> > 
+> > Patch #1 replaces hardcoded vhub port/endpoint number with device tree
+> > properties, so that it's more convenient to add support for ast2600-vhub
+> > which provides more downstream ports and endpoints.
+> 
+> Ah, something I should have mentioned on the previous series is you'll need
+> to update the binding documentation with the new properties.
 
+Looks like we don't have dt binding documentation for this driver. I will add
+the document in my 2nd patch set "allow to customize vhub device IDs/strings"
+so all the new dt properties are included in the doc.
+
+> > 
+> > Patch #2 enables ast2600 support in aspeed-vhub usb gadget driver.
+> 
+> Also need to add the 2600 support to the dt binding document.
+> 
+> Looks good to me otherwise.
+> 
+> Andrew
+
+Thanks again for the quick review, Andrew.
+
+
+Cheers,
+
+Tao
