@@ -1,81 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3060166A42
+	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 23:18:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D425166878
-	for <lists+openbmc@lfdr.de>; Thu, 20 Feb 2020 21:36:44 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48NmbF0ZtQzDqcV
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 07:36:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Nprg2n4KzDqWL
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 09:18:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.17;
- helo=wnew3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::232;
+ helo=mail-oi1-x232.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=MwrKSjkg; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=kkAw7Bz0; 
- dkim-atps=neutral
-Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com
- [64.147.123.17])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=g6Q8pyTA; dkim-atps=neutral
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com
+ [IPv6:2607:f8b0:4864:20::232])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48NmZL5rJzzDqSd
- for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 07:35:53 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.west.internal (Postfix) with ESMTP id 1B74E499;
- Thu, 20 Feb 2020 15:35:49 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Thu, 20 Feb 2020 15:35:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:mime-version:content-type; s=
- fm1; bh=c73aiKn+PZKNRx9tS6e3/XHzpKLpZsINWhySj5mu+eA=; b=MwrKSjkg
- bwlF26fMBYIOKrxvXzlxOiKbqLgQkaWEgiMROPlgGTDKjHrVdAjjxRL6TNClj6sU
- SZXdFmrWbj7Ec6VDetCF+oDo3KRAnm6nF76VEA5piIQo6Sp4b0Ro+Mn80fhvPHnC
- L4nn0HUPoIaVaJhZHsTxB1XTG+xSDB5b6rvU8xfh4/B8Wxd4coeHjf6Oj8fha8pp
- 2Uggl9x2Jl5t0LahJaIreUHIlLw6l7u2UzOpmHfQZYBm6uXHZobxOOCIgoMay1+j
- kZdPaU5tUd9vDdeMU0nPq9CAgkdVTOTumAsiYFVWHmtGqKeuu3+aIF4rDF2fk6Sx
- 5JMfXXqyo6k7tA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm2; bh=c73aiKn+PZKNRx9tS6e3/XHzpKLpZ
- sINWhySj5mu+eA=; b=kkAw7Bz0tg2x0heK886o+WilmTSrLCydtfk2r/2l7gjaQ
- xApkroTkRQVSL5dEp2MfDhrYmM6ppdMrsYos7M8F5eMeB7IqBjmzX0fXyqREd3Cl
- ihSoBNBj7FEU12Eb2wZL9lZFA1VV5mrUwQrjfUxTnKln7D8uDDP3l/mGjk1J32s0
- kHppGCd/F0yoRRawEEEi2toEcbs3Qz1vHyZXquJf1eZp9K0in4Aehn6mYIOWSNqJ
- PZOMSanr2HeneN/4p5Rqpy+9SVgFvmgKqmUWXqd9bFD2ZyUmowWvx2/Zyl/Fs5qx
- +aPmhRkt/u6hEsI4r3YxLWABz+m6l5ug/5UqtvYUg==
-X-ME-Sender: <xms:o-1OXj5_2pAUgOBJQmrm86CgEHKhSPLi93OKTcFusHnxXq4MmVfgFQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrkedvgddugeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
- fvuffkgggtugesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgr
- mhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuffhomhgrihhnpehophgvnh
- gsmhgtqdhprhhojhgvtghtrdighiiinecukfhppeduieefrdduudegrddufedtrdduvdek
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrth
- hrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:o-1OXlpY8TLt7rxyCcosyAmrLLTvAKfmU6vNj8TuzqpklbGsE0hHIA>
- <xmx:o-1OXmAVNFyKF8HRdzHNBnN7l4vWih9W935EIIEx3Hk6smN2s2MhyA>
- <xmx:o-1OXqRl8VR4xqSAbdBhRCV0VwjjKmzIPXGgiipqRhOZVh-d7ahnBw>
- <xmx:pO1OXuYXVJs1kwcIwAdHirJbqOoz7xwhZC4vKoP3YknBLtmNEseFl1ZupLo>
-Received: from localhost (unknown [163.114.130.128])
- by mail.messagingengine.com (Postfix) with ESMTPA id 952353060BD1;
- Thu, 20 Feb 2020 15:35:47 -0500 (EST)
-Date: Thu, 20 Feb 2020 14:35:46 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: kurt.r.taylor@gmail.com
-Subject: sdbusplus commits missing CLA
-Message-ID: <20200220203546.GF41328@patrickw3-mbp.dhcp.thefacebook.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Npr10NbBzDqWH
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 09:17:52 +1100 (AEDT)
+Received: by mail-oi1-x232.google.com with SMTP id i1so29180969oie.8
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Feb 2020 14:17:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:date:references
+ :to:in-reply-to:message-id;
+ bh=6GzEX3UflRMiFNIZaEgntoXM9niIFw8DvOBPlf6qWu4=;
+ b=g6Q8pyTA7taTpulpJCat6LrpEBYluusG5lAjIoF2swt6+kHAyx3qexfuVZi/diQZSE
+ vlCyBuEE9WNq8pu3QAXoMS9IfO1K72jPg8J8i60pTZ/Xd7f8lUSHFxaPb3rZQQpWly2s
+ fH2RyQ+oj7CXuhk+TFalGqYhhSikQKtKllbVR32/R5IKXDoWxdhNZoeBZJOzeKkywjXw
+ r7ebUFEmf/NM5y+CIJHUdm3xBhioJjTxMnwSBepFqgHdOWpakZ3pwD1Iz9Z0z1p+HJNB
+ oI/2/NBIeHGwcKePBPNraJ4MrkyFTjofmRfex5B+p4zjs7Ad+AHmH+1FcrwURmjbnG9e
+ kWLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:date:references:to:in-reply-to:message-id;
+ bh=6GzEX3UflRMiFNIZaEgntoXM9niIFw8DvOBPlf6qWu4=;
+ b=OPxml9Bpp/99lmxmy0fFI8+958zOKrMYV2ESjagT/i10muTrQHCrSP7klz6OPWJU/D
+ nMYTUMqBDxETCz0vuTyis6F3mbcueph55mdPfwuuFYOSvhEsZr//8o/Arh/snb5iOr81
+ kp6l9zKvwqgPWZ5T3aOKJnplrrIHpRV6t+alC0CrZS3KBND1f1NzsRA2BJf3/8H8jCbP
+ 4YtKTuKa1kJjpE2JzFMHXAR6mQWG1NaJeliNourcHBzlh7PMFN2FROx2v77Lf7Y4Wkug
+ HEMCYZknGfMduMDZpcik27Y+2xpsB/BW6T5gNln7nLxEE8c9ne0liKSWObrE5T3d7MBV
+ I+Zw==
+X-Gm-Message-State: APjAAAWSuP1a3x2xGqIOA29Dr3akL4CrkghTLUoRh5lE7icH6k4C1FrC
+ qfwzW2XZSWRQpMoHp2d+jkER7sSqJNc=
+X-Google-Smtp-Source: APXvYqzlljeM+I3ElSSNtFwP3cuxVZzKdGBVRPyjDXxX9Tg3W3ksBw5WbOoP7U+FhSVbvBIu9u9hbQ==
+X-Received: by 2002:aca:acc4:: with SMTP id v187mr3808890oie.130.1582237068648; 
+ Thu, 20 Feb 2020 14:17:48 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:8cd4:a5aa:a5cb:f899])
+ by smtp.gmail.com with ESMTPSA id n64sm295417otn.35.2020.02.20.14.17.47
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 20 Feb 2020 14:17:48 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: termination on hardware errors
+Date: Thu, 20 Feb 2020 16:17:47 -0600
+References: <6FBB6835-036E-4495-B28B-44D1210294DD@gmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+In-Reply-To: <6FBB6835-036E-4495-B28B-44D1210294DD@gmail.com>
+Message-Id: <22F340D0-D82C-4569-93FA-02653A1118C3@gmail.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,32 +82,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Kurt,
+For those interested, which measured by the response to this email, =
+there
+are tons of, here=E2=80=99s a link to the design doc :)
 
-We have a few commits for the openbmc/sdbusplus repository that have
-been floating around in Gerrit since early 2018 and seem to be stuck in
-"missing CLA limbo".  It appears that there was some discussion on the
-CLA at one point but I don't know what happened to it.  I don't see a
-CLA from the Bosch company in the Google Doc folder.
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/29603
 
-https://gerrit.openbmc-project.xyz/q/owner:mark.jonas%2540de.bosch.com
+> On Feb 18, 2020, at 10:24 AM, Andrew Geissler <geissonator@gmail.com> =
+wrote:
+>=20
+> We have a requirement from our manufacturing team that they be able to =
+configure
+> the BMC to fail the boot of a system if any error log is generated =
+that calls
+> out a piece of hardware. The idea being that if the firmware finds any =
+issue
+> with the hardware, manufacturing wants the system to halt and provide =
+a clear
+> indication of what that failure is so they can fix it prior to =
+shipping the
+> system.
+>=20
+> High level this will probably be a phosphor-settings field that =
+phosphor-logging
+> code would query when it gets an error log that has a inventory path =
+in it.
+> I'd like an external state to indicate when this event occurs. Maybe a =
+new
+> BMC state like Quiesce? (Quiesce is used by host when it is in fail =
+state
+> and has an easy mapping to the corresponding Redfish Quiesce)
+>=20
+> This is just a feeler email to see if anyone else has an interest in =
+this type
+> of function or if they have other ideas on how to fulfill this =
+requirement.
+>=20
+> Andrew
 
-There was recently a request to revive this work because someone else is
-finding it useful (and we've had a feature request open for a long time
-on one of them as well).  What options do we, the maintainers, have in
-this situation?
-
-I don't really want to blindly reimplement this feature since there was
-good work done here.  There appears to have been no plagiarism issues.
-Since the commits have a S-O-B by two people from the same company, it
-seems reasonable that they fully intended to contribute this work
-publicly.  I'm not looking to restart a "why do we have CLAs"
-discussion, but it seems like we need some direction on what maintainers
-should do when there is a missing CLA.
-
--- 
-Patrick Williams
