@@ -1,79 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08A8E16884B
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 21:23:37 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48PNFf3FfZzDqWS
-	for <lists+openbmc@lfdr.de>; Sat, 22 Feb 2020 07:23:34 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1955D168853
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 21:27:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48PNL83SH5zDqZy
+	for <lists+openbmc@lfdr.de>; Sat, 22 Feb 2020 07:27:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.221;
+ helo=new1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=alL36pBQ; 
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=ro0BTbxE; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=BSf2dVx/; 
  dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
+ [66.111.4.221])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48PNCh0xDmzDqWZ
- for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2020 07:21:49 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1582316503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8ZVndnXQ6NPYR6x7yir3mwRGjT+UFoQ+DunzVipJaS4=;
- b=alL36pBQ/JHTk/G83lDHpsNq9cMkcO8lwOgLRQItdWfUpbo2t26nj3XhaDvjPQcRLB84/F
- 4jUixBEkJNphQJ3xlehXSoNAOcx8G7zhbgqlptvDbOn/Q/of8C3PSsCU7sEcwc9su0FwA1
- nxqtWMsNjTCAc0yYP5imcP0WLbzhi/w=
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-363-c0A5W65YPU2ywySBkexWsA-1; Fri, 21 Feb 2020 15:21:41 -0500
-X-MC-Unique: c0A5W65YPU2ywySBkexWsA-1
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Fri, 21 Feb 2020 12:21:27 -0800
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Fri, 21 Feb 2020 12:21:27 -0800
-From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-To: Patrick Williams <patrick@stwcx.xyz>, Alexander Tereschenko
- <aleksandr.v.tereschenko@linux.intel.com>
-Subject: RE: Security Working Group meeting - this Wednesday February 19 -
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48PNKV4jZrzDqWS
+ for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2020 07:26:54 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 3A4D370B1;
+ Fri, 21 Feb 2020 15:26:52 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Fri, 21 Feb 2020 15:26:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=PmWV2Yr6ZFGeK0gLiGxcv6YZga9
+ oqiPFcZW+paC+Hvo=; b=ro0BTbxEVEb5pcVG45PRnzNWpxusMFw5MbII+eeYf7d
+ Xx/tOpwmiW4h7dNtCjl23HIvkB3skhxuHYtc6GmoyDS9pq7Yht+2xLyUq/OBPs0h
+ TsVQQuK82GBKTAqosn99wNAN23RqK0TKi6W7oFfO52sYoFGGF4A50F2JCxRILgfx
+ vjIlqaTkSeiqcnn0DdlqpDciU22EgeAsHWLa4IGl0nhOugnRqv7TKJmWeh9jTVCx
+ j+12pJX+mNQixpDjbb2qV/uDcF4vrCmFOx4LTQJgGtAfFAgC493QFnj9L6GlNuPV
+ LjnRJY2Vps8eDk7sYiiVjFrlmkjbArlycKrnV1u8dEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=PmWV2Y
+ r6ZFGeK0gLiGxcv6YZga9oqiPFcZW+paC+Hvo=; b=BSf2dVx/r3Op9fJ9b/2bYp
+ gapEaRNxxRSH881BL5j5Gcmt1CLCGh170791IMYVIYaowH9rtBOSqo/dwH8Btefb
+ p01Ja6R27pISdFCqEIC0DgiRjF9D5iB5rJU5Vhh+HrlzgRLHtIs/VGOLTef7jGDa
+ HSW5KPfdOZxaqCH74u3LjeIRpVPBPKEX59BF88wE3l0RiTJNU8+xDc2lGvrjf1uB
+ yy061Z34kUWlZAfAz8Zo54eDlm2+MFDB347EOtQgcVE5xdKS+eFUmcNwbzmDtVxv
+ F0JseJoJA7RMCTCQTS66w64hsxkUkEni8B79aC1Ph1xsxPmU+O0sLeTvemMdTlog
+ ==
+X-ME-Sender: <xms:Cz1QXkaUNlP7DXAwT9WXtqHIdD7BnazxIXpqs5JINWX3mTOJsYEmrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrkeeggddufeejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecukfhppeduieefrdduudegrddufedtrdduvdeknecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
+ htfigtgidrgiihii
+X-ME-Proxy: <xmx:Cz1QXmzG6ClcxbspyJUcScr-BPP3nDeN1r-styqSbn97rUS-EZG7kA>
+ <xmx:Cz1QXpSr4bSaolX3sF4Y3yIRIMH0IAXZRbS7m1nz5fm_yLav3qBIJw>
+ <xmx:Cz1QXkpDGWYWLaDQ6YfaYC4nOo0AvoNP49FjKanRAHj2D4_iXhVSVg>
+ <xmx:DD1QXhTfq4-PGVpnBRLe4hFdMePUZFHta21DORTNXRsbciNs2_hGtQ>
+Received: from localhost (unknown [163.114.130.128])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 6959C3060FCB;
+ Fri, 21 Feb 2020 15:26:51 -0500 (EST)
+Date: Fri, 21 Feb 2020 14:26:50 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+Subject: Re: Security Working Group meeting - this Wednesday February 19 -
  summary results
-Thread-Topic: Security Working Group meeting - this Wednesday February 19 -
- summary results
-Thread-Index: AQHV53kchAwNjm22XUSQsHt720Ts56gkzDCAgAFNSYCAAIOVAP//fAqA
-Date: Fri, 21 Feb 2020 20:21:27 +0000
-Message-ID: <2c409610c4544e0187e37a5322c6a313@SCL-EXCHMB-13.phoenix.com>
+Message-ID: <20200221202650.GC67957@patrickw3-mbp.dhcp.thefacebook.com>
 References: <b9170918-0937-714a-470e-cb41e1e74b63@linux.ibm.com>
  <f4d9d6f6-277e-8c8b-6b5c-d0577eaa82cc@linux.ibm.com>
  <20200220162633.GB41328@patrickw3-mbp.dhcp.thefacebook.com>
  <2b30dde7-3415-8c7a-2001-28793e938339@linux.intel.com>
  <20200221201022.GA67957@patrickw3-mbp.dhcp.thefacebook.com>
-In-Reply-To: <20200221201022.GA67957@patrickw3-mbp.dhcp.thefacebook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.122.68.174]
+ <2c409610c4544e0187e37a5322c6a313@SCL-EXCHMB-13.phoenix.com>
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="NKoe5XOeduwbEQHU"
+Content-Disposition: inline
+In-Reply-To: <2c409610c4544e0187e37a5322c6a313@SCL-EXCHMB-13.phoenix.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,86 +102,58 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--NKoe5XOeduwbEQHU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> -----Original Message-----
-> From: openbmc [mailto:openbmc-
-> bounces+bruce_mitchell=3Dphoenix.com@lists.ozlabs.org] On Behalf Of
-> Patrick Williams
-> Sent: Friday, February 21, 2020 12:10
-> To: Alexander Tereschenko
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: Security Working Group meeting - this Wednesday February
-> 19 - summary results
->=20
-> On Fri, Feb 21, 2020 at 01:19:25PM +0100, Alexander Tereschenko wrote:
-> > On 20-Feb-20 17:26, Patrick Williams wrote:
-> > > Can we put something into bmcweb to detect its own certificate has
-> > > expired and generate a new one?
-> >
-> > The idea here is to discourage any prolonged use of the default
-> self-signed
-> > certs at all, as they don't provide full protection from MitM attacks.
-> > That's why the 30 days validity period was suggested (compared to
-> current 10
-> > years) and discussed during the meeting. Adding an auto-regeneration
-> feature
-> > would be going directly against that idea, so I personally wouldn't
-> vote for
-> > that.
->=20
-> To me, if bmcweb is handing out an expired self-signed certificate that i=
-s
-> a bug.  I don't think we should be so heavy-handed to decide for others
-> what "secure" means.  We can certainly propose best practices but we
-> should not force specific behavior.
->=20
-> I'm not suggesting that real certs aren't better than self-signed ones, b=
-ut
-> some people have a well-isolated management network in a data center
-> behind locked doors.  They might decide that the likelihood of MitM
-> attack there isn't serious enough to devote engineering resources on a
-> certificate distribution scheme. (*)
->=20
-> We should keep in mind that part of the original motivation for this
-> project, and what keeps certain companies that don't market general-
-> purpose servers involved in it, is that they weren't satisfied with the
-> constraints being placed on them by the standard offering in the industry=
-.
-> If we become too heavy-handed here, we also lose that advantage.
->=20
+On Fri, Feb 21, 2020 at 08:21:27PM +0000, Bruce Mitchell wrote:
 
-I do not believe that the BMC's self-generated self-signed certificate shou=
-ld
-be beyond what web browsers will accept (or in the near future).  If the cu=
-stomer
-wants to install their own self-signed certificate (i.e. not from the BMC) =
-then that
-is their issue and can do what they want on  their own self-signed certific=
-ate.
+Hi Bruce,
 
-> > > I know self-signed certs aren't great, but the minute I have more
-> than 6
-> > > systems I'm not going to want to follow some "BMC Admin Guide" to
-> update
-> > > certificates by hand.  So we're effectively forcing everyone to
-> develop
-> > > some kind of certificate management infrastructure, without
-> providing
-> > > (or pointing to an existing) implementation.
-> > I'd say that in such context, you'd be using one of the configuration
-> > management systems (Puppet/Chef/Salt/Ansible/homegrown
-> scripts/whatnot)
-> > anyway, as that's a standard system administration BKM, so IMHO that's
-> a
-> > reasonable assumption at the OpenBMC project end that it's not going
-> to add
-> > any noticeable burden for BMC admins.
->=20
-> Fair.  But again, others might not feel that is a high enough value
-> problem to devote engineering resources to solve.
->=20
-> (*) Please don't read this as an implication into how my current
->     employer's management network is or is not designed.
-> --
-> Patrick Williams
+> I do not believe that the BMC's self-generated self-signed certificate sh=
+ould
+> be beyond what web browsers will accept (or in the near future).  If the =
+customer
+> wants to install their own self-signed certificate (i.e. not from the BMC=
+) then that
+> is their issue and can do what they want on  their own self-signed certif=
+icate.
 
+I think this is in reference to your original concern about the
+certificate being 800+ days?  If so, I agree we should shorten if that is
+more appropriate from a browser perspective.
+
+My only concern is that it appears we're generating the certificate once
+and if the bmcweb daemon stays up longer than that expiration time, we
+end up serving out an expired certificate.  Unfortunately this isn't
+something you can even observe until 30 days or so in the future.
+
+[ I remember once having a ~40 day bug in a product because someone
+  stored milliseconds in a 32 bit integer.  It can be a real pain to debug
+  something that only happens when you don't touch it for a month. ]
+
+--=20
+Patrick Williams
+
+--NKoe5XOeduwbEQHU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5QPQoACgkQqwNHzC0A
+wRlaVA/+Kk9dRxE162pvMHvShfxX7iqZG3xIKi8CH9sIQmQkmYymBI2wx3l+LQyC
+TKf0GUSGKW2rtwfU0PdeRq8sG9ytXsCjJB7N9/ptdzQpFLoxqjtWBtwJwCz+6L8T
+B6lux0zrNWzB12jmJZfuavqqjZhGh06sPpwsFkv2Al5a7U5JcULy98TbSqHzDfFv
+DR84bZJXoNq3v0/+kSJjzyLOvpS053ZX4txmKFiypudnS3V58K2pTKAngJ0J3xCM
+LwmRwkvzHPiSQPg1GlzdxYvMbao+4Mu6/M9BDlNJPQz+7V79MBRkrd+MzNYp8V4C
+hZjCD1C4L60VtN/Ta6Vt0k+RV3wk4Ukw14n4bnXatwxE2AbPSlvLwyslEiYWVRk1
+o1KdTROgkAZ561jcwiRaKgIp35dW4Z7CyamjY6zmGhlwuqUN1kfhrcIgBHV2+pbV
+iD7L96Io37pIB2b0IqGLtMZ/vjJiwuyR+SZ+26KSMVMhIL2r1rcBQIegkiDtRINZ
+cbVo2tOqftLcWZSJx4Sj14kHqRLk3GznXEEI2qV9WfA+VkYTxGJ06oMmldZ3Br56
+dBJ4sLbi/EcTVPNdjmTve5Pun2DoAMh1t5tbuErtxnGJN17a7ZA0nA+xUg4WYM8q
+rrPSQ7W5+6FTm05W+IPAnJ/JaUOon+5xthE/0MiJuYFarZpI2rE=
+=H2Xr
+-----END PGP SIGNATURE-----
+
+--NKoe5XOeduwbEQHU--
