@@ -1,77 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B674168845
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 21:22:00 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59EC2168822
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 21:12:26 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48PN0l4VxbzDqp5
-	for <lists+openbmc@lfdr.de>; Sat, 22 Feb 2020 07:12:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48PNCm56j8zDqZy
+	for <lists+openbmc@lfdr.de>; Sat, 22 Feb 2020 07:21:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::331;
- helo=mail-ot1-x331.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.221;
+ helo=new1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XqM34JOo; dkim-atps=neutral
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com
- [IPv6:2607:f8b0:4864:20::331])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=YJD38pJJ; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=wYYBGzoB; 
+ dkim-atps=neutral
+Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
+ [66.111.4.221])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48PMyp1dtZzDqlp
- for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2020 07:10:41 +1100 (AEDT)
-Received: by mail-ot1-x331.google.com with SMTP id g64so3107034otb.13
- for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 12:10:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=X2jqUNDYNdEFt7xWFKWQW6mHg4zwdYmL2f4VJWcUgF4=;
- b=XqM34JOoJTDfzIdR3U6TJwtLDhkUAuCWdF74oh4QRocvDh9Dih9+i33sfxfn+wCdak
- zH2oaNGXLyb67ay0AkKqwt4Uct/nzV2L4h9eNDKCEkq9iGmZKU5FjiKxrSuwhKuqerdo
- Zb3ZrjZnhKeEcZij3p112Ko6WcdEfvzqIE1mkycxsYddEXXOXZa9104VJdpdSCuHSKhi
- d/vek3EALi+h9JUckihGqKNiXFIMvypo0MrxkDXCahZPGVbrfr8fpA9BTzHoR356jl0J
- vl2Nh6vSeThshot4dVA1htQUZu8hnxPsslKp+8mYF4lEKUQYGGGOuIxScaXwtGg+cK0k
- 3jkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=X2jqUNDYNdEFt7xWFKWQW6mHg4zwdYmL2f4VJWcUgF4=;
- b=bHNCxwmMHKPBKs+uWUW6mUIXBTY1rlklXQBqJXcDaX1kmwjplfnLSfSDdGd1KNaAFv
- D/bmNIQFUvcSH+M/Fgp+yUT+UznXl2Y94Aa3BooZQrIGf1SSMrpF/7RWLN/YLx6RkOAr
- wUfvrHVLwzpyXEkcWsaWKA27ffhqDDFwQ0vd0cFsh8NOpQw2MXAGlnaGJuoiItESkLE1
- NauOAEapQuJiAEUOKlmpSukW6YbM1nQ873CJjBLOZGKh/osDTJhaxa8mQwIV0OkJMp1M
- FjdqiM4Bsk2sWwEHUWpR7JeDnpdtgNnk/KR7goleiivYip5zzKfC4HT82Kw8D1pyaIHn
- CKkA==
-X-Gm-Message-State: APjAAAV1doSFE39x2QM7RLxUWFy5eSN6+N6P8YPBHZs2WCX9XsRNIeWQ
- VTwyAUypZqd7WMaLnX9bT9V9veJp
-X-Google-Smtp-Source: APXvYqzQac8jVkdBQouw2gXpntUwWmnKBXsdx7fkeAEuXRtyNKih4N7e+EJndt5daSVF/sbm4vFkHA==
-X-Received: by 2002:a9d:4c14:: with SMTP id l20mr29472167otf.125.1582315837038; 
- Fri, 21 Feb 2020 12:10:37 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id j13sm1224521oij.56.2020.02.21.12.10.35
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 21 Feb 2020 12:10:36 -0800 (PST)
-Subject: Re: sdbusplus commits missing CLA
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <20200220203546.GF41328@patrickw3-mbp.dhcp.thefacebook.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <97f984a2-e975-c620-7fc3-e3b7defb75ea@gmail.com>
-Date: Fri, 21 Feb 2020 14:10:35 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48PNC13r4WzDqRY
+ for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2020 07:21:17 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailnew.nyi.internal (Postfix) with ESMTP id 9B35F1D58;
+ Fri, 21 Feb 2020 15:21:14 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Fri, 21 Feb 2020 15:21:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=0qayHbu85nOMHgKQXBZPvwNAkwg
+ RJY159l6K+HSjpyg=; b=YJD38pJJdoQ9cz4phqMYR10FeL2RgGOD9GeF4TyeRxz
+ A83541xYjrlDxtA1kKoGCou1e09+SoUskiZd/2rE/U31fTHrA0uGvi3Fm+l4Z1+8
+ 4uJX//NMDiL3uwfXC0jMFKz2jaTP4orCe6H1yeFNs8AMF73IvsqPYNfxNv8cyBKj
+ XmSQZXMFvz5VcMp29uKtptrGDy2BFFCYoXhiPiMC4fkdfOPQpIvCSemHU4EBj9xU
+ /5M0Qj6b1z+cRsh+Et/nCewHl48POuq8LiY4aAwXPecHYu/GFLDZfv6DYKL9Wg8H
+ AEukS9ABG/ULu3nxJ30qaPNij+dP6PB1mtzUDC6aCPg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=0qayHb
+ u85nOMHgKQXBZPvwNAkwgRJY159l6K+HSjpyg=; b=wYYBGzoBo4Q8rfpKiHbYMU
+ jQcWTYWPrvc3soREKxFJUw+ZbVVecxWqLlHHTx51DbhiRDxmvVU8G9hHC0/4om84
+ jiPtznJkwEwZJkeR9lJtLbN+aTgb2JQmed7u1PenOT3MRhkPbqmvFyTW2PWZub96
+ oOfSicIMUpO1QytOlRxZg1wyKLpXsNuxNoBw7aSUsaV/c6scxgME4aMM4kcJ1mgt
+ IL6kP3u2ZIn/xAjJ3e2Snl/5wQLTpQr3aOHi9Ch6zdDn4L4xcfn+1zYhqknw0zxz
+ kRowRzPm5MK9EjSTReDBqqhlE40rB8TcGvpn4rYxHcAa82OdY70u+LByNrBkgIeQ
+ ==
+X-ME-Sender: <xms:uTtQXpfdD7xUWnr8qcpZroayDYtXqe-FRySdJsOhRZWE93hTCJj0TA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrkeeggddufeehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtudenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecukfhppeduieefrdduud
+ egrddufedtrdduvdeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+ lhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:uTtQXjavr2_zVcttJnKfWnNB3avCaZtbfEpryVCHIbmXuyUo_VcmHg>
+ <xmx:uTtQXpqE0MPhHpc_L0wELBGF7mvN8Fr5gW11oXET7sCq2cf_p9BpZw>
+ <xmx:uTtQXugzbm_MMVj8zJrJzVocPy3Qfg6GQsnZZqrSs8od7Sxvv3qRaw>
+ <xmx:uTtQXnvqOJugrQ6G20Ex9NE6ruFKRs3b8Tre5dWoAKlkS7GwMo7G7w>
+Received: from localhost (unknown [163.114.130.128])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 733D03060BE4;
+ Fri, 21 Feb 2020 15:21:13 -0500 (EST)
+Date: Fri, 21 Feb 2020 14:21:12 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+Subject: Re: AST2500 I2C problem
+Message-ID: <20200221202112.GB67957@patrickw3-mbp.dhcp.thefacebook.com>
+References: <1699551582274510@sas1-1199a7868807.qloud-c.yandex.net>
 MIME-Version: 1.0
-In-Reply-To: <20200220203546.GF41328@patrickw3-mbp.dhcp.thefacebook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="VrqPEDrXMn8OVzN4"
+Content-Disposition: inline
+In-Reply-To: <1699551582274510@sas1-1199a7868807.qloud-c.yandex.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,44 +94,62 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/20/20 2:35 PM, Patrick Williams wrote:
-> Kurt,
 
-(Not a lawyer)
+--VrqPEDrXMn8OVzN4
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> We have a few commits for the openbmc/sdbusplus repository that have
-> been floating around in Gerrit since early 2018 and seem to be stuck in
-> "missing CLA limbo".  It appears that there was some discussion on the
-> CLA at one point but I don't know what happened to it.  I don't see a
-> CLA from the Bosch company in the Google Doc folder.
+On Fri, Feb 21, 2020 at 11:42:00AM +0300, Konstantin Klubnichkin wrote:
+> Hello, collegues!
+> =A0
+> I've faced a problem that don't know how to solve without tricks like ove=
+rlay
+> DTS.
+> =A0
+> I have PCA9555 device on I2C-11 bus, it's described in DTS as follows:
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> [ 3.128679] pca953x 11-0020: failed writing register
+> [ 3.133860] pca953x: probe of 11-0020 failed with error -110
+> [ 3.139801] aspeed-i2c-bus 1e78a400.i2c-bus: i2c bus 11 registered (dma m=
+ode),
+> irq 44
 
-I have not received a CLA from Bosch, or an ICLA from the developer(s) 
-referenced.
+Errno 110 is:
+    #define	ETIMEDOUT	110	/* Connection timed out */
 
-> https://gerrit.openbmc-project.xyz/q/owner:mark.jonas%2540de.bosch.com
-> 
-> There was recently a request to revive this work because someone else is
-> finding it useful (and we've had a feature request open for a long time
-> on one of them as well).  What options do we, the maintainers, have in
-> this situation?
+I think on i2c devices this happens when there is a NACK condition to
+the slave address on the bus.  The odd thing here is that usually the
+probing infrastructure handles the parent device (i2c bus in this case)
+not being ready by returning EPROBE_DEFER in the device probe function.
 
-We cannot accept/merge the code until resolved. If they cannot complete 
-a ICLA/CCLA for this submission, it should be abandoned.
+Is 'bus 11' a virtual bus behind an i2c mux / switch?  It is possible
+that either the driver for that switch or the pca953x driver isn't
+properly handling this condition and not sending back EPROBE_DEFER.
 
-> I don't really want to blindly reimplement this feature since there was
-> good work done here.  There appears to have been no plagiarism issues.
-> Since the commits have a S-O-B by two people from the same company, it
-> seems reasonable that they fully intended to contribute this work
-> publicly.  I'm not looking to restart a "why do we have CLAs"
+--=20
+Patrick Williams
 
-CLA's protect the company, individual and the project. We must have 
-permission from the company that a developer they are employing has 
-their permission to submit code to the project. If they don't care, that 
-is what the ICLA is for.
+--VrqPEDrXMn8OVzN4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Kurt Taylor (krtaylor)
+-----BEGIN PGP SIGNATURE-----
 
-> discussion, but it seems like we need some direction on what maintainers
-> should do when there is a missing CLA.
-> 
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5QO7YACgkQqwNHzC0A
+wRkebw//S5VETBwrov748rRXIT50hvlattQrQelV1ZvWtRSs8J9WLSZFzaqrO9Mq
+Zrvmb7+lZVV9FuzvLvPQD55ZJBuRp9Fiw7+KWPkIwxwo0E+xQHke3Svvsb3i5/nO
+uxOQ5h1a7ZPEuEHIhX7OW5QVKaYCp5bVQO2DvxRkxTnkBnAhooTJ6Pm4mWldh/Ti
+v06FYsMZfjo1zfVevJb37oz224Q7HUAUZQTBT3tdSULuJ2/R7ykisQfylK+k4H4w
+56IR2NFW7fuvEkcYhUS8rwgseUD4biKxJ4vK2yPpTRVfnQsnxB0SbXhClszsxrzV
+Cj/YILdgkzwtS8r2VT3ugUWgW8WFRoYIrYmcjo1SLf+VWOIikbRCFh6CFsHw5MQL
+QcgBMAORMQdv6TD+ZB6/bzdhi6prlX6IWVlUg99GE2aZc5xbWQpg153CdF/LHCUq
+jHwn8RDidyABZzik1T0MJLJuRhlLYiRNklSpZjlrJJ8pTIrOBs+2nVpC+VIjKoGH
+wwkHmN7PxBg6wpRMUkFuwIuhww6P720bgNBR5SgV7JYNMTJpAQnlADcN1/tXYvtj
+s5z9tucg3zs9opSlYY2C1a1kcvrKuGj7ylAvj7phnkC722ktA/8lyHRP8MEQfBE2
+n1IxY4M2n7XGbeiQyRa6RP2P2UiQvs2cawMPO9OroUEY/oCu4kA=
+=LQDN
+-----END PGP SIGNATURE-----
 
+--VrqPEDrXMn8OVzN4--
