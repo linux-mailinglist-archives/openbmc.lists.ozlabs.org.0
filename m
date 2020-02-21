@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 918F5167D51
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 13:20:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C9376167DB0
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 13:47:05 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48P9XK2hS5zDqM9
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 23:20:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48PB6t6ZNnzDqlK
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 23:47:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,33 +18,31 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48P9W950bnzDqkK
- for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 23:19:31 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48PB5f5WT0zDqZy
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 23:45:56 +1100 (AEDT)
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from orsmga008.jf.intel.com ([10.7.209.65])
  by fmsmga104.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2020 04:19:27 -0800
+ 21 Feb 2020 04:45:54 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,468,1574150400"; d="scan'208";a="229834527"
+X-IronPort-AV: E=Sophos;i="5.70,468,1574150400"; d="scan'208";a="229840808"
 Received: from avteresc-mobl1.ger.corp.intel.com (HELO [172.22.245.179])
  ([172.22.245.179])
- by orsmga008.jf.intel.com with ESMTP; 21 Feb 2020 04:19:26 -0800
-Subject: Re: Security Working Group meeting - this Wednesday February 19 -
- summary results
+ by orsmga008.jf.intel.com with ESMTP; 21 Feb 2020 04:45:53 -0800
+Subject: Re: Proposal: delete BMCWeb sessions after some kinds of account
+ changes
 To: openbmc@lists.ozlabs.org
-References: <b9170918-0937-714a-470e-cb41e1e74b63@linux.ibm.com>
- <f4d9d6f6-277e-8c8b-6b5c-d0577eaa82cc@linux.ibm.com>
- <20200220162633.GB41328@patrickw3-mbp.dhcp.thefacebook.com>
+References: <62c905ac-d35b-f670-aed7-589488676db0@linux.ibm.com>
 From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
-Message-ID: <2b30dde7-3415-8c7a-2001-28793e938339@linux.intel.com>
-Date: Fri, 21 Feb 2020 13:19:25 +0100
+Message-ID: <ef0ff8ae-4e43-1905-c5a8-d8c523c3a82a@linux.intel.com>
+Date: Fri, 21 Feb 2020 13:45:52 +0100
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.5.0
 MIME-Version: 1.0
-In-Reply-To: <20200220162633.GB41328@patrickw3-mbp.dhcp.thefacebook.com>
+In-Reply-To: <62c905ac-d35b-f670-aed7-589488676db0@linux.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -60,24 +58,21 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 20-Feb-20 17:26, Patrick Williams wrote:
-> Can we put something into bmcweb to detect its own
-> certificate has expired and generate a new one?
+On 17-Feb-20 23:10, Joseph Reynolds wrote:
+> This proposal is to enhance BMCWeb to terminate login session that are 
+> associated with accounts that have incompatible changes.  I understand 
+> this practice is allowed Redfish and recommended by OWASP.
+>
+This makes sense to me, with one specific note - see below
 
-The idea here is to discourage any prolonged use of the default 
-self-signed certs at all, as they don't provide full protection from 
-MitM attacks. That's why the 30 days validity period was suggested 
-(compared to current 10 years) and discussed during the meeting. Adding 
-an auto-regeneration feature would be going directly against that idea, 
-so I personally wouldn't vote for that.
+> - The [proposed][] ExpiredPassword D-Bus property and the 
+> PasswordChangeRequired Redfish properties set to True.  Sessions where 
+> this property is True are needed for a user to change their own password.
 
-> I know self-signed certs aren't great, but the minute I have more than 6
-> systems I'm not going to want to follow some "BMC Admin Guide" to update
-> certificates by hand.  So we're effectively forcing everyone to develop
-> some kind of certificate management infrastructure, without providing
-> (or pointing to an existing) implementation.
-I'd say that in such context, you'd be using one of the configuration 
-management systems (Puppet/Chef/Salt/Ansible/homegrown scripts/whatnot) 
-anyway, as that's a standard system administration BKM, so IMHO that's a 
-reasonable assumption at the OpenBMC project end that it's not going to 
-add any noticeable burden for BMC admins.
+While not terminating these sessions (which certainly makes sense), 
+should we restrict them to only allow for password change action 
+starting immediately after that flag is set? I'm not sure how it works now.
+
+regards,
+Alexander
+
