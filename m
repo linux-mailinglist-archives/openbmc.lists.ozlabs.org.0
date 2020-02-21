@@ -1,83 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 552A8167773
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 09:43:21 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03F99166B99
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 01:28:04 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Nsk92JZgzDqc2
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 11:28:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48P4jf2bDKzDqnF
+	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 19:43:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::442;
- helo=mail-pf1-x442.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1a2d::193;
+ helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Mk0CLeyD; dkim-atps=neutral
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com
- [IPv6:2607:f8b0:4864:20::442])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=yandex-team.ru
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
+ header.a=rsa-sha256 header.s=default header.b=vieBBFxm; 
+ dkim-atps=neutral
+Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
+ [IPv6:2a02:6b8:0:1a2d::193])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48NsjV5LzlzDqL9;
- Fri, 21 Feb 2020 11:27:24 +1100 (AEDT)
-Received: by mail-pf1-x442.google.com with SMTP id j9so258810pfa.8;
- Thu, 20 Feb 2020 16:27:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=vlf9e8PCxMy8eGHAA66JnCJwWWqoU2+bIGR18Xk5wUE=;
- b=Mk0CLeyDzct1sX63axT7hMDuzVKps8CcPRH1gOBCgnC7dn6oGylada1Aq+d2q80tY0
- IsrTO0zoWHUIkV7J+5At6YZmXgmlXtk7b3/Atb4YkT3gjxHVOJD4X11a9gW3J9xogMmC
- yZBgYo6tX7Y4rEeYV94pJ3gMaQvTCMue/PkSOzNkDi3wVYc0Imdo+gDWx9lys6yorXP2
- d6/f8BRHjs4lhqKHRWX2KYa9vABy7PeVZWqGP83q3chVv32+JaUjuUhP7LbrHgI0eWz2
- lb7i9Cbef+4fPYScbvO2rLsq4RJVaRPY/sle1TzfSAEKVlNCVpgcPl4xE/r0AtBWBNaB
- ZYDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=vlf9e8PCxMy8eGHAA66JnCJwWWqoU2+bIGR18Xk5wUE=;
- b=FqsvdTTXV1t7JF/9Rbruk4UiOM5SHAsS6HCqqDdLCC7Y+5n3C/v6Y8CTcEcNihq99m
- w/FYGL9zjXivVKaYb0X0GyTInnIdGYugRqH+TVqw5QUfE8c2V5n3z4f1x4kNziAVkPgy
- 4/RpCGcsHLf9m4ikWmxZV12YKJr9v1IUTQ/uf+/00fcDzC7hC+ixwg6bPrbibYpLUq+z
- WzcLx2NViHMkh7FeEei9AQmjwP5Ods8oxk+315rY3B1IgSaW8wIMKbXRgogm2m1GFn+0
- or1hwUkalys9KnA7upL7iLk2ANLwGYwhl6VwfhRHF0x18LLKCavbvQ4sb3tlXqbTyGTG
- k7iA==
-X-Gm-Message-State: APjAAAUJWcDAovwyir662FjG8G6ViC9tU+iF2M/iMMAYiMpbqF9ePgaq
- uDtxa1M3keMNCJujx9ioLh0=
-X-Google-Smtp-Source: APXvYqyeVIYTi7VwppjFDqFRf+PGuo3qQ+FGi2uyU11/sFnMcwObMpN+4M+7gA1IAJ8rt9kz3zp3MA==
-X-Received: by 2002:a62:1883:: with SMTP id 125mr33901467pfy.166.1582244839582; 
- Thu, 20 Feb 2020 16:27:19 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:500::6:8f30])
- by smtp.gmail.com with ESMTPSA id fh24sm535479pjb.24.2020.02.20.16.27.18
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 20 Feb 2020 16:27:19 -0800 (PST)
-Date: Thu, 20 Feb 2020 16:27:16 -0800
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Felipe Balbi <balbi@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Chunfeng Yun <chunfeng.yun@mediatek.com>,
- Colin Ian King <colin.king@canonical.com>,
- Stephen Boyd <swboyd@chromium.org>, Rob Herring <robh+dt@kernel.org>,
- Mark Rutland <mark.rutland@arm.com>, linux-usb@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: Re: [PATCH v3 0/5] aspeed-g6: enable usb support
-Message-ID: <20200221002715.GC7815@taoren-ubuntu-R90MNF91>
-References: <20200218031315.562-1-rentao.bupt@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48P4hQ5MHVzDqlB
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 19:42:09 +1100 (AEDT)
+Received: from mxbackcorp2j.mail.yandex.net (mxbackcorp2j.mail.yandex.net
+ [IPv6:2a02:6b8:0:1619::119])
+ by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 4DF742E15AE
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Feb 2020 11:42:00 +0300 (MSK)
+Received: from localhost (localhost [::1])
+ by mxbackcorp2j.mail.yandex.net (mxbackcorp/Yandex) with ESMTP id
+ f7aunHjGrV-g0eKbI66; Fri, 21 Feb 2020 11:42:00 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; 
+ t=1582274520; bh=XJpsRSnA7W6QOtBLX4q9aO2AD1INON11J6//t5dVNVA=;
+ h=Date:Message-Id:Subject:To:From;
+ b=vieBBFxmeRUyZYUnhitFfWOC4uU8cgJqMPh8CgiOa8A76c/1oitVD6HSK1tCubCxC
+ iGx4c1lSZ4cBLPcVxfg+H7yNKwR3cFNa/zu8x31d1V1mI/6ADEKvtEUi8Sj9n6A+3g
+ RR82Ggcqbip6UUBmQBz3FWuGA3ly1Y6tdoeEKgms=
+Authentication-Results: mxbackcorp2j.mail.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+X-Yandex-Sender-Uid: 1120000000049860
+X-Yandex-Avir: 1
+Received: from mxbackcorp1o.mail.yandex.net (localhost [::1])
+ by mxbackcorp1o.mail.yandex.net with LMTP id aEiphONq7c-5WXtaC2e
+ for <kitsok@yandex-team.ru>; Fri, 21 Feb 2020 11:41:50 +0300
+Received: by sas1-1199a7868807.qloud-c.yandex.net with HTTP;
+ Fri, 21 Feb 2020 11:41:50 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+To: openbmc@lists.ozlabs.org
+Subject: AST2500 I2C problem
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200218031315.562-1-rentao.bupt@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Fri, 21 Feb 2020 11:42:00 +0300
+Message-Id: <1699551582274510@sas1-1199a7868807.qloud-c.yandex.net>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,52 +71,60 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ben,
-
-Could you provide some comments on this patch series while I'm working on
-the other patch set (for vhub descriptors and DT binding document)?
-
-
-Cheers,
-
-Tao
-
-On Mon, Feb 17, 2020 at 07:13:10PM -0800, rentao.bupt@gmail.com wrote:
-> From: Tao Ren <rentao.bupt@gmail.com>
-> 
-> The patch series aims at enabling USB Host and Gadget support on AST2600
-> platforms.
-> 
-> Patch #1 replaces hardcoded vhub port/endpoint number with device tree
-> properties, so that it's more convenient to add support for ast2600-vhub
-> which provides more downstream ports and endpoints.
-> 
-> Patch #2 enables ast2600 support in aspeed-vhub usb gadget driver.
-> 
-> Patch #3 adds USB devices and according pin groups in aspeed-g6 dtsi.
-> 
-> Patch #4 and #5 add vhub port/endpoint properties into aspeed-g4 and
-> aspeed-g5 dtsi.
-> 
-> Tao Ren (5):
->   usb: gadget: aspeed: read vhub properties from device tree
->   usb: gadget: aspeed: add ast2600 vhub support
->   ARM: dts: aspeed-g6: add usb functions
->   ARM: dts: aspeed-g5: add vhub port and endpoint properties
->   ARM: dts: aspeed-g4: add vhub port and endpoint properties
-> 
->  arch/arm/boot/dts/aspeed-g4.dtsi           |  2 +
->  arch/arm/boot/dts/aspeed-g5.dtsi           |  2 +
->  arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi   | 25 +++++++
->  arch/arm/boot/dts/aspeed-g6.dtsi           | 45 ++++++++++++
->  drivers/usb/gadget/udc/aspeed-vhub/Kconfig |  4 +-
->  drivers/usb/gadget/udc/aspeed-vhub/core.c  | 79 +++++++++++++++-------
->  drivers/usb/gadget/udc/aspeed-vhub/dev.c   | 30 +++++---
->  drivers/usb/gadget/udc/aspeed-vhub/epn.c   |  4 +-
->  drivers/usb/gadget/udc/aspeed-vhub/hub.c   | 26 ++++---
->  drivers/usb/gadget/udc/aspeed-vhub/vhub.h  | 23 +++----
->  10 files changed, 178 insertions(+), 62 deletions(-)
-> 
-> -- 
-> 2.17.1
-> 
+PGRpdj5IZWxsbywgY29sbGVndWVzITwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PkkndmUgZmFjZWQg
+YSBwcm9ibGVtIHRoYXQgZG9uJ3Qga25vdyBob3cgdG8gc29sdmUgd2l0aG91dCB0cmlja3MgbGlr
+ZSBvdmVybGF5IERUUy48L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5JIGhhdmUgUENBOTU1NSBkZXZp
+Y2Ugb24gSTJDLTExIGJ1cywgaXQncyBkZXNjcmliZWQgaW4gRFRTIGFzIGZvbGxvd3M6PC9kaXY+
+PGRpdj49PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PTwvZGl2PjxkaXY+PGRpdj4mYW1wO2kyYzExIHs8IS0tIC0tPjwvZGl2Pjxk
+aXY+wqAgwqAgwqAgwqAgwqAgwqAgYnVzLWZyZXF1ZW5jeSA9ICZsdDsxMDAwMDAmZ3Q7OzwvZGl2
+PjxkaXY+wqAgwqAgwqAgwqAgwqAgwqAgbXVsdGktbWFzdGVyOzwvZGl2PjxkaXY+wqAgwqAgwqAg
+wqAgwqAgwqAgI3JldHJpZXMgPSAmbHQ7NSZndDs7PC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDCoCDC
+oCBhc3BlZWQsZG1hLWJ1Zi1zaXplID0gJmx0OzQwOTUmZ3Q7OzwvZGl2PjxkaXY+wqAgwqAgwqAg
+wqAgwqAgwqAgYXNwZWVkLGh3LXRpbWVvdXQtbXMgPSAmbHQ7MzAwJmd0Ozs8L2Rpdj48ZGl2PsKg
+IMKgIMKgIMKgIMKgIMKgIHN0YXR1cyA9ICJva2F5Ijs8L2Rpdj48ZGl2PjxkaXY+wqAgwqAgwqAg
+wqAgwqAgwqAgZ3Bpb19leHA6IHBjYTk1NTVAMjAgezwhLS0gLS0+PC9kaXY+PGRpdj7CoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNvbXBhdGlibGUgPSAibnhwLHBjYTk1
+NTUiOzwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBy
+ZWcgPSAmbHQ7MHgyMCZndDs7PC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCNncGlvLWNlbGxzID0gJmx0OzImZ3Q7OzwvZGl2PjxkaXY+wqAgwqAgwqAg
+wqAgwqAgwqAgwqB9OzwvZGl2PjxkaXY+fTs8L2Rpdj48L2Rpdj49PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PTwvZGl2PjxkaXY+
+wqA8L2Rpdj48ZGl2PlRoZSBwcm9ibGVtIGlzIC0gdGhlIGRldmljZSBwcm9iaW5nIG9yZGVyIGlz
+IGJyb2tlbiBzb21laG93LCBzbyBQQ0E5NTU1IGNhbid0IGJlIHByb2JlZCBzdWNjZXNzZnVsbHkg
+ZHVyaW5nIGJvb3QgdGltZTo8L2Rpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PC9kaXY+PGRpdj48ZGl2PlsgMS45
+ODEzMjFdIGkyYyAvZGV2IGVudHJpZXMgZHJpdmVyPC9kaXY+PGRpdj5bIDEuOTg3MTEyXSBhc3Bl
+ZWQtaTJjLWJ1cyAxZTc4YTA0MC5pMmMtYnVzOiBpMmMgYnVzIDAgcmVnaXN0ZXJlZCAoZG1hIG1v
+ZGUpLCBpcnEgMzU8L2Rpdj48ZGl2PlsgMS45OTY4NDddIGFzcGVlZC1pMmMtYnVzIDFlNzhhMDgw
+LmkyYy1idXM6IGkyYyBidXMgMSByZWdpc3RlcmVkIChkbWEgbW9kZSksIGlycSAzNjwvZGl2Pjxk
+aXY+WyAyLjAwNjc0M10gYXNwZWVkLWkyYy1idXMgMWU3OGEwYzAuaTJjLWJ1czogaTJjIGJ1cyAy
+IHJlZ2lzdGVyZWQgKGRtYSBtb2RlKSwgaXJxIDM3PC9kaXY+PGRpdj5bIDIuMDE2Njg5XSBhc3Bl
+ZWQtaTJjLWJ1cyAxZTc4YTEwMC5pMmMtYnVzOiBpMmMgYnVzIDMgcmVnaXN0ZXJlZCAoZG1hIG1v
+ZGUpLCBpcnEgMzg8L2Rpdj48ZGl2PlsgMi4wMjczMDhdIGFzcGVlZC1pMmMtYnVzIDFlNzhhMTQw
+LmkyYy1idXM6IGkyYyBidXMgNCByZWdpc3RlcmVkIChkbWEgbW9kZSksIGlycSAzOTwvZGl2Pjxk
+aXY+WyAyLjAzNzE5N10gYXNwZWVkLWkyYy1idXMgMWU3OGExODAuaTJjLWJ1czogaTJjIGJ1cyA1
+IHJlZ2lzdGVyZWQgKGRtYSBtb2RlKSwgaXJxIDQwPC9kaXY+PGRpdj5bIDIuMDQ3NDU3XSBhc3Bl
+ZWQtaTJjLWJ1cyAxZTc4YTFjMC5pMmMtYnVzOiBpMmMgYnVzIDYgcmVnaXN0ZXJlZCAoZG1hIG1v
+ZGUpLCBpcnEgNDE8L2Rpdj48ZGl2PlsgMi4wNTc0MDldIGFzcGVlZC1pMmMtYnVzIDFlNzhhMzAw
+LmkyYy1idXM6IGkyYyBidXMgNyByZWdpc3RlcmVkIChkbWEgbW9kZSksIGlycSA0MjwvZGl2Pjxk
+aXY+WyAyLjA2NzI1MV0gYXNwZWVkLWkyYy1idXMgMWU3OGEzNDAuaTJjLWJ1czogaTJjIGJ1cyA4
+IHJlZ2lzdGVyZWQgKGRtYSBtb2RlKSwgaXJxIDQzPC9kaXY+PGRpdj5bIDMuMTI4Njc5XSBwY2E5
+NTN4IDExLTAwMjA6IGZhaWxlZCB3cml0aW5nIHJlZ2lzdGVyPC9kaXY+PGRpdj5bIDMuMTMzODYw
+XSBwY2E5NTN4OiBwcm9iZSBvZiAxMS0wMDIwIGZhaWxlZCB3aXRoIGVycm9yIC0xMTA8L2Rpdj48
+ZGl2PlsgMy4xMzk4MDFdIGFzcGVlZC1pMmMtYnVzIDFlNzhhNDAwLmkyYy1idXM6IGkyYyBidXMg
+MTEgcmVnaXN0ZXJlZCAoZG1hIG1vZGUpLCBpcnEgNDQ8L2Rpdj48ZGl2PlsgMy4xNDk3OTVdIGFz
+cGVlZC1pMmMtYnVzIDFlNzhhNDQwLmkyYy1idXM6IGkyYyBidXMgMTIgcmVnaXN0ZXJlZCAoZG1h
+IG1vZGUpLCBpcnEgNDU8L2Rpdj48L2Rpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PC9kaXY+PGRpdj7CoDwvZGl2
+PjxkaXY+SSB1bmRlcnN0YW5kIHRoYXQgdGltZXN0YW1wIGluIGRtZXNnIGlzIG5vdCBhYnNvbHV0
+ZWx5IGFjY3VyYXRlLCBidXQgbG9va3MgbGlrZSB0aGUgZGV2aWNlIGlzIHJlYWxseSBwcm9iZWQg
+YmVmb3JlIGJ1cyBpcyByZWFkeS48L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5JZiBJIGV4Y2x1ZGUg
+UENBOTU1NSBmcm9tIERUUyBhbmQgaW5zdGFudGlhdGUgaXQgbWFudWFsbHkgKGVjaG8gcGNhOTU1
+NSAweDIwICZndDsgL3N5cy9idXMvaTJjL2RldmljZXMvaTJjLTExL25ld19kZXZpY2UpLCBpdCB3
+b3JrcyBmaW5lLjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PldoYXQgYW0gSSBtaXNzaW5nPzwvZGl2
+PjxkaXY+wqA8L2Rpdj48ZGl2PlRoYW5rIHlvdSE8L2Rpdj48ZGl2Pi0twqA8L2Rpdj48ZGl2PkJl
+c3QgcmVnYXJkcyw8L2Rpdj48ZGl2PktvbnN0YW50aW4gS2x1Ym5pY2hraW4sPC9kaXY+PGRpdj5s
+ZWFkIGZpcm13YXJlIGVuZ2luZWVyLDwvZGl2PjxkaXY+c2VydmVyIGhhcmR3YXJlIFImYW1wO0Qg
+Z3JvdXAsPC9kaXY+PGRpdj5ZYW5kZXggTW9zY293IG9mZmljZS48L2Rpdj48ZGl2PnRlbDogKzct
+OTAzLTUxMC0zMy0zMzwvZGl2PjxkaXY+wqA8L2Rpdj4=
