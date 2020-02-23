@@ -2,63 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04A55168890
-	for <lists+openbmc@lfdr.de>; Fri, 21 Feb 2020 22:03:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 53445169711
+	for <lists+openbmc@lfdr.de>; Sun, 23 Feb 2020 10:46:30 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48PP883d8BzDqpC
-	for <lists+openbmc@lfdr.de>; Sat, 22 Feb 2020 08:03:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48QL1Z0R9FzDqYV
+	for <lists+openbmc@lfdr.de>; Sun, 23 Feb 2020 20:46:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=95.108.205.193;
- helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::635;
+ helo=mail-pl1-x635.google.com; envelope-from=ckimchan17@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=yandex-team.ru
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=TwfAxRps; 
- dkim-atps=neutral
-Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
- [95.108.205.193])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=pExSn0b3; dkim-atps=neutral
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com
+ [IPv6:2607:f8b0:4864:20::635])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48PP7V36NlzDqf2
- for <openbmc@lists.ozlabs.org>; Sat, 22 Feb 2020 08:03:14 +1100 (AEDT)
-Received: from mxbackcorp1j.mail.yandex.net (mxbackcorp1j.mail.yandex.net
- [IPv6:2a02:6b8:0:1619::162])
- by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 637462E157C;
- Sat, 22 Feb 2020 00:03:08 +0300 (MSK)
-Received: from localhost (localhost [::1])
- by mxbackcorp1j.mail.yandex.net (mxbackcorp/Yandex) with ESMTP id
- rJTEHKt9Z0-38DOgfSM; Sat, 22 Feb 2020 00:03:08 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1582318988; bh=zKrM8ejiBF1OqSTVjTmRvZVbTYYt3vEPCr3ttugR3NI=;
- h=Cc:Subject:Date:References:To:From:Message-Id;
- b=TwfAxRpsAiw3BLBtudV4FNevdp0RbeCcpYYrJfK/njInMslhqvN2vMsyRIlgmWJcl
- c/d1Va0SdmccxCHieBFrsYpaZmpDoL7ZzLqw2cyQVcHXtyVUk05s/2/O5dd48YlcOv
- JEpGJd5zaYHdSox89UDElTZle+L6Krkezyi/RWEI=
-Authentication-Results: mxbackcorp1j.mail.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from mxbackcorp1o.mail.yandex.net (localhost [::1])
- by mxbackcorp1o.mail.yandex.net with LMTP id O0PJrF63FB-dKCky03l
- for <kitsok@yandex-team.ru>; Sat, 22 Feb 2020 00:02:58 +0300
-Received: by myt4-457577cc370d.qloud-c.yandex.net with HTTP;
- Sat, 22 Feb 2020 00:02:58 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <1699551582274510@sas1-1199a7868807.qloud-c.yandex.net>
- <20200221202112.GB67957@patrickw3-mbp.dhcp.thefacebook.com>
-Subject: Re: AST2500 I2C problem
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48QL0w1k33zDqWN
+ for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2020 20:45:48 +1100 (AEDT)
+Received: by mail-pl1-x635.google.com with SMTP id t6so2757089plj.5
+ for <openbmc@lists.ozlabs.org>; Sun, 23 Feb 2020 01:45:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=message-id:mime-version:date:from:subject:thread-topic:to:cc
+ :content-transfer-encoding;
+ bh=O02l9RRZG9ZK6Bg60dl5Fyj2svR9J0ML5r6Uq0tuMCE=;
+ b=pExSn0b37gZdpr/7+VtKsW7G73na/SFshOUcf67ZWFS/RE+8yetHY89imHb/ud3Xah
+ AzazelfNBpIFy3ZOKG8EMuRBA2mQu75kZub/l6ypPI1MxwBm+8DAm15pJSZQLjyyYu2A
+ XVO2J67PZijN/J8Y8L1UiphsxDy7jiRz5vUKI9n/FSyxTWHo8pmZqgSBd4D6vAccrrkp
+ NJVsYzOsN75tPzT0jADRJLUb3L6wTM0+OXpq+hpxx4Hj3IF6CNR5xQgj9/NpZGcBSfqt
+ oVrE9F7sA1B71SvZ9pp+f56xrbucfURRLzJKLB3rMssdiYErZ5QzE57VeE4NF+5UvQuk
+ w8ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:message-id:mime-version:date:from:subject
+ :thread-topic:to:cc:content-transfer-encoding;
+ bh=O02l9RRZG9ZK6Bg60dl5Fyj2svR9J0ML5r6Uq0tuMCE=;
+ b=HgbYcG9L0MkSjefSylpMnrw8jFHoecBOGTUyi4f+1uIqkRqI0TtdkuaO7N8Zfm4xzz
+ h03Ew+1bjD3S+F85eoNmZx3hpuQsMm4DH4UjCfq+dmzNjaLeOExQmJxB4fgMpDqm+bzy
+ /C94Zgat9w1NEEDQdM3yB3ZGxz3wDa+eYXnz6cIr0WIVWhAlbSdH9v1nRiRKdgShm8MR
+ abE9V3Wb0JySy4FzvwpEw1sRxwa2cpeQs9Q+WmrGdknaKRNV2A7+uSywVPFEoWO18INi
+ 4ogjq1x3aVQyaDrTBXEjedyRYwtjw95SX3DCD+0TpRKbeoKZnbzi+7lIs7utBIGNQ8BN
+ OZ0g==
+X-Gm-Message-State: APjAAAW2QxyCXa2HriZLhCLJV57uHb14uNcVMACiNbi+SXh7sHwBV8wy
+ qVNOSqmcLXpVQY3MV5tJhxU=
+X-Google-Smtp-Source: APXvYqybpMmrzT35dnqPeHNZSLD/MqYgC3zeBbZwaUfaTgFeJZG7RL8xWRIFCZocLbKMvJUTCRvyaA==
+X-Received: by 2002:a17:90a:8a98:: with SMTP id
+ x24mr14350046pjn.113.1582451145440; 
+ Sun, 23 Feb 2020 01:45:45 -0800 (PST)
+Received: from smtp.gmail.com (180-177-28-13.dynamic.kbronet.com.tw.
+ [180.177.28.13])
+ by smtp.gmail.com with ESMTPSA id y10sm8762841pfq.110.2020.02.23.01.45.43
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Sun, 23 Feb 2020 01:45:44 -0800 (PST)
+Message-ID: <5e5249c8.1c69fb81.2f4cd.9202@mx.google.com>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Sat, 22 Feb 2020 00:03:08 +0300
-Message-Id: <3402461582318978@myt4-457577cc370d.qloud-c.yandex.net>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+Date: Sun, 23 Feb 2020 17:45:40 +0800
+From: =?utf-8?Q?=E9=99=B3=EF=BC=8C=E6=9D=BE=E5=84=89?= <ckimchan17@gmail.com>
+Subject: =?utf-8?Q?=E5=9B=9E=E8=A6=86:_Re:_=E5=9B=9E=E8=A6=86=EF=BC=9Askeleton?=
+Thread-Topic: =?utf-8?Q?=E5=9B=9E=E8=A6=86:_Re:_=E5=9B=9E=E8=A6=86=EF=BC=9Askeleton?=
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,50 +79,226 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj5IZWxsbywgUGF0cmljayE8ZGl2PsKgPC9kaXY+PGRpdj5UaGFuayB5b3UgZm9yIHRoZSBy
-ZXBseS48L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5JMkMtMTEgaXMgbmF0aXZlIEFTVDI1MDAgYnVz
-LjwvZGl2PjxkaXY+T25lIHRoaW5nIHRoYXQgbWF5IGJlIHVudXN1YWwgaXMgdGhhdCBidXNlcyA5
-IGFuZCAxMCBhcmUgZGlzYWJsZWQ6IHRoZXkgYXJlIHVudXNlZCwgYW5kIHRoZSBwaW5zIGFyZSB1
-c2VkIGZvciBhbHRlcm5hdGl2ZSBmdW5jdGlvbi48L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5JJ3Zl
-IGVuYWJsZWQgZGVidWcgb2YgZHJpdmVyIGluc3RhbnRpYXRpb24sIGJ1dCB3aWxsIGJlIGFibGUg
-dG8gZ2l2ZSBsb2dzIG9ubHkgb24gTW9uZGF5LjwvZGl2PjxkaXY+QWxzbyBJJ3ZlIHJldmlld2Vk
-IEkyQyBkcml2ZXIgc291cmNlcywgYW5kIGNhbid0IGZpbmQgYW55dGhpbmcgdGhhdCBjb3VsZCBw
-b3N0cG9uZSBidXMgcmVhZGluZXNzLCBidXQgSSdtIG5vdCBMaW51eCBndXJ1LjwvZGl2PjxkaXY+
-wqA8L2Rpdj48ZGl2PkkgaGFkIHRoZSBzYW1lIGVycm9yIHdpdGggSU5BMjE5IHNpdHRpbmcgb24g
-dGhlIG90aGVyIGJ1cywgSSd2ZSBoYWNrZWQgdGhlIGRyaXZlciBieSByZW1vdmluZyBmYWlsdXJl
-IHJldHVybiwgYW5kIGl0IHdvcmtzIGxpa2UgYSBjaGFybSwgdGhlIGRyaXZlciBkZXRlY3RzIHRo
-YXQgdGhlIGNoaXAgaXMgdW5pbml0aWFsaXplZCBhbmQgcmUtaW5pdHMgaXQgYWdhaW4gb24gdGhl
-IGZpcnN0IHJlYWQgZnJvbSBzeXNmcywgYnV0IGl0J3Mgbm90IGEgc29sdXRpb24gZm9yIHN1cmUg
-Oik8L2Rpdj48ZGl2PklmIHlvdSBoYXZlIGFuIGlkZWEgd2hlcmUgdG8gbG9vayBkZWVwZXIsIHBs
-ZWFzZSBnaXZlIG1lIGEgaGludCBhcyBJJ20gc3R1Y2suLi48L2Rpdj48ZGl2PlRoYW5rIHlvdSE8
-YnIgLz7CoDwvZGl2PjIzOjIxLCAyMSDRhNC10LLRgNCw0LvRjyAyMDIwINCzLiwgUGF0cmljayBX
-aWxsaWFtcyAmbHQ7cGF0cmlja0BzdHdjeC54eXomZ3Q7OjxibG9ja3F1b3RlPjxwPk9uIEZyaSwg
-RmViIDIxLCAyMDIwIGF0IDExOjQyOjAwQU0gKzAzMDAsIEtvbnN0YW50aW4gS2x1Ym5pY2hraW4g
-d3JvdGU6PC9wPjxibG9ja3F1b3RlPsKgSGVsbG8sIGNvbGxlZ3VlcyE8YnIgLz7CoMKgPGJyIC8+
-wqBJJ3ZlIGZhY2VkIGEgcHJvYmxlbSB0aGF0IGRvbid0IGtub3cgaG93IHRvIHNvbHZlIHdpdGhv
-dXQgdHJpY2tzIGxpa2Ugb3ZlcmxheTxiciAvPsKgRFRTLjxiciAvPsKgwqA8YnIgLz7CoEkgaGF2
-ZSBQQ0E5NTU1IGRldmljZSBvbiBJMkMtMTEgYnVzLCBpdCdzIGRlc2NyaWJlZCBpbiBEVFMgYXMg
-Zm9sbG93czo8YnIgLz7CoD09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PGJyIC8+wqBbIDMuMTI4Njc5XSBwY2E5NTN4IDExLTAw
-MjA6IGZhaWxlZCB3cml0aW5nIHJlZ2lzdGVyPGJyIC8+wqBbIDMuMTMzODYwXSBwY2E5NTN4OiBw
-cm9iZSBvZiAxMS0wMDIwIGZhaWxlZCB3aXRoIGVycm9yIC0xMTA8YnIgLz7CoFsgMy4xMzk4MDFd
-IGFzcGVlZC1pMmMtYnVzIDFlNzhhNDAwLmkyYy1idXM6IGkyYyBidXMgMTEgcmVnaXN0ZXJlZCAo
-ZG1hIG1vZGUpLDxiciAvPsKgaXJxIDQ0PC9ibG9ja3F1b3RlPjxwPjxiciAvPkVycm5vIDExMCBp
-czo8YnIgLz7CoMKgwqDCoCNkZWZpbmUgRVRJTUVET1VUIDExMCAvKiBDb25uZWN0aW9uIHRpbWVk
-IG91dCAqLzxiciAvPjxiciAvPkkgdGhpbmsgb24gaTJjIGRldmljZXMgdGhpcyBoYXBwZW5zIHdo
-ZW4gdGhlcmUgaXMgYSBOQUNLIGNvbmRpdGlvbiB0bzxiciAvPnRoZSBzbGF2ZSBhZGRyZXNzIG9u
-IHRoZSBidXMuIFRoZSBvZGQgdGhpbmcgaGVyZSBpcyB0aGF0IHVzdWFsbHkgdGhlPGJyIC8+cHJv
-YmluZyBpbmZyYXN0cnVjdHVyZSBoYW5kbGVzIHRoZSBwYXJlbnQgZGV2aWNlIChpMmMgYnVzIGlu
-IHRoaXMgY2FzZSk8YnIgLz5ub3QgYmVpbmcgcmVhZHkgYnkgcmV0dXJuaW5nIEVQUk9CRV9ERUZF
-UiBpbiB0aGUgZGV2aWNlIHByb2JlIGZ1bmN0aW9uLjxiciAvPjxiciAvPklzICdidXMgMTEnIGEg
-dmlydHVhbCBidXMgYmVoaW5kIGFuIGkyYyBtdXggLyBzd2l0Y2g/IEl0IGlzIHBvc3NpYmxlPGJy
-IC8+dGhhdCBlaXRoZXIgdGhlIGRyaXZlciBmb3IgdGhhdCBzd2l0Y2ggb3IgdGhlIHBjYTk1M3gg
-ZHJpdmVyIGlzbid0PGJyIC8+cHJvcGVybHkgaGFuZGxpbmcgdGhpcyBjb25kaXRpb24gYW5kIG5v
-dCBzZW5kaW5nIGJhY2sgRVBST0JFX0RFRkVSLjxiciAvPsKgPC9wPi0tPGJyIC8+UGF0cmljayBX
-aWxsaWFtczwvYmxvY2txdW90ZT48YnIgLz48YnIgLz4tLTxiciAvPtCe0YLQv9GA0LDQstC70LXQ
-vdC+INC40Lcg0LzQvtCx0LjQu9GM0L3QvtCz0L4g0L/RgNC40LvQvtC20LXQvdC40Y8g0K/QvdC0
-0LXQutGBLtCf0L7Rh9GC0Ys8L2Rpdj4=
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta ht=
+tp-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8"><meta name=
+=3DGenerator content=3D"Microsoft Word 15 (filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:24.0pt;
+	margin-bottom:.0001pt;
+	mso-para-margin-top:0cm;
+	mso-para-margin-right:0cm;
+	mso-para-margin-bottom:0cm;
+	mso-para-margin-left:2.0gd;
+	mso-para-margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:2140564079;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-15441016 -1 67698713 67698715 67698703 67698713 676=
+98715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:ideograph-traditional;
+	mso-level-text:%2\3001;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:48.0pt;
+	text-indent:-24.0pt;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:72.0pt;
+	text-indent:-24.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:96.0pt;
+	text-indent:-24.0pt;}
+@list l0:level5
+	{mso-level-number-format:ideograph-traditional;
+	mso-level-text:%5\3001;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:120.0pt;
+	text-indent:-24.0pt;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:144.0pt;
+	text-indent:-24.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-24.0pt;}
+@list l0:level8
+	{mso-level-number-format:ideograph-traditional;
+	mso-level-text:%8\3001;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:192.0pt;
+	text-indent:-24.0pt;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:216.0pt;
+	text-indent:-24.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style></head><body lang=3DZH-TW link=3Dblue vlink=3D"#954F72"><div cla=
+ss=3DWordSection1><p class=3DMsoNormal><span lang=3DEN-US>Hi Brad,</span></=
+p><p class=3DMsoNormal><span lang=3DEN-US>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 I=E2=80=99m new to openbmc, now I can boot openbmc on MB with AST=
+2500.</span></p><p class=3DMsoNormal><span lang=3DEN-US>What I=E2=80=99m tr=
+ying to achieve are:</span></p><ol style=3D'margin-top:0cm' start=3D1 type=
+=3D1><li class=3DMsoListParagraph style=3D'margin-left:-18.0pt;mso-para-mar=
+gin-left:0gd;mso-list:l0 level1 lfo1'><span lang=3DEN-US>Power control.</sp=
+an><span lang=3DEN-US><o:p></o:p></span></li><li class=3DMsoListParagraph s=
+tyle=3D'margin-left:-18.0pt;mso-para-margin-left:0gd;mso-list:l0 level1 lfo=
+1'><span lang=3DEN-US>Update BMC firmware.</span><span lang=3DEN-US><o:p></=
+o:p></span></li><li class=3DMsoListParagraph style=3D'margin-left:-18.0pt;m=
+so-para-margin-left:0gd;mso-list:l0 level1 lfo1'><span lang=3DEN-US>Sensors=
+ monitoring.</span><span lang=3DEN-US><o:p></o:p></span></li></ol><p class=
+=3DMsoListParagraph style=3D'margin-left:18.0pt;mso-para-margin-left:0gd'><=
+span lang=3DEN-US>Thanks for your suggestion in advance.</span></p><p class=
+=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoN=
+ormal><span lang=3DEN-US>Jeff</span></p><p class=3DMsoNormal><span lang=3DE=
+N-US style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'><o:=
+p>&nbsp;</o:p></span></p><div style=3D'mso-element:para-border-div;border:n=
+one;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0cm 0cm 0cm'><p class=3DMs=
+oNormal style=3D'border:none;padding:0cm'><b><span style=3D'font-family:"=
+=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E5=AF=84=E4=BB=B6=E8=80=85</s=
+pan><span lang=3DEN-US>: </span></b><span lang=3DEN-US><a href=3D"mailto:br=
+adleyb@fuzziesquirrel.com">Brad Bishop</a><br></span><b><span style=3D'font=
+-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E5=82=B3=E9=80=81=E6=
+=99=82=E9=96=93</span><span lang=3DEN-US>: </span></b><span lang=3DEN-US>20=
+20</span><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",=
+serif'>=E5=B9=B4</span><span lang=3DEN-US>2</span><span style=3D'font-famil=
+y:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E6=9C=88</span><span lang=
+=3DEN-US>21</span><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=
+=E9=AB=94",serif'>=E6=97=A5</span> <span style=3D'font-family:"=E6=96=B0=E7=
+=B4=B0=E6=98=8E=E9=AB=94",serif'>=E4=B8=8A=E5=8D=88</span><span lang=3DEN-U=
+S> 01:02<br></span><b><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=
+=8E=E9=AB=94",serif'>=E6=94=B6=E4=BB=B6=E8=80=85</span><span lang=3DEN-US>:=
+ </span></b><span lang=3DEN-US><a href=3D"mailto:ckimchan17@gmail.com">=E2=
+=80=AA=E2=80=AA=E2=80=AA=E2=80=AAJeff Chan</a><br></span><b><span style=3D'=
+font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E5=89=AF=E6=9C=
+=AC</span><span lang=3DEN-US>: </span></b><span lang=3DEN-US><a href=3D"mai=
+lto:openbmc@lists.ozlabs.org">OpenBMC Maillist</a><br></span><b><span style=
+=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E4=B8=BB=E6=
+=97=A8</span><span lang=3DEN-US>: </span></b><span lang=3DEN-US>Re: </span>=
+<span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=
+=E5=9B=9E=E8=A6=86=EF=BC=9A</span><span lang=3DEN-US>skeleton</span></p></d=
+iv><p class=3DMsoNormal><span lang=3DEN-US style=3D'font-family:"=E6=96=B0=
+=E7=B4=B0=E6=98=8E=E9=AB=94",serif'><o:p>&nbsp;</o:p></span></p><p class=3D=
+MsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNorm=
+al><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><spa=
+n lang=3DEN-US>&gt; On Feb 19, 2020, at 8:06 PM, =E2=80=AA=E2=80=AA=E2=80=
+=AA=E2=80=AAJeff Chan &lt;ckimchan17@gmail.com&gt; wrote:</span></p><p clas=
+s=3DMsoNormal><span lang=3DEN-US>&gt; </span></p><p class=3DMsoNormal><span=
+ lang=3DEN-US>&gt; Hi Brad,</span></p><p class=3DMsoNormal><span lang=3DEN-=
+US>&gt; Thanks for reply, I checked=C2=A0 github.com/openbmc/skeleton, most=
+ of them released 2 years ago, and the title said &quot;will be replaced...=
+&quot;, is it still good to adopt it? </span></p><p class=3DMsoNormal><span=
+ lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span lang=
+=3DEN-US>No I would not recommend that.=C2=A0 Skeleton covers a lot of BMC =
+functions - which one in particular are you interested in?</span></p><p cla=
+ss=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMs=
+oNormal><span lang=3DEN-US>&gt; </span></p><p class=3DMsoNormal><span lang=
+=3DEN-US>&gt; Jeff</span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; <=
+/span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; </span></p><p class=
+=3DMsoNormal><span lang=3DEN-US>&gt; -------- </span><span style=3D'font-fa=
+mily:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E5=8E=9F=E5=A7=8B=E9=83=
+=B5=E4=BB=B6</span><span lang=3DEN-US> --------</span></p><p class=3DMsoNor=
+mal><span lang=3DEN-US>&gt; </span><span style=3D'font-family:"=E6=96=B0=E7=
+=B4=B0=E6=98=8E=E9=AB=94",serif'>=E5=AF=84=E4=BB=B6=E8=80=85=EF=BC=9A</span=
+><span lang=3DEN-US> Brad Bishop &lt;bradleyb@fuzziesquirrel.com&gt;</span>=
+</p><p class=3DMsoNormal><span lang=3DEN-US>&gt; </span><span style=3D'font=
+-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E6=97=A5=E6=9C=9F=EF=
+=BC=9A</span><span lang=3DEN-US> 2020</span><span style=3D'font-family:"=E6=
+=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E5=B9=B4</span><span lang=3DEN-U=
+S>2</span><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94"=
+,serif'>=E6=9C=88</span><span lang=3DEN-US>14</span><span style=3D'font-fam=
+ily:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E6=97=A5</span> <span st=
+yle=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=E9=80=B1=
+=E4=BA=94</span><span lang=3DEN-US> 02:39</span></p><p class=3DMsoNormal><s=
+pan lang=3DEN-US>&gt; </span><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=
+=E6=98=8E=E9=AB=94",serif'>=E6=94=B6=E4=BB=B6=E4=BA=BA=EF=BC=9A</span><span=
+ lang=3DEN-US> =E2=80=AA=E2=80=AA=E2=80=AA=E2=80=AAJeff Chan &lt;ckimchan17=
+@gmail.com&gt;</span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; </spa=
+n><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94",serif'>=
+=E5=89=AF=E6=9C=AC=EF=BC=9A</span><span lang=3DEN-US> OpenBMC Maillist &lt;=
+openbmc@lists.ozlabs.org&gt;</span></p><p class=3DMsoNormal><span lang=3DEN=
+-US>&gt; </span><span style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=
+=AB=94",serif'>=E4=B8=BB=E6=97=A8=EF=BC=9A</span><span lang=3DEN-US> Re: sk=
+eleton</span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; </span></p><p=
+ class=3DMsoNormal><span lang=3DEN-US>&gt; </span></p><p class=3DMsoNormal>=
+<span lang=3DEN-US>&gt; &gt; On Feb 11, 2020, at 6:29 AM, =E2=80=AA=E2=80=
+=AA=E2=80=AA=E2=80=AAJeff Chan &lt;ckimchan17@gmail.com&gt; wrote:</span></=
+p><p class=3DMsoNormal><span lang=3DEN-US>&gt; &gt; </span></p><p class=3DM=
+soNormal><span lang=3DEN-US>&gt; &gt; Hi,</span></p><p class=3DMsoNormal><s=
+pan lang=3DEN-US>&gt; &gt; As the description in skeleton github, it will b=
+e replaced with proper implementation, what's the up to date implementation=
+? where can I find those docs or samples?</span></p><p class=3DMsoNormal><s=
+pan lang=3DEN-US>&gt; &gt; </span></p><p class=3DMsoNormal><span lang=3DEN-=
+US>&gt; &gt; Jeff</span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; </=
+span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; Hi Jeff</span></p><p =
+class=3DMsoNormal><span lang=3DEN-US>&gt; </span></p><p class=3DMsoNormal><=
+span lang=3DEN-US>&gt; Most of skeleton has been rewritten.=C2=A0 skeleton =
+covers a lot of BMC functions - which one in particular are you interested =
+in?</span></p><p class=3DMsoNormal><span lang=3DEN-US>&gt; </span></p><p cl=
+ass=3DMsoNormal><span lang=3DEN-US>&gt; thx -brad</span></p><p class=3DMsoN=
+ormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p></div></body></html>=
+
