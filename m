@@ -2,53 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2787816AB32
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2020 17:19:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 34B4F16AD5A
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2020 18:28:16 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48R6j21Pn5zDqSg
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 03:19:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48R8Cv0cPXzDqVk
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 04:28:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=2607:f0b0:f:3:216:3eff:fe7c:d1f3;
- helo=tuna.sandelman.ca; envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32e;
+ helo=mail-ot1-x32e.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=sandelman.ca
-X-Greylist: delayed 289 seconds by postgrey-1.36 at bilbo;
- Tue, 25 Feb 2020 03:19:18 AEDT
-Received: from tuna.sandelman.ca (tuna.sandelman.ca
- [IPv6:2607:f0b0:f:3:216:3eff:fe7c:d1f3])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=KmIfBb4C; dkim-atps=neutral
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [IPv6:2607:f8b0:4864:20::32e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48R6hQ3dvgzDqSR
- for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 03:19:16 +1100 (AEDT)
-Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
- by tuna.sandelman.ca (Postfix) with ESMTP id 27D783897C
- for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 11:18:15 -0500 (EST)
-Received: from localhost (localhost [IPv6:::1])
- by sandelman.ca (Postfix) with ESMTP id AD1185A4
- for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 11:19:14 -0500 (EST)
-From: Michael Richardson <mcr@sandelman.ca>
-To: "openbmc\@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Security Working Group meeting - this Wednesday February 19 -
- summary results
-In-Reply-To: <18a2f2f6-7281-8884-20c2-eceee87c3bea@linux.intel.com>
-References: <b9170918-0937-714a-470e-cb41e1e74b63@linux.ibm.com>
- <f4d9d6f6-277e-8c8b-6b5c-d0577eaa82cc@linux.ibm.com>
- <20200220162633.GB41328@patrickw3-mbp.dhcp.thefacebook.com>
- <2b30dde7-3415-8c7a-2001-28793e938339@linux.intel.com>
- <20200221201022.GA67957@patrickw3-mbp.dhcp.thefacebook.com>
- <2c409610c4544e0187e37a5322c6a313@SCL-EXCHMB-13.phoenix.com>
- <18a2f2f6-7281-8884-20c2-eceee87c3bea@linux.intel.com>
-X-Mailer: MH-E 8.6; nmh 1.7+dev; GNU Emacs 25.1.1
-X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
- <'$9xN5Ub#
- z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha256; protocol="application/pgp-signature"
-Date: Mon, 24 Feb 2020 11:19:14 -0500
-Message-ID: <21543.1582561154@localhost>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48R8C31J42zDqTk
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 04:27:24 +1100 (AEDT)
+Received: by mail-ot1-x32e.google.com with SMTP id h9so9397467otj.11
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 09:27:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=nXZFa7LDtVrQNsl6a+y6z+5q2e5NoAfgGIM9QrsVmHI=;
+ b=KmIfBb4CNmQyvhO48PANlbUJnMxIdIWcnbBEWjpd8LMD+qzZnrQi2Sz35K4GLW94D/
+ WcA7M+ISn+6lLjgUftpGK6oKHWkUlS5ZLviEFwIveI8iTjOMccyRfAzZbEiZ3C+wftrR
+ AifwJ9jIxLzqr1ICSHbdKNpOfT6HoU45Bu+RS8eQSxjWbp/0aT29Fdkjpb78sDKzm2tL
+ MtDU3c+11ylRxU8WXK4Q7+4si30+ViwxlCHE2ANVJzCu8OqnzH7vTUN/XJbzHvtABl6a
+ RqJlsYswBQjy4HiwSVC3YchJSoZYxfiHjswa+Ds7PeRIDWw9sNilv8nmZVcEaBDvAzzi
+ wtGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=nXZFa7LDtVrQNsl6a+y6z+5q2e5NoAfgGIM9QrsVmHI=;
+ b=eX5PvU33EwU5Ksk7Sh3j51oJIdB5DnDr8Pamdns5i7XTVuFdtFJFZ2JrazYi07pS0j
+ UZ/XYls+KAr6L9lfeP6ryP1DVN14hUi0UKn+W60IREpfKmK3ADxoCyHbigzxm3BncGHH
+ GYk5ayXTSZ+DG5IPQ5KP9U3L62llULwSF2vxLTL2lkKnG1lK9nuel169uEE/INTP25zL
+ OCNKnRctbD25cxmDy4H9E2qFNk3jF51SX4bH/qk0Y4X0GJ28THfzNZtbIJytWHqTN6rv
+ QYBwVu0nnllKXqDxLAZOhVXnLc0EVpD++AubeWbmzvNEOf0oIIptyCRlpgd93uFUOv9H
+ S1tw==
+X-Gm-Message-State: APjAAAUxSyAVMxe9N9i9+h8nkBfUDWf1RSdc7Fx92UbWZKhqVSf5wgr8
+ Us3m7QSwDkZsw9pJkudTR/8AYJqX1MI=
+X-Google-Smtp-Source: APXvYqxmOz72yEgG4VZl5J9QwbWtZb7oa/45liaodDCGSqFl55AWBlachgA38mu4OYpCmQdP2HRQuQ==
+X-Received: by 2002:a05:6830:1d91:: with SMTP id
+ y17mr39210382oti.276.1582565239850; 
+ Mon, 24 Feb 2020 09:27:19 -0800 (PST)
+Received: from andrews-mbp-2.austin.ibm.com ([129.41.86.0])
+ by smtp.gmail.com with ESMTPSA id g25sm4631029otr.8.2020.02.24.09.27.18
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 24 Feb 2020 09:27:18 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: System Firmware states on D-Bus
+Message-Id: <9CA8B63A-991B-49C2-A8D1-83D1CCB6C46A@gmail.com>
+Date: Mon, 24 Feb 2020 11:27:18 -0600
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,61 +82,41 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
+I sent an email[1] out a while ago about mapping Redfish Host states to
+PLDM Boot values.
 
+Now that we have that design moving, the next question is whether we =
+want
+to try and map these to our current IPMI-based state sensors[2]
+(OperatingSystemState and BootProgress)? These are currently displayed =
+when
+a user does a "obmcutil state" and I see a few other repositories =
+reference
+them for boot status. The openbmc-test suite also uses them fairly =
+extensively
+to verify different boot tests.
 
-James Feist <james.feist@linux.intel.com> wrote:
-    > I think the original motivation of 10 years was something above the average
-    > support cycle of a server, so on first boot the user has something they can
-    > use to login to the server with.
+If we want to maintain backwards compatibility then we should map the =
+new PLDM
+based boot progress to these two. Mapping them does not seem too =
+difficult.
+I could have phosphor-host-state-manager (which hosts these D-Bus =
+properties)
+listen for changes to the PLDM property and update the two properties
+appropriately. This assumes a system where the system firmware is only
+IPMI or PLDM (not both) since they would not play all that well =
+together.
 
-That's not a crazy consideration to me.
+=46rom a Redfish API perspective, it will just directly look at the PLDM
+property.
 
-    > That being said, if the browser wont let you
-    > in, that is obviously more important. 30 days seems a bit too strict
-    > considering shipping / unpacking times make it likely you'll have an expired
-    > certificate upon arrival. But if we can't come to an agreement, we can always
-    > make this configurable.
+Thoughts?
 
-1) it would be good to clarify what browsers are really going to do.
-
-2) it won't apply to CURL, etc. which might be used to onboard a system
-   automatically.
-
-3) you can't make it configurable, because you can't configure it if you
-   can't connect :-)
-
-825 days (27 months, so 2yr plus some wiggle room) is definitely what they
-are going to for built-in trust anchors.  I'm not sure if this will apply
-to trust anchors that are loaded into browsers by end users, or if that
-configuration will somehow be attached to the trust anchor.
-
-So, if 825 days is a good default, I'd make it 820 days, and after 410 days,
-I'd have the self-signed certificate resigned, but not generate a new private
-key.   This allows for mgmt stations to pin the public key of the BMC,
-ignoring the actual certificate contents.
-
-I will try to send a patch to do this.
-
---
-]               Never tell me the odds!                 | ipv6 mesh networks [
-]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
-
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl5T94IACgkQgItw+93Q
-3WVIxAf+Oy0sCMrvTE0nx98cSKKFtVN0rZbUXZkBKue3uHct+eeICxya3/uTigGt
-eNp5ujn5iBchaWPlk36d74Cmf9MC8ESmlO+sEypQCMfLVb+dc+p5dss5tFzFM+Ij
-NH4/cepD2X8I/ykPrf0nc1sf9THPpjRgGZEwSHl2Qw8K1q5nYpmPQhDLwtdrisCt
-XkTpkVMNSycDpS186W2aLilD/nfx0ER/HdFqR+8VPb9xK8+X9gY9q2AA89rMYv4z
-57qSSuRmQY7d/JN+h2zTHhuUmGVf+vmTAeAEx04DFvbqyKcb1/UO7pJ4znbzOrvr
-61zKDPXqNaOUHl6SxPtw32xcQk3Nyg==
-=35Il
------END PGP SIGNATURE-----
---=-=-=--
+[1]: =
+https://lists.ozlabs.org/pipermail/openbmc/2020-February/020417.html
+[2]: =
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbm=
+c_project/State/Boot/Progress.interface.yaml
+     =
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbm=
+c_project/State/OperatingSystem/Status.interface.yaml=
