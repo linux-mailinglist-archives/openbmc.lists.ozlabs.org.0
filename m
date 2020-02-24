@@ -2,37 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE50916AB1F
-	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2020 17:15:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2787816AB32
+	for <lists+openbmc@lfdr.de>; Mon, 24 Feb 2020 17:19:54 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48R6bx2f4NzDqCg
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 03:15:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48R6j21Pn5zDqSg
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 03:19:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
+ smtp.mailfrom=sandelman.ca (client-ip=2607:f0b0:f:3:216:3eff:fe7c:d1f3;
+ helo=tuna.sandelman.ca; envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=sandelman.ca
-Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
+X-Greylist: delayed 289 seconds by postgrey-1.36 at bilbo;
+ Tue, 25 Feb 2020 03:19:18 AEDT
+Received: from tuna.sandelman.ca (tuna.sandelman.ca
+ [IPv6:2607:f0b0:f:3:216:3eff:fe7c:d1f3])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48R6Zx2sT5zDqRy
- for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 03:14:33 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48R6hQ3dvgzDqSR
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 03:19:16 +1100 (AEDT)
 Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
- by tuna.sandelman.ca (Postfix) with ESMTP id 9262D3897C
- for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 11:13:20 -0500 (EST)
+ by tuna.sandelman.ca (Postfix) with ESMTP id 27D783897C
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 11:18:15 -0500 (EST)
 Received: from localhost (localhost [IPv6:::1])
- by sandelman.ca (Postfix) with ESMTP id 16A585A4
- for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 11:14:20 -0500 (EST)
+ by sandelman.ca (Postfix) with ESMTP id AD1185A4
+ for <openbmc@lists.ozlabs.org>; Mon, 24 Feb 2020 11:19:14 -0500 (EST)
 From: Michael Richardson <mcr@sandelman.ca>
-To: openbmc <openbmc@lists.ozlabs.org>
+To: "openbmc\@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Subject: Re: Security Working Group meeting - this Wednesday February 19 -
  summary results
-In-Reply-To: <20200220162633.GB41328@patrickw3-mbp.dhcp.thefacebook.com>
+In-Reply-To: <18a2f2f6-7281-8884-20c2-eceee87c3bea@linux.intel.com>
 References: <b9170918-0937-714a-470e-cb41e1e74b63@linux.ibm.com>
  <f4d9d6f6-277e-8c8b-6b5c-d0577eaa82cc@linux.ibm.com>
  <20200220162633.GB41328@patrickw3-mbp.dhcp.thefacebook.com>
+ <2b30dde7-3415-8c7a-2001-28793e938339@linux.intel.com>
+ <20200221201022.GA67957@patrickw3-mbp.dhcp.thefacebook.com>
+ <2c409610c4544e0187e37a5322c6a313@SCL-EXCHMB-13.phoenix.com>
+ <18a2f2f6-7281-8884-20c2-eceee87c3bea@linux.intel.com>
 X-Mailer: MH-E 8.6; nmh 1.7+dev; GNU Emacs 25.1.1
 X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
  <'$9xN5Ub#
@@ -40,8 +47,8 @@ X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
 MIME-Version: 1.0
 Content-Type: multipart/signed; boundary="=-=-=";
  micalg=pgp-sha256; protocol="application/pgp-signature"
-Date: Mon, 24 Feb 2020 11:14:20 -0500
-Message-ID: <20306.1582560860@localhost>
+Date: Mon, 24 Feb 2020 11:19:14 -0500
+Message-ID: <21543.1582561154@localhost>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,102 +64,46 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 --=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
 
-Patrick Williams <patrick@stwcx.xyz> wrote:
-    >> > 6. (Bruce via email):=C2=A0 BMCWeb Cert valid for 10 years -
-    >> > https://lists.ozlabs.org/pipermail/openbmc/2020-February/020488.ht=
-ml=C2=A0=E2=80=A8
-    >>
-    >> Change BMCweb=E2=80=99s default self-signed cert to a maximum of 825=
- days.=C2=A0
-    >> Recommend 30 days.
-    >>
-    >> When this is done, if BMCWeb generates a self-signed cert, and it is=
- not
-    >> replaced, and the BMC=E2=80=99s time is sane, then browsers that con=
-nect to BMCWeb
-    >> will start to complain after 30 days.
-    >>
-    >> The recovery is: The BMC admin should install a valid BMCWeb site id=
-entity
-    >> cert, then clients can re-connect to the BMC. (This will serve the u=
-pdated
-    >> cert and make the browser happy.)
-    >>
-    >> The =E2=80=9CBMC Admin guide=E2=80=9D should talk about installing y=
-our own cert.
-    >>
-    >> See docs here: https://github.com/openbmc/bmcweb/#configuration
-    >>
-    >> Ass code here: https://github.com/openbmc/bmcweb/blob/91243c3b28b1df=
-66e682f5a3ee96341fdc516b5a/include/ssl_key_handler.hpp#L205
-    >>
-    >> Will there be a warning for the BMC admin (that the BMCWeb site cert=
- will
-    >> expire soon)?=C2=A0 (And don=E2=80=99t rely on a warning from the br=
-owser itself.)
+James Feist <james.feist@linux.intel.com> wrote:
+    > I think the original motivation of 10 years was something above the average
+    > support cycle of a server, so on first boot the user has something they can
+    > use to login to the server with.
 
-    > If I read this correctly, the side-effect of this proposed change is:
+That's not a crazy consideration to me.
 
-    > - If I leave my BMC running for 30 days without it crashing, the
-    > certificate it presents will have become expired and no longer
-    > valid.
+    > That being said, if the browser wont let you
+    > in, that is obviously more important. 30 days seems a bit too strict
+    > considering shipping / unpacking times make it likely you'll have an expired
+    > certificate upon arrival. But if we can't come to an agreement, we can always
+    > make this configurable.
 
-My reading of the code says is that in ensureOpensslKeyPresentAndValid() th=
-at
-if the certificate is invalid, according to X509_verify_cert() that a new
-self-signed certificate will be generated.
-So, I agree that if the BMC does not reboot within the self-signed
-certificate time, then it will expire, and this will be surprising.
+1) it would be good to clarify what browsers are really going to do.
 
-{A system could *easily* get turned on within a group of several hundred, a=
-nd
-nobody gets around to noticing that it wasn't cabled correctly for 30 days
-until one gets to the end of the onboarding process and asks why we bought
-746 servers, and only onboarded 745 machines.}
+2) it won't apply to CURL, etc. which might be used to onboard a system
+   automatically.
 
-So, this is probably rather wrong to limit to 30 days.
+3) you can't make it configurable, because you can't configure it if you
+   can't connect :-)
 
-a) Only a self-signed certificate that was locally generated should be repl=
-aced.
-   Replacing an administrator installed certificate because the clock was w=
-rong
-   is most likely wrong.
+825 days (27 months, so 2yr plus some wiggle room) is definitely what they
+are going to for built-in trust anchors.  I'm not sure if this will apply
+to trust anchors that are loaded into browsers by end users, or if that
+configuration will somehow be attached to the trust anchor.
 
-b) As long as we have this logic, we might as well do this check before
-   accepting any HTTPS connection, perhaps with a do this at most once a day
-   logic.     There is no advantage of expiring a self-signed certificate
-   quickly in my opinion.
+So, if 825 days is a good default, I'd make it 820 days, and after 410 days,
+I'd have the self-signed certificate resigned, but not generate a new private
+key.   This allows for mgmt stations to pin the public key of the BMC,
+ignoring the actual certificate contents.
 
+I will try to send a patch to do this.
 
-The concern about the CAB rules about 825 days is probably not important for
-several reasons, but if one wants to limit it to that period of time, that's
-okay with me.  Changing to 30 days is not a good thing.
-
-1) the browser is going require an exception for the certificate anyway.
-   Once the self-signed certificate is pinned in the browser, keeping it for
-   as long as possible is better.  Expiring after 30 days makes no sense
-   here.
-
-2) it could be that browsers will reject longer-lived certificates when
-   validated by a trust anchor, but the exception likely pins whatever comes
-   down, period.
-
-3) If a BMC is any kind of vulnerable environment where certificates are
-   important, then the BMC needs an automated onboarding system.
-   (I have one, and I'm working on code, but it's an unfunded best effort s=
-o far)
-
-=2D-
-]               Never tell me the odds!                 | ipv6 mesh network=
-s [
-]   Michael Richardson, Sandelman Software Works        |    IoT architect =
-  [
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails  =
-  [
+--
+]               Never tell me the odds!                 | ipv6 mesh networks [
+]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
+]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
 
 
 --=-=-=
@@ -160,13 +111,13 @@ Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl5T9lsACgkQgItw+93Q
-3WWNTQgAnuXEXq2iDTxd6h8jguWemoL85s5GTiQa0XJbnmjsI/3f8SZAMpNxeF9B
-OhU5UeaExD9uFRx0fRHzNyI4fiLRuYfa821sAuLocy0fBIdHUvWXSj09i42PKX5c
-48/ClqfdlXO/bfkHvnw5UOkVb0qtsMeX0FCuM32Ur6Nu+0fVHzXbablETIRyzWbs
-xOsT/Blrr1Fr0zOBBJ0PKLJGEMRJbN7FZndfEmQqtl+hmoM2yDv4DPAo6hGbMkpS
-mtWNP0hrx9856zMwM6GN8o1wkD4afq0ja3G5vQXSXbgU+m8vnOLPJqO+lWFxdP1K
-C4hgkssvvzLlBCqSluxgqlZAWybW+A==
-=NPQr
+iQEzBAEBCAAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl5T94IACgkQgItw+93Q
+3WVIxAf+Oy0sCMrvTE0nx98cSKKFtVN0rZbUXZkBKue3uHct+eeICxya3/uTigGt
+eNp5ujn5iBchaWPlk36d74Cmf9MC8ESmlO+sEypQCMfLVb+dc+p5dss5tFzFM+Ij
+NH4/cepD2X8I/ykPrf0nc1sf9THPpjRgGZEwSHl2Qw8K1q5nYpmPQhDLwtdrisCt
+XkTpkVMNSycDpS186W2aLilD/nfx0ER/HdFqR+8VPb9xK8+X9gY9q2AA89rMYv4z
+57qSSuRmQY7d/JN+h2zTHhuUmGVf+vmTAeAEx04DFvbqyKcb1/UO7pJ4znbzOrvr
+61zKDPXqNaOUHl6SxPtw32xcQk3Nyg==
+=35Il
 -----END PGP SIGNATURE-----
 --=-=-=--
