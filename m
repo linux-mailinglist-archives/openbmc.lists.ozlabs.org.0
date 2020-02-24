@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63B24170E61
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 03:23:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C952B170E60
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 03:22:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Sc165BnvzDqFC
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 13:23:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Sbzq1MDHzDqZl
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 13:22:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -22,7 +22,7 @@ Received: from sonic308-55.consmr.mail.gq1.yahoo.com
  (sonic308-55.consmr.mail.gq1.yahoo.com [98.137.68.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48RD4x1d32zDqSV
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48RD4x0fn2zDqSS
  for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 07:22:21 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
  t=1582575737; bh=d+WPYqinFu0/OPAEDDbVjmYXaxJGC46tsa154XJrbNs=;
