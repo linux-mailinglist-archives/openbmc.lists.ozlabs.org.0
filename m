@@ -2,72 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71A6F16BBC9
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 09:23:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D56AF16C34E
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 15:07:47 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48RX5B5F9MzDqWl
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 19:23:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Rgk91b72zDqMG
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 01:07:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133;
- helo=mail-lf1-x133.google.com; envelope-from=mine260309@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=J/DBN5B/; dkim-atps=neutral
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
- [IPv6:2a00:1450:4864:20::133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=apparao.puli@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48RX4K4XzTzDqRW
- for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 19:22:57 +1100 (AEDT)
-Received: by mail-lf1-x133.google.com with SMTP id y17so5942130lfe.8
- for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 00:22:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=C/MGF0H+lv+0MXNhS663qk1bb7+kBytOh98sa2yUV/A=;
- b=J/DBN5B/kBkLAI7bqtuDQAY+yCJ6xo6RD3xd/r6mlAS3j6CqD+l+fBn4AxOTvAeskv
- Tb9yVhXlEQ64ClAZCDEOwJK8nWUx8jBa804hXWMtwZZvqZP3Eo/DksDpRTiQSC6M0iLu
- +Wg5nM9MKvzNquKNXWJJ8Nb52EXt8HkDO4llwkd5Ieomg/4Eqs16k7mebPCrZ8cTODul
- ZpVsyXao9WlLHuPBUV4sFiCURNP1DRfzPIR2xIevmiIWR5IzDkpXSO/Ec0x5rq8vTzVp
- deM4nsMC6/RWH/nHZe9M6bEk1rENoiVj2G+tRkygSTem8qxyB2jkg8xaSTz14Zn4CBmj
- u7Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=C/MGF0H+lv+0MXNhS663qk1bb7+kBytOh98sa2yUV/A=;
- b=iWdfq7xD6RYulpxlH46DYngmHJJAjtgs7if+syvayDnsoUmMncXFHCHI5SVFMyf2ny
- EY0g1zmSfkWuWvrnJM9pXgxN5YJJwy1Os6ggOQMZl6zhzenL/xi2KLJ9j/Zap3NPLfli
- T523auv1e9184Mx8R7p2zv/64jWJdCBj4jQOR1W89AyyTptNCe9U8F2AEiR5xcZiyO4B
- S1eIgOx6cWTcLnjmP1hC2/4ePQRWjCnb+JhbgH/og+cvOOi9HOjRJoflAEoEnw9vGIH5
- Gxw6wQEgEiq2sKEHhZnp0Cv/KP/KBqHmy0g+nsC1ieLe3aPXCbenY03+BM41QElJ5Smx
- /goA==
-X-Gm-Message-State: APjAAAXYZ5WdVsdQJPtKJcc8jhvwYEll1QTDl3ayG3lNZjw83xlCdiAs
- Rt+FMf+ece9yTCyrlIdDenEEn37vc+/FsG7g3JM=
-X-Google-Smtp-Source: APXvYqznViFXFlMTpJILNJt8rTZXj/B+hVR+GfX3D5cBXHcTdsuKSdSFPePuyVhgTYEwmmQ0cmdQsE8XPs7UnmI+opk=
-X-Received: by 2002:a19:2396:: with SMTP id
- j144mr15719505lfj.113.1582618971905; 
- Tue, 25 Feb 2020 00:22:51 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Rgj530FSzDq9T
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2020 01:06:47 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga106.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2020 06:06:43 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,484,1574150400"; 
+ d="scan'208,217";a="231029528"
+Received: from apuli-mobl.gar.corp.intel.com (HELO [10.66.115.105])
+ ([10.66.115.105])
+ by orsmga008.jf.intel.com with ESMTP; 25 Feb 2020 06:06:41 -0800
+Subject: Re: Redfish EventService Implementation
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
+ <7a3d4141-ff5f-794a-6803-88a8bcfa3e02@gmail.com>
+ <1a22b091-675c-3e1d-b57a-d44b3ba5d4e0@linux.intel.com>
+ <813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com>
+From: "Puli, Apparao" <apparao.puli@linux.intel.com>
+Message-ID: <d27f94a5-7195-422a-9442-9e5e3e0aaae7@linux.intel.com>
+Date: Tue, 25 Feb 2020 19:36:40 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-References: <CAARXrtkPQWxhC3XdR-7kE8Kj4HC10gPk8=v7gPDVoZa_L7x-6w@mail.gmail.com>
- <20200218203934.GB2219@patrickw3-mbp.lan.stwcx.xyz>
- <CAARXrtkwsy3t=bz7wHa=oEG-KwE7dBJ0Upkft-RN9XNgiFdSHA@mail.gmail.com>
- <20200220163830.GD41328@patrickw3-mbp.dhcp.thefacebook.com>
- <CAARXrt=7=X53tQ33C9+wBkUV7tZXgVZCtf8un7y8wpRxVdVufw@mail.gmail.com>
- <20200224203215.GE67957@patrickw3-mbp.dhcp.thefacebook.com>
-In-Reply-To: <20200224203215.GE67957@patrickw3-mbp.dhcp.thefacebook.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Tue, 25 Feb 2020 16:22:40 +0800
-Message-ID: <CAARXrtnykCRL2EXekwb62aBie6YRQuSLBftZAg2AzheKA0vGug@mail.gmail.com>
-Subject: [sdbusplus] To generate client header (was: Re: To generate a common
- header for public information of interfaces)
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com>
+Content-Type: multipart/alternative;
+ boundary="------------B1B06DB6B59545133E03F34A"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,94 +58,403 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> > > I don't see any reason any code should ever directly utilize the enum
-> > > strings.  We generate code already to safely convert them to and from
-> > > real C++ enum types.  Why would you want to use string comparison
-> > > instead?
-> > >
-> > > Can you elaborate on why we should be enabling this usage pattern?
-> >
-> > There are cases for a service to use a "enum string" directly instead
-> > of getting the string from enum by `convertForMessage()`
-> > E.g.
-> > * https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/master/activation.hpp#L43
-> > * https://github.com/openbmc/phosphor-host-ipmid/blob/master/chassishandler.cpp#L218
->
-> Examples of poor code are not a use case.  Both of these examples are
-> trivially converted to convert<enum>ToString APIs.  We should do that
-> rather than facilitate unmaintainable code.
+This is a multi-part message in MIME format.
+--------------B1B06DB6B59545133E03F34A
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-My concern to use "convertXXX" APIs is that it requires the client
-code to link the server code, where logically all it needs is the enum
-string.
+Hi Ratan,
+
+    Comments in-line
+
+On 2/24/2020 12:07 PM, Ratan Gupta wrote:
+>
+> Hi Apparao,
+>
+> On 2/20/20 12:49 AM, Puli, Apparao wrote:
+>> Hi,
+>>
+>>   I am sorry for late response as this mail is buried under and got 
+>> struck back of my mind.
+>>
+>> As i did mentioned in EventService design document, EventLog Monitor 
+>> service is not common across the organizations( Example: Intel uses 
+>> the redfish event logs file and inotify mechanism for monitoring the 
+>> event logs. Where as IBM uses d-bus event log mechanism and they can 
+>> relay on match rules). That said challenges with ResourceType mapping 
+>> will be different in both monitoring mechanisms. This is good point. 
+>> Initially when i started EventService design, i thought we can have 
+>> mapping in bmcweb for ResourceTypes with set of MessageID's for 
+>> Logged events ( As per Intel design) but not sure that may become 
+>> difficult when we expand supported ResourceTypes.
+>
+> If I am getting correctly, Here is the flow which Intel uses.
+>
+>  1. Individual repo have to push the logs using sd_journal_send which
+>     will write to the file(/var/log/redfish) by using rsyslog daemon
+>
+> sd_journal_send("MESSAGE=%s","journal text","PRIORITY=%i", <LOG_LEVEL>,
+>                  "REDFISH_MESSAGE_ID=%s",
+>                  "ResourceEvent.1.0.ResourceCreated",NULL);
+>
+>       * How you would populate the "OriginOfCondition" during sending
+>         of event? (https://redfish.dmtf.org/schemas/v1/Event.v1_4_1.json)
+>
+Currently in logServices( logEntry),  we are not reporting the 
+"OriginOfCondition" property as per schema. I will check with Jason( Who 
+wrote the logService) and get back on this.
+
+BTW can you give me how this information is fetched in IBM way of 
+LogService implementation( D-Bus)? If you already ratified any such, i 
+think we can leverage.  If not, We work together for solution.
+
+>       * Any plan to add resource path in this journal message which
+>         tells that this is the path for which resource created event
+>         generated.
+>
+Same as above.
+>
+>       * Would the path be "Redfish Path/ D-bus Path"?
+>
+As per Redfish specification, This should be "@odata.id" which means it 
+should be of resource uri and so we can't use d-bus path here for 
+OriginOfConditions.
+>
+>       * Where the mapping would be done between D-busPath/Redfish
+>         Resource path?
+>
+>      
+>           Cons: Every application have to make the change(use sd_journal_send).
+>           My thought is backend application should not be aware of the redfish terminlogy.
+
+Having separate process only for this mapping may not be good( No 
+different from maintaining that map inside bmcweb as there won't be any 
+other consumers). Ideal way is, that should be mapped while logging 
+logEntry's itself. But we are not doing it currently which need to be 
+re-looked. Give me some time, I will think and check with other folks 
+and get back.
 
 >
-> >
-> > Some of the cases could be changed to use `convertForMessage()`, but
-> > if one does want to directly use that, or use it as constexpr, why not
-> > provide it directly?
+> *2.* Some application(bmcweb) would do the Inotify on the 
+> path(/var/log/redfish) and send the event once there is any activity 
+> on this file.
 >
-> Because it limits our future ability to change the string format.  When
-> people decided to reverse engineer what sdbusplus was doing and hard
-> code strings, they made it so we cannot change the format of what
-> sdbusplus is sending.
+> > I thought we can have mapping in bmcweb for ResourceTypes with set of MessageID's for Logged events ( As 
+> per Intel design)
 >
-> There was a commit recently, as an example, that requested we add an
-> Intel-only "Management Engine" enumeration to an xyz.openbmc_project interface
-> rather than a com.intel one.  If we supported enumeration inheritance,
-> there would have been less need for this.  I don't know how we might
-> implement enumeration inheritance, but we might need to change the
-> "on-the-wire" string as a result.  Right now we're hamstrung by people
-> having hard coded strings.
+>      Can you explain more here. What is your plan? How you would do the Resource Type based event filtering?REDFISH_MESSAGE_ID is different than the resource type.
+Initially i thought "ResourceType" based event filtering can be done 
+using minimal mapping( Using MessageID and args). But that will work for 
+minimal set. If the supported ResourceTypes grows, we will have bigger 
+challenges which i can sense it now.  Anyway, Supported Resources are 
+completely implementation specific. If this value is empty means, by 
+default all event logs will be sent to subscribers. This is what we can 
+start with before supported  ResourceTypes list grows.
+>>
+>> As per my reading from below query, You are looking at d-bus match 
+>> rules and ResourceTypes mapping which is more specific to d-bus event 
+>> logging(IBM way of implementing event logging). reading it from 
+>> journal logs will give more information but that will impact the 
+>> performance to large extent. This might be one of the reason why we 
+>> (Intel) uses Redfish message ID while logging redfish events logs to 
+>> journal(You can refer design document for same at 
+>> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md). 
+>> In opinion, in your d-bus if you are using some kind of 
+>> filter(Example REDFISH_MESSAGE_ID) while logging in journal logs for 
+>> all events and figure out the way to monitor the journal logs without 
+>> impacting the performance, that should be ok as long as match filters 
+>> are satisfied for Redfish EventService subscriptions and supported 
+>> Types(Again differs with implementation).
+>>
+>> Thanks,
+>>
+>> -Appu
+>>
+>> On 2/10/2020 1:52 AM, RAJESWARAN THILLAIGOVINDAN wrote:
+>>> ApparaRao.
+>>>
+>>> As you have shown interest in this feature and submitted the design 
+>>> document, do you have any opinion on this? Do you see any merit in 
+>>> using D-Bus match in bmcweb to create event logs for life cycle 
+>>> events?  Please feel free to weigh in.
+>>>
+>>> Thanks,
+>>> Rajes
+>>>
+>>> On 01-02-2020 02:23, RAJESWARAN THILLAIGOVINDAN wrote:
+>>>> Hi,
+>>>>
+>>>> I am going through the bmcweb code for implementing Redfish 
+>>>> EventService based on the design document 
+>>>> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749. This 
+>>>> design is hooked to the journal based Redfish Event Logging. For 
+>>>> life cycle events(ResourceAdded, ResourceRemoved, 
+>>>> ResourceUpdated),  using D-Bus match, bmcweb can create an event 
+>>>> log. This requires a JSON dictionary, comprising an array of 
+>>>> Redfish Resource Name and the D-Bus path. This approach works only 
+>>>> in case of one to one mapping of Redfish Resource Name and the 
+>>>> D-Bus path. For propertiesChanged events, if the Redfish Resource 
+>>>> property is not on the same D-Bus path or the Redfish Resource 
+>>>> property name is different from the D-Bus property name, then an 
+>>>> additional JSON dictionary to maintain this information is 
+>>>> required. With D-Bus match alone in the bmcweb, Redfish 
+>>>> EventService can't be fully supported. For the Message Registers 
+>>>> and the Resource Types that are supported, the relevant OpenBMC 
+>>>> application must create an event log in the journal using either 
+>>>> the phosphor::logging::entry or sd_journal_send() command.
+>>>>
+>>>> After realizing that with D-Bus match in the bmcweb alone can't 
+>>>> help to fully implement EventService, I prefer to avoid using D-Bus 
+>>>> match in bmcweb. Instead, I prefer to modify the OpenBMC 
+>>>> application that generated the event to create an event log in the 
+>>>> journal. Do you see any advantage of using combination of D-Bus 
+>>>> match in the bmcweb wherever it is possible and changes to OpenBMC 
+>>>> application in other cases to create an event log ?
+>>>>
+>>>> Your views are highly appreciated.
+>>>>
+>>>> Thanks,
+>>>> Rajes
+>>>
+> Thanks
+> Ratan
+>
+>
 
-This is exactly why I propose to provide enum strings in by the client header.
-Currently, client code (poorly) uses "hard-coded" strings directly. If
-we provide the constexpr strings in the client header, the client code
-could be "refacted" to use the definitions from the client header.
-Then sdbusplus is freely to update the string format without breaking
-client code.
+--------------B1B06DB6B59545133E03F34A
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
->
-> > I do not think it's good behavior for a client to include another
-> > server's heaader files.
-> > E.g. if I am writing client code and want to set a property on another
-> > service (e.g. foo.bar), I do not really want to include a
-> > "foo/bar/server.hpp", because it's not part of my client.
-> > What I want is some constexpr strings, like interface name, property
-> > name, enum string, etc.
->
-> With the current state of things, programming choices are:
->     1. Include a header poorly named "server" into a "client" code.
->     2. Reimplement what is in that "server" header file.
->
-> Under no circumstances is a good approach or one that should be
-> encouraged.
->
-> > Ideally, sdbusplus would generate the full client binding code. But we
-> > do not have that now.
-> > So I am proposing to move a bit forward to generate a little client
-> > code that would benefit the client's usage. The client won't have to
-> > write the full string manually anymore.
->
-> So maybe we call it "client" rather than "common"?  Common implies that
-> there are header files that are okay to import under any case and I
-> don't see that to be the case with what you're proposing we define.
->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Ratan,</p>
+    <p>   Comments in-line<br>
+    </p>
+    <div class="moz-cite-prefix">On 2/24/2020 12:07 PM, Ratan Gupta
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <p>Hi Apparao,</p>
+      <div class="moz-cite-prefix">On 2/20/20 12:49 AM, Puli, Apparao
+        wrote:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:1a22b091-675c-3e1d-b57a-d44b3ba5d4e0@linux.intel.com">Hi,
+        <br>
+        <br>
+          I am sorry for late response as this mail is buried under and
+        got struck back of my mind. <br>
+        <br>
+        As i did mentioned in EventService design document, EventLog
+        Monitor service is not common across the organizations( Example:
+        Intel uses the redfish event logs file and inotify mechanism for
+        monitoring the event logs. Where as IBM uses d-bus event log
+        mechanism and they can relay on match rules). That said
+        challenges with ResourceType mapping will be different in both
+        monitoring mechanisms. This is good point. Initially when i
+        started EventService design, i thought we can have mapping in
+        bmcweb for ResourceTypes with set of MessageID's for Logged
+        events ( As per Intel design) but not sure that may become
+        difficult when we expand supported ResourceTypes. <br>
+      </blockquote>
+      <p><tt>If I am getting correctly, Here is the flow which Intel
+          uses.</tt></p>
+      <ol>
+        <li><tt>Individual repo have to push the logs using
+            sd_journal_send which will write to the
+            file(/var/log/redfish) by using rsyslog daemon</tt></li>
+      </ol>
+      <pre><span class="pl-en">          sd_journal_send</span>(<span class="pl-s"><span class="pl-pds">"</span>MESSAGE=%s<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>journal text<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>PRIORITY=%i<span class="pl-pds">"</span></span>, &lt;LOG_LEVEL&gt;,
+                <span class="pl-s"><span class="pl-pds">"</span>REDFISH_MESSAGE_ID=%s<span class="pl-pds">"</span></span>,
+                <span class="pl-s"><span class="pl-pds">"</span>ResourceEvent.1.0.ResourceCreated<span class="pl-pds">"</span></span>, <span class="pl-c1">NULL</span>);
 
-Yeah, agreed.
+</pre>
+      <blockquote>
+        <ul>
+          <li> <tt>How you would populate the "</tt><tt><span
+                class="treeLabel objectLabel" aria-labelledby="default"
+                data-level="3">OriginOfCondition</span></tt><tt>" during
+              sending of event? (<a class="moz-txt-link-freetext"
+                href="https://redfish.dmtf.org/schemas/v1/Event.v1_4_1.json"
+                moz-do-not-send="true">https://redfish.dmtf.org/schemas/v1/Event.v1_4_1.json</a>)</tt></li>
+        </ul>
+      </blockquote>
+    </blockquote>
+    <p><tt>Currently in logServices( logEntry),  we are not reporting
+        the "OriginOfCondition" property as per schema. I will check
+        with Jason( Who wrote the logService) and get back on this.</tt></p>
+    <p><tt>BTW can you give me how this information is fetched in IBM
+        way of LogService implementation( D-Bus)? If you already
+        ratified any such, i think we can leverage.  If not, We work
+        together for solution. <br>
+      </tt></p>
+    <blockquote type="cite"
+      cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
+      <blockquote>
+        <ul>
+        </ul>
+      </blockquote>
+      <blockquote>
+        <ul>
+          <li><tt> Any plan to add resource path in this journal message
+              which tells that this is the path for which resource
+              created event generated.</tt></li>
+        </ul>
+      </blockquote>
+    </blockquote>
+    <tt>Same as above.</tt><br>
+    <blockquote type="cite"
+      cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
+      <blockquote>
+        <ul>
+        </ul>
+      </blockquote>
+      <blockquote>
+        <ul>
+          <li><tt> Would the path be "Redfish Path/ D-bus Path"?</tt></li>
+        </ul>
+      </blockquote>
+    </blockquote>
+    As per Redfish specification, This should be "@odata.id" which means
+    it should be of resource uri and so we can't use d-bus path here for
+    OriginOfConditions.<br>
+    <blockquote type="cite"
+      cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
+      <blockquote>
+        <ul>
+          <li><tt>Where the mapping would be done between
+              D-busPath/Redfish Resource path?</tt></li>
+        </ul>
+      </blockquote>
+      <pre>    
+         Cons: Every application have to make the change(use sd_journal_send).
+         My thought is backend application should not be aware of the redfish terminlogy.</pre>
+    </blockquote>
+    <p>Having separate process only for this mapping may not be good( No
+      different from maintaining that map inside bmcweb as there won't
+      be any other consumers). Ideal way is, that should be mapped while
+      logging logEntry's itself. But we are not doing it currently which
+      need to be re-looked. Give me some time, I will think and check
+      with other folks and get back.<br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
+      <pre>
 
-> Again, I don't have any issue with the interface names.  I do take issue
-> with the enumeration strings because they shouldn't ever be used outside
-> of sdbusplus (or a similar dbus binding).
->
+</pre>
+      <p><tt>  <b> 2.</b> Some application(bmcweb) would do the Inotify
+          on the path(/var/log/redfish) and send the event once there is
+          any activity on this file.</tt></p>
+      <pre>&gt; I thought we can have mapping in bmcweb for ResourceTypes with set of MessageID's for Logged events ( As 
+per Intel design)
 
-For the interface names, the patch is updated at:
-https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/29404
-Let's treat it as a start point of client code.
+    Can you explain more here. What is your plan? How you would do the Resource Type based event filtering? <span class="pl-s">REDFISH_MESSAGE_ID is different than the resource type.</span></pre>
+    </blockquote>
+    Initially i thought "ResourceType" based event filtering can be done
+    using minimal mapping( Using MessageID and args). But that will work
+    for minimal set. If the supported ResourceTypes grows, we will have
+    bigger challenges which i can sense it now.  Anyway, Supported
+    Resources are completely implementation specific. If this value is
+    empty means, by default all event logs will be sent to subscribers.
+    This is what we can start with before supported  ResourceTypes list
+    grows.<br>
+    <blockquote type="cite"
+      cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
+      <pre>
+<span class="pl-s"><span class="pl-pds"></span></span><span class="pl-s"></span></pre>
+      <blockquote type="cite"
+        cite="mid:1a22b091-675c-3e1d-b57a-d44b3ba5d4e0@linux.intel.com">
+        <br>
+        As per my reading from below query, You are looking at d-bus
+        match rules and ResourceTypes mapping which is more specific to
+        d-bus event logging(IBM way of implementing event logging).
+        reading it from journal logs will give more information but that
+        will impact the performance to large extent. This might be one
+        of the reason why we (Intel) uses Redfish message ID while
+        logging redfish events logs to journal(You can refer design
+        document for same at <a class="moz-txt-link-freetext"
+href="https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md"
+          moz-do-not-send="true">https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md</a>).
+        In opinion, in your d-bus if you are using some kind of
+        filter(Example REDFISH_MESSAGE_ID) while logging in journal logs
+        for all events and figure out the way to monitor the journal
+        logs without impacting the performance, that should be ok as
+        long as match filters are satisfied for Redfish EventService
+        subscriptions and supported Types(Again differs with
+        implementation). <br>
+        <br>
+        Thanks, <br>
+        <br>
+        -Appu <br>
+        <br>
+        On 2/10/2020 1:52 AM, RAJESWARAN THILLAIGOVINDAN wrote: <br>
+        <blockquote type="cite">ApparaRao. <br>
+          <br>
+          As you have shown interest in this feature and submitted the
+          design document, do you have any opinion on this? Do you see
+          any merit in using D-Bus match in bmcweb to create event logs
+          for life cycle events?  Please feel free to weigh in. <br>
+          <br>
+          Thanks, <br>
+          Rajes <br>
+          <br>
+          On 01-02-2020 02:23, RAJESWARAN THILLAIGOVINDAN wrote: <br>
+          <blockquote type="cite">Hi, <br>
+            <br>
+            I am going through the bmcweb code for implementing Redfish
+            EventService based on the design document <a
+              class="moz-txt-link-freetext"
+              href="https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749"
+              moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749</a>.
+            This design is hooked to the journal based Redfish Event
+            Logging. For life cycle events(ResourceAdded,
+            ResourceRemoved, ResourceUpdated),  using D-Bus match,
+            bmcweb can create an event log. This requires a JSON
+            dictionary, comprising an array of Redfish Resource Name and
+            the D-Bus path. This approach works only in case of one to
+            one mapping of Redfish Resource Name and the D-Bus path. For
+            propertiesChanged events, if the Redfish Resource property
+            is not on the same D-Bus path or the Redfish Resource
+            property name is different from the D-Bus property name,
+            then an additional JSON dictionary to maintain this
+            information is required. With D-Bus match alone in the
+            bmcweb, Redfish EventService can't be fully supported. For
+            the Message Registers and the Resource Types that are
+            supported, the relevant OpenBMC application must create an
+            event log in the journal using either the
+            phosphor::logging::entry or sd_journal_send() command. <br>
+            <br>
+            After realizing that with D-Bus match in the bmcweb alone
+            can't help to fully implement EventService, I prefer to
+            avoid using D-Bus match in bmcweb. Instead, I prefer to
+            modify the OpenBMC application that generated the event to
+            create an event log in the journal. Do you see any advantage
+            of using combination of D-Bus match in the bmcweb wherever
+            it is possible and changes to OpenBMC application in other
+            cases to create an event log ? <br>
+            <br>
+            Your views are highly appreciated. <br>
+            <br>
+            Thanks, <br>
+            Rajes <br>
+          </blockquote>
+          <br>
+        </blockquote>
+      </blockquote>
+      Thanks<br>
+      Ratan<br>
+      <p><br>
+      </p>
+    </blockquote>
+  </body>
+</html>
 
-> --
-> Patrick Williams
+--------------B1B06DB6B59545133E03F34A--
