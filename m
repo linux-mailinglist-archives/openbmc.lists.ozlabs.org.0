@@ -1,63 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51EE916F28D
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 23:23:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Rtkg2WcSzDqTF
-	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 09:23:55 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7778316F388
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 00:37:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48RwMF4kyszDqDC
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 10:37:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::230;
- helo=mail-lj1-x230.google.com; envelope-from=rhanley@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::82c;
+ helo=mail-qt1-x82c.google.com; envelope-from=xiangliu@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=aD9lSsfP; dkim-atps=neutral
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com
- [IPv6:2a00:1450:4864:20::230])
+ header.s=20161025 header.b=Jam/P3gl; dkim-atps=neutral
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com
+ [IPv6:2607:f8b0:4864:20::82c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Rtjs2YfGzDqSr
- for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2020 09:23:12 +1100 (AEDT)
-Received: by mail-lj1-x230.google.com with SMTP id q8so694432ljb.2
- for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 14:23:12 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48RwLY2PSBzDqSm
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2020 10:36:35 +1100 (AEDT)
+Received: by mail-qt1-x82c.google.com with SMTP id l16so983890qtq.1
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 15:36:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Tba1Vsh6D2IMr/J6NV2FxJUJDx8iwaRTvSmydRxQrXc=;
- b=aD9lSsfPSv+KnV4e1gdftwZsC4THfCjd3z8o8DOV2zmJn4RIxgeKHJZq/MLOweCWFO
- cgy7yC5jkKcpC1derturgkWLSexuBfhFmBup7IJ4A90F5chG/WMdQ4vPIgGmrkVp2JRg
- /cHmd6Uxx9+Sk5TgXJeSpmkMqBb59vO0MGobKSJKsiB5+b1vBbwoLouW7KzH3wtEj4bA
- n+O505g4ISweuDy18XWYn6oRCV9Ep16pa5GixIcGC/ZmugfXwIY90CIw6bOda75GdLwm
- cmT1sGBVQtcNABljX+KVWbKTaVX+3jxR3x1AhMtum3RvbrY0V+OeGyXfQVJ3Yl4F5aDR
- BR2w==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=TSz0vgHIIzwI8zc4lj8lv5ulWO6W1ZIK2hqROhuWlZc=;
+ b=Jam/P3glhhMxjpiNr4okoRgDOc63vcSjcgQMh3YSFfvfLW1y5SI5bBymWGjEtOMvts
+ dI0l32169IMaPkSdw7FdB+mloym8956W0Uz7VlssWiKuPgpxRpjo9blH4WOeSGyXwXoG
+ C4vFHl3Mhys9BWYybFT0sQc1I9HQgI8OByjX3JiEYMbhsBRzCMgU50m65DTpbupZD086
+ 1/U/cS9vmdaPfzb+C4qwLnpM0xUk0KQnw5eDwWuto9f4Q/ANueZ6N3N7Diy4giI4Tgyl
+ 3JrdT/ivGXAktUGtFpSy2yflnogyPEcv65KzxgMDanh0DvinkypwKBGsuHfUsCxoBw6B
+ yVRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Tba1Vsh6D2IMr/J6NV2FxJUJDx8iwaRTvSmydRxQrXc=;
- b=EGxBJ4GcR92yPp3GrQeibDtJnVB2plPzikks84M+0B3gmd0WCUz9PTy1sERphx5ond
- YO/ClKJ7QXJfdQ8o/TVXFhPJA1uvfBdcbJ373m3xJf/VBDlk1M0Gao00HVXOuMtaYLmG
- pwj6n0P7kkm/9bWJ3VefAoPixe0H4X6+VYPNJO/nhX4E1DmwC/YdwKb/1LH1YIIdrgA2
- kAOwwpdX27UZUZ9p/j2b43tcpBqZS2AnpwbIxN4OoG3vvQuZeSHap7z6tumyWFKOqGke
- +UiFJ8RPtvXjVZQ9KDYLBtgsEPD5ustTadma11KCEpBePRMRlPKzM1tZid13zFGPqnMi
- /yhQ==
-X-Gm-Message-State: ANhLgQ06tcfMFripTnT9Nou+pbZ0pi3gWxpnX0QYpi8Zx7eKFJZV/eAv
- 0TTHG0/0IXLOuON56FARtkmvXcAroVsroqofm7qmsF1o
-X-Google-Smtp-Source: ADFU+vvCFlcToE/4/LM3OPCo2R96nMDjxaMNsaAoURoHLezNht8ctXXxSK/KTnC4w8zdU6EbGBVVeKZEYXOK1Ri3JQA=
-X-Received: by 2002:a2e:90c6:: with SMTP id o6mr707216ljg.129.1582669387856;
- Tue, 25 Feb 2020 14:23:07 -0800 (PST)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=TSz0vgHIIzwI8zc4lj8lv5ulWO6W1ZIK2hqROhuWlZc=;
+ b=pekzpVhMkvADL+wBmZ2fSoJ/GAzaEmXWK8FE7TuMme4WX/qYBhchFoyfY2SmY1R2fp
+ eaTmCtEDkY41sMCiNfgq83N4A2oUR1utl8uyE6sNV9tBQan0dgutJdt6YppxgnOEfwwM
+ xKHPQxvPZvkFVAlBQF45QSNkKRsv5QpGyXrKOWJnuFAaDsUis595dB6VBJ7XJjnK2fE+
+ cKv4tEM9QIiUkiBJWxdzv9ONEePRe4Pq0dlgjSfgR709bsYAenoRnIZvQicMtBHPl89L
+ FJ9K5Q+KjSmfPC2HpsKw9gp9v+O0nBS5E/bQkPDpa7qyyyafN3t2oaz+ywvtYGr4JDQX
+ oYlw==
+X-Gm-Message-State: APjAAAWcbnU+DeCog4W3xY9rv/KknyAEjBsTkYXfDerXv8gCHrDG6ZBy
+ 4mVNuDAr7xdbnBKarSg1o9vxBMmktplfF0bJL/Sjtw==
+X-Google-Smtp-Source: APXvYqzJGHt21smtsKOc1c+oEqNZF2B25Jjasv/1hH+dTRGH3x0TM7Af+LWu56T+bhRkq5nK1hHw/LJ/Ksv3zrs7Aks=
+X-Received: by 2002:ac8:554b:: with SMTP id o11mr1351585qtr.36.1582673791775; 
+ Tue, 25 Feb 2020 15:36:31 -0800 (PST)
 MIME-Version: 1.0
-From: Richard Hanley <rhanley@google.com>
-Date: Tue, 25 Feb 2020 14:22:56 -0800
-Message-ID: <CAH1kD+a-3tb-=Xi17w=qrW3xLTJCk9JHF1b+PA=hvkekjSWt-w@mail.gmail.com>
-Subject: Adding a detailed physical model to bmcweb
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000a9523e059f6dee76"
+References: <CAH57Xkz0BDp9NY7QdB0i329t=YS7Vk4TQccv8bg6DSXknYVsUg@mail.gmail.com>
+ <20200225022603.GI67957@patrickw3-mbp.dhcp.thefacebook.com>
+In-Reply-To: <20200225022603.GI67957@patrickw3-mbp.dhcp.thefacebook.com>
+From: Xiang Liu <xiangliu@google.com>
+Date: Tue, 25 Feb 2020 15:35:55 -0800
+Message-ID: <CAH57Xkw6LgCeSK3AnR5Cy6SHY5wY8b6FMQV+9sG_QMhFmQ1d-Q@mail.gmail.com>
+Subject: Re: Possibility to move microsemi switchtec-user support from
+ meta-facebook to a shared meta-layer
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="00000000000027f733059f6ef50e"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,93 +74,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, amithash@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a9523e059f6dee76
+--00000000000027f733059f6ef50e
 Content-Type: text/plain; charset="UTF-8"
 
-One of the requirements we have for our data center management software is
-that we need to be able to map resources (e.g. actions, telemetry, and
-assemblies) directly to the physical component that it originated from as
-well as how those components are physically connected.
+Thank you Patrick! We will then try to port this recipe to some other meta
+layer. Hopefully we can find a good place for it :)
 
-Historically this mapping was done through a custom protocol on the host,
-and we would like to move this to a Redfish service on the BMC. Another
-engineer spoke with DMTF, and the most Redfishy way to represent this would
-be by adding links in the assemblies. Some examples of possible
-relationships are:
+Regards,
+Xiang
 
-*/Systems/1/Memory/1/Assembly ------> /Chassis/Mobo/Sensors/MemSensor*
-*/Chassis/Mobo/PCIeDevices/Storage/Assembly ---------->
-/Systems/1/Storage/BootVolume*
-*/Chassis/Mobo/PCIeDevices/ExpansionTray/Assembly --------->
-/Chassis/ExpansionTray/Assemby*
+On Mon, Feb 24, 2020 at 6:26 PM Patrick Williams <patrick@stwcx.xyz> wrote:
 
-That last example is actually represented in the current Redfish spec, but
-it helps explain the idea I'm getting at.  The hope is that by starting at
-the service entry point we can get a physical model of the component tree
-by traversing hyperlinks. From that a client could relate any Redfish
-resource to its physical component.
+> On Mon, Feb 24, 2020 at 01:54:27PM -0800, Xiang Liu wrote:
+> > Hi Amithash and other openbmc contributors,
+> >
+> > It seems the Microsemi switchtec-user tool has been integrated to
+> > meta-facebook, the recipe is currently located at:
+> >
+> https://github.com/facebook/openbmc/blob/eaf4d364e55f96a5b37331049db1a718d8667e5a/meta-facebook/meta-fbep/recipes-fbep/plat-libs/switchtec-user_2.2-rc1.bb
+> >
+> > I am wondering if this recipe could be moved to a shared meta-layer, like
+> > meta-phosphor or an upstream layer? As our team at Google will also need
+> > this tool.
+>
+> Xiang,
+>
+> Glad to hear you find this useful.  We won't ever import the meta-tree
+> at facebook/openbmc directly into openbmc/openbmc.  We've started a new
+> openbmc/meta-facebook for our machine specific support here.
+>
+> If there are recipes under facebook/openbmc that you find useful and we
+> haven't already ported them to some openbmc/meta-* layer, feel free to
+> do so.  Off the top of my head I'm not sure the best place for this
+> particular recipe.
+>
+> --
+> Patrick Williams
+>
 
-Let's just say for the moment that we get a service that collects this
-information, I've been trying to figure out a way to sustainably add it
-into bmcweb.  Presumably this would be a large amount of OEM material that
-OpenBMC wouldn't want to support upstream.
-
-I don't think making patches in bitbake or subclassing the individual nodes
-will be sustainable in the long run.  At a minimum a way to chain
-co-routines would allow for other code to "attach" to the response handlers.
-
-So I guess there are a couple of questions here.  Does the community have
-any plans/desire to support an extension mechanism in bmcweb? If so, should
-we be thinking of in-process code extensions or inter-process dynamic
-extensions?
-
-For the record, this requirement does not have an imminent deadline, so I
-am happy to design around the best long term solution as opposed to a short
-term hack.  I just wanted to get a plan here before things become imminent.
-
-Thanks,
-Richard
-
---000000000000a9523e059f6dee76
+--00000000000027f733059f6ef50e
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">One of the requirements we have for our data center manage=
-ment software is that we need to be able to map resources (e.g. actions, te=
-lemetry, and assemblies) directly to the physical component that it origina=
-ted from as well as how those components are physically connected.<div><br>=
-</div><div>Historically this mapping was done through a custom protocol on =
-the host, and we would like to move this to a Redfish service on the BMC. A=
-nother engineer spoke with DMTF, and the most Redfishy way to represent thi=
-s would be by adding links in the assemblies. Some examples of possible rel=
-ationships are:</div><div><br></div><div><i>/Systems/1/Memory/1/Assembly --=
-----&gt; /Chassis/Mobo/Sensors/MemSensor</i></div><div><i>/Chassis/Mobo/PCI=
-eDevices/Storage/Assembly ----------&gt; /Systems/1/Storage/BootVolume</i><=
-/div><div><i>/Chassis/Mobo/PCIeDevices/ExpansionTray/Assembly ---------&gt;=
- /Chassis/ExpansionTray/Assemby</i></div><div><i><br></i></div><div>That la=
-st example is actually represented in the current Redfish spec, but it help=
-s explain the idea I&#39;m getting at.=C2=A0 The hope is that by starting a=
-t the service entry point we can get a physical model of the component tree=
- by traversing hyperlinks. From that a client could relate any Redfish reso=
-urce to its physical component.</div><div><br></div><div>Let&#39;s just say=
- for the moment that we get a service that collects this information, I&#39=
-;ve been trying to figure out a way to sustainably add it into bmcweb.=C2=
-=A0 Presumably this would be a large amount of OEM material that OpenBMC wo=
-uldn&#39;t want to support upstream.</div><div><br></div><div>I don&#39;t t=
-hink making patches in bitbake or subclassing the individual nodes will be =
-sustainable in the long run.=C2=A0 At a minimum a way to chain co-routines=
-=C2=A0would allow for other code to &quot;attach&quot; to the response hand=
-lers.</div><div><br></div><div>So I guess there are a couple of questions h=
-ere.=C2=A0 Does the community have any plans/desire to support an extension=
- mechanism in bmcweb? If so, should we be thinking of in-process code exten=
-sions or inter-process dynamic extensions?=C2=A0=C2=A0</div><div><br></div>=
-<div>For the record, this requirement does not have an imminent deadline, s=
-o I am happy to design around the best long term solution as opposed to a s=
-hort term hack.=C2=A0 I just wanted to get a=C2=A0plan here before things b=
-ecome imminent.</div><div><br></div><div>Thanks,</div><div>Richard</div></d=
-iv>
+<div dir=3D"ltr">Thank you Patrick! We will then try to port this recipe to=
+ some other meta layer. Hopefully we can find a good place for it :)<div><b=
+r></div><div>Regards,</div><div>Xiang</div></div><br><div class=3D"gmail_qu=
+ote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Feb 24, 2020 at 6:26 PM =
+Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz=
+</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
+0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
+On Mon, Feb 24, 2020 at 01:54:27PM -0800, Xiang Liu wrote:<br>
+&gt; Hi Amithash and other openbmc contributors,<br>
+&gt; <br>
+&gt; It seems the Microsemi switchtec-user tool has been integrated to<br>
+&gt; meta-facebook, the recipe is currently located at:<br>
+&gt; <a href=3D"https://github.com/facebook/openbmc/blob/eaf4d364e55f96a5b3=
+7331049db1a718d8667e5a/meta-facebook/meta-fbep/recipes-fbep/plat-libs/switc=
+htec-user_2.2-rc1.bb" rel=3D"noreferrer" target=3D"_blank">https://github.c=
+om/facebook/openbmc/blob/eaf4d364e55f96a5b37331049db1a718d8667e5a/meta-face=
+book/meta-fbep/recipes-fbep/plat-libs/switchtec-user_2.2-rc1.bb</a><br>
+&gt; <br>
+&gt; I am wondering if this recipe could be moved to a shared meta-layer, l=
+ike<br>
+&gt; meta-phosphor or an upstream layer? As our team at Google will also ne=
+ed<br>
+&gt; this tool.<br>
+<br>
+Xiang,<br>
+<br>
+Glad to hear you find this useful.=C2=A0 We won&#39;t ever import the meta-=
+tree<br>
+at facebook/openbmc directly into openbmc/openbmc.=C2=A0 We&#39;ve started =
+a new<br>
+openbmc/meta-facebook for our machine specific support here.<br>
+<br>
+If there are recipes under facebook/openbmc that you find useful and we<br>
+haven&#39;t already ported them to some openbmc/meta-* layer, feel free to<=
+br>
+do so.=C2=A0 Off the top of my head I&#39;m not sure the best place for thi=
+s<br>
+particular recipe.<br>
+<br>
+-- <br>
+Patrick Williams<br>
+</blockquote></div>
 
---000000000000a9523e059f6dee76--
+--00000000000027f733059f6ef50e--
