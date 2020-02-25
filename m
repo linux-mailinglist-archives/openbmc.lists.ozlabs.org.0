@@ -1,87 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F76516B7B9
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 03:26:40 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48RN99351GzDqT1
-	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 13:26:37 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71A6F16BBC9
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 09:23:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48RX5B5F9MzDqWl
+	for <lists+openbmc@lfdr.de>; Tue, 25 Feb 2020 19:23:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.224;
- helo=new2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133;
+ helo=mail-lf1-x133.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=B/GjZVdb; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=AEhaMHhY; 
- dkim-atps=neutral
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=J/DBN5B/; dkim-atps=neutral
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
+ [IPv6:2a00:1450:4864:20::133])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48RN8b2x9VzDqN3
- for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 13:26:07 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
- by mailnew.nyi.internal (Postfix) with ESMTP id EEAAF66E8;
- Mon, 24 Feb 2020 21:26:04 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Mon, 24 Feb 2020 21:26:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=eSJnXXMvJyD++EDg3ImBCCfAweY
- 6kOZJU4tcVP8sg0A=; b=B/GjZVdbjtl+1uvUJ/xBO3emJBdSput/+cflWpI1d5f
- /YCnahkaZJRKCbBil1Ui1pOvPRDxz+Z/QAojX3FhuCGf1zDsh3WxA2WAZ+1nLSkb
- LjipRccICaBXHEpU26oODYbE8GcYkt4myaH73tRFIm3NVyK/U3dHgj3ReUtz+ffN
- h+Q8RKZod8k7gvO2UEA24bUyQ5njhxfoqnYNfCAe9Cd/ziC/Y2m44xZEaKGBWmE0
- xmpJawoHR7naCK2AeImP40wO5lbPKaz0a6ZNPW3xx/4t6FfR+uPMDBOLUkSwTmCB
- uzQgUFJI2oV4nyiN+SM3h4gdih8DiUpgZMSQ7+nL91Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=eSJnXX
- MvJyD++EDg3ImBCCfAweY6kOZJU4tcVP8sg0A=; b=AEhaMHhYqukN5iYRdb0LJp
- T2kpt5+Xni7J0LivNpvJWj8KhOi4Ndy66SzSf+Lxqe66xizvfwq/EFPJ2PvDC+xE
- SfsznfpFZYx8Y8o91vM4irxjVX93dsHf8ODwz+/UNndhWbb5grwgBczMOLyhgpgh
- ETaCFrgfn6SdbRLjQa/yeKHETf10PAfcfpAMpNmKDECZrGLilc//55zD8QGQRxT3
- X2KgerKDHJLc+KNeGi2/a3iF1YjjoyEtk2Yrq9XmF033zaNQY9tHrkE5iHZSvAx4
- 2sOveVwjkOQV9vULEefFbZ8JsmogodKaC+GmynnGcH+YIh56/Oxtzl9MCXXO/xqg
- ==
-X-ME-Sender: <xms:vIVUXo4qOj2uQwwJwkvIWnuag39yqxzGTO75RWQrc5ErVLgHmLZWXQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrledugdeghecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeejiedr
- vdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
- hilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:vIVUXo4TcTOaD340DJir2-1zTWzR8-aI-mGcCIgTEzoCFefA_WIduA>
- <xmx:vIVUXvt-RdmkOENOi22UIbjHDjc1GNHvG2Gx3J4UoBqUrlmITAvxDg>
- <xmx:vIVUXpiogtFsqPOy93NM0Oi0zoEJk4iA3H8sieXb_uPbaKIlXGn-ZA>
- <xmx:vIVUXlKFQznohJugo1-9p8n6Wc7DjX-KirjtSx5rzaByubv_Fxk0fA>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id BDAF63060D1A;
- Mon, 24 Feb 2020 21:26:03 -0500 (EST)
-Date: Mon, 24 Feb 2020 20:26:03 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Xiang Liu <xiangliu@google.com>
-Subject: Re: Possibility to move microsemi switchtec-user support from
- meta-facebook to a shared meta-layer
-Message-ID: <20200225022603.GI67957@patrickw3-mbp.dhcp.thefacebook.com>
-References: <CAH57Xkz0BDp9NY7QdB0i329t=YS7Vk4TQccv8bg6DSXknYVsUg@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48RX4K4XzTzDqRW
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 19:22:57 +1100 (AEDT)
+Received: by mail-lf1-x133.google.com with SMTP id y17so5942130lfe.8
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Feb 2020 00:22:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=C/MGF0H+lv+0MXNhS663qk1bb7+kBytOh98sa2yUV/A=;
+ b=J/DBN5B/kBkLAI7bqtuDQAY+yCJ6xo6RD3xd/r6mlAS3j6CqD+l+fBn4AxOTvAeskv
+ Tb9yVhXlEQ64ClAZCDEOwJK8nWUx8jBa804hXWMtwZZvqZP3Eo/DksDpRTiQSC6M0iLu
+ +Wg5nM9MKvzNquKNXWJJ8Nb52EXt8HkDO4llwkd5Ieomg/4Eqs16k7mebPCrZ8cTODul
+ ZpVsyXao9WlLHuPBUV4sFiCURNP1DRfzPIR2xIevmiIWR5IzDkpXSO/Ec0x5rq8vTzVp
+ deM4nsMC6/RWH/nHZe9M6bEk1rENoiVj2G+tRkygSTem8qxyB2jkg8xaSTz14Zn4CBmj
+ u7Pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=C/MGF0H+lv+0MXNhS663qk1bb7+kBytOh98sa2yUV/A=;
+ b=iWdfq7xD6RYulpxlH46DYngmHJJAjtgs7if+syvayDnsoUmMncXFHCHI5SVFMyf2ny
+ EY0g1zmSfkWuWvrnJM9pXgxN5YJJwy1Os6ggOQMZl6zhzenL/xi2KLJ9j/Zap3NPLfli
+ T523auv1e9184Mx8R7p2zv/64jWJdCBj4jQOR1W89AyyTptNCe9U8F2AEiR5xcZiyO4B
+ S1eIgOx6cWTcLnjmP1hC2/4ePQRWjCnb+JhbgH/og+cvOOi9HOjRJoflAEoEnw9vGIH5
+ Gxw6wQEgEiq2sKEHhZnp0Cv/KP/KBqHmy0g+nsC1ieLe3aPXCbenY03+BM41QElJ5Smx
+ /goA==
+X-Gm-Message-State: APjAAAXYZ5WdVsdQJPtKJcc8jhvwYEll1QTDl3ayG3lNZjw83xlCdiAs
+ Rt+FMf+ece9yTCyrlIdDenEEn37vc+/FsG7g3JM=
+X-Google-Smtp-Source: APXvYqznViFXFlMTpJILNJt8rTZXj/B+hVR+GfX3D5cBXHcTdsuKSdSFPePuyVhgTYEwmmQ0cmdQsE8XPs7UnmI+opk=
+X-Received: by 2002:a19:2396:: with SMTP id
+ j144mr15719505lfj.113.1582618971905; 
+ Tue, 25 Feb 2020 00:22:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="MPkR1dXiUZqK+927"
-Content-Disposition: inline
-In-Reply-To: <CAH57Xkz0BDp9NY7QdB0i329t=YS7Vk4TQccv8bg6DSXknYVsUg@mail.gmail.com>
+References: <CAARXrtkPQWxhC3XdR-7kE8Kj4HC10gPk8=v7gPDVoZa_L7x-6w@mail.gmail.com>
+ <20200218203934.GB2219@patrickw3-mbp.lan.stwcx.xyz>
+ <CAARXrtkwsy3t=bz7wHa=oEG-KwE7dBJ0Upkft-RN9XNgiFdSHA@mail.gmail.com>
+ <20200220163830.GD41328@patrickw3-mbp.dhcp.thefacebook.com>
+ <CAARXrt=7=X53tQ33C9+wBkUV7tZXgVZCtf8un7y8wpRxVdVufw@mail.gmail.com>
+ <20200224203215.GE67957@patrickw3-mbp.dhcp.thefacebook.com>
+In-Reply-To: <20200224203215.GE67957@patrickw3-mbp.dhcp.thefacebook.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Tue, 25 Feb 2020 16:22:40 +0800
+Message-ID: <CAARXrtnykCRL2EXekwb62aBie6YRQuSLBftZAg2AzheKA0vGug@mail.gmail.com>
+Subject: [sdbusplus] To generate client header (was: Re: To generate a common
+ header for public information of interfaces)
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,61 +79,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, amithash@gmail.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+> > > I don't see any reason any code should ever directly utilize the enum
+> > > strings.  We generate code already to safely convert them to and from
+> > > real C++ enum types.  Why would you want to use string comparison
+> > > instead?
+> > >
+> > > Can you elaborate on why we should be enabling this usage pattern?
+> >
+> > There are cases for a service to use a "enum string" directly instead
+> > of getting the string from enum by `convertForMessage()`
+> > E.g.
+> > * https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/master/activation.hpp#L43
+> > * https://github.com/openbmc/phosphor-host-ipmid/blob/master/chassishandler.cpp#L218
+>
+> Examples of poor code are not a use case.  Both of these examples are
+> trivially converted to convert<enum>ToString APIs.  We should do that
+> rather than facilitate unmaintainable code.
 
---MPkR1dXiUZqK+927
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+My concern to use "convertXXX" APIs is that it requires the client
+code to link the server code, where logically all it needs is the enum
+string.
 
-On Mon, Feb 24, 2020 at 01:54:27PM -0800, Xiang Liu wrote:
-> Hi Amithash and other openbmc contributors,
->=20
-> It seems the Microsemi switchtec-user tool has been integrated to
-> meta-facebook, the recipe is currently located at:
-> https://github.com/facebook/openbmc/blob/eaf4d364e55f96a5b37331049db1a718=
-d8667e5a/meta-facebook/meta-fbep/recipes-fbep/plat-libs/switchtec-user_2.2-=
-rc1.bb
->=20
-> I am wondering if this recipe could be moved to a shared meta-layer, like
-> meta-phosphor or an upstream layer? As our team at Google will also need
-> this tool.
+>
+> >
+> > Some of the cases could be changed to use `convertForMessage()`, but
+> > if one does want to directly use that, or use it as constexpr, why not
+> > provide it directly?
+>
+> Because it limits our future ability to change the string format.  When
+> people decided to reverse engineer what sdbusplus was doing and hard
+> code strings, they made it so we cannot change the format of what
+> sdbusplus is sending.
+>
+> There was a commit recently, as an example, that requested we add an
+> Intel-only "Management Engine" enumeration to an xyz.openbmc_project interface
+> rather than a com.intel one.  If we supported enumeration inheritance,
+> there would have been less need for this.  I don't know how we might
+> implement enumeration inheritance, but we might need to change the
+> "on-the-wire" string as a result.  Right now we're hamstrung by people
+> having hard coded strings.
 
-Xiang,
+This is exactly why I propose to provide enum strings in by the client header.
+Currently, client code (poorly) uses "hard-coded" strings directly. If
+we provide the constexpr strings in the client header, the client code
+could be "refacted" to use the definitions from the client header.
+Then sdbusplus is freely to update the string format without breaking
+client code.
 
-Glad to hear you find this useful.  We won't ever import the meta-tree
-at facebook/openbmc directly into openbmc/openbmc.  We've started a new
-openbmc/meta-facebook for our machine specific support here.
+>
+> > I do not think it's good behavior for a client to include another
+> > server's heaader files.
+> > E.g. if I am writing client code and want to set a property on another
+> > service (e.g. foo.bar), I do not really want to include a
+> > "foo/bar/server.hpp", because it's not part of my client.
+> > What I want is some constexpr strings, like interface name, property
+> > name, enum string, etc.
+>
+> With the current state of things, programming choices are:
+>     1. Include a header poorly named "server" into a "client" code.
+>     2. Reimplement what is in that "server" header file.
+>
+> Under no circumstances is a good approach or one that should be
+> encouraged.
+>
+> > Ideally, sdbusplus would generate the full client binding code. But we
+> > do not have that now.
+> > So I am proposing to move a bit forward to generate a little client
+> > code that would benefit the client's usage. The client won't have to
+> > write the full string manually anymore.
+>
+> So maybe we call it "client" rather than "common"?  Common implies that
+> there are header files that are okay to import under any case and I
+> don't see that to be the case with what you're proposing we define.
+>
 
-If there are recipes under facebook/openbmc that you find useful and we
-haven't already ported them to some openbmc/meta-* layer, feel free to
-do so.  Off the top of my head I'm not sure the best place for this
-particular recipe.
+Yeah, agreed.
 
---=20
-Patrick Williams
+> Again, I don't have any issue with the interface names.  I do take issue
+> with the enumeration strings because they shouldn't ever be used outside
+> of sdbusplus (or a similar dbus binding).
+>
 
---MPkR1dXiUZqK+927
-Content-Type: application/pgp-signature; name="signature.asc"
+For the interface names, the patch is updated at:
+https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/29404
+Let's treat it as a start point of client code.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5UhboACgkQqwNHzC0A
-wRnhJw//QeNiN2lj4/Rb5wsJ+5j76FrvjGmfqqEKMlggxJpHheqLfyXSrO1lgWi7
-oUX9tAfnItTS2qzeIpzPO6T3guUg7hIbI//i+2z3NtzbuTaAbAywYeTRzyuVo8pH
-12SohYsAIDVmNP+LUyjsdS7f9GHeRSNEYPKPNd1q2r5akbwPUt7JEmB5ApgfRFdW
-jbRjefDAVnmjbLZNUkjnbGcNDLQ3CDaemdUx0J1xDZE2vJ1tlekkhRuDAcUm53hF
-DQQRZTW6/dl5XWRilu4NpAvNtM/yTiuRYF86qTlJS3h1leUyxWrcqof3QjOlQmxN
-FJ8UItlYxEf7eObCNcdbYWJqPGQi2tYMtkYKnTFl9N/ggrkVNoVjR0e5ITake4o7
-w+B6fsEEqON6NNIHugFMh880XridpKMLsvRu+lIBx8Mp+DBy4jcbBbDPDJaY5/MF
-+y5A3p1W1W+7yay7GELYiEd9Fmtp7/RNKx1Y0puVguAO8IxaRhMm0h2jeQBlMW2/
-ULWZbAD3YLh25I9JOxDaSDL/DYGqEUPZRAz0wOp82PAVEjkF2dRctUHLgsnh1RZw
-9L6F+kwB6U2ACpsYcuUIZicCXmep+bUhVzTUo3vPY5GsjEZQEzCXtp4DqVE0aKy1
-VOqHJLFzZnY7dlIsjVm78fnZgjBN9f2ETrdwgp647TZSOKlB9Xg=
-=6PlS
------END PGP SIGNATURE-----
-
---MPkR1dXiUZqK+927--
+> --
+> Patrick Williams
