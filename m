@@ -1,61 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E589E170AEA
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 22:56:17 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BE75170AE7
-	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 22:54:43 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48SV2S3D9RzDqnV
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 08:54:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48SV4F6yxYzDqnf
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 08:56:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::744;
- helo=mail-qk1-x744.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
+ helo=mail-qt1-x841.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=naNgReko; dkim-atps=neutral
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com
- [IPv6:2607:f8b0:4864:20::744])
+ header.s=google header.b=Y/vinrmf; dkim-atps=neutral
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
+ [IPv6:2607:f8b0:4864:20::841])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48STzr68bXzDqcj
- for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2020 08:52:22 +1100 (AEDT)
-Received: by mail-qk1-x744.google.com with SMTP id a2so1094091qko.12
- for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2020 13:52:22 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48SV2w263bzDqnF
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2020 08:55:03 +1100 (AEDT)
+Received: by mail-qt1-x841.google.com with SMTP id j34so751867qtk.4
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2020 13:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=3t2bLQBAarl0eajRPMKUoV8Z/E+nWWcbk3OpMTRwEJQ=;
- b=naNgReko349ax0igpBfyIV65d0KT1nU+/SrTtSsRn6swLTpfkdA93lTPtQshJwGAUS
- NWcAA6nTW3ja5119mAg/DRzx95A+BtnLmR+RBvIQysqSW2S5ePhlBUHMOno5xKJPgKdR
- 5Q5cMXQnWuj5demCfcgGBBTPhi+vbjbVXOvZU=
+ :cc; bh=kz5Z4RCY4Tpl+dTiZNY8WHLRS8ZN2QcNJkbQ+Q8xyIw=;
+ b=Y/vinrmfZUGb4fq+pKb29Y9EsFc4bD1+nMlgeHrfy1u6xGdpGS/fXRvACbbsGJyUzo
+ 7TIcobyFROaCSkZbIxvITnP4BTY4h/0Vvx7EeI6P/LYw/50/s51/GjmbEhWT0l+/s0NM
+ fVka0oqTwitvSbujkwZw7IeMbnP18Tl7kkioU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=3t2bLQBAarl0eajRPMKUoV8Z/E+nWWcbk3OpMTRwEJQ=;
- b=J9RrtteTns06/yfeS70Ty5UDf1mY6pD7/B+/yAsv2BntSuEUQ57RY3E0v5n9TmNwkm
- TzbyTOoOc3uVvNcR6oq3kp/7u05+ZNBIO4wOMYjVvguOiy4IRT+WrA7aCnBnfYPFNZga
- dtasxqsb+FOS992ex9CasqjNxoscEjq2OKmnz5L6vWCh1P2C22BXOIToVbPJEEaK2+xb
- O+BxW59KRSqM5e1nZseAvCCV7w1tOpE6p9FQ9N9ebrGF/9pz/H62oR6wXWrdOcWpdA+v
- V5OJs7+WWy5nIBLtvdxTpPooAhOlaFJTWbY/J1CmjU2m2dhIhPLltV9YpLj/bDQaJvj+
- eqZQ==
-X-Gm-Message-State: APjAAAWoBckULBVXieKa13cwP7QZ9/z50RfEjSjb2jfQAqpzIgfJxYBx
- B7fT/2usJk86JGxjMrM/hg4aYZy7e06DvRuiwSU=
-X-Google-Smtp-Source: APXvYqyYP5wsQ5V3r97a7uX66GQCT6FwG+BWqCrUDuxTm6EOHxZa5aJLMMG0afDt3nsjOMR0zdcXl6Z7hC2lmO96Clo=
-X-Received: by 2002:a05:620a:c96:: with SMTP id
- q22mr1575691qki.330.1582753939537; 
- Wed, 26 Feb 2020 13:52:19 -0800 (PST)
+ bh=kz5Z4RCY4Tpl+dTiZNY8WHLRS8ZN2QcNJkbQ+Q8xyIw=;
+ b=TH+r92TqdJr696oKfZp3kEm+0SxbayYqaTfDT3XACC6ZKmZ7EFP/OfM8+H7R1RInfG
+ xB1GcW947gR8nHiSJ8FptS1cx0Vr9SYtHCYIW+iTJlcioPNuas4hxj0FyWN+/k3cf7GG
+ SfOL5Bw8HQisv2eqxWWZtn33UorGcmo3KYVtgq4VSXa9J3fdkYsRvz8Xt2kutGvqd5UY
+ xFcalFnGCqquA9WOWD/aQUBFzB0puWDT6BfCc0lQtL4AHqkRozmaxFED45Tm3fAGf/GC
+ LccTQ4uGmBZgWy3i2qAr5pWvhNPrxJASb5kJdnhfQVMeRyepfxi7EeeotageTcuyhyP0
+ QluA==
+X-Gm-Message-State: APjAAAWD4myjBliSKKhnLtown4/32VQA+uA5nzC0CWiuIG4P54mFgbnD
+ 5DqaXXLVRL61s0nGhNRJE7qB28/ZopiAjd+uXxBojQ==
+X-Google-Smtp-Source: APXvYqw8nOh2G8ZoxrJsIZtZyjVLpcolN1TY85DBbqoraoX9Ezgx1qHcUq/zZJPUmnIQbLDGCLyH60xyslot66DcPco=
+X-Received: by 2002:aed:3841:: with SMTP id j59mr1135369qte.220.1582754099305; 
+ Wed, 26 Feb 2020 13:54:59 -0800 (PST)
 MIME-Version: 1.0
 References: <20200211234950.4010-1-jae.hyun.yoo@linux.intel.com>
 In-Reply-To: <20200211234950.4010-1-jae.hyun.yoo@linux.intel.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 26 Feb 2020 21:52:07 +0000
-Message-ID: <CACPK8XfVH2AVUW=zQkSdLzW0tZF+PmzA8RJ=_xOhZmSBcri_cQ@mail.gmail.com>
+Date: Wed, 26 Feb 2020 21:54:47 +0000
+Message-ID: <CACPK8Xf5qcyBv3yZ7BRu-v4PGmqsvbXnMqoQEhsPyq_JC-wUZQ@mail.gmail.com>
 Subject: Re: [PATCH dev-5.4] hwmon: peci: change label strings to reflect
  natural numbers
 To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
@@ -83,16 +82,18 @@ On Tue, 11 Feb 2020 at 23:47, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
 > 'DIMM A0'.
 >
 > Signed-off-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-
-Applied to dev-5.4
-
-
 > ---
 >  drivers/hwmon/peci-cputemp.c  | 2 +-
 >  drivers/hwmon/peci-dimmtemp.c | 2 +-
 >  2 files changed, 2 insertions(+), 2 deletions(-)
 >  mode change 100644 => 100755 drivers/hwmon/peci-cputemp.c
 >  mode change 100644 => 100755 drivers/hwmon/peci-dimmtemp.c
+
+I don't think this was intended.
+
+I fixed it up for you, but please try to figure out what went wrong so
+it doesn't happen in the future.
+
 >
 > diff --git a/drivers/hwmon/peci-cputemp.c b/drivers/hwmon/peci-cputemp.c
 > old mode 100644
