@@ -1,49 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5485170A46
+	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 22:16:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 758AD170673
-	for <lists+openbmc@lfdr.de>; Wed, 26 Feb 2020 18:47:19 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48SNY062NbzDqdR
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 04:47:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48STBl2XVGzDqcy
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 08:16:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236;
+ helo=mail-oi1-x236.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=AfXlJwm/; dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48SNXL53tlzDqBH
- for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2020 04:46:41 +1100 (AEDT)
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga103.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
- 26 Feb 2020 09:46:39 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,488,1574150400"; d="scan'208";a="256403091"
-Received: from skyhawk.jf.intel.com (HELO [10.54.51.81]) ([10.54.51.81])
- by orsmga002.jf.intel.com with ESMTP; 26 Feb 2020 09:46:38 -0800
-Subject: Re: dbus-sensors updateValue update hysteresis logic question
-To: Andrew Macrae <drewmacrae@google.com>
-References: <CANPkJS8pfmJF9fTk3GQE45g8xQfu_NaLyuhWK=_+=o3B6Hsh_A@mail.gmail.com>
- <9328787b-568d-a777-30c7-feb3b0ec631b@linux.intel.com>
- <CAAD+EBrbhpihUKzXZUqDgADV9voOXnB5rJku1Q25ReYJPiV75w@mail.gmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <dd3b78a9-0a9d-cb66-447e-1369d363bd42@linux.intel.com>
-Date: Wed, 26 Feb 2020 09:46:38 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.7.1
-MIME-Version: 1.0
-In-Reply-To: <CAAD+EBrbhpihUKzXZUqDgADV9voOXnB5rJku1Q25ReYJPiV75w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48STB44pDjzDqhs
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2020 08:16:11 +1100 (AEDT)
+Received: by mail-oi1-x236.google.com with SMTP id 18so1031242oij.6
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Feb 2020 13:16:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:date:references
+ :to:in-reply-to:message-id;
+ bh=ihJbV0abe/fFyzHb4quoPIIhF4L3dSuTURTOZR0JnII=;
+ b=AfXlJwm/pkCtsbDBRuecDJAswnvLDefmk97zz/muJQvExK1w7L2hk9x9J7gJchpMdh
+ yb28G6GLZ+mWs8r7fzM5Dqg5diNQWc2ia7q67ccXkw4ALba/WgW6LPF4yo26yF7niLzP
+ 5g6p0jqjczOrYSYB7FMMoTFvkm9uZC6AB/EeOFr8SPQqfo6eWqK0JeZ/frwW8+s3AOZX
+ AwHz53xFNDK5fXcwOc8g+I3wlUFiGETu2tPRg+OodfCyxBX8AokRPr3W9gPI6GYbctwn
+ vISUsYwFiKE2Rs7cJvojvgZgpQjishr54PGN355Li9Wi8t6pf6ocw5PyuTPI2Oq+xeij
+ daaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:date:references:to:in-reply-to:message-id;
+ bh=ihJbV0abe/fFyzHb4quoPIIhF4L3dSuTURTOZR0JnII=;
+ b=XWN8HdYKb8Vo3UfPFaXBTtjj50VTIxtz/d8ifCOtpWV1QY7SLj32pXf/S30TiodpL+
+ /fuG1US+nUcTzBIHJqJVSqWByzysyRT9jA8/0QbzIyRIjwLc31UYsuluDkb7NyAbQ4Cz
+ 2QNoNI+cmG4tjpOqC/LONh1T0bIiOolE148UPD0gz8ZuboUxP7VtpcHkkt0IzxNLCCuj
+ VDEmrK1/sHGcnd7FGgkQROs122QaJfZUqzGXDuN1yg4k8yQClZrQRNLIMTPNcDl7S0HQ
+ 9FrJZPAmQHbAb/6l08JnabQfdLqcAibI/j3TmxGAvwhxiIALhkHlscMzCO8gqZOmLP9+
+ XSyg==
+X-Gm-Message-State: APjAAAU8tad+1GJTgeRba21df//1JXiGXOnaE/EYyT9ki3FcKiOaSNv3
+ dgLWZ4I/rL+k2STDcGi7lPMaP9MSlu0=
+X-Google-Smtp-Source: APXvYqxR8ykMMSzxvok9qt/uP1XtcrPwnMxEzxe88PUerOrUMMseFq9JitDEX8lsvR10mO+nx3Tvyw==
+X-Received: by 2002:a05:6808:8fc:: with SMTP id
+ d28mr810497oic.152.1582751768327; 
+ Wed, 26 Feb 2020 13:16:08 -0800 (PST)
+Received: from andrews-mbp-2.austin.ibm.com ([129.41.86.0])
+ by smtp.gmail.com with ESMTPSA id i20sm1182922otp.14.2020.02.26.13.16.07
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 26 Feb 2020 13:16:07 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: Enabling OpenBMC Debug
+Date: Wed, 26 Feb 2020 15:16:06 -0600
+References: <776B4FA1-4427-4FC1-802A-BC4192CA3D2E@gmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+In-Reply-To: <776B4FA1-4427-4FC1-802A-BC4192CA3D2E@gmail.com>
+Message-Id: <47466143-F32E-415B-80C5-4C4C2EBBDDAF@gmail.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,42 +82,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Josh Lehan <krellan@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/26/20 9:34 AM, Andrew Macrae wrote:
->     On 2/25/20 5:26 PM, Josh Lehan wrote:
->     > Hi there! Question about updateValue(), in sensor.hpp file, in
->     > dbus-sensors package.
->     >
->     > In updateValue(), it always calls set_property() to update the stored
->     > value to the new passed-in value, sending the new value on D-Bus.
->     > However, it then tests the hysteresis variable, to avoid a very small
->     > change. It only updates the stored value if the change is significant
->     > enough. This logic in updateValue() seems strange to me. Wouldn't you
->     > want to either do both of these operations at once, or none of them at all?
-> 
->     This is to not trip thresholds if the change is small, so you don't jump
->     back and forth over thresholds. We still update the value on d-bus for
->     anyone reading the value to have the most recent value.
-> 
-> 
-> If this is just for threshold comparison, would it make more sense to 
-> use a more typical method of applying hysteresis?
-> To simplify the code could we implement something with no hidden state, 
-> and only one bit of state like a schmitt trigger?
-> 
-> For clarification, could we say the threshold is violated when the value 
-> rises above it, but the violation is only 
-> resolved/cleared/no-longer-violated when the readings have fallen by an 
-> additional hysteresis value below the threshold?
-> 
-> static bool overThreshold;
-> overThreshold = (reading>__threshold-overThreshold*__thresholdHysteresis)
-> 
-> by making the state observable we make it much easier to understand, 
-> test and cover all the behavior.
 
-Sure, I see no problems with that.
+
+> On Feb 11, 2020, at 9:51 AM, Andrew Geissler <geissonator@gmail.com> =
+wrote:
+>=20
+> I find myself running a lot of different commands to enable a variety =
+of
+> debug data on OpenBMC when debugging different issues (usually BIOS
+> communication issues). I also end up giving these commands to a lot of =
+people
+> when recreating issues for me. Stuff like this:
+>=20
+> # enable debug logs in journal
+> sed -i 's/info/debug/' =
+/lib/systemd/journald.conf.d/journald-maxlevel-policy.conf
+> systemctl restart systemd-journald.service
+>=20
+> # Enable BIOS communication service debug
+> sed -i 's/mboxd/mboxd -vv/' /lib/systemd/system/mboxd.service
+> sed -i 's/btbridged/btbridged --vv/' =
+/lib/systemd/system/org.openbmc.HostIpmi.service
+> sed -i 's/ipmid/ipmid -d 0xff/'  =
+/lib/systemd/system/phosphor-ipmi-host.service
+> sed -i 's/0/1/' /etc/default/pldmd
+> systemctl daemon-reload
+> systemctl restart mboxd.service
+> systemctl restart org.openbmc.HostIpmi.service
+> systemctl restart phosphor-ipmi-host.service
+> systemctl restart pldmd.service
+
+I put up a proposal to try and standardize our debug within OpenBMC
+up at https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/29684
+
+That would make something like =E2=80=9Cobmcutil debugon=E2=80=9D much =
+easier in that
+it wouldn't have to know all the special debug incarnations per service.
+
+>=20
+> I was contemplating wrapping the above stuff in a obmcutil command so =
+instead
+> of telling people to do all of the above (and dealing with situations =
+when
+> those commands change), I could say something like run "obmcutil =
+debugon".
+>=20
+> Any thoughts out there? Would finer granularity of the debug be =
+useful?
+> Are there other forms of debug people would like enabled?
+>=20
+> Andrew
+
