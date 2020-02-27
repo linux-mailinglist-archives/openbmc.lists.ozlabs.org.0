@@ -2,138 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF6371786F7
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 01:23:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 461731787E2
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 02:58:52 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48XF320JbrzDqQr
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 11:23:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48XH9N6tfwzDqVL
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 12:58:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::344;
+ helo=mail-wm1-x344.google.com; envelope-from=daniel.lezcano@linaro.org;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=0332e40355=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=S8UANh/2; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=DVTySZkY; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=znc+w9Pk; dkim-atps=neutral
+Received: from mail-wm1-x344.google.com (mail-wm1-x344.google.com
+ [IPv6:2a00:1450:4864:20::344])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48XF256XpKzDqQ9
- for <openbmc@lists.ozlabs.org>; Wed,  4 Mar 2020 11:22:16 +1100 (AEDT)
-Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02408vDN027478; Tue, 3 Mar 2020 16:22:07 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=/2oz+pxpvPWzFAidCY//ViU0gB+OECZIYh5z4Z3f6y0=;
- b=S8UANh/2vBLNKvPIH75aCfj4nVifDnPJBw+iOmgYlKUT7jlkNUyU7qYVu7mh8pX0IeAN
- Syf2pvUmnYbsi0u03tu8MCKbdg51dLk5bQlZDqAWhS+ERWFN1HMRAvaKU2PiZ6foHfwz
- LcTiF11wJid9GQ0TZ5/tuIVmAv83Q98ISMA= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2yhpfwm1ae-3
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 03 Mar 2020 16:22:07 -0800
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.173) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1779.2; Tue, 3 Mar 2020 16:22:06 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HJ3CSpkZMGpBG6T0ncfxVLurwkjIKQjydeXwE5Ij9nhExWQqb8NGLrQzUvgulmtFu/fqPdhOTc7X4V2J43G4cluNYULH13dDYYMv9htb3Rq0tyRMY3lYAbjuyQsBpZ2MYNcQCaB4MSxPQTWy050JMpOVqEqazFir2A7YbSf+yurvOfpjU8v7CTC8IJ9g5+6A0d/3ZptEBfaEYnQm57D4UQ9vBBBHaV9c1uGNSFgxUM5+LnuEcSDcED/YUHql5issHdx6plX+yuMXJpwwnI26eAXd9RXzw2P65YVlW9iQfdKDPsQNNTwWrGQVM+OrKqNiKn9wdE3WgvHOCjTzmYgi6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/2oz+pxpvPWzFAidCY//ViU0gB+OECZIYh5z4Z3f6y0=;
- b=LF+tQcKgv0DEn4o4iCTDtxiEDRhvSq1dyudoocupIbGaaOi5D6PAooV5kDU1t6QECl1o5ZujSzkVd+wN5+vx4dxSGWsLT6v0skIOhBv1mEMElMd5b6kn5gMuGc9ciONpYFtsVIeEOCl8fyBZW4Y3bPbT0vUKj3BPn2Rl93/g3HNZc8NN+yyqVABMBx01GJdDujs75YPawi698HYfmRrei0EhLzoxAXPLomMQVdm95bM4bponQTpTfxMkYjBpSg79PZUT+hg68t5mANeeRRTjnwrSsyss9jiWzxlxuLpWD/lvFvhg5hwoFYNjHoWU5wNXAJvrWjPguiVm3vdt3xy0+A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/2oz+pxpvPWzFAidCY//ViU0gB+OECZIYh5z4Z3f6y0=;
- b=DVTySZkYoNs5kKmhhiJ9lrTq5hw6MKUMw1CGUkR9911Spv6jm6cRjvC3oRW9+3TiAglKynvPFfIS7Ez6JWgPPP1QFyAH8/1C2PqqtN+WJxl1hAG3F8oQG54pU0ddgGQb4kFyFGSpdlcNnMbAfbw1XiNG98O65LANzyAFeHkE3Nc=
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com (2603:10b6:303:49::9)
- by MW3PR15MB3866.namprd15.prod.outlook.com (2603:10b6:303:50::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2772.15; Wed, 4 Mar
- 2020 00:22:05 +0000
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936]) by MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936%4]) with mapi id 15.20.2772.019; Wed, 4 Mar 2020
- 00:22:05 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Andrew Jeffery <andrew@aj.id.au>, Kumar Thangavel <thangavel.k@hcl.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: obmc-console design for multi host support
-Thread-Topic: obmc-console design for multi host support
-Thread-Index: AQHV54I/nLHE21W9uEuIi5D/dIqKpKgj/zQAgAmtGoCAAS9LgIAA4TAAgAaVjgCAAM5lgA==
-Date: Wed, 4 Mar 2020 00:22:05 +0000
-Message-ID: <11C9DB76-A38F-41B3-AA20-1FFD79E12E8C@fb.com>
-References: <SG2PR04MB3029CF9F520DF543B57B93C2FD100@SG2PR04MB3029.apcprd04.prod.outlook.com>
- <f136d4ad-65e6-4e74-8f53-2ca3edaf9288@www.fastmail.com>
- <SG2PR04MB30295AD664D4B5BD5F24EFD3FD130@SG2PR04MB3029.apcprd04.prod.outlook.com>
- <SG2PR04MB302996468E42284DE73358A6FDEA0@SG2PR04MB3029.apcprd04.prod.outlook.com>
- <5dd6cbbe-5f58-4370-82c7-55c8dc22ca5b@www.fastmail.com>
- <26B24CEE-C910-4FB1-B316-8E0676E3AD16@fb.com>
- <5867808b-871f-435e-aa79-10bf64a8f4b5@www.fastmail.com>
-In-Reply-To: <5867808b-871f-435e-aa79-10bf64a8f4b5@www.fastmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:500::6:f398]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d2c3c588-7838-4278-adbe-08d7bfd211bf
-x-ms-traffictypediagnostic: MW3PR15MB3866:
-x-microsoft-antispam-prvs: <MW3PR15MB38661BE6E40E0E703B189628DDE50@MW3PR15MB3866.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:6108;
-x-forefront-prvs: 0332AACBC3
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(366004)(136003)(346002)(39860400002)(396003)(376002)(189003)(199004)(66476007)(76116006)(33656002)(64756008)(2616005)(110136005)(66556008)(66446008)(66946007)(316002)(2906002)(5660300002)(36756003)(81166006)(4326008)(6512007)(8936002)(8676002)(478600001)(6486002)(86362001)(81156014)(186003)(71200400001)(6506007);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MW3PR15MB3866;
- H:MW3PR15MB3947.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Xs3CVlWOkFrB2YV2HMjHnH0MUNiUNsNAVyhglT7K736t+O5/jopM2Y6uDdjJYAdAj0GISjYPF8C13SG1alZI3+4zZ+WA9kVNaB+Z1q7jvwSrMLBlCjWwrUO6kZiCdjPcUSVx2dFpXwjB8gdSeI9lF5uP2qWh00zUjojXoVjbyMlPcpck2+wzaXJVXFFJ8PRjat/n/eTie7/b13i58m/uCh5N3ov01l0asFBofQR667oHQqRjX22CtajUhKpsftY9sI9nFYK1qNBhxRefD42YVDjt+nCKywJkDQKffQSdlBjYxrpzwTB3/6iV3aHXj71WqeMEgnn0BIZIOEBwXoW2V4ky2hyu7EfI6drnB8EdCXrBA+hZnuXmWgL47UNe5IMuvrXMe7X8+Hr4klmYqpvZtA3p1wtGBNorn5C5+LI149vbcVLVVRJy/86+bVsXKF7j
-x-ms-exchange-antispam-messagedata: 5pynaTwlF+sTY9SgyRauSqA8wFFp3zNpq4162ktEgEAlnNivru1f8+nQvVtMehFMziz8wukF0+/+gz6WoVj6nZHJLIVIAYdjHOElqOT1bJ82nbpmtXHIv/ALAnDMzVktsptMzqoVKT6kiWFN7i4XdYTiLOxKZ+nPXI7azWHH2bJaBf03zneFpSXORqbqJhkf
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5FBF19D15903894FA95338FA79F90620@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48SnB21M26zDqYk
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2020 20:17:07 +1100 (AEDT)
+Received: by mail-wm1-x344.google.com with SMTP id a141so2489649wme.2
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Feb 2020 01:17:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=subject:to:cc:references:from:autocrypt:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=byYUcuzDUs6EI2f9ZAyw6JsIg3wiyl3GVfGmpZXFBGg=;
+ b=znc+w9PkEBnc+zTq9CxylE0W3IOsPMfyj0zzj9rfhzSqa6janRkZRYL48p3tGPMtZB
+ 0oR+0ElyxD+M4ZsBvDNSeR7HJDq2K5CNbZxIJ7qpklwpm0Xr2Fn0E9TFiQNmh6jtJfg5
+ QZp4mTQU9f06enAb2YyJWJ4DgFLmrpyy9peHIdQpbHXgMxiCDMbBkAqe02sjC5jID3lh
+ OZVDWGrnDTKfX0iQNWWM9yyuEnqlZRhVXzr4nxpcm67c3J/b7GRxRv9klHWdcw6KsoeE
+ 8Hdr+r55IVlqhwlg+jfucl7ZnsfbGGM0sQrk7+UvmcLQ09RR+sFZBPsfRtGYsvIjsb8A
+ HQHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:autocrypt
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-language:content-transfer-encoding;
+ bh=byYUcuzDUs6EI2f9ZAyw6JsIg3wiyl3GVfGmpZXFBGg=;
+ b=cbfxmNyIOiFNDfH1gnqhjKW9SzJ7CCUrHxt470DsLQWLe0ZWJ5T3skuD6IweQedJzt
+ ILDuEnq/9G+tSVShz61sNoA6nxrtWhcprvYFGYeHHStQlDF5yrNa+4XSvSMyU0XlmGW8
+ HsktImmUCA2BPfbRpNmCHCAupavQr1pnkVgxGjJEXldF+Va6wIm6HbFek0SszDcUBobL
+ U7GkYfsF8CYBtusi76CuJaKrMmpTEAWytZHFZrZ3kGftywr7VyrtsdNoB4bWEQh2E40c
+ fpP7pDvzMscpV52IfpcrBWV77Hp0wNnut2qC0U57l4etN4hHihOBLtDlAoj8M6q1b30r
+ E+1w==
+X-Gm-Message-State: APjAAAWmrm+Bj1GlcxTdo/67pc+UQ/IBvnf9JGuoxWH+vdoYALf5IDet
+ fd+iEwuhhuJkHjW94JGHVfMRag==
+X-Google-Smtp-Source: APXvYqxawPiOKaKn88qM82HAWaYmFB3tLwYe0d+o9KWMRvOoNS4J9ny55LDYIKO79xtfY0CVYnrsmg==
+X-Received: by 2002:a05:600c:21c6:: with SMTP id
+ x6mr3966652wmj.17.1582795023046; 
+ Thu, 27 Feb 2020 01:17:03 -0800 (PST)
+Received: from ?IPv6:2a01:e34:ed2f:f020:d916:1723:c1c1:22d?
+ ([2a01:e34:ed2f:f020:d916:1723:c1c1:22d])
+ by smtp.googlemail.com with ESMTPSA id b16sm2185717wrq.14.2020.02.27.01.16.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Feb 2020 01:17:02 -0800 (PST)
+Subject: Re: [PATCH 2/7] docs: dt: fix several broken references due to renames
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Linux Doc Mailing List <linux-doc@vger.kernel.org>
+References: <cover.1582361737.git.mchehab+huawei@kernel.org>
+ <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+Autocrypt: addr=daniel.lezcano@linaro.org; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <add18b30-6eec-9aba-a961-8ecfe9b32596@linaro.org>
+Date: Thu, 27 Feb 2020 10:16:59 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: d2c3c588-7838-4278-adbe-08d7bfd211bf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Mar 2020 00:22:05.6224 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: pCxgJBNmek7GYJfx43uWfJjdXC03omh8egFdnRM+VMY/+eXbGgW5A+v9mIGrcF/+Gap7hGJ/ripCuc23YuBVNA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR15MB3866
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-03-03_08:2020-03-03,
- 2020-03-03 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- impostorscore=0
- mlxscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0 spamscore=0
- adultscore=0 phishscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2003040000
-X-FB-Internal: deliver
+In-Reply-To: <83c5df4acbbe0fa55a1d58d4c4a435b51cd2a7ad.1582361737.git.mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Wed, 04 Mar 2020 12:57:28 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -145,65 +141,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+Cc: Stuart Yoder <stuyoder@gmail.com>, David Airlie <airlied@linux.ie>,
+ Michael Turquette <mturquette@baylibre.com>, dri-devel@lists.freedesktop.org,
+ Bjorn Andersson <bjorn.andersson@linaro.org>, Pavel Machek <pavel@ucw.cz>,
+ linux-clk@vger.kernel.org, linux-leds@vger.kernel.org,
+ Alexandre Torgue <alexandre.torgue@st.com>,
+ Amit Kucheria <amit.kucheria@verdurent.com>, linux-aspeed@lists.ozlabs.org,
+ Jonathan Corbet <corbet@lwn.net>, Kevin Hilman <khilman@baylibre.com>,
+ openbmc@lists.ozlabs.org, linux-stm32@st-md-mailman.stormreply.com,
+ Tomi Valkeinen <tomi.valkeinen@ti.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Zhang Rui <rui.zhang@intel.com>, Linus Walleij <linus.walleij@linaro.org>,
+ devicetree@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+ linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Jyri Sarha <jsarha@ti.com>, linux-gpio@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, Dan Murphy <dmurphy@ti.com>,
+ linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org,
+ Laurentiu Tudor <laurentiu.tudor@nxp.com>, Stephen Boyd <sboyd@kernel.org>,
+ Andy Gross <agross@kernel.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Sudeep Holla <sudeep.holla@arm.com>,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-UGVyZmVjdCwgSXQgaXMgd29ya2luZyBmb3IgYWxsIGZvdXIgc2VydmVyIGZvciBtZS4NCg0K77u/
-T24gMy8yLzIwLCA4OjAzIFBNLCAiQW5kcmV3IEplZmZlcnkiIDxhbmRyZXdAYWouaWQuYXU+IHdy
-b3RlOg0KDQogICAgT24gRnJpLCAyOCBGZWIgMjAyMCwgYXQgMTg6MDAsIFZpamF5IEtoZW1rYSB3
-cm90ZToNCiAgICA+IE9uIDIvMjcvMjAsIDI6MDUgQU0sICJvcGVuYm1jIG9uIGJlaGFsZiBvZiBB
-bmRyZXcgSmVmZmVyeSIgDQogICAgPiAgICAgDQogICAgPiAgICAgYGBgDQogICAgPiAgICAgJCBs
-cyAtMSAvZXRjL29ibWMtY29uc29sZQ0KICAgID4gICAgIGNsaWVudC4yMjAwLmNvbmYNCiAgICA+
-ICAgICBzZXJ2ZXIudHR5VlVBUlQwLmNvbmYNCiAgICA+ICAgICBgYGANCiAgICA+IFdoYXQgYXJl
-IG90aGVyIGNvbnRlbnRzIG9mIGNsaWVudCBhbmQgc2VydmVyIGNvbmYgZmlsZSBvdGhlciB0aGFu
-IHNvY2tldC1pZD8NCiAgICANCiAgICBXaGF0ZXZlciBlbHNlIHlvdSB3ZXJlIHByZXZpb3VzbHkg
-c3BlY2lmeWluZyBmb3IgdGhlIHNlcnZlci4NCiAgICANCiAgICA+ICAgICANCiAgICA+ICAgICBT
-byB0byBtYXAgdGhlIGNsaWVudCBhc3NvY2lhdGVkIHdpdGggcG9ydCAyMjAwIHRvIHRoZSBzZXJ2
-ZXIgYXNzb2NpYXRlZA0KICAgID4gICAgIHdpdGggdHR5VlVBUlQwIHdlIHNldCB0aGUgc2FtZSBz
-b2NrZXQtaWQgdmFsdWUgaW4gYm90aCBmaWxlczoNCiAgICA+IA0KICAgID4gQ2FuIHRoaXMgc29j
-a2V0LWlkIGJlIGFueSByYW5kb20gd29yZCBhbmQgY2FuIHRoaXMgYmUgc2FtZSBhY3Jvc3MgbXVs
-dGlwbGUNCiAgICA+IEhvc3QgKGNsaWVudC9zZXJ2ZXIpIGNvbmZpZ3VyYXRpb24uIEkgbWVhbiwg
-ZG8gd2UgbmVlZCBkaWZmZXJlbnQgc29ja2V0LWlkIGZvcg0KICAgID4gY2xpZW50LjIyMDAgYW5k
-IGNsaWVudC4yMjAxIG9yIGl0IGNhbiBiZSBzYW1lLg0KICAgIA0KICAgIFRoZSBzb2NrZXQtaWQg
-aXMgYSB1bmlxdWUgcG9ydGlvbiBmb3IgdGhlIHVuaXggZG9tYWluIHNvY2tldCBjcmVhdGVkIGJ5
-IHRoZQ0KICAgIG9ibWMtY29uc29sZS1zZXJ2ZXIgaW5zdGFuY2UuIFRoZSBzZXJ2ZXIgbmVlZHMg
-dG8ga25vdyB0aGlzIGJlY2F1c2UgaXQgbmVlZHMNCiAgICB0byBrbm93IHdoYXQgdG8gbmFtZSB0
-aGUgcGlwZTsgdGhlIGNsaWVudCBuZWVkcyB0byBrbm93IGl0IGFzIGl0IG5lZWRzIHRvIGZvcm0N
-CiAgICB0aGUgYWJzdHJhY3Qgc29ja2V0IG5hbWUgdG8gd2hpY2ggdG8gY29ubmVjdC4NCiAgICAN
-CiAgICBJbiBnZW5lcmFsIHVubGVzcyB5b3UncmUgbG9va2luZyB0byBleHBvc2UgdGhlIHNhbWUg
-Y29uc29sZSBvbiBfZGlmZmVyZW50Xw0KICAgIG5ldHdvcmsgcG9ydHMsIHlvdSB3YW50IHRvIHBh
-aXIgZWFjaCBjbGllbnQgd2l0aCBhIHVuaXF1ZSBzZXJ2ZXIuDQogICAgDQogICAgSGVyZSdzIGFu
-IEFTQ0lJIGRpYWdyYW06DQogICAgDQogICAgICAgICAgICAgICAgICAgKy0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tKw0KICAgICAgICAgICAgICAgICAgIHwgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHwNCiAgICAgICAgICAgICAgICAgICB8ICAgICAgIG9ibWMt
-Y29uc29sZS1jbGllbnQgICAgICB1bml4IGRvbWFpbiBzb2NrZXQgICAgICAgICBvYm1jLWNvbnNv
-bGUtc2VydmVyICAgICAgICAgICAgICB8DQogICAgICAgICAgICAgICAgICAgfCAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgfA0KICAgICAgICAgICAgICAgICAgIHwgICAgICstLS0t
-LS0tLS0tLS0tLS0tLS0tLS0rICAgICAgICAgICAgICAgICAgICAgICAgICAgKy0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLSsgICAgICAgICAgIHwNCiAgICAgICAgICAgICAgICAgICB8ICAgICB8IGNs
-aWVudC4yMjAxLmNvbmYgICAgfCAgKy0tLS0tLS0tLS0tLS0tLS0tLS0tLSsgIHwgc2VydmVyLnR0
-eVZVQVJUMS5jb25mICB8ICAgICAgICAgICB8DQogICAgICAgICAgICAgICArLS0tKy0tKyAgKy0t
-LS0tLS0tLS0tLS0tLS0tLS0tLSsgIHwgICAgICAgICAgICAgICAgICAgICB8ICArLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tKyAgKy0tLS0tLS0tKy0tLS0tLS0rDQogICAgTmV0d29yayAgICB8IDIy
-MDEgKy0tPiAgICAgICAgICAgICAgICAgICAgICstPisgQG9ibWMtY29uc29sZS5ob3N0MSArPC0r
-ICAgICAgICAgICAgICAgICAgICAgICAgPC0tKyAvZGV2L3R0eVZVQVJUMSB8ICAgVUFSVHMNCiAg
-ICAgICAgICAgICAgICstLS0rLS0rICB8IHNvY2tldC1pZCA9ICJob3N0MSIgfCAgfCAgICAgICAg
-ICAgICAgICAgICAgIHwgIHwgc29ja2V0LWlkID0gImhvc3QxIiAgICB8ICArLS0tLS0tLS0rLS0t
-LS0tLSsNCiAgICAgICAgICAgICAgICAgICB8ICAgICB8ICAgICAgICAgICAgICAgICAgICAgfCAg
-Ky0tLS0tLS0tLS0tLS0tLS0tLS0tLSsgIHwgICAgICAgICAgICAgICAgICAgICAgICB8ICAgICAg
-ICAgICB8DQogICAgICAgICAgICAgICAgICAgfCAgICAgKy0tLS0tLS0tLS0tLS0tLS0tLS0tLSsg
-ICAgICAgICAgICAgICAgICAgICAgICAgICArLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKyAgICAg
-ICAgICAgfA0KICAgICAgICAgICAgICAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIHwNCiAgICAgICAgICAgICAgICAgICB8ICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICB8DQogICAgICAgICAgICAgICAgICAgfCAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgfA0KICAgICAgICAgICAgICAgICAgICstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLSsNCiAgICANCiAgICBEb2VzIHRoYXQgaGVscD8NCiAgICANCiAgICBBbmRyZXcN
-CiAgICANCg0K
+On 22/02/2020 10:00, Mauro Carvalho Chehab wrote:
+> Several DT references got broken due to txt->yaml conversion.
+> 
+> Those are auto-fixed by running:
+> 
+> 	scripts/documentation-file-ref-check --fix
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+
+[ ... ]
+
+> diff --git a/Documentation/devicetree/bindings/thermal/brcm,avs-ro-thermal.yaml b/Documentation/devicetree/bindings/thermal/brcm,avs-ro-thermal.yaml
+> index d9fdf4809a49..f3e68ed03abf 100644
+> --- a/Documentation/devicetree/bindings/thermal/brcm,avs-ro-thermal.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/brcm,avs-ro-thermal.yaml
+> @@ -17,7 +17,7 @@ description: |+
+>                  "brcm,bcm2711-avs-monitor", "syscon", "simple-mfd"
+>  
+>    Refer to the the bindings described in
+> -  Documentation/devicetree/bindings/mfd/syscon.txt
+> +  Documentation/devicetree/bindings/mfd/syscon.yaml
+
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+
+
+-- 
+ <http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
+
