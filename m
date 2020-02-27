@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64430170F8A
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 05:16:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EC5A170F85
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 05:14:57 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48SfVS3dNkzDqMK
-	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 15:16:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48SfTB3YgnzDqYJ
+	for <lists+openbmc@lfdr.de>; Thu, 27 Feb 2020 15:14:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,15 +19,15 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from kernel.crashing.org (kernel.crashing.org [76.164.61.194])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48SfPk6ZHczDqTC;
- Thu, 27 Feb 2020 15:11:54 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48SfPF42bNzDqKh;
+ Thu, 27 Feb 2020 15:11:29 +1100 (AEDT)
 Received: from localhost (gate.crashing.org [63.228.1.57])
  (authenticated bits=0)
- by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 01R4AhSr022499
+ by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 01R4Avj6022505
  (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 26 Feb 2020 22:10:46 -0600
-Message-ID: <c1f990ad2fd35deeba9e4e937cb19ee5080ea2a8.camel@kernel.crashing.org>
-Subject: Re: [PATCH v4 5/7] ARM: dts: aspeed-g5: add vhub port and endpoint
+ Wed, 26 Feb 2020 22:11:00 -0600
+Message-ID: <83d7b817234f99c92272f7950129c56a58f4de54.camel@kernel.crashing.org>
+Subject: Re: [PATCH v4 6/7] ARM: dts: aspeed-g4: add vhub port and endpoint
  properties
 From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 To: rentao.bupt@gmail.com, Felipe Balbi <balbi@kernel.org>, Greg
@@ -40,10 +40,10 @@ To: rentao.bupt@gmail.com, Felipe Balbi <balbi@kernel.org>, Greg
  linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  openbmc@lists.ozlabs.org, taoren@fb.com
-Date: Thu, 27 Feb 2020 15:10:42 +1100
-In-Reply-To: <20200226230346.672-6-rentao.bupt@gmail.com>
+Date: Thu, 27 Feb 2020 15:10:55 +1100
+In-Reply-To: <20200226230346.672-7-rentao.bupt@gmail.com>
 References: <20200226230346.672-1-rentao.bupt@gmail.com>
- <20200226230346.672-6-rentao.bupt@gmail.com>
+ <20200226230346.672-7-rentao.bupt@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
 Mime-Version: 1.0
@@ -73,25 +73,26 @@ On Wed, 2020-02-26 at 15:03 -0800, rentao.bupt@gmail.com wrote:
 
 Acked-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 
+
 > ---
 >  No change in v2/v3/v4.
 >    - It's given v4 to align with the version of the patch series.
 > 
->  arch/arm/boot/dts/aspeed-g5.dtsi | 2 ++
+>  arch/arm/boot/dts/aspeed-g4.dtsi | 2 ++
 >  1 file changed, 2 insertions(+)
 > 
-> diff --git a/arch/arm/boot/dts/aspeed-g5.dtsi
-> b/arch/arm/boot/dts/aspeed-g5.dtsi
-> index ebec0fa8baa7..f12ec04d3cbc 100644
-> --- a/arch/arm/boot/dts/aspeed-g5.dtsi
-> +++ b/arch/arm/boot/dts/aspeed-g5.dtsi
-> @@ -195,6 +195,8 @@
+> diff --git a/arch/arm/boot/dts/aspeed-g4.dtsi
+> b/arch/arm/boot/dts/aspeed-g4.dtsi
+> index 807a0fc20670..8e04303e8514 100644
+> --- a/arch/arm/boot/dts/aspeed-g4.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-g4.dtsi
+> @@ -164,6 +164,8 @@
 >  			reg = <0x1e6a0000 0x300>;
 >  			interrupts = <5>;
 >  			clocks = <&syscon ASPEED_CLK_GATE_USBPORT1CLK>;
 > +			aspeed,vhub-downstream-ports = <5>;
 > +			aspeed,vhub-generic-endpoints = <15>;
 >  			pinctrl-names = "default";
->  			pinctrl-0 = <&pinctrl_usb2ad_default>;
+>  			pinctrl-0 = <&pinctrl_usb2d_default>;
 >  			status = "disabled";
 
