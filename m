@@ -2,65 +2,132 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C7DF173F71
-	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 19:21:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 466ED1741E4
+	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 23:19:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48TdD14Pq9zDrNm
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 05:21:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48TkVC2dgwzDrCB
+	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 09:19:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::432;
- helo=mail-pf1-x432.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=nipoy2y2; dkim-atps=neutral
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com
- [IPv6:2607:f8b0:4864:20::432])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=0327bd19d5=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=MdzeqJ5C; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=ff5otlXX; 
+ dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48TdCD4qmwzDr7D
- for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 05:21:11 +1100 (AEDT)
-Received: by mail-pf1-x432.google.com with SMTP id p14so2121730pfn.4
- for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 10:21:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=yyMO+OhpwfoIk5H1BIjuTuLhEF4phOzWOuFeuUDJrqQ=;
- b=nipoy2y2f2EIpP8+25IXDuwCt98aByR3L9oKBjRsVqgYnVVglz2BOgiq/AT5JRmqjW
- W3Kpmj474/YKlBYSyjKYbWvJ3AK0rxpw9yLurvBhUb6II61iIsZkGlxkswwHAczx5DBW
- vVZ8qHOME8Px7lVfnwp7Ttx5SGYKEe655dt8SFHQ3i8H4vGUB0YUa5QpJvMrArbq4iN3
- yRZRyU52wI8N5Dm2vGJRMgUBpI9tJ4TPYKSqskRtvcq/li86s8So/D4KP+TE0O8mI4sd
- fINIUn2Kwd1NNTzfXTtlcIfEl1pkRiOM+eqKgJNIC/b29cdrX1sN3QE3Oh2ysvP3AkrT
- VVwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=yyMO+OhpwfoIk5H1BIjuTuLhEF4phOzWOuFeuUDJrqQ=;
- b=ffZgAECXt+3MJ/S/b0sJzCg44Pa9jqTvyyi1y5Wywa5A8VxhFGaLa7HbQMJWlqDEcz
- er5kFRRdf8du7MfawG/vyhXVi6GbJa+zPe699ss+vj5uoBO/P4lNi/CSeKojdRmdEEOP
- SjtXPfLUVN4TLOqPc4lhc2fTqUcXj9u5CL84OvJcWmBb1sYNqVgsRJFZN6O1iiaH3Dw1
- 6Pb25jhrg0VOFjugiIrA+vmvrE/uDw2KNZmrOsJXKJCZ9nuCzWNiNHG0/FT0tNrpdHxN
- RakXvOv7PXLj1GDW0ZS2pWo/fHGgkv8shNT4DgW51EUDr1H8+ZxqMN0rkurYo9Ws5zsm
- 4Qpg==
-X-Gm-Message-State: APjAAAXdTJKLRpbuaHKAle12gsXZwss6BAhFasFUJPojHZBDvFxTNNXn
- XhogT5k8hMdWkcNqQwYGlBn2Yo/sweSOmCpPbdvxZg==
-X-Google-Smtp-Source: APXvYqzK6zREfUv+t3t994oZmwuydoxp+ZmSXfJWJLu596YpZqB3xuUD9eqAS3Jm/XnJ4gfWUazl+qADVLlOv3Wu+4E=
-X-Received: by 2002:a62:1456:: with SMTP id 83mr5727389pfu.186.1582914067453; 
- Fri, 28 Feb 2020 10:21:07 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48TkTP3t4tzDqq5
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 09:18:46 +1100 (AEDT)
+Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 01SMG0kn011812; Fri, 28 Feb 2020 14:18:41 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=xCGG+nvQlEV16JJG7XWcCq87O+qXW4zKdz8d7nSntsQ=;
+ b=MdzeqJ5CjMEo7wYhfX3vfyrdzGLtC3KgeycwGI/vQuzZFZKr6lipJ77UnZ9gmpsUhv+s
+ p09Cd0htV495xWx7q2mUL0QoixPqqZnr0tbkbkliHczG7AfpiOeYU2O16VmWjmIuv9jY
+ vhj+kAK9+KU27ILNb+KlSPuuUl9ZiWaQ6iM= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2yepu8wvgf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Fri, 28 Feb 2020 14:18:41 -0800
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.36.103) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1779.2; Fri, 28 Feb 2020 14:18:39 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=kmOChcuxFiruO+N0eoWGn3YdcrfD5+bRyBHxkd0O9/QwbPJPAGauszM+mgQ55X+Ja+2tPr/QRDMzq9EejlbYzVgjuRYVZwP2nFpK6ElE1ymLZoI9eMon45RqCHjw0cQZzex+lIIdIGX+WCpZCdkd9BDaSTXP0whhcK6l4Ns2uJHQ1bf1GFniginbeCXQe13l+mi/D3GqG4I2kUbUt32d7asKVSXVcsnqrQ22fhgOOFU912lIH3aE/RaYdFR7MMhnk8hz0LA5GoyE3CaAwlGcKyyaSNShsGvbCmz368XolZLVh3Gjeuukp4frzoepTw6zAs4kgBffMNeqAex1POh3YQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xCGG+nvQlEV16JJG7XWcCq87O+qXW4zKdz8d7nSntsQ=;
+ b=K9Z0M6gBN1qrNPdwyfk84ihR3MsOezcU4ICN/h3+Saxu5ez2GeXI057wv1xdCHpTsrKoG6LWmhLu/rsB7k32aZrz/pRXv8YxqR6bVyYn7G/e3uvnsSWSTXtoBVuWz0NjkulFzSgM7sEbclJI73UBw4NJ49FbBX6+lgUA2+pPOOk/MuD1/MdSB/kAXEUv42O0YHBIFAVoDTGOBz9aPFe6EW3FQQ/Ic6MaiVKs5E8m5jTB7ZBR10ughGFze+qBcr+Cgo96xuueartfX707ve/yX3GgaCughBf6GYrTBGKj6uD6dyKZ7pQsc1BS31VrpdTsAyat0/tsc7PLnx2LC/tDcg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xCGG+nvQlEV16JJG7XWcCq87O+qXW4zKdz8d7nSntsQ=;
+ b=ff5otlXXho5ljq63p1gcOgEF3o0an+P2kEWmtu2tQMYZAEjbFQGxRJlmSOn2QYPB+R/dNoGymkHjS27/0W+pUaUk0bMSpY3TdTOf8uQ7R/+ajCV4c0Ik81Q+zUX4j8nweHYHfQhGuOcUCVy18XcH6FyKWcB2Yy5oVTZj5F21v3I=
+Received: from MW3PR15MB3947.namprd15.prod.outlook.com (2603:10b6:303:49::9)
+ by MW3PR15MB3932.namprd15.prod.outlook.com (2603:10b6:303:51::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2772.15; Fri, 28 Feb
+ 2020 22:18:38 +0000
+Received: from MW3PR15MB3947.namprd15.prod.outlook.com
+ ([fe80::acc7:ed14:3f77:9936]) by MW3PR15MB3947.namprd15.prod.outlook.com
+ ([fe80::acc7:ed14:3f77:9936%4]) with mapi id 15.20.2772.018; Fri, 28 Feb 2020
+ 22:18:38 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: obmc console for multiple host
+Thread-Topic: obmc console for multiple host
+Thread-Index: AQHV7faP5RFIDWYuz0yVWkpwSrbrE6gwE56AgACUY4A=
+Date: Fri, 28 Feb 2020 22:18:38 +0000
+Message-ID: <0AB52768-6D88-4FF5-85C1-7BF1005CEF3A@fb.com>
+References: <37851ADF-67EC-4761-A4C5-33F28373A609@fb.com>
+ <64e1858f-7713-4ca4-880f-db639ab78d30@www.fastmail.com>
+In-Reply-To: <64e1858f-7713-4ca4-880f-db639ab78d30@www.fastmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:500::7:bb5c]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5eaf8460-81bf-4640-60c5-08d7bc9c2926
+x-ms-traffictypediagnostic: MW3PR15MB3932:
+x-microsoft-antispam-prvs: <MW3PR15MB393251151E235A9F258D04F2DDE80@MW3PR15MB3932.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-forefront-prvs: 0327618309
+x-forefront-antispam-report: SFV:NSPM;
+ SFS:(10019020)(376002)(346002)(396003)(39860400002)(366004)(136003)(189003)(199004)(4326008)(316002)(2616005)(478600001)(36756003)(2906002)(186003)(8676002)(81156014)(6486002)(81166006)(66946007)(86362001)(6916009)(33656002)(5660300002)(64756008)(6506007)(71200400001)(76116006)(8936002)(66556008)(66476007)(6512007)(66446008)(966005);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MW3PR15MB3932;
+ H:MW3PR15MB3947.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; MX:1; A:1; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 0TbO/AyQTVkXrko1X9kEDWWQjbzw1OfsjoB7/qECy8RHnzY8DeviGC+uF8rutXPcqfcGioAWRdYGqzvoN4BrWE8iOKTZXiKru7a0TDrZuSFrD35TWLsSMdiBH5Am+mQ4Wg0oc57+qOylq97bepPa5MPb5OljEXZMyhnmHkmXT+RAgLiEVWAr/glpa1EjqST8Nqc95S16lpjMfXozbgKBtihNVmft2n8YNWcIYU5U6mqkkR+kAVPbugi1x1TlfsZ5O0kjLdbCfpOWeDy5vnyb0kCkNuOdzXJtPFfMxZQVYPQNyqmd5W7Ue0VCPQ4VHCtG85diLguellPVzOSQwloGQU7manuykq6/ku1o27LlpM6KdNPPlnsJGL5yrue2t3zIRj0YGzdFuFwwI4N7GvHBDT4FVBlW4R95W7tXuxYOMQ1SsHOdjG4tcqQXEdAFiUL3gAJJOSp2MfyhF2GGof3BsnctAZxRYgnPwJBVx+1Gx86WEdi7W42pdU0w2JJcrnWiiPL4Jb1tCM8gmpzCa5JhSg==
+x-ms-exchange-antispam-messagedata: 3vOXfhgPn5Ns8lGn7Uj9ncZ0xsMKDeaxhz8ATBl8Qd2FERy9fnOcVx4lfJFcEyL96esVPXTGRXwDqEYQ+KwJZzbwPRn3GfBu0S+V00ip7xu72597FATRgNbufuF0XFV67XYmiaFfwBZj1Dppt3YkYDu72dMCZdUhQZBdCSa6lFYpPa3WpjYrsAhEm4JMzq3h
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <EF059252887EC94A8405F25E422274B4@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <OFBAC0E531.E7E68FE5-ON0025851C.0053A4C8-0025851C.0055AA1E@notes.na.collabserv.com>
-In-Reply-To: <OFBAC0E531.E7E68FE5-ON0025851C.0053A4C8-0025851C.0055AA1E@notes.na.collabserv.com>
-From: Patrick Venture <venture@google.com>
-Date: Fri, 28 Feb 2020 10:20:56 -0800
-Message-ID: <CAO=notw9Gt2=meykgiff09finUnMtLNqnW1PLpwX4HESm4OXVA@mail.gmail.com>
-Subject: Re: [OpenBMC]: Unit test coverage analysis on openbmc repositories
-To: Lakshminarayana R Kammath <lkammath@in.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5eaf8460-81bf-4640-60c5-08d7bc9c2926
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2020 22:18:38.5743 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CHgeYMeGJsjUUUzFpquGNasD+hVM6kXxQzasH9Jr1mMHYGor/axthRtylNf1bWpsugg7yDr3IlGsBI03Ky2fwA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR15MB3932
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-02-28_08:2020-02-28,
+ 2020-02-28 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ suspectscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=865 clxscore=1015
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2002280159
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,166 +143,31 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Feb 28, 2020 at 7:36 AM Lakshminarayana R Kammath
-<lkammath@in.ibm.com> wrote:
->
-> Hi All,
->
-> Recently we worked on pulling the UT coverage analysis from all the available OpenBMC repositories
->
-> https://github.com/openbmc/openbmc-build-scripts/commit/229b76a95f87af60c976a0c0dfe84716c9ce5318
->
-> This script does following
->
-> Clone the repo
-> Use the CI build environment to build code
-> Publish the result in the following format
->
-> Latest report:
-> *************************UNIT TEST COVERAGE REPORT*************************
-> https://github.com/openbmc/bmcweb.git NO
-> https://github.com/openbmc/boost-dbus.git ERROR
-> https://github.com/openbmc/btbridge.git NO
-> https://github.com/openbmc/dbus-sensors.git NO
-> https://github.com/openbmc/entity-manager.git NO
-> https://github.com/openbmc/fb-ipmi-oem.git NO
-> https://github.com/openbmc/google-ipmi-i2c.git ERROR
-> https://github.com/openbmc/google-ipmi-sys.git YES, UNIT TEST
-> https://github.com/openbmc/gpioplus.git YES, COVERAGE
-> https://github.com/openbmc/hiomapd.git YES, UNIT TEST
-> https://github.com/openbmc/ibm-dbus-interfaces.git NO
-> https://github.com/openbmc/ibm-logging.git YES, UNIT TEST
-> https://github.com/openbmc/ibm-pldm-oem.git ERROR
-> https://github.com/openbmc/inarp.git ERROR
-> https://github.com/openbmc/intel-dbus-interfaces.git NO
-> https://github.com/openbmc/intel-ipmi-oem.git NO
-> https://github.com/openbmc/ipmbbridge.git NO
-> https://github.com/openbmc/ipmi-blob-tool.git YES, UNIT TEST
-> https://github.com/openbmc/ipmi-fru-parser.git NO
-> https://github.com/openbmc/ipmitool.git ERROR
-> https://github.com/openbmc/jsnbd.git ERROR
-> https://github.com/openbmc/kcsbridge.git NO
-> https://github.com/openbmc/lenovo-ipmi-oem.git NO
-> https://github.com/openbmc/libmctp.git YES, UNIT TEST
-> https://github.com/openbmc/librrdplus.git NO
-> https://github.com/openbmc/obmc-console.git YES, UNIT TEST
-> https://github.com/openbmc/obmc-ikvm.git NO
-> https://github.com/openbmc/openbmc.git NO
-> https://github.com/openbmc/openbmc-tools.git NO
-> https://github.com/openbmc/openbmc.github.io.git NO
-> https://github.com/openbmc/openpower-dbus-interfaces.git NO
-> https://github.com/openbmc/openpower-debug-collector.git NO
-> https://github.com/openbmc/openpower-host-ipmi-flash.git NO
-> https://github.com/openbmc/openpower-host-ipmi-oem.git NO
-> https://github.com/openbmc/openpower-hw-diags.git YES, COVERAGE
-> https://github.com/openbmc/openpower-inventory-upload.git NO
-> https://github.com/openbmc/openpower-libhei.git YES, COVERAGE
-> https://github.com/openbmc/openpower-logging.git NO
-> https://github.com/openbmc/openpower-occ-control.git YES, UNIT TEST
-> https://github.com/openbmc/openpower-pnor-code-mgmt.git YES, UNIT TEST
-> https://github.com/openbmc/openpower-power-control.git NO
-> https://github.com/openbmc/openpower-proc-control.git YES, UNIT TEST
-> https://github.com/openbmc/openpower-sbe-interface.git NO
-> https://github.com/openbmc/openpower-vpd-parser.git YES, UNIT TEST
-> https://github.com/openbmc/pam-ipmi.git NO
-> https://github.com/openbmc/phosphor-bmc-code-mgmt.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-buttons.git NO
-> https://github.com/openbmc/phosphor-certificate-manager.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-dbus-interfaces.git NO
-> https://github.com/openbmc/phosphor-dbus-monitor.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-debug-collector.git NO
-> https://github.com/openbmc/phosphor-ecc.git NO
-> https://github.com/openbmc/phosphor-event.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-fan-presence.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-gpio-monitor.git YES, COVERAGE
-> https://github.com/openbmc/phosphor-host-ipmid.git ERROR
-> https://github.com/openbmc/phosphor-host-postd.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-hostlogger.git NO
-> https://github.com/openbmc/phosphor-hwmon.git NO
-
-^---- This one should be YES, UNIT TEST.
-
-Thanks for working on identifying missing coverage.  I wanted to point
-this out so you can take another swing at this, -- Thanks!
-
-> https://github.com/openbmc/phosphor-inventory-manager.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-ipmi-blobs.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-ipmi-blobs-binarystore.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-ipmi-ethstats.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-ipmi-flash.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-led-manager.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-led-sysfs.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-logging.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-mboxd.git ERROR
-> https://github.com/openbmc/phosphor-misc.git NO
-> https://github.com/openbmc/phosphor-mrw-tools.git NO
-> https://github.com/openbmc/phosphor-net-ipmid.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-networkd.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-nvme.git NO
-> https://github.com/openbmc/phosphor-objmgr.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-pcie-presence.git NO
-> https://github.com/openbmc/phosphor-pid-control.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-post-code-manager.git NO
-> https://github.com/openbmc/phosphor-power.git YES, COVERAGE
-> https://github.com/openbmc/phosphor-power-control.git NO
-> https://github.com/openbmc/phosphor-power-monitor.git NO
-> https://github.com/openbmc/phosphor-psu-code-mgmt.git YES, COVERAGE
-> https://github.com/openbmc/phosphor-rest-server.git NO
-> https://github.com/openbmc/phosphor-sel-logger.git NO
-> https://github.com/openbmc/phosphor-settingsd.git NO
-> https://github.com/openbmc/phosphor-snmp.git ERROR
-> https://github.com/openbmc/phosphor-state-manager.git YES, COVERAGE
-> https://github.com/openbmc/phosphor-time-manager.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-u-boot-env-mgr.git NO
-> https://github.com/openbmc/phosphor-user-manager.git YES, UNIT TEST
-> https://github.com/openbmc/phosphor-watchdog.git YES, COVERAGE
-> https://github.com/openbmc/phosphor-webui.git NO
-> https://github.com/openbmc/pldm.git YES, COVERAGE
-> https://github.com/openbmc/pyphosphor.git NO
-> https://github.com/openbmc/qualcomm-ipmi-oem.git NO
-> https://github.com/openbmc/qualcomm-misc.git NO
-> https://github.com/openbmc/quanta-ipmi-oem.git NO
-> https://github.com/openbmc/rest-dbus.git NO
-> https://github.com/openbmc/rrd-ipmi-blobs.git NO
-> https://github.com/openbmc/s2600wf-misc.git NO
-> https://github.com/openbmc/sdbusplus.git YES, UNIT TEST
-> https://github.com/openbmc/sdeventplus.git YES, COVERAGE
-> https://github.com/openbmc/skeleton.git ERROR
-> https://github.com/openbmc/slpd-lite.git NO
-> https://github.com/openbmc/smbios-mdr.git ERROR
-> https://github.com/openbmc/stdplus.git YES, COVERAGE
-> https://github.com/openbmc/telemetry.git NO
-> https://github.com/openbmc/u-boot NO
-> https://github.com/openbmc/webui-vue.git NO
-> https://github.com/openbmc/witherspoon-pfault-analysis.git YES, COVERAGE
-> https://github.com/openbmc/x86-power-control.git NO
-> *************************UNIT TEST COVERAGE REPORT*************************
-> SUMMARY:
-> TOTAL REPOSITORIES : 110
-> TESTED REPOSITORIES : 43
-> ERROR : 11
-> COVERAGE REPORT : 12
-> UNIT TEST REPORT : 31
-> NO REPORT : 56
-> ***************************************************************************
->
->
-> Following actions, we can draw from above
->
-> There are 12 repo's that have GCOV/LCOV plugged in - We need to maintain which has good coverage and try to improve those which has less coverage
-> There are 31 repo's that have unit test cases added but no coverage analysis because they aren't plugged in yet to GCOV/LCOV  - Is there a plan for plugging in GCOV
-> There are 11 repo's which fail to compile and errors out - Fix compilation issue. Some of these maybe not used currently?
-> There are 56 repo's for which there is no UT tests available  - This is a major issue we need to tackle and improve upon
->
-> Feedback's , views highly appreciated
->
-> Thanks & Regards,
-> Lakshminarayana Kamath
-> --------------------------------------------------------------------------------------------------
-> Senior Engineer,
-> IBM India Software Labs
-> Bangalore
-> github:lkammath
-> ---------------------------------------------------------------------------------------------------
->
->
+SGkgQW5kcmV3LA0KSSBhbSBhYmxlIHRvIHNlZSBjb25jdXJyZW50IHNlcnZlciB3b3JraW5nLiBJ
+IGhhdmUgdG8gYWRqdXN0IG15IGJiYXBwZW5kLiANCg0KVGhhbmtzIGEgbG90IGZvciB0aGlzIHN1
+cHBvcnQuDQoNClJlZ2FyZHMNCi1WaWpheQ0KDQrvu79PbiAyLzI3LzIwLCA5OjI3IFBNLCAiQW5k
+cmV3IEplZmZlcnkiIDxhbmRyZXdAYWouaWQuYXU+IHdyb3RlOg0KDQogICAgSGkgVmlqYXksDQog
+ICAgDQogICAgT24gRnJpLCAyOCBGZWIgMjAyMCwgYXQgMTU6NDgsIFZpamF5IEtoZW1rYSB3cm90
+ZToNCiAgICA+ICANCiAgICA+IEhpIEFuZHJldywNCiAgICA+IA0KICAgID4gSSBzYXcgbmV3IG11
+bHRpIGhvc3Qgc3VwcG9ydCBpbiBvYm1jIGNvbnNvbGUuIFRoYW5rcyBmb3IgZXh0ZW5kaW5nIA0K
+ICAgID4gb2JtYy1jb25zb2xlIGZvciBtdWx0aSBob3N0IGNvbm5lY3Rpb24uDQogICAgDQogICAg
+Tm8gcHJvYmxlbXMhDQogICAgDQogICAgPiANCiAgICA+IA0KICAgID4gQ2FuIHlvdSBwbGVhc2Ug
+c2VuZCBtZSBuZXcgY2hhbmdlcyByZXF1aXJlZCBpbiBjb25maWd1cmF0aW9uIGZpbGUgYXMgd2Ug
+DQogICAgPiBhcmUgZGVmaW5pbmcgbG9jYWwtdHR5IGFuZCBiYXVkIGZvciBob3N0IGluIG91dCBj
+b25maWd1cmF0aW9uIGZpbGUgZm9yIA0KICAgID4gc2luZ2xlIGhvc3QuIFdoYXQgd291bGQgYmUg
+YSBzYW1wbGUgY29uZmlnIGZpbGUgZm9yIG11bHRpcGxlIGhvc3QgDQogICAgPiBzdXBwb3J0IGFu
+ZCBhbHNvIHdoYXQgYXJlIGNvbW1hbmQgbGluZSBvcHRpb24gd291bGQgYmUgZm9yIGNsaWVudCB0
+byANCiAgICA+IGNvbm5lY3QgdG8gcGFydGljdWxhciB0dHkuDQogICAgDQogICAgRGlkIHlvdSBz
+ZWUgbXkgcmVzcG9uc2UgaGVyZT8gSSB0aGluayBpdCBjb3ZlcnMgdGhlIGFuc3dlcnMgdG8geW91
+cg0KICAgIHF1ZXN0aW9uczoNCiAgICANCiAgICBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2lu
+dC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX2xpc3RzLm96bGFicy5vcmdfcGlwZXJtYWlsX29wZW5i
+bWNfMjAyMC0yREZlYnJ1YXJ5XzAyMDczNi5odG1sJmQ9RHdJQkFnJmM9NVZEMFJUdE5sVGgzeWNk
+NDFiM01VdyZyPXY5TVUwS2k5cFduVFhDV3dqSFBWZ3BuQ1I4MHZYa2tjcklhcVU3VVNsNWcmbT1r
+cDhkUTNmTlNjcUJwUFI2QlFnRTJOaWlxN3NSQnFvT1BGMVN6cTgySmdFJnM9NTVSa1hmektYM0ZH
+YVpWVU0yYVhnUlRIYkRZbXlXQnlHamN6dWpublo1byZlPSANCiAgICANCiAgICBJZiBpdCBkb2Vz
+bid0IGNhbiB5b3UgcGxlYXNlIHJlc3BvbmQgaW4gdGhhdCB0aHJlYWQgYWJvdXQgd2hhdCBpcyB1
+bmNsZWFyPw0KICAgIA0KICAgIEkgZGlkIGxlYXZlIG91dCBleGFjdCBkZXRhaWxzIG9uIGhvdyB5
+b3UgbWlnaHQgaW50ZWdyYXRlIGNvbmN1cnJlbnQgc2VydmVyDQogICAgc3VwcG9ydCBpbnRvIHlv
+dXIgYml0YmFrZSByZWNpcGVzLiBJIGNhbiBwcm92aWRlIHN1Z2dlc3Rpb25zIG9uIGhvdyB0byBk
+bw0KICAgIHNvIGlmIGl0IGhlbHBzLg0KICAgIA0KICAgIENoZWVycywNCiAgICANCiAgICBBbmRy
+ZXcNCiAgICANCg0K
