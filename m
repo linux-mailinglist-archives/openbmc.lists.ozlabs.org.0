@@ -1,55 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C875A173238
-	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 08:57:21 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48TMMM1W3HzDrBZ
-	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 18:57:19 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 10DEE17327F
+	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 09:14:13 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48TMkn6nhqzDqtZ
+	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 19:14:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::441;
+ helo=mail-pf1-x441.google.com; envelope-from=rentao.bupt@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.54; helo=m13-54.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=PFIUYNeP; dkim-atps=neutral
-X-Greylist: delayed 926 seconds by postgrey-1.36 at bilbo;
- Fri, 28 Feb 2020 18:56:42 AEDT
-Received: from m13-54.163.com (m13-54.163.com [220.181.13.54])
- (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=BclSCGD/; dkim-atps=neutral
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com
+ [IPv6:2607:f8b0:4864:20::441])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48TMLf1CyrzDq5y
- for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 18:56:40 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=XaGWq
- NlTpvq+O4q2BLp6WsHqUo9HV15SVNVwksqXEas=; b=PFIUYNeP+l/7ym0QNZ/br
- Yr2QDlfUg+gtOAQCjZG97kiIx7RBkK6MKFqA8poyLzrLea7aGvxqd3cv0oEe1j6e
- xG77dtKe9XkZZVNCDjveQXNuZkBh5uRyfTsbEoZ5k8hPnXV8/7DYrocqylqF1n0F
- cw4p7Em6D2sjF56UKcYrXs=
-Received: from ouyangxuan10$163.com ( [106.120.127.15] ) by
- ajax-webmail-wmsvr54 (Coremail) ; Fri, 28 Feb 2020 15:40:55 +0800 (CST)
-X-Originating-IP: [106.120.127.15]
-Date: Fri, 28 Feb 2020 15:40:55 +0800 (CST)
-From: www <ouyangxuan10@163.com>
-To: openbmc@lists.ozlabs.org
-Subject: [OpenBMC]: How to get the update progress when flashing BMC firmware?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 163com
-X-CM-CTRLDATA: hWUN3mZvb3Rlcl9odG09MjUzOjU2
-Content-Type: multipart/alternative; 
- boundary="----=_Part_72266_1588454182.1582875655766"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48TMjt5DllzDrJp;
+ Fri, 28 Feb 2020 19:13:22 +1100 (AEDT)
+Received: by mail-pf1-x441.google.com with SMTP id i6so1340923pfc.1;
+ Fri, 28 Feb 2020 00:13:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=1XeAZdDEEMWPSRFSSrigFDHZjIaWywrJrDOcCv/SctI=;
+ b=BclSCGD/+Gp7pLCK+Yfq+IH0orWklytTcUNiFna90KwERemW3y0lq2SFGwBTScn/ZR
+ SOnMFpFra//MK4i1yP2XSWxhSB0AmtyVADIvnaixDjHOEilFGfAtxn96llpXGSu9w6x9
+ cnYc7x7sgEcbB4wEdoWPyc1hRhVj/x1T1b7yJp/3L1qebJXpWiZZcerMA4aKUSTSJzOu
+ +EJL716Ez9KnsOA3AUIXTOEjEYftKhDFAE4pxRa3OfvNhxlaMqYrOmYwyXYyNJdP0BwU
+ JH+Jb4ugNll/M3AjCQdCwSJWKoNoHs8e/biyVduULpYiHq+u7xkE0FG316miHyBgMLPu
+ 3vmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=1XeAZdDEEMWPSRFSSrigFDHZjIaWywrJrDOcCv/SctI=;
+ b=UUK7E4FXzk2ce895l1oMUDZBGvgv6KWS5Zd2b28+vXt96jHuO6meDKr4z83X64N/GF
+ FdtlU3v9NZPXtfIuWYEASHBZ7XgVP+yhJzEuFV2rsziJHw9DOIoLl7dbDgUPLdAfkAsz
+ WToJlIIakBT6nRi1PyINIZ436fhMJpUzt2p6E+0GV1sV4UqhDzYKXYFfAG/yrhxxPQ01
+ VN7A2anySvrw1FHV4D1uwa6KKqVNEPNHnDthyXYWj7gy/jGmfQ9j0oK2eO3upUlHZp1h
+ BZ7Z1cFZbHalSN3BV+UtxhYCtk9jH1+wNlcO1KBJ39IQYbCPm68Goah1vD8u6suCxkoD
+ p9Qg==
+X-Gm-Message-State: APjAAAXM1RDHQ1eJQqttQxrJXihwG78ZVyHADLMv7Dm6EPN2sCxYmN6R
+ YadlvZBp2HZCip376Zz7/xA=
+X-Google-Smtp-Source: APXvYqwaScFWt2pSZw8deGePN2rW5lckHptMxbrEKDdWitX5+l+202jKgzn654xFzxvUIwznQHDJHQ==
+X-Received: by 2002:aa7:93a6:: with SMTP id x6mr3341479pff.72.1582877599463;
+ Fri, 28 Feb 2020 00:13:19 -0800 (PST)
+Received: from taoren-ubuntuvm (c-24-4-25-55.hsd1.ca.comcast.net. [24.4.25.55])
+ by smtp.gmail.com with ESMTPSA id c18sm8717917pgw.17.2020.02.28.00.13.18
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 28 Feb 2020 00:13:19 -0800 (PST)
+Date: Fri, 28 Feb 2020 00:13:11 -0800
+From: Tao Ren <rentao.bupt@gmail.com>
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Subject: Re: [PATCH v5 7/7] dt-bindings: usb: add documentation for aspeed
+ usb-vhub
+Message-ID: <20200228081309.GA4531@taoren-ubuntuvm>
+References: <20200227230507.8682-1-rentao.bupt@gmail.com>
+ <20200227230507.8682-8-rentao.bupt@gmail.com>
+ <3150424b9e9f5856c747a0fbf44647919f49209d.camel@kernel.crashing.org>
+ <20200228010444.GA19910@taoren-ubuntu-R90MNF91>
+ <2676013663fc8c53e02a5fdaafb1b27e18249b80.camel@kernel.crashing.org>
 MIME-Version: 1.0
-Message-ID: <2042ec12.4c6e.1708abdbe56.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: NsGowAAXo5wHxFheQY2FAQ--.41502W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiMRPX2lUMSS0i5gABsX
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2676013663fc8c53e02a5fdaafb1b27e18249b80.camel@kernel.crashing.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,24 +84,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
+ linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Stephen Boyd <swboyd@chromium.org>, Rob Herring <robh+dt@kernel.org>,
+ taoren@fb.com, Chunfeng Yun <chunfeng.yun@mediatek.com>,
+ Colin Ian King <colin.king@canonical.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_72266_1588454182.1582875655766
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+On Fri, Feb 28, 2020 at 02:02:28PM +1100, Benjamin Herrenschmidt wrote:
+> On Thu, 2020-02-27 at 17:05 -0800, Tao Ren wrote:
+> > > Also long run I think best is going to have a child node per downstream
+> > > port, so we create a matching linux struct device. This will make it
+> > > easier to deal with the other device-controller in the ast2600 which is
+> > > basically one of these without a vhub above it.
+> > 
+> > Maybe a dumb question: what would be the proper place to parse the child
+> > node/properties when they are added? For example, in some usb_gadget_ops
+> > callback?
+> 
+> No. What the vhub would do is when it probes, it creates a platform
+> device for each "port" child node that's linked to the DT node.
+> 
+> The driver for the device then attaches to it via standard DT matching
+> and checks if it has a vhub parent or not, and based on that, operates
+> as a vhub child device or a standalone one.
+> 
+> (For example, it might have different functions for EP selection since
+> standalone devices have private EPs rather than a shared pool)
+> 
+> They can both be in the same module or they can be separate modules
+> with cross dependencies.
+> 
+> Cheers,
+> Ben.
 
-aGmjrAoKCkhvdyB0byBnZXQgdGhlIHVwZGF0ZSBwcm9ncmVzcyB3aGVuIEJNQyBpcyBmbGFzaGlu
-Zy4gSXQgY2FuIGJlIGRpc3BsYXllZCBvbiB3ZWJ1aS4KCgp0aGFua3MsCkJ5cm9u
-------=_Part_72266_1588454182.1582875655766
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+I see. It's to describe these downstream devices (such as configurations
+and according functions) in device tree, which is similar to defining a
+composite device and linking functions/interfaces via configfs. Thanks for
+the clarify.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+aGmjrDwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SG93
-IHRvIGdldCB0aGUgdXBkYXRlIHByb2dyZXNzIHdoZW4gQk1DIGlzIGZsYXNoaW5nLiBJdCBjYW4g
-YmUgZGlzcGxheWVkIG9uIHdlYnVpLjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+dGhhbmtzLDwv
-ZGl2PjxkaXY+Qnlyb248L2Rpdj48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9v
-dGVyIj48cD4mbmJzcDs8L3A+PC9zcGFuPg==
-------=_Part_72266_1588454182.1582875655766--
 
+Cheers,
+
+Tao
