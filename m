@@ -2,76 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3368C173D29
-	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 17:39:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFF98173E34
+	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 18:18:22 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48TZyD1K1zzDqvt
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 03:39:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Tbpg47qFzDrMf
+	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 04:18:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=in.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=lkammath@in.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=gYGtUSVs; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48TZxb2JZxzDqsj
- for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 03:39:15 +1100 (AEDT)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 01SGTmOK060997
- for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 11:39:13 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.67])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2yepx5nt0s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 11:39:13 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <lkammath@in.ibm.com>;
- Fri, 28 Feb 2020 16:39:12 -0000
-Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
- by smtp.notes.na.collabserv.com (10.106.227.16) with
- smtp.notes.na.collabserv.com ESMTP; Fri, 28 Feb 2020 16:39:09 -0000
-Received: from us1a3-mail34.a3.dal06.isc4sb.com ([10.146.6.29])
- by us1a3-smtp05.a3.dal06.isc4sb.com
- with ESMTP id 2020022816390813-643901 ;
- Fri, 28 Feb 2020 16:39:08 +0000 
-In-Reply-To: <ABE45DC2-0C5E-42B6-AE1F-60C5F608D1F1@fuzziesquirrel.com>
-From: "Lakshminarayana R Kammath" <lkammath@in.ibm.com>
-To: bradleyb@fuzziesquirrel.com
-Date: Fri, 28 Feb 2020 16:39:07 +0000
-Sensitivity: 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Tbp16931zDrMJ
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 04:17:42 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 582F341364;
+ Fri, 28 Feb 2020 17:17:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1582910254; x=1584724655; bh=0BQq5C08CoODoJFib1ipiDdXI
+ GDSDzHkfdwxNMCaCmY=; b=gYGtUSVsAbTSXpBYILUVWXTO6ephFCQzYPeXlHudf
+ Nwtu/XYdiQBF5P4N95QfGQ4N7QuAMQ4swUQ2OyjU9gzC8QzAk5xUlS4RPC5XIN+O
+ xd7Xw4WpM4vyTExCvUIvS33nOtPO6QVDdMZh3nYIUuxR/9Dy2fMSCnBw5YoSV5Pp
+ mg=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id N7op_qdmV5qi; Fri, 28 Feb 2020 20:17:34 +0300 (MSK)
+Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com
+ [172.17.10.101])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id DF43A41369;
+ Fri, 28 Feb 2020 20:17:30 +0300 (MSK)
+Received: from localhost.localdomain (172.17.15.69) by
+ T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Fri, 28 Feb 2020 20:17:30 +0300
+Message-ID: <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
+Subject: Re: service for tracking user activity (phosphor-audit)
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Date: Fri, 28 Feb 2020 20:15:05 +0300
+In-Reply-To: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
+References: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
 MIME-Version: 1.0
-References: 
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1661 | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 59759
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 20022816-7279-0000-0000-00000215C492
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.417846; ST=0; TS=0; UL=0; ISC=; MB=0.000001
-X-IBM-SpamModules-Versions: BY=3.00012657; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000293; SDB=6.01340537; UDB=6.00714412; IPR=6.01122900; 
- MB=3.00031011; MTD=3.00000008; XFM=3.00000015; UTC=2020-02-28 16:39:10
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-02-28 12:46:28 - 6.00011059
-x-cbparentid: 20022816-7280-0000-0000-00004ECFDBBA
-Message-Id: <OFD4A6FC95.990EBF4E-ON0025851C.005B2BE8-0025851C.005B78ED@notes.na.collabserv.com>
-Subject: RE: [OpenBMC]: Unit test coverage analysis on openbmc repositories
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-02-28_05:2020-02-28,
- 2020-02-28 signatures=0
-X-Proofpoint-Spam-Reason: safe
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [172.17.15.69]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-01.corp.yadro.com (172.17.10.101)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,35 +74,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: gmills@us.ibm.com, geissonator@yahoo.com, joseph-reynolds@charter.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
-elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family=
-:Arial, Helvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Yes, We ca=
-n do that. Just need to figure out the API's</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" ><div dir=3D"ltr" style=3D"font-family:Arial, Helvetica, s=
-ans-serif;font-size:10pt" ><div dir=3D"ltr" style=3D"font-family:Arial, Hel=
-vetica, sans-serif;font-size:10.5pt" ><div dir=3D"ltr" style=3D"font-family=
-:Arial, Helvetica, sans-serif;font-size:10.5pt" ><div dir=3D"ltr" >Thanks &=
-amp; Regards,<br>Lakshminarayana Kamath</div></div></div></div></div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
--left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
-margin-right:0px" >----- Original message -----<br>From: Brad Bishop &lt;br=
-adleyb@fuzziesquirrel.com&gt;<br>To: Lakshminarayana R Kammath &lt;lkammath=
-@in.ibm.com&gt;<br>Cc: openbmc@lists.ozlabs.org<br>Subject: [EXTERNAL] Re: =
-[OpenBMC]: Unit test coverage analysis on openbmc repositories<br>Date: Fri=
-, Feb 28, 2020 10:01 PM<br>&nbsp;
-<div><font size=3D"2" face=3D"Default Monospace,Courier New,Courier,monospa=
-ce" >at 11:30 AM, Lakshminarayana R Kammath &lt;lkammath@in.ibm.com&gt; wro=
-te:<br><br>&gt; sure Brad!<br>&gt;<br>&gt; If Some one can confirm the list=
- of repo's that can be ignored we can put &nbsp;<br>&gt; them to blacklist<=
-br><br>Is it possible to use the GitHub api to query this? &nbsp;Then we do=
-n=E2=80=99t need to &nbsp;<br>maintain a blacklist. &nbsp;How are you build=
-ing the list of repos?</font><br>&nbsp;</div></blockquote>
-<div dir=3D"ltr" >&nbsp;</div></div></div><BR>
+On Mon, 2019-08-26 at 15:31 +0300, Ivan Mikhaylov wrote:
+> hi all, There it is updated design proposal about audit service which provides
+> a
+> way to track user activity. Right now most parts are described there. If you
+> have any ideas or anything to add, feel free to share in this thread.
+> 
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23870
+> 
+> 
+> thanks.
+> 
+
+Thank you, everyone involved in the review process of this document! Just got
+back from the leave, and wanted to ask who should create the rep or which rep
+part it should belong to? I want to use the meson build system for this project,
+any problems with this decision? Also, any other tips or suggestions are
+welcome. I'll start working on it in next 1-2 weeks.
+
+Thanks.
 
