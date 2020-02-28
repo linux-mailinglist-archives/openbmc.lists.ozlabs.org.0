@@ -1,133 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 734FE17429E
+	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 23:59:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 466ED1741E4
-	for <lists+openbmc@lfdr.de>; Fri, 28 Feb 2020 23:19:34 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48TkVC2dgwzDrCB
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 09:19:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48TlNM4YXDzDrNm
+	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 09:59:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::541;
+ helo=mail-pg1-x541.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=0327bd19d5=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=MdzeqJ5C; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=ff5otlXX; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=KEaE/N0k; dkim-atps=neutral
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [IPv6:2607:f8b0:4864:20::541])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48TkTP3t4tzDqq5
- for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 09:18:46 +1100 (AEDT)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 01SMG0kn011812; Fri, 28 Feb 2020 14:18:41 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=xCGG+nvQlEV16JJG7XWcCq87O+qXW4zKdz8d7nSntsQ=;
- b=MdzeqJ5CjMEo7wYhfX3vfyrdzGLtC3KgeycwGI/vQuzZFZKr6lipJ77UnZ9gmpsUhv+s
- p09Cd0htV495xWx7q2mUL0QoixPqqZnr0tbkbkliHczG7AfpiOeYU2O16VmWjmIuv9jY
- vhj+kAK9+KU27ILNb+KlSPuuUl9ZiWaQ6iM= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 2yepu8wvgf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 28 Feb 2020 14:18:41 -0800
-Received: from NAM04-BN3-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.36.103) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1779.2; Fri, 28 Feb 2020 14:18:39 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kmOChcuxFiruO+N0eoWGn3YdcrfD5+bRyBHxkd0O9/QwbPJPAGauszM+mgQ55X+Ja+2tPr/QRDMzq9EejlbYzVgjuRYVZwP2nFpK6ElE1ymLZoI9eMon45RqCHjw0cQZzex+lIIdIGX+WCpZCdkd9BDaSTXP0whhcK6l4Ns2uJHQ1bf1GFniginbeCXQe13l+mi/D3GqG4I2kUbUt32d7asKVSXVcsnqrQ22fhgOOFU912lIH3aE/RaYdFR7MMhnk8hz0LA5GoyE3CaAwlGcKyyaSNShsGvbCmz368XolZLVh3Gjeuukp4frzoepTw6zAs4kgBffMNeqAex1POh3YQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xCGG+nvQlEV16JJG7XWcCq87O+qXW4zKdz8d7nSntsQ=;
- b=K9Z0M6gBN1qrNPdwyfk84ihR3MsOezcU4ICN/h3+Saxu5ez2GeXI057wv1xdCHpTsrKoG6LWmhLu/rsB7k32aZrz/pRXv8YxqR6bVyYn7G/e3uvnsSWSTXtoBVuWz0NjkulFzSgM7sEbclJI73UBw4NJ49FbBX6+lgUA2+pPOOk/MuD1/MdSB/kAXEUv42O0YHBIFAVoDTGOBz9aPFe6EW3FQQ/Ic6MaiVKs5E8m5jTB7ZBR10ughGFze+qBcr+Cgo96xuueartfX707ve/yX3GgaCughBf6GYrTBGKj6uD6dyKZ7pQsc1BS31VrpdTsAyat0/tsc7PLnx2LC/tDcg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xCGG+nvQlEV16JJG7XWcCq87O+qXW4zKdz8d7nSntsQ=;
- b=ff5otlXXho5ljq63p1gcOgEF3o0an+P2kEWmtu2tQMYZAEjbFQGxRJlmSOn2QYPB+R/dNoGymkHjS27/0W+pUaUk0bMSpY3TdTOf8uQ7R/+ajCV4c0Ik81Q+zUX4j8nweHYHfQhGuOcUCVy18XcH6FyKWcB2Yy5oVTZj5F21v3I=
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com (2603:10b6:303:49::9)
- by MW3PR15MB3932.namprd15.prod.outlook.com (2603:10b6:303:51::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2772.15; Fri, 28 Feb
- 2020 22:18:38 +0000
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936]) by MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936%4]) with mapi id 15.20.2772.018; Fri, 28 Feb 2020
- 22:18:38 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: obmc console for multiple host
-Thread-Topic: obmc console for multiple host
-Thread-Index: AQHV7faP5RFIDWYuz0yVWkpwSrbrE6gwE56AgACUY4A=
-Date: Fri, 28 Feb 2020 22:18:38 +0000
-Message-ID: <0AB52768-6D88-4FF5-85C1-7BF1005CEF3A@fb.com>
-References: <37851ADF-67EC-4761-A4C5-33F28373A609@fb.com>
- <64e1858f-7713-4ca4-880f-db639ab78d30@www.fastmail.com>
-In-Reply-To: <64e1858f-7713-4ca4-880f-db639ab78d30@www.fastmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:500::7:bb5c]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 5eaf8460-81bf-4640-60c5-08d7bc9c2926
-x-ms-traffictypediagnostic: MW3PR15MB3932:
-x-microsoft-antispam-prvs: <MW3PR15MB393251151E235A9F258D04F2DDE80@MW3PR15MB3932.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-forefront-prvs: 0327618309
-x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(376002)(346002)(396003)(39860400002)(366004)(136003)(189003)(199004)(4326008)(316002)(2616005)(478600001)(36756003)(2906002)(186003)(8676002)(81156014)(6486002)(81166006)(66946007)(86362001)(6916009)(33656002)(5660300002)(64756008)(6506007)(71200400001)(76116006)(8936002)(66556008)(66476007)(6512007)(66446008)(966005);
- DIR:OUT; SFP:1102; SCL:1; SRVR:MW3PR15MB3932;
- H:MW3PR15MB3947.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
- PTR:InfoNoRecords; MX:1; A:1; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 0TbO/AyQTVkXrko1X9kEDWWQjbzw1OfsjoB7/qECy8RHnzY8DeviGC+uF8rutXPcqfcGioAWRdYGqzvoN4BrWE8iOKTZXiKru7a0TDrZuSFrD35TWLsSMdiBH5Am+mQ4Wg0oc57+qOylq97bepPa5MPb5OljEXZMyhnmHkmXT+RAgLiEVWAr/glpa1EjqST8Nqc95S16lpjMfXozbgKBtihNVmft2n8YNWcIYU5U6mqkkR+kAVPbugi1x1TlfsZ5O0kjLdbCfpOWeDy5vnyb0kCkNuOdzXJtPFfMxZQVYPQNyqmd5W7Ue0VCPQ4VHCtG85diLguellPVzOSQwloGQU7manuykq6/ku1o27LlpM6KdNPPlnsJGL5yrue2t3zIRj0YGzdFuFwwI4N7GvHBDT4FVBlW4R95W7tXuxYOMQ1SsHOdjG4tcqQXEdAFiUL3gAJJOSp2MfyhF2GGof3BsnctAZxRYgnPwJBVx+1Gx86WEdi7W42pdU0w2JJcrnWiiPL4Jb1tCM8gmpzCa5JhSg==
-x-ms-exchange-antispam-messagedata: 3vOXfhgPn5Ns8lGn7Uj9ncZ0xsMKDeaxhz8ATBl8Qd2FERy9fnOcVx4lfJFcEyL96esVPXTGRXwDqEYQ+KwJZzbwPRn3GfBu0S+V00ip7xu72597FATRgNbufuF0XFV67XYmiaFfwBZj1Dppt3YkYDu72dMCZdUhQZBdCSa6lFYpPa3WpjYrsAhEm4JMzq3h
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <EF059252887EC94A8405F25E422274B4@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48TlMd6twtzDqtj
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 09:58:53 +1100 (AEDT)
+Received: by mail-pg1-x541.google.com with SMTP id d6so2250660pgn.5
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 14:58:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=N91mHC3Bt7AbePUGl8T8wFHWJhz65RPFn9IhplJ/GvY=;
+ b=KEaE/N0kpQAwTRCZvM3p4Cmz7GmkkPV9TrtT8cAIXF/HjyMaMAGT9H4PGrRdmQEAq3
+ xZ9Jj/DeJN6aTikxNuXgLNl7Ap1C5LejfX7iGe+7yuDYKXgzbu9R1VliUNoWJVStlIKu
+ Jyxownea2G3gEcXJM807BvkUs/qQq1KOpRHU2xkWP+AYYtKEXYPUg0NPujh0MQ2O0Fpf
+ YrSfMqKpiwXsWaOsVS5+WJP3k+hCmUySkiBMwcvkCVIwxtWt+9orbGaI/z+ga8RZ6GiW
+ j/pLOQFLEmdx4b3TSlIMOvE9oYA0KjTbFqoW7C6jtf4NLZ6p7MTinhlvjjL0KztV2R+U
+ 6phg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :references:mime-version:content-disposition:in-reply-to:user-agent;
+ bh=N91mHC3Bt7AbePUGl8T8wFHWJhz65RPFn9IhplJ/GvY=;
+ b=Ls70CQnXP405deIswYtWtisqKCM/SEqlwkFZFp7t1mX+K1tv/gMy6SvWbcopTJs4bG
+ kKUYhNVq/IISwwStAXRSG3ZdsrLcBXiDbg2famT11bMU8ILD1PUjENwnNXNFGAV4cRAT
+ fckiZTImgpc7O8Quz2qJ3GWGpDu3op7prrBDEE7fJidqj6lNdYJgp/hJbV8Dh/HA+9EA
+ x3ZxNAVLIyy/LvFcusenrr0qX3XF/bTEA+EgZxmmKj09LKA4kLjNHFzt3lGXR7F1p7u9
+ vKYfBPLtHmaUEj2R7qMxo++l8IvDzvXB2OC5RdlrQnYc6fco333z+UalNLMc9TNlr2lM
+ X1Cg==
+X-Gm-Message-State: APjAAAWGYuuxSBZLmWg25S1tEs3PphdTfgX7lQA7xjaBTb8h7GydnszU
+ Sh+hvup7YNtUQ0oir2E1Gyk=
+X-Google-Smtp-Source: APXvYqxuUPtqxzs68YXsTg5WLXnpCk+Y6EghOQHc0O4lA1U30DArmWMxNqX/Ui446L8QCgBAL5C0jA==
+X-Received: by 2002:a63:f311:: with SMTP id l17mr7014444pgh.142.1582930730325; 
+ Fri, 28 Feb 2020 14:58:50 -0800 (PST)
+Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id d1sm3864667pfc.3.2020.02.28.14.58.48
+ (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+ Fri, 28 Feb 2020 14:58:49 -0800 (PST)
+Date: Fri, 28 Feb 2020 14:58:48 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Grant Peltier <grantpeltier93@gmail.com>
+Subject: Re: [PATCH] hwmon: (pmbus) Add support for 2nd Gen Renesas digital
+ multiphase
+Message-ID: <20200228225848.GA14676@roeck-us.net>
+References: <20200228212349.GA1929@raspberrypi>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5eaf8460-81bf-4640-60c5-08d7bc9c2926
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Feb 2020 22:18:38.5743 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CHgeYMeGJsjUUUzFpquGNasD+hVM6kXxQzasH9Jr1mMHYGor/axthRtylNf1bWpsugg7yDr3IlGsBI03Ky2fwA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR15MB3932
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-02-28_08:2020-02-28,
- 2020-02-28 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- suspectscore=0
- bulkscore=0 phishscore=0 malwarescore=0 adultscore=0 impostorscore=0
- priorityscore=1501 lowpriorityscore=0 mlxlogscore=865 clxscore=1015
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2002280159
-X-FB-Internal: deliver
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200228212349.GA1929@raspberrypi>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,35 +80,450 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: linux-hwmon@vger.kernel.org, zaitsev@google.com, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, adam.vaughn.xh@renesas.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQW5kcmV3LA0KSSBhbSBhYmxlIHRvIHNlZSBjb25jdXJyZW50IHNlcnZlciB3b3JraW5nLiBJ
-IGhhdmUgdG8gYWRqdXN0IG15IGJiYXBwZW5kLiANCg0KVGhhbmtzIGEgbG90IGZvciB0aGlzIHN1
-cHBvcnQuDQoNClJlZ2FyZHMNCi1WaWpheQ0KDQrvu79PbiAyLzI3LzIwLCA5OjI3IFBNLCAiQW5k
-cmV3IEplZmZlcnkiIDxhbmRyZXdAYWouaWQuYXU+IHdyb3RlOg0KDQogICAgSGkgVmlqYXksDQog
-ICAgDQogICAgT24gRnJpLCAyOCBGZWIgMjAyMCwgYXQgMTU6NDgsIFZpamF5IEtoZW1rYSB3cm90
-ZToNCiAgICA+ICANCiAgICA+IEhpIEFuZHJldywNCiAgICA+IA0KICAgID4gSSBzYXcgbmV3IG11
-bHRpIGhvc3Qgc3VwcG9ydCBpbiBvYm1jIGNvbnNvbGUuIFRoYW5rcyBmb3IgZXh0ZW5kaW5nIA0K
-ICAgID4gb2JtYy1jb25zb2xlIGZvciBtdWx0aSBob3N0IGNvbm5lY3Rpb24uDQogICAgDQogICAg
-Tm8gcHJvYmxlbXMhDQogICAgDQogICAgPiANCiAgICA+IA0KICAgID4gQ2FuIHlvdSBwbGVhc2Ug
-c2VuZCBtZSBuZXcgY2hhbmdlcyByZXF1aXJlZCBpbiBjb25maWd1cmF0aW9uIGZpbGUgYXMgd2Ug
-DQogICAgPiBhcmUgZGVmaW5pbmcgbG9jYWwtdHR5IGFuZCBiYXVkIGZvciBob3N0IGluIG91dCBj
-b25maWd1cmF0aW9uIGZpbGUgZm9yIA0KICAgID4gc2luZ2xlIGhvc3QuIFdoYXQgd291bGQgYmUg
-YSBzYW1wbGUgY29uZmlnIGZpbGUgZm9yIG11bHRpcGxlIGhvc3QgDQogICAgPiBzdXBwb3J0IGFu
-ZCBhbHNvIHdoYXQgYXJlIGNvbW1hbmQgbGluZSBvcHRpb24gd291bGQgYmUgZm9yIGNsaWVudCB0
-byANCiAgICA+IGNvbm5lY3QgdG8gcGFydGljdWxhciB0dHkuDQogICAgDQogICAgRGlkIHlvdSBz
-ZWUgbXkgcmVzcG9uc2UgaGVyZT8gSSB0aGluayBpdCBjb3ZlcnMgdGhlIGFuc3dlcnMgdG8geW91
-cg0KICAgIHF1ZXN0aW9uczoNCiAgICANCiAgICBodHRwczovL3VybGRlZmVuc2UucHJvb2Zwb2lu
-dC5jb20vdjIvdXJsP3U9aHR0cHMtM0FfX2xpc3RzLm96bGFicy5vcmdfcGlwZXJtYWlsX29wZW5i
-bWNfMjAyMC0yREZlYnJ1YXJ5XzAyMDczNi5odG1sJmQ9RHdJQkFnJmM9NVZEMFJUdE5sVGgzeWNk
-NDFiM01VdyZyPXY5TVUwS2k5cFduVFhDV3dqSFBWZ3BuQ1I4MHZYa2tjcklhcVU3VVNsNWcmbT1r
-cDhkUTNmTlNjcUJwUFI2QlFnRTJOaWlxN3NSQnFvT1BGMVN6cTgySmdFJnM9NTVSa1hmektYM0ZH
-YVpWVU0yYVhnUlRIYkRZbXlXQnlHamN6dWpublo1byZlPSANCiAgICANCiAgICBJZiBpdCBkb2Vz
-bid0IGNhbiB5b3UgcGxlYXNlIHJlc3BvbmQgaW4gdGhhdCB0aHJlYWQgYWJvdXQgd2hhdCBpcyB1
-bmNsZWFyPw0KICAgIA0KICAgIEkgZGlkIGxlYXZlIG91dCBleGFjdCBkZXRhaWxzIG9uIGhvdyB5
-b3UgbWlnaHQgaW50ZWdyYXRlIGNvbmN1cnJlbnQgc2VydmVyDQogICAgc3VwcG9ydCBpbnRvIHlv
-dXIgYml0YmFrZSByZWNpcGVzLiBJIGNhbiBwcm92aWRlIHN1Z2dlc3Rpb25zIG9uIGhvdyB0byBk
-bw0KICAgIHNvIGlmIGl0IGhlbHBzLg0KICAgIA0KICAgIENoZWVycywNCiAgICANCiAgICBBbmRy
-ZXcNCiAgICANCg0K
+On Fri, Feb 28, 2020 at 03:23:49PM -0600, Grant Peltier wrote:
+> Add a driver to support 2nd generation Renesas digital multiphase power
+> regulators. The driver is meant to support a large family of part
+> numbers spanning isl682xx, isl692xx, and some raa228/9 part designations.
+> 
+> Signed-off-by: Grant Peltier <grantpeltier93@gmail.com>
+> ---
+>  drivers/hwmon/pmbus/Kconfig    |   9 +
+>  drivers/hwmon/pmbus/Makefile   |   1 +
+>  drivers/hwmon/pmbus/isl692xx.c | 352 +++++++++++++++++++++++++++++++++
+
+One of the supported chips should be selected as driver name. There is no
+guarantee that there will never be any ISL692XX chips with different
+functionality. Besides, the name is misleading anyway since the driver
+already supports other chips besides those named isl692xx.
+
+Please provide Documentation/hwmon/isl692xx (or whatever the final name is).
+This needs to briefly explain what each of those chips actually is.
+
+There is no public information available for several of the chips listed
+in the driver. Without datasheets I can only accept support for chips
+which are by some means confirmed to actually exist.
+
+In this context, I have to admit that I _really_ dislike the secrecy
+around those chips. I have seen several instances where I accepted
+a driver which turned out to be buggy, simply because I did not have
+access to a datasheet. In some cases, even if I know that there
+may be a problem or missing support for something I can't talk
+about it it because, say, I have seen an internal driver which
+does things a bit differently and my employer didn't get permission
+to publish the driver. Yes, I understand that this is becoming
+more and more common in the industry, but that doesn't make it
+better and ultimately just hurts everyone.
+
+More comments inline.
+
+Guenter
+
+>  3 files changed, 362 insertions(+)
+>  create mode 100644 drivers/hwmon/pmbus/isl692xx.c
+> 
+> diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
+> index a9ea06204767..fbe7bbc8b37c 100644
+> --- a/drivers/hwmon/pmbus/Kconfig
+> +++ b/drivers/hwmon/pmbus/Kconfig
+> @@ -100,6 +100,15 @@ config SENSORS_ISL68137
+>  	  This driver can also be built as a module. If so, the module will
+>  	  be called isl68137.
+>  
+> +config SENSORS_ISL692XX
+> +        tristate "Renesas 2nd Gen Digital Multiphase"
+						... Power Regulators
+> +        help
+> +          If you say yes here you get hardware monitoring support for Renesas
+> +          2nd Generation Digital Multiphase power regulators.
+> +
+> +          This driver can also be built as a module. If so, the module will
+> +          be called isl692xx.
+> +
+>  config SENSORS_LM25066
+>  	tristate "National Semiconductor LM25066 and compatibles"
+>  	help
+> diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
+> index 5feb45806123..bf1ea99a6120 100644
+> --- a/drivers/hwmon/pmbus/Makefile
+> +++ b/drivers/hwmon/pmbus/Makefile
+> @@ -13,6 +13,7 @@ obj-$(CONFIG_SENSORS_IR35221)	+= ir35221.o
+>  obj-$(CONFIG_SENSORS_IR38064)	+= ir38064.o
+>  obj-$(CONFIG_SENSORS_IRPS5401)	+= irps5401.o
+>  obj-$(CONFIG_SENSORS_ISL68137)	+= isl68137.o
+> +obj-$(CONFIG_SENSORS_ISL692XX)	+= isl692xx.o
+>  obj-$(CONFIG_SENSORS_LM25066)	+= lm25066.o
+>  obj-$(CONFIG_SENSORS_LTC2978)	+= ltc2978.o
+>  obj-$(CONFIG_SENSORS_LTC3815)	+= ltc3815.o
+> diff --git a/drivers/hwmon/pmbus/isl692xx.c b/drivers/hwmon/pmbus/isl692xx.c
+> new file mode 100644
+> index 000000000000..26f3d90a7ddc
+> --- /dev/null
+> +++ b/drivers/hwmon/pmbus/isl692xx.c
+> @@ -0,0 +1,352 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * Hardware monitoring driver for Renesas Gen 2 Digital Multiphase Devices
+> + *
+> + * Copyright (c) 2020 Renesas Electronics America
+> + */
+> +
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/init.h>
+> +#include <linux/err.h>
+> +#include <linux/i2c.h>
+> +
+Alphabetic order please
+
+> +#include "pmbus.h"
+> +
+> +#define ISL692XX_READ_VMON        0xc8
+> +
+> +enum parts {
+> +        isl68220,
+> +        isl68221,
+> +        isl68222,
+> +        isl68223,
+> +        isl68224,
+> +        isl68225,
+> +        isl68226,
+> +        isl68227,
+> +        isl68229,
+> +        isl68233,
+> +        isl68239,
+> +        isl69222,
+> +        isl69223,
+> +        isl69224,
+> +        isl69225,
+> +        isl69227,
+> +        isl69228,
+> +        isl69234,
+> +        isl69236,
+> +        isl69239,
+> +        isl69242,
+> +        isl69243,
+> +        isl69247,
+> +        isl69248,
+> +        isl69254,
+> +        isl69255,
+> +        isl69256,
+> +        isl69259,
+> +        isl69260,
+> +        isl69268,
+> +        isl69269,
+> +        isl69298,
+> +        raa228000,
+> +        raa228004,
+> +        raa228006,
+> +        raa228228,
+> +        raa229001,
+> +        raa229004,
+> +};
+> +
+> +enum rail_configs { high_voltage, one_rail, two_rail, three_rail };
+> +
+> +static const struct  i2c_device_id isl692xx_id[] = {
+> +        { "isl68220", isl68220 },
+> +        { "isl68221", isl68221 },
+> +        { "isl68222", isl68222 },
+> +        { "isl68223", isl68223 },
+> +        { "isl68224", isl68224 },
+> +        { "isl68225", isl68225 },
+> +        { "isl68226", isl68226 },
+> +        { "isl68227", isl68227 },
+> +        { "isl68229", isl68229 },
+> +        { "isl68233", isl68233 },
+> +        { "isl68239", isl68239 },
+> +        { "isl69222", isl69222 },
+> +        { "isl69223", isl69223 },
+> +        { "isl69224", isl69224 },
+> +        { "isl69225", isl69225 },
+> +        { "isl69227", isl69227 },
+> +        { "isl69228", isl69228 },
+> +        { "isl69234", isl69234 },
+> +        { "isl69236", isl69236 },
+> +        { "isl69239", isl69239 },
+> +        { "isl69242", isl69242 },
+> +        { "isl69243", isl69243 },
+> +        { "isl69247", isl69247 },
+> +        { "isl69248", isl69248 },
+> +        { "isl69254", isl69254 },
+> +        { "isl69255", isl69255 },
+> +        { "isl69256", isl69256 },
+> +        { "isl69259", isl69259 },
+> +        { "isl69260", isl69260 },
+> +        { "isl69268", isl69268 },
+> +        { "isl69269", isl69269 },
+> +        { "isl69298", isl69298 },
+> +        { "raa228000", raa228000 },
+> +        { "raa228004", raa228004 },
+> +        { "raa228006", raa228006 },
+> +        { "raa228228", raa228228 },
+> +        { "raa229001", raa229001 },
+> +        { "raa229004", raa229004 },
+
+It would be much simpler to just specify high_voltage, one_rail, two_rail,
+and three_rail as parameters. I don't see value in the code translating
+chip types to enum rail_configs (nor in enum parts).
+
+> +        { },
+> +};
+> +
+> +MODULE_DEVICE_TABLE(i2c, isl692xx_id);
+> +
+> +static int isl692xx_read_word_data(struct i2c_client *client, int page, int reg)
+> +{
+> +        int ret;
+> +
+> +        switch (reg) {
+> +        case PMBUS_VIRT_READ_VMON:
+> +                ret = pmbus_read_word_data(client, page, ISL692XX_READ_VMON);
+> +                break;
+> +        default:
+> +                ret = -ENODATA;
+> +                break;
+> +        }
+> +        
+> +        return ret;
+> +}
+> +
+> +static struct pmbus_driver_info isl692xx_info[] = {
+> +        [high_voltage] = {
+> +                .pages = 1,
+> +                .format[PSC_VOLTAGE_IN] = direct,
+> +                .format[PSC_VOLTAGE_OUT] = direct,
+> +                .format[PSC_CURRENT_IN] = direct,
+> +                .format[PSC_CURRENT_OUT] = direct,
+> +                .format[PSC_POWER] = direct,
+> +                .format[PSC_TEMPERATURE] = direct,
+> +                .m[PSC_VOLTAGE_IN] = 1,
+> +                .b[PSC_VOLTAGE_IN] = 0,
+> +                .R[PSC_VOLTAGE_IN] = 1,
+> +                .m[PSC_VOLTAGE_OUT] = 2,
+> +                .b[PSC_VOLTAGE_OUT] = 0,
+> +                .R[PSC_VOLTAGE_OUT] = 2,
+> +                .m[PSC_CURRENT_IN] = 2,
+> +                .b[PSC_CURRENT_IN] = 0,
+> +                .R[PSC_CURRENT_IN] = 2,
+> +                .m[PSC_CURRENT_OUT] = 1,
+> +                .b[PSC_CURRENT_OUT] = 0,
+> +                .R[PSC_CURRENT_OUT] = 1,
+> +                .m[PSC_POWER] = 2,
+> +                .b[PSC_POWER] = 0,
+> +                .R[PSC_POWER] = -1,
+> +                .m[PSC_TEMPERATURE] = 1,
+> +                .b[PSC_TEMPERATURE] = 0,
+> +                .R[PSC_TEMPERATURE] = 0,
+> +                .func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .read_word_data = isl692xx_read_word_data,
+> +        },
+> +        [one_rail] = {
+> +                .pages = 1,
+> +                .format[PSC_VOLTAGE_IN] = direct,
+> +                .format[PSC_VOLTAGE_OUT] = direct,
+> +                .format[PSC_CURRENT_IN] = direct,
+> +                .format[PSC_CURRENT_OUT] = direct,
+> +                .format[PSC_POWER] = direct,
+> +                .format[PSC_TEMPERATURE] = direct,
+> +                .m[PSC_VOLTAGE_IN] = 1,
+> +                .b[PSC_VOLTAGE_IN] = 0,
+> +                .R[PSC_VOLTAGE_IN] = 2,
+> +                .m[PSC_VOLTAGE_OUT] = 1,
+> +                .b[PSC_VOLTAGE_OUT] = 0,
+> +                .R[PSC_VOLTAGE_OUT] = 3,
+> +                .m[PSC_CURRENT_IN] = 1,
+> +                .b[PSC_CURRENT_IN] = 0,
+> +                .R[PSC_CURRENT_IN] = 2,
+> +                .m[PSC_CURRENT_OUT] = 1,
+> +                .b[PSC_CURRENT_OUT] = 0,
+> +                .R[PSC_CURRENT_OUT] = 1,
+> +                .m[PSC_POWER] = 1,
+> +                .b[PSC_POWER] = 0,
+> +                .R[PSC_POWER] = 0,
+> +                .m[PSC_TEMPERATURE] = 1,
+> +                .b[PSC_TEMPERATURE] = 0,
+> +                .R[PSC_TEMPERATURE] = 0,
+> +                .func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .read_word_data = isl692xx_read_word_data,
+> +        },
+> +        [two_rail] = {
+> +                .pages = 2,
+> +                .format[PSC_VOLTAGE_IN] = direct,
+> +                .format[PSC_VOLTAGE_OUT] = direct,
+> +                .format[PSC_CURRENT_IN] = direct,
+> +                .format[PSC_CURRENT_OUT] = direct,
+> +                .format[PSC_POWER] = direct,
+> +                .format[PSC_TEMPERATURE] = direct,
+> +                .m[PSC_VOLTAGE_IN] = 1,
+> +                .b[PSC_VOLTAGE_IN] = 0,
+> +                .R[PSC_VOLTAGE_IN] = 2,
+> +                .m[PSC_VOLTAGE_OUT] = 1,
+> +                .b[PSC_VOLTAGE_OUT] = 0,
+> +                .R[PSC_VOLTAGE_OUT] = 3,
+> +                .m[PSC_CURRENT_IN] = 1,
+> +                .b[PSC_CURRENT_IN] = 0,
+> +                .R[PSC_CURRENT_IN] = 2,
+> +                .m[PSC_CURRENT_OUT] = 1,
+> +                .b[PSC_CURRENT_OUT] = 0,
+> +                .R[PSC_CURRENT_OUT] = 1,
+> +                .m[PSC_POWER] = 1,
+> +                .b[PSC_POWER] = 0,
+> +                .R[PSC_POWER] = 0,
+> +                .m[PSC_TEMPERATURE] = 1,
+> +                .b[PSC_TEMPERATURE] = 0,
+> +                .R[PSC_TEMPERATURE] = 0,
+> +                .func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .func[1] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .read_word_data = isl692xx_read_word_data,
+> +        },
+> +        [three_rail] = {
+> +                .pages = 3,
+> +                .format[PSC_VOLTAGE_IN] = direct,
+> +                .format[PSC_VOLTAGE_OUT] = direct,
+> +                .format[PSC_CURRENT_IN] = direct,
+> +                .format[PSC_CURRENT_OUT] = direct,
+> +                .format[PSC_POWER] = direct,
+> +                .format[PSC_TEMPERATURE] = direct,
+> +                .m[PSC_VOLTAGE_IN] = 1,
+> +                .b[PSC_VOLTAGE_IN] = 0,
+> +                .R[PSC_VOLTAGE_IN] = 2,
+> +                .m[PSC_VOLTAGE_OUT] = 1,
+> +                .b[PSC_VOLTAGE_OUT] = 0,
+> +                .R[PSC_VOLTAGE_OUT] = 3,
+> +                .m[PSC_CURRENT_IN] = 1,
+> +                .b[PSC_CURRENT_IN] = 0,
+> +                .R[PSC_CURRENT_IN] = 2,
+> +                .m[PSC_CURRENT_OUT] = 1,
+> +                .b[PSC_CURRENT_OUT] = 0,
+> +                .R[PSC_CURRENT_OUT] = 1,
+> +                .m[PSC_POWER] = 1,
+> +                .b[PSC_POWER] = 0,
+> +                .R[PSC_POWER] = 0,
+> +                .m[PSC_TEMPERATURE] = 1,
+> +                .b[PSC_TEMPERATURE] = 0,
+> +                .R[PSC_TEMPERATURE] = 0,
+> +                .func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .func[1] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .func[2] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_IIN |
+> +                        PMBUS_HAVE_IOUT | PMBUS_HAVE_PIN | PMBUS_HAVE_POUT |
+> +                        PMBUS_HAVE_TEMP | PMBUS_HAVE_TEMP2 | PMBUS_HAVE_TEMP3 |
+> +                        PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_STATUS_IOUT |
+> +                        PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP |
+> +                        PMBUS_HAVE_VMON,
+> +                .read_word_data = isl692xx_read_word_data,
+> +        },
+> +};
+> +
+> +static int isl692xx_probe(struct i2c_client *client,
+> +                          const struct i2c_device_id *id)
+> +{
+> +        int ret;
+> +
+> +        switch (id->driver_data) {
+> +        case raa228000:
+> +        case raa228004:
+> +        case raa228006:
+> +                ret = pmbus_do_probe(client, id, &isl692xx_info[high_voltage]);
+> +                break;
+> +        case isl68227:
+> +        case isl69243:
+> +                ret = pmbus_do_probe(client, id, &isl692xx_info[one_rail]);
+> +                break;
+> +        case isl68220:
+> +        case isl68222:
+> +        case isl68223:
+> +        case isl68225:
+> +        case isl68233:
+> +        case isl69222:
+> +        case isl69224:
+> +        case isl69225:
+> +        case isl69234:
+> +        case isl69236:
+> +        case isl69242:
+> +        case isl69247:
+> +        case isl69248:
+> +        case isl69254:
+> +        case isl69255:
+> +        case isl69256:
+> +        case isl69259:
+> +        case isl69260:
+> +        case isl69268:
+> +        case isl69298:
+> +        case raa228228:
+> +        case raa229001:
+> +        case raa229004:
+> +                ret = pmbus_do_probe(client, id, &isl692xx_info[two_rail]);
+> +                break;
+> +        case isl68221:
+> +        case isl68224:
+> +        case isl68226:
+> +        case isl68229:
+> +        case isl68239:
+> +        case isl69223:
+> +        case isl69227:
+> +        case isl69228:
+> +        case isl69239:
+> +        case isl69269:
+> +                ret = pmbus_do_probe(client, id, &isl692xx_info[three_rail]);
+> +                break;
+> +        default:
+> +                ret = -ENODEV;
+> +        }
+> +
+> +        return ret;
+> +}
+> +
+> +static struct i2c_driver isl692xx_driver = {
+> +        .driver = {
+> +                .name = "isl692xx",
+> +        },
+> +        .probe = isl692xx_probe,
+> +        .remove = pmbus_do_remove,
+> +        .id_table = isl692xx_id,
+> +};
+> +
+> +module_i2c_driver(isl692xx_driver);
+> +
+> +MODULE_AUTHOR("Grant Peltier");
+> +MODULE_DESCRIPTION("PMBus driver for 2nd Gen Renesas digital multiphase "
+> +                   "devices");
+> +MODULE_LICENSE("GPL");
+> +
+> -- 
+> 2.20.1
+> 
