@@ -2,69 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 347D7174463
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 02:56:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5925D174810
+	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 17:31:39 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48TqJc4XKvzDrND
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 12:56:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48VBkG1lDbzDqc3
+	for <lists+openbmc@lfdr.de>; Sun,  1 Mar 2020 03:31:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
- helo=mail-pg1-x542.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
+ helo=mail-pj1-x1042.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=LufvHVTS; dkim-atps=neutral
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [IPv6:2607:f8b0:4864:20::542])
+ header.s=20161025 header.b=W08zDKBW; dkim-atps=neutral
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
+ [IPv6:2607:f8b0:4864:20::1042])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48TqHr3jW3zDrMs
- for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 12:55:49 +1100 (AEDT)
-Received: by mail-pg1-x542.google.com with SMTP id y30so2398101pga.13
- for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 17:55:49 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48VBhj4K08zDqc3
+ for <openbmc@lists.ozlabs.org>; Sun,  1 Mar 2020 03:30:11 +1100 (AEDT)
+Received: by mail-pj1-x1042.google.com with SMTP id 12so2583319pjb.5
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 08:30:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:subject:to:cc:references:from:autocrypt:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
- bh=i7Lymz3/UG6p46gG34Fh3vPe/udGkZ9zfaHdLppHN94=;
- b=LufvHVTSOlh0C3/3G14NtjXvq7M+N6HMy7772o1pa7nHRbTNz2WxZX7biXsHow6Qxs
- kacX9TlgaGCG84qkqsCMb027hADZ+ByoB0DLff3O0Jgq3L4e/FPvWli2XnNltrEAFgjy
- u1uumTOLL8yaPHVhyQWI6/bYZZhRl0te5ol0hg3uyvW/MzkETyUC+hJ5dEYgZJLr1lcG
- wEPToThI6+YimypW3Tp9Dx7EPzoOEwiHhLPsTYJKqNa7OY6jfe+mJ0znjEEda68z98pq
- jL9GnTIhjVQ7k36rG42haSgoIadRGf8kq5NboseVJjnGhbMyq6cKwCEeaa/XHyR0G124
- sM5A==
+ bh=MzYPFcgLq98qx0Z9hEcgZDgTUNyNkA7Y3So+hkWUqj4=;
+ b=W08zDKBWopWkisfBh9+8MXXzG4TFeqI3ap6x+j7OqODYer7ZMmk1nDE/PZkA2CwFFI
+ 2o3yk7In+hUvKLjDEY6R17lnn6TOq2su4w2xHVefsoz5Kj5MtbZwFltSF539Zi/4gHMp
+ KVIpR0n/Zvd1wv0J2ztnxDlMGdmal1VSd+laRh/XsLILEuHNdM/1Mer0qUzQpx9uzXXM
+ f343ATlqOpAg7yzwddzGu8lw7WVIMWv0Q10VGFj23QjPugII8fUhlORkuUw10ok5mMSr
+ 0XDrfLxwUt2oDMoHipCX6sZIEOeXHk2DLgrjzsATVb1DyPUE7ieX52LSLHdfSO78hm16
+ LGaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
  :message-id:date:user-agent:mime-version:in-reply-to
  :content-language:content-transfer-encoding;
- bh=i7Lymz3/UG6p46gG34Fh3vPe/udGkZ9zfaHdLppHN94=;
- b=luWn6OouMidLKzwe0VvNXQN5SNKhxS2W71f8srYFscHYXL14VqQW7PC8H34RhAPedj
- DEgFtBHG8Bj7l6EecVoqB/4rZN9Pe7M0OEiIC9x3strOLb6r24bYJioXHKAZXBbTjG3A
- 4X6Y/4PnqpRwaajeyjFBRYBtg0pjBpKbq8lJ3i3+qHcZQ0a2sM5qvLHQbwkkBjv5/K8v
- jFfV+rrK8C12v4p1I+t2jXIXuK5ouA1DjfLuLH2JucSEP+9+K7B+DfhO/KY/+yBF4TXZ
- PGfP2IS2JhK5QXUb1int4Dy7QYJ4fH1zoclE0z03LYGQjeQoZbNh/K+drkTHhAVwnxIg
- zIiA==
-X-Gm-Message-State: APjAAAWLgklK74wjrjerOCRtHxl+/XeZ6u7X5BmsXFKAhgbRjmfErtkP
- Xgj11SiCG7xta4mej4eH5Mg=
-X-Google-Smtp-Source: APXvYqy+ME+nd+WvS73ec3iljk4A+ibK5fhKwZcOrWCrz9abadzyBIen6SE11Wxu1bz2WP5ZBIAM2w==
-X-Received: by 2002:a62:1c11:: with SMTP id c17mr7196816pfc.192.1582941346414; 
- Fri, 28 Feb 2020 17:55:46 -0800 (PST)
+ bh=MzYPFcgLq98qx0Z9hEcgZDgTUNyNkA7Y3So+hkWUqj4=;
+ b=jMoxNEVrOJ+e/sRsImZnDcjLuXRaER1UgPFmmLUhX5Q4hpqZevMhVH8ZzuG69XPdq8
+ bTuK2IEhioogP/Jx65gf0V3r12W6+ophl9RhppG4YviMSrSADWrU0BmMY/q1GeaSsnrk
+ istXxycH2eMgxpnz030+xFGVSdx663BsQnqsFKZ18H+iIWjNo164i9WEAIHHylQTaDto
+ dZUgd1AXLz+1hYW50cWRRTnKfW4Nk63e3KoVsYaraYz3vpPkZuz6q58iq7g+nWH052QD
+ M8gDrSRDCLoDT1pyNrEhNjA8lPZ3IcMWTQxDpABtjmI9uGy7OtNguQDkjYsjOyaohFh5
+ 4i1g==
+X-Gm-Message-State: APjAAAVG0QpeJ/I7SYUxlzGZfit8jhGRlXkX8oqOIQpOqihlkIRIgodA
+ KjjzUZpFjGaK2EOqB8Zx4zo=
+X-Google-Smtp-Source: APXvYqwH3/MvTsLJABz5hBjbxh/e6fy0ABMBgwcW3rBgOU4donrmGEli7Yr+5Uct4YenU6GT1ry+Uw==
+X-Received: by 2002:a17:902:302:: with SMTP id 2mr9813854pld.58.1582993807856; 
+ Sat, 29 Feb 2020 08:30:07 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- r10sm8993909pgv.25.2020.02.28.17.55.44
+ 7sm3512986pfg.12.2020.02.29.08.30.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Feb 2020 17:55:45 -0800 (PST)
+ Sat, 29 Feb 2020 08:30:06 -0800 (PST)
 Subject: Re: [PATCH] hwmon: (pmbus) Add support for 2nd Gen Renesas digital
  multiphase
 To: Grant Peltier <grantpeltier93@gmail.com>
 References: <20200228212349.GA1929@raspberrypi>
  <20200228225848.GA14676@roeck-us.net> <20200228235206.GA3468@raspberrypi>
+ <1a456016-682a-2d53-767b-fe09784883ef@roeck-us.net>
+ <20200229154839.GA8048@grant-ubuntu>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -109,12 +111,12 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <1a456016-682a-2d53-767b-fe09784883ef@roeck-us.net>
-Date: Fri, 28 Feb 2020 17:55:44 -0800
+Message-ID: <a174f532-0595-30b9-b9af-04e67bb9be20@roeck-us.net>
+Date: Sat, 29 Feb 2020 08:30:05 -0800
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <20200228235206.GA3468@raspberrypi>
+In-Reply-To: <20200229154839.GA8048@grant-ubuntu>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -134,39 +136,101 @@ Cc: linux-hwmon@vger.kernel.org, zaitsev@google.com, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/28/20 3:52 PM, Grant Peltier wrote:
-> Hi Guenter,
+On 2/29/20 7:48 AM, Grant Peltier wrote:
+> On Fri, Feb 28, 2020 at 05:55:44PM -0800, Guenter Roeck wrote:
+>> On 2/28/20 3:52 PM, Grant Peltier wrote:
+>>> Hi Guenter,
+>>>
+>>> Thank you for your expedient review. I will need to consult with my
+>>> coworkers to determine a more appropriate driver name. In the meantime I
+>>> will make the desired changes and I will also create a document for the
+>>> driver, which I will submit as a linked but separate patch.
+>>>
+>>> With regard to the part numbers, this family of parts is currently in
+>>> the process of being released and we have not yet published all of the
+>>> corresponding datasheets. However, I have been assured that all of the
+>>> parts listed are slated to have a datasheet published publicly in the near
+>>> future.
+>>>
+>> That would be great.
+>>
+>> As for the driver name, I had a look into drivers/hwmon/pmbus/isl68137.c,
+>> and I don't immediately see why the new chips would warrant a new driver.
+>> The only differences seem to be that VMON is a new command, and of course
+>> only the ISL68137 supports AVL. But then there is, for example, ISL68127,
+>> which is again quite similar. The only other difference as far as I can
+>> see is input voltage scaling, but that doesn't warrant a separate driver
+>> (and, of course, I have no means to validate if input voltage scaling
+>> is indeed different for all the new chips).
+>>
+>> Overall I would suggest to extend the isl68137 driver. I would also
+>> suggest to not add separate tables for each of the rail configurations
+>> but use the three-phase entry as starting point, copy it, and adjust its
+>> values as needed.
+>>
+>> For the multi-phase chips, I question if reporting the input voltage
+>> for each phase make sense. Is it really a different voltage ? For IIN
+>> and PIN, the question is if the registers are indeed paged, since they
+>> are not paged in the older chips.
+>>
+>> Guenter
 > 
-> Thank you for your expedient review. I will need to consult with my
-> coworkers to determine a more appropriate driver name. In the meantime I
-> will make the desired changes and I will also create a document for the
-> driver, which I will submit as a linked but separate patch.
+> The ISL68137 is part of the first generation of our digital multiphase
+> parts which are all exclusively 2-rail (2-page) devices. There are a
+> couple of reasons that we are opting for a new driver for the new
+> generation of devices:
 > 
-> With regard to the part numbers, this family of parts is currently in
-> the process of being released and we have not yet published all of the
-> corresponding datasheets. However, I have been assured that all of the
-> parts listed are slated to have a datasheet published publicly in the near
-> future.
+> 1) Gen 2 has multiple rail configurations (1, 2, or 3) with different scaling
+> parameters than Gen 1
+
+That would only mean a single additional entry for the Gen1 devices.
+This is not a valid argument for a separate driver, especially since
+the difference in scaling only affects a single parameter as far as I
+can see.
+
+> 2) We are planning to support some of the non-generic PMBus functions of
+> the Gen 2 devices using the debugfs interface.
 > 
-That would be great.
+This is not a valid argument either. We have, for example, a single driver
+for all Linear chips, even though they have quite some difference across
+individual chips. The above can simply be solved by not instantiating
+debugfs for Gen1 devices, and marking VMON as supported for Gen2 devices
+only. If the Gen1 devices are all pretty much the same, you'd only need
+a single additional table entry for those in the driver (if you insist
+using a table).
 
-As for the driver name, I had a look into drivers/hwmon/pmbus/isl68137.c,
-and I don't immediately see why the new chips would warrant a new driver.
-The only differences seem to be that VMON is a new command, and of course
-only the ISL68137 supports AVL. But then there is, for example, ISL68127,
-which is again quite similar. The only other difference as far as I can
-see is input voltage scaling, but that doesn't warrant a separate driver
-(and, of course, I have no means to validate if input voltage scaling
-is indeed different for all the new chips).
+For the debugfs functions, please keep in mind that those will have to be
+documented in a way that lets people without access to datasheets
+understand what they are for. We can't have cryptic debugfs functions
+which, if misused, blow up the chip.
 
-Overall I would suggest to extend the isl68137 driver. I would also
-suggest to not add separate tables for each of the rail configurations
-but use the three-phase entry as starting point, copy it, and adjust its
-values as needed.
+> I am currently working on point 2 and those features are not
+> quite ready to be included in a patch set but we wanted to move forward
+> with the hwmon functionality for now as that is useful on it's own.
+> 
+> Fair point on the global vs paged commands. I will modify the page
+> functions so that global commands are only read from page 0.
+> 
 
-For the multi-phase chips, I question if reporting the input voltage
-for each phase make sense. Is it really a different voltage ? For IIN
-and PIN, the question is if the registers are indeed paged, since they
-are not paged in the older chips.
+Also a fair point showing that not having the datasheet hurts. I see the same
+problem with recent TI devices. In some cases I _know_ that a driver is buggy
+or much less than perfect, because I have access to a datasheet through
+my employer, but I can't talk about it because what I know is under NDA.
+Then I end up spending a lot of time trying to find leaks that let me comment.
+I am _not_ happy about this situation, not at all.
 
+Please understand that I won't accept a driver adding support for a chip
+if there is no public information available that the chip exists in the
+first place. Imagine a situation where you are requesting to add support
+for a chip, and that chip isn't mentioned anywhere, not even in a datasheet
+I (hypothetically) may have access to through my employer. How would _you_
+handle such a situation if you were in my place ?
+
+You could of course send me all the datasheets under NDA to my work e-mail,
+but that wouldn't really be much better since I still would not be able to
+comment in public. On the other side, I'd have at least some confirmation
+that those magic chips do indeed exist, so you might possibly want to
+consider that.
+
+Thanks,
 Guenter
