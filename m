@@ -2,56 +2,122 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98664174443
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 02:44:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 347D7174463
+	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 02:56:35 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Tq356DlbzDrMv
-	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 12:44:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48TqJc4XKvzDrND
+	for <lists+openbmc@lfdr.de>; Sat, 29 Feb 2020 12:56:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
+ helo=mail-pg1-x542.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.84; helo=m13-84.163.com;
- envelope-from=ouyangxuan10@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=oW2lCu/a; dkim-atps=neutral
-Received: from m13-84.163.com (m13-84.163.com [220.181.13.84])
- (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=LufvHVTS; dkim-atps=neutral
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Tq2K388fzDrM9
- for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 12:44:02 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=5L/D7
- JqPLWmLxI9D1/vipxDxc9RX1uFRTZZ5eUr6eMQ=; b=oW2lCu/aRIC9sv3n0awhR
- 9YfmrfNvynB4wVcyI/EcE+I4jrPnyzFkzrH+u9Vf/2xF+2SwLvh3SFXJDOpySkp6
- nrEONlzbRraJ26vFdjqMy7Vq/mr3CuQ6xa8eEoXE0DtsoAfWVl44rn5vgm/AvAUp
- UPbAmf6xa8JCEuC4yOA2ic=
-Received: from ouyangxuan10$163.com ( [222.128.178.231] ) by
- ajax-webmail-wmsvr84 (Coremail) ; Sat, 29 Feb 2020 09:43:54 +0800 (CST)
-X-Originating-IP: [222.128.178.231]
-Date: Sat, 29 Feb 2020 09:43:54 +0800 (CST)
-From: www  <ouyangxuan10@163.com>
-To: "Vijay Khemka" <vijaykhemka@fb.com>
-Subject: Re:Re: [OpenBMC]: How to get the update progress when flashing BMC
- firmware?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 163com
-In-Reply-To: <9B1332BB-7D2B-4BB9-9EE0-1EC1D5FD1E8A@fb.com>
-References: <2042ec12.4c6e.1708abdbe56.Coremail.ouyangxuan10@163.com>
- <9B1332BB-7D2B-4BB9-9EE0-1EC1D5FD1E8A@fb.com>
-X-CM-CTRLDATA: aw9VEGZvb3Rlcl9odG09Mjc1Njo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_13139_1192797724.1582940634144"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48TqHr3jW3zDrMs
+ for <openbmc@lists.ozlabs.org>; Sat, 29 Feb 2020 12:55:49 +1100 (AEDT)
+Received: by mail-pg1-x542.google.com with SMTP id y30so2398101pga.13
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Feb 2020 17:55:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:subject:to:cc:references:from:autocrypt:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=i7Lymz3/UG6p46gG34Fh3vPe/udGkZ9zfaHdLppHN94=;
+ b=LufvHVTSOlh0C3/3G14NtjXvq7M+N6HMy7772o1pa7nHRbTNz2WxZX7biXsHow6Qxs
+ kacX9TlgaGCG84qkqsCMb027hADZ+ByoB0DLff3O0Jgq3L4e/FPvWli2XnNltrEAFgjy
+ u1uumTOLL8yaPHVhyQWI6/bYZZhRl0te5ol0hg3uyvW/MzkETyUC+hJ5dEYgZJLr1lcG
+ wEPToThI6+YimypW3Tp9Dx7EPzoOEwiHhLPsTYJKqNa7OY6jfe+mJ0znjEEda68z98pq
+ jL9GnTIhjVQ7k36rG42haSgoIadRGf8kq5NboseVJjnGhbMyq6cKwCEeaa/XHyR0G124
+ sM5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-language:content-transfer-encoding;
+ bh=i7Lymz3/UG6p46gG34Fh3vPe/udGkZ9zfaHdLppHN94=;
+ b=luWn6OouMidLKzwe0VvNXQN5SNKhxS2W71f8srYFscHYXL14VqQW7PC8H34RhAPedj
+ DEgFtBHG8Bj7l6EecVoqB/4rZN9Pe7M0OEiIC9x3strOLb6r24bYJioXHKAZXBbTjG3A
+ 4X6Y/4PnqpRwaajeyjFBRYBtg0pjBpKbq8lJ3i3+qHcZQ0a2sM5qvLHQbwkkBjv5/K8v
+ jFfV+rrK8C12v4p1I+t2jXIXuK5ouA1DjfLuLH2JucSEP+9+K7B+DfhO/KY/+yBF4TXZ
+ PGfP2IS2JhK5QXUb1int4Dy7QYJ4fH1zoclE0z03LYGQjeQoZbNh/K+drkTHhAVwnxIg
+ zIiA==
+X-Gm-Message-State: APjAAAWLgklK74wjrjerOCRtHxl+/XeZ6u7X5BmsXFKAhgbRjmfErtkP
+ Xgj11SiCG7xta4mej4eH5Mg=
+X-Google-Smtp-Source: APXvYqy+ME+nd+WvS73ec3iljk4A+ibK5fhKwZcOrWCrz9abadzyBIen6SE11Wxu1bz2WP5ZBIAM2w==
+X-Received: by 2002:a62:1c11:: with SMTP id c17mr7196816pfc.192.1582941346414; 
+ Fri, 28 Feb 2020 17:55:46 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ r10sm8993909pgv.25.2020.02.28.17.55.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Feb 2020 17:55:45 -0800 (PST)
+Subject: Re: [PATCH] hwmon: (pmbus) Add support for 2nd Gen Renesas digital
+ multiphase
+To: Grant Peltier <grantpeltier93@gmail.com>
+References: <20200228212349.GA1929@raspberrypi>
+ <20200228225848.GA14676@roeck-us.net> <20200228235206.GA3468@raspberrypi>
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+Message-ID: <1a456016-682a-2d53-767b-fe09784883ef@roeck-us.net>
+Date: Fri, 28 Feb 2020 17:55:44 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Message-ID: <d366164.d52.1708e9d3c20.Coremail.ouyangxuan10@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: VMGowABnhY3awVleCEeFAQ--.5308W
-X-CM-SenderInfo: prx1t0pj0xt0irq6il2tof0z/1tbiWRLX2lWBpXKrxQACsp
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+In-Reply-To: <20200228235206.GA3468@raspberrypi>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,81 +129,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: linux-hwmon@vger.kernel.org, zaitsev@google.com, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, adam.vaughn.xh@renesas.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_13139_1192797724.1582940634144
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+On 2/28/20 3:52 PM, Grant Peltier wrote:
+> Hi Guenter,
+> 
+> Thank you for your expedient review. I will need to consult with my
+> coworkers to determine a more appropriate driver name. In the meantime I
+> will make the desired changes and I will also create a document for the
+> driver, which I will submit as a linked but separate patch.
+> 
+> With regard to the part numbers, this family of parts is currently in
+> the process of being released and we have not yet published all of the
+> corresponding datasheets. However, I have been assured that all of the
+> parts listed are slated to have a datasheet published publicly in the near
+> future.
+> 
+That would be great.
 
-eWVzLCBJIGp1c3Qgd2FudCB0byB0ZWxsIHRoZSB1c2VyIHRoZSBwcm9ncmVzcyBvZiB0aGUgdXBk
-YXRlIGFuZCB3aGV0aGVyIHRoZSB1cGRhdGUgaXMgY29tcGxldGUuCgoKdGhhbmtzLApCeXJvbgoK
-CgoKCgoKCgpBdCAyMDIwLTAyLTI5IDAxOjMwOjAxLCAiVmlqYXkgS2hlbWthIiA8dmlqYXlraGVt
-a2FAZmIuY29tPiB3cm90ZToKCkkgZG9uoa90IHRoaW5rIHRoZXJlIGlzIG11Y2ggdG8gc2hvdyBh
-cyBwcm9ncmVzcyB3aGVuIGJtYyB1cGdyYWRlIGhhcHBlbnMuIEJlY2F1c2UgYWN0dWFsIGZsYXNo
-IHdyaXRlIGhhcHBlbnMgZHVyaW5nIHJlYm9vdCBhbmQgdGhhdCB0aW1lIGV2ZXJ5IG90aGVyIHBy
-b2Nlc3Mgd291bGQgYmUgZG93biBJIGd1ZXNzLgoKIAoKRnJvbTogb3BlbmJtYyA8b3BlbmJtYy1i
-b3VuY2VzK3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnPiBvbiBiZWhhbGYgb2Yg
-d3d3IDxvdXlhbmd4dWFuMTBAMTYzLmNvbT4KRGF0ZTogVGh1cnNkYXksIEZlYnJ1YXJ5IDI3LCAy
-MDIwIGF0IDExOjU3IFBNClRvOiAib3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIiA8b3BlbmJtY0Bs
-aXN0cy5vemxhYnMub3JnPgpTdWJqZWN0OiBbT3BlbkJNQ106IEhvdyB0byBnZXQgdGhlIHVwZGF0
-ZSBwcm9ncmVzcyB3aGVuIGZsYXNoaW5nIEJNQyBmaXJtd2FyZT8KCiAKCmhpo6wKCiAKCkhvdyB0
-byBnZXQgdGhlIHVwZGF0ZSBwcm9ncmVzcyB3aGVuIEJNQyBpcyBmbGFzaGluZy4gSXQgY2FuIGJl
-IGRpc3BsYXllZCBvbiB3ZWJ1aS4KCiAKCnRoYW5rcywKCkJ5cm9uCgoKCgoKCiA=
-------=_Part_13139_1192797724.1582940634144
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+As for the driver name, I had a look into drivers/hwmon/pmbus/isl68137.c,
+and I don't immediately see why the new chips would warrant a new driver.
+The only differences seem to be that VMON is a new command, and of course
+only the ISL68137 supports AVL. But then there is, for example, ISL68127,
+which is again quite similar. The only other difference as far as I can
+see is input voltage scaling, but that doesn't warrant a separate driver
+(and, of course, I have no means to validate if input voltage scaling
+is indeed different for all the new chips).
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+eWVzLCZuYnNwO0kganVzdCB3YW50IHRvIHRlbGwgdGhl
-IHVzZXIgdGhlIHByb2dyZXNzIG9mIHRoZSB1cGRhdGUgYW5kIHdoZXRoZXIgdGhlIHVwZGF0ZSBp
-cyBjb21wbGV0ZS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PnRoYW5rcyw8L2Rpdj48ZGl2PkJ5
-cm9uPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-diBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48L2Rpdj48ZGl2IGlkPSJkaXZOZXRl
-YXNlTWFpbENhcmQiPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxwPkF0IDIwMjAtMDItMjkgMDE6MzA6
-MDEsICJWaWpheSBLaGVta2EiICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7IHdyb3RlOjwvcD48
-YmxvY2txdW90ZSBpZD0iaXNSZXBseUNvbnRlbnQiIHN0eWxlPSJQQURESU5HLUxFRlQ6IDFleDsg
-TUFSR0lOOiAwcHggMHB4IDBweCAwLjhleDsgQk9SREVSLUxFRlQ6ICNjY2MgMXB4IHNvbGlkIj4K
-CgoKPHN0eWxlPjwvc3R5bGU+CgoKPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+SSBkb26hr3QgdGhpbmsgdGhlcmUgaXMgbXVjaCB0byBzaG93IGFzIHByb2dy
-ZXNzIHdoZW4gYm1jIHVwZ3JhZGUgaGFwcGVucy4gQmVjYXVzZSBhY3R1YWwgZmxhc2ggd3JpdGUg
-aGFwcGVucyBkdXJpbmcgcmVib290IGFuZCB0aGF0IHRpbWUgZXZlcnkgb3RoZXIgcHJvY2VzcyB3
-b3VsZCBiZSBkb3duIEkgZ3Vlc3MuPG86cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9w
-OnNvbGlkICNCNUM0REYgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBpbiI+CjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNr
-Ij5Gcm9tOiA8L3NwYW4+PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJs
-YWNrIj5vcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5jZXMrdmlqYXlraGVta2E9ZmIuY29tQGxpc3Rz
-Lm96bGFicy5vcmcmZ3Q7IG9uIGJlaGFsZiBvZiB3d3cgJmx0O291eWFuZ3h1YW4xMEAxNjMuY29t
-Jmd0Ozxicj4KPGI+RGF0ZTogPC9iPlRodXJzZGF5LCBGZWJydWFyeSAyNywgMjAyMCBhdCAxMTo1
-NyBQTTxicj4KPGI+VG86IDwvYj4ib3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIiAmbHQ7b3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj4KPGI+U3ViamVjdDogPC9iPltPcGVuQk1DXTogSG93
-IHRvIGdldCB0aGUgdXBkYXRlIHByb2dyZXNzIHdoZW4gZmxhc2hpbmcgQk1DIGZpcm13YXJlPzxv
-OnA+PC9vOnA+PC9zcGFuPjwvcD4KPC9kaXY+CjxkaXY+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9wPgo8L2Rpdj4KPGRpdj4KPGRpdj4KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC41cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwm
-cXVvdDssc2Fucy1zZXJpZjtjb2xvcjpibGFjayI+aGk8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMC41cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7TVMgR290aGljJnF1b3Q7O2NvbG9yOmJsYWNr
-Ij6jrDwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjVwdDtmb250LWZhbWlseTomcXVv
-dDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmJsYWNrIj48bzpwPjwvbzpwPjwvc3Bhbj48
-L3A+CjwvZGl2Pgo8ZGl2Pgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1z
-aXplOjEwLjVwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9y
-OmJsYWNrIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+CjwvZGl2Pgo8ZGl2Pgo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjVwdDtmb250LWZhbWlseTom
-cXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmJsYWNrIj5Ib3cgdG8gZ2V0IHRoZSB1
-cGRhdGUgcHJvZ3Jlc3Mgd2hlbiBCTUMgaXMgZmxhc2hpbmcuIEl0IGNhbiBiZSBkaXNwbGF5ZWQg
-b24gd2VidWkuPG86cD48L286cD48L3NwYW4+PC9wPgo8L2Rpdj4KPGRpdj4KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC41cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7
-QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpibGFjayI+PG86cD4mbmJzcDs8L286cD48L3Nw
-YW4+PC9wPgo8L2Rpdj4KPGRpdj4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
-bnQtc2l6ZToxMC41cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtj
-b2xvcjpibGFjayI+dGhhbmtzLDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4KPC9kaXY+CjxkaXY+Cjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuNXB0O2ZvbnQtZmFt
-aWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6YmxhY2siPkJ5cm9uPG86cD48
-L286cD48L3NwYW4+PC9wPgo8L2Rpdj4KPC9kaXY+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxicj4K
-PGJyPgo8YnI+CjxvOnA+PC9vOnA+PC9wPgo8cD4mbmJzcDs8bzpwPjwvbzpwPjwvcD4KPC9kaXY+
-CgoKPC9ibG9ja3F1b3RlPjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIi
-PjxwPiZuYnNwOzwvcD48L3NwYW4+
-------=_Part_13139_1192797724.1582940634144--
+Overall I would suggest to extend the isl68137 driver. I would also
+suggest to not add separate tables for each of the rail configurations
+but use the three-phase entry as starting point, copy it, and adjust its
+values as needed.
 
+For the multi-phase chips, I question if reporting the input voltage
+for each phase make sense. Is it really a different voltage ? For IIN
+and PIN, the question is if the registers are indeed paged, since they
+are not paged in the older chips.
+
+Guenter
