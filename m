@@ -1,78 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C58F71782FE
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 20:19:49 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48X6Jy6c2hzDqVl
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 06:19:46 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 750F8178355
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 20:47:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48X6wp55QXzDqV8
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 06:47:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32e;
+ helo=mail-ot1-x32e.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=P9YuD9N+; dkim-atps=neutral
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [IPv6:2607:f8b0:4864:20::32e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48X6JF511LzDqTw
- for <openbmc@lists.ozlabs.org>; Wed,  4 Mar 2020 06:19:08 +1100 (AEDT)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 023JCkCH024973
- for <openbmc@lists.ozlabs.org>; Tue, 3 Mar 2020 14:19:06 -0500
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2yfknb2n3f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 03 Mar 2020 14:19:05 -0500
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 023JEw1G023802
- for <openbmc@lists.ozlabs.org>; Tue, 3 Mar 2020 19:19:04 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma05wdc.us.ibm.com with ESMTP id 2yffk6desn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 03 Mar 2020 19:19:04 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 023JJ4vX34144658
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 3 Mar 2020 19:19:04 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 482DE12405A
- for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 19:19:04 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2BBEE124055
- for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 19:19:04 +0000 (GMT)
-Received: from [9.10.252.41] (unknown [9.10.252.41])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 19:19:04 +0000 (GMT)
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Subject: OCP "Redfish and OpenBMC" presentation
-Message-ID: <b71e5051-6ea7-7bbf-3a5e-f19c401afcc7@linux.vnet.ibm.com>
-Date: Tue, 3 Mar 2020 13:19:04 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-03-03_06:2020-03-03,
- 2020-03-03 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0
- mlxlogscore=659 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 suspectscore=0 clxscore=1015 mlxscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2003030125
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48X6wB2S35zDqTV
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Mar 2020 06:46:47 +1100 (AEDT)
+Received: by mail-ot1-x32e.google.com with SMTP id b3so4308020otp.4
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Mar 2020 11:46:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=+/6oPYjWL/q8DmhWJdH3Nu+aCM3DK4PbYporyS8ucSU=;
+ b=P9YuD9N+68Jwpw624tgjhQLg2SRPlDck32033IouPBOYjrAm7SsyE+Jn0CQC60qgoR
+ hGa8YAS4eafpX3F5nIAJ8A/1DYa2X1DIyat7rmPQfsvZjltUbWROB/dOZPTGJumojqLu
+ Q6hEvAdKkbQx7CvBx+dLtl8A8u3G4N66fiDnR3hmrw3577A0Gdc8bH1iIfwKt09bzGtD
+ k0rD5MAsOdGzRICg1ruAVFaTz9+Lno+yYcAgFvl3u3eHeXKeJCOof5O0wGCZEOUpVMm9
+ soymMxp/02enEzU8XU7Hh83YeJ1CpE3ilaJnP8giLEJN9Nz7vy/1tcKpvgEVr6REyaXh
+ DTCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=+/6oPYjWL/q8DmhWJdH3Nu+aCM3DK4PbYporyS8ucSU=;
+ b=AuMCwZi6q9EqYwoRhAufp3Wg5vBAV2oPB9hwBmpHT3EKUIkd3xc6CTfGL2whbkqxOu
+ 5yONAJraC0d+XvYksI7HkEiZy/OhHQpZc5mls3riULXxuSQCBac2BvF64kuMlJkqnktd
+ GkNDaClBHjot05iJzapKdibfhig2+ycQwpLgngGvl1qCqN0cRqTlcky9eiU2loptdVmX
+ Tykq260uObJQ+L5KyhDCwxJ4zumkjSCUP/gWPwJCdVSR8zgYvqS9P+PnmsFrjDP7fGSs
+ P708RBWmzEoi638G03Bcs8AZgSBYm6aAHLgfj8A/fek3R8R5sZEF31Baq5THL89Nx3LK
+ 2yEA==
+X-Gm-Message-State: ANhLgQ0v9P00bF1xgFImCCZ2WGGm4GbArKERH4ld9xXsh54XBBLQi9tv
+ 1eCXjLW2NhBg5QVHmMIORWE=
+X-Google-Smtp-Source: ADFU+vt+bUqzGwO+SnAZoAsnDsrhJ8COoN/CqzrD39rl7nXhRZOPo8OlbJMoPrd/YbZ9g4t37iCWJQ==
+X-Received: by 2002:a9d:a16:: with SMTP id 22mr4389092otg.31.1583264805872;
+ Tue, 03 Mar 2020 11:46:45 -0800 (PST)
+Received: from ?IPv6:2600:1700:19e0:3310:55e0:b068:eaa2:66b1?
+ ([2600:1700:19e0:3310:55e0:b068:eaa2:66b1])
+ by smtp.gmail.com with ESMTPSA id f84sm435973oib.32.2020.03.03.11.46.44
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 03 Mar 2020 11:46:45 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: service for tracking user activity (phosphor-audit)
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
+Date: Tue, 3 Mar 2020 13:46:44 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B9364499-3954-4862-BDF2-52467AF39327@gmail.com>
+References: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
+ <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
+To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,16 +82,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Matt Spinler <mspinler@linux.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, joseph-reynolds@charter.net,
+ gmills@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The OCP global summit was canceled (for more information see the link 
-below). Uploaded what would have been my OCP presentation on "Redfish 
-and OpenBMC" to https://github.com/openbmc/openbmc/wiki/Presentations
 
-Feel free to use if ever building a similar presentation. :)
 
-https://www.opencompute.org/summit/global-summit
+> On Feb 28, 2020, at 11:15 AM, Ivan Mikhaylov <i.mikhaylov@yadro.com> =
+wrote:
+>=20
+> On Mon, 2019-08-26 at 15:31 +0300, Ivan Mikhaylov wrote:
+>> hi all, There it is updated design proposal about audit service which =
+provides
+>> a
+>> way to track user activity. Right now most parts are described there. =
+If you
+>> have any ideas or anything to add, feel free to share in this thread.
+>>=20
+>> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/23870
+>>=20
+>>=20
+>> thanks.
+>>=20
+>=20
+> Thank you, everyone involved in the review process of this document! =
+Just got
+> back from the leave, and wanted to ask who should create the rep or =
+which rep
+> part it should belong to? I want to use the meson build system for =
+this project,
+> any problems with this decision? Also, any other tips or suggestions =
+are
+> welcome. I'll start working on it in next 1-2 weeks.
 
-- Gunnar
+phosphor-logging would be one candidate for a repo for this function. =
+Otherwise
+a new repo, phosphor-audit would work.
+
+Brad would be the one to create a new repo.
+
+Matt and Deepak could weigh in on whether this could be a part of
+phosphor-logging. The community has swung the pendulum from a repo
+for each individual function to trying to group things more logically =
+into
+single larger repos which can be configured to enable different =
+functions
+(which is why I would lean towards phosphor-logging).
+
+>=20
+> Thanks.
+>=20
 
