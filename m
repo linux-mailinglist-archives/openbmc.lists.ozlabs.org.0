@@ -1,78 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AAB1176A11
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 02:35:51 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48WfjH1V7nzDqdn
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 12:35:47 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70143176BCD
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 03:52:40 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48WhPw6JkFzDqfF
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 13:52:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
+ helo=mail-oi1-x22a.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=jQxAqA3b; dkim-atps=neutral
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
+ [IPv6:2607:f8b0:4864:20::22a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48WfgZ6nZ4zDqhk
- for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 12:34:12 +1100 (AEDT)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0231UV3p004878
- for <openbmc@lists.ozlabs.org>; Mon, 2 Mar 2020 20:34:09 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.90])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2yfhqq9mh6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 02 Mar 2020 20:34:09 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Tue, 3 Mar 2020 01:34:09 -0000
-Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
- by smtp.notes.na.collabserv.com (10.106.227.141) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 3 Mar 2020 01:34:06 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp03.a3.dal06.isc4sb.com
- with ESMTP id 2020030301340569-1125266 ;
- Tue, 3 Mar 2020 01:34:05 +0000 
-In-Reply-To: <tencent_50CE0F4E75A8AC62FF7879B0299213180707@qq.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "=?ISO-2022-JP?B?GyRCRm5MbiVgJWslNyUoJWklNBsoQg==?=" <1181052146@qq.com>
-Date: Tue, 3 Mar 2020 01:34:06 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <tencent_50CE0F4E75A8AC62FF7879B0299213180707@qq.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 23855
-X-TNEFEvaluated: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48WhNh6GjzzDqM3
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 13:51:32 +1100 (AEDT)
+Received: by mail-oi1-x22a.google.com with SMTP id j80so1491419oih.7
+ for <openbmc@lists.ozlabs.org>; Mon, 02 Mar 2020 18:51:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=9AVZMOkXPZEhp0bspHirjVcFtVG9E6ZQO0tOBmhNK0w=;
+ b=jQxAqA3bSgneTE+FUlmCEW/jzvW4fbldqoHhZsxgOu2/mu4ds7S/Ln8Gkkw6KGSl13
+ AFz4DcnLlDDEGygKKkwqZ9tnFtpgw3kgxHYHRmOobC27m78gJhD0wr6FB1jLGhSqSMBU
+ 00Jhe1O1v/g8flKq086gA0V/zOEuLF7usJoUZpVBnE6cerfNmoaJgNZnJXdLusuOPV8w
+ lUzrpG6cgFaPtxdoJ9NDiTAsp3VViUoGImNscaEDRkoqjULY6wOpANst9NJSzo63d1fP
+ 4+mtmcgxCtS6O5T5b5xiLNCypZYGKYrcSvJTFBz882ZWgkI33XKhgezeDCWPAxVTAoQA
+ 3utQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=9AVZMOkXPZEhp0bspHirjVcFtVG9E6ZQO0tOBmhNK0w=;
+ b=Ny2kYCqDgPQ4XVfkqmEwWZmtt27hD+m8vydLvYBpT42/yJDiLHgKvwKkF3cMz7z9Bs
+ lPkHduyyxfo9ZFcP0J4iFO1s75vDQ1p8d5FexN+bHx2E5Z6JEvzikMs4L3MP1f6Evq0t
+ cLFtj4XVbcwqYCef/Bw7rpJHH0bHDYfwISRaTOQ03ntSzhN9ixGaeojf5F1dLEl+IioS
+ OPmPtMJ2P+gQsyfEW36thc6hDOmZA+cnRUHnTcRs22xyiMJBq5R/e7JcOtByXm8FB6Qm
+ IEgineo0ce7gZk2idGaja5WFaKo0/+5dXCWcgY6lLhbhXhPXlfnTwvjVn2/q9gQOAVjI
+ mmAA==
+X-Gm-Message-State: ANhLgQ1s6bpoP0XA39PurKfrqCcC9jjtGBm46IHFyYcFL2HPurFksqB0
+ aPzKZkE1apw8Pgc114/EaFM=
+X-Google-Smtp-Source: ADFU+vtF/VV9WA5lXb/HJ42UOSjTcfnB+fuMtzOf+ttbjCLLmOt3Mq0P+8P6Cm6bR47FPkn6TQyrXg==
+X-Received: by 2002:a05:6808:b22:: with SMTP id
+ t2mr1054245oij.40.1583203888930; 
+ Mon, 02 Mar 2020 18:51:28 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:7092:f573:b2b5:4037])
+ by smtp.gmail.com with ESMTPSA id m18sm7259785otf.6.2020.03.02.18.51.27
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 02 Mar 2020 18:51:28 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: BMC Compiling and running
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <31609.1583172370@localhost>
+Date: Mon, 2 Mar 2020 20:51:27 -0600
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20030301-3649-0000-0000-00000254A4E1
-X-IBM-SpamModules-Scores: BY=0.034212; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.047799
-X-IBM-SpamModules-Versions: BY=3.00012677; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000293; SDB=6.01342101; UDB=6.00715350; IPR=6.01124490; 
- MB=3.00031052; MTD=3.00000008; XFM=3.00000015; UTC=2020-03-03 01:34:08
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-03-03 00:07:47 - 6.00011072
-x-cbparentid: 20030301-3650-0000-0000-00004F6312DA
-Message-Id: <OFC06EDD92.C74E64C3-ON00258520.0006EF08-00258520.00089D80@notes.na.collabserv.com>
-Subject: Re: What does openbmc system do after update BMC Firmware and taps
- reboot?
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-03-02_09:2020-03-02,
- 2020-03-02 signatures=0
-X-Proofpoint-Spam-Reason: safe
+Message-Id: <5B1DBB16-3568-482E-91DC-5E35399D1888@gmail.com>
+References: <CA+k9xxb=5KMq+yruOAja9L9asquJ=FNPMoajyOsdHda2Ae3jTw@mail.gmail.com>
+ <31609.1583172370@localhost>
+To: Michael Richardson <mcr@sandelman.ca>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,88 +83,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, Samuel Herts <sdherts@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Around 03/02/2020 01:30AM in some timezone,  "=E5=8D=97=E9=87=8E=E3=83=A0=
-=E3=83=AB=E3=82=B7=E3=82=A8=E3=83=A9=E3=82=B4" <1181052146@qq.com> wrote:
-
->Greetings:
->
->I am learning how openbmc update BMC firmware. I am following the
->guide
->"https://github.com/openbmc/docs/blob/master/code-update/code-update.
->md" to update BMC Firmware. It works well for me.
->But I still do not know, why in step 7 should I reboot, and what
->reboot do?
-
-The low level workings was described better in the deprecated API=20
-documentation; as it says only the API is deprecated and not the=20
-underlying mechanism. =20
-
-https://github.com/openbmc/docs/blob/master/code-update/code-update-depreca=
-ted.md#preparing-for-bmc-code-update
-
->Later I found in
->"https://github.com/openbmc/docs/blob/master/code-update/code-update-
->diagrams.md", which tells that:
->        [*] In a static layout configuration, the images are stored
->in RAM and the content is written to flash during BMC reboot.=20
->        Reference the update and shutdown scripts provided by
->initrdscripts
 
 
+> On Mar 2, 2020, at 12:06 PM, Michael Richardson <mcr@sandelman.ca> =
+wrote:
+>=20
+> Samuel Herts <sdherts@gmail.com> wrote:
+>> Apologies for all the constant questions. I am trying to add code to =
+the
+>> Hello World tutorial, specifically a system call to run a shell =
+script on
+>> the QEMU BMC. The problem I run into is in the image below. My bmc =
+state
+>> manager main looks like the following as well.
+>=20
+> It looks like your hello world program was not properly linked.
+> Usually, that results in no executable being created.
+> Maybe, you linked against a different version of a share library than =
+is in
+> the target image.
 
->I am using a static layout. And I found two scripts named "shutdown"
->and "update" in "/run/initramfs/". So I thought it is that, the
->update applications put the firmware image in /run/initramfs/ and
->when I tap reboot, by some means the "update" script runs and the
->"update" script using "flashcp" command to write the firmware image
->to the /dev/mtd. Is that right?
+Yes, most likely your SDK that you are using to build the bmc =
+application
+does not match the level of code your are running in QEMU.
 
-Yes, the shutdown script is invoked by systemd and undoes the overlay=20
-mount.  This happends for both reboot and shutdown.
+If you=E2=80=99re using images from jenkins, try and match the git =
+commit
+id=E2=80=99s up in these 2 jobs (for your image and SDK)
 
-See the third bullet here
+=
+https://openpower.xyz/job/openbmc-build-sdk/distro=3Dubuntu,target=3Dromul=
+us/=20
+=
+https://openpower.xyz/job/openbmc-build/distro=3Dubuntu,label=3Dbuilder,ta=
+rget=3Dromulus/=20
 
-https://www.freedesktop.org/wiki/Software/systemd/InitrdInterface/
-
-
->What happens after I tap "reboot", and who calls the "update" script,
->and how it calls the "update" scripts?
-
-The shutdown script finishes unmounting the overlay, from which initrd
-was running.  The shutdown script just runs using the busybox and libc.
-The shutdown scripts notices the files in /run/initramfs and calls the
-update script.
-
-
-There is a big reason to do this at shutdown:   Its very unwise to try=20
-to run off a file system while the file system raw media is being=20
-replaced.
-
-For a static layout, there is only flash space for one copy.  The init
-script can make a separate copy (the deprecated API doc explains how)=20
-and then you can erase and flash at runtime (with full services and
-network to monitor progress).  The update script will automatically=20
-detect the code-update mode; don't try to fake it out you will only
-crash the machine.
-
-If you want your bmc to be online set update mode and reboot (it gets=20
-unset for the next boot every boot).  (I've seen slow flash take=20
-30 minutes to erase; others take just few minutes).
-
->Can someone tell me? Thanks a lot!
-
-Feel free to ask more questions I try to answer questions in this area
-daily. (I'm the author of the low level mechanism; the code-update API=20
-was written by others).
-
->
->Best Regards!
->Liu Hongwei
->
-
-milton
+>=20
+> --
+> ]               Never tell me the odds!                 | ipv6 mesh =
+networks [
+> ]   Michael Richardson, Sandelman Software Works        |    IoT =
+architect   [
+> ]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on =
+rails    [
+>=20
+>=20
+>=20
 
