@@ -2,90 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7DCF1785CC
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 23:42:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A66A01785D9
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 23:46:24 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48XBpj14g3zDqWM
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 09:42:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48XBvL07tbzDqVc
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 09:46:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.27;
- helo=wnew2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=tK562M8g; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=GitYyGLp; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=1DjWJkVn; 
+ header.a=rsa-sha256 header.s=fm2 header.b=lE1n6/kz; 
  dkim-atps=neutral
-Received: from wnew2-smtp.messagingengine.com (wnew2-smtp.messagingengine.com
- [64.147.123.27])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48XBnr3ZrHzDqRx
- for <openbmc@lists.ozlabs.org>; Wed,  4 Mar 2020 09:41:35 +1100 (AEDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailnew.west.internal (Postfix) with ESMTP id 08B08698;
- Tue,  3 Mar 2020 17:41:29 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 03 Mar 2020 17:41:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=nHnFCN9Z3BPalSmkAOzcYDWrbQt
- zpQEFq+vHXGqDPQo=; b=tK562M8gitzFbXBpi2BbrVRSGwBZVFGLtT+6umpqLsN
- 15ON6OHWpYAe4FQoZ8Drw5Y0MtTcb5QkXTY25ee7JQIy0BvQRQ3aFaowLK+ypUx4
- xvqy0qYkx9ooDWB2WwBc8DXG6Qfc/87itWpOpRNxbwY60Z55Pr36BQ7zjUeh0oEg
- 8bjCfvKIvSeg7yXhK6RNZEr90j6fH2Q+HqtiAOhlQblKZfVoa0Dl94+ceJFIbLFu
- 1T8MFH4qCPPl5LnfDdWdKpf0HGRMyo8EeOR3I/Gw/xXO31r2Dj+VA0LEKtdQ97Q5
- aQp0U4weSgSJM4dOEf3Q+7jQTAha0oM59fpR62uBRGg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48XBtd3pfgzDqSY
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Mar 2020 09:45:44 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 822DC2207D;
+ Tue,  3 Mar 2020 17:45:41 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute4.internal (MEProxy); Tue, 03 Mar 2020 17:45:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=C0GSY
+ xFmkABs8gR7KhLc1QcAmcHobPOsHK2l9Uz6ykA=; b=GitYyGLpxyB0ucceV8OFj
+ hPhJwwJ0zr8D7DC2/RaNkVg09YWywgJjOawo1ZJHQZzTQSREifFuW+BxwIxtio03
+ TQS+Ero/Q5Gna/X85xrtGyjngMSLEHJ1uPK8fMseUnB89PU/nbpRLgeNnYZy5rTU
+ oriW+LYqCj4NCva1Kr95PcN+T2ms5Q8vfI3/u6oY3MDbOLtynix9bGDB8ZHkPZzc
+ OGrZgFlNI5M+qTJ1+mKAo9q8aENPKcJUSei5oSy0e1yqgh8G80oC8nJkXduTq77Q
+ Ahsrqt95zKioTgaFWSo50hRLZPNJTL7waFimzxTwapwjniQaX66laCM9/T5KInjr
+ Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=nHnFCN
- 9Z3BPalSmkAOzcYDWrbQtzpQEFq+vHXGqDPQo=; b=1DjWJkVnDsCqMfaHVfIOx6
- s5ZQTs5P3jaaHwXY/VwIT/U6gSO8hCo297PPlHajv65N8vutuTJhOueWuXnuaCBk
- asvti12sr4gsRgYUOtalq0J8Hdr5rY73Ew+RN7tTCOn+v8MkpjDTeoXYfL0s0vdH
- Y7AhBUNH8ApoWKW7yJrdObfaGX+RYiU1pSm4p2ENd8bPKzhWszEim3Y82dT8rxkd
- B1n6HJ9Brhpx0D38KYJ7TIeeaFNWARkB702/Ni3KIYJND+fXr/GdD8vHtbLp0qup
- HwZ5g6qT/Jh+/W1/yKx+MYx4zHKYRbhVzuRecIviaXLtApEnuRBRE/wkO/tZy69w
- ==
-X-ME-Sender: <xms:F91eXkBN7AGc-UgZR9VCkTFs4belmcDlU_IS5S23KbGaV4WbkSl2KA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddtjecutefuodetggdotefrodftvfcurf
- hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdejnecu
- hfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsthiftg
- igrdighiiiqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeduieefrddu
- udegrddufedtrdduvdeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
- hilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:F91eXoLDExpSIV5Bbpw48pGF1Hfs0cKKWOjtdR1AJNLtAVumgO7H5Q>
- <xmx:F91eXmS02ncglbBBfhRH7-7QTCHpryG7OAMIHFG4ZLOVbBub9F7V6A>
- <xmx:F91eXjT-V0K_IUrYGPGN4hs_Ldk-9stSGpfDM8r3m15OsQP_p8kSiw>
- <xmx:Gd1eXqcQIL5Eoh5pXcSgWn4GG6A_XdQP-ZeeGsmYZD7kkE49zt8K39zAnkA>
-Received: from localhost (unknown [163.114.130.128])
- by mail.messagingengine.com (Postfix) with ESMTPA id 5B7B1328005E;
- Tue,  3 Mar 2020 17:41:27 -0500 (EST)
-Date: Tue, 3 Mar 2020 16:41:25 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Functionality vs Security
-Message-ID: <20200303224125.GA26971@patrickw3-mbp.dhcp.thefacebook.com>
-References: <62005ec9-e004-1041-7c5b-9272f8c2d854@linux.intel.com>
- <6F13EC73-E3F0-43D5-8E3F-1A8585918C2A@fuzziesquirrel.com>
- <99262b0e-fca2-71c9-ff1f-3526ed26efd0@linux.intel.com>
- <F59054FF-546F-4728-B569-CF94AB88CC96@fuzziesquirrel.com>
- <C599FC839619124CAC44E062ABB7DFE2D7BAF2D5@ORSMSX115.amr.corp.intel.com>
- <20200225155202.GK67957@patrickw3-mbp.dhcp.thefacebook.com>
- <a9d059b8-52d1-aa17-937d-7006a591e74d@linux.ibm.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="FCuugMFkClbJLl1L"
-Content-Disposition: inline
-In-Reply-To: <a9d059b8-52d1-aa17-937d-7006a591e74d@linux.ibm.com>
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=C0GSYxFmkABs8gR7KhLc1QcAmcHobPOsHK2l9Uz6y
+ kA=; b=lE1n6/kzYRYxEmja7Pgir6xXbcx9yKjVIru4vaocc0pnHsXEqlahUtSTs
+ Joe44Ndbgzh7o8TJ1poC/17ipPV2xal11gMGqrlSJhSOYbz6KzJ+kiY2rE9VO/92
+ 8txEKQ5nlD5lZFs8oah8V9+HzcGvbztbhIF4+RHl6Kah4Vzy8iUCYue01i8xOm6P
+ 0Jt+QQmELoELHQ3MuAqcUzMLnYCCiilgNwfE1FRVcew7MewFczYBnx44MZmN9jJy
+ 9a7+qsjBAfDwqwGAfe2ChxwHDHu9z2YLrYx2pogfLWxRlixkHhkVbyU3MpqrfB6N
+ rXsj7AAarzudAC6Ad/gBLd5VBtzkQ==
+X-ME-Sender: <xms:E95eXvDcZQ47K5mItidfmzeiQF2yAlIRLH-3L5ok8ZvwBc7N1nusgw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddtjedgtdduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlvdefmdenucfjughrpefofgggkfgjfhffhffvufgtgfesthhqredt
+ reerjeenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifse
+ grjhdrihgurdgruheqnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpohhpvghnsghm
+ tgdqphhrohhjvggtthdrgiihiidprghstghiihhflhhofidrtghomhenucevlhhushhtvg
+ hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhi
+ ugdrrghu
+X-ME-Proxy: <xmx:FN5eXiL-uq_jB2qDtJP-z5dz9Tu0IONGuY8zYGt7f0sRkCYfiH8AUw>
+ <xmx:FN5eXg8maToGWGpICTtX9zry0Y0WeFke_-f4BbrerWpQIG02e3t1CQ>
+ <xmx:FN5eXrpEWExv8bMo_pHR8gt-7W15YRweiOQPbifz-rhITo0ojiI4Ew>
+ <xmx:Fd5eXno_fh7SyFCGAsfjooK1J69u2NP0NWFpVF7U-Eblm2vL00XktA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D3DA8E00A8; Tue,  3 Mar 2020 17:45:39 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.1.7-967-g014f925-fmstable-20200226v1
+Mime-Version: 1.0
+Message-Id: <1e91c94b-bc20-477b-85b7-7cfab2f994b7@www.fastmail.com>
+In-Reply-To: <d999eac8-84e9-826f-1d7f-c327a8efbf89@linux.ibm.com>
+References: <SG2PR04MB3029CF9F520DF543B57B93C2FD100@SG2PR04MB3029.apcprd04.prod.outlook.com>
+ <f136d4ad-65e6-4e74-8f53-2ca3edaf9288@www.fastmail.com>
+ <SG2PR04MB30295AD664D4B5BD5F24EFD3FD130@SG2PR04MB3029.apcprd04.prod.outlook.com>
+ <SG2PR04MB302996468E42284DE73358A6FDEA0@SG2PR04MB3029.apcprd04.prod.outlook.com>
+ <5dd6cbbe-5f58-4370-82c7-55c8dc22ca5b@www.fastmail.com>
+ <26B24CEE-C910-4FB1-B316-8E0676E3AD16@fb.com>
+ <5867808b-871f-435e-aa79-10bf64a8f4b5@www.fastmail.com>
+ <d999eac8-84e9-826f-1d7f-c327a8efbf89@linux.ibm.com>
+Date: Wed, 04 Mar 2020 09:15:38 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joseph Reynolds" <jrey@linux.ibm.com>,
+ "Vijay Khemka" <vijaykhemka@fb.com>, "Kumar Thangavel" <thangavel.k@hcl.com>, 
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: obmc-console design for multi host support
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,103 +102,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>,
- Gunnar Mills <gmills@linux.vnet.ibm.com>
+Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---FCuugMFkClbJLl1L
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 26, 2020 at 05:26:20PM -0600, Joseph Reynolds wrote:
+On Wed, 4 Mar 2020, at 03:53, Joseph Reynolds wrote:
 >=20
 >=20
-> On 2/25/20 9:52 AM, Patrick Williams wrote:
-> > On Thu, Feb 13, 2020 at 08:15:29AM +0000, Mihm, James wrote:
-> > > Exposing the REST D-Bus APIs via a network interface is bad practice =
-and should be disabled by default. Just because it was done that way in the=
- beginning doesn=E2=80=99t mean that it should remain that way.
-> > > Applications should be configured to be secure by default. Consumers =
-of the code should have to intentionally select an insecure configuration -=
- it shouldn't be provided by default.
-> > I'm not going to argue one way or the other with respect to the REST
-> > D-Bus API.  I do feel like we're becoming a little too tightly coupled
-> > to Redfish though.
+> On 3/2/20 10:03 PM, Andrew Jeffery wrote:
+> > On Fri, 28 Feb 2020, at 18:00, Vijay Khemka wrote:
+> >> =EF=BB=BFOn 2/27/20, 2:05 AM, "openbmc on behalf of Andrew Jeffery"=
+
+> >>     =20
+> >>      ```
+> >>      $ ls -1 /etc/obmc-console
+> >>      client.2200.conf
+> >>      server.ttyVUART0.conf
+> >>      ```
+> >> What are other contents of client and server conf file other than s=
+ocket-id?
+> > Whatever else you were previously specifying for the server.
+> >
+> >>     =20
+> >>      So to map the client associated with port 2200 to the server a=
+ssociated
+> >>      with ttyVUART0 we set the same socket-id value in both files:
+> >>
+> >> Can this socket-id be any random word and can this be same across m=
+ultiple
+> >> Host (client/server) configuration. I mean, do we need different so=
+cket-id for
+> >> client.2200 and client.2201 or it can be same.
+> > The socket-id is a unique portion for the unix domain socket created=
+ by the
+> > obmc-console-server instance. The server needs to know this because =
+it needs
+> > to know what to name the pipe; the client needs to know it as it nee=
+ds to form
+> > the abstract socket name to which to connect.
+> >
+> > In general unless you're looking to expose the same console on _diff=
+erent_
+> > network ports, you want to pair each client with a unique server.
+> >
+> > Here's an ASCII diagram:
+> >
+> >                 +---------------------------------------------------=
+-----------------------------------------+
+> >                 |                                                   =
+                                         |
+> >                 |       obmc-console-client      unix domain socket =
+        obmc-console-server              |
+> >                 |                                                   =
+                                         |
+> >                 |     +---------------------+                       =
+    +------------------------+           |
+> >                 |     | client.2201.conf    |  +--------------------=
+-+  | server.ttyVUART1.conf  |           |
+> >             +---+--+  +---------------------+  |                    =
+ |  +------------------------+  +--------+-------+
+> > Network    | 2201 +-->                     +->+ @obmc-console.host1 =
++<-+                        <--+ /dev/ttyVUART1 |   UARTs
+> >             +---+--+  | socket-id =3D "host1" |  |                  =
+   |  | socket-id =3D "host1"    |  +--------+-------+
+> >                 |     |                     |  +--------------------=
+-+  |                        |           |
+> >                 |     +---------------------+                       =
+    +------------------------+           |
+> >                 |                                                   =
+                                         |
+> >                 |                                                   =
+                                         |
+> >                 |                                                   =
+                                         |
+> >                 +---------------------------------------------------=
+-----------------------------------------+
+> >
+> > Does that help?
 >=20
-> Do you mean you are concerned that the authorization checks are performed=
- in
-> BMCWeb, and the D-Bus APIs are expected to be run with root user authorit=
-y?
-
-No, I don't have as much concern about daemons running as root (which
-was the topic of the issue you pointed to below).  My concern is that
-we're focusing our efforts on a *specific* implementation inside bmcweb
-when we could likely come up with a *general* implementation at the
-D-Bus level that gives us similar functionality no matter what the
-management interface.
-
+> Nice diagram!=C2=A0 Can this be added to
+> https://github.com/openbmc/obmc-console/blob/master/README.md
 >=20
-> > When we first put together the REST / D-Bus API we did have discussions
-> > on how to secure it.  There isn't anything inherent to that API that
-> > makes it any more or less secure than Redfish might be, except for
-> > missing code.  D-Bus has policies that can be used to lock down access
-> > for specific users.  What we had talked about was creating these
-> > policies based on roles and having the REST end-point do something like
-> > 'setuid' to the logged in user so that those roles took effect.
+> I tried to capture this network interface in an architecture review=20=
+
+> here:
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/27969/3/architectu=
+re/interface-overview.md#130
+> which also includes 'ipmi sol activate' and hostlogger.
 >=20
-> There is a related issue to run daemons as a non-root user.
-> https://github.com/openbmc/openbmc/issues/3383
-> We tried briefly, hit an authority issue, ran out of time, and haven't got
-> back.
+> Please let me know the best way to document this in the project?=C2=A0=
+ I=20
+> would be happy to remove details from the doc-under-review and point t=
+o=20
+> the obmc-console README.=C2=A0 Does that sound right?
 
-What I was referring to was not that the whole bmcweb would run as a
-different user but that when it is performing a D-Bus operation on behalf
-of a particular user it could de-escalate permissions, for that
-operation, similar to what you might do with 'sudo'.
+Sure, if the diagram was useful for you then it's probably useful for
+others too.
 
-> > By writing all of the access policies inside the webserver based
-> > specifically on Redfish requirements, none of that code is helpful for
-> > any other management interface.  If those access policies were instead
-> > implemented as D-Bus policies then we gain that feature across every
-> > management interface available, with SSH being a trivial example.
-> >=20
->=20
-> I agree.=C2=A0 Although we are full speed ahead with BMCWeb/Redfish as the
-> management interface.=C2=A0 I would welcome some internal authorization c=
-ontrols
-> for BMC users.=C2=A0 As far as I know, when SSH'd to the BMC, if you are =
-root:
-> you can do everything; if not: your authority is severely limited.
+For what it's worth, I drew it using http://asciiflow.com/
 
-Correct.  We need the D-bus policies in order to allow non-root users to
-perform *some* operations (based on the users role).
-
---=20
-Patrick Williams
-
---FCuugMFkClbJLl1L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5e3RMACgkQqwNHzC0A
-wRkIyhAAo5XyVx3Co54fFh7UGHJOyjLEir6CT9xchq+8HkDjYMoC3zR9HqRgnKLL
-3qTKq71I3q5ECNgIsjxT7ULQoip1NcZ3lPWYlCFTuEuRN62xBopaVN05GJkpTqAT
-BMd8t76igUrjKPr9BeRPYN1b1ZcxEoOXk2321lUeMOBFwXVRTa8dBDX61lG82cjw
-+//I4gy3vtyYT3LbrUyA8ppwg5J1SdfuxtKjz8TCG/sXB47jwMt6Y7y3NgKEbyw1
-p3HrnXYR0td0ffF4NM/oh8iLB3i834gzkuYTGDsxa0z1rdY7c9xoJ9gJpdLmTMiC
-czhn9UNM8Fbs00qBErmb2wkia7dDSuhVyIUzEfCFZO3W0jcukDlYV7FIGIpBfFEl
-LF2Qrd1PpvUSuUrSoMZi3r3SniHiAMk43pD8+vUCegQ26L/SppFEr36LqtisbshC
-HhR9EYfNbWRrJNhUflc1Y5McMdnKtHNqFs6fTs+qO3ILdcmQ6O0xwAiZeIChv/Vj
-hjCPXIeo44SMXXygmJGe2g7HW5f+sR6UtzgWqFfXQ+ChZdYMp90EYP05FPi9z215
-QfnQdAdjpizLrdmozC04HOYoLvypUha60FjGaHbr+EmcHFi99jTf7gS80Ckb7Ryq
-H0S6dOLiEaRc+Nemq364yZWhZHZzO2Aj6xmaAZypa5LfG3RQTEg=
-=VUyw
------END PGP SIGNATURE-----
-
---FCuugMFkClbJLl1L--
+Andrew
