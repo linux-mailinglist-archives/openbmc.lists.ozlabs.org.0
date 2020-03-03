@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05540176DEF
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 05:19:09 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48WkKk0fWDzDqcc
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 15:19:06 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 11EA9176E29
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 05:48:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Wl021tGgzDqdl
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 15:48:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,72 +17,66 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=h/uY3mE5; 
+ header.s=fm2 header.b=ZNZVw89E; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=Z84G3G4k; 
+ header.a=rsa-sha256 header.s=fm2 header.b=Iu1UTnFd; 
  dkim-atps=neutral
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
  [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48WkK51FLszDqTP
- for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 15:18:33 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48WkzP2VpxzDqXM
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Mar 2020 15:48:17 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id B7A8A3E1;
- Mon,  2 Mar 2020 23:18:30 -0500 (EST)
+ by mailout.west.internal (Postfix) with ESMTP id B233B679;
+ Mon,  2 Mar 2020 23:48:14 -0500 (EST)
 Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Mon, 02 Mar 2020 23:18:30 -0500
+ by compute4.internal (MEProxy); Mon, 02 Mar 2020 23:48:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=mrtTa9i11F4Nbd4FUhvGsRzlZdpwwUA
- Er68iI+m9RRo=; b=h/uY3mE5e5Fhs0kAlWRtSzJTx6a/VByHQW7iubEZ866xwOm
- Ebz8jOh+f4X5Dvj/wQkmVjCu1vcCq7a63LTYCrM5AcGJwLbBCyRNK6aR5ITQz6Lj
- sa/hftJy8aUwPe87Qz/3Jk76T8dK5ahaP19uxIsvBNa0hgwy0W1boBsE1DDyjCsh
- 1cmfi54Ap14qzgVJr4q4gf4FfhFDb9WOADkdyfzuLan46gc1rZQKMV3SlSgiX26f
- YW/UnJprH1txeSmYwVzCuGzbX94D2IJecnNaFUUnjBAPnGdC+pmZchCu5P2/L2lp
- ckGuo2IoPv9C7h7J/xFI4ar80sZtamIBKiI2Cyw==
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm2; bh=FCMkBrFR+scHBSKWTNzIyu/xjAIEHVT
+ zz3St2QW+O3k=; b=ZNZVw89Ei4FCHx1V06DuD6zgEhjlxTpwVT2REuh4EBfwD3y
+ xu1iXPKZeXE8ZgJiCZ/MW8dvKAPiC3oLEKyUIanZQgby/bfgAunj9riB7bqeqMSF
+ cK5OTS37TFmiDPTgUlOeBXmZmWLfSAvcTfxTI4ChM9jJi6wkVdrfJ1wXTb2yONVl
+ WLAp4d9hqOx7RE35O/CB30zJhzIDlVX9EPjePVWdMi/6Bxtgu5WmRIt/2u6chbqH
+ 4o+3Bp5xJt/Ngn6IpmhBjfU/ZEscslHvp3T/StM8+8UV1D2TRSZKWYPIkQxXh46v
+ sDSIkowfCV6b3D95LI7uVS6g/huIl/7OtpZOfDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ messagingengine.com; h=content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=mrtTa9
- i11F4Nbd4FUhvGsRzlZdpwwUAEr68iI+m9RRo=; b=Z84G3G4khWasWoswoaryd2
- QsbHime+7++PayA1tCeuQifRnOIj4Svkl/BoaSsdw5eBViqET9MjJLJsiLAsSRSq
- CYvOuy8/+RSoBJsHuq1L86FqjH5K1uauSW01ehlojIbav6qZRaVM+HBI1F8SYmDb
- qoKSiqIXqgGdeUY1b0ibACXMQnAAThcwaVxplxPSck6TFqP08daCREkBuCqIzqix
- gvKedIEOICNDLP25uaqzvFA3xD+px2VKOTU3xPcNVkXhKCnxPDrP/43Eqp53sbNn
- 7036GvO+5zIT61QK+UNe2kQg3bKbUoTAKBRGdfGJIPhN2D/moUykHVROGw2b9KZA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=FCMkBr
+ FR+scHBSKWTNzIyu/xjAIEHVTzz3St2QW+O3k=; b=Iu1UTnFdqx9kbvNIlZV3Cy
+ yYh2uotEIOYWf34P4Pf8283h67FehbGEvtnrgu39W1MfpFcdUYqsuxYvsVDrrsft
+ RwN2FqHBdvo0/Fu6Pz0x0nI6stGgNw+yumIuHre4OdCDT3x1ldexBCJlu9VJVLQJ
+ xOKoO9b3CvKiHBkob5q0jmA++krlQmTc2Ojyd6+2Gys2VvSFmEMJe+3jXBXWLgus
+ zkwSFUf9Uy7UCrPk8qOGrLx5gHWYVVdu9LN/KxHy1OacddyQC82OF33QKjVTjh+R
+ GcAfiZkYyrKzesNq0dKQbDvyMGAHotJ7mc5mPIVsqn+XA/YmhyjXqap1o6wrWwBw
  ==
-X-ME-Sender: <xms:ldpdXoPCCl-i-YeLPnU7_UShXewQSeprgnxwY8Uh2hIKpveHuD0N_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddthedgieejucetufdoteggodetrfdotf
+X-ME-Sender: <xms:jeFdXl7nQsStI6NmMRI1t-VFxOrKOZot-zFLA6eik_YKrehAZxGIZA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddthedgjeefucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlvdefmdenucfjughrpefofgggkfgjfhffhffvufgtsehttdertder
- redtnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrg
- hjrdhiugdrrghuqeenucffohhmrghinhepohhpvghnsghmtgdqphhrohhjvggtthdrgiih
- iienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnh
- gurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:ldpdXuB-g5te1RFzvajUHIdjfEkzV2opWyzIe4kQRcWqljz4CQ7dlA>
- <xmx:ldpdXlcDByUpBtxFEyaNvTkApDc7Ka8OZpCUnKKvvlWv3YDOox44GA>
- <xmx:ldpdXtOzGQxw8OvVIgEnjsNzkDzYn-a5BCgPz9v1GEMppvnAN-BJmA>
- <xmx:ltpdXgSPClaSvURiYYTKqN5G5AWXzUpfWDde87t7j4tqGrCBvB3zNg>
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
+ grihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+ mhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:jeFdXtxeaKeRLJbXBhtL7JJmiNN7Vhr9JBIiq7PGpm4OsOgaw-0YYg>
+ <xmx:jeFdXtbrgbUlHkK7OZwjPSCdqhwOm8SGUdck7hxUAY6556475pWHhQ>
+ <xmx:jeFdXlIMUvpr6TevCS3FMBqsKwSz1d4YSUhUrUhgWtKJFr4xk4TdPg>
+ <xmx:juFdXkBhPoqrw7U57mF1GeaIi58C_bQ8vdG5Id1Qgpj75GvcqgIoiA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 8D99CE00C2; Mon,  2 Mar 2020 23:18:29 -0500 (EST)
+ id 6C52AE00C2; Mon,  2 Mar 2020 23:48:13 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-967-g014f925-fmstable-20200226v1
 Mime-Version: 1.0
-Message-Id: <2e540aa6-1540-46b2-af33-57ddb5ec9554@www.fastmail.com>
-In-Reply-To: <5dd6cbbe-5f58-4370-82c7-55c8dc22ca5b@www.fastmail.com>
-References: <SG2PR04MB3029CF9F520DF543B57B93C2FD100@SG2PR04MB3029.apcprd04.prod.outlook.com>
- <f136d4ad-65e6-4e74-8f53-2ca3edaf9288@www.fastmail.com>
- <SG2PR04MB30295AD664D4B5BD5F24EFD3FD130@SG2PR04MB3029.apcprd04.prod.outlook.com>
- <SG2PR04MB302996468E42284DE73358A6FDEA0@SG2PR04MB3029.apcprd04.prod.outlook.com>
- <5dd6cbbe-5f58-4370-82c7-55c8dc22ca5b@www.fastmail.com>
-Date: Tue, 03 Mar 2020 14:48:29 +1030
+Message-Id: <c2ebd229-edfc-4e9c-877e-313bce3a8c3e@www.fastmail.com>
+In-Reply-To: <OFBAC0E531.E7E68FE5-ON0025851C.0053A4C8-0025851C.0055AA1E@notes.na.collabserv.com>
+References: <OFBAC0E531.E7E68FE5-ON0025851C.0053A4C8-0025851C.0055AA1E@notes.na.collabserv.com>
+Date: Tue, 03 Mar 2020 15:18:12 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Kumar Thangavel" <thangavel.k@hcl.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: obmc-console design for multi host support
+To: "Lakshminarayana R Kammath" <lkammath@in.ibm.com>, openbmc@lists.ozlabs.org
+Subject: Re: [OpenBMC]: Unit test coverage analysis on openbmc repositories
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -95,71 +89,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Thu, 27 Feb 2020, at 20:34, Andrew Jeffery wrote:
+On Sat, 29 Feb 2020, at 02:05, Lakshminarayana R Kammath wrote:
 
-> 
-> You'll need a .bbappend file with a do_install_append() in your machine
-> layer to install the rest of your configuration files.
-> 
+> https://github.com/openbmc/obmc-console.git YES, UNIT TEST
 
-Just following up on the .bbappend - the change for the base recipe is here:
+I need to add coverage support to obmc-console.
 
-https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/29747/1/recipes-phosphor/console/obmc-console_git.bb
+> https://github.com/openbmc/openbmc-tools.git NO
 
-In that context, .bbappends for enabling concurrent console servers should
-look something like this for an example machine called 'foo':
+Not sure we can expect anything for openbmc-tools - it's a collection
+of random scripts people have written to make their life developing
+openbmc easier. It's not something that should have strict QA
+processes.
+
+> https://github.com/openbmc/openpower-host-ipmi-flash.git NO
+
+I should add some tests here where I can.
+
+> https://github.com/openbmc/hiomapd.git YES, UNIT TEST
+> https://github.com/openbmc/libmctp.git YES, UNIT TEST
+> https://github.com/openbmc/phosphor-led-sysfs.git YES, UNIT TEST
+
+These three do in-fact have GCOV/LCOV support, you need to do the usual autotools invocations to get it:
 
 ```
-FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-
-SRC_URI += "file://server.ttyVUART0.conf"
-SRC_URI_append_foo = " file://client.2201.conf"
-SRC_URI_append_foo = " file://server.ttyVUART1.conf"
-
-SRC_URI_remove = "file://${BPN}.conf"
-
-REGISTERED_SERVICES_${PN}_append_foo = " obmc_console_guests:tcp:2201:"
-
-SYSTEMD_SERVICE_${PN}_append_foo = " obmc-console-ssh@2200.service \
-		obmc-console-ssh@2201.service \
-                "
-SYSTEMD_SERVICE_${PN}_remove_foo = "obmc-console-ssh.socket"
-
-FILES_${PN}_remove_foo = "/lib/systemd/system/obmc-console-ssh@.service.d/use-socket.conf"
-
-EXTRA_OECONF_append_foo = " --enable-concurrent-servers"
-
-do_install_append_foo() {
-        # Install configuration for the servers and clients. Keep commandline
-        # compatibility with previous configurations by defaulting to not
-        # specifying a socket-id for VUART0/2200
-        install -m 0755 -d ${D}${sysconfdir}/${BPN}
-
-        # Remove the default client configuration as we don't to define a
-        # socket-id for the 2200 console
-        rm -f ${D}${sysconfdir}/${BPN}/client.2200.conf
-
-        # However, now link to /dev/null as a way of not specifying a
-        # socket-id while having a configuration file present. We need to
-        # provide a configuration path to meet the requirements of the packaged
-        # unit file.
-        ln -sr ${D}/dev/null ${D}${sysconfdir}/${BPN}/client.2200.conf
-
-        # We need to populate socket-id for remaining consoles
-        install -m 0644 ${WORKDIR}/client.2201.conf ${D}${sysconfdir}/${BPN}/
-
-        # Install configuration for remaining servers - the base recipe
-        # installs the configuration for the first.
-        install -m 0644 ${WORKDIR}/server.ttyVUART1.conf ${D}${sysconfdir}/${BPN}/
-}
+./configure --enable-code-coverage && make check-code-coverage
 ```
 
-Hope that helps.
+> https://github.com/openbmc/phosphor-mboxd.git ERROR
+
+This is archived.
+
+...
+
+> https://github.com/openbmc/u-boot NO
+
+This uses Kbuild as a build system. I notice openbmc/linux and openbmc/qemu aren't included in the list.
+
+> https://github.com/openbmc/webui-vue.git NO
+> https://github.com/openbmc/witherspoon-pfault-analysis.git YES, COVERAGE
+> https://github.com/openbmc/x86-power-control.git NO
+> *************************UNIT TEST COVERAGE 
+> REPORT*************************
+> SUMMARY:
+> TOTAL REPOSITORIES : 110
+> TESTED REPOSITORIES : 43
+> ERROR : 11
+> COVERAGE REPORT : 12
+> UNIT TEST REPORT : 31
+> NO REPORT : 56
+> ***************************************************************************
+> Following actions, we can draw from above
+> 
+>  1. *There are 12 repo's that have GCOV/LCOV plugged in* - We need to 
+> maintain which has good coverage and try to improve those which has 
+> less coverage
+>  2. *There are 31 repo's that have unit test cases added but no 
+> coverage analysis because they aren't plugged in yet to GCOV/LCOV* - Is 
+> there a plan for plugging in GCOV
+
+As above at least three of these are false-negatives for test coverage.
 
 Andrew
