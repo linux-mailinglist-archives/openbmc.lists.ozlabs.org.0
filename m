@@ -2,62 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A30A176F75
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 07:31:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3326B176F7C
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 07:32:19 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48WnFt4KhjzDqXw
-	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 17:30:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48WnHN4NvpzDqgD
+	for <lists+openbmc@lfdr.de>; Tue,  3 Mar 2020 17:32:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1041;
- helo=mail-pj1-x1041.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::641;
+ helo=mail-pl1-x641.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=APn8RafP; dkim-atps=neutral
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com
- [IPv6:2607:f8b0:4864:20::1041])
+ header.s=20161025 header.b=EAYDCY7S; dkim-atps=neutral
+Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
+ [IPv6:2607:f8b0:4864:20::641])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Wn5l47PFzDqXl;
- Tue,  3 Mar 2020 17:23:55 +1100 (AEDT)
-Received: by mail-pj1-x1041.google.com with SMTP id a18so877016pjs.5;
- Mon, 02 Mar 2020 22:23:55 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48Wn5m5HSFzDqY2;
+ Tue,  3 Mar 2020 17:23:56 +1100 (AEDT)
+Received: by mail-pl1-x641.google.com with SMTP id u3so840426plr.9;
+ Mon, 02 Mar 2020 22:23:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=AJWVhyWnEHa+16Vui1urxy6sASoDRCYbuAsm+q77gXs=;
- b=APn8RafPWLC33RJLX6TCTiGRb/43wtYEQOud3T6k/8l5hLjc08tRx5C2qRpMKAeAnA
- ZPB2XlcQcSz9uRgyvmkWsVWp0jwp1wCNBPnad6vFVDVgsCX7qWcBNGDtydlsYjgG13Q+
- JPV+xK6HbibTroJ3PMREqbZCjC2J3dM2lgB5dIEzYSPexKJsny6YxFQDl4qg4QY8BST3
- rHz4Oc+wu/2kDQkW2NZYRd2BfOC2YUuymHLrN3DmnonUFyvtJXl59/oS/JHfUjlQE7xS
- mNtZFeAbRKyTFr7R2IqrYDyjfq/sqh8R3AhV/pFlCnjw23rnbfifPejKh/05DDLnH7v+
- WkjA==
+ bh=TI3Z8YY503FP0KWJnGcP8fCbF2AkQr8pkKXqhxZsBmc=;
+ b=EAYDCY7S4bhB2WRC9nvVwFPyK5XgymtItdht/AXBXjWl4G4vRkAEs0a89EbW9UXGJK
+ 4AMHFHAVVrfXI6FGDnx3vHen7TN5/Bm2Nb0g3b3G83Dm5Yba+V9doMYTV2kSoU0LcqSV
+ xcX2Os7LGLf/Um4io/wG7mTQVJVlazLWmGGyJIw5Yyk/N5LrLZ7QB1B4VGhb4lViumw3
+ UZa0wiEtq3EuGyFUBCQ6rsGYCpdkivrV2VtUz+Uxkh47VVeKg7EwReRulojx6iBgrnb3
+ pSrVqaGSdo5F0T7KirZrS113pbsX+uxXRBVqy0ZVgnqvKvY5B9RDlEJjcdfYJ2x7axJ0
+ /2rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=AJWVhyWnEHa+16Vui1urxy6sASoDRCYbuAsm+q77gXs=;
- b=i8dBk3T5yTRNRy7ZJZ7B37v1x5Rl1hVMWDUchxZH2ZH+VQu2/N7H2IiLduuypeGlyr
- IqQRqkWNDLvxI6AY7wn0x6vfyTlrATX/BB2VbMhuU4Z/QO4dBiFfBLGUZba7UDqzHF86
- nA1IwAzUfkUYRYpM0Sxew1L+QcGygY+ZfClAHnuLCpyrB2Dn45EX8IYwWNDaNF7S5VK4
- hKxSNP0WLu1SZukMzMbYjr/j9AHotm/VUhzGH1W/fL6+oEv4vuEmwEPcVWBWliGyR08R
- oOeuimzsPZpYfY4HBdgBACZb7/Fk89Z7FLlSHzVGApBTsT+81k/h4xwKtijJIVTZkSZo
- hoDg==
-X-Gm-Message-State: ANhLgQ17bu3VpZP7+YVeF3ZGOjPAckzfuHUX2bxVhMbiDzTA5ZQhjESP
- c1pjsDrXYSXrzjwHf72VSjs=
-X-Google-Smtp-Source: ADFU+vu9XHZAPJ11uio30zd0ulJFBhMoXCNmPsvqw6amAMfXgqEAt3txRdMXOBF/hDXaXINhU1En/w==
-X-Received: by 2002:a17:90a:fb4d:: with SMTP id
- iq13mr2332424pjb.165.1583216632735; 
- Mon, 02 Mar 2020 22:23:52 -0800 (PST)
+ bh=TI3Z8YY503FP0KWJnGcP8fCbF2AkQr8pkKXqhxZsBmc=;
+ b=NuuJybxsZieYKB2Vd0/S/4KWTJlo+pN/RMziJgeQ/yQpIIp1r0NUSKl2BQIBKDTIbD
+ 7HJP9EJMg4NAoxLn3mhRlC2a/Tg2RYbahSa4wCc8AdPDqS4pyNFRf/7yrr2ZjWgYNnSM
+ p8pogZxIWGSDvMSZZQ5H4vt6O+1X4BWINOkJdbxcx9BoKxgdRF3tOIHkJAd1zfNq7HGM
+ JlsmIpUMvu4uYKZeNqj8l9kAkHqRjhjP6GshQmsm3QCNVoOnADax68RAo9Sb9DzKBnpv
+ 1RDxUelt+xjtp0j8Mv6BBOh0cy7erXtR+f2UmjghAHOgw6mn9msEn0622Y328fgvnzpj
+ cv1w==
+X-Gm-Message-State: ANhLgQ3OpIblrgyV3kXwnmc7vX/3Iag0CZcWYgcpqrS+rrWnTrCGTLxF
+ Bhfxx0YK6nIVArluxSNSpwE=
+X-Google-Smtp-Source: ADFU+vt9tRuqC9HtMQlJWQEOzdX43o3XQH7276qTwTP1ViurSta8NASB80y6m5uKUP303TtRaWHTww==
+X-Received: by 2002:a17:90a:f009:: with SMTP id
+ bt9mr2411146pjb.150.1583216634072; 
+ Mon, 02 Mar 2020 22:23:54 -0800 (PST)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  (c-24-4-25-55.hsd1.ca.comcast.net. [24.4.25.55])
- by smtp.gmail.com with ESMTPSA id k5sm7453526pfp.66.2020.03.02.22.23.51
+ by smtp.gmail.com with ESMTPSA id k5sm7453526pfp.66.2020.03.02.22.23.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Mar 2020 22:23:52 -0800 (PST)
+ Mon, 02 Mar 2020 22:23:53 -0800 (PST)
 From: rentao.bupt@gmail.com
 To: Felipe Balbi <balbi@kernel.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -70,10 +70,10 @@ To: Felipe Balbi <balbi@kernel.org>,
  linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH v7 5/7] ARM: dts: aspeed-g5: add vhub port and endpoint
+Subject: [PATCH v7 6/7] ARM: dts: aspeed-g4: add vhub port and endpoint
  properties
-Date: Mon,  2 Mar 2020 22:23:34 -0800
-Message-Id: <20200303062336.7361-6-rentao.bupt@gmail.com>
+Date: Mon,  2 Mar 2020 22:23:35 -0800
+Message-Id: <20200303062336.7361-7-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200303062336.7361-1-rentao.bupt@gmail.com>
 References: <20200303062336.7361-1-rentao.bupt@gmail.com>
@@ -104,21 +104,21 @@ Reviewed-by: Joel Stanley <joel@jms.id.au>
  No change in v2/v3/v4/v5/v6/v7.
    - It's given v7 to align with the version of the patch series.
 
- arch/arm/boot/dts/aspeed-g5.dtsi | 2 ++
+ arch/arm/boot/dts/aspeed-g4.dtsi | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-g5.dtsi b/arch/arm/boot/dts/aspeed-g5.dtsi
-index ebec0fa8baa7..f12ec04d3cbc 100644
---- a/arch/arm/boot/dts/aspeed-g5.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g5.dtsi
-@@ -195,6 +195,8 @@
+diff --git a/arch/arm/boot/dts/aspeed-g4.dtsi b/arch/arm/boot/dts/aspeed-g4.dtsi
+index 807a0fc20670..8e04303e8514 100644
+--- a/arch/arm/boot/dts/aspeed-g4.dtsi
++++ b/arch/arm/boot/dts/aspeed-g4.dtsi
+@@ -164,6 +164,8 @@
  			reg = <0x1e6a0000 0x300>;
  			interrupts = <5>;
  			clocks = <&syscon ASPEED_CLK_GATE_USBPORT1CLK>;
 +			aspeed,vhub-downstream-ports = <5>;
 +			aspeed,vhub-generic-endpoints = <15>;
  			pinctrl-names = "default";
- 			pinctrl-0 = <&pinctrl_usb2ad_default>;
+ 			pinctrl-0 = <&pinctrl_usb2d_default>;
  			status = "disabled";
 -- 
 2.17.1
