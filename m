@@ -2,51 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ACFB1792E3
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 15:58:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3DAF1794D1
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 17:17:14 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48XcT24J4wzDqYY
-	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 01:58:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48XfCr0CLDzDqVc
+	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 03:17:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.194;
+ helo=mail-oi1-f194.google.com; envelope-from=robherring2@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=126.com
- (client-ip=220.181.15.37; helo=m15-37.126.com;
- envelope-from=guilin1985@126.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256
- header.s=s110527 header.b=kLMcS5k9; dkim-atps=neutral
-Received: from m15-37.126.com (m15-37.126.com [220.181.15.37])
- (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from mail-oi1-f194.google.com (mail-oi1-f194.google.com
+ [209.85.167.194])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48XcS92xllzDqVR
- for <openbmc@lists.ozlabs.org>; Thu,  5 Mar 2020 01:57:43 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=jhBGZ
- w2sYI4W13WitbgP56LDSz92VftCD2h7BaL7//8=; b=kLMcS5k9kkjZV/1V9dzQj
- MQ4s8Liy1hkkJnXNxUmYoOn7HhQyABeOt9OclFD+RTxZRvwJ6TvjF0TpC5ehn2Xo
- Nft4c5jkySvWftR8mxPHaO2qiMK+l1JQF1YHvbhGKylq+kZeRUMs7C0FRaYv8lKT
- I8UozfcQvuywdbQWPmfgBU=
-Received: from guilin1985$126.com ( [218.88.47.219] ) by
- ajax-webmail-wmsvr37 (Coremail) ; Wed, 4 Mar 2020 22:27:05 +0800 (CST)
-X-Originating-IP: [218.88.47.219]
-Date: Wed, 4 Mar 2020 22:27:05 +0800 (CST)
-From: =?GBK?B?sKK58A==?= <guilin1985@126.com>
-To: openbmc@lists.ozlabs.org
-Subject: OpenBMC's "virtual media"  Is jsnbd not support windows ISO?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 126com
-Content-Type: multipart/alternative; 
- boundary="----=_Part_126418_18286312.1583332025018"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48XfBm1TtxzDqRw;
+ Thu,  5 Mar 2020 03:16:15 +1100 (AEDT)
+Received: by mail-oi1-f194.google.com with SMTP id d62so2606412oia.11;
+ Wed, 04 Mar 2020 08:16:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=GhAsniKvYUMptrJyDO+p1c/FdpaCICij3vPs9vpAABc=;
+ b=kri7NPcRxES9uAKiGgi8JBURmss2a8WmJe9/edZeLDjBNapvwg0l7D4spJWHy1JX1H
+ toADDwMWpGuA5Giuo+VVDqpgcJzf7oO2Fp/g336dDIqLuAVe9KmVioVVFk3eCenr5vQm
+ s1Eu/DDQwjNaRpMTRJZCBhusZIUY5kKp44dHfrlmCtdGFSLs/aOVwxIWrQlwQEXmKaDQ
+ NMSHbG9Vgq7wJH9WsGDVa5b0/5VOSjGdEBwULIpL2VMcHYWt4WrxKSVhJUezxeblfakj
+ 5yqBhs/K3Wj7HcQP3UKcXbXCGtV1dbtfhKghOxTEytAoU0Il/ed1MZBa6cgWAcUV3V9Z
+ qR1A==
+X-Gm-Message-State: ANhLgQ18KK7G5+rhxpVRHeURYqNGaa0rlZ8VDemvYfTXVFsxRDweCZh2
+ I1egE9/WOu2zQ522np8+Og==
+X-Google-Smtp-Source: ADFU+vscMM6br/Xn3C+U6tfhoqQLV4NMo3JZu/sSuSbhBxEB3/oNdCr4+Z6EvzgPb0uWjeursQTGaw==
+X-Received: by 2002:aca:4f8e:: with SMTP id d136mr2309174oib.77.1583338572096; 
+ Wed, 04 Mar 2020 08:16:12 -0800 (PST)
+Received: from rob-hp-laptop (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id s83sm8891708oif.33.2020.03.04.08.16.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Mar 2020 08:16:11 -0800 (PST)
+Received: (nullmailer pid 26946 invoked by uid 1000);
+ Wed, 04 Mar 2020 16:16:10 -0000
+Date: Wed, 4 Mar 2020 10:16:10 -0600
+From: Rob Herring <robh@kernel.org>
+To: rentao.bupt@gmail.com
+Subject: Re: [PATCH v7 7/7] dt-bindings: usb: add documentation for aspeed
+ usb-vhub
+Message-ID: <20200304161610.GA26873@bogus>
+References: <20200303062336.7361-1-rentao.bupt@gmail.com>
+ <20200303062336.7361-8-rentao.bupt@gmail.com>
 MIME-Version: 1.0
-Message-ID: <d2ea246.8692.170a5f162ba.Coremail.guilin1985@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: JcqowEBp1UK6ul9ekwNZAA--.60119W
-X-CM-SenderInfo: xjxlzxrqrzmka6rslhhfrp/1tbi3Brch1pD+S4iuwAAsK
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200303062336.7361-8-rentao.bupt@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,65 +71,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
+ linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ linux-usb@vger.kernel.org, taoren@fb.com, linux-kernel@vger.kernel.org,
+ Stephen Boyd <swboyd@chromium.org>, Tao Ren <rentao.bupt@gmail.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Chunfeng Yun <chunfeng.yun@mediatek.com>,
+ Colin Ian King <colin.king@canonical.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_126418_18286312.1583332025018
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+On Mon,  2 Mar 2020 22:23:36 -0800, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
+> 
+> Add device tree binding documentation for the Aspeed USB 2.0 Virtual HUb
+> Controller.
+> 
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> ---
+>  Changes in v7:
+>    - updated to dual license.
+>    - removed description for "reg" and "clocks" properties.
+>    - Added constraints (minimum/maximum/default) for vendor specific
+>      properties.
+>  Changes in v6:
+>    - added 2 required properties into example and passed "make
+>      dt_binding_check".
+>  Changes in v5:
+>    - updated maintainer to Ben.
+>    - refined patch description per Joel's suggestion.
+>  No change in v2/v3/v4:
+>    - the patch is added to the patch series since v4.
+> 
+>  .../bindings/usb/aspeed,usb-vhub.yaml         | 77 +++++++++++++++++++
+>  1 file changed, 77 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
+> 
 
-ICAgICAgSGkgQWxsLiAgSSBzZWUgdGhlIGZlYXR1cmVzIG9mIE9wZW5CTUMncyAidmlydHVhbCBt
-ZWRpYSIgaGFkIGZpbmlzaGVkIGZvciBhIGxvbmcgdGltZS4gIApCdXQgd2hlbiBpIHVzZSBhIGxp
-bnV4IElTTyBmaWxlLCBpdCB3b3JrcyBvaywgYW5kIHdoZW4gaSB1c2UgYSB3aW5kb3dzIElTTyAs
-aXQgc2FtZXMgdGhlIElTTyBwYXJ0aXRpb24gaXMgbm90IHJlY29nbml6ZWQuCkkgY3JlYXQgYSBu
-YmQtc2VydmVyIGluIG15IHVidW50dSBzeXN0ZW0gd2l0aCBhIHdpbmRvd3MgSVNPLCAgYW5kIHRo
-ZW4gb3BlbmJtYydzIG5iZC1jbGllbnQgIGNvbm5lY3RlIG5iZC1zZXJ2ZXIgd2VsbC4gCiAgICAg
-VGhlIGRpZmZlcmVuY2UgYmV0d2VlbiB0aGUgdHdvIGlzIG9wZW5ibWMgdXNlIG5iZC1wcm94eSBp
-bnN0ZWFkIG9mIG5iZC1zZXJ2ZXIuICBTbywgaXMgY3VycmVudCBqc25iZCBub3Qgc3VwcG9ydCB3
-aW5kb3dzIElTTz8=
-------=_Part_126418_18286312.1583332025018
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
-
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzYsIDQxLCA0
-Nik7IGZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90
-O1NlZ29lIFVJJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBs
-ZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkgRW1vamkmcXVvdDs7IGZvbnQtc2l6
-ZTogMThweDsiPiZuYnNwOyAmbmJzcDsgJm5ic3A7IEhpIEFsbC4mbmJzcDsgSSBzZWUgdGhlJm5i
-c3A7PC9zcGFuPjxmb250IGNvbG9yPSIjMjQyOTJlIiBmYWNlPSItYXBwbGUtc3lzdGVtLCBCbGlu
-a01hY1N5c3RlbUZvbnQsIFNlZ29lIFVJLCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCBB
-cHBsZSBDb2xvciBFbW9qaSwgU2Vnb2UgVUkgRW1vamkiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
-IDE4cHg7Ij5mZWF0dXJlcyBvZiBPcGVuQk1DJ3MgIjwvc3Bhbj48L2ZvbnQ+PHNwYW4gc3R5bGU9
-ImNvbG9yOiByZ2IoMzYsIDQxLCA0Nik7IGZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBCbGlu
-a01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCBIZWx2ZXRpY2EsIEFyaWFsLCBz
-YW5zLXNlcmlmLCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vnb2UgVUkg
-RW1vamkmcXVvdDs7IGZvbnQtc2l6ZTogMThweDsiPnZpcnR1YWwgbWVkaWEiIGhhZCBmaW5pc2hl
-ZCBmb3IgYSBsb25nIHRpbWU8L3NwYW4+PGZvbnQgY29sb3I9IiMyNDI5MmUiIGZhY2U9Ii1hcHBs
-ZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgU2Vnb2UgVUksIEhlbHZldGljYSwgQXJpYWws
-IHNhbnMtc2VyaWYsIEFwcGxlIENvbG9yIEVtb2ppLCBTZWdvZSBVSSBFbW9qaSI+PHNwYW4gc3R5
-bGU9ImZvbnQtc2l6ZTogMThweDsiPi4mbmJzcDs8L3NwYW4+PC9mb250PjxzcGFuIHN0eWxlPSJj
-b2xvcjogcmdiKDM2LCA0MSwgNDYpOyBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtN
-YWNTeXN0ZW1Gb250LCAmcXVvdDtTZWdvZSBVSSZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fu
-cy1zZXJpZiwgJnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVt
-b2ppJnF1b3Q7OyBmb250LXNpemU6IDE4cHg7Ij4mbmJzcDs8L3NwYW4+PC9kaXY+PGRpdj48c3Bh
-biBzdHlsZT0iY29sb3I6IHJnYigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0
-ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwg
-QXJpYWwsIHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtT
-ZWdvZSBVSSBFbW9qaSZxdW90OzsgZm9udC1zaXplOiAxOHB4OyI+QnV0IHdoZW4gaSB1c2UgYSBs
-aW51eCBJU08gZmlsZSwgaXQgd29ya3Mgb2ssIGFuZCB3aGVuIGkgdXNlIGEgd2luZG93cyBJU08g
-LGl0IHNhbWVzIHRoZSBJU08gcGFydGl0aW9uIGlzIG5vdCByZWNvZ25pemVkLjwvc3Bhbj48L2Rp
-dj48ZGl2Pjxmb250IGNvbG9yPSIjMjQyOTJlIiBmYWNlPSItYXBwbGUtc3lzdGVtLCBCbGlua01h
-Y1N5c3RlbUZvbnQsIFNlZ29lIFVJLCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNlcmlmLCBBcHBs
-ZSBDb2xvciBFbW9qaSwgU2Vnb2UgVUkgRW1vamkiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDE4
-cHg7Ij5JIGNyZWF0IGEgbmJkLXNlcnZlciBpbiBteSB1YnVudHUgc3lzdGVtIHdpdGggYSB3aW5k
-b3dzIElTTywmbmJzcDsgYW5kIHRoZW4gb3BlbmJtYydzIG5iZC1jbGllbnQmbmJzcDsgY29ubmVj
-dGUgbmJkLXNlcnZlciB3ZWxsLiZuYnNwOzwvc3Bhbj48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBj
-b2xvcj0iIzI0MjkyZSIgZmFjZT0iLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCBT
-ZWdvZSBVSSwgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwgQXBwbGUgQ29sb3IgRW1vamks
-IFNlZ29lIFVJIEVtb2ppIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOiAxOHB4OyI+Jm5ic3A7ICZu
-YnNwOyAmbmJzcDtUaGUgZGlmZmVyZW5jZSBiZXR3ZWVuIHRoZSB0d28gaXMgb3BlbmJtYyB1c2Ug
-bmJkLXByb3h5IGluc3RlYWQgb2YgbmJkLXNlcnZlci4mbmJzcDsgU28sIGlzIGN1cnJlbnQganNu
-YmQgbm90IHN1cHBvcnQgd2luZG93cyBJU08/PC9zcGFuPjwvZm9udD48L2Rpdj48L2Rpdj4=
-------=_Part_126418_18286312.1583332025018--
-
+Reviewed-by: Rob Herring <robh@kernel.org>
