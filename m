@@ -1,77 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3502B1798E5
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 20:22:04 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48XkK54SqGzDqfZ
-	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 06:22:01 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B996179B4B
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 22:52:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Xnfj3cS1zDqYY
+	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 08:52:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::343;
+ helo=mail-ot1-x343.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=akKunSq4; dkim-atps=neutral
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com
+ [IPv6:2607:f8b0:4864:20::343])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48XkJR4RkjzDq5W
- for <openbmc@lists.ozlabs.org>; Thu,  5 Mar 2020 06:21:27 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 024JLDPD068374
- for <openbmc@lists.ozlabs.org>; Wed, 4 Mar 2020 14:21:24 -0500
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.111])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2yhhy72sq2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 04 Mar 2020 14:21:24 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Wed, 4 Mar 2020 19:21:24 -0000
-Received: from us1b3-smtp06.a3dr.sjc01.isc4sb.com (10.122.203.184)
- by smtp.notes.na.collabserv.com (10.122.47.52) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 4 Mar 2020 19:21:20 -0000
-Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
- by us1b3-smtp06.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020030419211973-815860 ;
- Wed, 4 Mar 2020 19:21:19 +0000 
-In-Reply-To: <OF85141839.E61946A0-ON00258521.0044A2A8-00258521.0044A2AE@notes.na.collabserv.com>
-Subject: Re: OpenBMC GUI Design Workgroup - Today 10:00 AM CST
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: "Derick Montague" <Derick.Montague@ibm.com>
-Date: Wed, 4 Mar 2020 19:21:20 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <OF85141839.E61946A0-ON00258521.0044A2A8-00258521.0044A2AE@notes.na.collabserv.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 16843
-X-TNEFEvaluated: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48XndQ6k2LzDqM2
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Mar 2020 08:51:22 +1100 (AEDT)
+Received: by mail-ot1-x343.google.com with SMTP id f21so3592341otp.12
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Mar 2020 13:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=JJPycKz/YY1Gdao2BwCXHkfh6EhEJsGovm3N8RiTt/o=;
+ b=akKunSq4lsAesARp1N4aYcbPuTfuml4a4+9HmcJZqFfpxqIZNqjrJq3NvfE5tR+AVS
+ zkcKclP2Jb6fF7j9MsKrfduUpzKvT4dmFe7SSN7Q3BlvtN7L6f9cMBfYl+AYhNEZFetF
+ uR9tNdk5yyEQ+zh/QyYv0ciDzkB34MTxUVqb6suWQ6tHIDXdmpf9VK5X1YT49S9VtSmF
+ 9JlyKt59DPeJB9Gir7Wr9MaUPmY0Acia4DGK5Q8tPkP/Qn5aqpVhxM1NGUMPwiwNNRtf
+ 10luZ8rLwTMQh+RpemRsJ9ABW9C3I/lw+GzSwviDvPb/MjluVFx1nuMx8w9HpQc8fR7n
+ FdXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=JJPycKz/YY1Gdao2BwCXHkfh6EhEJsGovm3N8RiTt/o=;
+ b=ENrfKyFmrhEtD4iZhqiY3Kjr4yAOY19PwVdLSHyTaNcCTWJ5fxalC8t5kRuTq9j8Vk
+ SZIehZeqNcyufZbyDhh5PEy5+bYE1tWC93CZe/HcvCmMR75lzXHsUBQDmbPWMpqY0oxq
+ YfrhRM9DmDsVHerEBkqvQ5V4X6opZHB96hVBwHwx9i+8yAjD6WyKwKc3uEEXYwqZ7CWj
+ 9CIPxHJl2uqAYsn9R/tTq8P5lzEgl8aqlVlaJDVvNvxt4lSceiE0jVefWUIMLbIWNNcw
+ +M4Mc20zgv2hF6fMtVYjafl7QcZXyJUT2IvGKV0SYbjPyXc/Rdi9JKCEZS0F5GF4VG1b
+ mEeg==
+X-Gm-Message-State: ANhLgQ3wAUZO2sR5Fq02iT43F3zW88SRQyE8VZhQfMi/lMY8qd10h/az
+ foXUokI/oVSpkQJIknQgAbArKDRnmpQ=
+X-Google-Smtp-Source: ADFU+vt8NE/10bEWxBSnF/PtazmNPU+J3z1G2Qz551Tq8VjprknF85mZUYfSe84GdhIvfHUw74MaSw==
+X-Received: by 2002:a9d:6197:: with SMTP id g23mr4074097otk.239.1583358675863; 
+ Wed, 04 Mar 2020 13:51:15 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:5187:9c8f:6e2f:fa36])
+ by smtp.gmail.com with ESMTPSA id p5sm673639otp.4.2020.03.04.13.51.14
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 04 Mar 2020 13:51:15 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: BMC Compiling and running
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <CA+k9xxYnQEZu=_ig+rRDJ8mMxyFDmg0MFgvOpAt-cf=t=vE8fQ@mail.gmail.com>
+Date: Wed, 4 Mar 2020 15:51:14 -0600
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20030419-3633-0000-0000-000001D1B487
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.437038; ST=0; TS=0; UL=0; ISC=; MB=0.262912
-X-IBM-SpamModules-Versions: BY=3.00012687; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000293; SDB=6.01342931; UDB=6.00715848; IPR=6.01125319; 
- MB=3.00031080; MTD=3.00000008; XFM=3.00000015; UTC=2020-03-04 19:21:22
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-03-04 11:36:52 - 6.00011077
-x-cbparentid: 20030419-3634-0000-0000-0000AD62CB67
-Message-Id: <OF783D8D46.A2308282-ON00258521.0069ADA5-00258521.006A52C8@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-03-04_08:2020-03-04,
- 2020-03-04 signatures=0
-X-Proofpoint-Spam-Reason: safe
+Message-Id: <8D31D6B1-20C3-4AD2-87B4-C01E84867D15@gmail.com>
+References: <CA+k9xxb=5KMq+yruOAja9L9asquJ=FNPMoajyOsdHda2Ae3jTw@mail.gmail.com>
+ <31609.1583172370@localhost> <5B1DBB16-3568-482E-91DC-5E35399D1888@gmail.com>
+ <CA+k9xxYnQEZu=_ig+rRDJ8mMxyFDmg0MFgvOpAt-cf=t=vE8fQ@mail.gmail.com>
+To: Samuel Herts <sdherts@gmail.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,121 +83,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, Michael Richardson <mcr@sandelman.ca>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thank you everyone for the active and productive session today. Below are t=
-he notes:
-
-> In today's GUI Design Workgroup, we will will be discussing:
->
->
->- Vue Roadmap progress
->- Web UI color palette
->- Documentation progress (alerts, buttons, toasts)
->- Reference Id table column name in Event Logs
->- Date and Time design updates
->- Local User management review
-
-Road Map
-
-- Reviewed IBM's WIP ZenHub board for their current sprint
-    - Translation progress
-    - Feature toggle to provide support for more upstream development to su=
-pport different systems
-    - Date and Time research and design
-    - Local user management implementation progress
-    - Reboot BMC implementation
-    - Power server operations is WIP
-    - Overview page using Redfish API to display data
-
-Design story progress and feedback tracking
-
-- Determined that we will continue the pattern for tracking design reviews =
-in a Github story in the webui-vue branch
-    - Github story will contain link to Invision prototype
-    - Comments are best captured in Github, but can be created in Invision =
-as well. Designer will add comments to Github story as needed
-    - Design evolution and final design should be screen captured and added=
- to the Github story where it can be preserved
-- IBM design team will begin this process which will be evaluated for impro=
-vements in future workgroup meetings
-
-Color Palette
-
-- IBM has proposed a refined color palette based on the Bootstrap framework=
-s Theming guidelines (https://gerrit.openbmc-project.xyz/c/openbmc/webui-vu=
-e/+/29965)
-- Reviewed the colors and an overview of how they can be easily updated dow=
-nstream for branding purposes
-- Slightly more extensive color palette to improve the theming of components
-- Full documentation is partially completed explaining customization and th=
-e theming process
-- Workgroup was happy with the proposal
-
-Event Logs and the Reference Code column
-
-IBM needs a table column that contains a code the users and customer suppor=
-t can use to troubleshoot issues. The column name was previously based on a=
-n IBM proprietary naming. Through user testing the IBM OpenBMC design squad=
- has updated the column title to Reference Id.
-
-- Will not be needed for Intel systems currently
-- Intel systems need ID (currently can be toggled off in Intel GUI), status=
-, and description
-- Intel does not use the Systems Log page that is upstream.
-- Phoenix expressed the need for a solution for improving the experience on=
- small screens and make it easier to view the most important information. A=
-ll workgroup members agreed this was description.
-- New Event Log design with filter menu had not been seen by the current Wo=
-rkgroup members. IBM will create a Github story and send more requests for =
-feedback to the community.
-- Phoenix suggested not needed a redundant column displayed in the table du=
-ring filtering, e.g. hide severity column if filter is based on a severity =
-value
-- Determined this may be a future enhancement following priority work in pr=
-ocess
-- Need to write the GUI to have a dynamic event log table that only display=
-s a column if present in the JSON response
-    - Another option might be some type of page flag that can be set either=
- globally or in a single file component
-
-Language Translation
-
-- Intel and Phoenix noted that languages should be displayed in the native =
-language, e.g. Spanish should be Espa=C3=B1ol
-- IBM asked for for feedback on or a use case for the user being able to ch=
-ange the language after login since currently the user makes their language=
- preference on the login screen.
-    - Pros for and against. IBM will conduct more research to determine if =
-there is a need and the best pattern for enabling if needed.
-
-Date and Time Design
-
-- Phoenix discussed a "sync to ntp" use case there during setup the system =
-is connected to the internet in order for the admin to connect to an NTP se=
-rver to set the Host RTC and then disconnect from the internet
-    - Intel noted that they ask admins to update the time in the BIOS to se=
-t the Host RTC.
-    - Possible future enhancement
-- Design for Date and Time will allow flexibility for different functionali=
-ty, e.g IBM systems allow for NTP or manual time entry, while Intel systems=
- offer NTP or RTC only.
-- Need a toggle or flag to allow for both options to live upstream.
-
-Action Items
-
-- Start adding design review stories to Github
-    - Update event logs prototype and send to community
-    - Date and Time
-    - Color palette with alert and toast components
-- Update language menu options to display in native language
 
 
-Review in the wiki: https://github.com/openbmc/openbmc/wiki/GUI-Design-work=
--group#030420
-=20
-=20
-=20
+> On Mar 4, 2020, at 12:46 PM, Samuel Herts <sdherts@gmail.com> wrote:
+>=20
+> Yes, this seems to have fixed that issue. Thank you.
+>=20
+> When starting up the phosphor-bmc-state-manager on its own, everything =
+appears to work fine, but when I restart using systemctl the journal =
+entries do not appear to show any of my functions working. Previously =
+the hello world would show up in the journal entry, but after adding =
+more code, specifically the code seen below, nothing appears after =
+systemctl starts it.
+
+If you cat the system service file,
+cat /lib/systemd/system/xyz.openbmc_project.State.BMC.service
+
+you=E2=80=99ll see that it hard codes the path to the state manager =
+binary,
+ExecStart=3D/usr/bin/phosphor-bmc-state-manager
+
+So on Romulus QEMU you should be able to directly edit the
+file and point to your binary.  You=E2=80=99ll need to tell systemd to =
+reload
+once you edit the file:
+systemctl daemon-reload
+
+Or just stop the service and copy your version of the binary over
+/usr/bin/phosphor-bmc-state-manager
+
+On some systems, the filesystem may be read-only, you can mount
+an overlay and then do the copy:
+mkdir -p /tmp/persist/usr
+mkdir -p /tmp/persist/work/usr
+mount -t overlay -o =
+lowerdir=3D/usr,upperdir=3D/tmp/persist/usr,workdir=3D/tmp/persist/work/us=
+r overlay /usr
+
+> <image.png>
+> And here is the journal entry. All of the compiling has been working =
+flawlessly since.
+> <image.png>
+>=20
+> On Mon, Mar 2, 2020 at 9:51 PM Andrew Geissler <geissonator@gmail.com> =
+wrote:
+>=20
+>=20
+> > On Mar 2, 2020, at 12:06 PM, Michael Richardson <mcr@sandelman.ca> =
+wrote:
+> >=20
+> > Samuel Herts <sdherts@gmail.com> wrote:
+> >> Apologies for all the constant questions. I am trying to add code =
+to the
+> >> Hello World tutorial, specifically a system call to run a shell =
+script on
+> >> the QEMU BMC. The problem I run into is in the image below. My bmc =
+state
+> >> manager main looks like the following as well.
+> >=20
+> > It looks like your hello world program was not properly linked.
+> > Usually, that results in no executable being created.
+> > Maybe, you linked against a different version of a share library =
+than is in
+> > the target image.
+>=20
+> Yes, most likely your SDK that you are using to build the bmc =
+application
+> does not match the level of code your are running in QEMU.
+>=20
+> If you=E2=80=99re using images from jenkins, try and match the git =
+commit
+> id=E2=80=99s up in these 2 jobs (for your image and SDK)
+>=20
+> =
+https://openpower.xyz/job/openbmc-build-sdk/distro=3Dubuntu,target=3Dromul=
+us/=20
+> =
+https://openpower.xyz/job/openbmc-build/distro=3Dubuntu,label=3Dbuilder,ta=
+rget=3Dromulus/=20
+>=20
+> >=20
+> > --
+> > ]               Never tell me the odds!                 | ipv6 mesh =
+networks [
+> > ]   Michael Richardson, Sandelman Software Works        |    IoT =
+architect   [
+> > ]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on =
+rails    [
+> >=20
+> >=20
+> >=20
+>=20
+>=20
+>=20
+> --=20
+> Sincerely,=20
+> Samuel Herts
 
