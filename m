@@ -2,74 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99EAB179654
-	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 18:09:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1855D179837
+	for <lists+openbmc@lfdr.de>; Wed,  4 Mar 2020 19:44:27 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48XgMq0MZQzDqdX
-	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 04:09:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48XjTf35DwzDqdf
+	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 05:44:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32d;
+ helo=mail-ot1-x32d.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=nPtvWklQ; dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
+ header.s=20161025 header.b=VHIsqpeJ; dkim-atps=neutral
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com
+ [IPv6:2607:f8b0:4864:20::32d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48XgMD3VK1zDqX7
- for <openbmc@lists.ozlabs.org>; Thu,  5 Mar 2020 04:08:37 +1100 (AEDT)
-Received: by mail-pg1-x544.google.com with SMTP id b1so1272429pgm.8
- for <openbmc@lists.ozlabs.org>; Wed, 04 Mar 2020 09:08:37 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48XjT02LKBzDqbX
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Mar 2020 05:43:48 +1100 (AEDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 66so3043561otd.9
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Mar 2020 10:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=WcXiDjy33PYge8hUsXuS+/8NVEyCDj8/Q41XwHVNKcw=;
- b=nPtvWklQt9QghWJiSdW0QkhlOrTOjZ3+Pds6ZlGJMH65EhPXyR/CLtQPDyWFP6vkVk
- WBs9KyqFwr2826o1eb60HIE/D7eB88nLn5qItsO4QRJum9NW2rUgoDgdu2C/+OBnAOSm
- 7VGNMVXMqTvDsGKcEVAvHD4xY3TNY3Ecoz0Qo3LB+REQP+1vkTxrkDtf35T1c8a3WTAq
- sLvRu06xnTEnC5SFMLwJEPp9umUI7fdjZNSUghVcNxaa2fnjI1marOElFj9M6v17L6Tc
- cDQfQ0dSZIo4z57MzT4QliTFyIk634DnwZVwEEfcMAlNnN7o5KsNQ0HOvPjIMqpmRcrW
- VDkw==
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=q47vrHuyPOUWtPL4n2Iz2jDG0+kXsGWaQDSi5phqHbk=;
+ b=VHIsqpeJbUA1mEfOuREDMzdiGja2KBpExgsOu3kXkBwVcv6PK6QR331gZHQVFtEr0F
+ GUYbT3g6vCNuUyJITP/Ae1TCawm+wfrYAvAoElFBfYFxyhvu3y9vyFnsZagGzQkoFR2b
+ 5TpdMkMiKqEMgilqeZMUGc07Vby90NB2gRUxWniee+G1RPRaXz4eDOG/v3Mlk1uypoOc
+ Q7UPuUjmq3gu19vKJDWRg547aDs72xXecgcH0AcUoYZDhgFeHrv0yMi8ugy7YLXDkCVi
+ rOqrZYk5MG29WNL2OLXoQCLc/VYVtia1yOPZvjKRPRBzY2h4mhM6cnGzCN2xkhzJkxKZ
+ HBAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=WcXiDjy33PYge8hUsXuS+/8NVEyCDj8/Q41XwHVNKcw=;
- b=lcsbNakiFbM1GtNJrlgs8GMk9bdQjkRY50Hs89crDFlO68iuESVbXdKtJ/pCtdzQSK
- AtZmgWN4ODsKZLrY/HsvP4ueeEEKYERSVifu/Y3Na2t6OxW43p4n/KtziR86GoMj938U
- RskrvuMrzriiEoEbpqlxjRCc1pctNfMkaK8zgp6cWlQp0vXRrV8np0YNhhK7e0vipfpy
- zQJAjAK3CiDojbruUNzn5kIocQOjuwODVLZyY50WKEXdBLgFNLXQvo4o1Iip2MDx3b4F
- kvsMk0ZfKRK5IEk5ieg64VgmIi5A7iYRpFX06aQnmbenpciXTW35fyUfgDtwzfQlNKfb
- AaTg==
-X-Gm-Message-State: ANhLgQ0qdJumnW0O1fKzM6cvQw2KW554Uw/904QVaXPjl88Boqz+m3Xi
- bTvWfv42jcKBoGsRj+ZBs4s=
-X-Google-Smtp-Source: ADFU+vv+Df31P92V8d+K3fXU/m2exn8CF+UTDgAxezww+iG60GrEAezFnJETx5JbDF0id9d06IG8bw==
-X-Received: by 2002:aa7:91d7:: with SMTP id z23mr1179323pfa.160.1583341714250; 
- Wed, 04 Mar 2020 09:08:34 -0800 (PST)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id h8sm1192994pfn.59.2020.03.04.09.08.33
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Wed, 04 Mar 2020 09:08:33 -0800 (PST)
-Date: Wed, 4 Mar 2020 09:08:32 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-binding: watchdog: add bootstatus reset type
- documentation
-Message-ID: <20200304170832.GA22914@roeck-us.net>
-References: <20200303100114.87786-1-tmaimon77@gmail.com>
- <20200303100114.87786-2-tmaimon77@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200303100114.87786-2-tmaimon77@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=q47vrHuyPOUWtPL4n2Iz2jDG0+kXsGWaQDSi5phqHbk=;
+ b=N9Ja9P32J3+Kqb2kN3N4+yOeJp15s7sLZAveM297CNPsmS/VUeD7iquBnXVDUekRPT
+ vp+TcV2J84STn+h2frXzt4AhIGj8NrDaMVHV6zmkq0rgbamumxKflNg3jT1dIMzHrY0R
+ dKcxZcSV3gIH54KG158T49vr8pI0mhCeenqx/J3r1GyHcnrRsI+aW+uglV5IqAEU3G6F
+ UPAJ3iQUzF/lIkQq5VV1p/t6bTM3AGbu7qBmRqnxmCMHBSdn0ZFw9Kd9LuNgnQyjDFsA
+ i8mPpSoclYqvxuOjpD/O58qP9VnvwECp0M0GcqWWOHh5BVZ0nbwwHEwG8zdwKa3CKBJ8
+ +DxA==
+X-Gm-Message-State: ANhLgQ07cTGc8sl2Fn+hon9gVi0H8qz8coQwbKl+2DvdDZI44HIzZgIK
+ 4fbH+0BXMdUf7/4dZ/refnc=
+X-Google-Smtp-Source: ADFU+vuDeRVFVCJv1nktbSR/PfktAjH6ZszgJSPtrd4A+Tn9VjeBq756riGhnxvdLKwCNPb/GNeXVw==
+X-Received: by 2002:a9d:3f4b:: with SMTP id m69mr3243010otc.146.1583347424734; 
+ Wed, 04 Mar 2020 10:43:44 -0800 (PST)
+Received: from ?IPv6:2600:1700:19e0:3310:5187:9c8f:6e2f:fa36?
+ ([2600:1700:19e0:3310:5187:9c8f:6e2f:fa36])
+ by smtp.gmail.com with ESMTPSA id 17sm8172242oth.7.2020.03.04.10.43.42
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 04 Mar 2020 10:43:43 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: [OpenBMC]: Unit test coverage analysis on openbmc repositories
+From: Andrew Geissler <geissonator@gmail.com>
+X-Priority: 3 (Normal)
+In-Reply-To: <OFBAC0E531.E7E68FE5-ON0025851C.0053A4C8-0025851C.0055AA1E@notes.na.collabserv.com>
+Date: Wed, 4 Mar 2020 12:43:42 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EDA605F3-6630-49FC-9244-0A2499138CFC@gmail.com>
+References: <OFBAC0E531.E7E68FE5-ON0025851C.0053A4C8-0025851C.0055AA1E@notes.na.collabserv.com>
+To: Lakshminarayana R Kammath <lkammath@in.ibm.com>
+X-Mailer: Apple Mail (2.3608.60.0.2.5)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,72 +82,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, devicetree@vger.kernel.org, benjaminfair@google.com,
- avifishman70@gmail.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- tali.perry1@gmail.com, robh+dt@kernel.org, wim@linux-watchdog.org,
- linux-watchdog@vger.kernel.org
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Mar 03, 2020 at 12:01:12PM +0200, Tomer Maimon wrote:
-> Add device tree three bootstatus reset types documentation.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  .../bindings/watchdog/nuvoton,npcm-wdt.txt    | 30 +++++++++++++++++++
->  1 file changed, 30 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
-> index 6d593003c933..65e24a80ee70 100644
-> --- a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
-> +++ b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
-> @@ -17,6 +17,33 @@ Required clocking property, have to be one of:
->  
->  Optional properties:
->  - timeout-sec : Contains the watchdog timeout in seconds
-> +- nuvoton,card-reset-type : "porst|corst|wd0|wd1|wd2|sw1|sw2|sw3|sw4"
-> +  Contains the card reset type for checking and indicating
-> +  the last card reset status (WDIOF_CARDRESET)
-> +
-> +  If 'nuvoton,card-reset-type' is not specified the default is porst
-> +
-> +  Reset types:
-> +       - porst: Power reset
-> +       - corst: Core reset
-> +	   - wdX : Watchdog reset X (X represante 0-2)
-> +	   - swX : Software reset X (X represante 1-4)
-> +
-> +- nuvoton,ext1-reset-type : "porst|corst|wd0|wd1|wd2|sw1|sw2|sw3|sw4"
-> +  Contains the external 2 reset type for checking and indicating
-> +  the last external 2 reset status (WDIOF_EXTERN1)
-> +
-> +  If 'nuvoton,card-reset-type' is not specified the default is wd0.
-> +
-> +  Reset types are the same as in nuvoton,card-reset-type property.
-> +
-> +- nuvoton,ext2-reset-type : "porst|corst|wd0|wd1|wd2|sw1|sw2|sw3|sw4"
-> +  Contains the external 2 reset type for checking and indicating
-> +  the last external 2 reset status (WDIOF_EXTERN2)
-> +
-> +  If 'nuvoton,card-reset-type' is not specified the default is sw1.
-> +
-> +  Reset types are the same as in nuvoton,card-reset-type property.
->  
->  Example:
->  
-> @@ -25,4 +52,7 @@ timer@f000801c {
->      interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
->      reg = <0xf000801c 0x4>;
->      clocks = <&clk NPCM7XX_CLK_TIMER>;
-> +	nuvoton,card-reset-type = "porst";
-> +	nuvoton,ext1-reset-type = "wd1";
-> +	nuvoton,ext2-reset-type = "sw2";
 
-This set of properties maps chip reset types to reset types defined
-by the Linux watchdog subsystem (ie WDIOF_CARDRESET, WDIOF_EXTERN1,
-and WDIOF_EXTERN2). It is neither a hardware description nor a system
-configuration.
 
-It is up to Rob to decide, but I personally don't think it is appropriate.
+> On Feb 28, 2020, at 9:35 AM, Lakshminarayana R Kammath =
+<lkammath@in.ibm.com> wrote:
+>=20
+> Hi All,
+> =20
+> Recently we worked on pulling the UT coverage analysis from all the =
+available OpenBMC repositories
+> =20
+> =
+https://github.com/openbmc/openbmc-build-scripts/commit/229b76a95f87af60c9=
+76a0c0dfe84716c9ce5318
+> =20
+> This script does following
+> 	=E2=80=A2 Clone the repo
+> 	=E2=80=A2 Use the CI build environment to build code
+> 	=E2=80=A2 Publish the result in the following format
+> Feedback's , views highly appreciated
 
-Guenter
+Good stuff. I added this to a jenkins job which will run each day.
+
+https://openpower.xyz/job/openbmc-unit-test-coverage/
+
+You can then look at coverage info for your repo of interest by
+clicking through the artifacts and getting to your coverage info.
+
+For example:
+=
+https://openpower.xyz/job/openbmc-unit-test-coverage/lastSuccessfulBuild/a=
+rtifact/openbmc-build-scripts/scripts/unit-test-meta-data/pldm/build/meson=
+-logs/coveragereport/index.html=20
+
+The job uses the following to know which repositories to check so feel
+free to throw up some commits if there are missing or invalid repos:
+=
+https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/repos=
+itories.txt
+
+> =20
+> Thanks & Regards,
+> Lakshminarayana Kamath
+> =
+--------------------------------------------------------------------------=
+------------------------
+> Senior Engineer,
+> IBM India Software Labs
+> Bangalore
+> github:lkammath
+> =
+--------------------------------------------------------------------------=
+-------------------------
+> =20
+>=20
+
