@@ -1,75 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65AB6179E4E
+	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 04:36:58 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CD7E179DF6
-	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 03:40:23 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Xw2r1NQjzDqk7
-	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 13:40:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48XxJ75QmTzDqk7
+	for <lists+openbmc@lfdr.de>; Thu,  5 Mar 2020 14:36:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::642;
- helo=mail-pl1-x642.google.com; envelope-from=rentao.bupt@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=rwg0PwY/; dkim-atps=neutral
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [IPv6:2607:f8b0:4864:20::642])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Xw1l12jpzDqjp;
- Thu,  5 Mar 2020 13:39:22 +1100 (AEDT)
-Received: by mail-pl1-x642.google.com with SMTP id p7so1956505pli.5;
- Wed, 04 Mar 2020 18:39:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=YW1iAxgihWa7R1z2LZ0jq4L5SHYbV/y2Cl+4YB22Nq0=;
- b=rwg0PwY/pBMBBCdKXuCPnAOK+gKG8fWRjtLb8qoZDbY2XJir4nAN2j81+pu+Zm2ChD
- hCn10l37f12AqtrZmjlcBD/nXxilTi1O5VC6L/m9NC3V/T+XjjprVRilKGBmuIXjF1Ha
- Q+f7PNBgvDLKzBGbFa9qfE2bK1jHst3TZcW69C7NNScimVRub52WWTe497P8RrB74WRd
- bGLkqLKdi19e02DtQArGXu1Z8c2QS/J4wF3IRXj0U5poiJ/Oremq2M7A07gOQhv5yO6i
- ysJSDXEThmhWBDGfdo1hLCVBFb5PwWZ9dozA5wIqkKl6M0Cumh/IyVeNoEDEZDDr5Eqm
- vz4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=YW1iAxgihWa7R1z2LZ0jq4L5SHYbV/y2Cl+4YB22Nq0=;
- b=CwyPSqGRaL72xylyoI4Tmw6q1I1AIJZeHjpTdZgUywGprkI+0RMSg5ujZSC89YvBhE
- Sz0Q/iyBMXg6fdf0N8VMyYKFM248dAaZN9i6wkhtYKsU4LLPPnps6Cyl8JTrJh5vqqYs
- rBXWsP1ly347bTYwQTUiAUE5jj9E0e33SqIUFixY58dWw3wZU7+FpPzwEjizWQrk0yzk
- 2o0+9l5bbl3jq7N+Ob3poEDImM52t3d5NW6LDWR4lJgWKHZpnY+wqU5SGwh1/V4Lv06v
- EqCNtr9e0fD8zfBVXSOCrSmpLUTKPUOZIi2bG+suFw7cZoGqkggYXZoGfl10wkihyxxc
- rl0w==
-X-Gm-Message-State: ANhLgQ0iI1Vrww/ZJjiWnycv4gOb7kwuw1XtFaP1jGDEdu+SddtsufHt
- wkMy9CHo4OgRe9QzYtUOTTE=
-X-Google-Smtp-Source: ADFU+vvNfv1O4y+T8xjWDrOY/eMq3S4rz6h3FPkm/6Mv8mQrQ0af/lXw9Wl/PKse4xev/7IwPhvWKg==
-X-Received: by 2002:a17:90a:e012:: with SMTP id
- u18mr6415803pjy.190.1583375959117; 
- Wed, 04 Mar 2020 18:39:19 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91.thefacebook.com
- ([2620:10d:c090:500::5:7dc6])
- by smtp.gmail.com with ESMTPSA id i197sm26750447pfe.137.2020.03.04.18.39.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Mar 2020 18:39:18 -0800 (PST)
-From: rentao.bupt@gmail.com
-To: Felipe Balbi <balbi@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Chunfeng Yun <chunfeng.yun@mediatek.com>,
- Stephen Boyd <swboyd@chromium.org>, linux-usb@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH] usb: gadget: aspeed: improve vhub port irq handling
-Date: Wed,  4 Mar 2020 18:38:59 -0800
-Message-Id: <20200305023859.21057-1-rentao.bupt@gmail.com>
-X-Mailer: git-send-email 2.17.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48XxFP2MFCzDqS0
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Mar 2020 14:34:32 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0253TuKZ042320
+ for <openbmc@lists.ozlabs.org>; Wed, 4 Mar 2020 22:34:29 -0500
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.66])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2yhyxrfr29-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Mar 2020 22:34:29 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Thu, 5 Mar 2020 03:34:28 -0000
+Received: from us1a3-smtp01.a3.dal06.isc4sb.com (10.106.154.95)
+ by smtp.notes.na.collabserv.com (10.106.227.127) with
+ smtp.notes.na.collabserv.com ESMTP; Thu, 5 Mar 2020 03:34:24 -0000
+Received: from us1a3-mail157.a3.dal06.isc4sb.com ([10.146.71.179])
+ by us1a3-smtp01.a3.dal06.isc4sb.com
+ with ESMTP id 2020030503342395-18364 ;
+ Thu, 5 Mar 2020 03:34:23 +0000 
+In-Reply-To: <c7d6f785-755b-1c1c-9ec9-66862a6fedfb@linux.ibm.com>
+Subject: Re: OpenBMC GUI Design Workgroup - Today 10:00 AM CST
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: jrey@linux.ibm.com
+Date: Thu, 5 Mar 2020 03:34:23 +0000
+MIME-Version: 1.0
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <c7d6f785-755b-1c1c-9ec9-66862a6fedfb@linux.ibm.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
+X-LLNOutbound: False
+X-Disclaimed: 10711
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20030503-4409-0000-0000-00000222BFB3
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.388783; ST=0; TS=0; UL=0; ISC=; MB=0.058665
+X-IBM-SpamModules-Versions: BY=3.00012689; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000293; SDB=6.01343092; UDB=6.00715943; IPR=6.01125484; 
+ MB=3.00031085; MTD=3.00000008; XFM=3.00000015; UTC=2020-03-05 03:34:27
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-03-05 00:58:57 - 6.00011079
+x-cbparentid: 20030503-4410-0000-0000-00003E800F9E
+Message-Id: <OFFE8CB186.710715E7-ON00258522.00132915-00258522.0013A0F0@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-03-04_10:2020-03-04,
+ 2020-03-04 signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,84 +83,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <rentao.bupt@gmail.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tao Ren <rentao.bupt@gmail.com>
+Hi Joseph,
 
-This patch evaluates vhub ports' irq mask before going through per-port
-irq handling one by one, which helps to speed up irq handling in case
-there is no port interrupt.
+Thank you for your feedback.
 
-Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
----
- drivers/usb/gadget/udc/aspeed-vhub/core.c | 11 ++++++-----
- drivers/usb/gadget/udc/aspeed-vhub/vhub.h |  8 ++++----
- 2 files changed, 10 insertions(+), 9 deletions(-)
+> My two cents worth:
+> 1. Data should be stored untranslated whenever possible, and translated
+> only when it is presented to the user.
+>=20
+> 2. It seems to me the language preference should ideally be associated
+> with the session (whether login session or a session to perform a single
+> operation ~
+> https://lists.ozlabs.org/pipermail/openbmc/2019-November/019422.html).
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-index f8d35dd60c34..a03e4e4ea401 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-@@ -134,11 +134,11 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
- 	}
- 
- 	/* Handle device interrupts */
--	for (i = 0; i < vhub->max_ports; i++) {
--		u32 dev_mask = VHUB_IRQ_DEVICE1 << i;
--
--		if (istat & dev_mask)
--			ast_vhub_dev_irq(&vhub->ports[i].dev);
-+	if (istat & vhub->port_irq_mask) {
-+		for (i = 0; i < vhub->max_ports; i++) {
-+			if (istat & VHUB_DEV_IRQ(i))
-+				ast_vhub_dev_irq(&vhub->ports[i].dev);
-+		}
- 	}
- 
- 	/* Handle top-level vHub EP0 interrupts */
-@@ -332,6 +332,7 @@ static int ast_vhub_probe(struct platform_device *pdev)
- 
- 	spin_lock_init(&vhub->lock);
- 	vhub->pdev = pdev;
-+	vhub->port_irq_mask = GENMASK(vhub->max_ports + 8, 9);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	vhub->regs = devm_ioremap_resource(&pdev->dev, res);
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-index fac79ef6d669..e49924ec7e58 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-@@ -54,10 +54,6 @@
- #define VHUB_IRQ_USB_CMD_DEADLOCK		(1 << 18)
- #define VHUB_IRQ_EP_POOL_NAK			(1 << 17)
- #define VHUB_IRQ_EP_POOL_ACK_STALL		(1 << 16)
--#define VHUB_IRQ_DEVICE5			(1 << 13)
--#define VHUB_IRQ_DEVICE4			(1 << 12)
--#define VHUB_IRQ_DEVICE3			(1 << 11)
--#define VHUB_IRQ_DEVICE2			(1 << 10)
- #define VHUB_IRQ_DEVICE1			(1 << 9)
- #define VHUB_IRQ_BUS_RESUME			(1 << 8)
- #define VHUB_IRQ_BUS_SUSPEND 			(1 << 7)
-@@ -70,6 +66,9 @@
- #define VHUB_IRQ_HUB_EP0_SETUP			(1 << 0)
- #define VHUB_IRQ_ACK_ALL			0x1ff
- 
-+/* Downstream device IRQ mask. */
-+#define VHUB_DEV_IRQ(n)				(VHUB_IRQ_DEVICE1 << (n))
-+
- /* SW reset reg */
- #define VHUB_SW_RESET_EP_POOL			(1 << 9)
- #define VHUB_SW_RESET_DMA_CONTROLLER		(1 << 8)
-@@ -402,6 +401,7 @@ struct ast_vhub {
- 	/* Per-port info */
- 	struct ast_vhub_port		*ports;
- 	u32				max_ports;
-+	u32				port_irq_mask;
- 
- 	/* Generic EP data structures */
- 	struct ast_vhub_ep		*epns;
--- 
-2.17.1
+1. The GUI translations are stored in JSON files. Which content is determin=
+ed
+by the Vue i18n Plugin.=20
+
+
+2. The language preference will be stored in local storage, so it will pers=
+ist
+for as long as the user doesn't change the language or clear their browser's
+local storage. The question is whether the user should have to log out if t=
+hey
+want to change their preference.
+=20
 
