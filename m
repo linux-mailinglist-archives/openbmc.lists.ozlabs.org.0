@@ -2,62 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A14B17CA01
-	for <lists+openbmc@lfdr.de>; Sat,  7 Mar 2020 01:59:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E84C117D2D4
+	for <lists+openbmc@lfdr.de>; Sun,  8 Mar 2020 10:18:07 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48Z5j321P1zDrSB
-	for <lists+openbmc@lfdr.de>; Sat,  7 Mar 2020 11:59:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48Zwk84n4szDqgj
+	for <lists+openbmc@lfdr.de>; Sun,  8 Mar 2020 20:17:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.208.194;
- helo=mail-lj1-f194.google.com; envelope-from=obmc.developers@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=hObD+EJa; dkim-atps=neutral
-Received: from mail-lj1-f194.google.com (mail-lj1-f194.google.com
- [209.85.208.194])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.149; helo=m13-149.163.com;
+ envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Received: from m13-149.163.com (m13-149.163.com [220.181.13.149])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48Z5hM44WyzDsXy
- for <openbmc@lists.ozlabs.org>; Sat,  7 Mar 2020 11:58:26 +1100 (AEDT)
-Received: by mail-lj1-f194.google.com with SMTP id f10so4086835ljn.6
- for <openbmc@lists.ozlabs.org>; Fri, 06 Mar 2020 16:58:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=rU5IBfQ8CpcgWBJsYc8mVXvJSEK/Fl6zXyk9Mho9djg=;
- b=hObD+EJaUxakYL4qdq06/+uSQrnQSV1l2zkzxIv+I4vvuIxbm2wlbK/vhSsmCwg2MR
- nH5Ly2lPgzDpqWiHF6297yEPFClezcJAHxsPPvfBLkGTtlg3GEPDVA1wOAwvTuwjB9n0
- Tw/G905XvBL2YoSPfaqgSg3sOrirPvzpLINV5ocNgQ49zJjfrYRMJCDUG3GcaiReQsUu
- BftQgxcHblSxTMHsK1DDZZy0gO++AHPWKEh8aPJhR6bURxWY9EjeESGnhW0aYhMRdF3R
- sk4AwI5+lnTkO6qbIBTKyGSwWrxBQ+bjGnw+hYusrfst/Vw81JIC66UN2Pq5cP9PaXJW
- iNUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=rU5IBfQ8CpcgWBJsYc8mVXvJSEK/Fl6zXyk9Mho9djg=;
- b=A+oHl3tluird7CLv2N8mU1bGWaPHtvQzVuVF6RE+RgVhn0DzbPWbnSk7/6RhaWEKks
- JbpYBlk38yPy3rhQ5PWg1wU2aBho8PsU4TBdexxHY6lHGTAflRwPL4VgSAsWVx5gR5jP
- QBaY/hptnhxLztwzGQGmPsO4JAxIbUEj6g0woCgcupfxEzXnRY/ldXb+MziqnvqcHjzT
- RXsr7nuQXhoh2dtpob6h83NE9pYl2FiOkSGDepRcHnNwhtPvtmPa86L3pL7qQ7HN5fAw
- fQnF7fABiOhG8pHZ9/EjFP3w+9FnhVfznhjqNpyOdNJs15ObUbZbtEXML/1Lw88uC4Lr
- HKVg==
-X-Gm-Message-State: ANhLgQ0ZnJTcuTcRyMeQe5OO1FZuhIc0bN7hoSAlOJ4acOVtynSGPnn7
- BUhOTr8xbWWbwQQiKrSjMhbG6a5nFs4/DoclTCJWrJXT/Yk=
-X-Google-Smtp-Source: ADFU+vuO8WI8nRzhPybU55w+3xAxuamv0MufLpjTaF3gE3Ixq7O2Y7FxKuSXhqadvGUCThzbm2KFZwxQ9C6OdCShPok=
-X-Received: by 2002:a2e:920e:: with SMTP id k14mr3532969ljg.73.1583542641932; 
- Fri, 06 Mar 2020 16:57:21 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48ZwjJ07YgzDqd9
+ for <openbmc@lists.ozlabs.org>; Sun,  8 Mar 2020 20:17:04 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=MLuvR
+ +8CWnVkXq8SxUxYGG/ya8NMV55WOID11btZDjs=; b=VKhXT5jjxo+STYdVPdXQ9
+ nSwECw4VNrT4ZMyiffeDRsjJD0ObMWh/1LnJrGc0eeazqekX0xateAkP30tCtRr5
+ nW2AG4FsBtEOyQmJBCLbZgykOf/t9/w5SBx3MZxGu1GWUDnT4BVqck/7HrJzkV7l
+ X/kEqJS4TQNqLQkNRU/4n4=
+Received: from zhang_cy1989$163.com ( [111.199.190.120] ) by
+ ajax-webmail-wmsvr149 (Coremail) ; Sun, 8 Mar 2020 17:16:53 +0800 (CST)
+X-Originating-IP: [111.199.190.120]
+Date: Sun, 8 Mar 2020 17:16:53 +0800 (CST)
+From: zhang_cy1989 <zhang_cy1989@163.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: devtool modify u-boot-aspeed  fail when using intel wolfpass recipe
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 163com
+X-CM-CTRLDATA: 4LL/HGZvb3Rlcl9odG09MzMxNzo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_72400_1674678891.1583659013106"
 MIME-Version: 1.0
-From: Anony Mous <obmc.developers@gmail.com>
-Date: Fri, 6 Mar 2020 16:54:46 -0800
-Message-ID: <CABbLDjOsmeBTWb94DkeJHfUMNHzXEairkP+_rC4g4TRgZUn_7g@mail.gmail.com>
-Subject: IPMI Raw Commands
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000a8bc8f05a03940a0"
+Message-ID: <3c43c3a6.4a1a.170b96ed3f2.Coremail.zhang_cy1989@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: lcGowADnBjUFuGReFSgFAw--.14761W
+X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiDQXgT1QHRDW7mQAAsn
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,47 +59,107 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a8bc8f05a03940a0
-Content-Type: text/plain; charset="UTF-8"
+------=_Part_72400_1674678891.1583659013106
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-To whom it may concern,
+RGVhciBBbGwKICAgIEFmdGVyIEkgYml0YmFrZSByZWNpcGVzIHdpdGggVEVNUExBVEVDT05GPW1l
+dGEtb3BlbmJtYy1tb2RzL21ldGEtd29sZnBhc3MvY29uZiwKICAgIEkgd2FudCB0byBtb2RpZnkg
+dS1ib290LWFzcGVlZCB3aXRoIGRldnRvb2wuCiAgICBIb3dldmVyLEkgZ290IHRoZSBmb2xsb3dp
+bmcgdGlwczoKICAgIGRldnRvb2wgbW9kaWZ5IHUtYm9vdC1hc3BlZWQKICAgIEVSUk9SOiBFcnJv
+ciBleGVjdXRpbmcgYSBweXRob24gZnVuY3Rpb24gaW4gZXhlY19weXRob25fZnVuYygpIGF1dG9n
+ZW5lcmF0ZWQ6CgpUaGUgc3RhY2sgdHJhY2Ugb2YgcHl0aG9uIGNhbGxzIHRoYXQgcmVzdWx0ZWQg
+aW4gdGhpcyBleGNlcHRpb24vZmFpbHVyZSB3YXM6CkZpbGU6ICdleGVjX3B5dGhvbl9mdW5jKCkg
+YXV0b2dlbmVyYXRlZCcsIGxpbmVubzogMiwgZnVuY3Rpb246IDxtb2R1bGU+CiAgICAgMDAwMToK
+ICoqKiAwMDAyOmRldnRvb2xfcG9zdF9wYXRjaChkKQogICAgIDAwMDM6CkZpbGU6ICcvaW50ZWwt
+b3BlbmJtYy9vcGVuYm1jL21ldGEvY2xhc3Nlcy9kZXZ0b29sLXNvdXJjZS5iYmNsYXNzJywgbGlu
+ZW5vOiAyMDcsIGZ1bmN0aW9uOiBkZXZ0b29sX3Bvc3RfcGF0Y2gKICAgICAwMjAzOiAgICAgICAg
+ICAgIHJtX3BhdGNoZXMoKQogICAgIDAyMDQ6ICAgICAgICAgICAgIyBOb3cgd2UgbmVlZCB0byBy
+ZWNvbmNpbGUgdGhlIGRldiBicmFuY2ggd2l0aCB0aGUgbm8tb3ZlcnJpZGVzIG9uZQogICAgIDAy
+MDU6ICAgICAgICAgICAgIyAob3RoZXJ3aXNlIHdlJ2QgbGlrZWx5IGJlIGxlZnQgd2l0aCBpZGVu
+dGljYWwgY29tbWl0cyB0aGF0IGhhdmUgZGlmZmVyZW50IGhhc2hlcykKICAgICAwMjA2OiAgICAg
+ICAgICAgIGJiLnByb2Nlc3MucnVuKCdnaXQgY2hlY2tvdXQgJXMnICUgZGV2YnJhbmNoLCBjd2Q9
+c3Jjc3ViZGlyKQogKioqIDAyMDc6ICAgICAgICAgICAgYmIucHJvY2Vzcy5ydW4oJ2dpdCByZWJh
+c2UgZGV2dG9vbC1uby1vdmVycmlkZXMnLCBjd2Q9c3Jjc3ViZGlyKQogICAgIDAyMDg6ICAgICAg
+ICBlbHNlOgogICAgIDAyMDk6ICAgICAgICAgICAgYmIucHJvY2Vzcy5ydW4oJ2dpdCBjaGVja291
+dCAlcyAtYiBkZXZ0b29sLW5vLW92ZXJyaWRlcycgJSBkZXZicmFuY2gsIGN3ZD1zcmNzdWJkaXIp
+CiAgICAgMDIxMDoKICAgICAwMjExOiAgICAgICAgZm9yIG92ZXJyaWRlIGluIGV4dHJhX292ZXJy
+aWRlczoKRmlsZTogJy9pbnRlbC1vcGVuYm1jL29wZW5ibWMvcG9reS9iaXRiYWtlL2xpYi9iYi9w
+cm9jZXNzLnB5JywgbGluZW5vOiAxODIsIGZ1bmN0aW9uOiBydW4KICAgICAwMTc4OiAgICAgICAg
+aWYgbm90IHN0ZGVyciBpcyBOb25lOgogICAgIDAxNzk6ICAgICAgICAgICAgc3RkZXJyID0gc3Rk
+ZXJyLmRlY29kZSgidXRmLTgiKQogICAgIDAxODA6CiAgICAgMDE4MTogICAgaWYgcGlwZS5yZXR1
+cm5jb2RlICE9IDA6CiAqKiogMDE4MjogICAgICAgIHJhaXNlIEV4ZWN1dGlvbkVycm9yKGNtZCwg
+cGlwZS5yZXR1cm5jb2RlLCBzdGRvdXQsIHN0ZGVycikKICAgICAwMTgzOiAgICByZXR1cm4gc3Rk
+b3V0LCBzdGRlcnIKRXhjZXB0aW9uOiBiYi5wcm9jZXNzLkV4ZWN1dGlvbkVycm9yOiBFeGVjdXRp
+b24gb2YgJ2dpdCByZWJhc2UgZGV2dG9vbC1uby1vdmVycmlkZXMnIGZhaWxlZCB3aXRoIGV4aXQg
+Y29kZSAxOgpJdCBsb29rcyBsaWtlICdnaXQgYW0nIGlzIGluIHByb2dyZXNzLiBDYW5ub3QgcmVi
+YXNlLgoKCkVSUk9SOiBMb2dmaWxlIG9mIGZhaWx1cmUgc3RvcmVkIGluOiAvaW50ZWwtb3BlbmJt
+Yy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL2ludGVsX2FzdDI1MDAtb3BlbmJtYy1saW51eC1nbnVl
+YWJpL3UtYm9vdC1hc3BlZWQvMV92MjAxNi4wNytnaXRBVVRPSU5DKzU5NDI4ZmUwMTAtcjAvZGV2
+dG9vbHRtcC04cTJpbTA4by90ZW1wL2xvZy5kb19wYXRjaC45MDQxCgoKCg==
+------=_Part_72400_1674678891.1583659013106
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-1. Does openbmc ipmitool support any of the ipmi raw commands? Most of them
-(such as the one below) returns "invalid command".
-ipmitool raw <netfn> <command>
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBBbGw8L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZu
+YnNwOyBBZnRlciBJIGJpdGJha2UgcmVjaXBlcyB3aXRoIFRFTVBMQVRFQ09ORj1tZXRhLW9wZW5i
+bWMtbW9kcy9tZXRhLXdvbGZwYXNzL2NvbmYsPC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsg
+SSB3YW50IHRvIG1vZGlmeSB1LWJvb3QtYXNwZWVkIHdpdGggZGV2dG9vbC48L2Rpdj48ZGl2PiZu
+YnNwOyZuYnNwOyZuYnNwOyBIb3dldmVyLEkgZ290IHRoZSBmb2xsb3dpbmcgdGlwczo8L2Rpdj48
+ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyBkZXZ0b29sIG1vZGlmeSB1LWJvb3QtYXNwZWVkPC9kaXY+
+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsgRVJST1I6IEVycm9yIGV4ZWN1dGluZyBhIHB5dGhvbiBm
+dW5jdGlvbiBpbiBleGVjX3B5dGhvbl9mdW5jKCkgYXV0b2dlbmVyYXRlZDo8YnI+PGJyPjxiPlRo
+ZSBzdGFjayB0cmFjZSBvZiBweXRob24gY2FsbHMgdGhhdCByZXN1bHRlZCBpbiB0aGlzIGV4Y2Vw
+dGlvbi9mYWlsdXJlIHdhczo8L2I+PGJyPjxiPkZpbGU6ICdleGVjX3B5dGhvbl9mdW5jKCkgYXV0
+b2dlbmVyYXRlZCcsIGxpbmVubzogMiwgZnVuY3Rpb246ICZsdDttb2R1bGUmZ3Q7PC9iPjxicj48
+Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMDAwMTo8L2I+PGJyPjxiPiZuYnNwOyoqKiAwMDAy
+OmRldnRvb2xfcG9zdF9wYXRjaChkKTwvYj48YnI+PGI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IDAwMDM6PC9iPjxicj48Yj5GaWxlOiAnL2ludGVsLW9wZW5ibWMvb3BlbmJtYy9tZXRhL2NsYXNz
+ZXMvZGV2dG9vbC1zb3VyY2UuYmJjbGFzcycsIGxpbmVubzogMjA3LCBmdW5jdGlvbjogZGV2dG9v
+bF9wb3N0X3BhdGNoPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMDIwMzombmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsgcm1fcGF0Y2hlcygpPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMDIw
+NDombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsgIyBOb3cgd2UgbmVlZCB0byByZWNvbmNpbGUgdGhlIGRldiBicmFuY2ggd2l0
+aCB0aGUgbm8tb3ZlcnJpZGVzIG9uZTwvYj48YnI+PGI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+IDAyMDU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7ICMgKG90aGVyd2lzZSB3ZSdkIGxpa2VseSBiZSBsZWZ0IHdpdGggaWRl
+bnRpY2FsIGNvbW1pdHMgdGhhdCBoYXZlIGRpZmZlcmVudCBoYXNoZXMpPC9iPjxicj48Yj4mbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsgMDIwNjombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgYmIucHJvY2Vzcy5ydW4oJ2dpdCBj
+aGVja291dCAlcycgJSBkZXZicmFuY2gsIGN3ZD1zcmNzdWJkaXIpPC9iPjxicj48Yj4mbmJzcDsq
+KiogMDIwNzombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsgYmIucHJvY2Vzcy5ydW4oJ2dpdCByZWJhc2UgZGV2dG9vbC1uby1v
+dmVycmlkZXMnLCBjd2Q9c3Jjc3ViZGlyKTwvYj48YnI+PGI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IDAyMDg6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGVsc2U6
+PC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMDIwOTombmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgYmIucHJv
+Y2Vzcy5ydW4oJ2dpdCBjaGVja291dCAlcyAtYiBkZXZ0b29sLW5vLW92ZXJyaWRlcycgJSBkZXZi
+cmFuY2gsIGN3ZD1zcmNzdWJkaXIpPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsg
+MDIxMDo8L2I+PGJyPjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMjExOiZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBmb3Igb3ZlcnJpZGUgaW4gZXh0cmFfb3Zl
+cnJpZGVzOjwvYj48YnI+PGI+RmlsZTogJy9pbnRlbC1vcGVuYm1jL29wZW5ibWMvcG9reS9iaXRi
+YWtlL2xpYi9iYi9wcm9jZXNzLnB5JywgbGluZW5vOiAxODIsIGZ1bmN0aW9uOiBydW48L2I+PGJy
+PjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMTc4OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyBpZiBub3Qgc3RkZXJyIGlzIE5vbmU6PC9iPjxicj48Yj4mbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsgMDE3OTombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgc3RkZXJyID0gc3RkZXJyLmRlY29k
+ZSgidXRmLTgiKTwvYj48YnI+PGI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDAxODA6PC9iPjxi
+cj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMDE4MTombmJzcDsmbmJzcDsmbmJzcDsgaWYg
+cGlwZS5yZXR1cm5jb2RlICE9IDA6PC9iPjxicj48Yj4mbmJzcDsqKiogMDE4MjombmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgcmFpc2UgRXhlY3V0aW9uRXJyb3IoY21k
+LCBwaXBlLnJldHVybmNvZGUsIHN0ZG91dCwgc3RkZXJyKTwvYj48YnI+PGI+Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7IDAxODM6Jm5ic3A7Jm5ic3A7Jm5ic3A7IHJldHVybiBzdGRvdXQsIHN0ZGVy
+cjwvYj48YnI+PGI+RXhjZXB0aW9uOiBiYi5wcm9jZXNzLkV4ZWN1dGlvbkVycm9yOiBFeGVjdXRp
+b24gb2YgJ2dpdCByZWJhc2UgZGV2dG9vbC1uby1vdmVycmlkZXMnIGZhaWxlZCB3aXRoIGV4aXQg
+Y29kZSAxOjwvYj48YnI+PGI+SXQgbG9va3MgbGlrZSAnZ2l0IGFtJyBpcyBpbiBwcm9ncmVzcy4g
+Q2Fubm90IHJlYmFzZS48L2I+PGJyPjxicj48YnI+PGI+RVJST1I6IExvZ2ZpbGUgb2YgZmFpbHVy
+ZSBzdG9yZWQgaW46IC9pbnRlbC1vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsvaW50ZWxf
+YXN0MjUwMC1vcGVuYm1jLWxpbnV4LWdudWVhYmkvdS1ib290LWFzcGVlZC8xX3YyMDE2LjA3K2dp
+dEFVVE9JTkMrNTk0MjhmZTAxMC1yMC9kZXZ0b29sdG1wLThxMmltMDhvL3RlbXAvbG9nLmRvX3Bh
+dGNoLjkwNDE8L2I+PC9kaXY+PGRpdj48Yj48YnI+PC9iPjwvZGl2PjxkaXY+PGI+PGJyPjwvYj48
+L2Rpdj48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8
+L3A+PC9zcGFuPg==
+------=_Part_72400_1674678891.1583659013106--
 
-Where:
-netfn = storage = 0x0a
-command = enter sdr respository update mode = 0x2a
-
-The above command was executed on the BMC and the following error returned:
-
-"Unable to send RAW command (channel=0x0 netfn=0xa lun=0x0 cmd=0x2a
-rsp=0xc1): Invalid command"
-
-2.  Can the ipmi raw commands be executed on the BMC itself or does it need
-to be executed from an external source (such as a processor connected to
-the BMC)?
-
-3. Do any kind of privilege settings need to be modified in order to
-execute any ipmi raw commands?
-
---000000000000a8bc8f05a03940a0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>To whom it may concern,</div><div><br></div>1. Does o=
-penbmc ipmitool support any of the ipmi raw commands? Most of them (such as=
- the one below) returns &quot;invalid command&quot;. <br>ipmitool raw &lt;n=
-etfn&gt; &lt;command&gt;<br><br>Where: <br>	netfn =3D storage =3D 0x0a<br>	=
-command =3D enter sdr respository update mode =3D 0x2a<br>	<br>The above co=
-mmand was executed on the BMC and the following error returned:<br><br>&quo=
-t;Unable to send RAW command (channel=3D0x0 netfn=3D0xa lun=3D0x0 cmd=3D0x2=
-a rsp=3D0xc1): Invalid command&quot;<br><div><br></div><div>2.=C2=A0
-
-Can the ipmi raw commands be executed on the BMC itself or does it need to =
-be executed from an external source (such as a processor connected to the B=
-MC)?=C2=A0</div><div><br></div><div>3. Do any kind of privilege settings ne=
-ed to be modified in order to execute any ipmi raw commands?</div></div>
-
---000000000000a8bc8f05a03940a0--
