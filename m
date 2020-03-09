@@ -2,53 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25ED517D80C
-	for <lists+openbmc@lfdr.de>; Mon,  9 Mar 2020 03:11:32 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48bMCP31r6zDqVv
-	for <lists+openbmc@lfdr.de>; Mon,  9 Mar 2020 13:11:13 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65BB817E834
+	for <lists+openbmc@lfdr.de>; Mon,  9 Mar 2020 20:21:45 +0100 (CET)
+Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48bp4M5HKpzDqVm
+	for <lists+openbmc@lfdr.de>; Tue, 10 Mar 2020 06:21:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=126.com
- (client-ip=220.181.15.50; helo=m15-50.126.com;
- envelope-from=guilin1985@126.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=126.com
-Received: from m15-50.126.com (m15-50.126.com [220.181.15.50])
- (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48bMBb5prWzDqKv
- for <openbmc@lists.ozlabs.org>; Mon,  9 Mar 2020 13:10:27 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=I14+b
- VwqfnlihyODJ8Oo5tofssxlDe1lfQrbXVEvWdU=; b=YBkFpFRhiJQVrO2CqM4rq
- urx8yM4dfoyDtsLyZvK5StHbDXHFmIhjRr2S1FktmPZ1TxPklc/tTd1iNnXO4M0M
- PuPo2jwWCzqtpi/VFxPX4nAUkExBg/LvAQMVtSRbPSk/C1Rb6iQyThdQCiUH5FDd
- j0A3si6X6YooeXryvajCM4=
-Received: from guilin1985$126.com ( [222.212.97.145] ) by
- ajax-webmail-wmsvr50 (Coremail) ; Mon, 9 Mar 2020 10:10:18 +0800 (CST)
-X-Originating-IP: [222.212.97.145]
-Date: Mon, 9 Mar 2020 10:10:18 +0800 (CST)
-From: =?GBK?B?sKK58A==?= <guilin1985@126.com>
-To: zhang_cy1989 <zhang_cy1989@163.com>
-Subject: Re:Re:devtool modify u-boot-aspeed  fail when using intel wolfpass
- recipe
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 126com
-In-Reply-To: <45c508f3.4a70.170b971a0aa.Coremail.zhang_cy1989@163.com>
-References: <3c43c3a6.4a1a.170b96ed3f2.Coremail.zhang_cy1989@163.com>
- <45c508f3.4a70.170b971a0aa.Coremail.zhang_cy1989@163.com>
-X-CM-CTRLDATA: vYjTPWZvb3Rlcl9odG09NTE3NDo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_24990_1469037081.1583719818558"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48bp3R1k56zDqK3
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Mar 2020 06:20:46 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 029JKZMg111916
+ for <openbmc@lists.ozlabs.org>; Mon, 9 Mar 2020 15:20:37 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2ynmxfrwg4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 09 Mar 2020 15:20:37 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 029JK5mH020530
+ for <openbmc@lists.ozlabs.org>; Mon, 9 Mar 2020 19:20:16 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma03dal.us.ibm.com with ESMTP id 2ym386hwvv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 09 Mar 2020 19:20:16 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 029JKEfn52887960
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Mar 2020 19:20:15 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E221F7805F;
+ Mon,  9 Mar 2020 19:20:14 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AD19A78064;
+ Mon,  9 Mar 2020 19:20:14 +0000 (GMT)
+Received: from demeter.rchland.ibm.com (unknown [9.10.254.252])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Mon,  9 Mar 2020 19:20:14 +0000 (GMT)
+Subject: Re: OpenBMC GUI Design Workgroup - Today 10:00 AM CST
+To: Derick Montague <Derick.Montague@ibm.com>
+References: <c7d6f785-755b-1c1c-9ec9-66862a6fedfb@linux.ibm.com>
+ <OFFE8CB186.710715E7-ON00258522.00132915-00258522.0013A0F0@notes.na.collabserv.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <1adc6d23-a180-6bc2-108d-db31cf05bd7f@linux.ibm.com>
+Date: Mon, 9 Mar 2020 14:20:14 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.5.0
 MIME-Version: 1.0
-Message-ID: <70130a6e.1a9c.170bd0ea53f.Coremail.guilin1985@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: MsqowADHzyOLpWVetDRaAA--.36011W
-X-CM-SenderInfo: xjxlzxrqrzmka6rslhhfrp/1tbi9Bvgh1pD+EIiqQABsh
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+In-Reply-To: <OFFE8CB186.710715E7-ON00258522.00132915-00258522.0013A0F0@notes.na.collabserv.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
+ definitions=2020-03-09_08:2020-03-09,
+ 2020-03-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2001150001 definitions=main-2003090119
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,148 +88,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_24990_1469037081.1583719818558
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
 
-ZGV2dG9vbCBtb2RpZnkgdS1ib290CgoKCgoKCgoKCgoK1NogMjAyMC0wMy0wOCAxNzoxOTo1NqOs
-InpoYW5nX2N5MTk4OSIgPHpoYW5nX2N5MTk4OUAxNjMuY29tPiDQtLXAo7oKCkRlYXIgQWxsCiAg
-ICBIZWxwIG1lLCBQbGVhc2UhCiAgIFRoYW5rIHlvdSEKCgpGZWxpeAoKCgoKCgoKCgoKCgpBdCAy
-MDIwLTAzLTA4IDE3OjE2OjUzLCAiemhhbmdfY3kxOTg5IiA8emhhbmdfY3kxOTg5QDE2My5jb20+
-IHdyb3RlOgoKRGVhciBBbGwKICAgIEFmdGVyIEkgYml0YmFrZSByZWNpcGVzIHdpdGggVEVNUExB
-VEVDT05GPW1ldGEtb3BlbmJtYy1tb2RzL21ldGEtd29sZnBhc3MvY29uZiwKICAgIEkgd2FudCB0
-byBtb2RpZnkgdS1ib290LWFzcGVlZCB3aXRoIGRldnRvb2wuCiAgICBIb3dldmVyLEkgZ290IHRo
-ZSBmb2xsb3dpbmcgdGlwczoKICAgIGRldnRvb2wgbW9kaWZ5IHUtYm9vdC1hc3BlZWQKICAgIEVS
-Uk9SOiBFcnJvciBleGVjdXRpbmcgYSBweXRob24gZnVuY3Rpb24gaW4gZXhlY19weXRob25fZnVu
-YygpIGF1dG9nZW5lcmF0ZWQ6CgpUaGUgc3RhY2sgdHJhY2Ugb2YgcHl0aG9uIGNhbGxzIHRoYXQg
-cmVzdWx0ZWQgaW4gdGhpcyBleGNlcHRpb24vZmFpbHVyZSB3YXM6CkZpbGU6ICdleGVjX3B5dGhv
-bl9mdW5jKCkgYXV0b2dlbmVyYXRlZCcsIGxpbmVubzogMiwgZnVuY3Rpb246IDxtb2R1bGU+CiAg
-ICAgMDAwMToKICoqKiAwMDAyOmRldnRvb2xfcG9zdF9wYXRjaChkKQogICAgIDAwMDM6CkZpbGU6
-ICcvaW50ZWwtb3BlbmJtYy9vcGVuYm1jL21ldGEvY2xhc3Nlcy9kZXZ0b29sLXNvdXJjZS5iYmNs
-YXNzJywgbGluZW5vOiAyMDcsIGZ1bmN0aW9uOiBkZXZ0b29sX3Bvc3RfcGF0Y2gKICAgICAwMjAz
-OiAgICAgICAgICAgIHJtX3BhdGNoZXMoKQogICAgIDAyMDQ6ICAgICAgICAgICAgIyBOb3cgd2Ug
-bmVlZCB0byByZWNvbmNpbGUgdGhlIGRldiBicmFuY2ggd2l0aCB0aGUgbm8tb3ZlcnJpZGVzIG9u
-ZQogICAgIDAyMDU6ICAgICAgICAgICAgIyAob3RoZXJ3aXNlIHdlJ2QgbGlrZWx5IGJlIGxlZnQg
-d2l0aCBpZGVudGljYWwgY29tbWl0cyB0aGF0IGhhdmUgZGlmZmVyZW50IGhhc2hlcykKICAgICAw
-MjA2OiAgICAgICAgICAgIGJiLnByb2Nlc3MucnVuKCdnaXQgY2hlY2tvdXQgJXMnICUgZGV2YnJh
-bmNoLCBjd2Q9c3Jjc3ViZGlyKQogKioqIDAyMDc6ICAgICAgICAgICAgYmIucHJvY2Vzcy5ydW4o
-J2dpdCByZWJhc2UgZGV2dG9vbC1uby1vdmVycmlkZXMnLCBjd2Q9c3Jjc3ViZGlyKQogICAgIDAy
-MDg6ICAgICAgICBlbHNlOgogICAgIDAyMDk6ICAgICAgICAgICAgYmIucHJvY2Vzcy5ydW4oJ2dp
-dCBjaGVja291dCAlcyAtYiBkZXZ0b29sLW5vLW92ZXJyaWRlcycgJSBkZXZicmFuY2gsIGN3ZD1z
-cmNzdWJkaXIpCiAgICAgMDIxMDoKICAgICAwMjExOiAgICAgICAgZm9yIG92ZXJyaWRlIGluIGV4
-dHJhX292ZXJyaWRlczoKRmlsZTogJy9pbnRlbC1vcGVuYm1jL29wZW5ibWMvcG9reS9iaXRiYWtl
-L2xpYi9iYi9wcm9jZXNzLnB5JywgbGluZW5vOiAxODIsIGZ1bmN0aW9uOiBydW4KICAgICAwMTc4
-OiAgICAgICAgaWYgbm90IHN0ZGVyciBpcyBOb25lOgogICAgIDAxNzk6ICAgICAgICAgICAgc3Rk
-ZXJyID0gc3RkZXJyLmRlY29kZSgidXRmLTgiKQogICAgIDAxODA6CiAgICAgMDE4MTogICAgaWYg
-cGlwZS5yZXR1cm5jb2RlICE9IDA6CiAqKiogMDE4MjogICAgICAgIHJhaXNlIEV4ZWN1dGlvbkVy
-cm9yKGNtZCwgcGlwZS5yZXR1cm5jb2RlLCBzdGRvdXQsIHN0ZGVycikKICAgICAwMTgzOiAgICBy
-ZXR1cm4gc3Rkb3V0LCBzdGRlcnIKRXhjZXB0aW9uOiBiYi5wcm9jZXNzLkV4ZWN1dGlvbkVycm9y
-OiBFeGVjdXRpb24gb2YgJ2dpdCByZWJhc2UgZGV2dG9vbC1uby1vdmVycmlkZXMnIGZhaWxlZCB3
-aXRoIGV4aXQgY29kZSAxOgpJdCBsb29rcyBsaWtlICdnaXQgYW0nIGlzIGluIHByb2dyZXNzLiBD
-YW5ub3QgcmViYXNlLgoKCkVSUk9SOiBMb2dmaWxlIG9mIGZhaWx1cmUgc3RvcmVkIGluOiAvaW50
-ZWwtb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL2ludGVsX2FzdDI1MDAtb3BlbmJtYy1s
-aW51eC1nbnVlYWJpL3UtYm9vdC1hc3BlZWQvMV92MjAxNi4wNytnaXRBVVRPSU5DKzU5NDI4ZmUw
-MTAtcjAvZGV2dG9vbHRtcC04cTJpbTA4by90ZW1wL2xvZy5kb19wYXRjaC45MDQxCgoKCgoKCgoK
-IAoKCgoKCiA=
-------=_Part_24990_1469037081.1583719818558
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+ZGV2dG9vbCBtb2RpZnkgdS1ib290PCEtLTVmMzlhZTE3
-LThjNjItNGE0NS1iYzQzLWIzMjA2NGM5Mzg4YTpXM3NpWW14dlkydEpaQ0k2SWpZeE1qa3RNVFUy
-TURRM09UYzNNVE0wTkNJc0ltSnNiMk5yVkhsd1pTSTZJbU52WkdVaUxDSnpkSGxzWlhNaU9uc2lZ
-bUZqYXkxamIyeHZjaUk2SWlKOUxDSjBlWEJsSWpvaVkyOWtaU0lzSW5KcFkyaFVaWGgwSWpwN0lt
-UmhkR0VpT2x0N0ltTm9ZWElpT2lKa0luMHNleUpqYUdGeUlqb2laU0o5TEhzaVkyaGhjaUk2SW5Z
-aWZTeDdJbU5vWVhJaU9pSjBJbjBzZXlKamFHRnlJam9pYnlKOUxIc2lZMmhoY2lJNkltOGlmU3g3
-SW1Ob1lYSWlPaUpzSW4wc2V5SmphR0Z5SWpvaUlDSjlMSHNpWTJoaGNpSTZJbTBpZlN4N0ltTm9Z
-WElpT2lKdkluMHNleUpqYUdGeUlqb2laQ0o5TEhzaVkyaGhjaUk2SW1raWZTeDdJbU5vWVhJaU9p
-Sm1JbjBzZXlKamFHRnlJam9pZVNKOUxIc2lZMmhoY2lJNklpQWlmU3g3SW1Ob1lYSWlPaUoxSW4w
-c2V5SmphR0Z5SWpvaUxTSjlMSHNpWTJoaGNpSTZJbUlpZlN4N0ltTm9ZWElpT2lKdkluMHNleUpq
-YUdGeUlqb2lieUo5TEhzaVkyaGhjaUk2SW5RaWZWMHNJbWx6VW1samFGUmxlSFFpT25SeWRXVXNJ
-bXRsWlhCTWFXNWxRbkpsWVdzaU9uUnlkV1Y5TENKcGMxTmxiR1ZqZEdWa1FteHZZMnNpT21aaGJI
-TmxMQ0owYUdWdFpTSTZJa0YwWld4cFpYSnpkV3h3YUhWeWNHOXZiQ0lzSW14aGJtZDFZV2RsSWpv
-aWFtRjJZWE5qY21sd2RDSjlYUT09LS0+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9k
-aXY+PGRpdj48YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdiBzdHlsZT0icG9zaXRpb246cmVs
-YXRpdmU7em9vbToxIj48L2Rpdj48ZGl2IGlkPSJkaXZOZXRlYXNlTWFpbENhcmQiPjwvZGl2Pjxk
-aXY+PGJyPjwvZGl2PjxwPtTaIDIwMjAtMDMtMDggMTc6MTk6NTajrCJ6aGFuZ19jeTE5ODkiICZs
-dDt6aGFuZ19jeTE5ODlAMTYzLmNvbSZndDsg0LS1wKO6PC9wPjxibG9ja3F1b3RlIGlkPSJpc1Jl
-cGx5Q29udGVudCIgc3R5bGU9IlBBRERJTkctTEVGVDogMWV4OyBNQVJHSU46IDBweCAwcHggMHB4
-IDAuOGV4OyBCT1JERVItTEVGVDogI2NjYyAxcHggc29saWQiPjxkaXYgc3R5bGU9ImxpbmUtaGVp
-Z2h0OjEuNztjb2xvcjojMDAwMDAwO2ZvbnQtc2l6ZToxNHB4O2ZvbnQtZmFtaWx5OkFyaWFsIj48
-ZGl2PkRlYXIgQWxsPC9kaXY+PGRpdj4mbmJzcDsmbmJzcDsmbmJzcDsgSGVscCBtZSwgUGxlYXNl
-ITwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7IFRoYW5rIHlvdSE8L2Rpdj48ZGl2Pjxicj48L2Rpdj48
-ZGl2PkZlbGl4PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJy
-PjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXYgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206
-MSI+PC9kaXY+PGRpdj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48cD5BdCAyMDIwLTAzLTA4IDE3OjE2
-OjUzLCAiemhhbmdfY3kxOTg5IiAmbHQ7emhhbmdfY3kxOTg5QDE2My5jb20mZ3Q7IHdyb3RlOjwv
-cD48YmxvY2txdW90ZSBpZD0iaXNSZXBseUNvbnRlbnQiIHN0eWxlPSJQQURESU5HLUxFRlQ6IDFl
-eDsgTUFSR0lOOiAwcHggMHB4IDBweCAwLjhleDsgQk9SREVSLUxFRlQ6ICNjY2MgMXB4IHNvbGlk
-Ij48ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDoxLjc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRw
-eDtmb250LWZhbWlseTpBcmlhbCI+PGRpdj5EZWFyIEFsbDwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7
-Jm5ic3A7IEFmdGVyIEkgYml0YmFrZSByZWNpcGVzIHdpdGggVEVNUExBVEVDT05GPW1ldGEtb3Bl
-bmJtYy1tb2RzL21ldGEtd29sZnBhc3MvY29uZiw8L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNw
-OyBJIHdhbnQgdG8gbW9kaWZ5IHUtYm9vdC1hc3BlZWQgd2l0aCBkZXZ0b29sLjwvZGl2PjxkaXY+
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IEhvd2V2ZXIsSSBnb3QgdGhlIGZvbGxvd2luZyB0aXBzOjwvZGl2
-PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7IGRldnRvb2wgbW9kaWZ5IHUtYm9vdC1hc3BlZWQ8L2Rp
-dj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyBFUlJPUjogRXJyb3IgZXhlY3V0aW5nIGEgcHl0aG9u
-IGZ1bmN0aW9uIGluIGV4ZWNfcHl0aG9uX2Z1bmMoKSBhdXRvZ2VuZXJhdGVkOjxicj48YnI+PGI+
-VGhlIHN0YWNrIHRyYWNlIG9mIHB5dGhvbiBjYWxscyB0aGF0IHJlc3VsdGVkIGluIHRoaXMgZXhj
-ZXB0aW9uL2ZhaWx1cmUgd2FzOjwvYj48YnI+PGI+RmlsZTogJ2V4ZWNfcHl0aG9uX2Z1bmMoKSBh
-dXRvZ2VuZXJhdGVkJywgbGluZW5vOiAyLCBmdW5jdGlvbjogJmx0O21vZHVsZSZndDs8L2I+PGJy
-PjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMDAxOjwvYj48YnI+PGI+Jm5ic3A7KioqIDAw
-MDI6ZGV2dG9vbF9wb3N0X3BhdGNoKGQpPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsgMDAwMzo8L2I+PGJyPjxiPkZpbGU6ICcvaW50ZWwtb3BlbmJtYy9vcGVuYm1jL21ldGEvY2xh
-c3Nlcy9kZXZ0b29sLXNvdXJjZS5iYmNsYXNzJywgbGluZW5vOiAyMDcsIGZ1bmN0aW9uOiBkZXZ0
-b29sX3Bvc3RfcGF0Y2g8L2I+PGJyPjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMjAzOiZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyBybV9wYXRjaGVzKCk8L2I+PGJyPjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAw
-MjA0OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyAjIE5vdyB3ZSBuZWVkIHRvIHJlY29uY2lsZSB0aGUgZGV2IGJyYW5jaCB3
-aXRoIHRoZSBuby1vdmVycmlkZXMgb25lPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsgMDIwNTombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsgIyAob3RoZXJ3aXNlIHdlJ2QgbGlrZWx5IGJlIGxlZnQgd2l0aCBp
-ZGVudGljYWwgY29tbWl0cyB0aGF0IGhhdmUgZGlmZmVyZW50IGhhc2hlcyk8L2I+PGJyPjxiPiZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMjA2OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBiYi5wcm9jZXNzLnJ1bignZ2l0
-IGNoZWNrb3V0ICVzJyAlIGRldmJyYW5jaCwgY3dkPXNyY3N1YmRpcik8L2I+PGJyPjxiPiZuYnNw
-OyoqKiAwMjA3OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyBiYi5wcm9jZXNzLnJ1bignZ2l0IHJlYmFzZSBkZXZ0b29sLW5v
-LW92ZXJyaWRlcycsIGN3ZD1zcmNzdWJkaXIpPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsgMDIwODombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgZWxz
-ZTo8L2I+PGJyPjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMjA5OiZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBiYi5w
-cm9jZXNzLnJ1bignZ2l0IGNoZWNrb3V0ICVzIC1iIGRldnRvb2wtbm8tb3ZlcnJpZGVzJyAlIGRl
-dmJyYW5jaCwgY3dkPXNyY3N1YmRpcik8L2I+PGJyPjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyAwMjEwOjwvYj48YnI+PGI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDAyMTE6Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGZvciBvdmVycmlkZSBpbiBleHRyYV9v
-dmVycmlkZXM6PC9iPjxicj48Yj5GaWxlOiAnL2ludGVsLW9wZW5ibWMvb3BlbmJtYy9wb2t5L2Jp
-dGJha2UvbGliL2JiL3Byb2Nlc3MucHknLCBsaW5lbm86IDE4MiwgZnVuY3Rpb246IHJ1bjwvYj48
-YnI+PGI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDAxNzg6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGlmIG5vdCBzdGRlcnIgaXMgTm9uZTo8L2I+PGJyPjxiPiZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMTc5OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBzdGRlcnIgPSBzdGRlcnIuZGVj
-b2RlKCJ1dGYtOCIpPC9iPjxicj48Yj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMDE4MDo8L2I+
-PGJyPjxiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAwMTgxOiZuYnNwOyZuYnNwOyZuYnNwOyBp
-ZiBwaXBlLnJldHVybmNvZGUgIT0gMDo8L2I+PGJyPjxiPiZuYnNwOyoqKiAwMTgyOiZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyByYWlzZSBFeGVjdXRpb25FcnJvcihj
-bWQsIHBpcGUucmV0dXJuY29kZSwgc3Rkb3V0LCBzdGRlcnIpPC9iPjxicj48Yj4mbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsgMDE4MzombmJzcDsmbmJzcDsmbmJzcDsgcmV0dXJuIHN0ZG91dCwgc3Rk
-ZXJyPC9iPjxicj48Yj5FeGNlcHRpb246IGJiLnByb2Nlc3MuRXhlY3V0aW9uRXJyb3I6IEV4ZWN1
-dGlvbiBvZiAnZ2l0IHJlYmFzZSBkZXZ0b29sLW5vLW92ZXJyaWRlcycgZmFpbGVkIHdpdGggZXhp
-dCBjb2RlIDE6PC9iPjxicj48Yj5JdCBsb29rcyBsaWtlICdnaXQgYW0nIGlzIGluIHByb2dyZXNz
-LiBDYW5ub3QgcmViYXNlLjwvYj48YnI+PGJyPjxicj48Yj5FUlJPUjogTG9nZmlsZSBvZiBmYWls
-dXJlIHN0b3JlZCBpbjogL2ludGVsLW9wZW5ibWMvb3BlbmJtYy9idWlsZC90bXAvd29yay9pbnRl
-bF9hc3QyNTAwLW9wZW5ibWMtbGludXgtZ251ZWFiaS91LWJvb3QtYXNwZWVkLzFfdjIwMTYuMDcr
-Z2l0QVVUT0lOQys1OTQyOGZlMDEwLXIwL2RldnRvb2x0bXAtOHEyaW0wOG8vdGVtcC9sb2cuZG9f
-cGF0Y2guOTA0MTwvYj48L2Rpdj48ZGl2PjxiPjxicj48L2I+PC9kaXY+PGRpdj48Yj48YnI+PC9i
-PjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNw
-OzwvcD48L3NwYW4+PC9ibG9ja3F1b3RlPjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9Im5ldGVh
-c2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+PC9ibG9ja3F1b3RlPjwvZGl2Pjxicj48YnI+
-PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
-------=_Part_24990_1469037081.1583719818558--
+On 3/4/20 9:34 PM, Derick Montague wrote:
+> Hi Joseph,
+>
+> Thank you for your feedback.
+>
+>> My two cents worth:
+>> 1. Data should be stored untranslated whenever possible, and translated
+>> only when it is presented to the user.
+>>
+>> 2. It seems to me the language preference should ideally be associated
+>> with the session (whether login session or a session to perform a single
+>> operation ~
+>> https://lists.ozlabs.org/pipermail/openbmc/2019-November/019422.html).
+> 1. The GUI translations are stored in JSON files. Which content is determined
+> by the Vue i18n Plugin.
+
+That sounds good but covers only the GUI elements.  I was thinking about 
+the human readable data that flows from the Redfish APIs into the 
+browser.  For example, SEL data.  Do you know if this data will flow 
+from the Redfish APIs as messageId and replacementText, similar to 
+Redfish messages?  Alternately will the message already be formatted as 
+a single string when it flows from the Redfish API? <-- That was the 
+intent of my original cent (quoted above).
+
+>
+>
+> 2. The language preference will be stored in local storage, so it will persist
+> for as long as the user doesn't change the language or clear their browser's
+> local storage. The question is whether the user should have to log out if they
+> want to change their preference.
+>   
+
+I understand your response to mean: the user's language preference is 
+stored in the browser's local storage and presented to the BMCWeb server 
+in form of something like the a HTTP request Language header (whatever 
+the current practice is).  That sounds okay to me.  In any case, I think 
+switching languages is infrequent.  That is, I do not foresee a user 
+requirement to switch language frequently during a single signon session.
+
+- Joseph
 
