@@ -2,81 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65BB817E834
-	for <lists+openbmc@lfdr.de>; Mon,  9 Mar 2020 20:21:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E43217EA06
+	for <lists+openbmc@lfdr.de>; Mon,  9 Mar 2020 21:30:29 +0100 (CET)
 Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48bp4M5HKpzDqVm
-	for <lists+openbmc@lfdr.de>; Tue, 10 Mar 2020 06:21:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48bqbj2VWtzDqTJ
+	for <lists+openbmc@lfdr.de>; Tue, 10 Mar 2020 07:30:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48bp3R1k56zDqK3
- for <openbmc@lists.ozlabs.org>; Tue, 10 Mar 2020 06:20:46 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 029JKZMg111916
- for <openbmc@lists.ozlabs.org>; Mon, 9 Mar 2020 15:20:37 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 2ynmxfrwg4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 09 Mar 2020 15:20:37 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 029JK5mH020530
- for <openbmc@lists.ozlabs.org>; Mon, 9 Mar 2020 19:20:16 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma03dal.us.ibm.com with ESMTP id 2ym386hwvv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 09 Mar 2020 19:20:16 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 029JKEfn52887960
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2020 19:20:15 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E221F7805F;
- Mon,  9 Mar 2020 19:20:14 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD19A78064;
- Mon,  9 Mar 2020 19:20:14 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.252])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Mon,  9 Mar 2020 19:20:14 +0000 (GMT)
-Subject: Re: OpenBMC GUI Design Workgroup - Today 10:00 AM CST
-To: Derick Montague <Derick.Montague@ibm.com>
-References: <c7d6f785-755b-1c1c-9ec9-66862a6fedfb@linux.ibm.com>
- <OFFE8CB186.710715E7-ON00258522.00132915-00258522.0013A0F0@notes.na.collabserv.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <1adc6d23-a180-6bc2-108d-db31cf05bd7f@linux.ibm.com>
-Date: Mon, 9 Mar 2020 14:20:14 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48bqZq5VT4zDqSZ
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Mar 2020 07:29:37 +1100 (AEDT)
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2020 13:29:32 -0700
+X-IronPort-AV: E=Sophos;i="5.70,534,1574150400"; d="scan'208";a="234110023"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by fmsmga007-auth.fm.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2020 13:29:32 -0700
+Date: Mon, 9 Mar 2020 13:29:30 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: Anony Mous <obmc.developers@gmail.com>
+Subject: Re: IPMI Raw Commands
+Message-ID: <20200309202819.GA28744@mauery.jf.intel.com>
+References: <CABbLDjOsmeBTWb94DkeJHfUMNHzXEairkP+_rC4g4TRgZUn_7g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <OFFE8CB186.710715E7-ON00258522.00132915-00258522.0013A0F0@notes.na.collabserv.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-03-09_08:2020-03-09,
- 2020-03-09 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 impostorscore=0 adultscore=0
- mlxscore=0 mlxlogscore=999 lowpriorityscore=0 spamscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2001150001 definitions=main-2003090119
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CABbLDjOsmeBTWb94DkeJHfUMNHzXEairkP+_rC4g4TRgZUn_7g@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,46 +57,58 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 06-Mar-2020 04:54 PM, Anony Mous wrote:
+>To whom it may concern,
 
+Anony,
 
-On 3/4/20 9:34 PM, Derick Montague wrote:
-> Hi Joseph,
+Interesting name choice for interacting with an opensource project.
+
+>1. Does openbmc ipmitool support any of the ipmi raw commands? Most of them
+>(such as the one below) returns "invalid command".
+>ipmitool raw <netfn> <command>
 >
-> Thank you for your feedback.
+>Where:
+>netfn = storage = 0x0a
+>command = enter sdr respository update mode = 0x2a
+
+ipmitool supports raw commands in part because it the full array of 
+commands supported by the IPMI spec is too vast to have them all 
+implemented as named commands. In addition, IPMI offers the ability for 
+OEMs to define OEM-specific IPMI commands that may have one meaning on 
+one BMC and another meaning on a system from a different OEM.
+
+>The above command was executed on the BMC and the following error returned:
 >
->> My two cents worth:
->> 1. Data should be stored untranslated whenever possible, and translated
->> only when it is presented to the user.
->>
->> 2. It seems to me the language preference should ideally be associated
->> with the session (whether login session or a session to perform a single
->> operation ~
->> https://lists.ozlabs.org/pipermail/openbmc/2019-November/019422.html).
-> 1. The GUI translations are stored in JSON files. Which content is determined
-> by the Vue i18n Plugin.
+>"Unable to send RAW command (channel=0x0 netfn=0xa lun=0x0 cmd=0x2a
+>rsp=0xc1): Invalid command"
 
-That sounds good but covers only the GUI elements.  I was thinking about 
-the human readable data that flows from the Redfish APIs into the 
-browser.  For example, SEL data.  Do you know if this data will flow 
-from the Redfish APIs as messageId and replacementText, similar to 
-Redfish messages?  Alternately will the message already be formatted as 
-a single string when it flows from the Redfish API? <-- That was the 
-intent of my original cent (quoted above).
+The SDR commands for OpenBMC are defined in the phosphor-host-ipmid repo 
+(https://github.com/openbmc/phosphor-host-ipmid) in the 
+storagehandler.cpp file. It appears that the enter sdr update mode 
+command is not implemented.
 
->
->
-> 2. The language preference will be stored in local storage, so it will persist
-> for as long as the user doesn't change the language or clear their browser's
-> local storage. The question is whether the user should have to log out if they
-> want to change their preference.
->   
+>2.  Can the ipmi raw commands be executed on the BMC itself or does it need
+>to be executed from an external source (such as a processor connected to
+>the BMC)?
 
-I understand your response to mean: the user's language preference is 
-stored in the browser's local storage and presented to the BMCWeb server 
-in form of something like the a HTTP request Language header (whatever 
-the current practice is).  That sounds okay to me.  In any case, I think 
-switching languages is infrequent.  That is, I do not foresee a user 
-requirement to switch language frequently during a single signon session.
+As explained above, raw commands are not so much a kind of command as a 
+mechanism to send specific bytes to the IPMI execution machinery. From 
+the BMC console, it is possible to run raw commands, the same as if you 
+are executing them over any other channel (SI, IPMB, RMCP+, etc.)
 
-- Joseph
+>3. Do any kind of privilege settings need to be modified in order to
+>execute any ipmi raw commands?
 
+It is not that raw commands don't work on OpenBMC, it is that some 
+commands are not implemented.
+
+root@intel-obmc:~# ipmitool raw 6 1
+ 23 00 80 40 02 bf 57 01 00 7b 00 0c 42 ff 21
+
+From the BMC serial console, running ipmitool will execute commands in a 
+session-less manner, much like executing commands over the system 
+interface from the host or over an IPMB channel. So no privilege check 
+is done; the commands run as admin by default.
+
+--Vernon
