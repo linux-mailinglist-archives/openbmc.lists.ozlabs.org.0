@@ -2,61 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E9C5180A80
-	for <lists+openbmc@lfdr.de>; Tue, 10 Mar 2020 22:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35879180CA3
+	for <lists+openbmc@lfdr.de>; Wed, 11 Mar 2020 00:56:25 +0100 (CET)
 Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48cSwW025GzDqXq
-	for <lists+openbmc@lfdr.de>; Wed, 11 Mar 2020 08:32:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48cX6q2R5WzDqSk
+	for <lists+openbmc@lfdr.de>; Wed, 11 Mar 2020 10:56:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.210.68; helo=mail-ot1-f68.google.com;
- envelope-from=obmc.developers@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=C0tgC3U/; dkim-atps=neutral
-Received: from mail-ot1-f68.google.com (mail-ot1-f68.google.com
- [209.85.210.68])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48cSsh0kHDzDqQ8
- for <openbmc@lists.ozlabs.org>; Wed, 11 Mar 2020 08:29:43 +1100 (AEDT)
-Received: by mail-ot1-f68.google.com with SMTP id b3so14735564otp.4
- for <openbmc@lists.ozlabs.org>; Tue, 10 Mar 2020 14:29:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=7g4nXWLWliafT9r00Y4b4B+OV2eKxs2yVoJ4gUktKkQ=;
- b=C0tgC3U/yHZOsjGviGIMiBqbI8XhPAEYz6Wf8zwGC5clTOKJWJAy8JMq8SyeaQ68Fl
- U/mnUaHp89eyH4ToKzQD4U98NWesGUJD6VJ/kvDRRC+SoFJda5BIUPk+Jy9yVgT96H4d
- qpznVnqfEdErkj8rzUAbKYrOwwJCRy+HzAGGtp2koM6VepvH8R1BOY6vyyULT2lgq5Mh
- bkvy+1EOQnrn0i2HC7bQAcVS3RNOPOtcbkEen1JnuDzhBgK1IUU8y7bR3Ro9/L+/V2pz
- yEBFazMZGuFNqEPGFb+WBFuiEUi5y4enhAloaL9VQvlSh9KQdwdhyDBZ7DvrVZ8KUJa2
- v7DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=7g4nXWLWliafT9r00Y4b4B+OV2eKxs2yVoJ4gUktKkQ=;
- b=Z29RiMdTPBex3Aeh2Cc1tmWRmun5NWS9JOvEc/NyFbb9XyZK/QDQic6EvRn5dzbmT7
- 7IRYqMDTVO7USrlXGxVV8W84Bn5k1d9uVDHdNwIBAwMQo1X2sex49ByT5kCp/HWCOu2D
- vyoVkW6brzxs6Muzv5hvZanHhFJAM18vG33hDg1ws0MHgKlHhk01oKi+slu7z31KDMnl
- a9BocedljMdJ0MHz3qqxydiFCyTkhsxJzGwtg4AJCMWjXLNI0ETJf1Jnl2PeMpuBm+0A
- PkpvStF7t/cbZ6SfUoo7unp48WL3rKyX3ZTO54OfNWZwQoj7rtP15IqxTVYxr36YD5c0
- tL2w==
-X-Gm-Message-State: ANhLgQ0d07bDTL1HkcoiUUrWdmuC6JdZ/Z2qEBLHzdssnaWK0f8c+/NF
- JcQ0qRwBCExIc+DnUr7QMRg7DppztRh+k9puaqhRaWXJ
-X-Google-Smtp-Source: ADFU+vvcIYYinqhNzXSXyxSg3vm8sB4he16/i6YfrVPFtgEotLxQ41IL5yPlUEMzumKAboRdSNIlGBtfUpqSAkyZsQM=
-X-Received: by 2002:a9d:73c7:: with SMTP id m7mr4989120otk.69.1583875777518;
- Tue, 10 Mar 2020 14:29:37 -0700 (PDT)
-MIME-Version: 1.0
-From: Anony Mous <obmc.developers@gmail.com>
-Date: Tue, 10 Mar 2020 14:25:49 -0700
-Message-ID: <CABbLDjNCg84fVFzEWq2xg0UacMkZ86-NqmbD3maniP52JHaADQ@mail.gmail.com>
-Subject: openipmi - ipmi_si driver not installing
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48cX686xWVzDqR0
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Mar 2020 10:55:43 +1100 (AEDT)
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga103.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384;
+ 10 Mar 2020 16:55:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,538,1574150400"; d="scan'208";a="277156838"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga002.fm.intel.com with ESMTP; 10 Mar 2020 16:55:37 -0700
+Received: from [10.241.245.147] (unknown [10.241.245.147])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 9F70858010D
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Mar 2020 16:55:37 -0700 (PDT)
+Subject: Re: Multi-host support on x86-power-control
 To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000165fc005a086d153"
+References: <TYAPR04MB2304A73BA8079FC4063F159FCAFF0@TYAPR04MB2304.apcprd04.prod.outlook.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <128f07a3-0199-2599-0c2a-e792698deeaf@linux.intel.com>
+Date: Tue, 10 Mar 2020 16:55:37 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+In-Reply-To: <TYAPR04MB2304A73BA8079FC4063F159FCAFF0@TYAPR04MB2304.apcprd04.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,76 +61,37 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000165fc005a086d153
-Content-Type: text/plain; charset="UTF-8"
+On 3/10/2020 8:02 AM, P. Priyatharshan wrote:
+> Hi,
+> 
+> x86-power-control currently support single host. Is there any 
+> proposal/plan to support Multi-host?
+We have no plans currently for multi-host support in x86-power-control, 
+and I am not aware of any proposals submitted for it, yet.
 
-To whom it may concern,
+Thanks,
+-Jason
 
-I tried including the openipmi package in the image I built. The image is
-for a system with an AST2500 (ARM core) BMC. I also included the necessary
-configurations in the configuration file. dmesg shows the following:
-
-[    1.037509] IPMI message handler: version 39.2
-[    1.037713] ipmi device interface
-[    1.037855] ipmi_si: IPMI System Interface driver
-[    1.038289] ipmi_si: Unable to find any System Interface(s)
-[    1.038319] ipmi_ssif: IPMI SSIF Interface driver
-[    1.038569] IPMI Watchdog: driver initialized
-[    1.038597] IPMI poweroff: Copyright (C) 2004 MontaVista Software - IPMI
-Powerdown via sys_reboot
-[    8.346526] systemd[1]: /lib/systemd/system/phosphor-ipmi-net@.socket:3:
-Invalid interface name, ignoring: sys-subsystem-net-devices-%i.device
-
-The issue I'm having is "ipmi_si: Unable to find any System interface(s)".
-
-1. Why is that module not being loaded?
-2. What is the reason for that error?
-3. When I do an lsmod, it returns nothing and when I check /proc/moodules,
-the file is empty. Why is this and how can I fix it?
-4. Also modprobe and insmod give an error when I try loading ipmi_si
-manually (seen below). The folder /lib/modules does not exist for some
-reason. How would I be able to include the /lib/modules folder structure in
-the openbmc image?
-
-
-
-* insmod: ERROR: could not load module ipmi_si: No such file or directory*
-*modprobe: FATAL: Module ipmi_si not found in directory /lib/modules/5.4.16*
-
-5. Is openipmi driver required for executing ipmitool commands (i.e.
-ipmitool raw <commands>) on the BMC?
-
-Thank you for your time.
-
---000000000000165fc005a086d153
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>To whom it may concern,</div><div><br></div>I tried i=
-ncluding the openipmi package in the image I built. The image is for a syst=
-em with an AST2500 (ARM core) BMC. I also included the necessary configurat=
-ions in the configuration file. dmesg shows the following:<br><br>[ =C2=A0 =
-=C2=A01.037509] IPMI message handler: version 39.2<br>[ =C2=A0 =C2=A01.0377=
-13] ipmi device interface<br>[ =C2=A0 =C2=A01.037855] ipmi_si: IPMI System =
-Interface driver<br>[ =C2=A0 =C2=A01.038289] ipmi_si: Unable to find any Sy=
-stem Interface(s)<br>[ =C2=A0 =C2=A01.038319] ipmi_ssif: IPMI SSIF Interfac=
-e driver<br>[ =C2=A0 =C2=A01.038569] IPMI Watchdog: driver initialized<br>[=
- =C2=A0 =C2=A01.038597] IPMI poweroff: Copyright (C) 2004 MontaVista Softwa=
-re - IPMI Powerdown via sys_reboot<br>[ =C2=A0 =C2=A08.346526] systemd[1]: =
-/lib/systemd/system/phosphor-ipmi-net@.socket:3: Invalid interface name, ig=
-noring: sys-subsystem-net-devices-%i.device<br><br>The issue I&#39;m having=
- is &quot;ipmi_si: Unable to find any System interface(s)&quot;. <br><br>1.=
- Why is that module not being loaded? <br>2. What is the reason for that er=
-ror?<br>3. When I do an lsmod, it returns nothing and when I check /proc/mo=
-odules, the file is empty. Why is this and how can I fix it?<br>4. Also mod=
-probe and insmod give an error when I try loading ipmi_si manually (seen be=
-low). The folder /lib/modules does not exist for some reason. How would I b=
-e able to include the /lib/modules folder structure in the openbmc image?<d=
-iv><br><i>	insmod: ERROR: could not load module ipmi_si: No such file or di=
-rectory<br><br></i></div><div>	<i>modprobe: FATAL: Module ipmi_si not found=
- in directory /lib/modules/5.4.16</i><br></div><div><br></div><div>5. Is op=
-enipmi driver required for executing ipmitool commands (i.e. ipmitool raw &=
-lt;commands&gt;) on the BMC?<br></div><div><br></div><div>Thank you for you=
-r time.</div></div>
-
---000000000000165fc005a086d153--
+> 
+> Thanks,
+> 
+> Priyatharshan P
+> 
+> ::DISCLAIMER::
+> ------------------------------------------------------------------------
+> The contents of this e-mail and any attachment(s) are confidential and 
+> intended for the named recipient(s) only. E-mail transmission is not 
+> guaranteed to be secure or error-free as information could be 
+> intercepted, corrupted, lost, destroyed, arrive late or incomplete, or 
+> may contain viruses in transmission. The e mail and its contents (with 
+> or without referred errors) shall therefore not attach any liability on 
+> the originator or HCL or its affiliates. Views or opinions, if any, 
+> presented in this email are solely those of the author and may not 
+> necessarily reflect the views or opinions of HCL or its affiliates. Any 
+> form of reproduction, dissemination, copying, disclosure, modification, 
+> distribution and / or publication of this message without the prior 
+> written consent of authorized representative of HCL is strictly 
+> prohibited. If you have received this email in error please delete it 
+> and notify the sender immediately. Before opening any email and/or 
+> attachments, please check them for viruses and other defects.
+> ------------------------------------------------------------------------
