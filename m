@@ -2,63 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64C39181E44
-	for <lists+openbmc@lfdr.de>; Wed, 11 Mar 2020 17:51:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 84D87182153
+	for <lists+openbmc@lfdr.de>; Wed, 11 Mar 2020 19:55:34 +0100 (CET)
 Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48cyfY6pBQzDqRX
-	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 03:51:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48d1PD6fjszDqPj
+	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 05:55:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=209.85.208.170;
- helo=mail-lj1-f170.google.com; envelope-from=rhanley@google.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com
- [209.85.208.170])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org;
+ dkim=temperror header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=s8CUX86Q; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=eLMtstQz; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48cydv0kgrzDqNR
- for <openbmc@lists.ozlabs.org>; Thu, 12 Mar 2020 03:51:14 +1100 (AEDT)
-Received: by mail-lj1-f170.google.com with SMTP id w1so3143533ljh.5
- for <openbmc@lists.ozlabs.org>; Wed, 11 Mar 2020 09:51:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=f6WZoxhuTYU3X2PdKD+wLp8zipSn6vaMzIOszFAj5ns=;
- b=MlRVSEwhAIsAMHOTAmutdPFgotnSKd4ksSx7lxOnIFw4r8OAzxszTvnPkAjo38STYn
- c7dMB6nCtNDVLhCCyXQQmmZB3V1OgqJ1aqnzsCwl/ZLI3h9945MtyWT39YbRJtdC2etj
- kD9n6sMcjlGhAja9aUVOM1Fw1Kc6J4n33EO+V4yNQMfQQErz2Ff2WCNgb1eG5sURKY7J
- DNDbF5UcPdgUoEre62YJw28DoD/C+lkBPo67zQfBS1Wg2LCpGApBVe55tqvpig39U36w
- xdVzVvQt9+nQkz6uC8A73rn2XtZmStpqpNoRSWEMC1UFWpMVd/zpnuSA71m/59qbh+mo
- 9G4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=f6WZoxhuTYU3X2PdKD+wLp8zipSn6vaMzIOszFAj5ns=;
- b=T1cdcmsLnHbiBjV/+IpNGvSymIhnHY6juC3tIeeCUzdgWG/2wU6o/kEHUkmAbfemTV
- 8NP2EpOTJzMc5xWEbw93Q4YHUlrr0ZIcpJbXCTuYK6ZgnsEYfbQsE1Eg4i2MRthV4wbJ
- R/xWXTCSGW7eqxkwQmX2W09lCulEJoEf1h1YSbqWrmQ0Ytsbe2hbEruhyTwzSqpo65ht
- JfjwIMuTUwMxbIaHOlcjO1bqojc2DasBMNjUHzE2cGMFHYmAjYrGzQh04Urr/ISHOrTy
- ydAspEoWmCS2VYk7pIFcJB5tshQ33xnwaxJ6ExS/adP2wtsdUeDl5jBazYDF6W6HoIor
- rF4A==
-X-Gm-Message-State: ANhLgQ1YyfQp6SRxNMzIKuaIZh/bsbou7CX2fUyGYO3hpTHVi8+Glpol
- vOTjyCF2OhFtUcn+b+zWT+P0bTNroXeg8gK4sQO9Dw==
-X-Google-Smtp-Source: ADFU+vu3jD8VgNLbctbDnPMP92uRDXGFK6Non/Ze/zsEbcKcossqWxt2KHTQt1xpS25eDNo5eNVjQTXgYrGfaeYrn2Y=
-X-Received: by 2002:a2e:b554:: with SMTP id a20mr2692020ljn.34.1583945468223; 
- Wed, 11 Mar 2020 09:51:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48d1NT6y3bzDq9H
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Mar 2020 05:54:47 +1100 (AEDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id 6C7D32213A;
+ Wed, 11 Mar 2020 14:54:42 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Wed, 11 Mar 2020 14:54:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=77kyk91/e28Ep4pS3T+/Qd0vtDy
+ JBy6/hN3AHD1xMSk=; b=s8CUX86QQzbmBtGyD1hjF2Ihvyw0UjC/tG8TYHWpXOu
+ p1dedwIIT80e2hu0byVQ7prklMYyfLXlcY9CHF6kTFHpj2gDDVq7ZPrhIx7phn7N
+ u3eYRI23NQa99INXoPbQWGKdlre3E4bm83MAHsxdqKU+gAniSbxpUj2zFwsOWFLf
+ Wp7RMvVugEF6klkr8T3DCfSxcjRDHFJv3iN9bpJNGgUrZObWBo/I6rPTzrCc75Qv
+ 7INZzxFEMR8j3WfCOs2j7ANOAN8Tzi6CN8k27c/+qd5n7az8nS87TpvFHpNMBZJz
+ pXtYqcPZuvM55trbC+tYnFu4iSgRQTiO4ve61bZXIpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=77kyk9
+ 1/e28Ep4pS3T+/Qd0vtDyJBy6/hN3AHD1xMSk=; b=eLMtstQzCzSQRhw6xKYP7s
+ SPexvAGiCTMUMuJalaCY9zQS7E2qvJJcZMWq7269KDOX/BVs6vMTPv2qNO0UheBO
+ X4T/cg3QUSsW9VcQJR55RGj4UhImD2DVtEsayFlMMrRAXdQsDgb9bfH+MSytloWM
+ Q+9ty0BG3LpmnWS0HsINwtkQVxrkYCzLFoxKQwyDk48bjVfw6FJOk3UjgTTr00bZ
+ +WKSl4YxcIydxOuxgOLqE1mb5d4S0npFoczDE3cv7cM0HaiA6XXnD0L6YudRMzPo
+ gmwcAn4vQf2Q9JRlrRRS5VnMowbppE1wF/o8qdisFwu8sjUa5CAPc0eurPe+2KNA
+ ==
+X-ME-Sender: <xms:8TNpXmBayGKumYk8tnuGSOsvBVXN_tZvvkxCiMwTnAjn4JGOM8L0yA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedruddvfedgtdeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepjeei
+ rddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:8TNpXo8VxOlv1_By3KpAyTzAZEKNtOk6tURUja4pXoDAChoc6u6qXw>
+ <xmx:8TNpXqAXnXky3gwC3DRJtjFJDH5WTVIuTHrKhQJHJBWMC4jIMKnv4g>
+ <xmx:8TNpXlSeEtlOl3ZviMqNMGSvtAQWLrs8IZy1EN-5hMbDxiagBlX11g>
+ <xmx:8jNpXs0gx6ajn-NXBcUh5Lyg2VJllXv0hghVG1JFFwhkTDA4e-4bCg>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 3D07D3280066;
+ Wed, 11 Mar 2020 14:54:41 -0400 (EDT)
+Date: Wed, 11 Mar 2020 13:54:39 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Devender Rao <devenrao@in.ibm.com>
+Subject: Re: Uploading authority certificate with expiry date beyond 2038
+Message-ID: <20200311185439.GA4044@patrickw3-mbp.dhcp.thefacebook.com>
+References: <OF332527D2.5730A8E1-ON00258528.00318A0D-00258528.0035ED8F@notes.na.collabserv.com>
 MIME-Version: 1.0
-References: <CAH1kD+a-3tb-=Xi17w=qrW3xLTJCk9JHF1b+PA=hvkekjSWt-w@mail.gmail.com>
- <DED4A00E-CF36-4CB4-97B1-CD9BB96BF3C4@fuzziesquirrel.com>
-In-Reply-To: <DED4A00E-CF36-4CB4-97B1-CD9BB96BF3C4@fuzziesquirrel.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Wed, 11 Mar 2020 09:50:57 -0700
-Message-ID: <CAH1kD+ZKjw7PKqhzYaytJvcJKOAc0QDSXi61=kvUFpp4ANGpkA@mail.gmail.com>
-Subject: Re: Adding a detailed physical model to bmcweb
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000fa5ece05a0970a74"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="IS0zKkzwUGydFO0o"
+Content-Disposition: inline
+In-Reply-To: <OF332527D2.5730A8E1-ON00258528.00318A0D-00258528.0035ED8F@notes.na.collabserv.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,113 +92,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000fa5ece05a0970a74
-Content-Type: text/plain; charset="UTF-8"
 
->Right, so where we have shared interest I think is how this service works
->and exports its information to _any_ BMC service (not just bmcweb -
->exporting the mapping information via external interfaces is less of a
->priority over here).  Can you say any more about this service?
-
-I'm not sure at the moment.  Google has some software that runs on the host
-machine to build a physical model.  I'll check in with the developers to
-see if what they are doing is applicable to a BMC.  I'll follow up once I
-get a better idea on how this service could be constructed.
-
-Thanks,
-Richard
-
-On Wed, Mar 11, 2020 at 8:45 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
-
-> at 5:22 PM, Richard Hanley <rhanley@google.com> wrote:
->
-> > One of the requirements we have for our data center management software
-> > is that we need to be able to map resources (e.g. actions, telemetry,
-> and
-> > assemblies) directly to the physical component that it originated from
-> as
-> > well as how those components are physically connected.
-> >
-> > Historically this mapping was done through a custom protocol on the
-> host,
-> > and we would like to move this to a Redfish service on the BMC.
->
-> Hi Richard.  We (IBM) also have a need for the same detailed mapping
-> information but from other services on the BMC.
->
-> > Let's just say for the moment that we get a service that collects this
-> > information
->
->
-> Right, so where we have shared interest I think is how this service works
-> and exports its information to _any_ BMC service (not just bmcweb -
-> exporting the mapping information via external interfaces is less of a
-> priority over here).  Can you say any more about this service?
->
-> thanks!
->
-> -brad
->
-
---000000000000fa5ece05a0970a74
-Content-Type: text/html; charset="UTF-8"
+--IS0zKkzwUGydFO0o
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">&gt;Right, so where we have shared interest I think is how=
- this service works=C2=A0<br>&gt;and exports its information to _any_ BMC s=
-ervice (not just bmcweb -=C2=A0<br>&gt;exporting the mapping information vi=
-a external interfaces is less of a=C2=A0<br>&gt;priority over here).=C2=A0 =
-Can you say any more about this service?<br><div><br></div><div>I&#39;m not=
- sure at the moment.=C2=A0 Google has some software that runs on the host m=
-achine to build a physical model.=C2=A0 I&#39;ll check in with the develope=
-rs to see if what they are doing is applicable to a BMC.=C2=A0 I&#39;ll fol=
-low up once I get a better idea on how this service could be constructed.</=
-div><div><br></div><div>Thanks,</div><div>Richard</div></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Mar 11, 2020=
- at 8:45 AM Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com">=
-bradleyb@fuzziesquirrel.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">at 5:22 PM, Richard Hanley &lt;<a href=3D"mailto=
-:rhanley@google.com" target=3D"_blank">rhanley@google.com</a>&gt; wrote:<br=
->
-<br>
-&gt; One of the requirements we have for our data center management softwar=
-e=C2=A0 <br>
-&gt; is that we need to be able to map resources (e.g. actions, telemetry, =
-and=C2=A0 <br>
-&gt; assemblies) directly to the physical component that it originated from=
- as=C2=A0 <br>
-&gt; well as how those components are physically connected.<br>
-&gt;<br>
-&gt; Historically this mapping was done through a custom protocol on the ho=
-st,=C2=A0 <br>
-&gt; and we would like to move this to a Redfish service on the BMC.<br>
-<br>
-Hi Richard.=C2=A0 We (IBM) also have a need for the same detailed mapping=
-=C2=A0 <br>
-information but from other services on the BMC.<br>
-<br>
-&gt; Let&#39;s just say for the moment that we get a service that collects =
-this=C2=A0 <br>
-&gt; information<br>
-<br>
-<br>
-Right, so where we have shared interest I think is how this service works=
-=C2=A0 <br>
-and exports its information to _any_ BMC service (not just bmcweb -=C2=A0 <=
-br>
-exporting the mapping information via external interfaces is less of a=C2=
-=A0 <br>
-priority over here).=C2=A0 Can you say any more about this service?<br>
-<br>
-thanks!<br>
-<br>
--brad<br>
-</blockquote></div>
+On Wed, Mar 11, 2020 at 09:49:02AM +0000, Devender Rao wrote:
+> As time_t data structure is defined as int32 it can hold up to a maximum =
+value=20
+There is significant upstream work going on to transition time_t to a 64
+bit integer even on 32 bit machines (x86-64 and ARM64 already have a 64
+bit time_t).
 
---000000000000fa5ece05a0970a74--
+Kernel changes are already in as of 5.1 to support a userspace with
+64-bit time_t but the kernel itself uses 32-bit internally.  There is a
+merge that is heading into 5.6 to change the kernel (but I don't think
+we need this):
+
+https://lore.kernel.org/lkml/CAK8P3a2iZyA1VSFqvcEc9o59F76GgzLBiOAmEuHKD81FE=
+rPLDQ@mail.gmail.com/
+
+That pull request mentions userspace changes coming in glibc-2.32 that
+will use the 64-bit time_t syscalls and transition userspace over to
+64-bit everywhere.  glibc-2.32 is scheduled for August 2020.
+
+> Probable solutions
+> 1) Do nothing as the chances of uploading a certificate with expiry date =
+> 18
+> chances never happen
+> 2) Return error to the caller if the expirty date is greater than 2038.
+
+With this in mind I'd go with #2 in the short term until we get the
+upstream changes.
+
+These coming changes should cause us to think through any cases where we
+might be relying on a 32-bit time_t, especially in serialization.  I
+have a little concern that we're going to end up breaking some upgrade
+paths when we are using binary formats (like some code using Cereal
+might be).  How do we want to audit and fix that now?
+
+--=20
+Patrick Williams
+
+--IS0zKkzwUGydFO0o
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl5pM+0ACgkQqwNHzC0A
+wRkreg/+J/OesJufF4pv0P6yFtn9V3uQHHNXH2AbVjMVdZLTj6zV+0t3HFV4mcri
+1Q0CkY2sJIZbaop2BBezRbR/exZNaf2EzynOfxiTbBKj2lxsF2gDOp1SaHfO5A3v
+pLUckpHaXpRRe+4YCYTfIgOTgntaXX3YtyFd1rL3f3GWYqU6iWMzPXfgKu/4KGmd
+PmXO9pE54QxeZBSvxvUI+BKkiEIY+byIamnF4YiKv6xSLKIcCGmcLGGu3Pt6/VDZ
+cBnkcpLgvpdJwpguNWwvDCLfEqtBar8bbq/MrwDKOclL/Udg4zAiQaiv5z4f2yrE
+keuQeIQNrB7kQLWNtlbffblnSQzp7HSFqQTkDsyRD9Q6DLaLUu4q/dejTuv5ir7N
+2o1QgitLfUJ5TckljHZd7+iNi+3VoPvf5P3boJfReIFPuAFqxVGa7UVaXt2n/pw7
+DbGoCh3N18nL9v47IKlO87xTuK6QmBs8ZsHGjQVriQ4sipbv/VMEXKk/5T7LzdT8
+30qK7PhpU9ex8WsjwJj8R50POWT/itu7qefVGq+ZCqNsXxziLBFZTlhzGgBNgfG/
+jSIOP0s1nWaZkt7xk9Cbi2JcdkKhwfciwiFF5IkPgELzCCcanrMHvIVDG+jTb/g8
+/JpP9mbcOjUEpw3ni/UqMZyWv64aZDTVHHcLoRP86n8Ps58skog=
+=9bWE
+-----END PGP SIGNATURE-----
+
+--IS0zKkzwUGydFO0o--
