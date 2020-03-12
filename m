@@ -1,67 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3A641826F8
-	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 03:12:46 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48dC5k5RLRzDqN6
-	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 13:12:42 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id E647018293E
+	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 07:41:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48dK3t6r9czDqM6
+	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 17:41:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::244;
- helo=mail-lj1-x244.google.com; envelope-from=mine260309@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=KHuAcRDs; dkim-atps=neutral
-Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com
- [IPv6:2a00:1450:4864:20::244])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.149; helo=m13-149.163.com;
+ envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=gMJVAEyC; dkim-atps=neutral
+Received: from m13-149.163.com (m13-149.163.com [220.181.13.149])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48dC5232M0zDqKT
- for <openbmc@lists.ozlabs.org>; Thu, 12 Mar 2020 13:12:05 +1100 (AEDT)
-Received: by mail-lj1-x244.google.com with SMTP id 19so4567131ljj.7
- for <openbmc@lists.ozlabs.org>; Wed, 11 Mar 2020 19:12:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0krW6nJZRe2uhimfMWWzYEnL64dCYTo5Eqt51ou4ZRA=;
- b=KHuAcRDsO3Pf/FSM/P2bN91U+0/9o8U8oB0Bj9sLwchHKDm/5Y1hEa0t9mqx+FgPLQ
- TajLjwJFuW1iDjzd9lzvJnky3HRyvEGSMilg5voLRkKxpmcWMDbJCG5e4eYOhrI8bLdT
- r7GM5AdKhYiZjhfi2sJAxjUm6BWB1ZUGBcw5DaeVaMJ2Euz966KTFQOvJr/7uaRZH1ag
- YU/CtloKQ0ogQ9BoLm/zkUWuaS5FeG7IR8U+v2nEsdbE54GGvISmNRhcknkOdQ+XloEy
- 97M5Xb0XWIPWLw1bITJUFsT5ZuGIMDS6qW76DPPurD/J/MjJkKvaGo9/IlRJTe0d/bnD
- ONGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=0krW6nJZRe2uhimfMWWzYEnL64dCYTo5Eqt51ou4ZRA=;
- b=pl6d4gw1Zl/mNhmdozNBdB3nov4H+b5d2Vq9wHKCcSgiHWAVpIFQQfToqd5WC//qlc
- vasaS7/nvgtCI5W+1Qu1Z13CFYo2Cec3ctM0jic1MYpfCLeTdWxKSW73pgJKSy7lM5bA
- zEhY5nMA22rsuESN/VidUIXhC8dxZQD/TCrU6VKEOaEF3yhR9DPmaAoOxNQWWQ+vWXsm
- YANaDhrVC2NMMGMGZOlqo1bHp5AsPqzOSHTlgHPqt61Lju7C6Q0js3wkQHpFmQu6PXdS
- aNoFPor1h3bSTgDDUQX7aG2A3wsU5X20TwT1GKFpn6Viy4TynO9WVL8PJEVhA2dt9j45
- fpvg==
-X-Gm-Message-State: ANhLgQ3uvRILu0WT6fkWn+1+D5rzX63uYpcA9Gi1qHzdUMtqnZIeOk4J
- 8Nyuq8fgLXEpuV08QrHqkhqJOk/VhOL/YOYraEs=
-X-Google-Smtp-Source: ADFU+vvnXLWliR3oJmo+SdVAeNeSsukdslo9AbssqXqpSFayDeyS55x63zifdZn77wnxVNaY5L9yJLAH27cFkv2tkKU=
-X-Received: by 2002:a2e:730b:: with SMTP id o11mr3617914ljc.228.1583979120677; 
- Wed, 11 Mar 2020 19:12:00 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48dK3341bMzDqLc
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Mar 2020 17:40:41 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=69tHT
+ LMER4Z6NyoLAhubKUqaH6YZdk4mWD6Okkt9D3s=; b=gMJVAEyCJum5HXKDCveK5
+ TdbEbcyUF7/27w02n/YXaYGqsHYqqKMmGZFn3RRL1PJMJAxwRIQFt9Z+r5P3/V4m
+ q3gMtpMWqqr7sfVYSU5EREB4QAbpx5EcJEcZTmzeUb9mKjK7LaIx3BTuOSgNugQ5
+ ES4lKkdcCCYUFu/P5YcZeg=
+Received: from zhang_cy1989$163.com ( [111.199.187.5] ) by
+ ajax-webmail-wmsvr149 (Coremail) ; Thu, 12 Mar 2020 14:40:35 +0800 (CST)
+X-Originating-IP: [111.199.187.5]
+Date: Thu, 12 Mar 2020 14:40:35 +0800 (CST)
+From: zhang_cy1989 <zhang_cy1989@163.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: How to deal some fatal error causing from host in openbmc
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 163com
+X-CM-CTRLDATA: Vdl7z2Zvb3Rlcl9odG09MTAzNzo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_96825_771059046.1583995235640"
 MIME-Version: 1.0
-References: <OF332527D2.5730A8E1-ON00258528.00318A0D-00258528.0035ED8F@notes.na.collabserv.com>
- <20200311185439.GA4044@patrickw3-mbp.dhcp.thefacebook.com>
-In-Reply-To: <20200311185439.GA4044@patrickw3-mbp.dhcp.thefacebook.com>
-From: Lei YU <mine260309@gmail.com>
-Date: Thu, 12 Mar 2020 10:11:49 +0800
-Message-ID: <CAARXrtmK-=VxFNf-FwW45OH9ed8N30oYmEAJZ57B8Ac5+e8pgw@mail.gmail.com>
-Subject: Re: Uploading authority certificate with expiry date beyond 2038
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <24ed437.6642.170cd792d39.Coremail.zhang_cy1989@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: lcGowAD3_9tj2WlepXQJAw--.63936W
+X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiyAHkT1p6-SRSsgABs6
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,48 +59,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Devender Rao <devenrao@in.ibm.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 12, 2020 at 2:56 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> On Wed, Mar 11, 2020 at 09:49:02AM +0000, Devender Rao wrote:
-> > As time_t data structure is defined as int32 it can hold up to a maximum value
-> There is significant upstream work going on to transition time_t to a 64
-> bit integer even on 32 bit machines (x86-64 and ARM64 already have a 64
-> bit time_t).
->
-> Kernel changes are already in as of 5.1 to support a userspace with
-> 64-bit time_t but the kernel itself uses 32-bit internally.  There is a
-> merge that is heading into 5.6 to change the kernel (but I don't think
-> we need this):
->
-> https://lore.kernel.org/lkml/CAK8P3a2iZyA1VSFqvcEc9o59F76GgzLBiOAmEuHKD81FErPLDQ@mail.gmail.com/
->
-> That pull request mentions userspace changes coming in glibc-2.32 that
-> will use the 64-bit time_t syscalls and transition userspace over to
-> 64-bit everywhere.  glibc-2.32 is scheduled for August 2020.
->
-> > Probable solutions
-> > 1) Do nothing as the chances of uploading a certificate with expiry date > 18
-> > chances never happen
-> > 2) Return error to the caller if the expirty date is greater than 2038.
->
-> With this in mind I'd go with #2 in the short term until we get the
-> upstream changes.
+------=_Part_96825_771059046.1583995235640
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Agreed, a fair certificate should not have such an expiry date.
+RGVhciBBbGwKICAgICBUaGVyZSBhcmUgc29tZSBmYXRhbCBlcnJvcnMgaW4gaG9zdCBzaWRlLgog
+ICAgICBFeDoKICAgICAgICAgICBVbmNvcnJlY3RhYmxlIEVDQy8gb3RoZXIgdW5jb3JyZWN0YWJs
+ZSBtZW1vcnkgZXJyb3IKICAgICAgICAgICBVbnJlY292ZXJhYmxlIGhhcmQtZGlzayBkZXZpY2Ug
+ZmFpbHVyZS4uLgogICAgICAgICAgIFBDSUUgQUVSIGFuZCBzbyBvbi4KICAgICAgSG93IGRvc2Ug
+Qk1DIGdldCBhbGwgcmVhc29ucyBvZiB0aG9zZSBmYXRhbCBlcnJvcnM/CiAgICAgIEJJT1MgZ2l2
+ZXMgdGhvc2UgaW5mb3JtYXRpb25zIHRvIEJNQyBieSBpcG1pPwogICAgICBPciBsaWtlIHBlY2kg
+aW4gaW50ZWwgcGxhdGZvcm0/CgoKICAgICAgV2hhdCByZWNpcGVzICBjYW4gSSByZWZlciB0byBp
+biBvcGVuYm1jPwogICAgICBXYXRpbmcgZm9yIHlvdXIgaGVscCEKICAgICAgVGhhbmtzLgpGZWxp
+eAo=
+------=_Part_96825_771059046.1583995235640
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
->
-> These coming changes should cause us to think through any cases where we
-> might be relying on a 32-bit time_t, especially in serialization.  I
-> have a little concern that we're going to end up breaking some upgrade
-> paths when we are using binary formats (like some code using Cereal
-> might be).  How do we want to audit and fix that now?
->
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+RGVhciBBbGw8L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyBUaGVyZSBhcmUgc29tZSBmYXRhbCBlcnJvcnMgaW4gaG9zdCBzaWRlLjwvZGl2
+PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IEV4OjwvZGl2PjxkaXY+Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IFVu
+Y29ycmVjdGFibGUgRUNDLyBvdGhlciB1bmNvcnJlY3RhYmxlIG1lbW9yeSBlcnJvcjwvZGl2Pjxk
+aXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7IFVucmVjb3ZlcmFibGUgaGFyZC1kaXNrIGRldmljZSBmYWlsdXJlLi4uPC9kaXY+PGRp
+dj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsgUENJRSBBRVIgYW5kIHNvIG9uLjwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7IEhvdyBkb3NlIEJNQyBnZXQgYWxsIHJlYXNvbnMgb2YgdGhvc2UgZmF0YWwgZXJy
+b3JzPzwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IEJJT1MgZ2l2ZXMg
+dGhvc2UgaW5mb3JtYXRpb25zIHRvIEJNQyBieSBpcG1pPzwvZGl2PjxkaXY+Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7IE9yIGxpa2UgcGVjaSBpbiBpbnRlbCBwbGF0Zm9ybT88L2Rpdj48
+ZGl2Pjxicj48L2Rpdj48ZGl2PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBXaGF0IHJl
+Y2lwZXMmbmJzcDsgY2FuIEkgcmVmZXIgdG8gaW4gb3BlbmJtYz88L2Rpdj48ZGl2PiZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBXYXRpbmcgZm9yIHlvdXIgaGVscCE8L2Rpdj48ZGl2PiZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBUaGFua3MuPC9kaXY+PGRpdj5GZWxpeDxicj48
+L2Rpdj48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxlPSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8
+L3A+PC9zcGFuPg==
+------=_Part_96825_771059046.1583995235640--
 
-There is an interesting article in LWN talking about how Debian will
-handle the 2038 case:
-https://lwn.net/Articles/812767/
