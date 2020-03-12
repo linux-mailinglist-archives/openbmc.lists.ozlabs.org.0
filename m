@@ -2,81 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7FD51838F9
-	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 19:47:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EE2B2183C80
+	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 23:30:11 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48dd9S1RgQzDqQB
-	for <lists+openbmc@lfdr.de>; Fri, 13 Mar 2020 05:47:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48dk6T0yC0zDqJC
+	for <lists+openbmc@lfdr.de>; Fri, 13 Mar 2020 09:30:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22c;
+ helo=mail-lj1-x22c.google.com; envelope-from=ryanarnellibm@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=EsAevCN3; dkim-atps=neutral
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com
+ [IPv6:2a00:1450:4864:20::22c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48dd8l3GlnzDqMf
- for <openbmc@lists.ozlabs.org>; Fri, 13 Mar 2020 05:46:47 +1100 (AEDT)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02CIecAd033334; Thu, 12 Mar 2020 14:46:22 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2yqta6s32b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Mar 2020 14:46:22 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 02CIif9q031138;
- Thu, 12 Mar 2020 18:46:21 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma03dal.us.ibm.com with ESMTP id 2yqt6pr7s0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Mar 2020 18:46:21 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 02CIkLqb34210256
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Mar 2020 18:46:21 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id ECE7BAE062;
- Thu, 12 Mar 2020 18:46:20 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C70F2AE05F;
- Thu, 12 Mar 2020 18:46:20 +0000 (GMT)
-Received: from demeter.rchland.ibm.com (unknown [9.10.254.252])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
- Thu, 12 Mar 2020 18:46:20 +0000 (GMT)
-Subject: Re: Proposal: delete BMCWeb sessions after some kinds of account
- changes
-To: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>,
- openbmc@lists.ozlabs.org
-References: <62c905ac-d35b-f670-aed7-589488676db0@linux.ibm.com>
- <ef0ff8ae-4e43-1905-c5a8-d8c523c3a82a@linux.intel.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <c06b807c-1012-e51c-74d2-d95eb47065b7@linux.ibm.com>
-Date: Thu, 12 Mar 2020 13:46:20 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48dk4n1vYfzDqG1
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Mar 2020 09:28:35 +1100 (AEDT)
+Received: by mail-lj1-x22c.google.com with SMTP id u12so8393287ljo.2
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Mar 2020 15:28:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=1pJmPzn1wGOmXkhjv5vcTDOb88CZb3oNCos/01yLpa0=;
+ b=EsAevCN3gwod66HfFigYNWRa1uYGCwD7z+lAhhMW6zXjqXocQLKnw+q1ev7AUFfwXn
+ xX7Qbgl5t6dnJpZ4WU8KSkLGSu8Qum+ygt3w5omgrcnHOXYTtrW/52JEqKgiqDYFnb/c
+ NAze18AoOQcGG6UXSfnNFP8le77rkWs1lrQQMOCnvmXhNgJFUZudNA+G+89X/eubS37w
+ MtIV9BucUmk6ZBdTik6sRrvTXDRJs25mBzWoTTkuw4A9RuujFIMqbWeL4VHYY0KjmJdQ
+ 9sD/mCGXswwzbt4NfM2kkw4lPkysqD9OXu0m2SzS0pgNzx09sTQjkEZnk/aqd4yTdv8l
+ fqnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=1pJmPzn1wGOmXkhjv5vcTDOb88CZb3oNCos/01yLpa0=;
+ b=q6XOmT7/KVWI5iOoZshhIfzhvwsSsDlWQeiByraQZePxIRMwJDPJCVKvc/3WNNVcCP
+ JVI/FFKPtJWVcL3BJQ4Fs2WXaRgz9EQqq+5gaOBdkW9Z18Q7DXiGt1sBkE9awDhOg8kQ
+ G3WCK70GlSw4QCxjeSIBxLC0GXnLqYK/4AN8zAbEokRbXWdlDWWv4Wh+J0MqW1wJV0ea
+ 5PZqHN732kXOhGFkVolu/dQjG7o52GaX+oVnG6+0CqnmxzpROYIXbCoMxPhHkc1B24Qy
+ sDDZ4fQnph2+CuBsgoKoA4S5MD3mck7pXTt58tAJXwetSDL0kiJ2upXBaeWRzmGwJKSs
+ LmVw==
+X-Gm-Message-State: ANhLgQ0n8u+LbeYBKxkYdMd+J/pRbrLuBwZaECtog1J2cscCTA9Jaexn
+ KjiwGN0oUGMfG/dgNlg04bvkKwiXSRq+nj1N5iR5xWJA
+X-Google-Smtp-Source: ADFU+vtDm+wLLkr9KSrBOM7qF7x/STRJ1ddwB+0hbKlm75ytDxTzpOInrlcXAxyY1XELHHGt8MflJmnUfpdHmEsXSbQ=
+X-Received: by 2002:a2e:9bc8:: with SMTP id w8mr6234396ljj.227.1584052110713; 
+ Thu, 12 Mar 2020 15:28:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <ef0ff8ae-4e43-1905-c5a8-d8c523c3a82a@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.572
- definitions=2020-03-12_12:2020-03-11,
- 2020-03-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0
- clxscore=1011 malwarescore=0 phishscore=0 mlxscore=0 impostorscore=0
- lowpriorityscore=0 spamscore=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2003120094
+From: Ryan Arnell <ryanarnellibm@gmail.com>
+Date: Thu, 12 Mar 2020 17:28:20 -0500
+Message-ID: <CAH3qHna+U+VcKCKxgMkA0-JSBi0yaSzt_6uCZqLsnFZgumupXw@mail.gmail.com>
+Subject: OpenBMC GUI: Date and time settings
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000005d73cd05a0afdf2e"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,61 +72,61 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/21/20 6:45 AM, Alexander Tereschenko wrote:
-> On 17-Feb-20 23:10, Joseph Reynolds wrote:
->> This proposal is to enhance BMCWeb to terminate login session that 
->> are associated with accounts that have incompatible changes.  I 
->> understand this practice is allowed Redfish and recommended by OWASP.
->>
-> This makes sense to me, with one specific note - see below
+--0000000000005d73cd05a0afdf2e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Good.  I hadn't thought through any of the specific cases.  Some ideas:
-1. password becomes expired (for any reason, for example due to password 
-aging (which is not implemented in OpenBMC)) ==> the 
-PasswordChangeRequired property becomes true, with its restrictions.
-2. password becomes unexpired (because a new password was successfully 
-set) ==> currently the session remains valid <-- Redfish specifically 
-allows that behavior.  On the other hand, OWASP recommends deleting the 
-session even in this case.
-3. The account itself is disabled, expired, or deleted.  ==> The session 
-gets deleted.
-4. The account is renamed ==> The session gets deleted.
+Hello all,
+Here are the UI design proposals for date and time on the 'Date and time
+setting' page under 'Configuration'.
 
-Hey George, are you getting some ideas for test cases here?  :-)
+Users would interact with these designs when:
+- Checking the BMC=E2=80=99s current time
+- Correcting time drift
+- Adding an NTP server
 
->
->> - The [proposed][] ExpiredPassword D-Bus property and the 
->> PasswordChangeRequired Redfish properties set to True.  Sessions 
->> where this property is True are needed for a user to change their own 
->> password.
->
-> While not terminating these sessions (which certainly makes sense), 
-> should we restrict them to only allow for password change action 
-> starting immediately after that flag is set? I'm not sure how it works 
-> now.
+*Prototype:*
+https://ibm.invisionapp.com/share/Q6NZ13M3A5B#/319420720_01-Date-And-Time-S=
+ettings-02
+*GitHub story:* https://github.com/openbmc/webui-vue/issues/3
 
-Yes.  To clarify the wording: When an account's password changes to 
-expired aka "PasswordChangeRequired", in-flight operations can complete, 
-but new operations (including operations from an valid login session) 
-should be restricted by the PasswordChangeRequired requirements (which 
-restrict the session to the operations required to change the account 
-password).
+As a reminder, these mockups are static images with clickable hotspots to
+indicate the intended path. You can also use your right and left arrows to
+navigate through the flow.
 
-My proposed ExpiredPassword D-Bus property design ( 
-https://lists.ozlabs.org/pipermail/openbmc/2020-February/020554.html) 
-would make the statement above become true.  I am currently working on 
-the first part of the implementation (the D-Bus portion), with the 
-BMCWeb portion to follow.
-That same design would also make the converse true: Successfully setting 
-a new password would remove the PasswordChangeRequired condition; this 
-would allow the session's usual privileges to take effect.
+To comment you can either:
+- Add comment within the Github story (preferred)
+- Click on the bottom-right of the Invision prototype and select comment
+Thanks in advance for your feedback!
 
-Now let me get back to that....
+*Ryan Arnell    *
+UX Engineer | IBM Design | IBM Studios Austin
 
-- Joseph
+--0000000000005d73cd05a0afdf2e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->
-> regards,
-> Alexander
->
+<div dir=3D"ltr">Hello all,<br>Here are the UI design proposals for date an=
+d time on the &#39;Date and time setting&#39; page under &#39;Configuration=
+&#39;.<br><br>Users would interact with these designs when:<br>- Checking t=
+he BMC=E2=80=99s current time<br>- Correcting time drift<br>- Adding an NTP=
+ server<br><br><b>Prototype:</b> <a href=3D"https://ibm.invisionapp.com/sha=
+re/Q6NZ13M3A5B#/319420720_01-Date-And-Time-Settings-02">https://ibm.invisio=
+napp.com/share/Q6NZ13M3A5B#/319420720_01-Date-And-Time-Settings-02</a><br><=
+b>GitHub story:</b> <a href=3D"https://github.com/openbmc/webui-vue/issues/=
+3">https://github.com/openbmc/webui-vue/issues/3</a><br><br>As a reminder, =
+these mockups are static images with clickable hotspots to indicate the int=
+ended path. You can also use your right and left arrows to navigate through=
+ the flow.<br><br>To comment you can either:<br>- Add comment within the Gi=
+thub story (preferred)<br>- Click on the bottom-right of the Invision proto=
+type and select comment<div class=3D"gmail-" style=3D""><div id=3D"gmail-:m=
+r" class=3D"gmail-ii gmail-gt" style=3D"direction:ltr;margin:8px 0px 0px;pa=
+dding:0px"><div id=3D"gmail-:mq" class=3D"gmail-a3s gmail-aXjCH" style=3D"o=
+verflow:hidden;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-stretch:normal;line-height:1.5"><div dir=3D"ltr" style=3D"font-family:A=
+rial,Helvetica,sans-serif;font-size:small">Thanks in advance for your feedb=
+ack!<br></div><br><b>Ryan Arnell =C2=A0 =C2=A0</b> =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0<br>UX Engineer | IBM Design | IBM Studios Austin</div></d=
+iv></div></div>
 
+--0000000000005d73cd05a0afdf2e--
