@@ -2,72 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 169A5182620
-	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 01:10:49 +0100 (CET)
-Received: from lists.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48d8Nx60ZPzDqQR
-	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 11:10:41 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3A641826F8
+	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 03:12:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48dC5k5RLRzDqN6
+	for <lists+openbmc@lfdr.de>; Thu, 12 Mar 2020 13:12:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.214.195;
- helo=mail-pl1-f195.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::244;
+ helo=mail-lj1-x244.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
-Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com
- [209.85.214.195])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=KHuAcRDs; dkim-atps=neutral
+Received: from mail-lj1-x244.google.com (mail-lj1-x244.google.com
+ [IPv6:2a00:1450:4864:20::244])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48d8Mv4MxNzDqMm;
- Thu, 12 Mar 2020 11:09:46 +1100 (AEDT)
-Received: by mail-pl1-f195.google.com with SMTP id a23so1885124plm.1;
- Wed, 11 Mar 2020 17:09:46 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48dC5232M0zDqKT
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Mar 2020 13:12:05 +1100 (AEDT)
+Received: by mail-lj1-x244.google.com with SMTP id 19so4567131ljj.7
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Mar 2020 19:12:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=9ApGOF5PBkyoeBPogSoc/7/ab/yJXEM4Uq6xzW0uckE=;
- b=qa/JjpNbOa07fUsB4jPdLDm52/jZZEQRH9wlnggCo8DYirC2AP/CxM7bIpeGf+pTsZ
- Uv9+2rKZqzD67ItMqFhBlkKxIM3pO4GTO/b21mX73+MdeJ8hXW9aA30m/c7gsxNFkmvY
- 2l3HzKT7rZseU2snFyYgrJqHPN997zzhpWRiGk0t+jriJZeQ3BOe/fmG//AR7IdLhdFr
- uQzd7AOSjXIYBl7IBeG3pQGBBvzaLhYsBEqU4s+4zR1iUyentr12iqjc2dKsAzemOigy
- iZ6MrnT4onYr65Ude8HVtSsE4M05XvWBLKobbUKLxWtQ+JleX207ym20znvdc2QktO4I
- g/WQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=0krW6nJZRe2uhimfMWWzYEnL64dCYTo5Eqt51ou4ZRA=;
+ b=KHuAcRDsO3Pf/FSM/P2bN91U+0/9o8U8oB0Bj9sLwchHKDm/5Y1hEa0t9mqx+FgPLQ
+ TajLjwJFuW1iDjzd9lzvJnky3HRyvEGSMilg5voLRkKxpmcWMDbJCG5e4eYOhrI8bLdT
+ r7GM5AdKhYiZjhfi2sJAxjUm6BWB1ZUGBcw5DaeVaMJ2Euz966KTFQOvJr/7uaRZH1ag
+ YU/CtloKQ0ogQ9BoLm/zkUWuaS5FeG7IR8U+v2nEsdbE54GGvISmNRhcknkOdQ+XloEy
+ 97M5Xb0XWIPWLw1bITJUFsT5ZuGIMDS6qW76DPPurD/J/MjJkKvaGo9/IlRJTe0d/bnD
+ ONGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=9ApGOF5PBkyoeBPogSoc/7/ab/yJXEM4Uq6xzW0uckE=;
- b=uLC490/9uSzRw1jTmBC6f7Ycw2B80at0no7NtX9+q9ds5l0/OK2cU21wnjHwHJih/M
- FXyZNWVVjIGp5M/edM2zMe71yF8c2stjXVzS/TB/ltnuHGSqLDgLWscAjU675Hi1ydke
- bD9tIyoAAzIgHXQK6XuywGmX0YpnXQIgNJgpStL3WoYLnJwZlOwZmcgVh5PB+QtPJgVm
- kaTf7nLQqIH0KPWNdaL6+m5dKy9Yo0Vxe1SciqPi0x/dHACUwePNny1L0Lqy0/6KH01n
- e/DdXrgpl0Pc/oThXW9Sa+cILbB9y4LBzP5jm8e6Dq6f1ZJot47XseIt96MGiWToimwq
- xPVg==
-X-Gm-Message-State: ANhLgQ3Ac32v+XkvxGEiVPiVEQ6WYhcxpEJsos0ruasKB5EEqt2GO/Lg
- IN5ZuSeWyciHOR+0RZg9XP4=
-X-Google-Smtp-Source: ADFU+vtML21USPDOMZ+PmnB2abZahmaHnFt3ItHVXPSoef4wnUi8Xp1UT2B8XYgt+E7etOPYpGvc6g==
-X-Received: by 2002:a17:902:d88d:: with SMTP id
- b13mr5144514plz.228.1583971779921; 
- Wed, 11 Mar 2020 17:09:39 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 (c-24-4-25-55.hsd1.ca.comcast.net.
- [24.4.25.55])
- by smtp.gmail.com with ESMTPSA id e11sm9957036pfj.95.2020.03.11.17.09.38
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Wed, 11 Mar 2020 17:09:39 -0700 (PDT)
-Date: Wed, 11 Mar 2020 17:09:31 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Subject: Re: [PATCH v2] usb: gadget: aspeed: improve vhub port irq handling
-Message-ID: <20200312000930.GA3956@taoren-ubuntu-R90MNF91>
-References: <20200305234746.1002-1-rentao.bupt@gmail.com>
- <481e9b7d40c51505518a34ddc2515d3200dbf158.camel@kernel.crashing.org>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=0krW6nJZRe2uhimfMWWzYEnL64dCYTo5Eqt51ou4ZRA=;
+ b=pl6d4gw1Zl/mNhmdozNBdB3nov4H+b5d2Vq9wHKCcSgiHWAVpIFQQfToqd5WC//qlc
+ vasaS7/nvgtCI5W+1Qu1Z13CFYo2Cec3ctM0jic1MYpfCLeTdWxKSW73pgJKSy7lM5bA
+ zEhY5nMA22rsuESN/VidUIXhC8dxZQD/TCrU6VKEOaEF3yhR9DPmaAoOxNQWWQ+vWXsm
+ YANaDhrVC2NMMGMGZOlqo1bHp5AsPqzOSHTlgHPqt61Lju7C6Q0js3wkQHpFmQu6PXdS
+ aNoFPor1h3bSTgDDUQX7aG2A3wsU5X20TwT1GKFpn6Viy4TynO9WVL8PJEVhA2dt9j45
+ fpvg==
+X-Gm-Message-State: ANhLgQ3uvRILu0WT6fkWn+1+D5rzX63uYpcA9Gi1qHzdUMtqnZIeOk4J
+ 8Nyuq8fgLXEpuV08QrHqkhqJOk/VhOL/YOYraEs=
+X-Google-Smtp-Source: ADFU+vvnXLWliR3oJmo+SdVAeNeSsukdslo9AbssqXqpSFayDeyS55x63zifdZn77wnxVNaY5L9yJLAH27cFkv2tkKU=
+X-Received: by 2002:a2e:730b:: with SMTP id o11mr3617914ljc.228.1583979120677; 
+ Wed, 11 Mar 2020 19:12:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <481e9b7d40c51505518a34ddc2515d3200dbf158.camel@kernel.crashing.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <OF332527D2.5730A8E1-ON00258528.00318A0D-00258528.0035ED8F@notes.na.collabserv.com>
+ <20200311185439.GA4044@patrickw3-mbp.dhcp.thefacebook.com>
+In-Reply-To: <20200311185439.GA4044@patrickw3-mbp.dhcp.thefacebook.com>
+From: Lei YU <mine260309@gmail.com>
+Date: Thu, 12 Mar 2020 10:11:49 +0800
+Message-ID: <CAARXrtmK-=VxFNf-FwW45OH9ed8N30oYmEAJZ57B8Ac5+e8pgw@mail.gmail.com>
+Subject: Re: Uploading authority certificate with expiry date beyond 2038
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,59 +73,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Felipe Balbi <balbi@kernel.org>, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- Stephen Boyd <swboyd@chromium.org>, taoren@fb.com,
- Chunfeng Yun <chunfeng.yun@mediatek.com>, linux-arm-kernel@lists.infradead.org
+Cc: Devender Rao <devenrao@in.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ben,
+On Thu, Mar 12, 2020 at 2:56 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Wed, Mar 11, 2020 at 09:49:02AM +0000, Devender Rao wrote:
+> > As time_t data structure is defined as int32 it can hold up to a maximum value
+> There is significant upstream work going on to transition time_t to a 64
+> bit integer even on 32 bit machines (x86-64 and ARM64 already have a 64
+> bit time_t).
+>
+> Kernel changes are already in as of 5.1 to support a userspace with
+> 64-bit time_t but the kernel itself uses 32-bit internally.  There is a
+> merge that is heading into 5.6 to change the kernel (but I don't think
+> we need this):
+>
+> https://lore.kernel.org/lkml/CAK8P3a2iZyA1VSFqvcEc9o59F76GgzLBiOAmEuHKD81FErPLDQ@mail.gmail.com/
+>
+> That pull request mentions userspace changes coming in glibc-2.32 that
+> will use the 64-bit time_t syscalls and transition userspace over to
+> 64-bit everywhere.  glibc-2.32 is scheduled for August 2020.
+>
+> > Probable solutions
+> > 1) Do nothing as the chances of uploading a certificate with expiry date > 18
+> > chances never happen
+> > 2) Return error to the caller if the expirty date is greater than 2038.
+>
+> With this in mind I'd go with #2 in the short term until we get the
+> upstream changes.
 
-On Wed, Mar 11, 2020 at 12:31:22PM +1100, Benjamin Herrenschmidt wrote:
-> On Thu, 2020-03-05 at 15:47 -0800, rentao.bupt@gmail.com wrote:
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > This patch evaluates vhub ports' irq mask before going through per-port
-> > irq handling one by one, which helps to speed up irq handling in case
-> > there is no port interrupt.
-> > 
-> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> > ---
-> >  Changes in v2:
-> >    - use "for_each_set_bit" to speed up port irq handling.
-> > 
-> >  drivers/usb/gadget/udc/aspeed-vhub/core.c | 11 ++++++++---
-> >  drivers/usb/gadget/udc/aspeed-vhub/vhub.h |  8 +++-----
-> >  2 files changed, 11 insertions(+), 8 deletions(-)
-> > 
-> > diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> > index f8d35dd60c34..af2dbd405361 100644
-> > --- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> > +++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> > @@ -134,11 +134,14 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
-> >  	}
-> >  
-> >  	/* Handle device interrupts */
-> > -	for (i = 0; i < vhub->max_ports; i++) {
-> > -		u32 dev_mask = VHUB_IRQ_DEVICE1 << i;
-> > +	if (istat & vhub->port_irq_mask) {
-> > +		int offset = VHUB_IRQ_DEV1_BIT;
-> > +		int size = VHUB_IRQ_DEV1_BIT + vhub->max_ports;
-> >  
-> > -		if (istat & dev_mask)
-> > +		for_each_set_bit_from(offset, (unsigned long *)&istat, size) 
-> 
-> That type cast is very bad. It will not work on big endian for example
-> (yes this driver isn't used on big endian today but still).
-> 
-> Please assign istat to an unsigned long (or make it unsigned long to
-> begin with).
+Agreed, a fair certificate should not have such an expiry date.
 
-Thanks for pointing it out. Will fix it in v3.
+>
+> These coming changes should cause us to think through any cases where we
+> might be relying on a 32-bit time_t, especially in serialization.  I
+> have a little concern that we're going to end up breaking some upgrade
+> paths when we are using binary formats (like some code using Cereal
+> might be).  How do we want to audit and fix that now?
+>
 
-Cheers,
-
-Tao
+There is an interesting article in LWN talking about how Debian will
+handle the 2038 case:
+https://lwn.net/Articles/812767/
