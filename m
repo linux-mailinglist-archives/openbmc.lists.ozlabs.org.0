@@ -1,53 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34302188A9B
-	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 17:41:12 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48hf7R1nwLzDqd2
-	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 03:41:07 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FE40188B02
+	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 17:47:16 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48hfGT37kGzDqPl
+	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 03:47:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42c;
+ helo=mail-pf1-x42c.google.com; envelope-from=dhruvaraj@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=gT42w4v5; dkim-atps=neutral
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com
+ [IPv6:2607:f8b0:4864:20::42c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48hdBB1237zDqWN
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 02:58:23 +1100 (AEDT)
-IronPort-SDR: 7waFtMYj4RyeZSZ5G5eVwcr5odrmK6NYKdI1/5QNwL0fFq4IueHi1bd7TEABab3E64wZzwXSE6
- 54zo+zGfEAAw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2020 08:58:20 -0700
-IronPort-SDR: ZtgrwPFGzPqDetf49xBJviVt0sNfh8HdECvGSIPkmuMvRvodrw0CernxPJ+HlqphXC1fWCaHdN
- PAw/a7/ViqOQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.70,564,1574150400"; d="scan'208";a="236369157"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.135.41.192])
- ([10.135.41.192])
- by fmsmga007.fm.intel.com with ESMTP; 17 Mar 2020 08:58:20 -0700
-Subject: Re: Proposal for the connected redfish client info
-To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
-References: <94469ba3-2b59-b131-ecbe-d708054aef89@linux.vnet.ibm.com>
- <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com>
-Date: Tue, 17 Mar 2020 08:58:19 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48hdVq0sz3zDqkd
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 03:12:51 +1100 (AEDT)
+Received: by mail-pf1-x42c.google.com with SMTP id u68so12217480pfb.2
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 09:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=AcC6ajpKR3eykCPlAJXKY/0mGHa60zri6/gEL2YtrlA=;
+ b=gT42w4v5DmF3hDqjfi80xZjX7zzlOSbd4z7yXNEtLAV9KRlj5d4afL3TrYs927BgS4
+ DypaZ2e3GCkxPaRC8BY7d6odHhCIoez0++7jxsuOQ1yf4T14WgsvR/MhapGuj511GrEF
+ awnkFDfoirwSKQPXGk1vkWz2wFabYe7guAhwzlqQGodrEPgyt20sC6RkIodqq/nydwfK
+ PfOW1TnezjXMYnJc2ZpnEspLbWjV264ExBd/NH1+BmH7ldvG4VnFWT1Jg4jI9t5Qajk0
+ xNNrpm+syAvrZpSkbQccYgcU56QyDTl9J9vw39aFzjvSoAEQ31d++Y5+8gkLzPRZWb3U
+ PrqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=AcC6ajpKR3eykCPlAJXKY/0mGHa60zri6/gEL2YtrlA=;
+ b=WjoEI3A+/Sidu4HldWt0Jvfp0g17JqwaXso9yHjnMzP1egaNz64dqDI29vUlmjasPC
+ 0W1gHoaAshMCkG9sUhzFcJYJm7Gf8JouWm9hIeoI4S2k4t3hUQPdTCOTN3YYddVmoqE3
+ 0IQ5p9d0xX2LpkFDVsrv5Ps/PNQ80uKi78K/jRLqfZeVv0Yy0aF6Rk7XwO8Qpp5fUORL
+ ii5Hf1SxtD4LlxH1krj+mzaCBcDDzSgL76CCA28Ktu2WxLAqcvhRcqHVP15YlcMgTJeR
+ POFKOsZP/AUtYtcQEVrldh47HBifj847vIQTEfdSnx24hbjB7zHz6q1lWeObjei0l5xj
+ q76w==
+X-Gm-Message-State: ANhLgQ03zp3ofcCIgKsoleuv7GGtLtaRN/Qso/5JUr+apLwpjew/Q4gL
+ +Qvp7bfFcs+ppdoiumZQf8hP1PvwvAaod+yPI4Dqk0+P
+X-Google-Smtp-Source: ADFU+vuoCGv/xn48glxbag6Bwcs7vkASIeCC+TImJwMbcreEzDHUk4XylL3tiJLiFwR3dBuYbN149pKPVlVA3OYNa/M=
+X-Received: by 2002:a67:7f58:: with SMTP id a85mr4469805vsd.28.1584461116875; 
+ Tue, 17 Mar 2020 09:05:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From: dhruvaraj S <dhruvaraj@gmail.com>
+Date: Tue, 17 Mar 2020 21:35:05 +0530
+Message-ID: <CAK7WosgjqxpsfP9FUV5oTYyf_dKYWOXC4FUVEd4Oci5ndz1Zvg@mail.gmail.com>
+Subject: Updates for phosphor-debug-collector interfaces
+To: openbmc@lists.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,69 +72,18 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/17/2020 6:01 AM, Ratan Gupta wrote:
-> Hi Team,
-> 
-> Looking for your inputs
-> 
-> James, How about option1 for the below use case
+Proposing these updates to the existing phosphor-debug-collector DBus
+interfaces to support dumps that get created and stored in the host
+but notified and offloaded through BMC. looking for inputs from the
+team.
 
-Before creating OEM we are to propose it to the Redfish community. Have 
-you asked them for their thoughts?
+Design doc: https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28260
 
-> 
-> Ratan
-> 
-> On 3/11/20 3:48 PM, Ratan Gupta wrote:
->>
->> Hi Team,
->>
->> In IBM we have a following requirement
->>
->>   * Show the connected redfish client info.
->>       o   ClientIP >>       o   Client Unique Identifier(unique serial number of the 
-client etc)
+Update dump entry and add Notify method :
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/28621
 
-This confuses me, how are you getting the serial number for a connected 
-client? If so, have you looked into data protection laws and storing 
-Personally Identifiable Information?
+InitiateOffload method for the dump entry:
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/28784/7
 
->>
->>
->> Presently there is no way through which we can get this info.
->>
->> I have following two proposal for the above requirement.
->>
->> 1/ (Extend the session schema)
->>
->> Add the IPaddress and the client Identifier as a OEM in the session 
->> schema,
->> Clinet IP would be read only and will be updated once the redfish 
->> client creates the session.
->> ClientIdentifier(Management console unique serial number etc) will be 
->> writable property and can be set by the redfish client
->> during creation of the session or after creating the session.
->>
->>
->> 2/ (Create the Manager object at runtime)
->> once the redfish client creates the session , bmcweb internally does 
->> the following
->>
->> - Create the manager object whose type is "Management Controller".
->>
->> - Create the ethernet interface resource manager resource and update 
->> the client IP.
->>
->>    In the second option how to set the Client unique identifier which 
->> is to be given by the Redfish client
-
-I've had talks before about creating a new systems schema for the BMC 
-specifically, so that you could expose things like bmc memory, etc. 
-Systems also has the Ethernet schema. However this depends on what 
-you're trying to present.
-
->>
->>  Please let me know your thoughts on the above.
->>
->> Ratan
->>
+--------------
+Dhruvaraj S
