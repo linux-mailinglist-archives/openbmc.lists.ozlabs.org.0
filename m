@@ -1,70 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38676188D26
+	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 19:29:00 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC72C188CB1
-	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 19:00:03 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48hgtS3VztzDqmq
-	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 05:00:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48hhWp4x1dzDqlR
+	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 05:28:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=preossec.com (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=lee@preossec.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
+ dmarc=none (p=none dis=none) header.from=preossec.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=oKiNnIDi; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ unprotected) header.d=preossec.com header.i=@preossec.com header.a=rsa-sha256
+ header.s=mesmtp header.b=xvgVH1uV; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=khrh6kMl; 
+ dkim-atps=neutral
+X-Greylist: delayed 442 seconds by postgrey-1.36 at bilbo;
+ Wed, 18 Mar 2020 05:27:54 AEDT
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48hgsS5vxszDqlB
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 04:59:08 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 4F1DB4128F;
- Tue, 17 Mar 2020 17:59:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1584467942; x=1586282343; bh=XUl7RT0uBDpOF0/mnGHNCap0E
- ec/EWsHV+5Ik6bDg5w=; b=oKiNnIDiAFUIsY2/e1f2qknDCdXEQmUshJyku3TS+
- Kh8pb7nURYnu7tYE55Gx/VQmYpMkzL/vB7MZxHP5uLqetX5RVYKnSOvtmqVsxllV
- Syn6bxUNyLjO1mVcsN44OCjOGBlAbY9qXt/PoyJN/SVOEfyXT5a/PBcQ9fj5ly5h
- 4o=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Hadhq4JGGnXo; Tue, 17 Mar 2020 20:59:02 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 646CC4128E;
- Tue, 17 Mar 2020 20:59:01 +0300 (MSK)
-Received: from localhost.localdomain (10.199.3.54) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 17
- Mar 2020 20:59:01 +0300
-Message-ID: <530d856cf60f594e39a81e5b8b6f12253d0f3544.camel@yadro.com>
-Subject: Re: Proposal for the connected redfish client info
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, <openbmc@lists.ozlabs.org>,
- <james.feist@linux.intel.com>
-Date: Tue, 17 Mar 2020 20:58:44 +0300
-In-Reply-To: <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
-References: <94469ba3-2b59-b131-ecbe-d708054aef89@linux.vnet.ibm.com>
- <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48hhVf4zFxzDqlB
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 05:27:54 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 006825C024F
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 14:20:16 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Tue, 17 Mar 2020 14:20:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=preossec.com; h=
+ subject:to:references:from:message-id:date:mime-version
+ :in-reply-to:content-type:content-transfer-encoding; s=mesmtp;
+ bh=elPz5r+dLX3olBOf9lsMjOBb8NVw4aLB7VzfkvSGOWw=; b=xvgVH1uVrGqm
+ WfZtqe7uWqchKkEa/rmPwleTDILhu0rWnpP86LaV6Ck/kKzEjWUFhyoez+/5AfIo
+ GufPbGYkXXa9DrnFdmXrWm+cHsTMijxNlL+yQRsfi0zb86C44JDuUkAcBKqoWb+B
+ gkyjE8YuLzG9vpsu4eu69pIgpSgIPME=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=elPz5r+dLX3olBOf9lsMjOBb8NVw4aLB7VzfkvSGO
+ Ww=; b=khrh6kMl+gy7saDqSolLAJXjwjxJApAsf6Pr60gNIHVJsFuSiVBEC+/wm
+ i8VfF8MiV3iRw8YVWc70EIXSTE8wZ5EGfF1hwjusqYBZ3VXVvL9/58Cbo71ZhXru
+ lT6GlslbO7romiC2ngPlDpjtnYfn1fRB4ZtN2AZAHHCUrqlHIr/1Ke5mai1U00Hi
+ qbGXcZb/cHwl7gorPvmDbyWRI6eyqXpgWmAhPBiKejRJVx1lG2iP4z7E93u0+VDg
+ qD1y+CM1b7P2CHBWvCY/lHr8Gt+vAGYRCq6TPEZLcR2C6y+mcV7ixqtm9OyF9TSz
+ C1zlCNBKJFiTfDei6dKn6kMI50jXg==
+X-ME-Sender: <xms:3xRxXuMbmGFMNYCl7AIukfTuP6bx5NKNm3QWxJDzIWNSflYoErgqhg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudefhedguddtiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecunecujfgurhepuffvfhfhkffffgggjggtgfesth
+ ejredttdefjeenucfhrhhomhepnfgvvgcuhfhishhhvghruceolhgvvgesphhrvghoshhs
+ vggtrdgtohhmqeenucffohhmrghinheplhgruhhntghhphgrugdrnhgvthdpghhithhhuh
+ gsrdgtohhmpdhfihhrmhifrghrvghsvggtuhhrihhthidrtghomhenucfkphephedtrdef
+ hedrledrvddvudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+ hrohhmpehlvggvsehprhgvohhsshgvtgdrtghomh
+X-ME-Proxy: <xmx:3xRxXv0zobSI2GLU2u2ecTfmwcTC42kJgZfFKAF41_Yavb7k7ZDLxA>
+ <xmx:3xRxXmEQCPIIPlPYmJiCsF9ngeyHMELkOLPa3YomjTjiBeSQI2SAVA>
+ <xmx:3xRxXgj1TrUOL5QErNCT0h0N7TA774NVJB2K6XATbLHLh_hxSBEIPg>
+ <xmx:3xRxXt4ToJpbn4PP1J9wlSw0hzCnub35KYoRHcBRTm8TduqLpUDycw>
+Received: from [192.168.1.100] (unknown [50.35.9.221])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 593FA3280064
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 14:20:15 -0400 (EDT)
+Subject: Re: openbmc-specific dynamic security scanner
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <d2bdd336-88ee-19f7-9215-2c0ede78e3bb@linux.ibm.com>
+From: Lee Fisher <lee@preossec.com>
+Message-ID: <9bb74bdc-bb09-0206-1431-04979e664235@preossec.com>
+Date: Tue, 17 Mar 2020 11:20:11 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
+In-Reply-To: <d2bdd336-88ee-19f7-9215-2c0ede78e3bb@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.3.54]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,40 +96,31 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2020-03-17 at 18:31 +0530, Ratan Gupta wrote:
-> Hi Team,
-> 
-> Looking for your inputs 
-> 
-> James, How about option1 for the below use case
-> 
-> Ratan
-> 
-> On 3/11/20 3:48 PM, Ratan Gupta wrote:
-> > Hi Team,
-> > 
-> > In IBM we have a following requirement
-> > 
-> > Show the connected redfish client info.
-> >   ClientIP
-> >   Client Unique Identifier(unique serial number of the client etc)
-> > 
-> > Presently there is no way through which we can get this info.
-> > 
-> > I have following two proposal for the above requirement.
-> > 
-> > 1/ (Extend the session schema)
-> > 
-> > Add the IPaddress and the client Identifier as a OEM in the session schema,
-> > Clinet IP would be read only and will be updated once the redfish client
-> > creates the session.
 
-We've already some sort of it in our local env for old builds. I don't mind
-about client ip read only property inside session/connection inside bmcweb. 
+On 3/17/20 8:01 AM, Joseph Reynolds wrote:
+> [...] And I am looking for your feedback.
 
-> > ClientIdentifier(Management console unique serial number etc) will be
-> > writable property and can be set by the redfish client 
-> > during creation of the session or after creating the session.
+Perhaps, instead of creating a new OpenBMC-centric security tool, add
+OpenBMC-centric tests to an existing firmware security testing tool.
+IMO, there are basically two existing firmware security tools, FWTS and
+CHIPSEC.
 
-What is 'ClientIdentifier' and why it should be there?
+FirmWare Test Suite (FWTS) is from Canonical to run diagnostics (not
+necessarily security-centric) to see if a system (HW/FW) is capable of
+running an OS. Runs on multiple ISAs. Has security tests, but not
+security-centric. Probably has the best set of ACPI tests available,
+recommended by UEFI Forum for PC vendors doing ACPI testing. GPL C codebase.
+
+https://launchpad.net/fwts
+
+CHIPSEC is a firmware security-centric tool from Intel. It has existing
+security checks that OpenBMC could use. Main downside -- IMO -- is that
+it only works on Intel hardware, no support for
+AMD/ARM/RISC-V/POWER/etc. GPL Python codebase with a bit of asm.
+
+https://github.com/chipsec/chipsec
+
+HTH,
+Lee
+blog: https://firmwaresecurity.com/
 
