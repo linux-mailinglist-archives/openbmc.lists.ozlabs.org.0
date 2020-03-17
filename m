@@ -2,77 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B6541889CC
-	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 17:07:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 34302188A9B
+	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 17:41:12 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48hdNl5g1YzDqg4
-	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 03:07:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48hf7R1nwLzDqd2
+	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 03:41:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48hbyD1YWyzDqn4
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 02:02:58 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02HF2fFG104972
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 11:02:54 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2ytakdvqc1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 11:02:45 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 02HExsaf026331
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 15:01:21 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma01dal.us.ibm.com with ESMTP id 2yrpw6q6a5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 15:01:20 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 02HF1JDM45547850
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 15:01:19 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8FC48B205F
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 15:01:19 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A15AB206A
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 15:01:19 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.236.172])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 17 Mar 2020 15:01:19 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: openbmc-specific dynamic security scanner
-Message-ID: <d2bdd336-88ee-19f7-9215-2c0ede78e3bb@linux.ibm.com>
-Date: Tue, 17 Mar 2020 10:01:18 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48hdBB1237zDqWN
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 02:58:23 +1100 (AEDT)
+IronPort-SDR: 7waFtMYj4RyeZSZ5G5eVwcr5odrmK6NYKdI1/5QNwL0fFq4IueHi1bd7TEABab3E64wZzwXSE6
+ 54zo+zGfEAAw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2020 08:58:20 -0700
+IronPort-SDR: ZtgrwPFGzPqDetf49xBJviVt0sNfh8HdECvGSIPkmuMvRvodrw0CernxPJ+HlqphXC1fWCaHdN
+ PAw/a7/ViqOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.70,564,1574150400"; d="scan'208";a="236369157"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.135.41.192])
+ ([10.135.41.192])
+ by fmsmga007.fm.intel.com with ESMTP; 17 Mar 2020 08:58:20 -0700
+Subject: Re: Proposal for the connected redfish client info
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+References: <94469ba3-2b59-b131-ecbe-d708054aef89@linux.vnet.ibm.com>
+ <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com>
+Date: Tue, 17 Mar 2020 08:58:19 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
+In-Reply-To: <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
- definitions=2020-03-17_05:2020-03-17,
- 2020-03-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0
- malwarescore=0 mlxscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 phishscore=0 bulkscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2003170062
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,53 +62,69 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Team,
+On 3/17/2020 6:01 AM, Ratan Gupta wrote:
+> Hi Team,
+> 
+> Looking for your inputs
+> 
+> James, How about option1 for the below use case
 
-The OpenBMC security working group "end of release checklist" [1] calls 
-for a report of basic security facts.  I would like to create a dynamic 
-scan tool (okay, it's a shell script) to scan a running OpenBMC system 
-and report these facts.  It would not reveal any vulnerabilities that 
-are not already well-known.  I believe it would not be much of a head 
-start to attackers.
+Before creating OEM we are to propose it to the Redfish community. Have 
+you asked them for their thoughts?
 
-Once the tool was published, the idea is to run it on various platforms, 
-fix any issues that need fixing (typically tightening a configuration), 
-and reporting to the email list so folks could give their opinions for 
-the OpenBMC release process [2].
+> 
+> Ratan
+> 
+> On 3/11/20 3:48 PM, Ratan Gupta wrote:
+>>
+>> Hi Team,
+>>
+>> In IBM we have a following requirement
+>>
+>>   * Show the connected redfish client info.
+>>       o   ClientIP >>       o   Client Unique Identifier(unique serial number of the 
+client etc)
 
-[1]: 
-https://github.com/openbmc/openbmc/wiki/Security-working-group#security-end-of-release-checklist
-[2]: https://github.com/openbmc/docs/blob/master/release/release-process.md
+This confuses me, how are you getting the serial number for a connected 
+client? If so, have you looked into data protection laws and storing 
+Personally Identifiable Information?
 
-Tool operation:
-The tool would be given an admin account and use that probe the BMC, and 
-create additional accounts for Operator and ReadOnly access.
-It would report items such as which network services are running, what 
-transport layer security is offered, which accounts can access various 
-services, what URLs are accessible, etc.
-For web access, it can report on HTTP port 80 redirection,  HTTP 
-headers, etc.
-With access to the BMC's shell, it can report which files are readable, 
-writable, and which have sensitive data (like private keys).
-In summary, a catalog of OpenBMC security settings.
+>>
+>>
+>> Presently there is no way through which we can get this info.
+>>
+>> I have following two proposal for the above requirement.
+>>
+>> 1/ (Extend the session schema)
+>>
+>> Add the IPaddress and the client Identifier as a OEM in the session 
+>> schema,
+>> Clinet IP would be read only and will be updated once the redfish 
+>> client creates the session.
+>> ClientIdentifier(Management console unique serial number etc) will be 
+>> writable property and can be set by the redfish client
+>> during creation of the session or after creating the session.
+>>
+>>
+>> 2/ (Create the Manager object at runtime)
+>> once the redfish client creates the session , bmcweb internally does 
+>> the following
+>>
+>> - Create the manager object whose type is "Management Controller".
+>>
+>> - Create the ethernet interface resource manager resource and update 
+>> the client IP.
+>>
+>>    In the second option how to set the Client unique identifier which 
+>> is to be given by the Redfish client
 
-I realize a tool like this may fall under the test team's province. I 
-want this to be *trivial* for someone with limited OpenBMC experience to 
-be able to use.  Setting up a robot environment may be a barrier for 
-some, and running a shell script to connect to the BMC may be much easier.
+I've had talks before about creating a new systems schema for the BMC 
+specifically, so that you could expose things like bmc memory, etc. 
+Systems also has the Ethernet schema. However this depends on what 
+you're trying to present.
 
-I realize there are existing open source scanners.  Once again, I want 
-this to be very easy to use, and be customized for OpenBMC.  I would be 
-happy to abandon this project if such a scanner meets my needs.  It 
-would need to be customized for OpenBMC, and be very easy to use.  If 
-that ever happens, the tool I am proposing today would be a good start.
-
-And if you did not already guess, I've already cobbled together a number 
-of shell commands for this, so making the script would be relatively easy.
-
-I think the script would help further the security awareness of the project.
-
-And I am looking for your feedback.
-
-- Joseph
-
+>>
+>>  Please let me know your thoughts on the above.
+>>
+>> Ratan
+>>
