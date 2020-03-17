@@ -1,42 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C0D189126
+	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 23:14:32 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5E9F188EB3
-	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 21:09:10 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48hklS09z7zDqrW
-	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 07:09:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48hnX632WxzDqlP
+	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 09:14:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48hkkh6s0wzDqQK
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 07:08:28 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Content-Type: text/plain;
-	charset=us-ascii;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: service for tracking user activity (phosphor-audit)
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <B9364499-3954-4862-BDF2-52467AF39327@gmail.com>
-Date: Tue, 17 Mar 2020 16:08:25 -0400
-Content-Transfer-Encoding: 7bit
-Message-Id: <07C231EA-1761-4014-9A78-E2BDA3D71F0E@fuzziesquirrel.com>
-References: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
- <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
- <B9364499-3954-4862-BDF2-52467AF39327@gmail.com>
-To: Andrew Geissler <geissonator@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48hnWC1RlLzDqXt
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 09:13:42 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 02HM1Prf006942; Tue, 17 Mar 2020 18:13:39 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 2yrsdsvp5v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Mar 2020 18:13:39 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 02HMA6H2030279;
+ Tue, 17 Mar 2020 22:13:38 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma03dal.us.ibm.com with ESMTP id 2yrpw6jgfu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Mar 2020 22:13:38 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 02HMDbjW48169380
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Mar 2020 22:13:38 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DF3BA11206B;
+ Tue, 17 Mar 2020 22:13:37 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E6B2112067;
+ Tue, 17 Mar 2020 22:13:37 +0000 (GMT)
+Received: from ghost4.ibm.com (unknown [9.163.52.216])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Mar 2020 22:13:37 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.4 00/16] Aspeed: Add XDMA and SCU interrupt
+ controller drivers
+Date: Tue, 17 Mar 2020 17:13:20 -0500
+Message-Id: <20200317221336.19973-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.24.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
+ definitions=2020-03-17_09:2020-03-17,
+ 2020-03-17 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0
+ suspectscore=1 spamscore=0 lowpriorityscore=0 impostorscore=0 mlxscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=771 clxscore=1015
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2003170082
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -48,18 +81,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ivan Mikhaylov <i.mikhaylov@yadro.com>, gmills@us.ibm.com,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Matt Spinler <mspinler@linux.ibm.com>, joseph-reynolds@charter.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 2:46 PM, Andrew Geissler <geissonator@gmail.com> wrote:
+This series adds an interrupt controller driver, which has been accepted
+upstream, for the AST2500/AST2600 SCU. It then adds the XDMA driver, which has
+been reviewed upstream and is pending merge.
+The final four patches are not meant to be upstreamed in their current state,
+but they do get the driver to function on the AST2600 A1 chip.
 
->
-> Matt and Deepak could weigh in on whether this could be a part of
-> phosphor-logging.
+Eddie James (16):
+  dt-bindings: interrupt-controller: Add Aspeed SCU interrupt controller
+  irqchip: Add Aspeed SCU interrupt controller
+  ARM: dts: aspeed: ast2500: Add SCU interrupt controller
+  ARM: dts: aspeed: ast2600: Add SCU interrupt controllers
+  dt-bindings: soc: Add Aspeed XDMA Engine
+  soc: aspeed: Add XDMA Engine Driver
+  soc: aspeed: xdma: Add user interface
+  soc: aspeed: xdma: Add reset ioctl
+  ARM: dts: aspeed: ast2500: Add XDMA Engine
+  ARM: dts: aspeed: ast2600: Add XDMA Engine
+  ARM: dts: aspeed: witherspoon: Enable XDMA Engine
+  ARM: dts: aspeed: tacoma: Enable XDMA engine
+  soc: aspeed: xdma: Add memory controller configuration
+  soc: aspeed: xdma: Add root complex reset
+  soc: aspeed: xdma: Disable PCI AHB bridge during probe
+  soc: aspeed: xdma: Fix BMC PCI device class and revision for AST2600
 
-This would be my preference.
+ .../aspeed,ast2xxx-scu-ic.txt                 |   23 +
+ .../devicetree/bindings/soc/aspeed/xdma.txt   |   40 +
+ MAINTAINERS                                   |   16 +
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts   |    6 +
+ .../boot/dts/aspeed-bmc-opp-witherspoon.dts   |    6 +
+ arch/arm/boot/dts/aspeed-g5.dtsi              |   22 +-
+ arch/arm/boot/dts/aspeed-g6.dtsi              |   34 +
+ drivers/irqchip/Makefile                      |    2 +-
+ drivers/irqchip/irq-aspeed-scu-ic.c           |  239 ++++
+ drivers/soc/aspeed/Kconfig                    |    8 +
+ drivers/soc/aspeed/Makefile                   |    1 +
+ drivers/soc/aspeed/aspeed-xdma.c              | 1108 +++++++++++++++++
+ .../interrupt-controller/aspeed-scu-ic.h      |   23 +
+ include/uapi/linux/aspeed-xdma.h              |   42 +
+ 14 files changed, 1568 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/interrupt-controller/aspeed,ast2xxx-scu-ic.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/aspeed/xdma.txt
+ create mode 100644 drivers/irqchip/irq-aspeed-scu-ic.c
+ create mode 100644 drivers/soc/aspeed/aspeed-xdma.c
+ create mode 100644 include/dt-bindings/interrupt-controller/aspeed-scu-ic.h
+ create mode 100644 include/uapi/linux/aspeed-xdma.h
 
-thx - Brad
+-- 
+2.24.0
+
