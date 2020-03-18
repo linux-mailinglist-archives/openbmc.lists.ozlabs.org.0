@@ -1,77 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69162189181
-	for <lists+openbmc@lfdr.de>; Tue, 17 Mar 2020 23:31:40 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48hnvs4G9gzDqFF
-	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 09:31:37 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8419B18939E
+	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 02:15:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48hsYM5sshzDqq5
+	for <lists+openbmc@lfdr.de>; Wed, 18 Mar 2020 12:15:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
+ (client-ip=183.3.226.222; helo=qq.com; envelope-from=1450335857@qq.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
+ header.s=s201512 header.b=HJ5HF38e; dkim-atps=neutral
+Received: from qq.com (smtpbg417.qq.com [183.3.226.222])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48hnWM1pptzDql9
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 09:13:51 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02HM3X6t049320; Tue, 17 Mar 2020 18:13:49 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2ytb221stw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Mar 2020 18:13:48 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 02HMA643024114;
- Tue, 17 Mar 2020 22:13:48 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma04dal.us.ibm.com with ESMTP id 2yrpw6jp0f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Mar 2020 22:13:48 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 02HMDl1M49152484
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Mar 2020 22:13:47 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7039D112067;
- Tue, 17 Mar 2020 22:13:47 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0DD15112069;
- Tue, 17 Mar 2020 22:13:47 +0000 (GMT)
-Received: from ghost4.ibm.com (unknown [9.163.52.216])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue, 17 Mar 2020 22:13:46 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 16/16] soc: aspeed: xdma: Fix BMC PCI device
- class and revision for AST2600
-Date: Tue, 17 Mar 2020 17:13:36 -0500
-Message-Id: <20200317221336.19973-17-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200317221336.19973-1-eajames@linux.ibm.com>
-References: <20200317221336.19973-1-eajames@linux.ibm.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
- definitions=2020-03-17_09:2020-03-17,
- 2020-03-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 mlxlogscore=999 phishscore=0 impostorscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 priorityscore=1501 suspectscore=1
- adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2003170082
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48hsXc0LZgzDqP5
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 12:15:11 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1584494059; bh=yY2kthn2B649JXUNm4f3Wu8qV0CSjn12NszA+VZZSAg=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=HJ5HF38eSFgMJdCS/BsiSNxjwqoNndWH7l6sRvaZOTdbH8SMOf2I8rs8xZ9h1Gg4X
+ yQ0Gb1Bx1hCDFZnjtGYPXzX5nVnJzz7lE/r75ZAMZRwMNUN9hgoyKXrc8Jf+aAFryx
+ SQFsjMQSVxV0wEpHp+iM4cc/N4drB1RjVDJbfTUY=
+X-QQ-SSF: 00000000000000F000000000000000H
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 218.247.157.87
+In-Reply-To: <SN6PR13MB248037ACFB1C54BF58671A6EEDF60@SN6PR13MB2480.namprd13.prod.outlook.com>
+References: <tencent_51B1839602A2624376D6376B@qq.com>
+ <SN6PR13MB248037ACFB1C54BF58671A6EEDF60@SN6PR13MB2480.namprd13.prod.outlook.com>
+X-QQ-STYLE: 
+X-QQ-mid: webenglish1t1584494057t607419
+From: "=?ISO-8859-1?B?eGl1emhp?=" <1450335857@qq.com>
+To: "=?ISO-8859-1?B?VHJveS5MZWVAdmVydGl2LmNvbQ==?=" <Troy.Lee@vertiv.com>,
+ "=?ISO-8859-1?B?amFlLmh5dW4ueW9v?=" <jae.hyun.yoo@linux.intel.com>,
+ "=?ISO-8859-1?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>,
+ "=?ISO-8859-1?B?ZWFqYW1lcw==?=" <eajames@linux.ibm.com>
+Subject: Re:RE: [ExternalEmail] How change the  ikvm  port to 5901
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5E7175E9_0B33E2A0_2918BB2E"
+Content-Transfer-Encoding: 8Bit
+Date: Wed, 18 Mar 2020 09:14:17 +0800
+X-Priority: 3
+Message-ID: <tencent_24DAD94A2D4392B95D2C1EAF@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-ReplyHash: 2200875031
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Wed, 18 Mar 2020 09:14:18 +0800 (CST)
+Feedback-ID: webenglish:qq.com:bgforeign:bgforeign11
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,71 +74,170 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The A1 revision of the AST2600 changed the register address of the BMC
-PCI device class and revision, so take account of that when setting it.
+This is a multi-part message in MIME format.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/soc/aspeed/aspeed-xdma.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+------=_NextPart_5E7175E9_0B33E2A0_2918BB2E
+Content-Type: text/plain;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
 
-diff --git a/drivers/soc/aspeed/aspeed-xdma.c b/drivers/soc/aspeed/aspeed-xdma.c
-index 525214ce2c8b..5d97919d38cf 100644
---- a/drivers/soc/aspeed/aspeed-xdma.c
-+++ b/drivers/soc/aspeed/aspeed-xdma.c
-@@ -30,6 +30,9 @@
- 
- #define DEVICE_NAME				"aspeed-xdma"
- 
-+#define SCU_SILICON_REV_ID			0x004
-+#define  SCU_SILICON_REV_ID_AST2600_A0		 0x05000303
-+
- #define SCU_AST2600_MISC_CTRL			0x0c0
- #define  SCU_AST2600_MISC_CTRL_DISABLE_PCI	 BIT(8)
- 
-@@ -53,7 +56,8 @@
- #define  SCU_PCIE_CONF_BMC_EN_DMA		 BIT(14)
- 
- #define SCU_AST2500_BMC_CLASS_REV		0x19c
--#define SCU_AST2600_BMC_CLASS_REV		0xc4c
-+#define SCU_AST2600_A0_BMC_CLASS_REV		0xc4c
-+#define SCU_AST2600_A1_BMC_CLASS_REV		0xc68
- #define  SCU_BMC_CLASS_REV_XDMA			 0xff000001
- 
- #define SDMC_REMAP                             0x008
-@@ -797,9 +801,21 @@ static int aspeed_xdma_init_scu(struct aspeed_xdma *ctx, struct device *dev)
- 		}
- 
- 		if (pcie_device_bmc) {
-+			u32 addr = ctx->chip->scu_bmc_class;
-+
-+			if (addr == SCU_AST2600_A0_BMC_CLASS_REV) {
-+				u32 silicon_rev_id;
-+
-+				regmap_read(scu, SCU_SILICON_REV_ID,
-+					    &silicon_rev_id);
-+
-+				if (silicon_rev_id !=
-+				    SCU_SILICON_REV_ID_AST2600_A0)
-+					addr = SCU_AST2600_A1_BMC_CLASS_REV;
-+			}
-+
- 			selection = bmc;
--			regmap_write(scu, ctx->chip->scu_bmc_class,
--				     SCU_BMC_CLASS_REV_XDMA);
-+			regmap_write(scu, addr, SCU_BMC_CLASS_REV_XDMA);
- 		} else {
- 			selection = vga;
- 		}
-@@ -1042,7 +1058,7 @@ static const struct aspeed_xdma_chip aspeed_ast2500_xdma_chip = {
- static const struct aspeed_xdma_chip aspeed_ast2600_xdma_chip = {
- 	.control = XDMA_AST2600_CTRL_US_COMP | XDMA_AST2600_CTRL_DS_COMP |
- 		XDMA_AST2600_CTRL_DS_DIRTY | XDMA_AST2600_CTRL_DS_SIZE_256,
--	.scu_bmc_class = SCU_AST2600_BMC_CLASS_REV,
-+	.scu_bmc_class = SCU_AST2600_A0_BMC_CLASS_REV,
- 	.scu_dbg_ctrl = SCU_AST2600_DBG_CTRL,
- 	.scu_misc_ctrl = SCU_AST2600_MISC_CTRL,
- 	.scu_pcie_conf = SCU_AST2600_PCIE_CONF,
--- 
-2.24.0
+SGkgVHJveSwNCiAgIFRoYW5rcywgaXQgd29ya3Mgbm93Lg0KWGl1emhpDQoNCg0KDQoNCi0t
+LS0tLS0tLS0tLS0tLS0tLSBPcmlnaW5hbCAtLS0tLS0tLS0tLS0tLS0tLS0NCkZyb206ICAi
+VHJveS5MZWVAdmVydGl2LmNvbSI7PFRyb3kuTGVlQHZlcnRpdi5jb20+Ow0KRGF0ZTogIE1h
+ciAxNywgMjAyMA0KVG86ICAieGl1emhpIjwxNDUwMzM1ODU3QHFxLmNvbT47ICJqYWUuaHl1
+bi55b28iPGphZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20+OyAib3BlbmJtYyI8b3BlbmJt
+Y0BsaXN0cy5vemxhYnMub3JnPjsgImVhamFtZXMiPGVhamFtZXNAbGludXguaWJtLmNvbT47
+IA0KDQpTdWJqZWN0OiAgUkU6IFtFeHRlcm5hbEVtYWlsXSBIb3cgY2hhbmdlIHRoZSAgaWt2
+bSAgcG9ydCB0byA1OTAxDQoNCg0KDQogIA0KWW91IG1pZ2h0IG5lZWQgdG8gcGF0Y2ggYm1j
+d2ViIGFzIHdlbGwuDQogDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9ibWN3ZWIvYmxv
+Yi9tYXN0ZXIvaW5jbHVkZS9rdm1fd2Vic29ja2V0LmhwcCNMMjQNCiANCiANCiANClRyb3kN
+CiANCiANCiANCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt0cm95LmxlZT12ZXJ0
+aXYuY29tQGxpc3RzLm96bGFicy5vcmc+IE9uIEJlaGFsZiBPZiB4aXV6aGkNCiBTZW50OiBU
+dWVzZGF5LCBNYXJjaCAxNywgMjAyMCAxMToxMiBBTQ0KIFRvOiBqYWUuaHl1bi55b28gPGph
+ZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20+OyBvcGVuYm1jIDxvcGVuYm1jQGxpc3RzLm96
+bGFicy5vcmc+OyBlYWphbWVzIDxlYWphbWVzQGxpbnV4LmlibS5jb20+DQogU3ViamVjdDog
+W0V4dGVybmFsRW1haWxdIEhvdyBjaGFuZ2UgdGhlIGlrdm0gcG9ydCB0byA1OTAxDQogDQog
+DQogIA0KSGkgSmFlLEVkZGllLCANCiANCiAgDQogICAgSSB3YW50IHRvIGNoYW5nZSB0aGUg
+aWt2bSBzZXJ2ZXIgcG9ydCBmcm9tIDU5MDAgdG8gNTkwMSAuDQogDQogIA0KSSB0cnkgdG8g
+bW9kaWZ5IHRoZSBmb2xsb3dpbmcgc291cmNlOg0KIA0KICANCjEuIG9ibWMtaWt2bQ0KIA0K
+ICANCi0tLSBhL2lrdm1fc2VydmVyLmNwcCAgICAyMDE5LTA5LTAzIDA1OjQ3OjQyLjA2MDEx
+MDE0NSArMDgwMA0KICsrKyBiL2lrdm0tc2VydmVyLmNwcCAgICAyMDIwLTAzLTE2IDE1OjQ1
+OjU5LjM4OTU3MTczNyArMDgwMA0KIEBAIC00Myw3ICs0Myw3IEBADQogICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIChjaGFyKiljdXJzb3JNYXNrKTsNCiAgICAgIHNl
+cnZlci0+Y3Vyc29yLT54aG90ID0gMTsNCiAgICAgIHNlcnZlci0+Y3Vyc29yLT55aG90ID0g
+MTsNCiAtDQogKyAgICBzZXJ2ZXIgLT4gcG9ydCA9IDU5MDEgOw0KICAgICAgcmZiU3RyaW5n
+VG9BZGRyKCZpcFswXSwgJnNlcnZlci0+bGlzdGVuSW50ZXJmYWNlKTsNCiAgDQogICAgICBy
+ZmJJbml0U2VydmVyKHNlcnZlcik7DQogMi4gYm1jd2ViDQogDQogIA0KLS0tIGEvaW5jbHVk
+ZS9rdm1fd2Vic29ja2V0LmhwcCAgICAyMDE5LTEyLTE5IDE4OjExOjM4LjgzODUzMjAzNyAr
+MDgwMA0KICsrKyBiL2luY2x1ZGUva3ZtX3dlYnNvY2tldC5ocHAgICAgMjAyMC0wMy0xNyAx
+MTowNzowOS44MTQ4MzYwMDUgKzA4MDANCiBAQCAtMjAsNyArMjAsNyBAQA0KICAgICAgICAg
+IGNvbm4oY29ubiksIGRvaW5nV3JpdGUoZmFsc2UpLCBob3N0U29ja2V0KGNvbm4uZ2V0X2lv
+X2NvbnRleHQoKSkNCiAgICAgIHsNCiAgICAgICAgICBib29zdDo6YXNpbzo6aXA6OnRjcDo6
+ZW5kcG9pbnQgZW5kcG9pbnQoDQogLSAgICAgICAgICAgIGJvb3N0Ojphc2lvOjppcDo6bWFr
+ZV9hZGRyZXNzKCI6OjEiKSwgNTkwMCk7DQogKyAgICAgICAgICAgIGJvb3N0Ojphc2lvOjpp
+cDo6bWFrZV9hZGRyZXNzKCI6OjEiKSwgNTkwMSk7DQogICAgICAgICAgaG9zdFNvY2tldC5h
+c3luY19jb25uZWN0KA0KICAgICAgICAgICAgICBlbmRwb2ludCwgW3RoaXMsICZjb25uXShj
+b25zdCBib29zdDo6c3lzdGVtOjplcnJvcl9jb2RlJiBlYykgew0KICAgICAgICAgICAgICAg
+ICAgaWYgKGVjKQ0KIA0KICANCkkgY2FuIGNvbm5lY3QgdG8gaWt2bSBieSB0aWdodHZuYyBv
+biBwb3J0IDU5MDEgLiANCiANCiAgDQpCdXQgdGhlIHdlYnVpIGt2bSBwYWdlIGRvbid0IHdv
+cmssIHRoZSBrdm0gcGFnZSBjYW5ub3QgY29ubmVjdCB0byB0aGUgaWt2bSBzZXJ2ZXIgc3Vj
+Y2Vzcy4NCiANCiAgDQpIb3cgdG8gIG1vZGlmeSB0aGUgd2VidWkgPw0KIA0KICANCiAgQmVz
+dCwNCiANCiAgDQpYaXV6aGkNCiANCiANCiBDT05GSURFTlRJQUxJVFkgTk9USUNFOiBUaGlz
+IGUtbWFpbCBhbmQgYW55IGZpbGVzIHRyYW5zbWl0dGVkIHdpdGggaXQgYXJlIGludGVuZGVk
+IHNvbGVseSBmb3IgdGhlIHVzZSBvZiB0aGUgaW5kaXZpZHVhbCBvciBlbnRpdHkgdG8gd2hv
+bSB0aGV5IGFyZSBhZGRyZXNzZWQgYW5kIG1heSBjb250YWluIGNvbmZpZGVudGlhbCBhbmQg
+cHJpdmlsZWdlZCBpbmZvcm1hdGlvbiBwcm90ZWN0ZWQgYnkgbGF3LiBJZiB5b3UgcmVjZWl2
+ZWQgdGhpcyBlLW1haWwgIGluIGVycm9yLCBhbnkgcmV2aWV3LCB1c2UsIGRpc3NlbWluYXRp
+b24sIGRpc3RyaWJ1dGlvbiwgb3IgY29weWluZyBvZiB0aGUgZS1tYWlsIGlzIHN0cmljdGx5
+IHByb2hpYml0ZWQuIFBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseSBieSBy
+ZXR1cm4gZS1tYWlsIGFuZCBkZWxldGUgYWxsIGNvcGllcyBmcm9tIHlvdXIgc3lzdGVtLg==
+
+------=_NextPart_5E7175E9_0B33E2A0_2918BB2E
+Content-Type: text/html;
+	charset="ISO-8859-1"
+Content-Transfer-Encoding: base64
+
+PGRpdj5IaSBUcm95LDwvZGl2PjxkaXY+Jm5ic3A7ICZuYnNwO1RoYW5rcywgaXQgd29ya3Mg
+bm93LjwvZGl2PjxkaXY+WGl1emhpPC9kaXY+PGRpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxi
+cj48L2Rpdj48ZGl2IHN0eWxlPSJmb250LXNpemU6IDEycHg7Zm9udC1mYW1pbHk6IEFyaWFs
+IE5hcnJvdztwYWRkaW5nOjJweCAwIDJweCAwOyI+LS0tLS0tLS0tLS0tLS0tLS0tJm5ic3A7
+T3JpZ2luYWwmbmJzcDstLS0tLS0tLS0tLS0tLS0tLS08L2Rpdj48ZGl2IHN0eWxlPSJmb250
+LXNpemU6IDEycHg7YmFja2dyb3VuZDojZWZlZmVmO3BhZGRpbmc6OHB4OyI+PGRpdj48Yj5G
+cm9tOiA8L2I+Jm5ic3A7IlRyb3kuTGVlQHZlcnRpdi5jb20iOyZsdDtUcm95LkxlZUB2ZXJ0
+aXYuY29tJmd0Ozs8L2Rpdj48ZGl2PjxiPkRhdGU6IDwvYj4mbmJzcDtNYXIgMTcsIDIwMjA8
+L2Rpdj48ZGl2PjxiPlRvOiA8L2I+Jm5ic3A7InhpdXpoaSImbHQ7MTQ1MDMzNTg1N0BxcS5j
+b20mZ3Q7OyAiamFlLmh5dW4ueW9vIiZsdDtqYWUuaHl1bi55b29AbGludXguaW50ZWwuY29t
+Jmd0OzsgIm9wZW5ibWMiJmx0O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs7ICJlYWph
+bWVzIiZsdDtlYWphbWVzQGxpbnV4LmlibS5jb20mZ3Q7OyA8d2JyPjwvZGl2PjxkaXY+PC9k
+aXY+PGRpdj48Yj5TdWJqZWN0OiA8L2I+Jm5ic3A7UkU6IFtFeHRlcm5hbEVtYWlsXSBIb3cg
+Y2hhbmdlIHRoZSAgaWt2bSAgcG9ydCB0byA1OTAxPC9kaXY+PC9kaXY+PGRpdj48YnI+PC9k
+aXY+CgoKCjxzdHlsZT48L3N0eWxlPgoKCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+Cjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5Zb3UgbWlnaHQgbmVlZCB0
+byBwYXRjaCBibWN3ZWIgYXMgd2VsbC48bzpwPjwvbzpwPjwvc3Bhbj48L3A+CjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj48YSBocmVmPSJodHRwczovL2dpdGh1
+Yi5jb20vb3BlbmJtYy9ibWN3ZWIvYmxvYi9tYXN0ZXIvaW5jbHVkZS9rdm1fd2Vic29ja2V0
+LmhwcCNMMjQiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2JtY3dlYi9ibG9iL21hc3Rl
+ci9pbmNsdWRlL2t2bV93ZWJzb2NrZXQuaHBwI0wyNDwvYT48L3NwYW4+PHNwYW4gbGFuZz0i
+RU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTIuMHB0Ij48bzpwPjwvbzpwPjwvc3Bhbj48L3A+
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1z
+aXplOjEyLjBwdCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPgo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQiPlRy
+b3k8bzpwPjwvbzpwPjwvc3Bhbj48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxh
+bmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdCI+PG86cD4mbmJzcDs8L286cD48
+L3NwYW4+PC9wPgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBsYW5nPSJFTi1VUyI+
+RnJvbTo8L3NwYW4+PC9iPjxzcGFuIGxhbmc9IkVOLVVTIj4gb3BlbmJtYyAmbHQ7b3BlbmJt
+Yy1ib3VuY2VzK3Ryb3kubGVlPXZlcnRpdi5jb21AbGlzdHMub3psYWJzLm9yZyZndDsKPGI+
+T24gQmVoYWxmIE9mIDwvYj54aXV6aGk8YnI+CjxiPlNlbnQ6PC9iPiBUdWVzZGF5LCBNYXJj
+aCAxNywgMjAyMCAxMToxMiBBTTxicj4KPGI+VG86PC9iPiBqYWUuaHl1bi55b28gJmx0O2ph
+ZS5oeXVuLnlvb0BsaW51eC5pbnRlbC5jb20mZ3Q7OyBvcGVuYm1jICZsdDtvcGVuYm1jQGxp
+c3RzLm96bGFicy5vcmcmZ3Q7OyBlYWphbWVzICZsdDtlYWphbWVzQGxpbnV4LmlibS5jb20m
+Z3Q7PGJyPgo8Yj5TdWJqZWN0OjwvYj4gW0V4dGVybmFsRW1haWxdIEhvdyBjaGFuZ2UgdGhl
+IGlrdm0gcG9ydCB0byA1OTAxPG86cD48L286cD48L3NwYW4+PC9wPgo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9w
+Pgo8ZGl2Pgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+SGkgSmFl
+LEVkZGllLCA8bzpwPjwvbzpwPjwvc3Bhbj48L3A+CjwvZGl2Pgo8ZGl2Pgo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+Jm5ic3A7ICZuYnNwOyBJIHdhbnQgdG8g
+Y2hhbmdlIHRoZSBpa3ZtIHNlcnZlciBwb3J0IGZyb20gNTkwMCB0byA1OTAxIC48bzpwPjwv
+bzpwPjwvc3Bhbj48L3A+CjwvZGl2Pgo8ZGl2Pgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBsYW5nPSJFTi1VUyI+SSB0cnkgdG8gbW9kaWZ5IHRoZSBmb2xsb3dpbmcgc291cmNlOjxv
+OnA+PC9vOnA+PC9zcGFuPjwvcD4KPC9kaXY+CjxkaXY+CjxwIGNsYXNzPSJNc29Ob3JtYWwi
+PjxzcGFuIGxhbmc9IkVOLVVTIj4xLiBvYm1jLWlrdm08bzpwPjwvbzpwPjwvc3Bhbj48L3A+
+CjwvZGl2Pgo8ZGl2Pgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+
+LS0tIGEvaWt2bV9zZXJ2ZXIuY3BwJm5ic3A7ICZuYnNwOyAyMDE5LTA5LTAzIDA1OjQ3OjQy
+LjA2MDExMDE0NSArMDgwMDxicj4KKysrIGIvaWt2bS1zZXJ2ZXIuY3BwJm5ic3A7ICZuYnNw
+OyAyMDIwLTAzLTE2IDE1OjQ1OjU5LjM4OTU3MTczNyArMDgwMDxicj4KQEAgLTQzLDcgKzQz
+LDcgQEA8YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAm
+bmJzcDsgKGNoYXIqKWN1cnNvck1hc2spOzxicj4KJm5ic3A7Jm5ic3A7ICZuYnNwOyBzZXJ2
+ZXItJmd0O2N1cnNvci0mZ3Q7eGhvdCA9IDE7PGJyPgombmJzcDsmbmJzcDsgJm5ic3A7IHNl
+cnZlci0mZ3Q7Y3Vyc29yLSZndDt5aG90ID0gMTs8YnI+Ci08YnI+CismbmJzcDsgJm5ic3A7
+IHNlcnZlciAtJmd0OyBwb3J0ID0gNTkwMSA7PGJyPgombmJzcDsmbmJzcDsgJm5ic3A7IHJm
+YlN0cmluZ1RvQWRkcigmYW1wO2lwWzBdLCAmYW1wO3NlcnZlci0mZ3Q7bGlzdGVuSW50ZXJm
+YWNlKTs8YnI+CiA8YnI+CiZuYnNwOyZuYnNwOyAmbmJzcDsgcmZiSW5pdFNlcnZlcihzZXJ2
+ZXIpOzxicj4KMi4gYm1jd2ViPG86cD48L286cD48L3NwYW4+PC9wPgo8L2Rpdj4KPGRpdj4K
+PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPi0tLSBhL2luY2x1ZGUv
+a3ZtX3dlYnNvY2tldC5ocHAmbmJzcDsgJm5ic3A7IDIwMTktMTItMTkgMTg6MTE6MzguODM4
+NTMyMDM3ICswODAwPGJyPgorKysgYi9pbmNsdWRlL2t2bV93ZWJzb2NrZXQuaHBwJm5ic3A7
+ICZuYnNwOyAyMDIwLTAzLTE3IDExOjA3OjA5LjgxNDgzNjAwNSArMDgwMDxicj4KQEAgLTIw
+LDcgKzIwLDcgQEA8YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAm
+bmJzcDsgY29ubihjb25uKSwgZG9pbmdXcml0ZShmYWxzZSksIGhvc3RTb2NrZXQoY29ubi5n
+ZXRfaW9fY29udGV4dCgpKTxicj4KJm5ic3A7Jm5ic3A7ICZuYnNwOyB7PGJyPgombmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgJm5ic3A7IGJvb3N0Ojphc2lvOjppcDo6
+dGNwOjplbmRwb2ludCBlbmRwb2ludCg8YnI+Ci0mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgJm5ic3A7IGJvb3N0Ojphc2lvOjppcDo6
+bWFrZV9hZGRyZXNzKCI6OjEiKSwgNTkwMCk7PGJyPgorJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICZuYnNwOyBib29zdDo6YXNpbzo6
+aXA6Om1ha2VfYWRkcmVzcygiOjoxIiksIDU5MDEpOzxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7ICZuYnNwOyBob3N0U29ja2V0LmFzeW5jX2Nvbm5lY3QoPGJy
+PgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsgJm5ic3A7IGVuZHBvaW50LCBbdGhpcywgJmFtcDtjb25uXShjb25zdCBib29z
+dDo6c3lzdGVtOjplcnJvcl9jb2RlJmFtcDsgZWMpIHs8YnI+CiZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyAmbmJzcDsgaWYgKGVjKTxvOnA+PC9vOnA+PC9zcGFuPjwvcD4KPC9k
+aXY+CjxkaXY+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5JIGNh
+biBjb25uZWN0IHRvIGlrdm0gYnkgdGlnaHR2bmMgb24gcG9ydCA1OTAxIC4KPG86cD48L286
+cD48L3NwYW4+PC9wPgo8L2Rpdj4KPGRpdj4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
+bGFuZz0iRU4tVVMiPkJ1dCB0aGUgd2VidWkga3ZtIHBhZ2UgZG9uJ3Qgd29yaywgdGhlIGt2
+bSBwYWdlIGNhbm5vdCBjb25uZWN0IHRvIHRoZSBpa3ZtIHNlcnZlciBzdWNjZXNzLjxvOnA+
+PC9vOnA+PC9zcGFuPjwvcD4KPC9kaXY+CjxkaXY+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxz
+cGFuIGxhbmc9IkVOLVVTIj5Ib3cgdG8mbmJzcDsgbW9kaWZ5IHRoZSB3ZWJ1aSA/PG86cD48
+L286cD48L3NwYW4+PC9wPgo8L2Rpdj4KPGRpdj4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNw
+YW4gbGFuZz0iRU4tVVMiPiZuYnNwOyBCZXN0LDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4KPC9k
+aXY+CjxkaXY+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5YaXV6
+aGk8bzpwPjwvbzpwPjwvc3Bhbj48L3A+CjwvZGl2Pgo8L2Rpdj4KQ09ORklERU5USUFMSVRZ
+IE5PVElDRTogVGhpcyBlLW1haWwgYW5kIGFueSBmaWxlcyB0cmFuc21pdHRlZCB3aXRoIGl0
+IGFyZSBpbnRlbmRlZCBzb2xlbHkgZm9yIHRoZSB1c2Ugb2YgdGhlIGluZGl2aWR1YWwgb3Ig
+ZW50aXR5IHRvIHdob20gdGhleSBhcmUgYWRkcmVzc2VkIGFuZCBtYXkgY29udGFpbiBjb25m
+aWRlbnRpYWwgYW5kIHByaXZpbGVnZWQgaW5mb3JtYXRpb24gcHJvdGVjdGVkIGJ5IGxhdy4g
+SWYgeW91IHJlY2VpdmVkIHRoaXMgZS1tYWlsCiBpbiBlcnJvciwgYW55IHJldmlldywgdXNl
+LCBkaXNzZW1pbmF0aW9uLCBkaXN0cmlidXRpb24sIG9yIGNvcHlpbmcgb2YgdGhlIGUtbWFp
+bCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBQbGVhc2Ugbm90aWZ5IHRoZSBzZW5kZXIgaW1t
+ZWRpYXRlbHkgYnkgcmV0dXJuIGUtbWFpbCBhbmQgZGVsZXRlIGFsbCBjb3BpZXMgZnJvbSB5
+b3VyIHN5c3RlbS4KCjwvZGl2Pg==
+
+------=_NextPart_5E7175E9_0B33E2A0_2918BB2E--
+
+
 
