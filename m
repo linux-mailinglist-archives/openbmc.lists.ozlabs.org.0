@@ -2,76 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F11218A9EB
-	for <lists+openbmc@lfdr.de>; Thu, 19 Mar 2020 01:44:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C644D18BB11
+	for <lists+openbmc@lfdr.de>; Thu, 19 Mar 2020 16:26:47 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48jSpd3m75zDr4Q
-	for <lists+openbmc@lfdr.de>; Thu, 19 Mar 2020 11:44:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48jrNj0Ll5zDrP9
+	for <lists+openbmc@lfdr.de>; Fri, 20 Mar 2020 02:26:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+ spf=permerror (SPF Permanent Error: Two or more type
+ TXT spf records found.) smtp.mailfrom=yadro.com (client-ip=89.207.88.252;
+ helo=mta-01.yadro.com; envelope-from=i.mikhaylov@yadro.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=Idi/ojJ1; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48jSnt5PKKzDqmJ
- for <openbmc@lists.ozlabs.org>; Thu, 19 Mar 2020 11:43:45 +1100 (AEDT)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02J0WAKn132141
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 20:43:42 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.119])
- by mx0a-001b2d01.pphosted.com with ESMTP id 2yu71ag0hj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 18 Mar 2020 20:43:42 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Thu, 19 Mar 2020 00:43:41 -0000
-Received: from us1b3-smtp08.a3dr.sjc01.isc4sb.com (10.122.203.190)
- by smtp.notes.na.collabserv.com (10.122.182.123) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 19 Mar 2020 00:43:39 -0000
-Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
- by us1b3-smtp08.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020031900433842-949763 ;
- Thu, 19 Mar 2020 00:43:38 +0000 
-In-Reply-To: <64CAA2C9-5628-414C-BC95-D4E6970CA285@linux.vnet.ibm.com>
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: vishwa@linux.vnet.ibm.com
-Date: Thu, 19 Mar 2020 00:43:38 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48jr6b6qx2zDr5J
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Mar 2020 02:14:31 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 97FE3412DB;
+ Thu, 19 Mar 2020 15:14:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1584630860; x=1586445261; bh=f1fHyy9NctbZxLScYIwJP+2tH
+ /VskQd1877Y+M1/bi0=; b=Idi/ojJ1EmobSel6gxG3NXE6rOQCw0l2hLFQhBTRi
+ O511NYEom1iscZMeMzaSZUuIDvJ3ylAwmaFgs5m7EG5e96Zd0qXPcbOcE7HM3a2z
+ DZXil6dOuQidwa9cBtpXIZ6qz0RVM6GUqNlX8mHjnSZ2F07t6akNnaMJKLl1aSVs
+ 4M=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id Dt8CyksNtFvS; Thu, 19 Mar 2020 18:14:20 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id D36B7412E3;
+ Thu, 19 Mar 2020 18:14:19 +0300 (MSK)
+Received: from localhost.localdomain (10.199.1.78) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 19
+ Mar 2020 18:14:20 +0300
+Message-ID: <3672a09d41f6d80fcff8f85306eda4ef07351a34.camel@yadro.com>
+Subject: Re: service for tracking user activity (phosphor-audit)
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>, Andrew Geissler
+ <geissonator@gmail.com>
+Date: Thu, 19 Mar 2020 18:14:09 +0300
+In-Reply-To: <07C231EA-1761-4014-9A78-E2BDA3D71F0E@fuzziesquirrel.com>
+References: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
+ <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
+ <B9364499-3954-4862-BDF2-52467AF39327@gmail.com>
+ <07C231EA-1761-4014-9A78-E2BDA3D71F0E@fuzziesquirrel.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <64CAA2C9-5628-414C-BC95-D4E6970CA285@linux.vnet.ibm.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP62 November 04, 2019 at 09:47
-X-LLNOutbound: False
-X-Disclaimed: 6479
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20031900-3975-0000-0000-000001ECF89F
-X-IBM-SpamModules-Scores: BY=0.000002; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.101207
-X-IBM-SpamModules-Versions: BY=3.00012774; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000293; SDB=6.01349682; UDB=6.00719876; IPR=6.01132092; 
- MB=3.00031289; MTD=3.00000008; XFM=3.00000015; UTC=2020-03-19 00:43:41
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-03-18 21:52:14 - 6.00011134
-x-cbparentid: 20031900-3976-0000-0000-0000359E1430
-Message-Id: <OF1ACC918B.335C6EA9-ON00258530.0003DCF3-00258530.0003FEBF@notes.na.collabserv.com>
-Subject: RE: OpenBMC GUI: Date and time settings
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
- definitions=2020-03-18_07:2020-03-18,
- 2020-03-18 signatures=0
-X-Proofpoint-Spam-Reason: safe
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.1.78]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,24 +80,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, ryanarnellibm@gmail.com
+Cc: gmills@us.ibm.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>, joseph-reynolds@charter.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Vishwa,
+On Tue, 2020-03-17 at 16:08 -0400, Brad Bishop wrote:
+> at 2:46 PM, Andrew Geissler <geissonator@gmail.com> wrote:
+> 
+> > Matt and Deepak could weigh in on whether this could be a part of
+> > phosphor-logging.
+> 
+> This would be my preference.
+> 
+> thx - Brad
 
-> On the NTP, I see it makes =E2=80=9Ctime.google.com=E2=80=9D as mandatory=
- ( since I could not edit ) and lets only the secondary to be editable. Is =
-that intentional or just that I could not edit =E2=80=9Ctime.google=E2=80=
-=9D ?.
->
-> If it=E2=80=99s mandatory, then I would suggest we don=E2=80=99t make it =
-so unless there is a reason.
+Who can grant me rights into this rep or to directory in it? Matt, Deepak? Also,
+phosphor-logging/phosphor-audit would be the possible place for it then.
 
-=20
-That is just a static image prototype with hotspots, it is not coded. The u=
-sers will be able to enter any NTP server they want.
-=20
-=20
-=20
+Thanks.
 
