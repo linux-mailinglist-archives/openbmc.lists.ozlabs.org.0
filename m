@@ -1,73 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3189E18BF28
+	for <lists+openbmc@lfdr.de>; Thu, 19 Mar 2020 19:16:36 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80E4118BB96
-	for <lists+openbmc@lfdr.de>; Thu, 19 Mar 2020 16:50:26 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48jrvw4j2NzDrNg
-	for <lists+openbmc@lfdr.de>; Fri, 20 Mar 2020 02:50:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48jw8c3S9WzDrL9
+	for <lists+openbmc@lfdr.de>; Fri, 20 Mar 2020 05:16:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Two or more type
- TXT spf records found.) smtp.mailfrom=yadro.com (client-ip=89.207.88.252;
- helo=mta-01.yadro.com; envelope-from=i.mikhaylov@yadro.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=jeDtDFFE; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48jrtW1CCzzDrNf
- for <openbmc@lists.ozlabs.org>; Fri, 20 Mar 2020 02:49:07 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 4D820412E0;
- Thu, 19 Mar 2020 15:49:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1584632942; x=1586447343; bh=rBfJIH6/UjFhHXxtoKL7aoEwR
- ay/vJsF2S8j3OpyMgk=; b=jeDtDFFEOKMxQz755oimwDQqyjpVEsWpow+XPoR54
- w4nDGz8ou1RJupd8gKS0AtXTKivmp5sW82NZPtRiXOl8ZToMsjnEmdMgnihhvBo1
- h8PjEK3WC0P8MSN3yY+cxuoAAjEix7qgwml6cCPGl/azKJvHfhyBoqrOZCKjv2gx
- mA=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id BfD8MCMGbTaT; Thu, 19 Mar 2020 18:49:02 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 04A43412DB;
- Thu, 19 Mar 2020 18:49:01 +0300 (MSK)
-Received: from localhost.localdomain (10.199.1.78) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 19
- Mar 2020 18:49:02 +0300
-Message-ID: <4bdeb03083a0b1e9141118d1d47a3ca0ba2e1b96.camel@yadro.com>
-Subject: Re: Proposal for the connected redfish client info
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: Richard Hanley <rhanley@google.com>
-Date: Thu, 19 Mar 2020 18:49:03 +0300
-In-Reply-To: <CAH1kD+aJVELPFNR=F-rL3Bkp8pv8=yO+aRJOJFWEFEi_awgKNA@mail.gmail.com>
-References: <94469ba3-2b59-b131-ecbe-d708054aef89@linux.vnet.ibm.com>
- <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
- <530d856cf60f594e39a81e5b8b6f12253d0f3544.camel@yadro.com>
- <CAH1kD+aJVELPFNR=F-rL3Bkp8pv8=yO+aRJOJFWEFEi_awgKNA@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48jvw526JDzDrN6
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Mar 2020 05:05:40 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 02JI3gfS133563; Thu, 19 Mar 2020 14:05:34 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2yu8bt4uyp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2020 14:05:34 -0400
+Received: from m0098410.ppops.net (m0098410.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 02JI5YFv139760;
+ Thu, 19 Mar 2020 14:05:34 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 2yu8bt4uy1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2020 14:05:34 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 02JI3WXt011523;
+ Thu, 19 Mar 2020 18:05:33 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma03dal.us.ibm.com with ESMTP id 2yrpw74t9b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2020 18:05:33 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 02JI5W5T56230326
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 19 Mar 2020 18:05:32 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EBBD6C6055;
+ Thu, 19 Mar 2020 18:05:31 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D549C6061;
+ Thu, 19 Mar 2020 18:05:31 +0000 (GMT)
+Received: from [9.80.203.11] (unknown [9.80.203.11])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 19 Mar 2020 18:05:30 +0000 (GMT)
+Subject: Re: service for tracking user activity (phosphor-audit)
+To: Ivan Mikhaylov <i.mikhaylov@yadro.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Andrew Geissler <geissonator@gmail.com>
+References: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
+ <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
+ <B9364499-3954-4862-BDF2-52467AF39327@gmail.com>
+ <07C231EA-1761-4014-9A78-E2BDA3D71F0E@fuzziesquirrel.com>
+ <3672a09d41f6d80fcff8f85306eda4ef07351a34.camel@yadro.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <9bfe6392-902a-25aa-ac5c-d6254677f02b@linux.ibm.com>
+Date: Thu, 19 Mar 2020 13:05:32 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.1.78]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+In-Reply-To: <3672a09d41f6d80fcff8f85306eda4ef07351a34.camel@yadro.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
+ definitions=2020-03-19_06:2020-03-19,
+ 2020-03-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 mlxscore=0
+ lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 malwarescore=0 mlxlogscore=853 spamscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2003190074
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,26 +99,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Cc: gmills@us.ibm.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ joseph-reynolds@charter.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2020-03-17 at 12:49 -0700, Richard Hanley wrote:
-> >Show the connected redfish client info.
-> > ClientIP
-> > Client Unique Identifier(unique serial number of the client etc)
-> 
-> I'd like to know a bit more of the use case for this information.  Is this
-> done to help clients find each other in realtime? Or is this being to log
-> accesses for security audits?  I think that would help me figure out what
-> direction we should move towards.
-> 
-> If this is related to auditing, then we should be thinking about how this
-> feature might expand over time.
-> 
 
-Not sure about Ratan's use case but ClientIP will be used in upcoming phosphor-
-audit work.
+
+On 3/19/2020 10:14 AM, Ivan Mikhaylov wrote:
+> On Tue, 2020-03-17 at 16:08 -0400, Brad Bishop wrote:
+>> at 2:46 PM, Andrew Geissler <geissonator@gmail.com> wrote:
+>>
+>>> Matt and Deepak could weigh in on whether this could be a part of
+>>> phosphor-logging.
+>> This would be my preference.
+>>
+>> thx - Brad
+> Who can grant me rights into this rep or to directory in it? Matt, Deepak? Also,
+> phosphor-logging/phosphor-audit would be the possible place for it then.
+
+I think you mean to merge code?  You could either put up a commit to add 
+your
+name to the MAINTAINERS file, or there is a gerrit plugin that we can 
+somehow use
+to grant people merge access to only certain directories.
+
+>
+> Thanks.
+>
 
