@@ -1,45 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 134F018D6BD
+	for <lists+openbmc@lfdr.de>; Fri, 20 Mar 2020 19:22:15 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54DB518CF9A
-	for <lists+openbmc@lfdr.de>; Fri, 20 Mar 2020 14:58:34 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48kQNQ6Y3BzDrN9
-	for <lists+openbmc@lfdr.de>; Sat, 21 Mar 2020 00:58:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48kXDh3ZFRzF0YD
+	for <lists+openbmc@lfdr.de>; Sat, 21 Mar 2020 05:22:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=wiktor.golgowski@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ header.from=linux.intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48kP115FSrzDrff
- for <openbmc@lists.ozlabs.org>; Fri, 20 Mar 2020 23:56:35 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Content-Type: text/plain;
-	charset=utf-8;
-	delsp=yes;
-	format=flowed
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: service for tracking user activity (phosphor-audit)
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <9bfe6392-902a-25aa-ac5c-d6254677f02b@linux.ibm.com>
-Date: Fri, 20 Mar 2020 08:56:28 -0400
-Message-Id: <678E0FDF-6A80-4829-8843-334AB75C4DB3@fuzziesquirrel.com>
-References: <4efbcd540d3dd4bfb8021bdb6864326f72092852.camel@yadro.com>
- <da51cb6767c7f1e9130204f6f9c4af0019552b5b.camel@yadro.com>
- <B9364499-3954-4862-BDF2-52467AF39327@gmail.com>
- <07C231EA-1761-4014-9A78-E2BDA3D71F0E@fuzziesquirrel.com>
- <3672a09d41f6d80fcff8f85306eda4ef07351a34.camel@yadro.com>
- <9bfe6392-902a-25aa-ac5c-d6254677f02b@linux.ibm.com>
-To: Matt Spinler <mspinler@linux.ibm.com>
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48kXD35xF3zF0PJ
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Mar 2020 05:21:32 +1100 (AEDT)
+IronPort-SDR: /5oPNlxY3mKHvlPtRkDaHTTKm7BeR5YS1p+PFuhYurWKLAL+mQc1UfQ1qs3qf64RxT1bKF3DOJ
+ r+ol+ufIrb/A==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2020 11:21:29 -0700
+IronPort-SDR: aAZ2vFZSEjXEHx/wzQS7Uq2wtbjTEtIpnuNLNObZYXvbEHROPR7PnzOL4nxGgtEuKXrtTpW2ef
+ H/MMnvb+4EcA==
+X-IronPort-AV: E=Sophos;i="5.72,285,1580803200"; d="scan'208";a="418800328"
+Received: from gklab-127-200.igk.intel.com (HELO [10.91.127.200])
+ ([10.91.127.200])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2020 11:21:28 -0700
+From: =?UTF-8?Q?Wiktor_Go=c5=82gowski?= <wiktor.golgowski@linux.intel.com>
+Subject: MCTP control messages handling in libmctp
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Message-ID: <073c959d-d554-4cc8-21f4-c94777a42313@linux.intel.com>
+Date: Fri, 20 Mar 2020 19:21:26 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,53 +56,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ivan Mikhaylov <i.mikhaylov@yadro.com>, gmills@us.ibm.com,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, joseph-reynolds@charter.net
+Cc: Andrew Jeffery <andrew@aj.id.au>, richard.marian.thomaiyar@linux.intel.com,
+ sumanth.bhat@linux.intel.com, iwona.winiarska@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-at 2:05 PM, Matt Spinler <mspinler@linux.ibm.com> wrote:
+Hi all, 
 
->
->
-> On 3/19/2020 10:14 AM, Ivan Mikhaylov wrote:
->> On Tue, 2020-03-17 at 16:08 -0400, Brad Bishop wrote:
->>> at 2:46 PM, Andrew Geissler <geissonator@gmail.com> wrote:
->>>
->>>> Matt and Deepak could weigh in on whether this could be a part of
->>>> phosphor-logging.
->>> This would be my preference.
->>>
->>> thx - Brad
->> Who can grant me rights into this rep or to directory in it? Matt, =20
->> Deepak? Also,
->> phosphor-logging/phosphor-audit would be the possible place for it the=
-n.
->
-> I think you mean to merge code?  You could either put up a commit to ad=
-d =20
-> your
-> name to the MAINTAINERS file, or there is a gerrit plugin that we can =20
-> somehow use
-> to grant people merge access to only certain directories.
 
-Yes, the gerrit owners plugin is installed on our instance:
 
-https://gerrit.googlesource.com/plugins/owners/+doc/master/README.md
+I am currently working on a base implementation for handling control
 
-The missing piece for wide-scale deployment is the submit rules.  I=E2=80=
-=99ve not =20
-had time to figure these out - if someone wanted to get the first example=
- =20
-working on a repository that would be much appreciated.
+command requests in libmctp (relevant change here: [1]).  As I am not
 
-With that said Ivan, as an alternative to this^, I think if you:
+sure which solution would be the best here, I would like to put a
 
--submit your application for review
--procure reviewers for your application (_real_ reviews, not rubber stamp=
-s)
--one of the existing maintainers merges it
+quick summary of the different approaches that could be used for
 
-and _then_ submit yourself for merge authority to all of phosphor-logging=
- I =20
-suspect the phosphor-logging maintainers would be fine with that.
+further discussion on Monday PMCI WG meeting:
+
+
+
+1. External handling (as Andrew proposes)
+
+All control messages are handled in the layer calling into
+
+libmctp. The daemon is in control of how messages are handled.
+
+
+
+2. Separate handlers (what [1] introduces)
+
+There are separate callbacks for regular messages, control messages and
+
+transport-specific control messages. The main reason for this behavior
+
+is that I expect transport-specific commands to be executed in the
+
+context of the specific binding (serial, VDM, SMBus). I also hope that
+
+the daemon could be at least partially binding-agnostic.
+
+
+
+3. Handling is split between the caller and the library
+
+We could identify control command requests that libmctp (or its
+
+specific binding) is able to fulfill independently from the daemon
+
+(for example Get EID) and leave the implementation of the rest to the
+
+actual caller.
+
+
+
+I hope we could find the best solution to implement. Looking forward
+
+to the Monday meeting.
+
+
+
+Regards-
+
+Wiktor
+
+
+
+
+
+[1] https://gerrit.openbmc-project.xyz/c/openbmc/libmctp/+/30330
+
+
