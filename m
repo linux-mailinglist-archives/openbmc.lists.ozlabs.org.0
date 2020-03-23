@@ -1,77 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1D65190104
+	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 23:18:04 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 091C718FFE2
-	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 21:54:48 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48mRTH4JCJzDqhb
-	for <lists+openbmc@lfdr.de>; Tue, 24 Mar 2020 07:54:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48mTKQ0yrvzDqpH
+	for <lists+openbmc@lfdr.de>; Tue, 24 Mar 2020 09:18:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f33;
- helo=mail-qv1-xf33.google.com; envelope-from=bjwyman@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::329;
+ helo=mail-ot1-x329.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=poEHE2/X; dkim-atps=neutral
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com
- [IPv6:2607:f8b0:4864:20::f33])
+ header.s=20161025 header.b=HvJZsrcM; dkim-atps=neutral
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
+ [IPv6:2607:f8b0:4864:20::329])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48mRSc61d4zDqXr
- for <openbmc@lists.ozlabs.org>; Tue, 24 Mar 2020 07:54:08 +1100 (AEDT)
-Received: by mail-qv1-xf33.google.com with SMTP id v38so8038505qvf.6
- for <openbmc@lists.ozlabs.org>; Mon, 23 Mar 2020 13:54:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48mTJk6qVQzDql0
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Mar 2020 09:17:26 +1100 (AEDT)
+Received: by mail-ot1-x329.google.com with SMTP id c9so5015142otl.12
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Mar 2020 15:17:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language;
- bh=C8CyZgfbm0Y8yd0Uk7N0w+Q5o8EdsJ9oWjz6rGy2b6Q=;
- b=poEHE2/XEpRGPXPt+ANo6v4tZvrVJx66TOeM0X+tKYST/s/+jJQw0sq8o0F4BwjT09
- 2YFOCZ2bhxCSOCIsLMf+Jp2OZowuxw8SCqUp9LNxdCfqsn/dlFfdCcS+sZ30FLJ2+egO
- hrbhfMJr02CglizHPRvvFJekMgCsraSpbP2/pmWWP0S2pg9IjaFB47YkPIJISU1G1ZlQ
- JSkRnbH+dkt4ySjcICGOhxpdzVM9AMAShxXPZhn413TktquEPmsAA0Y3hAELSE7GGYx7
- DmYpkuxn9wADtFsKjCtdZjxzv1RZ+dnyjaMyoCLv7JK3COhZNlo0yLlnw+oWxQpqAzXP
- LoIA==
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-language:content-transfer-encoding;
+ bh=pfO/LsE5BEpDlN+9XFcZMFrheT23ddi997sWwNOeAuk=;
+ b=HvJZsrcMKVIU9S3spXDwwPx7CW1ZMunWku6d9u5WIGIYmy/gorXBoLqxHwqzH10j4u
+ 1FRcmh7G771apyGMVTInE+avB+ZR6CFfuM+R/jrB7bTN1n4+T2IEwFJZrph+eZf62b0I
+ iMMHPDdyUbM+DjTp2fos9uWzqCH4kH3km8YkXIqiOVwTooPtIcZf3T8ZJl/9AnzNjWSI
+ eelUvx6GacLn5bUivoru+fEpNuUXGlSE9hovQXENM3v1P3221eg92q2tfAsLf/3Ljf3m
+ 0R86BUbeEJYORKqGm8G6k5zdih5dpiTr5t8XJk/Mnaz+DltkmiCWXxFNSXsi/Icd4W1k
+ xMVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language;
- bh=C8CyZgfbm0Y8yd0Uk7N0w+Q5o8EdsJ9oWjz6rGy2b6Q=;
- b=DmUdAPil2bIZTjaHlM+f108rfY7XiYrNA3wZRI5P3UiNxut1NFI50CoElwUjuL2NKN
- S5f92rHMzThJo7XXN23vPgwO6UD6ChzIHOQ7Hc3pp9fxU7kVtokfp+XH5QFuXTeHKRju
- OnAc8qZHOFDJsKUhh0qYLLrn2Yt/e/1bniZITvariBcu2ZsgqhAbXI4b0up0hkxVUA1b
- 7JLnjHOrbBUR1GaTHwi/5ffN5VqcFlMc6ypYwSf0XhNwtNghjN7M7QHUnkGA1ttPeZw3
- 9LSOqSp5Ju1J4BiWprLAgzEy0Ol/EZSqbY+VEVJtqsBZcWBE1iFIhLVRiVOzNSV5Oso8
- 5EBw==
-X-Gm-Message-State: ANhLgQ36FLQiUhNTljs570yb5cFPtjchVHt62wEX/9kdOM0xEYRi1rOI
- CnGglHCwRuncVBYT7aAfpnd70Hdr
-X-Google-Smtp-Source: ADFU+vvLeTCOAzF/vPIQMaCSB2myBIs+Xb1WOvNMPvAOzepKlzgrwO4Jn4DZviNGEgJNNkLtWEZ68g==
-X-Received: by 2002:ad4:49cc:: with SMTP id j12mr22161957qvy.94.1584996844619; 
- Mon, 23 Mar 2020 13:54:04 -0700 (PDT)
-Received: from [192.168.1.114] (96-42-251-64.dhcp.roch.mn.charter.com.
- [96.42.251.64])
- by smtp.gmail.com with ESMTPSA id q1sm9068929qtn.69.2020.03.23.13.54.03
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=pfO/LsE5BEpDlN+9XFcZMFrheT23ddi997sWwNOeAuk=;
+ b=AsaPMNkaafr4FIdg7+asMmKlC8HPDu3xbUJ5bbBu4o4M08eTmuS2NkynCmifGPvfnv
+ MZsIIgfUo3OWll+8KEjo5zSFbYlxBW0tNXm6Hs/zCtBgt4Y5sr37winkmKnKC4cydMNe
+ BmQXD3DfeK/4+R+D114oGRzyuI889BRhsqDiHw1+31o60BSi6niErDMvNQuQpl+Y8/QE
+ 11MpVNFtQpZUBPYv5sLnhz7nlcl0gmArakNa5KvR8ql8ow/PTJmg00m6E+8Rn4fCHDCb
+ Pjqrga83Bokq3JNhUHYh4CuQYr8xhwPPIq10FQ7rdQtHUQSuv88yIfh87oljitr/kL2v
+ v66g==
+X-Gm-Message-State: ANhLgQ18tVyZY71qiBojfugxFt8wnBn2h02gs0D/8xUcKxZfm3uDYoY9
+ HUkcvyL8sWhAIbTMWvjwQxlMgQ0YD+k=
+X-Google-Smtp-Source: ADFU+vv++/5ovSxRxHbZxxC0MQ7hXnGb2Bvy5MPy3mNwQQeA03pMxWQ29qgSuUGsoRoUT+OpJLTOGg==
+X-Received: by 2002:a9d:7a4e:: with SMTP id z14mr20320210otm.78.1585001842863; 
+ Mon, 23 Mar 2020 15:17:22 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id i17sm1549283otc.16.2020.03.23.15.17.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 23 Mar 2020 13:54:03 -0700 (PDT)
-Subject: Re: build environment
-To: =?UTF-8?B?6Zmz77yM5p2+5YSJ?= <ckimchan17@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <5e776d91.1c69fb81.75c18.85c6@mx.google.com>
-From: Brandon Wyman <bjwyman@gmail.com>
-Message-ID: <0029f62e-233e-0d2e-1106-1ebaccf413ee@gmail.com>
-Date: Mon, 23 Mar 2020 15:53:56 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ Mon, 23 Mar 2020 15:17:21 -0700 (PDT)
+Subject: Re: Wiwynn CCLA Schedule A update 2020-03-16
+To: Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>,
+ Openbmc <openbmc@lists.ozlabs.org>
+References: <HK0PR02MB3556092B78902EA62BAF33D0FAF90@HK0PR02MB3556.apcprd02.prod.outlook.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <d0744602-31bc-f9de-17fb-659d07c6ec74@gmail.com>
+Date: Mon, 23 Mar 2020 17:17:21 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <5e776d91.1c69fb81.75c18.85c6@mx.google.com>
-Content-Type: multipart/alternative;
- boundary="------------4C417E65C983E1B8E28458C0"
+In-Reply-To: <HK0PR02MB3556092B78902EA62BAF33D0FAF90@HK0PR02MB3556.apcprd02.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,102 +84,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "LF_OpenBMC.WYHQ.Wiwynn" <LF_OpenBMC.WYHQ.Wiwynn@Wiwynn.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------4C417E65C983E1B8E28458C0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On 3/16/20 12:48 AM, Delphine Chiu/WYHQ/Wiwynn wrote:
+> Hi Kurt,
+> 
+> Please find the updated Schedule A of CCLA from Wiwynn.
 
-No. I know this as I personally hit it. There is a wiki page with a bit 
-more details on why:
+Received and entered. Thanks for the update!
 
-https://github.com/openbmc/openbmc/wiki/Developing-on-Windows
+Kurt Taylor (krtaylor)
 
-On 2020-03-22 08:52, 陳，松儉 wrote:
->
-> Hi all,
->
-> Can I use Windows subsystem (ubuntu) or Cygwin to build openbmc?
->
-> I tried but error at “. openbmc-env” command, any idea?
->
-> ### Initializing OE build env ###
->
-> -bash: ./oe-init-build-env: No such file or directory
->
-> Jeff
->
+> 
+> Thanks,
+> 
+> Delphine
+> 
 
---------------4C417E65C983E1B8E28458C0
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>No. I know this as I personally hit it. There is a wiki page with
-      a bit more details on why:</p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc/wiki/Developing-on-Windows">https://github.com/openbmc/openbmc/wiki/Developing-on-Windows</a><br>
-    </p>
-    <div class="moz-cite-prefix">On 2020-03-22 08:52, 陳，松儉 wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:5e776d91.1c69fb81.75c18.85c6@mx.google.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style>
-      <div class="WordSection1">
-        <p class="MsoNormal"><span lang="EN-US">Hi all,</span></p>
-        <p class="MsoNormal"><span lang="EN-US">Can I use Windows
-            subsystem (ubuntu) or Cygwin to build openbmc?</span></p>
-        <p class="MsoNormal"><span lang="EN-US">I tried but error at “.
-            openbmc-env” command, any idea?</span></p>
-        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US">### Initializing OE
-            build env ###</span></p>
-        <p class="MsoNormal"><span lang="EN-US">-bash:
-            ./oe-init-build-env: No such file or directory</span><span
-            lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span lang="EN-US">Jeff</span></p>
-        <p class="MsoNormal"><span
-            style="font-family:&quot;新細明體&quot;,serif" lang="EN-US"><o:p> </o:p></span></p>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------4C417E65C983E1B8E28458C0--
