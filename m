@@ -2,73 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8915218E93C
-	for <lists+openbmc@lfdr.de>; Sun, 22 Mar 2020 14:53:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 10E3718F4F0
+	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 13:47:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48lf9L6vkGzDrF5
-	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 00:53:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48mDg128q8zDqtv
+	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 23:47:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632;
- helo=mail-pl1-x632.google.com; envelope-from=ckimchan17@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=HfesEhNM; dkim-atps=neutral
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com
- [IPv6:2607:f8b0:4864:20::632])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48lf8Y5QPYzDr55
- for <openbmc@lists.ozlabs.org>; Mon, 23 Mar 2020 00:52:23 +1100 (AEDT)
-Received: by mail-pl1-x632.google.com with SMTP id g6so4717211plt.2
- for <openbmc@lists.ozlabs.org>; Sun, 22 Mar 2020 06:52:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=message-id:mime-version:date:from:subject:thread-topic:to
- :content-transfer-encoding;
- bh=hyAkUTlAkV4VZlUhzgS1Na7F0BQtViXjzC5SX6qoA/0=;
- b=HfesEhNMlL8eCanKgu8lC3lrmBDeCkWaMF5TG3r/NNr18qtpsfa0ZjvX4+4LiS0uSm
- Lj+RVTHX+PsQW0dAk4RpPIzPh2GU5bFtXOinhL4QjpO3PRZMxToB+4XWOGrFBlUjyXoC
- 42zqSXFH6tJVMPxkowzMFmyGoLShFayXdcIxk06F7TdHitGly3dC52mtpkXhklMcvrEq
- U/UcVgGByFHuKtXm6gpE5LdbXfGU/ue2851UocpA1RyvR4JAvkayvXfECItRXVT04OHp
- yDodgYtWHiFZekFi0QDuzTzKedp3FVx+El7jxC0ornshis233q5PevknF3esa3ZCyTez
- sj3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:message-id:mime-version:date:from:subject
- :thread-topic:to:content-transfer-encoding;
- bh=hyAkUTlAkV4VZlUhzgS1Na7F0BQtViXjzC5SX6qoA/0=;
- b=nf/FhD+yItO1EyybptCe1MLElCPl6bzlvPe19zfJgWIvpQiuaRFjYmAkHYWRA4LBE6
- dodq02iBke1LeXDLwhg+n1WYjkp8wx2V3A2n1Jw/UkVtMsA6kcL2LXFIwCLELZr7x+fP
- tvKMsNDp6+xst3Uo0jJ3vQjQ8RrkJTv7C7FpOFM9sS2EjEuNtWvbWeGOe/d3zmWOBPd+
- HepoTg4VHUgAwzs/WJgoj9rHNC5iBuwy8r93YmwSx4WhvU2fFdPN9tx8mwKIaeo5rIET
- m+cKtNWAtxm3236z1ve2C4nzEgYGgeN3UcnvmWkrqve/wFnvyVLAsBUV25DqrPhJrOjg
- ObOg==
-X-Gm-Message-State: ANhLgQ0r10Jq21di9OrkvxHw0fyK0qbRKiiUklpScvQYo1i2HJ3HSlEE
- YG/E6W+XeemrrX4g83E3UlNCUY5g
-X-Google-Smtp-Source: ADFU+vsADFtbHAE5RXugl4WRJ/C88fkuIoZzWdqdtklbXGZFPRWX+AiKRb+xg0Iz6f+nJ9Dhokuwfg==
-X-Received: by 2002:a17:90a:f00e:: with SMTP id
- bt14mr19178311pjb.11.1584885137759; 
- Sun, 22 Mar 2020 06:52:17 -0700 (PDT)
-Received: from smtp.gmail.com (180-177-28-13.dynamic.kbronet.com.tw.
- [180.177.28.13])
- by smtp.gmail.com with ESMTPSA id z17sm10731743pff.12.2020.03.22.06.52.16
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Sun, 22 Mar 2020 06:52:17 -0700 (PDT)
-Message-ID: <5e776d91.1c69fb81.75c18.85c6@mx.google.com>
-MIME-Version: 1.0
-Date: Sun, 22 Mar 2020 21:52:12 +0800
-From: =?utf-8?Q?=E9=99=B3=EF=BC=8C=E6=9D=BE=E5=84=89?= <ckimchan17@gmail.com>
-Subject: build environment
-Thread-Topic: build environment
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset="utf-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48mDcK1gW3zDqXL
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Mar 2020 23:45:03 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain;
+	charset=us-ascii;
+	delsp=yes;
+	format=flowed
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
+Subject: Re: OpenBMC Project metrics
+Date: Mon, 23 Mar 2020 08:44:55 -0400
+References: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
+ <1fdc7be1-71f7-4926-83aa-a531de6d5b81@www.fastmail.com>
+ <477d3fbb-5aa8-d4e8-958c-62fb94e2acc7@gmail.com>
+ <b9ef7897-f4a7-445d-a79b-289b399528ee@www.fastmail.com>
+ <391eaabe-6ade-e23d-97ef-a0c1d6630f8c@gmail.com>
+ <8d4e9e9c-2568-4ab0-960c-7383a981fbbe@www.fastmail.com>
+ <CADy_Pt1tqqHjUaHER6T01kt_Wq6oqn6HtV=8Nn7KwK3CSMm7Ug@mail.gmail.com>
+To: James Mihm <james.mihm@gmail.com>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Kurt Taylor <kurt.r.taylor@gmail.com>
+In-Reply-To: <CADy_Pt1tqqHjUaHER6T01kt_Wq6oqn6HtV=8Nn7KwK3CSMm7Ug@mail.gmail.com>
+Message-Id: <CDBD6ED0-751F-4EBC-B304-243FF105905A@fuzziesquirrel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,49 +57,11 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
-hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
-fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta ht=
-tp-equiv=3DContent-Type content=3D"text/html; charset=3Dutf-8"><meta name=
-=3DGenerator content=3D"Microsoft Word 15 (filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style></head><body lang=3DZH-TW link=3Dblue vlink=3D"#954F72"><div cla=
-ss=3DWordSection1><p class=3DMsoNormal><span lang=3DEN-US>Hi all,</span></p=
-><p class=3DMsoNormal><span lang=3DEN-US>Can I use Windows subsystem (ubunt=
-u) or Cygwin to build openbmc?</span></p><p class=3DMsoNormal><span lang=3D=
-EN-US>I tried but error at =E2=80=9C. openbmc-env=E2=80=9D command, any ide=
-a?</span></p><p class=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></spa=
-n></p><p class=3DMsoNormal><span lang=3DEN-US>### Initializing OE build env=
- ###</span></p><p class=3DMsoNormal><span lang=3DEN-US>-bash: ./oe-init-bui=
-ld-env: No such file or directory</span><span lang=3DEN-US><o:p></o:p></spa=
-n></p><p class=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><=
-p class=3DMsoNormal><span lang=3DEN-US>Jeff</span></p><p class=3DMsoNormal>=
-<span lang=3DEN-US style=3D'font-family:"=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=
-=94",serif'><o:p>&nbsp;</o:p></span></p></div></body></html>=
+FYI - The Yocto project put up a project metrics page:
+https://lists.yoctoproject.org/g/yocto/message/48893
 
+The stated goal is possibly this:
+> we have put in place a dashboard that shows our community engagement and  
+> stats
+
+-brad
