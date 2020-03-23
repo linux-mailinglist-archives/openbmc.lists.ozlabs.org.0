@@ -1,48 +1,42 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10E3718F4F0
-	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 13:47:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48mDg128q8zDqtv
-	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 23:47:25 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8190018F620
+	for <lists+openbmc@lfdr.de>; Mon, 23 Mar 2020 14:48:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48mG1x0M8pzDqR2
+	for <lists+openbmc@lfdr.de>; Tue, 24 Mar 2020 00:48:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48mDcK1gW3zDqXL
- for <openbmc@lists.ozlabs.org>; Mon, 23 Mar 2020 23:45:03 +1100 (AEDT)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain;
-	charset=us-ascii;
-	delsp=yes;
-	format=flowed
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.60.0.2.5\))
-Subject: Re: OpenBMC Project metrics
-Date: Mon, 23 Mar 2020 08:44:55 -0400
-References: <CAG5OiwjaiBnGw17NZdW4=XDmiWpuEM=z5_jsTcJ8ws=p1umeRQ@mail.gmail.com>
- <1fdc7be1-71f7-4926-83aa-a531de6d5b81@www.fastmail.com>
- <477d3fbb-5aa8-d4e8-958c-62fb94e2acc7@gmail.com>
- <b9ef7897-f4a7-445d-a79b-289b399528ee@www.fastmail.com>
- <391eaabe-6ade-e23d-97ef-a0c1d6630f8c@gmail.com>
- <8d4e9e9c-2568-4ab0-960c-7383a981fbbe@www.fastmail.com>
- <CADy_Pt1tqqHjUaHER6T01kt_Wq6oqn6HtV=8Nn7KwK3CSMm7Ug@mail.gmail.com>
-To: James Mihm <james.mihm@gmail.com>, Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Kurt Taylor <kurt.r.taylor@gmail.com>
-In-Reply-To: <CADy_Pt1tqqHjUaHER6T01kt_Wq6oqn6HtV=8Nn7KwK3CSMm7Ug@mail.gmail.com>
-Message-Id: <CDBD6ED0-751F-4EBC-B304-243FF105905A@fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48mFyS0FQkzDqkh
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Mar 2020 00:45:49 +1100 (AEDT)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 02NDj2b1019814;
+ Mon, 23 Mar 2020 15:45:02 +0200
+Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
+ id 7CD0D6032E; Mon, 23 Mar 2020 15:45:02 +0200 (IST)
+From: Tali Perry <tali.perry1@gmail.com>
+To: brendanhiggins@google.com, avifishman70@gmail.com, tmaimon77@gmail.com,
+ kfting@nuvoton.com, venture@google.com, yuenn@google.com,
+ benjaminfair@google.com, robh+dt@kernel.org, wsa@the-dreams.de,
+ andriy.shevchenko@linux.intel.com
+Subject: [PATCH v9 0/3] i2c: npcm7xx: add NPCM i2c controller driver
+Date: Mon, 23 Mar 2020 15:44:34 +0200
+Message-Id: <20200323134437.259210-1-tali.perry1@gmail.com>
+X-Mailer: git-send-email 2.22.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,14 +48,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, kbuild test robot <lkp@intel.com>,
+ Rob Herring <robh@kernel.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
+ linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-FYI - The Yocto project put up a project metrics page:
-https://lists.yoctoproject.org/g/yocto/message/48893
+This patch set adds i2c controller support 
+for the Nuvoton NPCM Baseboard Management Controller (BMC).
 
-The stated goal is possibly this:
-> we have put in place a dashboard that shows our community engagement and  
-> stats
+NPCM7xx includes 16 I2C controllers. This driver operates the controller.
+This module also includes a slave mode.
 
--brad
+---
+v9 -> v8:
+	- Fix according to maintainer comments.
+	- Split lines of iowrite..(ioread..) to separate lines.
+	- Use readx_poll_timeout_atomic
+	- resolve various style issues.
+	 
+v8 -> v7:
+	- Split to two commits, one for master, one for slave.
+	- Rename smb to i2c.
+	- Remove global vars.
+
+v7 -> v6:
+	- Rebased on Linux 5.4-rc8  (was Linux 5.4-rc7).
+	- Fix issue found by kbuild test robot (redundant include).
+	- Note: left a warning related to fall through. This fall through is
+	  intentional.
+	
+v6 -> v5:
+	- Update documentation
+
+v5 -> v4:
+	- support recovery
+	- master-slave switch support needed for IPMB
+
+v4 -> v3:
+	- typo on cover letter.
+
+v3 -> v2:
+	- fix dt binding: compatible name: omit "bus"
+
+v2 -> v1:
+	- run check patch in strict mode.
+	- use linux crc.
+	- define regs in constant offset without base.
+	- remove debug prints.
+	- no declarations for local functions.
+	
+v1: initial version
+
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Reported-by: kbuild test robot <lkp@intel.com>
+
+---
+Tali Perry (3):
+  dt-bindings: i2c: npcm7xx: add NPCM I2C controller documentation
+  i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver
+  i2c: npcm7xx: Add support for slave mode for Nuvoton NPCM BMC I2C
+    controller driver.
+
+ .../devicetree/bindings/i2c/i2c-npcm7xx.txt   |   29 +
+ drivers/i2c/busses/Kconfig                    |    9 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-npcm7xx.c              | 2434 +++++++++++++++++
+ 4 files changed, 2473 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i2c/i2c-npcm7xx.txt
+ create mode 100644 drivers/i2c/busses/i2c-npcm7xx.c
+
+
+base-commit: af42d3466bdc8f39806b26f593604fdc54140bcb
+-- 
+2.22.0
+
