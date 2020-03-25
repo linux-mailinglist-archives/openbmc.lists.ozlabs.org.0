@@ -2,73 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEEC319227B
-	for <lists+openbmc@lfdr.de>; Wed, 25 Mar 2020 09:20:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A29ED1924EE
+	for <lists+openbmc@lfdr.de>; Wed, 25 Mar 2020 11:02:47 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48nLds12pvzDqXN
-	for <lists+openbmc@lfdr.de>; Wed, 25 Mar 2020 19:20:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48nNw505f4zDqnB
+	for <lists+openbmc@lfdr.de>; Wed, 25 Mar 2020 21:02:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::12c;
+ helo=mail-il1-x12c.google.com; envelope-from=gmouse@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=XMQj2TNX; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=pRNRoNyu; dkim-atps=neutral
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com
+ [IPv6:2607:f8b0:4864:20::12c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48nLd76tGpzDqNn
- for <openbmc@lists.ozlabs.org>; Wed, 25 Mar 2020 19:19:36 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 8B9CD41268
- for <openbmc@lists.ozlabs.org>; Wed, 25 Mar 2020 08:19:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-language:content-type:content-type:in-reply-to
- :mime-version:user-agent:date:date:message-id:from:from
- :references:subject:subject:received:received:received; s=
- mta-01; t=1585124369; x=1586938770; bh=YpaNAQvEtlSuJbpoqH8sCd+It
- GRORST5qkI8WVEAz4U=; b=XMQj2TNXCIIvlLhoh/iTil2woRWE8AWT0CEMuf9jy
- mhBIN45SvtgHKBmhSvMZtuLsnsc5/ObA7SNDDLSThoiMvWEvfbjo/ZR8ju8NSDQV
- 8/5ZE+RHNV0ZOqANYDuoybZYh9DX0t/Su7QS5KM5G3GFzXH5yWahPDK8i4AUvFPN
- AY=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id JpGiXnGpt2hq for <openbmc@lists.ozlabs.org>;
- Wed, 25 Mar 2020 11:19:29 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id B7300404CD
- for <openbmc@lists.ozlabs.org>; Wed, 25 Mar 2020 11:19:29 +0300 (MSK)
-Received: from [10.199.2.106] (10.199.2.106) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 25
- Mar 2020 11:19:30 +0300
-Subject: Re: Fwd: Which repo is more stable, feature complete, most
- functionality? https://github.com/openbmc/openbmc or
- https://github.com/Intel-BMC/openbmc
-To: <openbmc@lists.ozlabs.org>
-References: <8117ef0c5f9a4c599ebe1d53aae209b3@SCL-EXCHMB-13.phoenix.com>
- <CADy_Pt3xOgPXungY+nwpYjFVcvCqMek_gHLeFWXOUoSjLom3RQ@mail.gmail.com>
- <CADy_Pt2mZ8E4EgY0y3wRSLh080cBBmoERgJvR7Lk8Rj4ep39-w@mail.gmail.com>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Message-ID: <b00d43e6-b296-a5a1-3c20-50f40bdfafd9@yadro.com>
-Date: Wed, 25 Mar 2020 11:19:29 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48nNtz6KkfzDqf9
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Mar 2020 21:01:38 +1100 (AEDT)
+Received: by mail-il1-x12c.google.com with SMTP id m7so1271903ilg.5
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Mar 2020 03:01:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=neDZd8Ho9ndDB4NW+kpfLaUMD/FoBcuoDx22D9JbgZ4=;
+ b=pRNRoNyu4XFNp9q4hU6urtDn4TGYj80Uk1tFQKOzaKR2TJXGpts687BCg9jVLkKr0M
+ xcjqanWbqDB6boOXZSeAPojBRqxKYDRk5cm2CVk49jrnsbL4KZpkQkvK3KMK0OJ/Ek2+
+ uNDMXQoda19BZY4u/70YGiK9Tp6r0YyuWcxQXAWH/iQMpRVn5us+8RXr2TIyMPEJQy8L
+ pCBjkUIoxzoTZVxPNaPJJmdwZthE0xiWqZ+7heDgJ+088ErdW4IH4POMTXkuagxWeSPn
+ E3Hvfhv9mvi5Jbl5zRTxjvZGmrbRJIcEi2YewO419qY6px+0ZRE7MZb3HRTiBO4PTKjO
+ hZzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=neDZd8Ho9ndDB4NW+kpfLaUMD/FoBcuoDx22D9JbgZ4=;
+ b=bqNx0w0mXjBDXdDumKnjLBvqn+/Q5IeCmPXkg7HuHopAMCXKbnx3e4pf+VRUDRVmKw
+ bIw+93TOAttgi86lkwRrvIyrcRv+irK6Gt2vsLFe/iKsndxC/DgB1YwN46+kQXkdTjyr
+ euRnJDkyRNSbu/UalME8IblcTJRrj0O0/uK19FYcS2bVfrd6ZS/4M3KvRhqBYUyedXNp
+ baIWa/JClb2e3yL9PQRkzQ4DYAz1X48lBOXVmog0lQdAJEJk06l8S53NnyMXxrL+pBhZ
+ KvpgYEUp4pwmo80ydr8vZOuPXj4mts8Bnl/Sr6VMIC3c+kbqYWBIZTpc7BNJVzzvntmV
+ 8hDg==
+X-Gm-Message-State: ANhLgQ1PMTvOE79LcrhCNWdCnpLaXs5UP7i1H1zsdb1D79NNPe04gnDH
+ 7jsrG5U8gmUBUlvHRZXz7gFpUzAligifOOKjq+5bcQhOmdE=
+X-Google-Smtp-Source: ADFU+vvrQNQ+F/QlEEwzV64N/oY7ePaJUJLEwYoYvLgf7iryPxeyGSYGtvnfH77q2h6QKVOpz60DhORRiW9n9RqzSyY=
+X-Received: by 2002:a92:bbc4:: with SMTP id x65mr2784101ilk.82.1585130495216; 
+ Wed, 25 Mar 2020 03:01:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CADy_Pt2mZ8E4EgY0y3wRSLh080cBBmoERgJvR7Lk8Rj4ep39-w@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------42489C4137989F85965DD8EA"
-Content-Language: en-US
-X-Originating-IP: [10.199.2.106]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+From: Anton Kachalov <rnouse@google.com>
+Date: Wed, 25 Mar 2020 11:01:23 +0100
+Message-ID: <CADVsX88r_Jf6+_UXSXOs44n4TVV8kssZ7UxPXJqoJp3AeFNWig@mail.gmail.com>
+Subject: SELinux or AppArmor integration status & plans
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000018779105a1aaf485"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,220 +72,37 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---------------42489C4137989F85965DD8EA
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+--00000000000018779105a1aaf485
+Content-Type: text/plain; charset="UTF-8"
 
-James, I have to disagree.
+Hello,
 
-The last time I tried (Mar 12, commit 276f647402), the openbmc/openbmc 
-repo was still unable to control power of the host system on Wolfpass. 
-That is why we're still using Intel-BMC/openbmc for our wolfpass-based 
-board in development.
+I'm referring to the wishlist:
 
-On the other hand, the Intel-BMC/openbmc repo lacks virtual media support.
 
-We would love to use the main openbmc/openbmc for our x86 board but so 
-far it just doesn't work.
+https://github.com/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list
 
-Alexander.
+that mentions about using the SELinux feature.
 
-24.03.2020 21:11, James Mihm пишет:
-> I meant to include the mailing list on my response.
->
-> James.
->
-> ---------- Forwarded message ---------
-> From: *James Mihm* <james.mihm@gmail.com <mailto:james.mihm@gmail.com>>
-> Date: Mon, Mar 9, 2020 at 7:11 PM
-> Subject: Re: Which repo is more stable, feature complete, most 
-> functionality? https://github.com/openbmc/openbmc or 
-> https://github.com/Intel-BMC/openbmc
-> To: Bruce Mitchell <Bruce_Mitchell@phoenix.com 
-> <mailto:Bruce_Mitchell@phoenix.com>>
->
->
-> Bruce,
->
-> The Intel-BMC/openbmc repo is where we (i.e., Intel) pushes our 
-> internal fork externally while in the process of upstreaming. The 
-> intent for this repo is for it to be functional on an Intel 
-> development platform (e.g., Wolfpass) at all times while upstreaming 
-> changes to the openbmc/openbmc repo. The long term goal is for Intel 
-> to be pushing all development upstream to the openbmc/openbmc repo, 
-> and using the Intel-BMC repository for sharing future capabilities 
-> that are not yet publically announced. Where our goal is to push our 
-> internal development fork to the Intel-BMC/openbmc repo every two weeks.
->
-> Two exceptions for upstreaming are the webui and linux kernel patches. 
-> Upstreaming the linux kernel patches is challenging and some of the 
-> patches may never make it upstream. With the migration of the webui to 
-> vue.js there's not much point in upstreaming the Intel fork of 
-> phosphor-webui.
->
-> My answer to your question is to use the openbmc/openbmc repository, 
-> but not for controlling your car brakes.
->
-> James.
->
->
->
-> On Thu, Jan 16, 2020 at 4:27 PM Bruce Mitchell 
-> <Bruce_Mitchell@phoenix.com <mailto:Bruce_Mitchell@phoenix.com>> wrote:
->
->     Which repo is more stable, feature complete, most functionality?
->     https://github.com/openbmc/openbmc or
->     https://github.com/Intel-BMC/openbmc
->
->     While the WebUI for https://github.com/Intel-BMC/openbmc may look
->     better,
->     presently its functionality for BMC operation seems intermittent
->     compared to the functionality of https://github.com/openbmc/openbmc.
->     I am referring to basic things such as displaying the BMC's
->     Firmware Version, the lack of displaying any NIC for Network
->     Settings, the "hang" for Health Hardware Status.
->
->     This is not a request about ahead or behind; I am asking about
->     stable, feature complete, most functionality.
->
->     Using a metaphor here; if you had to select today one of the 2 for
->     controlling your car's breaks which would it be?
->
->     Thank you.
->
+What is the current status and plans to integrate either SELinux or
+AppArmor?
+I'm especially interested in the hardening D-Bus (it can do both: AppArmor
+& SELinux).
 
---------------42489C4137989F85965DD8EA
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Thanks!
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>James, I have to disagree. <br>
-    </p>
-    <p>The last time I tried (Mar 12, commit 276f647402), the
-      openbmc/openbmc repo was still unable to control power of the host
-      system on Wolfpass. That is why we're still using
-      Intel-BMC/openbmc for our wolfpass-based board in development.</p>
-    <p>On the other hand, the Intel-BMC/openbmc repo lacks virtual media
-      support.</p>
-    <p>We would love to use the main openbmc/openbmc for our x86 board
-      but so far it just doesn't work.<br>
-    </p>
-    <p>Alexander.<br>
-    </p>
-    <div class="moz-cite-prefix">24.03.2020 21:11, James Mihm пишет:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CADy_Pt2mZ8E4EgY0y3wRSLh080cBBmoERgJvR7Lk8Rj4ep39-w@mail.gmail.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <div dir="ltr">
-        <div>I meant to include the mailing list on my response.</div>
-        <div><br>
-        </div>
-        <div>James.</div>
-        <br>
-        <div class="gmail_quote">
-          <div class="gmail_attr" dir="ltr">---------- Forwarded message
-            ---------<br>
-            From: <strong class="gmail_sendername" dir="auto">James
-              Mihm</strong> <span dir="auto">&lt;<a
-                href="mailto:james.mihm@gmail.com"
-                moz-do-not-send="true">james.mihm@gmail.com</a>&gt;</span><br>
-            Date: Mon, Mar 9, 2020 at 7:11 PM<br>
-            Subject: Re: Which repo is more stable, feature complete,
-            most functionality? <a
-              href="https://github.com/openbmc/openbmc"
-              moz-do-not-send="true">https://github.com/openbmc/openbmc</a>
-            or <a href="https://github.com/Intel-BMC/openbmc"
-              moz-do-not-send="true">https://github.com/Intel-BMC/openbmc</a><br>
-            To: Bruce Mitchell &lt;<a
-              href="mailto:Bruce_Mitchell@phoenix.com"
-              moz-do-not-send="true">Bruce_Mitchell@phoenix.com</a>&gt;<br>
-          </div>
-          <br>
-          <br>
-          <div dir="ltr">Bruce,
-            <div><br>
-            </div>
-            <div>The Intel-BMC/openbmc repo is where we (i.e., Intel)
-              pushes our internal fork externally while in the process
-              of upstreaming. The intent for this repo is for it to be
-              functional on an Intel development platform (e.g.,
-              Wolfpass) at all times while upstreaming changes to the
-              openbmc/openbmc repo. The long term goal is for Intel to
-              be pushing all development upstream to the openbmc/openbmc
-              repo, and using the Intel-BMC repository for sharing
-              future capabilities that are not yet publically announced.
-              Where our goal is to push our internal development fork to
-              the Intel-BMC/openbmc repo every two weeks. </div>
-            <div><br>
-            </div>
-            <div>Two exceptions for upstreaming are the webui and linux
-              kernel patches. Upstreaming the linux kernel patches is
-              challenging and some of the patches may never make it
-              upstream. With the migration of the webui to vue.js
-              there's not much point in upstreaming the Intel fork of
-              phosphor-webui. </div>
-            <div><br>
-            </div>
-            <div>My answer to your question is to use the
-              openbmc/openbmc repository, but not for controlling your
-              car brakes.</div>
-            <div><br>
-            </div>
-            <div>James.  </div>
-            <div><br>
-            </div>
-            <div><br>
-            </div>
-          </div>
-          <br>
-          <div class="gmail_quote">
-            <div class="gmail_attr" dir="ltr">On Thu, Jan 16, 2020 at
-              4:27 PM Bruce Mitchell &lt;<a
-                href="mailto:Bruce_Mitchell@phoenix.com" target="_blank"
-                moz-do-not-send="true">Bruce_Mitchell@phoenix.com</a>&gt;
-              wrote:<br>
-            </div>
-            <blockquote class="gmail_quote" style="margin:0px 0px 0px
-              0.8ex;border-left:1px solid
-              rgb(204,204,204);padding-left:1ex">Which repo is more
-              stable, feature complete, most functionality?  <a
-                href="https://github.com/openbmc/openbmc"
-                target="_blank" rel="noreferrer" moz-do-not-send="true">https://github.com/openbmc/openbmc</a>
-              or <a href="https://github.com/Intel-BMC/openbmc"
-                target="_blank" rel="noreferrer" moz-do-not-send="true">https://github.com/Intel-BMC/openbmc</a><br>
-              <br>
-              While the WebUI for <a
-                href="https://github.com/Intel-BMC/openbmc"
-                target="_blank" rel="noreferrer" moz-do-not-send="true">https://github.com/Intel-BMC/openbmc</a>
-              may look better,<br>
-              presently its functionality for BMC operation seems
-              intermittent compared to the functionality of <a
-                href="https://github.com/openbmc/openbmc"
-                target="_blank" rel="noreferrer" moz-do-not-send="true">https://github.com/openbmc/openbmc</a>.<br>
-              I am referring to basic things such as displaying the
-              BMC's Firmware Version, the lack of displaying any NIC for
-              Network Settings, the "hang" for Health Hardware Status. 
-              <br>
-              <br>
-              This is not a request about ahead or behind; I am asking
-              about stable, feature complete, most functionality.<br>
-              <br>
-              Using a metaphor here; if you had to select today one of
-              the 2 for controlling your car's breaks which would it be?<br>
-              <br>
-              Thank you.<br>
-              <br>
-            </blockquote>
-          </div>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
+--00000000000018779105a1aaf485
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---------------42489C4137989F85965DD8EA--
+<div dir=3D"ltr"><div>Hello,</div><div><br></div><div>I&#39;m referring to =
+the wishlist:</div><div><br></div>=C2=A0 =C2=A0<a href=3D"https://github.co=
+m/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list">h=
+ttps://github.com/openbmc/openbmc/wiki/Security-working-group#security-feat=
+ure-wish-list</a><br><div><br></div><div>that mentions about using the SELi=
+nux feature.</div><div><br></div><div>What is the current status and plans =
+to integrate either SELinux or AppArmor?</div><div>I&#39;m especially inter=
+ested in the hardening D-Bus (it can do both: AppArmor &amp; SELinux).</div=
+><div><br></div><div>Thanks!</div></div>
+
+--00000000000018779105a1aaf485--
