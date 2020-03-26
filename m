@@ -2,109 +2,130 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C54819341E
-	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 00:03:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 925E8193617
+	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 03:41:29 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48nkDg1y9wzDqbt
-	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 10:03:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48nq4Q6JmMzDqYL
+	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 13:41:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wiwynn.com (client-ip=103.200.3.19; helo=segapp03.wistron.com;
- envelope-from=max_lai@wiwynn.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=wiwynn.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
+ envelope-from=prvs=0354312910=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="signature verification failed" (1024-bit key;
- unprotected) header.d=Wistron.onmicrosoft.com
- header.i=@Wistron.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-Wistron-onmicrosoft-com header.b=el1ux63d; 
+ dmarc=pass (p=none dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=W9MrrxUS; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=HGkcMUqI; 
  dkim-atps=neutral
-Received: from segapp03.wistron.com (segapp02.wistron.com [103.200.3.19])
- by lists.ozlabs.org (Postfix) with ESMTP id 48nNyJ225pzDqgd
- for <openbmc@lists.ozlabs.org>; Wed, 25 Mar 2020 21:04:37 +1100 (AEDT)
-Received: from EXCHAPP02.whq.wistron (unverified [10.37.38.25]) by 
- TWNHUMSW4.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
- <Tde1f46d349c0a816721630@TWNHUMSW4.wistron.com>; Wed, 25 Mar 2020 
- 18:04:35 +0800
-Received: from EXCHAPP03.whq.wistron (10.37.38.26) by EXCHAPP02.whq.wistron 
- (10.37.38.25) with Microsoft SMTP Server 
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
- 15.1.1913.5; Wed, 25 Mar 2020 18:04:34 +0800
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (10.37.38.71) by 
- mail.wistron.com (10.37.38.26) with Microsoft SMTP Server 
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
- 15.1.1913.5 via Frontend Transport; Wed, 25 Mar 2020 18:04:33 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none; 
- b=lBOPKqELL1nz1ix5eBH3jbY+QdxhW7fzFS/gfQbrFWI1XOXjRJHn4tA5qQCP1YvxCD+bj0cmh+HDwmQ9WN3HYvGdgRkzRNEqBM15jO1Apg3ccr4R7Ed7PNFWrN8IKVy88HJPmjOYPGMd5Le1ZS9Wem8Pe9kDp+cC3HoTJN/3z4fNRxuwyDvWKf2cmaSwnPIaDNWJMAYxqgSlJ1yxpUfVHP2X4MOC7S68zhfy21RX5sKC8B6D2s0WQfpBkIEi2c4uOMW8Vkv7KKxh3CvYDdD+RdEsZZ3iYNN55PX9Z6ogHNNN7fFyCGcwQq7TvVwg7dbTxPn4YJOSo+iWp9mA7vlbiw==
+Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
+ [67.231.153.30])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48nq3H1Cm8zDqN6
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Mar 2020 13:40:20 +1100 (AEDT)
+Received: from pps.filterd (m0109331.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 02Q2e2E1025552; Wed, 25 Mar 2020 19:40:16 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type :
+ mime-version; s=facebook; bh=QUKaG2o0o9niqmNmwhtqK4CB9eI/EU5tizFUCCQqgts=;
+ b=W9MrrxUS3t16Lo+/AMvysORkpy1sq6Z94T6ZDvZOnKk5Y3u7tpLv+UOw/Voy7tAeRKUF
+ fbggPFFDnxwO4t9U8U8+C6a8gb+X5iOASYcYlj/nJYAfr/aBFbpCOe/VWK1N27qdSGBG
+ shtoHvseNJPsiH/RUC4i7wOE629cJsHuhH4= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 2yy3gye39c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Wed, 25 Mar 2020 19:40:16 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.174) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1847.3; Wed, 25 Mar 2020 19:40:15 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=R7hGg5km+G2lNg9dJqrULtH9vpeQtR3aX5LsreW1+D02Z/+LnllkHDresSueUpFzRIHuK5TP/5pLMXfwvzr65kUIhlIsLUNSeJXX2bRNPBqP4wMWTAgCm9J+M/Qd08tR/EwON9IPGd3JxA6hTo1xCMqySgd65di5NrbxqNvjFm4YF03lez8mRIc99BFsBV7/jVR2YVvBjmbmQ507NxBn+DS3QcNw+vGT6rD7mgtbiTIiHMC8ct1T+Obv3lLjYOOEohVMg7FfjRfAi3XRQZU/wgq3GmaLPr52hHKWu26tohFn2uGq1Xh5FvD05+ofdYDFN8bmH2KoBsg4BxTQl9dkvg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901; 
+ s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VKMpjd+Qmo1PiREGQ6oSx3kAvtIcq30XMadNlHuvaGI=; 
- b=SDCSZdcHjv1oMtjIO6u7i/l89Sr8znVELv4VBfATCp+rVGGEU3Agr+OfFAD0vjcvzYdX7uXWfK6aCA3gx8Kew9hFDhdmTvni5rnBTRBNJAi+lmvUMc9OHGheQXt+8UoMh8PlXiRsvMVQKe5iG8BIAo5r4/4MhGesJ88+ICTyfJWwKExfoVsp0GKgu02ZfcHofCW1xoDyIfP0MNbJkaGVA0E1euUWA/Xmlas08hBetSbdZN4v6Gcz2JlSUovk7sgI4QXE7kMXSRHh1fHAEDY5JQ2e16gkpbnQMr0HDgOEfSN7TdTdbUn4gcI9GXo9p8ChnHs0Wv+ddeghZYZOUSupGw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass 
- smtp.mailfrom=wiwynn.com; dmarc=pass action=none 
- header.from=wiwynn.com; dkim=pass header.d=wiwynn.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; 
- d=Wistron.onmicrosoft.com; s=selector2-Wistron-onmicrosoft-com; 
+ bh=QUKaG2o0o9niqmNmwhtqK4CB9eI/EU5tizFUCCQqgts=;
+ b=ZdKTj8XjDk84BJL88zCmn98ly+sms+HOao/+Yl3C/tYjm1yEJEPsktd0cilEzpn0Lf2724zFz51mpwVMuvAZZJZOc8PZun4PUvXxxe3bCviBaUXuNQIs5BWZUtILteNfWuJw7vTKVwxgGi4k2G6ehXXb1JtRNSdjG1buU+51t2mjb4XeB3X7f+VdS6VnGVTxcddeYRPz23QjfnIhTuWkBrZK0yy1sQkgwa937jJdtJ9D+PfTIcqUYrSVbgfklzfcYI4hBypT3pB72Y6QdpAu4lhQoPHYwYdhmmd7jBE9I6edxk5yt6Vlnp0Ww9vBXJs6BAhk8OHI7gDNHO6eXbeZlA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VKMpjd+Qmo1PiREGQ6oSx3kAvtIcq30XMadNlHuvaGI=; 
- b=el1ux63dmQEvk7O52jITrj1R+qFZfWXm9ayeewXNPG/XrcgUdvHKy3Qd23hpOjbf4ADJYpn9kMV0SM1urTvEHqs5Ifd6X+FU3crXjNQAyBt/HlHTgoPs5D6gLMT3pVAgB64oARukwihUl6qLtNz3wCjN1tusSaA+uP0zwAsRaCQ=
-Received: from HK2PR02MB3826.apcprd02.prod.outlook.com (10.170.156.210) by 
- HK2PR02MB3890.apcprd02.prod.outlook.com (10.170.158.144) with 
- Microsoft SMTP Server 
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 
- 15.20.2835.22; Wed, 25 Mar 2020 10:04:31 +0000
-Received: from HK2PR02MB3826.apcprd02.prod.outlook.com 
- ([fe80::c52c:3509:987b:9b1d]) by 
- HK2PR02MB3826.apcprd02.prod.outlook.com 
- ([fe80::c52c:3509:987b:9b1d%6]) with mapi id 15.20.2835.023; Wed, 25 
- Mar 2020 10:04:31 +0000
-From: Max Lai/WYHQ/Wiwynn <Max_Lai@wiwynn.com>
-To: "tomjose@linux.vnet.ibm.com" <tomjose@linux.vnet.ibm.com>
-Subject: Some questions about the handler of Add SEL Entry Command
+ bh=QUKaG2o0o9niqmNmwhtqK4CB9eI/EU5tizFUCCQqgts=;
+ b=HGkcMUqIKn/qcVaP2uB3jw3aSZPjiygfpj6fd80qwss3Yh4Dp9cOwqA/RvnUDHsv9kxWhIw6IMc0KSySUHkuaFsUWIr/ggVDoO3EN8KMYdhS5DN+FmRygWIh8S3RgUoFOqD7VC2AgLqbixNPVtKkA4LPV/l65pPURxDFcED49vM=
+Received: from MW3PR15MB3947.namprd15.prod.outlook.com (2603:10b6:303:49::9)
+ by MW3PR15MB3755.namprd15.prod.outlook.com (2603:10b6:303:4c::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2835.15; Thu, 26 Mar
+ 2020 02:40:15 +0000
+Received: from MW3PR15MB3947.namprd15.prod.outlook.com
+ ([fe80::acc7:ed14:3f77:9936]) by MW3PR15MB3947.namprd15.prod.outlook.com
+ ([fe80::acc7:ed14:3f77:9936%4]) with mapi id 15.20.2856.019; Thu, 26 Mar 2020
+ 02:40:15 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Max Lai/WYHQ/Wiwynn <Max_Lai@wiwynn.com>, "tomjose@linux.vnet.ibm.com"
+ <tomjose@linux.vnet.ibm.com>
+Subject: Re: Some questions about the handler of Add SEL Entry Command
 Thread-Topic: Some questions about the handler of Add SEL Entry Command
-Thread-Index: AdYCidN8vjFN1HoJSMqRwWkwqI3vpw==
-Date: Wed, 25 Mar 2020 10:04:31 +0000
-Message-ID: <HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0@HK2PR02MB3826.apcprd02.prod.outlook.com>
+Thread-Index: AdYCidN8vjFN1HoJSMqRwWkwqI3vpwAU2ASA
+Date: Thu, 26 Mar 2020 02:40:14 +0000
+Message-ID: <4C40A508-B1AE-497B-B181-D3E669B64A85@fb.com>
+References: <HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0@HK2PR02MB3826.apcprd02.prod.outlook.com>
+In-Reply-To: <HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0@HK2PR02MB3826.apcprd02.prod.outlook.com>
 Accept-Language: en-US
-Content-Language: zh-TW
+Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is ) 
- smtp.mailfrom=Max_Lai@wiwynn.com; 
-x-originating-ip: [125.227.140.245]
+x-originating-ip: [2620:10d:c091:480::6996]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 06658d28-9608-4af0-bb48-08d7d0a3e9d7
-x-ms-traffictypediagnostic: HK2PR02MB3890:|HK2PR02MB3890:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK2PR02MB38903C18F3FE11A2F81290E6EACE0@HK2PR02MB3890.apcprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-forefront-prvs: 0353563E2B
+x-ms-office365-filtering-correlation-id: da1bf77f-e39f-4213-3c88-08d7d12f03ac
+x-ms-traffictypediagnostic: MW3PR15MB3755:
+x-microsoft-antispam-prvs: <MW3PR15MB37558A8ACD883C0211688843DDCF0@MW3PR15MB3755.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-forefront-prvs: 0354B4BED2
 x-forefront-antispam-report: SFV:NSPM;
- SFS:(10019020)(4636009)(366004)(66556008)(6916009)(26005)(86362001)(66946007)(76116006)(6506007)(7696005)(66446008)(498600001)(186003)(55016002)(8936002)(54906003)(64756008)(107886003)(9686003)(52536014)(4744005)(4326008)(81166006)(66476007)(33656002)(81156014)(71200400001)(8676002)(5660300002)(2906002);
- DIR:OUT;SFP:1102;SCL:1;SRVR:HK2PR02MB3890;
- H:HK2PR02MB3826.apcprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;
- PTR:InfoNoRecords;
-received-spf: None 
- (protection.outlook.com: wiwynn.com does not designate permitted sender hosts)
+ SFS:(10019020)(376002)(396003)(346002)(366004)(136003)(39860400002)(36756003)(91956017)(64756008)(76116006)(5660300002)(66556008)(66446008)(66476007)(66946007)(316002)(54906003)(71200400001)(8676002)(86362001)(81156014)(6486002)(2616005)(4326008)(6506007)(53546011)(33656002)(110136005)(2906002)(186003)(8936002)(478600001)(6512007)(81166006);
+ DIR:OUT; SFP:1102; SCL:1; SRVR:MW3PR15MB3755;
+ H:MW3PR15MB3947.namprd15.prod.outlook.com; FPR:; SPF:None; LANG:en;
+ PTR:InfoNoRecords; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
 x-ms-exchange-senderadcheck: 1
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 9lAIb0p8wrzhr2/N6o1rom2bTy8Gjc2QS4eE1I2+2FN/Fri0xT3aE2TdcCVVP6uDQIZjbFCIkHJc21M/QOzu8sVxRGqm0amG9ICUw9iWOg+Dot134MIO7MRN7M18MqEbL99pdfInu7LVvj/1rHNHvViOgS3unphZZ2Lpn1zygPL3Qxc1RtXvVNcwk9nOlM4o1y3DRD66ZVERoEi12+htUeXFk08cIqnsO6FKUEE4ERs5CXnccW/F0Z/MSogstXcoSmiQnLdbyYK7kkL/cdaVT7JF+JzMKvJ41Yvuir1Y1rzchGaVOV9Ztq3PdPJl0FVFXRdZ6zh/3gUqLd1iFbtzvNBZrivrmQVQ1WPGDT0/VmL7OFvh7/5KDM0OpOC8t3lzq8qvIys3/8QNJi+eeLIBemaY8Rp2Y8RVbsKjxrDk8Rzf484CNqu+7gID5JGn8bhV
-x-ms-exchange-antispam-messagedata: /V0OxDqWqT8vGkvNqQa7YF9nmG6CvdmXhhtNq8SrR3y8hvE2E+y08JCTkIlR+uG4f6dJ8flteDwO8wbh6wFE2/5+UXukhupQA22wscvGf42TqnD27BLS99juXwbSvC2SIVwNH9Xh83pYGk61y4JTjg==
-Content-Type: multipart/alternative; 
- boundary="_000_HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0HK2PR02MB3826apcp_"
+x-microsoft-antispam-message-info: bByAKl1yZIoQxBr6G8FHUgloDtp6fMvqPB2CD2SxLTL+q3VCC72FLNv3LYaXaYqkgPreOsiuLhJ8Ck/jeo7i7rmUfG5X162F1ADnK+GXbOEdrmdKiheQzhbEyAsZswH8SbCDxBleazMwpefGtTVrwnAIL75H6pvhSSzqb1SWaQVih+yWLQcme28QSeLzhpdSd/iSxyV87Zs5sfOpSn6SGYZuD75V9DUTuqqkQQJWsmXqS2XLgzJ+6lpeePd25F8ync/Q2aIjgLjUdv3GM4UZ2k9J183R57t0HEc+BMJfHg9OX8QwYaDa8EJvV3LCRDLXVUb0XPd6+KxbfBE9/1qPONWM1q8BaBA2oTQ/Do9OtCjVNHLQF2LgykS4KZOeUQgeuzdl7umndZzKS3nTyf1F8pEbR03XnojBhMEfM1hBqFcEUmRj3k0biCbI01ZqBRNm
+x-ms-exchange-antispam-messagedata: Uz9IRleqmKKFyM5tBw3GIyX+rmiT0K2H4quhuHHCX79FeQc2k/Ag/TexIiByq8peQQnBHa7DD79//3OLHtK6s8074pc36Zjgmdde7gEpYjkmRx9UlslMVdtoZRAhHhcyWwcxRZke918MbBwQPJdoiZ3PjQb36OMXdvJTwONa3k4=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_4C40A508B1AE497BB181D3E669B64A85fbcom_"
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 06658d28-9608-4af0-bb48-08d7d0a3e9d7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2020 10:04:31.6281 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: da1bf77f-e39f-4213-3c88-08d7d12f03ac
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Mar 2020 02:40:14.9441 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: de0795e0-d7c0-4eeb-b9bb-bc94d8980d3b
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 0e0HHesG0tuIMGArkoZDlBtm1L2YGyY2iECbPV1858YALasXtrgDpAtQWF4MFIpV52F2R0B0DZW7rDeLg+sjsQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR02MB3890
-X-OriginatorOrg: wiwynn.com
-X-TM-SNTS-SMTP: F63DB15D99C8A68FB5BCB424CA0B14C97F4D63586E13AEAE20010CC4D6FB5BCB2000:8
-X-Mailman-Approved-At: Thu, 26 Mar 2020 10:02:36 +1100
+X-MS-Exchange-CrossTenant-userprincipalname: s0iMqwxf1PMRB7BBtjQnE2PN5COrzlTKfb6ttuf4KGShpa/N4iFl1hX9g8t8aaoaW1Xp7tReWqGI9/Ie3VBBpw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR15MB3755
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
+ definitions=2020-03-25_13:2020-03-24,
+ 2020-03-25 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ bulkscore=0 adultscore=0 mlxscore=0 phishscore=0 lowpriorityscore=0
+ clxscore=1011 malwarescore=0 mlxlogscore=999 spamscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2003260014
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -121,137 +142,123 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0HK2PR02MB3826apcp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+--_000_4C40A508B1AE497BB181D3E669B64A85fbcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hi Tom,
+SSBkb27igJl0IHRoaW5rIHRoaXMgY29tbWFuZCBpcyBldmVuIHN1cHBvcnRlZCBjb21wbGV0ZWx5
+IGJ5IElQTUlELCBJIHRoaW5rIGl0IHdhcyBzdGFydGVkIHdpdGggb25seSBvbmUgdHlwZSBhbmQg
+bmV2ZXIgZ290IHRvIGNvbXBsZXRpb24uDQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNl
+cyt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMub3psYWJzLm9yZz4gb24gYmVoYWxmIG9mIE1heCBM
+YWkvV1lIUS9XaXd5bm4gPE1heF9MYWlAd2l3eW5uLmNvbT4NCkRhdGU6IFdlZG5lc2RheSwgTWFy
+Y2ggMjUsIDIwMjAgYXQgNDowMyBQTQ0KVG86ICJ0b21qb3NlQGxpbnV4LnZuZXQuaWJtLmNvbSIg
+PHRvbWpvc2VAbGludXgudm5ldC5pYm0uY29tPg0KQ2M6ICJvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmciIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+LCAiTEZfT3BlbkJNQy5XWUhRLldpd3lubiIg
+PExGX09wZW5CTUMuV1lIUS5XaXd5bm5AV2l3eW5uLmNvbT4NClN1YmplY3Q6IFNvbWUgcXVlc3Rp
+b25zIGFib3V0IHRoZSBoYW5kbGVyIG9mIEFkZCBTRUwgRW50cnkgQ29tbWFuZA0KDQpIaSBUb20s
+DQoNCk91ciB2YWxpZGF0aW9uIHRlYW0gbWV0IGEgcHJvYmxlbSBpbiBwaG9zcGhvci1ob3N0LWlw
+bWlkIChwaG9zcGhvci1pcG1pLWhvc3QpIHJlY2VudGx5LiBXZSB3YW50IHRvIHVzZSB0aGUgQWRk
+IFNFTCBFbnRyeSBDb21tYW5kIGhhbmRsZWQgYnkgaXBtaVN0b3JhZ2VBZGRTRUwuIFdlIGxvb2sg
+Zm9yd2FyZCB0byBnZXR0aW5nIGNvcnJlY3Qgc2VsIGxvZyB3aXRoIHBhcmFtZXRlciB3ZSBvZmZl
+ci4gQnV0IFdlIGZvdW5kIHRoYXQgdGhlIGhhbmRsZXIgb25seSB1c2Ugc2Vuc29ydHlwZSB0byBj
+cmVhdGUgbG9nIGVudHJ5IHdoZW4gcmVjb3JkVHlwZSBpcyBlcXVhbCB0byBwcm9jZWR1cmVUeXBl
+KDB4REUpLiBXaHkgdGhlIG90aGVyIHBhcmFtZXRlciBpcyBpZ25vcmVkIHRvIGNyZWF0ZSBsb2cg
+ZW50cnkgPyBJdCBzZWVtZWQgdGhhdCBpdCBkaWTigJl0IGZvbGxvdyB0aGUgaXBtaSBzcGVjLiBU
+aGVyZSBhcmUgbW9yZSBxdWVzdGlvbnMuIFdoYXQgaXMgdGhlIGVTRUwgPyBJbiBmdW5jdGlvbiBj
+cmVhdGVQcm9jZWR1cmVMb2dFbnRyeSgpLCB3aGF0IGluZm9ybWF0aW9uIHdhcyBzdG9yZWQgaW4g
+dGhlIGVTRUxGaWxlICgvdG1wL2VzZWwpID8gQW5kIGhvdyB0byBjcmVhdGUgdGhlIGVTRUxGaWxl
+ID8NCg0KUmVnYXJkcywNCk1heCBMYWkNCg0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0NCg0KVGhpcyBlbWFpbCBjb250YWlucyBjb25maWRlbnRpYWwgb3Ig
+bGVnYWxseSBwcml2aWxlZ2VkIGluZm9ybWF0aW9uIGFuZCBpcyBmb3IgdGhlIHNvbGUgdXNlIG9m
+IGl0cyBpbnRlbmRlZCByZWNpcGllbnQuDQoNCkFueSB1bmF1dGhvcml6ZWQgcmV2aWV3LCB1c2Us
+IGNvcHlpbmcgb3IgZGlzdHJpYnV0aW9uIG9mIHRoaXMgZW1haWwgb3IgdGhlIGNvbnRlbnQgb2Yg
+dGhpcyBlbWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLg0KDQpJZiB5b3UgYXJlIG5vdCB0aGUg
+aW50ZW5kZWQgcmVjaXBpZW50LCB5b3UgbWF5IHJlcGx5IHRvIHRoZSBzZW5kZXIgYW5kIHNob3Vs
+ZCBkZWxldGUgdGhpcyBlLW1haWwgaW1tZWRpYXRlbHkuDQoNCi0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0K
 
-Our validation team met a problem in phosphor-host-ipmid (phosphor-ipmi-hos=
-t) recently. We want to use the Add SEL Entry Command handled by ipmiStorag=
-eAddSEL. We look forward to getting correct sel log with parameter we offer=
-. But We found that the handler only use sensortype to create log entry whe=
-n recordType is equal to procedureType(0xDE). Why the other parameter is ig=
-nored to create log entry ? It seemed that it did't follow the ipmi spec. T=
-here are more questions. What is the eSEL ? In function createProcedureLogE=
-ntry(), what information was stored in the eSELFile (/tmp/esel) ? And how t=
-o create the eSELFile ?
+--_000_4C40A508B1AE497BB181D3E669B64A85fbcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <B08AD0A703C8FF4D91B26C1730B8ABE9@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
-Regards,
-Max Lai
+PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
+bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
+dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
+dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
+dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
+dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
+bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
+ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
+IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
+IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3Jt
+YWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1i
+b3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
+IixzYW5zLXNlcmlmO30NCnNwYW4uRW1haWxTdHlsZTIwDQoJe21zby1zdHlsZS10eXBlOnBlcnNv
+bmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndp
+bmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7
+DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAx
+MS4waW47DQoJbWFyZ2luOjEuMGluIDEuMjVpbiAxLjBpbiAxLjI1aW47fQ0KZGl2LldvcmRTZWN0
+aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPg0KPC9oZWFkPg0KPGJvZHkg
+bGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIjOTU0RjcyIj4NCjxkaXYgY2xhc3M9
+IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1z
+aXplOjExLjBwdCI+SSBkb27igJl0IHRoaW5rIHRoaXMgY29tbWFuZCBpcyBldmVuIHN1cHBvcnRl
+ZCBjb21wbGV0ZWx5IGJ5IElQTUlELCBJIHRoaW5rIGl0IHdhcyBzdGFydGVkIHdpdGggb25seSBv
+bmUgdHlwZSBhbmQgbmV2ZXIgZ290IHRvIGNvbXBsZXRpb24uPG86cD48L286cD48L3NwYW4+PC9w
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxv
+OnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRl
+ci10b3A6c29saWQgI0I1QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+RnJvbTogPC9z
+cGFuPjwvYj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPm9wZW5ibWMgJmx0O29wZW5ibWMtYm91
+bmNlcyYjNDM7dmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmcmZ3Q7IG9uIGJlaGFs
+ZiBvZiBNYXggTGFpL1dZSFEvV2l3eW5uICZsdDtNYXhfTGFpQHdpd3lubi5jb20mZ3Q7PGJyPg0K
+PGI+RGF0ZTogPC9iPldlZG5lc2RheSwgTWFyY2ggMjUsIDIwMjAgYXQgNDowMyBQTTxicj4NCjxi
+PlRvOiA8L2I+JnF1b3Q7dG9tam9zZUBsaW51eC52bmV0LmlibS5jb20mcXVvdDsgJmx0O3RvbWpv
+c2VAbGludXgudm5ldC5pYm0uY29tJmd0Ozxicj4NCjxiPkNjOiA8L2I+JnF1b3Q7b3BlbmJtY0Bs
+aXN0cy5vemxhYnMub3JnJnF1b3Q7ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7LCAm
+cXVvdDtMRl9PcGVuQk1DLldZSFEuV2l3eW5uJnF1b3Q7ICZsdDtMRl9PcGVuQk1DLldZSFEuV2l3
+eW5uQFdpd3lubi5jb20mZ3Q7PGJyPg0KPGI+U3ViamVjdDogPC9iPlNvbWUgcXVlc3Rpb25zIGFi
+b3V0IHRoZSBoYW5kbGVyIG9mIEFkZCBTRUwgRW50cnkgQ29tbWFuZDxvOnA+PC9vOnA+PC9zcGFu
+PjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJm
+b250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPkhpIFRvbSw8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+T3Vy
+IHZhbGlkYXRpb24gdGVhbSBtZXQgYSBwcm9ibGVtIGluIHBob3NwaG9yLWhvc3QtaXBtaWQgKHBo
+b3NwaG9yLWlwbWktaG9zdCkgcmVjZW50bHkuIFdlIHdhbnQgdG8gdXNlIHRoZTwvYj4NCjxiPkFk
+ZCBTRUwgRW50cnkgQ29tbWFuZCBoYW5kbGVkIGJ5IGlwbWlTdG9yYWdlQWRkU0VMLiBXZSBsb29r
+IGZvcndhcmQgdG8gZ2V0dGluZyBjb3JyZWN0IHNlbCBsb2cgd2l0aCBwYXJhbWV0ZXIgd2Ugb2Zm
+ZXIuIEJ1dCBXZSBmb3VuZCB0aGF0IHRoZSBoYW5kbGVyIG9ubHkgdXNlIHNlbnNvcnR5cGUgdG8g
+Y3JlYXRlIGxvZyBlbnRyeSB3aGVuIHJlY29yZFR5cGUgaXMgZXF1YWwgdG8gcHJvY2VkdXJlVHlw
+ZSgweERFKS4gV2h5IHRoZSBvdGhlciBwYXJhbWV0ZXINCiBpcyBpZ25vcmVkIHRvIGNyZWF0ZSBs
+b2cgZW50cnkgPyBJdCBzZWVtZWQgdGhhdCBpdCBkaWTigJl0IGZvbGxvdyB0aGUgaXBtaSBzcGVj
+LiBUaGVyZSBhcmUgbW9yZSBxdWVzdGlvbnMuIFdoYXQgaXMgdGhlIGVTRUwgPyBJbiBmdW5jdGlv
+biBjcmVhdGVQcm9jZWR1cmVMb2dFbnRyeSgpLCB3aGF0IGluZm9ybWF0aW9uIHdhcyBzdG9yZWQg
+aW4gdGhlIGVTRUxGaWxlICgvdG1wL2VzZWwpID8gQW5kIGhvdyB0byBjcmVhdGUgdGhlIGVTRUxG
+aWxlID88L2I+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpw
+PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlJlZ2FyZHMsPG86cD48L286cD48L3A+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5NYXggTGFpPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+Jm5ic3A7PC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPHA+PGI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS08L3NwYW4+PC9iPjxvOnA+PC9vOnA+PC9w
+Pg0KPHA+PGI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5UaGlzIGVtYWlsIGNvbnRhaW5zIGNv
+bmZpZGVudGlhbCBvciBsZWdhbGx5IHByaXZpbGVnZWQgaW5mb3JtYXRpb24gYW5kIGlzIGZvciB0
+aGUgc29sZSB1c2Ugb2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4NCjwvc3Bhbj48L2I+PG86cD48
+L286cD48L3A+DQo8cD48Yj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPkFueSB1bmF1dGhvcml6
+ZWQgcmV2aWV3LCB1c2UsIGNvcHlpbmcgb3IgZGlzdHJpYnV0aW9uIG9mIHRoaXMgZW1haWwgb3Ig
+dGhlIGNvbnRlbnQgb2YgdGhpcyBlbWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLjwvc3Bhbj48
+L2I+PG86cD48L286cD48L3A+DQo8cD48Yj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPklmIHlv
+dSBhcmUgbm90IHRoZSBpbnRlbmRlZCByZWNpcGllbnQsIHlvdSBtYXkgcmVwbHkgdG8gdGhlIHNl
+bmRlciBhbmQgc2hvdWxkIGRlbGV0ZSB0aGlzIGUtbWFpbCBpbW1lZGlhdGVseS48L3NwYW4+PC9i
+PjxvOnA+PC9vOnA+PC9wPg0KPHA+PGI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS08L3NwYW4+PC9iPjxvOnA+PC9v
+OnA+PC9wPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
 
-
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient.=20
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-
---_000_HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0HK2PR02MB3826apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Tom,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">Our validation team met a pr=
-oblem in phosphor-host-ipmid (phosphor-ipmi-host) recently. We want to use =
-the</span></b><span lang=3D"EN-US">
-<b>Add SEL Entry Command handled by ipmiStorageAddSEL. We look forward to g=
-etting correct sel log with parameter we offer. But We found that the handl=
-er only use sensortype to create log entry when recordType is equal to proc=
-edureType(0xDE). Why the other parameter
- is ignored to create log entry ? It seemed that it did&#8217;t follow the =
-ipmi spec. There are more questions. What is the eSEL ? In function createP=
-rocedureLogEntry(), what information was stored in the eSELFile (/tmp/esel)=
- ? And how to create the eSELFile ?<o:p></o:p></b></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Regards,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Max Lai<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D"><o:p>&n=
-bsp;</o:p></span></p>
-</div>
-
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient. </b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------</b></span></p></body>
-</html>
-
---_000_HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0HK2PR02MB3826apcp_--
+--_000_4C40A508B1AE497BB181D3E669B64A85fbcom_--
