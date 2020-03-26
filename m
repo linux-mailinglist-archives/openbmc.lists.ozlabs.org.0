@@ -1,89 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A1811940A4
+	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 15:00:57 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 609A9193AC7
-	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 09:25:06 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48nyht707HzDqbB
-	for <lists+openbmc@lfdr.de>; Thu, 26 Mar 2020 19:25:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48p68H66pdzDqC7
+	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 01:00:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=XhjEBAMN; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=fPqm7r2z; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48nyh12K0ZzDqYd
- for <openbmc@lists.ozlabs.org>; Thu, 26 Mar 2020 19:24:15 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02Q852GI154928
- for <openbmc@lists.ozlabs.org>; Thu, 26 Mar 2020 04:24:12 -0400
-Received: from e06smtp01.uk.ibm.com (e06smtp01.uk.ibm.com [195.75.94.97])
- by mx0b-001b2d01.pphosted.com with ESMTP id 300qp1jah7-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 26 Mar 2020 04:24:11 -0400
-Received: from localhost
- by e06smtp01.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Thu, 26 Mar 2020 08:24:05 -0000
-Received: from b06cxnps3074.portsmouth.uk.ibm.com (9.149.109.194)
- by e06smtp01.uk.ibm.com (192.168.101.131) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Thu, 26 Mar 2020 08:24:03 -0000
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com
- (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
- by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 02Q8O72r62390520
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 26 Mar 2020 08:24:07 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 24047A405C;
- Thu, 26 Mar 2020 08:24:07 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0E8A8A4054;
- Thu, 26 Mar 2020 08:24:06 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.79.181.161])
- by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Thu, 26 Mar 2020 08:24:05 +0000 (GMT)
-Subject: Re: Proposal for the connected redfish client info
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-To: James Feist <james.feist@linux.intel.com>, openbmc@lists.ozlabs.org,
- i.mikhaylov@yadro.com, rhanley@google.com
-References: <94469ba3-2b59-b131-ecbe-d708054aef89@linux.vnet.ibm.com>
- <bfd9332f-1a27-d00f-4379-8c039b9e9b24@linux.vnet.ibm.com>
- <76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com>
- <477c9a0c-ea2a-f1d5-7e0f-59ece898096d@linux.vnet.ibm.com>
-Date: Thu, 26 Mar 2020 13:54:05 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48p6073MWPzDqsX
+ for <openbmc@lists.ozlabs.org>; Fri, 27 Mar 2020 00:53:41 +1100 (AEDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 868B4458;
+ Thu, 26 Mar 2020 09:53:36 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Thu, 26 Mar 2020 09:53:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:content-transfer-encoding:in-reply-to; s=fm1; bh=1
+ DIfDLPT5v9jT1osqzeTiU4HnnUmc46Q0PQMNi5DfRs=; b=XhjEBAMNIkysiUf6r
+ cbcgSio0Uj+htSinbi3Pw9387sKZU11R516oWVUKqgo19kxW8eWqwIAtsPmAmuwp
+ QVGKfDBQOOg0kh8JBumTZsseM13rqC9g0iBwWJ8cy4kVhmwslJCR8ZDIblMxlFOt
+ bVwLdthr32Uh5hcl6LryqJE5/tzxdzhkCCtk9hmdullOyahQtjkAo7uNSxdW3oRV
+ LgavI4hFd6cHorOMensVodT5pBFHTBPovAwQwcwX+kR1xRqahN6eLtsb2qjYPMwE
+ 5lNLgzoKZfIlWCH7XNxDjtu3LWFMYe96sFJl7MmqpOYzRVEcLle1xN4JD99VhUsZ
+ dRE/g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=1DIfDLPT5v9jT1osqzeTiU4HnnUmc46Q0PQMNi5Df
+ Rs=; b=fPqm7r2z+ZS98n44SaEhQyAVItFtG4a1Gy75waZiNkQhOQNL40+Hi+Net
+ TNvC0BrRu0MxfvuKAvocadeYsA1CFRuXKAqmekewf+LqqRNPM2SsIZSlbFnoY5D4
+ 0m4hZjoTqm4/TtBh69l/vG+IKm3HP8NidtRbwWG/U/OiRmAnztWKj+Un9mvVOwAr
+ d3FYwtKjYN4cNF8bcGlhFdiktbKlhWgYv/kTiuYR4dMYUd3Xqg7xAnvM6hXAfENt
+ rfoLeWGS6hiJSf5QYm2KEyg2WQIchpin1rSe0JBF+Dp67yPiSkm4W428Xtj7GFNb
+ NTMIuIBgFMmSjosnmotP4Xa1cvORw==
+X-ME-Sender: <xms:37N8XqHF26_cOc7zMbtN7SzFEtvFSpjrjSefZclEVi3zmkz3_vbtWg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudehiedgheejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkfhggtggugfgjsehtkeertddt
+ tdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+ hsthiftgigrdighiiiqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedu
+ ieeirddujedvrdduvdefrdduvddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+ hmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:37N8XqkDREdEmAnP4sOuZcoq0SWUQas1WFQa3ds2ZGTQrZfA-q3MDg>
+ <xmx:37N8Xm9Zant4oW_K2kmiCD8h_uh6xpo42gf2DbSkgC3IsfQdksdLNw>
+ <xmx:37N8Xrmlx0n5bLM_YVxNVHJqxs62gQPsY7YCSr534V5h2b08MpkaSQ>
+ <xmx:4LN8Xrk801YXDlsm7wncoGtWbmB7GGimj1e_-ZtvMnlzP2vPeWeQUg>
+Received: from localhost (mobile-166-172-123-121.mycingular.net
+ [166.172.123.121])
+ by mail.messagingengine.com (Postfix) with ESMTPA id C3FD730699AA;
+ Thu, 26 Mar 2020 09:53:34 -0400 (EDT)
+Date: Thu, 26 Mar 2020 08:53:33 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Vijay Khemka <vijaykhemka@fb.com>
+Subject: Re: Some questions about the handler of Add SEL Entry Command
+Message-ID: <20200326134831.GA10853@heinlein.lan.stwcx.xyz>
+References: <HK2PR02MB3826E495C4A57F7F0F4C07B1EACE0@HK2PR02MB3826.apcprd02.prod.outlook.com>
+ <4C40A508-B1AE-497B-B181-D3E669B64A85@fb.com>
 MIME-Version: 1.0
-In-Reply-To: <477c9a0c-ea2a-f1d5-7e0f-59ece898096d@linux.vnet.ibm.com>
-Content-Type: multipart/alternative;
- boundary="------------86B1B9BF8FD0465DC145C1A4"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 20032608-4275-0000-0000-000003B3A1C8
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 20032608-4276-0000-0000-000038C8E25B
-Message-Id: <2e08beba-3904-f3dd-b11e-6df9994f901b@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
- definitions=2020-03-25_15:2020-03-24,
- 2020-03-25 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- mlxlogscore=999 adultscore=0 lowpriorityscore=0 mlxscore=0 suspectscore=0
- spamscore=0 clxscore=1015 malwarescore=0 bulkscore=0 priorityscore=1501
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2003260053
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4C40A508-B1AE-497B-B181-D3E669B64A85@fb.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,299 +94,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Max Lai/WYHQ/Wiwynn <Max_Lai@wiwynn.com>,
+ "LF_OpenBMC.WYHQ.Wiwynn" <LF_OpenBMC.WYHQ.Wiwynn@Wiwynn.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------86B1B9BF8FD0465DC145C1A4
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Thu, Mar 26, 2020 at 02:40:14AM +0000, Vijay Khemka wrote:
+> I don’t think this command is even supported completely by IPMID, I think it was started with only one type and never got to completion.
+> 
+> From: openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> on behalf of Max Lai/WYHQ/Wiwynn <Max_Lai@wiwynn.com>
+> Date: Wednesday, March 25, 2020 at 4:03 PM
+> To: "tomjose@linux.vnet.ibm.com" <tomjose@linux.vnet.ibm.com>
+> Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "LF_OpenBMC.WYHQ.Wiwynn" <LF_OpenBMC.WYHQ.Wiwynn@Wiwynn.com>
+> Subject: Some questions about the handler of Add SEL Entry Command
+> 
+> Hi Tom,
+> 
+> Our validation team met a problem in phosphor-host-ipmid (phosphor-ipmi-host) recently. We want to use the Add SEL Entry Command handled by ipmiStorageAddSEL. We look forward to getting correct sel log with parameter we offer. But We found that the handler only use sensortype to create log entry when recordType is equal to procedureType(0xDE). Why the other parameter is ignored to create log entry ? It seemed that it did’t follow the ipmi spec. There are more questions. What is the eSEL ? In function createProcedureLogEntry(), what information was stored in the eSELFile (/tmp/esel) ? And how to create the eSELFile ?
 
-Hi James, Ivan, Richard,
+The IPMI code was originally written to support IBM's Power systems.
+They had existing firmware that supported this "eSEL" format, which I
+think stood for "extended SEL".  The eSEL contains everything in a SEL
+plus more and is sent down as multiple IPMI transactions.  The handler
+for the multiple IPMI transactions are what create the /tmp/esel file.
 
-Please go through the mail below, I responded the queries.
+[1] https://github.com/openbmc/phosphor-host-ipmid/blob/e08fbffcd9bd1976f7d26d48bf7a4c3e5843d4a8/storageaddsel.cpp
+[2] https://github.com/open-power/hostboot/search?q=esel&type=
 
-Let me know if we have concern around this.
-
-Ratan
-
-On 3/20/20 12:50 PM, Ratan Gupta wrote:
->
-> Hi James,Ivan,Richard
->
-> The Intention of the below requirement is to help the clients to find 
-> the other connected clients in realtime.
->
-> Richard, As you mentioned in other thread
->
-> *"Or is this being to log accesses for security audits? I think that 
-> would help me figure out what direction we should move towards."*
->
->  It may get used for security audits but didn't think before you 
-> pointed out.
->
->
-> On 3/17/20 9:28 PM, James Feist wrote:
->> On 3/17/2020 6:01 AM, Ratan Gupta wrote:
->>> Hi Team,
->>>
->>> Looking for your inputs
->>>
->>> James, How about option1 for the below use case
->>
->> Before creating OEM we are to propose it to the Redfish community. 
->> Have you asked them for their thoughts?
-> My plan was to ask from the openBMC community first about the 
-> requirement, If the community interested in this we can propose it to 
-> the Redfish-Forum.
->>
->>>
->>> Ratan
->>>
->>> On 3/11/20 3:48 PM, Ratan Gupta wrote:
->>>>
->>>> Hi Team,
->>>>
->>>> In IBM we have a following requirement
->>>>
->>>>   * Show the connected redfish client info.
->>>>       o   ClientIP >>       o   Client Unique Identifier(unique 
->>>> serial number of the 
->> client etc)
->>
->> This confuses me, how are you getting the serial number for a 
->> connected client? If so, have you looked into data protection laws 
->> and storing Personally Identifiable Information?
->
-> Client have to give this info, it could be anything like hostname of 
-> the client, serial number of the machine etc, it is up to the client 
-> what they want to provide as part of client identifier.
->
-> Why it is needed?
->
-> Consider the below use case
->
-> => Client(x.x.x.x) creates the session with BMC
->
-> => BMC stores this IP(x.x.x.x)
->
-> => Now say Client IP(x.x.x.x) got change to y.y.y.y but the session is 
-> still valid.
->
-> => Stored IP(x.x.x.x) will not be much usable here in this scenario
->
-> => Here Client Identifier may be usable to identify the connected client.
->
-> Let me know your thoughts here.
->
->
->>
->>>>
->>>>
->>>> Presently there is no way through which we can get this info.
->>>>
->>>> I have following two proposal for the above requirement.
->>>>
->>>> 1/ (Extend the session schema)
->>>>
->>>> Add the IPaddress and the client Identifier as a OEM in the session 
->>>> schema,
->>>> Clinet IP would be read only and will be updated once the redfish 
->>>> client creates the session.
->>>> ClientIdentifier(Management console unique serial number etc) will 
->>>> be writable property and can be set by the redfish client
->>>> during creation of the session or after creating the session.
->>>>
->>>>
->>>> 2/ (Create the Manager object at runtime)
->>>> once the redfish client creates the session , bmcweb internally 
->>>> does the following
->>>>
->>>> - Create the manager object whose type is "Management Controller".
->>>>
->>>> - Create the ethernet interface resource manager resource and 
->>>> update the client IP.
->>>>
->>>>    In the second option how to set the Client unique identifier 
->>>> which is to be given by the Redfish client
->>
->> I've had talks before about creating a new systems schema for the BMC 
->> specifically, so that you could expose things like bmc memory, etc. 
->> Systems also has the Ethernet schema. However this depends on what 
->> you're trying to present.
->>
-> Here I was proposing to create a manager object for the external 
-> clients, once they creates the session with the BMC. I am not sure 
-> what else we can set for the connected client in the manager object so 
-> I was inclined towards extending the session schema instead of 
-> creating the manager object for external clients.
->>>>
->>>>  Please let me know your thoughts on the above.
->>>>
->>>> Ratan
->>>>
-> Ratan
-
---------------86B1B9BF8FD0465DC145C1A4
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi James, Ivan, Richard,</p>
-    <p>Please go through the mail below, I responded the queries.</p>
-    <p>Let me know if we have concern around this.</p>
-    <p>Ratan</p>
-    <div class="moz-cite-prefix">On 3/20/20 12:50 PM, Ratan Gupta wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:477c9a0c-ea2a-f1d5-7e0f-59ece898096d@linux.vnet.ibm.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <p><tt>Hi James,Ivan,Richard</tt><tt><br>
-        </tt></p>
-      <p><tt>The Intention of the below requirement is to help the
-          clients to find the other connected clients in realtime.</tt></p>
-      <p><tt>Richard, As you mentioned in other thread </tt><tt><br>
-        </tt></p>
-      <p><b><tt>"Or is this being to log accesses for security audits? 
-            I think that would help me figure out what direction we
-            should move towards."</tt></b></p>
-      <p><tt> It may get used for security audits but didn't think
-          before you pointed out.</tt></p>
-      <p><tt><br>
-        </tt></p>
-      <div class="moz-cite-prefix">On 3/17/20 9:28 PM, James Feist
-        wrote:<br>
-      </div>
-      <blockquote type="cite"
-        cite="mid:76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com">On
-        3/17/2020 6:01 AM, Ratan Gupta wrote: <br>
-        <blockquote type="cite">Hi Team, <br>
-          <br>
-          Looking for your inputs <br>
-          <br>
-          James, How about option1 for the below use case <br>
-        </blockquote>
-        <br>
-        Before creating OEM we are to propose it to the Redfish
-        community. Have you asked them for their thoughts? <br>
-      </blockquote>
-      <tt>My plan was to ask from the openBMC community first about the
-        requirement, If the co</tt><tt>mmunity interested in this we can
-        propose it to the Redfish-Forum.</tt><br>
-      <blockquote type="cite"
-        cite="mid:76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com">
-        <br>
-        <blockquote type="cite"> <br>
-          Ratan <br>
-          <br>
-          On 3/11/20 3:48 PM, Ratan Gupta wrote: <br>
-          <blockquote type="cite"> <br>
-            Hi Team, <br>
-            <br>
-            In IBM we have a following requirement <br>
-            <br>
-              * Show the connected redfish client info. <br>
-                  o   ClientIP &gt;&gt;       o   Client Unique
-            Identifier(unique serial number of the </blockquote>
-        </blockquote>
-        client etc) <br>
-        <br>
-        This confuses me, how are you getting the serial number for a
-        connected client? If so, have you looked into data protection
-        laws and storing Personally Identifiable Information? <br>
-      </blockquote>
-      <p><tt>Client have to give this info, it could be anything like
-          hostname of the client, serial number of the machine etc, it
-          is up to the client what they want to provide as part of
-          client identifier.</tt></p>
-      <p><tt>Why it is needed?</tt></p>
-      <p><tt>Consider the below use case</tt></p>
-      <tt> </tt>
-      <p><tt>=&gt; Client(x.x.x.x) creates the session with BMC</tt></p>
-      <tt> </tt>
-      <p><tt>=&gt; BMC stores this IP(x.x.x.x)</tt></p>
-      <tt> </tt>
-      <p><tt>=&gt; Now say Client IP(x.x.x.x) got change to y.y.y.y but
-          the session is still valid.</tt></p>
-      <tt> </tt>
-      <p><tt>=&gt; Stored IP(x.x.x.x) will not be much usable here in
-          this scenario</tt></p>
-      <tt> </tt>
-      <p><tt>=&gt; Here Client Identifier may be usable to identify the
-          connected client.</tt></p>
-      <p><tt>Let me know your thoughts here.<br>
-        </tt></p>
-      <p><tt><br>
-        </tt></p>
-      <blockquote type="cite"
-        cite="mid:76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com">
-        <br>
-        <blockquote type="cite">
-          <blockquote type="cite"> <br>
-            <br>
-            Presently there is no way through which we can get this
-            info. <br>
-            <br>
-            I have following two proposal for the above requirement. <br>
-            <br>
-            1/ (Extend the session schema) <br>
-            <br>
-            Add the IPaddress and the client Identifier as a OEM in the
-            session schema, <br>
-            Clinet IP would be read only and will be updated once the
-            redfish client creates the session. <br>
-            ClientIdentifier(Management console unique serial number
-            etc) will be writable property and can be set by the redfish
-            client <br>
-            during creation of the session or after creating the
-            session. <br>
-            <br>
-            <br>
-            2/ (Create the Manager object at runtime) <br>
-            once the redfish client creates the session , bmcweb
-            internally does the following <br>
-            <br>
-            - Create the manager object whose type is "Management
-            Controller". <br>
-            <br>
-            - Create the ethernet interface resource manager resource
-            and update the client IP. <br>
-            <br>
-               In the second option how to set the Client unique
-            identifier which is to be given by the Redfish client <br>
-          </blockquote>
-        </blockquote>
-        <br>
-        I've had talks before about creating a new systems schema for
-        the BMC specifically, so that you could expose things like bmc
-        memory, etc. Systems also has the Ethernet schema. However this
-        depends on what you're trying to present. <br>
-        <br>
-      </blockquote>
-      Here I was proposing to create a manager object for the external
-      clients, once they creates the session with the BMC. I am not sure
-      what else we can set for the connected client in the manager
-      object so I was inclined towards extending the session schema
-      instead of creating the manager object for external clients. <br>
-      <blockquote type="cite"
-        cite="mid:76571c68-ed92-f15f-cfd5-37a323b430b1@linux.intel.com">
-        <blockquote type="cite">
-          <blockquote type="cite"> <br>
-             Please let me know your thoughts on the above. <br>
-            <br>
-            Ratan <br>
-            <br>
-          </blockquote>
-        </blockquote>
-      </blockquote>
-      Ratan<br>
-    </blockquote>
-  </body>
-</html>
-
---------------86B1B9BF8FD0465DC145C1A4--
-
+-- 
+Patrick Williams
