@@ -2,85 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B001195163
-	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 07:37:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 84555195BF1
+	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 18:06:23 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48pXGm2qK0zDr55
-	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 17:37:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48ppCw3dSXzDrCN
+	for <lists+openbmc@lfdr.de>; Sat, 28 Mar 2020 04:06:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=f3bHCZHt; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=j7Nf5tLp; 
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=LX/EGoEM; 
  dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48pX8S2XtZzDr42
- for <openbmc@lists.ozlabs.org>; Fri, 27 Mar 2020 17:32:24 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 1D8DD5C034D;
- Fri, 27 Mar 2020 02:32:22 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 27 Mar 2020 02:32:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=jZcLeLB0UG/wd
- 8io7LAHNTT/6h3HTScw++K57cUQf24=; b=f3bHCZHtlL/yrGk0qwI4GTYjUFL+b
- RUaq62SqsxLFONw4H70jfAMeUOPGw28HnAgL/12t2h7cyzhxJr+swdv4y5KUOO8s
- FCfvooXyNX+8n19x1gPaZbhbYCmRwiwCeWgPQGOO3XB/6RxbjOFyRmICmqpnlE6K
- VA7mee9+ppaCnaovsX1uFbevjYYAlWwCKnvxF+FA1zV3Xpe+VOO4rBm880SJbkue
- p8oI8JgpPx1Cw7/ZGEGrtnpVjpCYUoV86QF16/bNu5bAir22ZEbEbpplhvhzq66z
- Lqpnz+3bI3c9pf9EDAKzkvtqTcC+GhxXzsy2uMQS0smn3ZV3lEmJwxHFQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=jZcLeLB0UG/wd8io7LAHNTT/6h3HTScw++K57cUQf24=; b=j7Nf5tLp
- mM7Z17rV1Mj89bBSedVBlRUctmLNShDLlIqu6NgaiILAjio0OSdY+/F5iq7jZT1Q
- GuwgjYKzrq9cbbHEDtKTApDcV1P2qOMu0pWGYA3TgsWk0O30xX+PX5YXA9tryPdI
- kFd9qYnR9OfClasVBITKfyzBvZTBr6jhNtzSjQ1SwcbdRS4md6/2MiPFnaiIwfNv
- Zj+jw27UV73pytp1gxpNkNvMJG48/LgDZY3iqOTU1/sdVoJCcs5uNUEm6D1qrGbq
- xnfe8/QD9DtMyJqdoEOWFfsFiDFai4qhbkYEBHIIDSnq6nhOchiG4VyfEOp5J9O1
- 2RTNrkL5JyPsFA==
-X-ME-Sender: <xms:9Z19Xq2mXVD74pXvhcL8Q1LJidZ7LyqdMGV3JhFxh2tEk3TikM-Skg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudehjedgudelhecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomheptehnughr
- vgifucflvghffhgvrhihuceorghnughrvgifsegrjhdrihgurdgruheqnecukfhppeduud
- ekrddvuddtrddukeefrdduleeknecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghm
- pehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:9Z19Xv70n-IokWkcIihmrjQRxT548pI_ia5DQChWXbR0yIZV3Luu_Q>
- <xmx:9Z19XoS9x_4pFBinTePCo1dAGDNcdkkF1N0mmwjam3Krjxi0oiwn9Q>
- <xmx:9Z19XpnIUasfokUWlEa_F42I7aOl29NL4MxM7e1iUdZl4ZYFcqJXsg>
- <xmx:9p19XjOpUe1tiA_mgWrLX1TiYUODhCGaVImZ23bb289MHVQ8BR1cJQ>
-Received: from localhost.localdomain
- (ppp118-210-183-198.adl-adc-lon-bras34.tpg.internode.on.net
- [118.210.183.198])
- by mail.messagingengine.com (Postfix) with ESMTPA id 3B87A3280063;
- Fri, 27 Mar 2020 02:32:19 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [WIP PATCH linux dev-5.4 4/4] ARM: dts: rainier: Add KCS node for LPC
- MCTP
-Date: Fri, 27 Mar 2020 17:01:46 +1030
-Message-Id: <20200327063146.28885-5-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200327063146.28885-1-andrew@aj.id.au>
-References: <20200327063146.28885-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48ppBs24qhzDr3T
+ for <openbmc@lists.ozlabs.org>; Sat, 28 Mar 2020 04:05:18 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1585328714;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=O3DDr+YwfXkIc5nljqYBxlVYzzRgEq3d8RJpPYnaPP0=;
+ b=LX/EGoEMIf2f2IWmpcfTy0xt9F93W6YCTjPFtJCCR+9TME9BFPlF4wChADwg6h82HTIQEx
+ HiCfdVPPjwV8I702m/7CaXZlowVquDgP0N7dZBbnErlt4bAcYlLu6rtdVv779qWrPEXsb+
+ r3VSXihfQXVsFe5qiZ0uH0RXDpE/5b8=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-447-hFPaBVIkM8CgchWyvSLxuw-1; Fri, 27 Mar 2020 13:05:10 -0400
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Fri, 27 Mar 2020 10:05:08 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Fri, 27 Mar 2020 10:05:08 -0700
+From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Any idea of when Virtual Media will be supported in the Web UI for
+ https://github.com/Intel-BMC/openbmc ?
+Thread-Topic: Any idea of when Virtual Media will be supported in the Web UI
+ for https://github.com/Intel-BMC/openbmc ?
+Thread-Index: AdYEWc1puf5mzzgrRByTxDDFnRGECg==
+Date: Fri, 27 Mar 2020 17:05:07 +0000
+Message-ID: <76bad904573040cc874ee52de5bf3981@SCL-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [98.246.252.115]
+x-mc-unique: hFPaBVIkM8CgchWyvSLxuw-1
+x-crosspremisesheadersfilteredbysendconnector: SCL-EXCHMB-13.phoenix.com
+x-organizationheaderspreserved: SCL-EXCHMB-13.phoenix.com
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,36 +77,11 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
+Cc: Patrick Voelker <Patrick_Voelker@phoenix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Eddie James <eajames@linux.ibm.com>
+Any idea of when Virtual Media will be supported in the Web UI for https://=
+github.com/Intel-BMC/openbmc ?
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index f4cad70d8edc..7ed6bbb759b2 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -588,6 +588,14 @@
- 	memory-region = <&flash_memory>;
- };
- 
-+&lpc_host {
-+	kcs4: kcs4@0 {
-+		compatible = "openbmc,mctp-lpc";
-+		interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
-+		status = "okay";
-+	};
-+};
-+
- &mac2 {
- 	status = "okay";
- 	pinctrl-names = "default";
--- 
-2.20.1
 
