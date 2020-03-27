@@ -1,87 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75521194E21
+	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 01:38:34 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AEA8194C26
-	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 00:22:02 +0100 (CET)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48pLbq3WDWzDr2w
-	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 10:21:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48pNJ73DKWzDr3f
+	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 11:38:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::232;
+ helo=mail-lj1-x232.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=gxK9Lq1U; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=w6pqPp7I; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=Wqco4Vh8; dkim-atps=neutral
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com
+ [IPv6:2a00:1450:4864:20::232])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48pLZj0yWpzDr1q;
- Fri, 27 Mar 2020 10:21:00 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 3E0F95C0296;
- Thu, 26 Mar 2020 19:20:56 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 26 Mar 2020 19:20:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=SPBez9eP4WUK7nuKDXBKLrvMRPHaZsR
- cUIsM6kI098U=; b=gxK9Lq1U1ZxYWuJmDagu+BiWgP0UnweCyPcj1hQFPT3pqyB
- LxatrOpz3FAEfvUd5qLkvi73gmsE81WE1yuXW3/+H2utlTJ700zpmigwBnng3LbP
- Epw8/ZUwW//YNGi5vI5WP29M05ArTjZhgECYpIDLXpl6l0XutKGVK/TqH3kcZBdb
- 3fSSnnl3RegVFPK/pIMZwfbrLHVDz3R6nOZICjfQBEfWu4mT5wdRt6V042RXxLmB
- HkftvIlma412PclEU/x7QGDAcvIx6P6fK/P70Q67FDmPZhmfiGiC5mD8vTQus/wK
- YbUFsrsiOCXjtwmYkz/tONJ9O56EGqCaNR+XSBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=SPBez9
- eP4WUK7nuKDXBKLrvMRPHaZsRcUIsM6kI098U=; b=w6pqPp7Ik+M1thZhT77paX
- 0kTNlrTdUYnMQAcVrtDz0NnabndanpH5Kz7uitVjMAH0IawekET32chwxjx/QrAB
- AI5EfDCNQ0ShnkOkID+8nHPKbHikhphmtXZIsHLlv2WNug7wH7+rQJVOYtlTdBUy
- /I5OGMrmq66pb2tLup533nvm5ega0BzsX+qGUr9aHIGB8pen3wqOIAzVku6CGdr5
- xIWIZvNyfoE7Wpw1QhVFQ+KvRMN7rQD1z/FJcERurYlNGq8E/FSzXocw+RRPxMX9
- jEcJsfq855jiZVYtNqFIlqx/UDaUIpMMzgTwthXI2YV74airZKu9lhdGwLETBR3Q
- ==
-X-ME-Sender: <xms:1zh9XiSSQNyIfR04Kthsm7UhzVRMzwkPn4FDqhKG-ph4JO8hrCG-fw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedugedrudehjedguddtkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehn
- ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucevlh
- hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfies
- rghjrdhiugdrrghu
-X-ME-Proxy: <xmx:1zh9XufHtV7zdwoJoABA-XKbJMCRjPY8iHi8hsLe8a8Jb5SOWvmeYA>
- <xmx:1zh9XhKzeexi5vEcv5EEK2-QJmy_wLjc9fAATGXS2oBd9NlFV8nS-w>
- <xmx:1zh9Xj46U2c1B70fLh5hYzpKB_YaQ7-xS0qosaP_zzgI0y1FsQ5TFQ>
- <xmx:2Dh9XmZVnS9kqIWj4sBS7nBGvNBOOGjDmrY1GIvL4Kj1IhMLrUY-hA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 02149E00EF; Thu, 26 Mar 2020 19:20:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-1021-g152deaf-fmstable-20200319v1
-Mime-Version: 1.0
-Message-Id: <294a52cd-2f60-41e5-a58f-a74151a83b08@www.fastmail.com>
-In-Reply-To: <20200306170218.79698-2-geissonator@yahoo.com>
-References: <20200306170218.79698-1-geissonator@yahoo.com>
- <20200306170218.79698-2-geissonator@yahoo.com>
-Date: Fri, 27 Mar 2020 09:50:58 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Andrew Geissler" <geissonator@gmail.com>,
- "Joel Stanley" <joel@jms.id.au>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] ARM: dts: aspeed: zaius: Add gpio line names
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48pNH762ZrzDr27
+ for <openbmc@lists.ozlabs.org>; Fri, 27 Mar 2020 11:37:38 +1100 (AEDT)
+Received: by mail-lj1-x232.google.com with SMTP id i20so8457845ljn.6
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Mar 2020 17:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=sVpXmZrSLQ83hsSsaBL3L/XXkiEGACe9OC/vMOjvnNE=;
+ b=Wqco4Vh87iR0MCoFOlkAFwvzWjRum04Um4iWUEnf70w8xwTOw1zuS2b/KDkr5JCVQw
+ KHDe9PDSWYj3Vj5bTxs/bqBosGFW/rtP2JnhqiV28nZp1pXuQMxYtrMfBn1AHkk0KMxQ
+ XrH9m8tGGGIyCeGl//UtSXKWhDLp9QfLQYLqd49aqdESh0p0ODA0LbT4LXYO0p+gMR5T
+ kLZLau38H6wWCBYigY3FhGz1+jqb8l94OlhUeOCJjbkUB8z3x4D/s9g+s9GjWasBYrgO
+ jFfESXbrYEFX849Vn4W+bMZ1z6/0mCPlvIO0mufmgldfzjwxyIG8Z2WZcbLdc+q2rSMI
+ BBRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=sVpXmZrSLQ83hsSsaBL3L/XXkiEGACe9OC/vMOjvnNE=;
+ b=WbJ4vKYoN70JH2hKlVULUwecSU/p7S8EfvEoHBb9bX5WeGGJbVgaZ4uyGnaCT0URr3
+ MTn0QRncbGZC93HO0mHMcTiSvOFB4mFFs+5mwEQjiItM7MSnegCksOjIh6iRoDvPR/1r
+ d7x4dbj77YPlMgoARKZPsBpyqOyeOSKw+ceGVWxDnCxCIoQouTOWy71glO1hXeLFzAwj
+ yQ3Awwi5nHqAiNjlghdDWkccO3Klm/R+0FgoEdcpmCZBR3ghXVf6nlR0SjXLzMEXUwbT
+ XfTEnlluRijzkgqMsJtZp9IPq03KkX8JpucJ+RvegvxHDsQILeymgGLKdhqh6q4akEsu
+ 6gQw==
+X-Gm-Message-State: ANhLgQ2XKCceaWkZW8LRfBEOLZKgSZYkMNgOwQaIooxvFqfxGGPA5sSg
+ Qlj1ID04Ziv343EIJM8hrtLGBwyMR7HY+wuAXyHr8g==
+X-Google-Smtp-Source: APiQypKb+cSHj0ve5U7P8NrErtcg7NxCfUpkPvLJLEFTybfB8Pw9c2hz1Skj9AXR4s5MllM/ewDoRgYNYNSk5sF48gY=
+X-Received: by 2002:a05:651c:287:: with SMTP id
+ b7mr6801376ljo.129.1585269451774; 
+ Thu, 26 Mar 2020 17:37:31 -0700 (PDT)
+MIME-Version: 1.0
+References: <AA561FEC-E514-41F1-800F-B1085C05D6C2@fuzziesquirrel.com>
+ <20200324160659.GB23988@patrickw3-mbp>
+ <318AF56E-3DC0-4B3E-9B41-E49C51A1F3B3@fuzziesquirrel.com>
+In-Reply-To: <318AF56E-3DC0-4B3E-9B41-E49C51A1F3B3@fuzziesquirrel.com>
+From: Richard Hanley <rhanley@google.com>
+Date: Thu, 26 Mar 2020 17:37:20 -0700
+Message-ID: <CAH1kD+Yw2AcigiDcxpUfHB_M7C3u2s8RdqG3dbyHwuJXyS0gng@mail.gmail.com>
+Subject: Re: corosync?
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: multipart/alternative; boundary="0000000000008c614f05a1cb4e73"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,105 +75,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org,
- Andrew Geissler <geissonator@yahoo.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000008c614f05a1cb4e73
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+We looked into getting Envoy as a proxy for a distributed BMC network.  The
+idea was that Envoy could be used for discoverability and creating long
+lived authenticated channels with HTTP/2.  That work got mostly shelved
+because it was really hard to get the build system to work on 32-bit arm
+(not to mention getting it to work with bitbake).
 
-On Sat, 7 Mar 2020, at 03:32, Andrew Geissler wrote:
-> Name the GPIOs to help userspace work with them. The names describe the
-> functionality the lines provide, not the net or ball name. This makes it
-> easier to share userspace code across different systems and makes the
-> use of the lines more obvious.
-> 
-> Signed-off-by: Andrew Geissler <geissonator@yahoo.com>
+I'm not too familiar with corosync.  I remember reading a bit about it when
+Vishwa mentioned aggregating BMCs a few months ago.  It looks like it
+should be relatively easy to build (at least compared to envoy).
 
-So we're creating a bit of an ad-hoc ABI here between the DT and userspace.
+Unfortunately we never got a chance to see how much cpu usage is used when
+Envoy is run on a Poleg.  In terms of sheer craziness, corosync isn't any
+less crazy than what we were thinking about, and I was relatively
+optimistic that it could work on current generation hardware.
 
-Where are we documenting it?
+- Richard
 
-Generally I think the idea is good though, so:
+On Tue, Mar 24, 2020 at 9:22 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
+wrote:
 
-Acked-by: Andrew Jeffery <andrew@aj.id.au>
-
-> ---
->  arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts | 37 +++++++++++++++++++---
->  1 file changed, 33 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts
-> index bc60ec291681..4bcc82046362 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-opp-zaius.dts
-> @@ -478,32 +478,61 @@
->  	pinctrl-names = "default";
->  	pinctrl-0 = <&pinctrl_gpioh_unbiased>;
->  
-> +	gpio-line-names =
-> +	/*A0-A7*/	"","cfam-reset","","","","","","",
-> +	/*B0-B7*/	"","","","","","","","",
-> +	/*C0-C7*/	"","","","","","","","",
-> +	/*D0-D7*/	"fsi-enable","","","","","led-sys-boot-status","led-attention",
-> +				"led-fault",
-> +	/*E0-E7*/	"","","","","","","","presence-pcie-e2b",
-> +	/*F0-F7*/	"","","","","","","","checkstop",
-> +	/*G0-G7*/	"fsi-clock","fsi-data","","","","","","",
-> +	/*H0-H7*/	"onewire0","onewire1","onewire2","onewire3","","","","",
-> +	/*I0-I7*/	"","","","power-button","","","","",
-> +	/*J0-J7*/	"","","","","","","","",
-> +	/*K0-K7*/	"","","","","","","","",
-> +	/*L0-L7*/	"","","","","","","","",
-> +	/*M0-M7*/	"","","","","","","","",
-> +	/*N0-N7*/	"","","","","","","","",
-> +	/*O0-O7*/	"","","","","iso_u164_en","","fsi-trans","",
-> +	/*P0-P7*/	"ncsi_mux_en_n","bmc_i2c2_sw_rst_n","","bmc_i2c5_sw_rst_n","",
-> +				"","fsi-mux","",
-> +	/*Q0-Q7*/	"","","","","","","","",
-> +	/*R0-R7*/	"","","","","","","","",
-> +	/*S0-S7*/	"","","","","","","","",
-> +	/*T0-T7*/	"","","","","","","","",
-> +	/*U0-U7*/	"","","","","","","","",
-> +	/*V0-V7*/	"","","","","","","","",
-> +	/*W0-W7*/	"","","","","","","","",
-> +	/*X0-X7*/	"","","","","","","","",
-> +	/*Y0-Y7*/	"","","","","","","","",
-> +	/*Z0-Z7*/	"","","","","","","","",
-> +	/*AA0-AA7*/	"","","led-hdd-fault","","","","","",
-> +	/*AB0-AB7*/	"","","","","","","","",
-> +	/*AC0-AC7*/	"","","","","","","","";
-> +
->  	line_iso_u146_en {
->  		gpio-hog;
->  		gpios = <ASPEED_GPIO(O, 4) GPIO_ACTIVE_HIGH>;
->  		output-high;
-> -		line-name = "iso_u164_en";
->  	};
->  
->  	ncsi_mux_en_n {
->  		gpio-hog;
->  		gpios = <ASPEED_GPIO(P, 0) GPIO_ACTIVE_HIGH>;
->  		output-low;
-> -		line-name = "ncsi_mux_en_n";
->  	};
->  
->  	line_bmc_i2c2_sw_rst_n {
->  		gpio-hog;
->  		gpios = <ASPEED_GPIO(P, 1) GPIO_ACTIVE_HIGH>;
->  		output-high;
-> -		line-name = "bmc_i2c2_sw_rst_n";
->  	};
->  
->  	line_bmc_i2c5_sw_rst_n {
->  		gpio-hog;
->  		gpios = <ASPEED_GPIO(P, 3) GPIO_ACTIVE_HIGH>;
->  		output-high;
-> -		line-name = "bmc_i2c5_sw_rst_n";
->  	};
->  };
->  
-> -- 
-> 2.21.0 (Apple Git-122)
-> 
+> at 12:06 PM, Patrick Williams <patrick@stwcx.xyz> wrote:
 >
+> > On Tue, Mar 24, 2020 at 11:33:23AM -0400, Brad Bishop wrote:
+> >> Is anyone using corosync/pacemaker on a BMC?  Is that a crazy idea? :-=
+)
+> >>
+> >> thx - brad
+> >
+> > Can you elaborate on what you'd be trying to accomplish?
+>
+> Thanks Patrick.  Yes I will definitely do that at some point.  I=E2=80=99=
+m not
+> ready to do this right now though simply because I myself am not sure
+> what
+> I am trying to accomplish.
+>
+> In this moment I=E2=80=99m just curious if anyone has any experience with=
+ it, or
+> similar tools or frameworks, in a "BMC-like" distributed system, and the
+> sorts of problems that were solved with it/them.
+>
+> thx - brad
+>
+
+--0000000000008c614f05a1cb4e73
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">We looked into getting Envoy as a proxy for a distributed =
+BMC network.=C2=A0 The idea was that Envoy could be used for discoverabilit=
+y and creating long lived authenticated channels with HTTP/2.=C2=A0 That wo=
+rk got mostly shelved because it was really hard to get the build system to=
+ work on 32-bit arm (not to mention getting it to work with bitbake).<div><=
+br></div><div>I&#39;m not too familiar with corosync.=C2=A0 I remember read=
+ing a bit about it when Vishwa mentioned aggregating BMCs a few months ago.=
+=C2=A0 It looks like it should be relatively easy to build (at least compar=
+ed to envoy).</div><div><br></div><div>Unfortunately we never got a chance =
+to see how much cpu usage is used when Envoy is=C2=A0run on a Poleg.=C2=A0 =
+In terms of sheer craziness, corosync isn&#39;t any less crazy than what we=
+ were thinking about, and I was relatively optimistic that it could work on=
+ current generation hardware.=C2=A0=C2=A0</div><div><br></div><div>- Richar=
+d</div><div></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">On Tue, Mar 24, 2020 at 9:22 AM Brad Bishop &lt;<a href=
+=3D"mailto:bradleyb@fuzziesquirrel.com">bradleyb@fuzziesquirrel.com</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">at 12:06=
+ PM, Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz" target=3D"_b=
+lank">patrick@stwcx.xyz</a>&gt; wrote:<br>
+<br>
+&gt; On Tue, Mar 24, 2020 at 11:33:23AM -0400, Brad Bishop wrote:<br>
+&gt;&gt; Is anyone using corosync/pacemaker on a BMC?=C2=A0 Is that a crazy=
+ idea? :-)<br>
+&gt;&gt;<br>
+&gt;&gt; thx - brad<br>
+&gt;<br>
+&gt; Can you elaborate on what you&#39;d be trying to accomplish?<br>
+<br>
+Thanks Patrick.=C2=A0 Yes I will definitely do that at some point.=C2=A0 I=
+=E2=80=99m not=C2=A0 <br>
+ready to do this right now though simply because I myself am not sure what=
+=C2=A0 <br>
+I am trying to accomplish.<br>
+<br>
+In this moment I=E2=80=99m just curious if anyone has any experience with i=
+t, or=C2=A0 <br>
+similar tools or frameworks, in a &quot;BMC-like&quot; distributed system, =
+and the=C2=A0 <br>
+sorts of problems that were solved with it/them.<br>
+<br>
+thx - brad<br>
+</blockquote></div>
+
+--0000000000008c614f05a1cb4e73--
