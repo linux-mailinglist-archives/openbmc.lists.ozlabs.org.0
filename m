@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84555195BF1
-	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 18:06:23 +0100 (CET)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48ppCw3dSXzDrCN
-	for <lists+openbmc@lfdr.de>; Sat, 28 Mar 2020 04:06:20 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FB63195C68
+	for <lists+openbmc@lfdr.de>; Fri, 27 Mar 2020 18:19:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48ppW95rlhzDr0d
+	for <lists+openbmc@lfdr.de>; Sat, 28 Mar 2020 04:19:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,48 +17,48 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=phoenix.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=LX/EGoEM; 
+ header.s=mimecast20170203 header.b=P+El+Lg/; 
  dkim-atps=neutral
 Received: from us-smtp-delivery-170.mimecast.com
  (us-smtp-delivery-170.mimecast.com [216.205.24.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48ppBs24qhzDr3T
- for <openbmc@lists.ozlabs.org>; Sat, 28 Mar 2020 04:05:18 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48ppVN1ksJzDqRD
+ for <openbmc@lists.ozlabs.org>; Sat, 28 Mar 2020 04:18:51 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1585328714;
+ s=mimecast20170203; t=1585329529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=O3DDr+YwfXkIc5nljqYBxlVYzzRgEq3d8RJpPYnaPP0=;
- b=LX/EGoEMIf2f2IWmpcfTy0xt9F93W6YCTjPFtJCCR+9TME9BFPlF4wChADwg6h82HTIQEx
- HiCfdVPPjwV8I702m/7CaXZlowVquDgP0N7dZBbnErlt4bAcYlLu6rtdVv779qWrPEXsb+
- r3VSXihfQXVsFe5qiZ0uH0RXDpE/5b8=
+ bh=h7/UD3ezL+arHQIFEqP2R9tRLyV++QN8oubAdJE9kpU=;
+ b=P+El+Lg/1vTwB93L05WNflp4LjE6ab2L/rMBnEkBjdKZMIDSsfwYzgNRD32G8o6UHi8gc9
+ TVZTe1nXwJHuRjTOQSLe+ivEYjjPC69Ti2FgaIsnFAOQlCctsz6JuLwK78sDYGTJ09cSuZ
+ 3lrp1l1+W49MpA/BZnTEDeXMvjPyqaM=
 Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
  (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-447-hFPaBVIkM8CgchWyvSLxuw-1; Fri, 27 Mar 2020 13:05:10 -0400
+ us-mta-66-AMJCDL-tOryW70q-0gFP1A-1; Fri, 27 Mar 2020 13:17:40 -0400
 Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
  SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Fri, 27 Mar 2020 10:05:08 -0700
+ 15.0.1156.6; Fri, 27 Mar 2020 10:17:38 -0700
 Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
  SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Fri, 27 Mar 2020 10:05:08 -0700
+ 15.00.1156.000; Fri, 27 Mar 2020 10:17:38 -0700
 From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Any idea of when Virtual Media will be supported in the Web UI for
+Subject: Any idea of when qemu-system-arm will be supported for
  https://github.com/Intel-BMC/openbmc ?
-Thread-Topic: Any idea of when Virtual Media will be supported in the Web UI
- for https://github.com/Intel-BMC/openbmc ?
-Thread-Index: AdYEWc1puf5mzzgrRByTxDDFnRGECg==
-Date: Fri, 27 Mar 2020 17:05:07 +0000
-Message-ID: <76bad904573040cc874ee52de5bf3981@SCL-EXCHMB-13.phoenix.com>
+Thread-Topic: Any idea of when qemu-system-arm will be supported for
+ https://github.com/Intel-BMC/openbmc ?
+Thread-Index: AdYEW5g0PNyrWOIxTpaE+uMcwMbtmw==
+Date: Fri, 27 Mar 2020 17:17:37 +0000
+Message-ID: <1d854d104f3a48dd8f2c3929fc93a68b@SCL-EXCHMB-13.phoenix.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 x-ms-exchange-transport-fromentityheader: Hosted
 x-originating-ip: [98.246.252.115]
-x-mc-unique: hFPaBVIkM8CgchWyvSLxuw-1
+x-mc-unique: AMJCDL-tOryW70q-0gFP1A-1
 x-crosspremisesheadersfilteredbysendconnector: SCL-EXCHMB-13.phoenix.com
 x-organizationheaderspreserved: SCL-EXCHMB-13.phoenix.com
 MIME-Version: 1.0
@@ -81,7 +81,7 @@ Cc: Patrick Voelker <Patrick_Voelker@phoenix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Any idea of when Virtual Media will be supported in the Web UI for https://=
-github.com/Intel-BMC/openbmc ?
+Any idea of when qemu-system-arm will be supported for https://github.com/I=
+ntel-BMC/openbmc ?
 
 
