@@ -2,75 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA205197E9E
-	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 16:38:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 948B01980D0
+	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 18:18:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48rZnQ1VBTzDqc5
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 01:38:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48rd1Y07W5zDqgN
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 03:18:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
+ dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=N9kskrSb; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=MEgPVGRC; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48rZlF74KBzDqgF
- for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 01:36:06 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1585578961;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U1Kcj8Z58Cod8Aa7tDYHm2rLoDNaoYR9hXkDJViC3xE=;
- b=N9kskrSbxoRBCQBksRNwzNNW9gkGo1CBkqunVg+YkFzdsWBdUHqCVzfcE3fgqYolSnQV4/
- JtNOtk0FF7ea//GpCN/cuf9OK8khOOQDiv5XbfN4/+qtIb3CjuAGc991zB2Ly1fL+QRAH6
- cv/hgCuqMZGL4TeHsRB2/qqZPncTOzQ=
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-423-mOxyjVjcPx-RudwHNvMhRw-1; Mon, 30 Mar 2020 10:35:58 -0400
-X-MC-Unique: mOxyjVjcPx-RudwHNvMhRw-1
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Mon, 30 Mar 2020 07:35:56 -0700
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Mon, 30 Mar 2020 07:35:56 -0700
-From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-To: "Alexander A. Filippov" <a.filippov@yadro.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: Any idea of when qemu-system-arm will be supported for
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48rd0j6wS3zDqfN
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 03:17:57 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 6EB3A4126E
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 16:17:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ in-reply-to:content-disposition:content-type:content-type
+ :mime-version:references:message-id:subject:subject:from:from
+ :date:date:received:received:received; s=mta-01; t=1585585071;
+ x=1587399472; bh=6ojDMFvpj/jiUxD9bcws6IPJKngTS3DEH+FXJeRdpJg=; b=
+ MEgPVGRCX7ZBAVobeRw1IwOuQ5Q3R9AvyyqdFvs2TSpL4ZtVCr5bAJ1YvvQjjQ/2
+ 2Bi9QwmWvDzA0rJkBE1DcHxr2/uk81OR4vft9gN0SeNMPCmBb65nGLcKhM26aj5F
+ njzAvX6bUAotuG8p64CQ0poz93bhYe6zrJSCm16JNo8=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id MinvE63bXGQl for <openbmc@lists.ozlabs.org>;
+ Mon, 30 Mar 2020 19:17:51 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 311FA4126B
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 19:17:51 +0300 (MSK)
+Received: from localhost (172.17.14.122) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 30
+ Mar 2020 19:17:51 +0300
+Date: Mon, 30 Mar 2020 19:17:50 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: Re: Any idea of when qemu-system-arm will be supported for
  https://github.com/Intel-BMC/openbmc ?
-Thread-Topic: Any idea of when qemu-system-arm will be supported for
- https://github.com/Intel-BMC/openbmc ?
-Thread-Index: AdYEW5g0PNyrWOIxTpaE+uMcwMbtmwCULaUAAAMWpGA=
-Date: Mon, 30 Mar 2020 14:35:55 +0000
-Message-ID: <de86f16351804487b251000e03e28fe5@SCL-EXCHMB-13.phoenix.com>
+Message-ID: <20200330161750.GA10520@bbwork.lan>
 References: <1d854d104f3a48dd8f2c3929fc93a68b@SCL-EXCHMB-13.phoenix.com>
  <20200330090018.GA20872@bbwork.lan>
-In-Reply-To: <20200330090018.GA20872@bbwork.lan>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [98.246.252.115]
+ <de86f16351804487b251000e03e28fe5@SCL-EXCHMB-13.phoenix.com>
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <de86f16351804487b251000e03e28fe5@SCL-EXCHMB-13.phoenix.com>
+X-Originating-IP: [172.17.14.122]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,107 +78,19 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SSB3YXMgbG9va2luZyBmb3Igc29tZXRoaW5nIGxpa2UgYSAtTSB3b2xmcGFzcy1ibWMgY29tbWFu
-ZCBsaW5lIG9wdGlvbiBsaWtlIFJvbXVsdXMgaGFzIC1NIHJvbXVsdXMtYm1jDQooc2VlIGhlcmU6
-IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvZGV2ZWxvcG1lbnQv
-ZGV2LWVudmlyb25tZW50Lm1kICkNCg0KWWV0IEkgZmluZCBubyB3b2xmcGFzcywgUzI2MDBXRiwg
-bm9yIEludGVsIGluIHRoZSAtbWFjaGluZSBoZWxwIGxpc3QuIChzZWUgYmVsb3cpDQoNCn4vT3Bl
-bkJNQ19EZXZlbG9wbWVudF9FbnZpcm9ubWVudCQgLi9xZW11LXN5c3RlbS1hcm0gLXZlcnNpb24N
-ClFFTVUgZW11bGF0b3IgdmVyc2lvbiA0LjEuMCAodjQuMC4wLXJjMS0yOTUzLWcwZDdjMWVjLWRp
-cnR5KQ0KQ29weXJpZ2h0IChjKSAyMDAzLTIwMTkgRmFicmljZSBCZWxsYXJkIGFuZCB0aGUgUUVN
-VSBQcm9qZWN0IGRldmVsb3BlcnMNCg0Kfi9PcGVuQk1DX0RldmVsb3BtZW50X0Vudmlyb25tZW50
-JCAuL3FlbXUtc3lzdGVtLWFybSAtbWFjaGluZSBoZWxwDQpTdXBwb3J0ZWQgbWFjaGluZXMgYXJl
-Og0KYWtpdGEgICAgICAgICAgICAgICAgU2hhcnAgU0wtQzEwMDAgKEFraXRhKSBQREEgKFBYQTI3
-MCkNCmFzdDI1MDAtZXZiICAgICAgICAgIEFzcGVlZCBBU1QyNTAwIEVWQiAoQVJNMTE3NikNCmFz
-dDI2MDAtZXZiICAgICAgICAgIEFzcGVlZCBBU1QyNjAwIEVWQiAoQ29ydGV4IEE3KQ0KYm9yem9p
-ICAgICAgICAgICAgICAgU2hhcnAgU0wtQzMxMDAgKEJvcnpvaSkgUERBIChQWEEyNzApDQpjYW5v
-bi1hMTEwMCAgICAgICAgICBDYW5vbiBQb3dlclNob3QgQTExMDAgSVMNCmNoZWV0YWggICAgICAg
-ICAgICAgIFBhbG0gVHVuZ3N0ZW58RSBha2EuIENoZWV0YWggUERBIChPTUFQMzEwKQ0KY29sbGll
-ICAgICAgICAgICAgICAgU2hhcnAgU0wtNTUwMCAoQ29sbGllKSBQREEgKFNBLTExMTApDQpjb25u
-ZXggICAgICAgICAgICAgICBHdW1zdGl4IENvbm5leCAoUFhBMjU1KQ0KY3ViaWVib2FyZCAgICAg
-ICAgICAgY3ViaWV0ZWNoIGN1YmllYm9hcmQNCmVtY3JhZnQtc2YyICAgICAgICAgIFNtYXJ0RnVz
-aW9uMiBTT00ga2l0IGZyb20gRW1jcmFmdCAoTTJTMDEwKQ0KaGlnaGJhbmsgICAgICAgICAgICAg
-Q2FseGVkYSBIaWdoYmFuayAoRUNYLTEwMDApDQppbXgyNS1wZGsgICAgICAgICAgICBBUk0gaS5N
-WDI1IFBESyBib2FyZCAoQVJNOTI2KQ0KaW50ZWdyYXRvcmNwICAgICAgICAgQVJNIEludGVncmF0
-b3IvQ1AgKEFSTTkyNkVKLVMpDQprem0gICAgICAgICAgICAgICAgICBBUk0gS1pNIEVtdWxhdGlv
-biBCYXNlYm9hcmQgKEFSTTExMzYpDQpsbTNzNjk2NWV2YiAgICAgICAgICBTdGVsbGFyaXMgTE0z
-UzY5NjVFVkINCmxtM3M4MTFldmIgICAgICAgICAgIFN0ZWxsYXJpcyBMTTNTODExRVZCDQptYWlu
-c3RvbmUgICAgICAgICAgICBNYWluc3RvbmUgSUkgKFBYQTI3eCkNCm1jaW14NnVsLWV2ayAgICAg
-ICAgIEZyZWVzY2FsZSBpLk1YNlVMIEV2YWx1YXRpb24gS2l0IChDb3J0ZXggQTcpDQptY2lteDdk
-LXNhYnJlICAgICAgICBGcmVlc2NhbGUgaS5NWDcgRFVBTCBTQUJSRSAoQ29ydGV4IEE3KQ0KbWlj
-cm9iaXQgICAgICAgICAgICAgQkJDIG1pY3JvOmJpdA0KbWlkd2F5ICAgICAgICAgICAgICAgQ2Fs
-eGVkYSBNaWR3YXkgKEVDWC0yMDAwKQ0KbXBzMi1hbjM4NSAgICAgICAgICAgQVJNIE1QUzIgd2l0
-aCBBTjM4NSBGUEdBIGltYWdlIGZvciBDb3J0ZXgtTTMNCm1wczItYW41MDUgICAgICAgICAgIEFS
-TSBNUFMyIHdpdGggQU41MDUgRlBHQSBpbWFnZSBmb3IgQ29ydGV4LU0zMw0KbXBzMi1hbjUxMSAg
-ICAgICAgICAgQVJNIE1QUzIgd2l0aCBBTjUxMSBEZXNpZ25TdGFydCBGUEdBIGltYWdlIGZvciBD
-b3J0ZXgtTTMNCm1wczItYW41MjEgICAgICAgICAgIEFSTSBNUFMyIHdpdGggQU41MjEgRlBHQSBp
-bWFnZSBmb3IgZHVhbCBDb3J0ZXgtTTMzDQptdXNjYS1hICAgICAgICAgICAgICBBUk0gTXVzY2Et
-QSBib2FyZCAoZHVhbCBDb3J0ZXgtTTMzKQ0KbXVzY2EtYjEgICAgICAgICAgICAgQVJNIE11c2Nh
-LUIxIGJvYXJkIChkdWFsIENvcnRleC1NMzMpDQptdXNpY3BhbCAgICAgICAgICAgICBNYXJ2ZWxs
-IDg4dzg2MTggLyBNdXNpY1BhbCAoQVJNOTI2RUotUykNCm44MDAgICAgICAgICAgICAgICAgIE5v
-a2lhIE44MDAgdGFibGV0IGFrYS4gUlgtMzQgKE9NQVAyNDIwKQ0KbjgxMCAgICAgICAgICAgICAg
-ICAgTm9raWEgTjgxMCB0YWJsZXQgYWthLiBSWC00NCAoT01BUDI0MjApDQpuZXRkdWlubzIgICAg
-ICAgICAgICBOZXRkdWlubyAyIE1hY2hpbmUNCm5vbmUgICAgICAgICAgICAgICAgIGVtcHR5IG1h
-Y2hpbmUNCm51cmkgICAgICAgICAgICAgICAgIFNhbXN1bmcgTlVSSSBib2FyZCAoRXh5bm9zNDIx
-MCkNCnBhbG1ldHRvLWJtYyAgICAgICAgIE9wZW5QT1dFUiBQYWxtZXR0byBCTUMgKEFSTTkyNkVK
-LVMpDQpyYXNwaTIgICAgICAgICAgICAgICBSYXNwYmVycnkgUGkgMg0KcmVhbHZpZXctZWIgICAg
-ICAgICAgQVJNIFJlYWxWaWV3IEVtdWxhdGlvbiBCYXNlYm9hcmQgKEFSTTkyNkVKLVMpDQpyZWFs
-dmlldy1lYi1tcGNvcmUgICBBUk0gUmVhbFZpZXcgRW11bGF0aW9uIEJhc2Vib2FyZCAoQVJNMTFN
-UENvcmUpDQpyZWFsdmlldy1wYi1hOCAgICAgICBBUk0gUmVhbFZpZXcgUGxhdGZvcm0gQmFzZWJv
-YXJkIGZvciBDb3J0ZXgtQTgNCnJlYWx2aWV3LXBieC1hOSAgICAgIEFSTSBSZWFsVmlldyBQbGF0
-Zm9ybSBCYXNlYm9hcmQgRXhwbG9yZSBmb3IgQ29ydGV4LUE5DQpyb211bHVzLWJtYyAgICAgICAg
-ICBPcGVuUE9XRVIgUm9tdWx1cyBCTUMgKEFSTTExNzYpDQpzYWJyZWxpdGUgICAgICAgICAgICBG
-cmVlc2NhbGUgaS5NWDYgUXVhZCBTQUJSRSBMaXRlIEJvYXJkIChDb3J0ZXggQTkpDQpzbWRrYzIx
-MCAgICAgICAgICAgICBTYW1zdW5nIFNNREtDMjEwIGJvYXJkIChFeHlub3M0MjEwKQ0Kc3BpdHog
-ICAgICAgICAgICAgICAgU2hhcnAgU0wtQzMwMDAgKFNwaXR6KSBQREEgKFBYQTI3MCkNCnN3aWZ0
-LWJtYyAgICAgICAgICAgIE9wZW5QT1dFUiBTd2lmdCBCTUMgKEFSTTExNzYpDQpzeDEgICAgICAg
-ICAgICAgICAgICBTaWVtZW5zIFNYMSAoT01BUDMxMCkgVjINCnN4MS12MSAgICAgICAgICAgICAg
-IFNpZW1lbnMgU1gxIChPTUFQMzEwKSBWMQ0KdGVycmllciAgICAgICAgICAgICAgU2hhcnAgU0wt
-QzMyMDAgKFRlcnJpZXIpIFBEQSAoUFhBMjcwKQ0KdG9zYSAgICAgICAgICAgICAgICAgU2hhcnAg
-U0wtNjAwMCAoVG9zYSkgUERBIChQWEEyNTUpDQp2ZXJkZXggICAgICAgICAgICAgICBHdW1zdGl4
-IFZlcmRleCAoUFhBMjcwKQ0KdmVyc2F0aWxlYWIgICAgICAgICAgQVJNIFZlcnNhdGlsZS9BQiAo
-QVJNOTI2RUotUykNCnZlcnNhdGlsZXBiICAgICAgICAgIEFSTSBWZXJzYXRpbGUvUEIgKEFSTTky
-NkVKLVMpDQp2ZXhwcmVzcy1hMTUgICAgICAgICBBUk0gVmVyc2F0aWxlIEV4cHJlc3MgZm9yIENv
-cnRleC1BMTUNCnZleHByZXNzLWE5ICAgICAgICAgIEFSTSBWZXJzYXRpbGUgRXhwcmVzcyBmb3Ig
-Q29ydGV4LUE5DQp2aXJ0LTIuMTAgICAgICAgICAgICBRRU1VIDIuMTAgQVJNIFZpcnR1YWwgTWFj
-aGluZQ0KdmlydC0yLjExICAgICAgICAgICAgUUVNVSAyLjExIEFSTSBWaXJ0dWFsIE1hY2hpbmUN
-CnZpcnQtMi4xMiAgICAgICAgICAgIFFFTVUgMi4xMiBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0
-LTIuNiAgICAgICAgICAgICBRRU1VIDIuNiBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTIuNyAg
-ICAgICAgICAgICBRRU1VIDIuNyBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTIuOCAgICAgICAg
-ICAgICBRRU1VIDIuOCBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTIuOSAgICAgICAgICAgICBR
-RU1VIDIuOSBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTMuMCAgICAgICAgICAgICBRRU1VIDMu
-MCBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTMuMSAgICAgICAgICAgICBRRU1VIDMuMSBBUk0g
-VmlydHVhbCBNYWNoaW5lDQp2aXJ0LTQuMCAgICAgICAgICAgICBRRU1VIDQuMCBBUk0gVmlydHVh
-bCBNYWNoaW5lDQp2aXJ0ICAgICAgICAgICAgICAgICBRRU1VIDQuMSBBUk0gVmlydHVhbCBNYWNo
-aW5lIChhbGlhcyBvZiB2aXJ0LTQuMSkNCnZpcnQtNC4xICAgICAgICAgICAgIFFFTVUgNC4xIEFS
-TSBWaXJ0dWFsIE1hY2hpbmUNCndpdGhlcnNwb29uLWJtYyAgICAgIE9wZW5QT1dFUiBXaXRoZXJz
-cG9vbiBCTUMgKEFSTTExNzYpDQp4aWxpbngtenlucS1hOSAgICAgICBYaWxpbnggWnlucSBQbGF0
-Zm9ybSBCYXNlYm9hcmQgZm9yIENvcnRleC1BOQ0KejIgICAgICAgICAgICAgICAgICAgWmlwaXQg
-WjIgKFBYQTI3eCkNCg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IG9w
-ZW5ibWMgW21haWx0bzpvcGVuYm1jLQ0KPiBib3VuY2VzK2JydWNlX21pdGNoZWxsPXBob2VuaXgu
-Y29tQGxpc3RzLm96bGFicy5vcmddIE9uIEJlaGFsZiBPZg0KPiBBbGV4YW5kZXIgQS4gRmlsaXBw
-b3YNCj4gU2VudDogTW9uZGF5LCBNYXJjaCAzMCwgMjAyMCAwMjowMA0KPiBUbzogb3BlbmJtY0Bs
-aXN0cy5vemxhYnMub3JnDQo+IFN1YmplY3Q6IFJlOiBBbnkgaWRlYSBvZiB3aGVuIHFlbXUtc3lz
-dGVtLWFybSB3aWxsIGJlIHN1cHBvcnRlZCBmb3INCj4gaHR0cHM6Ly9naXRodWIuY29tL0ludGVs
-LUJNQy9vcGVuYm1jID8NCj4gDQo+IE9uIEZyaSwgTWFyIDI3LCAyMDIwIGF0IDA1OjE3OjM3UE0g
-KzAwMDAsIEJydWNlIE1pdGNoZWxsIHdyb3RlOg0KPiA+IEFueSBpZGVhIG9mIHdoZW4gcWVtdS1z
-eXN0ZW0tYXJtIHdpbGwgYmUgc3VwcG9ydGVkIGZvcg0KPiBodHRwczovL2dpdGh1Yi5jb20vSW50
-ZWwtQk1DL29wZW5ibWMgPw0KPiA+DQo+ID4NCj4gDQo+IEl0IGRlcGVuZHMgb24gd2hhdCB5b3Ug
-d2FudCBmcm9tIHFlbXUuDQo+IA0KPiBGb3IgZXhhbXBsZSwgSSB1c2UgcWVtdSB0byBjaGVjayB0
-aGF0IHRoZSBmaXJtd2FyZSBpbWFnZSBpcyBib290YWJsZQ0KPiBhbmQgd29ya3MNCj4gZmluZToN
-Cj4gYGBgDQo+IHFlbXUtc3lzdGVtLWFybSAtTSBhc3QyNTAwLWV2YiAtbSBzaXplPTUxMk0gXA0K
-PiAgICAgLW5vZ3JhcGhpYyAtbm9kZWZhdWx0cyAtc2VyaWFsIG1vbjpzdGRpbyBcDQo+ICAgICAt
-bmV0IG5pYyxtb2RlbD1mdGdtYWMxMDAgXA0KPiAgICAgLWRyaXZlIGZpbGU9PHBhdGgtdG8taW1h
-Z2UtbXRkPixmb3JtYXQ9cmF3LGlmPW10ZA0KPiBgYGANCj4gDQo+IFRoaXMgd2F5IGhhcyBzb21l
-IGZhaWx1cmVzOg0KPiAgLSBUaGVyZSBpcyBlbXVsYXRlZCBNVEQgZmFsc2ggZHJpdmUgb25seSAz
-Mk0gc2l6ZS4gQXMgYSByZXN1bHQgZml0LWltYWdlLQ0KPiBiIGFuZA0KPiAgICB1LWJvb3QtZW52
-IHBhcnRpdGlvbnMgYXJlIHVucmVhZGFibGUuDQo+ICAtIFRoZXJlIGlzIG5vIG1hbmFnZWQgaG9z
-dC4gU28gdGhlcmUgYXJlIG5vdCB3b3JrIHRoZSBob3N0IHBvd2VyIHN0YXRlDQo+ICAgIG1hbmFn
-ZW1lbnQsIEtWTSwgVmlydHVhbCBNZWRpYSBhbmQgc28gb24uDQo+IA0KPiBQcm9iYWJseSB0aGVy
-ZSBhcmUgbW9yZSBmYWlsdXJlcywgd2hpY2ggSSBoYXZlIG5vdCBub3RpY2VkLg0KPiANCj4gV2hp
-bGUgd3JpdGluZyB0aGVzZSBsaW5lcyBJIHJlbWVtYmVyZWQgdGhhdCBJIHVzZSBxZW11LXN5c3Rl
-bS1hcm0sDQo+IGJ1aWx0IGZyb20NCj4gc291cmNlIG9uIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVu
-Ym1jL3FlbXUuDQo+IEl0J3MgaW1wb3J0YW50LCBiZWNhdXNlIHRoZSBxZW11LXN5c3RlbS1hcm0g
-ZnJvbSBteSBkaXN0cm8gaXMgdG9vIG9sZA0KPiBhbmQgdGhpcw0KPiBpbWFnZSBpcyBub3Qgd29y
-a2luZyB3aXRoIGl0Lg0KPiANCj4gDQo+IEFsZXhhbmRlci4NCg0K
+On Mon, Mar 30, 2020 at 02:35:55PM +0000, Bruce Mitchell wrote:
+> I was looking for something like a -M wolfpass-bmc command line option like Romulus has -M romulus-bmc
+> (see here: https://github.com/openbmc/docs/blob/master/development/dev-environment.md )
+> 
+> Yet I find no wolfpass, S2600WF, nor Intel in the -machine help list. (see below)
+> 
 
+Yes, there is no full implemented platform.
+
+As I know, the wolfpass bmc based on aspeed ast2500 SoC. 
+I can't remember why I choose exactly ast2500-evb for the tests of wolfpass.
+Probably it was reported somewhere in the internal documents.
+
+If someone has other experience or more knowledge please share it.
+
+Alexander.
