@@ -2,69 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42C5E197243
-	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 03:52:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EBE5E197245
+	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 03:54:36 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48rFpG1y5JzDqYK
-	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 12:52:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48rFrV2PcVzDqYK
+	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 12:54:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1041;
- helo=mail-pj1-x1041.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::541;
+ helo=mail-pg1-x541.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=llAT2hhx; dkim-atps=neutral
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com
- [IPv6:2607:f8b0:4864:20::1041])
+ header.s=20161025 header.b=cmk0b7Ou; dkim-atps=neutral
+Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
+ [IPv6:2607:f8b0:4864:20::541])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48rFnQ2hc3zDqX0
- for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 12:51:54 +1100 (AEDT)
-Received: by mail-pj1-x1041.google.com with SMTP id ng8so6881986pjb.2
- for <openbmc@lists.ozlabs.org>; Sun, 29 Mar 2020 18:51:54 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48rFnT6lLfzDqYq
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 12:51:57 +1100 (AEDT)
+Received: by mail-pg1-x541.google.com with SMTP id u12so7927079pgb.10
+ for <openbmc@lists.ozlabs.org>; Sun, 29 Mar 2020 18:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=GMWEgW+gvwOnhcRdHHV3BSHLj5yAOIL3sM4j9b3VbGE=;
- b=llAT2hhxPjReR+gxol1AR8gxvzJoNiH8ReS8Bjxrvyqq8FTP6/i1lYhpV8c3/+2tc8
- hebQ2Q8VN5DkJG/Hrou0dZb/LTag5wVqGCffuGEm9WUaqkvmUeoUjga5SuJhPSYkt6gv
- 8t4arDSqVeoRXNuh65USk3beOJEKbid++zlHBw/Va/Wuw02zl8r5CvGic9bU/zGYEMoR
- tvORuiwRfEa6A+xryv6Vhq5/yPjsDtRw4C6LiSbSBWA/I0qzjzfJZ3e3zcpGRX3oborP
- HtwFu95vKCz06dLsdRuCe9G6ozKXn7jhC6t0iPt5PsMbEQFFs+y5pXfS3FG4rMmJzjpi
- woxA==
+ bh=Ko6YYqdciCHKWQVjR2jPOvKajtfGuYF4VUfbMLtyUcQ=;
+ b=cmk0b7Ou2ibSvvCBUtrvKHPlV42IGiGKe+sV+lwy8URVut+Atg+8YgUcaboN9oOWT6
+ L7Ep+5hAhu33dPEd6uAr+6QNB/1rzqD892T9L+fhefT6LN8VMbtN3mhQhj5Of/oujAsB
+ WHLQv4ZFcb9UsnmRak9jfy5UiFIdPiDOeD8klIYUq6eVg7pbBLhErsB9562zcJGo6nwv
+ g2ECk0rk3Wyv9JnhUEXvxQFb6mui6ykQTrnULXNqD6xIIKPstVpkdKwcOzhNIYqLhTTO
+ fLtcgf4lAqDqJYHJYI92XD7cdUALqGnbHyFjJBmJvhDNcvC5+iz6fxy95NmQYA95e42V
+ frQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=GMWEgW+gvwOnhcRdHHV3BSHLj5yAOIL3sM4j9b3VbGE=;
- b=X96KY7AwFqaAtmhdJYhkyltivCAryaoD7pro2NXSkdsmVv/Hq8LSiiDQEvOgnMtZM/
- 6IEuQ140xM7ehbkRmdEqBpDRT5dG8MUCzjek24IZK2RHmYPzJlQ2xTqTzTKbs2/7n99T
- e0QL2HZKgyJsiHUipILo5gjpoBP3QFSoq7+4ce6r9SzJ/CGT95nZRNMAyGTJ49zVjHxK
- khjB1T2OI/v8l/Om28La72jRv2ftO5J3Yrhu5WWHoGXqoveX6NagMYepQSq2Vo5PGAw0
- sa9Kz5HV6WcABRh5Wop8Zp2CoOf5rqUYkLzic8OcldTEDaT7F63MIBCJodxYkcT9Etvh
- FQFg==
-X-Gm-Message-State: ANhLgQ0YwRrzg6Q7Rm2UHkrY2fViJZ5NaUK9cyNcJ2dk/Ya7D/VxrT/m
- kpafH1fNo95EsiWUbRLwk/2GHggcluQ=
-X-Google-Smtp-Source: ADFU+vtTF2RCwiUVxuHkzLmNW8uL+27bwq7myCM7KPWcZTKNYmP4bLXLJQXcA0Qa0uESBi8kjFkjKA==
-X-Received: by 2002:a17:90a:d101:: with SMTP id
- l1mr13148860pju.1.1585533112513; 
- Sun, 29 Mar 2020 18:51:52 -0700 (PDT)
+ bh=Ko6YYqdciCHKWQVjR2jPOvKajtfGuYF4VUfbMLtyUcQ=;
+ b=pyWZDG/9k81AbZdcEUfGjzYJgIzno+Tx7V/vLUZWYsplxHA2Na7M8RG7E9A/WGdUYZ
+ MldIj6Kt6gXXcvbQ7QAryX6ake8NQwo4Gdy3ZimJ0jAa8jWi6AtfX17vJNBqdxP7KGEF
+ uSzpYZmYL7oargidhAra0Rk85TaPUrXYhUg1sw7nR9knITzX9VOGz2wYOmAii5kcDHLd
+ xoTzQVAeVzdd5R3c6FVuS9Ul4A+lpgjE7dc3bmdnajsdHW1mvw55p769M355Z+p4w0Qs
+ QVIru2X1R7+NuTyjkynEoxSCOU5kp6r1zjKfMZMgKQiWkCYZYFs8LdqhJ5bh59sUyCAi
+ nf9Q==
+X-Gm-Message-State: ANhLgQ37n6Z7I5BsVj1tabN+mFwRyzQix+cIL8t2/ZLKQqVM0Yds+JOX
+ JrEdPFPE2NdRyMV6XdvvcB0=
+X-Google-Smtp-Source: ADFU+vsnwgc+vxc9lajVw6rb3qmTJ2JcUtXjkGYgvqpHa+blhPnZ05FRDf/Ubi1PpBjlOplM5B0IEg==
+X-Received: by 2002:a63:a746:: with SMTP id w6mr10835866pgo.76.1585533115288; 
+ Sun, 29 Mar 2020 18:51:55 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
- by smtp.gmail.com with ESMTPSA id y17sm8897327pfl.104.2020.03.29.18.51.50
+ by smtp.gmail.com with ESMTPSA id y17sm8897327pfl.104.2020.03.29.18.51.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Mar 2020 18:51:52 -0700 (PDT)
+ Sun, 29 Mar 2020 18:51:54 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Andrew Jeffery <andrew@aj.id.au>,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 v2 1/2] ARM: dts: aspeed: tacoma: Add GPIOs for
- FSI
-Date: Mon, 30 Mar 2020 12:21:41 +1030
-Message-Id: <20200330015142.132779-2-joel@jms.id.au>
+Subject: [PATCH linux dev-5.4 v2 2/2] fsi: aspeed: Support cabled FSI
+Date: Mon, 30 Mar 2020 12:21:42 +1030
+Message-Id: <20200330015142.132779-3-joel@jms.id.au>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200330015142.132779-1-joel@jms.id.au>
 References: <20200330015142.132779-1-joel@jms.id.au>
@@ -84,45 +82,95 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-GPIO Q7 is no longer used for air/water. It is repurposed on Tacoma to
-indicate internal FSI (low) vs cabled (high).
+Some FSI development systems have internal FSI signals, and some have
+external cabled FSI. Software can detect which machine this is by
+reading a jumper GPIO, and also control which pins the signals are
+routed to through a mux GPIO.
 
-GPIO B0 controls the muxing of FSI to the cable (low) or internal pins
-(high).
+This attempts to find the GPIOs at probe time. If they are not present
+in the device tree the driver will not error and continue as before.
 
-Acked-by: Andrew Jeffery <andrew@aj.id.au>
+The mux GPIO is owned by the FSI driver to ensure it is not modified at
+runtime. The routing jumper obtained as non-exclusive to allow other
+software to inspect it's state.
+
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/fsi/fsi-master-aspeed.c | 47 +++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-index 194a48220e2f..d0f7693815c6 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -34,12 +34,6 @@
- 	gpio-keys {
- 		compatible = "gpio-keys";
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index f49742b310c2..374e158ccdc7 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -13,6 +13,7 @@
+ #include <linux/regmap.h>
+ #include <linux/slab.h>
+ #include <linux/iopoll.h>
++#include <linux/gpio/consumer.h>
  
--		air-water {
--			label = "air-water";
--			gpios = <&gpio0 ASPEED_GPIO(Q, 7) GPIO_ACTIVE_LOW>;
--			linux,code = <ASPEED_GPIO(Q, 7)>;
--		};
--
- 		checkstop {
- 			label = "checkstop";
- 			gpios = <&gpio0 ASPEED_GPIO(E, 3) GPIO_ACTIVE_LOW>;
-@@ -146,6 +140,9 @@
- 	#address-cells = <2>;
- 	#size-cells = <0>;
+ #include "fsi-master.h"
  
-+	fsi-routing-gpios = <&gpio0 ASPEED_GPIO(Q, 7) GPIO_ACTIVE_HIGH>;
-+	fsi-mux-gpios = <&gpio0 ASPEED_GPIO(B, 0) GPIO_ACTIVE_HIGH>;
+@@ -419,6 +420,46 @@ static int aspeed_master_init(struct fsi_master_aspeed *aspeed)
+ 	return 0;
+ }
+ 
++static int tacoma_cabled_fsi_fixup(struct device *dev)
++{
++	struct gpio_desc *routing_gpio, *mux_gpio;
++	int gpio;
 +
- 	cfam@0,0 {
- 		reg = <0 0>;
- 		#address-cells = <1>;
++	/*
++	 * The routing GPIO is a jumper indicating we should mux for the
++	 * externally connected FSI cable.
++	 */
++	routing_gpio = devm_gpiod_get_optional(dev, "fsi-routing",
++			GPIOD_IN | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
++	if (IS_ERR(routing_gpio))
++		return PTR_ERR(routing_gpio);
++	if (!routing_gpio)
++		return 0;
++
++	mux_gpio = devm_gpiod_get_optional(dev, "fsi-mux", GPIOD_ASIS);
++	if (IS_ERR(mux_gpio))
++		return PTR_ERR(mux_gpio);
++	if (!mux_gpio)
++		return 0;
++
++	gpio = gpiod_get_value(routing_gpio);
++	if (gpio < 0)
++		return 0;
++
++	/* If the routing GPIO is high we should set the mux to low. */
++	if (gpio) {
++		gpiod_direction_output(mux_gpio, 0);
++		dev_info(dev, "FSI configured for external cable\n");
++	} else {
++		gpiod_direction_output(mux_gpio, 1);
++	}
++
++	devm_gpiod_put(dev, routing_gpio);
++
++	return 0;
++}
++
++
+ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ {
+ 	struct fsi_master_aspeed *aspeed;
+@@ -426,6 +467,12 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
+ 	int rc, links, reg;
+ 	__be32 raw;
+ 
++	rc = tacoma_cabled_fsi_fixup(&pdev->dev);
++	if (rc) {
++		dev_err(&pdev->dev, "Tacoma FSI cable fixup failed\n");
++		return rc;
++	}
++
+ 	aspeed = devm_kzalloc(&pdev->dev, sizeof(*aspeed), GFP_KERNEL);
+ 	if (!aspeed)
+ 		return -ENOMEM;
 -- 
 2.25.1
 
