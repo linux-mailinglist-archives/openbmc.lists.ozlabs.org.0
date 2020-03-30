@@ -1,73 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD4F719775F
+	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 11:01:53 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0190D197390
-	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 06:50:00 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48rKkr5xjrzDqBx
-	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 15:49:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48rRKV2bTfzDqjJ
+	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 20:01:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::442;
- helo=mail-pf1-x442.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=sd6FpU05; dkim-atps=neutral
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com
- [IPv6:2607:f8b0:4864:20::442])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=mlCjVRfy; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48rKgx4gl0zDqWW
- for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 15:47:25 +1100 (AEDT)
-Received: by mail-pf1-x442.google.com with SMTP id j1so8022691pfe.0
- for <openbmc@lists.ozlabs.org>; Sun, 29 Mar 2020 21:47:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=DhwPfzaz2g9EG0GOVe87Wha6FA6DWEuicUqyz1rsA7o=;
- b=sd6FpU05vb7AOr3M9fjkq/IijTkclHi80B6bBGvzc8qkCofDK+QZatEk3biDxf30qu
- NCvR8DubIbcW6v0eVyvQ6cQL6DBY26e4Xu0D5AwAWRvnWorQvnOLISPuTDx4DTnJP7eC
- M9PA4nrITg8VS5oHI5jE9Xl2nkNRbf0m+U8owEp3o6B6Lb3PIeoW7ylQRga6/FmPILzf
- 5i7OOeVXwfRHWd4NZKLm1hRKN5wrZSvChuPn0qhWJdR2pN997y+r8r6DcdkyqhY9wnBe
- G19GK453WWK3MLB2uOzQESQWhQR9NCBXsvcopfgRmwwrgTCvNGKkef+6/qRaw2hY4WMX
- Na/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=DhwPfzaz2g9EG0GOVe87Wha6FA6DWEuicUqyz1rsA7o=;
- b=Xzyxp8Q7t9+84oz/yNZEkZ5rpnmQHakBmqVlRDQsHH/2qC2yvxw3WPjMZGkwYXcuyq
- yywkTMhOGMieC9RujLaIpsBKCk4meUBVJIU5Opye+wOpmb6LfPfa/IyVOzmieu17LGev
- lqJrP+gzyP525ArFUGMhqzjhD1JWHM6G2/CbSNzE4H1zW/E20Ze/AXqGfaY9ouLLXpcA
- 16On1ZMbFiaqmRkt5b65645fWPY8vPkJlaSX/8ioNL+z2KbbGQvltaT+m/V+94udYpec
- Te/96HRRNQj92gcjsaqXgdy+yiAqurRqXZ3JeYHVrs2FSq6njVrzCMiagmchtt6fSkRt
- gV3g==
-X-Gm-Message-State: ANhLgQ3v1UXolEd5YJb4V2WL1yqkfYtqf5EbYCmtX3U203KwJq9P+zYL
- XM6B3HZZOlsqM6yp6ovmUlA=
-X-Google-Smtp-Source: ADFU+vvqrrFK9pHkl05bnubJ819DUESILvd/2BSmAP9loIioRLi9hPxl5MZLN0pmSJiqxOt/b/GVBg==
-X-Received: by 2002:a63:e80a:: with SMTP id s10mr10952835pgh.189.1585543643037; 
- Sun, 29 Mar 2020 21:47:23 -0700 (PDT)
-Received: from localhost.localdomain ([45.124.203.18])
- by smtp.gmail.com with ESMTPSA id x27sm9239537pfj.74.2020.03.29.21.47.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 29 Mar 2020 21:47:22 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Eddie James <eajames@linux.ibm.com>,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH 2/2] ARM: dts: aspeed: raininer: Enable XDMA
-Date: Mon, 30 Mar 2020 15:17:08 +1030
-Message-Id: <20200330044708.195184-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200330044708.195184-1-joel@jms.id.au>
-References: <20200330044708.195184-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48rRHt2w4dzDqGq
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 20:00:26 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 590F541288
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 09:00:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ in-reply-to:content-disposition:content-type:content-type
+ :mime-version:references:message-id:subject:subject:from:from
+ :date:date:received:received:received; s=mta-01; t=1585558819;
+ x=1587373220; bh=/xWJuq0QCP0qwPjmlFFZN+qPWJtAZ/u1YPEX4WhdD2Q=; b=
+ mlCjVRfyptO4P95wbpwPdHCenztGG+JmEiiu0iSHLHbrVao3ar+Nhjy873rc6RLE
+ m+QImJ9kZjmWQosnBaRZaIqSQoXtjkk/lfgXb77OIT5m9hJKiXC7gPxhJ9cvWW+5
+ R5JuPJfPMkB/ygpOgxf5ctcfcKS/JGFtqNCZIP8kfIM=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id nV2BezITKfOM for <openbmc@lists.ozlabs.org>;
+ Mon, 30 Mar 2020 12:00:19 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 12422412DB
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Mar 2020 12:00:19 +0300 (MSK)
+Received: from localhost (172.17.14.122) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 30
+ Mar 2020 12:00:19 +0300
+Date: Mon, 30 Mar 2020 12:00:18 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: Re: Any idea of when qemu-system-arm will be supported for
+ https://github.com/Intel-BMC/openbmc ?
+Message-ID: <20200330090018.GA20872@bbwork.lan>
+References: <1d854d104f3a48dd8f2c3929fc93a68b@SCL-EXCHMB-13.phoenix.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <1d854d104f3a48dd8f2c3929fc93a68b@SCL-EXCHMB-13.phoenix.com>
+X-Originating-IP: [172.17.14.122]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,26 +76,34 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The XDMA device uses the VGA reserved memory region.
+On Fri, Mar 27, 2020 at 05:17:37PM +0000, Bruce Mitchell wrote:
+> Any idea of when qemu-system-arm will be supported for https://github.com/Intel-BMC/openbmc ?
+> 
+> 
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+It depends on what you want from qemu.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 708924fe42cb..a8095aa88dbe 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -748,3 +748,8 @@
- 		spi-max-frequency = <100000000>;
- 	};
- };
-+
-+&xdma {
-+        status = "okay";
-+        memory-region = <&vga_memory>;
-+};
--- 
-2.25.1
+For example, I use qemu to check that the firmware image is bootable and works
+fine:
+```
+qemu-system-arm -M ast2500-evb -m size=512M \
+    -nographic -nodefaults -serial mon:stdio \
+    -net nic,model=ftgmac100 \
+    -drive file=<path-to-image-mtd>,format=raw,if=mtd
+```
 
+This way has some failures:
+ - There is emulated MTD falsh drive only 32M size. As a result fit-image-b and
+   u-boot-env partitions are unreadable.
+ - There is no managed host. So there are not work the host power state
+   management, KVM, Virtual Media and so on. 
+
+Probably there are more failures, which I have not noticed.
+
+While writing these lines I remembered that I use qemu-system-arm, built from
+source on https://github.com/openbmc/qemu.
+It's important, because the qemu-system-arm from my distro is too old and this
+image is not working with it.
+
+
+Alexander.
