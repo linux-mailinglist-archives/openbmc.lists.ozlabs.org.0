@@ -1,81 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA205197E9E
+	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 16:38:04 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F27A5197E46
-	for <lists+openbmc@lfdr.de>; Mon, 30 Mar 2020 16:24:10 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48rZTN2RrszDqfF
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 01:24:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48rZnQ1VBTzDqc5
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 01:38:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=N9kskrSb; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48rZRm05JJzDqcT
- for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 01:22:43 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02UE4I36079953; Mon, 30 Mar 2020 10:22:41 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30206x732d-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Mar 2020 10:22:41 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 02UEM67p006833;
- Mon, 30 Mar 2020 14:22:16 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma03dal.us.ibm.com with ESMTP id 301x775mjt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 30 Mar 2020 14:22:15 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 02UEMEPc51970408
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 30 Mar 2020 14:22:14 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC0D06A054;
- Mon, 30 Mar 2020 14:22:14 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 834E36A047;
- Mon, 30 Mar 2020 14:22:14 +0000 (GMT)
-Received: from [9.211.150.185] (unknown [9.211.150.185])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon, 30 Mar 2020 14:22:14 +0000 (GMT)
-Subject: Re: [PATCH 2/2] ARM: dts: aspeed: raininer: Enable XDMA
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
-References: <20200330044708.195184-1-joel@jms.id.au>
- <20200330044708.195184-3-joel@jms.id.au>
-From: Eddie James <eajames@linux.ibm.com>
-Message-ID: <b95c57c2-450b-eced-c6fb-35076b98b2f2@linux.ibm.com>
-Date: Mon, 30 Mar 2020 09:22:14 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
-MIME-Version: 1.0
-In-Reply-To: <20200330044708.195184-3-joel@jms.id.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48rZlF74KBzDqgF
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 01:36:06 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1585578961;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U1Kcj8Z58Cod8Aa7tDYHm2rLoDNaoYR9hXkDJViC3xE=;
+ b=N9kskrSbxoRBCQBksRNwzNNW9gkGo1CBkqunVg+YkFzdsWBdUHqCVzfcE3fgqYolSnQV4/
+ JtNOtk0FF7ea//GpCN/cuf9OK8khOOQDiv5XbfN4/+qtIb3CjuAGc991zB2Ly1fL+QRAH6
+ cv/hgCuqMZGL4TeHsRB2/qqZPncTOzQ=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-423-mOxyjVjcPx-RudwHNvMhRw-1; Mon, 30 Mar 2020 10:35:58 -0400
+X-MC-Unique: mOxyjVjcPx-RudwHNvMhRw-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Mon, 30 Mar 2020 07:35:56 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Mon, 30 Mar 2020 07:35:56 -0700
+From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+To: "Alexander A. Filippov" <a.filippov@yadro.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Any idea of when qemu-system-arm will be supported for
+ https://github.com/Intel-BMC/openbmc ?
+Thread-Topic: Any idea of when qemu-system-arm will be supported for
+ https://github.com/Intel-BMC/openbmc ?
+Thread-Index: AdYEW5g0PNyrWOIxTpaE+uMcwMbtmwCULaUAAAMWpGA=
+Date: Mon, 30 Mar 2020 14:35:55 +0000
+Message-ID: <de86f16351804487b251000e03e28fe5@SCL-EXCHMB-13.phoenix.com>
+References: <1d854d104f3a48dd8f2c3929fc93a68b@SCL-EXCHMB-13.phoenix.com>
+ <20200330090018.GA20872@bbwork.lan>
+In-Reply-To: <20200330090018.GA20872@bbwork.lan>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.645
- definitions=2020-03-30_01:2020-03-27,
- 2020-03-30 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0
- spamscore=0 lowpriorityscore=0 adultscore=0 mlxlogscore=999 suspectscore=0
- bulkscore=0 phishscore=0 priorityscore=1501 mlxscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2003300129
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [98.246.252.115]
+MIME-Version: 1.0
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,30 +85,107 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+SSB3YXMgbG9va2luZyBmb3Igc29tZXRoaW5nIGxpa2UgYSAtTSB3b2xmcGFzcy1ibWMgY29tbWFu
+ZCBsaW5lIG9wdGlvbiBsaWtlIFJvbXVsdXMgaGFzIC1NIHJvbXVsdXMtYm1jDQooc2VlIGhlcmU6
+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvZGV2ZWxvcG1lbnQv
+ZGV2LWVudmlyb25tZW50Lm1kICkNCg0KWWV0IEkgZmluZCBubyB3b2xmcGFzcywgUzI2MDBXRiwg
+bm9yIEludGVsIGluIHRoZSAtbWFjaGluZSBoZWxwIGxpc3QuIChzZWUgYmVsb3cpDQoNCn4vT3Bl
+bkJNQ19EZXZlbG9wbWVudF9FbnZpcm9ubWVudCQgLi9xZW11LXN5c3RlbS1hcm0gLXZlcnNpb24N
+ClFFTVUgZW11bGF0b3IgdmVyc2lvbiA0LjEuMCAodjQuMC4wLXJjMS0yOTUzLWcwZDdjMWVjLWRp
+cnR5KQ0KQ29weXJpZ2h0IChjKSAyMDAzLTIwMTkgRmFicmljZSBCZWxsYXJkIGFuZCB0aGUgUUVN
+VSBQcm9qZWN0IGRldmVsb3BlcnMNCg0Kfi9PcGVuQk1DX0RldmVsb3BtZW50X0Vudmlyb25tZW50
+JCAuL3FlbXUtc3lzdGVtLWFybSAtbWFjaGluZSBoZWxwDQpTdXBwb3J0ZWQgbWFjaGluZXMgYXJl
+Og0KYWtpdGEgICAgICAgICAgICAgICAgU2hhcnAgU0wtQzEwMDAgKEFraXRhKSBQREEgKFBYQTI3
+MCkNCmFzdDI1MDAtZXZiICAgICAgICAgIEFzcGVlZCBBU1QyNTAwIEVWQiAoQVJNMTE3NikNCmFz
+dDI2MDAtZXZiICAgICAgICAgIEFzcGVlZCBBU1QyNjAwIEVWQiAoQ29ydGV4IEE3KQ0KYm9yem9p
+ICAgICAgICAgICAgICAgU2hhcnAgU0wtQzMxMDAgKEJvcnpvaSkgUERBIChQWEEyNzApDQpjYW5v
+bi1hMTEwMCAgICAgICAgICBDYW5vbiBQb3dlclNob3QgQTExMDAgSVMNCmNoZWV0YWggICAgICAg
+ICAgICAgIFBhbG0gVHVuZ3N0ZW58RSBha2EuIENoZWV0YWggUERBIChPTUFQMzEwKQ0KY29sbGll
+ICAgICAgICAgICAgICAgU2hhcnAgU0wtNTUwMCAoQ29sbGllKSBQREEgKFNBLTExMTApDQpjb25u
+ZXggICAgICAgICAgICAgICBHdW1zdGl4IENvbm5leCAoUFhBMjU1KQ0KY3ViaWVib2FyZCAgICAg
+ICAgICAgY3ViaWV0ZWNoIGN1YmllYm9hcmQNCmVtY3JhZnQtc2YyICAgICAgICAgIFNtYXJ0RnVz
+aW9uMiBTT00ga2l0IGZyb20gRW1jcmFmdCAoTTJTMDEwKQ0KaGlnaGJhbmsgICAgICAgICAgICAg
+Q2FseGVkYSBIaWdoYmFuayAoRUNYLTEwMDApDQppbXgyNS1wZGsgICAgICAgICAgICBBUk0gaS5N
+WDI1IFBESyBib2FyZCAoQVJNOTI2KQ0KaW50ZWdyYXRvcmNwICAgICAgICAgQVJNIEludGVncmF0
+b3IvQ1AgKEFSTTkyNkVKLVMpDQprem0gICAgICAgICAgICAgICAgICBBUk0gS1pNIEVtdWxhdGlv
+biBCYXNlYm9hcmQgKEFSTTExMzYpDQpsbTNzNjk2NWV2YiAgICAgICAgICBTdGVsbGFyaXMgTE0z
+UzY5NjVFVkINCmxtM3M4MTFldmIgICAgICAgICAgIFN0ZWxsYXJpcyBMTTNTODExRVZCDQptYWlu
+c3RvbmUgICAgICAgICAgICBNYWluc3RvbmUgSUkgKFBYQTI3eCkNCm1jaW14NnVsLWV2ayAgICAg
+ICAgIEZyZWVzY2FsZSBpLk1YNlVMIEV2YWx1YXRpb24gS2l0IChDb3J0ZXggQTcpDQptY2lteDdk
+LXNhYnJlICAgICAgICBGcmVlc2NhbGUgaS5NWDcgRFVBTCBTQUJSRSAoQ29ydGV4IEE3KQ0KbWlj
+cm9iaXQgICAgICAgICAgICAgQkJDIG1pY3JvOmJpdA0KbWlkd2F5ICAgICAgICAgICAgICAgQ2Fs
+eGVkYSBNaWR3YXkgKEVDWC0yMDAwKQ0KbXBzMi1hbjM4NSAgICAgICAgICAgQVJNIE1QUzIgd2l0
+aCBBTjM4NSBGUEdBIGltYWdlIGZvciBDb3J0ZXgtTTMNCm1wczItYW41MDUgICAgICAgICAgIEFS
+TSBNUFMyIHdpdGggQU41MDUgRlBHQSBpbWFnZSBmb3IgQ29ydGV4LU0zMw0KbXBzMi1hbjUxMSAg
+ICAgICAgICAgQVJNIE1QUzIgd2l0aCBBTjUxMSBEZXNpZ25TdGFydCBGUEdBIGltYWdlIGZvciBD
+b3J0ZXgtTTMNCm1wczItYW41MjEgICAgICAgICAgIEFSTSBNUFMyIHdpdGggQU41MjEgRlBHQSBp
+bWFnZSBmb3IgZHVhbCBDb3J0ZXgtTTMzDQptdXNjYS1hICAgICAgICAgICAgICBBUk0gTXVzY2Et
+QSBib2FyZCAoZHVhbCBDb3J0ZXgtTTMzKQ0KbXVzY2EtYjEgICAgICAgICAgICAgQVJNIE11c2Nh
+LUIxIGJvYXJkIChkdWFsIENvcnRleC1NMzMpDQptdXNpY3BhbCAgICAgICAgICAgICBNYXJ2ZWxs
+IDg4dzg2MTggLyBNdXNpY1BhbCAoQVJNOTI2RUotUykNCm44MDAgICAgICAgICAgICAgICAgIE5v
+a2lhIE44MDAgdGFibGV0IGFrYS4gUlgtMzQgKE9NQVAyNDIwKQ0KbjgxMCAgICAgICAgICAgICAg
+ICAgTm9raWEgTjgxMCB0YWJsZXQgYWthLiBSWC00NCAoT01BUDI0MjApDQpuZXRkdWlubzIgICAg
+ICAgICAgICBOZXRkdWlubyAyIE1hY2hpbmUNCm5vbmUgICAgICAgICAgICAgICAgIGVtcHR5IG1h
+Y2hpbmUNCm51cmkgICAgICAgICAgICAgICAgIFNhbXN1bmcgTlVSSSBib2FyZCAoRXh5bm9zNDIx
+MCkNCnBhbG1ldHRvLWJtYyAgICAgICAgIE9wZW5QT1dFUiBQYWxtZXR0byBCTUMgKEFSTTkyNkVK
+LVMpDQpyYXNwaTIgICAgICAgICAgICAgICBSYXNwYmVycnkgUGkgMg0KcmVhbHZpZXctZWIgICAg
+ICAgICAgQVJNIFJlYWxWaWV3IEVtdWxhdGlvbiBCYXNlYm9hcmQgKEFSTTkyNkVKLVMpDQpyZWFs
+dmlldy1lYi1tcGNvcmUgICBBUk0gUmVhbFZpZXcgRW11bGF0aW9uIEJhc2Vib2FyZCAoQVJNMTFN
+UENvcmUpDQpyZWFsdmlldy1wYi1hOCAgICAgICBBUk0gUmVhbFZpZXcgUGxhdGZvcm0gQmFzZWJv
+YXJkIGZvciBDb3J0ZXgtQTgNCnJlYWx2aWV3LXBieC1hOSAgICAgIEFSTSBSZWFsVmlldyBQbGF0
+Zm9ybSBCYXNlYm9hcmQgRXhwbG9yZSBmb3IgQ29ydGV4LUE5DQpyb211bHVzLWJtYyAgICAgICAg
+ICBPcGVuUE9XRVIgUm9tdWx1cyBCTUMgKEFSTTExNzYpDQpzYWJyZWxpdGUgICAgICAgICAgICBG
+cmVlc2NhbGUgaS5NWDYgUXVhZCBTQUJSRSBMaXRlIEJvYXJkIChDb3J0ZXggQTkpDQpzbWRrYzIx
+MCAgICAgICAgICAgICBTYW1zdW5nIFNNREtDMjEwIGJvYXJkIChFeHlub3M0MjEwKQ0Kc3BpdHog
+ICAgICAgICAgICAgICAgU2hhcnAgU0wtQzMwMDAgKFNwaXR6KSBQREEgKFBYQTI3MCkNCnN3aWZ0
+LWJtYyAgICAgICAgICAgIE9wZW5QT1dFUiBTd2lmdCBCTUMgKEFSTTExNzYpDQpzeDEgICAgICAg
+ICAgICAgICAgICBTaWVtZW5zIFNYMSAoT01BUDMxMCkgVjINCnN4MS12MSAgICAgICAgICAgICAg
+IFNpZW1lbnMgU1gxIChPTUFQMzEwKSBWMQ0KdGVycmllciAgICAgICAgICAgICAgU2hhcnAgU0wt
+QzMyMDAgKFRlcnJpZXIpIFBEQSAoUFhBMjcwKQ0KdG9zYSAgICAgICAgICAgICAgICAgU2hhcnAg
+U0wtNjAwMCAoVG9zYSkgUERBIChQWEEyNTUpDQp2ZXJkZXggICAgICAgICAgICAgICBHdW1zdGl4
+IFZlcmRleCAoUFhBMjcwKQ0KdmVyc2F0aWxlYWIgICAgICAgICAgQVJNIFZlcnNhdGlsZS9BQiAo
+QVJNOTI2RUotUykNCnZlcnNhdGlsZXBiICAgICAgICAgIEFSTSBWZXJzYXRpbGUvUEIgKEFSTTky
+NkVKLVMpDQp2ZXhwcmVzcy1hMTUgICAgICAgICBBUk0gVmVyc2F0aWxlIEV4cHJlc3MgZm9yIENv
+cnRleC1BMTUNCnZleHByZXNzLWE5ICAgICAgICAgIEFSTSBWZXJzYXRpbGUgRXhwcmVzcyBmb3Ig
+Q29ydGV4LUE5DQp2aXJ0LTIuMTAgICAgICAgICAgICBRRU1VIDIuMTAgQVJNIFZpcnR1YWwgTWFj
+aGluZQ0KdmlydC0yLjExICAgICAgICAgICAgUUVNVSAyLjExIEFSTSBWaXJ0dWFsIE1hY2hpbmUN
+CnZpcnQtMi4xMiAgICAgICAgICAgIFFFTVUgMi4xMiBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0
+LTIuNiAgICAgICAgICAgICBRRU1VIDIuNiBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTIuNyAg
+ICAgICAgICAgICBRRU1VIDIuNyBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTIuOCAgICAgICAg
+ICAgICBRRU1VIDIuOCBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTIuOSAgICAgICAgICAgICBR
+RU1VIDIuOSBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTMuMCAgICAgICAgICAgICBRRU1VIDMu
+MCBBUk0gVmlydHVhbCBNYWNoaW5lDQp2aXJ0LTMuMSAgICAgICAgICAgICBRRU1VIDMuMSBBUk0g
+VmlydHVhbCBNYWNoaW5lDQp2aXJ0LTQuMCAgICAgICAgICAgICBRRU1VIDQuMCBBUk0gVmlydHVh
+bCBNYWNoaW5lDQp2aXJ0ICAgICAgICAgICAgICAgICBRRU1VIDQuMSBBUk0gVmlydHVhbCBNYWNo
+aW5lIChhbGlhcyBvZiB2aXJ0LTQuMSkNCnZpcnQtNC4xICAgICAgICAgICAgIFFFTVUgNC4xIEFS
+TSBWaXJ0dWFsIE1hY2hpbmUNCndpdGhlcnNwb29uLWJtYyAgICAgIE9wZW5QT1dFUiBXaXRoZXJz
+cG9vbiBCTUMgKEFSTTExNzYpDQp4aWxpbngtenlucS1hOSAgICAgICBYaWxpbnggWnlucSBQbGF0
+Zm9ybSBCYXNlYm9hcmQgZm9yIENvcnRleC1BOQ0KejIgICAgICAgICAgICAgICAgICAgWmlwaXQg
+WjIgKFBYQTI3eCkNCg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IG9w
+ZW5ibWMgW21haWx0bzpvcGVuYm1jLQ0KPiBib3VuY2VzK2JydWNlX21pdGNoZWxsPXBob2VuaXgu
+Y29tQGxpc3RzLm96bGFicy5vcmddIE9uIEJlaGFsZiBPZg0KPiBBbGV4YW5kZXIgQS4gRmlsaXBw
+b3YNCj4gU2VudDogTW9uZGF5LCBNYXJjaCAzMCwgMjAyMCAwMjowMA0KPiBUbzogb3BlbmJtY0Bs
+aXN0cy5vemxhYnMub3JnDQo+IFN1YmplY3Q6IFJlOiBBbnkgaWRlYSBvZiB3aGVuIHFlbXUtc3lz
+dGVtLWFybSB3aWxsIGJlIHN1cHBvcnRlZCBmb3INCj4gaHR0cHM6Ly9naXRodWIuY29tL0ludGVs
+LUJNQy9vcGVuYm1jID8NCj4gDQo+IE9uIEZyaSwgTWFyIDI3LCAyMDIwIGF0IDA1OjE3OjM3UE0g
+KzAwMDAsIEJydWNlIE1pdGNoZWxsIHdyb3RlOg0KPiA+IEFueSBpZGVhIG9mIHdoZW4gcWVtdS1z
+eXN0ZW0tYXJtIHdpbGwgYmUgc3VwcG9ydGVkIGZvcg0KPiBodHRwczovL2dpdGh1Yi5jb20vSW50
+ZWwtQk1DL29wZW5ibWMgPw0KPiA+DQo+ID4NCj4gDQo+IEl0IGRlcGVuZHMgb24gd2hhdCB5b3Ug
+d2FudCBmcm9tIHFlbXUuDQo+IA0KPiBGb3IgZXhhbXBsZSwgSSB1c2UgcWVtdSB0byBjaGVjayB0
+aGF0IHRoZSBmaXJtd2FyZSBpbWFnZSBpcyBib290YWJsZQ0KPiBhbmQgd29ya3MNCj4gZmluZToN
+Cj4gYGBgDQo+IHFlbXUtc3lzdGVtLWFybSAtTSBhc3QyNTAwLWV2YiAtbSBzaXplPTUxMk0gXA0K
+PiAgICAgLW5vZ3JhcGhpYyAtbm9kZWZhdWx0cyAtc2VyaWFsIG1vbjpzdGRpbyBcDQo+ICAgICAt
+bmV0IG5pYyxtb2RlbD1mdGdtYWMxMDAgXA0KPiAgICAgLWRyaXZlIGZpbGU9PHBhdGgtdG8taW1h
+Z2UtbXRkPixmb3JtYXQ9cmF3LGlmPW10ZA0KPiBgYGANCj4gDQo+IFRoaXMgd2F5IGhhcyBzb21l
+IGZhaWx1cmVzOg0KPiAgLSBUaGVyZSBpcyBlbXVsYXRlZCBNVEQgZmFsc2ggZHJpdmUgb25seSAz
+Mk0gc2l6ZS4gQXMgYSByZXN1bHQgZml0LWltYWdlLQ0KPiBiIGFuZA0KPiAgICB1LWJvb3QtZW52
+IHBhcnRpdGlvbnMgYXJlIHVucmVhZGFibGUuDQo+ICAtIFRoZXJlIGlzIG5vIG1hbmFnZWQgaG9z
+dC4gU28gdGhlcmUgYXJlIG5vdCB3b3JrIHRoZSBob3N0IHBvd2VyIHN0YXRlDQo+ICAgIG1hbmFn
+ZW1lbnQsIEtWTSwgVmlydHVhbCBNZWRpYSBhbmQgc28gb24uDQo+IA0KPiBQcm9iYWJseSB0aGVy
+ZSBhcmUgbW9yZSBmYWlsdXJlcywgd2hpY2ggSSBoYXZlIG5vdCBub3RpY2VkLg0KPiANCj4gV2hp
+bGUgd3JpdGluZyB0aGVzZSBsaW5lcyBJIHJlbWVtYmVyZWQgdGhhdCBJIHVzZSBxZW11LXN5c3Rl
+bS1hcm0sDQo+IGJ1aWx0IGZyb20NCj4gc291cmNlIG9uIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVu
+Ym1jL3FlbXUuDQo+IEl0J3MgaW1wb3J0YW50LCBiZWNhdXNlIHRoZSBxZW11LXN5c3RlbS1hcm0g
+ZnJvbSBteSBkaXN0cm8gaXMgdG9vIG9sZA0KPiBhbmQgdGhpcw0KPiBpbWFnZSBpcyBub3Qgd29y
+a2luZyB3aXRoIGl0Lg0KPiANCj4gDQo+IEFsZXhhbmRlci4NCg0K
 
-On 3/29/20 11:47 PM, Joel Stanley wrote:
-> The XDMA device uses the VGA reserved memory region.
-
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
-
->
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 5 +++++
->   1 file changed, 5 insertions(+)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index 708924fe42cb..a8095aa88dbe 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -748,3 +748,8 @@
->   		spi-max-frequency = <100000000>;
->   	};
->   };
-> +
-> +&xdma {
-> +        status = "okay";
-> +        memory-region = <&vga_memory>;
-> +};
