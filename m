@@ -1,56 +1,44 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED54A1988BC
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 02:15:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D21401987B7
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 01:03:19 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48rp0N0TcDzDqkw
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 10:03:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48rqbL4HkTzDqkd
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 11:15:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+ spf=permerror (SPF Permanent Error: Unknown mechanism
+ found: ip:192.40.192.88/32) smtp.mailfrom=kernel.crashing.org
+ (client-ip=76.164.61.194; helo=kernel.crashing.org;
+ envelope-from=benh@kernel.crashing.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ header.from=kernel.crashing.org
+Received: from kernel.crashing.org (kernel.crashing.org [76.164.61.194])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48rnzc0yFczDqkd
- for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 10:02:34 +1100 (AEDT)
-IronPort-SDR: +ga2DfquYW7g5XXuztNr90wtDZsDMjaJ9Q9Ovcj8CkHORf2QVpQv7Wcrpo8r2jP11HacEF2LR7
- YJAt25St6R4Q==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Mar 2020 16:02:31 -0700
-IronPort-SDR: uSxTdlehieoVm8SSA5uAlHRj1Q1EF+j7UEeKOYDIv3NW67bk1vSCmbKlll4Jr+mB4fDqgC1Wuq
- DvmZhFKQSRGw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,325,1580803200"; d="scan'208";a="272537236"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga004.fm.intel.com with ESMTP; 30 Mar 2020 16:02:31 -0700
-Received: from [10.135.52.61] (jmbills-mobl.amr.corp.intel.com [10.135.52.61])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
- bits)) (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 0A293580281;
- Mon, 30 Mar 2020 16:02:30 -0700 (PDT)
-Subject: Re: Chassis sled cycle
-To: Vijay Khemka <vijaykhemka@fb.com>,
- James Feist <james.feist@linux.intel.com>
-References: <F69B446C-E70B-4B04-83A1-618A4F60E965@fb.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <478597bb-e9f9-d71c-bbf8-84ad79fd8821@linux.intel.com>
-Date: Mon, 30 Mar 2020 16:02:30 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <F69B446C-E70B-4B04-83A1-618A4F60E965@fb.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48rqZM1zM9zDqkh;
+ Tue, 31 Mar 2020 11:14:17 +1100 (AEDT)
+Received: from localhost (gate.crashing.org [63.228.1.57])
+ (authenticated bits=0)
+ by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 02V0DJbF013894
+ (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 30 Mar 2020 19:13:23 -0500
+Message-ID: <4dc3ac910c79dcca398eb5161dde44e1cc50baca.camel@kernel.crashing.org>
+Subject: Re: [PATCH v2 6/6] dt-bindings: usb: document aspeed vhub device
+ ID/string properties
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+To: Rob Herring <robh@kernel.org>, rentao.bupt@gmail.com
+Date: Tue, 31 Mar 2020 11:13:17 +1100
+In-Reply-To: <20200330192347.GA6388@bogus>
+References: <20200315191632.12536-1-rentao.bupt@gmail.com>
+ <20200315191632.12536-7-rentao.bupt@gmail.com>
+ <20200330192347.GA6388@bogus>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -63,24 +51,137 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
+ linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Stephen Boyd <swboyd@chromium.org>, taoren@fb.com,
+ Chunfeng Yun <chunfeng.yun@mediatek.com>,
+ Colin Ian King <colin.king@canonical.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Vijay,
+On Mon, 2020-03-30 at 13:23 -0600, Rob Herring wrote:
+> On Sun, Mar 15, 2020 at 12:16:32PM -0700, rentao.bupt@gmail.com wrote:
+> > From: Tao Ren <rentao.bupt@gmail.com>
+> > 
+> > Update device tree binding document for aspeed vhub's device IDs and
+> > string properties.
+> > 
+> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> > ---
+> >  No change in v2:
+> >    - the patch is added into the series since v2.
+> > 
+> >  .../bindings/usb/aspeed,usb-vhub.yaml         | 68 +++++++++++++++++++
+> >  1 file changed, 68 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml b/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
+> > index 06399ba0d9e4..5b2e8d867219 100644
+> > --- a/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
+> > @@ -52,6 +52,59 @@ properties:
+> >          minimum: 1
+> >          maximum: 21
+> >  
+> > +  vhub-vendor-id:
+> > +    description: vhub Vendor ID
+> > +    allOf:
+> > +      - $ref: /schemas/types.yaml#/definitions/uint32
+> > +      - maximum: 65535
+> > +
+> > +  vhub-product-id:
+> > +    description: vhub Product ID
+> > +    allOf:
+> > +      - $ref: /schemas/types.yaml#/definitions/uint32
+> > +      - maximum: 65535
+> 
+> There's already standard 'vendor-id' and 'device-id' properties. Use 
+> those.
 
-On 3/30/2020 12:59 PM, Vijay Khemka wrote:
-> Hi Jason,
-> 
-> We have a requirement of Chassis sled cycle and it can be achieved by 
-> sending an i2c command to hotswap controller. Is there any plan to add 
-> this feature in x86-power-control. It should take i2c bus address from 
-> configuration file.
-We don't have any platforms with this capability, so there are no plans 
-to add this feature to x86-power-control.
+So yes and no... I don't fundamentally object but keep in mind that
+traditionally, the properties are about matching with a physical
+hardware.
 
+In this case however, we are describing a virtual piece of HW and so
+those IDs are going to be picked up to be exposed as the USB
+vendor/device of the vhub on the USB bus.
+
+Not necessarily an issue but it's more "configuration" than "matching"
+and as such, it might make sense to expose that with a prefix, though I
+would prefer something like usb-vendor-id or usb,vendor-id...
+
+> > +
+> > +  vhub-device-revision:
 > 
-> Regards
+> Specific to USB, not vhub.
+
+Same as the above.
+
+> > +    description: vhub Device Revision in binary-coded decimal
+> > +    allOf:
+> > +      - $ref: /schemas/types.yaml#/definitions/uint32
+> > +      - maximum: 65535
+> > +
+> > +  vhub-strings:
+> > +    type: object
+> > +
+> > +    properties:
+> > +      '#address-cells':
+> > +        const: 1
+> > +
+> > +      '#size-cells':
+> > +        const: 0
+> > +
+> > +    patternProperties:
+> > +      '^string@[0-9a-f]+$':
+> > +        type: object
+> > +        description: string descriptors of the specific language
+> > +
+> > +        properties:
+> > +          reg:
+> > +            maxItems: 1
+> > +            description: 16-bit Language Identifier defined by USB-IF
+> > +
+> > +          manufacturer:
+> > +            description: vhub manufacturer
+> > +            allOf:
+> > +              - $ref: /schemas/types.yaml#/definitions/string
+> > +
+> > +          product:
+> > +            description: vhub product name
+> > +            allOf:
+> > +              - $ref: /schemas/types.yaml#/definitions/string
+> > +
+> > +          serial-number:
+> > +            description: vhub device serial number
+> > +            allOf:
+> > +              - $ref: /schemas/types.yaml#/definitions/string
 > 
-> -Vijay
-> 
+> For all of this, it's USB specific, not vhub specific. I'm not sure this 
+> is the right approach. It might be better to just define properties 
+> which are just raw USB descriptors rather than inventing some DT format 
+> that then has to be converted into USB descriptors.
+
+Raw blob in the DT is rather annoying and leads to hard to parse stuff
+for both humans and scripts. The main strenght of the DT is it's easy
+to read and manipulate.
+
+Also not the entire descriptor is configurable this way.
+
+That said, it could be that using  the DT for the above is overkill and
+instead, we should consider a configfs like the rest of USB gadget.
+Though it isn't obvious how to do that, the current gadget stuff
+doesn't really "fit" what we need here.
+
+Maybe we could expose the port as UDCs but not actually expose them on
+the bus until the hub is "activated" via a special configfs entry...
+
+Cheers,
+Ben.
+
+> os the 
+> Rob
+
