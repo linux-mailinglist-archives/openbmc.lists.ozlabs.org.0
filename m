@@ -2,71 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7619199DEF
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 20:22:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A210E199ED7
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 21:22:01 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48sHjz3F0mzDqxf
-	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 05:22:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48sK2Z6R7GzDqxq
+	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 06:21:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
- helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=byvTrbEc; dkim-atps=neutral
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
- [IPv6:2607:f8b0:4864:20::330])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=dHBIfjSB; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48sHgB5g9JzDqPl
- for <openbmc@lists.ozlabs.org>; Wed,  1 Apr 2020 05:20:04 +1100 (AEDT)
-Received: by mail-ot1-x330.google.com with SMTP id l23so23077064otf.3
- for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 11:20:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :cc:to; bh=/UYWNJb+dBuYwk28gHErfJHS5B/8wneHeUxXE4FFu84=;
- b=byvTrbEcedRIJyBb4sOC3XeQvaDN9pfZ8nLAIw24gu/0ByWeClFP7CW2xA06O031Bt
- V8mgJu//rSJAHdvreER7tFgFHXwMbAQlCtOZr2xOaJGtU2fsEz6hwVbmOL8I/wlnVyoS
- s66t8GF4OPAuCNqf0P+bm/KYctFyy2plPG2kPmV5U/6JICXybGp/e1eiN5GcrU3um9Bh
- Z2+8w64UMKJyRPMnRdAAKgl53cyXv6AnM/sEQOjs8/lKSrxautwHPNSQQpzkSGpU/hAh
- 0NEZkGNdhopuPNGEyS1GAftrBxFNr4gQPC4GhAC22Yk/J9CvtPIPp7eNumO4AZSL2xzC
- 2B3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:cc:to;
- bh=/UYWNJb+dBuYwk28gHErfJHS5B/8wneHeUxXE4FFu84=;
- b=QAgs7oeEt0ri08p+3xQwVA2BZO+yGlET7IUG1S0SM8whE1kU3Hz2uPDWnhmFVDxDFi
- hiL+KSwMPu7evZzcSoLZZwwUqKtH0Gs/77MYPhe/H6ofviOw0fz1IA8vDJ5PB+LWWp3O
- nzkXZuq+N0fPVFa+lzpZfI9qatrIHTQSyMlz9y24Ojhwgr3GH5drgo1SlKMAnNHFmdZ8
- FgfYAGDxDSRFGAcP8cg/ah/AR9lPIKY9nmCrpirZPyaMbGDdX1ZaMIbjygO/DJisk5ZE
- FEN4RaU9duCXZqH0YDdrTCuGPKiFHRqp/2LtRLOh5Srdm5RBrqb7x9B6BVUT7IgWGxu/
- MYzA==
-X-Gm-Message-State: ANhLgQ19OgMjee6eMwWh6kgy8oB5sn53PWr9z7A8mIjAzj7pbNCjt9oZ
- 924u4kHJCZZE/WIA2BfrRzzX90m0rRU=
-X-Google-Smtp-Source: ADFU+vswYgtzhZ8xKGL74bl2qr51V+KP/wb3wIbjAMIWoA29S/2qivAsLEsygKtNkL1VoOk0/tKRlw==
-X-Received: by 2002:a9d:3423:: with SMTP id v32mr4090548otb.46.1585678800559; 
- Tue, 31 Mar 2020 11:20:00 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:298f:5627:e1a2:6a29])
- by smtp.gmail.com with ESMTPSA id d84sm5257374oig.33.2020.03.31.11.20.00
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 31 Mar 2020 11:20:00 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: boost monthly download limits
-Message-Id: <C0E87748-C981-46DE-A5D4-539BA33EC94A@gmail.com>
-Date: Tue, 31 Mar 2020 13:19:59 -0500
-To: yocto@lists.yoctoproject.org
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48sK1W4FTszDqvP
+ for <openbmc@lists.ozlabs.org>; Wed,  1 Apr 2020 06:21:02 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id EA93C41286
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 19:20:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-language:content-transfer-encoding:content-type
+ :content-type:in-reply-to:mime-version:user-agent:date:date
+ :message-id:from:from:references:subject:subject:received
+ :received:received; s=mta-01; t=1585682454; x=1587496855; bh=Xyt
+ cI88pnAjyROtt3P7Xi60r1HyJIobH7au/s1L/ecQ=; b=dHBIfjSBw2nafKnSZHs
+ 61oM7VaBbJpaL7MqYqmISPAiLSbZJA3+I2Fs3aal6e7VGUMOscs4emFb0hcCTKMs
+ OnhWf+lUHguqZm3QVtISqh7tk4VbecK5uEtOeyZgNQ6wwbNvHCCcS6CNi0Dyiirt
+ zHYER1lLcrPGAOxFaWicoBw0=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id MtuTn21psakb for <openbmc@lists.ozlabs.org>;
+ Tue, 31 Mar 2020 22:20:54 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 9E3B64126D
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 22:20:54 +0300 (MSK)
+Received: from [10.199.0.98] (10.199.0.98) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 31
+ Mar 2020 22:20:54 +0300
+Subject: Re: Authorization of LDAP users in bmcweb
+To: <openbmc@lists.ozlabs.org>
+References: <32e56dd0-488b-2c25-4f9f-92d5f18d697e@intel.com>
+ <03510b52-dbdc-5365-570e-1b2c89a20f09@linux.vnet.ibm.com>
+ <d16f6fd8-dbd2-d013-37c1-157da8e8ba4d@gmail.com>
+ <94be4d08-016d-4d51-1c18-b77281619db1@intel.com>
+ <d72f1519-a102-3b4c-3649-bba3b94444ed@gmail.com>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Message-ID: <705ff06f-2b61-f848-b0d5-b593ea60c182@yadro.com>
+Date: Tue, 31 Mar 2020 22:20:54 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <d72f1519-a102-3b4c-3649-bba3b94444ed@gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.199.0.98]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,41 +80,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Greetings,
+16.10.2019 14:13, RAJESWARAN THILLAIGOVINDAN пишет:
+>
+> On 09-10-2019 23:25, Ed Tanous wrote:
+>> I'd rather we discuss on the mailing list, so others can have input, and
+>> we've documented our conversation for archival later.  I appreciate the
+>> offer though.
 
-Recently, the OpenBMC project started to hit
-https://github.com/boostorg/boost/issues/299#issuecomment-593064251. =
-Basically
-the site that hosts the boost packages has a monthly download limit and =
-once
-hit, starts to fail.
+That was a wise decision. Although it didn't help me here, it did 
+clarify some things.
 
-There was a commit last year,
-=
-https://github.com/openembedded/openembedded-core/commit/810aded01fc2ae2c2=
-7c2573135c20947453e50c6
-which moved from using sourceforge to dl.bintray.com. I don't see a =
-reason in
-the commit message but I suspect it was because sourceforge for some =
-reason did
-not mirror 1.71.0. They have 1.70.0 and 1.72.0 but not 1.71.0. I opened
-=
-https://sourceforge.net/p/boost/discussion/23622/thread/4fe1cce13b/?limit=3D=
-25#7d3e
-to try and understand why this was.
+What I would like to know is: is LDAP authentication fully working in 
+master now?
 
-Given the download limitations of dl.bintray.com, does it make sense to =
-try
-and move back to sourceforge? Someone also had recommended we just grab
-from github (i.e. =
-https://github.com/boostorg/boost/archive/boost-1.71.0.tar.gz)
+We're trying to configure it with Intel-BMC/openbmc/intel for wolfpass 
+target and it looks like LDAP support is somehow incomplete.
 
-This issue will reset on the first of the month but could come back and =
-bite
-us again in the future. Anyone else hit this or looking into it?
+I configure binding to the server and try to authenticate with an LDAP 
+user in WebUI, but I get a message in journalctl that requirement "user 
+in group redfish" is not met by the user, and an "Invalid username or 
+password" appears in the web browser. I don't see any means in WebUI to 
+include any remote users to 'redfish' group. Adding the user to an LDAP 
+group 'redfish' doesn't help (why would it?).
 
-Andrew=
+Trying to log in to shell also fails without any diagnostics, just 
+"authentication failure".
+
+After reading the user_management.md I would expect the following scenario:
+
+1. I enter credentials for LDAP binding
+2. I list LDAP groups with their respective OpenBMC privileges
+3. I log in with an LDAP user without any errors and get the privilege 
+according to the LDAP/OpenBMC group mapping set up in 2)
+
+Currently it doesn't work like that for me.
+
+So the question is: is it Intel-BMC/openbmc repo that is not up to date 
+or is it LDAP support in openbmc/openbmc also incomplete? Or am I doing 
+anything wrong?
+
+Thank you for any help.
+
