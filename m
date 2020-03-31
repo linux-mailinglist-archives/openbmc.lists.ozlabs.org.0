@@ -2,127 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 623E419A231
-	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 01:02:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7781F19A242
+	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 01:12:11 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48sPwQ3kJwzDqtR
-	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 10:01:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48sQ885GQ1zDqvP
+	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 10:12:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12f;
+ helo=mail-lf1-x12f.google.com; envelope-from=wak@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=135935d244=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=Fr4W2B6d; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=UFhtIGae; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=LiskqSdK; dkim-atps=neutral
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48sPvf0clTzDq6l
- for <openbmc@lists.ozlabs.org>; Wed,  1 Apr 2020 10:01:17 +1100 (AEDT)
-Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 02VMxFsf004975; Tue, 31 Mar 2020 16:01:13 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : content-type : mime-version; s=facebook;
- bh=BAPYGSXoDpFrGiYfUiSmVrxYrwNQVyJYlgL2sRHZdVc=;
- b=Fr4W2B6dS55pnq7fnIMHMteo5pM6BPLNcUkZbEqfCbgzO9k47tNDujp6nvFAX2XXG2VI
- W7XCTw0p+ZJpjsM2H3Vt+UZzFP76T/QCXU6hEgY3naGwFcziYRVQHWipVIPR6C9xIiiK
- Z0item6YsSAV8K02UD8euuZlHFhfSWxDVZs= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 304c9aru7v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 31 Mar 2020 16:01:13 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.36.103) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Tue, 31 Mar 2020 16:01:12 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Lt+tJxt//MXZgn4QTNHGTXB0YHzPYbfTn6q1TGMqLtofdU+fweAKt9D/UvMrLqPtDhm/rT/d/176zX/Uz3SqBOdFkdRV1HYQgw/CLMjZaSsa+JV1mLgsw7viiwJ63SFWxLxBgx2dKBlSLUhXYCX6hBQYHqwoGH5r2p7vGDm7QvkLIz4uVeCQf4CE67MgWjsONM2PZIJTt3Fqc8dkw1cZXpD7ofr4qBA7xFPEjaKkzSF2PCA88gzl63t0Y6OwsTUZS7fBn8iUKBRqcHd88nxmWN3lGH9Iw6Hw2hi0lf0gnX5lMFnlnCXcXuK/QSLCWWcglDBMa0mWHF6p11n/peYTPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BAPYGSXoDpFrGiYfUiSmVrxYrwNQVyJYlgL2sRHZdVc=;
- b=m/zRmsVLneRH56ePD93LgWD3tegm/5S1KGoAQJ/BQ1AORIUSJ34dHWw2llzdnPx2YW99QyGz6u4HdA/O/uHhrs07DfoTEJtqnuZSacSLxB1CA2rTacRXWYiCD+ZWUM9yGx8NJCmSMWbIvC+TczSMS6arLUELBP8giPh0ZofpnG99gp+W3qcuL+7c7ej1BhfZWT8iXBP/S6bL+LIRYn3YlE86Opbt6iVBIUA3wRyFThyNVnXQu8gnfAf6UWZWBikFiRLzVO+ywFVvbjkea9pVA5lU7fwekMmkIQfL5a+7r4XheB3U8qlWxh3K4juS82j8Bw/eFao5086O4rr7DMfujg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BAPYGSXoDpFrGiYfUiSmVrxYrwNQVyJYlgL2sRHZdVc=;
- b=UFhtIGaet9CC6vsqlPuRU10cPumgPekUa2H9NPlDbKybml0MHsVAT12IyJlpAqprMimV6cfm8Tpq1g93MfYBb6aT/j+H1nr7STwscyr4Q9Rt1etEEJ3e05QB9p+vPhZfe1+iZPAK9URpnYuGOu2Jfb9OumzcsTGPM48Ao2M2ONo=
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com (2603:10b6:303:49::9)
- by MW3PR15MB3804.namprd15.prod.outlook.com (2603:10b6:303:49::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2856.19; Tue, 31 Mar
- 2020 23:01:11 +0000
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936]) by MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936%4]) with mapi id 15.20.2856.019; Tue, 31 Mar 2020
- 23:01:11 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: "vernon.mauery@linux.intel.com" <vernon.mauery@linux.intel.com>
-Subject: Review restart cause
-Thread-Topic: Review restart cause
-Thread-Index: AQHWB7BFqaQb3hkqmUegJl4VvMXPww==
-Date: Tue, 31 Mar 2020 23:01:11 +0000
-Message-ID: <D274947A-FC7A-4731-B3A7-65B0FB407391@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2601:647:4b00:fd70:18e2:66b5:5e3d:3d1a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 36ce323a-133d-407a-7a4c-08d7d5c76820
-x-ms-traffictypediagnostic: MW3PR15MB3804:
-x-microsoft-antispam-prvs: <MW3PR15MB3804D62019E13BF484F94A4DDDC80@MW3PR15MB3804.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:2803;
-x-forefront-prvs: 0359162B6D
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR15MB3947.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(10019020)(366004)(136003)(396003)(376002)(39860400002)(346002)(76116006)(71200400001)(8676002)(81156014)(66556008)(558084003)(81166006)(66476007)(64756008)(7116003)(4326008)(6916009)(8936002)(316002)(66446008)(66946007)(966005)(91956017)(6486002)(478600001)(9326002)(5660300002)(6512007)(2906002)(2616005)(86362001)(186003)(36756003)(33656002)(6506007)(3480700007);
- DIR:OUT; SFP:1102; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: O1htYdl5sKuEUkMFLe/AUTKtjvqsQd+gZZuwxek1SBoj6GfRtrqavjPkpwzLXdFmKPpwjuPLghiv1LvyuczGiZqc16DiN95aT/4Ue4Vph7aWuZi/7a+UiaJ0nYNuG2A23zRzYyXsVkuk/AtqtCzl0zg5zINKCERg0qZLjNuTF+A/sZ5v5TTORbrcN8/zzPFeoe2XF88N2hgnsfADWvc/iSfCOOcXG4Wh1g8Wed2gOrkdObTbxmNGVycI9phNb3Wa21AQe9x4MSXc/EIXkAHM3ITbG31DwHT7E06TTt4Gwp3SI4s22t56J5LM+QYEn6dE/j2dJs4GL28h/saoVrRHFyoDSifmuddgKD9Ydo7gt9NKIkT8V9iOrtHCU6GBfjNIw2zNxANeklB9u0zbmn0V2/is4K4cQ+wfJRdYTUu80CS0+tqSZGkgLDUbsdRLrx2yKj8ppP4aZGeIq/5k2EV7CRLUlkhGmzm89CLYUVgY6BziJVRx8iY5+21scZTm3vUx8O6ueGNFUd881hazRP/tbw==
-x-ms-exchange-antispam-messagedata: hlqekaHpfbYkuQejhop8JrO2XyZnYVj+Rtl3FWu1PRD+7MZGZzOxrzpXPY7oQ5UW+RgQbBJ/yCfIp9xlrom0HOJHIhoCDiBZDnYBHTvHDG5U457XS7BKOvARZzqt0nac7nMA4YWdHE/YxGLEr5MbmK2Lk5awBRGwJ5TNoHgoPnaN1YTEa1OnsDldoQGNhEen4JQFRGbtwf4KW1g2dd/4mw==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_D274947AFC7A4731B3A765B0FB407391fbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48sQ7K4DfZzDqvH
+ for <openbmc@lists.ozlabs.org>; Wed,  1 Apr 2020 10:11:24 +1100 (AEDT)
+Received: by mail-lf1-x12f.google.com with SMTP id q5so18779097lfb.13
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 16:11:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=T6lZo7o1shAe1mlVPwzVAAAswyknJG90Z9YV8x802A4=;
+ b=LiskqSdKIfUTIEcXx9V4mR7QtfxTeuQz9LAs+9H0b/tfkk5zOK1KNgBzS5bZNzqJJW
+ ISXXq/0093gpDV1L1eaMhyil2l72H21Yz4ZU7CnlUwtOMgc921zUYP18uV9POoy8uMsi
+ 0+SUqC5iBxic4th5UwOVBuMzbutNxNWPPxwsjTE1k4jaYuGsshRygsy22dlFqqTnw/H0
+ +B9H8/N+e7yyyV6Xu/ZECSdBe09Y1vzKRbYN5pyC6xFZnRCTUjes9ruHB9dfgVPdq4jp
+ nTlxAPaj3ECIP1zibKnNjth5nkqlLye+KTbeFYzNDav1OSRHgagAT0wz8GbDqbprLAx7
+ cqMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=T6lZo7o1shAe1mlVPwzVAAAswyknJG90Z9YV8x802A4=;
+ b=IdbZx3O8V0RAXBkjEQNM4CRbaxu58pP2/OKLZEvtaGoQkoJ6ksa7VAy6pvhMkNQ/6D
+ XocT55lXqnb97SArsdsYK2xclP4Ius10NNy2c/1VDLMCJMBEli60/Bw/21zVzS2GLa/r
+ JFMmVeiIuJlXifuDA5Q3jSolyhCWI29lvsdWV2P+P/qZwC4vMkMyxXXRfJWpgBz8T/68
+ l2yZHPkG86Q1nBNDW61m/76dSZ0fWGX0kRZrTtrYwHQPeb5cG4CSATlnTihl3+dBpM9/
+ WPQ47+K/qoWIpnbiIjGlrpyWDv2WiUtOieyW+UUJP5yarVQa98TeYJIXjKnLkavZwgDi
+ 72nA==
+X-Gm-Message-State: AGi0PuZm4wRUx8Upz/9iibWu4jKG3b082uQzpeJPiWYRMT1eUfV/FrWa
+ TPvJwGlXY54soIzDInXhqnRfC7hQVGa5abZ5uxHo1w==
+X-Google-Smtp-Source: APiQypJqxRKuxI9ZymckjDSLSNbYxVuR5KZJVgH3CFr++XRk7+SYyuh9hw0MtWD+wZNW1hjwnHLytlzk6kW+tJJCt9Q=
+X-Received: by 2002:ac2:4473:: with SMTP id y19mr2992477lfl.23.1585696277550; 
+ Tue, 31 Mar 2020 16:11:17 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 36ce323a-133d-407a-7a4c-08d7d5c76820
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2020 23:01:11.6908 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dM0HoChVqGjUBplGnKS+tZvgrQXcaktodpVfSSWVmg8x9r3+jKq1FS1PpZdUu4J5K7zqKqc1X2nufmAHkky4tw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR15MB3804
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-03-31_07:2020-03-31,
- 2020-03-31 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- suspectscore=0 phishscore=0 malwarescore=0 clxscore=1011 impostorscore=0
- bulkscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=508 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2003310187
-X-FB-Internal: deliver
+References: <F69B446C-E70B-4B04-83A1-618A4F60E965@fb.com>
+ <CADKL2t6nach67q57ca==uqHHEVCf=+F3PBOcQ1v0ZAazk6Yr+Q@mail.gmail.com>
+ <4EA88F1E-3B2E-45FC-8135-0A91A4CF84D8@fb.com>
+ <CAPnigKkwhidiMCxY9w6n=-s4gc9rk-Hnjz3YWiQPVX7r1dKCzA@mail.gmail.com>
+ <286B2DEB-8444-4A97-BDE9-F34E60A1A0F9@fb.com>
+In-Reply-To: <286B2DEB-8444-4A97-BDE9-F34E60A1A0F9@fb.com>
+From: William Kennington <wak@google.com>
+Date: Tue, 31 Mar 2020 16:11:06 -0700
+Message-ID: <CAPnigK=mu=GJfnjQM=EVnHOoLbEcxp3NYUOTbOV2GwkecZ3FAg@mail.gmail.com>
+Subject: Re: Chassis sled cycle
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: multipart/alternative; boundary="00000000000058b2a505a22eaf4a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,62 +76,227 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>,
+ Benjamin Fair <benjaminfair@google.com>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_D274947AFC7A4731B3A765B0FB407391fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--00000000000058b2a505a22eaf4a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SGkgVmVybm9uLA0KQ2FuIHlvdSBwbGVhc2UgY29tcGxldGUgZm9sbG93aW5nIHJldmlldywgSSBo
-YXZlIGluY29ycG9yYXRlZCBldmVyeXRoaW5nIGZyb20gcmV2aWV3IGZlZWRiYWNrLg0KaHR0cHM6
-Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5ei8jL2Mvb3BlbmJtYy9waG9zcGhvci1ob3N0LWlw
-bWlkLysvMjk5NjIvDQoNClJlZ2FyZHMNCi1WaWpheQ0K
+You don't really want to implement that logic in the power daemon since it
+has to find and unbind devices and whatnot. It's quite specific to a
+platform and well tailored to be scripted.
 
---_000_D274947AFC7A4731B3A765B0FB407391fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <1B9D1ABBE040F44B87878648B27D3B35@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+On Tue, Mar 31, 2020 at 3:58 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
-Zm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQph
-OmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xv
-cjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0Kc3Bhbi5FbWFpbFN0eWxl
-MTcNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwtY29tcG9zZTsNCglmb250LWZhbWlseToiQ2Fs
-aWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJ
-e21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5z
-LXNlcmlmO30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJn
-aW46MS4waW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldv
-cmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hh
-cGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlm
-XS0tPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQi
-Pg0KPG86aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94
-bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iIzA1NjND
-MSIgdmxpbms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5IaSBWZXJub24sPG86
-cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
-bnQtc2l6ZToxMS4wcHQiPkNhbiB5b3UgcGxlYXNlIGNvbXBsZXRlIGZvbGxvd2luZyByZXZpZXcs
-IEkgaGF2ZSBpbmNvcnBvcmF0ZWQgZXZlcnl0aGluZyBmcm9tIHJldmlldyBmZWVkYmFjay48bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBocmVmPSJodHRwczov
-L2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6LyMvYy9vcGVuYm1jL3Bob3NwaG9yLWhvc3QtaXBt
-aWQvJiM0MzsvMjk5NjIvIj5odHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6LyMvYy9v
-cGVuYm1jL3Bob3NwaG9yLWhvc3QtaXBtaWQvJiM0MzsvMjk5NjIvPC9hPjxvOnA+PC9vOnA+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0
-eWxlPSJmb250LXNpemU6MTEuMHB0Ij5SZWdhcmRzPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPi1WaWpheTxv
-OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+> William,
+>
+> I am not worried by that I am just considering that one has to implement
+> that unit file as well.
+>
+> Rather than triggering unit file why can=E2=80=99t we trigger gpio or i2c=
+ command
+> based on configuration
+>
+> Provided by each platform.
+>
+>
+>
+> Regards
+>
+> -Vijay
+>
+>
+>
+> *From: *William Kennington <wak@google.com>
+> *Date: *Tuesday, March 31, 2020 at 1:37 PM
+> *To: *Vijay Khemka <vijaykhemka@fb.com>
+> *Cc: *Benjamin Fair <benjaminfair@google.com>, "
+> jason.m.bills@linux.intel.com" <jason.m.bills@linux.intel.com>, James
+> Feist <james.feist@linux.intel.com>, "openbmc@lists.ozlabs.org" <
+> openbmc@lists.ozlabs.org>
+> *Subject: *Re: Chassis sled cycle
+>
+>
+>
+> The target is just that file. Platform specific services add themselves a=
+s
+> WantedBy. You shouldn't really need to worry about that part as triggerin=
+g
+> the service will cause them to run.
+>
+>
+>
+> On Tue, Mar 31, 2020 at 1:33 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+>
+>
+>
+> On 3/31/20, 10:53 AM, "Benjamin Fair" <benjaminfair@google.com> wrote:
+>
+>     On Mon, 30 Mar 2020 at 13:00, Vijay Khemka <vijaykhemka@fb.com> wrote=
+:
+>     >
+>     > Hi Jason,
+>     >
+>     > We have a requirement of Chassis sled cycle and it can be achieved
+> by sending an i2c command to hotswap controller. Is there any plan to add
+> this feature in x86-power-control. It should take i2c bus address from
+> configuration file.
+>     >
+>     >
+>     >
+>     > Regards
+>     >
+>     > -Vijay
+>
+>     This feature is implemented on some systems using an IPMI OEM command=
+:
+>
+> https://github.com/openbmc/google-ipmi-sys#delayedhardreset---subcommand-=
+0x03
+>
+>     It currently just activates the systemd target
+>     gbmc-psu-hardreset.target and lets you register services to do the
+>     actual hotswap reset (usually by toggling a GPIO). Having a unified
+>     solution in x86-power-control for this would be great!
+>
+> Ben, Can you please share content of
+>
+> https://github.com/openbmc/google-ipmi-sys/blob/master/gbmc-psu-hardreset=
+.target
+> as my assumption is each platform needs to provide this file but I
+> couldn't find any platform
+> using this. I only found reference in meta-quanta which is deleting this
+> file. So please
+> provide a reference to this file.
+>
+>
 
---_000_D274947AFC7A4731B3A765B0FB407391fbcom_--
+--00000000000058b2a505a22eaf4a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">You don&#39;t really want to implement that logic in the p=
+ower daemon since it has to find and unbind devices and whatnot. It&#39;s q=
+uite specific to a platform and well tailored to be scripted.</div><br><div=
+ class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 31=
+, 2020 at 3:58 PM Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.com">vi=
+jaykhemka@fb.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_-5458205649521246665WordSection1">
+<p class=3D"MsoNormal">William,<u></u><u></u></p>
+<p class=3D"MsoNormal">I am not worried by that I am just considering that =
+one has to implement that unit file as well.<u></u><u></u></p>
+<p class=3D"MsoNormal">Rather than triggering unit file why can=E2=80=99t w=
+e trigger gpio or i2c command based on configuration<u></u><u></u></p>
+<p class=3D"MsoNormal">Provided by each platform.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Regards<u></u><u></u></p>
+<p class=3D"MsoNormal">-Vijay<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(181,196,223);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
+</span></b><span style=3D"font-size:12pt;color:black">William Kennington &l=
+t;<a href=3D"mailto:wak@google.com" target=3D"_blank">wak@google.com</a>&gt=
+;<br>
+<b>Date: </b>Tuesday, March 31, 2020 at 1:37 PM<br>
+<b>To: </b>Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.com" target=3D=
+"_blank">vijaykhemka@fb.com</a>&gt;<br>
+<b>Cc: </b>Benjamin Fair &lt;<a href=3D"mailto:benjaminfair@google.com" tar=
+get=3D"_blank">benjaminfair@google.com</a>&gt;, &quot;<a href=3D"mailto:jas=
+on.m.bills@linux.intel.com" target=3D"_blank">jason.m.bills@linux.intel.com=
+</a>&quot; &lt;<a href=3D"mailto:jason.m.bills@linux.intel.com" target=3D"_=
+blank">jason.m.bills@linux.intel.com</a>&gt;, James Feist &lt;<a href=3D"ma=
+ilto:james.feist@linux.intel.com" target=3D"_blank">james.feist@linux.intel=
+.com</a>&gt;, &quot;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_=
+blank">openbmc@lists.ozlabs.org</a>&quot; &lt;<a href=3D"mailto:openbmc@lis=
+ts.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
+<b>Subject: </b>Re: Chassis sled cycle<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">The target is just=C2=A0that file. Platform specific=
+ services add themselves as WantedBy. You shouldn&#39;t really need to worr=
+y about that part as triggering the service will cause them to run.<u></u><=
+u></u></p>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Tue, Mar 31, 2020 at 1:33 PM Vijay Khemka &lt;<a =
+href=3D"mailto:vijaykhemka@fb.com" target=3D"_blank">vijaykhemka@fb.com</a>=
+&gt; wrote:<u></u><u></u></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin-left:4=
+.8pt;margin-right:0in">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12pt"><br>
+<br>
+On 3/31/20, 10:53 AM, &quot;Benjamin Fair&quot; &lt;<a href=3D"mailto:benja=
+minfair@google.com" target=3D"_blank">benjaminfair@google.com</a>&gt; wrote=
+:<br>
+<br>
+=C2=A0 =C2=A0 On Mon, 30 Mar 2020 at 13:00, Vijay Khemka &lt;<a href=3D"mai=
+lto:vijaykhemka@fb.com" target=3D"_blank">vijaykhemka@fb.com</a>&gt; wrote:=
+<br>
+=C2=A0 =C2=A0 &gt;<br>
+=C2=A0 =C2=A0 &gt; Hi Jason,<br>
+=C2=A0 =C2=A0 &gt;<br>
+=C2=A0 =C2=A0 &gt; We have a requirement of Chassis sled cycle and it can b=
+e achieved by sending an i2c command to hotswap controller. Is there any pl=
+an to add this feature in x86-power-control. It should take i2c bus address=
+ from configuration file.<br>
+=C2=A0 =C2=A0 &gt;<br>
+=C2=A0 =C2=A0 &gt;<br>
+=C2=A0 =C2=A0 &gt;<br>
+=C2=A0 =C2=A0 &gt; Regards<br>
+=C2=A0 =C2=A0 &gt;<br>
+=C2=A0 =C2=A0 &gt; -Vijay<br>
+<br>
+=C2=A0 =C2=A0 This feature is implemented on some systems using an IPMI OEM=
+ command:<br>
+=C2=A0 =C2=A0 <a href=3D"https://github.com/openbmc/google-ipmi-sys#delayed=
+hardreset---subcommand-0x03" target=3D"_blank">
+https://github.com/openbmc/google-ipmi-sys#delayedhardreset---subcommand-0x=
+03</a><br>
+<br>
+=C2=A0 =C2=A0 It currently just activates the systemd target<br>
+=C2=A0 =C2=A0 gbmc-psu-hardreset.target and lets you register services to d=
+o the<br>
+=C2=A0 =C2=A0 actual hotswap reset (usually by toggling a GPIO). Having a u=
+nified<br>
+=C2=A0 =C2=A0 solution in x86-power-control for this would be great!<br>
+<br>
+Ben, Can you please share content of<br>
+=C2=A0<a href=3D"https://github.com/openbmc/google-ipmi-sys/blob/master/gbm=
+c-psu-hardreset.target" target=3D"_blank">https://github.com/openbmc/google=
+-ipmi-sys/blob/master/gbmc-psu-hardreset.target</a><br>
+as my assumption is each platform needs to provide this file but I couldn&#=
+39;t find any platform<br>
+using this. I only found reference in meta-quanta which is deleting this fi=
+le. So please<br>
+provide a reference to this file.<br>
+<br>
+<u></u><u></u></p>
+</blockquote>
+</div>
+</div>
+</div>
+
+</blockquote></div>
+
+--00000000000058b2a505a22eaf4a--
