@@ -1,51 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46D8A198E01
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 10:10:31 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0141C198C7C
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 08:45:10 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48s0FF5JRSzDqwH
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 17:45:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48s27m2nTRzDr7d
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 19:10:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=3521f8a2e=spencer.ku@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-X-Greylist: delayed 71 seconds by postgrey-1.36 at bilbo;
- Tue, 31 Mar 2020 17:43:47 AEDT
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 48s0Cl52gyzDrLv
- for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 17:43:45 +1100 (AEDT)
-IronPort-SDR: V0PL4b+MZeHtDiUOD2Lxzw1+koVTupovCOnJEkYp+guU3MTba2HZLOkf/gK4qJCqvZhMJVyXJz
- kEkMo2bz6NFQ==
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx01.quantatw.com with ESMTP; 31 Mar 2020 14:42:31 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 31 Mar
- 2020 14:42:29 +0800
-Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
- ([192.168.57.11]) with mapi id 15.01.1713.009;
- Tue, 31 Mar 2020 14:42:29 +0800
-From: =?big5?B?U3BlbmNlciBLdSAopWqlQLfsKQ==?= <Spencer.Ku@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Question of Lost Dbus
-Thread-Topic: Question of Lost Dbus
-Thread-Index: AQHWBybAQdbbZR2aQUC0ULTFHgv2tg==
-Date: Tue, 31 Mar 2020 06:42:29 +0000
-Message-ID: <5d8c24246ba2413a99eff60aca2a9f71@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
+ spf=softfail (domain owner discourages use of this
+ host) smtp.mailfrom=eltan.com (client-ip=213.75.39.15;
+ helo=cpsmtpb-ews10.kpnxchange.com; envelope-from=wvervoorn@eltan.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=eltan.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=kpnmail.nl header.i=@kpnmail.nl header.a=rsa-sha256
+ header.s=kpnmail01 header.b=Rk44U7Uj; 
+ dkim-atps=neutral
+X-Greylist: delayed 69 seconds by postgrey-1.36 at bilbo;
+ Tue, 31 Mar 2020 18:52:04 AEDT
+Received: from cpsmtpb-ews10.kpnxchange.com (cpsmtpb-ews10.kpnxchange.com
+ [213.75.39.15])
+ by lists.ozlabs.org (Postfix) with ESMTP id 48s1kX2WBlzDqsG
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 18:52:03 +1100 (AEDT)
+Received: from cpsps-ews28.kpnxchange.com ([10.94.84.194]) by
+ cpsmtpb-ews10.kpnxchange.com with Microsoft SMTPSVC(8.5.9600.16384); 
+ Tue, 31 Mar 2020 09:50:46 +0200
+X-Brand: 4ZrJ
+X-KPN-SpamVerdict: e1=0;e2=0;e3=0;e4=(e1=10;e3=10;e2=11;e4=10);EVW:Whi
+ te;BM:NotScanned;FinalVerdict:Clean
+X-CMAE-Analysis: v=2.3 cv=WNfkokkR c=1 sm=1 tr=0 cx=a_idp_e
+ a=ShNidqeCEQB33TAKUUzslw==:117 a=+94oq0dzjs5YbdIDA+8OCg==:17
+ a=uoIxLzx0AAAA:20 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=xqWC_Br6kY4A:10
+ a=y9pAQzHkNQkA:10 a=HsDtDo0tafEA:10 a=IkcTkHD0fZMA:10
+ a=SS2py6AdgQ4A:10 a=X5F7dNyOAAAA:8 a=voM4FWlXAAAA:8 a=peDeANYtAAAA:20
+ a=Uf1ZA7nTt6RLly3dwAIA:9 a=3MccFAHqgLkUUhUR:21 a=NMhp6j3rPC-Spz1q:21
+ a=QEXdDO2ut3YA:10 a=pS7LufLo7ZPxIL5li5Lt:22 a=IC2XNlieTeVoXbcui8wp:22
+X-CM-AcctID: kpn@feedback.cloudmark.com
+Received: from smtp.kpnmail.nl ([195.121.84.11]) by cpsps-ews28.kpnxchange.com
+ over TLS secured channel with Microsoft SMTPSVC(8.5.9600.16384); 
+ Tue, 31 Mar 2020 09:50:46 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=kpnmail.nl; s=kpnmail01;
+ h=mime-version:content-type:message-id:date:subject:to:from;
+ bh=7UhIYlzaUnsS+qu+iKmRnNvbEZRCan/ZpDVEIA5wbGo=;
+ b=Rk44U7UjjvKOKQkurnj41ITqwLI5ptqQdQOEu5542F8sE7+Shw/Lq8STqIwguNdrdrGRpwaMGLwYT
+ KyE2S9763wRMilqxYj7ws280ktTK3nRi4nX7J6JN46aNgvdhAAnj1wpSuPiYUerFFCwuIUScay2ElM
+ +YICtfOU/tb8YWdA=
+X-KPN-VerifiedSender: No
+X-CMASSUN: 33|M3zskjhMfeOhAnyJFOFqEApf6L2lLZc9MVTIL9vNs95WpMZ+riNNzS62qphoRhj
+ KcMvvC8Agy0oUGwnYFLe/vxoIVwQ6xQvfR41DDUqAnz4=
+X-Originating-IP: 84.85.114.86
+Received: from Eltsrv03.Eltan.local (ip54557256.adsl-surfen.hetnet.nl
+ [84.85.114.86]) by smtp.kpnmail.nl (Halon) with ESMTPSA
+ id 54813824-7324-11ea-8c67-00505699b758;
+ Tue, 31 Mar 2020 09:50:46 +0200 (CEST)
+Received: from Eltsrv03.Eltan.local (192.168.100.3) by Eltsrv03.Eltan.local
+ (192.168.100.3) with Microsoft SMTP Server (TLS) id 15.0.847.32; Tue, 31 Mar
+ 2020 09:50:45 +0200
+Received: from Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8]) by
+ Eltsrv03.Eltan.local ([fe80::24e7:1cc6:a76a:a3a8%12]) with mapi id
+ 15.00.0847.040; Tue, 31 Mar 2020 09:50:45 +0200
+From: Wim Vervoorn <wvervoorn@eltan.com>
+To: "Alexander A. Filippov" <a.filippov@yadro.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Any idea of when qemu-system-arm will be supported for
+ https://github.com/Intel-BMC/openbmc ?
+Thread-Topic: Any idea of when qemu-system-arm will be supported for
+ https://github.com/Intel-BMC/openbmc ?
+Thread-Index: AdYEW5g0PNyrWOIxTpaE+uMcwMbtmwCBUasAAAu4poAAA480AAAkqmzg
+Date: Tue, 31 Mar 2020 07:50:45 +0000
+Message-ID: <c2da4dff71364ead835ed5c2cc53a86f@Eltsrv03.Eltan.local>
+References: <1d854d104f3a48dd8f2c3929fc93a68b@SCL-EXCHMB-13.phoenix.com>
+ <20200330161750.GA10520@bbwork.lan>
+In-Reply-To: <20200330161750.GA10520@bbwork.lan>
+Accept-Language: nl-NL, en-US
+Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: 9570A5ACC34BA4E630F0296F2EB59C5FD586C64AB8B69F88D89F5446EF5584F22000:8
-Content-Type: multipart/alternative;
- boundary="_000_5d8c24246ba2413a99eff60aca2a9f71quantatwcom_"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
+X-OriginalArrivalTime: 31 Mar 2020 07:50:46.0244 (UTC)
+ FILETIME=[16454A40:01D60731]
+X-RcptDomain: lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,164 +101,36 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_5d8c24246ba2413a99eff60aca2a9f71quantatwcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
-
-SGkgRXZlcnlvbmUsDQoNCkkgaGF2ZSBzb21lIHByb2JsZW0gYWJvdXQgdGhhdCB3aGVuIGkgdXNp
-bmcgc29tZSBpcG1pIGNvbW1hbmRzLCBpdCB3aWxsIHJldHVybiAiVW5zcGVjaWZpZWQgZXJyb3Ii
-LA0KDQphbmQgYWZ0ZXIgSSB0cmFjaW5nIGNvZGUgaW4gcGhvc2hwb3ItaXBtaS1ob3N0IHBhY2th
-Z2UsIEkgZmluZCB0aGF0IHRoZXJlIGFyZSBzb21lIER1YnMgZG9lc24ndCBjcmVhdGUgaW4gb3Vy
-IG9wZW5ibWMgc3lzdGVtLg0KDQpNb3N0IG9mIHRoZW0gYXJlIG5ldHdvcmsgcmVsYXRpb25hbCBE
-YnVzLCBhbmQgaGVyZSBpcyB0aGUgRGJ1cyBsaXN0IHdoaWNoIGRvIG5vdCBjcmVhdGUgaW4gb3Vy
-IHN5c3RlbToNCg0KDQpOZXR3b3RrOg0KDQp4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuU3lz
-dGVtQ29uZmlndXJhdGlvbg0KeHl6Lm9wZW5ibWNfcHJvamVjdC5OZXR3b3JrLkV0aGVybmV0SW50
-ZXJmYWNlDQp4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuSVANCnh5ei5vcGVuYm1jX3Byb2pl
-Y3QuTmV0d29yay5JUC5DcmVhdGUNCnh5ei5vcGVuYm1jX3Byb2plY3QuTmV0d29yay5NQUNBZGRy
-ZXNzDQp4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuTmVpZ2hib3INCnh5ei5vcGVuYm1jX3By
-b2plY3QuTmV0d29yay5OZWlnaGJvci5DcmVhdGVTdGF0aWMNCnh5ei5vcGVuYm1jX3Byb2plY3Qu
-TmV0d29yay5WTEFODQp4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuVkxBTi5DcmVhdGUNCg0K
-DQpBQ1BJOg0KDQp4eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wuUG93ZXIuQUNQSVBvd2VyU3Rh
-dGUNCg0KDQpDaGFzc2lzIENhcGFiaWxpdGllczoNCg0KeHl6Lm9wZW5ibWNfcHJvamVjdC5Db250
-cm9sLkNoYXNzaXNDYXBhYmlsaXRpZXMNCg0KDQoNCkFuZCBoZXJlIGFyZSBvbmx5IHR3byBuZXR3
-b3JrIHJlbGF0aW9uYWwgRGJ1cyBpbiBvdXIgc3lzdGVtOg0KDQpTZXJ2aWNlIHh5ei5vcGVuYm1j
-X3Byb2plY3QuTmV0d29yazoNCqJ8oncveHl6DQogIKJ8oncveHl6L29wZW5ibWNfcHJvamVjdA0K
-ICAgIKJ8oncveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3JrDQogICAgICCidaJ3L3h5ei9vcGVu
-Ym1jX3Byb2plY3QvbmV0d29yay9jb25maWcNCiAgICAgIKJ4IKJ8oncveHl6L29wZW5ibWNfcHJv
-amVjdC9uZXR3b3JrL2NvbmZpZy9kaGNwDQogICAgICCidaJ3L3h5ei9vcGVuYm1jX3Byb2plY3Qv
-bmV0d29yay9ldGgwDQogICAgICCieCCidaJ3L3h5ei9vcGVuYm1jX3Byb2plY3QvbmV0d29yay9l
-dGgwL2lwdjQNCiAgICAgIKJ4IKJ4IKJ8oncveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3JrL2V0
-aDAvaXB2NC84ZTFiZmEyZg0KICAgICAgonggonyidy94eXovb3BlbmJtY19wcm9qZWN0L25ldHdv
-cmsvZXRoMC9pcHY2DQogICAgICCieCAgIKJ8oncveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3Jr
-L2V0aDAvaXB2Ni9iYzQxZWVmNg0KICAgICAgonWidy94eXovb3BlbmJtY19wcm9qZWN0L25ldHdv
-cmsvZXRoMQ0KICAgICAgonggonWidy94eXovb3BlbmJtY19wcm9qZWN0L25ldHdvcmsvZXRoMS9p
-cHY0DQogICAgICCieCCieCCifKJ3L3h5ei9vcGVuYm1jX3Byb2plY3QvbmV0d29yay9ldGgxL2lw
-djQvMWM0YTE4N2YNCiAgICAgIKJ4IKJ8oncveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3JrL2V0
-aDEvaXB2Ng0KICAgICAgonggICCifKJ3L3h5ei9vcGVuYm1jX3Byb2plY3QvbmV0d29yay9ldGgx
-L2lwdjYvNzNhMmE1ZDANCiAgICAgIKJ1oncveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3JrL3Np
-dDANCiAgICAgIKJ8oncveHl6L29wZW5ibWNfcHJvamVjdC9uZXR3b3JrL3VzYjANCiAgICAgICAg
-onyidy94eXovb3BlbmJtY19wcm9qZWN0L25ldHdvcmsvdXNiMC9pcHY0DQogICAgICAgICAgonyi
-dy94eXovb3BlbmJtY19wcm9qZWN0L25ldHdvcmsvdXNiMC9pcHY0L2NhY2EwZDFkDQoNClNlcnZp
-Y2UgeHl6Lm9wZW5ibWNfcHJvamVjdC5OZXR3b3JrLlNOTVA6DQqifKJ3L3h5eg0KICCifKJ3L3h5
-ei9vcGVuYm1jX3Byb2plY3QNCiAgICCifKJ3L3h5ei9vcGVuYm1jX3Byb2plY3QvbmV0d29yaw0K
-ICAgICAgonyidy94eXovb3BlbmJtY19wcm9qZWN0L25ldHdvcmsvc25tcA0KICAgICAgICCifKJ3
-L3h5ei9vcGVuYm1jX3Byb2plY3QvbmV0d29yay9zbm1wL21hbmFnZXINCg0KDQpBcmUgdGhlcmUg
-c29tZSBwYWNrYWdlcyBpIGxvc2luZyB0byBhZGQgaW50byBvdXIgc3lzdGVtPw0KDQpGZWVsIGZy
-ZWUgdG8gZ2l2ZSB5b3VyIGNvbW1lbnRzLCB0aGFuayB5b3UuDQoNCg0KU2luY2VyZWx5LA0KDQpT
-cGVuY2VyIEt1DQoNCg==
-
---_000_5d8c24246ba2413a99eff60aca2a9f71quantatwcom_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
-n-bottom:0;} --></style>
-</head>
-<body dir=3D"ltr">
-<div id=3D"divtagdefaultwrapper" style=3D"font-size:12pt;color:#000000;font=
--family:Calibri,Helvetica,sans-serif;" dir=3D"ltr">
-<p>Hi Everyone,</p>
-<p>I have some problem about that when i using&nbsp;<span style=3D"font-fam=
-ily: Calibri, Helvetica, sans-serif, EmojiFont, &quot;Apple Color Emoji&quo=
-t;, &quot;Segoe UI Emoji&quot;, NotoColorEmoji, &quot;Segoe UI Symbol&quot;=
-, &quot;Android Emoji&quot;, EmojiSymbols; font-size: 16px;">some ipmi comm=
-ands,
- it</span>&nbsp;will&nbsp;return &quot;Unspecified error&quot;,</p>
-<p>and after I tracing code in&nbsp;phoshpor-ipmi-host package, I find that=
- there are some Dubs doesn't create in our openbmc system.</p>
-<p>Most of them are <span style=3D"font-family: Calibri, Helvetica, sans-se=
-rif, EmojiFont, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, =
-NotoColorEmoji, &quot;Segoe UI Symbol&quot;, &quot;Android Emoji&quot;, Emo=
-jiSymbols; font-size: 16px;">
-network relational Dbus</span><span>, and&nbsp;here is the Dbus list which =
-do not create in our system:</span></p>
-<p><span><b><br>
-</b></span></p>
-<p><span><b>Netwotk:</b></span></p>
-<p><span></span></p>
-<div>xyz.openbmc_project.Network.SystemConfiguration</div>
-<div>xyz.openbmc_project.Network.EthernetInterface</div>
-<div>xyz.openbmc_project.Network.IP</div>
-<div>xyz.openbmc_project.Network.IP.Create</div>
-<div>xyz.openbmc_project.Network.MACAddress</div>
-<div>xyz.openbmc_project.Network.Neighbor</div>
-<div>xyz.openbmc_project.Network.Neighbor.CreateStatic</div>
-<div>xyz.openbmc_project.Network.VLAN</div>
-<div>xyz.openbmc_project.Network.VLAN.Create</div>
-<br>
-<p></p>
-<p><span><b>ACPI:</b></span></p>
-<p><span><span>xyz.openbmc_project.Control.Power.ACPIPowerState</span><br>
-</span></p>
-<p><br>
-</p>
-<p><b>Chassis Capabilities:</b></p>
-<p><span>xyz.openbmc_project.Control.ChassisCapabilities</span><br>
-</p>
-<p><span><br>
-</span></p>
-<p><span><br>
-</span></p>
-<p>And here are&nbsp;only two network relational Dbus in our system:</p>
-<p></p>
-<div><b>Service xyz.openbmc_project.Network:</b></div>
-<div>=A2|=A2w/xyz</div>
-<div>&nbsp; =A2|=A2w/xyz/openbmc_project</div>
-<div>&nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/network</div>
-<div>&nbsp; &nbsp; &nbsp; =A2u=A2w/xyz/openbmc_project/network/config</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2|=A2w/xyz/openbmc_project/network/config/=
-dhcp</div>
-<div>&nbsp; &nbsp; &nbsp; =A2u=A2w/xyz/openbmc_project/network/eth0</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2u=A2w/xyz/openbmc_project/network/eth0/ip=
-v4</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2x =A2|=A2w/xyz/openbmc_project/network/et=
-h0/ipv4/8e1bfa2f</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2|=A2w/xyz/openbmc_project/network/eth0/ip=
-v6</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x&nbsp; &nbsp;=A2|=A2w/xyz/openbmc_project/net=
-work/eth0/ipv6/bc41eef6</div>
-<div>&nbsp; &nbsp; &nbsp; =A2u=A2w/xyz/openbmc_project/network/eth1</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2u=A2w/xyz/openbmc_project/network/eth1/ip=
-v4</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2x =A2|=A2w/xyz/openbmc_project/network/et=
-h1/ipv4/1c4a187f</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x =A2|=A2w/xyz/openbmc_project/network/eth1/ip=
-v6</div>
-<div>&nbsp; &nbsp; &nbsp; =A2x&nbsp; &nbsp;=A2|=A2w/xyz/openbmc_project/net=
-work/eth1/ipv6/73a2a5d0</div>
-<div>&nbsp; &nbsp; &nbsp; =A2u=A2w/xyz/openbmc_project/network/sit0</div>
-<div>&nbsp; &nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/network/usb0</div>
-<div>&nbsp; &nbsp; &nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/network/usb0/=
-ipv4</div>
-<div>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/networ=
-k/usb0/ipv4/caca0d1d</div>
-<div><br>
-</div>
-<div>
-<div><b>Service xyz.openbmc_project.Network.SNMP:</b></div>
-<div>=A2|=A2w/xyz</div>
-<div>&nbsp; =A2|=A2w/xyz/openbmc_project</div>
-<div>&nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/network</div>
-<div>&nbsp; &nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/network/snmp</div>
-<div>&nbsp; &nbsp; &nbsp; &nbsp; =A2|=A2w/xyz/openbmc_project/network/snmp/=
-manager</div>
-</div>
-<br>
-<p></p>
-<p>Are there some packages i losing to add into our system?</p>
-<p><span>Feel free to give your comments,&nbsp;</span><span style=3D"font-s=
-ize: 12pt;">thank you.</span></p>
-<p><span><br>
-</span></p>
-<p><span>Sincerely,</span></p>
-<p><span>Spencer Ku</span></p>
-<p><br>
-</p>
-</div>
-</body>
-</html>
-
---_000_5d8c24246ba2413a99eff60aca2a9f71quantatwcom_--
+SGVsbG8sDQoNCllvdSBjYW4gdXNlIHRoZSBhc3QyNTAwLWV2YiBhcyBhIGJhc2UgdG8gYWRkIGEg
+bW9kZWwgdGhhdCBtYXRjaGVzIHRoZSBXb2xmUGFzcyBjb25maWd1cmF0aW9uIGFzIGNsb3NlbHkg
+YXMgcG9zc2libGUuDQoNClVzdWFsbHksIGl0IHdvcmtzIHF1aXRlIHdlbGwgdG8gbW9kZWwgdGhh
+dCBwYXJ0IG9mIHRoZSBCTUMgdGhhdCB5b3UgYXJlIGRldmVsb3Bpbmcgc29mdHdhcmUgZm9yLiBG
+dWxsIGltcGxlbWVudGF0aW9uIGlzIHBvc3NpYmxlIG9mIGNvdXJzZSBidXQgbW9zdCBsaWtlbHkg
+YSBsb3Qgb2Ygd29yay4NCg0KQmVzdCBSZWdhcmRzLA0KV2ltIFZlcnZvb3JuDQoNCkVsdGFuIEIu
+Vi4NCkFtYmFjaHRzdHJhYXQgMjMNCjU0ODEgU00gU2NoaWpuZGVsDQpUaGUgTmV0aGVybGFuZHMN
+Cg0KVCA6ICszMS0oMCk3My01OTQgNDYgNjQNCkUgOiB3dmVydm9vcm5AZWx0YW4uY29tDQpXIDog
+aHR0cDovL3d3dy5lbHRhbi5jb20NCg0KDQoiVEhJUyBNRVNTQUdFIENPTlRBSU5TIENPTkZJREVO
+VElBTCBJTkZPUk1BVElPTi4gVU5MRVNTIFlPVSBBUkUgVEhFIElOVEVOREVEIFJFQ0lQSUVOVCBP
+RiBUSElTIE1FU1NBR0UsIEFOWSBVU0UgT0YgVEhJUyBNRVNTQUdFIElTIFNUUklDVExZIFBST0hJ
+QklURUQuIElGIFlPVSBIQVZFIFJFQ0VJVkVEIFRISVMgTUVTU0FHRSBJTiBFUlJPUiwgUExFQVNF
+IElNTUVESUFURUxZIE5PVElGWSBUSEUgU0VOREVSIEJZIFRFTEVQSE9ORSArMzEtKDApNzMtNTk0
+NDY2NCBPUiBSRVBMWSBFTUFJTCwgQU5EIElNTUVESUFURUxZIERFTEVURSBUSElTIE1FU1NBR0Ug
+QU5EIEFMTCBDT1BJRVMuIsKgDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBv
+cGVuYm1jIFttYWlsdG86b3BlbmJtYy1ib3VuY2VzK3d2ZXJ2b29ybj1lbHRhbi5jb21AbGlzdHMu
+b3psYWJzLm9yZ10gT24gQmVoYWxmIE9mIEFsZXhhbmRlciBBLiBGaWxpcHBvdg0KU2VudDogTW9u
+ZGF5LCBNYXJjaCAzMCwgMjAyMCA2OjE4IFBNDQpUbzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+DQpTdWJqZWN0OiBSZTogQW55IGlkZWEgb2Ygd2hlbiBxZW11LXN5c3RlbS1hcm0gd2lsbCBiZSBz
+dXBwb3J0ZWQgZm9yIGh0dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJtYyA/DQoNCk9u
+IE1vbiwgTWFyIDMwLCAyMDIwIGF0IDAyOjM1OjU1UE0gKzAwMDAsIEJydWNlIE1pdGNoZWxsIHdy
+b3RlOg0KPiBJIHdhcyBsb29raW5nIGZvciBzb21ldGhpbmcgbGlrZSBhIC1NIHdvbGZwYXNzLWJt
+YyBjb21tYW5kIGxpbmUgb3B0aW9uIA0KPiBsaWtlIFJvbXVsdXMgaGFzIC1NIHJvbXVsdXMtYm1j
+IChzZWUgaGVyZTogDQo+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0
+ZXIvZGV2ZWxvcG1lbnQvZGV2LWVudmlyb25tZW4NCj4gdC5tZCApDQo+IA0KPiBZZXQgSSBmaW5k
+IG5vIHdvbGZwYXNzLCBTMjYwMFdGLCBub3IgSW50ZWwgaW4gdGhlIC1tYWNoaW5lIGhlbHAgbGlz
+dC4gDQo+IChzZWUgYmVsb3cpDQo+IA0KDQpZZXMsIHRoZXJlIGlzIG5vIGZ1bGwgaW1wbGVtZW50
+ZWQgcGxhdGZvcm0uDQoNCkFzIEkga25vdywgdGhlIHdvbGZwYXNzIGJtYyBiYXNlZCBvbiBhc3Bl
+ZWQgYXN0MjUwMCBTb0MuIA0KSSBjYW4ndCByZW1lbWJlciB3aHkgSSBjaG9vc2UgZXhhY3RseSBh
+c3QyNTAwLWV2YiBmb3IgdGhlIHRlc3RzIG9mIHdvbGZwYXNzLg0KUHJvYmFibHkgaXQgd2FzIHJl
+cG9ydGVkIHNvbWV3aGVyZSBpbiB0aGUgaW50ZXJuYWwgZG9jdW1lbnRzLg0KDQpJZiBzb21lb25l
+IGhhcyBvdGhlciBleHBlcmllbmNlIG9yIG1vcmUga25vd2xlZGdlIHBsZWFzZSBzaGFyZSBpdC4N
+Cg0KQWxleGFuZGVyLg0KDQoNCg0KDQo=
