@@ -1,41 +1,46 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED54A1988BC
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 02:15:13 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48rqbL4HkTzDqkd
-	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 11:15:10 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00D11198BA3
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 07:19:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48ryL40KK2zDqmC
+	for <lists+openbmc@lfdr.de>; Tue, 31 Mar 2020 16:19:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Received: from ozlabs.org (bilbo.ozlabs.org [IPv6:2401:3900:2:1::2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48ryKR0hqszDqDP
+ for <openbmc@lists.ozlabs.org>; Tue, 31 Mar 2020 16:18:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Unknown mechanism
- found: ip:192.40.192.88/32) smtp.mailfrom=kernel.crashing.org
- (client-ip=76.164.61.194; helo=kernel.crashing.org;
- envelope-from=benh@kernel.crashing.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=kernel.crashing.org
-Received: from kernel.crashing.org (kernel.crashing.org [76.164.61.194])
+ dmarc=pass (p=none dis=none) header.from=ozlabs.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256
+ header.s=201707 header.b=bNP3CJvX; dkim-atps=neutral
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48rqZM1zM9zDqkh;
- Tue, 31 Mar 2020 11:14:17 +1100 (AEDT)
-Received: from localhost (gate.crashing.org [63.228.1.57])
- (authenticated bits=0)
- by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 02V0DJbF013894
- (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 30 Mar 2020 19:13:23 -0500
-Message-ID: <4dc3ac910c79dcca398eb5161dde44e1cc50baca.camel@kernel.crashing.org>
-Subject: Re: [PATCH v2 6/6] dt-bindings: usb: document aspeed vhub device
- ID/string properties
-From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-To: Rob Herring <robh@kernel.org>, rentao.bupt@gmail.com
-Date: Tue, 31 Mar 2020 11:13:17 +1100
-In-Reply-To: <20200330192347.GA6388@bogus>
-References: <20200315191632.12536-1-rentao.bupt@gmail.com>
- <20200315191632.12536-7-rentao.bupt@gmail.com>
- <20200330192347.GA6388@bogus>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 48ryKQ4cK4z9sPJ;
+ Tue, 31 Mar 2020 16:18:34 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
+ t=1585631914; bh=iyCzwERs6WU3hln8Qbia/iJ1o94JEiRWSxMnXgn9UFE=;
+ h=Subject:From:To:Date:In-Reply-To:References:From;
+ b=bNP3CJvX4XlmOpOAyyRL0iO+dWAoWONH7cuegPKZNxh0icocsHed2pj7WBbsvrm4W
+ uBalajnDosc5hGAjqXusmQeV+Dmejknt63pucAsCnVHcoeSnGS/dzkHXeVdLR3605o
+ CAP777r0EiVR8Wpa4+BidkMpMWy4vELhHitn6nB+Y6qYnphjRuY1dHZjMddA7pGJgm
+ JnEP5DJ4wJspH3LdcPj3xiho41gh2Nw9eIE2vAfVvJSlHXsF9uNOkC+PLGdquMkc9a
+ RCcsG6ZuDv5IVYnt920pQBARdusCARtc3rukGc55mxSobH+fuaCuDEER5vY5jonaph
+ Er1tx3JelJcVg==
+Message-ID: <20fd1439d28e6310d6c4dfc1d98ef4fa63cca794.camel@ozlabs.org>
+Subject: Re: [PATCH linux dev-5.4 v2] fsi: master: Add link_disable function
+From: Jeremy Kerr <jk@ozlabs.org>
+To: Eddie James <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Date: Tue, 31 Mar 2020 13:18:31 +0800
+In-Reply-To: <20200305034641.11426-1-eajames@linux.ibm.com>
+References: <20200305034641.11426-1-eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
 Mime-Version: 1.0
@@ -51,137 +56,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
- linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org,
- Andrew Jeffery <andrew@aj.id.au>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- Stephen Boyd <swboyd@chromium.org>, taoren@fb.com,
- Chunfeng Yun <chunfeng.yun@mediatek.com>,
- Colin Ian King <colin.king@canonical.com>,
- linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2020-03-30 at 13:23 -0600, Rob Herring wrote:
-> On Sun, Mar 15, 2020 at 12:16:32PM -0700, rentao.bupt@gmail.com wrote:
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > Update device tree binding document for aspeed vhub's device IDs and
-> > string properties.
-> > 
-> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> > ---
-> >  No change in v2:
-> >    - the patch is added into the series since v2.
-> > 
-> >  .../bindings/usb/aspeed,usb-vhub.yaml         | 68 +++++++++++++++++++
-> >  1 file changed, 68 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml b/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
-> > index 06399ba0d9e4..5b2e8d867219 100644
-> > --- a/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
-> > +++ b/Documentation/devicetree/bindings/usb/aspeed,usb-vhub.yaml
-> > @@ -52,6 +52,59 @@ properties:
-> >          minimum: 1
-> >          maximum: 21
-> >  
-> > +  vhub-vendor-id:
-> > +    description: vhub Vendor ID
-> > +    allOf:
-> > +      - $ref: /schemas/types.yaml#/definitions/uint32
-> > +      - maximum: 65535
-> > +
-> > +  vhub-product-id:
-> > +    description: vhub Product ID
-> > +    allOf:
-> > +      - $ref: /schemas/types.yaml#/definitions/uint32
-> > +      - maximum: 65535
-> 
-> There's already standard 'vendor-id' and 'device-id' properties. Use 
-> those.
+Hi Eddie,
 
-So yes and no... I don't fundamentally object but keep in mind that
-traditionally, the properties are about matching with a physical
-hardware.
+> The master driver should disable links that don't have slaves or links
+> that fail to be accessed. To do this, add a link_disable function and
+> use it in the failure path for slave break and init.
 
-In this case however, we are describing a virtual piece of HW and so
-those IDs are going to be picked up to be exposed as the USB
-vendor/device of the vhub on the USB bus.
+Concept looks good, but would it work to merge the disable
+functionality with the existing link_enable callback?
 
-Not necessarily an issue but it's more "configuration" than "matching"
-and as such, it might make sense to expose that with a prefix, though I
-would prefer something like usb-vendor-id or usb,vendor-id...
+ie., something like:
 
-> > +
-> > +  vhub-device-revision:
-> 
-> Specific to USB, not vhub.
+--- a/drivers/fsi/fsi-master.h
++++ b/drivers/fsi/fsi-master.h
+@@ -130,6 +130,7 @@ struct fsi_master {
+ 				uint32_t addr, const void *val, size_t size);
+ 	int		(*term)(struct fsi_master *, int link, uint8_t id);
+ 	int		(*send_break)(struct fsi_master *, int link);
+-  	int		(*link_enable)(struct fsi_master *, int link);
++  	int		(*link_enable)(struct fsi_master *, int link, bool enable);
+ 	int		(*link_config)(struct fsi_master *, int link,
+ 				       u8 t_send_delay, u8 t_echo_delay);
 
-Same as the above.
+(and add the bool to the core api too).
 
-> > +    description: vhub Device Revision in binary-coded decimal
-> > +    allOf:
-> > +      - $ref: /schemas/types.yaml#/definitions/uint32
-> > +      - maximum: 65535
-> > +
-> > +  vhub-strings:
-> > +    type: object
-> > +
-> > +    properties:
-> > +      '#address-cells':
-> > +        const: 1
-> > +
-> > +      '#size-cells':
-> > +        const: 0
-> > +
-> > +    patternProperties:
-> > +      '^string@[0-9a-f]+$':
-> > +        type: object
-> > +        description: string descriptors of the specific language
-> > +
-> > +        properties:
-> > +          reg:
-> > +            maxItems: 1
-> > +            description: 16-bit Language Identifier defined by USB-IF
-> > +
-> > +          manufacturer:
-> > +            description: vhub manufacturer
-> > +            allOf:
-> > +              - $ref: /schemas/types.yaml#/definitions/string
-> > +
-> > +          product:
-> > +            description: vhub product name
-> > +            allOf:
-> > +              - $ref: /schemas/types.yaml#/definitions/string
-> > +
-> > +          serial-number:
-> > +            description: vhub device serial number
-> > +            allOf:
-> > +              - $ref: /schemas/types.yaml#/definitions/string
-> 
-> For all of this, it's USB specific, not vhub specific. I'm not sure this 
-> is the right approach. It might be better to just define properties 
-> which are just raw USB descriptors rather than inventing some DT format 
-> that then has to be converted into USB descriptors.
+- as I suspect the logic between enable and disable will be much the
+same, aside from the actual value set.
 
-Raw blob in the DT is rather annoying and leads to hard to parse stuff
-for both humans and scripts. The main strenght of the DT is it's easy
-to read and manipulate.
+Along those lines:
 
-Also not the entire descriptor is configurable this way.
+> --- a/drivers/fsi/fsi-master-aspeed.c
+> +++ b/drivers/fsi/fsi-master-aspeed.c
+> @@ -299,6 +299,20 @@ static int aspeed_master_write(struct fsi_master *master, int link,
+>  	return 0;
+>  }
+>  
+> +static int aspeed_master_link_disable(struct fsi_master *master, int link)
+> +{
+> +	struct fsi_master_aspeed *aspeed = to_fsi_master_aspeed(master);
+> +	int idx, bit;
+> +	__be32 reg;
+> +
+> +	idx = link / 32;
+> +	bit = link % 32;
+> +
+> +	reg = cpu_to_be32(0x80000000 >> bit);
+> +
+> +	return opb_writel(aspeed, ctrl_base + FSI_MCENP0 + (4 * idx), reg);
+> +}
 
-That said, it could be that using  the DT for the above is overkill and
-instead, we should consider a configfs like the rest of USB gadget.
-Though it isn't obvious how to do that, the current gadget stuff
-doesn't really "fit" what we need here.
-
-Maybe we could expose the port as UDCs but not actually expose them on
-the bus until the hub is "activated" via a special configfs entry...
+If we don't need the delay and read-back here, should we drop it from
+enable too?
 
 Cheers,
-Ben.
 
-> os the 
-> Rob
+
+Jeremy
 
