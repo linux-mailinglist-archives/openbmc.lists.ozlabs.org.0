@@ -1,58 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3BBE219B5E1
+	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 20:46:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 059A319B5A4
-	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 20:36:25 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48svzT67przDr10
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 05:36:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48swCT4F11zDr2J
+	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 05:46:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
  envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48svxz6gVlzDr83
- for <openbmc@lists.ozlabs.org>; Thu,  2 Apr 2020 05:35:02 +1100 (AEDT)
-IronPort-SDR: yBS6p/gbse6VNRoOFgRwq/0BppXL5/raCLP3+ZkGGoypzWxnaGs+2w3Kx32DWnoFqPV6833zlo
- vO8fZ2QCEawg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48sw3h4gKHzDr9w
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Apr 2020 05:39:59 +1100 (AEDT)
+IronPort-SDR: EExY2tIc6DfzH2qf2rg8lMfnExHc8FrYDvQQGl2JV0ZcU9uhRK7qMB4NPHrjJcddS6eSOW3BJ+
+ /Rrzivou8lqQ==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Apr 2020 11:34:53 -0700
-IronPort-SDR: sQudz6lpv0a1NmhL6waWvIZnjC9OH1Qa3cIB2X4/K7DAJSQuSNYoGDf8BKi8NkHlOOV3Mpjx+k
- YMhOPsql2A2Q==
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Apr 2020 11:39:56 -0700
+IronPort-SDR: SxCgDGRU1eAhd+P2nV7WRn+i0usmqUyQ3a1XcKaTLV/KYYt8xIla1x7NCEy5iLpoApYa0unQeS
+ vJqIvXNUAl5g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,332,1580803200"; d="scan'208";a="238267623"
+X-IronPort-AV: E=Sophos;i="5.72,332,1580803200"; d="scan'208";a="242823783"
 Received: from linux.intel.com ([10.54.29.200])
- by orsmga007.jf.intel.com with ESMTP; 01 Apr 2020 11:34:33 -0700
+ by orsmga008.jf.intel.com with ESMTP; 01 Apr 2020 11:39:56 -0700
 Received: from [10.212.83.15] (jmbills-mobl.amr.corp.intel.com [10.212.83.15])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
  bits)) (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 07B815803DA
- for <openbmc@lists.ozlabs.org>; Wed,  1 Apr 2020 11:34:32 -0700 (PDT)
-Subject: Re: New repos request
+ by linux.intel.com (Postfix) with ESMTPS id 7845A58077B
+ for <openbmc@lists.ozlabs.org>; Wed,  1 Apr 2020 11:39:56 -0700 (PDT)
+Subject: Re: Can't not find interface "xyz.openbmc_project.Logging.Entry" in
+ intel wolfpass
 To: openbmc@lists.ozlabs.org
-References: <7388c9a0-20da-a9a2-af08-76d3e4aca4f1@linux.intel.com>
- <56BA4944-EF73-40E7-9E16-35A327A2DC9B@fuzziesquirrel.com>
- <723777DD-6CF7-4C46-B79D-BE2AAF66C693@fb.com>
- <da673369-58c1-e64a-72ac-75283ae3c7fc@linux.intel.com>
- <53BBA343-A673-4762-997A-47A26EA1EF36@fb.com>
+References: <472f36ef.d33d.17135999deb.Coremail.zhang_cy1989@163.com>
 From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <e497c65a-7283-f623-2f8f-7a48e3ed6ef7@linux.intel.com>
-Date: Wed, 1 Apr 2020 11:34:32 -0700
+Message-ID: <aa49220a-eb6e-57dc-fbe2-eeb7c6226112@linux.intel.com>
+Date: Wed, 1 Apr 2020 11:39:55 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <53BBA343-A673-4762-997A-47A26EA1EF36@fb.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <472f36ef.d33d.17135999deb.Coremail.zhang_cy1989@163.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -71,67 +68,40 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 3/31/2020 12:58 PM, Vijay Khemka wrote:
+On 4/1/2020 4:56 AM, zhang_cy1989 wrote:
+> Dear All
+>       I use the following command inside BMC, but return empty.
+>       dbus-send --system --print-reply 
+> --dest=xyz.openbmc_project.ObjectMapper 
+> /xyz/openbmc_project/object_mapper 
+> xyz.openbmc_project.ObjectMapper.GetSubTreePaths string:"/" int32:0 
+> array:string:"xyz.openbmc_project.Logging.Entry"
 > 
+> method return time=5896.731621 sender=:1.27 -> destination=:1.141 
+> serial=1425 reply_serial=2
+>     array [
+>     ]
 > 
-> ﻿On 3/31/20, 12:34 PM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
+>      However, I use ipmitool to get sel list in another computer and got 
+> those info:
 > 
->      
->      
->      On 3/31/2020 10:03 AM, Vijay Khemka wrote:
->      > Hi Jason,
->      > Can we get some details about these repos like features, usage.
->      Sure. I will update the ones that I know below but will have to depend
->      on others to add more detail.
->      >
->      > Regards
->      > -Vijay
->      >
->      > On 3/31/20, 8:45 AM, "openbmc on behalf of Brad Bishop" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of bradleyb@fuzziesquirrel.com> wrote:
->      >
->      >      at 4:05 PM, Bills, Jason M <jason.m.bills@linux.intel.com> wrote:
->      >
->      >      > Hi Brad,
->      >      >
->      >      > We're doing some housekeeping and have some code various places that we'd
->      >      > like to move into github.com/openbmc repos.
->      >      >
->      >      > I'd like to request the following four new repos, if possible:
->      >      > host-error-monitor
->      This application will monitor various GPIOs and signals from the host
->      and take the appropriate action when they are detected.  For example,
->      log the event, capture a crashdump, etc.
+>     1 |  Pre-Init  |0000000121| Temperature #0x0b | Lower Non-critical 
+> going low  | Asserted
+>     2 |  Pre-Init  |0000000101| Temperature #0x0b | Lower Non-critical 
+> going low  | Asserted
+>     3 |  Pre-Init  |0000000098| Temperature #0x0b | Lower Non-critical 
+> going low  | Asserted
 > 
-> Why can't we use phosphor-gpio-montor for this. In my understanding, phosphor-gpio-monitor
-> does the same.
-Sorry, I wasn't aware of phosphor-gpio-monitor.  Right now it is all 
-GPIOs, so could probably be done there.  Additional monitoring may be 
-added in the future for non-GPIO signals.
+>     I can't find interface "xyz.openbmc_project.Logging.Entry" and can 
+> get sel list by ipmitool, why?
+In the Intel build, we don't use D-Bus for SEL log entries.  They are 
+instead extracted from the journal by rsyslog and stored in a syslog 
+file under /var/log.
 
->      
->      Will be ported from: https://github.com/Intel-BMC/host-error-monitor
->      
->      >      > libpeci
->      This is a library to provide an interface to the PECI driver.
->      
->      Will be ported from:
->      https://github.com/Intel-BMC/provingground/tree/master/libpeci
->      
->      >      > pfr-manager
->      Will be ported from:
->      https://github.com/Intel-BMC/provingground/tree/master/intel-pfr-manager
->      
->      >      > service-config-manager
->      Will be ported from:
->      https://github.com/Intel-BMC/provingground/tree/master/srvcfg-manager
->      
->      >      >
->      >      > Please let me know if you have any questions.  Thanks!
->      >      > -Jason
->      >
->      >      done!
->      Thanks, Brad!
->      >
->      >
->      
+>     Who could help me? waiting for you.
+>     Thanks
+> 
+> BR
+> Felix
+> 
 > 
