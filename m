@@ -1,85 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B962219B77A
-	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 23:17:36 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48szYV23tZzDr1r
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 08:17:34 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BB4619B7E7
+	for <lists+openbmc@lfdr.de>; Wed,  1 Apr 2020 23:50:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48t0HJ6TdVzDqWQ
+	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 08:50:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=Hpd3kWwD; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=EeaKLSnd; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48szXW1GgszDr3T
- for <openbmc@lists.ozlabs.org>; Thu,  2 Apr 2020 08:16:42 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 031L2oIx125091; Wed, 1 Apr 2020 17:16:39 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 304edxbgfq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Apr 2020 17:16:39 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 031LE7af004966;
- Wed, 1 Apr 2020 21:16:39 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma04dal.us.ibm.com with ESMTP id 301x76vwcj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 01 Apr 2020 21:16:39 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 031LGbWf45613324
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 1 Apr 2020 21:16:37 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C226D6A054;
- Wed,  1 Apr 2020 21:16:37 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 950C16A047;
- Wed,  1 Apr 2020 21:16:37 +0000 (GMT)
-Received: from [9.163.16.235] (unknown [9.163.16.235])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
- Wed,  1 Apr 2020 21:16:37 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.4] ARM: dts: Aspeed: Tacoma: Add iio-hwmon
- nodes for IIO devices
-To: Joel Stanley <joel@jms.id.au>
-References: <20200330211430.13064-1-eajames@linux.ibm.com>
- <CACPK8XcSvozg23MzbAoJP85ACnCvc8Hx6sFC7ye8BNR71=L6KQ@mail.gmail.com>
- <699bee76-27fa-c3ec-128e-e58b66505234@linux.ibm.com>
- <4f2afaa3-aee2-8034-7536-7e53418856d0@linux.ibm.com>
- <CACPK8Xdd42yAL1LEU2OpVLSQc0TUwCrC1-fU=NcwKBRvTY7CUw@mail.gmail.com>
-From: Eddie James <eajames@linux.ibm.com>
-Message-ID: <232361cb-8652-cbe3-5e38-ab210276a739@linux.ibm.com>
-Date: Wed, 1 Apr 2020 16:16:37 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.5.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48szvH3QtWzDqWb
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Apr 2020 08:32:58 +1100 (AEDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id D63865C034D;
+ Wed,  1 Apr 2020 17:32:54 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Wed, 01 Apr 2020 17:32:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:mime-version:content-type; s=
+ fm1; bh=TgUDlSiUkIzg/5/lHLvBsGgUKzeodAY6mLveysgjJ9U=; b=Hpd3kWwD
+ mIvuob2XB5nZDf2/6gbGWVUzA9pFxLCH8C/XpecRUCbSwltfflAREbVRKFNucNIi
+ FrJvwEvpIz2fPc1wPQw7k7YDBkG2pcOkA2fiPBYgUyaYV8Bh2dAuVbfDOLji03KF
+ pt7oEgsefb4sbu23tjzXQw+rzWa/cE2PX8DeWCXV7M/sO4349iweWj42y1wBTCrW
+ Gt3/f7Z5G46UibluFn6L0cVve77MAsHJ22C9kevgMPQ9KN2Mtwaw0WfiKvPbddSy
+ I2O6y4F6honPqQinvSqHInFmyxinEytISxaSz51G9buy7sKTuIxdp8xzejEfqBm7
+ 8VzrDn9ygjhbTw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm2; bh=TgUDlSiUkIzg/5/lHLvBsGgUKzeod
+ AY6mLveysgjJ9U=; b=EeaKLSndeAD5rAUrQCYbxVPH4q1LW21vaa+FIjswJXTNr
+ lcM1RS8ueCuTGL/SJ5k/nYanSLfwuzdfMuz3bBywzIN5OZLLEFTyvC7mi7+q9URp
+ kHLwPS3gguIAAMbexBbTo72vHuyF6C9gtxDoT0/bKdJqNkLre8v7xQLBAclk+54T
+ PHhA/oMSTiCRZYvjnfN7tJ9khpwaZvMM0MYvpssg5jZQIwCAIp51UOETGrHkUOwt
+ z3lrmrhlCftM+GZ63JfLB3aC8yy5PEvVJPZGLaOsyoaQlzbf070T1+DaV77dzrLv
+ Fa2W55GIq86ngkZ2o7JD8dHv3i4UsWq1FNKKz0SLw==
+X-ME-Sender: <xms:hQiFXgHcIt8_NWPTB5AALo70nryYBsNQ_jW8Hnfo6u28Y5nav3OFXQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrtdefucetufdoteggodetrfdotffvucfrrh
+ hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
+ lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrhhluc
+ fvnfffucdljedtmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvdenucfhrhho
+ mheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgi
+ ihiieqnecukfhppeduieeirddujedvrdduvdefrddvvdehnecuvehluhhsthgvrhfuihii
+ vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgi
+ ihii
+X-ME-Proxy: <xmx:hQiFXgMOzmzFT27IPaZ--BHRJe-F4wY5sT5PgCzOvA_-etFx4c0HGg>
+ <xmx:hQiFXnEqqAPXaIuEcj5hHPgxjzEbZsRh8vhDNV35f-HKMDS6ZGY9aA>
+ <xmx:hQiFXvOhujBfaexwdLi4mEr9jN3Yo_2a_92CIcnJ9gCMfg3LN-tScA>
+ <xmx:hgiFXsU8Amz947ImxBBbI09M_fT47X2Qh2kyGJbx_gZsx0srxERsxg>
+Received: from localhost (mobile-166-172-123-225.mycingular.net
+ [166.172.123.225])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 550FC3280060;
+ Wed,  1 Apr 2020 17:32:53 -0400 (EDT)
+Date: Wed, 1 Apr 2020 16:32:51 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: openbmc@lists.ozlabs.org
+Subject: Dead machines?
+Message-ID: <20200401213251.GA580847@heinlein.lan.stwcx.xyz>
 MIME-Version: 1.0
-In-Reply-To: <CACPK8Xdd42yAL1LEU2OpVLSQc0TUwCrC1-fU=NcwKBRvTY7CUw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-01_04:2020-03-31,
- 2020-04-01 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0
- phishscore=0 impostorscore=0 mlxlogscore=999 lowpriorityscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 mlxscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004010170
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="y0ulUmNC+osPPQO6"
+Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,30 +89,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Patrick Venture <venture@google.com>, Yuan Yao <yao.yuan@hxt-semitech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 4/1/20 4:15 PM, Joel Stanley wrote:
-> On Wed, 1 Apr 2020 at 19:39, Eddie James <eajames@linux.ibm.com> wrote:
->>
->> On 4/1/20 1:57 PM, Eddie James wrote:
->>> On 3/30/20 4:36 PM, Joel Stanley wrote:
->>>> On Mon, 30 Mar 2020 at 21:14, Eddie James <eajames@linux.ibm.com> wrote:
->>>>> Connect the BMP280 and DPS310 to the hwmon subsystem with iio-hwmon
->>>>> nodes.
->>>> The BMP280 was on pre-production witherspoons. I imagine most of the
->>>> ones we're using have dps310. Can we drop the bmp280 support?
->>>
->>> Yes, sent a new patch for that, so this one can be abandoned.
->>
->> Nevermind... This one is better, because the device is physically there
->> on all the Tacomas I've checked. It's also present in the regular old
->> Witherspoon devicetree.
-> Sorry, I don't follow. The machines have both the DPS and the BMP?
+--y0ulUmNC+osPPQO6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+Hello,
 
-Yep.
+As part of the python2 -> 3 transition, I was looking for recipes that are
+still have a "inherit pythonnative" line to see how much farther we have
+until python2 is eliminated.
 
+I came across two machines that have recipes using the very old
+"config-in-skeleton" feature and include python2 machine configuration
+scripts.  Running python 2to3 on the contained scripts give parsing errors
+even.
 
+Do these machines even build and run anymore?  Is anyone planning to mainta=
+in
+them, or should we delete them?  The last time either meta was touched
+in a meaningful way was a year ago.
+
+=2E/meta-hxt/meta-stardragon4800-rep2/recipes-phosphor/workbook/stardragon4=
+800-rep2-config.bb
+=2E/meta-qualcomm/meta-centriq2400-rep/recipes-phosphor/workbook/centriq240=
+0-rep-config.bb
+
+--=20
+Patrick Williams
+
+--y0ulUmNC+osPPQO6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6FCIEACgkQqwNHzC0A
+wRn84BAAkqfyDrDXG5mGJhvuy7jzngw9taJ0MKK4n7MnubWJeAWKnbapIS1M9RxJ
+Be1wQB5CYxKeSup8/VlDKrGNeSM6MWwV0R7k1dzwtyI+nRyenCRxLOtgngSVLgHP
+N0PT08cyuQcdtMLOm6qP+Ssd3+hrV1cKhJJyz5UqZlNp5p6sSOEhal9yjWxVaNwd
+cSMWOOq8gNYq4PLLH81GvSCc73XBsRcTjGuuic6E0q27IilkT+oCNenY7X3f/rA4
+1/66l0VHkH3BOtVLGGTnhTRhFcPxoXZJNmM1C4Zxr57UZWvOEnn0/BY3/Cb1XaO1
+WUFLUH7j48JrNRyeRkwO6hHkX7N+++6dbVbK3N5Xqupn2ADl+XLqvDxGOOOOXpMi
+Ar1GYpbj0aZmXvhkDO/4/xl3Kt4y3KxWEh0WS5eTSyiZ8bE8lj0ggJ1SrRYYVM2+
+fmRkOTikcMFu5H0QXmCdexA1PqjjbgcqvB+1WWd18U3u722bQR7xlB/ZZIX9LviN
+aYFtn8bQzYXxo0h8IoCo+6rNH/0d1cQuAaLt8hIh27cl6fTbaMdzZGDZteP6BLdW
+dkvwq1ICEQStZHZhBLeekVTd4VEa366XfYSRAakVewdbjkmE6wC1wUrdZ9OYA/CW
+hF4CzXYiH7Rq6E2X+gB/G9LoviHWfDgQJnaleyhejj2pBD3G9w8=
+=f9nd
+-----END PGP SIGNATURE-----
+
+--y0ulUmNC+osPPQO6--
