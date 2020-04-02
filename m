@@ -1,57 +1,126 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 076C319EEF8
+	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 02:56:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1768419C68C
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 17:56:46 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48tSNq2b4gzDqML
-	for <lists+openbmc@lfdr.de>; Fri,  3 Apr 2020 02:56:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48wXDX1VwhzDqQt
+	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 10:56:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
+ (client-ip=148.163.147.86; helo=mx0a-002e3701.pphosted.com;
+ envelope-from=prvs=0361987b65=jonathan.hilliard@hpe.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=hpe.com
+X-Greylist: delayed 2042 seconds by postgrey-1.36 at bilbo;
+ Fri, 03 Apr 2020 03:35:01 AEDT
+Received: from mx0a-002e3701.pphosted.com (mx0a-002e3701.pphosted.com
+ [148.163.147.86])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48tSBt2C30zDrWV
- for <openbmc@lists.ozlabs.org>; Fri,  3 Apr 2020 02:48:05 +1100 (AEDT)
-IronPort-SDR: MiKA5SgzmO9Ndmdzp8y7wk/hvALv+bFnBDgRNsaMsycJdjI90Xmiwycpt7WO6+nkMNnL6J2P+J
- EozWa9eTUNAw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2020 08:48:02 -0700
-IronPort-SDR: WIpUA4OOrkzReJ64RdIJjzCC0jtp9PZKbc8NeRu2+zZmjNjdfAX3CLhjYuu9tE6yRc9YMnNwzy
- BkCJs/sTNgwg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,336,1580803200"; d="scan'208";a="450972026"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga006.fm.intel.com with ESMTP; 02 Apr 2020 08:48:01 -0700
-Received: from [10.251.12.50] (jmbills-mobl.amr.corp.intel.com [10.251.12.50])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
- bits)) (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 973EC5802C8;
- Thu,  2 Apr 2020 08:48:01 -0700 (PDT)
-Subject: Re: openbmc Digest, Vol 56, Issue 11
-To: zhang_cy1989 <zhang_cy1989@163.com>, openbmc@lists.ozlabs.org
-References: <mailman.2145.1585766879.27067.openbmc@lists.ozlabs.org>
- <27868164.25af.17138893c91.Coremail.zhang_cy1989@163.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <c9a7eb65-b910-fe41-e49a-22c6f059b572@linux.intel.com>
-Date: Thu, 2 Apr 2020 08:48:01 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <27868164.25af.17138893c91.Coremail.zhang_cy1989@163.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48tTF14HmJzDqv6
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Apr 2020 03:34:57 +1100 (AEDT)
+Received: from pps.filterd (m0134420.ppops.net [127.0.0.1])
+ by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 032FxvH3012701; Thu, 2 Apr 2020 16:00:55 GMT
+Received: from g4t3426.houston.hpe.com (g4t3426.houston.hpe.com
+ [15.241.140.75])
+ by mx0b-002e3701.pphosted.com with ESMTP id 305jh40d75-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2020 16:00:54 +0000
+Received: from G2W6310.americas.hpqcorp.net (g2w6310.austin.hp.com
+ [16.197.64.52])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by g4t3426.houston.hpe.com (Postfix) with ESMTPS id D914D67;
+ Thu,  2 Apr 2020 16:00:53 +0000 (UTC)
+Received: from G1W8108.americas.hpqcorp.net (2002:10c1:483c::10c1:483c) by
+ G2W6310.americas.hpqcorp.net (2002:10c5:4034::10c5:4034) with Microsoft SMTP
+ Server (TLS) id 15.0.1497.2; Thu, 2 Apr 2020 16:00:35 +0000
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (15.241.52.11) by
+ G1W8108.americas.hpqcorp.net (16.193.72.60) with Microsoft SMTP
+ Server (TLS)
+ id 15.0.1497.2 via Frontend Transport; Thu, 2 Apr 2020 16:00:35 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=K3N4G1oq1GNRYiAHjXKC43qda8U+mdE8PF5N9K9rzs2cGJaBEXlU2GIrlnlawsJbKcdFnwmZBwtDzWyI6Bi9bnC4XUIdVAz6LzP0Lsv2smJmbTIfs+hATO0tNT98rsMTyGE1Megq5XXLG7QsKIY9Z6skaJyTrptRXsk6zF5O72gbAesiCyym+0LhH3AQb9ce0Vp1DZjZr3X4Yrs0e5EIGLNoHPdRroWX7JtN06g8vXYiktLQs/xMsX197u36O3e05hkaUPeTFezS0fLVO8Qtqim+Q+T+dG8qZoG1HQE60EsGhxHH1VSWwbX3bhgB+zH82GDq5Nq5oU1OtRLIgzjjOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b7A8+FKNWqLFWejJ3M5aD46hFsBCnatDi2COICYWVbg=;
+ b=aiPs8/ayorUH3ZmK29t2RMhvK2E6Ttyr6+trH+bSiUQ1QROPK9ljNMQw1ZEZyiOI9ccI4BAjIgsFcMQPogP071l2Dq2kCHaOKA/MWU2o0l2O7EzkQD2O82q8Eeml3UKCmVhLLIQKuoaZYZ1CfkSNHCUxBZrPZgz6YqwH0jbg0EZeNQmQdOWenU5UzSsY2PQZnuUGEqt9eZUjTlbrcSnt8MIzxERtguKgNEK2KCfII2QehXbQQHoeXH5tKeda4Nj2mc1Z/CSLYqvXBpgOwvbppLXfrq3mY4nmT6jjzctF9VdkLNu/da7NgpbRW5/FuGNUPmZQNYahXn90YA1HkWH3qw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
+ header.d=hpe.com; arc=none
+Received: from DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM
+ (2a01:111:e400:7610::17) by DF4PR8401MB1017.NAMPRD84.PROD.OUTLOOK.COM
+ (2a01:111:e400:760f::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2878.16; Thu, 2 Apr
+ 2020 16:00:33 +0000
+Received: from DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::c187:2fb7:3ffb:2281]) by DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::c187:2fb7:3ffb:2281%3]) with mapi id 15.20.2856.019; Thu, 2 Apr 2020
+ 16:00:33 +0000
+From: "Hilliard, Jonathan Blake" <jonathan.hilliard@hpe.com>
+To: =?iso-8859-2?Q?Adrian_Ambro=BFewicz?= <adrian.ambrozewicz@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: Redfish events?
+Thread-Topic: Redfish events?
+Thread-Index: AdYIWczd/g4PtFD6RCGTifuCN8tASAAZuaCAABHEgwA=
+Date: Thu, 2 Apr 2020 16:00:33 +0000
+Message-ID: <DF4PR8401MB1177EE5A5955E3C343757918E0C60@DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM>
+References: <DF4PR8401MB1177ED2C2AA795CF251570EAE0C90@DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM>
+ <c866c2b0-cc27-c5c3-3ff1-3d467ee5b8a0@linux.intel.com>
+In-Reply-To: <c866c2b0-cc27-c5c3-3ff1-3d467ee5b8a0@linux.intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [76.186.127.143]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: a515fb59-5bfe-447e-d0c4-08d7d71ef99f
+x-ms-traffictypediagnostic: DF4PR8401MB1017:
+x-microsoft-antispam-prvs: <DF4PR8401MB10171A479B347F712915441EE0C60@DF4PR8401MB1017.NAMPRD84.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:2000;
+x-forefront-prvs: 0361212EA8
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(10019020)(366004)(376002)(346002)(396003)(39860400002)(136003)(52536014)(7696005)(6506007)(966005)(5660300002)(19627235002)(8676002)(8936002)(81166006)(4744005)(86362001)(7116003)(2906002)(316002)(71200400001)(53546011)(33656002)(110136005)(66946007)(66556008)(76116006)(186003)(66446008)(64756008)(66476007)(81156014)(478600001)(55016002)(9686003)(3480700007)(26005);
+ DIR:OUT; SFP:1102; 
+received-spf: None (protection.outlook.com: hpe.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Yl47p/k5oDce+zGyMHbO5e5H0y98RVsM/+6B2JC4VDqHzGclapIqHGgnx42Nerif8dhEFRZ9SlenVHh0QAkbkwET6FzyAlIH8YnqgLy7nRq7AIZiFjyK2rT9cuOMWVREDzV8lKC3a9AG9fDAcEUCFXLg9XkJO5q71BVoUdjbqlI0aE20eo4ZEbasEL4k8WJ7WDa2WdenKzN3/C0Yu55WrM763o3fM887vZba9cusr8Ifym6masLlWPCr9XMtsJ7ZTdbVA3Y3Fco6nc+V+JP4xiGHhcWYQvf2ZXsWqViHUCS/wylRlWs/wUYHQDW/NBLmwvGR5+phrFzwj7rMvCPkXXFPznSlJpI9vNfaru6OD0cyAaQSmqwKYBzeKx5N4bj5/H4AsTbfVayxVfKfXm9QQzeM0iHIln0++PSDkN9GaMgN5xSCZ+lq8wS5ubI4PfKDhWxcD0y2ihqRYXnNz4GjAvDeerp2+sTbUv8g1ertO3mRQZI4+wwgjUsLRl+wDyumwXMEBgsc8mmQHL5ug1edNA==
+x-ms-exchange-antispam-messagedata: eJgmMgKfkEYjtA+Lb6LBhXNGwJg3Z+aG3iBybKUuVYatSsDemNR83mSl9o5XGkOzp1x5s1YtVH7mV+1QjyjuhjkU6a4oBZ7qBgP0jSAXXTPTriepsBqlZQm8WkYTMq1cOxJqvfpcuCrHXqDS3dSoZg==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-2"
+X-MS-Exchange-CrossTenant-Network-Message-Id: a515fb59-5bfe-447e-d0c4-08d7d71ef99f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Apr 2020 16:00:33.1896 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: OQSvYFZnxOwGIHEtZOKzMeV0OrGZFts77xs2emdnyzK4E5AWbyqMRBb6MfxcbGJ2agFJT65bAWFmmaPrVlO6rNMHkspabOOU5f/dTxLC2xY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DF4PR8401MB1017
+X-OriginatorOrg: hpe.com
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 1 URL was un-rewritten
+MIME-Version: 1.0
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-02_06:2020-04-02,
+ 2020-04-02 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxlogscore=689
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004020131
+X-Mailman-Approved-At: Mon, 06 Apr 2020 10:53:32 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,293 +135,30 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+EventService is what I was looking for. Thanks!
+
+-----Original Message-----
+From: Adrian Ambro=BFewicz [mailto:adrian.ambrozewicz@linux.intel.com]=20
+Sent: Thursday, April 2, 2020 2:31 AM
+To: Hilliard, Jonathan Blake <jonathan.hilliard@hpe.com>; openbmc@lists.ozl=
+abs.org
+Subject: Re: Redfish events?
+
+What exact events do you mean?
+
+EventService is currently in the review https://gerrit.openbmc-project.xyz/=
+c/openbmc/bmcweb/+/24889=20
+
+/redfish/v1/Systems/system/LogServices/EventLog is already implemented and =
+supports proper proper MessageRegistry files.=20
+https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in=
+-bmcweb.md
+
+Regards,
+Adrian
 
 
-On 4/1/2020 6:37 PM, zhang_cy1989 wrote:
-> Dear Jason
-> 
->>In the Intel build, we don't use D-Bus for SEL log entries.  They are  >instead extracted from the journal by rsyslog and stored in a syslog 
->  >file under /var/log.
-> 
-> I am still confused.
-> Could you give me more info how  SEL works in the intel build?
-> 
-> I trace the SEL commands in phosphor-ipmi-host, including:
-> Get SEL info
-> Get SEL Entry
-> Delete SEL Entry...
-> 
-> Those commands need interface:xyz.openbmc_project.Logging.Entry.
-> And get object paths by GetSubTreePaths method.
-> 
-> I don't know how those commands return results in the intel build?
-> Can you give me any further tips?
-These commands are overridden in intel-ipmi-oem to get the SEL entry 
-from /var/log instead of D-Bus.
-
-For example, Get SEL Entry is overridden here:
-https://github.com/openbmc/intel-ipmi-oem/blob/master/src/storagecommands.cpp#L827.
-
-> 
-> Thanks
-> BR
-> Felix
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> 
-> At 2020-04-02 02:47:59, openbmc-request@lists.ozlabs.org wrote:
->>Send openbmc mailing list submissions to
->>	openbmc@lists.ozlabs.org
->>
->>To subscribe or unsubscribe via the World Wide Web, visit
->>	https://lists.ozlabs.org/listinfo/openbmc
->>or, via email, send a message with subject or body 'help' to
->>	openbmc-request@lists.ozlabs.org
->>
->>You can reach the person managing the list at
->>	openbmc-owner@lists.ozlabs.org
->>
->>When replying, please edit your Subject line so it is more specific
->>than "Re: Contents of openbmc digest..."
->>
->>
->>Today's Topics:
->>
->>   1. OpenBMC Janitor/Gardener (Richard Hanley)
->>   2. Re: New repos request (Bills, Jason M)
->>   3. Re: Can't not find interface
->>      "xyz.openbmc_project.Logging.Entry" in intel wolfpass (Bills, Jason M)
->>   4. Re: OpenBMC Janitor/Gardener (Vijay Khemka)
->>
->>
->>----------------------------------------------------------------------
->>
->>Message: 1
->>Date: Wed, 1 Apr 2020 10:34:53 -0700
->>From: Richard Hanley <rhanley@google.com>
->>To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
->>Subject: OpenBMC Janitor/Gardener
->>Message-ID:
->>	<CAH1kD+ans6=BbPP9Sut7OQC3Fdt_=+=QEgzyFgyPa_9vwLS0TQ@mail.gmail.com>
->>Content-Type: text/plain; charset="utf-8"
->>
->>Hi,
->>
->>I was recently looking into the linux kernel introduction, and I noticed
->>the kernel janitors https://kernelnewbies.org/KernelJanitors.  It seems
->>like a pretty interesting idea, and I've been thinking about janitorial
->>tasks in OpenBMC.
->>
->>For some context, we've had a handful of new developers join recently, and
->>I've been looking for some small refactoring projects that they could work
->>on upstream.
->>
->>So I guess there are two parts to this email.  First does anyone have some
->>bite sized improvement task that's been on their wishlist, but there hasn't
->>been anyone around to work on it.  (In particular things around bmcweb and
->>phosphor dbus interfaces would be appreciated).
->>
->>The other thing is, what do people think would be the best way to publicize
->>these kinds of refactoring/janitorial/gardening tasks. One way would be to
->>create a *gardening* tag in the github issues.  That way people can set up
->>filters for ideas that experts think are a good idea, but probably won't
->>need deep design discussions to get started.
->>
->>Another way would be to have a monthly/quarterly wishlist gathering on the
->>mailing list.  That way we have some dedicated time to discuss issues of
->>the day, and put them together into a markdown document (like a per project
->>version of the security group wishlist
->>https://github.com/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list
->>)
->>
->>Maybe this is already happening, and I just haven't noticed it.  Anywho,
->>hope you are all doing well.
->>
->>Cheers,
->>Richard
->>-------------- next part --------------
->>An HTML attachment was scrubbed...
->>URL: <http://lists.ozlabs.org/pipermail/openbmc/attachments/20200401/c3be5db8/attachment-0001.htm>
->>
->>------------------------------
->>
->>Message: 2
->>Date: Wed, 1 Apr 2020 11:34:32 -0700
->>From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
->>To: openbmc@lists.ozlabs.org
->>Subject: Re: New repos request
->>Message-ID: <e497c65a-7283-f623-2f8f-7a48e3ed6ef7@linux.intel.com>
->>Content-Type: text/plain; charset=utf-8; format=flowed
->>
->>
->>
->>On 3/31/2020 12:58 PM, Vijay Khemka wrote:
->>> 
->>> 
->>> ?On 3/31/20, 12:34 PM, "openbmc on behalf of Bills, Jason M" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jason.m.bills@linux.intel.com> wrote:
->>> 
->>>      
->>>      
->>>      On 3/31/2020 10:03 AM, Vijay Khemka wrote:
->>>      > Hi Jason,
->>>      > Can we get some details about these repos like features, usage.
->>>      Sure. I will update the ones that I know below but will have to depend
->>>      on others to add more detail.
->>>      >
->>>      > Regards
->>>      > -Vijay
->>>      >
->>>      > On 3/31/20, 8:45 AM, "openbmc on behalf of Brad Bishop" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of bradleyb@fuzziesquirrel.com> wrote:
->>>      >
->>>      >      at 4:05 PM, Bills, Jason M <jason.m.bills@linux.intel.com> wrote:
->>>      >
->>>      >      > Hi Brad,
->>>      >      >
->>>      >      > We're doing some housekeeping and have some code various places that we'd
->>>      >      > like to move into github.com/openbmc repos.
->>>      >      >
->>>      >      > I'd like to request the following four new repos, if possible:
->>>      >      > host-error-monitor
->>>      This application will monitor various GPIOs and signals from the host
->>>      and take the appropriate action when they are detected.  For example,
->>>      log the event, capture a crashdump, etc.
->>> 
->>> Why can't we use phosphor-gpio-montor for this. In my understanding, phosphor-gpio-monitor
->>> does the same.
->>Sorry, I wasn't aware of phosphor-gpio-monitor.  Right now it is all 
->>GPIOs, so could probably be done there.  Additional monitoring may be 
->>added in the future for non-GPIO signals.
->>
->>>      
->>>      Will be ported from: https://github.com/Intel-BMC/host-error-monitor
->>>      
->>>      >      > libpeci
->>>      This is a library to provide an interface to the PECI driver.
->>>      
->>>      Will be ported from:
->>>      https://github.com/Intel-BMC/provingground/tree/master/libpeci
->>>      
->>>      >      > pfr-manager
->>>      Will be ported from:
->>>      https://github.com/Intel-BMC/provingground/tree/master/intel-pfr-manager
->>>      
->>>      >      > service-config-manager
->>>      Will be ported from:
->>>      https://github.com/Intel-BMC/provingground/tree/master/srvcfg-manager
->>>      
->>>      >      >
->>>      >      > Please let me know if you have any questions.  Thanks!
->>>      >      > -Jason
->>>      >
->>>      >      done!
->>>      Thanks, Brad!
->>>      >
->>>      >
->>>      
->>> 
->>
->>
->>------------------------------
->>
->>Message: 3
->>Date: Wed, 1 Apr 2020 11:39:55 -0700
->>From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
->>To: openbmc@lists.ozlabs.org
->>Subject: Re: Can't not find interface
->>	"xyz.openbmc_project.Logging.Entry" in intel wolfpass
->>Message-ID: <aa49220a-eb6e-57dc-fbe2-eeb7c6226112@linux.intel.com>
->>Content-Type: text/plain; charset=UTF-8; format=flowed
->>
->>
->>
->>On 4/1/2020 4:56 AM, zhang_cy1989 wrote:
->>> Dear All
->>>  ???? I use the following command inside BMC, but return empty.
->>>  ???? dbus-send --system --print-reply 
->>> --dest=xyz.openbmc_project.ObjectMapper 
->>> /xyz/openbmc_project/object_mapper 
->>> xyz.openbmc_project.ObjectMapper.GetSubTreePaths string:"/" int32:0 
->>> array:string:"xyz.openbmc_project.Logging.Entry"
->>> 
->>> method return time=5896.731621 sender=:1.27 -> destination=:1.141 
->>> serial=1425 reply_serial=2
->>>  ?? array [
->>>  ?? ]
->>> 
->>>  ??? However, I use ipmitool to get sel list in another computer and got 
->>> those info:
->>> 
->>>  ?? 1 |? Pre-Init? |0000000121| Temperature #0x0b | Lower Non-critical 
->>> going low? | Asserted
->>>  ?? 2 |? Pre-Init? |0000000101| Temperature #0x0b | Lower Non-critical 
->>> going low? | Asserted
->>>  ?? 3 |? Pre-Init? |0000000098| Temperature #0x0b | Lower Non-critical 
->>> going low? | Asserted
->>> 
->>>  ?? I can't find interface "xyz.openbmc_project.Logging.Entry" and can 
->>> get sel list by ipmitool, why?
->>In the Intel build, we don't use D-Bus for SEL log entries.  They are 
->>instead extracted from the journal by rsyslog and stored in a syslog 
->>file under /var/log.
->>
->>>  ?? Who could help me? waiting for you.
->>>  ?? Thanks
->>> 
->>> BR
->>> Felix
->>> 
->>> 
->>
->>
->>------------------------------
->>
->>Message: 4
->>Date: Wed, 1 Apr 2020 18:47:39 +0000
->>From: Vijay Khemka <vijaykhemka@fb.com>
->>To: Richard Hanley <rhanley@google.com>, OpenBMC Maillist
->>	<openbmc@lists.ozlabs.org>
->>Subject: Re: OpenBMC Janitor/Gardener
->>Message-ID: <F7B1155E-705F-402C-A60B-3C7B39E2675C@fb.com>
->>Content-Type: text/plain; charset="utf-8"
->>
->>Hi Richard,
->>Thanks for starting this introduction, I have been also thinking in the same line as having a wishlist per project and we can consolidate it to create pool of small project which can be grabbed by anyone who is interested in contributing. This will also reduce duplication of effort  by multiple people, it can be a common implementation.
->>
->>Regards
->>-Vijay
->>
->>From: openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> on behalf of Richard Hanley <rhanley@google.com>
->>Date: Wednesday, April 1, 2020 at 10:37 AM
->>To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
->>Subject: OpenBMC Janitor/Gardener
->>
->>Hi,
->>
->>I was recently looking into the linux kernel introduction, and I noticed the kernel janitors https://kernelnewbies.org/KernelJanitors<https://urldefense.proofpoint.com/v2/url?u=https-3A__kernelnewbies.org_KernelJanitors&d=DwMFaQ&c=5VD0RTtNlTh3ycd41b3MUw&r=v9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&m=ZzfBQAzaR2vYWK6uVXgOWlcVJRWLg9NTsMm_dxgs4mY&s=rkRy56V3ybhJpI_crtyC3Kwqr2-2tMy6Lky2fIzvYaE&e=>.  It seems like a pretty interesting idea, and I've been thinking about janitorial tasks in OpenBMC.
->>
->>For some context, we've had a handful of new developers join recently, and I've been looking for some small refactoring projects that they could work on upstream.
->>
->>So I guess there are two parts to this email.  First does anyone have some bite sized improvement task that's been on their wishlist, but there hasn't been anyone around to work on it.  (In particular things around bmcweb and phosphor dbus interfaces would be appreciated).
->>
->>The other thing is, what do people think would be the best way to publicize these kinds of refactoring/janitorial/gardening tasks. One way would be to create a *gardening* tag in the github issues.  That way people can set up filters for ideas that experts think are a good idea, but probably won't need deep design discussions to get started.
->>
->>Another way would be to have a monthly/quarterly wishlist gathering on the mailing list.  That way we have some dedicated time to discuss issues of the day, and put them together into a markdown document (like a per project version of the security group wishlist https://github.com/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list)
->>
->>Maybe this is already happening, and I just haven't noticed it.  Anywho, hope you are all doing well.
->>
->>Cheers,
->>Richard
->>-------------- next part --------------
->>An HTML attachment was scrubbed...
->>URL: <http://lists.ozlabs.org/pipermail/openbmc/attachments/20200401/a57889e6/attachment.htm>
->>
->>End of openbmc Digest, Vol 56, Issue 11
->>***************************************
-> 
-> 
-> 
+W dniu 4/1/2020 o=A021:16, Hilliard, Jonathan Blake pisze:
+> Are there any plans to support redfish events in openbmc? And if so,=20
+> is there a rough ETA?
+>=20
