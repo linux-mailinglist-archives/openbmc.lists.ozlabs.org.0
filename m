@@ -2,52 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 994A819BCF3
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 09:44:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F92719BF7C
+	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 12:39:29 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48tFSb6SrxzDrCW
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 18:44:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48tKLk54s4zDrRh
+	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 21:39:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
+ spf=permerror (SPF Permanent Error: Unknown mechanism
+ found: ip:192.40.192.88/32) smtp.mailfrom=kernel.crashing.org
+ (client-ip=76.164.61.194; helo=kernel.crashing.org;
+ envelope-from=benh@kernel.crashing.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ header.from=kernel.crashing.org
+Received: from kernel.crashing.org (kernel.crashing.org [76.164.61.194])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48tF9w1FvVzDqs1
- for <openbmc@lists.ozlabs.org>; Thu,  2 Apr 2020 18:31:27 +1100 (AEDT)
-IronPort-SDR: av+ImyQWd2FMTC7do7shNbFBBUtaCfK4GgapaT+vB7C+OgRFoYI2rbBEup91Jo+rYvuYRdDaNm
- iUbe2D2tyJqw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2020 00:31:25 -0700
-IronPort-SDR: a3JiRr+91/mopbcbFnsgTOex0GpmMWrxpz0Sc+NK7k4NO+JzMPFQyLEyX1gs8k4oO71703JYCR
- E4EbKxG3b5Ug==
-X-IronPort-AV: E=Sophos;i="5.72,334,1580803200"; d="scan'208";a="396266288"
-Received: from aambroze-mobl1.ger.corp.intel.com (HELO [10.213.10.231])
- ([10.213.10.231])
- by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Apr 2020 00:31:23 -0700
-Subject: Re: Redfish events?
-To: "Hilliard, Jonathan Blake" <jonathan.hilliard@hpe.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <DF4PR8401MB1177ED2C2AA795CF251570EAE0C90@DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM>
-From: =?UTF-8?Q?Adrian_Ambro=c5=bcewicz?= <adrian.ambrozewicz@linux.intel.com>
-Message-ID: <c866c2b0-cc27-c5c3-3ff1-3d467ee5b8a0@linux.intel.com>
-Date: Thu, 2 Apr 2020 09:31:19 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <DF4PR8401MB1177ED2C2AA795CF251570EAE0C90@DF4PR8401MB1177.NAMPRD84.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48tKKh3GzyzDrBR;
+ Thu,  2 Apr 2020 21:38:32 +1100 (AEDT)
+Received: from localhost (gate.crashing.org [63.228.1.57])
+ (authenticated bits=0)
+ by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 032Abb5C028468
+ (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 2 Apr 2020 05:37:40 -0500
+Message-ID: <c556467d63cd5de806b4bf1806caee013ba5a808.camel@kernel.crashing.org>
+Subject: Re: [PATCH v2 6/6] dt-bindings: usb: document aspeed vhub device
+ ID/string properties
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+To: Rob Herring <robh@kernel.org>
+Date: Thu, 02 Apr 2020 21:37:35 +1100
+In-Reply-To: <CAL_JsqKZeCC352TKFGDNRRogSefF9vq+J=WqCEeg59PBsSOW1w@mail.gmail.com>
+References: <20200315191632.12536-1-rentao.bupt@gmail.com>
+ <20200315191632.12536-7-rentao.bupt@gmail.com>
+ <20200330192347.GA6388@bogus>
+ <4dc3ac910c79dcca398eb5161dde44e1cc50baca.camel@kernel.crashing.org>
+ <CAL_JsqKZeCC352TKFGDNRRogSefF9vq+J=WqCEeg59PBsSOW1w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,23 +53,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Mark Rutland <mark.rutland@arm.com>, Felipe Balbi <balbi@kernel.org>,
+ linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux USB List <linux-usb@vger.kernel.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ Stephen Boyd <swboyd@chromium.org>, Chunfeng Yun <chunfeng.yun@mediatek.com>,
+ Tao Ren <taoren@fb.com>, rentao.bupt@gmail.com,
+ Colin Ian King <colin.king@canonical.com>,
+ "moderated list:ARM/FREESCALE IMX / MXC ARM
+ ARCHITECTURE" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-What exact events do you mean?
-
-EventService is currently in the review 
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/24889
-
-/redfish/v1/Systems/system/LogServices/EventLog is already implemented 
-and supports proper proper MessageRegistry files. 
-https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
-
-Regards,
-Adrian
-
-
-W dniu 4/1/2020 o 21:16, Hilliard, Jonathan Blake pisze:
-> Are there any plans to support redfish events in openbmc? And if so, is 
-> there a rough ETA?
+On Tue, 2020-03-31 at 10:21 -0600, Rob Herring wrote:
+> Surely the descriptor building code can be shared at a minimum.
 > 
+> Regardless of whether gadget configfs fits, usually it is pretty clear
+> whether something belongs in DT or userspace. That should be decided
+> first.
+> 
+> > Maybe we could expose the port as UDCs but not actually expose them on
+> > the bus until the hub is "activated" via a special configfs entry...
+> 
+> If control of the hub is done by userspace, I'd think configuration
+> should be there too.
+
+It's not in the current driver. For now, I expose the hub when the
+driver loads/initializes, and it creates UDCs for each port, which are
+then controlled from userspace.
+
+That said, I did it this way because it was easy, not because there are
+fundamental reasons to do so...
+
+The main reason to want to change the hub descriptor is for the device
+to advertise a vendor/device ID rather than our generic linux one,
+which some vendors might want to do for ... reasons. I didn't implement
+that functionality initially as in openbmc case, we didn't care. But I
+know some vendors would like to, if anything because from a user
+perspective, it's actually nice to have the string tell you that it's
+your BMC rather than Linux Fundation Hub.
+
+Originally I suggested we allow that via the device-tree because it was
+the simplest way to get there and I love have to deal with less code ..
+:)
+
+However, if we want to support the whole language string set etc... it
+gets really clumsy. So if there's a strong will to get there all the
+way, then configfs is probably the way to go.
+
+In that case, some sugery will probably be needed to make the gadget
+descriptor building code a bit less dependent on the overall gadget
+stuff... either that, or pre-create a "hub" gadget at driver loading
+time that userspace can modify before "plugging".
+
+In that case, the discussion should move back to linux-usb...
+
+Cheers,
+Ben.
+
+
