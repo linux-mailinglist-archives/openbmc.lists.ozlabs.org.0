@@ -2,79 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC85919C145
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 14:40:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E216E19C28F
+	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 15:27:04 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48tN2n276BzDrBZ
-	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 23:40:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48tP452rxMzDrKn
+	for <lists+openbmc@lfdr.de>; Fri,  3 Apr 2020 00:27:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::244;
+ helo=mail-oi1-x244.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=uOD5u01M; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=4MbP3/OE; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=uN3EohhB; dkim-atps=neutral
+Received: from mail-oi1-x244.google.com (mail-oi1-x244.google.com
+ [IPv6:2607:f8b0:4864:20::244])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48tN1b6l5FzDrDr
- for <openbmc@lists.ozlabs.org>; Thu,  2 Apr 2020 23:39:47 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id EBE2E5C02AB;
- Thu,  2 Apr 2020 08:39:42 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Thu, 02 Apr 2020 08:39:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm2; bh=3VibULpJXMTBvLEguoeblKRBaK
- E6YafTnK+foZH0VZE=; b=uOD5u01M8126/OL9LoclxB6p5Jhwu15voV6YzN73s4
- hYoneoC6ZarxF0b6tJdYMZqfVaNAvBgw9xZF6dOsDM5UrDeOljOv/LFHlwDrdq8U
- Nx9JXKXBYREv8/1rD3bhYmCHbZZRj1eKfLwEiITRMf6AokHwHq4t42i7W/DmfK2L
- sxcQtqewm9rrOc0PjduaeutzqXOXnTCnkijG58yJ1jQKTgTcV/b3yoeUmCrMgyCB
- Iv8xUpmuzplMb0jMqxFVgAyRoIFZeSsDXVMwwA+KHOw5QnixtKsM8bl2xaGyIgB3
- 5AHI4SXvrbPzP9q2Wtc7AcG7ACndow7UX7uaKoT+oVow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=3VibULpJXMTBvLEgu
- oeblKRBaKE6YafTnK+foZH0VZE=; b=4MbP3/OES4EVj8V/xuCP6DpmiYSAeD6mL
- sBhIKTKtf6ezevRuZyZP0p7qkWKYaDRCGYqDNKoGsXTA2MCMRUcL8dFEGCwy5ygH
- lGA+ghqZitP+0LON2sdIhtdyRqKnbqdqjw5kNic12JWeB/Xnfe1L4F9t06YUI4Qx
- iMLztvOluBdyJ0bzivvqYrojZ7rZX45LsLo8oKdW8ozF+YSEEgq2MkEGDN8ODSSg
- ntWXTJ5KdMWiG9gcnzfBnjguqIjc3QKx2UDDqLvUCox96lhK4OTz3D8e4L12dr4l
- grHQinJ8MO/q9yoBE7y2HSdwc2AGa6qYmghL5/WMkINyJdebpIwvA==
-X-ME-Sender: <xms:Dd2FXge10_DHDuvi4GcQDR03bjzuc4kIRbR62PFLKGyfUkYKIrUKeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrtdeggdeglecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertdertd
- dtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghjrdhi
- ugdrrghuqeenucfkphepudegrddvrddutdekrddugeelnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:Dd2FXmdTYVTWGEKefCpy4jI1te2UOLdVR7A6ZhFLQh2mjvF1o6u8ZQ>
- <xmx:Dd2FXsj5_VQN4gbRDAxnyqVlo57h5TH_7iiLE151l7k429p-_6pHwQ>
- <xmx:Dd2FXqQT7CFaR8O4-8O3uxnMTm3gZZlfMjxZ19GuT2d8kfFk9LGOZA>
- <xmx:Dt2FXrrMYe3cixUTvVigWzKpEcjXm4VaMjAAFHnqlWOlqah_GQ9Tnw>
-Received: from localhost.localdomain
- (ppp14-2-108-149.adl-apt-pir-bras32.tpg.internode.on.net [14.2.108.149])
- by mail.messagingengine.com (Postfix) with ESMTPA id 98F593280059;
- Thu,  2 Apr 2020 08:39:40 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4] ARM: dts: tacoma: Enable the second VUART
-Date: Thu,  2 Apr 2020 23:09:31 +1030
-Message-Id: <20200402123931.23379-1-andrew@aj.id.au>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48tP1c38vXzDrJq
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Apr 2020 00:24:50 +1100 (AEDT)
+Received: by mail-oi1-x244.google.com with SMTP id q204so2692705oia.13
+ for <openbmc@lists.ozlabs.org>; Thu, 02 Apr 2020 06:24:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=4+g1yjqkVto6kWbssuTF510eyFtCn9cQBNdvJQYalBM=;
+ b=uN3EohhBc3gTzON4Z1dEXrV5mfiZhRGpam52wqRF32FFAVlrDsHdh1tzavcnslE/xv
+ S+EoZ7U/xDwka9KVia8mhAh0BvuthqYbRbKIeAgybXkjIfla9v/eJTwnEhcZeQR5epRx
+ rbGBEB2gWQtJn8EBcwoActxGw7PO+VAMs6sXLkLyNDyWNaR7eNqunzCVVhr/Mp8yLQEj
+ ipFRpR6Qo/FZJbRX2JL/ihvu6pa/pMy/M6mUTJIs9jaajJ/L/5RA4Oisk4JSIKZvUQN8
+ FSMeKFzpmoTh95o2Y906qQ6/6H5JBHNZnbaqnxbiuNIz6eN/MoeBGFySx6Dsx7DWHPxZ
+ 1EFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=4+g1yjqkVto6kWbssuTF510eyFtCn9cQBNdvJQYalBM=;
+ b=YmeYpoRLCWf5eY0mx7GfTzHHbVjT5ZTPbLUFpIJbdpR0TBlzVMDjSuJv6D4Vw2znZx
+ REVefbh/uk+d+jJ+UZNKsalZtzsUKdCi4rNXu4AtLSqLT8uM/yjIU6TzJzyawlz4JjwT
+ uUII6+h9SClzm9HkUh+KtMJUJffh+5UReawuZbcfWtVK1R/TZujQKQ9mVSONOt/oLMus
+ CBUG7F1FrW7YCG3rVNFhTqBO3g2561WpfZgSrF7y+G2wJuH5iw/zmdHc92qkxJQj3Zal
+ OWUCoYj5E5EEX2D+I4jthbhelrpG9CguAMg22AjLg+8bts8BFKkZC1xgMs26t0cEcdy8
+ 0wWA==
+X-Gm-Message-State: AGi0PuaAH7hSt8NtqLerv6f8tS7Ra90fsrxXrpvR7FhNh8jMWSIU5qGb
+ yoL84A5tcZVf39jH736LTto=
+X-Google-Smtp-Source: APiQypLKuio0fpAtNgLUkF/wHEAva0luyq85UGTYGjRPXPWkaDWmEz50wd4DUeg7N8KX9BhnZsXv7A==
+X-Received: by 2002:aca:100e:: with SMTP id 14mr2205987oiq.79.1585833886413;
+ Thu, 02 Apr 2020 06:24:46 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:88e1:9244:7116:6a6b])
+ by smtp.gmail.com with ESMTPSA id r18sm1253823ooc.17.2020.04.02.06.24.45
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 02 Apr 2020 06:24:45 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: OpenBMC Janitor/Gardener
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <CAH1kD+ans6=BbPP9Sut7OQC3Fdt_=+=QEgzyFgyPa_9vwLS0TQ@mail.gmail.com>
+Date: Thu, 2 Apr 2020 08:24:44 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D5247659-8187-4C5E-8CDB-452BA6B411E5@gmail.com>
+References: <CAH1kD+ans6=BbPP9Sut7OQC3Fdt_=+=QEgzyFgyPa_9vwLS0TQ@mail.gmail.com>
+To: Richard Hanley <rhanley@google.com>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,31 +81,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Used by some POWER hypervisors.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-index d332c0706c5d..6fbe58ccd7d3 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -823,6 +823,10 @@
- 	status = "okay";
- };
- 
-+&vuart2 {
-+	status = "okay";
-+};
-+
- &lpc_ctrl {
- 	status = "okay";
- 	memory-region = <&flash_memory>;
--- 
-2.20.1
+> On Apr 1, 2020, at 12:34 PM, Richard Hanley <rhanley@google.com> =
+wrote:
+>=20
+> Hi,
+>=20
+> I was recently looking into the linux kernel introduction, and I =
+noticed the kernel janitors https://kernelnewbies.org/KernelJanitors.  =
+It seems like a pretty interesting idea, and I've been thinking about =
+janitorial tasks in OpenBMC.
+
+Yeah, this is nice. I saw yocto just did something recently as well with =
+their =E2=80=9Cnewcomer=E2=80=9D tag.
+https://wiki.yoctoproject.org/wiki/Newcomers
+
+> For some context, we've had a handful of new developers join recently, =
+and I've been looking for some small refactoring projects that they =
+could work on upstream.
+
+Yeah, best way to learn is always to just jump in with some easy =
+bugs/refactor.
+
+> So I guess there are two parts to this email.  First does anyone have =
+some bite sized improvement task that's been on their wishlist, but =
+there hasn't been anyone around to work on it.  (In particular things =
+around bmcweb and phosphor dbus interfaces would be appreciated).
+
+We=E2=80=99ve always been a bit lacking in unit test coverage in bmcweb. =
+Anything to improve that would be great.
+I know Gunnar also has a constant stream of DMTF Redfish spec new =
+function and updates that always need some bmcweb work.
+
+>=20
+> The other thing is, what do people think would be the best way to =
+publicize these kinds of refactoring/janitorial/gardening tasks. One way =
+would be to create a *gardening* tag in the github issues.  That way =
+people can set up filters for ideas that experts think are a good idea, =
+but probably won't need deep design discussions to get started.
+
+I think we used to try and do this with the =E2=80=9Cbitesize=E2=80=9D =
+tag (https://github.com/openbmc/openbmc/issues?q=3Dlabel%3Abitesize+) =
+but it really isn=E2=80=99t used much anymore. I=E2=80=99d vote we try =
+and be consistent with whatever tag others use though. =E2=80=9Cgardening=E2=
+=80=9D or maybe the yocto one of =E2=80=9Cnewcomer"
+
+>=20
+> Another way would be to have a monthly/quarterly wishlist gathering on =
+the mailing list.  That way we have some dedicated time to discuss =
+issues of the day, and put them together into a markdown document (like =
+a per project version of the security group wishlist =
+https://github.com/openbmc/openbmc/wiki/Security-working-group#security-fe=
+ature-wish-list)
+
+I would def participate in a mailing list gathering on this topic if it =
+were to happen!
+
+>=20
+> Maybe this is already happening, and I just haven't noticed it.  =
+Anywho, hope you are all doing well.
+>=20
+> Cheers,
+> Richard
 
