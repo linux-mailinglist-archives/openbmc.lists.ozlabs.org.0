@@ -1,71 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF30519C442
+	for <lists+openbmc@lfdr.de>; Thu,  2 Apr 2020 16:32:14 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04A0C19EEF5
-	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 02:54:16 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48wX9c639KzDqgd
-	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 10:54:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48tQWF47jgzDrTf
+	for <lists+openbmc@lfdr.de>; Fri,  3 Apr 2020 01:32:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
- helo=mail-pg1-x542.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=PIC13765; dkim-atps=neutral
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [IPv6:2607:f8b0:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48tQ3z0G9RzDr8H;
- Fri,  3 Apr 2020 01:11:58 +1100 (AEDT)
-Received: by mail-pg1-x542.google.com with SMTP id b1so1888916pgm.8;
- Thu, 02 Apr 2020 07:11:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:mime-version:content-disposition
- :user-agent; bh=KRil4IG/RY96nscl8h3n0Ow1s/U/cZE1l2gDbraOSck=;
- b=PIC13765bN2s0STyZE3R63JlJatZkjsCAY9M0BYQONZWkYyBnMl2sf2DwT/Gasiipt
- F+AZiTp3qjGJDYDj2ghb+i5NCNYR+rAxTbric07Rk/5uOXhSm+Csh7sWNt4w/IoQjDHp
- SvHkozzTqBY23Ywc+3ggPWDcqkLVr8ORrUvlS+NqGO/lPv+1WMid7ndMiFHedP/l8mJN
- vsViU3PVPMxlXQ8yZisLxOkEGjLLVMVZOUJCn5OsuZT2jA2DLTB4lNOKujN2PS0R5aRw
- 2kUuegfiWI+dXAwK3pQTCFUVmQyBwBaUvfDhj8ip20xR2GXc1UZz+/f0qg6QZlQ84LjG
- UgNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
- :content-disposition:user-agent;
- bh=KRil4IG/RY96nscl8h3n0Ow1s/U/cZE1l2gDbraOSck=;
- b=FgqCcXE/6c6nwOEdacOMG7Ue1jJsVm+BLxLuHspWMBJ0e6dwOr56GxMNQQhkTJp3uP
- sFMh+ry5i5sTWMmlP/1GdWc9tRatVR3YViPERd1OhGo5kWiRjIiShQSutPAUv4Jl4f/W
- JZozuYKzJvLAnJ8ccZPO/2movqOAEkphHfNpbTlhh98sRu5yNPg+o/hH9jAhM+l7xVpB
- yat5ipi/w8HqA7OQFz0aEaeA0EO8qTXkEmokWoJQwJTOYhPcf68z9x5O0rqAiMUDgAjp
- K/HBqZx74KZg4YU+6DfEPELV4TErmLjjZ9eCoZbVH1EIAu7AUVoQj2EjdETR2WAe6gzx
- hecg==
-X-Gm-Message-State: AGi0PuaUeBTkGVwdPY1HL65ka/ETC1tNN+BYHjCE8ETBLzYk+4eMNKhF
- B8jH5/7BpioyMRZtDRsgB5w=
-X-Google-Smtp-Source: APiQypIWILFF8219H+fW+mfg8OMS0kZ8gQYTFp44wgce3ClTX4l8bjO2uhgzCPWz03GlHvRVtmpcdw==
-X-Received: by 2002:a62:e20c:: with SMTP id a12mr3422338pfi.37.1585836716316; 
- Thu, 02 Apr 2020 07:11:56 -0700 (PDT)
-Received: from cnn ([42.111.167.250])
- by smtp.gmail.com with ESMTPSA id h64sm3739427pfg.191.2020.04.02.07.11.45
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 02 Apr 2020 07:11:55 -0700 (PDT)
-Date: Thu, 2 Apr 2020 19:41:35 +0530
-From: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
-To: andrew@aj.id.au, joel@jms.id.au
-Subject: [PATCH v8] ARM: dts: aspeed: Adding Facebook Yosemite V2 BMC
-Message-ID: <20200402141135.GA19190@cnn>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48tQVP4ggXzDrR1
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Apr 2020 01:31:24 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 032E2AHC077846; Thu, 2 Apr 2020 10:31:21 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3043g9er2h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2020 10:31:21 -0400
+Received: from m0098404.ppops.net (m0098404.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 032E2bX4080843;
+ Thu, 2 Apr 2020 10:31:21 -0400
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3043g9er20-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2020 10:31:21 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 032EUNLg025048;
+ Thu, 2 Apr 2020 14:31:19 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma04wdc.us.ibm.com with ESMTP id 301x771huy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 02 Apr 2020 14:31:19 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 032EVJJ031654196
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 2 Apr 2020 14:31:19 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 57B7EB205F;
+ Thu,  2 Apr 2020 14:31:19 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CF8AEB2067;
+ Thu,  2 Apr 2020 14:31:18 +0000 (GMT)
+Received: from [9.163.31.233] (unknown [9.163.31.233])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
+ Thu,  2 Apr 2020 14:31:18 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.4 1/2] hwmon: (pmbus/ibm-cffps) Add another
+ PSU CCIN to version detection
+To: Joel Stanley <joel@jms.id.au>, Guenter Roeck <linux@roeck-us.net>
+References: <20200401220339.2006-1-eajames@linux.ibm.com>
+ <20200401220339.2006-2-eajames@linux.ibm.com>
+ <fc05a492-f04b-b80d-51a0-52cb793e5c9d@roeck-us.net>
+ <CACPK8XcKpK9Fz8GmudSYVqph0MBFKpwrCdr68Hha1wtamLLNhw@mail.gmail.com>
+From: Eddie James <eajames@linux.ibm.com>
+Message-ID: <03116ba3-9054-344c-7890-dbb9ccabd038@linux.ibm.com>
+Date: Thu, 2 Apr 2020 09:31:18 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Mailman-Approved-At: Mon, 06 Apr 2020 10:53:32 +1000
+In-Reply-To: <CACPK8XcKpK9Fz8GmudSYVqph0MBFKpwrCdr68Hha1wtamLLNhw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-02_05:2020-03-31,
+ 2020-04-02 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ spamscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0 clxscore=1015
+ phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004020124
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,291 +96,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, manikandan.e@hcl.com,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, vijaykhemka@fb.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brandon Wyman <bjwyman@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Yosemite V2 is a facebook multi-node server
-platform that host four OCP server. The BMC
-in the Yosemite V2 platform based on AST2500 SoC.
 
-This patch adds linux device tree entry related to
-Yosemite V2 specific devices connected to BMC SoC.
+On 4/1/20 5:20 PM, Joel Stanley wrote:
+> On Wed, 1 Apr 2020 at 22:13, Guenter Roeck <linux@roeck-us.net> wrote:
+>> On 4/1/20 3:03 PM, Eddie James wrote:
+>>> There is an additional CCIN for the IBM CFFPS that may be classifed as
+>>> either version one or version two, based upon the rest of the bits of
+>>> the CCIN. Add support for it in the version detection.
+>>>
+>>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+>>> Link: https://lore.kernel.org/r/1583948590-17220-1-git-send-email-eajames@linux.ibm.com
+>>> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+>> Those e-mails are confusing. Can you drop me from cc:, please ?
+> I think Eddie forgot to --suppress-cc=body when he git send-email'd
+>
+> Sorry for the noise Guenter.
 
-Signed-off-by: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
-Acked-by     : Andrew Jeffery <andrew@aj.id.au>
-Reviewed-by  : Vijay Khemka <vkhemka@fb.com>
----
----      v8 - Added dtb entry in Makefile as review comment.
----           -Added IPMB bridge device details as review comment.
----      v7 - Added multi-host SOL feature.
----      v6 - Added device tree property for multi-host Mellanox NIC in the ncsi driver.
----      v5 - Spell and contributor name correction.
----           - License identifier changed to GPL-2.0-or-later.
----           - aspeed-gpio.h removed.
----           - FAN2 tacho channel changed.
----      v4 - Bootargs removed.
----      v3 - Uart1 Debug removed .
----      v2 - LPC and VUART removed .
----      v1 - Initial draft.
----
----
- arch/arm/boot/dts/Makefile                         |   1 +
- .../boot/dts/aspeed-bmc-facebook-yosemitev2.dts    | 231 +++++++++++++++++++++
- 2 files changed, 232 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index fcd607f..00b6649 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1289,6 +1289,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-facebook-wedge40.dtb \
- 	aspeed-bmc-facebook-wedge100.dtb \
- 	aspeed-bmc-facebook-yamp.dtb \
-+	aspeed-bmc-facebook-yosemitev2.dtb \
- 	aspeed-bmc-ibm-rainier.dtb \
- 	aspeed-bmc-intel-s2600wf.dtb \
- 	aspeed-bmc-inspur-fp5280g2.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-new file mode 100644
-index 0000000..8864e9c
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-@@ -0,0 +1,231 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright (c) 2018 Facebook Inc.
-+/dts-v1/;
-+#include "aspeed-g5.dtsi"
-+#include <dt-bindings/i2c/i2c.h>
-+
-+/ {
-+	model = "Facebook Yosemitev2 BMC";
-+	compatible = "facebook,yosemitev2-bmc", "aspeed,ast2500";
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	memory@80000000 {
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	iio-hwmon {
-+		// VOLATAGE SENSOR
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0> , <&adc 1> , <&adc 2> ,  <&adc 3> ,
-+		<&adc 4> , <&adc 5> , <&adc 6> ,  <&adc 7> ,
-+		<&adc 8> , <&adc 9> , <&adc 10>, <&adc 11> ,
-+		<&adc 12> , <&adc 13> , <&adc 14> , <&adc 15> ;
-+	};
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+	};
-+};
-+&uart1 {
-+	// Host1 Console
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+		     &pinctrl_rxd1_default>;
-+};
-+
-+&uart2 {
-+	// Host2 Console
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd2_default
-+		     &pinctrl_rxd2_default>;
-+
-+};
-+
-+&uart3 {
-+	// Host3 Console
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd3_default
-+		     &pinctrl_rxd3_default>;
-+};
-+
-+&uart4 {
-+	// Host4 Console
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd4_default
-+		     &pinctrl_rxd4_default>;
-+};
-+
-+&uart5 {
-+	// BMC Console
-+	status = "okay";
-+};
-+
-+&vuart {
-+	// Virtual UART
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	use-ncsi;
-+	mlx,multi-host;
-+};
-+
-+&adc {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_adc0_default
-+			&pinctrl_adc1_default
-+			&pinctrl_adc2_default
-+			&pinctrl_adc3_default
-+			&pinctrl_adc4_default
-+			&pinctrl_adc5_default
-+			&pinctrl_adc6_default
-+			&pinctrl_adc7_default
-+			&pinctrl_adc8_default
-+			&pinctrl_adc9_default
-+			&pinctrl_adc10_default
-+			&pinctrl_adc11_default
-+			&pinctrl_adc12_default
-+			&pinctrl_adc13_default
-+			&pinctrl_adc14_default
-+			&pinctrl_adc15_default>;
-+};
-+
-+&i2c1 {
-+	//Host1 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb1@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c3 {
-+	//Host2 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb3@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c5 {
-+	//Host3 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb5@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c7 {
-+	//Host4 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb7@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+	//FRU EEPROM
-+	eeprom@51 {
-+		compatible = "atmel,24c64";
-+		reg = <0x51>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+	tmp421@4e {
-+	//INLET TEMP
-+		compatible = "ti,tmp421";
-+		reg = <0x4e>;
-+	};
-+	//OUTLET TEMP
-+	tmp421@4f {
-+		compatible = "ti,tmp421";
-+		reg = <0x4f>;
-+	};
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+	//HSC
-+	adm1278@40 {
-+		compatible = "adi,adm1278";
-+		reg = <0x40>;
-+	};
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+	//MEZZ_TEMP_SENSOR
-+	tmp421@1f {
-+		compatible = "ti,tmp421";
-+		reg = <0x1f>;
-+	};
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+	//MEZZ_FRU
-+	eeprom@51 {
-+		compatible = "atmel,24c64";
-+		reg = <0x51>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	//FSC
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default>;
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x00>;
-+	};
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x01>;
-+	};
-+};
--- 
-2.7.4
+Indeed, my apologies.
 
+Thanks,
+
+Eddie
+
+
+>
+> Cheers,
+>
+> Joel
