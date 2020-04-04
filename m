@@ -1,128 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EE6F19E5FD
+	for <lists+openbmc@lfdr.de>; Sat,  4 Apr 2020 17:02:58 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21E3C19E070
-	for <lists+openbmc@lfdr.de>; Fri,  3 Apr 2020 23:40:15 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48vCyh1BTnzDsTQ
-	for <lists+openbmc@lfdr.de>; Sat,  4 Apr 2020 08:40:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48vg5n1VVxzDqgx
+	for <lists+openbmc@lfdr.de>; Sun,  5 Apr 2020 02:02:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::f41;
+ helo=mail-qv1-xf41.google.com; envelope-from=kunyi@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=13624f9dcf=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=ox+8xW30; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=PpvGcUVt; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=NBCKst4i; dkim-atps=neutral
+Received: from mail-qv1-xf41.google.com (mail-qv1-xf41.google.com
+ [IPv6:2607:f8b0:4864:20::f41])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48vCxt3JxJzDsNM
- for <openbmc@lists.ozlabs.org>; Sat,  4 Apr 2020 08:39:19 +1100 (AEDT)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 033LSLKR020215; Fri, 3 Apr 2020 14:39:13 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : content-type : mime-version; s=facebook;
- bh=nze8d4W90jV1SE/3SEjdz0WrYddJ1tpTxzgHzYcCLt4=;
- b=ox+8xW30VhS+om1ZXbz/5WqY/eFPBkbolBB8GvatkKXScQ35q9g2OW2EKoHwgtaXpnoA
- i2XhvE/bHUWEycl9xekOu3+tZoht6PzLiXFOOSPmdypdwFuFpwjCFkOdSI7/x7T++BoC
- znTFAaS2Og8py7ajt+q0jyvg84o0ikjBe5A= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 306b100mwg-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 03 Apr 2020 14:39:13 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.173) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Fri, 3 Apr 2020 14:39:11 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iAunWn8MRQ8ieiRIYC+kl/P+WInCDLWs/N65hFT+QsufXZYWYlkqhPXZ2TVonSzbMGJ69yY7Tl2/jY0/umXwN3yHv5/wmiq3Ns+OzXlQ0A/it6H7zFu9YEZZ6qT5s8P/ylBHkawEF491+bOUpkEhuY1PlVZ3cHSLEVg+JdlQ7wRisg5M1RinizWP6lIx7g+fxwQuKY7YvzZfpq/iqcAB++W73MqJ4u3xw4cDaXFt1D4xgW2mVWIWAYzDHidq10+bu/A/iv4tMmY9BydJA2RxANk8a/4KjDB8tykRMoZ0ug7+5WFYtO0THLeO3fgzHqv3O/iBN+BI+OkHZXWiT+8Sog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nze8d4W90jV1SE/3SEjdz0WrYddJ1tpTxzgHzYcCLt4=;
- b=NXTiNJhl+vfzomkeufnY4AQW1KvYA08JrL7ue7kfmosFiqFe2CBpUWQDbJGu6IwasO3Ehw7Mp4Hx2NezFGVKZ7fWZ86b6Att1ju7FkRmKmKeetoyEoE5eWlshHvMCDdkB0RKhe3QgrQe1v6rxxQhkDQ29DNCm+jAOQes/vKhrtHp9XMHR25qX4z1tG4by2ueoXOn8o337yYcRm9jqvCqN+0xkSJOOp6XwGQtcYjHLssZeU1ucYuY+Ebz/c9UhNL8gAGKdc95Ykhu0dBNB761llKq4D0g6HKQSskszNH5mr/2xePeqWSNRxx0FM5wCD8hGd2fXNiW/2iCcS1/G/2woQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nze8d4W90jV1SE/3SEjdz0WrYddJ1tpTxzgHzYcCLt4=;
- b=PpvGcUVtmC9TacGn+8RaD5vLc/ovmRTNfiZqzhbfiFj9t56/d1Ugx/YFW6DZEQwfCkJvrD6Hxu6rSbzws8518OPh5qy3NSplWEnRw3KfWPdZrdVTlazymLZ+SlKCC6bPM+KRPzZqJ/BqyXtd6RDYS8jggW6tA+1xSrilMSHSaXY=
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com (2603:10b6:303:49::9)
- by MW3PR15MB4025.namprd15.prod.outlook.com (2603:10b6:303:46::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2878.16; Fri, 3 Apr
- 2020 21:39:10 +0000
-Received: from MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936]) by MW3PR15MB3947.namprd15.prod.outlook.com
- ([fe80::acc7:ed14:3f77:9936%4]) with mapi id 15.20.2878.016; Fri, 3 Apr 2020
- 21:39:10 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: objc console new design
-Thread-Topic: objc console new design
-Thread-Index: AQHWCgBPwdBJh2WrEU2ViFQA6gD9zg==
-Date: Fri, 3 Apr 2020 21:39:10 +0000
-Message-ID: <73161AF5-F6B6-40C6-AE70-5FCF5A530B82@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:400::5:ae69]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 925a0743-89cd-4153-1f33-08d7d8177222
-x-ms-traffictypediagnostic: MW3PR15MB4025:
-x-microsoft-antispam-prvs: <MW3PR15MB402515EA3352705649D5364FDDC70@MW3PR15MB4025.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-forefront-prvs: 0362BF9FDB
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR15MB3947.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(10019020)(366004)(376002)(346002)(136003)(39860400002)(396003)(8676002)(478600001)(66446008)(6506007)(66556008)(8936002)(71200400001)(81156014)(64756008)(4744005)(81166006)(76116006)(66946007)(66476007)(5660300002)(33656002)(36756003)(186003)(6916009)(316002)(6512007)(2906002)(4326008)(86362001)(9326002)(2616005)(3480700007)(6486002);
- DIR:OUT; SFP:1102; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: QXYn2nrbHFw/gyX308rIhxhqERhRCMWcscFG8lLKWo3w41Wc8Ojqgd8JNhlnenmHLzr6y/6PvxdScZyZD7vG5aRtBQQJteGOnSlk9eb2PSye6WdhuVid6ayfKBSIpAXGRNUJle8HZv5shrHJVcMED7eeVbBuPTSH/V4KOP9qllEwceLa76cDYGTL3ZZGliQ6TO9Xvyd36PUbTt/71BjmuU/nma+glOukjZy5qXv3bCmGXLVNUhSawIgJzWUBphg768I2t7KanV5Mq0YdFi1UnnkFkKmKvcSMl+9dwrt5NK/au9Nx3sovZavuun8GLmM+za4aOGb+owEBWVJD72JPDBVgIAIkVkv8yr9p7jYl6FhwtbEhxGytvHmn1FG/9MzMIhwv+LXRLszBkzdidzhVKmvYE3e9zVckUUjn6eNWXSbNdXDWqNBACEClo5SZB+6Q
-x-ms-exchange-antispam-messagedata: 5nIip6vG8jZc9+01lIoBuFmNditwvYsMnylfPa+X1uU4PJnwJEjRcyREz6E1kcD5f9W9UUBKrpWe/VAKpbl0ByfrnQoe3gtewQ8wLghbxBNlF4ndAqejqGkc+SPWCJ0hPSDSdjdv6KPYMELZUFkwvJvw1SFq0ja9rBmfA1JUljMmlMpJ2tKg/CQ6916kxQW9
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_73161AF5F6B640C6AE705FCF5A530B82fbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48vg413pSLzDrQb
+ for <openbmc@lists.ozlabs.org>; Sun,  5 Apr 2020 02:01:20 +1100 (AEDT)
+Received: by mail-qv1-xf41.google.com with SMTP id bu9so5134571qvb.13
+ for <openbmc@lists.ozlabs.org>; Sat, 04 Apr 2020 08:01:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=AsJPI0kgDCKGswo0+xFUMj9ekMPPjTHCNOTX6rTxeB8=;
+ b=NBCKst4iqQqjP8k5jOCubePQx47OOiWEBhIj5jzxri9gtnvjZpDv3O09t/bhD2SVoX
+ QUAdujBotIBRYcG7u+gkn2Ti1NQ8IY9BxX35UH+V+Uas3pbHmeP/X8c7hRRMK5Y20rr1
+ T8hIVUKnVOFNV7XaSelIE9S+Vi6Sn9aM8iovCibmdAviYHEcjUO+eB49oSxT6k+hDepf
+ Y0CxtlBW2zZPdoyVwy23EiJw75+AFsH0TeRJXrP/VCSYLQLBubwK00Zckc/YNgidDA+y
+ ivpzLAYAiO6t8KMCvpi8Lb4r3uVtZ1/f6QNzq+7SfOfWkaOJBhEK6jU3gXvHD4CN40VG
+ ZIBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=AsJPI0kgDCKGswo0+xFUMj9ekMPPjTHCNOTX6rTxeB8=;
+ b=k2T2azvcHPhAxHRkPwCapmA9hY0QRqEky/Et1WeREraXV45EWZDAulH4iO9ugn3Ivt
+ PaEoL5pDXyK67LO4Xm8Tf/ubfSvWMXZMe8V6A1Or8ghPKdKxh+3vZMujVRcP/aex+RHj
+ d8pLWwWX/uTWTBzssod/D12Y1NeWPEOWGqjNxUUT5/c0c5th95NkIO4me7PsMPrSp13N
+ czpHECO2j/+NROzgy4/w1CvQ52+LAnhHevwQzDUBfg9jIfZjKZXgyLyelnFOUGIsW6M1
+ D/TkwfljyIM8KMsl6Up/fqIXHzcjSkqiU6B/oFYwSAzTAYPefJKxje7IZ+weE/xhDOD+
+ fLOA==
+X-Gm-Message-State: AGi0PuZWB7mDpKx1BE62bStdlSkiL9N6kJaidYaGYEb+xaNV+ceNGbRO
+ 8YZNY9x9jQXd78k4XrJcxbjLXFvYtwbtqq5+dAHDCw==
+X-Google-Smtp-Source: APiQypI+Y25nGgXrD7Ut0TNZeTXXfBz7/2dPd5u0GfPZ64ekcp3Fqw+axoRmDDBqjRVZVq/lt5GCNJGL+Vy12LFHaMQ=
+X-Received: by 2002:a0c:a2a2:: with SMTP id g31mr42043qva.31.1586012474420;
+ Sat, 04 Apr 2020 08:01:14 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 925a0743-89cd-4153-1f33-08d7d8177222
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Apr 2020 21:39:10.4740 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: yernDPu57V8nuNyBr7QFiBNfxaSK6pF1cGDgLGmeRTdkNU2+1lfleTrfvM2/2obyH9N2rur+wERTDKaZcKyeBQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR15MB4025
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-03_18:2020-04-03,
- 2020-04-03 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- suspectscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 malwarescore=0
- clxscore=1015 adultscore=0 mlxlogscore=918 spamscore=0 mlxscore=0
- phishscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2003020000 definitions=main-2004030168
-X-FB-Internal: deliver
+References: <20200323233354.239365-1-kunyi@google.com>
+ <20200323233354.239365-2-kunyi@google.com>
+ <20200331154630.GA41691@roeck-us.net>
+In-Reply-To: <20200331154630.GA41691@roeck-us.net>
+From: Kun Yi <kunyi@google.com>
+Date: Sat, 4 Apr 2020 08:00:00 -0700
+Message-ID: <CAGMNF6WQ4FLZOiHf6cL43oMtREV+Zi8gbZbnNbgxVaHHcp-FYQ@mail.gmail.com>
+Subject: Re: [PATCH linux hwmon-next v2 1/3] hwmon: (sbtsi) Add basic support
+ for SB-TSI sensors
+To: Guenter Roeck <linux@roeck-us.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,80 +75,352 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: mark.rutland@arm.com, linux-hwmon@vger.kernel.org, jdelvare@suse.com,
+ devicetree@vger.kernel.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ linux-kernel@vger.kernel.org, robh+dt@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_73161AF5F6B640C6AE705FCF5A530B82fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Tue, Mar 31, 2020 at 8:46 AM Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> On Mon, Mar 23, 2020 at 04:33:52PM -0700, Kun Yi wrote:
+> > SB Temperature Sensor Interface (SB-TSI) is an SMBus compatible
+> > interface that reports AMD SoC's Ttcl (normalized temperature),
+> > and resembles a typical 8-pin remote temperature sensor's I2C interface
+> > to BMC.
+> >
+> > This commit adds basic support using this interface to read CPU
+> > temperature, and read/write high/low CPU temp thresholds.
+> >
+> > To instantiate this driver on an AMD CPU with SB-TSI
+> > support, the i2c bus number would be the bus connected from the board
+> > management controller (BMC) to the CPU. The i2c address is specified in
+> > Section 6.3.1 of the spec [1]: The SB-TSI address is normally 98h for socket 0
+> > and 90h for socket 1, but it could vary based on hardware address select pins.
+> >
+> > [1]: https://www.amd.com/system/files/TechDocs/56255_OSRR.pdf
+> >
+> > Test status: tested reading temp1_input, and reading/writing
+> > temp1_max/min.
+> >
+> > Signed-off-by: Kun Yi <kunyi@google.com>
+> > Change-Id: I85ec65a57e8d73d7343aa9e250860ec85bfa79e5
+> > ---
+> >  drivers/hwmon/Kconfig      |  10 ++
+> >  drivers/hwmon/Makefile     |   1 +
+> >  drivers/hwmon/sbtsi_temp.c | 261 +++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 272 insertions(+)
+> >  create mode 100644 drivers/hwmon/sbtsi_temp.c
+> >
+> > diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+> > index 05a30832c6ba..9585dcd01d1b 100644
+> > --- a/drivers/hwmon/Kconfig
+> > +++ b/drivers/hwmon/Kconfig
+> > @@ -1412,6 +1412,16 @@ config SENSORS_RASPBERRYPI_HWMON
+> >         This driver can also be built as a module. If so, the module
+> >         will be called raspberrypi-hwmon.
+> >
+> > +config SENSORS_SBTSI
+> > +     tristate "Emulated SB-TSI temperature sensor"
+> > +     depends on I2C
+> > +     help
+> > +       If you say yes here you get support for emulated temperature
+> > +       sensors on AMD SoCs with SB-TSI interface connected to a BMC device.
+> > +
+> > +       This driver can also be built as a module. If so, the module will
+> > +       be called sbtsi_temp.
+> > +
+> >  config SENSORS_SHT15
+> >       tristate "Sensiron humidity and temperature sensors. SHT15 and compat."
+> >       depends on GPIOLIB || COMPILE_TEST
+> > diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+> > index b0b9c8e57176..cd109f003ce4 100644
+> > --- a/drivers/hwmon/Makefile
+> > +++ b/drivers/hwmon/Makefile
+> > @@ -152,6 +152,7 @@ obj-$(CONFIG_SENSORS_POWR1220)  += powr1220.o
+> >  obj-$(CONFIG_SENSORS_PWM_FAN)        += pwm-fan.o
+> >  obj-$(CONFIG_SENSORS_RASPBERRYPI_HWMON)      += raspberrypi-hwmon.o
+> >  obj-$(CONFIG_SENSORS_S3C)    += s3c-hwmon.o
+> > +obj-$(CONFIG_SENSORS_SBTSI)  += sbtsi_temp.o
+> >  obj-$(CONFIG_SENSORS_SCH56XX_COMMON)+= sch56xx-common.o
+> >  obj-$(CONFIG_SENSORS_SCH5627)        += sch5627.o
+> >  obj-$(CONFIG_SENSORS_SCH5636)        += sch5636.o
+> > diff --git a/drivers/hwmon/sbtsi_temp.c b/drivers/hwmon/sbtsi_temp.c
+> > new file mode 100644
+> > index 000000000000..cc452cb29c2c
+> > --- /dev/null
+> > +++ b/drivers/hwmon/sbtsi_temp.c
+> > @@ -0,0 +1,261 @@
+> > +// SPDX-License-Identifier: GPL-2.0-or-later
+> > +/*
+> > + * sbtsi_temp.c - hwmon driver for a SBI Temperature Sensor Interface (SB-TSI)
+> > + *                compliant AMD SoC temperature device.
+> > + *
+> > + * Copyright (c) 2020, Google Inc.
+> > + * Copyright (c) 2020, Kun Yi <kunyi@google.com>
+> > + */
+> > +
+> > +#include <linux/err.h>
+> > +#include <linux/i2c.h>
+> > +#include <linux/init.h>
+> > +#include <linux/hwmon.h>
+> > +#include <linux/module.h>
+> > +#include <linux/mutex.h>
+> > +#include <linux/of_device.h>
+> > +#include <linux/of.h>
+> > +
+> > +/*
+> > + * SB-TSI registers only support SMBus byte data access. "_INT" registers are
+> > + * the integer part of a temperature value or limit, and "_DEC" registers are
+> > + * corresponding decimal parts.
+> > + */
+> > +#define SBTSI_REG_TEMP_INT           0x01 /* RO */
+> > +#define SBTSI_REG_STATUS             0x02 /* RO */
+> > +#define SBTSI_REG_CONFIG             0x03 /* RO */
+> > +#define SBTSI_REG_TEMP_HIGH_INT              0x07 /* RW */
+> > +#define SBTSI_REG_TEMP_LOW_INT               0x08 /* RW */
+> > +#define SBTSI_REG_TEMP_DEC           0x10 /* RW */
+> > +#define SBTSI_REG_TEMP_HIGH_DEC              0x13 /* RW */
+> > +#define SBTSI_REG_TEMP_LOW_DEC               0x14 /* RW */
+> > +#define SBTSI_REG_REV                        0xFF /* RO */
+> > +
+> > +#define SBTSI_CONFIG_READ_ORDER_SHIFT        5
+> > +
+> > +#define SBTSI_TEMP_MIN       0
+> > +#define SBTSI_TEMP_MAX       255875
+> > +#define SBTSI_REV_MAX_VALID_ID       4
+> > +
+> > +/* Each client has this additional data */
+> > +struct sbtsi_data {
+> > +     struct i2c_client *client;
+> > +     struct mutex lock;
+> > +};
+> > +
+> > +/*
+> > + * From SB-TSI spec: CPU temperature readings and limit registers encode the
+> > + * temperature in increments of 0.125 from 0 to 255.875. The "high byte"
+> > + * register encodes the base-2 of the integer portion, and the upper 3 bits of
+> > + * the "low byte" encode in base-2 the decimal portion.
+> > + *
+> > + * e.g. INT=0x19, DEC=0x20 represents 25.125 degrees Celsius
+> > + *
+> > + * Therefore temperature in millidegree Celsius =
+> > + *   (INT + DEC / 256) * 1000 = (INT * 8 + DEC / 32) * 125
+> > + */
+> > +static inline int sbtsi_reg_to_mc(s32 integer, s32 decimal)
+> > +{
+> > +     return ((integer << 3) + (decimal >> 5)) * 125;
+> > +}
+> > +
+> > +/*
+> > + * Inversely, given temperature in millidegree Celsius
+> > + *   INT = (TEMP / 125) / 8
+> > + *   DEC = ((TEMP / 125) % 8) * 32
+> > + * Caller have to make sure temp doesn't exceed 255875, the max valid value.
+> > + */
+> > +static inline void sbtsi_mc_to_reg(s32 temp, u8 *integer, u8 *decimal)
+> > +{
+> > +     temp /= 125;
+> > +     *integer = temp >> 3;
+> > +     *decimal = (temp & 0x7) << 5;
+> > +}
+> > +
+> > +static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+> > +                   u32 attr, int channel, long *val)
+> > +{
+> > +     struct sbtsi_data *data = dev_get_drvdata(dev);
+> > +     s32 temp_int, temp_dec;
+> > +     int err, reg_int, reg_dec;
+> > +     u8 read_order;
+> > +
+> > +     if (type != hwmon_temp)
+> > +             return -EINVAL;
+> > +
+> > +     read_order = 0;
+> > +     switch (attr) {
+> > +     case hwmon_temp_input:
+> > +             /*
+> > +              * ReadOrder bit specifies the reading order of integer and
+> > +              * decimal part of CPU temp for atomic reads. If bit == 0,
+> > +              * reading integer part triggers latching of the decimal part,
+> > +              * so integer part should be read first. If bit == 1, read
+> > +              * order should be reversed.
+> > +              */
+> > +             err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
+> > +             if (err < 0)
+> > +                     return err;
+> > +
+> > +             read_order = (u8)err & BIT(SBTSI_CONFIG_READ_ORDER_SHIFT);
+> > +             reg_int = SBTSI_REG_TEMP_INT;
+> > +             reg_dec = SBTSI_REG_TEMP_DEC;
+> > +             break;
+> > +     case hwmon_temp_max:
+> > +             reg_int = SBTSI_REG_TEMP_HIGH_INT;
+> > +             reg_dec = SBTSI_REG_TEMP_HIGH_DEC;
+> > +             break;
+> > +     case hwmon_temp_min:
+> > +             reg_int = SBTSI_REG_TEMP_LOW_INT;
+> > +             reg_dec = SBTSI_REG_TEMP_LOW_DEC;
+> > +             break;
+> > +     default:
+> > +             return -EINVAL;
+> > +     }
+> > +
+> > +     if (read_order == 0) {
+> > +             temp_int = i2c_smbus_read_byte_data(data->client, reg_int);
+> > +             temp_dec = i2c_smbus_read_byte_data(data->client, reg_dec);
+> > +     } else {
+> > +             temp_dec = i2c_smbus_read_byte_data(data->client, reg_dec);
+> > +             temp_int = i2c_smbus_read_byte_data(data->client, reg_int);
+> > +     }
+> > +
+> > +     if (temp_int < 0)
+> > +             return temp_int;
+> > +     if (temp_dec < 0)
+> > +             return temp_dec;
+> > +
+> > +     *val = sbtsi_reg_to_mc(temp_int, temp_dec);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int sbtsi_write(struct device *dev, enum hwmon_sensor_types type,
+> > +                    u32 attr, int channel, long val)
+> > +{
+> > +     struct sbtsi_data *data = dev_get_drvdata(dev);
+> > +     int reg_int, reg_dec, err;
+> > +     u8 temp_int, temp_dec;
+> > +
+> > +     if (type != hwmon_temp)
+> > +             return -EINVAL;
+> > +
+> > +     switch (attr) {
+> > +     case hwmon_temp_max:
+> > +             reg_int = SBTSI_REG_TEMP_HIGH_INT;
+> > +             reg_dec = SBTSI_REG_TEMP_HIGH_DEC;
+> > +             break;
+> > +     case hwmon_temp_min:
+> > +             reg_int = SBTSI_REG_TEMP_LOW_INT;
+> > +             reg_dec = SBTSI_REG_TEMP_LOW_DEC;
+> > +             break;
+> > +     default:
+> > +             return -EINVAL;
+> > +     }
+> > +
+> > +     val = clamp_val(val, SBTSI_TEMP_MIN, SBTSI_TEMP_MAX);
+> > +     mutex_lock(&data->lock);
+> > +     sbtsi_mc_to_reg(val, &temp_int, &temp_dec);
+> > +     err = i2c_smbus_write_byte_data(data->client, reg_int, temp_int);
+> > +     if (err)
+> > +             goto exit;
+> > +
+> > +     err = i2c_smbus_write_byte_data(data->client, reg_dec, temp_dec);
+> > +exit:
+> > +     mutex_unlock(&data->lock);
+> > +     return err;
+> > +}
+> > +
+> > +static umode_t sbtsi_is_visible(const void *data,
+> > +                             enum hwmon_sensor_types type,
+> > +                             u32 attr, int channel)
+> > +{
+> > +     switch (type) {
+> > +     case hwmon_temp:
+> > +             switch (attr) {
+> > +             case hwmon_temp_input:
+> > +                     return 0444;
+> > +             case hwmon_temp_min:
+> > +                     return 0644;
+> > +             case hwmon_temp_max:
+> > +                     return 0644;
+> > +             }
+> > +             break;
+> > +     default:
+> > +             break;
+> > +     }
+> > +     return 0;
+> > +}
+> > +
+> > +static const struct hwmon_channel_info *sbtsi_info[] = {
+> > +     HWMON_CHANNEL_INFO(chip,
+> > +                        HWMON_C_REGISTER_TZ),
+> > +     HWMON_CHANNEL_INFO(temp,
+> > +                        HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX),
+> > +     NULL
+> > +};
+> > +
+> > +static const struct hwmon_ops sbtsi_hwmon_ops = {
+> > +     .is_visible = sbtsi_is_visible,
+> > +     .read = sbtsi_read,
+> > +     .write = sbtsi_write,
+> > +};
+> > +
+> > +static const struct hwmon_chip_info sbtsi_chip_info = {
+> > +     .ops = &sbtsi_hwmon_ops,
+> > +     .info = sbtsi_info,
+> > +};
+> > +
+> > +static int sbtsi_probe(struct i2c_client *client,
+> > +                    const struct i2c_device_id *id)
+> > +{
+> > +     struct device *dev = &client->dev;
+> > +     struct device *hwmon_dev;
+> > +     struct sbtsi_data *data;
+> > +
+> > +     data = devm_kzalloc(dev, sizeof(struct sbtsi_data), GFP_KERNEL);
+> > +     if (!data)
+> > +             return -ENOMEM;
+> > +
+> > +     data->client = client;
+> > +     mutex_init(&data->lock);
+> > +
+> > +     dev_set_drvdata(dev, data);
+> > +
+>
+> This is not needed.
+Thanks. Removed in v3.
+>
+> Guenter
+>
+> > +     hwmon_dev =
+> > +             devm_hwmon_device_register_with_info(dev, client->name, data,
+> > +                                                  &sbtsi_chip_info, NULL);
+> > +
+> > +     return PTR_ERR_OR_ZERO(hwmon_dev);
+> > +}
+> > +
+> > +static const struct i2c_device_id sbtsi_id[] = {
+> > +     {"sbtsi", 0},
+> > +     {}
+> > +};
+> > +MODULE_DEVICE_TABLE(i2c, sbtsi_id);
+> > +
+> > +static const struct of_device_id __maybe_unused sbtsi_of_match[] = {
+> > +     {
+> > +             .compatible = "amd,sbtsi",
+> > +     },
+> > +     { },
+> > +};
+> > +MODULE_DEVICE_TABLE(of, sbtsi_of_match);
+> > +
+> > +static struct i2c_driver sbtsi_driver = {
+> > +     .class = I2C_CLASS_HWMON,
+> > +     .driver = {
+> > +             .name = "sbtsi",
+> > +             .of_match_table = of_match_ptr(sbtsi_of_match),
+> > +     },
+> > +     .probe = sbtsi_probe,
+> > +     .id_table = sbtsi_id,
+> > +};
+> > +
+> > +module_i2c_driver(sbtsi_driver);
+> > +
+> > +MODULE_AUTHOR("Kun Yi <kunyi@google.com>");
+> > +MODULE_DESCRIPTION("Hwmon driver for AMD SB-TSI emulated sensor");
+> > +MODULE_LICENSE("GPL");
 
-SGkgQW5kcmV3LA0KSG93IGlzIHNlcnZlciBsYXVuY2hlZCBhcyBwZXIgbmV3IGRlc2lnbiBjb2Rl
-LiBXaXRoIGxhdGVzdCB1cGRhdGUsIGNvbnNvbGUgc2VydmVyIGlzIG5vdCBsYXVuY2hpbmcgaW4g
-b3VyIHBsYXRmb3JtLiBJIHNhdyBjb25maWcgb3B0aW9uIOKAnE9CTUNfQ09OU09MRV9IT1NUX1RU
-WSA/PSAidHR5VlVBUlQwIiDigJwgaGFzIGJlZW4gcmVtb3ZlZCBmcm9tIGJiIGZpbGUgYW5kIGFs
-c28gdGhlcmUgaXMgbm8gdHJpZ2dlcmluZyBwb2ludCBpbiBvYm1jLWNvbnNvbGUtc3NoIHNvY2tl
-dCBhbmQgc2VydmljZSBsaWtlIGVhcmxpZXIgV2FudHM9b2JtYy1jb25zb2xlQHtPQk1DX0NPTlNP
-TEVfSE9TVF9UVFl9LnNlcnZpY2U8bWFpbHRvOldhbnRzPW9ibWMtY29uc29sZUAlN2JPQk1DX0NP
-TlNPTEVfSE9TVF9UVFklN2Quc2VydmljZT4uDQoNCkkgc2VlIHVkZXYgcnVsZXMgYWRkZWQgaW4g
-bGF0ZXN0IHBhdGNoIGZvciBsYXVuY2hpbmcgc2VydmVyIHdoaWNoIG5lZWRzIGNvbmZpZyBkZWZp
-bml0aW9uIG9mIHVkZXYsIGRvIHdlIG5lZWQgdGhpcyBmb3IgbGF1bmNoaW5nLCBwbGVhc2UgYWR2
-aXNlLg0KDQpSZWdhcmRzDQotVmlqYXkNCg0KDQo=
 
---_000_73161AF5F6B640C6AE705FCF5A530B82fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <1187BD6C18EACB4986ADBC1514F1EDE5@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpNZW5sbzsNCglwYW5vc2UtMToyIDExIDYg
-OSAzIDggNCAyIDIgNDt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxp
-Lk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1ib3R0b206
-LjAwMDFwdDsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5z
-LXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5
-Ojk5Ow0KCWNvbG9yOiMwNTYzQzE7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpzcGFu
-LkVtYWlsU3R5bGUxNw0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1jb21wb3NlOw0KCWZvbnQt
-ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0Kc3Bhbi5z
-MQ0KCXttc28tc3R5bGUtbmFtZTpzMTt9DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5bGUtdHlw
-ZTpleHBvcnQtb25seTt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47
-DQoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7
-cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4N
-CjxvOnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48
-IVtlbmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0
-PSJlZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5
-b3V0PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9
-IiMwNTYzQzEiIHZsaW5rPSIjOTU0RjcyIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+SGkgQW5k
-cmV3LDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0
-eWxlPSJmb250LXNpemU6MTEuMHB0Ij5Ib3cgaXMgc2VydmVyIGxhdW5jaGVkIGFzIHBlciBuZXcg
-ZGVzaWduIGNvZGUuIFdpdGggbGF0ZXN0IHVwZGF0ZSwgY29uc29sZSBzZXJ2ZXIgaXMgbm90IGxh
-dW5jaGluZyBpbiBvdXIgcGxhdGZvcm0uIEkgc2F3IGNvbmZpZyBvcHRpb24g4oCcPC9zcGFuPjxz
-cGFuIGNsYXNzPSJzMSI+T0JNQ19DT05TT0xFX0hPU1RfVFRZID89ICZxdW90O3R0eVZVQVJUMCZx
-dW90OyDigJwgaGFzIGJlZW4NCiByZW1vdmVkIGZyb20gYmIgZmlsZSBhbmQgYWxzbyB0aGVyZSBp
-cyBubyB0cmlnZ2VyaW5nIHBvaW50IGluIG9ibWMtY29uc29sZS1zc2ggc29ja2V0IGFuZCBzZXJ2
-aWNlIGxpa2UgZWFybGllcg0KPGEgaHJlZj0ibWFpbHRvOldhbnRzPW9ibWMtY29uc29sZUAlN2JP
-Qk1DX0NPTlNPTEVfSE9TVF9UVFklN2Quc2VydmljZSI+V2FudHM9b2JtYy1jb25zb2xlQHtPQk1D
-X0NPTlNPTEVfSE9TVF9UVFl9LnNlcnZpY2U8L2E+LjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGNsYXNzPSJzMSI+PG86cD4mbmJzcDs8L286cD48L3Nw
-YW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gY2xhc3M9InMxIj5JIHNlZSB1ZGV2
-IHJ1bGVzIGFkZGVkIGluIGxhdGVzdCBwYXRjaCBmb3IgbGF1bmNoaW5nIHNlcnZlciB3aGljaCBu
-ZWVkcyBjb25maWcgZGVmaW5pdGlvbiBvZiB1ZGV2LCBkbyB3ZSBuZWVkIHRoaXMgZm9yIGxhdW5j
-aGluZywgcGxlYXNlIGFkdmlzZS48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48c3BhbiBjbGFzcz0iczEiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGNsYXNzPSJzMSI+UmVnYXJkczxvOnA+PC9vOnA+PC9z
-cGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGNsYXNzPSJzMSI+LVZpamF5PC9z
-cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBw
-dCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+
-DQo=
-
---_000_73161AF5F6B640C6AE705FCF5A530B82fbcom_--
+-- 
+Regards,
+Kun
