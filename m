@@ -1,85 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BBDB19EB76
+	for <lists+openbmc@lfdr.de>; Sun,  5 Apr 2020 15:30:39 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26D0119EB1F
-	for <lists+openbmc@lfdr.de>; Sun,  5 Apr 2020 14:11:50 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48wCFv1G6XzDqbC
-	for <lists+openbmc@lfdr.de>; Sun,  5 Apr 2020 22:11:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48wF0r1YCSzDqyY
+	for <lists+openbmc@lfdr.de>; Sun,  5 Apr 2020 23:30:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d29;
+ helo=mail-io1-xd29.google.com; envelope-from=gmouse@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=ontMfYGO; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=N2NutX0r; 
- dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=aoAKZy4U; dkim-atps=neutral
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com
+ [IPv6:2607:f8b0:4864:20::d29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48wCDv2VtszDqcx
- for <openbmc@lists.ozlabs.org>; Sun,  5 Apr 2020 22:10:53 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id C90248B2;
- Sun,  5 Apr 2020 08:10:49 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 05 Apr 2020 08:10:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm2; bh=xbvHg
- Js5DKova4I2uISIuzkAxJ4+e06pk8TYTAyOjG0=; b=ontMfYGO+Gcp9AwR2NkoK
- +/eWCxsmJFAGAmSruLCgsgIsqjR/N8ouqdIFEe6QkK3d0p3rm//erXVt2xMcWBlP
- iK8W9KvpdBoUA15DlhNRVRo4NaOZRWGByRxPrmHO6dVsShDl/PfA0P5csb/+n3OI
- m3wSw8nbNpRnc33WicY0wB1OzwgrZ5R0ZpPlXgAX/fNXtrHLWlIGAaAweVJfUKtA
- 14HgK5X5qn2I9KgQBjDqxMnj8efkMY3WaYusRJht02aY4OA2ylX0j5NoQKrMy75b
- /LYEZyETHcfqap9aqnfXvYuJwOMuS6ZjMVrXfv/7GER/Gm9kWNtr2+PPUc9p9PVn
- A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=xbvHgJs5DKova4I2uISIuzkAxJ4+e06pk8TYTAyOj
- G0=; b=N2NutX0ryFZSKR5d0Df9Vy9Dsf7hmTwB2ErA4JxyAf4EvZtuj7iWyz0yq
- jNK9JgxDhW6CYtJhJoTXZS82s+KQEOsFtdlRz7mVGnkfVvHoyjSWTnbYSEggwDf/
- /VkaKvFiq/cvJ0M7YiktLGFxYQmw3DfZDFiUbH7q/Jtbc0RYGu0h1Y1ODkYaVLWJ
- sihXqi3P/cUcPECKp3Riku+hZbqJg5sIRjKJEtNVYEQilMJt6heZXsdFa/UfZR8P
- W5bdsU8SYYYFHfNjNe/wfjlS3s8G5iYvA2d4Xsu4fW416Zh5bGmyxu0SP10HLOWP
- hTXOL/ZRlNrwVMJcrDlk8uMPpjreQ==
-X-ME-Sender: <xms:yMqJXiu-qosUccMojvWK0YD1xaes46MCj8GtrQ1HGc8v0e8ppPnnXQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddugdehtdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuffhomh
- grihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
- mhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:yMqJXg3ml0mjkTzesD01ahzW8KwRJXluXrp9qsKlLm3NT_HoXV00mQ>
- <xmx:yMqJXmTfV_jI90NN0L3PLK9zariYPE7IsaPjqx-ZAtRfhx6Es-iKXw>
- <xmx:yMqJXstzhpTBm4P6K038Y3v_9Jn5AB4h-kUlRwN1KbcjaTGEVLFmCg>
- <xmx:ycqJXgjwVAABLKt8nsXqlHIKzNDtUjLw38gTkIUqES2CKLJWXK-J6A>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 998BEE00B1; Sun,  5 Apr 2020 08:10:48 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-1082-g13d7805-fmstable-20200403v1
-Mime-Version: 1.0
-Message-Id: <451f5f0e-a1ba-4016-b044-e55b966f64ea@www.fastmail.com>
-In-Reply-To: <73161AF5-F6B6-40C6-AE70-5FCF5A530B82@fb.com>
-References: <73161AF5-F6B6-40C6-AE70-5FCF5A530B82@fb.com>
-Date: Sun, 05 Apr 2020 21:40:57 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Vijay Khemka" <vijaykhemka@fb.com>
-Subject: Re: objc console new design
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48wDz352QrzDqwl
+ for <openbmc@lists.ozlabs.org>; Sun,  5 Apr 2020 23:29:01 +1000 (AEST)
+Received: by mail-io1-xd29.google.com with SMTP id c16so12795243iod.6
+ for <openbmc@lists.ozlabs.org>; Sun, 05 Apr 2020 06:29:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=drAiiFHK5nYBYVpUIYxjaPiqYhA+9Rpr6ZfJ9o/2gKc=;
+ b=aoAKZy4UEzzazwxGHrLY827VCMC9/+l8Crlh/HxMi6j6L8rJB2EHtZuaz0e/meGEaK
+ 26G/4nR7HIWgrQgg9L1IPWlsO4GM9JurnSJYRaY7+hucSp4TdBimJBWUCvgAGpFyFg5+
+ hrD0bsefmT7ioG0JHHugvg9qMVQlkHP254Q4YeZ1Xq+g2Sy2L4x+2IVFizU0XcJlm3oD
+ VayHOhihR6v9rgEDm76jYAQgbfZwNyr8dQYFQD/4jVY8SsMAR2ZYy3p/o2v5jCQiGWPO
+ 7Suq3XIVsISdqyf7YZqvtHey17Xb4yuqFQsJGsUlwzVzPeSjTxXlJXI2Ck+VYVyk0d7k
+ kkmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=drAiiFHK5nYBYVpUIYxjaPiqYhA+9Rpr6ZfJ9o/2gKc=;
+ b=qEbhzpL1U258b36QGfLfkkrUdzrehk5RA7EWMRHaQSyMMRFQml0Iww120Hf+1KIAj7
+ bDrrLLW477reYf2PafCKjUTEyuUBtLOX0lAd0IOUqgJVMFWXdhfvqcd1jGL18m7TEPse
+ bJCccGALxjg4jW7r+5C8Sp6zGA+FcnbdZ4e7mDinrAOYY3oB+UTGBz0EQSxkg9hxLYPt
+ HRuoLOsSqrnzwRb6Vo9bSUseO2Qb4fXkx3clLrAa3F18IqmLMxCV4MXZqL4zLcJRmVVY
+ sIMPY3/5I9WldZBuopAvzjSn0OZ3ww3QLW+Sg/xY4AF841tpusZKrhhL5PSs+53uZS9X
+ 7EDA==
+X-Gm-Message-State: AGi0Pubw6c3O3fCsufm9DlFAjdZLS893al4LkcUG2OkaumpHgL6I6C0Z
+ ZWD/JyVedzDrL7SkR78xDi9hkzvSthIth+/fjGRxdA==
+X-Google-Smtp-Source: APiQypKo+5J20sJ4YPoZ2n8RiS9M+CPenjJO5GTW8eeGJSUBM33P6zAbKGQTmMzMDQHVC7uV9ZuNTUBwdlaMKZk9Sho=
+X-Received: by 2002:a02:70c7:: with SMTP id f190mr9510111jac.60.1586093335865; 
+ Sun, 05 Apr 2020 06:28:55 -0700 (PDT)
+MIME-Version: 1.0
+References: <44bae429-2507-e044-2d0e-c4e110dfa700@linux.ibm.com>
+ <9e9929c1-1c55-43ea-236d-b14c82aacf88@linux.vnet.ibm.com>
+In-Reply-To: <9e9929c1-1c55-43ea-236d-b14c82aacf88@linux.vnet.ibm.com>
+From: Anton Kachalov <rnouse@google.com>
+Date: Sun, 5 Apr 2020 15:28:44 +0200
+Message-ID: <CADVsX8-r8ebFydQJgGQ=C7sTFVQmxk_vFinbRi2kkJ5skRgXcA@mail.gmail.com>
+Subject: Re: Security Working Group - Wednesday April 1
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000dde80805a28b2196"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,52 +73,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000dde80805a28b2196
+Content-Type: text/plain; charset="UTF-8"
 
+Hello, Ratan.
 
-On Sat, 4 Apr 2020, at 08:09, Vijay Khemka wrote:
-> =20
-> Hi Andrew,
->=20
-> How is server launched as per new design code. With latest update,=20
-> console server is not launching in our platform. I saw config option=20=
+Would you mind breaking down the estimation, curious about what brought up
+18MB when enabling SELinux.
+Precompiled rules in Android took 3MB on average.
 
-> =E2=80=9COBMC_CONSOLE_HOST_TTY ?=3D "ttyVUART0" =E2=80=9C has been rem=
-oved from bb file=20
-> and also there is no triggering point in obmc-console-ssh socket and=20=
+On Wed, 1 Apr 2020 at 16:22, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+wrote:
 
-> service like earlier Wants=3Dobmc-console@{OBMC_CONSOLE_HOST_TTY}.serv=
-ice=20
-> <mailto:Wants=3Dobmc-console@%7bOBMC_CONSOLE_HOST_TTY%7d.service>.
->=20
->=20
-> I see udev rules added in latest patch for launching server which need=
-s=20
-> config definition of udev, do we need this for launching, please advis=
-e.
+> Hi Joseph,
+>
+> We did some POC around selinux, will share the detailed use-cases with
+> selinux which can be useful in openbmc stack.
+>
+> selinux is taking around 18MB space on flash, Is it a concern?
+>
+> Regards
+>
+> Ratan
+>
+> On 3/31/20 9:51 PM, Joseph Reynolds wrote:
+> > This is a reminder of the OpenBMC Security Working Group meeting
+> > scheduled for this Wednesday April 1 at 10:00am PDT.
+> >
+> > We'll discuss current development items, and anything else that comes up.
+> >
+> > The current topics:
+> >
+> > 1. SELinux or AppArmor plans
+> >
+> > Access, agenda, and notes are in the wiki:
+> >
+> > https://github.com/openbmc/openbmc/wiki/Security-working-group
+> >
+> > - Joseph
+> >
+>
+>
 
-Yes, obmc-console now ships a udev rules file that launches obmc-console=
--server
-via an `ENV{SYSTEMD_WANTS}` directive:
+--000000000000dde80805a28b2196
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://github.com/openbmc/obmc-console/commit/fdf1a7102f800711daadfc389=
-5fc8feeffa73c0e#diff-416dba8b88aad2291d9c314cfa7a75f1
+<div dir=3D"ltr">Hello, Ratan.<div><br></div><div>Would you mind breaking d=
+own the estimation, curious about what brought up 18MB when enabling SELinu=
+x.</div><div>Precompiled rules in Android took 3MB on average.</div></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed,=
+ 1 Apr 2020 at 16:22, Ratan Gupta &lt;<a href=3D"mailto:ratagupt@linux.vnet=
+.ibm.com">ratagupt@linux.vnet.ibm.com</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">Hi Joseph,<br>
+<br>
+We did some POC around selinux, will share the detailed use-cases with <br>
+selinux which can be useful in openbmc stack.<br>
+<br>
+selinux is taking around 18MB space on flash, Is it a concern?<br>
+<br>
+Regards<br>
+<br>
+Ratan<br>
+<br>
+On 3/31/20 9:51 PM, Joseph Reynolds wrote:<br>
+&gt; This is a reminder of the OpenBMC Security Working Group meeting <br>
+&gt; scheduled for this Wednesday April 1 at 10:00am PDT.<br>
+&gt;<br>
+&gt; We&#39;ll discuss current development items, and anything else that co=
+mes up.<br>
+&gt;<br>
+&gt; The current topics:<br>
+&gt;<br>
+&gt; 1. SELinux or AppArmor plans<br>
+&gt;<br>
+&gt; Access, agenda, and notes are in the wiki:<br>
+&gt;<br>
+&gt; <a href=3D"https://github.com/openbmc/openbmc/wiki/Security-working-gr=
+oup" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/openbm=
+c/wiki/Security-working-group</a><br>
+&gt;<br>
+&gt; - Joseph<br>
+&gt;<br>
+<br>
+</blockquote></div>
 
-I saw on IRC you need to launch obmc-console-server for UARTs other than=
- the
-VUARTS - please send a patch to the rules file in obmc-console adding th=
-e
-UARTs you need. As noted in the commit message systemd will only attempt=
-
-to start obmc-console-server for the UARTs that have configuration files=
- installed
-on the system, so we can in theory support adding rules for each UART wi=
-thout
-negative effects.
-
-Hope that helps,
-
-Andrew
+--000000000000dde80805a28b2196--
