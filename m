@@ -2,75 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1D9B19EC98
-	for <lists+openbmc@lfdr.de>; Sun,  5 Apr 2020 18:28:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4404719EF36
+	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 03:50:28 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48wJy50bYmzDqlF
-	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 02:28:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48wYQT4RYQzDqwW
+	for <lists+openbmc@lfdr.de>; Mon,  6 Apr 2020 11:50:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::643;
- helo=mail-pl1-x643.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.helo=apc01-hk2-obe.outbound.protection.outlook.com
+ (client-ip=40.107.130.44; helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=kfting@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=AH0fj9TS; dkim-atps=neutral
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
- [IPv6:2607:f8b0:4864:20::643])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=nuvoton.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-nuvoton-onmicrosoft-com header.b=fd1feSJH; 
+ dkim-atps=neutral
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1300044.outbound.protection.outlook.com [40.107.130.44])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48wJxG4kG5zDqT4
- for <openbmc@lists.ozlabs.org>; Mon,  6 Apr 2020 02:27:44 +1000 (AEST)
-Received: by mail-pl1-x643.google.com with SMTP id w3so4921775plz.5
- for <openbmc@lists.ozlabs.org>; Sun, 05 Apr 2020 09:27:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=bJ/LcOSIlYiaLe2lBWuO3tI66lhILiB6h5yZlYKXPHI=;
- b=AH0fj9TSSbTaMy2uQaKS113BKu2jo+djlzk8QUJ8GIQzO7A6eAbFE7mfgPqc0Ii1sj
- wTeIzsCEMFETu2MkHeOwJIKIS2StfUvrxoR4OZaE8DHKIprKblDseq/vbdEzsPIdMh+G
- KtstcxmhyOEWu/Badqwu2ek+kv/ALHsY4drtpCFw0X0JAF10+Yx6Jyccziv5MSVASETy
- aBuiExokVTycIW+PkI3R+oLYFOqKef47/OLXnYjzug4R12rE1PeuGA20QyuJ2YN/z/Jf
- iWU8z/QurfW3uo+vlg+g2JaHXw2p+5W3TzYs+l/tolNpTddQe8Ej9wAEjIjwnGPIMUsJ
- IBLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=bJ/LcOSIlYiaLe2lBWuO3tI66lhILiB6h5yZlYKXPHI=;
- b=JuGNftE5ixtzfKwJNid4odbkChxzTLTTLlwWVMvC3GFad23PoDQ7Lh4Grq8h4qp531
- oDWX6tuyHRbhvU0ehJrCoLkT5PDUBu2nW5rbFHP3eysmAX7FEGvWQHBfoUIkeoc0K4n2
- wtbC4OF1OV49qxrwPoEUQrvA9VczYPreLh+W11CpYE3hUNH399PGjDPFZKqojp/8T78v
- Ocp86AnVSv9n7hKNMEdpVrkcWby3FbCUaSTZL2NoVqWkk3Rc4GtcUXKF9VM0LLP2jD0o
- Fb/9eACzycMw8WWanHfTiniPJwMav2GvV13pl6XCTcVfsJHjqahHIba2npY2N7ANLnC4
- z3rw==
-X-Gm-Message-State: AGi0PuYIBWA3T7B1MqimsLntiIRt42EI7+ONC1zDXj1YLrW4OdKucl+R
- Zvu1Nog5j5P9f3NmQ6HNUgQ=
-X-Google-Smtp-Source: APiQypJYKKjonvi129GAuEokj1MBJcWucjt1DpxCmGL97+oXqjf4mlzEFgdTfgrMXHiwofkzx3I9rg==
-X-Received: by 2002:a17:90a:a00c:: with SMTP id
- q12mr21198502pjp.7.1586104060576; 
- Sun, 05 Apr 2020 09:27:40 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id u13sm9005251pgp.49.2020.04.05.09.27.39
- (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
- Sun, 05 Apr 2020 09:27:39 -0700 (PDT)
-Date: Sun, 5 Apr 2020 09:27:38 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Kun Yi <kunyi@google.com>
-Subject: Re: [PATCH linux hwmon-next v3 1/3] hwmon: (sbtsi) Add basic support
- for SB-TSI sensors
-Message-ID: <20200405162738.GA161211@roeck-us.net>
-References: <20200405030118.191950-1-kunyi@google.com>
- <20200405030118.191950-2-kunyi@google.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48wYPr3nMyzDqWR
+ for <openbmc@lists.ozlabs.org>; Mon,  6 Apr 2020 11:49:51 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ezMuAtsWpPRdWmZS74+UtO21OTk5l499sYtYe/tg1580iT8I+bzILEDkPW2HTUBpEMfy/n3tih2idVLpmG6Xrj//pCLSr42o8h5ugPMzrS0sfz6PShZwcf3o3C1K8Wj3cEZQWRfuFSyC4reMkX0glnQOkI4vD1HTu7RO/lcyNwmUJTdQrHoLvtDMbdOOrPtQpnNYNn47uceMoYHXnFbFUfuBo7WDGHNP0dD4Ec3C6qXVhIbYPvWtGoXSPvL/S4naS0xEt3YU0/1J7NmC1DQa+BskXdskmNTeqRRijr1HZem+cvEm/4bc+xwJnJlONc+0R6tDEc2V8Q/9FPd1VHQEqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Bq0vH90RckS076qZoCUNyIlrgos0uQHf2j2WTn4ljMA=;
+ b=Lo/NUB+B+BbBJTEjrv+7J0BiHRrJoq5NXrrxW4P0+jnXXa8QyAvwD08NWM1eZAT19cphKxn26vzDiQ3eFwzZQwBIZyWyzZZUUksnLKoW2mblyF2elQc/6dyK5k9BpQ8I6f6g/EmxsJgYVZjveyqL0BcUjJL+ONqHXWfq7sUZUhlY04zog8yHOlaeT2ox+/IMCg7SWK4iMjKas4NEr0EMwP+CIcVJWif+P3/HMTpgoV8tT95zl8gO5v7EHaIoheKo6W4mUWIRosv/R3knvsab7FvtuDtZuHI0iBJo2wT2dLloROmcYTRllxqTd89gQWUtsTz9O0LMkgJWolBWlIiblg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Bq0vH90RckS076qZoCUNyIlrgos0uQHf2j2WTn4ljMA=;
+ b=fd1feSJHWpmD54wm+ZlJdeHMBzDwB5GT/rvLC25MeVQwRs6Vj7VPNBip8rBsW/p4CdYfwr9FT2MxujLBVguAJjdfFCPKnFpDCqMo/IsPFbWNUFHCWst+hsDmYrUaLo06qq1nqLoULStOkFmSUiRoOtreyyjSuhQrFKGuvy6Rccc=
+Received: from HK0PR03MB4897.apcprd03.prod.outlook.com (52.132.238.150) by
+ HK0PR03MB3170.apcprd03.prod.outlook.com (52.133.151.140) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2900.13; Mon, 6 Apr 2020 01:49:46 +0000
+Received: from HK0PR03MB4897.apcprd03.prod.outlook.com
+ ([fe80::65f6:ab1e:5f92:b026]) by HK0PR03MB4897.apcprd03.prod.outlook.com
+ ([fe80::65f6:ab1e:5f92:b026%6]) with mapi id 15.20.2900.012; Mon, 6 Apr 2020
+ 01:49:46 +0000
+From: CS20 KFTing <KFTING@nuvoton.com>
+To: Alexander Amelkin <a.amelkin@yadro.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Authorization of LDAP users in bmcweb
+Thread-Topic: Authorization of LDAP users in bmcweb
+Thread-Index: AQHWCD2hZfnucqMpiU2pv8i8Wv7IZ6hrVOBA
+Date: Mon, 6 Apr 2020 01:49:46 +0000
+Message-ID: <HK0PR03MB4897C3396259E1B919741D4BDBC20@HK0PR03MB4897.apcprd03.prod.outlook.com>
+References: <HK0PR03MB4897F2703C45135D276DFFDFDBC90@HK0PR03MB4897.apcprd03.prod.outlook.com>
+ <cf96937a-8b21-6e44-47ed-77ce58b7f220@yadro.com>
+In-Reply-To: <cf96937a-8b21-6e44-47ed-77ce58b7f220@yadro.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=KFTING@nuvoton.com; 
+x-originating-ip: [60.250.207.217]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: cd340cbc-fe0e-4904-061c-08d7d9ccc91e
+x-ms-traffictypediagnostic: HK0PR03MB3170:|HK0PR03MB3170:
+x-microsoft-antispam-prvs: <HK0PR03MB3170F60ED6C622DB77511325DBC20@HK0PR03MB3170.apcprd03.prod.outlook.com>
+x-ms-exchange-transport-forked: True
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-forefront-prvs: 0365C0E14B
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR03MB4897.apcprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(10009020)(376002)(136003)(366004)(346002)(396003)(39850400004)(8676002)(81156014)(81166006)(86362001)(186003)(7696005)(8936002)(966005)(5660300002)(478600001)(26005)(6506007)(53546011)(64756008)(33656002)(76116006)(110136005)(55016002)(9686003)(66556008)(316002)(66446008)(66476007)(66946007)(2906002)(71200400001)(52536014);
+ DIR:OUT; SFP:1101; 
+received-spf: None (protection.outlook.com: nuvoton.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 4iCmjRoCqCvxofAlIIAh+TE772r8ZwBDAdQ60KuwY+KGWw+P/SYaDxeOUJX3w8fDXlOFVFVRbdXTbeUwAG4kWsnSup55HWKi8OQCLAEfwbJ0RUpDM2mKjmHdmEmUUR0i2DQM6wYoPIDEA0V1UpunVAThgJ02/g7zyI5diyXXZBSK6mnjDlKFrYNbsgc/XkA/idYGZUiCH+5de0j4p2nl+NTTIJSDIGSd8gWfFAwsrZIJz4bFRZLeX/Ut3hMUC+lyREzH8QYCmzwvCfQ+OAyGD1JbMu4MCtd6EPycXW8rcOyf788WmDefPLBuIjS0ri4UWwLqIaxmhdmOtNill13NzWMCPXODnrzhLBnWtG4iYkNfxbONjDDawkgLpz/OMorN93Plf/bWrxeCU/mzSUP/YLVLfXOxU2+JWGoy/PnKzyOTt+t3odqOK8Iat/qN0hqPKn2P4Mu9x5gtgGaqi2YSLQtOrf2CayUJvmwbxylaB6bj8La0eYxWu/XHVRVbQGh27aJ5pBfzgqD0xlbeATz82g==
+x-ms-exchange-antispam-messagedata: GRyw0b9bmnSbJMQhx/e/gtJvKOtZQalRkJ1pucbaQ6ftVjsoWksNErDQ6NDqdK7lFEL18RXsMhIUpfq5CCgw1uPKBQZ1qVbsCbJzukJjdMo8k6jWNCx7xdUnefgGoCBgamRu+PsdQmXOPFcU68lGZg==
+Content-Type: multipart/alternative;
+ boundary="_000_HK0PR03MB4897C3396259E1B919741D4BDBC20HK0PR03MB4897apcp_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200405030118.191950-2-kunyi@google.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cd340cbc-fe0e-4904-061c-08d7d9ccc91e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Apr 2020 01:49:46.5069 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: SJOpgnxvp3IQ2gfLPbyjiBmF/2r0UNikg2J0OFDvA6TeqUyHN7m+9uYDCyPhQG0xYuTE1NR2sx/hJBP5TIMvmQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB3170
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,374 +107,254 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mark.rutland@arm.com, linux-hwmon@vger.kernel.org, jdelvare@suse.com,
- devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Apr 04, 2020 at 08:01:16PM -0700, Kun Yi wrote:
-> SB Temperature Sensor Interface (SB-TSI) is an SMBus compatible
-> interface that reports AMD SoC's Ttcl (normalized temperature),
-> and resembles a typical 8-pin remote temperature sensor's I2C interface
-> to BMC.
-> 
-> This commit adds basic support using this interface to read CPU
-> temperature, and read/write high/low CPU temp thresholds.
-> 
-> To instantiate this driver on an AMD CPU with SB-TSI
-> support, the i2c bus number would be the bus connected from the board
-> management controller (BMC) to the CPU. The i2c address is specified in
-> Section 6.3.1 of the spec [1]: The SB-TSI address is normally 98h for socket 0
-> and 90h for socket 1, but it could vary based on hardware address select pins.
-> 
-> [1]: https://www.amd.com/system/files/TechDocs/56255_OSRR.pdf
-> 
-> Test status: tested reading temp1_input, and reading/writing
-> temp1_max/min.
-> 
-> Signed-off-by: Kun Yi <kunyi@google.com>
-> ---
->  drivers/hwmon/Kconfig      |  10 ++
->  drivers/hwmon/Makefile     |   1 +
->  drivers/hwmon/sbtsi_temp.c | 259 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 270 insertions(+)
->  create mode 100644 drivers/hwmon/sbtsi_temp.c
-> 
-> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-> index 05a30832c6ba..9585dcd01d1b 100644
-> --- a/drivers/hwmon/Kconfig
-> +++ b/drivers/hwmon/Kconfig
-> @@ -1412,6 +1412,16 @@ config SENSORS_RASPBERRYPI_HWMON
->  	  This driver can also be built as a module. If so, the module
->  	  will be called raspberrypi-hwmon.
->  
-> +config SENSORS_SBTSI
-> +	tristate "Emulated SB-TSI temperature sensor"
-> +	depends on I2C
-> +	help
-> +	  If you say yes here you get support for emulated temperature
-> +	  sensors on AMD SoCs with SB-TSI interface connected to a BMC device.
-> +
-> +	  This driver can also be built as a module. If so, the module will
-> +	  be called sbtsi_temp.
-> +
->  config SENSORS_SHT15
->  	tristate "Sensiron humidity and temperature sensors. SHT15 and compat."
->  	depends on GPIOLIB || COMPILE_TEST
-> diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-> index b0b9c8e57176..cd109f003ce4 100644
-> --- a/drivers/hwmon/Makefile
-> +++ b/drivers/hwmon/Makefile
-> @@ -152,6 +152,7 @@ obj-$(CONFIG_SENSORS_POWR1220)  += powr1220.o
->  obj-$(CONFIG_SENSORS_PWM_FAN)	+= pwm-fan.o
->  obj-$(CONFIG_SENSORS_RASPBERRYPI_HWMON)	+= raspberrypi-hwmon.o
->  obj-$(CONFIG_SENSORS_S3C)	+= s3c-hwmon.o
-> +obj-$(CONFIG_SENSORS_SBTSI)	+= sbtsi_temp.o
->  obj-$(CONFIG_SENSORS_SCH56XX_COMMON)+= sch56xx-common.o
->  obj-$(CONFIG_SENSORS_SCH5627)	+= sch5627.o
->  obj-$(CONFIG_SENSORS_SCH5636)	+= sch5636.o
-> diff --git a/drivers/hwmon/sbtsi_temp.c b/drivers/hwmon/sbtsi_temp.c
-> new file mode 100644
-> index 000000000000..e3ad6a9f7ec1
-> --- /dev/null
-> +++ b/drivers/hwmon/sbtsi_temp.c
-> @@ -0,0 +1,259 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +/*
-> + * sbtsi_temp.c - hwmon driver for a SBI Temperature Sensor Interface (SB-TSI)
-> + *                compliant AMD SoC temperature device.
-> + *
-> + * Copyright (c) 2020, Google Inc.
-> + * Copyright (c) 2020, Kun Yi <kunyi@google.com>
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/i2c.h>
-> +#include <linux/init.h>
-> +#include <linux/hwmon.h>
-> +#include <linux/module.h>
-> +#include <linux/mutex.h>
-> +#include <linux/of_device.h>
-> +#include <linux/of.h>
-> +
-> +/*
-> + * SB-TSI registers only support SMBus byte data access. "_INT" registers are
-> + * the integer part of a temperature value or limit, and "_DEC" registers are
-> + * corresponding decimal parts.
-> + */
-> +#define SBTSI_REG_TEMP_INT		0x01 /* RO */
-> +#define SBTSI_REG_STATUS		0x02 /* RO */
-> +#define SBTSI_REG_CONFIG		0x03 /* RO */
-> +#define SBTSI_REG_TEMP_HIGH_INT		0x07 /* RW */
-> +#define SBTSI_REG_TEMP_LOW_INT		0x08 /* RW */
-> +#define SBTSI_REG_TEMP_DEC		0x10 /* RW */
-> +#define SBTSI_REG_TEMP_HIGH_DEC		0x13 /* RW */
-> +#define SBTSI_REG_TEMP_LOW_DEC		0x14 /* RW */
-> +#define SBTSI_REG_REV			0xFF /* RO */
+--_000_HK0PR03MB4897C3396259E1B919741D4BDBC20HK0PR03MB4897apcp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-The revision register is not actually used. 
+SGkgQWxleDoNCg0KWWVzLCB0aGUgcGF0Y2ggZG9lcyBwcmV0dHkgbXVjaCBsaWtlIHdoYXQgeW91
+IGRlc2NyaWJlZC4NCg0KSSBhbHNvIGFncmVlIHRoYXQgdGhlIGl04oCZcyBwcm9uZSB0byBncm91
+cCBuYW1lIGNvbmZsaWN0cyAob3IgZ3JvdXAgaWQgY29uZmxpY3RzKSBjb25zaWRlcmluZyB0aGUg
+cGFtX3N1Y2NlZWRfaWYgbW9kdWxlIGNhc2UuDQoNClRoZXJlIGlzIGEgTERBUCBtYXBwaW5nIGNv
+bW1pdCBtZXJnZWQgd2hpY2ggaGFuZGxlcyBsb2NhbCBwcml2aWxlZ2VzIGFuZCBMREFQIGdyb3Vw
+cyBidXQgaXQgZG9lc27igJl0IGNvdmVyIHRoaXMg4oCccmVkZmlzaOKAnSBncm91cCBjYXNlLg0K
+DQpUaGUgYXBwbGljYXRpb25zIHdoaWNoIHJlcXVpcmUgYXV0aGVudGljYXRpb24gbWlnaHQgYWxz
+byBoYXZlIHNpbWlsYXIgaXNzdWVzIHdpdGggYXR0ZW1wdHMgdG8gbG9naW4gd2l0aCByZW1vdGUg
+dXNlcnMuDQoNCkl0IHdvdWxkIGJlIGdvb2QgdG8gY29uc2lkZXIgcmVzb3VyY2UgY29uZmxpY3Rz
+IChsaWtlIGdyb3VwIG5hbWUvaWQpIGFuZCBoYXZlIGEgbW9yZSBnZW5lcmljIHJ1bGUgb3IgZGly
+ZWN0aW9uIGxpa2UgeW91ciBzdWdnZXN0aW9uIGZvciB0aGUgYXBwbGljYXRpb25zIHdoaWNoIHJl
+cXVpcmUgYXV0aGVudGljYXRpb24uDQoNClRoYW5rIHlvdS4NCg0KUmVnYXJkcywNClR5cm9uZQ0K
+DQpGcm9tOiBBbGV4YW5kZXIgQW1lbGtpbiA8YS5hbWVsa2luQHlhZHJvLmNvbT4NClNlbnQ6IFdl
+ZG5lc2RheSwgQXByaWwgMSwgMjAyMCAxMTo1MyBQTQ0KVG86IENTMjAgS0ZUaW5nIDxLRlRJTkdA
+bnV2b3Rvbi5jb20+OyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBBdXRo
+b3JpemF0aW9uIG9mIExEQVAgdXNlcnMgaW4gYm1jd2ViDQoNCjAxLjA0LjIwMjAgMTA6NDAsIENT
+MjAgS0ZUaW5nINC/0LjRiNC10YI6DQpIaSBBbGV4Og0KDQpQbGVhc2UgaGVscCB0cnkgdGhlIHBh
+dGNoIGZyb20gaHR0cHM6Ly9naXRodWIuY29tL051dm90b24tSXNyYWVsL29wZW5ibWMvYmxvYi9y
+dW5ibWMvbWV0YS1xdWFudGEvbWV0YS1vbHltcHVzLW51dm90b24vcmVjaXBlcy1leHRlbmRlZC9w
+YW0vbGlicGFtL3BhbV9zdWNjZWVkX2lmX3N1cHBvcnRfbGRhcF91c2VyX2xvZ2luLnBhdGNoPGh0
+dHBzOi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2l0aHVi
+LmNvbV9OdXZvdG9uLTJESXNyYWVsX29wZW5ibWNfYmxvYl9ydW5ibWNfbWV0YS0yRHF1YW50YV9t
+ZXRhLTJEb2x5bXB1cy0yRG51dm90b25fcmVjaXBlcy0yRGV4dGVuZGVkX3BhbV9saWJwYW1fcGFt
+LTVGc3VjY2VlZC01RmlmLTVGc3VwcG9ydC01RmxkYXAtNUZ1c2VyLTVGbG9naW4ucGF0Y2gmZD1E
+d01EYVEmYz11ZThtTzh6Z0M0Vlo0cV9hTlZLdDhHOU1DMDFVRkRtaXN2TVIxay1Fb0RNJnI9a0dp
+YlNDRVF6LVBpbG5XLXI5S05UN196V0pYSk50blNLNWFZWkNlN1NWcyZtPU52WTB5NXFnZVZZZ3dC
+VW1nUEpuOWdmdWtsa1p1MTFlVEVZa0p0d1VlUGMmcz1PaXh0NGVKMm1HWkdmRkVnTnhVSU9OcVF0
+XzVvLXhOa3RnbWJiRl9uUWJjJmU9PiB0byBsaWJwYW0gYW5kIHNlZSBob3cgaXQgZ29lcy4NCg0K
+QmVzaWRlcyB0aGUgcGF0Y2gsIHRoZSB1c2VyIGZyb20gdGhlIGxkYXAgc2VydmVyIG5lZWRzIHRv
+IGJlIGluIHRoZSDigJxyZWRmaXNo4oCdIGdyb3VwIGluIHRoZSBsZGFwIHNlcnZlciBkYXRhYmFz
+ZSBhbmQgaXTigJlzIGFscmVhZHkgZG9uZSBhY2NvcmRpbmcgdG8geW91ciBkZXNjcmlwdGlvbi4N
+Cg0KVGhlIHJlcXVpcmVtZW50ICJ1c2VyIGluIGdyb3VwIHJlZGZpc2giIGlzIGNvbnRyb2xsZWQg
+YnkgdGhlIHBhbV9zdWNjZWVkX2lmIG1vZHVsZSB3aGVuIGEgdXNlciB0cmllcyB0byBsb2dpbiB2
+aWEgV2ViVUkgYW5kIHRoZSBvcmlnaW5hbCBpbXBsZW1lbnRhdGlvbiBpbiBwYW1fc3VjY2VlZF9p
+ZiBtb2R1bGUgaGFzIHNvbWUgbGltaXRhdGlvbiBvbiBncm91cCBpZGVudGlmaWNhdGlvbi4NCldl
+J3ZlIHRlc3RlZCB5b3VyIHBhdGNoLiBJdCB3b3JrcywgYnV0IG5vdCBldmVyeSB0aW1lLg0KDQpJ
+IHN1c3BlY3QgdGhhdCB0aGUgZ3JvdXBzIGNoZWNrIGxlYWRzIHRvIHJlcXVlc3RpbmcgYWxsIGdy
+b3VwcyBmcm9tIExEQVAsIGFuZCB0aGF0IHRha2VzIGEgbG90IG9mIHRpbWUgaW4gb3VyIHNldHVw
+IHNvIGF1dGhlbnRpY2F0aW9uIHRpbWVzIG91dCBhbmQgZmFpbHMuIFdoZW4gSSByZXBlYXQgdGhl
+IGF1dGggcmVxdWVzdCwgdGhlIGxpc3Qgb2YgZ3JvdXBzIGlzIGFscmVhZHkgaW4gdGhlIG1lbW9y
+eSBhbmQgc28gYXV0aGVudGljYXRpb24gY29tcGxldGVzIHN1Y2Nlc3NmdWxseS4NCg0KSSBiZWxp
+ZXZlIHRoYXQgdGhlcmUgc2hvdWxkIGJlIGFuIGVhc3kgd2F5IHRvIG1ha2UgYSBtYXBwaW5nIGJl
+dHdlZW4gTERBUCBhbmQgbG9jYWwgcGVybWlzc2lvbiAoc3VjaCBhcyAncmVkZmlzaCcsIGV0Yy4p
+IGFuZCBwcml2aWxlZ2UgKHN1Y2ggYXMgJ3ByaXYtYWRtaW4nLCBldGMuKSBncm91cHMuIEknZCBz
+YXkgdGhhdCB0aGVyZSBtdXN0IGJlIG5vIG5lZWQgdG8gYWRkIGEgdXNlciB0byBMREFQIGByZWRm
+aXNoYCBncm91cCwgYW5kIEkgcGVyc29uYWxseSBkaXNsaWtlIHRoYXQgYXBwcm9hY2ggYmVjYXVz
+ZSBpdCBpcyBwcm9uZSB0byBncm91cCBuYW1lIGNsYXNoZXMuIFdoYXQgSSB0aGluayB3b3VsZCBi
+ZSBncmVhdCBpcyBoYXZlIGluIFdlYlVJIGEgdGFibGUgbGlrZSB0aGlzOg0KDQpMREFQIEdyb3Vw
+IHwgUHJpdmlsZWdlIGxldmVsIHwgU1NIIHwgUmVkZmlzaCB8IFdlYg0KPT09PT09PT09PT18PT09
+PT09PT09PT09PT09PT18PT09PT18PT09PT09PT09fD09PT0NClNvbWVHcm91cCAgfCBBZG1pbmlz
+dHJhdG9yICAgfCAgWSAgfCAgICBZICAgIHwgIFkNCk90aGVyR3JvdXAgfCBPcGVyYXRvciAgICAg
+ICAgfCAgTiAgfCAgICBZICAgIHwgIFkNCg0KKiBJUE1JIGlzIG5vdCBsaXN0ZWQgYmVjYXVzZSBp
+dCByZXF1aXJlcyBwbGFpbi10ZXh0IHBhc3N3b3JkcyBhbmQgY2FuJ3QgYmUgYXV0aGVudGljYXRl
+ZCBhZ2FpbnN0IExEQVANCg0KV2hhdCBkbyB5b3UgdGhpbms/DQoNCldCUiwgQWxleGFuZGVyDQoN
+Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQpUaGUgcHJpdmlsZWdlZCBjb25maWRl
+bnRpYWwgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRoaXMgZW1haWwgaXMgaW50ZW5kZWQgZm9y
+IHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNzZWVzIGFzIGluZGljYXRlZCBieSB0aGUgb3JpZ2luYWwg
+c2VuZGVyIG9mIHRoaXMgZW1haWwuIElmIHlvdSBhcmUgbm90IHRoZSBhZGRyZXNzZWUgaW5kaWNh
+dGVkIGluIHRoaXMgZW1haWwgb3IgYXJlIG5vdCByZXNwb25zaWJsZSBmb3IgZGVsaXZlcnkgb2Yg
+dGhlIGVtYWlsIHRvIHN1Y2ggYSBwZXJzb24sIHBsZWFzZSBraW5kbHkgcmVwbHkgdG8gdGhlIHNl
+bmRlciBpbmRpY2F0aW5nIHRoaXMgZmFjdCBhbmQgZGVsZXRlIGFsbCBjb3BpZXMgb2YgaXQgZnJv
+bSB5b3VyIGNvbXB1dGVyIGFuZCBuZXR3b3JrIHNlcnZlciBpbW1lZGlhdGVseS4gWW91ciBjb29w
+ZXJhdGlvbiBpcyBoaWdobHkgYXBwcmVjaWF0ZWQuIEl0IGlzIGFkdmlzZWQgdGhhdCBhbnkgdW5h
+dXRob3JpemVkIHVzZSBvZiBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gb2YgTnV2b3RvbiBpcyBz
+dHJpY3RseSBwcm9oaWJpdGVkOyBhbmQgYW55IGluZm9ybWF0aW9uIGluIHRoaXMgZW1haWwgaXJy
+ZWxldmFudCB0byB0aGUgb2ZmaWNpYWwgYnVzaW5lc3Mgb2YgTnV2b3RvbiBzaGFsbCBiZSBkZWVt
+ZWQgYXMgbmVpdGhlciBnaXZlbiBub3IgZW5kb3JzZWQgYnkgTnV2b3Rvbi4NCg==
 
-> +
-> +#define SBTSI_CONFIG_READ_ORDER_SHIFT	5
-> +
-> +#define SBTSI_TEMP_MIN	0
-> +#define SBTSI_TEMP_MAX	255875
-> +#define SBTSI_REV_MAX_VALID_ID	4
+--_000_HK0PR03MB4897C3396259E1B919741D4BDBC20HK0PR03MB4897apcp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Not actually used, and I am not sure if it would make sense to check it.
-If at all, it would only make sense if you also check SBTSIxFE (Manufacture
-ID). Unfortunately, the actual SB-TSI specification seems to be non-public,
-so I can't check if the driver as-is supports versions 0..3 (assuming those
-exist).
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+5paw57Sw5piO6auUOw0KCXBhbm9zZS0xOjIgMiA1IDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFj
+ZQ0KCXtmb250LWZhbWlseTrntLDmmI7pq5Q7DQoJcGFub3NlLTE6MiAyIDUgOSAwIDAgMCAwIDAg
+MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
+OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
+Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1m
+YW1pbHk6IlxA5paw57Sw5piO6auUIjsNCglwYW5vc2UtMToyIDEgNiAxIDAgMSAxIDEgMSAxO30N
+CkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IlxA57Sw5piO6auUIjsNCglwYW5vc2UtMToyIDEg
+NiA5IDAgMSAxIDEgMSAxO30NCi8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1hbCwg
+bGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowY207DQoJbWFyZ2luLWJvdHRv
+bTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNh
+bnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXttc28tc3R5bGUtcHJpb3Jp
+dHk6OTk7DQoJY29sb3I6IzA1NjNDMTsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30NCmE6
+dmlzaXRlZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0KCXttc28tc3R5bGUtcHJpb3JpdHk6
+OTk7DQoJY29sb3I6Izk1NEY3MjsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30NCnANCgl7
+bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCW1zby1tYXJnaW4tdG9wLWFsdDphdXRvOw0KCW1hcmdp
+bi1yaWdodDowY207DQoJbXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG87DQoJbWFyZ2luLWxlZnQ6
+MGNtOw0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IuaWsOe0sOaYjumrlCIsc2Vy
+aWY7fQ0KdHQNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWZvbnQtZmFtaWx5Oue0sOaYjumr
+lDt9DQpwLm1zb25vcm1hbDAsIGxpLm1zb25vcm1hbDAsIGRpdi5tc29ub3JtYWwwDQoJe21zby1z
+dHlsZS1uYW1lOm1zb25vcm1hbDsNCgltc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzsNCgltYXJnaW4t
+cmlnaHQ6MGNtOw0KCW1zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvOw0KCW1hcmdpbi1sZWZ0OjBj
+bTsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQtZmFtaWx5OiLmlrDntLDmmI7pq5QiLHNlcmlm
+O30NCnNwYW4uRW1haWxTdHlsZTE4DQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsOw0KCWZvbnQt
+ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0Kc3Bhbi5F
+bWFpbFN0eWxlMjENCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWw7DQoJZm9udC1mYW1pbHk6IkNh
+bGlicmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6IzFGNDk3RDt9DQpzcGFuLkVtYWlsU3R5bGUyMg0K
+CXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1jb21wb3NlOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
+IixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNv
+LXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3Jk
+U2VjdGlvbjENCgl7c2l6ZTo2MTIuMHB0IDc5Mi4wcHQ7DQoJbWFyZ2luOjcyLjBwdCA5MC4wcHQg
+NzIuMHB0IDkwLjBwdDt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30N
+Ci0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6
+ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBn
+dGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2
+OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48L3htbD48IVtlbmRpZl0t
+LT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IlpILVRXIiBsaW5rPSIjMDU2M0MxIiB2bGluaz0iIzk1
+NEY3MiI+DQo8ZGl2IGNsYXNzPSJXb3JkU2VjdGlvbjEiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5IaSBBbGV4OjxvOnA+PC9v
+OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBz
+dHlsZT0iY29sb3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
+c3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5Z
+ZXMsIHRoZSBwYXRjaCBkb2VzIHByZXR0eSBtdWNoIGxpa2Ugd2hhdCB5b3UgZGVzY3JpYmVkLjxv
+OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVO
+LVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0
+OTdEIj5JIGFsc28gYWdyZWUgdGhhdCB0aGUgaXTigJlzIHByb25lIHRvIGdyb3VwIG5hbWUgY29u
+ZmxpY3RzIChvciBncm91cCBpZCBjb25mbGljdHMpIGNvbnNpZGVyaW5nIHRoZSBwYW1fc3VjY2Vl
+ZF9pZiBtb2R1bGUgY2FzZS48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7
+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVT
+IiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+VGhlcmUgaXMgYSBMREFQIG1hcHBpbmcgY29tbWl0IG1l
+cmdlZCB3aGljaCBoYW5kbGVzIGxvY2FsIHByaXZpbGVnZXMgYW5kIExEQVAgZ3JvdXBzIGJ1dCBp
+dCBkb2VzbuKAmXQgY292ZXIgdGhpcyDigJxyZWRmaXNo4oCdIGdyb3VwIGNhc2UuPG86cD48L286
+cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0
+eWxlPSJjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPlRo
+ZSBhcHBsaWNhdGlvbnMgd2hpY2ggcmVxdWlyZSBhdXRoZW50aWNhdGlvbiBtaWdodCBhbHNvIGhh
+dmUgc2ltaWxhciBpc3N1ZXMgd2l0aCBhdHRlbXB0cyB0byBsb2dpbiB3aXRoIHJlbW90ZSB1c2Vy
+cy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5n
+PSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6
+IzFGNDk3RCI+SXQgd291bGQgYmUgZ29vZCB0byBjb25zaWRlciByZXNvdXJjZSBjb25mbGljdHMg
+KGxpa2UgZ3JvdXAgbmFtZS9pZCkgYW5kIGhhdmUgYSBtb3JlIGdlbmVyaWMgcnVsZSBvciBkaXJl
+Y3Rpb24gbGlrZSB5b3VyIHN1Z2dlc3Rpb24gZm9yIHRoZSBhcHBsaWNhdGlvbnMgd2hpY2ggcmVx
+dWlyZSBhdXRoZW50aWNhdGlvbi48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5i
+c3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
+YW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPlRoYW5rIHlvdS48bzpwPjwvbzpwPjwv
+c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9
+ImNvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+UmVnYXJk
+cyw8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5n
+PSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPlR5cm9uZTxvOnA+PC9vOnA+PC9zcGFuPjwv
+cD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxl
+PSJjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPGRp
+diBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRp
+bmc6My4wcHQgMGNtIDBjbSAwY20iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gbGFu
+Zz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5Gcm9tOjwvc3Bhbj48L2I+PHNwYW4g
+bGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij4gQWxleGFuZGVyIEFtZWxraW4g
+Jmx0O2EuYW1lbGtpbkB5YWRyby5jb20mZ3Q7DQo8YnI+DQo8Yj5TZW50OjwvYj4gV2VkbmVzZGF5
+LCBBcHJpbCAxLCAyMDIwIDExOjUzIFBNPGJyPg0KPGI+VG86PC9iPiBDUzIwIEtGVGluZyAmbHQ7
+S0ZUSU5HQG51dm90b24uY29tJmd0Ozsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPGJyPg0KPGI+
+U3ViamVjdDo8L2I+IFJlOiBBdXRob3JpemF0aW9uIG9mIExEQVAgdXNlcnMgaW4gYm1jd2ViPG86
+cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
+PjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjAxLjA0LjIwMjAgMTA6NDAs
+IENTMjAgS0ZUaW5nINC/0LjRiNC10YI6PG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8
+YmxvY2txdW90ZSBzdHlsZT0ibWFyZ2luLXRvcDo1LjBwdDttYXJnaW4tYm90dG9tOjUuMHB0Ij4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5IaSBBbGV4OjxvOnA+PC9v
+OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj4m
+bmJzcDs8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
+YW5nPSJFTi1VUyI+UGxlYXNlIGhlbHAgdHJ5IHRoZSBwYXRjaCBmcm9tIDxhIGhyZWY9Imh0dHBz
+Oi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2l0aHViLmNv
+bV9OdXZvdG9uLTJESXNyYWVsX29wZW5ibWNfYmxvYl9ydW5ibWNfbWV0YS0yRHF1YW50YV9tZXRh
+LTJEb2x5bXB1cy0yRG51dm90b25fcmVjaXBlcy0yRGV4dGVuZGVkX3BhbV9saWJwYW1fcGFtLTVG
+c3VjY2VlZC01RmlmLTVGc3VwcG9ydC01RmxkYXAtNUZ1c2VyLTVGbG9naW4ucGF0Y2gmYW1wO2Q9
+RHdNRGFRJmFtcDtjPXVlOG1POHpnQzRWWjRxX2FOVkt0OEc5TUMwMVVGRG1pc3ZNUjFrLUVvRE0m
+YW1wO3I9a0dpYlNDRVF6LVBpbG5XLXI5S05UN196V0pYSk50blNLNWFZWkNlN1NWcyZhbXA7bT1O
+dlkweTVxZ2VWWWd3QlVtZ1BKbjlnZnVrbGtadTExZVRFWWtKdHdVZVBjJmFtcDtzPU9peHQ0ZUoy
+bUdaR2ZGRWdOeFVJT05xUXRfNW8teE5rdGdtYmJGX25RYmMmYW1wO2U9Ij4NCmh0dHBzOi8vZ2l0
+aHViLmNvbS9OdXZvdG9uLUlzcmFlbC9vcGVuYm1jL2Jsb2IvcnVuYm1jL21ldGEtcXVhbnRhL21l
+dGEtb2x5bXB1cy1udXZvdG9uL3JlY2lwZXMtZXh0ZW5kZWQvcGFtL2xpYnBhbS9wYW1fc3VjY2Vl
+ZF9pZl9zdXBwb3J0X2xkYXBfdXNlcl9sb2dpbi5wYXRjaDwvYT4gdG8gbGlicGFtIGFuZCBzZWUg
+aG93IGl0IGdvZXMuPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PHNwYW4gbGFuZz0iRU4tVVMiPiZuYnNwOzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5CZXNpZGVzIHRoZSBwYXRjaCwgdGhlIHVz
+ZXIgZnJvbSB0aGUgbGRhcCBzZXJ2ZXIgbmVlZHMgdG8gYmUgaW4gdGhlIOKAnHJlZGZpc2jigJ0g
+Z3JvdXAgaW4gdGhlIGxkYXAgc2VydmVyIGRhdGFiYXNlIGFuZCBpdOKAmXMgYWxyZWFkeSBkb25l
+IGFjY29yZGluZyB0byB5b3VyIGRlc2NyaXB0aW9uLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDs8bzpwPjwvbzpwPjwv
+c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+VGhlIHJl
+cXVpcmVtZW50ICZxdW90O3VzZXIgaW4gZ3JvdXAgcmVkZmlzaCZxdW90OyBpcyBjb250cm9sbGVk
+IGJ5IHRoZSBwYW1fc3VjY2VlZF9pZiBtb2R1bGUgd2hlbiBhIHVzZXIgdHJpZXMgdG8gbG9naW4g
+dmlhIFdlYlVJIGFuZCB0aGUgb3JpZ2luYWwgaW1wbGVtZW50YXRpb24gaW4gcGFtX3N1Y2NlZWRf
+aWYgbW9kdWxlIGhhcyBzb21lIGxpbWl0YXRpb24gb24gZ3JvdXAgaWRlbnRpZmljYXRpb24uPG86
+cD48L286cD48L3NwYW4+PC9wPg0KPC9ibG9ja3F1b3RlPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDvmlrDntLDmmI7pq5Qm
+cXVvdDssc2VyaWYiPldlJ3ZlIHRlc3RlZCB5b3VyIHBhdGNoLiBJdCB3b3JrcywgYnV0IG5vdCBl
+dmVyeSB0aW1lLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwPjxzcGFuIGxhbmc9IkVOLVVTIj5J
+IHN1c3BlY3QgdGhhdCB0aGUgZ3JvdXBzIGNoZWNrIGxlYWRzIHRvIHJlcXVlc3RpbmcgYWxsIGdy
+b3VwcyBmcm9tIExEQVAsIGFuZCB0aGF0IHRha2VzIGEgbG90IG9mIHRpbWUgaW4gb3VyIHNldHVw
+IHNvIGF1dGhlbnRpY2F0aW9uIHRpbWVzIG91dCBhbmQgZmFpbHMuIFdoZW4gSSByZXBlYXQgdGhl
+IGF1dGggcmVxdWVzdCwgdGhlIGxpc3Qgb2YgZ3JvdXBzIGlzIGFscmVhZHkgaW4gdGhlIG1lbW9y
+eSBhbmQNCiBzbyBhdXRoZW50aWNhdGlvbiBjb21wbGV0ZXMgc3VjY2Vzc2Z1bGx5LjxvOnA+PC9v
+OnA+PC9zcGFuPjwvcD4NCjxwPjxzcGFuIGxhbmc9IkVOLVVTIj5JIGJlbGlldmUgdGhhdCB0aGVy
+ZSBzaG91bGQgYmUgYW4gZWFzeSB3YXkgdG8gbWFrZSBhIG1hcHBpbmcgYmV0d2VlbiBMREFQIGFu
+ZCBsb2NhbCBwZXJtaXNzaW9uIChzdWNoIGFzICdyZWRmaXNoJywgZXRjLikgYW5kIHByaXZpbGVn
+ZSAoc3VjaCBhcyAncHJpdi1hZG1pbicsIGV0Yy4pIGdyb3Vwcy4gSSdkIHNheSB0aGF0IHRoZXJl
+IG11c3QgYmUgbm8gbmVlZCB0byBhZGQgYSB1c2VyIHRvIExEQVAgYHJlZGZpc2hgDQogZ3JvdXAs
+IGFuZCBJIHBlcnNvbmFsbHkgZGlzbGlrZSB0aGF0IGFwcHJvYWNoIGJlY2F1c2UgaXQgaXMgcHJv
+bmUgdG8gZ3JvdXAgbmFtZSBjbGFzaGVzLiBXaGF0IEkgdGhpbmsgd291bGQgYmUgZ3JlYXQgaXMg
+aGF2ZSBpbiBXZWJVSSBhIHRhYmxlIGxpa2UgdGhpczo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8
+cD48dHQ+PHNwYW4gbGFuZz0iRU4tVVMiPkxEQVAgR3JvdXAgfCBQcml2aWxlZ2UgbGV2ZWwgfCBT
+U0ggfCBSZWRmaXNoIHwgV2ViPC9zcGFuPjwvdHQ+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJm
+b250LWZhbWlseTrntLDmmI7pq5QiPjxicj4NCjx0dD49PT09PT09PT09PXw9PT09PT09PT09PT09
+PT09PXw9PT09PXw9PT09PT09PT18PT09PTwvdHQ+PGJyPg0KPHR0PlNvbWVHcm91cCZuYnNwOyB8
+IEFkbWluaXN0cmF0b3ImbmJzcDsmbmJzcDsgfCZuYnNwOyBZJm5ic3A7IHwmbmJzcDsmbmJzcDsm
+bmJzcDsgWSZuYnNwOyZuYnNwOyZuYnNwOyB8Jm5ic3A7IFk8L3R0Pjxicj4NCjx0dD5PdGhlckdy
+b3VwIHwgT3BlcmF0b3ImbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsg
+fCZuYnNwOyBOJm5ic3A7IHwmbmJzcDsmbmJzcDsmbmJzcDsgWSZuYnNwOyZuYnNwOyZuYnNwOyB8
+Jm5ic3A7IFk8L3R0Pjwvc3Bhbj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+
+PC9wPg0KPHA+PHR0PjxzcGFuIGxhbmc9IkVOLVVTIj4qIElQTUkgaXMgbm90IGxpc3RlZCBiZWNh
+dXNlIGl0IHJlcXVpcmVzIHBsYWluLXRleHQgcGFzc3dvcmRzIGFuZCBjYW4ndCBiZSBhdXRoZW50
+aWNhdGVkIGFnYWluc3QgTERBUDwvc3Bhbj48L3R0PjxzcGFuIGxhbmc9IkVOLVVTIj48bzpwPjwv
+bzpwPjwvc3Bhbj48L3A+DQo8cD48c3BhbiBsYW5nPSJFTi1VUyI+V2hhdCBkbyB5b3UgdGhpbms/
+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHA+PHNwYW4gbGFuZz0iRU4tVVMiPldCUiwgQWxleGFu
+ZGVyPG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8aHIgYWxpZ249ImNlbnRlciIgd2lk
+dGg9IjEwMCUiPg0KPHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMnB0O2xpbmUtaGVpZ2h0OjAuNztm
+b250LWZhbWlseTogJ0FyaWFsJzsgY29sb3I6IzgwODA4MCI+VGhlIHByaXZpbGVnZWQgY29uZmlk
+ZW50aWFsIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBpbiB0aGlzIGVtYWlsIGlzIGludGVuZGVkIGZv
+ciB1c2Ugb25seSBieSB0aGUgYWRkcmVzc2VlcyBhcyBpbmRpY2F0ZWQgYnkgdGhlIG9yaWdpbmFs
+IHNlbmRlciBvZiB0aGlzIGVtYWlsLiBJZiB5b3UgYXJlIG5vdCB0aGUNCiBhZGRyZXNzZWUgaW5k
+aWNhdGVkIGluIHRoaXMgZW1haWwgb3IgYXJlIG5vdCByZXNwb25zaWJsZSBmb3IgZGVsaXZlcnkg
+b2YgdGhlIGVtYWlsIHRvIHN1Y2ggYSBwZXJzb24sIHBsZWFzZSBraW5kbHkgcmVwbHkgdG8gdGhl
+IHNlbmRlciBpbmRpY2F0aW5nIHRoaXMgZmFjdCBhbmQgZGVsZXRlIGFsbCBjb3BpZXMgb2YgaXQg
+ZnJvbSB5b3VyIGNvbXB1dGVyIGFuZCBuZXR3b3JrIHNlcnZlciBpbW1lZGlhdGVseS4gWW91ciBj
+b29wZXJhdGlvbiBpcyBoaWdobHkNCiBhcHByZWNpYXRlZC4gSXQgaXMgYWR2aXNlZCB0aGF0IGFu
+eSB1bmF1dGhvcml6ZWQgdXNlIG9mIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBvZiBOdXZvdG9u
+IGlzIHN0cmljdGx5IHByb2hpYml0ZWQ7IGFuZCBhbnkgaW5mb3JtYXRpb24gaW4gdGhpcyBlbWFp
+bCBpcnJlbGV2YW50IHRvIHRoZSBvZmZpY2lhbCBidXNpbmVzcyBvZiBOdXZvdG9uIHNoYWxsIGJl
+IGRlZW1lZCBhcyBuZWl0aGVyIGdpdmVuIG5vciBlbmRvcnNlZCBieSBOdXZvdG9uLg0KPC9zcGFu
+Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
-> +
-> +/* Each client has this additional data */
-> +struct sbtsi_data {
-> +	struct i2c_client *client;
-> +	struct mutex lock;
-> +};
-> +
-> +/*
-> + * From SB-TSI spec: CPU temperature readings and limit registers encode the
-> + * temperature in increments of 0.125 from 0 to 255.875. The "high byte"
-> + * register encodes the base-2 of the integer portion, and the upper 3 bits of
-> + * the "low byte" encode in base-2 the decimal portion.
-> + *
-> + * e.g. INT=0x19, DEC=0x20 represents 25.125 degrees Celsius
-> + *
-> + * Therefore temperature in millidegree Celsius =
-> + *   (INT + DEC / 256) * 1000 = (INT * 8 + DEC / 32) * 125
-> + */
-> +static inline int sbtsi_reg_to_mc(s32 integer, s32 decimal)
-> +{
-> +	return ((integer << 3) + (decimal >> 5)) * 125;
-> +}
-> +
-> +/*
-> + * Inversely, given temperature in millidegree Celsius
-> + *   INT = (TEMP / 125) / 8
-> + *   DEC = ((TEMP / 125) % 8) * 32
-> + * Caller have to make sure temp doesn't exceed 255875, the max valid value.
-> + */
-> +static inline void sbtsi_mc_to_reg(s32 temp, u8 *integer, u8 *decimal)
-> +{
-> +	temp /= 125;
-> +	*integer = temp >> 3;
-> +	*decimal = (temp & 0x7) << 5;
-> +}
-> +
-> +static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
-> +		      u32 attr, int channel, long *val)
-> +{
-> +	struct sbtsi_data *data = dev_get_drvdata(dev);
-> +	s32 temp_int, temp_dec;
-> +	int err, reg_int, reg_dec;
-> +	u8 read_order;
-> +
-> +	if (type != hwmon_temp)
-> +		return -EINVAL;
-> +
-> +	read_order = 0;
-> +	switch (attr) {
-> +	case hwmon_temp_input:
-> +		/*
-> +		 * ReadOrder bit specifies the reading order of integer and
-> +		 * decimal part of CPU temp for atomic reads. If bit == 0,
-> +		 * reading integer part triggers latching of the decimal part,
-> +		 * so integer part should be read first. If bit == 1, read
-> +		 * order should be reversed.
-> +		 */
-> +		err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
-> +		if (err < 0)
-> +			return err;
-> +
-As I understand it, the idea is to set this configuration bit once and then
-just use it. Any chance to do that ? This would save an i2c read operation
-each time the temperature is read, and the if/else complexity below.
-
-> +		read_order = (u8)err & BIT(SBTSI_CONFIG_READ_ORDER_SHIFT);
-
-Nit: typecast is unnecessary.
-
-> +		reg_int = SBTSI_REG_TEMP_INT;
-> +		reg_dec = SBTSI_REG_TEMP_DEC;
-> +		break;
-> +	case hwmon_temp_max:
-> +		reg_int = SBTSI_REG_TEMP_HIGH_INT;
-> +		reg_dec = SBTSI_REG_TEMP_HIGH_DEC;
-> +		break;
-> +	case hwmon_temp_min:
-> +		reg_int = SBTSI_REG_TEMP_LOW_INT;
-> +		reg_dec = SBTSI_REG_TEMP_LOW_DEC;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (read_order == 0) {
-> +		temp_int = i2c_smbus_read_byte_data(data->client, reg_int);
-> +		temp_dec = i2c_smbus_read_byte_data(data->client, reg_dec);
-> +	} else {
-> +		temp_dec = i2c_smbus_read_byte_data(data->client, reg_dec);
-> +		temp_int = i2c_smbus_read_byte_data(data->client, reg_int);
-> +	}
-
-Just a thought: if you use regmap and tell it that the limit registers
-are non-volatile, this wouldn't actually read from the chip more than once.
-
-Also, since the read involves reading two registers, and the first read
-locks the value for the second, you'll need mutex protection when reading
-the current temperature (not for limits, though).
-
-> +
-> +	if (temp_int < 0)
-> +		return temp_int;
-> +	if (temp_dec < 0)
-> +		return temp_dec;
-> +
-> +	*val = sbtsi_reg_to_mc(temp_int, temp_dec);
-> +
-> +	return 0;
-> +}
-> +
-> +static int sbtsi_write(struct device *dev, enum hwmon_sensor_types type,
-> +		       u32 attr, int channel, long val)
-> +{
-> +	struct sbtsi_data *data = dev_get_drvdata(dev);
-> +	int reg_int, reg_dec, err;
-> +	u8 temp_int, temp_dec;
-> +
-> +	if (type != hwmon_temp)
-> +		return -EINVAL;
-> +
-> +	switch (attr) {
-> +	case hwmon_temp_max:
-> +		reg_int = SBTSI_REG_TEMP_HIGH_INT;
-> +		reg_dec = SBTSI_REG_TEMP_HIGH_DEC;
-> +		break;
-> +	case hwmon_temp_min:
-> +		reg_int = SBTSI_REG_TEMP_LOW_INT;
-> +		reg_dec = SBTSI_REG_TEMP_LOW_DEC;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	val = clamp_val(val, SBTSI_TEMP_MIN, SBTSI_TEMP_MAX);
-> +	mutex_lock(&data->lock);
-> +	sbtsi_mc_to_reg(val, &temp_int, &temp_dec);
-> +	err = i2c_smbus_write_byte_data(data->client, reg_int, temp_int);
-> +	if (err)
-> +		goto exit;
-> +
-> +	err = i2c_smbus_write_byte_data(data->client, reg_dec, temp_dec);
-> +exit:
-> +	mutex_unlock(&data->lock);
-> +	return err;
-> +}
-> +
-> +static umode_t sbtsi_is_visible(const void *data,
-> +				enum hwmon_sensor_types type,
-> +				u32 attr, int channel)
-> +{
-> +	switch (type) {
-> +	case hwmon_temp:
-> +		switch (attr) {
-> +		case hwmon_temp_input:
-> +			return 0444;
-> +		case hwmon_temp_min:
-> +			return 0644;
-> +		case hwmon_temp_max:
-> +			return 0644;
-> +		}
-> +		break;
-> +	default:
-> +		break;
-> +	}
-> +	return 0;
-> +}
-> +
-> +static const struct hwmon_channel_info *sbtsi_info[] = {
-> +	HWMON_CHANNEL_INFO(chip,
-> +			   HWMON_C_REGISTER_TZ),
-> +	HWMON_CHANNEL_INFO(temp,
-> +			   HWMON_T_INPUT | HWMON_T_MIN | HWMON_T_MAX),
-
-For your consideration: SB-TSI supports reporting high/low alerts.
-With this, it would be possible to implement respective alarm attributes.
-In conjunction with https://patchwork.kernel.org/patch/11277347/mbox/,
-it should also be possible to add interrupt and thus userspace notification
-for those attributes.
-
-SBTSI also supports setting the update rate (SBTSIx04) and setting
-the temperature offset (SBTSIx11, SBTSIx12), which could also be
-implemented as standard attributes.
-
-I won't require that for the initial version, just something to keep
-in mind.
-
-> +	NULL
-> +};
-> +
-> +static const struct hwmon_ops sbtsi_hwmon_ops = {
-> +	.is_visible = sbtsi_is_visible,
-> +	.read = sbtsi_read,
-> +	.write = sbtsi_write,
-> +};
-> +
-> +static const struct hwmon_chip_info sbtsi_chip_info = {
-> +	.ops = &sbtsi_hwmon_ops,
-> +	.info = sbtsi_info,
-> +};
-> +
-> +static int sbtsi_probe(struct i2c_client *client,
-> +		       const struct i2c_device_id *id)
-> +{
-> +	struct device *dev = &client->dev;
-> +	struct device *hwmon_dev;
-> +	struct sbtsi_data *data;
-> +
-> +	data = devm_kzalloc(dev, sizeof(struct sbtsi_data), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	data->client = client;
-> +	mutex_init(&data->lock);
-> +
-> +	hwmon_dev =
-> +		devm_hwmon_device_register_with_info(dev, client->name, data,
-> +						     &sbtsi_chip_info, NULL);
-> +
-> +	return PTR_ERR_OR_ZERO(hwmon_dev);
-> +}
-> +
-> +static const struct i2c_device_id sbtsi_id[] = {
-> +	{"sbtsi", 0},
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(i2c, sbtsi_id);
-> +
-> +static const struct of_device_id __maybe_unused sbtsi_of_match[] = {
-> +	{
-> +		.compatible = "amd,sbtsi",
-> +	},
-> +	{ },
-> +};
-> +MODULE_DEVICE_TABLE(of, sbtsi_of_match);
-> +
-> +static struct i2c_driver sbtsi_driver = {
-> +	.class = I2C_CLASS_HWMON,
-> +	.driver = {
-> +		.name = "sbtsi",
-> +		.of_match_table = of_match_ptr(sbtsi_of_match),
-> +	},
-> +	.probe = sbtsi_probe,
-> +	.id_table = sbtsi_id,
-> +};
-> +
-> +module_i2c_driver(sbtsi_driver);
-> +
-> +MODULE_AUTHOR("Kun Yi <kunyi@google.com>");
-> +MODULE_DESCRIPTION("Hwmon driver for AMD SB-TSI emulated sensor");
-> +MODULE_LICENSE("GPL");
+--_000_HK0PR03MB4897C3396259E1B919741D4BDBC20HK0PR03MB4897apcp_--
