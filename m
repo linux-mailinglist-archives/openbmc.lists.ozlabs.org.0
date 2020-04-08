@@ -1,83 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5A3B1A2534
+	for <lists+openbmc@lfdr.de>; Wed,  8 Apr 2020 17:32:29 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 401421A23CD
-	for <lists+openbmc@lfdr.de>; Wed,  8 Apr 2020 16:08:34 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48y5jC37cfzDrP1
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 00:08:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48y7Z247skzDqCc
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 01:32:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::336;
+ helo=mail-ot1-x336.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Bi5dsQ/k; dkim-atps=neutral
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
+ [IPv6:2607:f8b0:4864:20::336])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48y4nm4QNgzDqQ5
- for <openbmc@lists.ozlabs.org>; Wed,  8 Apr 2020 23:27:23 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 038D3f5c065266
- for <openbmc@lists.ozlabs.org>; Wed, 8 Apr 2020 09:27:19 -0400
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30920amxwa-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 08 Apr 2020 09:27:18 -0400
-Received: from localhost
- by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <ratagupt@linux.vnet.ibm.com>;
- Wed, 8 Apr 2020 14:26:51 +0100
-Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
- by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Wed, 8 Apr 2020 14:26:48 +0100
-Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
- [9.149.105.232])
- by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 038DRDal50724912
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 8 Apr 2020 13:27:13 GMT
-Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F281552052
- for <openbmc@lists.ozlabs.org>; Wed,  8 Apr 2020 13:27:12 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.79.186.218])
- by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id 831F25204E
- for <openbmc@lists.ozlabs.org>; Wed,  8 Apr 2020 13:27:12 +0000 (GMT)
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Subject: Re: Proposal: Add ManagerNetworkProtocol.Oem.OpenBMC.mDNS
-To: openbmc@lists.ozlabs.org
-References: <a1f2974a-280b-2c5b-0fb6-0bd53e29b560@linux.ibm.com>
- <39aa6afe-2cee-74d7-71d7-1659c9550b6b@linux.vnet.ibm.com>
-Date: Wed, 8 Apr 2020 18:57:11 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
-MIME-Version: 1.0
-In-Reply-To: <39aa6afe-2cee-74d7-71d7-1659c9550b6b@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-x-cbid: 20040813-0016-0000-0000-00000300BEAB
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 20040813-0017-0000-0000-000033649E74
-Message-Id: <60041df2-44f9-7d80-4296-4d4a75a01bed@linux.vnet.ibm.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-07_10:2020-04-07,
- 2020-04-07 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0
- mlxlogscore=276 adultscore=0 priorityscore=1501 clxscore=1015
- malwarescore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004080109
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48y7Sc154kzDqyf
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Apr 2020 01:27:43 +1000 (AEST)
+Received: by mail-ot1-x336.google.com with SMTP id v2so7132411oto.2
+ for <openbmc@lists.ozlabs.org>; Wed, 08 Apr 2020 08:27:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=uDrui88R6TrXawLpXbPdW4YXBzf92Fj1QPdsWKZeKg4=;
+ b=Bi5dsQ/ku3QRRxKuO3F2AKOMi3onLD9b/oor4YwuymNUvfJBWv/ZzPRDR42L5JzXB8
+ /mJyWNOrRVMLwEp1+Y6yt0lwvRC9I5T7/yv0HlwcDJV5+cZ+/GRWU0uYQvI7XJ6gFn9G
+ LAzPwyyxiJf4tQgAU4c2bjvMlQp+idmg516APC6YxRcelZjXQ+iCQQFQ7fovzCRJOZz2
+ 5ojNtChl42wxlfr5ALSdKvLbkZkq2gQ1I6FPDsDCvqehYpCgKwDR9iT2Y+PckYwQ0Jnl
+ 8QTJCmqb/A1YH64a7IJ3DqtLrZywHsWzB2DAsuUc0qS6AwG95vLEvpSYSYZYLYnPN35R
+ Vcag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=uDrui88R6TrXawLpXbPdW4YXBzf92Fj1QPdsWKZeKg4=;
+ b=sXgvmaj0kzBwiJpx0et10KoHB7D71Fdt5AP158guYai3F1PPLWEOL/DpN4FCnlt7ie
+ TtPez/O7txA57aQC2FjlJSMuLqsklDLMvL4eChl2AL/GGUYXGPmPBqMJE8Ty4g/A7pxT
+ mU658p1FYdTuTHFFbkBDBFYoJUbCuXVXBbskrDeJhphkJT4vZpORIQiCbfwgoiPiyjje
+ rGhocCyjTZlLOkYMXXzlCOP1KWoWpfrwdx4XGIuSq/sGFQ3PqSa1BZ2sRG5dRAEsZKKN
+ EnEwnbO0Z0yOcxDNLjNWUOpDTk86s2k4U5sFAarG4fJeoPLmoC9xgeGsoDWZm9hvPKLf
+ HEOg==
+X-Gm-Message-State: AGi0PubSGhDGau58vLYqFFhlqCBOW+s0AwpcG6o3kk8Dbi9vIEYeWGcJ
+ SdT/b6p6G2tlisBdofsLfH5gAn8/BjU=
+X-Google-Smtp-Source: APiQypJqthTvtzjPjR7L1N5LCm2TqxBq71il0wDS3NeQwoKuqXiuHX2/zM0Zm3cvI0XOeZH/LLxIMw==
+X-Received: by 2002:a4a:da03:: with SMTP id e3mr6429097oou.4.1586359657571;
+ Wed, 08 Apr 2020 08:27:37 -0700 (PDT)
+Received: from ?IPv6:2600:1700:19e0:3310:1152:47d0:1eab:b673?
+ ([2600:1700:19e0:3310:1152:47d0:1eab:b673])
+ by smtp.gmail.com with ESMTPSA id p130sm7006242oig.51.2020.04.08.08.27.35
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 08 Apr 2020 08:27:36 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: Old PREFERRED_PROVIDERs using python2
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <20200406215027.GA5368@heinlein.lan.stwcx.xyz>
+Date: Wed, 8 Apr 2020 10:27:35 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <BFC5DB59-9AB5-4469-94F7-73E810ACBD68@gmail.com>
+References: <20200406215027.GA5368@heinlein.lan.stwcx.xyz>
+To: Patrick Williams <patrick@stwcx.xyz>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,39 +81,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Joseph,
 
-I am in favor for adding this as oem for short term and also propose it 
-in DMTF to get it standardized.
 
-There should be a way to disable the multicast-feature as for some 
-clients multicast is a security concern.
+> On Apr 6, 2020, at 4:50 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+> As part of the python2 -> python3 migration I was building a few
+> machines to confirm that they did not have python2 installed in any =
+way.
+> I noticed right off that tiogapass does.
+>=20
+> Tiogapass has obmc-phosphor-chassisd and obmc-phosphor-flashd pulled =
+in,
+> which are old python2 applications that aren't suppose to be used
+> anymore.  I did some investigation and these are picked up due to
+> PREFERRED_PROVIDER values in phosphor-defaults.inc.
+>=20
+> Are there better PREFERRED_PROVIDERs we should update in
+> phosphor-defaults now?
+>=20
+> PREFERRED_PROVIDER_virtual/obmc-chassis-mgmt and
+> PREFERRED_PROVIDER_virtual/obmc-flash-mgmt both seems to be a custom
+> package group for most machines.  Can someone with more expertise in
+> these subsystems define a better default (or set of packages to make =
+up
+> that default)?
 
-Regards
+phosphor-state-manager and phosphor-software-manager? Or should it just
+be =E2=80=9Cpackagegroup-obmc-apps=E2=80=9D? I have a feeling we=E2=80=99v=
+e moved away from
+the original intent of those and there may not be a good mapping.
 
-Ratan
+Most people seem to overload obmc-chassis-mgmt with their machine
+layer specific apps.
 
-On 4/6/20 8:53 PM, Gunnar Mills wrote:
->
-> On 4/6/2020 9:57 AM, Joseph Reynolds wrote:
->> Proposal: Add ManagerNetworkProtocol.Oem.OpenBMC.mDNS.
->>
->> This is a proposal to add a new Oem.OpenBMC.mDNS property to BMCWeb's 
->> implementation of the Redfish ManagerNetworkProtocol.
->> This property would be used to enable and disable OpenBMC's 
->> Avahi/mDNS discovery service and be similar to Redfish's SSDProtocol
->>
-> Why OEM? Why not ask Redfish to add mDNS to ManagerNetworkProtocol so 
-> it can be enabled/disabled via standard Redfish?
->
->
->> Redfish's direction is to use SSDP as the standard discovery 
->> mechanism.  See discussion here:
->> https://redfishforum.com/thread/267/add-avahi-managernetworkprotocol
->>
->>
->>
+On a side note, I think I=E2=80=99ve seen people starting to get away =
+from the
+_virtual stuff as well. The extra level of indirection has alway added a
+complexity that never seemed to be worth it.
+
+>=20
+> --=20
+> Patrick Williams
 
