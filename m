@@ -2,82 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D42ED1A2E8F
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 06:53:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B20A1A30AF
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 10:12:23 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48yTLk1TyDzDqRN
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 14:53:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48yYll5SntzDrCN
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 18:12:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=zhaoxin.com (client-ip=203.148.12.82; helo=zxshcas2.zhaoxin.com;
+ envelope-from=tigerliu@zhaoxin.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=Kw6gWkOl; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=wbtU+f5z; 
- dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=zhaoxin.com
+X-Greylist: delayed 921 seconds by postgrey-1.36 at bilbo;
+ Thu, 09 Apr 2020 18:11:43 AEST
+Received: from ZXSHCAS2.zhaoxin.com (unknown [203.148.12.82])
+ (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48yTKz1ytyzDqQ3
- for <openbmc@lists.ozlabs.org>; Thu,  9 Apr 2020 14:53:10 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 002122A6;
- Thu,  9 Apr 2020 00:53:06 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 09 Apr 2020 00:53:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm2; bh=dHvAVjg26/MdpfhJwaineCQVcidUozU
- IdFvfqTYnRWE=; b=Kw6gWkOl3HuP/tyyzn+t6LfPY4DEAZoZn8oaV/HiaUFUxHn
- Uif4vgHm5fovPioX7rY81/cGjexMwZY854UWPeXpRB0fWs+w2iW/FISbQz2174Mw
- 3UP2I2JslhLTa2GRn2PIY0yPq1qFtaJtrscNeB5b2hq3v6DG9UTnOdkBHpWJyn71
- /rm/yE4cw5USWSlUjMt9tny0TIKOLVl7tXrb3C2HYMq7azkqkazsTEvNiRjn7ZC8
- 1h8/YWiuK3Lr06ijSyPz9/vA55k5wOWz+EjOk3/VMYHyFCFisUOP5HDfVZvEYnaW
- 4DRkq5TbSkv0xtisPX4hDs4MB9K/LcMqx83M2eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=dHvAVj
- g26/MdpfhJwaineCQVcidUozUIdFvfqTYnRWE=; b=wbtU+f5zUL1JB3Rqhe/hmA
- XYVKXBXKrTI8tJiIMNHt4qAg0E/uONR1ZO2N3SidCGmGgHRA/wRT9EZgF/ocQbn2
- xSX67Ga4o50w0+3gyUsQb0kvAWEeKJPwIx1xQVrzvShcz/2ULia2raRaIAnK9YLc
- h8kT+mVvnnk6e0uG8Or6r/W30UGRgBOCt0IWi83zYmxTLpX3qirYRoCTeP0HJlxC
- ZsuMG0FrbSZ3NeKsEn9wj2vBWIb9u+kXRv3Uxu/eJSS1Z/ZcwdmnZ8sqPG632WhE
- YvDG00SaMhksEKquhI/tMh723DQ/SRTaG1pmRiNgS9L0qg0YbeHlbn6HPDktbMkw
- ==
-X-ME-Sender: <xms:MqqOXgn91s56egCZ6Qc9YF85tmD6D2v0J8WnoBqGD097wwPHvGWojQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudekgdekhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
- rdhiugdrrghu
-X-ME-Proxy: <xmx:MqqOXnaypAYxplV2dHeSzim7D3426yIFxcOlbfTH6VqxidcFYe8b5w>
- <xmx:MqqOXmMddkkuJVq-5uQbk7ACXev-M9kwRI0EKB4fLMxSXUN6BDWqKw>
- <xmx:MqqOXsj8J-QLuOK_gV_AvRUBoz7Qqi-gMYCStvx3TC2O2sFN_XYv1g>
- <xmx:MqqOXjBSx_fAm0j2n6sCKIQuFiQ4VuOhQwPWTgavPLLMxABV1PDRlA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 4F50EE00E1; Thu,  9 Apr 2020 00:53:06 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-1104-g203475c-fmstable-20200408v2
-Mime-Version: 1.0
-Message-Id: <71cfd9fd-a70f-47ad-8c54-b950e32c0fef@www.fastmail.com>
-In-Reply-To: <20200408202711.3509-1-eajames@linux.ibm.com>
-References: <20200408202711.3509-1-eajames@linux.ibm.com>
-Date: Thu, 09 Apr 2020 14:23:31 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH linux dev-5.4] clk: ast2600: Fix AHB clock divider for A1
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48yYl30mnBzDrB4
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Apr 2020 18:11:32 +1000 (AEST)
+Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHCAS2.zhaoxin.com
+ (10.28.252.162) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1261.35; Thu, 9 Apr
+ 2020 15:56:09 +0800
+Received: from zxbjmbx2.zhaoxin.com (10.29.252.164) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1261.35; Thu, 9 Apr
+ 2020 15:56:08 +0800
+Received: from zxbjmbx2.zhaoxin.com ([fe80::4d77:9dba:64a8:8ec3]) by
+ zxbjmbx2.zhaoxin.com ([fe80::4d77:9dba:64a8:8ec3%4]) with mapi id
+ 15.01.1261.035; Thu, 9 Apr 2020 15:56:08 +0800
+From: "Tiger Liu(BJ-RD)" <TigerLiu@zhaoxin.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: OpenBMC : KVM over IP and media redirection function
+Thread-Topic: OpenBMC : KVM over IP and media redirection function
+Thread-Index: AdYOQ9GAmQuksx5zT0mO9/AFvvAtXQ==
+Date: Thu, 9 Apr 2020 07:56:08 +0000
+Message-ID: <b75bce785fbc4bad8c053ed2261102c2@zhaoxin.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [210.12.195.129]
+Content-Type: multipart/alternative;
+ boundary="_000_b75bce785fbc4bad8c053ed2261102c2zhaoxincom_"
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,73 +61,224 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_b75bce785fbc4bad8c053ed2261102c2zhaoxincom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Hi, experts:
+I have a question about KVM over IP and media redirection function.
+Intel provided a RMM lite component, which provided KVM/Media redirection c=
+apability.
+
+So my question is:
+
+1.      OpenBMC + AST2500 Chip, could not implement KVM/Media redirection c=
+apability?
+
+2.      If wanting to use KVM/Media redirection ,must buy a RMM component?
+
+I found OpenBMC had implemented KVM over IP capability.
+
+Thanks
 
 
-On Thu, 9 Apr 2020, at 05:57, Eddie James wrote:
-> The latest specs for the AST2600 A1 chip include some different bit
-> definitions for calculating the AHB clock divider. Implement these in
-> order to get the correct AHB clock value in Linux.
-> 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  drivers/clk/clk-ast2600.c | 31 +++++++++++++++++++++++++------
->  1 file changed, 25 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
-> index 42bfdc16bf7a..35f53956c762 100644
-> --- a/drivers/clk/clk-ast2600.c
-> +++ b/drivers/clk/clk-ast2600.c
-> @@ -642,14 +642,22 @@ static const u32 ast2600_a0_axi_ahb_div_table[] = {
->  	2, 2, 3, 5,
->  };
->  
-> -static const u32 ast2600_a1_axi_ahb_div_table[] = {
-> -	4, 6, 2, 4,
-> +static const u32 ast2600_a1_axi_ahb_div0_tbl[] = {
-> +	3, 2, 3, 4,
-> +};
-> +
-> +static const u32 ast2600_a1_axi_ahb_div1_tbl[] = {
-> +	3, 4, 6, 8,
-> +};
-> +
-> +static const u32 ast2600_a1_axi_ahb200_tbl[] = {
-> +	3, 4, 3, 4, 2, 2, 2, 2,
->  };
->  
->  static void __init aspeed_g6_cc(struct regmap *map)
->  {
->  	struct clk_hw *hw;
-> -	u32 val, div, chip_id, axi_div, ahb_div;
-> +	u32 val, div, divbits, chip_id, axi_div, ahb_div;
->  
->  	clk_hw_register_fixed_rate(NULL, "clkin", NULL, 0, 25000000);
->  
-> @@ -679,11 +687,22 @@ static void __init aspeed_g6_cc(struct regmap *map)
->  	else
->  		axi_div = 2;
->  
-> +	divbits = (val >> 11) & 0x3;
->  	regmap_read(map, ASPEED_G6_SILICON_REV, &chip_id);
-> -	if (chip_id & BIT(16))
-> -		ahb_div = ast2600_a1_axi_ahb_div_table[(val >> 11) & 0x3];
-> -	else
-> +	if (chip_id & BIT(16)) {
-> +		if (!divbits) {
-> +			ahb_div = ast2600_a1_axi_ahb200_tbl[(val >> 8) & 0x3];
-> +			if (val & BIT(16))
-> +				ahb_div *= 2;
-> +		} else {
-> +			if (val & BIT(16))
-> +				ahb_div = ast2600_a1_axi_ahb_div1_tbl[divbits];
-> +			else
-> +				ahb_div = ast2600_a1_axi_ahb_div0_tbl[divbits];
-> +		}
-> +	} else {
->  		ahb_div = ast2600_a0_axi_ahb_div_table[(val >> 11) & 0x3];
-> +	}
+?????
+?????????????????????????????????????????????????????
+CONFIDENTIAL NOTE:
+This email contains confidential or legally privileged information and is f=
+or the sole use of its intended recipient. Any unauthorized review, use, co=
+pying or forwarding of this email or the content of this email is strictly =
+prohibited.
 
-This was hard for me to read. Have you considered giving the conditions
-names?
+--_000_b75bce785fbc4bad8c053ed2261102c2zhaoxincom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Andrew
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:\7B49\7EBF;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@\7B49\7EBF";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:\7B49\7EBF;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	font-size:10.5pt;
+	font-family:\7B49\7EBF;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:\7B49\7EBF;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:\7B49\7EBF;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:842476273;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-776993466 -575797284 67698713 67698715 67698703 676=
+98713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:18.0pt;
+	text-indent:-18.0pt;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%2\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:42.0pt;
+	text-indent:-21.0pt;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:63.0pt;
+	text-indent:-21.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:84.0pt;
+	text-indent:-21.0pt;}
+@list l0:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%5\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:105.0pt;
+	text-indent:-21.0pt;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:126.0pt;
+	text-indent:-21.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:147.0pt;
+	text-indent:-21.0pt;}
+@list l0:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-text:"%8\)";
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	margin-left:168.0pt;
+	text-indent:-21.0pt;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	margin-left:189.0pt;
+	text-indent:-21.0pt;}
+ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-CN" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi, experts:<o:p></o:p></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I have a question about KVM ove=
+r IP and media redirection function.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Intel provided a RMM lite compo=
+nent, which provided KVM/Media redirection capability.<o:p></o:p></span></p=
+>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">So my question is:<o:p></o:p></=
+span></p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;text-indent:-18.0=
+pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">1=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">OpenBMC &#43; AST2500 C=
+hip, could not implement KVM/Media redirection capability?<o:p></o:p></span=
+></p>
+<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;text-indent:-18.0=
+pt;mso-list:l0 level1 lfo1">
+<![if !supportLists]><span lang=3D"EN-US"><span style=3D"mso-list:Ignore">2=
+.<span style=3D"font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+</span></span></span><![endif]><span lang=3D"EN-US">If wanting to use KVM/M=
+edia redirection ,must buy a RMM component?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I found OpenBMC had implemented=
+ KVM over IP capability.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks<o:p></o:p></span></p>
+</div>
+<p></p>
+<br>
+<br>
+<div style=3D"font-size:10pt; line-height:10pt; font-family: '&#23435;&#203=
+07;';color:#595959;">&#20445;&#23494;&#22768;&#26126;&#65306;</div>
+<div style=3D"font-size:10pt; line-height:10pt; font-family: '&#23435;&#203=
+07;';color:#595959;">&#26412;&#37038;&#20214;&#21547;&#26377;&#20445;&#2349=
+4;&#25110;&#19987;&#26377;&#20449;&#24687;&#65292;&#20165;&#20379;&#25351;&=
+#23450;&#25910;&#20214;&#20154;&#20351;&#29992;&#12290;&#20005;&#31105;&#23=
+545;&#26412;&#37038;&#20214;&#25110;&#20854;&#20869;&#23481;&#20570;&#20219=
+;&#20309;&#26410;&#32463;&#25480;&#26435;&#30340;&#26597;&#38405;&#12289;&#=
+20351;&#29992;&#12289;&#22797;&#21046;&#25110;&#36716;&#21457;&#12290;</div=
+>
+<div style=3D"font-size:10pt; line-height:10pt; font-family: 'Times New Rom=
+an';color:#595959;">
+<i>CONFIDENTIAL NOTE: </i></div>
+<div style=3D"font-size:10pt; line-height:10pt; font-family: 'Times New Rom=
+an';color:#595959;">
+<i>This email contains confidential or legally privileged information and i=
+s for the sole use of its intended recipient. Any unauthorized review, use,=
+ copying or forwarding of this email or the content of this email is strict=
+ly prohibited.</i></div>
+</body>
+</html>
+
+--_000_b75bce785fbc4bad8c053ed2261102c2zhaoxincom_--
