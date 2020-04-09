@@ -1,51 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41C6D1A31B8
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 11:24:55 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48ybMR4SyczDqX0
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 19:24:51 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B59C01A3699
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 17:07:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48ykz85sDxzDqTv
+	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 01:07:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=zhaoxin.com (client-ip=203.148.12.81; helo=zxshcas1.zhaoxin.com;
- envelope-from=tigerliu@zhaoxin.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=zhaoxin.com
-Received: from ZXSHCAS1.zhaoxin.com (unknown [203.148.12.81])
- (using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48ybLn2HB5zDqRs
- for <openbmc@lists.ozlabs.org>; Thu,  9 Apr 2020 19:24:12 +1000 (AEST)
-Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHCAS1.zhaoxin.com
- (10.28.252.161) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1261.35; Thu, 9 Apr
- 2020 17:24:02 +0800
-Received: from zxbjmbx2.zhaoxin.com (10.29.252.164) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1261.35; Thu, 9 Apr
- 2020 17:24:01 +0800
-Received: from zxbjmbx2.zhaoxin.com ([fe80::4d77:9dba:64a8:8ec3]) by
- zxbjmbx2.zhaoxin.com ([fe80::4d77:9dba:64a8:8ec3%4]) with mapi id
- 15.01.1261.035; Thu, 9 Apr 2020 17:24:01 +0800
-From: "Tiger Liu(BJ-RD)" <TigerLiu@zhaoxin.com>
-To: chunhui.jia <chunhui.jia@linux.intel.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re:  OpenBMC : KVM over IP and media redirection function
-Thread-Topic: OpenBMC : KVM over IP and media redirection function
-Thread-Index: AdYOT+gZmQuksx5zT0mO9/AFvvAtXQ==
-Date: Thu, 9 Apr 2020 09:24:01 +0000
-Message-ID: <e03bdf55444c437ca6133440aa85a3ff@zhaoxin.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.29.28.153]
-Content-Type: multipart/alternative;
- boundary="_000_e03bdf55444c437ca6133440aa85a3ffzhaoxincom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48ykyB63hYzDqQK
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Apr 2020 01:06:51 +1000 (AEST)
+IronPort-SDR: AZlGtfr/ze8koqIHOk96CzOizzy2pxknjpEgvMv+7HDFE1gD75xenbSmdJGItTMiZ7c9RQa47k
+ SKPGFNvRW2zQ==
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Apr 2020 08:06:46 -0700
+IronPort-SDR: 8plB3A0raijCmjcy5UrVwNlQpRwKdM9NE4Sk+Fh8ZvSQ44eNenW3E1RpfHOuV7LBzTiUCLJunL
+ 1/zKiiatZwwQ==
+X-IronPort-AV: E=Sophos;i="5.72,363,1580803200"; 
+ d="asc'?scan'208,217";a="251918516"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
+ by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Apr 2020 08:06:45 -0700
+Subject: Re: OpenBMC : KVM over IP and media redirection function
+To: "Tiger Liu(BJ-RD)" <TigerLiu@zhaoxin.com>,
+ "chunhui.jia" <chunhui.jia@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <e03bdf55444c437ca6133440aa85a3ff@zhaoxin.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <f208b51c-2ab1-487f-86ba-21a9a6e95b2f@intel.com>
+Date: Thu, 9 Apr 2020 08:06:14 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
+In-Reply-To: <e03bdf55444c437ca6133440aa85a3ff@zhaoxin.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="o7RlyxGygYUafcG9SuJthZum5mjkTTSMD"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,299 +86,586 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_e03bdf55444c437ca6133440aa85a3ffzhaoxincom_
-Content-Type: text/plain; charset="utf-8"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--o7RlyxGygYUafcG9SuJthZum5mjkTTSMD
+Content-Type: multipart/mixed; boundary="956xsmcQy1tBdP3SRUMCgvAV05t1IKd4Z"
+
+--956xsmcQy1tBdP3SRUMCgvAV05t1IKd4Z
+Content-Type: multipart/alternative;
+ boundary="------------5059704AFDD4777C65630ED5"
+Content-Language: en-US
+
+This is a multi-part message in MIME format.
+--------------5059704AFDD4777C65630ED5
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: base64
 
-SGksIENodW5odWk6DQpUaGFua3MgZm9yIHlvdXIgcmVwbHkuDQoNCkkgYW0gc3R1ZHlpbmcgT0NQ
-KE9wZW4gQ29tcHV0ZXIgUGxhdGZvcm0pIHNlcnZlciBib2FyZCBkb2MgYW5kIE9wZW5CTUMgZG9j
-Lg0KSSBhbSBqdXN0IGN1cmlvdXMgd2hldGhlciBPQ1Agc2VydmVyIGJvYXJkIGFsc28gbmVlZHMg
-YW4gYWRkLW9uIFJNTSBjb21wb25lbnQgdG8gc3VwcG9ydCBLVk0vTWVkaWEgcmVkaXJlY3Rpb24u
-DQoNClNvLCBPcGVuQk1D4oCZcyBjdXJyZW50IGNvZGUgaGFzIGltcGxlbWVudGVkIEtWTSBvdmVy
-IElQLg0KU28sIE9wZW5CTUMgd291bGQgc3VwcG9ydCBLVk0vTWVkaWEgcmVkaXJlY3Rpb24gZnVu
-Y3Rpb24gd2l0aG91dCBhZGRpbmcgYWRkLW9uIHNvbWUgUk1NIGxpa2UgY29tcG9uZW50Pw0KDQpU
-aGFua3MNCuWPkeS7tuS6ujogY2h1bmh1aS5qaWEgPGNodW5odWkuamlhQGxpbnV4LmludGVsLmNv
-bT4NCuWPkemAgeaXtumXtDogMjAyMOW5tDTmnIg55pelIDE2OjUxDQrmlLbku7bkuro6IFRpZ2Vy
-IExpdShCSi1SRCkgPFRpZ2VyTGl1QHpoYW94aW4uY29tPjsgb3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnDQrkuLvpopg6IFJlOiBPcGVuQk1DIDogS1ZNIG92ZXIgSVAgYW5kIG1lZGlhIHJlZGlyZWN0
-aW9uIGZ1bmN0aW9uDQoNCjEuIHllcywgaXQgY2FuIGltcGxlbWVudCB0aGUgZnVuY3Rpb25hbGl0
-eSB3aXRoIHRoaXMgY29tYmluYXRpb24NCjIuIFdoYXQgcGxhdGZvcm0gYXJlIHlvdSB1c2luZz8N
-Cg0KMjAyMC0wNC0wOQ0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCmNodW5odWku
-amlhDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0K5Y+R5Lu25Lq677yaIlRpZ2Vy
-IExpdShCSi1SRCkiIDxUaWdlckxpdUB6aGFveGluLmNvbTxtYWlsdG86VGlnZXJMaXVAemhhb3hp
-bi5jb20+Pg0K5Y+R6YCB5pe26Ze077yaMjAyMC0wNC0wOSAxNTo1Ng0K5Li76aKY77yaT3BlbkJN
-QyA6IEtWTSBvdmVyIElQIGFuZCBtZWRpYSByZWRpcmVjdGlvbiBmdW5jdGlvbg0K5pS25Lu25Lq6
-77yaIm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnPiI8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmc+Pg0K5oqE6YCB77yaDQoNCkhpLCBleHBlcnRzOg0KSSBoYXZlIGEgcXVlc3Rpb24gYWJv
-dXQgS1ZNIG92ZXIgSVAgYW5kIG1lZGlhIHJlZGlyZWN0aW9uIGZ1bmN0aW9uLg0KSW50ZWwgcHJv
-dmlkZWQgYSBSTU0gbGl0ZSBjb21wb25lbnQsIHdoaWNoIHByb3ZpZGVkIEtWTS9NZWRpYSByZWRp
-cmVjdGlvbiBjYXBhYmlsaXR5Lg0KDQpTbyBteSBxdWVzdGlvbiBpczoNCg0KMS4gICAgICBPcGVu
-Qk1DICsgQVNUMjUwMCBDaGlwLCBjb3VsZCBub3QgaW1wbGVtZW50IEtWTS9NZWRpYSByZWRpcmVj
-dGlvbiBjYXBhYmlsaXR5Pw0KDQoyLiAgICAgIElmIHdhbnRpbmcgdG8gdXNlIEtWTS9NZWRpYSBy
-ZWRpcmVjdGlvbiAsbXVzdCBidXkgYSBSTU0gY29tcG9uZW50Pw0KDQpJIGZvdW5kIE9wZW5CTUMg
-aGFkIGltcGxlbWVudGVkIEtWTSBvdmVyIElQIGNhcGFiaWxpdHkuDQoNClRoYW5rcw0KDQrkv53l
-r4blo7DmmI7vvJoNCuacrOmCruS7tuWQq+acieS/neWvhuaIluS4k+acieS/oeaBr++8jOS7heS+
-m+aMh+WumuaUtuS7tuS6uuS9v+eUqOOAguS4peemgeWvueacrOmCruS7tuaIluWFtuWGheWuueWB
-muS7u+S9leacque7j+aOiOadg+eahOafpemYheOAgeS9v+eUqOOAgeWkjeWItuaIlui9rOWPkeOA
-gg0KQ09ORklERU5USUFMIE5PVEU6DQpUaGlzIGVtYWlsIGNvbnRhaW5zIGNvbmZpZGVudGlhbCBv
-ciBsZWdhbGx5IHByaXZpbGVnZWQgaW5mb3JtYXRpb24gYW5kIGlzIGZvciB0aGUgc29sZSB1c2Ug
-b2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4gQW55IHVuYXV0aG9yaXplZCByZXZpZXcsIHVzZSwg
-Y29weWluZyBvciBmb3J3YXJkaW5nIG9mIHRoaXMgZW1haWwgb3IgdGhlIGNvbnRlbnQgb2YgdGhp
-cyBlbWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLg0KDQoNCuS/neWvhuWjsOaYju+8mg0K5pys
-6YKu5Lu25ZCr5pyJ5L+d5a+G5oiW5LiT5pyJ5L+h5oGv77yM5LuF5L6b5oyH5a6a5pS25Lu25Lq6
-5L2/55So44CC5Lil56aB5a+55pys6YKu5Lu25oiW5YW25YaF5a655YGa5Lu75L2V5pyq57uP5o6I
-5p2D55qE5p+l6ZiF44CB5L2/55So44CB5aSN5Yi25oiW6L2s5Y+R44CCDQpDT05GSURFTlRJQUwg
-Tk9URToNClRoaXMgZW1haWwgY29udGFpbnMgY29uZmlkZW50aWFsIG9yIGxlZ2FsbHkgcHJpdmls
-ZWdlZCBpbmZvcm1hdGlvbiBhbmQgaXMgZm9yIHRoZSBzb2xlIHVzZSBvZiBpdHMgaW50ZW5kZWQg
-cmVjaXBpZW50LiBBbnkgdW5hdXRob3JpemVkIHJldmlldywgdXNlLCBjb3B5aW5nIG9yIGZvcndh
-cmRpbmcgb2YgdGhpcyBlbWFpbCBvciB0aGUgY29udGVudCBvZiB0aGlzIGVtYWlsIGlzIHN0cmlj
-dGx5IHByb2hpYml0ZWQuDQo=
+TGl1LAoKUk1NIGlzIGEgSFcgbGljZW5zaW5nIGRldmljZSwgYW5kIHdhcywgaWYgSSByZWNh
+bGwsIGVsaW1pbmF0ZWQgaW4gdGhlCmxhc3QgZ2VuZXJhdGlvbiBvZiBJbnRlbCBzZXJ2ZXJz
+IChpLmUuIFMyNjAwV0YsIFMyNjAwQk5QLCBTMjYwMFNXUCkuCk9wZW5CTUMgcHJvdmlkZXMg
+eW91IGFsbCBvZiB0aGUgc291cmNlLCBzbyBhbnkgY29udHJvbCBvdmVyIFNXIGZlYXR1cmVz
+Cmxpa2UgS1ZNIChhc3N1bWluZyB0aGUgS1ZNIHNvdXJjZSBpcyBvcGVuKSwgYnkgSFcgY29t
+cG9uZW50cyBiZWluZwpwcmVzZW50IGNhbiBiZSBjb21waWxlZCBvdXQgb2YgeW91ciBpbXBs
+ZW1lbnRhdGlvbi4KSSBoYXZlIGEgaGFyZCB0aW1lIGJlbGlldmluZyB0aGUgT1BDIHdvdWxk
+IHdpbGxpbmdseSBhZGQgYSBIVyBkZXZpY2UgZm9yCmVuYWJsaW5nL2Rpc2FibGluZyBTVyBm
+dW5jdGlvbmFsaXR5LiBTZWVtcyBhIGJpdCBjb3VudGVyIHRvIHRoZSBzcGlyaXQKb2YgdGhl
+IHByb2plY3RzIHBoaWxvc29waHkgdG8gbWUuCgpPbiA0LzkvMjAgMjoyNCBBTSwgVGlnZXIg
+TGl1KEJKLVJEKSB3cm90ZToKPgo+IEhpLCBDaHVuaHVpOgo+Cj4gVGhhbmtzIGZvciB5b3Vy
+IHJlcGx5Lgo+Cj4gwqAKPgo+IEkgYW0gc3R1ZHlpbmcgT0NQKE9wZW4gQ29tcHV0ZXIgUGxh
+dGZvcm0pIHNlcnZlciBib2FyZCBkb2MgYW5kIE9wZW5CTUMKPiBkb2MuCj4KPiBJIGFtIGp1
+c3QgY3VyaW91cyB3aGV0aGVyIE9DUCBzZXJ2ZXIgYm9hcmQgYWxzbyBuZWVkcyBhbiBhZGQt
+b24gUk1NCj4gY29tcG9uZW50IHRvIHN1cHBvcnQgS1ZNL01lZGlhIHJlZGlyZWN0aW9uLgo+
+Cj4gwqAKPgo+IFNvLCBPcGVuQk1D4oCZcyBjdXJyZW50IGNvZGUgaGFzIGltcGxlbWVudGVk
+IEtWTSBvdmVyIElQLgo+Cj4gU28sIE9wZW5CTUMgd291bGQgc3VwcG9ydCBLVk0vTWVkaWEg
+cmVkaXJlY3Rpb24gZnVuY3Rpb24gd2l0aG91dAo+IGFkZGluZyBhZGQtb24gc29tZSBSTU0g
+bGlrZSBjb21wb25lbnQ/Cj4KPiDCoAo+Cj4gVGhhbmtzCj4KPiAq5Y+R5Lu25Lq6OipjaHVu
+aHVpLmppYSA8Y2h1bmh1aS5qaWFAbGludXguaW50ZWwuY29tPgo+ICrlj5HpgIHml7bpl7Q6
+KjIwMjDlubQ05pyIOeaXpTE2OjUxCj4gKuaUtuS7tuS6ujoqVGlnZXIgTGl1KEJKLVJEKSA8
+VGlnZXJMaXVAemhhb3hpbi5jb20+OyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcKPiAq5Li7
+6aKYOipSZTogT3BlbkJNQyA6IEtWTSBvdmVyIElQIGFuZCBtZWRpYSByZWRpcmVjdGlvbiBm
+dW5jdGlvbgo+Cj4gwqAKPgo+IDEuIHllcywgaXQgY2FuIGltcGxlbWVudCB0aGUgZnVuY3Rp
+b25hbGl0eSB3aXRoIHRoaXMgY29tYmluYXRpb24KPgo+IDIuIFdoYXQgcGxhdGZvcm0gYXJl
+IHlvdSB1c2luZz8KPgo+IMKgCj4KPiAyMDIwLTA0LTA5Cj4KPiAtLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0KPgo+IGNodW5odWkuamlhCj4KPiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPgo+ICAgICAq5Y+R
+5Lu25Lq677yaKiJUaWdlciBMaXUoQkotUkQpIiA8VGlnZXJMaXVAemhhb3hpbi5jb20KPiAg
+ICAgPG1haWx0bzpUaWdlckxpdUB6aGFveGluLmNvbT4+Cj4KPiAgICAgKuWPkemAgeaXtumX
+tO+8mioyMDIwLTA0LTA5wqAxNTo1Ngo+Cj4gICAgICrkuLvpopjvvJoqT3BlbkJNQyA6IEtW
+TSBvdmVyIElQIGFuZCBtZWRpYSByZWRpcmVjdGlvbiBmdW5jdGlvbgo+Cj4gICAgICrmlLbk
+u7bkurrvvJoqIm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZwo+ICAgICA8bWFpbHRvOm9wZW5i
+bWNAbGlzdHMub3psYWJzLm9yZz4iPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZwo+ICAgICA8
+bWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4+Cj4KPiAgICAgKuaKhOmAge+8mioK
+Pgo+ICAgICDCoAo+Cj4gICAgIEhpLCBleHBlcnRzOgo+Cj4gICAgIEkgaGF2ZSBhIHF1ZXN0
+aW9uIGFib3V0IEtWTSBvdmVyIElQIGFuZCBtZWRpYSByZWRpcmVjdGlvbiBmdW5jdGlvbi4K
+Pgo+ICAgICBJbnRlbCBwcm92aWRlZCBhIFJNTSBsaXRlIGNvbXBvbmVudCwgd2hpY2ggcHJv
+dmlkZWQgS1ZNL01lZGlhCj4gICAgIHJlZGlyZWN0aW9uIGNhcGFiaWxpdHkuCj4KPiAgICAg
+wqAKPgo+ICAgICBTbyBteSBxdWVzdGlvbiBpczoKPgo+ICAgICAxLsKgwqDCoMKgwqAgT3Bl
+bkJNQyArIEFTVDI1MDAgQ2hpcCwgY291bGQgbm90IGltcGxlbWVudCBLVk0vTWVkaWEKPiAg
+ICAgcmVkaXJlY3Rpb24gY2FwYWJpbGl0eT8KPgo+ICAgICAyLsKgwqDCoMKgwqAgSWYgd2Fu
+dGluZyB0byB1c2UgS1ZNL01lZGlhIHJlZGlyZWN0aW9uICxtdXN0IGJ1eSBhIFJNTQo+ICAg
+ICBjb21wb25lbnQ/Cj4KPiAgICAgwqAKPgo+ICAgICBJIGZvdW5kIE9wZW5CTUMgaGFkIGlt
+cGxlbWVudGVkIEtWTSBvdmVyIElQIGNhcGFiaWxpdHkuCj4KPiAgICAgwqAKPgo+ICAgICBU
+aGFua3MKPgo+ICAgICDCoAo+Cj4gICAgIOS/neWvhuWjsOaYju+8mgo+Cj4gICAgIOacrOmC
+ruS7tuWQq+acieS/neWvhuaIluS4k+acieS/oeaBr++8jOS7heS+m+aMh+WumuaUtuS7tuS6
+uuS9v+eUqOOAguS4peemgeWvueacrOmCruS7tuaIluWFtuWGheWuueWBmuS7u+S9leacque7
+j+aOiOadg+eahOafpemYheOAgeS9v+eUqOOAgeWkjeWItuaIlui9rOWPkeOAggo+Cj4gICAg
+IC9DT05GSURFTlRJQUwgTk9URTogLwo+Cj4gICAgIC9UaGlzIGVtYWlsIGNvbnRhaW5zIGNv
+bmZpZGVudGlhbCBvciBsZWdhbGx5IHByaXZpbGVnZWQKPiAgICAgaW5mb3JtYXRpb24gYW5k
+IGlzIGZvciB0aGUgc29sZSB1c2Ugb2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4gQW55Cj4g
+ICAgIHVuYXV0aG9yaXplZCByZXZpZXcsIHVzZSwgY29weWluZyBvciBmb3J3YXJkaW5nIG9m
+IHRoaXMgZW1haWwgb3IKPiAgICAgdGhlIGNvbnRlbnQgb2YgdGhpcyBlbWFpbCBpcyBzdHJp
+Y3RseSBwcm9oaWJpdGVkLi8KPgo+Cj4KPiDkv53lr4blo7DmmI7vvJoKPiDmnKzpgq7ku7bl
+kKvmnInkv53lr4bmiJbkuJPmnInkv6Hmga/vvIzku4XkvpvmjIflrprmlLbku7bkurrkvb/n
+lKjjgILkuKXnpoHlr7nmnKzpgq7ku7bmiJblhbblhoXlrrnlgZrku7vkvZXmnKrnu4/mjojm
+nYPnmoTmn6XpmIXjgIHkvb/nlKjjgIHlpI3liLbmiJbovazlj5HjgIIKPiAvQ09ORklERU5U
+SUFMIE5PVEU6IC8KPiAvVGhpcyBlbWFpbCBjb250YWlucyBjb25maWRlbnRpYWwgb3IgbGVn
+YWxseSBwcml2aWxlZ2VkIGluZm9ybWF0aW9uCj4gYW5kIGlzIGZvciB0aGUgc29sZSB1c2Ug
+b2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4gQW55IHVuYXV0aG9yaXplZAo+IHJldmlldywg
+dXNlLCBjb3B5aW5nIG9yIGZvcndhcmRpbmcgb2YgdGhpcyBlbWFpbCBvciB0aGUgY29udGVu
+dCBvZgo+IHRoaXMgZW1haWwgaXMgc3RyaWN0bHkgcHJvaGliaXRlZC4vCgotLSAKSm9obmF0
+aGFuIE1hbnRleQpTZW5pb3IgU29mdHdhcmUgRW5naW5lZXIKKmF6YWQgdGUqKmNobm9sb2d5
+IHBhcnRuZXJzKgpDb250cmlidXRpbmcgdG8gVGVjaG5vbG9neSBJbm5vdmF0aW9uIHNpbmNl
+IDE5OTIKUGhvbmU6ICg1MDMpIDcxMi02NzY0CkVtYWlsOiBqb2huYXRoYW54Lm1hbnRleUBp
+bnRlbC5jb20gPG1haWx0bzpqb2huYXRoYW54Lm1hbnRleUBpbnRlbC5jb20+Cgo=
+--------------5059704AFDD4777C65630ED5
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
---_000_e03bdf55444c437ca6133440aa85a3ffzhaoxincom_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    Liu,<br>
+    <br>
+    RMM is a HW licensing device, and was, if I recall, eliminated in
+    the last generation of Intel servers (i.e. S2600WF, S2600BNP,
+    S2600SWP).<br>
+    OpenBMC provides you all of the source, so any control over SW
+    features like KVM (assuming the KVM source is open), by HW
+    components being present can be compiled out of your implementation.<=
+br>
+    I have a hard time believing the OPC would willingly add a HW device
+    for enabling/disabling SW functionality. Seems a bit counter to the
+    spirit of the projects philosophy to me.<br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 4/9/20 2:24 AM, Tiger Liu(BJ-RD)
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite"
+      cite=3D"mid:e03bdf55444c437ca6133440aa85a3ff@zhaoxin.com">
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DU=
+TF-8">
+      <meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered
+        medium)">
+      <base target=3D"_blank"><!--[if !mso]><style>v\:* {behavior:url(#de=
+fault#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+=2Eshape {behavior:url(#default#VML);}
+</style><![endif]-->
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:=E5=AE=8B=E4=BD=93;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:=E7=AD=89=E7=BA=BF;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@=E5=AE=8B=E4=BD=93";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:"\@=E7=AD=89=E7=BA=BF";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:=C3=8E=C2=A2=C3=88=C3=AD=C3=91=C3=85=C2=BA=C3=9A;
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"\@=C3=8E=C2=A2=C3=88=C3=AD=C3=91=C3=85=C2=BA=C3=9A";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	font-size:10.5pt;
+	font-family:=E7=AD=89=E7=BA=BF;
+	mso-believe-normal-left:yes;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p
+	{mso-style-priority:99;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:=E5=AE=8B=E4=BD=93;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-indent:21.0pt;
+	font-size:10.5pt;
+	font-family:=E7=AD=89=E7=BA=BF;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:=E5=AE=8B=E4=BD=93;}
+span.EmailStyle19
+	{mso-style-type:personal;
+	font-family:=E7=AD=89=E7=BA=BF;
+	color:windowtext;}
+span.EmailStyle22
+	{mso-style-type:personal-reply;
+	font-family:=E7=AD=89=E7=BA=BF;
+	color:#1F497D;}
+=2EMsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if mso 9]-->
+      <style>p.MsoNormal
+	{margin-left:9.0pt;}
+</style><!--[endif]--><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+      <div class=3D"WordSection1">
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">Hi,
+            Chunhui:<o:p></o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">Thanks
+            for your reply.<o:p></o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S"><o:p>=C2=A0</o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">I
+            am studying OCP(Open Computer Platform) server board doc and
+            OpenBMC doc.<o:p></o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">I
+            am just curious whether OCP server board also needs an
+            add-on RMM component to support KVM/Media redirection.<o:p></=
+o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S"><o:p>=C2=A0</o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">So,
+            OpenBMC=E2=80=99s current code has implemented KVM over IP.<o=
+:p></o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">So,
+            OpenBMC would support KVM/Media redirection function without
+            adding add-on some RMM like component?<o:p></o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S"><o:p>=C2=A0</o:p></span></p>
+        <p class=3D"MsoNormal"><span style=3D"color:#1F497D" lang=3D"EN-U=
+S">Thanks<o:p></o:p></span></p>
+        <div>
+          <div style=3D"border:none;border-top:solid #E1E1E1
+            1.0pt;padding:3.0pt 0cm 0cm 0cm">
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><b><span
+                  style=3D"font-size:11.0pt">=E5=8F=91=E4=BB=B6=E4=BA=BA<=
+span lang=3D"EN-US">:</span></span></b><span
+                style=3D"font-size:11.0pt" lang=3D"EN-US"> chunhui.jia
+                <a class=3D"moz-txt-link-rfc2396E" href=3D"mailto:chunhui=
+=2Ejia@linux.intel.com">&lt;chunhui.jia@linux.intel.com&gt;</a>
+                <br>
+              </span><b><span style=3D"font-size:11.0pt">=E5=8F=91=E9=80=81=
+=E6=97=B6=E9=97=B4<span
+                    lang=3D"EN-US">:</span></span></b><span
+                style=3D"font-size:11.0pt" lang=3D"EN-US"> 2020</span><sp=
+an
+                style=3D"font-size:11.0pt">=E5=B9=B4<span lang=3D"EN-US">=
+4</span>=E6=9C=88<span
+                  lang=3D"EN-US">9</span>=E6=97=A5<span lang=3D"EN-US"> 1=
+6:51<br>
+                </span><b>=E6=94=B6=E4=BB=B6=E4=BA=BA<span lang=3D"EN-US"=
+>:</span></b><span
+                  lang=3D"EN-US"> Tiger Liu(BJ-RD)
+                  <a class=3D"moz-txt-link-rfc2396E" href=3D"mailto:Tiger=
+Liu@zhaoxin.com">&lt;TigerLiu@zhaoxin.com&gt;</a>; <a class=3D"moz-txt-li=
+nk-abbreviated" href=3D"mailto:openbmc@lists.ozlabs.org">openbmc@lists.oz=
+labs.org</a><br>
+                </span><b>=E4=B8=BB=E9=A2=98<span lang=3D"EN-US">:</span>=
+</b><span
+                  lang=3D"EN-US"> Re: OpenBMC : KVM over IP and media
+                  redirection function<o:p></o:p></span></span></p>
+          </div>
+        </div>
+        <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"><=
+span
+            lang=3D"EN-US"><o:p>=C2=A0</o:p></span></p>
+        <div>
+          <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"=
+><span
+              style=3D"font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=C3=
+=85=C2=BA=C3=9A&quot;,serif;color:black"
+              lang=3D"EN-US">1. yes, it can implement the functionality
+              with this combination<o:p></o:p></span></p>
+        </div>
+        <div>
+          <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"=
+><span
+              style=3D"font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=C3=
+=85=C2=BA=C3=9A&quot;,serif;color:black"
+              lang=3D"EN-US">2. What platform are you using?<o:p></o:p></=
+span></p>
+        </div>
+        <div>
+          <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"=
+><span
+              style=3D"font-family:=E5=AE=8B=E4=BD=93;color:black" lang=3D=
+"EN-US">=C2=A0</span><span
+              style=3D"font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=C3=
+=85=C2=BA=C3=9A&quot;,serif;color:black"
+              lang=3D"EN-US"><o:p></o:p></span></p>
+        </div>
+        <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"><=
+span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:silver"
+            lang=3D"EN-US">2020-04-09
+            <o:p></o:p></span></p>
+        <div class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"=
+><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:silver"
+            lang=3D"EN-US">
+            <hr style=3D"width:91.5pt" width=3D"153" size=3D"1" align=3D"=
+left">
+          </span></div>
+        <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"left"><=
+span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:silver"
+            lang=3D"EN-US">chunhui.jia
+            <o:p></o:p></span></p>
+        <div class=3D"MsoNormal" style=3D"text-align:center" align=3D"cen=
+ter"><span
+            style=3D"font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=C3=85=
+=C2=BA=C3=9A&quot;,serif;color:black"
+            lang=3D"EN-US">
+            <hr width=3D"100%" size=3D"1" align=3D"center">
+          </span></div>
+        <blockquote
+          style=3D"margin-left:0cm;margin-top:5.0pt;margin-bottom:5.0pt"
+          id=3D"ntes-flashmail-quote">
+          <div>
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><strong><span
+style=3D"font-size:10.0pt;font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=
+=C3=85=C2=BA=C3=9A&quot;,serif;color:black">=E5=8F=91=E4=BB=B6=E4=BA=BA=EF=
+=BC=9A</span></strong><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US">"Tiger Liu(BJ-RD)" &lt;<a
+                  href=3D"mailto:TigerLiu@zhaoxin.com"
+                  moz-do-not-send=3D"true">TigerLiu@zhaoxin.com</a>&gt;<o=
+:p></o:p></span></p>
+          </div>
+          <div>
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><strong><span
+style=3D"font-size:10.0pt;font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=
+=C3=85=C2=BA=C3=9A&quot;,serif;color:black">=E5=8F=91=E9=80=81=E6=97=B6=E9=
+=97=B4=EF=BC=9A</span></strong><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US">2020-04-09=C2=A015:56<o:p></o:p></span></p=
+>
+          </div>
+          <div>
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><strong><span
+style=3D"font-size:10.0pt;font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=
+=C3=85=C2=BA=C3=9A&quot;,serif;color:black">=E4=B8=BB=E9=A2=98=EF=BC=9A</=
+span></strong><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US">OpenBMC : KVM over IP and media redirectio=
+n
+                function<o:p></o:p></span></p>
+          </div>
+          <div>
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><strong><span
+style=3D"font-size:10.0pt;font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=
+=C3=85=C2=BA=C3=9A&quot;,serif;color:black">=E6=94=B6=E4=BB=B6=E4=BA=BA=EF=
+=BC=9A</span></strong><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US">"<a href=3D"mailto:openbmc@lists.ozlabs.or=
+g"
+                  moz-do-not-send=3D"true">openbmc@lists.ozlabs.org</a>"&=
+lt;<a
+                  href=3D"mailto:openbmc@lists.ozlabs.org"
+                  moz-do-not-send=3D"true">openbmc@lists.ozlabs.org</a>&g=
+t;<o:p></o:p></span></p>
+          </div>
+          <div>
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><strong><span
+style=3D"font-size:10.0pt;font-family:&quot;=C3=8E=C2=A2=C3=88=C3=AD=C3=91=
+=C3=85=C2=BA=C3=9A&quot;,serif;color:black">=E6=8A=84=E9=80=81=EF=BC=9A</=
+span></strong><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US"><o:p></o:p></span></p>
+          </div>
+          <div>
+            <p class=3D"MsoNormal" style=3D"text-align:left" align=3D"lef=
+t"><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US">=C2=A0<o:p></o:p></span></p>
+          </div>
+          <div>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US">Hi,
+                experts:<o:p></o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US">I
+                have a question about KVM over IP and media redirection
+                function.<o:p></o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US">Intel
+                provided a RMM lite component, which provided KVM/Media
+                redirection capability.<o:p></o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US"><o:p>=C2=A0</o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US">So
+                my question is:<o:p></o:p></span></p>
+            <p class=3D"MsoListParagraph"
+              style=3D"margin-left:18.0pt;text-indent:-18.0pt"><span
+                style=3D"color:black" lang=3D"EN-US">1.</span><span
+                style=3D"font-size:7.0pt;font-family:&quot;Times New
+                Roman&quot;,serif;color:black" lang=3D"EN-US">=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0
+              </span><span style=3D"color:black" lang=3D"EN-US">OpenBMC +=
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPGJhc2Ug
-dGFyZ2V0PSJfYmxhbmsiPjwhLS1baWYgIW1zb10+PHN0eWxlPnZcOioge2JlaGF2aW9yOnVybCgj
-ZGVmYXVsdCNWTUwpO30NCm9cOioge2JlaGF2aW9yOnVybCgjZGVmYXVsdCNWTUwpO30NCndcOiog
-e2JlaGF2aW9yOnVybCgjZGVmYXVsdCNWTUwpO30NCi5zaGFwZSB7YmVoYXZpb3I6dXJsKCNkZWZh
-dWx0I1ZNTCk7fQ0KPC9zdHlsZT48IVtlbmRpZl0tLT48c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZp
-bml0aW9ucyAqLw0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTrlrovkvZM7DQoJcGFub3NlLTE6
-MiAxIDYgMCAzIDEgMSAxIDEgMTt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlh
-IE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtm
-b250LWZhbWlseTrnrYnnur87DQoJcGFub3NlLTE6MiAxIDYgMCAzIDEgMSAxIDEgMTt9DQpAZm9u
-dC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJcQOWui+S9kyI7DQoJcGFub3NlLTE6MiAxIDYgMCAzIDEg
-MSAxIDEgMTt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJcQOetiee6vyI7DQoJcGFub3Nl
-LTE6MiAxIDYgMCAzIDEgMSAxIDEgMTt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OlZlcmRh
-bmE7DQoJcGFub3NlLTE6MiAxMSA2IDQgMyA1IDQgNCAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250
-LWZhbWlseTrDjsKiw4jDrcORw4XCusOaOw0KCXBhbm9zZS0xOjAgMCAwIDAgMCAwIDAgMCAwIDA7
-fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseToiXEDDjsKiw4jDrcORw4XCusOaIjsNCglwYW5v
-c2UtMTowIDAgMCAwIDAgMCAwIDAgMCAwO30NCi8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1z
-b05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowY207DQoJbWFy
-Z2luLWJvdHRvbTouMDAwMXB0Ow0KCXRleHQtYWxpZ246anVzdGlmeTsNCgl0ZXh0LWp1c3RpZnk6
-aW50ZXItaWRlb2dyYXBoOw0KCWZvbnQtc2l6ZToxMC41cHQ7DQoJZm9udC1mYW1pbHk6562J57q/
-Ow0KCW1zby1iZWxpZXZlLW5vcm1hbC1sZWZ0Onllczt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJs
-aW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjojMDU2M0MxOw0KCXRleHQtZGVj
-b3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFuLk1zb0h5cGVybGlua0ZvbGxvd2Vk
-DQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjojOTU0RjcyOw0KCXRleHQtZGVjb3Jh
-dGlvbjp1bmRlcmxpbmU7fQ0KcA0KCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJbXNvLW1hcmdp
-bi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBjbTsNCgltc28tbWFyZ2luLWJvdHRvbS1h
-bHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowY207DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZh
-bWlseTrlrovkvZM7fQ0KcC5Nc29MaXN0UGFyYWdyYXBoLCBsaS5Nc29MaXN0UGFyYWdyYXBoLCBk
-aXYuTXNvTGlzdFBhcmFncmFwaA0KCXttc28tc3R5bGUtcHJpb3JpdHk6MzQ7DQoJbWFyZ2luOjBj
-bTsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJdGV4dC1hbGlnbjpqdXN0aWZ5Ow0KCXRleHQt
-anVzdGlmeTppbnRlci1pZGVvZ3JhcGg7DQoJdGV4dC1pbmRlbnQ6MjEuMHB0Ow0KCWZvbnQtc2l6
-ZToxMC41cHQ7DQoJZm9udC1mYW1pbHk6562J57q/O30NCnAubXNvbm9ybWFsMCwgbGkubXNvbm9y
-bWFsMCwgZGl2Lm1zb25vcm1hbDANCgl7bXNvLXN0eWxlLW5hbWU6bXNvbm9ybWFsOw0KCW1zby1t
-YXJnaW4tdG9wLWFsdDphdXRvOw0KCW1hcmdpbi1yaWdodDowY207DQoJbXNvLW1hcmdpbi1ib3R0
-b20tYWx0OmF1dG87DQoJbWFyZ2luLWxlZnQ6MGNtOw0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9u
-dC1mYW1pbHk65a6L5L2TO30NCnNwYW4uRW1haWxTdHlsZTE5DQoJe21zby1zdHlsZS10eXBlOnBl
-cnNvbmFsOw0KCWZvbnQtZmFtaWx5Ouetiee6vzsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCnNwYW4u
-RW1haWxTdHlsZTIyDQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFt
-aWx5Ouetiee6vzsNCgljb2xvcjojMUY0OTdEO30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHls
-ZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rp
-b24xDQoJe3NpemU6NjEyLjBwdCA3OTIuMHB0Ow0KCW1hcmdpbjo3Mi4wcHQgOTAuMHB0IDcyLjBw
-dCA5MC4wcHQ7fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48
-L3N0eWxlPjwhW2lmIG1zbyA5XT48c3R5bGU+cC5Nc29Ob3JtYWwNCgl7bWFyZ2luLWxlZnQ6OS4w
-cHQ7fQ0KPC9zdHlsZT48IVtlbmRpZl0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFw
-ZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5kaWZd
-LS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRpdCI+
-DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48L3ht
-bD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IlpILUNOIiBsaW5rPSIjMDU2M0Mx
-IiB2bGluaz0iIzk1NEY3MiIgc3R5bGU9Im1hcmdpbi1sZWZ0OjkuMHB0O21hcmdpbi10b3A6OS4w
-cHQ7bWFyZ2luLXJpZ2h0OjkuMHB0O21hcmdpbi1ib3R0b206OS4wcHQiPg0KPGRpdiBjbGFzcz0i
-V29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBz
-dHlsZT0iY29sb3I6IzFGNDk3RCI+SGksIENodW5odWk6PG86cD48L286cD48L3NwYW4+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0
-OTdEIj5UaGFua3MgZm9yIHlvdXIgcmVwbHkuPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj48
-bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
-YW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPkkgYW0gc3R1ZHlpbmcgT0NQKE9wZW4g
-Q29tcHV0ZXIgUGxhdGZvcm0pIHNlcnZlciBib2FyZCBkb2MgYW5kIE9wZW5CTUMgZG9jLjxvOnA+
-PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVT
-IiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+SSBhbSBqdXN0IGN1cmlvdXMgd2hldGhlciBPQ1Agc2Vy
-dmVyIGJvYXJkIGFsc28gbmVlZHMgYW4gYWRkLW9uIFJNTSBjb21wb25lbnQgdG8gc3VwcG9ydCBL
-Vk0vTWVkaWEgcmVkaXJlY3Rpb24uPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj48bzpwPiZu
-YnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJF
-Ti1VUyIgc3R5bGU9ImNvbG9yOiMxRjQ5N0QiPlNvLCBPcGVuQk1D4oCZcyBjdXJyZW50IGNvZGUg
-aGFzIGltcGxlbWVudGVkIEtWTSBvdmVyIElQLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+
-U28sIE9wZW5CTUMgd291bGQgc3VwcG9ydCBLVk0vTWVkaWEgcmVkaXJlY3Rpb24gZnVuY3Rpb24g
-d2l0aG91dCBhZGRpbmcgYWRkLW9uIHNvbWUgUk1NIGxpa2UgY29tcG9uZW50PzxvOnA+PC9vOnA+
-PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHls
-ZT0iY29sb3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5UaGFu
-a3M8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7
-Ym9yZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRpbmc6My4wcHQgMGNtIDBjbSAwY20i
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxl
-ZnQiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij7lj5Hku7bkuro8c3BhbiBsYW5n
-PSJFTi1VUyI+Ojwvc3Bhbj48L3NwYW4+PC9iPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdCI+IGNodW5odWkuamlhICZsdDtjaHVuaHVpLmppYUBsaW51eC5pbnRlbC5j
-b20mZ3Q7DQo8YnI+DQo8L3NwYW4+PGI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPuWP
-kemAgeaXtumXtDxzcGFuIGxhbmc9IkVOLVVTIj46PC9zcGFuPjwvc3Bhbj48L2I+PHNwYW4gbGFu
-Zz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij4gMjAyMDwvc3Bhbj48c3BhbiBzdHls
-ZT0iZm9udC1zaXplOjExLjBwdCI+5bm0PHNwYW4gbGFuZz0iRU4tVVMiPjQ8L3NwYW4+5pyIPHNw
-YW4gbGFuZz0iRU4tVVMiPjk8L3NwYW4+5pelPHNwYW4gbGFuZz0iRU4tVVMiPiAxNjo1MTxicj4N
-Cjwvc3Bhbj48Yj7mlLbku7bkuro8c3BhbiBsYW5nPSJFTi1VUyI+Ojwvc3Bhbj48L2I+PHNwYW4g
-bGFuZz0iRU4tVVMiPiBUaWdlciBMaXUoQkotUkQpICZsdDtUaWdlckxpdUB6aGFveGluLmNvbSZn
-dDs7IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxicj4NCjwvc3Bhbj48Yj7kuLvpopg8c3BhbiBs
-YW5nPSJFTi1VUyI+Ojwvc3Bhbj48L2I+PHNwYW4gbGFuZz0iRU4tVVMiPiBSZTogT3BlbkJNQyA6
-IEtWTSBvdmVyIElQIGFuZCBtZWRpYSByZWRpcmVjdGlvbiBmdW5jdGlvbjxvOnA+PC9vOnA+PC9z
-cGFuPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxp
-Z249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQiPjxzcGFuIGxhbmc9IkVOLVVTIj48bzpw
-PiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxp
-Z249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHls
-ZT0iZm9udC1mYW1pbHk6JnF1b3Q7w47CosOIw63DkcOFwrrDmiZxdW90OyxzZXJpZjtjb2xvcjpi
-bGFjayI+MS4geWVzLCBpdCBjYW4gaW1wbGVtZW50IHRoZSBmdW5jdGlvbmFsaXR5IHdpdGggdGhp
-cyBjb21iaW5hdGlvbjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiIGFsaWduPSJsZWZ0IiBzdHlsZT0idGV4dC1hbGlnbjpsZWZ0Ij48c3Bh
-biBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O8OOwqLDiMOtw5HDhcK6w5om
-cXVvdDssc2VyaWY7Y29sb3I6YmxhY2siPjIuIFdoYXQgcGxhdGZvcm0gYXJlIHlvdSB1c2luZz88
-bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-IiBhbGlnbj0ibGVmdCIgc3R5bGU9InRleHQtYWxpZ246bGVmdCI+PHNwYW4gbGFuZz0iRU4tVVMi
-IHN0eWxlPSJmb250LWZhbWlseTrlrovkvZM7Y29sb3I6YmxhY2siPiZuYnNwOzwvc3Bhbj48c3Bh
-biBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O8OOwqLDiMOtw5HDhcK6w5om
-cXVvdDssc2VyaWY7Y29sb3I6YmxhY2siPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQi
-PjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTom
-cXVvdDtWZXJkYW5hJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6c2lsdmVyIj4yMDIwLTA0LTA5DQo8
-bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2IGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJsZWZ0
-IiBzdHlsZT0idGV4dC1hbGlnbjpsZWZ0Ij48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
-c2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7VmVyZGFuYSZxdW90OyxzYW5zLXNlcmlmO2Nv
-bG9yOnNpbHZlciI+DQo8aHIgc2l6ZT0iMSIgd2lkdGg9IjE1MyIgc3R5bGU9IndpZHRoOjkxLjVw
-dCIgYWxpZ249ImxlZnQiPg0KPC9zcGFuPjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxp
-Z249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHls
-ZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtWZXJkYW5hJnF1b3Q7LHNhbnMt
-c2VyaWY7Y29sb3I6c2lsdmVyIj5jaHVuaHVpLmppYQ0KPG86cD48L286cD48L3NwYW4+PC9wPg0K
-PGRpdiBjbGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0iY2VudGVyIiBzdHlsZT0idGV4dC1hbGlnbjpj
-ZW50ZXIiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7w47CosOI
-w63DkcOFwrrDmiZxdW90OyxzZXJpZjtjb2xvcjpibGFjayI+DQo8aHIgc2l6ZT0iMSIgd2lkdGg9
-IjEwMCUiIGFsaWduPSJjZW50ZXIiPg0KPC9zcGFuPjwvZGl2Pg0KPGJsb2NrcXVvdGUgc3R5bGU9
-Im1hcmdpbi1sZWZ0OjBjbTttYXJnaW4tdG9wOjUuMHB0O21hcmdpbi1ib3R0b206NS4wcHQiIGlk
-PSJudGVzLWZsYXNobWFpbC1xdW90ZSI+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxp
-Z249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQiPjxzdHJvbmc+PHNwYW4gc3R5bGU9ImZv
-bnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7w47CosOIw63DkcOFwrrDmiZxdW90Oyxz
-ZXJpZjtjb2xvcjpibGFjayI+5Y+R5Lu25Lq677yaPC9zcGFuPjwvc3Ryb25nPjxzcGFuIGxhbmc9
-IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtWZXJkYW5h
-JnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6YmxhY2siPiZxdW90O1RpZ2VyIExpdShCSi1SRCkmcXVv
-dDsNCiAmbHQ7PGEgaHJlZj0ibWFpbHRvOlRpZ2VyTGl1QHpoYW94aW4uY29tIj5UaWdlckxpdUB6
-aGFveGluLmNvbTwvYT4mZ3Q7PG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQi
-PjxzdHJvbmc+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7
-w47CosOIw63DkcOFwrrDmiZxdW90OyxzZXJpZjtjb2xvcjpibGFjayI+5Y+R6YCB5pe26Ze077ya
-PC9zcGFuPjwvc3Ryb25nPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEwLjBw
-dDtmb250LWZhbWlseTomcXVvdDtWZXJkYW5hJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6YmxhY2si
-PjIwMjAtMDQtMDkmbmJzcDsxNTo1NjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJsZWZ0IiBzdHlsZT0idGV4dC1hbGlnbjps
-ZWZ0Ij48c3Ryb25nPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZx
-dW90O8OOwqLDiMOtw5HDhcK6w5omcXVvdDssc2VyaWY7Y29sb3I6YmxhY2siPuS4u+mimO+8mjwv
-c3Bhbj48L3N0cm9uZz48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7
-Zm9udC1mYW1pbHk6JnF1b3Q7VmVyZGFuYSZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmJsYWNrIj5P
-cGVuQk1DIDogS1ZNDQogb3ZlciBJUCBhbmQgbWVkaWEgcmVkaXJlY3Rpb24gZnVuY3Rpb248bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBh
-bGlnbj0ibGVmdCIgc3R5bGU9InRleHQtYWxpZ246bGVmdCI+PHN0cm9uZz48c3BhbiBzdHlsZT0i
-Zm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDvDjsKiw4jDrcORw4XCusOaJnF1b3Q7
-LHNlcmlmO2NvbG9yOmJsYWNrIj7mlLbku7bkurrvvJo8L3NwYW4+PC9zdHJvbmc+PHNwYW4gbGFu
-Zz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O1ZlcmRh
-bmEmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpibGFjayI+JnF1b3Q7PGEgaHJlZj0ibWFpbHRvOm9w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9hPiZxdW90
-OyZsdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIj5vcGVuYm1jQGxp
-c3RzLm96bGFicy5vcmc8L2E+Jmd0OzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJsZWZ0IiBzdHlsZT0idGV4dC1hbGlnbjps
-ZWZ0Ij48c3Ryb25nPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZx
-dW90O8OOwqLDiMOtw5HDhcK6w5omcXVvdDssc2VyaWY7Y29sb3I6YmxhY2siPuaKhOmAge+8mjwv
-c3Bhbj48L3N0cm9uZz48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7
-Zm9udC1mYW1pbHk6JnF1b3Q7VmVyZGFuYSZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmJsYWNrIj48
-bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-IiBhbGlnbj0ibGVmdCIgc3R5bGU9InRleHQtYWxpZ246bGVmdCI+PHNwYW4gbGFuZz0iRU4tVVMi
-IHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O1ZlcmRhbmEmcXVvdDss
-c2Fucy1zZXJpZjtjb2xvcjpibGFjayI+Jm5ic3A7PG86cD48L286cD48L3NwYW4+PC9wPg0KPC9k
-aXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxl
-PSJjb2xvcjpibGFjayI+SGksIGV4cGVydHM6PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjpibGFjayI+SSBo
-YXZlIGEgcXVlc3Rpb24gYWJvdXQgS1ZNIG92ZXIgSVAgYW5kIG1lZGlhIHJlZGlyZWN0aW9uIGZ1
-bmN0aW9uLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
-IGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6YmxhY2siPkludGVsIHByb3ZpZGVkIGEgUk1NIGxp
-dGUgY29tcG9uZW50LCB3aGljaCBwcm92aWRlZCBLVk0vTWVkaWEgcmVkaXJlY3Rpb24gY2FwYWJp
-bGl0eS48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
-YW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOmJsYWNrIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9y
-OmJsYWNrIj5TbyBteSBxdWVzdGlvbiBpczo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
-cz0iTXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjE4LjBwdDt0ZXh0LWluZGVu
-dDotMTguMHB0Ij48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImNvbG9yOmJsYWNrIj4xLjwvc3Bh
-bj48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZTo3LjBwdDtmb250LWZhbWlseTom
-cXVvdDtUaW1lcyBOZXcgUm9tYW4mcXVvdDssc2VyaWY7Y29sb3I6YmxhY2siPiZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOw0KPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29s
-b3I6YmxhY2siPk9wZW5CTUMgJiM0MzsgQVNUMjUwMCBDaGlwLCBjb3VsZCBub3QgaW1wbGVtZW50
-IEtWTS9NZWRpYSByZWRpcmVjdGlvbiBjYXBhYmlsaXR5PzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4N
-CjxwIGNsYXNzPSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFyZ2luLWxlZnQ6MTguMHB0O3Rl
-eHQtaW5kZW50Oi0xOC4wcHQiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6YmxhY2si
-PjIuPC9zcGFuPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjcuMHB0O2ZvbnQt
-ZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyxzZXJpZjtjb2xvcjpibGFjayI+Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7DQo8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiIHN0
-eWxlPSJjb2xvcjpibGFjayI+SWYgd2FudGluZyB0byB1c2UgS1ZNL01lZGlhIHJlZGlyZWN0aW9u
-ICxtdXN0IGJ1eSBhIFJNTSBjb21wb25lbnQ/PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJjb2xvcjpibGFjayI+PG86
-cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFu
-Zz0iRU4tVVMiIHN0eWxlPSJjb2xvcjpibGFjayI+SSBmb3VuZCBPcGVuQk1DIGhhZCBpbXBsZW1l
-bnRlZCBLVk0gb3ZlciBJUCBjYXBhYmlsaXR5LjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6YmxhY2siPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxh
-bmc9IkVOLVVTIiBzdHlsZT0iY29sb3I6YmxhY2siPlRoYW5rczxvOnA+PC9vOnA+PC9zcGFuPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJsZWZ0IiBzdHlsZT0ibWFyZ2luLWJvdHRv
-bToxMi4wcHQ7dGV4dC1hbGlnbjpsZWZ0Ij48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQt
-c2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7VmVyZGFuYSZxdW90OyxzYW5zLXNlcmlmO2Nv
-bG9yOmJsYWNrIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCIgYWxpZ249ImxlZnQiIHN0eWxlPSJ0ZXh0LWFsaWduOmxlZnQ7bGluZS1oZWln
-aHQ6MTAuMHB0Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTrlrovk
-vZM7Y29sb3I6IzU5NTk1OSI+5L+d5a+G5aOw5piO77yaPHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+
-PC9vOnA+PC9zcGFuPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIiBhbGlnbj0ibGVmdCIgc3R5bGU9InRleHQtYWxpZ246bGVmdDtsaW5lLWhlaWdodDoxMC4w
-cHQiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OuWui+S9kztjb2xv
-cjojNTk1OTU5Ij7mnKzpgq7ku7blkKvmnInkv53lr4bmiJbkuJPmnInkv6Hmga/vvIzku4Xkvpvm
-jIflrprmlLbku7bkurrkvb/nlKjjgILkuKXnpoHlr7nmnKzpgq7ku7bmiJblhbblhoXlrrnlgZrk
-u7vkvZXmnKrnu4/mjojmnYPnmoTmn6XpmIXjgIHkvb/nlKjjgIHlpI3liLbmiJbovazlj5HjgII8
-c3BhbiBsYW5nPSJFTi1VUyI+PG86cD48L286cD48L3NwYW4+PC9zcGFuPjwvcD4NCjwvZGl2Pg0K
-PGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJsZWZ0IiBzdHlsZT0idGV4dC1hbGln
-bjpsZWZ0O2xpbmUtaGVpZ2h0OjEwLjBwdCI+PGk+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJm
-b250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O1RpbWVzIE5ldyBSb21hbiZxdW90Oyxz
-ZXJpZjtjb2xvcjojNTk1OTU5Ij5DT05GSURFTlRJQUwgTk9URToNCjwvc3Bhbj48L2k+PHNwYW4g
-bGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O1Rp
-bWVzIE5ldyBSb21hbiZxdW90OyxzZXJpZjtjb2xvcjojNTk1OTU5Ij48bzpwPjwvbzpwPjwvc3Bh
-bj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0ibGVmdCIg
-c3R5bGU9InRleHQtYWxpZ246bGVmdDtsaW5lLWhlaWdodDoxMC4wcHQiPjxpPjxzcGFuIGxhbmc9
-IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtUaW1lcyBO
-ZXcgUm9tYW4mcXVvdDssc2VyaWY7Y29sb3I6IzU5NTk1OSI+VGhpcyBlbWFpbCBjb250YWlucyBj
-b25maWRlbnRpYWwgb3IgbGVnYWxseSBwcml2aWxlZ2VkIGluZm9ybWF0aW9uIGFuZCBpcyBmb3Ig
-dGhlIHNvbGUNCiB1c2Ugb2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4gQW55IHVuYXV0aG9yaXpl
-ZCByZXZpZXcsIHVzZSwgY29weWluZyBvciBmb3J3YXJkaW5nIG9mIHRoaXMgZW1haWwgb3IgdGhl
-IGNvbnRlbnQgb2YgdGhpcyBlbWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLjwvc3Bhbj48L2k+
-PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZx
-dW90O1RpbWVzIE5ldyBSb21hbiZxdW90OyxzZXJpZjtjb2xvcjojNTk1OTU5Ij48bzpwPjwvbzpw
-Pjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8cD48
-L3A+DQo8YnI+DQo8YnI+DQo8ZGl2IHN0eWxlPSJmb250LXNpemU6MTBwdDsgbGluZS1oZWlnaHQ6
-MTBwdDsgZm9udC1mYW1pbHk6ICflrovkvZMnO2NvbG9yOiM1OTU5NTk7Ij7kv53lr4blo7DmmI7v
-vJo8L2Rpdj4NCjxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxMHB0OyBsaW5lLWhlaWdodDoxMHB0OyBm
-b250LWZhbWlseTogJ+Wui+S9kyc7Y29sb3I6IzU5NTk1OTsiPuacrOmCruS7tuWQq+acieS/neWv
-huaIluS4k+acieS/oeaBr++8jOS7heS+m+aMh+WumuaUtuS7tuS6uuS9v+eUqOOAguS4peemgeWv
-ueacrOmCruS7tuaIluWFtuWGheWuueWBmuS7u+S9leacque7j+aOiOadg+eahOafpemYheOAgeS9
-v+eUqOOAgeWkjeWItuaIlui9rOWPkeOAgjwvZGl2Pg0KPGRpdiBzdHlsZT0iZm9udC1zaXplOjEw
-cHQ7IGxpbmUtaGVpZ2h0OjEwcHQ7IGZvbnQtZmFtaWx5OiAnVGltZXMgTmV3IFJvbWFuJztjb2xv
-cjojNTk1OTU5OyI+DQo8aT5DT05GSURFTlRJQUwgTk9URTogPC9pPjwvZGl2Pg0KPGRpdiBzdHls
-ZT0iZm9udC1zaXplOjEwcHQ7IGxpbmUtaGVpZ2h0OjEwcHQ7IGZvbnQtZmFtaWx5OiAnVGltZXMg
-TmV3IFJvbWFuJztjb2xvcjojNTk1OTU5OyI+DQo8aT5UaGlzIGVtYWlsIGNvbnRhaW5zIGNvbmZp
-ZGVudGlhbCBvciBsZWdhbGx5IHByaXZpbGVnZWQgaW5mb3JtYXRpb24gYW5kIGlzIGZvciB0aGUg
-c29sZSB1c2Ugb2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4gQW55IHVuYXV0aG9yaXplZCByZXZp
-ZXcsIHVzZSwgY29weWluZyBvciBmb3J3YXJkaW5nIG9mIHRoaXMgZW1haWwgb3IgdGhlIGNvbnRl
-bnQgb2YgdGhpcyBlbWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLjwvaT48L2Rpdj4NCjwvYm9k
-eT4NCjwvaHRtbD4NCg==
+                AST2500 Chip, could not implement KVM/Media redirection
+                capability?<o:p></o:p></span></p>
+            <p class=3D"MsoListParagraph"
+              style=3D"margin-left:18.0pt;text-indent:-18.0pt"><span
+                style=3D"color:black" lang=3D"EN-US">2.</span><span
+                style=3D"font-size:7.0pt;font-family:&quot;Times New
+                Roman&quot;,serif;color:black" lang=3D"EN-US">=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0
+              </span><span style=3D"color:black" lang=3D"EN-US">If wantin=
+g
+                to use KVM/Media redirection ,must buy a RMM component?<o=
+:p></o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US"><o:p>=C2=A0</o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US">I
+                found OpenBMC had implemented KVM over IP capability.<o:p=
+></o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US"><o:p>=C2=A0</o:p></span></p>
+            <p class=3D"MsoNormal"><span style=3D"color:black" lang=3D"EN=
+-US">Thanks<o:p></o:p></span></p>
+            <p class=3D"MsoNormal"
+              style=3D"margin-bottom:12.0pt;text-align:left" align=3D"lef=
+t"><span
+style=3D"font-size:10.0pt;font-family:&quot;Verdana&quot;,sans-serif;colo=
+r:black"
+                lang=3D"EN-US"><o:p>=C2=A0</o:p></span></p>
+            <div>
+              <p class=3D"MsoNormal"
+                style=3D"text-align:left;line-height:10.0pt" align=3D"lef=
+t"><span
+                  style=3D"font-size:10.0pt;font-family:=E5=AE=8B=E4=BD=93=
+;color:#595959">=E4=BF=9D=E5=AF=86=E5=A3=B0=E6=98=8E=EF=BC=9A<span
+                    lang=3D"EN-US"><o:p></o:p></span></span></p>
+            </div>
+            <div>
+              <p class=3D"MsoNormal"
+                style=3D"text-align:left;line-height:10.0pt" align=3D"lef=
+t"><span
+                  style=3D"font-size:10.0pt;font-family:=E5=AE=8B=E4=BD=93=
+;color:#595959">=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=90=AB=E6=9C=89=E4=BF=9D=E5=
+=AF=86=E6=88=96=E4=B8=93=E6=9C=89=E4=BF=A1=E6=81=AF=EF=BC=8C=E4=BB=85=E4=BE=
+=9B=E6=8C=87=E5=AE=9A=E6=94=B6=E4=BB=B6=E4=BA=BA=E4=BD=BF=E7=94=A8=E3=80=82=
+=E4=B8=A5=E7=A6=81=E5=AF=B9=E6=9C=AC=E9=82=AE=E4=BB=B6=E6=88=96=E5=85=B6=E5=
+=86=85=E5=AE=B9=E5=81=9A=E4=BB=BB=E4=BD=95=E6=9C=AA=E7=BB=8F=E6=8E=88=E6=9D=
+=83=E7=9A=84=E6=9F=A5=E9=98=85=E3=80=81=E4=BD=BF=E7=94=A8=E3=80=81=E5=A4=8D=
+=E5=88=B6=E6=88=96=E8=BD=AC=E5=8F=91=E3=80=82<span
+                    lang=3D"EN-US"><o:p></o:p></span></span></p>
+            </div>
+            <div>
+              <p class=3D"MsoNormal"
+                style=3D"text-align:left;line-height:10.0pt" align=3D"lef=
+t"><i><span
+                    style=3D"font-size:10.0pt;font-family:&quot;Times New=
 
---_000_e03bdf55444c437ca6133440aa85a3ffzhaoxincom_--
+                    Roman&quot;,serif;color:#595959" lang=3D"EN-US">CONFI=
+DENTIAL
+                    NOTE:
+                  </span></i><span
+                  style=3D"font-size:10.0pt;font-family:&quot;Times New
+                  Roman&quot;,serif;color:#595959" lang=3D"EN-US"><o:p></=
+o:p></span></p>
+            </div>
+            <div>
+              <p class=3D"MsoNormal"
+                style=3D"text-align:left;line-height:10.0pt" align=3D"lef=
+t"><i><span
+                    style=3D"font-size:10.0pt;font-family:&quot;Times New=
+
+                    Roman&quot;,serif;color:#595959" lang=3D"EN-US">This
+                    email contains confidential or legally privileged
+                    information and is for the sole use of its intended
+                    recipient. Any unauthorized review, use, copying or
+                    forwarding of this email or the content of this
+                    email is strictly prohibited.</span></i><span
+                  style=3D"font-size:10.0pt;font-family:&quot;Times New
+                  Roman&quot;,serif;color:#595959" lang=3D"EN-US"><o:p></=
+o:p></span></p>
+            </div>
+          </div>
+        </blockquote>
+      </div>
+      <br>
+      <br>
+      <div style=3D"font-size:10pt; line-height:10pt; font-family:
+        '=E5=AE=8B=E4=BD=93';color:#595959;">=E4=BF=9D=E5=AF=86=E5=A3=B0=E6=
+=98=8E=EF=BC=9A</div>
+      <div style=3D"font-size:10pt; line-height:10pt; font-family:
+        '=E5=AE=8B=E4=BD=93';color:#595959;">=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=
+=90=AB=E6=9C=89=E4=BF=9D=E5=AF=86=E6=88=96=E4=B8=93=E6=9C=89=E4=BF=A1=E6=81=
+=AF=EF=BC=8C=E4=BB=85=E4=BE=9B=E6=8C=87=E5=AE=9A=E6=94=B6=E4=BB=B6=E4=BA=BA=
+=E4=BD=BF=E7=94=A8=E3=80=82=E4=B8=A5=E7=A6=81=E5=AF=B9=E6=9C=AC=E9=82=AE=E4=
+=BB=B6=E6=88=96=E5=85=B6=E5=86=85=E5=AE=B9=E5=81=9A=E4=BB=BB=E4=BD=95=E6=9C=
+=AA=E7=BB=8F=E6=8E=88=E6=9D=83=E7=9A=84=E6=9F=A5=E9=98=85=E3=80=81=E4=BD=BF=
+=E7=94=A8=E3=80=81=E5=A4=8D=E5=88=B6=E6=88=96=E8=BD=AC=E5=8F=91=E3=80=82<=
+/div>
+      <div style=3D"font-size:10pt; line-height:10pt; font-family: 'Times=
+
+        New Roman';color:#595959;">
+        <i>CONFIDENTIAL NOTE: </i></div>
+      <div style=3D"font-size:10pt; line-height:10pt; font-family: 'Times=
+
+        New Roman';color:#595959;">
+        <i>This email contains confidential or legally privileged
+          information and is for the sole use of its intended recipient.
+          Any unauthorized review, use, copying or forwarding of this
+          email or the content of this email is strictly prohibited.</i><=
+/div>
+    </blockquote>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------5059704AFDD4777C65630ED5--
+
+--956xsmcQy1tBdP3SRUMCgvAV05t1IKd4Z--
+
+--o7RlyxGygYUafcG9SuJthZum5mjkTTSMD
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl6POeYACgkQ0EfviT3f
+HwngIgf+MbrztVdNTUtn45Ljkt0q56lLCAuJUI/1lpikYdhnw68MeUSt1h6vGFVa
+XOA49D5+l922t9QRyHEHTi2vhoRlgufDMvr65IXzMDsXFdcRvCLpatA1Ntt0MF7d
+jkNm7/bxSu6fvgatjwiDyKcf/KnIFFQCzJNU+1VBY9lmb/93L1UEGWQ5mlqvhJ6P
+XrvT2zoyE3PJf7SHdauUNsJm6t0+CowjhxnPtWf6jcnGoyy1iSOJdDMNqNxZzbcq
+kPRmKnThpniL+65NbyetAHwv6CfzTaatTH2Oi+H8Auk5c3cBr/Ec/fkXzGa8quYZ
+6sdV9wIDIYHY1Z98x9vBBt7Eli6E+g==
+=b4Cg
+-----END PGP SIGNATURE-----
+
+--o7RlyxGygYUafcG9SuJthZum5mjkTTSMD--
