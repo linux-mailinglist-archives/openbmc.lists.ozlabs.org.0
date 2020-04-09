@@ -1,67 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3ADB1A9399
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 08:48:10 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 492Cbq4XTkzDr3p
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 16:48:07 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D6C31A3142
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 10:52:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48yZf04Rx8zDrG3
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 18:52:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yahoo.co.in (client-ip=106.10.244.139;
- helo=sonic310-19.consmr.mail.sg3.yahoo.com;
- envelope-from=muniswamy_setty@yahoo.co.in; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=yahoo.co.in
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=yahoo.co.in header.i=@yahoo.co.in header.a=rsa-sha256
- header.s=s2048 header.b=QMn5JmD+; dkim-atps=neutral
-Received: from sonic310-19.consmr.mail.sg3.yahoo.com
- (sonic310-19.consmr.mail.sg3.yahoo.com [106.10.244.139])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48yYXY6xd8zDr9W
- for <openbmc@lists.ozlabs.org>; Thu,  9 Apr 2020 18:02:33 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.co.in; s=s2048;
- t=1586419349; bh=N8ZztguiZ6ViatoDA241KbkjaWQ8bnaEYux6SoljSqY=;
- h=Date:From:To:Subject:References:From:Subject;
- b=QMn5JmD+s+MIdB4xNmnNLnG7oZSelOXED/LJ/mDoxpLTQp6G7hnvD+ztSl+zhqAVvNxttn3tM3f8gtvrD6hJAK6/r2Lxt0N+z+xQhS9S0stY5WyZr7RKWBPe/DqVrnucJDWpDxvh5Zn8yAj4VoO/Y4uAvC5IAdWWCm7CP67TuxIS4Fyh9oM9YUI4eLDwvYx5/XKc82efwm1DouuofJjw7beP6PQ+cW7U0+GiRWIwq1RjdpAJ3UptnNcEklT+k4rZ3jxLYJVx06j0vyP5J66jYVf2vwivKXwK6QFW8PxR4/56Rp+qFVtZuhNm6iB2YlCMvhOzFlh1jL3fznywhwD4kA==
-X-YMail-OSG: mev7s3kVM1ldVCHg5s_YsueK4.20D.tYbEsqOlc8I2O9I6rG48zaBexZNqy1N5z
- ds2xJ2McfjlJ1JCkkCI7CMeElfEORNdtbrXa_JrnIrQsNWP7885.rvEV4NQlX.iHLMGSdBqikjcE
- ZILLkr.EPVheG3_977q1UaekSKwmOVTCO3gPjJRRLcubhBodhhqY25Mo79c1JkIuAoWVOPtMVD_W
- nnCs61qT5TLKe5NwXFf0giasnmdDL4F4Mu9w60b7te40LK0txATNJESZ3wazODv1xPX6.9fBqBxZ
- I62N_ZaAyhUznazVyOflrNg7lST9l.RRM.LtZFNvbaqsggDABBTSuXQtipP0mjvHKb2P7qCRiWar
- PyhTsNUDgw2Epac0rALm.ARZQ9fXbSbD9_9DTIBj6xWmLMq0rNtRdLDC4IMK8Y9vJ1PShfBKmqbg
- jhFI8xLDoW9L1R3fGLsGAWILd73Sr4bHgnfMzEjVNTdmWqhRiSdmVmVpDOHTVWjvosw6j6rLEXIZ
- LvNIlt.p2mHtxyqIFjjLFVZ6RhDragzx2v57g.gUCUK4LAY14VsNEnyHXGQ21BJF.oRogteOtqMB
- ebU66_X6U9Hl4faTc01.HLlMVcdXZ4e9A93uz5frMTGFrWySLSx0LQAQYkp6vcLdVfcPKQfL6B8H
- ReHw56h.TAK2WLd1.a0n9jFfvDrXP8UqVH0gX0ih711w46S0b.1fgJBJ6TR8plWF7pY7YDzzDi61
- p.ST0XDRiXhE_Iv4hlcUROso32mbLGIWLKzOyXIx9B.jAkdATgKY9A76TAAZszkBcqO3rWmsq1ri
- vc15IzLRAFQYjOHGBdOO5RDETH6haiLmi3GafRt2hUw5bYy6xwabSfCZWDNW1ZHd7dRRyyKDjDqg
- 7RJuIDzhfbaNDV7Ljo16hjECc_PTR12uKhYYQbeUMoGd5OH01f04rp1ISRpj3g7o5dpWHmm6Nz9R
- DLSb5YzR7OrWrrHh0P8TREZnzsrFagq1svnX8druvCRIKXto1Zygd4hxaHglBRJpjEuk5IjS6gNE
- _HRG00S0i9Q9QaVYvVas4J6cnKdWvo240YvNNFEEbdddzZK8tesYf9v5.bZtvRWp1OvmJXG4dF9K
- x9YzZPx2deAH9Szf4q79JROoD7ZuVTYW46v.qywdqRgrFeWo5pwGHdn4biwIGizZ.vySmnjQnIPT
- KBHfhdTm38uXeyBGPcnDVpJzQz.cMxqOpLUkQ9O7vNtdoftc67D20NbvbyIXOlLUs.MEsgMIP_Ui
- hQiUTanWISCtKr2qHg17jdLopaex8GE4ApI30oH.FD8vDGp6cUlZk7xgO2pkt
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic310.consmr.mail.sg3.yahoo.com with HTTP; Thu, 9 Apr 2020 08:02:29 +0000
-Date: Thu, 9 Apr 2020 08:02:23 +0000 (UTC)
-From: Muniswamy Setty <muniswamy_setty@yahoo.co.in>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Message-ID: <1489827237.1722456.1586419343847@mail.yahoo.com>
-Subject: Any tool to list the PLDM header structure of a PLDM based firmware
- file
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48yZcl1v4ZzDqVS
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Apr 2020 18:51:14 +1000 (AEST)
+IronPort-SDR: OioG+fg0QWchgIG48t5uBx7SkW06Ew51T/+8dVzQU2de4z6126DEtTo+5MCRYiQHOHMmq464Ej
+ +Oo/XIu56kFQ==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Apr 2020 01:51:10 -0700
+IronPort-SDR: sYTkd6lXEkUeqt8rJ2Gh01gYiVso3EAMGkU+KZ3GrKzXtHdY4QUg7RdGBGnuaxVjRyo5cJ61nq
+ RHNA5MD8Is7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.72,362,1580803200"; 
+ d="scan'208,217";a="240561559"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga007.jf.intel.com with ESMTP; 09 Apr 2020 01:51:09 -0700
+Received: from SHWDE9518 (shwde9518.ccr.corp.intel.com [10.239.164.117])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 18C22580678;
+ Thu,  9 Apr 2020 01:51:08 -0700 (PDT)
+Date: Thu, 09 Apr 2020 16:51:09 +0800
+From: "chunhui.jia" <chunhui.jia@linux.intel.com>
+To: "Tiger Liu(BJ-RD)" <TigerLiu@zhaoxin.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re:  OpenBMC : KVM over IP and media redirection function
+In-Reply-To: <b75bce785fbc4bad8c053ed2261102c2@zhaoxin.com>
+References: <b75bce785fbc4bad8c053ed2261102c2@zhaoxin.com>
+X-Mailer: NetEase FlashMail 2.4.1.32
+X-Priority: 3 (Normal)
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
- boundary="----=_Part_1722455_2048727526.1586419343846"
-References: <1489827237.1722456.1586419343847.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.15620 YMailNorrin Mozilla/5.0 (Windows NT 10.0;
- WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149
- Safari/537.36
-X-Mailman-Approved-At: Wed, 15 Apr 2020 16:46:15 +1000
+Message-ID: <5E8EE1F9.4050900@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="NetEase-FlashMail-003-76119913-b36e-4f0e-8f5d-d3029ea1cf41"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,16 +66,168 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_1722455_2048727526.1586419343846
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--NetEase-FlashMail-003-76119913-b36e-4f0e-8f5d-d3029ea1cf41
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Hi Team,=C2=A0 =C2=A0 Wanted to know are there any tools to view the PLDM h=
-eader information in a readable format from a PLDM firmware update file?
--Regards,Muni
-------=_Part_1722455_2048727526.1586419343846
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+MS4geWVzLCBpdCBjYW4gaW1wbGVtZW50IHRoZSBmdW5jdGlvbmFsaXR5IHdpdGggdGhpcyBjb21i
+aW5hdGlvbg0KMi4gV2hhdCBwbGF0Zm9ybSBhcmUgeW91IHVzaW5nPw0KDQoyMDIwLTA0LTA5IA0K
+DQpjaHVuaHVpLmppYSANCg0KDQoNCuWPkeS7tuS6uu+8miJUaWdlciBMaXUoQkotUkQpIiA8VGln
+ZXJMaXVAemhhb3hpbi5jb20+DQrlj5HpgIHml7bpl7TvvJoyMDIwLTA0LTA5IDE1OjU2DQrkuLvp
+opjvvJpPcGVuQk1DIDogS1ZNIG92ZXIgSVAgYW5kIG1lZGlhIHJlZGlyZWN0aW9uIGZ1bmN0aW9u
+DQrmlLbku7bkurrvvJoib3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIjxvcGVuYm1jQGxpc3RzLm96
+bGFicy5vcmc+DQrmioTpgIHvvJoNCg0KSGksIGV4cGVydHM6DQpJIGhhdmUgYSBxdWVzdGlvbiBh
+Ym91dCBLVk0gb3ZlciBJUCBhbmQgbWVkaWEgcmVkaXJlY3Rpb24gZnVuY3Rpb24uDQpJbnRlbCBw
+cm92aWRlZCBhIFJNTSBsaXRlIGNvbXBvbmVudCwgd2hpY2ggcHJvdmlkZWQgS1ZNL01lZGlhIHJl
+ZGlyZWN0aW9uIGNhcGFiaWxpdHkuDQogDQpTbyBteSBxdWVzdGlvbiBpczoNCjEuICAgICAgT3Bl
+bkJNQyArIEFTVDI1MDAgQ2hpcCwgY291bGQgbm90IGltcGxlbWVudCBLVk0vTWVkaWEgcmVkaXJl
+Y3Rpb24gY2FwYWJpbGl0eT8NCjIuICAgICAgSWYgd2FudGluZyB0byB1c2UgS1ZNL01lZGlhIHJl
+ZGlyZWN0aW9uICxtdXN0IGJ1eSBhIFJNTSBjb21wb25lbnQ/DQogDQpJIGZvdW5kIE9wZW5CTUMg
+aGFkIGltcGxlbWVudGVkIEtWTSBvdmVyIElQIGNhcGFiaWxpdHkuDQogDQpUaGFua3MNCg0KDQoN
+CuS/neWvhuWjsOaYju+8mg0K5pys6YKu5Lu25ZCr5pyJ5L+d5a+G5oiW5LiT5pyJ5L+h5oGv77yM
+5LuF5L6b5oyH5a6a5pS25Lu25Lq65L2/55So44CC5Lil56aB5a+55pys6YKu5Lu25oiW5YW25YaF
+5a655YGa5Lu75L2V5pyq57uP5o6I5p2D55qE5p+l6ZiF44CB5L2/55So44CB5aSN5Yi25oiW6L2s
+5Y+R44CCDQpDT05GSURFTlRJQUwgTk9URTogDQpUaGlzIGVtYWlsIGNvbnRhaW5zIGNvbmZpZGVu
+dGlhbCBvciBsZWdhbGx5IHByaXZpbGVnZWQgaW5mb3JtYXRpb24gYW5kIGlzIGZvciB0aGUgc29s
+ZSB1c2Ugb2YgaXRzIGludGVuZGVkIHJlY2lwaWVudC4gQW55IHVuYXV0aG9yaXplZCByZXZpZXcs
+IHVzZSwgY29weWluZyBvciBmb3J3YXJkaW5nIG9mIHRoaXMgZW1haWwgb3IgdGhlIGNvbnRlbnQg
+b2YgdGhpcyBlbWFpbCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLg==
 
-<html><head></head><body><div class="yahoo-style-wrap" style="font-family:courier new, courier, monaco, monospace, sans-serif;font-size:13px;"><div dir="ltr" data-setdir="false">Hi Team,</div><div dir="ltr" data-setdir="false">&nbsp; &nbsp; Wanted to know are there any tools to view the PLDM header information in a readable format from a PLDM firmware update file?<br></div><div dir="ltr" data-setdir="false">-Regards,</div><div dir="ltr" data-setdir="false">Muni</div></div></body></html>
-------=_Part_1722455_2048727526.1586419343846--
+--NetEase-FlashMail-003-76119913-b36e-4f0e-8f5d-d3029ea1cf41
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
+L0VOIj4NCjxIVE1MIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIiB4bWxu
+czp2ID0gDQoidXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm8gPSANCiJ1cm46
+c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTpvZmZpY2UiIHhtbG5zOncgPSANCiJ1cm46c2No
+ZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptID0gDQoiaHR0cDovL3NjaGVt
+YXMubWljcm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIj48SEVBRD4NCjxNRVRBIGNvbnRl
+bnQ9InRleHQvaHRtbDsgY2hhcnNldD11dGYtOCIgaHR0cC1lcXVpdj1Db250ZW50LVR5cGU+DQo8
+TUVUQSBuYW1lPUdFTkVSQVRPUiBjb250ZW50PSJNU0hUTUwgMTEuMDAuOTYwMC4xOTY1MCI+DQo8
+U1RZTEU+PCEtLQovKiBGb250IERlZmluaXRpb25zICovCkBmb250LWZhY2UKCXtmb250LWZhbWls
+eToiQ2FtYnJpYSBNYXRoIjsKCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQpAZm9udC1m
+YWNlCgl7Zm9udC1mYW1pbHk6XDdCNDlcN0VCRjsKCXBhbm9zZS0xOjIgMSA2IDAgMyAxIDEgMSAx
+IDE7fQpAZm9udC1mYWNlCgl7Zm9udC1mYW1pbHk6IlxAXDdCNDlcN0VCRiI7CglwYW5vc2UtMToy
+IDEgNiAwIDMgMSAxIDEgMSAxO30KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8KcC5Nc29Ob3JtYWws
+IGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbAoJe21hcmdpbjowY207CgltYXJnaW4tYm90dG9t
+Oi4wMDAxcHQ7Cgl0ZXh0LWFsaWduOmp1c3RpZnk7Cgl0ZXh0LWp1c3RpZnk6aW50ZXItaWRlb2dy
+YXBoOwoJZm9udC1zaXplOjEwLjVwdDsKCWZvbnQtZmFtaWx5Olw3QjQ5XDdFQkY7fQphOmxpbmss
+IHNwYW4uTXNvSHlwZXJsaW5rCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5OwoJY29sb3I6IzA1NjND
+MTsKCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlwZXJs
+aW5rRm9sbG93ZWQKCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7Cgljb2xvcjojOTU0RjcyOwoJdGV4
+dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9CnAuTXNvTGlzdFBhcmFncmFwaCwgbGkuTXNvTGlzdFBh
+cmFncmFwaCwgZGl2Lk1zb0xpc3RQYXJhZ3JhcGgKCXttc28tc3R5bGUtcHJpb3JpdHk6MzQ7Cglt
+YXJnaW46MGNtOwoJbWFyZ2luLWJvdHRvbTouMDAwMXB0OwoJdGV4dC1hbGlnbjpqdXN0aWZ5OwoJ
+dGV4dC1qdXN0aWZ5OmludGVyLWlkZW9ncmFwaDsKCXRleHQtaW5kZW50OjIxLjBwdDsKCWZvbnQt
+c2l6ZToxMC41cHQ7Cglmb250LWZhbWlseTpcN0I0OVw3RUJGO30Kc3Bhbi5FbWFpbFN0eWxlMTcK
+CXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1jb21wb3NlOwoJZm9udC1mYW1pbHk6XDdCNDlcN0VC
+RjsKCWNvbG9yOndpbmRvd3RleHQ7fQouTXNvQ2hwRGVmYXVsdAoJe21zby1zdHlsZS10eXBlOmV4
+cG9ydC1vbmx5OwoJZm9udC1mYW1pbHk6XDdCNDlcN0VCRjt9Ci8qIFBhZ2UgRGVmaW5pdGlvbnMg
+Ki8KQHBhZ2UgV29yZFNlY3Rpb24xCgl7c2l6ZTo2MTIuMHB0IDc5Mi4wcHQ7CgltYXJnaW46NzIu
+MHB0IDkwLjBwdCA3Mi4wcHQgOTAuMHB0O30KZGl2LldvcmRTZWN0aW9uMQoJe3BhZ2U6V29yZFNl
+Y3Rpb24xO30KLyogTGlzdCBEZWZpbml0aW9ucyAqLwpAbGlzdCBsMAoJe21zby1saXN0LWlkOjg0
+MjQ3NjI3MzsKCW1zby1saXN0LXR5cGU6aHlicmlkOwoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOi03
+NzY5OTM0NjYgLTU3NTc5NzI4NCA2NzY5ODcxMyA2NzY5ODcxNSA2NzY5ODcwMyA2NzY5ODcxMyA2
+NzY5ODcxNSA2NzY5ODcwMyA2NzY5ODcxMyA2NzY5ODcxNTt9CkBsaXN0IGwwOmxldmVsMQoJe21z
+by1sZXZlbC10YWItc3RvcDpub25lOwoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0OwoJ
+bWFyZ2luLWxlZnQ6MTguMHB0OwoJdGV4dC1pbmRlbnQ6LTE4LjBwdDt9CkBsaXN0IGwwOmxldmVs
+MgoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmFscGhhLWxvd2VyOwoJbXNvLWxldmVsLXRleHQ6
+IiUyXCkiOwoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0
+aW9uOmxlZnQ7CgltYXJnaW4tbGVmdDo0Mi4wcHQ7Cgl0ZXh0LWluZGVudDotMjEuMHB0O30KQGxp
+c3QgbDA6bGV2ZWwzCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6cm9tYW4tbG93ZXI7Cgltc28t
+bGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmlnaHQ7Cglt
+YXJnaW4tbGVmdDo2My4wcHQ7Cgl0ZXh0LWluZGVudDotMjEuMHB0O30KQGxpc3QgbDA6bGV2ZWw0
+Cgl7bXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxl
+ZnQ7CgltYXJnaW4tbGVmdDo4NC4wcHQ7Cgl0ZXh0LWluZGVudDotMjEuMHB0O30KQGxpc3QgbDA6
+bGV2ZWw1Cgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxwaGEtbG93ZXI7Cgltc28tbGV2ZWwt
+dGV4dDoiJTVcKSI7Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXIt
+cG9zaXRpb246bGVmdDsKCW1hcmdpbi1sZWZ0OjEwNS4wcHQ7Cgl0ZXh0LWluZGVudDotMjEuMHB0
+O30KQGxpc3QgbDA6bGV2ZWw2Cgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6cm9tYW4tbG93ZXI7
+Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsKCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmln
+aHQ7CgltYXJnaW4tbGVmdDoxMjYuMHB0OwoJdGV4dC1pbmRlbnQ6LTIxLjBwdDt9CkBsaXN0IGww
+OmxldmVsNwoJe21zby1sZXZlbC10YWItc3RvcDpub25lOwoJbXNvLWxldmVsLW51bWJlci1wb3Np
+dGlvbjpsZWZ0OwoJbWFyZ2luLWxlZnQ6MTQ3LjBwdDsKCXRleHQtaW5kZW50Oi0yMS4wcHQ7fQpA
+bGlzdCBsMDpsZXZlbDgKCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDphbHBoYS1sb3dlcjsKCW1z
+by1sZXZlbC10ZXh0OiIlOFwpIjsKCW1zby1sZXZlbC10YWItc3RvcDpub25lOwoJbXNvLWxldmVs
+LW51bWJlci1wb3NpdGlvbjpsZWZ0OwoJbWFyZ2luLWxlZnQ6MTY4LjBwdDsKCXRleHQtaW5kZW50
+Oi0yMS4wcHQ7fQpAbGlzdCBsMDpsZXZlbDkKCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpyb21h
+bi1sb3dlcjsKCW1zby1sZXZlbC10YWItc3RvcDpub25lOwoJbXNvLWxldmVsLW51bWJlci1wb3Np
+dGlvbjpyaWdodDsKCW1hcmdpbi1sZWZ0OjE4OS4wcHQ7Cgl0ZXh0LWluZGVudDotMjEuMHB0O30K
+b2wKCXttYXJnaW4tYm90dG9tOjBjbTt9CnVsCgl7bWFyZ2luLWJvdHRvbTowY207fQotLT48L1NU
+WUxFPg0KPCEtLSBmbGFzaG1haWwgc3R5bGUgYmVnaW4gLS0+DQo8U1RZTEUgdHlwZT10ZXh0L2Nz
+cz4KYm9keSB7Ym9yZGVyLXdpZHRoOjA7bWFyZ2luOjB9CmltZyB7Ym9yZGVyOjA7bWFyZ2luOjA7
+cGFkZGluZzowfQo8L1NUWUxFPg0KPEJBU0UgdGFyZ2V0PV9ibGFuaz48IS0tIGZsYXNobWFpbCBz
+dHlsZSBlbmQgLS0+PC9IRUFEPg0KPEJPRFkgDQpzdHlsZT0iQk9SREVSLUxFRlQtV0lEVEg6IDBw
+eDsgRk9OVC1TSVpFOiAxMC41cHQ7IEZPTlQtRkFNSUxZOiDDjsKiw4jDrcORw4XCusOaOyBCT1JE
+RVItUklHSFQtV0lEVEg6IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4OyBDT0xPUjogIzAw
+MDAwMDsgTUFSR0lOOiAxMnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVItVE9QLVdJRFRIOiAw
+cHgiIA0KbWFyZ2luaGVpZ2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+DQo8RElWPjEuIHllcywgaXQg
+Y2FuIGltcGxlbWVudCB0aGUgZnVuY3Rpb25hbGl0eSB3aXRoIHRoaXMgY29tYmluYXRpb248L0RJ
+Vj4NCjxESVY+Mi4gV2hhdCBwbGF0Zm9ybSBhcmUgeW91IHVzaW5nPzwvRElWPg0KPERJVj4mbmJz
+cDs8L0RJVj4NCjxESVYgc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRh
+bmE7IENPTE9SOiAjYzBjMGMwIiANCmFsaWduPWxlZnQ+MjAyMC0wNC0wOSANCjxIUiBpZD1TaWdu
+TmFtZUhSIA0Kc3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMwYzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFw
+eDsgQk9SREVSLVJJR0hUOiAwcHg7IFdJRFRIOiAxMjJweDsgQk9SREVSLUJPVFRPTTogMHB4OyBC
+T1JERVItTEVGVDogMHB4IiANCmFsaWduPWxlZnQ+DQo8U1BBTiBpZD1fRmxhc2hTaWduTmFtZT5j
+aHVuaHVpLmppYTwvU1BBTj4gPC9ESVY+DQo8SFIgDQpzdHlsZT0iQk9SREVSLVRPUDogI2MwYzBj
+MCAxcHggc29saWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsgQk9SREVSLUJPVFRP
+TTogMHB4OyBCT1JERVItTEVGVDogMHB4Ij4NCg0KPEJMT0NLUVVPVEUgaWQ9bnRlcy1mbGFzaG1h
+aWwtcXVvdGUgDQpzdHlsZT0iRk9OVC1TSVpFOiAxMHB0OyBGT05ULUZBTUlMWTogVmVyZGFuYTsg
+UEFERElORy1MRUZUOiAwcHg7IE1BUkdJTi1MRUZUOiAwcHgiPg0KICA8RElWPjxTVFJPTkc+5Y+R
+5Lu25Lq677yaPC9TVFJPTkc+IlRpZ2VyIExpdShCSi1SRCkiIA0KJmx0O1RpZ2VyTGl1QHpoYW94
+aW4uY29tJmd0OzwvRElWPg0KICA8RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze077yaPC9TVFJPTkc+
+MjAyMC0wNC0wOSZuYnNwOzE1OjU2PC9ESVY+DQogIDxESVY+PFNUUk9ORz7kuLvpopjvvJo8L1NU
+Uk9ORz5PcGVuQk1DIDogS1ZNIG92ZXIgSVAgYW5kIG1lZGlhIHJlZGlyZWN0aW9uIA0KICBmdW5j
+dGlvbjwvRElWPg0KICA8RElWPjxTVFJPTkc+5pS25Lu25Lq677yaPC9TVFJPTkc+Im9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0OzwvRElWPg0K
+ICA8RElWPjxTVFJPTkc+5oqE6YCB77yaPC9TVFJPTkc+PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9E
+SVY+DQogIDxESVY+DQogIDxESVYgY2xhc3M9V29yZFNlY3Rpb24xPg0KICA8UCBjbGFzcz1Nc29O
+b3JtYWw+PFNQQU4gbGFuZz1FTi1VUz5IaSwgZXhwZXJ0czo8bzpwPjwvbzpwPjwvU1BBTj48L1A+
+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBsYW5nPUVOLVVTPkkgaGF2ZSBhIHF1ZXN0aW9u
+IGFib3V0IEtWTSBvdmVyIElQIGFuZCANCiAgbWVkaWEgcmVkaXJlY3Rpb24gZnVuY3Rpb24uPG86
+cD48L286cD48L1NQQU4+PC9QPg0KICA8UCBjbGFzcz1Nc29Ob3JtYWw+PFNQQU4gbGFuZz1FTi1V
+Uz5JbnRlbCBwcm92aWRlZCBhIFJNTSBsaXRlIGNvbXBvbmVudCwgd2hpY2ggDQogIHByb3ZpZGVk
+IEtWTS9NZWRpYSByZWRpcmVjdGlvbiBjYXBhYmlsaXR5LjxvOnA+PC9vOnA+PC9TUEFOPjwvUD4N
+CiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxTUEFOIGxhbmc9RU4tVVM+PG86cD4mbmJzcDs8L286cD48
+L1NQQU4+PC9QPg0KICA8UCBjbGFzcz1Nc29Ob3JtYWw+PFNQQU4gbGFuZz1FTi1VUz5TbyBteSBx
+dWVzdGlvbiBpczo8bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNzPU1zb0xpc3RQYXJh
+Z3JhcGggDQogIHN0eWxlPSJNQVJHSU4tTEVGVDogMThwdDsgVEVYVC1JTkRFTlQ6IC0xOHB0OyBt
+c28tbGlzdDogbDAgbGV2ZWwxIGxmbzEiPjxTUEFOIA0KICBsYW5nPUVOLVVTPjxTUEFOIHN0eWxl
+PSJtc28tbGlzdDogSWdub3JlIj4xLjxTUEFOIA0KICBzdHlsZT0nRk9OVDogN3B0ICJUaW1lcyBO
+ZXcgUm9tYW4iJz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgDQogIDwvU1BBTj48L1NQ
+QU4+PC9TUEFOPjxTUEFOIGxhbmc9RU4tVVM+T3BlbkJNQyArIEFTVDI1MDAgQ2hpcCwgY291bGQg
+bm90IA0KICBpbXBsZW1lbnQgS1ZNL01lZGlhIHJlZGlyZWN0aW9uIGNhcGFiaWxpdHk/PG86cD48
+L286cD48L1NQQU4+PC9QPg0KICA8UCBjbGFzcz1Nc29MaXN0UGFyYWdyYXBoIA0KICBzdHlsZT0i
+TUFSR0lOLUxFRlQ6IDE4cHQ7IFRFWFQtSU5ERU5UOiAtMThwdDsgbXNvLWxpc3Q6IGwwIGxldmVs
+MSBsZm8xIj48U1BBTiANCiAgbGFuZz1FTi1VUz48U1BBTiBzdHlsZT0ibXNvLWxpc3Q6IElnbm9y
+ZSI+Mi48U1BBTiANCiAgc3R5bGU9J0ZPTlQ6IDdwdCAiVGltZXMgTmV3IFJvbWFuIic+Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KICA8L1NQQU4+PC9TUEFOPjwvU1BBTj48U1BBTiBs
+YW5nPUVOLVVTPklmIHdhbnRpbmcgdG8gdXNlIEtWTS9NZWRpYSByZWRpcmVjdGlvbiANCiAgLG11
+c3QgYnV5IGEgUk1NIGNvbXBvbmVudD88bzpwPjwvbzpwPjwvU1BBTj48L1A+DQogIDxQIGNsYXNz
+PU1zb05vcm1hbD48U1BBTiBsYW5nPUVOLVVTPjxvOnA+Jm5ic3A7PC9vOnA+PC9TUEFOPjwvUD4N
+CiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxTUEFOIGxhbmc9RU4tVVM+SSBmb3VuZCBPcGVuQk1DIGhh
+ZCBpbXBsZW1lbnRlZCBLVk0gb3ZlciANCiAgSVAgY2FwYWJpbGl0eS48bzpwPjwvbzpwPjwvU1BB
+Tj48L1A+DQogIDxQIGNsYXNzPU1zb05vcm1hbD48U1BBTiBsYW5nPUVOLVVTPjxvOnA+Jm5ic3A7
+PC9vOnA+PC9TUEFOPjwvUD4NCiAgPFAgY2xhc3M9TXNvTm9ybWFsPjxTUEFOIGxhbmc9RU4tVVM+
+VGhhbmtzPG86cD48L286cD48L1NQQU4+PC9QPjwvRElWPg0KICA8UD48L1A+PEJSPjxCUj4NCiAg
+PERJViANCiAgc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6ICflrovkvZMnOyBD
+T0xPUjogIzU5NTk1OTsgTElORS1IRUlHSFQ6IDEwcHQiPuS/neWvhuWjsOaYju+8mjwvRElWPg0K
+ICA8RElWIA0KICBzdHlsZT0iRk9OVC1TSVpFOiAxMHB0OyBGT05ULUZBTUlMWTogJ+Wui+S9kyc7
+IENPTE9SOiAjNTk1OTU5OyBMSU5FLUhFSUdIVDogMTBwdCI+5pys6YKu5Lu25ZCr5pyJ5L+d5a+G
+5oiW5LiT5pyJ5L+h5oGv77yM5LuF5L6b5oyH5a6a5pS25Lu25Lq65L2/55So44CC5Lil56aB5a+5
+5pys6YKu5Lu25oiW5YW25YaF5a655YGa5Lu75L2V5pyq57uP5o6I5p2D55qE5p+l6ZiF44CB5L2/
+55So44CB5aSN5Yi25oiW6L2s5Y+R44CCPC9ESVY+DQogIDxESVYgDQogIHN0eWxlPSJGT05ULVNJ
+WkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiAnVGltZXMgTmV3IFJvbWFuJzsgQ09MT1I6ICM1OTU5NTk7
+IExJTkUtSEVJR0hUOiAxMHB0Ij48ST5DT05GSURFTlRJQUwgDQogIE5PVEU6IDwvST48L0RJVj4N
+CiAgPERJViANCiAgc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6ICdUaW1lcyBO
+ZXcgUm9tYW4nOyBDT0xPUjogIzU5NTk1OTsgTElORS1IRUlHSFQ6IDEwcHQiPjxJPlRoaXMgDQog
+IGVtYWlsIGNvbnRhaW5zIGNvbmZpZGVudGlhbCBvciBsZWdhbGx5IHByaXZpbGVnZWQgaW5mb3Jt
+YXRpb24gYW5kIGlzIGZvciB0aGUgDQogIHNvbGUgdXNlIG9mIGl0cyBpbnRlbmRlZCByZWNpcGll
+bnQuIEFueSB1bmF1dGhvcml6ZWQgcmV2aWV3LCB1c2UsIGNvcHlpbmcgb3IgDQogIGZvcndhcmRp
+bmcgb2YgdGhpcyBlbWFpbCBvciB0aGUgY29udGVudCBvZiB0aGlzIGVtYWlsIGlzIHN0cmljdGx5
+IA0KICBwcm9oaWJpdGVkLjwvST48L0RJVj48L0RJVj48L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRN
+TD4=
+
+--NetEase-FlashMail-003-76119913-b36e-4f0e-8f5d-d3029ea1cf41--
+
