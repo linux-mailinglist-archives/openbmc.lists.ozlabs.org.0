@@ -2,80 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCDDB1A3BF3
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 23:30:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BBF131A3C25
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 23:55:35 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48yvSx6G35zDrKq
-	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 07:30:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48yw1c3C5JzDqbv
+	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 07:55:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::229;
+ helo=mail-lj1-x229.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=ZFCTInuZ; dkim-atps=neutral
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
+ [IPv6:2a00:1450:4864:20::229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48yvS91JhmzDrK2
- for <openbmc@lists.ozlabs.org>; Fri, 10 Apr 2020 07:30:00 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 039L41bE036168; Thu, 9 Apr 2020 17:29:53 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3091yn4mnt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Apr 2020 17:29:53 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 039LT28q032705;
- Thu, 9 Apr 2020 21:29:52 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma03dal.us.ibm.com with ESMTP id 3091mec20n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Apr 2020 21:29:52 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 039LTp6b49807798
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Apr 2020 21:29:51 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 715EB6A057;
- Thu,  9 Apr 2020 21:29:51 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 465786A04D;
- Thu,  9 Apr 2020 21:29:51 +0000 (GMT)
-Received: from [9.163.95.55] (unknown [9.163.95.55])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu,  9 Apr 2020 21:29:51 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.4] clk: ast2600: Fix AHB clock divider for A1
-To: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
-References: <20200408202711.3509-1-eajames@linux.ibm.com>
- <71cfd9fd-a70f-47ad-8c54-b950e32c0fef@www.fastmail.com>
-From: Eddie James <eajames@linux.ibm.com>
-Message-ID: <afc1c465-3bfc-1f8a-7f61-96329643b02c@linux.ibm.com>
-Date: Thu, 9 Apr 2020 16:29:50 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48yw0l3M4ZzDqPQ
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Apr 2020 07:54:46 +1000 (AEST)
+Received: by mail-lj1-x229.google.com with SMTP id h25so129460lja.10
+ for <openbmc@lists.ozlabs.org>; Thu, 09 Apr 2020 14:54:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=eCmJ3eTAdkFRY6e4oBRuavZI8HkgPpVJKCnngEaQMrM=;
+ b=ZFCTInuZkEXDUIG8J2Prk96heTkqv5y88KmR9o/u8Hhe7ILdIaM/iMUSm31Mk1Rxak
+ ZglHujwlhhFu9S0nXDXML7G5GgJPiUahIHPRm16dvgl1wEEx3EvfpMOiO4OYGyg5cULt
+ 4sPXSqCnlIASINStMPo1aewt0O6qpfI/VY26Cg4YsG9YkTKEkR2LTJAe0wdpKUPOy6uu
+ 7D0ZbKv926gQUNx4qaLcpxvUcwZgJV+6A1uAScuE+vtKjbmofPHsusP+2m0Wv+qJ/brf
+ 852m4dsvabGqyduaPlvlLVCDM1t+iQZZdcHtyJEfuZFIdPkpMtxl2MltJAdw6h7EImgS
+ a0xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=eCmJ3eTAdkFRY6e4oBRuavZI8HkgPpVJKCnngEaQMrM=;
+ b=FUFVUFIRriMHSWeuvEPkgOC44hKNupI1fNvTPGs6D2DHQyBc6xhCCQukRBOi7rZLtE
+ Z/RT/qEhGdH6NNhzkmk5URF8bcgaQ8nPDOvE1grjBjiEpz0lBfMYrRftSFT9DvzTSh1R
+ TILPAeavcZMrHXoYzim1kCCefFD8Fd8F4OWpZfOqMqMfQro8ZG6+uvDDj5l8LlORYMbc
+ x98Js100ZxHPYKXRbo3OkIPLM/G7MF3Ypsx+7TM9LiLnDKfKYklQZG/UX3Zh9ZVwbCR4
+ ae4xB3oXNRnNOqkxOnuM4bZt6tM2m2Zf34gH36h3+1sSoIems9A6eOwBSLNqQk6JC3rb
+ +TIA==
+X-Gm-Message-State: AGi0PuYBjhnxBHtlXn/UWoRrpTHeaxUlV4RIw5w3wACxNuj7+nzJezBX
+ u0u7P3aDKEYbXQ7eny08GrD4LQTYOpPUi7QA47/OXhi1
+X-Google-Smtp-Source: APiQypJ6wDwj+CWrbVOFRUZINmlyIZ2XzcF7txJLgq0ORQNIg3v3E0h40Bda5l4VljIMjewuXa2h3JwLmGrWqK+Sdlc=
+X-Received: by 2002:a2e:9798:: with SMTP id y24mr1126530lji.267.1586469277547; 
+ Thu, 09 Apr 2020 14:54:37 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <71cfd9fd-a70f-47ad-8c54-b950e32c0fef@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-09_08:2020-04-07,
- 2020-04-09 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0
- clxscore=1015 mlxscore=0 suspectscore=0 bulkscore=0 adultscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004090149
+From: Richard Hanley <rhanley@google.com>
+Date: Thu, 9 Apr 2020 14:54:26 -0700
+Message-ID: <CAH1kD+bqZfeO8ezvwbmjx_PZ4vaKyhxGgvirVz13P3FK9UDBWQ@mail.gmail.com>
+Subject: Call for Gardening Tasks
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="000000000000bc98b905a2e2a9dd"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,83 +72,63 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000bc98b905a2e2a9dd
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/8/20 11:53 PM, Andrew Jeffery wrote:
->
-> On Thu, 9 Apr 2020, at 05:57, Eddie James wrote:
->> The latest specs for the AST2600 A1 chip include some different bit
->> definitions for calculating the AHB clock divider. Implement these in
->> order to get the correct AHB clock value in Linux.
->>
->> Signed-off-by: Eddie James <eajames@linux.ibm.com>
->> ---
->>   drivers/clk/clk-ast2600.c | 31 +++++++++++++++++++++++++------
->>   1 file changed, 25 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
->> index 42bfdc16bf7a..35f53956c762 100644
->> --- a/drivers/clk/clk-ast2600.c
->> +++ b/drivers/clk/clk-ast2600.c
->> @@ -642,14 +642,22 @@ static const u32 ast2600_a0_axi_ahb_div_table[] = {
->>   	2, 2, 3, 5,
->>   };
->>   
->> -static const u32 ast2600_a1_axi_ahb_div_table[] = {
->> -	4, 6, 2, 4,
->> +static const u32 ast2600_a1_axi_ahb_div0_tbl[] = {
->> +	3, 2, 3, 4,
->> +};
->> +
->> +static const u32 ast2600_a1_axi_ahb_div1_tbl[] = {
->> +	3, 4, 6, 8,
->> +};
->> +
->> +static const u32 ast2600_a1_axi_ahb200_tbl[] = {
->> +	3, 4, 3, 4, 2, 2, 2, 2,
->>   };
->>   
->>   static void __init aspeed_g6_cc(struct regmap *map)
->>   {
->>   	struct clk_hw *hw;
->> -	u32 val, div, chip_id, axi_div, ahb_div;
->> +	u32 val, div, divbits, chip_id, axi_div, ahb_div;
->>   
->>   	clk_hw_register_fixed_rate(NULL, "clkin", NULL, 0, 25000000);
->>   
->> @@ -679,11 +687,22 @@ static void __init aspeed_g6_cc(struct regmap *map)
->>   	else
->>   		axi_div = 2;
->>   
->> +	divbits = (val >> 11) & 0x3;
->>   	regmap_read(map, ASPEED_G6_SILICON_REV, &chip_id);
->> -	if (chip_id & BIT(16))
->> -		ahb_div = ast2600_a1_axi_ahb_div_table[(val >> 11) & 0x3];
->> -	else
->> +	if (chip_id & BIT(16)) {
->> +		if (!divbits) {
->> +			ahb_div = ast2600_a1_axi_ahb200_tbl[(val >> 8) & 0x3];
->> +			if (val & BIT(16))
->> +				ahb_div *= 2;
->> +		} else {
->> +			if (val & BIT(16))
->> +				ahb_div = ast2600_a1_axi_ahb_div1_tbl[divbits];
->> +			else
->> +				ahb_div = ast2600_a1_axi_ahb_div0_tbl[divbits];
->> +		}
->> +	} else {
->>   		ahb_div = ast2600_a0_axi_ahb_div_table[(val >> 11) & 0x3];
->> +	}
-> This was hard for me to read. Have you considered giving the conditions
-> names?
+Hi everyone,
 
+Last week I started a thread on Open BMC Gardening
+<https://lists.ozlabs.org/pipermail/openbmc/2020-April/021100.html>, and I
+wanted to kick off the process.
 
-Yea it's a bit complicated. Do you mean use some boolean variables or 
-add some comments?
+The basic idea here is to get a survey of various improvement tasks
+throughout OpenBMC.  Some things might be small refactoring or changes that
+can be done incrementally (i.e. weeding the garden). Other tasks might be
+more research or structural (i.e. excavating the garden).
 
-Thanks,
+Just getting these in writing can be helpful for others to gauge what they
+should focus on. It also helps leave breadcrumbs for any new developer
+interested in the subject.
 
-Eddie
+So here's how I see this working. Anyone who has some ideas can reply to
+this thread with a short to medium description.  Try to avoid new features,
+and instead look at ways we could improve the status quo. Think about
+changes and tools that would make your day to day life better.
 
+From there we can do a write up about what we know about the issue.  This
+can function as an early stage design doc that gives a broad overview on
+where the dev's head is at right now.
 
->
-> Andrew
+Finally, we can do a quarterly review to keep the garden refreshed.
+Obviously, things can change between that time, but having a semi-regular
+cadence will hopefully give us a better chance of keeping this up to date.
+
+- Richard
+
+--000000000000bc98b905a2e2a9dd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi everyone,<div><br></div><div>Last week I started a thre=
+ad on <a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2020-April/0211=
+00.html">Open BMC Gardening</a>, and I wanted to kick off the process.</div=
+><div><br></div><div>The basic idea here is to get a survey=C2=A0of various=
+ improvement=C2=A0tasks throughout OpenBMC.=C2=A0 Some things might be smal=
+l refactoring or changes that can be done incrementally (i.e. weeding the g=
+arden). Other tasks might be more research or structural (i.e. excavating t=
+he garden).</div><div><br></div><div>Just getting these in writing can be h=
+elpful for others to gauge what they should focus on. It also helps leave b=
+readcrumbs for any new developer interested in the subject.</div><div><br><=
+/div><div>So here&#39;s how I see this working. Anyone who has some ideas c=
+an reply to this thread with a short to medium description.=C2=A0 Try to av=
+oid new features, and instead look at ways we could improve the status quo.=
+ Think about changes and tools that would make your day to day life better.=
+</div><div><br></div><div>From there we can do a write up about what we kno=
+w about the issue.=C2=A0 This can function as an early stage design doc tha=
+t gives a broad overview on where the dev&#39;s head is at right now.</div>=
+<div><br></div><div>Finally, we can do a quarterly review to keep the garde=
+n refreshed. Obviously, things can change between that time, but having a s=
+emi-regular cadence will hopefully give us a better chance of keeping this =
+up to date.</div><div><br></div><div>- Richard</div></div>
+
+--000000000000bc98b905a2e2a9dd--
