@@ -2,74 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A97411A3B72
-	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 22:41:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BCDDB1A3BF3
+	for <lists+openbmc@lfdr.de>; Thu,  9 Apr 2020 23:30:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48ytNN6DXyzDrHy
-	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 06:41:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48yvSx6G35zDrKq
+	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 07:30:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1043;
- helo=mail-pj1-x1043.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=mqmSGUUO; dkim-atps=neutral
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com
- [IPv6:2607:f8b0:4864:20::1043])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48ytML5hDrzDrHb;
- Fri, 10 Apr 2020 06:40:44 +1000 (AEST)
-Received: by mail-pj1-x1043.google.com with SMTP id l36so1779843pjb.3;
- Thu, 09 Apr 2020 13:40:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=YFdk+s6DAN6aaYEhySzPfFS73mspXBy0eatt12t9vpE=;
- b=mqmSGUUOx2o/pdEGWUOtz0ExRCl94+NNqTsUbvbhkwTI350tV+G3oWT1Ml7Mcxxddd
- MfA75X9sWWTGWeNwddMUCFeNsUEh5NSx3hM8rFkLfkaYYlu68cjHbN3U98/k8vApdBm2
- 5K9O6yE3rklLInMQgvFdPbCDO2aJou4Xi1D5cgq0VJa3EKUeeQEtP7FbL/8JvxdZu1SB
- wOcbZDwEd4jLpC5Y5a0cmnEVk4Mn6iv4JJRWD0i0OpsxKqj7jountgI0kAJ05uPT7Uyh
- aahYTWFxCLJAKzN7gNJFlrCa4FxaZXwkhUAkZmeWTMDDg3OaFbKfHmtpbmM352Lt5pAY
- iojw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=YFdk+s6DAN6aaYEhySzPfFS73mspXBy0eatt12t9vpE=;
- b=RofOVcHS2j3VAzDREAz19FYaK6k2rVSpDFNUP2GpYIYEpPmvi8x0OSLaPycNtjDH7X
- fwRL84XgMY/LDHzu+R5MhZKRcLMK0RvfI41vFEoTeteWID+cnY4fkjQx9MMbAkLsJGvN
- YX0uGeKkSWoOQNuPcK5ppv+aZahCjG+lMqyGnvm2yVL6aZEEUD+wTyPBjWyJYghn6iig
- lTZaeskx2Oj/KmlAaz6e3tI9a9JRH0zOWi+E+O0DS6PkFPchMWrIQvYeI2SPBbmRPlHw
- SO71otRmSg9d7FZhqbG6eZV8DnLmVT8WiLDYATXlK66YGWN4RzCk3ESmm2uEWpRrSGVN
- 8acw==
-X-Gm-Message-State: AGi0PuZk287DqpaUf5BwFD7qSmrz+yQ+TcNOv1Ai3J2TAdqmAJpcPAWA
- JxM4HzCzPBtc/23BYJgxIh0=
-X-Google-Smtp-Source: APiQypJDY7fIgt5BH2dLASbxM7xt1HbxuX8tMAQnHRwL2JQKsbL/ySbmDvLuSgYsSMHwePJNtrvSbg==
-X-Received: by 2002:a17:902:a5cc:: with SMTP id
- t12mr1456010plq.322.1586464840437; 
- Thu, 09 Apr 2020 13:40:40 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91.thefacebook.com
- ([2620:10d:c090:400::5:b9ab])
- by smtp.gmail.com with ESMTPSA id t4sm20043960pfb.156.2020.04.09.13.40.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 09 Apr 2020 13:40:39 -0700 (PDT)
-From: rentao.bupt@gmail.com
-To: Felipe Balbi <balbi@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Chunfeng Yun <chunfeng.yun@mediatek.com>,
- Stephen Boyd <swboyd@chromium.org>, linux-usb@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH v4] usb: gadget: aspeed: improve vhub port irq handling
-Date: Thu,  9 Apr 2020 13:40:30 -0700
-Message-Id: <20200409204030.21330-1-rentao.bupt@gmail.com>
-X-Mailer: git-send-email 2.17.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48yvS91JhmzDrK2
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Apr 2020 07:30:00 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 039L41bE036168; Thu, 9 Apr 2020 17:29:53 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3091yn4mnt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2020 17:29:53 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 039LT28q032705;
+ Thu, 9 Apr 2020 21:29:52 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma03dal.us.ibm.com with ESMTP id 3091mec20n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 09 Apr 2020 21:29:52 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 039LTp6b49807798
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 9 Apr 2020 21:29:51 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 715EB6A057;
+ Thu,  9 Apr 2020 21:29:51 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 465786A04D;
+ Thu,  9 Apr 2020 21:29:51 +0000 (GMT)
+Received: from [9.163.95.55] (unknown [9.163.95.55])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu,  9 Apr 2020 21:29:51 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.4] clk: ast2600: Fix AHB clock divider for A1
+To: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
+References: <20200408202711.3509-1-eajames@linux.ibm.com>
+ <71cfd9fd-a70f-47ad-8c54-b950e32c0fef@www.fastmail.com>
+From: Eddie James <eajames@linux.ibm.com>
+Message-ID: <afc1c465-3bfc-1f8a-7f61-96329643b02c@linux.ibm.com>
+Date: Thu, 9 Apr 2020 16:29:50 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
+MIME-Version: 1.0
+In-Reply-To: <71cfd9fd-a70f-47ad-8c54-b950e32c0fef@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-09_08:2020-04-07,
+ 2020-04-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0
+ clxscore=1015 mlxscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004090149
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,100 +87,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tao Ren <rentao.bupt@gmail.com>
 
-This patch evaluates vhub ports' irq mask before going through per-port
-irq handling one by one, which helps to speed up irq handling in case
-there is no port interrupt.
+On 4/8/20 11:53 PM, Andrew Jeffery wrote:
+>
+> On Thu, 9 Apr 2020, at 05:57, Eddie James wrote:
+>> The latest specs for the AST2600 A1 chip include some different bit
+>> definitions for calculating the AHB clock divider. Implement these in
+>> order to get the correct AHB clock value in Linux.
+>>
+>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+>> ---
+>>   drivers/clk/clk-ast2600.c | 31 +++++++++++++++++++++++++------
+>>   1 file changed, 25 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/drivers/clk/clk-ast2600.c b/drivers/clk/clk-ast2600.c
+>> index 42bfdc16bf7a..35f53956c762 100644
+>> --- a/drivers/clk/clk-ast2600.c
+>> +++ b/drivers/clk/clk-ast2600.c
+>> @@ -642,14 +642,22 @@ static const u32 ast2600_a0_axi_ahb_div_table[] = {
+>>   	2, 2, 3, 5,
+>>   };
+>>   
+>> -static const u32 ast2600_a1_axi_ahb_div_table[] = {
+>> -	4, 6, 2, 4,
+>> +static const u32 ast2600_a1_axi_ahb_div0_tbl[] = {
+>> +	3, 2, 3, 4,
+>> +};
+>> +
+>> +static const u32 ast2600_a1_axi_ahb_div1_tbl[] = {
+>> +	3, 4, 6, 8,
+>> +};
+>> +
+>> +static const u32 ast2600_a1_axi_ahb200_tbl[] = {
+>> +	3, 4, 3, 4, 2, 2, 2, 2,
+>>   };
+>>   
+>>   static void __init aspeed_g6_cc(struct regmap *map)
+>>   {
+>>   	struct clk_hw *hw;
+>> -	u32 val, div, chip_id, axi_div, ahb_div;
+>> +	u32 val, div, divbits, chip_id, axi_div, ahb_div;
+>>   
+>>   	clk_hw_register_fixed_rate(NULL, "clkin", NULL, 0, 25000000);
+>>   
+>> @@ -679,11 +687,22 @@ static void __init aspeed_g6_cc(struct regmap *map)
+>>   	else
+>>   		axi_div = 2;
+>>   
+>> +	divbits = (val >> 11) & 0x3;
+>>   	regmap_read(map, ASPEED_G6_SILICON_REV, &chip_id);
+>> -	if (chip_id & BIT(16))
+>> -		ahb_div = ast2600_a1_axi_ahb_div_table[(val >> 11) & 0x3];
+>> -	else
+>> +	if (chip_id & BIT(16)) {
+>> +		if (!divbits) {
+>> +			ahb_div = ast2600_a1_axi_ahb200_tbl[(val >> 8) & 0x3];
+>> +			if (val & BIT(16))
+>> +				ahb_div *= 2;
+>> +		} else {
+>> +			if (val & BIT(16))
+>> +				ahb_div = ast2600_a1_axi_ahb_div1_tbl[divbits];
+>> +			else
+>> +				ahb_div = ast2600_a1_axi_ahb_div0_tbl[divbits];
+>> +		}
+>> +	} else {
+>>   		ahb_div = ast2600_a0_axi_ahb_div_table[(val >> 11) & 0x3];
+>> +	}
+> This was hard for me to read. Have you considered giving the conditions
+> names?
 
-Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
----
- Changes in v4:
-   - use simple for() loop as it runs faster than for_each_set_bit()
-     loop on aspeed BMCs.
- Changes in v3:
-   - assign istat to (unsigned long) bitmap before calling
-     "for_each_set_bit_from".
- Changes in v2:
-   - use "for_each_set_bit" to speed up port irq handling.
 
- drivers/usb/gadget/udc/aspeed-vhub/core.c | 12 +++++++-----
- drivers/usb/gadget/udc/aspeed-vhub/vhub.h | 11 ++++++-----
- 2 files changed, 13 insertions(+), 10 deletions(-)
+Yea it's a bit complicated. Do you mean use some boolean variables or 
+add some comments?
 
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-index f8d35dd60c34..fb36bad2c0b7 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-@@ -134,11 +134,11 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
- 	}
- 
- 	/* Handle device interrupts */
--	for (i = 0; i < vhub->max_ports; i++) {
--		u32 dev_mask = VHUB_IRQ_DEVICE1 << i;
--
--		if (istat & dev_mask)
--			ast_vhub_dev_irq(&vhub->ports[i].dev);
-+	if (istat & vhub->port_irq_mask) {
-+		for (i = 0; i < vhub->max_ports; i++) {
-+			if (istat & VHUB_DEV_IRQ(i))
-+				ast_vhub_dev_irq(&vhub->ports[i].dev);
-+		}
- 	}
- 
- 	/* Handle top-level vHub EP0 interrupts */
-@@ -332,6 +332,8 @@ static int ast_vhub_probe(struct platform_device *pdev)
- 
- 	spin_lock_init(&vhub->lock);
- 	vhub->pdev = pdev;
-+	vhub->port_irq_mask = GENMASK(VHUB_IRQ_DEV1_BIT + vhub->max_ports - 1,
-+				      VHUB_IRQ_DEV1_BIT);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	vhub->regs = devm_ioremap_resource(&pdev->dev, res);
-diff --git a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-index fac79ef6d669..b80e3ddff797 100644
---- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-+++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-@@ -51,14 +51,11 @@
- #define VHUB_CTRL_UPSTREAM_CONNECT		(1 << 0)
- 
- /* IER & ISR */
-+#define VHUB_IRQ_DEV1_BIT			9
- #define VHUB_IRQ_USB_CMD_DEADLOCK		(1 << 18)
- #define VHUB_IRQ_EP_POOL_NAK			(1 << 17)
- #define VHUB_IRQ_EP_POOL_ACK_STALL		(1 << 16)
--#define VHUB_IRQ_DEVICE5			(1 << 13)
--#define VHUB_IRQ_DEVICE4			(1 << 12)
--#define VHUB_IRQ_DEVICE3			(1 << 11)
--#define VHUB_IRQ_DEVICE2			(1 << 10)
--#define VHUB_IRQ_DEVICE1			(1 << 9)
-+#define VHUB_IRQ_DEVICE1			(1 << (VHUB_IRQ_DEV1_BIT))
- #define VHUB_IRQ_BUS_RESUME			(1 << 8)
- #define VHUB_IRQ_BUS_SUSPEND 			(1 << 7)
- #define VHUB_IRQ_BUS_RESET 			(1 << 6)
-@@ -70,6 +67,9 @@
- #define VHUB_IRQ_HUB_EP0_SETUP			(1 << 0)
- #define VHUB_IRQ_ACK_ALL			0x1ff
- 
-+/* Downstream device IRQ mask. */
-+#define VHUB_DEV_IRQ(n)				(VHUB_IRQ_DEVICE1 << (n))
-+
- /* SW reset reg */
- #define VHUB_SW_RESET_EP_POOL			(1 << 9)
- #define VHUB_SW_RESET_DMA_CONTROLLER		(1 << 8)
-@@ -402,6 +402,7 @@ struct ast_vhub {
- 	/* Per-port info */
- 	struct ast_vhub_port		*ports;
- 	u32				max_ports;
-+	u32				port_irq_mask;
- 
- 	/* Generic EP data structures */
- 	struct ast_vhub_ep		*epns;
--- 
-2.17.1
+Thanks,
 
+Eddie
+
+
+>
+> Andrew
