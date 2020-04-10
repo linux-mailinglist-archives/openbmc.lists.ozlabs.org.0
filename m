@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 371F41A4219
-	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 06:47:37 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48z5922BrDzDrHm
-	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 14:47:34 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 286561A421D
+	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 06:50:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 48z5DN0zCkzDrMK
+	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 14:50:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,71 +17,69 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=UtAXc5KB; 
+ header.s=fm2 header.b=ytGSHH+9; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=SOYdN5Jv; 
+ header.a=rsa-sha256 header.s=fm2 header.b=PhbTpZcM; 
  dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48z5840cCyzDrHZ
- for <openbmc@lists.ozlabs.org>; Fri, 10 Apr 2020 14:46:42 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48z5Cm39KtzDrHb
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Apr 2020 14:49:56 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id C52375C0105;
- Fri, 10 Apr 2020 00:46:37 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id C287B5C01CE;
+ Fri, 10 Apr 2020 00:49:53 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Fri, 10 Apr 2020 00:46:37 -0400
+ by compute3.internal (MEProxy); Fri, 10 Apr 2020 00:49:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm2; bh=KrGZ+
- yqJX2r0PBCZsN0OOll27JYDNpAVeaX5tI10kbU=; b=UtAXc5KBuyytPcwY6ocLu
- xFnU9j2+GNP/28wYZA2HNdBDCnAlqs26JQxUFRR+zdWcXkEfCuw+ycI21+9Rj020
- uFP+Q86GLa4pKYnBw+NPK2byJo4G6U0JPonpaD1lHFu9YEZsZ54fD1pqy15dnIom
- nLs0ITfAiEVvfKV7QDu69hGaZsvRW3Ao42Ykqwn8WcCxzrmw/e2jVQr6O1eNJ298
- WGsluNtzLIhfjDiHIhS1MxH9RtNK9MFessol6/HqXGte/n2/SugC4W7SP3vcZWRe
- gAHDZR8KUXgbdCWn8F+ZQpJU+OJLqbX+5FY9LcpnAHzo8Wenoz7N6XeWAdUdPbpl
- A==
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm2; bh=rUE5s6rBzb3pjU1BKHJz7Nd9Xsi9jy2
+ f4Q7Vwz/5KV0=; b=ytGSHH+9KdWiszzzKvB9tANAy3hfoPmi1R4zFv6LTz6vxJn
+ ru4stvq+eKEXn0Y6kYe8wfbFQ0/18OaVm9D3MX96UXublFsI3M7dULsYt8vMqb4X
+ wAqiBPeYHIQCH3NGqRQwRn+PVQRzoF6K19UxF/xClZ8zubfaG/e/S+WDXTBvwf3t
+ KZ0TAwoOuCN2ZhmcBGGrXm/Ux1CTbA6KKFlswAcFYDtFb1fW3pwklwEYCp9NHGQM
+ u62joKLht5zpJO5cBPiS8axeP3WM1m+0XZleD2/noISNxlCZKny81afAlI4nRIXo
+ 3GZW4B0Vz+rMJwYo65yG5/fW8/oflutniKwvTWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=KrGZ+yqJX2r0PBCZsN0OOll27JYDNpAVeaX5tI10k
- bU=; b=SOYdN5Jv37C74dsgSyxid410zDem/JUIv2XNeCMai4LoJDURRD/c+NUw1
- y9UG1F/CIby8RlMRH6bt4M0MuBrEfnB8DM5yGJvdkQldfPGqUV2PNuAqHEpG0j5K
- 4grJs0KEqnFGoZ0muyR7KvR5aB/GEIg8t0By0mq0H+nZMsH88HTnAAnklZj8pDZN
- +xqsQNQaK40lpYgC+7v6fjpXxUHWUy3gwOOFYAOyshSeHaW/hr76FlAILngtBRyr
- en8UpRiz7dgrfHY7UA3ecrvK3mlMUyuXatySVHnU2xpocmbnxhrGJWjVVcZ8Hemx
- GF3A8Dw2b3BCIqnZg4kZy46C4FCyA==
-X-ME-Sender: <xms:LfqPXkqbSbSEazuimDgH3qxCKG7WTzOr73k_BFNQC-rWgfiAi79HPA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrvddugdekiecutefuodetggdotefrodftvf
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=rUE5s6
+ rBzb3pjU1BKHJz7Nd9Xsi9jy2f4Q7Vwz/5KV0=; b=PhbTpZcMfYEWzAyKsYZjTj
+ ppcwfWRJDV4COyhF1k3SwxIrlwnbi5g7JMWbc2wO8UM3nu+GDCbY2sJj5y+vN0P8
+ F31nwxSt+vUOu4Lb9HF/V8KPubu9uKct4tzjLUMPMeZX6Lr1xifqoHYavM1G/p+m
+ 0nxkjh3W0ehQTmUiEGrNtDDcoj9mnRlJ0crPKxc3Cp+icHlWRbJLEgaCtaXFEUrI
+ BYzkoDV9v1JHU0y0DwwMTiAy11Jwn7ACHeO65YRtFWWtPnRV51n/RNiC4NXbDxAF
+ xxBKwMXy3O+MKv9RNUAJcTBN9XktDYhwNkVQPNFHEJO7t4XIWlH6UsUBBD1RDyTQ
+ ==
+X-ME-Sender: <xms:8fqPXrxrtk-fi1whORPwRmWa3NFCOIzwtwue0IpjiOvG3EYg8vzWEg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrvddugdekjecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuvehluh
- hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegr
- jhdrihgurdgruh
-X-ME-Proxy: <xmx:LfqPXnTmr3VsjloFEB5k4XYYG4Sv6ZGsBzCFaI4nDHsG5aHzU1Acag>
- <xmx:LfqPXvm8AdTRK2e_J2Z0zmEIg-PajJqCifhmTub44t-IGtpemThvuQ>
- <xmx:LfqPXlzCntW2BrcM6F0SmJgf059Be3ftenCWeBlBt-ZwjmI-b__gbg>
- <xmx:LfqPXhD-0usqzk_EGZuBx_4s4rVor_t8WkiT5QRNJM8i2L8ZP7SFwg>
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
+ rdhiugdrrghu
+X-ME-Proxy: <xmx:8fqPXvXPC1pxEQwdusVgSkvOocK9j-k8wi5CsHPhymFGL-jSkMZQSQ>
+ <xmx:8fqPXrRjWLZM_5x3mwmGhUzahkoaHvbxH7xlZ0URiUH9izi04hZiyA>
+ <xmx:8fqPXmc5eAUel1k7nE9-rbJfJhcgARVrSt9OpvuqTQfFonPCmipvkA>
+ <xmx:8fqPXrBlI_Ud1Qv891tXZR8pa4W67lb6cJzyMU4cRprodOtaZT8THw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E7C2CE00A5; Fri, 10 Apr 2020 00:46:36 -0400 (EDT)
+ id 3799CE00A5; Fri, 10 Apr 2020 00:49:53 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.1.7-1104-g203475c-fmstable-20200408v2
 Mime-Version: 1.0
-Message-Id: <625f79f9-0490-4dbe-b364-959e2091fdc8@www.fastmail.com>
-In-Reply-To: <B81F049C-24DB-49A0-9DE5-5D7C02496AD0@fb.com>
-References: <73161AF5-F6B6-40C6-AE70-5FCF5A530B82@fb.com>
- <451f5f0e-a1ba-4016-b044-e55b966f64ea@www.fastmail.com>
- <B81F049C-24DB-49A0-9DE5-5D7C02496AD0@fb.com>
-Date: Fri, 10 Apr 2020 14:17:00 +0930
+Message-Id: <7fea717a-50b4-4ff3-9936-80a80a35c51a@www.fastmail.com>
+In-Reply-To: <20200406191938.31156-2-eajames@linux.ibm.com>
+References: <20200406191938.31156-1-eajames@linux.ibm.com>
+ <20200406191938.31156-2-eajames@linux.ibm.com>
+Date: Fri, 10 Apr 2020 14:20:18 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Vijay Khemka" <vijaykhemka@fb.com>
-Subject: Re: objc console new design
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.4_1/3]_fsi:_master:_Remove_link_enable_?=
+ =?UTF-8?Q?read-back?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,58 +91,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Tue, 7 Apr 2020, at 05:11, Vijay Khemka wrote:
->=20
->=20
-> =EF=BB=BFOn 4/5/20, 5:10 AM, "Andrew Jeffery" <andrew@aj.id.au> wrote:=
+On Tue, 7 Apr 2020, at 04:49, Eddie James wrote:
+> Both the Aspeed and hub masters read back the link enable register
+> after enabling the link, but this is unnecessary, so remove it.
 
->=20
->    =20
->    =20
->     On Sat, 4 Apr 2020, at 08:09, Vijay Khemka wrote:
->     > =20
->     > Hi Andrew,
->     >=20
->     > How is server launched as per new design code. With latest updat=
-e,=20
->     > console server is not launching in our platform. I saw config op=
-tion=20
->     > =E2=80=9COBMC_CONSOLE_HOST_TTY ?=3D "ttyVUART0" =E2=80=9C has be=
-en removed from bb file=20
->     > and also there is no triggering point in obmc-console-ssh socket=
- and=20
->     > service like earlier Wants=3Dobmc-console@{OBMC_CONSOLE_HOST_TTY=
-}.service=20
->     > <mailto:Wants=3Dobmc-console@%7bOBMC_CONSOLE_HOST_TTY%7d.service=
->.
->     >=20
->     >=20
->     > I see udev rules added in latest patch for launching server whic=
-h needs=20
->     > config definition of udev, do we need this for launching, please=
- advise.
->    =20
->     Yes, obmc-console now ships a udev rules file that launches=20
-> obmc-console-server
->     via an `ENV{SYSTEMD_WANTS}` directive:
->=20
-> If this is mandatory then why do we need to enable UDEV config as it=20=
+Unfortunately the code isn't commented, but you're making the assertion
+that it's not necessary without explaining why. Are we sure it's not
+implementing a workaround e.g. to make sure the write is flushed?
 
-> should be enabled by default.
->
-
-It's not mandatory, just I don't know the requirements of any systems th=
-at
-aren't using udev. The switch exists in obmc-console so you can implemen=
-t
-support for systems without udev if that's desired. Maybe adding the swi=
-tch
-was premature?
+Or is this assertion made on the basis that the result is unused?
 
 Andrew
