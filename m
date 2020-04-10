@@ -1,56 +1,105 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D05D71A49C2
+	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 20:16:54 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 535541A49A0
-	for <lists+openbmc@lfdr.de>; Fri, 10 Apr 2020 20:01:49 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 48zQnP0BlqzDrL1
-	for <lists+openbmc@lfdr.de>; Sat, 11 Apr 2020 04:01:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 48zR6q5vj5zDqss
+	for <lists+openbmc@lfdr.de>; Sat, 11 Apr 2020 04:16:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.93.105;
+ helo=nam10-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.a=rsa-sha256 header.s=selector2 header.b=MPhi5FLz; 
+ dkim-atps=neutral
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10on2105.outbound.protection.outlook.com [40.107.93.105])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 48zQmc51MWzDrHg
- for <openbmc@lists.ozlabs.org>; Sat, 11 Apr 2020 04:01:02 +1000 (AEST)
-IronPort-SDR: mybX8DLkFNaz8yykLCy+xLRkenYraW2W/k82hrQyDRg0IHrPhdq+1GR1zCazJ6iPG8OM7Nev9p
- jD2lt+dM6gIA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Apr 2020 11:00:50 -0700
-IronPort-SDR: yPux+hCz2V8i9w94XUchSIIphCqCa4138Q56eADGhzYowl3CtS5DHXgsKCq/ADUUuHsWAQ4C65
- uEuzdOM9EgrQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,367,1580803200"; d="scan'208";a="270466424"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.212.223.122])
- ([10.212.223.122])
- by orsmga002.jf.intel.com with ESMTP; 10 Apr 2020 11:00:49 -0700
-Subject: Re: Call for Gardening Tasks
-To: krtaylor <kurt.r.taylor@gmail.com>, openbmc@lists.ozlabs.org
+ by lists.ozlabs.org (Postfix) with ESMTPS id 48zR606ZQQzDqkT
+ for <openbmc@lists.ozlabs.org>; Sat, 11 Apr 2020 04:16:07 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IqgjMiVJjHVyPNLy6DwdKz9sM1k3U0LSLX59NZt4a7MFf78sOiPav7rM+Cctp68TTOCsyNj32glUOND1RDmgvYdP3boGDPQXrpK10Im3Y5eiZ0W/1ibEcZZT3DjJzHJ90ZFWwg5prHXtCRzOfDvyDVjYkr4zaclT6D2G+nPKrvhzj10YA0+yjZJR9d2ZYnodYzY1TXe5MC4ABGsIk7hWcXJ/QxNiCgK3BAhIWfKXnKXMqybIMM06WV+AgqLuD9+AxjCY91yYmmbXVdY56SqyvSHfzkAqj65CfWnV3Fb+SpBizJX9iYcA2dtiEBntboArFAC9BUjuo19rCCB29RDgSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RIkjEC3jB2FyhH7IvgOn7UqIepH17tmUKC21CfKHyjQ=;
+ b=nLoOn4z0fBPPsN1/11cwpCWAYns6TxEvr//56/dj+FVjKpe5LOhxVZ6X47MHVJbvCdVdQpyeiQ/IGLEXi2YXJExq2ZNAPbadYuF/MywaliC1BNpqgB5MjjWVf7U4GiQrwo4JlxB8aDJSFcjZYN6F3KttsNYBRuXZ3ndf4xUU59O8QmOg1AEtpy2lrFCbBEJL8vIyXKeVYPSGbR6lI8VcrOrJ7RxImmXN7NSGagffO+GoS3CmPF8whrNBwisE6p4XkgK/J8DYTIAyC7TkXsAa9NspxFGplk4emVv96u/buhmqV0SLxY8Oq/oyGgHMruHNLL2zyyCoYsERzMPr6mz2pA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RIkjEC3jB2FyhH7IvgOn7UqIepH17tmUKC21CfKHyjQ=;
+ b=MPhi5FLz72NuFZqX9FnDDQrbu5Rz/tSEdewkg1h5nBhCrD49Ij2xHSy6LJEQNtdvrknFZR7PGOkw5oZu3bhLbrC59zsqHCyuSuPXFLLhGcNDOvZM3bNLrd8kOZH0OzW0bxjWBzqUizw81sW4Hnv/H9/3q3LQBjgjmAP0agiNsBE=
+Received: from CH2PR21MB1510.namprd21.prod.outlook.com (2603:10b6:610:8e::7)
+ by CH2PR21MB1477.namprd21.prod.outlook.com (2603:10b6:610:82::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.5; Fri, 10 Apr
+ 2020 18:16:02 +0000
+Received: from CH2PR21MB1510.namprd21.prod.outlook.com
+ ([fe80::6838:df24:78e3:e78a]) by CH2PR21MB1510.namprd21.prod.outlook.com
+ ([fe80::6838:df24:78e3:e78a%10]) with mapi id 15.20.2921.009; Fri, 10 Apr
+ 2020 18:16:01 +0000
+From: Neeraj Ladkani <neladk@microsoft.com>
+To: krtaylor <kurt.r.taylor@gmail.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: [EXTERNAL] Re: Call for Gardening Tasks
+Thread-Topic: [EXTERNAL] Re: Call for Gardening Tasks
+Thread-Index: AQHWDr0mwN/tqIyRukeDdkDyySeT76hyaa2AgAACEYCAACk6MA==
+Date: Fri, 10 Apr 2020 18:16:01 +0000
+Message-ID: <CH2PR21MB1510CAF670EF0FA95DBDFE6DC8DE0@CH2PR21MB1510.namprd21.prod.outlook.com>
 References: <CAH1kD+bqZfeO8ezvwbmjx_PZ4vaKyhxGgvirVz13P3FK9UDBWQ@mail.gmail.com>
  <CAH1kD+b3ij5KiZn+-N0O+BnbB-XONmbWtYSRA2feKNb+zw6kjw@mail.gmail.com>
  <521FD3E2-3AFE-4E56-A6CF-B0ABA7E9C8E3@fb.com>
  <e42cef9e-1760-d3ee-4396-61cd1d141983@linux.ibm.com>
  <d3eac624-f1a2-fd2d-6639-3290c8085abd@gmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <bea70fb0-780c-39a7-a677-dfc41e864337@linux.intel.com>
-Date: Fri, 10 Apr 2020 11:00:48 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
-MIME-Version: 1.0
 In-Reply-To: <d3eac624-f1a2-fd2d-6639-3290c8085abd@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=neladk@microsoft.com; 
+x-originating-ip: [50.35.81.9]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: a8991d9e-8c20-4cdf-ccd2-08d7dd7b39fb
+x-ms-traffictypediagnostic: CH2PR21MB1477:
+x-microsoft-antispam-prvs: <CH2PR21MB1477737C8BA58D7540B39E2AC8DE0@CH2PR21MB1477.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-forefront-prvs: 0369E8196C
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR21MB1510.namprd21.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(10019020)(4636009)(39860400002)(346002)(396003)(136003)(366004)(376002)(66446008)(66556008)(76116006)(86362001)(52536014)(64756008)(66946007)(2906002)(83080400001)(55016002)(9686003)(6506007)(66476007)(7696005)(53546011)(966005)(5660300002)(478600001)(26005)(110136005)(81156014)(186003)(8936002)(8676002)(71200400001)(33656002)(316002)(8990500004)(10290500003)(82960400001)(82950400001);
+ DIR:OUT; SFP:1102; 
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: gcSlANidFEAZnT2PI5oIAjdwtvobZL75TAeFc+pJuXF+McKHJXTVsqZXaBH4F1zbMXO4yByOzDB600hMrMm5696MxA9P0lag4jpe8zHoM3ZRk886d6oQCZxpVx74KrRO3SujxZitdU+SLNg3YMaM8MG5gcWyqpvdOcvUyQ99xmYdHsizaWpRSHNzIb8oY05Bs2YxnS26QaLEJnKAqrVpM2CerjOeCV76eA2m18TKTHcsW2xsS4n8uozFqfLVFVWp/t1rmbd8hscq9ZHaE6xo+WLfgYv5CmwrX1YE9BwJZuE05Oh2O+GK3orcJ2HiYSgA5snGLh3/LORmvr0QChYGK4Vdozoj51/Vr9VBRONbxNWUZyQgJriyWXpRBUVN/646N4yhq2jD2nKtVHLxI3D4A3JSUqM5Y47qVhFgjp0qeQR5pzDB96eAgvy39//9/pXWe/dhSfSXGDv7h/M7qVaOTSJpRD6s4EuKrG90skUlgFV3inBbQReXxwvpqJGZsvyI7OYNrsevHwJKFPdmsYgBcA==
+x-ms-exchange-antispam-messagedata: gO56ij5aYFVAftaJBNnlzWuYjCcJNcfJWBVf93PNVT1WKNBeO2uoIsBoS6TyI8u6E92Bc9jEH4gvjlNwAOxdjOB476b/fxilxzt87xluQ2TP1PQBTy2WICMkosAk5SSKFMNn7C+vgXfZamuG/v6jag==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a8991d9e-8c20-4cdf-ccd2-08d7dd7b39fb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Apr 2020 18:16:01.8937 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sNFsHfg7KNo38/7/bRDCxdDaLyEGG6AIwJPVUgUKhIxDdnwcNToof3wbujsoeI/7ehrrJ/yU5csZjLfsjienxA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR21MB1477
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,177 +114,163 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/10/2020 7:30 AM, krtaylor wrote:
-> On 4/10/20 9:23 AM, Joseph Reynolds wrote:
->> On 4/9/20 5:19 PM, Vijay Khemka wrote:
-
-I'd really like to see clang-tidy or other checks for style added into 
-the build CI. The number of style violations waste lots of time in 
-code-review for both the submitter and reviewers.
-
->>>
->>> I can see following small tasks which need refactoring
->>>
->>> IPMID:
->>>
->>> Some of standard commands are incomplete here like “restore power 
->>> policies”, some of sensors  sdrs etc.
->>>
->>> Dbus interface:
->>>
->>> Define more dbus interfaces being used in common code. I see multiple 
->>> repos has these interfaces hard coded. And I agree for client side 
->>> code would really be helpful.
->>>
->>> Phosphor package clean up:
->>>
->>> There are many phosphor packages in image which are added by default 
->>> and lots of systemd unit are running irrespective of platform 
->>> requirements.
->>>
->>> Documentation:
->>>
->>> Many repos doesn’t have proper documentations and it will be really 
->>> good to add and a root level documents giving an idea about different 
->>> features and mapped to multiple available repos.
->>>
->>
->> Can we flesh out the list of features?
->> https://github.com/openbmc/docs/blob/master/features.md
-> 
-> Heck, can we start by simply fleshing out what devs (companies) are/have 
-> worked on for this release?  ;-)
-> https://github.com/openbmc/openbmc/wiki/Current-Release-Content
-> 
-> - krtaylor
-> 
->>
->> The openbmc/docs repo has good stuff for developers.  Can we take it 
->> the next level by adding:
->> - Guide for system integrators - source and build config, signing 
->> keys, etc.
->> - Guide for initial BMC setup - genesis boot, discovery, configure IP, 
->> certs, users, etc.
->> - Guide for system admins - ongoing tasks like auditing logs, firmware 
->> updates, etc.
->> - Security technical implementation guide (STIG).
->>
->> We've discussed these in the OpenBMC security working group, and I've 
->> collected some details here:
->> https://github.com/ibm-openbmc/dev/issues/1531
->>
->> I would be happy to contribute to these ... just looking for someone 
->> to collaborate with.  :-)
->>
->>> I will add more once I remember back.
->>>
->>> Regards
->>>
->>> -Vijay
->>>
->>> *From: *openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> 
->>> on behalf of Richard Hanley <rhanley@google.com>
->>> *Date: *Thursday, April 9, 2020 at 2:57 PM
->>> *To: *OpenBMC Maillist <openbmc@lists.ozlabs.org>
->>> *Subject: *Re: Call for Gardening Tasks
->>>
->>> Here are some ideas I have as a wishlist for gardening/improvements.
->>>
->>> *Client Models for DBus*
->>>
->>> Right now sdbusplus does a pretty good job of making server 
->>> development easy.  However, I wish we had some more tooling on the 
->>> client side. I see a decent amount of repeated code around ObjectMapper.
->>>
->>> One way to separate concerns and cut down on boilerplate is to have a 
->>> model library. A call to a model would spin off an async method call 
->>> to manage the data marshalling, which would then call a lambda with a 
->>> fully reified object.  This is similar in concept to the way models 
->>> work in web development.
->>>
->>> *Unit Testing in bmcweb*
->>>
->>> This is pretty easy to say, and harder to do. I've been thinking a 
->>> bit about how to add in unit tests without them being too fragile. 
->>> (This was also something that geissonator mentioned).
->>>
->>> *DBus Virtualization and Playback*
->>>
->>> One thing that I think makes unit testing in some modules hard is 
->>> that there is a high barrier around mocking DBus.  I'm not sure the 
->>> best way to build this sustainably, but it would help improve our CI 
->>> testing.
->>>
->>> *OpenAPI for Redfish*
->>>
->>> So far the general impression I've seen with this is that the Swagger 
->>> output for OpenAPI isn't really good for C++.  Either the ergonomics 
->>> aren't really good, or there is a lot of code bloat.  I'd love to 
->>> have some OpenAPI bindings that work well in OpenBMC.
->>>
->>> *RUST!?!?*
->>>
->>> I'm betting a lot of people have thought about Rust. I'd love to hear 
->>> what people have tried and what are the sticking points.  Any 
->>> thoughts on what module/functionality could be a decent candidate for 
->>> breaking ground here?
->>>
->>
->> We discussed the rust language in the OpenBMC security working group 
->> meetings 2019-10-02
->> OpenBMC security working group minutes:
->> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI 
->>
->>
->>> -Richard
->>>
->>> On Thu, Apr 9, 2020 at 2:54 PM Richard Hanley <rhanley@google.com 
->>> <mailto:rhanley@google.com>> wrote:
->>>
->>>     Hi everyone,
->>>
->>>     Last week I started a thread on Open BMC Gardening
->>> <https://urldefense.proofpoint.com/v2/url?u=https-3A__lists.ozlabs.org_pipermail_openbmc_2020-2DApril_021100.html&d=DwMFaQ&c=5VD0RTtNlTh3ycd41b3MUw&r=v9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&m=fAZZtmWl4g8Vngk56_Rs09hgS96TYQMeyRsyZKGHzAo&s=HXdHl56jq4p5eXbhyUHUkkmoF_hGh5tJWMUaVKQ68VM&e=>, 
->>>
->>>     and I wanted to kick off the process.
->>>
->>>     The basic idea here is to get a survey of various
->>>     improvement tasks throughout OpenBMC.  Some things might be small
->>>     refactoring or changes that can be done incrementally (i.e.
->>>     weeding the garden). Other tasks might be more research or
->>>     structural (i.e. excavating the garden).
->>>
->>>     Just getting these in writing can be helpful for others to gauge
->>>     what they should focus on. It also helps leave breadcrumbs for any
->>>     new developer interested in the subject.
->>>
->>
->> Richard,
->>
->> Thanks for your efforts to move this forward.
->>
->> Security wish list here: 
->> https://github.com/openbmc/openbmc/wiki/Security-working-group#security-feature-wish-list 
->>
->>
->> - Joseph
->>
->>>     So here's how I see this working. Anyone who has some ideas can
->>>     reply to this thread with a short to medium description.  Try to
->>>     avoid new features, and instead look at ways we could improve the
->>>     status quo. Think about changes and tools that would make your day
->>>     to day life better.
->>>
->>>     From there we can do a write up about what we know about the
->>>     issue.  This can function as an early stage design doc that gives
->>>     a broad overview on where the dev's head is at right now.
->>>
->>>     Finally, we can do a quarterly review to keep the garden
->>>     refreshed. Obviously, things can change between that time, but
->>>     having a semi-regular cadence will hopefully give us a better
->>>     chance of keeping this up to date.
->>>
->>>     - Richard
->>>
->>
-> 
+TXkgd2lzaCBsaXN0IA0KDQotIERvY3VtZW50YXRpb24gaXMgYSBiaWdnZXN0IGdhcCBpbiBhZG9w
+dGlvbiBzbyB3ZSBzaG91bGQgdHJ5IHRvIGhhdmUgY2xlYXIgZG9jdW1lbnRhdGlvbiBvbiANCgkt
+IEJ1aWxkDQoJLSBEZXYgUHJhY3RpY2VzIA0KCS0gRGVidWcgDQoJLSBCZXN0IEtub3duIE1ldGhv
+ZHMgb2YgZGVidWdnaW5nICggU3RhdGljIGFuZCBSdW50aW1lKSANCgktIERvY3VtZW50YXRpb24g
+b2YgZWFjaCBmZWF0dXJlIA0KCS0gVXNlciBHdWlkZQ0KLSBCb290IHRpbWUgb3B0aW1pemF0aW9u
+IGFuZCBydW50aW1lIG9wdGltaXphdGlvbiAoIGRidXMgbGF0ZW5jaWVzKSANCi0gT3BlbkJNQyBy
+ZXNpbGllbmN5IChibWMgaGFuZywgYm1jIGNvcnJ1cHRpb24gZXRjICkgDQotIFBhY2thZ2UgTWFu
+YWdlci0gQWJpbGl0eSB0byB1cGRhdGUgb25seSByZXF1aXJlZCBzZXJ2aWNlcyANCi0gQk1DIHVw
+ZGF0ZSB0b29sIHRoYXQgcnVucyBmcm9tIFdpbmRvd3MNCg0KVGhhbmtzDQpOZWVyYWoNCg0KDQot
+LS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogb3BlbmJtYyA8b3BlbmJtYy1ib3VuY2Vz
+K25lbGFkaz1taWNyb3NvZnQuY29tQGxpc3RzLm96bGFicy5vcmc+IE9uIEJlaGFsZiBPZiBrcnRh
+eWxvcg0KU2VudDogRnJpZGF5LCBBcHJpbCAxMCwgMjAyMCA3OjMxIEFNDQpUbzogb3BlbmJtY0Bs
+aXN0cy5vemxhYnMub3JnDQpTdWJqZWN0OiBbRVhURVJOQUxdIFJlOiBDYWxsIGZvciBHYXJkZW5p
+bmcgVGFza3MNCg0KT24gNC8xMC8yMCA5OjIzIEFNLCBKb3NlcGggUmV5bm9sZHMgd3JvdGU6DQo+
+IE9uIDQvOS8yMCA1OjE5IFBNLCBWaWpheSBLaGVta2Egd3JvdGU6DQo+Pg0KPj4gSSBjYW4gc2Vl
+IGZvbGxvd2luZyBzbWFsbCB0YXNrcyB3aGljaCBuZWVkIHJlZmFjdG9yaW5nDQo+Pg0KPj4gSVBN
+SUQ6DQo+Pg0KPj4gU29tZSBvZiBzdGFuZGFyZCBjb21tYW5kcyBhcmUgaW5jb21wbGV0ZSBoZXJl
+IGxpa2Ug4oCccmVzdG9yZSBwb3dlciANCj4+IHBvbGljaWVz4oCdLCBzb21lIG9mIHNlbnNvcnPC
+oCBzZHJzIGV0Yy4NCj4+DQo+PiBEYnVzIGludGVyZmFjZToNCj4+DQo+PiBEZWZpbmUgbW9yZSBk
+YnVzIGludGVyZmFjZXMgYmVpbmcgdXNlZCBpbiBjb21tb24gY29kZS4gSSBzZWUgbXVsdGlwbGUg
+DQo+PiByZXBvcyBoYXMgdGhlc2UgaW50ZXJmYWNlcyBoYXJkIGNvZGVkLiBBbmQgSSBhZ3JlZSBm
+b3IgY2xpZW50IHNpZGUgDQo+PiBjb2RlIHdvdWxkIHJlYWxseSBiZSBoZWxwZnVsLg0KPj4NCj4+
+IFBob3NwaG9yIHBhY2thZ2UgY2xlYW4gdXA6DQo+Pg0KPj4gVGhlcmUgYXJlIG1hbnkgcGhvc3Bo
+b3IgcGFja2FnZXMgaW4gaW1hZ2Ugd2hpY2ggYXJlIGFkZGVkIGJ5IGRlZmF1bHQgDQo+PiBhbmQg
+bG90cyBvZiBzeXN0ZW1kIHVuaXQgYXJlIHJ1bm5pbmcgaXJyZXNwZWN0aXZlIG9mIHBsYXRmb3Jt
+IA0KPj4gcmVxdWlyZW1lbnRzLg0KPj4NCj4+IERvY3VtZW50YXRpb246DQo+Pg0KPj4gTWFueSBy
+ZXBvcyBkb2VzbuKAmXQgaGF2ZSBwcm9wZXIgZG9jdW1lbnRhdGlvbnMgYW5kIGl0IHdpbGwgYmUg
+cmVhbGx5IA0KPj4gZ29vZCB0byBhZGQgYW5kIGEgcm9vdCBsZXZlbCBkb2N1bWVudHMgZ2l2aW5n
+IGFuIGlkZWEgYWJvdXQgZGlmZmVyZW50IA0KPj4gZmVhdHVyZXMgYW5kIG1hcHBlZCB0byBtdWx0
+aXBsZSBhdmFpbGFibGUgcmVwb3MuDQo+Pg0KPiANCj4gQ2FuIHdlIGZsZXNoIG91dCB0aGUgbGlz
+dCBvZiBmZWF0dXJlcz8NCj4gaHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRs
+b29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2l0aA0KPiB1Yi5jb20lMkZvcGVuYm1jJTJGZG9j
+cyUyRmJsb2IlMkZtYXN0ZXIlMkZmZWF0dXJlcy5tZCZhbXA7ZGF0YT0wMiU3QzAxDQo+ICU3Q25l
+bGFkayU0MG1pY3Jvc29mdC5jb20lN0M5MTZjZWNiN2YwMmQ0OWE2OWJiNjA4ZDdkZDViZmE0ZiU3
+QzcyZjk4OGINCj4gZjg2ZjE0MWFmOTFhYjJkN2NkMDExZGI0NyU3QzElN0MwJTdDNjM3MjIxMjU5
+NDI0NjIzMjAxJmFtcDtzZGF0YT0yNnlQQw0KPiBZazVTUGx4eWo2V3JIdGxwY2hvQjBtenE5QWxG
+Z2I2ajE4WjRpQSUzRCZhbXA7cmVzZXJ2ZWQ9MA0KDQpIZWNrLCBjYW4gd2Ugc3RhcnQgYnkgc2lt
+cGx5IGZsZXNoaW5nIG91dCB3aGF0IGRldnMgKGNvbXBhbmllcykgYXJlL2hhdmUgd29ya2VkIG9u
+IGZvciB0aGlzIHJlbGVhc2U/ICA7LSkNCmh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnByb3RlY3Rp
+b24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZvcGVuYm1jJTJG
+b3BlbmJtYyUyRndpa2klMkZDdXJyZW50LVJlbGVhc2UtQ29udGVudCZhbXA7ZGF0YT0wMiU3QzAx
+JTdDbmVsYWRrJTQwbWljcm9zb2Z0LmNvbSU3QzkxNmNlY2I3ZjAyZDQ5YTY5YmI2MDhkN2RkNWJm
+YTRmJTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNzIyMTI1
+OTQyNDYyMzIwMSZhbXA7c2RhdGE9MnpvS2VlTnEzRVg1cVhmVWhWaHNmMVJxSE5hTzM5OXVqaEVS
+Y0J6bkVOZyUzRCZhbXA7cmVzZXJ2ZWQ9MA0KDQotIGtydGF5bG9yDQoNCj4gDQo+IFRoZSBvcGVu
+Ym1jL2RvY3MgcmVwbyBoYXMgZ29vZCBzdHVmZiBmb3IgZGV2ZWxvcGVycy7CoCBDYW4gd2UgdGFr
+ZSBpdCANCj4gdGhlIG5leHQgbGV2ZWwgYnkgYWRkaW5nOg0KPiAtIEd1aWRlIGZvciBzeXN0ZW0g
+aW50ZWdyYXRvcnMgLSBzb3VyY2UgYW5kIGJ1aWxkIGNvbmZpZywgc2lnbmluZyANCj4ga2V5cywg
+ZXRjLg0KPiAtIEd1aWRlIGZvciBpbml0aWFsIEJNQyBzZXR1cCAtIGdlbmVzaXMgYm9vdCwgZGlz
+Y292ZXJ5LCBjb25maWd1cmUgSVAsIA0KPiBjZXJ0cywgdXNlcnMsIGV0Yy4NCj4gLSBHdWlkZSBm
+b3Igc3lzdGVtIGFkbWlucyAtIG9uZ29pbmcgdGFza3MgbGlrZSBhdWRpdGluZyBsb2dzLCBmaXJt
+d2FyZSANCj4gdXBkYXRlcywgZXRjLg0KPiAtIFNlY3VyaXR5IHRlY2huaWNhbCBpbXBsZW1lbnRh
+dGlvbiBndWlkZSAoU1RJRykuDQo+IA0KPiBXZSd2ZSBkaXNjdXNzZWQgdGhlc2UgaW4gdGhlIE9w
+ZW5CTUMgc2VjdXJpdHkgd29ya2luZyBncm91cCwgYW5kIEkndmUgDQo+IGNvbGxlY3RlZCBzb21l
+IGRldGFpbHMgaGVyZToNCj4gaHR0cHM6Ly9uYW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRs
+b29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2l0aA0KPiB1Yi5jb20lMkZpYm0tb3BlbmJtYyUy
+RmRldiUyRmlzc3VlcyUyRjE1MzEmYW1wO2RhdGE9MDIlN0MwMSU3Q25lbGFkayU0DQo+IDBtaWNy
+b3NvZnQuY29tJTdDOTE2Y2VjYjdmMDJkNDlhNjliYjYwOGQ3ZGQ1YmZhNGYlN0M3MmY5ODhiZjg2
+ZjE0MWFmOTENCj4gYWIyZDdjZDAxMWRiNDclN0MxJTdDMCU3QzYzNzIyMTI1OTQyNDYyMzIwMSZh
+bXA7c2RhdGE9a2U2Nm0lMkZQN21VeWRJTg0KPiAzWklrRWV5cWElMkZST1g4ZndhYWxvZE9RSWtJ
+WGJNJTNEJmFtcDtyZXNlcnZlZD0wDQo+IA0KPiBJIHdvdWxkIGJlIGhhcHB5IHRvIGNvbnRyaWJ1
+dGUgdG8gdGhlc2UgLi4uIGp1c3QgbG9va2luZyBmb3Igc29tZW9uZSANCj4gdG8gY29sbGFib3Jh
+dGUgd2l0aC7CoCA6LSkNCj4gDQo+PiBJIHdpbGwgYWRkIG1vcmUgb25jZSBJIHJlbWVtYmVyIGJh
+Y2suDQo+Pg0KPj4gUmVnYXJkcw0KPj4NCj4+IC1WaWpheQ0KPj4NCj4+ICpGcm9tOiAqb3BlbmJt
+YyA8b3BlbmJtYy1ib3VuY2VzK3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnPg0K
+Pj4gb24gYmVoYWxmIG9mIFJpY2hhcmQgSGFubGV5IDxyaGFubGV5QGdvb2dsZS5jb20+DQo+PiAq
+RGF0ZTogKlRodXJzZGF5LCBBcHJpbCA5LCAyMDIwIGF0IDI6NTcgUE0NCj4+ICpUbzogKk9wZW5C
+TUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCj4+ICpTdWJqZWN0OiAqUmU6
+IENhbGwgZm9yIEdhcmRlbmluZyBUYXNrcw0KPj4NCj4+IEhlcmUgYXJlIHNvbWUgaWRlYXMgSSBo
+YXZlIGFzIGEgd2lzaGxpc3QgZm9yIGdhcmRlbmluZy9pbXByb3ZlbWVudHMuDQo+Pg0KPj4gKkNs
+aWVudCBNb2RlbHMgZm9yIERCdXMqDQo+Pg0KPj4gUmlnaHQgbm93IHNkYnVzcGx1cyBkb2VzIGEg
+cHJldHR5IGdvb2Qgam9iIG9mIG1ha2luZyBzZXJ2ZXIgDQo+PiBkZXZlbG9wbWVudCBlYXN5LsKg
+IEhvd2V2ZXIsIEkgd2lzaCB3ZSBoYWQgc29tZSBtb3JlIHRvb2xpbmcgb24gdGhlIA0KPj4gY2xp
+ZW50IHNpZGUuIEkgc2VlIGEgZGVjZW50IGFtb3VudCBvZiByZXBlYXRlZCBjb2RlIGFyb3VuZCBP
+YmplY3RNYXBwZXIuDQo+Pg0KPj4gT25lIHdheSB0byBzZXBhcmF0ZcKgY29uY2VybnMgYW5kIGN1
+dCBkb3duIG9uIGJvaWxlcnBsYXRlIGlzIHRvIGhhdmUgYSANCj4+IG1vZGVsIGxpYnJhcnkuIEEg
+Y2FsbCB0byBhIG1vZGVsIHdvdWxkIHNwaW4gb2ZmIGFuIGFzeW5jIG1ldGhvZCBjYWxsIA0KPj4g
+dG8gbWFuYWdlIHRoZSBkYXRhIG1hcnNoYWxsaW5nLCB3aGljaCB3b3VsZCB0aGVuIGNhbGwgYSBs
+YW1iZGEgd2l0aCBhIA0KPj4gZnVsbHkgcmVpZmllZCBvYmplY3QuwqAgVGhpcyBpcyBzaW1pbGFy
+IGluIGNvbmNlcHQgdG8gdGhlIHdheSBtb2RlbHMgDQo+PiB3b3JrIGluIHdlYiBkZXZlbG9wbWVu
+dC4NCj4+DQo+PiAqVW5pdCBUZXN0aW5nIGluIGJtY3dlYioNCj4+DQo+PiBUaGlzIGlzIHByZXR0
+eSBlYXN5IHRvIHNheSwgYW5kIGhhcmRlciB0byBkby4gSSd2ZSBiZWVuIHRoaW5raW5nIGEgDQo+
+PiBiaXQgYWJvdXQgaG93IHRvIGFkZCBpbiB1bml0IHRlc3RzIHdpdGhvdXQgdGhlbSBiZWluZyB0
+b28gZnJhZ2lsZS4gDQo+PiAoVGhpcyB3YXMgYWxzbyBzb21ldGhpbmcgdGhhdCBnZWlzc29uYXRv
+ciBtZW50aW9uZWQpLg0KPj4NCj4+ICpEQnVzIFZpcnR1YWxpemF0aW9uIGFuZCBQbGF5YmFjayoN
+Cj4+DQo+PiBPbmUgdGhpbmcgdGhhdCBJIHRoaW5rIG1ha2VzIHVuaXQgdGVzdGluZyBpbiBzb21l
+IG1vZHVsZXMgaGFyZCBpcyANCj4+IHRoYXQgdGhlcmUgaXMgYSBoaWdoIGJhcnJpZXIgYXJvdW5k
+IG1vY2tpbmcgREJ1cy7CoCBJJ20gbm90IHN1cmUgdGhlIA0KPj4gYmVzdCB3YXkgdG8gYnVpbGQg
+dGhpcyBzdXN0YWluYWJseSwgYnV0IGl0IHdvdWxkIGhlbHAgaW1wcm92ZSBvdXIgQ0kgdGVzdGlu
+Zy4NCj4+DQo+PiAqT3BlbkFQSSBmb3IgUmVkZmlzaCoNCj4+DQo+PiBTbyBmYXIgdGhlIGdlbmVy
+YWwgaW1wcmVzc2lvbiBJJ3ZlIHNlZW4gd2l0aCB0aGlzIGlzIHRoYXQgdGhlIFN3YWdnZXIgDQo+
+PiBvdXRwdXQgZm9yIE9wZW5BUEkgaXNuJ3QgcmVhbGx5IGdvb2QgZm9yIEMrKy7CoCBFaXRoZXIg
+dGhlIGVyZ29ub21pY3MgDQo+PiBhcmVuJ3QgcmVhbGx5IGdvb2QsIG9yIHRoZXJlIGlzIGEgbG90
+IG9mIGNvZGUgYmxvYXQuwqAgSSdkIGxvdmUgdG8gDQo+PiBoYXZlIHNvbWUgT3BlbkFQSSBiaW5k
+aW5ncyB0aGF0IHdvcmsgd2VsbCBpbiBPcGVuQk1DLg0KPj4NCj4+ICpSVVNUIT8hPyoNCj4+DQo+
+PiBJJ20gYmV0dGluZyBhIGxvdCBvZiBwZW9wbGUgaGF2ZSB0aG91Z2h0IGFib3V0IFJ1c3QuIEkn
+ZCBsb3ZlIHRvIGhlYXIgDQo+PiB3aGF0IHBlb3BsZSBoYXZlIHRyaWVkIGFuZCB3aGF0IGFyZSB0
+aGUgc3RpY2tpbmcgcG9pbnRzLsKgIEFueSANCj4+IHRob3VnaHRzIG9uIHdoYXQgbW9kdWxlL2Z1
+bmN0aW9uYWxpdHkgY291bGQgYmUgYSBkZWNlbnQgY2FuZGlkYXRlwqBmb3IgDQo+PiBicmVha2lu
+ZyBncm91bmQgaGVyZT8NCj4+DQo+IA0KPiBXZSBkaXNjdXNzZWQgdGhlIHJ1c3QgbGFuZ3VhZ2Ug
+aW4gdGhlIE9wZW5CTUMgc2VjdXJpdHkgd29ya2luZyBncm91cCANCj4gbWVldGluZ3MgMjAxOS0x
+MC0wMiBPcGVuQk1DIHNlY3VyaXR5IHdvcmtpbmcgZ3JvdXAgbWludXRlczoNCj4gaHR0cHM6Ly9u
+YW0wNi5zYWZlbGlua3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJG
+ZG9jcw0KPiAuZ29vZ2xlLmNvbSUyRmRvY3VtZW50JTJGZCUyRjFiN3g5QmF4c2ZjdWtRRHFidlpz
+VTJlaE1xNHhvSlJRdkx4eHNEVVdtDQo+IEFPSSZhbXA7ZGF0YT0wMiU3QzAxJTdDbmVsYWRrJTQw
+bWljcm9zb2Z0LmNvbSU3QzkxNmNlY2I3ZjAyZDQ5YTY5YmI2MDgNCj4gZDdkZDViZmE0ZiU3Qzcy
+Zjk4OGJmODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3JTdDMSU3QzAlN0M2MzcyMjEyNTk0MjQ2Mg0K
+PiAzMjAxJmFtcDtzZGF0YT1pbENWenV6ZXlScURGdTU2aGE5elhvRTElMkY2bXBHTkswZTdZd1FJ
+dW9SU2clM0QmYW1wO3JlDQo+IHNlcnZlZD0wDQo+IA0KPiANCj4+IC1SaWNoYXJkDQo+Pg0KPj4g
+T24gVGh1LCBBcHIgOSwgMjAyMCBhdCAyOjU0IFBNIFJpY2hhcmQgSGFubGV5IDxyaGFubGV5QGdv
+b2dsZS5jb20gDQo+PiA8bWFpbHRvOnJoYW5sZXlAZ29vZ2xlLmNvbT4+IHdyb3RlOg0KPj4NCj4+
+IMKgwqDCoCBIaSBldmVyeW9uZSwNCj4+DQo+PiDCoMKgwqAgTGFzdCB3ZWVrIEkgc3RhcnRlZCBh
+IHRocmVhZCBvbiBPcGVuIEJNQyBHYXJkZW5pbmcNCj4+ICAgICANCj4+IDxodHRwczovL25hbTA2
+LnNhZmVsaW5rcy5wcm90ZWN0aW9uLm91dGxvb2suY29tLz91cmw9aHR0cHMlM0ElMkYlMkZ1cg0K
+Pj4gbGRlZmVuc2UucHJvb2Zwb2ludC5jb20lMkZ2MiUyRnVybCUzRnUlM0RodHRwcy0zQV9fbGlz
+dHMub3psYWJzLm9yZ19wDQo+PiBpcGVybWFpbF9vcGVuYm1jXzIwMjAtMkRBcHJpbF8wMjExMDAu
+aHRtbCUyNmQlM0REd01GYVElMjZjJTNENVZEMFJUdE4NCj4+IGxUaDN5Y2Q0MWIzTVV3JTI2ciUz
+RHY5TVUwS2k5cFduVFhDV3dqSFBWZ3BuQ1I4MHZYa2tjcklhcVU3VVNsNWclMjZtJQ0KPj4gM0Rm
+QVpadG1XbDRnOFZuZ2s1Nl9SczA5aGdTOTZUWVFNZXlSc3laS0dIekFvJTI2cyUzREhYZEhsNTZq
+cTRwNWVYYmh5DQo+PiBVSFVra21vRl9oR2g1dEpXTVVhVktRNjhWTSUyNmUlM0QmYW1wO2RhdGE9
+MDIlN0MwMSU3Q25lbGFkayU0MG1pY3Jvc28NCj4+IGZ0LmNvbSU3QzkxNmNlY2I3ZjAyZDQ5YTY5
+YmI2MDhkN2RkNWJmYTRmJTdDNzJmOTg4YmY4NmYxNDFhZjkxYWIyZDdjZA0KPj4gMDExZGI0NyU3
+QzElN0MwJTdDNjM3MjIxMjU5NDI0NjIzMjAxJmFtcDtzZGF0YT1zdXBGbGI4N3p6JTJGSkNIYlRm
+UmtaDQo+PiBpRHM0cUk2MyUyQml0eGx0RW5WaDZSUTBzJTNEJmFtcDtyZXNlcnZlZD0wPiwNCj4+
+DQo+PiDCoMKgwqAgYW5kIEkgd2FudGVkIHRvIGtpY2sgb2ZmIHRoZSBwcm9jZXNzLg0KPj4NCj4+
+IMKgwqDCoCBUaGUgYmFzaWMgaWRlYSBoZXJlIGlzIHRvIGdldCBhIHN1cnZlecKgb2YgdmFyaW91
+cw0KPj4gwqDCoMKgIGltcHJvdmVtZW50wqB0YXNrcyB0aHJvdWdob3V0IE9wZW5CTUMuwqAgU29t
+ZSB0aGluZ3MgbWlnaHQgYmUgc21hbGwNCj4+IMKgwqDCoCByZWZhY3RvcmluZyBvciBjaGFuZ2Vz
+IHRoYXQgY2FuIGJlIGRvbmUgaW5jcmVtZW50YWxseSAoaS5lLg0KPj4gwqDCoMKgIHdlZWRpbmcg
+dGhlIGdhcmRlbikuIE90aGVyIHRhc2tzIG1pZ2h0IGJlIG1vcmUgcmVzZWFyY2ggb3INCj4+IMKg
+wqDCoCBzdHJ1Y3R1cmFsIChpLmUuIGV4Y2F2YXRpbmcgdGhlIGdhcmRlbikuDQo+Pg0KPj4gwqDC
+oMKgIEp1c3QgZ2V0dGluZyB0aGVzZSBpbiB3cml0aW5nIGNhbiBiZSBoZWxwZnVsIGZvciBvdGhl
+cnMgdG8gZ2F1Z2UNCj4+IMKgwqDCoCB3aGF0IHRoZXkgc2hvdWxkIGZvY3VzIG9uLiBJdCBhbHNv
+IGhlbHBzIGxlYXZlIGJyZWFkY3J1bWJzIGZvciANCj4+IGFueQ0KPj4gwqDCoMKgIG5ldyBkZXZl
+bG9wZXIgaW50ZXJlc3RlZCBpbiB0aGUgc3ViamVjdC4NCj4+DQo+IA0KPiBSaWNoYXJkLA0KPiAN
+Cj4gVGhhbmtzIGZvciB5b3VyIGVmZm9ydHMgdG8gbW92ZSB0aGlzIGZvcndhcmQuDQo+IA0KPiBT
+ZWN1cml0eSB3aXNoIGxpc3QgaGVyZTogDQo+IGh0dHBzOi8vbmFtMDYuc2FmZWxpbmtzLnByb3Rl
+Y3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmdpdGgNCj4gdWIuY29tJTJGb3Bl
+bmJtYyUyRm9wZW5ibWMlMkZ3aWtpJTJGU2VjdXJpdHktd29ya2luZy1ncm91cCUyM3NlY3VyaXR5
+LQ0KPiBmZWF0dXJlLXdpc2gtbGlzdCZhbXA7ZGF0YT0wMiU3QzAxJTdDbmVsYWRrJTQwbWljcm9z
+b2Z0LmNvbSU3QzkxNmNlY2I3DQo+IGYwMmQ0OWE2OWJiNjA4ZDdkZDViZmE0ZiU3QzcyZjk4OGJm
+ODZmMTQxYWY5MWFiMmQ3Y2QwMTFkYjQ3JTdDMSU3QzAlN0MNCj4gNjM3MjIxMjU5NDI0NjIzMjAx
+JmFtcDtzZGF0YT1CbmpLdVklMkZIZFNZOUhmWmhWU2VuS2lLOUw0U1olMkZEOHNOaWxlcg0KPiB3
+RDIzZFUlM0QmYW1wO3Jlc2VydmVkPTANCj4gDQo+IA0KPiAtIEpvc2VwaA0KPiANCj4+IMKgwqDC
+oCBTbyBoZXJlJ3MgaG93IEkgc2VlIHRoaXMgd29ya2luZy4gQW55b25lIHdobyBoYXMgc29tZSBp
+ZGVhcyBjYW4NCj4+IMKgwqDCoCByZXBseSB0byB0aGlzIHRocmVhZCB3aXRoIGEgc2hvcnQgdG8g
+bWVkaXVtIGRlc2NyaXB0aW9uLsKgIFRyeSB0bw0KPj4gwqDCoMKgIGF2b2lkIG5ldyBmZWF0dXJl
+cywgYW5kIGluc3RlYWQgbG9vayBhdCB3YXlzIHdlIGNvdWxkIGltcHJvdmUgdGhlDQo+PiDCoMKg
+wqAgc3RhdHVzIHF1by4gVGhpbmsgYWJvdXQgY2hhbmdlcyBhbmQgdG9vbHMgdGhhdCB3b3VsZCBt
+YWtlIHlvdXIgDQo+PiBkYXkNCj4+IMKgwqDCoCB0byBkYXkgbGlmZSBiZXR0ZXIuDQo+Pg0KPj4g
+wqDCoMKgIEZyb20gdGhlcmUgd2UgY2FuIGRvIGEgd3JpdGUgdXAgYWJvdXQgd2hhdCB3ZSBrbm93
+IGFib3V0IHRoZQ0KPj4gwqDCoMKgIGlzc3VlLsKgIFRoaXMgY2FuIGZ1bmN0aW9uIGFzIGFuIGVh
+cmx5IHN0YWdlIGRlc2lnbiBkb2MgdGhhdCBnaXZlcw0KPj4gwqDCoMKgIGEgYnJvYWQgb3ZlcnZp
+ZXcgb24gd2hlcmUgdGhlIGRldidzIGhlYWQgaXMgYXQgcmlnaHQgbm93Lg0KPj4NCj4+IMKgwqDC
+oCBGaW5hbGx5LCB3ZSBjYW4gZG8gYSBxdWFydGVybHkgcmV2aWV3IHRvIGtlZXAgdGhlIGdhcmRl
+bg0KPj4gwqDCoMKgIHJlZnJlc2hlZC4gT2J2aW91c2x5LCB0aGluZ3MgY2FuIGNoYW5nZSBiZXR3
+ZWVuIHRoYXQgdGltZSwgYnV0DQo+PiDCoMKgwqAgaGF2aW5nIGEgc2VtaS1yZWd1bGFyIGNhZGVu
+Y2Ugd2lsbCBob3BlZnVsbHkgZ2l2ZSB1cyBhIGJldHRlcg0KPj4gwqDCoMKgIGNoYW5jZSBvZiBr
+ZWVwaW5nIHRoaXMgdXAgdG8gZGF0ZS4NCj4+DQo+PiDCoMKgwqAgLSBSaWNoYXJkDQo+Pg0KPiAN
+Cg0K
