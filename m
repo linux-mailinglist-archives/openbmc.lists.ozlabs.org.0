@@ -2,50 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 093451A8722
-	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 19:12:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 422401A8899
+	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 20:07:42 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 491sVg4ZVvzDr3L
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 03:12:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 491tkM278NzDqwt
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 04:07:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ dmarc=none (p=none dis=none) header.from=us.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 491rwY1MN2zDqtR
- for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 02:46:19 +1000 (AEST)
-IronPort-SDR: ieBdZ/dhzuCKALJhz5DmHtnqdUxV9IKSkIfrbd3sVgAG5s3tjcJlUjqeO1out9/uQ781ea5MQS
- 9Cbw6zlB5y2g==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2020 09:46:11 -0700
-IronPort-SDR: 449oRtg2aLugJl3oi+rtKlr8qFmNPZNauqJ3NskKqVKFYmqOD1wTC1U84dcFX7N7RAyMdTVAiU
- zPCaEOrfGYpg==
-X-IronPort-AV: E=Sophos;i="5.72,383,1580803200"; d="scan'208";a="242046689"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2020 09:46:11 -0700
-Date: Tue, 14 Apr 2020 09:46:10 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: ipmi password storage
-Message-ID: <20200414164610.GC9295@mauery.jf.intel.com>
-References: <20200413230015.GB9295@mauery.jf.intel.com>
- <20200414155019.GB443018@heinlein.lan.stwcx.xyz>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 491tj14T0fzDqwp
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 04:06:27 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03EI6E4r123523
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 14:06:21 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.114])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30b6sgdx6g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 14:06:19 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
+ Tue, 14 Apr 2020 18:04:41 -0000
+Received: from us1b3-smtp08.a3dr.sjc01.isc4sb.com (10.122.203.190)
+ by smtp.notes.na.collabserv.com (10.122.47.58) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 14 Apr 2020 18:04:38 -0000
+Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
+ by us1b3-smtp08.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2020041418043721-664928 ;
+ Tue, 14 Apr 2020 18:04:37 +0000 
+In-Reply-To: <20200413230015.GB9295@mauery.jf.intel.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: Vernon Mauery <vernon.mauery@linux.intel.com>
+Date: Tue, 14 Apr 2020 18:04:36 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20200414155019.GB443018@heinlein.lan.stwcx.xyz>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <20200413230015.GB9295@mauery.jf.intel.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP64 March 05, 2020 at 12:58
+X-LLNOutbound: False
+X-Disclaimed: 839
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20041418-1639-0000-0000-000001D27A9F
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.006015
+X-IBM-SpamModules-Versions: BY=3.00012911; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000293; SDB=6.01362413; UDB=6.00727402; IPR=6.01144779; 
+ MB=3.00031697; MTD=3.00000008; XFM=3.00000015; UTC=2020-04-14 18:04:39
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-04-14 16:37:25 - 6.00011241
+x-cbparentid: 20041418-1640-0000-0000-000057C07F59
+Message-Id: <OFED1A87B9.D16D66BD-ON0025854A.004EDFC4-0025854A.00634C8E@notes.na.collabserv.com>
+Subject: Re:  ipmi password storage
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-14_09:2020-04-14,
+ 2020-04-14 signatures=0
+X-Proofpoint-Spam-Reason: safe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,113 +87,59 @@ Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 14-Apr-2020 10:50 AM, Patrick Williams wrote:
->On Mon, Apr 13, 2020 at 04:00:15PM -0700, Vernon Mauery wrote:
+On Apr 13, 2020 around 6:01PM in some time zone, Vernon Mauery wrote:
 >
->Vernon,
+>Internally, an issue was raised that basically says that the
+>mechanism=20
+>by which we are storing the IPMI passwords on the BMC is
+>insufficiently=20
+>obfuscated. I have come up with a patch set that resolves this at the
 >
->Is there some background pointers on why IPMI needs to store passwords
->in a reverable way?  I never understood that.
+>expense of no downgrading the BMC without the side-effect of losing
+>all=20
+>IPMI passwords. I would like to know what the community thinks about=20
+>usability vs. security in this scenario.
 
-Sure. I think this is most clearly described in section 13.31 "RMCP+ 
-Authenticated Key-Exchange Protocol (RAKP)" in the IPMI v2 1.1 spec.
+...
 
-Here is a high level overview though: It is baked into the RMCP+ key 
-exchange (RAKP). The password never goes across the wire in plaintext, 
-but it does get used during the session creation in RAKP messages as the 
-key to integrity and authentication HMACs.
-
-Specifically, the RAKP3 message (User->BMC) contains an HMAC of the 
-various parts of the exchanged session (User random number, session ID, Role, 
-Username) using the password as the key for the HMAC. The BMC needs to 
-compute this same HMAC to compare (this is the main authentication 
-challenge).
-
-Then, the session key is generated using an HMAC of similar 
-data (BMC random number, user random number, role, username) using 
-either the user password or the channel password. Almost nobody uses the 
-channel password, which is good because it allows for simple privilege 
-escalation and session hijacking.
-
-Both sides use the same inputs and HMAC key, so the BMC needs to store 
-the user passwords in a way that they can be used as the key for an 
-HMAC. Ideally this would be stored in some sort of secure enclave or 
-HSM, but that is not yet available.
-
---Vernon
-
->> Internally, an issue was raised that basically says that the mechanism
->> by which we are storing the IPMI passwords on the BMC is insufficiently
->> obfuscated. I have come up with a patch set that resolves this at the
->> expense of no downgrading the BMC without the side-effect of losing all
->> IPMI passwords. I would like to know what the community thinks about
->> usability vs. security in this scenario.
->>
->> Current Implementation
->> ======================
->> 1) If the user is part of the ipmi group (/etc/group) then when the user
->> changes their password, pam-ipmisave.so intercepts the password as a one
->> of the PAM layers and saves it, encrypted, to /etc/ipmi_pass.
->> 2) Encryption (obfuscation, because we don't really have a secure
->> mechanism of storing secret keys), is done like this:
->>    a) read 8 bytes (S) from /etc/key_file (currently pre-loaded with "OPENBMC=")
->>    b) create a random value H (read from /dev/urandom)
->>    c) create the AES-CBC secret key K=HMAC-SHA256(S, H)
->>    d) encrypt the list of username:password data using K
->>    e) store H along with the encrypted data in /etc/ipmi_pass
->> 3) reading the password (for establishing IPMI RMCP+ sessions)
->>    a) read 8 bytes (S) from /etc/key_file
->>    b) read H from /etc/ipmi_pass
->>    c) compute the AES-CBC secret key K=HMAC-SHA256(S, H)
->>    d) decrypt and verify the contents of /etc/key_file
->>
->>
->> There are many issues with this mechanism, but we cannot fix all of them
->> without some secure mechanism for storing secret keys. That is why
->> really, at best, this is obfuscation, not encryption. The data is not in
->> plain text, it takes some work to get to it. More than xor or rot13, but
->> not so much that a person could do it with a bash script.
->> 1) the default /etc/key_file is the same for every BMC built with the
->> default settings (changing this requires a bbappend for pam-ipmi). This
->> means the /etc/key_file could basically not exist; all you need is the
->> algorithm and /etc/ipmi_pass.
->> 2) the size of the /etc/key_file is also not really great. Even if it
->> was different on every machine, computing only 2^64 possibilities is not
->> so hard.
->>
->>
->> Possible Solution
->> =================
->> Migrate to a solution that uses a key that is longer that does not
->> get written directly to the flash
->> 1) S is now computed instead of hard-coded. S=HMAC(MachineId, AppID)
->> 2) S is longer (32 bytes instead of 8)
->> 3) S is not written to flash, because it can be computed
->> 4) S is different for every machine because it is a derivative of
->> /etc/machine-id
->>
->> The migration from the old mechanism to the new could be done simply by
->> using the new key on the next write to the /etc/ipmi_pass file. After a
->> firmware update to this new code, a password change would trigger a
->> decrypt of the /etc/ipmi_pass file, a modification of the plain text,
->> and a re-encryption of the data. If it reads the 'legacy' key in and
->> writes out the data using the new key mechanism and deletes the legacy
->> key, it would use the new key mechanism from that point onward. However,
->> this would cause any downgrades to prior versions to fail to decrypt the
->> /etc/ipmi_pass file, thereby losing all the ipmi passwords. This is not
->> ideal, but could possibly be mitigating by truncating the new machine-id
->> derivative password to 8 bytes and storing it in the /etc/key_file
->> instead of just deleting it. This might improve security only slightly
->> at for the price of a better user experience.
->>
->> I know that some companies using OpenBMC have products with users out in
->> the field, so it is not great to make changes like this. Also, it is not
->> great to have low-grade security. So here I am, writing to ask for
->> opinions and options.
->>
->> --Vernon
+>The migration from the old mechanism to the new could be done simply>by=20
+>using the new key on the next write to the /etc/ipmi=5Fpass file. After
+>a=20
+>firmware update to this new code, a password change would trigger a=20
+>decrypt of the /etc/ipmi=5Fpass file, a modification of the plain text,
 >
->-- 
->Patrick Williams
+>and a re-encryption of the data. If it reads the 'legacy' key in and=20
+>writes out the data using the new key mechanism and deletes the
+>legacy=20
+>key, it would use the new key mechanism from that point onward.
+>However,=20
+>this would cause any downgrades to prior versions to fail to decrypt
+>the=20
+>/etc/ipmi=5Fpass file, thereby losing all the ipmi passwords. This is
+>not=20
+>ideal, but could possibly be mitigating by truncating the new
+>machine-id=20
+>derivative password to 8 bytes and storing it in the /etc/key=5Ffile=20
+>instead of just deleting it. This might improve security only
+>slightly=20
+>at for the price of a better user experience.
+>
 
+I'll point out the code to handle the new password could be added=20
+before the cdoe to use the new method, allowing test and revert=20
+until the users are upgraded to the new method.  It does require=20
+both methods to be supported.
+
+I didn't follow why currently all openbmc systems end up with
+the same encryption^Wobsfucation for what that is worth.
+
+>I know that some companies using OpenBMC have products with users out>in=20
+>the field, so it is not great to make changes like this. Also, it is
+>not=20
+>great to have low-grade security. So here I am, writing to ask for=20
+>opinions and options.
+>
+>--Vernon
+
+Milton
 
