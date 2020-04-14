@@ -2,68 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82F0B1A78CA
-	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 12:52:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D24351A78CE
+	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 12:53:36 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 491j4C4QDZzDqcN
-	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 20:52:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 491j5V0qMJzDqWd
+	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 20:53:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::442;
- helo=mail-pf1-x442.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1041;
+ helo=mail-pj1-x1041.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=g3RHP2Os; dkim-atps=neutral
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com
- [IPv6:2607:f8b0:4864:20::442])
+ header.s=20161025 header.b=vN2vA2E6; dkim-atps=neutral
+Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com
+ [IPv6:2607:f8b0:4864:20::1041])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 491j3Y0rgdzDqWR
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 20:51:52 +1000 (AEST)
-Received: by mail-pf1-x442.google.com with SMTP id a13so5891958pfa.2
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 03:51:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 491j3Z3T1MzDqWd
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 20:51:54 +1000 (AEST)
+Received: by mail-pj1-x1041.google.com with SMTP id b7so5117135pju.0
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 03:51:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=1jryGiSpOzAUnTSPByMu8P85OVM8Tp1VW/wh7Tg1Xbw=;
- b=g3RHP2Os7qPZL/GomdraOUkf/jcpKhZDZ8Zp+z69gfVFt5d92d8FBbgR3JtqYxoSwj
- tg3Jy5Wxwkyme+T2f/MbZElBeKYIRv0EQtgaAr9sox/GTcxWsPpiyEdg3JTmQDHaMwIK
- 6eGiQqsBZr6OoGICmRyQUCuasaBjRxHwWveS1roecBHWMG+EqWWx07wQW95h/CFS8b7I
- syp+tEPOBKHi2AMbL7x13yQUq1TR/Dnkl8tSlMFzxMPY4t94QyLPGlHx0qtL6AvoT8Gg
- vKmfdr7zlP3mmENe96/PBdtLa0drFJZK0y522/C1oTvYOEm3aP9EqH3oicTS1HHPv+1Y
- stIg==
+ h=sender:from:to:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=opCghKgW45K6s/aXjwfbAM0eR5FcASZUBfMMaA4u+xU=;
+ b=vN2vA2E6rf203GoQRb3xT0Ui4m18w4B1ZPXVTsndQcmHORwxoAj5db7gzv1C3f6lGw
+ kbajW+c8R4oow6+jFTlkOud8W5r4/p1nA7cN23pjgjNxZWDs3LidCdrvVjuDRDdcX8Qw
+ KRWRMu66sFBiFHFf3qX64VR8/wpH4awdCo7yqDC2pj79C7OcvWinBBLoZM1+w1QjLzjI
+ drdm6tt6yR+yqIpmqT1y5tRdVaS4uRzJGyxyDS5x5aCC3SvxKA+HBKzfLezdh67niryv
+ dj1Oy4IFrYVIord9/OqA/LG50uCGfJ7BeWi/RNnM8GWgyoGf9QjKMXEuVWKhvCeRx1eV
+ 8f5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=1jryGiSpOzAUnTSPByMu8P85OVM8Tp1VW/wh7Tg1Xbw=;
- b=jYkNKbTjMJJm4wRZ9tMOpGkWoRoDD4vZiLtRucMYIIDPixBLIQQlZR6GvhoOkUtYjj
- zZ44RYYblWY9Qj9aOql999VEiz999s9feLQ+RNiH3TsLsaKoxmMMpDgwQvp/ZDU+2bo+
- e8rPXZ9rxOF7KeKABuwfbn2q6sKBi5s2WeV2HBflPee6nVfPmywbTQ/4R3zd/B5+Jmsu
- DTHRCtsT3aFCeX5t/QRBvyuBspBh3aI5JCQbYjqyhSJUJDLjZaYfaOLpR9QzqVyJCfJ3
- Xt+3QcWEBhDd7Gk0j5us6xViy7pvlMzJm31stqSZ5TzcrChzyIrRlLQ05M1AchxD3AK0
- nDtw==
-X-Gm-Message-State: AGi0PuaRwpF30+ky57JFZMP1Aegai5tkPmg0gH1obCSEh5LMVn7a/xWQ
- xxWYKf3jKjaUsw3O2LA+uAZ+K3/4INM=
-X-Google-Smtp-Source: APiQypIkZ70S++b6H9bJhowo3sF6ujRmmW2P23XTjdUt3oW5VVycaMhZR19bDESxMKQ99mavQqKCJA==
-X-Received: by 2002:a62:778d:: with SMTP id s135mr23461343pfc.21.1586861509089; 
- Tue, 14 Apr 2020 03:51:49 -0700 (PDT)
+ :in-reply-to:references:mime-version:content-transfer-encoding;
+ bh=opCghKgW45K6s/aXjwfbAM0eR5FcASZUBfMMaA4u+xU=;
+ b=QKAsQI3XkigEvFL6G2laTxqqAuIM3JHrv2YNjr8o6bj7gRcGbgYqVqWI7xjrHm3eRa
+ 0kKlxehzRWkuMxhsXfDKD86uMj0iFupYu7qcESGE1OtWW9qo13F6Kht8dtNwBKsnf7+c
+ +FRhmQzO4pEFOjd8bDqD5AFRkj2dB0buzYokHpCNt9u7phLLqM9tkDzhhSKVAgakf6jV
+ QMRAHMbiUjzer3TKaT17y8JvgBfAWRfpy9e58Vox7++qXpsqAbVPvatS0R++YpCbhcLZ
+ iQ1NguWx6mi2+/QNCUVEoNQm6vvgM/77Yl1LfqIamPslofoiyzg3m8RAW1XD6xbQTw/3
+ lN9g==
+X-Gm-Message-State: AGi0PuYBiLpk0cu2PombYeZKxsfRYa0rlRliBS0+9mt+Pxxe/Y1mSjUj
+ sXgaxGEvKyKrh2kA/ctQ5Uw9kc+1BG0=
+X-Google-Smtp-Source: APiQypI+VvQxtGDv5SzEVN8HRL17XDVz2Flio5OAy8xut8fSEspOzuFp2axHXIU/JTuriJeeP9ax7A==
+X-Received: by 2002:a17:902:6b0a:: with SMTP id
+ o10mr21434542plk.32.1586861511728; 
+ Tue, 14 Apr 2020 03:51:51 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
- by smtp.gmail.com with ESMTPSA id r28sm4556820pfg.186.2020.04.14.03.51.46
+ by smtp.gmail.com with ESMTPSA id r28sm4556820pfg.186.2020.04.14.03.51.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 14 Apr 2020 03:51:48 -0700 (PDT)
+ Tue, 14 Apr 2020 03:51:51 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
  Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.4 0/2] fsi: aspeed: Divisor settings
-Date: Tue, 14 Apr 2020 20:21:38 +0930
-Message-Id: <20200414105140.1089095-1-joel@jms.id.au>
+Subject: [PATCH linux dev-5.4 1/2] fsi: aspeed: Run the bus at maximum speed
+Date: Tue, 14 Apr 2020 20:21:39 +0930
+Message-Id: <20200414105140.1089095-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200414105140.1089095-1-joel@jms.id.au>
+References: <20200414105140.1089095-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -80,16 +83,60 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This defaults the ASPEED FSI master to a faster bus speed, and allows a
-user to override the speed using the kernel command line.
+Testing of Tacoma has shown that the ASPEED master can be run at maximum
+speed.
 
-Joel Stanley (2):
-  fsi: aspeed: Run the bus at maximum speed
-  fsi: aspeed: Add module param for bus divisor
+The exception is when wired externally with a cable, in which case we
+use a divisor of two to ensure reliable operation.
 
- drivers/fsi/fsi-master-aspeed.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/fsi/fsi-master-aspeed.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
+index fe2da6f90590..80bc9132e4f8 100644
+--- a/drivers/fsi/fsi-master-aspeed.c
++++ b/drivers/fsi/fsi-master-aspeed.c
+@@ -83,7 +83,11 @@ static const u32 fsi_base = 0xa0000000;
+ 
+ #define FSI_LINK_ENABLE_SETUP_TIME	10	/* in mS */
+ 
+-#define DEFAULT_DIVISOR			14
++/* Run the bus at maximum speed by default */
++#define FSI_DIVISOR_DEFAULT            1
++#define FSI_DIVISOR_CABLED             2
++static u16 aspeed_fsi_divisor = FSI_DIVISOR_DEFAULT;
++
+ #define OPB_POLL_TIMEOUT		10000
+ 
+ static int __opb_write(struct fsi_master_aspeed *aspeed, u32 addr,
+@@ -389,9 +393,11 @@ static int aspeed_master_init(struct fsi_master_aspeed *aspeed)
+ 	opb_writel(aspeed, ctrl_base + FSI_MECTRL, reg);
+ 
+ 	reg = cpu_to_be32(FSI_MMODE_ECRC | FSI_MMODE_EPC | FSI_MMODE_RELA
+-			| fsi_mmode_crs0(DEFAULT_DIVISOR)
+-			| fsi_mmode_crs1(DEFAULT_DIVISOR)
++			| fsi_mmode_crs0(aspeed_fsi_divisor)
++			| fsi_mmode_crs1(aspeed_fsi_divisor)
+ 			| FSI_MMODE_P8_TO_LSB);
++	dev_info(aspeed->dev, "mmode set to %08x (divisor %d)\n",
++			be32_to_cpu(reg), aspeed_fsi_divisor);
+ 	opb_writel(aspeed, ctrl_base + FSI_MMODE, reg);
+ 
+ 	reg = cpu_to_be32(0xffff0000);
+@@ -450,6 +456,11 @@ static int tacoma_cabled_fsi_fixup(struct device *dev)
+ 
+ 	/* If the routing GPIO is high we should set the mux to low. */
+ 	if (gpio) {
++		/*
++		 * Cable signal integrity means we should run the bus
++		 * slightly slower
++		 */
++		aspeed_fsi_divisor = FSI_DIVISOR_CABLED;
+ 		gpiod_direction_output(mux_gpio, 0);
+ 		dev_info(dev, "FSI configured for external cable\n");
+ 	} else {
 -- 
 2.25.1
 
