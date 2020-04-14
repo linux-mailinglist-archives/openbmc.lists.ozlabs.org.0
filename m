@@ -1,51 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 130F51A8A92
-	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 21:17:56 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 491wHP1v0czDqvv
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 05:17:53 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A5B1C1A8CAF
+	for <lists+openbmc@lfdr.de>; Tue, 14 Apr 2020 22:42:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 491y8Z5VDBzDqwf
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 06:42:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12e;
+ helo=mail-lf1-x12e.google.com; envelope-from=rhanley@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=ORBSXsmu; dkim-atps=neutral
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
+ [IPv6:2a00:1450:4864:20::12e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 491wCv4rV4zDqvn
- for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 05:14:49 +1000 (AEST)
-IronPort-SDR: YBTAsTViDTx9oBK6eIPapOZuLnsxdPp4iRZHu5H+PU4QtRdfMjZRH39+FCze2YErfsWw0qwJq7
- gUh/ibwAloYg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2020 12:14:45 -0700
-IronPort-SDR: C1RpqG3/7yYN/kmRlBPOLIGFpcXPRYqb6RcHDqTYWMXaY8CfKzl2ekvjK3mBcYIFUTBnIhreK9
- +dDzuH2TdKig==
-X-IronPort-AV: E=Sophos;i="5.72,383,1580803200"; d="scan'208";a="288312798"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Apr 2020 12:14:45 -0700
-Date: Tue, 14 Apr 2020 12:14:44 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Milton Miller II <miltonm@us.ibm.com>
-Subject: Re: ipmi password storage
-Message-ID: <20200414191444.GE9295@mauery.jf.intel.com>
-References: <20200413230015.GB9295@mauery.jf.intel.com>
- <OFED1A87B9.D16D66BD-ON0025854A.004EDFC4-0025854A.00634C8E@notes.na.collabserv.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 491y7v22XBzDqvh
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 06:41:30 +1000 (AEST)
+Received: by mail-lf1-x12e.google.com with SMTP id t11so881820lfe.4
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 13:41:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=67Qrs7HqOLr7PxG12ieUTqnENQcK05FxyQM3nVs/3Ac=;
+ b=ORBSXsmuD66k4awVdQ+Hj90mA9wWEw63Ra+3AT0StURyqdRN40qW1y5AN8MKlEPNZf
+ f4300246kY6vy/Bw+BK9LTK0tUTgsvmTu+RRLLXHtiIljpMDmxu2Hffhve3tWyBgkr+j
+ McDIghnWlwfbR9Mf/gBOCs05mUH2P9qgw9JPxSmyjoXGLSxEQPuXhjXAH0Y2GaFZYRKO
+ YEOud+LOlCpy3GghetAEJTV0QR98kKo2g+/uDCN4zGpBvZ21GWme+Beiay2JKDx1vaXu
+ lCde7khVYUSRUXd0eF7QcI0SI+isrBfSV2K9t2Svci59OiPPbSJxu1+/615/Kg6+FLPs
+ Eguw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=67Qrs7HqOLr7PxG12ieUTqnENQcK05FxyQM3nVs/3Ac=;
+ b=O/3m6V1vad8kd4ndlmQgS3Sdy/OmAyDV6c6VvPgBpcPm3Dma24IKwbiDwevUzicDr9
+ Q6QRufV/KtzndDEPKAX6D0JYMGLuVpbp12uIqF2pS34DIX0LCFGyksLfT7j2MtDCM8nz
+ gJPNrZffXd+SrsKSzND9hBHHY0kCfxh6gmACgr+cf+b5ACHICUwUAXTudoY91zvrgWMb
+ 3NzM9drjVnxwtHj7AP+P+LvH2TVekXzKnpvh3nq1taCtBRRPRenh1fXR5ezH/S3tbKtZ
+ GXOsZG0eiUv4WaFd72jyOfmLn2ipdSW/HDV7s0ol+sYIOLyhfnWxrE2Byp6Hi/wHavm6
+ 9Ycg==
+X-Gm-Message-State: AGi0PuY5ws7otoFODU1vOO5v58wyin6VJc7gNHUTL7WyJfbmyXJzu947
+ aw8CX60Ltt5HQM377pEpLrB/N1BOnYHTO6zAB7Jhlw==
+X-Google-Smtp-Source: APiQypKJgsJfqIeSmLZVpgOrwwZz5oGD6HfrPjZHKokR8C32algS5wY5vlA9VO/XY0UgQmNI0blCem3tyAvVnL8uGXg=
+X-Received: by 2002:ac2:489b:: with SMTP id x27mr972876lfc.60.1586896885940;
+ Tue, 14 Apr 2020 13:41:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <OFED1A87B9.D16D66BD-ON0025854A.004EDFC4-0025854A.00634C8E@notes.na.collabserv.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <EED5BF91-4AE9-4B5A-BE68-BAE3D93C3704@fb.com>
+ <20200410210033.GA9295@mauery.jf.intel.com>
+ <85700953-1CBE-4DFB-9A5B-AF64B9735735@fuzziesquirrel.com>
+ <A785371B-1AD2-45E0-AD62-60C7E8B2C69D@fb.com>
+In-Reply-To: <A785371B-1AD2-45E0-AD62-60C7E8B2C69D@fb.com>
+From: Richard Hanley <rhanley@google.com>
+Date: Tue, 14 Apr 2020 13:41:14 -0700
+Message-ID: <CAH1kD+b4GQFs_V13APk8123dc_vL0GVxXwZLx6pPdUHiKodZRA@mail.gmail.com>
+Subject: Re: Sensor history
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: multipart/alternative; boundary="0000000000002eef2805a3463970"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,65 +75,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
+Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 14-Apr-2020 06:04 PM, Milton Miller II wrote:
->On Apr 13, 2020 around 6:01PM in some time zone, Vernon Mauery wrote:
->>
->>Internally, an issue was raised that basically says that the
->>mechanism
->>by which we are storing the IPMI passwords on the BMC is
->>insufficiently
->>obfuscated. I have come up with a patch set that resolves this at the
->>
->>expense of no downgrading the BMC without the side-effect of losing
->>all
->>IPMI passwords. I would like to know what the community thinks about
->>usability vs. security in this scenario.
+--0000000000002eef2805a3463970
+Content-Type: text/plain; charset="UTF-8"
+
+> Hi Team,
 >
->...
->
->>The migration from the old mechanism to the new could be done simply>by
->>using the new key on the next write to the /etc/ipmi_pass file. After
->>a
->>firmware update to this new code, a password change would trigger a
->>decrypt of the /etc/ipmi_pass file, a modification of the plain text,
->>
->>and a re-encryption of the data. If it reads the 'legacy' key in and
->>writes out the data using the new key mechanism and deletes the
->>legacy
->>key, it would use the new key mechanism from that point onward.
->>However,
->>this would cause any downgrades to prior versions to fail to decrypt
->>the
->>/etc/ipmi_pass file, thereby losing all the ipmi passwords. This is
->>not
->>ideal, but could possibly be mitigating by truncating the new
->>machine-id
->>derivative password to 8 bytes and storing it in the /etc/key_file
->>instead of just deleting it. This might improve security only
->>slightly
->>at for the price of a better user experience.
->>
->
->I'll point out the code to handle the new password could be added
->before the cdoe to use the new method, allowing test and revert
->until the users are upgraded to the new method.  It does require
->both methods to be supported.
+> There is a telemetry proposal in docs and repository.
+> https://github.com/openbmc/docs/blob/master/designs/telemetry.md
+> https://github.com/openbmc/telemetry
+> The proposal seems promising and complete.
+> What is the implementation status?
 
-Yes, it looks like any sort of change here would need to be a staged 
-change to reduce the disruption.
+I'm also curious about a status update here.  Were there any design issues
+that needed to be worked out, or is it ready to develop?
 
->I didn't follow why currently all openbmc systems end up with
->the same encryption^Wobsfucation for what that is worth.
+>>    To implement the Redfish Telemetry service would we need to store
+them on
+>>    the BMC as well?
+>It will be nice if we can store it in RAM at least with larger data and
+some diskspace
+>With small log rotate.
 
-Unless the build has a bbappend that changes the contents of the 
-key_file that is a part of the pam-ipmi package, all of the builds will 
-contain that same key_file. I can't say for sure how many builds have 
-this already, but I did not see much documentation around that fact that 
-would have spurred people to take action, so it is my assumption that 
-most builds would use the default.
+The Telemetry Service already has a concept of log rotation, but overall I
+agree that storing in RAM first with optional persistence is better than
+the other way around.
+- Richard
 
---Vernon
+--0000000000002eef2805a3463970
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span style=3D"color:rgb(80,0,80)">&gt; Hi Team,</span><br=
+ style=3D"color:rgb(80,0,80)"><span style=3D"color:rgb(80,0,80)">&gt;</span=
+><br style=3D"color:rgb(80,0,80)"><span style=3D"color:rgb(80,0,80)">&gt; T=
+here is a telemetry proposal in docs and repository.</span><br style=3D"col=
+or:rgb(80,0,80)"><span style=3D"color:rgb(80,0,80)">&gt;=C2=A0</span><a hre=
+f=3D"https://github.com/openbmc/docs/blob/master/designs/telemetry.md" rel=
+=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/docs/blob/mast=
+er/designs/telemetry.md</a><br style=3D"color:rgb(80,0,80)"><span style=3D"=
+color:rgb(80,0,80)">&gt;=C2=A0</span><a href=3D"https://github.com/openbmc/=
+telemetry" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/=
+telemetry</a><br style=3D"color:rgb(80,0,80)"><div><font color=3D"#741b47">=
+&gt; The proposal seems promising and complete.</font></div><div><font colo=
+r=3D"#741b47">&gt; What is the implementation status?</font><br></div><div>=
+<br></div><div>I&#39;m also curious about a status update here.=C2=A0 Were =
+there any design issues that needed to be worked out, or is it ready to dev=
+elop?</div><div><br></div><div><span class=3D"gmail-im" style=3D"color:rgb(=
+80,0,80)">&gt;&gt;=C2=A0 =C2=A0 To implement the Redfish Telemetry service =
+would we need to store them on=C2=A0<br>&gt;&gt;=C2=A0 =C2=A0 the BMC as we=
+ll?<br></span>&gt;It will be nice if we can store it in RAM at least with l=
+arger data and some diskspace<br>&gt;With small log rotate.<br></div><div><=
+br></div><div>The Telemetry Service already has a concept of log rotation, =
+but overall I agree that storing in RAM first with optional persistence is =
+better than the other way around.</div><div>- Richard</div></div>
+
+--0000000000002eef2805a3463970--
