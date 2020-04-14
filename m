@@ -1,71 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 584A61A8EA2
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 00:31:28 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DA1D1A8E98
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 00:29:19 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4920XD5WX5zDqnZ
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 08:29:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4920Zj547qzDqsL
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 08:31:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4920Vs0dv1zDqsX
- for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 08:28:04 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4920Ys6BK8zDqBG
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 08:30:41 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03EM45Hi059086; Tue, 14 Apr 2020 18:28:00 -0400
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30dnn4rh6t-1
+ 03EM3RSG029256; Tue, 14 Apr 2020 18:30:34 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30dnmu0kft-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Apr 2020 18:28:00 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03EMOhjL020280;
- Tue, 14 Apr 2020 22:27:59 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma02dal.us.ibm.com with ESMTP id 30b5h6v63e-1
+ Tue, 14 Apr 2020 18:30:34 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03EMURKU002073;
+ Tue, 14 Apr 2020 22:30:33 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma04dal.us.ibm.com with ESMTP id 30b5h746qj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 14 Apr 2020 22:27:59 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03EMRw3U12452376
+ Tue, 14 Apr 2020 22:30:33 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03EMUVFb56492396
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 14 Apr 2020 22:27:58 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9DD9C112062;
- Tue, 14 Apr 2020 22:27:58 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF76C112063;
- Tue, 14 Apr 2020 22:27:56 +0000 (GMT)
-Received: from [9.163.60.61] (unknown [9.163.60.61])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue, 14 Apr 2020 22:27:56 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.4 2/2] fsi: aspeed: Add module param for bus
- divisor
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
- Eddie James <eajames@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>
-References: <20200414105140.1089095-1-joel@jms.id.au>
- <20200414105140.1089095-3-joel@jms.id.au>
-From: Eddie James <eajames@linux.vnet.ibm.com>
-Message-ID: <58fdf880-52ec-3b3e-8fbc-14db8ae6d024@linux.vnet.ibm.com>
-Date: Tue, 14 Apr 2020 17:27:55 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ Tue, 14 Apr 2020 22:30:31 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E98936A04D;
+ Tue, 14 Apr 2020 22:30:30 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61E7C6A047;
+ Tue, 14 Apr 2020 22:30:30 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.154.32])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Tue, 14 Apr 2020 22:30:30 +0000 (GMT)
+Subject: Re: ipmi password storage
+To: Vernon Mauery <vernon.mauery@linux.intel.com>,
+ Milton Miller II <miltonm@us.ibm.com>
+References: <20200413230015.GB9295@mauery.jf.intel.com>
+ <OFED1A87B9.D16D66BD-ON0025854A.004EDFC4-0025854A.00634C8E@notes.na.collabserv.com>
+ <20200414191444.GE9295@mauery.jf.intel.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <aa6d601a-998b-8ed0-24bb-27e5fdf0828f@linux.ibm.com>
+Date: Tue, 14 Apr 2020 17:30:29 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <20200414105140.1089095-3-joel@jms.id.au>
+In-Reply-To: <20200414191444.GE9295@mauery.jf.intel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
@@ -73,9 +74,9 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
  2020-04-14 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501
- malwarescore=0 adultscore=0 bulkscore=0 clxscore=1015 spamscore=0
- mlxlogscore=999 impostorscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ clxscore=1015 impostorscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ phishscore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2003020000 definitions=main-2004140156
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -88,54 +89,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On 4/14/20 5:51 AM, Joel Stanley wrote:
-> For testing and hardware debugging a user may wish to override the
-> divisor at runtime. By setting fsi_master_aspeed.bus_div=N, the divisor
-> will be set to N, if 0 < N <= 0x3ff.
+On 4/14/20 2:14 PM, Vernon Mauery wrote:
+> On 14-Apr-2020 06:04 PM, Milton Miller II wrote:
+>> On Apr 13, 2020 around 6:01PM in some time zone, Vernon Mauery wrote:
+>>>
+>>> Internally, an issue was raised that basically says that the
+>>> mechanism
+>>> by which we are storing the IPMI passwords on the BMC is
+>>> insufficiently
+>>> obfuscated. I have come up with a patch set that resolves this at the
+>>>
+>>> expense of no downgrading the BMC without the side-effect of losing
+>>> all
+>>> IPMI passwords. I would like to know what the community thinks about
+>>> usability vs. security in this scenario.
+>>
+>> ...
+>>
+>>> The migration from the old mechanism to the new could be done simply>by
+>>> using the new key on the next write to the /etc/ipmi_pass file. After
+>>> a
+>>> firmware update to this new code, a password change would trigger a
+>>> decrypt of the /etc/ipmi_pass file, a modification of the plain text,
+>>>
+>>> and a re-encryption of the data. If it reads the 'legacy' key in and
+>>> writes out the data using the new key mechanism and deletes the
+>>> legacy
+>>> key, it would use the new key mechanism from that point onward.
+>>> However,
+>>> this would cause any downgrades to prior versions to fail to decrypt
+>>> the
+>>> /etc/ipmi_pass file, thereby losing all the ipmi passwords. This is
+>>> not
+>>> ideal, but could possibly be mitigating by truncating the new
+>>> machine-id
+>>> derivative password to 8 bytes and storing it in the /etc/key_file
+>>> instead of just deleting it. This might improve security only
+>>> slightly
+>>> at for the price of a better user experience.
+>>>
+>>
+>> I'll point out the code to handle the new password could be added
+>> before the cdoe to use the new method, allowing test and revert
+>> until the users are upgraded to the new method.  It does require
+>> both methods to be supported.
 >
-> This is a module parameter and not a device tree option as it will only
-> need to be set when testing or debugging.
+> Yes, it looks like any sort of change here would need to be a staged 
+> change to reduce the disruption.
 
-
-Looks good.
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
+Thanks for handling this issue -- I appreciate it.  Don't take this the 
+wrong way, but...
+If this change provides little value and causes upgrade issues, would it 
+be better to avoid having an upgrade path?
+Instead, use this new approach for new major release that requires a 
+fresh install and upgrading is not an option.
 
 >
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->   drivers/fsi/fsi-master-aspeed.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
+>> I didn't follow why currently all openbmc systems end up with
+>> the same encryption^Wobsfucation for what that is worth.
 >
-> diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-> index 80bc9132e4f8..b44f71f1f0a8 100644
-> --- a/drivers/fsi/fsi-master-aspeed.c
-> +++ b/drivers/fsi/fsi-master-aspeed.c
-> @@ -87,6 +87,7 @@ static const u32 fsi_base = 0xa0000000;
->   #define FSI_DIVISOR_DEFAULT            1
->   #define FSI_DIVISOR_CABLED             2
->   static u16 aspeed_fsi_divisor = FSI_DIVISOR_DEFAULT;
-> +module_param_named(bus_div,aspeed_fsi_divisor, ushort, 0);
->   
->   #define OPB_POLL_TIMEOUT		10000
->   
-> @@ -458,9 +459,12 @@ static int tacoma_cabled_fsi_fixup(struct device *dev)
->   	if (gpio) {
->   		/*
->   		 * Cable signal integrity means we should run the bus
-> -		 * slightly slower
-> +		 * slightly slower. Do not override if a kernel param
-> +		 * has already overridden.
->   		 */
-> -		aspeed_fsi_divisor = FSI_DIVISOR_CABLED;
-> +		if (aspeed_fsi_divisor == FSI_DIVISOR_DEFAULT)
-> +			aspeed_fsi_divisor = FSI_DIVISOR_CABLED;
-> +
->   		gpiod_direction_output(mux_gpio, 0);
->   		dev_info(dev, "FSI configured for external cable\n");
->   	} else {
+> Unless the build has a bbappend that changes the contents of the 
+> key_file that is a part of the pam-ipmi package, all of the builds 
+> will contain that same key_file. I can't say for sure how many builds 
+> have this already, but I did not see much documentation around that 
+> fact that would have spurred people to take action, so it is my 
+> assumption that most builds would use the default.
+
+ From previous emails in this thread, it doesn't seem like having each 
+BMC having an unique key_file would help much.  Nevertheless, I've added 
+this to my notes for BMC build considerations: 
+https://github.com/ibm-openbmc/dev/issues/1531#issuecomment-613676676
+
+- Joseph
+
+>
+> --Vernon
+
