@@ -2,78 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90E661A8ED6
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 01:00:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3B391A90AC
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 03:59:46 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4921Dh0lK5zDql5
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 09:00:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4925C40GfxzDqym
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 11:59:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::229;
+ helo=mail-lj1-x229.google.com; envelope-from=mine260309@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=frGWCiKe; dkim-atps=neutral
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
+ [IPv6:2a00:1450:4864:20::229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4921Cw200rzDqFh
- for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 09:00:11 +1000 (AEST)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03EMb9SC154856
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 19:00:07 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30dnmqh5eb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 19:00:07 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03EMtpi1028593
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 23:00:07 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma01dal.us.ibm.com with ESMTP id 30b5h6vb51-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 23:00:07 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03EN05ta40370662
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 23:00:05 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE3F66A061
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 23:00:04 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A363C6A05F
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 23:00:04 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.154.32])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 23:00:04 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Proposal: how to make incompatible changes
-Message-ID: <5532c90e-75e8-4998-b0cf-e65ed9af1424@linux.ibm.com>
-Date: Tue, 14 Apr 2020 18:00:03 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4925BM2hNbzDqwP
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Apr 2020 11:59:03 +1000 (AEST)
+Received: by mail-lj1-x229.google.com with SMTP id u15so1954322ljd.3
+ for <openbmc@lists.ozlabs.org>; Tue, 14 Apr 2020 18:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=M00Jytb6e/qbqEghK01M4du6TqfbztgspJb21MAMzWU=;
+ b=frGWCiKex4rgXrnZZPN5ANmjVZSUICcbaGDDPdQSXSNw3fJK9zpD7kYD4LW27AUt6p
+ 5z9b5vGE1jDCU0H1trw0D9FOjwTaCc/4eetdBXBUGCQl2B1S3jnbENWL8Ca5w5EXid5X
+ 7fWfGHh/b9h0tFalk7Nhw3FkzaqMMIc3JOKwmZnw9dd7sKV7RoxbjBF4g6RIweFQeoj8
+ u2OQcXyYQrEHQv+pSLTXGFRzM6IvKxNbfmqRrco2EGt1sns7FnB/ZCj14YjPNpNof6BM
+ DeriNzW8MKLVTCFjXDfYHFC59xeEpvKPjzDaj36SNlY15TI+8KMBnZRsQyKngdU/4rJc
+ aIsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=M00Jytb6e/qbqEghK01M4du6TqfbztgspJb21MAMzWU=;
+ b=hGYJKdvqYEJl1Y7ILU7IjFvhFh+l0dEaQvl5VjuWAPTqpzIjRk53qSXAjPXvSOQQ2u
+ +7dra55J/16GGco27VxslspJi37oH1xGHoh9a15Ay+kFKbksvDrUPNvFIqnc+CwYLhbl
+ h798B3Q5Y08oF6f+tXUNH3j3pbp7nC9/8Gh1lHBZfh/vC2PVNwgp7Wrfy8ovyna2rAzc
+ jBH9FHHUJGdWAKolsaARgMwfpzf/qdIM1LONROYCuKC6rjFPsKy6FGt9TSpb7LylJoT6
+ 8VbQKh1hWF6v7+UMddk/9AALUMZT06k+N1KnR7w2tvF07QSbmseNgKESD/4MviEfQ5bA
+ 0W4g==
+X-Gm-Message-State: AGi0PubwNr+jvkFxdS5e+7hQce8gB707q6u22JP7QcQRZxDEdQmDKp5K
+ NPIX+zQn26a4EiV/cG8zKFteMbUnVCfFSFSncM4=
+X-Google-Smtp-Source: APiQypI9EHs8ab7m1LVnS9ikEVAAOowglAK7PvFccqZDCjgPoY1Ws2woJTGtZxaeq7TCgwwRHLtU106wFa9iYg5u5XU=
+X-Received: by 2002:a2e:720e:: with SMTP id n14mr1710755ljc.64.1586915938863; 
+ Tue, 14 Apr 2020 18:58:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-14_11:2020-04-14,
- 2020-04-14 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015
- phishscore=0 adultscore=0 suspectscore=0 mlxlogscore=999 spamscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004140156
+References: <CAH1kD+bqZfeO8ezvwbmjx_PZ4vaKyhxGgvirVz13P3FK9UDBWQ@mail.gmail.com>
+ <CAH1kD+b3ij5KiZn+-N0O+BnbB-XONmbWtYSRA2feKNb+zw6kjw@mail.gmail.com>
+ <521FD3E2-3AFE-4E56-A6CF-B0ABA7E9C8E3@fb.com>
+ <e42cef9e-1760-d3ee-4396-61cd1d141983@linux.ibm.com>
+ <d3eac624-f1a2-fd2d-6639-3290c8085abd@gmail.com>
+ <bea70fb0-780c-39a7-a677-dfc41e864337@linux.intel.com>
+ <20200414154801.GA443018@heinlein.lan.stwcx.xyz>
+In-Reply-To: <20200414154801.GA443018@heinlein.lan.stwcx.xyz>
+From: Lei YU <mine260309@gmail.com>
+Date: Wed, 15 Apr 2020 09:58:46 +0800
+Message-ID: <CAARXrtm7ex5wNcc3ggkYNw5s9qdT8rw+4F46ioiPfp-7s+GM-w@mail.gmail.com>
+Subject: Re: Call for Gardening Tasks
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,95 +78,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>, krtaylor <kurt.r.taylor@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Proposal: how to make incompatible changes
+On Wed, Apr 15, 2020 at 12:57 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Fri, Apr 10, 2020 at 11:00:48AM -0700, James Feist wrote:
+> > On 4/10/2020 7:30 AM, krtaylor wrote:
+> > > On 4/10/20 9:23 AM, Joseph Reynolds wrote:
+> > >> On 4/9/20 5:19 PM, Vijay Khemka wrote:
+> >
+> > I'd really like to see clang-tidy or other checks for style added into
+> > the build CI. The number of style violations waste lots of time in
+> > code-review for both the submitter and reviewers.
+>
+> Do we have .clang-tidy files in the repositories?  Meson has built-in
+> support for generating a 'ninja clang-tidy' so it is pretty trivial to
+> enable.
 
-This is a proposal to add guidelines for making incompatible changes to 
-OpenBMC interfaces.  Is it okay to make incompatible changes? Yes, IMHO: 
-the project will continuously break compatibility in various ways, and 
-its users will adapt.  The main idea is to minimize churn and make it 
-easier for users to adapt.
-
-As the OpenBMC project moves forward with new releases, it will make 
-changes that necessarily break existing use cases.  My recommendations are:
-- Try hard to maintain forward compatibility.  For example, maintain all 
-of the BMC's intended user interfaces.
-- Identify changes that break compatibility.  Briefly describe the use 
-case, what breaks, how a user can adapt, and cross-link technical 
-discussions (Gerrit reviews, issues, emails).
-- Work with maintainers to determine which incompatible changes get 
-merged and what documentation is needed.
-- Give users time to adapt to incompatible changes.  For example, 
-deprecate interfaces in a previous release.
-- List incompatible changes in the [release notes][] so community 
-members will know they have to adapt, and link to how to adapt.
-
-[release notes]: 
-https://github.com/openbmc/docs/blob/master/release/release-notes
-
-Perhaps we could add a section to one of these here documents:
-https://github.com/openbmc/docs/blob/master/maintainer-workflow.md
-https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md
-
-What do you think?
-
-- Joseph
-
-
-TLDR:
-
-Applicability.
-
-These guidelines are for the BMC's "intended external user interfaces".  
-For example, its management interfaces including its web server and all 
-REST APIs.  I haven't given much thought to the BMC/host interfaces or 
-interfaces internal to the BMC.  IMHO, it is less important to maintain 
-compatibility in these areas.  For example, if you need an incompatible 
-change in an internal interface, you have a smaller set of users who 
-ought to be active in the project, and can give you feedback and adapt 
-within a release cycle.
-
-
-What is forward compatibility?
-
-The OpenBMC project has a sequence of releases.  When someone is using 
-one of these releases, then updates to a later release, ideally all the 
-BMC interfaces they use will continue to work as before.  That's what I 
-call "forward compatibility"  which is close to the Wikipedia's [upward 
-compatibility][].
-
-Backward compatibility means that after you perform a firmware update to 
-an older release in the sequence, using that release's older interfaces 
-will continue to operate the BMC as before.  That is, you can downgrade 
-to that release.  For example, backward compatibility is needed to be 
-able to revert a previous update back to a known-good firmware image 
-version.  Once again, this is different from Wikipedia's [backward 
-compatibility][] entry which is more like interoperability.
-
-I think it is useful to separate these concepts.  To be clear: I am in 
-favor of the OpenBMC interfaces being upward compatible, backward 
-compatible, and interoperable, but I think we need to take baby steps to 
-get there.  So I am limiting the scope of this email to a narrow 
-definition of forward compatibility.
-
-I expect maintainers will consider backward compatibility at the same 
-time they consider forward compatibility.  Note that it may be 
-acceptable to break backward compatibility more frequently that breaking 
-forward compatibility.  For example, you can tell users that once they 
-upgrade to a new release, they cannot downgrade.
-
-[upward compatibility]: https://en.wikipedia.org/wiki/Forward_compatibility
-[backward compatibility]: 
-https://en.wikipedia.org/wiki/Backward_compatibility
-
-
-Examples of changes that may break compatibility:
-
-https://gerrit.openbmc-project.xyz/c/openbmc/pam-ipmi/+/31054
-
-https://github.com/openbmc/openbmc/issues/3615
-
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29344
-
+phosphor-state-manager has .clang-tidy in the repo, and the CI will
+invoke run-clang-tidy.py to do the task.
+However, it's noticed that it's broken with
+https://github.com/openbmc/openbmc-build-scripts/commit/9e5b11f5d5069d244a2dd86b120fcc98fea66d2c
