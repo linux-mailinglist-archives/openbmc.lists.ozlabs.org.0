@@ -1,59 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 695451AAFE7
+	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 19:37:20 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D24A71AAF23
-	for <lists+openbmc@lfdr.de>; Wed, 15 Apr 2020 19:09:54 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 492TPD0FPtzDrB9
-	for <lists+openbmc@lfdr.de>; Thu, 16 Apr 2020 03:09:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 492V0s3vJWzDr7x
+	for <lists+openbmc@lfdr.de>; Thu, 16 Apr 2020 03:37:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 492TNM07S7zDr6c
- for <openbmc@lists.ozlabs.org>; Thu, 16 Apr 2020 03:09:05 +1000 (AEST)
-IronPort-SDR: kIhVx6jYAqzKWPmUOJcSmWAGiKimC2zRxBRcLgTpxtjN7s+/krKbd3747WEJKXH+Svz0LHWHNR
- NNxh7kTqvRlA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 15 Apr 2020 10:08:45 -0700
-IronPort-SDR: iL8gO0eTNoeggkVfL54DhxTPIJOHWLsNcfxZ3XI+kLl0jF6/OAAmJmIr+7BYQUUqL3Un6MVTSO
- KTv4wlw4Uz9g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,387,1580803200"; d="scan'208";a="253580351"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.213.184.101])
- ([10.213.184.101])
- by orsmga003.jf.intel.com with ESMTP; 15 Apr 2020 10:08:43 -0700
-Subject: Re: Call for Gardening Tasks
-To: Lei YU <mine260309@gmail.com>, Patrick Williams <patrick@stwcx.xyz>
-References: <CAH1kD+bqZfeO8ezvwbmjx_PZ4vaKyhxGgvirVz13P3FK9UDBWQ@mail.gmail.com>
- <CAH1kD+b3ij5KiZn+-N0O+BnbB-XONmbWtYSRA2feKNb+zw6kjw@mail.gmail.com>
- <521FD3E2-3AFE-4E56-A6CF-B0ABA7E9C8E3@fb.com>
- <e42cef9e-1760-d3ee-4396-61cd1d141983@linux.ibm.com>
- <d3eac624-f1a2-fd2d-6639-3290c8085abd@gmail.com>
- <bea70fb0-780c-39a7-a677-dfc41e864337@linux.intel.com>
- <20200414154801.GA443018@heinlein.lan.stwcx.xyz>
- <CAARXrtm7ex5wNcc3ggkYNw5s9qdT8rw+4F46ioiPfp-7s+GM-w@mail.gmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <1e50b9d0-e0b7-682f-6a5b-356d9666d49b@linux.intel.com>
-Date: Wed, 15 Apr 2020 10:08:43 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 492V000w6MzDr7f
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Apr 2020 03:36:31 +1000 (AEST)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03FHXsLp029168; Wed, 15 Apr 2020 13:36:28 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30dnnfdptq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Apr 2020 13:36:27 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03FHURSU005396;
+ Wed, 15 Apr 2020 17:36:26 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma01dal.us.ibm.com with ESMTP id 30b5h74e7w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Apr 2020 17:36:26 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03FHaPkY46137742
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Apr 2020 17:36:25 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9BE1B112063;
+ Wed, 15 Apr 2020 17:36:25 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4576C112064;
+ Wed, 15 Apr 2020 17:36:25 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 15 Apr 2020 17:36:25 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <CAARXrtm7ex5wNcc3ggkYNw5s9qdT8rw+4F46ioiPfp-7s+GM-w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Wed, 15 Apr 2020 12:36:24 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] configs: Add OpenBMC spl
+ defconfig for AST2600 boards
+In-Reply-To: <CACPK8XcTR-pOwn_3dJz1Z5JiS7K8j5Cv2wryEj+v3bi=OTs9Pw@mail.gmail.com>
+References: <1586370073-71433-1-git-send-email-anoo@linux.ibm.com>
+ <CACPK8XcTR-pOwn_3dJz1Z5JiS7K8j5Cv2wryEj+v3bi=OTs9Pw@mail.gmail.com>
+Message-ID: <85b64f81c3a1b758f7233d5d9281e20c@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-15_06:2020-04-14,
+ 2020-04-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ phishscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ bulkscore=0 malwarescore=0 clxscore=1011 mlxlogscore=812 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004150125
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,40 +88,29 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- krtaylor <kurt.r.taylor@gmail.com>
+ Adriana Kobylak <anoo@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/14/2020 6:58 PM, Lei YU wrote:
-> On Wed, Apr 15, 2020 at 12:57 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->>
->> On Fri, Apr 10, 2020 at 11:00:48AM -0700, James Feist wrote:
->>> On 4/10/2020 7:30 AM, krtaylor wrote:
->>>> On 4/10/20 9:23 AM, Joseph Reynolds wrote:
->>>>> On 4/9/20 5:19 PM, Vijay Khemka wrote:
->>>
->>> I'd really like to see clang-tidy or other checks for style added into
->>> the build CI. The number of style violations waste lots of time in
->>> code-review for both the submitter and reviewers.
->>
->> Do we have .clang-tidy files in the repositories?  Meson has built-in
->> support for generating a 'ninja clang-tidy' so it is pretty trivial to
->> enable.
+
+>> +CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_SECTOR=y
+>> +CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR=0x0
+>> +CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_PARTITION=y
+> 
+> How do these work? I thought the SPL loaded u-boot.bin from SPI NOR
+> for now. Do we need to change these?
+
+It appears these were added to the ast2600 defconfig to reduce the size 
+of the SPL:
+https://github.com/openbmc/u-boot/commit/688ce7568eaffec782fe451ac807961f9abf4e19
+
+Even with these enabled the SPL loads the u-boot.bin from the SPI NOR.
+Perhaps a setting for MMC in raw mode is equivalent to the raw NOR 
+partition.
+
+> 
+> How should we handle the configuration options when we want to build a 
+> eMMC SPL?
 > 
 
-There was one here: 
-https://github.com/openbmc/bmcweb/blob/70ee8cbd4f3ec5b3e3c18967de221a9f3a70cd38/.clang-tidy
-
-It wasn't perfect, but did move bmcweb over to nearly upstream style. If 
-there is a .clang-tidy file we could all agree to, even if it isn't 
-perfect, that would be great.
-
-
-> phosphor-state-manager has .clang-tidy in the repo, and the CI will
-> invoke run-clang-tidy.py to do the task.
-> However, it's noticed that it's broken with
-> https://github.com/openbmc/openbmc-build-scripts/commit/9e5b11f5d5069d244a2dd86b120fcc98fea66d2c
-> 
-
-Seems to be empty? Or is meson injecting dependencies somewhere? 
-https://github.com/openbmc/phosphor-state-manager/blob/master/.clang-tidy
+I'd say we can create a separate "mmc" defconfig.
