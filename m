@@ -2,88 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 025501AD154
-	for <lists+openbmc@lfdr.de>; Thu, 16 Apr 2020 22:42:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A27CC1AD261
+	for <lists+openbmc@lfdr.de>; Thu, 16 Apr 2020 23:56:44 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 493B3T6h0VzDrhF
-	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 06:41:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 493Cjj35ZJzDrPN
+	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 07:56:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::235;
+ helo=mail-lj1-x235.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=IbnqtAsU; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=X2md5S6S; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=fNcp8rMt; dkim-atps=neutral
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
+ [IPv6:2a00:1450:4864:20::235])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 493B1X06TXzDr85
- for <openbmc@lists.ozlabs.org>; Fri, 17 Apr 2020 06:40:15 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 4A0EC5C0279;
- Thu, 16 Apr 2020 16:40:12 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Thu, 16 Apr 2020 16:40:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=xRbZcGhuIqbTVMbOYEoKzBW3U3w
- xkAQjzM7h6uPWucA=; b=IbnqtAsUrXJHZBFi+t8eTA7W4GGwhCoZEyijTLcC6+i
- YcPWpQzBAjhlOTlaPWqztcCwshKw6GIdafa3iQ95zkAkftlQQXiDPvgjSm/eRfLi
- s200VUePYnm2vF2nuPiDzzANkd/Ki2X6Aq2GMxcfKfPDPO7v+wVX9Lg717PAYMJ5
- kF8k8P4lJ9E3CCIoBqa/UCpYP2qwBkxRnsy2ld30fSclsnl05bNDnyXyXFJTPs00
- qv/QEH+X93Gke2gkRK87qN/Q5PIjg7yR5jzDvPuKiGiKaepz9SKRPgKm4BInh4jX
- NSwCJAwk+SvBxplelBrNtOdMdZ2lXUy3AdWThcODh3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=xRbZcG
- huIqbTVMbOYEoKzBW3U3wxkAQjzM7h6uPWucA=; b=X2md5S6ST7+7CDAOZAMxZV
- APp4IHJFcAzxN84BNo2MFxN3Q14sLQzY4Lt5ntHtQoPYngI7JUWdusyF+r4wHTnh
- YrfTg5tpITS86J46tI8LaRr/FCiOmK+iBkYDjoYGWrA6fx23zu29T3T+rIzrxy9W
- ysKYq2zB6ZsKty9dLDH1hjTsemMLU2EZxN2cERS4d50kr2DnbC4n3HrCKQyfjMFb
- 8MjqDgORBk+1Td17dnASpG1j+k1iQPvEi8CczIsDhqghvK0xVQzQsYx8qEWEZIh+
- +XeS2ZbtuKvb9wCjgGMqgccSSSHfKLbBbcFNZhFwKNvw8V30liiVyqjGXJIqgg4g
- ==
-X-ME-Sender: <xms:q8KYXjxMmPAutkJkhdYncWkF97LTejc767aUrKyMWrrzwF_tiRdx_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrfeehgdduheefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecukfhppedutdejrddutdejrddukeeirdduhedtnecuvehluhhs
- thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
- htfigtgidrgiihii
-X-ME-Proxy: <xmx:q8KYXvhSyzVp7y4VABXEKRwHKCJH5tHa-qwSUStfdr0g3xA0Pf8Amg>
- <xmx:q8KYXoUQaOKlKPx7DSWdgCg1S7PxIIVeq57tnEKvgVLvyBULlyN8Hg>
- <xmx:q8KYXh2QwYSjktIzpsWsW81b2POurD09kwRXvo6oJUegdoIJknAIuw>
- <xmx:rMKYXuDtjVcY5X8pFjN1BkB-qWaWtpd0NQ-F-BfokKcNXLPJmMMq9g>
-Received: from localhost (mobile-107-107-186-150.mycingular.net
- [107.107.186.150])
- by mail.messagingengine.com (Postfix) with ESMTPA id 7F9643060060;
- Thu, 16 Apr 2020 16:40:11 -0400 (EDT)
-Date: Thu, 16 Apr 2020 15:40:10 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Subject: Re: Why does OpenBMC use Avahi mDNS instead of SSDP?
-Message-ID: <20200416204010.GD443018@heinlein.lan.stwcx.xyz>
-References: <64ed3841-fc25-50d2-5353-d778301ce06d@linux.ibm.com>
- <20200407154653.GB5368@heinlein.lan.stwcx.xyz>
- <d3801437-bde4-ffe9-9f3e-1604ad174625@linux.ibm.com>
- <e292cc98-cdd8-2eff-3fd0-ba42762b2720@linux.vnet.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 493CfT0nxhzDrfV
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Apr 2020 07:53:52 +1000 (AEST)
+Received: by mail-lj1-x235.google.com with SMTP id h25so9492139lja.10
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Apr 2020 14:53:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=dgJIivIXNthxjV3Oe2d6vUH4/hPy6hgJ+jStmZm5PCE=;
+ b=fNcp8rMtiYV4vMq4/F1zrIGTKHSNmLBLGyicni0WCrk63VS7e6D5OCUKjs737ls41E
+ bWBnsasXMq3lUz+wmbQcliGK4ZetF906AMYQhptyVG3npfa5rKdsJ1LJhXOxnlysCAwN
+ 7wt5C3gruZnlf8Oa6uW+2ml3IQDFtDo+Ox5SnXwqrMZg98vMyi6vRdmb+lfPTYAKADVL
+ DhHayc3SMEv33PVjsax4n0XHeS5h9sLhJz+TKZeWW0sM0k+YZKa/hd/5arZv2uxxz/bX
+ /TX601lA7THPHlZMHT/ojr4ECIUJB0K2NKHnaKIuhmGcdsgmcKqZ+74xBiCdDXF1nLIg
+ Q2Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=dgJIivIXNthxjV3Oe2d6vUH4/hPy6hgJ+jStmZm5PCE=;
+ b=jL5vzDAatcHwCg9XmitWa1Dxn/JTcw4jNW1/Q8xpRuMp+rltLgtnObnzCTxliE1Aue
+ XJBRPS1YWsm74cRSMflEzlK39dDrms/IHL5tj+ZKD9k5FDjHd9MoFPhcmcnd9WpzojkZ
+ 8lh0LbboRQrl3lBmBAsfDsnjCAOwas+xxP6hDPmyeqYwFZDF24vZJkTm2OrCntvJ6DGA
+ aHByTS37sup6fenN1CFBNdwZdy06EVuaxlBT1U1htxrINKSa54SDSxIQzaRmbowdWD7q
+ YmXIFO2hxg/h4UylF1YO6zVKXmQSm5D5sv7X2xqsUCzsK1BoiP/mGhNG0ZAQbmMMUlqB
+ X6qA==
+X-Gm-Message-State: AGi0PuZUR5bvjpPhuYf44zBpmhxkY3xPBOOGxzGW191+7Ii0ALsBcblB
+ JA94Hq+9b1AWM97pFhSar4tTobQi5SPiQJ1wvGs3cg==
+X-Google-Smtp-Source: APiQypLWDLQ2YVKDEENpc1GrCetmJIQV0d75gAEsRNDiPoJrUDDqokHKujV8o8VJ+hZ23GiN2iNXvQMSGFW7MniRU+o=
+X-Received: by 2002:a2e:8884:: with SMTP id k4mr106924lji.267.1587074025261;
+ Thu, 16 Apr 2020 14:53:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="eheScQNz3K90DVRs"
-Content-Disposition: inline
-In-Reply-To: <e292cc98-cdd8-2eff-3fd0-ba42762b2720@linux.vnet.ibm.com>
+References: <5532c90e-75e8-4998-b0cf-e65ed9af1424@linux.ibm.com>
+ <e77335c2-97a8-42aa-ad93-394fe6f9b420@www.fastmail.com>
+In-Reply-To: <e77335c2-97a8-42aa-ad93-394fe6f9b420@www.fastmail.com>
+From: Richard Hanley <rhanley@google.com>
+Date: Thu, 16 Apr 2020 14:53:33 -0700
+Message-ID: <CAH1kD+YQ+Am_uwb0vo0mReq8FvBLuxKnxoZi7x_Xfap3SYQFzg@mail.gmail.com>
+Subject: Re: Proposal: how to make incompatible changes
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: multipart/alternative; boundary="000000000000826e3805a36f77d8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,77 +73,162 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, ratagupt <ratagupt@linux.vnet.ibm.com>,
- Joseph Reynolds <jrey@linux.ibm.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000826e3805a36f77d8
+Content-Type: text/plain; charset="UTF-8"
 
---eheScQNz3K90DVRs
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Thank you for bringing this up.  I really think that some policy discussion
+is useful here.  I also 100% agree that forward compatibility should be our
+goal here.
+
+When I think about incompatible changes I tend to group them into one of
+two categories:
+1) A design change goes in the opposite direction than what previous
+versions offered, and the old feature needs to be shut off.
+2) New features/designs are made, and supporting several different options
+at the same time is difficult
+
+Security changes are often in the former category. I remember a few months
+back there was a thread about removing the DBus rest interface as a default
+service for security reasons.  Brad's point at the time was (I may be
+paraphrasing here) that we need to maintain support for any currently
+supported use case or be able to support their migration.
+
+Now another point in that thread was that some users are going to care more
+about security than compatibility, and vice versa. One possible solution is
+to create a second secure phosphor reference implementation.
+
+Here is the thread I'm talking about:
+https://lists.ozlabs.org/pipermail/openbmc/2020-February/020491.html
+
+Having two reference implementations (profiles, tracks, or whatever we want
+to call it) isn't without risk.  If things ever diverge too far, then the
+overhead might be larger than supporting forward compatibility.  However, I
+would like to get to a place where changes of that sort can be made
+accessible to early adopters, combined with a clearly communicated
+deprecation/migration plan.
+
+
+On Wed, Apr 15, 2020 at 10:01 PM Andrew Jeffery <andrew@aj.id.au> wrote:
+
+> > Applicability.
+> >
+> > These guidelines are for the BMC's "intended external user interfaces".
+> > For example, its management interfaces including its web server and all
+> > REST APIs.  I haven't given much thought to the BMC/host interfaces or
+> > interfaces internal to the BMC.  IMHO, it is less important to maintain
+> > compatibility in these areas.
+>
+> Lets split this. My feelings are
+>
+> 1. Inband (BMC/Host) interfaces are in the same class as "intended
+> external user interfaces" and therefore should not have incompatible
+> changes unless _absolutely_ necessary. What we implement here should
+> have passed through a specification process under e.g. DMTF.
+>
+> 2. Interfaces between applications on the BMC (e.g. D-Bus interfaces)
+> is the class where compatibility is less critical, on systems that do not
+> expose the D-Bus interfaces via REST. However, while any system exists
+> that exposes the D-Bus interfaces via REST we must constrain changes
+> to these interfaces as well.
+>
+> > For example, if you need an incompatible
+> > change in an internal interface, you have a smaller set of users who
+> > ought to be active in the project, and can give you feedback and adapt
+> > within a release cycle.
+> >
+>
+> This is true for interfaces between BMC components, it's not true of the
+> host firmware interfaces, hence my split above.
+>
+> When we remove the ability to directly access the D-Bus interfaces via
+> REST we will gain a lot more freedom as the D-Bus interfaces then truly
+> become internal.
+>
+> Andrew
+>
+
+--000000000000826e3805a36f77d8
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Apr 16, 2020 at 03:02:46PM -0500, Gunnar Mills wrote:
-> On 4/8/2020 3:27 PM, Joseph Reynolds wrote:
-> > On 4/7/20 10:46 AM, Patrick Williams wrote:
-> >> On Tue, Apr 07, 2020 at 09:58:15AM -0500, Joseph Reynolds wrote:
+<div dir=3D"ltr">Thank you for bringing this up.=C2=A0 I really think that =
+some policy discussion is useful here.=C2=A0 I also 100% agree that forward=
+=C2=A0compatibility=C2=A0should be our goal here.<div><br></div><div>When I=
+ think about incompatible changes I tend to group them into one of two cate=
+gories:</div><div><div>1) A design change goes in the opposite direction th=
+an what previous versions offered, and the old feature needs to be shut off=
+.</div><div></div></div><div>2) New features/designs are made, and supporti=
+ng several different options at the same time is difficult</div><div><br></=
+div><div>Security changes are often in the former category. I remember a fe=
+w months back there was a thread about removing the DBus rest interface as =
+a default service for security reasons.=C2=A0 Brad&#39;s point at the time =
+was (I may be paraphrasing here) that we need to maintain support for any c=
+urrently supported use case or be able to support their=C2=A0migration.</di=
+v><div><br></div><div>Now another point in that thread was that some users =
+are going to care more about security than compatibility, and vice versa. O=
+ne possible solution is to create a second secure phosphor reference implem=
+entation.</div><div><br></div><div>Here is the thread I&#39;m talking about=
+:=C2=A0<a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2020-February/=
+020491.html">https://lists.ozlabs.org/pipermail/openbmc/2020-February/02049=
+1.html</a></div><div><br></div><div>Having two reference implementations (p=
+rofiles, tracks, or whatever we want to call it) isn&#39;t without risk.=C2=
+=A0 If things ever diverge too far, then the overhead might be larger than =
+supporting forward compatibility.=C2=A0 However, I would like to get to a p=
+lace where changes of that sort can be made accessible to early adopters, c=
+ombined with a clearly communicated deprecation/migration plan.</div><div><=
+br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Wed, Apr 15, 2020 at 10:01 PM Andrew Jeffery &lt;<a href=3D"mai=
+lto:andrew@aj.id.au" target=3D"_blank">andrew@aj.id.au</a>&gt; wrote:<br></=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; Applicability.<b=
+r>
+&gt; <br>
+&gt; These guidelines are for the BMC&#39;s &quot;intended external user in=
+terfaces&quot;.=C2=A0 <br>
+&gt; For example, its management interfaces including its web server and al=
+l <br>
+&gt; REST APIs.=C2=A0 I haven&#39;t given much thought to the BMC/host inte=
+rfaces or <br>
+&gt; interfaces internal to the BMC.=C2=A0 IMHO, it is less important to ma=
+intain <br>
+&gt; compatibility in these areas.=C2=A0<br>
+<br>
+Lets split this. My feelings are<br>
+<br>
+1. Inband (BMC/Host) interfaces are in the same class as &quot;intended<br>
+external user interfaces&quot; and therefore should not have incompatible<b=
+r>
+changes unless _absolutely_ necessary. What we implement here should<br>
+have passed through a specification process under e.g. DMTF.<br>
+<br>
+2. Interfaces between applications on the BMC (e.g. D-Bus interfaces)<br>
+is the class where compatibility is less critical, on systems that do not<b=
+r>
+expose the D-Bus interfaces via REST. However, while any system exists<br>
+that exposes the D-Bus interfaces via REST we must constrain changes<br>
+to these interfaces as well.<br>
+<br>
+&gt; For example, if you need an incompatible <br>
+&gt; change in an internal interface, you have a smaller set of users who <=
+br>
+&gt; ought to be active in the project, and can give you feedback and adapt=
+ <br>
+&gt; within a release cycle.<br>
+&gt; <br>
+<br>
+This is true for interfaces between BMC components, it&#39;s not true of th=
+e<br>
+host firmware interfaces, hence my split above.<br>
+<br>
+When we remove the ability to directly access the D-Bus interfaces via<br>
+REST we will gain a lot more freedom as the D-Bus interfaces then truly<br>
+become internal.<br>
+<br>
+Andrew<br>
+</blockquote></div>
 
-> >> mDNS is used more in the UNIX world, SSDP is used more in Windows.
-> >>
-> Was on the Redfish call earlier and this forum thread was discussed. The=
-=20
-> Redfish members on the call did not totally agree with this statement.=20
-> They believe SSDP has a wider adaption than just Windows. A wider=20
-> adaption than mDNS.=A0 Since SSDP is already in the Redfish specification=
-=20
-> and has been adapted by Redfish implementations, adding a 2nd discovery=
-=20
-> service would damage interoperability in Redfish.
-
-I'm not really interested in a debate on this point, but I'm not finding
-much evidence to back it up.  Can anyone point to well-used OSS
-implementation of SSDP?  The only thing I can find is gssdp, which seems
-to require a lot of Gnome components; not something we could easily pull
-in on the BMC.
-
-> The members on the call really wanted to encourage OpenBMC to implement=
-=20
-> SSDP instead.
-
-It probably isn't a bad thing to be able to support SSDP, don't get me
-wrong, but "instead"?  Why would we want to take away service=20
-advertisement functionality, unless someone wants to explicitly disable it?
-
-I can understand if they don't want to document, in the standard, a way to
-advertise the Redfish service over mDNS, but isn't that a different
-problem from what we're asking for?  Aren't we asking for a method to
-manage the enablement of services on the BMC, specifically our mDNS
-service?  So, if we still have mDNS, don't we need a way to configure it
-through Redfish?
-
---=20
-
-Patrick Williams
-
---eheScQNz3K90DVRs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6YwqgACgkQqwNHzC0A
-wRkL3w/9FIOLdflc0zYNxJ6JYTRqI+BAlRR/GbkXnvMS9fUjyDSbDpDGvBtV9UUj
-vCodd6ksMmkmCk7ZZe5wbRClfKBZWebfbDnF/mhgRcdtlY54O+2lh7Iury6Tfj0P
-VxD5ecOYbVth6nJgbHeRsd6KZlNlAzDR+NMkwqPN6nOPDrBrKecPIAdYvRr79lgX
-dNRE6osENGl6oFVl3gwqoI0V65U0OzA0/v0X91/8zUeMYeD/BB2vuhQuZSwCStLA
-qEE7aQtcMd5ozaakzP79l2oB9LoNY4gZk3JTLcu5DMGJT15qTS1yLTo3ehvf2Zez
-wQcwKzhbMllaWqwFK3RH9HUAnptYc3XOLluv8DAtwnJqdMWc1oVoOzYdG1ivfsJt
-hnNDOfbNosOrw8/p22QbnLvbCC+7xCpUuxu+PRcAQ3h7IZ086wmijj9E3ewsSrSk
-s+lKwLDrW50RQnlexVt9MuG8uxy3TXJsp01WwFT6JLpfg/T3/DZnKaUb+ch0mErL
-FU7nesZgQBiZEpogM48lF4DAtMbpfBAqx1Mc9xcC0sqijSqpPyQm1VC6Xed0ckY9
-3RouJBXX6h/l1njP61ih0ZZw8Q6AuLo7gIYbgTmSY4GyohhL5VuxExrszFzmC/0E
-n5tUQC4BhDGzQQaaelLhiGQLYPVzK6NGwkcgf8dQjJB0uI1Qa7c=
-=YJf1
------END PGP SIGNATURE-----
-
---eheScQNz3K90DVRs--
+--000000000000826e3805a36f77d8--
