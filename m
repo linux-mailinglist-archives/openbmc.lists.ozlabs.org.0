@@ -1,84 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6840D1AD3B7
+	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 02:43:40 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FCE21AD3AD
-	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 02:37:26 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 493HH43slkzDsx9
-	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 10:37:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 493HQK37MlzDrcN
+	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 10:43:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12e;
+ helo=mail-lf1-x12e.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=E9tXE/hp; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=H9Yo/3Cq; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=gizthNxj; dkim-atps=neutral
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com
+ [IPv6:2a00:1450:4864:20::12e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 493HFL4phSzDsq3
- for <openbmc@lists.ozlabs.org>; Fri, 17 Apr 2020 10:35:50 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id F358D5C0248;
- Thu, 16 Apr 2020 20:35:46 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 16 Apr 2020 20:35:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=M73uMMN6NSFYJvVBFvvHytJ7R6kitRF
- LXggRW+ra8ys=; b=E9tXE/hpIeW6kxnJRgrQrreHWYWgkOQXm+HZILGyq+W0D47
- Rlb8v2E1UscrHfjyQodwnAHfdZSbf/fdtHfjkxY9IqFIKSWPTIgwWINXN5VwksNX
- Jnce685kz63OEcFjPBsi4wwqM0aUJG/AXkq2PbegdDlu8vJqAgvxSpGuUA0TdJjt
- uMsaehaCFm1PDP1FqJ6pZ+SDhx+CZ1ovwiswBulgcVoY8qN4lEiCULXjJlNKQDGJ
- fK0hvU2ZhavLMtVMycKa2sZhU13rc+xsNE2GjGzAgkWbhsX7t3zRFF29KZQhbDm5
- y4oULDBHSsqhyXjlVYo/pC1hgn/nLFqyUMtWQtg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=M73uMM
- N6NSFYJvVBFvvHytJ7R6kitRFLXggRW+ra8ys=; b=H9Yo/3CqxQkGL2DSR6lnnP
- UXVzaXWUtivaHGB9TUlP5C6pmjbtePfqKlg7sKSkYYZqpONEKLjhAnS44FWmXXjc
- 9E9Lu/dMz7DcXFUr/BNoY0qzto3kiOlkkKnqBXLJ1xilitc5riZcG41YBKVYtjuO
- mgCDqnpot7s4OwuR8Fnr6otqAADl86zbq5676nC8JW2Euynj9sYJCYfgg6MqaJbQ
- xYaL1MP8DxuoyQ5i7lCKQsb1/oQHLo9QnaCSlmaBhRxbDUYakffy9hWMuUKQ++5v
- FrF7jpMbXR7ec/irTB/j3523qjNtF3nibE641lav8IBwqZW+ZDF44VOExAUuUYpw
- ==
-X-ME-Sender: <xms:4vmYXhrVwYPpK5DcVhp2KtrD8CX-0Ppzh1Gxx4sQWiedF80aHil6lA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrfeeigdefiecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucffohhmrg
- hinhepohiilhgrsghsrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
- pehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:4vmYXhcmFRhukgx8OnzQ-3VQcgoVthCnv9hf7j7Xoz7tW1mWBvjHLg>
- <xmx:4vmYXooXr_0Z0tIDetuPfYolzwIYIVWAsCnpc_uWvj1xthbnGul-nQ>
- <xmx:4vmYXqFPgQBaIbPpIxDBVr-Ez1FUAJ64nRgDJciDorj71j8l_DUyGQ>
- <xmx:4vmYXuyK_s83F4ybkxjXh-SzF9dIQGXnC79PXKrlgh7gnngiYII3eQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 22422E00A6; Thu, 16 Apr 2020 20:35:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-1131-g3221b37-fmstable-20200415v1
-Mime-Version: 1.0
-Message-Id: <22e54b85-83e8-4325-aac3-41d51518bc4d@www.fastmail.com>
-In-Reply-To: <38C6FED3-EACB-4BE9-B3AE-4FE34D2982AF@carlson.net>
-References: <4770a42d-d012-4e95-9347-d5c287c2e288@www.fastmail.com>
- <38C6FED3-EACB-4BE9-B3AE-4FE34D2982AF@carlson.net>
-Date: Fri, 17 Apr 2020 10:06:12 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Mark Carlson" <mark@carlson.net>
-Subject: Re: nvme sensors
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 493HPX1kvxzDr3B
+ for <openbmc@lists.ozlabs.org>; Fri, 17 Apr 2020 10:42:55 +1000 (AEST)
+Received: by mail-lf1-x12e.google.com with SMTP id u10so346730lfo.8
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Apr 2020 17:42:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=es/u4G9wBtiInlA4rZ20lpvnChW9DjV1sLSmQFNVFhk=;
+ b=gizthNxjcOrkZTfiWTa4eX0x4UqVFdk5lKQk+VuE5jG7Xc83A8ic7oGcnOETwWBDRX
+ ZjBvcKdpeHsaSkmlptRsY54TqnnGno9Csq8f7eg01EUk6Mb/ZTzmjjR8SaQdMyGKlPkB
+ kPqlP1suA7mvwql9Bq6BEi0cRmmnmcyXKxIFPutN168CUB+jtS/Cc9I/qMF/VLErpg69
+ RMH/TOqsQDjEbNS5F+HhEyH/ECnoHvs2QZghjg2FgcMTymff2IWQjny4yjWlVnG4HQsq
+ UJEOLXcvpl5aAC1yUbEj2nuFqy7nDLIpWoB4sIXx2dRwq6JO8cn69qg7aZHQ4lf4wVU6
+ 0T9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=es/u4G9wBtiInlA4rZ20lpvnChW9DjV1sLSmQFNVFhk=;
+ b=k2IWaHAUrs+W6LHe0Z+c5Vld58w08gOVBnsuEC24DNSKy90Ve9l7Ty4pp9mGK6EhRm
+ U12dZxaSB7hzXpJ9HwFQEbqOUA2D+T0GeVXUASoyjHCumAvbt4H1DvOLQPWg9TWlrike
+ CD++CFKMsG3KTIIGQokXpSJlus++kUPpF8whGxbYCjl0qSR7ardFzHeqaVoktZDhJZ5z
+ ZxcfNHypyH4ztRUVr71rkCTynxEhzwEZTjff8RFcrUlDXsStJR4Lfw0zHQdSENZC3hMu
+ 07oJMDOqm4fUhHwC05kCztCNkBD9CqxxbSr8Nxdf5FLweC4CG8F25wl2TzYALgrYsfuE
+ BwhQ==
+X-Gm-Message-State: AGi0PuYOriIlm0sDksz9pVLyuQhsVcNzjBlzxFTSpIZw/1r7GAsm9Vky
+ 5g/r1F6xWBdPu1/g3Vf8tQihyg7BrBmly9ScA4YLDA==
+X-Google-Smtp-Source: APiQypKvLCYlokc7te3s5Ins+b3xfPLuomFmyusffxB4j3NqEoaFavAzk3DKqNJkwZXKr8pxz8n020qD9kIEpJMP32k=
+X-Received: by 2002:a2e:8884:: with SMTP id k4mr439001lji.267.1587084169331;
+ Thu, 16 Apr 2020 17:42:49 -0700 (PDT)
+MIME-Version: 1.0
+References: <64ed3841-fc25-50d2-5353-d778301ce06d@linux.ibm.com>
+ <20200407154653.GB5368@heinlein.lan.stwcx.xyz>
+ <d3801437-bde4-ffe9-9f3e-1604ad174625@linux.ibm.com>
+ <e292cc98-cdd8-2eff-3fd0-ba42762b2720@linux.vnet.ibm.com>
+ <20200416204010.GD443018@heinlein.lan.stwcx.xyz>
+In-Reply-To: <20200416204010.GD443018@heinlein.lan.stwcx.xyz>
+From: Richard Hanley <rhanley@google.com>
+Date: Thu, 16 Apr 2020 17:42:37 -0700
+Message-ID: <CAH1kD+bVgh0kjUt7bkt+7G5-0G66hneto-Ks2o6iNDXKxLsN8w@mail.gmail.com>
+Subject: Re: Why does OpenBMC use Avahi mDNS instead of SSDP?
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="00000000000024b96705a371d4a6"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,28 +76,113 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Neeraj Ladkani <neladk@microsoft.com>, Vijay Khemka <vijaykhemka@fb.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>, Joseph Reynolds <jrey@linux.ibm.com>,
+ ratagupt <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Mark,
+--00000000000024b96705a371d4a6
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 16 Apr 2020, at 12:38, Mark Carlson wrote:
-> NVMe-MI. Over MCTP. This gets you into a broad range of SSDs for 
-> management.
+>
+>
+> > >> mDNS is used more in the UNIX world, SSDP is used more in Windows.
+> > >>
+> > Was on the Redfish call earlier and this forum thread was discussed. The
+> > Redfish members on the call did not totally agree with this statement.
+> > They believe SSDP has a wider adaption than just Windows. A wider
+> > adaption than mDNS.  Since SSDP is already in the Redfish specification
+> > and has been adapted by Redfish implementations, adding a 2nd discovery
+> > service would damage interoperability in Redfish.
+>
+> I'm not really interested in a debate on this point, but I'm not finding
+> much evidence to back it up.  Can anyone point to well-used OSS
+> implementation of SSDP?  The only thing I can find is gssdp, which seems
+> to require a lot of Gnome components; not something we could easily pull
+> in on the BMC.
+>
+> The only thing besides gssdp is this
+https://github.com/troglobit/ssdp-responder, but that's only one
+(presumably easier) half.
 
-As mentioned in other replies in this thread you may want to check out
-Intel's dbus-sensors or the phosphor-nvme repos.
 
-https://lists.ozlabs.org/pipermail/openbmc/2020-April/021288.html
+> > The members on the call really wanted to encourage OpenBMC to implement
+> > SSDP instead.
+>
+> It probably isn't a bad thing to be able to support SSDP, don't get me
+> wrong, but "instead"?  Why would we want to take away service
+> advertisement functionality, unless someone wants to explicitly disable it?
+>
+> I can understand if they don't want to document, in the standard, a way to
+> advertise the Redfish service over mDNS, but isn't that a different
+> problem from what we're asking for?  Aren't we asking for a method to
+> manage the enablement of services on the BMC, specifically our mDNS
+> service?  So, if we still have mDNS, don't we need a way to configure it
+> through Redfish?
+>
+> I see your point here.  I guess there might be some implicit assumption
+that adding it to a schema implies endorsement elsewhere.
+Discovery is probably an area where supporting a diversity of protocols is
+better than making a single choice.
 
-> Also would like to look to I3C Basic for MCTP in the future, and I know 
-> DMTF is looking at this. They have a Redfish Device Enablement method 
-> for getting an NVMe drive to respond with Redfish.
-> 
+--00000000000024b96705a371d4a6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Cheers,
+<div dir=3D"ltr"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex"><br>
+&gt; &gt;&gt; mDNS is used more in the UNIX world, SSDP is used more in Win=
+dows.<br>
+&gt; &gt;&gt;<br>
+&gt; Was on the Redfish call earlier and this forum thread was discussed. T=
+he <br>
+&gt; Redfish members on the call did not totally agree with this statement.=
+ <br>
+&gt; They believe SSDP has a wider adaption than just Windows. A wider <br>
+&gt; adaption than mDNS.=C2=A0 Since SSDP is already in the Redfish specifi=
+cation <br>
+&gt; and has been adapted by Redfish implementations, adding a 2nd discover=
+y <br>
+&gt; service would damage interoperability in Redfish.<br>
+<br>
+I&#39;m not really interested in a debate on this point, but I&#39;m not fi=
+nding<br>
+much evidence to back it up.=C2=A0 Can anyone point to well-used OSS<br>
+implementation of SSDP?=C2=A0 The only thing I can find is gssdp, which see=
+ms<br>
+to require a lot of Gnome components; not something we could easily pull<br=
+>
+in on the BMC.<br>
+<br></blockquote><div>The only thing besides gssdp is this=C2=A0<a href=3D"=
+https://github.com/troglobit/ssdp-responder">https://github.com/troglobit/s=
+sdp-responder</a>, but that&#39;s only one (presumably easier) half.</div><=
+div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; The members on the call really wanted to encourage OpenBMC to implemen=
+t <br>
+&gt; SSDP instead.<br>
+<br>
+It probably isn&#39;t a bad thing to be able to support SSDP, don&#39;t get=
+ me<br>
+wrong, but &quot;instead&quot;?=C2=A0 Why would we want to take away servic=
+e <br>
+advertisement functionality, unless someone wants to explicitly disable it?=
+<br>
+<br>
+I can understand if they don&#39;t want to document, in the standard, a way=
+ to<br>
+advertise the Redfish service over mDNS, but isn&#39;t that a different<br>
+problem from what we&#39;re asking for?=C2=A0 Aren&#39;t we asking for a me=
+thod to<br>
+manage the enablement of services on the BMC, specifically our mDNS<br>
+service?=C2=A0 So, if we still have mDNS, don&#39;t we need a way to config=
+ure it<br>
+through Redfish?<br><br></blockquote><div>I see your point here.=C2=A0 I gu=
+ess there might be some implicit assumption that adding it to a schema impl=
+ies endorsement elsewhere.=C2=A0</div><div>Discovery is probably an area wh=
+ere supporting a diversity of protocols is better than making a single choi=
+ce.</div></div></div>
 
-Andrew
+--00000000000024b96705a371d4a6--
