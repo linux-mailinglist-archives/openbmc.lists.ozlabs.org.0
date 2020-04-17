@@ -1,88 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 548031AE694
-	for <lists+openbmc@lfdr.de>; Fri, 17 Apr 2020 22:14:41 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 493nPT6zkKzDs09
-	for <lists+openbmc@lfdr.de>; Sat, 18 Apr 2020 06:14:37 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C92B1AE8A1
+	for <lists+openbmc@lfdr.de>; Sat, 18 Apr 2020 01:30:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 493slQ0J3BzDrf7
+	for <lists+openbmc@lfdr.de>; Sat, 18 Apr 2020 09:30:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=XqYww6wl; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=XXqpeHQW; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 493nNp1wQPzDqBh
- for <openbmc@lists.ozlabs.org>; Sat, 18 Apr 2020 06:14:01 +1000 (AEST)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03HK6hH8116062; Fri, 17 Apr 2020 16:13:57 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30fjux8pxc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Apr 2020 16:13:57 -0400
-Received: from m0098416.ppops.net (m0098416.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 03HK8LUW121541;
- Fri, 17 Apr 2020 16:13:56 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30fjux8px8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Apr 2020 16:13:56 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03HKAmHU011777;
- Fri, 17 Apr 2020 20:13:56 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04wdc.us.ibm.com with ESMTP id 30b5h7cvcu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 17 Apr 2020 20:13:56 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03HKDtZm23986522
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 17 Apr 2020 20:13:55 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D85C2AE066;
- Fri, 17 Apr 2020 20:13:55 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 67790AE05C;
- Fri, 17 Apr 2020 20:13:55 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.154.32])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
- Fri, 17 Apr 2020 20:13:55 +0000 (GMT)
-Subject: Re: Proposal: how to make incompatible changes
-To: Richard Hanley <rhanley@google.com>, Andrew Jeffery <andrew@aj.id.au>
-References: <5532c90e-75e8-4998-b0cf-e65ed9af1424@linux.ibm.com>
- <e77335c2-97a8-42aa-ad93-394fe6f9b420@www.fastmail.com>
- <CAH1kD+YQ+Am_uwb0vo0mReq8FvBLuxKnxoZi7x_Xfap3SYQFzg@mail.gmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <7c9d03de-a9ca-a79b-4753-b7d1fc350f8a@linux.ibm.com>
-Date: Fri, 17 Apr 2020 15:13:54 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAH1kD+YQ+Am_uwb0vo0mReq8FvBLuxKnxoZi7x_Xfap3SYQFzg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 493skY52fBzDrQl
+ for <openbmc@lists.ozlabs.org>; Sat, 18 Apr 2020 09:29:37 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1587166172;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nCOnj2S2elRcPvb3uawXDhh0EpQ/4m4ruaT7zHRSVcI=;
+ b=XqYww6wl3Ch062ML7nVHo71lP+HNxDM/zcJeLFnEHvvmTJJRUJbp6Wnh1agcFeA8Szs0+h
+ a1852/cpFAUxqv5ct15HkLI4ixRigtNkC72ft6EbuilkdQC2l1+PHPqrrrnqg7kai1Br3I
+ gIIKsNVy2ijZDYri5Ht0QDy1rMR5Yws=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1587166173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nCOnj2S2elRcPvb3uawXDhh0EpQ/4m4ruaT7zHRSVcI=;
+ b=XXqpeHQWurQnTBb9tLq41KSMCaMDrhSnhVmCQfDQufSoUZikIpwOOQhKRd2wrXJHzt9IrC
+ rvVNfmkOaKeY0auAbTqxoUaccACIk2QGS3eMzaR8JEMsAq70RQi+8LgOYVEXQKdMSv/RPb
+ lhou+ZmpHEwZNJJjAE7iTwdXSUgfTGc=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-74-_dQk_-0gOLqs1uN7bwY4nA-1; Fri, 17 Apr 2020 19:29:30 -0400
+X-MC-Unique: _dQk_-0gOLqs1uN7bwY4nA-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Fri, 17 Apr 2020 16:29:28 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Fri, 17 Apr 2020 16:29:28 -0700
+From: Patrick Voelker <Patrick_Voelker@phoenix.com>
+To: Vijay Khemka <vijaykhemka@fb.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: PSU (PMBus) fault monitoring / logging
+Thread-Topic: PSU (PMBus) fault monitoring / logging
+Thread-Index: AdYUPUOzhfShaeRKTfKjB4RwKlmmUQAavwCAABnYX2A=
+Date: Fri, 17 Apr 2020 23:29:27 +0000
+Message-ID: <a02ac6a947854897a3b5069d9e7da7df@SCL-EXCHMB-13.phoenix.com>
+References: <337b91ad1ac2401a982113f025564da7@SCL-EXCHMB-13.phoenix.com>
+ <EF8FF2A3-2EA7-42F5-A568-9AE3389CDE2B@fb.com>
+In-Reply-To: <EF8FF2A3-2EA7-42F5-A568-9AE3389CDE2B@fb.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-17_09:2020-04-17,
- 2020-04-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0
- mlxscore=0 adultscore=0 mlxlogscore=999 phishscore=0 priorityscore=1501
- impostorscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004170145
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.122.68.154]
+MIME-Version: 1.0
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: multipart/alternative;
+ boundary="_000_a02ac6a947854897a3b5069d9e7da7dfSCLEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,116 +90,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/16/20 4:53 PM, Richard Hanley wrote:  -- also responding to Andrew 
-Jeffery
-> Thank you for bringing this up.  I really think that some policy 
-> discussion is useful here.  I also 100% agree that 
-> forward compatibility should be our goal here.
->
-> When I think about incompatible changes I tend to group them into one 
-> of two categories:
-> 1) A design change goes in the opposite direction than what previous 
-> versions offered, and the old feature needs to be shut off.
-> 2) New features/designs are made, and supporting several different 
-> options at the same time is difficult
->
-> Security changes are often in the former category. I remember a few 
-> months back there was a thread about removing the DBus rest interface 
-> as a default service for security reasons.  Brad's point at the time 
-> was (I may be paraphrasing here) that we need to maintain support for 
-> any currently supported use case or be able to support their migration.
+--_000_a02ac6a947854897a3b5069d9e7da7dfSCLEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-There is broad support to disable the phosphor REST APIs by default.  I 
-understand we are waiting for a little more development work so this 
-will go smoothly.  See comments in the review:
-https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29344
+VGhhbmtzIFZpamF5LCB0aGF0IHdhcyByZWFsbHkgaGVscGZ1bC4NCg0KSeKAmW0gc3BlY2lmaWNh
+bGx5IGxvb2tpbmcgZm9yIGhvdyB0aGUgUE1CdXMgU1RBVFVTX1dPUkQgYW5kIHN1Yi1yZWdpc3Rl
+cnMgYXJlIG1vbml0b3JlZCBhbmQgcmVwcmVzZW50ZWQgaW4gT3BlbkJNQyBidXQgaXTigJlzIG5v
+dCBqdW1waW5nIG91dCBhdCBtZS4NCg0KDQpGcm9tOiBWaWpheSBLaGVta2EgW21haWx0bzp2aWph
+eWtoZW1rYUBmYi5jb21dDQpTZW50OiBGcmlkYXksIEFwcmlsIDE3LCAyMDIwIDExOjA3IEFNDQpU
+bzogUGF0cmljayBWb2Vsa2VyOyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJl
+OiBQU1UgKFBNQnVzKSBmYXVsdCBtb25pdG9yaW5nIC8gbG9nZ2luZw0KDQpUaGVyZSBhcmUgcHN1
+c2Vuc29yIGRhZW1vbiB3aG8gbW9uaXRvcnMgdGhlc2UgUFNVIHNlbnNvcnMuDQoNCkZyb206IG9w
+ZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMub3psYWJzLm9y
+Zz4gb24gYmVoYWxmIG9mIFBhdHJpY2sgVm9lbGtlciA8UGF0cmlja19Wb2Vsa2VyQHBob2VuaXgu
+Y29tPg0KRGF0ZTogVGh1cnNkYXksIEFwcmlsIDE2LCAyMDIwIGF0IDc6NDAgUE0NClRvOiAib3Bl
+bmJtY0BsaXN0cy5vemxhYnMub3JnIiA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KU3ViamVj
+dDogUFNVIChQTUJ1cykgZmF1bHQgbW9uaXRvcmluZyAvIGxvZ2dpbmcNCg0KSXMgdGhlcmUgYSBt
+b2R1bGUgdGhhdCBpbnN0YW50aWF0ZXMgc2Vuc29ycyBmb3IgUFNVIFBNQnVzIGJhc2VkIGZhdWx0
+cyBhZnRlciB0aGUgZW50aXR5LW1hbmFnZXIgcHJvYmVzIHRoZSBidXNzZXMgYW5kIGZpbmRzIHRo
+ZSBQU1VzIGJ5IEZSVQ0KDQpJJ20gbG9va2luZyBmb3IgdGhlIG1ldGhvZCBieSB3aGljaCB0aGUg
+ZmF1bHRzIGFyZSBtb25pdG9yZWQgYW5kIGxvZ2dlZC4gIEkgc2VlIHRoYXQgdGhlcmXigJlzIGtl
+cm5lbCBod21vbiBzdXBwb3J0IGZvciBQTUJ1cyBidXQgSeKAmW0gdHJ5aW5nIHRvIHVuZGVyc3Rh
+bmQgaG93IElQTUkgc2Vuc29ycyBhbmQgbG9nZ2luZyB0aWUgaW4uDQoNCg==
+--_000_a02ac6a947854897a3b5069d9e7da7dfSCLEXCHMB13phoenixcom_
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-> Now another point in that thread was that some users are going to care 
-> more about security than compatibility, and vice versa. One possible 
-> solution is to create a second secure phosphor reference implementation.
-
-I am trying hard to move the OpenBMC distro to be "secure by default".  
-If we run into compatibility issues, I would try to put them in as 
-DISTRO_FEATUREs, and then work to change the default to the secure setting.
-
-An example for this is network IPMI.  I am (we are?) working toward 
-allowing the BMC admin to disable the network IPMI service, but it would 
-be enabled by default.  Then in future, we can change the default to 
-disabled. ... (goes to look for old email)....
-
-So I don't see a need for a second reference distro.
-
->
-> Here is the thread I'm talking about: 
-> https://lists.ozlabs.org/pipermail/openbmc/2020-February/020491.html
->
-> Having two reference implementations (profiles, tracks, or whatever we 
-> want to call it) isn't without risk.  If things ever diverge too far, 
-> then the overhead might be larger than supporting forward 
-> compatibility.  However, I would like to get to a place where changes 
-> of that sort can be made accessible to early adopters, combined with a 
-> clearly communicated deprecation/migration plan.
->
->
-> On Wed, Apr 15, 2020 at 10:01 PM Andrew Jeffery <andrew@aj.id.au 
-> <mailto:andrew@aj.id.au>> wrote:
->
->     > Applicability.
->     >
->     > These guidelines are for the BMC's "intended external user
->     interfaces".
->     > For example, its management interfaces including its web server
->     and all
->     > REST APIs.  I haven't given much thought to the BMC/host
->     interfaces or
->     > interfaces internal to the BMC.  IMHO, it is less important to
->     maintain
->     > compatibility in these areas.
->
->     Lets split this. My feelings are
->
->     1. Inband (BMC/Host) interfaces are in the same class as "intended
->     external user interfaces" and therefore should not have incompatible
->     changes unless _absolutely_ necessary. What we implement here should
->     have passed through a specification process under e.g. DMTF.
->
-
-That sounds right to me.  I have less understanding of the BMC/host 
-interface, so I'm ahpy ot let someone else lead there.
-
->
->     2. Interfaces between applications on the BMC (e.g. D-Bus interfaces)
->     is the class where compatibility is less critical, on systems that
->     do not
->     expose the D-Bus interfaces via REST. However, while any system exists
->     that exposes the D-Bus interfaces via REST we must constrain changes
->     to these interfaces as well.
->
-
-Agreed.
-
->
->     > For example, if you need an incompatible
->     > change in an internal interface, you have a smaller set of users
->     who
->     > ought to be active in the project, and can give you feedback and
->     adapt
->     > within a release cycle.
->     >
->
->     This is true for interfaces between BMC components, it's not true
->     of the
->     host firmware interfaces, hence my split above.
->
->     When we remove the ability to directly access the D-Bus interfaces via
->     REST we will gain a lot more freedom as the D-Bus interfaces then
->     truly
->     become internal.
->
->     Andrew
->
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTQgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+UE1pbmdMaVU7DQoJcGFub3NlLTE6MiAyIDUgMCAwIDAgMCAwIDAgMDt9DQpAZm9udC1mYWNlDQoJ
+e2ZvbnQtZmFtaWx5OlBNaW5nTGlVOw0KCXBhbm9zZS0xOjIgMiA1IDAgMCAwIDAgMCAwIDA7fQ0K
+QGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIgMTUgNSAyIDIg
+MiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6VGFob21hOw0KCXBhbm9zZS0x
+OjIgMTEgNiA0IDMgNSA0IDQgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IlxAUE1p
+bmdMaVUiOw0KCXBhbm9zZS0xOjIgMiA1IDAgMCAwIDAgMCAwIDA7fQ0KLyogU3R5bGUgRGVmaW5p
+dGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWwsIGRpdi5Nc29Ob3JtYWwNCgl7bWFy
+Z2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJZm9udC1zaXplOjExLjBwdDsNCglm
+b250LWZhbWlseToiQ2FsaWJyaSIsInNhbnMtc2VyaWYiO30NCmE6bGluaywgc3Bhbi5Nc29IeXBl
+cmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNv
+cmF0aW9uOnVuZGVybGluZTt9DQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlwZXJsaW5rRm9sbG93ZWQN
+Cgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOnB1cnBsZTsNCgl0ZXh0LWRlY29yYXRp
+b246dW5kZXJsaW5lO30NCnNwYW4uRW1haWxTdHlsZTE3DQoJe21zby1zdHlsZS10eXBlOnBlcnNv
+bmFsOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIiwic2Fucy1zZXJpZiI7DQoJY29sb3I6d2luZG93
+dGV4dDt9DQpzcGFuLkVtYWlsU3R5bGUxOA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBs
+eTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsInNhbnMtc2VyaWYiOw0KCWNvbG9yOiMxRjQ5N0Q7
+fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1z
+aXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJ
+bWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFn
+ZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxv
+OnNoYXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtl
+bmRpZl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJl
+ZGl0Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0
+PjwveG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9ImJs
+dWUiIHZsaW5rPSJwdXJwbGUiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5UaGFua3MgVmlqYXksIHRo
+YXQgd2FzIHJlYWxseSBoZWxwZnVsLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwv
+c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6IzFGNDk3
+RCI+SeKAmW0gc3BlY2lmaWNhbGx5IGxvb2tpbmcgZm9yIGhvdyB0aGUgUE1CdXMgU1RBVFVTX1dP
+UkQgYW5kIHN1Yi1yZWdpc3RlcnMgYXJlIG1vbml0b3JlZCBhbmQgcmVwcmVzZW50ZWQgaW4gT3Bl
+bkJNQyBidXQgaXTigJlzIG5vdCBqdW1waW5nIG91dCBhdCBtZS48bzpwPjwvbzpwPjwvc3Bhbj48
+L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+PG86
+cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGEgbmFtZT0i
+X01haWxFbmRDb21wb3NlIj48c3BhbiBzdHlsZT0iY29sb3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8
+L286cD48L3NwYW4+PC9hPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci1sZWZ0
+OnNvbGlkIGJsdWUgMS41cHQ7cGFkZGluZzowaW4gMGluIDBpbiA0LjBwdCI+DQo8ZGl2Pg0KPGRp
+diBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRp
+bmc6My4wcHQgMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5
+bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7VGFob21hJnF1b3Q7LCZxdW90
+O3NhbnMtc2VyaWYmcXVvdDsiPkZyb206PC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9udC1zaXpl
+OjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtUYWhvbWEmcXVvdDssJnF1b3Q7c2Fucy1zZXJpZiZx
+dW90OyI+IFZpamF5IEtoZW1rYSBbbWFpbHRvOnZpamF5a2hlbWthQGZiLmNvbV0NCjxicj4NCjxi
+PlNlbnQ6PC9iPiBGcmlkYXksIEFwcmlsIDE3LCAyMDIwIDExOjA3IEFNPGJyPg0KPGI+VG86PC9i
+PiBQYXRyaWNrIFZvZWxrZXI7IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxicj4NCjxiPlN1Ympl
+Y3Q6PC9iPiBSZTogUFNVIChQTUJ1cykgZmF1bHQgbW9uaXRvcmluZyAvIGxvZ2dpbmc8bzpwPjwv
+bzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86
+cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5UaGVyZSBhcmUgcHN1c2Vu
+c29yIGRhZW1vbiB3aG8gbW9uaXRvcnMgdGhlc2UgUFNVIHNlbnNvcnMuPG86cD48L286cD48L3A+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9
+ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29saWQgI0I1QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0
+IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250
+LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5Gcm9tOiA8L3NwYW4+PC9iPjxzcGFuIHN0eWxlPSJm
+b250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5vcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5jZXMm
+IzQzO3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnJmd0OyBvbiBiZWhhbGYgb2Yg
+UGF0cmljayBWb2Vsa2VyICZsdDtQYXRyaWNrX1ZvZWxrZXJAcGhvZW5peC5jb20mZ3Q7PGJyPg0K
+PGI+RGF0ZTogPC9iPlRodXJzZGF5LCBBcHJpbCAxNiwgMjAyMCBhdCA3OjQwIFBNPGJyPg0KPGI+
+VG86IDwvYj4mcXVvdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmcXVvdDsgJmx0O29wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZyZndDs8YnI+DQo8Yj5TdWJqZWN0OiA8L2I+UFNVIChQTUJ1cykgZmF1
+bHQgbW9uaXRvcmluZyAvIGxvZ2dpbmc8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxk
+aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCI+SXMgdGhlcmUgYSBtb2R1bGUgdGhhdCBpbnN0YW50aWF0ZXMg
+c2Vuc29ycyBmb3IgUFNVIFBNQnVzIGJhc2VkIGZhdWx0cyBhZnRlciB0aGUgZW50aXR5LW1hbmFn
+ZXIgcHJvYmVzIHRoZSBidXNzZXMgYW5kIGZpbmRzIHRoZSBQU1VzIGJ5IEZSVTxvOnA+PC9vOnA+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj5JJ20gbG9va2luZyBmb3IgdGhlIG1ldGhvZCBieSB3aGljaCB0aGUgZmF1
+bHRzIGFyZSBtb25pdG9yZWQgYW5kIGxvZ2dlZC4mbmJzcDsgSSBzZWUgdGhhdCB0aGVyZeKAmXMg
+a2VybmVsIGh3bW9uIHN1cHBvcnQgZm9yIFBNQnVzIGJ1dCBJ4oCZbSB0cnlpbmcgdG8gdW5kZXJz
+dGFuZCBob3cgSVBNSSBzZW5zb3JzIGFuZCBsb2dnaW5nIHRpZSBpbi48bzpwPjwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rp
+dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+--_000_a02ac6a947854897a3b5069d9e7da7dfSCLEXCHMB13phoenixcom_--
 
