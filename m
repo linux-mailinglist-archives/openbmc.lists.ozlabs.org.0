@@ -1,87 +1,100 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05ECF1AFA31
-	for <lists+openbmc@lfdr.de>; Sun, 19 Apr 2020 14:53:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 494qWr5ZmLzDqd7
-	for <lists+openbmc@lfdr.de>; Sun, 19 Apr 2020 22:53:44 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19F7B1AFFB0
+	for <lists+openbmc@lfdr.de>; Mon, 20 Apr 2020 04:08:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 49598H5zNMzDq8W
+	for <lists+openbmc@lfdr.de>; Mon, 20 Apr 2020 12:07:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.helo=apc01-hk2-obe.outbound.protection.outlook.com
+ (client-ip=40.107.130.70; helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=chma0@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=EaavHSQx; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=ZfVBGbWE; 
+ dmarc=none (p=none dis=none) header.from=nuvoton.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=nuvoton.onmicrosoft.com
+ header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-nuvoton-onmicrosoft-com header.b=ACnY/I9v; 
  dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1300070.outbound.protection.outlook.com [40.107.130.70])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 494qVX01RGzDqC6
- for <openbmc@lists.ozlabs.org>; Sun, 19 Apr 2020 22:52:35 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id E5C94700;
- Sun, 19 Apr 2020 08:52:30 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 19 Apr 2020 08:52:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type:content-transfer-encoding; s=fm2; bh=AQgfU
- vs2S7G94wptkAlwV79JMcYZhKRkhg4PZJHpalU=; b=EaavHSQxvhWLkBNW2eXDt
- 1XI9VqNqRapCxx8N/NO2N7xaLLRJN+Kjir0J5mpETuarfK5rqCT3h/obs7UA4/HK
- GFk3Dyk2ksej1wLCQZe1FKQMaUlWmYh9kzROOWt8loOMh8WCPmMtopyiZYsJydF+
- XCLRNcp3J+O1qcO54QKS20t0HmGzPUVMwla6/s4s4MjMK5MW31aWAVEptx3LA7UU
- tuUbd73d94RufX86Kp92H3EOW7CxU9g0h3qDelkEyKZchm8Cd+RUPziQYMKknVHy
- 2uqfkbU+NMw/P8PDPKut8VQ0nJrnGUIXLZcEH/4Q33aoJFGhXbKvf8UqeDy996Ds
- w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=AQgfUvs2S7G94wptkAlwV79JMcYZhKRkhg4PZJHpa
- lU=; b=ZfVBGbWEUtFfGIlUFmzL01fLkM8Qj6c01gJT9iksIzeJ1AphP+QDpbXqq
- HnfpoAg5BlS3LkoO/FQo0OvX8hS0WtyckJHywJbOv8NRl/cneL3+krZHFGPmT1nP
- laZd9HPgDqeKDJKE5V7jqs/OYOu9GYeK5I+bve7nOxB2MykijQdwfXDBwaB/6gPA
- D9G6XzVJNEpRdbz/Tyx8MbLETPPYxYeK5qAFLKCKg8tQWfMXXB4wsycHWFHrW2jO
- whMaTeaokzr899Dl5yoSc4ezyGHPUr2L6otu2u9sYu9l5uUuSnPymq4GVN1kaG9g
- KmYEwP3ceoFMjgiREpC/vrvSkJ4Dg==
-X-ME-Sender: <xms:jkmcXtYvkoVGiUgdyDGIKMUDssaJTkal927HxxnUHV6cRcf5rAdNBg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrgedugdehjecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgfgsehtqh
- ertderreejnecuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgv
- fiesrghjrdhiugdrrghuqeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:jkmcXswq3uhoQI5HGxlYmzZBboXf_ULeFzAvTCIGv7_cnBfMK8Ov1Q>
- <xmx:jkmcXqPGUr6-E1jfA7EOnsFvXs00QCkTToBAz7FZvghgsNVdjTkS5w>
- <xmx:jkmcXgMP2PdrxJalUgE36u3QXgu-LwYecU5gqOKTHXfgoEGbd0-3rg>
- <xmx:jkmcXp2fCrmA-defTyCjvcRo6EeYOKb50zwekhLkA-Rwr2AobhZi4w>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 1130EE00B0; Sun, 19 Apr 2020 08:52:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.1.7-1131-g3221b37-fmstable-20200415v1
-Mime-Version: 1.0
-Message-Id: <fd147288-3521-4667-abec-ae330dd328a2@www.fastmail.com>
-In-Reply-To: <HK2PR04MB3826B414E7D2F68C81359C25FED70@HK2PR04MB3826.apcprd04.prod.outlook.com>
-References: <HK2PR04MB3826A2AAD55E77655BDFB558FED60@HK2PR04MB3826.apcprd04.prod.outlook.com>
- <1fbb893d-6a13-4d33-b11e-407f5283368e@www.fastmail.com>
- <HK2PR04MB3826B414E7D2F68C81359C25FED70@HK2PR04MB3826.apcprd04.prod.outlook.com>
-Date: Sun, 19 Apr 2020 22:22:53 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "zhouyuanqing8@outlook.com" <zhouyuanqing8@outlook.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: About RGMII mode setting of MAC0
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49597P6csqzDqgb
+ for <openbmc@lists.ozlabs.org>; Mon, 20 Apr 2020 12:07:12 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mK5DstLuFbRDVPL7vja/hjS1BbzzWVpq+0Dfk6wwvIdE20TLYJNRH7qmMcdvN7h62PZsbVbukSwCA3D6uSqEP15uIJ+dS46cWU2NqRJpcL92Fs+mmgQBlccVeQA/R1ToCM5pBzkhs9znk5st3ziKhJ4P0e7l5nyt1DEz0TEv8H5mF5oL6o1QjI1K8SfNHYP+cWKDxpZxduEFm4x2sAF39aaAXDctjsmDGWSyQ56vVKdtWaGpcQZBOUGf/KQt1KyODF2ZxJLNBJ/a800eWPYdJso/aVU7sLHeRiPnVXW4t23JZCq3DWVNIgowCdOz+ErPyAxHTm4MN2j3Gf62eOSI/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JqVk2iQx7pRnXGEJO3B2OdbRhOwdG4UcO3lV7GE0wAY=;
+ b=hejyUnwUBXafM75i2F1/Ax80Me8GzsxtbGjq8s4QVMvqUaR1z20l4ZMLtoXU2P4wxsff9CARjAQZwsmEUhuiak4wf1FF95d50Ve0J3WoAuuC0j5moksOdccLvbbKTZyFEBt6hpYhcz5b1ujEgJp+5w5MIIDlb///VjmMiuQkGmxtfwlaJe7Lp8YdHFv5HeWDmRRmdImtUHnX6Wx/PzquK1tCSQN+EHrGYTKREFuk9gc2u8zF65RRIcbdXhRnKdC411Q4xjOUnPwV0uExvFLx7MZHVkZ6u4RjNaQ8KbqbzZXDQ2FbjxSkBshaOtXPrVj2g/wtlEy6MU5qbmEVelUEpA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JqVk2iQx7pRnXGEJO3B2OdbRhOwdG4UcO3lV7GE0wAY=;
+ b=ACnY/I9vz4eQsDluoq1S0ESEp7QG2Kxa2DJlMfFeLJzEjVwDgtFN1Tw44po+Da4uRHoyOsM3GzCeojbOT9vs1qJ+dCnPx0WZS9e9sf0j6FrArDyXu+Sz//NIQO55F8riZaUY42lZoJ+H8pdmZNF6/Vme3IXU8EUWttHnBVTiqko=
+Received: from HK0PR03MB3089.apcprd03.prod.outlook.com (2603:1096:203:42::22)
+ by HK0PR03MB2753.apcprd03.prod.outlook.com (2603:1096:203:27::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2937.10; Mon, 20 Apr
+ 2020 02:07:07 +0000
+Received: from HK0PR03MB3089.apcprd03.prod.outlook.com
+ ([fe80::34ed:ddf2:525d:29bc]) by HK0PR03MB3089.apcprd03.prod.outlook.com
+ ([fe80::34ed:ddf2:525d:29bc%7]) with mapi id 15.20.2937.011; Mon, 20 Apr 2020
+ 02:07:06 +0000
+From: CS20 CHMa0 <CHMA0@nuvoton.com>
+To: Oskar Senft <osk@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: RE: Access Intel ME IPMB from BMC
+Thread-Topic: Access Intel ME IPMB from BMC
+Thread-Index: AQHWFexXa5rtgsntP0+pn4AS6Y2LDaiBQ3Ww
+Date: Mon, 20 Apr 2020 02:07:06 +0000
+Message-ID: <HK0PR03MB308958C2A978970BC6F136DCF5D40@HK0PR03MB3089.apcprd03.prod.outlook.com>
+References: <CABoTLcSOQYY+gk=7Q2w6Ny02L15yM19vTPmJxDfZVst6FV5r+Q@mail.gmail.com>
+In-Reply-To: <CABoTLcSOQYY+gk=7Q2w6Ny02L15yM19vTPmJxDfZVst6FV5r+Q@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=CHMA0@nuvoton.com; 
+x-originating-ip: [42.77.65.99]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c87c491c-576c-4f2f-7536-08d7e4cf86f4
+x-ms-traffictypediagnostic: HK0PR03MB2753:|HK0PR03MB2753:
+x-microsoft-antispam-prvs: <HK0PR03MB27533229E635CFCB1AF83610F5D40@HK0PR03MB2753.apcprd03.prod.outlook.com>
+x-ms-exchange-transport-forked: True
+x-ms-oob-tlc-oobclassifiers: OLM:5797;
+x-forefront-prvs: 03793408BA
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR03MB3089.apcprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(346002)(376002)(396003)(39840400004)(136003)(366004)(5660300002)(9326002)(52536014)(2906002)(8676002)(81156014)(33656002)(8936002)(9686003)(55016002)(71200400001)(110136005)(6506007)(53546011)(76116006)(7696005)(966005)(478600001)(64756008)(66946007)(66556008)(66476007)(66446008)(26005)(316002)(86362001)(186003);
+ DIR:OUT; SFP:1101; 
+received-spf: None (protection.outlook.com: nuvoton.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 6Lp9VuliPdyodtBbnJMJRa8zW5t2C4l0Xiesi4dznZF810kaCMJhlPwUn7vMk7Ws36zjzcWcNHj67StZTVP1//wSaMt6OkutUtHgQ/efTr5pq5KaC7/ELfBf0zBDPJi0U3v4mmObxqSm8FA7noAOJ4QDkjgsqxxBsXiJ9u69nUI16Amv8q4718u7DW+CF0n1MA83gV5QYXWsLu816ZtLnrOGucAOHX88Gxp02uFsBrnfQ18rWm/hNlqf60bcggASLxuQDPZfaehH06kuMwaFtxfvMKaK3mohZr8ujFHZOF2ow+El+ZMzoyPtMeSypmz6mtrOm5vMaDjHpf25mRGsUk0JUuuZZioBKmxN4cuEFL+xK/abw3v9oAPdAnz28ryZBSZF+wE9z8w2h6A1r6DGc26gxQvM1NzMLjihCrPGQXfLwYAJXBion4O2FOcTe6sSr+ZdYWOG/bks4Is3ennh9JP0WQS8pEC3+/qVZrWc0+kmM+ZICr2FlPPQGhJURAx9NGVUDLsFWIrN2FDn8VAlUg==
+x-ms-exchange-antispam-messagedata: G+U7GDuhxiM4tLeQzewK9TGJphsR44pG0g/dtldzTH5YRVwnVNYL4fFVXREiMtKcHBX5cLpxUKo9IeXysjtW1eB3czFppvuWltD151FgcOuvQEUZLvHkIkRVpA2UWPubKmRbCIRq3eyulQzb4AGmsg==
+Content-Type: multipart/alternative;
+ boundary="_000_HK0PR03MB308958C2A978970BC6F136DCF5D40HK0PR03MB3089apcp_"
+MIME-Version: 1.0
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c87c491c-576c-4f2f-7536-08d7e4cf86f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2020 02:07:06.7506 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XXlq0H5ExTksAXi7ndrv3JK3CyrokFP003EW+6jYoffQjwTLmnCXccKfgCYZc7/CoUb3njNg3vrYRvGaf6a1Gw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR03MB2753
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,48 +106,162 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "uperic@163.com" <uperic@163.com>,
- "shinerocky@yahoo.com" <shinerocky@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_HK0PR03MB308958C2A978970BC6F136DCF5D40HK0PR03MB3089apcp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
+SGkgT3NrYXIsDQpZb3UgY2FuIHJlZmVyZW5jZSBJbnRlbCBub2RlIG1hbmFnZXIgZm9yIHNlbmQg
+SVBNQiBjb21tYW5kIGV4YW1wbGUuDQpodHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1DL25vZGUt
+bWFuYWdlci9ibG9iL21hc3Rlci9Ob2RlTWFuYWdlclByb3h5LmNwcA0KDQpBbmQgeW91IGNhbiBn
+ZXQgbW9yZSBpbmZvcm1hdGlvbiBhYm91dCBob3cgSVBNQiB3b3JrIGJ5IGZvbGxvd2luZyBsaW5r
+Og0KaHR0cHM6Ly9naXRodWIuY29tL051dm90b24tSXNyYWVsL29wZW5ibWMvdHJlZS9ydW5ibWMv
+bWV0YS1xdWFudGEvbWV0YS1vbHltcHVzLW51dm90b24jaG9zdC1wb3dlci1idWRnZXQtY29udHJv
+bA0KDQpUaGFua3MsDQpCcmlhbg0KDQpGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJtYy1ib3Vu
+Y2VzK2NobWEwPW51dm90b24uY29tQGxpc3RzLm96bGFicy5vcmddIE9uIEJlaGFsZiBPZiBPc2th
+ciBTZW5mdA0KU2VudDogU3VuZGF5LCBBcHJpbCAxOSwgMjAyMCA5OjQ1IEFNDQpUbzogT3BlbkJN
+QyBNYWlsbGlzdCA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KU3ViamVjdDogQWNjZXNzIElu
+dGVsIE1FIElQTUIgZnJvbSBCTUMNCg0KSGkgZXZlcnlvbmUNCg0KSSdtIHRyeWluZyB0byBmaW5k
+IG91dCBob3cgSSBjYW4gYWNjZXNzIHRoZSBJbnRlbCBNRSB2aWEgSVBNQiBmcm9tIHRoZSBCTUMg
+KE9wZW5CTUMpLg0KDQpGcm9tIHdoYXQgSSBnYXRoZXJlZCwgSW50ZWwgTUUncyBJUE1CIGlzIG9u
+IHRoZSBQQ0gncyBTTUxpbmswLiBJIGtub3cgdGhpcyBpcyBjb25uZWN0ZWQgdG8gb25lIG9mIHRo
+ZSBTTUJ1cyBtb2R1bGVzIG9uIG15IEFTVDI1MDAuIEJ1dCB3aGF0IEkgY2FuJ3QgZmluZCBvdXQg
+aXMgaG93IEkgYWN0dWFsbHkgc2VuZCBjb21tYW5kcyB0aGVyZT8gSSdtIHN1cmUgSSdtIG1pc3Np
+bmcgYSBkb2N1bWVudCB0aGF0IG1ha2VzIHRoaXMgb2J2aW91cy4NCg0KT3IgaXMgaXQgYXMgc2lt
+cGxlIGFzIGRyb3BwaW5nIElQTUkgcGFja2V0cyBvbnRvIHRoZSBidXM/DQoNCklzIHRoaXMgYnkg
+YW55IGNoYW5jZSBhbHJlYWR5IGltcGxlbWVudGVkIGluIE9wZW5CTUM/DQoNClRoYW5rcyBmb3Ig
+YW55IGhpbnRzIQ0KDQpPc2thcg0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NClRo
+ZSBwcml2aWxlZ2VkIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBjb250YWluZWQgaW4gdGhpcyBl
+bWFpbCBpcyBpbnRlbmRlZCBmb3IgdXNlIG9ubHkgYnkgdGhlIGFkZHJlc3NlZXMgYXMgaW5kaWNh
+dGVkIGJ5IHRoZSBvcmlnaW5hbCBzZW5kZXIgb2YgdGhpcyBlbWFpbC4gSWYgeW91IGFyZSBub3Qg
+dGhlIGFkZHJlc3NlZSBpbmRpY2F0ZWQgaW4gdGhpcyBlbWFpbCBvciBhcmUgbm90IHJlc3BvbnNp
+YmxlIGZvciBkZWxpdmVyeSBvZiB0aGUgZW1haWwgdG8gc3VjaCBhIHBlcnNvbiwgcGxlYXNlIGtp
+bmRseSByZXBseSB0byB0aGUgc2VuZGVyIGluZGljYXRpbmcgdGhpcyBmYWN0IGFuZCBkZWxldGUg
+YWxsIGNvcGllcyBvZiBpdCBmcm9tIHlvdXIgY29tcHV0ZXIgYW5kIG5ldHdvcmsgc2VydmVyIGlt
+bWVkaWF0ZWx5LiBZb3VyIGNvb3BlcmF0aW9uIGlzIGhpZ2hseSBhcHByZWNpYXRlZC4gSXQgaXMg
+YWR2aXNlZCB0aGF0IGFueSB1bmF1dGhvcml6ZWQgdXNlIG9mIGNvbmZpZGVudGlhbCBpbmZvcm1h
+dGlvbiBvZiBOdXZvdG9uIGlzIHN0cmljdGx5IHByb2hpYml0ZWQ7IGFuZCBhbnkgaW5mb3JtYXRp
+b24gaW4gdGhpcyBlbWFpbCBpcnJlbGV2YW50IHRvIHRoZSBvZmZpY2lhbCBidXNpbmVzcyBvZiBO
+dXZvdG9uIHNoYWxsIGJlIGRlZW1lZCBhcyBuZWl0aGVyIGdpdmVuIG5vciBlbmRvcnNlZCBieSBO
+dXZvdG9uLg0K
 
-On Sun, 19 Apr 2020, at 22:11, zhouyuanqing8@outlook.com wrote:
->  Hi Andrew,=20
->=20
->  Thank you very much for your guidance=EF=BC=81
->=20
->  I have modified the  ${MACHINE}.conf file and recompiled u-boot,I wil=
-l=20
-> debug it on the board tomorrow.
->=20
->  According to your guidance, I found the correspondence between the=20=
+--_000_HK0PR03MB308958C2A978970BC6F136DCF5D40HK0PR03MB3089apcp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> recipes specified in the  ${MACHINE}.conf file and the pn-buildlist.
->=20
->  In the compilation directory of obmc-op-control-power=EF=BC=8Cas foll=
-ows=EF=BC=9A
->=20
-> =20
-> [work/arm1176jzs-openbmc-linux-gnueabi/obmc-op-control-power/1.0+gitAU=
-TOINC+1146f8c6e5-r1/image/usr/sbin]$ ls=20
->  pgood_wait power_control.exe
->=20
->  The .exe file should be the executable file of windows, how can it=20=
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+5paw57Sw5piO6auUOw0KCXBhbm9zZS0xOjIgMiA1IDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFj
+ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
+IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
+IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJcQOaWsOe0
+sOaYjumrlCI7DQoJcGFub3NlLTE6MiAxIDYgMSAwIDEgMSAxIDEgMTt9DQovKiBTdHlsZSBEZWZp
+bml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXtt
+YXJnaW46MGNtOw0KCW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTIuMHB0Ow0K
+CWZvbnQtZmFtaWx5OiJUaW1lcyBOZXcgUm9tYW4iLHNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29I
+eXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOiMwNTYzQzE7DQoJdGV4
+dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlwZXJsaW5rRm9s
+bG93ZWQNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOiM5NTRGNzI7DQoJdGV4dC1k
+ZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwLm1zb25vcm1hbDAsIGxpLm1zb25vcm1hbDAsIGRpdi5t
+c29ub3JtYWwwDQoJe21zby1zdHlsZS1uYW1lOm1zb25vcm1hbDsNCgltc28tbWFyZ2luLXRvcC1h
+bHQ6YXV0bzsNCgltYXJnaW4tcmlnaHQ6MGNtOw0KCW1zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
+Ow0KCW1hcmdpbi1sZWZ0OjBjbTsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQtZmFtaWx5OiJU
+aW1lcyBOZXcgUm9tYW4iLHNlcmlmO30NCnNwYW4uRW1haWxTdHlsZTE4DQoJe21zby1zdHlsZS10
+eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0K
+CWNvbG9yOiMxRjQ5N0Q7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0
+LW9ubHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2UgV29yZFNl
+Y3Rpb24xDQoJe3NpemU6NjEyLjBwdCA3OTIuMHB0Ow0KCW1hcmdpbjo3Mi4wcHQgOTAuMHB0IDcy
+LjBwdCA5MC4wcHQ7fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQot
+LT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4
+dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3Rl
+IG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpl
+eHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+
+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxpbms9IiM5NTRG
+NzIiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxz
+cGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVv
+dDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj5IaSBPc2thciw8bzpwPjwvbzpwPjwvc3Bhbj48
+L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtm
+b250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+
+WW91IGNhbiByZWZlcmVuY2UgSW50ZWwgbm9kZSBtYW5hZ2VyIGZvciBzZW5kIElQTUIgY29tbWFu
+ZCBleGFtcGxlLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxh
+IGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvbm9kZS1tYW5hZ2VyL2Jsb2IvbWFz
+dGVyL05vZGVNYW5hZ2VyUHJveHkuY3BwIj5odHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1DL25v
+ZGUtbWFuYWdlci9ibG9iL21hc3Rlci9Ob2RlTWFuYWdlclByb3h5LmNwcDwvYT48bzpwPjwvbzpw
+PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
+O2ZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdE
+Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7
+LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+QW5kIHlvdSBjYW4gZ2V0IG1vcmUgaW5mb3JtYXRp
+b24gYWJvdXQgaG93IElQTUIgd29yayBieSBmb2xsb3dpbmcgbGluazo8bzpwPjwvbzpwPjwvc3Bh
+bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBw
+dDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3
+RCI+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL051dm90b24tSXNyYWVsL29wZW5ibWMvdHJl
+ZS9ydW5ibWMvbWV0YS1xdWFudGEvbWV0YS1vbHltcHVzLW51dm90b24jaG9zdC1wb3dlci1idWRn
+ZXQtY29udHJvbCI+aHR0cHM6Ly9naXRodWIuY29tL051dm90b24tSXNyYWVsL29wZW5ibWMvdHJl
+ZS9ydW5ibWMvbWV0YS1xdWFudGEvbWV0YS1vbHltcHVzLW51dm90b24jaG9zdC1wb3dlci1idWRn
+ZXQtY29udHJvbDwvYT4NCjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NhbGli
+cmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bh
+bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBw
+dDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3
+RCI+VGhhbmtzLDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxz
+cGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVv
+dDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj5CcmlhbjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQt
+ZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj48bzpw
+PiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBz
+dHlsZT0iZm9udC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNh
+bnMtc2VyaWYiPkZyb206PC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtm
+b250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWYiPiBvcGVuYm1jIFttYWls
+dG86b3BlbmJtYy1ib3VuY2VzJiM0MztjaG1hMD1udXZvdG9uLmNvbUBsaXN0cy5vemxhYnMub3Jn
+XQ0KPGI+T24gQmVoYWxmIE9mIDwvYj5Pc2thciBTZW5mdDxicj4NCjxiPlNlbnQ6PC9iPiBTdW5k
+YXksIEFwcmlsIDE5LCAyMDIwIDk6NDUgQU08YnI+DQo8Yj5Ubzo8L2I+IE9wZW5CTUMgTWFpbGxp
+c3QgJmx0O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs8YnI+DQo8Yj5TdWJqZWN0OjwvYj4g
+QWNjZXNzIEludGVsIE1FIElQTUIgZnJvbSBCTUM8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj5IaSBldmVyeW9uZTxvOnA+PC9vOnA+PC9wPg0KPGRpdj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9
+Ik1zb05vcm1hbCI+SSdtIHRyeWluZyB0byBmaW5kIG91dCBob3cgSSBjYW4gYWNjZXNzIHRoZSBJ
+bnRlbCBNRSB2aWEgSVBNQiBmcm9tIHRoZSBCTUMgKE9wZW5CTUMpLjxvOnA+PC9vOnA+PC9wPg0K
+PC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+
+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5Gcm9tIHdoYXQgSSBnYXRoZXJl
+ZCwgSW50ZWwgTUUncyBJUE1CIGlzIG9uIHRoZSBQQ0gncyBTTUxpbmswLiBJIGtub3cgdGhpcyBp
+cyBjb25uZWN0ZWQgdG8gb25lIG9mIHRoZSBTTUJ1cyBtb2R1bGVzIG9uIG15IEFTVDI1MDAuIEJ1
+dCB3aGF0IEkgY2FuJ3QgZmluZCBvdXQgaXMgaG93IEkgYWN0dWFsbHkgc2VuZCBjb21tYW5kcyB0
+aGVyZT8gSSdtIHN1cmUgSSdtIG1pc3NpbmcgYSBkb2N1bWVudCB0aGF0IG1ha2VzDQogdGhpcyBv
+YnZpb3VzLjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj5PciBpcyBpdCBhcyBzaW1wbGUgYXMmbmJzcDtkcm9wcGluZyBJUE1JIHBhY2tldHMgb250
+byB0aGUgYnVzPzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj5JcyB0aGlzIGJ5IGFueSBjaGFuY2UgYWxyZWFkeSBpbXBsZW1lbnRlZCBpbiBPcGVu
+Qk1DPzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij5UaGFua3MgZm9yIGFueSBoaW50cyE8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCI+T3NrYXI8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+
+DQo8L2Rpdj4NCjxociBhbGlnbj0iY2VudGVyIiB3aWR0aD0iMTAwJSI+DQo8c3BhbiBzdHlsZT0i
+Zm9udC1zaXplOjEycHQ7bGluZS1oZWlnaHQ6MC43O2ZvbnQtZmFtaWx5OiAnQXJpYWwnOyBjb2xv
+cjojODA4MDgwIj5UaGUgcHJpdmlsZWdlZCBjb25maWRlbnRpYWwgaW5mb3JtYXRpb24gY29udGFp
+bmVkIGluIHRoaXMgZW1haWwgaXMgaW50ZW5kZWQgZm9yIHVzZSBvbmx5IGJ5IHRoZSBhZGRyZXNz
+ZWVzIGFzIGluZGljYXRlZCBieSB0aGUgb3JpZ2luYWwgc2VuZGVyIG9mIHRoaXMgZW1haWwuIElm
+IHlvdSBhcmUgbm90IHRoZQ0KIGFkZHJlc3NlZSBpbmRpY2F0ZWQgaW4gdGhpcyBlbWFpbCBvciBh
+cmUgbm90IHJlc3BvbnNpYmxlIGZvciBkZWxpdmVyeSBvZiB0aGUgZW1haWwgdG8gc3VjaCBhIHBl
+cnNvbiwgcGxlYXNlIGtpbmRseSByZXBseSB0byB0aGUgc2VuZGVyIGluZGljYXRpbmcgdGhpcyBm
+YWN0IGFuZCBkZWxldGUgYWxsIGNvcGllcyBvZiBpdCBmcm9tIHlvdXIgY29tcHV0ZXIgYW5kIG5l
+dHdvcmsgc2VydmVyIGltbWVkaWF0ZWx5LiBZb3VyIGNvb3BlcmF0aW9uIGlzIGhpZ2hseQ0KIGFw
+cHJlY2lhdGVkLiBJdCBpcyBhZHZpc2VkIHRoYXQgYW55IHVuYXV0aG9yaXplZCB1c2Ugb2YgY29u
+ZmlkZW50aWFsIGluZm9ybWF0aW9uIG9mIE51dm90b24gaXMgc3RyaWN0bHkgcHJvaGliaXRlZDsg
+YW5kIGFueSBpbmZvcm1hdGlvbiBpbiB0aGlzIGVtYWlsIGlycmVsZXZhbnQgdG8gdGhlIG9mZmlj
+aWFsIGJ1c2luZXNzIG9mIE51dm90b24gc2hhbGwgYmUgZGVlbWVkIGFzIG5laXRoZXIgZ2l2ZW4g
+bm9yIGVuZG9yc2VkIGJ5IE51dm90b24uDQo8L3NwYW4+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
 
-> appear in the linux system?
-
-So the rumour is one of the original OpenBMC devs was a bit lazy and
-wanted an easy way to copy binaries onto the BMC. By tacking a '.exe'
-suffix onto the executables he could run:
-
-scp *.exe root@bmc:/usr/bin/
-
-The binary itself is still an ARM ELF and not a PE/COFF. There's no harm=
-
-aside from looking bizarre. Having said that someone should fix it,
-because everyone asks this question. Perhaps something to add to the
-"gardening" tasks.
-
-Andrew
+--_000_HK0PR03MB308958C2A978970BC6F136DCF5D40HK0PR03MB3089apcp_--
