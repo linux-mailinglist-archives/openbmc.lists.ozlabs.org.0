@@ -1,78 +1,131 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 165C71B172A
-	for <lists+openbmc@lfdr.de>; Mon, 20 Apr 2020 22:32:35 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 495dfm2hV6zDqXX
-	for <lists+openbmc@lfdr.de>; Tue, 21 Apr 2020 06:32:32 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C2971B1734
+	for <lists+openbmc@lfdr.de>; Mon, 20 Apr 2020 22:35:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 495djk5DYTzDqWL
+	for <lists+openbmc@lfdr.de>; Tue, 21 Apr 2020 06:35:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2a;
- helo=mail-qv1-xf2a.google.com; envelope-from=bjwyman@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=YE7oq2Df; dkim-atps=neutral
-Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com
- [IPv6:2607:f8b0:4864:20::f2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=13794f8ec5=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=quarantine dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=pnWBVqqb; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=J3kPGwZu; 
+ dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 495dcf04QPzDqf4
- for <openbmc@lists.ozlabs.org>; Tue, 21 Apr 2020 06:30:41 +1000 (AEST)
-Received: by mail-qv1-xf2a.google.com with SMTP id q2so2458250qvd.1
- for <openbmc@lists.ozlabs.org>; Mon, 20 Apr 2020 13:30:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:cc:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language;
- bh=lwkced5nQY56gcHd/piif/8XSaNr7k3E3EsMsDr1bTo=;
- b=YE7oq2DfwQYtt3oItjR5SWPYQEglsjbwwdmJkxGIMtAsZHTOmSC3ebsm3FeBIir6/T
- yu+StKU+HASnhUZD5/rhEhsLnRm2tScfYFdwtCZoXDiTcIRn/D0i22uHiBrWcfac8X1a
- 3tpmc8bySAVk8D0bCKF4pkvkRXT9rkRmfcfnA4d4BugRGoTTIhCk+SydMhqMi3+uwA40
- gujzE8n58IBsomlyZsu5qE9MpFHZBDP5PR255k2wCUChSBHiSbe30YdvE8YtqyYCwP+I
- zRd4h2mbtKOjddpo1jv2SXI7UvnJkH5xeMtYifCtQZwdJxSDnJ1Hs1kBS7R0jefJIhIr
- tDVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:cc:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language;
- bh=lwkced5nQY56gcHd/piif/8XSaNr7k3E3EsMsDr1bTo=;
- b=uW8Isv6GmRX5ml6imrVdV4m2zHz7PYrvYijkQyWPVfw0tMhCwXZAH7LGE+UbJrZS6a
- XK3v+HHwHEvgfB7vNvl1x8xFnoFE0HnyDg6hPFpvNVRCnm3H7+yIfP/68geRp70hNd2L
- PEwDB2p2IOmHiARmjdL5GtizvQBtuv167kBYMxxgJQNcNCaIp0hd5QDI7m3N08j/NZV3
- nlJSvn6neltP34smoMe1lZlqFTU0NZhgS8a7UshH6FVL9hTdd7Ee7iK4KprCFJe+Y+LL
- O/yxtUhzRrBH3xnbAujbMBTgF4K7/wE0hiSe7piCp1FuBalHe2eN1OrOeFz8HG91i+BN
- ykyQ==
-X-Gm-Message-State: AGi0PuZ4RdTcKDxATg2QSsUg55lOOTlUTDBZ0yeWD7U9YXk6Zp2EzUEt
- xc1CRO8M8nAN/2EiLB+3MunHVkk4
-X-Google-Smtp-Source: APiQypIWz2CEz5SbnydkqRGt8UdZmUmySN/I7NAmB77DOBhtX+Cb7mcGy159owdeqHQoATp7+St8Aw==
-X-Received: by 2002:ad4:4812:: with SMTP id g18mr17568847qvy.120.1587414636533; 
- Mon, 20 Apr 2020 13:30:36 -0700 (PDT)
-Received: from [192.168.1.110] (96-42-251-64.dhcp.roch.mn.charter.com.
- [96.42.251.64])
- by smtp.gmail.com with ESMTPSA id c27sm300554qte.49.2020.04.20.13.30.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 20 Apr 2020 13:30:35 -0700 (PDT)
-Subject: Re: PSU (PMBus) fault monitoring / logging
-To: openbmc@lists.ozlabs.org
-References: <337b91ad1ac2401a982113f025564da7@SCL-EXCHMB-13.phoenix.com>
- <EF8FF2A3-2EA7-42F5-A568-9AE3389CDE2B@fb.com>
- <a02ac6a947854897a3b5069d9e7da7df@SCL-EXCHMB-13.phoenix.com>
-From: Brandon Wyman <bjwyman@gmail.com>
-Message-ID: <e03a6da6-3e3f-c037-9c28-7f50b5af2d38@gmail.com>
-Date: Mon, 20 Apr 2020 15:30:35 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <a02ac6a947854897a3b5069d9e7da7df@SCL-EXCHMB-13.phoenix.com>
-Content-Type: multipart/alternative;
- boundary="------------FD9B706D6F381516400F5469"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 495dht47fSzDqXX
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Apr 2020 06:34:21 +1000 (AEST)
+Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03KKXdEV027179; Mon, 20 Apr 2020 13:34:16 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type :
+ mime-version; s=facebook; bh=YbshUt3IVTiCE1FftDApp0wmGHh5viBjRXlMMNkGmOI=;
+ b=pnWBVqqbOK7iK9lUPjvATmMQmCX8usm5U4O8d/NRux63s5WFskUHbLcIz/YMLuNK5K+/
+ JhnP1EZrJOfaItItBVLPPOlJ7WFe65XU96oGA3JpTwwSIzitZdGRfuE6clyWqOoQF8Bd
+ RmXsqHB2NjMCMxce+n2GHU0bFiaZAE0vDd8= 
+Received: from mail.thefacebook.com ([163.114.132.120])
+ by mx0a-00082601.pphosted.com with ESMTP id 30ghfdy7as-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Mon, 20 Apr 2020 13:34:15 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (100.104.98.9) by
+ o365-in.thefacebook.com (100.104.94.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1847.3; Mon, 20 Apr 2020 13:34:15 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JpKkLPNIK/WtQNRTQFjE3Nnsnx4D/XLJwyLqtlx3AlKlm/EkqmS88aDQPyAfAMIcuLWyAfZRUqGao4WivtFFMZvc0d4+XV50WoXXxXHO5071GGroTRF1u8Sg6M8vYs0iv18fSsla9bEcF6pb3gLrHWVoY8eWDDZrILtk0FrUZVulQrz0d8E25JfvrdDqW2+lG/Oyy0ftgptZTQyXs/JwB8PQrcQKCtx2CBNT0iVup2ODONROy3ZMC05SrASka0bcfiNCiziqfLY4YohyqOZG5pSjn+h1zNu8cg7BWAZAjtfYZoh2pdIrmimsoG6acsAlxOeUtukx0mtN7jktiKUr2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YbshUt3IVTiCE1FftDApp0wmGHh5viBjRXlMMNkGmOI=;
+ b=iGJZF0cxdymw80gi7HCKaLdUws6XsX9k2V+CTKsnuZOjgcEJBTS5cZGoo/q9BZeqQENcav03CwZHeHHFVk880qhQpkhUcRv3Q9TOPW91xw9+ipfJxGn0rF/NyTv/6BkFYtP91b2GJMTRqpg97Hze4c1WIULAVrGLerOyrmmA9cuVbvhQuHGgklSvLDm8tXmUMxrHf6D5UdE90wWMd/Vx7rT0ZOY2beWQSNzSE5+8i1QMmIRBR3FlcH11wlqEpVMfh0aFbSnirdvuGRDaCisQ4GQJmU+f9a3Jc/Y2nj5C1HKfMHRm2zfjDZsnnocrZlQpydoISvaK3gCOkEP5+btkrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YbshUt3IVTiCE1FftDApp0wmGHh5viBjRXlMMNkGmOI=;
+ b=J3kPGwZuG5smpxyYUfkkE6LFwfrFrWR41zu7krUK/XE8C/1SFgteWOlqDO46HTuhzMRZDZJmGWWmsa7idHQI7g7EoNy5IZTC1hROuvGJU23sLtggVA1oTSrVOiUHTq30BL6v4rP3FF/EKthTOhXnACOViFCRckU7T5vPM67LPa4=
+Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
+ by BYAPR15MB2214.namprd15.prod.outlook.com (2603:10b6:a02:8d::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.25; Mon, 20 Apr
+ 2020 20:34:14 +0000
+Received: from BYAPR15MB2374.namprd15.prod.outlook.com
+ ([fe80::e43b:5f8d:799:39a4]) by BYAPR15MB2374.namprd15.prod.outlook.com
+ ([fe80::e43b:5f8d:799:39a4%3]) with mapi id 15.20.2921.027; Mon, 20 Apr 2020
+ 20:34:14 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Oskar Senft <osk@google.com>
+Subject: Re: Access Intel ME IPMB from BMC
+Thread-Topic: Access Intel ME IPMB from BMC
+Thread-Index: AQHWFexuK6oXnP3TQkeAetsUpPklTKiB3UuAgAB7mID//6wGgA==
+Date: Mon, 20 Apr 2020 20:34:14 +0000
+Message-ID: <B3FB3174-1794-4A57-B850-61F0D8200339@fb.com>
+References: <CABoTLcSOQYY+gk=7Q2w6Ny02L15yM19vTPmJxDfZVst6FV5r+Q@mail.gmail.com>
+ <70D0A47B-9C5B-418C-BC1F-7379493C60AA@fb.com>
+ <CABoTLcTa-7Fnu9rodg9PrbeZ9wYM7vYPHZK2meEZLx2XW+ZE1Q@mail.gmail.com>
+In-Reply-To: <CABoTLcTa-7Fnu9rodg9PrbeZ9wYM7vYPHZK2meEZLx2XW+ZE1Q@mail.gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:400::5:fd95]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e4d1b112-0eec-4c64-f762-08d7e56a30ea
+x-ms-traffictypediagnostic: BYAPR15MB2214:
+x-microsoft-antispam-prvs: <BYAPR15MB2214F834797CE4A8D1CF3264DDD40@BYAPR15MB2214.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-forefront-prvs: 03793408BA
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(10019020)(376002)(366004)(136003)(39860400002)(396003)(346002)(6512007)(2616005)(966005)(316002)(33656002)(186003)(6486002)(91956017)(2906002)(86362001)(6506007)(53546011)(478600001)(9326002)(6916009)(36756003)(4326008)(5660300002)(66556008)(66946007)(76116006)(66476007)(64756008)(66446008)(71200400001)(8936002)(81156014)(8676002);
+ DIR:OUT; SFP:1102; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: uKNnByZlR1SaYd5+ACWkWoH5HAChOOQ2k0DLpk1tLICnphDIbMGVjheYKHL3PnjJfLYN+y/oF8jbZRIVjixpxCQ71R8fqmrG5iKc9awtxq2R2oalRekNZWm+jHb9h4M3nMObJmDxU4YbvNGBXscAKS7e09kvUZroM4buN4Gg0pmpOhalAePC1Mtsro211VzP3TzSPSC6IpzXiJBYUmApsC8EQgDvkK5rllkBoeWqV/Kal77Molx4vk7Bll5+nZH8bBnxAUUaF+Mh7GZFLuddmjhXKbGh35WWuUYI0W+gXxlUx/3y90CrjoJkbq02dt7V6bujxVcHq0FcbSFGfWupUgI7892Vb3j54qd7hcosREmIiDW5pRpXLenVW4epHsvp1BoYpmMqHRTkGw7loqplrKkrrw71CIzjaiJfYRgGo65hJd768F64+VzMX81nzd0wrM9F9c2L2TOnjIsQeltacLwOMZdeoVSdYEZyLf3JZcBatbSIKjt/V3Q0u48ncgOfF+QHGDOeqSXTwFejyBgy8w==
+x-ms-exchange-antispam-messagedata: mZphdjrgCx0or6hThkJDnUyWQWCO9hSiQ2d8bLSpRfXJIDSfTAlUWsGOkafu8nhU8QIMuTpxmFwHqra47jfySuYEavGw9sazfHvRNbzy4EBWf3fCsSOsGQrbXwS6xN5p5yKUhlujeKfHtTCEp0ECON6bOXkbiTrLLvMhKBxmQ0RHqJXrpbqKjxp4Y4G/E5Lk
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_B3FB317417944A57B85061F0D8200339fbcom_"
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-Network-Message-Id: e4d1b112-0eec-4c64-f762-08d7e56a30ea
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2020 20:34:14.3995 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: M1ToEQQaHqOZ2lKCozVkDHq9Z6c5CdKuuyaB8UNR1HKeM1WWbnxFsZNIKTJkXPUwi53Ss/TjPjXduL/X6/xZwQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2214
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-20_08:2020-04-20,
+ 2020-04-20 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ bulkscore=0
+ priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 phishscore=0
+ mlxscore=0 adultscore=0 clxscore=1015 malwarescore=0 spamscore=0
+ suspectscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2003020000 definitions=main-2004200162
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,228 +137,202 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick_Voelker@phoenix.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------FD9B706D6F381516400F5469
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--_000_B3FB317417944A57B85061F0D8200339fbcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-The IBM systems use an ibm-cffps device driver:
+SGkgT3NrYXIsDQpZb3UgbmVlZCB0byB1c2UgaXBtYi1kZXYgZHJpdmVyIHdoaWNoIGlzIGlzIGJl
+aW5nIHVzZWQgYnkgaXBtYmJyaWRnZS4gWW91IGRvbuKAmXQgbmVlZCBpcG1iLWhvc3QgYXMgd2Ug
+YXJlIGhhdmluZyBpcG1iYnJpZGdlIHRvIHJlcGxhY2UgdGhhdC4NCg0KUmVnYXJkcw0KLVZpamF5
+DQoNCkZyb206IE9za2FyIFNlbmZ0IDxvc2tAZ29vZ2xlLmNvbT4NCkRhdGU6IE1vbmRheSwgQXBy
+aWwgMjAsIDIwMjAgYXQgMTE6MzUgQU0NClRvOiBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZi
+LmNvbT4NCkNjOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpT
+dWJqZWN0OiBSZTogQWNjZXNzIEludGVsIE1FIElQTUIgZnJvbSBCTUMNCg0KSGkgVmlqYXkNCg0K
+VGhhbmtzIGZvciB0aGUgcG9pbnRlciENCg0KSSBhbHNvIGZvdW5kIGJvdGggaHR0cHM6Ly9naXRo
+dWIuY29tL01lbGxhbm94L2lwbWItaG9zdCBhbmQgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
+bGludXgvYmxvYi9kZXYtNS40L2RyaXZlcnMvY2hhci9pcG1pL2lwbWJfZGV2X2ludC5jLg0KDQpJ
+cyBpdCByaWdodCB0aGF0IHdpdGggaXBtYmJyaWRnZSBJIGRvbid0IG5lZWQgZWl0aGVyIG9mIHRo
+ZW0gc2luY2UgaXBtYmJyaWRnZSB1c2VzIHRoZSByYXcgaTJjIGRldj8NCg0KVGhhbmtzDQpPc2th
+ci4NCg0KT24gTW9uLCBBcHIgMjAsIDIwMjAgYXQgMjoxMiBQTSBWaWpheSBLaGVta2EgPHZpamF5
+a2hlbWthQGZiLmNvbTxtYWlsdG86dmlqYXlraGVta2FAZmIuY29tPj4gd3JvdGU6DQpIaSBPc2th
+ciwNCllvdSBuZWVkIHRvIGNvbmZpZ3VyZSB5b3VyIE1FIGNoYW5uZWwgaW4gaXBtYiBjaGFubmVs
+IGNvbmZpZyBmaWxlIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2lwbWJicmlkZ2UvYmxvYi9t
+YXN0ZXIvaXBtYi1jaGFubmVscy5qc29uDQpBbmQgbWFrZSBzdXJlIGlwbWJicmlkZ2UgaXMgcnVu
+bmluZy4gVGhlbiB5b3UgY2FuIHNlbmQgZ2V0IGRldmljZSBpZCBjb21tYW5kIHRvIE1FIGZyb20g
+Y29tbWFuZCBsaW5lIGl0c2VsZiB0byB0ZXN0IGlmIGV2ZXJ5dGhpbmcgaXMgd29ya2luZy4NCg0K
+DQoNCmJ1c2N0bCBjYWxsIHh5ei5vcGVuYm1jX3Byb2plY3QuSXBtaS5DaGFubmVsLklwbWIgL3h5
+ei9vcGVuYm1jX3Byb2plY3QvSXBtaS9DaGFubmVsL0lwbWIgb3JnLm9wZW5ibWMuSXBtYiBzZW5k
+UmVxdWVzdCB5eXl5YXkgMSA2IDAgMHgxIDANCg0KUmVnYXJkcw0KLVZpamF5DQoNCkZyb206IG9w
+ZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMub3psYWJzLm9y
+ZzxtYWlsdG86ZmIuY29tQGxpc3RzLm96bGFicy5vcmc+PiBvbiBiZWhhbGYgb2YgT3NrYXIgU2Vu
+ZnQgPG9za0Bnb29nbGUuY29tPG1haWx0bzpvc2tAZ29vZ2xlLmNvbT4+DQpEYXRlOiBTYXR1cmRh
+eSwgQXByaWwgMTgsIDIwMjAgYXQgNjo0NyBQTQ0KVG86IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5i
+bWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPj4NClN1
+YmplY3Q6IEFjY2VzcyBJbnRlbCBNRSBJUE1CIGZyb20gQk1DDQoNCkhpIGV2ZXJ5b25lDQoNCkkn
+bSB0cnlpbmcgdG8gZmluZCBvdXQgaG93IEkgY2FuIGFjY2VzcyB0aGUgSW50ZWwgTUUgdmlhIElQ
+TUIgZnJvbSB0aGUgQk1DIChPcGVuQk1DKS4NCg0KRnJvbSB3aGF0IEkgZ2F0aGVyZWQsIEludGVs
+IE1FJ3MgSVBNQiBpcyBvbiB0aGUgUENIJ3MgU01MaW5rMC4gSSBrbm93IHRoaXMgaXMgY29ubmVj
+dGVkIHRvIG9uZSBvZiB0aGUgU01CdXMgbW9kdWxlcyBvbiBteSBBU1QyNTAwLiBCdXQgd2hhdCBJ
+IGNhbid0IGZpbmQgb3V0IGlzIGhvdyBJIGFjdHVhbGx5IHNlbmQgY29tbWFuZHMgdGhlcmU/IEkn
+bSBzdXJlIEknbSBtaXNzaW5nIGEgZG9jdW1lbnQgdGhhdCBtYWtlcyB0aGlzIG9idmlvdXMuDQoN
+Ck9yIGlzIGl0IGFzIHNpbXBsZSBhcyBkcm9wcGluZyBJUE1JIHBhY2tldHMgb250byB0aGUgYnVz
+Pw0KDQpJcyB0aGlzIGJ5IGFueSBjaGFuY2UgYWxyZWFkeSBpbXBsZW1lbnRlZCBpbiBPcGVuQk1D
+Pw0KDQpUaGFua3MgZm9yIGFueSBoaW50cyENCg0KT3NrYXINCg==
 
-https://github.com/openbmc/linux/blob/dev-5.4/drivers/hwmon/pmbus/ibm-cffps.c
+--_000_B3FB317417944A57B85061F0D8200339fbcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <DC63DE328BEA334F912D42B6B4F555ED@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
-There are some other power supply PMBus hwmon drivers, check the parent 
-directory.
+PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
+bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
+dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
+dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
+dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
+dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
+bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
+ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
+IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
+IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3Jt
+YWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1i
+b3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
+IixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXBy
+aW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpw
+LmdtYWlsLW0yODg3NTM4MTY2Njk0OTEyMjFwMSwgbGkuZ21haWwtbTI4ODc1MzgxNjY2OTQ5MTIy
+MXAxLCBkaXYuZ21haWwtbTI4ODc1MzgxNjY2OTQ5MTIyMXAxDQoJe21zby1zdHlsZS1uYW1lOmdt
+YWlsLW1fMjg4NzUzODE2NjY5NDkxMjIxcDE7DQoJbXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJ
+bWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4t
+bGVmdDowaW47DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fu
+cy1zZXJpZjt9DQpzcGFuLmdtYWlsLW0yODg3NTM4MTY2Njk0OTEyMjFzMQ0KCXttc28tc3R5bGUt
+bmFtZTpnbWFpbC1tXzI4ODc1MzgxNjY2OTQ5MTIyMXMxO30NCnNwYW4uRW1haWxTdHlsZTIwDQoJ
+e21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixz
+YW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0
+eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2Vj
+dGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEu
+MGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHls
+ZT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSJibHVlIiB2bGluaz0icHVycGxl
+Ij4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5IaSBP
+c2thciw8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPllvdSBuZWVkIHRvIHVz
+ZSBpcG1iLWRldiBkcml2ZXIgd2hpY2ggaXMgaXMgYmVpbmcgdXNlZCBieSBpcG1iYnJpZGdlLiBZ
+b3UgZG9u4oCZdCBuZWVkIGlwbWItaG9zdCBhcyB3ZSBhcmUgaGF2aW5nIGlwbWJicmlkZ2UgdG8g
+cmVwbGFjZSB0aGF0LjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4m
+bmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5SZWdhcmRzPG86cD48L286cD48
+L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4tVmlqYXk8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5v
+bmU7Ym9yZGVyLXRvcDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRpbmc6My4wcHQgMGluIDBpbiAw
+aW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4w
+cHQ7Y29sb3I6YmxhY2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+Mi4wcHQ7Y29sb3I6YmxhY2siPk9za2FyIFNlbmZ0ICZsdDtvc2tAZ29vZ2xlLmNvbSZndDs8YnI+
+DQo8Yj5EYXRlOiA8L2I+TW9uZGF5LCBBcHJpbCAyMCwgMjAyMCBhdCAxMTozNSBBTTxicj4NCjxi
+PlRvOiA8L2I+VmlqYXkgS2hlbWthICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7PGJyPg0KPGI+
+Q2M6IDwvYj5PcGVuQk1DIE1haWxsaXN0ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7
+PGJyPg0KPGI+U3ViamVjdDogPC9iPlJlOiBBY2Nlc3MgSW50ZWwgTUUgSVBNQiBmcm9tIEJNQzxv
+OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
+PjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+SGkgVmlqYXkgPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij5UaGFua3MgZm9yIHRoZSBwb2ludGVyITxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JIGFsc28gZm91bmQgYm90aCZuYnNwOzxhIGhyZWY9Imh0
+dHBzOi8vZ2l0aHViLmNvbS9NZWxsYW5veC9pcG1iLWhvc3QiPmh0dHBzOi8vZ2l0aHViLmNvbS9N
+ZWxsYW5veC9pcG1iLWhvc3Q8L2E+Jm5ic3A7YW5kJm5ic3A7PGEgaHJlZj0iaHR0cHM6Ly9naXRo
+dWIuY29tL29wZW5ibWMvbGludXgvYmxvYi9kZXYtNS40L2RyaXZlcnMvY2hhci9pcG1pL2lwbWJf
+ZGV2X2ludC5jIj5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9saW51eC9ibG9iL2Rldi01LjQv
+ZHJpdmVycy9jaGFyL2lwbWkvaXBtYl9kZXZfaW50LmM8L2E+LiZuYnNwOzxvOnA+PC9vOnA+PC9w
+Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48
+L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JcyBpdCByaWdodCB0aGF0
+IHdpdGgmbmJzcDtpcG1iYnJpZGdlJm5ic3A7SSBkb24ndCBuZWVkIGVpdGhlciBvZiB0aGVtIHNp
+bmNlIGlwbWJicmlkZ2UmbmJzcDt1c2VzIHRoZSByYXcgaTJjIGRldj88bzpwPjwvbzpwPjwvcD4N
+CjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
+Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+VGhhbmtzPG86cD48L286cD48
+L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5Pc2thci48bzpwPjwvbzpw
+PjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwv
+bzpwPjwvcD4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+T24gTW9uLCBBcHIg
+MjAsIDIwMjAgYXQgMjoxMiBQTSBWaWpheSBLaGVta2EgJmx0OzxhIGhyZWY9Im1haWx0bzp2aWph
+eWtoZW1rYUBmYi5jb20iPnZpamF5a2hlbWthQGZiLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9v
+OnA+PC9wPg0KPC9kaXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxl
+ZnQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1s
+ZWZ0OjQuOHB0O21hcmdpbi1yaWdodDowaW4iPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20t
+YWx0OmF1dG8iPkhpIE9za2FyLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
+c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
+Ij5Zb3UgbmVlZCB0byBjb25maWd1cmUgeW91ciBNRSBjaGFubmVsIGluIGlwbWIgY2hhbm5lbCBj
+b25maWcgZmlsZQ0KPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvaXBtYmJyaWRn
+ZS9ibG9iL21hc3Rlci9pcG1iLWNoYW5uZWxzLmpzb24iIHRhcmdldD0iX2JsYW5rIj4NCmh0dHBz
+Oi8vZ2l0aHViLmNvbS9vcGVuYm1jL2lwbWJicmlkZ2UvYmxvYi9tYXN0ZXIvaXBtYi1jaGFubmVs
+cy5qc29uPC9hPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1z
+by1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5BbmQgbWFr
+ZSBzdXJlIGlwbWJicmlkZ2UgaXMgcnVubmluZy4gVGhlbiB5b3UgY2FuIHNlbmQgZ2V0IGRldmlj
+ZSBpZCBjb21tYW5kIHRvIE1FIGZyb20gY29tbWFuZCBsaW5lIGl0c2VsZiB0byB0ZXN0IGlmIGV2
+ZXJ5dGhpbmcgaXMgd29ya2luZy48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJnbWFpbC1tMjg4
+NzUzODE2NjY5NDkxMjIxcDEiPjxzcGFuIGNsYXNzPSJnbWFpbC1tMjg4NzUzODE2NjY5NDkxMjIx
+czEiPiZuYnNwOzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJnbWFpbC1tMjg4NzUz
+ODE2NjY5NDkxMjIxcDEiPjxzcGFuIGNsYXNzPSJnbWFpbC1tMjg4NzUzODE2NjY5NDkxMjIxczEi
+PmJ1c2N0bCBjYWxsIHh5ei5vcGVuYm1jX3Byb2plY3QuSXBtaS5DaGFubmVsLklwbWIgL3h5ei9v
+cGVuYm1jX3Byb2plY3QvSXBtaS9DaGFubmVsL0lwbWIgb3JnLm9wZW5ibWMuSXBtYiBzZW5kUmVx
+dWVzdCB5eXl5YXkgMSA2IDAgMHgxIDA8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0
+b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
+c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
+Ij5SZWdhcmRzPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNv
+LW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPi1WaWpheTxv
+OnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9w
+LWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwv
+cD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29saWQgI0I1QzRERiAxLjBw
+dDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxl
+PSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PGI+
+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPkZyb206DQo8L3NwYW4+
+PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5vcGVuYm1jICZs
+dDtvcGVuYm1jLWJvdW5jZXMmIzQzO3ZpamF5a2hlbWthPTxhIGhyZWY9Im1haWx0bzpmYi5jb21A
+bGlzdHMub3psYWJzLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPmZiLmNvbUBsaXN0cy5vemxhYnMub3Jn
+PC9hPiZndDsgb24gYmVoYWxmIG9mIE9za2FyIFNlbmZ0ICZsdDs8YSBocmVmPSJtYWlsdG86b3Nr
+QGdvb2dsZS5jb20iIHRhcmdldD0iX2JsYW5rIj5vc2tAZ29vZ2xlLmNvbTwvYT4mZ3Q7PGJyPg0K
+PGI+RGF0ZTogPC9iPlNhdHVyZGF5LCBBcHJpbCAxOCwgMjAyMCBhdCA2OjQ3IFBNPGJyPg0KPGI+
+VG86IDwvYj5PcGVuQk1DIE1haWxsaXN0ICZsdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0
+cy5vemxhYnMub3JnIiB0YXJnZXQ9Il9ibGFuayI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9h
+PiZndDs8YnI+DQo8Yj5TdWJqZWN0OiA8L2I+QWNjZXNzIEludGVsIE1FIElQTUIgZnJvbSBCTUM8
+L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+IiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1
+dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFs
+dDphdXRvIj5IaSBldmVyeW9uZQ0KPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
+LWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJv
+dHRvbS1hbHQ6YXV0byI+SSdtIHRyeWluZyB0byBmaW5kIG91dCBob3cgSSBjYW4gYWNjZXNzIHRo
+ZSBJbnRlbCBNRSB2aWEgSVBNQiBmcm9tIHRoZSBCTUMgKE9wZW5CTUMpLjxvOnA+PC9vOnA+PC9w
+Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4t
+dG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpw
+PjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFy
+Z2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+RnJvbSB3aGF0IEkg
+Z2F0aGVyZWQsIEludGVsIE1FJ3MgSVBNQiBpcyBvbiB0aGUgUENIJ3MgU01MaW5rMC4gSSBrbm93
+IHRoaXMgaXMgY29ubmVjdGVkIHRvIG9uZSBvZiB0aGUgU01CdXMgbW9kdWxlcyBvbiBteSBBU1Qy
+NTAwLiBCdXQgd2hhdCBJIGNhbid0IGZpbmQgb3V0IGlzIGhvdyBJIGFjdHVhbGx5IHNlbmQNCiBj
+b21tYW5kcyB0aGVyZT8gSSdtIHN1cmUgSSdtIG1pc3NpbmcgYSBkb2N1bWVudCB0aGF0IG1ha2Vz
+IHRoaXMgb2J2aW91cy48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRv
+bS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1i
+b3R0b20tYWx0OmF1dG8iPk9yIGlzIGl0IGFzIHNpbXBsZSBhcyZuYnNwO2Ryb3BwaW5nIElQTUkg
+cGFja2V0cyBvbnRvIHRoZSBidXM/PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdp
+bi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1t
+YXJnaW4tYm90dG9tLWFsdDphdXRvIj5JcyB0aGlzIGJ5IGFueSBjaGFuY2UgYWxyZWFkeSBpbXBs
+ZW1lbnRlZCBpbiBPcGVuQk1DPzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xh
+c3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4t
+Ym90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFy
+Z2luLWJvdHRvbS1hbHQ6YXV0byI+VGhhbmtzIGZvciBhbnkgaGludHMhPG86cD48L286cD48L3A+
+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10
+b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+
+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
+aW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5Pc2thcjxvOnA+PC9v
+OnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Jsb2NrcXVvdGU+DQo8
+L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
-There were some other non-standard or MFR SPECIFIC items that were 
-needed/desired, so those ended up being put in a /sys/kernel/debug tree.
-
-This device driver was introduced for the Witherspoon system, and has 
-had some updates since then.
-
-The repository for looking at the STATUS_WORD and other PMBus 
-commands/registers was called witherspoon-pfault-analysis, renamed to 
-phosphor-power. I am not certain how that relates to the psusensor daemon.
-
-https://github.com/openbmc/witherspoon-pfault-analysis
-
-https://github.ibm.com/openbmc/phosphor-power
-
-https://github.com/openbmc/dbus-sensors/tree/master/src
-
-The hwmon specific information that Witherspoon used for telemetry data 
-was updated via the phosphor-hwmon application:
-
-https://github.com/openbmc/phosphor-hwmon
-
-https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-witherspoon/recipes-phosphor/sensors/phosphor-hwmon/witherspoon/obmc/hwmon/ahb/apb/bus%401e78a000/i2c-bus%40100
-
-https://github.com/openbmc/openbmc/tree/master/meta-inspur/meta-fp5280g2/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/bus%401e78a000/i2c-bus%40400
-
-On 2020-04-17 18:29, Patrick Voelker wrote:
->
-> Thanks Vijay, that was really helpful.
->
-> I’m specifically looking for how the PMBus STATUS_WORD and 
-> sub-registers are monitored and represented in OpenBMC but it’s not 
-> jumping out at me.
->
-> *From:*Vijay Khemka [mailto:vijaykhemka@fb.com]
-> *Sent:* Friday, April 17, 2020 11:07 AM
-> *To:* Patrick Voelker; openbmc@lists.ozlabs.org
-> *Subject:* Re: PSU (PMBus) fault monitoring / logging
->
-> There are psusensor daemon who monitors these PSU sensors.
->
-> *From: *openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> 
-> on behalf of Patrick Voelker <Patrick_Voelker@phoenix.com>
-> *Date: *Thursday, April 16, 2020 at 7:40 PM
-> *To: *"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-> *Subject: *PSU (PMBus) fault monitoring / logging
->
-> Is there a module that instantiates sensors for PSU PMBus based faults 
-> after the entity-manager probes the busses and finds the PSUs by FRU
->
-> I'm looking for the method by which the faults are monitored and 
-> logged.  I see that there’s kernel hwmon support for PMBus but I’m 
-> trying to understand how IPMI sensors and logging tie in.
->
-
---------------FD9B706D6F381516400F5469
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>The IBM systems use an ibm-cffps device driver:</p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/linux/blob/dev-5.4/drivers/hwmon/pmbus/ibm-cffps.c">https://github.com/openbmc/linux/blob/dev-5.4/drivers/hwmon/pmbus/ibm-cffps.c</a></p>
-    <p>There are some other power supply PMBus hwmon drivers, check the
-      parent directory.</p>
-    <p>There were some other non-standard or MFR SPECIFIC items that
-      were needed/desired, so those ended up being put in a
-      /sys/kernel/debug tree.</p>
-    <p>This device driver was introduced for the Witherspoon system, and
-      has had some updates since then.</p>
-    <p>The repository for looking at the STATUS_WORD and other PMBus
-      commands/registers was called witherspoon-pfault-analysis, renamed
-      to phosphor-power. I am not certain how that relates to the
-      psusensor daemon.</p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/witherspoon-pfault-analysis">https://github.com/openbmc/witherspoon-pfault-analysis</a></p>
-    <p><a class="moz-txt-link-freetext" href="https://github.ibm.com/openbmc/phosphor-power">https://github.ibm.com/openbmc/phosphor-power</a></p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/dbus-sensors/tree/master/src">https://github.com/openbmc/dbus-sensors/tree/master/src</a></p>
-    <p>The hwmon specific information that Witherspoon used for
-      telemetry data was updated via the phosphor-hwmon application:</p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-hwmon">https://github.com/openbmc/phosphor-hwmon</a></p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-witherspoon/recipes-phosphor/sensors/phosphor-hwmon/witherspoon/obmc/hwmon/ahb/apb/bus%401e78a000/i2c-bus%40100">https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-witherspoon/recipes-phosphor/sensors/phosphor-hwmon/witherspoon/obmc/hwmon/ahb/apb/bus%401e78a000/i2c-bus%40100</a></p>
-    <p><a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc/tree/master/meta-inspur/meta-fp5280g2/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/bus%401e78a000/i2c-bus%40400">https://github.com/openbmc/openbmc/tree/master/meta-inspur/meta-fp5280g2/recipes-phosphor/sensors/phosphor-hwmon/obmc/hwmon/ahb/apb/bus%401e78a000/i2c-bus%40400</a><br>
-    </p>
-    <div class="moz-cite-prefix">On 2020-04-17 18:29, Patrick Voelker
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:a02ac6a947854897a3b5069d9e7da7df@SCL-EXCHMB-13.phoenix.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator" content="Microsoft Word 14 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:Tahoma;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}
-@font-face
-	{font-family:"\@PMingLiU";
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal;
-	font-family:"Calibri","sans-serif";
-	color:windowtext;}
-span.EmailStyle18
-	{mso-style-type:personal-reply;
-	font-family:"Calibri","sans-serif";
-	color:#1F497D;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal"><span style="color:#1F497D">Thanks Vijay,
-            that was really helpful.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D">I’m
-            specifically looking for how the PMBus STATUS_WORD and
-            sub-registers are monitored and represented in OpenBMC but
-            it’s not jumping out at me.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="color:#1F497D"><o:p> </o:p></span></p>
-        <p class="MsoNormal"><a name="_MailEndCompose"
-            moz-do-not-send="true"><span style="color:#1F497D"><o:p> </o:p></span></a></p>
-        <div style="border:none;border-left:solid blue 1.5pt;padding:0in
-          0in 0in 4.0pt">
-          <div>
-            <div style="border:none;border-top:solid #B5C4DF
-              1.0pt;padding:3.0pt 0in 0in 0in">
-              <p class="MsoNormal"><b><span
-style="font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;">From:</span></b><span
-style="font-size:10.0pt;font-family:&quot;Tahoma&quot;,&quot;sans-serif&quot;">
-                  Vijay Khemka [<a class="moz-txt-link-freetext" href="mailto:vijaykhemka@fb.com">mailto:vijaykhemka@fb.com</a>]
-                  <br>
-                  <b>Sent:</b> Friday, April 17, 2020 11:07 AM<br>
-                  <b>To:</b> Patrick Voelker; <a class="moz-txt-link-abbreviated" href="mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a><br>
-                  <b>Subject:</b> Re: PSU (PMBus) fault monitoring /
-                  logging<o:p></o:p></span></p>
-            </div>
-          </div>
-          <p class="MsoNormal"><o:p> </o:p></p>
-          <p class="MsoNormal">There are psusensor daemon who monitors
-            these PSU sensors.<o:p></o:p></p>
-          <p class="MsoNormal"><o:p> </o:p></p>
-          <div style="border:none;border-top:solid #B5C4DF
-            1.0pt;padding:3.0pt 0in 0in 0in">
-            <p class="MsoNormal"><b><span
-                  style="font-size:12.0pt;color:black">From: </span></b><span
-                style="font-size:12.0pt;color:black">openbmc
-                <a class="moz-txt-link-rfc2396E" href="mailto:openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org">&lt;openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org&gt;</a>
-                on behalf of Patrick Voelker
-                <a class="moz-txt-link-rfc2396E" href="mailto:Patrick_Voelker@phoenix.com">&lt;Patrick_Voelker@phoenix.com&gt;</a><br>
-                <b>Date: </b>Thursday, April 16, 2020 at 7:40 PM<br>
-                <b>To: </b><a class="moz-txt-link-rfc2396E" href="mailto:openbmc@lists.ozlabs.org">"openbmc@lists.ozlabs.org"</a>
-                <a class="moz-txt-link-rfc2396E" href="mailto:openbmc@lists.ozlabs.org">&lt;openbmc@lists.ozlabs.org&gt;</a><br>
-                <b>Subject: </b>PSU (PMBus) fault monitoring / logging<o:p></o:p></span></p>
-          </div>
-          <div>
-            <p class="MsoNormal"><o:p> </o:p></p>
-          </div>
-          <p class="MsoNormal">Is there a module that instantiates
-            sensors for PSU PMBus based faults after the entity-manager
-            probes the busses and finds the PSUs by FRU<o:p></o:p></p>
-          <p class="MsoNormal"> <o:p></o:p></p>
-          <p class="MsoNormal">I'm looking for the method by which the
-            faults are monitored and logged.  I see that there’s kernel
-            hwmon support for PMBus but I’m trying to understand how
-            IPMI sensors and logging tie in.<o:p></o:p></p>
-          <p class="MsoNormal"> <o:p></o:p></p>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------FD9B706D6F381516400F5469--
+--_000_B3FB317417944A57B85061F0D8200339fbcom_--
