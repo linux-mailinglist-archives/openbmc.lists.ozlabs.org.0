@@ -2,130 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C2971B1734
-	for <lists+openbmc@lfdr.de>; Mon, 20 Apr 2020 22:35:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA9141B237A
+	for <lists+openbmc@lfdr.de>; Tue, 21 Apr 2020 11:59:49 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 495djk5DYTzDqWL
-	for <lists+openbmc@lfdr.de>; Tue, 21 Apr 2020 06:35:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 495zZC2cbdzDqg9
+	for <lists+openbmc@lfdr.de>; Tue, 21 Apr 2020 19:59:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2c;
+ helo=mail-io1-xd2c.google.com; envelope-from=gmouse@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=13794f8ec5=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=pnWBVqqb; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=J3kPGwZu; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=dKR3m4aJ; dkim-atps=neutral
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com
+ [IPv6:2607:f8b0:4864:20::d2c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 495dht47fSzDqXX
- for <openbmc@lists.ozlabs.org>; Tue, 21 Apr 2020 06:34:21 +1000 (AEST)
-Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03KKXdEV027179; Mon, 20 Apr 2020 13:34:16 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=YbshUt3IVTiCE1FftDApp0wmGHh5viBjRXlMMNkGmOI=;
- b=pnWBVqqbOK7iK9lUPjvATmMQmCX8usm5U4O8d/NRux63s5WFskUHbLcIz/YMLuNK5K+/
- JhnP1EZrJOfaItItBVLPPOlJ7WFe65XU96oGA3JpTwwSIzitZdGRfuE6clyWqOoQF8Bd
- RmXsqHB2NjMCMxce+n2GHU0bFiaZAE0vDd8= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 30ghfdy7as-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Mon, 20 Apr 2020 13:34:15 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Mon, 20 Apr 2020 13:34:15 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JpKkLPNIK/WtQNRTQFjE3Nnsnx4D/XLJwyLqtlx3AlKlm/EkqmS88aDQPyAfAMIcuLWyAfZRUqGao4WivtFFMZvc0d4+XV50WoXXxXHO5071GGroTRF1u8Sg6M8vYs0iv18fSsla9bEcF6pb3gLrHWVoY8eWDDZrILtk0FrUZVulQrz0d8E25JfvrdDqW2+lG/Oyy0ftgptZTQyXs/JwB8PQrcQKCtx2CBNT0iVup2ODONROy3ZMC05SrASka0bcfiNCiziqfLY4YohyqOZG5pSjn+h1zNu8cg7BWAZAjtfYZoh2pdIrmimsoG6acsAlxOeUtukx0mtN7jktiKUr2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YbshUt3IVTiCE1FftDApp0wmGHh5viBjRXlMMNkGmOI=;
- b=iGJZF0cxdymw80gi7HCKaLdUws6XsX9k2V+CTKsnuZOjgcEJBTS5cZGoo/q9BZeqQENcav03CwZHeHHFVk880qhQpkhUcRv3Q9TOPW91xw9+ipfJxGn0rF/NyTv/6BkFYtP91b2GJMTRqpg97Hze4c1WIULAVrGLerOyrmmA9cuVbvhQuHGgklSvLDm8tXmUMxrHf6D5UdE90wWMd/Vx7rT0ZOY2beWQSNzSE5+8i1QMmIRBR3FlcH11wlqEpVMfh0aFbSnirdvuGRDaCisQ4GQJmU+f9a3Jc/Y2nj5C1HKfMHRm2zfjDZsnnocrZlQpydoISvaK3gCOkEP5+btkrA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YbshUt3IVTiCE1FftDApp0wmGHh5viBjRXlMMNkGmOI=;
- b=J3kPGwZuG5smpxyYUfkkE6LFwfrFrWR41zu7krUK/XE8C/1SFgteWOlqDO46HTuhzMRZDZJmGWWmsa7idHQI7g7EoNy5IZTC1hROuvGJU23sLtggVA1oTSrVOiUHTq30BL6v4rP3FF/EKthTOhXnACOViFCRckU7T5vPM67LPa4=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB2214.namprd15.prod.outlook.com (2603:10b6:a02:8d::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.25; Mon, 20 Apr
- 2020 20:34:14 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4%3]) with mapi id 15.20.2921.027; Mon, 20 Apr 2020
- 20:34:14 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Oskar Senft <osk@google.com>
-Subject: Re: Access Intel ME IPMB from BMC
-Thread-Topic: Access Intel ME IPMB from BMC
-Thread-Index: AQHWFexuK6oXnP3TQkeAetsUpPklTKiB3UuAgAB7mID//6wGgA==
-Date: Mon, 20 Apr 2020 20:34:14 +0000
-Message-ID: <B3FB3174-1794-4A57-B850-61F0D8200339@fb.com>
-References: <CABoTLcSOQYY+gk=7Q2w6Ny02L15yM19vTPmJxDfZVst6FV5r+Q@mail.gmail.com>
- <70D0A47B-9C5B-418C-BC1F-7379493C60AA@fb.com>
- <CABoTLcTa-7Fnu9rodg9PrbeZ9wYM7vYPHZK2meEZLx2XW+ZE1Q@mail.gmail.com>
-In-Reply-To: <CABoTLcTa-7Fnu9rodg9PrbeZ9wYM7vYPHZK2meEZLx2XW+ZE1Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:400::5:fd95]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e4d1b112-0eec-4c64-f762-08d7e56a30ea
-x-ms-traffictypediagnostic: BYAPR15MB2214:
-x-microsoft-antispam-prvs: <BYAPR15MB2214F834797CE4A8D1CF3264DDD40@BYAPR15MB2214.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-forefront-prvs: 03793408BA
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(10019020)(376002)(366004)(136003)(39860400002)(396003)(346002)(6512007)(2616005)(966005)(316002)(33656002)(186003)(6486002)(91956017)(2906002)(86362001)(6506007)(53546011)(478600001)(9326002)(6916009)(36756003)(4326008)(5660300002)(66556008)(66946007)(76116006)(66476007)(64756008)(66446008)(71200400001)(8936002)(81156014)(8676002);
- DIR:OUT; SFP:1102; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: uKNnByZlR1SaYd5+ACWkWoH5HAChOOQ2k0DLpk1tLICnphDIbMGVjheYKHL3PnjJfLYN+y/oF8jbZRIVjixpxCQ71R8fqmrG5iKc9awtxq2R2oalRekNZWm+jHb9h4M3nMObJmDxU4YbvNGBXscAKS7e09kvUZroM4buN4Gg0pmpOhalAePC1Mtsro211VzP3TzSPSC6IpzXiJBYUmApsC8EQgDvkK5rllkBoeWqV/Kal77Molx4vk7Bll5+nZH8bBnxAUUaF+Mh7GZFLuddmjhXKbGh35WWuUYI0W+gXxlUx/3y90CrjoJkbq02dt7V6bujxVcHq0FcbSFGfWupUgI7892Vb3j54qd7hcosREmIiDW5pRpXLenVW4epHsvp1BoYpmMqHRTkGw7loqplrKkrrw71CIzjaiJfYRgGo65hJd768F64+VzMX81nzd0wrM9F9c2L2TOnjIsQeltacLwOMZdeoVSdYEZyLf3JZcBatbSIKjt/V3Q0u48ncgOfF+QHGDOeqSXTwFejyBgy8w==
-x-ms-exchange-antispam-messagedata: mZphdjrgCx0or6hThkJDnUyWQWCO9hSiQ2d8bLSpRfXJIDSfTAlUWsGOkafu8nhU8QIMuTpxmFwHqra47jfySuYEavGw9sazfHvRNbzy4EBWf3fCsSOsGQrbXwS6xN5p5yKUhlujeKfHtTCEp0ECON6bOXkbiTrLLvMhKBxmQ0RHqJXrpbqKjxp4Y4G/E5Lk
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_B3FB317417944A57B85061F0D8200339fbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 495zX16mp7zDqvW
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Apr 2020 19:57:52 +1000 (AEST)
+Received: by mail-io1-xd2c.google.com with SMTP id o127so14397829iof.0
+ for <openbmc@lists.ozlabs.org>; Tue, 21 Apr 2020 02:57:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=If1y/pr9GcMd9Mdz1EcXbtMVTc9O4JPz8t79ANbJj34=;
+ b=dKR3m4aJ8UJGS3aWyE0z+n5ZTbHWKb78UK8tRv6i8jhws3Lvb/63oK1vJJxruiJWVw
+ 36JMw6rwBwG5eps63v93RtmL5Zdo4MFdn9yKos+vd+zLgVKdGulPKNymRssVrQs4ljQM
+ nabarZVrj6FjA4Qbu3/VD29IxGfNd4XGyqlFU8enHRLe+vzr7AaQewkZ5ABBdxKLEd9M
+ YqFQxa0jGB0K0n7LVlw8dCMWeHDbH7F9KGnViFQf6tRSNq6k3smm2CCd/LrET+GOLxNe
+ QarMkRS/2EDtD6FDaXEsvnPzLYn5npyusciKR2DR+t9QHorIRf6lrrAD22880MCzMgJI
+ J3kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=If1y/pr9GcMd9Mdz1EcXbtMVTc9O4JPz8t79ANbJj34=;
+ b=XXEjIEkv/rS0bV99WLLAm799V9WPF1jk1x1jhdh5BPxfCnwUuLr7VeygMf1FKfNGVB
+ panN+gUiqEvKi69b3QTiw8q4cXUsPlxr3zmcdvEUvafji9ZZEMa3AkbDdlldVHjQM4Pw
+ 29mGebgImm4JW8Wt0FjAiodcqv0QNngXHQagUFnvibIGBjV3bh1tYche+xE7Y5/1hmdl
+ L4kwdtCskSpDPYsGCq7VB+TMWIHKcGkn6RbmLVdbTOXVe0VFiw263QIqqMLQ3/DffAbG
+ mmg+XOSs5BdEvtRHEpQn6jVCtIQKvELovB7SNgdo4IesmoRE0QvFIIUCPG9W8Sa+P44f
+ ffzA==
+X-Gm-Message-State: AGi0PuY4qKLI1KvL9tpdJFCZWjGlxaiKD+qLsaGmCip8wDnIjm+Tj8h9
+ V49qtesViVzAt+NsvyM+vB51TP/9yhjf4o5JCnx8HynGY3E=
+X-Google-Smtp-Source: APiQypL9poUl35M+r0T0fvENCpkK1Twg0uty6h6WxXYAAInGp6Oc9K43k9Cg1HIH3k/bZcvZ3YOzyQvHVFt16jIW90w=
+X-Received: by 2002:a5d:8553:: with SMTP id b19mr20333090ios.129.1587463068446; 
+ Tue, 21 Apr 2020 02:57:48 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: e4d1b112-0eec-4c64-f762-08d7e56a30ea
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Apr 2020 20:34:14.3995 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: M1ToEQQaHqOZ2lKCozVkDHq9Z6c5CdKuuyaB8UNR1HKeM1WWbnxFsZNIKTJkXPUwi53Ss/TjPjXduL/X6/xZwQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2214
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-20_08:2020-04-20,
- 2020-04-20 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- bulkscore=0
- priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 phishscore=0
- mlxscore=0 adultscore=0 clxscore=1015 malwarescore=0 spamscore=0
- suspectscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2003020000 definitions=main-2004200162
-X-FB-Internal: deliver
+References: <44bae429-2507-e044-2d0e-c4e110dfa700@linux.ibm.com>
+ <9e9929c1-1c55-43ea-236d-b14c82aacf88@linux.vnet.ibm.com>
+ <CADVsX8-r8ebFydQJgGQ=C7sTFVQmxk_vFinbRi2kkJ5skRgXcA@mail.gmail.com>
+ <01100446-5312-2ab4-f2e4-7bab3a86631d@linux.vnet.ibm.com>
+ <CADVsX8-2L6umOA8OE-8z3Buu=dKefPJa8KQvycJPPLX9QDz=nQ@mail.gmail.com>
+In-Reply-To: <CADVsX8-2L6umOA8OE-8z3Buu=dKefPJa8KQvycJPPLX9QDz=nQ@mail.gmail.com>
+From: Anton Kachalov <rnouse@google.com>
+Date: Tue, 21 Apr 2020 11:57:37 +0200
+Message-ID: <CADVsX89dY1YcKmsBvsymb2dGu5_tXQNzmDCgrmf38b0_0T_y4Q@mail.gmail.com>
+Subject: Re: Security Working Group - Wednesday April 1
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Content-Type: multipart/alternative; boundary="0000000000004a7b5b05a3ca0c06"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,202 +76,234 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Manojeda@in.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_B3FB317417944A57B85061F0D8200339fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--0000000000004a7b5b05a3ca0c06
+Content-Type: text/plain; charset="UTF-8"
 
-SGkgT3NrYXIsDQpZb3UgbmVlZCB0byB1c2UgaXBtYi1kZXYgZHJpdmVyIHdoaWNoIGlzIGlzIGJl
-aW5nIHVzZWQgYnkgaXBtYmJyaWRnZS4gWW91IGRvbuKAmXQgbmVlZCBpcG1iLWhvc3QgYXMgd2Ug
-YXJlIGhhdmluZyBpcG1iYnJpZGdlIHRvIHJlcGxhY2UgdGhhdC4NCg0KUmVnYXJkcw0KLVZpamF5
-DQoNCkZyb206IE9za2FyIFNlbmZ0IDxvc2tAZ29vZ2xlLmNvbT4NCkRhdGU6IE1vbmRheSwgQXBy
-aWwgMjAsIDIwMjAgYXQgMTE6MzUgQU0NClRvOiBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZi
-LmNvbT4NCkNjOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpT
-dWJqZWN0OiBSZTogQWNjZXNzIEludGVsIE1FIElQTUIgZnJvbSBCTUMNCg0KSGkgVmlqYXkNCg0K
-VGhhbmtzIGZvciB0aGUgcG9pbnRlciENCg0KSSBhbHNvIGZvdW5kIGJvdGggaHR0cHM6Ly9naXRo
-dWIuY29tL01lbGxhbm94L2lwbWItaG9zdCBhbmQgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
-bGludXgvYmxvYi9kZXYtNS40L2RyaXZlcnMvY2hhci9pcG1pL2lwbWJfZGV2X2ludC5jLg0KDQpJ
-cyBpdCByaWdodCB0aGF0IHdpdGggaXBtYmJyaWRnZSBJIGRvbid0IG5lZWQgZWl0aGVyIG9mIHRo
-ZW0gc2luY2UgaXBtYmJyaWRnZSB1c2VzIHRoZSByYXcgaTJjIGRldj8NCg0KVGhhbmtzDQpPc2th
-ci4NCg0KT24gTW9uLCBBcHIgMjAsIDIwMjAgYXQgMjoxMiBQTSBWaWpheSBLaGVta2EgPHZpamF5
-a2hlbWthQGZiLmNvbTxtYWlsdG86dmlqYXlraGVta2FAZmIuY29tPj4gd3JvdGU6DQpIaSBPc2th
-ciwNCllvdSBuZWVkIHRvIGNvbmZpZ3VyZSB5b3VyIE1FIGNoYW5uZWwgaW4gaXBtYiBjaGFubmVs
-IGNvbmZpZyBmaWxlIGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2lwbWJicmlkZ2UvYmxvYi9t
-YXN0ZXIvaXBtYi1jaGFubmVscy5qc29uDQpBbmQgbWFrZSBzdXJlIGlwbWJicmlkZ2UgaXMgcnVu
-bmluZy4gVGhlbiB5b3UgY2FuIHNlbmQgZ2V0IGRldmljZSBpZCBjb21tYW5kIHRvIE1FIGZyb20g
-Y29tbWFuZCBsaW5lIGl0c2VsZiB0byB0ZXN0IGlmIGV2ZXJ5dGhpbmcgaXMgd29ya2luZy4NCg0K
-DQoNCmJ1c2N0bCBjYWxsIHh5ei5vcGVuYm1jX3Byb2plY3QuSXBtaS5DaGFubmVsLklwbWIgL3h5
-ei9vcGVuYm1jX3Byb2plY3QvSXBtaS9DaGFubmVsL0lwbWIgb3JnLm9wZW5ibWMuSXBtYiBzZW5k
-UmVxdWVzdCB5eXl5YXkgMSA2IDAgMHgxIDANCg0KUmVnYXJkcw0KLVZpamF5DQoNCkZyb206IG9w
-ZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMub3psYWJzLm9y
-ZzxtYWlsdG86ZmIuY29tQGxpc3RzLm96bGFicy5vcmc+PiBvbiBiZWhhbGYgb2YgT3NrYXIgU2Vu
-ZnQgPG9za0Bnb29nbGUuY29tPG1haWx0bzpvc2tAZ29vZ2xlLmNvbT4+DQpEYXRlOiBTYXR1cmRh
-eSwgQXByaWwgMTgsIDIwMjAgYXQgNjo0NyBQTQ0KVG86IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5i
-bWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPj4NClN1
-YmplY3Q6IEFjY2VzcyBJbnRlbCBNRSBJUE1CIGZyb20gQk1DDQoNCkhpIGV2ZXJ5b25lDQoNCkkn
-bSB0cnlpbmcgdG8gZmluZCBvdXQgaG93IEkgY2FuIGFjY2VzcyB0aGUgSW50ZWwgTUUgdmlhIElQ
-TUIgZnJvbSB0aGUgQk1DIChPcGVuQk1DKS4NCg0KRnJvbSB3aGF0IEkgZ2F0aGVyZWQsIEludGVs
-IE1FJ3MgSVBNQiBpcyBvbiB0aGUgUENIJ3MgU01MaW5rMC4gSSBrbm93IHRoaXMgaXMgY29ubmVj
-dGVkIHRvIG9uZSBvZiB0aGUgU01CdXMgbW9kdWxlcyBvbiBteSBBU1QyNTAwLiBCdXQgd2hhdCBJ
-IGNhbid0IGZpbmQgb3V0IGlzIGhvdyBJIGFjdHVhbGx5IHNlbmQgY29tbWFuZHMgdGhlcmU/IEkn
-bSBzdXJlIEknbSBtaXNzaW5nIGEgZG9jdW1lbnQgdGhhdCBtYWtlcyB0aGlzIG9idmlvdXMuDQoN
-Ck9yIGlzIGl0IGFzIHNpbXBsZSBhcyBkcm9wcGluZyBJUE1JIHBhY2tldHMgb250byB0aGUgYnVz
-Pw0KDQpJcyB0aGlzIGJ5IGFueSBjaGFuY2UgYWxyZWFkeSBpbXBsZW1lbnRlZCBpbiBPcGVuQk1D
-Pw0KDQpUaGFua3MgZm9yIGFueSBoaW50cyENCg0KT3NrYXINCg==
+Looks like an increase of image size for 18MB came from the dependencies
+such as Python e.g. audit2allow that we can get rid of from the prod image.
 
---_000_B3FB317417944A57B85061F0D8200339fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <DC63DE328BEA334F912D42B6B4F555ED@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+I've tried to build AppArmor for OpenBMC. By default, it's being built with
+Python and Perl as well, which also adds an extra 14MB of image size or
+68MB -> 126MB unpacked rootfs increase.
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
-IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
-IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3Jt
-YWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1i
-b3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
-IixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXBy
-aW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpw
-LmdtYWlsLW0yODg3NTM4MTY2Njk0OTEyMjFwMSwgbGkuZ21haWwtbTI4ODc1MzgxNjY2OTQ5MTIy
-MXAxLCBkaXYuZ21haWwtbTI4ODc1MzgxNjY2OTQ5MTIyMXAxDQoJe21zby1zdHlsZS1uYW1lOmdt
-YWlsLW1fMjg4NzUzODE2NjY5NDkxMjIxcDE7DQoJbXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJ
-bWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4t
-bGVmdDowaW47DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fu
-cy1zZXJpZjt9DQpzcGFuLmdtYWlsLW0yODg3NTM4MTY2Njk0OTEyMjFzMQ0KCXttc28tc3R5bGUt
-bmFtZTpnbWFpbC1tXzI4ODc1MzgxNjY2OTQ5MTIyMXMxO30NCnNwYW4uRW1haWxTdHlsZTIwDQoJ
-e21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixz
-YW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0
-eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2Vj
-dGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEu
-MGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHls
-ZT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSJibHVlIiB2bGluaz0icHVycGxl
-Ij4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5IaSBP
-c2thciw8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPllvdSBuZWVkIHRvIHVz
-ZSBpcG1iLWRldiBkcml2ZXIgd2hpY2ggaXMgaXMgYmVpbmcgdXNlZCBieSBpcG1iYnJpZGdlLiBZ
-b3UgZG9u4oCZdCBuZWVkIGlwbWItaG9zdCBhcyB3ZSBhcmUgaGF2aW5nIGlwbWJicmlkZ2UgdG8g
-cmVwbGFjZSB0aGF0LjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4m
-bmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5SZWdhcmRzPG86cD48L286cD48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4tVmlqYXk8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5v
-bmU7Ym9yZGVyLXRvcDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRpbmc6My4wcHQgMGluIDBpbiAw
-aW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4w
-cHQ7Y29sb3I6YmxhY2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
-Mi4wcHQ7Y29sb3I6YmxhY2siPk9za2FyIFNlbmZ0ICZsdDtvc2tAZ29vZ2xlLmNvbSZndDs8YnI+
-DQo8Yj5EYXRlOiA8L2I+TW9uZGF5LCBBcHJpbCAyMCwgMjAyMCBhdCAxMTozNSBBTTxicj4NCjxi
-PlRvOiA8L2I+VmlqYXkgS2hlbWthICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7PGJyPg0KPGI+
-Q2M6IDwvYj5PcGVuQk1DIE1haWxsaXN0ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7
-PGJyPg0KPGI+U3ViamVjdDogPC9iPlJlOiBBY2Nlc3MgSW50ZWwgTUUgSVBNQiBmcm9tIEJNQzxv
-OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+SGkgVmlqYXkgPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij5UaGFua3MgZm9yIHRoZSBwb2ludGVyITxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JIGFsc28gZm91bmQgYm90aCZuYnNwOzxhIGhyZWY9Imh0
-dHBzOi8vZ2l0aHViLmNvbS9NZWxsYW5veC9pcG1iLWhvc3QiPmh0dHBzOi8vZ2l0aHViLmNvbS9N
-ZWxsYW5veC9pcG1iLWhvc3Q8L2E+Jm5ic3A7YW5kJm5ic3A7PGEgaHJlZj0iaHR0cHM6Ly9naXRo
-dWIuY29tL29wZW5ibWMvbGludXgvYmxvYi9kZXYtNS40L2RyaXZlcnMvY2hhci9pcG1pL2lwbWJf
-ZGV2X2ludC5jIj5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9saW51eC9ibG9iL2Rldi01LjQv
-ZHJpdmVycy9jaGFyL2lwbWkvaXBtYl9kZXZfaW50LmM8L2E+LiZuYnNwOzxvOnA+PC9vOnA+PC9w
-Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48
-L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JcyBpdCByaWdodCB0aGF0
-IHdpdGgmbmJzcDtpcG1iYnJpZGdlJm5ic3A7SSBkb24ndCBuZWVkIGVpdGhlciBvZiB0aGVtIHNp
-bmNlIGlwbWJicmlkZ2UmbmJzcDt1c2VzIHRoZSByYXcgaTJjIGRldj88bzpwPjwvbzpwPjwvcD4N
-CjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
-Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+VGhhbmtzPG86cD48L286cD48
-L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5Pc2thci48bzpwPjwvbzpw
-PjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwv
-bzpwPjwvcD4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+T24gTW9uLCBBcHIg
-MjAsIDIwMjAgYXQgMjoxMiBQTSBWaWpheSBLaGVta2EgJmx0OzxhIGhyZWY9Im1haWx0bzp2aWph
-eWtoZW1rYUBmYi5jb20iPnZpamF5a2hlbWthQGZiLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9v
-OnA+PC9wPg0KPC9kaXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxl
-ZnQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1s
-ZWZ0OjQuOHB0O21hcmdpbi1yaWdodDowaW4iPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20t
-YWx0OmF1dG8iPkhpIE9za2FyLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
-Ij5Zb3UgbmVlZCB0byBjb25maWd1cmUgeW91ciBNRSBjaGFubmVsIGluIGlwbWIgY2hhbm5lbCBj
-b25maWcgZmlsZQ0KPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvaXBtYmJyaWRn
-ZS9ibG9iL21hc3Rlci9pcG1iLWNoYW5uZWxzLmpzb24iIHRhcmdldD0iX2JsYW5rIj4NCmh0dHBz
-Oi8vZ2l0aHViLmNvbS9vcGVuYm1jL2lwbWJicmlkZ2UvYmxvYi9tYXN0ZXIvaXBtYi1jaGFubmVs
-cy5qc29uPC9hPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1z
-by1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5BbmQgbWFr
-ZSBzdXJlIGlwbWJicmlkZ2UgaXMgcnVubmluZy4gVGhlbiB5b3UgY2FuIHNlbmQgZ2V0IGRldmlj
-ZSBpZCBjb21tYW5kIHRvIE1FIGZyb20gY29tbWFuZCBsaW5lIGl0c2VsZiB0byB0ZXN0IGlmIGV2
-ZXJ5dGhpbmcgaXMgd29ya2luZy48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJnbWFpbC1tMjg4
-NzUzODE2NjY5NDkxMjIxcDEiPjxzcGFuIGNsYXNzPSJnbWFpbC1tMjg4NzUzODE2NjY5NDkxMjIx
-czEiPiZuYnNwOzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJnbWFpbC1tMjg4NzUz
-ODE2NjY5NDkxMjIxcDEiPjxzcGFuIGNsYXNzPSJnbWFpbC1tMjg4NzUzODE2NjY5NDkxMjIxczEi
-PmJ1c2N0bCBjYWxsIHh5ei5vcGVuYm1jX3Byb2plY3QuSXBtaS5DaGFubmVsLklwbWIgL3h5ei9v
-cGVuYm1jX3Byb2plY3QvSXBtaS9DaGFubmVsL0lwbWIgb3JnLm9wZW5ibWMuSXBtYiBzZW5kUmVx
-dWVzdCB5eXl5YXkgMSA2IDAgMHgxIDA8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0
-b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
-Ij5SZWdhcmRzPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNv
-LW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPi1WaWpheTxv
-OnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9w
-LWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwv
-cD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29saWQgI0I1QzRERiAxLjBw
-dDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxl
-PSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PGI+
-PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPkZyb206DQo8L3NwYW4+
-PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5vcGVuYm1jICZs
-dDtvcGVuYm1jLWJvdW5jZXMmIzQzO3ZpamF5a2hlbWthPTxhIGhyZWY9Im1haWx0bzpmYi5jb21A
-bGlzdHMub3psYWJzLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPmZiLmNvbUBsaXN0cy5vemxhYnMub3Jn
-PC9hPiZndDsgb24gYmVoYWxmIG9mIE9za2FyIFNlbmZ0ICZsdDs8YSBocmVmPSJtYWlsdG86b3Nr
-QGdvb2dsZS5jb20iIHRhcmdldD0iX2JsYW5rIj5vc2tAZ29vZ2xlLmNvbTwvYT4mZ3Q7PGJyPg0K
-PGI+RGF0ZTogPC9iPlNhdHVyZGF5LCBBcHJpbCAxOCwgMjAyMCBhdCA2OjQ3IFBNPGJyPg0KPGI+
-VG86IDwvYj5PcGVuQk1DIE1haWxsaXN0ICZsdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0
-cy5vemxhYnMub3JnIiB0YXJnZXQ9Il9ibGFuayI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9h
-PiZndDs8YnI+DQo8Yj5TdWJqZWN0OiA8L2I+QWNjZXNzIEludGVsIE1FIElQTUIgZnJvbSBCTUM8
-L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-IiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1
-dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFs
-dDphdXRvIj5IaSBldmVyeW9uZQ0KPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
-LWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJv
-dHRvbS1hbHQ6YXV0byI+SSdtIHRyeWluZyB0byBmaW5kIG91dCBob3cgSSBjYW4gYWNjZXNzIHRo
-ZSBJbnRlbCBNRSB2aWEgSVBNQiBmcm9tIHRoZSBCTUMgKE9wZW5CTUMpLjxvOnA+PC9vOnA+PC9w
-Pg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4t
-dG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpw
-PjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFy
-Z2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+RnJvbSB3aGF0IEkg
-Z2F0aGVyZWQsIEludGVsIE1FJ3MgSVBNQiBpcyBvbiB0aGUgUENIJ3MgU01MaW5rMC4gSSBrbm93
-IHRoaXMgaXMgY29ubmVjdGVkIHRvIG9uZSBvZiB0aGUgU01CdXMgbW9kdWxlcyBvbiBteSBBU1Qy
-NTAwLiBCdXQgd2hhdCBJIGNhbid0IGZpbmQgb3V0IGlzIGhvdyBJIGFjdHVhbGx5IHNlbmQNCiBj
-b21tYW5kcyB0aGVyZT8gSSdtIHN1cmUgSSdtIG1pc3NpbmcgYSBkb2N1bWVudCB0aGF0IG1ha2Vz
-IHRoaXMgb2J2aW91cy48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRv
-bS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1i
-b3R0b20tYWx0OmF1dG8iPk9yIGlzIGl0IGFzIHNpbXBsZSBhcyZuYnNwO2Ryb3BwaW5nIElQTUkg
-cGFja2V0cyBvbnRvIHRoZSBidXM/PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdp
-bi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1t
-YXJnaW4tYm90dG9tLWFsdDphdXRvIj5JcyB0aGlzIGJ5IGFueSBjaGFuY2UgYWxyZWFkeSBpbXBs
-ZW1lbnRlZCBpbiBPcGVuQk1DPzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4t
-Ym90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFy
-Z2luLWJvdHRvbS1hbHQ6YXV0byI+VGhhbmtzIGZvciBhbnkgaGludHMhPG86cD48L286cD48L3A+
-DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10
-b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+
-PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
-aW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5Pc2thcjxvOnA+PC9v
-OnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Jsb2NrcXVvdGU+DQo8
-L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+Once such dependencies were dropped, I got a working AppArmor-enabled
+system with only a 2MB increase.
 
---_000_B3FB317417944A57B85061F0D8200339fbcom_--
+On Mon, 6 Apr 2020 at 15:20, Anton Kachalov <rnouse@google.com> wrote:
+
+> Thanks you for clarifying, Ratan.
+>
+> Meanwhile I would try to check what will give us AppArmor in terms of
+> firmware's size growth.
+>
+> On Mon, 6 Apr 2020 at 13:24, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+> wrote:
+>
+>> Hi Anton,
+>>
+>> I brought  the meta-selinux layer, that enables the selinux framework on
+>> obmc-phosphor-image and it increases the size of the image by 18MB.
+>>
+>> This layer enables the linux kernel support for selinux framework and
+>> brings in a lot of tools and scripts.
+>> Just to name a few,layer comes with binaries like
+>>
+>> - getenforce
+>> - setenforce
+>> - semange
+>> - sestatus
+>> - audit2why
+>> - audit2allow
+>> - restorecon
+>> - chcon
+>>
+>> It also brings in various scripts that would help to label the entire
+>> system during the first boot.
+>>
+>> While lot of these binaries may be only required by the developer during
+>> the inital phase if selinux enablement and not to the end customer.
+>>
+>> I need to spend a little more time to see what can we remove form the
+>> layer.
+>>
+>> My suggestion is  we can defer this size work for later and start working
+>> on how selinux can help in openBMC security.
+>>
+>> We would be publishing the se-linux use cases in a week.
+>>
+>> Manoj is working with me on bringing down the size of se-linux layer.
+>>
+>> Regards
+>>
+>> Ratan
+>> On 4/5/20 6:58 PM, Anton Kachalov wrote:
+>>
+>> Hello, Ratan.
+>>
+>> Would you mind breaking down the estimation, curious about what brought
+>> up 18MB when enabling SELinux.
+>> Precompiled rules in Android took 3MB on average.
+>>
+>> On Wed, 1 Apr 2020 at 16:22, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+>> wrote:
+>>
+>>> Hi Joseph,
+>>>
+>>> We did some POC around selinux, will share the detailed use-cases with
+>>> selinux which can be useful in openbmc stack.
+>>>
+>>> selinux is taking around 18MB space on flash, Is it a concern?
+>>>
+>>> Regards
+>>>
+>>> Ratan
+>>>
+>>> On 3/31/20 9:51 PM, Joseph Reynolds wrote:
+>>> > This is a reminder of the OpenBMC Security Working Group meeting
+>>> > scheduled for this Wednesday April 1 at 10:00am PDT.
+>>> >
+>>> > We'll discuss current development items, and anything else that comes
+>>> up.
+>>> >
+>>> > The current topics:
+>>> >
+>>> > 1. SELinux or AppArmor plans
+>>> >
+>>> > Access, agenda, and notes are in the wiki:
+>>> >
+>>> > https://github.com/openbmc/openbmc/wiki/Security-working-group
+>>> >
+>>> > - Joseph
+>>> >
+>>>
+>>>
+
+--0000000000004a7b5b05a3ca0c06
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Looks like an increase of image size for =
+18MB came from the dependencies such as Python e.g. audit2allow that we can=
+ get rid of from the prod image.</div><div><br></div><div>I&#39;ve tried to=
+ build AppArmor for OpenBMC. By default, it&#39;s being built with Python a=
+nd Perl as well, which also adds an extra 14MB of image size or 68MB -&gt; =
+126MB unpacked rootfs increase.</div><div><br></div><div>Once such dependen=
+cies were dropped, I got a working AppArmor-enabled system with only a 2MB =
+increase.</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Mon, 6 Apr 2020 at 15:20, Anton Kachalov &lt;<a href=3D"mailto:=
+rnouse@google.com" target=3D"_blank">rnouse@google.com</a>&gt; wrote:<br></=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Than=
+ks you for clarifying, Ratan.<div><br></div><div>Meanwhile I would try to c=
+heck what will give us AppArmor in terms of firmware&#39;s size growth.</di=
+v></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr=
+">On Mon, 6 Apr 2020 at 13:24, Ratan Gupta &lt;<a href=3D"mailto:ratagupt@l=
+inux.vnet.ibm.com" target=3D"_blank">ratagupt@linux.vnet.ibm.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+ =20
+   =20
+ =20
+  <div>
+    <p>Hi Anton,</p>
+    <p>I brought=C2=A0 the meta-selinux layer, that enables the selinux
+      framework on obmc-phosphor-image and it increases the size of the
+      image by 18MB.</p>
+    <p>This layer enables the linux kernel support for selinux framework
+      and brings in a lot of tools and scripts.<br>
+      Just to name a few,layer comes with binaries like</p>
+    <p>- getenforce<br>
+      - setenforce<br>
+      - semange<br>
+      - sestatus<br>
+      - audit2why<br>
+      - audit2allow<br>
+      - restorecon<br>
+      - chcon</p>
+    <p>It also brings in various scripts that would help to label the
+      entire system during the first boot.</p>
+    <p>While lot of these binaries may be only required by the developer
+      during the inital phase if selinux enablement and not to the end
+      customer.</p>
+    <p>I need to spend a little more time to see what can we remove form
+      the layer. <br>
+    </p>
+    <p>My suggestion is=C2=A0 we can defer this size work for later and sta=
+rt
+      working on how selinux can help in openBMC security.</p>
+    <p>We would be publishing the se-linux use cases in a week.=C2=A0 <br>
+    </p>
+    <p>Manoj is working with me on bringing down the size of se-linux
+      layer.<br>
+    </p>
+    <p>Regards</p>
+    <p>Ratan<br>
+    </p>
+    <div>On 4/5/20 6:58 PM, Anton Kachalov
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite">
+     =20
+      <div dir=3D"ltr">Hello, Ratan.
+        <div><br>
+        </div>
+        <div>Would you mind breaking down the estimation, curious about
+          what brought up 18MB when enabling SELinux.</div>
+        <div>Precompiled rules in Android took 3MB on average.</div>
+      </div>
+      <br>
+      <div class=3D"gmail_quote">
+        <div dir=3D"ltr" class=3D"gmail_attr">On Wed, 1 Apr 2020 at 16:22,
+          Ratan Gupta &lt;<a href=3D"mailto:ratagupt@linux.vnet.ibm.com" ta=
+rget=3D"_blank">ratagupt@linux.vnet.ibm.com</a>&gt;
+          wrote:<br>
+        </div>
+        <blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi
+          Joseph,<br>
+          <br>
+          We did some POC around selinux, will share the detailed
+          use-cases with <br>
+          selinux which can be useful in openbmc stack.<br>
+          <br>
+          selinux is taking around 18MB space on flash, Is it a concern?<br=
+>
+          <br>
+          Regards<br>
+          <br>
+          Ratan<br>
+          <br>
+          On 3/31/20 9:51 PM, Joseph Reynolds wrote:<br>
+          &gt; This is a reminder of the OpenBMC Security Working Group
+          meeting <br>
+          &gt; scheduled for this Wednesday April 1 at 10:00am PDT.<br>
+          &gt;<br>
+          &gt; We&#39;ll discuss current development items, and anything
+          else that comes up.<br>
+          &gt;<br>
+          &gt; The current topics:<br>
+          &gt;<br>
+          &gt; 1. SELinux or AppArmor plans<br>
+          &gt;<br>
+          &gt; Access, agenda, and notes are in the wiki:<br>
+          &gt;<br>
+          &gt; <a href=3D"https://github.com/openbmc/openbmc/wiki/Security-=
+working-group" rel=3D"noreferrer" target=3D"_blank">https://github.com/open=
+bmc/openbmc/wiki/Security-working-group</a><br>
+          &gt;<br>
+          &gt; - Joseph<br>
+          &gt;<br>
+          <br>
+        </blockquote>
+      </div>
+    </blockquote>
+  </div>
+
+</blockquote></div>
+</blockquote></div></div>
+
+--0000000000004a7b5b05a3ca0c06--
