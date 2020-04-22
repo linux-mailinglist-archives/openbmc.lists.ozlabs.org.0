@@ -2,77 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9277C1B46CA
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 16:05:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 203E71B49A0
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 18:08:09 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 496hyq0bqTzDqrj
-	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 00:05:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 496lhk2NymzDqg1
+	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 02:08:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::335;
- helo=mail-ot1-x335.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=PNyPciPe; dkim-atps=neutral
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
- [IPv6:2607:f8b0:4864:20::335])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 496hxq3w2NzDqpf
- for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 00:04:15 +1000 (AEST)
-Received: by mail-ot1-x335.google.com with SMTP id e26so2098408otr.2
- for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 07:04:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=oKDYuladfMHYv7YAajInk9lev4P7gtAmD0cywck/jwg=;
- b=PNyPciPekm2z6cGs1Q8HsJh+D6iKBtOzZoDdsdSpmaML6wXYo3sYXWLT+x0YAydAu1
- M3WRk0e7ULEovzY9y+FF9DkEcc4kiN54HEiLDk8L/zB2dUbfDbJIaZuVMfEEgOvhwyQn
- 4v0/0lVviqn6Mbfswj/YBYKUl0VCopEu1ClkSfQyqCNcOOLRh1xzTWYFS9wEl5vN8Eyo
- rRTDs92QVwbi51T2K3cOuJ992lZ2TwytJvVXNUenH5CGKDPErdupOT0ExO+mA5hJ/DCK
- UQii/+3eqo646MwxwEvIfXmcKnJvci9/G+Mjz0dLF5itaIiPxx2PIzri7Ag502Qt2EfP
- KI8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=oKDYuladfMHYv7YAajInk9lev4P7gtAmD0cywck/jwg=;
- b=LT1L6vCr+FZ425f+UPPmsb2sb8cIYeMJOG1OiaMkqsg10cCqCUm2P/kydkyGFEEsi/
- 4ZhFWNBkbUD0aOpewSf7/TyxupxvsZeHWIOSGYM/vH5TD/AJJRtAFmc+78Xku68H3TTF
- gwsEY8DKoCnSx2xI6VEPyAQfXtamSvh4VGUHLxmp4+gV/Q9kMfHM2Jl7HyhEPmwUnE5p
- lrGKOLggSds5Yy1DXNwS6ixrLsDvHCHjGIYkeH1WM532DHHEJPua8+cgdZdv1ZbNhGJJ
- E3xpQgJyu2v70Bj+FNDAkFFTXIGyqp13Q00zKG42eCZp38xBD7qnq5NdtH8e6nO/azfv
- /rXA==
-X-Gm-Message-State: AGi0PuZ01Y51rMqDG3xHnl0ICYmUH9jiSGbsyIKNr9JjhzsH/XirLdMm
- 9kd1QaTsdAY1//IR95RQRY34fbpV
-X-Google-Smtp-Source: APiQypJIS/ym7EKNjbTxQNYHuXlS6BgpX/PuWv9y301ZUCrVWR8m8dUminlCVzmX7xJwGbaK2gC6CA==
-X-Received: by 2002:a9d:12f6:: with SMTP id g109mr18246980otg.0.1587564251141; 
- Wed, 22 Apr 2020 07:04:11 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id h65sm1533188oth.34.2020.04.22.07.04.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 22 Apr 2020 07:04:09 -0700 (PDT)
-Subject: Re: Call for Gardening Tasks
-To: Richard Hanley <rhanley@google.com>
-References: <5e9dd66f.1c69fb81.45fc6.0118@mx.google.com>
- <CAH1kD+ZSFEPVrYsf69auE8iEGxyXg6ru3RArcZrDi2AHrbxOJQ@mail.gmail.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <ebea0fe4-9fde-5025-a765-6c1ce9515fb3@gmail.com>
-Date: Wed, 22 Apr 2020 09:04:08 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 496lYm1JcSzDqrn
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 02:02:03 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03MFfm5a045941; Wed, 22 Apr 2020 12:01:54 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 30gc2ygbxd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Apr 2020 12:01:54 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03MG0l2W018567;
+ Wed, 22 Apr 2020 16:01:54 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma02dal.us.ibm.com with ESMTP id 30fs673a08-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Apr 2020 16:01:54 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03MG1rAh52691274
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Apr 2020 16:01:53 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2FC92124052;
+ Wed, 22 Apr 2020 16:01:53 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DBBB6124054;
+ Wed, 22 Apr 2020 16:01:52 +0000 (GMT)
+Received: from [9.85.155.31] (unknown [9.85.155.31])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 22 Apr 2020 16:01:52 +0000 (GMT)
+Subject: Re: dbus-sensors
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <dbdb4dac-a73a-5c39-8cf8-33dd2d318d16@linux.ibm.com>
+ <2cb1c83a-9803-c9ac-ae76-2e09b616562e@linux.intel.com>
+ <ED37CD16-CFB6-4D78-BF6E-062849051D02@fuzziesquirrel.com>
+ <20200422121131.GE196148@heinlein.lan.stwcx.xyz>
+ <56790A50-40DE-44F5-A043-A91E1C48C8C2@fuzziesquirrel.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <672387da-09f5-dc7a-3822-8e9af9c745ca@linux.ibm.com>
+Date: Wed, 22 Apr 2020 11:01:52 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <CAH1kD+ZSFEPVrYsf69auE8iEGxyXg6ru3RArcZrDi2AHrbxOJQ@mail.gmail.com>
+In-Reply-To: <56790A50-40DE-44F5-A043-A91E1C48C8C2@fuzziesquirrel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-22_06:2020-04-22,
+ 2020-04-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1011 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004220120
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,108 +90,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/21/20 6:18 PM, Richard Hanley wrote:
-> Thank you everyone for your suggestions.
-> 
-> Scanning through this it's clear that documentation is one of the 
-> biggest most generally agreed upon area to work on.
-> 
-> Build tools and package management seems like another area with some 
-> agreed on improvements. I like the idea of moving to meson. Getting tidy 
-> files and revising our style guides also sound like good ideas. I also 
-> really agree that we could stand to do some consolidation of 
-> processes/repos.
-> 
-> There is also some use for DBus tooling for both improved code, and for 
-> visualizations.
-> 
-> So here are my next steps:
->    1) Since we have some new people getting started, I've asked them to 
-> add documentation at the points they get stuck during on-boarding.
->    2) I'm going to take the ideas in this thread and put together a .md 
-> doc with any relevant information I can find. I'll be adding it to 
-> openbmc/docs.
-
-That would work, but I would also suggest a wiki page. Docs have a 
-tendency to get stale quickly, where a wiki page has a lower pain point 
-for a small changes. I can get that started if it would help.
-
-Kurt Taylor (krtaylor)
 
 
->    3) I'll follow up in another thread about some of the ideas around 
-> DBus tooling and package consolidation. That seems to be an area where 
-> most people agree some improvements can be made, but I'm not sure there 
-> is an agreement on how we should do it.
-> 
-> -Richard
-> 
-> 
-> 
-> On Mon, Apr 20, 2020 at 10:19 AM Sui Chen <suichen6@gmail.com 
-> <mailto:suichen6@gmail.com>> wrote:
-> 
->     > On Apr 11, 2020, at 8:15 AM, Andrew Geissler <geissonator at gmail.com <http://gmail.com>> wrote:
-> 
->     > Systemd Visualization
-> 
->     > Another complicated area of OpenBMC is our systemd targets and services. Building on the upstream tools to visualize our systemd targets and services would be useful to new people.
-> 
->     __ __
-> 
->     +1 to visualization, and I have a few thoughts on this ---____
-> 
->     My lacking a mental model of how an OpenBMC system works had been my
->     pain point in the first few months working with OpenBMC (I’m a bit
->     new to this area), so after learning the minimal set of survival
->     skills I did something similar to what you mentioned – visualizing
->     the messages passed between different dbus peers (and conveniently,
->     IPMI traffic, as IPMI-related dbus messages exposing all IPMI
->     payload comprise most of the dbus traffic on that particular system
->     I was working on.)____
-> 
->     __ __
-> 
->     I think packet analysis tools such as Wireshark and graphics frame
->     analysis tools such as RenderDoc, or system event-based Windows
->     Performance tool like GPUView provide great examples of what people
->     might expect to achieve with a visualization tool: capture, inspect
->     and (sometimes) playback, across multiple layers in the
->     software/hardware stack. Many similar existing tools process
->     sequences of events, and in this case of BMCs, the events could be
->     dbus messages. I found a prototype visualizer made at work greatly
->     helpful in explaining to new team members some basic concepts and
->     the IPMI stack on the BMC.____
-> 
->     __ __
-> 
->     The IPMI stack is interesting because it’s one noticeable workload
->     on the particular BMC system I had been working on; in my current
->     limited understanding, having lots of I/O capability to connect to
->     hundreds of sensors is one of the many features that set apart a BMC
->     chip and a similarly powerful smartphone chip, and the broad use of
->     dbus is what sets apart OpenBMC and the desktop Linux distro I had
->     been using. I heard optimization is best done workload by workload,
->     perhaps this rationale applies to visualization too?____
-> 
->     __ __
-> 
->     I realize I was mostly talking about visualizing the run-time state
->     of the system rather than build-time, but we could visualize the
->     run-time aspect of systemd units too since I have seen many times a
->     dbus message eventually triggering a systemd target to acutate the
->     system, so it would be good to consider both dbus and systemd (and
->     maybe other parts of the system?) to have a more holistic view of
->     the BMC’s operations.____
-> 
->     __ __
-> 
->     Thanks____
-> 
->     Sui____
-> 
+On 4/22/2020 7:24 AM, Brad Bishop wrote:
+> at 8:11 AM, Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+>> On Wed, Apr 22, 2020 at 07:56:14AM -0400, Brad Bishop wrote:
+>>> at 5:54 PM, James Feist <james.feist@linux.intel.com> wrote:
+>>>>> 3. After creating this event log, make sure not to do it again until
+>>>>>    main power is cycled.
+>>>>
+>>>> I'd rather this be until the status goes OK again.
+>>>
+>>> We have user-experience requirements that the server administrator 
+>>> must be
+>>> “nagged” in this fashion when something is broken like this. Could the
+>>> behavior be selectable via build switch?  Any other ideas on how to
+>>> accommodate both behaviors?
+>>
+>> This sounds like a form of error filtering.  Shouldn't that decision be
+>> done at a much higher level in the stack than down in the entity that
+>> reads the hardware sensor?
+>
+> Thats an interesting thought.  When the error reporting code sees the 
+> error for the first time, it could maintain a list of errors that it 
+> needs to “replay” at different system events, like when the server 
+> powers on.
+
+It isn't really nagging, it's more like error throttling.  At most, only 
+log one error per power cycle.
+I have to check still, but we may also need to still log the other 
+errors, just with a
+different severity (for debug purposes).
+
+I kinda like this filtering idea too.  It is flexible and we would only 
+have to do it in one place as
+opposed to in all the sensor applications we end up using, and could 
+also be used to change the
+event log severities as mentioned above.  We will have to make sure when 
+creating the event log
+that it contains enough information to recognize the device that is 
+failing so that we can filter
+appropriately.
+
+
+>
+> This is certainly more flexible and I like the idea - but one down 
+> side though is the logging code becomes stateful and the complexity is 
+> slightly higher.
 
