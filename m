@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D39481B4373
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 13:44:43 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE9991B4366
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 13:40:06 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 496dlS0fGDzDqlp
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 21:40:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 496drn2gtczDqck
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 21:44:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,72 +17,70 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=FMYH+Vzc; 
+ header.s=fm1 header.b=s/cAhtdr; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=beX0/pVX; 
+ header.a=rsa-sha256 header.s=fm2 header.b=Etq0xmgL; 
  dkim-atps=neutral
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
  [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 496dkN6r7HzDqjW
- for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 21:39:05 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 496dqs2s1tzDqW9
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 21:43:53 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 5D08B5C0124;
- Wed, 22 Apr 2020 07:39:01 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 8E8555C01BD;
+ Wed, 22 Apr 2020 07:43:50 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Wed, 22 Apr 2020 07:39:01 -0400
+ by compute7.internal (MEProxy); Wed, 22 Apr 2020 07:43:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=3lxzHHHJwjF3BPE355e8NXosejV
- X3C0TfRYM4s4MdSs=; b=FMYH+VzccRfQJ5en/JBh1TsRVm6onxG0s7LyObuka/l
- F2vGN/hGS6Qq6JAgZeDgt76p7GBfyaKgLphDATNU39Mnbx4IGZekcWKZ9Cu4EF9L
- QvHsZke0KKlrF6XCMctB+QUFhtrPdrTOPLRmMPAl3RaDlOFUUQPNJbD9AP5F6i7X
- tJDm8epzr1QxEY7BT9qBJNx7BMECAOVU1JW5VE//DhYeSU4AJLj8AdtpelISfiq0
- x8+Ih/o8IW4tmnNJRsOCvjvzfO/FSdnxGn1C73YGs4RcVP/0v0HSfil2Kn5oaBpi
- AR57jhxFPctx/Kso3P+6lLxEBIlTbBrcjWdp0F2bPsA==
+ :content-type:in-reply-to; s=fm1; bh=JLvzJUtfS21KUmH89Y9tQFepedJ
+ Z1WEsybLcHTTdZXs=; b=s/cAhtdr49WF4Yr1wwaUMTD8D75193ekSWi8Q+Ey5BF
+ w58KuVSG6qy120xA6Yp54Xv7n80eB7JnJJovopWdnw1W91MR5XsQT2C3eGf3SeJU
+ qgBvH5PS065rwK5K2nbcaRfIudeaCrqjslmnepl3FqLesaN5SQfoDqWtt5UQer+0
+ eShrhoHDjEbdb4CPubRfaigoy4dNDVk9VyFJcAe25S4/FizPWqEDkGVu+d29ILhy
+ fciAeQeMvGnw+r4bcRBJ9feCGeIEgMnfsRNpgwSV+tZHEaAYWTBwc0JuC9J0RRQ6
+ LZukPX4J0tFM3ZEWE3Wo4Zy45V/Wr+zGKJqgj4bVR/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=3lxzHH
- HJwjF3BPE355e8NXosejVX3C0TfRYM4s4MdSs=; b=beX0/pVX2oRFfcKyM74Wnx
- fyFVaebYWguDFbJOu56Xys4TAghV3MOJWJh8WWcdL4m3EeiY07aC2hk8CEimjl+m
- 4sn3ngvEp6twhgCrp8G9t4RDd4A8lPwq85lcKQ+Ciim5J6O5janrQcP1VY5wwmiF
- EXoRndXSHqemx1NcFPTJE/pWwZndxG5jBzkZ15EjEo95KehhLTQARgbyHYIo32Kw
- VVFUbLrDTSrI//Ls5LwGV3uqH3H6s+3HKvkmNKuzmKhRKbKWLXGYu4fdKfdfOnTP
- OMnpaXSqou/nfVxNHD6tqt2CcaVrm/IGmXwGGkHs1SS7lDVpQQqJHWWNoyuiLHHQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=JLvzJU
+ tfS21KUmH89Y9tQFepedJZ1WEsybLcHTTdZXs=; b=Etq0xmgLcvdAIxLjp6mWJd
+ wV2Ub8357I8oudt4+d1AkEDHFN9zZqmqq8aeclxGeQ5I8v6V6i2CMiFHC0Gsz+zq
+ KmVNiUrPQlDeJN/d1PvboBR6wSl0FvjWufLhwsT9PEjXBVyA7qcgb62KDwGMQPul
+ BXTdgdJYZ4txXHleM+DTla63R/t+fyBUlJq+VlU6DQzZbP3TcVQh0A0duccNdKUq
+ +wcLgQaQTq4yDKfv4v0MWVZYG8t5QkLUzZI0fEdswE3wdlV++esk7oCZ4y9VYv3Y
+ HpNkfylcpTcyEAdTeCaeAlsnAqO7KcYwOYZtrb1lPZ0NiCdq9lwf2GEVRZbMH/Ig
  ==
-X-ME-Sender: <xms:1CygXqg8c5_lgMLVE--pjavkGgQuKefi66WTdnflzqoPAcOPeP4UZA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrgeejgdegtdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:9i2gXoXWzv4H00stxMWiY_4vJ8Qkifr_j6rCQ8Ctnt9ZGEEYsH9uIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrgeejgdegudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdej
  necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghr
- ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftg
- igrdighiii
-X-ME-Proxy: <xmx:1CygXmr6kARrjMkXMTeien-TDwj8pyepWKBz90N5uNlyr089z91bdA>
- <xmx:1CygXshRUJNQsTHmCFvODNMWBGffCTiE4VnDKDuEYam5bkhjAGvsyA>
- <xmx:1CygXhKbexrdTrEd3ZWxi-CtVu7Y2wyvsleLQTWUZgPs_k1ydHBYNw>
- <xmx:1SygXutu4kuhW2Epl_7T5an-7x9Xv1666J0l9gf29dQXeQkOysLhEQ>
+ iftgigrdighiiiqeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppeejiedr
+ vdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:9i2gXs-IdzUSIR9faHmqjtZgPWaGIEf3BxlfmjgqRygPNJoLlNQR5A>
+ <xmx:9i2gXthHXUhA27y78SpLuMUBVNlcQC5coL2DZfZeODp_t0-FuWa6Uw>
+ <xmx:9i2gXjVYNccUdMSWUFdA-gc6c5sTntjitedcdrEL9JzMkC_vuqTcCA>
+ <xmx:9i2gXqPAJepNpCUS6eDiD2lfc_v8WmL2PUgjPAmNxbPrwIdD0Yn30A>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id F2B9B3280069;
- Wed, 22 Apr 2020 07:38:59 -0400 (EDT)
-Date: Wed, 22 Apr 2020 06:38:57 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 21B4F3280066;
+ Wed, 22 Apr 2020 07:43:50 -0400 (EDT)
+Date: Wed, 22 Apr 2020 06:43:49 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-Subject: Re: ipmi password storage
-Message-ID: <20200422113857.GC196148@heinlein.lan.stwcx.xyz>
-References: <20200413230015.GB9295@mauery.jf.intel.com>
- <20200414155019.GB443018@heinlein.lan.stwcx.xyz>
- <20200414164610.GC9295@mauery.jf.intel.com>
+To: Adrian =?utf-8?Q?Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
+Subject: Re: phosphor-dbus-interfaces modification process for existing YAML
+Message-ID: <20200422114349.GD196148@heinlein.lan.stwcx.xyz>
+References: <29a3376f-d82d-057c-e2d5-0fe250b55951@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="96YOpH+ONegL0A3E"
+ protocol="application/pgp-signature"; boundary="d9ADC0YsG2v16Js0"
 Content-Disposition: inline
-In-Reply-To: <20200414164610.GC9295@mauery.jf.intel.com>
+In-Reply-To: <29a3376f-d82d-057c-e2d5-0fe250b55951@linux.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,82 +92,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Development <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---96YOpH+ONegL0A3E
-Content-Type: text/plain; charset=us-ascii
+--d9ADC0YsG2v16Js0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Vernon,
+On Wed, Apr 22, 2020 at 01:00:40PM +0200, Adrian Ambro=C5=BCewicz wrote:
+> We would need to extend it with new hierarchy/namespace : utilization,=20
+> and corresponding Unit: Percent.
 
-Thanks for the info.  It's taken a few days before I could find a time
-slot to think about this in detail.
+Seems reasonable to me.
 
-On Tue, Apr 14, 2020 at 09:46:10AM -0700, Vernon Mauery wrote:
-> On 14-Apr-2020 10:50 AM, Patrick Williams wrote:
-> >On Mon, Apr 13, 2020 at 04:00:15PM -0700, Vernon Mauery wrote:
-> Specifically, the RAKP3 message (User->BMC) contains an HMAC of the=20
-> various parts of the exchanged session (User random number, session ID, R=
-ole,=20
-> Username) using the password as the key for the HMAC. The BMC needs to=20
-> compute this same HMAC to compare (this is the main authentication=20
-> challenge).
->=20
-> Then, the session key is generated using an HMAC of similar=20
-> data (BMC random number, user random number, role, username) using=20
-> either the user password or the channel password. Almost nobody uses the=
-=20
-> channel password, which is good because it allows for simple privilege=20
-> escalation and session hijacking.
+> Should I push change directly to review or do I need to discuss it=20
+> earlier with someone? My first thought was to address=20
+> https://github.com/openbmc/docs/blob/master/architecture/sensor-architect=
+ure.md=20
+> , however this document doesn't seem to address these details.
 
-If I understand this right, the algorithm uses this to create a symetric
-key for the session:
-    HMAC(password, hash(pseudo_random_session_data))
-
-The client gives some data to seed the session-data and the server gives
-some data to seed the session-data, so that part is unique per
-connection.  The part that is constant, and that they both have, is the
-key to the HMAC.  Do I have that right?
-
-The HMAC algorithm, at least for SHA-1/2, is a two-phase hash call, but
-the key is always used at the front of the first hash phase.  The SHA
-hash algorithms allow you to do a partial hash, extract the hash state,
-and then resume the hash (See SHA1_Init / SHA1_Update functions in
-openssl/sha1.h as example).  Rather than calling the OpenSSL HMAC
-directly, can't we rewrite it such that it uses the partial hash on the
-key as the starting point rather than the raw password?
-
-This approach would allow us to save a SHA-1 + SHA-2 hash'd version of
-the password rather than the raw (or even obfuscated) password.  It
-isn't as secure as the normal crypt methods because we cannot salt them,
-but we could certainly obfuscate the hash-state in a similar method to
-what you already proposed.
+It sounds like a straight-forward enough change to just put up a commit
+that changes the phosphor-dbus-interfaces.  Since you're also proposing
+a new hierarchy for these sensors to fit under, there isn't likely to be
+any backwards compatibility issues are there?  If there are, that's
+probably when we'd want to expand the scope to a design document.
 
 --=20
 Patrick Williams
 
---96YOpH+ONegL0A3E
+--d9ADC0YsG2v16Js0
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6gLM8ACgkQqwNHzC0A
-wRklEQ/+N3abqy+PIVMIbNbJO5W6Py2AwfEcM1MhlMKh7Tv3T3f7MJJNwhBKHESa
-rr6Li60sGypLSwQjE73e+h/WLjkcmXQFmSl9vNQaTN1e2dWF3cKK//YGa5eCE6/c
-3dxFMTVXIp8ADWFyeTSwKofgtVIIA5Xq4l+xznV5SMPY2v1Al11zIp2TrHNJWaBn
-G4wsC4z3mCA5TKFCm+NKhi20sb8n6+9Aa7Wxc9E8zi8A4FGUXyG9MCRcNJrd+e98
-upr1EhkMukSns4Ql4rXlqrVj/70Nu70hnK29C8l5n3eZUxR1InIOyT7Ed8VMmMQY
-M/NYEJkxJzouX7dnjc+p9/870Qtp+bVVrozUMCo6tP9CGd5MYfKaOCCW3peEG3v9
-YgvsvxJDwEpJUfAflEKnlYhNJe35sjm8zbXa+wm3zi9/orwwh+PE2JC1g5QxO4sP
-SSjnWnQbI5jhJo9P+BZ4O1YMm6c9Q6dWWbIu0YsrDy8QvwY3yA1IQgCTCtOOjEPS
-CO1jJ+duBSZJ8hMQE4UqDT8h0dc7EvDv78nmX8CRFSG6f27hW7t+VpfT+AqFugg7
-eRBxrGqpQbN4uO8xZNUA5XNeFyHamc3da59RsmiKY2dI64UqmBtpsP2V/kytmejz
-z4fRrcjAv1xwkExyiSq0t/WB41YyvXxerM4Zpvj/WoBhWlaroh8=
-=wJk7
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6gLfUACgkQqwNHzC0A
+wRlzkA//eKC/YzSyO23cIKn1Vt5PF8dDfSTg23vBDikNdLQ3HNpUMZ7NuEm1ht90
+kf9vfkTIHW8UmZKHHWSmdjvH5KyNDM6ZslFtb9HEXE2Gf6C3kFeo9YqjHGq4gEXt
+0D4whdoKmU9SefDely3ZI1Bu3SaAPdaTtwGL2VuhEW6Hk1qTg3M/HhZBxB16GuGV
+A1UG3vIAZCw0cKgtfAjtHDcJ8H8HZ9nhKXiP88SKBKahdmNfVIW1ReEY8ougj0Ve
+f7S4vJgcO19tOx+f1njK3AQBaPv5j/U0411729gwXjvVmq8jhtAmxHNeTzjdLqaH
+tgKXMCXP3R3M7f8FdndFNZtqyV4mCXcR+c40pg8G2zJKIvTONOGi5EdfzP+Lfoc3
+DCbjza7H8iZ3VemC6eRSK+F6SLIMxtXZMescxzMPh/fOhDZI0jvzPA98wmHcZqqT
+znoW6daWHgRZLAcAYsD29d3RXwwcCaH1kPBbtdrwTaGLUkp7mZKeysgJ2ZRvHDAv
+vtP1kkJWPTTiIFQvU5ACdvpV+UxFXFpV6XfD+lRG14ntxG4ad5pFJFiskSGD9DxD
+QbqPNzla5hQDB+ZtGEPLfKFIoeYHAd1uZ86d7uhnjcvu+rd0UDwQ37SAj/ZtuK/d
+HmClPUiTHA2eYYYjpu6WSwCjBizjt9nfDs/J2B4wDlYQRt/iAMo=
+=yxG7
 -----END PGP SIGNATURE-----
 
---96YOpH+ONegL0A3E--
+--d9ADC0YsG2v16Js0--
