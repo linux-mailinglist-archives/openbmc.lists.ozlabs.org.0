@@ -1,66 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 052C81B3300
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 01:19:51 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 496KKG5xfJzDqxM
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 09:19:46 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3717F1B35DC
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 06:01:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 496RZp4ScHzDr2N
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 14:01:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::229;
- helo=mail-lj1-x229.google.com; envelope-from=rhanley@google.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.64; helo=m13-64.163.com; envelope-from=slm_8269@163.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=hZtuwlul; dkim-atps=neutral
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
- [IPv6:2a00:1450:4864:20::229])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=gJHGaP3X; dkim-atps=neutral
+Received: from m13-64.163.com (m13-64.163.com [220.181.13.64])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 496KJV3wNhzDqrn
- for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 09:19:03 +1000 (AEST)
-Received: by mail-lj1-x229.google.com with SMTP id w20so324618ljj.0
- for <openbmc@lists.ozlabs.org>; Tue, 21 Apr 2020 16:19:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Nk17Wq5YZWJ3adBr5fPtb9svJstDdubh3hiqK1wzqao=;
- b=hZtuwlulhJbHAN3H/5drQu0/YwxMr8p7WvNuX1CzEHWW2k1x+bHyk3wK4hR9AC5F32
- VqblcxOObTHBs9R1AeKyh2vh8LkAZRO2YHA1I/Wd95vyWe5kOx8kIm8jMzIpxl1hbAYW
- PW/18x0uk14Js/MtppCsP/HKiW62t2b6giJCtyn5qeVmFEI32n6Hm2anKj2WsLxYRLuD
- NyAIt35XJXS1KWfrCBSCTY5vM3XjzXiEnfO+zGKJB5hUGjV+sf341BZFUPEHPPPc3WQU
- YoaIFlMzRK5YGcNne9e1fOMpfr35cgA8REtF2ACbjdNBPFz28DcjB50aTftMqAwt6TRb
- bYTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Nk17Wq5YZWJ3adBr5fPtb9svJstDdubh3hiqK1wzqao=;
- b=iXNf7YgTfZDLiTChItGX1xYYG329KigtldjQcEJRVVjIiK7mlaxQoDsdgRKpV8Bitz
- xGlD5lGHuM/70aWSYqK4HI2xj5RTQg2NSu6aOnZglO8cprEd7ZrBz1PrjQoGu02WuyI0
- /uUsKkYUZP8pOhTlCjYndZAy2fj0YDrFXd1WfemUWTt+Wb8hCYSAYmRaKHfUxajl9QMH
- zpiBwqqpExR5nP0HIHZEFwT+u+ksDI3EMmJnCTfnUcNj6djGY3DVW+TYIohHeV3PvuFu
- 7GZVaZOWCZQSSfN2qPrTlxlL2aN0Jq9TyQljljsD1H3jfxpsJY4v+hNJBc2X5IqR6eod
- co+Q==
-X-Gm-Message-State: AGi0PuZ8zVSZ+b6+iR3o41bKHnj4KNp61vhjQ0yxpLu3K8abnACIK7YH
- zQUlBdTpGGfp0TBsaeK6TtODM0l8BtdowcHEG7983Q==
-X-Google-Smtp-Source: APiQypIgA2XJPlN1h+najrbjqYURpE9z5jcRnGFOYt9xiBFgzm2ql9V1ER/sg/MsR2CR9U1tJ9U2La8rB7VTwuK4yJw=
-X-Received: by 2002:a2e:b4d0:: with SMTP id r16mr14632897ljm.129.1587511139025; 
- Tue, 21 Apr 2020 16:18:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 496PS72wqBzDqtY
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 12:25:52 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=GS1tr
+ 1JTyFigrPd3qvHH0frrrI6T+5mLhPMKIuIJCmU=; b=gJHGaP3XNGfcYcJlCjm8o
+ YF/BiuDNLbu4sUnyJ1+jHMOnZ+X76czv0vIoUijnj8pWcMuF6TcVHV+KF3gg7DQa
+ GvTgFvbOaO0dCseUBkOhwmklkzo3rlcUegd/qPyJMPhkzOA1GTZ3LHa19jJI3tUv
+ 2T3OlE48G8BTGiji/6S8GA=
+Received: from slm_8269$163.com ( [116.246.26.28] ) by ajax-webmail-wmsvr64
+ (Coremail) ; Wed, 22 Apr 2020 10:25:46 +0800 (CST)
+X-Originating-IP: [116.246.26.28]
+Date: Wed, 22 Apr 2020 10:25:46 +0800 (CST)
+From: shi  <slm_8269@163.com>
+To: "Milton Miller II" <miltonm@us.ibm.com>
+Subject: =?GBK?Q?I_wan_to_debug_the_=A3=A8export_TEMPLATECONF=3Dmet?=
+ =?GBK?Q?a-ibm/meta-romulus/conf_=A3=A9_on_evb2500_board_?=
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 163com
+In-Reply-To: <OF3868DF77.01074283-ON00258550.0010EFAE-00258550.0010EFB7@notes.na.collabserv.com>
+References: <2b2bed16.185b.1719064112f.Coremail.slm_8269@163.com>
+ <OF3868DF77.01074283-ON00258550.0010EFAE-00258550.0010EFB7@notes.na.collabserv.com>
+X-CM-CTRLDATA: aiwrH2Zvb3Rlcl9odG09NTI4NDo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_22531_491740282.1587522346838"
 MIME-Version: 1.0
-References: <5e9dd66f.1c69fb81.45fc6.0118@mx.google.com>
-In-Reply-To: <5e9dd66f.1c69fb81.45fc6.0118@mx.google.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Tue, 21 Apr 2020 16:18:47 -0700
-Message-ID: <CAH1kD+ZSFEPVrYsf69auE8iEGxyXg6ru3RArcZrDi2AHrbxOJQ@mail.gmail.com>
-Subject: Re: Call for Gardening Tasks
-To: Sui Chen <suichen6@gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000085216705a3d53dc6"
+Message-ID: <1af7b20c.18da.1719fb49f56.Coremail.slm_8269@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: QMGowAAXH6cqq59eKqkYAA--.42358W
+X-CM-SenderInfo: pvopsmqswzqiywtou0bp/1tbiGQ4OIVyPXy36kgABsw
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+X-Mailman-Approved-At: Wed, 22 Apr 2020 13:59:59 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,193 +64,158 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000085216705a3d53dc6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+------=_Part_22531_491740282.1587522346838
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-Thank you everyone for your suggestions.
+TWlsdG9uLAoKCnRoYW5rcyBmb3IgeW91IGluZm8uCgoKSSB0cnkgdGhlIGh0dHBzOi8vZ2l0aHVi
+LmNvbS9vcGVuYm1jL29wZW5ibWMvdHJlZS9tYXN0ZXIvbWV0YS1ldmIvbWV0YS1ldmItYXNwZWVk
+L21ldGEtZXZiLWFzdDI1MDAgaW1hZ2UuIHRoZSBmaXRpbWFnZSBjYW4gc3RhcnR1cC4gYnV0IHRo
+ZSByZWFkZmlzaCBldGMsIG1hbnkgYXBwIG5vdCBoYXZlLiBzbyBJIHN0aWxsIHVzZSB0aGUgSUJN
+IFJvbXVsdXMgaW1hZ2UuIGl0IGFsd2F5cyBub3RoaW5nIG91dHB1dCBhZnRlciB0aGUgdWJvb3Qg
+b3V0cHV0IHRoZSBzdGFydGluZyBrZXJuZWwgaW5mby4sIGZvciB0aGUgbWV0YS1ldmItYXN0MjUw
+MCwgaXQgY2FuIHdhaXRpbmcgdGhlbiBwb3B1cCB0aGUgbG9nIGluIHByb21wdC4gSSB3YW50IHRv
+IGNoYW5nZSB0aGUgZHRiIGZpbGVzLCB0aGF0IGp1c3QgY3V0IGl0IGp1c3QgbGlrZSB0aGUgZXZi
+LTI1MDAncyBkdHMsIGJ1dCBzdGlsbCBjYW5ub3Qgc3RhcnR1cC4gc28gSSBjaGFuZ2VkIHRoZSBr
+ZXJuZWwgb2YgUm9tdWx1cyBpbWFnZSdzIGNvbmZpZyBmaWxlcyB0cnkgdG8gb3BlbiB0aGUgQ09O
+RklHX0RFQlVHX0xMPXksIHdoZW4gYml0YmFrZSBvYm1jLXBob3NwaG9yLWltYWdlLCB0aGVyZSBh
+bHdheXMgaGFzIGVycm9yIGluZm86IEVSUk9SOiBvYm1jLXBob3NwaG9yLWluaXRyYW1mcy0xLjAt
+cjAgZG9fcm9vdGZzOiBUaGUgcG9zdGluc3RhbGwgaW50ZXJjZXB0IGhvb2sgJ3VwZGF0ZV91ZGV2
+X2h3ZGInIGZhaWxlZCwgZGV0YWlscyBpbiAvaG9tZS9zaGlsYWltYW8vYm1jL3JvbXVsdXMtYm1j
+L29wZW5ibWMvYnVpbGQvdG1wL3dvcmsvcm9tdWx1cy1vcGVuYm1jLWxpbnV4LWdudWVhYmkvb2Jt
+Yy1waG9zcGhvci1pbml0cmFtZnMvMS4wLXIwL3RlbXAvbG9nLmRvX3Jvb3RmcwpFUlJPUjogTG9n
+ZmlsZSBvZiBmYWlsdXJlIHN0b3JlZCBpbjogL2hvbWUvc2hpbGFpbWFvL2JtYy9yb211bHVzLWJt
+Yy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3JvbXVsdXMtb3BlbmJtYy1saW51eC1nbnVlYWJpL29i
+bWMtcGhvc3Bob3ItaW5pdHJhbWZzLzEuMC1yMC90ZW1wL2xvZy5kb19yb290ZnMuMjY1MDcKRVJS
+T1I6IFRhc2sgKC9ob21lL3NoaWxhaW1hby9ibWMvcm9tdWx1cy1ibWMvb3BlbmJtYy9tZXRhLXBo
+b3NwaG9yL3JlY2lwZXMtcGhvc3Bob3IvaW1hZ2VzL29ibWMtcGhvc3Bob3ItaW5pdHJhbWZzLmJi
+OmRvX3Jvb3RmcykgZmFpbGVkIHdpdGggZXhpdCBjb2RlICcxJyBob3cgdG8gcmVtb3ZlIHRoaXMg
+dXBkYXRlX3VkZXZfaHdkYiBlcnJvcj8gSSBhbHNvIGluc3RhbGwgdGhlIHNkayBmcm9tIHRoZSBk
+ZXZlbG9wbWVudCBkb2MsIGl0IGNhbiBtYWtlIG9ubHkgekltYWdlIGZpbGVzLiB0aGUgZGVmYXVs
+dCBtYWtlLiBhbmQgSSBhbHNvIG5lZWQgdGhlIHJvb3Rmcy4gc28gSSBjYW4gZGVidWcgYnkgdGhl
+IGJvb3RtIGtlcm5lbCByb290ZnMgZHRiLiBidXQgaG93IHRvIHNlcGFyYXRlZCBjaGFuZ2VkIGFu
+ZCBjb21waWxlIHRoZSByb290ZnM/IGZyb20gdGhlIFJvbXVsdXMgZHRzIGZpbGVzLCBpdCBpcyBu
+byBiaWcgZGlmZmVyZW5jZSwgc28gSSB0aGluayBpdCBzaG91bGQgc3RhcnR1cCBiYXNlZCBvbiBz
+b21lIGNoYW5nZXMuIGlmIHUgaGF2ZSB0aW1lIHBsZWFzZSBoZWxwIG1lIGFuc3dlciB0aGlzIHF1
+ZXN0aW9ucy4gdGhhbmtzIFN0ZXZlbgoKCgoKCgoKCgoKCgoKCgoKCgoKQXQgMjAyMC0wNC0yMCAx
+MTowNDo1OSwgIk1pbHRvbiBNaWxsZXIgSUkiIDxtaWx0b25tQHVzLmlibS5jb20+IHdyb3RlOgo+
+T24gQXByaWwgMTksIDIwMjAgYXJvdW5kIDA3OjE1UE0gaW4gc29tZSB0aW1lem9uZSwgc2hpIHdy
+b3RlOgo+Cj4+U3ViamVjdDogW0VYVEVSTkFMXSBob3cgcnVuIKOoZXhwb3J0Cj4+VEVNUExBVEVD
+T05GPW1ldGEtaWJtL21ldGEtcm9tdWx1cy9jb25mIKOpIG9uIGV2YjI1MDAgYm9hcmQgCj4+Cj4+
+Cj4KPj5JIGFtIG5vdyBmb2N1cyBvbiB0aGUgQk1Do64KPj5CdWlsZCBiYXNlZCBvbiB0aGUgb3Bl
+bmJtYyBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jLCB0aGVuCj4+d2FudCB0byBy
+dW4gb24gZXZiMjUwMCBib2FyZCBvZiBhc3BlZWQsIHdoZW4gZG93bmxvYWQgdGhlIGZpdGltYWdl
+IGJ5Cj4+dGZ0cHNlcnZlciB0aGVuIGJvb3RtLCBhbHdheXMgc3R1Y2sgb24gdGhlIHN0YXJ0aW5n
+IGtlcm5lbC4gVGhlCj4+aGFyZHdhcmUgYWxzbyAyNTAwIHR5cGUuIFdoeSBub3Qgc3RhcnR1cC4g
+SG93IEkgY2hhbmdlZCB0aGUgY29kZSBjYW4KPj5ib290IHVwPyAgIElzIHRoZXJlIGFueSBjbHVl
+IG9uIHRoaXM/IAo+Pgo+Cj5Db25zZGVyIHRyeWluZyB0aGUgZXZhbHVhdGlvbiBib2FyZCBjb25m
+aWcsIGFzIHJhbmllciB3aWxsIGhhdmUgbmNzaSAKPmNvbmZpZ3VyZWQgZm9yIHRoZSBuZXR3b3Jr
+IGFuZCBjb3VsZCBlYXNpbHkgaGF2ZSBkaWZmZXJlbnQgY29uZmlncyAKPnN1Y2ggYXMgR1BJTyBh
+c3NpZ25tZW50cy4KPgo+VGhlIGFzdDI1MDAgZXZiIGNvbmZpZyBpcyBpbiB0aGUgdHJlZSBiZWxv
+dzoKPgo+aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy90cmVlL21hc3Rlci9tZXRh
+LWV2Yi9tZXRhLWV2Yi1hc3BlZWQvbWV0YS1ldmItYXN0MjUwMAo+Cj4+Cj4+VGhhbmtzCj4+U3Rl
+dmVuCj4KPm1pbHRvbgo=
+------=_Part_22531_491740282.1587522346838
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-Scanning through this it's clear that documentation is one of the biggest
-most generally agreed upon area to work on.
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+TWlsdG9uLDwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+
+dGhhbmtzIGZvciB5b3UgaW5mby48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkkgdHJ5IHRoZSZu
+YnNwOzxzcGFuIHN0eWxlPSJkaXNwbGF5OiBpbmxpbmUgIWltcG9ydGFudDsgZmxvYXQ6IG5vbmU7
+IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsgY29sb3I6IHJnYigwLCAwLCAw
+KTsgZm9udC1mYW1pbHk6IGFyaWFsOyBmb250LXNpemU6IDE0cHg7IGZvbnQtc3R5bGU6IG5vcm1h
+bDsgZm9udC12YXJpYW50OiBub3JtYWw7IGZvbnQtd2VpZ2h0OiA0MDA7IGxldHRlci1zcGFjaW5n
+OiBub3JtYWw7IG9ycGhhbnM6IDI7IG92ZXJmbG93LXdyYXA6IGJyZWFrLXdvcmQ7IHRleHQtYWxp
+Z246IGxlZnQ7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgdGV4dC1pbmRlbnQ6IDBweDsgdGV4dC10
+cmFuc2Zvcm06IG5vbmU7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweDsgd2hpdGUtc3Bh
+Y2U6IHByZS13cmFwOyB3b3JkLXNwYWNpbmc6IDBweDsiPjxhIGhyZWY9Imh0dHBzOi8vZ2l0aHVi
+LmNvbS9vcGVuYm1jL29wZW5ibWMvdHJlZS9tYXN0ZXIvbWV0YS1ldmIvbWV0YS1ldmItYXNwZWVk
+L21ldGEtZXZiLWFzdDI1MDAiIF9zcmM9Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5i
+bWMvdHJlZS9tYXN0ZXIvbWV0YS1ldmIvbWV0YS1ldmItYXNwZWVkL21ldGEtZXZiLWFzdDI1MDAi
+Pmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMvdHJlZS9tYXN0ZXIvbWV0YS1ldmIv
+bWV0YS1ldmItYXNwZWVkL21ldGEtZXZiLWFzdDI1MDA8L2E+IGltYWdlLiB0aGUgZml0aW1hZ2Ug
+Y2FuIHN0YXJ0dXAuCmJ1dCB0aGUgcmVhZGZpc2ggZXRjLCBtYW55IGFwcCBub3QgaGF2ZS4KCnNv
+IEkgc3RpbGwgdXNlIHRoZSBJQk0gUm9tdWx1cyBpbWFnZS4KaXQgYWx3YXlzIG5vdGhpbmcgb3V0
+cHV0IGFmdGVyIHRoZSB1Ym9vdCBvdXRwdXQgdGhlIHN0YXJ0aW5nIGtlcm5lbCBpbmZvLiwgZm9y
+IHRoZSAgPGEgc3R5bGU9ImNvbG9yOiByZ2IoMCwgMTAyLCAyMDQpOyBmb250LWZhbWlseTogYXJp
+YWw7IGZvbnQtc2l6ZTogMTRweDsgZm9udC1zdHlsZTogbm9ybWFsOyBmb250LXZhcmlhbnQ6IG5v
+cm1hbDsgZm9udC13ZWlnaHQ6IDQwMDsgbGV0dGVyLXNwYWNpbmc6IG5vcm1hbDsgb3JwaGFuczog
+MjsgdGV4dC1hbGlnbjogbGVmdDsgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7IHRleHQtaW5k
+ZW50OiAwcHg7IHRleHQtdHJhbnNmb3JtOiBub25lOyAtd2Via2l0LXRleHQtc3Ryb2tlLXdpZHRo
+OiAwcHg7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsgd29yZC1zcGFjaW5nOiAwcHg7IiBocmVmPSJo
+dHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL3RyZWUvbWFzdGVyL21ldGEtZXZiL21l
+dGEtZXZiLWFzcGVlZC9tZXRhLWV2Yi1hc3QyNTAwIiBfc3JjPSJodHRwczovL2dpdGh1Yi5jb20v
+b3BlbmJtYy9vcGVuYm1jL3RyZWUvbWFzdGVyL21ldGEtZXZiL21ldGEtZXZiLWFzcGVlZC9tZXRh
+LWV2Yi1hc3QyNTAwIj5tZXRhLWV2Yi1hc3QyNTAwPC9hPiwgaXQgY2FuIHdhaXRpbmcgdGhlbiBw
+b3B1cCB0aGUgbG9nIGluIHByb21wdC4KSSB3YW50IHRvIGNoYW5nZSB0aGUgZHRiIGZpbGVzLCB0
+aGF0IGp1c3QgY3V0IGl0IGp1c3QgbGlrZSB0aGUgZXZiLTI1MDAncyBkdHMsIGJ1dCBzdGlsbCBj
+YW5ub3Qgc3RhcnR1cC4KCnNvIEkgY2hhbmdlZCB0aGUga2VybmVsIG9mIFJvbXVsdXMgaW1hZ2Un
+cyBjb25maWcgZmlsZXMgdHJ5IHRvIG9wZW4gdGhlICBDT05GSUdfREVCVUdfTEw9eSwgd2hlbiAg
+Yml0YmFrZSBvYm1jLXBob3NwaG9yLWltYWdlLCB0aGVyZSBhbHdheXMgaGFzIGVycm9yIGluZm86
+CgpFUlJPUjogb2JtYy1waG9zcGhvci1pbml0cmFtZnMtMS4wLXIwIGRvX3Jvb3RmczogVGhlIHBv
+c3RpbnN0YWxsIGludGVyY2VwdCBob29rICd1cGRhdGVfdWRldl9od2RiJyBmYWlsZWQsIGRldGFp
+bHMgaW4gL2hvbWUvc2hpbGFpbWFvL2JtYy9yb211bHVzLWJtYy9vcGVuYm1jL2J1aWxkL3RtcC93
+b3JrL3JvbXVsdXMtb3BlbmJtYy1saW51eC1nbnVlYWJpL29ibWMtcGhvc3Bob3ItaW5pdHJhbWZz
+LzEuMC1yMC90ZW1wL2xvZy5kb19yb290ZnM8YnI+RVJST1I6IExvZ2ZpbGUgb2YgZmFpbHVyZSBz
+dG9yZWQgaW46IC9ob21lL3NoaWxhaW1hby9ibWMvcm9tdWx1cy1ibWMvb3BlbmJtYy9idWlsZC90
+bXAvd29yay9yb211bHVzLW9wZW5ibWMtbGludXgtZ251ZWFiaS9vYm1jLXBob3NwaG9yLWluaXRy
+YW1mcy8xLjAtcjAvdGVtcC9sb2cuZG9fcm9vdGZzLjI2NTA3PGJyPkVSUk9SOiBUYXNrICgvaG9t
+ZS9zaGlsYWltYW8vYm1jL3JvbXVsdXMtYm1jL29wZW5ibWMvbWV0YS1waG9zcGhvci9yZWNpcGVz
+LXBob3NwaG9yL2ltYWdlcy9vYm1jLXBob3NwaG9yLWluaXRyYW1mcy5iYjpkb19yb290ZnMpIGZh
+aWxlZCB3aXRoIGV4aXQgY29kZSAnMScKCjxzcGFuIHN0eWxlPSJkaXNwbGF5OiBpbmxpbmUgIWlt
+cG9ydGFudDsgZmxvYXQ6IG5vbmU7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1
+KTsgY29sb3I6IHJnYigwLCAwLCAwKTsgZm9udC1mYW1pbHk6IGFyaWFsOyBmb250LXNpemU6IDE0
+cHg7IGZvbnQtc3R5bGU6IG5vcm1hbDsgZm9udC12YXJpYW50OiBub3JtYWw7IGZvbnQtd2VpZ2h0
+OiA0MDA7IGxldHRlci1zcGFjaW5nOiBub3JtYWw7IG9ycGhhbnM6IDI7IG92ZXJmbG93LXdyYXA6
+IGJyZWFrLXdvcmQ7IHRleHQtYWxpZ246IGxlZnQ7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsgdGV4
+dC1pbmRlbnQ6IDBweDsgdGV4dC10cmFuc2Zvcm06IG5vbmU7IC13ZWJraXQtdGV4dC1zdHJva2Ut
+d2lkdGg6IDBweDsgd2hpdGUtc3BhY2U6IHByZS13cmFwOyB3b3JkLXNwYWNpbmc6IDBweDsiPiBo
+b3cgdG8gcmVtb3ZlIHRoaXMgPHNwYW4gc3R5bGU9ImRpc3BsYXk6IGlubGluZSAhaW1wb3J0YW50
+OyBmbG9hdDogbm9uZTsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1LCAyNTUpOyBjb2xv
+cjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogYXJpYWw7IGZvbnQtc2l6ZTogMTRweDsgZm9u
+dC1zdHlsZTogbm9ybWFsOyBmb250LXZhcmlhbnQ6IG5vcm1hbDsgZm9udC13ZWlnaHQ6IDQwMDsg
+bGV0dGVyLXNwYWNpbmc6IG5vcm1hbDsgb3JwaGFuczogMjsgb3ZlcmZsb3ctd3JhcDogYnJlYWst
+d29yZDsgdGV4dC1hbGlnbjogbGVmdDsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyB0ZXh0LWluZGVu
+dDogMHB4OyB0ZXh0LXRyYW5zZm9ybTogbm9uZTsgLXdlYmtpdC10ZXh0LXN0cm9rZS13aWR0aDog
+MHB4OyB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7IHdvcmQtc3BhY2luZzogMHB4OyI+dXBkYXRlX3Vk
+ZXZfaHdkYiBlcnJvcj8KCkkgYWxzbyBpbnN0YWxsIHRoZSBzZGsgZnJvbSB0aGUgZGV2ZWxvcG1l
+bnQgZG9jLCBpdCBjYW4gbWFrZSBvbmx5IHpJbWFnZSBmaWxlcy4gdGhlIGRlZmF1bHQgbWFrZS4g
+YW5kIEkgYWxzbyBuZWVkIHRoZSByb290ZnMuIHNvIEkgY2FuIGRlYnVnIGJ5IHRoZSBib290bSBr
+ZXJuZWwgcm9vdGZzIGR0Yi4KCmJ1dCBob3cgdG8gc2VwYXJhdGVkIGNoYW5nZWQgYW5kICBjb21w
+aWxlIHRoZSByb290ZnM/Cgpmcm9tIHRoZSBSb211bHVzIGR0cyBmaWxlcywgaXQgaXMgbm8gYmln
+IGRpZmZlcmVuY2UsIHNvIEkgdGhpbmsgaXQgc2hvdWxkIHN0YXJ0dXAgYmFzZWQgb24gc29tZSBj
+aGFuZ2VzLgoKaWYgdSBoYXZlIHRpbWUgcGxlYXNlIGhlbHAgbWUgYW5zd2VyIHRoaXMgcXVlc3Rp
+b25zLgoKdGhhbmtzClN0ZXZlbgo8L3NwYW4+PC9zcGFuPgoKCiA8L3NwYW4+PC9kaXY+PGRpdiBz
+dHlsZT0ibWFyZ2luOiAwOyI+PGI+PC9iPjxpPjwvaT48dT48L3U+PHN1Yj48L3N1Yj48c3VwPjwv
+c3VwPjxzdHJpa2U+PC9zdHJpa2U+PGJyPjwvZGl2PjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+
+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48
+YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxkaXYgc3R5bGU9InBvc2l0aW9u
+OnJlbGF0aXZlO3pvb206MSI+PC9kaXY+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJkIj48L2Rp
+dj48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48cHJlPjxicj5BdCAyMDIwLTA0LTIwIDEx
+OjA0OjU5LCAiTWlsdG9uIE1pbGxlciBJSSIgJmx0O21pbHRvbm1AdXMuaWJtLmNvbSZndDsgd3Jv
+dGU6CiZndDtPbiBBcHJpbCAxOSwgMjAyMCBhcm91bmQgMDc6MTVQTSBpbiBzb21lIHRpbWV6b25l
+LCBzaGkgd3JvdGU6CiZndDsKJmd0OyZndDtTdWJqZWN0OiBbRVhURVJOQUxdIGhvdyBydW4go6hl
+eHBvcnQKJmd0OyZndDtURU1QTEFURUNPTkY9bWV0YS1pYm0vbWV0YS1yb211bHVzL2NvbmYgo6kg
+b24gZXZiMjUwMCBib2FyZCAKJmd0OyZndDsKJmd0OyZndDsKJmd0OwomZ3Q7Jmd0O0kgYW0gbm93
+IGZvY3VzIG9uIHRoZSBCTUOjrgomZ3Q7Jmd0O0J1aWxkIGJhc2VkIG9uIHRoZSBvcGVuYm1jIGh0
+dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMsIHRoZW4KJmd0OyZndDt3YW50IHRvIHJ1
+biBvbiBldmIyNTAwIGJvYXJkIG9mIGFzcGVlZCwgd2hlbiBkb3dubG9hZCB0aGUgZml0aW1hZ2Ug
+YnkKJmd0OyZndDt0ZnRwc2VydmVyIHRoZW4gYm9vdG0sIGFsd2F5cyBzdHVjayBvbiB0aGUgc3Rh
+cnRpbmcga2VybmVsLiBUaGUKJmd0OyZndDtoYXJkd2FyZSBhbHNvIDI1MDAgdHlwZS4gV2h5IG5v
+dCBzdGFydHVwLiBIb3cgSSBjaGFuZ2VkIHRoZSBjb2RlIGNhbgomZ3Q7Jmd0O2Jvb3QgdXA/ICAg
+SXMgdGhlcmUgYW55IGNsdWUgb24gdGhpcz8gCiZndDsmZ3Q7CiZndDsKJmd0O0NvbnNkZXIgdHJ5
+aW5nIHRoZSBldmFsdWF0aW9uIGJvYXJkIGNvbmZpZywgYXMgcmFuaWVyIHdpbGwgaGF2ZSBuY3Np
+IAomZ3Q7Y29uZmlndXJlZCBmb3IgdGhlIG5ldHdvcmsgYW5kIGNvdWxkIGVhc2lseSBoYXZlIGRp
+ZmZlcmVudCBjb25maWdzIAomZ3Q7c3VjaCBhcyBHUElPIGFzc2lnbm1lbnRzLgomZ3Q7CiZndDtU
+aGUgYXN0MjUwMCBldmIgY29uZmlnIGlzIGluIHRoZSB0cmVlIGJlbG93OgomZ3Q7CiZndDtodHRw
+czovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL3RyZWUvbWFzdGVyL21ldGEtZXZiL21ldGEt
+ZXZiLWFzcGVlZC9tZXRhLWV2Yi1hc3QyNTAwCiZndDsKJmd0OyZndDsKJmd0OyZndDtUaGFua3MK
+Jmd0OyZndDtTdGV2ZW4KJmd0OwomZ3Q7bWlsdG9uCjwvcHJlPjwvZGl2Pjxicj48YnI+PHNwYW4g
+dGl0bGU9Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
+------=_Part_22531_491740282.1587522346838--
 
-Build tools and package management seems like another area with some agreed
-on improvements. I like the idea of moving to meson. Getting tidy files and
-revising our style guides also sound like good ideas. I also really agree
-that we could stand to do some consolidation of processes/repos.
-
-There is also some use for DBus tooling for both improved code, and for
-visualizations.
-
-So here are my next steps:
-  1) Since we have some new people getting started, I've asked them to add
-documentation at the points they get stuck during on-boarding.
-  2) I'm going to take the ideas in this thread and put together a .md doc
-with any relevant information I can find. I'll be adding it to openbmc/docs=
-.
-  3) I'll follow up in another thread about some of the ideas around DBus
-tooling and package consolidation. That seems to be an area where most
-people agree some improvements can be made, but I'm not sure there is an
-agreement on how we should do it.
-
--Richard
-
-
-
-On Mon, Apr 20, 2020 at 10:19 AM Sui Chen <suichen6@gmail.com> wrote:
-
-> > On Apr 11, 2020, at 8:15 AM, Andrew Geissler <geissonator at gmail.com>
-> wrote:
->
-> > Systemd Visualization
->
-> > Another complicated area of OpenBMC is our systemd targets and services=
-.
-> Building on the upstream tools to visualize our systemd targets and
-> services would be useful to new people.
->
->
->
-> +1 to visualization, and I have a few thoughts on this ---
->
-> My lacking a mental model of how an OpenBMC system works had been my pain
-> point in the first few months working with OpenBMC (I=E2=80=99m a bit new=
- to this
-> area), so after learning the minimal set of survival skills I did somethi=
-ng
-> similar to what you mentioned =E2=80=93 visualizing the messages passed b=
-etween
-> different dbus peers (and conveniently, IPMI traffic, as IPMI-related dbu=
-s
-> messages exposing all IPMI payload comprise most of the dbus traffic on
-> that particular system I was working on.)
->
->
->
-> I think packet analysis tools such as Wireshark and graphics frame
-> analysis tools such as RenderDoc, or system event-based Windows Performan=
-ce
-> tool like GPUView provide great examples of what people might expect to
-> achieve with a visualization tool: capture, inspect and (sometimes)
-> playback, across multiple layers in the software/hardware stack. Many
-> similar existing tools process sequences of events, and in this case of
-> BMCs, the events could be dbus messages. I found a prototype visualizer
-> made at work greatly helpful in explaining to new team members some basic
-> concepts and the IPMI stack on the BMC.
->
->
->
-> The IPMI stack is interesting because it=E2=80=99s one noticeable workloa=
-d on the
-> particular BMC system I had been working on; in my current limited
-> understanding, having lots of I/O capability to connect to hundreds of
-> sensors is one of the many features that set apart a BMC chip and a
-> similarly powerful smartphone chip, and the broad use of dbus is what set=
-s
-> apart OpenBMC and the desktop Linux distro I had been using. I heard
-> optimization is best done workload by workload, perhaps this rationale
-> applies to visualization too?
->
->
->
-> I realize I was mostly talking about visualizing the run-time state of th=
-e
-> system rather than build-time, but we could visualize the run-time aspect
-> of systemd units too since I have seen many times a dbus message eventual=
-ly
-> triggering a systemd target to acutate the system, so it would be good to
-> consider both dbus and systemd (and maybe other parts of the system?) to
-> have a more holistic view of the BMC=E2=80=99s operations.
->
->
->
-> Thanks
->
-> Sui
->
-
---00000000000085216705a3d53dc6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thank you everyone for your suggestions.<div><br></div><di=
-v>Scanning through this it&#39;s clear that documentation is one of the big=
-gest most generally agreed upon area to work on.</div><div><br></div><div>B=
-uild tools and package management seems like another area with some agreed =
-on improvements. I like the idea of moving to meson. Getting tidy files and=
- revising our style guides also sound like good ideas. I also really agree =
-that we could stand to do some consolidation of processes/repos.</div><div>=
-<br></div><div>There is also some use for DBus tooling for both improved co=
-de, and for visualizations.</div><div><br></div><div>So here are my next st=
-eps:</div><div>=C2=A0 1) Since we have some new people getting started, I&#=
-39;ve asked them to add documentation at the points they get stuck during o=
-n-boarding.</div><div>=C2=A0 2) I&#39;m going to take the ideas in this thr=
-ead and put together a .md doc with any relevant=C2=A0information I can fin=
-d. I&#39;ll be adding it to openbmc/docs.</div><div>=C2=A0 3) I&#39;ll foll=
-ow up in another thread about some of the ideas around DBus tooling and pac=
-kage consolidation. That seems to be an area where most people agree some i=
-mprovements can be made, but I&#39;m not sure there is an agreement on how =
-we should do it.</div><div><br></div><div>-Richard</div><div><br></div><div=
-><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"g=
-mail_attr">On Mon, Apr 20, 2020 at 10:19 AM Sui Chen &lt;<a href=3D"mailto:=
-suichen6@gmail.com">suichen6@gmail.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex"><div lang=3D"ZH-CN"><div class=3D"gma=
-il-m_-1448104613106764596WordSection1"><p class=3D"MsoNormal"><span lang=3D=
-"EN-US">&gt; On Apr 11, 2020, at 8:15 AM, Andrew Geissler &lt;geissonator a=
-t <a href=3D"http://gmail.com" target=3D"_blank">gmail.com</a>&gt; wrote:</=
-span></p><p class=3D"MsoNormal"><span lang=3D"EN-US">&gt; Systemd Visualiza=
-tion</span></p><p class=3D"MsoNormal"><span lang=3D"EN-US">&gt; Another com=
-plicated area of OpenBMC is our systemd targets and services. Building on t=
-he upstream tools to visualize our systemd targets and services would be us=
-eful to new people.</span></p><p class=3D"MsoNormal"><span lang=3D"EN-US" s=
-tyle=3D"font-size:12pt"><u></u>=C2=A0<u></u></span></p><p class=3D"MsoNorma=
-l"><span lang=3D"EN-US" style=3D"font-size:12pt">+1 to visualization, and I=
- have a few thoughts on this ---<u></u><u></u></span></p><p class=3D"MsoNor=
-mal"><span lang=3D"EN-US" style=3D"font-size:12pt">My lacking a mental mode=
-l of how an OpenBMC system works had been my pain point in the first few mo=
-nths working with OpenBMC (I=E2=80=99m a bit new to this area), so after le=
-arning the minimal set of survival skills I did something similar to what y=
-ou mentioned =E2=80=93 visualizing the messages passed between different db=
-us peers (and conveniently, IPMI traffic, as IPMI-related dbus messages exp=
-osing all IPMI payload comprise most of the dbus traffic on that particular=
- system I was working on.)<u></u><u></u></span></p><p class=3D"MsoNormal"><=
-span lang=3D"EN-US" style=3D"font-size:12pt"><u></u>=C2=A0<u></u></span></p=
-><p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12pt">I thi=
-nk packet analysis tools such as Wireshark and graphics frame analysis tool=
-s such as RenderDoc, or system event-based Windows Performance tool like GP=
-UView provide great examples of what people might expect to achieve with a =
-visualization tool: capture, inspect and (sometimes) playback, across multi=
-ple layers in the software/hardware stack. Many similar existing tools proc=
-ess sequences of events, and in this case of BMCs, the events could be dbus=
- messages. I found a prototype visualizer made at work greatly helpful in e=
-xplaining to new team members some basic concepts and the IPMI stack on the=
- BMC.<u></u><u></u></span></p><p class=3D"MsoNormal"><span lang=3D"EN-US" s=
-tyle=3D"font-size:12pt"><u></u>=C2=A0<u></u></span></p><p class=3D"MsoNorma=
-l"><span lang=3D"EN-US" style=3D"font-size:12pt">The IPMI stack is interest=
-ing because it=E2=80=99s one noticeable workload on the particular BMC syst=
-em I had been working on; in my current limited understanding, having lots =
-of I/O capability to connect to hundreds of sensors is one of the many feat=
-ures that set apart a BMC chip and a similarly powerful smartphone chip, an=
-d the broad use of dbus is what sets apart OpenBMC and the desktop Linux di=
-stro I had been using. I heard optimization is best done workload by worklo=
-ad, perhaps this rationale applies to visualization too?<u></u><u></u></spa=
-n></p><p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12pt">=
-<u></u>=C2=A0<u></u></span></p><p class=3D"MsoNormal"><span lang=3D"EN-US" =
-style=3D"font-size:12pt">I realize I was mostly talking about visualizing t=
-he run-time state of the system rather than build-time, but we could visual=
-ize the run-time aspect of systemd units too since I have seen many times a=
- dbus message eventually triggering a systemd target to acutate the system,=
- so it would be good to consider both dbus and systemd (and maybe other par=
-ts of the system?) to have a more holistic view of the BMC=E2=80=99s operat=
-ions.<u></u><u></u></span></p><p class=3D"MsoNormal"><span lang=3D"EN-US" s=
-tyle=3D"font-size:12pt"><u></u>=C2=A0<u></u></span></p><p class=3D"MsoNorma=
-l"><span lang=3D"EN-US" style=3D"font-size:12pt">Thanks<u></u><u></u></span=
-></p><p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12pt">S=
-ui<u></u><u></u></span></p></div></div>
-</blockquote></div>
-
---00000000000085216705a3d53dc6--
