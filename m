@@ -2,72 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 868861B49E8
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 18:11:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CD37C1B4A36
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 18:20:26 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 496lm96SG5zDqv4
-	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 02:11:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 496lyw0cQDzDqgD
+	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 02:20:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
- helo=mail-oi1-x22a.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=EY2GOFye; dkim-atps=neutral
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
- [IPv6:2607:f8b0:4864:20::22a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 496lZN4gnvzDqTK
- for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 02:02:35 +1000 (AEST)
-Received: by mail-oi1-x22a.google.com with SMTP id x10so2459413oie.1
- for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 09:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=fEtKPg32ljn1stbDRIyyeEl78Q6p27wVcaNA3+YICKA=;
- b=EY2GOFyerU7/PIg3N2CROIy+HKzVpW7ZCMq3viIvC42hIJadRyc0huepDE2wzqaguw
- QV99Y461BqadiSjigrox2TSvbVQOZ3yr4BVE+Q81MXUL0O0bHr5bgaBDA0S1PbUgc9CB
- vPQ0cmh1WNt0o+2ykBUHqojDFDJ8EnLvCFFHR64YpqeoF92irxcnriU/DU0G+EDDh//D
- eIDDhb2iFwggp2yfh69zG529ozAnBqGiys/3UTLaUh9OprPOZJWumRo2o00FxnJiT5xy
- 80iEjkFwHmzUCVGLyauzwJm67CyGM6wDyHO9X5QCXAopC0xXy7/rU3yTzQdi4rWyqOUu
- 8umA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=fEtKPg32ljn1stbDRIyyeEl78Q6p27wVcaNA3+YICKA=;
- b=d755PjXOS/3tQqihstkSuHdQQcNPg4okHHNPtzJ21PFJDIVnuQNykfkmDGNs7s9vu9
- HPTKMKvafYbHUaPdbdpom109ziUOP8dwQgkSHCHTvjCtDU7r9NnlZPEHOh2+Ye3BFQOR
- MrFwNFsSnRPCaH3HNh/yBVToj//PzQKvt4Hqzn/GcKCg+hBHeq9VO0IosCMTu6baT8j5
- RIXQdZXupTsLa5uBZWzjt9t72VIZDTjshZzVvvVKibpWi2LdN276hGNnnnYrzyWmeY4y
- ehGt/b2Q0p29+9U+pM2/vnuihADrIPwrulzy/vyceKkYEcRn30oyxHOuc1akyjmwZAFS
- kYYw==
-X-Gm-Message-State: AGi0PuZNV3FUFdGBwLuGQz84W+YLtwDs1COZf3gRSjUyFl0g0B45sQ+7
- x5bZv7IitJVTenNCmgwvkg2fYv3u2ig=
-X-Google-Smtp-Source: APiQypK/c6YrV0t1gSpq1f3DAwSic5Oc97SKLB88RKxotOGhK+n2y6Oupaomxa9RA9QZGTz4EkNICQ==
-X-Received: by 2002:aca:5613:: with SMTP id k19mr1789417oib.148.1587571351393; 
- Wed, 22 Apr 2020 09:02:31 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:28dd:4ed0:302:40d3])
- by smtp.gmail.com with ESMTPSA id 61sm1604451oty.56.2020.04.22.09.02.30
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 22 Apr 2020 09:02:30 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Adding new machine in CI, Tacoma
-Message-Id: <7386475E-19B2-442F-97C4-B5CAF6FCD92F@gmail.com>
-Date: Wed, 22 Apr 2020 11:02:29 -0500
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 496lxR30WjzDqBL
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 02:19:06 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03MG3BbU112033; Wed, 22 Apr 2020 12:19:03 -0400
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 30gc2ygyua-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Apr 2020 12:19:02 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03MGI2rc015585;
+ Wed, 22 Apr 2020 16:19:02 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma05wdc.us.ibm.com with ESMTP id 30fs66tqda-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Apr 2020 16:19:02 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03MGJ1AH16777650
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Apr 2020 16:19:02 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E157C12405A;
+ Wed, 22 Apr 2020 16:19:01 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AA43C124052;
+ Wed, 22 Apr 2020 16:19:01 +0000 (GMT)
+Received: from [9.85.155.31] (unknown [9.85.155.31])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 22 Apr 2020 16:19:01 +0000 (GMT)
+Subject: Re: dbus-sensors
+To: James Feist <james.feist@linux.intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <dbdb4dac-a73a-5c39-8cf8-33dd2d318d16@linux.ibm.com>
+ <2cb1c83a-9803-c9ac-ae76-2e09b616562e@linux.intel.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <4a5cad39-b366-0a0c-54b0-23da9f2a3d81@linux.ibm.com>
+Date: Wed, 22 Apr 2020 11:19:01 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <2cb1c83a-9803-c9ac-ae76-2e09b616562e@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-22_06:2020-04-22,
+ 2020-04-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 spamscore=0 malwarescore=0 mlxlogscore=999
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004220122
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,38 +90,74 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+Great!  Sounds like we should be able to make thing work.
+A few comments below.
 
-IBM has created a new system called witherspoon-tacoma. It=E2=80=99s =
-based on our
-Witherspoon system but it uses an AST2600 instead of an AST2500. We=E2=80=99=
-re
-utilizing the larger emmc based flash that comes with it to add =
-additional
-functions (like mctp/pldm).
+On 4/21/2020 4:54 PM, James Feist wrote:
+> On 4/21/2020 12:35 PM, Matt Spinler wrote:
+>> Hi James,
+>>
+>> We're looking into using dbus-sensors(HwmonTemp and PSU) in the future,
+>> but would need to make a few changes to fit our requirements. Was 
+>> wondering
+>> what you'd think of the following:
+>>
+>> 1. Check if a sensor has a _fault sysfs file, and if it does and it
+>>    is nonzero, set the Functional property on the OperationalStatus
+>>    interface to false (and/or maybe 6 below)
+> Sounds ok.
+>
+>>
+>> 2. After the 10 failed reads, instead of just setting the sensor to 0
+>>    also make a D-Bus call to create a phosphor-logging event log and set
+>>    the OperationalStatus sensor to false.
+>
+> Sounds ok.
+>
+>>
+>> 3. After creating this event log, make sure not to do it again until
+>>    main power is cycled.
+>
+> I'd rather this be until the status goes OK again.
 
-Witherspoon is currently the system that we run all meta-* commits =
-through on HW
-CI. I=E2=80=99m looking to transition our HW CI to this new Tacoma based =
-system. It will
-be faster (the AST2600 gets to Ready state 4x faster then the AST2500, =
-and the
-emmc code update is also quite a bit faster), and it will test more =
-OpenBMC
-functions.
+As suggested by Patrick, I agree the throttling can be done elsewhere, so we
+would just create the logs as you state here.
 
-The first step is adding this new Tacoma machine to our CI compile. When =
-adding
-a new system, it=E2=80=99s always nice to remove one. Once we fully =
-switch over to
-Tacoma I think we can remove Witherspoon, but until then we=E2=80=99ll =
-need both. On my
-chopping block would be Zaius, Romulus, or Palmetto but I know in the =
-past all
-have been requested to stay so I think for now we=E2=80=99ll just deal =
-with the
-addition.
+>
+>>
+>> 4. If not already supported (was unsure), be able to find an
+>>    _input file based on a value it has in the corresponding _label file.
+>
+> PSU sensor does this, hwmontemp does it by index.
 
-If anyone has thoughts or concerns, let me know.
+Would you be OK with us also adding this to PSUSensor?
 
-Andrew=
+>>
+>> 5. We have a case where a driver isn't loaded with power off, so somehow
+>>    we still need the sensors to stay on D-Bus when off (and show them
+>>    as not available).
+>
+> All sensors are on d-bus all the time, its based on the EM config.
+
+Perfect!
+
+>
+>>
+>> 6. Maybe add a new property to Sensor.Value on the validity
+>>    of the value property, for when driver is unloaded or there is an
+>>    error or the sensor reading is otherwise not valid.  We could add
+>>   this to phosphor-hwmon at the same time.
+>>   (I think this was mentioned on the list before).
+>
+> Yes, this is where we've used std::nan, I'm not sure if that made it 
+> to all sensors as it's not tested very much. I know the fans do this.
+>
+>>
+>> We would definitely of course work with you on the best way to
+>> accomplish these, and I know #6 needs more discussion on if
+>> this is something we want to do in OpenBMC, though I thought
+>> I remembered an earlier discussion where it was popular.
+>>
+>> Thanks,
+>> Matt
+
