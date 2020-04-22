@@ -1,55 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB93C1B38EE
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 09:28:08 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83FDE1B36D7
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 07:35:37 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 496Tfs6N1xzDqyl
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 15:35:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 496X8h6KZrzDqwn
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 17:28:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1a2d::193;
+ helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=yandex-team.ru
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
+ header.a=rsa-sha256 header.s=default header.b=a0vPMQpy; 
+ dkim-atps=neutral
+X-Greylist: delayed 98 seconds by postgrey-1.36 at bilbo;
+ Wed, 22 Apr 2020 17:27:16 AEST
+Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
+ [IPv6:2a02:6b8:0:1a2d::193])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 496Tdy5vyGzDqtQ
- for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 15:34:40 +1000 (AEST)
-IronPort-SDR: bp2bvF1Zdo5Q4r51/JMryhpZ4xSKWLFk4JEj/GjW6QLdEgKJTKqHXY0CHH8h6//BMfEEmvyvaU
- hsKTMm7PVkCw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Apr 2020 22:34:38 -0700
-IronPort-SDR: eDGDMkTobxYGHfCQu5in2KiTEz1TS/axllHg32htW2nqq8ACtEl/kgNxkadFuiXYtViAMADCGV
- KDcxL201J3CA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.72,412,1580803200"; 
- d="scan'208,217";a="456373236"
-Received: from yongli3-mobl1.ccr.corp.intel.com (HELO [10.238.5.105])
- ([10.238.5.105])
- by fmsmga005.fm.intel.com with ESMTP; 21 Apr 2020 22:34:35 -0700
-Subject: =?UTF-8?B?UmU6IGFib3V0IHBvd2VyIGNvbnRyb2wu5Zue5aSNOiBDYWxsIGZvciBH?=
- =?UTF-8?Q?ardening_Tasks?=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 496X7m6jT6zDqkp
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 17:27:16 +1000 (AEST)
+Received: from mxbackcorp1g.mail.yandex.net (mxbackcorp1g.mail.yandex.net
+ [IPv6:2a02:6b8:0:1402::301])
+ by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 552EA2E156D;
+ Wed, 22 Apr 2020 10:25:12 +0300 (MSK)
+Received: from localhost (localhost [::1])
+ by mxbackcorp1g.mail.yandex.net (mxbackcorp/Yandex) with ESMTP id
+ glSYfjpLvQ-PBQG0Ht3; Wed, 22 Apr 2020 10:25:12 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; 
+ t=1587540312; bh=WkJKtjbTAyoXHBW+Zwtt3Cve305rFzJZLJMnFPpWfb8=;
+ h=Subject:In-Reply-To:Cc:Date:References:To:From:Message-Id;
+ b=a0vPMQpyWoQt/RfbVusHT+nZgl4ddx1q0KYSzYJAeA7K+EUcRvOe//4ZrcI0o8fVx
+ 3KbSygM1PpJA+LU/Hwyu1pUO3NidaZbMcmqZ/EJm+hqj3/SlMlCFHe3fcMKdaASfEm
+ 0KrVdi8nGTgNaRhJ0R7myCjJ/AsudMjIy7S/Yjm4=
+Authentication-Results: mxbackcorp1g.mail.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+X-Yandex-Sender-Uid: 1120000000049860
+X-Yandex-Avir: 1
+Received: from mxbackcorp2j.mail.yandex.net (localhost [::1])
+ by mxbackcorp2j.mail.yandex.net with LMTP id YxHoaqokt9-moMJeBm1
+ for <kitsok@yandex-team.ru>; Wed, 22 Apr 2020 10:25:01 +0300
+Received: by iva8-edafde7c849c.qloud-c.yandex.net with HTTP;
+ Wed, 22 Apr 2020 10:25:00 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
 To: "zhouyuanqing8@outlook.com" <zhouyuanqing8@outlook.com>,
  Sui Chen <suichen6@gmail.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+In-Reply-To: <PS2PR04MB383294A0D7402F9204C46C97FED50@PS2PR04MB3832.apcprd04.prod.outlook.com>
 References: <5e9dd66f.1c69fb81.45fc6.0118@mx.google.com>
  <PS2PR04MB383294A0D7402F9204C46C97FED50@PS2PR04MB3832.apcprd04.prod.outlook.com>
-From: "Li, Yong" <yong.b.li@linux.intel.com>
-Message-ID: <12c67029-2a01-13c6-de2e-9721d85c4ec7@linux.intel.com>
-Date: Wed, 22 Apr 2020 13:34:35 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Subject: =?utf-8?B?UmU6IGFib3V0IHBvd2VyIGNvbnRyb2wu5Zue5aSNOiBDYWxsIGZvciBHYXJkZW5pbmcgVGFza3M=?=
 MIME-Version: 1.0
-In-Reply-To: <PS2PR04MB383294A0D7402F9204C46C97FED50@PS2PR04MB3832.apcprd04.prod.outlook.com>
-Content-Type: multipart/alternative;
- boundary="------------E565549C4BF89AD3993BC1AF"
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Wed, 22 Apr 2020 10:25:10 +0300
+Message-Id: <51921587538931@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,764 +80,407 @@ Cc: "uperic@163.com" <uperic@163.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------E565549C4BF89AD3993BC1AF
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Regarding the power control related, sugest to check on the below:
-
-https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp
-
-
-
-It uses litter systems related services/targets, and monitor these gpio 
-signals, to trigger different callback actions.
-
-
-For the pgood_wait, it is in:
-
-https://github.com/openbmc/skeleton/tree/master/op-pwrctl/pgood_wait
-
-https://github.com/openbmc/skeleton/tree/master/op-pwrctl
-
-
-Thanks,
-
-Yong
-
-
-在 4/21/2020 10:50 PM, zhouyuanqing8@outlook.com 写道:
-> Hi
->
->     This is a very good idea. As the first time to do openbmc, I look 
-> forward to it. Currently, I am being troubled by the problems you 
-> describe.
->
->     The following questions, please also help you answer it, thank you 
-> very much.
->
->     1.I modified the dts file, how to use the command "bitbake -f 
-> linux-aspeed" to Generate fitimage and dub？
->      Now, I modify the dts file in the kernel source directory. When I 
-> compile, bitbake will re-fetch the source code, decompress, patch, 
-> configure, and compile, causing my changes to be overwritten. I 
-> currently use manual call scripts to compile dts files and make images 
-> for debugging.Is there a way to make bitbake skip the previous steps 
-> and compile directly？
->
->
->      2.The size of image-rwfs is 0, I want to use rwfs debugging, how 
-> to configure to generate a normal image-rwfs?
-> -rw-r--r--. 2 harleyzhou harleyzhou     9443     4月        7 17:27 
-> obmc-phosphor-image-xxh-20200407092558.rootfs.manifest
->      -rw-r--r--. 2 harleyzhou harleyzhou 18214912 4月    7 17:27 
-> obmc-phosphor-image-xxh-20200407092558.rootfs.squashfs-xz
->      -rw-rw-r--. 2 harleyzhou harleyzhou 33554432        4月   7 17:27 
-> obmc-phosphor-image-xxh-20200407092558.static.mtd
->      -rw-rw-r--. 2 harleyzhou harleyzhou 33566720        4月   7 17:28 
-> obmc-phosphor-image-xxh-20200407092558.static.mtd.all.tar
->      -rw-rw-r--. 2 harleyzhou harleyzhou 22384640        4月   7 17:28 
-> obmc-phosphor-image-xxh-20200407092558.static.mtd.tar
->      -rw-r--r--. 2 harleyzhou harleyzhou   308218  4月      7 17:27 
-> obmc-phosphor-image-xxh-20200407092558.testdata.json
->      -rw-r--r--. 2 harleyzhou harleyzhou           0  4月   7 17:27 
-> obmc-phosphor-image-xxh.jffs2
->
->
->     3. I did not find the source code of "pgood_wait" and 
-> "power_control.exe" in obmc-op-control-power? where can I get it ?
->
->
->     4.OpenBMC usessystemd 
-> <https://www.freedesktop.org/wiki/Software/systemd/>to manage all 
-> processes, So i analyzed the process of systemd starting process and 
-> saw "default.target-> basic.target-> sysinit.target-> 
-> local-fs.target", there is no content behind.please help to provide 
-> clues of systemd starting process.
->
->     5.I understand the following execution process of power-on , help 
-> check if it is correct.
->        a).rest or busctl send power-on commands to systemd through 
-> d-bus messages.
->        b).systemd find the obmc-chassis-poweron@.target
->   c).systemd find the obmc-power-start@.target
-> d).systemd find the op-power-start@0.service
-> e).systemd start a thread and execute "busctl call `mapper get-service 
-> /org/openbmc/control/power%i` /org/openbmc/control/power%i 
-> org.openbmc.control.Power setPowerState I 1"
->
-> appendix：
->
-> ls obmc-chassis-poweron@0.target.requires
->
-> op-power-start@0.serviceop-wait-power-on@0.service
->
->
-> cat obmc-chassis-poweron@.target
->
-> [Unit]
->
-> Description=Chassis%i (Power On)
->
-> Wants=multi-user.target
->
-> After=multi-user.target
->
-> Wants=mapper-wait@-xyz-openbmc_project-state-chassis%i.service
->
-> After=mapper-wait@-xyz-openbmc_project-state-chassis%i.service
->
-> Wants=mapper-subtree-remove@-xyz-openbmc\x5fproject-software\x3Axyz.openbmc_project.Software.ActivationBlocksTransition.service
->
-> After=mapper-subtree-remove@-xyz-openbmc\x5fproject-software\x3Axyz.openbmc_project.Software.ActivationBlocksTransition.service
->
->
-> cat op-power-start@0.service
->
-> [Unit]
->
-> Description=Start Power%i
->
-> Wants=obmc-power-start@%i.target
->
-> Before=obmc-power-start@%i.target
->
-> After=obmc-power-start-pre@%i.target
->
-> After=obmc-fan-control.target
->
-> Wants=mapper-wait@-org-openbmc-control-power%i.service
->
-> After=mapper-wait@-org-openbmc-control-power%i.service
->
-> [Service]
->
-> RemainAfterExit=yes
->
-> Type=oneshot
->
-> ExecStart=/bin/sh -c "busctl call `mapper get-service 
-> /org/openbmc/control/power%i` /org/openbmc/control/power%i 
-> org.openbmc.control.Power setPowerState i 1"
->
-> SyslogIdentifier=op-power-start
->
-> [Install]
->
-> WantedBy=obmc-host-start@%i.target
->
->
-> cat obmc-power-start@.target
->
-> [Unit]
->
-> Description=Power%i On
->
-> After=obmc-power-start-pre@%i.target
->
-> Wants=multi-user.target
->
-> Conflicts=obmc-chassis-poweroff@%i.target
->
-> RefuseManualStart=yes
->
-> RefuseManualStop=yes
->
->
-> Thanks
-> Harley
-> ------------------------------------------------------------------------
-> *发件人:* openbmc 
-> <openbmc-bounces+zhouyuanqing8=outlook.com@lists.ozlabs.org> 代表 Sui 
-> Chen <suichen6@gmail.com>
-> *发送时间:* 2020年4月21日 1:05
-> *收件人:* openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>
-> *主题:* Re: Call for Gardening Tasks
->
-> > On Apr 11, 2020, at 8:15 AM, Andrew Geissler <geissonator at gmail.com> wrote:
->
-> > Systemd Visualization
->
-> > Another complicated area of OpenBMC is our systemd targets and services. Building on the upstream 
-> tools to visualize our systemd targets and services would be useful to 
-> new people.
->
-> +1 to visualization, and I have a few thoughts on this ---
->
-> My lacking a mental model of how an OpenBMC system works had been my 
-> pain point in the first few months working with OpenBMC (I’m a bit new 
-> to this area), so after learning the minimal set of survival skills I 
-> did something similar to what you mentioned – visualizing the messages 
-> passed between different dbus peers (and conveniently, IPMI traffic, 
-> as IPMI-related dbus messages exposing all IPMI payload comprise most 
-> of the dbus traffic on that particular system I was working on.)
->
-> I think packet analysis tools such as Wireshark and graphics frame 
-> analysis tools such as RenderDoc, or system event-based Windows 
-> Performance tool like GPUView provide great examples of what people 
-> might expect to achieve with a visualization tool: capture, inspect 
-> and (sometimes) playback, across multiple layers in the 
-> software/hardware stack. Many similar existing tools process sequences 
-> of events, and in this case of BMCs, the events could be dbus 
-> messages. I found a prototype visualizer made at work greatly helpful 
-> in explaining to new team members some basic concepts and the IPMI 
-> stack on the BMC.
->
-> The IPMI stack is interesting because it’s one noticeable workload on 
-> the particular BMC system I had been working on; in my current limited 
-> understanding, having lots of I/O capability to connect to hundreds of 
-> sensors is one of the many features that set apart a BMC chip and a 
-> similarly powerful smartphone chip, and the broad use of dbus is what 
-> sets apart OpenBMC and the desktop Linux distro I had been using. I 
-> heard optimization is best done workload by workload, perhaps this 
-> rationale applies to visualization too?
->
-> I realize I was mostly talking about visualizing the run-time state of 
-> the system rather than build-time, but we could visualize the run-time 
-> aspect of systemd units too since I have seen many times a dbus 
-> message eventually triggering a systemd target to acutate the system, 
-> so it would be good to consider both dbus and systemd (and maybe other 
-> parts of the system?) to have a more holistic view of the BMC’s 
-> operations.
->
-> Thanks
->
-> Sui
->
-
---------------E565549C4BF89AD3993BC1AF
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Regarding the power control related, sugest to check on the
-      below:</p>
-    <p><a
-href="https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp">https://github.com/openbmc/x86-power-control/blob/master/power-control-x86/src/power_control.cpp</a></p>
-    <p><br>
-    </p>
-    <p><br>
-    </p>
-    <p>It uses litter systems related services/targets, and monitor
-      these gpio signals, to trigger different callback actions.<br>
-    </p>
-    <p><br>
-    </p>
-    <p>For the pgood_wait, it is in:</p>
-    <p> <a
-href="https://github.com/openbmc/skeleton/tree/master/op-pwrctl/pgood_wait">https://github.com/openbmc/skeleton/tree/master/op-pwrctl/pgood_wait</a></p>
-    <p><a
-        href="https://github.com/openbmc/skeleton/tree/master/op-pwrctl">https://github.com/openbmc/skeleton/tree/master/op-pwrctl</a></p>
-    <p><br>
-    </p>
-    <p>Thanks,</p>
-    <p>Yong<br>
-    </p>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">在 4/21/2020 10:50 PM,
-      <a class="moz-txt-link-abbreviated" href="mailto:zhouyuanqing8@outlook.com">zhouyuanqing8@outlook.com</a> 写道:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:PS2PR04MB383294A0D7402F9204C46C97FED50@PS2PR04MB3832.apcprd04.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <style type="text/css" style="display:none;"> P {margin-top:0;margin-bottom:0;} </style>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        Hi </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-            This is a very good idea. As the first time to do openbmc, I
-        look forward to it. Currently, I am being troubled by the
-        problems you describe.<br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-            The following questions, please also help you answer it,
-        thank you very much.</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-            1.I modified the dts file, how to use the command "bitbake
-        -f linux-aspeed" to Generate fitimage and dub？</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-             Now, I modify the dts file in the kernel source directory.
-        When I compile, bitbake will re-fetch the source code,
-        decompress, patch, configure, and compile, causing my changes to
-        be overwritten. I currently use manual call scripts to compile
-        dts files and make images for debugging.Is there a way to make
-        bitbake skip the previous steps and compile directly？</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-             2.The size of image-rwfs is 0, I want to use rwfs
-        debugging, how to configure to generate a normal image-rwfs? </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-             <span>-rw-r--r--. 2 harleyzhou harleyzhou     9443        
-              4月        7 17:27
-          obmc-phosphor-image-xxh-20200407092558.rootfs.manifest<br>
-        </span>
-        <div>     -rw-r--r--. 2 harleyzhou harleyzhou 18214912        
-          4月    7 17:27 obmc-phosphor-image-<span style="caret-color:
-            rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-            sans-serif; background-color: rgb(255, 255, 255); display:
-            inline !important">xxh</span>-20200407092558.rootfs.squashfs-xz<br>
-        </div>
-        <div>     -rw-rw-r--. 2 harleyzhou harleyzhou 33554432        4月
-            7 17:27 obmc-phosphor-image-<span style="caret-color: rgb(0,
-            0, 0); font-family: Calibri, Arial, Helvetica, sans-serif;
-            background-color: rgb(255, 255, 255); display: inline
-            !important">xxh</span>-20200407092558.static.mtd<br>
-        </div>
-        <div>     -rw-rw-r--. 2 harleyzhou harleyzhou 33566720        4月
-            7 17:28 obmc-phosphor-image-<span style="caret-color: rgb(0,
-            0, 0); font-family: Calibri, Arial, Helvetica, sans-serif;
-            background-color: rgb(255, 255, 255); display: inline
-            !important">xxh</span>-20200407092558.static.mtd.all.tar<br>
-        </div>
-        <div>     -rw-rw-r--. 2 harleyzhou harleyzhou 22384640        4月
-            7 17:28 obmc-phosphor-image-<span style="caret-color: rgb(0,
-            0, 0); font-family: Calibri, Arial, Helvetica, sans-serif;
-            background-color: rgb(255, 255, 255); display: inline
-            !important">xxh</span>-20200407092558.static.mtd.tar<br>
-        </div>
-        <div>     -rw-r--r--. 2 harleyzhou harleyzhou   308218          
-           4月      7 17:27 obmc-phosphor-image-<span style="caret-color:
-            rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-            sans-serif; background-color: rgb(255, 255, 255); display:
-            inline !important">xxh</span>-20200407092558.testdata.json<br>
-        </div>
-        <div>     -rw-r--r--. 2 harleyzhou harleyzhou           0      
-                 <span style="background-color: rgb(0, 255, 0);"> 4月   7
-            17:27 obmc-phosphor-image-</span><span style="caret-color:
-            rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-            sans-serif; background-color: rgb(0, 255, 0); display:
-            inline !important;">xxh</span><span style="background-color:
-            rgb(0, 255, 0);">.jffs2</span><br>
-        </div>
-        <span></span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-            3. I did not find the source code of "pgood_wait" and
-        "power_control.exe" in obmc-op-control-power? where can I get it
-        ?</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-            4.<span style="caret-color: rgb(36, 41, 46); color: rgb(36,
-          41, 46); font-family: -apple-system, BlinkMacSystemFont,
-          &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif,
-          &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;
-          background-color: rgb(255, 255, 255); display: inline
-          !important">OpenBMC uses<span> </span></span><a
-          href="https://www.freedesktop.org/wiki/Software/systemd/"
-          rel="nofollow" style="box-sizing: border-box; color: rgb(3,
-          102, 214); font-family: -apple-system, BlinkMacSystemFont,
-          &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif,
-          &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;"
-          moz-do-not-send="true">systemd</a><span style="caret-color:
-          rgb(36, 41, 46); color: rgb(36, 41, 46); font-family:
-          -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;,
-          Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;,
-          &quot;Segoe UI Emoji&quot;; background-color: rgb(255, 255,
-          255); display: inline !important"><span> </span>to manage all
-          processes, So i analyzed the process of systemd starting
-          process and saw "default.target-&gt; basic.target-&gt;
-          sysinit.target-&gt; local-fs.target", there is no content
-          behind.please help to provide clues of systemd starting
-          process.</span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="caret-color: rgb(36, 41, 46); color: rgb(36, 41,
-          46); font-family: -apple-system, BlinkMacSystemFont,
-          &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif,
-          &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;
-          background-color: rgb(255, 255, 255); display: inline
-          !important"><br>
-        </span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="caret-color: rgb(36, 41, 46); color: rgb(36, 41,
-          46); font-family: -apple-system, BlinkMacSystemFont,
-          &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif,
-          &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;
-          background-color: rgb(255, 255, 255); display: inline
-          !important">    5.I understand the following execution process
-          of power-on , help check if it is correct.</span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-               a).rest or busctl send power-on commands to systemd
-        through d-bus messages.</div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-               b).systemd find the <span style="caret-color: rgb(36,
-          41, 46); color: rgb(36, 41, 46); font-family: &quot;PingFang
-          SC&quot;; font-size: 12px; background-color: rgb(255, 255,
-          255); display: inline !important">
-          <a class="moz-txt-link-abbreviated" href="mailto:obmc-chassis-poweron@.target">obmc-chassis-poweron@.target</a></span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="caret-color: rgb(36, 41, 46); color: rgb(36, 41,
-          46); font-family: &quot;PingFang SC&quot;; font-size: 12px;
-          background-color: rgb(255, 255, 255); display: inline
-          !important">     
-          <span style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);
-            font-family: Calibri, Arial, Helvetica, sans-serif;
-            font-size: 16px; background-color: rgb(255, 255, 255);
-            display: inline !important">
-              c).systemd find the <span style="caret-color: rgb(36, 41,
-              46); color: rgb(36, 41, 46); font-family: &quot;PingFang
-              SC&quot;; font-size: 12px; background-color: rgb(255, 255,
-              255); display: inline !important"><a class="moz-txt-link-abbreviated" href="mailto:obmc-power-start@.target">obmc-power-start@.target</a></span></span></span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="caret-color: rgb(36, 41, 46); color: rgb(36, 41,
-          46); font-family: &quot;PingFang SC&quot;; font-size: 12px;
-          background-color: rgb(255, 255, 255); display: inline
-          !important"><span style="caret-color: rgb(0, 0, 0); color:
-            rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-            sans-serif; font-size: 16px; background-color: rgb(255, 255,
-            255); display: inline !important"><span style="caret-color:
-              rgb(36, 41, 46); color: rgb(36, 41, 46); font-family:
-              &quot;PingFang SC&quot;; font-size: 12px;
-              background-color: rgb(255, 255, 255); display: inline
-              !important">        <span style="caret-color: rgb(0, 0,
-                0); color: rgb(0, 0, 0); font-family: Calibri, Arial,
-                Helvetica, sans-serif; font-size: 16px;
-                background-color: rgb(255, 255, 255); display: inline
-                !important">
-                d</span><span style="caret-color: rgb(0, 0, 0); color:
-                rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-                sans-serif; font-size: 16px; background-color: rgb(255,
-                255, 255); display: inline !important">).systemd find
-                the <span style="caret-color: rgb(36, 41, 46); color:
-                  rgb(36, 41, 46); font-family: &quot;PingFang SC&quot;;
-                  font-size: 12px; background-color: rgb(255, 255, 255);
-                  display: inline !important"><a class="moz-txt-link-abbreviated" href="mailto:op-power-start@0.service">op-power-start@0.service</a></span><span
-                  style="margin: 0px; font-family: &quot;PingFang
-                  SC&quot;; font-size: 12px; color: rgb(36, 41, 46);
-                  caret-color: rgb(36, 41, 46)"> </span></span></span></span></span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="caret-color: rgb(36, 41, 46); color: rgb(36, 41,
-          46); font-family: &quot;PingFang SC&quot;; font-size: 12px;
-          background-color: rgb(255, 255, 255); display: inline
-          !important"><span style="caret-color: rgb(0, 0, 0); color:
-            rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-            sans-serif; font-size: 16px; background-color: rgb(255, 255,
-            255); display: inline !important"><span style="caret-color:
-              rgb(36, 41, 46); color: rgb(36, 41, 46); font-family:
-              &quot;PingFang SC&quot;; font-size: 12px;
-              background-color: rgb(255, 255, 255); display: inline
-              !important"><span style="caret-color: rgb(0, 0, 0); color:
-                rgb(0, 0, 0); font-family: Calibri, Arial, Helvetica,
-                sans-serif; font-size: 16px; background-color: rgb(255,
-                255, 255); display: inline !important"><span
-                  style="margin: 0px; font-family: &quot;PingFang
-                  SC&quot;; font-size: 12px; color: rgb(36, 41, 46);
-                  caret-color: rgb(36, 41, 46)">        <span
-                    style="margin: 0px; font-family: Calibri, Arial,
-                    Helvetica, sans-serif; font-size: 16px; color:
-                    rgb(0, 0, 0); background-color: rgb(255, 255, 255);
-                    caret-color: rgb(0, 0, 0); display: inline
-                    !important">e</span><span style="margin: 0px;
-                    font-family: Calibri, Arial, Helvetica, sans-serif;
-                    font-size: 16px; color: rgb(0, 0, 0);
-                    background-color: rgb(255, 255, 255); caret-color:
-                    rgb(0, 0, 0); display: inline !important">).<span
-                      style="caret-color: rgb(0, 0, 0); font-family:
-                      Calibri, Arial, Helvetica, sans-serif;
-                      background-color: rgb(255, 255, 255); display:
-                      inline !important">systemd start a thread and
-                      execute "<span style="caret-color: rgb(36, 41,
-                        46); color: rgb(36, 41, 46); font-family:
-                        &quot;PingFang SC&quot;; font-size: 12px;
-                        background-color: rgb(255, 255, 255); display:
-                        inline !important">busctl call `mapper
-                        get-service /org/openbmc/control/power%i`
-                        /org/openbmc/control/power%i
-                        org.openbmc.control.Power setPowerState I 1"</span></span></span></span></span></span></span></span></div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        appendix：<br>
-      </div>
-      <div style="font-family: Calibri, Arial, Helvetica, sans-serif;
-        font-size: 12pt; color: rgb(0, 0, 0);">
-        <span style="caret-color: rgb(36, 41, 46); color: rgb(36, 41,
-          46); font-family: -apple-system, BlinkMacSystemFont,
-          &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif,
-          &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;
-          background-color: rgb(255, 255, 255); display: inline
-          !important">
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">ls <a class="moz-txt-link-abbreviated" href="mailto:obmc-chassis-poweron@0.target.requires">obmc-chassis-poweron@0.target.requires</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:op-power-start@0.service">op-power-start@0.service</a><span> 
-            </span><a class="moz-txt-link-abbreviated" href="mailto:op-wait-power-on@0.service">op-wait-power-on@0.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'; min-height: 17.0px">
-            <br>
-          </p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">cat <a class="moz-txt-link-abbreviated" href="mailto:obmc-chassis-poweron@.target">obmc-chassis-poweron@.target</a><span> </span></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">[Unit]</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">Description=Chassis%i (Power On)</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">Wants=multi-user.target</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">After=multi-user.target</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:Wants=mapper-wait@-xyz-openbmc_project-state-chassis%i.service">Wants=mapper-wait@-xyz-openbmc_project-state-chassis%i.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:After=mapper-wait@-xyz-openbmc_project-state-chassis%i.service">After=mapper-wait@-xyz-openbmc_project-state-chassis%i.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:Wants=mapper-subtree-remove@-xyz-openbmc\x5fproject-software\x3Axyz.openbmc_project.Software.ActivationBlocksTransition.service">Wants=mapper-subtree-remove@-xyz-openbmc\x5fproject-software\x3Axyz.openbmc_project.Software.ActivationBlocksTransition.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:After=mapper-subtree-remove@-xyz-openbmc\x5fproject-software\x3Axyz.openbmc_project.Software.ActivationBlocksTransition.service">After=mapper-subtree-remove@-xyz-openbmc\x5fproject-software\x3Axyz.openbmc_project.Software.ActivationBlocksTransition.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'; min-height: 17.0px">
-            <br>
-          </p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">cat <a class="moz-txt-link-abbreviated" href="mailto:op-power-start@0.service">op-power-start@0.service</a><span> </span></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">[Unit]</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">Description=Start Power%i</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:Wants=obmc-power-start@%i.target">Wants=obmc-power-start@%i.target</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:Before=obmc-power-start@%i.target">Before=obmc-power-start@%i.target</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:After=obmc-power-start-pre@%i.target">After=obmc-power-start-pre@%i.target</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">After=obmc-fan-control.target</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:Wants=mapper-wait@-org-openbmc-control-power%i.service">Wants=mapper-wait@-org-openbmc-control-power%i.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:After=mapper-wait@-org-openbmc-control-power%i.service">After=mapper-wait@-org-openbmc-control-power%i.service</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">[Service]</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">RemainAfterExit=yes</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">Type=oneshot</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">ExecStart=/bin/sh -c "busctl call `mapper
-            get-service /org/openbmc/control/power%i`
-            /org/openbmc/control/power%i org.openbmc.control.Power
-            setPowerState i 1"</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">SyslogIdentifier=op-power-start</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">[Install]</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:WantedBy=obmc-host-start@%i.target">WantedBy=obmc-host-start@%i.target</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'; min-height: 17.0px">
-            <br>
-          </p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">cat <a class="moz-txt-link-abbreviated" href="mailto:obmc-power-start@.target">obmc-power-start@.target</a><span> </span></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">[Unit]</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">Description=Power%i On</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:After=obmc-power-start-pre@%i.target">After=obmc-power-start-pre@%i.target</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">Wants=multi-user.target</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'"><a class="moz-txt-link-abbreviated" href="mailto:Conflicts=obmc-chassis-poweroff@%i.target">Conflicts=obmc-chassis-poweroff@%i.target</a></p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">RefuseManualStart=yes</p>
-          <p style="margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px
-            'PingFang SC'">RefuseManualStop=yes</p>
-          <br>
-        </span></div>
-      <div>
-        <div style="font-family:Calibri,Arial,Helvetica,sans-serif;
-          font-size:12pt; color:rgb(0,0,0)">
-          <span style="caret-color: rgb(50, 49, 48); color: rgb(50, 49,
-            48); font-family: DengXian; text-align: justify;
-            background-color: rgb(255, 255, 255); display: inline
-            !important">Thanks</span><br>
-        </div>
-        <div style="font-family:Calibri,Arial,Helvetica,sans-serif;
-          font-size:12pt; color:rgb(0,0,0)">
-          <span style="caret-color: rgb(50, 49, 48); color: rgb(50, 49,
-            48); font-family: DengXian; text-align: justify;
-            background-color: rgb(255, 255, 255); display: inline
-            !important">Harley</span></div>
-        <hr tabindex="-1" style="display:inline-block; width:98%">
-        <div id="divRplyFwdMsg" dir="ltr"><font style="font-size:11pt"
-            face="Calibri, sans-serif" color="#000000"><b>发件人:</b>
-            openbmc
-            <a class="moz-txt-link-rfc2396E" href="mailto:openbmc-bounces+zhouyuanqing8=outlook.com@lists.ozlabs.org">&lt;openbmc-bounces+zhouyuanqing8=outlook.com@lists.ozlabs.org&gt;</a>
-            代表 Sui Chen <a class="moz-txt-link-rfc2396E" href="mailto:suichen6@gmail.com">&lt;suichen6@gmail.com&gt;</a><br>
-            <b>发送时间:</b> 2020年4月21日 1:05<br>
-            <b>收件人:</b> <a class="moz-txt-link-abbreviated" href="mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a>
-            <a class="moz-txt-link-rfc2396E" href="mailto:openbmc@lists.ozlabs.org">&lt;openbmc@lists.ozlabs.org&gt;</a><br>
-            <b>主题:</b> Re: Call for Gardening Tasks</font>
-          <div> </div>
-        </div>
-        <div lang="ZH-CN">
-          <div class="x_WordSection1">
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span lang="EN-US">&gt; On Apr 11, 2020, at 8:15 AM,
-                Andrew Geissler &lt;geissonator at gmail.com&gt; wrote:</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span lang="EN-US">&gt; Systemd Visualization</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span lang="EN-US">&gt; Another complicated area of
-                OpenBMC is our systemd targets and services. Building on
-                the upstream tools to visualize our systemd targets and
-                services would be useful to new people.</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US"> </span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">+1 to
-                visualization, and I have a few thoughts on this ---</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">My lacking a
-                mental model of how an OpenBMC system works had been my
-                pain point in the first few months working with OpenBMC
-                (I’m a bit new to this area), so after learning the
-                minimal set of survival skills I did something similar
-                to what you mentioned – visualizing the messages passed
-                between different dbus peers (and conveniently, IPMI
-                traffic, as IPMI-related dbus messages exposing all IPMI
-                payload comprise most of the dbus traffic on that
-                particular system I was working on.)</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US"> </span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">I think packet
-                analysis tools such as Wireshark and graphics frame
-                analysis tools such as RenderDoc, or system event-based
-                Windows Performance tool like GPUView provide great
-                examples of what people might expect to achieve with a
-                visualization tool: capture, inspect and (sometimes)
-                playback, across multiple layers in the
-                software/hardware stack. Many similar existing tools
-                process sequences of events, and in this case of BMCs,
-                the events could be dbus messages. I found a prototype
-                visualizer made at work greatly helpful in explaining to
-                new team members some basic concepts and the IPMI stack
-                on the BMC.</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US"> </span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">The IPMI stack
-                is interesting because it’s one noticeable workload on
-                the particular BMC system I had been working on; in my
-                current limited understanding, having lots of I/O
-                capability to connect to hundreds of sensors is one of
-                the many features that set apart a BMC chip and a
-                similarly powerful smartphone chip, and the broad use of
-                dbus is what sets apart OpenBMC and the desktop Linux
-                distro I had been using. I heard optimization is best
-                done workload by workload, perhaps this rationale
-                applies to visualization too?</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US"> </span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">I realize I
-                was mostly talking about visualizing the run-time state
-                of the system rather than build-time, but we could
-                visualize the run-time aspect of systemd units too since
-                I have seen many times a dbus message eventually
-                triggering a systemd target to acutate the system, so it
-                would be good to consider both dbus and systemd (and
-                maybe other parts of the system?) to have a more
-                holistic view of the BMC’s operations.</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US"> </span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">Thanks</span></p>
-            <p class="x_MsoNormal" style="margin: 0cm 0cm 0.0001pt;
-              text-align: justify; font-size: 10.5pt; font-family:
-              DengXian;">
-              <span style="font-size:12.0pt" lang="EN-US">Sui</span></p>
-          </div>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------E565549C4BF89AD3993BC1AF--
+PGRpdj5IZWxsbyE8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5JJ2xsIHRyeSB0byBhbnN3ZXIgeW91
+ciBxdWVzdGlvbiBhYm91dCByd2ZzIGltYWdlLjwvZGl2PjxkaXY+SSBoYWQgdGhlIHNhbWUgaXNz
+dWUgcGx1cyBJIHdhbnRlZCB0byBiZSBhYmxlIHRvIGNyZWF0ZSBzb21lIGRhdGEgaW4gcndmcyBz
+ZWdtZW50LjwvZGl2PjxkaXY+VGh1cyBJJ3ZlIGNyZWF0ZWQgb2JtYy1waG9zcGhvci1pbWFnZS5i
+YmFwcGVuZCB3aGVyZSBJIGRvIHRoZSBmb2xsb3dpbmc6PC9kaXY+PGRpdj48ZGl2Pj09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT08L2Rpdj48ZGl2PlJXRlNfU0laRSA/PSAiNDE5NDMwNCI8L2Rpdj48ZGl2Pk9WRVJMQVlf
+TUtGU19PUFRTID0gIiAtLXBhZD0ke1JXRlNfU0laRX0iPC9kaXY+PC9kaXY+PGRpdj48ZGl2PsKg
+PC9kaXY+PGRpdj4jIE92ZXJyaWRlIEpGRlMgaW1hZ2UgY3JlYXRpb248L2Rpdj48ZGl2PmRvX2dl
+bmVyYXRlX3J3ZnNfc3RhdGljKCkgezwhLS0gLS0+PC9kaXY+PGRpdj5yd2Rpcj0kKHB3ZCk8L2Rp
+dj48ZGl2PnJ3ZGlyPSR7cndkaXJ9L2pmZnMyPC9kaXY+PGRpdj5pbWFnZT1yd2ZzLmpmZnMyPC9k
+aXY+PGRpdj7CoDwvZGl2PjxkaXY+cm0gLXJmICRyd2RpciAkaW1hZ2UgJmd0OyAvZGV2L251bGwg
+MiZndDsmYW1wOzE8L2Rpdj48ZGl2Pm1rZGlyIC1wICR7cndkaXJ9L2NvdzwvZGl2PjxkaXY+cndk
+aXI9JHtyd2Rpcn0vY293PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+YmJwbGFpbiAiREVCVUc6IENy
+ZWF0aW5nIFJXRlMgaW1hZ2UgIjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2Pm12ICR7SU1BR0VfUk9P
+VEZTfS9yd2ZzLyogJHtyd2Rpcn0vPC9kaXY+PGRpdj5ybSAtcmYgJHtJTUFHRV9ST09URlN9L3J3
+ZnM8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj4jIENyZWF0ZSBuZWNlc3NhcnkgZmlsZXMsIGRpcmVj
+dG9yaWVzLCBldGMgaW4gJHtyd2Rpcn08L2Rpdj48ZGl2PiR7SkZGUzJfUldGU19DTUR9ICR7T1ZF
+UkxBWV9NS0ZTX09QVFN9ICR7T1ZFUkxBWV9NS0ZTX09QVFN9IC0tc3F1YXNoLXVpZHM8L2Rpdj48
+ZGl2Pn08L2Rpdj48L2Rpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT08L2Rpdj48ZGl2PsKgPC9kaXY+PGRp
+dj5BdCB0aGUgZW5kIEkgaGF2ZSB0aGUgbm9ybWFsIEpGRlMyIGltYWdlIGluc3RlYWQgb2YgZW1w
+dHkuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+SG9wZSB0aGlzIGNhbiBoZWxwLjwvZGl2PjxkaXY+
+wqA8L2Rpdj48ZGl2PjIxLjA0LjIwMjAsIDE4OjI0LCAiemhvdXl1YW5xaW5nOEBvdXRsb29rLmNv
+bSIgJmx0O3pob3V5dWFucWluZzhAb3V0bG9vay5jb20mZ3Q7OjwvZGl2PjxibG9ja3F1b3RlPjxk
+aXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTonY2FsaWJy
+aScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB0Ij5I
+acKgPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTon
+Y2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZTox
+MnB0Ij7CoDwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYiggMCAsIDAgLCAwICk7Zm9udC1mYW1p
+bHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtmb250LXNp
+emU6MTJwdCI+wqAgwqAgVGhpcyBpcyBhIHZlcnkgZ29vZCBpZGVhLiBBcyB0aGUgZmlyc3QgdGlt
+ZSB0byBkbyBvcGVuYm1jLCBJIGxvb2sgZm9yd2FyZCB0byBpdC4gQ3VycmVudGx5LCBJIGFtIGJl
+aW5nIHRyb3VibGVkIGJ5IHRoZSBwcm9ibGVtcyB5b3UgZGVzY3JpYmUuPC9kaXY+PGRpdiBzdHls
+ZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwn
+ICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB0Ij7CoDwvZGl2PjxkaXYg
+c3R5bGU9ImNvbG9yOnJnYiggMCAsIDAgLCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2Fy
+aWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTJwdCI+wqAgwqDCoFRo
+ZSBmb2xsb3dpbmcgcXVlc3Rpb25zLCBwbGVhc2UgYWxzbyBoZWxwIHlvdSBhbnN3ZXIgaXQsIHRo
+YW5rIHlvdSB2ZXJ5IG11Y2guPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAg
+KTtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNl
+cmlmO2ZvbnQtc2l6ZToxMnB0Ij7CoDwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYiggMCAsIDAg
+LCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fu
+cy1zZXJpZjtmb250LXNpemU6MTJwdCI+wqAgwqAgMS5JIG1vZGlmaWVkIHRoZSBkdHMgZmlsZSwg
+aG93IHRvIHVzZSB0aGUgY29tbWFuZCAiYml0YmFrZSAtZiBsaW51eC1hc3BlZWQiIHRvIEdlbmVy
+YXRlIGZpdGltYWdlIGFuZCBkdWImI3hmZjFmOzwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYigg
+MCAsIDAgLCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2En
+ICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTJwdCI+wqAgwqAgwqBOb3cswqBJIG1vZGlmeSB0aGUg
+ZHRzIGZpbGUgaW4gdGhlIGtlcm5lbCBzb3VyY2UgZGlyZWN0b3J5LiBXaGVuIEkgY29tcGlsZSwg
+Yml0YmFrZSB3aWxsIHJlLWZldGNoIHRoZSBzb3VyY2UgY29kZSwgZGVjb21wcmVzcywgcGF0Y2gs
+IGNvbmZpZ3VyZSwgYW5kIGNvbXBpbGUsIGNhdXNpbmcgbXkgY2hhbmdlcyB0byBiZSBvdmVyd3Jp
+dHRlbi4gSSBjdXJyZW50bHkgdXNlIG1hbnVhbCBjYWxsIHNjcmlwdHMgdG8gY29tcGlsZSBkdHMg
+ZmlsZXMgYW5kIG1ha2UgaW1hZ2VzIGZvciBkZWJ1Z2dpbmcuSXMgdGhlcmUgYSB3YXkgdG8gbWFr
+ZSBiaXRiYWtlIHNraXAgdGhlIHByZXZpb3VzIHN0ZXBzIGFuZCBjb21waWxlIGRpcmVjdGx5JiN4
+ZmYxZjs8L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpyZ2IoIDAgLCAwICwgMCApO2ZvbnQtZmFtaWx5
+OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjEycHQiPsKgPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZh
+bWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQt
+c2l6ZToxMnB0Ij7CoDwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYiggMCAsIDAgLCAwICk7Zm9u
+dC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtm
+b250LXNpemU6MTJwdCI+wqAgwqAgwqAyLlRoZSBzaXplIG9mIGltYWdlLXJ3ZnMgaXMgMCwgSSB3
+YW50IHRvIHVzZSByd2ZzIGRlYnVnZ2luZywgaG93IHRvIGNvbmZpZ3VyZSB0byBnZW5lcmF0ZSBh
+IG5vcm1hbCBpbWFnZS1yd2ZzP8KgPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAs
+IDAgKTtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5z
+LXNlcmlmO2ZvbnQtc2l6ZToxMnB0Ij7CoCDCoCDCoC1ydy1yLS1yLS0uIDIgaGFybGV5emhvdSBo
+YXJsZXl6aG91IMKgIMKgIDk0NDMgwqAgwqAgwqAgwqAgwqAgwqAgNOaciCDCoCDCoCDCoCDCoDcg
+MTc6Mjcgb2JtYy1waG9zcGhvci1pbWFnZS14eGgtMjAyMDA0MDcwOTI1NTgucm9vdGZzLm1hbmlm
+ZXN0PGRpdj7CoCDCoCDCoC1ydy1yLS1yLS0uIDIgaGFybGV5emhvdSBoYXJsZXl6aG91IDE4MjE0
+OTEyIMKgIMKgIMKgIMKgIDTmnIggwqAgwqA3IDE3OjI3IG9ibWMtcGhvc3Bob3ItaW1hZ2UtPHNw
+YW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtmb250LWZhbWlseTonY2FsaWJyaScg
+LCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmIj54eGg8L3NwYW4+LTIwMjAwNDA3
+MDkyNTU4LnJvb3Rmcy5zcXVhc2hmcy14ejwvZGl2PjxkaXY+wqAgwqAgwqAtcnctcnctci0tLiAy
+IGhhcmxleXpob3UgaGFybGV5emhvdSAzMzU1NDQzMiDCoCDCoCDCoCDCoDTmnIggwqAgNyAxNzoy
+NyBvYm1jLXBob3NwaG9yLWltYWdlLTxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZm
+ZmY7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1z
+ZXJpZiI+eHhoPC9zcGFuPi0yMDIwMDQwNzA5MjU1OC5zdGF0aWMubXRkPC9kaXY+PGRpdj7CoCDC
+oCDCoC1ydy1ydy1yLS0uIDIgaGFybGV5emhvdSBoYXJsZXl6aG91IDMzNTY2NzIwIMKgIMKgIMKg
+IMKgNOaciCDCoCA3IDE3OjI4IG9ibWMtcGhvc3Bob3ItaW1hZ2UtPHNwYW4gc3R5bGU9ImJhY2tn
+cm91bmQtY29sb3I6I2ZmZmZmZjtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hl
+bHZldGljYScgLCBzYW5zLXNlcmlmIj54eGg8L3NwYW4+LTIwMjAwNDA3MDkyNTU4LnN0YXRpYy5t
+dGQuYWxsLnRhcjwvZGl2PjxkaXY+wqAgwqAgwqAtcnctcnctci0tLiAyIGhhcmxleXpob3UgaGFy
+bGV5emhvdSAyMjM4NDY0MCDCoCDCoCDCoCDCoDTmnIggwqAgNyAxNzoyOCBvYm1jLXBob3NwaG9y
+LWltYWdlLTxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Zm9udC1mYW1pbHk6
+J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZiI+eHhoPC9zcGFu
+Pi0yMDIwMDQwNzA5MjU1OC5zdGF0aWMubXRkLnRhcjwvZGl2PjxkaXY+wqAgwqAgwqAtcnctci0t
+ci0tLiAyIGhhcmxleXpob3UgaGFybGV5emhvdSDCoCAzMDgyMTggwqAgwqAgwqAgwqAgwqAgwqA0
+5pyIIMKgIMKgIMKgNyAxNzoyNyBvYm1jLXBob3NwaG9yLWltYWdlLTxzcGFuIHN0eWxlPSJiYWNr
+Z3JvdW5kLWNvbG9yOiNmZmZmZmY7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdo
+ZWx2ZXRpY2EnICwgc2Fucy1zZXJpZiI+eHhoPC9zcGFuPi0yMDIwMDQwNzA5MjU1OC50ZXN0ZGF0
+YS5qc29uPC9kaXY+PGRpdj7CoCDCoCDCoC1ydy1yLS1yLS0uIDIgaGFybGV5emhvdSBoYXJsZXl6
+aG91IMKgIMKgIMKgIMKgIMKgIDAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8c3BhbiBzdHlsZT0iYmFj
+a2dyb3VuZC1jb2xvcjojMDBmZjAwIj7CoDTmnIggwqAgNyAxNzoyNyBvYm1jLXBob3NwaG9yLWlt
+YWdlLTwvc3Bhbj48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojMDBmZjAwO2ZvbnQtZmFt
+aWx5OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWYiPnh4aDwv
+c3Bhbj48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojMDBmZjAwIj4uamZmczI8L3NwYW4+
+PC9kaXY+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWls
+eTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6
+ZToxMnB0Ij7CoDwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYiggMCAsIDAgLCAwICk7Zm9udC1m
+YW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtmb250
+LXNpemU6MTJwdCI+wqA8L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpyZ2IoIDAgLCAwICwgMCApO2Zv
+bnQtZmFtaWx5OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7
+Zm9udC1zaXplOjEycHQiPsKgIMKgIDMuIEkgZGlkIG5vdCBmaW5kIHRoZSBzb3VyY2UgY29kZSBv
+ZiAicGdvb2Rfd2FpdCIgYW5kICJwb3dlcl9jb250cm9sLmV4ZSIgaW4gb2JtYy1vcC1jb250cm9s
+LXBvd2VyPyB3aGVyZSBjYW4gSSBnZXQgaXQgPzwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYigg
+MCAsIDAgLCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2En
+ICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTJwdCI+wqA8L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpy
+Z2IoIDAgLCAwICwgMCApO2ZvbnQtZmFtaWx5OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0
+aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjEycHQiPsKgPC9kaXY+PGRpdiBzdHlsZT0iY29s
+b3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hl
+bHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB0Ij7CoCDCoCA0LjxzcGFuIHN0eWxl
+PSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+T3BlbkJNQyB1c2VzwqA8
+L3NwYW4+PGEgaHJlZj0iaHR0cHM6Ly93d3cuZnJlZWRlc2t0b3Aub3JnL3dpa2kvU29mdHdhcmUv
+c3lzdGVtZC8iIHN0eWxlPSJib3gtc2l6aW5nOmJvcmRlci1ib3g7Y29sb3I6cmdiKCAzICwgMTAy
+ICwgMjE0ICkiPnN5c3RlbWQ8L2E+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZm
+Zjtjb2xvcjojMjQyOTJlIj7CoHRvIG1hbmFnZSBhbGwgcHJvY2Vzc2VzLCBTbyBpwqBhbmFseXpl
+ZCB0aGUgcHJvY2VzcyBvZiBzeXN0ZW1kIHN0YXJ0aW5nIHByb2Nlc3MgYW5kIHNhdyAiZGVmYXVs
+dC50YXJnZXQtJmd0OyBiYXNpYy50YXJnZXQtJmd0OyBzeXNpbml0LnRhcmdldC0mZ3Q7IGxvY2Fs
+LWZzLnRhcmdldCIsIHRoZXJlIGlzIG5vIGNvbnRlbnQgYmVoaW5kLnBsZWFzZSBoZWxwIHRvIHBy
+b3ZpZGUgY2x1ZXMgb2Ygc3lzdGVtZCBzdGFydGluZyBwcm9jZXNzLjwvc3Bhbj48L2Rpdj48ZGl2
+IHN0eWxlPSJjb2xvcjpyZ2IoIDAgLCAwICwgMCApO2ZvbnQtZmFtaWx5OidjYWxpYnJpJyAsICdh
+cmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjEycHQiPsKgPC9kaXY+
+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTonY2FsaWJyaScg
+LCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB0Ij48c3Bh
+biBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPsKgIMKgIDUu
+SSB1bmRlcnN0YW5kIHRoZSBmb2xsb3dpbmcgZXhlY3V0aW9uIHByb2Nlc3Mgb2YgcG93ZXItb24g
+LCBoZWxwIGNoZWNrIGlmIGl0IGlzIGNvcnJlY3QuPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9ImNv
+bG9yOnJnYiggMCAsIDAgLCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdo
+ZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTJwdCI+wqAgwqAgwqAgwqBhKS5yZXN0
+IG9yIGJ1c2N0bCBzZW5kIHBvd2VyLW9uIGNvbW1hbmRzIHRvIHN5c3RlbWQgdGhyb3VnaCBkLWJ1
+cyBtZXNzYWdlcy48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpyZ2IoIDAgLCAwICwgMCApO2ZvbnQt
+ZmFtaWx5OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9u
+dC1zaXplOjEycHQiPsKgIMKgIMKgIMKgYikuc3lzdGVtZCBmaW5kIHRoZSA8c3BhbiBzdHlsZT0i
+YmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmU7Zm9udC1mYW1pbHk6J3Bpbmdm
+YW5nIHNjJztmb250LXNpemU6MTJweCI+IG9ibWMtY2hhc3Npcy1wb3dlcm9uQC50YXJnZXQ8L3Nw
+YW4+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTon
+Y2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZTox
+MnB0Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmU7
+Zm9udC1mYW1pbHk6J3BpbmdmYW5nIHNjJztmb250LXNpemU6MTJweCI+wqAgwqAgwqAgPHNwYW4g
+c3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMDAwMDAwO2ZvbnQtZmFtaWx5
+OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjE2cHgiPiDCoCBjKS5zeXN0ZW1kIGZpbmQgdGhlwqA8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1j
+b2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmU7Zm9udC1mYW1pbHk6J3BpbmdmYW5nIHNjJztmb250
+LXNpemU6MTJweCI+b2JtYy1wb3dlci1zdGFydEAudGFyZ2V0PC9zcGFuPjwvc3Bhbj48L3NwYW4+
+PC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdiKCAwICwgMCAsIDAgKTtmb250LWZhbWlseTonY2Fs
+aWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB0
+Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmU7Zm9u
+dC1mYW1pbHk6J3BpbmdmYW5nIHNjJztmb250LXNpemU6MTJweCI+PHNwYW4gc3R5bGU9ImJhY2tn
+cm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMDAwMDAwO2ZvbnQtZmFtaWx5OidjYWxpYnJpJyAs
+ICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjE2cHgiPjxzcGFu
+IHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZTtmb250LWZhbWls
+eToncGluZ2Zhbmcgc2MnO2ZvbnQtc2l6ZToxMnB4Ij7CoCDCoCDCoCDCoCA8c3BhbiBzdHlsZT0i
+YmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMwMDAwMDA7Zm9udC1mYW1pbHk6J2NhbGli
+cmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTZweCI+
+IGQpLnN5c3RlbWQgZmluZCB0aGXCoDxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZm
+ZmY7Y29sb3I6IzI0MjkyZTtmb250LWZhbWlseToncGluZ2Zhbmcgc2MnO2ZvbnQtc2l6ZToxMnB4
+Ij48YSBocmVmPSJtYWlsdG86b3AtcG93ZXItc3RhcnRAMC5zZXJ2aWNlIj5vcC1wb3dlci1zdGFy
+dEAwLnNlcnZpY2U8L2E+PC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjojMjQyOTJlO2ZvbnQtZmFt
+aWx5OidwaW5nZmFuZyBzYyc7Zm9udC1zaXplOjEycHg7bWFyZ2luOjBweCI+wqA8L3NwYW4+PC9z
+cGFuPjwvc3Bhbj48L3NwYW4+PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9ImNvbG9yOnJnYiggMCAs
+IDAgLCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwg
+c2Fucy1zZXJpZjtmb250LXNpemU6MTJwdCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6
+I2ZmZmZmZjtjb2xvcjojMjQyOTJlO2ZvbnQtZmFtaWx5OidwaW5nZmFuZyBzYyc7Zm9udC1zaXpl
+OjEycHgiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzAwMDAw
+MDtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNl
+cmlmO2ZvbnQtc2l6ZToxNnB4Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZm
+O2NvbG9yOiMyNDI5MmU7Zm9udC1mYW1pbHk6J3BpbmdmYW5nIHNjJztmb250LXNpemU6MTJweCI+
+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMDAwMDAwO2ZvbnQt
+ZmFtaWx5OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9u
+dC1zaXplOjE2cHgiPjxzcGFuIHN0eWxlPSJjb2xvcjojMjQyOTJlO2ZvbnQtZmFtaWx5OidwaW5n
+ZmFuZyBzYyc7Zm9udC1zaXplOjEycHg7bWFyZ2luOjBweCI+wqAgwqAgwqAgwqDCoDxzcGFuIHN0
+eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzAwMDAwMDtmb250LWZhbWlseTon
+Y2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGljYScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZTox
+NnB4O21hcmdpbjowcHgiPmUpLjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7
+Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAsICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJp
+ZiI+c3lzdGVtZCBzdGFydCBhIHRocmVhZCBhbmQgZXhlY3V0ZcKgIjxzcGFuIHN0eWxlPSJiYWNr
+Z3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZTtmb250LWZhbWlseToncGluZ2Zhbmcg
+c2MnO2ZvbnQtc2l6ZToxMnB4Ij5idXNjdGwgY2FsbCBgbWFwcGVyIGdldC1zZXJ2aWNlIC9vcmcv
+b3BlbmJtYy9jb250cm9sL3Bvd2VyJWlgIC9vcmcvb3BlbmJtYy9jb250cm9sL3Bvd2VyJWkgb3Jn
+Lm9wZW5ibWMuY29udHJvbC5Qb3dlciBzZXRQb3dlclN0YXRlIEkgMSI8L3NwYW4+PC9zcGFuPjwv
+c3Bhbj48L3NwYW4+PC9zcGFuPjwvc3Bhbj48L3NwYW4+PC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9
+ImNvbG9yOnJnYiggMCAsIDAgLCAwICk7Zm9udC1mYW1pbHk6J2NhbGlicmknICwgJ2FyaWFsJyAs
+ICdoZWx2ZXRpY2EnICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTJwdCI+wqA8L2Rpdj48ZGl2IHN0
+eWxlPSJjb2xvcjpyZ2IoIDAgLCAwICwgMCApO2ZvbnQtZmFtaWx5OidjYWxpYnJpJyAsICdhcmlh
+bCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjEycHQiPmFwcGVuZGl4JiN4
+ZmYxYTs8L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpyZ2IoIDAgLCAwICwgMCApO2ZvbnQtZmFtaWx5
+OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjEycHQiPjxwIHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3Bh
+biBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPmxzIDxhIGhy
+ZWY9Im1haWx0bzpvYm1jLWNoYXNzaXMtcG93ZXJvbkAwLnRhcmdldC5yZXF1aXJlcyI+b2JtYy1j
+aGFzc2lzLXBvd2Vyb25AMC50YXJnZXQucmVxdWlyZXM8L2E+PC9zcGFuPjwvcD48cCBzdHlsZT0i
+Zm9udDoxMnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91
+bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj48YSBocmVmPSJtYWlsdG86b3AtcG93ZXIt
+c3RhcnRAMC5zZXJ2aWMiPm9wLXBvd2VyLXN0YXJ0QDAuc2VydmljPC9hPmXCoCA8YSBocmVmPSJt
+YWlsdG86b3Atd2FpdC1wb3dlci1vbkAwLnNlcnZpY2UiPm9wLXdhaXQtcG93ZXItb25AMC5zZXJ2
+aWNlPC9hPjwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdp
+bjowcHg7bWluLWhlaWdodDoxN3B4Ij7CoDwvcD48cCBzdHlsZT0iZm9udDoxMnB4ICdwaW5nZmFu
+ZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtj
+b2xvcjojMjQyOTJlIj5jYXQgb2JtYy1jaGFzc2lzLXBvd2Vyb25ALnRhcmdldMKgPC9zcGFuPjwv
+cD48cCBzdHlsZT0iZm9udDoxMnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5
+bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj5bVW5pdF08L3NwYW4+
+PC9wPjxwIHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBz
+dHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPkRlc2NyaXB0aW9u
+PUNoYXNzaXMlaSAoUG93ZXIgT24pPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDoxMnB4ICdwaW5n
+ZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZm
+Zjtjb2xvcjojMjQyOTJlIj5XYW50cz1tdWx0aS11c2VyLnRhcmdldDwvc3Bhbj48L3A+PHAgc3R5
+bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdpbjowcHgiPjxzcGFuIHN0eWxlPSJiYWNr
+Z3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+QWZ0ZXI9bXVsdGktdXNlci50YXJn
+ZXQ8L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4
+Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPjxh
+IGhyZWY9Im1haWx0bzpXYW50cz1tYXBwZXItd2FpdEAteHl6LW9wZW5ibWNfcHJvamVjdC1zdGF0
+ZS1jaGFzc2lzJWkuc2VydmljZSI+V2FudHM9bWFwcGVyLXdhaXRALXh5ei1vcGVuYm1jX3Byb2pl
+Y3Qtc3RhdGUtY2hhc3NpcyVpLnNlcnZpY2U8L2E+PC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDox
+MnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29s
+b3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj48YSBocmVmPSJtYWlsdG86QWZ0ZXI9bWFwcGVyLXdh
+aXRALXh5ei1vcGVuYm1jX3Byb2plY3Qtc3RhdGUtY2hhc3NpcyVpLnNlcnZpY2UiPkFmdGVyPW1h
+cHBlci13YWl0QC14eXotb3BlbmJtY19wcm9qZWN0LXN0YXRlLWNoYXNzaXMlaS5zZXJ2aWNlPC9h
+Pjwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdpbjowcHgi
+PjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+V2Fu
+dHM9bWFwcGVyLXN1YnRyZWUtcmVtb3ZlQC14eXotb3BlbmJtY1x4NWZwcm9qZWN0LXNvZnR3YXJl
+XHgzQXh5ei5vcGVuYm1jX3Byb2plY3QuU29mdHdhcmUuQWN0aXZhdGlvbkJsb2Nrc1RyYW5zaXRp
+b24uc2VydmljZTwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21h
+cmdpbjowcHgiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0
+MjkyZSI+QWZ0ZXI9bWFwcGVyLXN1YnRyZWUtcmVtb3ZlQC14eXotb3BlbmJtY1x4NWZwcm9qZWN0
+LXNvZnR3YXJlXHgzQXh5ei5vcGVuYm1jX3Byb2plY3QuU29mdHdhcmUuQWN0aXZhdGlvbkJsb2Nr
+c1RyYW5zaXRpb24uc2VydmljZTwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zh
+bmcgc2MnO21hcmdpbjowcHg7bWluLWhlaWdodDoxN3B4Ij7CoDwvcD48cCBzdHlsZT0iZm9udDox
+MnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29s
+b3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj5jYXQgPGEgaHJlZj0ibWFpbHRvOm9wLXBvd2VyLXN0
+YXJ0QDAuc2VydmljIj5vcC1wb3dlci1zdGFydEAwLnNlcnZpYzwvYT5lwqA8L3NwYW4+PC9wPjxw
+IHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0i
+YmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPltVbml0XTwvc3Bhbj48L3A+
+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdpbjowcHgiPjxzcGFuIHN0eWxl
+PSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+RGVzY3JpcHRpb249U3Rh
+cnQgUG93ZXIlaTwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21h
+cmdpbjowcHgiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0
+MjkyZSI+PGEgaHJlZj0ibWFpbHRvOldhbnRzPW9ibWMtcG93ZXItc3RhcnRAJWkudGFyZ2V0Ij5X
+YW50cz1vYm1jLXBvd2VyLXN0YXJ0QCVpLnRhcmdldDwvYT48L3NwYW4+PC9wPjxwIHN0eWxlPSJm
+b250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0iYmFja2dyb3Vu
+ZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPjxhIGhyZWY9Im1haWx0bzpCZWZvcmU9b2Jt
+Yy1wb3dlci1zdGFydEAlaS50YXJnZXQiPkJlZm9yZT1vYm1jLXBvd2VyLXN0YXJ0QCVpLnRhcmdl
+dDwvYT48L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46
+MHB4Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUi
+PjxhIGhyZWY9Im1haWx0bzpBZnRlcj1vYm1jLXBvd2VyLXN0YXJ0LXByZUAlaS50YXJnZXQiPkFm
+dGVyPW9ibWMtcG93ZXItc3RhcnQtcHJlQCVpLnRhcmdldDwvYT48L3NwYW4+PC9wPjxwIHN0eWxl
+PSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0iYmFja2dy
+b3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPkFmdGVyPW9ibWMtZmFuLWNvbnRyb2wu
+dGFyZ2V0PC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDoxMnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2lu
+OjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJl
+Ij48YSBocmVmPSJtYWlsdG86V2FudHM9bWFwcGVyLXdhaXRALW9yZy1vcGVuYm1jLWNvbnRyb2wt
+cG93ZXIlaS5zZXJ2aWNlIj5XYW50cz1tYXBwZXItd2FpdEAtb3JnLW9wZW5ibWMtY29udHJvbC1w
+b3dlciVpLnNlcnZpY2U8L2E+PC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDoxMnB4ICdwaW5nZmFu
+ZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtj
+b2xvcjojMjQyOTJlIj48YSBocmVmPSJtYWlsdG86QWZ0ZXI9bWFwcGVyLXdhaXRALW9yZy1vcGVu
+Ym1jLWNvbnRyb2wtcG93ZXIlaS5zZXJ2aWNlIj5BZnRlcj1tYXBwZXItd2FpdEAtb3JnLW9wZW5i
+bWMtY29udHJvbC1wb3dlciVpLnNlcnZpY2U8L2E+PC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDox
+MnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29s
+b3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj5bU2VydmljZV08L3NwYW4+PC9wPjxwIHN0eWxlPSJm
+b250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0iYmFja2dyb3Vu
+ZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPlJlbWFpbkFmdGVyRXhpdD15ZXM8L3NwYW4+
+PC9wPjxwIHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBz
+dHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPlR5cGU9b25lc2hv
+dDwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdpbjowcHgi
+PjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+RXhl
+Y1N0YXJ0PS9iaW4vc2ggLWMgImJ1c2N0bCBjYWxsIGBtYXBwZXIgZ2V0LXNlcnZpY2UgL29yZy9v
+cGVuYm1jL2NvbnRyb2wvcG93ZXIlaWAgL29yZy9vcGVuYm1jL2NvbnRyb2wvcG93ZXIlaSBvcmcu
+b3BlbmJtYy5jb250cm9sLlBvd2VyIHNldFBvd2VyU3RhdGUgaSAxIjwvc3Bhbj48L3A+PHAgc3R5
+bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdpbjowcHgiPjxzcGFuIHN0eWxlPSJiYWNr
+Z3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+U3lzbG9nSWRlbnRpZmllcj1vcC1w
+b3dlci1zdGFydDwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21h
+cmdpbjowcHgiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0
+MjkyZSI+W0luc3RhbGxdPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDoxMnB4ICdwaW5nZmFuZyBz
+Yyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2ZmZmZmZjtjb2xv
+cjojMjQyOTJlIj48YSBocmVmPSJtYWlsdG86V2FudGVkQnk9b2JtYy1ob3N0LXN0YXJ0QCVpLnRh
+cmdldCI+V2FudGVkQnk9b2JtYy1ob3N0LXN0YXJ0QCVpLnRhcmdldDwvYT48L3NwYW4+PC9wPjxw
+IHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4O21pbi1oZWlnaHQ6MTdw
+eCI+wqA8L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAncGluZ2Zhbmcgc2MnO21hcmdpbjowcHgiPjxz
+cGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmY7Y29sb3I6IzI0MjkyZSI+Y2F0IG9i
+bWMtcG93ZXItc3RhcnRALnRhcmdldMKgPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udDoxMnB4ICdw
+aW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6I2Zm
+ZmZmZjtjb2xvcjojMjQyOTJlIj5bVW5pdF08L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250OjEycHgg
+J3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjoj
+ZmZmZmZmO2NvbG9yOiMyNDI5MmUiPkRlc2NyaXB0aW9uPVBvd2VyJWkgT248L3NwYW4+PC9wPjxw
+IHN0eWxlPSJmb250OjEycHggJ3BpbmdmYW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0i
+YmFja2dyb3VuZC1jb2xvcjojZmZmZmZmO2NvbG9yOiMyNDI5MmUiPjxhIGhyZWY9Im1haWx0bzpB
+ZnRlcj1vYm1jLXBvd2VyLXN0YXJ0LXByZUAlaS50YXJnZXQiPkFmdGVyPW9ibWMtcG93ZXItc3Rh
+cnQtcHJlQCVpLnRhcmdldDwvYT48L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250OjEycHggJ3Bpbmdm
+YW5nIHNjJzttYXJnaW46MHB4Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZm
+O2NvbG9yOiMyNDI5MmUiPldhbnRzPW11bHRpLXVzZXIudGFyZ2V0PC9zcGFuPjwvcD48cCBzdHls
+ZT0iZm9udDoxMnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJhY2tn
+cm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj48YSBocmVmPSJtYWlsdG86Q29uZmxp
+Y3RzPW9ibWMtY2hhc3Npcy1wb3dlcm9mZkAlaS50YXJnZXQiPkNvbmZsaWN0cz1vYm1jLWNoYXNz
+aXMtcG93ZXJvZmZAJWkudGFyZ2V0PC9hPjwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQ6MTJweCAn
+cGluZ2Zhbmcgc2MnO21hcmdpbjowcHgiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNm
+ZmZmZmY7Y29sb3I6IzI0MjkyZSI+UmVmdXNlTWFudWFsU3RhcnQ9eWVzPC9zcGFuPjwvcD48cCBz
+dHlsZT0iZm9udDoxMnB4ICdwaW5nZmFuZyBzYyc7bWFyZ2luOjBweCI+PHNwYW4gc3R5bGU9ImJh
+Y2tncm91bmQtY29sb3I6I2ZmZmZmZjtjb2xvcjojMjQyOTJlIj5SZWZ1c2VNYW51YWxTdG9wPXll
+czwvc3Bhbj48L3A+PC9kaXY+PGRpdj48ZGl2PsKgPC9kaXY+PGRpdiBzdHlsZT0iY29sb3I6cmdi
+KCAwICwgMCAsIDAgKTtmb250LWZhbWlseTonY2FsaWJyaScgLCAnYXJpYWwnICwgJ2hlbHZldGlj
+YScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMnB0Ij48c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1j
+b2xvcjojZmZmZmZmO2NvbG9yOiMzMjMxMzA7Zm9udC1mYW1pbHk6J2Rlbmd4aWFuJzt0ZXh0LWFs
+aWduOmp1c3RpZnkiPlRoYW5rczwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJjb2xvcjpyZ2IoIDAg
+LCAwICwgMCApO2ZvbnQtZmFtaWx5OidjYWxpYnJpJyAsICdhcmlhbCcgLCAnaGVsdmV0aWNhJyAs
+IHNhbnMtc2VyaWY7Zm9udC1zaXplOjEycHQiPjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9y
+OiNmZmZmZmY7Y29sb3I6IzMyMzEzMDtmb250LWZhbWlseTonZGVuZ3hpYW4nO3RleHQtYWxpZ246
+anVzdGlmeSI+SGFybGV5PC9zcGFuPjwvZGl2PjxociBzdHlsZT0id2lkdGg6OTglIiAvPjxkaXY+
+PGZvbnQgY29sb3I9IiMwMDAwMDAiIGZhY2U9IkNhbGlicmksIHNhbnMtc2VyaWYiIHN0eWxlPSJm
+b250LXNpemU6MTFwdCI+PHN0cm9uZz7lj5Hku7bkuro6PC9zdHJvbmc+IG9wZW5ibWMgJmx0Ozxh
+IGhyZWY9Im1haWx0bzpvcGVuYm1jLWJvdW5jZXMremhvdXl1YW5xaW5nOD1vdXRsb29rLmNvbUBs
+aXN0cy5vemxhYnMub3JnIj5vcGVuYm1jLWJvdW5jZXMremhvdXl1YW5xaW5nOD1vdXRsb29rLmNv
+bUBsaXN0cy5vemxhYnMub3JnPC9hPiZndDsg5Luj6KGoIFN1aSBDaGVuICZsdDs8YSBocmVmPSJt
+YWlsdG86c3VpY2hlbjZAZ21haWwuY29tIj5zdWljaGVuNkBnbWFpbC5jb208L2E+Jmd0OzxiciAv
+PjxzdHJvbmc+5Y+R6YCB5pe26Ze0Ojwvc3Ryb25nPiAyMDIw5bm0NOaciDIx5pelIDE6MDU8YnIg
+Lz48c3Ryb25nPuaUtuS7tuS6ujo8L3N0cm9uZz4gPGEgaHJlZj0ibWFpbHRvOm9wZW5ibWNAbGlz
+dHMub3psYWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9hPiAmbHQ7PGEgaHJlZj0i
+bWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+PC9hPiZndDs8YnIgLz48c3Ryb25nPuS4u+mimDo8L3N0cm9uZz4gUmU6IENhbGwgZm9yIEdhcmRl
+bmluZyBUYXNrczwvZm9udD48ZGl2PsKgPC9kaXY+PC9kaXY+PGRpdiBsYW5nPSJaSC1DTiI+PGRp
+dj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2Rlbmd4aWFuJztmb250LXNpemU6MTAuNXB0O21hcmdp
+bjowY20gMGNtIDAuMDAwMXB0IDBjbTt0ZXh0LWFsaWduOmp1c3RpZnkiPjxzcGFuIGxhbmc9IkVO
+LVVTIj4mZ3Q7IE9uIEFwciAxMSwgMjAyMCwgYXQgODoxNSBBTSwgQW5kcmV3IEdlaXNzbGVyICZs
+dDtnZWlzc29uYXRvciBhdCBnbWFpbC5jb20mZ3Q7IHdyb3RlOjwvc3Bhbj48L3A+PHAgc3R5bGU9
+ImZvbnQtZmFtaWx5OidkZW5neGlhbic7Zm9udC1zaXplOjEwLjVwdDttYXJnaW46MGNtIDBjbSAw
+LjAwMDFwdCAwY207dGV4dC1hbGlnbjpqdXN0aWZ5Ij48c3BhbiBsYW5nPSJFTi1VUyI+Jmd0OyBT
+eXN0ZW1kIFZpc3VhbGl6YXRpb248L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTonZGVu
+Z3hpYW4nO2ZvbnQtc2l6ZToxMC41cHQ7bWFyZ2luOjBjbSAwY20gMC4wMDAxcHQgMGNtO3RleHQt
+YWxpZ246anVzdGlmeSI+PHNwYW4gbGFuZz0iRU4tVVMiPiZndDsgQW5vdGhlciBjb21wbGljYXRl
+ZCBhcmVhIG9mIE9wZW5CTUMgaXMgb3VyIHN5c3RlbWQgdGFyZ2V0cyBhbmQgc2VydmljZXMuIEJ1
+aWxkaW5nIG9uIHRoZSB1cHN0cmVhbSB0b29scyB0byB2aXN1YWxpemUgb3VyIHN5c3RlbWQgdGFy
+Z2V0cyBhbmQgc2VydmljZXMgd291bGQgYmUgdXNlZnVsIHRvIG5ldyBwZW9wbGUuPC9zcGFuPjwv
+cD48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2Rlbmd4aWFuJztmb250LXNpemU6MTAuNXB0O21hcmdp
+bjowY20gMGNtIDAuMDAwMXB0IDBjbTt0ZXh0LWFsaWduOmp1c3RpZnkiPjxzcGFuIGxhbmc9IkVO
+LVVTIiBzdHlsZT0iZm9udC1zaXplOjEycHQiPsKgPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udC1m
+YW1pbHk6J2Rlbmd4aWFuJztmb250LXNpemU6MTAuNXB0O21hcmdpbjowY20gMGNtIDAuMDAwMXB0
+IDBjbTt0ZXh0LWFsaWduOmp1c3RpZnkiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1z
+aXplOjEycHQiPisxIHRvIHZpc3VhbGl6YXRpb24sIGFuZCBJIGhhdmUgYSBmZXcgdGhvdWdodHMg
+b24gdGhpcyAtLS08L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTonZGVuZ3hpYW4nO2Zv
+bnQtc2l6ZToxMC41cHQ7bWFyZ2luOjBjbSAwY20gMC4wMDAxcHQgMGNtO3RleHQtYWxpZ246anVz
+dGlmeSI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTJwdCI+TXkgbGFja2lu
+ZyBhIG1lbnRhbCBtb2RlbCBvZiBob3cgYW4gT3BlbkJNQyBzeXN0ZW0gd29ya3MgaGFkIGJlZW4g
+bXkgcGFpbiBwb2ludCBpbiB0aGUgZmlyc3QgZmV3IG1vbnRocyB3b3JraW5nIHdpdGggT3BlbkJN
+QyAoSeKAmW0gYSBiaXQgbmV3IHRvIHRoaXMgYXJlYSksIHNvIGFmdGVyIGxlYXJuaW5nIHRoZSBt
+aW5pbWFsIHNldCBvZiBzdXJ2aXZhbCBza2lsbHMgSSBkaWQgc29tZXRoaW5nIHNpbWlsYXIgdG8g
+d2hhdCB5b3UgbWVudGlvbmVkIEMgdmlzdWFsaXppbmcgdGhlIG1lc3NhZ2VzIHBhc3NlZCBiZXR3
+ZWVuIGRpZmZlcmVudCBkYnVzIHBlZXJzIChhbmQgY29udmVuaWVudGx5LCBJUE1JIHRyYWZmaWMs
+IGFzIElQTUktcmVsYXRlZCBkYnVzIG1lc3NhZ2VzIGV4cG9zaW5nIGFsbCBJUE1JIHBheWxvYWQg
+Y29tcHJpc2UgbW9zdCBvZiB0aGUgZGJ1cyB0cmFmZmljIG9uIHRoYXQgcGFydGljdWxhciBzeXN0
+ZW0gSSB3YXMgd29ya2luZyBvbi4pPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2Rl
+bmd4aWFuJztmb250LXNpemU6MTAuNXB0O21hcmdpbjowY20gMGNtIDAuMDAwMXB0IDBjbTt0ZXh0
+LWFsaWduOmp1c3RpZnkiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEycHQi
+PsKgPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2Rlbmd4aWFuJztmb250LXNpemU6
+MTAuNXB0O21hcmdpbjowY20gMGNtIDAuMDAwMXB0IDBjbTt0ZXh0LWFsaWduOmp1c3RpZnkiPjxz
+cGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEycHQiPkkgdGhpbmsgcGFja2V0IGFu
+YWx5c2lzIHRvb2xzIHN1Y2ggYXMgV2lyZXNoYXJrIGFuZCBncmFwaGljcyBmcmFtZSBhbmFseXNp
+cyB0b29scyBzdWNoIGFzIFJlbmRlckRvYywgb3Igc3lzdGVtIGV2ZW50LWJhc2VkIFdpbmRvd3Mg
+UGVyZm9ybWFuY2UgdG9vbCBsaWtlIEdQVVZpZXcgcHJvdmlkZSBncmVhdCBleGFtcGxlcyBvZiB3
+aGF0IHBlb3BsZSBtaWdodCBleHBlY3QgdG8gYWNoaWV2ZSB3aXRoIGEgdmlzdWFsaXphdGlvbiB0
+b29sOiBjYXB0dXJlLCBpbnNwZWN0IGFuZCAoc29tZXRpbWVzKSBwbGF5YmFjaywgYWNyb3NzIG11
+bHRpcGxlIGxheWVycyBpbiB0aGUgc29mdHdhcmUvaGFyZHdhcmUgc3RhY2suIE1hbnkgc2ltaWxh
+ciBleGlzdGluZyB0b29scyBwcm9jZXNzIHNlcXVlbmNlcyBvZiBldmVudHMsIGFuZCBpbiB0aGlz
+IGNhc2Ugb2YgQk1DcywgdGhlIGV2ZW50cyBjb3VsZCBiZSBkYnVzIG1lc3NhZ2VzLiBJIGZvdW5k
+IGEgcHJvdG90eXBlIHZpc3VhbGl6ZXIgbWFkZSBhdCB3b3JrIGdyZWF0bHkgaGVscGZ1bCBpbiBl
+eHBsYWluaW5nIHRvIG5ldyB0ZWFtIG1lbWJlcnMgc29tZSBiYXNpYyBjb25jZXB0cyBhbmQgdGhl
+IElQTUkgc3RhY2sgb24gdGhlIEJNQy48L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTon
+ZGVuZ3hpYW4nO2ZvbnQtc2l6ZToxMC41cHQ7bWFyZ2luOjBjbSAwY20gMC4wMDAxcHQgMGNtO3Rl
+eHQtYWxpZ246anVzdGlmeSI+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTJw
+dCI+wqA8L3NwYW4+PC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTonZGVuZ3hpYW4nO2ZvbnQtc2l6
+ZToxMC41cHQ7bWFyZ2luOjBjbSAwY20gMC4wMDAxcHQgMGNtO3RleHQtYWxpZ246anVzdGlmeSI+
+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJmb250LXNpemU6MTJwdCI+VGhlIElQTUkgc3RhY2sg
+aXMgaW50ZXJlc3RpbmcgYmVjYXVzZSBpdOKAmXMgb25lIG5vdGljZWFibGUgd29ya2xvYWQgb24g
+dGhlIHBhcnRpY3VsYXIgQk1DIHN5c3RlbSBJIGhhZCBiZWVuIHdvcmtpbmcgb247IGluIG15IGN1
+cnJlbnQgbGltaXRlZCB1bmRlcnN0YW5kaW5nLCBoYXZpbmcgbG90cyBvZiBJL08gY2FwYWJpbGl0
+eSB0byBjb25uZWN0IHRvIGh1bmRyZWRzIG9mIHNlbnNvcnMgaXMgb25lIG9mIHRoZSBtYW55IGZl
+YXR1cmVzIHRoYXQgc2V0IGFwYXJ0IGEgQk1DIGNoaXAgYW5kIGEgc2ltaWxhcmx5IHBvd2VyZnVs
+IHNtYXJ0cGhvbmUgY2hpcCwgYW5kIHRoZSBicm9hZCB1c2Ugb2YgZGJ1cyBpcyB3aGF0IHNldHMg
+YXBhcnQgT3BlbkJNQyBhbmQgdGhlIGRlc2t0b3AgTGludXggZGlzdHJvIEkgaGFkIGJlZW4gdXNp
+bmcuIEkgaGVhcmQgb3B0aW1pemF0aW9uIGlzIGJlc3QgZG9uZSB3b3JrbG9hZCBieSB3b3JrbG9h
+ZCwgcGVyaGFwcyB0aGlzIHJhdGlvbmFsZSBhcHBsaWVzIHRvIHZpc3VhbGl6YXRpb24gdG9vPzwv
+c3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidkZW5neGlhbic7Zm9udC1zaXplOjEwLjVw
+dDttYXJnaW46MGNtIDBjbSAwLjAwMDFwdCAwY207dGV4dC1hbGlnbjpqdXN0aWZ5Ij48c3BhbiBs
+YW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMnB0Ij7CoDwvc3Bhbj48L3A+PHAgc3R5bGU9
+ImZvbnQtZmFtaWx5OidkZW5neGlhbic7Zm9udC1zaXplOjEwLjVwdDttYXJnaW46MGNtIDBjbSAw
+LjAwMDFwdCAwY207dGV4dC1hbGlnbjpqdXN0aWZ5Ij48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9
+ImZvbnQtc2l6ZToxMnB0Ij5JIHJlYWxpemUgSSB3YXMgbW9zdGx5IHRhbGtpbmcgYWJvdXQgdmlz
+dWFsaXppbmcgdGhlIHJ1bi10aW1lIHN0YXRlIG9mIHRoZSBzeXN0ZW0gcmF0aGVyIHRoYW4gYnVp
+bGQtdGltZSwgYnV0IHdlIGNvdWxkIHZpc3VhbGl6ZSB0aGUgcnVuLXRpbWUgYXNwZWN0IG9mIHN5
+c3RlbWQgdW5pdHMgdG9vIHNpbmNlIEkgaGF2ZSBzZWVuIG1hbnkgdGltZXMgYSBkYnVzIG1lc3Nh
+Z2UgZXZlbnR1YWxseSB0cmlnZ2VyaW5nIGEgc3lzdGVtZCB0YXJnZXQgdG8gYWN1dGF0ZSB0aGUg
+c3lzdGVtLCBzbyBpdCB3b3VsZCBiZSBnb29kIHRvIGNvbnNpZGVyIGJvdGggZGJ1cyBhbmQgc3lz
+dGVtZCAoYW5kIG1heWJlIG90aGVyIHBhcnRzIG9mIHRoZSBzeXN0ZW0/KSB0byBoYXZlIGEgbW9y
+ZSBob2xpc3RpYyB2aWV3IG9mIHRoZSBCTUPigJlzIG9wZXJhdGlvbnMuPC9zcGFuPjwvcD48cCBz
+dHlsZT0iZm9udC1mYW1pbHk6J2Rlbmd4aWFuJztmb250LXNpemU6MTAuNXB0O21hcmdpbjowY20g
+MGNtIDAuMDAwMXB0IDBjbTt0ZXh0LWFsaWduOmp1c3RpZnkiPjxzcGFuIGxhbmc9IkVOLVVTIiBz
+dHlsZT0iZm9udC1zaXplOjEycHQiPsKgPC9zcGFuPjwvcD48cCBzdHlsZT0iZm9udC1mYW1pbHk6
+J2Rlbmd4aWFuJztmb250LXNpemU6MTAuNXB0O21hcmdpbjowY20gMGNtIDAuMDAwMXB0IDBjbTt0
+ZXh0LWFsaWduOmp1c3RpZnkiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0iZm9udC1zaXplOjEy
+cHQiPlRoYW5rczwvc3Bhbj48L3A+PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidkZW5neGlhbic7Zm9u
+dC1zaXplOjEwLjVwdDttYXJnaW46MGNtIDBjbSAwLjAwMDFwdCAwY207dGV4dC1hbGlnbjpqdXN0
+aWZ5Ij48c3BhbiBsYW5nPSJFTi1VUyIgc3R5bGU9ImZvbnQtc2l6ZToxMnB0Ij5TdWk8L3NwYW4+
+PC9wPjwvZGl2PjwvZGl2PjwvZGl2PjwvZGl2PjwvYmxvY2txdW90ZT48ZGl2PsKgPC9kaXY+PGRp
+dj7CoDwvZGl2PjxkaXY+LS3CoDwvZGl2PjxkaXY+QmVzdCByZWdhcmRzLDwvZGl2PjxkaXY+S29u
+c3RhbnRpbiBLbHVibmljaGtpbiw8L2Rpdj48ZGl2PmxlYWQgZmlybXdhcmUgZW5naW5lZXIsPC9k
+aXY+PGRpdj5zZXJ2ZXIgaGFyZHdhcmUgUiZhbXA7RCBncm91cCw8L2Rpdj48ZGl2PllhbmRleCBN
+b3Njb3cgb2ZmaWNlLjwvZGl2PjxkaXY+dGVsOiArNy05MDMtNTEwLTMzLTMzPC9kaXY+PGRpdj7C
+oDwvZGl2Pg==
