@@ -2,55 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92FC21B4B46
-	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 19:05:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 455D11B4BA4
+	for <lists+openbmc@lfdr.de>; Wed, 22 Apr 2020 19:25:07 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 496mz13FKbzDqtZ
-	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 03:05:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 496nPX5qYPzDqsx
+	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 03:25:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 496mx95gVVzDqXK
- for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 03:03:54 +1000 (AEST)
-IronPort-SDR: rtC8sj8PAWzxXHKplMl//mMupJbjLNxwR3DrDJsEyCMAdEgscNiLL3ckhCcW9MKRTXpUjhe0En
- 1tM2uHd24u3Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 496nNc1wyDzDqq8
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 03:24:14 +1000 (AEST)
+IronPort-SDR: tqaUmejgTLgXOA1uEa/aIIyNXQM5fFODR2PpKoXB3QuPV41AdDijMcGMGt2RyMPVOuVxxFrIIr
+ u7i9pEPFPW6g==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Apr 2020 10:03:51 -0700
-IronPort-SDR: JLu2USZ6zYqnNGDZHiLJ2NTtEt0hP+JlSkCPMeEIV8ygjab0ghVkQ7VHOuWR6IXS/hS0k9EEyw
- ZooAbpFYkCDg==
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Apr 2020 10:24:09 -0700
+IronPort-SDR: IFTntZGkD3oNHUeHX7nUjMW3kn9iXiP0PASNKNWYMb1zFy1F2LzZuD7+oALMOQg4oLi6LpNnZe
+ B9u8yEW9W9OA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,304,1583222400"; d="scan'208";a="334688337"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga001.jf.intel.com with ESMTP; 22 Apr 2020 10:03:51 -0700
-Received: from [10.215.176.208] (jmbills-mobl.amr.corp.intel.com
- [10.215.176.208])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id E598A5805B4
- for <openbmc@lists.ozlabs.org>; Wed, 22 Apr 2020 10:03:48 -0700 (PDT)
+X-IronPort-AV: E=Sophos;i="5.73,304,1583222400"; d="scan'208";a="292013498"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.134.47.201])
+ ([10.134.47.201])
+ by orsmga008.jf.intel.com with ESMTP; 22 Apr 2020 10:24:09 -0700
 Subject: Re: dbus-sensors
-To: openbmc@lists.ozlabs.org
+To: Matt Spinler <mspinler@linux.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Patrick Williams <patrick@stwcx.xyz>
 References: <dbdb4dac-a73a-5c39-8cf8-33dd2d318d16@linux.ibm.com>
  <2cb1c83a-9803-c9ac-ae76-2e09b616562e@linux.intel.com>
- <4a5cad39-b366-0a0c-54b0-23da9f2a3d81@linux.ibm.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <38628854-4dbd-5087-c7f8-386d94e1e421@linux.intel.com>
-Date: Wed, 22 Apr 2020 10:03:43 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ <ED37CD16-CFB6-4D78-BF6E-062849051D02@fuzziesquirrel.com>
+ <20200422121131.GE196148@heinlein.lan.stwcx.xyz>
+ <56790A50-40DE-44F5-A043-A91E1C48C8C2@fuzziesquirrel.com>
+ <672387da-09f5-dc7a-3822-8e9af9c745ca@linux.ibm.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <c2bedc17-9584-93f5-0203-1980134cb458@linux.intel.com>
+Date: Wed, 22 Apr 2020 10:24:08 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <4a5cad39-b366-0a0c-54b0-23da9f2a3d81@linux.ibm.com>
+In-Reply-To: <672387da-09f5-dc7a-3822-8e9af9c745ca@linux.ibm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -65,86 +65,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 4/22/2020 9:01 AM, Matt Spinler wrote:
+> 
+> 
+> On 4/22/2020 7:24 AM, Brad Bishop wrote:
+>> at 8:11 AM, Patrick Williams <patrick@stwcx.xyz> wrote:
+>>
+>>> On Wed, Apr 22, 2020 at 07:56:14AM -0400, Brad Bishop wrote:
+>>>> at 5:54 PM, James Feist <james.feist@linux.intel.com> wrote:
+>>>>>> 3. After creating this event log, make sure not to do it again until
+>>>>>>    main power is cycled.
+>>>>>
+>>>>> I'd rather this be until the status goes OK again.
+>>>>
+>>>> We have user-experience requirements that the server administrator 
+>>>> must be
+>>>> “nagged” in this fashion when something is broken like this. Could the
+>>>> behavior be selectable via build switch?  Any other ideas on how to
+>>>> accommodate both behaviors?
 
+As long as it's configurable somehow, fine by me.
 
-On 4/22/2020 9:19 AM, Matt Spinler wrote:
-> Great!  Sounds like we should be able to make thing work.
-> A few comments below.
-> 
-> On 4/21/2020 4:54 PM, James Feist wrote:
->> On 4/21/2020 12:35 PM, Matt Spinler wrote:
->>> Hi James,
 >>>
->>> We're looking into using dbus-sensors(HwmonTemp and PSU) in the future,
->>> but would need to make a few changes to fit our requirements. Was 
->>> wondering
->>> what you'd think of the following:
->>>
->>> 1. Check if a sensor has a _fault sysfs file, and if it does and it
->>>    is nonzero, set the Functional property on the OperationalStatus
->>>    interface to false (and/or maybe 6 below)
->> Sounds ok.
+>>> This sounds like a form of error filtering.  Shouldn't that decision be
+>>> done at a much higher level in the stack than down in the entity that
+>>> reads the hardware sensor?
 >>
->>>
->>> 2. After the 10 failed reads, instead of just setting the sensor to 0
->>>    also make a D-Bus call to create a phosphor-logging event log and set
->>>    the OperationalStatus sensor to false.
->>
->> Sounds ok.
->>
->>>
->>> 3. After creating this event log, make sure not to do it again until
->>>    main power is cycled.
->>
->> I'd rather this be until the status goes OK again.
+>> Thats an interesting thought.  When the error reporting code sees the 
+>> error for the first time, it could maintain a list of errors that it 
+>> needs to “replay” at different system events, like when the server 
+>> powers on.
 > 
-> As suggested by Patrick, I agree the throttling can be done elsewhere, 
-> so we
-> would just create the logs as you state here.
+> It isn't really nagging, it's more like error throttling.  At most, only 
+> log one error per power cycle.
+> I have to check still, but we may also need to still log the other 
+> errors, just with a
+> different severity (for debug purposes).
 > 
-I'm not familiar with the sensors, but for this specific case, would it 
-work to base the log on OperationalStatus?  It seems logical to not log 
-events for sensors that are not operational, and since it will be set to 
-false after the 10 failures, it would stop the log from nagging.
-
->>
->>>
->>> 4. If not already supported (was unsure), be able to find an
->>>    _input file based on a value it has in the corresponding _label file.
->>
->> PSU sensor does this, hwmontemp does it by index.
+> I kinda like this filtering idea too.  It is flexible and we would only 
+> have to do it in one place as
+> opposed to in all the sensor applications we end up using, and could 
+> also be used to change the
+> event log severities as mentioned above.  We will have to make sure when 
+> creating the event log
+> that it contains enough information to recognize the device that is 
+> failing so that we can filter
+> appropriately.
 > 
-> Would you be OK with us also adding this to PSUSensor?
-> 
->>>
->>> 5. We have a case where a driver isn't loaded with power off, so somehow
->>>    we still need the sensors to stay on D-Bus when off (and show them
->>>    as not available).
->>
->> All sensors are on d-bus all the time, its based on the EM config.
-> 
-> Perfect!
 > 
 >>
->>>
->>> 6. Maybe add a new property to Sensor.Value on the validity
->>>    of the value property, for when driver is unloaded or there is an
->>>    error or the sensor reading is otherwise not valid.  We could add
->>>   this to phosphor-hwmon at the same time.
->>>   (I think this was mentioned on the list before).
->>
->> Yes, this is where we've used std::nan, I'm not sure if that made it 
->> to all sensors as it's not tested very much. I know the fans do this.
->>
->>>
->>> We would definitely of course work with you on the best way to
->>> accomplish these, and I know #6 needs more discussion on if
->>> this is something we want to do in OpenBMC, though I thought
->>> I remembered an earlier discussion where it was popular.
->>>
->>> Thanks,
->>> Matt
+>> This is certainly more flexible and I like the idea - but one down 
+>> side though is the logging code becomes stateful and the complexity is 
+>> slightly higher.
 > 
