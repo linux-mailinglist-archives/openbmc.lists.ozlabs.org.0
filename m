@@ -2,137 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E11A1B67F1
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 01:11:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A0481B6A21
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 01:49:48 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 497Y376W0qzDr4N
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 09:11:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 497Ytx5RKFzDr6Y
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 09:49:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=1382a73f5b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=fb.com
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=g7kkVI55; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=HGu/gO3Q; 
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=jtqiLp/U; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=o8yz4fGJ; 
  dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 497Y1R66wkzDqKK
- for <openbmc@lists.ozlabs.org>; Fri, 24 Apr 2020 09:10:17 +1000 (AEST)
-Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03NMxKta010970; Thu, 23 Apr 2020 16:10:10 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=5uY4+Nu1ydS8Tr5km9LevTflA6jZgfNDizzaaDNwZhA=;
- b=g7kkVI5550OKokXflGqkIYbsLvDZ3Wb09hYxz4wMgKlWKcwVyw//ort23NvxnkBZicLG
- e9YJ1oFFSydMPbfIgNFp9PYdVYTpPhxZTaEEt1r2XBN/BHci1mysgAL7HDNG2urWEEGK
- ipf/Hz9aY4X5515kS6jXUUzLA+kgeJ0tIV4= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 30kknkr9be-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Thu, 23 Apr 2020 16:10:09 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Thu, 23 Apr 2020 16:10:09 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dqL+b4o92Cjm+3Y26rhQruQ7Umjo7wzMzGioCsEn782gYxF6Qx27HG4zHXm8AoBpakkVmeFJNu362RGQKzLUVUhMDS/27tg71UWsj+i+p/Xv8ohNPdacxWB+ROhiCqMVl9T12AbAZtIdI33yCOiTeMMpmYNi3UYN3Ggp8JbtFZsENmaCdtsmRb2D2yXuD+HDABbpnRA9+XOZW/cn6TXepmIcSmJI9HzXQyqaI56JRshk7D7NbjIQmI7JiA3neW9kIzzpGB6s4WmylTDwVRP3KIE79ExwZSHNL/HWTxIHxsQjUU65aHB/wO3Qu3RAIRQl3wt6tndj7d/l3+lv5AsKeg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5uY4+Nu1ydS8Tr5km9LevTflA6jZgfNDizzaaDNwZhA=;
- b=QIpSSVyaKR1LL0VnntaDRI6DGTovbYt1PvHRtcl0jCk/3QoXn71GBSUFg6U4ZTLABynUlzLIJXg9SkBtMFwA2Z0rd1MohS/55jfQ/OFptKL7SS8VjHBgG3Rn5asgknt0BsM3u+SCg0Gm66oRHrUukNc9kK2C9GNcDqiHHn5iCL9ZDStSA2BrxQBhCQznxyjDH/ld6EbQlGM+SP8XbOf3HW0LL2S+DZB3arX8sGa+Fxw8YUhfGWfn/u5o0ZQ//YHDmuZhNoamsLH8cZSVP5rXRT1fyBWDzg6n+yZ4sPqOTcTf23tHwSgsle8neQlM4PLOEa5zSmw9OU05ePHLuwiREQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5uY4+Nu1ydS8Tr5km9LevTflA6jZgfNDizzaaDNwZhA=;
- b=HGu/gO3QFFvenIfWVAPYOoYQxGmobA4QEnZc8DM/Vdp3T8sXWH8iWPEc9t9Wszs79EX2TZrDkg7oZmJSoRz2D+62D8ZYwLPBgtvaANNQ/nl85eXOEX14KQ2YpX6hIY/0xCrc7OjHHPT8rS9HvwE62e6nIWnHt1SHRpzshLP8EdQ=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB2806.namprd15.prod.outlook.com (2603:10b6:a03:15c::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.29; Thu, 23 Apr
- 2020 23:10:08 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4%3]) with mapi id 15.20.2921.030; Thu, 23 Apr 2020
- 23:10:08 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: James Feist <james.feist@linux.intel.com>, Oskar Senft <osk@google.com>
-Subject: Re: Access Intel ME IPMB from BMC
-Thread-Topic: Access Intel ME IPMB from BMC
-Thread-Index: AQHWFexuK6oXnP3TQkeAetsUpPklTKiB3UuAgAB7mID//6wGgIAE18eAgAAAvoD//8PsgIAAlx0A//+u/4A=
-Date: Thu, 23 Apr 2020 23:10:08 +0000
-Message-ID: <9F56DDEC-765C-4C50-AE04-B2418FD88770@fb.com>
-References: <CABoTLcSOQYY+gk=7Q2w6Ny02L15yM19vTPmJxDfZVst6FV5r+Q@mail.gmail.com>
- <70D0A47B-9C5B-418C-BC1F-7379493C60AA@fb.com>
- <CABoTLcTa-7Fnu9rodg9PrbeZ9wYM7vYPHZK2meEZLx2XW+ZE1Q@mail.gmail.com>
- <B3FB3174-1794-4A57-B850-61F0D8200339@fb.com>
- <CABoTLcStCvQ2fAVudN6q7bexNjuT1_NcEFwjMOR0yePWZ+d=Dg@mail.gmail.com>
- <CABoTLcSriF37EgG9dtwZGfPm-arBG66hsnn380nxYXP4cY1W4w@mail.gmail.com>
- <403834AD-B194-44E8-8904-21610A30D727@fb.com>
- <aa5912c6-de60-f965-368f-1864a521c4d8@linux.intel.com>
-In-Reply-To: <aa5912c6-de60-f965-368f-1864a521c4d8@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 497YtH2Cs4zDr09
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Apr 2020 09:49:07 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1587685743;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=pp33Io5R9mPepfQnBpX3MccWygQCVWZqv+2hELRMYso=;
+ b=jtqiLp/U/DhXVQZE27UpdVdNjGtpbftOZJ9aOYDNi7Npf2I16sdqK1QH4F2fjOksVqlIPC
+ 13sXsq0ncS08hzmAta3QtC/CpbJDSwV3VwL0juDNLHIN4GzMtSFgUAUoH6udwow7l4YO42
+ U3H5W/n6X5SvgPIqjqn0h7VzxVibn8I=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1587685744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=pp33Io5R9mPepfQnBpX3MccWygQCVWZqv+2hELRMYso=;
+ b=o8yz4fGJkl9jU/ezcLvtaxLw0BRCyC3cR0mGJKQz1Sk4sdnwCnRUqN+3tjn4wu0GGXGtvj
+ zvajM9jXyKFk2CjHT3B/HWxES2jGUHvOGAEoN2Vx6/Ch0E/z5u1Ya6h5DGKJd8HxgKD3vB
+ TSUwi6Wqd7wgvitBcn3eJ6PBfQlKLS8=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-416-bnomDiCpNKOGUFxxo5l4dw-1; Thu, 23 Apr 2020 19:49:00 -0400
+X-MC-Unique: bnomDiCpNKOGUFxxo5l4dw-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Thu, 23 Apr 2020 16:48:58 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Thu, 23 Apr 2020 16:48:58 -0700
+From: Patrick Voelker <Patrick_Voelker@phoenix.com>
+To: "OpenBMC (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
+Subject: Intel-BMC: Fan control
+Thread-Topic: Intel-BMC: Fan control
+Thread-Index: AdYZyY7P3PIB+VYAQwqoWDNCiBKcFw==
+Date: Thu, 23 Apr 2020 23:48:57 +0000
+Message-ID: <e3297385bee9483989607bce1e9837d9@SCL-EXCHMB-13.phoenix.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [2620:10d:c090:400::5:265d]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: af3c0f6e-204b-4097-2b52-08d7e7db7789
-x-ms-traffictypediagnostic: BYAPR15MB2806:
-x-microsoft-antispam-prvs: <BYAPR15MB2806AEBC4C72E296E0686EB5DDD30@BYAPR15MB2806.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:7691;
-x-forefront-prvs: 03827AF76E
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(10019020)(396003)(346002)(376002)(39860400002)(366004)(136003)(66446008)(33656002)(6486002)(66476007)(66946007)(5660300002)(478600001)(36756003)(186003)(66556008)(4326008)(86362001)(2906002)(110136005)(2616005)(316002)(6512007)(64756008)(81156014)(8676002)(71200400001)(76116006)(53546011)(6506007)(4744005)(8936002)(91956017);
- DIR:OUT; SFP:1102; 
-received-spf: None (protection.outlook.com: fb.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: er+jtBaUf4uo0TMbI0OrwcPjZKGbuGtELkRdwXdR9f32/VGFHRtA+P41P+alhIB3YCwUdOjrn7zUjzYLYZRgbF6SL0NiMkWs0SKbBXCmVYk14vghee00HJQGbSawxJ3tQTBvWB3asxG1ER5boDcsmbtQmz3VG2AQXRTCagEa5ylZrI7LvQ10g5zr7eq2O1wGT6mj05WVT5+XyIQU/D80HDLOZ8W4ydbOCTNX0RdsXooAmSCySmkqBjU70c/vxohroYqr0CzcSrenyq1DxTg+Kf0o+5dPm7d/KVti8kJz4YX2HoiSWh25M2htRpsRBvhoCIthaJliGqTB+4FSzgKiXAkd6QdOBHOcU8GAvoyBPyQbTnCFvljQ2AwxAa8Zcm2nO62a6W5Uvcgx/vrHE2fQLfbFF4BEq+0HPMiQka84ShR7BrQlfgzQaEi9WZmOzBSy
-x-ms-exchange-antispam-messagedata: 2zrmvfDiU0i0HK41yGVfWk0Y4dwuSkgdIPmOiNvgVGebe3ccFJWrpP+mFvP/ejUpK/1JytXIq9/fG+GpQc80jyr6N8TYB+oQXmcVrqVEe5q6LrUKHcw7Wu7yep0SlmXs7aRWkzodFDXtA6AhTxpCj1qWRQqyvOuX+beat97MzaEja5wwO720hd5gVY9lMjfa
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C33D901B09B22D48BDC5DBCECDA9A2A4@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [50.126.102.102]
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: af3c0f6e-204b-4097-2b52-08d7e7db7789
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2020 23:10:08.4017 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VbpzRXpHsSVrP7MuhmnXT8rioqNS+AefaFfw56D+dHg1iB4zrzY4TFXkk49xCenW/lOsFoM0HrvXce2tw3ECig==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2806
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-23_18:2020-04-23,
- 2020-04-23 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 bulkscore=0
- mlxlogscore=999 impostorscore=0 malwarescore=0 clxscore=1015 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004230166
-X-FB-Internal: deliver
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: multipart/alternative;
+ boundary="_000_e3297385bee9483989607bce1e9837d9SCLEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,27 +84,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCu+7v09uIDQvMjMvMjAsIDI6MDAgUE0sICJKYW1lcyBGZWlzdCIgPGphbWVzLmZlaXN0QGxp
-bnV4LmludGVsLmNvbT4gd3JvdGU6DQoNCiAgICBPbiA0LzIzLzIwMjAgMTE6NTkgQU0sIFZpamF5
-IEtoZW1rYSB3cm90ZToNCiAgICA+IEFzIGkyYyBzbGF2ZSBtcXVldWUgZHJpdmVyIGlzIG5vdCB1
-cHN0cmVhbWVkIGFuZCB3aXRoIGFscmVhZHkgaGF2aW5nIA0KICAgID4gc2FtZSBmdW5jdGlvbmFs
-aXR5IGluIGlwbWItZGV2IGRyaXZlciB3aGljaCBpcyBhbHJlYWR5IGluIHVvc3RyZWFtIA0KICAg
-ID4ga2VybmVsLCBJIGRvbuKAmXQgc2VlIGFueSByZWFzb24gdG8gdXNlIGkyYyBzbGF2ZSBtcXVl
-dWUgZHJpdmVyLiBJIGhpZ2hseSANCiAgICA+IGluY291cmFnZSBwZW9wbGUgdG8gdXNlIGlwbWIt
-ZGV2IGRyaXZlciB3aXRoIGxhdGVzdCBpcG1iYnJpZGdlLiBJZiB0aGVyZSANCiAgICA+IGFyZSBh
-bnkgaXNzdWVzLCBwbGVhc2UgbGV0IHVzIGtub3cuDQogICAgDQogICAgT25lIGlzc3VlIHdlIHJh
-biBpbnRvIGlzIGhhdmluZyBNQ1RQIGFuZCBJUE1CIG9uIHRoZSBzYW1lIGJ1cy4gSVBNQiANCiAg
-ICBkcml2ZXIgY2FuJ3QgaGFuZGxlIE1DVFAgdHJhZmZpYywgd2hlcmUgdGhlIG1xdWV1ZSBjb3Vs
-ZCBoYW5kbGUgYm90aC4gDQogICAgS2VybmVsIGFsc28gZG9lc24ndCBhbGxvdyBtdWx0aXBsZSBz
-bGF2ZSBhZGRyZXNzZXMgb24gb25lIGJ1cy4gSGF2ZW4ndCANCiAgICBmb3VuZCBhIGdvb2Qgc29s
-dXRpb24gdG8gdGhpcyBvbmUgeWV0Lg0KDQpJIGRvbid0IHNlZSBtdWNoIGRpZmZlcmVuY2UgaW4g
-bXF1ZXVlIGFuZCBpcG1iIGRyaXZlciBjb2RlIHdpc2UuIElmIA0Kc29tZXRoaW5nIGhhcyBjaGFu
-Z2VkIGluIGN1cnJlbnQgbXF1ZXVlIGRyaXZlciB0byBzdXBwb3J0IG1jdHAgdHJhZmZpYw0KdGhl
-biB3ZSBzaG91bGQgdHJ5IHRvIGFkZCB0aGVzZSBpbiBpcG1iIGRyaXZlciBhcyB3ZWxsLg0KDQpJ
-IGNhbid0IGNvbW1lbnQgbXVjaCBhcyBJIGhhdmUgbm90IHNlZW4gY3VycmVudCBtcXVldWUgZHJp
-dmVyLg0KICAgIA0KICAgID4gDQogICAgPiBSZWdhcmRzDQogICAgPiANCiAgICA+IC1WaWpheQ0K
-ICAgID4gDQogICAgDQogICAgDQoNCg==
+--_000_e3297385bee9483989607bce1e9837d9SCLEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+Fan control related question for Intel-BMC: Do the entity-manager tachs, PW=
+Ms, and zones inform phosphor-fan-control? Or is phosphor-fan-control drive=
+n purely from the yaml configurations at build time?
+
+--_000_e3297385bee9483989607bce1e9837d9SCLEXCHMB13phoenixcom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+=09{font-family:"\@PMingLiU";
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09margin-bottom:.0001pt;
+=09font-size:11.0pt;
+=09font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+=09{mso-style-priority:99;
+=09color:blue;
+=09text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+=09{mso-style-priority:99;
+=09color:purple;
+=09text-decoration:underline;}
+span.EmailStyle17
+=09{mso-style-type:personal-compose;
+=09font-family:"Calibri","sans-serif";
+=09color:windowtext;}
+.MsoChpDefault
+=09{mso-style-type:export-only;
+=09font-family:"Calibri","sans-serif";}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Fan control related question for Intel-BMC: Do the e=
+ntity-manager tachs, PWMs, and zones inform phosphor-fan-control? Or is pho=
+sphor-fan-control driven purely from the yaml configurations at build time?=
+<o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_e3297385bee9483989607bce1e9837d9SCLEXCHMB13phoenixcom_--
+
