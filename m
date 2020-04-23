@@ -1,78 +1,138 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 011351B669E
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 00:06:49 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 497Wc72fLQzDr3t
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 08:06:47 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E11A1B67F1
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 01:11:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 497Y376W0qzDr4N
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 09:11:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=1382a73f5b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=quarantine dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=g7kkVI55; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=HGu/gO3Q; 
+ dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 497WbQ0F3BzDqYJ
- for <openbmc@lists.ozlabs.org>; Fri, 24 Apr 2020 08:06:09 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03NM2YBQ063901
- for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 18:06:06 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.75])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30jrc68rwb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 18:06:06 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Thu, 23 Apr 2020 22:06:05 -0000
-Received: from us1a3-smtp04.a3.dal06.isc4sb.com (10.106.154.237)
- by smtp.notes.na.collabserv.com (10.106.227.123) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 23 Apr 2020 22:06:01 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp04.a3.dal06.isc4sb.com
- with ESMTP id 2020042322055895-968406 ;
- Thu, 23 Apr 2020 22:05:58 +0000 
-In-Reply-To: <3238f1802a0646cfab824a7a83fd7759@SCL-EXCHMB-13.phoenix.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-Date: Thu, 23 Apr 2020 22:05:59 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 497Y1R66wkzDqKK
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Apr 2020 09:10:17 +1000 (AEST)
+Received: from pps.filterd (m0109334.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03NMxKta010970; Thu, 23 Apr 2020 16:10:10 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=5uY4+Nu1ydS8Tr5km9LevTflA6jZgfNDizzaaDNwZhA=;
+ b=g7kkVI5550OKokXflGqkIYbsLvDZ3Wb09hYxz4wMgKlWKcwVyw//ort23NvxnkBZicLG
+ e9YJ1oFFSydMPbfIgNFp9PYdVYTpPhxZTaEEt1r2XBN/BHci1mysgAL7HDNG2urWEEGK
+ ipf/Hz9aY4X5515kS6jXUUzLA+kgeJ0tIV4= 
+Received: from mail.thefacebook.com ([163.114.132.120])
+ by mx0a-00082601.pphosted.com with ESMTP id 30kknkr9be-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Thu, 23 Apr 2020 16:10:09 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (100.104.98.9) by
+ o365-in.thefacebook.com (100.104.94.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1847.3; Thu, 23 Apr 2020 16:10:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=dqL+b4o92Cjm+3Y26rhQruQ7Umjo7wzMzGioCsEn782gYxF6Qx27HG4zHXm8AoBpakkVmeFJNu362RGQKzLUVUhMDS/27tg71UWsj+i+p/Xv8ohNPdacxWB+ROhiCqMVl9T12AbAZtIdI33yCOiTeMMpmYNi3UYN3Ggp8JbtFZsENmaCdtsmRb2D2yXuD+HDABbpnRA9+XOZW/cn6TXepmIcSmJI9HzXQyqaI56JRshk7D7NbjIQmI7JiA3neW9kIzzpGB6s4WmylTDwVRP3KIE79ExwZSHNL/HWTxIHxsQjUU65aHB/wO3Qu3RAIRQl3wt6tndj7d/l3+lv5AsKeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5uY4+Nu1ydS8Tr5km9LevTflA6jZgfNDizzaaDNwZhA=;
+ b=QIpSSVyaKR1LL0VnntaDRI6DGTovbYt1PvHRtcl0jCk/3QoXn71GBSUFg6U4ZTLABynUlzLIJXg9SkBtMFwA2Z0rd1MohS/55jfQ/OFptKL7SS8VjHBgG3Rn5asgknt0BsM3u+SCg0Gm66oRHrUukNc9kK2C9GNcDqiHHn5iCL9ZDStSA2BrxQBhCQznxyjDH/ld6EbQlGM+SP8XbOf3HW0LL2S+DZB3arX8sGa+Fxw8YUhfGWfn/u5o0ZQ//YHDmuZhNoamsLH8cZSVP5rXRT1fyBWDzg6n+yZ4sPqOTcTf23tHwSgsle8neQlM4PLOEa5zSmw9OU05ePHLuwiREQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5uY4+Nu1ydS8Tr5km9LevTflA6jZgfNDizzaaDNwZhA=;
+ b=HGu/gO3QFFvenIfWVAPYOoYQxGmobA4QEnZc8DM/Vdp3T8sXWH8iWPEc9t9Wszs79EX2TZrDkg7oZmJSoRz2D+62D8ZYwLPBgtvaANNQ/nl85eXOEX14KQ2YpX6hIY/0xCrc7OjHHPT8rS9HvwE62e6nIWnHt1SHRpzshLP8EdQ=
+Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
+ by BYAPR15MB2806.namprd15.prod.outlook.com (2603:10b6:a03:15c::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2921.29; Thu, 23 Apr
+ 2020 23:10:08 +0000
+Received: from BYAPR15MB2374.namprd15.prod.outlook.com
+ ([fe80::e43b:5f8d:799:39a4]) by BYAPR15MB2374.namprd15.prod.outlook.com
+ ([fe80::e43b:5f8d:799:39a4%3]) with mapi id 15.20.2921.030; Thu, 23 Apr 2020
+ 23:10:08 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: James Feist <james.feist@linux.intel.com>, Oskar Senft <osk@google.com>
+Subject: Re: Access Intel ME IPMB from BMC
+Thread-Topic: Access Intel ME IPMB from BMC
+Thread-Index: AQHWFexuK6oXnP3TQkeAetsUpPklTKiB3UuAgAB7mID//6wGgIAE18eAgAAAvoD//8PsgIAAlx0A//+u/4A=
+Date: Thu, 23 Apr 2020 23:10:08 +0000
+Message-ID: <9F56DDEC-765C-4C50-AE04-B2418FD88770@fb.com>
+References: <CABoTLcSOQYY+gk=7Q2w6Ny02L15yM19vTPmJxDfZVst6FV5r+Q@mail.gmail.com>
+ <70D0A47B-9C5B-418C-BC1F-7379493C60AA@fb.com>
+ <CABoTLcTa-7Fnu9rodg9PrbeZ9wYM7vYPHZK2meEZLx2XW+ZE1Q@mail.gmail.com>
+ <B3FB3174-1794-4A57-B850-61F0D8200339@fb.com>
+ <CABoTLcStCvQ2fAVudN6q7bexNjuT1_NcEFwjMOR0yePWZ+d=Dg@mail.gmail.com>
+ <CABoTLcSriF37EgG9dtwZGfPm-arBG66hsnn380nxYXP4cY1W4w@mail.gmail.com>
+ <403834AD-B194-44E8-8904-21610A30D727@fb.com>
+ <aa5912c6-de60-f965-368f-1864a521c4d8@linux.intel.com>
+In-Reply-To: <aa5912c6-de60-f965-368f-1864a521c4d8@linux.intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [2620:10d:c090:400::5:265d]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: af3c0f6e-204b-4097-2b52-08d7e7db7789
+x-ms-traffictypediagnostic: BYAPR15MB2806:
+x-microsoft-antispam-prvs: <BYAPR15MB2806AEBC4C72E296E0686EB5DDD30@BYAPR15MB2806.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-forefront-prvs: 03827AF76E
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(10019020)(396003)(346002)(376002)(39860400002)(366004)(136003)(66446008)(33656002)(6486002)(66476007)(66946007)(5660300002)(478600001)(36756003)(186003)(66556008)(4326008)(86362001)(2906002)(110136005)(2616005)(316002)(6512007)(64756008)(81156014)(8676002)(71200400001)(76116006)(53546011)(6506007)(4744005)(8936002)(91956017);
+ DIR:OUT; SFP:1102; 
+received-spf: None (protection.outlook.com: fb.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: er+jtBaUf4uo0TMbI0OrwcPjZKGbuGtELkRdwXdR9f32/VGFHRtA+P41P+alhIB3YCwUdOjrn7zUjzYLYZRgbF6SL0NiMkWs0SKbBXCmVYk14vghee00HJQGbSawxJ3tQTBvWB3asxG1ER5boDcsmbtQmz3VG2AQXRTCagEa5ylZrI7LvQ10g5zr7eq2O1wGT6mj05WVT5+XyIQU/D80HDLOZ8W4ydbOCTNX0RdsXooAmSCySmkqBjU70c/vxohroYqr0CzcSrenyq1DxTg+Kf0o+5dPm7d/KVti8kJz4YX2HoiSWh25M2htRpsRBvhoCIthaJliGqTB+4FSzgKiXAkd6QdOBHOcU8GAvoyBPyQbTnCFvljQ2AwxAa8Zcm2nO62a6W5Uvcgx/vrHE2fQLfbFF4BEq+0HPMiQka84ShR7BrQlfgzQaEi9WZmOzBSy
+x-ms-exchange-antispam-messagedata: 2zrmvfDiU0i0HK41yGVfWk0Y4dwuSkgdIPmOiNvgVGebe3ccFJWrpP+mFvP/ejUpK/1JytXIq9/fG+GpQc80jyr6N8TYB+oQXmcVrqVEe5q6LrUKHcw7Wu7yep0SlmXs7aRWkzodFDXtA6AhTxpCj1qWRQqyvOuX+beat97MzaEja5wwO720hd5gVY9lMjfa
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C33D901B09B22D48BDC5DBCECDA9A2A4@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <3238f1802a0646cfab824a7a83fd7759@SCL-EXCHMB-13.phoenix.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP64 March 05, 2020 at 12:58
-X-LLNOutbound: False
-X-Disclaimed: 38447
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20042322-6875-0000-0000-000002632BB5
-X-IBM-SpamModules-Scores: BY=0.283579; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.407427; ST=0; TS=0; UL=0; ISC=; MB=0.082518
-X-IBM-SpamModules-Versions: BY=3.00012960; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000293; SDB=6.01366792; UDB=6.00730001; IPR=6.01149147; 
- MB=3.00031843; MTD=3.00000008; XFM=3.00000015; UTC=2020-04-23 22:06:03
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-04-23 20:16:03 - 6.00011278
-x-cbparentid: 20042322-6876-0000-0000-000022DA6FD7
-Message-Id: <OF270324DB.AB2D97B1-ON00258553.007753F9-00258553.007965EF@notes.na.collabserv.com>
-Subject: Re: Remove default private image signing key from openbmc [was:
- Security Working Group meeting - Wednesday April 15 - results]
+X-MS-Exchange-CrossTenant-Network-Message-Id: af3c0f6e-204b-4097-2b52-08d7e7db7789
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2020 23:10:08.4017 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VbpzRXpHsSVrP7MuhmnXT8rioqNS+AefaFfw56D+dHg1iB4zrzY4TFXkk49xCenW/lOsFoM0HrvXce2tw3ECig==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2806
+X-OriginatorOrg: fb.com
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-23_17:2020-04-23,
+ definitions=2020-04-23_18:2020-04-23,
  2020-04-23 signatures=0
-X-Proofpoint-Spam-Reason: safe
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ priorityscore=1501
+ lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 bulkscore=0
+ mlxlogscore=999 impostorscore=0 malwarescore=0 clxscore=1015 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004230166
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,128 +144,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On April 23, 2020 about 14:11 in some timezone, Bruce Mitchell wrote:
-
->How does OpenBMC keep the publickey, that is generated from the
->private image signing key (i.e. OpenBMC.priv),  in the SPI image and
->in the upgrade files?
-
-The upgrade files are a tarball, and the MANIFEST include the image=20
-type and key.
-
-https://github.com/openbmc/docs/blob/master/code-update/code-update.md#step=
-s-to-update
-
-Also, fit images (containg the kernel, device-tree, and any initrd)=20
-can be signed; see=20
-
-https://github.com/openbmc/u-boot/blob/v2016.07-aspeed-openbmc/doc/uImage.F=
-IT/signature.txt
-
-
-The code management app locates the key, see the answer to the=20
-next question.
-
-
-There is also an effort to design some kind of image security=20
-for the upcoming eMMC support.  The current strawman is to=20
-use dm-verity with the signature stored in boot-config signed=20
-into the FIT with the initrd.
-
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28443
-
-
-
-
->Also how does OpenBMC verify that upgrade images are properly signed?
-
-The bmc code management application, which provides the D-bus=20
-endpoint, impments verifing the image. =20
-
-https://github.com/openbmc/phosphor-bmc-code-mgmt/blob/master/image=5Fverif=
-y.cpp
-
-There is similar code for the host images depending on the platform.=20
-For example OpenPower systems use openpower-pnor-code-mgmt.
-
-https://github.com/openbmc/openpower-pnor-code-mgmt/blob/master/image=5Fver=
-ify.cpp
-
-
->Is there a document describing how all of this works that I have yet>to fi=
-nd?
-
-https://github.com/openbmc/docs/blob/master/code-update/code-update-diagram=
-s.md
-
-
-
-
->> Subject: Re: Security Working Group meeting - Wednesday April 15 -
->> results
->>=20
->> On 4/14/20 4:57 PM, Joseph Reynolds wrote:
->> > This is a reminder of the OpenBMC Security Working Group meeting
->> > scheduled for this Wednesday April 15 at 10:00am PDT.
-...
->> > The current topics:
->> >
->> > 1. Remove default private image signing key from openbmc
->>=20
->> The leading idea is to disable the recipe that signs the image, but
->> leave the private signing key in the source tree.  Then someone who
->> builds will get an unsigned image.  If they enable the image
->> signing
->> recipe or use it as an example, they will hopefully see the
->> instructions
->> that say to use their own key pair.
->>=20
->> Note that an unsigned image is a good starting point for build
->> processes
->> that use a separate image signing step, such as when the image is
->> signed
->> by a hardware security module (HSM).  One difficulty with this
->> approach
->> is that the public key needs to be put into the BMC's root file
->> system.
->>=20
-
->> > 2. Discuss issues from the =E2=80=9Cipmi password storage=E2=80=9D ema=
-il thread.
->>=20
->> We pretty much re-hashed the ideas from the email thread with no
->> conclusions.
->> One more idea was added, that we can the BMC's TPM to hold the
->> RMCP+
->> keys.
->>=20
->> >
->> > 3. Which algorithm should sign OpenBMC images?
->>=20
->> The answer will vary between projects that are downstream from
->> OpenBMC.
->> We'll keep the default as RSA-SHA256.  Going forward, the plan is:
->> the
->> OpenBMC release process will give visibility to this and other
->> ciphers per:
-
-The MANIFEST includes the key signing type.
-
->>=20
->>=20
->> 4. Use the Yocto cvecheck vulnerability scan for OpenBMC repos No
->> CVE
->> checking is done at the project-level, but similar check are being
->> done
->> in projects that are downstream from OpenBMC. The idea is a nightly
->> Jenkins job to generate a report of all the unfixed
->> vulnerabilities,
->> something like: bitbake -c cvecheck obmc-phosphor-image.
-
-
-milton
-
+DQoNCu+7v09uIDQvMjMvMjAsIDI6MDAgUE0sICJKYW1lcyBGZWlzdCIgPGphbWVzLmZlaXN0QGxp
+bnV4LmludGVsLmNvbT4gd3JvdGU6DQoNCiAgICBPbiA0LzIzLzIwMjAgMTE6NTkgQU0sIFZpamF5
+IEtoZW1rYSB3cm90ZToNCiAgICA+IEFzIGkyYyBzbGF2ZSBtcXVldWUgZHJpdmVyIGlzIG5vdCB1
+cHN0cmVhbWVkIGFuZCB3aXRoIGFscmVhZHkgaGF2aW5nIA0KICAgID4gc2FtZSBmdW5jdGlvbmFs
+aXR5IGluIGlwbWItZGV2IGRyaXZlciB3aGljaCBpcyBhbHJlYWR5IGluIHVvc3RyZWFtIA0KICAg
+ID4ga2VybmVsLCBJIGRvbuKAmXQgc2VlIGFueSByZWFzb24gdG8gdXNlIGkyYyBzbGF2ZSBtcXVl
+dWUgZHJpdmVyLiBJIGhpZ2hseSANCiAgICA+IGluY291cmFnZSBwZW9wbGUgdG8gdXNlIGlwbWIt
+ZGV2IGRyaXZlciB3aXRoIGxhdGVzdCBpcG1iYnJpZGdlLiBJZiB0aGVyZSANCiAgICA+IGFyZSBh
+bnkgaXNzdWVzLCBwbGVhc2UgbGV0IHVzIGtub3cuDQogICAgDQogICAgT25lIGlzc3VlIHdlIHJh
+biBpbnRvIGlzIGhhdmluZyBNQ1RQIGFuZCBJUE1CIG9uIHRoZSBzYW1lIGJ1cy4gSVBNQiANCiAg
+ICBkcml2ZXIgY2FuJ3QgaGFuZGxlIE1DVFAgdHJhZmZpYywgd2hlcmUgdGhlIG1xdWV1ZSBjb3Vs
+ZCBoYW5kbGUgYm90aC4gDQogICAgS2VybmVsIGFsc28gZG9lc24ndCBhbGxvdyBtdWx0aXBsZSBz
+bGF2ZSBhZGRyZXNzZXMgb24gb25lIGJ1cy4gSGF2ZW4ndCANCiAgICBmb3VuZCBhIGdvb2Qgc29s
+dXRpb24gdG8gdGhpcyBvbmUgeWV0Lg0KDQpJIGRvbid0IHNlZSBtdWNoIGRpZmZlcmVuY2UgaW4g
+bXF1ZXVlIGFuZCBpcG1iIGRyaXZlciBjb2RlIHdpc2UuIElmIA0Kc29tZXRoaW5nIGhhcyBjaGFu
+Z2VkIGluIGN1cnJlbnQgbXF1ZXVlIGRyaXZlciB0byBzdXBwb3J0IG1jdHAgdHJhZmZpYw0KdGhl
+biB3ZSBzaG91bGQgdHJ5IHRvIGFkZCB0aGVzZSBpbiBpcG1iIGRyaXZlciBhcyB3ZWxsLg0KDQpJ
+IGNhbid0IGNvbW1lbnQgbXVjaCBhcyBJIGhhdmUgbm90IHNlZW4gY3VycmVudCBtcXVldWUgZHJp
+dmVyLg0KICAgIA0KICAgID4gDQogICAgPiBSZWdhcmRzDQogICAgPiANCiAgICA+IC1WaWpheQ0K
+ICAgID4gDQogICAgDQogICAgDQoNCg==
