@@ -1,53 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 564E31B57B2
-	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 11:05:20 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 497BGP3C19zDqvD
-	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 19:05:17 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 979ED1B59A6
+	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 12:49:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 497DZg0kfGzDqxZ
+	for <lists+openbmc@lfdr.de>; Thu, 23 Apr 2020 20:49:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=375fe1c2c=p.k.lee@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 497BFL3DK5zDr2k
- for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 19:04:21 +1000 (AEST)
-IronPort-SDR: zuQWrtuXBkvdMznLXaGT8T1K2RAoL5Rhzv2U6GalX91ZSjKeZK4ftQ1qYthXK/SWbeBPeomf8a
- jSVz+kz46AJg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2020 02:04:18 -0700
-IronPort-SDR: k0iSq5y14yHy5diop2/qKiaML9ThSeD2PyHgecTXWndxvkDRSvdK0I8+cOPRLL5uo6YfGvrhvX
- vg8jmygDSKww==
-X-IronPort-AV: E=Sophos;i="5.73,306,1583222400"; d="scan'208";a="402855515"
-Received: from aambroze-mobl1.ger.corp.intel.com (HELO [10.249.143.125])
- ([10.249.143.125])
- by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2020 02:04:17 -0700
-Subject: Re: phosphor-dbus-interfaces modification process for existing YAML
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-References: <29a3376f-d82d-057c-e2d5-0fe250b55951@linux.intel.com>
- <2A59C9DC-F7F5-4A7E-BF83-5BE2AA8A04B9@fuzziesquirrel.com>
-From: =?UTF-8?Q?Adrian_Ambro=c5=bcewicz?= <adrian.ambrozewicz@linux.intel.com>
-Message-ID: <c83bd827-6155-ae55-6c8e-1d52078ad9ca@linux.intel.com>
-Date: Thu, 23 Apr 2020 11:04:15 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
+ Thu, 23 Apr 2020 20:48:45 AEST
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 497DYn0PBXzDqZq
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Apr 2020 20:48:43 +1000 (AEST)
+IronPort-SDR: taBkdwrA1yWc8MFXLTf6t5Ez6OtrtgChaoSze852yrBb15oIF4xJTp6G1ngRNk78gsH3rzb6Zb
+ d0nz0LVT7XcQ==
+Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
+ by mx01.quantatw.com with ESMTP; 23 Apr 2020 18:47:32 +0800
+Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
+ (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 23 Apr
+ 2020 18:47:27 +0800
+Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
+ ([192.168.57.11]) with mapi id 15.01.1713.009;
+ Thu, 23 Apr 2020 18:47:27 +0800
+From: =?big5?B?UC4gSy4gTGVlICin9axmvGUp?= <P.K.Lee@quantatw.com>
+To: "ztai@google.com" <ztai@google.com>
+Subject: Re: mTLS on bmcweb
+Thread-Topic: mTLS on bmcweb
+Thread-Index: AQHWGVyUYDFPzhylEE64ge0yqb7UkA==
+Date: Thu, 23 Apr 2020 10:47:27 +0000
+Message-ID: <1DF7E55B-29E9-43A2-9981-F67521B2B3E2@quantatw.com>
+References: <mailman.1237.1587601186.5884.openbmc@lists.ozlabs.org>
+In-Reply-To: <mailman.1237.1587601186.5884.openbmc@lists.ozlabs.org>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Apple Mail (2.3445.104.14)
+x-originating-ip: [10.243.91.252]
+x-tm-snts-smtp: AF988409A0862D5011C01C984925D51B3CB1E47AE5B4921EADB4A635DE4E9E272000:8
+Content-Type: text/plain; charset="big5"
+Content-ID: <91F6B9E2F37A6046880182D7554BAAB8@quantatw.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <2A59C9DC-F7F5-4A7E-BF83-5BE2AA8A04B9@fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,38 +65,24 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-W dniu 4/22/2020 o 13:45, Brad Bishop pisze:
-> at 7:00 AM, Adrian Ambrożewicz <adrian.ambrozewicz@linux.intel.com> wrote:
-> 
->> Hello,
->>
->> OpenBMC Sensor interface is specified here:
->> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Value.interface.yaml 
->>
->>
->> We would need to extend it with new hierarchy/namespace : utilization, 
->> and corresponding Unit: Percent.
->>
->> Should I push change directly to review or do I need to discuss it 
->> earlier with someone? My first thought was to address 
->> https://github.com/openbmc/docs/blob/master/architecture/sensor-architecture.md 
->> , however this document doesn't seem to address these details.
->>
->> Regards,
->> Adrian
-> 
-> Thanks for bringing the topic to the mailing list first!  I find 
-> discussion here to be much easier than in a docs/designs or 
-> phosphor-dbus-interfacs gerrit review.  I also think it ends up getting 
-> much more visibility.
-Glad to see the enthusiasm :) I will keep that in mind for the future:)
-
-> 
-> With that said - this one is pretty straightforward.  Your proposal 
-> sounds good to me!
-Great.
-
-> 
-> thx - brad
+SGksDQoNCkkgZW5jb3VudGVyZWQgdGhlIHNhbWUgaXNzdWUgd2hlbiB1c2luZyBSZWRmaXNoIHRv
+IHJlcGxhY2UgdGhlIGNlcnRpZmljYXRlLg0KUmVnYXJkbGVzcyBvZiB3aGV0aGVyIHRoZSBwYXJh
+bWV0ZXJzIGluY2x1ZGUgLS1jZXJ0IC0ta2V5IC0tY2FjZXJ0IG9yIG9ubHkgLS1jYWNlcnQsIHRo
+ZSBhdXRoZW50aWNhdGlvbiBjYW4gc3RpbGwgc3VjY2VlZC4NCg0KQmVzdCwNClAuSy4NCg0KPiBE
+YXRlOiBXZWQsIDIyIEFwciAyMDIwIDE0OjU4OjA2IC0wNzAwDQo+IEZyb206IFpoZW5mZWkgVGFp
+IDx6dGFpQGdvb2dsZS5jb20+DQo+IFRvOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4gU3Vi
+amVjdDogbVRMUyBvbiBibWN3ZWINCj4gTWVzc2FnZS1JRDoNCj4gCTxDQU1Ydzk2UHA1MTFzVU89
+cTFYTHoydUp6aDRTNkQ3dFV3bWt2cGJucV95VS1pSmZpS2dAbWFpbC5nDQo+IG1haWwuY29tPg0K
+PiBDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9InV0Zi04Ig0KPiANCj4gSGksDQo+
+IA0KPiBJJ20gdHJ5aW5nIG91dCBibWN3ZWIgbVRMUyB3aGljaCBzaG91bGQgYmUgZW5hYmxlZCBi
+eSBkZWZhdWx0IGJ5DQo+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2JtY3dlYi9ibG9iL21h
+c3Rlci9DTWFrZUxpc3RzLnR4dCNMODkNCj4gDQo+IEluIG15IHRlc3QsIEkgY3JlYXRlZCBhIHNl
+bGYgc2lnbmVkIGtleSBhbmQgY2VydGlmaWNhdGUgcGFpciwgc3RhY2tlZCB0aGVtDQo+IHVwIGlu
+dG8gc2VydmVyLnBlbSBpbiAvZXRjL3NzbC9jZXJ0cy9odHRwcyB0aGF0IGJtY3dlYiB1c2VzLg0K
+PiANCj4gSG93ZXZlciB3aGVuIEkgdHJpZWQgdG8gY3VybCBibWN3ZWIgc2VydmljZSwgSSB3YXMg
+YWJsZSB0byBnZXQgcmVzcG9uc2UgYnkNCj4gb25seSBzdXBwbHlpbmcgdGhlIGNlcnQuDQo+IA0K
+PiBjdXJsIC0tY2FjZXJ0IGNlcnQucGVtICBodHRwczovLyR7Ym1jfS9yZWRmaXNoL3YxDQo+IA0K
+PiBXaXRoIHRoZSBtVExTIGVuYWJsZWQsIEkgZXhwZWN0ZWQgaXQgc2hvdWxkIGVycm9yIG91dCBz
+aW5jZSBubyBjbGllbnQNCj4gY2VydGlmaWNhdGUgaXMgcHJvdmlkZWQuDQo+IA0KPiBDb3VsZCBz
+b21lb25lIHdpdGggcmVsZXZhbnQga25vd2xlZGdlIGhlbHAgd2l0aCBteSBxdWVzdGlvbj8NCj4g
+DQo+IFRoYW5rcywNCj4gWmhlbmZlaQ0KDQo=
