@@ -2,80 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82ADE1B78D1
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 17:07:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EE7D51B78E4
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 17:10:12 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 497yFV5GBnzDqQ8
-	for <lists+openbmc@lfdr.de>; Sat, 25 Apr 2020 01:07:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 497yJw6r20zDqNV
+	for <lists+openbmc@lfdr.de>; Sat, 25 Apr 2020 01:10:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=msbarth@linux.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 497y9M2Sz7zDqXB
- for <openbmc@lists.ozlabs.org>; Sat, 25 Apr 2020 01:03:27 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 497yF439bnzDqR1
+ for <openbmc@lists.ozlabs.org>; Sat, 25 Apr 2020 01:06:47 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03OEUehD043719; Fri, 24 Apr 2020 11:03:24 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30jrj83vw4-1
+ 03OF5vUS094660; Fri, 24 Apr 2020 11:06:40 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30jvfvqrp5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2020 11:03:24 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03OF2wrv004727;
- Fri, 24 Apr 2020 15:03:23 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma01dal.us.ibm.com with ESMTP id 30fs67py98-1
+ Fri, 24 Apr 2020 11:06:40 -0400
+Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 03OF6D3H095190;
+ Fri, 24 Apr 2020 11:06:38 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30jvfvqrhw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2020 15:03:22 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03OF3LBK42533178
+ Fri, 24 Apr 2020 11:06:38 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03OEppuW028588;
+ Fri, 24 Apr 2020 15:06:30 GMT
+Received: from b06cxnps3075.portsmouth.uk.ibm.com
+ (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
+ by ppma03ams.nl.ibm.com with ESMTP id 30fs659a9u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2020 15:06:30 +0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com
+ [9.149.105.62])
+ by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03OF6SWI65011750
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Apr 2020 15:03:21 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9208BE087;
- Fri, 24 Apr 2020 15:03:20 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5ECD3BE0C1;
- Fri, 24 Apr 2020 15:03:20 +0000 (GMT)
-Received: from [9.85.177.21] (unknown [9.85.177.21])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri, 24 Apr 2020 15:03:20 +0000 (GMT)
-Subject: Re: Intel-BMC: Fan control
-To: Patrick Voelker <Patrick_Voelker@phoenix.com>,
- "OpenBMC (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
-References: <e3297385bee9483989607bce1e9837d9@SCL-EXCHMB-13.phoenix.com>
-From: Matthew Barth <msbarth@linux.ibm.com>
-Message-ID: <e05f77ca-b69c-0e8a-3b4d-3e20a2f87b02@linux.ibm.com>
-Date: Fri, 24 Apr 2020 10:03:19 -0500
+ Fri, 24 Apr 2020 15:06:28 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B0447AE045;
+ Fri, 24 Apr 2020 15:06:28 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D3C65AE04D;
+ Fri, 24 Apr 2020 15:06:27 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.85.91.26])
+ by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Apr 2020 15:06:27 +0000 (GMT)
+To: wak@google.com, johnathanx.mantey@intel.com, openbmc@lists.ozlabs.org
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Subject: Default Gateway for a system v/s Default gateway per Interface
+Message-ID: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+Date: Fri, 24 Apr 2020 20:36:26 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <e3297385bee9483989607bce1e9837d9@SCL-EXCHMB-13.phoenix.com>
-Content-Type: multipart/alternative;
- boundary="------------7FA8340F3D17438E8A6DB0B5"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-24_06:2020-04-24,
+ definitions=2020-04-24_07:2020-04-24,
  2020-04-24 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- malwarescore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- adultscore=0 mlxlogscore=893 phishscore=0 suspectscore=0 clxscore=1011
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004240113
+ mlxscore=0 priorityscore=1501
+ adultscore=0 impostorscore=0 mlxlogscore=999 spamscore=0 clxscore=1011
+ phishscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
+ definitions=main-2004240117
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,106 +94,46 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------7FA8340F3D17438E8A6DB0B5
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi All,
 
-No, phosphor-fan-control is currently driven by yaml configs at build 
-time. There is work slated to enable use of runtime json configs for 
-phosphor-fan-control.
+Currently, OpenBMC stack allows a single default gateway for the system. 
+Latest kernel allows to configure multiple default gateways.
 
-I believe entity-manager can be used to provide config data to the 
-phosphor-pid-control fan control application though.
+Eg: In a system with two interfaces eth0 and eth1,
 
-On 4/23/20 6:48 PM, Patrick Voelker wrote:
->
-> Fan control related question for Intel-BMC: Do the entity-manager 
-> tachs, PWMs, and zones inform phosphor-fan-control? Or is 
-> phosphor-fan-control driven purely from the yaml configurations at 
-> build time?
->
+eth0 configured with static address and having gateway(192.168.2.1)
+eth1 configured with DHCP and gets Gateway from DHCP server (10.10.10.1)
+~~~~~~~~~~~~~
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt 
+Iface
+0.0.0.0         19.168.2.1      0.0.0.0         UG        0 0          0 
+eth0
+0.0.0.0         10.10.10.1      0.0.0.0         UG        0 0          0 
+eth1
+~~~~~~~~~~~~~~
 
---------------7FA8340F3D17438E8A6DB0B5
-Content-Type: text/html; charset=windows-1252
-Content-Transfer-Encoding: 7bit
+Kernel will first try using the default gateway having higher metric 
+value and then fall back to the lower.
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;
-      charset=windows-1252">
-  </head>
-  <body>
-    <p>No, phosphor-fan-control is currently driven by yaml configs at
-      build time. There is work slated to enable use of runtime json
-      configs for phosphor-fan-control.</p>
-    <p>I believe entity-manager can be used to provide config data to
-      the phosphor-pid-control fan control application though.<br>
-    </p>
-    <div class="moz-cite-prefix">On 4/23/20 6:48 PM, Patrick Voelker
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:e3297385bee9483989607bce1e9837d9@SCL-EXCHMB-13.phoenix.com">
-      <meta http-equiv="Content-Type" content="text/html;
-        charset=windows-1252">
-      <meta name="Generator" content="Microsoft Word 14 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@PMingLiU";
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri","sans-serif";}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri","sans-serif";
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri","sans-serif";}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal">Fan control related question for Intel-BMC:
-          Do the entity-manager tachs, PWMs, and zones inform
-          phosphor-fan-control? Or is phosphor-fan-control driven purely
-          from the yaml configurations at build time?<o:p></o:p></p>
-      </div>
-    </blockquote>
-  </body>
-</html>
+More references: 
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_the_default_gateway
 
---------------7FA8340F3D17438E8A6DB0B5--
+I'm proposing to make this change in the openBMC D-bus interfaces to tie 
+the gateway property with the Ethernet interface schema instead of 
+System configuration.
+
+Ethernet Interface Schema =>
+
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/EthernetInterface.interface.yaml
+
+System Configuration Schema =>
+
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/SystemConfiguration.interface.yaml
+
+
+Please let me know your suggestions.
+
+Regards
+Ratan Gupta
 
