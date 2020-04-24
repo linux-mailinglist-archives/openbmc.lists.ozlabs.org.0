@@ -1,65 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBA1D1B78AB
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 16:58:31 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 748D61B7860
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 16:35:14 +0200 (CEST)
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 497xXb1n15zDr7K
-	for <lists+openbmc@lfdr.de>; Sat, 25 Apr 2020 00:35:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 497y3S2yPXzDqWb
+	for <lists+openbmc@lfdr.de>; Sat, 25 Apr 2020 00:58:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=203.205.250.101; helo=smtpbg501.qq.com;
- envelope-from=1181052146@qq.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
- header.s=s201512 header.b=MWizYVCV; dkim-atps=neutral
-X-Greylist: delayed 187 seconds by postgrey-1.36 at bilbo;
- Sat, 25 Apr 2020 00:34:03 AEST
-Received: from smtpbg501.qq.com (smtpbg501.qq.com [203.205.250.101])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=ab/JPris; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=ztYvEeGC; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (unknown [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 497xWH0ksQzDqQW
- for <openbmc@lists.ozlabs.org>; Sat, 25 Apr 2020 00:34:01 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1587738836; bh=nP/M85BxSrATFk/lK/1Lmah0Yo5hi1bDRS8GU6hA1YI=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=MWizYVCVCufz2IOS9yWZhZdJCRMnze3CAWQoqSD3FdV5vipPP3dRw/M8opPia3iKq
- ltXuY90YdhEURBd44s0D0kUF+w61PNkEJAlMNW4I9H5583PSh2LqupYlej4WAYmWFR
- 3upiBHhIKzn/b2J28nD4TLbKcHdln2Qdcel1jrI8=
-X-QQ-FEAT: W6fIo0Owl0BB9dx2WVYACh12u5xevpfKlva9RFPCtFmk3FpqIk2bUqaX5xqxb
- 8+XzrHOKaETkx3fQQcdSPeN3APFN/MsBAkjH4melJCgrPJPtQuPkAet5GBFzQ+Lz3TdQj8N
- o2TKSm4vNeZruYV9jFF9HMHaQcXsoZ6KyXJhxX/6e580YzWR6IAbSy4hih8knTIl50jOv0i
- kWxSQybOCMFzgoZl6KdoQPl1rYsgdWHm6kN8MmWd6AXFti3nntWt11Vt/3WyKxlf0GtJfdl
- 8xo0kBy02DG15G70jrGDrxeTM=
-X-QQ-SSF: 00000000000000F000000000000000S
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 211.75.18.137
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1587738507t1103318
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: How can the host access BMC's SPI Flash via LPC and How do BMC's CPU
- read uboot from SPI Flash when power up?
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5EA2F78A_1357F2E0_3DA63BB4"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 24 Apr 2020 22:28:26 +0800
-X-Priority: 3
-Message-ID: <tencent_2D6AE7A4D981E94342BD340BC7DF4EBE7F05@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 24 Apr 2020 22:28:29 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgweb:bgweb5
+ by lists.ozlabs.org (Postfix) with ESMTPS id 497y1b2T0qzDqLv
+ for <openbmc@lists.ozlabs.org>; Sat, 25 Apr 2020 00:56:49 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 248FE10E1;
+ Fri, 24 Apr 2020 10:56:37 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Fri, 24 Apr 2020 10:56:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=Cn2DnYUXmq84ONoor1VC7MxKN6H
+ YEyqamjopLxKntTE=; b=ab/JPrisKdIZdg4mIwa67h1EoCX4VZbvkCTmDio/CwH
+ gFGwPwc/Toax0lBz5nSLkywlDHoy7pwXpzuGCuAXJANilwOhqC9Bx6VKEG5zfKe+
+ VNh2cp9AYl9jgzzEPkCJUJPx4doPBv17KaNLFpOxY6ma4bg71UThQlfwxB3auTDK
+ LNamKhfSQ2Qi9ZP4zy4mdRGDVDHFkGyHJ8jiAh2VupnM+h/POpfgws2Zi9llf+fR
+ yz2yd21oGXXqPT2L4quHCm+qcjVKdDPseRjMnJjchUqvgINJ3m/wT9IAJJDyMAik
+ mO0O2NUWggkiUolgmPVMZ/T9C+gSb2ydO12RncM33Ig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Cn2DnY
+ UXmq84ONoor1VC7MxKN6HYEyqamjopLxKntTE=; b=ztYvEeGCvs0RmUWOsEBw73
+ Khzhv/inI/4hMuPAzTAGZAgw9WXXg3Y95qUEdqDPWJfAm/sSvJ73BxrYU614BjYF
+ Y7q8Vd6axsJ7gMD5wbQWbO6ejeEZ4j2XyBEAX/AGXWDPwcuaLA/l8pNVA+GvNmUr
+ GhgVH+LgBu1nWmW9kzjzeYCkkmmnxJH+wsyuWpbvpHoGdmUDv+pcW5F8mmR9FQ8W
+ v7uh+T0mJbZltC7FkD2mf15Mly/fpNL/ZDXnei6mSL2iQtxl+0NTF7OAZ5Eu1VNu
+ RiMMhWAD0/9cehoAEKePt0S9F2/RZNtHgawIwtFvtrWuAyD1e7+hFBfmvD6FO/Qg
+ ==
+X-ME-Sender: <xms:JP6iXgoAOCKlXcVP6F6ajsfT9h9RaoiZks9pIAvPFqq72IcO-jC8-Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrhedugdejjecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdej
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucfkphepudeiiedrudejiedruddvuddruddvfeenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
+ iftgigrdighiii
+X-ME-Proxy: <xmx:JP6iXp4Il8uVysGUMELMDXqrMbknnP3r4gmWQH2yp4ip1XS1NaGaTg>
+ <xmx:JP6iXuoifz-y-lgS6oLqcXxJeu6yXDWQFMXenM4tYdU7hVM_DCJV3g>
+ <xmx:JP6iXjiVmcid_0zSAXwEWBvNoKVAWqyiOA3esecgPSIFSG40lqZgxQ>
+ <xmx:JP6iXsEPAX28MRy_LPzkbpmDEMwc6tyzUoMaLsYEJID3tYy_ICv6Ng>
+Received: from localhost (mobile-166-176-121-123.mycingular.net
+ [166.176.121.123])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 25ACE3280060;
+ Fri, 24 Apr 2020 10:56:36 -0400 (EDT)
+Date: Fri, 24 Apr 2020 09:56:35 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: Proposal: how to make incompatible changes
+Message-ID: <20200424145635.GB26818@heinlein.lan.stwcx.xyz>
+References: <5532c90e-75e8-4998-b0cf-e65ed9af1424@linux.ibm.com>
+ <05835fa0-508f-d3ba-13be-280f4dfc92e4@yadro.com>
+ <DA097328-158E-48DA-9F8F-6CD0C7FC4DDE@fuzziesquirrel.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="4SFOXa2GPu3tIq4H"
+Content-Disposition: inline
+In-Reply-To: <DA097328-158E-48DA-9F8F-6CD0C7FC4DDE@fuzziesquirrel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,75 +93,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Alexander Amelkin <a.amelkin@yadro.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
 
-------=_NextPart_5EA2F78A_1357F2E0_3DA63BB4
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+--4SFOXa2GPu3tIq4H
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-SGksIEdyZWV0aW5ncw0KJm5ic3A7ICZuYnNwOyBBIEJNQyB1c3VhbGx5IHVzZXMgYXNwZWVk
-J3MgY2hpcC4gVG8gbGVhcm4gQk1DIEkgcmVhZCB0aGUgc3BlYyBvZiBhc3BlZWQncyBBU1Qy
-NTAwLiBJIGhhdmUgbG9uZyBiZWVuIGNvbmZ1c2VkIGJ5IHR3byBxdWVzdGlvbnMgd2hlbiBJ
-IGFtIGxlYXJuaW5nIEJNQy4NCiZuYnNwOyAmbmJzcDsgMS4gT25lIGlzIHRoYXQ6IEhvdyBj
-YW4gdGhlIGhvc3QgYWNjZXNzIEJNQydzIFNQSSBGbGFzaCB2aWEgTFBDPyBJIHJlYWQgZnJv
-bSBBU1QyNTAwJ3Mgc3BlYyB0aGF0IHRoZSBob3N0IGNhbiB1cGRhdGUgdGhlIEJJT1Mgc3Rv
-cmVkIGluIHRoZSBTUEkgZmxhc2ggdmlhIExQQy4gSSBhbHNvIHNlZW4gZnJvbSBBU1QyNTAw
-J3Mgc3BlYyB0aGF0IHRoZSBTUEkgY29udHJvbGxlciBpbiBBU1QyNTAwIGNhbiBiZSBhY2Nl
-c3MgYnkgaG9zdCB0aHJvdWdoIExQQy4gSXQgc2VlbXMgbGlrZSB0aGUgYXJjaGl0ZWN0dXJl
-IGlzIGFzIGJlbG93Lg0KJm5ic3A7ICZuYnNwOyBIb3N0IENQVS0tLS0mZ3Q7TFBDLS0tLSZn
-dDtTUEkgY29udHJvbGxlci0tLS0mZ3Q7U1BJIEZsYXNoW0JJT1NdDQombmJzcDsgJm5ic3A7
-IEkgZG8gbm90IGtub3cgaG93IGl0IHdvcmtzLCBkb2VzIHRoaXMgbmVlZCB0byBpbnN0YWxs
-IGEgTFBDIGRyaXZlciBpbiBob3N0IE9TIGFuZCBvcGVuYm1jIE9TPyBBbmQgZG9lcyB0aGlz
-IG5lZWQgc29mdHdhcmUgaW50ZXJ2ZW50aW9uPw0KJm5ic3A7ICZuYnNwOyAyLiBUaGUgb3Ro
-ZXIgaXMgdGhhdDogSG93IGRvZXMgQk1DJ3MgQ1BVIHJlYWQgdWJvb3QgY29kZSBmcm9tIFNQ
-SSBmbGFzaCB3aGVuIHBvd2VyIHVwPyBJIGtub3cgdGhhdCB0aGUgdWJvb3QoYWN0IGFzIGJv
-b3Rsb2FkZXIpIGlzIHN0b3JlZCBpbiBhIFNQSSBmbGFzaCwgYW5kIHVib290IGlzIHRoZSBm
-aXJzdCBjb2RlIHRoYXQgaXMgZXhlY3V0ZWQgYnkgQk1DJ3MgQ1BVLiBJIGRvIG5vdCBrbm93
-IHdoZXRoZXIgaXQgaXMgcmlnaHQgb3Igd3JvbmcgYnV0IEkgdGhpbmsgQk1DJ3MgQ1BVIGNh
-biBvbmx5IGV4ZWN1dGUgdGhlIGNvZGUgc3RvcmVkIGluIERSQU0uIFdobyBjb3B5IHRoZSBj
-b2RlIGZyb20gU1BJIGZsYXNoIHRvIERSQU0/IEdpdmVuIHRoYXQgd2hlbiBCTUMgaXMgcG93
-ZXJlZCB1cCB0aGVyZSBpcyBubyBTUEkgZHJpdmVyLCBob3cgU1BJIGNvbnRyb2xsZXIgd29y
-a3M/DQombmJzcDsgJm5ic3A7IFRoYW5rcyBmb3IgaGVscGluZyBtZSwgdGhleSByZWFsbHkg
-Y29uZnVzZWQgbWUgZm9yIGEgcGVyaW9kIG9mIHRpbWUoVKOsVCkuDQoNCg0KQmVzdCBSZWdh
-cmRzIQ0KTGl1IEhvbmd3ZWk=
+On Thu, Apr 23, 2020 at 12:20:53PM -0400, Brad Bishop wrote:
+> at 8:11 AM, Alexander Amelkin <a.amelkin@yadro.com> wrote:
+>=20
+> > Internally, for inter-process dbus communication the interface version =
+=20
+> > could be checked during compile time to prevent problems that couldn't =
+be =20
+> > detected by compiler/linker automatically.
+>=20
+> I like the idea of a stable, versioned DBus API.  Does anyone else?
+>=20
+> In the past there was opposition to that.  I=E2=80=99m not sure if there =
+still is.
 
-------=_NextPart_5EA2F78A_1357F2E0_3DA63BB4
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+Since we're deprecating the REST-dbus path and moving towards Redfish is
+there much advantage to a versioned DBus API?  Alexander mentioned
+compile-time checking of the interface, but we already have that through
+sdbusplus.  The issues are:
+    1. Client bindings are not currently being generated.
+    2. Not every implementation is using them.
+    3. We don't have a good mechanism to deal with cross-repository
+       interface changes.
 
-PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
-YXJzZXQ9R0IxODAzMCI+PGRpdj5IaSwgR3JlZXRpbmdzPC9kaXY+PGRpdj4mbmJzcDsgJm5i
-c3A7IEEgQk1DIHVzdWFsbHkgdXNlcyBhc3BlZWQncyBjaGlwLiBUbyBsZWFybiBCTUMgSSBy
-ZWFkIHRoZSBzcGVjIG9mIGFzcGVlZCdzIEFTVDI1MDAuIEkgaGF2ZSBsb25nIGJlZW4gY29u
-ZnVzZWQgYnkgdHdvIHF1ZXN0aW9ucyB3aGVuIEkgYW0gbGVhcm5pbmcgQk1DLjwvZGl2Pjxk
-aXY+Jm5ic3A7ICZuYnNwOyAxLiBPbmUgaXMgdGhhdDogSG93IGNhbiB0aGUgaG9zdCBhY2Nl
-c3MgQk1DJ3MgU1BJIEZsYXNoIHZpYSBMUEM/IEkgcmVhZCBmcm9tIEFTVDI1MDAncyBzcGVj
-IHRoYXQgdGhlIGhvc3QgY2FuIHVwZGF0ZSB0aGUgQklPUyBzdG9yZWQgaW4gdGhlIFNQSSBm
-bGFzaCB2aWEgTFBDLiBJIGFsc28gc2VlbiBmcm9tIEFTVDI1MDAncyBzcGVjIHRoYXQgdGhl
-IFNQSSBjb250cm9sbGVyIGluIEFTVDI1MDAgY2FuIGJlIGFjY2VzcyBieSBob3N0IHRocm91
-Z2ggTFBDLiBJdCBzZWVtcyBsaWtlIHRoZSBhcmNoaXRlY3R1cmUgaXMgYXMgYmVsb3cuPC9k
-aXY+PGRpdj4mbmJzcDsgJm5ic3A7IEhvc3QgQ1BVLS0tLSZndDtMUEMtLS0tJmd0O1NQSSBj
-b250cm9sbGVyLS0tLSZndDtTUEkgRmxhc2hbQklPU108L2Rpdj48ZGl2PiZuYnNwOyAmbmJz
-cDsgSSBkbyBub3Qga25vdyBob3cgaXQgd29ya3MsIGRvZXMgdGhpcyBuZWVkIHRvIGluc3Rh
-bGwgYSBMUEMgZHJpdmVyIGluIGhvc3QgT1MgYW5kIG9wZW5ibWMgT1M/IEFuZCBkb2VzIHRo
-aXMgbmVlZCBzb2Z0d2FyZSBpbnRlcnZlbnRpb24/PC9kaXY+PGRpdj4mbmJzcDsgJm5ic3A7
-IDIuIFRoZSBvdGhlciBpcyB0aGF0OiBIb3cgZG9lcyBCTUMncyBDUFUgcmVhZCB1Ym9vdCBj
-b2RlIGZyb20gU1BJIGZsYXNoIHdoZW4gcG93ZXIgdXA/IEkga25vdyB0aGF0IHRoZSB1Ym9v
-dChhY3QgYXMgYm9vdGxvYWRlcikgaXMgc3RvcmVkIGluIGEgU1BJIGZsYXNoLCBhbmQgdWJv
-b3QgaXMgdGhlIGZpcnN0IGNvZGUgdGhhdCBpcyBleGVjdXRlZCBieSBCTUMncyBDUFUuIEkg
-ZG8gbm90IGtub3cgd2hldGhlciBpdCBpcyByaWdodCBvciB3cm9uZyBidXQgSSB0aGluayBC
-TUMncyBDUFUgY2FuIG9ubHkgZXhlY3V0ZSB0aGUgY29kZSBzdG9yZWQgaW4gRFJBTS4gV2hv
-IGNvcHkgdGhlIGNvZGUgZnJvbSBTUEkgZmxhc2ggdG8gRFJBTT8gR2l2ZW4gdGhhdCB3aGVu
-IEJNQyBpcyBwb3dlcmVkIHVwIHRoZXJlIGlzIG5vIFNQSSBkcml2ZXIsIGhvdyBTUEkgY29u
-dHJvbGxlciB3b3Jrcz88L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsgVGhhbmtzIGZvciBoZWxw
-aW5nIG1lLCB0aGV5IHJlYWxseSBjb25mdXNlZCBtZSBmb3IgYSBwZXJpb2Qgb2YgdGltZShU
-o6xUKS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkJlc3QgUmVnYXJkcyE8L2Rpdj48ZGl2
-PkxpdSBIb25nd2VpPC9kaXY+
+I don't think a versioned DBus API solves any of these, except maybe #3
+but that is only if we're going to write servers that support N-versions=20
+of the interfaces.
 
-------=_NextPart_5EA2F78A_1357F2E0_3DA63BB4--
+It seems to me like a better investment is #1 and #2?  I'd personally
+like to have #1 implemented by the end of Sept at the latest.  Solving
+#3, I think, requires us to do some CI investment to support Gerrit
+topic-based testing.
 
+--=20
+Patrick Williams
+
+--4SFOXa2GPu3tIq4H
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6i/iEACgkQqwNHzC0A
+wRlWdA/9FWdXhmkoWKQjHXrrSIrRiyZVlCntbaAtBDn29eLtBhW/T/9BKVSu4uWK
+Np+T8DO1Z3cjyiGREhjHHdS53ZFobPKJ+aDSwVO3om+LdmkyMSsjXc9Ub6r4xE9x
+Y5QyB/A14zTR2ZKxAW9wc6qbBxAkmq1eFiS4fYKDtfKffRmyywAVi/VrUSMhntwo
+QcGwYc2hpRgU0mqIQanE0ECaK3Fz29g3tKOxdDtgOuH4meaHPnklT5KMZsHe+tye
+K4T1hm67oUNjGkPFIYDfq+Rtio8loesaeUl841tmKbMRgz6XKn5GeES5CMWbB1Df
+5Od4K/zRv9fEVBj6eAq3OO11NbImNzZhwZZSchbW88nE7Iv4kwDB+eVrmC5V9LWV
+QCu8X+K3NtLI+SePJNlczzeAu6W6T3b2pNzlS0dotehm5F/+fBX+D3j0QvsKo9FC
+49a1hyYQYMqW6MPAtFLjlxpTUyqATureEaT5/tP9UiAh77AklxgBpvSUMiEn3qKI
+8yNuC106oxJpt+d7Q0miXyhVrWPOW09KME+q9ADmjlfRdy5JfkSHmVYK70mwjCuq
+MCVD1yzGEQ5/Bul4wBDqj++gxYgljBGnAn1yP77TNb5Dnb57ILOQfFKZ+LN1rnAd
+OTCCTVTbh8n2dpWyZtaKI22mdTgN8XAyTsrEDCse+AYapcEPtV8=
+=4rNs
+-----END PGP SIGNATURE-----
+
+--4SFOXa2GPu3tIq4H--
