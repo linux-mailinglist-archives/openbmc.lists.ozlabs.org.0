@@ -2,85 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B7CC1B7237
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 12:43:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C65911B7304
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 13:25:39 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 497rNy2WlYzDr8q
-	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 20:43:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 497sKr6nf1zDr88
+	for <lists+openbmc@lfdr.de>; Fri, 24 Apr 2020 21:25:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=McV7CzAi; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=hXUX8kBU; 
- dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 497rN15M0mzDr5Y
- for <openbmc@lists.ozlabs.org>; Fri, 24 Apr 2020 20:42:24 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id E9C0DC33;
- Fri, 24 Apr 2020 06:42:19 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Fri, 24 Apr 2020 06:42:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=6qjI5swdlVzocmbfeSbjXbstSzN
- 7yU10roVtGuCBp2c=; b=McV7CzAiPDabpC3NAhgfKEHD5kTXzRvApLxbi2yp1AK
- z/AaHXUvdEOuxCKdV4XDyh6yizvTvOVjzzSozc5T6EMGZz/G+OSEzXuNrTQpJMml
- Z6A/sB774WKJeCiJQUPL0PcTaiRcqa7gKAym0xWe6LR+Rd8vvxAeLPgNIBGIa8xY
- o5V29XI1sgjbKNJIG0lPzOtYCOiDK6IMx72vGaJnjYuRxfT6QF+1jdRInE3dxkkQ
- 6Jqn+NX41M85L1D/y7hl4J0uQxxxmjenjpfUBf8vK9JkNB7r3jVCGQUu91kwjaAk
- OWV2FqAF4nIWvqNhiS2iOLwwCepnfgBzCPF562SEKJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=6qjI5s
- wdlVzocmbfeSbjXbstSzN7yU10roVtGuCBp2c=; b=hXUX8kBUer5hzUf712/cTM
- JYcsaK56XJf7M0387XjpWCuUxBvLH+e8cyAUN5umGwp43m3mQW0h2rrihHTJWBIM
- FTy0uLQoaC1VZH5h6hXHGJmyknWR0hdW3hRpvs58gPsceiLQ2M5+z/8QC67az0ZQ
- 6KJcHPkmML/E3KL+DchV237YcGLAt8cMHXvWN5O5gR1i5HRhdV/ngESAllBANTzZ
- AhuKfWQvRUbDce+vUtWPyZIpVboiuFmAdjPC313z2nwqMzDh8Yf2far+d2yp2IWB
- dZtJt7NHhTX8dIUckeU1hsimQpCXs34eBGkpubaa2H6zJc4A8/TwtCA8+SxI+TgA
- ==
-X-ME-Sender: <xms:i8KiXt2zjpl4Br5J9p01_0pgX1hJ8rlu0OXe0yWsow-CG5uXK94CwA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrhedugddvjecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucffohhmrghinhepohhpvghnsghmtgdqphhrohhjvggtthdrgiih
- iienucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:i8KiXrDd6w43UdgwFFo2Kys3OEmk6HN2isKHgkDCo87OvL22r__sLQ>
- <xmx:i8KiXm25TAyAxcbzFou9131v-gxc9UA5jig-JWv35v-6IX-XINMS1Q>
- <xmx:i8KiXirZjP6K_PK2Sa1s8uGmQ_ksQ4bLLLq78cKLwrBNR5UUbSmUyQ>
- <xmx:i8KiXu8lGF2NuIPXFB4LptloYAVGhgWfE_mfHCoG4_rWEcvY80OGVQ>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 470563065D8E;
- Fri, 24 Apr 2020 06:42:18 -0400 (EDT)
-Date: Fri, 24 Apr 2020 05:42:16 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Subject: Re: dbus interface for SLED reset
-Message-ID: <20200424104216.GA26818@heinlein.lan.stwcx.xyz>
-References: <903F1195-A0B7-416A-8CD9-BDB1E30E0F2B@fb.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 497sJy1kxWzDr7h
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Apr 2020 21:24:40 +1000 (AEST)
+IronPort-SDR: UHQ8toukTYv64qJUpN7LLmb+O9FTa0KAo+e3ViAGIFuORJOK/L4z2SKF7j1tcn/lkF/DmdmUG9
+ 9Vyo1DmYBZpw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2020 04:24:18 -0700
+IronPort-SDR: BGUDaaE/UZ5t2VDWnHdoJTTvBDiy8urz4KQJ9o9Q704wyMaqFSRf4d3/0NOVxgzZ0EeiFGwaKO
+ +uYGPGfoDYCw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,311,1583222400"; d="scan'208";a="292608501"
+Received: from irsmsx108.ger.corp.intel.com ([163.33.3.3])
+ by orsmga008.jf.intel.com with ESMTP; 24 Apr 2020 04:24:16 -0700
+Received: from irsmsx603.ger.corp.intel.com (163.33.146.9) by
+ IRSMSX108.ger.corp.intel.com (163.33.3.3) with Microsoft SMTP Server (TLS) id
+ 14.3.439.0; Fri, 24 Apr 2020 12:22:03 +0100
+Received: from irsmsx606.ger.corp.intel.com (163.33.146.139) by
+ irsmsx603.ger.corp.intel.com (163.33.146.9) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Fri, 24 Apr 2020 12:22:03 +0100
+Received: from irsmsx606.ger.corp.intel.com ([163.33.146.139]) by
+ IRSMSX606.ger.corp.intel.com ([163.33.146.139]) with mapi id 15.01.1713.004;
+ Fri, 24 Apr 2020 12:22:03 +0100
+From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
+To: "Troy.Lee@vertiv.com" <Troy.Lee@vertiv.com>,
+ =?utf-8?B?QWRyaWFuIEFtYnJvxbxld2ljeg==?=
+ <adrian.ambrozewicz@linux.intel.com>, Richard Hanley <rhanley@google.com>,
+ Vijay Khemka <vijaykhemka@fb.com>
+Subject: RE: [ExternalEmail] Re: Sensor history
+Thread-Topic: [ExternalEmail] Re: Sensor history
+Thread-Index: AQHWBs4VmN6lX3CS6Uq7IxtJ4cK5Bahy18aAgASxEQCAAXbpgIAAG/QAgADB7gCAABtAAIAOTe7Q
+Date: Fri, 24 Apr 2020 11:22:02 +0000
+Message-ID: <ad63e2f0c0d8423388ee5cfcb9d39380@intel.com>
+References: <EED5BF91-4AE9-4B5A-BE68-BAE3D93C3704@fb.com>
+ <20200410210033.GA9295@mauery.jf.intel.com>
+ <85700953-1CBE-4DFB-9A5B-AF64B9735735@fuzziesquirrel.com>
+ <A785371B-1AD2-45E0-AD62-60C7E8B2C69D@fb.com>
+ <CAH1kD+b4GQFs_V13APk8123dc_vL0GVxXwZLx6pPdUHiKodZRA@mail.gmail.com>
+ <bbd70c99-dc36-7d2b-ef25-a17108be8de0@linux.intel.com>
+ <SN6PR13MB2480B3B7DED9EC3C8163E659EDDB0@SN6PR13MB2480.namprd13.prod.outlook.com>
+In-Reply-To: <SN6PR13MB2480B3B7DED9EC3C8163E659EDDB0@SN6PR13MB2480.namprd13.prod.outlook.com>
+Accept-Language: pl-PL, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: request-justification,no-action
+x-originating-ip: [163.33.253.164]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
-Content-Disposition: inline
-In-Reply-To: <903F1195-A0B7-416A-8CD9-BDB1E30E0F2B@fb.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,63 +82,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Williams <patrickw3@fb.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---jRHKVT23PllUwdXP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Apr 23, 2020 at 06:54:47PM +0000, Vijay Khemka wrote:
-> Hi Andrew,
-> As discussed this in patch review https://gerrit.openbmc-project.xyz/#/c/=
-openbmc/phosphor-dbus-interfaces/+/31319/, I have thought of 2 approach to =
-handle this interface.
->=20
->=20
->   1.  As included in patch create a new method Sled Reset in xyz/openbmc_=
-project/Chassis/Control/Power.interface.yaml. which can be invoked by user =
-for sled reset.
->   2.  As suggested by many reviewer to have a new chassis instance in xyz=
-/openbmc_project/State/Chassis.interface.yaml and use powerCycle property f=
-or Sled reset. As chassis are named as chassis0-N. What should be appropria=
-te name to be used for this instance if we choose this option. Can it be ch=
-assis-server or I am not getting proper name, please suggest.
-
-#2 would be my preference.
-
-Per xyz/openbmc_project/State/README.md, it is sort of implied that the=20
-'{bmc, host, chassis}<instance>' are reserved for those relationships
-but it isn't explicit.  I think we should pick something like
-'chassis-{system, machine, server}' and add it to the README (I tend
-to like "server" least because switches don't seem to like to be called a
-server).
-
---=20
-Patrick Williams
-
---jRHKVT23PllUwdXP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6iwoYACgkQqwNHzC0A
-wRkS/BAAqQ/9e+qQtXah3L3i7x3nFHDI2Cood7y6HYnYLMs/Y6a8WkBDIq7ytQti
-CsBTc+vX/8ZDBf7gdwe51Ba9FlHKJRgZiZg3fi1NJRvPrlaBqXOw1PAeUjy1h+nT
-0kbGVr9iSU0oui91c0YjfujLfCkLE28EYRA+2j0mEJ1BWd3lwLk0n7HX8ZcO67M/
-7cJ1a7RvrWeZr6TU/Xj9q/o8o4INlZceDmMgofMufxf1DA2ejGVU+EPv/N1BwU5c
-TK9IVdiJgFTql7nTf6gmM40ydxxl2U11Mbl4tuVUPLgO9+Vss894Fc1vx6uCJRX4
-Oa5p4v3GL3A7qhcwk6zxge8QjCzlbEj/0s+xrOqrtM6JEZ+Wbk/IVJNoiwggXAVM
-yLBo4sjzOmkQvDtvEW4WVYVmcVUoIHzZjcF1+Q2nnNfY1F5pXii1JNT1QBi0peAX
-KGZAoaxw5xyZG7cbhgIJeG0j0UQoDv6uhmCXtdR6lv4Y91kiRq8oK9Oeb3fMHCyQ
-KuTYGsZhagaI2IsKOyfa+xpZMA558whafLyYTNj/mxK26zWf7n4W/10v7lx5k+LL
-GZRPuh03KY8zMsC9XzKXeOb8/7KxXJbUKbXkFFoYbRb3EI0dT3TPAYfBhN/HdhQN
-t5f1hT9plyYQh9JdyQ2/NwqmDfRuPHF+SYhTYisT+mRrGcXlknk=
-=v+qK
------END PGP SIGNATURE-----
-
---jRHKVT23PllUwdXP--
+SGksIA0KDQpJIHdvdWxkIGxpa2UgdG8gdXBsb2FkIGEgcGF0Y2ggZm9yIHRoZSB0ZWxlbWV0cnkg
+ZG9jdW1lbnRhdGlvbiB0aGF0IGFkZHJlc3NlcyB0aGUgcmVwb3J0IHN0b3JhZ2UgaW4gbm9uLXZv
+bGF0aWxlIG1lbW9yeSBhbmQgc29tZSBELUJ1cyBBUEkgZXh0ZW5zaW9ucyBmb3IgYmV0dGVyIGFs
+aWdubWVudCB3aXRoIHRoZSBSZWRmaXNoIFRlbGVtZXRyeSBTZXJ2aWNlLiBUaGUgY2hhbmdlcyBh
+cmUgcmVzdWx0cyBvZiBpbnRlZ3JhdGlvbiB3aXRoIHRoZSBFdmVudCBTZXJ2aWNlLiANCg0KUGlv
+dHIgTWF0dXN6Y3phaw0KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpJbnRlbCBUZWNobm9sb2d5IFBvbGFuZCBzcC4g
+eiBvLm8uIA0KdWwuIFNsb3dhY2tpZWdvIDE3MywgODAtMjk4IEdkYW5zaw0KS1JTIDEwMTg4Mg0K
+TklQIDk1Ny0wNy01Mi0zMTYNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IG9w
+ZW5ibWMgPG9wZW5ibWMtYm91bmNlcytwaW90ci5tYXR1c3pjemFrPWludGVsLmNvbUBsaXN0cy5v
+emxhYnMub3JnPiBPbiBCZWhhbGYgT2YgVHJveS5MZWVAdmVydGl2LmNvbQ0KU2VudDogV2VkbmVz
+ZGF5LCBBcHJpbCAxNSwgMjAyMCAxMTo1MyBBTQ0KVG86IEFkcmlhbiBBbWJyb8W8ZXdpY3ogPGFk
+cmlhbi5hbWJyb3pld2ljekBsaW51eC5pbnRlbC5jb20+OyBSaWNoYXJkIEhhbmxleSA8cmhhbmxl
+eUBnb29nbGUuY29tPjsgVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+DQpDYzogVmVy
+bm9uIE1hdWVyeSA8dmVybm9uLm1hdWVyeUBsaW51eC5pbnRlbC5jb20+OyBvcGVuYm1jQGxpc3Rz
+Lm96bGFicy5vcmc7IEJyYWQgQmlzaG9wIDxicmFkbGV5YkBmdXp6aWVzcXVpcnJlbC5jb20+DQpT
+dWJqZWN0OiBSRTogW0V4dGVybmFsRW1haWxdIFJlOiBTZW5zb3IgaGlzdG9yeQ0KDQpBZHJpYW4s
+DQoNClRoYW5rcyBmb3IgdGhlIHVwZGF0ZSENCg0KVGhhbmtzDQpUcm95IExlZQ0KDQotLS0tLU9y
+aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogb3BlbmJtYyA8b3BlbmJtYy1ib3VuY2VzK3Ryb3ku
+bGVlPXZlcnRpdi5jb21AbGlzdHMub3psYWJzLm9yZz4gT24gQmVoYWxmIE9mIEFkcmlhbiBBbWJy
+bz9ld2ljeg0KU2VudDogV2VkbmVzZGF5LCBBcHJpbCAxNSwgMjAyMCA0OjE1IFBNDQpUbzogUmlj
+aGFyZCBIYW5sZXkgPHJoYW5sZXlAZ29vZ2xlLmNvbT47IFZpamF5IEtoZW1rYSA8dmlqYXlraGVt
+a2FAZmIuY29tPg0KQ2M6IFZlcm5vbiBNYXVlcnkgPHZlcm5vbi5tYXVlcnlAbGludXguaW50ZWwu
+Y29tPjsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnOyBCcmFkIEJpc2hvcCA8YnJhZGxleWJAZnV6
+emllc3F1aXJyZWwuY29tPg0KU3ViamVjdDogW0V4dGVybmFsRW1haWxdIFJlOiBTZW5zb3IgaGlz
+dG9yeQ0KDQpUZWxlbWV0cnlTZXJ2aWNlIGlzIGN1cnJlbnRseSBpbiBkZXZlbG9wbWVudC4NCg0K
+SW50ZWdyYXRpb24gd2l0aCBFdmVudFNlcnZpY2Ugd2FzIHRlc3RlZCBhbmQgcHJvdmVkIHRvIHdv
+cmsgZmluZS4gSW50ZWwgaGF2ZSBwcmVwYXJlZCBkZW1vIGZvciAyMDIwIFZpcnR1YWwgT0NQIFN1
+bW1pdCBpZiB5b3UgYXJlIHdpbGxpbmcgdG8gaGF2ZSBzb21lIGluc2lnaHQgYWJvdXQgdXNlIGNh
+c2VzLg0KDQpXZSBzaG91bGQgZXhwZWN0IHNvbHV0aW9uIHRvIHN0YXJ0IGFwcGVhcmluZyBpbiB1
+cHN0cmVhbSBzb29uZXIgdGhhbiBsYXRlciBhcyBmZWF0dXJlIGlzIGFsbW9zdCBjb21wbGV0ZSAt
+IGl0IHJlcXVpcmVzIGxlZ2FsIGlzc3VlcyB0byBiZSBzb3J0ZWQgb3V0Lg0KDQpSZWdhcmRzLA0K
+QWRyaWFuDQoNClcgZG5pdSA0LzE0LzIwMjAgbyAyMjo0MSwgUmljaGFyZCBIYW5sZXkgcGlzemU6
+DQo+PiBIaSBUZWFtLA0KPj4NCj4+IFRoZXJlIGlzIGEgdGVsZW1ldHJ5IHByb3Bvc2FsIGluIGRv
+Y3MgYW5kIHJlcG9zaXRvcnkuDQo+PiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kb2NzL2Js
+b2IvbWFzdGVyL2Rlc2lnbnMvdGVsZW1ldHJ5Lm1kDQo+PiBodHRwczovL2dpdGh1Yi5jb20vb3Bl
+bmJtYy90ZWxlbWV0cnkNCj4gID4gVGhlIHByb3Bvc2FsIHNlZW1zIHByb21pc2luZyBhbmQgY29t
+cGxldGUuDQo+ICA+IFdoYXQgaXMgdGhlIGltcGxlbWVudGF0aW9uIHN0YXR1cz8NCj4NCj4gSSdt
+IGFsc28gY3VyaW91cyBhYm91dCBhIHN0YXR1cyB1cGRhdGUgaGVyZS4gIFdlcmUgdGhlcmUgYW55
+IGRlc2lnbiANCj4gaXNzdWVzIHRoYXQgbmVlZGVkIHRvIGJlIHdvcmtlZCBvdXQsIG9yIGlzIGl0
+IHJlYWR5IHRvIGRldmVsb3A/DQo+DQo+Pj4gICAgVG8gaW1wbGVtZW50IHRoZSBSZWRmaXNoIFRl
+bGVtZXRyeSBzZXJ2aWNlIHdvdWxkIHdlIG5lZWQgdG8gc3RvcmUgDQo+Pj50aGVtIG9uDQo+Pj4g
+ICAgdGhlIEJNQyBhcyB3ZWxsPw0KPiAgPkl0IHdpbGwgYmUgbmljZSBpZiB3ZSBjYW4gc3RvcmUg
+aXQgaW4gUkFNIGF0IGxlYXN0IHdpdGggbGFyZ2VyIGRhdGEgDQo+IGFuZCBzb21lIGRpc2tzcGFj
+ZSAgPldpdGggc21hbGwgbG9nIHJvdGF0ZS4NCj4NCj4gVGhlIFRlbGVtZXRyeSBTZXJ2aWNlIGFs
+cmVhZHkgaGFzIGEgY29uY2VwdCBvZiBsb2cgcm90YXRpb24sIGJ1dCANCj4gb3ZlcmFsbCBJIGFn
+cmVlIHRoYXQgc3RvcmluZyBpbiBSQU0gZmlyc3Qgd2l0aCBvcHRpb25hbCBwZXJzaXN0ZW5jZSBp
+cyANCj4gYmV0dGVyIHRoYW4gdGhlIG90aGVyIHdheSBhcm91bmQuDQo+IC0gUmljaGFyZA0KQ09O
+RklERU5USUFMSVRZIE5PVElDRTogVGhpcyBlLW1haWwgYW5kIGFueSBmaWxlcyB0cmFuc21pdHRl
+ZCB3aXRoIGl0IGFyZSBpbnRlbmRlZCBzb2xlbHkgZm9yIHRoZSB1c2Ugb2YgdGhlIGluZGl2aWR1
+YWwgb3IgZW50aXR5IHRvIHdob20gdGhleSBhcmUgYWRkcmVzc2VkIGFuZCBtYXkgY29udGFpbiBj
+b25maWRlbnRpYWwgYW5kIHByaXZpbGVnZWQgaW5mb3JtYXRpb24gcHJvdGVjdGVkIGJ5IGxhdy4g
+SWYgeW91IHJlY2VpdmVkIHRoaXMgZS1tYWlsIGluIGVycm9yLCBhbnkgcmV2aWV3LCB1c2UsIGRp
+c3NlbWluYXRpb24sIGRpc3RyaWJ1dGlvbiwgb3IgY29weWluZyBvZiB0aGUgZS1tYWlsIGlzIHN0
+cmljdGx5IHByb2hpYml0ZWQuIFBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseSBi
+eSByZXR1cm4gZS1tYWlsIGFuZCBkZWxldGUgYWxsIGNvcGllcyBmcm9tIHlvdXIgc3lzdGVtLg0K
