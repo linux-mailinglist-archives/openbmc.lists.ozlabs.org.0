@@ -2,50 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 552C71BA957
-	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 17:54:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A8E61BA9E0
+	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 18:14:23 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 499q8s4yRtzDqdw
-	for <lists+openbmc@lfdr.de>; Tue, 28 Apr 2020 01:54:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 499qbb68FGzDqcq
+	for <lists+openbmc@lfdr.de>; Tue, 28 Apr 2020 02:14:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=protonmail.com (client-ip=185.70.40.141;
- helo=mail-40141.protonmail.ch; envelope-from=rgrs@protonmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=protonmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=protonmail.com header.i=@protonmail.com header.a=rsa-sha256
- header.s=protonmail header.b=DRGnmdX5; 
- dkim-atps=neutral
-Received: from mail-40141.protonmail.ch (mail-40141.protonmail.ch
- [185.70.40.141])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 499q807397zDqYV
- for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 01:53:49 +1000 (AEST)
-Date: Mon, 27 Apr 2020 15:53:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
- s=protonmail; t=1588002824;
- bh=dKFMR/vBtHJsFyCbT9eyuiinMM6sp/XLr2PtiIqMAMo=;
- h=Date:To:From:Reply-To:Subject:In-Reply-To:References:From;
- b=DRGnmdX5XtRNs/wPhjBHzsPL+NNd3cb8A4I/qV6c3vda51Kjwd2tKdc6qD+1FzWH8
- BBSSIrpzHchuDc6AQ/KRg1xcKdcUai+dCH0/EX7BfZYG+UGvsr7QbTwPP83V7JcEX2
- qeoTMm7/6CX3/+045vgfzmvEEh0IsvBzDE6sEU68=
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: rgrs <rgrs@protonmail.com>
-Subject: Re: Setting up a system for first time
-Message-ID: <IsJ8ZyIQ3y0MDj6HTH_0rkhRb9VbXdh67uddwFYhenESjgI2EEDfuKY3jedGwQZrXELtYL7v34EqyAPj9Y9haqWzv6oMkARQ0rZjvO-aB5M=@protonmail.com>
-In-Reply-To: <3O7HBbmKi-6nXjhfbxxIFC2_17vjRSv84dvD3kk0lKURP-469mYH0pa_Xkb38JIDG6kFXn6jbyvFHQIiz8-LqfWX1Uvlqdn-Av_TYLJBzU4=@protonmail.com>
-References: <3O7HBbmKi-6nXjhfbxxIFC2_17vjRSv84dvD3kk0lKURP-469mYH0pa_Xkb38JIDG6kFXn6jbyvFHQIiz8-LqfWX1Uvlqdn-Av_TYLJBzU4=@protonmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 499qZZ5pqnzDqdd
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 02:13:26 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03RG4v3d038323; Mon, 27 Apr 2020 12:13:23 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 30me4vp8cr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Apr 2020 12:13:23 -0400
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 03RG5FkE040236;
+ Mon, 27 Apr 2020 12:13:22 -0400
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 30me4vp8ch-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Apr 2020 12:13:22 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03RGAGYp010466;
+ Mon, 27 Apr 2020 16:13:22 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma05wdc.us.ibm.com with ESMTP id 30mcu64gad-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 27 Apr 2020 16:13:22 +0000
+Received: from b03ledav001.gho.boulder.ibm.com
+ (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03RGDLj056099214
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 27 Apr 2020 16:13:21 GMT
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7B9646E04C;
+ Mon, 27 Apr 2020 16:13:21 +0000 (GMT)
+Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A14AB6E05B;
+ Mon, 27 Apr 2020 16:13:20 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.137.230])
+ by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Mon, 27 Apr 2020 16:13:20 +0000 (GMT)
+Subject: Re: Why does OpenBMC use Avahi mDNS instead of SSDP - proposal
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ Richard Hanley <rhanley@google.com>, Patrick Williams <patrick@stwcx.xyz>
+References: <64ed3841-fc25-50d2-5353-d778301ce06d@linux.ibm.com>
+ <20200407154653.GB5368@heinlein.lan.stwcx.xyz>
+ <d3801437-bde4-ffe9-9f3e-1604ad174625@linux.ibm.com>
+ <e292cc98-cdd8-2eff-3fd0-ba42762b2720@linux.vnet.ibm.com>
+ <20200416204010.GD443018@heinlein.lan.stwcx.xyz>
+ <CAH1kD+bVgh0kjUt7bkt+7G5-0G66hneto-Ks2o6iNDXKxLsN8w@mail.gmail.com>
+ <13f119b4-56fa-c6dd-2e1b-9718e4e41fc3@linux.vnet.ibm.com>
+ <a8c08cff-3a77-4b89-fb49-3bd8a9b71173@linux.ibm.com>
+Message-ID: <57d1bdd6-c7c0-f70d-7af1-a9453d36689c@linux.ibm.com>
+Date: Mon, 27 Apr 2020 11:13:19 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1_e42862683994d3a5af68c050332feb4c"
-X-Spam-Status: No, score=-1.2 required=7.0 tests=ALL_TRUSTED,DKIM_SIGNED,
- DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE
- shortcircuit=no autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on mail.protonmail.ch
+In-Reply-To: <a8c08cff-3a77-4b89-fb49-3bd8a9b71173@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-27_12:2020-04-27,
+ 2020-04-27 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
+ suspectscore=0 impostorscore=0 bulkscore=0 spamscore=0 mlxscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004270127
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,259 +101,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: rgrs <rgrs@protonmail.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, ratagupt <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On 4/17/20 3:02 PM, Joseph Reynolds wrote:
+> On 4/17/20 11:44 AM, Gunnar Mills wrote:
+>> On 4/16/2020 7:42 PM, Richard Hanley wrote:
+>>>
+>>>     > The members on the call really wanted to encourage OpenBMC to
+>>>     implement
+>>>     > SSDP instead.
+>>>
+>
+> Thanks for helping to move this forward.  IMHO, Redfish has given us 
+> enough direction to move forward with OpenBMC.  I understand the 
+> debate, but don't have any insight or energy to contribute. So on a 
+> purely practical level...
+>
+> I hereby propose implementing ManagerNetworkProtocol.Oem.OpenBMC.mDNS.
+> Its schema would either be "Protocol" or a new "mDNSProtocol" modeled 
+> after SSDProtocol.
+> The only property I need to be readwrite is ProtocolEnabled.
+> This allows the BMC admin to enable and disable OpenBMC's Avahi-based 
+> mDNS discovery service.
 
---b1_e42862683994d3a5af68c050332feb4c
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Who can effectively ask DMTF Redfish to add a new "mDNSProtocol"? Some 
+of the reasons stated in this email thread [1] seem compelling:
 
-SGksCgpQbGVhc2UgY2FuIGFueW9uZSBoZWxwIHdpdGggdGhpcz8Kd2hlbiBqdXN0IHNhbWUgcGhv
-c3Bob3IgaW1hZ2UgZmxhc2hlZCBvbiBib3RoIFNQSSwgSSBhbSBub3QgYWJsZSB0byB1cGdyYWRl
-IHRvIG5ldyBmaXJtd2FyZS4KCldoYXQgaXMgdGhlIHJpZ2h0IHdheSB0byBpbnN0YWxsIGltYWdl
-cyB0byBuZXcgYm9hcmQgd2l0aCBlbXB0eSBTUElzPwoKQXByIDI2IDEyOjQ2OjUyIHNydjEgcGhv
-c3Bob3ItdmVyc2lvbi1zb2Z0d2FyZS1tYW5hZ2VyWzE2NTldOiBVbnRhcmluZwpBcHIgMjYgMTI6
-NDY6NTMgc3J2MSBwaG9zcGhvci1tYXBwZXJbMTMxOV06IEZvdW5kIGludmFsaWQgYXNzb2NpYXRp
-b24gb24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8yYWVkNTI2NQpBcHIgMjYg
-MTI6NDY6NTMgc3J2MSBwaG9zcGhvci1tYXBwZXJbMTMxOV06IEZvdW5kIGludmFsaWQgYXNzb2Np
-YXRpb24gb24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8yYWVkNTI2NQpBcHIg
-MjYgMTI6NDY6NTMgc3J2MSBwaG9zcGhvci1tYXBwZXJbMTMxOV06IEZvdW5kIGludmFsaWQgYXNz
-b2NpYXRpb24gb24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8yYWVkNTI2NQoK
-4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ4oCQIE9yaWdpbmFsIE1lc3NhZ2Ug4oCQ4oCQ4oCQ4oCQ4oCQ4oCQ
-4oCQCk9uIFRodXJzZGF5LCBBcHJpbCAyMywgMjAyMCA3OjUxIFBNLCByZ3JzIDxyZ3JzQHByb3Rv
-bm1haWwuY29tPiB3cm90ZToKCj4gSGksCj4KPiBJJ20gdHJ5aW5nIHRvIHNldHVwIGEgbmV3IHN5
-c3RlbSBmb3IgdGhlIHZlcnkgZmlyc3QgdGltZS4KPiBUaGUgYm9hcmQgaGFzIHR3byBTUEkgTk9S
-IGZvciBCTUMgZmxhc2guCj4KPiBJZiBJIGZsYXNoIHNhbWUgaW1hZ2Ugb24gYm90aCBTUEksIFdl
-YlVJIGRpc3BsYXlzIG9ubHkgb25lIGVudHJ5IHNpbmNlIHZlcnNpb25pbmcgaXMgc2FtZS4KPiBX
-aGVuIEkgZmxhc2ggdHdvIGRpZmZlcmVudCBpbWFnZXMgaW4gZWFjaCBTUEksIGFjdGl2YXRpb24g
-b2Ygc2Vjb25kIGltYWdlIGlzIG5vdCB3b3JraW5nLgo+IFUtYm9vdCBnb2VzIGludG8gYSBsb29w
-IGFuZCBpcyBub3QgYWJsZSBib290Lgo+Cj4gRG8gd2UgaGF2ZSBhbnkgc2VxdWVuY2UgdG8gYmUg
-Zm9sbG93ZWQgd2hlbiBmbGFzaGluZyB0aGUgaW1hZ2VzPwo+Cj4gVUJJbmZvOgo+IC0tLS0tLS0K
-PiByb290QHNydjE6fiMgdWJpbmZvIC1kIDAgLW4gMAo+IFZvbHVtZSBJRDogICAwIChvbiB1Ymkw
-KQo+IFR5cGU6ICAgICAgICBzdGF0aWMKPiBBbGlnbm1lbnQ6ICAgMQo+IFNpemU6ICAgICAgICA0
-MyBMRUJzICgyODEyNTQ0IGJ5dGVzLCAyLjYgTWlCKQo+IERhdGEgYnl0ZXM6ICAyNzcxNjU2IGJ5
-dGVzICgyLjYgTWlCKQo+IFN0YXRlOiAgICAgICBPSwo+IE5hbWU6ICAgICAgICBrZXJuZWwtZTJi
-ZTY3YmIKPiBDaGFyYWN0ZXIgZGV2aWNlIG1ham9yL21pbm9yOiAyNDY6MQo+IHJvb3RAc3J2MTp+
-IyB1YmluZm8gLWQgMCAtbiAxCj4gVm9sdW1lIElEOiAgIDEgKG9uIHViaTApCj4gVHlwZTogICAg
-ICAgIHN0YXRpYwo+IEFsaWdubWVudDogICAxCj4gU2l6ZTogICAgICAgIDMxOCBMRUJzICgyMDc5
-OTc0NCBieXRlcywgMTkuOCBNaUIpCj4gRGF0YSBieXRlczogIDIwNzU0NDMyIGJ5dGVzICgxOS43
-IE1pQikKPiBTdGF0ZTogICAgICAgT0sKPiBOYW1lOiAgICAgICAgcm9mcy1lMmJlNjdiYgo+IENo
-YXJhY3RlciBkZXZpY2UgbWFqb3IvbWlub3I6IDI0NjoyCj4gcm9vdEBzcnYxOn4jIHViaW5mbyAt
-ZCAwIC1uIDIKPiBWb2x1bWUgSUQ6ICAgMiAob24gdWJpMCkKPiBUeXBlOiAgICAgICAgZHluYW1p
-Ywo+IEFsaWdubWVudDogICAxCj4gU2l6ZTogICAgICAgIDk3IExFQnMgKDYzNDQ1NzYgYnl0ZXMs
-IDYuMCBNaUIpCj4gU3RhdGU6ICAgICAgIE9LCj4gTmFtZTogICAgICAgIHJ3ZnMKPiBDaGFyYWN0
-ZXIgZGV2aWNlIG1ham9yL21pbm9yOiAyNDY6Mwo+IHJvb3RAc3J2MTp+IyB1YmluZm8gLWQgNCAt
-biAwCj4gVm9sdW1lIElEOiAgIDAgKG9uIHViaTQpCj4gVHlwZTogICAgICAgIHN0YXRpYwo+IEFs
-aWdubWVudDogICAxCj4gU2l6ZTogICAgICAgIDQzIExFQnMgKDI4MTI1NDQgYnl0ZXMsIDIuNiBN
-aUIpCj4gRGF0YSBieXRlczogIDI3NzEzMjAgYnl0ZXMgKDIuNiBNaUIpCj4gU3RhdGU6ICAgICAg
-IE9LCj4gTmFtZTogICAgICAgIGtlcm5lbC02M2ViOTc4NAo+IENoYXJhY3RlciBkZXZpY2UgbWFq
-b3IvbWlub3I6IDI0NToxCj4gcm9vdEBzcnYxOn4jIHViaW5mbyAtZCA0IC1uIDEKPiBWb2x1bWUg
-SUQ6ICAgMSAob24gdWJpNCkKPiBUeXBlOiAgICAgICAgc3RhdGljCj4gQWxpZ25tZW50OiAgIDEK
-PiBTaXplOiAgICAgICAgMzE4IExFQnMgKDIwNzk5NzQ0IGJ5dGVzLCAxOS44IE1pQikKPiBEYXRh
-IGJ5dGVzOiAgMjA3NTAzMzYgYnl0ZXMgKDE5LjcgTWlCKQo+IFN0YXRlOiAgICAgICBPSwo+IE5h
-bWU6ICAgICAgICByb2ZzLTYzZWI5Nzg0Cj4gQ2hhcmFjdGVyIGRldmljZSBtYWpvci9taW5vcjog
-MjQ1OjIKPiByb290QHNydjE6fiMgdWJpbmZvIC1kIDQgLW4gMgo+IFZvbHVtZSBJRDogICAyIChv
-biB1Ymk0KQo+IFR5cGU6ICAgICAgICBkeW5hbWljCj4gQWxpZ25tZW50OiAgIDEKPiBTaXplOiAg
-ICAgICAgOTcgTEVCcyAoNjM0NDU3NiBieXRlcywgNi4wIE1pQikKPiBTdGF0ZTogICAgICAgT0sK
-PiBOYW1lOiAgICAgICAgcndmcwo+IENoYXJhY3RlciBkZXZpY2UgbWFqb3IvbWlub3I6IDI0NToz
-Cj4gcm9vdEBzcnYxOn4jCj4KPiBMb2dzOgo+IC0tLS0tLS0KPiBVLUJvb3QgMjAxNi4wNyAoQXBy
-IDIxIDIwMjAgLSAwNjoyMjo0NiArMDAwMCkKPgo+ICBXYXRjaGRvZyBlbmFibGVkCj4gRFJBTTog
-IDQ5NiBNaUIKPiBGbGFzaDogNjQgTWlCCj4gSW46ICAgIHNlcmlhbAo+IE91dDogICBzZXJpYWwK
-PiBFcnI6ICAgc2VyaWFsCj4gTmV0OiAgIGV0aDAsIGV0aDEKPiBIaXQgYW55IGtleSB0byBzdG9w
-IGF1dG9ib290OiAgMAo+IHViaTA6IGF0dGFjaGluZyBtdGQyCj4gdWJpMDogc2Nhbm5pbmcgaXMg
-ZmluaXNoZWQKPiB1YmkwOiBhdHRhY2hlZCBtdGQyIChuYW1lICJtdGQ9MiIsIHNpemUgMzEgTWlC
-KQo+IHViaTA6IFBFQiBzaXplOiA2NTUzNiBieXRlcyAoNjQgS2lCKSwgTEVCIHNpemU6IDY1NDA4
-IGJ5dGVzCj4gdWJpMDogbWluLi9tYXguIEkvTyB1bml0IHNpemVzOiAxLzEsIHN1Yi1wYWdlIHNp
-emUgMQo+IHViaTA6IFZJRCBoZWFkZXIgb2Zmc2V0OiA2NCAoYWxpZ25lZCA2NCksIGRhdGEgb2Zm
-c2V0OiAxMjgKPiB1YmkwOiBnb29kIFBFQnM6IDUwNCwgYmFkIFBFQnM6IDAsIGNvcnJ1cHRlZCBQ
-RUJzOiAwCj4gdWJpMDogdXNlciB2b2x1bWU6IDMsIGludGVybmFsIHZvbHVtZXM6IDEsIG1heC4g
-dm9sdW1lcyBjb3VudDogMTI4Cj4gdWJpMDogbWF4L21lYW4gZXJhc2UgY291bnRlcjogMS8wLCBX
-TCB0aHJlc2hvbGQ6IDQwOTYsIGltYWdlIHNlcXVlbmNlIG51bWJlcjogMTE4MDgxMTAwNgo+IHVi
-aTA6IGF2YWlsYWJsZSBQRUJzOiA0MiwgdG90YWwgcmVzZXJ2ZWQgUEVCczogNDYyLCBQRUJzIHJl
-c2VydmVkIGZvciBiYWQgUEVCIGhhbmRsaW5nOiAwCj4gUmVhZCAwIGJ5dGVzIGZyb20gdm9sdW1l
-IGtlcm5lbC02M2ViOTc4NCB0byA4MDgwMDAwMAo+IFZvbHVtZSBrZXJuZWwtNjNlYjk3ODQgbm90
-IGZvdW5kIQo+IFdyb25nIEltYWdlIEZvcm1hdCBmb3IgYm9vdG0gY29tbWFuZAo+IEVSUk9SOiBj
-YW4ndCBnZXQga2VybmVsIGltYWdlIQo+Cj4gRFJBTSBJbml0LVYxMi1ERFI0Cj4gMGFiYzEtNEdi
-LURvbmUKPiBSZWFkIG1hcmdpbi1ETDowLjM4MjMvREg6MC4zOTIxIENLIChtaW46MC4zMCkKPgo+
-IFUtQm9vdCAyMDE2LjA3IChBcHIgMjEgMjAyMCAtIDA2OjIyOjQ2ICswMDAwKQo+Cj4gV2F0Y2hk
-b2cgZW5hYmxlZAo+IERSQU06ICA0OTYgTWlCCj4gRmxhc2g6IDY0IE1pQgo+IEluOiAgICBzZXJp
-YWwKPiBPdXQ6ICAgc2VyaWFsCj4gRXJyOiAgIHNlcmlhbAo+IE5ldDogICBldGgwLCBldGgxCj4g
-SGl0IGFueSBrZXkgdG8gc3RvcCBhdXRvYm9vdDogIDAKPiBhc3QjIHByaW50ZW52Cj4gNjNlYjk3
-ODQ9MQo+IGJhdWRyYXRlPTExNTIwMAo+IGJvb3RhbHQ9cnVuIHdkdDJiaXRlCj4gYm9vdGFyZ3M9
-Y29uc29sZT10dHlTNCwxMTUyMDBuOCB1YmkubXRkPW9ibWMtdWJpLDAsMCwwIHViaS5tdGQ9YWx0
-LW9ibWMtdWJpLDAsMCw0IHJvIHJvb3Rmc3R5cGU9c3F1YXNoZnMKPiBib290Y21kPXJ1biBzZXRf
-Ym9vdGFyZ3M7IHJ1biBvYm1jX2Jvb3RjbWQKPiBib290ZGVsYXk9Mgo+IGRvX3J3cmVzZXQ9aWYg
-dGVzdCAiJHtyd3Jlc2V0fSIgPSAidHJ1ZSI7IHRoZW4gdWJpIHJlbW92ZSByd2ZzOyB1YmkgY3Jl
-YXRlIHJ3ZnMgJHtyd2ZzX3NpemV9OyBmaQo+IGUyYmU2N2JiPTAKPiBldGgxYWRkcj0wMDowMDow
-MDowMTowMjowNAo+IGV0aGFjdD1ldGgwCj4gZXRoYWRkcj0wMDowMDowMDowMTowMjowMwo+IGtl
-cm5lbG5hbWU9a2VybmVsLWUyYmU2N2JiCj4gbG9hZGFkZHI9ODA4MDAwMDAKPiBtdGRpZHM9bm9y
-MD1ibWMKPiBtdGRwYXJ0cz1tdGRwYXJ0cz1ibWM6Mzg0ayh1LWJvb3QpLDEyOGsodS1ib290LWVu
-diksLShvYm1jLXViaSkKPiBvYm1jX2Jvb3RjbWQ9dWJpIHBhcnQgb2JtYy11Ymk7IHJ1biBkb19y
-d3Jlc2V0OyB1YmkgcmVhZCAke2xvYWRhZGRyfSAke2tlcm5lbG5hbWV9OyBib290bSAke2xvYWRh
-ZGRyfSB8fCBydW4gYm9vdGFsdAo+IHJvb3Q9L2Rldi91YmlibG9jazRfMQo+IHJ3ZnNfc2l6ZT0w
-eDYwMDAwMAo+IHNldF9ib290YXJncz1zZXRlbnYgYm9vdGFyZ3MgY29uc29sZT10dHlTNCwxMTUy
-MDBuOCB1YmkubXRkPW9ibWMtdWJpLDAsMCwwIHViaS5tdGQ9YWx0LW9ibWMtdWJpLDAsMCw0IHJv
-IHJvb3Rmc3R5cGU9c3F1YXNoZnMgdWJpLmJsb2NrPSR7dWJpYmxvY2t9IHJvb3Q9JHtyb290fQo+
-IHNwaV9kbWE9eWVzCj4gc3RkZXJyPXNlcmlhbAo+IHN0ZGluPXNlcmlhbAo+IHN0ZG91dD1zZXJp
-YWwKPiB1YmlibG9jaz00LDEKPiB2ZXJpZnk9eWVzCj4gd2R0MmJpdGU9bXcubCAweDFlNzg1MDI0
-IDB4YSAxOyBtdy5iIDB4MWU3ODUwMmMgMHhiMyAxCj4KPiBFbnZpcm9ubWVudCBzaXplOiAxMDE0
-LzY1NTMxIGJ5dGVzCj4gYXN0Iw==
+1. Installations can be locked into a specific discovery protocol. Some 
+use SSDP and some use mDNS.  It would take effort for these 
+installations to support an additional discovery protocol.  --> Given 
+that real Redfish server implement mDNS Discovery, can we add a Redfish 
+capability to control this service?
 
+2. If we wanted to use SSDP discovery of our FOSS Linux-based project, 
+what implementation can we use?
 
---b1_e42862683994d3a5af68c050332feb4c
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+I tried, but my knowledge is limited.  You can respond to this email or 
+participate in the Redfish discussion here: 
+https://redfishforum.com/thread/267/add-avahi-managernetworkprotocol
 
-PGRpdj5IaSw8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5QbGVhc2UgY2FuIGFueW9uZSBo
-ZWxwIHdpdGggdGhpcz88YnI+PC9kaXY+PGRpdj53aGVuIGp1c3Qgc2FtZSBwaG9zcGhvciBpbWFn
-ZSBmbGFzaGVkIG9uIGJvdGggU1BJLCBJIGFtIG5vdCBhYmxlIHRvIHVwZ3JhZGUgdG8gbmV3IGZp
-cm13YXJlLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PldoYXQgaXMgdGhlIHJpZ2h0IHdh
-eSB0byBpbnN0YWxsIGltYWdlcyB0byBuZXcgYm9hcmQgd2l0aCBlbXB0eSBTUElzPzxicj48L2Rp
-dj48ZGl2Pjxicj48L2Rpdj48ZGl2PkFwciAyNiAxMjo0Njo1MiBzcnYxIHBob3NwaG9yLXZlcnNp
-b24tc29mdHdhcmUtbWFuYWdlclsxNjU5XTogVW50YXJpbmc8YnI+PC9kaXY+PGRpdj5BcHIgMjYg
-MTI6NDY6NTMgc3J2MSBwaG9zcGhvci1tYXBwZXJbMTMxOV06IEZvdW5kIGludmFsaWQgYXNzb2Np
-YXRpb24gb24gcGF0aCAveHl6L29wZW5ibWNfcHJvamVjdC9zb2Z0d2FyZS8yYWVkNTI2NTxicj48
-L2Rpdj48ZGl2PkFwciAyNiAxMjo0Njo1MyBzcnYxIHBob3NwaG9yLW1hcHBlclsxMzE5XTogRm91
-bmQgaW52YWxpZCBhc3NvY2lhdGlvbiBvbiBwYXRoIC94eXovb3BlbmJtY19wcm9qZWN0L3NvZnR3
-YXJlLzJhZWQ1MjY1PGJyPjwvZGl2PjxkaXY+QXByIDI2IDEyOjQ2OjUzIHNydjEgcGhvc3Bob3It
-bWFwcGVyWzEzMTldOiBGb3VuZCBpbnZhbGlkIGFzc29jaWF0aW9uIG9uIHBhdGggL3h5ei9vcGVu
-Ym1jX3Byb2plY3Qvc29mdHdhcmUvMmFlZDUyNjU8YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj48YnI+PC9kaXY+PGRpdj7igJDigJDigJDigJDigJDigJDigJAgT3JpZ2luYWwgTWVzc2FnZSDi
-gJDigJDigJDigJDigJDigJDigJA8YnI+PC9kaXY+PGRpdj4gT24gVGh1cnNkYXksIEFwcmlsIDIz
-LCAyMDIwIDc6NTEgUE0sIHJncnMgJmx0O3JncnNAcHJvdG9ubWFpbC5jb20mZ3Q7IHdyb3RlOjxi
-cj48L2Rpdj48ZGl2PiA8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9InByb3Rvbm1haWxfcXVv
-dGUiIHR5cGU9ImNpdGUiPjxkaXY+SGksPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSdt
-IHRyeWluZyB0byBzZXR1cCBhIG5ldyBzeXN0ZW0gZm9yIHRoZSB2ZXJ5IGZpcnN0IHRpbWUuPGJy
-PjwvZGl2PjxkaXY+VGhlIGJvYXJkIGhhcyB0d28gU1BJIE5PUiBmb3IgQk1DIGZsYXNoLiA8YnI+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JZiBJIGZsYXNoIHNhbWUgaW1hZ2Ugb24gYm90aCBT
-UEksIFdlYlVJIGRpc3BsYXlzIG9ubHkgb25lIGVudHJ5IHNpbmNlIHZlcnNpb25pbmcgaXMgc2Ft
-ZS48YnI+PC9kaXY+PGRpdj5XaGVuIEkgZmxhc2ggdHdvIGRpZmZlcmVudCBpbWFnZXMgaW4gZWFj
-aCBTUEksIGFjdGl2YXRpb24gb2Ygc2Vjb25kIGltYWdlIGlzIG5vdCB3b3JraW5nLjxicj48L2Rp
-dj48ZGl2PlUtYm9vdCBnb2VzIGludG8gYSBsb29wIGFuZCBpcyBub3QgYWJsZSBib290Ljxicj48
-L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkRvIHdlIGhhdmUgYW55IHNlcXVlbmNlIHRvIGJlIGZv
-bGxvd2VkIHdoZW4gZmxhc2hpbmcgdGhlIGltYWdlcz88YnI+PC9kaXY+PGRpdj48YnI+PC9kaXY+
-PGRpdj5VQkluZm86PGJyPjwvZGl2PjxkaXY+LS0tLS0tLTxicj48L2Rpdj48ZGl2PnJvb3RAc3J2
-MTp+IyB1YmluZm8gLWQgMCAtbiAwPGJyPjwvZGl2PjxkaXY+Vm9sdW1lIElEOiZuYnNwOyZuYnNw
-OyAwIChvbiB1YmkwKTxicj48L2Rpdj48ZGl2PlR5cGU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IHN0YXRpYzxicj48L2Rpdj48ZGl2PkFsaWdubWVudDombmJzcDsm
-bmJzcDsgMTxicj48L2Rpdj48ZGl2PlNpemU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7IDQzIExFQnMgKDI4MTI1NDQgYnl0ZXMsIDIuNiBNaUIpPGJyPjwvZGl2Pjxk
-aXY+RGF0YSBieXRlczombmJzcDsgMjc3MTY1NiBieXRlcyAoMi42IE1pQik8YnI+PC9kaXY+PGRp
-dj5TdGF0ZTombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgT0s8YnI+PC9kaXY+
-PGRpdj5OYW1lOiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBrZXJu
-ZWwtZTJiZTY3YmI8YnI+PC9kaXY+PGRpdj5DaGFyYWN0ZXIgZGV2aWNlIG1ham9yL21pbm9yOiAy
-NDY6MTxicj48L2Rpdj48ZGl2PnJvb3RAc3J2MTp+IyB1YmluZm8gLWQgMCAtbiAxPGJyPjwvZGl2
-PjxkaXY+Vm9sdW1lIElEOiZuYnNwOyZuYnNwOyAxIChvbiB1YmkwKTxicj48L2Rpdj48ZGl2PlR5
-cGU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHN0YXRpYzxicj48
-L2Rpdj48ZGl2PkFsaWdubWVudDombmJzcDsmbmJzcDsgMTxicj48L2Rpdj48ZGl2PlNpemU6Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDMxOCBMRUJzICgyMDc5OTc0
-NCBieXRlcywgMTkuOCBNaUIpPGJyPjwvZGl2PjxkaXY+RGF0YSBieXRlczombmJzcDsgMjA3NTQ0
-MzIgYnl0ZXMgKDE5LjcgTWlCKTxicj48L2Rpdj48ZGl2PlN0YXRlOiZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyBPSzxicj48L2Rpdj48ZGl2Pk5hbWU6Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHJvZnMtZTJiZTY3YmI8YnI+PC9kaXY+PGRpdj5D
-aGFyYWN0ZXIgZGV2aWNlIG1ham9yL21pbm9yOiAyNDY6Mjxicj48L2Rpdj48ZGl2PnJvb3RAc3J2
-MTp+IyB1YmluZm8gLWQgMCAtbiAyPGJyPjwvZGl2PjxkaXY+Vm9sdW1lIElEOiZuYnNwOyZuYnNw
-OyAyIChvbiB1YmkwKTxicj48L2Rpdj48ZGl2PlR5cGU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IGR5bmFtaWM8YnI+PC9kaXY+PGRpdj5BbGlnbm1lbnQ6Jm5ic3A7
-Jm5ic3A7IDE8YnI+PC9kaXY+PGRpdj5TaXplOiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyA5NyBMRUJzICg2MzQ0NTc2IGJ5dGVzLCA2LjAgTWlCKTxicj48L2Rpdj48
-ZGl2PlN0YXRlOiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBPSzxicj48L2Rp
-dj48ZGl2Pk5hbWU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHJ3
-ZnM8YnI+PC9kaXY+PGRpdj5DaGFyYWN0ZXIgZGV2aWNlIG1ham9yL21pbm9yOiAyNDY6Mzxicj48
-L2Rpdj48ZGl2PnJvb3RAc3J2MTp+IyB1YmluZm8gLWQgNCAtbiAwPGJyPjwvZGl2PjxkaXY+Vm9s
-dW1lIElEOiZuYnNwOyZuYnNwOyAwIChvbiB1Ymk0KTxicj48L2Rpdj48ZGl2PlR5cGU6Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHN0YXRpYzxicj48L2Rpdj48ZGl2
-PkFsaWdubWVudDombmJzcDsmbmJzcDsgMTxicj48L2Rpdj48ZGl2PlNpemU6Jm5ic3A7Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDQzIExFQnMgKDI4MTI1NDQgYnl0ZXMsIDIu
-NiBNaUIpPGJyPjwvZGl2PjxkaXY+RGF0YSBieXRlczombmJzcDsgMjc3MTMyMCBieXRlcyAoMi42
-IE1pQik8YnI+PC9kaXY+PGRpdj5TdGF0ZTombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsgT0s8YnI+PC9kaXY+PGRpdj5OYW1lOiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyBrZXJuZWwtNjNlYjk3ODQ8YnI+PC9kaXY+PGRpdj5DaGFyYWN0ZXIgZGV2
-aWNlIG1ham9yL21pbm9yOiAyNDU6MTxicj48L2Rpdj48ZGl2PnJvb3RAc3J2MTp+IyB1YmluZm8g
-LWQgNCAtbiAxPGJyPjwvZGl2PjxkaXY+Vm9sdW1lIElEOiZuYnNwOyZuYnNwOyAxIChvbiB1Ymk0
-KTxicj48L2Rpdj48ZGl2PlR5cGU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7IHN0YXRpYzxicj48L2Rpdj48ZGl2PkFsaWdubWVudDombmJzcDsmbmJzcDsgMTxicj48
-L2Rpdj48ZGl2PlNpemU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-IDMxOCBMRUJzICgyMDc5OTc0NCBieXRlcywgMTkuOCBNaUIpPGJyPjwvZGl2PjxkaXY+RGF0YSBi
-eXRlczombmJzcDsgMjA3NTAzMzYgYnl0ZXMgKDE5LjcgTWlCKTxicj48L2Rpdj48ZGl2PlN0YXRl
-OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBPSzxicj48L2Rpdj48ZGl2Pk5h
-bWU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHJvZnMtNjNlYjk3
-ODQ8YnI+PC9kaXY+PGRpdj5DaGFyYWN0ZXIgZGV2aWNlIG1ham9yL21pbm9yOiAyNDU6Mjxicj48
-L2Rpdj48ZGl2PnJvb3RAc3J2MTp+IyB1YmluZm8gLWQgNCAtbiAyPGJyPjwvZGl2PjxkaXY+Vm9s
-dW1lIElEOiZuYnNwOyZuYnNwOyAyIChvbiB1Ymk0KTxicj48L2Rpdj48ZGl2PlR5cGU6Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGR5bmFtaWM8YnI+PC9kaXY+PGRp
-dj5BbGlnbm1lbnQ6Jm5ic3A7Jm5ic3A7IDE8YnI+PC9kaXY+PGRpdj5TaXplOiZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyA5NyBMRUJzICg2MzQ0NTc2IGJ5dGVzLCA2
-LjAgTWlCKTxicj48L2Rpdj48ZGl2PlN0YXRlOiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyBPSzxicj48L2Rpdj48ZGl2Pk5hbWU6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7IHJ3ZnM8YnI+PC9kaXY+PGRpdj5DaGFyYWN0ZXIgZGV2aWNlIG1ham9y
-L21pbm9yOiAyNDU6Mzxicj48L2Rpdj48ZGl2PnJvb3RAc3J2MTp+Izxicj48L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkxvZ3M6PGJyPjwvZGl2PjxkaXY+LS0tLS0tLTxi
-cj48L2Rpdj48ZGl2PlUtQm9vdCAyMDE2LjA3IChBcHIgMjEgMjAyMCAtIDA2OjIyOjQ2ICswMDAw
-KTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PiZuYnNwO1dhdGNo
-ZG9nIGVuYWJsZWQ8YnI+PC9kaXY+PGRpdj5EUkFNOiZuYnNwOyA0OTYgTWlCPGJyPjwvZGl2Pjxk
-aXY+Rmxhc2g6IDY0IE1pQjxicj48L2Rpdj48ZGl2PkluOiZuYnNwOyZuYnNwOyZuYnNwOyBzZXJp
-YWw8YnI+PC9kaXY+PGRpdj5PdXQ6Jm5ic3A7Jm5ic3A7IHNlcmlhbDxicj48L2Rpdj48ZGl2PkVy
-cjombmJzcDsmbmJzcDsgc2VyaWFsPGJyPjwvZGl2PjxkaXY+TmV0OiZuYnNwOyZuYnNwOyBldGgw
-LCBldGgxPGJyPjwvZGl2PjxkaXY+SGl0IGFueSBrZXkgdG8gc3RvcCBhdXRvYm9vdDombmJzcDsg
-MDxicj48L2Rpdj48ZGl2PnViaTA6IGF0dGFjaGluZyBtdGQyPGJyPjwvZGl2PjxkaXY+dWJpMDog
-c2Nhbm5pbmcgaXMgZmluaXNoZWQ8YnI+PC9kaXY+PGRpdj51YmkwOiBhdHRhY2hlZCBtdGQyIChu
-YW1lICJtdGQ9MiIsIHNpemUgMzEgTWlCKTxicj48L2Rpdj48ZGl2PnViaTA6IFBFQiBzaXplOiA2
-NTUzNiBieXRlcyAoNjQgS2lCKSwgTEVCIHNpemU6IDY1NDA4IGJ5dGVzPGJyPjwvZGl2PjxkaXY+
-dWJpMDogbWluLi9tYXguIEkvTyB1bml0IHNpemVzOiAxLzEsIHN1Yi1wYWdlIHNpemUgMTxicj48
-L2Rpdj48ZGl2PnViaTA6IFZJRCBoZWFkZXIgb2Zmc2V0OiA2NCAoYWxpZ25lZCA2NCksIGRhdGEg
-b2Zmc2V0OiAxMjg8YnI+PC9kaXY+PGRpdj51YmkwOiBnb29kIFBFQnM6IDUwNCwgYmFkIFBFQnM6
-IDAsIGNvcnJ1cHRlZCBQRUJzOiAwPGJyPjwvZGl2PjxkaXY+dWJpMDogdXNlciB2b2x1bWU6IDMs
-IGludGVybmFsIHZvbHVtZXM6IDEsIG1heC4gdm9sdW1lcyBjb3VudDogMTI4PGJyPjwvZGl2Pjxk
-aXY+dWJpMDogbWF4L21lYW4gZXJhc2UgY291bnRlcjogMS8wLCBXTCB0aHJlc2hvbGQ6IDQwOTYs
-IGltYWdlIHNlcXVlbmNlIG51bWJlcjogMTE4MDgxMTAwNjxicj48L2Rpdj48ZGl2PnViaTA6IGF2
-YWlsYWJsZSBQRUJzOiA0MiwgdG90YWwgcmVzZXJ2ZWQgUEVCczogNDYyLCBQRUJzIHJlc2VydmVk
-IGZvciBiYWQgUEVCIGhhbmRsaW5nOiAwPGJyPjwvZGl2PjxkaXY+UmVhZCAwIGJ5dGVzIGZyb20g
-dm9sdW1lIGtlcm5lbC02M2ViOTc4NCB0byA4MDgwMDAwMDxicj48L2Rpdj48ZGl2PlZvbHVtZSBr
-ZXJuZWwtNjNlYjk3ODQgbm90IGZvdW5kITxicj48L2Rpdj48ZGl2Pldyb25nIEltYWdlIEZvcm1h
-dCBmb3IgYm9vdG0gY29tbWFuZDxicj48L2Rpdj48ZGl2PkVSUk9SOiBjYW4ndCBnZXQga2VybmVs
-IGltYWdlITxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkRSQU0g
-SW5pdC1WMTItRERSNDxicj48L2Rpdj48ZGl2PjBhYmMxLTRHYi1Eb25lPGJyPjwvZGl2PjxkaXY+
-UmVhZCBtYXJnaW4tREw6MC4zODIzL0RIOjAuMzkyMSBDSyAobWluOjAuMzApPGJyPjwvZGl2Pjxk
-aXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2
-PjxkaXY+VS1Cb290IDIwMTYuMDcgKEFwciAyMSAyMDIwIC0gMDY6MjI6NDYgKzAwMDApPGJyPjwv
-ZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+V2F0Y2hkb2cgZW5hYmxlZDxi
-cj48L2Rpdj48ZGl2PkRSQU06Jm5ic3A7IDQ5NiBNaUI8YnI+PC9kaXY+PGRpdj5GbGFzaDogNjQg
-TWlCPGJyPjwvZGl2PjxkaXY+SW46Jm5ic3A7Jm5ic3A7Jm5ic3A7IHNlcmlhbDxicj48L2Rpdj48
-ZGl2Pk91dDombmJzcDsmbmJzcDsgc2VyaWFsPGJyPjwvZGl2PjxkaXY+RXJyOiZuYnNwOyZuYnNw
-OyBzZXJpYWw8YnI+PC9kaXY+PGRpdj5OZXQ6Jm5ic3A7Jm5ic3A7IGV0aDAsIGV0aDE8YnI+PC9k
-aXY+PGRpdj5IaXQgYW55IGtleSB0byBzdG9wIGF1dG9ib290OiZuYnNwOyAwPGJyPjwvZGl2Pjxk
-aXY+YXN0IyBwcmludGVudjxicj48L2Rpdj48ZGl2PjYzZWI5Nzg0PTE8YnI+PC9kaXY+PGRpdj5i
-YXVkcmF0ZT0xMTUyMDA8YnI+PC9kaXY+PGRpdj5ib290YWx0PXJ1biB3ZHQyYml0ZTxicj48L2Rp
-dj48ZGl2PmJvb3RhcmdzPWNvbnNvbGU9dHR5UzQsMTE1MjAwbjggdWJpLm10ZD1vYm1jLXViaSww
-LDAsMCB1YmkubXRkPWFsdC1vYm1jLXViaSwwLDAsNCBybyByb290ZnN0eXBlPXNxdWFzaGZzPGJy
-PjwvZGl2PjxkaXY+Ym9vdGNtZD1ydW4gc2V0X2Jvb3RhcmdzOyBydW4gb2JtY19ib290Y21kPGJy
-PjwvZGl2PjxkaXY+Ym9vdGRlbGF5PTI8YnI+PC9kaXY+PGRpdj5kb19yd3Jlc2V0PWlmIHRlc3Qg
-IiR7cndyZXNldH0iID0gInRydWUiOyB0aGVuIHViaSByZW1vdmUgcndmczsgdWJpIGNyZWF0ZSBy
-d2ZzICR7cndmc19zaXplfTsgZmk8YnI+PC9kaXY+PGRpdj5lMmJlNjdiYj0wPGJyPjwvZGl2Pjxk
-aXY+ZXRoMWFkZHI9MDA6MDA6MDA6MDE6MDI6MDQ8YnI+PC9kaXY+PGRpdj5ldGhhY3Q9ZXRoMDxi
-cj48L2Rpdj48ZGl2PmV0aGFkZHI9MDA6MDA6MDA6MDE6MDI6MDM8YnI+PC9kaXY+PGRpdj5rZXJu
-ZWxuYW1lPWtlcm5lbC1lMmJlNjdiYjxicj48L2Rpdj48ZGl2PmxvYWRhZGRyPTgwODAwMDAwPGJy
-PjwvZGl2PjxkaXY+bXRkaWRzPW5vcjA9Ym1jPGJyPjwvZGl2PjxkaXY+bXRkcGFydHM9bXRkcGFy
-dHM9Ym1jOjM4NGsodS1ib290KSwxMjhrKHUtYm9vdC1lbnYpLC0ob2JtYy11YmkpPGJyPjwvZGl2
-PjxkaXY+b2JtY19ib290Y21kPXViaSBwYXJ0IG9ibWMtdWJpOyBydW4gZG9fcndyZXNldDsgdWJp
-IHJlYWQgJHtsb2FkYWRkcn0gJHtrZXJuZWxuYW1lfTsgYm9vdG0gJHtsb2FkYWRkcn0gfHwgcnVu
-IGJvb3RhbHQ8YnI+PC9kaXY+PGRpdj5yb290PS9kZXYvdWJpYmxvY2s0XzE8YnI+PC9kaXY+PGRp
-dj5yd2ZzX3NpemU9MHg2MDAwMDA8YnI+PC9kaXY+PGRpdj5zZXRfYm9vdGFyZ3M9c2V0ZW52IGJv
-b3RhcmdzIGNvbnNvbGU9dHR5UzQsMTE1MjAwbjggdWJpLm10ZD1vYm1jLXViaSwwLDAsMCB1Ymku
-bXRkPWFsdC1vYm1jLXViaSwwLDAsNCBybyByb290ZnN0eXBlPXNxdWFzaGZzIHViaS5ibG9jaz0k
-e3ViaWJsb2NrfSByb290PSR7cm9vdH08YnI+PC9kaXY+PGRpdj5zcGlfZG1hPXllczxicj48L2Rp
-dj48ZGl2PnN0ZGVycj1zZXJpYWw8YnI+PC9kaXY+PGRpdj5zdGRpbj1zZXJpYWw8YnI+PC9kaXY+
-PGRpdj5zdGRvdXQ9c2VyaWFsPGJyPjwvZGl2PjxkaXY+dWJpYmxvY2s9NCwxPGJyPjwvZGl2Pjxk
-aXY+dmVyaWZ5PXllczxicj48L2Rpdj48ZGl2PndkdDJiaXRlPW13LmwgMHgxZTc4NTAyNCAweGEg
-MTsgbXcuYiAweDFlNzg1MDJjIDB4YjMgMTxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2PkVudmlyb25tZW50IHNpemU6IDEwMTQvNjU1MzEgYnl0ZXM8YnI+PC9kaXY+
-PGRpdj5hc3QjPGJyPjwvZGl2PjwvYmxvY2txdW90ZT48ZGl2Pjxicj48L2Rpdj4=
+- Joseph
 
+[1]: You can review the OpenBMC mDNS email discussion thread here:
+https://lists.ozlabs.org/pipermail/openbmc/2020-April/
 
-
---b1_e42862683994d3a5af68c050332feb4c--
+> - Joseph
+>
+>>>
+>>>     It probably isn't a bad thing to be able to support SSDP, don't
+>>>     get me
+>>>     wrong, but "instead"?  Why would we want to take away service
+>>>     advertisement functionality, unless someone wants to explicitly
+>>>     disable it?
+>>>
+>>>     I can understand if they don't want to document, in the standard,
+>>>     a way to
+>>>     advertise the Redfish service over mDNS, but isn't that a different
+>>>     problem from what we're asking for?  Aren't we asking for a 
+>>> method to
+>>>     manage the enablement of services on the BMC, specifically our mDNS
+>>>     service?  So, if we still have mDNS, don't we need a way to
+>>>     configure it
+>>>     through Redfish?
+>>>
+>>> I see your point here.  I guess there might be some implicit 
+>>> assumption that adding it to a schema implies endorsement elsewhere.
+>>
+>> Yeah, from Jeff's reply on the thread, "The concern is if we add this 
+>> to ManagerNetworkProtocol, it would seem to indicate that Redfish 
+>> supports mDNS/DNS-SD for discovery of Redfish services, which it does 
+>> not (SSDP is the standard discovery mechanism). "
+>>
+>>> Discovery is probably an area where supporting a diversity of 
+>>> protocols is better than making a single choice.
+>>
+>> A bit over my head here, but I believe Redfish's interoperability 
+>> concern about supporting a second discovery protocol comes from then 
+>> all Redfish implementations need to implement both otherwise 
+>> different Redfish implementations aren't discoverable. This can be 
+>> expanded to OpenBMC's use of mDNS vs Redfish's SSDP and hence the ask 
+>> for OpenBMC to implement SSDP. A concern of compatibility of 
+>> OpenBMC-based Redfish implementations vs other Redfish implementations.
+>>
+>> These are all good questions. Anyone can sign up for an account and 
+>> post to the Redfish forum if you are interested in pursuing.
+>> https://redfishforum.com/thread/267/add-avahi-managernetworkprotocol
+>>
+>> Forum posts, along with new issues and proposals, are discussed on 
+>> the main Redfish calls, Tuesday at 1:00 PM CT and Thursday at 2:00 PM 
+>> CT if your company is a supporting member of Redfish.
+>>
+>> Thanks,
+>> Gunnar
+>>
+>
 
