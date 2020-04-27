@@ -2,90 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AF961BA16B
-	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 12:35:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9B961BA209
+	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 13:12:09 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 499h4M3mswzDqf4
-	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 20:35:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 499htv22XWzDqf5
+	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 21:12:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 499h3Y3kqNzDqM9
- for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 20:34:28 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03RAXYfr016612
- for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 06:34:27 -0400
-Received: from e06smtp04.uk.ibm.com (e06smtp04.uk.ibm.com [195.75.94.100])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30mfhcss23-1
- (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 06:34:26 -0400
-Received: from localhost
- by e06smtp04.uk.ibm.com with IBM ESMTP SMTP Gateway: Authorized Use Only!
- Violators will be prosecuted
- for <openbmc@lists.ozlabs.org> from <vishwa@linux.vnet.ibm.com>;
- Mon, 27 Apr 2020 11:33:29 +0100
-Received: from b06cxnps4074.portsmouth.uk.ibm.com (9.149.109.196)
- by e06smtp04.uk.ibm.com (192.168.101.134) with IBM ESMTP SMTP Gateway:
- Authorized Use Only! Violators will be prosecuted; 
- (version=TLSv1/SSLv3 cipher=AES256-GCM-SHA384 bits=256/256)
- Mon, 27 Apr 2020 11:33:27 +0100
-Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
- [9.149.105.232])
- by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03RAYLfm61341752
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Apr 2020 10:34:21 GMT
-Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4753852050;
- Mon, 27 Apr 2020 10:34:21 +0000 (GMT)
-Received: from [9.102.1.95] (unknown [9.102.1.95])
- by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 394415204F;
- Mon, 27 Apr 2020 10:34:20 +0000 (GMT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: Request for Feedback :: Time Mode setting in timemanager
-From: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
-In-Reply-To: <20200225022358.GH67957@patrickw3-mbp.dhcp.thefacebook.com>
-Date: Mon, 27 Apr 2020 16:04:18 +0530
-Content-Transfer-Encoding: quoted-printable
-References: <68732B2D-EB7D-418A-86D9-3095223A31FB@linux.vnet.ibm.com>
- <5B7FD9A0-8A4A-4BCC-9BC5-77B5DEBCDD00@fuzziesquirrel.com>
- <20200218202507.GA2219@patrickw3-mbp.lan.stwcx.xyz>
- <329B2251-4BA2-425F-A8E1-886C4E2F686F@fuzziesquirrel.com>
- <20200218215128.GF2219@patrickw3-mbp.lan.stwcx.xyz>
- <B09077F7-2752-4C7C-B005-38B00C6DD428@linux.vnet.ibm.com>
- <20200220163326.GC41328@patrickw3-mbp.dhcp.thefacebook.com>
- <9B609C37-44FE-4636-BFFE-76BB48DAEB10@linux.vnet.ibm.com>
- <20200224203636.GF67957@patrickw3-mbp.dhcp.thefacebook.com>
- <CAARXrtnVf8cccGk29Xgk7V=LvX+ocnrn1jgQHwDT97xGkKO9vA@mail.gmail.com>
- <20200225022358.GH67957@patrickw3-mbp.dhcp.thefacebook.com>
-To: Patrick Williams <patrick@stwcx.xyz>, liuxiwei@inspur.com
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 499ht40RRFzDqTk
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 21:11:23 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03RB51N9133277
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 07:11:21 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 30mhbh98cq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 07:11:21 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03RBA2v0020990
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 11:11:19 GMT
+Received: from b06cxnps3074.portsmouth.uk.ibm.com
+ (d06relay09.portsmouth.uk.ibm.com [9.149.109.194])
+ by ppma03ams.nl.ibm.com with ESMTP id 30mcu5kqtu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 11:11:19 +0000
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03RBBHiR5243174
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 11:11:17 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 58DBF4C046
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 11:11:17 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D56404C04A
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 11:11:16 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.199.37.37])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Apr 2020 11:11:16 +0000 (GMT)
+Subject: Re: Default Gateway for a system v/s Default gateway per Interface
+To: openbmc@lists.ozlabs.org
+References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+ <20200424152120.GD26818@heinlein.lan.stwcx.xyz>
+ <CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Message-ID: <32f161d2-784e-8fe5-a00b-e9bec181a265@linux.vnet.ibm.com>
+Date: Mon, 27 Apr 2020 16:41:15 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
+MIME-Version: 1.0
+In-Reply-To: <CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="------------E0CB2A1658948249D5C83A7C"
+Content-Language: en-US
 X-TM-AS-GCONF: 00
-x-cbid: 20042710-0016-0000-0000-0000030B53CE
-X-IBM-AV-DETECTION: SAVI=unused REMOTE=unused XFE=unused
-x-cbparentid: 20042710-0017-0000-0000-0000336F81D4
-Message-Id: <F244EE72-6639-4FF3-B80C-AF4F4B23D046@linux.vnet.ibm.com>
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-27_05:2020-04-24,
+ definitions=2020-04-27_07:2020-04-24,
  2020-04-27 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 mlxlogscore=306
- malwarescore=0 impostorscore=0 clxscore=1011 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004270095
+ malwarescore=0 bulkscore=0
+ phishscore=0 adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=839 suspectscore=1
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004270100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,63 +89,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+This is a multi-part message in MIME format.
+--------------E0CB2A1658948249D5C83A7C
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Further to the proposal I made to the community about removing TimeOwner =
-feature, George Liu ( Thank you ) has put up a commit to :
+Thanks Patrick, William for sharing the feedbacks
 
-- Remove TimeOwner feature :                          =
-https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-time-manager/+/312=
-78/
-- Consume changes to NTP/MANUAL settings immediately: =
-https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-time-manager/+/312=
-84/
+I will start working on the changes.
 
-We have had many discussions with needed people here in IBM and we agree =
-to the proposal.=20
 
-With that said: Both IPMI and PLDM will now use =
-"/xyz/openbmc_project/time/bmc=E2=80=9D as part of SetTime/GetTime =
-instead of =E2=80=9C/xyz/openbmc_project/time/host=E2=80=9D
+On 4/24/20 11:15 PM, William Kennington wrote:
+> Sounds good to me, we have needed this for a long time because the 
+> current gateway configuration breaks our v6 stack with multiple NICs.
+>
+> On Fri, Apr 24, 2020 at 8:21 AM Patrick Williams <patrick@stwcx.xyz 
+> <mailto:patrick@stwcx.xyz>> wrote:
+>
+>     On Fri, Apr 24, 2020 at 08:36:26PM +0530, Ratan Gupta wrote:
+>     > ~~~~~~~~~~~~~
+>     > Kernel IP routing table
+>     > Destination     Gateway         Genmask         Flags MSS
+>     Window  irtt
+>     > Iface
+>     > 0.0.0.0         19.168.2.1      0.0.0.0         UG 0 0          0
+>     > eth0
+>     > 0.0.0.0         10.10.10.1      0.0.0.0         UG 0 0          0
+>     > eth1
+>     > ~~~~~~~~~~~~~~
+>     >
+>     > Kernel will first try using the default gateway having higher
+>     metric
+>     > value and then fall back to the lower.
+>
+>     I'm not seeing us with an interface to adjust the metric for an
+>     interface.  I think we need to add that at the same time?
+>
+Not now, As per my testing if metric value is not defined and both the 
+routes
 
-Thank you all for contributing into this discussion.
+having same metric then kernel tries one after other. We can bring the 
+metric
 
-!! Vishwa !!
+later.
 
-> On 25-Feb-2020, at 7:53 AM, Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->=20
-> On Tue, Feb 25, 2020 at 10:01:21AM +0800, Lei YU wrote:
->> On Tue, Feb 25, 2020 at 4:37 AM Patrick Williams <patrick@stwcx.xyz> =
-wrote:
->>>=20
->>> On Mon, Feb 24, 2020 at 11:38:56AM +0530, Vishwanatha Subbanna =
-wrote:
->>>> Proposal for now is to:  *Remove the support for TimeOwner*. It =
-will be as good as BOTH
->>>=20
->>> "TimeOwner =3D BOTH" today creates two virtual clocks from the =
-physical
->>> RTC by implementing the Host clock as an offset from the BMC clock,
->>> doesn't it?  Is that going to continue to be the functionality with =
-your
->>> proposal or are you reverting back to a single physical clock where =
-both
->>> Host and BMC can update?
->>=20
->> "TimeOnwer =3D BOTH" does not creates two virtual clocks, "TimeOwner =
-=3D
->> Split" does.
->> "BOTH" effectively enables both BMC and the Host to set the "single" =
-clock.
->=20
-> Got it, my mistake.
->=20
-> --=20
-> Patrick Williams
+>     Otherwise, I
+>     don't think we have a way to specify which interface
+>     outside-the-subnet
+>     should go (vs today we can set the default-gateway to the desired
+>     interface's gateway).
+>     -- 
+>     Patrick Williams
+>
+
+--------------E0CB2A1658948249D5C83A7C
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Thanks Patrick, William for sharing the feedbacks<br>
+    </p>
+    <p>I will start working on the changes.<br>
+    </p>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 4/24/20 11:15 PM, William Kennington
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com">
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <div dir="ltr">Sounds good to me, we have needed this for a long
+        time because the current gateway configuration breaks our v6
+        stack with multiple NICs.<br>
+      </div>
+      <br>
+      <div class="gmail_quote">
+        <div dir="ltr" class="gmail_attr">On Fri, Apr 24, 2020 at 8:21
+          AM Patrick Williams &lt;<a href="mailto:patrick@stwcx.xyz"
+            moz-do-not-send="true">patrick@stwcx.xyz</a>&gt; wrote:<br>
+        </div>
+        <blockquote class="gmail_quote" style="margin:0px 0px 0px
+          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On
+          Fri, Apr 24, 2020 at 08:36:26PM +0530, Ratan Gupta wrote:<br>
+          &gt; ~~~~~~~~~~~~~<br>
+          &gt; Kernel IP routing table<br>
+          &gt; Destination     Gateway         Genmask         Flags  
+          MSS Window  irtt <br>
+          &gt; Iface<br>
+          &gt; 0.0.0.0         19.168.2.1      0.0.0.0         UG       
+          0 0          0 <br>
+          &gt; eth0<br>
+          &gt; 0.0.0.0         10.10.10.1      0.0.0.0         UG       
+          0 0          0 <br>
+          &gt; eth1<br>
+          &gt; ~~~~~~~~~~~~~~<br>
+          &gt; <br>
+          &gt; Kernel will first try using the default gateway having
+          higher metric <br>
+          &gt; value and then fall back to the lower.<br>
+          <br>
+          I'm not seeing us with an interface to adjust the metric for
+          an<br>
+          interface.  I think we need to add that at the same time?</blockquote>
+      </div>
+    </blockquote>
+    <p>Not now, As per my testing if metric value is not defined and
+      both the routes</p>
+    <p>having same metric then kernel tries one after other. We can
+      bring the metric</p>
+    <p>later.<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com">
+      <div class="gmail_quote">
+        <blockquote class="gmail_quote" style="margin:0px 0px 0px
+          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"> 
+          Otherwise, I<br>
+          don't think we have a way to specify which interface
+          outside-the-subnet<br>
+          should go (vs today we can set the default-gateway to the
+          desired<br>
+          interface's gateway).<br>
+          -- <br>
+          Patrick Williams<br>
+        </blockquote>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------E0CB2A1658948249D5C83A7C--
 
