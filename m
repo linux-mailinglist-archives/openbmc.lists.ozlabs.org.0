@@ -2,94 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A8E61BA9E0
-	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 18:14:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 729501BADBB
+	for <lists+openbmc@lfdr.de>; Mon, 27 Apr 2020 21:19:51 +0200 (CEST)
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 499qbb68FGzDqcq
-	for <lists+openbmc@lfdr.de>; Tue, 28 Apr 2020 02:14:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 499vjb2BQ9zDq5t
+	for <lists+openbmc@lfdr.de>; Tue, 28 Apr 2020 05:19:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 499qZZ5pqnzDqdd
- for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 02:13:26 +1000 (AEST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03RG4v3d038323; Mon, 27 Apr 2020 12:13:23 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30me4vp8cr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Apr 2020 12:13:23 -0400
-Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 03RG5FkE040236;
- Mon, 27 Apr 2020 12:13:22 -0400
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30me4vp8ch-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Apr 2020 12:13:22 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03RGAGYp010466;
- Mon, 27 Apr 2020 16:13:22 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma05wdc.us.ibm.com with ESMTP id 30mcu64gad-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Apr 2020 16:13:22 +0000
-Received: from b03ledav001.gho.boulder.ibm.com
- (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03RGDLj056099214
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Apr 2020 16:13:21 GMT
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B9646E04C;
- Mon, 27 Apr 2020 16:13:21 +0000 (GMT)
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A14AB6E05B;
- Mon, 27 Apr 2020 16:13:20 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.137.230])
- by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Mon, 27 Apr 2020 16:13:20 +0000 (GMT)
-Subject: Re: Why does OpenBMC use Avahi mDNS instead of SSDP - proposal
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>,
- Richard Hanley <rhanley@google.com>, Patrick Williams <patrick@stwcx.xyz>
-References: <64ed3841-fc25-50d2-5353-d778301ce06d@linux.ibm.com>
- <20200407154653.GB5368@heinlein.lan.stwcx.xyz>
- <d3801437-bde4-ffe9-9f3e-1604ad174625@linux.ibm.com>
- <e292cc98-cdd8-2eff-3fd0-ba42762b2720@linux.vnet.ibm.com>
- <20200416204010.GD443018@heinlein.lan.stwcx.xyz>
- <CAH1kD+bVgh0kjUt7bkt+7G5-0G66hneto-Ks2o6iNDXKxLsN8w@mail.gmail.com>
- <13f119b4-56fa-c6dd-2e1b-9718e4e41fc3@linux.vnet.ibm.com>
- <a8c08cff-3a77-4b89-fb49-3bd8a9b71173@linux.ibm.com>
-Message-ID: <57d1bdd6-c7c0-f70d-7af1-a9453d36689c@linux.ibm.com>
-Date: Mon, 27 Apr 2020 11:13:19 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 499vbP38JDzDqdw
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 05:14:23 +1000 (AEST)
+IronPort-SDR: nSgUyB9+npp3R8zQ1L1P+AlEMnkrjFPbTvjf82/bxngBCcJvLu25QdRyS9QwEsc6gC3yPxXLwc
+ UORWhUPIXJSA==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Apr 2020 12:14:21 -0700
+IronPort-SDR: PT3mjWsiWtGWvFG3KDZJClDqGa3PMoZruFRxEp3H+IDgZJ8Mb6v6dHDGypA6vXiGYn+2+ab0Xu
+ cT1P8TUzpXsg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,325,1583222400"; d="scan'208";a="246242019"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga007.jf.intel.com with ESMTP; 27 Apr 2020 12:14:21 -0700
+Received: from [10.213.65.25] (jmbills-mobl.amr.corp.intel.com [10.213.65.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
+ bits)) (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 953B15807CA;
+ Mon, 27 Apr 2020 12:14:19 -0700 (PDT)
+Subject: Re: question about sensor sel
+To: =?UTF-8?B?6Zi/5qGC?= <guilin1985@126.com>, openbmc@lists.ozlabs.org
+References: <4a3fdbed.27ba.171b49628cc.Coremail.guilin1985@126.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <3c8e7eae-a345-702e-4fff-d04010de7594@linux.intel.com>
+Date: Mon, 27 Apr 2020 12:14:14 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <a8c08cff-3a77-4b89-fb49-3bd8a9b71173@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <4a3fdbed.27ba.171b49628cc.Coremail.guilin1985@126.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-27_12:2020-04-27,
- 2020-04-27 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 mlxlogscore=999
- suspectscore=0 impostorscore=0 bulkscore=0 spamscore=0 mlxscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004270127
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,100 +62,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, ratagupt <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 4/17/20 3:02 PM, Joseph Reynolds wrote:
-> On 4/17/20 11:44 AM, Gunnar Mills wrote:
->> On 4/16/2020 7:42 PM, Richard Hanley wrote:
->>>
->>>     > The members on the call really wanted to encourage OpenBMC to
->>>     implement
->>>     > SSDP instead.
->>>
->
-> Thanks for helping to move this forward.  IMHO, Redfish has given us 
-> enough direction to move forward with OpenBMC.  I understand the 
-> debate, but don't have any insight or energy to contribute. So on a 
-> purely practical level...
->
-> I hereby propose implementing ManagerNetworkProtocol.Oem.OpenBMC.mDNS.
-> Its schema would either be "Protocol" or a new "mDNSProtocol" modeled 
-> after SSDProtocol.
-> The only property I need to be readwrite is ProtocolEnabled.
-> This allows the BMC admin to enable and disable OpenBMC's Avahi-based 
-> mDNS discovery service.
 
-Who can effectively ask DMTF Redfish to add a new "mDNSProtocol"? Some 
-of the reasons stated in this email thread [1] seem compelling:
 
-1. Installations can be locked into a specific discovery protocol. Some 
-use SSDP and some use mDNS.  It would take effort for these 
-installations to support an additional discovery protocol.  --> Given 
-that real Redfish server implement mDNS Discovery, can we add a Redfish 
-capability to control this service?
+On 4/25/2020 8:44 PM, 阿桂 wrote:
+> Hi, all:
+> 
+> Why is the result empty when I run 'ipmitool sel list', as follows:
+> root@lon:/var/log# ipmitool sel list
+> SEL has no entries
+> 
+> Below is what I changed:
+> 
+> 1. I added yaml config file of those sensors 'ipmi-sensors.yaml'
+> 
+> 2. I added below compling option to module 'phosphor-sel-logger'';
+> EXTRA_OECMAKE += "-DSEL_LOGGER_MONITOR_THRESHOLD_EVENTS=ON"
+> 
+> 3. I modified the config settings of rsyslog as 
+> https://lists.ozlabs.org/pipermail/openbmc/2019-November/019619.html 
+> refer to.
+>      so, I can see a journalctl log,  ipmi_sel and redfish file at /var/log;
+> 
+> 
+> Below two commands can get wanted results. But why the command 'ipmitool 
+> sel list' can't? what else should I modify?
+It looks like the only thing missing is the override to the IPMI Get SEL 
+Entry command to make it look in the /var/log/ipmi_sel file instead of 
+on D-Bus.
 
-2. If we wanted to use SSDP discovery of our FOSS Linux-based project, 
-what implementation can we use?
+You can find the override implemented in intel-ipmi-oem, here: 
+https://github.com/openbmc/intel-ipmi-oem/blob/master/src/storagecommands.cpp#L827.
 
-I tried, but my knowledge is limited.  You can respond to this email or 
-participate in the Redfish discussion here: 
-https://redfishforum.com/thread/267/add-avahi-managernetworkprotocol
-
-- Joseph
-
-[1]: You can review the OpenBMC mDNS email discussion thread here:
-https://lists.ozlabs.org/pipermail/openbmc/2020-April/
-
-> - Joseph
->
->>>
->>>     It probably isn't a bad thing to be able to support SSDP, don't
->>>     get me
->>>     wrong, but "instead"?  Why would we want to take away service
->>>     advertisement functionality, unless someone wants to explicitly
->>>     disable it?
->>>
->>>     I can understand if they don't want to document, in the standard,
->>>     a way to
->>>     advertise the Redfish service over mDNS, but isn't that a different
->>>     problem from what we're asking for?  Aren't we asking for a 
->>> method to
->>>     manage the enablement of services on the BMC, specifically our mDNS
->>>     service?  So, if we still have mDNS, don't we need a way to
->>>     configure it
->>>     through Redfish?
->>>
->>> I see your point here.  I guess there might be some implicit 
->>> assumption that adding it to a schema implies endorsement elsewhere.
->>
->> Yeah, from Jeff's reply on the thread, "The concern is if we add this 
->> to ManagerNetworkProtocol, it would seem to indicate that Redfish 
->> supports mDNS/DNS-SD for discovery of Redfish services, which it does 
->> not (SSDP is the standard discovery mechanism). "
->>
->>> Discovery is probably an area where supporting a diversity of 
->>> protocols is better than making a single choice.
->>
->> A bit over my head here, but I believe Redfish's interoperability 
->> concern about supporting a second discovery protocol comes from then 
->> all Redfish implementations need to implement both otherwise 
->> different Redfish implementations aren't discoverable. This can be 
->> expanded to OpenBMC's use of mDNS vs Redfish's SSDP and hence the ask 
->> for OpenBMC to implement SSDP. A concern of compatibility of 
->> OpenBMC-based Redfish implementations vs other Redfish implementations.
->>
->> These are all good questions. Anyone can sign up for an account and 
->> post to the Redfish forum if you are interested in pursuing.
->> https://redfishforum.com/thread/267/add-avahi-managernetworkprotocol
->>
->> Forum posts, along with new issues and proposals, are discussed on 
->> the main Redfish calls, Tuesday at 1:00 PM CT and Thursday at 2:00 PM 
->> CT if your company is a supporting member of Redfish.
->>
->> Thanks,
->> Gunnar
->>
->
-
+> root@lon:/var/log# ipmitool sensor list
+> ambient_temp     | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> cpu0_temp          | na         |            | na    | na        | na    
+>      | na        | na        | na        | na
+> cpu1_temp          | na         |            | na    | na        | na    
+>      | na        | na        | na        | na
+> psu_vol_in          | 12.031     | Volts      | ok    | 0.000     | 
+> 10.971    | 11.448    | 12.985    | 13.462    | 0.000
+> psu_curr_in         | 0.275      | Amps       | ok    | 0.000     | 
+> 0.275     | 0.550     | 49.775    | 69.850    | 0.000
+> psu_power_in     | 3.150      | Watts      | ok    | 0.000     | 3.150  
+>     | 6.300     | 497.700   | 796.950   | 0.000
+> battery         | 0.345      | Volts      | ok    | 0.000     | 1.995    
+>   | 2.490     | 3.300     | 3.495     | 0.000
+> fan1             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan2             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan3             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan4             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan5             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan6             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan7             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> fan8             | na         |            | na    | na        | na      
+>    | na        | na        | na        | na
+> 
+> root@lon:/var/log# journalctl |grep sel
+> Apr 25 15:16:36 lon sel-logger[240]: battery sensor crossed a warning 
+> low threshold going low. Reading=0.344000 Threshold=2.500000.
+> Apr 25 15:16:36 lon sel-logger[240]: battery sensor crossed a critical 
+> low threshold going low. Reading=0.344000 Threshold=2.000000.
+> Apr 25 15:16:36 lon sel-logger[240]: psu_curr_in sensor crossed a 
+> warning low threshold going low. Reading=0.361000 Threshold=0.600000.
+> Apr 25 15:16:36 lon sel-logger[240]: psu_power_in sensor crossed a 
+> warning low threshold going low. Reading=4.667744 Threshold=6.500000.
+> 
+> root@lon:/var/log# ls
+> ipmi_sel          lastlog           obmc-console.log  private/          
+> redfish           state             tallylog
+> 
+> root@lon:/var/log# cat ipmi_sel
+> 2020-04-25T15:16:36.125187+00:00 
+> 1,2,50FFFF,20,/xyz/openbmc_project/sensors/voltage/battery,1
+> 2020-04-25T15:16:36.245679+00:00 
+> 1,2,52FFFF,20,/xyz/openbmc_project/sensors/voltage/battery,1
+> 2020-04-25T15:16:36.705420+00:00 
+> 2,2,50FFFF,20,/xyz/openbmc_project/sensors/current/psu_curr_in,1
+> 2020-04-25T15:16:36.764327+00:00 
+> 3,2,50FFFF,20,/xyz/openbmc_project/sensors/power/psu_power_in,1
+> root@lon:/var/log# cat redfish
+> 2020-04-25T15:16:19.003251+00:00 
+> OpenBMC.0.1.ServiceFailure,phosphor-pid-control.service
+> 2020-04-25T15:16:36.125187+00:00 
+> OpenBMC.0.1.SensorThresholdWarningLowGoingLow,battery,0.344000,2.500000
+> 2020-04-25T15:16:36.245679+00:00 
+> OpenBMC.0.1.SensorThresholdCriticalLowGoingLow,battery,0.344000,2.000000
+> 2020-04-25T15:16:36.705420+00:00 
+> OpenBMC.0.1.SensorThresholdWarningLowGoingLow,psu_curr_in,0.361000,0.600000
+> 2020-04-25T15:16:36.764327+00:00 
+> OpenBMC.0.1.SensorThresholdWarningLowGoingLow,psu_power_in,4.667744,6.500000
+> 2020-04-25T15:16:51.611885+00:00 
+> OpenBMC.0.1.ServiceFailure,obmc-read-eeprom@system-chassis-motherboard.service
+> 
+> 
+> 
+> 
+> 
+> 
