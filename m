@@ -2,59 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE9C31BC07C
-	for <lists+openbmc@lfdr.de>; Tue, 28 Apr 2020 16:03:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 74EFF1BC27B
+	for <lists+openbmc@lfdr.de>; Tue, 28 Apr 2020 17:15:26 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49BNdZ2J7hzDqw8
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 00:02:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49BQF43lRnzDqCT
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 01:15:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=183.3.226.243; helo=qq.com; envelope-from=1181052146@qq.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
- header.s=s201512 header.b=PG6aP41Z; dkim-atps=neutral
-X-Greylist: delayed 71 seconds by postgrey-1.36 at bilbo;
- Tue, 28 Apr 2020 23:59:24 AEST
-Received: from qq.com (smtpbg419.qq.com [183.3.226.243])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49BNYS552DzDqY2
- for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 23:59:24 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1588082254; bh=1pDkz3ZSTRiIC90z6veICNvJ3S5lCehHaSKgpN9lzTo=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=PG6aP41ZxcD96F1O8jOilxYi+f1gMzeO67VEpsomd5hcebea9y0cxWXHDtLRvqsLp
- ElmYx9vygstUkUxpyT5v9R4JYqG45+hliqMsSds5v1ebeRRi+N/vbuiGpCZbYZl+E+
- FAA3FyLo5nxKrGomM+cCjNvm0mgNTUKOTfpx5nEM=
-X-QQ-SSF: 00000000000000F000000000000000S
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 117.14.152.15
-X-QQ-STYLE: 
-X-QQ-mid: webenglish2t1588082253t386954
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: meta-palmetto fail to login via web broswer
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5EA8364D_0B7DE790_4377D6B7"
-Content-Transfer-Encoding: 8Bit
-Date: Tue, 28 Apr 2020 21:57:33 +0800
-X-Priority: 3
-Message-ID: <tencent_5AA0A65123464A4C78256C2D@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Tue, 28 Apr 2020 21:57:33 +0800 (CST)
-Feedback-ID: webenglish:qq.com:bgforeign:bgforeign11
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49BQ9c42VTzDqv9
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 01:12:19 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 03SF1sWn056373
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 11:12:15 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30me454859-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 11:12:13 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03SF9vkm018002
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 15:12:12 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma02dal.us.ibm.com with ESMTP id 30mcu6m4kt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 15:12:12 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 03SFCCR949021232
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 15:12:12 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 03EEE112061
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 15:12:12 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D051C112063
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 15:12:11 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.137.230])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Apr 2020 15:12:11 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: OWASP dependency checker
+Message-ID: <ea8363a6-8f24-192b-a3af-68cb90fd88f1@linux.ibm.com>
+Date: Tue, 28 Apr 2020 10:12:11 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
+ definitions=2020-04-28_10:2020-04-28,
+ 2020-04-28 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 impostorscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=475 clxscore=1015 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2004280116
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,37 +87,8 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+Does anyone have experience with OWASP's Dependency Checker?  Is using 
+something like this worthwhile to improve web application security?
 
-------=_NextPart_5EA8364D_0B7DE790_4377D6B7
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-SGksIEdyZWV0aW5ncw0KDQpJIGFtIHVzaW5nIG1ldGEtcGFsbWV0dG8gaW1hZ2UgaW4gcWVt
-dS4gQWZ0ZXIgYm9vdCB1cCwgSSB0cnkgdG8gbG9naW4gb3BlbmJtYyB2aWEgd2ViIGJyb3N3
-ZXIuIEJ1dCBJIGZhaWwgdG8gbG9naW4gYW5kIGdvdCBhIGVycm9yIGNvZGUgIkVSUl9UT09f
-TUFOWV9SRURJUkVDVFMiLiBJIHRyeSBmaXJlZm94IGFuZCBjaHJvbWUsIGJvdGggZ2V0IHRo
-ZSBzYW1lIGVycm9yIGNvZGUuDQpXaGVuIHVzaW5nIGlwbWl0b29sIG9yIGN1cmwgdG8gYWNj
-ZXNzIG9wZW5ibWMsIGl0IHdvcmtzIHdlbGwuIEFuZCBmb3IgbWV0YS1yb211bHVzIGltYWdl
-IEkgY2FuIGxvZ2luIG9wZW5ibWMgdmlhIG15IHdlYiBicm9zd2VyLg0KV2hhdCBjYW4gSSBk
-bz8NCg0KQmVzdCBSZWdhcmRzIQ0KTGl1IEhvbmd3ZWk=
-
-------=_NextPart_5EA8364D_0B7DE790_4377D6B7
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-SGksIEdyZWV0aW5nczxicj48YnI+SSBhbSB1c2luZyBtZXRhLXBhbG1ldHRvIGltYWdlIGlu
-IHFlbXUuIEFmdGVyIGJvb3QgdXAsIEkgdHJ5IHRvIGxvZ2luIG9wZW5ibWMgdmlhIHdlYiBi
-cm9zd2VyLiBCdXQgSSBmYWlsIHRvIGxvZ2luIGFuZCBnb3QgYSBlcnJvciBjb2RlICJFUlJf
-VE9PX01BTllfUkVESVJFQ1RTIi4gSSB0cnkgZmlyZWZveCBhbmQgY2hyb21lLCBib3RoIGdl
-dCB0aGUgc2FtZSBlcnJvciBjb2RlLjxicj5XaGVuIHVzaW5nIGlwbWl0b29sIG9yIGN1cmwg
-dG8gYWNjZXNzIG9wZW5ibWMsIGl0IHdvcmtzIHdlbGwuIEFuZCBmb3IgbWV0YS1yb211bHVz
-IGltYWdlIEkgY2FuIGxvZ2luIG9wZW5ibWMgdmlhIG15IHdlYiBicm9zd2VyLjxicj5XaGF0
-IGNhbiBJIGRvPzxicj48YnI+QmVzdCBSZWdhcmRzITxicj5MaXUgSG9uZ3dlaTxicj4=
-
-------=_NextPart_5EA8364D_0B7DE790_4377D6B7--
-
-
+- Joseph
 
