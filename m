@@ -1,57 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19A5C1BD34C
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 05:58:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 578741BD5CF
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 09:22:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Bl9K6FdNzDr0t
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 13:58:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49BqhR1BFGzDr7h
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 17:21:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=aspeedtech.com
- (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com;
- envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-X-Greylist: delayed 1141 seconds by postgrey-1.36 at bilbo;
- Wed, 29 Apr 2020 13:57:33 AEST
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
+ spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
+ (client-ip=183.3.226.235; helo=qq.com; envelope-from=704645140@qq.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=qq.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
+ header.s=s201512 header.b=axZd+a4Q; dkim-atps=neutral
+Received: from qq.com (smtpbg418.qq.com [183.3.226.235])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Bl8Y1NDJzDqkV;
- Wed, 29 Apr 2020 13:57:32 +1000 (AEST)
-Received: from twspam01.aspeedtech.com (localhost [127.0.0.2] (may be forged))
- by twspam01.aspeedtech.com with ESMTP id 03T3SgxH051776;
- Wed, 29 Apr 2020 11:28:42 +0800 (GMT-8)
- (envelope-from ryan_chen@aspeedtech.com)
-Received: from mail.aspeedtech.com (twmbx02.aspeed.com [192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 03T3Rxv1051700;
- Wed, 29 Apr 2020 11:27:59 +0800 (GMT-8)
- (envelope-from ryan_chen@aspeedtech.com)
-Received: from localhost.localdomain (192.168.100.253) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.620.29; Wed, 29 Apr
- 2020 11:37:52 +0800
-From: ryan_chen <ryan_chen@aspeedtech.com>
-To: Brendan Higgins <brendanhiggins@google.com>, Benjamin Herrenschmidt
- <benh@kernel.crashing.org>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery
- <andrew@aj.id.au>, <linux-i2c@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
- <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v0 linux master] i2c/busses: Avoid i2c interrupt status clear
- race condition.
-Date: Wed, 29 Apr 2020 11:37:37 +0800
-Message-ID: <20200429033737.2781-1-ryan_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.17.1
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [192.168.100.253]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 03T3Rxv1051700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49BqQ94g28zDqFm
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 17:09:37 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1588144131; bh=c1024xmvCrLDHyyyhKxs0odWZyyNoFITqn61wn6jEBg=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=axZd+a4Qcefu2Lk94wxj5F1sqGQBdOQNjalqK+J59hBg+/omriftQc/VS9nRIPBKL
+ zpSq+HlDu48grTfhjGyOXYP6eiwIpB6xzkctrikU5Oof5z96zlyAvL09ZH6z0VYteL
+ qfgvLihbFuyPwSl70BZlQYLwSQOTIAZY67mw5Hsc=
+X-QQ-FEAT: c+dLv9yHU5wGtKfUqkMK0APxL0MFKlWN1c9JjJR+TEiU7ZQGuAtfGf9uDE/gW
+ BpcTBT5NxA7eUY3PoWMS368SQFVlOkNg5fioIqV7HZvpESN2wLprbbGGDlCCxY0zyBI2TVN
+ ozNNDMk0mSoKYPd4Vq33YC87msXusASSzB5qm/OgYOK/eNlnaWqm7y4IHI0LmfSQIz4gXMY
+ Q86XA6K/E9RG2DVP/kYqi8vj4uSSzraFmXU4PJW6l7QjrOoowXWRfrRNKsVY+bWU61FknWQ
+ OJxTsDBB4aVPNdr9h/jU7Bfag=
+X-QQ-SSF: 00000000000000F000000000000000Z
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 117.136.160.60
+X-QQ-STYLE: 
+X-QQ-mid: webmail303t1588144129t3918667
+From: "=?gb18030?B?zfXOxMqi?=" <704645140@qq.com>
+To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
+Subject: w83795 sensor info over ast2400(Palmetto && ARM)
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5EA92801_10F35160_3BAEC8DA"
+Content-Transfer-Encoding: 8Bit
+Date: Wed, 29 Apr 2020 15:08:49 +0800
+X-Priority: 3
+Message-ID: <tencent_7EBBB4E0FBDB1CA419771E415EEC20A8FD0A@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Wed, 29 Apr 2020 15:08:51 +0800 (CST)
+Feedback-ID: webmail:qq.com:bgforeign:bgforeign12
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,47 +69,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: ryan_chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In AST2600 there have a slow peripheral bus between CPU
- and i2c controller.
-Therefore GIC i2c interrupt status clear have delay timing,
-when CPU issue write clear i2c controller interrupt status.
-To avoid this issue, the driver need have read after write
- clear at i2c ISR.
+This is a multi-part message in MIME format.
 
-Signed-off-by: ryan_chen <ryan_chen@aspeedtech.com>
----
- drivers/i2c/busses/i2c-aspeed.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+------=_NextPart_5EA92801_10F35160_3BAEC8DA
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index 07c1993274c5..f51702d86a90 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -603,6 +603,7 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
- 	/* Ack all interrupts except for Rx done */
- 	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
- 	       bus->base + ASPEED_I2C_INTR_STS_REG);
-+	readl(bus->base + ASPEED_I2C_INTR_STS_REG);
- 	irq_remaining = irq_received;
- 
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
-@@ -645,9 +646,11 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
- 			irq_received, irq_handled);
- 
- 	/* Ack Rx done */
--	if (irq_received & ASPEED_I2CD_INTR_RX_DONE)
-+	if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
- 		writel(ASPEED_I2CD_INTR_RX_DONE,
- 		       bus->base + ASPEED_I2C_INTR_STS_REG);
-+		readl(bus->base + ASPEED_I2C_INTR_STS_REG);
-+	}
- 	spin_unlock(&bus->lock);
- 	return irq_remaining ? IRQ_NONE : IRQ_HANDLED;
- }
--- 
-2.17.1
+SGVsbG8sIHdlIGhhdmUgYSBwcm9ibGVtLg0KV2UgdXNlIHc4Mzc5NWFkZy4gTWFueSBzZW5z
+b3JzIGhhdmUgYmVlbiBhZGRlZCB0byB0aGlzIGNoaXAsIGJ1dCBpdCBoYXMgbm90IHByb2R1
+Y2VkIHRoZSByZXN1bHRzIHdlIHdhbnQgdG8gYWNoaWV2ZS4gSG93IGNhbiB3ZSBhZGQgc3Bl
+Y2lmaWMgc2Vuc29yIGRlc2NyaXB0aW9ucyB0byBtYWtlIGl0IGVmZmVjdGl2ZS4=
+
+------=_NextPart_5EA92801_10F35160_3BAEC8DA
+Content-Type: text/html;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
+
+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
+YXJzZXQ9R0IxODAzMCI+PGJsb2NrcXVvdGUgc3R5bGU9Im1hcmdpbjogMCAwIDAgNDBweDsg
+Ym9yZGVyOiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PkhlbGxvLCB3ZSBoYXZlIGEgcHJv
+YmxlbS48L2Rpdj48L2Jsb2NrcXVvdGU+PGJsb2NrcXVvdGUgc3R5bGU9Im1hcmdpbjogMCAw
+IDAgNDBweDsgYm9yZGVyOiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PldlIHVzZSB3ODM3
+OTVhZGcuIE1hbnkgc2Vuc29ycyBoYXZlIGJlZW4gYWRkZWQgdG8gdGhpcyBjaGlwLCBidXQg
+aXQgaGFzIG5vdCBwcm9kdWNlZCB0aGUgcmVzdWx0cyB3ZSB3YW50IHRvIGFjaGlldmUuIEhv
+dyBjYW4gd2UgYWRkIHNwZWNpZmljIHNlbnNvciBkZXNjcmlwdGlvbnMgdG8gbWFrZSBpdCBl
+ZmZlY3RpdmUuPC9kaXY+PC9ibG9ja3F1b3RlPg==
+
+------=_NextPart_5EA92801_10F35160_3BAEC8DA--
+
+
 
