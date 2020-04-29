@@ -2,62 +2,36 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 578741BD5CF
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 09:22:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D51551BD6A2
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 09:55:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49BqhR1BFGzDr7h
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 17:21:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49BrQm01PjzDqtK
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 17:55:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=the-dreams.de (client-ip=88.99.104.3; helo=pokefinder.org;
+ envelope-from=wsa@the-dreams.de; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=183.3.226.235; helo=qq.com; envelope-from=704645140@qq.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
- header.s=s201512 header.b=axZd+a4Q; dkim-atps=neutral
-Received: from qq.com (smtpbg418.qq.com [183.3.226.235])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49BqQ94g28zDqFm
- for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 17:09:37 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1588144131; bh=c1024xmvCrLDHyyyhKxs0odWZyyNoFITqn61wn6jEBg=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=axZd+a4Qcefu2Lk94wxj5F1sqGQBdOQNjalqK+J59hBg+/omriftQc/VS9nRIPBKL
- zpSq+HlDu48grTfhjGyOXYP6eiwIpB6xzkctrikU5Oof5z96zlyAvL09ZH6z0VYteL
- qfgvLihbFuyPwSl70BZlQYLwSQOTIAZY67mw5Hsc=
-X-QQ-FEAT: c+dLv9yHU5wGtKfUqkMK0APxL0MFKlWN1c9JjJR+TEiU7ZQGuAtfGf9uDE/gW
- BpcTBT5NxA7eUY3PoWMS368SQFVlOkNg5fioIqV7HZvpESN2wLprbbGGDlCCxY0zyBI2TVN
- ozNNDMk0mSoKYPd4Vq33YC87msXusASSzB5qm/OgYOK/eNlnaWqm7y4IHI0LmfSQIz4gXMY
- Q86XA6K/E9RG2DVP/kYqi8vj4uSSzraFmXU4PJW6l7QjrOoowXWRfrRNKsVY+bWU61FknWQ
- OJxTsDBB4aVPNdr9h/jU7Bfag=
-X-QQ-SSF: 00000000000000F000000000000000Z
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 117.136.160.60
-X-QQ-STYLE: 
-X-QQ-mid: webmail303t1588144129t3918667
-From: "=?gb18030?B?zfXOxMqi?=" <704645140@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: w83795 sensor info over ast2400(Palmetto && ARM)
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5EA92801_10F35160_3BAEC8DA"
-Content-Transfer-Encoding: 8Bit
-Date: Wed, 29 Apr 2020 15:08:49 +0800
-X-Priority: 3
-Message-ID: <tencent_7EBBB4E0FBDB1CA419771E415EEC20A8FD0A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Wed, 29 Apr 2020 15:08:51 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign12
-X-QQ-Bgrelay: 1
+ dmarc=none (p=none dis=none) header.from=the-dreams.de
+Received: from pokefinder.org (sauhun.de [88.99.104.3])
+ by lists.ozlabs.org (Postfix) with ESMTP id 49BrPW2l3bzDq6k;
+ Wed, 29 Apr 2020 17:54:04 +1000 (AEST)
+Received: from localhost (p54B330EB.dip0.t-ipconnect.de [84.179.48.235])
+ by pokefinder.org (Postfix) with ESMTPSA id 3F6972C08B2;
+ Wed, 29 Apr 2020 09:53:59 +0200 (CEST)
+Date: Wed, 29 Apr 2020 09:53:57 +0200
+From: Wolfram Sang <wsa@the-dreams.de>
+To: ryan_chen <ryan_chen@aspeedtech.com>
+Subject: Re: [PATCH v0 linux master] i2c/busses: Avoid i2c interrupt status
+ clear race condition.
+Message-ID: <20200429075357.GA1957@kunai>
+References: <20200429033737.2781-1-ryan_chen@aspeedtech.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="0F1p//8PRICkK4MW"
+Content-Disposition: inline
+In-Reply-To: <20200429033737.2781-1-ryan_chen@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,37 +43,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, Brendan Higgins <brendanhiggins@google.com>,
+ linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
 
-------=_NextPart_5EA92801_10F35160_3BAEC8DA
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+--0F1p//8PRICkK4MW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-SGVsbG8sIHdlIGhhdmUgYSBwcm9ibGVtLg0KV2UgdXNlIHc4Mzc5NWFkZy4gTWFueSBzZW5z
-b3JzIGhhdmUgYmVlbiBhZGRlZCB0byB0aGlzIGNoaXAsIGJ1dCBpdCBoYXMgbm90IHByb2R1
-Y2VkIHRoZSByZXN1bHRzIHdlIHdhbnQgdG8gYWNoaWV2ZS4gSG93IGNhbiB3ZSBhZGQgc3Bl
-Y2lmaWMgc2Vuc29yIGRlc2NyaXB0aW9ucyB0byBtYWtlIGl0IGVmZmVjdGl2ZS4=
+On Wed, Apr 29, 2020 at 11:37:37AM +0800, ryan_chen wrote:
+> In AST2600 there have a slow peripheral bus between CPU
+>  and i2c controller.
+> Therefore GIC i2c interrupt status clear have delay timing,
+> when CPU issue write clear i2c controller interrupt status.
+> To avoid this issue, the driver need have read after write
+>  clear at i2c ISR.
+>=20
+> Signed-off-by: ryan_chen <ryan_chen@aspeedtech.com>
 
-------=_NextPart_5EA92801_10F35160_3BAEC8DA
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+v0? is it a prototype?
 
-PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
-YXJzZXQ9R0IxODAzMCI+PGJsb2NrcXVvdGUgc3R5bGU9Im1hcmdpbjogMCAwIDAgNDBweDsg
-Ym9yZGVyOiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PkhlbGxvLCB3ZSBoYXZlIGEgcHJv
-YmxlbS48L2Rpdj48L2Jsb2NrcXVvdGU+PGJsb2NrcXVvdGUgc3R5bGU9Im1hcmdpbjogMCAw
-IDAgNDBweDsgYm9yZGVyOiBub25lOyBwYWRkaW5nOiAwcHg7Ij48ZGl2PldlIHVzZSB3ODM3
-OTVhZGcuIE1hbnkgc2Vuc29ycyBoYXZlIGJlZW4gYWRkZWQgdG8gdGhpcyBjaGlwLCBidXQg
-aXQgaGFzIG5vdCBwcm9kdWNlZCB0aGUgcmVzdWx0cyB3ZSB3YW50IHRvIGFjaGlldmUuIEhv
-dyBjYW4gd2UgYWRkIHNwZWNpZmljIHNlbnNvciBkZXNjcmlwdGlvbnMgdG8gbWFrZSBpdCBl
-ZmZlY3RpdmUuPC9kaXY+PC9ibG9ja3F1b3RlPg==
+And is there maybe a Fixes: tag for it?
 
-------=_NextPart_5EA92801_10F35160_3BAEC8DA--
+> ---
+>  drivers/i2c/busses/i2c-aspeed.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-asp=
+eed.c
+> index 07c1993274c5..f51702d86a90 100644
+> --- a/drivers/i2c/busses/i2c-aspeed.c
+> +++ b/drivers/i2c/busses/i2c-aspeed.c
+> @@ -603,6 +603,7 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *=
+dev_id)
+>  	/* Ack all interrupts except for Rx done */
+>  	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
+>  	       bus->base + ASPEED_I2C_INTR_STS_REG);
+> +	readl(bus->base + ASPEED_I2C_INTR_STS_REG);
+>  	irq_remaining =3D irq_received;
+> =20
+>  #if IS_ENABLED(CONFIG_I2C_SLAVE)
+> @@ -645,9 +646,11 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void =
+*dev_id)
+>  			irq_received, irq_handled);
+> =20
+>  	/* Ack Rx done */
+> -	if (irq_received & ASPEED_I2CD_INTR_RX_DONE)
+> +	if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
+>  		writel(ASPEED_I2CD_INTR_RX_DONE,
+>  		       bus->base + ASPEED_I2C_INTR_STS_REG);
+> +		readl(bus->base + ASPEED_I2C_INTR_STS_REG);
+> +	}
+>  	spin_unlock(&bus->lock);
+>  	return irq_remaining ? IRQ_NONE : IRQ_HANDLED;
+>  }
+> --=20
+> 2.17.1
+>=20
 
+--0F1p//8PRICkK4MW
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl6pMo4ACgkQFA3kzBSg
+KbbntRAAs++ZnC+iCmSLY5Q3M4OON+jEs3K4ZhdSuNgzbZsLaWVt5Cx7cCjT/JDi
+988C8kzysPKL8Cknlqyv4GBus0cCPwylvFZGHWXdot89RmG4stjYb3JbaV+Qm9Ov
+8bCKE8xEWEHyYFFEgreqtLbEFCnHCNf7TnX21b8+L6E988R1AE7r5qIFCTuK1/4/
+hrNCRmEoXYLp0pSDC6BuAgJvayrewlTkvCfnBVv39FzN95ghtC21cC73I6SKfDat
+qxCyKy1x++V6n03sprTFgc8MCqOpYu6rIgFKm94NSltyJWaRAZKY1vd/Pzj7D0Oc
+UPhtu7ldQAbllMAZmMutCDf8m0ek+Ob4jHF+DQKqq2E8MQZs35RxrNnDYzFOLm7r
+NISJkGAZ6ZmC3lmyH1t1GRxZls5RfqpUJuVFIke07C4eSO7r6y9rWoOOhzMYJERC
+cQuG05T6fcJRGx35/h9GHbcb9+kafQXXRaM65H4aEPKBjbtDbyC8j9PT5WGTRFwS
+kS0iSZ5XnSiCccMv33mJqgotV9yPTaVHstupHCnI7K77MH0b7l4Ni1Q7DAnR0cE/
+7mhN81qc04aqCi4+Zi1PtWRKMBcgvdX9QmHQnt2KYc7kSmgD9gy454O1NOIbA97S
+c1UOGjbptbrnl1VaH9/o0SldOXlHGdNzkzspFGAhk/5ioC8I2oE=
+=hr47
+-----END PGP SIGNATURE-----
+
+--0F1p//8PRICkK4MW--
