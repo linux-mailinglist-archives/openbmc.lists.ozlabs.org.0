@@ -2,63 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C52F1BD8F6
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 12:02:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EFB1C1BD8FD
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 12:06:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49BvF34XvCzDr10
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 20:01:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49BvLL2fgJzDr0v
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 20:06:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=77.88.29.217;
- helo=forwardcorp1p.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=yandex-team.ru
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=hwAT3q7x; 
- dkim-atps=neutral
-X-Greylist: delayed 95 seconds by postgrey-1.36 at bilbo;
- Wed, 29 Apr 2020 20:01:20 AEST
-Received: from forwardcorp1p.mail.yandex.net (forwardcorp1p.mail.yandex.net
- [77.88.29.217])
+ smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=sumanth.bhat@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49BvDJ0pCDzDqLT
- for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 20:01:20 +1000 (AEST)
-Received: from mxbackcorp1g.mail.yandex.net (mxbackcorp1g.mail.yandex.net
- [IPv6:2a02:6b8:0:1402::301])
- by forwardcorp1p.mail.yandex.net (Yandex) with ESMTP id 48D252E154A
- for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 12:59:29 +0300 (MSK)
-Received: from localhost (localhost [::1])
- by mxbackcorp1g.mail.yandex.net (mxbackcorp/Yandex) with ESMTP id
- xuvCsjG7cg-xTAK3Bn4; Wed, 29 Apr 2020 12:59:29 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1588154369; bh=EGnOCsHl9pJ3vjeWLpAUFZADvsynnZzmm8c9yHayjVY=;
- h=Date:Message-Id:Subject:To:From;
- b=hwAT3q7xcLCpNoEOTV6dtsEeXjw0ZeDLIxdxqHUI2w1Lh4Y/eTDp1EutPvlywpssM
- eWFBuU3rbdcLPyDDlPnf6n3x+muk+v6Li//XALsC9UztkJaXUhsZL28+Bnckvml7Ei
- KHzzZAsbOIgYFEj0MT3NLo55W4V3wtne9F5Ipz+E=
-Authentication-Results: mxbackcorp1g.mail.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from mxbackcorp2j.mail.yandex.net (localhost [::1])
- by mxbackcorp2j.mail.yandex.net with LMTP id PrniA2nlA8-qxNrvA5q
- for <kitsok@yandex-team.ru>; Wed, 29 Apr 2020 12:59:19 +0300
-Received: by vla1-bfecef18a7a0.qloud-c.yandex.net with HTTP;
- Wed, 29 Apr 2020 12:59:19 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: openbmc@lists.ozlabs.org
-Subject: Polling OpenBMC using IPMB
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49BvKT708WzDqvH
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 20:05:48 +1000 (AEST)
+IronPort-SDR: /D86rFJufLtfovdY4jAGzIWMif4lhr2kl/LZO27b1KW4xNUL0XrWv6Oi8CNejpCI+x+4QNfRh6
+ GfgNyq3mBtzg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Apr 2020 03:05:45 -0700
+IronPort-SDR: /dvHvodRZ+46yvB2wh8gBlJEOxm8z2wR9C/XoV3HfGp9KOB0noBdBrWwJNyAqlOT2XpopIF/T8
+ F2UcM8VqR9Dw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,331,1583222400"; 
+ d="scan'208,217";a="367763114"
+Received: from fmsmsx105.amr.corp.intel.com ([10.18.124.203])
+ by fmsmga001.fm.intel.com with ESMTP; 29 Apr 2020 03:05:39 -0700
+Received: from FMSMSX110.amr.corp.intel.com (10.18.116.10) by
+ FMSMSX105.amr.corp.intel.com (10.18.124.203) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Wed, 29 Apr 2020 03:05:39 -0700
+Received: from BGSMSX107.gar.corp.intel.com (10.223.4.191) by
+ fmsmsx110.amr.corp.intel.com (10.18.116.10) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Wed, 29 Apr 2020 03:05:38 -0700
+Received: from bgsmsx105.gar.corp.intel.com ([169.254.3.54]) by
+ BGSMSX107.gar.corp.intel.com ([169.254.9.214]) with mapi id 14.03.0439.000;
+ Wed, 29 Apr 2020 15:35:33 +0530
+From: "Bhat, Sumanth" <sumanth.bhat@intel.com>
+To: Konstantin Klubnichkin <kitsok@yandex-team.ru>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Polling OpenBMC using IPMB
+Thread-Topic: Polling OpenBMC using IPMB
+Thread-Index: AQHWHg1S+wQ8mpXUd0ayp3iGJ45sFKiP3s6w
+Date: Wed, 29 Apr 2020 10:05:32 +0000
+Message-ID: <1504A9E7C77EF44697F386AD61B162601534A594@BGSMSX105.gar.corp.intel.com>
+References: <8521588154162@mail.yandex-team.ru>
+In-Reply-To: <8521588154162@mail.yandex-team.ru>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-version: 11.2.0.6
+dlp-reaction: request-justification,no-action
+x-originating-ip: [10.223.10.10]
+Content-Type: multipart/alternative;
+ boundary="_000_1504A9E7C77EF44697F386AD61B162601534A594BGSMSX105garcor_"
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Wed, 29 Apr 2020 12:59:29 +0300
-Message-Id: <8521588154162@mail.yandex-team.ru>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,4 +77,104 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div> </div><div> </div><div><div>Hello all!</div><div> </div><div>I've got a Purley motherboard with one of the I2C buses going out from AST2500 to external controller.</div><div>It gets BMC data (sensors, MAC address, etc) by polling it with IPMB.</div><div> </div><div>I'm trying to find out how to implement it in OpenBMC.</div><div>Is it ipmbbridge service used for this?</div><div> </div><div>Thank you!</div></div><div>-- </div><div>Best regards,</div><div>Konstantin Klubnichkin,</div><div>lead firmware engineer,</div><div>server hardware R&amp;D group,</div><div>Yandex Moscow office.</div><div>tel: +7-903-510-33-33</div><div> </div>
+--_000_1504A9E7C77EF44697F386AD61B162601534A594BGSMSX105garcor_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+SGkgS29uc3RhbnRpbiwNCiAgIElwbWJicmlkZ2UgaXMgdGhlIHJpZ2h0IHNlcnZpY2UuIFBsZWFz
+ZSBvdmVycmlkZSB0aGUgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvaXBtYmJyaWRnZS9ibG9i
+L21hc3Rlci9pcG1iLWNoYW5uZWxzLmpzb24gd2l0aCB0aGUgSVBNQiBjaGFubmVsIHJlbGV2YW50
+IG9uIHlvdXIgYm9hcmQuDQoNClRoYW5rcywNClN1bWFudGgNCg0KRnJvbTogb3BlbmJtYyA8b3Bl
+bmJtYy1ib3VuY2VzK3N1bWFudGguYmhhdD1pbnRlbC5jb21AbGlzdHMub3psYWJzLm9yZz4gT24g
+QmVoYWxmIE9mIEtvbnN0YW50aW4gS2x1Ym5pY2hraW4NClNlbnQ6IFdlZG5lc2RheSwgQXByaWwg
+MjksIDIwMjAgMzoyOSBQTQ0KVG86IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KU3ViamVjdDog
+UG9sbGluZyBPcGVuQk1DIHVzaW5nIElQTUINCg0KDQoNCkhlbGxvIGFsbCENCg0KSSd2ZSBnb3Qg
+YSBQdXJsZXkgbW90aGVyYm9hcmQgd2l0aCBvbmUgb2YgdGhlIEkyQyBidXNlcyBnb2luZyBvdXQg
+ZnJvbSBBU1QyNTAwIHRvIGV4dGVybmFsIGNvbnRyb2xsZXIuDQpJdCBnZXRzIEJNQyBkYXRhIChz
+ZW5zb3JzLCBNQUMgYWRkcmVzcywgZXRjKSBieSBwb2xsaW5nIGl0IHdpdGggSVBNQi4NCg0KSSdt
+IHRyeWluZyB0byBmaW5kIG91dCBob3cgdG8gaW1wbGVtZW50IGl0IGluIE9wZW5CTUMuDQpJcyBp
+dCBpcG1iYnJpZGdlIHNlcnZpY2UgdXNlZCBmb3IgdGhpcz8NCg0KVGhhbmsgeW91IQ0KLS0NCkJl
+c3QgcmVnYXJkcywNCktvbnN0YW50aW4gS2x1Ym5pY2hraW4sDQpsZWFkIGZpcm13YXJlIGVuZ2lu
+ZWVyLA0Kc2VydmVyIGhhcmR3YXJlIFImRCBncm91cCwNCllhbmRleCBNb3Njb3cgb2ZmaWNlLg0K
+dGVsOiArNy05MDMtNTEwLTMzLTMzDQoNCg==
+
+--_000_1504A9E7C77EF44697F386AD61B162601534A594BGSMSX105garcor_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
+IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
+Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQph
+OmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xv
+cjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KYTp2aXNpdGVkLCBzcGFu
+Lk1zb0h5cGVybGlua0ZvbGxvd2VkDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjoj
+OTU0RjcyOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KcC5tc29ub3JtYWwwLCBsaS5t
+c29ub3JtYWwwLCBkaXYubXNvbm9ybWFsMA0KCXttc28tc3R5bGUtbmFtZTptc29ub3JtYWw7DQoJ
+bXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2lu
+LWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJZm9udC1zaXplOjExLjBwdDsN
+Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOA0K
+CXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIs
+c2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1z
+dHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlm
+O30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4w
+aW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0
+aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZh
+dWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwh
+LS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86
+aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFb
+ZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iIzA1NjNDMSIgdmxp
+bms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPkhpIEtvbnN0YW50aW4sPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+Ij4mbmJzcDsmbmJzcDsgSXBtYmJyaWRnZSBpcyB0aGUgcmlnaHQgc2VydmljZS4gUGxlYXNlIG92
+ZXJyaWRlIHRoZSA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9pcG1iYnJpZGdl
+L2Jsb2IvbWFzdGVyL2lwbWItY2hhbm5lbHMuanNvbiI+DQpodHRwczovL2dpdGh1Yi5jb20vb3Bl
+bmJtYy9pcG1iYnJpZGdlL2Jsb2IvbWFzdGVyL2lwbWItY2hhbm5lbHMuanNvbjwvYT4gd2l0aCB0
+aGUgSVBNQiBjaGFubmVsIHJlbGV2YW50IG9uIHlvdXIgYm9hcmQuPG86cD48L286cD48L3A+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPlRoYW5rcyw8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlN1bWFu
+dGg8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+RnJvbTo8L2I+IG9wZW5ibWMgJmx0O29wZW5i
+bWMtYm91bmNlcyYjNDM7c3VtYW50aC5iaGF0PWludGVsLmNvbUBsaXN0cy5vemxhYnMub3JnJmd0
+Ow0KPGI+T24gQmVoYWxmIE9mIDwvYj5Lb25zdGFudGluIEtsdWJuaWNoa2luPGJyPg0KPGI+U2Vu
+dDo8L2I+IFdlZG5lc2RheSwgQXByaWwgMjksIDIwMjAgMzoyOSBQTTxicj4NCjxiPlRvOjwvYj4g
+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPGJyPg0KPGI+U3ViamVjdDo8L2I+IFBvbGxpbmcgT3Bl
+bkJNQyB1c2luZyBJUE1CPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpw
+PiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpw
+PjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOzxv
+OnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
+PkhlbGxvIGFsbCE8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+SSd2ZSBnb3QgYSBQdXJsZXkgbW90aGVyYm9hcmQgd2l0aCBvbmUgb2YgdGhlIEky
+QyBidXNlcyBnb2luZyBvdXQgZnJvbSBBU1QyNTAwIHRvIGV4dGVybmFsIGNvbnRyb2xsZXIuPG86
+cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JdCBnZXRz
+IEJNQyBkYXRhIChzZW5zb3JzLCBNQUMgYWRkcmVzcywgZXRjKSBieSBwb2xsaW5nIGl0IHdpdGgg
+SVBNQi48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
+PiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+SSdtIHRyeWluZyB0byBmaW5kIG91dCBob3cgdG8gaW1wbGVtZW50IGl0IGluIE9wZW5CTUMu
+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5JcyBp
+dCBpcG1iYnJpZGdlIHNlcnZpY2UgdXNlZCBmb3IgdGhpcz88bzpwPjwvbzpwPjwvcD4NCjwvZGl2
+Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9k
+aXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+VGhhbmsgeW91ITxvOnA+PC9vOnA+PC9w
+Pg0KPC9kaXY+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4tLSZuYnNwOzxv
+OnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+QmVzdCBy
+ZWdhcmRzLDxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCI+S29uc3RhbnRpbiBLbHVibmljaGtpbiw8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPmxlYWQgZmlybXdhcmUgZW5naW5lZXIsPG86cD48L286cD48
+L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5zZXJ2ZXIgaGFyZHdhcmUg
+UiZhbXA7RCBncm91cCw8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPllhbmRleCBNb3Njb3cgb2ZmaWNlLjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8
+ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+dGVsOiAmIzQzOzctOTAzLTUxMC0zMy0zMzxvOnA+
+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86
+cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+
+--_000_1504A9E7C77EF44697F386AD61B162601534A594BGSMSX105garcor_--
