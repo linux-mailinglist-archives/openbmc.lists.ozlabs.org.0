@@ -2,62 +2,97 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08F571BEC2F
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 00:53:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D0C301BECB4
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 01:43:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49CDLq0yBfzDrBd
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 08:53:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49CFTK2yFlzDr8p
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 09:43:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b2a;
- helo=mail-yb1-xb2a.google.com; envelope-from=yuenn@google.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=WpnpiBxT; dkim-atps=neutral
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com
- [IPv6:2607:f8b0:4864:20::b2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.220.137;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=neladk@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.a=rsa-sha256 header.s=selector2 header.b=dimpzeVn; 
+ dkim-atps=neutral
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2137.outbound.protection.outlook.com [40.107.220.137])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49CDL82Rh5zDr9S
- for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 08:52:25 +1000 (AEST)
-Received: by mail-yb1-xb2a.google.com with SMTP id d197so2154977ybh.6
- for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 15:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=pwX91t83w5liogC8iJNpFd6CRRd+QUAcxUxyUsK6Btk=;
- b=WpnpiBxTTc/+IEpr+PB2Si8bXD80QcbLfl0MgO6xGTMM4jrBpHmAAKTsbAsEzCS4LA
- PZSuc4vs/tVa6/CrJWTUDl2ak8uLUbGLlyYOXLPCOhpLX9WQr66dQSvioeV7giRyM8U6
- NiR55VFDi7vhVX2hpaL8mbkO6B/AZPt7n6vj4sMDFZo5fevXOmIVRFlIcSFWsWGXKhyz
- RzOR92JP+t6uXdV+gnVd7p58TG3eqyIyBCoecU4d5qRmMTaqWI3/CFae55+szXb2qPOw
- 6J0DTET34TpgyEXJk9+iyF+iUnEMql7BelNLxFrOIHsCcFUqGPlsNjWUKvP0R68Y8eHx
- jqWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=pwX91t83w5liogC8iJNpFd6CRRd+QUAcxUxyUsK6Btk=;
- b=bpDkV0xolt/JSxQFBzPS2nDg0BvYJkyQNhRl3KQl/IxRW8P4vnUW6wQxBv5UjqniVh
- 6z5dvmQ5TVZOFUPCNwnXGHPSw2wmgVt9tJZxZyMhtdCM1uCyVH2z4+zKzMCPk6vaaVIj
- m/bvfYgwor0YbtBirj0y3VY377gUA6/J/YJOfB3QItQCuwiWLpp8FhouPxD4ohFbakqx
- nP8ejn4hczNJo+EPoC0rVEJ93GMb6InUSmUJ+YfOZKZTrl3BrRwYi0EGHFZjsVWtn+di
- +bKFIWesBtB/RLZFKR8P8kyqi/2INqzRpt1+UUcxBP3+AZspZIb7C6Id/zPNijQbaEir
- R16Q==
-X-Gm-Message-State: AGi0PuZg++e0rJMiU1sLu9m/BX1A+DlZgS5XM34Ye0xl7QmnhO/ouF1u
- gX2UWTBUSP9bY7sKKhX49dlbspkd4F5R3m7ijzHk+fth+RE=
-X-Google-Smtp-Source: APiQypLSDeYbc7G4T5O7vsT0F5ub+zo0pZJeqI0l0TZGbmysVNm4Kenn1QKomWoycDFZjvtqy2BZ620QCDIhUd9Aj1w=
-X-Received: by 2002:a25:bcc8:: with SMTP id l8mr956476ybm.225.1588200741444;
- Wed, 29 Apr 2020 15:52:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49CFSf5kGxzDr8N
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 09:43:12 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Ljpg8wHBSfHPLHho2BxuXlk880c9Yj15qvFqeuoKMvlX9NCzB9KDo4R587kQMh8G6gNBQP2wLo52EBValknRu28NrEH14Ag+4qE+786LScxmOtFNKewAmcLTcmvCQZqP7AdV4t1GuaSGHzhVK/6TeBFmO+RO4+K9bDQlp1LegpE0qvdFuCctLlv7JLU8brBgg+Uflk1MaeiBhGcqcKpHirbe6tAItLxmYoVNLSkDh/39pXMcwN5I1db9yzz1Y35kW2U6gozPK57ydctCn5gaR0wgeizXgAUyl9vx1L5AuUmsQxcfBhyDgZU9KQ3alx+Gnyxw7prkyK7O8N1WdNwwwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JmcNJGV2Po0s+IvdHqlgcI2jOgExd++XPg94HZEGZPw=;
+ b=YU1dJ5Q2THINqajEvuh0kzcLmv30MNypSKapQUuxBhz92UUoAiDwYKzCdm1X+xT5bIZOQ+beVfrsGpMnRStrTMlua3FqXlXoBzxk9aMO/W4BXzGDqUCmNw+DvjAF+THmK+27bSzQ7hUZ1kmuXdfLA8PhzV+4lHVwoKvB/Nj4NX25lpa0DtR9zcco12B7EdjRF+/C/bmM8WYoWN/9l+c/qNjwPqQRVpGvgDrpTMKUzva3mLUD00ivWLmKG6PqKga1CO69Ol0EusH6qtDMTJDKwZaf5xyAyqCI3pCA4kXqOfk4xQ6SvOLUZykjF4JtMab19v/hUvxEH5oTPDpgbZTVpw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JmcNJGV2Po0s+IvdHqlgcI2jOgExd++XPg94HZEGZPw=;
+ b=dimpzeVnS1HYGAFqct/f1mU4Y9js9Gasia1z1+Sbym+rT3pFYZv9b9g4iHqJSgTYRJ93ojCjlwR0SpMsBNI7hfpdZe0jUs4etk5Zh2HkCzIABEqXOe4t7RQ6ArY6kzG04ZHMBu2FqaWD7IsyxdO2Hy4PD9+453Xwe/jpcjzC3jg=
+Received: from CH2PR21MB1510.namprd21.prod.outlook.com (2603:10b6:610:8e::7)
+ by CH2PR21MB1399.namprd21.prod.outlook.com (2603:10b6:610:8e::23) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2979.6; Wed, 29 Apr
+ 2020 23:43:07 +0000
+Received: from CH2PR21MB1510.namprd21.prod.outlook.com
+ ([fe80::6838:df24:78e3:e78a]) by CH2PR21MB1510.namprd21.prod.outlook.com
+ ([fe80::6838:df24:78e3:e78a%9]) with mapi id 15.20.2979.013; Wed, 29 Apr 2020
+ 23:43:06 +0000
+From: Neeraj Ladkani <neladk@microsoft.com>
+To: Nancy Yuen <yuenn@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: RE: [EXTERNAL] Multiple BMCs in a system: IPMB? Redfish? MCTP?
+Thread-Topic: [EXTERNAL] Multiple BMCs in a system: IPMB? Redfish? MCTP?
+Thread-Index: AQHWHnjxxTcirPL3ck2K0OUX+E5uhKiQwipQ
+Date: Wed, 29 Apr 2020 23:43:06 +0000
+Message-ID: <CH2PR21MB1510918CD20EA4F6EDE38132C8AD0@CH2PR21MB1510.namprd21.prod.outlook.com>
+References: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
+In-Reply-To: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: google.com; dkim=none (message not signed)
+ header.d=none;google.com; dmarc=none action=none header.from=microsoft.com;
+x-originating-ip: [50.47.130.131]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: f71de6fc-21a8-43ee-746c-08d7ec971140
+x-ms-traffictypediagnostic: CH2PR21MB1399:
+x-microsoft-antispam-prvs: <CH2PR21MB13994113061D86CC5191982BC8AD0@CH2PR21MB1399.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7219;
+x-forefront-prvs: 03883BD916
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: r3JQTT4nsx7XJ72OoWo3WP2bRqGbM/ugjxUaVMvbUH/N9lkvlJ7GxxRSB6akAqVNXxxUIU2PBYLEsXenTcWHPprmFxK7xn5kXbKPaD3VygStlcMRWdM5E/XOOKp5zVHkQBlArF2DeRt7VFaqnJt2Nn6qiGRA+cUKStoTrmkaOeVP1O3X5bytXaXkI0Amcq82ic9qq/r5QmhynNt/pqwrGgr1TXAcnZ05sJaGvcPYS9+/wh8ZxKlhvnqlxfb8XGN0ZoxDVgNUgkr1dqfGLcYJtF4T+mk5m6+Re7PCcJfmsBgH3843LxHgDTPA/I+ghAil+K1OGvgwQTJmLttjx9bdfcdxostpIA3S7X6TnoWY3jKWOYGHwv8t8KK7aD9tTG+9IAF2Zc5wZaOlC1IInyVH6OhIjZJEJB1JyItiFekrlH7NyvOLQ7uRLhvTgMek7zrT
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR21MB1510.namprd21.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(4636009)(396003)(346002)(136003)(39860400002)(366004)(376002)(76116006)(66946007)(7696005)(9686003)(316002)(55016002)(110136005)(86362001)(53546011)(478600001)(6506007)(2906002)(52536014)(10290500003)(186003)(26005)(5660300002)(66556008)(71200400001)(8676002)(66476007)(66446008)(64756008)(82960400001)(33656002)(8990500004)(8936002)(82950400001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: VydMGDoLSEo2GHT2dG4I5TijX7ClcdxKBeeEu6QeqODXDKN7K29XAwTE0D0rO9BAaVevxMbcvuOD3utie+MPvbsACN0kHLFVgGX/13bQ8Jug49Y7OG/06pXGwqHahen5Bx87Nd/jjWNgFVvQTZ7UMlf0oHwufJoh6bupV951WtrilQf/LXXm8tfy3lvKO1VdNuRwU58RO87a19Ito+QQ69FDgnBxkhWjVGJTeQJIER07pvU2fOLq4/0Nt8SwrvUg51w05kRh3sYHvZnGfgMez2El5vcaU1rX1E0CUW981mPq1LxDpxtN80YAEP8vYfzpIcKTqGUWV1ib+bxUOiehgkFr9Nk9a4ToE9PvqT7pBIZkZWlc2dofRZ752n81zAVMSVG5Jcnt+S91eXIDE8lFL7rSbiAXuTNNKjgQZQ7AonI0w1iU03THUpjwYQH893zWjbi488qttcFqvanbeTIGtQNpzkveQTMDokkM8MSt91BaofivTMhF6twPlizP4lPGShSNHUjIHG+ZYOhyP4q9vg/FHQ9eyT5w65Dhyc5iRCsZLqHmSDHEwYgfvJ2lNDB10pS96j46KzNaifn30KxrHXHC0EgTrkDgLyu85OvsjzYa82n7hI8tKt9yOeSVwn/2L5w6N7YHDQ+yjIJJjhqbIbM0i6Meiuc0gY3RcGdypuhANF+pKLuy5E32yx+slP394kF1tTvJ6QJMlmx0WD7BO6EyOYgFUErcjbVq8WTEqFTqmhP+i9QKPyoVl4QZNYVIV8kcN5z3fWIqmFUe1i5Q3PArdUrpVJNbeU1g9B8MfKY=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_CH2PR21MB1510918CD20EA4F6EDE38132C8AD0CH2PR21MB1510namp_"
 MIME-Version: 1.0
-From: Nancy Yuen <yuenn@google.com>
-Date: Wed, 29 Apr 2020 15:51:44 -0700
-Message-ID: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
-Subject: Multiple BMCs in a system: IPMB? Redfish? MCTP?
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000000719cb05a475cd93"
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f71de6fc-21a8-43ee-746c-08d7ec971140
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Apr 2020 23:43:06.8882 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: z53lnzoOvbbkvoJv0DVF98gkdqMuh3GyzTubpPJKwF/+1KPEdIBfn2qSDDz+khaI9cfpT2FDItACNBjYdmXYyQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR21MB1399
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,45 +107,104 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000000719cb05a475cd93
-Content-Type: text/plain; charset="UTF-8"
+--_000_CH2PR21MB1510918CD20EA4F6EDE38132C8AD0CH2PR21MB1510namp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I've talked with some people a while back (long while back) about multiple
-BMCs in a system.  Either for redundancy or managing separate parts of a
-system.   I'm wondering what other people are thinking in this area if at
-all.
+TmFuY3ksDQoNCkp1c3QgdHJ5aW5nIHRvIHVuZGVyc3RhbmQsIGFyZSB0aGVyZSBhbnkgc3BlY2lm
+aWMgc2NlbmFyaW9zIHRoYXQgbmVlZCBhZ2dyZWdhdGlvbiBhdCBIZWFkIE5vZGUgdXNpbmcgQk1D
+LUJNQyBjb21tdW5pY2F0aW9uPyBIYXZlIHlvdSB0aG91Z2h0IGFib3V0IGFnZ3JlZ2F0aW9uIGF0
+IGNsb3VkIHNlcnZpY2U/DQoNCk5lZXJhag0KDQpGcm9tOiBvcGVuYm1jIDxvcGVuYm1jLWJvdW5j
+ZXMrbmVsYWRrPW1pY3Jvc29mdC5jb21AbGlzdHMub3psYWJzLm9yZz4gT24gQmVoYWxmIE9mIE5h
+bmN5IFl1ZW4NClNlbnQ6IFdlZG5lc2RheSwgQXByaWwgMjksIDIwMjAgMzo1MiBQTQ0KVG86IE9w
+ZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NClN1YmplY3Q6IFtFWFRF
+Uk5BTF0gTXVsdGlwbGUgQk1DcyBpbiBhIHN5c3RlbTogSVBNQj8gUmVkZmlzaD8gTUNUUD8NCg0K
+SSd2ZSB0YWxrZWQgd2l0aCBzb21lIHBlb3BsZSBhIHdoaWxlIGJhY2sgKGxvbmcgd2hpbGUgYmFj
+aykgYWJvdXQgbXVsdGlwbGUgQk1DcyBpbiBhIHN5c3RlbS4gIEVpdGhlciBmb3IgcmVkdW5kYW5j
+eSBvciBtYW5hZ2luZyBzZXBhcmF0ZSBwYXJ0cyBvZiBhIHN5c3RlbS4gICBJJ20gd29uZGVyaW5n
+IHdoYXQgb3RoZXIgcGVvcGxlIGFyZSB0aGlua2luZyBpbiB0aGlzIGFyZWEgaWYgYXQgYWxsLg0K
+DQpXZSBhcmUgY29uc2lkZXJpbmcgc2ltaWxhciBkZXNpZ25zIGFuZCBJJ20gbG9va2luZyBpbnRv
+IG9wdGlvbnMgZm9yIEJNQy1CTUMgY29tbXVuaWNhdGlvbnMuICBTb21lIEJNQ3MgbWF5IG5vdCBi
+ZSBleHRlcm5hbGx5IGFjY2Vzc2libGUuIEhlcmUgYXJlIHNvbWUgb3B0aW9ucyB0aGF0IHdlJ3Zl
+IGxvb2tlZCBhdDoNCg0KICAxLiAgaTJjL0lQTUINCiAgMi4gIHVzYm5ldC9SZWRmaXNoDQogIDMu
+ICBpMmMvTUNUUC9QTERNIG9yIHNvbWV0aGluZyBlbHNlPw0KICA0LiAgaW50ZXJuYWwgbmV0d29y
+ayB2aWEgc3dpdGNoIGNoaXAvUmVkZmlzaCBvciBNQ1RQDQogSSdkIGxpa2UgdG8gcmVkdWNlIG91
+ciB1c2Ugb2YgSVBNSSBzbyBJIHdhbnQgdG8gYXZvaWQgKDEpLg0KDQotLS0tLS0tLS0tDQpOYW5j
+eQ0K
 
-We are considering similar designs and I'm looking into options for BMC-BMC
-communications.  Some BMCs may not be externally accessible. Here are some
-options that we've looked at:
+--_000_CH2PR21MB1510918CD20EA4F6EDE38132C8AD0CH2PR21MB1510namp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-   1. i2c/IPMB
-   2. usbnet/Redfish
-   3. i2c/MCTP/PLDM or something else?
-   4. internal network via switch chip/Redfish or MCTP
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
+IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBpbjsNCgltYXJnaW4tYm90dG9tOi4wMDAxcHQ7DQoJ
+Zm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpz
+cGFuLkVtYWlsU3R5bGUxOA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250
+LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29D
+aHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtZmFtaWx5OiJD
+YWxpYnJpIixzYW5zLXNlcmlmO30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDEx
+LjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9u
+MQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQovKiBMaXN0IERlZmluaXRpb25zICovDQpAbGlzdCBs
+MA0KCXttc28tbGlzdC1pZDoxODY5MTIyODU7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOjEwMTI0
+MzI5NTA7fQ0Kb2wNCgl7bWFyZ2luLWJvdHRvbTowaW47fQ0KdWwNCgl7bWFyZ2luLWJvdHRvbTow
+aW47fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVmYXVs
+dHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48IS0t
+W2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxvOmlk
+bWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwhW2Vu
+ZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5r
+PSIjOTU0RjcyIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj5OYW5jeSwgPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZu
+YnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkp1c3QgdHJ5aW5nIHRvIHVuZGVy
+c3RhbmQsIGFyZSB0aGVyZSBhbnkgc3BlY2lmaWMgc2NlbmFyaW9zIHRoYXQgbmVlZCBhZ2dyZWdh
+dGlvbiBhdCBIZWFkIE5vZGUgdXNpbmcgQk1DLUJNQyBjb21tdW5pY2F0aW9uPyBIYXZlIHlvdSB0
+aG91Z2h0IGFib3V0IGFnZ3JlZ2F0aW9uIGF0IGNsb3VkIHNlcnZpY2U/DQo8bzpwPjwvbzpwPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9
+Ik1zb05vcm1hbCI+TmVlcmFqPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
+bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6
+c29saWQgI0UxRTFFMSAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxiPkZyb206PC9iPiBvcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5jZXMmIzQz
+O25lbGFkaz1taWNyb3NvZnQuY29tQGxpc3RzLm96bGFicy5vcmcmZ3Q7DQo8Yj5PbiBCZWhhbGYg
+T2YgPC9iPk5hbmN5IFl1ZW48YnI+DQo8Yj5TZW50OjwvYj4gV2VkbmVzZGF5LCBBcHJpbCAyOSwg
+MjAyMCAzOjUyIFBNPGJyPg0KPGI+VG86PC9iPiBPcGVuQk1DIE1haWxsaXN0ICZsdDtvcGVuYm1j
+QGxpc3RzLm96bGFicy5vcmcmZ3Q7PGJyPg0KPGI+U3ViamVjdDo8L2I+IFtFWFRFUk5BTF0gTXVs
+dGlwbGUgQk1DcyBpbiBhIHN5c3RlbTogSVBNQj8gUmVkZmlzaD8gTUNUUD88bzpwPjwvbzpwPjwv
+cD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8
+ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkkndmUgdGFsa2VkIHdpdGggc29tZSBw
+ZW9wbGUgYSB3aGlsZSBiYWNrIChsb25nIHdoaWxlIGJhY2spIGFib3V0IG11bHRpcGxlIEJNQ3Mg
+aW4gYSBzeXN0ZW0uJm5ic3A7IEVpdGhlciBmb3IgcmVkdW5kYW5jeSBvciBtYW5hZ2luZyBzZXBh
+cmF0ZSBwYXJ0cyBvZiBhIHN5c3RlbS4mbmJzcDsmbmJzcDsgSSdtIHdvbmRlcmluZyB3aGF0IG90
+aGVyIHBlb3BsZSBhcmUgdGhpbmtpbmcgaW4gdGhpcyBhcmVhIGlmIGF0IGFsbC48bzpwPjwvbzpw
+PjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9v
+OnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+V2UgYXJlIGNvbnNp
+ZGVyaW5nIHNpbWlsYXIgZGVzaWducyBhbmQgSSdtIGxvb2tpbmcgaW50byBvcHRpb25zIGZvciBC
+TUMtQk1DIGNvbW11bmljYXRpb25zLiZuYnNwOyBTb21lIEJNQ3MgbWF5IG5vdCBiZSBleHRlcm5h
+bGx5IGFjY2Vzc2libGUuJm5ic3A7SGVyZSBhcmUgc29tZSBvcHRpb25zIHRoYXQgd2UndmUgbG9v
+a2VkIGF0OjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPG9sIHN0YXJ0PSIxIiB0eXBl
+PSIxIj4NCjxsaSBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1
+dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG87bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPg0K
+aTJjL0lQTUI8bzpwPjwvbzpwPjwvbGk+PGxpIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28t
+bWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzttc28tbGlzdDps
+MCBsZXZlbDEgbGZvMSI+DQp1c2JuZXQvUmVkZmlzaDxvOnA+PC9vOnA+PC9saT48bGkgY2xhc3M9
+Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90
+dG9tLWFsdDphdXRvO21zby1saXN0OmwwIGxldmVsMSBsZm8xIj4NCmkyYy9NQ1RQL1BMRE0gb3Ig
+c29tZXRoaW5nIGVsc2U/PG86cD48L286cD48L2xpPjxsaSBjbGFzcz0iTXNvTm9ybWFsIiBzdHls
+ZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG87bXNv
+LWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPg0KaW50ZXJuYWwgbmV0d29yayB2aWEgc3dpdGNoIGNoaXAv
+UmVkZmlzaCBvciBNQ1RQPG86cD48L286cD48L2xpPjwvb2w+DQo8L2Rpdj4NCjxkaXY+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj4mbmJzcDtJJ2QgbGlrZSB0byByZWR1Y2Ugb3VyIHVzZSBvZiBJUE1J
+IHNvIEkgd2FudCB0byBhdm9pZCAoMSkuPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPi0tLS0tLS0tLS08YnI+DQpOYW5jeTxvOnA+PC9vOnA+PC9w
+Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
- I'd like to reduce our use of IPMI so I want to avoid (1).
-
-----------
-Nancy
-
---0000000000000719cb05a475cd93
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div data-smartmail=3D"gmail_signature">I&#39;ve talked wi=
-th some people a while back (long while back) about multiple BMCs in a syst=
-em.=C2=A0 Either for redundancy or managing separate parts of a system.=C2=
-=A0=C2=A0 I&#39;m wondering what other people are thinking in this area if =
-at all.</div><div data-smartmail=3D"gmail_signature"><br></div><div data-sm=
-artmail=3D"gmail_signature">We are considering similar designs and I&#39;m =
-looking into options for BMC-BMC communications.=C2=A0 Some BMCs may not be=
- externally accessible.=C2=A0Here are some options that we&#39;ve looked at=
-:</div><div data-smartmail=3D"gmail_signature"><ol><li>i2c/IPMB</li><li>usb=
-net/Redfish</li><li>i2c/MCTP/PLDM or something else?</li><li>internal netwo=
-rk via switch chip/Redfish or MCTP</li></ol></div><div data-smartmail=3D"gm=
-ail_signature">=C2=A0I&#39;d like to reduce our use of IPMI so I want to av=
-oid (1).</div><div data-smartmail=3D"gmail_signature"><br></div><div dir=3D=
-"ltr" data-smartmail=3D"gmail_signature">----------<br>Nancy</div></div>
-
---0000000000000719cb05a475cd93--
+--_000_CH2PR21MB1510918CD20EA4F6EDE38132C8AD0CH2PR21MB1510namp_--
