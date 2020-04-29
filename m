@@ -1,67 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82E611BE214
-	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 17:08:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B04E1BE32F
+	for <lists+openbmc@lfdr.de>; Wed, 29 Apr 2020 17:56:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49C22z2TqhzDrBh
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 01:08:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49C3624kZPzDrBg
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 01:56:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1472:2741:0:8b6:217;
- helo=forwardcorp1p.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e31;
+ helo=mail-vs1-xe31.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=yandex-team.ru
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=Vg2cAu3h; 
- dkim-atps=neutral
-X-Greylist: delayed 18268 seconds by postgrey-1.36 at bilbo;
- Thu, 30 Apr 2020 01:04:10 AEST
-Received: from forwardcorp1p.mail.yandex.net (forwardcorp1p.mail.yandex.net
- [IPv6:2a02:6b8:0:1472:2741:0:8b6:217])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=PIcUGWLK; dkim-atps=neutral
+Received: from mail-vs1-xe31.google.com (mail-vs1-xe31.google.com
+ [IPv6:2607:f8b0:4864:20::e31])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49C1xl3rkNzDr2N
- for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 01:04:04 +1000 (AEST)
-Received: from mxbackcorp1g.mail.yandex.net (mxbackcorp1g.mail.yandex.net
- [IPv6:2a02:6b8:0:1402::301])
- by forwardcorp1p.mail.yandex.net (Yandex) with ESMTP id 83DA92E157B;
- Wed, 29 Apr 2020 18:03:53 +0300 (MSK)
-Received: from localhost (localhost [::1])
- by mxbackcorp1g.mail.yandex.net (mxbackcorp/Yandex) with ESMTP id
- 6LZqvkG8NQ-3rA06YVx; Wed, 29 Apr 2020 18:03:53 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1588172633; bh=4BH2ztsmjtZM9kzx0GWoyjD9Kkih7DwbvUdVJ1iPfb8=;
- h=Message-Id:Subject:Date:References:To:From;
- b=Vg2cAu3hEgLmk6Px2urm4ZdzVyCh5+h/3HKc8PBqZvoKCdH5c0LI1X5RhGHbkjdSg
- 51Akrq2YJVGQQu8lIrQKvWEy7N481exvCYExkJEOC2+XUZvzejHvM6ZEMCJUp1C74k
- TmXTMX8n3ecxbEShJn87Tng5zM7PyUNDfRHCo8+o=
-Authentication-Results: mxbackcorp1g.mail.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from mxbackcorp1j.mail.yandex.net (localhost [::1])
- by mxbackcorp1j.mail.yandex.net with LMTP id gTyRzsuIZT-pbj6KiMz
- for <kitsok@yandex-team.ru>; Wed, 29 Apr 2020 18:03:43 +0300
-Received: by vla5-c30c59847b9e.qloud-c.yandex.net with HTTP;
- Wed, 29 Apr 2020 18:03:43 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <8521588154162@mail.yandex-team.ru>
- <1504A9E7C77EF44697F386AD61B162601534A594@BGSMSX105.gar.corp.intel.com>
-Subject: Re: Polling OpenBMC using IPMB
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49C2xS0FpDzDqSN
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 01:48:58 +1000 (AEST)
+Received: by mail-vs1-xe31.google.com with SMTP id a5so1691959vsm.7
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 08:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=szcTTZAoyj+vyfRwNgr8OrZ8sw2beVd/icjS8IrQaFM=;
+ b=PIcUGWLKzlENhLVVknT+yLTvlIbn+GyUjt8+chsKRwd3pLw+3f+VF0hLjKT9+i1Px9
+ HjkvdPSGKGy9eFTpoScFMWh35A8GhIiQIqnN+8Mc2dw/M78OQQJTpMKNBVfJPlL+JArq
+ cSCGhRutUa10IXcYevDcEl97ZZnLhm1n4i5rG/T16b8N5ZODB7MvmKxxjHErq4pLQH6+
+ MyMx1iX2zFrf2Ep9yQd2tJhmRY3Px49PYJgWJiGn2KDQjOTt6g1nMAiLeZQ1/WrEFsCX
+ 4yhkL9vfUuWs97NzylvCx03qIVC0Uj6GN0/+evo6tiRYtgCItomWf5Z6wSZkYMrAMFAg
+ R2VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=szcTTZAoyj+vyfRwNgr8OrZ8sw2beVd/icjS8IrQaFM=;
+ b=KuA8fGwmqHG77d2winbdSFF0aZjDYOukbuG1zvV+vISSq0XuP3oZK+p1DJ4V4aYN7c
+ dLnOI3qe9C1Zerh7Ni3hAQbFwrO1lFSsdtEwpUDcdlkotcRs0hcF4d279gLxu/LfrwF4
+ rhhqIuyIQqNvZI1Yc7EB+s0EOMoIGrLJCbpZVm3BjEzdzvYytolzDrZzeCeHiBWjk6B1
+ f+P1s5f//L3uFd/U4ioIa3QO2P9pI576UtGiySvaWqepDJKBHO+cW+O/ZKktAVQ6u3Ba
+ FeujK5cIyd0O4zWIcpXRdC8zd/T++ch4BLW2+RYQ3++yAK8f3eOhwT2ZJ3E/HIEe6zgd
+ KeTQ==
+X-Gm-Message-State: AGi0PuYmP10e69tARTLYdd33ZiWC3xpX7fujknhgbpwmPtiZfWb4vm5+
+ ty9Y/C2g/oWO9SrG1gIBb9DlXbck/ErEyL/bc+q6+RqOKks=
+X-Google-Smtp-Source: APiQypIedsZmozCuaOPstKymOMi3mqAikP3ZkdjvVtYCrYF/L364GCr33kbjWNUIWeO9plJGkD4FkApIcoWD2XYGacg=
+X-Received: by 2002:a67:79d0:: with SMTP id
+ u199mr25457834vsc.115.1588175333083; 
+ Wed, 29 Apr 2020 08:48:53 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Wed, 29 Apr 2020 18:03:53 +0300
-Message-Id: <31621588171049@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+From: Kurt Taylor <kurt.r.taylor@gmail.com>
+Date: Wed, 29 Apr 2020 10:48:41 -0500
+Message-ID: <CAG5Oiwj+-OnkPMc+dfeo0P=MfREPz_7E+zBaMaYy6AHMLO+BxA@mail.gmail.com>
+Subject: OpenBMC 2.8 Release
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,119 +73,24 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj5IZWxsbywgU3VtYW50aCE8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5UaGFuayB5b3UgZm9y
-IHRoZSByZXBseSwgSSd2ZSBmb3VuZCB0aGF0IGFsc28gaXQncyBuZWNlc3NhcnkgdG8gwqA8L2Rp
-dj48ZGl2PjEuIENvbXBpbGUgaXBtaV9kZXYgZHJpdmVyIGludG8ga2VybmVsOzwvZGl2PjxkaXY+
-Mi4gUmVuYW1lIGNoYW5uZWwgaW4gL3Vzci9zaGFyZS9pcG1pLXByb3ZpZGVycy9jaGFubmVsX2Nv
-bmZpZy5qc29uIC0gaXQgbXVzdCBiZSBuYW1lZCAiSXBtYiIsIG5vdCAiSVBNQiI8L2Rpdj48ZGl2
-PkknbSBjb25mdXNlZCB3aXRoIHRoZSBhZGRyZXNzZXMuPC9kaXY+PGRpdj5PbiB0aGUgY29udHJv
-bGxlciBzaWRlIEkgb3BlbiBzbGF2ZSBkZXZpY2UgYXQgMHgzNiBhbmQgZXhwZWN0IEJNQyB0byBh
-cHBlYXIgYXQgMHgxMCAoYWxsIGluIGkyY2RldGVjdCBub3RhdGlvbikuPC9kaXY+PGRpdj5TbyBJ
-IGFzc3VtZSB0aGF0IGluIGlwbWItY2hhbm5lbHMuanNvbiBtdXN0IGJlIHRoZSBmb2xsb3dpbmc6
-PC9kaXY+PGRpdj7CoDxkaXY+InR5cGUiOiAiaXBtYiIsPC9kaXY+PGRpdj4ic2xhdmUtcGF0aCI6
-ICIvZGV2L2lwbWItNiIsPC9kaXY+PGRpdj4iYm1jLWFkZHIiOiAzNCw8L2Rpdj48ZGl2PiJyZW1v
-dGUtYWRkciI6IDEwODwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PkJ1dCBpcG1iYnJpZGdlZCBpZ25v
-cmVzIHRoaXMgMzQgKDB4MTEgc2hpZnRlZCBsZWZ0IGJ5IDEgYml0KSwgaW5zdGVhZCBpdCBpbnN0
-YW50aWF0ZXMgZGV2aWNlIGF0IDB4MTAgYW5kIHRoZSByZS1pbnN0YW50aWF0ZSBpdCBhdCB3aGF0
-IGlzIGNvbW1hbmRlZCBieSBzb21lIHNlcnZpY2UuIFdoYXQgc2VydmljZSBzaG91bGQgaXQgYmU/
-IMKgdXBkYXRlU2xhdmVBZGRySGFuZGxlciBpcyBuZXZlciBjYWxsZWQuPC9kaXY+PGRpdj7CoDwv
-ZGl2PjxkaXY+VG8gb3ZlcnJpZGUgdGhpcyBJJ3ZlIG1hbnVhbGx5IGNoYW5nZWQgMHgxMDEwIHRv
-IDB4MTAxMSBpbiBzb3VyY2VzIGFuZCB2b2lsYSAtIEkgY2FuIG5vdyByZWNlaXZlIHRoZSByZXF1
-ZXN0cyBmcm9tIHRoZSBjb250cm9sbGVyLCBidXQgaXQgaW50ZXJwcmV0cyBpcG1iYnJpZGdlZCBy
-ZXNwb25zZXMgaW4gYSB3cm9uZyBtYW5uZXIuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+SSd2ZSBh
-ZGRlZCBzb21lIGRlYnVnIChhY3R1YWxseSBhIGxvdCBvZiA6KSkgdG8gaXBtYmJyaWRnZWQsIHNv
-IGl0IGR1bXBzIHdoYXQgaXMgc2VudCB2aWEgSTJDLiBIZXJlIGlzIHRoZSByZXNwb25zZTo8L2Rp
-dj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PC9kaXY+PGRpdj48ZGl2PmJtY1NsYXZlQWRkcmVzcz0weDM2IG5ldGZu
-PTB4MDcgbHVuPTB4MDAgY21kPTB4MDEgY2M9MHgwMDwvZGl2PjxkaXY+Jmd0OyZndDsmZ3Q7Jmd0
-OyAxNyA2YyAxZSA3NiAzNiAwYyAwMSAwMCAyMyAwMCAwMiAwOCAwMiBiZiAzZCAyYiAwMCAwMCAw
-MCBhYiAwMCAwMCAwZCBhZjwvZGl2PjxkaXY+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT08L2Rpdj48ZGl2PkJ1dCB0aGUgY29u
-dHJvbGxlciBjYW4ndCBpbnRlcnByZXQgaXQgcmlnaHQ6PC9kaXY+PGRpdj49PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PTwvZGl2
-PjxkaXY+aXBtaS1pMmMgMi0wMDExOiBJUE1JIG1lc3NhZ2UgaGFuZGxlcjogQk1DIHJldHVybmVk
-IGluY29ycmVjdCByZXNwb25zZSwgZXhwZWN0ZWQgbmV0Zm4gNyBjbWQgMSwgZ290IG5ldGZuIDcg
-Y21kIGM8L2Rpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+SSdtIG5vdCBz
-dXJlIGlmIGl0J3MgYSBwcm9ibGVtIGluIGNvbnRyb2xsZXIncyBJUE1CIGltcGxlbWVudGF0aW9u
-LCBvciBpdCdzIHRoZSB3cm9uZyBhZGRyZXNzZXMsIGJ1dCB0aGlzIGNvbnRyb2xsZXIgd29ya3Mg
-ZmluZSB3aXRoIG90aGVyIEJNQyBvdmVyIElQTUIuPC9kaXY+PC9kaXY+PGRpdj5Db3VsZCB5b3Ug
-cGxlYXNlIGNsYXJpZnkgd2hhdCBzaG91bGQgYmUgaW4gYm1jLWFkZHIgYW5kIHJlbW90ZS1hZGRy
-IGluIGlwbWItY2hhbm5lbHMuanNvbj88L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5UaGFuayB5b3Uh
-PC9kaXY+PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+MjkuMDQuMjAyMCwgMTM6MDUsICJCaGF0LCBT
-dW1hbnRoIiAmbHQ7PGEgaHJlZj0ibWFpbHRvOnN1bWFudGguYmhhdEBpbnRlbC5jb20iPnN1bWFu
-dGguYmhhdEBpbnRlbC5jb208L2E+Jmd0Ozo8L2Rpdj48YmxvY2txdW90ZT48ZGl2IGxhbmc9IkVO
-LVVTIj48ZGl2PjxwIHN0eWxlPSJmb250LWZhbWlseTonY2FsaWJyaScgLCBzYW5zLXNlcmlmO2Zv
-bnQtc2l6ZToxMXB0O21hcmdpbjowaW4gMGluIDAuMDAwMXB0IDBpbiI+SGkgS29uc3RhbnRpbiw8
-L3A+PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjExcHQ7bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj7CoMKgIElwbWJicmlkZ2UgaXMgdGhl
-IHJpZ2h0IHNlcnZpY2UuIFBsZWFzZSBvdmVycmlkZSB0aGUgPGEgaHJlZj0iaHR0cHM6Ly9naXRo
-dWIuY29tL29wZW5ibWMvaXBtYmJyaWRnZS9ibG9iL21hc3Rlci9pcG1iLWNoYW5uZWxzLmpzb24i
-PiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9pcG1iYnJpZGdlL2Jsb2IvbWFzdGVyL2lwbWIt
-Y2hhbm5lbHMuanNvbjwvYT4gd2l0aCB0aGUgSVBNQiBjaGFubmVsIHJlbGV2YW50IG9uIHlvdXIg
-Ym9hcmQuPC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTonY2FsaWJyaScgLCBzYW5zLXNlcmlmO2Zv
-bnQtc2l6ZToxMXB0O21hcmdpbjowaW4gMGluIDAuMDAwMXB0IDBpbiI+wqA8L3A+PHAgc3R5bGU9
-ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjExcHQ7bWFyZ2lu
-OjBpbiAwaW4gMC4wMDAxcHQgMGluIj5UaGFua3MsPC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTon
-Y2FsaWJyaScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMXB0O21hcmdpbjowaW4gMGluIDAuMDAw
-MXB0IDBpbiI+U3VtYW50aDwvcD48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGlicmknICwgc2Fu
-cy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAwaW4iPsKgPC9w
-PjxwIHN0eWxlPSJmb250LWZhbWlseTonY2FsaWJyaScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZTox
-MXB0O21hcmdpbjowaW4gMGluIDAuMDAwMXB0IDBpbiI+PHN0cm9uZz5Gcm9tOjwvc3Ryb25nPiBv
-cGVuYm1jICZsdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtYy1ib3VuY2VzK3N1bWFudGguYmhhdD1p
-bnRlbC5jb21AbGlzdHMub3psYWJzLm9yZyI+b3BlbmJtYy1ib3VuY2VzK3N1bWFudGguYmhhdD1p
-bnRlbC5jb21AbGlzdHMub3psYWJzLm9yZzwvYT4mZ3Q7IDxzdHJvbmc+T24gQmVoYWxmIE9mIDwv
-c3Ryb25nPktvbnN0YW50aW4gS2x1Ym5pY2hraW48YnIgLz48c3Ryb25nPlNlbnQ6PC9zdHJvbmc+
-IFdlZG5lc2RheSwgQXByaWwgMjksIDIwMjAgMzoyOSBQTTxiciAvPjxzdHJvbmc+VG86PC9zdHJv
-bmc+IDxhIGhyZWY9Im1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmciPm9wZW5ibWNAbGlz
-dHMub3psYWJzLm9yZzwvYT48YnIgLz48c3Ryb25nPlN1YmplY3Q6PC9zdHJvbmc+IFBvbGxpbmcg
-T3BlbkJNQyB1c2luZyBJUE1CPC9wPjxwIHN0eWxlPSJmb250LWZhbWlseTonY2FsaWJyaScgLCBz
-YW5zLXNlcmlmO2ZvbnQtc2l6ZToxMXB0O21hcmdpbjowaW4gMGluIDAuMDAwMXB0IDBpbiI+wqA8
-L3A+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGlicmknICwgc2Fucy1zZXJpZjtmb250
-LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAwaW4iPsKgPC9wPjwvZGl2PjxkaXY+
-PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjEx
-cHQ7bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj7CoDwvcD48L2Rpdj48ZGl2PjxkaXY+PHAg
-c3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjExcHQ7
-bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj5IZWxsbyBhbGwhPC9wPjwvZGl2PjxkaXY+PHAg
-c3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjExcHQ7
-bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj7CoDwvcD48L2Rpdj48ZGl2PjxwIHN0eWxlPSJm
-b250LWZhbWlseTonY2FsaWJyaScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMXB0O21hcmdpbjow
-aW4gMGluIDAuMDAwMXB0IDBpbiI+SSd2ZSBnb3QgYSBQdXJsZXkgbW90aGVyYm9hcmQgd2l0aCBv
-bmUgb2YgdGhlIEkyQyBidXNlcyBnb2luZyBvdXQgZnJvbSBBU1QyNTAwIHRvIGV4dGVybmFsIGNv
-bnRyb2xsZXIuPC9wPjwvZGl2PjxkaXY+PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAs
-IHNhbnMtc2VyaWY7Zm9udC1zaXplOjExcHQ7bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj5J
-dCBnZXRzIEJNQyBkYXRhIChzZW5zb3JzLCBNQUMgYWRkcmVzcywgZXRjKSBieSBwb2xsaW5nIGl0
-IHdpdGggSVBNQi48L3A+PC9kaXY+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGlicmkn
-ICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAwaW4i
-PsKgPC9wPjwvZGl2PjxkaXY+PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMt
-c2VyaWY7Zm9udC1zaXplOjExcHQ7bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj5JJ20gdHJ5
-aW5nIHRvIGZpbmQgb3V0IGhvdyB0byBpbXBsZW1lbnQgaXQgaW4gT3BlbkJNQy48L3A+PC9kaXY+
-PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGlicmknICwgc2Fucy1zZXJpZjtmb250LXNp
-emU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAwaW4iPklzIGl0IGlwbWJicmlkZ2Ugc2Vy
-dmljZSB1c2VkIGZvciB0aGlzPzwvcD48L2Rpdj48ZGl2PjxwIHN0eWxlPSJmb250LWZhbWlseTon
-Y2FsaWJyaScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMXB0O21hcmdpbjowaW4gMGluIDAuMDAw
-MXB0IDBpbiI+wqA8L3A+PC9kaXY+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGlicmkn
-ICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAwaW4i
-PlRoYW5rIHlvdSE8L3A+PC9kaXY+PC9kaXY+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2Nh
-bGlicmknICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFw
-dCAwaW4iPi0twqA8L3A+PC9kaXY+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGlicmkn
-ICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAwaW4i
-PkJlc3QgcmVnYXJkcyw8L3A+PC9kaXY+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGli
-cmknICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAw
-aW4iPktvbnN0YW50aW4gS2x1Ym5pY2hraW4sPC9wPjwvZGl2PjxkaXY+PHAgc3R5bGU9ImZvbnQt
-ZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMtc2VyaWY7Zm9udC1zaXplOjExcHQ7bWFyZ2luOjBpbiAw
-aW4gMC4wMDAxcHQgMGluIj5sZWFkIGZpcm13YXJlIGVuZ2luZWVyLDwvcD48L2Rpdj48ZGl2Pjxw
-IHN0eWxlPSJmb250LWZhbWlseTonY2FsaWJyaScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMXB0
-O21hcmdpbjowaW4gMGluIDAuMDAwMXB0IDBpbiI+c2VydmVyIGhhcmR3YXJlIFImYW1wO0QgZ3Jv
-dXAsPC9wPjwvZGl2PjxkaXY+PHAgc3R5bGU9ImZvbnQtZmFtaWx5OidjYWxpYnJpJyAsIHNhbnMt
-c2VyaWY7Zm9udC1zaXplOjExcHQ7bWFyZ2luOjBpbiAwaW4gMC4wMDAxcHQgMGluIj5ZYW5kZXgg
-TW9zY293IG9mZmljZS48L3A+PC9kaXY+PGRpdj48cCBzdHlsZT0iZm9udC1mYW1pbHk6J2NhbGli
-cmknICwgc2Fucy1zZXJpZjtmb250LXNpemU6MTFwdDttYXJnaW46MGluIDBpbiAwLjAwMDFwdCAw
-aW4iPnRlbDogKzctOTAzLTUxMC0zMy0zMzwvcD48L2Rpdj48ZGl2PjxwIHN0eWxlPSJmb250LWZh
-bWlseTonY2FsaWJyaScgLCBzYW5zLXNlcmlmO2ZvbnQtc2l6ZToxMXB0O21hcmdpbjowaW4gMGlu
-IDAuMDAwMXB0IDBpbiI+wqA8L3A+PC9kaXY+PC9kaXY+PC9kaXY+PC9ibG9ja3F1b3RlPjxkaXY+
-wqA8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj4tLcKgPC9kaXY+PGRpdj5CZXN0IHJlZ2FyZHMsPC9k
-aXY+PGRpdj5Lb25zdGFudGluIEtsdWJuaWNoa2luLDwvZGl2PjxkaXY+bGVhZCBmaXJtd2FyZSBl
-bmdpbmVlciw8L2Rpdj48ZGl2PnNlcnZlciBoYXJkd2FyZSBSJmFtcDtEIGdyb3VwLDwvZGl2Pjxk
-aXY+WWFuZGV4IE1vc2NvdyBvZmZpY2UuPC9kaXY+PGRpdj50ZWw6ICs3LTkwMy01MTAtMzMtMzM8
-L2Rpdj48ZGl2PsKgPC9kaXY+
+It's that time again!
+
+You all have probably seen the Dunfell update emails, which means we
+are nearing another release. We will have our 2.8 release in May after
+a 2-week period of testing.
+
+Assuming we continue as before, we will finish the yocto update, tag a
+release candidate and branch. This new branch will become the release
+while still allowing contributions on master. Hopefully everyone will
+also testing the release in parallel on their platforms. (For planning
+discussions on the release process, see:
+https://github.com/openbmc/openbmc/wiki/Release-Planning
+
+We'll need to make sure that the project documentation is current.
+Also, I need the main features/functionality enhancements for the 2.8
+release notes. You can send me email with a feature you worked on and
+a brief description, or just add it directly here:
+https://github.com/openbmc/openbmc/wiki/Current-Release-Content
+
+Thanks everyone!
+Kurt Taylor (krtaylor)
