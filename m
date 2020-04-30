@@ -2,68 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 120761BED9B
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 03:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC2051BEDF8
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 03:59:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49CHvw2KhhzDr7J
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 11:33:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49CJV54w9QzDrB4
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 11:59:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b2d;
- helo=mail-yb1-xb2d.google.com; envelope-from=yuenn@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=outlook.com (client-ip=40.92.253.52;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=outlook.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=K/4sXSuM; dkim-atps=neutral
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com
- [IPv6:2607:f8b0:4864:20::b2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
+ header.s=selector1 header.b=unhTPSuH; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-oln040092253052.outbound.protection.outlook.com [40.92.253.52])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49CHvB5ZB0zDr7J
- for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 11:32:53 +1000 (AEST)
-Received: by mail-yb1-xb2d.google.com with SMTP id i16so2313690ybq.9
- for <openbmc@lists.ozlabs.org>; Wed, 29 Apr 2020 18:32:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=lOCegcfdQ3GQ5dY18MQD5ZV0zjTlOuTU+M7ecQKrxkc=;
- b=K/4sXSuM4Bvp8aRj0WyhTMTw/R2SR7MoX5U2T/4l6RYmfsENfyKziKntDb1+MnyFpq
- lEOK9OMDmERmwILSa9cnPVn3iwNBKgJJDelo5UGwqbl4cCwvUbC9Y4kfEeWX8HtX69bF
- Vk2p+grFAvhapngkS/ITL5LziSSva71hxqNHZGpRP98p/DTFRpWH+HGm94iYzo0ZUSj9
- luNXYtT35PYMzFSxCYbxXX7tISTSGC1TmHuV8VQNXHRfAzYM5PNZyY61Ao7WoRpLqkTy
- pSaevVjsFc3i41lbm+aKNa5kcCfQnx2IEp03w7mFCH8cbkEI41I1z0222ZRb+ynwzYwf
- 4Hfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=lOCegcfdQ3GQ5dY18MQD5ZV0zjTlOuTU+M7ecQKrxkc=;
- b=PHNvLK9VM1Ll7dIIOA0BkPNjtKhfLzV5mUnGeGtg9Zb+4/mM4gLBLS8JF9WAlvLq2D
- v6dVRiDQiASPc8YNWYP7cFHD6anoFDJ5IfHqjbywfZFxhSi/w1/0SmNWh6ICSkJ1CXnR
- 9Aq8qmVH+ZEacO62eQUI5TktRDqFPuxMJDZHh4fsiis+u6BqYbxF9lSAdOZtma++0/S6
- qoepy2bDwXlkcb7tysni1wJpDdCiMsXgDC76NUNER/4RHG5HW30IwWQt+yq4vbunK8In
- yVWaeU+o1FRuT9tWrEqS+i/ZClAc8awLDTV5rq6trwXttLJYBDwPXnnTBB/ttAYZl0+o
- 7Lfw==
-X-Gm-Message-State: AGi0PubiR3z926d85bd2XYz6gReKyawsTFvR1f4LRUY5IlLBFK9j1nK8
- 7kcA2f5PQ+1vCXO4naTld7K2wHlQSSow2b0pPzA60Q==
-X-Google-Smtp-Source: APiQypK4kC9Joi4mQH4h6RPG4CoK5aKptCEgUWhCflDnDjQq4psSd/k7TFB0p+NrWpkmql8+xo0e+f2rKWuu4yVwlPQ=
-X-Received: by 2002:a25:e907:: with SMTP id n7mr1915183ybd.85.1588210369253;
- Wed, 29 Apr 2020 18:32:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49CJTN6b3xzDqBM
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 11:59:03 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=b++ifLXLV99o16IvdyFZ61RGGUV9B6jiGtubib8L0shM3bwNA00aO6iVmCpJL6C9gyhZGUKNV4ohDIjNrTvVegglOK4GTAGdepD8pTV98RRVV/73GkaCSmw0c6bFy0WKKrOxLmR7qkdkdNnEkZyhpmOlfq5PcM7tdgEcGELl8TGxaZeXhLRSXVuLfjkoGsBXtoeH+LzcHd4tIUpD2R6rQKVEqoTScrhMqxxyr8vgVHLGElxyT/caWGaxcg4IPN4E52E3D1zTSxrT9mlZ2k2zQqULap/HYTEM/sKUXpUUqOwqjLo2apFbdO2Tmu8/GOAqQQmwe91bczaosoyWlGsCeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NqR0NfY9AC+K6oBmB+eNpoA/QgEYNOB/eAHfw5QK4jE=;
+ b=cBl9g/KxXlXOe7prE7eWVnpWLBITRo7S95suSwv0cBO/jE9eYd4AB9gp1FuHOLiXOKmCy+JxMfR684vADDL3P+zrm94nQoZMyozqGb7tshhwyo3wahOOtRfizljvDgECsEPiITzYXvJEtT6W3/9FP9znXzzfadbRwaRwGGRyvke1R44HJ7fL+EoqCnqOAj38ZotjwbPIRJqGyh9XRPqGMu3aDyLyffu/GzYYq8HmfEdfKe8+vPUXXan19BUv9ke3e0XVDW6awaqcoDUn0ZRZhF9qqp2ChrOPANKBtYIcSAz6jb6FszT1Yj2kHY3OSIpz7IFs5LILyMaheu4a5uP3bg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NqR0NfY9AC+K6oBmB+eNpoA/QgEYNOB/eAHfw5QK4jE=;
+ b=unhTPSuHJdvrofmVF0pnzupGnIG2zwZaJVxBPmIecnFHb63LtvWZQxtX2BXD50of67s9AW5t6mgyH5qwnRrcr7vEoT7HqXgv3VDTFcliXAbktFcb+zB3E7yI/Jjia7utL/T1ShQNF9HlapC0E8Xf7q1eeZczvdvkUnuKrwk8+lSEKYZTo2t+8CnXgS5uFaPEgUMceFl5PLc7C7BUwfN1Wguh9tTr5uiuWYs1xznFyw/O11mjJ2dXKs7pF9xKoHxWN5DCyes04DF+7rutFct3S2el2pYy4juDF6spFqMkkQbxIKYQFG2qdiecAQegNvLl1nmM1l2olrGf3LXSvdru7A==
+Received: from HK2APC01FT053.eop-APC01.prod.protection.outlook.com
+ (2a01:111:e400:7ebc::52) by
+ HK2APC01HT165.eop-APC01.prod.protection.outlook.com (2a01:111:e400:7ebc::439)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2958.19; Thu, 30 Apr
+ 2020 01:58:58 +0000
+Received: from HK2PR04MB3826.apcprd04.prod.outlook.com
+ (2a01:111:e400:7ebc::4d) by HK2APC01FT053.mail.protection.outlook.com
+ (2a01:111:e400:7ebc::264) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2958.19 via Frontend
+ Transport; Thu, 30 Apr 2020 01:58:58 +0000
+Received: from HK2PR04MB3826.apcprd04.prod.outlook.com
+ ([fe80::48eb:bda9:d490:c17c]) by HK2PR04MB3826.apcprd04.prod.outlook.com
+ ([fe80::48eb:bda9:d490:c17c%3]) with mapi id 15.20.2958.020; Thu, 30 Apr 2020
+ 01:58:58 +0000
+From: "zhouyuanqing8@outlook.com" <zhouyuanqing8@outlook.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: =?gb2312?B?u9i4tDogUmVnYXJkaW5nIHBvd2VyIGNvbnRyb2w=?=
+Thread-Topic: =?gb2312?B?u9i4tDogUmVnYXJkaW5nIHBvd2VyIGNvbnRyb2w=?=
+Thread-Index: AQHWHpEAeH+WPuILk0SxjFqpsNUQLw==
+Date: Thu, 30 Apr 2020 01:58:58 +0000
+Message-ID: <HK2PR04MB38261661F9BD9194120C795CFEAA0@HK2PR04MB3826.apcprd04.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:5E82F7B8FDF46CE7CC0F7969490363A437B78DE77BE7DC2B2E930B85E2F38902;
+ UpperCasedChecksum:29E5CB6739E6F99F1C751A56DD566D6A8E61B89B4BE5AF4B7E34993DB32193D3;
+ SizeAsReceived:6804; Count:43
+x-tmn: [eZow+CgevRkETQ3RscL8c0XMHj3xl2oR]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 43
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: c0964cba-bced-42d6-3680-08d7ecaa0c19
+x-ms-traffictypediagnostic: HK2APC01HT165:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ahLPKbP78ipbW2Es5MCCJCx57NbVt2y2NMM5yG6NwiuWq8QXDEuxokVml6JjvE63w5uMQ6Mis1yYg2jeZPVf2Skq/ORoex//G0uR6dQivVCDJvaqsMXgj2y0aFxNVQKDx9ar/bmYQod7LCaQo563V9UrnvQhu1W/3ttRcefH1Hsfqhs4Vhc1vCXJ4LfsuOR+PYybcvKII+AqtUNTCwDQpA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:0; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK2PR04MB3826.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:; SFS:; DIR:OUT; SFP:1901; 
+x-ms-exchange-antispam-messagedata: h6SZZq9aqMtVgKq4k8zUR2rmqPyyoIADY2dc63u/fBUMCtm9HS6eYwxYyUDJ2SwTifmpd1hHhMfH5uX6j26wCiz4dJQqTYTjPqr/I6YoOgKyqgyc//NHSra3zr7A9S+EdbL+tfS2nMUXgNcavkjuMg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_HK2PR04MB38261661F9BD9194120C795CFEAA0HK2PR04MB3826apcp_"
 MIME-Version: 1.0
-References: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
- <59A41CBD-05E4-4CE5-BFDB-19CA52FC8460@fb.com>
- <CADfYTpGeVOx8bfEZgXga1Pokk18xw+=-6ONjCyfMt7tQGumCrw@mail.gmail.com>
- <CBE4A094-E71A-4997-8AAE-6B5962D42556@fb.com>
-In-Reply-To: <CBE4A094-E71A-4997-8AAE-6B5962D42556@fb.com>
-From: Nancy Yuen <yuenn@google.com>
-Date: Wed, 29 Apr 2020 18:32:12 -0700
-Message-ID: <CADfYTpGjup=UXM-bzBD9ZbMkF8T-fZdS3sRr2u_=9hVYgqkFWg@mail.gmail.com>
-Subject: Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: multipart/alternative; boundary="000000000000e3d3a305a4780a8b"
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: c0964cba-bced-42d6-3680-08d7ecaa0c19
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2020 01:58:58.7029 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2APC01HT165
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,256 +103,128 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "uperic@163.com" <uperic@163.com>, openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e3d3a305a4780a8b
-Content-Type: text/plain; charset="UTF-8"
+--_000_HK2PR04MB38261661F9BD9194120C795CFEAA0HK2PR04MB3826apcp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Vijay, I wonder if IPMB would still be used in later generations or would
-something like MCTP be considered?
-----------
-Nancy
+SGkgUGF0cmljayBXaWxsaWFtc6OsDQoNCiAgICAgTXkgYm9hcmQgaGFyZHdhcmUgaXMgY29ubmVj
+dGVkIHRvIENQTEQgdGhyb3VnaCBJMkMgb2YgQVNUMjUwMCwgQk1DIHJlYWRzIGFuZCB3cml0ZXMg
+Q1BMRCByZWdpc3RlciB0aHJvdWdoIEkyQywgYW5kIHRoZW4gQ1BMRCBjb250cm9scyBwb3dlciBv
+biBhbmQgb2ZmLg0KDQogICAgU28sIEkgdGhpbmsgVGhlIHg4Ni1wb3dlci1jb250cm9sIGltcGxl
+bWVudGF0aW9uIGNhbm5vdCBiZSBkaXJlY3RseSBhZGFwdGVkIHRvIG15IGJvYXJkLg0KDQogICAg
+IFBsZWFzZSBoZWxwIG1lIHRvIHN1Z2dlc3Qgd2hhdCB0byBkbyBuZXh0LCB3aGljaCBjYW4gc29s
+dmUgdGhpcyBwcm9ibGVtIGFuZCBhZGFwdCB3ZWxsIHRvIHRoZSBjb2RlIG9mIG9wZW5ibWMgY29t
+bXVuaXR5Lg0KDQpUaGFua3MNCkhhcmxleQ0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
+X18NCreivP7IyzogUGF0cmljayBXaWxsaWFtcw0K0tG3osvNOiAyMDIwIMTqIDQg1MIgMzAgyNUg
+0MfG2svEIDA6MDQNCsrVvP7IyzogemhvdXl1YW5xaW5nOEBvdXRsb29rLmNvbQ0Ks63LzTogb3Bl
+bmJtYzsgdXBlcmljQDE2My5jb20NCtb3zOI6IFJlOiBSZWdhcmRpbmcgcG93ZXIgY29udHJvbA0K
+DQpPbiBXZWQsIEFwciAyOSwgMjAyMCBhdCAwMTo1MDowOVBNICswMDAwLCB6aG91eXVhbnFpbmc4
+QG91dGxvb2suY29tIHdyb3RlOg0KDQo+IFJlZ2FyZGluZyBwb3dlciBjb250cm9sLCBJIHJlYWQg
+dGhlIGNvZGVzIGluIHRoZSBmb2xsb3dpbmcgdHdvIGRpcmVjdG9yaWVzKGdpdGh1Yi5jb20vb3Bl
+bmJtYy94ODYtcG93ZXItY29udHJvbC5naXQgJiBnaXRodWIuY29tL29wZW5ibWMvc2tlbGV0b24v
+dHJlZS9tYXN0ZXIvb3AtcHdyY3RsKS4gVGhlIHBvd2VyIGNvbnRyb2wgaXMgY29udHJvbGxlZCBi
+eSBHUElPLCBidXQgdGhlIHBvd2VyIG9mIG15IGJvYXJkIGlzIGNvbnRyb2xsZWQgYnkgQ1BMRC4N
+Cg0KVGhlIHg4Ni1wb3dlci1jb250cm9sIGltcGxlbWVudGF0aW9uIHVzZXMgR1BJT3MgZnJvbSB0
+aGUgQk1DLCBidXQgdGhvc2UNCkdQSU9zIGFyZSB3aXJlZCB0byBhIENQTEQgZm9yIHRoZSBzaWdu
+YWxsaW5nLiAgVGhlIENQTEQgbW9uaXRvcnMgdGhlDQpHUElPcyB0byBrbm93IHdoZW4gdG8gYmVn
+aW4gdGhlIHBvd2VyIHNlcXVlbmNlLiAgVGhpcyBpcyB3aGF0IHdlIHVzZSBvbg0KVGlvZ2FwYXNz
+Lg0KDQotLQ0KUGF0cmljayBXaWxsaWFtcw0K
 
-
-On Wed, Apr 29, 2020 at 5:42 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
-
-> Nancy,
->
-> We have multiple hosts which has a small controller called BIC (Bridge
-> IC). This BIC on each host connected via i2c to main BMC and communicates
-> through ipmi messages to BMC over IPMB/i2c.
->
->
->
-> Regards
->
-> -Vijay
->
->
->
-> *From: *Nancy Yuen <yuenn@google.com>
-> *Date: *Wednesday, April 29, 2020 at 5:25 PM
-> *To: *Vijay Khemka <vijaykhemka@fb.com>
-> *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> *Subject: *Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
->
->
->
-> Neeraj, I was not considering aggregation in this case, just having the
-> intermediate BMC "route".
->
->
->
-> Vijay, thanks.  I was wondering what your applications for IPMB were for.
-> What's the rationale for using IPMB vs something else?  In your multihost
-> system, one BMC supports multiple host CPUs?  Are there also multiple BMCs?
->
->
-> ----------
-> Nancy
->
->
->
->
->
-> On Wed, Apr 29, 2020 at 5:15 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
-> Hi Nancy,
->
-> We are currently using (1) in our current multi host design. Option (3)
-> also looks good.
->
->
->
-> Regards
->
-> -Vijay
->
->
->
-> *From: *openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> on
-> behalf of Nancy Yuen <yuenn@google.com>
-> *Date: *Wednesday, April 29, 2020 at 3:53 PM
-> *To: *OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> *Subject: *Multiple BMCs in a system: IPMB? Redfish? MCTP?
->
->
->
-> I've talked with some people a while back (long while back) about multiple
-> BMCs in a system.  Either for redundancy or managing separate parts of a
-> system.   I'm wondering what other people are thinking in this area if at
-> all.
->
->
->
-> We are considering similar designs and I'm looking into options for
-> BMC-BMC communications.  Some BMCs may not be externally accessible. Here
-> are some options that we've looked at:
->
->    1. i2c/IPMB
->    2. usbnet/Redfish
->    3. i2c/MCTP/PLDM or something else?
->    4. internal network via switch chip/Redfish or MCTP
->
->  I'd like to reduce our use of IPMI so I want to avoid (1).
->
->
->
-> ----------
-> Nancy
->
->
-
---000000000000e3d3a305a4780a8b
-Content-Type: text/html; charset="UTF-8"
+--_000_HK2PR04MB38261661F9BD9194120C795CFEAA0HK2PR04MB3826apcp_
+Content-Type: text/html; charset="gb2312"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Vijay, I wonder if IPMB would still be used in later gener=
-ations or would something like MCTP be considered?<br clear=3D"all"><div><d=
-iv dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"=
->----------<br>Nancy</div></div><br></div><br><div class=3D"gmail_quote"><d=
-iv dir=3D"ltr" class=3D"gmail_attr">On Wed, Apr 29, 2020 at 5:42 PM Vijay K=
-hemka &lt;<a href=3D"mailto:vijaykhemka@fb.com">vijaykhemka@fb.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Hi <span style=3D"caret-color: rgb(50, 49, 48); color: rgb(50, 49, 48); fon=
+t-family: &quot;Microsoft Yahei UI&quot;, Verdana, Simsun, &quot;Segoe UI&q=
+uot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica Neue&quot;=
+, sans-serif; font-size: 14.666666984558105px; background-color: rgb(255, 2=
+55, 255); display: inline !important">
+Patrick Williams</span>=A3=AC</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp; &nbsp;My board hardware is connected to CPLD through I2C of A=
+ST2500, BMC reads and writes CPLD register through I2C, and then CPLD contr=
+ols power on and off.<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div>
+<div>&nbsp; &nbsp; So, I think&nbsp;<span style=3D"caret-color: rgb(50, 49,=
+ 48); font-family: &quot;Microsoft Yahei UI&quot;, Verdana, Simsun, &quot;S=
+egoe UI&quot;, -apple-system, BlinkMacSystemFont, Roboto, &quot;Helvetica N=
+eue&quot;, sans-serif; font-size: 14.666666984558105px; background-color: r=
+gb(255, 255, 255); display: inline !important">The
+ x86-power-control implementation</span> cannot be directly adapted to my b=
+oard.</div>
+<div><br>
+</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
+t; color:rgb(0,0,0);">
+&nbsp; &nbsp; &nbsp;Please help me to suggest what to do next, which can so=
+lve this problem and adapt well to the code of openbmc community.</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
+t; color:rgb(0,0,0);">
+<br>
+</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
+t; color:rgb(0,0,0);">
+Thanks</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
+t; color:rgb(0,0,0);">
+Harley<br>
+<hr tabindex=3D"-1" style=3D"display:inline-block; width:98%;">
+<b>=B7=A2=BC=FE=C8=CB:</b> Patrick Williams<br>
+<b>=D2=D1=B7=A2=CB=CD:</b> 2020 =C4=EA 4 =D4=C2 30 =C8=D5 =D0=C7=C6=DA=CB=
+=C4 0:04<br>
+<b>=CA=D5=BC=FE=C8=CB:</b> zhouyuanqing8@outlook.com<br>
+<b>=B3=AD=CB=CD:</b> openbmc; uperic@163.com<br>
+<b>=D6=F7=CC=E2:</b> Re: Regarding power control
+<div><br>
+</div>
+</div>
+<div class=3D"BodyFragment"><font size=3D"2"><span style=3D"font-size:11pt;=
+">
+<div class=3D"PlainText">On Wed, Apr 29, 2020 at 01:50:09PM &#43;0000, zhou=
+yuanqing8@outlook.com wrote:<br>
+<br>
+&gt; Regarding power control, I read the codes in the following two directo=
+ries(github.com/openbmc/x86-power-control.git &amp; github.com/openbmc/skel=
+eton/tree/master/op-pwrctl). The power control is controlled by GPIO, but t=
+he power of my board is controlled by CPLD.
+<br>
+<br>
+The x86-power-control implementation uses GPIOs from the BMC, but those<br>
+GPIOs are wired to a CPLD for the signalling.&nbsp; The CPLD monitors the<b=
+r>
+GPIOs to know when to begin the power sequence.&nbsp; This is what we use o=
+n<br>
+Tiogapass.<br>
+<br>
+-- <br>
+Patrick Williams<br>
+</div>
+</span></font></div>
+</div>
+</body>
+</html>
 
-
-
-
-
-<div lang=3D"EN-US">
-<div class=3D"gmail-m_7908806319401427381WordSection1">
-<p class=3D"MsoNormal">Nancy,<u></u><u></u></p>
-<p class=3D"MsoNormal">We have multiple hosts which has a small controller =
-called BIC (Bridge IC). This BIC on each host connected via i2c to main BMC=
- and communicates through ipmi messages to BMC over IPMB/i2c.<u></u><u></u>=
-</p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Regards<u></u><u></u></p>
-<p class=3D"MsoNormal">-Vijay<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
-top:1pt solid rgb(181,196,223);padding:3pt 0in 0in">
-<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
-</span></b><span style=3D"font-size:12pt;color:black">Nancy Yuen &lt;<a hre=
-f=3D"mailto:yuenn@google.com" target=3D"_blank">yuenn@google.com</a>&gt;<br=
->
-<b>Date: </b>Wednesday, April 29, 2020 at 5:25 PM<br>
-<b>To: </b>Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.com" target=3D=
-"_blank">vijaykhemka@fb.com</a>&gt;<br>
-<b>Cc: </b>OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org"=
- target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
-<b>Subject: </b>Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?<u></u><=
-u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Neeraj, I was not considering aggregation in this ca=
-se, just having=C2=A0the intermediate BMC &quot;route&quot;.
-<u></u><u></u></p>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Vijay, thanks.=C2=A0 I was wondering what your appli=
-cations for IPMB were for.=C2=A0 What&#39;s the rationale for using IPMB vs=
- something else?=C2=A0 In your multihost system, one BMC supports multiple =
-host CPUs?=C2=A0 Are there also multiple BMCs?<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><br clear=3D"all">
-<u></u><u></u></p>
-<div>
-<div>
-<p class=3D"MsoNormal">----------<br>
-Nancy<u></u><u></u></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div>
-<div>
-<p class=3D"MsoNormal">On Wed, Apr 29, 2020 at 5:15 PM Vijay Khemka &lt;<a =
-href=3D"mailto:vijaykhemka@fb.com" target=3D"_blank">vijaykhemka@fb.com</a>=
-&gt; wrote:<u></u><u></u></p>
-</div>
-<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
-order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin-left:4=
-.8pt;margin-right:0in">
-<div>
-<div>
-<p class=3D"MsoNormal">Hi Nancy,<u></u><u></u></p>
-<p class=3D"MsoNormal">We are currently using (1) in our current multi host=
- design. Option (3) also looks good.<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-<p class=3D"MsoNormal">Regards<u></u><u></u></p>
-<p class=3D"MsoNormal">-Vijay<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
-top:1pt solid rgb(181,196,223);padding:3pt 0in 0in">
-<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From:
-</span></b><span style=3D"font-size:12pt;color:black">openbmc &lt;openbmc-b=
-ounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_=
-blank">fb.com@lists.ozlabs.org</a>&gt; on behalf of Nancy Yuen &lt;<a href=
-=3D"mailto:yuenn@google.com" target=3D"_blank">yuenn@google.com</a>&gt;<br>
-<b>Date: </b>Wednesday, April 29, 2020 at 3:53 PM<br>
-<b>To: </b>OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org"=
- target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
-<b>Subject: </b>Multiple BMCs in a system: IPMB? Redfish? MCTP?</span><u></=
-u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-</div>
-<div>
-<div>
-<p class=3D"MsoNormal">I&#39;ve talked with some people a while back (long =
-while back) about multiple BMCs in a system.=C2=A0 Either for redundancy or=
- managing separate parts of a system.=C2=A0=C2=A0 I&#39;m wondering what
- other people are thinking in this area if at all.<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">We are considering similar designs and I&#39;m looki=
-ng into options for BMC-BMC communications.=C2=A0 Some BMCs may not be exte=
-rnally accessible.=C2=A0Here are some options that we&#39;ve looked
- at:<u></u><u></u></p>
-</div>
-<div>
-<ol start=3D"1" type=3D"1">
-<li class=3D"MsoNormal">
-i2c/IPMB<u></u><u></u></li><li class=3D"MsoNormal">
-usbnet/Redfish<u></u><u></u></li><li class=3D"MsoNormal">
-i2c/MCTP/PLDM or something else?<u></u><u></u></li><li class=3D"MsoNormal">
-internal network via switch chip/Redfish or MCTP<u></u><u></u></li></ol>
-</div>
-<div>
-<p class=3D"MsoNormal">=C2=A0I&#39;d like to reduce our use of IPMI so I wa=
-nt to avoid (1).<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">----------<br>
-Nancy<u></u><u></u></p>
-</div>
-</div>
-</div>
-</div>
-</blockquote>
-</div>
-</div>
-</div>
-
-</blockquote></div>
-
---000000000000e3d3a305a4780a8b--
+--_000_HK2PR04MB38261661F9BD9194120C795CFEAA0HK2PR04MB3826apcp_--
