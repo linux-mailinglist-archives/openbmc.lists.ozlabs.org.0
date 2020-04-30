@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87CD41BF5E7
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 12:54:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F03961BF5F4
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 12:56:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49CXMC6K34zDr9w
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 20:54:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49CXPz1TBSzDrB9
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 20:56:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,25 +19,24 @@ Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
 Received: from kernel.crashing.org (kernel.crashing.org [76.164.61.194])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49CXLF72jYzDrBf;
- Thu, 30 Apr 2020 20:53:40 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49CXPF0hBzzDr7C;
+ Thu, 30 Apr 2020 20:56:16 +1000 (AEST)
 Received: from localhost (gate.crashing.org [63.228.1.57])
  (authenticated bits=0)
- by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 03UAqvDf025142
+ by kernel.crashing.org (8.14.7/8.14.7) with ESMTP id 03UAtojD025184
  (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 30 Apr 2020 05:53:01 -0500
-Message-ID: <9b5fbaf29adccc5abb66c3d39ecc92a2d5f10d10.camel@kernel.crashing.org>
+ Thu, 30 Apr 2020 05:55:54 -0500
+Message-ID: <232b9fac588beb4d024ab496b118c51af2b0ecba.camel@kernel.crashing.org>
 Subject: Re: [PATCH v0 linux master] i2c/busses: Avoid i2c interrupt status
  clear race condition.
 From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-To: ryan_chen <ryan_chen@aspeedtech.com>, Brendan Higgins
- <brendanhiggins@google.com>, Joel Stanley <joel@jms.id.au>, Andrew Jeffery
- <andrew@aj.id.au>, linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-Date: Thu, 30 Apr 2020 20:52:56 +1000
-In-Reply-To: <20200429033737.2781-1-ryan_chen@aspeedtech.com>
+To: Wolfram Sang <wsa@the-dreams.de>, Ryan Chen <ryan_chen@aspeedtech.com>
+Date: Thu, 30 Apr 2020 20:55:48 +1000
+In-Reply-To: <20200429090355.GA2891@kunai>
 References: <20200429033737.2781-1-ryan_chen@aspeedtech.com>
+ <20200429075357.GA1957@kunai>
+ <56add9c6e6b5410986325a1360466e4b@TWMBX02.aspeed.com>
+ <20200429090355.GA2891@kunai>
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.2 
 Mime-Version: 1.0
@@ -53,53 +52,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+ "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2020-04-29 at 11:37 +0800, ryan_chen wrote:
-> In AST2600 there have a slow peripheral bus between CPU
->  and i2c controller.
-> Therefore GIC i2c interrupt status clear have delay timing,
-> when CPU issue write clear i2c controller interrupt status.
-> To avoid this issue, the driver need have read after write
->  clear at i2c ISR.
+On Wed, 2020-04-29 at 11:03 +0200, Wolfram Sang wrote:
+> > And is there maybe a Fixes: tag for it?
+> > [Ryan Chen] Yes it is a fix patch.
 > 
-> Signed-off-by: ryan_chen <ryan_chen@aspeedtech.com>
+> I meant this (from submitting-patches.rst):
 
-Acked-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
---
+It fixes the original implementation of the driver basically. It's just
+a classic posted-write fix. The write to clear the pending interrupt is
+asynchronous, so you can get spurrious ones if you return from the
+handler before it has percolated to the HW.
 
+I assume it's just more visible on the 2600 because of the cores are
+significantly faster but the IO bus is still as dumb.
 
-> ---
->  drivers/i2c/busses/i2c-aspeed.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-aspeed.c
-> b/drivers/i2c/busses/i2c-aspeed.c
-> index 07c1993274c5..f51702d86a90 100644
-> --- a/drivers/i2c/busses/i2c-aspeed.c
-> +++ b/drivers/i2c/busses/i2c-aspeed.c
-> @@ -603,6 +603,7 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq,
-> void *dev_id)
->  	/* Ack all interrupts except for Rx done */
->  	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
->  	       bus->base + ASPEED_I2C_INTR_STS_REG);
-> +	readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->  	irq_remaining = irq_received;
->  
->  #if IS_ENABLED(CONFIG_I2C_SLAVE)
-> @@ -645,9 +646,11 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq,
-> void *dev_id)
->  			irq_received, irq_handled);
->  
->  	/* Ack Rx done */
-> -	if (irq_received & ASPEED_I2CD_INTR_RX_DONE)
-> +	if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
->  		writel(ASPEED_I2CD_INTR_RX_DONE,
->  		       bus->base + ASPEED_I2C_INTR_STS_REG);
-> +		readl(bus->base + ASPEED_I2C_INTR_STS_REG);
-> +	}
->  	spin_unlock(&bus->lock);
->  	return irq_remaining ? IRQ_NONE : IRQ_HANDLED;
->  }
+Ryan: You could always add a Fixed-by: tag that specifies the commit
+that added the initial driver...
+
+Cheers,
+Ben.
 
