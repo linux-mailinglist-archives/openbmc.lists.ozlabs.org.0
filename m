@@ -1,76 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2D171C08C7
-	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 23:07:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1C751C08F5
+	for <lists+openbmc@lfdr.de>; Thu, 30 Apr 2020 23:15:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Cnyv1tzSzDq6N
-	for <lists+openbmc@lfdr.de>; Fri,  1 May 2020 07:07:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Cp7X21c1zDqqY
+	for <lists+openbmc@lfdr.de>; Fri,  1 May 2020 07:15:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49CnLV2x5kzDr7Z
- for <openbmc@lists.ozlabs.org>; Fri,  1 May 2020 06:39:46 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 03UKWlNB161359; Thu, 30 Apr 2020 16:39:43 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30mggxca21-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2020 16:39:43 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 03UKVLoR010451;
- Thu, 30 Apr 2020 20:39:42 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04dal.us.ibm.com with ESMTP id 30mcu7cdhv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2020 20:39:42 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 03UKdgTG52625884
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Apr 2020 20:39:42 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E56D9B205F;
- Thu, 30 Apr 2020 20:39:41 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 53597B2064;
- Thu, 30 Apr 2020 20:39:41 +0000 (GMT)
-Received: from ghost4.ibm.com (unknown [9.163.86.64])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Thu, 30 Apr 2020 20:39:41 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Cp6X27rszDqnr
+ for <openbmc@lists.ozlabs.org>; Fri,  1 May 2020 07:14:25 +1000 (AEST)
+IronPort-SDR: L8PZzsigPVJ1xVLaaMIqpJolgDW/YpPYEz5BOapQX1XMFN1thZaxM3hDbal8D9++8AP4Wfs2MK
+ R1HkEOrvsnsg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Apr 2020 14:14:23 -0700
+IronPort-SDR: h65ma4Lx89foq0HWcBivvO1eYvy55bA3Ge3B6iFPUyjS84AWMJDILjcFt4/xqXvVGaqGa51uL1
+ ZorL6v1IHsog==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,337,1583222400"; d="scan'208";a="405548733"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga004.jf.intel.com with ESMTP; 30 Apr 2020 14:14:23 -0700
+Received: from [10.251.68.156] (jmbills-mobl.amr.corp.intel.com
+ [10.251.68.156])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 093E8580613
+ for <openbmc@lists.ozlabs.org>; Thu, 30 Apr 2020 14:14:21 -0700 (PDT)
+Subject: Re: [EXTERNAL] how to get pci config space
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 3/3] hwmon: (occ) Add new temperature sensor type
-Date: Thu, 30 Apr 2020 15:39:26 -0500
-Message-Id: <20200430203926.30081-4-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200430203926.30081-1-eajames@linux.ibm.com>
-References: <20200430203926.30081-1-eajames@linux.ibm.com>
+References: <584F7181-73DB-4090-93D7-87E0E7408F20@fuzziesquirrel.com>
+ <DM6PR21MB1388CB8A990972BA09EB5163C8500@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <3718EF06-C5DE-4D3D-B2B1-548FEF5A1919@fuzziesquirrel.com>
+ <DM6PR21MB138892F44E5B77CCE63F83D4C8530@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <D37CC7FB-0199-47A5-930A-B9BBFF02F0D8@fuzziesquirrel.com>
+ <DM6PR21MB138859ED52E4D8B7B1B634FEC8520@DM6PR21MB1388.namprd21.prod.outlook.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <187e72f2-3ecb-2693-4467-3da3752efde8@linux.intel.com>
+Date: Thu, 30 Apr 2020 14:14:17 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-04-30_12:2020-04-30,
- 2020-04-30 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0
- suspectscore=1 mlxscore=0 lowpriorityscore=0 adultscore=0 phishscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 clxscore=1015
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2004300150
+In-Reply-To: <DM6PR21MB138859ED52E4D8B7B1B634FEC8520@DM6PR21MB1388.namprd21.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,109 +67,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The latest version of the On-Chip Controller (OCC) has a different
-format for the temperature sensor data. Add a new temperature sensor
-version to handle this data.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/hwmon/occ/common.c | 65 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
 
-diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
-index 30e18eb60da7..3e580a83ae61 100644
---- a/drivers/hwmon/occ/common.c
-+++ b/drivers/hwmon/occ/common.c
-@@ -41,6 +41,14 @@ struct temp_sensor_2 {
- 	u8 value;
- } __packed;
- 
-+struct temp_sensor_10 {
-+	u32 sensor_id;
-+	u8 fru_type;
-+	u8 value;
-+	u8 throttle;
-+	u8 reserved;
-+} __packed;
-+
- struct freq_sensor_1 {
- 	u16 sensor_id;
- 	u16 value;
-@@ -307,6 +315,60 @@ static ssize_t occ_show_temp_2(struct device *dev,
- 	return snprintf(buf, PAGE_SIZE - 1, "%u\n", val);
- }
- 
-+static ssize_t occ_show_temp_10(struct device *dev,
-+				struct device_attribute *attr, char *buf)
-+{
-+	int rc;
-+	u32 val = 0;
-+	struct temp_sensor_10 *temp;
-+	struct occ *occ = dev_get_drvdata(dev);
-+	struct occ_sensors *sensors = &occ->sensors;
-+	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
-+
-+	rc = occ_update_response(occ);
-+	if (rc)
-+		return rc;
-+
-+	temp = ((struct temp_sensor_10 *)sensors->temp.data) + sattr->index;
-+
-+	switch (sattr->nr) {
-+	case 0:
-+		val = get_unaligned_be32(&temp->sensor_id);
-+		break;
-+	case 1:
-+		val = temp->value;
-+		if (val == OCC_TEMP_SENSOR_FAULT)
-+			return -EREMOTEIO;
-+
-+		/*
-+		 * VRM doesn't return temperature, only alarm bit. This
-+		 * attribute maps to tempX_alarm instead of tempX_input for
-+		 * VRM
-+		 */
-+		if (temp->fru_type != OCC_FRU_TYPE_VRM) {
-+			/* sensor not ready */
-+			if (val == 0)
-+				return -EAGAIN;
-+
-+			val *= 1000;
-+		}
-+		break;
-+	case 2:
-+		val = temp->fru_type;
-+		break;
-+	case 3:
-+		val = temp->value == OCC_TEMP_SENSOR_FAULT;
-+		break;
-+	case 4:
-+		val = temp->throttle * 1000;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return snprintf(buf, PAGE_SIZE - 1, "%u\n", val);
-+}
-+
- static ssize_t occ_show_freq_1(struct device *dev,
- 			       struct device_attribute *attr, char *buf)
- {
-@@ -745,6 +807,9 @@ static int occ_setup_sensor_attrs(struct occ *occ)
- 		num_attrs += (sensors->temp.num_sensors * 4);
- 		show_temp = occ_show_temp_2;
- 		break;
-+	case 0x10:
-+		show_temp = occ_show_temp_10;
-+		break;
- 	default:
- 		sensors->temp.num_sensors = 0;
- 	}
--- 
-2.24.0
+On 12/19/2019 12:45 AM, Neeraj Ladkani wrote:
+> It depends on requirements like in our use case, our PCIe devices are fixed so we can preprogram a array in JSON file to include all PCI functions from a device but for someone else for example OEM who is selling the servers, it not possible to predict all PCI device can be connected on PCIe slot so we can let system firmware send this information or do RdPCIRd via PECI.
 
+Sorry for not replying earlier.  I had some legal questions that I was 
+waiting to be resolved.
+
+Intel has a downstream solution that uses PECI to get the PCIe 
+information onto D-Bus which is then published to Redfish.  I can now 
+share what we have upstream if there is interest.
+
+If so, I guess I'd need a new 'peci-pcie' repo to check into?
+
+Thanks,
+-Jason>
+> I am not aware of any standards on "Implementation". I have seen typical implementations where system firmware sends post PCIe data ( exact schema) to BMC using redfish and BMC produces this data over redfish ( just act like passthrough).
+> 
+> Neeraj
+> 
+> -----Original Message-----
+> From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+> Sent: Wednesday, December 18, 2019 4:35 AM
+> To: Neeraj Ladkani <neladk@microsoft.com>
+> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+> Subject: Re: [EXTERNAL] how to get pci config space
+> 
+> Thanks Neeraj
+> 
+>> On Dec 18, 2019, at 2:18 AM, Neeraj Ladkani <neladk@microsoft.com> wrote:
+>>
+>> IMO, we only need DeviceID and VendorID fields from PCIe Config space
+> 
+> This would probably meet my need to dynamically tune fan control parameters.  Is it possible to populate instances of the pciedevice schema based on devid and vendorid alone?
+> 
+>> and we can let system firmware send this information during boot
+> 
+> This is how it works on Power systems before OpenBMC, but we have a custom protocol with a proprietary implementation.  The purpose of my note was to find out if there are typical implementations or even standards out there for doing this.
+> 
+>> or preprogram the information to BMC using EntityManager.
+> 
+> Can you elaborate on how this would work?  Given the number of pcie devices out there this seems like it would be hard to do it this way without a huge database of some kind on the bmc?
+> 
+>> Regarding BMC-CPU(via PECI), BMC needs to send PECI command to CPU. CPU should support RdPCICfg as supported PECI command and thus respond with data.
+> 
+> Ok - that sounds like its all in hardware.  But above it sounded like you suggest we skip RdPCICfg and instead let system firmware push this information down to the BMC - do I have it right?  If so why do you prefer that mechanism?
+> 
+> thx!
+> 
+> -brad
+> 
