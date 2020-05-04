@@ -2,92 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E76FA1C32F0
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 08:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B0E51C36F3
+	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 12:31:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49FtK84dyXzDqWT
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 16:30:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Fzfq0K6hzDqcq
+	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 20:31:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=u/v7CTJK; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=woQV47h3; 
+ dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49FtJM40MVzDqCX
- for <openbmc@lists.ozlabs.org>; Mon,  4 May 2020 16:30:10 +1000 (AEST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04461nMV020478; Mon, 4 May 2020 02:30:02 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30s1svaswb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 02:30:02 -0400
-Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 0446Kk0V071071;
- Mon, 4 May 2020 02:30:01 -0400
-Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
- [169.51.49.98])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30s1svasvh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 02:30:01 -0400
-Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
- by ppma03ams.nl.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 0446TO8L009987;
- Mon, 4 May 2020 06:30:00 GMT
-Received: from b06cxnps4074.portsmouth.uk.ibm.com
- (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
- by ppma03ams.nl.ibm.com with ESMTP id 30s0g5m440-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 06:29:59 +0000
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
- [9.149.105.58])
- by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0446TvDq54067208
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 May 2020 06:29:57 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF2484C04A;
- Mon,  4 May 2020 06:29:57 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37F374C046;
- Mon,  4 May 2020 06:29:56 +0000 (GMT)
-Received: from Deepaks-MacBook-Pro.local (unknown [9.79.232.237])
- by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Mon,  4 May 2020 06:29:55 +0000 (GMT)
-Subject: Re: OpenBMC 2.8 Release
-To: Andrew Jeffery <andrew@aj.id.au>, Gunnar Mills <gmills@linux.vnet.ibm.com>,
- Kurt Taylor <kurt.r.taylor@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- James Feist <james.feist@linux.intel.com>, Joel Stanley <joel@jms.id.au>
-References: <CAG5Oiwj+-OnkPMc+dfeo0P=MfREPz_7E+zBaMaYy6AHMLO+BxA@mail.gmail.com>
- <f44ba049-2678-c34e-4906-5ce0b9d416d3@linux.vnet.ibm.com>
- <6458b8d3-d460-40c0-9573-fa970cc8fd47@www.fastmail.com>
-From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-Message-ID: <588ffcf2-f766-952c-1ab3-da271d84516f@linux.vnet.ibm.com>
-Date: Mon, 4 May 2020 11:59:55 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <6458b8d3-d460-40c0-9573-fa970cc8fd47@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-05-04_02:2020-05-01,
- 2020-05-04 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- lowpriorityscore=0 malwarescore=0 phishscore=0 adultscore=0
- impostorscore=0 mlxlogscore=999 bulkscore=0 clxscore=1011 suspectscore=0
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2005040048
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Fzds2p87zDqRy
+ for <openbmc@lists.ozlabs.org>; Mon,  4 May 2020 20:30:40 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 877DF6BC;
+ Mon,  4 May 2020 06:30:35 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Mon, 04 May 2020 06:30:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=YoeFQ
+ Bw9D7vnH4QXxbMphWFvRaY3sDJQQBzDHl2zSfE=; b=u/v7CTJKrJYBPIcBMTDBB
+ +rcMwr1FwB2y0wCqrnLiQkwtD1oHfDhi6aFX2uP65/bgIiCG+HCCaKJ2J9PIFrQM
+ D2AlMoJfi6x8GtJm8o5JtK+AyDnQ1TTbnI0sjZyJNXnIMgpi8zN2OTBC9JXNLX7U
+ cxZJQhNZNV7ADJH0g2+a8vFA1fj1+4d24PplsWTlmDi0ngJpslnNvBBYHAAVnYxj
+ 1XnyR9FnxIF9EcyWGf1+bkRL3eu9wKmjXvpUcBNxMw2+hcuSTy1KnpUWWC3SsAaN
+ /x3wEqSlUZWzdjR2nBJwQ/wVIBVBIB6uP/NLmXn8kPsttnj4VwX7Q8drcbCfC9wI
+ Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=YoeFQBw9D7vnH4QXxbMphWFvRaY3sDJQQBzDHl2zS
+ fE=; b=woQV47h3ZF4kgyo4DuATwfcQedH4IKsTj+H06KLhgUxfF+nCR+C3Qzq8O
+ twfaCJddL/dDWFZOW2plJACt0W6r7N4fyZhEWzcOM8x/GRhfZ1/R0rvxLxx7DXhF
+ ZCJzd2gAoOLKfPLmAtOgu7HyZIYBHmLwT4xey9ctdiy6GyYgP6pTCBU1PBAeos88
+ cdwVGaykzIs9cf8Dx2oCJ84Y2kbXJgVsqPvFFIwNMTaAuvmwoQR4NhV35mW3CIVz
+ xmX/hOTkWWsoKDAlSQ7J9KzuuHcCMZgA9rKCY5toB2VwTiq+PV8HS6GaK3gN3GLT
+ jDTWfD1Kg/bf5mcXYs9UBN3HDFcRA==
+X-ME-Sender: <xms:yu6vXgWSrsuKsvB9IfVttd242vQWwei7xdGhBnkerRjKPZs7jZPCNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrjeeggddviecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepvdegkeehgeefvdfhteehhfduteetgeeugefgieeigeeuheekudegtdek
+ gfelgfehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:yu6vXlWu6AU9HRpsK5lK-vYJITgmaHeXkOMi3M0Z2xXoRTQ9pNOhEA>
+ <xmx:yu6vXkCpf0871b90bPfONNShb3yuKwDxl4t_CGp7gBtgEaEFPNVAAw>
+ <xmx:yu6vXogX1xHBX0cq4C7QV2peC8FZBYsTFGzXAXToNgd9Hfm-6P_PtQ>
+ <xmx:y-6vXuX0-DFOcV6L0jlHBHk1j_Zn3TQLCHlJ7niUaHcJH8sl9AzNiQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 9C2C0E00A9; Mon,  4 May 2020 06:30:34 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-351-g9981f4f-fmstable-20200421v1
+Mime-Version: 1.0
+Message-Id: <789e1bda-63d4-479e-bfa3-12bf1603ebbc@www.fastmail.com>
+In-Reply-To: <f197f55c-f7f2-c405-f3c8-bfbd5cd5e3bd@linux.vnet.ibm.com>
+References: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
+ <f197f55c-f7f2-c405-f3c8-bfbd5cd5e3bd@linux.vnet.ibm.com>
+Date: Mon, 04 May 2020 20:00:10 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Deepak Kodihalli" <dkodihal@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+Subject: Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,36 +96,52 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 04/05/20 10:43 am, Andrew Jeffery wrote:
-> 
-> 
-> On Thu, 30 Apr 2020, at 02:30, Gunnar Mills wrote:
->> On 4/29/2020 10:48 AM, Kurt Taylor wrote:
->>> just add it directly here:
->>> https://github.com/openbmc/openbmc/wiki/Current-Release-Content
->> Added:
->>   * Yocto refresh to "Dunfell" version 3.1
->>   * Redfish support for: full certificate management, complete LDAP
->> management, full sensor support, event service schema, task schema
->>   * Move to Redfish Specification 1.9.0
->>   * Redfish support for 2019.4 Schemas
->>   * GUI enhancements: LDAP, certificate management
->>
->> And removed "`Redfish configuration backup and restore function`".
->> James, Jason are you okay with the Redfish list above? Should we add
->> something about Storage & Drives? Anything else?
->>
->> Should we add something about the Kernel? "Move to 5.4"?
->>
->> Anything for PLDM / MCTP? For the 2.7 release it says "Partial PLDM
->> Support" and "Partial MCTP Support".
-> 
-> Certainly MCTP support is still "Partial". Slowly progressing with help from
-> Intel.
 
-Same goes for PLDM. There's definitely more PLDM specs and commands 
-implemented in libpldm since the 2.7 release though.
 
-> Andrew
-> 
+On Thu, 30 Apr 2020, at 17:08, Deepak Kodihalli wrote:
+> On 30/04/20 4:21 am, Nancy Yuen wrote:
+> > I've talked with some people a while back (long while back) about=20=
 
+> > multiple BMCs in a system.=C2=A0 Either for redundancy or managing s=
+eparate=20
+> > parts of a system.=C2=A0=C2=A0 I'm wondering what other people are t=
+hinking in=20
+> > this area if at all.
+> >=20
+> > We are considering similar designs and I'm looking into options for=20=
+
+> > BMC-BMC communications.=C2=A0 Some BMCs may not be externally=20
+> > accessible.=C2=A0Here are some options that we've looked at:
+> >=20
+> >  1. i2c/IPMB
+> >  2. usbnet/Redfish
+> >  3. i2c/MCTP/PLDM or something else?
+> >  4. internal network via switch chip/Redfish or MCTP
+> >=20
+> >  =C2=A0I'd like to reduce our use of IPMI so I want to avoid (1).
+> >=20
+> > ----------
+> > Nancy
+>=20
+> Hi Nancy,
+>=20
+> I think it depends on whether the BMCs need to talk to each other for=20=
+
+> platform management, or if they manage their own hosts and we need one=
+=20
+> of the BMCs to broadcast out of band requests and aggregate responses.=
+
+>=20
+> For the former I think PLDM over MCTP could be a good fit. This is mor=
+e=20
+> of an "inband" use-case in my opinion so I'm not sure if Redfish is we=
+ll=20
+> suited. For the latter, a Redfish based aggregation is a good option.
+
+I think this looks like the right approach. Certainly some thought would=
+ be
+required in designing the MCTP networks given the (intentionally) limite=
+d
+number of endpoint IDs.
+
+Andrew
