@@ -1,17 +1,17 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D59BA1C3B66
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 15:39:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2F1A1C3C4A
+	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 16:05:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49G3qm16WmzDqYJ
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 23:39:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49G4P425phzDqTY
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 00:04:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
  smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.vnet.ibm.com
@@ -19,57 +19,54 @@ Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49G3pg5f9dzDqY1
- for <openbmc@lists.ozlabs.org>; Mon,  4 May 2020 23:38:35 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49G4L73hzVzDqTF
+ for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 00:02:22 +1000 (AEST)
 Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
  by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 044DYbBu181887; Mon, 4 May 2020 09:38:30 -0400
-Received: from ppma03fra.de.ibm.com (6b.4a.5195.ip4.static.sl-reverse.com
- [149.81.74.107])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30s316w052-1
+ 044DYcAI181932; Mon, 4 May 2020 10:02:17 -0400
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 30s316wumk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 09:38:30 -0400
-Received: from pps.filterd (ppma03fra.de.ibm.com [127.0.0.1])
- by ppma03fra.de.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 044DUc10013690;
- Mon, 4 May 2020 13:38:28 GMT
-Received: from b06avi18626390.portsmouth.uk.ibm.com
- (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
- by ppma03fra.de.ibm.com with ESMTP id 30s0g5hybs-1
+ Mon, 04 May 2020 10:02:16 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 044Dww29003337;
+ Mon, 4 May 2020 14:02:16 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma04wdc.us.ibm.com with ESMTP id 30s0g6h164-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 13:38:28 +0000
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
- [9.149.105.58])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 044DbGkg66454014
+ Mon, 04 May 2020 14:02:16 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 044E2Eb322806930
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 May 2020 13:37:16 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 010FA4C044;
- Mon,  4 May 2020 13:38:26 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3265A4C046;
- Mon,  4 May 2020 13:38:25 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.79.190.93])
- by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Mon,  4 May 2020 13:38:24 +0000 (GMT)
-Subject: Re: Default Gateway for a system v/s Default gateway per Interface
-To: Johnathan Mantey <johnathanx.mantey@intel.com>, openbmc@lists.ozlabs.org
-References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
- <20200424152120.GD26818@heinlein.lan.stwcx.xyz>
- <CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com>
- <32f161d2-784e-8fe5-a00b-e9bec181a265@linux.vnet.ibm.com>
- <7c9a2b08-1224-9828-9175-41566532602a@intel.com>
- <1f8f6dd4-c62e-7165-c1ba-7466e407d594@linux.vnet.ibm.com>
- <35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Message-ID: <d523bbb9-59a4-4b15-6527-68f842c0f3ec@linux.vnet.ibm.com>
-Date: Mon, 4 May 2020 19:08:24 +0530
+ Mon, 4 May 2020 14:02:14 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BCE23780B3;
+ Mon,  4 May 2020 14:02:14 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 17FCB78191;
+ Mon,  4 May 2020 14:01:49 +0000 (GMT)
+Received: from [9.211.132.8] (unknown [9.211.132.8])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon,  4 May 2020 14:01:48 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.4 v2 2/3] fsi: occ: Add support for P10
+To: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>,
+ openbmc@lists.ozlabs.org
+References: <20200430220619.31943-1-eajames@linux.ibm.com>
+ <20200430220619.31943-3-eajames@linux.ibm.com>
+ <2f460711-1108-4dec-a578-ce18cdba0157@www.fastmail.com>
+From: Eddie James <eajames@linux.vnet.ibm.com>
+Message-ID: <3aaf88d9-e9d8-a163-f5d7-2594b2af3245@linux.vnet.ibm.com>
+Date: Mon, 4 May 2020 09:01:48 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com>
-Content-Type: multipart/alternative;
- boundary="------------C4E630BCD9B4078E7C068B99"
+In-Reply-To: <2f460711-1108-4dec-a578-ce18cdba0157@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
@@ -77,7 +74,7 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
  2020-05-04 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  impostorscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 mlxscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=2 mlxscore=0
  spamscore=0 malwarescore=0 mlxlogscore=999 adultscore=0 bulkscore=0
  clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2003020000 definitions=main-2005040111
@@ -95,359 +92,291 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------C4E630BCD9B4078E7C068B99
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
-
-On 4/29/20 12:19 AM, Johnathan Mantey wrote:
-> I think I understand most of your plan.
+On 5/4/20 12:04 AM, Andrew Jeffery wrote:
 >
-> What does it mean to "use the default metric"?
+> On Fri, 1 May 2020, at 07:36, Eddie James wrote:
+>> The P10 OCC has a different SRAM address for the command and response
+>> buffers. In addition, the SBE commands to access the SRAM have changed
+>> format. Add versioning to the driver to handle these differences.
+>>
+>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+>> ---
+>>   drivers/fsi/fsi-occ.c | 126 ++++++++++++++++++++++++++++++------------
+>>   1 file changed, 92 insertions(+), 34 deletions(-)
+>>
+>> diff --git a/drivers/fsi/fsi-occ.c b/drivers/fsi/fsi-occ.c
+>> index 7da9c81759ac..942eff4032b0 100644
+>> --- a/drivers/fsi/fsi-occ.c
+>> +++ b/drivers/fsi/fsi-occ.c
+>> @@ -14,6 +14,7 @@
+>>   #include <linux/mutex.h>
+>>   #include <linux/fsi-occ.h>
+>>   #include <linux/of.h>
+>> +#include <linux/of_device.h>
+>>   #include <linux/platform_device.h>
+>>   #include <linux/sched.h>
+>>   #include <linux/slab.h>
+>> @@ -24,8 +25,13 @@
+>>   #define OCC_CMD_DATA_BYTES	4090
+>>   #define OCC_RESP_DATA_BYTES	4089
+>>   
+>> -#define OCC_SRAM_CMD_ADDR	0xFFFBE000
+>> -#define OCC_SRAM_RSP_ADDR	0xFFFBF000
+>> +#define OCC_P9_SRAM_CMD_ADDR	0xFFFBE000
+>> +#define OCC_P9_SRAM_RSP_ADDR	0xFFFBF000
+>> +
+>> +#define OCC_P10_SRAM_CMD_ADDR	0xFFFFD000
+>> +#define OCC_P10_SRAM_RSP_ADDR	0xFFFFE000
+>> +
+>> +#define OCC_P10_SRAM_MODE	0x58	/* Normal mode, OCB channel 2 */
+>>   
+>>   /*
+>>    * Assume we don't have much FFDC, if we do we'll overflow and
+>> @@ -37,11 +43,14 @@
+>>   #define OCC_TIMEOUT_MS		1000
+>>   #define OCC_CMD_IN_PRG_WAIT_MS	50
+>>   
+>> +enum versions { occ_p9, occ_p10 };
+>> +
+>>   struct occ {
+>>   	struct device *dev;
+>>   	struct device *sbefifo;
+>>   	char name[32];
+>>   	int idx;
+>> +	enum versions version;
+>>   	struct miscdevice mdev;
+>>   	struct mutex occ_lock;
+>>   };
+>> @@ -235,29 +244,43 @@ static int occ_verify_checksum(struct
+>> occ_response *resp, u16 data_length)
+>>   	return 0;
+>>   }
+>>   
+>> -static int occ_getsram(struct occ *occ, u32 address, void *data, ssize_t len)
+>> +static int occ_getsram(struct occ *occ, u32 offset, void *data, ssize_t len)
+>>   {
+>>   	u32 data_len = ((len + 7) / 8) * 8;	/* must be multiples of 8 B */
+>> -	size_t resp_len, resp_data_len;
+>> -	__be32 *resp, cmd[5];
+>> -	int rc;
+>> +	size_t cmd_len, resp_len, resp_data_len;
+>> +	__be32 *resp, cmd[6];
+>> +	int idx = 0, rc;
+>>   
+>>   	/*
+>>   	 * Magic sequence to do SBE getsram command. SBE will fetch data from
+>>   	 * specified SRAM address.
+>>   	 */
+>> -	cmd[0] = cpu_to_be32(0x5);
+>> +	switch (occ->version) {
+>> +	default:
+>> +	case occ_p9:
+>> +		cmd_len = 5;
+>> +		cmd[2] = cpu_to_be32(1);	/* Normal mode */
+>> +		cmd[3] = cpu_to_be32(OCC_P9_SRAM_RSP_ADDR + offset);
+>> +		break;
+>> +	case occ_p10:
+>> +		idx = 1;
+>> +		cmd_len = 6;
+>> +		cmd[2] = cpu_to_be32(OCC_P10_SRAM_MODE);
+>> +		cmd[3] = 0;
+>> +		cmd[4] = cpu_to_be32(OCC_P10_SRAM_RSP_ADDR + offset);
+>> +		break;
+>> +	}
+>> +
+>> +	cmd[0] = cpu_to_be32(cmd_len);
+>>   	cmd[1] = cpu_to_be32(SBEFIFO_CMD_GET_OCC_SRAM);
+>> -	cmd[2] = cpu_to_be32(1);
+>> -	cmd[3] = cpu_to_be32(address);
+>> -	cmd[4] = cpu_to_be32(data_len);
+>> +	cmd[4 + idx] = cpu_to_be32(data_len);
+>>   
+>>   	resp_len = (data_len >> 2) + OCC_SBE_STATUS_WORDS;
+>>   	resp = kzalloc(resp_len << 2, GFP_KERNEL);
+>>   	if (!resp)
+>>   		return -ENOMEM;
+>>   
+>> -	rc = sbefifo_submit(occ->sbefifo, cmd, 5, resp, &resp_len);
+>> +	rc = sbefifo_submit(occ->sbefifo, cmd, cmd_len, resp, &resp_len);
+>>   	if (rc)
+>>   		goto free;
+>>   
+>> @@ -287,20 +310,21 @@ static int occ_getsram(struct occ *occ, u32
+>> address, void *data, ssize_t len)
+>>   	return rc;
+>>   }
+>>   
+>> -static int occ_putsram(struct occ *occ, u32 address, const void *data,
+>> -		       ssize_t len)
+>> +static int occ_putsram(struct occ *occ, const void *data, ssize_t len)
+>>   {
+>>   	size_t cmd_len, buf_len, resp_len, resp_data_len;
+>>   	u32 data_len = ((len + 7) / 8) * 8;	/* must be multiples of 8 B */
+>>   	__be32 *buf;
+>> -	int rc;
+>> +	int idx = 0, rc;
+>> +
+>> +	cmd_len = (occ->version == occ_p10) ? 6 : 5;
+>>   
+>>   	/*
+>>   	 * We use the same buffer for command and response, make
+>>   	 * sure it's big enough
+>>   	 */
+>>   	resp_len = OCC_SBE_STATUS_WORDS;
+>> -	cmd_len = (data_len >> 2) + 5;
+>> +	cmd_len += data_len >> 2;
+>>   	buf_len = max(cmd_len, resp_len);
+>>   	buf = kzalloc(buf_len << 2, GFP_KERNEL);
+>>   	if (!buf)
+>> @@ -312,11 +336,23 @@ static int occ_putsram(struct occ *occ, u32
+>> address, const void *data,
+>>   	 */
+>>   	buf[0] = cpu_to_be32(cmd_len);
+>>   	buf[1] = cpu_to_be32(SBEFIFO_CMD_PUT_OCC_SRAM);
+>> -	buf[2] = cpu_to_be32(1);
+>> -	buf[3] = cpu_to_be32(address);
+>> -	buf[4] = cpu_to_be32(data_len);
+>>   
+>> -	memcpy(&buf[5], data, len);
+>> +	switch (occ->version) {
+>> +	default:
+>> +	case occ_p9:
+>> +		buf[2] = cpu_to_be32(1);	/* Normal mode */
+>> +		buf[3] = cpu_to_be32(OCC_P9_SRAM_CMD_ADDR);
+>> +		break;
+>> +	case occ_p10:
+>> +		idx = 1;
+>> +		buf[2] = cpu_to_be32(OCC_P10_SRAM_MODE);
+>> +		buf[3] = 0;
+>> +		buf[4] = cpu_to_be32(OCC_P10_SRAM_CMD_ADDR);
+>> +		break;
+>> +	}
+>> +
+>> +	buf[4 + idx] = cpu_to_be32(data_len);
+>> +	memcpy(&buf[5 + idx], data, len);
+>>   
+>>   	rc = sbefifo_submit(occ->sbefifo, buf, cmd_len, buf, &resp_len);
+>>   	if (rc)
+>> @@ -356,21 +392,35 @@ static int occ_putsram(struct occ *occ, u32
+>> address, const void *data,
+>>   static int occ_trigger_attn(struct occ *occ)
+>>   {
+>>   	__be32 buf[OCC_SBE_STATUS_WORDS];
+>> -	size_t resp_len, resp_data_len;
+>> -	int rc;
+>> +	size_t cmd_len, resp_len, resp_data_len;
+>> +	int idx = 0, rc;
+>>   
+>> -	BUILD_BUG_ON(OCC_SBE_STATUS_WORDS < 7);
+>> +	BUILD_BUG_ON(OCC_SBE_STATUS_WORDS < 8);
+>>   	resp_len = OCC_SBE_STATUS_WORDS;
+>>   
+>> -	buf[0] = cpu_to_be32(0x5 + 0x2);        /* Chip-op length in words */
+>> +	switch (occ->version) {
+>> +	default:
+>> +	case occ_p9:
+>> +		cmd_len = 7;
+>> +		buf[2] = cpu_to_be32(3); /* Circular mode */
+>> +		buf[3] = 0;
+>> +		break;
+>> +	case occ_p10:
+>> +		idx = 1;
+>> +		cmd_len = 8;
+>> +		buf[2] = cpu_to_be32(0xd0); /* Circular mode, OCB Channel 1 */
+>> +		buf[3] = 0;
+>> +		buf[4] = 0;
+>> +		break;
+>> +	}
+>> +
+>> +	buf[0] = cpu_to_be32(cmd_len);		/* Chip-op length in words */
+>>   	buf[1] = cpu_to_be32(SBEFIFO_CMD_PUT_OCC_SRAM);
+>> -	buf[2] = cpu_to_be32(0x3);              /* Mode: Circular */
+>> -	buf[3] = cpu_to_be32(0x0);              /* Address: ignore in mode 3 */
+>> -	buf[4] = cpu_to_be32(0x8);              /* Data length in bytes */
+>> -	buf[5] = cpu_to_be32(0x20010000);       /* Trigger OCC attention */
+>> -	buf[6] = 0;
+>> +	buf[4 + idx] = cpu_to_be32(8);		/* Data length in bytes */
+>> +	buf[5 + idx] = cpu_to_be32(0x20010000);	/* Trigger OCC attention */
+>> +	buf[6 + idx] = 0;
+>>   
+>> -	rc = sbefifo_submit(occ->sbefifo, buf, 7, buf, &resp_len);
+>> +	rc = sbefifo_submit(occ->sbefifo, buf, cmd_len, buf, &resp_len);
+>>   	if (rc)
+>>   		goto error;
+>>   
+>> @@ -429,7 +479,7 @@ int fsi_occ_submit(struct device *dev, const void
+>> *request, size_t req_len,
+>>   
+>>   	/* Extract the seq_no from the command (first byte) */
+>>   	seq_no = *(const u8 *)request;
+>> -	rc = occ_putsram(occ, OCC_SRAM_CMD_ADDR, request, req_len);
+>> +	rc = occ_putsram(occ, request, req_len);
+>>   	if (rc)
+>>   		goto done;
+>>   
+>> @@ -440,7 +490,7 @@ int fsi_occ_submit(struct device *dev, const void
+>> *request, size_t req_len,
+>>   	/* Read occ response header */
+>>   	start = jiffies;
+>>   	do {
+>> -		rc = occ_getsram(occ, OCC_SRAM_RSP_ADDR, resp, 8);
+>> +		rc = occ_getsram(occ, 0, resp, 8);
+>>   		if (rc)
+>>   			goto done;
+>>   
+>> @@ -476,8 +526,7 @@ int fsi_occ_submit(struct device *dev, const void
+>> *request, size_t req_len,
+>>   	/* Grab the rest */
+>>   	if (resp_data_length > 1) {
+>>   		/* already got 3 bytes resp, also need 2 bytes checksum */
+>> -		rc = occ_getsram(occ, OCC_SRAM_RSP_ADDR + 8,
+>> -				 &resp->data[3], resp_data_length - 1);
+>> +		rc = occ_getsram(occ, 8, &resp->data[3], resp_data_length - 1);
+>>   		if (rc)
+>>   			goto done;
+>>   	}
+>> @@ -508,6 +557,7 @@ static int occ_probe(struct platform_device *pdev)
+>>   	struct occ *occ;
+>>   	struct platform_device *hwmon_dev;
+>>   	struct device *dev = &pdev->dev;
+>> +	const void *md =  of_device_get_match_data(dev);
+>>   	struct platform_device_info hwmon_dev_info = {
+>>   		.parent = dev,
+>>   		.name = "occ-hwmon",
+>> @@ -517,6 +567,7 @@ static int occ_probe(struct platform_device *pdev)
+>>   	if (!occ)
+>>   		return -ENOMEM;
+>>   
+>> +	occ->version = (enum versions)md;
+>>   	occ->dev = dev;
+>>   	occ->sbefifo = dev->parent;
+>>   	mutex_init(&occ->occ_lock);
+>> @@ -575,7 +626,14 @@ static int occ_remove(struct platform_device *pdev)
+>>   }
+>>   
+>>   static const struct of_device_id occ_match[] = {
+>> -	{ .compatible = "ibm,p9-occ" },
+>> +	{
+>> +		.compatible = "ibm,p9-occ",
+>> +		.data = (void *)occ_p9
+>> +	},
+>> +	{
+>> +		.compatible = "ibm,p10-occ",
+>> +		.data = (void *)occ_p10
+> Why not stick an ops struct pointer in .data and separate out the implementations
+> rather than stick a switch over the version in each of the affected functions?
 
-https://support.microsoft.com/en-in/help/299540/an-explanation-of-the-automatic-metric-feature-for-ipv4-routes
 
-Instead of user level application assigns the metric value, Let the 
-kernel decide which gateway should be used.
+I did try but I found I ended up with two copies of most of the code. 
+There is too much in common and no good way to split out the 
+processor-specific stuff without duplicating everything...
 
-I understand that there should be a way through which we should be able 
-to change the metric value  but that can be implemented later with some 
-thing like route management where user should be able to add 
-HostRoutes/Network routes etc, chnaging the values of the routes etc.
+
+Thanks,
+
+Eddie
+
 
 >
-> On 4/28/20 8:16 AM, Ratan Gupta wrote:
->>
->> Hi Jonathan,
->>
->> On 4/28/20 1:00 AM, Johnathan Mantey wrote:
->>> Ratan,
->>>
->>> Can you provide more info about how you plan to implement this?
->> I am not getting, Do you mean to say how to get the per interface 
->> gateway from system?  that would be through netlink, and during 
->> configuration we would use the systemd-networkd file configuration.
->>>
->>> The Redfish schemas already have a per IP addr Gateway entry, which 
->>> OBMC is ignoring. Is it better to modify the existing D-Bus schema 
->>> (i.e. versioning discussion), or just use what is presently in 
->>> existence?
->> Redfish schema are getting changed to accommodate this through the 
->> following issue https://github.com/DMTF/Redfish/issues/3609.
->>
->> The above issue(gateway/interface) exist only for the IPv4 redfish 
->> schema, IPv6 redfish is already having default gateway per interface
->>
->> http://redfish.dmtf.org/schemas/v1/EthernetInterface.v1_5_1.json#/definitions/EthernetInterface
->>
->>>
->>> That said, doing as you propose melds better with how IPMI (i.e Set 
->>> LAN Configuration Parameter 12) works.
->>>
->>> As Patrick pointed out, there's no IPMI or Redfish control over the 
->>> routing metric parameter. What are your thoughts on how to reconcile 
->>> applying a metric value?
->> We will go with default metric value as today as underlying stack 
->> tries for fallback gateway.
->>> I've long been desirous of getting Williams submission merged: 
->>> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/20799
->>> as it can be used to improve the collection of netlink stats.
->>>
->>> Redfish exacerbates this whole problem by allowing a collection of 
->>> static IP addresses (and a DHCP addr) per NIC, unlike IPMI which was 
->>> very one to one with IP addr/NIC.
->>>
->>> Thanks for investigating this and working to implement a solution.
->>>
->>> On 4/27/20 4:11 AM, Ratan Gupta wrote:
->>>>
->>>> Thanks Patrick, William for sharing the feedbacks
->>>>
->>>> I will start working on the changes.
->>>>
->>>>
->>>> On 4/24/20 11:15 PM, William Kennington wrote:
->>>>> Sounds good to me, we have needed this for a long time because the 
->>>>> current gateway configuration breaks our v6 stack with multiple NICs.
->>>>>
->>>>> On Fri, Apr 24, 2020 at 8:21 AM Patrick Williams 
->>>>> <patrick@stwcx.xyz <mailto:patrick@stwcx.xyz>> wrote:
->>>>>
->>>>>     On Fri, Apr 24, 2020 at 08:36:26PM +0530, Ratan Gupta wrote:
->>>>>     > ~~~~~~~~~~~~~
->>>>>     > Kernel IP routing table
->>>>>     > Destination     Gateway         Genmask Flags   MSS Window 
->>>>>     irtt
->>>>>     > Iface
->>>>>     > 0.0.0.0         19.168.2.1      0.0.0.0 UG        0
->>>>>     0          0
->>>>>     > eth0
->>>>>     > 0.0.0.0         10.10.10.1      0.0.0.0 UG        0
->>>>>     0          0
->>>>>     > eth1
->>>>>     > ~~~~~~~~~~~~~~
->>>>>     >
->>>>>     > Kernel will first try using the default gateway having
->>>>>     higher metric
->>>>>     > value and then fall back to the lower.
->>>>>
->>>>>     I'm not seeing us with an interface to adjust the metric for an
->>>>>     interface.  I think we need to add that at the same time?
->>>>>
->>>> Not now, As per my testing if metric value is not defined and both 
->>>> the routes
->>>>
->>>> having same metric then kernel tries one after other. We can bring 
->>>> the metric
->>>>
->>>> later.
->>>>
->>>>>       Otherwise, I
->>>>>     don't think we have a way to specify which interface
->>>>>     outside-the-subnet
->>>>>     should go (vs today we can set the default-gateway to the desired
->>>>>     interface's gateway).
->>>>>     -- 
->>>>>     Patrick Williams
->>>>>
->>>
->>> -- 
->>> Johnathan Mantey
->>> Senior Software Engineer
->>> *azad te**chnology partners*
->>> Contributing to Technology Innovation since 1992
->>> Phone: (503) 712-6764
->>> Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
->>
->> Ratan
->>
->
-> -- 
-> Johnathan Mantey
-> Senior Software Engineer
-> *azad te**chnology partners*
-> Contributing to Technology Innovation since 1992
-> Phone: (503) 712-6764
-> Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
->
-
---------------C4E630BCD9B4078E7C068B99
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 4/29/20 12:19 AM, Johnathan Mantey
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      I think I understand most of your plan.<br>
-      <br>
-      What does it mean to "use the default metric"?<br>
-    </blockquote>
-    <p><a class="moz-txt-link-freetext" href="https://support.microsoft.com/en-in/help/299540/an-explanation-of-the-automatic-metric-feature-for-ipv4-routes">https://support.microsoft.com/en-in/help/299540/an-explanation-of-the-automatic-metric-feature-for-ipv4-routes</a></p>
-    <p>Instead of user level application assigns the metric value, Let
-      the kernel decide which gateway should be used.</p>
-    <p>I understand that there should be a way through which we should
-      be able to change the metric value  but that can be implemented
-      later with some thing like route management where user should be
-      able to add HostRoutes/Network routes etc, chnaging the values of
-      the routes etc. <br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com"> <br>
-      <div class="moz-cite-prefix">On 4/28/20 8:16 AM, Ratan Gupta
-        wrote:<br>
-      </div>
-      <blockquote type="cite"
-        cite="mid:1f8f6dd4-c62e-7165-c1ba-7466e407d594@linux.vnet.ibm.com">
-        <meta http-equiv="Content-Type" content="text/html;
-          charset=UTF-8">
-        <p>Hi Jonathan,</p>
-        <div class="moz-cite-prefix">On 4/28/20 1:00 AM, Johnathan
-          Mantey wrote:<br>
-        </div>
-        <blockquote type="cite"
-          cite="mid:7c9a2b08-1224-9828-9175-41566532602a@intel.com">
-          Ratan,<br>
-          <br>
-          Can you provide more info about how you plan to implement
-          this?<br>
-        </blockquote>
-        I am not getting, Do you mean to say how to get the per
-        interface gateway from system?  that would be through netlink,
-        and during configuration we would use the systemd-networkd file
-        configuration.<br>
-        <blockquote type="cite"
-          cite="mid:7c9a2b08-1224-9828-9175-41566532602a@intel.com"> <br>
-          The Redfish schemas already have a per IP addr Gateway entry,
-          which OBMC is ignoring. Is it better to modify the existing
-          D-Bus schema (i.e. versioning discussion), or just use what is
-          presently in existence?<br>
-        </blockquote>
-        Redfish schema are getting changed to accommodate this through
-        the following issue <a class="moz-txt-link-freetext"
-          href="https://github.com/DMTF/Redfish/issues/3609"
-          moz-do-not-send="true">https://github.com/DMTF/Redfish/issues/3609</a>.<br>
-        <p>The above issue(gateway/interface) exist only for the IPv4
-          redfish schema, IPv6 redfish is already having default gateway
-          per interface <br>
-        </p>
-        <p><a class="moz-txt-link-freetext"
-href="http://redfish.dmtf.org/schemas/v1/EthernetInterface.v1_5_1.json#/definitions/EthernetInterface"
-            moz-do-not-send="true">http://redfish.dmtf.org/schemas/v1/EthernetInterface.v1_5_1.json#/definitions/EthernetInterface</a><br>
-        </p>
-        <blockquote type="cite"
-          cite="mid:7c9a2b08-1224-9828-9175-41566532602a@intel.com"> <br>
-          That said, doing as you propose melds better with how IPMI
-          (i.e Set LAN Configuration Parameter 12) works.<br>
-          <br>
-          As Patrick pointed out, there's no IPMI or Redfish control
-          over the routing metric parameter. What are your thoughts on
-          how to reconcile applying a metric value?<br>
-        </blockquote>
-        We will go with default metric value as today as underlying
-        stack tries for fallback gateway.
-        <blockquote type="cite"
-          cite="mid:7c9a2b08-1224-9828-9175-41566532602a@intel.com">
-          I've long been desirous of getting Williams submission merged:
-          <a class="moz-txt-link-freetext"
-href="https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/20799"
-            moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/20799</a><br>
-          as it can be used to improve the collection of netlink stats.<br>
-          <br>
-          Redfish exacerbates this whole problem by allowing a
-          collection of static IP addresses (and a DHCP addr) per NIC,
-          unlike IPMI which was very one to one with IP addr/NIC. <br>
-          <br>
-          Thanks for investigating this and working to implement a
-          solution.<br>
-          <br>
-          <div class="moz-cite-prefix">On 4/27/20 4:11 AM, Ratan Gupta
-            wrote:<br>
-          </div>
-          <blockquote type="cite"
-            cite="mid:32f161d2-784e-8fe5-a00b-e9bec181a265@linux.vnet.ibm.com">
-            <p>Thanks Patrick, William for sharing the feedbacks<br>
-            </p>
-            <p>I will start working on the changes.<br>
-            </p>
-            <p><br>
-            </p>
-            <div class="moz-cite-prefix">On 4/24/20 11:15 PM, William
-              Kennington wrote:<br>
-            </div>
-            <blockquote type="cite"
-cite="mid:CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com">
-              <div dir="ltr">Sounds good to me, we have needed this for
-                a long time because the current gateway configuration
-                breaks our v6 stack with multiple NICs.<br>
-              </div>
-              <br>
-              <div class="gmail_quote">
-                <div dir="ltr" class="gmail_attr">On Fri, Apr 24, 2020
-                  at 8:21 AM Patrick Williams &lt;<a
-                    href="mailto:patrick@stwcx.xyz"
-                    moz-do-not-send="true">patrick@stwcx.xyz</a>&gt;
-                  wrote:<br>
-                </div>
-                <blockquote class="gmail_quote" style="margin:0px 0px
-                  0px 0.8ex;border-left:1px solid
-                  rgb(204,204,204);padding-left:1ex">On Fri, Apr 24,
-                  2020 at 08:36:26PM +0530, Ratan Gupta wrote:<br>
-                  &gt; ~~~~~~~~~~~~~<br>
-                  &gt; Kernel IP routing table<br>
-                  &gt; Destination     Gateway         Genmask        
-                  Flags   MSS Window  irtt <br>
-                  &gt; Iface<br>
-                  &gt; 0.0.0.0         19.168.2.1      0.0.0.0        
-                  UG        0 0          0 <br>
-                  &gt; eth0<br>
-                  &gt; 0.0.0.0         10.10.10.1      0.0.0.0        
-                  UG        0 0          0 <br>
-                  &gt; eth1<br>
-                  &gt; ~~~~~~~~~~~~~~<br>
-                  &gt; <br>
-                  &gt; Kernel will first try using the default gateway
-                  having higher metric <br>
-                  &gt; value and then fall back to the lower.<br>
-                  <br>
-                  I'm not seeing us with an interface to adjust the
-                  metric for an<br>
-                  interface.  I think we need to add that at the same
-                  time?</blockquote>
-              </div>
-            </blockquote>
-            <p>Not now, As per my testing if metric value is not defined
-              and both the routes</p>
-            <p>having same metric then kernel tries one after other. We
-              can bring the metric</p>
-            <p>later.<br>
-            </p>
-            <blockquote type="cite"
-cite="mid:CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com">
-              <div class="gmail_quote">
-                <blockquote class="gmail_quote" style="margin:0px 0px
-                  0px 0.8ex;border-left:1px solid
-                  rgb(204,204,204);padding-left:1ex">  Otherwise, I<br>
-                  don't think we have a way to specify which interface
-                  outside-the-subnet<br>
-                  should go (vs today we can set the default-gateway to
-                  the desired<br>
-                  interface's gateway).<br>
-                  -- <br>
-                  Patrick Williams<br>
-                </blockquote>
-              </div>
-            </blockquote>
-          </blockquote>
-          <br>
-          <div class="moz-signature">-- <br>
-            <title></title>
-            <font color="#1F497D"><font face="Century Gothic">Johnathan
-                Mantey<br>
-                <small>Senior Software Engineer</small><br>
-                <big><font color="#555555"><small><b>azad te</b><b>chnology
-                        partners</b></small><br>
-                    <small><font color="#1F497D"><small>Contributing to
-                          Technology Innovation since 1992</small></font><small><br>
-                        <font color="#1F497D">Phone: (503) 712-6764<br>
-                          Email: <a
-                            href="mailto:johnathanx.mantey@intel.com"
-                            moz-do-not-send="true">johnathanx.mantey@intel.com</a></font></small><br>
-                    </small></font></big></font></font></div>
-        </blockquote>
-        <p><font color="#1F497D"><font face="Century Gothic">Ratan</font></font></p>
-      </blockquote>
-      <br>
-      <div class="moz-signature">-- <br>
-        <meta http-equiv="content-type" content="text/html;
-          charset=UTF-8">
-        <title></title>
-        <font color="#1F497D"><font face="Century Gothic">Johnathan
-            Mantey<br>
-            <small>Senior Software Engineer</small><br>
-            <big><font color="#555555"><small><b>azad te</b><b>chnology
-                    partners</b></small><br>
-                <small><font color="#1F497D"><small>Contributing to
-                      Technology Innovation since 1992</small></font><small><br>
-                    <font color="#1F497D">Phone: (503) 712-6764<br>
-                      Email: <a
-                        href="mailto:johnathanx.mantey@intel.com"
-                        moz-do-not-send="true">johnathanx.mantey@intel.com</a></font></small><br>
-                  <br>
-                </small></font></big></font></font> </div>
-    </blockquote>
-  </body>
-</html>
-
---------------C4E630BCD9B4078E7C068B99--
-
+> Andrew
