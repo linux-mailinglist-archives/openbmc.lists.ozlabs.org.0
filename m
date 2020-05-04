@@ -2,87 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18CD21C4961
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 00:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62E051C4987
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 00:21:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49GH8Q2fGHzDqYK
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 08:09:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49GHPX5NQZzDqXK
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 08:21:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::136;
+ helo=mail-lf1-x136.google.com; envelope-from=rhanley@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=rICIrqgw; dkim-atps=neutral
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com
+ [IPv6:2a00:1450:4864:20::136])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49GH7Z4JT9zDqMV
- for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 08:08:58 +1000 (AEST)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 044LWYpS074858
- for <openbmc@lists.ozlabs.org>; Mon, 4 May 2020 18:08:54 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30s50g13n4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 04 May 2020 18:08:54 -0400
-Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 044Lxomq132601
- for <openbmc@lists.ozlabs.org>; Mon, 4 May 2020 18:08:54 -0400
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30s50g13mw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 18:08:54 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 044M4oJR002085;
- Mon, 4 May 2020 22:08:53 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma01wdc.us.ibm.com with ESMTP id 30s0g641f1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 22:08:53 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 044M8rlT55509374
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 May 2020 22:08:53 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 03704AC094;
- Mon,  4 May 2020 22:08:53 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF53BAC08E;
- Mon,  4 May 2020 22:08:52 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon,  4 May 2020 22:08:52 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49GHNJ66ZNzDqQ8
+ for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 08:19:59 +1000 (AEST)
+Received: by mail-lf1-x136.google.com with SMTP id z22so11031510lfd.0
+ for <openbmc@lists.ozlabs.org>; Mon, 04 May 2020 15:19:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=kRaFpm9DvV7AFTl6o0t+vR2FQ1CygP2+Jl9Zbw/Gb/o=;
+ b=rICIrqgwRIRDJS1BfzBEbolgZQXyj/Zk7InuMUrPzw2Js09zHi5TTCZKF5arL4i9Ny
+ i2vBQM5likDkSyXe3UAvEWGe7R7qfMVEeApBxSdaXXKjycS3K9DGYYI/9gvBABKmHn9u
+ ORAyJ636pYIdkRO+MGZcbb+X/N8SCH2gPowKmEjPFvYVX2qYqXKdHxv9hejWdpydo/QL
+ 1Z8Cyhre8lkBksUg5Z8Wbj5ngHpCfa/31qR69IRB4IhawQZEDCxwmrSaLdjJAjG3thtX
+ HFT8rbLHh/UD87h7qcVK7JSpvl1ZUrN3J6l9Ugp2e5SCv2wcklSkNQhDkXu+74aqM+Z3
+ byzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=kRaFpm9DvV7AFTl6o0t+vR2FQ1CygP2+Jl9Zbw/Gb/o=;
+ b=B7EdfGkGUIdQlqXYme951HW6hoIj6lNxq6wmdC0lLKIEHiYd3UEoomJBtke3AZjcqC
+ XHKdrF3zZA5EO/DHL25tmQEx8Xd1GyJ1QRlL88cuyfOqgpaH+8+khqOUnlaUqxjDCoQh
+ HrHrOi0sxqw1ojOkZBmc+soM+yPnOgAGTTxPhaSboO8C1P/xzCBPWVvG9DogrXEbnRiD
+ trZg4kPJIka1pQiraIKqyXNgnadfpQ82/hkOmfkQEFZl4MPBvq59E4+vwnJ4mfio31bR
+ 52iQqXoN7YM0dJ8VOrZvRcYCo2oHQ43UDs6AYwOAYu40dSp3b/+Kabh8aZ8mtOxDh2Jk
+ RphA==
+X-Gm-Message-State: AGi0PuaPd0ozRS/Mv3gPd3atMjFvuDFhZirgQsoXe/V8DGTV2eeMg3Ie
+ /FGSpCzlBM2FOTVokGXOTDYOr3LGF+OFp969C0iS/N+I
+X-Google-Smtp-Source: APiQypLtr83UUr7iwjWSp2PLkzWbukdAG7ek7Tynyq2M0ctTTru0efb6Ym/T9EinI+J4vOsKtcIcbkxbmWR9RQWQGUk=
+X-Received: by 2002:a19:e013:: with SMTP id x19mr2506986lfg.49.1588630794230; 
+ Mon, 04 May 2020 15:19:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Mon, 04 May 2020 17:08:52 -0500
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: rgrs <rgrs@protonmail.com>
-Subject: Re: Setting up a system for first time
-In-Reply-To: <IsJ8ZyIQ3y0MDj6HTH_0rkhRb9VbXdh67uddwFYhenESjgI2EEDfuKY3jedGwQZrXELtYL7v34EqyAPj9Y9haqWzv6oMkARQ0rZjvO-aB5M=@protonmail.com>
-References: <3O7HBbmKi-6nXjhfbxxIFC2_17vjRSv84dvD3kk0lKURP-469mYH0pa_Xkb38JIDG6kFXn6jbyvFHQIiz8-LqfWX1Uvlqdn-Av_TYLJBzU4=@protonmail.com>
- <IsJ8ZyIQ3y0MDj6HTH_0rkhRb9VbXdh67uddwFYhenESjgI2EEDfuKY3jedGwQZrXELtYL7v34EqyAPj9Y9haqWzv6oMkARQ0rZjvO-aB5M=@protonmail.com>
-Message-ID: <2e8ba477c2a3128ba4e88d44e1bad6d5@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-05-04_11:2020-05-04,
- 2020-05-04 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- clxscore=1015 impostorscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 phishscore=0 mlxscore=0 spamscore=0 mlxlogscore=815
- bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2005040169
+References: <CAH1kD+Y1u0CHZ_6PRV8GKmzSq49sg24QD1X99KZRZK=GN-Aedw@mail.gmail.com>
+ <11791.1588627267@localhost>
+In-Reply-To: <11791.1588627267@localhost>
+From: Richard Hanley <rhanley@google.com>
+Date: Mon, 4 May 2020 15:19:42 -0700
+Message-ID: <CAH1kD+bKnGtca3SzAyaSwz4pQHG9EMWJfKHLtGHXMh=_jOTCtw@mail.gmail.com>
+Subject: Re: Survey for Certificate Management Needs
+To: Michael Richardson <mcr@sandelman.ca>
+Content-Type: multipart/alternative; boundary="0000000000002bb95905a4d9eef3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,53 +73,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+--0000000000002bb95905a4d9eef3
+Content-Type: text/plain; charset="UTF-8"
 
-On 2020-04-27 10:53, rgrs wrote:
-> Hi,
-> 
-> Please can anyone help with this?
-> 
-> when just same phosphor image flashed on both SPI, I am not able to
-> upgrade to new firmware.
-> 
-> What is the right way to install images to new board with empty SPIs?
-> 
+On Mon, May 4, 2020 at 2:21 PM Michael Richardson <mcr@sandelman.ca> wrote:
 
-Yeah there are some limitations that I'll explain below, the 
-recommendation
-would be to build a 2nd image with a dummy commit so that you have 2 
-version
-ids to start with, then you can code update to a new 3rd image from 
-there
-when you need to put new code on the system.
+> Richard Hanley <rhanley@google.com> wrote:
+>     > 3) Finally we need to
+>     > support revocations lists. AFIAK, there is no support for this today.
+>
+> What are the certificates you speak of for?
+> If you are talking about HTTPs end-point certificates for bmcweb, then
+> there
+> is nothing to do for CRLs, because CRLs aren't a function of the HTTPS
+> End-Entity certificate you are worried about.
+>
+> They are provided by the CA, and it's a problem of the HTTP browser to
+> validate.
+>
+So I don't understand your CRL point.
+>
+>
+I think that CRL becomes more of an issue when communication is
+mutually authenticated.  If a client is given a certificate from the CA,
+then there should be a way for that client's cert to be revoked on a BMC.
 
->> 
->> The board has two SPI NOR for BMC flash.
->> 
->> If I flash same image on both SPI, WebUI displays only one entry
->> since versioning is same.
 
-Right. This is a limitation that we're exploring on solving so that the
-customer can have their 'backup' devices at the same software version.
+>     > Finally, I'm expecting we will need an out of band mechanism to talk
+>     > with hardware root of trust (e.g. OpenTitan https://opentitan.org/).
+>
+> Possibly.
+>
+> --
+> ]               Never tell me the odds!                 | ipv6 mesh
+> networks [
+> ]   Michael Richardson, Sandelman Software Works        |    IoT
+> architect   [
+> ]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on
+> rails    [
+>
+>
+>
 
->> 
->> When I flash two different images in each SPI, activation of second
->> image is not working.
->> 
->> U-boot goes into a loop and is not able boot.
+--0000000000002bb95905a4d9eef3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The issue is that u-boot can't read the volume from the alternate SPI,
-therefore during a code update it creates 2 volumes with the new kernel 
-image,
-one on each SPI, to work around this limitation.
-After flashing the two SPIs, one with a dummy commit, use code update to
-flash a new image.
+<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Mon, May 4, 2020 at 2:21 PM Michael Ri=
+chardson &lt;<a href=3D"mailto:mcr@sandelman.ca">mcr@sandelman.ca</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Richard Ha=
+nley &lt;<a href=3D"mailto:rhanley@google.com" target=3D"_blank">rhanley@go=
+ogle.com</a>&gt; wrote:<br>
+=C2=A0 =C2=A0 &gt; 3) Finally we need to<br>
+=C2=A0 =C2=A0 &gt; support revocations lists. AFIAK, there is no support fo=
+r this today.<br>
+<br>
+What are the certificates you speak of for?<br>
+If you are talking about HTTPs end-point certificates for bmcweb, then ther=
+e<br>
+is nothing to do for CRLs, because CRLs aren&#39;t a function of the HTTPS<=
+br>
+End-Entity certificate you are worried about.<br>
+<br>
+They are provided by the CA, and it&#39;s a problem of the HTTP browser to<=
+br>
+validate.<br></blockquote><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+>
+So I don&#39;t understand your CRL point.<br>
+<br></blockquote><div><br></div><div>I think that CRL becomes more of an is=
+sue when communication is mutually=C2=A0authenticated.=C2=A0 If a client is=
+ given a certificate from the CA, then there should be a way for that clien=
+t&#39;s cert to be revoked on a BMC.=C2=A0=C2=A0</div><div>=C2=A0</div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 &gt; Finally, I&#39;m expecting we will need an out of band m=
+echanism to talk<br>
+=C2=A0 =C2=A0 &gt; with hardware root of trust (e.g. OpenTitan <a href=3D"h=
+ttps://opentitan.org/" rel=3D"noreferrer" target=3D"_blank">https://opentit=
+an.org/</a>).<br>
+<br>
+Possibly.<br>
+<br>
+--<br>
+]=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Never tell me the o=
+dds!=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| ipv6 me=
+sh networks [<br>
+]=C2=A0 =C2=A0Michael Richardson, Sandelman Software Works=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 |=C2=A0 =C2=A0 IoT architect=C2=A0 =C2=A0[<br>
+]=C2=A0 =C2=A0 =C2=A0<a href=3D"mailto:mcr@sandelman.ca" target=3D"_blank">=
+mcr@sandelman.ca</a>=C2=A0 <a href=3D"http://www.sandelman.ca/" rel=3D"nore=
+ferrer" target=3D"_blank">http://www.sandelman.ca/</a>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 |=C2=A0 =C2=A0ruby on rails=C2=A0 =C2=A0 [<br>
+<br>
+<br>
+</blockquote></div></div>
 
->> 
->> Do we have any sequence to be followed when flashing the images?
->> 
+--0000000000002bb95905a4d9eef3--
