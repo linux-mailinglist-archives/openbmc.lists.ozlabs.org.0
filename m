@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B0E51C36F3
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 12:31:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10ED11C3764
+	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 12:59:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Fzfq0K6hzDqcq
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 20:31:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49G0GX0XzkzDqdc
+	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 20:59:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,71 +17,70 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=u/v7CTJK; 
+ header.s=fm2 header.b=tsIppicN; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=woQV47h3; 
+ header.a=rsa-sha256 header.s=fm2 header.b=eeIwLfxR; 
  dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Fzds2p87zDqRy
- for <openbmc@lists.ozlabs.org>; Mon,  4 May 2020 20:30:40 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49G0Fj3X7tzDqBv
+ for <openbmc@lists.ozlabs.org>; Mon,  4 May 2020 20:58:17 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 877DF6BC;
- Mon,  4 May 2020 06:30:35 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 77BC244E;
+ Mon,  4 May 2020 06:58:14 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Mon, 04 May 2020 06:30:35 -0400
+ by compute3.internal (MEProxy); Mon, 04 May 2020 06:58:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm2; bh=YoeFQ
- Bw9D7vnH4QXxbMphWFvRaY3sDJQQBzDHl2zSfE=; b=u/v7CTJKrJYBPIcBMTDBB
- +rcMwr1FwB2y0wCqrnLiQkwtD1oHfDhi6aFX2uP65/bgIiCG+HCCaKJ2J9PIFrQM
- D2AlMoJfi6x8GtJm8o5JtK+AyDnQ1TTbnI0sjZyJNXnIMgpi8zN2OTBC9JXNLX7U
- cxZJQhNZNV7ADJH0g2+a8vFA1fj1+4d24PplsWTlmDi0ngJpslnNvBBYHAAVnYxj
- 1XnyR9FnxIF9EcyWGf1+bkRL3eu9wKmjXvpUcBNxMw2+hcuSTy1KnpUWWC3SsAaN
- /x3wEqSlUZWzdjR2nBJwQ/wVIBVBIB6uP/NLmXn8kPsttnj4VwX7Q8drcbCfC9wI
- Q==
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=u/R9BI0RhV5sOy5h8tq4IMky50+BPuv
+ hHU6alZgwRwg=; b=tsIppicN/kjw66wkqKbc6qPsJEQtgmcsONXkl/w7RdzpFsf
+ 8SS3VU/8/GzuxjSMMLrgX7X++ApZPflhCucM4BJhWAY0wVZxau7+ztv6ZqdhP9Qc
+ cBF84bMqqEEMWet7//6+iXHVDHPDdf2Kgh8N5kWLff5iLtZKjLMDHrZFojTfOr27
+ 1wQ6ZVe1Ipq9fek9yHJd/tDQPy/IeQilCiwkbNc5+Mn6VLiUIe39k4wCngnvTJu8
+ PDxf9qvD/Bima6t/s9DRPykQyPDtVispI7XWFNjxUZDvny4hr/bNhmOABBHFRdR3
+ bkOhYI8Yp3YPGUI2tysO2rRIocb/iKXbRDDxvoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=YoeFQBw9D7vnH4QXxbMphWFvRaY3sDJQQBzDHl2zS
- fE=; b=woQV47h3ZF4kgyo4DuATwfcQedH4IKsTj+H06KLhgUxfF+nCR+C3Qzq8O
- twfaCJddL/dDWFZOW2plJACt0W6r7N4fyZhEWzcOM8x/GRhfZ1/R0rvxLxx7DXhF
- ZCJzd2gAoOLKfPLmAtOgu7HyZIYBHmLwT4xey9ctdiy6GyYgP6pTCBU1PBAeos88
- cdwVGaykzIs9cf8Dx2oCJ84Y2kbXJgVsqPvFFIwNMTaAuvmwoQR4NhV35mW3CIVz
- xmX/hOTkWWsoKDAlSQ7J9KzuuHcCMZgA9rKCY5toB2VwTiq+PV8HS6GaK3gN3GLT
- jDTWfD1Kg/bf5mcXYs9UBN3HDFcRA==
-X-ME-Sender: <xms:yu6vXgWSrsuKsvB9IfVttd242vQWwei7xdGhBnkerRjKPZs7jZPCNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrjeeggddviecutefuodetggdotefrodftvf
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=u/R9BI
+ 0RhV5sOy5h8tq4IMky50+BPuvhHU6alZgwRwg=; b=eeIwLfxR/XA1KDt8JyCpZ3
+ vux/GFAfRJc+oBfaCr7t2KjiBjTMP96BZfS3/+Al4U41SgLil1pBOpUsNl6pWDCQ
+ RQLjymGmo0vCkuSOGFCjYfLyKnkvZfK7REe1sztxh562k9ShTSxozz+qkmMmDzdz
+ f3XVhmQ88fhcAsBv1YO7kbLs7Hdn6abYGY1SjHyLhCbNhZK9gt7VgqASo6YJvGmM
+ CbaH6JaMrltK3MeFNYRlAfX3dUdC7mqD/PhHd2f11ZFbE+PWdpb2UyaTGUrrQRGT
+ OIW1hdthEAVLCO5enf/3WJRv9fctY7A00nWVowXiksg/fqEFnQ6xui9I1cXuPmVA
+ ==
+X-ME-Sender: <xms:RfWvXmSJVMwv_YQw2giVUnWTkQzwu2U4yK5yNSWUwQm0EFlxkQDrvQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrjeeggdefudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtgfesthhqredtreerjeenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhepvdegkeehgeefvdfhteehhfduteetgeeugefgieeigeeuheekudegtdek
- gfelgfehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:yu6vXlWu6AU9HRpsK5lK-vYJITgmaHeXkOMi3M0Z2xXoRTQ9pNOhEA>
- <xmx:yu6vXkCpf0871b90bPfONNShb3yuKwDxl4t_CGp7gBtgEaEFPNVAAw>
- <xmx:yu6vXogX1xHBX0cq4C7QV2peC8FZBYsTFGzXAXToNgd9Hfm-6P_PtQ>
- <xmx:y-6vXuX0-DFOcV6L0jlHBHk1j_Zn3TQLCHlJ7niUaHcJH8sl9AzNiQ>
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:RfWvXmLcFEjf7PyDb0_RQ3YiAgkEfmkbDobCixSqJT9vAQKcudAIsw>
+ <xmx:RfWvXkkdu9p3ymOkDwCvstBobkLNRzIB7c2zEFyJ_I8HelINfBdsBg>
+ <xmx:RfWvXvgg4XX4j9VDA-VVNZmd_VkUiLQj3Bdc2ba1-Whpe_WxOUngxg>
+ <xmx:RvWvXjU1zB9C8QVarfYLZt87FtxdZwfbi4aiCEFkGZtcOnWY2-PyEQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 9C2C0E00A9; Mon,  4 May 2020 06:30:34 -0400 (EDT)
+ id B59CDE00C7; Mon,  4 May 2020 06:58:13 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.3.0-dev0-351-g9981f4f-fmstable-20200421v1
 Mime-Version: 1.0
-Message-Id: <789e1bda-63d4-479e-bfa3-12bf1603ebbc@www.fastmail.com>
-In-Reply-To: <f197f55c-f7f2-c405-f3c8-bfbd5cd5e3bd@linux.vnet.ibm.com>
-References: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
- <f197f55c-f7f2-c405-f3c8-bfbd5cd5e3bd@linux.vnet.ibm.com>
-Date: Mon, 04 May 2020 20:00:10 +0930
+Message-Id: <569b80cc-aa29-41dd-9edb-15c140d8c39a@www.fastmail.com>
+In-Reply-To: <CAMXw96PaiyjPY2+Zk-BFRquWYPqtzJhCFtUQuoRudurOJK9iLA@mail.gmail.com>
+References: <CAMXw96O6LpiR5CsmY4e_m2K-HNm_uHdRvRavf5iBSs1RqHYE6g@mail.gmail.com>
+ <CAARXrtnLOFVT2TuBa=mPBzVv1tXtrPEbqjms1d2AiX3n4L9wag@mail.gmail.com>
+ <CAMXw96PaiyjPY2+Zk-BFRquWYPqtzJhCFtUQuoRudurOJK9iLA@mail.gmail.com>
+Date: Mon, 04 May 2020 20:27:53 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Deepak Kodihalli" <dkodihal@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
-Subject: Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Zhenfei Tai" <ztai@google.com>, Mine <mine260309@gmail.com>
+Subject: Re: Error with QEMU
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,55 +92,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Zhenfei Tai,
 
+On Wed, 29 Apr 2020, at 02:18, Zhenfei Tai wrote:
+> Thanks for the info. 
+> For me it just hangs there.
 
-On Thu, 30 Apr 2020, at 17:08, Deepak Kodihalli wrote:
-> On 30/04/20 4:21 am, Nancy Yuen wrote:
-> > I've talked with some people a while back (long while back) about=20=
+It's hard to help without knowing exactly how you're launching qemu. Can you
+provide the command line that you're using and tell us what BMC image you
+are trying to run?
 
-> > multiple BMCs in a system.=C2=A0 Either for redundancy or managing s=
-eparate=20
-> > parts of a system.=C2=A0=C2=A0 I'm wondering what other people are t=
-hinking in=20
-> > this area if at all.
-> >=20
-> > We are considering similar designs and I'm looking into options for=20=
-
-> > BMC-BMC communications.=C2=A0 Some BMCs may not be externally=20
-> > accessible.=C2=A0Here are some options that we've looked at:
-> >=20
-> >  1. i2c/IPMB
-> >  2. usbnet/Redfish
-> >  3. i2c/MCTP/PLDM or something else?
-> >  4. internal network via switch chip/Redfish or MCTP
-> >=20
-> >  =C2=A0I'd like to reduce our use of IPMI so I want to avoid (1).
-> >=20
-> > ----------
-> > Nancy
->=20
-> Hi Nancy,
->=20
-> I think it depends on whether the BMCs need to talk to each other for=20=
-
-> platform management, or if they manage their own hosts and we need one=
-=20
-> of the BMCs to broadcast out of band requests and aggregate responses.=
-
->=20
-> For the former I think PLDM over MCTP could be a good fit. This is mor=
-e=20
-> of an "inband" use-case in my opinion so I'm not sure if Redfish is we=
-ll=20
-> suited. For the latter, a Redfish based aggregation is a good option.
-
-I think this looks like the right approach. Certainly some thought would=
- be
-required in designing the MCTP networks given the (intentionally) limite=
-d
-number of endpoint IDs.
+Cheers,
 
 Andrew
