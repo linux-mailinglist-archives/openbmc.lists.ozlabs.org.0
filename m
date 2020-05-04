@@ -2,82 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2F1A1C3C4A
-	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 16:05:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DCAD41C3DA5
+	for <lists+openbmc@lfdr.de>; Mon,  4 May 2020 16:55:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49G4P425phzDqTY
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 00:04:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49G5W413D1zDqXg
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 00:55:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e32;
+ helo=mail-vs1-xe32.google.com; envelope-from=sunithaharish04@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=iM3/h3AN; dkim-atps=neutral
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com
+ [IPv6:2607:f8b0:4864:20::e32])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49G4L73hzVzDqTF
- for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 00:02:22 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 044DYcAI181932; Mon, 4 May 2020 10:02:17 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0b-001b2d01.pphosted.com with ESMTP id 30s316wumk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 10:02:16 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 044Dww29003337;
- Mon, 4 May 2020 14:02:16 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma04wdc.us.ibm.com with ESMTP id 30s0g6h164-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2020 14:02:16 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 044E2Eb322806930
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 May 2020 14:02:14 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BCE23780B3;
- Mon,  4 May 2020 14:02:14 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 17FCB78191;
- Mon,  4 May 2020 14:01:49 +0000 (GMT)
-Received: from [9.211.132.8] (unknown [9.211.132.8])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon,  4 May 2020 14:01:48 +0000 (GMT)
-Subject: Re: [PATCH linux dev-5.4 v2 2/3] fsi: occ: Add support for P10
-To: Andrew Jeffery <andrew@aj.id.au>, Eddie James <eajames@linux.ibm.com>,
- openbmc@lists.ozlabs.org
-References: <20200430220619.31943-1-eajames@linux.ibm.com>
- <20200430220619.31943-3-eajames@linux.ibm.com>
- <2f460711-1108-4dec-a578-ce18cdba0157@www.fastmail.com>
-From: Eddie James <eajames@linux.vnet.ibm.com>
-Message-ID: <3aaf88d9-e9d8-a163-f5d7-2594b2af3245@linux.vnet.ibm.com>
-Date: Mon, 4 May 2020 09:01:48 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49G5SD3JZtzDqSB
+ for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 00:52:35 +1000 (AEST)
+Received: by mail-vs1-xe32.google.com with SMTP id y185so11278183vsy.8
+ for <openbmc@lists.ozlabs.org>; Mon, 04 May 2020 07:52:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Si4u1G8Df82Ju84ZlEbt+nLi7dOzt/JTTkj2OZma3co=;
+ b=iM3/h3ANn6u7/z1H6IWdiyCVOeib5HWnf/aVoxNjUkfoFMC1e4+W0cKMu9ZFUoyyB1
+ FC8VT2OAnx5P15ERWaF4EqUYnQp8kD5VK4HOJMGIZURtu1k2IEn8ygePl/z291xffrdB
+ GP9f5HtYzraJ1uyy0MWSCvRahA9TenrDBSHlGsP1u5TCUsxE8sM2pkqrijJRa6TFeRrd
+ TVbPoSM6DpClNlAqdeNUsGTwZ2qsaX+N3J/toFO2j2O5c+bmBtxM0o8+AJxW2G0AYsuV
+ 59g6yJRmIUyDXxvPqqK8U2BJYIETf/ZjVBIe0EYamG02xDMPJNZ1oSUHBvZ5lbDPXJNx
+ axEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Si4u1G8Df82Ju84ZlEbt+nLi7dOzt/JTTkj2OZma3co=;
+ b=jXnKRNSzfOfBT8AJB3M2r0AVTduWoM+LVZypSpkCyPG1N8pkzZFJMRbt18/w5lv6ks
+ vJ9OXFAsqlJdP8fKbv8rpBOShg9MOFup0/ejkecTa6+OBxMzcrO697Ftvmho837k97R4
+ jkiNmSIq16MzKKv28fshrG969Jxiu7j+xhmyqCjOhI2fDaeH/CQk0xe0Lyq8kp8WnW9A
+ KZsKqkT8larmQqhk3lgFTgSUeKtIEHXXOv8r3K96+UB19MYcapbixaeazMuaKoPS1VnF
+ CA1U7YSuWurECWLYMlXJqnM11We2Dv+fkEqmlLg84gQ8snidBfKKYxurU7vGkQ+ojEjs
+ Y3PA==
+X-Gm-Message-State: AGi0Pubz0pqg/KKNR0XSUacLPxpx0Lv/ihxlt0sje1UgoES+logu1RbM
+ BkUf0GmduR1MS5ILjyp36IxqFT2u+LHrqy9dlPo=
+X-Google-Smtp-Source: APiQypKT1pepry6rTBTf7FcJiTHRjdklf4keZVHKLnu4D9Luja9SeZy1XZptaJ+GA/6eMckcs9VFWh8pNK8+0W+dH7E=
+X-Received: by 2002:a67:407:: with SMTP id 7mr11080579vse.95.1588603950834;
+ Mon, 04 May 2020 07:52:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2f460711-1108-4dec-a578-ce18cdba0157@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-05-04_07:2020-05-04,
- 2020-05-04 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=2 mlxscore=0
- spamscore=0 malwarescore=0 mlxlogscore=999 adultscore=0 bulkscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2005040111
+From: Sunitha Harish <sunithaharish04@gmail.com>
+Date: Mon, 4 May 2020 20:22:18 +0530
+Message-ID: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
+Subject: Storing host data on the BMC
+To: patrick@stwcx.xyz, dkodihal@in.ibm.com, suryakanth.sekar@linux.intel.com, 
+ openbmc <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000002da98c05a4d3ae69"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,291 +73,114 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000002da98c05a4d3ae69
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/4/20 12:04 AM, Andrew Jeffery wrote:
->
-> On Fri, 1 May 2020, at 07:36, Eddie James wrote:
->> The P10 OCC has a different SRAM address for the command and response
->> buffers. In addition, the SBE commands to access the SRAM have changed
->> format. Add versioning to the driver to handle these differences.
->>
->> Signed-off-by: Eddie James <eajames@linux.ibm.com>
->> ---
->>   drivers/fsi/fsi-occ.c | 126 ++++++++++++++++++++++++++++++------------
->>   1 file changed, 92 insertions(+), 34 deletions(-)
->>
->> diff --git a/drivers/fsi/fsi-occ.c b/drivers/fsi/fsi-occ.c
->> index 7da9c81759ac..942eff4032b0 100644
->> --- a/drivers/fsi/fsi-occ.c
->> +++ b/drivers/fsi/fsi-occ.c
->> @@ -14,6 +14,7 @@
->>   #include <linux/mutex.h>
->>   #include <linux/fsi-occ.h>
->>   #include <linux/of.h>
->> +#include <linux/of_device.h>
->>   #include <linux/platform_device.h>
->>   #include <linux/sched.h>
->>   #include <linux/slab.h>
->> @@ -24,8 +25,13 @@
->>   #define OCC_CMD_DATA_BYTES	4090
->>   #define OCC_RESP_DATA_BYTES	4089
->>   
->> -#define OCC_SRAM_CMD_ADDR	0xFFFBE000
->> -#define OCC_SRAM_RSP_ADDR	0xFFFBF000
->> +#define OCC_P9_SRAM_CMD_ADDR	0xFFFBE000
->> +#define OCC_P9_SRAM_RSP_ADDR	0xFFFBF000
->> +
->> +#define OCC_P10_SRAM_CMD_ADDR	0xFFFFD000
->> +#define OCC_P10_SRAM_RSP_ADDR	0xFFFFE000
->> +
->> +#define OCC_P10_SRAM_MODE	0x58	/* Normal mode, OCB channel 2 */
->>   
->>   /*
->>    * Assume we don't have much FFDC, if we do we'll overflow and
->> @@ -37,11 +43,14 @@
->>   #define OCC_TIMEOUT_MS		1000
->>   #define OCC_CMD_IN_PRG_WAIT_MS	50
->>   
->> +enum versions { occ_p9, occ_p10 };
->> +
->>   struct occ {
->>   	struct device *dev;
->>   	struct device *sbefifo;
->>   	char name[32];
->>   	int idx;
->> +	enum versions version;
->>   	struct miscdevice mdev;
->>   	struct mutex occ_lock;
->>   };
->> @@ -235,29 +244,43 @@ static int occ_verify_checksum(struct
->> occ_response *resp, u16 data_length)
->>   	return 0;
->>   }
->>   
->> -static int occ_getsram(struct occ *occ, u32 address, void *data, ssize_t len)
->> +static int occ_getsram(struct occ *occ, u32 offset, void *data, ssize_t len)
->>   {
->>   	u32 data_len = ((len + 7) / 8) * 8;	/* must be multiples of 8 B */
->> -	size_t resp_len, resp_data_len;
->> -	__be32 *resp, cmd[5];
->> -	int rc;
->> +	size_t cmd_len, resp_len, resp_data_len;
->> +	__be32 *resp, cmd[6];
->> +	int idx = 0, rc;
->>   
->>   	/*
->>   	 * Magic sequence to do SBE getsram command. SBE will fetch data from
->>   	 * specified SRAM address.
->>   	 */
->> -	cmd[0] = cpu_to_be32(0x5);
->> +	switch (occ->version) {
->> +	default:
->> +	case occ_p9:
->> +		cmd_len = 5;
->> +		cmd[2] = cpu_to_be32(1);	/* Normal mode */
->> +		cmd[3] = cpu_to_be32(OCC_P9_SRAM_RSP_ADDR + offset);
->> +		break;
->> +	case occ_p10:
->> +		idx = 1;
->> +		cmd_len = 6;
->> +		cmd[2] = cpu_to_be32(OCC_P10_SRAM_MODE);
->> +		cmd[3] = 0;
->> +		cmd[4] = cpu_to_be32(OCC_P10_SRAM_RSP_ADDR + offset);
->> +		break;
->> +	}
->> +
->> +	cmd[0] = cpu_to_be32(cmd_len);
->>   	cmd[1] = cpu_to_be32(SBEFIFO_CMD_GET_OCC_SRAM);
->> -	cmd[2] = cpu_to_be32(1);
->> -	cmd[3] = cpu_to_be32(address);
->> -	cmd[4] = cpu_to_be32(data_len);
->> +	cmd[4 + idx] = cpu_to_be32(data_len);
->>   
->>   	resp_len = (data_len >> 2) + OCC_SBE_STATUS_WORDS;
->>   	resp = kzalloc(resp_len << 2, GFP_KERNEL);
->>   	if (!resp)
->>   		return -ENOMEM;
->>   
->> -	rc = sbefifo_submit(occ->sbefifo, cmd, 5, resp, &resp_len);
->> +	rc = sbefifo_submit(occ->sbefifo, cmd, cmd_len, resp, &resp_len);
->>   	if (rc)
->>   		goto free;
->>   
->> @@ -287,20 +310,21 @@ static int occ_getsram(struct occ *occ, u32
->> address, void *data, ssize_t len)
->>   	return rc;
->>   }
->>   
->> -static int occ_putsram(struct occ *occ, u32 address, const void *data,
->> -		       ssize_t len)
->> +static int occ_putsram(struct occ *occ, const void *data, ssize_t len)
->>   {
->>   	size_t cmd_len, buf_len, resp_len, resp_data_len;
->>   	u32 data_len = ((len + 7) / 8) * 8;	/* must be multiples of 8 B */
->>   	__be32 *buf;
->> -	int rc;
->> +	int idx = 0, rc;
->> +
->> +	cmd_len = (occ->version == occ_p10) ? 6 : 5;
->>   
->>   	/*
->>   	 * We use the same buffer for command and response, make
->>   	 * sure it's big enough
->>   	 */
->>   	resp_len = OCC_SBE_STATUS_WORDS;
->> -	cmd_len = (data_len >> 2) + 5;
->> +	cmd_len += data_len >> 2;
->>   	buf_len = max(cmd_len, resp_len);
->>   	buf = kzalloc(buf_len << 2, GFP_KERNEL);
->>   	if (!buf)
->> @@ -312,11 +336,23 @@ static int occ_putsram(struct occ *occ, u32
->> address, const void *data,
->>   	 */
->>   	buf[0] = cpu_to_be32(cmd_len);
->>   	buf[1] = cpu_to_be32(SBEFIFO_CMD_PUT_OCC_SRAM);
->> -	buf[2] = cpu_to_be32(1);
->> -	buf[3] = cpu_to_be32(address);
->> -	buf[4] = cpu_to_be32(data_len);
->>   
->> -	memcpy(&buf[5], data, len);
->> +	switch (occ->version) {
->> +	default:
->> +	case occ_p9:
->> +		buf[2] = cpu_to_be32(1);	/* Normal mode */
->> +		buf[3] = cpu_to_be32(OCC_P9_SRAM_CMD_ADDR);
->> +		break;
->> +	case occ_p10:
->> +		idx = 1;
->> +		buf[2] = cpu_to_be32(OCC_P10_SRAM_MODE);
->> +		buf[3] = 0;
->> +		buf[4] = cpu_to_be32(OCC_P10_SRAM_CMD_ADDR);
->> +		break;
->> +	}
->> +
->> +	buf[4 + idx] = cpu_to_be32(data_len);
->> +	memcpy(&buf[5 + idx], data, len);
->>   
->>   	rc = sbefifo_submit(occ->sbefifo, buf, cmd_len, buf, &resp_len);
->>   	if (rc)
->> @@ -356,21 +392,35 @@ static int occ_putsram(struct occ *occ, u32
->> address, const void *data,
->>   static int occ_trigger_attn(struct occ *occ)
->>   {
->>   	__be32 buf[OCC_SBE_STATUS_WORDS];
->> -	size_t resp_len, resp_data_len;
->> -	int rc;
->> +	size_t cmd_len, resp_len, resp_data_len;
->> +	int idx = 0, rc;
->>   
->> -	BUILD_BUG_ON(OCC_SBE_STATUS_WORDS < 7);
->> +	BUILD_BUG_ON(OCC_SBE_STATUS_WORDS < 8);
->>   	resp_len = OCC_SBE_STATUS_WORDS;
->>   
->> -	buf[0] = cpu_to_be32(0x5 + 0x2);        /* Chip-op length in words */
->> +	switch (occ->version) {
->> +	default:
->> +	case occ_p9:
->> +		cmd_len = 7;
->> +		buf[2] = cpu_to_be32(3); /* Circular mode */
->> +		buf[3] = 0;
->> +		break;
->> +	case occ_p10:
->> +		idx = 1;
->> +		cmd_len = 8;
->> +		buf[2] = cpu_to_be32(0xd0); /* Circular mode, OCB Channel 1 */
->> +		buf[3] = 0;
->> +		buf[4] = 0;
->> +		break;
->> +	}
->> +
->> +	buf[0] = cpu_to_be32(cmd_len);		/* Chip-op length in words */
->>   	buf[1] = cpu_to_be32(SBEFIFO_CMD_PUT_OCC_SRAM);
->> -	buf[2] = cpu_to_be32(0x3);              /* Mode: Circular */
->> -	buf[3] = cpu_to_be32(0x0);              /* Address: ignore in mode 3 */
->> -	buf[4] = cpu_to_be32(0x8);              /* Data length in bytes */
->> -	buf[5] = cpu_to_be32(0x20010000);       /* Trigger OCC attention */
->> -	buf[6] = 0;
->> +	buf[4 + idx] = cpu_to_be32(8);		/* Data length in bytes */
->> +	buf[5 + idx] = cpu_to_be32(0x20010000);	/* Trigger OCC attention */
->> +	buf[6 + idx] = 0;
->>   
->> -	rc = sbefifo_submit(occ->sbefifo, buf, 7, buf, &resp_len);
->> +	rc = sbefifo_submit(occ->sbefifo, buf, cmd_len, buf, &resp_len);
->>   	if (rc)
->>   		goto error;
->>   
->> @@ -429,7 +479,7 @@ int fsi_occ_submit(struct device *dev, const void
->> *request, size_t req_len,
->>   
->>   	/* Extract the seq_no from the command (first byte) */
->>   	seq_no = *(const u8 *)request;
->> -	rc = occ_putsram(occ, OCC_SRAM_CMD_ADDR, request, req_len);
->> +	rc = occ_putsram(occ, request, req_len);
->>   	if (rc)
->>   		goto done;
->>   
->> @@ -440,7 +490,7 @@ int fsi_occ_submit(struct device *dev, const void
->> *request, size_t req_len,
->>   	/* Read occ response header */
->>   	start = jiffies;
->>   	do {
->> -		rc = occ_getsram(occ, OCC_SRAM_RSP_ADDR, resp, 8);
->> +		rc = occ_getsram(occ, 0, resp, 8);
->>   		if (rc)
->>   			goto done;
->>   
->> @@ -476,8 +526,7 @@ int fsi_occ_submit(struct device *dev, const void
->> *request, size_t req_len,
->>   	/* Grab the rest */
->>   	if (resp_data_length > 1) {
->>   		/* already got 3 bytes resp, also need 2 bytes checksum */
->> -		rc = occ_getsram(occ, OCC_SRAM_RSP_ADDR + 8,
->> -				 &resp->data[3], resp_data_length - 1);
->> +		rc = occ_getsram(occ, 8, &resp->data[3], resp_data_length - 1);
->>   		if (rc)
->>   			goto done;
->>   	}
->> @@ -508,6 +557,7 @@ static int occ_probe(struct platform_device *pdev)
->>   	struct occ *occ;
->>   	struct platform_device *hwmon_dev;
->>   	struct device *dev = &pdev->dev;
->> +	const void *md =  of_device_get_match_data(dev);
->>   	struct platform_device_info hwmon_dev_info = {
->>   		.parent = dev,
->>   		.name = "occ-hwmon",
->> @@ -517,6 +567,7 @@ static int occ_probe(struct platform_device *pdev)
->>   	if (!occ)
->>   		return -ENOMEM;
->>   
->> +	occ->version = (enum versions)md;
->>   	occ->dev = dev;
->>   	occ->sbefifo = dev->parent;
->>   	mutex_init(&occ->occ_lock);
->> @@ -575,7 +626,14 @@ static int occ_remove(struct platform_device *pdev)
->>   }
->>   
->>   static const struct of_device_id occ_match[] = {
->> -	{ .compatible = "ibm,p9-occ" },
->> +	{
->> +		.compatible = "ibm,p9-occ",
->> +		.data = (void *)occ_p9
->> +	},
->> +	{
->> +		.compatible = "ibm,p10-occ",
->> +		.data = (void *)occ_p10
-> Why not stick an ops struct pointer in .data and separate out the implementations
-> rather than stick a switch over the version in each of the affected functions?
+Hi,
 
+We have some user defined host settings which we are presently keeping it
+in phosphor-settings-manager and the associated pldm bios attributes are
+there in the pldm BIOS table. Few properties in the object hosted by the
+phosphor-settings-manager are read-only for out of band but through in-band
+it can be changed.
 
-I did try but I found I ended up with two copies of most of the code. 
-There is too much in common and no good way to split out the 
-processor-specific stuff without duplicating everything...
+For example; the IP origin (static/dhcp) in the below commit.
+https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30205/
 
+UseCase: The redfish client will set the hypervisor IP address via bmcweb.
+This will be taken to the hypervisor via pldm. Once the system is powered
+on, the hypervisor will apply the IP address to its Ethernet Interface.
+Properties like IPAddress, SubnetMask, Gateway are having one to one
+mapping in the PLDM BIOS attr table and Dbus object properties, Now concern
+here is on the Origin property which PLDM reads as sensor from Hypervisor.
 
-Thanks,
+We have two views on this scenario.
+View 1: These are not suitable to be stored in the existing
+phopsphor-settings-manager since these are not the writable out-of-band
+user settings.
+View 2: These sensors can be part of this settings table, can be considered
+as a read-only attribute for the out-of-band access. These can be writable
+to the host.
 
-Eddie
+I understand that there are some efforts going on by Intel to come up with
+internal Bios settings table but this problem is agnostic to whether we
+keep the data in settings Dbus object or in the new app which is array of
+key-value pairs.
 
+Below are the two solutions which i can think of:
+-------------------------------------------------------------
+1. Let there be an attribute in the existing BIOS attribute table (Settings
+Storage), which will be settable from the hypervisor through PLDM, however
+pldm reads it as a sensor.This setting will be read-only for the
+out-of-band clients(redfish). This approach is something similar to the
+redfish schema, where we implement the writable & read-only attributes in
+the same schema/resource. Redfish also has the origin as a settings but
+they made it as a read-only attribute. This helps in bringing the related
+attributes together under same object.
 
->
-> Andrew
+2. Let create a new table/object for mapping of pldm sensors ; the Sensors
+Storage table which will contain only those attributes which are mapped to
+the pldm sensors. This sensor table can be set by the pldm, and other
+interested components can read this to get the required attribute values.
+If we do this, then openBMC would be having two tables 1) Settings Storage
+for Bios settings 2) Sensors Storage for pldm sensors. It is kind of
+bringing the pldm complexities to the external application. Also
+complexities involved in bringing the related attributes together from two
+different tables.
+
+Please let me know your views on these.  What could be the better long term
+solution for this?
+It would be great if you can propose any other way of handling this.
+
+Thanks & regards,
+Sunitha
+
+--0000000000002da98c05a4d3ae69
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi,<br><br>We have some user defined host=
+ settings which we are presently keeping it in phosphor-settings-manager an=
+d the associated pldm bios attributes are there in the pldm BIOS table. Few=
+ properties in the object hosted by the phosphor-settings-manager are read-=
+only for out of band but through in-band it can be changed.<br><br>For exam=
+ple; the IP origin (static/dhcp) in the below commit.<br>	<a href=3D"https:=
+//gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30205/">https://gerrit.=
+openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30205/</a><br><br>UseCase: The r=
+edfish client will set the hypervisor IP address via bmcweb. This will be t=
+aken to the hypervisor via pldm. Once the system is powered on, the hypervi=
+sor will apply the IP address to its Ethernet Interface. Properties like IP=
+Address, SubnetMask, Gateway are having one to one mapping in the PLDM BIOS=
+ attr table and Dbus object properties, Now concern here is on the Origin p=
+roperty which PLDM reads as sensor from Hypervisor.<br><br>We have two view=
+s on this scenario.<br>View 1: These are not suitable to be stored in the e=
+xisting phopsphor-settings-manager since these are not the writable out-of-=
+band user settings. <br>View 2: These sensors can be part of this settings =
+table, can be considered as a read-only attribute for the out-of-band acces=
+s. These can be writable to the host. <br><br>I understand that there are s=
+ome efforts going on by Intel to come up with internal Bios settings table =
+but this problem is agnostic to whether we keep the data in settings Dbus o=
+bject or in the new app which is array of key-value pairs.<br><br>Below are=
+ the two solutions which i can think of:<br>-------------------------------=
+------------------------------<br>1. Let there be an attribute in the exist=
+ing BIOS attribute table (Settings Storage), which will be settable from th=
+e hypervisor through PLDM, however pldm reads it as a sensor.This setting w=
+ill be read-only for the out-of-band clients(redfish). This approach is som=
+ething similar to the redfish schema, where we implement the writable &amp;=
+ read-only attributes in the same schema/resource. Redfish also has the ori=
+gin as a settings but they made it as a read-only attribute. This helps in =
+bringing the related attributes together under same object.<br><br>2. Let c=
+reate a new table/object for mapping of pldm sensors ; the Sensors Storage =
+table which will contain only those attributes which are mapped to the pldm=
+ sensors. This sensor table can be set by the pldm, and other interested co=
+mponents can read this to get the required attribute values. If we do this,=
+ then openBMC would be having two tables 1) Settings Storage for Bios setti=
+ngs 2) Sensors Storage for pldm sensors. It is kind of bringing the pldm co=
+mplexities to the external application. Also complexities involved in bring=
+ing the related attributes together from two different tables.<br><br>Pleas=
+e let me know your views on these.=C2=A0 What could be the better long term=
+ solution for this? =C2=A0<br>It would be great if you can propose any othe=
+r way of handling this.<br><br>Thanks &amp; regards,<br>Sunitha</div><div d=
+ir=3D"ltr"><br></div></div>
+
+--0000000000002da98c05a4d3ae69--
