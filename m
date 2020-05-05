@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02FF21C500E
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 10:17:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id BED451C5008
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 10:16:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49GXdg3bxQzDqTb
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 18:17:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49GXcF5sV8zDqjN
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 18:16:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,65 +17,69 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=moBRUot/; 
+ header.s=fm2 header.b=gXW4YgXJ; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=3NY8joF+; 
+ header.a=rsa-sha256 header.s=fm2 header.b=mtXFTY36; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49GWXc4jgbzDqYd
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49GWXc4l88zDqby
  for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 17:27:59 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 84D856CC;
- Tue,  5 May 2020 03:27:55 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id B94D96B0;
+ Tue,  5 May 2020 03:27:56 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Tue, 05 May 2020 03:27:55 -0400
+ by compute3.internal (MEProxy); Tue, 05 May 2020 03:27:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm2; bh=Unqa23sxeK96peI8Nb1PYGhmE+
- 0JSyaDDedeQTaXtDk=; b=moBRUot/r2gkiNwH/BSxXio4e2EWnZ3+CHE6V21cVY
- NyjyGFdPp5Eo+Y3x2Z3QSzddnnM2gUxjmlDDnhvZ3UlYvcKzJiqpZAJLNw/M1HXP
- Em0hkDMOpEdX8rFuhtMxgm9OqCktYU3YN8uS7x+j2MSaSpL9wS6W3Yn+rI4tBuJj
- TCgN/nwjbyaFfAdkE3V/DZzhR5o24ColqE1e/eaMz3k9iXzvQNO3tg7dfxx2ADGi
- 6hLh1TvKgRXVDTGWPK1K3BIX95HMqGU7JaTMOdX2002jVjM1dWTeHs83VFC5fvwb
- UauzjEf8loCo/uF8f1oe6ChTItrqqDw4r8INe4I3Jb2w==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=fm2; bh=09VNgR/pMJ5Ru
+ IweMDDcynlfkE6IqDnYzGiRDtPT/7E=; b=gXW4YgXJGpBXfbdUBpOUJbw/Tb4Rj
+ BqDKrd75lchsIsCFlqm0xyT7QbDJN88VJUPjZ0CObQNWFgk5pQbtSYosJ73rITSa
+ /3LTdXeZvOaHEE46thuCCzQzUDQckmNqb1Ei6U2qdWwcoe/OvOPA1f0OF28vYUFr
+ HDA9oej0Q45kMEyHecRtK1BjtMN+IAeq8JnIVEy8TkvKFvUC4eNRZHv+4jB/QxLP
+ qZ8A3Pgiuz/g0Av9T4UDp0nVjuaoOtOHxSuFMhcfYeDknQVWo2+MJ3EwFpMjDkEj
+ nEsCeZvhg2pXL0g//jqkkRTBZy7RuwngEkpeFvlSaOXjwZSSTBg99TGAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Unqa23sxeK96peI8N
- b1PYGhmE+0JSyaDDedeQTaXtDk=; b=3NY8joF+j0A6jZxquaDubCToatmf06LF+
- K8DbqhJjvnD6rngNG0F4x4rvCqDEOZDTRE4McqyVIP/5jhYwWpoqcRRnjwQohokp
- yctndJ53v7SlznT+MOUQ7UsXbJdALrXaGdu80a44AdWMFeLtKN0pnCPLx4UddeIF
- sgge9/ngvuA9n0dTU2FRWTQ7jgK/kjeNkXCT7pnp0FPMO6j7Gzsr4Ce9b3Uqrg3V
- aqysB+jbH0AanXhGmLn+Fkf35j+9omQR9yQQcl4CeaBfdswHCliKjFOhq3meM9op
- nXgckmjiO+rmh6EwNpOuy0ZuE3X1Pvq3HVl/B9hdeKWFEnID22NTg==
-X-ME-Sender: <xms:ehWxXl3LsGwiX8tZovJl9_DoCtZFLgz3lQeYw6s0FKpxXQXVRdyUQw>
+ :in-reply-to:message-id:mime-version:references:subject:to
+ :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm2; bh=09VNgR/pMJ5RuIweMDDcynlfkE6IqDnYzGiRDtPT/7E=; b=mtXFTY36
+ NZ72KV2LZ5BQ0dhiKy+fQ2EISX9mx8XJx+JI7CoUeLMWIdEF40an6cWtUpdf7ktO
+ TRkgsDxC5zPfdZ5iFtzfJ/rFb8KTOJ+8WC9pXamGxdUpwtKor7vkc7U1ZuAzvE7U
+ 3+pg4CSAzC/r1AlvGqEBcvGTFBRb8yMGVHXSQySRayPtgMtWzJHLj8LMB23wBtUd
+ 6kFVowVtVEko/zksa5d3fFSO9hKrdOvQlPE/3QXK4QzktoxMzB8LisvWjlTgw9eI
+ m3wfWpG9dzV1M9oIvjYzoes3DldBPg00Kt9rt3Snd579cJ5k40JTdvjG0d0+0uBM
+ EGSFBssl1rGpVA==
+X-ME-Sender: <xms:fBWxXnoXPcaUFb3RenIT5CP8v8KiEb5n0-zbP2onKTbR6_EUk2Kg5Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrjeehgdduudejucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
- dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
- ihgurdgruheqnecuggftrfgrthhtvghrnhepkefhieffjeevfeevhedtieeihfefvdejle
- dvvddthefftedujeethfeuueelfedtnecukfhppedugedrvddrjeehrdekgeenucevlhhu
- shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrg
- hjrdhiugdrrghu
-X-ME-Proxy: <xmx:ehWxXmoyoqv1K6spVwdxuo2m66T88814AxZ4HO9MjIKSozP7Zq4LDw>
- <xmx:ehWxXifBMgwpMaOM0gmaCVt3L2O2HyqD_hgZLL6qGuL0tY-pE6yKaA>
- <xmx:ehWxXlp9Wlqe9SAc-7G3uURzHKnN8ux4CjJWZVZsG9DG5rN4-MhpJw>
- <xmx:exWxXjOWPcREtT15ANI_QOotX4U6-9WLQen8f0JClPFmxMZb5vv8AQ>
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+ dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
+ jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
+ etjeffleffvdduudevieffgeetleevhfetnecukfhppedugedrvddrjeehrdekgeenucev
+ lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfi
+ esrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:fBWxXpXKV-nyDyAfU6pLcaHH0Ag6LFzgBYwrC348MCz1hX3UhjMUsw>
+ <xmx:fBWxXqC1XXdJ5qTHQg0qe7C19g0g26y3_6B649ZGyhAgltZxW405qg>
+ <xmx:fBWxXsRXZg5zVISc30RgcxguZo-0hJn8JqyHThSBtaOn7PrpfAge3g>
+ <xmx:fBWxXoSyKOC09dMWByCdcI299gHz1wr3Z5zGprO07c5VmYSvaTr1ZQ>
 Received: from localhost.localdomain
  (ppp14-2-75-84.adl-apt-pir-bras31.tpg.internode.on.net [14.2.75.84])
- by mail.messagingengine.com (Postfix) with ESMTPA id 1BD1C3066033;
- Tue,  5 May 2020 03:27:52 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id E360D3066052;
+ Tue,  5 May 2020 03:27:54 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.4 0/3] AST2600's Y23 heartbeat to pinctrl
-Date: Tue,  5 May 2020 16:57:39 +0930
-Message-Id: <20200505072742.350305-1-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.4 1/3] dt-bindings: pinctrl: Add HEARTBEAT to
+ ASPEED AST2600
+Date: Tue,  5 May 2020 16:57:40 +0930
+Message-Id: <20200505072742.350305-2-andrew@aj.id.au>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200505072742.350305-1-andrew@aj.id.au>
+References: <20200505072742.350305-1-andrew@aj.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -93,33 +97,119 @@ Cc: elkowals@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Ball Y23 in the AST2600 defaults to a heartbeat function to light a LED,
+generating a pulse-train from power-on.
 
-This short series adds the "heartbeat" function to ball Y23 on the AST2600,
-which is the default function for the pin (not GPIO as described by previous
-datasheets). It's necessary to describe the heartbeat function in order to
-export the pin as GPIOP7.
-
-Further, work-around the heartbeat behaviour for Rainer by hogging the GPIO so
-that we're not messing with the microcontroller to which it is routed.
-
-I'd like to let these patches bake for a period in the OpenBMC kernel tree
-until we can verify the behaviour on hardware.
-
-Cheers,
-
-Andrew
-
-Andrew Jeffery (3):
-  dt-bindings: pinctrl: Add HEARTBEAT to ASPEED AST2600
-  pinctrl: aspeed: Describe the heartbeat function on ball Y23
-  ARM: dts: rainier: Configure ball Y23 as GPIOP7 for MCLR_VPP
-
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
  .../pinctrl/aspeed,ast2600-pinctrl.yaml       | 87 ++++++++++---------
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts  |  7 ++
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c    |  7 +-
- 3 files changed, 57 insertions(+), 44 deletions(-)
+ 1 file changed, 44 insertions(+), 43 deletions(-)
 
+diff --git a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml
+index 064b7dfc4252..b4a9155879ff 100644
+--- a/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/aspeed,ast2600-pinctrl.yaml
+@@ -36,26 +36,26 @@ patternProperties:
+               ADC2, ADC3, ADC4, ADC5, ADC6, ADC7, ADC8, ADC9, BMCINT, EMMC,
+               ESPI, ESPIALT, FSI1, FSI2, FWSPIABR, FWSPID, FWSPIWP, GPIT0,
+               GPIT1, GPIT2, GPIT3, GPIT4, GPIT5, GPIT6, GPIT7, GPIU0, GPIU1,
+-              GPIU2, GPIU3, GPIU4, GPIU5, GPIU6, GPIU7, I2C1, I2C10, I2C11,
+-              I2C12, I2C13, I2C14, I2C15, I2C16, I2C2, I2C3, I2C4, I2C5, I2C6,
+-              I2C7, I2C8, I2C9, I3C3, I3C4, I3C5, I3C6, JTAGM, LHPD, LHSIRQ,
+-              LPC, LPCHC, LPCPD, LPCPME, LPCSMI, LSIRQ, MACLINK1, MACLINK2,
+-              MACLINK3, MACLINK4, MDIO1, MDIO2, MDIO3, MDIO4, NCTS1, NCTS2,
+-              NCTS3, NCTS4, NDCD1, NDCD2, NDCD3, NDCD4, NDSR1, NDSR2, NDSR3,
+-              NDSR4, NDTR1, NDTR2, NDTR3, NDTR4, NRI1, NRI2, NRI3, NRI4, NRTS1,
+-              NRTS2, NRTS3, NRTS4, OSCCLK, PEWAKE, PWM0, PWM1, PWM10, PWM11,
+-              PWM12, PWM13, PWM14, PWM15, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7,
+-              PWM8, PWM9, RGMII1, RGMII2, RGMII3, RGMII4, RMII1, RMII2, RMII3,
+-              RMII4, RXD1, RXD2, RXD3, RXD4, SALT1, SALT10, SALT11, SALT12,
+-              SALT13, SALT14, SALT15, SALT16, SALT2, SALT3, SALT4, SALT5,
+-              SALT6, SALT7, SALT8, SALT9, SD1, SD2, SGPM1, SGPS1, SIOONCTRL,
+-              SIOPBI, SIOPBO, SIOPWREQ, SIOPWRGD, SIOS3, SIOS5, SIOSCI, SPI1,
+-              SPI1ABR, SPI1CS1, SPI1WP, SPI2, SPI2CS1, SPI2CS2, TACH0, TACH1,
+-              TACH10, TACH11, TACH12, TACH13, TACH14, TACH15, TACH2, TACH3,
+-              TACH4, TACH5, TACH6, TACH7, TACH8, TACH9, THRU0, THRU1, THRU2,
+-              THRU3, TXD1, TXD2, TXD3, TXD4, UART10, UART11, UART12, UART13,
+-              UART6, UART7, UART8, UART9, VB, VGAHS, VGAVS, WDTRST1, WDTRST2,
+-              WDTRST3, WDTRST4, ]
++              GPIU2, GPIU3, GPIU4, GPIU5, GPIU6, GPIU7, HEARTBEAT, I2C1, I2C10,
++              I2C11, I2C12, I2C13, I2C14, I2C15, I2C16, I2C2, I2C3, I2C4, I2C5,
++              I2C6, I2C7, I2C8, I2C9, I3C3, I3C4, I3C5, I3C6, JTAGM, LHPD,
++              LHSIRQ, LPC, LPCHC, LPCPD, LPCPME, LPCSMI, LSIRQ, MACLINK1,
++              MACLINK2, MACLINK3, MACLINK4, MDIO1, MDIO2, MDIO3, MDIO4, NCTS1,
++              NCTS2, NCTS3, NCTS4, NDCD1, NDCD2, NDCD3, NDCD4, NDSR1, NDSR2,
++              NDSR3, NDSR4, NDTR1, NDTR2, NDTR3, NDTR4, NRI1, NRI2, NRI3, NRI4,
++              NRTS1, NRTS2, NRTS3, NRTS4, OSCCLK, PEWAKE, PWM0, PWM1, PWM10,
++              PWM11, PWM12, PWM13, PWM14, PWM15, PWM2, PWM3, PWM4, PWM5, PWM6,
++              PWM7, PWM8, PWM9, RGMII1, RGMII2, RGMII3, RGMII4, RMII1, RMII2,
++              RMII3, RMII4, RXD1, RXD2, RXD3, RXD4, SALT1, SALT10, SALT11,
++              SALT12, SALT13, SALT14, SALT15, SALT16, SALT2, SALT3, SALT4,
++              SALT5, SALT6, SALT7, SALT8, SALT9, SD1, SD2, SGPM1, SGPS1,
++              SIOONCTRL, SIOPBI, SIOPBO, SIOPWREQ, SIOPWRGD, SIOS3, SIOS5,
++              SIOSCI, SPI1, SPI1ABR, SPI1CS1, SPI1WP, SPI2, SPI2CS1, SPI2CS2,
++              TACH0, TACH1, TACH10, TACH11, TACH12, TACH13, TACH14, TACH15,
++              TACH2, TACH3, TACH4, TACH5, TACH6, TACH7, TACH8, TACH9, THRU0,
++              THRU1, THRU2, THRU3, TXD1, TXD2, TXD3, TXD4, UART10, UART11,
++              UART12, UART13, UART6, UART7, UART8, UART9, VB, VGAHS, VGAVS,
++              WDTRST1, WDTRST2, WDTRST3, WDTRST4, ]
+         groups:
+           allOf:
+             - $ref: "/schemas/types.yaml#/definitions/string"
+@@ -64,29 +64,30 @@ patternProperties:
+               EMMCG4, EMMCG8, ESPI, ESPIALT, FSI1, FSI2, FWSPIABR, FWSPID,
+               FWQSPID, FWSPIWP, GPIT0, GPIT1, GPIT2, GPIT3, GPIT4, GPIT5,
+               GPIT6, GPIT7, GPIU0, GPIU1, GPIU2, GPIU3, GPIU4, GPIU5, GPIU6,
+-              GPIU7, HVI3C3, HVI3C4, I2C1, I2C10, I2C11, I2C12, I2C13, I2C14,
+-              I2C15, I2C16, I2C2, I2C3, I2C4, I2C5, I2C6, I2C7, I2C8, I2C9,
+-              I3C3, I3C4, I3C5, I3C6, JTAGM, LHPD, LHSIRQ, LPC, LPCHC, LPCPD,
+-              LPCPME, LPCSMI, LSIRQ, MACLINK1, MACLINK2, MACLINK3, MACLINK4,
+-              MDIO1, MDIO2, MDIO3, MDIO4, NCTS1, NCTS2, NCTS3, NCTS4, NDCD1,
+-              NDCD2, NDCD3, NDCD4, NDSR1, NDSR2, NDSR3, NDSR4, NDTR1, NDTR2,
+-              NDTR3, NDTR4, NRI1, NRI2, NRI3, NRI4, NRTS1, NRTS2, NRTS3, NRTS4,
+-              OSCCLK, PEWAKE, PWM0, PWM1, PWM10G0, PWM10G1, PWM11G0, PWM11G1,
+-              PWM12G0, PWM12G1, PWM13G0, PWM13G1, PWM14G0, PWM14G1, PWM15G0,
+-              PWM15G1, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7, PWM8G0, PWM8G1,
+-              PWM9G0, PWM9G1, QSPI1, QSPI2, RGMII1, RGMII2, RGMII3, RGMII4,
+-              RMII1, RMII2, RMII3, RMII4, RXD1, RXD2, RXD3, RXD4, SALT1,
+-              SALT10G0, SALT10G1, SALT11G0, SALT11G1, SALT12G0, SALT12G1,
+-              SALT13G0, SALT13G1, SALT14G0, SALT14G1, SALT15G0, SALT15G1,
+-              SALT16G0, SALT16G1, SALT2, SALT3, SALT4, SALT5, SALT6, SALT7,
+-              SALT8, SALT9G0, SALT9G1, SD1, SD2, SD3, SGPM1, SGPS1, SIOONCTRL,
+-              SIOPBI, SIOPBO, SIOPWREQ, SIOPWRGD, SIOS3, SIOS5, SIOSCI, SPI1,
+-              SPI1ABR, SPI1CS1, SPI1WP, SPI2, SPI2CS1, SPI2CS2, TACH0, TACH1,
+-              TACH10, TACH11, TACH12, TACH13, TACH14, TACH15, TACH2, TACH3,
+-              TACH4, TACH5, TACH6, TACH7, TACH8, TACH9, THRU0, THRU1, THRU2,
+-              THRU3, TXD1, TXD2, TXD3, TXD4, UART10, UART11, UART12G0,
+-              UART12G1, UART13G0, UART13G1, UART6, UART7, UART8, UART9, VB,
+-              VGAHS, VGAVS, WDTRST1, WDTRST2, WDTRST3, WDTRST4, ]
++              GPIU7, HEARTBEAT, HVI3C3, HVI3C4, I2C1, I2C10, I2C11, I2C12,
++              I2C13, I2C14, I2C15, I2C16, I2C2, I2C3, I2C4, I2C5, I2C6, I2C7,
++              I2C8, I2C9, I3C3, I3C4, I3C5, I3C6, JTAGM, LHPD, LHSIRQ, LPC,
++              LPCHC, LPCPD, LPCPME, LPCSMI, LSIRQ, MACLINK1, MACLINK2,
++              MACLINK3, MACLINK4, MDIO1, MDIO2, MDIO3, MDIO4, NCTS1, NCTS2,
++              NCTS3, NCTS4, NDCD1, NDCD2, NDCD3, NDCD4, NDSR1, NDSR2, NDSR3,
++              NDSR4, NDTR1, NDTR2, NDTR3, NDTR4, NRI1, NRI2, NRI3, NRI4, NRTS1,
++              NRTS2, NRTS3, NRTS4, OSCCLK, PEWAKE, PWM0, PWM1, PWM10G0,
++              PWM10G1, PWM11G0, PWM11G1, PWM12G0, PWM12G1, PWM13G0, PWM13G1,
++              PWM14G0, PWM14G1, PWM15G0, PWM15G1, PWM2, PWM3, PWM4, PWM5, PWM6,
++              PWM7, PWM8G0, PWM8G1, PWM9G0, PWM9G1, QSPI1, QSPI2, RGMII1,
++              RGMII2, RGMII3, RGMII4, RMII1, RMII2, RMII3, RMII4, RXD1, RXD2,
++              RXD3, RXD4, SALT1, SALT10G0, SALT10G1, SALT11G0, SALT11G1,
++              SALT12G0, SALT12G1, SALT13G0, SALT13G1, SALT14G0, SALT14G1,
++              SALT15G0, SALT15G1, SALT16G0, SALT16G1, SALT2, SALT3, SALT4,
++              SALT5, SALT6, SALT7, SALT8, SALT9G0, SALT9G1, SD1, SD2, SD3,
++              SGPM1, SGPS1, SIOONCTRL, SIOPBI, SIOPBO, SIOPWREQ, SIOPWRGD,
++              SIOS3, SIOS5, SIOSCI, SPI1, SPI1ABR, SPI1CS1, SPI1WP, SPI2,
++              SPI2CS1, SPI2CS2, TACH0, TACH1, TACH10, TACH11, TACH12, TACH13,
++              TACH14, TACH15, TACH2, TACH3, TACH4, TACH5, TACH6, TACH7, TACH8,
++              TACH9, THRU0, THRU1, THRU2, THRU3, TXD1, TXD2, TXD3, TXD4,
++              UART10, UART11, UART12G0, UART12G1, UART13G0, UART13G1, UART6,
++              UART7, UART8, UART9, VB, VGAHS, VGAVS, WDTRST1, WDTRST2, WDTRST3,
++              WDTRST4, ]
+ 
+ required:
+   - compatible
 -- 
 2.25.1
 
