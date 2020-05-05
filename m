@@ -1,69 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AD5C1C4BD7
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 04:14:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9A1D1C4C80
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 05:09:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49GNZH0qMqzDqZT
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 12:13:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49GPns4l5KzDqZL
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 13:09:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::133;
- helo=mail-lf1-x133.google.com; envelope-from=rhanley@google.com;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=r7J2hhPb; dkim-atps=neutral
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com
- [IPv6:2a00:1450:4864:20::133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=fbpVnEhj; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=RPTBfT9/; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49GNYd6j3fzDqWM
- for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 12:13:24 +1000 (AEST)
-Received: by mail-lf1-x133.google.com with SMTP id w14so54866lfk.3
- for <openbmc@lists.ozlabs.org>; Mon, 04 May 2020 19:13:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Mj+Dy2YQh6puUejU7yNIG+RQzPqyAia3v+BwvUPorj0=;
- b=r7J2hhPbYxC/43frmovZ1ozRe8SBydtI06fXwwaVIzJdoWDeFSZQwTW6n87ppU8/I+
- GyQErnFLKsgovyU2oL7+xp0I7i9fWn4IafvDbseFPgf7uMVgHORBrLx4GqpH0km7c/ot
- /j5FjHYqrYDt0IZE+aUTk1Sf2+k2ZtCHEIuRUBq7T9uN0aUlOcUDdfFUyUiJSSztBfDI
- sy6KOSMa27rmcNNlXFeVWxUzoTuAsXFCvWm7lFxMIOFMzjNJniUaE+6dgZM2Hdw8iCPB
- Y+7IADMyruz2k8gCrY0Fsg4iRlRqqMv2OeAXAM4PiAqJaqKNrAgQugcS+Oxij8tZhtf8
- PPZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Mj+Dy2YQh6puUejU7yNIG+RQzPqyAia3v+BwvUPorj0=;
- b=NfnZUyGtTrWPXP62Aky7E9cQ7rixqyfBb1vLr0Y1VC0z1viPuA8XboXXZiQI86ZBQt
- yM7uGDZ2MQqQyNLjBUbZ7xqsO8EIWa+kBLGzbSfSdu00GOmoK+4yAS2cHmGW3CfbbPBG
- ZM6xrqs8d8g1lO7hlWPqJzIeAuQJh2wAlttmVLb5vcOxGWYPfLPilRvShLyAvz+QAkoZ
- dnoVLVNnTS16vzUnY9nvix+GQAAQq+X5o1Yp9hagwFpIlE+9WObhJ0oHhyxYzNu8gyth
- L6Mh5JeMKi+afL6jSWdFvZcj1Ct/VIDiPOuOkApH6fgLEA+NRHAY3jou6TKTJCKUBAFq
- krTA==
-X-Gm-Message-State: AGi0Pua8gkhnGmPBdr0dvr78LX+0Ug1OBqGvombjftOs58waHPDxpXFq
- oEP6Ru71G3zYxV4lRnnuhZukW5VH8wswbLhkYsA+y2jw
-X-Google-Smtp-Source: APiQypLKYHcTKbZqcP6aUozKdSvQZ7cNHQzinvAdeVdbXVBtDMR8o7pjDisvCmH8k7DAYFp+rg2iWavpCb4QV5wlNG4=
-X-Received: by 2002:a19:4285:: with SMTP id p127mr71559lfa.46.1588644799659;
- Mon, 04 May 2020 19:13:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAH1kD+Y1u0CHZ_6PRV8GKmzSq49sg24QD1X99KZRZK=GN-Aedw@mail.gmail.com>
- <11791.1588627267@localhost>
- <CAH1kD+bKnGtca3SzAyaSwz4pQHG9EMWJfKHLtGHXMh=_jOTCtw@mail.gmail.com>
- <26047.1588638024@localhost>
-In-Reply-To: <26047.1588638024@localhost>
-From: Richard Hanley <rhanley@google.com>
-Date: Mon, 4 May 2020 19:13:08 -0700
-Message-ID: <CAH1kD+ZQ8TmHvZoEX2k7vfbA=cT2m5of+qeX64dGrhAyLdoMBQ@mail.gmail.com>
-Subject: Re: Survey for Certificate Management Needs
-To: Michael Richardson <mcr@sandelman.ca>
-Content-Type: multipart/alternative; boundary="000000000000f5868d05a4dd30f4"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49GPn24MDqzDqYp
+ for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 13:08:20 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id D550861F;
+ Mon,  4 May 2020 23:08:16 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Mon, 04 May 2020 23:08:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm2; bh=ADwd/CK9LDwlbZmg135GsYTsZZI2Q/O
+ sqZ8kH82YRGc=; b=fbpVnEhjyey6XPVqakD6+amVZBuN+MIOjCVgVdwwTxWIlWq
+ CQRiB/jwb9rcpC1JtJRaYpzXhW0fdSEOh40JrqvDwtWw+VsJqBpNJ5WDqhER73ua
+ 5g4Fb7Ar1nlDDIBISsSg0IsnhIMWapd+cleOYqTQzZM8ZTaXyq+7r/hIqkJU8nTe
+ Dkre0AwDY4kzUU57zxosn56oW0or79ZI80d0agUovmEbi1HjaBXYNOP//ym+URt8
+ 6XmtUgV/YEoNSm1rH/MGTDZ2cpRpsSbx6AJr3kWot9XUFLKVVjvLjLVY8luyoGOu
+ JJsldSS1vC2R2REMdM5X1TfUbvVExwuQNLhI1eQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ADwd/C
+ K9LDwlbZmg135GsYTsZZI2Q/OsqZ8kH82YRGc=; b=RPTBfT9/3AFsq3E5dBnvPQ
+ XD2f+3onGFQQs2OnmPZa9uirDBZiGQrK+enxdJ0MPg19oQ/bRFPb/PH8x2KJtiVr
+ 6uOdMjQEZS1AZlHeocxiT696w18e+7bHhzofRvYzD1z9j1k0u0ICcXNu7rVhsuyQ
+ Xk9gm9iPr4lyQDMqppYN5KQmoj/fwDdLQXHcChPSuWGYnma4388sv+ejn9qz18Qa
+ 2/WUEhS9oy2GFGvg3rPiJemEuqNMCRMY6cIcynKZ0rwr9ErPOB6V1RzMCu5fsGPB
+ ttY3b93WYI3X0mY8Sp3NSHCM0LY/aGycSBJT080Yt3I+LSyHmGwncdsRqlKxTeLw
+ ==
+X-ME-Sender: <xms:n9iwXv2AW_E3RNkUVX9AMHagrLEehzEeu9YHeI-FbMnUYOx6qgupuQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrjeehgdeihecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:n9iwXpFK8bop2fPKpF10pGSZYdqirQzqx5SbYk34FkKlg0zBR47epg>
+ <xmx:n9iwXmhYL6w7J1jHy_Gxmtr5BPAFS5ZuoksMfO-kftgjRC36zVUoEA>
+ <xmx:n9iwXicmv4jPC4uSXPC8Czo8__Qg_u7tDtMLuH6PnycTSq-D4S1KWg>
+ <xmx:oNiwXvOMIvUI_3HNALhRnryu_3eXuJITntyCsPyshxgSjVYTeyCuEA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id BCB61E00A8; Mon,  4 May 2020 23:08:15 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-351-g9981f4f-fmstable-20200421v1
+Mime-Version: 1.0
+Message-Id: <37aa75db-f0aa-40a6-b55c-fddacc77b560@www.fastmail.com>
+In-Reply-To: <3aaf88d9-e9d8-a163-f5d7-2594b2af3245@linux.vnet.ibm.com>
+References: <20200430220619.31943-1-eajames@linux.ibm.com>
+ <20200430220619.31943-3-eajames@linux.ibm.com>
+ <2f460711-1108-4dec-a578-ce18cdba0157@www.fastmail.com>
+ <3aaf88d9-e9d8-a163-f5d7-2594b2af3245@linux.vnet.ibm.com>
+Date: Tue, 05 May 2020 12:37:55 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Eddie James" <eajames@linux.vnet.ibm.com>,
+ "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH linux dev-5.4 v2 2/3] fsi: occ: Add support for P10
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,136 +94,295 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000f5868d05a4dd30f4
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, May 4, 2020 at 5:20 PM Michael Richardson <mcr@sandelman.ca> wrote:
-
->
-> Richard Hanley <rhanley@google.com> wrote:
->     > I think that CRL becomes more of an issue when communication is
->     > mutually authenticated.  If a client is given a certificate from the
->     > CA, then there should be a way for that client's cert to be revoked
-> on
->     > a BMC.
->
-> Again, it's the CA that issues the CRL.
-> If you want to revoke authorization, then you need to do that.
-> I'm unware of client-certificate based authorization in bmcweb at this
-> time.
->
-
-There is some support for it in bmcweb. Intel added it at the beginning of
-the year.  We've just started looking into it, so I don't have a great idea
-of what is and isn't implemented yet.
 
 
->
-> If your authorization process if just "signed by CA foo"
-> (i.e. authentication), then you would have to rely on the CA to revoke the
-> certificate.
->
-> If your authorization process consists of a list of pinned EE certificates,
-> then you could delete/mark-inactive the broken certificate.
->
-> If you combine both methods, then in theory, you could have a "anything
-> signed by CA foo, unless it is on blacklist X".  But that's not a CRL,
-> that's
-> a blacklist.
->
->
-Perhaps I mispoke here, but let's imagine a situation where a machine is
-suspected to have been tampered with.  In that case the machine could be
-re-imaged and have the CA sign a new cert with the same username.  The CA
-would then need to deploy the CRL to any servers (BMCs in this case) that
-interacted with that user. In practice (for us at least), that CA doesn't
-really know what users are authorized where, so the CRL is widely
-distributed.
+On Mon, 4 May 2020, at 23:31, Eddie James wrote:
+> 
+> On 5/4/20 12:04 AM, Andrew Jeffery wrote:
+> >
+> > On Fri, 1 May 2020, at 07:36, Eddie James wrote:
+> >> The P10 OCC has a different SRAM address for the command and response
+> >> buffers. In addition, the SBE commands to access the SRAM have changed
+> >> format. Add versioning to the driver to handle these differences.
+> >>
+> >> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> >> ---
+> >>   drivers/fsi/fsi-occ.c | 126 ++++++++++++++++++++++++++++++------------
+> >>   1 file changed, 92 insertions(+), 34 deletions(-)
+> >>
+> >> diff --git a/drivers/fsi/fsi-occ.c b/drivers/fsi/fsi-occ.c
+> >> index 7da9c81759ac..942eff4032b0 100644
+> >> --- a/drivers/fsi/fsi-occ.c
+> >> +++ b/drivers/fsi/fsi-occ.c
+> >> @@ -14,6 +14,7 @@
+> >>   #include <linux/mutex.h>
+> >>   #include <linux/fsi-occ.h>
+> >>   #include <linux/of.h>
+> >> +#include <linux/of_device.h>
+> >>   #include <linux/platform_device.h>
+> >>   #include <linux/sched.h>
+> >>   #include <linux/slab.h>
+> >> @@ -24,8 +25,13 @@
+> >>   #define OCC_CMD_DATA_BYTES	4090
+> >>   #define OCC_RESP_DATA_BYTES	4089
+> >>   
+> >> -#define OCC_SRAM_CMD_ADDR	0xFFFBE000
+> >> -#define OCC_SRAM_RSP_ADDR	0xFFFBF000
+> >> +#define OCC_P9_SRAM_CMD_ADDR	0xFFFBE000
+> >> +#define OCC_P9_SRAM_RSP_ADDR	0xFFFBF000
+> >> +
+> >> +#define OCC_P10_SRAM_CMD_ADDR	0xFFFFD000
+> >> +#define OCC_P10_SRAM_RSP_ADDR	0xFFFFE000
+> >> +
+> >> +#define OCC_P10_SRAM_MODE	0x58	/* Normal mode, OCB channel 2 */
+> >>   
+> >>   /*
+> >>    * Assume we don't have much FFDC, if we do we'll overflow and
+> >> @@ -37,11 +43,14 @@
+> >>   #define OCC_TIMEOUT_MS		1000
+> >>   #define OCC_CMD_IN_PRG_WAIT_MS	50
+> >>   
+> >> +enum versions { occ_p9, occ_p10 };
+> >> +
+> >>   struct occ {
+> >>   	struct device *dev;
+> >>   	struct device *sbefifo;
+> >>   	char name[32];
+> >>   	int idx;
+> >> +	enum versions version;
+> >>   	struct miscdevice mdev;
+> >>   	struct mutex occ_lock;
+> >>   };
+> >> @@ -235,29 +244,43 @@ static int occ_verify_checksum(struct
+> >> occ_response *resp, u16 data_length)
+> >>   	return 0;
+> >>   }
+> >>   
+> >> -static int occ_getsram(struct occ *occ, u32 address, void *data, ssize_t len)
+> >> +static int occ_getsram(struct occ *occ, u32 offset, void *data, ssize_t len)
+> >>   {
+> >>   	u32 data_len = ((len + 7) / 8) * 8;	/* must be multiples of 8 B */
+> >> -	size_t resp_len, resp_data_len;
+> >> -	__be32 *resp, cmd[5];
+> >> -	int rc;
+> >> +	size_t cmd_len, resp_len, resp_data_len;
+> >> +	__be32 *resp, cmd[6];
+> >> +	int idx = 0, rc;
+> >>   
+> >>   	/*
+> >>   	 * Magic sequence to do SBE getsram command. SBE will fetch data from
+> >>   	 * specified SRAM address.
+> >>   	 */
+> >> -	cmd[0] = cpu_to_be32(0x5);
+> >> +	switch (occ->version) {
+> >> +	default:
+> >> +	case occ_p9:
+> >> +		cmd_len = 5;
+> >> +		cmd[2] = cpu_to_be32(1);	/* Normal mode */
+> >> +		cmd[3] = cpu_to_be32(OCC_P9_SRAM_RSP_ADDR + offset);
+> >> +		break;
+> >> +	case occ_p10:
+> >> +		idx = 1;
+> >> +		cmd_len = 6;
+> >> +		cmd[2] = cpu_to_be32(OCC_P10_SRAM_MODE);
+> >> +		cmd[3] = 0;
+> >> +		cmd[4] = cpu_to_be32(OCC_P10_SRAM_RSP_ADDR + offset);
+> >> +		break;
+> >> +	}
+> >> +
+> >> +	cmd[0] = cpu_to_be32(cmd_len);
+> >>   	cmd[1] = cpu_to_be32(SBEFIFO_CMD_GET_OCC_SRAM);
+> >> -	cmd[2] = cpu_to_be32(1);
+> >> -	cmd[3] = cpu_to_be32(address);
+> >> -	cmd[4] = cpu_to_be32(data_len);
+> >> +	cmd[4 + idx] = cpu_to_be32(data_len);
+> >>   
+> >>   	resp_len = (data_len >> 2) + OCC_SBE_STATUS_WORDS;
+> >>   	resp = kzalloc(resp_len << 2, GFP_KERNEL);
+> >>   	if (!resp)
+> >>   		return -ENOMEM;
+> >>   
+> >> -	rc = sbefifo_submit(occ->sbefifo, cmd, 5, resp, &resp_len);
+> >> +	rc = sbefifo_submit(occ->sbefifo, cmd, cmd_len, resp, &resp_len);
+> >>   	if (rc)
+> >>   		goto free;
+> >>   
+> >> @@ -287,20 +310,21 @@ static int occ_getsram(struct occ *occ, u32
+> >> address, void *data, ssize_t len)
+> >>   	return rc;
+> >>   }
+> >>   
+> >> -static int occ_putsram(struct occ *occ, u32 address, const void *data,
+> >> -		       ssize_t len)
+> >> +static int occ_putsram(struct occ *occ, const void *data, ssize_t len)
+> >>   {
+> >>   	size_t cmd_len, buf_len, resp_len, resp_data_len;
+> >>   	u32 data_len = ((len + 7) / 8) * 8;	/* must be multiples of 8 B */
+> >>   	__be32 *buf;
+> >> -	int rc;
+> >> +	int idx = 0, rc;
+> >> +
+> >> +	cmd_len = (occ->version == occ_p10) ? 6 : 5;
+> >>   
+> >>   	/*
+> >>   	 * We use the same buffer for command and response, make
+> >>   	 * sure it's big enough
+> >>   	 */
+> >>   	resp_len = OCC_SBE_STATUS_WORDS;
+> >> -	cmd_len = (data_len >> 2) + 5;
+> >> +	cmd_len += data_len >> 2;
+> >>   	buf_len = max(cmd_len, resp_len);
+> >>   	buf = kzalloc(buf_len << 2, GFP_KERNEL);
+> >>   	if (!buf)
+> >> @@ -312,11 +336,23 @@ static int occ_putsram(struct occ *occ, u32
+> >> address, const void *data,
+> >>   	 */
+> >>   	buf[0] = cpu_to_be32(cmd_len);
+> >>   	buf[1] = cpu_to_be32(SBEFIFO_CMD_PUT_OCC_SRAM);
+> >> -	buf[2] = cpu_to_be32(1);
+> >> -	buf[3] = cpu_to_be32(address);
+> >> -	buf[4] = cpu_to_be32(data_len);
+> >>   
+> >> -	memcpy(&buf[5], data, len);
+> >> +	switch (occ->version) {
+> >> +	default:
+> >> +	case occ_p9:
+> >> +		buf[2] = cpu_to_be32(1);	/* Normal mode */
+> >> +		buf[3] = cpu_to_be32(OCC_P9_SRAM_CMD_ADDR);
+> >> +		break;
+> >> +	case occ_p10:
+> >> +		idx = 1;
+> >> +		buf[2] = cpu_to_be32(OCC_P10_SRAM_MODE);
+> >> +		buf[3] = 0;
+> >> +		buf[4] = cpu_to_be32(OCC_P10_SRAM_CMD_ADDR);
+> >> +		break;
+> >> +	}
+> >> +
+> >> +	buf[4 + idx] = cpu_to_be32(data_len);
+> >> +	memcpy(&buf[5 + idx], data, len);
+> >>   
+> >>   	rc = sbefifo_submit(occ->sbefifo, buf, cmd_len, buf, &resp_len);
+> >>   	if (rc)
+> >> @@ -356,21 +392,35 @@ static int occ_putsram(struct occ *occ, u32
+> >> address, const void *data,
+> >>   static int occ_trigger_attn(struct occ *occ)
+> >>   {
+> >>   	__be32 buf[OCC_SBE_STATUS_WORDS];
+> >> -	size_t resp_len, resp_data_len;
+> >> -	int rc;
+> >> +	size_t cmd_len, resp_len, resp_data_len;
+> >> +	int idx = 0, rc;
+> >>   
+> >> -	BUILD_BUG_ON(OCC_SBE_STATUS_WORDS < 7);
+> >> +	BUILD_BUG_ON(OCC_SBE_STATUS_WORDS < 8);
+> >>   	resp_len = OCC_SBE_STATUS_WORDS;
+> >>   
+> >> -	buf[0] = cpu_to_be32(0x5 + 0x2);        /* Chip-op length in words */
+> >> +	switch (occ->version) {
+> >> +	default:
+> >> +	case occ_p9:
+> >> +		cmd_len = 7;
+> >> +		buf[2] = cpu_to_be32(3); /* Circular mode */
+> >> +		buf[3] = 0;
+> >> +		break;
+> >> +	case occ_p10:
+> >> +		idx = 1;
+> >> +		cmd_len = 8;
+> >> +		buf[2] = cpu_to_be32(0xd0); /* Circular mode, OCB Channel 1 */
+> >> +		buf[3] = 0;
+> >> +		buf[4] = 0;
+> >> +		break;
+> >> +	}
+> >> +
+> >> +	buf[0] = cpu_to_be32(cmd_len);		/* Chip-op length in words */
+> >>   	buf[1] = cpu_to_be32(SBEFIFO_CMD_PUT_OCC_SRAM);
+> >> -	buf[2] = cpu_to_be32(0x3);              /* Mode: Circular */
+> >> -	buf[3] = cpu_to_be32(0x0);              /* Address: ignore in mode 3 */
+> >> -	buf[4] = cpu_to_be32(0x8);              /* Data length in bytes */
+> >> -	buf[5] = cpu_to_be32(0x20010000);       /* Trigger OCC attention */
+> >> -	buf[6] = 0;
+> >> +	buf[4 + idx] = cpu_to_be32(8);		/* Data length in bytes */
+> >> +	buf[5 + idx] = cpu_to_be32(0x20010000);	/* Trigger OCC attention */
+> >> +	buf[6 + idx] = 0;
+> >>   
+> >> -	rc = sbefifo_submit(occ->sbefifo, buf, 7, buf, &resp_len);
+> >> +	rc = sbefifo_submit(occ->sbefifo, buf, cmd_len, buf, &resp_len);
+> >>   	if (rc)
+> >>   		goto error;
+> >>   
+> >> @@ -429,7 +479,7 @@ int fsi_occ_submit(struct device *dev, const void
+> >> *request, size_t req_len,
+> >>   
+> >>   	/* Extract the seq_no from the command (first byte) */
+> >>   	seq_no = *(const u8 *)request;
+> >> -	rc = occ_putsram(occ, OCC_SRAM_CMD_ADDR, request, req_len);
+> >> +	rc = occ_putsram(occ, request, req_len);
+> >>   	if (rc)
+> >>   		goto done;
+> >>   
+> >> @@ -440,7 +490,7 @@ int fsi_occ_submit(struct device *dev, const void
+> >> *request, size_t req_len,
+> >>   	/* Read occ response header */
+> >>   	start = jiffies;
+> >>   	do {
+> >> -		rc = occ_getsram(occ, OCC_SRAM_RSP_ADDR, resp, 8);
+> >> +		rc = occ_getsram(occ, 0, resp, 8);
+> >>   		if (rc)
+> >>   			goto done;
+> >>   
+> >> @@ -476,8 +526,7 @@ int fsi_occ_submit(struct device *dev, const void
+> >> *request, size_t req_len,
+> >>   	/* Grab the rest */
+> >>   	if (resp_data_length > 1) {
+> >>   		/* already got 3 bytes resp, also need 2 bytes checksum */
+> >> -		rc = occ_getsram(occ, OCC_SRAM_RSP_ADDR + 8,
+> >> -				 &resp->data[3], resp_data_length - 1);
+> >> +		rc = occ_getsram(occ, 8, &resp->data[3], resp_data_length - 1);
+> >>   		if (rc)
+> >>   			goto done;
+> >>   	}
+> >> @@ -508,6 +557,7 @@ static int occ_probe(struct platform_device *pdev)
+> >>   	struct occ *occ;
+> >>   	struct platform_device *hwmon_dev;
+> >>   	struct device *dev = &pdev->dev;
+> >> +	const void *md =  of_device_get_match_data(dev);
+> >>   	struct platform_device_info hwmon_dev_info = {
+> >>   		.parent = dev,
+> >>   		.name = "occ-hwmon",
+> >> @@ -517,6 +567,7 @@ static int occ_probe(struct platform_device *pdev)
+> >>   	if (!occ)
+> >>   		return -ENOMEM;
+> >>   
+> >> +	occ->version = (enum versions)md;
+> >>   	occ->dev = dev;
+> >>   	occ->sbefifo = dev->parent;
+> >>   	mutex_init(&occ->occ_lock);
+> >> @@ -575,7 +626,14 @@ static int occ_remove(struct platform_device *pdev)
+> >>   }
+> >>   
+> >>   static const struct of_device_id occ_match[] = {
+> >> -	{ .compatible = "ibm,p9-occ" },
+> >> +	{
+> >> +		.compatible = "ibm,p9-occ",
+> >> +		.data = (void *)occ_p9
+> >> +	},
+> >> +	{
+> >> +		.compatible = "ibm,p10-occ",
+> >> +		.data = (void *)occ_p10
+> > Why not stick an ops struct pointer in .data and separate out the implementations
+> > rather than stick a switch over the version in each of the affected functions?
+> 
+> 
+> I did try but I found I ended up with two copies of most of the code. 
+> There is too much in common and no good way to split out the 
+> processor-specific stuff without duplicating everything...
 
-That's also one of the reasons I like RBAC, and other systems like it. They
-do a really good job at cleanly separating authorization and
-authentication.
+Yep, fair anough. I find it useful to mention this kind of decision in
+the commit message, can you do that in the future?
 
-> --
-> ]               Never tell me the odds!                 | ipv6 mesh
-> networks [
-> ]   Michael Richardson, Sandelman Software Works        |    IoT
-> architect   [
-> ]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on
-> rails    [
->
->
+Cheers,
 
---000000000000f5868d05a4dd30f4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 4, 2020 at 5:20 PM Michae=
-l Richardson &lt;<a href=3D"mailto:mcr@sandelman.ca">mcr@sandelman.ca</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-Richard Hanley &lt;<a href=3D"mailto:rhanley@google.com" target=3D"_blank">=
-rhanley@google.com</a>&gt; wrote:<br>
-=C2=A0 =C2=A0 &gt; I think that CRL becomes more of an issue when communica=
-tion is<br>
-=C2=A0 =C2=A0 &gt; mutually authenticated.=C2=A0 If a client is given a cer=
-tificate from the<br>
-=C2=A0 =C2=A0 &gt; CA, then there should be a way for that client&#39;s cer=
-t to be revoked on<br>
-=C2=A0 =C2=A0 &gt; a BMC.<br>
-<br>
-Again, it&#39;s the CA that issues the CRL.<br>
-If you want to revoke authorization, then you need to do that.<br>
-I&#39;m unware of client-certificate based authorization in bmcweb at this =
-time.<br></blockquote><div><br></div><div>There is some support for it in b=
-mcweb. Intel added it at the beginning of the year.=C2=A0 We&#39;ve just st=
-arted looking into it, so I don&#39;t have a great idea of what is and isn&=
-#39;t implemented yet.</div><div>=C2=A0</div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">
-<br>
-If your authorization process if just &quot;signed by CA foo&quot;<br>
-(i.e. authentication), then you would have to rely on the CA to revoke the<=
-br>
-certificate.<br>
-<br>
-If your authorization process consists of a list of pinned EE certificates,=
-<br>
-then you could delete/mark-inactive the broken certificate.<br>
-<br>
-If you combine both methods, then in theory, you could have a &quot;anythin=
-g<br>
-signed by CA foo, unless it is on blacklist X&quot;.=C2=A0 But that&#39;s n=
-ot a CRL, that&#39;s<br>
-a blacklist.<br>
-<br></blockquote><div><br></div><div>Perhaps I mispoke=C2=A0here, but let&#=
-39;s imagine a situation where a machine is suspected to have been tampered=
- with.=C2=A0 In that case the machine could be re-imaged and have the CA si=
-gn a new cert with the same username.=C2=A0 The CA would then need to deplo=
-y the CRL to any servers (BMCs in this case) that interacted with that user=
-. In practice (for us at least), that CA doesn&#39;t really know what users=
- are authorized where, so the CRL is widely distributed.</div><div><br></di=
-v><div>That&#39;s also one of the reasons I like RBAC, and other systems li=
-ke it. They do a really good job at cleanly separating=C2=A0authorization a=
-nd authentication.=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
-1ex">
---<br>
-]=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Never tell me the o=
-dds!=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| ipv6 me=
-sh networks [<br>
-]=C2=A0 =C2=A0Michael Richardson, Sandelman Software Works=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 |=C2=A0 =C2=A0 IoT architect=C2=A0 =C2=A0[<br>
-]=C2=A0 =C2=A0 =C2=A0<a href=3D"mailto:mcr@sandelman.ca" target=3D"_blank">=
-mcr@sandelman.ca</a>=C2=A0 <a href=3D"http://www.sandelman.ca/" rel=3D"nore=
-ferrer" target=3D"_blank">http://www.sandelman.ca/</a>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 |=C2=A0 =C2=A0ruby on rails=C2=A0 =C2=A0 [<br>
-<br>
-</blockquote></div></div>
-
---000000000000f5868d05a4dd30f4--
+Andrew
