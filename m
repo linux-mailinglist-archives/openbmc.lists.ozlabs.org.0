@@ -2,74 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69F031C5F10
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 19:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61AAD1C5F37
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 19:48:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Gn9k5HgLzDqgs
-	for <lists+openbmc@lfdr.de>; Wed,  6 May 2020 03:42:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49GnHz3GvGzDqQF
+	for <lists+openbmc@lfdr.de>; Wed,  6 May 2020 03:47:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d36;
+ helo=mail-io1-xd36.google.com; envelope-from=suichen6@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=dgcRHeli; dkim-atps=neutral
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com
+ [IPv6:2607:f8b0:4864:20::d36])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49GmvN2Cq6zDqVp
- for <openbmc@lists.ozlabs.org>; Wed,  6 May 2020 03:30:08 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 045H1rIO007798; Tue, 5 May 2020 13:30:06 -0400
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30u8sy8bs0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2020 13:30:05 -0400
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 045HO0do027174;
- Tue, 5 May 2020 17:30:04 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04wdc.us.ibm.com with ESMTP id 30s0g6tf8t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2020 17:30:04 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 045HU4M246924270
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 May 2020 17:30:04 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4241211206B;
- Tue,  5 May 2020 17:30:04 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BAC6D11206D;
- Tue,  5 May 2020 17:30:03 +0000 (GMT)
-Received: from talon7.ibm.com (unknown [9.211.137.116])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue,  5 May 2020 17:30:03 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 6/6] ARM: dts: Aspeed: Tacoma: Update VGA memory
- compatibility
-Date: Tue,  5 May 2020 12:29:58 -0500
-Message-Id: <1588699798-26292-7-git-send-email-eajames@linux.ibm.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1588699798-26292-1-git-send-email-eajames@linux.ibm.com>
-References: <1588699798-26292-1-git-send-email-eajames@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-05-05_09:2020-05-04,
- 2020-05-05 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=844 phishscore=0
- suspectscore=1 clxscore=1015 impostorscore=0 priorityscore=1501 mlxscore=0
- adultscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2003020000
- definitions=main-2005050129
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49GmxY1dGNzDqSq
+ for <openbmc@lists.ozlabs.org>; Wed,  6 May 2020 03:32:00 +1000 (AEST)
+Received: by mail-io1-xd36.google.com with SMTP id f3so3245398ioj.1
+ for <openbmc@lists.ozlabs.org>; Tue, 05 May 2020 10:32:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=wJYFi3L4RCMqnH+WbVnYJiW6Je+mj9wS6Qtx+kGqM0g=;
+ b=dgcRHelid7EKnUDsjV9yC5g/tBvAJ5WbV/+90Nnw1rHTW//ApXITrS25kipWRKxwhp
+ qjpyxuJopjKi01sseIQwhnHB3ttAP9+xqLEGCgWW3akHZf/Tg6M7giNCrTDjDTbHD6lX
+ XSi0yBPS0s6HD74bEH9DJ4xUzjN84iuYMLioh2bT2wG3tAnY6GRdWvD/iHJdTpPTcy+q
+ p7wVszvOzYMl7jggfrl118Jf+P9xVxogG9LWhJPdyLE5nUye7ZNiw4wa8VhSFz8fo0ii
+ MPrIzeLBtdTMJY+BMyglRUStOAl9JOjd+aGkxrGT1E/NtmPkKlCScwA7s01cOnMMGUh5
+ TZiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=wJYFi3L4RCMqnH+WbVnYJiW6Je+mj9wS6Qtx+kGqM0g=;
+ b=TK9ijDHsaiu/rpGmvVmetuAyh1Mz3bkjFM1xh5L2HHOk8bDC71lVfFfVd6+R39Z+Ek
+ ZxQyM9obh1sNO1jC4e/vohErCzmIOhYejDxDIf9Evv32rU+Ij+YnAj+wA2lBi8Dl3OJ/
+ 41VPRuLwYFPasTwWbQzhNWUPZjyYOKuBp8rN5PNtU6OYiNUfkJgk86rFRcYU65iQb8dg
+ kNKmNCY76c0b6BMR5uYAI9eiOG1wol7jAey+4pH73Pcgr0YQpUMXZmnGThyaT//pwOwj
+ sOucOxwsAF1PXBMn8QzixNECkRRKkUr8WwWp2i3B9XgO2/A5zE1RxEiVhvEprGkWzqcc
+ AD7A==
+X-Gm-Message-State: AGi0Pua/4TO0cC4Fg3vWUlxKf5o9ZRH1onngvIANSv9veg1bJltiG4BO
+ Lp342tckPcqZfAZjGumyO7eoMMph126mQdfN838=
+X-Google-Smtp-Source: APiQypLRpMUHGu3G9boroTIJ6DFMq4T3+8u7VPbZnQ8ttbpzYnGOFAmmPSGXZhEVsI0jsvKwMz9febxcUoO81RbrTSo=
+X-Received: by 2002:a02:cc16:: with SMTP id n22mr4467073jap.72.1588699915412; 
+ Tue, 05 May 2020 10:31:55 -0700 (PDT)
+MIME-Version: 1.0
+References: <PS2PR04MB354432E1908672CE27203758FDAA0@PS2PR04MB3544.apcprd04.prod.outlook.com>
+ <0B252A9A-3E34-4FA5-A872-CDA2C463500B@gmail.com>
+ <PS2PR04MB3544D3F9F9D913A7828B6AB7FDA70@PS2PR04MB3544.apcprd04.prod.outlook.com>
+In-Reply-To: <PS2PR04MB3544D3F9F9D913A7828B6AB7FDA70@PS2PR04MB3544.apcprd04.prod.outlook.com>
+From: Sui Chen <suichen6@gmail.com>
+Date: Tue, 5 May 2020 10:31:44 -0700
+Message-ID: <CAFaEeaE9DbzyHRKJZy24=D2yLJVk0Hq1adUV7vcRhNDNKWSzDw@mail.gmail.com>
+Subject: Re: openbmc build issue.
+To: Kumar Thangavel <thangavel.k@hcl.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,29 +76,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The reserved memory should be compatible with the shared DMA pool for
-use with the XDMA engine.
+Hi Kumar,
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 1 +
- 1 file changed, 1 insertion(+)
+I remember there are "python-core" and "python3-core" packages that
+are much smaller than "python" and "python3" packags respectively.
+(around 2MB vs 8MB if I remember correctly, with the difference causd
+by all the Python packages that come with "python" and "python3")
+So if you don't need all the Python packages it might be possible to
+save space by installing the core Python and only the packages that
+are used (for example, in one of my experiments, I included just
+python-core and python-subprocess).
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-index ba1f4cb..4729035 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
-@@ -32,6 +32,7 @@
- 
- 		vga_memory: region@bf000000 {
- 			no-map;
-+			compatible = "shared-dma-pool";
- 			reg = <0xbf000000 0x01000000>;	/* 16M */
- 		};
- 	};
--- 
-1.8.3.1
+Thanks
+Sui
 
+On Tue, May 5, 2020 at 6:49 AM Kumar Thangavel <thangavel.k@hcl.com> wrote:
+>
+> Hi Andrew,
+>
+>              Thanks for your response and information. We are checking on=
+ the python3 issue.
+>
+> Thanks,
+> Kumar.
+>
+> -----Original Message-----
+> From: Andrew Geissler <geissonator@gmail.com>
+> Sent: Monday, May 4, 2020 9:23 PM
+> To: Kumar Thangavel <thangavel.k@hcl.com>
+> Cc: openbmc@lists.ozlabs.org; Velumani T-ERS,HCLTech <velumanit@hcl.com>
+> Subject: Re: openbmc build issue.
+>
+> [CAUTION: This Email is from outside the Organization. Unless you trust t=
+he sender, Don=E2=80=99t click links or open attachments as it may be a Phi=
+shing email, which can steal your Information and compromise your Computer.=
+]
+>
+> > On Apr 30, 2020, at 1:23 AM, Kumar Thangavel <thangavel.k@hcl.com> wrot=
+e:
+> >
+> > Hi All,
+> >
+> > YV2 Build failing in latest LF openbmc master. PFB the reason and the d=
+etailed log file. Please let me know if there are suggestions to resolve.
+> > ERROR: obmc-phosphor-image-1.0-r0 do_generate_static: Image '/home/velu=
+/buildtest/openbmc/build/tmp/work/yosemitev2-openbmc-linux-gnueabi/obmc-pho=
+sphor-image/1.0-r0/deploy-obmc-phosphor-image-image-complete/obmc-phosphor-=
+image-yosemitev2.squashfs-xz' is too large!
+>
+> Hi Kumar, you=E2=80=99ve exceeded the allowed size for you rootfs. You=E2=
+=80=99ll need to pull some functions out. The biggest bang for your buck if=
+ possible is to remove python usage. Otherwise, you=E2=80=99ll need to find=
+ some functions to pull out.
+>
+> What probably caused this is upstream moved from python2 to python3. pyth=
+on3 takes significantly more space in the image.
+>
+>
+> > Please fine the attachment.
+> >
+> > Thanks,
+> > Kumar.
+>
+> ::DISCLAIMER::
+> ________________________________
+> The contents of this e-mail and any attachment(s) are confidential and in=
+tended for the named recipient(s) only. E-mail transmission is not guarante=
+ed to be secure or error-free as information could be intercepted, corrupte=
+d, lost, destroyed, arrive late or incomplete, or may contain viruses in tr=
+ansmission. The e mail and its contents (with or without referred errors) s=
+hall therefore not attach any liability on the originator or HCL or its aff=
+iliates. Views or opinions, if any, presented in this email are solely thos=
+e of the author and may not necessarily reflect the views or opinions of HC=
+L or its affiliates. Any form of reproduction, dissemination, copying, disc=
+losure, modification, distribution and / or publication of this message wit=
+hout the prior written consent of authorized representative of HCL is stric=
+tly prohibited. If you have received this email in error please delete it a=
+nd notify the sender immediately. Before opening any email and/or attachmen=
+ts, please check them for viruses and other defects.
+> ________________________________
