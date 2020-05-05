@@ -1,51 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50DD01C4CB2
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 05:38:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 818371C4E71
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 08:43:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49GQRR3qXtzDqbm
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 13:38:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49GVYC4rFRzDqWm
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 16:43:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=387f094da=davidwang@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::436;
+ helo=mail-pf1-x436.google.com; envelope-from=sunithaharish04@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
- Tue, 05 May 2020 13:37:38 AEST
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 49GQQp3VHJzDqWS
- for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 13:37:36 +1000 (AEST)
-IronPort-SDR: Z9kQlzBcue4AejheEGBtrW2Ky6PvNkOX5Ua8Pn2ABirxJFdp+Sb45caoZxFvuKW4Q7zPcwuiNU
- 6y9G9n6NOXpQ==
-Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
- by mx02.quantatw.com with ESMTP; 05 May 2020 11:36:25 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx08.quanta.corp
- (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Tue, 5 May 2020
- 11:36:23 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Tue, 5 May 2020 11:36:23 +0800
-From: =?big5?B?RGF2aWQgV2FuZyAopP2utqZ0KQ==?= <DavidWang@quantatw.com>
-To: "gkeishin@in.ibm.com" <gkeishin@in.ibm.com>
-Subject: Runing openbmc-test-automation with latest DMTF tool
-Thread-Topic: Runing openbmc-test-automation with latest DMTF tool
-Thread-Index: AdYijliOoppu2H5nRfGbNNknDCph2g==
-Date: Tue, 5 May 2020 03:36:23 +0000
-Message-ID: <9ca3227c0a18406da062b22b9581bb96@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: 6C780FDCD75A299EC7A5EBA8042D2ED7D4709DFD98F83D3554630C4F372B15302000:8
-Content-Type: multipart/alternative;
- boundary="_000_9ca3227c0a18406da062b22b9581bb96quantatwcom_"
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=c3uyjVQD; dkim-atps=neutral
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com
+ [IPv6:2607:f8b0:4864:20::436])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49GVXT613DzDqSv
+ for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 16:42:49 +1000 (AEST)
+Received: by mail-pf1-x436.google.com with SMTP id d184so425724pfd.4
+ for <openbmc@lists.ozlabs.org>; Mon, 04 May 2020 23:42:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=b6IRI7eUlk9xw5/HLzgCDMsDSEHbpxpByn4FFC9rdrw=;
+ b=c3uyjVQDbwugWHY5Gke6yJxX/smtboJXa8Shnfgd8KPFi4kIGaJjnbwVk9Qz3O1ZWV
+ 0UyNZMTDQ7A65+iUD76Bo+z3Ji55HzURvqz2T+XMo5ALXUs2t7eS2Nwzd0/AngvNatFJ
+ WQBsBqRZDGfkEM0NWja6UXxPPPxj2xN5eV2x07nftZeLEjXPstqOiNJpjilRvJ0I0ZKN
+ 1yn29jE4ijkxpJ717UYzdn/9EYjOO0MlJkIWiuBiBEp4vFuZbjqeFnKi2FyTchIp5r5I
+ 0YAKVpVL0ooSHU4VJbKUQ8TDYm+3nGghiD5GLqjS/4NUcdF6LTVN5c2UDhSu2j9UDwxt
+ +piw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=b6IRI7eUlk9xw5/HLzgCDMsDSEHbpxpByn4FFC9rdrw=;
+ b=JWVQ3Q7GD3v8XXFJ8jna00ZDQmI00FDNtU6AkZz3juWwPQ7vaQAc7ZOaI5fTKgtBt0
+ 9sEj+EsPCm90Ns9tmHBT7HM0MYySxeS7bkswtzLE2ueKH/pfkCoTXbkSFKu5XLZFMK+c
+ SmQbM8hBtfPUkj+1XuX2gwwlVvU7Yt+M7UahkMfgtL188z4ImJJUneyvfE7qfXvKtKOC
+ CI81YJDhTITLh5sw7P/1mIp0otpo0oyUd1V26LblBs11wnCpWjytJnpbYUgmexMNADMw
+ pATg8nK5pGQXbJ1ke+72KAQJKPpMC5YDbJSyqHBzb23STI/Z35w0zdMgqYuXSZXpk8hC
+ R9+Q==
+X-Gm-Message-State: AGi0Pua/Rsu8wr9CxzRleKA+WqEpY1VY3cRgmTciOJ4oATN9CvDpEvBA
+ RE27fsr255ePF9KdB8qlptQsc2uuKmGZ5A==
+X-Google-Smtp-Source: APiQypK+UymEvpQ94YtT61Ofi2S4aIEfHxLiozKYBe7dTonO1qruJeiodoGG2eFo6dih0TG/LvuYVA==
+X-Received: by 2002:a63:7214:: with SMTP id n20mr1744179pgc.437.1588660964193; 
+ Mon, 04 May 2020 23:42:44 -0700 (PDT)
+Received: from ?IPv6:2405:204:52a5:be69:7cff:3b37:b36a:493c?
+ ([2405:204:52a5:be69:7cff:3b37:b36a:493c])
+ by smtp.gmail.com with ESMTPSA id r21sm917783pjo.2.2020.05.04.23.42.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 May 2020 23:42:43 -0700 (PDT)
+Subject: Re: Storing host data on the BMC
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>, patrick@stwcx.xyz,
+ dkodihal@in.ibm.com, suryakanth.sekar@linux.intel.com,
+ openbmc <openbmc@lists.ozlabs.org>
+References: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
+ <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+From: Sunitha Harish <sunithaharish04@gmail.com>
+Message-ID: <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+Date: Tue, 5 May 2020 12:12:38 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,107 +86,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_9ca3227c0a18406da062b22b9581bb96quantatwcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+Hi Deepak,
 
-SGkgR2VvcmdlOg0KDQpJoaZtIHRlc3RpbmcgbXkgQk1DcyB3aXRoIFJlZGZpc2hfVXNlY2FzZV9D
-aGVja2Vycy5yb2JvdCB3aGljaCBpcyB1c2luZyBETVRGIHRvb2wgY2xvbmUgZnJvbSBnaXRodWIu
-Y29tL0RNVEYvUmVkZmlzaC1Vc2VjYXNlLUNoZWNrZXJzLmdpdA0KDQpUaGUgcmVhc29uIGZvciB0
-aGUgZmFpbHVyZSBpcyB0aGF0IHRoZSBsYXRlc3QgRE1URiB0b29sIGNhbqGmdCByZWNvZ25pemUg
-LXYgYXJndW1lbnQgaW4gYWNjb3VudF9tYW5hZ2VtZW50LnB5LCBhbmQgoVZGIGluIHBvd2VyX2Nv
-bnRyb2wucHkuDQoNCkRvIHlvdSBoYXZlIGFueSBzdWdnZXN0aW9uPyBJcyBpdCBmaW5lIGlmIEkg
-b25seSByZXN0b3JlIHRoZSBETVRGIHRvb2wgd2l0aCBwcmV2aW91cyByZXZpc2lvbiBhbmQgdGVz
-dCBteSBCTUNzPw0KDQpUaGFua3MNCkJlc3QgUmVnYXJkcywNCkRhdmlkDQoNCg==
+As mentioned , the Origin is the property which will be set by the host 
+once the IP address is applied to its interface. Its a read-only 
+property for the out-of-band user. But its a closely coupled - related 
+attribute on the host setting/BIOS object.
 
---_000_9ca3227c0a18406da062b22b9581bb96quantatwcom_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
+I am looking for the opinion on the two approaches proposed ; so that we 
+can handle these kind of scenarios.
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi George:<o:p></o:p></span></p=
+Thanks & regards,
+Sunitha
+
+
+On 04-05-2020 21:26, Deepak Kodihalli wrote:
+> On 04/05/20 8:22 pm, Sunitha Harish wrote:
+>> Hi,
+>>
+>> We have some user defined host settings which we are presently 
+>> keeping it in phosphor-settings-manager and the associated pldm bios 
+>> attributes are there in the pldm BIOS table. Few properties in the 
+>> object hosted by the phosphor-settings-manager are read-only for out 
+>> of band but through in-band it can be changed.
+>>
+>> For example; the IP origin (static/dhcp) in the below commit.
+>> https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30205/
 >
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I=A1=A6m testing my BMCs with R=
-edfish_Usecase_Checkers.robot which is using DMTF tool clone from github.co=
-m/DMTF/Redfish-Usecase-Checkers.git<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">The reason for the failure is t=
-hat the latest DMTF tool can=A1=A6t recognize -v argument in account_manage=
-ment.py, and =A1VF in power_control.py.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Do you have any suggestion? Is =
-it fine if I only restore the DMTF tool with previous revision and test my =
-BMCs?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">David<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
-
---_000_9ca3227c0a18406da062b22b9581bb96quantatwcom_--
+> Is the Origin property here a host setting/BIOS attribute? I don't 
+> believe it is. From a PLDM perspective, this is a sensor that the host 
+> can update and notify the BMC via an event, for eg. Even if you make 
+> it read-only, it is not a setting for the host firmware - which is 
+> what BIOS attributes are meant for.
+>
+> Thanks,
+> Deepak
