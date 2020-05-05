@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84D291C5001
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 10:15:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E52571C501B
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 10:18:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49GXZn6CMkzDqXs
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 18:14:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49GXg70bs3zDqNn
+	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 18:18:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,66 +17,66 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=TxnK3+Z6; 
+ header.s=fm2 header.b=K1gCCo5g; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=t1YKRwHK; 
+ header.a=rsa-sha256 header.s=fm2 header.b=q/EAvrlp; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49GWXc6PQ2zDqVZ
- for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 17:28:00 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49GWXg6Xz9zDqPS
+ for <openbmc@lists.ozlabs.org>; Tue,  5 May 2020 17:28:03 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 892265CD;
- Tue,  5 May 2020 03:27:58 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 62E1C6D6;
+ Tue,  5 May 2020 03:28:00 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Tue, 05 May 2020 03:27:58 -0400
+ by compute3.internal (MEProxy); Tue, 05 May 2020 03:28:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=XoL+ntUtebZU4
- TteH5GhD5sAyqCV36nA4iemxbqkO78=; b=TxnK3+Z6ALgkrQ5tbOL4X+mdWyDOP
- dO8VURD3BFWNHQLis6Ik/+b+d3CbRDQN69sm/RzUZQ2HnMLpDB4FZ1XwXhG95BBk
- BrNtnopmyXgyiUxXkDKqouZk+f4qnLPQyx2fL681GmG7L+kRDfQgId+446yUfCB6
- OWSKgAvBAciLghtIx8QNZNILElgTejyhTeTEXxyuxmnAsEvwUnrqHwdIZ1PcUf2d
- e4nVwrvM7BKJZ6D+cnMxNKpf68tqwnOwdHJXvBarLLJfj69vsZ7NV8UzI5pjz3Az
- iurafxEunTNmMiNmnak73MR2GBU2XOcMGpU0QPoQkrfgDQtVV+0DsyAZw==
+ :mime-version:content-transfer-encoding; s=fm2; bh=JTBib5XMuE+/L
+ cumzeOup1o95iCS93yRZfvLsnKwdfc=; b=K1gCCo5gRElQg5z8Ly/ndMo2sEenT
+ V9yJTrk11EFeXHhEvB2x5yBAYu3aimETmrFI4J9IO2wtJh71uCI4k7ci2GGXUgZ/
+ tuRfjVTzrWO+fr7FKXduEWCDN6GwqT8yAkIb0wIX/x7UAsp1erRjLHAgpdiRUpMJ
+ KHQwZID3pYjQI0eSR9nwEOQBlCNz1K1+mMXqqp/A+vHp4fG0+hBHC6wSBbWtje5U
+ s/9cUzQWnfVEz3PKL4gOCfNoETxR0MO9vBg3CJsPgr09QQLeZPgjApVhuNgnGOiZ
+ 0YT9WOUlZBPSBDoSxqJtKCzjoJlBimhvCQIuzbJSX+M4Q/HoGonlskP9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=XoL+ntUtebZU4TteH5GhD5sAyqCV36nA4iemxbqkO78=; b=t1YKRwHK
- g7NXfU1BHzDhVF1YX4sCSmmKIyNzI1pZvgN9Z64eMKbisljItgmdkfeHl7vdBtRW
- 2LqicZE22WmrWA17G0a3R2fuzGKGJ/fRD+QUCEBTIScwhzhJeohcKLB/A/xdCBCA
- SQL5j2tXywXuYOKcdsrOUdxmrHYZm2yjGaf0AXy3K5+EkYRItrLkyg+lQ+Frgt0w
- GNQtpyEvSEcPC7TDNI6ibv8LgHTESCYxwQG7y9i9jYm2/8pGPewYTw4aXIpiPHWC
- jUOmnad3DPJg1KvFyaTO5aGJNTEVRrqZJq2U6Imd9AirDWZToFFssj8w8qMeZrI2
- UlE/7S3ePLFfvg==
-X-ME-Sender: <xms:fhWxXqsHx3CMzU730vM-OtT9FTAwqd0rK6ZXNAbxPzFN9MrbMfsvaw>
+ fm2; bh=JTBib5XMuE+/LcumzeOup1o95iCS93yRZfvLsnKwdfc=; b=q/EAvrlp
+ AXQX3oMhIgYT60I0WQDVW8V9horQI3XhXIVJz082mxT26cuWusmek+IRuJtJq4nQ
+ gZLAAgWsHTGeQu68MQywupTdlEGOGbhNWrsS0yabHwXczLSPmoxIAlfLwGZNpPSz
+ lbxtS8NFRRa+qvZMrk2qfQEn3evuSRVVGHXLwzQ97PYGG8S53qrERu2bwWlKUR8V
+ +/nF1ZTf0iGe4NRi9fhCeOdbXua/KnXp1E2BBOWH6pokodD7DqVf3bp+zi9kEwK0
+ v1/PzUheOBnhrefKP9un0ywKpSzPhG9bX2f1eJZ7JwQLnJLCl629YwocoDdFgqCs
+ B+Nnty1OTybGUg==
+X-ME-Sender: <xms:fxWxXmmG3wdhVrLLsWWwx2W4khJ-bKpDXW_7Vc8JtKkPPVlUgVCeTA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrjeehgdduudejucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
  dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
  jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
  etjeffleffvdduudevieffgeetleevhfetnecukfhppedugedrvddrjeehrdekgeenucev
- lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfi
+ lhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfi
  esrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:fhWxXhDiTPoYtOOXodkkWAXRH0_yX4jiw3oT-kIIICSlKgPgF04iwQ>
- <xmx:fhWxXsGHYmSSJs2Hjy0buzeflrrxH6W9h3s5X0ndwFoU18RWYo-wPQ>
- <xmx:fhWxXhBsfTtNDf_7VlYSVEgSmRQ0ymD1fXuQwOox1Vmmji-ub6T2ZA>
- <xmx:fhWxXutTzXvtdTlDY72sCQ8xTfmc8pdNgXZfP--lFn-PShhBG4Ih2A>
+X-ME-Proxy: <xmx:fxWxXj9tjcH3C-DnaxrJb7cpjd0eBl7YyNq4q-ZdeYlagpWrNApa9Q>
+ <xmx:fxWxXhbNv7bffxQNC6dAvz1opHuFGRSihOPcAPiUjpuptG3OBNtk-A>
+ <xmx:fxWxXge8vrW7E8JWnQO6_aCePz8MvzoXER__tyWve6u4UrBfCq0anw>
+ <xmx:gBWxXjDk0YwHG413Jfn2TUfPkeUCCZWDosh5mwC-9ljkSjk09Ex2ZQ>
 Received: from localhost.localdomain
  (ppp14-2-75-84.adl-apt-pir-bras31.tpg.internode.on.net [14.2.75.84])
- by mail.messagingengine.com (Postfix) with ESMTPA id B41883066033;
- Tue,  5 May 2020 03:27:56 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 831C43066052;
+ Tue,  5 May 2020 03:27:58 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.4 2/3] pinctrl: aspeed: Describe the heartbeat
- function on ball Y23
-Date: Tue,  5 May 2020 16:57:41 +0930
-Message-Id: <20200505072742.350305-3-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.4 3/3] ARM: dts: rainier: Configure ball Y23 as
+ GPIOP7 for MCLR_VPP
+Date: Tue,  5 May 2020 16:57:42 +0930
+Message-Id: <20200505072742.350305-4-andrew@aj.id.au>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200505072742.350305-1-andrew@aj.id.au>
 References: <20200505072742.350305-1-andrew@aj.id.au>
@@ -97,58 +97,36 @@ Cc: elkowals@us.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The default pinmux configuration for Y23 is to route a heartbeat to
-drive a LED. Previous revisions of the AST2600 datasheet did not include
-a description of this function
+GPIOP7 is used in the Rainier design to manage the state of a
+microcontroller elsewhere in the system but its ball, Y23, is the
+driver of the heartbeat LED on the ast2600-evb and the SoC defaults Y23
+at power-on to the pulse-train behaviour used to drive the LED. This
+causes much confusion for the micro in the Rainier system, so hog the
+line as early as possible.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index fa32c3e9c9d1..7efe6dbe4398 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -46,6 +46,7 @@
- #define SCU634		0x634 /* Disable GPIO Internal Pull-Down #5 */
- #define SCU638		0x638 /* Disable GPIO Internal Pull-Down #6 */
- #define SCU694		0x694 /* Multi-function Pin Control #25 */
-+#define SCU69C		0x69C /* Multi-function Pin Control #27 */
- #define SCUC20		0xC20 /* PCIE configuration Setting Control */
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 01db238ce741..794af5517313 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -102,6 +102,13 @@
+ 	/*AA0-AA7*/	"","","","","","","","",
+ 	/*AB0-AB7*/	"","","","","","","","",
+ 	/*AC0-AC7*/	"","","","","","","","";
++
++	pin_mclr_vpp {
++		gpio-hog;
++		gpios = <ASPEED_GPIO(P, 7) GPIO_OPEN_DRAIN>;
++		output-high;
++		line-name = "mclr_vpp";
++	};
+ };
  
- #define ASPEED_G6_NR_PINS 256
-@@ -819,11 +820,13 @@ FUNC_DECL_2(PWM14, PWM14G0, PWM14G1);
- #define Y23 127
- SIG_EXPR_LIST_DECL_SEMG(Y23, PWM15, PWM15G1, PWM15, SIG_DESC_SET(SCU41C, 31));
- SIG_EXPR_LIST_DECL_SESG(Y23, THRUOUT3, THRU3, SIG_DESC_SET(SCU4BC, 31));
--PIN_DECL_2(Y23, GPIOP7, PWM15, THRUOUT3);
-+SIG_EXPR_LIST_DECL_SESG(Y23, HEARTBEAT, HEARTBEAT, SIG_DESC_SET(SCU69C, 31));
-+PIN_DECL_3(Y23, GPIOP7, PWM15, THRUOUT3, HEARTBEAT);
- GROUP_DECL(PWM15G1, Y23);
- FUNC_DECL_2(PWM15, PWM15G0, PWM15G1);
- 
- FUNC_GROUP_DECL(THRU3, AB24, Y23);
-+FUNC_GROUP_DECL(HEARTBEAT, Y23);
- 
- #define AA25 128
- SSSF_PIN_DECL(AA25, GPIOQ0, TACH0, SIG_DESC_SET(SCU430, 0));
-@@ -1920,6 +1923,7 @@ static const struct aspeed_pin_group aspeed_g6_groups[] = {
- 	ASPEED_PINCTRL_GROUP(GPIU5),
- 	ASPEED_PINCTRL_GROUP(GPIU6),
- 	ASPEED_PINCTRL_GROUP(GPIU7),
-+	ASPEED_PINCTRL_GROUP(HEARTBEAT),
- 	ASPEED_PINCTRL_GROUP(HVI3C3),
- 	ASPEED_PINCTRL_GROUP(HVI3C4),
- 	ASPEED_PINCTRL_GROUP(I2C1),
-@@ -2158,6 +2162,7 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
- 	ASPEED_PINCTRL_FUNC(GPIU5),
- 	ASPEED_PINCTRL_FUNC(GPIU6),
- 	ASPEED_PINCTRL_FUNC(GPIU7),
-+	ASPEED_PINCTRL_FUNC(HEARTBEAT),
- 	ASPEED_PINCTRL_FUNC(I2C1),
- 	ASPEED_PINCTRL_FUNC(I2C10),
- 	ASPEED_PINCTRL_FUNC(I2C11),
+ &emmc_controller {
 -- 
 2.25.1
 
