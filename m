@@ -2,89 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CCD71C6191
-	for <lists+openbmc@lfdr.de>; Tue,  5 May 2020 22:06:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D99D1C65ED
+	for <lists+openbmc@lfdr.de>; Wed,  6 May 2020 04:38:59 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49GrMG3LnWzDqSB
-	for <lists+openbmc@lfdr.de>; Wed,  6 May 2020 06:06:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49H14c6cwkzDqjg
+	for <lists+openbmc@lfdr.de>; Wed,  6 May 2020 12:38:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.140; helo=m13-140.163.com;
+ envelope-from=lemon_zhang555@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=jGsx7Npf; dkim-atps=neutral
+Received: from m13-140.163.com (m13-140.163.com [220.181.13.140])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49GrLJ1RpxzDqbs
- for <openbmc@lists.ozlabs.org>; Wed,  6 May 2020 06:05:11 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 045K2Xhs175151
- for <openbmc@lists.ozlabs.org>; Tue, 5 May 2020 16:05:08 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30s4xm0y66-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 05 May 2020 16:05:08 -0400
-Received: from m0098404.ppops.net (m0098404.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 045K39s0178779
- for <openbmc@lists.ozlabs.org>; Tue, 5 May 2020 16:05:08 -0400
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30s4xm0y5k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2020 16:05:08 -0400
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 045K39ff018506;
- Tue, 5 May 2020 20:05:07 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma02wdc.us.ibm.com with ESMTP id 30s0g6ke64-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2020 20:05:07 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 045K56XK21954952
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 May 2020 20:05:06 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4BCE3BE051;
- Tue,  5 May 2020 20:05:06 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 12361BE056;
- Tue,  5 May 2020 20:05:04 +0000 (GMT)
-Received: from [9.102.37.152] (unknown [9.102.37.152])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Tue,  5 May 2020 20:05:04 +0000 (GMT)
-Subject: Re: Dunfell Update Status
-To: Andrew Geissler <geissonator@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <41CB9FEC-1892-489A-8CD8-A50F5E744C4D@gmail.com>
- <16620BAA-69AD-491E-A2C3-265C53DC91F9@gmail.com>
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Message-ID: <0938c96f-b3ff-3a16-7ca4-53bf99488009@linux.vnet.ibm.com>
-Date: Tue, 5 May 2020 15:05:01 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49H13r68P9zDqT3
+ for <openbmc@lists.ozlabs.org>; Wed,  6 May 2020 12:38:12 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=mPGsq
+ 7QVTmbr0UL3lZafhou0YJCZF/36SDU7nzcsntY=; b=jGsx7NpfkC/PhJblaZ2fZ
+ WwzHtPd/HsxpgjFvAMtY76TPL/w/HRGbe4d/oykSUi08dAQ86hzH9KH/iLgE9vsE
+ Y6FIixmdEPRkQgmvT8R9mAnNKzEGvEhAsQCHiQQMdB6Ad4fApEyl8h+nR6UgluP4
+ e09qfOen0P3O9JDXGj3SMI=
+Received: from lemon_zhang555$163.com ( [112.224.32.183] ) by
+ ajax-webmail-wmsvr140 (Coremail) ; Wed, 6 May 2020 10:38:04 +0800 (CST)
+X-Originating-IP: [112.224.32.183]
+Date: Wed, 6 May 2020 10:38:04 +0800 (CST)
+From: hgfcc <lemon_zhang555@163.com>
+To: openbmc@lists.ozlabs.org
+Subject: use the LTC2990 monitors the temperature
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 163com
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_36634_201144583.1588732684258"
 MIME-Version: 1.0
-In-Reply-To: <16620BAA-69AD-491E-A2C3-265C53DC91F9@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.138, 18.0.676
- definitions=2020-05-05_10:2020-05-04,
- 2020-05-05 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- mlxlogscore=905 spamscore=0 impostorscore=0 mlxscore=0 adultscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2005050149
+Message-ID: <22969cf5.2743.171e7d8e7e2.Coremail.lemon_zhang555@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: jMGowACHoqYNI7JeWYoqAA--.40166W
+X-CM-SenderInfo: pohp00pb2kt0jjvvkqqrwthudrp/1tbiVBsckVUMM2cQDAABsS
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,25 +61,31 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 5/5/2020 12:38 PM, Andrew Geissler wrote:
-> An update on the email below. Upstream yocto (including the new Dunfell release)
-> went into openbmc master this morning with the following commit:
->
-> https://github.com/openbmc/openbmc/commit/82c905dc58a36aeae40b1b273a12f63fb1973cf4
->
->
-> Now that we’re past the python3 migration issue, we’ll be doing rebases
-> on upstream yocto once a week again (which should prevent needing
-> big painful updates like this).
-Awesome!
+------=_Part_36634_201144583.1588732684258
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
->> On Apr 28, 2020, at 2:05 PM, Andrew Geissler <geissonator@gmail.com> wrote:
->>
->> A fairly quick update on where we are with getting back onto upstream yocto.
->>
->> For those that don’t know, dunfell is the name of the next yocto release.
->>
->> The move from python2 to python3 is mostly behind us, thanks everyone,
->> especially Patrick (stwcx) for all the help there.
->>
-Thank you Andrew for driving this and to everyone who helped!
+SGVsbG8sIEkgdXNlIHRoZSBMVEMyOTkwIHRvIG1vbml0b3IgdGhlIG1vdGhlcmJvYXJkIHRlbXBl
+cmF0dXJlLiBCdXQgdGhlIExUQzI5OTAgaGFzIGZvdXIgbW9uaXRvcmluZyBwaW5zLiBIb3cgY2Fu
+IEkgY29uZmlndXJlIGl0IHRvIHNwZWNpZnkgd2hpY2ggcGluIEkgdXNlLiBGb3IgZXhhbXBsZSwg
+SSBvbmx5IHVzZWQgdGhlIHNlY29uZCBhbmQgdGhpcmQgcGlucy4KUmVnYXJkcywKR2FybmV0
+------=_Part_36634_201144583.1588732684258
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+SGVsbG8sIEkgdXNlIHRo
+ZSBMVEMyOTkwIHRvIG1vbml0b3IgdGhlIG1vdGhlcmJvYXJkIHRlbXBlcmF0dXJlLiBCdXQgdGhl
+IExUQzI5OTAgaGFzIGZvdXIgbW9uaXRvcmluZyBwaW5zLiBIb3cgY2FuIEkgY29uZmlndXJlIGl0
+IHRvIHNwZWNpZnkgd2hpY2ggcGluIEkgdXNlLiBGb3IgZXhhbXBsZSwgSSBvbmx5IHVzZWQgdGhl
+IHNlY29uZCBhbmQgdGhpcmQgcGlucy48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPjxkaXYg
+c3R5bGU9ImNvbG9yOiByZ2IoMzYsIDQxLCA0Nik7IGZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVt
+LCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCBIZWx2ZXRpY2EsIEFy
+aWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7U2Vn
+b2UgVUkgRW1vamkmcXVvdDs7IG1hcmdpbjogMHB4OyI+UmVnYXJkcyw8L2Rpdj48ZGl2IHN0eWxl
+PSJtYXJnaW46IDBweDsiPjxmb250IGNvbG9yPSIjMjQyOTJlIiBmYWNlPSItYXBwbGUtc3lzdGVt
+LCBCbGlua01hY1N5c3RlbUZvbnQsIFNlZ29lIFVJLCBIZWx2ZXRpY2EsIEFyaWFsLCBzYW5zLXNl
+cmlmLCBBcHBsZSBDb2xvciBFbW9qaSwgU2Vnb2UgVUkgRW1vamkiPkdhcm5ldDwvZm9udD48L2Rp
+dj48L2Rpdj48L2Rpdj4=
+------=_Part_36634_201144583.1588732684258--
+
