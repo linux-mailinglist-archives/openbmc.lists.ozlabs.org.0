@@ -2,75 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E84BC1C80AC
-	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 05:54:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F1E701C822F
+	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 08:08:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49HfjC6scCzDqx4
-	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 13:54:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Hjh3203KzDqwt
+	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 16:08:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::334;
- helo=mail-ot1-x334.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=wistron.com (client-ip=103.200.3.19; helo=segapp01.wistron.com;
+ envelope-from=ben_pai@wistron.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=C4a0sTjF; dkim-atps=neutral
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
- [IPv6:2607:f8b0:4864:20::334])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49HfhY1K2nzDqvN
- for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 13:53:47 +1000 (AEST)
-Received: by mail-ot1-x334.google.com with SMTP id t3so3407063otp.3
- for <openbmc@lists.ozlabs.org>; Wed, 06 May 2020 20:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=jcrT8AybKQ1dkgUjM2ZYOp9x2fYuia3JnXOLiOdKznA=;
- b=C4a0sTjFQTQfXkPhHze1MC+uDE5kS/ihFkHNaZDmuhyH/RkrNGzrevETurMq95jxNM
- CuwrTwn7eWKLYoBujWQnEKl3LyHMF6UjtxfE0BrQnZXVwNUnUXSoJ3UKAjKvE2Zq9pUe
- qnN60Ql+DyZcgUV7RN3k0Drs1cgk6feydMVOZOiikw3IgQY0KEFmEgPs+mjsgTTe3pqT
- FIKf5+Kg6ai8fTAERhzZor/n/J0EsQBWNb97eWA/tm1n/+ZVwPqafA0JXfIWluCtpuPo
- vDRTu6hF/ftr/TqfIxF+/0toNdiI8lF7hKiov0qgpZzxcMyBqVvixLl7hoavdETGdpBa
- cmWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=jcrT8AybKQ1dkgUjM2ZYOp9x2fYuia3JnXOLiOdKznA=;
- b=LrDg2K2FjYn8RupbYVc5YdPlcDg1hWFhMEwLxdeQuRO55nijLd/zXsBUui1hDasB4u
- rs3N0BG6b3in/FLoyxytgi0yoHOsGWS7mpaME8zHHIFpRjpEPlLxyqsaahaKaI26QZor
- eQynX6FCP+ZEUktPBwv4jhd0hrcHuiI8smJhSFbJOsYNuY1oN6XmU5inEq2Cpslk9XXk
- MXF+Gy5EBd53KGTTF6Qcu2oZeHt+g2zwCKK4liGJ1P32u+s5Moy660C6ImI8khzSzRIe
- DY8JkyWvBHxRDxwfGJfHZOejM1n6AEAwdNH9rV9Nbj9bAou0cB9+akKzuR2Jwg36UWc2
- cuTw==
-X-Gm-Message-State: AGi0PuYdc56dI36zsEw2FxcvD1elpAQTlmzkxPJPAwTB0nlzgTDl7yTj
- AjUDCKIdbaRdXI5KslzRal2f2EHLDsk=
-X-Google-Smtp-Source: APiQypIRlO44/DQNAOgctIhbPnyQI7Lcykpcz180cW3UezxpBeJRaaQ5IaQ+pfMjN5LjE5OBxq5u/A==
-X-Received: by 2002:a05:6830:155a:: with SMTP id
- l26mr8695074otp.246.1588823625113; 
- Wed, 06 May 2020 20:53:45 -0700 (PDT)
-Received: from ?IPv6:2600:1700:19e0:3310:9ed:7687:7c6b:8b4d?
- ([2600:1700:19e0:3310:9ed:7687:7c6b:8b4d])
- by smtp.gmail.com with ESMTPSA id u197sm1091506oie.7.2020.05.06.20.53.43
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 06 May 2020 20:53:44 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: Add new repos to CI
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <7302f733-8a0a-46ba-efe6-cfadb1ea1a22@linux.intel.com>
-Date: Wed, 6 May 2020 22:53:43 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <C60F371A-D791-41E9-9874-F538557ED1CA@gmail.com>
-References: <7302f733-8a0a-46ba-efe6-cfadb1ea1a22@linux.intel.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+ dmarc=none (p=none dis=none) header.from=wistron.com
+Received: from segapp01.wistron.com (segapp02.wistron.com [103.200.3.19])
+ by lists.ozlabs.org (Postfix) with ESMTP id 49HjgK0qmWzDqvn
+ for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 16:07:52 +1000 (AEST)
+Received: from EXCHAPP01.whq.wistron (unverified [10.37.38.24]) by 
+ TWNHUMSW5.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
+ <Tdefbdf78bfc0a816731278@TWNHUMSW5.wistron.com>; Thu, 7 May 2020 
+ 14:07:46 +0800
+Received: from EXCHAPP02.whq.wistron (10.37.38.25) by EXCHAPP01.whq.wistron 
+ (10.37.38.24) with Microsoft SMTP Server 
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
+ 15.1.1913.5; Thu, 7 May 2020 14:07:45 +0800
+Received: from EXCHAPP02.whq.wistron ([fe80::cddc:5806:56d5:6e30]) by 
+ EXCHAPP02.whq.wistron ([fe80::cddc:5806:56d5:6e30%7]) with mapi id 
+ 15.01.1913.007; Thu, 7 May 2020 14:07:45 +0800
+From: <Ben_Pai@wistron.com>
+To: <bradleyb@fuzziesquirrel.com>, <openbmc@lists.ozlabs.org>
+Subject: phosphor-bittware repository
+Thread-Topic: phosphor-bittware repository
+Thread-Index: AdYkNFXgbdgKWTyxSeeYFtD/FWOCcw==
+Date: Thu, 7 May 2020 06:07:44 +0000
+Message-ID: <b7e1bb0b82394f8ca3a193cb9ed5c218@wistron.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.37.38.230]
+x-tm-snts-smtp: 8E12950010B689BE26B129A0D5C311D014A44921B91726DD35604BF80B2B26CE2000:8
+Content-Type: multipart/alternative; 
+ boundary="_000_b7e1bb0b82394f8ca3a193cb9ed5c218wistroncom_"
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,28 +55,131 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Claire_Ku@wistron.com, wangat@tw.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_b7e1bb0b82394f8ca3a193cb9ed5c218wistroncom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Brad
+
+Could you please help to create a new repository for phosphor-bittware?
+
+Best Regards,
+Ben
 
 
-> On May 6, 2020, at 4:28 PM, Bills, Jason M =
-<jason.m.bills@linux.intel.com> wrote:
->=20
-> Hi Andrew,
->=20
-> I recently had a couple new repos added and would like to have them =
-included in CI.  What's the right way to add them?
->=20
-> openbmc/libpeci
-> openbmc/host-error-monitor
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------
+This email contains confidential or legally privileged information and is f=
+or the sole use of its intended recipient.=20
+Any unauthorized review, use, copying or distribution of this email or the =
+content of this email is strictly prohibited.
+If you are not the intended recipient, you may reply to the sender and shou=
+ld delete this e-mail immediately.
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------
 
-Added them into CI and triggered what I saw in gerrit
+--_000_b7e1bb0b82394f8ca3a193cb9ed5c218wistroncom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Andrew
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Dotum;
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+@font-face
+	{font-family:"\@Dotum";
+	panose-1:2 11 6 0 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Brad<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Could you please help to create=
+ a new repository for phosphor-bittware?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Ben<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
 
->=20
-> Thanks!
-> -Jason
+<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------</b></span></p>
+<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
+This email contains confidential or legally privileged information and is f=
+or the sole use of its intended recipient. </b></span></p>
+<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
+Any unauthorized review, use, copying or distribution of this email or the =
+content of this email is strictly prohibited.</b></span></p>
+<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
+If you are not the intended recipient, you may reply to the sender and shou=
+ld delete this e-mail immediately.</b></span></p>
+<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
+---------------------------------------------------------------------------=
+---------------------------------------------------------------------------=
+---------</b></span></p></body>
+</html>
 
+--_000_b7e1bb0b82394f8ca3a193cb9ed5c218wistroncom_--
