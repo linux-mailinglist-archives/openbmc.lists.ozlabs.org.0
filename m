@@ -1,81 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 710441C9865
-	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 19:54:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDAA71C98A9
+	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 20:04:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49J1LL3shNzDqrq
-	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 03:54:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49J1Z06vqkzDqsH
+	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 04:04:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=thalerj@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49J1KX2B5pzDqmJ
- for <openbmc@lists.ozlabs.org>; Fri,  8 May 2020 03:53:29 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49J1YG1BnpzDqn1
+ for <openbmc@lists.ozlabs.org>; Fri,  8 May 2020 04:03:45 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 047HVhVg142908
- for <openbmc@lists.ozlabs.org>; Thu, 7 May 2020 13:53:27 -0400
+ 047I2DeL173425
+ for <openbmc@lists.ozlabs.org>; Thu, 7 May 2020 14:03:43 -0400
 Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
  [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30twj0n2mx-1
+ by mx0a-001b2d01.pphosted.com with ESMTP id 30s4vapmsk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 07 May 2020 13:53:27 -0400
+ for <openbmc@lists.ozlabs.org>; Thu, 07 May 2020 14:03:43 -0400
 Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 047HonVa019075
- for <openbmc@lists.ozlabs.org>; Thu, 7 May 2020 17:53:26 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma01dal.us.ibm.com with ESMTP id 30s0g76n09-1
+ by ppma01dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 047I2BlA032332
+ for <openbmc@lists.ozlabs.org>; Thu, 7 May 2020 18:03:42 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 30s0g76qyr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 07 May 2020 17:53:26 +0000
-Received: from b03ledav006.gho.boulder.ibm.com
- (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 047HrOx19241060
+ for <openbmc@lists.ozlabs.org>; Thu, 07 May 2020 18:03:42 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 047I3f2G32768446
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Thu, 7 May 2020 17:53:24 GMT
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F08B4C6057
- for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 17:53:24 +0000 (GMT)
-Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B6DD3C6055
- for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 17:53:24 +0000 (GMT)
-Received: from oc2358436115.ibm.com (unknown [9.160.17.201])
- by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 17:53:24 +0000 (GMT)
-Subject: Re: Prometheus telemetry exporter for OpenBmc - repository location
-To: openbmc@lists.ozlabs.org
-References: <b422a05c874e423ca0ad556ace9f8d03@intel.com>
-From: Justin Thaler <thalerj@linux.vnet.ibm.com>
-Message-ID: <65cc69da-63a4-391e-3768-7d071e681588@linux.vnet.ibm.com>
-Date: Thu, 7 May 2020 12:53:24 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ for <openbmc@lists.ozlabs.org>; Thu, 7 May 2020 18:03:41 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 51438AC064
+ for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 18:03:41 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EEE1AC05F
+ for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 18:03:41 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 18:03:40 +0000 (GMT)
 MIME-Version: 1.0
-In-Reply-To: <b422a05c874e423ca0ad556ace9f8d03@intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date: Thu, 07 May 2020 13:03:40 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: Update tools (fwupd, swupdate, ...)
+Message-ID: <703ee8c0b9265cdae7fa7fc2583be04e@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
  definitions=2020-05-07_10:2020-05-07,
  2020-05-07 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=808
- priorityscore=1501 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
- malwarescore=0 impostorscore=0 suspectscore=0 mlxscore=0 clxscore=1011
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2005070139
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=1
+ malwarescore=0 spamscore=1
+ suspectscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 mlxscore=1 mlxlogscore=222
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2003020000 definitions=main-2005070143
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,31 +87,10 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jakub,
+Doing some exploration on firmware update tools for openbmc.
 
-On 5/7/20 11:52 AM, Dlugolecki, Jakub wrote:
-> Hi OpenBmc Community,
-> 
-> We would like to release a Prometheus exporter for telemetry collected via Redfish protocol.
-> Our team uses this exporter for OpenBmc telemetry collection and for health monitoring.
-> 
-This is pretty awesome and I've seen a few different solutions to get 
-data into Prometheus, most around a message broker.
-> Would you agree create a repository in https://github.com/openbmc/ organization?
-> 
-How would you feel about a page that points out tools/plugins out there 
-that have been tested against OpenBMC? For instance a Netdata plugin, or 
-your Prometheus plugin. We could then provide a pointer to other repo's 
-that have the actual code, along with what level of openBMC is supported?
+Vikram mentioned that Intel would be looking at implementing fwupd 
+(https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/27576/).
+Has work started on this?
 
-It might make a nice list for those looking at adopting OpenBMC to see 
-what other tools are supported along with it.
-> My initial idea was to create a repository in a Prometheus GitHub organization.
-> Unfortunately, Prometheus project does not have any dedicated space for third party exporters:
-> https://prometheus.io/docs/instrumenting/exporters/
-> 
-> Thank you,
-> Jakub
-> 
-Thanks,
-Justin
+Has anybody looked a swupdate? Others?
