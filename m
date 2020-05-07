@@ -2,56 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A5801C83A5
-	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 09:44:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 677361C83CF
+	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 09:49:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49HlpH1gQQzDqvn
-	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 17:44:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Hlwd6Bz2zDqvY
+	for <lists+openbmc@lfdr.de>; Thu,  7 May 2020 17:49:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::631;
+ helo=mail-pl1-x631.google.com; envelope-from=zbigniewku@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=EiwpeptJ; dkim-atps=neutral
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com
+ [IPv6:2607:f8b0:4864:20::631])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49HlnV2LSWzDqv5
- for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 17:43:23 +1000 (AEST)
-IronPort-SDR: WPjs+F8uu7U8wsLGNnKzGwbr2wUaBE31T9puGJpJBCtoFhhkinAPizWAcIJkD0oy+k5nS3SwIt
- 1CBeN4SCCFMA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2020 00:43:20 -0700
-IronPort-SDR: awb3uVYF7TjlHsus/5G4SzSNf41SkL3sAo42YO0vonkluH65FZBReCOwU5bVCEIIsjOa9qIRRk
- /i6zna3FAlDg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,363,1583222400"; 
- d="scan'208,217";a="295633022"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga002.fm.intel.com with ESMTP; 07 May 2020 00:43:20 -0700
-Received: from SHWDE9518 (shwde9518.ccr.corp.intel.com [10.239.164.117])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 68506580679;
- Thu,  7 May 2020 00:43:19 -0700 (PDT)
-Date: Thu, 07 May 2020 15:43:19 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>
-Subject: openssl upgrade
-In-Reply-To: <FAD2D9A0-A730-4A28-9798-0B8B3228E14F@fuzziesquirrel.com>
-References: <959CAFA1E282D14FB901BE9A7BF4E7724E52C8BD@shsmsx102.ccr.corp.intel.com>
- <FAD2D9A0-A730-4A28-9798-0B8B3228E14F@fuzziesquirrel.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Hlvv0vN6zDqv6
+ for <openbmc@lists.ozlabs.org>; Thu,  7 May 2020 17:48:58 +1000 (AEST)
+Received: by mail-pl1-x631.google.com with SMTP id b6so1742071plz.13
+ for <openbmc@lists.ozlabs.org>; Thu, 07 May 2020 00:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=DGeu0HirLGUjV7YOPABaA5X5QsxcevAOD4LfYcv/Pxg=;
+ b=EiwpeptJ/+BWlKfqCRaeBUPbuEClHCP0Cikoq5YLS6NEMmlRSu45T5GA+eqSZrTY4P
+ PUq+9XOnX00oIrCmZ/AbCPjBLd1HmJ0JVikgPCPuR7AakojDjkONB4vIc2TUA24tCQ3P
+ Ywn2gxTWDNkd1j25J5t/QnpCbvYzE0vqKM/JJrqV/aysCSDiTr6MxqLUYexguO7k4kpT
+ 6UnG8ZYScq5sCEoMBnhmkoSmN9qnrnt+cD2HOszTdffrs96iioknsF+uHaT0rWjyaSbt
+ 1NbHCfmfjxPUaFDGsMrQfp89H/eQPM3X4zUSaDFQcu0p3Mk+dxCYYQlOmeFSO5IdZVnF
+ a47g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=DGeu0HirLGUjV7YOPABaA5X5QsxcevAOD4LfYcv/Pxg=;
+ b=hGg5c0emrUei5wSXWZvfn2G0vjhJPYeldisvJ5YYaorhaWuKeGe39MqByQ4VcHw+46
+ UUhLAx97g9w9P9COemEAm9PRzdQakL+paRAniOUDMaIBYL+699LxddZRQDSAHcEyDv5f
+ 1lqFpT5i2ySpOb2A7XcpFKp635QsBY0TIz+DDLTviSK4SwN+tG5ZDS899OqvfWchKX6z
+ 5cmH6UZkM62Z08W4IHl8mR2k3NXXkdh561QKE21wR5sjbDBZZ82snmK895IubRWYDkLF
+ F+ejZZqq34oLzADDToazphTcgoQiZuwnfH7CFsIOjIIAFJh/gJEvEXWPkU7pe9ZjYU22
+ JzBQ==
+X-Gm-Message-State: AGi0PuY+xAhvaCC6HxFxo2vuNJZpcfk2mzXjg9IV4pgwVJpj5zlBaHGp
+ LiKd2+VnbZu66MrVccMPwb1CzY7RnZzbwolwnbY=
+X-Google-Smtp-Source: APiQypJ18z9Myrif2e46mRE9YvATFm4IIAC0mCacPS3pTzkhAJfKa8Wsj5A3qcIR2fVOYSDXeFLExnQ/2JP/69tnmGs=
+X-Received: by 2002:a17:90a:3aef:: with SMTP id
+ b102mr14711861pjc.177.1588837733839; 
+ Thu, 07 May 2020 00:48:53 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <5EB3BC15.60402@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-edcf374d-47cd-4f4c-8f99-a3fbf10396ec"
+References: <CAMXw96Mnk8Hf4wAB_Ot=XEqp9yecspPfMGB6oF_LSgjRFMNHvw@mail.gmail.com>
+ <CAB_SOc5tEo7xRg65aMfBOWyY_yXkb6+mLmRhf8hifNhHDWGVgQ@mail.gmail.com>
+ <CAMXw96NoWn+sZELD1Xd=WUyLwvOUZ9prKyqqaLFKiMwM6ChuMw@mail.gmail.com>
+In-Reply-To: <CAMXw96NoWn+sZELD1Xd=WUyLwvOUZ9prKyqqaLFKiMwM6ChuMw@mail.gmail.com>
+From: Zbyszek <zbigniewku@gmail.com>
+Date: Thu, 7 May 2020 09:48:42 +0200
+Message-ID: <CAB_SOc6pgn2OXd-KRYNpzszxWyhfGOdBTHMB5FWbat8QaZ1CoQ@mail.gmail.com>
+Subject: Re: [bmcweb] mTLS client authentication always succeeds
+To: Zhenfei Tai <ztai@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,137 +77,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-edcf374d-47cd-4f4c-8f99-a3fbf10396ec
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+=C5=9Br., 6 maj 2020 o 20:19 Zhenfei Tai <ztai@google.com> napisa=C5=82(a):
+>
+> Hi Zbyszek,
+>
+> Thanks for your reply. I look forward to the official documentation.
+>
+> The callback function returns true when preverified =3D=3D false. Not sur=
+e why it should always return true, which accepts any client certificate.
 
-QnJhZCwNClRoZXJlIGlzIGEgQ1ZFIHJlcG9ydGVkIGluIG9wZW5TU0wgMS4xLjFkICh1c2VkIGJ5
-IGN1cnJlbnQgb3BlbmJtYykuICBTZXZlcml0eSBpcyBoaWdoLiANCkNWRS0yMDIwLTE5NjcgICBo
-dHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUtMjAyMC0xOTY3DQoNClNlcnZlciBv
-ciBjbGllbnQgYXBwbGljYXRpb25zIHRoYXQgY2FsbCB0aGUgU1NMX2NoZWNrX2NoYWluKCkgZnVu
-Y3Rpb24gZHVyaW5nIG9yIGFmdGVyIGEgVExTIDEuMyBoYW5kc2hha2UgbWF5IGNyYXNoIGR1ZSB0
-byBhIE5VTEwgcG9pbnRlciBkZXJlZmVyZW5jZSBhcyBhIHJlc3VsdCBvZiBpbmNvcnJlY3QgaGFu
-ZGxpbmcgb2YgdGhlICJzaWduYXR1cmVfYWxnb3JpdGhtc19jZXJ0IiBUTFMgZXh0ZW5zaW9uLiBU
-aGUgY3Jhc2ggb2NjdXJzIGlmIGFuIGludmFsaWQgb3IgdW5yZWNvZ25pc2VkIHNpZ25hdHVyZSBh
-bGdvcml0aG0gaXMgcmVjZWl2ZWQgZnJvbSB0aGUgcGVlci4gVGhpcyBjb3VsZCBiZSBleHBsb2l0
-ZWQgYnkgYSBtYWxpY2lvdXMgcGVlciBpbiBhIERlbmlhbCBvZiBTZXJ2aWNlIGF0dGFjay4gT3Bl
-blNTTCB2ZXJzaW9uIDEuMS4xZCwgMS4xLjFlLCBhbmQgMS4xLjFmIGFyZSBhZmZlY3RlZCBieSB0
-aGlzIGlzc3VlLiBUaGlzIGlzc3VlIGRpZCBub3QgYWZmZWN0IE9wZW5TU0wgdmVyc2lvbnMgcHJp
-b3IgdG8gMS4xLjFkLiBGaXhlZCBpbiBPcGVuU1NMIDEuMS4xZyAoQWZmZWN0ZWQgMS4xLjFkLTEu
-MS4xZikuDQoNCg0KSXQgaXMgZml4ZWQgaW4gMS4xLjFnLiAgVXBzdHJlYW0gcmVjaXBlIGFscmVh
-ZHkgcG9pbnQgb3BlbnNzbCB0byBsYXRlc3QgdmVyc2lvbiAoMS4xLjFnKS4NCmh0dHBzOi8vZ2l0
-LnlvY3RvcHJvamVjdC5vcmcvY2dpdC5jZ2kvcG9reS9wbGFpbi9tZXRhL3JlY2lwZXMtY29ubmVj
-dGl2aXR5L29wZW5zc2wvb3BlbnNzbF8xLjEuMWcuYmINCg0KV2lsbCB5b3UgdXBkYXRlIHBva3kg
-c3VidHJlZSB0byBsYXRlc3Q/
+Yes, always returning true we do not break the tls handshake allowing
+for connection.
+But user will not be authenticated anyway because its name will not be
+extracted from the certificate.
+In such case user should receive proper http error code telling he is
+not authenticated.
 
---NetEase-FlashMail-003-edcf374d-47cd-4f4c-8f99-a3fbf10396ec
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
-IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC45NjAwLjE5Njc4Ij48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IMOOwqLDiMOtw5HDhcK6w5o7IEJPUkRFUi1SSUdIVC1XSURUSDogMHB4OyBCT1JERVItQk9UVE9N
-LVdJRFRIOiAwcHg7IENPTE9SOiAjMDAwMDAwOyBNQVJHSU46IDEycHg7IExJTkUtSEVJR0hUOiAx
-LjU7IEJPUkRFUi1UT1AtV0lEVEg6IDBweCIgDQptYXJnaW5oZWlnaHQ9IjAiIG1hcmdpbndpZHRo
-PSIwIj4NCjxESVY+DQo8RElWIGNsYXNzPW1vZGFsLXRpdGxlPkJyYWQsPC9ESVY+DQo8RElWIGNs
-YXNzPW1vZGFsLXRpdGxlIHN0eWxlPSJGT05ULUZBTUlMWTogVGltZXMgTmV3IFJvbWFuIj5UaGVy
-ZSBpcyBhIENWRSANCnJlcG9ydGVkIGluIG9wZW5TU0wgMS4xLjFkICh1c2VkIGJ5IGN1cnJlbnQg
-b3BlbmJtYykuJm5ic3A7IFNldmVyaXR5IGlzIGhpZ2guIA0KPC9ESVY+DQo8RElWIGNsYXNzPW1v
-ZGFsLXRpdGxlPg0KPFRBQkxFIGlkPWZsYXNobWFpbF90YWJsZV8yIA0Kc3R5bGU9IkZPTlQtU0la
-RTogMTBwdDsgQk9SREVSLVRPUDogbWVkaXVtIG5vbmU7IEJPUkRFUi1SSUdIVDogbWVkaXVtIG5v
-bmU7IEJPUkRFUi1DT0xMQVBTRTogY29sbGFwc2U7IEJPUkRFUi1CT1RUT006IG1lZGl1bSBub25l
-OyBCT1JERVItTEVGVDogbWVkaXVtIG5vbmUiIA0KYm9yZGVyQ29sb3I9IzAwMDAwMCBjZWxsU3Bh
-Y2luZz0wIGNlbGxQYWRkaW5nPTIgYm9yZGVyPTE+DQogIDxDQVBUSU9OPjxTUEFOIA0KICBzdHls
-ZT0iRk9OVC1TSVpFOiAxMC41cHQ7IEZPTlQtRkFNSUxZOiBUaW1lcyBOZXcgUm9tYW4iPjwvU1BB
-Tj48L0NBUFRJT04+DQogIDxUQk9EWT4NCiAgPFRSPg0KICAgIDxURCANCiAgICBzdHlsZT0iQk9S
-REVSLVRPUDogIzAwMDAwMCAxcHggc29saWQ7IEJPUkRFUi1SSUdIVDogIzAwMDAwMCAxcHggc29s
-aWQ7IEJPUkRFUi1CT1RUT006ICMwMDAwMDAgMXB4IHNvbGlkOyBCT1JERVItTEVGVDogIzAwMDAw
-MCAxcHggc29saWQiIA0KICAgIHdpZHRoPTg3NCBub1dyYXA+PFNQQU4gc3R5bGU9IkZPTlQtU0la
-RTogMTAuNXB0OyBGT05ULUZBTUlMWTogw47CosOIw63DkcOFwrrDmiI+DQogICAgICA8RElWPg0K
-ICAgICAgPERJViBjbGFzcz1tb2RhbC10aXRsZSBzdHlsZT0iRk9OVC1GQU1JTFk6IFRpbWVzIE5l
-dyBSb21hbiI+PEEgDQogICAgICBocmVmPSJodHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFp
-bC9DVkUtMjAyMC0xOTY3IiANCiAgICAgIHJlbD0ibm9vcGVuZXIgbm9yZWZlcnJlciIgdGFyZ2V0
-PV9ibGFuayANCiAgICAgIGRhdGEtb3JpZ2luYWwtdGl0bGU9IlNlZSBOVkQgZGVzY3JpcHRpb24u
-IE9wZW5zIGluIG5ldyB3aW5kb3cuIj48U1BBTiANCiAgICAgIHN0eWxlPSJGT05ULUZBTUlMWTog
-VGltZXMgTmV3IFJvbWFuIj5DVkUtMjAyMC0xOTY3PC9TUEFOPjwvQT4mbmJzcDsmbmJzcDsgDQog
-ICAgICA8QSBocmVmPSJodHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUtMjAyMC0x
-OTY3Ij48U1BBTiANCiAgICAgIHN0eWxlPSJGT05ULUZBTUlMWTogVGltZXMgTmV3IFJvbWFuIj5o
-dHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUtMjAyMC0xOTY3PC9TUEFOPjwvQT48
-L0RJVj4NCiAgICAgIDxESVYgY2xhc3M9bW9kYWwtdGl0bGUgc3R5bGU9IkZPTlQtRkFNSUxZOiBU
-aW1lcyBOZXcgUm9tYW4iPiZuYnNwOzwvRElWPg0KICAgICAgPERJViBjbGFzcz1tb2RhbC10aXRs
-ZT48U1BBTiBzdHlsZT0iRk9OVC1GQU1JTFk6IFRpbWVzIE5ldyBSb21hbiIgDQogICAgICBkYXRh
-LXYtM2U4OTFkNDg9IiI+U2VydmVyIG9yIGNsaWVudCBhcHBsaWNhdGlvbnMgdGhhdCBjYWxsIHRo
-ZSANCiAgICAgIFNTTF9jaGVja19jaGFpbigpIGZ1bmN0aW9uIGR1cmluZyBvciBhZnRlciBhIFRM
-UyAxLjMgaGFuZHNoYWtlIG1heSBjcmFzaCANCiAgICAgIGR1ZSB0byBhIE5VTEwgcG9pbnRlciBk
-ZXJlZmVyZW5jZSBhcyBhIHJlc3VsdCBvZiBpbmNvcnJlY3QgaGFuZGxpbmcgb2YgdGhlIA0KICAg
-ICAgInNpZ25hdHVyZV9hbGdvcml0aG1zX2NlcnQiIFRMUyBleHRlbnNpb24uIFRoZSBjcmFzaCBv
-Y2N1cnMgaWYgYW4gaW52YWxpZCANCiAgICAgIG9yIHVucmVjb2duaXNlZCBzaWduYXR1cmUgYWxn
-b3JpdGhtIGlzIHJlY2VpdmVkIGZyb20gdGhlIHBlZXIuIFRoaXMgY291bGQgDQogICAgICBiZSBl
-eHBsb2l0ZWQgYnkgYSBtYWxpY2lvdXMgcGVlciBpbiBhIERlbmlhbCBvZiBTZXJ2aWNlIGF0dGFj
-ay4gT3BlblNTTCANCiAgICAgIHZlcnNpb24gMS4xLjFkLCAxLjEuMWUsIGFuZCAxLjEuMWYgYXJl
-IGFmZmVjdGVkIGJ5IHRoaXMgaXNzdWUuIFRoaXMgaXNzdWUgDQogICAgICBkaWQgbm90IGFmZmVj
-dCBPcGVuU1NMIHZlcnNpb25zIHByaW9yIHRvIDEuMS4xZC4gRml4ZWQgaW4gT3BlblNTTCAxLjEu
-MWcgDQogICAgICAoQWZmZWN0ZWQgDQoxLjEuMWQtMS4xLjFmKS48L1NQQU4+PC9ESVY+PC9ESVY+
-PC9TUEFOPjwvVEQ+PC9UUj48L1RCT0RZPjwvVEFCTEU+PC9ESVY+DQo8RElWIGNsYXNzPW1vZGFs
-LXRpdGxlPjxTUEFOIA0Kc3R5bGU9IldISVRFLVNQQUNFOiBwcmUtd3JhcDsgV09SRC1TUEFDSU5H
-OiAwcHg7IFRFWFQtVFJBTlNGT1JNOiBub25lOyBGTE9BVDogbm9uZTsgQ09MT1I6IHJnYigzMywz
-MywzMyk7IEZPTlQ6IDEzcHgvMThweCBUaW1lcyBOZXcgUm9tYW47IFdJRE9XUzogMTsgRElTUExB
-WTogaW5saW5lICFpbXBvcnRhbnQ7IExFVFRFUi1TUEFDSU5HOiBub3JtYWw7IEJBQ0tHUk9VTkQt
-Q09MT1I6IHJnYigyNTUsMjU1LDI1NSk7IFRFWFQtSU5ERU5UOiAwcHg7IC13ZWJraXQtdGV4dC1z
-dHJva2Utd2lkdGg6IDBweCI+PC9TUEFOPjxTUEFOIA0Kc3R5bGU9IldISVRFLVNQQUNFOiBwcmUt
-d3JhcDsgV09SRC1TUEFDSU5HOiAwcHg7IFRFWFQtVFJBTlNGT1JNOiBub25lOyBGTE9BVDogbm9u
-ZTsgQ09MT1I6IHJnYigzMywzMywzMyk7IEZPTlQ6IDEzcHgvMThweCBUaW1lcyBOZXcgUm9tYW47
-IFdJRE9XUzogMTsgRElTUExBWTogaW5saW5lICFpbXBvcnRhbnQ7IExFVFRFUi1TUEFDSU5HOiBu
-b3JtYWw7IEJBQ0tHUk9VTkQtQ09MT1I6IHJnYigyNTUsMjU1LDI1NSk7IFRFWFQtSU5ERU5UOiAw
-cHg7IC13ZWJraXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweCI+PC9TUEFOPiZuYnNwOzwvRElWPg0K
-PERJViBjbGFzcz1tb2RhbC10aXRsZT48U1BBTiANCnN0eWxlPSJXSElURS1TUEFDRTogcHJlLXdy
-YXA7IFdPUkQtU1BBQ0lORzogMHB4OyBURVhULVRSQU5TRk9STTogbm9uZTsgRkxPQVQ6IG5vbmU7
-IENPTE9SOiByZ2IoMzMsMzMsMzMpOyBGT05UOiAxM3B4LzE4cHggVGltZXMgTmV3IFJvbWFuOyBX
-SURPV1M6IDE7IERJU1BMQVk6IGlubGluZSAhaW1wb3J0YW50OyBMRVRURVItU1BBQ0lORzogbm9y
-bWFsOyBCQUNLR1JPVU5ELUNPTE9SOiByZ2IoMjU1LDI1NSwyNTUpOyBURVhULUlOREVOVDogMHB4
-OyAtd2Via2l0LXRleHQtc3Ryb2tlLXdpZHRoOiAwcHgiPkl0IA0KaXMgZml4ZWQgaW4gMS4xLjFn
-LiZuYnNwOyBVPC9TUEFOPjxTUEFOIA0Kc3R5bGU9IldISVRFLVNQQUNFOiBwcmUtd3JhcDsgV09S
-RC1TUEFDSU5HOiAwcHg7IFRFWFQtVFJBTlNGT1JNOiBub25lOyBGTE9BVDogbm9uZTsgQ09MT1I6
-IHJnYigzMywzMywzMyk7IEZPTlQ6IDEzcHgvMThweCBUaW1lcyBOZXcgUm9tYW47IFdJRE9XUzog
-MTsgRElTUExBWTogaW5saW5lICFpbXBvcnRhbnQ7IExFVFRFUi1TUEFDSU5HOiBub3JtYWw7IEJB
-Q0tHUk9VTkQtQ09MT1I6IHJnYigyNTUsMjU1LDI1NSk7IFRFWFQtSU5ERU5UOiAwcHg7IC13ZWJr
-aXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweCI+cHN0cmVhbSANCnJlY2lwZSBhbHJlYWR5IHBvaW50
-IG9wZW5zc2wgdG8gbGF0ZXN0IHZlcnNpb24gKDEuMS4xZykuPC9TUEFOPjwvRElWPg0KPERJViBj
-bGFzcz1tb2RhbC10aXRsZT48U1BBTiANCnN0eWxlPSJXSElURS1TUEFDRTogcHJlLXdyYXA7IFdP
-UkQtU1BBQ0lORzogMHB4OyBURVhULVRSQU5TRk9STTogbm9uZTsgRkxPQVQ6IG5vbmU7IENPTE9S
-OiByZ2IoMzMsMzMsMzMpOyBGT05UOiAxM3B4LzE4cHggJ1JvYm90byBNb25vJywgTWVubG8sICdM
-dWNpZGEgQ29uc29sZScsIE1vbmFjbywgbW9ub3NwYWNlOyBXSURPV1M6IDE7IERJU1BMQVk6IGlu
-bGluZSAhaW1wb3J0YW50OyBMRVRURVItU1BBQ0lORzogbm9ybWFsOyBCQUNLR1JPVU5ELUNPTE9S
-OiByZ2IoMjU1LDI1NSwyNTUpOyBURVhULUlOREVOVDogMHB4OyAtd2Via2l0LXRleHQtc3Ryb2tl
-LXdpZHRoOiAwcHgiPjxBIA0KaHJlZj0iaHR0cHM6Ly9naXQueW9jdG9wcm9qZWN0Lm9yZy9jZ2l0
-LmNnaS9wb2t5L3BsYWluL21ldGEvcmVjaXBlcy1jb25uZWN0aXZpdHkvb3BlbnNzbC9vcGVuc3Ns
-XzEuMS4xZy5iYiI+PEZPTlQgDQpmYWNlPSJUaW1lcyBOZXcgUm9tYW4iPjxTUEFOIA0Kc3R5bGU9
-IkZPTlQtRkFNSUxZOiBUaW1lcyBOZXcgUm9tYW4iPmh0dHBzOi8vZ2l0LnlvY3RvcHJvamVjdC5v
-cmcvY2dpdC5jZ2kvcG9reS9wbGFpbi9tZXRhL3JlY2lwZXMtY29ubmVjdGl2aXR5L29wZW5zc2wv
-b3BlbnNzbF8xLjEuMWcuYmI8L1NQQU4+PC9GT05UPjwvQT48L1NQQU4+PC9ESVY+DQo8RElWIGNs
-YXNzPW1vZGFsLXRpdGxlPjxTUEFOIA0Kc3R5bGU9IldISVRFLVNQQUNFOiBwcmUtd3JhcDsgV09S
-RC1TUEFDSU5HOiAwcHg7IFRFWFQtVFJBTlNGT1JNOiBub25lOyBGTE9BVDogbm9uZTsgQ09MT1I6
-IHJnYigzMywzMywzMyk7IEZPTlQ6IDEzcHgvMThweCBUaW1lcyBOZXcgUm9tYW47IFdJRE9XUzog
-MTsgRElTUExBWTogaW5saW5lICFpbXBvcnRhbnQ7IExFVFRFUi1TUEFDSU5HOiBub3JtYWw7IEJB
-Q0tHUk9VTkQtQ09MT1I6IHJnYigyNTUsMjU1LDI1NSk7IFRFWFQtSU5ERU5UOiAwcHg7IC13ZWJr
-aXQtdGV4dC1zdHJva2Utd2lkdGg6IDBweCI+PC9TUEFOPiZuYnNwOzwvRElWPg0KPERJViBjbGFz
-cz1tb2RhbC10aXRsZT48U1BBTiANCnN0eWxlPSJXSElURS1TUEFDRTogcHJlLXdyYXA7IFdPUkQt
-U1BBQ0lORzogMHB4OyBURVhULVRSQU5TRk9STTogbm9uZTsgRkxPQVQ6IG5vbmU7IENPTE9SOiBy
-Z2IoMzMsMzMsMzMpOyBGT05UOiAxM3B4LzE4cHggVGltZXMgTmV3IFJvbWFuOyBXSURPV1M6IDE7
-IERJU1BMQVk6IGlubGluZSAhaW1wb3J0YW50OyBMRVRURVItU1BBQ0lORzogbm9ybWFsOyBCQUNL
-R1JPVU5ELUNPTE9SOiByZ2IoMjU1LDI1NSwyNTUpOyBURVhULUlOREVOVDogMHB4OyAtd2Via2l0
-LXRleHQtc3Ryb2tlLXdpZHRoOiAwcHgiPldpbGwgDQp5b3UmbmJzcDt1cGRhdGUgcG9reSBzdWJ0
-cmVlIHRvIGxhdGVzdD88L1NQQU4+PC9ESVY+PC9ESVY+PC9CT0RZPjwvSFRNTD4=
-
---NetEase-FlashMail-003-edcf374d-47cd-4f4c-8f99-a3fbf10396ec--
-
+>
+> // We always return true to allow full auth flow
+> if (!preverified)
+> {
+> BMCWEB_LOG_DEBUG << this << " TLS preverification failed.";
+> return true;
+> }
+>
+> Thanks,
+> Zhenfei
+>
+> On Wed, May 6, 2020 at 4:22 AM Zbyszek <zbigniewku@gmail.com> wrote:
+>>
+>> pt., 1 maj 2020 o 02:07 Zhenfei Tai <ztai@google.com> napisa=C5=82(a):
+>> >
+>> > Hi,
+>> >
+>> > I've been testing bmcweb mTLS for a while and found the user defined v=
+erify callback function returns true in all cases. (https://github.com/open=
+bmc/bmcweb/blob/master/http/http_connection.h#L287)
+>> >
+>> > If client authentication is enabled in bmcweb, should it reject if cli=
+ent certificate is bad?
+>>
+>> No, purpose of this callback is to only extract the user name from the
+>> certificate and then allow to proceed with default OpenSSL
+>> verification flow which should finally fail if something is wrong with
+>> the certificate no matter what this function returned.
+>> The 'set_verify_callback' doesn't replace the whole verification
+>> procedure, it only adds a callback that is called when the default
+>> validator checks each certificate. The 'preverified' parameter, passed
+>> to it indicates if verification of the certificate succeeded or not.
+>> You should be able to see it in bmcweb logs.
+>>
+>> >
+>> > Thanks,
+>> > Zhenfei
