@@ -2,59 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D86F1C9FAA
-	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 02:29:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 462B61CA084
+	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 04:08:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49JB67516bzDqsq
-	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 10:29:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49JDJz3zRBzDqmJ
+	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 12:08:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::736;
+ helo=mail-qk1-x736.google.com; envelope-from=park910113@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=FIgEkT+H; dkim-atps=neutral
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com
+ [IPv6:2607:f8b0:4864:20::736])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49JB4g5Yt4zDqsG
- for <openbmc@lists.ozlabs.org>; Fri,  8 May 2020 10:28:01 +1000 (AEST)
-IronPort-SDR: Z48zQVI2YpoLf6rzfAKprBg/mW06zLKOtnYQObaR1ISfoQgP/RArde2EYCs3qGvM6k48F15Olo
- jHcIUnRxm0CQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2020 17:27:58 -0700
-IronPort-SDR: XJmyG967/K33qXlyEuRLipBkbXcGEGUHu5S9AA99dK4e15PuKruVwNO6DmpS4qsRFlZTICEO3/
- bXcq9ygK096w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,365,1583222400"; 
- d="scan'208,217";a="250243956"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga007.fm.intel.com with ESMTP; 07 May 2020 17:27:58 -0700
-Received: from SHWDE9518 (shwde9518.ccr.corp.intel.com [10.239.164.117])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 62E47580378;
- Thu,  7 May 2020 17:27:56 -0700 (PDT)
-Date: Fri, 08 May 2020 08:27:57 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Joseph Reynolds" <jrey@linux.ibm.com>,
- "Brad Bishop" <bradleyb@fuzziesquirrel.com>
-Subject: Re:  Re: openssl upgrade CVE-2020-1967
-In-Reply-To: <691f8cf6-f448-5df3-8200-8ee864f78bc7@linux.ibm.com>
-References: <959CAFA1E282D14FB901BE9A7BF4E7724E52C8BD@shsmsx102.ccr.corp.intel.com>
- <FAD2D9A0-A730-4A28-9798-0B8B3228E14F@fuzziesquirrel.com>
- <5EB3BC15.60402@linux.intel.com>
- <691f8cf6-f448-5df3-8200-8ee864f78bc7@linux.ibm.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49JDJ133gczDqmF
+ for <openbmc@lists.ozlabs.org>; Fri,  8 May 2020 12:07:58 +1000 (AEST)
+Received: by mail-qk1-x736.google.com with SMTP id q7so196245qkf.3
+ for <openbmc@lists.ozlabs.org>; Thu, 07 May 2020 19:07:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=VqJLE8gN1s4VmHMiSXZZvD4uQisM9z164hdEfi2Afe8=;
+ b=FIgEkT+HnZ5nB3pwW0qmi3eZtraGc1AilJjpM2LJcn2O+ECLncQsRZ5mf0Z8RwD74x
+ 5ZdHBCgbk0hFFDMjTM29f2iqH+1BgAQ1D7ryGIEHaXKA/TI/GzpvktxJDxsWUHlBSIkW
+ EGCNDY8SupXnUdjiD2DlpiCm2pDKgVGUnKizKV+ePeUxUxipBb/M0DkDiNcUok4AfKKB
+ 9bF1Rgz/80WxptOx9eIeJSaV1rTp7dwV7IaeO6K99JrkSfh9WIwGIe9dUdYPMhTrxunF
+ p7+3nThaQxo8oxPZHLX1Vhu10wOJhXzBW4IbW83J6HwgWFO+HOiH4rzN1xtEQM2hm3Yd
+ paTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=VqJLE8gN1s4VmHMiSXZZvD4uQisM9z164hdEfi2Afe8=;
+ b=V8lKp6ZNWn9ntkDMwznHIN5YelBXUXvOY6tnrLS/P1CN14/KWF0YbG6P6InE602aDH
+ K5HNdmbqefZlWxSeZ/jQPmovLVqvEbjBhJTKvpUW9sr5WAIcEB3atw/JdKWRTyWBNrdR
+ HuqUcR59tysAa8erlvgy/MMIOZdQeekOQMWnoSy6Wye2f+4NtaWrkp5Hcn5CLV9onwY0
+ EA9nxiZYf9Ojdi/SrD2cF81ckXDt87xLn4GIEtewA5nVkolo68PKDbAB8CohcjihrGbp
+ E2zIwTAizIyDPZomlG4tomtky5jcX78O1Ao5yXD1B+bJoKB1N49Rs0GLxPBQ6uEoKw/7
+ SQRg==
+X-Gm-Message-State: AGi0PuZytXissjHoIpW+3aqRH8EkXhptm80X7Za3utC22N0AxlqpxwzK
+ o8rXIGC9VuzDWoxWzsefkc2E/ugiE575cKm7O3vuqLhK+Zc=
+X-Google-Smtp-Source: APiQypKgzvMbqngVukXlZGvFeItlZzxrDhA7wckCchUplCnxnbHQKlsq5i2Mb5ooqaa01rD8lFG2CT4Q0zwvtp9L5hI=
+X-Received: by 2002:a05:620a:7ca:: with SMTP id
+ 10mr417792qkb.131.1588903676070; 
+ Thu, 07 May 2020 19:07:56 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <5EB4A78A.1080704@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-3c417bb6-cc26-4247-ad22-3f6d81e7a98f"
+From: =?UTF-8?B?67CV7LCs7JiB?= <park910113@gmail.com>
+Date: Fri, 8 May 2020 11:07:45 +0900
+Message-ID: <CAB-G9zsc9kmcCSxnkLY4pWLDuV2z20g4pS-pmr-UHYG7QiTkUA@mail.gmail.com>
+Subject: Request to add CLA
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000031ce5105a51977eb"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,175 +70,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Vernon Mauery <vernon.mauery@linux.intel.com>, "Bills,
- Jason M" <jason.m.bills@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-3c417bb6-cc26-4247-ad22-3f6d81e7a98f
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--00000000000031ce5105a51977eb
+Content-Type: text/plain; charset="UTF-8"
 
-VGhhbmtzIEpvc2VwaC4NCg0KMjAyMC0wNS0wOCANCg0KY2h1bmh1aS5qaWEgDQoNCg0KDQrlj5Hk
-u7bkurrvvJpKb3NlcGggUmV5bm9sZHMgPGpyZXlAbGludXguaWJtLmNvbT4NCuWPkemAgeaXtumX
-tO+8mjIwMjAtMDUtMDggMDA6NTQNCuS4u+mimO+8mlJlOiBvcGVuc3NsIHVwZ3JhZGUgQ1ZFLTIw
-MjAtMTk2Nw0K5pS25Lu25Lq677yaImNodW5odWkuamlhIjxjaHVuaHVpLmppYUBsaW51eC5pbnRl
-bC5jb20+LCJCcmFkIEJpc2hvcCI8YnJhZGxleWJAZnV6emllc3F1aXJyZWwuY29tPg0K5oqE6YCB
-77yaIkJpbGxzLCBKYXNvbiBNIjxqYXNvbi5tLmJpbGxzQGxpbnV4LmludGVsLmNvbT4sIlZlcm5v
-biBNYXVlcnkiPHZlcm5vbi5tYXVlcnlAbGludXguaW50ZWwuY29tPiwib3BlbmJtY0BsaXN0cy5v
-emxhYnMub3JnIjxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+LCJKYW1lcyBGZWlzdCI8amFtZXMu
-ZmVpc3RAbGludXguaW50ZWwuY29tPg0KDQpPbiA1LzcvMjAgMjo0MyBBTSwgY2h1bmh1aS5qaWEg
-d3JvdGU6IA0KPiBCcmFkLCANCj4gVGhlcmUgaXMgYSBDVkUgcmVwb3J0ZWQgaW4gb3BlblNTTCAx
-LjEuMWQgKHVzZWQgYnkgY3VycmVudCBvcGVuYm1jKS4gICANCj4gU2V2ZXJpdHkgaXMgaGlnaC4g
-DQo+IA0KPiBDVkUtMjAyMC0xOTY3IDxodHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9D
-VkUtMjAyMC0xOTY3PiAgDQo+IGh0dHBzOi8vbnZkLm5pc3QuZ292L3Z1bG4vZGV0YWlsL0NWRS0y
-MDIwLTE5NjcgDQo+IFNlcnZlciBvciBjbGllbnQgYXBwbGljYXRpb25zIHRoYXQgY2FsbCB0aGUg
-U1NMX2NoZWNrX2NoYWluKCkgZnVuY3Rpb24gIA0KPiBkdXJpbmcgb3IgYWZ0ZXIgYSBUTFMgMS4z
-IGhhbmRzaGFrZSBtYXkgY3Jhc2ggZHVlIHRvIGEgTlVMTCBwb2ludGVyICANCj4gZGVyZWZlcmVu
-Y2UgYXMgYSByZXN1bHQgb2YgaW5jb3JyZWN0IGhhbmRsaW5nIG9mIHRoZSAgDQo+ICJzaWduYXR1
-cmVfYWxnb3JpdGhtc19jZXJ0IiBUTFMgZXh0ZW5zaW9uLiBUaGUgY3Jhc2ggb2NjdXJzIGlmIGFu
-ICANCj4gaW52YWxpZCBvciB1bnJlY29nbmlzZWQgc2lnbmF0dXJlIGFsZ29yaXRobSBpcyByZWNl
-aXZlZCBmcm9tIHRoZSBwZWVyLiAgDQo+IFRoaXMgY291bGQgYmUgZXhwbG9pdGVkIGJ5IGEgbWFs
-aWNpb3VzIHBlZXIgaW4gYSBEZW5pYWwgb2YgU2VydmljZSAgDQo+IGF0dGFjay4gT3BlblNTTCB2
-ZXJzaW9uIDEuMS4xZCwgMS4xLjFlLCBhbmQgMS4xLjFmIGFyZSBhZmZlY3RlZCBieSAgDQo+IHRo
-aXMgaXNzdWUuIFRoaXMgaXNzdWUgZGlkIG5vdCBhZmZlY3QgT3BlblNTTCB2ZXJzaW9ucyBwcmlv
-ciB0byAgDQo+IDEuMS4xZC4gRml4ZWQgaW4gT3BlblNTTCAxLjEuMWcgKEFmZmVjdGVkIDEuMS4x
-ZC0xLjEuMWYpLiANCj4gDQoNClRoYW5rcyBmb3IgcmVwb3J0aW5nIHRoaXMuICBBY2NvcmRpbmcg
-dG8gT3BlbkJNQyBuZXR3b3JrIHNlY3VyaXR5ICANCmNvbnNpZGVyYXRpb25zIFsxXSwgU1NMIChh
-bmQgc3BlY2lmaWNhbGx5IE9wZW5TU0wpIGlzIHVzZWQgaW4gdHdvICANCnBsYWNlczogdGhlIGRy
-b3BiZWFyIFNTSCBzZXJ2ZXIgWzJdIGFuZCB0aGUgQk1DV2ViIEhUVFBTIHNlcnZlciBbM10uICAg
-SSAgDQpkb24ndCBzZWUgYW55IHJlZmVyZW5jZXMgdG8gdGhlIGRlZmVjdGl2ZSBmdW5jdGlvbiAo
-U1NMX2NoZWNrX2NoYWluKSBpbiAgDQp0aG9zZSBjb2RlIGJhc2VzIG9yIGluIGFueSBvdGhlciBP
-cGVuQk1DIGNvZGUuIEkndmUgQ0MnZCB0aGUgQk1DV2ViICANCm1haW50YWluZXJzIHRvIGhlbHAg
-Y2hlY2sgdGhpcy4gIElmIHRoYXQgaXMgYWxsIHRydWUsIHRoZSBPcGVuQk1DIGlzIG5vdCAgDQph
-ZmZlY3RlZC4gDQoNCkkgYmVsaWV2ZSBCcmFkIHBsYW5zIHRvIHVwZGF0ZSBPcGVuQk1DIHRvIHRo
-ZSBZb2N0byBEdW5mZWxsIDMuMSByZWxlYXNlICANCls0XSB3aGljaCBkb2VzIHVzZSBPcGVuU1NM
-IDEuMS4xZyBbNV0uIA0KDQotIEpvc2VwaCANCg0KWzFdOiAgDQpodHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVyL3NlY3VyaXR5L25ldHdvcmstc2VjdXJpdHktY29uc2lk
-ZXJhdGlvbnMubWQgDQpbMl06IGh0dHBzOi8vZ2l0aHViLmNvbS9ta2ovZHJvcGJlYXIgDQpbM106
-IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2JtY3dlYiANCls0XTogaHR0cHM6Ly93aWtpLnlv
-Y3RvcHJvamVjdC5vcmcvd2lraS9SZWxlYXNlcyANCls1XTogIA0KaHR0cHM6Ly9naXQueW9jdG9w
-cm9qZWN0Lm9yZy9jZ2l0L2NnaXQuY2dpL3Bva3kvdHJlZS9tZXRhL3JlY2lwZXMtY29ubmVjdGl2
-aXR5L29wZW5zc2w/aD1kdW5mZWxsIA0KDQo+IEl0IGlzIGZpeGVkIGluIDEuMS4xZy4gIFVwc3Ry
-ZWFtIHJlY2lwZSBhbHJlYWR5IHBvaW50IG9wZW5zc2wgdG8gIA0KPiBsYXRlc3QgdmVyc2lvbiAo
-MS4xLjFnKS4gDQo+IGh0dHBzOi8vZ2l0LnlvY3RvcHJvamVjdC5vcmcvY2dpdC5jZ2kvcG9reS9w
-bGFpbi9tZXRhL3JlY2lwZXMtY29ubmVjdGl2aXR5L29wZW5zc2wvb3BlbnNzbF8xLjEuMWcuYmIg
-DQo+IFdpbGwgeW91IHVwZGF0ZSBwb2t5IHN1YnRyZWUgdG8gbGF0ZXN0PyA=
+Dear CLA repository manager.
 
---NetEase-FlashMail-003-3c417bb6-cc26-4247-ad22-3f6d81e7a98f
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Could you add my individual CLA to the repository?
+[CLA file link]
+https://drive.google.com/file/d/1cFjNkVnMhDhXx3atH-dNPQVLQgdlRCiy/view?usp=sharing
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
-IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC45NjAwLjE5Njc4Ij48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IMOOwqLDiMOtw5HDhcK6w5o7IEJPUkRFUi1SSUdIVC1XSURUSDogMHB4OyBCT1JERVItQk9UVE9N
-LVdJRFRIOiAwcHg7IENPTE9SOiAjMDAwMDAwOyBNQVJHSU46IDEycHg7IExJTkUtSEVJR0hUOiAx
-LjU7IEJPUkRFUi1UT1AtV0lEVEg6IDBweCIgDQptYXJnaW5oZWlnaHQ9IjAiIG1hcmdpbndpZHRo
-PSIwIj4NCjxESVY+VGhhbmtzIEpvc2VwaC48L0RJVj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8RElW
-IHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJkYW5hOyBDT0xPUjogI2Mw
-YzBjMCIgDQphbGlnbj1sZWZ0PjIwMjAtMDUtMDggDQo8SFIgaWQ9U2lnbk5hbWVIUiANCnN0eWxl
-PSJCT1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdI
-VDogMHB4OyBXSURUSDogMTIycHg7IEJPUkRFUi1CT1RUT006IDBweDsgQk9SREVSLUxFRlQ6IDBw
-eCIgDQphbGlnbj1sZWZ0Pg0KPFNQQU4gaWQ9X0ZsYXNoU2lnbk5hbWU+Y2h1bmh1aS5qaWE8L1NQ
-QU4+IDwvRElWPg0KPEhSIA0Kc3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMwYzAgMXB4IHNvbGlkOyBI
-RUlHSFQ6IDFweDsgQk9SREVSLVJJR0hUOiAwcHg7IEJPUkRFUi1CT1RUT006IDBweDsgQk9SREVS
-LUxFRlQ6IDBweCI+DQoNCjxCTE9DS1FVT1RFIGlkPW50ZXMtZmxhc2htYWlsLXF1b3RlIA0Kc3R5
-bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IFBBRERJTkctTEVGVDog
-MHB4OyBNQVJHSU4tTEVGVDogMHB4Ij4NCiAgPERJVj48U1RST05HPuWPkeS7tuS6uu+8mjwvU1RS
-T05HPkpvc2VwaCBSZXlub2xkcyAmbHQ7anJleUBsaW51eC5pYm0uY29tJmd0OzwvRElWPg0KICA8
-RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze077yaPC9TVFJPTkc+MjAyMC0wNS0wOCZuYnNwOzAwOjU0
-PC9ESVY+DQogIDxESVY+PFNUUk9ORz7kuLvpopjvvJo8L1NUUk9ORz5SZTogb3BlbnNzbCB1cGdy
-YWRlIENWRS0yMDIwLTE5Njc8L0RJVj4NCiAgPERJVj48U1RST05HPuaUtuS7tuS6uu+8mjwvU1RS
-T05HPiJjaHVuaHVpLmppYSImbHQ7Y2h1bmh1aS5qaWFAbGludXguaW50ZWwuY29tJmd0OywiQnJh
-ZCANCiAgQmlzaG9wIiZsdDticmFkbGV5YkBmdXp6aWVzcXVpcnJlbC5jb20mZ3Q7PC9ESVY+DQog
-IDxESVY+PFNUUk9ORz7mioTpgIHvvJo8L1NUUk9ORz4iQmlsbHMsIEphc29uIA0KICBNIiZsdDtq
-YXNvbi5tLmJpbGxzQGxpbnV4LmludGVsLmNvbSZndDssIlZlcm5vbiANCiAgTWF1ZXJ5IiZsdDt2
-ZXJub24ubWF1ZXJ5QGxpbnV4LmludGVsLmNvbSZndDssIm9wZW5ibWNAbGlzdHMub3psYWJzLm9y
-ZyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0OywiSmFtZXMgDQogIEZlaXN0IiZsdDtq
-YW1lcy5mZWlzdEBsaW51eC5pbnRlbC5jb20mZ3Q7PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+
-DQogIDxESVY+DQogIDxESVY+T24mbmJzcDs1LzcvMjAmbmJzcDsyOjQzJm5ic3A7QU0sJm5ic3A7
-Y2h1bmh1aS5qaWEmbmJzcDt3cm90ZTombmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7QnJh
-ZCwmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7VGhlcmUmbmJzcDtpcyZuYnNwO2EmbmJz
-cDtDVkUmbmJzcDtyZXBvcnRlZCZuYnNwO2luJm5ic3A7b3BlblNTTCZuYnNwOzEuMS4xZCZuYnNw
-Oyh1c2VkJm5ic3A7YnkmbmJzcDtjdXJyZW50Jm5ic3A7b3BlbmJtYykuJm5ic3A7Jm5ic3A7Jm5i
-c3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO1NldmVyaXR5Jm5ic3A7aXMmbmJzcDtoaWdoLiZu
-YnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7Q1ZF
-LTIwMjAtMTk2NyZuYnNwOyZsdDtodHRwczovL252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUt
-MjAyMC0xOTY3Jmd0OyZuYnNwOyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtodHRwczov
-L252ZC5uaXN0Lmdvdi92dWxuL2RldGFpbC9DVkUtMjAyMC0xOTY3Jm5ic3A7PC9ESVY+DQogIDxE
-SVY+Jmd0OyZuYnNwO1NlcnZlciZuYnNwO29yJm5ic3A7Y2xpZW50Jm5ic3A7YXBwbGljYXRpb25z
-Jm5ic3A7dGhhdCZuYnNwO2NhbGwmbmJzcDt0aGUmbmJzcDtTU0xfY2hlY2tfY2hhaW4oKSZuYnNw
-O2Z1bmN0aW9uJm5ic3A7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO2R1cmluZyZuYnNw
-O29yJm5ic3A7YWZ0ZXImbmJzcDthJm5ic3A7VExTJm5ic3A7MS4zJm5ic3A7aGFuZHNoYWtlJm5i
-c3A7bWF5Jm5ic3A7Y3Jhc2gmbmJzcDtkdWUmbmJzcDt0byZuYnNwO2EmbmJzcDtOVUxMJm5ic3A7
-cG9pbnRlciZuYnNwOyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtkZXJlZmVyZW5jZSZu
-YnNwO2FzJm5ic3A7YSZuYnNwO3Jlc3VsdCZuYnNwO29mJm5ic3A7aW5jb3JyZWN0Jm5ic3A7aGFu
-ZGxpbmcmbmJzcDtvZiZuYnNwO3RoZSZuYnNwOyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJz
-cDsic2lnbmF0dXJlX2FsZ29yaXRobXNfY2VydCImbmJzcDtUTFMmbmJzcDtleHRlbnNpb24uJm5i
-c3A7VGhlJm5ic3A7Y3Jhc2gmbmJzcDtvY2N1cnMmbmJzcDtpZiZuYnNwO2FuJm5ic3A7Jm5ic3A7
-PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO2ludmFsaWQmbmJzcDtvciZuYnNwO3VucmVjb2duaXNl
-ZCZuYnNwO3NpZ25hdHVyZSZuYnNwO2FsZ29yaXRobSZuYnNwO2lzJm5ic3A7cmVjZWl2ZWQmbmJz
-cDtmcm9tJm5ic3A7dGhlJm5ic3A7cGVlci4mbmJzcDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7
-Jm5ic3A7VGhpcyZuYnNwO2NvdWxkJm5ic3A7YmUmbmJzcDtleHBsb2l0ZWQmbmJzcDtieSZuYnNw
-O2EmbmJzcDttYWxpY2lvdXMmbmJzcDtwZWVyJm5ic3A7aW4mbmJzcDthJm5ic3A7RGVuaWFsJm5i
-c3A7b2YmbmJzcDtTZXJ2aWNlJm5ic3A7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO2F0
-dGFjay4mbmJzcDtPcGVuU1NMJm5ic3A7dmVyc2lvbiZuYnNwOzEuMS4xZCwmbmJzcDsxLjEuMWUs
-Jm5ic3A7YW5kJm5ic3A7MS4xLjFmJm5ic3A7YXJlJm5ic3A7YWZmZWN0ZWQmbmJzcDtieSZuYnNw
-OyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDt0aGlzJm5ic3A7aXNzdWUuJm5ic3A7VGhp
-cyZuYnNwO2lzc3VlJm5ic3A7ZGlkJm5ic3A7bm90Jm5ic3A7YWZmZWN0Jm5ic3A7T3BlblNTTCZu
-YnNwO3ZlcnNpb25zJm5ic3A7cHJpb3ImbmJzcDt0byZuYnNwOyZuYnNwOzwvRElWPg0KICA8RElW
-PiZndDsmbmJzcDsxLjEuMWQuJm5ic3A7Rml4ZWQmbmJzcDtpbiZuYnNwO09wZW5TU0wmbmJzcDsx
-LjEuMWcmbmJzcDsoQWZmZWN0ZWQmbmJzcDsxLjEuMWQtMS4xLjFmKS4mbmJzcDs8L0RJVj4NCiAg
-PERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+VGhhbmtz
-Jm5ic3A7Zm9yJm5ic3A7cmVwb3J0aW5nJm5ic3A7dGhpcy4mbmJzcDsmbmJzcDtBY2NvcmRpbmcm
-bmJzcDt0byZuYnNwO09wZW5CTUMmbmJzcDtuZXR3b3JrJm5ic3A7c2VjdXJpdHkmbmJzcDsmbmJz
-cDs8L0RJVj4NCiAgPERJVj5jb25zaWRlcmF0aW9ucyZuYnNwO1sxXSwmbmJzcDtTU0wmbmJzcDso
-YW5kJm5ic3A7c3BlY2lmaWNhbGx5Jm5ic3A7T3BlblNTTCkmbmJzcDtpcyZuYnNwO3VzZWQmbmJz
-cDtpbiZuYnNwO3R3byZuYnNwOyZuYnNwOzwvRElWPg0KICA8RElWPnBsYWNlczombmJzcDt0aGUm
-bmJzcDtkcm9wYmVhciZuYnNwO1NTSCZuYnNwO3NlcnZlciZuYnNwO1syXSZuYnNwO2FuZCZuYnNw
-O3RoZSZuYnNwO0JNQ1dlYiZuYnNwO0hUVFBTJm5ic3A7c2VydmVyJm5ic3A7WzNdLiZuYnNwOyZu
-YnNwOyZuYnNwO0kmbmJzcDsmbmJzcDs8L0RJVj4NCiAgPERJVj5kb24ndCZuYnNwO3NlZSZuYnNw
-O2FueSZuYnNwO3JlZmVyZW5jZXMmbmJzcDt0byZuYnNwO3RoZSZuYnNwO2RlZmVjdGl2ZSZuYnNw
-O2Z1bmN0aW9uJm5ic3A7KFNTTF9jaGVja19jaGFpbikmbmJzcDtpbiZuYnNwOyZuYnNwOzwvRElW
-Pg0KICA8RElWPnRob3NlJm5ic3A7Y29kZSZuYnNwO2Jhc2VzJm5ic3A7b3ImbmJzcDtpbiZuYnNw
-O2FueSZuYnNwO290aGVyJm5ic3A7T3BlbkJNQyZuYnNwO2NvZGUuJm5ic3A7SSd2ZSZuYnNwO0ND
-J2QmbmJzcDt0aGUmbmJzcDtCTUNXZWImbmJzcDsmbmJzcDs8L0RJVj4NCiAgPERJVj5tYWludGFp
-bmVycyZuYnNwO3RvJm5ic3A7aGVscCZuYnNwO2NoZWNrJm5ic3A7dGhpcy4mbmJzcDsmbmJzcDtJ
-ZiZuYnNwO3RoYXQmbmJzcDtpcyZuYnNwO2FsbCZuYnNwO3RydWUsJm5ic3A7dGhlJm5ic3A7T3Bl
-bkJNQyZuYnNwO2lzJm5ic3A7bm90Jm5ic3A7Jm5ic3A7PC9ESVY+DQogIDxESVY+YWZmZWN0ZWQu
-Jm5ic3A7PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+SSZuYnNwO2JlbGlldmUm
-bmJzcDtCcmFkJm5ic3A7cGxhbnMmbmJzcDt0byZuYnNwO3VwZGF0ZSZuYnNwO09wZW5CTUMmbmJz
-cDt0byZuYnNwO3RoZSZuYnNwO1lvY3RvJm5ic3A7RHVuZmVsbCZuYnNwOzMuMSZuYnNwO3JlbGVh
-c2UmbmJzcDsmbmJzcDs8L0RJVj4NCiAgPERJVj5bNF0mbmJzcDt3aGljaCZuYnNwO2RvZXMmbmJz
-cDt1c2UmbmJzcDtPcGVuU1NMJm5ic3A7MS4xLjFnJm5ic3A7WzVdLiZuYnNwOzwvRElWPg0KICA8
-RElWPiZuYnNwOzwvRElWPg0KICA8RElWPi0mbmJzcDtKb3NlcGgmbmJzcDs8L0RJVj4NCiAgPERJ
-Vj4mbmJzcDs8L0RJVj4NCiAgPERJVj5bMV06Jm5ic3A7Jm5ic3A7PC9ESVY+DQogIDxESVY+aHR0
-cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZG9jcy9ibG9iL21hc3Rlci9zZWN1cml0eS9uZXR3b3Jr
-LXNlY3VyaXR5LWNvbnNpZGVyYXRpb25zLm1kJm5ic3A7PC9ESVY+DQogIDxESVY+WzJdOiZuYnNw
-O2h0dHBzOi8vZ2l0aHViLmNvbS9ta2ovZHJvcGJlYXImbmJzcDs8L0RJVj4NCiAgPERJVj5bM106
-Jm5ic3A7aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvYm1jd2ViJm5ic3A7PC9ESVY+DQogIDxE
-SVY+WzRdOiZuYnNwO2h0dHBzOi8vd2lraS55b2N0b3Byb2plY3Qub3JnL3dpa2kvUmVsZWFzZXMm
-bmJzcDs8L0RJVj4NCiAgPERJVj5bNV06Jm5ic3A7Jm5ic3A7PC9ESVY+DQogIDxESVY+aHR0cHM6
-Ly9naXQueW9jdG9wcm9qZWN0Lm9yZy9jZ2l0L2NnaXQuY2dpL3Bva3kvdHJlZS9tZXRhL3JlY2lw
-ZXMtY29ubmVjdGl2aXR5L29wZW5zc2w/aD1kdW5mZWxsJm5ic3A7PC9ESVY+DQogIDxESVY+Jm5i
-c3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO0l0Jm5ic3A7aXMmbmJzcDtmaXhlZCZuYnNwO2lu
-Jm5ic3A7MS4xLjFnLiZuYnNwOyZuYnNwO1Vwc3RyZWFtJm5ic3A7cmVjaXBlJm5ic3A7YWxyZWFk
-eSZuYnNwO3BvaW50Jm5ic3A7b3BlbnNzbCZuYnNwO3RvJm5ic3A7Jm5ic3A7PC9ESVY+DQogIDxE
-SVY+Jmd0OyZuYnNwO2xhdGVzdCZuYnNwO3ZlcnNpb24mbmJzcDsoMS4xLjFnKS4mbmJzcDs8L0RJ
-Vj4NCiAgPERJVj4mZ3Q7Jm5ic3A7aHR0cHM6Ly9naXQueW9jdG9wcm9qZWN0Lm9yZy9jZ2l0LmNn
-aS9wb2t5L3BsYWluL21ldGEvcmVjaXBlcy1jb25uZWN0aXZpdHkvb3BlbnNzbC9vcGVuc3NsXzEu
-MS4xZy5iYiZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtXaWxsJm5ic3A7eW91Jm5ic3A7
-dXBkYXRlJm5ic3A7cG9reSZuYnNwO3N1YnRyZWUmbmJzcDt0byZuYnNwO2xhdGVzdD8mbmJzcDs8
-L0RJVj4NCiAgPERJVj4mbmJzcDs8L0RJVj48L0RJVj48L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRN
-TD4=
+Thank you,
 
---NetEase-FlashMail-003-3c417bb6-cc26-4247-ad22-3f6d81e7a98f--
+Chanyoung Park.
 
+--00000000000031ce5105a51977eb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
+r=3D"ltr"><div dir=3D"ltr">Dear CLA repository manager.<div><br></div><div>=
+<div dir=3D"ltr" style=3D"color:rgb(0,0,0)">Could you add my individual CLA=
+ to the repository?</div></div><div>[CLA file link] <a href=3D"https://driv=
+e.google.com/file/d/1cFjNkVnMhDhXx3atH-dNPQVLQgdlRCiy/view?usp=3Dsharing">h=
+ttps://drive.google.com/file/d/1cFjNkVnMhDhXx3atH-dNPQVLQgdlRCiy/view?usp=
+=3Dsharing</a></div></div></div><div dir=3D"ltr"><br><div dir=3D"ltr"><div>=
+Thank you,</div><div><br></div><div>Chanyoung Park.</div></div></div></div>=
+</div></div></div>
+
+--00000000000031ce5105a51977eb--
