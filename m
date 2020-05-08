@@ -2,131 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42F041CB618
-	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 19:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB0E11CB63D
+	for <lists+openbmc@lfdr.de>; Fri,  8 May 2020 19:45:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Jcrf4KtGzDrHg
-	for <lists+openbmc@lfdr.de>; Sat,  9 May 2020 03:34:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Jd5P0qWgzDrHF
+	for <lists+openbmc@lfdr.de>; Sat,  9 May 2020 03:45:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=2397cd1311=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=bGF6BmGJ; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=bEgyPr7O; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49JcVv3RlWzDr0w
- for <openbmc@lists.ozlabs.org>; Sat,  9 May 2020 03:18:34 +1000 (AEST)
-Received: from pps.filterd (m0001303.ppops.net [127.0.0.1])
- by m0001303.ppops.net (8.16.0.42/8.16.0.42) with SMTP id 048H7ptH012377;
- Fri, 8 May 2020 10:18:26 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=T2b6BT3r9atCLxAomtnvY8Hjr9WVfLmGUCkV+0UYv+s=;
- b=bGF6BmGJo+K7/zWbb6L5IhC+l50nv3SthScqqhbgCYVSghRvsz4N/xgb6ayQd1s13Xk4
- mn8g/j5mL42HVQoaoA2gpmzuCrJZW4woGZB8OX9cTjjdhxplQyocrdu4gXHjuPm6qDiJ
- ikwzixchC7bHVDT1xDFAFitym0iqpN+dE2M= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by m0001303.ppops.net with ESMTP id 30vtcavtgm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 08 May 2020 10:18:26 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Fri, 8 May 2020 10:18:25 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nHjFlUCKzoOHBlNA33tYk/z2qC4lBfQAnoWakU0YPHrWjRfRFKP4Vqrcn1BcXYldFjwe4Q9hGbI1SJK0ZUSO7vXmnKUH+TgpLpAiYjIUuOggTiEJ5VkXvEHWrwYHW0/4Al4FNxOEjWEIaBO6fCGb3zVqa0DrGhHdGwqT+u1ZgZaNMLV3dHqNreMmvhdhMPa17Jr520gwr1Ju8z0jmjieTSa15uzRylgK99Qw0Uh68qENS+FedfkXk0ADwckdiq2ft5B/vcoQ0OwOXMwgDWUzZDGMxfnYuZrqGUl8Z11wYtP6qKIgXi78+ytR/9fYt2KPL7mSqJ8jmQHrXIqWoWj/dg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=T2b6BT3r9atCLxAomtnvY8Hjr9WVfLmGUCkV+0UYv+s=;
- b=ijHbIaaaaohiZC26tKsHdlvdBIIdlBEvS4C41BIStWp7tw9SvNxIqqgMD058jmOJ6QGNj8OZxT0MaIGhRh9Ul91Y22wDfWLI2PTsyxOfEMibI8DOMU3DqigY3sWGj5MSPJSSIC9nH8S0FaFKKBU32GdK0VnCNBKo5QcULA54A+dkft1vFnyF34uUiSYIEapvRmJXANi0D3oBhewbOxjejB292bW7h9/mNaKgkD6Z0kJTP4XLfxrkfzWJ2KGGj3hC9FSbpRuukBQBeUyj9fBpMhI0CHxWeqcNyQJzBhRYrRPiwiZJWcmjnxwAZmrpIZo3+faIvbatfmanN2rcniJAyw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=T2b6BT3r9atCLxAomtnvY8Hjr9WVfLmGUCkV+0UYv+s=;
- b=bEgyPr7ODXvsspuxPxtWLpTAEH1N98lky4zmWMBDlwofpysMCd6lPrg8BlJF7UwrLZk6BvYd2hN94GjNpqeJoWpZJbQJfaVrbnd2213SDKN2Gs0HSR1RBvD0I5JQhOw7T3earPU901V7W5vP18NgpvasHouvgRaUIq4CwgBT+T0=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB3141.namprd15.prod.outlook.com (2603:10b6:a03:f5::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2958.20; Fri, 8 May
- 2020 17:18:24 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4%3]) with mapi id 15.20.2958.035; Fri, 8 May 2020
- 17:18:24 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Nancy Yuen <yuenn@google.com>, Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
-Thread-Topic: Multiple BMCs in a system: IPMB? Redfish? MCTP?
-Thread-Index: AQHWHnkPYQJlRTUjS06KHOVKGww4dKiRR8QAgAZ5QwCABVHZgIAA9C4A
-Date: Fri, 8 May 2020 17:18:23 +0000
-Message-ID: <933294DA-9290-4A33-970F-7DD723BA178B@fb.com>
-References: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
- <f197f55c-f7f2-c405-f3c8-bfbd5cd5e3bd@linux.vnet.ibm.com>
- <789e1bda-63d4-479e-bfa3-12bf1603ebbc@www.fastmail.com>
- <CADfYTpGNRJ3Yk6h7K4iw27jn4c4VqNKnHw0PLMHyG5h+O7cQ6Q@mail.gmail.com>
-In-Reply-To: <CADfYTpGNRJ3Yk6h7K4iw27jn4c4VqNKnHw0PLMHyG5h+O7cQ6Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2601:647:4b00:fd70:18e2:66b5:5e3d:3d1a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9514bc71-37a7-4542-c961-08d7f373d070
-x-ms-traffictypediagnostic: BYAPR15MB3141:
-x-microsoft-antispam-prvs: <BYAPR15MB31419109352E535CEBE225C1DDA20@BYAPR15MB3141.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 039735BC4E
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 0Jsf2EC8nURBnDmVmrzFtztlrNOJLewQZJIQOfWxwE5CCcKdrK90y/gmcsHv50Odc7+KQDptFf7eSp0r/ijcFQQKpiNlLM2byrOs0f+VyONcTeLkruvVPMFegXm6IAponc921TFxa5/oc3e8nTG0fT7vnDnFOE6sZZ2idJu3zVnT35EnM3C27N7+KbO1YcqKb7QDV4gQgXGMvCfaOqunKtBLzKlVV7quD1aDJZARLWgBeHSxFs2TgYCgZf5fkZQJ9o8yUDpuWKTjhTR9aCjcKhqOfExyGYfDflK+LH3X2/DY1vxmPuWkCZRvxXGAhSGYdFMfkODMtvb06PeR76jCBMVOEXkoECErETC5hypdtUdz1/u8V+zHsdv3No2rQTLiWHiyS7aXDtEsJddwUHupmIuMJJ+H5td3RTNVwrtavoegLbinmGddnqa1mpoDLrL6Tr1QLd2bkdKg0t1JtF0ac2KOIS67P8eBjhQxMllK0flxOp7/pdwbVWLTk8/LRE+WzV+fRwxg2JG+a9Hg9yLoQw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(346002)(396003)(136003)(366004)(376002)(39860400002)(33430700001)(2616005)(66476007)(66556008)(186003)(64756008)(66946007)(478600001)(36756003)(6512007)(2906002)(316002)(6506007)(4326008)(6486002)(53546011)(76116006)(66446008)(5660300002)(83320400001)(8676002)(33440700001)(71200400001)(83300400001)(83310400001)(8936002)(86362001)(83280400001)(110136005)(83290400001)(33656002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: vcyuhDvxafeZwNVCOCAcKZmcQ0voi1CJsbwpCDUIf/hUHfrVLkZpxC1iz1oAHHXAHV4LJofvBIOFpLjaCSdKiWezU/LgyFBfsdCun6E5B0DXR+kCWIH9Fg8VVMIAaVuP6tcHMSRYTJuFbkzS5L4wL9+ynQrb/CMpaFSa8JzV3+A3Di6Sa+u5tbjrZ+127f2+/AbBUUuXYHaBo+LtP5Cca+kb4rfQM0Ges6vFv+Qlq3HQ6r1uLlDxo+3182DPi8oS4TmsCAHWpLsPQ5algvV92sxSmMaL1RSHRSGFWY7l28QLqL4dwXW4Zw9WRXJftYAL3fzl84NFy8+UAXh65c5WtIoOwvNy8GStmJ1bHG9xKmQTCtokyNrHxru/pFh2+oZTFAeQ6cS7Dab1jEgiz2ez3h1+rC7QIGaFZiI6/G53/sSK7MorL6g+B6s7ktyPg/CqaTd9wmT9gvllYxq/QBglF+S3G2redUXcaadTO24traWvh6ZbaVOl7H2QTolVmLlCG+KRebHMkg+agCQs2Ne6OqF2boyygU0ETpkWh1FlwSRMs7MqNqIw2qrZQ/mzxNDt
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_933294DA92904A33970F7DD723BA178Bfbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Jd2w1ZsXzDrHs
+ for <openbmc@lists.ozlabs.org>; Sat,  9 May 2020 03:43:02 +1000 (AEST)
+IronPort-SDR: WBsSfChtX4AlgizqiZwx7QApJqHxFtu6WOx8NP+BKDORJbBWcozvfpUYd3UhTo0YgwIEPX94q5
+ qHN8e9H0liKw==
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 May 2020 10:42:59 -0700
+IronPort-SDR: 0RAVHRlgkzi99J42EYjUtaHsiJ5ahNEgLuscnxL9JMSuPugIMDK3GR1E4edB5KfhQNtA2YNRjt
+ hI7RdVlDYhbg==
+X-IronPort-AV: E=Sophos;i="5.73,368,1583222400"; 
+ d="asc'?scan'208,217";a="435848309"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 May 2020 10:42:58 -0700
+Subject: Re: Default Gateway for a system v/s Default gateway per Interface
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+ <20200424152120.GD26818@heinlein.lan.stwcx.xyz>
+ <CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmail.com>
+ <32f161d2-784e-8fe5-a00b-e9bec181a265@linux.vnet.ibm.com>
+ <7c9a2b08-1224-9828-9175-41566532602a@intel.com>
+ <1f8f6dd4-c62e-7165-c1ba-7466e407d594@linux.vnet.ibm.com>
+ <35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com>
+ <d523bbb9-59a4-4b15-6527-68f842c0f3ec@linux.vnet.ibm.com>
+ <cae1cc3d-b4f3-ac09-e023-b469b45cc478@intel.com>
+ <3209c571-c535-8915-314d-353bccf063f6@linux.vnet.ibm.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <2bff4d8f-3479-48e5-787c-590ecc1cf156@intel.com>
+Date: Fri, 8 May 2020 10:42:50 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9514bc71-37a7-4542-c961-08d7f373d070
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2020 17:18:23.9426 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +w6U/INBVTnTqmP4mw6zcHdCKjq6BD2k5KmOptYoBcPUS4tSkrEjgH2s2H0PfurWepyznpjnVdAwjuyO1TdkDg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB3141
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
- definitions=2020-05-08_15:2020-05-08,
- 2020-05-08 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- malwarescore=0
- impostorscore=0 mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
- mlxlogscore=999 phishscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2003020000 definitions=main-2005080145
-X-FB-Internal: deliver
+In-Reply-To: <3209c571-c535-8915-314d-353bccf063f6@linux.vnet.ibm.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="4PcrIkw0alXpr9Q4nyTgHE4mhGFFDkYdc"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -138,172 +90,644 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_933294DA92904A33970F7DD723BA178Bfbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--4PcrIkw0alXpr9Q4nyTgHE4mhGFFDkYdc
+Content-Type: multipart/mixed; boundary="XHOaQjNleirAMOIyP01PuHDL5eZpXddF8"
 
-DQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlz
-dHMub3psYWJzLm9yZz4gb24gYmVoYWxmIG9mIE5hbmN5IFl1ZW4gPHl1ZW5uQGdvb2dsZS5jb20+
-DQpEYXRlOiBUaHVyc2RheSwgTWF5IDcsIDIwMjAgYXQgMTI6NDcgUE0NClRvOiBBbmRyZXcgSmVm
-ZmVyeSA8YW5kcmV3QGFqLmlkLmF1Pg0KQ2M6IE9wZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNAbGlz
-dHMub3psYWJzLm9yZz4NClN1YmplY3Q6IFJlOiBNdWx0aXBsZSBCTUNzIGluIGEgc3lzdGVtOiBJ
-UE1CPyBSZWRmaXNoPyBNQ1RQPw0KDQoNCk9uIE1vbiwgTWF5IDQsIDIwMjAgYXQgMzozMSBBTSBB
-bmRyZXcgSmVmZmVyeSA8YW5kcmV3QGFqLmlkLmF1PG1haWx0bzphbmRyZXdAYWouaWQuYXU+PiB3
-cm90ZToNCg0KDQpPbiBUaHUsIDMwIEFwciAyMDIwLCBhdCAxNzowOCwgRGVlcGFrIEtvZGloYWxs
-aSB3cm90ZToNCj4gT24gMzAvMDQvMjAgNDoyMSBhbSwgTmFuY3kgWXVlbiB3cm90ZToNCj4gPiBJ
-J3ZlIHRhbGtlZCB3aXRoIHNvbWUgcGVvcGxlIGEgd2hpbGUgYmFjayAobG9uZyB3aGlsZSBiYWNr
-KSBhYm91dA0KPiA+IG11bHRpcGxlIEJNQ3MgaW4gYSBzeXN0ZW0uICBFaXRoZXIgZm9yIHJlZHVu
-ZGFuY3kgb3IgbWFuYWdpbmcgc2VwYXJhdGUNCj4gPiBwYXJ0cyBvZiBhIHN5c3RlbS4gICBJJ20g
-d29uZGVyaW5nIHdoYXQgb3RoZXIgcGVvcGxlIGFyZSB0aGlua2luZyBpbg0KPiA+IHRoaXMgYXJl
-YSBpZiBhdCBhbGwuDQo+ID4NCj4gPiBXZSBhcmUgY29uc2lkZXJpbmcgc2ltaWxhciBkZXNpZ25z
-IGFuZCBJJ20gbG9va2luZyBpbnRvIG9wdGlvbnMgZm9yDQo+ID4gQk1DLUJNQyBjb21tdW5pY2F0
-aW9ucy4gIFNvbWUgQk1DcyBtYXkgbm90IGJlIGV4dGVybmFsbHkNCj4gPiBhY2Nlc3NpYmxlLiBI
-ZXJlIGFyZSBzb21lIG9wdGlvbnMgdGhhdCB3ZSd2ZSBsb29rZWQgYXQ6DQo+ID4NCj4gPiAgMS4g
-aTJjL0lQTUINCj4gPiAgMi4gdXNibmV0L1JlZGZpc2gNCj4gPiAgMy4gaTJjL01DVFAvUExETSBv
-ciBzb21ldGhpbmcgZWxzZT8NCj4gPiAgNC4gaW50ZXJuYWwgbmV0d29yayB2aWEgc3dpdGNoIGNo
-aXAvUmVkZmlzaCBvciBNQ1RQDQo+ID4NCj4gPiAgIEknZCBsaWtlIHRvIHJlZHVjZSBvdXIgdXNl
-IG9mIElQTUkgc28gSSB3YW50IHRvIGF2b2lkICgxKS4NCj4gPg0KPiA+IC0tLS0tLS0tLS0NCj4g
-PiBOYW5jeQ0KPg0KPiBIaSBOYW5jeSwNCj4NCj4gSSB0aGluayBpdCBkZXBlbmRzIG9uIHdoZXRo
-ZXIgdGhlIEJNQ3MgbmVlZCB0byB0YWxrIHRvIGVhY2ggb3RoZXIgZm9yDQo+IHBsYXRmb3JtIG1h
-bmFnZW1lbnQsIG9yIGlmIHRoZXkgbWFuYWdlIHRoZWlyIG93biBob3N0cyBhbmQgd2UgbmVlZCBv
-bmUNCj4gb2YgdGhlIEJNQ3MgdG8gYnJvYWRjYXN0IG91dCBvZiBiYW5kIHJlcXVlc3RzIGFuZCBh
-Z2dyZWdhdGUgcmVzcG9uc2VzLg0KPg0KPiBGb3IgdGhlIGZvcm1lciBJIHRoaW5rIFBMRE0gb3Zl
-ciBNQ1RQIGNvdWxkIGJlIGEgZ29vZCBmaXQuIFRoaXMgaXMgbW9yZQ0KPiBvZiBhbiAiaW5iYW5k
-IiB1c2UtY2FzZSBpbiBteSBvcGluaW9uIHNvIEknbSBub3Qgc3VyZSBpZiBSZWRmaXNoIGlzIHdl
-bGwNCj4gc3VpdGVkLiBGb3IgdGhlIGxhdHRlciwgYSBSZWRmaXNoIGJhc2VkIGFnZ3JlZ2F0aW9u
-IGlzIGEgZ29vZCBvcHRpb24uDQoNCkkgdGhpbmsgdGhpcyBsb29rcyBsaWtlIHRoZSByaWdodCBh
-cHByb2FjaC4gQ2VydGFpbmx5IHNvbWUgdGhvdWdodCB3b3VsZCBiZQ0KcmVxdWlyZWQgaW4gZGVz
-aWduaW5nIHRoZSBNQ1RQIG5ldHdvcmtzIGdpdmVuIHRoZSAoaW50ZW50aW9uYWxseSkgbGltaXRl
-ZA0KbnVtYmVyIG9mIGVuZHBvaW50IElEcy4NCg0KQW5kcmV3DQoNCkhpIEFuZHJldywgRGVlcGFr
-LA0KDQpTb3JyeSBmb3IgdGhlIGRlbGF5ZWQgcmVzcG9uc2UhDQoNCkZvciB0aGUgcHVycG9zZXMg
-b2YgdGhpcyBkaXNjdXNzaW9uIEkgaGF2ZSBCTUNzIG1hbmFnaW5nIHRoZWlyIG93biBob3N0OiBC
-TUMzPC0tLT5CTUMyPC0tLT5CTUMxL2NvbnRyb2xsZXI8LS0+IGV4dGVybmFsLiAgSSB3cm90ZSBC
-TUMxIGJ1dCB0aGVyZSBtYXliZSBzb21lIG90aGVyIGNvbnRyb2xsZXIgdGhlcmUgdGhhdCBpc24n
-dCBzdHJpY3RseSBhIEJNQy4gIEJNQzIgd291bGQgYmUgInBhc3NpbmcgdGhyb3VnaCIgaW5mb3Jt
-YXRpb24gYmV0d2VlbiBCTUMxIGFuZCBCTUMzLiAgQnV0IEkgZG9uJ3QgbmVjZXNzYXJpbHkgd2Fu
-dCBCTUMyIHRvIGRvIGFueSBmb3JtIG9mIGFnZ3JlZ2F0aW9uIGZyb20gaW5mb3JtYXRpb24gZnJv
-bSBCTUMzLiAgRm9yIEJNQzEvQ29udHJvbGxlciBhbmQgQk1DIDIgd2UgYXJlIHRoaW5raW5nIFJl
-ZGZpc2guDQoNCkluIG15IGNhc2UgSSdtIGludGVyZXN0ZWQgaW4gd2hhdCB3YXlzIHBlb3BsZSBh
-cmUgdGhpbmtpbmcgQk1DMiBhbmQgQk1DMyBzaG91bGQgYmUgY29ubmVjdGVkIGFuZCBzcGVha2lu
-ZyB0byBlYWNoIG90aGVyLiBJcyBNQ1RQL1BMRE0gd2hlcmUgZXZlcnlvbmUgaXMgbGVhbmluZz8N
-Cg0KTmFuY3ksDQpXaGF0IGlzIGNvbm5lY3Rpdml0eSBiZXR3ZWVuIEJNQzEsIEJNQzIgYW5kIEJN
-QzMuIEFyZSB0aGVzZSBleHBvc2luZyBhbnkgb3V0IG9mIGJhbmQgY29ubmVjdGlvbnMuIEZvciBz
-ZWN1cml0eSByZWFzb25zLCBhZ2dyZWdhdG9yIHNob3VsZCB1c2UgaW5iYW5kIGNvbm5lY3Rpdml0
-eSBiZXR3ZWVuIEJNQ3MgYW5kIGFzIERlZXBhayBzYWlkIE1DVFAgaXMgZ29vZCBvcHRpb24gZm9y
-IGluYmFuZC4NCg0KDQoNCg==
+--XHOaQjNleirAMOIyP01PuHDL5eZpXddF8
+Content-Type: multipart/alternative;
+ boundary="------------E2806FEA3290219ABC4F5E3D"
+Content-Language: en-US
 
---_000_933294DA92904A33970F7DD723BA178Bfbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <B2D2ACFC1418CB4F9AB4C0290250CF07@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+This is a multi-part message in MIME format.
+--------------E2806FEA3290219ABC4F5E3D
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
-IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
-IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQovKiBTdHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3Jt
-YWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46MGluOw0KCW1hcmdpbi1i
-b3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
-IixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXBy
-aW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpz
-cGFuLkVtYWlsU3R5bGUxOA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250
-LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29D
-aHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMC4w
-cHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjox
-LjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNl
-Y3Rpb24xO30NCi0tPjwvc3R5bGU+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0i
-Ymx1ZSIgdmxpbms9InB1cnBsZSI+DQo8ZGl2IGNsYXNzPSJXb3JkU2VjdGlvbjEiPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10
-b3A6c29saWQgI0I1QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJs
-YWNrIj5Gcm9tOiA8L3NwYW4+PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9y
-OmJsYWNrIj5vcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5jZXMmIzQzO3ZpamF5a2hlbWthPWZiLmNv
-bUBsaXN0cy5vemxhYnMub3JnJmd0OyBvbiBiZWhhbGYgb2YgTmFuY3kgWXVlbiAmbHQ7eXVlbm5A
-Z29vZ2xlLmNvbSZndDs8YnI+DQo8Yj5EYXRlOiA8L2I+VGh1cnNkYXksIE1heSA3LCAyMDIwIGF0
-IDEyOjQ3IFBNPGJyPg0KPGI+VG86IDwvYj5BbmRyZXcgSmVmZmVyeSAmbHQ7YW5kcmV3QGFqLmlk
-LmF1Jmd0Ozxicj4NCjxiPkNjOiA8L2I+T3BlbkJNQyBNYWlsbGlzdCAmbHQ7b3BlbmJtY0BsaXN0
-cy5vemxhYnMub3JnJmd0Ozxicj4NCjxiPlN1YmplY3Q6IDwvYj5SZTogTXVsdGlwbGUgQk1DcyBp
-biBhIHN5c3RlbTogSVBNQj8gUmVkZmlzaD8gTUNUUD88bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8
-L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4N
-CjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
-Pg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5PbiBNb24sIE1heSA0LCAyMDIw
-IGF0IDM6MzEgQU0gQW5kcmV3IEplZmZlcnkgJmx0OzxhIGhyZWY9Im1haWx0bzphbmRyZXdAYWou
-aWQuYXUiPmFuZHJld0Bhai5pZC5hdTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0KPC9k
-aXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6c29saWQgI0ND
-Q0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1sZWZ0OjQuOHB0O21h
-cmdpbi1yaWdodDowaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGJyPg0KPGJyPg0KT24gVGh1
-LCAzMCBBcHIgMjAyMCwgYXQgMTc6MDgsIERlZXBhayBLb2RpaGFsbGkgd3JvdGU6PGJyPg0KJmd0
-OyBPbiAzMC8wNC8yMCA0OjIxIGFtLCBOYW5jeSBZdWVuIHdyb3RlOjxicj4NCiZndDsgJmd0OyBJ
-J3ZlIHRhbGtlZCB3aXRoIHNvbWUgcGVvcGxlIGEgd2hpbGUgYmFjayAobG9uZyB3aGlsZSBiYWNr
-KSBhYm91dCA8YnI+DQomZ3Q7ICZndDsgbXVsdGlwbGUgQk1DcyBpbiBhIHN5c3RlbS4mbmJzcDsg
-RWl0aGVyIGZvciByZWR1bmRhbmN5IG9yIG1hbmFnaW5nIHNlcGFyYXRlIDxicj4NCiZndDsgJmd0
-OyBwYXJ0cyBvZiBhIHN5c3RlbS4mbmJzcDsmbmJzcDsgSSdtIHdvbmRlcmluZyB3aGF0IG90aGVy
-IHBlb3BsZSBhcmUgdGhpbmtpbmcgaW4gPGJyPg0KJmd0OyAmZ3Q7IHRoaXMgYXJlYSBpZiBhdCBh
-bGwuPGJyPg0KJmd0OyAmZ3Q7IDxicj4NCiZndDsgJmd0OyBXZSBhcmUgY29uc2lkZXJpbmcgc2lt
-aWxhciBkZXNpZ25zIGFuZCBJJ20gbG9va2luZyBpbnRvIG9wdGlvbnMgZm9yIDxicj4NCiZndDsg
-Jmd0OyBCTUMtQk1DIGNvbW11bmljYXRpb25zLiZuYnNwOyBTb21lIEJNQ3MgbWF5IG5vdCBiZSBl
-eHRlcm5hbGx5IDxicj4NCiZndDsgJmd0OyBhY2Nlc3NpYmxlLiZuYnNwO0hlcmUgYXJlIHNvbWUg
-b3B0aW9ucyB0aGF0IHdlJ3ZlIGxvb2tlZCBhdDo8YnI+DQomZ3Q7ICZndDsgPGJyPg0KJmd0OyAm
-Z3Q7Jm5ic3A7IDEuIGkyYy9JUE1CPGJyPg0KJmd0OyAmZ3Q7Jm5ic3A7IDIuIHVzYm5ldC9SZWRm
-aXNoPGJyPg0KJmd0OyAmZ3Q7Jm5ic3A7IDMuIGkyYy9NQ1RQL1BMRE0gb3Igc29tZXRoaW5nIGVs
-c2U/PGJyPg0KJmd0OyAmZ3Q7Jm5ic3A7IDQuIGludGVybmFsIG5ldHdvcmsgdmlhIHN3aXRjaCBj
-aGlwL1JlZGZpc2ggb3IgTUNUUDxicj4NCiZndDsgJmd0OyA8YnI+DQomZ3Q7ICZndDsmbmJzcDsg
-Jm5ic3A7SSdkIGxpa2UgdG8gcmVkdWNlIG91ciB1c2Ugb2YgSVBNSSBzbyBJIHdhbnQgdG8gYXZv
-aWQgKDEpLjxicj4NCiZndDsgJmd0OyA8YnI+DQomZ3Q7ICZndDsgLS0tLS0tLS0tLTxicj4NCiZn
-dDsgJmd0OyBOYW5jeTxicj4NCiZndDsgPGJyPg0KJmd0OyBIaSBOYW5jeSw8YnI+DQomZ3Q7IDxi
-cj4NCiZndDsgSSB0aGluayBpdCBkZXBlbmRzIG9uIHdoZXRoZXIgdGhlIEJNQ3MgbmVlZCB0byB0
-YWxrIHRvIGVhY2ggb3RoZXIgZm9yIDxicj4NCiZndDsgcGxhdGZvcm0gbWFuYWdlbWVudCwgb3Ig
-aWYgdGhleSBtYW5hZ2UgdGhlaXIgb3duIGhvc3RzIGFuZCB3ZSBuZWVkIG9uZSA8YnI+DQomZ3Q7
-IG9mIHRoZSBCTUNzIHRvIGJyb2FkY2FzdCBvdXQgb2YgYmFuZCByZXF1ZXN0cyBhbmQgYWdncmVn
-YXRlIHJlc3BvbnNlcy48YnI+DQomZ3Q7IDxicj4NCiZndDsgRm9yIHRoZSBmb3JtZXIgSSB0aGlu
-ayBQTERNIG92ZXIgTUNUUCBjb3VsZCBiZSBhIGdvb2QgZml0LiBUaGlzIGlzIG1vcmUgPGJyPg0K
-Jmd0OyBvZiBhbiAmcXVvdDtpbmJhbmQmcXVvdDsgdXNlLWNhc2UgaW4gbXkgb3BpbmlvbiBzbyBJ
-J20gbm90IHN1cmUgaWYgUmVkZmlzaCBpcyB3ZWxsIDxicj4NCiZndDsgc3VpdGVkLiBGb3IgdGhl
-IGxhdHRlciwgYSBSZWRmaXNoIGJhc2VkIGFnZ3JlZ2F0aW9uIGlzIGEgZ29vZCBvcHRpb24uPGJy
-Pg0KPGJyPg0KSSB0aGluayB0aGlzIGxvb2tzIGxpa2UgdGhlIHJpZ2h0IGFwcHJvYWNoLiBDZXJ0
-YWlubHkgc29tZSB0aG91Z2h0IHdvdWxkIGJlPGJyPg0KcmVxdWlyZWQgaW4gZGVzaWduaW5nIHRo
-ZSBNQ1RQIG5ldHdvcmtzIGdpdmVuIHRoZSAoaW50ZW50aW9uYWxseSkgbGltaXRlZDxicj4NCm51
-bWJlciBvZiBlbmRwb2ludCBJRHMuPGJyPg0KPGJyPg0KQW5kcmV3PG86cD48L286cD48L3A+DQo8
-L2Jsb2NrcXVvdGU+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286
-cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5IaSBBbmRyZXcsIERl
-ZXBhayw8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+U29ycnkgZm9yIHRoZSBkZWxheWVkIHJlc3BvbnNlITxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+
-DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rp
-dj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5Gb3IgdGhlIHB1cnBvc2VzIG9mIHRoaXMg
-ZGlzY3Vzc2lvbiBJIGhhdmUgQk1DcyBtYW5hZ2luZyB0aGVpciBvd24gaG9zdDogQk1DMyZsdDst
-LS0mZ3Q7Qk1DMiZsdDstLS0mZ3Q7Qk1DMS9jb250cm9sbGVyJmx0Oy0tJmd0OyBleHRlcm5hbC4m
-bmJzcDsgSSB3cm90ZSBCTUMxIGJ1dCB0aGVyZSBtYXliZSBzb21lIG90aGVyIGNvbnRyb2xsZXIg
-dGhlcmUgdGhhdCBpc24ndCBzdHJpY3RseSBhIEJNQy4mbmJzcDsgQk1DMiB3b3VsZCBiZSAmcXVv
-dDtwYXNzaW5nIHRocm91Z2gmcXVvdDsNCiBpbmZvcm1hdGlvbiBiZXR3ZWVuIEJNQzEgYW5kIEJN
-QzMuJm5ic3A7IEJ1dCBJIGRvbid0IG5lY2Vzc2FyaWx5IHdhbnQgQk1DMiB0byBkbyBhbnkgZm9y
-bSBvZiBhZ2dyZWdhdGlvbiBmcm9tIGluZm9ybWF0aW9uIGZyb20gQk1DMy4mbmJzcDsgRm9yIEJN
-QzEvQ29udHJvbGxlciBhbmQgQk1DIDIgd2UgYXJlIHRoaW5raW5nIFJlZGZpc2guJm5ic3A7Jm5i
-c3A7PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
-bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PkluIG15IGNhc2UgSSdtIGludGVyZXN0ZWQgaW4gd2hhdCB3YXlzIHBlb3BsZSBhcmUgdGhpbmtp
-bmcgQk1DMiBhbmQgQk1DMyBzaG91bGQgYmUgY29ubmVjdGVkIGFuZCBzcGVha2luZyB0byBlYWNo
-IG90aGVyLiBJcyBNQ1RQL1BMRE0gd2hlcmUgZXZlcnlvbmUgaXMgbGVhbmluZz88bzpwPjwvbzpw
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+TmFuY3ksPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij5XaGF0IGlzIGNvbm5lY3Rpdml0eSBiZXR3ZWVuIEJNQzEsIEJNQzIgYW5kIEJNQzMuIEFyZSB0
-aGVzZSBleHBvc2luZyBhbnkgb3V0IG9mIGJhbmQgY29ubmVjdGlvbnMuIEZvciBzZWN1cml0eSBy
-ZWFzb25zLCBhZ2dyZWdhdG9yIHNob3VsZCB1c2UgaW5iYW5kIGNvbm5lY3Rpdml0eSBiZXR3ZWVu
-IEJNQ3MgYW5kIGFzIERlZXBhayBzYWlkIE1DVFAgaXMgZ29vZCBvcHRpb24gZm9yIGluYmFuZC48
-bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+
-Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86
-cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
-bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9i
-b2R5Pg0KPC9odG1sPg0K
+Ratan,
+Thanks for clarifying.
 
---_000_933294DA92904A33970F7DD723BA178Bfbcom_--
+On 5/7/20 11:35 PM, Ratan Gupta wrote:
+>
+> Jonathan,
+>
+>
+> On 5/4/20 9:44 PM, Johnathan Mantey wrote:
+>> Ratan,
+>>
+>> We're not using Windows. What is the Linux kernel/systemd going to do
+>> for the Metric? So far the only value that has been applied to the
+>> Metric is "0" (assigned by ??).
+> I was trying to explain your query "What does it mean to "use the
+> default metric"?" I am hoping the Idea would be same to understand the
+> behavior of default metric value.
+> In OpenBmc systemd assigns the default metric value for static
+> routes/DHCP routes(if the DHCP server is not providing the metric value=
+)
+>
+> Default Metric means what systemd-networkd assigns if the metric is
+> not given by the user(in case of static)/DHCP server. Static Routes
+> gets added as default metric value as 0 by systemd-networkd.
+>> As the Microsoft article points out, using a low value Metric for
+>> "private" nets is to be avoided.
+>> Our DHCP servers are supplying a Metric value of 1024. I'm sure other
+>> network managers use different values.
+>
+> I am hoping that this behavior in your case is coming through
+> systemd-netwokd, I also observed this.
+> https://github.com/systemd/systemd/blob/c51c6f2f574e8c107994057c13a6506=
+d93966a23/src/network/networkd-dhcp-common.h#L8
+>
+>> I don't know how to solve this issue. Especially for the IPMI use
+>> case of assigning a static address. IPMI doesn't have the ability to
+>> assign metric values. At least with Redfish we can have that feature
+>> added.
+> As I mentioned before that we can come up with route management
+> feature where user can add/delete/update route(i.e) user can change
+> the metric value also for a route.
+>>
+>> On 5/4/20 6:38 AM, Ratan Gupta wrote:
+>>>
+>>>
+>>> On 4/29/20 12:19 AM, Johnathan Mantey wrote:
+>>>> I think I understand most of your plan.
+>>>>
+>>>> What does it mean to "use the default metric"?
+>>>
+>>> https://support.microsoft.com/en-in/help/299540/an-explanation-of-the=
+-automatic-metric-feature-for-ipv4-routes
+>>>
+>>> Instead of user level application assigns the metric value, Let the
+>>> kernel decide which gateway should be used.
+>>>
+>>> I understand that there should be a way through which we should be
+>>> able to change the metric value=C2=A0 but that can be implemented lat=
+er
+>>> with some thing like route management where user should be able to
+>>> add HostRoutes/Network routes etc, chnaging the values of the routes
+>>> etc.
+>>>
+>>>>
+>>>> On 4/28/20 8:16 AM, Ratan Gupta wrote:
+>>>>>
+>>>>> Hi Jonathan,
+>>>>>
+>>>>> On 4/28/20 1:00 AM, Johnathan Mantey wrote:
+>>>>>> Ratan,
+>>>>>>
+>>>>>> Can you provide more info about how you plan to implement this?
+>>>>> I am not getting, Do you mean to say how to get the per interface
+>>>>> gateway from system?=C2=A0 that would be through netlink, and durin=
+g
+>>>>> configuration we would use the systemd-networkd file configuration.=
+
+>>>>>>
+>>>>>> The Redfish schemas already have a per IP addr Gateway entry,
+>>>>>> which OBMC is ignoring. Is it better to modify the existing D-Bus
+>>>>>> schema (i.e. versioning discussion), or just use what is
+>>>>>> presently in existence?
+>>>>> Redfish schema are getting changed to accommodate this through the
+>>>>> following issue https://github.com/DMTF/Redfish/issues/3609.
+>>>>>
+>>>>> The above issue(gateway/interface) exist only for the IPv4 redfish
+>>>>> schema, IPv6 redfish is already having default gateway per interfac=
+e
+>>>>>
+>>>>> http://redfish.dmtf.org/schemas/v1/EthernetInterface.v1_5_1.json#/d=
+efinitions/EthernetInterface
+>>>>>
+>>>>>>
+>>>>>> That said, doing as you propose melds better with how IPMI (i.e
+>>>>>> Set LAN Configuration Parameter 12) works.
+>>>>>>
+>>>>>> As Patrick pointed out, there's no IPMI or Redfish control over
+>>>>>> the routing metric parameter. What are your thoughts on how to
+>>>>>> reconcile applying a metric value?
+>>>>> We will go with default metric value as today as underlying stack
+>>>>> tries for fallback gateway.
+>>>>>> I've long been desirous of getting Williams submission merged:
+>>>>>> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/2=
+0799
+>>>>>> as it can be used to improve the collection of netlink stats.
+>>>>>>
+>>>>>> Redfish exacerbates this whole problem by allowing a collection
+>>>>>> of static IP addresses (and a DHCP addr) per NIC, unlike IPMI
+>>>>>> which was very one to one with IP addr/NIC.
+>>>>>>
+>>>>>> Thanks for investigating this and working to implement a solution.=
+
+>>>>>>
+>>>>>> On 4/27/20 4:11 AM, Ratan Gupta wrote:
+>>>>>>>
+>>>>>>> Thanks Patrick, William for sharing the feedbacks
+>>>>>>>
+>>>>>>> I will start working on the changes.
+>>>>>>>
+>>>>>>>
+>>>>>>> On 4/24/20 11:15 PM, William Kennington wrote:
+>>>>>>>> Sounds good to me, we have needed this for a long time because
+>>>>>>>> the current gateway configuration breaks our v6 stack with
+>>>>>>>> multiple NICs.
+>>>>>>>>
+>>>>>>>> On Fri, Apr 24, 2020 at 8:21 AM Patrick Williams
+>>>>>>>> <patrick@stwcx.xyz <mailto:patrick@stwcx.xyz>> wrote:
+>>>>>>>>
+>>>>>>>>     On Fri, Apr 24, 2020 at 08:36:26PM +0530, Ratan Gupta wrote:=
+
+>>>>>>>>     > ~~~~~~~~~~~~~
+>>>>>>>>     > Kernel IP routing table
+>>>>>>>>     > Destination=C2=A0=C2=A0=C2=A0=C2=A0 Gateway=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Genmask=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 Flags=C2=A0=C2=A0
+>>>>>>>>     MSS Window=C2=A0 irtt
+>>>>>>>>     > Iface
+>>>>>>>>     > 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 19=
+=2E168.2.1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+>>>>>>>>     0 0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
+>>>>>>>>     > eth0
+>>>>>>>>     > 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 10=
+=2E10.10.1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+>>>>>>>>     0 0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
+>>>>>>>>     > eth1
+>>>>>>>>     > ~~~~~~~~~~~~~~
+>>>>>>>>     >
+>>>>>>>>     > Kernel will first try using the default gateway having
+>>>>>>>>     higher metric
+>>>>>>>>     > value and then fall back to the lower.
+>>>>>>>>
+>>>>>>>>     I'm not seeing us with an interface to adjust the metric for=
+ an
+>>>>>>>>     interface.=C2=A0 I think we need to add that at the same tim=
+e?
+>>>>>>>>
+>>>>>>> Not now, As per my testing if metric value is not defined and
+>>>>>>> both the routes
+>>>>>>>
+>>>>>>> having same metric then kernel tries one after other. We can
+>>>>>>> bring the metric
+>>>>>>>
+>>>>>>> later.
+>>>>>>>
+>>>>>>>>     =C2=A0 Otherwise, I
+>>>>>>>>     don't think we have a way to specify which interface
+>>>>>>>>     outside-the-subnet
+>>>>>>>>     should go (vs today we can set the default-gateway to the
+>>>>>>>>     desired
+>>>>>>>>     interface's gateway).
+>>>>>>>>     --=20
+>>>>>>>>     Patrick Williams
+>>>>>>>>
+>>>>>>
+>>>>>> --=20
+>>>>>> Johnathan Mantey
+>>>>>> Senior Software Engineer
+>>>>>> *azad te**chnology partners*
+>>>>>> Contributing to Technology Innovation since 1992
+>>>>>> Phone: (503) 712-6764
+>>>>>> Email: johnathanx.mantey@intel.com
+>>>>>> <mailto:johnathanx.mantey@intel.com>
+>>>>>
+>>>>> Ratan
+>>>>>
+>>>>
+>>>> --=20
+>>>> Johnathan Mantey
+>>>> Senior Software Engineer
+>>>> *azad te**chnology partners*
+>>>> Contributing to Technology Innovation since 1992
+>>>> Phone: (503) 712-6764
+>>>> Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.c=
+om>
+>>>>
+>>
+>> --=20
+>> Johnathan Mantey
+>> Senior Software Engineer
+>> *azad te**chnology partners*
+>> Contributing to Technology Innovation since 1992
+>> Phone: (503) 712-6764
+>> Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com=
+>
+>>
+
+--=20
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
+
+
+--------------E2806FEA3290219ABC4F5E3D
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    Ratan,<br>
+    Thanks for clarifying. <br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 5/7/20 11:35 PM, Ratan Gupta wrote:=
+<br>
+    </div>
+    <blockquote type=3D"cite"
+      cite=3D"mid:3209c571-c535-8915-314d-353bccf063f6@linux.vnet.ibm.com=
+">
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DU=
+TF-8">
+      <p>Jonathan,</p>
+      <p><br>
+      </p>
+      <div class=3D"moz-cite-prefix">On 5/4/20 9:44 PM, Johnathan Mantey
+        wrote:<br>
+      </div>
+      <blockquote type=3D"cite"
+        cite=3D"mid:cae1cc3d-b4f3-ac09-e023-b469b45cc478@intel.com">
+        Ratan,<br>
+        <br>
+        We're not using Windows. What is the Linux kernel/systemd going
+        to do for the Metric? So far the only value that has been
+        applied to the Metric is "0" (assigned by ??).</blockquote>
+      I was trying to explain your query "What does it mean to "use the
+      default metric"?" I am hoping the Idea would be same to understand
+      the behavior of default metric value.<br>
+      In OpenBmc systemd assigns the default metric value for static
+      routes/DHCP routes(if the DHCP server is not providing the metric
+      value) <br>
+      <br>
+      Default Metric means what systemd-networkd assigns if the metric
+      is not given by the user(in case of static)/DHCP server. Static
+      Routes gets added as default metric value as 0 by
+      systemd-networkd.<br>
+      <blockquote type=3D"cite"
+        cite=3D"mid:cae1cc3d-b4f3-ac09-e023-b469b45cc478@intel.com"> As
+        the Microsoft article points out, using a low value Metric for
+        "private" nets is to be avoided. <br>
+        Our DHCP servers are supplying a Metric value of 1024. I'm sure
+        other network managers use different values.<br>
+      </blockquote>
+      <p>I am hoping that this behavior in your case is coming through
+        systemd-netwokd, I also observed this.<br>
+        <a class=3D"moz-txt-link-freetext"
+href=3D"https://github.com/systemd/systemd/blob/c51c6f2f574e8c107994057c1=
+3a6506d93966a23/src/network/networkd-dhcp-common.h#L8"
+          moz-do-not-send=3D"true">https://github.com/systemd/systemd/blo=
+b/c51c6f2f574e8c107994057c13a6506d93966a23/src/network/networkd-dhcp-comm=
+on.h#L8</a></p>
+      <blockquote type=3D"cite"
+        cite=3D"mid:cae1cc3d-b4f3-ac09-e023-b469b45cc478@intel.com"> I
+        don't know how to solve this issue. Especially for the IPMI use
+        case of assigning a static address. IPMI doesn't have the
+        ability to assign metric values. At least with Redfish we can
+        have that feature added.<br>
+      </blockquote>
+      As I mentioned before that we can come up with route management
+      feature where user can add/delete/update route(i.e) user can
+      change the metric value also for a route.<br>
+      <blockquote type=3D"cite"
+        cite=3D"mid:cae1cc3d-b4f3-ac09-e023-b469b45cc478@intel.com"> <br>=
+
+        <div class=3D"moz-cite-prefix">On 5/4/20 6:38 AM, Ratan Gupta
+          wrote:<br>
+        </div>
+        <blockquote type=3D"cite"
+          cite=3D"mid:d523bbb9-59a4-4b15-6527-68f842c0f3ec@linux.vnet.ibm=
+=2Ecom">
+          <p><br>
+          </p>
+          <div class=3D"moz-cite-prefix">On 4/29/20 12:19 AM, Johnathan
+            Mantey wrote:<br>
+          </div>
+          <blockquote type=3D"cite"
+            cite=3D"mid:35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com"> =
+I
+            think I understand most of your plan.<br>
+            <br>
+            What does it mean to "use the default metric"?<br>
+          </blockquote>
+          <p><a class=3D"moz-txt-link-freetext"
+href=3D"https://support.microsoft.com/en-in/help/299540/an-explanation-of=
+-the-automatic-metric-feature-for-ipv4-routes"
+              moz-do-not-send=3D"true">https://support.microsoft.com/en-i=
+n/help/299540/an-explanation-of-the-automatic-metric-feature-for-ipv4-rou=
+tes</a></p>
+          <p>Instead of user level application assigns the metric value,
+            Let the kernel decide which gateway should be used.</p>
+          <p>I understand that there should be a way through which we
+            should be able to change the metric value=C2=A0 but that can =
+be
+            implemented later with some thing like route management
+            where user should be able to add HostRoutes/Network routes
+            etc, chnaging the values of the routes etc. <br>
+          </p>
+          <blockquote type=3D"cite"
+            cite=3D"mid:35251645-af06-5ab5-9e1b-8e6eaa44f650@intel.com"> =
+<br>
+            <div class=3D"moz-cite-prefix">On 4/28/20 8:16 AM, Ratan Gupt=
+a
+              wrote:<br>
+            </div>
+            <blockquote type=3D"cite"
+              cite=3D"mid:1f8f6dd4-c62e-7165-c1ba-7466e407d594@linux.vnet=
+=2Eibm.com">
+              <p>Hi Jonathan,</p>
+              <div class=3D"moz-cite-prefix">On 4/28/20 1:00 AM, Johnatha=
+n
+                Mantey wrote:<br>
+              </div>
+              <blockquote type=3D"cite"
+                cite=3D"mid:7c9a2b08-1224-9828-9175-41566532602a@intel.co=
+m">
+                Ratan,<br>
+                <br>
+                Can you provide more info about how you plan to
+                implement this?<br>
+              </blockquote>
+              I am not getting, Do you mean to say how to get the per
+              interface gateway from system?=C2=A0 that would be through
+              netlink, and during configuration we would use the
+              systemd-networkd file configuration.<br>
+              <blockquote type=3D"cite"
+                cite=3D"mid:7c9a2b08-1224-9828-9175-41566532602a@intel.co=
+m">
+                <br>
+                The Redfish schemas already have a per IP addr Gateway
+                entry, which OBMC is ignoring. Is it better to modify
+                the existing D-Bus schema (i.e. versioning discussion),
+                or just use what is presently in existence?<br>
+              </blockquote>
+              Redfish schema are getting changed to accommodate this
+              through the following issue <a
+                class=3D"moz-txt-link-freetext"
+                href=3D"https://github.com/DMTF/Redfish/issues/3609"
+                moz-do-not-send=3D"true">https://github.com/DMTF/Redfish/=
+issues/3609</a>.<br>
+              <p>The above issue(gateway/interface) exist only for the
+                IPv4 redfish schema, IPv6 redfish is already having
+                default gateway per interface <br>
+              </p>
+              <p><a class=3D"moz-txt-link-freetext"
+href=3D"http://redfish.dmtf.org/schemas/v1/EthernetInterface.v1_5_1.json#=
+/definitions/EthernetInterface"
+                  moz-do-not-send=3D"true">http://redfish.dmtf.org/schema=
+s/v1/EthernetInterface.v1_5_1.json#/definitions/EthernetInterface</a><br>=
+
+              </p>
+              <blockquote type=3D"cite"
+                cite=3D"mid:7c9a2b08-1224-9828-9175-41566532602a@intel.co=
+m">
+                <br>
+                That said, doing as you propose melds better with how
+                IPMI (i.e Set LAN Configuration Parameter 12) works.<br>
+                <br>
+                As Patrick pointed out, there's no IPMI or Redfish
+                control over the routing metric parameter. What are your
+                thoughts on how to reconcile applying a metric value?<br>=
+
+              </blockquote>
+              We will go with default metric value as today as
+              underlying stack tries for fallback gateway.
+              <blockquote type=3D"cite"
+                cite=3D"mid:7c9a2b08-1224-9828-9175-41566532602a@intel.co=
+m">
+                I've long been desirous of getting Williams submission
+                merged: <a class=3D"moz-txt-link-freetext"
+href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-networkd/+/=
+20799"
+                  moz-do-not-send=3D"true">https://gerrit.openbmc-project=
+=2Exyz/c/openbmc/phosphor-networkd/+/20799</a><br>
+                as it can be used to improve the collection of netlink
+                stats.<br>
+                <br>
+                Redfish exacerbates this whole problem by allowing a
+                collection of static IP addresses (and a DHCP addr) per
+                NIC, unlike IPMI which was very one to one with IP
+                addr/NIC. <br>
+                <br>
+                Thanks for investigating this and working to implement a
+                solution.<br>
+                <br>
+                <div class=3D"moz-cite-prefix">On 4/27/20 4:11 AM, Ratan
+                  Gupta wrote:<br>
+                </div>
+                <blockquote type=3D"cite"
+                  cite=3D"mid:32f161d2-784e-8fe5-a00b-e9bec181a265@linux.=
+vnet.ibm.com">
+                  <p>Thanks Patrick, William for sharing the feedbacks<br=
+>
+                  </p>
+                  <p>I will start working on the changes.<br>
+                  </p>
+                  <p><br>
+                  </p>
+                  <div class=3D"moz-cite-prefix">On 4/24/20 11:15 PM,
+                    William Kennington wrote:<br>
+                  </div>
+                  <blockquote type=3D"cite"
+cite=3D"mid:CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmai=
+l.com">
+                    <div dir=3D"ltr">Sounds good to me, we have needed
+                      this for a long time because the current gateway
+                      configuration breaks our v6 stack with multiple
+                      NICs.<br>
+                    </div>
+                    <br>
+                    <div class=3D"gmail_quote">
+                      <div dir=3D"ltr" class=3D"gmail_attr">On Fri, Apr 2=
+4,
+                        2020 at 8:21 AM Patrick Williams &lt;<a
+                          href=3D"mailto:patrick@stwcx.xyz"
+                          moz-do-not-send=3D"true">patrick@stwcx.xyz</a>&=
+gt;
+                        wrote:<br>
+                      </div>
+                      <blockquote class=3D"gmail_quote" style=3D"margin:0=
+px
+                        0px 0px 0.8ex;border-left:1px solid
+                        rgb(204,204,204);padding-left:1ex">On Fri, Apr
+                        24, 2020 at 08:36:26PM +0530, Ratan Gupta wrote:<=
+br>
+                        &gt; ~~~~~~~~~~~~~<br>
+                        &gt; Kernel IP routing table<br>
+                        &gt; Destination=C2=A0=C2=A0=C2=A0=C2=A0 Gateway=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+                        Genmask=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 Flags=C2=A0=C2=A0 MSS Window=C2=A0 irtt <br>
+                        &gt; Iface<br>
+                        &gt; 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 19.168.2.1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+                        0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 <br>
+                        &gt; eth0<br>
+                        &gt; 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 10.10.10.1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+                        0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 <br>
+                        &gt; eth1<br>
+                        &gt; ~~~~~~~~~~~~~~<br>
+                        &gt; <br>
+                        &gt; Kernel will first try using the default
+                        gateway having higher metric <br>
+                        &gt; value and then fall back to the lower.<br>
+                        <br>
+                        I'm not seeing us with an interface to adjust
+                        the metric for an<br>
+                        interface.=C2=A0 I think we need to add that at t=
+he
+                        same time?</blockquote>
+                    </div>
+                  </blockquote>
+                  <p>Not now, As per my testing if metric value is not
+                    defined and both the routes</p>
+                  <p>having same metric then kernel tries one after
+                    other. We can bring the metric</p>
+                  <p>later.<br>
+                  </p>
+                  <blockquote type=3D"cite"
+cite=3D"mid:CAPnigKkaj5aU-3KXKsL_LxAdZg2pccXiQz0bPPb+h8RToBzotg@mail.gmai=
+l.com">
+                    <div class=3D"gmail_quote">
+                      <blockquote class=3D"gmail_quote" style=3D"margin:0=
+px
+                        0px 0px 0.8ex;border-left:1px solid
+                        rgb(204,204,204);padding-left:1ex">=C2=A0 Otherwi=
+se,
+                        I<br>
+                        don't think we have a way to specify which
+                        interface outside-the-subnet<br>
+                        should go (vs today we can set the
+                        default-gateway to the desired<br>
+                        interface's gateway).<br>
+                        -- <br>
+                        Patrick Williams<br>
+                      </blockquote>
+                    </div>
+                  </blockquote>
+                </blockquote>
+                <br>
+                <div class=3D"moz-signature">-- <br>
+                  <title></title>
+                  <font color=3D"#1F497D"><font face=3D"Century Gothic">J=
+ohnathan
+                      Mantey<br>
+                      <small>Senior Software Engineer</small><br>
+                      <big><font color=3D"#555555"><small><b>azad te</b><=
+b>chnology
+                              partners</b></small><br>
+                          <small><font color=3D"#1F497D"><small>Contribut=
+ing
+                                to Technology Innovation since 1992</smal=
+l></font><small><br>
+                              <font color=3D"#1F497D">Phone: (503)
+                                712-6764<br>
+                                Email: <a
+                                  href=3D"mailto:johnathanx.mantey@intel.=
+com"
+                                  moz-do-not-send=3D"true">johnathanx.man=
+tey@intel.com</a></font></small><br>
+                          </small></font></big></font></font></div>
+              </blockquote>
+              <p><font color=3D"#1F497D"><font face=3D"Century Gothic">Ra=
+tan</font></font></p>
+            </blockquote>
+            <br>
+            <div class=3D"moz-signature">-- <br>
+              <title></title>
+              <font color=3D"#1F497D"><font face=3D"Century Gothic">Johna=
+than
+                  Mantey<br>
+                  <small>Senior Software Engineer</small><br>
+                  <big><font color=3D"#555555"><small><b>azad te</b><b>ch=
+nology
+                          partners</b></small><br>
+                      <small><font color=3D"#1F497D"><small>Contributing
+                            to Technology Innovation since 1992</small></=
+font><small><br>
+                          <font color=3D"#1F497D">Phone: (503) 712-6764<b=
+r>
+                            Email: <a
+                              href=3D"mailto:johnathanx.mantey@intel.com"=
+
+                              moz-do-not-send=3D"true">johnathanx.mantey@=
+intel.com</a></font></small><br>
+                        <br>
+                      </small></font></big></font></font> </div>
+          </blockquote>
+        </blockquote>
+        <br>
+        <div class=3D"moz-signature">-- <br>
+          <title></title>
+          <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan=
+
+              Mantey<br>
+              <small>Senior Software Engineer</small><br>
+              <big><font color=3D"#555555"><small><b>azad te</b><b>chnolo=
+gy
+                      partners</b></small><br>
+                  <small><font color=3D"#1F497D"><small>Contributing to
+                        Technology Innovation since 1992</small></font><s=
+mall><br>
+                      <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                        Email: <a
+                          href=3D"mailto:johnathanx.mantey@intel.com"
+                          moz-do-not-send=3D"true">johnathanx.mantey@inte=
+l.com</a></font></small><br>
+                    <br>
+                  </small></font></big></font></font> </div>
+      </blockquote>
+    </blockquote>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------E2806FEA3290219ABC4F5E3D--
+
+--XHOaQjNleirAMOIyP01PuHDL5eZpXddF8--
+
+--4PcrIkw0alXpr9Q4nyTgHE4mhGFFDkYdc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl61mhoACgkQ0EfviT3f
+HwnPtAf/X+2toWzJQqGklzzKk6ctWL7KggEAvPXwJYylv1uyIiaymXTnMpkmQOhW
+u5Z6llUdK/VMfDyO+dBzn1M+kKW36PQiXdJcXoAWedeO8uTumwszAKmZAQmli3kE
+sjX1hAFgSE82KFEBmgBXUhy8Petqj+rF4ESKGak+Af7e7FhSr7n9cstvtHlgnfk2
+yT/fHzyaG7ojkcAn5R7RW9EDWcD9qFuCIrB+VJPO3Ex/5kMUymJ4F7wPKj7LWTNC
+EJKb3oZxb1qITbLahRDFNYz9DYvKqheRzpE9e8aPal0Q1MboHTPtcy7C+1tlT9lM
+xiwSmTRBEsdBVvag5IjVbmwN/CCmwA==
+=dWOW
+-----END PGP SIGNATURE-----
+
+--4PcrIkw0alXpr9Q4nyTgHE4mhGFFDkYdc--
