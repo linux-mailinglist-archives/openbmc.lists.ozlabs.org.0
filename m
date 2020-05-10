@@ -2,57 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA9CC1CC46A
-	for <lists+openbmc@lfdr.de>; Sat,  9 May 2020 22:09:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85DAF1CC99F
+	for <lists+openbmc@lfdr.de>; Sun, 10 May 2020 10:57:35 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49KJFq6TLszDr48
-	for <lists+openbmc@lfdr.de>; Sun, 10 May 2020 06:09:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49KdHc4c6FzDqD9
+	for <lists+openbmc@lfdr.de>; Sun, 10 May 2020 18:57:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.203; helo=m13-203.163.com;
+ envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=RAtFRtqV; dkim-atps=neutral
+X-Greylist: delayed 915 seconds by postgrey-1.36 at bilbo;
+ Sun, 10 May 2020 18:43:11 AEST
+Received: from m13-203.163.com (m13-203.163.com [220.181.13.203])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49KJDy2MH8zDr2q
- for <openbmc@lists.ozlabs.org>; Sun, 10 May 2020 06:09:06 +1000 (AEST)
-IronPort-SDR: qbcctFDM7FJqDJWwIT+FCnKMeNINvr9VGdWU5sojGdrX3h92FicEaECLF5zDoDP+6GUejLJKBF
- Nr6eqiGw/+1g==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 May 2020 13:07:50 -0700
-IronPort-SDR: wfvKnsLfhOVQMD3N2pqUkRktbzBRNwqzVdIHRf4sEQeTBNxJALORQfKncwbhQVhjRw8Cdbc8sh
- sK7H2ctaEG8A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,373,1583222400"; 
- d="scan'208,217";a="462670341"
-Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.251.48.111])
- ([10.251.48.111])
- by fmsmga005.fm.intel.com with ESMTP; 09 May 2020 13:07:47 -0700
-Subject: Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
-To: Vijay Khemka <vijaykhemka@fb.com>, Nancy Yuen <yuenn@google.com>,
- Andrew Jeffery <andrew@aj.id.au>
-References: <CADfYTpG8Jp6rkQXnAeRjyAf41jzrJa0sPHmc7K0gbR7=EigQNw@mail.gmail.com>
- <f197f55c-f7f2-c405-f3c8-bfbd5cd5e3bd@linux.vnet.ibm.com>
- <789e1bda-63d4-479e-bfa3-12bf1603ebbc@www.fastmail.com>
- <CADfYTpGNRJ3Yk6h7K4iw27jn4c4VqNKnHw0PLMHyG5h+O7cQ6Q@mail.gmail.com>
- <933294DA-9290-4A33-970F-7DD723BA178B@fb.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <68264f4b-35a0-6c2b-67ab-9fb0f314269f@linux.intel.com>
-Date: Sun, 10 May 2020 01:37:46 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Kcz30yHtzDqLN
+ for <openbmc@lists.ozlabs.org>; Sun, 10 May 2020 18:43:09 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=T5m3E
+ GLeaV+dhQnwZQvgwkI4gEEosxv3sKh0h0554NA=; b=RAtFRtqVgOgq7yfGKYJW7
+ OHlGk+eRsK9rQSbBEq9BTcgEHuYTxt3H6MYX+F2hmLvsli6XvbiOVYpR/scTQoGn
+ hu0xzQ3Osb4W7Z+Td0d6blOGZnsJ+rDy3Iq5kQJmzN9WJw//TOZ1zKKo6XW9Lsj7
+ aIKyg/BKbq+iL7Lt7Ao1sM=
+Received: from zhang_cy1989$163.com ( [111.199.188.222] ) by
+ ajax-webmail-wmsvr198 (Coremail) ; Sun, 10 May 2020 16:27:33 +0800
+ (GMT+08:00)
+X-Originating-IP: [111.199.188.222]
+Date: Sun, 10 May 2020 16:27:33 +0800 (GMT+08:00)
+From: zhang_cy1989 <zhang_cy1989@163.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, 
+ "andrew@aj.id.au" <andrew@aj.id.au>
+Subject: How to use eSPI between Host and slave BMC in openbmc project
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20180820(5a019900) Copyright (c) 2002-2020 www.mailtech.cn 163com
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_12217_905559016.1589099253581"
 MIME-Version: 1.0
-In-Reply-To: <933294DA-9290-4A33-970F-7DD723BA178B@fb.com>
-Content-Type: multipart/alternative;
- boundary="------------76301776A0299F504B8D3960"
-Content-Language: en-US
+Message-ID: <50cce7b2.1057.171fdb24f4d.Coremail.zhang_cy1989@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: hceowACniJL1urdeQg0WAA--.18275W
+X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiDQkfT1QHRuAmoAABsm
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,355 +62,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------76301776A0299F504B8D3960
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+------=_Part_12217_905559016.1589099253581
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-PICMG has defined certain specifications in this angle (HPM), but those 
-basically uses IPMI (PICMG group extension commands)
+RGVhciBBbmRyZXcgSmVmZmVyeSAgICBJIG5vdGljZWQgdGhhdCB5b3UgbWVudGlvbmVkIGVTUEkg
+aW4gYW5vdGhlciBtYWlsIHRocmVhZC5CdXQgSSBjYW4ndCBmaW5kIHNvbWUgaW5mb3JtYXRpb24g
+aW4gb3BlbmJtYyBwcm9qZWN0LiAgICBUaGVyZSBhcmUgc29tZSBxdWVzdGlvbnMgYWJvdXQgZVNQ
+STogICAgICAgIDEgQXJlIHRoZXJlIHNvbWUgc29sdXRpb25zIHRvIHVzZSBlU1BJIGludGVyZmFj
+ZSBpbiBvcGVuYm1jIHByb2plY3Q/ICAgICAgICAgMiBXaGV0aGVyIHRoZSBIb3N0IHNpZGUgbmVl
+ZHMgZVNQSSBjb250cm9sZXIgZHJpdmVyPyBJIGNhbid0IGZpbmQgYW55IGluZm8gYWJvdXQgZVNQ
+SSBpbiBsaW51eCBrZXJuZWwgZm9yIGhvc3Qgb3MuIElzIGVTUEkgdHJhbnNwYXJlbnQgdG8gdGhl
+IEhvc3Qgc2lkZT8gICAgICAgIDMgV2hldGhlciB0aGUgc2xhdmUgc2lkZe+8iEV4IEJNQy9FQ++8
+iSBuZWVkcyBzbGF2ZSBlU1BJIGRyaXZlcj8gSSBrbm93IHRoZXJlIGFyZSBzb21lIHJlZ2lzdGVy
+cyBkZXNjcmlwdGlvbnMgb2YgZVNQSSBjb250cm9sbGVyIGluIHRoZSBhc3QyNTAwIGRhdGEgc2hl
+ZXQuICAgICAgICAgVW5mb3J0dW5hdGVseSwgSSBkb24ndCBmaW5kIHNsYXZlIGVTUEkgZHJpdmVy
+IGVpdGhlci4gICAgICAgICA0IHdoaWNoIGludGVsIHByb2R1Y3RzIGluY2x1ZGUgZVNQSSBmZWF0
+dXJlPyAgICAgICAgIDUgZVNQSSBpbnRlcmZhY2UgY2FuIHRyYW5zbWl0IGlvIGN5Y2xlIGFuZCBt
+ZW0gY3ljbGXvvIwgYnV0IGluIHdoaWNoIGNhc2Ugb3IgYXBwbGljYXRpb25zIGVTUEkgdHJhbnNm
+ZXIgbWVtIGN5Y2xlPyAgICBMb29raW5nIGZvcndhcmQgdG8geW91ciByZXBseS4gICAgVGhhbmtz
+QlJGZWxpeAoKCgp8IHwKemhhbmdfY3kxOTg5CnwKfAp6aGFuZ19jeTE5ODlAMTYzLmNvbQp8Cuet
+vuWQjeeUsee9keaYk+mCrueuseWkp+W4iOWumuWItg==
+------=_Part_12217_905559016.1589099253581
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-1. Physical interface (i2c/IPMB) - IPMI
+PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
+PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
+b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
+YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
+ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
+YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48L2Rpdj48ZGl2PgogICAgPGRpdj4K
+ICAgICAgICA8cHJlIHN0eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7Ij48Zm9u
+dCBzaXplPSIyIiBzdHlsZT0iZm9udC1zaXplOiAxNHB4OyI+RGVhciBBbmRyZXcgSmVmZmVyeTwv
+Zm9udD48L3ByZT48cHJlIHN0eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7Ij4m
+bmJzcDsmbmJzcDsmbmJzcDs8Zm9udCBzaXplPSIyIiBzdHlsZT0iZm9udC1zaXplOiAxNHB4OyI+
+Jm5ic3A7SSBub3RpY2VkIHRoYXQgeW91IG1lbnRpb25lZCBlU1BJIGluIGFub3RoZXIgbWFpbCB0
+aHJlYWQuQnV0IEkgY2FuJ3QgZmluZCBzb21lIGluZm9ybWF0aW9uIGluIG9wZW5ibWMgcHJvamVj
+dC48L2ZvbnQ+PC9wcmU+PHByZSBzdHlsZT0iZm9udC12YXJpYW50LWxpZ2F0dXJlczogbm9ybWFs
+OyI+PGZvbnQgc2l6ZT0iMiIgc3R5bGU9ImZvbnQtc2l6ZTogMTRweDsiPiZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwO1RoZXJlIGFyZSBzb21lIHF1ZXN0aW9ucyBhYm91dCBlU1BJOjwvZm9udD48L3By
+ZT48cHJlIHN0eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7Ij4mbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsxIEFyZSB0aGVyZSBzb21lIHNv
+bHV0aW9uczxmb250IHNpemU9IjIiIHN0eWxlPSJmb250LXNpemU6IDE0cHg7Ij4gdG8gdXNlIGVT
+UEkgaW50ZXJmYWNlIDxzcGFuIHN0eWxlPSJvcnBoYW5zOiAyOyB3aWRvd3M6IDI7Ij5pbiBvcGVu
+Ym1jIHByb2plY3Q/IDwvc3Bhbj48L2ZvbnQ+PC9wcmU+PHByZSBzdHlsZT0iZm9udC12YXJpYW50
+LWxpZ2F0dXJlczogbm9ybWFsOyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7PGZvbnQgc2l6ZT0iMiIgc3R5bGU9ImZvbnQtc2l6ZTogMTRweDsiPiZuYnNwOzIgV2hl
+dGhlciB0aGUgSG9zdCBzaWRlIG5lZWRzIGVTUEkgY29udHJvbGVyIGRyaXZlcj8gSSBjYW4ndCBm
+aW5kIGFueSBpbmZvIGFib3V0IGVTUEkgaW4gbGludXgga2VybmVsIGZvciBob3N0IG9zLiBJcyBl
+U1BJIHRyYW5zcGFyZW50IHRvIHRoZSBIb3N0IHNpZGU/PC9mb250PjwvcHJlPjxwcmUgc3R5bGU9
+ImZvbnQtdmFyaWFudC1saWdhdHVyZXM6IG5vcm1hbDsiPjxmb250IHNpemU9IjIiIHN0eWxlPSJm
+b250LXNpemU6IDE0cHg7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDszIFdoZXRoZXIgdGhlIHNsYXZlIHNpZGXvvIhFeCBCTUMvRUPvvIkgbmVlZHMgc2xh
+dmUgZVNQSSBkcml2ZXI/IEkga25vdyB0aGVyZSBhcmUgc29tZSByZWdpc3RlcnMgZGVzY3JpcHRp
+b25zIG9mIGVTUEkgY29udHJvbGxlciBpbiB0aGUgYXN0MjUwMCBkYXRhIHNoZWV0LjwvZm9udD48
+L3ByZT48cHJlIHN0eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7Ij4mbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs8Zm9udCBzaXplPSIyIiBzdHlsZT0iZm9udC1zaXplOiAx
+NHB4OyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7VW5mb3J0dW5hdGVseSwgSSBkb24ndCBmaW5k
+IHNsYXZlIGVTUEkgZHJpPC9mb250Pjxmb250IHNpemU9IjIiIHN0eWxlPSJmb250LXNpemU6IDE0
+cHg7Ij52ZXIgZWl0aGVyLiA8L2ZvbnQ+PC9wcmU+PHByZSBzdHlsZT0iZm9udC12YXJpYW50LWxp
+Z2F0dXJlczogbm9ybWFsOyI+PGZvbnQgc2l6ZT0iMiIgc3R5bGU9ImZvbnQtc2l6ZTogMTRweDsi
+PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzQgd2hpY2gg
+aW50ZWwgcHJvZHVjdHMgaW5jbHVkZSBlU1BJIGZlYXR1cmU/IDwvZm9udD48L3ByZT48cHJlIHN0
+eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7Ij4mbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDs1IGVTUEkgaW50ZXJmYWNlIGNhbiB0cmFuc21p
+dCBpbyBjeWNsZSBhbmQgbWVtIGN5Y2xl77yMIGJ1dCBpbiB3aGljaCBjYXNlIG9yIGFwcGxpY2F0
+aW9ucyBlU1BJIHRyYW5zZmVyIG1lbSBjeWNsZT88L3ByZT48cHJlIHN0eWxlPSJmb250LXZhcmlh
+bnQtbGlnYXR1cmVzOiBub3JtYWw7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtMb29raW5nIGZv
+cndhcmQgdG8geW91ciByZXBseS48L3ByZT48cHJlIHN0eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1
+cmVzOiBub3JtYWw7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtUaGFua3M8L3ByZT48cHJlIHN0
+eWxlPSJmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7Ij5CUjwvcHJlPjxwcmUgc3R5bGU9
+ImZvbnQtdmFyaWFudC1saWdhdHVyZXM6IG5vcm1hbDsiPkZlbGl4PC9wcmU+PHByZSBzdHlsZT0i
+d2hpdGUtc3BhY2U6IHByZS13cmFwOyBmb250LXZhcmlhbnQtbGlnYXR1cmVzOiBub3JtYWw7IG9y
+cGhhbnM6IDI7IHdpZG93czogMjsiPjxicj48L3ByZT48c3Bhbj4KICAgICAgICAgICAgCiAgICAg
+ICAgPC9zcGFuPgogICAgPC9kaXY+CiAgICA8ZGl2PgogICAgICAgIDxzcGFuPgogICAgICAgICAg
+ICA8YnI+CiAgICAgICAgPC9zcGFuPgogICAgPC9kaXY+CiAgICA8ZGl2IGlkPSJudGVzLXBjbWFj
+LXNpZ25hdHVyZSIgc3R5bGU9ImZvbnQtZmFtaWx5Oiflvq7ova/pm4Xpu5EnIj4KICAgICAKICAg
+IDxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxNHB4OyBwYWRkaW5nOiAwOyAgbWFyZ2luOjA7bGluZS1o
+ZWlnaHQ6MTRweDsiPgogICAgICAgIDxkaXYgc3R5bGU9InBhZGRpbmctYm90dG9tOjZweDttYXJn
+aW4tYm90dG9tOjEwcHg7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgI2U2ZTZlNjtkaXNwbGF5Omlu
+bGluZS1ibG9jazsiPgogICAgICAgICAgICAgICAgICAgIDxhIGhyZWY9Imh0dHBzOi8vbWFhcy5t
+YWlsLjE2My5jb20vZGFzaGktd2ViLWV4dGVuZC9odG1sL3Byb1NpZ25hdHVyZS5odG1sP2Z0bElk
+PTEmYW1wO25hbWU9emhhbmdfY3kxOTg5JmFtcDt1aWQ9emhhbmdfY3kxOTg5JTQwMTYzLmNvbSZh
+bXA7aWNvblVybD1odHRwcyUzQSUyRiUyRm1haWwtb25saW5lLm5vc2RuLjEyNy5uZXQlMkZxaXll
+bG9nbyUyRmRlZmF1bHRBdmF0YXIucG5nJmFtcDtpdGVtcz0lNUIlMjJ6aGFuZ19jeTE5ODklNDAx
+NjMuY29tJTIyJTVEIiBzdHlsZT0iZGlzcGxheTpibG9jaztiYWNrZ3JvdW5kOiNmZmY7IG1heC13
+aWR0aDogNDAwcHg7IF93aWR0aDogNDAwcHg7cGFkZGluZzoxNXB4IDAgMTBweCAwO3RleHQtZGVj
+b3JhdGlvbjogbm9uZTsgb3V0bGluZTpub25lOy13ZWJraXQtdGFwLWhpZ2hsaWdodC1jb2xvcjp0
+cmFuc3BhcmVudDstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50O3RleHQt
+c2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50OyI+CiAgICAgICAgICAgIDx0YWJsZSBjZWxscGFk
+ZGluZz0iMCIgc3R5bGU9IndpZHRoOiAxMDAlOyBtYXgtd2lkdGg6IDEwMCU7IHRhYmxlLWxheW91
+dDogZml4ZWQ7IGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7Y29sb3I6ICM5YjllYTE7Zm9udC1z
+aXplOiAxNHB4O2xpbmUtaGVpZ2h0OjEuMzstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZSAh
+aW1wb3J0YW50O3RleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50OyI+CiAgICAgICAgICAg
+ICAgICA8dGJvZHkgc3R5bGU9ImZvbnQtZmFtaWx5OiAnUGluZ0ZhbmcgU0MnLCAnSGlyYWdpbm8g
+U2FucyBHQicsJ1dlblF1YW5ZaSBNaWNybyBIZWknLCAnTWljcm9zb2Z0IFlhaGVpJywgJ+W+rui9
+r+mbhem7kScsIHZlcmRhbmEgIWltcG9ydGFudDsgd29yZC13cmFwOmJyZWFrLXdvcmQ7IHdvcmQt
+YnJlYWs6YnJlYWstYWxsOy13ZWJraXQtdGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7
+dGV4dC1zaXplLWFkanVzdDpub25lICFpbXBvcnRhbnQ7Ij4KICAgICAgICAgICAgICAgICAgICA8
+dHIgY2xhc3M9ImZpcnN0Um93Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCB3aWR0
+aD0iMzgiIHN0eWxlPSJwYWRkaW5nOjA7IGJveC1zaXppbmc6IGJvcmRlci1ib3g7IHdpZHRoOiAz
+OHB4OyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGltZyB3aWR0aD0iMzgiIGhl
+aWdodD0iMzgiIHN0eWxlPSJ2ZXJ0aWNhbC1hbGlnbjptaWRkbGU7IHdpZHRoOiAzOHB4OyBoZWln
+aHQ6IDM4cHg7IGJvcmRlci1yYWRpdXM6NTAlOyIgc3JjPSJodHRwczovL21haWwtb25saW5lLm5v
+c2RuLjEyNy5uZXQvcWl5ZWxvZ28vZGVmYXVsdEF2YXRhci5wbmciPgogICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgPC90ZD4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCBzdHlsZT0i
+cGFkZGluZzogMCAwIDAgMTBweDsgY29sb3I6ICMzMTM1M2I7Ij4KICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICA8ZGl2IHN0eWxlPSJmb250LXNpemU6IDE2cHg7Zm9udC13ZWlnaHQ6Ym9s
+ZDsgd2lkdGg6MTAwJTsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgb3ZlcmZsb3c6aGlkZGVuO3RleHQt
+b3ZlcmZsb3c6IGVsbGlwc2lzOyI+emhhbmdfY3kxOTg5PC9kaXY+CiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgIDwvdHI+CiAgICAgICAgICAgICAg
+ICAgICAgICAgIDx0ciB3aWR0aD0iMTAwJSIgc3R5bGU9ImZvbnQtc2l6ZTogMTRweCAhaW1wb3J0
+YW50OyB3aWR0aDogMTAwJTsiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRkIGNvbHNw
+YW49IjIiIHN0eWxlPSJwYWRkaW5nOjEwcHggMCAwIDA7IGZvbnQtc2l6ZToxNHB4ICFpbXBvcnRh
+bnQ7IHdpZHRoOiAxMDAlOyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxk
+aXYgc3R5bGU9IndpZHRoOiAxMDAlO2ZvbnQtc2l6ZTogMTRweCAhaW1wb3J0YW50O3dvcmQtd3Jh
+cDpicmVhay13b3JkO3dvcmQtYnJlYWs6YnJlYWstYWxsOyI+emhhbmdfY3kxOTg5QDE2My5jb208
+L2Rpdj4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvdGQ+CiAgICAgICAgICAgICAgICAg
+ICAgICAgIDwvdHI+CiAgICAgICAgICAgICAgICA8L3Rib2R5PgogICAgICAgICAgICA8L3RhYmxl
+PgogICAgICAgIDwvYT4KICAgICAgICA8L2Rpdj4KICAgIDwvZGl2PgogICAgPGRpdiBzdHlsZT0i
+Zm9udC1zaXplOjEycHg7Y29sb3I6I2I1YjliZDtsaW5lLWhlaWdodDoxOHB4OyI+CiAgICAgICAg
+PHNwYW4+562+5ZCN55SxPC9zcGFuPgogICAgICAgIDxhIHN0eWxlPSJ0ZXh0LWRlY29yYXRpb246
+IG5vbmU7Y29sb3I6IzQxOTZmZjtwYWRkaW5nOjAgNXB4OyIgaHJlZj0iaHR0cHM6Ly9tYWlsLjE2
+My5jb20vZGFzaGkvZGxwcm8uaHRtbD9mcm9tPW1haWw4MSI+572R5piT6YKu566x5aSn5biIPC9h
+PgogICAgICAgIDxzcGFuPuWumuWItjwvc3Bhbj4KICAgIDwvZGl2PgogPC9kaXY+CjwvZGl2Pjwh
+LS3wn5iALS0+CjwvZGl2Pgo8L2JvZHk+CjwvaHRtbD4=
+------=_Part_12217_905559016.1589099253581--
 
-2. LAN Channel - IPMI RMCP+ other Direct stuff for say console access etc.
-
-PICMG started working with DMTF redfish for the purpose of IPMC to IPMC 
-communication few years before (but not sure where it stands now)
-
-No one solution will fit for all, and need to consider based on 1. 
-Features required (ssh / serial console access / SOL / KVM etc.) and 2. 
-Physical interface between the controller (I2C/ LAN / others?) . Nancy / 
-Vijay??
-
-Say, with i2c- anything related to SSH / KVM forwarding etc is going to 
-be a problem, but with LAN these can be addressed.
-
-With i2c-> IPMB / PLDM  (MCTP over smbus) (with IPMI moving out of 
-picture PLDM will be better alternative).
-
-With LAN -> PLDM / Redfish. (Using Redfish has advantage over PLDM for 
-RDE, and still other features can be supported)
-
-Apart from this, need to define fail-over management(PICMG defined some) 
-/ discovery(MCTP offers some) etc.
-
-Regards,
-
-Richard
-
-
-On 5/8/2020 10:48 PM, Vijay Khemka wrote:
->
-> *From: *openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> 
-> on behalf of Nancy Yuen <yuenn@google.com>
-> *Date: *Thursday, May 7, 2020 at 12:47 PM
-> *To: *Andrew Jeffery <andrew@aj.id.au>
-> *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> *Subject: *Re: Multiple BMCs in a system: IPMB? Redfish? MCTP?
->
-> On Mon, May 4, 2020 at 3:31 AM Andrew Jeffery <andrew@aj.id.au 
-> <mailto:andrew@aj.id.au>> wrote:
->
->
->
->     On Thu, 30 Apr 2020, at 17:08, Deepak Kodihalli wrote:
->     > On 30/04/20 4:21 am, Nancy Yuen wrote:
->     > > I've talked with some people a while back (long while back) about
->     > > multiple BMCs in a system.  Either for redundancy or managing
->     separate
->     > > parts of a system.   I'm wondering what other people are
->     thinking in
->     > > this area if at all.
->     > >
->     > > We are considering similar designs and I'm looking into
->     options for
->     > > BMC-BMC communications.  Some BMCs may not be externally
->     > > accessible. Here are some options that we've looked at:
->     > >
->     > >  1. i2c/IPMB
->     > >  2. usbnet/Redfish
->     > >  3. i2c/MCTP/PLDM or something else?
->     > >  4. internal network via switch chip/Redfish or MCTP
->     > >
->     > >   I'd like to reduce our use of IPMI so I want to avoid (1).
->     > >
->     > > ----------
->     > > Nancy
->     >
->     > Hi Nancy,
->     >
->     > I think it depends on whether the BMCs need to talk to each
->     other for
->     > platform management, or if they manage their own hosts and we
->     need one
->     > of the BMCs to broadcast out of band requests and aggregate
->     responses.
->     >
->     > For the former I think PLDM over MCTP could be a good fit. This
->     is more
->     > of an "inband" use-case in my opinion so I'm not sure if Redfish
->     is well
->     > suited. For the latter, a Redfish based aggregation is a good
->     option.
->
->     I think this looks like the right approach. Certainly some thought
->     would be
->     required in designing the MCTP networks given the (intentionally)
->     limited
->     number of endpoint IDs.
->
->     Andrew
->
-> Hi Andrew, Deepak,
->
-> Sorry for the delayed response!
->
-> For the purposes of this discussion I have BMCs managing their own 
-> host: BMC3<--->BMC2<--->BMC1/controller<--> external.  I wrote BMC1 
-> but there maybe some other controller there that isn't strictly a 
-> BMC.  BMC2 would be "passing through" information between BMC1 and 
-> BMC3. But I don't necessarily want BMC2 to do any form of aggregation 
-> from information from BMC3.  For BMC1/Controller and BMC 2 we are 
-> thinking Redfish.
->
-> In my case I'm interested in what ways people are thinking BMC2 and 
-> BMC3 should be connected and speaking to each other. Is MCTP/PLDM 
-> where everyone is leaning?
->
-> Nancy,
->
-> What is connectivity between BMC1, BMC2 and BMC3. Are these exposing 
-> any out of band connections. For security reasons, aggregator should 
-> use inband connectivity between BMCs and as Deepak said MCTP is good 
-> option for inband.
->
-
---------------76301776A0299F504B8D3960
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>PICMG has defined certain specifications in this angle (HPM), but
-      those basically uses IPMI (PICMG group extension commands)<br>
-    </p>
-    <p>1. Physical interface (i2c/IPMB) - IPMI</p>
-    <p>2. LAN Channel - IPMI RMCP+ other Direct stuff for say console
-      access etc.<br>
-    </p>
-    <p>PICMG started working with DMTF redfish for the purpose of IPMC
-      to IPMC communication few years before (but not sure where it
-      stands now)<br>
-    </p>
-    <p>No one solution will fit for all, and need to consider based on
-      1. Features required (ssh / serial console access / SOL / KVM
-      etc.) and 2. Physical interface between the controller (I2C/ LAN /
-      others?) . Nancy / Vijay??<br>
-    </p>
-    <p>Say, with i2c- anything related to SSH / KVM forwarding etc is
-      going to be a problem, but with LAN these can be addressed.<br>
-    </p>
-    <p>With i2c-&gt; IPMB / PLDM  (MCTP over smbus) (with IPMI moving
-      out of picture PLDM will be better alternative).</p>
-    <p>With LAN -&gt; PLDM / Redfish. (Using Redfish has advantage over
-      PLDM for RDE, and still other features can be supported)<br>
-    </p>
-    <p>Apart from this, need to define fail-over management(PICMG
-      defined some) / discovery(MCTP offers some) etc.<br>
-    </p>
-    <p>Regards,</p>
-    <p>Richard<br>
-    </p>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 5/8/2020 10:48 PM, Vijay Khemka
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:933294DA-9290-4A33-970F-7DD723BA178B@fb.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-span.EmailStyle18
-	{mso-style-type:personal-reply;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style>
-      <div class="WordSection1">
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <div style="border:none;border-top:solid #B5C4DF
-          1.0pt;padding:3.0pt 0in 0in 0in">
-          <p class="MsoNormal"><b><span
-                style="font-size:12.0pt;color:black">From: </span></b><span
-              style="font-size:12.0pt;color:black">openbmc
-              <a class="moz-txt-link-rfc2396E" href="mailto:openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org">&lt;openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org&gt;</a>
-              on behalf of Nancy Yuen <a class="moz-txt-link-rfc2396E" href="mailto:yuenn@google.com">&lt;yuenn@google.com&gt;</a><br>
-              <b>Date: </b>Thursday, May 7, 2020 at 12:47 PM<br>
-              <b>To: </b>Andrew Jeffery <a class="moz-txt-link-rfc2396E" href="mailto:andrew@aj.id.au">&lt;andrew@aj.id.au&gt;</a><br>
-              <b>Cc: </b>OpenBMC Maillist
-              <a class="moz-txt-link-rfc2396E" href="mailto:openbmc@lists.ozlabs.org">&lt;openbmc@lists.ozlabs.org&gt;</a><br>
-              <b>Subject: </b>Re: Multiple BMCs in a system: IPMB?
-              Redfish? MCTP?<o:p></o:p></span></p>
-        </div>
-        <div>
-          <p class="MsoNormal"><o:p> </o:p></p>
-        </div>
-        <div>
-          <p class="MsoNormal"><o:p> </o:p></p>
-          <div>
-            <div>
-              <p class="MsoNormal">On Mon, May 4, 2020 at 3:31 AM Andrew
-                Jeffery &lt;<a href="mailto:andrew@aj.id.au"
-                  moz-do-not-send="true">andrew@aj.id.au</a>&gt; wrote:<o:p></o:p></p>
-            </div>
-            <blockquote style="border:none;border-left:solid #CCCCCC
-              1.0pt;padding:0in 0in 0in
-              6.0pt;margin-left:4.8pt;margin-right:0in">
-              <p class="MsoNormal"><br>
-                <br>
-                On Thu, 30 Apr 2020, at 17:08, Deepak Kodihalli wrote:<br>
-                &gt; On 30/04/20 4:21 am, Nancy Yuen wrote:<br>
-                &gt; &gt; I've talked with some people a while back
-                (long while back) about <br>
-                &gt; &gt; multiple BMCs in a system.  Either for
-                redundancy or managing separate <br>
-                &gt; &gt; parts of a system.   I'm wondering what other
-                people are thinking in <br>
-                &gt; &gt; this area if at all.<br>
-                &gt; &gt; <br>
-                &gt; &gt; We are considering similar designs and I'm
-                looking into options for <br>
-                &gt; &gt; BMC-BMC communications.  Some BMCs may not be
-                externally <br>
-                &gt; &gt; accessible. Here are some options that we've
-                looked at:<br>
-                &gt; &gt; <br>
-                &gt; &gt;  1. i2c/IPMB<br>
-                &gt; &gt;  2. usbnet/Redfish<br>
-                &gt; &gt;  3. i2c/MCTP/PLDM or something else?<br>
-                &gt; &gt;  4. internal network via switch chip/Redfish
-                or MCTP<br>
-                &gt; &gt; <br>
-                &gt; &gt;   I'd like to reduce our use of IPMI so I want
-                to avoid (1).<br>
-                &gt; &gt; <br>
-                &gt; &gt; ----------<br>
-                &gt; &gt; Nancy<br>
-                &gt; <br>
-                &gt; Hi Nancy,<br>
-                &gt; <br>
-                &gt; I think it depends on whether the BMCs need to talk
-                to each other for <br>
-                &gt; platform management, or if they manage their own
-                hosts and we need one <br>
-                &gt; of the BMCs to broadcast out of band requests and
-                aggregate responses.<br>
-                &gt; <br>
-                &gt; For the former I think PLDM over MCTP could be a
-                good fit. This is more <br>
-                &gt; of an "inband" use-case in my opinion so I'm not
-                sure if Redfish is well <br>
-                &gt; suited. For the latter, a Redfish based aggregation
-                is a good option.<br>
-                <br>
-                I think this looks like the right approach. Certainly
-                some thought would be<br>
-                required in designing the MCTP networks given the
-                (intentionally) limited<br>
-                number of endpoint IDs.<br>
-                <br>
-                Andrew<o:p></o:p></p>
-            </blockquote>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal">Hi Andrew, Deepak,<o:p></o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal">Sorry for the delayed response!<o:p></o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal">For the purposes of this discussion I
-                have BMCs managing their own host:
-                BMC3&lt;---&gt;BMC2&lt;---&gt;BMC1/controller&lt;--&gt;
-                external.  I wrote BMC1 but there maybe some other
-                controller there that isn't strictly a BMC.  BMC2 would
-                be "passing through" information between BMC1 and BMC3. 
-                But I don't necessarily want BMC2 to do any form of
-                aggregation from information from BMC3.  For
-                BMC1/Controller and BMC 2 we are thinking Redfish.  <o:p></o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal">In my case I'm interested in what
-                ways people are thinking BMC2 and BMC3 should be
-                connected and speaking to each other. Is MCTP/PLDM where
-                everyone is leaning?<o:p></o:p></p>
-              <p class="MsoNormal"><o:p> </o:p></p>
-              <p class="MsoNormal">Nancy,<o:p></o:p></p>
-              <p class="MsoNormal">What is connectivity between BMC1,
-                BMC2 and BMC3. Are these exposing any out of band
-                connections. For security reasons, aggregator should use
-                inband connectivity between BMCs and as Deepak said MCTP
-                is good option for inband.<o:p></o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-            <div>
-              <p class="MsoNormal"><o:p> </o:p></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------76301776A0299F504B8D3960--
