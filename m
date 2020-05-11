@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B3071CDDED
-	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 16:58:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B6BE41CDE06
+	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 17:01:59 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49LPG46FXXzDr5l
-	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 00:58:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49LPKc6RPVzDr6L
+	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 01:01:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,70 +17,72 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=Xuwrqnk2; 
+ header.s=fm1 header.b=EKOaTGDu; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=Fl60IX5r; 
+ header.a=rsa-sha256 header.s=fm2 header.b=bNvDCbPt; 
  dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49LLkz1CltzDqKs
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 23:05:15 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49LLmj1qXszDqML
+ for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 23:06:45 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 637B44BE;
- Mon, 11 May 2020 09:05:11 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id ABF7B4BE;
+ Mon, 11 May 2020 09:06:42 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Mon, 11 May 2020 09:05:11 -0400
+ by compute7.internal (MEProxy); Mon, 11 May 2020 09:06:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=mzMPoWAOfSmoJUTxv1JnelwNPyl
- oiNTWRyJvJ73YAa0=; b=Xuwrqnk2XGj3Mkye0O+ivKLZ1wcfyo+BlnjuLll19GC
- xUIWC7c1ze6dqdRRjKaoP60suekEgi5MYwD1IJp4skq04iTa/f14+IMF4xmMXL41
- rSesnfpIKWndROs4LH/kKgrB1STsHhVS8RvvmjTsxdC8tjwhN4cQqpiQpKC/rWBY
- vIFael+uBhS/AL2+7SqTgeYSeql1GNKxIeVP3Q3fVZRdzOB1Ies/5H2ttZMVVLNz
- akMKtU2+MzNvg+wPhZFDO/Iavg/EwgtLFTPFu6avt9pVnPgmF7QlMVqjETj74l/j
- E9M92ObJV/pBqm1PW/YLLpC0nRHblLNXeV72T0C4RGw==
+ :content-type:in-reply-to; s=fm1; bh=TTa5rNmKzJMHDp289qUff347roZ
+ P10VG2BaBriY2rjM=; b=EKOaTGDu5QHKto/qtixwyUPUN615oHghc0GG2Yif4OU
+ i3JkTni1SLC3IK1gzZbvGa1J+Ft5fMm+mZ2EGYEg9sqJKNci9l/JmiGl0l0/i32F
+ a0lrIb1MByZFxMkzkxwJriBbE1flp9GagyI8UPBUN7WkDH/IviOfCTSuIm+3qq2Z
+ CG2vg5h0eCWgejC3+Vif5qXXCYntAlNUwFAa19vxVimXFjgnX+mOnkFTWbS8EMle
+ 6rhKoYMRsDT7ldh89kTITbfw2S9qgAS0y9Dd+kfseJDZcg0yG9rV4yoMNsZyqR7Q
+ uMwfcMTDdB1P3v7IdDP+bgF+EI44iJGcFGBGia1aCbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=mzMPoW
- AOfSmoJUTxv1JnelwNPyloiNTWRyJvJ73YAa0=; b=Fl60IX5rd9OqU76q9s6bVX
- V+8a7X32rn5aUpBPp7cp14umWBoxocJd7ZYo8Tc8IaAglmG7y2xb/cSlRP0v2YD0
- /oy74cuqSTIko5v5i7+9wTEMdy2BswLBDNyJaBHry9nK5bInqv3K/+iBidEDGkUh
- xUqzWRR2F/GHbKhZI2CfYOwdyslYukYFVoRUpTI/BrFLzu6qtEzaRB2sLT+UtwIy
- ui0K0plIPOXqqgA3HHAvp9c6m9p4ifGsSy03N3ihncTzr2B34O5gz8RZDUrVS7Jf
- cAURMkTAWD358UtKynBjKevO5L5QfaoOWFMmYLqPM97LrzW2oY1yYTK8Ow/EQUDQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=TTa5rN
+ mKzJMHDp289qUff347roZP10VG2BaBriY2rjM=; b=bNvDCbPtyPSpxmOXaCE2SM
+ 8qvvnhUm7mpSDM71VDm2oIBYsUhOVSrwYW3I00O6im9uCMhQ2jEO5OAgt3Cit7f+
+ BhJOsHn21iqgY0J6ePRtfdba0IIjsaQNc09qX2Lii0jLubA7GRGb8aG6gjdgKCWS
+ vvWXULdF0ep+yBvdr/g7lBOzh9uNh2KVFaIXEn8EYn9LDoYHZs/NSmeIRP6YjwvM
+ +Gn2ALS+uiZLhbJDnNMIcqW+gFI5PEZPGqLYutPfz+TkIDwQ9NYadehkXAjQS7K8
+ CCKXKj/ioP1sUFi8r0O4PgHXTZ/aVLh0PSakGUaOp3Qs2eS0yd46E8nkLteemxdg
  ==
-X-ME-Sender: <xms:hk25XmStiLLOSf2sI897ECkuybrqqtWOSkCV3ZFMpF-EjmM__aIMyg>
+X-ME-Sender: <xms:4k25XoGoxgXG63WqVQPK_108WBgUeNBshugBcoEaQjksGmDz6Ra3Fw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrledtgdehgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepfffhvf
- fukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
- rghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpe
- egheehfeffgeekveehtdfhgfduhfegfefgtdehhfektdelffevkefgueffhedtieenucfk
- phepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
- grmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:hk25XiPN82mGxS3517y9gH9pOIEBs_IriMXnSHyiXQbv_4YGY4CcIg>
- <xmx:hk25XhV-bmcIiqX1SLT4jdd6yG-GgogQAn1jBHcAA_z2F5NIvGr8yw>
- <xmx:hk25XqaaaD_fl_6ybrHMX38tWssyQIz5xS7Vq6rUH7qih9zArC43Tg>
- <xmx:h025XuoCCgxMH78_5_jenaRvHlzXTB0cvV6tf-QPYAl70q4D1Nmo-g>
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduudefleeuhefhleehjeejgfeujeeh
+ hfdtledufeehkeduudevkeeiuddugfegkeenucffohhmrghinhepohhpvghnsghmtgdqph
+ hrohhjvggtthdrgiihiienucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
+ iftgigrdighiii
+X-ME-Proxy: <xmx:4k25XsTDFbU9OSWwHeepAUk2JRe7voxGgewNszviSPi0Z-JzgHDDuw>
+ <xmx:4k25XhLp3iY1kc8Gf3Ge0g9PIEv1QR75MgJO7XLE3LGR5oQtabXNxg>
+ <xmx:4k25XvZstUk3j6pZoI4Y2Bbsjr3jf0ruzPTzJLt-z40DbAo_OHsjSw>
+ <xmx:4k25XtMNdy19AC0_y6jfPPcE14E9tsiLTAHbXHjRdGL6H9s2P9iqiQ>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 3FB8E3066297;
- Mon, 11 May 2020 09:05:10 -0400 (EDT)
-Date: Mon, 11 May 2020 08:05:09 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id D3E5C3066286;
+ Mon, 11 May 2020 09:06:41 -0400 (EDT)
+Date: Mon, 11 May 2020 08:06:40 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Ben_Pai@wistron.com
-Subject: Re: phosphor-bittware repository
-Message-ID: <20200511130509.GD10214@heinlein>
-References: <b7e1bb0b82394f8ca3a193cb9ed5c218@wistron.com>
+To: Vijay Khemka <vijaykhemka@fb.com>
+Subject: Re: phosphor-health-monitor repo
+Message-ID: <20200511130640.GE10214@heinlein>
+References: <13E6D0A2-69B1-4F89-92FA-F0A234682B28@fb.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="5gxpn/Q6ypwruk0T"
+ protocol="application/pgp-signature"; boundary="ILuaRSyQpoVaJ1HG"
 Content-Disposition: inline
-In-Reply-To: <b7e1bb0b82394f8ca3a193cb9ed5c218@wistron.com>
+In-Reply-To: <13E6D0A2-69B1-4F89-92FA-F0A234682B28@fb.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,57 +94,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, bradleyb@fuzziesquirrel.com,
- Claire_Ku@wistron.com, wangat@tw.ibm.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---5gxpn/Q6ypwruk0T
+--ILuaRSyQpoVaJ1HG
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello Ben,
+On Thu, May 07, 2020 at 01:23:54AM +0000, Vijay Khemka wrote:
+> Hi Brad,
+> Can you please create a new repo for phosphor-health-monitor.
+>=20
+> Regards
+> -Vijay
 
-On Thu, May 07, 2020 at 06:07:44AM +0000, Ben_Pai@wistron.com wrote:
-> Could you please help to create a new repository for phosphor-bittware?
+For clarification, this repository seems to be an implementation of this
+proposed design [1], correct?
 
-Out of curiousity for others who aren't aware of what 'bittware' is,
-could you describe a little about this repository?  It seems to be a
-hardware vendor, so it would be interesting to know what the BMC will be
-doing with it.
-
-Examples:
-  * What is the overall purpose of the code in this repository?
-  * Is there an existing architecture that this code will be following
-    or is there some new design that you are persuing (and needs to be
-    document)?
-  * Are there existing phosphor-dbus-interfaces that you will be
-    implementing?  Are there new dbus interfaces you are proposing to
-    implement the functionality you want from this repository?
+1. https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/31957=20
 
 --=20
 Patrick Williams
 
---5gxpn/Q6ypwruk0T
+--ILuaRSyQpoVaJ1HG
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl65TYUACgkQqwNHzC0A
-wRkpnA/7Bms/kIX+7coAGFlCMm8znRuSbmvmlqFVohoWyW7UEAC4c7QK28rk2DYg
-tg8HXAgrOivU0jqnS3WNcVLOHhSt0rLi6CQ4UE+aIUszCDkyRiLs3EW3e1udsXxz
-KUtU5xH4KYE7dC8RQOk5b+ibR6GGddMJRPbSrrA3QPMIkMkWj/Xm74bhs6yPAKJL
-nppw+j/wctxQkHwdrKIySfyGZCrqZ0wSIZEJmTwYWOloom9LSH0YsMre1eiFWly6
-rYwHiFs3z93fMByyFZn4/eYsirtOwaqu7E8UxfCW/FpAeOImhUcqT54EbBxswwNK
-gCbYSwyCgc8oKkRIJYwNKMe12nqOesIfnGKvHZCWlobfEi7j7e1F7T6hV49b9VrV
-5GFtf/kOFYUNMhLaS6B3HrWH7g6MG384Tb02cY3zTvIS1OUuwCCZXNccriuq030H
-+aRoGekgtsc0jIBVbov01KzU+fTCDrRENl8l3BRPsbJqkj0w14q3XmdFLzZLyfC9
-J5WKEEtvwTcgrYoFwyWoN4nkEzarTLd5ioxlg+gEaHftgnH1axYo3FSgJhRB31+L
-Tq+Xuuv+FWfLivY586OnjljaU0/tesMcSAob74oLX8b91t+mKrNQ4Q5bNMwXbxOc
-OaNa9joJ+VZTACY/wPuKhvGh79fLouzOQJWb/9QknFbFHmfgerw=
-=uA8B
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl65TeAACgkQqwNHzC0A
+wRkWXQ//VCia9ID/qeeRfyt7kS7xBfoj9RBTCdIVKRSQKsfKj4iHf+4pnr5XS2zA
+xoyFDKj/UQ09CkRLzkvkO8Me+74AQLxYAVN85JkRaljLfQlynGZGwCZmYVsXK9J1
+V56BSf+OPbNfQy2hFfkfonE/eRgAsX1UHB6Q341QT+sZXsiSxU/4S2ibidB1dTzO
+pp3QEpryXLImUu0a8mYRl7cBwRzcYQFoBLfiTHOXhRvUb6Y+tCfTI3bBYJ9EnRJA
+jOSe1hjDNLnGWHk2xst7B8FJcdGQAyjHJh/uMfzFbA2jBVE8B5D82nwSbFtLfEP3
+fIJFyO2+IEh3ezwUkP6ess5XM4c7GWk2zznrr59p1/Y8RzzTGCNebVtYI/6c3+nF
+lMwrol5jjiook9XfXy9H+N4D72HhWw1UcGjc0wkGUbGmAoqu23Qn7KG1wAg+rR+A
+9ZD9H7JSkfCrwC9ZL9bTlHUEfzzUv1BruIy+Dh8HYdqjbZZKkQvR5oMz8y8OYLfT
+TCaH0rQHHkF/FCcOIt2GK32OISlp04oRGr1wX/01ka+dBVE58gLKVqqXXoS5LcVc
+QRhjNbG2/dP22BI1zgVwUKJmTYOMFdafyOH0za+7F7dREhO7q8Nq6cbhBGjNenq8
+Jpev34hYQw6GphNee+8i51j9wPrMy9QamMKBbC0uCFsgN6oqZII=
+=RJs0
 -----END PGP SIGNATURE-----
 
---5gxpn/Q6ypwruk0T--
+--ILuaRSyQpoVaJ1HG--
