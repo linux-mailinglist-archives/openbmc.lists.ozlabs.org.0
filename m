@@ -1,79 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 112761CD0D7
-	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 06:35:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 836961CD1B9
+	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 08:15:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49L7QN67qnzDqdT
-	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 14:35:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49L9f62p7QzDqTs
+	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 16:15:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=in.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=manojeda@in.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636;
+ helo=mail-pl1-x636.google.com; envelope-from=sunithaharish04@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=AIF457dc; dkim-atps=neutral
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com
+ [IPv6:2607:f8b0:4864:20::636])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49L7PT5f2TzDqPg
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 14:34:20 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04B4WeBd110907
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 00:34:18 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.114])
- by mx0a-001b2d01.pphosted.com with ESMTP id 30wsc2pnsf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 00:34:18 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <manojeda@in.ibm.com>;
- Mon, 11 May 2020 04:34:17 -0000
-Received: from us1b3-smtp01.a3dr.sjc01.isc4sb.com (10.122.7.174)
- by smtp.notes.na.collabserv.com (10.122.47.58) with
- smtp.notes.na.collabserv.com ESMTP; Mon, 11 May 2020 04:34:14 -0000
-Received: from us1b3-mail220.a3dr.sjc03.isc4sb.com ([10.160.174.232])
- by us1b3-smtp01.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020051104341312-40178 ;
- Mon, 11 May 2020 04:34:13 +0000 
-Subject: Re: SELinux UseCases
-In-Reply-To: <OFBBFB47E3.6EABAE1E-ON0025855A.00486BC9-0025855A.004946E0@LocalDomain>
-From: "Manojkiran Eda" <manojeda@in.ibm.com>
-To: openbmc@lists.ozlabs.org, rnouse@google.com
-Date: Mon, 11 May 2020 04:34:13 +0000
-Sensitivity: 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49L9dJ0dMGzDqP2
+ for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 16:14:43 +1000 (AEST)
+Received: by mail-pl1-x636.google.com with SMTP id g11so270343plp.1
+ for <openbmc@lists.ozlabs.org>; Sun, 10 May 2020 23:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:from:to:references:message-id:date:user-agent:mime-version
+ :in-reply-to:content-transfer-encoding:content-language;
+ bh=9pCEUg6fHAu6oO+EDHx2UubxXrOWCT30wwg/g5FtxR8=;
+ b=AIF457dcQi+gCyGew+LNUEhh2AvuBRIa91BnGFgjs+Yz/Yhy/qVhYpiTV/kJCTqxQ9
+ IV7Wu97ql3BF68/0ETfgvdS7LPkSzQtf64tMZA3Bo+xMOaOK2BxTMACy0Lv/L773XFkZ
+ /CtEhkX7xERs9zmDYgTjEF4EmgR/UctEN5vceZy44D2eMo7D4/QLH4otUxM+9yJoZkFI
+ Pf3+9H7F3/TTbfxK9GYC2cTuqd6ZwTTUeJUnLwyemWfzfeAM1zn8tpVA96deCN6t4MaA
+ Gn7bxMVR+365P3ogvHXcYPjLUHyjLeDUmF9Rs+kTPg6CFm/eeFLD0klUqVUw8DCYNjLd
+ nPSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:from:to:references:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=9pCEUg6fHAu6oO+EDHx2UubxXrOWCT30wwg/g5FtxR8=;
+ b=NpfVYTR/0u6DgZt0yAYBjD/Wj63jJiEdyjlM9KrRvRdJM5rwnl1ySwpyeQIF+Xs/Ju
+ 0hTCk2526QSmbIxO7hnNH8hRaKrRDdxjVk22otmQDoHB/xipmbP3sQhR9jQhsvsDa11M
+ TPcByAMQKTkRSu96oYlPukb+Ev4bCw436My957NEPs+fsD58Xb5kTrWHZfGUYBnXOrYK
+ JFrPEXYzVEVHWObSYUwGy7lEsLIVCYaeKfqfoFsADdZxkmWKi4sPfCLNjv6HmIhVhrhJ
+ vL6peETXMxAKa2v9neG8JAvD3UK8uhQWHqnRnuxBeyxpvCdqMlpxlkTnwyn59A8PLhf6
+ OK9w==
+X-Gm-Message-State: AGi0PuZLK8mvnzD/W9XUi45mmR03O7kHOh5eZ9zd+qEDOKRUc3HqXx/q
+ tin0nBFs7yb94SvNAarYDvi8JN+F
+X-Google-Smtp-Source: APiQypKJ7yikAviKupONrof+41AFDRWlNp33xnjZc9lqHPF8ghMoy0M4nVGPI3w8B75/tmoGVRqBkA==
+X-Received: by 2002:a17:90a:4d07:: with SMTP id
+ c7mr12121755pjg.70.1589177679584; 
+ Sun, 10 May 2020 23:14:39 -0700 (PDT)
+Received: from ?IPv6:2409:4071:2106:da58:9822:2e57:128a:590e?
+ ([2409:4071:2106:da58:9822:2e57:128a:590e])
+ by smtp.gmail.com with ESMTPSA id p19sm8922159pjv.30.2020.05.10.23.14.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 10 May 2020 23:14:38 -0700 (PDT)
+Subject: Re: Storing host data on the BMC
+From: Sunitha Harish <sunithaharish04@gmail.com>
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>, patrick@stwcx.xyz,
+ dkodihal@in.ibm.com, suryakanth.sekar@linux.intel.com,
+ openbmc <openbmc@lists.ozlabs.org>
+References: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
+ <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+Message-ID: <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+Date: Mon, 11 May 2020 11:44:35 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <OFBBFB47E3.6EABAE1E-ON0025855A.00486BC9-0025855A.004946E0@LocalDomain>
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Mailer: IBM Verse Build 17652-1661 | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-KeepSent: C15F6E2A:E823991E-00258565:0018CF1F;
- type=4; name=$KeepSent
-X-LLNOutbound: False
-X-Disclaimed: 56611
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 20051104-1639-0000-0000-000002005498
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.407427; ST=0; TS=0; UL=0; ISC=; MB=0.372543
-X-IBM-SpamModules-Versions: BY=3.00013068; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000294; SDB=6.01375022; UDB=6.00734890; IPR=6.01157380; 
- MB=3.00032108; MTD=3.00000008; XFM=3.00000015; UTC=2020-05-11 04:34:16
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-05-11 01:40:58 - 6.00011347
-x-cbparentid: 20051104-1640-0000-0000-00005A436C6A
-Message-Id: <OFC15F6E2A.E823991E-ON00258565.0018CF1F-00258565.00191B17@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
- definitions=2020-05-10_11:2020-05-08,
- 2020-05-10 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+In-Reply-To: <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,231 +90,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: ratagupt@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<div class=3D"socmaildefaultfont" dir=3D"ltr" style=3D"font-family:Arial, H=
-elvetica, sans-serif;font-size:10pt" ><div dir=3D"ltr" >Hi All,</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >This is a just a ping - to generate a discussion on the b=
-elow mentioned use-cases.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Appreciate any inputs/comments.</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<div dir=3D"ltr" >Thanks,</div>
-<div dir=3D"ltr" >Manoj</div>
-<div dir=3D"ltr" >&nbsp;</div>
-<blockquote data-history-content-modified=3D"1" dir=3D"ltr" style=3D"border=
--left:solid #aaaaaa 2px; margin-left:5px; padding-left:5px; direction:ltr; =
-margin-right:0px" >----- Original message -----<br>From: Manojkiran Eda/Ind=
-ia/IBM<br>To: openbmc@lists.ozlabs.org, rnouse@google.com<br>Cc: ratagupt@l=
-inux.vnet.ibm.com<br>Subject: SELinux UseCases<br>Date: Thu, Apr 30, 2020 6=
-:50 PM<br>&nbsp;
-<div dir=3D"ltr" style=3D"font-family:Arial, Helvetica, sans-serif;font-siz=
-e:10pt" ><div dir=3D"ltr" style=3D"font-family:Arial, Helvetica, sans-serif=
-;font-size:10pt" ><div dir=3D"ltr" ><div><span style=3D"font-family:Verdana=
-,Geneva,sans-serif;" >Hi All,</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >(My apologies =
-for the lengthy email.)</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Below are few =
-use-cases in BMC, which i feel inclusion of SELinux would be a value add (t=
-here could be may more missing). Please feel free to drop-in your comments/=
-feedback.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >1. BMC every a=
-pplication runs a root (tops the security wish-list)<br>=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Assume that a =
-malicious user compromises an application, say for example "bmcweb". The us=
-er found a loophole in the webgui, and plants a php script through which he=
- can add a user with root privilege. This makes things easy as bmcweb is ru=
-nning as root (and has sufficient rights to do it), which could result in s=
-niffing or potentially could bring the server down.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- With SELinux=
-, we can stop bmcweb from adding another user with root privilege, even whe=
-n running as root. We should write a policy , so that bmcweb gets an access=
- denied when trying to edit /etc/passwd file.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Another classi=
-c example of udev, where software must typically run as the root user to wr=
-ite into raw block devices. In a traditional DAC-based Linux environment, i=
-f the root user becomes compromised, that user can write to every raw block=
- device. However, SELinux can be used to label these devices so the process=
- assigned the root privilege can write to only those specified in the assoc=
-iated policy.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >For example, I=
-BM uses nbd to offload the dumps to management console, as per the udev rul=
-e mentioned any root user can write to the network block device, say an app=
-lication which is running as root(bmcweb/ipmi) was compromised and it start=
-s writing into the device , there by keeping it busy (because of which pldm=
- cannot write into the device , because of which hypervisor dumps cannot be=
- offloaded)</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >2. Every appli=
-cation trusts every other running on the BMC system<br>=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Assume there i=
-s a weak code in ipmi, which got exploited and it tries to delete bmcweb=5F=
-persistence.json (which contains the sessions x-auth token details and othe=
-r confidential information).</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- bmcweb=5Fper=
-sistence.json will be loaded into bmcweb whenever it restarts, so that the =
-sessions can be still valid even when bmcweb is crashed due to some reason.=
-</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- In the curre=
-nt state, no one can prevent compromised ipmi from deleting the file that b=
-mcweb requires, with SELinux (using type enforcement mode), we can prevent =
-ipmi from executing (or even stat on) bmcweb files.</span></div>
-<div><br><span style=3D"font-family:Verdana,Geneva,sans-serif;" >3. We use =
-SYSTEMD - We have SELINUX SYSTEMD ACCESS CONTROL<br>=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >As we know sys=
-temd starts and stops all services, and users and processes communicate wit=
-h systemd using the systemctl utility. The systemd daemon has the ability t=
-o consult the SELinux policy and check the label of the calling process and=
- the label of the unit file that the caller tries to manage, and then get i=
-t validated from SELinux whether or not the caller is allowed to access.</s=
-pan></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >This approach =
-strengthens access control to critical system capabilities, which include s=
-tarting and stopping system services.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- Assume that =
-a compromised ipmi running as root stops the bmcweb/network service, this w=
-ould bring down the webserver/network. With SELinux, we can have a fine gra=
-ined control policy to only allow ipmi to query the status of bmcweb, but c=
-annot enable or disable the service.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >4. We use JOUR=
-NALD - We have SELINUX JOURNALD ACCESS CONTROL<br>=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Say ipmid is c=
-ompromised (it can be blocked from malfunctioning), but it also sends syslo=
-g messages, SELinux would allow the compromised process to continue to send=
- those messages.</span></div>
-<div><br><span style=3D"font-family:Verdana,Geneva,sans-serif;" >The compro=
-mised ipmid could format syslog messages to match other daemons and potenti=
-ally mislead an administrator, or even worse, a utility that reads the sysl=
-og file into compromising the whole system.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- The systemd-=
-journal daemon verifies all log messages and, among other things, adds SELi=
-nux labels to them. It is then easy to detect inconsistencies in log messag=
-es and prevent an attack of this type before it occurs.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >5.1 Port Secur=
-ity using SELinux<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Using SELinux =
-, It is possible to limit TCP port access to specific scripts/applications =
-and block other applications from using them.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- For example,=
- bmcweb works on tcp port 443, what if another application which gets start=
-ed before bmcweb acquires the same port and which causes the bmcweb to fail=
- acquiring the port.Using SELinux, we can label a process/application to a =
-use a particular port.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >5.2 Controllin=
-g service acquisition with SELinux<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Administrators=
- can enable within D-Bus to ensure that only well-established domains can a=
-cquire a particular object within D-Bus.<br>&nbsp;</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- Without this=
- control, malicious code could register itself as being xyz.openbmc=5Fproje=
-ct.Network, for instance, and pretend to be network system daemon on the bu=
-s. Other applications might mistakenly send out sensitive information to th=
-e application.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >6. Governing D=
-Bus message flows - Hardening the DBUS Communication<br>=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Another contro=
-l that D-Bus validates is which applications are allowed to communicate wit=
-h each other. This is not configurable through the service configurations, =
-but is a pure SELinux policy control.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- Whenever a s=
-ource application is calling a method of a target application, D-Bus valida=
-tes the send=5Fmsg permission between the two domains associated with the s=
-ource and target applications and if these permissions are not in effect, t=
-hen D-Bus will not allow the communication to happen.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- There by thi=
-s selinux feature would restrict the ability of the dbus applications to sn=
-iff the exposed interfaces of the other applications, even when they are ru=
-nning as root.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >7. Confining L=
-inux Users abilities using SELinux<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Users are mapp=
-ed to the SELinux unconfined=5Fu user by default and all processes that are=
- run by unconfined=5Fu are in the unconfined=5Ft domain. This means that us=
-ers can access across the system within the limits of the standard Linux DA=
-C policy.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- However, a n=
-umber of confined SELinux users are available in linux. This means that use=
-rs can be restricted to limited set of capabilities. Each Linux user is map=
-ped to an SELinux user using a policy, allowing Linux users to inherit the =
-restrictions placed on SELinux users, for&nbsp; example (depending on the u=
-ser),<br>we can restrict the user from :<br>&nbsp;-&nbsp; using networking<=
-br>&nbsp;-&nbsp; run setuid applications (unless SELinux policy permits it)=
-<br>&nbsp;-&nbsp; run the su and sudo commands.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >When user logs=
--in, the pam=5Fselinux module maps the Linux user to an SELinux user , and =
-sets up the resulting SELinux context. By using this feature, we can restri=
-ct the permissions of even a root user by his login method.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >For Example:<b=
-r>=3D=3D=3D=3D=3D=3D=3D=3D<br>- By leveraging this feature, root logged-in =
-via webserver will get only limited permissions , but the same root user lo=
-gged in via ssh will get full permission.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >8. Disable ptr=
-ace()<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >The ptrace() s=
-ystem call allows one process to observe and control the execution of anoth=
-er process and change its memory and registers. This call is used primarily=
- by developers during debugging, for example when using the strace utility.=
- When ptrace() is not needed, it can be disabled to improve system security=
-.</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >- With Selinux=
-, we can disable ptrace() , which denies all processes, even those that are=
- running in unconfined=5Ft domains from being able to use ptrace() on other=
- processes</span></div>
-<div>&nbsp;</div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >9. Restricting=
- on users capabilities for executing applications<br>=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D</span></div>
-<div><span style=3D"font-family:Verdana,Geneva,sans-serif;" >-&nbsp; Not al=
-lowing Linux users to execute applications (which inherit users' permission=
-s) in their home directories and the /tmp directory, which they have write =
-access to, helps prevent flawed or malicious applications((memory leaked)) =
-from modifying files that users own/corrupt the system.</span></div>
-<div><br><span style=3D"font-family:Verdana,Geneva,sans-serif;" >Regards,<b=
-r>Manoj</span></div>
-<div>&nbsp;</div></div></div></div></blockquote>
-<div dir=3D"ltr" >&nbsp;</div></div><BR>
+Hi,
 
+Gentle reminder for the feedback.
+
+Thanks & regards,
+Sunitha
+
+On 06-05-2020 12:53, Sunitha Harish wrote:
+> Hi Deepak,
+>
+> Please suggest which other approach you think is better here for 
+> Origin attribute?
+>
+> When the interface is set as DHCPEnabled=true ; similar to the Origin 
+> attribute , the IP address, SubnetMask and Gateway will be set by the 
+> host. So we would need to consider this usecase also as a candidate 
+> for the new approach.
+>
+> Thanks & regards,
+> Sunitha
+>
+>
+> On 05-05-2020 12:29, Deepak Kodihalli wrote:
+>> On 05/05/20 12:12 pm, Sunitha Harish wrote:
+>>> Hi Deepak,
+>>>
+>>> As mentioned , the Origin is the property which will be set by the 
+>>> host once the IP address is applied to its interface. Its a 
+>>> read-only property for the out-of-band user. But its a closely 
+>>> coupled - related attribute on the host setting/BIOS object.
+>>
+>> Hi Sunitha,
+>>
+>> What I'm trying to say is - we shouldn't make this coupling. The BIOS 
+>> settings table is a group of attributes that can alter the default 
+>> behavior of the host firmware. The Origin property you describe 
+>> doesn't fit that description.
+>>
+>> The host "sets" several things for the BMC, for eg the host firmware 
+>> can tell us functional/presence states of FRUs which the host has 
+>> access to. Everything that the host "sets" this way isn't a BIOS 
+>> attribute. Once you decouple this, I believe we can think about 
+>> options other than the two you have suggested - since both of them 
+>> involve making the Origin property seem like a BIOS attribute, which 
+>> it clearly is not.
+>>
+>> Thanks,
+>> Deepak
