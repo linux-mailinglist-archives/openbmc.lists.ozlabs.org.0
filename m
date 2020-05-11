@@ -1,68 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D5F31CDE1A
-	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 17:04:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E11B1CE018
+	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 18:08:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49LPNm2XZVzDqBX
-	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 01:04:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49LQpX2DKrzDr6y
+	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 02:08:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22b;
- helo=mail-lj1-x22b.google.com; envelope-from=osk@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::433;
+ helo=mail-pf1-x433.google.com; envelope-from=sunithaharish04@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=oKS29Ihw; dkim-atps=neutral
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com
- [IPv6:2a00:1450:4864:20::22b])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=sIfV2+tH; dkim-atps=neutral
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com
+ [IPv6:2607:f8b0:4864:20::433])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49LML94nbszDqNB
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 23:32:16 +1000 (AEST)
-Received: by mail-lj1-x22b.google.com with SMTP id a21so9467003ljj.11
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 06:32:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=OkajmhD/8r5dBozmYPhzQ+ELYHwc3fqA5ijyYK5xf3w=;
- b=oKS29IhwGZk9/qQXWMSU/NG3TaANkC40QgEHgqu0/0g3n8PmQg0xoPPHvIAcc2eohn
- yL08GmdI7y7RwT52FPwKgYxSPJq22dJOnPY5SZRkr0u25/vTzVPazDVYd8CEOmsz8O/3
- 5M7/8BBrE6v0l4AALx5qkb3z5hScEiQ55PEhMIkePcf/OTp6JR8rAhM02cU6/CmqAuMD
- 576WJ864GiXY5Qc1ay1mvYp1hbNqiUeAKyhtQRPfXEUY7f6PqFN+2VLcFSPHJTyX8HDh
- Vkb1imXJx94Hy6SmXZjgoodYVIeFqTqeRpr7nYxPylM6dTVwufIf1erZrn1CjNgNgxW/
- Th/w==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49LQlS0V3gzDqTg
+ for <openbmc@lists.ozlabs.org>; Tue, 12 May 2020 02:05:54 +1000 (AEST)
+Received: by mail-pf1-x433.google.com with SMTP id w65so4929675pfc.12
+ for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 09:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=jQl8AlPv0WA8mqpQfYz1wRhInI/2nLWkL9tRiUoekpI=;
+ b=sIfV2+tHtIrMcHwfJfz26oR4EsQtk/x1zn7mvHanBnJg5uCqHh3cIcE/O6s6+fNn3/
+ V766Vg8292qrM2rwa0mUZdZ1uLSpw0b1MHK95ZXx+EwhW4YIi1dmh67nBU+UvlSZSjE4
+ asGMv+P5qrYBLWUy27QbquGSXul9idmEnd2ZNJ+380RrJ+xnkLyZ8m1bEKvpfB3IiQYx
+ nEAcN+ORl8PGYMqxunZ1SbfwdZgu5ykqUqj+fDo+bZOkbeP7tRS2ZMMZsTL5LgOIceYg
+ F0FXDGy4Rx8co34mcdDLdV+HoikGUoN5+taJuw7cMHbwJTxkkY5UA0wSMpEArcg9a+9m
+ 6zew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=OkajmhD/8r5dBozmYPhzQ+ELYHwc3fqA5ijyYK5xf3w=;
- b=VZZi5Lk44DWjuPrMtdDLUDJI2otqQMSD5wD2racr561WibriAcLPnCY44ecy9Pxo0/
- J1GqqaaaDZPkoxQ4bchWrihrfELU+p2rbcqxqEp9CMpie84FiNq3Yv45b3FPktc0N0eV
- i2YMqrOUsFILKSFKNY8fE5gPHcwkgvAe7PuJOmJY6lx+WyE+miW1SCueXppWgZcKqGvz
- ii6oms6R+FsnEX8+tuPcR98kr4LnndUUi1RiJPGmvsqnXOvGudprdDD1QyGq3xNV/2TP
- I8DgoS0nVCM5GHRXYFiaei+eAbxv804hK86n9yCFgKymugjNfWYt7vZmR3KWkzIMV52j
- 5vnw==
-X-Gm-Message-State: AOAM5326gH2QzH2iasmQKLNa4PPFYNPnXhH53CiVkzSkHyunWulpINSU
- SAaPRhWjLSphu55sHBX0t3Qztgq4v0EGpPva8M0qfQ==
-X-Google-Smtp-Source: ABdhPJxua4Pft7FJykQYsgzMZs0gkzJQ3UAD9c6yn13wyDFjDQQxghuQ9ASJYAaXWe6Hf2aHamB1+RY70iLQyDUUQqY=
-X-Received: by 2002:a2e:909a:: with SMTP id l26mr10130613ljg.262.1589203929520; 
- Mon, 11 May 2020 06:32:09 -0700 (PDT)
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=jQl8AlPv0WA8mqpQfYz1wRhInI/2nLWkL9tRiUoekpI=;
+ b=q6F5SwJhh5GkpTlLg1LXRAfOeIWq4k4GsAl80DcfKWJQd1XbqqBAKajtBK66zxlJmm
+ tnMNF3griTYAzz7G4ksPsBBw5x5rA3wcxmBwgiMsYBH/evNQd1K9cPEEFq1yOdVud7m+
+ xPLWS7q0XyxJ53S8h/IUNaGmZCqsKgMwLnK3SaazC5ckoWKwPAW5VblqvFXZ9hToQMsT
+ olhqwYsZkwT2HuOX6dXcSL8cdYD4LLDhLPjeSwlKZFGhDLnS+fyhJ55oR2z0UWu+EYVu
+ KN9zOlTUefmL/bslkG4Kw6yMn1NWnFLfTd9cYk7NUiYvdc/dBEEqJtGqyvEmyxAgRpsK
+ oLSA==
+X-Gm-Message-State: AGi0PubhjFL3QKJjWkHoszV7bQLlN/TdW6R5PUFe0FVLwgEDc3vX2Lz0
+ CgVRH1dt7VDdkyKB9i++jYDNj6Uca5c=
+X-Google-Smtp-Source: APiQypJ0XYVkoaxFOGAfysLogrYb+Ilq4ZY0qGha0TrVlXStzNjZ6XdMdui3BB6dg4WWFwJYYUeBdA==
+X-Received: by 2002:a63:5955:: with SMTP id j21mr15733238pgm.70.1589213150277; 
+ Mon, 11 May 2020 09:05:50 -0700 (PDT)
+Received: from ?IPv6:2405:204:5517:3650:9956:f6e5:8f1b:c166?
+ ([2405:204:5517:3650:9956:f6e5:8f1b:c166])
+ by smtp.gmail.com with ESMTPSA id ev5sm24468929pjb.1.2020.05.11.09.05.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 May 2020 09:05:49 -0700 (PDT)
+Subject: Re: Storing host data on the BMC
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
+ <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+ <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+ <20200511120719.GA10214@heinlein>
+From: Sunitha Harish <sunithaharish04@gmail.com>
+Message-ID: <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+Date: Mon, 11 May 2020 21:35:44 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <50cce7b2.1057.171fdb24f4d.Coremail.zhang_cy1989@163.com>
- <775abd77-ce5b-4f1d-99e6-8f14b06114fa@www.fastmail.com>
- <840ea83777699177e2af8ba77c193c73e27feaca.camel@ozlabs.org>
-In-Reply-To: <840ea83777699177e2af8ba77c193c73e27feaca.camel@ozlabs.org>
-From: Oskar Senft <osk@google.com>
-Date: Mon, 11 May 2020 09:31:53 -0400
-Message-ID: <CABoTLcSappOuBWZ6w=PZPNo4=EbzPiTVbYV6vv10AS9bG116hQ@mail.gmail.com>
-Subject: Re: How to use eSPI between Host and slave BMC in openbmc project
-To: Jeremy Kerr <jk@ozlabs.org>, zhang_cy1989 <zhang_cy1989@163.com>
-Content-Type: multipart/alternative; boundary="000000000000b26cf605a55f5fcf"
+In-Reply-To: <20200511120719.GA10214@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,101 +89,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, dkodihal@in.ibm.com,
+ suryakanth.sekar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b26cf605a55f5fcf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Patrick,
 
-Hi
+Thanks for sharing the pointers. I was aware that there was work going 
+on in this area. So was looking for your and Surya's inputs on this.
 
-Jeremy's response matches my understanding, thank you!
+I will go through these designs from my use-case perspective.
 
-> 1 Are there some solutions to use eSPI interface in openbmc project?
+Thanks & regards,
+Sunitha
+
+
+On 11-05-2020 17:37, Patrick Williams wrote:
+> Hello Sunitha,
 >
-> There are some platforms in development that use eSPI between the host
-> and BMC, yes.
+> Intel has already made significant progress on this problem domain and
+> we seem to be fairly converged on the design direction [1,2].  Have you
+> read through their design proposal?  Are there any oversights in their
+> design that would affect your needs?
 >
-On platforms using Intel's C620 series PCH + AST2500 BMC,  eSPI can be used
-basically exactly like LPC on both sides.
-
-
-> For the BMC, we need some support in the kernel to handle eSPI
-> behaviour. There is a prototype driver for the ast2500 eSPI slave
-> around, but it hasn't made it upstream:
+> Their design has been on-going for months now.  I don't think it is
+> appropriate to start from scratch on the design discussions unless there
+> is something fundamentally broken about their direction.
 >
-> https://lists.ozlabs.org/pipermail/openbmc/2018-February/010937.html
-
-Yes, without that, the PCH will not release the host CPU from reset.
-
- > 5 eSPI interface can transmit io cycle and mem cycle=EF=BC=8C
-
-> > but in which case or applications eSPI transfer mem cycle?
+> 1. https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/29320
+> 2. https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/18242
 >
-> I haven't seen anything specific, I don't think it'd be too useful in
-> our architecture.
+> I thought there was even some implementation started in bmcweb for this
+> feature.
 >
-I've seen platforms that load the "lower 16 MiB" from SPI flash (descriptor
-region, ME, GbE FW) and load the "upper 16 MiB" (the actual BIOS) via LPC.
-The same should be possible via eSPI.
-
-Note that with eSPI it would "technically" be possible to load _ALL_ FW for
-the PCH (descriptor region, ME, GbE FW, BIOS) via eSPI using the "Slave
-Attached Flash Sharing" (SAFS) feature. However, there's no BMC available
-today that I know of that supports that, but support is in the works on BMC
-chips. Having said that, Intel's support for SAFS is unclear: some
-documents claim it's supported, others state it's not POR (SAFS that is).
-
-Happy to provide more information.
-
-Oskar.
-
---000000000000b26cf605a55f5fcf
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi</div><div><br></div><div>Jeremy&#39;s response mat=
-ches my understanding, thank you!</div><div><br></div><div class=3D"gmail_q=
-uote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; 1 Are there so=
-me solutions to use eSPI interface in openbmc project?<br>
-<br>
-There are some platforms in development that use eSPI between the host<br>
-and BMC, yes.<br></blockquote><div>On platforms using Intel&#39;s C620 seri=
-es PCH + AST2500 BMC,=C2=A0 eSPI can be used basically exactly like LPC on =
-both sides.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">For the BMC, we need some support in the kernel to handle eSPI<b=
-r>
-behaviour. There is a prototype driver for the ast2500 eSPI slave<br>
-around, but it hasn&#39;t made it upstream:<br>
-<br>
-<a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2018-February/010937.=
-html" rel=3D"noreferrer" target=3D"_blank">https://lists.ozlabs.org/piperma=
-il/openbmc/2018-February/010937.html</a></blockquote><div>Yes, without that=
-, the PCH will not release the host CPU from reset.</div><div><br></div><di=
-v>=C2=A0&gt; 5 eSPI interface can transmit io cycle and mem cycle=EF=BC=8C=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; but in which case or applications eSPI transfer mem cycle?<br>
-<br>
-I haven&#39;t seen anything specific, I don&#39;t think it&#39;d be too use=
-ful in<br>
-our architecture.<br></blockquote><div>I&#39;ve seen platforms that load th=
-e &quot;lower 16 MiB&quot; from SPI flash (descriptor region, ME, GbE FW) a=
-nd load the &quot;upper 16 MiB&quot; (the actual BIOS) via LPC. The same sh=
-ould be possible via eSPI.</div><div><br></div><div>Note that with eSPI it =
-would &quot;technically&quot; be possible to load _ALL_ FW for the PCH (des=
-criptor region, ME, GbE FW, BIOS) via eSPI using the &quot;Slave Attached F=
-lash Sharing&quot; (SAFS) feature. However, there&#39;s no BMC available to=
-day that I know of that supports that, but support is in the works on BMC c=
-hips. Having said that, Intel&#39;s support for SAFS is unclear: some docum=
-ents claim it&#39;s supported, others state it&#39;s not POR (SAFS that is)=
-.</div><div><br></div><div>Happy to provide more information.</div><div><br=
-></div><div>Oskar.</div></div></div>
-
---000000000000b26cf605a55f5fcf--
+> On Mon, May 11, 2020 at 11:44:35AM +0530, Sunitha Harish wrote:
+>> Hi,
+>>
+>> Gentle reminder for the feedback.
+>>
+>> Thanks & regards,
+>> Sunitha
+>>
+>> On 06-05-2020 12:53, Sunitha Harish wrote:
+>>> Hi Deepak,
+>>>
+>>> Please suggest which other approach you think is better here for
+>>> Origin attribute?
+>>>
+>>> When the interface is set as DHCPEnabled=true ; similar to the Origin
+>>> attribute , the IP address, SubnetMask and Gateway will be set by the
+>>> host. So we would need to consider this usecase also as a candidate
+>>> for the new approach.
+>>>
+>>> Thanks & regards,
+>>> Sunitha
+>>>
+>>>
+>>> On 05-05-2020 12:29, Deepak Kodihalli wrote:
+>>>> On 05/05/20 12:12 pm, Sunitha Harish wrote:
+>>>>> Hi Deepak,
+>>>>>
+>>>>> As mentioned , the Origin is the property which will be set by the
+>>>>> host once the IP address is applied to its interface. Its a
+>>>>> read-only property for the out-of-band user. But its a closely
+>>>>> coupled - related attribute on the host setting/BIOS object.
+>>>> Hi Sunitha,
+>>>>
+>>>> What I'm trying to say is - we shouldn't make this coupling. The BIOS
+>>>> settings table is a group of attributes that can alter the default
+>>>> behavior of the host firmware. The Origin property you describe
+>>>> doesn't fit that description.
+>>>>
+>>>> The host "sets" several things for the BMC, for eg the host firmware
+>>>> can tell us functional/presence states of FRUs which the host has
+>>>> access to. Everything that the host "sets" this way isn't a BIOS
+>>>> attribute. Once you decouple this, I believe we can think about
+>>>> options other than the two you have suggested - since both of them
+>>>> involve making the Origin property seem like a BIOS attribute, which
+>>>> it clearly is not.
+>>>>
+>>>> Thanks,
+>>>> Deepak
