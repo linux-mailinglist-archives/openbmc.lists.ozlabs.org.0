@@ -2,86 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6863D1CDD8F
-	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 16:45:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 173361CDDA0
+	for <lists+openbmc@lfdr.de>; Mon, 11 May 2020 16:47:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49LNy34T4szDqQr
-	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 00:44:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49LP1B28gnzDqL2
+	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 00:47:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
+ helo=mail-oi1-x22e.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=lfVLaZNv; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=T+azKznW; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=jeMazQwj; dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49LKbd3DfZzDqMC
- for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 22:13:49 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id D13FB2D0;
- Mon, 11 May 2020 08:13:46 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Mon, 11 May 2020 08:13:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=l/GWxOU/EMBNjzpzn3w2/RLamrW
- DD5IvskzYRKmmgmg=; b=lfVLaZNvYZbdyTMiRNwBIV3NVn0tRKDjboqec96jXae
- gp0SR6JGUaoGOsqlKrJ9lgLwzyIhzLXvDg1whCh4JupSktL79NEH/6MnIlIHVF4c
- T4MpA1m5owcUnJrhk7hjWaVjTp6a8w0DprkOc/TA8Vac+t2CZoLPhopKZYXn8nxR
- hzD36nQWNaIDaiQScZ45QwecAVztn0Zrhal6laH3BS7mU2EihVYb2vmDJeIJbT11
- bEQa4QhlCdZY5gM/0r5/0M12yz7BGbcHFmqmPw3LxdI+vbvRdMl8Z/1yw6oP5AVF
- WbCijr8rwZ3htQlpTzxn+bEq49YWHZXjY2ae/gypvgw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=l/GWxO
- U/EMBNjzpzn3w2/RLamrWDD5IvskzYRKmmgmg=; b=T+azKznWqaAL7WxJrfY/ot
- D8b11UrGCo+R5cc/+qYlfRZie8yDpCIVjeuw8L7IkZY7vnU4pR5K6Lj0SThzwxzt
- Sr/IHeSKCsxXeB8sS3uipo+dPyMwltLrCRMka3lcGEUp7sJu/DruLcoUCyf/TrwW
- nbPLe6mBBECAqlpFZMYBQzAvL6Hht0v7WrnnuvOPdE+s2svkV6bUUeaNjIgZd0Di
- 5o6cRaWTE4ZTfcS/HuUCMSn2cib7K8GG8u/osL90sY4XbX+pEXVxCBlpq1OF7Bou
- ezb6cS3sSFLMYsn1iP0Fkj/nfERfqCQIe/iqpw6Y+2osVoa8JG9D2xj7M+/ohQvg
- ==
-X-ME-Sender: <xms:ekG5XpO_S3-j9aep387Tfj0hXblily83U70GcwEDYMNslQuRv3QWng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrledtgdeggecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddu
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpedtfeejteeutdefleefieeiveevkeeg
- ueevtdevfeeivdfhieeuuefghfekledvhfenucfkphepjeeirddvhedtrdekgedrvdefie
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:ekG5XqMpW7m14C9p8uXFLEnSVujsk4ESulzkV7njMmUVBLxGVnBJ8w>
- <xmx:ekG5Xhlwy4ahM-WtckZO7R9uHg2VWp-fnz1quQuuRWJnH8dORAucFA>
- <xmx:ekG5XosDRifRXa4sywJMN4fjDaAE25NZjHzSKFUnItHlAgmrvlR4MA>
- <xmx:ekG5XnBLfUDQ_4TTTLll2NVFSb-8z2eSbpwA6CrFqJsp8zhwX4B1OA>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id C7FE1306628F;
- Mon, 11 May 2020 08:13:45 -0400 (EDT)
-Date: Mon, 11 May 2020 07:13:44 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: "Li, Yong" <yong.b.li@linux.intel.com>
-Subject: Re: rest-dbus does not work?
-Message-ID: <20200511121344.GB10214@heinlein>
-References: <0f8b153c-5edc-1aab-422c-28f5943d12db@linux.intel.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="i9LlY+UWpKt15+FH"
-Content-Disposition: inline
-In-Reply-To: <0f8b153c-5edc-1aab-422c-28f5943d12db@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49LL4r4GDDzDqKV
+ for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 22:35:40 +1000 (AEST)
+Received: by mail-oi1-x22e.google.com with SMTP id c12so13912625oic.1
+ for <openbmc@lists.ozlabs.org>; Mon, 11 May 2020 05:35:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=qZDldZW9hTsJd7v480yX7bErVmzzYnLkWsC8dJdDfi8=;
+ b=jeMazQwjRmppVmXTaJIKOU0UGzNJV31PnVmYWCH9XzmOP5TLm/fclBrBtQlR1ZVWfT
+ EOt5QImuTukGxcTCEBgB1vPZzvUMHahuIGSF0g2MsalUxyRYlUrDRc4O46QV8Pl4v1Xn
+ lsM30S0QfjVBnRIAS5+8T0x9NGDbx3jHnNAluDUpoyvPNQs5VszQMempGIyuALCtIIIh
+ iVzyNC6Q+ayw7yZ/yhhxG7JlE0fLh4e4B6simXmjRybM2wttA1gHJulH8LZjZ84DmBtn
+ MFY18yd1uhO5i98nk4xyRDzB8pFMhD9KjZ+LscdFIuCQxMx+yujptZspjZce/5U71lqi
+ /M2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=qZDldZW9hTsJd7v480yX7bErVmzzYnLkWsC8dJdDfi8=;
+ b=rKkQho2z8smuNOgIURnFJ/hVdGZr+b9Bgu/Lg9apW7L94C2GnRuIO3RIuKXYU8vf+8
+ MiuEpdtE3AaufGJTCCs2pYwsXWKlcddCdf4OmltU0/kFUYZCJJkKpLhooh+IR1fEwgXq
+ jkQgxeT3W2AQpIFKaLuAoWoDRFN886nsghi9ArqBv6Us0zFQ1cy+pOfVbp98K6cqqwIH
+ lUjuArkm6H23SEtkPbg1dbTKrrFemj3mc9AplAGDIxaUuEpwrGFPlrO7nIZRrMYVBfcu
+ BJxlUl79Wxiy+7yAWLhsV2uqYh73Z81TOFg9TBoZBxuhwO7gm1UXyU49aYItxvmGnkMu
+ odAQ==
+X-Gm-Message-State: AGi0PubaBiL19EGGImyKhvM5ctiFa+R9OyyJKUajiT+rb5WYQvR1nHm3
+ VP6e8EEvt+XicGpPs1LmNls=
+X-Google-Smtp-Source: APiQypKkWDgZ87Ers5xqKCKRFKzoqff8T87DpgVM5xEpGBFmq38YzYuspJaKqvmcI4BFJHbeZ3yYzA==
+X-Received: by 2002:aca:4d13:: with SMTP id a19mr5786941oib.158.1589200535968; 
+ Mon, 11 May 2020 05:35:35 -0700 (PDT)
+Received: from ?IPv6:2600:1700:19e0:3310:c096:9c45:8674:7d6f?
+ ([2600:1700:19e0:3310:c096:9c45:8674:7d6f])
+ by smtp.gmail.com with ESMTPSA id m189sm4610532oig.12.2020.05.11.05.35.34
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 11 May 2020 05:35:34 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: Dunfell Update Status
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <414154FE-AAEA-43DA-889A-BC79CA092ADE@fb.com>
+Date: Mon, 11 May 2020 07:35:34 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E3BFD8C9-657A-494B-A50B-88AB6CE19093@gmail.com>
+References: <41CB9FEC-1892-489A-8CD8-A50F5E744C4D@gmail.com>
+ <16620BAA-69AD-491E-A2C3-265C53DC91F9@gmail.com>
+ <0938c96f-b3ff-3a16-7ca4-53bf99488009@linux.vnet.ibm.com>
+ <414154FE-AAEA-43DA-889A-BC79CA092ADE@fb.com>
+To: Vijay Khemka <vijaykhemka@fb.com>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,57 +84,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, yong.b.li@intel.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---i9LlY+UWpKt15+FH
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
-
-On Sat, May 09, 2020 at 10:26:10AM +0800, Li, Yong wrote:
-> Just find that the rest-dbus is broken, with the below error message:
+> On May 8, 2020, at 5:12 PM, Vijay Khemka <vijaykhemka@fb.com> wrote:
 >=20
-> Anyone encoutner this issue? Any suggestions/comments?
+> Do we need to install or upgrade any package in our build system to =
+build this new dunfel.
+> I am seeing lots of build error starting from sanity checker. My build =
+machine is centos=20
+> CentOS Linux release 7.7.1908.
+
+The main thing that bit us was we needed gcc 6 or greater but that was a
+pretty obvious error bitbake spit out before it started building =
+anything.
+
+If you have docker installed you could run the build-setup.sh script
+that CI uses to verify all builds well with that.
+=
+https://github.com/openbmc/openbmc-build-scripts/blob/master/build-setup.s=
+h=20
+
 >=20
->  =A0rest-dbus
+> =EF=BB=BFOn 5/5/20, 1:06 PM, "openbmc on behalf of Gunnar Mills" =
+<openbmc-bounces+vijaykhemka=3Dfb.com@lists.ozlabs.org on behalf of =
+gmills@linux.vnet.ibm.com> wrote:
+>=20
+>    On 5/5/2020 12:38 PM, Andrew Geissler wrote:
+>> An update on the email below. Upstream yocto (including the new =
+Dunfell release)
+>> went into openbmc master this morning with the following commit:
+>>=20
+>> =
+https://github.com/openbmc/openbmc/commit/82c905dc58a36aeae40b1b273a12f63f=
+b1973cf4
+>>=20
+>>=20
+>> Now that we=E2=80=99re past the python3 migration issue, we=E2=80=99ll =
+be doing rebases
+>> on upstream yocto once a week again (which should prevent needing
+>> big painful updates like this).
+>    Awesome!
+>=20
+>>> On Apr 28, 2020, at 2:05 PM, Andrew Geissler <geissonator@gmail.com> =
+wrote:
+>>>=20
+>>> A fairly quick update on where we are with getting back onto =
+upstream yocto.
+>>>=20
+>>> For those that don=E2=80=99t know, dunfell is the name of the next =
+yocto release.
+>>>=20
+>>> The move from python2 to python3 is mostly behind us, thanks =
+everyone,
+>>> especially Patrick (stwcx) for all the help there.
+>>>=20
+>    Thank you Andrew for driving this and to everyone who helped!
+>=20
+>=20
 
-I think we effectively broke this with the Python2 to Python3 migration.
-rest-dbus was written in Python2 and against libraries that I think were
-deprecated and never migrated to Python3.  I'm somewhat surprised that
-it even installed into your image.  I would have expected it to fail
-dependency needs as the libraries it depends on had been removed.
-
-I believe everyone has effectively moved to bmcweb now, and most
-platforms are not even installing Python on the BMC anymore.  I suspect
-there is not much interest in reviving rest-dbus and migrating it to
-full Python3.
-
---=20
-Patrick Williams
-
---i9LlY+UWpKt15+FH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl65QXgACgkQqwNHzC0A
-wRmaGw//aFURx9EvIsA8ampXDPRkjhGc6JDEoe2/HA0Mi+qVQcCX8aQV6vNSJl2w
-O+vfxsbHc73pteBjxgc2nyXPOqxOOlMAEbMQiC9tOGe8oZYQpZfGWCaZAj956wsd
-pzq4gRuIDQblsvtKePfKilOLfGuLfs9fPNamVELQ6HdpKIYAQxlGjgAzAm7qOo1l
-q7w7C7vaWgyNxN8R/sRnidsohu3DPHVULCqEkjKFfkzk6ckYYFEX0G0TMItaZrCq
-HQkiEOK4SXh5/yYGgO6MiwCRWJ9G4i43BZKTry/fupBNkEW5VaoOHWaQdJd50Wye
-C2DsVPLDHdcLrlxw7uoCC8/quBuFd6HFODTZMMLPngu3y4uLCMS+NjAd9mmRVuvi
-kjMOHTdREkDg8MnVis4SP5DQkmOO92e8DZONTAF16PfATp+ygMMSZLHXZSmmpVi0
-rrWamvLYVe5SgyT+PI355o4DWKjwPUzttljLcJqw1O+m1EOZjHN0XkWB6XXQoohW
-xMn5FU/kUuvOBKbAmeQ14kDUytI2HdTIih7x/0CuKrMAu9MFU3mZJVPZB677nm8b
-+2+IrpuRGbIeitnyyZZ2h0p0G6jbQTIapgj+/PDriQPe+P/nQj+uZphiIzYkReqQ
-x4JzH1f0icIH+9aM8MIV1QV2Sq1FjvQLcRUlcj1RUfYV+w2hiJQ=
-=S9Ms
------END PGP SIGNATURE-----
-
---i9LlY+UWpKt15+FH--
