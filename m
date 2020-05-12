@@ -2,48 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3331D1CF130
-	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 11:10:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 160DF1CF443
+	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 14:21:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49LsV061yrzDqpR
-	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 19:10:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Lxk56hJHzDqgP
+	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 22:21:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wistron.com (client-ip=103.200.3.19; helo=segapp03.wistron.com;
- envelope-from=ben_pai@wistron.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=wistron.com
-Received: from segapp03.wistron.com (segapp02.wistron.com [103.200.3.19])
- by lists.ozlabs.org (Postfix) with ESMTP id 49LsT60c5FzDql6
- for <openbmc@lists.ozlabs.org>; Tue, 12 May 2020 19:09:57 +1000 (AEST)
-Received: from EXCHAPP02.whq.wistron (unverified [10.37.38.25]) by 
- TWNHUMSW4.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
- <Tdf1645fb09c0a816721a1c@TWNHUMSW4.wistron.com>; Tue, 12 May 2020 
- 17:09:52 +0800
-Received: from EXCHAPP02.whq.wistron (10.37.38.25) by EXCHAPP02.whq.wistron 
- (10.37.38.25) with Microsoft SMTP Server 
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
- 15.1.1913.5; Tue, 12 May 2020 17:09:50 +0800
-Received: from EXCHAPP02.whq.wistron ([fe80::cddc:5806:56d5:6e30]) by 
- EXCHAPP02.whq.wistron ([fe80::cddc:5806:56d5:6e30%7]) with mapi id 
- 15.01.1913.007; Tue, 12 May 2020 17:09:50 +0800
-From: <Ben_Pai@wistron.com>
-To: <patrick@stwcx.xyz>
-Subject: phosphor-bittware repository
-Thread-Topic: phosphor-bittware repository
-Thread-Index: AdYoOA7H2kBN2vABR5GWCd2jybLNAw==
-Date: Tue, 12 May 2020 09:09:50 +0000
-Message-ID: <822cfe8a5ec94973903534f7932d9049@wistron.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.37.38.230]
-x-tm-snts-smtp: 6931A8F414C5C9592067C66BB06AF0856FFA29CFD46642D0B18911104917317B2000:8
-Content-Type: multipart/alternative; 
- boundary="_000_822cfe8a5ec94973903534f7932d9049wistroncom_"
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=qkk4Q29n; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=EF+1Zilt; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Lxhj6yPCzDqgB
+ for <openbmc@lists.ozlabs.org>; Tue, 12 May 2020 22:20:20 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 3E12F814;
+ Tue, 12 May 2020 08:20:16 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Tue, 12 May 2020 08:20:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=ECb9kePKrmFrJVxpxm2ZEj5rO7/
+ JJfFQz0nGQ8l6aHc=; b=qkk4Q29njh7vJab9muzpaPgP4dSgXWgciQkGscQmWjS
+ jB15gHWkVbZpNqtVWS4E8kcuq1+Zp84vzVaE6H5jQmgniYgRwPt2PknVQpVVS9EX
+ 1AAYY3A35twO+tGYLWxAuKI603tVBrQ//tDKXnsOHRe3bkoUFaFWpnZJVMzZ4m7C
+ 04MMiSEgPeSpvADW8/JdAp50hadhF8SpZmIsXo7g8/xsNxx9fJ7GQ/+Yz1qnPN6C
+ k6ydYW/NudRoIVVzEpmQzlJ2VlmKYm3fhrQibK6W4w2MRp8UedkoHjhsQodWZNoc
+ jxwA6Mhs3t2V8QYW7uJjFaGuyvevugDVeW25sjRraGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ECb9ke
+ PKrmFrJVxpxm2ZEj5rO7/JJfFQz0nGQ8l6aHc=; b=EF+1ZiltBnjwLab6LHOIfW
+ TUdA6pZ/6KQGuGeukLWUd0s8BrA0zK/WthZFbGXgRMqdUGBhbEdZlStJ6XwhCkTx
+ NjBpCXmHIooOw9Ky+OTcg+HBS5Wrgd7q7EhCRf+U+awJjrgVhrYvASxpwyeqyhVu
+ BbTWs6SozWwqTvgxa9YtSgHfQPqyaAjvKotVvJrHID7vyzdYlqibSVHjCeQODcmY
+ /R91wRkGfh74T94/Q3Yn7edN1wqNWffwlEGrIS7seKKYb4/caVXDiUXHPze7GhCx
+ RPh0lS08EPwwKr68Hj3PG8pGyngKL0ykUtlM3lozS4a2N35ATJRbCIh3UUSFBm9Q
+ ==
+X-ME-Sender: <xms:f5S6XkoE925I6HAZ9MJA86P7Mb0XJOUzh1UZwDpkYvNbPL0w5SdZ_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrledvgdegkecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepfffhvf
+ fukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
+ rghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpe
+ etvdejiedvteegudejudelgeeiffdvhefgveeiieekjefhfeelgeevhfehteffjeenucff
+ ohhmrghinhepsghithhtfigrrhgvrdgtohhmnecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:f5S6XqprNZV91rKA3RP2NGUA_IaKA5cN6cuVnlhC12K6drUmEuolUw>
+ <xmx:f5S6XpPrkSpmwbL2sfu52YibFU399U76ahcVOTLGeiGoexEGGCywdg>
+ <xmx:f5S6Xr7LLiTkvoa8lXCEgwUO2S32p9yUZnk7x8C3XDuJzyfSA_ti9A>
+ <xmx:f5S6XtRQYErligYri4z_lCXYqdQ0qZkaP_NP6o43azOamxbs2tTe9A>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id C0251328005D;
+ Tue, 12 May 2020 08:20:14 -0400 (EDT)
+Date: Tue, 12 May 2020 07:20:12 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Ben_Pai@wistron.com
+Subject: Re: phosphor-bittware repository
+Message-ID: <20200512122012.GG10214@heinlein>
+References: <822cfe8a5ec94973903534f7932d9049@wistron.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="MrRUTeZlqqNo1jQ9"
+Content-Disposition: inline
+In-Reply-To: <822cfe8a5ec94973903534f7932d9049@wistron.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,237 +98,73 @@ Cc: openbmc@lists.ozlabs.org, bradleyb@fuzziesquirrel.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_822cfe8a5ec94973903534f7932d9049wistroncom_
-Content-Type: text/plain; charset="us-ascii"
+
+--MrRUTeZlqqNo1jQ9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello Patrick
+Hello Ben,
 
+On Tue, May 12, 2020 at 09:09:50AM +0000, Ben_Pai@wistron.com wrote:
 
-On Thu, May 07, 2020 at 06:07:44AM +0000, Ben_Pai at wistron.com<https://li=
-sts.ozlabs.org/listinfo/openbmc> wrote:
+> I want to implement related functions for the bittware 250-SoC card.
+> For example: Sensor reading, VPD information, led control and Brick
+> Protection mechanism.
 
-> Could you please help to create a new repository for phosphor-bittware?
+I looked briefly at the datasheet for this hardware [1].  It appears to
+expose an SMBus interface for the features you mentioned.  The most
+straight-forward way to get this implemented is to create a kernel
+driver for most of the features you mentioned.  If you implement a
+driver for this hardware that interacts with the hwmon, eeprom, and LED/GPIO
+subsystems in the kernel(*), you'll be able to reuse a lot of existing
+OpenBMC functionality without rewriting any userspace code.
 
+- Sensor
+    - Kernel: hwmon
+    - Userspace: phosphor-hwmon or dbus-sensors
+- VPD
+    - Kernel: eeprom
+    - Userspace: entity-manager (I think)
+- LED control
+    - Kernel: LED / GPIO
+    - Userspace: phosphor-led-manager
 
+The only part that wouldn't be covered would be the "Brick Protection".
+We'd need to see some more information on how this is exposed but you
+might be able to work it into the existing phosphor-bmc-code-mgmt
+repository.  For power supplies, they did create a separate repository
+(phosphor-psu-code-mgmt) but I think they relied on some kernel APIs for
+doing part of the work.
 
-Out of curiousity for others who aren't aware of what 'bittware' is,
+(*) Depending on how the bittware hardware is implemented at an SMBus
+    level you may end up with multiple smaller drivers (this is better).
+    If there is a single SMBus address for all these functions, you'll
+    likely end up with one big driver.
 
-could you describe a little about this repository?  It seems to be a
+1. https://www.bittware.com/wp-content/uploads/datasheets/ds-250-soc.pdf
 
-hardware vendor, so it would be interesting to know what the BMC will be
+--=20
+Patrick Williams
 
-doing with it.
+--MrRUTeZlqqNo1jQ9
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl66lHoACgkQqwNHzC0A
+wRmtww//TFqcksGaXoaWQLF2llU01LJ71jH9gjccFSBQfALWoEhXVKeJjiLB6NCx
+/cq9WKwc/nkQA9oBc/cJb5+V0/USwREa4afTJ+LqhxVA2FNBtxeYCTGN0sFGKyPc
+ZuOeX+JzjhuvGPZUdMr6dFkiQ3VhCI8ztptOAuQbA5nWBxoHU/P8E2vsbczPdUV+
+sOqVlXWpY4fNlqrWIlD1Df9xCyLAJhKieGTAdI1xwFIt7YaHV2BI88qPsldA7ftQ
+8g5Cvy9bZgDDeE8dXZ+tsvbI8SK/Pz2oyv/HI9EwgR3WuyyV67r0EdmsOa+82gcP
+9r5EW8FmKqX2pkw7QqGDgC8Bb/lntx6fk4VJ0edlTRiVtAIMZlKiMVe+2h9z1lGF
+oVuiOTiWeB6xPSSp7HEncsuateAMlOM9uq98v8peWt2XnbXzNgSC6q824CEkjld6
+7EjQTduiAfPUupDByPutPgIJSGBlkA3IYDlkw7w4VQ3WNUncw99sDLGlIL3jhKo0
+Q8m7G9qeUEr8wc7cmRDuHnOU4b3pL+0/Kf0x1DI6Kiuch827SH7H33duH6fAklyG
+w/6cnacvLmCfm5QmAzpLDvQvY1875fcneFm+IcBKdNBql8DxJeu+NadESpJtefmd
+G6CDWAg07nsJhjZWFzBebmTM9B5YTDsGp2Q6K+XT1hyIATjzhuI=
+=v/Q1
+-----END PGP SIGNATURE-----
 
-Examples:
-
-  * What is the overall purpose of the code in this repository?
-
-  * Is there an existing architecture that this code will be following
-
-    or is there some new design that you are persuing (and needs to be
-
-    document)?
-
-  * Are there existing phosphor-dbus-interfaces that you will be
-
-    implementing?  Are there new dbus interfaces you are proposing to
-
-    implement the functionality you want from this repository?
-
-
-
---
-
-
-I want to implement related functions for the bittware 250-SoC card.
-For example: Sensor reading, VPD information, led control and Brick Protect=
-ion mechanism.
-
-We don't need to modify phosphor-dbus-interfaces.
-
-Best Regards,
-Ben
-
-
-
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient.=20
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-
---_000_822cfe8a5ec94973903534f7932d9049wistroncom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:Dotum;
-	panose-1:2 11 6 0 0 1 1 1 1 1;}
-@font-face
-	{font-family:MingLiU;
-	panose-1:2 2 5 9 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-@font-face
-	{font-family:"\@Dotum";
-	panose-1:2 11 6 0 0 1 1 1 1 1;}
-@font-face
-	{font-family:MingLiU;
-	panose-1:2 1 6 9 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-pre
-	{mso-style-priority:99;
-	mso-style-link:"HTML \9810\8A2D\683C\5F0F \5B57\5143";
-	margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:MingLiU;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.HTML
-	{mso-style-name:"HTML \9810\8A2D\683C\5F0F \5B57\5143";
-	mso-style-priority:99;
-	mso-style-link:"HTML \9810\8A2D\683C\5F0F";
-	font-family:MingLiU;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hello Patrick<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<pre><span lang=3D"EN-US" style=3D"color:black">On Thu, May 07, 2020 at 06:=
-07:44AM &#43;0000, <a href=3D"https://lists.ozlabs.org/listinfo/openbmc">Be=
-n_Pai at wistron.com</a> wrote:<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&gt;<i> Could you please he=
-lp to create a new repository for phosphor-bittware?<o:p></o:p></i></span><=
-/pre>
-<pre><span lang=3D"EN-US" style=3D"color:black"><o:p>&nbsp;</o:p></span></p=
-re>
-<pre><span lang=3D"EN-US" style=3D"color:black">Out of curiousity for other=
-s who aren't aware of what 'bittware' is,<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">could you describe a little=
- about this repository?&nbsp; It seems to be a<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">hardware vendor, so it woul=
-d be interesting to know what the BMC will be<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">doing with it.<o:p></o:p></=
-span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black"><o:p>&nbsp;</o:p></span></p=
-re>
-<pre><span lang=3D"EN-US" style=3D"color:black">Examples:<o:p></o:p></span>=
-</pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp; * What is the overal=
-l purpose of the code in this repository?<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp; * Is there an existi=
-ng architecture that this code will be following<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp;&nbsp;&nbsp; or is th=
-ere some new design that you are persuing (and needs to be<o:p></o:p></span=
-></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp;&nbsp;&nbsp; document=
-)?<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp; * Are there existing=
- phosphor-dbus-interfaces that you will be<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp;&nbsp;&nbsp; implemen=
-ting?&nbsp; Are there new dbus interfaces you are proposing to<o:p></o:p></=
-span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black">&nbsp;&nbsp;&nbsp; implemen=
-t the functionality you want from this repository?<o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black"><o:p>&nbsp;</o:p></span></p=
-re>
-<pre><span lang=3D"EN-US" style=3D"color:black">-- <o:p></o:p></span></pre>
-<pre><span lang=3D"EN-US" style=3D"color:black"><o:p>&nbsp;</o:p></span></p=
-re>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I want to implement related fun=
-ctions for the bittware 250-SoC card.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">For example: Sensor reading, VP=
-D information, led control and Brick Protection mechanism.<o:p></o:p></span=
-></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">We don&#8217;t need to modify p=
-hosphor-dbus-interfaces.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Ben<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient. </b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------</b></span></p></body>
-</html>
-
---_000_822cfe8a5ec94973903534f7932d9049wistroncom_--
+--MrRUTeZlqqNo1jQ9--
