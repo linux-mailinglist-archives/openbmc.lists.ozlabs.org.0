@@ -2,55 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17B9D1D1948
-	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3DF01D196A
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:29:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Mdlw11mRzDqg1
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:25:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Mdrc3WmfzDqkG
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:29:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49MdkW2FTHzDq9G
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:24:18 +1000 (AEST)
-IronPort-SDR: yrKJQWcRlY37P0kI3RqvGGw8jK5Am+DVjn+MmsgknD7POfqrL1HLkLuPeEJWQabp5c86HOeS0r
- 4lOml69TxJkg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 May 2020 08:24:15 -0700
-IronPort-SDR: LEYmL0D8h4/MJPzQww7+nG6ZMTyIUMdrpW620uivs8d1RMOvGn0hsKExHGUYjZoUgEhe4Gmdup
- YKNkAXzriOTw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,388,1583222400"; d="scan'208";a="251288456"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
- by orsmga007.jf.intel.com with ESMTP; 13 May 2020 08:24:10 -0700
-Received: from andy by smile with local (Exim 4.93)
- (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1jYtEz-006Rr3-Pi; Wed, 13 May 2020 18:24:13 +0300
-Date: Wed, 13 May 2020 18:24:13 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Tali Perry <tali.perry1@gmail.com>
-Subject: Re: [PATCH v10 2/3] i2c: npcm7xx: Add Nuvoton NPCM I2C controller
- driver
-Message-ID: <20200513152413.GQ185537@smile.fi.intel.com>
-References: <20200510102330.66715-1-tali.perry1@gmail.com>
- <20200510102330.66715-3-tali.perry1@gmail.com>
- <20200511091759.GE185537@smile.fi.intel.com>
- <CAHb3i=tERsM+gwmQN1+vjnML9o5NxRK=uBokEUsd-Ljyje4s3A@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49MdqZ2NZhzDqhS
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:28:41 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04DF3eFp133794; Wed, 13 May 2020 11:27:37 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 310175gry6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2020 11:27:37 -0400
+Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 04DFLIP2019698;
+ Wed, 13 May 2020 11:27:37 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 310175grxd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2020 11:27:36 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 04DFLfWn027053;
+ Wed, 13 May 2020 15:27:35 GMT
+Received: from b06cxnps3075.portsmouth.uk.ibm.com
+ (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
+ by ppma03ams.nl.ibm.com with ESMTP id 3100ub9unc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2020 15:27:34 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04DFRW7Q32702592
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 May 2020 15:27:32 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BAD8E5204F;
+ Wed, 13 May 2020 15:27:32 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.250.237])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id A378E52059;
+ Wed, 13 May 2020 15:27:31 +0000 (GMT)
+Subject: Re: Storing host data on the BMC
+To: Sunitha Harish <sunithaharish04@gmail.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
+ <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+ <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+ <20200511120719.GA10214@heinlein>
+ <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+ <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <a9d7deb2-487c-1e53-4896-68cc0c352bf7@linux.vnet.ibm.com>
+Date: Wed, 13 May 2020 20:57:30 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHb3i=tERsM+gwmQN1+vjnML9o5NxRK=uBokEUsd-Ljyje4s3A@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
+ definitions=2020-05-13_06:2020-05-13,
+ 2020-05-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ lowpriorityscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ adultscore=0 mlxlogscore=986 bulkscore=0 malwarescore=0 mlxscore=0
+ cotscore=-2147483648 clxscore=1015 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2005130135
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,73 +100,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
- avifishman70@gmail.com, Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
- Brendan Higgins <brendanhiggins@google.com>, ofery@google.com,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, kfting@nuvoton.com,
- Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, suryakanth.sekar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, May 11, 2020 at 02:28:50PM +0300, Tali Perry wrote:
-> On Mon, May 11, 2020 at 12:18 PM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> > On Sun, May 10, 2020 at 01:23:29PM +0300, Tali Perry wrote:
-
-...
-
-> > > +#if IS_ENABLED(CONFIG_DEBUG_FS)
-> >
-> > Why?
-> 
-> We wanted to add an optional feature to track i2c slave status.
-> the NPCM has 16 channels handling multiple devices each. Some of the devices
-> are polled periodically, and might power down.
-> The user wanted to implement a health monitoring option
-> to occasionally check the status of the buses (how many timeouts, recovery etc.)
-> This feature is optional and depends on CONFIG_DEBUG_FS The counters are exposed
-> to user through the file system.
-
-What I meant is why do you need an #ifdef?
+On 13/05/20 8:37 pm, Sunitha Harish wrote:
 
 
-...
+> Redfish client would need this value to interpret where the IP address 
+> has been Originated from. So we need a DBus property to save it.
 
-> > > +#define I2C_NUM_OF_ADDR 10
-> >
-> > Is it 10-bit address support or what?
-> >
-> 
-> No, the NPCM has an option to respond to multiple slave addresses
-> (10 own slave addresses)
+Makes sense.
 
-Perhaps more descriptive name then?
+> this is actually an attribute which is set by the hypervisor/host - a 
+> pldm sensor. Its not suitable to be fit into the BIOS table.
 
-...
+Agree.
 
-> > > +     // Repeat the following sequence until SDA is released
-> > > +     do {
-> > > +             // Issue a single SCL toggle
-> > > +             iowrite8(NPCM_I2CCST_TGSCL, bus->reg + NPCM_I2CCST);
-> > > +             udelay(20);
-> > > +             // If SDA line is inactive (high), stop
-> > > +             if (npcm_i2c_get_SDA(_adap)) {
-> > > +                     done = true;
-> > > +                     status = 0;
-> > > +             }
-> > > +     } while (!done && iter--);
-> >
-> > readx_poll_timeout() ?
-> 
-> Not exactly, readx_poll_timeout includes only a read operation, here there is a
-> write in the middle. (iowrite8)
+> My question&proposal is about how/where to store this value?
 
-Ah, indeed. Perhaps time to add writex_poll_timeout() ?
+Anywhere but the BIOS attributes store on D-Bus? For eg could you come 
+up with another D-Bus interface to house this property? The PLDM demon 
+can relay a PLDM sensor to a D-Bus object that implements this property. 
+There are other PLDM sensors that the host owns, that are already 
+handled this way today - the host updates a PLDM sensor and lets the BMC 
+know about it. The BMC can update a corresponding D-Bus property.
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+> Thanks & regards,
+> Sunitha
