@@ -2,77 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5648B1D18FB
-	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:20:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 17B9D1D1948
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:25:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Mddp3Q9mzDqgN
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:20:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Mdlw11mRzDqg1
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:25:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22b;
- helo=mail-oi1-x22b.google.com; envelope-from=kurt.r.taylor@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=sK0Nv2h2; dkim-atps=neutral
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
- [IPv6:2607:f8b0:4864:20::22b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49MdPG10VBzDqfs
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:09:21 +1000 (AEST)
-Received: by mail-oi1-x22b.google.com with SMTP id r25so21703028oij.4
- for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 08:09:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=VmtAHZPCQnUN98Y34tXll6MmGOtVH/+ZH612dT5FXWA=;
- b=sK0Nv2h2egvupFXymULl7nvEVC+EIjG6/VjmLs+HzsGIy848QZ9EC3Fh3idbwuuHU0
- X2PRFdocblGCl61NjPZfxoBaM7O5J8npWnNlY2iO7O1tJ7I/FHeosHcG8YTr96NUjme7
- G8jYb15hwbVPNEjOrz110DWgY7DYzcn4XbrFdsxIFuafhkjPhTBAGs2Iz8pE6o9cAj9d
- aBhILIazXZHau8b2+7KIlClfLrH8Q5MNPJeN/5gJVl1CGr/5peEG+iu+ZvT+cJxiDcN9
- S5Kw+2nZ3PIguHiw3+q8eUovkA1xEtkAHD047pD0rWNfHRVcM8OVu2gK/P/t0kbvg4fZ
- uyvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=VmtAHZPCQnUN98Y34tXll6MmGOtVH/+ZH612dT5FXWA=;
- b=gmAGLTNlTiJ8VXd2PKqp7C98+NHDlxt0HELHUn9hTw5jfgTBDJ8Jv9SWwY4YYPvF4h
- ONCKxly8/+i79Yf4a3+sybhYjlNsDcU1VyBiQnnFyaolhtxwQiOaYXzRze7QTmIVUxWZ
- EOl2+8tcHyvvqtQMgvMXvUSDnLCynDg00kK9qbIt+YGe8gddampxVQMcy2UaluoC7pSW
- 55FBsZHrjiwvWrR9zycfOvCvqYoZt9WxVtFTR1s/LutpoMfbgQTrfPZ0OISLHs0mHpNX
- azusyrwPhKltbUWynptJQqiVFnr4OQGImpPPrhQ1FmoSlGGUCvGY6aMGgYEXKLKLBbDR
- ZV0A==
-X-Gm-Message-State: AGi0Pua6KjnPOjQ8A1sWwVK0GCyi4/9OXFdUY6KEjEJ3MzD03vVSKfbC
- K5pIwOMWgCEVAqGFSEOVZcQw/mDJ1jg=
-X-Google-Smtp-Source: APiQypIncpE9amu2N41HZ2UlH7ovLgAxgxH6c9xh1iMsOzlQQuTDOXO/dZtmlXj7BxX/eMQ42Br0/Q==
-X-Received: by 2002:aca:ccc6:: with SMTP id
- c189mr27514353oig.161.1589382553125; 
- Wed, 13 May 2020 08:09:13 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id q142sm6148307oic.44.2020.05.13.08.09.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 May 2020 08:09:12 -0700 (PDT)
-Subject: Re: CCLA for Code Construct Pty Ltd
-To: Jeremy Kerr <jk@codeconstruct.com.au>, openbmc@lists.ozlabs.org
-References: <117d87290b79966daae8e1e8b6ff66acbd0ab3d5.camel@codeconstruct.com.au>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <bc512c4b-4629-14b9-9be8-957bc6c9fccf@gmail.com>
-Date: Wed, 13 May 2020 10:09:11 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49MdkW2FTHzDq9G
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:24:18 +1000 (AEST)
+IronPort-SDR: yrKJQWcRlY37P0kI3RqvGGw8jK5Am+DVjn+MmsgknD7POfqrL1HLkLuPeEJWQabp5c86HOeS0r
+ 4lOml69TxJkg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 May 2020 08:24:15 -0700
+IronPort-SDR: LEYmL0D8h4/MJPzQww7+nG6ZMTyIUMdrpW620uivs8d1RMOvGn0hsKExHGUYjZoUgEhe4Gmdup
+ YKNkAXzriOTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,388,1583222400"; d="scan'208";a="251288456"
+Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
+ by orsmga007.jf.intel.com with ESMTP; 13 May 2020 08:24:10 -0700
+Received: from andy by smile with local (Exim 4.93)
+ (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1jYtEz-006Rr3-Pi; Wed, 13 May 2020 18:24:13 +0300
+Date: Wed, 13 May 2020 18:24:13 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Tali Perry <tali.perry1@gmail.com>
+Subject: Re: [PATCH v10 2/3] i2c: npcm7xx: Add Nuvoton NPCM I2C controller
+ driver
+Message-ID: <20200513152413.GQ185537@smile.fi.intel.com>
+References: <20200510102330.66715-1-tali.perry1@gmail.com>
+ <20200510102330.66715-3-tali.perry1@gmail.com>
+ <20200511091759.GE185537@smile.fi.intel.com>
+ <CAHb3i=tERsM+gwmQN1+vjnML9o5NxRK=uBokEUsd-Ljyje4s3A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <117d87290b79966daae8e1e8b6ff66acbd0ab3d5.camel@codeconstruct.com.au>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHb3i=tERsM+gwmQN1+vjnML9o5NxRK=uBokEUsd-Ljyje4s3A@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,29 +62,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
+ avifishman70@gmail.com, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Wolfram Sang <wsa@the-dreams.de>,
+ Brendan Higgins <brendanhiggins@google.com>, ofery@google.com,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, kfting@nuvoton.com,
+ Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 5/11/20 11:56 PM, Jeremy Kerr wrote:
-> Hi all,
-> 
-> I'd like to register a CCLA for Code Construct Pty Ltd, and have
-> attached a completed CCLA.
-> 
-> [I suspect I'll continue to contributing partly from my personal email
-> address - jk@ozlabs.org - but I thought a CCLA would be more
-> appropriate than an ICLA
+On Mon, May 11, 2020 at 02:28:50PM +0300, Tali Perry wrote:
+> On Mon, May 11, 2020 at 12:18 PM Andy Shevchenko
+> <andriy.shevchenko@linux.intel.com> wrote:
+> > On Sun, May 10, 2020 at 01:23:29PM +0300, Tali Perry wrote:
 
-Thanks Jeremy, your CCLA has been accepted.
+...
 
-You're official now! :)
-
-Kurt Taylor (krtaylor)
-
-
-> Cheers,
+> > > +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> >
+> > Why?
 > 
+> We wanted to add an optional feature to track i2c slave status.
+> the NPCM has 16 channels handling multiple devices each. Some of the devices
+> are polled periodically, and might power down.
+> The user wanted to implement a health monitoring option
+> to occasionally check the status of the buses (how many timeouts, recovery etc.)
+> This feature is optional and depends on CONFIG_DEBUG_FS The counters are exposed
+> to user through the file system.
+
+What I meant is why do you need an #ifdef?
+
+
+...
+
+> > > +#define I2C_NUM_OF_ADDR 10
+> >
+> > Is it 10-bit address support or what?
+> >
 > 
-> Jeremy
+> No, the NPCM has an option to respond to multiple slave addresses
+> (10 own slave addresses)
+
+Perhaps more descriptive name then?
+
+...
+
+> > > +     // Repeat the following sequence until SDA is released
+> > > +     do {
+> > > +             // Issue a single SCL toggle
+> > > +             iowrite8(NPCM_I2CCST_TGSCL, bus->reg + NPCM_I2CCST);
+> > > +             udelay(20);
+> > > +             // If SDA line is inactive (high), stop
+> > > +             if (npcm_i2c_get_SDA(_adap)) {
+> > > +                     done = true;
+> > > +                     status = 0;
+> > > +             }
+> > > +     } while (!done && iter--);
+> >
+> > readx_poll_timeout() ?
 > 
+> Not exactly, readx_poll_timeout includes only a read operation, here there is a
+> write in the middle. (iowrite8)
+
+Ah, indeed. Perhaps time to add writex_poll_timeout() ?
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
 
