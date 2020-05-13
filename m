@@ -1,90 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C45C1D18AC
-	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:05:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DB2F1D18D5
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:12:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49MdJp746MzDqH5
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:05:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49MdSJ543bzDqf6
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:12:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d41;
+ helo=mail-io1-xd41.google.com; envelope-from=gmouse@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=Khh7K0LS; dkim-atps=neutral
+Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com
+ [IPv6:2607:f8b0:4864:20::d41])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Md9t0ykPzDqZq
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 00:59:28 +1000 (AEST)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04DEWEQV121921
- for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 10:59:24 -0400
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3101m9793x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 10:59:24 -0400
-Received: from m0098416.ppops.net (m0098416.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 04DEXUOb135903
- for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 10:59:23 -0400
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3101m97938-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 May 2020 10:59:23 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 04DEu8Ni023437;
- Wed, 13 May 2020 14:59:23 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma01wdc.us.ibm.com with ESMTP id 3100ub7a4n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 May 2020 14:59:23 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 04DExMn729229410
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 13 May 2020 14:59:22 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BCA95AE062;
- Wed, 13 May 2020 14:59:22 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 52BE3AE066;
- Wed, 13 May 2020 14:59:22 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.153.254])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
- Wed, 13 May 2020 14:59:22 +0000 (GMT)
-Subject: Re: SELinux UseCases
-To: Manojkiran Eda <manojeda@in.ibm.com>
-References: <e229e29c-e6a0-ae91-aa5c-2b13a4416faa@linux.ibm.com>
- <OFBBFB47E3.6EABAE1E-ON0025855A.00486BC9-0025855A.004946E0@LocalDomain>
- <OFC15F6E2A.E823991E-ON00258565.0018CF1F-00258565.00191B17@notes.na.collabserv.com>
- <OF6E82DE95.F0DBD406-ON00258567.00161A33-00258567.001BE5D7@notes.na.collabserv.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <84b06e90-847e-45c2-59b3-9cc4e32a156a@linux.ibm.com>
-Date: Wed, 13 May 2020 09:59:21 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49MdGp2xpkzDqdk
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:03:45 +1000 (AEST)
+Received: by mail-io1-xd41.google.com with SMTP id j8so18336920iog.13
+ for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 08:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=jcSDkiwWLnnJbGJNgoLy0GPyMR3KWouWrSSUbYQ6Xkg=;
+ b=Khh7K0LS5oPewj6Ol9Dv8pl4Bn7G70iVz0o0quZ3F7fQrJCFzgNCkYNV5MvYaSkjT5
+ xFYY0dzEE71s+v3CE+G8rTE7TGSy8pETjYqk+GuRO7SXrHFlBn2J99hDeGsoq9RVPUJR
+ wVo2R2rpWq141l/KMsD5agQMegOSxcfY3Xoc8JEMwFugcKpY6OO0wwkTowPIvmLcdv6Z
+ nfWgudDEVd92/398rhYFMlZpCBCxZG7vcOCLVMKn91wBuQJrNude0ZWqd7eJonGndSp5
+ yFrTY24CrJWbViQqJojCoh5C/n+s9IAOEHR2CE6/dwm6QeY0AgZvzQ+g1ExcPvg2MM5P
+ WmBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=jcSDkiwWLnnJbGJNgoLy0GPyMR3KWouWrSSUbYQ6Xkg=;
+ b=n0yx9C1YKgNQiuDVPqaS+1C1dPYptm+m2S7Z1dh+XVHRPl25+zWAC3dH8d9mYhEMr6
+ 8WFAGWKHwYpF2UbVgxl/SH7AGuqGhjhb3wtjoaupBBTSuacc3uXRMbIwzEtB6Bxk3cyD
+ rr2bNudTXNsDoXxIZuH951TieCJtN6/RJndOheFwTWIhEVMgtCef36XMV9TT3XRZbV/7
+ 2beKIWGe+p7LCEaWjDvSfg3M1fYWz1EDmVY59S4tu+6pEk2Ho28C8IkU7e5owMQRBVIZ
+ irw+l++F/Q0P/sq04HWVyE+rBM9WSjJ1e+Ih0hDYgJqD/EzJTkN57ZsS3kv5LxyX3Ifi
+ dhPg==
+X-Gm-Message-State: AGi0PuZ6UGTsA+N5I9jCX/71W0MJpavwM1DFOiTz4Hc8vrk9AB56vtg0
+ zIl5rsSTa5kFvDs4yb45hvQ448jt3xp9lDy/O9CTaQ==
+X-Google-Smtp-Source: APiQypL4SQgw3K+aMTTImd16H4if6REmOKYpkHAKabnFo6+sdH8vY1nSUtyvXi3o1gW8UnuGzStdYPKteQOpxL0OoEU=
+X-Received: by 2002:a02:665c:: with SMTP id l28mr2740635jaf.1.1589382218031;
+ Wed, 13 May 2020 08:03:38 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <OF6E82DE95.F0DBD406-ON00258567.00161A33-00258567.001BE5D7@notes.na.collabserv.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
- definitions=2020-05-13_06:2020-05-13,
- 2020-05-13 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 spamscore=0
- mlxlogscore=999 impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0
- cotscore=-2147483648 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2004280000 definitions=main-2005130126
+References: <20200510102330.66715-1-tali.perry1@gmail.com>
+ <20200510102330.66715-2-tali.perry1@gmail.com>
+In-Reply-To: <20200510102330.66715-2-tali.perry1@gmail.com>
+From: Anton Kachalov <rnouse@google.com>
+Date: Wed, 13 May 2020 17:03:26 +0200
+Message-ID: <CADVsX8_2KjAEiOj0H7UgZsC7THyWO8aaxaEJgTMb9t=xtx-huw@mail.gmail.com>
+Subject: Re: [PATCH v10 1/3] dt-bindings: i2c: npcm7xx: add NPCM I2C controller
+To: Tali Perry <tali.perry1@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000852ca805a588e2d1"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,116 +73,217 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, rnouse@google.com, ratagupt@linux.vnet.ibm.com
+Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, avifishman70@gmail.com,
+ venture@google.com, openbmc@lists.ozlabs.org, wsa@the-dreams.de,
+ Brendan Higgins <brendanhiggins@google.com>, Ofer Yehielli <ofery@google.com>,
+ linux-kernel@vger.kernel.org, kfting@nuvoton.com, robh+dt@kernel.org,
+ linux-i2c@vger.kernel.org, andriy.shevchenko@linux.intel.com,
+ linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 5/13/20 12:04 AM, Manojkiran Eda wrote:
-> Hi Joseph,
-> I may not be accurate here, But from what i have learnt - Yes, this 
-> can be done using "Type Enforcement feature" in SELinux.
-> Type Enforcement essentially allows every file/object/process in 
-> SELinux enabled system to be stored with a security context label as 
-> an extended attribute.
-> And policies can be framed to allow access between various security 
-> context labelled objects.
-> Any access between security contexts - that does not have an 
-> associated selinux policy will be denied by default.
-> Say for example, in this case :
-> > I would like to see SELinux limit who can write to files under the /etc
-> > directory.  For example, bmcweb implements REST APIs add and modify
-> > local users, control pam_tally2 account lockout parameters, etc.  More
-> > specifically, the phosphor-user-manager daemon modifies files like
-> > /etc/shadow and /etc/pam.d/common_auth.  Only this application should be
-> > able to write to these file.  Also, this daemon should not be to allowed
-> > to write to any other config files.
-> 1. A new security label needs to be defined, say *user_manager_t*  for 
-> *phosphor-user-manager* service and this context can be attached to 
-> the service through the SELinux tag in the dbus-configuration xml 
-> file. so that when the user-manager service executes it obtains a 
-> security context type of *user_manager_t*.
-> 2. As far as i know the files in the /*etc* would acquire a security 
-> context label of *etc_t *by default during the auto relabelling 
-> process which happens at the first selinux enabled boot of BMC.
-> 3. Now we just need to write a selinux policy to allow access between 
-> *user_manager_t *type with *etc_t* type.
-> 4. Any process,  example *bmcweb* say has *webserver_t* (does not have 
-> the security context of *user_manager_t*) would get an access denied 
-> if it tries to write into the /*etc* files as there is no associated 
-> policy.
-> 5. We can even assign a security label for each file inside the */etc* 
-> and write an associated policy for it, so that we can get a granular 
-> control over who can access which file under */etc*.
+--000000000000852ca805a588e2d1
+Content-Type: text/plain; charset="UTF-8"
 
-Manoj,
+The example uses "bus-frequency" while description says "clock-frequency"
+for bus speed.
 
-Thanks for the details.  Yes, using type enforcement sounds right. You 
-know a lot more about SELinux than I do.
+On Sun, May 10, 2020, 12:27 Tali Perry <tali.perry1@gmail.com> wrote:
 
-If I understand this correctly, a simpler less-granular design (perhaps 
-as a proof of concept) that still provides meaningful internal barriers 
-would be:
-Define a new label etc_writer_t and attach it only to D-Bus daemons that 
-need to update config files.
-
-In this way, only those daemons can update confg files, and attackers 
-coming in through BMCWeb or the host side would not be able to directly 
-update config files.  Doing so may make the attacker's task 
-significantly more difficult.
-
-- Joseph
-
-> Hope this answers your question.
-> Thanks,
-> Manoj
+> Added device tree binding documentation for Nuvoton BMC
+> NPCM I2C controller.
 >
->     ----- Original message -----
->     From: Joseph Reynolds <jrey@linux.ibm.com>
->     Sent by: "openbmc"
->     <openbmc-bounces+manojeda=in.ibm.com@lists.ozlabs.org>
->     To: Manojkiran Eda <manojeda@in.ibm.com>,
->     openbmc@lists.ozlabs.org, rnouse@google.com
->     Cc: ratagupt@linux.vnet.ibm.com
->     Subject: [EXTERNAL] Re: SELinux UseCases
->     Date: Tue, May 12, 2020 11:48 PM
->     On 5/10/20 11:34 PM, Manojkiran Eda wrote:
->     > Hi All,
->     > This is a just a ping - to generate a discussion on the below
->     > mentioned use-cases.
->     > Appreciate any inputs/comments.
+> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+> ---
+>  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 62 +++++++++++++++++++
+>  1 file changed, 62 insertions(+)
+>  create mode 100644
+> Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
 >
->     Thanks for putting this together.
->
->     I would like to see SELinux limit who can write to files under the
->     /etc
->     directory.  For example, bmcweb implements REST APIs add and modify
->     local users, control pam_tally2 account lockout parameters, etc.  More
->     specifically, the phosphor-user-manager daemon modifies files like
->     /etc/shadow and /etc/pam.d/common_auth.  Only this application
->     should be
->     able to write to these file.  Also, this daemon should not be to
->     allowed
->     to write to any other config files.
->
->     - Joseph
->
->     > Thanks,
->     > Manoj
->     >
->     >     ----- Original message -----
->     >     From: Manojkiran Eda/India/IBM
->     >     To: openbmc@lists.ozlabs.org, rnouse@google.com
->     >     Cc: ratagupt@linux.vnet.ibm.com
->     >     Subject: SELinux UseCases
->     >     Date: Thu, Apr 30, 2020 6:50 PM
->     >     Hi All,
->     >     (My apologies for the lengthy email.)
->     >     Below are few use-cases in BMC, which i feel inclusion of
->     SELinux
->     >     would be a value add (there could be may more missing). Please
->     >     feel free to drop-in your comments/feedback.
->     >
->     ...snip...
+> diff --git
+> a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> new file mode 100644
+> index 000000000000..d6f553154388
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> @@ -0,0 +1,62 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/i2c/nuvoton,npcm7xx-i2c.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: nuvoton NPCM7XX I2C Controller Device Tree Bindings
+> +
+> +description: |
+> +  The NPCM750x includes sixteen I2C bus controllers. All Controllers
+> support
+> +  both master and slave mode. Each controller can switch between master
+> and slave
+> +  at run time (i.e. IPMB mode). Each controller has two 16 byte HW FIFO
+> for TX and
+> +  RX.
+> +
+> +maintainers:
+> +  - Tali Perry <tali.perry1@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +      - const: nuvoton,npcm7xx-i2c
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +    items:
+> +      - description: Reference clock for the I2C bus
+> +
+> +  clock-frequency:
+> +    maxItems: 1
+> +    default: 100000
+> +    enum: [ 100000, 400000, 1000000 ]
+> +    description:
+> +      SCL frequency to use (in Hz). If omitted, 100kHz is used.
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +
+> +allOf:
+> +  - $ref: /schemas/i2c/i2c-controller.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    i2c0: i2c@80000 {
+> +        compatible = "nuvoton,npcm750-i2c";
+> +        reg = <0x80000 0x1000>;
+> +        clocks = <&clk NPCM7XX_CLK_APB2>;
+> +        bus-frequency = <100000>;
+> +        interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
+> +        pinctrl-names = "default";
+> +        pinctrl-0 = <&smb0_pins>;
+> +    };
+> +
+> +...
+> --
+> 2.22.0
 >
 >
 
+--000000000000852ca805a588e2d1
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">The example uses &quot;bus-frequency&quot; while descript=
+ion says &quot;clock-frequency&quot; for bus speed.</div><br><div class=3D"=
+gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, May 10, 2020, 12=
+:27 Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com">tali.perry1@gma=
+il.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Added device =
+tree binding documentation for Nuvoton BMC<br>
+NPCM I2C controller.<br>
+<br>
+Signed-off-by: Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" targ=
+et=3D"_blank" rel=3D"noreferrer">tali.perry1@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0.../bindings/i2c/nuvoton,npcm7xx-i2c.yaml=C2=A0 =C2=A0 =C2=A0| 62 +++=
+++++++++++++++++<br>
+=C2=A01 file changed, 62 insertions(+)<br>
+=C2=A0create mode 100644 Documentation/devicetree/bindings/i2c/nuvoton,npcm=
+7xx-i2c.yaml<br>
+<br>
+diff --git a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml=
+ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml<br>
+new file mode 100644<br>
+index 000000000000..d6f553154388<br>
+--- /dev/null<br>
++++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml<br>
+@@ -0,0 +1,62 @@<br>
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause<br>
++%YAML 1.2<br>
++---<br>
++$id: <a href=3D"http://devicetree.org/schemas/i2c/nuvoton,npcm7xx-i2c.yaml=
+#" rel=3D"noreferrer noreferrer" target=3D"_blank">http://devicetree.org/sc=
+hemas/i2c/nuvoton,npcm7xx-i2c.yaml#</a><br>
++$schema: <a href=3D"http://devicetree.org/meta-schemas/core.yaml#" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">http://devicetree.org/meta-schemas=
+/core.yaml#</a><br>
++<br>
++title: nuvoton NPCM7XX I2C Controller Device Tree Bindings<br>
++<br>
++description: |<br>
++=C2=A0 The NPCM750x includes sixteen I2C bus controllers. All Controllers =
+support<br>
++=C2=A0 both master and slave mode. Each controller can switch between mast=
+er and slave<br>
++=C2=A0 at run time (i.e. IPMB mode). Each controller has two 16 byte HW FI=
+FO for TX and<br>
++=C2=A0 RX.<br>
++<br>
++maintainers:<br>
++=C2=A0 - Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" target=3D=
+"_blank" rel=3D"noreferrer">tali.perry1@gmail.com</a>&gt;<br>
++<br>
++properties:<br>
++=C2=A0 compatible:<br>
++=C2=A0 =C2=A0 =C2=A0 - const: nuvoton,npcm7xx-i2c<br>
++<br>
++=C2=A0 reg:<br>
++=C2=A0 =C2=A0 maxItems: 1<br>
++<br>
++=C2=A0 interrupts:<br>
++=C2=A0 =C2=A0 maxItems: 1<br>
++<br>
++=C2=A0 clocks:<br>
++=C2=A0 =C2=A0 maxItems: 1<br>
++=C2=A0 =C2=A0 items:<br>
++=C2=A0 =C2=A0 =C2=A0 - description: Reference clock for the I2C bus<br>
++<br>
++=C2=A0 clock-frequency:<br>
++=C2=A0 =C2=A0 maxItems: 1<br>
++=C2=A0 =C2=A0 default: 100000<br>
++=C2=A0 =C2=A0 enum: [ 100000, 400000, 1000000 ]<br>
++=C2=A0 =C2=A0 description:<br>
++=C2=A0 =C2=A0 =C2=A0 SCL frequency to use (in Hz). If omitted, 100kHz is u=
+sed.<br>
++<br>
++required:<br>
++=C2=A0 - compatible<br>
++=C2=A0 - reg<br>
++=C2=A0 - interrupts<br>
++<br>
++allOf:<br>
++=C2=A0 - $ref: /schemas/i2c/i2c-controller.yaml#<br>
++<br>
++unevaluatedProperties: false<br>
++<br>
++examples:<br>
++=C2=A0 - |<br>
++=C2=A0 =C2=A0 i2c0: i2c@80000 {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;nuvoton,npcm750-i2c&quot;=
+;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0x80000 0x1000&gt;;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 clocks =3D &lt;&amp;clk NPCM7XX_CLK_APB2&gt;;<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 bus-frequency =3D &lt;100000&gt;;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 interrupts =3D &lt;GIC_SPI 64 IRQ_TYPE_LEVEL_H=
+IGH&gt;;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 pinctrl-names =3D &quot;default&quot;;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 pinctrl-0 =3D &lt;&amp;smb0_pins&gt;;<br>
++=C2=A0 =C2=A0 };<br>
++<br>
++...<br>
+-- <br>
+2.22.0<br>
+<br>
+</blockquote></div>
+
+--000000000000852ca805a588e2d1--
