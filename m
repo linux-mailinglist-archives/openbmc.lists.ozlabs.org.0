@@ -2,66 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DB2F1D18D5
-	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:12:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1130E1D18ED
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 17:17:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49MdSJ543bzDqf6
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:12:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49MdZB71fSzDqWS
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 01:17:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d41;
- helo=mail-io1-xd41.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=sunithaharish04@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Khh7K0LS; dkim-atps=neutral
-Received: from mail-io1-xd41.google.com (mail-io1-xd41.google.com
- [IPv6:2607:f8b0:4864:20::d41])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=i1WEAEtF; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49MdGp2xpkzDqdk
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:03:45 +1000 (AEST)
-Received: by mail-io1-xd41.google.com with SMTP id j8so18336920iog.13
- for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 08:03:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=jcSDkiwWLnnJbGJNgoLy0GPyMR3KWouWrSSUbYQ6Xkg=;
- b=Khh7K0LS5oPewj6Ol9Dv8pl4Bn7G70iVz0o0quZ3F7fQrJCFzgNCkYNV5MvYaSkjT5
- xFYY0dzEE71s+v3CE+G8rTE7TGSy8pETjYqk+GuRO7SXrHFlBn2J99hDeGsoq9RVPUJR
- wVo2R2rpWq141l/KMsD5agQMegOSxcfY3Xoc8JEMwFugcKpY6OO0wwkTowPIvmLcdv6Z
- nfWgudDEVd92/398rhYFMlZpCBCxZG7vcOCLVMKn91wBuQJrNude0ZWqd7eJonGndSp5
- yFrTY24CrJWbViQqJojCoh5C/n+s9IAOEHR2CE6/dwm6QeY0AgZvzQ+g1ExcPvg2MM5P
- WmBA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49MdMY3FRCzDqNR
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 01:07:52 +1000 (AEST)
+Received: by mail-pj1-x1034.google.com with SMTP id e6so11104852pjt.4
+ for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 08:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:from:to:cc:references:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=W1IT0gh7vi5WJ2GKf2UQzz9IPJvrM9R4+ia7z+tKNDQ=;
+ b=i1WEAEtFB33L+aIT4TfjrItCUK8c0YGmJdYYBzsuA6+kPQy7mUC56EPHkjobyXIiRe
+ F3k7wXUuGVtzJr+6tY9tOCpiSgXK6MAz/XJO0cSL5lW1xNtsjMhwyOVffPKzJGsDVIAI
+ nZetjHcA8+DkRRN/05EiNF1CXB9s7UNNnBqKmOvRI9SmUIpef1lnG0r+9ksk4VmX4ONk
+ tBZC/kLY6RgefV3AXWihlLU2iUjZYB/WCvId6NGGmqCvtkHVUl45mON8KEaY76mETn1T
+ Uv7R9dUMol5J/xrfRuAFf6FJUwWLT3bqLkAcR1ezBi3vUh1GzBvyJL5hlnsDC/6Glqla
+ ysPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=jcSDkiwWLnnJbGJNgoLy0GPyMR3KWouWrSSUbYQ6Xkg=;
- b=n0yx9C1YKgNQiuDVPqaS+1C1dPYptm+m2S7Z1dh+XVHRPl25+zWAC3dH8d9mYhEMr6
- 8WFAGWKHwYpF2UbVgxl/SH7AGuqGhjhb3wtjoaupBBTSuacc3uXRMbIwzEtB6Bxk3cyD
- rr2bNudTXNsDoXxIZuH951TieCJtN6/RJndOheFwTWIhEVMgtCef36XMV9TT3XRZbV/7
- 2beKIWGe+p7LCEaWjDvSfg3M1fYWz1EDmVY59S4tu+6pEk2Ho28C8IkU7e5owMQRBVIZ
- irw+l++F/Q0P/sq04HWVyE+rBM9WSjJ1e+Ih0hDYgJqD/EzJTkN57ZsS3kv5LxyX3Ifi
- dhPg==
-X-Gm-Message-State: AGi0PuZ6UGTsA+N5I9jCX/71W0MJpavwM1DFOiTz4Hc8vrk9AB56vtg0
- zIl5rsSTa5kFvDs4yb45hvQ448jt3xp9lDy/O9CTaQ==
-X-Google-Smtp-Source: APiQypL4SQgw3K+aMTTImd16H4if6REmOKYpkHAKabnFo6+sdH8vY1nSUtyvXi3o1gW8UnuGzStdYPKteQOpxL0OoEU=
-X-Received: by 2002:a02:665c:: with SMTP id l28mr2740635jaf.1.1589382218031;
- Wed, 13 May 2020 08:03:38 -0700 (PDT)
+ h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=W1IT0gh7vi5WJ2GKf2UQzz9IPJvrM9R4+ia7z+tKNDQ=;
+ b=tdeIxuj0+LuWqryaO8S0Jbeeh7Nk4J26yiJpMHw2pHDUNk0oCrDnV/Dz49tOV+aPfA
+ D6qSbSVvUUa7RvU4c1QBwiTnJvriCD0bCio8EtTsefJLFz47VhNycnFC6UNjeF0JIvVY
+ 6gw/topE3qmz79cc7LJB5wELElxUwtXPSRAAqoSJEscu4J0p9+BWnGgWVDaKu+IpmF24
+ 9sLshxKVHyEbCqE+1M7FjPRNCB6Bem04e0fI16WzZfAVlF51FZQoOBVgKknLBGvXYWM9
+ UK/46RbFqq/SnvBSyBtg1R06MoY5F7w80ujyZjAnsHCUmOQKS6G1y9uPuv2NWyerowTu
+ PKlA==
+X-Gm-Message-State: AGi0PuaaxYhKfqPY44eWPd/Ra9ne/ZoE/Ri0NMu6xSE+zwJTPVvpLqX3
+ y2hfiaSUYhERiw1qOzoQX28bWAs0eg0=
+X-Google-Smtp-Source: APiQypK8OIYYiN6gykZ2+yUOAzzqrFi8mu3EqYubvKFk8hxGMlzvqzcapdG4DZVL9YUImjcWqqXJjg==
+X-Received: by 2002:a17:90a:2843:: with SMTP id
+ p3mr33433462pjf.204.1589382462261; 
+ Wed, 13 May 2020 08:07:42 -0700 (PDT)
+Received: from ?IPv6:2405:204:560d:598d:c50d:71a9:ad3:2adc?
+ ([2405:204:560d:598d:c50d:71a9:ad3:2adc])
+ by smtp.gmail.com with ESMTPSA id v189sm4388928pfv.176.2020.05.13.08.07.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 May 2020 08:07:41 -0700 (PDT)
+Subject: Re: Storing host data on the BMC
+From: Sunitha Harish <sunithaharish04@gmail.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
+ <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+ <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+ <20200511120719.GA10214@heinlein>
+ <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+Message-ID: <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+Date: Wed, 13 May 2020 20:37:32 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <20200510102330.66715-1-tali.perry1@gmail.com>
- <20200510102330.66715-2-tali.perry1@gmail.com>
-In-Reply-To: <20200510102330.66715-2-tali.perry1@gmail.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Wed, 13 May 2020 17:03:26 +0200
-Message-ID: <CADVsX8_2KjAEiOj0H7UgZsC7THyWO8aaxaEJgTMb9t=xtx-huw@mail.gmail.com>
-Subject: Re: [PATCH v10 1/3] dt-bindings: i2c: npcm7xx: add NPCM I2C controller
-To: Tali Perry <tali.perry1@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000852ca805a588e2d1"
+In-Reply-To: <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,217 +91,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, avifishman70@gmail.com,
- venture@google.com, openbmc@lists.ozlabs.org, wsa@the-dreams.de,
- Brendan Higgins <brendanhiggins@google.com>, Ofer Yehielli <ofery@google.com>,
- linux-kernel@vger.kernel.org, kfting@nuvoton.com, robh+dt@kernel.org,
- linux-i2c@vger.kernel.org, andriy.shevchenko@linux.intel.com,
- linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
+Cc: openbmc <openbmc@lists.ozlabs.org>, dkodihal@in.ibm.com,
+ suryakanth.sekar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000852ca805a588e2d1
-Content-Type: text/plain; charset="UTF-8"
+Hi Patrick/Surya,
 
-The example uses "bus-frequency" while description says "clock-frequency"
-for bus speed.
+Seems to me that the design which Intel proposed does not cover the 
+scenario which i was mentioning about.
 
-On Sun, May 10, 2020, 12:27 Tali Perry <tali.perry1@gmail.com> wrote:
+My scenario is :
+1. Redfish client sets the host interface parameters for the IPv4 
+address. These user settable values are stored in the DBus.
+2. When the system is powered on , the pldm reads these DBus values , 
+and sets the BIOS attributes.
+3. The hypervisor reads this BIOS attributes for the interfaces and sets 
+them.
+4. Now the hypervisor sends an indication to the pldm that the IP 
+address is active at its interface and its Origin is Static ( ie : user 
+configured) OR it is DHCP ( ie: not user configured, if its DHCP enabled)
+5. The pldm should store this Origin value "somewhere".
 
-> Added device tree binding documentation for Nuvoton BMC
-> NPCM I2C controller.
+Redfish client would need this value to interpret where the IP address 
+has been Originated from. So we need a DBus property to save it. But , 
+this is actually an attribute which is set by the hypervisor/host - a 
+pldm sensor. Its not suitable to be fit into the BIOS table. My 
+question&proposal is about how/where to store this value?
+
+Thanks & regards,
+Sunitha
+
+
+On 11-05-2020 21:35, Sunitha Harish wrote:
+> Hi Patrick,
 >
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-> ---
->  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 62 +++++++++++++++++++
->  1 file changed, 62 insertions(+)
->  create mode 100644
-> Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> Thanks for sharing the pointers. I was aware that there was work going 
+> on in this area. So was looking for your and Surya's inputs on this.
 >
-> diff --git
-> a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
-> b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
-> new file mode 100644
-> index 000000000000..d6f553154388
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
-> @@ -0,0 +1,62 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/i2c/nuvoton,npcm7xx-i2c.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: nuvoton NPCM7XX I2C Controller Device Tree Bindings
-> +
-> +description: |
-> +  The NPCM750x includes sixteen I2C bus controllers. All Controllers
-> support
-> +  both master and slave mode. Each controller can switch between master
-> and slave
-> +  at run time (i.e. IPMB mode). Each controller has two 16 byte HW FIFO
-> for TX and
-> +  RX.
-> +
-> +maintainers:
-> +  - Tali Perry <tali.perry1@gmail.com>
-> +
-> +properties:
-> +  compatible:
-> +      - const: nuvoton,npcm7xx-i2c
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +    items:
-> +      - description: Reference clock for the I2C bus
-> +
-> +  clock-frequency:
-> +    maxItems: 1
-> +    default: 100000
-> +    enum: [ 100000, 400000, 1000000 ]
-> +    description:
-> +      SCL frequency to use (in Hz). If omitted, 100kHz is used.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +allOf:
-> +  - $ref: /schemas/i2c/i2c-controller.yaml#
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    i2c0: i2c@80000 {
-> +        compatible = "nuvoton,npcm750-i2c";
-> +        reg = <0x80000 0x1000>;
-> +        clocks = <&clk NPCM7XX_CLK_APB2>;
-> +        bus-frequency = <100000>;
-> +        interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-> +        pinctrl-names = "default";
-> +        pinctrl-0 = <&smb0_pins>;
-> +    };
-> +
-> +...
-> --
-> 2.22.0
+> I will go through these designs from my use-case perspective.
+>
+> Thanks & regards,
+> Sunitha
 >
 >
-
---000000000000852ca805a588e2d1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">The example uses &quot;bus-frequency&quot; while descript=
-ion says &quot;clock-frequency&quot; for bus speed.</div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, May 10, 2020, 12=
-:27 Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com">tali.perry1@gma=
-il.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Added device =
-tree binding documentation for Nuvoton BMC<br>
-NPCM I2C controller.<br>
-<br>
-Signed-off-by: Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" targ=
-et=3D"_blank" rel=3D"noreferrer">tali.perry1@gmail.com</a>&gt;<br>
----<br>
-=C2=A0.../bindings/i2c/nuvoton,npcm7xx-i2c.yaml=C2=A0 =C2=A0 =C2=A0| 62 +++=
-++++++++++++++++<br>
-=C2=A01 file changed, 62 insertions(+)<br>
-=C2=A0create mode 100644 Documentation/devicetree/bindings/i2c/nuvoton,npcm=
-7xx-i2c.yaml<br>
-<br>
-diff --git a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml=
- b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml<br>
-new file mode 100644<br>
-index 000000000000..d6f553154388<br>
---- /dev/null<br>
-+++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml<br>
-@@ -0,0 +1,62 @@<br>
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause<br>
-+%YAML 1.2<br>
-+---<br>
-+$id: <a href=3D"http://devicetree.org/schemas/i2c/nuvoton,npcm7xx-i2c.yaml=
-#" rel=3D"noreferrer noreferrer" target=3D"_blank">http://devicetree.org/sc=
-hemas/i2c/nuvoton,npcm7xx-i2c.yaml#</a><br>
-+$schema: <a href=3D"http://devicetree.org/meta-schemas/core.yaml#" rel=3D"=
-noreferrer noreferrer" target=3D"_blank">http://devicetree.org/meta-schemas=
-/core.yaml#</a><br>
-+<br>
-+title: nuvoton NPCM7XX I2C Controller Device Tree Bindings<br>
-+<br>
-+description: |<br>
-+=C2=A0 The NPCM750x includes sixteen I2C bus controllers. All Controllers =
-support<br>
-+=C2=A0 both master and slave mode. Each controller can switch between mast=
-er and slave<br>
-+=C2=A0 at run time (i.e. IPMB mode). Each controller has two 16 byte HW FI=
-FO for TX and<br>
-+=C2=A0 RX.<br>
-+<br>
-+maintainers:<br>
-+=C2=A0 - Tali Perry &lt;<a href=3D"mailto:tali.perry1@gmail.com" target=3D=
-"_blank" rel=3D"noreferrer">tali.perry1@gmail.com</a>&gt;<br>
-+<br>
-+properties:<br>
-+=C2=A0 compatible:<br>
-+=C2=A0 =C2=A0 =C2=A0 - const: nuvoton,npcm7xx-i2c<br>
-+<br>
-+=C2=A0 reg:<br>
-+=C2=A0 =C2=A0 maxItems: 1<br>
-+<br>
-+=C2=A0 interrupts:<br>
-+=C2=A0 =C2=A0 maxItems: 1<br>
-+<br>
-+=C2=A0 clocks:<br>
-+=C2=A0 =C2=A0 maxItems: 1<br>
-+=C2=A0 =C2=A0 items:<br>
-+=C2=A0 =C2=A0 =C2=A0 - description: Reference clock for the I2C bus<br>
-+<br>
-+=C2=A0 clock-frequency:<br>
-+=C2=A0 =C2=A0 maxItems: 1<br>
-+=C2=A0 =C2=A0 default: 100000<br>
-+=C2=A0 =C2=A0 enum: [ 100000, 400000, 1000000 ]<br>
-+=C2=A0 =C2=A0 description:<br>
-+=C2=A0 =C2=A0 =C2=A0 SCL frequency to use (in Hz). If omitted, 100kHz is u=
-sed.<br>
-+<br>
-+required:<br>
-+=C2=A0 - compatible<br>
-+=C2=A0 - reg<br>
-+=C2=A0 - interrupts<br>
-+<br>
-+allOf:<br>
-+=C2=A0 - $ref: /schemas/i2c/i2c-controller.yaml#<br>
-+<br>
-+unevaluatedProperties: false<br>
-+<br>
-+examples:<br>
-+=C2=A0 - |<br>
-+=C2=A0 =C2=A0 i2c0: i2c@80000 {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;nuvoton,npcm750-i2c&quot;=
-;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0x80000 0x1000&gt;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 clocks =3D &lt;&amp;clk NPCM7XX_CLK_APB2&gt;;<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 bus-frequency =3D &lt;100000&gt;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 interrupts =3D &lt;GIC_SPI 64 IRQ_TYPE_LEVEL_H=
-IGH&gt;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 pinctrl-names =3D &quot;default&quot;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 pinctrl-0 =3D &lt;&amp;smb0_pins&gt;;<br>
-+=C2=A0 =C2=A0 };<br>
-+<br>
-+...<br>
--- <br>
-2.22.0<br>
-<br>
-</blockquote></div>
-
---000000000000852ca805a588e2d1--
+> On 11-05-2020 17:37, Patrick Williams wrote:
+>> Hello Sunitha,
+>>
+>> Intel has already made significant progress on this problem domain and
+>> we seem to be fairly converged on the design direction [1,2]. Have you
+>> read through their design proposal?  Are there any oversights in their
+>> design that would affect your needs?
+>>
+>> Their design has been on-going for months now.  I don't think it is
+>> appropriate to start from scratch on the design discussions unless there
+>> is something fundamentally broken about their direction.
+>>
+>> 1. https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/29320
+>> 2. 
+>> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/18242
+>>
+>> I thought there was even some implementation started in bmcweb for this
+>> feature.
+>>
+>> On Mon, May 11, 2020 at 11:44:35AM +0530, Sunitha Harish wrote:
+>>> Hi,
+>>>
+>>> Gentle reminder for the feedback.
+>>>
+>>> Thanks & regards,
+>>> Sunitha
+>>>
+>>> On 06-05-2020 12:53, Sunitha Harish wrote:
+>>>> Hi Deepak,
+>>>>
+>>>> Please suggest which other approach you think is better here for
+>>>> Origin attribute?
+>>>>
+>>>> When the interface is set as DHCPEnabled=true ; similar to the Origin
+>>>> attribute , the IP address, SubnetMask and Gateway will be set by the
+>>>> host. So we would need to consider this usecase also as a candidate
+>>>> for the new approach.
+>>>>
+>>>> Thanks & regards,
+>>>> Sunitha
+>>>>
+>>>>
+>>>> On 05-05-2020 12:29, Deepak Kodihalli wrote:
+>>>>> On 05/05/20 12:12 pm, Sunitha Harish wrote:
+>>>>>> Hi Deepak,
+>>>>>>
+>>>>>> As mentioned , the Origin is the property which will be set by the
+>>>>>> host once the IP address is applied to its interface. Its a
+>>>>>> read-only property for the out-of-band user. But its a closely
+>>>>>> coupled - related attribute on the host setting/BIOS object.
+>>>>> Hi Sunitha,
+>>>>>
+>>>>> What I'm trying to say is - we shouldn't make this coupling. The BIOS
+>>>>> settings table is a group of attributes that can alter the default
+>>>>> behavior of the host firmware. The Origin property you describe
+>>>>> doesn't fit that description.
+>>>>>
+>>>>> The host "sets" several things for the BMC, for eg the host firmware
+>>>>> can tell us functional/presence states of FRUs which the host has
+>>>>> access to. Everything that the host "sets" this way isn't a BIOS
+>>>>> attribute. Once you decouple this, I believe we can think about
+>>>>> options other than the two you have suggested - since both of them
+>>>>> involve making the Origin property seem like a BIOS attribute, which
+>>>>> it clearly is not.
+>>>>>
+>>>>> Thanks,
+>>>>> Deepak
