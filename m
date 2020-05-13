@@ -2,93 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD3B01D20CD
-	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 23:20:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB59A1D217A
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 23:51:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Mnct16cjzDqg3
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 07:19:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49MpK210RFzDqWH
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 07:51:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
- helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=gNzdIgQi; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=xn/gkVi2; 
- dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (unknown [64.147.123.19])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Mnc31l5LzDqfN
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 07:19:14 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 8017F537;
- Wed, 13 May 2020 17:19:01 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Wed, 13 May 2020 17:19:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=pNiNxgiwgVIeO5D03mYNlMrHdNT
- dy7454je32Spc/p0=; b=gNzdIgQiZHlDyQjzuQxercXLatDzKFaSUYIdzkdTRbv
- OEGkhu4ZJp4YyPJNNzotW3992kdOYxovp1TmMc60I56anQ4Qub2zCFBrPdxtqVP3
- Lp/QQfL3a3B97byudj6b2zlM2h3qE/DfrKmr/FHV/HdrU6yRZfgGHYwASE+pUjB/
- 4oXP2nvFW/S85TFVWGXMet21pzNHqPDEArK3kRfdEVW0SugrfT1iqNoSjwAu5+hf
- ox6OWXK8a6kt/kjufZe7BtJcr8dhwaVvK5YJ6nYXCvwG83IJc+tbtE0+LQxPTzPK
- cwuXCB3hNl/cuOrNNxa+FdzqeGIBzgAijCEC6YTQvgA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=pNiNxg
- iwgVIeO5D03mYNlMrHdNTdy7454je32Spc/p0=; b=xn/gkVi2SkbBxY6BtH9301
- WfRLRanmft+IKay6K4bsfPLAO3UrklQhECI+y1EQEVhn4S+YrQ9A9u+Gt7uDXYxB
- eSOeKoe25/wBn6WOkfNXxQR7OFXi+WiWLVwOyvHCTEbMvXmiH08PvhQxRKA3MHYr
- tG7JHpGskZWD9E9/SO/22+oec2sjx4jrVqURQlKxyY+RtBUvdVsDOCZIzm/ZUczh
- ByAT7yPqOB3vSZNLQVeK+hUoplDtyU78JzBw/BGflKpQ8pcDYk79BHqdHSo+vs4A
- kUKImmCquPmU02y1kzHoW0cuAkMcGUJgmClFJgmsuS6iKJDEPZPxCRSuaVik+ljA
- ==
-X-ME-Sender: <xms:RGS8XmCszTC_aQ7IxoQBMqnjIsUb78h58BQQL6Qw_sMKA7XLqcX0sQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleeggdduheejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:RGS8XgjB5gAQNyieOmYOdGG9YWRdYd9ijd5ZMW6Zgyu59gP2reUnSw>
- <xmx:RGS8Xpm4bY55PutfVOUWNkm0OL8eeOdyOVTQsnxt8ihXssIQvrvF8w>
- <xmx:RGS8Xkx7gFiD-pPU-Ye_UBNruocDYc7iMRqbDYGlUEov-QCjArP8Xg>
- <xmx:RWS8XiIkd1ZwWtrpbLYTuZPij5xzFajVjeYg0l1wcEl3cXJsxhQRZg>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 7D9933280059;
- Wed, 13 May 2020 17:18:59 -0400 (EDT)
-Date: Wed, 13 May 2020 16:18:57 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Sunitha Harish <sunithaharish04@gmail.com>
-Subject: Re: Storing host data on the BMC
-Message-ID: <20200513211857.GA1166713@heinlein>
-References: <CADeuMvXQfS01sdwpiM+POkaqdVesj64XGDqPWAPreo_TPbuV8A@mail.gmail.com>
- <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
- <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
- <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
- <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
- <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
- <20200511120719.GA10214@heinlein>
- <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
- <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49MpJF4HMtzDqNy
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 07:50:37 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04DLX6eq074361; Wed, 13 May 2020 17:50:32 -0400
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 31016mv197-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2020 17:50:32 -0400
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 04DLjT3v002331;
+ Wed, 13 May 2020 21:50:31 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma01wdc.us.ibm.com with ESMTP id 3100ub9snm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 May 2020 21:50:31 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04DLoUGN49349086
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 May 2020 21:50:30 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D9FAAE064;
+ Wed, 13 May 2020 21:50:30 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C6E4FAE062;
+ Wed, 13 May 2020 21:50:29 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.153.254])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Wed, 13 May 2020 21:50:29 +0000 (GMT)
+Subject: Re: Security workgroup meeting times
+To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
+ openbmc <openbmc@lists.ozlabs.org>, Manojkiran Eda <manojeda@in.ibm.com>
+References: <66647c93-56c8-f64f-4e13-abe1c703f8f7@linux.ibm.com>
+ <27d0f3fb-98b9-0a5b-f682-40f95142748c@linux.ibm.com>
+ <3a5d85c078c64a0e9bd57a31b9096207@SCL-EXCHMB-13.phoenix.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <80674629-3a0f-3bca-d5c6-5a0efba7323c@linux.ibm.com>
+Date: Wed, 13 May 2020 16:50:28 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
-Content-Disposition: inline
-In-Reply-To: <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+In-Reply-To: <3a5d85c078c64a0e9bd57a31b9096207@SCL-EXCHMB-13.phoenix.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
+ definitions=2020-05-13_09:2020-05-13,
+ 2020-05-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1011
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 adultscore=0
+ impostorscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0
+ cotscore=-2147483648 phishscore=0 malwarescore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2005130183
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,96 +89,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, dkodihal@in.ibm.com,
- suryakanth.sekar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---k1lZvvs/B4yU6o8G
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 13, 2020 at 08:37:32PM +0530, Sunitha Harish wrote:
-> My scenario is :
-> 1. Redfish client sets the host interface parameters for the IPv4=20
-> address. These user settable values are stored in the DBus.
+On 5/13/20 1:43 PM, Bruce Mitchell wrote:
+> If you want to include Silicon Valley it seem like 22:00, 23:00, 00:00, 01:00, and 02:00 UTC/GMT are the only real options.
 
-Ignoring which process "stores" this data, we have two mechanisms over
-DBus to store this kind of data.  I can't tell fully from your
-explaination which is more appropriate for this data.
+I think the current time (10:00am PDT) works for most Silicon Valley 
+folks.  I am looking for a second meeting time good for others not in 
+the Americas.  For example, we've has security collaborations from folks 
+in Switzerland Poland Russia India China and Australia, and I want to 
+find a time that work for those regions.
 
-1. Data we want to split out into well-formed, existing dbus objects.
+- Joseph
 
-    * We already have interfaces to store networking information under
-      xyz/openbmc_project/Network.
+>
+>> -----Original Message-----
+>> From: openbmc [mailto:openbmc-
+>> bounces+bruce_mitchell=phoenix.com@lists.ozlabs.org] On Behalf Of
+>> Joseph Reynolds
+>> Sent: Wednesday, May 13, 2020 11:31
+>> To: openbmc; Manojkiran Eda
+>> Subject: Security workgroup meeting times
+>>
+>> Re-sending this email to refresh this topic.
+>>
+>> Looking for a specific time and ideally someone to run the meeting.
+>> See the replies in the archive here:
+>> https://lists.ozlabs.org/pipermail/openbmc/2020-January
+>>
+>> - Joseph
+>>
+>> -------- Forwarded Message --------
+>> Subject: 	Security workgroup meeting times
+>> Date: 	Mon, 27 Jan 2020 11:42:04 -0600
+>> From: 	Joseph Reynolds <jrey@linux.ibm.com>
+>> To: 	openbmc <openbmc@lists.ozlabs.org>
+>>
+>>
+>>
+>> Team,
+>>
+>> Let's try again to establish another OpenBMC Security Workgroup
+>> meeting
+>> time.  The current meeting time (every other week 10am Pacific Daylight
+>> Time) is working for some, but not for others. To be clear, we would use
+>> the same workgroup, just have alternate meeting times.
+>>
+>> First, let's find a time that works for Australia, Asia, and Europe.
+>> I've seen participation and continued interest from folks in those time
+>> zones. Because the current meeting time is bad for them, let's establish
+>> alternate times.
+>>
+>> Second, I am thinking we could establish alternating meeting times. We
+>> will not find a time that works for everyone.  I try to accommodate
+>> folks who cannot attend by writing a summary of the topics and
+>> conclusions, and by pushing the work back out into this email list.  But
+>> that is not the same as attending a meeting.  I feel that the meetings
+>> foster better responses and more participation than using the email list
+>> alone.  For that reason, I want to continue to meet.  Hence, I am
+>> proposing alternating meeting times.
+>>
+>> Third, I have been running the meetings.  I plan to continue to handle
+>> the Security workgroup meeting agenda, and can help set up the initial
+>> workgroup meetings at alternate times, I would not plan to run them.  I
+>> hope you will solve all the security problems while I am sleeping.
+>> Fortunately, running meetings is easy: just go through the agenda,
+>> introduce each item, wait for people to talk, and summarize the
+>> outcome.  We need a volunteer leader for that.
+>>
+>> Send me your ideas,
+>> - Joseph
+>>
+>> ...snip...
 
-2. Data which is generic / opaque to the BMC and we're just using the
-   BMC as a "storage location".
-
-   * This would be the proposed BIOS attributes interface.
-
-So the question to you is, do you want the BMC to actively interact with
-and manage this data, like we do for our own data, or do you want the
-BMC to just be a dumb passthru of this data?
-
-> 2. When the system is powered on , the pldm reads these DBus values ,=20
-> and sets the BIOS attributes.
-> 3. The hypervisor reads this BIOS attributes for the interfaces and sets=
-=20
-> them.
-
-It doesn't seem like two steps matter with respect to the 1/2 above.
-Where the data is obtained in this regard can be self-contained in your
-PLDM provider, correct?
-
-> 4. Now the hypervisor sends an indication to the pldm that the IP=20
-> address is active at its interface and its Origin is Static ( ie : user=
-=20
-> configured) OR it is DHCP ( ie: not user configured, if its DHCP enabled)
-> 5. The pldm should store this Origin value "somewhere".
-
-This description makes it seem like you want it to be more "managed"
-data than "opaque", if I'm reading this correctly.
-
-> Redfish client would need this value to interpret where the IP address=20
-> has been Originated from. So we need a DBus property to save it. But ,=20
-> this is actually an attribute which is set by the hypervisor/host - a=20
-> pldm sensor. Its not suitable to be fit into the BIOS table. My=20
-> question&proposal is about how/where to store this value?
-
-I think we need to be careful about being hung up on the name "BIOS
-table".  For opaque data that is more OS-centric,  we could  make the
-proposed "BIOS Attributes" interface more generic to store different
-levels of host-owned data: BIOS, Hypervisor, OS.  This might be a good
-comment to make on the interface code review.
-
-If you are wanting the data to be managed, utilizing existing DBus
-interfaces we have around networking, doesn't phosphor-settingsd cover
-that from an implementation perspective?
-
---=20
-Patrick Williams
-
---k1lZvvs/B4yU6o8G
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl68ZD8ACgkQqwNHzC0A
-wRmzlA//RoODHfwTACWU+WbiMeZbgekVoBLlD/KD8qz0TgAvfW2KxFodXsAesu2H
-cdP4BkDkItZ7dWCGTGguI6bQabhfutHRDPtP3LNMUvYHbaUcHVQu1I1ih8H6mENG
-M7dmxI8l0dQyZOP2m9Zexj8i9LEYkvraIWeLiwS+ADadSWvmbZ0GbGjFDrxqjw7V
-Q8hPuB3mfovIt6dqpONyKENQs0wtYBnz/YoZhpGamNkkYe7mrqcshwaF0jNprrkC
-IVTPZiroraTTPpkYVVSLUkcLlXg+J/tHp7+rxQoRmUl3K8hzA08gh6H6d2692Av3
-JYbm+5hkySuVgyrqihWA6tqqD/Zv5TIgAq5hG/59sWgExTTp8gIOf0bfAm62GdId
-Jzv9SvFHGYc4EANrU19bqAGZTgSDeVBONducIODwgWToZGtta0Qt9QuPQEIN7Gw0
-dyILb9LGj7lHnNPHBAD6dGn9EyoTZuCEpPkAj9iHxMfnOOMxhQiOYTVHWqhdPbMj
-JSpFMFJpR4Gr6NmKRVe56mDA5vLBbdDHnTOnNt42ch6iPqNyxxsPGLwEeT6BjsPJ
-/VWGBWbFkA458XrIEIWinSAMQi2UFbGvP3yFtjF9fMrbTnj5vY03dJDMJqU7d8lq
-pNUQQzPpULbCdP1l+Uw4tc/5RnmHEOELtHQpn0wgKPecT1U9tT8=
-=ANn8
------END PGP SIGNATURE-----
-
---k1lZvvs/B4yU6o8G--
