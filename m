@@ -2,87 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25C4C1D00E9
-	for <lists+openbmc@lfdr.de>; Tue, 12 May 2020 23:32:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 20F961D0371
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 02:18:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49M9xZ2Y5SzDqpB
-	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 07:32:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49MFdf21GfzDqkj
+	for <lists+openbmc@lfdr.de>; Wed, 13 May 2020 10:18:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=XFdn0Lw3; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=2M238+f2; 
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=F8TG52ZX; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=F8TG52ZX; 
  dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+X-Greylist: delayed 92 seconds by postgrey-1.36 at bilbo;
+ Wed, 13 May 2020 10:18:06 AEST
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49M9ws0sX4zDqdX
- for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 07:31:40 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 0831147B;
- Tue, 12 May 2020 17:31:37 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 12 May 2020 17:31:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=cO0CFQnGD+DLBmF/Nya9H3Aqvv4
- +T4oGmQO0a6yaD8k=; b=XFdn0Lw3+40Uj+0qUKedWDHCWIn1jnvt3RC7AQiBYpr
- vwjstBQjlxNJqQFAIY8qxSJ7S1wark6FAbmdHiuvMY7WNJFChBPMNH0Qbg5pdemu
- HgaaMR+naTvF3zO6pBox0MO2V4apjPJbFL0BsARkEJ7pXUyrucSazwQ1uTYlXUjg
- cSTjKSDRs3vutbdU83ZPPYNM55EchLlkFokLB4+SFkI4JU5nQAWF8AXtsUVcnS8m
- l+P7T4lvhu/q04DNmaKpC72xlDBP6CaYQ5jLDH47Uzp8WslDc46rA+u9IhQNt+3k
- yAy3WU0a8gr8QaZYd3rW/GoHU4mCUN80gd3xj6OsSZw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=cO0CFQ
- nGD+DLBmF/Nya9H3Aqvv4+T4oGmQO0a6yaD8k=; b=2M238+f2ROr+53gzlNNF8r
- 3kLz/cjE+j2NwlxmScMlnBBt/XyuTvh6zwQKUcUfphBc8JEWVbqmilOM1vA7p5ct
- 5jPAIDuB0ywVuMYyBR54gNq0hK6sEjrtNxh5SBgWoFJkRVFSdICaToCADhVcu9Ry
- 8BLeyOX9/MkERlEqfRiUKMRKozZjPo86qvEBt3dYBKscU38nRAZ41vTl2a5S695O
- 4Nir0WEV56OKLVKEs1470N4yFKENrZBMIr4iQZBee0Az+T2VZBo1oWVAHNzFFVNO
- DbAiOd8DlXwTp9Jot3FxwxnS+380Evhh62bFb0gCLh0uG1NnNQJyVYBfHcTOEDxQ
- ==
-X-ME-Sender: <xms:uRW7Xrwn009vVm6EjPvOCi1CqKcjqN4TlBpmfARw3-5fJ2yj2uegdQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrledvgdduheekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepuddufeelueehhfelheejjefgueej
- hefhtdeludefheekudduveekieduudfggeeknecuffhomhgrihhnpehophgvnhgsmhgtqd
- hprhhojhgvtghtrdighiiinecukfhppeduieeirddujeeirdduvddtrddutdeinecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkh
- esshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:uRW7XjTv4KOo5Qly23IxWtpMCrlVp85a9OE2Atq5eKi_v2i8rkBvEw>
- <xmx:uRW7XlXp_nBDogfZAaEaSyzPNJAYwFjzMxoLjNFG4W0PZl9vz49hGg>
- <xmx:uRW7XlgjazfafQ0G3UA-Wg7ikD_pDOXoUAkHMg_umIA0QCquoFpN-Q>
- <xmx:uRW7Xgr8XZC-IAfYGlU83AWp_oLKo_fR7akr41fUPo5CzCYVJR8Gpw>
-Received: from localhost (mobile-166-176-120-106.mycingular.net
- [166.176.120.106])
- by mail.messagingengine.com (Postfix) with ESMTPA id 355093280059;
- Tue, 12 May 2020 17:31:37 -0400 (EDT)
-Date: Tue, 12 May 2020 16:31:35 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: openbmc@lists.ozlabs.org
-Subject: Re: [PATCH u-boot-v2016.07] libfdt: Make it compatible with newer dtc
-Message-ID: <20200512213135.GI10214@heinlein>
-References: <20200512212755.621891-1-patrick@stwcx.xyz>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49MFct1NsQzDqMk
+ for <openbmc@lists.ozlabs.org>; Wed, 13 May 2020 10:18:05 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1589329082;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=7W7uIojtH8vI5M/89U1WOETJxDuHeHE1BIG3Lbw9KgQ=;
+ b=F8TG52ZXrbZtwkc/66eTutFo62QPNH+NqUeIm9nXZilhTceUjbCi4BG1UQbCQ8bSZEK9ZK
+ 8vr3ntVMzyLV9SmfE/VobMJ8W4wjUaC0eLaRP+XbbCPj+NDcxs0dcZhTcNeiySu4jFQbez
+ 8Y2POdNbd8wqF/WDjPgIyJz2kwMo0RQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1589329082;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=7W7uIojtH8vI5M/89U1WOETJxDuHeHE1BIG3Lbw9KgQ=;
+ b=F8TG52ZXrbZtwkc/66eTutFo62QPNH+NqUeIm9nXZilhTceUjbCi4BG1UQbCQ8bSZEK9ZK
+ 8vr3ntVMzyLV9SmfE/VobMJ8W4wjUaC0eLaRP+XbbCPj+NDcxs0dcZhTcNeiySu4jFQbez
+ 8Y2POdNbd8wqF/WDjPgIyJz2kwMo0RQ=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-341-Bq6xw1krNYSpLV_hsSrUAw-1; Tue, 12 May 2020 20:16:24 -0400
+X-MC-Unique: Bq6xw1krNYSpLV_hsSrUAw-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Tue, 12 May 2020 17:16:22 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Tue, 12 May 2020 17:16:22 -0700
+From: Patrick Voelker <Patrick_Voelker@phoenix.com>
+To: "OpenBMC (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
+Subject: phosphor-ipmi-flash interfaces
+Thread-Topic: phosphor-ipmi-flash interfaces
+Thread-Index: AdYot2r4k1N2F+XPTC+e6VW9k+WH7QAA/F1g
+Date: Wed, 13 May 2020 00:16:21 +0000
+Message-ID: <d5f9ec4e5c554c2b9588cb7ba2bec581@SCL-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [50.39.166.255]
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="4BlIp4fARb6QCoOq"
-Content-Disposition: inline
-In-Reply-To: <20200512212755.621891-1-patrick@stwcx.xyz>
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: multipart/alternative;
+ boundary="_000_d5f9ec4e5c554c2b9588cb7ba2bec581SCLEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,61 +86,108 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- Alejandro Enedino Hernandez Samaniego <aehs29@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---4BlIp4fARb6QCoOq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--_000_d5f9ec4e5c554c2b9588cb7ba2bec581SCLEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=WINDOWS-1252
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 12, 2020 at 04:27:55PM -0500, Patrick Williams wrote:
-> From: Alejandro Enedino Hernandez Samaniego <aehs29@gmail.com>
->=20
-> DTC does not use an underscore for the LIBFDT_H and
-> LIBFDT_ENV_H variables, this causes an error since
-> u-boot does.
->=20
-> Remove the underscore from these variables to allow u-boot
-> to compile along with dtc.
->=20
-> Signed-off-by: Alejandro Enedino Hernandez Samaniego <aehs29@gmail.com>
-> Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
-> ---
+I got a "ipmibt" interface transfer complete and want to move on to one of =
+the faster interfaces to speed up debug since it takes so long to transfer =
+the FW image.
 
-Hi Joel,
+For the "ipmilpc" and "ipmipci" interfaces, do those options require ASPEED=
+_LPC_CTRL and ASPEED_P2A_CTRL respectively in the BMC's kernel config?  Tho=
+se two configs happen to be disabled in the BMC I'm building and I've been =
+searching for examples on how to configure the memory regions correctly bot=
+h on the BMC and the host side and am not entirely sure what I'm looking fo=
+r.
 
-This patch is a port from facebook/openbmc to fix some failures we're
-seeing building u-boot in some cases.  I originally tried to submit it
-as a Yocto patch [1] and Andrew Jeffery suggested I send it to your
-branch instead.
 
-1. https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/31833
+--_000_d5f9ec4e5c554c2b9588cb7ba2bec581SCLEXCHMB13phoenixcom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 
---=20
-Patrick Williams
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+=09{font-family:"\@PMingLiU";
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09margin-bottom:.0001pt;
+=09font-size:11.0pt;
+=09font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+=09{mso-style-priority:99;
+=09color:blue;
+=09text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+=09{mso-style-priority:99;
+=09color:purple;
+=09text-decoration:underline;}
+span.EmailStyle17
+=09{mso-style-type:personal;
+=09font-family:"Calibri","sans-serif";
+=09color:windowtext;}
+span.EmailStyle18
+=09{mso-style-type:personal-reply;
+=09font-family:"Calibri","sans-serif";
+=09color:#1F497D;}
+.MsoChpDefault
+=09{mso-style-type:export-only;
+=09font-size:10.0pt;}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D">I got a &quot;ipmibt&q=
+uot; interface transfer complete and want to move on to one of the faster i=
+nterfaces to speed up debug since it takes so long to transfer the FW image=
+.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D"><o:p>&nbsp;</o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D">For the &quot;ipmilpc&=
+quot; and &quot;ipmipci&quot; interfaces, do those options require ASPEED_L=
+PC_CTRL and ASPEED_P2A_CTRL respectively in the BMC's kernel config?&nbsp; =
+Those two configs happen to be disabled in the BMC I'm building
+ and I've been searching for examples on how to configure the memory region=
+s correctly both on the BMC and the host side and am not entirely sure what=
+ I'm looking for.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:#1F497D"><o:p>&nbsp;</o:p></spa=
+n></p>
+</div>
+</body>
+</html>
 
---4BlIp4fARb6QCoOq
-Content-Type: application/pgp-signature; name="signature.asc"
+--_000_d5f9ec4e5c554c2b9588cb7ba2bec581SCLEXCHMB13phoenixcom_--
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl67FbUACgkQqwNHzC0A
-wRnJqhAAqIYyK/pvmWdffJhBd2luC2wIq2VfMyT+PQDm1ZJ/Zsa/kPG6antjf3nM
-SwNCdNHD6sWkNQ2kADtwaS65G0cyB22guoJck+54I9fugs4N6ISlXPYIYmqaIR+A
-c5PRPmEyFnPspB6wrnhh20zvbPu88I4nc2BVHP+QTyBlqBrQif/y9KegcqlJGI/6
-UlJKXvUXGxMpJHV6bu6Gwwz1a7q6qWI5ay86ieHfCY/INvkno9aXNNljv2pwddt0
-XDRm1FAqZbojvlNjITgghr2BTCzeYndLbw3iviP34sE+q6Qv5+fTx0EQz1eZXEyy
-858ILnNTfCNFLZOIV3/hIwRBR+K5BAqwuRdui1bWvRaqqZetnMjb1BUPLGWCftRv
-Nia33H7f2AnFAolJqxODZZWgR76K2bhrP4bcth3ObOV2PyF8kjRcDGomIVzejc/X
-g0xpUldcRoqrYhoUCMswOk7GnvYBJZZE6oS4HZhOLH/Rbbvu0ivjutyIBlx3VzHn
-Vj6mfohE6G1ea7fnJ0dky4B5bBbSDsHDhoskw7yHrf84f01DPKfR0yAz1UeDUWyy
-dhMtHTGqSrwdL3EApWE2jxviXdGwhQXoL67Ydk7DGAdA4nCYpNjj7qd5rOtA3rmn
-i4hbWSeEQ/om5AL6pFWWW95d4W6X0r0dm2rOtj+9PElNkxkTHjw=
-=Wk20
------END PGP SIGNATURE-----
-
---4BlIp4fARb6QCoOq--
