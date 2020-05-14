@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 054F81D4087
-	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 00:11:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BC4B1D41E6
+	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 01:59:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49NQk20nxTzDqwy
-	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 08:11:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49NT6L2xx1zDqy9
+	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 09:59:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,69 +17,69 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=cVTJ8XtE; 
+ header.s=fm2 header.b=guVFuZkt; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=BmOB1pBQ; 
+ header.a=rsa-sha256 header.s=fm2 header.b=UNavdBPW; 
  dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49NQj90SH3zDqw0
- for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 08:10:51 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49NT5V4FzgzDqDp
+ for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 09:58:37 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 0D55A5C0120;
- Thu, 14 May 2020 18:10:48 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 9C0AA5C0110;
+ Thu, 14 May 2020 19:58:34 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 14 May 2020 18:10:48 -0400
+ by compute3.internal (MEProxy); Thu, 14 May 2020 19:58:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm2; bh=E/M8xr2v5wHOj02alFITDo4bBri+9HB
- PYEwR9tiAF5E=; b=cVTJ8XtEX7gly1vrIS+J6NzZZmRe1epZGzYV4VEGzr/ogoy
- Dyv41JFFLbruyyp3pQVo6dVA6W2XFP/azyCO4YyK9+WXHlUWrF0cyCjCJBaDFvO5
- jN5jbtIJ8GLYwZSUOWkVw8AmBfO67SVLWCmG6x1bdXRoWdGhBZH6PkrFhZA3cxZp
- MLRvSju0zQfA6iLs+r39BP+l+qw3zYHSGMW05+zKkcJn+UHCPYoPezgPMGS+pYAv
- AtHlNDCMdd/odQrLUGWpEgKjY5T526LOs/2ZFWKyk1y+vRNM0uMD52lB+OrS0yjY
- 5ZLji51Ml5kJvqHUwEjqEeM249LM2pWrUVRlb7g==
+ :subject:content-type; s=fm2; bh=ikrlVkNizpx9cDNTynic5IrJyG4IUSu
+ YIcWJKZDpQCs=; b=guVFuZktF1mQOXzZGRJrurc8F/a8itV1e3t60y4AOR6QiKr
+ rrSvl1wPpXWbjiMQizTzxwStJ0UOKVap7rDkw+ows02go7dq72WR+P9OHk4mWp6Q
+ jdAxI5BRbCGyBOWjqeUQnNB3CEoUXpD/huCMqvPpbCJF5ZlRwORM3s7q1Y5cAAYx
+ f1X/owwGDMlFcEgPyIdFtvOdQ36nspUQR8Ypvbh8WJabs0GAhFO/TVRlZgY70P1N
+ fo5nS1gXkR/X8F4FUAt6gW1ouKVui9qhkwphiKQ6yJ6tv+bquECtRY90JEQ6fv52
+ bVuqG8FYBgPfbeZAi54lx8dxPJuWU0KbsmjyRzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=E/M8xr
- 2v5wHOj02alFITDo4bBri+9HBPYEwR9tiAF5E=; b=BmOB1pBQXyFehAY7Abcvr2
- V1sNo4fa/Q0tsZNvlEMHXEkbYSFBgunrtbp75xAUHsOUyaIfSAMpY3f9LOUEJwUg
- 1lxfRPYqe3HTVUIX4JHKGpHeJ7vdeLYWLSqpPZl1jeRhadhoEyv9YNdliTbJ3/Oe
- Av44JjYDqf3w6mVtmHlgtO5lgBlE9Isz3K7HqyCJ8kbTVo80UfcXHXM7qWP0XMP2
- UYg6hvEsxO5blTGop0lI0Ev0/7/K+qrUJ3Krl4KNbOggNW8tfrt+MEQ0kDaQARIT
- wYp1HDVbitp7tx6RKNkNbgTyryieYbhOrcyVleGfm0rhP9Kr9cYAfBMIxOTEidRw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=ikrlVk
+ Nizpx9cDNTynic5IrJyG4IUSuYIcWJKZDpQCs=; b=UNavdBPWlab48M3EOXmofQ
+ xW5aA5RCj9M9iiJ/Gr/n1+dvm9v89IneTq7k5ERQAZoEiaORD9jTQRSCRGw3JBB9
+ /yLmUgnZ+Z5oSeAQ9y3rT6gVcltiSecLPjJ8LbktdREZePgx2GQamTMdSlH1/0c/
+ iFQ0PVbBvaLvKfe5VPnVYLGjtQX8BXNXt8s1clMlsvk45AHJXHXOG8+V0whZqDpR
+ TmZpZrakqjQ9g25PzeazLdnYM+x4JLO0Cuokw6xpAehUL3kTU8g4cHd1a8Exjfnt
+ iEae03a+ctDAkp+ZWV+RIj0Z3edidCBEC7rlPJ6nfE4KuLtBuYV37gzJMl39kHXw
  ==
-X-ME-Sender: <xms:5sG9XsIsPYRqN5ntEfWn15ZMfZ-dE_d_wbMGYjxkUhFVEjfrIFWvlw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleejucetufdoteggodetrfdotffvucfrrh
- hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
- lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
- epofgfggfkjghffffhvffutgesthdtredtreerjeenucfhrhhomhepfdetnhgurhgvficu
- lfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrfgrthhtvg
- hrnhepuddttdekueeggedvtddtueekiedutdfguedutdefieeuteefieelteetvddthfei
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnug
- hrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:5sG9XsJ2EAttXBoBXQa57qV7I0BJ7GUcmWNo7kr21SkmwcBmtrXvYQ>
- <xmx:5sG9Xss07S4t6mvWEdZDZRg6CN2jPGkZPEIf2wXRmaIymCvYaoJXBw>
- <xmx:5sG9XpZIdRIgR1hEDUGVXErALWlPbRJG69_9HiMa89oFMQ8-sstqdQ>
- <xmx:6MG9Xt3_r74fCZ_M3x3J9QdcdhoD6D2MfbA0jDMTgQMNtQ5AY9rYzA>
+X-ME-Sender: <xms:Kdu9XkuiIpK_w7PClCQrkES2I-kcsFoEWxXOsAy8jr176bOpLkPRfQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleejgddvudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpedutddtkeeugeegvddttdeukeeiuddtgfeuuddtfeeiueetfeeileettedv
+ tdfhieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:Kdu9XheYqEX6y4K7ZaQ9L46aw_hfKZleosmR0sydMZO4xn3Aia8XCA>
+ <xmx:Kdu9XvzDAUC-TMYcwh8I-MdJ-VR6ehK4C21ILrWaiXoj-C1O-7uBLQ>
+ <xmx:Kdu9XnNGCFDqh4NZO9H1EqeXhX0B-0Yxmrt4o1Vf8Vqe8isjwikXYw>
+ <xmx:Ktu9XnLrau-Okh7rDsFL2Rs4vM8SSCalolojjPh5yKGqDw7StF4uiQ>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 7BA99E0128; Thu, 14 May 2020 18:10:46 -0400 (EDT)
+ id B5953E0128; Thu, 14 May 2020 19:58:33 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.3.0-dev0-413-g750b809-fmstable-20200507v1
 Mime-Version: 1.0
-Message-Id: <6922803d-99c9-4d23-85d8-32eeecad0c34@www.fastmail.com>
-In-Reply-To: <20200514135401.GD1166713@heinlein>
+Message-Id: <d890ea78-6b4f-44b3-8b4a-fac878e2d8fb@www.fastmail.com>
+In-Reply-To: <20200514132703.448317-4-andrew@aj.id.au>
 References: <20200514132703.448317-1-andrew@aj.id.au>
- <20200514132703.448317-5-andrew@aj.id.au> <20200514135401.GD1166713@heinlein>
-Date: Fri, 15 May 2020 07:40:26 +0930
+ <20200514132703.448317-4-andrew@aj.id.au>
+Date: Fri, 15 May 2020 09:28:11 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Patrick Williams" <patrick@stwcx.xyz>
-Subject: =?UTF-8?Q?Re:_[RFC_PATCH_linux_dev-5.4_4/4]_ARM:_configs:_aspeed-g5:_Set?=
- =?UTF-8?Q?_CONFIG=5FFORTIFY=5FSOURCE=3Dn_to_appease_kprobes?=
+To: "Joel Stanley" <joel@jms.id.au>
+Subject: =?UTF-8?Q?Re:_[RFC_PATCH_linux_dev-5.4_3/4]_ARM:_configs:_aspeed-g5:_Ena?=
+ =?UTF-8?Q?ble_kprobes?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -98,51 +98,33 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Thu, 14 May 2020, at 23:24, Patrick Williams wrote:
-> On Thu, May 14, 2020 at 10:57:03PM +0930, Andrew Jeffery wrote:
-> > Setting CONFIG_FORTIFY_SOURCE=y and CONFIG_KPROBES=y on arm gives a panic when
-> > trying to insert a new probe:
-> > 
-> > $ echo r:myretprobe do_sys_open '$retval' >> /sys/kernel/debug/tracing/kprobe_events
-> > [   51.688589] detected buffer overflow in memcpy
-> > [   51.689430] ------------[ cut here ]------------
-> > [   51.689627] kernel BUG at lib/string.c:1096!
-> > [   51.689800] Internal error: Oops - BUG: 0 [#1] SMP ARM
-> > [   51.690107] Modules linked in:
-> > [   51.690442] CPU: 0 PID: 107 Comm: sh Not tainted 5.4.39-00272-ga1ee7c973659 #6
-> > [   51.690674] Hardware name: Generic DT based system
-> > [   51.691184] PC is at fortify_panic+0x18/0x20
-> > [   51.691371] LR is at __irq_work_queue_local+0x40/0x7c
-> > [   51.691575] pc : [<8083eaa4>]    lr : [<8020e0ec>]    psr: 60000013
-> > [   51.691812] sp : bd237cb0  ip : bd237bc0  fp : bd237cbc
-> > [   51.692129] r10: 00000007  r9 : 00000000  r8 : 00000060
-> > [   51.692395] r7 : 8011f2f0  r6 : b5092480  r5 : 7f000000  r4 : b4c53b4c
-> > [   51.692723] r3 : 80c04c48  r2 : 00000000  r1 : bd7c5448  r0 : 00000022
-> > [   51.693088] Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-> > [   51.693449] Control: 10c5387d  Table: b50f406a  DAC: 00000051
-> > [   51.693769] Process sh (pid: 107, stack limit = 0x4e9b7225)
-> > [   51.694126] Stack: (0xbd237cb0 to 0xbd238000)
-> > 
-> > YOLO it and disable fortified source.
-> > 
-> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-> > ---
-> >  arch/arm/configs/aspeed_g5_defconfig | 1 -
-> >  1 file changed, 1 deletion(-)
+On Thu, 14 May 2020, at 22:57, Andrew Jeffery wrote:
+> Enable kprobes to improve the debugging experience on the AST2500 and
+> later.
 > 
-> Doesn't this mean we're just hiding a bug with KPROBE code
+> Setting CONFIG_KPROBES=y results in the following change in kernel size:
+> 
+> Before:
+>          $ size vmlinux
+>             text    data     bss     dec     hex filename
+>          8240349 2388862  172304 10801515         a4d16b vmlinux
+>          $ stat --printf '%s\n' *.zImage
+>          3458368
+> 
+> After:
+>          $ size vmlinux
+>             text    data     bss     dec     hex filename
+>          8279214 2399530  176912 10855656         a5a4e8 vmlinux
+>          $ stat --printf '%s\n' *.zImage
+>          3471880
+> 
+> This gives a 54,141 byte increase to vmlinux and a 13,512 byte increase
+> to the size of the compressed kernel image. In the most constrained BMC
+> flash layout (arch/arm/boot/dts/openbmc-flash-layout.dtsi) this change
+> decreases the free space in the kernel partition from 998,080 bytes to
+> 984,568 bytes.
 
-Possibly.
-
-> and
-> potentially hiding more bugs with other drivers?
-
-Yes.
-
-You should view this series as "things I did to get kprobes 'working'" and not
-"patches we should apply to the kernel tree". This one in particular was a
-low-key troll patch to flush out any information on why
-CONFIG_FORTIFY_SOURCE=y breaks kprobes in particular. I mean, it even
-features "YOLO" in the commit mesage, so don't take it too seriously :)
+Just realised I should be measuring the FIT not the zImage so ignore the
+free-space numbers for the moment.
 
 Andrew
