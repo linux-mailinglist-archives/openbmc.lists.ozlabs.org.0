@@ -2,50 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D5DC1D2EE9
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 13:56:06 +0200 (CEST)
-Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49N9386tLNzDqTk
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 21:55:32 +1000 (AEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 341451D2FE6
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 14:37:17 +0200 (CEST)
+Received: from bilbo.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 49N9yg3kWGzDqLV
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 22:36:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
- envelope-from=prvs=39665d7fe=davidwang@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-X-Greylist: delayed 71 seconds by postgrey-1.36 at bilbo;
- Thu, 14 May 2020 21:33:50 AEST
-Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
- by lists.ozlabs.org (Postfix) with ESMTP id 49N8Z65syBzDql9
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 21:33:48 +1000 (AEST)
-IronPort-SDR: g009D+c6M6xqkUEcSmTsQamoXjWvu1F9OMDBdawG5bQewnH9CxJpzvNptggjqG3ZW9SV6xW6be
- ALTvkxCwf9aw==
-Received: from unknown (HELO mailbx08.quanta.corp) ([10.243.91.103])
- by mx01.quantatw.com with ESMTP; 14 May 2020 19:32:35 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx08.quanta.corp
- (10.243.91.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 14 May
- 2020 19:32:33 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Thu, 14 May 2020 19:32:33 +0800
-From: =?big5?B?RGF2aWQgV2FuZyAopP2utqZ0KQ==?= <DavidWang@quantatw.com>
-To: "gkeishin@in.ibm.com" <gkeishin@in.ibm.com>
-Subject: Openbmc-test-automation checking service root URL "/"
-Thread-Topic: Openbmc-test-automation checking service root URL "/"
-Thread-Index: AdYp4qgyJHxzOCQnQC+Zg+5dnQ7fJg==
-Date: Thu, 14 May 2020 11:32:33 +0000
-Message-ID: <a8c9861001b14bf7ba2bd6cba832d2f5@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: 1FF197BEB95ED73B613D68321AFCA2345B1BDB686989AA47F0E02DEE75FA24B32000:8
-Content-Type: multipart/alternative;
- boundary="_000_a8c9861001b14bf7ba2bd6cba832d2f5quantatwcom_"
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=K4ihyoL0; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=trCXeoaG; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (unknown [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49N9vf6d15zDqqD
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 22:34:05 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 9437DB5A;
+ Thu, 14 May 2020 08:33:53 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Thu, 14 May 2020 08:33:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=+hyWubth4+CaszOckLL1G8K8Auq
+ yvdSGSBkJSywwnDc=; b=K4ihyoL0L7WUp8Zn3yeh2yrmchdeDmHaAWTgesmQeOj
+ dGmfHfCoyMyqoWta0Zz+XrwTjLMmheiqZDC/ALfp/ihsZvnGmAHPnWkR46RAB/E4
+ CCXRL90kLO/lPpkWsNKuuznJrDI0RYw9mWSR3aYD6J2xFXStYVuhRPA/ZTaXwsvh
+ Ot9vkCcW5iA1DtuJQUsliRr+7eBtBJsvIiaDLECSk9mg8Nn1UMe+qudMYM45Hif8
+ BvtT2AWaWQDHACMC/PAKQgLHqEqTMRsAJnohhp35D5tGAEFcPikRU2Fhujrp4xP1
+ MveDB+mW3e+znVHEdPOz0eEwc+r9rxom63F2iReIpkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=+hyWub
+ th4+CaszOckLL1G8K8AuqyvdSGSBkJSywwnDc=; b=trCXeoaGDIVX70gWEiPA29
+ oLySdHZ6n1n/Zmo3gZ9v9h24HdT5tbSYVvcnYoxDRwSwC5Y0Fy/IHatCfkBLxVYo
+ gtED47vOD0o7tvCr9bjqfSJjFeHOw1/TvoY4ON4lMO/VrHwRBXNXiiWTrjWk7d7A
+ 1pktfTvBPRCH2BS2ZvCjSE8sgZ6rovTAxvIVOIZP+8LaYZQEw6+gviPcULGzKoMS
+ nSIiReViirdyvjaX9z4ACBdPrgjJMS47zDygIGvbRamUZHkjxHPrBFjwLXOZ8FZM
+ wXfGlDEb4kwq3/+33peg/tbOjFqPivw0Sa6DqYYvtwJh++Up5/76TBdzg9sOeuYQ
+ ==
+X-ME-Sender: <xms:sDq9Xt_dtyHkJSC5Sgs-GuX_J0gEAlw4YczKiE_Mu4ay5Km13xTBCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleeigdehudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
+ fefgtdehhfektdelffevkefgueffhedtieenucfkphepjeeirddvhedtrdekgedrvdefie
+ enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
+ rhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:sDq9XhvuKcBIh9H9E3-JMbecr1iwbhc4xTek6F2R0FfX5JcAgGUu4g>
+ <xmx:sDq9XrD7CmDb3mzYLLWYBaCEqw20vkumsop3QTqQvgr-4k-WWCSC6w>
+ <xmx:sDq9Xhe28K3p4iVe5UjJiPFwdv30CJyM-dTNqgOYFSSFoEOsHiK-aA>
+ <xmx:sTq9Xk3NyaJndsUTUJHbCuhDqFDXJhG804Dlb9oC9h0H_-BKu4WDLg>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 28027328005D;
+ Thu, 14 May 2020 08:33:52 -0400 (EDT)
+Date: Thu, 14 May 2020 07:33:50 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Subject: Re: Storing host data on the BMC
+Message-ID: <20200514123350.GB1166713@heinlein>
+References: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+ <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+ <20200511120719.GA10214@heinlein>
+ <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+ <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+ <20200513211857.GA1166713@heinlein>
+ <10275d64-bebd-cb33-0a16-21299b7b1880@linux.vnet.ibm.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="aVD9QWMuhilNxW9f"
+Content-Disposition: inline
+In-Reply-To: <10275d64-bebd-cb33-0a16-21299b7b1880@linux.vnet.ibm.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,105 +101,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>, suryakanth.sekar@linux.intel.com,
+ Sunitha Harish <sunithaharish04@gmail.com>, dkodihal@in.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_a8c9861001b14bf7ba2bd6cba832d2f5quantatwcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
 
-SGVsbG8gR2VvcmdlOg0KDQpJoaZtIHRyeWluZyB0byB0ZXN0IEJNQyB3aXRoIHRlc3Rfc2Vydmlj
-ZV9yb290LnJvYm90IGluIG9wZW5ibWMtdGVzdC1hdXRvbWF0aW9uLg0KSG93ZXZlciB0aGVyZaGm
-cyBhIHByb2JsZW0gdGhhdCByb2JvdCB0cmllZCB0byBjaGVjayAgoacvoagsICChpy9yZWRmaXNo
-oagsICChpy9yZWRmaXNoL3YxoaggIFVSTCBpbiByZWRmaXNoLA0KYnV0IGl0IHNlZW1zIHRoZXJl
-oaZzIG5vIKGnL6GoIGFzIGEgc2VydmljZSByb290IG5vZGUgaW4gYm1jd2ViLg0KU2hvdWxkIGl0
-IGV4aXN0PyBEbyB5b3UgaGF2ZSBhbnkgc3VnZ2VzdGlvbiBhYm91dCB0aGlzPw0KDQpUaGFua3MN
-CkJlc3QgUmVnYXJkcywNCkRhdmlkDQoNCg==
-
---_000_a8c9861001b14bf7ba2bd6cba832d2f5quantatwcom_
-Content-Type: text/html; charset="big5"
+--aVD9QWMuhilNxW9f
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hello George:<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I=A1=A6m trying to test BMC wit=
-h test_service_root.robot in openbmc-test-automation.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">However there=A1=A6s a problem =
-that robot tried to check &nbsp;=A1=A7/=A1=A8, &nbsp;=A1=A7/redfish=A1=A8, =
-&nbsp;=A1=A7/redfish/v1=A1=A8 &nbsp;URL in redfish,
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">but it seems there=A1=A6s no =
-=A1=A7/=A1=A8 as a service root node in bmcweb.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Should it exist? Do you have an=
-y suggestion about this?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">David<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+On Thu, May 14, 2020 at 09:13:47AM +0530, Deepak Kodihalli wrote:
+> On 14/05/20 2:48 am, Patrick Williams wrote:
+> > On Wed, May 13, 2020 at 08:37:32PM +0530, Sunitha Harish wrote:
+=20
+> I think the current proposal from Surya enables this already. Do you=20
+> just mean the design doc should explicitly state this isn't restricted=20
+> to the "BIOS" firmware.
 
---_000_a8c9861001b14bf7ba2bd6cba832d2f5quantatwcom_--
+Yep.
+
+> As far as Sunitha's question goes, my point is that not all host=20
+> firmware generated data is a BIOS attribute. For eg if the host tells me=
+=20
+> about the presence of certain FRUs, or their functional states, I=20
+> wouldn't want to store those in the BIOS attributes backend, I'd rather=
+=20
+> associates those with the existing D-Bus interfaces for the FRU=20
+> inventory. I think the same applies to the Origin property that has been=
+=20
+> described - associate with the networking D-Bus backend.
+
+I think we're in agreement here.  Data which is interesting to represent
+on the BMC, for which we already have a defined-interface, use it.  For
+data which isn't interesting the to BMC, use the generic BIOS attribute
+table.
+
+> > If you are wanting the data to be managed, utilizing existing DBus
+> > interfaces we have around networking, doesn't phosphor-settingsd cover
+> > that from an implementation perspective?
+>=20
+> I don't think the 'Origin' property is a setting.
+
+Well the name "settingsd" is somewhat arbitrary based on its original
+definition.  I believe the current implementation can make a placeholder
+instance of any dbus interface.
+
+Having said that, one weakness with settingsd is that you can't easily
+restrict property changes to data coming from the host.  Once you make a
+settingsd object, anyone can make dbus calls to change properties on it.
+If we want to be able to restrict that to specific interfaces, we might
+want to look at a phosphor-inventory-manager like implementation which
+has a special "backdoor" method to create / update the instances but
+prevents modification through the normal property change interfaces.
+
+--=20
+Patrick Williams
+
+--aVD9QWMuhilNxW9f
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl69Oq0ACgkQqwNHzC0A
+wRltjg/8Djl5NKiwyZtZn18Lv5CzE1tEOp/0oKO2/J7kDw8erRehTmiQfrZuV3q8
+DC/JPenj/97bkGwUxaxIBih7SMl1zA9zxY8qB/XTefGYkl8uMV1QmbkQazdM/lFo
+8yif7p9sj7yeVT68FG3s8ugPu56OA15kaorZxkV3oXcUK8HoV/tEKjy5KRfp2Py3
+4V83xoDYzmyTtrnongzn+KpkEZ9L81UfuC6rLJk3kRxMF09DQZJfAP6kpjfbuaDw
+JKF7F8x8M3M1BewFIKC3XepcSM5hMrTI4HAPLu/KQLcA92X/6FP9urDL2YHOHCNA
+nOZArmZ/hp/Is8z26VzUdfqEmMYfrPbuEuzJJ1wcJBjfSGQVDh8B535sYvCE3JVW
+Bn+LIWZQTc5GmPWuXyuVwfwYb1s+jgPsobrOqM/AJkBFSYqQfAFpq9leQahXpQep
+U/93YMdDBPv1LDs3AXohM8GT1ah3WmrWkYPqb59cM6rfN00VLhP3Cp6Q/THLicu3
+V8hSfTg6XwZqVQORlNV0rW5hRBInFgfdbn5BKe8GSUW5rvXjDTz2Q0HsYxXFaWZA
+FoIsKgPhrJZbIyrlBjIi48j4UQxTKO1bcbf/6m43gIwQOXwnaJ8d1UScbabNtDaM
+ZzoCcu6L9mL9c2/MW+5lqwZ0v5HWxkG4nnadMw3Ll0MXYbt6Hjo=
+=EFjU
+-----END PGP SIGNATURE-----
+
+--aVD9QWMuhilNxW9f--
