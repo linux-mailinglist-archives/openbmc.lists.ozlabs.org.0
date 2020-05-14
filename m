@@ -2,86 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D5381D31F7
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 15:58:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B49D1D3530
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 17:34:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49NCmt1qXDzDqft
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 23:58:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49NFw25lsNzDqn4
+	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 01:34:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=oN2LiJth; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=yej5M4rA; 
- dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49NClq3D7CzDqcg
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 23:57:27 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 8303AC13;
- Thu, 14 May 2020 09:57:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Thu, 14 May 2020 09:57:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=cSfAm5suiHAWJ3WP/DPf2u5PCyR
- hLG8L8zRnbMkXPdo=; b=oN2LiJthX9jV+izCAOtcSlFBP/XfsWvq/BNh2U2qZOG
- /ptKO9qSSOchboqFvHpyx5p/LEvOqRydIydxniVS8ty4tADT9/H5iK69aga4oAcz
- iAzqNAbdSkrvBAQyEwqemqDnAW4jPyHi2RAD7SDWO1Zk0XyXDIvLSCaO8v7SPNe2
- IklxwsJEDrMH+xGt4Sp4ugw8hgYI2lqMGHg1YPoRz+KloTpHzqwul8kc9yL84NUh
- Tiyb9QxYwdmmmnx576l+vVo7lbaqVaAujkyVn5AAaSj1+A63iUSPZliGp3Wb7cyr
- 0u1K7jHqNbtnQoPajyjR5Kqrg6eswcnMgcg46u1/ggA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=cSfAm5
- suiHAWJ3WP/DPf2u5PCyRhLG8L8zRnbMkXPdo=; b=yej5M4rAcLgExv86WufuiI
- WV3oyTLZqIHJfwXeGW3Y8wCcaJ2rRBH1tFqWxNTvcqUblh3hFzvFij3byayLIdSe
- yFIm2HWqZrgkdpnJnTVnRrCNBPkeEIXS3yT0EZBT/kwn39k1XJeln7DwGFMBAjC5
- OOxdX7CmWL/uFqnW86C3gYrTVnLX1YonUm7R0dQ8A5dIMAVDfPBQnX9XuGbmtYva
- dkH/dD19bfHkaEUDN0KuQgrmrFZhRXekAgTeiDPu1zierNIH+Qscz/jDh1w3XjGL
- nPq7yx473u9cc0PyQwofKLkyI2rCa09l+MaoNTXijLb+flMJnC1B5re6itsLBAkw
- ==
-X-ME-Sender: <xms:Q069XmKsag7XzpiJh_SY7PyZqy_V5Tc8lutmHrU-CgqH5KSv_R4atg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleeigdeiiecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucfkphepudeiiedrudejiedruddvtddrud
- ehvdenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
- rghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:RE69XuKNmShdwNbS6M85_ZGA66oTd4_bQi2oeEzvrfSCld83DTOODQ>
- <xmx:RE69XmvNkv6i_k6HQ_gMTxEOLqKzxCDIs6tFh74Qcq0Ce3jtfTx7WQ>
- <xmx:RE69XrYEl7bofPfQEjdyJ1HCkNZE4ZnTe9YmqlVMPD6J0ineqvzARQ>
- <xmx:RE69XmmBS3HS_0AGFRALY2b3FlkJDxs7W9l4e62xOMMVNsXRsCz4hA>
-Received: from localhost (mobile-166-176-120-152.mycingular.net
- [166.176.120.152])
- by mail.messagingengine.com (Postfix) with ESMTPA id B456C3060F9B;
- Thu, 14 May 2020 09:57:23 -0400 (EDT)
-Date: Thu, 14 May 2020 08:57:23 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Sui Chen <suichen6@gmail.com>
-Subject: Re: An IPMI Request Visualization Tool
-Message-ID: <20200514135723.GE1166713@heinlein>
-References: <CAFaEeaFTP9v1xZefxzoU9E6h7SpjfbxVrnnSRCmJfJ3QjWRqhA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49NFtt1K5dzDqkS
+ for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 01:33:41 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04EFWce0134237; Thu, 14 May 2020 11:33:39 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 310v92yubk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 May 2020 11:33:39 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.27/8.16.0.27) with SMTP id 04EFUx56007333;
+ Thu, 14 May 2020 15:33:39 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma02dal.us.ibm.com with ESMTP id 3100ucbma3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 May 2020 15:33:38 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04EFXbOB40501690
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 May 2020 15:33:37 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 11BB0AE060;
+ Thu, 14 May 2020 15:33:37 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC2AAAE05F;
+ Thu, 14 May 2020 15:33:36 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.153.254])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Thu, 14 May 2020 15:33:36 +0000 (GMT)
+Subject: Re: Openbmc-test-automation checking service root URL "/"
+To: =?UTF-8?B?RGF2aWQgV2FuZyAo546L5oyv5a6HKQ==?= <DavidWang@quantatw.com>,
+ "gkeishin@in.ibm.com" <gkeishin@in.ibm.com>
+References: <a8c9861001b14bf7ba2bd6cba832d2f5@quantatw.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <9390dab8-9e8a-64e7-572a-52fcbca4b215@linux.ibm.com>
+Date: Thu, 14 May 2020 10:33:35 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="AjmyJqqohANyBN/e"
-Content-Disposition: inline
-In-Reply-To: <CAFaEeaFTP9v1xZefxzoU9E6h7SpjfbxVrnnSRCmJfJ3QjWRqhA@mail.gmail.com>
+In-Reply-To: <a8c9861001b14bf7ba2bd6cba832d2f5@quantatw.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
+ definitions=2020-05-14_05:2020-05-14,
+ 2020-05-14 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ cotscore=-2147483648
+ impostorscore=0 suspectscore=0 phishscore=0 adultscore=0 mlxscore=0
+ mlxlogscore=916 spamscore=0 clxscore=1011 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2005140133
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,58 +86,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 5/14/20 6:32 AM, David Wang (王振宇) wrote:
+>
+> Hello George:
+>
+> I’m trying to test BMC with test_service_root.robot in 
+> openbmc-test-automation.
+>
+> However there’s a problem that robot tried to check  “/”,  “/redfish”, 
+>  “/redfish/v1”  URL in redfish,
+>
+> but it seems there’s no “/” as a service root node in bmcweb.
+>
+> Should it exist? Do you have any suggestion about this?
+>
 
---AjmyJqqohANyBN/e
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The Redfish spec (DSP0266, section "Service Root Request") specifies the 
+service root as /redfish/v1.
+It also specifies the (in the "Protocol version" section) what GET 
+/redfish should return.
+It does not specify what "/" should return.
+To see supported URIs, see 
+https://github.com/openbmc/bmcweb/blob/master/CMakeLists.txt
 
-On Wed, May 13, 2020 at 03:38:47PM -0700, Sui Chen wrote:
-> We're working on a GUI tool that allows the user to capture and visualize
-> BMC IPMI requests.
->=20
-> The tool accepts 2 kinds of inputs:
->  1) Load a DBus traffic dump file generated by dbus-monitor on the BMC
->  2) Capture IPMI requests on the BMC -- the tool connects to the BMC
-> console by launching a program of the the user's choice (example: ssh or
-> telnet), then starts "dbus-monitor" on the BMC and checks its outputs for=
- DBus
-> calls on the IPMI daemon and then draws the IPMI requests on the canvas
-> accordingly.
-=20
-> A screenshot is attached to illustrate what it does:
-> [image: scrnshot_compressed.png]
+I understand GET requests for URI "/" to return the web app, if 
+BMCWEB_ENABLE_STATIC_HOSTING is enabled and the web app is present. See 
+https://github.com/openbmc/bmcweb/blob/master/CMakeLists.txt#L49
+and https://github.com/openbmc/phosphor-webui
 
-Neat.  I wonder if we can use this to analyse dbus messages with high
-amounts of latency (especially once that are infrequently latent) in
-order to better target which processes we should move towards async
-calls.
+- Joseph
 
---=20
-Patrick Williams
+> Thanks
+>
+> Best Regards,
+>
+> David
+>
 
---AjmyJqqohANyBN/e
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl69TkIACgkQqwNHzC0A
-wRlz8Q/9EMZPsRstTUoxYd7R3IgXyoSylNQz9sw3nJhIknKR5W6x9jSeRfs8HHSl
-tcyN8gw+gLYnQwfVBrTpKMjvA5dk/4dTqjGztsHyM/2wdAnOezyU7xjHrpN4Mpbn
-kWIkRk9teVDU3toAz3JJu0LZbbDmd2kJ1yameyBIU7pFanVmfEuJDml00o+rgxHo
-kwTTegeuwSBtwwtYHGKM4plHRvYfsn+3xYoecmOOqlRTqx7om5W4AXaVLrE9FSAS
-X2iBwV3j/TMrvR0ZtwAVk6csAXq0z4Hla0tJl4Cx7HxsnrtFonwpFfh0TN5tFNy5
-mbRMTr+W7y0+lyF3DoGNPiBv9WfvoD1xljmXpV2xW9OMh121VViZzir3bJKSQX8M
-fdz7IWjRq3BzkKYoubp2hbE0aP7aGvmnf3WRr2PhK4f3Q60pjvEyMFiPizVuQ2R5
-r+wyMCBPAmltpH7+Dcyllwewix9Re+/AREiK+TSajyhSIFctiB6oCYv8RdN98VEo
-Rrq4+ZJaY0ylXOXy/WMJ2qsbrUk+yTAeeDtN9GMzUx2kAPzSQdVnwunPIKgrSlRe
-mM+Yq59aCTkYBe+7vOMDuGTlCaBH7O4yv1GJMrRSLrOTlV1YawhT7moyvgrQ5Ps7
-0gz0eN1VLPdynSkxYjcLWxW/W+F6H4k54qVPvi3AKjAUpqU3BhQ=
-=ARSB
------END PGP SIGNATURE-----
-
---AjmyJqqohANyBN/e--
