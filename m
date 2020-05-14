@@ -2,85 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 223E21D315C
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 15:33:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CBF51D3196
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 15:44:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49NCCw4XbszDqs2
-	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 23:33:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49NCSR347SzDqWy
+	for <lists+openbmc@lfdr.de>; Thu, 14 May 2020 23:44:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=qOBGqzCB; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=NHCa0DvK; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=aRdP6//R; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49NC5569ybzDqSZ
- for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 23:27:21 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 9C1D25C0243;
- Thu, 14 May 2020 09:27:19 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Thu, 14 May 2020 09:27:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm2; bh=SETVyfr5ZtYfV
- TywJMKRXKdYJs3Awt1Ux8E2j1ZYFdY=; b=qOBGqzCBlhzK3SYhqHYBt8kUfOlxp
- pH4vkIok63VcbuaWC35XsNBXvRjSEfII4exJRQfvFNiooOurabF+Os7gGeUrVg1B
- oj1NRQ0oxrFNASFe2g0+z/dTI61uljYShG5/jYaHGszYUPGlhYSGvkRE1GqimZRY
- LXrWqyMKjz/ZwxzZXi9gZqrJAsT7n8nhvnjiXwgfYRrHi6oDBAb/cg8zY8tMG/c0
- 5n6mutWgHVasb36sIklHS3I3xsVOztf72HZuq3vxrc8uoH7+Y06Ug7wk6IabWXhA
- 3HIYqCccO92vZcMY+T7aDwSP0p3d1Is7NvPa7qqsAijmeQXIJqiADaTrw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; bh=SETVyfr5ZtYfVTywJMKRXKdYJs3Awt1Ux8E2j1ZYFdY=; b=NHCa0DvK
- UyEaeoYeP14J0rfgkoTQFocS3AZ9z94F2FC0Sy7d8/PN054aQKbkPX9NDwFJm30+
- JnlrtYMvqLU5vs9k/mnp15QG/8nTn/L7g46Bu4pYjUXGXT+7W4ctsrLzysYV96jS
- iNlbTUfPpiCQfAXNgyy4Qt4nEnCsV2FHa/yVVl4fSaG6PJ1C6CTfm0UtJNKiWLaC
- JDSiHPvtkNSYrBPEK2YRJr/27plMFgBdb+QialAwoqPH8xZIv39RFGyic/DUlO5v
- 1C/6wQV8xhQyenrtBC2JBgOP5GeaGqnx2cnZWoDSHc6FemXTAxbGC80trKHunjFY
- gofD1idch6d/TQ==
-X-ME-Sender: <xms:N0e9Xg79rM52R9YDR5q-Er-Dva123_kYyI7a8uiRMYMrPS-mQoyi3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleeigdeitdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtkeertd
- ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
- rdhiugdrrghuqeenucggtffrrghtthgvrhhnpeejgfdvveehteekveeggeellefgleette
- ejffelffdvudduveeiffegteelvefhteenucfkphepudegrddvrdelhedrfedunecuvehl
- uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
- grjhdrihgurdgruh
-X-ME-Proxy: <xmx:N0e9Xh5v4B_1f41KgQyMYUqFiubjRDJ_RmFgAT9fQGfsqt_NGMS3ow>
- <xmx:N0e9XvebbKH0I_rDDoSwdXvqudOCGamVi_4QKn4ypycvnr-qgf0AXA>
- <xmx:N0e9XlK-9Y2aou3LCeZozAwoapVFE0oCH6kOgswXm_ZIICRKkJ3G2Q>
- <xmx:N0e9XpW7zubaP6Jtfd8d1VKzmK5WwExQZxcdr_XeU5Nnk3saVhqXmQ>
-Received: from localhost.localdomain
- (ppp14-2-95-31.adl-apt-pir-bras31.tpg.internode.on.net [14.2.95.31])
- by mail.messagingengine.com (Postfix) with ESMTPA id 5EE8C3060FDD;
- Thu, 14 May 2020 09:27:18 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [RFC PATCH linux dev-5.4 4/4] ARM: configs: aspeed-g5: Set
- CONFIG_FORTIFY_SOURCE=n to appease kprobes
-Date: Thu, 14 May 2020 22:57:03 +0930
-Message-Id: <20200514132703.448317-5-andrew@aj.id.au>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200514132703.448317-1-andrew@aj.id.au>
-References: <20200514132703.448317-1-andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49NCRK26tgzDqWy
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 23:43:09 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 1A71C4C83B;
+ Thu, 14 May 2020 13:34:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1589463282; x=1591277683; bh=7NSc+IheR1wQgO3DWW8UWZN/L
+ 84FV9QzjQxA/UOgQQY=; b=aRdP6//R+y3T/oBeD6fhmYoIrvxZwwHO5lA3ygAXu
+ D63dwf5hLYp8YvmZsgUaqIimMVvSXdsO3NYctlajQQqfqiobZqKTfbfUyVdVMi0w
+ BM+gnJk1qhSXkuDt9miMw63oO3VVja9p4L//oJGMS2WFb3gwLMopyd5Db0ynwhEX
+ HQ=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id HRJjb3Nxe1cG; Thu, 14 May 2020 16:34:42 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id C77C44C842;
+ Thu, 14 May 2020 16:34:34 +0300 (MSK)
+Received: from localhost.localdomain (10.199.3.14) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 14
+ May 2020 16:34:36 +0300
+Message-ID: <203fa0c3540c4b6aa48eeb8de03ad42f43c1d463.camel@yadro.com>
+Subject: Re: Requirements for security audit logs?
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: Joseph Reynolds <jrey@linux.ibm.com>, Andrew Geissler
+ <geissonator@gmail.com>
+Date: Thu, 14 May 2020 16:35:44 +0300
+In-Reply-To: <391768ba-0c55-d862-d2fd-af5546b382df@linux.ibm.com>
+References: <87f78066-22d5-6f15-56a2-134388844a66@linux.ibm.com>
+ <4DD0C271-0081-4E9D-9733-F9DA101D7CF8@gmail.com>
+ <391768ba-0c55-d862-d2fd-af5546b382df@linux.ibm.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.3.14]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,52 +77,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Setting CONFIG_FORTIFY_SOURCE=y and CONFIG_KPROBES=y on arm gives a panic when
-trying to insert a new probe:
+On Wed, 2020-05-13 at 17:54 -0500, Joseph Reynolds wrote:
+> On 5/13/20 3:38 PM, Andrew Geissler wrote:
+> > > On May 13, 2020, at 11:56 AM, Joseph Reynolds <jrey@linux.ibm.com> wrote:
+> > > 
+> > > What are our requirements for Security Audit Logs?  The main idea is to
+> > > add a new BMC logging service to hold security-relevant events.
+> > > 
+> > Def hoping we can work this into our audit design:
+> > https://github.com/openbmc/docs/blob/master/designs/phosphor-audit.md
+> > 
+> > I’m not sure how much progress has been made with implementation but
+> > we spent a good chunk of time reviewing/discussing it and it seems to
+> > hit a lot of the items below.
 
-$ echo r:myretprobe do_sys_open '$retval' >> /sys/kernel/debug/tracing/kprobe_events
-[   51.688589] detected buffer overflow in memcpy
-[   51.689430] ------------[ cut here ]------------
-[   51.689627] kernel BUG at lib/string.c:1096!
-[   51.689800] Internal error: Oops - BUG: 0 [#1] SMP ARM
-[   51.690107] Modules linked in:
-[   51.690442] CPU: 0 PID: 107 Comm: sh Not tainted 5.4.39-00272-ga1ee7c973659 #6
-[   51.690674] Hardware name: Generic DT based system
-[   51.691184] PC is at fortify_panic+0x18/0x20
-[   51.691371] LR is at __irq_work_queue_local+0x40/0x7c
-[   51.691575] pc : [<8083eaa4>]    lr : [<8020e0ec>]    psr: 60000013
-[   51.691812] sp : bd237cb0  ip : bd237bc0  fp : bd237cbc
-[   51.692129] r10: 00000007  r9 : 00000000  r8 : 00000060
-[   51.692395] r7 : 8011f2f0  r6 : b5092480  r5 : 7f000000  r4 : b4c53b4c
-[   51.692723] r3 : 80c04c48  r2 : 00000000  r1 : bd7c5448  r0 : 00000022
-[   51.693088] Flags: nZCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-[   51.693449] Control: 10c5387d  Table: b50f406a  DAC: 00000051
-[   51.693769] Process sh (pid: 107, stack limit = 0x4e9b7225)
-[   51.694126] Stack: (0xbd237cb0 to 0xbd238000)
+Not so much for now, little too busy on april.
 
-YOLO it and disable fortified source.
+> 
+> Thank you, I had forgotten about that design. :-)
+> 
+> I think the phosphor-audit design can perform security auditing. The 
+> "low-level design" in my email below is not needed and is replaced with 
+> phosphor-audit.  Here are some ideas and questions how the  
+> phosphor-audit Configuration can work:
+> 
+> 1. We can have a "security" configuration that identifies 
+> security-relevant events (as listed below).
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- arch/arm/configs/aspeed_g5_defconfig | 1 -
- 1 file changed, 1 deletion(-)
+This is whitelist/blacklist part. Any security-relevant event should be in
+whitelist. Or we talking about some 'security list'?
 
-diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
-index 254fb7562738..b7f8ccc99000 100644
---- a/arch/arm/configs/aspeed_g5_defconfig
-+++ b/arch/arm/configs/aspeed_g5_defconfig
-@@ -269,7 +269,6 @@ CONFIG_SQUASHFS_XZ=y
- CONFIG_SQUASHFS_ZSTD=y
- # CONFIG_NETWORK_FILESYSTEMS is not set
- CONFIG_HARDENED_USERCOPY=y
--CONFIG_FORTIFY_SOURCE=y
- CONFIG_CRYPTO_HMAC=y
- CONFIG_CRYPTO_SHA256=y
- CONFIG_CRYPTO_USER_API_HASH=y
--- 
-2.25.1
+> 
+> 2. Can an event be handled in two different ways?  We need all security 
+> events to be logged n omatter what else happens because of that event.  
+> For example, if a server powers off, we should log that as a 
+> security-relevant event, and also send a SMS to the operations staff.
+> 
+
+This is post-process in 'User actions'.
+
+> Then if you don't fully trust your admin:
+> 
+> 3. Security logging should NOT be configurable by the admin and should 
+> be always on.  If the BMC admin can prevent security logs from being 
+> generated, it is too easy for a bad admin to hide their tracks.
+
+I assume it is possible with additional list for such events. This list will not
+be configurable and always on with their configuration. Also, what about
+generation of these logs from BMC admin? If so, then we need to care about some
+trust on transaction level for such events.
+
+> 
+> 4. The admin should NOT have a function to delete security log entries.  
+> The security log should instead automatically delete older entries after 
+> the prescribed (configured?) retention period.
+> 
+
+Any ideas where it can be stored?
+
+> If we need a way to configure security audit log settings, for example, 
+> to satisfy more strict auditing schemes, we can create a new security 
+> administrator role.  For example, a new distro feature 
+> SEPARATE_SECURITY_ADMIN adds a Role called SecurityAdmin, with 
+> Privileges that do NOT include admin privileges but can configure the 
+> security settings.  If this feature is not defined, the SecurityAdmin 
+> Privileges would go to the Administrator role.
+> 
+> Those are my initial ideas ... probably need to be kicked around a bit.  
+> Staging: I would be happy if we got 1&2 working and we allow the admin 
+> to configure security settings.  Items 3&4 can be developed later.
+> 
+> - Joseph
+
+
+Thanks.
 
