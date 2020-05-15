@@ -1,78 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 237A21D565C
-	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 18:42:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 900501D56C4
+	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 18:54:19 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49NvNB3svbzDr5Z
-	for <lists+openbmc@lfdr.de>; Sat, 16 May 2020 02:42:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49NvdN3hQ9zDr4m
+	for <lists+openbmc@lfdr.de>; Sat, 16 May 2020 02:54:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=jh+NLOyk; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=nlKEoOck; 
+ dkim-atps=neutral
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49NrsW4MrmzDqsW
- for <openbmc@lists.ozlabs.org>; Sat, 16 May 2020 00:49:35 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04FEXeeo071985
- for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 10:49:27 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.81])
- by mx0a-001b2d01.pphosted.com with ESMTP id 311rd70c67-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 10:49:26 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Fri, 15 May 2020 14:49:25 -0000
-Received: from us1a3-smtp02.a3.dal06.isc4sb.com (10.106.154.159)
- by smtp.notes.na.collabserv.com (10.106.227.88) with
- smtp.notes.na.collabserv.com ESMTP; Fri, 15 May 2020 14:49:21 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp02.a3.dal06.isc4sb.com
- with ESMTP id 2020051514492098-657844 ;
- Fri, 15 May 2020 14:49:20 +0000 
-In-Reply-To: <61131589544441@mail.yandex-team.ru>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Date: Fri, 15 May 2020 14:49:20 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49NvcK5Z4jzDqvx
+ for <openbmc@lists.ozlabs.org>; Sat, 16 May 2020 02:53:20 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 1624C8E1;
+ Fri, 15 May 2020 12:53:16 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Fri, 15 May 2020 12:53:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm1; bh=cqodLmuk2QmFyrhaCJmXUhB/Pmf
+ 6ckLzB8tDoLvogCk=; b=jh+NLOykqqjFpUg5+posLeO3YnjBAk8YP7vYe4cv8cQ
+ jtUylhNHXRl5VEF6nUQztVx3OJmtnwGiKCFzQ5soFONlsfFwS3atljdt6GpkZy8X
+ r/AVs9vcodPQMnkZTubi0BOi5TJSbh8nmoo+39raAboBRv1hc0Tkke93+KfnBB05
+ z4dL6m+iEURK9ByyTGXOmzQ3eoN9TnaS/NHezSTf+3PvCfgO2oNZtQ8UR9mjQoSD
+ rOy4qTRBdfRu9uLrfH0lcztz9soG7gSqLHmWt5m4IhKaOsDCn/DZ9EzBSNZbIb+U
+ qWSA9STLfMOSXcFqD2opIDijiXnrRf04XdZkmSwOUAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=cqodLm
+ uk2QmFyrhaCJmXUhB/Pmf6ckLzB8tDoLvogCk=; b=nlKEoOckRfztW5WI/epHhS
+ fpjc0z168LK2LZkvgtZbuAAvqp6tV5O6VAn56zY2gSColTtsfxIIEsqx2NA+0sBy
+ VCq8p4sFYRoFtgKtKDEp2S2fNfSy/oX/JiUe9MkniFDGWDU5Af2Wo374YrIlCmO5
+ Od6fBZvuEJ5p9wVxuD7KGqWNUdNZvPwo5+f9snS30g6GRYcGrl7drcdQOAM6P61r
+ N1luDuWYA5ta5kFSAXyk2BxIbt9WeKleyxGFLfTSSIFam/3WQ1w6ZgG5ePaSW2q9
+ XT2bbHsK7Vo3R/wqr+lw0Y2aMdSjkeb6LHGOVndZ0OX+u9TMXeoAyn6XrCptRvUw
+ ==
+X-ME-Sender: <xms:-si-XhzuRqKD2fVkmsjwcmz2llZXuzICXGe7-5K-oq2NgArddNzLpQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrleekgddutdegucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:-si-XhSm5uPv8NVp5LuBAw-6UFf4KstcxWab1GiwOeHLmciTn8Pk1A>
+ <xmx:-si-XrUGO6wi2z5PdrGOSxyWwpgE0U7wUonTByXwITsAG0qIcngQNQ>
+ <xmx:-si-Xjjl58ZwbWAb4K00YhDVEnUCWCuf4DfLitixpxQdokLSvw_oDg>
+ <xmx:-8i-XmOAZFModFtDheRVGauciAyR5vvgTyi7uucRG25-H-rOq0BQCg>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 479563280059;
+ Fri, 15 May 2020 12:53:14 -0400 (EDT)
+Date: Fri, 15 May 2020 11:53:13 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Gil Montag <gmontag@habana.ai>
+Subject: Re: problem trying to bitbake obmc-phosphor-image
+Message-ID: <20200515165313.GH1166713@heinlein>
+References: <VI1PR02MB5007850894D7D7DC219CDFE5A0BC0@VI1PR02MB5007.eurprd02.prod.outlook.com>
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <61131589544441@mail.yandex-team.ru>,
- <46741589523578@mail.yandex-team.ru>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 42479
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20051514-3067-0000-0000-0000032A6146
-X-IBM-SpamModules-Scores: BY=0.002165; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.388783; ST=0; TS=0; UL=0; ISC=; MB=0.101035
-X-IBM-SpamModules-Versions: BY=3.00013098; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000294; SDB=6.01377135; UDB=6.00736146; IPR=6.01159490; 
- MB=3.00032176; MTD=3.00000008; XFM=3.00000015; UTC=2020-05-15 14:49:23
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-05-15 10:42:19 - 6.00011366
-x-cbparentid: 20051514-3068-0000-0000-00006A1C73CC
-Message-Id: <OF2D1D05D1.FA81C6D6-ON00258569.00516C00-00258569.00516C07@notes.na.collabserv.com>
-Subject: RE: Veird power reading using ipmitool
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
- definitions=2020-05-15_06:2020-05-15,
- 2020-05-15 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="mhjHhnbe5PrRcwjY"
+Content-Disposition: inline
+In-Reply-To: <VI1PR02MB5007850894D7D7DC219CDFE5A0BC0@VI1PR02MB5007.eurprd02.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,45 +97,53 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On May 15, 2020 around 7:19AM in some timezone, Konstantin Klubnichkin wrot=
-e:
->Hello again!
->=20
->Answering myself, may be this would help anybody else.
->So the core reason is the quantum nature of the world, in this
->particular case - how fractional number are presented in IPMI.
->=20
->This is well described here:
->https://github.com/openbmc/docs/blob/master/architecture/sensor-archi
->tecture.md#how-to-best-choose-coefficients
->=20
->By default the upper limit for power sensors is 3000, thus the
->discreteness of the sensor value just doesn't allow it to follow the
->"real" values read from  sysfs files.
->=20
->To fix this it's necessary to add custom real limits to entity
->manager configuration file.
->In my case this looks like the following:
->=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->"pin=5FName" : "VR=5FP0=5FPIN",
->"pin=5FMin": 0.0,
->"pin=5FMax": 252.0,
->"pout1=5FName" : "VR=5FP0=5FPOUT",
->"pout1=5FMin": 0.0,
->"pout1=5FMax": 230.0,
->=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->The value of 252 Watts is taken from the power subsystem calculation,
->it's a bit more than the maximum value the VR can transform before
->shutdown.
->The same limits are set for currents and volts, and now I have sensor
->value presentation precision that allows me to get a given VR
->efficiency.
->=20
->Thank you!
 
-Thanks for sharing your successful resolution!
+--mhjHhnbe5PrRcwjY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-milton
+On Thu, May 14, 2020 at 05:49:56PM +0000, Gil Montag wrote:
+>   1.  When trying to run bitbake  in a schroot trusty (ubuntu 14.04) I'm =
+getting that python version is too old. Need python >=3D3.5 and available m=
+ax python 3.4 for that ububtu version...
 
+Yes, this is a requirement for newer versions of bitbake (which comes
+=66rom upstream Yocto) and there isn't much we can do about it.  I suspect
+even if you could get bitbake to run with this older version of Python
+you'd run into other issues.  Ubuntu 14.04 is 6 years old at this point.
+
+>   2.  I tried to do the build in ububtu18.04 and then it proceeded until =
+stopped with some timeout accessing github. (manually I manage to access th=
+is github repo)
+
+This looks like you're on the right track.  Github fetching isn't always
+the most reliable.  Most people set up bitbake to create a download
+mirror so you're only having to do this once (or when newer versions of
+code come out).  I'd suggest just retrying until you get all the
+downloads.
+
+--=20
+Patrick Williams
+
+--mhjHhnbe5PrRcwjY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl6+yPcACgkQqwNHzC0A
+wRkhVA//UPV1IIxTjUMsUILBB4noqzzdwsCdTlWLizGTMkjySnAJrZGTPjB0r3oN
+HPU7gtyWj4E0YUE+S56zqDMZ5vuxoWwmxBsMtRv1hsEXHRpBeCk66lgp6F1rUDQk
+DIzCrKuoKYC5rNK/2VAAlw9Ba1eP9+prqwFqDxV4h0G1eE80JHmF0re9eiuHsxM5
+aFc7YFWvYKpEfrnM+XUKXJhTuwOWDJOBJj7nPoTnuzZzSUsTGZ5TYuhXJzBcWr21
+g2EMbB8KDpNk8PibwOTsbjq1FLt+9a2D0cY5x2vGH45pK5XCSBEGlGvJYAamJGvi
+RFZJcbmYlU56W3ZnWpQ8C4DM6B941dvHqd8p9SNS3RRbqSHaksdmlIS8uz+H/7lr
+KMQ0RNyloc95pDNz309kUYNlPY3eVuH+oK57Z4S6CYwVVG3WggYMbwYDUCRqdKFF
+lBrO587zQmkhK3aXc1wxKzcvUz/yw3j1pJGVjsOKqSikMYZQAiAgBgWZhKO6PwKT
+MURKeD/UDmpu1Dnr24ueANl97EcfVQ5cAuqNT9e46kTqJ570i9GdguGrnVFsI2rY
+k6ph8oDMwpCuP1mCuTU3FvgxdxbhwGKfhVz3V6JicKau+KRQqHhmg6luAvDuAgJr
+1vwliW5dHgte0ZMqcEfCO52ayAvd6Agz5+97zbt+hrL2ACvMaX4=
+=C6HS
+-----END PGP SIGNATURE-----
+
+--mhjHhnbe5PrRcwjY--
