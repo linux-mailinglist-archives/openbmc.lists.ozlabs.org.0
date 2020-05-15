@@ -2,61 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3003D1D45C8
-	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 08:22:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DB871D4623
+	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 08:50:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Ndcq2F1hzDqyb
-	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 16:22:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49NfF96LwdzDr09
+	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 16:50:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1a2d::193;
- helo=forwardcorp1o.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=zbigniewku@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=yandex-team.ru
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
- header.a=rsa-sha256 header.s=default header.b=c+9Slq4x; 
- dkim-atps=neutral
-Received: from forwardcorp1o.mail.yandex.net (forwardcorp1o.mail.yandex.net
- [IPv6:2a02:6b8:0:1a2d::193])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=kW8ouuav; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Ndc94NjDzDqsM
- for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 16:22:16 +1000 (AEST)
-Received: from mxbackcorp1j.mail.yandex.net (mxbackcorp1j.mail.yandex.net
- [IPv6:2a02:6b8:0:1619::162])
- by forwardcorp1o.mail.yandex.net (Yandex) with ESMTP id 5C31B2E15A7
- for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 09:21:58 +0300 (MSK)
-Received: from localhost (localhost [::1])
- by mxbackcorp1j.mail.yandex.net (mxbackcorp/Yandex) with ESMTP id
- 937XQaEYbf-LwOee0X5; Fri, 15 May 2020 09:21:58 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; 
- t=1589523718; bh=BRwxPRHh7N9jEXP2jLv+9rj5eq/mj7P4gyVDXaWyDV0=;
- h=Date:Message-Id:Subject:To:From;
- b=c+9Slq4xxlw6dQCRAZKp6VLLIQibGkrZwL7JktuYFlb016cx8OGbha31zpBO/LGy5
- ogIAmexghuQTriXoQ/bwDXF9qt6ALGzQem9gDm2owxsFe/Mb7yR7xwyvSLWIDrDUdq
- ziskawTRnhglRn3FaTvjoZo26F+88KLkIidikHCs=
-Authentication-Results: mxbackcorp1j.mail.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-X-Yandex-Sender-Uid: 1120000000049860
-X-Yandex-Avir: 1
-Received: from mxbackcorp1j.mail.yandex.net (localhost [::1])
- by mxbackcorp1j.mail.yandex.net with LMTP id F3aF3ze4Ay-6TaOxYxH
- for <kitsok@yandex-team.ru>; Fri, 15 May 2020 09:21:48 +0300
-Received: by sas1-1199a7868807.qloud-c.yandex.net with HTTP;
- Fri, 15 May 2020 09:21:47 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Veird power reading using ipmitool
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49NfDH26kpzDqfq
+ for <openbmc@lists.ozlabs.org>; Fri, 15 May 2020 16:50:04 +1000 (AEST)
+Received: by mail-pj1-x1034.google.com with SMTP id q24so557720pjd.1
+ for <openbmc@lists.ozlabs.org>; Thu, 14 May 2020 23:50:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=71U7JpJAG0zCtJ/g/wQ9DTauzWlqVdEFG4Y+eZV5L+8=;
+ b=kW8ouuavXuzq5gLOHbzMpDeuTMbTkThHKGgODUxXQ4EBLDOiyB4o1SZNjsndq3Ha8Y
+ DgW6gBBl6r/euFdTp4Ci2FTvG4bCvO/l0enqoiN2fCONO7AIsLCh0jxGQ8K82yHx7gYN
+ Xzc7ji/ozRQgsv5pWszW9HepocF0OYZ6+U9VtqF1/eaU5o2w2DCIWLQifnOl7LsisQFn
+ 8vLNymhabJ2y5Wj+KFVOnOQRrmDdMmIRluvm13hbspkArtTbKjmNJCg+UMmz0J0VTxS/
+ wwR6IlTe4xWdHeb1gKjlUdoam+TSe6G+1kxeOXdpU2FF8OkaoOy5U8bcsfm8SEkYRx0l
+ hW8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=71U7JpJAG0zCtJ/g/wQ9DTauzWlqVdEFG4Y+eZV5L+8=;
+ b=d5yoNfb1pK5NsV8973rl3KNYHe8UxxiUE/8nwLil6gl3aInLvIRqlB6bb9BN3ka83V
+ F+JJkfrujoCWCXQzLWKPao3MDmFOZ5jP/3hjmqYpisx6B4wFFmGqklZ7RnumcRALSDzz
+ LpSSfiGc0RkAf9z2jJpuT5gBPGQlSK4PYm7It2KqeZD9kpABhG60Hitbf0XR84bMABVF
+ uTfiNaf9rXQfO/aqJJfVaRLpuHrm0/XHiic4rdDmWC2FaGGZ1LTFLG5qg9mNTQ31API/
+ +p5MLiNy9pk+QPqQUqzqrK7ZMFSH+bILQ7JFjQsVjLiTml4tLjHZzAvILmLGetSJqzwc
+ AaxA==
+X-Gm-Message-State: AOAM531zTftP6K3vICuZ3G9HNnskfXnkX1pmLAKInItDL9itz6GkhfR9
+ Lxf2Uo7lyplFqPIk7uvl8rpeeuZ11PCLTelpluVMyDIa
+X-Google-Smtp-Source: ABdhPJzN7mqfZFDLnJso9e4aUZJLTAIcyPHA7TbTWncvRdeBpmGlhE5XlTK8M9r7R/soO/4pv7Fz15nejBkTnw4ZTFE=
+X-Received: by 2002:a17:90a:8c8e:: with SMTP id
+ b14mr1756685pjo.222.1589525400899; 
+ Thu, 14 May 2020 23:50:00 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Fri, 15 May 2020 09:21:57 +0300
-Message-Id: <46741589523578@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+From: Zbyszek <zbigniewku@gmail.com>
+Date: Fri, 15 May 2020 08:49:49 +0200
+Message-ID: <CAB_SOc61Z0F=pkRfvjYUATAkQvYpu3+Qo7hSoGmmvT7+hzQhqA@mail.gmail.com>
+Subject: OpenBMC userguide questions
+To: openbmc@lists.ozlabs.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,155 +70,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: andrew@aj.id.au, bradleyb@fuzziesquirrel.com, anoo@us.ibm.com,
+ gmills@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+SGVsbG8g
-YWxsITwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+wqA8
-L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPkkndmUgbm90
-aWNlZCBhIHN0cmFuZ2UgYmVoYXZpb3Igd2hpbGUgaW50ZWdyYXRpbmcgcG1idXMgc2Vuc29ycyBp
-bnRvIE9wZW5CTUMuPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206
-MGluIj5UaGlzIHBoZW5vbWVub24gaXMgb2JzZXJ2ZWQgb24gYWxsIHBvd2VyIHNlbnNvcnMgcHJv
-dmlkZWQgYnkgcHN1c2Vuc29yLjwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4t
-Ym90dG9tOjBpbiI+QWxsIHRoaXMgc3RhcnRlZCBmcm9tIHRoaXMgcGF0Y2g6PC9wPjxwIHN0eWxl
-PSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj5odHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9lbnRpdHktbWFuYWdlci9jb21taXQvMjRkMzBhZWE2NDY4ZWYzMzU4ZWFiOTM3MTRl
-YWQ5MjkyNzEyNDJkODwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9t
-OjBpbiI+UGxlYXNlIG5vdGUgaW4gdGhlIGNvbW1pdCBtZXNzYWdlIHRoYXQgdGhlIGVmZmljaWVu
-Y3kgb2YgdGhpcyBQU1UgaXMgMTAwJSB0aGF0IGlzIGdyZWF0IGJ1dCBoYXJkIHRvIGJlbGlldmUg
-Oik8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPsKgPC9w
-PjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj5XZSBhbHNvIG5v
-dGljZWQgdGhlIHNhbWU6IGlwbWl0b29sIGdpdmVzIHRoZSBzYW1lIHZhbHVlcyBmb3IgUElOIGFu
-ZCBQT1VUIGZvciBhIFZSLjwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90
-dG9tOjBpbiI+wqA8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTow
-aW4iPlRoZW4gSSBzdGFydGVkIHRvIGRpZyBkZWVwZXIgYW5kIGZvdW5kIHRoYXQgdmFsdWVzIGdp
-dmVuIGJ5IHNlbnNvcnMgY29tbWFuZCAoaS5lLiBkaXJlY3RseSByZWFkIGZyb20gdGhlIHN5c2Zz
-IGRyaXZlciBpbnRlcmZhY2UpIGRpZmZlciBmcm9tIHdoYXQgd2Ugc2VlIGluIERidXMvUmVkRmlz
-aCwgYnV0IHRoaXMgZGlmZmVyZW5jZSBpcyBtb3JlIG9yIGxlc3MgY2FuIGJlIGV4cGxhaW5lZCBi
-eSByb3VuZGluZyBlcnJvciBhbmQgcmFwaWQgdmFsdWUgY2hhbmdlLiBXaGF0IGlzIG1vcmUgc3Ry
-YW5nZSBpcyDigJxiaWfigJ0gZGlmZmVyZW5jZSBvZiBkYXRhIGluIERidXMgYW5kIGlwbWl0b29s
-IG91dHB1dCBmb3IgcG93ZXIgcmVhZGluZ3MuPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAl
-O21hcmdpbi1ib3R0b206MGluIj7CoDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJn
-aW4tYm90dG9tOjBpbiI+T2theSwgdG8gdGhlIGNvbmZpZ3VyYXRpb24uPC9wPjxwIHN0eWxlPSJs
-aW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj7CoDwvcD48cCBzdHlsZT0ibGluZS1o
-ZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+SW4gb3VyIHNlcnZlciBlbnRpdHkgbWFuYWdl
-ciBjb25maWd1cmF0aW9uIGZpbGUgd2UgZGVjbGFyZSBJTkEyMTkgc2Vuc29yLiBUaGUgZHJpdmVy
-IGlzIGxvYWRlZCB2aWEgRFRTIGFzIEkgdXNlIG15IGRpcnR5LWhhY2tlZCBkcml2ZXIgdmVyc2lv
-biB0aGF0IG5lZWRzIGFkZGl0aW9uYWwgRFRTIHBhcmFtZXRlcnM6PC9wPjxwIHN0eWxlPSJsaW5l
-LWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj49PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PTwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJn
-aW4tYm90dG9tOjBpbiI+ezwhLS0gLS0+PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21h
-cmdpbi1ib3R0b206MGluIj4iQWRkcmVzcyI6ICIweDQ1Iiw8L3A+PHAgc3R5bGU9ImxpbmUtaGVp
-Z2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPiJCdXMiOiA2LDwvcD48cCBzdHlsZT0ibGluZS1o
-ZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+IlR5cGUiOiAicG1idXMiLDwvcD48cCBzdHls
-ZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+Ik5hbWUiOiAiU1lTX1BXUiIs
-PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj4icG93ZXIx
-X05hbWUiOiAiU1lTX1BXUiIsPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1i
-b3R0b206MGluIj4iY3VycjFfTmFtZSI6ICJTWVNfQ1VSUkVOVCIsPC9wPjxwIHN0eWxlPSJsaW5l
-LWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj4iaW4xX05hbWUiOiAiQlVTXzEyViIsPC9w
-PjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj4iTGFiZWxzIjog
-WyAicG93ZXIxIiwgImN1cnIxIiwgImluMSIgXTwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAw
-JTttYXJnaW4tYm90dG9tOjBpbiI+fSw8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFy
-Z2luLWJvdHRvbTowaW4iPj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj7C
-oDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+U2Vjb25k
-IEhXTU9OIGlzIFZSLCB0aGlzIG9uZSBpcyBpbnN0YW50aWF0ZWQgaW4gdXNlciBzcGFjZSBhcyB0
-aGUgZHJpdmVyIGlzIHN0YW5kYXJkIGFuZCBWUiBjYW4gYmUgb3ZlcnRha2VuIGJ5IGhvc3Q6PC9w
-PjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj49PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PTwvcD48cCBzdHlsZT0ibGluZS1o
-ZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+ezwhLS0gLS0+PC9wPjxwIHN0eWxlPSJsaW5l
-LWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj4iQWRkcmVzcyI6ICIweDc0Iiw8L3A+PHAg
-c3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPiJCdXMiOiAyMiw8L3A+
-PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPiJUeXBlIjogInBt
-YnVzIiw8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPiJO
-YW1lIjogIlZSX1AwIiw8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRv
-bTowaW4iPiJ2aW5fTmFtZSI6ICJWUl9QMF9WSU4iLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6
-MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+InZvdXQxX05hbWUiOiAiVlJfUDBfVk9VVCIsPC9wPjxw
-IHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj4idGVtcDFfTmFtZSIg
-OiAiVlJfUDBfVEVNUF8xIiw8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJv
-dHRvbTowaW4iPiJ0ZW1wMl9OYW1lIiA6ICJWUl9QMF9URU1QXzIiLDwvcD48cCBzdHlsZT0ibGlu
-ZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+InBpbl9OYW1lIiA6ICJWUl9QMF9QSU4i
-LDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+InBvdXQx
-X05hbWUiIDogIlZSX1AwX1BPVVQiLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJn
-aW4tYm90dG9tOjBpbiI+Imlpbl9OYW1lIiA6ICJWUl9QMF9JSU4iLDwvcD48cCBzdHlsZT0ibGlu
-ZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+ImlvdXQxX05hbWUiIDogIlZSX1AwX0lP
-VVQiLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+Ikxh
-YmVscyI6IFs8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4i
-PiJ2aW4iLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+
-InZvdXQxIiw8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4i
-PiJ0ZW1wMSIsPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGlu
-Ij4idGVtcDIiLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBp
-biI+InBpbiIsPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGlu
-Ij4icG91dDEiLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBp
-biI+ImlpbiIsPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGlu
-Ij4iaW91dDEiPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGlu
-Ij5dLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+fSw8
-L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPj09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PC9wPjxwIHN0eWxlPSJsaW5l
-LWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj7CoDwvcD48cCBzdHlsZT0ibGluZS1oZWln
-aHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+Q2hlY2tpbmcgY3VycmVudCB2YWx1ZXMgZ2l2ZXMg
-bm8gc3VzcGljaW9uczo8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRv
-bTowaW4iPj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PC9w
-PjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj5yb290QG15ODE6
-fiMgc2Vuc29ycyBpbmEyMTktKiB8IGdyZXAgY3VycjE7IGJ1c2N0bCBpbnRyb3NwZWN0IC0tbm8t
-cGFnZXIgeHl6Lm9wZW5ibWNfcHJvamVjdC5QU1VTZW5zb3IgL3h5ei9vcGVuYm1jX3Byb2plY3Qv
-c2Vuc29ycy9jdXJyZW50L1NZU19DVVJSRU5UIHwgZ3JlcCAiXi5WYWx1ZSI7IGlwbWl0b29sIHNl
-bnNvciByZWFkaW5nIFNZU19DVVJSRU5UPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21h
-cmdpbi1ib3R0b206MGluIj5jdXJyMTogMTIuMjAgQTwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6
-MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+LlZhbHVlIHByb3BlcnR5IGQgMTIuMjQgZW1pdHMtY2hh
-bmdlIHdyaXRhYmxlPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206
-MGluIj5TWVNfQ1VSUkVOVCB8IDEyPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdp
-bi1ib3R0b206MGluIj5yb290QG15ODE6fiM8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7
-bWFyZ2luLWJvdHRvbTowaW4iPj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGlu
-Ij7CoDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+QnV0
-IHBvd2VyIHZhbHVlcyBsb29rIHdvcnNlOjwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTtt
-YXJnaW4tYm90dG9tOjBpbiI+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT08L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4i
-PnJvb3RAbXk4MTp+IyBzZW5zb3JzIGluYTIxOS0qIHwgZ3JlcCBwb3dlcjE7IGJ1c2N0bCBpbnRy
-b3NwZWN0IC0tbm8tcGFnZXIgeHl6Lm9wZW5ibWNfcHJvamVjdC5QU1VTZW5zb3IgL3h5ei9vcGVu
-Ym1jX3Byb2plY3Qvc2Vuc29ycy9wb3dlci9TWVNfUFdSIHwgZ3JlcCAiXi5WYWx1ZSI7IGlwbWl0
-b29sIHNlbnNvciByZWFkaW5nIFNZU19QV1I8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7
-bWFyZ2luLWJvdHRvbTowaW4iPnBvd2VyMTogMTE1LjIwIFc8L3A+PHAgc3R5bGU9ImxpbmUtaGVp
-Z2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPi5WYWx1ZSBwcm9wZXJ0eSBkIDE1OC40IGVtaXRz
-LWNoYW5nZSB3cml0YWJsZTwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90
-dG9tOjBpbiI+U1lTX1BXUiB8IDE0MS42MDA8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7
-bWFyZ2luLWJvdHRvbTowaW4iPnJvb3RAbXk4MTp+IzwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6
-MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT08L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRv
-bTowaW4iPsKgPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGlu
-Ij5J4oCZdmUgZG9uZSB0aGUgYWJvdmUgdGVzdCBzZXZlcmFsIHRpbWVzIGFuZCBpdCBsb29rcyBs
-aWtlIHRoZSB2YWx1ZSBpbiBpcG1pdG9vbCBvdXRwdXQgaGFzIGRpc2NyZXRlIHZhbHVlcyBsaWtl
-IDE0MS42IGFuZCAxNTMuNCBidXQgY2Fu4oCZdCBnZXQgdmFsdWUgaW4gYmV0d2Vlbi48L3A+PHAg
-c3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPsKgPC9wPjxwIHN0eWxl
-PSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206MGluIj5Gb3IgdGhlIFZSIHRoaW5ncyBh
-cmUgZXZlbiB3b3JzZSBhcyBQSU4gaXMgYWx3YXlzIGVxdWFscyB0byBQT1VUOjwvcD48cCBzdHls
-ZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT08L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEw
-MCU7bWFyZ2luLWJvdHRvbTowaW4iPnJvb3RAbXk4MTp+IyBzZW5zb3JzIHBtYnVzLSogfCBncmVw
-IC1FICcocGlufHBvdXQpJzsgYnVzY3RsIGludHJvc3BlY3QgLS1uby1wYWdlciB4eXoub3BlbmJt
-Y19wcm9qZWN0LlBTVVNlbnNvciAveHl6L29wZW5ibWNfcHJvamVjdC9zZW5zb3JzL3Bvd2VyL1ZS
-X1AwX1BJTiB8IGdyZXAgIl4uVmFsdWUiOyBidXNjdGwgaW50cm9zcGVjdCAtLW5vLXBhZ2VyIHh5
-ei5vcGVuYm1jX3Byb2plY3QuUFNVU2Vuc29yIC94eXovb3BlbmJtY19wcm9qZWN0L3NlbnNvcnMv
-cG93ZXIvVlJfUDBfUE9VVCB8IGdyZXAgIl4uVmFsdWUiOyBpcG1pdG9vbCBzZW5zb3IgcmVhZGlu
-ZyBWUl9QMF9QSU4gVlJfUDBfUE9VVDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJn
-aW4tYm90dG9tOjBpbiI+cGluOiAyNi4wMCBXPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAl
-O21hcmdpbi1ib3R0b206MGluIj5wb3V0MTogMjEuMDAgVzwvcD48cCBzdHlsZT0ibGluZS1oZWln
-aHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+LlZhbHVlIHByb3BlcnR5IGQgMjYgZW1pdHMtY2hh
-bmdlIHdyaXRhYmxlPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1ib3R0b206
-MGluIj4uVmFsdWUgcHJvcGVydHkgZCAyMSBlbWl0cy1jaGFuZ2Ugd3JpdGFibGU8L3A+PHAgc3R5
-bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPlZSX1AwX1BJTiB8IDIzLjYw
-MDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+VlJfUDBf
-UE9VVCB8IDIzLjYwMDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9t
-OjBpbiI+cm9vdEBteTgxOn4jPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAlO21hcmdpbi1i
-b3R0b206MGluIj49PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PTwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6MTAwJTttYXJnaW4tYm90dG9tOjBpbiI+wqA8L3A+
-PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPkkgdGhpbmsgdGhp
-cyBpcyBjYXVzZWQgYnkgdGhlIGZyYWN0aW9uYWwgbnVtYmVycyByZXByZXNlbnRhdGlvbiBpbiBJ
-UE1JIGl0c2VsZiwgYnV0IGNhbiBpdCBiZSBmaXhlZD88L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0
-OjEwMCU7bWFyZ2luLWJvdHRvbTowaW4iPsKgPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDoxMDAl
-O21hcmdpbi1ib3R0b206MGluIj5UaGFuayB5b3UhPC9wPjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2
-Pi0twqA8L2Rpdj48ZGl2PkJlc3QgcmVnYXJkcyw8L2Rpdj48ZGl2PktvbnN0YW50aW4gS2x1Ym5p
-Y2hraW4sPC9kaXY+PGRpdj5sZWFkIGZpcm13YXJlIGVuZ2luZWVyLDwvZGl2PjxkaXY+c2VydmVy
-IGhhcmR3YXJlIFImYW1wO0QgZ3JvdXAsPC9kaXY+PGRpdj5ZYW5kZXggTW9zY293IG9mZmljZS48
-L2Rpdj48ZGl2PnRlbDogKzctOTAzLTUxMC0zMy0zMzwvZGl2PjxkaXY+wqA8L2Rpdj4=
+Hi,
+Few days ago I have pushed to review something that can be called a userguide.
+
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/32234
+
+Because there were no user guides so far neither any template some
+questions arose, like:
+* Should we use the reply markup to indicate side comments though-out?
+* Do we want to add user level doc to userguide? or put this doc under
+security? Currently userguide only has a .tex including other markup.
+* Do we allow the `---` line separating doc header and text
+introducing to document?
+
+I will appreciate you answers here on mailing list or as a comments
+under mentioned review.
+
+Thanks,
+Best regards,
+-Zbigniew
