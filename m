@@ -1,133 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D0321D5B33
-	for <lists+openbmc@lfdr.de>; Fri, 15 May 2020 23:09:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1A901D65E5
+	for <lists+openbmc@lfdr.de>; Sun, 17 May 2020 06:37:04 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49P1JG4B1XzDr5D
-	for <lists+openbmc@lfdr.de>; Sat, 16 May 2020 07:09:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Pq9p0RxtzDqGF
+	for <lists+openbmc@lfdr.de>; Sun, 17 May 2020 14:37:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=2404b589be=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=NrwQZd7t; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=SASMTDgr; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49P1GN5sBZzDr4q
- for <openbmc@lists.ozlabs.org>; Sat, 16 May 2020 07:08:12 +1000 (AEST)
-Received: from pps.filterd (m0109333.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04FL64xp016240; Fri, 15 May 2020 14:08:08 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=facebook;
- bh=pPLdQNtg3ATe3ezmUTQLfn5h4FcpldcoZKr0I/tHJcM=;
- b=NrwQZd7t3TAsaR+yWiCmLLbm6Va1wzW551KA5rOc4NYI6hlWs3p8VTfzNTEEQI5c7jo6
- Wd5jPOZcgWg4olOIgslvflHkJjnyFU9Tl58dNeV7FM0zpvyr+RRbY2QfsYDr5R32uaKS
- sJ59SoPcIwQB24+hUwU7df7AbZJhrgknj6g= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 3119kpyu3q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Fri, 15 May 2020 14:08:08 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1847.3; Fri, 15 May 2020 14:08:08 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Gl8PFRGebfPB8RVAVjo/DpePqpALIUMDCW8I7gtOtn65caV7S8loIGECSEH5W5hTHrxNfSSxI9mElUafXta87ZyqBFLWhMtXyPYxpRNbtf1k7x0NiXHQBajTKmNKPFWIYLtgsm70dDiejJInRvXYiFifA2SzAE66jj5jg5XGgmq0Uz5bJlTjVZ8D/x88aNWcjLzHrUT+sVKeXoH7x60qXNB55jg/fVX/E0+V3trC1jvMH3RP1MSG84Xtzru1U1lA/rVk7CjHfYCQxtpDC1puzK9lz1UXArekcSsnjWTdqzNXQRhNHWdbIDWAiUeVk1BRrHPv0c817jjcVM2WZMUblw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pPLdQNtg3ATe3ezmUTQLfn5h4FcpldcoZKr0I/tHJcM=;
- b=NsBHbVb6i51TTb9B/r2h7wZDVNx+x9EtLuW6m/+r1CDq5OirZYLn22pihyRZ1aLoyq+A+Byhbnev7391JPu6Lj4QAmQ0y1WdX4emtI3yeRwgol1XkuB0smh/dP00cKdzjgASlxtBOmYsSEvdHsleqBPANIzUMPSAIq4QoSfiwB9+tzKWCRYY8fMaG8efXkwAFLBqQqmsJ/B72rGzcZ/owyEgFNJ2X6Lew6Uow37tYc2/8/0Mu90+CPl2gUnwwc4y9+b7ypcyULo3npcBOiTY0xJU6iNaufCtLxgfsIcPoVjm1RIVsWLOJr+T0RZ3nfhQbZdgfirLVF+aPIIddg9Odw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pPLdQNtg3ATe3ezmUTQLfn5h4FcpldcoZKr0I/tHJcM=;
- b=SASMTDgrqXjjn4cK4JjFehGA+qfTdczenD7omVS/1IGfV7HLPS9KccR+5amH5YRKRYo3vYVcS94Mc/zZwh4pF8Sn9itYN6uizcJcHMwjEXMc9lmddcQVRvvo71H+dTWZiQMBNZY5KeaP1jeQrPdFHbXm/j0XuAvAOGyS5vEZRGY=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB2309.namprd15.prod.outlook.com (2603:10b6:a02:8b::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3000.25; Fri, 15 May
- 2020 21:08:07 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::e43b:5f8d:799:39a4%3]) with mapi id 15.20.2979.033; Fri, 15 May 2020
- 21:08:07 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: Re: phosphor-health-monitor repo
-Thread-Topic: phosphor-health-monitor repo
-Thread-Index: AQHWJA4sk8meb7nphECQ9HJxRwpJWKik+YMAgARC4wA=
-Date: Fri, 15 May 2020 21:08:07 +0000
-Message-ID: <0B4BA5EE-35E4-4793-9AD0-A0954B5E4B61@fb.com>
-References: <13E6D0A2-69B1-4F89-92FA-F0A234682B28@fb.com>
- <bb5d34b2371a2a63f93e67b7d176e14a91912da8.camel@fuzziesquirrel.com>
-In-Reply-To: <bb5d34b2371a2a63f93e67b7d176e14a91912da8.camel@fuzziesquirrel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: fuzziesquirrel.com; dkim=none (message not signed)
- header.d=none;fuzziesquirrel.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2620:10d:c090:400::5:3d17]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: be6d28c6-cc2f-45a5-04af-08d7f91410cb
-x-ms-traffictypediagnostic: BYAPR15MB2309:
-x-microsoft-antispam-prvs: <BYAPR15MB2309781E71BCF6D1702EC3CFDDBD0@BYAPR15MB2309.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:6430;
-x-forefront-prvs: 04041A2886
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: CgoRLCWLhQ1sVzWeaLu+FkqYSpYQgaEGifSK4t2xfPD4SmWGxgxGgcScQ38+Ti1LnJItI8k4lXOtgnKxD6gTy2A4woNEW3IC0N/dkyCCYOCXWfdATryQPfkosqJAzMG5U6UJLomIH6vaWlyf8zeUQnrKIVQI7dTgiiLs0ZrtlR3q4wxOKqyi3sYLYhy7PwIHn3jUjep6kMOSy/LIVHR0Ib107Vf7KvdPePP+JnmlOWGKB8qd5mJL+BggAOfgZDJEe96ZyeiLyyOUo0FdA9efPTTUt8BG2TPEjBIfrUQj5SgfbVEmwBVl/X4da0MqoYLGRAik9vlZJ/jR76172t+/1z4CPfToj9LBefUCGSWnn+829OomJGhevY6gHlHZUb9FaJOGlUWxb/DSD446Y3jthhYnr6av1Q1v1JDQcF98VrtCFwX7fKU+tk+5RSnkl5/N
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(39860400002)(376002)(366004)(346002)(396003)(136003)(478600001)(33656002)(6512007)(3480700007)(71200400001)(2906002)(6486002)(86362001)(4326008)(6916009)(8676002)(5660300002)(8936002)(66446008)(76116006)(186003)(316002)(6506007)(36756003)(66556008)(2616005)(66946007)(64756008)(66476007)(558084003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: bRQJUKU73JoBoewtMn503Tu6ZfSk45+76ppzQPY6lZTWN6i6ADkwr1zDlNaCcYfN/mNKyyApnd/ODUc+0+VqFYf/8ZasTFoElXproD8UXIewubcaaydR3bQsdx+aaATG8kUABPn37GUFzLGyOYwlmM43Mbr/jj+xAA4DkqZlwUT48vM+HS20bTvc3VcCPjVEJQ+XxfILnCikFyTo2MCphMyXeLAmykgFfTrTxeW9FUHg7Q5DmvSM7TRKKDAdOWcnjJrq2jQHfAT1IF0TT8IP3CaSGiBzy0wS1lCXPOvr3bQfIn5edrJ4Vo3SUo/I7ALsoex/9PkLYV/EjwKroMSeVOM/21kk3y9svRD9llsZOGhaBJpGyJh723CicnrBnxkuwDEFrCIj8jo5wF3JxHv0lkVFaNspT+9bRTtCl+FnrsxxW+pF+5uEeYjhV1bLVgR/IbmtP3iVMXeD3scumb1DaEMTECUayUbAQyK5nbBHzy3mD7AJKMHt1HL/r0o65Q4jZiZoEdSZOEoMxuQ9eWHcpw==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <02F41E079C181844B0668C811AD80BF2@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Pq915LtszDqZl
+ for <openbmc@lists.ozlabs.org>; Sun, 17 May 2020 14:36:19 +1000 (AEST)
+IronPort-SDR: wByI4KbPe238LSumxSqokOrz5vkP4HD6QNazTofQUpS96FnzmkoMvVF2+yaBoUw7457E3CaZQb
+ YcgQVipuRcHw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 May 2020 21:36:16 -0700
+IronPort-SDR: N1v3LUIhBm0CVm9Ub2iTOp6rgiW1T709sEEH3I5A6ruZNT4w14QAUk12Db5Pj1G8m8FJs5xB99
+ Osp0D4ToGNWw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,402,1583222400"; 
+ d="scan'208,217";a="465205405"
+Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.84.62])
+ ([10.252.84.62])
+ by fmsmga005.fm.intel.com with ESMTP; 16 May 2020 21:36:14 -0700
+Subject: Re: Redfish: Disable/enable out of band IPMI
+To: TOM JOSEPH <tomjose@linux.vnet.ibm.com>, apparao.puli@linux.intel.com
+References: <CALzeG+-bxR0oqA_h8Gaf-RQLJygL1QYXy3y2DU=GKdLC9nhWhw@mail.gmail.com>
+ <aa329f9e-9e66-d5e7-ecac-e54c23e16a48@linux.ibm.com>
+ <d6b94dbe-a6c5-1b19-63e7-1695c3794e78@linux.ibm.com>
+ <CALzeG+-dbvwLseu9agpKp5L8vVkNMabM76UOmuDo2sh0uS_qFA@mail.gmail.com>
+ <696721cc-2cf4-373e-027d-475ff8d357dc@linux.intel.com>
+ <CALzeG+83r=v5G_jiCV2M9XErD3fXiMYcti3zknO-YY3_yL59DQ@mail.gmail.com>
+ <7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <dd73bc52-641d-a763-bcb1-455bd0ddd58f@linux.intel.com>
+Date: Sun, 17 May 2020 10:06:12 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: be6d28c6-cc2f-45a5-04af-08d7f91410cb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 May 2020 21:08:07.2397 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: h9QqAWy5/Yq12ah4OQGFzKbjGxvcM6+YGWGOvEh1Oupr+FmoN/ARz8KUI4XvTaUYrDh0py13hpfbIFautokuFQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2309
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
- definitions=2020-05-15_07:2020-05-15,
- 2020-05-15 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- malwarescore=0
- lowpriorityscore=0 suspectscore=0 cotscore=-2147483648 mlxlogscore=674
- clxscore=1015 mlxscore=0 adultscore=0 spamscore=0 impostorscore=0
- phishscore=0 priorityscore=1501 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2005150176
-X-FB-Internal: deliver
+In-Reply-To: <7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com>
+Content-Type: multipart/alternative;
+ boundary="------------2D9CD7374AD0C2177D51AE04"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,13 +65,246 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Joseph Reynolds <jrey@linux.ibm.com>, karo33bug@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-VGhhbmtzIEJyYWQuDQoNCu+7v09uIDUvMTIvMjAsIDI6MDMgUE0sICJCcmFkIEJpc2hvcCIgPGJy
-YWRsZXliQGZ1enppZXNxdWlycmVsLmNvbT4gd3JvdGU6DQoNCiAgICBPbiBUaHUsIDIwMjAtMDUt
-MDcgYXQgMDE6MjMgKzAwMDAsIFZpamF5IEtoZW1rYSB3cm90ZToNCiAgICA+IEhpIEJyYWQsDQog
-ICAgPiBDYW4geW91IHBsZWFzZSBjcmVhdGUgYSBuZXcgcmVwbyBmb3IgcGhvc3Bob3ItaGVhbHRo
-LW1vbml0b3IuDQogICAgDQogICAgRG9uZSEgIEFwb2xvZ2llcyBmb3IgdGhlIGRlbGF5Lg0KICAg
-IA0KICAgIHRoeCAtYnJhZA0KICAgIA0KDQo=
+This is a multi-part message in MIME format.
+--------------2D9CD7374AD0C2177D51AE04
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Hi Tom,
+
+Answers inline.
+
+Regards,
+
+Richard
+
+On 5/15/2020 5:35 PM, TOM JOSEPH wrote:
+>
+> Hello AppaRao/Richard,
+>
+> I took a stab at service-config-manager. Got it running on one of our 
+> systems. Thanks for upstreaming it. Few questions i had:
+>
+> 1) Are the Redfish changes yet to be upstreamed? 
+> https://github.com/openbmc/bmcweb/commit/ec4974dd6a419b7f5556d4dcf4b8b836b5efbbd9 
+> Why did we not leverage service-config-manager for the Get method?
+>
+[Richard]: In order to make use of Get method which is applicable to 
+community, directly used the systemd query implementation, instead of 
+service-config-manager as it was not used by all.
+> 2) For the Patch method, do you have code yet to be upstreamed? If so 
+> I will be interested in consuming it. Otherwise I can pick it up (This 
+> is something which I am pursuing 
+> https://github.com/ibm-openbmc/dev/issues/513).
+>
+[Richard]: bmcweb code is fully up-streamed. We don't have a code to do 
+the patch method call. Please go ahead.
+> 3) Are there plans to upstream the recipe file for service-config-manager?
+>
+[Richard]: Yes, need to. It is here 
+https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-phosphor/srvcfg-manager/srvcfg-manager_git.bb 
+(Don't mind if you can add the same).
+> 4) The interface exposed by the application looked different from this 
+> (https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Control/Service/Attributes.interface.yaml)
+>
+[Richard]: Yes, it got updated, as the plan was to allow the temporary 
+disable of service, and similarly permanent blocking of service using 
+mask functionality exposed by systemd1. Interface needs to be updated.
+> 5) For disabling out of band IPMI, there could be multiple instances 
+> of phosphor-ipmi-net that needs to be disabled/masked. How do we plan 
+> to achieve that? I had couple of options in mind. Let me know your 
+> thoughts.
+>      a) Get all object paths of the service-config-manager which match 
+> phosphor-ipmi-net( phosphor_2dipmi_2dnet) and then disable each interface.
+>      b) Use the "ListUnits" method on "/org/freedesktop/systemd1" and 
+> get the object paths of phosphor-ipmi-net instances.
+>
+[Richard]: Internally service-config-manager does ListUnits, and adds 
+all the phosphor-ipmi-net instances in it's tree. From application 
+level, querying all the objects exposed by service-config-manager itself 
+is enough. This is done already in order to disable RMCP+ in one of our 
+oem IPMI command - 
+https://github.com/openbmc/intel-ipmi-oem/blob/master/src/bmccontrolservices.cpp#L141 
+
+> Regards,
+> Tom
+> On 17-12-2019 08:29, Carol Wang wrote:
+>> Ok, I got it. Thank you!
+>> Waiting for the change then. :-)
+>>
+>> On Mon, Dec 16, 2019 at 9:48 PM Thomaiyar, Richard Marian
+>> <richard.marian.thomaiyar@linux.intel.com>  wrote:
+>>> This came a month back, and i wanted to push the changes in intel repo
+>>> to the OpenBMC community repo, due to other priority missed to push the
+>>> same.
+>>>
+>>> https://github.com/Intel-BMC/provingground/tree/master/srvcfg-manager
+>>>
+>>> Will push the document in few day and the changes for the same.
+>>>
+>>> Regards,
+>>>
+>>> Richard
+>>>
+>>> On 12/16/2019 11:38 AM, Carol Wang wrote:
+>>>> rface in phosphor-dbus-interface to indicate the status
+>>>> of net IPMI.
+>>>> Have a daemon to monitor the status, if the status is changed, then
+>>>> enable or
+>>>> disable the net IPMI service and socket.
+>>>> 2. Check the net IPMI socket state by getData()[1] in bmcweb. If the
+>>>> state is
+>>>> "running" or "listening", the net IPMI status is true, otherwise, the
+>>>> status is
+>>>> false. Then bmcweb can enable or disable the service and socket.
+>>>>
+>>>> Wondering if anyone has any thoughts on this feature, which way is
+>>>> better.
+>>>> If add interface, in which daemon this interface should be implemented?
+
+--------------2D9CD7374AD0C2177D51AE04
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Tom, <br>
+    </p>
+    <p>Answers inline.</p>
+    <p>Regards, <br>
+    </p>
+    <p>Richard</p>
+    <div class="moz-cite-prefix">On 5/15/2020 5:35 PM, TOM JOSEPH wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <p>Hello AppaRao/Richard,</p>
+      I took a stab at service-config-manager. Got it running on one of
+      our systems. Thanks for upstreaming it. Few questions i had:<br>
+      <p>1) Are the Redfish changes yet to be upstreamed? 
+        <a class="moz-txt-link-freetext"
+href="https://github.com/openbmc/bmcweb/commit/ec4974dd6a419b7f5556d4dcf4b8b836b5efbbd9"
+          moz-do-not-send="true">https://github.com/openbmc/bmcweb/commit/ec4974dd6a419b7f5556d4dcf4b8b836b5efbbd9</a>
+        Why did we not leverage service-config-manager for the Get
+        method?</p>
+    </blockquote>
+    [Richard]: In order to make use of Get method which is applicable to
+    community, directly used the systemd query implementation, instead
+    of service-config-manager as it was not used by all.<br>
+    <blockquote type="cite"
+      cite="mid:7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com">
+      2) For the Patch method, do you have code yet to be upstreamed? If
+      so I will be interested in consuming it. Otherwise I can pick it
+      up (This is something which I am pursuing <a
+        class="moz-txt-link-freetext"
+        href="https://github.com/ibm-openbmc/dev/issues/513"
+        moz-do-not-send="true">https://github.com/ibm-openbmc/dev/issues/513</a>).
+      <br>
+      <br>
+    </blockquote>
+    [Richard]: bmcweb code is fully up-streamed. We don't have a code to
+    do the patch method call. Please go ahead.<br>
+    <blockquote type="cite"
+      cite="mid:7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com">
+      3) Are there plans to upstream the recipe file for
+      service-config-manager?<br>
+      <br>
+    </blockquote>
+    [Richard]: Yes, need to. It is here <a
+href="https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-phosphor/srvcfg-manager/srvcfg-manager_git.bb">https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-phosphor/srvcfg-manager/srvcfg-manager_git.bb</a>
+    (Don't mind if you can add the same).<br>
+    <blockquote type="cite"
+      cite="mid:7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com">
+      4) The interface exposed by the application looked different from
+      this
+      (<a class="moz-txt-link-freetext"
+href="https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Control/Service/Attributes.interface.yaml"
+        moz-do-not-send="true">https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Control/Service/Attributes.interface.yaml</a>)<br>
+      <br>
+    </blockquote>
+    [Richard]: Yes, it got updated, as the plan was to allow the
+    temporary disable of service, and similarly permanent blocking of
+    service using mask functionality exposed by systemd1. Interface
+    needs to be updated.<br>
+    <blockquote type="cite"
+      cite="mid:7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com">
+      5) For disabling out of band IPMI, there could be multiple
+      instances of phosphor-ipmi-net that needs to be disabled/masked.
+      How do we plan to achieve that? I had couple of options in mind.
+      Let me know your thoughts.<br>
+           a) Get all object paths of the service-config-manager which
+      match phosphor-ipmi-net( phosphor_2dipmi_2dnet) and then disable
+      each interface.<br>
+           b) Use the "ListUnits" method on "/org/freedesktop/systemd1"
+      and get the object paths of phosphor-ipmi-net instances.<span style="display: inline !important; float: none; background-color: rgb(255, 238, 240); color: rgb(3, 47, 98); font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace; font-size: 12px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: pre-wrap; word-spacing: 0px;"></span><br>
+      <br>
+    </blockquote>
+    [Richard]: Internally service-config-manager does ListUnits, and
+    adds all the phosphor-ipmi-net instances in it's tree. From
+    application level, querying all the objects exposed by
+    service-config-manager itself is enough. This is done already in
+    order to disable RMCP+ in one of our oem IPMI command - <a
+href="https://github.com/openbmc/intel-ipmi-oem/blob/master/src/bmccontrolservices.cpp#L141">https://github.com/openbmc/intel-ipmi-oem/blob/master/src/bmccontrolservices.cpp#L141</a>
+    <blockquote type="cite"
+      cite="mid:7ff70ad6-8e51-93c3-1175-2bce01e4db77@linux.vnet.ibm.com">
+      Regards,<br>
+      Tom<br>
+      <div class="moz-cite-prefix">On 17-12-2019 08:29, Carol Wang
+        wrote:<br>
+      </div>
+      <blockquote type="cite"
+cite="mid:CALzeG+83r=v5G_jiCV2M9XErD3fXiMYcti3zknO-YY3_yL59DQ@mail.gmail.com">
+        <pre class="moz-quote-pre" wrap="">Ok, I got it. Thank you!
+Waiting for the change then. :-)
+
+On Mon, Dec 16, 2019 at 9:48 PM Thomaiyar, Richard Marian
+<a class="moz-txt-link-rfc2396E" href="mailto:richard.marian.thomaiyar@linux.intel.com" moz-do-not-send="true">&lt;richard.marian.thomaiyar@linux.intel.com&gt;</a> wrote:
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">This came a month back, and i wanted to push the changes in intel repo
+to the OpenBMC community repo, due to other priority missed to push the
+same.
+
+<a class="moz-txt-link-freetext" href="https://github.com/Intel-BMC/provingground/tree/master/srvcfg-manager" moz-do-not-send="true">https://github.com/Intel-BMC/provingground/tree/master/srvcfg-manager</a>
+
+Will push the document in few day and the changes for the same.
+
+Regards,
+
+Richard
+
+On 12/16/2019 11:38 AM, Carol Wang wrote:
+</pre>
+          <blockquote type="cite">
+            <pre class="moz-quote-pre" wrap="">rface in phosphor-dbus-interface to indicate the status
+of net IPMI.
+Have a daemon to monitor the status, if the status is changed, then
+enable or
+disable the net IPMI service and socket.
+2. Check the net IPMI socket state by getData()[1] in bmcweb. If the
+state is
+"running" or "listening", the net IPMI status is true, otherwise, the
+status is
+false. Then bmcweb can enable or disable the service and socket.
+
+Wondering if anyone has any thoughts on this feature, which way is
+better.
+If add interface, in which daemon this interface should be implemented?
+</pre>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
+
+--------------2D9CD7374AD0C2177D51AE04--
