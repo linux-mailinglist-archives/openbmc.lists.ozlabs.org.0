@@ -1,88 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F01E81D77FA
-	for <lists+openbmc@lfdr.de>; Mon, 18 May 2020 13:54:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FF8D1D7B5E
+	for <lists+openbmc@lfdr.de>; Mon, 18 May 2020 16:37:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Qcqr0ScSzDqf5
-	for <lists+openbmc@lfdr.de>; Mon, 18 May 2020 21:54:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49QhRx0hN0zDqcN
+	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 00:37:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::433;
- helo=mail-pf1-x433.google.com; envelope-from=sunithaharish04@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Cns0sMk4; dkim-atps=neutral
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com
- [IPv6:2607:f8b0:4864:20::433])
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.13; helo=m1313.mail.163.com;
+ envelope-from=lemon_zhang555@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=hu92oxoW; dkim-atps=neutral
+Received: from m1313.mail.163.com (m1313.mail.163.com [220.181.13.13])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Qcpm2LSwzDqBV
- for <openbmc@lists.ozlabs.org>; Mon, 18 May 2020 21:53:19 +1000 (AEST)
-Received: by mail-pf1-x433.google.com with SMTP id z1so4846883pfn.3
- for <openbmc@lists.ozlabs.org>; Mon, 18 May 2020 04:53:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=7RMesUi9y0sbsuE4k1fP40FIpTLY3L39E+RhvMXu8hg=;
- b=Cns0sMk4tYKR9xwDjxJ8Ne2R4DGFxMWihWmRxOyJLPDRX2PEHfe3gIuqHbU9vN4AJv
- atIam5uikDQUoDhZ1ZCNaahtmG48m+tWMyEsOUHbHL9t+sdNvirIBw+CA0u4PziMA/tB
- OMlxatVia79xTXITiNk4H+wJvpcOs4UNNCOnx9gbeuSLiETgZSQPo7s3yLUEnApyourN
- /Ns7LOlsOiz7diQqhCfP7EmshNuo4Di+g2uAoOvmNdw7xufOZIytlEBARLY1gtKQKCjz
- icwnaQ4O+YbGAXijwMbR2uutoK5RUSTM4oJQTJrsG3ssXW07DR5JQvvABDm0UDvJlICn
- LT8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=7RMesUi9y0sbsuE4k1fP40FIpTLY3L39E+RhvMXu8hg=;
- b=rqVT0NGvNR553Dkz4miIic0NpaTHGVxj3lcacR0/V0Z6OPKijcbhuubuHKFsPF329a
- FlfQR8ZF8yAdbRYiidKlOxvdvYZmsVvdcgAPaxSN140xXdAnp2nVG64jmRRHAOswtqiw
- j0lE2+NlCZMqu7tMMLget9w0/QcRRdoEzMkNdH8qm/eQxkHLIEX7CWgn7+SpgOUgd5Mh
- 7aBRuvRmRMR7tNeld5Mv8W8Jmm2UJsAPmIXTZDzVR4qFNja6SaNso10onYze7AhbbUZf
- fhKUNhLGsAKtL3DMVjD464o73FisOIsc8qGY46IrrWONOvTcIcRi2MR2yfXXRz4aPZpE
- ycwg==
-X-Gm-Message-State: AOAM532DfBCQ0GWKOo/XxuKYaIdEGcRSaMpunr8ckoVnzR7Ct3j8EfGc
- t7nRmxhik9Y0MuDIPCHNCt6V0e7W
-X-Google-Smtp-Source: ABdhPJyoxLGA1/By/uibWlPZtcJx8hXAnWUAV5wF5ux9HyoLoolHKVDOEj4a/dF5buh75qAoGskt4w==
-X-Received: by 2002:a62:8388:: with SMTP id h130mr6118883pfe.292.1589802794211; 
- Mon, 18 May 2020 04:53:14 -0700 (PDT)
-Received: from ?IPv6:2405:204:5785:1f3:e0f7:7109:8397:cb77?
- ([2405:204:5785:1f3:e0f7:7109:8397:cb77])
- by smtp.gmail.com with ESMTPSA id c14sm7906990pgi.54.2020.05.18.04.53.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 May 2020 04:53:13 -0700 (PDT)
-Subject: Re: Storing host data on the BMC
-To: Patrick Williams <patrick@stwcx.xyz>,
- Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-References: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
- <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
- <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
- <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
- <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
- <20200511120719.GA10214@heinlein>
- <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
- <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
- <20200513211857.GA1166713@heinlein>
- <10275d64-bebd-cb33-0a16-21299b7b1880@linux.vnet.ibm.com>
- <20200514123350.GB1166713@heinlein>
-From: Sunitha Harish <sunithaharish04@gmail.com>
-Message-ID: <7a159b9d-ec82-fed9-a9e1-23ffdf1c62e5@gmail.com>
-Date: Mon, 18 May 2020 17:23:08 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49QhPd3zMBzDqfG
+ for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 00:35:12 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=zXIcx
+ aW4/zculqFp96SH84976iXdai62Lx1gjKEpFO8=; b=hu92oxoWCB+bkcjD1qreR
+ IX/hbzeOJHqzzKulZdFFisTjBMH1uRF/wfJOP0rpYBIb8IOxyiKc5fgq3LDufK3H
+ HRpj1qH4BXi8+4ReN0b6XRbrlBhgIF3RdPg/1uGyzAzauYFdJZrMoHvlxaKrfog3
+ WTuHiuOQaYo2eKwgmxClzw=
+Received: from lemon_zhang555$163.com ( [113.128.100.128] ) by
+ ajax-webmail-wmsvr13 (Coremail) ; Mon, 18 May 2020 22:35:01 +0800 (CST)
+X-Originating-IP: [113.128.100.128]
+Date: Mon, 18 May 2020 22:35:01 +0800 (CST)
+From: "Lemon Zhang" <lemon_zhang555@163.com>
+To: openbmc@lists.ozlabs.org
+Subject: some code in power_control_obj.c
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 163com
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_110696_371098107.1589812501746"
 MIME-Version: 1.0
-In-Reply-To: <20200514123350.GB1166713@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Message-ID: <607ad726.7940.17228359cf2.Coremail.lemon_zhang555@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: DcGowADnXO0VncJeDH8mAA--.15949W
+X-CM-SenderInfo: pohp00pb2kt0jjvvkqqrwthudrp/1tbiQAcokVSIfIFkyAABsy
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,79 +59,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, dkodihal@in.ibm.com,
- suryakanth.sekar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Deepak & Patrick.
+------=_Part_110696_371098107.1589812501746
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-So the preferred approach would be to define the host settable data in a 
-new phosphor-host-inventory-manager, and make this as read-only to the 
-other BMC applications.
+aGVsbG8sCjEgSW4gdGhlIGZpbGUgcG93ZXJfY29udHJvbF9vYmouY6OsIHRoZXJlIGlzIHRoZSBm
+b2xsb3dpbmcgcHJvZ3JhbSBjb2RlCmBgYAppZiAocGdvb2Rfc3RhdGUgPT0gMCkKICAgICAgICAg
+ICAgIHsKICAgICAgICAgICAgICAgICBjb250cm9sX3Bvd2VyX2VtaXRfcG93ZXJfbG9zdCAoY29u
+dHJvbF9wb3dlcik7CiAgICAgICAgICAgICAgICAgZ19wY2lfcmVzZXRfaGVsZCA9IDE7CiAgICAg
+ICAgICAgICB9CiAgICAgICAgICAgICBlbHNlCiAgICAgICAgICAgICB7CiAgICAgICAgICAgICAg
+ICAgY29udHJvbF9wb3dlcl9lbWl0X3Bvd2VyX2dvb2QgKGNvbnRyb2xfcG93ZXIpOwogICAgICAg
+ICAgICAgfQp9CmBgYApJcyB0aGlzIHRoZSBjb2RlIHRoYXQgbm90aWZpZXMgdGhlIGhhcmR3YXJl
+IHBvd2VyIHN0YXR1cz8gSWYgeWVzLCB0byB3aG9tIGRpZCBpdCBub3RpZnk7IGlmIG5vdCwgd2hh
+dCBpcyBpdCB1c2VkIGZvcj8KMiBJbiBmdW5jdGlvbiAKYGBgCnN0YXRpYyBnYm9vbGVhbiBvbl9z
+ZXRfcG93ZXJfc3RhdGUgKENvbnRyb2xQb3dlciAqIHB3ciwKICAgICAgICAgR0RCdXNNZXRob2RJ
+bnZvY2F0aW9uICogaW52b2NhdGlvbiwKICAgICAgICAgZ3VpbnQgc3RhdGUsCiAgICAgICAgIGdw
+b2ludGVyIHVzZXJfZGF0YSkKYGBgCk5vIG1hdHRlciB3aGV0aGVyIEkgc2V0IHRoZSBwb3dlci1v
+biBjb21tYW5kIG9yIHRoZSBwb3dlci1vZmYgY29tbWFuZCwgdGhlIHBhcmFtZXRlciBzdGF0ZSBp
+cyBhbHdheXMgMC4gSXMgdGhlcmUgYW55IHByb2JsZW0gaGVyZT8KUmVnYXJkcywKR2FybmV0CgoK
+Cg==
+------=_Part_110696_371098107.1589812501746
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-The Interface: xyz.openbmc_project.Network.EthernetInterface - 
-DHCPEnabled property is a Bios attribute. 
-https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30424/
-Lets take a scenario - when the Ethernet interface set to be DHCP 
-enabled ( by setting the DHCPEnabled = true via redfish), the IPAddress, 
-SubnetMask and Gateway along with the Origin property will not be BIOS 
-one as all they can't be settable by the redfish in the case of DHCP and 
-they will be part of this new manager.
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+aGVsbG8sPC9kaXY+PGRp
+diBzdHlsZT0ibWFyZ2luOjA7Ij4xIEluIHRoZSBmaWxlIHBvd2VyX2NvbnRyb2xfb2JqLmOjrCZu
+YnNwO3RoZXJlIGlzIHRoZSBmb2xsb3dpbmcgcHJvZ3JhbSBjb2RlPC9kaXY+PGRpdiBzdHlsZT0i
+bWFyZ2luOjA7Ij48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPmBgYDwvZGl2PjxkaXYgc3R5bGU9Im1h
+cmdpbjowOyI+aWYgKHBnb29kX3N0YXRlID09IDApPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7
+Ij4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt7PC9kaXY+
+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2NvbnRyb2xfcG93ZXJfZW1pdF9wb3dlcl9sb3N0
+IChjb250cm9sX3Bvd2VyKTs8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPiZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7Z19wY2lf
+cmVzZXRfaGVsZCA9IDE7PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4mbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt9PC9kaXY+PGRpdiBzdHlsZT0ibWFy
+Z2luOjA7Ij4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtl
+bHNlPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt7PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4mbmJz
+cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
+O2NvbnRyb2xfcG93ZXJfZW1pdF9wb3dlcl9nb29kIChjb250cm9sX3Bvd2VyKTs8L2Rpdj48ZGl2
+IHN0eWxlPSJtYXJnaW46MDsiPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
+c3A7ICZuYnNwO308L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPn08L2Rpdj48ZGl2IHN0eWxl
+PSJtYXJnaW46MDsiPmBgYDwvZGl2PjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+SXMgdGhp
+cyB0aGUgY29kZSB0aGF0IG5vdGlmaWVzIHRoZSBoYXJkd2FyZSBwb3dlciBzdGF0dXM/IElmIHll
+cywgdG8gd2hvbSBkaWQgaXQgbm90aWZ5OyBpZiBub3QsIHdoYXQgaXMgaXQgdXNlZCBmb3I/PC9k
+aXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4yIEluIGZ1bmN0aW9uJm5ic3A7PC9kaXY+PGRpdiBz
+dHlsZT0ibWFyZ2luOjA7Ij5gYGA8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPnN0YXRpYyBn
+Ym9vbGVhbiBvbl9zZXRfcG93ZXJfc3RhdGUgKENvbnRyb2xQb3dlciAqIHB3ciw8L2Rpdj48ZGl2
+IHN0eWxlPSJtYXJnaW46MDsiPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtHREJ1
+c01ldGhvZEludm9jYXRpb24gKiBpbnZvY2F0aW9uLDwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjow
+OyI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2d1aW50IHN0YXRlLDwvZGl2Pjxk
+aXYgc3R5bGU9Im1hcmdpbjowOyI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2dw
+b2ludGVyIHVzZXJfZGF0YSk8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPmBgYDwvZGl2Pjxk
+aXYgc3R5bGU9Im1hcmdpbjowOyI+Tm8gbWF0dGVyIHdoZXRoZXIgSSBzZXQgdGhlIHBvd2VyLW9u
+IGNvbW1hbmQgb3IgdGhlIHBvd2VyLW9mZiBjb21tYW5kLCB0aGUgcGFyYW1ldGVyIHN0YXRlIGlz
+IGFsd2F5cyAwLiBJcyB0aGVyZSBhbnkgcHJvYmxlbSBoZXJlPzwvZGl2PjxkaXYgc3R5bGU9Im1h
+cmdpbjowOyI+PGRpdiBzdHlsZT0ibWFyZ2luOiAwcHg7Ij48c3BhbiBzdHlsZT0iY29sb3I6IHJn
+YigzNiwgNDEsIDQ2KTsgZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVt
+Rm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYs
+ICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90
+OzsiPlJlZ2FyZHMsPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMHB4OyI+PGZvbnQg
+Y29sb3I9IiMyNDI5MmUiIGZhY2U9Ii1hcHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwg
+U2Vnb2UgVUksIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsIEFwcGxlIENvbG9yIEVtb2pp
+LCBTZWdvZSBVSSBFbW9qaSI+R2FybmV0PC9mb250PjwvZGl2PjwvZGl2PjxkaXYgc3R5bGU9Im1h
+cmdpbjowOyI+PGJyPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+PGJyPjwvZGl2PjwvZGl2
+Pg==
+------=_Part_110696_371098107.1589812501746--
 
-However in the case of Static IP configuration(IPAddress, SubnetMask and 
-Gateway) will become bios setting.
-
-Would we be having these attributes in both Bios table and in the new 
-settings manager ?
-
-By considering all these , can you please weigh in your thoughts about 
-extending the existing settings interface table, by defining the 
-attribute as read-only for BMC ? We can block the "write" to these 
-attributes at user level. This would make things simpler , and it will 
-be in line with the redfish interface definitions as well. Redfish 
-already defines the schema where it makes some attributes read-only for 
-the users.
-
-Thanks & regards,
-Sunitha
-
-
-On 14-05-2020 18:03, Patrick Williams wrote:
-> On Thu, May 14, 2020 at 09:13:47AM +0530, Deepak Kodihalli wrote:
->> On 14/05/20 2:48 am, Patrick Williams wrote:
->>> On Wed, May 13, 2020 at 08:37:32PM +0530, Sunitha Harish wrote:
->   
->> I think the current proposal from Surya enables this already. Do you
->> just mean the design doc should explicitly state this isn't restricted
->> to the "BIOS" firmware.
-> Yep.
->
->> As far as Sunitha's question goes, my point is that not all host
->> firmware generated data is a BIOS attribute. For eg if the host tells me
->> about the presence of certain FRUs, or their functional states, I
->> wouldn't want to store those in the BIOS attributes backend, I'd rather
->> associates those with the existing D-Bus interfaces for the FRU
->> inventory. I think the same applies to the Origin property that has been
->> described - associate with the networking D-Bus backend.
-> I think we're in agreement here.  Data which is interesting to represent
-> on the BMC, for which we already have a defined-interface, use it.  For
-> data which isn't interesting the to BMC, use the generic BIOS attribute
-> table.
->
->>> If you are wanting the data to be managed, utilizing existing DBus
->>> interfaces we have around networking, doesn't phosphor-settingsd cover
->>> that from an implementation perspective?
->> I don't think the 'Origin' property is a setting.
-> Well the name "settingsd" is somewhat arbitrary based on its original
-> definition.  I believe the current implementation can make a placeholder
-> instance of any dbus interface.
->
-> Having said that, one weakness with settingsd is that you can't easily
-> restrict property changes to data coming from the host.  Once you make a
-> settingsd object, anyone can make dbus calls to change properties on it.
-> If we want to be able to restrict that to specific interfaces, we might
-> want to look at a phosphor-inventory-manager like implementation which
-> has a special "backdoor" method to create / update the instances but
-> prevents modification through the normal property change interfaces.
->
