@@ -2,39 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3ED71D96B2
-	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 14:51:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D3E1D1D9B07
+	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 17:22:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49RG3W4rQzzDr88
-	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 22:51:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49RKPK73qyzDqw0
+	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 01:22:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ header.from=linux.intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49RG2K30C2zDqyG
- for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 22:50:31 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Message-ID: <9b94cd92ae0d06992f897fa3e5008a1537498578.camel@fuzziesquirrel.com>
-Subject: Re: Reducing fragmentation in OpenBMC
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: =?UTF-8?Q?=E9=83=81=E9=9B=B7?= <yulei.sh@bytedance.com>, Andrew Geissler
- <geissonator@gmail.com>
-Date: Tue, 19 May 2020 08:50:46 -0400
-In-Reply-To: <CAGm54UFc15aXH9qJz+-hig8NDbX-bVxjpZa-g-9Bg=uUpjEydQ@mail.gmail.com>
-References: <d7da4861c449609d2cf1b1b1434c653e9a27a805.camel@ozlabs.org>
- <AA2FE467-1072-4CD6-BA9F-3AAAD40DC8E0@gmail.com>
- <CAGm54UFc15aXH9qJz+-hig8NDbX-bVxjpZa-g-9Bg=uUpjEydQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49RKNP20NGzDqvt
+ for <openbmc@lists.ozlabs.org>; Wed, 20 May 2020 01:21:23 +1000 (AEST)
+IronPort-SDR: 6LFpuvTehzgA/4krqC0/GxfFLwQvr8H044Kq5SnKBWaTuDD2ohZxW7AJQW/pazmM20s2tzq9W7
+ rpdyBKvjgaAw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 May 2020 08:21:20 -0700
+IronPort-SDR: kaYzQzzwtAEGm/yjpRTqhIcdw5fiYWYmQWS9SoefBCfy5Dyg3XCYWk+StFQQJJbdRL1kGqEwBZ
+ FHA+tahrQ3LA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,410,1583222400"; d="scan'208";a="466160953"
+Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.67.220])
+ ([10.252.67.220])
+ by fmsmga006.fm.intel.com with ESMTP; 19 May 2020 08:21:18 -0700
+Subject: Re: LDAP authentication is not working
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
+References: <b242dd63-3fb2-6c16-bbd2-3797afb23a8e@linux.vnet.ibm.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <9e6d226f-fb2a-4d1e-f68f-826d958e85ec@linux.intel.com>
+Date: Tue, 19 May 2020 20:51:17 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <b242dd63-3fb2-6c16-bbd2-3797afb23a8e@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,41 +58,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2020-05-19 at 10:25 +0800, =E9=83=81=E9=9B=B7 wrote:
-> On Tue, May 19, 2020 at 8:53 AM Andrew Geissler <
-> geissonator@gmail.com> wrote:
->=20
-> > I know phosphor-dbus-interfaces has always been a bit onerous. I do
-> > feel like
-> > we get some good stuff in the reviews though. It also ensures we
-> > have
-> > documentation  of our interfaces. The cross-repo dependencies we
-> > get are a bit frustrating (i.e. need to get interface merged and
-> > bubbled into
-> > openbmc before you can implement). There=E2=80=99s also no versioning
-> > concept so
-> > if an interface needs to be changed, it=E2=80=99s a huge pain. Ideas =
-on how
-> > we could
-> > make this easier but keep the benefits? Or people that don=E2=80=99t =
-use it
-> > and just
-> > define their own interfaces, any improvements we could make to get
-> > you to use it?
-> >=20
->=20
-> This usually involves the repo CI.
-> If we could implement "Cross-repo dependencies", making the Jenkins
-> job able to pick the "dependent" revision of phosphor-dbus-interfaces
-> (or sdbusplus, or else), and build a docker container with the
-> dependencies to run the repo CI, the issue could be resolved.
+Agree. As for LDAP user we defined privilege related mapping only and 
+not group based authentication restriction. I think adding group based 
+authentication for ldap users immediately, is not good option, as it 
+must be done with agreement from everyone.
 
-This would be a nice feature to have in our CI when cross repo
-dependencies come up.  But I don't think  having that would give us
-free license to add cross repo dependencies everywhere though - I would
-like to see us come up with a system that avoids the need for cross-
-repo dependencies in the first place.
+Quick solution is to skip the pam_succeed_if check if it is local user 
+using pam_localuser module. i.e. using user_unknown condition to skip 
+the pam_succeed_if, we can skip the group check for ldap users, and 
+still continue for local users.
+
+Note: I am OK, if you want to revert the fix immediately, i can roll out 
+the fix this weekend after testing.
+
+Regards,
+
+Richard
+
+
+On 5/19/2020 3:35 PM, Ratan Gupta wrote:
+> in the LDAP server and put the ldap user under the newly created 
+> "redfish" group
+> but that didn't help as same group is listed in both places(Local,LDAP)
+>
+> As I explained above local database will get priortize over LDAP
+>
+> Hence there would be failure. Now we have following option
+>
+> Priortize LDAP over Local if LDAP is enabled but in that case the same 
+> problem will occur for the local user.
+>
+> We have upstream tagging is planned for this week and with the commit 
+> below LDAP is broken
+>
+> (https://github.com/openbmc/bmcweb/commit/cd17b26c893ba9dd1dcb0d56d725f2892c57e125.) 
+>
+>
+> Should we revert it or do you have any plans?
+>
+> Please let me know your thoughts. 
