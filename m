@@ -2,88 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 636E21D885B
-	for <lists+openbmc@lfdr.de>; Mon, 18 May 2020 21:42:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E494B1D8C95
+	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 02:53:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49QqD76CztzDqVH
-	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 05:42:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Qy7P206fzDqcR
+	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 10:53:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22d;
+ helo=mail-oi1-x22d.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=t1r8mFUG; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=P10+01zn; 
- dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Th8AEPyL; dkim-atps=neutral
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com
+ [IPv6:2607:f8b0:4864:20::22d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49QqCG472VzDqjN
- for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 05:41:45 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 2A05FAE9;
- Mon, 18 May 2020 15:41:41 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Mon, 18 May 2020 15:41:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm1; bh=vpUp+TRq5TwVJOQYDOz0SIXdiEC
- nlBZrCBTmTEWC4nk=; b=t1r8mFUGZFl+o3BuPxQhDQzuQFQKM9sGnkfcieg3Awl
- j0wTAAicH0U4rv0HeBXx7VL15Vr19Q0p/u1m32Fvw6TOn6I/djvqu0Bf6i7gLFZ+
- QX4Ad8aWxFWhoWS++xof3jM3hLMy4xIu81oBrE4RDRCoqM4LGgKnMH98kyomBSD4
- efvk6B/0XimUEWM/jrF77H0krC64+euuULfnQ3IYhkoGwOLyytoGwoq5TElohGfP
- OY4CqN4OkSw0JWSNPCmJGd//rrFsjb8Ef+R3w/1RtBPOZnczqUmVFWIekEB0xIRZ
- Z5HAH4TSS5klGCLtDn6AoHrt31k9gvoC+0pxTb5RzDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=vpUp+T
- Rq5TwVJOQYDOz0SIXdiECnlBZrCBTmTEWC4nk=; b=P10+01znsw2v8J8yphM7kK
- tv1togN60TgsRugdPD7tvxFaVK9JvTeaMozioILvozJzXudD6S0+IC0ICKXREsz8
- wXeTW2o5Hi5r5QbAx/r3PWO6sdhLzp9hz6Lh15XINa/x+k9DmsiQcs3uuMzQv//2
- dwIio3k8RKdhKIHz7OSRRdbxFxJ69/4dyfOiz0jn/kgM/s/ZTuxLLXvsd/P3LUbZ
- Q4Z5opsinrSAbdGd6zoXpfddPsGs9DeadkxW/JQafBBoOfldMu2KoieKwf2g5GRR
- CRUTBrF+4yvuJwC4RvTULZjgzBL8gG+3ft856mSFfZZ+Wcbr71gMut9jENPEVBKA
- ==
-X-ME-Sender: <xms:9OTCXjaX75tPGILJJl_jTzNZpJwTSGW-519TYkYAvoSm6qLIKQUJkQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddthedgudefkecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
- tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduudefleeuhefhleehjeejgfeu
- jeehhfdtledufeehkeduudevkeeiuddugfegkeenucffohhmrghinhepohhpvghnsghmtg
- dqphhrohhjvggtthdrgiihiienucfkphepuddtjedruddtjedrudekledrvddtudenucev
- lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitg
- hksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:9OTCXiYCnCitU_8oH-GmeLHfMAvzz7gWgdR_5-GAWbxJ0C2o8gFUsA>
- <xmx:9OTCXl9mw1o7rI2c5i9qx0A3ILKKTLNolWj6qxSHOoXK2Xnf1qUQXA>
- <xmx:9OTCXppcozk1JEQuTSIttIG_R0B2q8sytz93oaeQmnp4HVazJWabeg>
- <xmx:9OTCXsETtHqMwo9nMBqzUL7Qqtkp4rSilDbiURi5sE_MHatEKCK1KA>
-Received: from localhost (mobile-107-107-189-201.mycingular.net
- [107.107.189.201])
- by mail.messagingengine.com (Postfix) with ESMTPA id C8C3A3280065;
- Mon, 18 May 2020 15:41:39 -0400 (EDT)
-Date: Mon, 18 May 2020 14:41:38 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: openbmc@lists.ozlabs.org
-Subject: Re: [PATCH u-boot-v2016.07] libfdt: Make it compatible with newer dtc
-Message-ID: <20200518194138.GJ1166713@heinlein>
-References: <20200512212755.621891-1-patrick@stwcx.xyz>
- <20200512213135.GI10214@heinlein>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="rwgQ89ZNnFUwFHTC"
-Content-Disposition: inline
-In-Reply-To: <20200512213135.GI10214@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Qy6Z2jKyzDqQs
+ for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 10:53:08 +1000 (AEST)
+Received: by mail-oi1-x22d.google.com with SMTP id w4so6991064oia.1
+ for <openbmc@lists.ozlabs.org>; Mon, 18 May 2020 17:53:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=ceOyYSbdQY+O7BkOstEAL5Yh5YVPw6yXLmlg+eoHPjU=;
+ b=Th8AEPyLzyZNQA71xD0d3ZRrRKbGUxy0Fz5RZRofLEAJQGJVxDvnFTXhkfkoS2YGcY
+ zCFxzTYC0SssKrLvLOkDBszydAb0Colb5dB/vtyZWHRxNip0y8Z5FmuJ3jSQxhoo+r4p
+ ai+SmfTtt0iLTV5Nd921hSX40eS1iYwQN1T9MMWYt8wtWtaz/0XHb5BMHxEY/65waXoe
+ exGvlG2uiNDPsrG3JDxyeBiPCzv4gU3PDcx6WxwsTbIC3BFw+3D9gYuvlpGrJi4OF2rD
+ Sym0kDKY8rkD+jSsmMNiQwy3yc77vjAp/+k98nxDrYCbEkU2qzQ3yBFib9DL+ZkcTwsf
+ Nfzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=ceOyYSbdQY+O7BkOstEAL5Yh5YVPw6yXLmlg+eoHPjU=;
+ b=bw3Bm1UMpU30JwKX8fGTKmh3lYLB85npEPcusMkkHkmWKEeE+nYryftls7Za3Gw8Ho
+ DcNlYNydqe2m9hzkRCu+HvlssQa+TeHCqEYstI9dCZDeTT7N2lWvHZp0uXoBhWmovZ/i
+ dpzKDEeJkcZJcQAU5bVL7C1pipIPtmDLHQgLLhx4iVtdbQGMCiJ1BZWPEne/DXTVuFC1
+ 0Hf2fMDUzZJcPSb18ubYCcVPxRNyohR6x5m0rSS4l+5ajMbqk02CwHl9lE3Ps5Drr0eq
+ uzX8I0PFG+ekzUr9aTWlQsPpiRpgv3Y2QjJ3ctenCZy7AqvbIwUR0fsrXFcsnk54DEsG
+ Qqig==
+X-Gm-Message-State: AOAM5312JciuICpvEAL/ovGv5o6g1JtIs+3v9AtCQjeeiiITota/+5qt
+ JqkkT9lr/4OCxC9aD/0VpPFfE818NZw=
+X-Google-Smtp-Source: ABdhPJzz3MKfi2jvwUNc3hPqZTT4tuWK3fPC8eJ6mchBvYDmLhsLrHC0sTl/lGFVCbg1oiDjehhdKA==
+X-Received: by 2002:aca:d493:: with SMTP id l141mr1603223oig.20.1589849584602; 
+ Mon, 18 May 2020 17:53:04 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:78a3:9763:996f:9137])
+ by smtp.gmail.com with ESMTPSA id t127sm737371oif.41.2020.05.18.17.53.03
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 18 May 2020 17:53:04 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: Reducing fragmentation in OpenBMC
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <d7da4861c449609d2cf1b1b1434c653e9a27a805.camel@ozlabs.org>
+Date: Mon, 18 May 2020 19:53:03 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <AA2FE467-1072-4CD6-BA9F-3AAAD40DC8E0@gmail.com>
+References: <d7da4861c449609d2cf1b1b1434c653e9a27a805.camel@ozlabs.org>
+To: Jeremy Kerr <jk@ozlabs.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,66 +81,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- Alejandro Enedino Hernandez Samaniego <aehs29@gmail.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---rwgQ89ZNnFUwFHTC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hi Joel,
-
-Any feedback on this?
-
-On Tue, May 12, 2020 at 04:31:35PM -0500, Patrick Williams wrote:
-> On Tue, May 12, 2020 at 04:27:55PM -0500, Patrick Williams wrote:
-> > From: Alejandro Enedino Hernandez Samaniego <aehs29@gmail.com>
-> >=20
-> > DTC does not use an underscore for the LIBFDT_H and
-> > LIBFDT_ENV_H variables, this causes an error since
-> > u-boot does.
-> >=20
-> > Remove the underscore from these variables to allow u-boot
-> > to compile along with dtc.
-> >=20
-> > Signed-off-by: Alejandro Enedino Hernandez Samaniego <aehs29@gmail.com>
-> > Signed-off-by: Patrick Williams <patrick@stwcx.xyz>
-> > ---
+> On May 15, 2020, at 4:03 AM, Jeremy Kerr <jk@ozlabs.org> wrote:
 >=20
-> Hi Joel,
+> So, a few things that I think may help the situation:
 >=20
-> This patch is a port from facebook/openbmc to fix some failures we're
-> seeing building u-boot in some cases.  I originally tried to submit it
-> as a Yocto patch [1] and Andrew Jeffery suggested I send it to your
-> branch instead.
+>  - Adherence to standards. Being a little more strict about what
+> comprises an OpenBMC implementation will go a long way to prevent
+> future incompatibilities, and means that all of our interface
+> implementations automatically document their expected behaviour
+> (because that's in the standard).
+
+I know phosphor-dbus-interfaces has always been a bit onerous. I do feel =
+like
+we get some good stuff in the reviews though. It also ensures we have
+documentation  of our interfaces. The cross-repo dependencies we
+get are a bit frustrating (i.e. need to get interface merged and bubbled =
+into
+openbmc before you can implement). There=E2=80=99s also no versioning =
+concept so
+if an interface needs to be changed, it=E2=80=99s a huge pain. Ideas on =
+how we could
+make this easier but keep the benefits? Or people that don=E2=80=99t use =
+it and just
+define their own interfaces, any improvements we could make to get
+you to use it?
+
 >=20
-> 1. https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/31833
+>  - Identification of a set of reference platforms. If we can point
+> adopters to a platform that provides a recommended (and somewhat
+> "supported") way of doing things, that would prevent a lot of =
+confusion
+> around different implementations, and how to best work with the =
+options
+> available
 
---=20
-Patrick Williams
+This is definitely a big one. I=E2=80=99m not sure the solution though. =
+There=E2=80=99s a
+divergence between platforms. I know there=E2=80=99s some effort to to =
+converge a bit
+(entity manager usage) but  we seem to still be going through that phase =
+where
+we have multiple implementations of things and we=E2=80=99ve just got to =
+let them work
+themselves out. That can be confusing to new people coming in. A lack of =
+an
+affordable reference platform we can point people to is something that =
+comes up
+often in the community.
 
---rwgQ89ZNnFUwFHTC
-Content-Type: application/pgp-signature; name="signature.asc"
+>=20
+>  - Documentation of interactions between components. There's some =
+great
+> documentation on how our components work, but not a whole lot on how
+> they fit together. Without this, it means a lot of jumping around
+> between repos, trying to find the "other side" of each interface.
+>=20
+>  - Keep pushing on upstream. Sometimes this can delay things, but I
+> really think that's almost always false economy; the out-of-tree
+> patches will have to be addressed at some point, and that job just =
+gets
+> more involved as time passes. Even engaging other community members to
+> help out would be great.
+>=20
+> Finally, I don't mean this to sound like a bunch of complaints - I'm
+> keen to put in a bunch of time to address things. I'd just like to
+> start some discussion on how best to do that, before I do so.
 
------BEGIN PGP SIGNATURE-----
+Good topics and thanks for starting the discussion Jeremy!
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7C5PAACgkQqwNHzC0A
-wRlOQw//WmFFAJy5ERi7C/oC6Jr+8U7W9fYjMg/OmAJwYToOAr9eVmAictvtdaBZ
-+PVVkIBMiGcZM4M3Vjn6JFWNscI3TPfIi3WZ1zhn+iIjy2d1AVpYcR+pM6/5Ll3a
-TfFFXlSxTy0AgLCCAV8f0wOIQzvIw6tYOXUUYiDGiZqFhm/Gucr2OKtuEu+OdLm4
-kFVjgmSxjhwr/dYpO+2Pe1p3wyjTXyRCWxEKr+ao87gy2XOSNMoMdssWpYrId08K
-6nmXEuELULQReiLTe7CbgP9rNolLTeoaRUaSaALhiu3K5CPtSTcR0C+4RKruBGlG
-baDFEN/QQGpyKKCfowDnb50p1ddy9oZX78FQ+Hb4tCuO5ixHNl+nTlJs6ujSLpCN
-W6XqGB+MPFqjBwQSXhbenGzyqMWaTN4v+u2SBxS+p1GO5msl5ykkjmCJp/3PJiuc
-fvWwHMbFAbNcEoYjzUM3z1lJfSVc/1C4UhnM11hqsRMH95iq7vUwo8UYKjZRtMmR
-JpNY0fyiNXNIxY5CUVUk7/3kdU85SX2Od1esIn7yxfIx38nyr495d3bGag4NCpHn
-akxtgfu6hMpfVA1HFRProNxYmmygZwAYIi3AW0ih5UvMbAg765I/WFAPey1yb7Kl
-dEP2UE9jWoVx9XXZFSdyG5W/jiNpckqAtcMAIrLLskmH4Vzs6Qg=
-=9k2a
------END PGP SIGNATURE-----
+>=20
+> So - any thoughts on how we can improve this? Comments / disagreements
+> / questions always welcome.
+>=20
+> Cheers,
+>=20
+>=20
+> Jeremy
 
---rwgQ89ZNnFUwFHTC--
