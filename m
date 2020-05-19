@@ -2,70 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08BB41D8D9D
-	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 04:26:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 511D11D8E55
+	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 05:41:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49R0BB28SDzDqlS
-	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 12:26:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49R1rP6QPDzDqnw
+	for <lists+openbmc@lfdr.de>; Tue, 19 May 2020 13:41:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::22e;
- helo=mail-lj1-x22e.google.com; envelope-from=yulei.sh@bytedance.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=XOnFGjDx; dkim-atps=neutral
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com
- [IPv6:2a00:1450:4864:20::22e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49R09P6H8BzDqgp
- for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 12:25:44 +1000 (AEST)
-Received: by mail-lj1-x22e.google.com with SMTP id d21so11994482ljg.9
- for <openbmc@lists.ozlabs.org>; Mon, 18 May 2020 19:25:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=WJVPHBjk5e5ck6jEwmkX7aWX0sZeObiWTX0reVMVcQQ=;
- b=XOnFGjDxg4xo8DP6U/OO28gssmlvht1C7zhV//FZ4LcqjVzL/rhGinfhhZz9lU/9ZI
- LtCLVrnSkRe3OFD+Ap/5PfRw+dIJPEA1lNG9eiF01Cu7yHrlB0sjXeaKFAYy3a4afMAc
- M2pqii7zU1xahStYI9J+Bvquq0+dvckBRh6tDVFSIpjY956XrZENKp5N4G7fLWB96kjM
- ypU5Cou/XkTagDX35YaQSSsaZTTMTHdA0UHtDHBVLXdssarvzii+e4DlYzS3H3VSGygc
- KjEsc+hGxOiBvdg7B5lFNkSIk/0YH3PAFzQSI7KGScQ+tml7NjVZoukDInuwD07rJX0C
- 0dBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=WJVPHBjk5e5ck6jEwmkX7aWX0sZeObiWTX0reVMVcQQ=;
- b=o8x/ygAFUnqFT754Dk81yqNNxODQUYt1jjLHGaQ6loMBVsQd/8ZKQ60wErdArBLDzU
- JhXLxKVHts3BAHHzp509Dxd6K0MIj7n94uH2Lw2qoMakz6f8jVEjuMf+NoHFQ86XQDV6
- 3zz05N0FuVVjtvq8us5ksErLBFs95J2trNquMxwD/lApaHWozSs2IskXG3uhPsSerNS2
- WOdy+XclFYJNjSCSBWihhRTVQKlgdo0JfU25HCS9w4MNoNgs+ZAU1qRR8DC+XZfrrt8I
- 0hD88g/DPjHuuHYwslwZOGy7Y6fmBeYyanZXOl1OBtXS+UvPNA6y92C5H42XZ12RWKdR
- kcQg==
-X-Gm-Message-State: AOAM531vzBb6wujQvNZK2zoQLlrLrgFTuySbDBDy41UTqsGYfdxqH7LN
- DLPSplPbCdUxsThitdzdnNUvtanA16XDrQT2RBd6CA==
-X-Google-Smtp-Source: ABdhPJwzB/O21Xz2avS2ucW9cv4ZUzeoDjmI/QJLn1wldL2/2jkDIJtC9267D+JNIT6ju6LFH35mvKf1/EVmWZl0SIQ=
-X-Received: by 2002:a2e:9159:: with SMTP id q25mr1122132ljg.95.1589855139575; 
- Mon, 18 May 2020 19:25:39 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49R1qX5XYYzDqm9
+ for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 13:40:24 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04J3Xrr8109984; Mon, 18 May 2020 23:40:13 -0400
+Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com
+ [149.81.74.106])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 312c22qrpn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 May 2020 23:40:12 -0400
+Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
+ by ppma04fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04J3UiCO011271;
+ Tue, 19 May 2020 03:40:11 GMT
+Received: from b06cxnps3074.portsmouth.uk.ibm.com
+ (d06relay09.portsmouth.uk.ibm.com [9.149.109.194])
+ by ppma04fra.de.ibm.com with ESMTP id 313wne0c4h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 19 May 2020 03:40:11 +0000
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04J3e8ad2359666
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 19 May 2020 03:40:08 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D0F18A4065;
+ Tue, 19 May 2020 03:40:07 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 926F4A4057;
+ Tue, 19 May 2020 03:40:06 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.246.128])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Tue, 19 May 2020 03:40:06 +0000 (GMT)
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Subject: Processing PLDM FRU information with entity manager
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ James Feist <james.feist@linux.intel.com>,
+ "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Bhat, Sumanth" <sumanth.bhat@intel.com>
+Message-ID: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
+Date: Tue, 19 May 2020 09:10:05 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-References: <d7da4861c449609d2cf1b1b1434c653e9a27a805.camel@ozlabs.org>
- <AA2FE467-1072-4CD6-BA9F-3AAAD40DC8E0@gmail.com>
-In-Reply-To: <AA2FE467-1072-4CD6-BA9F-3AAAD40DC8E0@gmail.com>
-From: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
-Date: Tue, 19 May 2020 10:25:28 +0800
-Message-ID: <CAGm54UFc15aXH9qJz+-hig8NDbX-bVxjpZa-g-9Bg=uUpjEydQ@mail.gmail.com>
-Subject: Re: Reducing fragmentation in OpenBMC
-To: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
+ definitions=2020-05-18_11:2020-05-15,
+ 2020-05-18 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0
+ cotscore=-2147483648 lowpriorityscore=0 adultscore=0 malwarescore=0
+ mlxlogscore=828 priorityscore=1501 mlxscore=0 spamscore=0 suspectscore=0
+ phishscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2004280000 definitions=main-2005190025
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,47 +87,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, May 19, 2020 at 8:53 AM Andrew Geissler <geissonator@gmail.com> wro=
-te:
+Hi,
 
-> I know phosphor-dbus-interfaces has always been a bit onerous. I do feel =
-like
-> we get some good stuff in the reviews though. It also ensures we have
-> documentation  of our interfaces. The cross-repo dependencies we
-> get are a bit frustrating (i.e. need to get interface merged and bubbled =
-into
-> openbmc before you can implement). There=E2=80=99s also no versioning con=
-cept so
-> if an interface needs to be changed, it=E2=80=99s a huge pain. Ideas on h=
-ow we could
-> make this easier but keep the benefits? Or people that don=E2=80=99t use =
-it and just
-> define their own interfaces, any improvements we could make to get
-> you to use it?
->
+IBM systems have a requirement to consume FRU information sent down via 
+the host firmware and then relay that onto D-Bus (and then onto 
+Redfish). The host firmware will send down FRU information using PLDM.
 
-This usually involves the repo CI.
-If we could implement "Cross-repo dependencies", making the Jenkins
-job able to pick the "dependent" revision of phosphor-dbus-interfaces
-(or sdbusplus, or else), and build a docker container with the
-dependencies to run the repo CI, the issue could be resolved.
-For example:
-* A change in phosphor-dbus-interfaces is submitted to gerrit with
-revision `abcd` and Change-Id `wxyz`, which is not yet merged;
-* A change in repo is submitted to gerrit, with commit message
-containing `Depends-On: wxyz`
+We wanted to use entity manager to enable transforming the PLDM FRU data 
+to D-Bus properties that fall under D-Bus inventory interfaces such as 
+the xyz.openbmc_project.Inventory.Decorator.Asset interface. I have an 
+update to the PLDM design doc to capture this flow [1], and some D-Bus 
+interfaces [2] proposed on Gerrit. Would appreciate feedback on the 
+same. The high level idea is that the pldm daemon will host raw PLDM FRU 
+information on D-Bus, and via JSON configs, entity manager can convert 
+those to D-Bus inventory objects (which then can be found by bmcweb).
 
-The Jenkins repo CI job needs to figure out that this commit depends
-on `wxyz`, which is phosphor-dbus-interfaces.
-Then it needs to build the container with `abcd` revision of
-phosphor-dbus-interfaces, and run the repo CI.
+ From an entity manager perspective, I had few questions :
+- I see there is provision for persistence, but it looks like applying 
+the persisted information works only if "D-Bus probes" succeed. We have 
+a requirement to make the host-sent inventory information available even 
+when the host is powered off. Now if the host has sent this, then powers 
+off, and then BMC reboots, the BMC will no longer have the raw PLDM FRU 
+information on D-Bus and hence the entity manager probe on the same will 
+fail. Question is, can the probes be made optional when reading the 
+persisted config (system.json)?
 
-It requires non-trivial changes to the Jenkins job though.
+- How are hierarchical relationships between FRUs supposed to be 
+represented? Is that based on D-Bus pathnames? Or making use of 
+something like the D-Bus Associations interface? Any thoughts on how 
+representing such parent-child relation can be achieved via entity 
+manager configs?
 
---=20
-BRs,
-Lei YU
+[1] https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/
+[2] 
+https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-dbus-interfaces/+/32533/
+
+Thanks,
+Deepak
+
