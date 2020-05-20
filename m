@@ -2,72 +2,41 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35BD21DA7F0
-	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 04:26:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 855C11DAF6B
+	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 11:53:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Rc7V4yVyzDqWW
-	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 12:26:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Rp3L3HlyzDqYh
+	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 19:53:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::235;
- helo=mail-lj1-x235.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=VtPgEaYa; dkim-atps=neutral
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
- [IPv6:2a00:1450:4864:20::235])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Rc6l1XSrzDqNS
- for <openbmc@lists.ozlabs.org>; Wed, 20 May 2020 12:25:33 +1000 (AEST)
-Received: by mail-lj1-x235.google.com with SMTP id w10so1904410ljo.0
- for <openbmc@lists.ozlabs.org>; Tue, 19 May 2020 19:25:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=XdnCIvUKcinUb/gDz27tgm86WdzihAkb0OvC0kwQb7E=;
- b=VtPgEaYaIdqPpiKisHcMNu/NsJCcCBJWyzUb2jzYNqDkAlfWAmxoCZuxNgsuIZ/WvG
- ExChfol+qwaQaSpBJOLxFdGJhuE9hrad+uRf6U63U1dwfk0OCVZfsDO1Mr9kvTP4wE9g
- sDF85AOL0b3Xrp9c8KcjPL+azeHgu9Hr8TAkW9opm24L3IvE+9nRtwt+m977nnX5mynj
- luMHHhut+DfKBFELXwkmOz2PQqN3YFEFwddMc4ZMavY3fyBHEDfY8rl+7KJ+NO5nlE9r
- yLqOZCeXosPwl2VLKPfWV5BgEq8Cgpg2nEAV0XgCtLALnVtd5Uc0KzSsGvZT3lKh0txG
- cUlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=XdnCIvUKcinUb/gDz27tgm86WdzihAkb0OvC0kwQb7E=;
- b=a5tajxLuSaqaRy/aBfQJpN/q3VHE7PBqg0aVsqbZYhZ0OqbrCJMJc9UuKyxvXq0EUN
- WmZMRGVy6a+BV3+H0fMdGR9KvIiQ4gnrKCt7W/ATcyYMst286vp6a4OXwEy4LOOrXedE
- P9pvoN44h59Ed5TMWx5Y+paxugUrCn1tSosCVjtu1/zf31QZHIeTX/bLRm1hH0NcMCRb
- Ba3aj49QQgDIVom5rQyZ9zYvH1rZm/DQfgCSMbYGsbYfMwW8IhIy+X1TsLIpIKGl+b3t
- HQHQ6czCRJlPvRBE473YMYi7j1BdZgekU2yHOpFo3HJvdeTb6EioUtuUxKTlimY8V3mU
- NMZw==
-X-Gm-Message-State: AOAM530rPd2VRxWIcH0oWsIf8tWt4w8qLjJxWZ/RR0xG0r+qTRTch2Eq
- eQOg6RV0+PKbuu2tPqPTl1dR2pnKsBZYkdL+V/JEhw==
-X-Google-Smtp-Source: ABdhPJxkxSIFD0wGYIwYYVvbI5v9nfTr9lUP6SQw8jaS/i3mDSQqIO9rFjpZPLFKZY/YqY2tPypulmqrE5L8qZj0hwc=
-X-Received: by 2002:a2e:8901:: with SMTP id d1mr1384097lji.37.1589941526487;
- Tue, 19 May 2020 19:25:26 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Rp2V2pg2zDqRj
+ for <openbmc@lists.ozlabs.org>; Wed, 20 May 2020 19:52:30 +1000 (AEST)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 04K9pZjj016025;
+ Wed, 20 May 2020 12:51:35 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
+ id E12D3639C0; Wed, 20 May 2020 12:51:34 +0300 (IDT)
+From: Tali Perry <tali.perry1@gmail.com>
+To: ofery@google.com, brendanhiggins@google.com, avifishman70@gmail.com,
+ tmaimon77@gmail.com, kfting@nuvoton.com, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
+ wsa@the-dreams.de, andriy.shevchenko@linux.intel.com
+Subject: [PATCH v11 0/3] i2c: npcm7xx: add NPCM i2c controller driver
+Date: Wed, 20 May 2020 12:51:10 +0300
+Message-Id: <20200520095113.185414-1-tali.perry1@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <d7da4861c449609d2cf1b1b1434c653e9a27a805.camel@ozlabs.org>
- <AA2FE467-1072-4CD6-BA9F-3AAAD40DC8E0@gmail.com>
- <CAGm54UFc15aXH9qJz+-hig8NDbX-bVxjpZa-g-9Bg=uUpjEydQ@mail.gmail.com>
- <9b94cd92ae0d06992f897fa3e5008a1537498578.camel@fuzziesquirrel.com>
-In-Reply-To: <9b94cd92ae0d06992f897fa3e5008a1537498578.camel@fuzziesquirrel.com>
-From: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
-Date: Wed, 20 May 2020 10:25:15 +0800
-Message-ID: <CAGm54UG0FZ38QzY0rROYVnk3izTE46SNb1D39Hdbz77xz3POZQ@mail.gmail.com>
-Subject: Re: Reducing fragmentation in OpenBMC
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,51 +48,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, kbuild test robot <lkp@intel.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, linux-i2c@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, May 19, 2020 at 8:50 PM Brad Bishop <bradleyb@fuzziesquirrel.com> w=
-rote:
->
-> On Tue, 2020-05-19 at 10:25 +0800, =E9=83=81=E9=9B=B7 wrote:
-> > On Tue, May 19, 2020 at 8:53 AM Andrew Geissler <
-> > geissonator@gmail.com> wrote:
-> >
-> > > I know phosphor-dbus-interfaces has always been a bit onerous. I do
-> > > feel like
-> > > we get some good stuff in the reviews though. It also ensures we
-> > > have
-> > > documentation  of our interfaces. The cross-repo dependencies we
-> > > get are a bit frustrating (i.e. need to get interface merged and
-> > > bubbled into
-> > > openbmc before you can implement). There=E2=80=99s also no versioning
-> > > concept so
-> > > if an interface needs to be changed, it=E2=80=99s a huge pain. Ideas =
-on how
-> > > we could
-> > > make this easier but keep the benefits? Or people that don=E2=80=99t =
-use it
-> > > and just
-> > > define their own interfaces, any improvements we could make to get
-> > > you to use it?
-> > >
-> >
-> > This usually involves the repo CI.
-> > If we could implement "Cross-repo dependencies", making the Jenkins
-> > job able to pick the "dependent" revision of phosphor-dbus-interfaces
-> > (or sdbusplus, or else), and build a docker container with the
-> > dependencies to run the repo CI, the issue could be resolved.
->
-> This would be a nice feature to have in our CI when cross repo
-> dependencies come up.  But I don't think  having that would give us
-> free license to add cross repo dependencies everywhere though - I would
-> like to see us come up with a system that avoids the need for cross-
-> repo dependencies in the first place.
+This patch set adds i2c controller support 
+for the Nuvoton NPCM Baseboard Management Controller (BMC).
 
-As Andrew indicates, phosphor-dbus-interfaces is the major cross repo
-dependency already.
+NPCM7xx includes 16 I2C controllers. This driver operates the controller.
+This module also includes a slave mode.
 
---=20
-BRs,
-Lei YU
+---
+v11 -> v10:
+	- Fix according to maintainer comments.
+	- Init clk simplified.
+	- Comments in c99
+	- Split master irq function.
+	- debugfs not mandatory.
+	- yaml file fix.
+
+v10 -> v9:
+	- Fix according to maintainer comments.
+	- binding file changed to yaml format.
+	- Shorten recovery flow.
+	- Add support for health monitoring counters.
+
+v9 -> v8:
+	- Fix according to maintainer comments.
+	- Split lines of iowrite..(ioread..) to separate lines.
+	- Use readx_poll_timeout_atomic
+	- resolve various style issues.
+	 
+v8 -> v7:
+	- Split to two commits, one for master, one for slave.
+	- Rename smb to i2c.
+	- Remove global vars.
+
+v7 -> v6:
+	- Rebased on Linux 5.4-rc8  (was Linux 5.4-rc7).
+	- Fix issue found by kbuild test robot (redundant include).
+	- Note: left a warning related to fall through. This fall through is
+	  intentional.
+	
+v6 -> v5:
+	- Update documentation
+
+v5 -> v4:
+	- support recovery
+	- master-slave switch support needed for IPMB
+
+v4 -> v3:
+	- typo on cover letter.
+
+v3 -> v2:
+	- fix dt binding: compatible name: omit "bus"
+
+v2 -> v1:
+	- run check patch in strict mode.
+	- use linux crc.
+	- define regs in constant offset without base.
+	- remove debug prints.
+	- no declarations for local functions.
+	
+v1: initial version
+
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Reported-by: kbuild test robot <lkp@intel.com>
+
+---
+Tali Perry (3):
+  dt-bindings: i2c: npcm7xx: add NPCM I2C controller documentation
+  i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver
+  i2c: npcm7xx: Add support for slave mode for Nuvoton NPCM BMC I2C
+    controller driver.
+
+ .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     |   62 +
+ drivers/i2c/busses/Kconfig                    |    9 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-npcm7xx.c              | 2480 +++++++++++++++++
+ 4 files changed, 2552 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+ create mode 100644 drivers/i2c/busses/i2c-npcm7xx.c
+
+
+base-commit: b9bbe6ed63b2b9f2c9ee5cbd0f2c946a2723f4ce
+-- 
+2.22.0
+
