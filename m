@@ -2,57 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C3791DBBDD
-	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 19:47:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2C4F1DBC86
+	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 20:18:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49S0Z85YQZzDqJm
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 03:47:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49S1Fl3VWBzDqdV
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 04:18:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49S0YN61qczDqJX
- for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 03:46:32 +1000 (AEST)
-IronPort-SDR: HVyJXXljLuh6Fye/0QeXb7DDjuYcj6wunr4WMeUjYr+lVaKoLOrs4w9yGcG7KJurn6eskK5V+T
- m2M3zw5RV1VA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2020 10:46:29 -0700
-IronPort-SDR: UIcqwSuIU/bphU1oaDbBr5r0E8lFbxxZMob6vd7mt3fNwz4AD0RqDtZRL0a16nN/GvWUS3BI4D
- e5GwT2DIsZlQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,414,1583222400"; d="scan'208";a="412102791"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.212.214.40])
- ([10.212.214.40])
- by orsmga004.jf.intel.com with ESMTP; 20 May 2020 10:46:28 -0700
-Subject: Re: Processing PLDM FRU information with entity manager
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
- "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
- "Bhat, Sumanth" <sumanth.bhat@intel.com>
-References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
- <6bd3254af95cbd8ae44151f62114acca9d221962.camel@fuzziesquirrel.com>
- <8e62ac67-8415-d5ef-a034-a306ae2a18c6@linux.intel.com>
- <d3bcea4e6ba97439a3c529cc8607186f10b00ebd.camel@fuzziesquirrel.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <064203ec-1917-b916-d2aa-4763ee8a6a89@linux.intel.com>
-Date: Wed, 20 May 2020 10:46:28 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49S1Dr6zFSzDqMd
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 04:17:15 +1000 (AEST)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04KHXvRN122499; Wed, 20 May 2020 14:17:12 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 312cqpphhc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2020 14:17:12 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04KIEOYF029964;
+ Wed, 20 May 2020 18:17:11 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma02dal.us.ibm.com with ESMTP id 313whb58ky-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 May 2020 18:17:11 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04KIH9vP51446058
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 May 2020 18:17:09 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D19FAC6055;
+ Wed, 20 May 2020 18:17:09 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9875BC6061;
+ Wed, 20 May 2020 18:17:09 +0000 (GMT)
+Received: from ghost4.ibm.com (unknown [9.163.2.51])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 20 May 2020 18:17:09 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.4] fsi: core: Set slave local bus ownership during
+ init
+Date: Wed, 20 May 2020 13:17:07 -0500
+Message-Id: <20200520181707.9235-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
-In-Reply-To: <d3bcea4e6ba97439a3c529cc8607186f10b00ebd.camel@fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
+ definitions=2020-05-20_13:2020-05-20,
+ 2020-05-20 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0
+ adultscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=1 lowpriorityscore=0 clxscore=1015 cotscore=-2147483648
+ spamscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2005200142
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,21 +82,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 5/20/2020 10:35 AM, Brad Bishop wrote:
-> On Wed, 2020-05-20 at 09:56 -0700, James Feist wrote:
-> 
->> I need a better example. FRUs are independent things, so there is no
->> hierarchy.
-> 
-> A drive plugs into a riser which plugs into the motherboard.  Isn't
-> that a hierarchy?
-> 
+The driver ought to claim local bus ownership of the slave it's
+communicating with.
 
-For a FRU, no. FRUs are independent items. For inventory, yes. Assuming 
-you mean inventory then? If so, then the paths do not have any hierarchy 
-today. I assume it might be possible by creating an i2c device tree of 
-sorts and mapping back what bus is which item.
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ drivers/fsi/fsi-core.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+index 8244da8a7241..48424b672295 100644
+--- a/drivers/fsi/fsi-core.c
++++ b/drivers/fsi/fsi-core.c
+@@ -50,6 +50,7 @@ static const int engine_page_size = 0x400;
+ #define FSI_SMODE		0x0	/* R/W: Mode register */
+ #define FSI_SISC		0x8	/* R/W: Interrupt condition */
+ #define FSI_SSTAT		0x14	/* R  : Slave status */
++#define FSI_SLBUS		0x30	/* W  : LBUS Ownership */
+ #define FSI_LLMODE		0x100	/* R/W: Link layer mode register */
+ 
+ /*
+@@ -66,6 +67,11 @@ static const int engine_page_size = 0x400;
+ #define FSI_SMODE_LBCRR_SHIFT	8		/* Clk ratio shift */
+ #define FSI_SMODE_LBCRR_MASK	0xf		/* Clk ratio mask */
+ 
++/*
++ * SLBUS fields
++ */
++#define FSI_SLBUS_FORCE		0x80000000	/* Force LBUS ownership */
++
+ /*
+  * LLMODE fields
+  */
+@@ -981,7 +987,7 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 	uint32_t cfam_id;
+ 	struct fsi_slave *slave;
+ 	uint8_t crc;
+-	__be32 data, llmode;
++	__be32 data, llmode, slbus;
+ 	int rc;
+ 
+ 	/* Currently, we only support single slaves on a link, and use the
+@@ -1052,6 +1058,14 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+ 
+ 	}
+ 
++	slbus = cpu_to_be32(FSI_SLBUS_FORCE);
++	rc = fsi_master_write(master, link, id, FSI_SLAVE_BASE + FSI_SLBUS,
++			      &slbus, sizeof(slbus));
++	if (rc)
++		dev_warn(&master->dev,
++			 "can't set slbus on slave:%02x:%02x %d\n", link, id,
++			 rc);
++
+ 	rc = fsi_slave_set_smode(slave);
+ 	if (rc) {
+ 		dev_warn(&master->dev,
+-- 
+2.24.0
+
