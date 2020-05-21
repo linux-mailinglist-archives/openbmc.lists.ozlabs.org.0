@@ -2,48 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 662BD1DCAC4
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 12:13:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 97DAA1DCB13
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 12:31:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49SQSJ4zWNzDqnc
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 20:13:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49SQrz27mhzDqmJ
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 20:31:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wistron.com (client-ip=103.200.3.19; helo=segapp03.wistron.com;
- envelope-from=andy_yf_wang@wistron.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42a;
+ helo=mail-pf1-x42a.google.com; envelope-from=sunithaharish04@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=wistron.com
-Received: from segapp03.wistron.com (segapp02.wistron.com [103.200.3.19])
- by lists.ozlabs.org (Postfix) with ESMTP id 49SQPJ4ck3zDql0
- for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 20:10:51 +1000 (AEST)
-Received: from EXCHAPP04.whq.wistron (unverified [10.37.38.27]) by 
- TWNHUMSW4.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
- <Tdf44d6f853c0a816721a44@TWNHUMSW4.wistron.com>; Thu, 21 May 2020 
- 18:10:45 +0800
-Received: from EXCHAPP01.whq.wistron (10.37.38.24) by EXCHAPP04.whq.wistron 
- (10.37.38.27) with Microsoft SMTP Server 
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
- 15.1.1913.5; Thu, 21 May 2020 18:10:44 +0800
-Received: from EXCHAPP01.whq.wistron ([fe80::bd29:5a96:46fd:7d55]) by 
- EXCHAPP01.whq.wistron ([fe80::bd29:5a96:46fd:7d55%10]) with mapi id 
- 15.01.1913.007; Thu, 21 May 2020 18:10:44 +0800
-From: <Andy_YF_Wang@wistron.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: Implement a tool of flashing EEPROM to update the VPD data
-Thread-Topic: Implement a tool of flashing EEPROM to update the VPD data
-Thread-Index: AdYvV0qDYj1NNgNWQou/FU2lu1AJOg==
-Date: Thu, 21 May 2020 10:10:44 +0000
-Message-ID: <514e63dbddb94bfeacd1705fd98420b6@wistron.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.37.38.230]
-x-tm-snts-smtp: 54D081C4A5910743CAF7EC164CD0A37F8B5DEC3A6EE6AA07F65A07D82204491D2000:8
-Content-Type: multipart/alternative; 
- boundary="_000_514e63dbddb94bfeacd1705fd98420b6wistroncom_"
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=rcAbrHCm; dkim-atps=neutral
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com
+ [IPv6:2607:f8b0:4864:20::42a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49SQr46sYGzDqfH
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 20:30:44 +1000 (AEST)
+Received: by mail-pf1-x42a.google.com with SMTP id y18so3115307pfl.9
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 03:30:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=uH8Ujp7iw0I2mLh8PrbjQaBJVBPg+z8X8iasxqgZvdw=;
+ b=rcAbrHCmlZdFGszWzBmzZsnAoUBQ2T/WoDMu1xrTef723hhlyhXRJHa8ZKX3ibbQ1u
+ 1j2uSPvbHcMbyybB6c9P4zrmJ8QNuAVnYmx8Y2flS7x4dBKU8WXLhNQJMXkafr0Ux8Zb
+ MlXtKT8aozDRa21QuO7AagfyHjpgvDvxVc5ESMDNnDAOpQFQapbeJ+ExWMs+S+DCiBEM
+ 9XlUI6KOpUxdJnzyvnz5lqILvN6Viz+9yRv4JM1xPJnVAxSu65P7U6gWawQFSTTk5cGQ
+ sAD/uwCD6POwGfz86MWf2wgXRQZuXM80bsDrhSG26nxc2cSMu5ExDDr0GdHJQb2TPbYG
+ TIyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=uH8Ujp7iw0I2mLh8PrbjQaBJVBPg+z8X8iasxqgZvdw=;
+ b=m8Vm6BWdIsOBVBpMLUlMUsCA1XKr8b7ACdvFjjpi9QH6ONhQldayOkU9PZr5Ov7SsX
+ g0dj8M5zFCLDUQtDoCrKhY5RpNx7ANAWqc4pYtW05PX3eAZDRBS8Q3aP78PCAk5qUh2k
+ vA6R5M4PifK9Hp90Wwnwjl6oleZpC0PTXMkDNt8Do393ILX3KVKwt+5FJcttFBCoRlVb
+ ACUI0Id1TgQax9HdopDUJKUGLUt1UksJL7+BAj+YZXDcrfVl+7v7jI7cQz8XlvexUcmP
+ bQGgbgc/AUtdacoonDlT4H2+sXU+217ZWEwhehP81y+o0cvtF5U6qcfyLdcMZa36fXo3
+ iVkg==
+X-Gm-Message-State: AOAM5309nsEI7MNtYvd/Bjtg149hfnlMjMThu0ErLtARZEt/V5BcZ8dF
+ /r+4QqVd6XWAcLJglHItLwDaw9a0
+X-Google-Smtp-Source: ABdhPJxYGaQtgCHENsC3PLnnWGiNDCugJUhvItTDsYcTwZW8gusOH8guitvBFiDf8iA3Fu5h4PcIdQ==
+X-Received: by 2002:a62:ab04:: with SMTP id p4mr8970706pff.254.1590057040171; 
+ Thu, 21 May 2020 03:30:40 -0700 (PDT)
+Received: from [192.168.1.100] ([106.206.78.207])
+ by smtp.gmail.com with ESMTPSA id d2sm4170883pfa.164.2020.05.21.03.30.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 May 2020 03:30:39 -0700 (PDT)
+Subject: Re: Storing host data on the BMC
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+ <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+ <20200511120719.GA10214@heinlein>
+ <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+ <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+ <20200513211857.GA1166713@heinlein>
+ <10275d64-bebd-cb33-0a16-21299b7b1880@linux.vnet.ibm.com>
+ <20200514123350.GB1166713@heinlein>
+ <7a159b9d-ec82-fed9-a9e1-23ffdf1c62e5@gmail.com>
+ <534fbbca-ffe2-450d-b5e3-ef664c2a3729@gmail.com>
+ <9de48a92-bb18-7c0f-0a68-68e9808a46d3@linux.vnet.ibm.com>
+From: Sunitha Harish <sunithaharish04@gmail.com>
+Message-ID: <ee4ac345-def8-5c33-c7e7-c8189dc8b733@gmail.com>
+Date: Thu, 21 May 2020 16:00:13 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
+In-Reply-To: <9de48a92-bb18-7c0f-0a68-68e9808a46d3@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,138 +96,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrewg@us.ibm.com, wangat@tw.ibm.com
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_514e63dbddb94bfeacd1705fd98420b6wistroncom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
 
-Hello everyone,
+On 21-05-2020 10:46, Deepak Kodihalli wrote:
+> On 21/05/20 10:42 am, Sunitha Harish wrote:
+>> Hi,
+>>
+>> Any inputs?
+>>
+>> Thanks & regards,
+>> Sunitha
+>
+> Hi Sunitha,
+>
+> I believe you had got a direction based on the discussion below.
+>
+>>>>> As far as Sunitha's question goes, my point is that not all host
+>>>>> firmware generated data is a BIOS attribute. For eg if the host 
+>>>>> tells me
+>>>>> about the presence of certain FRUs, or their functional states, I
+>>>>> wouldn't want to store those in the BIOS attributes backend, I'd 
+>>>>> rather
+>>>>> associates those with the existing D-Bus interfaces for the FRU
+>>>>> inventory. I think the same applies to the Origin property that 
+>>>>> has been
+>>>>> described - associate with the networking D-Bus backend.
+>>>> I think we're in agreement here.  Data which is interesting to 
+>>>> represent
+>>>> on the BMC, for which we already have a defined-interface, use it.  
+>>>> For
+>>>> data which isn't interesting the to BMC, use the generic BIOS 
+>>>> attribute
+>>>> table.
+>
+> ^^ You use existing (or come up with new) D-Bus interfaces to 
+> represent your data. Those D-Bus interfaces can be implemented by 
+> settingsd or networkd or something else.
 
-I plan to implement a tool of flashing EEPROM to update the VPD data(MAC, B=
-MC's PartNumber, BMC's SerialNumber and BMC's PrettyName) recently.
-Then I didn't find a similar tool or module on the existing respository of =
-openbmc.
-So can I create a new respository to implement this tool?
-Or does anyone have any other better comments or suggestions?
-Thanks!
+If i am getting it correctly , the current changes which were made to 
+the phosphor-settings-manager should be good enough to handle all the 
+scenarios.
 
-Andy YF Wang
+In my last email i mentioned that ===>>
+--------------------------------------------------------------------------------------------------------------------------
+When the Ethernet interface set to be DHCP enabled ( by setting the Bios 
+attribute DHCPEnabled = true via redfish), the IPAddress, SubnetMask and 
+Gateway along with the Origin property will not be Bios settings. Here 
+the user will be setting the DHCPEnabled property.
+However in the case of Static IP configuration(IPAddress, SubnetMask and 
+Gateway) they will become bios setting.
+---------------------------------------------------------------------------------------------------------------------------
+Currently we are using the xyz.openbmc_project.Network.IP and this 
+interface is being implemented by settings object - 
+https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30424/
 
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient.=20
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
+Do you see any issues here?
 
---_000_514e63dbddb94bfeacd1705fd98420b6wistroncom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hello everyone,<o:p></o:p></spa=
-n></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I plan to implement a tool of f=
-lashing EEPROM to update the VPD data(MAC, BMC's PartNumber, BMC's SerialNu=
-mber and BMC's PrettyName) recently.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Then I didn&#8217;t find a simi=
-lar tool or module on the existing respository of openbmc.<o:p></o:p></span=
-></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">So can I create a new resposito=
-ry to implement this tool?
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Or does anyone have any other b=
-etter comments or suggestions?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks!<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Andy YF Wang<o:p></o:p></span><=
-/p>
-</div>
-
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient. </b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.</b></span></p>
-<p><span style=3D"font-family:'Calibri';font-size:11pt; color:#000000;"><b>=
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------</b></span></p></body>
-</html>
-
---_000_514e63dbddb94bfeacd1705fd98420b6wistroncom_--
+> Thanks,
+> Deepak
+>
