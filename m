@@ -1,68 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ED401DCB5A
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 12:48:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D08C1DCB73
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 12:53:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49SRDy5l1pzDqmC
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 20:48:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49SRLX3N7RzDqml
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 20:53:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::530;
+ helo=mail-pg1-x530.google.com; envelope-from=santosh.puranik.ibm@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=D/zABjaP; dkim-atps=neutral
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com
+ [IPv6:2607:f8b0:4864:20::530])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49SRD91D07zDql0
- for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 20:48:02 +1000 (AEST)
-IronPort-SDR: D8AHGd5LmGga/f81a5ptx+ZxxqTMxTPRfwA66vacD4Erm4v+6iJs8+TKKObpoCYutOcQZdy984
- P3kWZoAzrF8Q==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2020 03:47:57 -0700
-IronPort-SDR: uDcCcY+Zwjw4LYHCcIUSUYF6yIfmift/HEwMJz2Im/juFm1TqaoSky7DFd49IM4E6xdL9VyW7J
- oy+WNS5174NQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,417,1583222400"; d="scan'208";a="268591738"
-Received: from irsmsx108.ger.corp.intel.com ([163.33.3.3])
- by orsmga006.jf.intel.com with ESMTP; 21 May 2020 03:47:57 -0700
-Received: from irsmsx604.ger.corp.intel.com (163.33.146.137) by
- IRSMSX108.ger.corp.intel.com (163.33.3.3) with Microsoft SMTP Server (TLS) id
- 14.3.439.0; Thu, 21 May 2020 11:47:56 +0100
-Received: from irsmsx606.ger.corp.intel.com (163.33.146.139) by
- IRSMSX604.ger.corp.intel.com (163.33.146.137) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Thu, 21 May 2020 11:47:56 +0100
-Received: from irsmsx606.ger.corp.intel.com ([163.33.146.139]) by
- IRSMSX606.ger.corp.intel.com ([163.33.146.139]) with mapi id 15.01.1713.004;
- Thu, 21 May 2020 11:47:56 +0100
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: Sui Chen <suichen@google.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: Implementing BMC Health Monitoring
-Thread-Topic: Implementing BMC Health Monitoring
-Thread-Index: AQHWLxB5nWp7ul00W0maBFXrAVXhNaiyWbFA
-Date: Thu, 21 May 2020 10:47:56 +0000
-Message-ID: <ef1c70adf41b465bb29143cbf0b20f63@intel.com>
-References: <CAJOps0vP=0sa0R+gNFdrDy9y=e8Qq+LnZX6E2ssJ=5YaWigaeA@mail.gmail.com>
-In-Reply-To: <CAJOps0vP=0sa0R+gNFdrDy9y=e8Qq+LnZX6E2ssJ=5YaWigaeA@mail.gmail.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [10.22.254.132]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49SRKq1CKpzDqCK
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 20:52:59 +1000 (AEST)
+Received: by mail-pg1-x530.google.com with SMTP id j21so2990927pgb.7
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 03:52:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:cc:references:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=oXJlooMWHN+BMfvR8mPJSP5a8FbDduhXiFI4eZxVUK8=;
+ b=D/zABjaPmQxrjxWEvA07wLVTds/KuCaqvfeznJ0fNNcgft2pg+HDmlabu8RkaGdGWi
+ PeSBbX6uJSm+uCmvQjN7IkogQ7cx44E1/R5Om6+jXKMTLpeo+YvkxxOvj9r6ogiXce8H
+ Uo77a1iJd3NYRsBwNeaYACTTXjESX0Yv7Sa6tVDqO7TCy99jClh5wlqkajmcZL5Diah/
+ ou+S+MedSq3Jdhe4CKds9ZUzpSgCRdC3tQemHjbIxXVCVoA9TpuhkX+npqwuUVhodjtq
+ jqDPrBS5F87C0tuJSH0c1VQLYqrtdyw4PSZASlxl9Hb/T9BK1latS+odnTQoqrRPj63M
+ UDzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=oXJlooMWHN+BMfvR8mPJSP5a8FbDduhXiFI4eZxVUK8=;
+ b=MS93d+qBPCOwJs620S1SimP7FGs8gVeyV4biojqjQYRbSjapGePDgkaB9qLypInzym
+ 8FWlK4qwuSCsp+xquFqsKcn+yKo78o3vEv+WEgct4AZbBNcQ1jifl3gHvqYwbOlbQlNA
+ 33V0OmqI+SxZzyxYOo3m0SRub5jr0XXwxF/OLaRaGSkNHBDq59xNNyYmGjoszilZfYoy
+ UBlSqlVngzyftVnR4Q92g9WlfJQbSaRtpzFBi8T2jOWVtMeTuqzCQ3Re5XC4lLLO++H8
+ +TAPFwpzIDjfcFnumQssIbxjoJ3jSLwMosinbT48Y5lcOF0g/dYoK6gUFg8tUuNtH/sp
+ 9OJQ==
+X-Gm-Message-State: AOAM530tCA4Gf8XAXuY1mLTNPquK8jcosiTmCg35tflRSqPLAnAFAu05
+ sg63KtJ1eQwZ8bHpjal+VGZFe4tlqag=
+X-Google-Smtp-Source: ABdhPJxpuyS7H9MLk2aXBj/MHRoZOkA0Sr7NssTL1mtqwuaRC+FLS3fpF4+6I6N/da7AKQJYMrGv3w==
+X-Received: by 2002:a65:608c:: with SMTP id t12mr8579353pgu.46.1590058375980; 
+ Thu, 21 May 2020 03:52:55 -0700 (PDT)
+Received: from [192.168.1.6] ([49.205.222.75])
+ by smtp.gmail.com with ESMTPSA id m14sm3911270pgt.6.2020.05.21.03.52.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 May 2020 03:52:55 -0700 (PDT)
+Subject: Re: Implement a tool of flashing EEPROM to update the VPD data
+To: Andy_YF_Wang@wistron.com, openbmc@lists.ozlabs.org
+References: <514e63dbddb94bfeacd1705fd98420b6@wistron.com>
+From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+Message-ID: <11774881-bae0-16b5-eb01-f82cba9eb9cd@gmail.com>
+Date: Thu, 21 May 2020 16:22:52 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
+In-Reply-To: <514e63dbddb94bfeacd1705fd98420b6@wistron.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,91 +82,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: andrewg@us.ibm.com, wangat@tw.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGksIA0KDQpUaGUgcHJvcG9zYWwgc2VlbXMgaW50ZXJlc3RpbmcuIEZyb20gd2hhdCBJJ3ZlIHJl
-YWQgZnJvbSB5b3VyIGUtbWFpbCwgeW91IGFyZSBsb29raW5nIHRoZSBiZXN0IHdheSB0byBpbXBs
-ZW1lbnQgQk1DIGhlYWx0aCBtZXRyaWNzLiBNeSBwcm9wb3NhbCB3b3VsZCBiZSB0byBleHBvc2Ug
-dGhlc2UgbWV0cmljcyBhcyBELUJ1cyBzZW5zb3JzIHdpdGggYW4gb3B0aW9uIHRvIHN0b3JlIGRh
-dGEgdG8gdGhlIGZpbGVzeXN0ZW0uIFN1Y2ggc29sdXRpb24gd2lsbCBlYXNlIHRoZSBpbnRlZ3Jh
-dGlvbiB3aXRoIFJlZGZpc2ggYW5kIHN1cHBvcnQgdGhlc2UgbWV0cmljcyBieSB0aGUgTW9uaXRv
-cmluZyBTZXJ2aWNlIChodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVy
-L2Rlc2lnbnMvdGVsZW1ldHJ5Lm1kKSAuIFRoaXMgd2F5LCB5b3UgaGF2ZSBzdXBwb3J0IGZvciBj
-b2xsZWN0aW5nIG1ldHJpY3MgaW50byBtZXRyaWMgcmVwb3J0LCB5b3UgaGF2ZSBzdXBwb3J0IG9m
-IHNpbXBsZSBvcGVyYXRpb25zLCBsaWtlIG1pbi9tYXgvYXZlcmFnZS9zdW0uIEFsc28sIHVzaW5n
-IG1ldHJpYyByZXBvcnRzLCB5b3UgY2FuIHN0b3JlIGhpc3RvcmljYWwgcmVhZGluZ3MgYW5kIHN0
-cmVhbSB0aGUgbWV0cmljIHJlcG9ydHMgYXMgZXZlbnRzLiANClBpb3RyIE1hdHVzemN6YWsNCi0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQ0KSW50ZWwgVGVjaG5vbG9neSBQb2xhbmQgc3AuIHogby5vLiANCnVsLiBTbG93
-YWNraWVnbyAxNzMsIDgwLTI5OCBHZGFuc2sNCktSUyAxMDE4ODINCk5JUCA5NTctMDctNTItMzE2
-DQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcytwaW90ci5tYXR1c3pjemFrPWludGVs
-LmNvbUBsaXN0cy5vemxhYnMub3JnPiBPbiBCZWhhbGYgT2YgU3VpIENoZW4NClNlbnQ6IFRodXJz
-ZGF5LCBNYXkgMjEsIDIwMjAgMzozNyBBTQ0KVG86IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0K
-U3ViamVjdDogSW1wbGVtZW50aW5nIEJNQyBIZWFsdGggTW9uaXRvcmluZw0KDQpIZWxsbyBPcGVu
-Qk1DIE1haWxpbmcgTGlzdCwNCg0KSXQgaXMgZ3JlYXQgdG8gc2VlIHRoZSBwcm9wb3NhbCBvbiBC
-TUMgaGVhbHRoIG1vbml0b3JpbmchIFdlIGhhdmUgc2ltaWxhciBlZmZvcnRzIGluIGhlYWx0aCBt
-b25pdG9yaW5nIGluIHByb2dyZXNzLCBzdGFydGVkIGRvaW5nIHNvbWUgaW1wbGVtZW50YXRpb24s
-IGFuZCB3b3VsZCBsaWtlIHRvIHNoYXJlIHNvbWUgdGhvdWdodHMgd2l0aCB0aGUgTWFpbGluZyBM
-aXN0IHRvIGhlbHAgZ2V0IEJNQyBoZWFsdGggbW9uaXRvcmluZyBzdGFydGVkOg0KDQooMSkgV2hh
-dCBtZXRyaWNzIGhhdmUgd2UgY29uc2lkZXJlZCBub3c/DQoNCldlIGhhdmUgY29uc2lkZXJlZCB0
-aGUgZm9sbG93aW5nIG1ldHJpY3Mgb24gdGhlIEJNQzoNCsKgIC0gTWVtb3J5IHVzYWdlDQrCoCAt
-IE51bWJlciBvZiBvcGVuIGZpbGUgZGVzY3JpcHRvcnMNCsKgIC0gRnJlZSBzdG9yYWdlIHNwYWNl
-IGluIHRoZSByZWFkLXdyaXRlIGZpbGUgc3lzdGVtDQrCoCAtIExpc3Qgb2YgcHJvY2Vzc2VzDQrC
-oCAtIENQVSB0aW1lIGZvciBhIGZldyB0b3AgcHJvY2Vzc2VzDQrCoCANCsKgIFNvbWUgb2YgdGhl
-c2UgYXJlIGluc3BpcmVkIGJ5IHZhcmlvdXMgcHJvZmlsZXJzLCBhbmQgc29tZSBvdGhlcnMgYXJl
-IGV4cGVjdGVkIHRvIGJlIHJlbGV2YW50IHRvIHRoZSB0eXBpY2FsIHdvcmtsb2FkcyBydW5uaW5n
-IG9uIHRoZSBCTUMuDQoNCigyKSBPdmVyYWxsLCBpdCBhcHBlYXJzIHRoZSBkZXNpZ24gc3BhY2Ug
-Zm9yIGhlYWx0aCBtb25pdG9yaW5nIGhhcyB0aGUgZm9sbG93aW5nIGRpbWVuc2lvbnM6DQoNCmEp
-IEEgbWV0aG9kIHRvIGRvIHRoZSBjb2xsZWN0aW9uLCB3aGljaCBtaWdodCBiZToNCsKgIC0gUnVu
-bmluZyBhIHByb2dyYW0gbGlrZSAiZGYiIHRvIGdldCBmcmVlIGRpc2sgc3BhY2UNCsKgIC0gVHJh
-dmVyc2luZyBzb21lIGZvbGRlciB0byBjb21wdXRlIHNvbWUgc3RhdGlzdGljcw0KwqAgLSBNb25p
-dG9yIHNvbWUgYnVzIGZvciBzb21lIHRpbWUgYW5kIGdlbmVyYXRlIHNvbWUgcmVzdWx0DQrCoCAt
-IG9yIHNvbWV0aGluZyBlbHNlDQrCoCANCsKgIFRoZSBjb2xsZWN0aW9uIHByb2Nlc3MgbWlnaHQg
-dmFyeSBmcm9tIG1ldHJpYyB0byBtZXRyaWMsIGFuZCBjYW4gdGFrZSBzb21lIHRpbWUgdG8gY29t
-cGxldGUgb24gdGhlIEJNQywgYW5kIHRoZXJlZm9yZSwgdGhlIHJlc3VsdHMgbmVlZMKgdG8gYmUg
-c3RhZ2VkIHNvbWV3aGVyZSBhbmQgbWFkZSBhY2Nlc3NpYmxlIHdoZW4gaXQncyBjb21wbGV0ZWQs
-IHNvIHRoZSByZXF1ZXN0b3Igd29uJ3QgaGF2ZSB0byBidXN5LXdhaXQuDQoNCmIpIEEgd2F5IHRv
-IHN0YWdlIG1vbml0b3JpbmcgZGF0YSBvbiB0aGUgQk1DLCB3aGljaCBtaWdodCBiZToNCsKgIC0g
-RmlsZXMgb3IgZGF0YWJhc2VzIGluIERSQU0gb3Igc29tZSBwZXJzaXN0ZW50IHN0b3JlLg0KwqAg
-LSBEQnVzIG9iamVjdHMsIGFzIGRlc2NyaWJlZCBpbiBWaWpheSdzIGRvY3VtZW50OyB0aGlzIGlz
-IHNpbWlsYXIgdG8gaG93IHNlbnNvcnMgd29yay4NCsKgIC0gSVBNSSBCbG9icyAodGhpcyBpcyB3
-aGF0IHdlIGhhdmUgaW1wbGVtZW50ZWQgcmlnaHQgbm93KQ0KwqAgLSBvciBzb21ldGhpbmcgZWxz
-ZQ0KwqAgDQpjKSBBIHdheSB0byB0cmFuc2ZlciBtb25pdG9yaW5nIGRhdGEgb3V0IG9mIHRoZSBC
-TUMsIHdoaWNoIG1pZ2h0IGJlOg0KwqAgLSBzY3ANCsKgIC0gUmVkRmlzaA0KwqAgLSBJUE1JICh0
-aGlzIGlzIHdoYXQgd2UncmUgdXNpbmcgcmlnaHQgbm93KQ0KwqAgLSBvciBzb21ldGhpbmcgZWxz
-ZQ0KwqAgDQpkKSBGb3JtYXQgb2Ygc3RhZ2VkIGRhdGE6DQrCoCAtIFJhdyBieXRlcw0KwqAgLSBQ
-cm90b2NvbCBidWZmZXJzDQrCoCAtIEpTT04gb2JqZWN0cw0KwqAgLSBvciBzb21ldGhpbmcgZWxz
-ZQ0KwqAgLSBUaGUgZGF0YSBtYXkgYmUgY29tcHJlc3NlZCB0byBzYXZlIHRyYW5zZmVyIHRpbWUN
-CsKgDQplKSBBIHdheSB0byBjb25zdW1lIHRoZSBoZWFsdGggbW9uaXRvcmluZyBkYXRhOg0KwqAg
-LSBUaGUgQk1DIG1pZ2h0IGRvIHNvbWUgcHJlLXByb2Nlc3NpbmcsIGxpa2Ugd2luZG93ZWQgYXZl
-cmFnZS4NCsKgIC0gVGhlIEJNQyBtYXkgcGVyZm9ybSBjZXJ0YWluIGNvcnJlY3RpdmUgbWVhc3Vy
-ZXMgd2hlbiBtZXRyaWNzIGFwcGVhciBhYm5vcm1hbC4NCsKgIC0gVGhlIGhvc3QgbWF5IHBlcmZv
-cm0gY2VydGFpbiBjb3JyZWN0aXZlIG1lYXN1cmVzIHdoZW4gbWV0cmljcyBhcHBlYXIgYWJub3Jt
-YWwuDQrCoCAtIEJNQyBoZWFsdGggZGF0YSBtaWdodCBiZSBwbHVnZ2VkIGludG8gc29tZSBhbHJl
-YWR5IGV4aXN0aW5nIG1vbml0b3JpbmcgZnJhbWV3b3JrIG92ZXJzZWVpbmcgYSBsYXJnZSBudW1i
-ZXIgb2YgbWFjaGluZXMsIGNvbGxlY3RpbmcgaGlzdG9yaWNhbCBkYXRhLCBhbmQgcHJvamVjdGlu
-ZyBmdXR1cmUgdHJlbmRzLCBldGMuDQoNCmYpIEEgd2F5IHRvIGNvbmZpZ3VyZSB0aGUgaGVhbHRo
-IG1vbml0b3Jpbmcgc3lzdGVtOg0KwqAgLSBDb25maWd1cmF0aW9uIGZvciB3aGljaCBtZXRyaWNz
-IGFyZSBjb2xsZWN0ZWQNCsKgIC0gQ29uZmlndXJhdGlvbiBmb3IgdGhlIGNob2ljZSBvZiBzdGFn
-aW5nIGluIGIpLCB3YXkgb2YgdHJhbnNmZXIgaW4gYyksIGFuZCBmcmVxdWVuY3kgb2YgY29sbGVj
-dGlvbiBpbiBlKQ0KwqAgLSBTb21lIGNvbmZpZ3VyYXRpb25zIG1heSBiZSBidWlsZC10aW1lIGFu
-ZCBzb21lIG1heSBiZSBydW4tdGltZQ0KwqAgwqAgwqAtIEkgZ3Vlc3Mgd2UgY2FuIGRyYXcgc29t
-ZSBpbnNwaXJhdGlvbnMgZnJvbSBwaG9zcGhvci1pcG1pLWJsb2JzDQoNCigzKSBUaGUgcmVxdWly
-ZW1lbnRzIGFuZCBwZXJmb3JtYW5jZS9zdG9yYWdlIGltcGFjdHMgb24gdGhlIEJNQzoNCg0KYSkg
-VGhlIGNvbGxlY3Rpb24gc2hvdWxkIG5vdCBiZSB0b28gdGF4aW5nIG9uIHRoZSBwcm9jZXNzaW5n
-L3N0b3JhZ2UgcmVzb3VyY2VzIG9uIHRoZSBCTUMNCg0KYikgVGhlIGRhdGEgdHJhbnNmZXIgcHJv
-Y2VzcyBzaG91bGQgbm90IGJlIHRvbyB0YXhpbmcgb24gdGhlIGxpbmsgYmV0d2VlbiB0aGUgaG9z
-dCBhbmQgQk1DDQrCoCAtIEZvciB0aGUgbWV0cmljcyB3ZSBoYXZlIGFuZCB0aGUgSVBNSSBjb25u
-ZWN0aW9uIHdlJ3JlIHVzaW5nIHNvIGZhciwgaXQgdG9vayBhcm91bmQgMTAgfiAxMDBtcyBmb3Ig
-dGhlIGhvc3QgdG8gY29sbGVjdCBhIG1ldHJpYy4gVGhlIHRpbWUgaXMgZG9taW5hdGVkIGJ5IElQ
-TUkgdHJhbnNmZXIgdGltZS4gVGhlIHRpbWUgaXMgY29uc2lkZXJlZCBhY2NlcHRhYmxlIGlmIGEg
-bWV0cmljIGlzIGNvbGxlY3RlZCBhdCBhIHJlYXNvbmFibHkgbG9uZyBpbnRlcnZhbCwgc2F5LCBl
-dmVyeSAzMCBtaW51dGVzLg0KwqAgDQoNCldlIGhvcGUgdGhlIGFib3ZlIGNvbnRlbnRzIGhlbHAg
-Y29tcGxlbWVudCB0aGUgZXhpc3RpbmcgZGVzaWduIHByb3Bvc2FsLCBhbmQgd291bGQgbGlrZSB0
-byBoZWxwIGFjdHVhbGx5IHN0YXJ0IGltcGxlbWVudGluZyAoYW5kIGRlcGxveWluZykgaGVhbHRo
-IG1vbml0b3JpbmcgZm9yIHRoZSBCTUMuDQpUaGUgcXVlc3Rpb24gaXM6IHdlJ3JlIHdvcmtpbmcg
-b24gb3VyIGltcGxlbWVudGF0aW9uIGFuZCB3ZSdyZSB3b25kZXJpbmcgd2hhdCB3b3VsZCBiZSBh
-IGdvb2QgdGltZSBmb3IgdXMgdG8gc2VuZCBpdCBmb3IgcmV2aWV3PyBEbyB3ZSBuZWVkIHRvIHN1
-cHBvcnQgYm90aCB3aGF0IHdlIGhhdmUgbm93IGFuZCB3aGF0IGlzIGJlaW5nIHByb3Bvc2VkPw0K
-DQpUaGFua3MhDQpTdWkNCg==
+Hi,
+
+On 5/21/20 3:40 PM, Andy_YF_Wang@wistron.com wrote:
+>
+> Hello everyone,
+>
+> I plan to implement a tool of flashing EEPROM to update the VPD 
+> data(MAC, BMC's PartNumber, BMC's SerialNumber and BMC's PrettyName) 
+> recently.
+>
+> Then I didn’t find a similar tool or module on the existing 
+> respository of openbmc.
+>
+> So can I create a new respository to implement this tool?
+>
+> Or does anyone have any other better comments or suggestions?
+>
+Which VPD format are you interested in updating? Assuming you are using 
+the OpenPower VPD format,
+there is a tool being implemented in the series of patches here:
+https://gerrit.openbmc-project.xyz/c/openbmc/openpower-vpd-parser/+/30239
+That can currently handle OpenPower and IBM format VPD and relies on the 
+VPD being represented as
+D-Bus objects, but we'd be happy to see that getting extended to just 
+doing EEPROM writes.
+--
+Santosh
+>
+> Thanks!
+>
+> Andy YF Wang
+>
+> *---------------------------------------------------------------------------------------------------------------------------------------------------------------*
+>
+> *This email contains confidential or legally privileged information 
+> and is for the sole use of its intended recipient. *
+>
+> *Any unauthorized review, use, copying or distribution of this email 
+> or the content of this email is strictly prohibited.*
+>
+> *If you are not the intended recipient, you may reply to the sender 
+> and should delete this e-mail immediately.*
+>
+> *---------------------------------------------------------------------------------------------------------------------------------------------------------------*
+>
