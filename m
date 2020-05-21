@@ -2,53 +2,39 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D721C1DCFAE
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 16:27:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3F881DCFD7
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 16:34:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49SX4f1t79zDqdq
-	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 00:26:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49SXF75QbwzDqM6
+	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 00:34:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=the-dreams.de (client-ip=88.99.104.3; helo=pokefinder.org;
+ envelope-from=wsa@the-dreams.de; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49SX1J3kWSzDqkd
- for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 00:24:02 +1000 (AEST)
-IronPort-SDR: T4oLM85U64G9gsR0Uzt7WQ0buzFF1uP5CoTrLEr2oErOoMMjCQ9c+On/o21EQvUiwgKAzm3tCi
- pgUMdS8pWMnQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 May 2020 07:23:41 -0700
-IronPort-SDR: HJwr70oF8r+qmhLkXdAqGrFwTDZR+Uh1JWVRI1suhxl+UzDLL/Fl2/k3MnYyHkfNDm743d3dr5
- u5ECfTDgt3EQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,417,1583222400"; d="scan'208";a="253985670"
-Received: from smile.fi.intel.com (HELO smile) ([10.237.68.40])
- by fmsmga007.fm.intel.com with ESMTP; 21 May 2020 07:23:38 -0700
-Received: from andy by smile with local (Exim 4.93)
- (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1jbm6m-0082sf-QV; Thu, 21 May 2020 17:23:40 +0300
-Date: Thu, 21 May 2020 17:23:40 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Tali Perry <tali.perry1@gmail.com>
+ dmarc=none (p=none dis=none) header.from=the-dreams.de
+Received: from pokefinder.org (sauhun.de [88.99.104.3])
+ by lists.ozlabs.org (Postfix) with ESMTP id 49SX9X52VNzDqQ1
+ for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 00:31:08 +1000 (AEST)
+Received: from localhost (p5486ce13.dip0.t-ipconnect.de [84.134.206.19])
+ by pokefinder.org (Postfix) with ESMTPSA id F01102C1FCF;
+ Thu, 21 May 2020 16:31:03 +0200 (CEST)
+Date: Thu, 21 May 2020 16:31:00 +0200
+From: Wolfram Sang <wsa@the-dreams.de>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Subject: Re: [PATCH v12 2/3] i2c: npcm7xx: Add Nuvoton NPCM I2C controller
  driver
-Message-ID: <20200521142340.GM1634618@smile.fi.intel.com>
+Message-ID: <20200521143100.GA16812@ninjato>
 References: <20200521110910.45518-1-tali.perry1@gmail.com>
  <20200521110910.45518-3-tali.perry1@gmail.com>
+ <20200521142340.GM1634618@smile.fi.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="1yeeQ81UyVL57Vl7"
 Content-Disposition: inline
-In-Reply-To: <20200521110910.45518-3-tali.perry1@gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <20200521142340.GM1634618@smile.fi.intel.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,103 +46,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, avifishman70@gmail.com,
- venture@google.com, openbmc@lists.ozlabs.org, wsa@the-dreams.de,
- brendanhiggins@google.com, ofery@google.com, linux-kernel@vger.kernel.org,
- kfting@nuvoton.com, robh+dt@kernel.org, linux-i2c@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ tmaimon77@gmail.com, avifishman70@gmail.com, venture@google.com,
+ openbmc@lists.ozlabs.org, brendanhiggins@google.com, ofery@google.com,
+ Tali Perry <tali.perry1@gmail.com>, kfting@nuvoton.com, robh+dt@kernel.org,
+ linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 21, 2020 at 02:09:09PM +0300, Tali Perry wrote:
-> Add Nuvoton NPCM BMC I2C controller driver.
 
-Thanks. My comments below.
-After addressing them, FWIW,
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+--1yeeQ81UyVL57Vl7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-...
+Hi Tali, Andy!
 
-> +	/* Frequency larger than 1 MHZ is not supported */
+On Thu, May 21, 2020 at 05:23:40PM +0300, Andy Shevchenko wrote:
+> On Thu, May 21, 2020 at 02:09:09PM +0300, Tali Perry wrote:
+> > Add Nuvoton NPCM BMC I2C controller driver.
+>=20
+> Thanks. My comments below.
+> After addressing them, FWIW,
+> Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-1 MHZ -> 1MHz
+Thanks, Andy, for all the review!
 
-...
+=46rom a glimpse, this looks good to go. I will have a close look later
+today.
 
-> +#ifdef CONFIG_DEBUG_FS
+> > +#ifdef CONFIG_DEBUG_FS
+>=20
+> Again, why is this here?
+>=20
+> Have you checked debugfs.h for !CONFIG_DEBUG_FS case?
 
-Again, why is this here?
+I wondered also about DEBUG_FS entries. I can see their value when
+developing the driver. But since this is done now, do they really help a
+user to debug a difficult case? I am not sure, and then I wonder if we
+should have that code in upstream. I am open for discussion, though.
 
-Have you checked debugfs.h for !CONFIG_DEBUG_FS case?
+> > +MODULE_VERSION("0.1.3");
+>=20
+> Module version is defined by kernel commit hash. But it's up to you and
+> subsystem maintainer to decide.
 
-> +/* i2c debugfs directory: used to keep health monitor of i2c devices */
-> +static struct dentry *npcm_i2c_debugfs_dir;
-> +
-> +static void i2c_init_debugfs(struct platform_device *pdev, struct npcm_i2c *bus)
-> +{
-> +	struct dentry *d;
-> +
-> +	if (!npcm_i2c_debugfs_dir)
-> +		return;
-> +
-> +	d = debugfs_create_dir(dev_name(&pdev->dev), npcm_i2c_debugfs_dir);
-> +	if (IS_ERR_OR_NULL(d))
-> +		return;
-> +
-> +	debugfs_create_u64("ber_cnt", 0444, d, &bus->ber_cnt);
-> +	debugfs_create_u64("nack_cnt", 0444, d, &bus->nack_cnt);
-> +	debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
-> +	debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
-> +	debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
-> +
-> +	bus->debugfs = d;
-> +}
+Please drop it. I also think commit id's (or even kernel versions) are a
+more precise description.
 
-> +#else
-> +static void i2c_init_debugfs(struct platform_device *pdev, struct npcm_i2c *bus)
-> +{
-> +}
+Regards,
 
-This is completely redundant.
-
-> +#endif
-
-...
-
-> +#ifdef CONFIG_DEBUG_FS
-
-Ditto.
-
-> +static int __init npcm_i2c_init(void)
-> +{
-> +	struct dentry *dir;
-> +
-> +	dir = debugfs_create_dir("i2c", NULL);
-> +	if (IS_ERR_OR_NULL(dir))
-> +		return 0;
-> +
-> +	npcm_i2c_debugfs_dir = dir;
-> +	return 0;
-> +}
-> +
-> +static void __exit npcm_i2c_exit(void)
-> +{
-> +	debugfs_remove_recursive(npcm_i2c_debugfs_dir);
-> +}
-> +
-> +module_init(npcm_i2c_init);
-> +module_exit(npcm_i2c_exit);
-> +#endif
-
-...
-
-> +MODULE_VERSION("0.1.3");
-
-Module version is defined by kernel commit hash. But it's up to you and
-subsystem maintainer to decide.
-
--- 
-With Best Regards,
-Andy Shevchenko
+   Wolfram
 
 
+--1yeeQ81UyVL57Vl7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl7GkKAACgkQFA3kzBSg
+KbZ4kA/+J19dZhaJMmLz3WgryibpVzJTnhheDeduLgYVUvQcBoHj7dvuMF9+RYNM
+R+ClE6BTGWDYBGglNFSSFq/M8TUro7GzIPJw1wzSjLLtxYh13FeFx9FFYX+XS1zO
+oKff+p2gC1XM6RjEsIyTz7+/e0AsUKgCM6ENX4re+BbU/6IHvv2zOOaaVn2oEsoO
+3jQ/V2yV9U1QsFLd/Ev2SnYT4owBZY/CVz93njaUc9/Hfvz5FawH0SD3/GnWh8+K
+3gm7Ry1VoW8oopkXEcquXTBjaLKQPE3/w0cuJHFh4f9PAi1aEYHCfFa6MgC/Z8xg
+Fkhwkxj5m226WUa41Lswib5sdQ/ITRLetMkoM3VTLFKj5x2HmluwSV2Jt6tGFReZ
+K5fP8h8b4/TjEqVILEctTAfW0pEVT+BF0/cg9MiPPlKjNKXdOollLpu6hnaUdUxb
+QYz3ehhDfsD9lKpKFfCTyx1seQ54DwBM/C/w+RAg8ThTWjMHuj2rz872SVC1i+hY
+OCqRzUicn60p0SzZW5rL+kAVEKQkWjuosQ9XyoBMASXZnfWjzhLIFde6Yas6SXHV
+rTKLx5840wEuTVnNKsQ5XoMN0eadd9H0eu4I/XBXoc5ywX5EISq6df4xKfGC0kx6
+VB9hc42qrJ5lmQVOMVQ1bAdFba+mwzLKdCNcC+qHISoNJOctprY=
+=dVRn
+-----END PGP SIGNATURE-----
+
+--1yeeQ81UyVL57Vl7--
