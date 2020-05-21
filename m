@@ -1,55 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 272A11DBFE1
-	for <lists+openbmc@lfdr.de>; Wed, 20 May 2020 22:07:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 315631DC4D2
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 03:37:52 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49S3h8238HzDqS1
-	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 06:07:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49SC194NK7zDqk8
+	for <lists+openbmc@lfdr.de>; Thu, 21 May 2020 11:37:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::229;
+ helo=mail-lj1-x229.google.com; envelope-from=suichen@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=D9QGJS6s; dkim-atps=neutral
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com
+ [IPv6:2a00:1450:4864:20::229])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49S3g40fQ7zDqZk
- for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 06:06:37 +1000 (AEST)
-IronPort-SDR: AGeE6aug16f1PhSkkYsM/is7B6bHOzANrhLv+7SFTwAJzz4KFY1v5GNePZal7wew1W+gPwH8UY
- Zyyv1rsO7uEw==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2020 13:06:34 -0700
-IronPort-SDR: 60zJACGRmlO1ISOIUMlCKiK9FFQNpysWrzlyUrBHNN04QsKGvwwvDZ8tqVJUdkgxei9IPihRg1
- lQ+q9qCWd/3w==
-X-IronPort-AV: E=Sophos;i="5.73,415,1583222400"; d="scan'208";a="253768051"
-Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
- ([10.7.150.62])
- by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 May 2020 13:06:34 -0700
-Date: Wed, 20 May 2020 13:06:33 -0700
-From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: =?utf-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
-Subject: Re: Reducing fragmentation in OpenBMC
-Message-ID: <20200520200445.GA45595@mauery.jf.intel.com>
-References: <d7da4861c449609d2cf1b1b1434c653e9a27a805.camel@ozlabs.org>
- <AA2FE467-1072-4CD6-BA9F-3AAAD40DC8E0@gmail.com>
- <CAGm54UFc15aXH9qJz+-hig8NDbX-bVxjpZa-g-9Bg=uUpjEydQ@mail.gmail.com>
- <9b94cd92ae0d06992f897fa3e5008a1537498578.camel@fuzziesquirrel.com>
- <CAGm54UG0FZ38QzY0rROYVnk3izTE46SNb1D39Hdbz77xz3POZQ@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49SC0T4pnwzDqPN
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 11:37:06 +1000 (AEST)
+Received: by mail-lj1-x229.google.com with SMTP id l15so5889009lje.9
+ for <openbmc@lists.ozlabs.org>; Wed, 20 May 2020 18:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=oVxTdDE7v3cmi2dE4rP9W1HIBDUxIgZPOnz8OwIVxQI=;
+ b=D9QGJS6siQKxGRRA+qy8+tbZdeI4vi66VUwaqwFDt0JfFxqLoAYIdrE1E4PyewUCtn
+ bsWnIgBomswqyTryRkmelwFYAAN9dj+a2IZs3vD4EuuvlEhW8zV7rWBVg7Y7bOAZgdHG
+ 0RIAZpEAUbh2zt135i1vPPJ8v/I5p9upaG5ybh0gibHhsvt2AB5bk2V9VIZcvYOZYiER
+ ceKMLwq7eliw15CsrhwXptKpP6vsomeZYihOFcFVfpqAbXYsm8FPHsPD2TdLsIcOKoDy
+ M3vAGpbH/SPe2Wl0HcB695boHoubnhriQx1hsyCKtJN0SbWqMhLmp52ErcarMbS2OyGF
+ HQjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=oVxTdDE7v3cmi2dE4rP9W1HIBDUxIgZPOnz8OwIVxQI=;
+ b=nQKYKcLAi14pHqzeeJK8dOyu57kUH1AyfisqTbpZIBesI0ZJJf3NuzeVOeEZpZRLxV
+ VSQEDkr6cZ82vLJDgDTLbUadbSQ9A9txhpqsJfvd2AJU/yBukH/6JdvbXy4HGwpzD3la
+ hZEbbgrEIVkbOzkPFwSvbsa1MAgxFt6E/jMDOQS+ZuwWQMP4mseivaOd58JkA0FDJZDi
+ imz59C3KnxQ/sCSG9u1oYGs0jwfMO61nscRpcO9CHFsb2ZGXnarDMiJP6dW3HyNBpu9K
+ Y7kbMJz5sZjxd1BNxsnXzCJ4tnAJZI+Wd/ssGqrAZHU6tktWQ8j0rGDeKk0Zsf9ShC0h
+ e4jg==
+X-Gm-Message-State: AOAM531HSGKTzQmG8PpBZVGQ63YKjBRD419B9yVGO10+X4MshchZ/LyF
+ JbUOorZF43x+7sLG9+Kc0hxZaIVKcQn3nn0FCJ5sBeEcxEU=
+X-Google-Smtp-Source: ABdhPJxPKS9ej5avnypAuMPwWl2zCu8rYzv3M1kuwNzxthv8ae8b/+LYpXwSXAaVQpsP8JtphknRa93xPppb2ckBaHI=
+X-Received: by 2002:a05:651c:112e:: with SMTP id
+ e14mr1755397ljo.350.1590025019495; 
+ Wed, 20 May 2020 18:36:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAGm54UG0FZ38QzY0rROYVnk3izTE46SNb1D39Hdbz77xz3POZQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+From: Sui Chen <suichen@google.com>
+Date: Wed, 20 May 2020 18:36:47 -0700
+Message-ID: <CAJOps0vP=0sa0R+gNFdrDy9y=e8Qq+LnZX6E2ssJ=5YaWigaeA@mail.gmail.com>
+Subject: Implementing BMC Health Monitoring
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000079184705a61e8cf7"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,63 +70,164 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 20-May-2020 10:25 AM, =E9=83=81=E9=9B=B7 wrote:
->On Tue, May 19, 2020 at 8:50 PM Brad Bishop <bradleyb@fuzziesquirrel.com> =
-wrote:
->>
->> On Tue, 2020-05-19 at 10:25 +0800, =E9=83=81=E9=9B=B7 wrote:
->> > On Tue, May 19, 2020 at 8:53 AM Andrew Geissler <
->> > geissonator@gmail.com> wrote:
->> >
->> > > I know phosphor-dbus-interfaces has always been a bit onerous. I do
->> > > feel like
->> > > we get some good stuff in the reviews though. It also ensures we
->> > > have
->> > > documentation  of our interfaces. The cross-repo dependencies we
->> > > get are a bit frustrating (i.e. need to get interface merged and
->> > > bubbled into
->> > > openbmc before you can implement). There=E2=80=99s also no versioning
->> > > concept so
->> > > if an interface needs to be changed, it=E2=80=99s a huge pain. Ideas=
- on how
->> > > we could
->> > > make this easier but keep the benefits? Or people that don=E2=80=99t=
- use it
->> > > and just
->> > > define their own interfaces, any improvements we could make to get
->> > > you to use it?
->> > >
->> >
->> > This usually involves the repo CI.
->> > If we could implement "Cross-repo dependencies", making the Jenkins
->> > job able to pick the "dependent" revision of phosphor-dbus-interfaces
->> > (or sdbusplus, or else), and build a docker container with the
->> > dependencies to run the repo CI, the issue could be resolved.
->>
->> This would be a nice feature to have in our CI when cross repo
->> dependencies come up.  But I don't think  having that would give us
->> free license to add cross repo dependencies everywhere though - I would
->> like to see us come up with a system that avoids the need for cross-
->> repo dependencies in the first place.
->
->As Andrew indicates, phosphor-dbus-interfaces is the major cross repo
->dependency already.
+--00000000000079184705a61e8cf7
+Content-Type: text/plain; charset="UTF-8"
 
-Would it be possible to have the D-Bus interfaces in the repo that=20
-provides it? If the yaml->c++ generator is used (sdbusplus) then it=20
-could be run IN that repo as part of the build. If the yaml->c++=20
-generator is not used (sdbusplus-asio) then maybe we could figure out=20
-some auto-generated unit tests that validate that the provider actually=20
-does serve the interface as it is defined in the yaml.
+Hello OpenBMC Mailing List,
 
-This would make it harder to find where the interface is, but it would=20
-reduce the dependency problem. Also, it would make it difficult for=20
-multiple things that provide the same interface.
+It is great to see the proposal on BMC health monitoring! We have similar
+efforts in health monitoring in progress, started doing some
+implementation, and would like to share some thoughts with the Mailing List
+to help get BMC health monitoring started:
 
-Just throwing ideas out there.
+(1) What metrics have we considered now?
 
---Vernon
+We have considered the following metrics on the BMC:
+  - Memory usage
+  - Number of open file descriptors
+  - Free storage space in the read-write file system
+  - List of processes
+  - CPU time for a few top processes
+
+  Some of these are inspired by various profilers, and some others are
+expected to be relevant to the typical workloads running on the BMC.
+
+(2) Overall, it appears the design space for health monitoring has the
+following dimensions:
+
+a) A method to do the collection, which might be:
+  - Running a program like "df" to get free disk space
+  - Traversing some folder to compute some statistics
+  - Monitor some bus for some time and generate some result
+  - or something else
+
+  The collection process might vary from metric to metric, and can take
+some time to complete on the BMC, and therefore, the results need to be
+staged somewhere and made accessible when it's completed, so the requestor
+won't have to busy-wait.
+
+b) A way to stage monitoring data on the BMC, which might be:
+  - Files or databases in DRAM or some persistent store.
+  - DBus objects, as described in Vijay's document; this is similar to how
+sensors work.
+  - IPMI Blobs (this is what we have implemented right now)
+  - or something else
+
+c) A way to transfer monitoring data out of the BMC, which might be:
+  - scp
+  - RedFish
+  - IPMI (this is what we're using right now)
+  - or something else
+
+d) Format of staged data:
+  - Raw bytes
+  - Protocol buffers
+  - JSON objects
+  - or something else
+  - The data may be compressed to save transfer time
+
+e) A way to consume the health monitoring data:
+  - The BMC might do some pre-processing, like windowed average.
+  - The BMC may perform certain corrective measures when metrics appear
+abnormal.
+  - The host may perform certain corrective measures when metrics appear
+abnormal.
+  - BMC health data might be plugged into some already existing monitoring
+framework overseeing a large number of machines, collecting historical
+data, and projecting future trends, etc.
+
+f) A way to configure the health monitoring system:
+  - Configuration for which metrics are collected
+  - Configuration for the choice of staging in b), way of transfer in c),
+and frequency of collection in e)
+  - Some configurations may be build-time and some may be run-time
+     - I guess we can draw some inspirations from phosphor-ipmi-blobs
+
+(3) The requirements and performance/storage impacts on the BMC:
+
+a) The collection should not be too taxing on the processing/storage
+resources on the BMC
+
+b) The data transfer process should not be too taxing on the link between
+the host and BMC
+  - For the metrics we have and the IPMI connection we're using so far, it
+took around 10 ~ 100ms for the host to collect a metric. The time is
+dominated by IPMI transfer time. The time is considered acceptable if a
+metric is collected at a reasonably long interval, say, every 30 minutes.
+
+
+We hope the above contents help complement the existing design proposal,
+and would like to help actually start implementing (and deploying) health
+monitoring for the BMC.
+The question is: we're working on our implementation and we're wondering
+what would be a good time for us to send it for review? Do we need to
+support both what we have now and what is being proposed?
+
+Thanks!
+Sui
+
+--00000000000079184705a61e8cf7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello OpenBMC Mailing List,<br><br>It is great to see the =
+proposal on BMC health monitoring! We have similar efforts in health monito=
+ring in progress, started doing some implementation, and would like to shar=
+e some thoughts with the Mailing List to help get BMC health monitoring sta=
+rted:<br><br>(1) What metrics have we considered now?<br><br>We have consid=
+ered the following metrics on the BMC:<br>=C2=A0 - Memory usage<br>=C2=A0 -=
+ Number of open file descriptors<br>=C2=A0 - Free storage space in the read=
+-write file system<br>=C2=A0 - List of processes<br>=C2=A0 - CPU time for a=
+ few top processes<br>=C2=A0 <br>=C2=A0 Some of these are inspired by vario=
+us profilers, and some others are expected to be relevant to the typical wo=
+rkloads running on the BMC.<br><br>(2) Overall, it appears the design space=
+ for health monitoring has the following dimensions:<br><br>a) A method to =
+do the collection, which might be:<br>=C2=A0 - Running a program like &quot=
+;df&quot; to get free disk space<br>=C2=A0 - Traversing some folder to comp=
+ute some statistics<br>=C2=A0 - Monitor some bus for some time and generate=
+ some result<div>=C2=A0 - or something else<br><div>=C2=A0 <br>=C2=A0 The c=
+ollection process might vary from metric to metric, and can take some time =
+to complete on the BMC, and therefore, the results need=C2=A0to be staged s=
+omewhere and made accessible when it&#39;s completed, so the requestor won&=
+#39;t have to busy-wait.<br><br>b) A way to stage monitoring data on the BM=
+C, which might be:<br>=C2=A0 - Files or databases in DRAM or some persisten=
+t store.<br>=C2=A0 - DBus objects, as described in Vijay&#39;s document; th=
+is is similar to how sensors work.<br>=C2=A0 - IPMI Blobs (this is what we =
+have implemented right now)<div>=C2=A0 - or something else<br>=C2=A0 <br>c)=
+ A way to transfer monitoring data out of the BMC, which might be:<br>=C2=
+=A0 - scp<br>=C2=A0 - RedFish<br>=C2=A0 - IPMI (this is what we&#39;re usin=
+g right now)<div>=C2=A0 - or something else<br>=C2=A0 <br>d) Format of stag=
+ed data:<br>=C2=A0 - Raw bytes<br>=C2=A0 - Protocol buffers<br>=C2=A0 - JSO=
+N objects<br>=C2=A0 - or something else<br>=C2=A0 - The data may be compres=
+sed to save transfer time<br>=C2=A0<br>e) A way to consume the health monit=
+oring data:<br>=C2=A0 - The BMC might do some pre-processing, like windowed=
+ average.<br>=C2=A0 - The BMC may perform certain corrective measures when =
+metrics appear abnormal.<br>=C2=A0 - The host may perform certain correctiv=
+e measures when metrics appear abnormal.<br>=C2=A0 - BMC health data might =
+be plugged into some already existing monitoring framework overseeing a lar=
+ge number of machines, collecting historical data, and projecting future tr=
+ends, etc.<br><br>f) A way to configure the health monitoring system:<br>=
+=C2=A0 - Configuration for which metrics are collected<br>=C2=A0 - Configur=
+ation for the choice of staging in b), way of transfer in c), and frequency=
+ of collection in e)<br>=C2=A0 - Some configurations may be build-time and =
+some may be run-time<br>=C2=A0 =C2=A0 =C2=A0- I guess we can draw some insp=
+irations from phosphor-ipmi-blobs<br><br>(3) The requirements and performan=
+ce/storage impacts on the BMC:<br><br>a) The collection should not be too t=
+axing on the processing/storage resources on the BMC<br><br>b) The data tra=
+nsfer process should not be too taxing on the link between the host and BMC=
+<br>=C2=A0 - For the metrics we have and the IPMI connection we&#39;re usin=
+g so far, it took around 10 ~ 100ms for the host to collect a metric. The t=
+ime is dominated by IPMI transfer time. The time is considered acceptable i=
+f a metric is collected at a reasonably long interval, say, every 30 minute=
+s.<br>=C2=A0 <br><br>We hope the above contents help complement the existin=
+g design proposal, and would like to help actually start implementing (and =
+deploying) health monitoring for the BMC.<br>The question is: we&#39;re wor=
+king on our implementation and we&#39;re wondering what would be a good tim=
+e for us to send it for review? Do we need to support both what we have now=
+ and what is being proposed?<br><br>Thanks!<br>Sui<br></div></div></div></d=
+iv></div>
+
+--00000000000079184705a61e8cf7--
