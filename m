@@ -1,75 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E881B1DE097
-	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 09:08:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EC821DE262
+	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 10:44:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49SyHl3JdKzDqw4
-	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 17:08:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49T0RQ6XLlzDqyS
+	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 18:44:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=in.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=gkeishin@in.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=in.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49SyGr2SCMzDqXl
- for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 17:07:09 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04M73bKQ076215
- for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 03:07:06 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.75])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3160mgws3w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 03:07:06 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <gkeishin@in.ibm.com>;
- Fri, 22 May 2020 07:07:05 -0000
-Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
- by smtp.notes.na.collabserv.com (10.106.227.123) with
- smtp.notes.na.collabserv.com ESMTP; Fri, 22 May 2020 07:07:02 -0000
-Received: from us1a3-mail113.a3.dal06.isc4sb.com ([10.146.6.4])
- by us1a3-smtp05.a3.dal06.isc4sb.com
- with ESMTP id 2020052207070195-126835 ;
- Fri, 22 May 2020 07:07:01 +0000 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49T0QM5FJ4zDqwv
+ for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 18:43:53 +1000 (AEST)
+IronPort-SDR: +qNtfMYIjTDIr0h6SCUcSHL8oqndZgbg7kc+uIY9V4pTcYE1s+Pd9+KnZSCRzW6oOQhFF/ufXm
+ T0ACQQL9Xs7A==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 May 2020 01:43:48 -0700
+IronPort-SDR: cGwgseDbvnhild+VIsYuyqt7cx45+YVBvdk5JpCIEFVNNSNi9G6jAxosW79Lsi2aQ+9ETIaPgx
+ al+NuGd+dKdg==
+X-IronPort-AV: E=Sophos;i="5.73,421,1583222400"; d="scan'208";a="412696031"
+Received: from pciesiel-mobl2.ger.corp.intel.com (HELO [10.213.23.173])
+ ([10.213.23.173])
+ by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 May 2020 01:43:47 -0700
+Subject: Re: Implementing BMC Health Monitoring
+To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>,
+ Sui Chen <suichen@google.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <CAJOps0vP=0sa0R+gNFdrDy9y=e8Qq+LnZX6E2ssJ=5YaWigaeA@mail.gmail.com>
+ <ef1c70adf41b465bb29143cbf0b20f63@intel.com>
+From: =?UTF-8?Q?Adrian_Ambro=c5=bcewicz?= <adrian.ambrozewicz@linux.intel.com>
+Message-ID: <9a86fbeb-7270-8fcd-10a9-a84bd40ea9a7@linux.intel.com>
+Date: Fri, 22 May 2020 10:43:43 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.6.0
 MIME-Version: 1.0
-In-Reply-To: <87d0d525b6bc4599b9f85ac0e28fbd0e@quantatw.com>
-To: "=?Big5?B?VG9ueSBMZWUgKKf1pOW0SSk=?=" <Tony.Lee@quantatw.com>
-From: "George Keishing" <gkeishin@in.ibm.com>
-Date: Fri, 22 May 2020 12:36:56 +0530
-References: <87d0d525b6bc4599b9f85ac0e28fbd0e@quantatw.com>
-X-KeepSent: 37C9532D:ECA445ED-00258570:00265905;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 10.0.1 November 29, 2018
-X-LLNOutbound: False
-X-Disclaimed: 37751
-X-TNEFEvaluated: 1
-Content-type: multipart/related; 
- Boundary="0__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95"
-x-cbid: 20052207-6875-0000-0000-0000029D782B
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.410717; ST=0; TS=0; UL=0; ISC=; MB=0.121654
-X-IBM-SpamModules-Versions: BY=3.00013139; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01380324; UDB=6.00738040; IPR=6.01162674; 
- MB=3.00032270; MTD=3.00000008; XFM=3.00000015; UTC=2020-05-22 07:07:03
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-05-22 02:17:56 - 6.00011391
-x-cbparentid: 20052207-6876-0000-0000-0000233B93ED
-Message-Id: <OF37C9532D.ECA445ED-ON00258570.00265905-65258570.0027169F@notes.na.collabserv.com>
-Subject: Re:  Test suite 'test_event_logging' in openbmc-test-automation
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.676
- definitions=2020-05-22_02:2020-05-21,
- 2020-05-22 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+In-Reply-To: <ef1c70adf41b465bb29143cbf0b20f63@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,114 +61,116 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- openbmc <openbmc-bounces+gkeishin=in.ibm.com@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95
-Content-type: multipart/alternative; 
-	Boundary="1__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95"
+I suppose I could back up Piotr here.
 
+I believe that in general EntityManager could be leveraged for 
+configuration (enabling/disabling metrics and configuring them). 
+dbus-sensors infrastructure would be beneficial in terms of:
+- familiarity (already used for monitoring physical sensors, new 
+synthetized sensors to come)
+- flexibility (EntityManager could provide runtime configuration of the 
+metrics in the system)
+- availability - both configuration and metrics would be exposed using 
+D-Bus interfaces as easy to consume and 'standarized' way.
 
---1__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95
-Content-Transfer-Encoding: base64
-Content-type: text/plain; charset=Big5
+If dbus-sensors would be used then feature mentioned by Piotr 
+(TelemetryService) could almost 'out of the box' support storing and 
+exposing metrics snapshots, send them to external databases 
+(EventService) etc.
 
-DQoNCg0KRnJvbToJIlRvbnkgTGVlICin9aTltEkpIiA8VG9ueS5MZWVAcXVhbnRhdHcuY29tPg0K
-VG86CSJzaXZhcy5zcnJAaW4uaWJtLmNvbSIgPHNpdmFzLnNyckBpbi5pYm0uY29tPg0KQ2M6CSJv
-cGVuYm1jQGxpc3RzLm96bGFicy5vcmciIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpEYXRl
-OgkyMi0wNS0yMDIwIDEyOjA0DQpTdWJqZWN0OglbRVhURVJOQUxdIFRlc3Qgc3VpdGUgJ3Rlc3Rf
-ZXZlbnRfbG9nZ2luZycgaW4NCiAgICAgICAgICAgIG9wZW5ibWMtdGVzdC1hdXRvbWF0aW9uDQpT
-ZW50IGJ5Ogkib3BlbmJtYyIgPG9wZW5ibWMtYm91bmNlcw0KICAgICAgICAgICAgK2drZWlzaGlu
-PWluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZz4NCg0KDQoNCkhpIFNpdmFzLA0KDQpUaGUga2V5
-d29yZCAnQ3JlYXRlIFRlc3QgRXJyb3IgTG9nJyBpcyB1c2VkIGluIHRoaXMgdGVzdCBzdWl0ZSBh
-bmQgdXNlIGENCmJpbmFyeSAnbG9nZ2luZy10ZXN0JyB0byBjcmVhdGUgdGhlIGVycm9yIGxvZy4N
-Cg0KTXkgcXVlc3Rpb24gaXQgdGhhdCBob3cgZG9lcyB0aGUgJ2xvZ2dpbmctdGVzdCcgd29yayB0
-byBjcmVhdGUgdGhlIGVycm9yDQpsb2c/DQpEb2VzIGl0IGFsc28gdXNlIHJlZGZpc2ggb3IgbWF5
-YmUgY2FsbCBkYnVzIGluIEJNQz8NCg0KVGhhbmtzDQpCZXN0IFJlZ2FyZHMsDQpUb255DQotLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQ0KDQpIaSBUb255LA0KDQoJbG9nZ2luZy10ZXN0IGJpbmFyeSBjb21lcyBmcm9tIGJ1aWxkIHRh
-cmJhbGwgZXhhbXBsZToNCm9ibWMtcGhvc3Bob3ItZGVidWctdGFyYmFsbC13aXRoZXJzcG9vbi50
-YXIueHogZnJvbSB0aGUNCmh0dHBzOi8vb3BlbnBvd2VyLnh5ei8vam9iL29wZW5ibWMtYnVpbGQv
-ICAgcGFnZQ0KICAgICAgVGhlIGxvZ2dpbmcgdGVzdCB1c2VzIHRoZSBkYnVzIGNhbGwgdG8gZ2Vu
-ZXJhdGUgdGhvc2UgZXJyb3IgbG9nIGZvcg0KdGVzdGluZw0KaHR0cHM6Ly9naXRodWIuY29tL29w
-ZW5ibWMvcGhvc3Bob3ItbG9nZ2luZy90cmVlL21hc3Rlci9waG9zcGhvci1sb2dnaW5nDQoJUmVm
-ZXI6DQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9zcGhvci1sb2dnaW5nL2Jsb2IvMzAw
-NDdiZjk2NDcyMTU5NTFiYTVkZmUyMWNlYjNlNThhMWI0MDVhNC9sb2dnaW5nX3Rlc3QuY3BwDQoN
-Cg0KVGhhbmtzDQpHZW9yZ2UNCg==
+Of course dbus-sensors (xyz.openbmcc_project.Sensor.Value) could be only 
+one of the interfaces for the data, so it's not limiting any other use 
+cases you've mentioned.
 
---1__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95
-Content-Transfer-Encoding: base64
-Content-type: text/html; charset=Big5
-Content-Disposition: inline
+Regards,
+Adrian
 
-PGh0bWw+PGJvZHk+PHA+PGltZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHNyYz0iY2lkOjFfXz04
-RkJCMEZFM0RGQjVERjk1OGY5ZThhOTNkZjkzODY5MDkxOGM4RkJAIiBib3JkZXI9IjAiIGFsdD0i
-SW5hY3RpdmUgaGlkZSBkZXRhaWxzIGZvciAmcXVvdDtUb255IExlZSAop/Wk5bRJKSZxdW90OyAt
-LS0yMi0wNS0yMDIwIDEyOjA0OjMyLS0tSGkgU2l2YXMsIFRoZSBrZXl3b3JkICdDcmVhdGUgVGVz
-dCBFcnJvciBMb2cnIGlzIHVzZWQiPjxmb250IHNpemU9IjIiIGNvbG9yPSIjNDI0MjgyIj4mcXVv
-dDtUb255IExlZSAop/Wk5bRJKSZxdW90OyAtLS0yMi0wNS0yMDIwIDEyOjA0OjMyLS0tSGkgU2l2
-YXMsIFRoZSBrZXl3b3JkICdDcmVhdGUgVGVzdCBFcnJvciBMb2cnIGlzIHVzZWQgaW4gdGhpcyB0
-ZXN0IHN1aXRlIGFuZCB1c2UgYSBiaW5hcnkgJ2xvZ2dpbmctdDwvZm9udD48YnI+PGJyPjxmb250
-IHNpemU9IjIiIGNvbG9yPSIjNUY1RjVGIj5Gcm9tOiAgICAgICAgPC9mb250Pjxmb250IHNpemU9
-IjIiPiZxdW90O1RvbnkgTGVlICin9aTltEkpJnF1b3Q7ICZsdDtUb255LkxlZUBxdWFudGF0dy5j
-b20mZ3Q7PC9mb250Pjxicj48Zm9udCBzaXplPSIyIiBjb2xvcj0iIzVGNUY1RiI+VG86ICAgICAg
-ICA8L2ZvbnQ+PGZvbnQgc2l6ZT0iMiI+JnF1b3Q7c2l2YXMuc3JyQGluLmlibS5jb20mcXVvdDsg
-Jmx0O3NpdmFzLnNyckBpbi5pYm0uY29tJmd0OzwvZm9udD48YnI+PGZvbnQgc2l6ZT0iMiIgY29s
-b3I9IiM1RjVGNUYiPkNjOiAgICAgICAgPC9mb250Pjxmb250IHNpemU9IjIiPiZxdW90O29wZW5i
-bWNAbGlzdHMub3psYWJzLm9yZyZxdW90OyAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0
-OzwvZm9udD48YnI+PGZvbnQgc2l6ZT0iMiIgY29sb3I9IiM1RjVGNUYiPkRhdGU6ICAgICAgICA8
-L2ZvbnQ+PGZvbnQgc2l6ZT0iMiI+MjItMDUtMjAyMCAxMjowNDwvZm9udD48YnI+PGZvbnQgc2l6
-ZT0iMiIgY29sb3I9IiM1RjVGNUYiPlN1YmplY3Q6ICAgICAgICA8L2ZvbnQ+PGZvbnQgc2l6ZT0i
-MiI+W0VYVEVSTkFMXSBUZXN0IHN1aXRlICd0ZXN0X2V2ZW50X2xvZ2dpbmcnIGluIG9wZW5ibWMt
-dGVzdC1hdXRvbWF0aW9uPC9mb250Pjxicj48Zm9udCBzaXplPSIyIiBjb2xvcj0iIzVGNUY1RiI+
-U2VudCBieTogICAgICAgIDwvZm9udD48Zm9udCBzaXplPSIyIj4mcXVvdDtvcGVuYm1jJnF1b3Q7
-ICZsdDtvcGVuYm1jLWJvdW5jZXMrZ2tlaXNoaW49aW4uaWJtLmNvbUBsaXN0cy5vemxhYnMub3Jn
-Jmd0OzwvZm9udD48YnI+PGhyIHdpZHRoPSIxMDAlIiBzaXplPSIyIiBhbGlnbj0ibGVmdCIgbm9z
-aGFkZSBzdHlsZT0iY29sb3I6IzgwOTFBNTsgIj48YnI+PGJyPjxicj48dHQ+PGZvbnQgc2l6ZT0i
-MiI+SGkgU2l2YXMsPGJyPjxicj5UaGUga2V5d29yZCAnQ3JlYXRlIFRlc3QgRXJyb3IgTG9nJyBp
-cyB1c2VkIGluIHRoaXMgdGVzdCBzdWl0ZSBhbmQgdXNlIGEgYmluYXJ5ICdsb2dnaW5nLXRlc3Qn
-IHRvIGNyZWF0ZSB0aGUgZXJyb3IgbG9nLjxicj48YnI+TXkgcXVlc3Rpb24gaXQgdGhhdCBob3cg
-ZG9lcyB0aGUgJ2xvZ2dpbmctdGVzdCcgd29yayB0byBjcmVhdGUgdGhlIGVycm9yIGxvZz88YnI+
-RG9lcyBpdCBhbHNvIHVzZSByZWRmaXNoIG9yIG1heWJlIGNhbGwgZGJ1cyBpbiBCTUM/PGJyPjxi
-cj5UaGFua3M8YnI+QmVzdCBSZWdhcmRzLDxicj5Ub255PGJyPi0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tPC9mb250PjwvdHQ+PGJy
-Pjxicj48dHQ+PGZvbnQgc2l6ZT0iMiI+SGkgVG9ueSw8L2ZvbnQ+PC90dD48YnI+PGJyPjx0dD48
-Zm9udCBzaXplPSIyIj4gICAgICAgIGxvZ2dpbmctdGVzdCBiaW5hcnkgY29tZXMgZnJvbSBidWls
-ZCB0YXJiYWxsIGV4YW1wbGU6IDwvZm9udD48L3R0Pm9ibWMtcGhvc3Bob3ItZGVidWctdGFyYmFs
-bC13aXRoZXJzcG9vbi50YXIueHo8dHQ+PGZvbnQgc2l6ZT0iMiI+Jm5ic3A7ZnJvbSB0aGUgPC9m
-b250PjwvdHQ+PGEgaHJlZj0iaHR0cHM6Ly9vcGVucG93ZXIueHl6Ly9qb2Ivb3BlbmJtYy1idWls
-ZC8iPjx1Pjxmb250IGNvbG9yPSIjMDAwMEZGIj5odHRwczovL29wZW5wb3dlci54eXovL2pvYi9v
-cGVuYm1jLWJ1aWxkLzwvZm9udD48L3U+PC9hPiA8dHQ+PGZvbnQgc2l6ZT0iMiI+Jm5ic3A7IHBh
-Z2U8L2ZvbnQ+PC90dD48YnI+PHR0Pjxmb250IHNpemU9IjIiPiZuYnNwOyAmbmJzcDsgJm5ic3A7
-IFRoZSBsb2dnaW5nIHRlc3QgdXNlcyB0aGUgZGJ1cyBjYWxsIHRvIGdlbmVyYXRlIHRob3NlIGVy
-cm9yIGxvZyBmb3IgdGVzdGluZyA8L2ZvbnQ+PC90dD48YSBocmVmPSJodHRwczovL2dpdGh1Yi5j
-b20vb3BlbmJtYy9waG9zcGhvci1sb2dnaW5nL3RyZWUvbWFzdGVyL3Bob3NwaG9yLWxvZ2dpbmci
-Pjx1Pjxmb250IGNvbG9yPSIjMDAwMEZGIj5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9waG9z
-cGhvci1sb2dnaW5nL3RyZWUvbWFzdGVyL3Bob3NwaG9yLWxvZ2dpbmc8L2ZvbnQ+PC91PjwvYT4g
-PHR0Pjxmb250IHNpemU9IjIiPjxicj4gICAgICAgIDwvZm9udD48L3R0Pjx0dD48Zm9udCBzaXpl
-PSIyIj5SZWZlcjogPC9mb250PjwvdHQ+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5i
-bWMvcGhvc3Bob3ItbG9nZ2luZy9ibG9iLzMwMDQ3YmY5NjQ3MjE1OTUxYmE1ZGZlMjFjZWIzZTU4
-YTFiNDA1YTQvbG9nZ2luZ190ZXN0LmNwcCI+PHU+PGZvbnQgY29sb3I9IiMwMDAwRkYiPmh0dHBz
-Oi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLWxvZ2dpbmcvYmxvYi8zMDA0N2JmOTY0NzIx
-NTk1MWJhNWRmZTIxY2ViM2U1OGExYjQwNWE0L2xvZ2dpbmdfdGVzdC5jcHA8L2ZvbnQ+PC91Pjwv
-YT4gPGJyPjxicj48Zm9udCBzaXplPSIyIj5UaGFua3M8L2ZvbnQ+PGJyPjxmb250IHNpemU9IjIi
-Pkdlb3JnZTwvZm9udD48QlI+DQo8L2JvZHk+PC9odG1sPg0K
-
---1__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95--
-
-
---0__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95
-Content-type: image/gif; 
-	name="graycol.gif"
-Content-Disposition: inline; filename="graycol.gif"
-Content-ID: <1__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FB@>
-Content-Transfer-Encoding: base64
-
-R0lGODlhEAAQAKECAMzMzAAAAP///wAAACH5BAEAAAIALAAAAAAQABAAAAIXlI+py+0PopwxUbpu
-ZRfKZ2zgSJbmSRYAIf4fT3B0aW1pemVkIGJ5IFVsZWFkIFNtYXJ0U2F2ZXIhAAA7
-
-
---0__=8FBB0FE3DFB5DF958f9e8a93df938690918c8FBB0FE3DFB5DF95--
-
+W dniu 5/21/2020 o 12:47, Matuszczak, Piotr pisze:
+> Hi,
+> 
+> The proposal seems interesting. From what I've read from your e-mail, you are looking the best way to implement BMC health metrics. My proposal would be to expose these metrics as D-Bus sensors with an option to store data to the filesystem. Such solution will ease the integration with Redfish and support these metrics by the Monitoring Service (https://github.com/openbmc/docs/blob/master/designs/telemetry.md) . This way, you have support for collecting metrics into metric report, you have support of simple operations, like min/max/average/sum. Also, using metric reports, you can store historical readings and stream the metric reports as events.
+> Piotr Matuszczak
+> ---------------------------------------------------------------------
+> Intel Technology Poland sp. z o.o.
+> ul. Slowackiego 173, 80-298 Gdansk
+> KRS 101882
+> NIP 957-07-52-316
+> 
+> From: openbmc <openbmc-bounces+piotr.matuszczak=intel.com@lists.ozlabs.org> On Behalf Of Sui Chen
+> Sent: Thursday, May 21, 2020 3:37 AM
+> To: openbmc@lists.ozlabs.org
+> Subject: Implementing BMC Health Monitoring
+> 
+> Hello OpenBMC Mailing List,
+> 
+> It is great to see the proposal on BMC health monitoring! We have similar efforts in health monitoring in progress, started doing some implementation, and would like to share some thoughts with the Mailing List to help get BMC health monitoring started:
+> 
+> (1) What metrics have we considered now?
+> 
+> We have considered the following metrics on the BMC:
+>    - Memory usage
+>    - Number of open file descriptors
+>    - Free storage space in the read-write file system
+>    - List of processes
+>    - CPU time for a few top processes
+>    
+>    Some of these are inspired by various profilers, and some others are expected to be relevant to the typical workloads running on the BMC.
+> 
+> (2) Overall, it appears the design space for health monitoring has the following dimensions:
+> 
+> a) A method to do the collection, which might be:
+>    - Running a program like "df" to get free disk space
+>    - Traversing some folder to compute some statistics
+>    - Monitor some bus for some time and generate some result
+>    - or something else
+>    
+>    The collection process might vary from metric to metric, and can take some time to complete on the BMC, and therefore, the results need to be staged somewhere and made accessible when it's completed, so the requestor won't have to busy-wait.
+> 
+> b) A way to stage monitoring data on the BMC, which might be:
+>    - Files or databases in DRAM or some persistent store.
+>    - DBus objects, as described in Vijay's document; this is similar to how sensors work.
+>    - IPMI Blobs (this is what we have implemented right now)
+>    - or something else
+>    
+> c) A way to transfer monitoring data out of the BMC, which might be:
+>    - scp
+>    - RedFish
+>    - IPMI (this is what we're using right now)
+>    - or something else
+>    
+> d) Format of staged data:
+>    - Raw bytes
+>    - Protocol buffers
+>    - JSON objects
+>    - or something else
+>    - The data may be compressed to save transfer time
+>   
+> e) A way to consume the health monitoring data:
+>    - The BMC might do some pre-processing, like windowed average.
+>    - The BMC may perform certain corrective measures when metrics appear abnormal.
+>    - The host may perform certain corrective measures when metrics appear abnormal.
+>    - BMC health data might be plugged into some already existing monitoring framework overseeing a large number of machines, collecting historical data, and projecting future trends, etc.
+> 
+> f) A way to configure the health monitoring system:
+>    - Configuration for which metrics are collected
+>    - Configuration for the choice of staging in b), way of transfer in c), and frequency of collection in e)
+>    - Some configurations may be build-time and some may be run-time
+>       - I guess we can draw some inspirations from phosphor-ipmi-blobs
+> 
+> (3) The requirements and performance/storage impacts on the BMC:
+> 
+> a) The collection should not be too taxing on the processing/storage resources on the BMC
+> 
+> b) The data transfer process should not be too taxing on the link between the host and BMC
+>    - For the metrics we have and the IPMI connection we're using so far, it took around 10 ~ 100ms for the host to collect a metric. The time is dominated by IPMI transfer time. The time is considered acceptable if a metric is collected at a reasonably long interval, say, every 30 minutes.
+>    
+> 
+> We hope the above contents help complement the existing design proposal, and would like to help actually start implementing (and deploying) health monitoring for the BMC.
+> The question is: we're working on our implementation and we're wondering what would be a good time for us to send it for review? Do we need to support both what we have now and what is being proposed?
+> 
+> Thanks!
+> Sui
+> 
