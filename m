@@ -2,34 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D0341DF0C0
-	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 22:47:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 29F2C1DF1A5
+	for <lists+openbmc@lfdr.de>; Sat, 23 May 2020 00:06:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49TJTg08g2zDr0X
-	for <lists+openbmc@lfdr.de>; Sat, 23 May 2020 06:47:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49TLDC2NsrzDr1x
+	for <lists+openbmc@lfdr.de>; Sat, 23 May 2020 08:06:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
- helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=fuzziesquirrel.com
-Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
- [173.167.31.197])
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=hDmrLUal; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=hDmrLUal; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49TJSG4VVdzDqxh
- for <openbmc@lists.ozlabs.org>; Sat, 23 May 2020 06:46:36 +1000 (AEST)
-X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Message-ID: <58a733f5aac22446c8cab43535aaa2a133a20717.camel@fuzziesquirrel.com>
-Subject: article on data in OpenBMC
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-Date: Fri, 22 May 2020 16:46:43 -0400
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49TLCM5Nx4zDqxj
+ for <openbmc@lists.ozlabs.org>; Sat, 23 May 2020 08:05:31 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1590185127;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=9OKoGLoe8fJ9Wrh2dD1yRywtNIKDAHjOAtu0s0tdjGY=;
+ b=hDmrLUalYBJMRVLb+9Mkk6c8w10njecNdCDUuukvYSnyc4RJ7DDjLTz7oBmI5/3bEy7bbS
+ f3ucxJ0eDFx/DHHMsvGHd54bCNYCRGDb1R2RCTwbd69BVMAhquWHB7gB6D3vzTZxYAQeuG
+ kJ1S0fs8tUmiziyt/1AIHtZPpfszy74=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1590185127;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=9OKoGLoe8fJ9Wrh2dD1yRywtNIKDAHjOAtu0s0tdjGY=;
+ b=hDmrLUalYBJMRVLb+9Mkk6c8w10njecNdCDUuukvYSnyc4RJ7DDjLTz7oBmI5/3bEy7bbS
+ f3ucxJ0eDFx/DHHMsvGHd54bCNYCRGDb1R2RCTwbd69BVMAhquWHB7gB6D3vzTZxYAQeuG
+ kJ1S0fs8tUmiziyt/1AIHtZPpfszy74=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-198-7AuK7BD9OOqOIWJfpCVw3Q-1; Fri, 22 May 2020 18:05:23 -0400
+X-MC-Unique: 7AuK7BD9OOqOIWJfpCVw3Q-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Fri, 22 May 2020 15:05:21 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Fri, 22 May 2020 15:05:21 -0700
+From: Patrick Voelker <Patrick_Voelker@phoenix.com>
+To: "OpenBMC (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
+Subject: phosphor-ipmi-flash state recovery
+Thread-Topic: phosphor-ipmi-flash state recovery
+Thread-Index: AdYwe01TRgfLKJ7fSOiPeZ5iSAOYbQ==
+Date: Fri, 22 May 2020 22:05:21 +0000
+Message-ID: <bbd0955547ff46728528fd14d52fb04d@SCL-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [50.39.166.255]
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: multipart/alternative;
+ boundary="_000_bbd0955547ff46728528fd14d52fb04dSCLEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -41,115 +84,119 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Patrick Venture <venture@google.com>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello
+--_000_bbd0955547ff46728528fd14d52fb04dSCLEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 
-I wrote this article on data in OpenBMC to begin an attempt at making
-it easier to find data, when porting new systems to OpenBMC.  I say
-begin because I only documented three repositories.  The idea is that
-more would be added to the list over time.  My intent would be to add
-this to the docs repository or to the wiki.  I would love to hear any
-feedback on my article or any ideas anyone has on data in OpenBMC.
+When running burn_my_bmc, if I exit the program during image upload with ct=
+rl-c, it seems that the bmc gets left in a state that is difficult to recov=
+er from.
 
-thx - brad
+When attempting to run the update again I can see that the /flash/active/im=
+age blob is present.  burn_my_bmc opens the cleanup blob, commits it, and t=
+hen closes it but the state doesn't change. I don't have the cleanup-delete=
+ option enabled but it doesn't look like that cleans up the state anyhow.
 
-----------------------------------------
-# Data Driven Applications in OpenBMC
+Internally, it looks like I need to get to abortProcess() but to do that I =
+need to close the current session but I don't have a way to obtain the sess=
+ionID after the fact.  Also the stale session doesn't seem to expire (as me=
+ntioned in the readme.md) and I can't find the support for that in the code=
+.
 
-**Purpose:** Describe techniques for finding data in OpenBMC.
+Can you give me a pointer on the best known way to recover from this scenar=
+io without rebooting the BMC?
 
-**Intended Audience:** System integrators, system engineers, developers porting
-systems to OpenBMC.
 
-**Prerequisites:** None
+--_000_bbd0955547ff46728528fd14d52fb04dSCLEXCHMB13phoenixcom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 
-If you already know the techniques for finding data in OpenBMC, skip ahead to
-[the list of OpenBMC applications with
-data](#list-of-openbmc-applications-with-data).
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+=09{font-family:"\@PMingLiU";
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09margin-bottom:.0001pt;
+=09font-size:11.0pt;
+=09font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+=09{mso-style-priority:99;
+=09color:blue;
+=09text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+=09{mso-style-priority:99;
+=09color:purple;
+=09text-decoration:underline;}
+span.EmailStyle17
+=09{mso-style-type:personal-compose;
+=09font-family:"Calibri","sans-serif";
+=09color:windowtext;}
+.MsoChpDefault
+=09{mso-style-type:export-only;
+=09font-family:"Calibri","sans-serif";}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">When running burn_my_bmc, if I exit the program duri=
+ng image upload with ctrl-c, it seems that the bmc gets left in a state tha=
+t is difficult to recover from.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">When attempting to run the update again I can see th=
+at the /flash/active/image blob is present.&nbsp; burn_my_bmc opens the cle=
+anup blob, commits it, and then closes it but the state doesn&#8217;t chang=
+e. I don&#8217;t have the cleanup-delete option enabled
+ but it doesn&#8217;t look like that cleans up the state anyhow.<o:p></o:p>=
+</p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Internally, it looks like I need to get to abortProc=
+ess() but to do that I need to close the current session but I don&#8217;t =
+have a way to obtain the sessionID after the fact. &nbsp;Also the stale ses=
+sion doesn&#8217;t seem to expire (as mentioned in
+ the readme.md) and I can&#8217;t find the support for that in the code. <o=
+:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Can you give me a pointer on the best known way to r=
+ecover from this scenario without rebooting the BMC?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
 
-## Techniques for finding data
-### Runtime configuration files in bitbake metadata
-Some applications consume data in the form of runtime configuration files.
-Runtime means the application loads the configuration data when it is invoked,
-on the target (on the BMC).  Configuration files are `/etc/<packagename>.conf`
-or in `/etc/<packagename>/` in the target's root filesystem.  The format of a
-configuration file is application specific.
+--_000_bbd0955547ff46728528fd14d52fb04dSCLEXCHMB13phoenixcom_--
 
-To identify the location of a configuration file in bitbake metadata, first
-identify which bitbake layer will host or already hosts the support for your
-target.  Often this is `meta-<vendor>/meta-<target>` or just `meta-<vendor>`.
-The former is used in one to one layer to target configurations, the latter in
-one to many layer to target configurations.
-
-#### Anatomy of a path in a bitbake layer
-Most bitbake layers adhere to a de-facto standard directory hierarchy:
-
-`recipes-<group>/<subgroup>/<package>/<target-group>`
-
-The `<group>` is almost always phosphor, which refers to programs that provide
-BMC specific functions and the `<subgroup>` refers to even more specific
-functions like fan control or inventory management.  The `<package>` is the
-program that makes use of the configuration file.  The `<target-group>` may just
-be the target or it may refer to a group of targets if multiple targets share
-the same configuration.
-
-Configuration files may be found in the `<target-group>` directory or in the
-`<package>` directory.  For example the location of the host processor console
-configuration for the [Mihawk][2] server would be:
-
-[`recipes-phosphor/console/obmc-console/mihawk/server.ttyVUART0.conf`][1]
-
-### Build time configuration files in bitbake metadata
-Other applications consume data in the form of build time configuration files.
-Build time means the data is embedded directly into the application in some
-fashion.  Typically build time configuration files in OpenBMC are written in
-YAML, but the schemas are application specific.
-
-The location of build time configuration files can be found in the same manner
-as runtime configuration files.
-
-### Application specific hardware databases
-Another class of applications maintain databases of supported hardware.
-Hardware databases are often just a hierarchy of JSON files in
-`/usr/share/<packagename>/` in the target root filesystem.  Different
-applications have different schema for their databases.  Applications with
-hardware databases have some level of support for discovering out what kinds of
-hardware exist and then load the correct data from the database.
-
-Like other data, hardware databases can be found in the bitbake metadata.  Or
-hardware databases are often found in the source repository for the application
-itself.
-
-## List of OpenBMC applications with data
-When adding new applications to the list, be sure to indicate whether the
-application uses [runtime](#runtime-configuration-files-in-bitbake-metadata) or
-[build time](#build-time-configuration-files-in-bitbake-metadata) configuration
-files, or a [hardware database](#application-specific-hardware-databases).  Also
-list briefly what the application data describes and provide links to
-application specific documentation that outline the data schema.
-
-### obmc-console
-obmc-console uses runtime configuration files in bitbake metadata.  The
-obmc-console configuration describes the physical console (UART or VUART)
-parameters.  Additional documentation for the obmc-console configuration can be
-found [here][3].
-
-### phosphor-regulators
-phosphor-regulators uses a hardware database.  The database describes
-information required to configure voltage regulators in servers, or any other
-system with a voltage regulator.  Additional information about data in
-phosphor-regulators can be found [here][4].
-
-### phosphor-dbus-monitor
-phosphor-dbus-monitor uses build time configuration files in bitbake metadata.
-The phosphor-dbus-monitor configuration can describe anything, but is typically
-used to express power or thermal system policies.  Additional informationi about
-data in phosphor-dbus-monitor can be found [here][5].
-
-[1]: https://github.com/openbmc/meta-ibm/tree/master/recipes-phosphor/console/obmc-console/mihawk/server.ttyVUART0.conf
-[2]: https://github.com/openbmc/meta-ibm/tree/master/conf/machine/mihawk.conf
-[3]: https://github.com/openbmc/obmc-console/tree/master/conf/server.ttyVUART0.conf.in
-[4]: https://github.com/openbmc/phosphor-power/tree/master/phosphor-regulators/README.md
-[5]: https://github.com/openbmc/phosphor-dbus-monitor/tree/master/src/example/example.yaml
