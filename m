@@ -1,48 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB6B91DDA8D
-	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 00:50:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E236E1DDC3D
+	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 02:37:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49SlG60gMtzDqx2
-	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 08:50:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Sncl5K1rzDqHK
+	for <lists+openbmc@lfdr.de>; Fri, 22 May 2020 10:37:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=176.58.120.209; helo=relay.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c42;
+ helo=mail-oo1-xc42.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=sandelman.ca
-X-Greylist: delayed 541 seconds by postgrey-1.36 at bilbo;
- Fri, 22 May 2020 08:49:02 AEST
-Received: from relay.sandelman.ca (relay.cooperix.net [176.58.120.209])
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=d2d5pHqW; dkim-atps=neutral
+Received: from mail-oo1-xc42.google.com (mail-oo1-xc42.google.com
+ [IPv6:2607:f8b0:4864:20::c42])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49SlCy4dBczDqdw
- for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 08:48:59 +1000 (AEST)
-Received: from dooku.sandelman.ca (unknown [209.87.249.16])
- by relay.sandelman.ca (Postfix) with ESMTPS id DAE951F449;
- Thu, 21 May 2020 22:39:47 +0000 (UTC)
-Received: by dooku.sandelman.ca (Postfix, from userid 179)
- id CB08A1A329C; Thu, 21 May 2020 18:39:46 -0400 (EDT)
-From: Michael Richardson <mcr@sandelman.ca>
-To: Sui Chen <suichen6@gmail.com>
-Subject: Re: An IPMI Request Visualization Tool
-In-reply-to: <CAFaEeaGs0GSiPp9mGVrSMB1brG19ttroPcK-x-p+BN3SnHrU4g@mail.gmail.com>
-References: <CAFaEeaFTP9v1xZefxzoU9E6h7SpjfbxVrnnSRCmJfJ3QjWRqhA@mail.gmail.com>
- <20200514135723.GE1166713@heinlein>
- <3d6db63b-f670-4e01-94c3-425f93d89708@www.fastmail.com>
- <CAFaEeaGs0GSiPp9mGVrSMB1brG19ttroPcK-x-p+BN3SnHrU4g@mail.gmail.com>
-Comments: In-reply-to Sui Chen <suichen6@gmail.com>
- message dated "Thu, 21 May 2020 09:44:05 -0700."
-X-Mailer: MH-E 8.6; nmh 1.7+dev; GNU Emacs 25.2.1
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 21 May 2020 18:39:46 -0400
-Message-ID: <2775.1590100786@dooku>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Snbt723czDqs1
+ for <openbmc@lists.ozlabs.org>; Fri, 22 May 2020 10:36:26 +1000 (AEST)
+Received: by mail-oo1-xc42.google.com with SMTP id i9so1839218ool.5
+ for <openbmc@lists.ozlabs.org>; Thu, 21 May 2020 17:36:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=xSRCZVVcT4MoyU/XsxYFuPWbzEvu20RDcPiObyWJMSI=;
+ b=d2d5pHqWasTt4Yuf9b193SRomUsX/4uVRcPv9Fgszgf8vjJOSnWGUYyXzGDTxpPam9
+ PkXoUWEwRWr2+2JOgmHYUiRunOTwCukNsfNYoFrrMEXRjzMc3lL5z8yyMJHW89plGh5N
+ q4iUpNiqNAb+5pfI/K4wNBdEIr9l5t88APaOJuBGa6oM+0kp9cvSJC45USEq6X156dWu
+ cRxqf6dupAAKQrb5Se7OjxHXBf4/tqX1acfrBROfeeVxgMHHbHwhYG7lMPCxkkzS/ZFP
+ dlVw3SlYq+Otl+skUGj2vf2/LK4/z1LZXIQNmMR8m4l6p9T4HjdCX7HEl6+N7AGmQZ48
+ RRlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=xSRCZVVcT4MoyU/XsxYFuPWbzEvu20RDcPiObyWJMSI=;
+ b=aOMgXaLJvsxpDCzXVmZ0VSZhfg/MFnlQBIZPtIbD79OelbjM6xlP7bu0HVLjYdC0Tz
+ GEXVhEC1Zkdr/KP1JGuRd6QilssLgZP44Uodwx4Q2079whnVBkFgOcOLmocg/6KEk/Kh
+ Sz4QBOlw9ZhpHbhTFtMIR3Xygld3WApKQC2UA2fwz3Kn6adgi6sLsKkfXe7JJTVrrsXE
+ OdjLAkoGQsdQ2xiewK2CCfx+UsFQUZsQqlQevy24dVszIHQEJqjxJuZSn9kOp1CjyVNk
+ +4XrTJ9hk+n/fTPlN6WLL1nz+ur/fagqFsSVrKCDhzJO02b7HYOV9XFg3ppI8kAuhFQ0
+ NpqQ==
+X-Gm-Message-State: AOAM532n2SgcZCaBMjg8f91mNMSsfA9u62NlW5vxl7wZtpLAphOPaDBQ
+ +vgBenb5BzeWCXCE9lVOqMfJ7fkEmEw=
+X-Google-Smtp-Source: ABdhPJyhc7kVsd7PamO1kWzPYODrdSIVucNNkuyOWSvDaVtGFKulmGQ8eEN47A6ue3ZVEWiikI59IA==
+X-Received: by 2002:a4a:d043:: with SMTP id x3mr1062623oor.17.1590107783334;
+ Thu, 21 May 2020 17:36:23 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:3d6c:fa93:bfa1:70e4])
+ by smtp.gmail.com with ESMTPSA id f5sm1719916oig.32.2020.05.21.17.36.22
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 21 May 2020 17:36:22 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: Upstream Yocto Bringing in GCC 10
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <20200518000811.GI1166713@heinlein>
+Date: Thu, 21 May 2020 19:36:22 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <2E02F120-7D24-48BE-AFD8-9A7ADD0F08E5@gmail.com>
+References: <9871E71B-5B1F-4172-9F41-454F8C1F644D@gmail.com>
+ <20200518000811.GI1166713@heinlein>
+To: Patrick Williams <patrick@stwcx.xyz>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,57 +82,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
 
 
-Sui Chen <suichen6@gmail.com> wrote:
-    > Thanks for your interest! I'm also using dbus-pcap to track certain
-    > issues on the BMC recently, and would like to add support for all DBus
-    > messages to the visualization tool, making it somewhat resemble a GUI
-    > version of dbus-pcap.  The goal would be to be able to use this tool to
-    > investigate both DBus and IPMI. The way I plan to use it would be more
-    > similar to how I use GPUView (full-system timeline rather than
-    > inspecting individual packets)
+> On May 17, 2020, at 7:08 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+> On Sun, May 17, 2020 at 12:19:39PM -0500, Andrew Geissler wrote:
+>> Ready or not, this weeks upstream update brought in GCC 10 (along =
+with the normal slew of new packages).
+>=20
+> Alright!  The great thing about GCC 10.x is that it brings in support
+> for most of C++20, including co-routines.  Looking forward to playing
+> around with it.
 
-Interestingly, I was not that clearly aware of dbus-pcap :-)
-I ought to know more, as the lead libpcap maintainer.
-Is this visualization tool part of openbmc, or is it a generic dbus
-visualization tool?
+It took a few more patches but GCC 10 is now in openbmc master.
+Our unit test CI framework has also been updated to run with GCC 10.
 
-We recently brought rpcapd into the mix; it can be invoked via ssh.
-I wonder if that might help you as a debug tool?
+We also migrated from clang-8 to clang-10 in CI so you may want
+to take a look at a recommended clang format update in this commit:
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/32696=20
 
-    > If you ask how this user interface might differ from the already
-    > existing dbus visualizers such as bustle, my answer would be: it will
-    > present information in a way that's more relevant to the BMC, putting a
-    > bit more focus on BMC-specific DBus messages, such as HWMon and RedFish
-    > DBus messages, to present information in a high signal-noise ratio way.
+You may see some new CI fails with your existing code. It could be
+the clang format noted above or some code that is not exercised
+as a part of our normal machine builds. If you hit an issue, it=E2=80=99s
+probably been fixed somewhere in our code base already so
+browse over this commit list for your issue:
+=
+https://gerrit.openbmc-project.xyz/q/topic:%22upstream%22+(status:open%20O=
+R%20status:merged)=20
 
-Would this need to run on the BMC itself?
+There were a lot of include related issues where you just need
+to include the needed header files.
 
---
-]               Never tell me the odds!                 | ipv6 mesh networks [
-]   Michael Richardson, Sandelman Software Works        | network architect  [
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
+Andrew
 
+>=20
+> --=20
+> Patrick Williams
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEERK+9HEcJHTJ9UqTMlUzhVv38QpAFAl7HAzIACgkQlUzhVv38
-QpBaOAf+Pf6JMg07LS72Ol4ehZgcVrCoxtJjcn9qUeu4vUQgnslxvehuPI7IN7o3
-QZhF+Sj1xMkzveLZOVPS0b9VzGzG6bmWKALGb07/Nxr0Or1Mrvl0uhygLv8esu2b
-UzDAbfooT7xS3oL7PI++m4Lh3Lxx4gMzEZ0ZTHkf0q8A5Hrv2GZNf7ppV+XG5oBo
-z9aAZ2TlVL0sgz67goEYT6nhtfktbo+FZ4+uJY7VgDGH1V42lPieVlkeri2QaV6E
-iF4KoAnNgeaRYJ7Uilkx9zwx0z387z/VET/PVvLXG6KpUVIlI8XkPAx8zKTbjTJ7
-yOyxsxfraIRNPOZwWrvTanAuCoKY3w==
-=2/fb
------END PGP SIGNATURE-----
---=-=-=--
