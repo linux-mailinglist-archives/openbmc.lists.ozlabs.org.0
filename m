@@ -2,60 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF2EB1E0E6F
-	for <lists+openbmc@lfdr.de>; Mon, 25 May 2020 14:28:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD3921E0E7C
+	for <lists+openbmc@lfdr.de>; Mon, 25 May 2020 14:33:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49VxGd1MXTzDqM1
-	for <lists+openbmc@lfdr.de>; Mon, 25 May 2020 22:28:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49VxMM1C9gzDqJC
+	for <lists+openbmc@lfdr.de>; Mon, 25 May 2020 22:33:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=cmd.nu
- (client-ip=2a00:1450:4864:20::62c; helo=mail-ej1-x62c.google.com;
- envelope-from=blue@cmd.nu; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=cmd.nu
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=cmd.nu header.i=@cmd.nu header.a=rsa-sha256
- header.s=google header.b=bQSlanC4; dkim-atps=neutral
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com
- [IPv6:2a00:1450:4864:20::62c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49VxFR6sZrzDqCZ
- for <openbmc@lists.ozlabs.org>; Mon, 25 May 2020 22:27:52 +1000 (AEST)
-Received: by mail-ej1-x62c.google.com with SMTP id h21so20302514ejq.5
- for <openbmc@lists.ozlabs.org>; Mon, 25 May 2020 05:27:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cmd.nu; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=mjdbvvySUHbQFjg4rVuDBzO1Q7Wj+9RkSraJbddOxBQ=;
- b=bQSlanC4YDyQ3liOJYRZp6LDpJu4AWsRTwRToVlXpAO8nKLO69PY95a+ax/SAo+6Ju
- TNWWftgJyHSKyhDv7O8j7vgOJ2YCaHaU49GM0HLGxVM8VDYvY+8Iyxqt25L9mdm1sjFo
- B6x+deF/b8f0pkwxdc/aYQSAsC51kGiWRfZS4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=mjdbvvySUHbQFjg4rVuDBzO1Q7Wj+9RkSraJbddOxBQ=;
- b=U9LNxB/snUDgmn/ZS3SiCD/EQKBL/RC679mH/d9ZrBSTHuSv8RMLll+/mo4fbfKMGv
- 1QBhQYOUL1JGqozu9FWsYSjpc3UlLDDiFQN5Tp5f1MdyVMS45vbqd1PptE6+bQmpAyLP
- rzX3JakDrnIOD6USzIHZrabApjFaMS71ifKTQxVoNGJJHqapBsvAasYSie71kuEgy5qV
- sh84MnTJC2LWe7RICH1sTCv1Xynn7/snP4J8DAdVwQLfElQNmBZIsaCB5B9fzHFjMeg1
- YiYbyBkIVAo0iB1tFvDkHLbsZqONWCvO0u9CVVaQ/J3nEFETRF7Ds6Izsq4jF28FszKf
- Yx4Q==
-X-Gm-Message-State: AOAM531jTLpcsd3NJZbv8vSQDmmMKTXyjyhj2FItrd1HuIe1TBpDRp5H
- Wnk6Ox7hMppfqXMZWEnRJh0Gl4pL4uV7tIBYrgB8+v32tQ7nGQ==
-X-Google-Smtp-Source: ABdhPJzzvVQtTtHa1X+tUBkU0C5zm/twI0pxd/E/h8vjsM4bEFKoDMPFnQIDs4oXmcL6n1dWowTw7UILfRJr8K8N7q0=
-X-Received: by 2002:a17:906:7c4e:: with SMTP id
- g14mr19128585ejp.353.1590409667237; 
- Mon, 25 May 2020 05:27:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49VxLP4GSlzDqGL
+ for <openbmc@lists.ozlabs.org>; Mon, 25 May 2020 22:32:12 +1000 (AEST)
+IronPort-SDR: CJxBHzUZbBBzDYjUC0MIzVBSIqm8AuVykjXPCZRzNrSFyJbiggAas4CF6BKzjwcW9z+xLHL+BP
+ TlGgiP2N+gdw==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 May 2020 05:32:10 -0700
+IronPort-SDR: N3miJSLW5JXCSa4XnSQUe0xVp1r6dmOrN3uzla1e0F+2sD3vChkvZQEUHsaoNIo+LEA/3yGkJc
+ 8E2Fk9h2M2aw==
+X-IronPort-AV: E=Sophos;i="5.73,433,1583222400"; d="scan'208";a="441715994"
+Received: from aambroze-mobl1.ger.corp.intel.com (HELO [10.213.25.232])
+ ([10.213.25.232])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 May 2020 05:32:08 -0700
+Subject: Re: Implementing BMC Health Monitoring
+From: =?UTF-8?Q?Adrian_Ambro=c5=bcewicz?= <adrian.ambrozewicz@linux.intel.com>
+To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>,
+ Sui Chen <suichen@google.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, Vijay Khemka <vijaykhemka@fb.com>
+References: <CAJOps0vP=0sa0R+gNFdrDy9y=e8Qq+LnZX6E2ssJ=5YaWigaeA@mail.gmail.com>
+ <ef1c70adf41b465bb29143cbf0b20f63@intel.com>
+ <9a86fbeb-7270-8fcd-10a9-a84bd40ea9a7@linux.intel.com>
+Message-ID: <6a2274b7-d811-3b1d-f725-54c8c542d47c@linux.intel.com>
+Date: Mon, 25 May 2020 14:32:04 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-From: Christian Svensson <christian@cmd.nu>
-Date: Mon, 25 May 2020 14:27:36 +0200
-Message-ID: <CADiuDARPjYVhhx6bQ68ETnXG0X7j6L7s7tnoW8ipCddU=oR2Zg@mail.gmail.com>
-Subject: Pre-seeding properties into images
-To: "openbmc @ lists . ozlabs . org" <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000436af805a6781b80"
+In-Reply-To: <9a86fbeb-7270-8fcd-10a9-a84bd40ea9a7@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,48 +66,155 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000436af805a6781b80
-Content-Type: text/plain; charset="UTF-8"
+@Brad, @Vijay
 
-Hi,
+It seems Sui is proposing something highly related to already discussed 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/31957 . As a matter 
+of fact - requirement for such system metrics availability is also 
+highly desirable on our (Intel) side. It seems we need to merge all 
+requirements to satisfy the common needs..
 
-I've been contemplating the case of an immutable OpenBMC flash, one where
-the whole image is stored on a, from OpenBMCs perspective at least,
-read-only flash. One could think of doing this from either a security or
-reliability perspective.
-One thing that I would like to do for these cases is to inject things like
-the hostname of the BMC, as well as the TLS certificates to be used.
-A wanted property is that the build signature of OpenBMC shouldn't need to
-be refreshed, and adding these extra files should be relatively easy.
+Regards,
+Adrian
 
-Simple example to communicate what I'm thinking:
-Something like (cat openbmc.img; server-aa01.tar) > openbmc-aa01.img. This
-would then be flashed onto the server using normal means.
-OpenBMC would then use this tar archive as an overlay of /.
-The tar archive could optionally be signed as well, to prevent somebody
-from overwriting /bin/bash or something like that.
-
-Has something like this been discussed before? Thoughts on the general idea?
-
---000000000000436af805a6781b80
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi,<div><br></div><div>I&#39;ve been contemplating the cas=
-e of an immutable OpenBMC flash, one where the whole image is stored on a, =
-from OpenBMCs perspective at least, read-only flash. One could think of doi=
-ng this from either a security or reliability perspective.</div><div>One th=
-ing that I would like to do for these cases is to inject things like the ho=
-stname of the BMC, as well as the TLS certificates to=C2=A0be used.</div><d=
-iv>A wanted property is that the build signature of OpenBMC shouldn&#39;t n=
-eed to be refreshed, and adding these extra files should be relatively=C2=
-=A0easy.</div><div><br></div><div>Simple example to communicate what=C2=A0I=
-&#39;m thinking:</div><div>Something like (cat openbmc.img; server-aa01.tar=
-) &gt; openbmc-aa01.img. This would then be flashed onto the server using n=
-ormal means.</div><div>OpenBMC would then use this tar archive as an overla=
-y of /.</div><div>The tar archive could optionally be signed as well, to pr=
-event somebody from overwriting /bin/bash or something like that.</div><div=
-><br></div><div>Has something like this been discussed before? Thoughts on =
-the general idea?</div></div>
-
---000000000000436af805a6781b80--
+W dniu 5/22/2020 o 10:43, Adrian Ambrożewicz pisze:
+> I suppose I could back up Piotr here.
+> 
+> I believe that in general EntityManager could be leveraged for 
+> configuration (enabling/disabling metrics and configuring them). 
+> dbus-sensors infrastructure would be beneficial in terms of:
+> - familiarity (already used for monitoring physical sensors, new 
+> synthetized sensors to come)
+> - flexibility (EntityManager could provide runtime configuration of the 
+> metrics in the system)
+> - availability - both configuration and metrics would be exposed using 
+> D-Bus interfaces as easy to consume and 'standarized' way.
+> 
+> If dbus-sensors would be used then feature mentioned by Piotr 
+> (TelemetryService) could almost 'out of the box' support storing and 
+> exposing metrics snapshots, send them to external databases 
+> (EventService) etc.
+> 
+> Of course dbus-sensors (xyz.openbmcc_project.Sensor.Value) could be only 
+> one of the interfaces for the data, so it's not limiting any other use 
+> cases you've mentioned.
+> 
+> Regards,
+> Adrian
+> 
+> W dniu 5/21/2020 o 12:47, Matuszczak, Piotr pisze:
+>> Hi,
+>>
+>> The proposal seems interesting. From what I've read from your e-mail, 
+>> you are looking the best way to implement BMC health metrics. My 
+>> proposal would be to expose these metrics as D-Bus sensors with an 
+>> option to store data to the filesystem. Such solution will ease the 
+>> integration with Redfish and support these metrics by the Monitoring 
+>> Service 
+>> (https://github.com/openbmc/docs/blob/master/designs/telemetry.md) . 
+>> This way, you have support for collecting metrics into metric report, 
+>> you have support of simple operations, like min/max/average/sum. Also, 
+>> using metric reports, you can store historical readings and stream the 
+>> metric reports as events.
+>> Piotr Matuszczak
+>> ---------------------------------------------------------------------
+>> Intel Technology Poland sp. z o.o.
+>> ul. Slowackiego 173, 80-298 Gdansk
+>> KRS 101882
+>> NIP 957-07-52-316
+>>
+>> From: openbmc 
+>> <openbmc-bounces+piotr.matuszczak=intel.com@lists.ozlabs.org> On 
+>> Behalf Of Sui Chen
+>> Sent: Thursday, May 21, 2020 3:37 AM
+>> To: openbmc@lists.ozlabs.org
+>> Subject: Implementing BMC Health Monitoring
+>>
+>> Hello OpenBMC Mailing List,
+>>
+>> It is great to see the proposal on BMC health monitoring! We have 
+>> similar efforts in health monitoring in progress, started doing some 
+>> implementation, and would like to share some thoughts with the Mailing 
+>> List to help get BMC health monitoring started:
+>>
+>> (1) What metrics have we considered now?
+>>
+>> We have considered the following metrics on the BMC:
+>>    - Memory usage
+>>    - Number of open file descriptors
+>>    - Free storage space in the read-write file system
+>>    - List of processes
+>>    - CPU time for a few top processes
+>>    Some of these are inspired by various profilers, and some others 
+>> are expected to be relevant to the typical workloads running on the BMC.
+>>
+>> (2) Overall, it appears the design space for health monitoring has the 
+>> following dimensions:
+>>
+>> a) A method to do the collection, which might be:
+>>    - Running a program like "df" to get free disk space
+>>    - Traversing some folder to compute some statistics
+>>    - Monitor some bus for some time and generate some result
+>>    - or something else
+>>    The collection process might vary from metric to metric, and can 
+>> take some time to complete on the BMC, and therefore, the results 
+>> need to be staged somewhere and made accessible when it's completed, 
+>> so the requestor won't have to busy-wait.
+>>
+>> b) A way to stage monitoring data on the BMC, which might be:
+>>    - Files or databases in DRAM or some persistent store.
+>>    - DBus objects, as described in Vijay's document; this is similar 
+>> to how sensors work.
+>>    - IPMI Blobs (this is what we have implemented right now)
+>>    - or something else
+>> c) A way to transfer monitoring data out of the BMC, which might be:
+>>    - scp
+>>    - RedFish
+>>    - IPMI (this is what we're using right now)
+>>    - or something else
+>> d) Format of staged data:
+>>    - Raw bytes
+>>    - Protocol buffers
+>>    - JSON objects
+>>    - or something else
+>>    - The data may be compressed to save transfer time
+>> e) A way to consume the health monitoring data:
+>>    - The BMC might do some pre-processing, like windowed average.
+>>    - The BMC may perform certain corrective measures when metrics 
+>> appear abnormal.
+>>    - The host may perform certain corrective measures when metrics 
+>> appear abnormal.
+>>    - BMC health data might be plugged into some already existing 
+>> monitoring framework overseeing a large number of machines, collecting 
+>> historical data, and projecting future trends, etc.
+>>
+>> f) A way to configure the health monitoring system:
+>>    - Configuration for which metrics are collected
+>>    - Configuration for the choice of staging in b), way of transfer in 
+>> c), and frequency of collection in e)
+>>    - Some configurations may be build-time and some may be run-time
+>>       - I guess we can draw some inspirations from phosphor-ipmi-blobs
+>>
+>> (3) The requirements and performance/storage impacts on the BMC:
+>>
+>> a) The collection should not be too taxing on the processing/storage 
+>> resources on the BMC
+>>
+>> b) The data transfer process should not be too taxing on the link 
+>> between the host and BMC
+>>    - For the metrics we have and the IPMI connection we're using so 
+>> far, it took around 10 ~ 100ms for the host to collect a metric. The 
+>> time is dominated by IPMI transfer time. The time is considered 
+>> acceptable if a metric is collected at a reasonably long interval, 
+>> say, every 30 minutes.
+>>
+>> We hope the above contents help complement the existing design 
+>> proposal, and would like to help actually start implementing (and 
+>> deploying) health monitoring for the BMC.
+>> The question is: we're working on our implementation and we're 
+>> wondering what would be a good time for us to send it for review? Do 
+>> we need to support both what we have now and what is being proposed?
+>>
+>> Thanks!
+>> Sui
+>>
