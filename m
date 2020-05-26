@@ -1,63 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0DC71E2237
-	for <lists+openbmc@lfdr.de>; Tue, 26 May 2020 14:48:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79D921E2277
+	for <lists+openbmc@lfdr.de>; Tue, 26 May 2020 14:58:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49WYf64q4NzDqHb
-	for <lists+openbmc@lfdr.de>; Tue, 26 May 2020 22:47:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49WYtM4wn5zDqQc
+	for <lists+openbmc@lfdr.de>; Tue, 26 May 2020 22:58:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::534;
- helo=mail-pg1-x534.google.com; envelope-from=zbigniewku@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=LBN4vLOS; dkim-atps=neutral
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
- [IPv6:2607:f8b0:4864:20::534])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49WYd56mxbzDq63
- for <openbmc@lists.ozlabs.org>; Tue, 26 May 2020 22:47:03 +1000 (AEST)
-Received: by mail-pg1-x534.google.com with SMTP id c75so10040911pga.3
- for <openbmc@lists.ozlabs.org>; Tue, 26 May 2020 05:47:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=96xX4DsZZu/XIHDh0T1rUvXs/YfPHVK2CZ1ygOB/SvU=;
- b=LBN4vLOSWkjT4ysWkS8z+jZmbnc2uEVV+Au+HBan6Mf70SgILpvivR6D8nK58QoBMj
- p76sqwH9jxn/gDyEI3vW8TSVU6LS75CRklZghJucwE8D5dADA+Z+3A+C0MbuUGXZgM84
- cRVTDoVwyesAbWckv6EGpZ//jGmiEWxkOIDY1ZXObDeJCQ5kIOw349WaOTVdDBsoZpE9
- TZo0ifE5FAc4E8ErO2EwypQCFNJPowKyT2Q9kbMZI80M7nVEkJa7lrQbZRJdvtaUDyZi
- 7YYNpkQrz2k7eqF3WsReGp5tgZH9u5H0ybQNEKxJVmuEeMP7ETN/moYCZHCnIsV8cc/I
- 7PRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=96xX4DsZZu/XIHDh0T1rUvXs/YfPHVK2CZ1ygOB/SvU=;
- b=DQpx0ZVKq1fczSzr10RhFrKCX6DoThnySqg+jCNdtFoccb4WHa2IQZ/yyL0Nm5vEM4
- K68mWTinuUkAx48Vq56fDNstdV5pPu63Nh4fecvzykkIg/Vg1paDbc+PtqgKBrCrr+N0
- INV2hFOk9MPQUfc9/IuljQg+n8MhV32d+v3tb0D9831FnLAwkryyQF4kpcRTJJE7jzAD
- TRKl0r863PXe+G+DE3mv8kNJh501yGF6lhVtstRNMQCU3aW75S5Ia2LKvaiRT6aJWLAr
- CIGBpINPVJVIm83ZZgxSoD9gZInKtTaiBZBi0ro+1R+krRxmN5OCFQ3dTfrPU3iHbTeV
- OZOg==
-X-Gm-Message-State: AOAM530Q+fbj7fOnFI5A7rsee3FnYQt+umw96f28hXq0qNz/ojnE7NSE
- 7WyWUprXiFWGXnW8alnW8rQDpCLzYfHrZm3QEzwk8SIq
-X-Google-Smtp-Source: ABdhPJy3aYg8mOqZfHkq67kBHu3OTQtM5zzPyCkUrbICfOa8cm+VTPHhNaQ3U2EgH4hBEaPwtfW3uHHzbbs8FzyIBkI=
-X-Received: by 2002:a62:543:: with SMTP id 64mr6505085pff.271.1590497219358;
- Tue, 26 May 2020 05:46:59 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49WYsL203QzDqGN
+ for <openbmc@lists.ozlabs.org>; Tue, 26 May 2020 22:57:41 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04QCXZIv132221; Tue, 26 May 2020 08:56:34 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 316vqfy36c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 May 2020 08:56:34 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04QCpwxw025807;
+ Tue, 26 May 2020 12:56:32 GMT
+Received: from b06cxnps4075.portsmouth.uk.ibm.com
+ (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
+ by ppma03ams.nl.ibm.com with ESMTP id 316uf85xa8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 May 2020 12:56:31 +0000
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04QCuTYe65208500
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 26 May 2020 12:56:29 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8EEED4C058;
+ Tue, 26 May 2020 12:56:29 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2299F4C04E;
+ Tue, 26 May 2020 12:56:28 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.246.120])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Tue, 26 May 2020 12:56:27 +0000 (GMT)
+Subject: D-Bus interface to provide data to entity manager (was: Processing
+ PLDM FRU information with entity manager)
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ James Feist <james.feist@linux.intel.com>,
+ "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Bhat, Sumanth" <sumanth.bhat@intel.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
+Message-ID: <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
+Date: Tue, 26 May 2020 18:26:27 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-From: Zbyszek <zbigniewku@gmail.com>
-Date: Tue, 26 May 2020 14:46:48 +0200
-Message-ID: <CAB_SOc5KK9D5TGiJZ=LFBF4Y8_dibp1iRZbvenyfscW+gkVEYA@mail.gmail.com>
-Subject: power capping values on dbus
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-05-26_02:2020-05-26,
+ 2020-05-26 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0
+ mlxlogscore=999 spamscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 cotscore=-2147483648 mlxscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2005260095
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,35 +92,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi everyone!
+On 19/05/20 9:10 am, Deepak Kodihalli wrote:
+> Hi,
+> 
+> IBM systems have a requirement to consume FRU information sent down via 
+> the host firmware and then relay that onto D-Bus (and then onto 
+> Redfish). The host firmware will send down FRU information using PLDM.
+> 
+> We wanted to use entity manager to enable transforming the PLDM FRU data 
+> to D-Bus properties that fall under D-Bus inventory interfaces such as 
+> the xyz.openbmc_project.Inventory.Decorator.Asset interface. I have an 
+> update to the PLDM design doc to capture this flow [1], and some D-Bus 
+> interfaces [2] proposed on Gerrit. Would appreciate feedback on the 
+> same. The high level idea is that the pldm daemon will host raw PLDM FRU 
+> information on D-Bus, and via JSON configs, entity manager can convert 
+> those to D-Bus inventory objects (which then can be found by bmcweb).
+> 
+>  From an entity manager perspective, I had few questions :
+> - I see there is provision for persistence, but it looks like applying 
+> the persisted information works only if "D-Bus probes" succeed. We have 
+> a requirement to make the host-sent inventory information available even 
+> when the host is powered off. Now if the host has sent this, then powers 
+> off, and then BMC reboots, the BMC will no longer have the raw PLDM FRU 
+> information on D-Bus and hence the entity manager probe on the same will 
+> fail. Question is, can the probes be made optional when reading the 
+> persisted config (system.json)?
+> 
+> - How are hierarchical relationships between FRUs supposed to be 
+> represented? Is that based on D-Bus pathnames? Or making use of 
+> something like the D-Bus Associations interface? Any thoughts on how 
+> representing such parent-child relation can be achieved via entity 
+> manager configs?
+> 
+> [1] https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/
+> [2] 
+> https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-dbus-interfaces/+/32533/ 
+> 
+> 
+> Thanks,
+> Deepak
+> 
 
-I would like to expose on dbus values like min and max power capping.
-These values could be read from files provided by hwmon like:
-   power[1-*]_cap_max,
-   power[1-*]_cap_min
-which are describe here:
-https://www.kernel.org/doc/Documentation/hwmon/sysfs-interface
+I've got some feedback on the proposal above, which is primarily 
+directed at/impacts how the PLDM daemon provides FRU information to the 
+entity manager daemon. Wanted to discuss the same here.
 
-I have noticed that this interface:
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Sensor/Value.interface.yaml
-is already exposing something like MinValue and MaxValue,
-but current implementation in dbus-sensors always sets these
-attributes to some const values.
-My understanding of the power capping values is that they could be used as these
-MinValue and MaxValue if hwmon provides them otherwise some default
-should be used as it is now.
+Very briefly, the proposal was :
+a) The PLDM daemon will parse PLDM FRU format data and host the same on 
+D-Bus as a set of PLDM FRU properties (similar to how the FruDevice 
+daemon hosts properties under xyz.openbmc_project.FruDevice).
+b) Apply EM system/board specific configurations on a) to be able to 
+create specific inventory D-Bus objects (this is how EM works today).
 
 
-My questions:
-1. Should I create a new interface for the capping readings?
-2. Or should I extend the existing Value.interface.yaml with new
-attributes like MinCapValue, MaxCapValue?
-3  Or the correct approach would be to read the cap values if provided
-and expose them under already existing MinValue, MaxValue?
+To do a) above, there are 3 options:
+
+1) Propose a D-Bus interface in phosphor-dbus-interfaces. This was [2] 
+in my original email above. The concern raised by Patrick here is that 
+this interface is very specific to a protocol (PLDM in this case), 
+whereas the phosphor D-Bus interfaces are mostly abstract and protocol 
+agnostic.
+
+In my opinion, PLDM is also a data model, so PLDM specific D-Bus 
+interfaces can enable two apps that are PLDM aware (for eg a PLDM 
+requester app talking to the PLDM daemon) to talk to each other. I do 
+see other protocol specific D-Bus interfaces as well (for eg related to 
+SMBIOS). So I don't really understand the concern. The protocol specific 
+interfaces do not preclude other abstract interfaces.
 
 
-Regards,
-Zbigniew.
+
+2) Propose a generic/abstract 'FRU properties' kind of D-Bus interface. 
+This is something that both the PLDM daemon and FRU device daemon could 
+use to host FRU information on D-Bus, and to provide the same as an 
+intermediate FRU format data to apps like EM. The suggestion on the docs 
+commit above [2] was to have an interface like {Enum[Protocol], 
+array[byte]}. I think instead this could be a dict[string, 
+variant[string, int64]], for a FRU property to value mapping.
+
+While this sounds interesting, are the maintainers of EM and FruDevice 
+interested in such an interface? Based on how this interface is 
+designed, it might imply changes to FruDevice and Entity Manager. I 
+might be interested in chasing this based on the feedback received, and 
+if this will really have users other than the PLDM daemon.
+
+
+
+3) If everyone thinks option 1 is a bad idea, and if the interest in 
+option 2 is limited, I could do this based on how the FruDevice daemon 
+and EM interact today, which is based on kind of a private D-Bus 
+interface between the two apps. I don't think the Fru device daemon is 
+tied up to EM though, it could even be in its own repository.
+
+
+Thanks,
+Deepak
