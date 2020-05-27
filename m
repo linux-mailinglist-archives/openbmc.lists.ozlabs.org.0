@@ -1,95 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5540D1E4625
-	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 16:38:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D1AF1E474A
+	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 17:27:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49XD3M1bSRzDqTd
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 00:38:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49XF7V213bzDqP0
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 01:27:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=js7oESqa; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49XD1D3KSCzDqTN
- for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 00:36:47 +1000 (AEST)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04REaC2D094533; Wed, 27 May 2020 10:36:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=mime-version :
- content-type : content-transfer-encoding : date : from : to : cc : subject
- : in-reply-to : references : message-id; s=pp1;
- bh=9F/502rJf7YNy2j5SUkMAFpu98GrFPb26zVft36btr8=;
- b=js7oESqaZRvvS0zrLiLUO92bdoAfIgU+uo2ZU3d9zwsGFG1QTUAyqcJ1jOrJiqax/s6q
- RaadCIkrZpvI+VfcZ4ldey/zmwVuMnMMzej3vNGd4EZRs2V9+A7HiWYqpUyxnRjzF0jW
- MwDulL3OlwOxIKHatIRSGxiVHxt6qwtL/Jpbez3jTJQJvp4mNq5nD+ac7Y4dD3nR9z9/
- NTH6IbKC6fgLnKOKV5TVoqICaHnPOXgx+vR+emchMdbkMY19FaBB5QMPDybKKy5yXMfI
- 72xdfZYj/KtKc5BgQ3h3HtJfwixQuYhapm03b21eLKdSQF4IyZSzKRSWjiQrxxG77JBg 9A== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 319sv1rc2x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 27 May 2020 10:36:40 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04RETSHx009758;
- Wed, 27 May 2020 14:36:39 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma03dal.us.ibm.com with ESMTP id 316ufammdy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 27 May 2020 14:36:39 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 04REacMd51905010
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 27 May 2020 14:36:38 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CFA89B2067;
- Wed, 27 May 2020 14:36:38 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 47574B205F;
- Wed, 27 May 2020 14:36:38 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 27 May 2020 14:36:38 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XF615TPgzDqBN
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 01:26:00 +1000 (AEST)
+IronPort-SDR: PQb3+Cvk0CIw2doYEAg/hQ7T9cRCz9dHNuAF3vMHQpm26AKAoOG4sBwcz9Wgz3ykTL8D0tf4OX
+ rjW6lThfvN6g==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2020 08:25:43 -0700
+IronPort-SDR: V99f8SUfpY7otmYhP1l4pfF7Lez0jm+/KzRP9a/tQUL6kYY09pzwdhnC+pyKJStGdx5PQpT8FP
+ 2nOwzqfjkVJw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,441,1583222400"; d="scan'208";a="284837566"
+Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.89.209])
+ ([10.252.89.209])
+ by orsmga002.jf.intel.com with ESMTP; 27 May 2020 08:25:40 -0700
+Subject: Re: D-Bus interface to provide data to entity manager
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ James Feist <james.feist@linux.intel.com>,
+ "Bhat, Sumanth" <sumanth.bhat@intel.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
+ <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
+ <0a9b8934-a3be-aaa0-90c0-134f286df951@linux.intel.com>
+ <c2872079-ffba-1788-69b5-50350e21f1a3@linux.vnet.ibm.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <55702d05-66c0-275e-880b-06e6c7c1203e@linux.intel.com>
+Date: Wed, 27 May 2020 20:55:39 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date: Wed, 27 May 2020 09:36:37 -0500
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: "Bodireddy, Vikram" <vikram.bodireddy@linux.intel.com>,
- openbmc@lists.ozlabs.org, joel@jms.id.au, andrew@aj.id.au
-Subject: Re: openBMC eMMC image support
-In-Reply-To: <b13a0e82-4f88-f35b-0d3f-8f7d6a91351b@linux.intel.com>
-References: <c2d7ecb8-b0b8-c5a3-12e7-7201fbd86b1a@linux.intel.com>
- <b13a0e82-4f88-f35b-0d3f-8f7d6a91351b@linux.intel.com>
-Message-ID: <b8407f3ebaa1e5d24750551f4ad4f3aa@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-05-27_03:2020-05-27,
- 2020-05-27 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- adultscore=0 suspectscore=0 cotscore=-2147483648 impostorscore=0
- malwarescore=0 mlxlogscore=704 mlxscore=0 phishscore=0 spamscore=0
- lowpriorityscore=0 clxscore=1011 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2005270107
+In-Reply-To: <c2872079-ffba-1788-69b5-50350e21f1a3@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,48 +65,107 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: richard.marian.thomaiyar@linux.intel.com, suryakanth.sekar@linux.intel.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Vikram,
 
-On 2020-05-27 09:03, Bodireddy, Vikram wrote:
-> +Richard
-> 
-> On 25-05-2020 15:29, Bodireddy, Vikram wrote:
->> Hi Andriana,
->> 
->> We are working on enabling OpenBMC eMMC support for Intel platforms.
->> 
->> I see that you had started on it, and enabling it for ibm platforms.
->> 
->> We would like to co-work with you to get to know eMMC support status 
->> and  to contribute further to complete it.
+On 5/27/2020 7:28 PM, Deepak Kodihalli wrote:
+> On 27/05/20 7:20 pm, Thomaiyar, Richard Marian wrote:
+>> I always view D-Bus interface as a specification / API which can work 
+>> with different producers / consumers (correct me, if that's not what 
+>> we intend with D-Bus interface here). Problem with Option 1 is, it 
+>> will end up in having multiple producers exposing different 
+>> interface, and thereby consumers(user interface facing applications) 
+>> of D-Bus must be aware about all the D-Bus interfaces and always 
+>> requires change.
+>>
+>> Consider, we want to expose ChassisType, then irrespective of PLDM 
+>> FRU / IPMI FRU / Proprietary FRU, Consumer applications must read it 
+>> in the same manner. Having different interface / property types, 
+>> requires update in both the end. PLDM FRU / IPMI FRU can be in common 
+>> form (except few nit's /OEM's). We need to make sure it is 
+>> represented in that angle. As of today phosphor-dbus-interfaces 
+>> doesn't have FRU interface, but it has inventory related interfaces 
+>> (exposed by Entity-Manager), which is what Redfish uses (i.e. 
+>> Indirectly the FruDevice exposed interface is hidden by 
+>> Entity-manager, and inventory interface exposed by entity-manager is 
+>> used).
+>>
+>> As of today, entity-manager doesn't add Inventory interface 
+>> automatically for Add-on cards (which doesn't have any json 
+>> configuration), but needs exposure (say PLDM based Add on card 
+>> devices will be of this type), but shouldn't be hard to add it anyway.
+>>
+>> Now the question is do we want to expose FRU as a separate interafce 
+>> to be used in User facing application, or shall we just use Inventory 
+>> based interface itself ?If inventory itself can be used, then let's 
+>> go ahead and add more fields to those if missing anything / correct 
+>> the same accordingly.
+>>
+>> James, Deepak, Patrick - your thoughts ?
+>
+> I guess there is a difference between FRU and inventory. If inventory 
+> interfaces could be used directly, why wouldn't the FruDevice or PLDM 
+> apps directly host inventory objects, why even use EM?
+>
+[Richard]: Inventory.Decorator is used in Redfish. i.e. Today Frudevice 
+& it's interface exposed is consumed by Entity-Manager alone & Entity 
+manager exposes all the needed configuration along with 
+Inventory.Decorator.Asset interface. (As you stated, inventory does more 
+than what FRU has to expose, but i am trying to see can we use 
+Inventory.Decorator itself to expose these needed FRU information?). 
+James F ? (Maintainer of both EM & bmcweb)
 
-Great!
+Current Behavior:
 
->> 
->> Can you please help with the current status of OpenBMC eMMC support?
+Say - Baseboard fru information is exposed by FruDevice, and Entity 
+Manager exposes the sensor or any configuration required for platform A 
+or Platform B (based on fru device data). Entity-manager also expose 
+Inventory interface which hides the manufacturer name exposed by FRU, 
+but exposes the it as Manufacturer in the Inventory interface and 
+Redfish uses this).
 
-For code update support, I’ll be pushing changes to gerrit for 
-phosphor-bmc-code-mgmt today/tomorrow to support eMMC.
-On the build side, there are a few WIP changes that I’ll be refreshing 
-this week as well, will tag them as ‘mmc’ on gerrit to be able to 
-find them, some previous commits have the topic ‘wic’ and ‘mmc’ 
-already but are in Abandoned or WIP, will be cleaning them up this week.
-Updates to the emmc doc: 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28443
+In case of exposing the PLDM FRU
 
->> 
->> Also can you let us know your availability this week for a sync 
->> meeting on the same?
+Option 1:
 
-Ping me on IRC, any time during the day CST time, or if it's later at 
-night like 8/9pm CST time we can have Joel/Andrew J join us as well.
+If we need to rely on PLDM FRU, then Entity-Manager will probe the 
+FruDevice data exposed by PLDM FRU daemon, and expose the inventory 
+(both for sensor configuration and decorator Asset), we don't change any 
+upper layer application. We can follow the same design for the PLDM FRU 
+daemon.
 
->> 
->> Thanks
->> 
->> Vikram
->> 
+Note: Currently, it doesn't have a mechanism to expose all the FRU 
+devices as Inventory.Decorator interface automatically when there is no 
+json configuration for it in EM. This needs to be fixed (say for PLDM 
+based Add-on card).
+
+Option 2:
+
+Define new FRU interface (common for both PLDM, IPMI etc.), similar to 
+inventory and this itself will be used by both Entity-manager & user 
+level interface application (say Redfish).
+
+(Problem with option 2 is it requires changes in Currenr behavior, and 
+redfish etc, may need to update it's code to use the common FRU 
+interface rather than inventory.Decorator).
+
+Regards,
+
+Richard
+
+> I believe these apps (FruDevice, PLDM daemon) operate at a per FRU 
+> level, and rely on something like EM to make one or more inventory 
+> objects based on the FRU data. So that was my option 2, a generic FRU 
+> properties interface. I'm just not sure at the moment the 
+> impact/interest of doing something like that and then aligning 
+> FruDevice and EM to the same.
+>
+> Thanks,
+> Deepak
+>
+>>
+>> regards,
+>>
+>> Richard
