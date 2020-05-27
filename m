@@ -1,44 +1,129 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B4821E4EFE
-	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 22:12:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFE701E4FE6
+	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 23:16:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49XMSg5XDrzDqW7
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 06:12:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49XNtG5HKhzDqXC
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 07:16:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=2416886ead=vijaykhemka@fb.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=lIofW2VG; 
+ dkim=pass (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=SJH/wyTn; 
+ dkim-atps=neutral
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49XMPf25sBzDqVZ
- for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 06:09:53 +1000 (AEST)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 04RK91Xn011494;
- Wed, 27 May 2020 23:09:01 +0300
-Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
- id C7D37639C2; Wed, 27 May 2020 23:09:01 +0300 (IDT)
-From: Tali Perry <tali.perry1@gmail.com>
-To: ofery@google.com, brendanhiggins@google.com, avifishman70@gmail.com,
- tmaimon77@gmail.com, kfting@nuvoton.com, venture@google.com,
- yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
- wsa@the-dreams.de, andriy.shevchenko@linux.intel.com
-Subject: [PATCH v14 3/3] i2c: npcm7xx: Add support for slave mode for Nuvoton
-Date: Wed, 27 May 2020 23:08:20 +0300
-Message-Id: <20200527200820.47359-4-tali.perry1@gmail.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20200527200820.47359-1-tali.perry1@gmail.com>
-References: <20200527200820.47359-1-tali.perry1@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XNsL27f0zDqT4
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 07:15:27 +1000 (AEST)
+Received: from pps.filterd (m0044010.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04RLBaoq010427; Wed, 27 May 2020 14:15:22 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : content-type : mime-version; s=facebook;
+ bh=AGAc164U9ZUuijFcqPeO8kz6iOhdIVIE5kk+Dp2y8uY=;
+ b=lIofW2VGekN2KNvMCxCxmtY0EsBhFs9hwO63+2NC4kxXQyVwA4SIOiUULMeEU19UGAYb
+ QszX6xnFKmK4m/u7eGceB5/ueBMHL1QWBIUXyLSSVeAEK/WxXh8BtbMyV0QE/xLefN91
+ UX6k9aHXi8Z5d/KhSfNoDl564lDCitKmy3k= 
+Received: from maileast.thefacebook.com ([163.114.130.16])
+ by mx0a-00082601.pphosted.com with ESMTP id 317kp41gys-5
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Wed, 27 May 2020 14:15:22 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (100.104.31.183)
+ by o365-in.thefacebook.com (100.104.35.175) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1979.3; Wed, 27 May 2020 14:15:10 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=b1GigJIEgX0PIdOSM89CZTuw/H/bfN8ak45xbNZ4wM+yF+VQNkhXtHRCNTg0Gs5pZy+5aVLYPLMw5e5d5EY9ng10WizfKVFUZPgQN/u1nz4hJPBiyvxAg46KKnq7P5pUiuibz2R5Vehbb3mLXsj6FH0C8cKwoh8SrBAo1t2x1QzSp5Y4+ywmMI3mE4GnNrXtbtJNCfTAvTMTAAsGRiUqXHZV3tl2ZGsrNW9zTLUw92epsVv1ys3Sre7WAmPjBResqjfLJ3Ua+9lZVmOhLzQ+Zb9RtCblqA7UBRY3THbjjW9LO87LLh4FrgCErQY6q3GerifFk5Bc7sqvigXQ9q7wng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AGAc164U9ZUuijFcqPeO8kz6iOhdIVIE5kk+Dp2y8uY=;
+ b=AV8SynMDSTsqXIlRXoltWIJTQ2TCSnEj/XIOkWruBq7suTiWxnhEt0/y6uCxRBqvPGfhznOU2cOfgWhVoVB56w4YV5RkZl1f9Pt60jL3wXTChaPgntlJk2se7HDB1n8hXcXTNKG7zxgLQjWkKQy1U5cw+C6LbiHClMcao1viBarh6IcN5Htanb8bOwM8Axxr/LFOhIG9lpTktLNHFZtWwOavfb9Hng2Jez/7odH5xJDRQGVsA5mQJAFq3ze/+FePNty0uSxhE52Z1i7jIHuyFaqFATCPIVeNUGQV2B4YE7Hh1lXiIlIvevjOamHTchVAZKYC4Y+a2usPANmMiJaEPw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AGAc164U9ZUuijFcqPeO8kz6iOhdIVIE5kk+Dp2y8uY=;
+ b=SJH/wyTnQ9PUk28TPSyi+nN5gBp5u9c42+/ZM4WwqaiGsNvZyxCTBrCUqyR2+QhnWIumjVr8i/ailG2iHlXxUJK6tc697KB3Mw7o3lSyvtk9uhiG1mEFL9YGW8o1QkFuiyc2QEfRuGES9o8JLZL5XEoLQVXYf8VZdqt81fFdUtM=
+Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
+ by BYAPR15MB2869.namprd15.prod.outlook.com (2603:10b6:a03:b3::27)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3021.23; Wed, 27 May
+ 2020 21:15:10 +0000
+Received: from BYAPR15MB2374.namprd15.prod.outlook.com
+ ([fe80::34b8:e690:6dfc:8faf]) by BYAPR15MB2374.namprd15.prod.outlook.com
+ ([fe80::34b8:e690:6dfc:8faf%4]) with mapi id 15.20.3021.029; Wed, 27 May 2020
+ 21:15:10 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: =?utf-8?B?5ZGoIOi/nOa4hQ==?= <zhouyuanqing8@outlook.com>, "Wang, Kuiying"
+ <kuiying.wang@intel.com>
+Subject: =?utf-8?B?UmU6IOWbnuWkjTogQWJvdXQgRlJV?=
+Thread-Topic: =?utf-8?B?5Zue5aSNOiBBYm91dCBGUlU=?=
+Thread-Index: AQHWNGvnxEG4rUz0eEGs7cDZzKoAzQ==
+Date: Wed, 27 May 2020 21:15:09 +0000
+Message-ID: <0FA5C43C-DEBB-4671-84A1-EFA79FABF777@fb.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: outlook.com; dkim=none (message not signed)
+ header.d=none;outlook.com; dmarc=none action=none header.from=fb.com;
+x-originating-ip: [2620:10d:c090:400::5:a75c]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: f94347e7-6e2e-428a-ae7e-08d8028309d4
+x-ms-traffictypediagnostic: BYAPR15MB2869:
+x-microsoft-antispam-prvs: <BYAPR15MB2869B535646FB45DE34A345DDDB10@BYAPR15MB2869.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-forefront-prvs: 04163EF38A
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: P2Fh1c7WrHnFYhacGrFHn1ammZ3YUtyX4t2sfeW3Aw8/B7CkGObP/emLGhDJGpDMH9Vo9zg7rtXFXcGBZM6UNMGd7AmcW+h4fbSMdIQV3EZMDJ195xqSuGajCP9/dqjlKmlfKBBsJ55qyiK0HKwdJYu/hACvWCLDjr/aw/MXLZnjzeBdquhzo+Drd7yfDZM85qP9GZPbrQlsnnUfblWFe008untUc8O3s9MlikFSeDHy4ql3L3Ie/cQeCQbmcUhQXEywWgTP1fzNWlbSFaxZ5mEKZl/ak1LCPQ5OlRYc2UHIZSAz73GurOTpNnZC3Zx7cBwNmhMv+yutmmfnXBslbBdThWNgiNmShUYmUkEX6yKs95oRwWBRN3rw7yP06iEgSc6zBbNnQ3VsTjodH1UZ0w==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(39860400002)(396003)(366004)(376002)(346002)(136003)(166002)(45080400002)(5660300002)(66476007)(86362001)(2616005)(66946007)(66556008)(66446008)(76116006)(6506007)(53546011)(186003)(6512007)(224303003)(6486002)(9326002)(8936002)(478600001)(64756008)(966005)(316002)(2906002)(36756003)(71200400001)(33656002)(4326008)(110136005);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: TaJoojdbxbPY/OAL25YoHwy4+EKA1oSMFrnhIElh3JhzZH8jyPmPcE3VldLNzXru7WLBRDjSBUA33+TkpgRFpBcKmb74uC8glfvphsRBZ7vQqobfcivzcC8MGsPWfk9/IKcDGQ6GVvINVtdmhLgqjDa0pG5kHK8FDbRHlmef9MGjid8IEB71L21WTm1bUvTaewVBmv9QWfftWoSx883v0dO4I7GM+h5NEKK9wxEtvjkxAGUEExlkrgr3aJnfDTapvBDTTVX2ljt68b8NcrrwVHuGeLEgg++ef1yQBGTRS7eD9HHg2vcy8EbSQfDQ/VjyoeKirkJgFa8PPguourgbX7L/1OrfqLFOjWJQsRAG+emr6+U+uct3ClAw/tEUlriA4yPnIxM3ZZTf/8dcP7tHf6Q1M4+PKB5XSTQzhvk6+iGHwcDVVuMMTgOLaM0m+iVPQQM6LrNQI7RPp80WXwPT57yBArBc3vlcjPkKvdQUvhAcDbrxiTjg/z+BIlTxAKj6guCuJYlM3AxdeU1lVrrOAg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_0FA5C43CDEBB467184A1EFA79FABF777fbcom_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-CrossTenant-Network-Message-Id: f94347e7-6e2e-428a-ae7e-08d8028309d4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2020 21:15:09.9930 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kzwFwA0oAy1T2yuRYLZdriVqSYyV8P4exgXDhAeRD2jUdTjRPkL2FbDqPAcd/x4a8144MIMKoEe+Ng39AaGm4g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2869
+X-OriginatorOrg: fb.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-05-27_03:2020-05-27,
+ 2020-05-27 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ lowpriorityscore=0
+ mlxlogscore=999 suspectscore=0 priorityscore=1501 cotscore=-2147483648
+ adultscore=0 malwarescore=0 phishscore=0 bulkscore=0 impostorscore=0
+ mlxscore=0 clxscore=1011 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2005270164
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,745 +135,344 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
- linux-i2c@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add support for slave mode for Nuvoton
-NPCM BMC I2C controller driver.
+--_000_0FA5C43CDEBB467184A1EFA79FABF777fbcom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/i2c/busses/i2c-npcm7xx.c | 608 ++++++++++++++++++++++++++++++-
- 1 file changed, 607 insertions(+), 1 deletion(-)
+SGkgSGFybGV5LA0KWW91IGRvbuKAmXQgbmVlZCBhbnkgY29uZmlndXJhdGlvbiBmb3IgZWVwcm9t
+IGlmIHlvdSBhcmUgdXNpbmcgZW50aXR5IG1hbmFnZXIgcGFja2FnZS4gSnVzdCBhZGQgdGhpcyBw
+YWNrYWdlIGluIHlvdXIgaW1hZ2UgYW5kIGF0IHRoZSBzdGFydCAvdXNyL2Jpbi9mcnUtZGV2aWNl
+IHByb2Nlc3Mgd2lsbCBzdGFydCB3aGljaCB3aWxsIGVudW1lcmF0ZSBhbGwgZWVwcm9tIGV4aXN0
+ZWQgaW4gdGhlIHN5c3RlbSBhbmQgY3JlYXRlIGEgZGJ1cyBpbnRlcmZhY2UgZm9yIGVhY2ggZnJ1
+IGRldmljZSBmb3VuZC4gSW4gbXkgc3lzdGVtLCBpdCBzaG93cyBsaWtlIGJlbG93Lg0KDQpTZXJ2
+aWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuRnJ1RGV2aWNlOg0KDQogICAg4pSU4pSAL3h5ei9vcGVu
+Ym1jX3Byb2plY3QvRnJ1RGV2aWNlDQoNCiAgICAgIOKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0
+L0ZydURldmljZS8wXzgwDQoNCiAgICAgIOKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0ZydURl
+dmljZS8wXzgxDQoNCiAgICAgIOKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS8x
+XzExMw0KDQogICAgICDilJzilIAveHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvMl8xMTIN
+Cg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzJfMTYNCg0KICAg
+ICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzJfMjINCg0KICAgICAg4pSc
+4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzNfMTA0DQoNCiAgICAgIOKUnOKUgC94
+eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS8zXzEwOA0KDQogICAgICDilJzilIAveHl6L29w
+ZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvM18xMTMNCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1j
+X3Byb2plY3QvRnJ1RGV2aWNlLzNfMzYNCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2pl
+Y3QvRnJ1RGV2aWNlLzNfNjgNCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1
+RGV2aWNlLzNfODENCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNl
+LzZfMzINCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfMzMN
+Cg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfNzgNCg0KICAg
+ICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfNzkNCg0KICAgICAg4pSc
+4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfODANCg0KICAgICAg4pSc4pSAL3h5
+ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzdfNjkNCg0KICAgICAg4pSc4pSAL3h5ei9vcGVu
+Ym1jX3Byb2plY3QvRnJ1RGV2aWNlLzhfMzENCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3By
+b2plY3QvRnJ1RGV2aWNlLzlfMzkNCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3Qv
+RnJ1RGV2aWNlLzlfODQNCg0KICAgICAg4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2
+aWNlL0F2YV9NXzJfU1NEX0FkYXB0ZXINCg0KICAgICAg4pSU4pSAL3h5ei9vcGVuYm1jX3Byb2pl
+Y3QvRnJ1RGV2aWNlL1Rpb2dhX1Bhc3NfU2luZ2xlX1NpZGUNCg0KUmVnYXJkcw0KLVZpamF5DQoN
+CkZyb206IOWRqCDov5zmuIUgPHpob3V5dWFucWluZzhAb3V0bG9vay5jb20+DQpEYXRlOiBXZWRu
+ZXNkYXksIE1heSAyNywgMjAyMCBhdCAxOjMzIEFNDQpUbzogIldhbmcsIEt1aXlpbmciIDxrdWl5
+aW5nLndhbmdAaW50ZWwuY29tPiwgVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+DQpD
+YzogIm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyIgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4N
+ClN1YmplY3Q6IOWbnuWkjTogQWJvdXQgRlJVDQoNCkhpDQoNCiAgICAgTXkgcHJvamVjdCB1c2Vz
+IHBob3NwaG9yLWZydSwgYW5kIGEgcGhvc3Bob3ItcmVhZC1lZXByb20gaXMgZ2VuZXJhdGVkIGR1
+cmluZyBjb21waWxhdGlvbi4gSSB0aGluayB3aGVuIG9wZW5ibWMgc3RhcnRzLCBwaG9zcGhvci1y
+ZWFkLWVlcHJvbSB3aWxsIHJlYWQgdGhlIGNvbmZpZ3VyYXRpb24gaW5mb3JtYXRpb24gb2YgZWVw
+cm9tIGZyb20gYSBjb25maWd1cmF0aW9uIGZpbGUgKHN1Y2ggYXMgaTJjIGNoYW5uZWwgbnVtYmVy
+LCBpMmMgYWRkcmVzcyksIGFuZCB0aGVuIHJlYWQgRlJVIGluZm9ybWF0aW9uIGZyb20gZWVwcm9t
+Lg0KICAgICBJZiB0aGUgZW50aXR5LW1hbmFnZXIgbW9kdWxlIGlzIHVzZWTvvIxhZGQganNvbiBj
+b25maWd1cmF0aW9uIGZpbGUgZm9yIG15IGRldmljZSBpbnRvIGVudGl0eS1tYW5hZ2VyLiB0aGVu
+IEkgdXNlIHRoZSBwaG9zaG9yLWZydSBtZXRob2QsIGluIHdoaWNoIGNvbmZpZ3VyYXRpb24gZmls
+ZSBzaG91bGQgSSBjb25maWd1cmUgdGhlIGVlcHJvbSBpbmZvcm1hdGlvbj8NCg0KICAgICBwaG9z
+cGhvci1yZWFkLWVlcHJvbSB3aWxsIGV4aXRzIGFmdGVyIHJlYWRpbmcgdGhlIGVlcHJvbSBpbmZv
+cm1hdGlvbiwgc28gaG93IGlzIHRoZSBGUlUgaW5mb3JtYXRpb24gcmVhZCB0byB0aGUgSVBNSSBw
+cm9jZXNz77yfDQoNClRoYW5rcw0KSGFybGV5DQoNCg0KX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fX18NCuWPkeS7tuS6ujogV2FuZywgS3VpeWluZyA8a3VpeWluZy53YW5nQGludGVsLmNv
+bT4NCuWPkemAgeaXtumXtDogMjAyMOW5tDXmnIgyN+aXpSAxNTo1OA0K5pS25Lu25Lq6OiB6aG91
+eXVhbnFpbmc4QG91dGxvb2suY29tIDx6aG91eXVhbnFpbmc4QG91dGxvb2suY29tPg0K5oqE6YCB
+OiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCuS4
+u+mimDogUkU6IEFib3V0IEZSVQ0KDQoNCkhpIEhhcmxleSwNCg0KWW91IGNvdWxkIGFkZCBqc29u
+IGNvbmZpZ3VyYXRpb24gZmlsZSBmb3IgeW91ciBkZXZpY2UgaW50byBlbnRpdHktbWFuYWdlciBh
+cyBiZWxvdzoNCg0KaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZW50aXR5LW1hbmFnZXIvdHJl
+ZS9tYXN0ZXIvY29uZmlndXJhdGlvbnMNCg0KDQoNCg0KDQpUaGFua3MsDQoNCkt3aW4uDQoNCg0K
+DQoNCg0KSGVsbG8gZXZlcnlvbmUsDQoNCg0KDQogICAgICAgTXkgbW90aGVyYm9hcmQgaGFzIGFu
+IEVFUFJPTSBkZXZpY2UgdG8gc3RvcmUgRlJVIHJlbGF0ZWQgaW5mb3JtYXRpb24uIEhvdyBjYW4g
+SSBjb25maWd1cmUgaXQgaW4gdGhlIG9wZW5ibWMgY29uZmlndXJhdGlvbiBmaWxlIHRvIHNlZSB0
+aGlzIEZSVSBpbmZvcm1hdGlvbiB0aHJvdWdoIHRoZSBpcG1pdG9vbCBmcnUgcHJpbnQgY29tbWFu
+ZD8NCg0KDQoNCkFyZSB0aGVyZSBzb21lIGV4YW1wbGVzIHRvIHByb3ZpZGUgcmVmZXJlbmNlLCBJ
+IGRpZCBub3QgZmluZCBhIHBsYWNlIHRvIGNvbmZpZ3VyZSB0aGUgZWVwcm9tIGRldmljZSBpbiB0
+aGUgb3BlbmJtYyBwcm9qZWN0Pw0KDQoNCg0KSXMgdGhlcmUgYW55IGRvY3VtZW50YXRpb24gYWJv
+dXQgRlJVIGluZGljYXRpbmcgdGhhdCB0aGUgbW9kdWxlIHJlYWRzIGFuZCBwYXJzZXMgaW5mb3Jt
+YXRpb24gZnJvbSBlZXByb20sIGFuZCB0aGVuIGl0IGNhbiBiZSByZWFkIGJ5IHRoZSBpcG1pdG9v
+bCBmcnUgcHJpbnQgY29tbWFuZD8gV2hhdCBpcyB0aGUgcHJvY2VzcyBsaWtlPw0KDQoNCg0KVGhh
+bmtzDQoNCkhhcmxleQ0KDQoNCg0KDQo=
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 018abf8dda7e..a8e75c3484f1 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -71,6 +71,24 @@ enum i2c_state {
- 	I2C_STOP_PENDING,
- };
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+/* Module supports setting multiple own slave addresses */
-+enum i2c_addr {
-+	I2C_SLAVE_ADDR1 = 0,
-+	I2C_SLAVE_ADDR2,
-+	I2C_SLAVE_ADDR3,
-+	I2C_SLAVE_ADDR4,
-+	I2C_SLAVE_ADDR5,
-+	I2C_SLAVE_ADDR6,
-+	I2C_SLAVE_ADDR7,
-+	I2C_SLAVE_ADDR8,
-+	I2C_SLAVE_ADDR9,
-+	I2C_SLAVE_ADDR10,
-+	I2C_GC_ADDR,
-+	I2C_ARP_ADDR,
-+};
-+#endif
-+
- /* init register and default value required to enable module */
- #define NPCM_I2CSEGCTL			0xE4
- #define NPCM_I2CSEGCTL_INIT_VAL		0x0333F000
-@@ -98,6 +116,21 @@ enum i2c_state {
- #define NPCM_I2CADDR6			0x16
- #define NPCM_I2CADDR10			0x17
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+/*
-+ * npcm_i2caddr array:
-+ * The module supports having multiple own slave addresses.
-+ * Since the addr regs are sprinkled all over the address space,
-+ * use this array to get the address or each register.
-+ */
-+#define I2C_NUM_OWN_ADDR 10
-+const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
-+	NPCM_I2CADDR1, NPCM_I2CADDR2, NPCM_I2CADDR3, NPCM_I2CADDR4,
-+	NPCM_I2CADDR5, NPCM_I2CADDR6, NPCM_I2CADDR7, NPCM_I2CADDR8,
-+	NPCM_I2CADDR9, NPCM_I2CADDR10,
-+};
-+#endif
-+
- #define NPCM_I2CCTL4			0x1A
- #define NPCM_I2CCTL5			0x1B
- #define NPCM_I2CSCLLT			0x1C /* SCL Low Time */
-@@ -265,6 +298,16 @@ struct npcm_i2c {
- 	bool read_block_use;
- 	unsigned long int_time_stamp;
- 	unsigned long bus_freq; /* in Hz */
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	u8 own_slave_addr;
-+	struct i2c_client *slave;
-+	int slv_rd_size;
-+	int slv_rd_ind;
-+	int slv_wr_size;
-+	int slv_wr_ind;
-+	u8 slv_rd_buf[I2C_HW_FIFO_SIZE];
-+	u8 slv_wr_buf[I2C_HW_FIFO_SIZE];
-+#endif
- 	struct dentry *debugfs; /* debugfs device directory */
- 	u64 ber_cnt;
- 	u64 rec_succ_cnt;
-@@ -296,6 +339,10 @@ static void npcm_i2c_init_params(struct npcm_i2c *bus)
- 	bus->int_time_stamp = 0;
- 	bus->PEC_use = false;
- 	bus->PEC_mask = 0;
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	if (bus->slave)
-+		bus->master_or_slave = I2C_SLAVE;
-+#endif
- }
- 
- static inline void npcm_i2c_wr_byte(struct npcm_i2c *bus, u8 data)
-@@ -341,6 +388,18 @@ static void npcm_i2c_disable(struct npcm_i2c *bus)
- {
- 	u8 i2cctl2;
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	int i;
-+
-+	/* select bank 0 for I2C addresses */
-+	npcm_i2c_select_bank(bus, I2C_BANK_0);
-+
-+	/* Slave addresses removal */
-+	for (i = I2C_SLAVE_ADDR1; i < I2C_NUM_OWN_ADDR; i++)
-+		iowrite8(0, bus->reg + npcm_i2caddr[i]);
-+
-+	npcm_i2c_select_bank(bus, I2C_BANK_1);
-+#endif
- 	/* Disable module */
- 	i2cctl2 = ioread8(bus->reg + NPCM_I2CCTL2);
- 	i2cctl2 = i2cctl2 & ~I2CCTL2_ENABLE;
-@@ -504,6 +563,61 @@ static inline void npcm_i2c_nack(struct npcm_i2c *bus)
- 	iowrite8(val, bus->reg + NPCM_I2CCTL1);
- }
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+static void npcm_i2c_slave_int_enable(struct npcm_i2c *bus, bool enable)
-+{
-+	u8 i2cctl1;
-+
-+	/* enable interrupt on slave match: */
-+	i2cctl1 = ioread8(bus->reg + NPCM_I2CCTL1);
-+	i2cctl1 &= ~NPCM_I2CCTL1_RWS;
-+	if (enable)
-+		i2cctl1 |= NPCM_I2CCTL1_NMINTE;
-+	else
-+		i2cctl1 &= ~NPCM_I2CCTL1_NMINTE;
-+	iowrite8(i2cctl1, bus->reg + NPCM_I2CCTL1);
-+}
-+
-+static int npcm_i2c_slave_enable(struct npcm_i2c *bus, enum i2c_addr addr_type,
-+				 u8 addr, bool enable)
-+{
-+	u8 i2cctl1;
-+	u8 i2cctl3;
-+	u8 sa_reg;
-+
-+	sa_reg = (addr & 0x7F) | FIELD_PREP(NPCM_I2CADDR_SAEN, enable);
-+	if (addr_type == I2C_GC_ADDR) {
-+		i2cctl1 = ioread8(bus->reg + NPCM_I2CCTL1);
-+		if (enable)
-+			i2cctl1 |= NPCM_I2CCTL1_GCMEN;
-+		else
-+			i2cctl1 &= ~NPCM_I2CCTL1_GCMEN;
-+		iowrite8(i2cctl1, bus->reg + NPCM_I2CCTL1);
-+		return 0;
-+	}
-+	if (addr_type == I2C_ARP_ADDR) {
-+		i2cctl3 = ioread8(bus->reg + NPCM_I2CCTL3);
-+		if (enable)
-+			i2cctl3 |= I2CCTL3_ARPMEN;
-+		else
-+			i2cctl3 &= ~I2CCTL3_ARPMEN;
-+		iowrite8(i2cctl3, bus->reg + NPCM_I2CCTL3);
-+		return 0;
-+	}
-+	if (addr_type >= I2C_ARP_ADDR)
-+		return -EFAULT;
-+	/* select bank 0 for address 3 to 10 */
-+	if (addr_type > I2C_SLAVE_ADDR2)
-+		npcm_i2c_select_bank(bus, I2C_BANK_0);
-+	/* Set and enable the address */
-+	iowrite8(sa_reg, bus->reg + npcm_i2caddr[addr_type]);
-+	npcm_i2c_slave_int_enable(bus, enable);
-+	if (addr_type > I2C_SLAVE_ADDR2)
-+		npcm_i2c_select_bank(bus, I2C_BANK_1);
-+	return 0;
-+}
-+#endif
-+
- static void npcm_i2c_reset(struct npcm_i2c *bus)
- {
- 	/*
-@@ -511,6 +625,9 @@ static void npcm_i2c_reset(struct npcm_i2c *bus)
- 	 *  is disabled.
- 	 */
- 	u8 i2cctl1;
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	u8 addr;
-+#endif
- 
- 	i2cctl1 = ioread8(bus->reg + NPCM_I2CCTL1);
- 
-@@ -531,6 +648,13 @@ static void npcm_i2c_reset(struct npcm_i2c *bus)
- 	/* Clear all fifo bits: */
- 	iowrite8(NPCM_I2CFIF_CTS_CLR_FIFO, bus->reg + NPCM_I2CFIF_CTS);
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	if (bus->slave) {
-+		addr = bus->slave->addr;
-+		npcm_i2c_slave_enable(bus, I2C_SLAVE_ADDR1, addr, true);
-+	}
-+#endif
-+
- 	bus->state = I2C_IDLE;
- }
- 
-@@ -596,6 +720,10 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- 	}
- 
- 	bus->operation = I2C_NO_OPER;
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	if (bus->slave)
-+		bus->master_or_slave = I2C_SLAVE;
-+#endif
- }
- 
- static u8 npcm_i2c_fifo_usage(struct npcm_i2c *bus)
-@@ -707,6 +835,459 @@ static void npcm_i2c_master_abort(struct npcm_i2c *bus)
- 	npcm_i2c_clear_master_status(bus);
- }
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+static u8 npcm_i2c_get_slave_addr(struct npcm_i2c *bus, enum i2c_addr addr_type)
-+{
-+	u8 slave_add;
-+
-+	/* select bank 0 for address 3 to 10 */
-+	if (addr_type > I2C_SLAVE_ADDR2)
-+		npcm_i2c_select_bank(bus, I2C_BANK_0);
-+
-+	slave_add = ioread8(bus->reg + npcm_i2caddr[(int)addr_type]);
-+
-+	if (addr_type > I2C_SLAVE_ADDR2)
-+		npcm_i2c_select_bank(bus, I2C_BANK_1);
-+
-+	return slave_add;
-+}
-+
-+static int npcm_i2c_remove_slave_addr(struct npcm_i2c *bus, u8 slave_add)
-+{
-+	int i;
-+
-+	/* Set the enable bit */
-+	slave_add |= 0x80;
-+	npcm_i2c_select_bank(bus, I2C_BANK_0);
-+	for (i = I2C_SLAVE_ADDR1; i < I2C_NUM_OWN_ADDR; i++) {
-+		if (ioread8(bus->reg + npcm_i2caddr[i]) == slave_add)
-+			iowrite8(0, bus->reg + npcm_i2caddr[i]);
-+	}
-+	npcm_i2c_select_bank(bus, I2C_BANK_1);
-+	return 0;
-+}
-+
-+static void npcm_i2c_write_fifo_slave(struct npcm_i2c *bus, u16 max_bytes)
-+{
-+	/*
-+	 * Fill the FIFO, while the FIFO is not full and there are more bytes
-+	 * to write
-+	 */
-+	npcm_i2c_clear_fifo_int(bus);
-+	npcm_i2c_clear_tx_fifo(bus);
-+	iowrite8(0, bus->reg + NPCM_I2CTXF_CTL);
-+	while (max_bytes-- && I2C_HW_FIFO_SIZE != npcm_i2c_fifo_usage(bus)) {
-+		if (bus->slv_wr_size <= 0)
-+			break;
-+		bus->slv_wr_ind = bus->slv_wr_ind % I2C_HW_FIFO_SIZE;
-+		npcm_i2c_wr_byte(bus, bus->slv_wr_buf[bus->slv_wr_ind]);
-+		bus->slv_wr_ind++;
-+		bus->slv_wr_ind = bus->slv_wr_ind % I2C_HW_FIFO_SIZE;
-+		bus->slv_wr_size--;
-+	}
-+}
-+
-+static void npcm_i2c_read_fifo_slave(struct npcm_i2c *bus, u8 bytes_in_fifo)
-+{
-+	u8 data;
-+
-+	if (!bus->slave)
-+		return;
-+
-+	while (bytes_in_fifo--) {
-+		data = npcm_i2c_rd_byte(bus);
-+
-+		bus->slv_rd_ind = bus->slv_rd_ind % I2C_HW_FIFO_SIZE;
-+		bus->slv_rd_buf[bus->slv_rd_ind] = data;
-+		bus->slv_rd_ind++;
-+
-+		/* 1st byte is length in block protocol: */
-+		if (bus->slv_rd_ind == 1 && bus->read_block_use)
-+			bus->slv_rd_size = data + bus->PEC_use + 1;
-+	}
-+}
-+
-+static int npcm_i2c_slave_get_wr_buf(struct npcm_i2c *bus)
-+{
-+	int i;
-+	u8 value;
-+	int ind;
-+	int ret = bus->slv_wr_ind;
-+
-+	/* fill a cyclic buffer */
-+	for (i = 0; i < I2C_HW_FIFO_SIZE; i++) {
-+		if (bus->slv_wr_size >= I2C_HW_FIFO_SIZE)
-+			break;
-+		i2c_slave_event(bus->slave, I2C_SLAVE_READ_REQUESTED, &value);
-+		ind = (bus->slv_wr_ind + bus->slv_wr_size) % I2C_HW_FIFO_SIZE;
-+		bus->slv_wr_buf[ind] = value;
-+		bus->slv_wr_size++;
-+		i2c_slave_event(bus->slave, I2C_SLAVE_READ_PROCESSED, &value);
-+	}
-+	return I2C_HW_FIFO_SIZE - ret;
-+}
-+
-+static void npcm_i2c_slave_send_rd_buf(struct npcm_i2c *bus)
-+{
-+	int i;
-+
-+	for (i = 0; i < bus->slv_rd_ind; i++)
-+		i2c_slave_event(bus->slave, I2C_SLAVE_WRITE_RECEIVED,
-+				&bus->slv_rd_buf[i]);
-+	/*
-+	 * once we send bytes up, need to reset the counter of the wr buf
-+	 * got data from master (new offset in device), ignore wr fifo:
-+	 */
-+	if (bus->slv_rd_ind) {
-+		bus->slv_wr_size = 0;
-+		bus->slv_wr_ind = 0;
-+	}
-+
-+	bus->slv_rd_ind = 0;
-+	bus->slv_rd_size = bus->adap.quirks->max_read_len;
-+
-+	npcm_i2c_clear_fifo_int(bus);
-+	npcm_i2c_clear_rx_fifo(bus);
-+}
-+
-+static void npcm_i2c_slave_receive(struct npcm_i2c *bus, u16 nread,
-+				   u8 *read_data)
-+{
-+	bus->state = I2C_OPER_STARTED;
-+	bus->operation = I2C_READ_OPER;
-+	bus->slv_rd_size = nread;
-+	bus->slv_rd_ind = 0;
-+
-+	iowrite8(0, bus->reg + NPCM_I2CTXF_CTL);
-+	iowrite8(I2C_HW_FIFO_SIZE, bus->reg + NPCM_I2CRXF_CTL);
-+	npcm_i2c_clear_tx_fifo(bus);
-+	npcm_i2c_clear_rx_fifo(bus);
-+}
-+
-+static void npcm_i2c_slave_xmit(struct npcm_i2c *bus, u16 nwrite,
-+				u8 *write_data)
-+{
-+	if (nwrite == 0)
-+		return;
-+
-+	bus->state = I2C_OPER_STARTED;
-+	bus->operation = I2C_WRITE_OPER;
-+
-+	/* get the next buffer */
-+	npcm_i2c_slave_get_wr_buf(bus);
-+	npcm_i2c_write_fifo_slave(bus, nwrite);
-+}
-+
-+/*
-+ * npcm_i2c_slave_wr_buf_sync:
-+ * currently slave IF only supports single byte operations.
-+ * in order to utilyze the npcm HW FIFO, the driver will ask for 16 bytes
-+ * at a time, pack them in buffer, and then transmit them all together
-+ * to the FIFO and onward to the bus.
-+ * NACK on read will be once reached to bus->adap->quirks->max_read_len.
-+ * sending a NACK wherever the backend requests for it is not supported.
-+ * the next two functions allow reading to local buffer before writing it all
-+ * to the HW FIFO.
-+ */
-+static void npcm_i2c_slave_wr_buf_sync(struct npcm_i2c *bus)
-+{
-+	int left_in_fifo;
-+
-+	left_in_fifo = FIELD_GET(NPCM_I2CTXF_STS_TX_BYTES,
-+				 ioread8(bus->reg + NPCM_I2CTXF_STS));
-+
-+	/* fifo already full: */
-+	if (left_in_fifo >= I2C_HW_FIFO_SIZE ||
-+	    bus->slv_wr_size >= I2C_HW_FIFO_SIZE)
-+		return;
-+
-+	/* update the wr fifo index back to the untransmitted bytes: */
-+	bus->slv_wr_ind = bus->slv_wr_ind - left_in_fifo;
-+	bus->slv_wr_size = bus->slv_wr_size + left_in_fifo;
-+
-+	if (bus->slv_wr_ind < 0)
-+		bus->slv_wr_ind += I2C_HW_FIFO_SIZE;
-+}
-+
-+static void npcm_i2c_slave_rd_wr(struct npcm_i2c *bus)
-+{
-+	if (NPCM_I2CST_XMIT & ioread8(bus->reg + NPCM_I2CST)) {
-+		/*
-+		 * Slave got an address match with direction bit 1 so it should
-+		 * transmit data. Write till the master will NACK
-+		 */
-+		bus->operation = I2C_WRITE_OPER;
-+		npcm_i2c_slave_xmit(bus, bus->adap.quirks->max_write_len,
-+				    bus->slv_wr_buf);
-+	} else {
-+		/*
-+		 * Slave got an address match with direction bit 0 so it should
-+		 * receive data.
-+		 * this module does not support saying no to bytes.
-+		 * it will always ACK.
-+		 */
-+		bus->operation = I2C_READ_OPER;
-+		npcm_i2c_read_fifo_slave(bus, npcm_i2c_fifo_usage(bus));
-+		bus->stop_ind = I2C_SLAVE_RCV_IND;
-+		npcm_i2c_slave_send_rd_buf(bus);
-+		npcm_i2c_slave_receive(bus, bus->adap.quirks->max_read_len,
-+				       bus->slv_rd_buf);
-+	}
-+}
-+
-+static irqreturn_t npcm_i2c_int_slave_handler(struct npcm_i2c *bus)
-+{
-+	u8 val;
-+	irqreturn_t ret = IRQ_NONE;
-+	u8 i2cst = ioread8(bus->reg + NPCM_I2CST);
-+
-+	/* Slave: A NACK has occurred */
-+	if (NPCM_I2CST_NEGACK & i2cst) {
-+		bus->stop_ind = I2C_NACK_IND;
-+		npcm_i2c_slave_wr_buf_sync(bus);
-+		if (bus->fifo_use)
-+			/* clear the FIFO */
-+			iowrite8(NPCM_I2CFIF_CTS_CLR_FIFO,
-+				 bus->reg + NPCM_I2CFIF_CTS);
-+
-+		/* In slave write, NACK is OK, otherwise it is a problem */
-+		bus->stop_ind = I2C_NO_STATUS_IND;
-+		bus->operation = I2C_NO_OPER;
-+		bus->own_slave_addr = 0xFF;
-+
-+		/*
-+		 * Slave has to wait for STOP to decide this is the end
-+		 * of the transaction. tx is not yet considered as done
-+		 */
-+		iowrite8(NPCM_I2CST_NEGACK, bus->reg + NPCM_I2CST);
-+
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	/* Slave mode: a Bus Error (BER) has been identified */
-+	if (NPCM_I2CST_BER & i2cst) {
-+		/*
-+		 * Check whether bus arbitration or Start or Stop during data
-+		 * xfer bus arbitration problem should not result in recovery
-+		 */
-+		bus->stop_ind = I2C_BUS_ERR_IND;
-+
-+		/* wait for bus busy before clear fifo */
-+		iowrite8(NPCM_I2CFIF_CTS_CLR_FIFO, bus->reg + NPCM_I2CFIF_CTS);
-+
-+		bus->state = I2C_IDLE;
-+
-+		/*
-+		 * in BER case we might get 2 interrupts: one for slave one for
-+		 * master ( for a channel which is master\slave switching)
-+		 */
-+		if (completion_done(&bus->cmd_complete) == false) {
-+			bus->cmd_err = -EIO;
-+			complete(&bus->cmd_complete);
-+		}
-+		bus->own_slave_addr = 0xFF;
-+		iowrite8(NPCM_I2CST_BER, bus->reg + NPCM_I2CST);
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	/* A Slave Stop Condition has been identified */
-+	if (NPCM_I2CST_SLVSTP & i2cst) {
-+		u8 bytes_in_fifo = npcm_i2c_fifo_usage(bus);
-+
-+		bus->stop_ind = I2C_SLAVE_DONE_IND;
-+
-+		if (bus->operation == I2C_READ_OPER)
-+			npcm_i2c_read_fifo_slave(bus, bytes_in_fifo);
-+
-+		/* if the buffer is empty nothing will be sent */
-+		npcm_i2c_slave_send_rd_buf(bus);
-+
-+		/* Slave done transmitting or receiving */
-+		bus->stop_ind = I2C_NO_STATUS_IND;
-+
-+		/*
-+		 * Note, just because we got here, it doesn't mean we through
-+		 * away the wr buffer.
-+		 * we keep it until the next received offset.
-+		 */
-+		bus->operation = I2C_NO_OPER;
-+		bus->own_slave_addr = 0xFF;
-+		i2c_slave_event(bus->slave, I2C_SLAVE_STOP, 0);
-+		iowrite8(NPCM_I2CST_SLVSTP, bus->reg + NPCM_I2CST);
-+		if (bus->fifo_use) {
-+			npcm_i2c_clear_fifo_int(bus);
-+			npcm_i2c_clear_rx_fifo(bus);
-+			npcm_i2c_clear_tx_fifo(bus);
-+
-+			iowrite8(NPCM_I2CFIF_CTS_CLR_FIFO,
-+				 bus->reg + NPCM_I2CFIF_CTS);
-+		}
-+		bus->state = I2C_IDLE;
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	/* restart condition occurred and Rx-FIFO was not empty */
-+	if (bus->fifo_use && FIELD_GET(NPCM_I2CFIF_CTS_SLVRSTR,
-+				       ioread8(bus->reg + NPCM_I2CFIF_CTS))) {
-+		bus->stop_ind = I2C_SLAVE_RESTART_IND;
-+		bus->master_or_slave = I2C_SLAVE;
-+		if (bus->operation == I2C_READ_OPER)
-+			npcm_i2c_read_fifo_slave(bus, npcm_i2c_fifo_usage(bus));
-+		bus->operation = I2C_WRITE_OPER;
-+		iowrite8(0, bus->reg + NPCM_I2CRXF_CTL);
-+		val = NPCM_I2CFIF_CTS_CLR_FIFO | NPCM_I2CFIF_CTS_SLVRSTR |
-+		      NPCM_I2CFIF_CTS_RXF_TXE;
-+		iowrite8(val, bus->reg + NPCM_I2CFIF_CTS);
-+		npcm_i2c_slave_rd_wr(bus);
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	/* A Slave Address Match has been identified */
-+	if (NPCM_I2CST_NMATCH & i2cst) {
-+		u8 info = 0;
-+
-+		/* Address match automatically implies slave mode */
-+		bus->master_or_slave = I2C_SLAVE;
-+		npcm_i2c_clear_fifo_int(bus);
-+		npcm_i2c_clear_rx_fifo(bus);
-+		npcm_i2c_clear_tx_fifo(bus);
-+		iowrite8(0, bus->reg + NPCM_I2CTXF_CTL);
-+		iowrite8(I2C_HW_FIFO_SIZE, bus->reg + NPCM_I2CRXF_CTL);
-+		if (NPCM_I2CST_XMIT & i2cst) {
-+			bus->operation = I2C_WRITE_OPER;
-+		} else {
-+			i2c_slave_event(bus->slave, I2C_SLAVE_WRITE_REQUESTED,
-+					&info);
-+			bus->operation = I2C_READ_OPER;
-+		}
-+		if (bus->own_slave_addr == 0xFF) {
-+			/* Check which type of address match */
-+			val = ioread8(bus->reg + NPCM_I2CCST);
-+			if (NPCM_I2CCST_MATCH & val) {
-+				u16 addr;
-+				enum i2c_addr eaddr;
-+				u8 i2ccst2;
-+				u8 i2ccst3;
-+
-+				i2ccst3 = ioread8(bus->reg + NPCM_I2CCST3);
-+				i2ccst2 = ioread8(bus->reg + NPCM_I2CCST2);
-+
-+				/*
-+				 * the i2c module can response to 10 own SA.
-+				 * check which one was addressed by the master.
-+				 * repond to the first one.
-+				 */
-+				addr = ((i2ccst3 & 0x07) << 7) |
-+					(i2ccst2 & 0x7F);
-+				info = ffs(addr);
-+				eaddr = (enum i2c_addr)info;
-+				addr = npcm_i2c_get_slave_addr(bus, eaddr);
-+				addr &= 0x7F;
-+				bus->own_slave_addr = addr;
-+				if (bus->PEC_mask & BIT(info))
-+					bus->PEC_use = true;
-+				else
-+					bus->PEC_use = false;
-+			} else {
-+				if (NPCM_I2CCST_GCMATCH & val)
-+					bus->own_slave_addr = 0;
-+				if (NPCM_I2CCST_ARPMATCH & val)
-+					bus->own_slave_addr = 0x61;
-+			}
-+		} else {
-+			/*
-+			 *  Slave match can happen in two options:
-+			 *  1. Start, SA, read (slave read without further ado)
-+			 *  2. Start, SA, read, data, restart, SA, read,  ...
-+			 *     (slave read in fragmented mode)
-+			 *  3. Start, SA, write, data, restart, SA, read, ..
-+			 *     (regular write-read mode)
-+			 */
-+			if ((bus->state == I2C_OPER_STARTED &&
-+			     bus->operation == I2C_READ_OPER &&
-+			     bus->stop_ind == I2C_SLAVE_XMIT_IND) ||
-+			     bus->stop_ind == I2C_SLAVE_RCV_IND) {
-+				/* slave tx after slave rx w/o STOP */
-+				bus->stop_ind = I2C_SLAVE_RESTART_IND;
-+			}
-+		}
-+
-+		if (NPCM_I2CST_XMIT & i2cst)
-+			bus->stop_ind = I2C_SLAVE_XMIT_IND;
-+		else
-+			bus->stop_ind = I2C_SLAVE_RCV_IND;
-+		bus->state = I2C_SLAVE_MATCH;
-+		npcm_i2c_slave_rd_wr(bus);
-+		iowrite8(NPCM_I2CST_NMATCH, bus->reg + NPCM_I2CST);
-+		ret = IRQ_HANDLED;
-+	}
-+
-+	/* Slave SDA status is set - tx or rx */
-+	if ((NPCM_I2CST_SDAST & i2cst) ||
-+	    (bus->fifo_use &&
-+	    (npcm_i2c_tx_fifo_empty(bus) || npcm_i2c_rx_fifo_full(bus)))) {
-+		npcm_i2c_slave_rd_wr(bus);
-+		iowrite8(NPCM_I2CST_SDAST, bus->reg + NPCM_I2CST);
-+		ret = IRQ_HANDLED;
-+	} /* SDAST */
-+
-+	return ret;
-+}
-+
-+static int npcm_i2c_reg_slave(struct i2c_client *client)
-+{
-+	unsigned long lock_flags;
-+	struct npcm_i2c *bus = i2c_get_adapdata(client->adapter);
-+
-+	bus->slave = client;
-+
-+	if (!bus->slave)
-+		return -EINVAL;
-+
-+	if (client->flags & I2C_CLIENT_TEN)
-+		return -EAFNOSUPPORT;
-+
-+	spin_lock_irqsave(&bus->lock, lock_flags);
-+
-+	npcm_i2c_init_params(bus);
-+	bus->slv_rd_size = 0;
-+	bus->slv_wr_size = 0;
-+	bus->slv_rd_ind = 0;
-+	bus->slv_wr_ind = 0;
-+	if (client->flags & I2C_CLIENT_PEC)
-+		bus->PEC_use = true;
-+
-+	dev_info(bus->dev, "i2c%d register slave SA=0x%x, PEC=%d\n", bus->num,
-+		 client->addr, bus->PEC_use);
-+
-+	npcm_i2c_slave_enable(bus, I2C_SLAVE_ADDR1, client->addr, true);
-+	npcm_i2c_clear_fifo_int(bus);
-+	npcm_i2c_clear_rx_fifo(bus);
-+	npcm_i2c_clear_tx_fifo(bus);
-+	npcm_i2c_slave_int_enable(bus, true);
-+
-+	spin_unlock_irqrestore(&bus->lock, lock_flags);
-+	return 0;
-+}
-+
-+static int npcm_i2c_unreg_slave(struct i2c_client *client)
-+{
-+	struct npcm_i2c *bus = client->adapter->algo_data;
-+	unsigned long lock_flags;
-+
-+	spin_lock_irqsave(&bus->lock, lock_flags);
-+	if (!bus->slave) {
-+		spin_unlock_irqrestore(&bus->lock, lock_flags);
-+		return -EINVAL;
-+	}
-+	npcm_i2c_slave_int_enable(bus, false);
-+	npcm_i2c_remove_slave_addr(bus, client->addr);
-+	bus->slave = NULL;
-+	spin_unlock_irqrestore(&bus->lock, lock_flags);
-+	return 0;
-+}
-+#endif /* CONFIG_I2C_SLAVE */
-+
- static void npcm_i2c_master_fifo_read(struct npcm_i2c *bus)
- {
- 	int rcount;
-@@ -1372,6 +1953,9 @@ static int __npcm_i2c_init(struct npcm_i2c *bus, struct platform_device *pdev)
- 	bus->state = I2C_DISABLE;
- 	bus->master_or_slave = I2C_SLAVE;
- 	bus->int_time_stamp = 0;
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	bus->slave = NULL;
-+#endif
- 
- 	ret = device_property_read_u32(&pdev->dev, "clock-frequency",
- 				       &clk_freq_hz);
-@@ -1401,6 +1985,12 @@ static irqreturn_t npcm_i2c_bus_irq(int irq, void *dev_id)
- 		if (!npcm_i2c_int_master_handler(bus))
- 			return IRQ_HANDLED;
- 	}
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	if (bus->slave) {
-+		bus->master_or_slave = I2C_SLAVE;
-+		return npcm_i2c_int_slave_handler(bus);
-+	}
-+#endif
- 	return IRQ_NONE;
- }
- 
-@@ -1520,6 +2110,11 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 		 */
- 		spin_lock_irqsave(&bus->lock, flags);
- 		bus_busy = ioread8(bus->reg + NPCM_I2CCST) & NPCM_I2CCST_BB;
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+		if (!bus_busy && bus->slave)
-+			iowrite8((bus->slave->addr & 0x7F),
-+				 bus->reg + NPCM_I2CADDR1);
-+#endif
- 		spin_unlock_irqrestore(&bus->lock, flags);
- 
- 	} while (time_is_after_jiffies(time_left) && bus_busy);
-@@ -1564,6 +2159,12 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 	if (bus->cmd_err == -EAGAIN)
- 		ret = i2c_recover_bus(adap);
- 
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	/* reenable slave if it was enabled */
-+	if (bus->slave)
-+		iowrite8((bus->slave->addr & 0x7F) | NPCM_I2CADDR_SAEN,
-+			 bus->reg + NPCM_I2CADDR1);
-+#endif
- 	return bus->cmd_err;
- }
- 
-@@ -1572,7 +2173,8 @@ static u32 npcm_i2c_functionality(struct i2c_adapter *adap)
- 	return I2C_FUNC_I2C |
- 	       I2C_FUNC_SMBUS_EMUL |
- 	       I2C_FUNC_SMBUS_BLOCK_DATA |
--	       I2C_FUNC_SMBUS_PEC;
-+	       I2C_FUNC_SMBUS_PEC |
-+	       I2C_FUNC_SLAVE;
- }
- 
- static const struct i2c_adapter_quirks npcm_i2c_quirks = {
-@@ -1584,6 +2186,10 @@ static const struct i2c_adapter_quirks npcm_i2c_quirks = {
- static const struct i2c_algorithm npcm_i2c_algo = {
- 	.master_xfer = npcm_i2c_master_xfer,
- 	.functionality = npcm_i2c_functionality,
-+#if IS_ENABLED(CONFIG_I2C_SLAVE)
-+	.reg_slave	= npcm_i2c_reg_slave,
-+	.unreg_slave	= npcm_i2c_unreg_slave,
-+#endif
- };
- 
- /* i2c debugfs directory: used to keep health monitor of i2c devices */
--- 
-2.22.0
+--_000_0FA5C43CDEBB467184A1EFA79FABF777fbcom_
+Content-Type: text/html; charset="utf-8"
+Content-ID: <BB3CEE8B51A55B469068ACBA2AB0E987@namprd15.prod.outlook.com>
+Content-Transfer-Encoding: base64
 
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtp
+ZiAhbXNvXT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kb1w6KiB7
+YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0
+I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwh
+W2VuZGlmXS0tPjxzdHlsZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNl
+DQoJe2ZvbnQtZmFtaWx5OiJNUyBHb3RoaWMiOw0KCXBhbm9zZS0xOjIgMTEgNiA5IDcgMiA1IDgg
+MiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6TWluZ0xpVTsNCglwYW5vc2UtMToyIDIg
+NSA5IDAgMCAwIDAgMCAwO30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IkNhbWJyaWEgTWF0
+aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQt
+ZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAyIDQ7fQ0KQGZvbnQt
+ZmFjZQ0KCXtmb250LWZhbWlseTpNZW5sbzsNCglwYW5vc2UtMToyIDExIDYgOSAzIDggNCAyIDIg
+NDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJQaW5nRmFuZyBUQyI7DQoJcGFub3NlLTE6
+MiAxMSA0IDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseToiXEBQaW5n
+RmFuZyBUQyI7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseToiXEBNUyBHb3RoaWMiOw0KCXBh
+bm9zZS0xOjIgMTEgNiA5IDcgMiA1IDggMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IlxATWluZ0xpVSI7DQoJcGFub3NlLTE6MiAxIDYgOSAwIDEgMSAxIDEgMTt9DQovKiBTdHlsZSBE
+ZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0K
+CXttYXJnaW46MGluOw0KCW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTEuMHB0
+Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29I
+eXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1k
+ZWNvcmF0aW9uOnVuZGVybGluZTt9DQpwLnhtc29ub3JtYWwsIGxpLnhtc29ub3JtYWwsIGRpdi54
+bXNvbm9ybWFsDQoJe21zby1zdHlsZS1uYW1lOnhfbXNvbm9ybWFsOw0KCW1hcmdpbjowaW47DQoJ
+bWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6
+IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0eWxlMjANCgl7bXNvLXN0eWxlLXR5
+cGU6cGVyc29uYWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJ
+Y29sb3I6d2luZG93dGV4dDt9DQpwLnAxLCBsaS5wMSwgZGl2LnAxDQoJe21zby1zdHlsZS1uYW1l
+OnAxOw0KCW1hcmdpbjowaW47DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZTo4
+LjVwdDsNCglmb250LWZhbWlseTpNZW5sbzsNCgljb2xvcjpibGFjazt9DQpzcGFuLnMxDQoJe21z
+by1zdHlsZS1uYW1lOnMxO30NCnNwYW4uYXBwbGUtY29udmVydGVkLXNwYWNlDQoJe21zby1zdHls
+ZS1uYW1lOmFwcGxlLWNvbnZlcnRlZC1zcGFjZTt9DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5
+bGUtdHlwZTpleHBvcnQtb25seTsNCglmb250LXNpemU6MTAuMHB0O30NCkBwYWdlIFdvcmRTZWN0
+aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4gMS4w
+aW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0eWxl
+PjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIg
+c3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3RlIG1zbyA5XT48
+eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpleHQ9ImVkaXQi
+IGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+
+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iYmx1ZSIgdmxpbms9InB1cnBsZSI+DQo8ZGl2IGNs
+YXNzPSJXb3JkU2VjdGlvbjEiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+SGkgSGFybGV5LDxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+WW91IGRvbuKAmXQgbmVlZCBhbnkgY29u
+ZmlndXJhdGlvbiBmb3IgZWVwcm9tIGlmIHlvdSBhcmUgdXNpbmcgZW50aXR5IG1hbmFnZXIgcGFj
+a2FnZS4gSnVzdCBhZGQgdGhpcyBwYWNrYWdlIGluIHlvdXIgaW1hZ2UgYW5kIGF0IHRoZSBzdGFy
+dCAvdXNyL2Jpbi9mcnUtZGV2aWNlIHByb2Nlc3Mgd2lsbCBzdGFydCB3aGljaCB3aWxsIGVudW1l
+cmF0ZSBhbGwgZWVwcm9tIGV4aXN0ZWQgaW4gdGhlIHN5c3RlbSBhbmQgY3JlYXRlDQogYSBkYnVz
+IGludGVyZmFjZSBmb3IgZWFjaCBmcnUgZGV2aWNlIGZvdW5kLiBJbiBteSBzeXN0ZW0sIGl0IHNo
+b3dzIGxpa2UgYmVsb3cuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNz
+PSJzMSI+U2VydmljZSB4eXoub3BlbmJtY19wcm9qZWN0LkZydURldmljZTo8L3NwYW4+PG86cD48
+L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJhcHBsZS1jb252ZXJ0ZWQtc3Bh
+Y2UiPiZuYnNwOyAmbmJzcDsgPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+4pSU4pSAL3h5ei9vcGVu
+Ym1jX3Byb2plY3QvRnJ1RGV2aWNlPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAx
+Ij48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJzcDsgJm5ic3A7ICZuYnNw
+OyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7ilJzilIAveHl6L29wZW5ibWNfcHJvamVjdC9GcnVE
+ZXZpY2UvMF84MDwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xh
+c3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgPC9zcGFuPjxz
+cGFuIGNsYXNzPSJzMSI+4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzBfODE8
+L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJhcHBsZS1j
+b252ZXJ0ZWQtc3BhY2UiPiZuYnNwOyAmbmJzcDsgJm5ic3A7IDwvc3Bhbj48c3BhbiBjbGFzcz0i
+czEiPuKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS8xXzExMzwvc3Bhbj48bzpw
+PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9ImFwcGxlLWNvbnZlcnRlZC1z
+cGFjZSI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+4pSc4pSA
+L3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzJfMTEyPC9zcGFuPjxvOnA+PC9vOnA+PC9w
+Pg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJz
+cDsgJm5ic3A7ICZuYnNwOyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7ilJzilIAveHl6L29wZW5i
+bWNfcHJvamVjdC9GcnVEZXZpY2UvMl8xNjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJwMSI+PHNwYW4gY2xhc3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7ICZuYnNwOyAm
+bmJzcDsgPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3Qv
+RnJ1RGV2aWNlLzJfMjI8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFu
+IGNsYXNzPSJhcHBsZS1jb252ZXJ0ZWQtc3BhY2UiPiZuYnNwOyAmbmJzcDsgJm5ic3A7IDwvc3Bh
+bj48c3BhbiBjbGFzcz0iczEiPuKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS8z
+XzEwNDwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9ImFw
+cGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgPC9zcGFuPjxzcGFuIGNs
+YXNzPSJzMSI+4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzNfMTA4PC9zcGFu
+PjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVy
+dGVkLXNwYWNlIj4mbmJzcDsgJm5ic3A7ICZuYnNwOyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7i
+lJzilIAveHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvM18xMTM8L3NwYW4+PG86cD48L286
+cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJhcHBsZS1jb252ZXJ0ZWQtc3BhY2Ui
+PiZuYnNwOyAmbmJzcDsgJm5ic3A7IDwvc3Bhbj48c3BhbiBjbGFzcz0iczEiPuKUnOKUgC94eXov
+b3BlbmJtY19wcm9qZWN0L0ZydURldmljZS8zXzM2PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJzcDsgJm5i
+c3A7ICZuYnNwOyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7ilJzilIAveHl6L29wZW5ibWNfcHJv
+amVjdC9GcnVEZXZpY2UvM182ODwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+
+PHNwYW4gY2xhc3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsg
+PC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2
+aWNlLzNfODE8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNz
+PSJhcHBsZS1jb252ZXJ0ZWQtc3BhY2UiPiZuYnNwOyAmbmJzcDsgJm5ic3A7IDwvc3Bhbj48c3Bh
+biBjbGFzcz0iczEiPuKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS82XzMyPC9z
+cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29u
+dmVydGVkLXNwYWNlIj4mbmJzcDsgJm5ic3A7ICZuYnNwOyA8L3NwYW4+PHNwYW4gY2xhc3M9InMx
+Ij7ilJzilIAveHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvNl8zMzwvc3Bhbj48bzpwPjwv
+bzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFj
+ZSI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+4pSc4pSAL3h5
+ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzZfNzg8L3NwYW4+PG86cD48L286cD48L3A+DQo8
+cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJhcHBsZS1jb252ZXJ0ZWQtc3BhY2UiPiZuYnNwOyAm
+bmJzcDsgJm5ic3A7IDwvc3Bhbj48c3BhbiBjbGFzcz0iczEiPuKUnOKUgC94eXovb3BlbmJtY19w
+cm9qZWN0L0ZydURldmljZS82Xzc5PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAx
+Ij48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJzcDsgJm5ic3A7ICZuYnNw
+OyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7ilJzilIAveHl6L29wZW5ibWNfcHJvamVjdC9GcnVE
+ZXZpY2UvNl84MDwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xh
+c3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgPC9zcGFuPjxz
+cGFuIGNsYXNzPSJzMSI+4pSc4pSAL3h5ei9vcGVuYm1jX3Byb2plY3QvRnJ1RGV2aWNlLzdfNjk8
+L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0icDEiPjxzcGFuIGNsYXNzPSJhcHBsZS1j
+b252ZXJ0ZWQtc3BhY2UiPiZuYnNwOyAmbmJzcDsgJm5ic3A7IDwvc3Bhbj48c3BhbiBjbGFzcz0i
+czEiPuKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0ZydURldmljZS84XzMxPC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNw
+YWNlIj4mbmJzcDsgJm5ic3A7ICZuYnNwOyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7ilJzilIAv
+eHl6L29wZW5ibWNfcHJvamVjdC9GcnVEZXZpY2UvOV8zOTwvc3Bhbj48bzpwPjwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJwMSI+PHNwYW4gY2xhc3M9ImFwcGxlLWNvbnZlcnRlZC1zcGFjZSI+Jm5ic3A7
+ICZuYnNwOyAmbmJzcDsgPC9zcGFuPjxzcGFuIGNsYXNzPSJzMSI+4pSc4pSAL3h5ei9vcGVuYm1j
+X3Byb2plY3QvRnJ1RGV2aWNlLzlfODQ8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+cDEiPjxzcGFuIGNsYXNzPSJhcHBsZS1jb252ZXJ0ZWQtc3BhY2UiPiZuYnNwOyAmbmJzcDsgJm5i
+c3A7IDwvc3Bhbj48c3BhbiBjbGFzcz0iczEiPuKUnOKUgC94eXovb3BlbmJtY19wcm9qZWN0L0Zy
+dURldmljZS9BdmFfTV8yX1NTRF9BZGFwdGVyPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
+c3M9InAxIj48c3BhbiBjbGFzcz0iYXBwbGUtY29udmVydGVkLXNwYWNlIj4mbmJzcDsgJm5ic3A7
+ICZuYnNwOyA8L3NwYW4+PHNwYW4gY2xhc3M9InMxIj7ilJTilIAveHl6L29wZW5ibWNfcHJvamVj
+dC9GcnVEZXZpY2UvVGlvZ2FfUGFzc19TaW5nbGVfU2lkZTwvc3Bhbj48bzpwPjwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+UmVnYXJkczxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+LVZp
+amF5PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpw
+PjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29saWQgI0I1QzRERiAx
+LjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxi
+PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5Gcm9tOiA8L3NwYW4+
+PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O01TIEdv
+dGhpYyZxdW90Oztjb2xvcjpibGFjayI+5ZGoPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
+MTIuMHB0O2NvbG9yOmJsYWNrIj4NCjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBw
+dDtmb250LWZhbWlseTpNaW5nTGlVO2NvbG9yOmJsYWNrIj7ov5w8L3NwYW4+PHNwYW4gc3R5bGU9
+ImZvbnQtc2l6ZToxMi4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7TVMgR290aGljJnF1b3Q7O2NvbG9y
+OmJsYWNrIj7muIU8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6Ymxh
+Y2siPiAmbHQ7emhvdXl1YW5xaW5nOEBvdXRsb29rLmNvbSZndDs8YnI+DQo8Yj5EYXRlOiA8L2I+
+V2VkbmVzZGF5LCBNYXkgMjcsIDIwMjAgYXQgMTozMyBBTTxicj4NCjxiPlRvOiA8L2I+JnF1b3Q7
+V2FuZywgS3VpeWluZyZxdW90OyAmbHQ7a3VpeWluZy53YW5nQGludGVsLmNvbSZndDssIFZpamF5
+IEtoZW1rYSAmbHQ7dmlqYXlraGVta2FAZmIuY29tJmd0Ozxicj4NCjxiPkNjOiA8L2I+JnF1b3Q7
+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJnF1b3Q7ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmcmZ3Q7PGJyPg0KPGI+U3ViamVjdDogPC9iPjwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXpl
+OjEyLjBwdDtmb250LWZhbWlseTomcXVvdDtNUyBHb3RoaWMmcXVvdDs7Y29sb3I6YmxhY2siPuWb
+nuWkjTwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+OiBB
+Ym91dCBGUlU8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5I
+aSZuYnNwOzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJN
+c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj48bzpw
+PiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+Jm5ic3A7ICZu
+YnNwOyAmbmJzcDtNeSBwcm9qZWN0IHVzZXMgcGhvc3Bob3ItZnJ1LCBhbmQgYSBwaG9zcGhvci1y
+ZWFkLWVlcHJvbSBpcyBnZW5lcmF0ZWQgZHVyaW5nIGNvbXBpbGF0aW9uLiBJIHRoaW5rIHdoZW4g
+b3BlbmJtYyBzdGFydHMsIHBob3NwaG9yLXJlYWQtZWVwcm9tIHdpbGwgcmVhZCB0aGUgY29uZmln
+dXJhdGlvbiBpbmZvcm1hdGlvbiBvZiBlZXByb20NCiBmcm9tIGEgY29uZmlndXJhdGlvbiBmaWxl
+IChzdWNoIGFzIGkyYyBjaGFubmVsIG51bWJlciwgaTJjIGFkZHJlc3MpLCBhbmQgdGhlbiByZWFk
+IEZSVSBpbmZvcm1hdGlvbiBmcm9tIGVlcHJvbS48YnI+DQombmJzcDsgJm5ic3A7ICZuYnNwOzwv
+c3Bhbj5JZiB0aGUgZW50aXR5LW1hbmFnZXIgbW9kdWxlIGlzIHVzZWQ8c3BhbiBzdHlsZT0iZm9u
+dC1zaXplOjEzLjVwdDtmb250LWZhbWlseTomcXVvdDtNUyBHb3RoaWMmcXVvdDs7Y29sb3I6Ymxh
+Y2s7YmFja2dyb3VuZDp3aGl0ZSI+77yMPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIu
+MHB0O2NvbG9yOmJsYWNrIj5hZGQganNvbiBjb25maWd1cmF0aW9uIGZpbGUgZm9yIG15IGRldmlj
+ZSBpbnRvIGVudGl0eS1tYW5hZ2VyLiB0aGVuIEkgdXNlDQogdGhlIHBob3Nob3ItZnJ1IG1ldGhv
+ZCwgaW4gd2hpY2ggY29uZmlndXJhdGlvbiBmaWxlIHNob3VsZCBJIGNvbmZpZ3VyZSB0aGUgZWVw
+cm9tIGluZm9ybWF0aW9uPzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJs
+YWNrIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+
+Jm5ic3A7ICZuYnNwOyAmbmJzcDtwaG9zcGhvci1yZWFkLWVlcHJvbSB3aWxsIGV4aXRzDQo8c3Bh
+biBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+YWZ0ZXIgcmVhZGluZyB0aGUgZWVwcm9tIGluZm9y
+bWF0aW9uPC9zcGFuPiwgc28gaG93IGlzIHRoZSBGUlUgaW5mb3JtYXRpb24gcmVhZCB0byB0aGUg
+SVBNSSBwcm9jZXNzPC9zcGFuPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2ZvbnQtZmFt
+aWx5OiZxdW90O01TIEdvdGhpYyZxdW90Oztjb2xvcjpibGFjayI+77yfPC9zcGFuPjxzcGFuIHN0
+eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+
+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1z
+aXplOjEyLjBwdDtjb2xvcjpibGFjayI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPC9k
+aXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+Mi4wcHQ7Y29sb3I6YmxhY2siPlRoYW5rczxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0K
+PGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0
+O2NvbG9yOmJsYWNrIj5IYXJsZXk8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xv
+cjpibGFjayI+Jm5ic3A7ICZuYnNwOzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRp
+dj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEy
+LjBwdDtjb2xvcjpibGFjayI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8
+ZGl2IGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJjZW50ZXIiIHN0eWxlPSJ0ZXh0LWFsaWduOmNl
+bnRlciI+DQo8aHIgc2l6ZT0iMCIgd2lkdGg9IjEwMCUiIGFsaWduPSJjZW50ZXIiPg0KPC9kaXY+
+DQo8ZGl2IGlkPSJkaXZScGx5RndkTXNnIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFu
+IHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtQaW5nRmFuZyBUQyZxdW90OyxzYW5zLXNlcmlmO2Nv
+bG9yOmJsYWNrIj7lj5E8L3NwYW4+PC9iPjxiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVv
+dDtNUyBHb3RoaWMmcXVvdDs7Y29sb3I6YmxhY2siPuS7tuS6ujwvc3Bhbj48L2I+PGI+PHNwYW4g
+c3R5bGU9ImNvbG9yOmJsYWNrIj46PC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2si
+PiBXYW5nLCBLdWl5aW5nICZsdDtrdWl5aW5nLndhbmdAaW50ZWwuY29tJmd0Ozxicj4NCjwvc3Bh
+bj48Yj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7UGluZ0ZhbmcgVEMmcXVvdDssc2Fu
+cy1zZXJpZjtjb2xvcjpibGFjayI+5Y+RPC9zcGFuPjwvYj48Yj48c3BhbiBzdHlsZT0iZm9udC1m
+YW1pbHk6JnF1b3Q7TVMgR290aGljJnF1b3Q7O2NvbG9yOmJsYWNrIj7pgIE8L3NwYW4+PC9iPjxi
+PjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtQaW5nRmFuZyBUQyZxdW90OyxzYW5zLXNl
+cmlmO2NvbG9yOmJsYWNrIj7ml7bpl7Q8L3NwYW4+PC9iPjxiPjxzcGFuIHN0eWxlPSJjb2xvcjpi
+bGFjayI+Ojwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4NCiAyMDIwPC9zcGFu
+PjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtNUyBHb3RoaWMmcXVvdDs7Y29sb3I6Ymxh
+Y2siPuW5tDwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPjU8L3NwYW4+PHNwYW4gc3R5
+bGU9ImZvbnQtZmFtaWx5OiZxdW90O01TIEdvdGhpYyZxdW90Oztjb2xvcjpibGFjayI+5pyIPC9z
+cGFuPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Mjc8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQt
+ZmFtaWx5OiZxdW90O01TIEdvdGhpYyZxdW90Oztjb2xvcjpibGFjayI+5pelPC9zcGFuPjxzcGFu
+IHN0eWxlPSJjb2xvcjpibGFjayI+DQogMTU6NTg8YnI+DQo8L3NwYW4+PGI+PHNwYW4gc3R5bGU9
+ImZvbnQtZmFtaWx5OiZxdW90O01TIEdvdGhpYyZxdW90Oztjb2xvcjpibGFjayI+5pS25Lu25Lq6
+PC9zcGFuPjwvYj48Yj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPjo8L3NwYW4+PC9iPjxzcGFu
+IHN0eWxlPSJjb2xvcjpibGFjayI+IHpob3V5dWFucWluZzhAb3V0bG9vay5jb20gJmx0O3pob3V5
+dWFucWluZzhAb3V0bG9vay5jb20mZ3Q7PGJyPg0KPC9zcGFuPjxiPjxzcGFuIHN0eWxlPSJmb250
+LWZhbWlseTomcXVvdDtNUyBHb3RoaWMmcXVvdDs7Y29sb3I6YmxhY2siPuaKhOmAgTwvc3Bhbj48
+L2I+PGI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj46PC9zcGFuPjwvYj48c3BhbiBzdHlsZT0i
+Y29sb3I6YmxhY2siPiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcgJmx0O29wZW5ibWNAbGlzdHMu
+b3psYWJzLm9yZyZndDs8YnI+DQo8L3NwYW4+PGI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiZx
+dW90O01TIEdvdGhpYyZxdW90Oztjb2xvcjpibGFjayI+5Li7PC9zcGFuPjwvYj48Yj48c3BhbiBz
+dHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7UGluZ0ZhbmcgVEMmcXVvdDssc2Fucy1zZXJpZjtjb2xv
+cjpibGFjayI+6aKYPC9zcGFuPjwvYj48Yj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPjo8L3Nw
+YW4+PC9iPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+IFJFOiBBYm91dCBGUlU8L3NwYW4+DQo8
+bzpwPjwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwv
+bzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJ4bXNvbm9y
+bWFsIj5IaSBIYXJsZXksPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+WW91
+IGNvdWxkIGFkZCBqc29uIGNvbmZpZ3VyYXRpb24gZmlsZSBmb3IgeW91ciBkZXZpY2UgaW50byBl
+bnRpdHktbWFuYWdlciBhcyBiZWxvdzo8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJ4bXNvbm9y
+bWFsIj48YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9lbnRpdHktbWFuYWdlci90
+cmVlL21hc3Rlci9jb25maWd1cmF0aW9ucyI+aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZW50
+aXR5LW1hbmFnZXIvdHJlZS9tYXN0ZXIvY29uZmlndXJhdGlvbnM8L2E+DQo8bzpwPjwvbzpwPjwv
+cD4NCjxwIGNsYXNzPSJ4bXNvbm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJ4bXNvbm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJ4bXNvbm9ybWFs
+Ij5UaGFua3MsPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+S3dpbi48bzpw
+PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJ4bXNvbm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJ4bXNvbm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJ4
+bXNvbm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVv
+dDtDb3VyaWVyIE5ldyZxdW90Oztjb2xvcjpibGFjayI+SGVsbG8gZXZlcnlvbmUsPC9zcGFuPjxv
+OnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Inhtc29ub3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNp
+emU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7O2NvbG9yOmJsYWNr
+Ij4mbmJzcDs8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+PHNw
+YW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcm
+cXVvdDs7Y29sb3I6YmxhY2siPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyAmbmJzcDsmbmJzcDtN
+eSBtb3RoZXJib2FyZCBoYXMgYW4gRUVQUk9NIGRldmljZSB0byBzdG9yZSBGUlUgcmVsYXRlZCBp
+bmZvcm1hdGlvbi4gSG93IGNhbiBJIGNvbmZpZ3VyZSBpdCBpbiB0aGUgb3BlbmJtYyBjb25maWd1
+cmF0aW9uIGZpbGUgdG8gc2VlIHRoaXMgRlJVIGluZm9ybWF0aW9uIHRocm91Z2gNCiB0aGUgaXBt
+aXRvb2wgZnJ1IHByaW50IGNvbW1hbmQ/PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9
+Inhtc29ub3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZx
+dW90O0NvdXJpZXIgTmV3JnF1b3Q7O2NvbG9yOmJsYWNrIj4mbmJzcDs8L3NwYW4+PG86cD48L286
+cD48L3A+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4w
+cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDs7Y29sb3I6YmxhY2siPkFyZSB0
+aGVyZSBzb21lIGV4YW1wbGVzIHRvIHByb3ZpZGUgcmVmZXJlbmNlLCBJIGRpZCBub3QgZmluZCBh
+IHBsYWNlIHRvIGNvbmZpZ3VyZSB0aGUgZWVwcm9tIGRldmljZSBpbiB0aGUgb3BlbmJtYyBwcm9q
+ZWN0Pzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJ4bXNvbm9ybWFsIj48c3BhbiBz
+dHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90
+Oztjb2xvcjpibGFjayI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Inht
+c29ub3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90
+O0NvdXJpZXIgTmV3JnF1b3Q7O2NvbG9yOmJsYWNrIj5JcyB0aGVyZSBhbnkgZG9jdW1lbnRhdGlv
+biBhYm91dCBGUlUgaW5kaWNhdGluZyB0aGF0IHRoZSBtb2R1bGUgcmVhZHMgYW5kIHBhcnNlcyBp
+bmZvcm1hdGlvbiBmcm9tIGVlcHJvbSwgYW5kIHRoZW4gaXQgY2FuIGJlIHJlYWQgYnkgdGhlIGlw
+bWl0b29sIGZydSBwcmludCBjb21tYW5kPyBXaGF0DQogaXMgdGhlIHByb2Nlc3MgbGlrZT88L3Nw
+YW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
+bnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDs7Y29sb3I6
+YmxhY2siPiZuYnNwOzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJ4bXNvbm9ybWFs
+Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtDb3VyaWVy
+IE5ldyZxdW90Oztjb2xvcjpibGFjayI+VGhhbmtzPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9Inhtc29ub3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFt
+aWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7O2NvbG9yOmJsYWNrIj5IYXJsZXk8L3NwYW4+PG86
+cD48L286cD48L3A+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+
+DQo8cCBjbGFzcz0ieG1zb25vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwv
+ZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+
+--_000_0FA5C43CDEBB467184A1EFA79FABF777fbcom_--
