@@ -1,82 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4435A1E42E4
-	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 15:04:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AF581E4485
+	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 15:52:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49X9yr0n1DzDqRG
-	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 23:04:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49XC2F06K5zDqTL
+	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 23:52:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=113.96.223.72; helo=qq.com; envelope-from=1181052146@qq.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-X-Greylist: delayed 73 seconds by postgrey-1.36 at bilbo;
- Wed, 27 May 2020 23:03:20 AEST
-Received: from qq.com (smtpbg410.qq.com [113.96.223.72])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49X9xN3PDZzDqQ4
- for <openbmc@lists.ozlabs.org>; Wed, 27 May 2020 23:03:20 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1590584447; bh=X7mYqFIMMowXIs2ePk3TEn1Grx/z/1Ck+GrwxjI0Qys=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=z1eWoEf+peeedo6YHKQW6o0Buwb/MePIZLiAZ+tS7NzrzDGABQhp/KWsSUcZL+4fD
- jW8C08nafTWoFygSkfKUvSAZCLh69A2Mt/wSHbR0CO27D/S2Zu93KATEqO/RFNotdD
- QmNbeKzaWiQW6Y2QpW65qioVifw3U1ADCNQ9/1Fs=
-X-QQ-FEAT: wGRdIOemcLcEpb+GcO8Ql83vRAOMqpyc/Jc2cq8w5Fw77X2ztRULA40NqSr0H
- qdrnheFVbXXE40mhIRbKqVVw+IG7jLmw7HYxssVVPtw3h05BHU4qVYyUXqlhk5t4BLlLsya
- rR5AqsnMxDbi+SFqG8t2zx7t5srfcagrdnUlRz1VnDQL6obhpMNbbfQaaS0hLVh+bFh8X+l
- pH747JgmD/f3OOkPOGnwiS+wB2WbbCKdaoDVM0ifj5zUWdpFRl1O4Si3qJ/LyJczCVuTm+0
- KZRkPypJgGZXvgmomKwNZHu9s=
-X-QQ-SSF: 00000000000000F000000000000000S
-X-QQ-XMAILINFO: M8eupG6LO6eun5BZSB0XMRF8aXBDLRCCqoNI0ro82fjgbHLDgGuIAQricXfmux
- JQibAzf6EH0W0GdIU+8OH3uYeMgVzcrrRGM6xz0QwVr0Mi3rhTnyS7Yeq1M517P3HcfPbUsi5I+2V
- ksHcD+N8bKU9aeixXn41U7ztoBEQ9KbbiJtQnv4zCpT2WFXFJfOycSHkVeN4tC4ah0Xxm2zx57a9C
- 1OpK9kz1j8rK2N6gcXh6KICIAIQ3vUhXMPRSWRN4tVyNl9pczjY58YZKqN2jIdusnDZDBAlvR2UwB
- AkuVFz+pZvVBfyRuA9IWQqPbjh3/AhbARzZauwv0LN5CvCHn/rBfSUUgi+FXqMzFcmwYVpYpI35xo
- aWbUm4F9cOSiTG3MXi28CLZJYYZkSVqlk9+IWw/wTrIplqDcS84hoQ/w696eGrxZs0A4RcS+2HeKJ
- v7TC3A4dVvh0mt3emBoRczTT5rL337NWlxGhQ2s9NVxhYGrsKGCKc4NtxSFUN+c2+kA+ewMoInkSu
- k56WP6+06IS/lZZyejf23DpMyhEh2BLFJzzksxlHCo/FdSmIrBApjgQAFDxyZikvchJaghcKSDw8P
- XtscD8Z0VOkS6m2uAEymaOLT4Y3Qv3rXS+w9FG9y1u5OxZjTIJNuykA6Mp62TrdyND0fQr/OcYCGX
- 3NPOoncVCwmKNfpfoYA87iZGgF4/2AEhRGs4PSKEywMh/YzQICTctH+0zVxw==
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 106.119.229.50
-In-Reply-To: <b59bce6b-52d6-427b-84fa-defae872af10@www.fastmail.com>
-References: <tencent_2D6AE7A4D981E94342BD340BC7DF4EBE7F05@qq.com>
- <4813264f-fe81-4563-838d-f5356acb768a@www.fastmail.com>
- <tencent_720F45F5C22C1BFF2BF99029CA933807E907@qq.com>
- <b59bce6b-52d6-427b-84fa-defae872af10@www.fastmail.com>
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1590584446t133937
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?QW5kcmV3IEplZmZlcnk=?=" <andrew@aj.id.au>,
- "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: =?gb18030?B?UmWjuiBSZaO6IEhvdyBjYW4gdGhlIGhvc3QgYWNj?=
- =?gb18030?B?ZXNzIEJNQydzIFNQSSBGbGFzaCB2aWEgTFBDIGFu?=
- =?gb18030?B?ZCBIb3cgZG8gQk1DJ3MgQ1BVIHJlYWQgdWJvb3Qg?=
- =?gb18030?B?ZnJvbSBTUEkgRmxhc2ggd2hlbiBwb3dlciB1cD8=?=
-Mime-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XBzP6BcLzDqKb
+ for <openbmc@lists.ozlabs.org>; Wed, 27 May 2020 23:50:08 +1000 (AEST)
+IronPort-SDR: eAv36v3zKONFdgZD2GKcpJvimHnspUnGXqmTZkMHgG9G6tm+zoPIkzLMnrN1jHx015J5ui2Xaz
+ O4VD9yz3zARA==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 May 2020 06:50:05 -0700
+IronPort-SDR: kS5twHX1D9G5nVIeKc+Fm9rkHt+P6SAjfNv5eaowa7SYCCAUxVjHMkdnL6hfWuwUdvqFJ3MWDj
+ Gm+t2KYSbAPA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,441,1583222400"; 
+ d="scan'208,217";a="468746416"
+Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.69.86])
+ ([10.252.69.86])
+ by fmsmga006.fm.intel.com with ESMTP; 27 May 2020 06:50:02 -0700
+Subject: Re: D-Bus interface to provide data to entity manager
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ James Feist <james.feist@linux.intel.com>,
+ "Bhat, Sumanth" <sumanth.bhat@intel.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
+ <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <0a9b8934-a3be-aaa0-90c0-134f286df951@linux.intel.com>
+Date: Wed, 27 May 2020 19:20:00 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
+MIME-Version: 1.0
+In-Reply-To: <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
 Content-Type: multipart/alternative;
- boundary="----=_NextPart_5ECE647E_0F6A81B8_6612378C"
-Content-Transfer-Encoding: 8Bit
-Date: Wed, 27 May 2020 21:00:46 +0800
-X-Priority: 3
-Message-ID: <tencent_1D864FA41CFA3E42D4A9B236FC75E41BA609@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 2310809239
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Wed, 27 May 2020 21:00:47 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign11
-X-QQ-Bgrelay: 1
+ boundary="------------DBFA1E00A6D89F7E1FEC2BD4"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,226 +64,386 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is a multi-part message in MIME format.
+--------------DBFA1E00A6D89F7E1FEC2BD4
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-------=_NextPart_5ECE647E_0F6A81B8_6612378C
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+I always view D-Bus interface as a specification / API which can work 
+with different producers / consumers (correct me, if that's not what we 
+intend with D-Bus interface here). Problem with Option 1 is, it will end 
+up in having multiple producers exposing different interface, and 
+thereby consumers(user interface facing applications) of D-Bus must be 
+aware about all the D-Bus interfaces and always requires change.
 
-SGkgTXIuIEFuZHJldyBKZWZmZXJ5DQoNCg0KVGhhbmsgeW91IHZlcnkgbXVjaCBmb3IgeW91
-ciBoZWxwLiBJIHJlYWxseSB0aGFua3MgZm9yIHlvdXIgZXhwbGFuYXRpb25zLCB2ZXJ5IGRl
-dGFpbCBhbmQgdmVyeSBjbGVhci4NCk5vdyBJIGFtIGNsZWFyIGFib3V0IHRoZSBpTFBDMkFI
-QiBicmlkZ2UuIEkgZm91bmQgdGhlIGlMUEMyQUhCIGJyaWRnZSBkZXZpY2UgaW4gQVNUMjUw
-MCwgYnV0IEkgZG8gbm90IGZpbmQgdGhlIExQQzJBSEIgYnJpZGdlLiBJIHRoaW5rIG1heWJl
-IGl0IGlzIGludGVncmF0ZWQgaW4gTFBDIGNvbnRyb2xsZXIsIGFuZCBhYm91dCBob3cgTFBD
-MkFIQiB3b3JrLCBwZXJoYXBzIEkgc3RpbGwgbmVlZCBzb21lIHRpbWUgdG8gc3R1ZHkgdGhp
-cy4gQmVjYXVzZSBJIHJ1biBvcGVuYm1jIGluIHFlbXUsIHRoZXJlIGFyZSBzb21lIGV4cGVy
-aW1lbnRzIHRoYXQgSSBjYW4gbm90IGNvbmR1Y3QuIEFmdGVyIEkgZ2V0IGEgcmVhbCBoYXJk
-d2FyZSBJIHdpbGwgZG8gZnV0aGVyIGV4cGVyaW1lbnQuDQpBZ2FpbiwgVGhhbmtzIGZvciB5
-b3VyIGhlbHAsIHJlYWxseSENCg0KDQpCZXN0IFJlZ2FyZHMhDQpMaXUgSG9uZ3dlaQ0KDQoN
-CiZndDtIZWxsbyBhZ2FpbiENCiZndDsNCiZndDtPbiBTdW4sIDEwIE1heSAyMDIwLCBhdCAw
-MjowNiwgxM/SsKXgpeult6WopemltCB3cm90ZToNCiZndDsmZ3Q7IEhpIE1yLiBBbmRyZXcg
-SmVmZmVyeQ0KJmd0OyZndDsgDQomZ3Q7Jmd0OyBUaGFuayB5b3UgZm9yIHlvdXIgaGVscC4g
-U29ycnkgZm9yIGxhdGUgcmVzcG9uc2UuIEFmdGVyIGdldHRpbmcgeW91ciZuYnNwOw0KJmd0
-OyZndDsgcmVwbGF5LCBJIHJlYWQgQVNUMjUwMCBzcGVjIGFuZCBPcGVuQk1DIGxpbnV4IGtl
-cm5lbCBhZ2Fpbi4NCiZndDsmZ3Q7IEkgZm91bmQgYSAiU3VwZXJJTyBjb250cm9sbGVyIiBp
-biBBU1QyNTAwIHNwZWMgYW5kICJhc3BlZWQtbHBjLWN0cmwuYyIgDQomZ3Q7Jmd0OyBpbiBs
-aW51eCBrZXJuZWwuDQomZ3Q7Jmd0OyANCiZndDsmZ3Q7IDEuIEkgZm91bmQgdGhlcmUgaXMg
-YSBsb2dpY2FsIGRldmljZSAiaUxQQzJBSEIiIGluIFN1cGVySU8gY29udHJvbGxlciwgDQom
-Z3Q7Jmd0OyBhbmQgaXQgaXMgc2FpZCB0aGUgcmVnaXN0ZXIgY2FuIGJlIGFjY2Vzc2VkIGJ5
-IEhvc3QgQ1BVIHRocm91Z2ggTFBDIA0KJmd0OyZndDsgYnVzKEkgYW0gbm90IHN1cmUgYnV0
-IEkgdGhpbmsgdGhlIFN1cGVySU8gY29udHJvbGxlciB3aWxsIGJlIHVzZWQgZm9yIA0KJmd0
-OyZndDsgSG9zdCBDUFUsIGFuZCBubyBCTUMgZHJpdmVyIHdpbGwgdXNlIGl0KS4NCiZndDsN
-CiZndDtDb3JyZWN0LCB0aGUgaUxQQzJBSEIgYnJpZGdlIGlzIGRyaXZlbiBieSBob3N0IGZp
-cm13YXJlLg0KJmd0Ow0KJmd0OyZndDsgSSBhbHNvIGZvdW5kICJTSU8gaUxQQzJBSEIgDQom
-Z3Q7Jmd0OyBhZGRyZXNzIiByZWdpc3RlciBpbiBTdXBlcklPIGNvbnRyb2xsZXIuIEdpdmVu
-IHRoYXQgdGhpcyByZWdpc3RlciBjYW4gDQomZ3Q7Jmd0OyBiZSBhY2Nlc3NlZCBieSBIb3N0
-IENQVSwgY2FuIEkgdGhpbmsgdGhhdCB0aGUgSG9zdCBDUFUgZmlyc3RseSANCiZndDsmZ3Q7
-IGNvbmZpZ3VyZSB0aGUgIlNJTyBpTFBDMkFIQiBhZGRyZXNzIiByZWdpc3RlciwgdGhlbiBp
-ZiB0aGUgTFBDIHNsYXZlIA0KJmd0OyZndDsgY29udHJvbGxlciBpcyBjb25maWd1cmVkIHJp
-Z2h0bHksIEhvc3QgQ1BVIGNhbiBhY2Nlc3MgdGhlIEJNQydzIG1lbW9yeSANCiZndDsmZ3Q7
-IHNwYWNlIGJ5IHVzaW5nIG1lbW9yeSByZWFkaW5nIG9yIHdyaXRpbmcgdG8gdGhlIGFkZHJl
-c3Mgd3JpdHRlbiB0byAiU0lPIA0KJmd0OyZndDsgaUxQQzJBSEIgYWRkcmVzcyIgcmVnaXN0
-ZXI/DQomZ3Q7DQomZ3Q7WWVzLg0KJmd0Ow0KJmd0OyZndDsgSWYgSSBhbSByaWdodCwgd2hh
-dCBkb2VzIFN1cGVySU8gY29udHJvbGxlciBkbywgaXMgaXQgYmV0d2VlbiBIb3N0J3MgDQom
-Z3Q7Jmd0OyBMUEMgYnVzIGFuZCBCTUMncyBMUEMgc2xhdmUgY29udHJvbGxlciBsaWtlOg0K
-Jmd0OyZndDsgSG9zdC0tJmd0O0xQQyBidXMtLSZndDtTdXBlcklPIGNvbnRyb2xsZXItLSZn
-dDtMUEMgc2xhdmUgY29udHJvbGxlci0tJmd0O0xQQzJBSEIgDQomZ3Q7Jmd0OyBicmlkZ2Ut
-LSZndDtTUEkgRmxhc2ggbWFwcGluZw0KJmd0OyZndDsgb3IgU3VwZXJJTyBjb250cm9sbGVy
-IGlzIGluZGVwZW5kZW50IG9mIExQQyBzbGF2ZSBjb250cm9sbGVyIGxpa2U6DQomZ3Q7Jmd0
-OyBIb3N0LS0mZ3Q7TFBDIGJ1cy0tJmd0O1N1cGVySU8gY29udHJvbGxlcg0KJmd0OyZndDsg
-SG9zdC0tJmd0O0xQQyBidXMtLSZndDtMUEMgc2xhdmUgY29udHJsbGVyLS0mZ3Q7TFBDMkFI
-QiBicmlkZ2UtLSZndDtTUEkgRmxhc2ggDQomZ3Q7Jmd0OyBtYXBwaW5nDQomZ3Q7DQomZ3Q7
-SSB0aGluayB3ZSBuZWVkIHRvIHNlcGFyYXRlIG91dCBmaXJtd2FyZSBhY2Nlc3NlcyBmcm9t
-IHdoYXQgeW91J3JlDQomZ3Q7ZGVzY3JpYmluZyBhYm92ZS4gVGhlIGlMUEMyQUhCIGJyaWRn
-ZSBpcyBzbG93IGFuZCBpcyBnZW5lcmFsbHkgbm90DQomZ3Q7dXNlZCB0byBhY2Nlc3MgdGhl
-IGhvc3QgZmxhc2guIFRvIGFjY2VzcyB0aGUgaG9zdCBmbGFzaCB3ZSB1c2UgdGhlDQomZ3Q7
-c2ltaWxhcmx5LW5hbWVkIGJ1dCBfZGlmZmVyZW50XyBMUEMyQUhCIGJyaWRnZSAobm8gImki
-KSB0aGF0IG1hcHMNCiZndDtMUEMgRmlybXdhcmUgY3ljbGVzIGludG8gdGhlIEJNQydzIHBo
-eXNpY2FsIGFkZHJlc3Mgc3BhY2UuIFRoZSBrZXkNCiZndDtwb2ludCBoZXJlIGlzIHRoYXQg
-dGhlIGlMUEMyQUhCICh3aXRoICJpIikgYnJpZGdlIGlzIGFjY2Vzc2VkIHdpdGggTFBDDQom
-Z3Q7SU8gY3ljbGVzIGluc3RlYWQuDQomZ3Q7DQomZ3Q7WW91IGNhbiByZWFkIG1vcmUgYWJv
-dXQgZGlmZmVyZW50IExQQyBjeWNsZSB0eXBlcyBpbiB0aGUgc3BlY2lmaWNhdGlvbjoNCiZn
-dDsNCiZndDtodHRwczovL3d3dy5pbnRlbC5jb20vY29udGVudC9kYW0vd3d3L3Byb2dyYW0v
-ZGVzaWduL3VzL2VuL2RvY3VtZW50cy9sb3ctcGluLWNvdW50LWludGVyZmFjZS1zcGVjaWZp
-Y2F0aW9uLnBkZg0KJmd0Ow0KJmd0O1NvIHdoYXQgaXMgdGhlIGlMUEMyQUhCIGJyaWRnZSB1
-c2VkIGZvcj8gV2VsbCwgd3JpdGluZyBhIFNQSS1OT1IgZmxhc2gNCiZndDtkaXJlY3RseSBp
-cyBub3QgcG9zc2libGUgd2l0aCBqdXN0IExQQyBGaXJtd2FyZSBjeWNsZXMgYXMsIGZvciBl
-eGFtcGxlLA0KJmd0O3dlIG5lZWQgdG8gaXNzdWUgV1JFTiwgRVJBU0UgYW5kIFBQIGNvbW1h
-bmRzIGluIG9yZGVyIGdldCB0aGUgZGF0YQ0KJmd0O3RvIHN0aWNrLiBJbiB0aGUgbmFpdmUg
-Y2FzZSB3ZSB1c2UgdGhlIGlMUEMyQUhCIGJyaWRnZSB0byBkcml2ZSB0aGVzZQ0KJmd0O2Nv
-bW1hbmRzIHRocm91Z2ggdGhlIEJNQydzIGhvc3QgZmxhc2ggY29udHJvbGxlciBhbmQgdGhl
-biB3cml0ZSB0aGUNCiZndDtkYXRhIHRocm91Z2ggTFBDIEZpcm13YXJlIGN5Y2xlcy4NCiZn
-dDsNCiZndDtIb3dldmVyLCBhcyB0aGUgaUxQQzJBSEIgYnJpZGdlIGlzIHVuY29uc3RyYWlu
-ZWQgaW4gd2hhdCBpdCBjYW4gYWNjZXNzDQomZ3Q7aW4gdGhlIEJNQydzIHBoeXNpY2FsIGFk
-ZHJlc3Mgc3BhY2UsIHlvdSBjYW4gZG8gcHJldHR5IG11Y2ggYW55dGhpbmcNCiZndDtlbHNl
-IHlvdSB3YW50IHRvIHRoZSBCTUMgcGVyaXBoZXJhbHMgd2l0aCBpdCBhcyB3ZWxsLiBBcyBz
-dWNoIGl0IGNhbiBiZQ0KJmd0O2Egc2lnbmlmaWNhbnQgc2VjdXJpdHkgY29uY2VybiAoZGVw
-ZW5kaW5nIG9uIHlvdXIgdGhyZWF0IG1vZGVsKSwgYW5kDQomZ3Q7dGhlcmUncyBhIENWRSB0
-aGF0IGNvdmVycyBpdDoNCiZndDsNCiZndDtodHRwczovL2N2ZS5taXRyZS5vcmcvY2dpLWJp
-bi9jdmVuYW1lLmNnaT9uYW1lPUNWRS0yMDE5LTYyNjANCiZndDsNCiZndDsmZ3Q7IA0KJmd0
-OyZndDsgMi4gSSBmb3VuZCAiYXNwZWVkLWxwYy1jdHJsLmMiIGluIGxpbnV4IGtlcm5lbCBz
-b3VyY2UgY29kZS4gQWx0aG91Z2ggSSANCiZndDsmZ3Q7IGFtIG5vdCB2ZXJ5IGZhbWlsYXIg
-d2l0aCB0aGlzIGRyaXZlciwgSSBmb3VuZCB0aGF0IGJ5IGNvbmZpZ3VyaW5nIHRoZSANCiZn
-dDsmZ3Q7IExQQyBzbGF2ZSBjb250cm9sbGVyJ3MgaG9zdCBpbnRlcmZhY2UgY29udHJvbCBy
-ZWdpc3RlciwgdGhpcyBkcml2ZXIgY2FuIA0KJmd0OyZndDsgZGVjaWRlIHdoaWNoIEJNQydz
-IG1lbW9yeSBzcGFjZSBjYW4gYmUgbWFwcGVyIHRvIEhvc3QgQ1BVLg0KJmd0OyZndDsgQW5k
-IEluIHRoZSBwaWN0dXJlIHlvdSBkcmF3IGZvciBtZQ0KJmd0OyZndDsgSG9zdCBDUFUNCiZn
-dDsmZ3Q7Jm5ic3A7IC0mZ3Q7IExQQyBGVw0KJmd0OyZndDsmbmJzcDsgLSZndDsgTFBDMkFI
-QiBCcmlkZ2UNCiZndDsmZ3Q7Jm5ic3A7IC0mZ3Q7IFNQSSBmbGFzaCBtYXBwaW5nDQomZ3Q7
-Jmd0OyZuYnNwOyAtJmd0OyBTUEkgRmxhc2gNCiZndDsmZ3Q7IERvZXMgdGhlICJMUEMgRlci
-IG1lYW5zIGFzcGVlZC1scGMtY3RybCBkcml2ZXI/DQomZ3Q7DQomZ3Q7IkxQQyBGVyIgc2lt
-cGx5IG1lYW5zIExQQyBGaXJtd2FyZSBjeWNsZXMgYXMgZGVzY3JpYmVkIGluIHRoZSBMUEMN
-CiZndDtzcGVjaWZpY2F0aW9uIEkgbGlua2VkIGFib3ZlLg0KJmd0Ow0KJmd0O0hvd2V2ZXIs
-IHllcywgTFBDIEZXIGN5Y2xlcyBhcmUgcmVsYXRlZCB0byB0aGUgYXNwZWVkLWxwYy1jdHJs
-IGRyaXZlcg0KJmd0O2FzIHRoaXMgZHJpdmVyIGlzIHdoYXQgY29udHJvbHMgdGhlIG1hcHBp
-bmcgb2YgdGhlIGZpcm13YXJlIGN5Y2xlcyBvbnRvDQomZ3Q7dGhlIEJNQydzIHBoeXNpY2Fs
-IGFkZHJlc3Mgc3BhY2UuIEZvciBzb21lIGNvbnRleHQsIGluIE9wZW5QT1dFUg0KJmd0O3N5
-c3RlbXMgd2UgdXNlIHRoZSBhc3BlZWQtbHBjLWN0cmwgZHJpdmVyIHRvIHBvaW50IHRoZSBM
-UEMyQUhCIGJyaWRnZQ0KJmd0O2F0IGEgc3BlY2lmaWMgcmVnaW9uIG9mIEJNQyBSQU0gdGhh
-dCB3ZSBoYXZlIHJlc2VydmVkIChpLmUuIHRoZSBCTUMNCiZndDtrZXJuZWwgbm8tbG9uZ2Vy
-IGNvbnNpZGVycyBpdCBnZW5lcmFsbHkgYXZhaWxhYmxlIHRvIGFwcGxpY2F0aW9ucyBvciB0
-aGUNCiZndDtrZXJuZWwpLiBJbiB0aGlzIGNvbmZpZ3VyYXRpb24sIGFsbCBMUEMgRlcgcmVh
-ZCBhbmQgd3JpdGUgY3ljbGVzIGlzc3VlZA0KJmd0O2J5IHRoZSBob3N0IGFjY2VzcyB0aGlz
-IHJlc2VydmVkIHJlZ2lvbiBvZiBSQU0gKGluc3RlYWQgb2YgZS5nLiB0aGUNCiZndDtob3N0
-IGZsYXNoIGRldmljZSkuDQomZ3Q7DQomZ3Q7SG9wZSB0aGF0IGhlbHBzLA0KJmd0Ow0KJmd0
-O0FuZHJldw==
+Consider, we want to expose ChassisType, then irrespective of PLDM FRU / 
+IPMI FRU / Proprietary FRU, Consumer applications must read it in the 
+same manner. Having different interface / property types, requires 
+update in both the end. PLDM FRU / IPMI FRU can be in common form 
+(except few nit's /OEM's). We need to make sure it is represented in 
+that angle. As of today phosphor-dbus-interfaces doesn't have FRU 
+interface, but it has inventory related interfaces (exposed by 
+Entity-Manager), which is what Redfish uses (i.e. Indirectly the 
+FruDevice exposed interface is hidden by Entity-manager, and inventory 
+interface exposed by entity-manager is used).
 
-------=_NextPart_5ECE647E_0F6A81B8_6612378C
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+As of today, entity-manager doesn't add Inventory interface 
+automatically for Add-on cards (which doesn't have any json 
+configuration), but needs exposure (say PLDM based Add on card devices 
+will be of this type), but shouldn't be hard to add it anyway.
 
-PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
-YXJzZXQ9R0IxODAzMCI+PGRpdj5IaSBNci4gQW5kcmV3IEplZmZlcnk8L2Rpdj48ZGl2Pjxi
-cj48L2Rpdj48ZGl2PlRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIgaGVscC4gSSByZWFs
-bHkgdGhhbmtzIGZvciB5b3VyIGV4cGxhbmF0aW9ucywgdmVyeSBkZXRhaWwgYW5kIHZlcnkg
-Y2xlYXIuPC9kaXY+PGRpdj5Ob3cgSSBhbSBjbGVhciBhYm91dCB0aGUgaUxQQzJBSEIgYnJp
-ZGdlLiBJIGZvdW5kIHRoZSBpTFBDMkFIQiBicmlkZ2UgZGV2aWNlIGluIEFTVDI1MDAsIGJ1
-dCBJIGRvIG5vdCBmaW5kIHRoZSBMUEMyQUhCIGJyaWRnZS4gSSB0aGluayBtYXliZSBpdCBp
-cyBpbnRlZ3JhdGVkIGluIExQQyBjb250cm9sbGVyLCBhbmQgYWJvdXQgaG93IExQQzJBSEIg
-d29yaywgcGVyaGFwcyBJIHN0aWxsIG5lZWQgc29tZSB0aW1lIHRvIHN0dWR5IHRoaXMuIEJl
-Y2F1c2UgSSBydW4gb3BlbmJtYyBpbiBxZW11LCB0aGVyZSBhcmUgc29tZSBleHBlcmltZW50
-cyB0aGF0IEkgY2FuIG5vdCBjb25kdWN0LiBBZnRlciBJIGdldCBhIHJlYWwgaGFyZHdhcmUg
-SSB3aWxsIGRvIGZ1dGhlciBleHBlcmltZW50LjwvZGl2PjxkaXY+QWdhaW4sIFRoYW5rcyBm
-b3IgeW91ciBoZWxwLCByZWFsbHkhPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5CZXN0IFJl
-Z2FyZHMhPC9kaXY+PGRpdj5MaXUgSG9uZ3dlaTwvZGl2PjxkaXY+PGRpdj48YnI+PC9kaXY+
-Jmd0O0hlbGxvIGFnYWluITxicj4mZ3Q7PGJyPiZndDtPbiBTdW4sIDEwIE1heSAyMDIwLCBh
-dCAwMjowNiwgxM/SsKXgpeult6WopemltCB3cm90ZTo8YnI+Jmd0OyZndDsgSGkgTXIuIEFu
-ZHJldyBKZWZmZXJ5PGJyPiZndDsmZ3Q7IDxicj4mZ3Q7Jmd0OyBUaGFuayB5b3UgZm9yIHlv
-dXIgaGVscC4gU29ycnkgZm9yIGxhdGUgcmVzcG9uc2UuIEFmdGVyIGdldHRpbmcgeW91ciZu
-YnNwOzwvZGl2PjxkaXY+Jmd0OyZndDsgcmVwbGF5LCBJIHJlYWQgQVNUMjUwMCBzcGVjIGFu
-ZCBPcGVuQk1DIGxpbnV4IGtlcm5lbCBhZ2Fpbi48YnI+Jmd0OyZndDsgSSBmb3VuZCBhICJT
-dXBlcklPIGNvbnRyb2xsZXIiIGluIEFTVDI1MDAgc3BlYyBhbmQgImFzcGVlZC1scGMtY3Ry
-bC5jIiA8YnI+Jmd0OyZndDsgaW4gbGludXgga2VybmVsLjxicj4mZ3Q7Jmd0OyA8YnI+Jmd0
-OyZndDsgMS4gSSBmb3VuZCB0aGVyZSBpcyBhIGxvZ2ljYWwgZGV2aWNlICJpTFBDMkFIQiIg
-aW4gU3VwZXJJTyBjb250cm9sbGVyLCA8YnI+Jmd0OyZndDsgYW5kIGl0IGlzIHNhaWQgdGhl
-IHJlZ2lzdGVyIGNhbiBiZSBhY2Nlc3NlZCBieSBIb3N0IENQVSB0aHJvdWdoIExQQyA8YnI+
-Jmd0OyZndDsgYnVzKEkgYW0gbm90IHN1cmUgYnV0IEkgdGhpbmsgdGhlIFN1cGVySU8gY29u
-dHJvbGxlciB3aWxsIGJlIHVzZWQgZm9yIDxicj4mZ3Q7Jmd0OyBIb3N0IENQVSwgYW5kIG5v
-IEJNQyBkcml2ZXIgd2lsbCB1c2UgaXQpLjxicj4mZ3Q7PGJyPiZndDtDb3JyZWN0LCB0aGUg
-aUxQQzJBSEIgYnJpZGdlIGlzIGRyaXZlbiBieSBob3N0IGZpcm13YXJlLjxicj4mZ3Q7PGJy
-PiZndDsmZ3Q7IEkgYWxzbyBmb3VuZCAiU0lPIGlMUEMyQUhCIDxicj4mZ3Q7Jmd0OyBhZGRy
-ZXNzIiByZWdpc3RlciBpbiBTdXBlcklPIGNvbnRyb2xsZXIuIEdpdmVuIHRoYXQgdGhpcyBy
-ZWdpc3RlciBjYW4gPGJyPiZndDsmZ3Q7IGJlIGFjY2Vzc2VkIGJ5IEhvc3QgQ1BVLCBjYW4g
-SSB0aGluayB0aGF0IHRoZSBIb3N0IENQVSBmaXJzdGx5IDxicj4mZ3Q7Jmd0OyBjb25maWd1
-cmUgdGhlICJTSU8gaUxQQzJBSEIgYWRkcmVzcyIgcmVnaXN0ZXIsIHRoZW4gaWYgdGhlIExQ
-QyBzbGF2ZSA8YnI+Jmd0OyZndDsgY29udHJvbGxlciBpcyBjb25maWd1cmVkIHJpZ2h0bHks
-IEhvc3QgQ1BVIGNhbiBhY2Nlc3MgdGhlIEJNQydzIG1lbW9yeSA8YnI+Jmd0OyZndDsgc3Bh
-Y2UgYnkgdXNpbmcgbWVtb3J5IHJlYWRpbmcgb3Igd3JpdGluZyB0byB0aGUgYWRkcmVzcyB3
-cml0dGVuIHRvICJTSU8gPGJyPiZndDsmZ3Q7IGlMUEMyQUhCIGFkZHJlc3MiIHJlZ2lzdGVy
-Pzxicj4mZ3Q7PGJyPiZndDtZZXMuPGJyPiZndDs8YnI+Jmd0OyZndDsgSWYgSSBhbSByaWdo
-dCwgd2hhdCBkb2VzIFN1cGVySU8gY29udHJvbGxlciBkbywgaXMgaXQgYmV0d2VlbiBIb3N0
-J3MgPGJyPiZndDsmZ3Q7IExQQyBidXMgYW5kIEJNQydzIExQQyBzbGF2ZSBjb250cm9sbGVy
-IGxpa2U6PGJyPiZndDsmZ3Q7IEhvc3QtLSZndDtMUEMgYnVzLS0mZ3Q7U3VwZXJJTyBjb250
-cm9sbGVyLS0mZ3Q7TFBDIHNsYXZlIGNvbnRyb2xsZXItLSZndDtMUEMyQUhCIDxicj4mZ3Q7
-Jmd0OyBicmlkZ2UtLSZndDtTUEkgRmxhc2ggbWFwcGluZzxicj4mZ3Q7Jmd0OyBvciBTdXBl
-cklPIGNvbnRyb2xsZXIgaXMgaW5kZXBlbmRlbnQgb2YgTFBDIHNsYXZlIGNvbnRyb2xsZXIg
-bGlrZTo8YnI+Jmd0OyZndDsgSG9zdC0tJmd0O0xQQyBidXMtLSZndDtTdXBlcklPIGNvbnRy
-b2xsZXI8YnI+Jmd0OyZndDsgSG9zdC0tJmd0O0xQQyBidXMtLSZndDtMUEMgc2xhdmUgY29u
-dHJsbGVyLS0mZ3Q7TFBDMkFIQiBicmlkZ2UtLSZndDtTUEkgRmxhc2ggPGJyPiZndDsmZ3Q7
-IG1hcHBpbmc8YnI+Jmd0Ozxicj4mZ3Q7SSB0aGluayB3ZSBuZWVkIHRvIHNlcGFyYXRlIG91
-dCBmaXJtd2FyZSBhY2Nlc3NlcyBmcm9tIHdoYXQgeW91J3JlPGJyPiZndDtkZXNjcmliaW5n
-IGFib3ZlLiBUaGUgaUxQQzJBSEIgYnJpZGdlIGlzIHNsb3cgYW5kIGlzIGdlbmVyYWxseSBu
-b3Q8YnI+Jmd0O3VzZWQgdG8gYWNjZXNzIHRoZSBob3N0IGZsYXNoLiBUbyBhY2Nlc3MgdGhl
-IGhvc3QgZmxhc2ggd2UgdXNlIHRoZTxicj4mZ3Q7c2ltaWxhcmx5LW5hbWVkIGJ1dCBfZGlm
-ZmVyZW50XyBMUEMyQUhCIGJyaWRnZSAobm8gImkiKSB0aGF0IG1hcHM8YnI+Jmd0O0xQQyBG
-aXJtd2FyZSBjeWNsZXMgaW50byB0aGUgQk1DJ3MgcGh5c2ljYWwgYWRkcmVzcyBzcGFjZS4g
-VGhlIGtleTxicj4mZ3Q7cG9pbnQgaGVyZSBpcyB0aGF0IHRoZSBpTFBDMkFIQiAod2l0aCAi
-aSIpIGJyaWRnZSBpcyBhY2Nlc3NlZCB3aXRoIExQQzxicj4mZ3Q7SU8gY3ljbGVzIGluc3Rl
-YWQuPGJyPiZndDs8YnI+Jmd0O1lvdSBjYW4gcmVhZCBtb3JlIGFib3V0IGRpZmZlcmVudCBM
-UEMgY3ljbGUgdHlwZXMgaW4gdGhlIHNwZWNpZmljYXRpb246PGJyPiZndDs8YnI+Jmd0O2h0
-dHBzOi8vd3d3LmludGVsLmNvbS9jb250ZW50L2RhbS93d3cvcHJvZ3JhbS9kZXNpZ24vdXMv
-ZW4vZG9jdW1lbnRzL2xvdy1waW4tY291bnQtaW50ZXJmYWNlLXNwZWNpZmljYXRpb24ucGRm
-PGJyPiZndDs8YnI+Jmd0O1NvIHdoYXQgaXMgdGhlIGlMUEMyQUhCIGJyaWRnZSB1c2VkIGZv
-cj8gV2VsbCwgd3JpdGluZyBhIFNQSS1OT1IgZmxhc2g8YnI+Jmd0O2RpcmVjdGx5IGlzIG5v
-dCBwb3NzaWJsZSB3aXRoIGp1c3QgTFBDIEZpcm13YXJlIGN5Y2xlcyBhcywgZm9yIGV4YW1w
-bGUsPGJyPiZndDt3ZSBuZWVkIHRvIGlzc3VlIFdSRU4sIEVSQVNFIGFuZCBQUCBjb21tYW5k
-cyBpbiBvcmRlciBnZXQgdGhlIGRhdGE8YnI+Jmd0O3RvIHN0aWNrLiBJbiB0aGUgbmFpdmUg
-Y2FzZSB3ZSB1c2UgdGhlIGlMUEMyQUhCIGJyaWRnZSB0byBkcml2ZSB0aGVzZTxicj4mZ3Q7
-Y29tbWFuZHMgdGhyb3VnaCB0aGUgQk1DJ3MgaG9zdCBmbGFzaCBjb250cm9sbGVyIGFuZCB0
-aGVuIHdyaXRlIHRoZTxicj4mZ3Q7ZGF0YSB0aHJvdWdoIExQQyBGaXJtd2FyZSBjeWNsZXMu
-PGJyPiZndDs8YnI+Jmd0O0hvd2V2ZXIsIGFzIHRoZSBpTFBDMkFIQiBicmlkZ2UgaXMgdW5j
-b25zdHJhaW5lZCBpbiB3aGF0IGl0IGNhbiBhY2Nlc3M8YnI+Jmd0O2luIHRoZSBCTUMncyBw
-aHlzaWNhbCBhZGRyZXNzIHNwYWNlLCB5b3UgY2FuIGRvIHByZXR0eSBtdWNoIGFueXRoaW5n
-PGJyPiZndDtlbHNlIHlvdSB3YW50IHRvIHRoZSBCTUMgcGVyaXBoZXJhbHMgd2l0aCBpdCBh
-cyB3ZWxsLiBBcyBzdWNoIGl0IGNhbiBiZTxicj4mZ3Q7YSBzaWduaWZpY2FudCBzZWN1cml0
-eSBjb25jZXJuIChkZXBlbmRpbmcgb24geW91ciB0aHJlYXQgbW9kZWwpLCBhbmQ8YnI+Jmd0
-O3RoZXJlJ3MgYSBDVkUgdGhhdCBjb3ZlcnMgaXQ6PGJyPiZndDs8YnI+Jmd0O2h0dHBzOi8v
-Y3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMTktNjI2MDxi
-cj4mZ3Q7PGJyPiZndDsmZ3Q7IDxicj4mZ3Q7Jmd0OyAyLiBJIGZvdW5kICJhc3BlZWQtbHBj
-LWN0cmwuYyIgaW4gbGludXgga2VybmVsIHNvdXJjZSBjb2RlLiBBbHRob3VnaCBJIDxicj4m
-Z3Q7Jmd0OyBhbSBub3QgdmVyeSBmYW1pbGFyIHdpdGggdGhpcyBkcml2ZXIsIEkgZm91bmQg
-dGhhdCBieSBjb25maWd1cmluZyB0aGUgPGJyPiZndDsmZ3Q7IExQQyBzbGF2ZSBjb250cm9s
-bGVyJ3MgaG9zdCBpbnRlcmZhY2UgY29udHJvbCByZWdpc3RlciwgdGhpcyBkcml2ZXIgY2Fu
-IDxicj4mZ3Q7Jmd0OyBkZWNpZGUgd2hpY2ggQk1DJ3MgbWVtb3J5IHNwYWNlIGNhbiBiZSBt
-YXBwZXIgdG8gSG9zdCBDUFUuPGJyPiZndDsmZ3Q7IEFuZCBJbiB0aGUgcGljdHVyZSB5b3Ug
-ZHJhdyBmb3IgbWU8YnI+Jmd0OyZndDsgSG9zdCBDUFU8YnI+Jmd0OyZndDsmbmJzcDsgLSZn
-dDsgTFBDIEZXPGJyPiZndDsmZ3Q7Jm5ic3A7IC0mZ3Q7IExQQzJBSEIgQnJpZGdlPGJyPiZn
-dDsmZ3Q7Jm5ic3A7IC0mZ3Q7IFNQSSBmbGFzaCBtYXBwaW5nPGJyPiZndDsmZ3Q7Jm5ic3A7
-IC0mZ3Q7IFNQSSBGbGFzaDxicj4mZ3Q7Jmd0OyBEb2VzIHRoZSAiTFBDIEZXIiBtZWFucyBh
-c3BlZWQtbHBjLWN0cmwgZHJpdmVyPzxicj4mZ3Q7PGJyPiZndDsiTFBDIEZXIiBzaW1wbHkg
-bWVhbnMgTFBDIEZpcm13YXJlIGN5Y2xlcyBhcyBkZXNjcmliZWQgaW4gdGhlIExQQzxicj4m
-Z3Q7c3BlY2lmaWNhdGlvbiBJIGxpbmtlZCBhYm92ZS48YnI+Jmd0Ozxicj4mZ3Q7SG93ZXZl
-ciwgeWVzLCBMUEMgRlcgY3ljbGVzIGFyZSByZWxhdGVkIHRvIHRoZSBhc3BlZWQtbHBjLWN0
-cmwgZHJpdmVyPGJyPiZndDthcyB0aGlzIGRyaXZlciBpcyB3aGF0IGNvbnRyb2xzIHRoZSBt
-YXBwaW5nIG9mIHRoZSBmaXJtd2FyZSBjeWNsZXMgb250bzxicj4mZ3Q7dGhlIEJNQydzIHBo
-eXNpY2FsIGFkZHJlc3Mgc3BhY2UuIEZvciBzb21lIGNvbnRleHQsIGluIE9wZW5QT1dFUjxi
-cj4mZ3Q7c3lzdGVtcyB3ZSB1c2UgdGhlIGFzcGVlZC1scGMtY3RybCBkcml2ZXIgdG8gcG9p
-bnQgdGhlIExQQzJBSEIgYnJpZGdlPGJyPiZndDthdCBhIHNwZWNpZmljIHJlZ2lvbiBvZiBC
-TUMgUkFNIHRoYXQgd2UgaGF2ZSByZXNlcnZlZCAoaS5lLiB0aGUgQk1DPGJyPiZndDtrZXJu
-ZWwgbm8tbG9uZ2VyIGNvbnNpZGVycyBpdCBnZW5lcmFsbHkgYXZhaWxhYmxlIHRvIGFwcGxp
-Y2F0aW9ucyBvciB0aGU8YnI+Jmd0O2tlcm5lbCkuIEluIHRoaXMgY29uZmlndXJhdGlvbiwg
-YWxsIExQQyBGVyByZWFkIGFuZCB3cml0ZSBjeWNsZXMgaXNzdWVkPGJyPiZndDtieSB0aGUg
-aG9zdCBhY2Nlc3MgdGhpcyByZXNlcnZlZCByZWdpb24gb2YgUkFNIChpbnN0ZWFkIG9mIGUu
-Zy4gdGhlPGJyPiZndDtob3N0IGZsYXNoIGRldmljZSkuPGJyPiZndDs8YnI+Jmd0O0hvcGUg
-dGhhdCBoZWxwcyw8YnI+Jmd0Ozxicj4mZ3Q7QW5kcmV3PGJyPjwvZGl2Pg==
+Now the question is do we want to expose FRU as a separate interafce to 
+be used in User facing application, or shall we just use Inventory based 
+interface itself ?If inventory itself can be used, then let's go ahead 
+and add more fields to those if missing anything / correct the same 
+accordingly.
 
-------=_NextPart_5ECE647E_0F6A81B8_6612378C--
+James, Deepak, Patrick - your thoughts ?
 
 
+regards,
 
+Richard
+
+
+Say, we want to expose Manufacturer Name, then it can be produced by 
+PLDM FRU application, IPMI Fru based application or even any proprietary 
+application and consumed by applications like Redfish / any other 
+proprietary one. In this way applications can get the data of what ever 
+it is required. I don't find any data which is different in terms of 
+PLDM FRU / IPMI FRU (ofcourse OEM fields will be there, but that can't 
+be unique), but we need to implement things in common form though.
+
+Say, ChassisType in IPMI FRU is single byte field, whereas in PLDM FRU 
+it will be of string. But we need to represent the same in well 
+established form (say SMBIOS System /Chassis Type enums). i.e. Producers 
+(IPMI FRU must change it from one byte type to enum), and PLDM FRU from 
+string to proper enum. Redfish will use this one and accordingly map it 
+to the schema
+
+
+On 5/26/2020 6:26 PM, Deepak Kodihalli wrote:
+> On 19/05/20 9:10 am, Deepak Kodihalli wrote:
+>> Hi,
+>>
+>> IBM systems have a requirement to consume FRU information sent down 
+>> via the host firmware and then relay that onto D-Bus (and then onto 
+>> Redfish). The host firmware will send down FRU information using PLDM.
+>>
+>> We wanted to use entity manager to enable transforming the PLDM FRU 
+>> data to D-Bus properties that fall under D-Bus inventory interfaces 
+>> such as the xyz.openbmc_project.Inventory.Decorator.Asset interface. 
+>> I have an update to the PLDM design doc to capture this flow [1], and 
+>> some D-Bus interfaces [2] proposed on Gerrit. Would appreciate 
+>> feedback on the same. The high level idea is that the pldm daemon 
+>> will host raw PLDM FRU information on D-Bus, and via JSON configs, 
+>> entity manager can convert those to D-Bus inventory objects (which 
+>> then can be found by bmcweb).
+>>
+>>  From an entity manager perspective, I had few questions :
+>> - I see there is provision for persistence, but it looks like 
+>> applying the persisted information works only if "D-Bus probes" 
+>> succeed. We have a requirement to make the host-sent inventory 
+>> information available even when the host is powered off. Now if the 
+>> host has sent this, then powers off, and then BMC reboots, the BMC 
+>> will no longer have the raw PLDM FRU information on D-Bus and hence 
+>> the entity manager probe on the same will fail. Question is, can the 
+>> probes be made optional when reading the persisted config (system.json)?
+>>
+>> - How are hierarchical relationships between FRUs supposed to be 
+>> represented? Is that based on D-Bus pathnames? Or making use of 
+>> something like the D-Bus Associations interface? Any thoughts on how 
+>> representing such parent-child relation can be achieved via entity 
+>> manager configs?
+>>
+>> [1] https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/
+>> [2] 
+>> https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-dbus-interfaces/+/32533/ 
+>>
+>>
+>> Thanks,
+>> Deepak
+>>
+>
+> I've got some feedback on the proposal above, which is primarily 
+> directed at/impacts how the PLDM daemon provides FRU information to 
+> the entity manager daemon. Wanted to discuss the same here.
+>
+> Very briefly, the proposal was :
+> a) The PLDM daemon will parse PLDM FRU format data and host the same 
+> on D-Bus as a set of PLDM FRU properties (similar to how the FruDevice 
+> daemon hosts properties under xyz.openbmc_project.FruDevice).
+> b) Apply EM system/board specific configurations on a) to be able to 
+> create specific inventory D-Bus objects (this is how EM works today).
+>
+>
+> To do a) above, there are 3 options:
+>
+> 1) Propose a D-Bus interface in phosphor-dbus-interfaces. This was [2] 
+> in my original email above. The concern raised by Patrick here is that 
+> this interface is very specific to a protocol (PLDM in this case), 
+> whereas the phosphor D-Bus interfaces are mostly abstract and protocol 
+> agnostic.
+>
+> In my opinion, PLDM is also a data model, so PLDM specific D-Bus 
+> interfaces can enable two apps that are PLDM aware (for eg a PLDM 
+> requester app talking to the PLDM daemon) to talk to each other. I do 
+> see other protocol specific D-Bus interfaces as well (for eg related 
+> to SMBIOS). So I don't really understand the concern. The protocol 
+> specific interfaces do not preclude other abstract interfaces.
+>
+>
+>
+> 2) Propose a generic/abstract 'FRU properties' kind of D-Bus 
+> interface. This is something that both the PLDM daemon and FRU device 
+> daemon could use to host FRU information on D-Bus, and to provide the 
+> same as an intermediate FRU format data to apps like EM. The 
+> suggestion on the docs commit above [2] was to have an interface like 
+> {Enum[Protocol], array[byte]}. I think instead this could be a 
+> dict[string, variant[string, int64]], for a FRU property to value 
+> mapping.
+>
+> While this sounds interesting, are the maintainers of EM and FruDevice 
+> interested in such an interface? Based on how this interface is 
+> designed, it might imply changes to FruDevice and Entity Manager. I 
+> might be interested in chasing this based on the feedback received, 
+> and if this will really have users other than the PLDM daemon.
+>
+>
+>
+> 3) If everyone thinks option 1 is a bad idea, and if the interest in 
+> option 2 is limited, I could do this based on how the FruDevice daemon 
+> and EM interact today, which is based on kind of a private D-Bus 
+> interface between the two apps. I don't think the Fru device daemon is 
+> tied up to EM though, it could even be in its own repository.
+>
+>
+> Thanks,
+> Deepak
+
+--------------DBFA1E00A6D89F7E1FEC2BD4
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>I always view D-Bus interface as a specification / API which can
+      work with different producers / consumers (correct me, if that's
+      not what we intend with D-Bus interface here). Problem with Option
+      1 is, it will end up in having multiple producers exposing
+      different interface, and thereby consumers(user interface facing
+      applications) of D-Bus must be aware about all the D-Bus
+      interfaces and always requires change. <br>
+    </p>
+    <p>Consider, we want to expose ChassisType, then irrespective of
+      PLDM FRU / IPMI FRU / Proprietary FRU, Consumer applications must
+      read it in the same manner. Having different interface / property
+      types, requires update in both the end. PLDM FRU / IPMI FRU can be
+      in common form (except few nit's /OEM's). We need to make sure it
+      is represented in that angle. As of today phosphor-dbus-interfaces
+      doesn't have FRU interface, but it has inventory related
+      interfaces (exposed by Entity-Manager), which is what Redfish uses
+      (i.e. Indirectly the FruDevice exposed interface is hidden by
+      Entity-manager, and inventory interface exposed by entity-manager
+      is used). <br>
+    </p>
+    <p>As of today, entity-manager doesn't add Inventory interface
+      automatically for Add-on cards (which doesn't have any json
+      configuration), but needs exposure (say PLDM based Add on card
+      devices will be of this type), but shouldn't be hard to add it
+      anyway.</p>
+    <p>Now the question is do we want to expose FRU as a separate
+      interafce to be used in User facing application, or shall we just
+      use Inventory based interface itself ?If inventory itself can be
+      used, then let's go ahead and add more fields to those if missing
+      anything / correct the same accordingly. <br>
+    </p>
+    <p>James, Deepak, Patrick - your thoughts ?<br>
+    </p>
+    <p><br>
+    </p>
+    <p>regards,</p>
+    <p>Richard<br>
+    </p>
+    <p><br>
+    </p>
+    <p class="style-scope gr-formatted-text" style="box-sizing:
+      border-box; margin: 0px 0px 0.8em; padding: 0px; border: 0px;
+      font-style: normal; font-variant-ligatures: normal;
+      font-variant-caps: normal; font-variant-numeric: inherit;
+      font-variant-east-asian: inherit; font-weight: 400; font-stretch:
+      inherit; font-size: 13px; line-height: inherit; font-family:
+      Roboto, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;,
+      Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;,
+      &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;;
+      vertical-align: baseline; max-width: 80ch; color: rgb(33, 33, 33);
+      letter-spacing: normal; orphans: 2; text-align: start;
+      text-indent: 0px; text-transform: none; white-space: normal;
+      widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;
+      background-color: rgb(255, 255, 255); text-decoration-style:
+      initial; text-decoration-color: initial;"><span id="output" class="style-scope gr-linked-text" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font: inherit; vertical-align: baseline; white-space: pre-wrap; overflow-wrap: break-word;">
+Say, we want to expose Manufacturer Name, then it can be produced by PLDM FRU application, IPMI Fru based application or even any proprietary application and consumed by applications like Redfish / any other proprietary one. In this way applications can get the data of what ever it is required. 
+I don't find any data which is different in terms of PLDM FRU / IPMI FRU (ofcourse OEM fields will be there, but that can't be unique), but we need to implement things in common form though.</span></p>
+    <p class="style-scope gr-formatted-text" style="box-sizing:
+      border-box; margin: 0px; padding: 0px; border: 0px; font-style:
+      normal; font-variant-ligatures: normal; font-variant-caps: normal;
+      font-variant-numeric: inherit; font-variant-east-asian: inherit;
+      font-weight: 400; font-stretch: inherit; font-size: 13px;
+      line-height: inherit; font-family: Roboto, -apple-system,
+      BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial,
+      sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI
+      Emoji&quot;, &quot;Segoe UI Symbol&quot;; vertical-align:
+      baseline; max-width: 80ch; color: rgb(33, 33, 33); letter-spacing:
+      normal; orphans: 2; text-align: start; text-indent: 0px;
+      text-transform: none; white-space: normal; widows: 2;
+      word-spacing: 0px; -webkit-text-stroke-width: 0px;
+      background-color: rgb(255, 255, 255); text-decoration-style:
+      initial; text-decoration-color: initial;"><span id="output" class="style-scope gr-linked-text" style="box-sizing: border-box; margin: 0px; padding: 0px; border: 0px; font: inherit; vertical-align: baseline; white-space: pre-wrap; overflow-wrap: break-word;">Say, ChassisType in IPMI FRU is single byte field, whereas in PLDM FRU it will be of string. But we need to represent the same in well established form (say SMBIOS System /Chassis Type enums). 
+i.e. Producers (IPMI FRU must change it from one byte type to enum), and PLDM FRU from string to proper enum. Redfish will use this one and accordingly map it to the schema</span></p>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 5/26/2020 6:26 PM, Deepak Kodihalli
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com">On
+      19/05/20 9:10 am, Deepak Kodihalli wrote:
+      <br>
+      <blockquote type="cite">Hi,
+        <br>
+        <br>
+        IBM systems have a requirement to consume FRU information sent
+        down via the host firmware and then relay that onto D-Bus (and
+        then onto Redfish). The host firmware will send down FRU
+        information using PLDM.
+        <br>
+        <br>
+        We wanted to use entity manager to enable transforming the PLDM
+        FRU data to D-Bus properties that fall under D-Bus inventory
+        interfaces such as the
+        xyz.openbmc_project.Inventory.Decorator.Asset interface. I have
+        an update to the PLDM design doc to capture this flow [1], and
+        some D-Bus interfaces [2] proposed on Gerrit. Would appreciate
+        feedback on the same. The high level idea is that the pldm
+        daemon will host raw PLDM FRU information on D-Bus, and via JSON
+        configs, entity manager can convert those to D-Bus inventory
+        objects (which then can be found by bmcweb).
+        <br>
+        <br>
+         From an entity manager perspective, I had few questions :
+        <br>
+        - I see there is provision for persistence, but it looks like
+        applying the persisted information works only if "D-Bus probes"
+        succeed. We have a requirement to make the host-sent inventory
+        information available even when the host is powered off. Now if
+        the host has sent this, then powers off, and then BMC reboots,
+        the BMC will no longer have the raw PLDM FRU information on
+        D-Bus and hence the entity manager probe on the same will fail.
+        Question is, can the probes be made optional when reading the
+        persisted config (system.json)?
+        <br>
+        <br>
+        - How are hierarchical relationships between FRUs supposed to be
+        represented? Is that based on D-Bus pathnames? Or making use of
+        something like the D-Bus Associations interface? Any thoughts on
+        how representing such parent-child relation can be achieved via
+        entity manager configs?
+        <br>
+        <br>
+        [1] <a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/">https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/</a>
+        <br>
+        [2]
+<a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-dbus-interfaces/+/32533/">https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-dbus-interfaces/+/32533/</a>
+        <br>
+        <br>
+        Thanks,
+        <br>
+        Deepak
+        <br>
+        <br>
+      </blockquote>
+      <br>
+      I've got some feedback on the proposal above, which is primarily
+      directed at/impacts how the PLDM daemon provides FRU information
+      to the entity manager daemon. Wanted to discuss the same here.
+      <br>
+      <br>
+      Very briefly, the proposal was :
+      <br>
+      a) The PLDM daemon will parse PLDM FRU format data and host the
+      same on D-Bus as a set of PLDM FRU properties (similar to how the
+      FruDevice daemon hosts properties under
+      xyz.openbmc_project.FruDevice).
+      <br>
+      b) Apply EM system/board specific configurations on a) to be able
+      to create specific inventory D-Bus objects (this is how EM works
+      today).
+      <br>
+      <br>
+      <br>
+      To do a) above, there are 3 options:
+      <br>
+      <br>
+      1) Propose a D-Bus interface in phosphor-dbus-interfaces. This was
+      [2] in my original email above. The concern raised by Patrick here
+      is that this interface is very specific to a protocol (PLDM in
+      this case), whereas the phosphor D-Bus interfaces are mostly
+      abstract and protocol agnostic.
+      <br>
+      <br>
+      In my opinion, PLDM is also a data model, so PLDM specific D-Bus
+      interfaces can enable two apps that are PLDM aware (for eg a PLDM
+      requester app talking to the PLDM daemon) to talk to each other. I
+      do see other protocol specific D-Bus interfaces as well (for eg
+      related to SMBIOS). So I don't really understand the concern. The
+      protocol specific interfaces do not preclude other abstract
+      interfaces.
+      <br>
+      <br>
+      <br>
+      <br>
+      2) Propose a generic/abstract 'FRU properties' kind of D-Bus
+      interface. This is something that both the PLDM daemon and FRU
+      device daemon could use to host FRU information on D-Bus, and to
+      provide the same as an intermediate FRU format data to apps like
+      EM. The suggestion on the docs commit above [2] was to have an
+      interface like {Enum[Protocol], array[byte]}. I think instead this
+      could be a dict[string, variant[string, int64]], for a FRU
+      property to value mapping.
+      <br>
+      <br>
+      While this sounds interesting, are the maintainers of EM and
+      FruDevice interested in such an interface? Based on how this
+      interface is designed, it might imply changes to FruDevice and
+      Entity Manager. I might be interested in chasing this based on the
+      feedback received, and if this will really have users other than
+      the PLDM daemon.
+      <br>
+      <br>
+      <br>
+      <br>
+      3) If everyone thinks option 1 is a bad idea, and if the interest
+      in option 2 is limited, I could do this based on how the FruDevice
+      daemon and EM interact today, which is based on kind of a private
+      D-Bus interface between the two apps. I don't think the Fru device
+      daemon is tied up to EM though, it could even be in its own
+      repository.
+      <br>
+      <br>
+      <br>
+      Thanks,
+      <br>
+      Deepak
+      <br>
+    </blockquote>
+  </body>
+</html>
+
+--------------DBFA1E00A6D89F7E1FEC2BD4--
