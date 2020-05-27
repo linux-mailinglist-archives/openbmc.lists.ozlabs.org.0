@@ -2,89 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C612B1E457D
-	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 16:15:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5540D1E4625
+	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 16:38:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49XCXy2bk3zDqPG
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 00:15:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49XD3M1bSRzDqTd
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 00:38:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=PjQbU/S/; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ header.s=pp1 header.b=js7oESqa; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49XCWj74PdzDqPK
- for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 00:14:41 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 04RE1urV098164
- for <openbmc@lists.ozlabs.org>; Wed, 27 May 2020 10:14:39 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XD1D3KSCzDqTN
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 00:36:47 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04REaC2D094533; Wed, 27 May 2020 10:36:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : subject :
- from : to : date : mime-version : references : content-transfer-encoding :
- content-type : message-id; s=pp1;
- bh=KROOFCKzAlE5DKEdGRqX/BPw/JWPVQ36yit15QMyQEw=;
- b=PjQbU/S/r/tL/yKlDYgLRI4kN0r7OzVaS2yM0cUUyOyexvdu3pZeBt6jUh3h0uWdPK45
- bHWPcwkNygLGnsKOy4czRTiXgDAryJJIAyqhHPxvoHl+sfHRp/D2pkm7WVCoch9Bg1o3
- UvPSq21NZe3zzgGYE3aSWgphIvrRnhz0ROShlF/M3RRnoHS0tznEVR+pH1HynJiPOOXI
- 9jf+96XlLp3kJIHxh1RMZfzJarxLALR/pquC8EyHSvLndN5jm0WWvnj+2PmZF3OoOw9u
- XYzfzxrvceOdFy8H5/aM5V2hEJg6/vwRwXbLEDTPSQTpyJklODGDiOWGMvCdBlXsbJ43 qg== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.93])
- by mx0a-001b2d01.pphosted.com with ESMTP id 316vqh7qwt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 27 May 2020 10:14:38 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Wed, 27 May 2020 14:14:37 -0000
-Received: from us1a3-smtp05.a3.dal06.isc4sb.com (10.146.71.159)
- by smtp.notes.na.collabserv.com (10.106.227.39) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 27 May 2020 14:14:35 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp05.a3.dal06.isc4sb.com
- with ESMTP id 2020052714143530-520993 ;
- Wed, 27 May 2020 14:14:35 +0000 
-In-Reply-To: 
-Subject: GUI Design Workgroup - Today at 10:00 AM Central
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Wed, 27 May 2020 14:14:34 +0000
+ h=mime-version :
+ content-type : content-transfer-encoding : date : from : to : cc : subject
+ : in-reply-to : references : message-id; s=pp1;
+ bh=9F/502rJf7YNy2j5SUkMAFpu98GrFPb26zVft36btr8=;
+ b=js7oESqaZRvvS0zrLiLUO92bdoAfIgU+uo2ZU3d9zwsGFG1QTUAyqcJ1jOrJiqax/s6q
+ RaadCIkrZpvI+VfcZ4ldey/zmwVuMnMMzej3vNGd4EZRs2V9+A7HiWYqpUyxnRjzF0jW
+ MwDulL3OlwOxIKHatIRSGxiVHxt6qwtL/Jpbez3jTJQJvp4mNq5nD+ac7Y4dD3nR9z9/
+ NTH6IbKC6fgLnKOKV5TVoqICaHnPOXgx+vR+emchMdbkMY19FaBB5QMPDybKKy5yXMfI
+ 72xdfZYj/KtKc5BgQ3h3HtJfwixQuYhapm03b21eLKdSQF4IyZSzKRSWjiQrxxG77JBg 9A== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 319sv1rc2x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 May 2020 10:36:40 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04RETSHx009758;
+ Wed, 27 May 2020 14:36:39 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma03dal.us.ibm.com with ESMTP id 316ufammdy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 27 May 2020 14:36:39 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04REacMd51905010
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 27 May 2020 14:36:38 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CFA89B2067;
+ Wed, 27 May 2020 14:36:38 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 47574B205F;
+ Wed, 27 May 2020 14:36:38 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 27 May 2020 14:36:38 +0000 (GMT)
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: 
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 53171
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20052714-8889-0000-0000-000002CA5208
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.394815; ST=0; TS=0; UL=0; ISC=; MB=0.088523
-X-IBM-SpamModules-Versions: BY=3.00013175; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01382853; UDB=6.00739498; IPR=6.01165129; 
- MB=3.00032344; MTD=3.00000008; XFM=3.00000015; UTC=2020-05-27 14:14:36
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-05-27 11:11:00 - 6.00011412
-x-cbparentid: 20052714-8890-0000-0000-000066605709
-Message-Id: <OF123D71B8.0538A973-ON00258575.004E3D2F-00258575.004E3D34@notes.na.collabserv.com>
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date: Wed, 27 May 2020 09:36:37 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: "Bodireddy, Vikram" <vikram.bodireddy@linux.intel.com>,
+ openbmc@lists.ozlabs.org, joel@jms.id.au, andrew@aj.id.au
+Subject: Re: openBMC eMMC image support
+In-Reply-To: <b13a0e82-4f88-f35b-0d3f-8f7d6a91351b@linux.intel.com>
+References: <c2d7ecb8-b0b8-c5a3-12e7-7201fbd86b1a@linux.intel.com>
+ <b13a0e82-4f88-f35b-0d3f-8f7d6a91351b@linux.intel.com>
+Message-ID: <b8407f3ebaa1e5d24750551f4ad4f3aa@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
  definitions=2020-05-27_03:2020-05-27,
  2020-05-27 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ adultscore=0 suspectscore=0 cotscore=-2147483648 impostorscore=0
+ malwarescore=0 mlxlogscore=704 mlxscore=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1011 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2005270107
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,26 +101,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: richard.marian.thomaiyar@linux.intel.com, suryakanth.sekar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Hi Vikram,
 
+On 2020-05-27 09:03, Bodireddy, Vikram wrote:
+> +Richard
+> 
+> On 25-05-2020 15:29, Bodireddy, Vikram wrote:
+>> Hi Andriana,
+>> 
+>> We are working on enabling OpenBMC eMMC support for Intel platforms.
+>> 
+>> I see that you had started on it, and enabling it for ibm platforms.
+>> 
+>> We would like to co-work with you to get to know eMMC support status 
+>> and  to contribute further to complete it.
 
-We have a workgroup this morning. The meeting agenda today includes:
+Great!
 
+>> 
+>> Can you please help with the current status of OpenBMC eMMC support?
 
-1. Working demo of Vue progress
-2. Help Wanted functionality review
-3. Design Review stories review
+For code update support, I’ll be pushing changes to gerrit for 
+phosphor-bmc-code-mgmt today/tomorrow to support eMMC.
+On the build side, there are a few WIP changes that I’ll be refreshing 
+this week as well, will tag them as ‘mmc’ on gerrit to be able to 
+find them, some previous commits have the topic ‘wic’ and ‘mmc’ 
+already but are in Abandoned or WIP, will be cleaning them up this week.
+Updates to the emmc doc: 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/28443
 
-Visit the wiki page for details for joining the meeting.
+>> 
+>> Also can you let us know your availability this week for a sync 
+>> meeting on the same?
 
-OpenBMC GUI Design Workgroup Wiki: https://github.com/openbmc/openbmc/wiki/=
-GUI-Design-work-group
+Ping me on IRC, any time during the day CST time, or if it's later at 
+night like 8/9pm CST time we can have Joel/Andrew J join us as well.
 
-=20
-Derick Montague
-FED Lead | OpenBMC Design Team Lead
-Cognitive Systems User Experience
-
+>> 
+>> Thanks
+>> 
+>> Vikram
+>> 
