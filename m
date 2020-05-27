@@ -2,59 +2,41 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 857E01E4DCB
-	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 21:01:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F8621E4EFF
+	for <lists+openbmc@lfdr.de>; Wed, 27 May 2020 22:13:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49XKtz3JP7zDqVW
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 05:01:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49XMV34M4kzDqWf
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 06:13:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=apparao.puli@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49XKqH4JNYzDqWp
- for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 04:58:33 +1000 (AEST)
-IronPort-SDR: AzVYF9uj2PL/FIlL3qR7vNqKr3jOzS29Ti+E1+7lC4avOHLuOHqNYAMWkhinNJVtZc5sGlb4Xg
- NS0AcPy0zIOg==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 May 2020 11:58:18 -0700
-IronPort-SDR: 2mhvx9vcQyjWZ1wWWCFDl9Jgo5eXmhZJD9qTld4XXjTZCQVun8K6TFoEygxAy/2+DCCUqXBEWX
- 3r+Y3G+ZOEIA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,442,1583222400"; 
- d="scan'208,217";a="291701124"
-Received: from apuli-mobl.gar.corp.intel.com (HELO [10.215.122.167])
- ([10.215.122.167])
- by fmsmga004.fm.intel.com with ESMTP; 27 May 2020 11:58:14 -0700
-Subject: Re: Redfish EventService Implementation
-To: RAJESWARAN THILLAIGOVINDAN <rajeswaran.thillaigovindan@gmail.com>,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>, openbmc@lists.ozlabs.org
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <7a3d4141-ff5f-794a-6803-88a8bcfa3e02@gmail.com>
- <1a22b091-675c-3e1d-b57a-d44b3ba5d4e0@linux.intel.com>
- <813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com>
- <d27f94a5-7195-422a-9442-9e5e3e0aaae7@linux.intel.com>
- <23e93766-980b-2bd1-fc8c-bb5c18b962eb@gmail.com>
- <ea71f5a6-1e63-9e04-f0ab-edbbce1ec162@linux.intel.com>
- <deed2104-2703-4dd8-8180-f9c4f8fffaee@gmail.com>
-From: "Puli, Apparao" <apparao.puli@linux.intel.com>
-Message-ID: <fc0c20a9-f132-4dc6-d27a-d6b09b4900d7@linux.intel.com>
-Date: Thu, 28 May 2020 00:28:12 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XMPf60YbzDqVq
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 06:09:58 +1000 (AEST)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 04RK91F9011491;
+ Wed, 27 May 2020 23:09:01 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
+ id B3F42639C0; Wed, 27 May 2020 23:09:01 +0300 (IDT)
+From: Tali Perry <tali.perry1@gmail.com>
+To: ofery@google.com, brendanhiggins@google.com, avifishman70@gmail.com,
+ tmaimon77@gmail.com, kfting@nuvoton.com, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
+ wsa@the-dreams.de, andriy.shevchenko@linux.intel.com
+Subject: [PATCH v14 0/3] i2c: npcm7xx: add NPCM i2c controller driver
+Date: Wed, 27 May 2020 23:08:17 +0300
+Message-Id: <20200527200820.47359-1-tali.perry1@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-In-Reply-To: <deed2104-2703-4dd8-8180-f9c4f8fffaee@gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------EBD67F09E2639389D4EEAA47"
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,630 +48,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, kbuild test robot <lkp@intel.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, linux-i2c@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------EBD67F09E2639389D4EEAA47
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+This patch set adds i2c controller support 
+for the Nuvoton NPCM Baseboard Management Controller (BMC).
 
-Rajes,
+NPCM7xx includes 16 I2C controllers. This driver operates the controller.
+This module also includes a slave mode.
 
-    The dictionary to map Redfish resourceType and D-Bus object path( I 
-believe URI intern) is good. It will be great if you share design 
-document, if its done.
+---
+v14 -> v13:
+	- Fix yaml example: add missing include.
+	- Replace all udelay to usleep_range, except one which is called from
+	  irq.
+	- Fix compilation error (module_platfrom_init conflict).
+	- debugfs counters always updated. Counting till max value,
+	  then stop counting.
+	- Rename bus-frequency to clock-frequency.
+	- Remove unused variables.
+v13 -> v12:
+	- Fix yaml example. Issue found by an updated dt_binding_check.
+	- remove double spacing. indentation issues.
+	- remove ifdef DEBUG_FS around __init and __exit.
+	- debugfs and counters are always present in bus struct.
+	- Fix npcm_i2c_write_fifo_slave flow.
+	- Remove version number.
+v12 -> v11:
+	- Fix according to maintainer comments.
+	- debugfs simplified (usedebugfs_create_u64).
+	- slave read fifo split from master read fifo.
+v11 -> v10:
+	- Fix according to maintainer comments.
+	- Init clk simplified.
+	- Comments in c99
+	- Split master irq function.
+	- debugfs not mandatory.
+	- yaml file fix.
 
-At the moment, redfish event logs file(/var/log/redfish) doesn't have 
-ResourceTypes and OriginResource fields. The Existing redfish event log 
-implementation(log service) also doesn't have support for that. You can 
-propose design change for same along with how it is used in event log 
-service. Same thing, can be adopted to EventService, once its agreed by 
-OEM's( I am thinking, it should go under new OEM specific compiler flag. 
-But that we can ratify later).
+v10 -> v9:
+	- Fix according to maintainer comments.
+	- binding file changed to yaml format.
+	- Shorten recovery flow.
+	- Add support for health monitoring counters.
 
-Thanks,
+v9 -> v8:
+	- Fix according to maintainer comments.
+	- Split lines of iowrite..(ioread..) to separate lines.
+	- Use readx_poll_timeout_atomic
+	- resolve various style issues.
+	 
+v8 -> v7:
+	- Split to two commits, one for master, one for slave.
+	- Rename smb to i2c.
+	- Remove global vars.
 
--Appu
+v7 -> v6:
+	- Rebased on Linux 5.4-rc8  (was Linux 5.4-rc7).
+	- Fix issue found by kbuild test robot (redundant include).
+	- Note: left a warning related to fall through. This fall through is
+	  intentional.
+	
+v6 -> v5:
+	- Update documentation
 
-On 5/27/2020 5:20 PM, RAJESWARAN THILLAIGOVINDAN wrote:
->
-> Apparao,
->
-> Thanks a lot for your suggestions. We lean towards using a dictionary 
-> to map Redfish ResourceType to D-Bus objects path and vice versa and 
-> then using D-Bus match to generate life cycle events. This way, the 
-> changes are limited to bmcweb. The resource type and the origin 
-> resource URI will be included in the event log. This requires change 
-> in the format of event log file /var/log/redfish. I have commented the 
-> same in the server sent event patch that you have uploaded. Kindly see 
-> if you can leave the parsing of file to the OEMs. That way, the 
-> existing infrastructure can be used by the OEMs to support other 
-> filtering mechanisms as defined in the specification.
->
-> Thanks,
-> Rajes
->
->
-> On 27-05-2020 09:18, Puli, Apparao wrote:
->>
->> Hi Rajeswaran,
->>
->>   Thanks for your mail. At the moment, I don't have plans to support 
->> the "ResourceTypes", "OriginResources" based filtering.  Basically 
->> Intel uses file systems based redfish event logs( journalctl -> 
->> rsync-> filesystem) and doesn't use D-Bus mechanism like IBM uses. So 
->> I am not much familiar with D-Bus logging but some of the suggestions:
->>
->>  1) While logging redfish events over D-Bus itself,  it can provide 
->> details on ResourceTypes and OriginResource URI/Path.
->>
->>      This is ideal and most efficient way. Since  we walked a walked 
->> long distance from start, Its hard to modify all the services to uses 
->> these 2 new input parameters while logging events( Requires change in 
->> almost all repo's)
->>
->> 2) For resourcesTypes: Can have mapping dictionary against all 
->> MessageId's. For OriginResources: I believe, event log over D-Bus is 
->> already holding the Path. If so, last 3/4 nodes of uri can be taken 
->> and mapped against the resources and that can be used in Event 
->> filtering. We did used same mechanism in case of telemetry  while 
->> mapping MetricReportDefinitions to URI.
->>
->> Hope this helps.
->>
->> Thanks,
->>
->> -Appu
->>
->>
->> On 5/26/2020 5:50 PM, RAJESWARAN THILLAIGOVINDAN wrote:
->>>
->>> Apparao,
->>>
->>> I see that you have uploaded a 
->>> patch(https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/32441) 
->>> for supporting server sent events. This patch supports event 
->>> filtering based on registry prefix  and/or messageId.
->>>
->>> I would like to know if you have any plan to support event filtering 
->>> based on resource type. If so, I would like to work together for a 
->>> better solution. Earlier, I have proposed a solution based on D-Bus 
->>> match using a dictionary. With that approach, the major challenge is 
->>> to map Redfish resource and properties to D-Bus object and 
->>> properties respectively.   If D-Bus applications are modified to 
->>> include resource type and origin of condition in the event, then 
->>> there is no need for a map. But,that brings Redfish terminology to 
->>> the application. Also, this will become an overhead if an OEM is not 
->>> interested in Redfish event service.
->>>
->>> Thanks,
->>> Rajes
->>> On 25-02-2020 19:36, Puli, Apparao wrote:
->>>>
->>>> Hi Ratan,
->>>>
->>>>    Comments in-line
->>>>
->>>> On 2/24/2020 12:07 PM, Ratan Gupta wrote:
->>>>>
->>>>> Hi Apparao,
->>>>>
->>>>> On 2/20/20 12:49 AM, Puli, Apparao wrote:
->>>>>> Hi,
->>>>>>
->>>>>>   I am sorry for late response as this mail is buried under and 
->>>>>> got struck back of my mind.
->>>>>>
->>>>>> As i did mentioned in EventService design document, EventLog 
->>>>>> Monitor service is not common across the organizations( Example: 
->>>>>> Intel uses the redfish event logs file and inotify mechanism for 
->>>>>> monitoring the event logs. Where as IBM uses d-bus event log 
->>>>>> mechanism and they can relay on match rules). That said 
->>>>>> challenges with ResourceType mapping will be different in both 
->>>>>> monitoring mechanisms. This is good point. Initially when i 
->>>>>> started EventService design, i thought we can have mapping in 
->>>>>> bmcweb for ResourceTypes with set of MessageID's for Logged 
->>>>>> events ( As per Intel design) but not sure that may become 
->>>>>> difficult when we expand supported ResourceTypes.
->>>>>
->>>>> If I am getting correctly, Here is the flow which Intel uses.
->>>>>
->>>>>  1. Individual repo have to push the logs using sd_journal_send
->>>>>     which will write to the file(/var/log/redfish) by using
->>>>>     rsyslog daemon
->>>>>
->>>>> sd_journal_send("MESSAGE=%s","journal text","PRIORITY=%i", <LOG_LEVEL>,
->>>>>                  "REDFISH_MESSAGE_ID=%s",
->>>>>                  "ResourceEvent.1.0.ResourceCreated",NULL);
->>>>>
->>>>>       * How you would populate the "OriginOfCondition" during
->>>>>         sending of event?
->>>>>         (https://redfish.dmtf.org/schemas/v1/Event.v1_4_1.json)
->>>>>
->>>> Currently in logServices( logEntry),  we are not reporting the 
->>>> "OriginOfCondition" property as per schema. I will check with 
->>>> Jason( Who wrote the logService) and get back on this.
->>>>
->>>> BTW can you give me how this information is fetched in IBM way of 
->>>> LogService implementation( D-Bus)? If you already ratified any 
->>>> such, i think we can leverage.  If not, We work together for solution.
->>>>
->>>>>       * Any plan to add resource path in this journal message
->>>>>         which tells that this is the path for which resource
->>>>>         created event generated.
->>>>>
->>>> Same as above.
->>>>>
->>>>>       * Would the path be "Redfish Path/ D-bus Path"?
->>>>>
->>>> As per Redfish specification, This should be "@odata.id" which 
->>>> means it should be of resource uri and so we can't use d-bus path 
->>>> here for OriginOfConditions.
->>>>>
->>>>>       * Where the mapping would be done between D-busPath/Redfish
->>>>>         Resource path?
->>>>>
->>>>>      
->>>>>           Cons: Every application have to make the change(use sd_journal_send).
->>>>>           My thought is backend application should not be aware of the redfish terminlogy.
->>>>
->>>> Having separate process only for this mapping may not be good( No 
->>>> different from maintaining that map inside bmcweb as there won't be 
->>>> any other consumers). Ideal way is, that should be mapped while 
->>>> logging logEntry's itself. But we are not doing it currently which 
->>>> need to be re-looked. Give me some time, I will think and check 
->>>> with other folks and get back.
->>>>
->>>>> *2.* Some application(bmcweb) would do the Inotify on the 
->>>>> path(/var/log/redfish) and send the event once there is any 
->>>>> activity on this file.
->>>>>
->>>>> > I thought we can have mapping in bmcweb for ResourceTypes with set of MessageID's for Logged events ( As 
->>>>> per Intel design)
->>>>>
->>>>>      Can you explain more here. What is your plan? How you would do the Resource Type based event filtering?REDFISH_MESSAGE_ID is different than the resource type.
->>>> Initially i thought "ResourceType" based event filtering can be 
->>>> done using minimal mapping( Using MessageID and args). But that 
->>>> will work for minimal set. If the supported ResourceTypes grows, we 
->>>> will have bigger challenges which i can sense it now.  Anyway, 
->>>> Supported Resources are completely implementation specific. If this 
->>>> value is empty means, by default all event logs will be sent to 
->>>> subscribers. This is what we can start with before supported  
->>>> ResourceTypes list grows.
->>>>>>
->>>>>> As per my reading from below query, You are looking at d-bus 
->>>>>> match rules and ResourceTypes mapping which is more specific to 
->>>>>> d-bus event logging(IBM way of implementing event logging). 
->>>>>> reading it from journal logs will give more information but that 
->>>>>> will impact the performance to large extent. This might be one of 
->>>>>> the reason why we (Intel) uses Redfish message ID while logging 
->>>>>> redfish events logs to journal(You can refer design document for 
->>>>>> same at 
->>>>>> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md). 
->>>>>> In opinion, in your d-bus if you are using some kind of 
->>>>>> filter(Example REDFISH_MESSAGE_ID) while logging in journal logs 
->>>>>> for all events and figure out the way to monitor the journal logs 
->>>>>> without impacting the performance, that should be ok as long as 
->>>>>> match filters are satisfied for Redfish EventService 
->>>>>> subscriptions and supported Types(Again differs with 
->>>>>> implementation).
->>>>>>
->>>>>> Thanks,
->>>>>>
->>>>>> -Appu
->>>>>>
->>>>>> On 2/10/2020 1:52 AM, RAJESWARAN THILLAIGOVINDAN wrote:
->>>>>>> ApparaRao.
->>>>>>>
->>>>>>> As you have shown interest in this feature and submitted the 
->>>>>>> design document, do you have any opinion on this? Do you see any 
->>>>>>> merit in using D-Bus match in bmcweb to create event logs for 
->>>>>>> life cycle events? Please feel free to weigh in.
->>>>>>>
->>>>>>> Thanks,
->>>>>>> Rajes
->>>>>>>
->>>>>>> On 01-02-2020 02:23, RAJESWARAN THILLAIGOVINDAN wrote:
->>>>>>>> Hi,
->>>>>>>>
->>>>>>>> I am going through the bmcweb code for implementing Redfish 
->>>>>>>> EventService based on the design document 
->>>>>>>> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749. This 
->>>>>>>> design is hooked to the journal based Redfish Event Logging. 
->>>>>>>> For life cycle events(ResourceAdded, ResourceRemoved, 
->>>>>>>> ResourceUpdated),  using D-Bus match, bmcweb can create an 
->>>>>>>> event log. This requires a JSON dictionary, comprising an array 
->>>>>>>> of Redfish Resource Name and the D-Bus path. This approach 
->>>>>>>> works only in case of one to one mapping of Redfish Resource 
->>>>>>>> Name and the D-Bus path. For propertiesChanged events, if the 
->>>>>>>> Redfish Resource property is not on the same D-Bus path or the 
->>>>>>>> Redfish Resource property name is different from the D-Bus 
->>>>>>>> property name, then an additional JSON dictionary to maintain 
->>>>>>>> this information is required. With D-Bus match alone in the 
->>>>>>>> bmcweb, Redfish EventService can't be fully supported. For the 
->>>>>>>> Message Registers and the Resource Types that are supported, 
->>>>>>>> the relevant OpenBMC application must create an event log in 
->>>>>>>> the journal using either the phosphor::logging::entry or 
->>>>>>>> sd_journal_send() command.
->>>>>>>>
->>>>>>>> After realizing that with D-Bus match in the bmcweb alone can't 
->>>>>>>> help to fully implement EventService, I prefer to avoid using 
->>>>>>>> D-Bus match in bmcweb. Instead, I prefer to modify the OpenBMC 
->>>>>>>> application that generated the event to create an event log in 
->>>>>>>> the journal. Do you see any advantage of using combination of 
->>>>>>>> D-Bus match in the bmcweb wherever it is possible and changes 
->>>>>>>> to OpenBMC application in other cases to create an event log ?
->>>>>>>>
->>>>>>>> Your views are highly appreciated.
->>>>>>>>
->>>>>>>> Thanks,
->>>>>>>> Rajes
->>>>>>>
->>>>> Thanks
->>>>> Ratan
->>>>>
->>>>>
+v5 -> v4:
+	- support recovery
+	- master-slave switch support needed for IPMB
 
---------------EBD67F09E2639389D4EEAA47
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
+v4 -> v3:
+	- typo on cover letter.
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Rajes,</p>
-    <p>   The dictionary to map Redfish resourceType and D-Bus object
-      path( I believe URI intern) is good. It will be great if you share
-      design document, if its done. <br>
-    </p>
-    <p>At the moment, redfish event logs file(/var/log/redfish) doesn't
-      have ResourceTypes and OriginResource fields. The Existing redfish
-      event log implementation(log service) also doesn't have support
-      for that. You can propose design change for same along with how it
-      is used in event log service. Same thing, can be adopted to
-      EventService, once its agreed by OEM's( I am thinking, it should
-      go under new OEM specific compiler flag. But that we can ratify
-      later).</p>
-    <p>Thanks,</p>
-    <p>-Appu<br>
-    </p>
-    <div class="moz-cite-prefix">On 5/27/2020 5:20 PM, RAJESWARAN
-      THILLAIGOVINDAN wrote:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:deed2104-2703-4dd8-8180-f9c4f8fffaee@gmail.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <p>Apparao,</p>
-      <p>Thanks a lot for your suggestions. We lean towards using a
-        dictionary to map Redfish ResourceType to D-Bus objects path and
-        vice versa and then using D-Bus match to generate life cycle
-        events. This way, the changes are limited to bmcweb. The
-        resource type and the origin resource URI will be included in
-        the event log. This requires change in the format of event log
-        file /var/log/redfish. I have commented the same in the server
-        sent event patch that you have uploaded. Kindly see if you can
-        leave the parsing of file to the OEMs. That way, the existing
-        infrastructure can be used by the OEMs to support other
-        filtering mechanisms as defined in the specification.</p>
-      Thanks,<br>
-      Rajes<br>
-      <p> <br>
-      </p>
-      <div class="moz-cite-prefix">On 27-05-2020 09:18, Puli, Apparao
-        wrote:<br>
-      </div>
-      <blockquote type="cite"
-        cite="mid:ea71f5a6-1e63-9e04-f0ab-edbbce1ec162@linux.intel.com">
-        <meta http-equiv="Content-Type" content="text/html;
-          charset=UTF-8">
-        <p>Hi Rajeswaran,</p>
-        <p>  Thanks for your mail. At the moment, I don't have plans to
-          support the "ResourceTypes", "OriginResources" based
-          filtering.  Basically Intel uses file systems based redfish
-          event logs( journalctl -&gt; rsync-&gt; filesystem) and
-          doesn't use D-Bus mechanism like IBM uses. So I am not much
-          familiar with D-Bus logging but some of the suggestions:</p>
-        <p> 1) While logging redfish events over D-Bus itself,  it can
-          provide details on ResourceTypes and OriginResource URI/Path.
-          <br>
-        </p>
-        <p>     This is ideal and most efficient way. Since  we walked a
-          walked long distance from start, Its hard to modify all the
-          services to uses these 2 new input parameters while logging
-          events( Requires change in almost all repo's)<br>
-        </p>
-        <p>2) For resourcesTypes: Can have mapping dictionary against
-          all MessageId's. For OriginResources: I believe, event log
-          over D-Bus is already holding the Path. If so, last 3/4 nodes
-          of uri can be taken and mapped against the resources and that
-          can be used in Event filtering. We did used same mechanism in
-          case of telemetry  while mapping MetricReportDefinitions to
-          URI.</p>
-        <p>Hope this helps.</p>
-        <p>Thanks,</p>
-        <p>-Appu  <br>
-        </p>
-        <p><br>
-        </p>
-        <div class="moz-cite-prefix">On 5/26/2020 5:50 PM, RAJESWARAN
-          THILLAIGOVINDAN wrote:<br>
-        </div>
-        <blockquote type="cite"
-          cite="mid:23e93766-980b-2bd1-fc8c-bb5c18b962eb@gmail.com">
-          <meta http-equiv="Content-Type" content="text/html;
-            charset=UTF-8">
-          <p>Apparao, <br>
-          </p>
-          <p>I see that you have uploaded a patch(<a
-              class="moz-txt-link-freetext"
-              href="https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/32441"
-              moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/32441</a>)
-            for supporting server sent events. This patch supports event
-            filtering based on registry prefix  and/or messageId.  <br>
-          </p>
-          <p>I would like to know if you have any plan to support event
-            filtering based on resource type. If so, I would like to
-            work together for a better solution. Earlier, I have
-            proposed a solution based on D-Bus match using a dictionary.
-            With that approach, the major challenge is to map Redfish
-            resource and properties to D-Bus object and properties
-            respectively.   If D-Bus applications are modified to
-            include resource type and origin of condition in the event,
-            then there is no need for a map. But,that brings Redfish
-            terminology to the application. Also, this will become an
-            overhead if an OEM is not interested in Redfish event
-            service. <br>
-          </p>
-          Thanks,<br>
-          Rajes<br>
-          <div class="moz-cite-prefix">On 25-02-2020 19:36, Puli,
-            Apparao wrote:<br>
-          </div>
-          <blockquote type="cite"
-            cite="mid:d27f94a5-7195-422a-9442-9e5e3e0aaae7@linux.intel.com">
-            <meta http-equiv="Content-Type" content="text/html;
-              charset=UTF-8">
-            <p>Hi Ratan,</p>
-            <p>   Comments in-line<br>
-            </p>
-            <div class="moz-cite-prefix">On 2/24/2020 12:07 PM, Ratan
-              Gupta wrote:<br>
-            </div>
-            <blockquote type="cite"
-              cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
-              <meta http-equiv="Content-Type" content="text/html;
-                charset=UTF-8">
-              <p>Hi Apparao,</p>
-              <div class="moz-cite-prefix">On 2/20/20 12:49 AM, Puli,
-                Apparao wrote:<br>
-              </div>
-              <blockquote type="cite"
-                cite="mid:1a22b091-675c-3e1d-b57a-d44b3ba5d4e0@linux.intel.com">Hi,
-                <br>
-                <br>
-                  I am sorry for late response as this mail is buried
-                under and got struck back of my mind. <br>
-                <br>
-                As i did mentioned in EventService design document,
-                EventLog Monitor service is not common across the
-                organizations( Example: Intel uses the redfish event
-                logs file and inotify mechanism for monitoring the event
-                logs. Where as IBM uses d-bus event log mechanism and
-                they can relay on match rules). That said challenges
-                with ResourceType mapping will be different in both
-                monitoring mechanisms. This is good point. Initially
-                when i started EventService design, i thought we can
-                have mapping in bmcweb for ResourceTypes with set of
-                MessageID's for Logged events ( As per Intel design) but
-                not sure that may become difficult when we expand
-                supported ResourceTypes. <br>
-              </blockquote>
-              <p><tt>If I am getting correctly, Here is the flow which
-                  Intel uses.</tt></p>
-              <ol>
-                <li><tt>Individual repo have to push the logs using
-                    sd_journal_send which will write to the
-                    file(/var/log/redfish) by using rsyslog daemon</tt></li>
-              </ol>
-              <pre><span class="pl-en">          sd_journal_send</span>(<span class="pl-s"><span class="pl-pds">"</span>MESSAGE=%s<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>journal text<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>PRIORITY=%i<span class="pl-pds">"</span></span>, &lt;LOG_LEVEL&gt;,
-                <span class="pl-s"><span class="pl-pds">"</span>REDFISH_MESSAGE_ID=%s<span class="pl-pds">"</span></span>,
-                <span class="pl-s"><span class="pl-pds">"</span>ResourceEvent.1.0.ResourceCreated<span class="pl-pds">"</span></span>, <span class="pl-c1">NULL</span>);
+v3 -> v2:
+	- fix dt binding: compatible name: omit "bus"
 
-</pre>
-              <blockquote>
-                <ul>
-                  <li> <tt>How you would populate the "</tt><tt><span
-                        class="treeLabel objectLabel"
-                        aria-labelledby="default" data-level="3">OriginOfCondition</span></tt><tt>"
-                      during sending of event? (<a
-                        class="moz-txt-link-freetext"
-                        href="https://redfish.dmtf.org/schemas/v1/Event.v1_4_1.json"
-                        moz-do-not-send="true">https://redfish.dmtf.org/schemas/v1/Event.v1_4_1.json</a>)</tt></li>
-                </ul>
-              </blockquote>
-            </blockquote>
-            <p><tt>Currently in logServices( logEntry),  we are not
-                reporting the "OriginOfCondition" property as per
-                schema. I will check with Jason( Who wrote the
-                logService) and get back on this.</tt></p>
-            <p><tt>BTW can you give me how this information is fetched
-                in IBM way of LogService implementation( D-Bus)? If you
-                already ratified any such, i think we can leverage.  If
-                not, We work together for solution. <br>
-              </tt></p>
-            <blockquote type="cite"
-              cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
-              <blockquote>
-                <ul>
-                </ul>
-              </blockquote>
-              <blockquote>
-                <ul>
-                  <li><tt> Any plan to add resource path in this journal
-                      message which tells that this is the path for
-                      which resource created event generated.</tt></li>
-                </ul>
-              </blockquote>
-            </blockquote>
-            <tt>Same as above.</tt><br>
-            <blockquote type="cite"
-              cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
-              <blockquote>
-                <ul>
-                </ul>
-              </blockquote>
-              <blockquote>
-                <ul>
-                  <li><tt> Would the path be "Redfish Path/ D-bus Path"?</tt></li>
-                </ul>
-              </blockquote>
-            </blockquote>
-            As per Redfish specification, This should be "@odata.id"
-            which means it should be of resource uri and so we can't use
-            d-bus path here for OriginOfConditions.<br>
-            <blockquote type="cite"
-              cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
-              <blockquote>
-                <ul>
-                  <li><tt>Where the mapping would be done between
-                      D-busPath/Redfish Resource path?</tt></li>
-                </ul>
-              </blockquote>
-              <pre>    
-         Cons: Every application have to make the change(use sd_journal_send).
-         My thought is backend application should not be aware of the redfish terminlogy.</pre>
-            </blockquote>
-            <p>Having separate process only for this mapping may not be
-              good( No different from maintaining that map inside bmcweb
-              as there won't be any other consumers). Ideal way is, that
-              should be mapped while logging logEntry's itself. But we
-              are not doing it currently which need to be re-looked.
-              Give me some time, I will think and check with other folks
-              and get back.<br>
-            </p>
-            <blockquote type="cite"
-              cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
-              <p><tt>  <b> 2.</b> Some application(bmcweb) would do the
-                  Inotify on the path(/var/log/redfish) and send the
-                  event once there is any activity on this file.</tt></p>
-              <pre>&gt; I thought we can have mapping in bmcweb for ResourceTypes with set of MessageID's for Logged events ( As 
-per Intel design)
+v2 -> v1:
+	- run check patch in strict mode.
+	- use linux crc.
+	- define regs in constant offset without base.
+	- remove debug prints.
+	- no declarations for local functions.
+	
+v1: initial version
 
-    Can you explain more here. What is your plan? How you would do the Resource Type based event filtering? <span class="pl-s">REDFISH_MESSAGE_ID is different than the resource type.</span></pre>
-            </blockquote>
-            Initially i thought "ResourceType" based event filtering can
-            be done using minimal mapping( Using MessageID and args).
-            But that will work for minimal set. If the supported
-            ResourceTypes grows, we will have bigger challenges which i
-            can sense it now.  Anyway, Supported Resources are
-            completely implementation specific. If this value is empty
-            means, by default all event logs will be sent to
-            subscribers. This is what we can start with before
-            supported  ResourceTypes list grows.<br>
-            <blockquote type="cite"
-              cite="mid:813853bb-b3a3-79a7-94c5-bbe487c2902b@linux.vnet.ibm.com">
-              <pre><span class="pl-s"><span class="pl-pds"></span></span><span class="pl-s"></span></pre>
-              <blockquote type="cite"
-                cite="mid:1a22b091-675c-3e1d-b57a-d44b3ba5d4e0@linux.intel.com">
-                <br>
-                As per my reading from below query, You are looking at
-                d-bus match rules and ResourceTypes mapping which is
-                more specific to d-bus event logging(IBM way of
-                implementing event logging). reading it from journal
-                logs will give more information but that will impact the
-                performance to large extent. This might be one of the
-                reason why we (Intel) uses Redfish message ID while
-                logging redfish events logs to journal(You can refer
-                design document for same at <a
-                  class="moz-txt-link-freetext"
-href="https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md"
-                  moz-do-not-send="true">https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md</a>).
-                In opinion, in your d-bus if you are using some kind of
-                filter(Example REDFISH_MESSAGE_ID) while logging in
-                journal logs for all events and figure out the way to
-                monitor the journal logs without impacting the
-                performance, that should be ok as long as match filters
-                are satisfied for Redfish EventService subscriptions and
-                supported Types(Again differs with implementation). <br>
-                <br>
-                Thanks, <br>
-                <br>
-                -Appu <br>
-                <br>
-                On 2/10/2020 1:52 AM, RAJESWARAN THILLAIGOVINDAN wrote:
-                <br>
-                <blockquote type="cite">ApparaRao. <br>
-                  <br>
-                  As you have shown interest in this feature and
-                  submitted the design document, do you have any opinion
-                  on this? Do you see any merit in using D-Bus match in
-                  bmcweb to create event logs for life cycle events? 
-                  Please feel free to weigh in. <br>
-                  <br>
-                  Thanks, <br>
-                  Rajes <br>
-                  <br>
-                  On 01-02-2020 02:23, RAJESWARAN THILLAIGOVINDAN wrote:
-                  <br>
-                  <blockquote type="cite">Hi, <br>
-                    <br>
-                    I am going through the bmcweb code for implementing
-                    Redfish EventService based on the design document <a
-                      class="moz-txt-link-freetext"
-                      href="https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749"
-                      moz-do-not-send="true">https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749</a>.
-                    This design is hooked to the journal based Redfish
-                    Event Logging. For life cycle events(ResourceAdded,
-                    ResourceRemoved, ResourceUpdated),  using D-Bus
-                    match, bmcweb can create an event log. This requires
-                    a JSON dictionary, comprising an array of Redfish
-                    Resource Name and the D-Bus path. This approach
-                    works only in case of one to one mapping of Redfish
-                    Resource Name and the D-Bus path. For
-                    propertiesChanged events, if the Redfish Resource
-                    property is not on the same D-Bus path or the
-                    Redfish Resource property name is different from the
-                    D-Bus property name, then an additional JSON
-                    dictionary to maintain this information is required.
-                    With D-Bus match alone in the bmcweb, Redfish
-                    EventService can't be fully supported. For the
-                    Message Registers and the Resource Types that are
-                    supported, the relevant OpenBMC application must
-                    create an event log in the journal using either the
-                    phosphor::logging::entry or sd_journal_send()
-                    command. <br>
-                    <br>
-                    After realizing that with D-Bus match in the bmcweb
-                    alone can't help to fully implement EventService, I
-                    prefer to avoid using D-Bus match in bmcweb.
-                    Instead, I prefer to modify the OpenBMC application
-                    that generated the event to create an event log in
-                    the journal. Do you see any advantage of using
-                    combination of D-Bus match in the bmcweb wherever it
-                    is possible and changes to OpenBMC application in
-                    other cases to create an event log ? <br>
-                    <br>
-                    Your views are highly appreciated. <br>
-                    <br>
-                    Thanks, <br>
-                    Rajes <br>
-                  </blockquote>
-                  <br>
-                </blockquote>
-              </blockquote>
-              Thanks<br>
-              Ratan<br>
-              <p><br>
-              </p>
-            </blockquote>
-          </blockquote>
-        </blockquote>
-      </blockquote>
-    </blockquote>
-  </body>
-</html>
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reported-by: kbuild test robot <lkp@intel.com>
 
---------------EBD67F09E2639389D4EEAA47--
+---
+Tali Perry (3):
+  dt-bindings: i2c: npcm7xx: add NPCM I2C controller documentation
+  i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver
+  i2c: npcm7xx: Add support for slave mode for Nuvoton NPCM BMC I2C
+    controller driver.
+
+ .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     |   62 +
+ drivers/i2c/busses/Kconfig                    |    9 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-npcm7xx.c              | 2342 +++++++++++++++++
+ 4 files changed, 2414 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+ create mode 100644 drivers/i2c/busses/i2c-npcm7xx.c
+
+
+base-commit: b9bbe6ed63b2b9f2c9ee5cbd0f2c946a2723f4ce
+-- 
+2.22.0
+
