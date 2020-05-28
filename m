@@ -1,93 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B72821E6092
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 14:20:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 648DE1E60CA
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 14:28:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Xmx40ScwzDqQH
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 22:20:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Xn671dwbzDqVT
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 22:27:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=LbBOno0J; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=3HoskGYV; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=G76aDe80; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Xmj647ymzDqFF
- for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 22:09:46 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 6EACF5C01A5;
- Thu, 28 May 2020 08:09:44 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Thu, 28 May 2020 08:09:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=g5XaeQvJVGnH04rsnIPn5Umivqs
- LXvHCfUiVIaXKjBE=; b=LbBOno0JgIa4US5e29alqNl+q0scT1scPARx8v2jtUU
- 1UkO7lsxIC8CZliPfprLTHDBiPZU/aslvr2TvG0334sToDr/8nb0K2gYQm/fdVa1
- hCuH+/d5c6oxGp+o0Ky5MjpgMsoM1DZdgFn778FxGwNJAdmafI3AGPGs2lUGoUeD
- QANNGgCr527KNsgMleRkMxNipUG02vos1mo9TeTSVuLtJT//e22zT84e2w1Y6BGq
- 6fRqDLteyYZjkriPsXo/shpI+UeeW7VqNgnt0BTLBei+sq7eK9xxCpvFH6YjIjLF
- nR8ASjPfgxGRABT+c03bDwieWGoNu+ntNXCOszPLLSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=g5XaeQ
- vJVGnH04rsnIPn5UmivqsLXvHCfUiVIaXKjBE=; b=3HoskGYVf4SwlEhGje+V7P
- Hwsc+sbVwSwzyzEVNKuqcCpxlJvsdzHEIgoMgLszM3C+4v3WEFzKca4zokN856RH
- HHnGBxYtYpOWC0wT34oPsdAtZNu4qnoWDRh3IkrN82g10YXdFFNheFZzvlboqAJV
- XHm6OQLXPBB0t+l8r2vRv3KisEJ272+dGzYphMPWZbzBGXUafH/xvzLrQVk3e57+
- N/vKnSdUWFHFtcFlyHO+FOUUuFzYUhLPyE1Lux94cVOw3zBM/hASSu3HVQ6bqKVh
- LnnbcKBTaau/bvms7ybAA/YirF2eK+1v2a+BDiQGokrzZQVvXSHHdUA9W3YrJtXQ
- ==
-X-ME-Sender: <xms:B6rPXj9lj_mQYqZL4LLJPHu8f40TGIcGiJ_JlGKX7vWt8-j4b6zlNg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddviedgvdefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:B6rPXvvRDle3I0aOT_YC-ZoUz5pEebvH_L6ao_hlUiZyrPhH5tGMdg>
- <xmx:B6rPXhBCu5Z89RXrRd5Gy0uo9Z7-byJTVoONOum1nznOC7gbvh5ncg>
- <xmx:B6rPXvfsuHbyzozbuRf99r5vKuhNnJ3ASdZrdPoZAQ-HZVM-q3cejA>
- <xmx:CKrPXhZuRXQGJa_sOgBzndXDKMev6sbodCa0mBbkmyitLFLB725AOQ>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id AFA903060FE7;
- Thu, 28 May 2020 08:09:43 -0400 (EDT)
-Date: Thu, 28 May 2020 07:09:42 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49Xn2D3tZjzDqVZ
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 22:24:36 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04SCBNmf003736; Thu, 28 May 2020 08:24:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=q+No7kJENSL/GLtIVS2TO5KH2Wb4u3oPo+a3sT3isrE=;
+ b=G76aDe8032Anw2tC2iFooR8jf4jaMwc/csIhW+44AeibqXeLwL6I9NzoQs8EShu4n7sa
+ 9wp3khu3GtMplVtnlVOxHyeStAyho/lu0A9FAn/WcuHFbbDMnzjIXBGHD5T9OJ0FMxix
+ 55I8oHYudWJYloEy5WTnEgOzL4UjarGaKZ7XD0pqYW5g2jwHPRiKZQCe+n8t+WpoT5Wk
+ uXBeK3WbGil0qTwX3eTc+ujh+F41r8FSMakoEjMLcE4aBxF1u5MgGcT+avO+Bc6rYede
+ ST9f5ozowE7hwFQgNXSxxgm4NMjukC8PX1EzceALw7nXyq19T5QqjXvrc+Zxl+cBEQF+ aA== 
+Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.99])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 319qns7k8f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 May 2020 08:24:27 -0400
+Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
+ by ppma04ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04SCLUti002761;
+ Thu, 28 May 2020 12:24:25 GMT
+Received: from b06avi18626390.portsmouth.uk.ibm.com
+ (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
+ by ppma04ams.nl.ibm.com with ESMTP id 316uf91www-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 May 2020 12:24:24 +0000
+Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
+ [9.149.105.61])
+ by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id 04SCN8kx47841664
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 May 2020 12:23:08 GMT
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7A22311C058;
+ Thu, 28 May 2020 12:24:22 +0000 (GMT)
+Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D67E11C04A;
+ Thu, 28 May 2020 12:24:20 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.244.94])
+ by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Thu, 28 May 2020 12:24:19 +0000 (GMT)
 Subject: Re: D-Bus interface to provide data to entity manager
-Message-ID: <20200528120942.GD17541@heinlein>
+To: Patrick Williams <patrick@stwcx.xyz>
 References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
  <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
- <0a9b8934-a3be-aaa0-90c0-134f286df951@linux.intel.com>
- <c2872079-ffba-1788-69b5-50350e21f1a3@linux.vnet.ibm.com>
- <55702d05-66c0-275e-880b-06e6c7c1203e@linux.intel.com>
- <531a5ace-1537-dcc1-33c7-427470dada8b@linux.vnet.ibm.com>
- <5633c1da-1ca7-7913-6bcc-321b7663528b@linux.intel.com>
+ <20200528120331.GC17541@heinlein>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <0942393e-4475-5249-4918-4125e85ec554@linux.vnet.ibm.com>
+Date: Thu, 28 May 2020 17:54:18 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="3Gf/FFewwPeBMqCJ"
-Content-Disposition: inline
-In-Reply-To: <5633c1da-1ca7-7913-6bcc-321b7663528b@linux.intel.com>
+In-Reply-To: <20200528120331.GC17541@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-05-28_03:2020-05-28,
+ 2020-05-27 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 phishscore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 cotscore=-2147483648
+ spamscore=0 priorityscore=1501 impostorscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2005280080
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,75 +103,64 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
  "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, "Thomaiyar,
+ Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
  James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 28/05/20 5:33 pm, Patrick Williams wrote:
+> On Tue, May 26, 2020 at 06:26:27PM +0530, Deepak Kodihalli wrote:
+>> On 19/05/20 9:10 am, Deepak Kodihalli wrote:
+>> To do a) above, there are 3 options:
+>>
+>> 1) Propose a D-Bus interface in phosphor-dbus-interfaces. This was [2]
+>> in my original email above. The concern raised by Patrick here is that
+>> this interface is very specific to a protocol (PLDM in this case),
+>> whereas the phosphor D-Bus interfaces are mostly abstract and protocol
+>> agnostic.
+>>
+>> In my opinion, PLDM is also a data model, so PLDM specific D-Bus
+>> interfaces can enable two apps that are PLDM aware (for eg a PLDM
+>> requester app talking to the PLDM daemon) to talk to each other. I do
+>> see other protocol specific D-Bus interfaces as well (for eg related to
+>> SMBIOS). So I don't really understand the concern. The protocol specific
+>> interfaces do not preclude other abstract interfaces.
+> 
+> After thinking about it for a bit, I think this is my preference with
+> the design caveat that these are only consumed by processes which are
+> "FRU-to-Inventory" transformers.  I would suggest putting these
+> interfaces under the 'Inventory/' namespace somewhere to hopefully make
+> this clearer.
+> 
+> We have two implementations of these "FRU-to-Inventory" transformers: EM
+> and PIM.  Both of them have a form of dbus backdoor in order to get the
+> information they need to create the Inventory objects they host.  PIM uses
+> `Inventory/Manager`[1] and EM uses an undocumented `FruDevice` interface
+> between it and 'fru-device'.  Both of these implementations do
+> processing on the data they get (though, very minimal in the case of
+> PIM) and create `Inventory/Item`s as a result.
+> 
+> What I am worried about, and Richard seconded in his response, is the
+> details of PLDM (or any other protocol) starting to leak into other
+> processes.  We don't want people to notice that there is some piece of
+> information that isn't currently exposed via Inventory but happens to be
+> available in PLDM and start coding towards consuming it.  Hence, my
+> request that the design document the caveat I listed above.  We want to
+> limit the scope of applications that need to understand specific
+> protocols.
+> 
+> My suggestion would be to put these new proposed PLDM interfaces under
+> `Inventory/Source/PLDM`.  Anything under `Source` becomes one of these
+> "FRU-to-Inventory" transformational interfaces.
 
---3Gf/FFewwPeBMqCJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-I already responded with my overall design preference but had one point
-in the chain I wanted to discuss a bit more.
+Makes sense to me. This makes the intent clearer. I've updated my commit 
+on Gerrit. Please re-review.
 
-On Wed, May 27, 2020 at 10:49:38PM +0530, Thomaiyar, Richard Marian wrote:
->=20
-> [Richard]: If we are choosing this option, then we can use the existing=
-=20
-> Frudevice interface and use the PRODUCT_XYZ which is currently exposed.=
-=20
-> Almost all the PLDM Fru content will match the IPMI FRU, except few like=
-=20
-> SKU, version, description, Engineering_change_level & Vendor IANA (which=
-=20
-> we can expose as new properties in the same interface) ??
->=20
-> i.e. PLDM PartNumber is nothing but PRODUCT_PART_NUMBER in IPMI Fru etc.
+Thanks,
+Deepak
 
-The current FruDevice interface is effectively a private dbus API
-between EM and `fru-device` (which is also in the EM repo anyhow) and it
-doesn't follow either our dbus practices nor widely accepted ones.  Here
-are a few reasons:
+> 1. https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Inventory/Manager.interface.yaml
 
-    - FruDevice instances do not have the same properties.  Two
-      different IPMI FRU types create a different set of properties, so
-      you end up with dbus objects with a variety of interface layouts.
-
-    - The properties exposed are not documented and differ stylistically
-      from our existing, documented dbus objects.
-
-Right now, if we need to implement another FruDevice provider, such as
-will likely happen as Facebook implements our multi-host system, we have
-to reverse engineer the code in `fru-device`.  Ideally this would be
-refactored into a set of documented dbus interfaces under
-`Inventory/Source/IPMI` (or some equally reasonable name) so others
-could implement as needed.
-
---=20
-Patrick Williams
-
---3Gf/FFewwPeBMqCJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIyBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7PqgYACgkQqwNHzC0A
-wRmaGQ/4gwc7000lckBWjS3tZjKLuAaUw8wo0X50dzFh/kr6wAiH3Eum67U71zyr
-F9qYQJzjUsRs9jN5fq/HgyYzuapeeyEomi48rjq3aIk9LLv39zR/S0vdEEWNpnuO
-QHT7tkeFzClZ+DGgwa6SO8S6+J6wFXaP/rwcKOiRunD/OEN1Xl3kUNYyKGwUZ8Kn
-A96PuF4yDsB3l85G2B/SRdqrmzpdWjgrOgDAUCXSwlbmRXk0fdI5gtz7YiziD/5w
-tDDnIpSyvbG7ug+SkVmzuffRT/pEzicy3/nbDAR3OypKAe96U2Z4VOH1KfkJrPzc
-1PschAqkNt64nf4WIfMWtg2OoqhdmYXXcBWpZPKb0iKjY+oi+AtPZK6OlktYdeOm
-NdB0Xj8SO7tuvKJK8cSj0uV9uxrDmP+8mbj2UcS1TYKNPanRd1BGrKEptVWaVCx4
-RqAlD7dkk23V+x4eZLZj0cPyQZQmZkoS4QjJBaIg2DONrInBpw7LyZjvzSLky5IT
-oT5Uslk2AwpitHPcBSHmPML8Dip/GZu5bB3RHImzpmRkzkxZGQNtCK9DcG0pBLW/
-bo8Y5/oYI41UpyghUPyLEOZZ6403NGAXRAlOsKaMEwDc3AUW7XKV/iMj10eHPEz5
-Crpx3pweM3bV1YJ/6VYewACokbZuQEihkszfKx/WJdiNFOD23A==
-=Tdyh
------END PGP SIGNATURE-----
-
---3Gf/FFewwPeBMqCJ--
