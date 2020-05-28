@@ -1,81 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23DA81E52DC
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 03:21:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF0FA1E539B
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 04:01:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49XVJq41SszDqWp
-	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 11:21:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49XWCm185fzDqXG
+	for <lists+openbmc@lfdr.de>; Thu, 28 May 2020 12:01:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::643;
- helo=mail-pl1-x643.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=TwSyLC8e; dkim-atps=neutral
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
- [IPv6:2607:f8b0:4864:20::643])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=IrWPPhhS; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=JWpmLMlu; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49XVHs0xmZzDqQM;
- Thu, 28 May 2020 11:20:24 +1000 (AEST)
-Received: by mail-pl1-x643.google.com with SMTP id d3so10860702pln.1;
- Wed, 27 May 2020 18:20:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=VQ7LUQQZ/eVaGd5VEJD8oJklzM/fJyrG9ba3r7/1SoE=;
- b=TwSyLC8eiHi2IO8CR/d7V5Qvb8xA2M9Nl35lijvJ4ZPWcZraZiDNuo8HfBWx7Sce0X
- Bv6T8vUl/PB5CLJp1W7qmAOzmeZ9QHyynNj+YMnvfMcKbFghWLKAG5aGzrC/u8vi5e8W
- 0tMS0MLZLkC5NpVvwvIJffw9mqVRG9CtmOphbnhppofBjDvmZjURgRm07Vw7YZxOdw2w
- z7w2kEp2z29Ih7QX+RuXo9B11yKEbFZL0N/GqusxSgtfWrWhShEwv+PgcB7UMrtDYKeL
- LXxaHazBly6uVv34fK2vIy03U523QrWgP2a2wblyrA/JV5j/kh/v9+MO2rpiPOvETIYw
- 0d6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=VQ7LUQQZ/eVaGd5VEJD8oJklzM/fJyrG9ba3r7/1SoE=;
- b=mchAjlzqkmszFfnb6SAtmV1LYYGHk8pJ4YEutE9Oht1ubgDG+quweCObbc3pWRFdtZ
- G3Ost0bn0OGfsTNh8Ak4Ao+fgPpNO59LYDL+zayXXjE/3umseYjZIa/6FaA0xRCQqlPx
- 2l/IQLskUDT+HKkCqnuJV70SsSNSYqsK980mAep0ubAmNRRbgnvOnNDw8iaQDAVEKy23
- rc6wePtC7XEZpoVPOK8RgMLbCp33MNtRFa6cdppFdzgIpcq67vmAWkx0uVfgLiUBrOo2
- XM0vOCWib/sRO0kNeXapSIznGscImT9N0Q0A1kOC7rR6OPuYZQ6dDemkMMn5f2gNFjdi
- 6R6A==
-X-Gm-Message-State: AOAM532Ifhq7TnTYIRUy7+zqX2LzCxNdAr1Kfu3OwSta86fyKF62zi8m
- IkNPYlGQVjSVbSmI5AjkK14=
-X-Google-Smtp-Source: ABdhPJxxtSCpYuqOC2VnFEhiZ9l6NIkOXrrUOJLnOaecuTiUxgsIzz0zpHcFLL8l6Z397kEPj5y8Aw==
-X-Received: by 2002:a17:90a:2ec1:: with SMTP id
- h1mr1161911pjs.145.1590628818740; 
- Wed, 27 May 2020 18:20:18 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 ([2620:10d:c090:400::5:ccc9])
- by smtp.gmail.com with ESMTPSA id n21sm3523989pjo.25.2020.05.27.18.20.17
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Wed, 27 May 2020 18:20:18 -0700 (PDT)
-Date: Wed, 27 May 2020 18:20:11 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Felipe Balbi <balbi@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Chunfeng Yun <chunfeng.yun@mediatek.com>,
- Stephen Boyd <swboyd@chromium.org>, linux-usb@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: Re: [PATCH] usb: gadget: aspeed: fixup vhub port irq handling
-Message-ID: <20200528012010.GA30405@taoren-ubuntu-R90MNF91>
-References: <20200528011154.30355-1-rentao.bupt@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XWBV5kFqzDqW0
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 12:00:50 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 94AED9DB;
+ Wed, 27 May 2020 22:00:46 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Wed, 27 May 2020 22:00:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=D3UdPJp2cNxa1p2lMMQ/gO0GXzr
+ NLERsovRIlljKTLY=; b=IrWPPhhSjAV5ee2VnwMkpiaSECnQW/4F8zBYh1b/VUK
+ j4sTMBpJhy8hYjcWiBsAi221rTj5ZqUEI2JvG813/O+WowdJBQEM1Gphmg2v/2VG
+ ybJfrX/vkesy2bZ+tZOgvVTwcVc6yqIZDdcARFpTcWljDGzwjrImmeCmbY8Myk5X
+ uN2yYVscRZp/QZdXY11Mq0ZQdXJSo3X8oXz0uRY+NPk3/QYhkpuGTO8bjXDLCHMR
+ 0t+iUmn2nGRe/zziMXCQ4bm0k0JE3vq5OsA1r6ruD8egYPiXNsFEJiO4jyMwVlP3
+ CXkAQat54Xu52Av5ksZv9g1TVGlW0i9ni2JRmPg0YfA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=D3UdPJ
+ p2cNxa1p2lMMQ/gO0GXzrNLERsovRIlljKTLY=; b=JWpmLMluB/LyWWNnOQIFqx
+ hR6AiWOUCCED7eisxRaOa7DPSpqVKfMkemynPXpBWrjJNEGkY+/wJ6TIsARV/I1U
+ VQR+sj08QManj4gwY62xBlGcQDlOZ96HOmcobwceeEHHsvt74SoQA9TS6SkdGOrD
+ 3FNaRKitdRO277e+6z/79HR0Os3O56wUrED4AaOpewHXH3ij+5HdH0DhZt+cbJD/
+ K02tLku5NTuGJfC3kNGmCAxpONGuFJId8v5/gTpcVtLz+8lpBUMtFIuhPIQa1KZA
+ dlplj1wLLbe/QSXpeFTpJzAcz3NVDpMtQeiDUOmNICFvZ+OEhZWE5zsLxyYMUW4A
+ ==
+X-ME-Sender: <xms:TRvPXsAeTmfTsEiSkVUntbU6Iv5NMMDmxPzQ0YQMxwfGEJAXFmprCA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedruddvhedggeekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhephfejkeevffeguedtfeffvdffiedv
+ ffdukeegledvuddugeefheduffdugfdtieegnecuffhomhgrihhnpehophgvnhgsmhgtqd
+ hprhhojhgvtghtrdighiiinecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
+ htfigtgidrgiihii
+X-ME-Proxy: <xmx:TRvPXuiz2UzzK7wH06oaQd-tWKspTz3pvMt-EKuofAhZ-OMK5TvNNw>
+ <xmx:TRvPXvlhlFHdTWp-OyDc0ksX2J56VeeI8v2hsGPLyAGx8lXafAbwIA>
+ <xmx:TRvPXizZopAOT5VqGlYT6-QDYf5bKeagNp3zKCEyOPcKMTn4mSkOTw>
+ <xmx:ThvPXsN7Gafmq_nPYLGLvahc-EZsQrlycJI80UBf1UOA6EGv4ihYBg>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 880D43280065;
+ Wed, 27 May 2020 22:00:45 -0400 (EDT)
+Date: Wed, 27 May 2020 21:00:44 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Andrew Geissler <geissonator@gmail.com>
+Subject: Re: article on data in OpenBMC
+Message-ID: <20200528020044.GA17541@heinlein>
+References: <58a733f5aac22446c8cab43535aaa2a133a20717.camel@fuzziesquirrel.com>
+ <E3CB1347-0E32-416F-9837-A955BF0F0613@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="qDbXVdCdHGoSgWSk"
 Content-Disposition: inline
-In-Reply-To: <20200528011154.30355-1-rentao.bupt@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <E3CB1347-0E32-416F-9837-A955BF0F0613@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,69 +95,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ben,
 
-I sent out the follow-on patch per Greg's suggestion, and the purpose is
-to include the latest version (v4) of the original commit. As v4 was
-already Acked-by you, can I add the tag for this patch? Or are you
-willing to Ack it again?
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, May 26, 2020 at 10:56:19AM -0500, Andrew Geissler wrote:
+>=20
+>=20
+> > On May 22, 2020, at 3:46 PM, Brad Bishop <bradleyb@fuzziesquirrel.com> =
+wrote:
+> What=E2=80=99s your vision for this article? A doc repo? A wiki? Wikis def
+> make it more likely to get updated.
 
-Cheers,
+A few people asked similarly, but he had already submitted it to Gerrit
+before posting to the ML:
 
-Tao
+    https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/32735
 
-On Wed, May 27, 2020 at 06:11:54PM -0700, rentao.bupt@gmail.com wrote:
-> From: Tao Ren <rentao.bupt@gmail.com>
-> 
-> This is a follow-on patch for commit a23be4ed8f48 ("usb: gadget: aspeed:
-> improve vhub port irq handling"): for_each_set_bit() is replaced with
-> simple for() loop because for() loop runs faster on ASPEED BMC.
-> 
-> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> ---
->  drivers/usb/gadget/udc/aspeed-vhub/core.c | 10 +++-------
->  drivers/usb/gadget/udc/aspeed-vhub/vhub.h |  3 +++
->  2 files changed, 6 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> index cdf96911e4b1..be7bb64e3594 100644
-> --- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> +++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
-> @@ -135,13 +135,9 @@ static irqreturn_t ast_vhub_irq(int irq, void *data)
->  
->  	/* Handle device interrupts */
->  	if (istat & vhub->port_irq_mask) {
-> -		unsigned long bitmap = istat;
-> -		int offset = VHUB_IRQ_DEV1_BIT;
-> -		int size = VHUB_IRQ_DEV1_BIT + vhub->max_ports;
-> -
-> -		for_each_set_bit_from(offset, &bitmap, size) {
-> -			i = offset - VHUB_IRQ_DEV1_BIT;
-> -			ast_vhub_dev_irq(&vhub->ports[i].dev);
-> +		for (i = 0; i < vhub->max_ports; i++) {
-> +			if (istat & VHUB_DEV_IRQ(i))
-> +				ast_vhub_dev_irq(&vhub->ports[i].dev);
->  		}
->  	}
->  
-> diff --git a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-> index 2e5a1ef14a75..87a5dea12d3c 100644
-> --- a/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-> +++ b/drivers/usb/gadget/udc/aspeed-vhub/vhub.h
-> @@ -67,6 +67,9 @@
->  #define VHUB_IRQ_HUB_EP0_SETUP			(1 << 0)
->  #define VHUB_IRQ_ACK_ALL			0x1ff
->  
-> +/* Downstream device IRQ mask. */
-> +#define VHUB_DEV_IRQ(n)				(VHUB_IRQ_DEVICE1 << (n))
-> +
->  /* SW reset reg */
->  #define VHUB_SW_RESET_EP_POOL			(1 << 9)
->  #define VHUB_SW_RESET_DMA_CONTROLLER		(1 << 8)
-> -- 
-> 2.17.1
-> 
+--=20
+Patrick Williams
+
+--qDbXVdCdHGoSgWSk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7PG0oACgkQqwNHzC0A
+wRnJ/Q//X34H16aaqpFmbGyC/KHiUKNWSj7CbsEghQO8DJUV5VkUqszV3z/rBdAs
+Ue7Vkj9A4oh7s19rP1gl8CkvGdsnt4o3X3hJb+NZ/mfXhU99MimcBqwE2wq8N+DM
+22CpfZ3AfEUifxSGEJh2pUBwwY38CYX9FJNApMSSj7EOWPsBZEPYZ9Yyj5jFekq+
+sLNgGd+Zmy+bPpgc0NW/lGQHuc/xw7SIvdkH5j+HsBCduCWGqurTN4OfHiPU8Wfh
+pNB7hbGnxnuCHaO2bCZGRgSD4/Qe2G9aFikKBVRTX9o8YM7orVh87acOkS0eBr/2
+kSDYFS8sAzidHugy3GqdohctPW5DROy3ye0f0uz6tK6R33ZmJypBCaAyABBE8h7V
+6SAQvdOE06mkFIbAwpY0FKYm3/KKq84S3a2A3kP1uy5Fr6RGae4QnYrtRg1KZVq4
+bTY4WXHKC7snsMfXil1I86bl5pDm7Ko2cp9zm0EVU8SzQdNxaOO/GEFlGslnNpDE
+vtJxIsPOgoLeOfskxm5SEgT1pQTUk+BDL2qtWviyxaK+iUCibrq6o9nC6Fvw+ozs
+R1D1wPLsQmx2wDJO/2WUNHvJYWYJ2XaCkNik9T0UgQlooaWC0n4KNjmTWM5ehbov
++qlsDocA1nhBDALI9J41IyWVRQ9VN0khLOov5OFQkIt0N/crnFk=
+=aboB
+-----END PGP SIGNATURE-----
+
+--qDbXVdCdHGoSgWSk--
