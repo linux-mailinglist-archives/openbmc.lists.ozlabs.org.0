@@ -1,143 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC32D1E7214
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 03:36:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1BDC1E7216
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 03:37:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49Y6bf1YdtzDqb9
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 11:36:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49Y6cm6BDvzDqc1
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 11:37:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Void lookup limit
- of 2 exceeded) smtp.mailfrom=hcl.com (client-ip=2a01:111:f400:febc::71e;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=dhanapals@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hcl.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=gPz8XD0T; 
- dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=gPz8XD0T; 
- dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-hk2apc01on071e.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febc::71e])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=softfail (domain owner discourages use of this
+ host) smtp.mailfrom=lfprojects.org (client-ip=2607:f8b0:4864:20::12d;
+ helo=mail-il1-x12d.google.com; envelope-from=manager@lfprojects.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=lfprojects.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=lfprojects-org.20150623.gappssmtp.com
+ header.i=@lfprojects-org.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=yIuo0eHi; dkim-atps=neutral
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com
+ [IPv6:2607:f8b0:4864:20::12d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49Xjrv35VbzDqW4
- for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 20:01:13 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4YwS78+nIayIC57Kt/uGL+RaFLcq2Ia53SE14f8H438=;
- b=gPz8XD0TgOHm7LXazCoYATvkuXf8ZTX20nIqaeB1btVAg/5jd9vxasctBymXo3C2B2P5TNX4rHoVF5pghMFbofg2O6InTEm7gd5f9tjWxaZeWw4CAViAagaevKF/zPacV0CWW0MtgZkLJT5luQqLJ7jtwFf6n/r8alLkaL34LCA=
-Received: from SG2PR02CA0114.apcprd02.prod.outlook.com (2603:1096:4:92::30) by
- SG2PR04MB3945.apcprd04.prod.outlook.com (2603:1096:0:b::16) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3045.19; Thu, 28 May 2020 10:01:07 +0000
-Received: from SG2APC01FT114.eop-APC01.prod.protection.outlook.com
- (2603:1096:4:92:cafe::c8) by SG2PR02CA0114.outlook.office365.com
- (2603:1096:4:92::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3045.19 via Frontend
- Transport; Thu, 28 May 2020 10:01:07 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.53)
- smtp.mailfrom=hcl.com; lfprojects.org; dkim=pass (signature was verified)
- header.d=HCL.COM;lfprojects.org; dmarc=pass action=none header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.53 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.53; helo=APC01-HK2-obe.outbound.protection.outlook.com;
-Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.245.53) by
- SG2APC01FT114.mail.protection.outlook.com (10.152.250.193) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3045.17 via Frontend Transport; Thu, 28 May 2020 10:01:06 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=chQHVW83tWEv504wPtx9VZolQLoYzg3TSUggmazISKmtBGCjSnD+JurOT88MP4cHX+6v1Z8LZoqaxNGs/mBUKEX+L9OSaVIHCmQyZNjia8ueyUfqTwaWtbAfqp17FseEbANRkOwroYstHG+G7o+2MngbSboSIDz/qEhV4ZHirS2HCSF6M44ioeaUM+XzAFnBLqirhejnqfmSoDx0qYwW/t6oXByeUPrbNbSYc4VfhX4ul2HpidpYiOdm8eLDtlN3pYgJOZ7pH08H3Z4lXyB0MQ5ZQiY+Os0K4ucyhY+O+3ln7na9gaTFU6jYeLeVH80t/jOgFmUx6XP/Rfqa+FpYag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4YwS78+nIayIC57Kt/uGL+RaFLcq2Ia53SE14f8H438=;
- b=Bck5Qdpd2HblvIW4ZRDx7WGAOTYdv+P/JnSw3FuDGTsVqwnk0cV3+7MLH+dt/uPCrIz19Yf15VdfP8F+lv/HO0AYjmiwcQzuCweLjhta+1fQBJI+4Fo1a+QomnjSfr+NpKdf/4i2cdCYjRNdq3JvYPZKEfy2I5Dsn8f6cFE1R2HqxE+x6RL+ul2tR6lgz+XiKGASYrJ+whD1ZtAcZzJ5nyMEIYB778hnMNM9D7sFrb4RgnCXp7kMS/QcMXCZCgpDxn6YkMdXsu2uy+nGhyF4V4lVGoE2hrKePXPkDFCQyDrySi2tx8iYr+evWNsldlRdXilnMkRMa3yp9hjMJQOKTg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4YwS78+nIayIC57Kt/uGL+RaFLcq2Ia53SE14f8H438=;
- b=gPz8XD0TgOHm7LXazCoYATvkuXf8ZTX20nIqaeB1btVAg/5jd9vxasctBymXo3C2B2P5TNX4rHoVF5pghMFbofg2O6InTEm7gd5f9tjWxaZeWw4CAViAagaevKF/zPacV0CWW0MtgZkLJT5luQqLJ7jtwFf6n/r8alLkaL34LCA=
-Received: from SG2PR04MB3609.apcprd04.prod.outlook.com (2603:1096:4:a3::18) by
- SG2PR04MB3612.apcprd04.prod.outlook.com (2603:1096:4:99::12) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3045.19; Thu, 28 May 2020 10:01:03 +0000
-Received: from SG2PR04MB3609.apcprd04.prod.outlook.com
- ([fe80::5065:49d7:5886:16a6]) by SG2PR04MB3609.apcprd04.prod.outlook.com
- ([fe80::5065:49d7:5886:16a6%7]) with mapi id 15.20.3045.018; Thu, 28 May 2020
- 10:01:03 +0000
-From: "Dhanapal Subramaniam, ERS,HCLTech" <dhanapals@hcl.com>
-To: "manager@lfprojects.org" <manager@lfprojects.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: HCL CLA Update
-Thread-Topic: HCL CLA Update
-Thread-Index: AdWNrw3TPOT+OV1lTTSDG/+EH8//rwAjoO7AKaK3JAA=
-Date: Thu, 28 May 2020 10:01:03 +0000
-Message-ID: <SG2PR04MB360909FD89E39097C5D1A99BBE8E0@SG2PR04MB3609.apcprd04.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49XpvH6mrnzDqSM
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 23:48:39 +1000 (AEST)
+Received: by mail-il1-x12d.google.com with SMTP id h3so117017ilh.13
+ for <openbmc@lists.ozlabs.org>; Thu, 28 May 2020 06:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lfprojects-org.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=9rZXYjvOs/ICgiJPpZas1VgoeLeba18wK3OYzbmj7N4=;
+ b=yIuo0eHiS53t7gjP16z+JjYiYuM96US5315UlUzB8/TILw/9u4hgs807UYdoAJSOXE
+ kOeiZZVtr3bus6UCZvWuBJSFR1BXPhnQqFsq2Tl7RIt15kvs4jR8hmBnL6in9ilMt4nw
+ 2wU8ZQQ7Hqk+aC+EwbupOdzHjs3Ue3WmL3lfv89XXRd76ZveYUinCEJb3Y00JXzmcvBZ
+ Z5EuS1ThKN3OxVPznCifp87qsXR1tCzhUHcI5A2AnbGpnTmhm5kemWTw4j46nXTlacqv
+ Q9AdwFB6nIp8Jz+Qf8CbaN2TcVSKjVcVd9jfFYgtqygvRTrNHmatV/NWTTjATFxI59lU
+ b9uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=9rZXYjvOs/ICgiJPpZas1VgoeLeba18wK3OYzbmj7N4=;
+ b=hgEQ5axWn/w9VELNwR/0RlLUR0nvvIUdGQz0K7BNdkcF2di1hCFWhExvIuBcVHfM0i
+ Dak3rSbXQO9pMBCp6+l6Ur+BNxhdM10q3q7tZi/eZSZsOtwinwQ7HgyCjXt2cj9gOhtH
+ upRpoj9GEKGnObbwkdyY7IdxlG5mrqIR2tkh/6ch/xQB0rKmSqiyYyMAUVy+aUuAs3Lg
+ qAsJlkAQhy82mynMutS9YsvQuSPNtftbs3vehpVv+bjENJcX4ssZTy//mGRi1WbhFIlI
+ wNvOxQ0kb5mryunXtBSaJ0yedr4pSKBhQea6Qc1caSJzJljxeUXVGIGLy7BMSzcCGf4Y
+ Z4yw==
+X-Gm-Message-State: AOAM5313JTQrRXnxxOLcb8W/KoDWI2SDY6pozNXMZmQvWU2ZPNGYHCeN
+ GwYT3It+lR5awhV+geXUb9B0/+SwtPfjtcy7sZeLrQ==
+X-Google-Smtp-Source: ABdhPJy9I35JQiC/jxfmwSoE3zUKAuKxM6GRx2UTVXQMKtCNn53gYoU/elzAPZIOCoZOR4FVp/NnJ3NZoA0ww5i0LT8=
+X-Received: by 2002:a05:6e02:42:: with SMTP id
+ i2mr2758711ilr.282.1590673715773; 
+ Thu, 28 May 2020 06:48:35 -0700 (PDT)
+MIME-Version: 1.0
 References: <SG2PR04MB2876DAF2455DB54427EFFFD6FC660@SG2PR04MB2876.apcprd04.prod.outlook.com>
  <SG2PR04MB2876EC5F2B54A303926CFAC4FC630@SG2PR04MB2876.apcprd04.prod.outlook.com>
-In-Reply-To: <SG2PR04MB2876EC5F2B54A303926CFAC4FC630@SG2PR04MB2876.apcprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNDdjNjQ5YTctOTMzNy00YzlkLWFhZjYtZDQ0MDljNDFmNjhkIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoibnVsbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IlM0VHdVNm93XC9OT2liRm9TcmthdFM1S3ZQOTdNMDZ3cHpSejRhcFwvV0ZGazE4ZUhOaGVnaWxyR3BmM2JjaXJETSJ9
-x-hclclassification: null
-Authentication-Results-Original: lfprojects.org; dkim=none (message not
- signed) header.d=none;lfprojects.org; dmarc=none action=none
- header.from=hcl.com;
-x-originating-ip: [122.174.66.15]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 6c69bcdf-554d-4ebe-9f70-08d802ee0a51
-x-ms-traffictypediagnostic: SG2PR04MB3612:|SG2PR04MB3945:
-X-Microsoft-Antispam-PRVS: <SG2PR04MB39452718CC16E1D9610638D9BE8E0@SG2PR04MB3945.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2958;OLM:3631;
-x-forefront-prvs: 0417A3FFD2
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: 62c4fLuoxjw6jwb7sGSg32Oa7YwOoYC22HmB15+KUSV9nwRbiKVKuPfv6AbbQN270bxgQeTH12dTr39OAHyJPrmgBzmaRd7QJDswmgVKoIpNpS7iJGtZJqx1LY6WHsanCgCYxMKXCSecP7jULZpeLaGHyD2E2h7CCA4MZuUcJLcZlC3pdu/g7brMchN9n6xfEl6O6JGrY5CICNFGvfXsaVn/D+ObBKaFxrY0tUeyaIZilWQFgZWswafurEYCln4/8MsfudrB7WY1AZeTU99LOC+Ld6Af3mr0t2MbTmKV/hhzSRdIfoySO2nXKwQYq0uERXUPRu5mY8igUCrjNGQeTEB/ygf8U8fKjzTRlEfb8Cmj6Dn5HSW0zuD+3BPUBz7VbL9gGqS/R2hNS8Cuk74HFA==
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3609.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE; SFTY:;
- SFS:(4636009)(136003)(39860400002)(396003)(376002)(346002)(366004)(6506007)(3480700007)(86362001)(8936002)(26005)(966005)(186003)(110136005)(15650500001)(54906003)(4326008)(5660300002)(66946007)(33656002)(478600001)(316002)(52536014)(55016002)(76116006)(83380400001)(2906002)(9686003)(64756008)(66616009)(8676002)(66556008)(7116003)(7696005)(66476007)(99936003)(71200400001)(66446008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: yjxXh4GBlniIUQhvzKzo8KhKk6sAE5qIgj8L1uGJsFZ4/DIbOz6zx54E2eUi3h2bQjrBJ8jD6r4k3ftvzWIiUD230AHKLHXryJa7ZMnU0bowbxUIh5E3thIJ4JiwUvnmPFmfgk7oR0b6gX5xxtLZOllZ0UBzKxEYUC2Dzb+k1tZhIF7lccWuAmZHmCj1kLTWUkBhKxKiRt5NZdtWTqO5N/cVsk2W3LVPJOjTBOVKzqH+u0M3XZoeNaFx2gi6XMps9RrVJ6FGb6jfEgPmwLz6BHOEkBPMTdKRJv5NgyZgiThMEzkq/P80aMw82TQzegMKr/Op/1X7Xne6zL6BXVeky4jAXbcKFnIB7Zz0Zi0F76haF0hPgWCwot0gLTRB6W8SJel7xeAHVhOH/YYyLQ2XfsMPENGrCLdHdxbzKLG4DDIKKprl6E8JTsPOHkMlhBxJ6YeND4QEZfRSrvyxxtxWRja/VGRVj4PhznetG4/TAmvGpA+TnzSV9J3/KEaea8A+
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/mixed;
- boundary="_004_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_"
-MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3612
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT114.eop-APC01.prod.protection.outlook.com
-X-Forefront-Antispam-Report: CIP:192.8.245.53; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE; SFTY:;
- SFS:(4636009)(376002)(346002)(136003)(396003)(39860400002)(46966005)(3480700007)(86362001)(81166007)(9686003)(2906002)(21480400003)(55016002)(52536014)(7696005)(82740400003)(99936003)(66616009)(28085005)(8676002)(82310400002)(7116003)(356005)(4326008)(70586007)(336012)(54906003)(70206006)(5660300002)(36906005)(6506007)(15843345004)(186003)(15650500001)(110136005)(8936002)(966005)(26005)(316002)(33656002)(47076004)(478600001)(235185007)(83380400001);
- DIR:OUT; SFP:1102; 
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 90541956-b517-4728-3d14-08d802ee0835
-X-Forefront-PRVS: 0417A3FFD2
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: ra4XgY+f2G7vz5ml4xjDfSCheKfEd3QWW9jYQpTYP+wnpzAG5ISPHiVkyMzfRG5u9zDBTtC/qzDoOMG/WMJPZrNmCVFYq58vXwxOvvHig3wTRmnun2D1w9TbAozDgEzGWyxwZL9wB6a+VHP2JC1gXjfYwnf9wkuhIhq2Qx3Tu5AUJluZrjus2vNG34DjmLHYQO+J0t4rmiykt4DXsg/SQU5T5+pu/vuGFvVNBSoDfPj+Eeqohi4ax5rdPxMFLpgR/wU/HZ8OWzCQBKN9s19YnfE2lJ9JLvOVXkpr47KQzj4vG0Nx0hzEyJsM2+QgA/SkaM7ZcWoda3vYlsIG0YFHfUJW48thI6o7J3haivei79jtlhi3IIZzlh03uwecK52XCI8uGqA0qcSoKCnjTW1FwQPf03iCTMryqIsPnZn+1+OOjP32arVv5A9uP1XFa9UkNAktYa86uKK7HislEd2+hJwDfv+yz/kyDa8VgBsM8Ls=
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2020 10:01:06.6690 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6c69bcdf-554d-4ebe-9f70-08d802ee0a51
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.53];
- Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3945
+ <SG2PR04MB360909FD89E39097C5D1A99BBE8E0@SG2PR04MB3609.apcprd04.prod.outlook.com>
+In-Reply-To: <SG2PR04MB360909FD89E39097C5D1A99BBE8E0@SG2PR04MB3609.apcprd04.prod.outlook.com>
+From: Mike Dolan <manager@lfprojects.org>
+Date: Thu, 28 May 2020 09:48:22 -0400
+Message-ID: <CALVHhecqoPau_fx4bRicgGSuZ1OcHT7E3XEx=dnZjXV1EW3VRA@mail.gmail.com>
+Subject: Re: HCL CLA Update
+To: "Dhanapal Subramaniam, ERS, HCLTech" <dhanapals@hcl.com>,
+ bradleyb@us.ibm.com
+Content-Type: multipart/mixed; boundary="000000000000c8c9d205a6b5956b"
 X-Mailman-Approved-At: Fri, 29 May 2020 11:35:31 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -150,209 +80,190 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "'dhanapal.s@gmail.com'" <dhanapal.s@gmail.com>,
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "dhanapal.s@gmail.com" <dhanapal.s@gmail.com>,
  "manikandan.hcl.ers.epl@gmail.com" <manikandan.hcl.ers.epl@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_004_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_
-Content-Type: multipart/alternative;
-	boundary="_000_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_"
+--000000000000c8c9d205a6b5956b
+Content-Type: multipart/alternative; boundary="000000000000c8c9d005a6b59569"
 
---_000_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_
-Content-Type: text/plain; charset="us-ascii"
+--000000000000c8c9d005a6b59569
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Dear Team,
-Can you please help to upload attached CLA in GDrive.
+Adding Brad from the OpenBMC project who manages the access list.
+
+Thanks,
+
+Mike
 
 
-Also please help to add
-Dhanapal S dhanapals@hcl.com<mailto:dhanapals@hcl.com> in below group
-https://gerrit.openbmc-project.xyz/admin/groups/42,members
+On Thu, May 28, 2020 at 6:01 AM Dhanapal Subramaniam, ERS,HCLTech <
+dhanapals@hcl.com> wrote:
 
-Following members to
-Dhanapal Subramaniam, dhanapals@hcl.com
-Kumar Thangavel,  thangavel.k@hcl.com
-Thillaivasan Veeranathan,  thillaivasan-v@hcl.com
-Manikandan E, manikandan.e@hcl.com
-P. Priyatharshan,  priyatharshanp@hcl.com
-Velumani T-ERS,HCLTech,  velumanit@hcl.com
-Jayashree D,  jayashree-d@hcl.com<mailto:jayashree-d@hcl.com>
-Iswarya S,    iswarya-shan@hcl.com
-https://gerrit.openbmc-project.xyz/admin/groups/43,members
-
-Dear Mani,
-Please help to forward incase if this mail didn't reach group since my HCL =
-mail ID has some issues and I am working on to fix.
-
-Regards,
-Dhanapal.S
-::DISCLAIMER::
-________________________________
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
-smission. The e mail and its contents (with or without referred errors) sha=
-ll therefore not attach any liability on the originator or HCL or its affil=
-iates. Views or opinions, if any, presented in this email are solely those =
-of the author and may not necessarily reflect the views or opinions of HCL =
-or its affiliates. Any form of reproduction, dissemination, copying, disclo=
-sure, modification, distribution and / or publication of this message witho=
-ut the prior written consent of authorized representative of HCL is strictl=
-y prohibited. If you have received this email in error please delete it and=
- notify the sender immediately. Before opening any email and/or attachments=
-, please check them for viruses and other defects.
-________________________________
-
---_000_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+> Dear Team,
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Mangal;
-	panose-1:0 0 4 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Myriad Pro";
-	panose-1:0 0 0 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-p
-	{mso-style-priority:99;
-	mso-margin-top-alt:auto;
-	margin-right:0in;
-	mso-margin-bottom-alt:auto;
-	margin-left:0in;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0in;
-	mso-margin-bottom-alt:auto;
-	margin-left:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle19
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle21
-	{mso-style-type:personal-reply;
-	font-family:"Calibri",sans-serif;
-	color:#1F497D;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Dear =
-Team,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Can y=
-ou please help to upload attached CLA in GDrive.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D"><o:p>=
-&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D"><o:p>=
-&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Also =
-please help to add<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Dhana=
-pal S <a href=3D"mailto:dhanapals@hcl.com">
-dhanapals@hcl.com</a> in below group<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">https=
-://gerrit.openbmc-project.xyz/admin/groups/42,members<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D"><o:p>=
-&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Follo=
-wing members to
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Dhanapal Subramaniam, dhanapals@hcl.com<o:p></o:p></span></=
-p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Kumar Thangavel, &nbsp;thangavel.k@hcl.com<o:p></o:p></span=
-></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Thillaivasan Veeranathan, &nbsp;thillaivasan-v@hcl.com<o:p>=
-</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Manikandan E, manikandan.e@hcl.com<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">P. Priyatharshan,&nbsp; priyatharshanp@hcl.com&nbsp;
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Velumani T-ERS,HCLTech,&nbsp; velumanit@hcl.com&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Jayashree D,&nbsp;
-<a href=3D"mailto:jayashree-d@hcl.com"><span style=3D"font-size:11.0pt;font=
--family:&quot;Calibri&quot;,sans-serif;color:windowtext;text-decoration:non=
-e">jayashree-d@hcl.com</span></a><o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:&quot;My=
-riad Pro&quot;">Iswarya S,&nbsp;&nbsp;&nbsp; iswarya-shan@hcl.com<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">https=
-://gerrit.openbmc-project.xyz/admin/groups/43,members<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D"><o:p>=
-&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Dear =
-Mani,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D">Pleas=
-e help to forward incase if this mail didn&#8217;t reach group since my HCL=
- mail ID has some issues and I am working on to fix.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:12.0pt;color:#1F497D"><o:p>=
-&nbsp;</o:p></span></p>
+> Can you please help to upload attached CLA in GDrive.
+>
+>
+>
+>
+>
+> Also please help to add
+>
+> Dhanapal S dhanapals@hcl.com in below group
+>
+> https://gerrit.openbmc-project.xyz/admin/groups/42,members
+>
+>
+>
+> Following members to
+>
+> Dhanapal Subramaniam, dhanapals@hcl.com
+>
+> Kumar Thangavel,  thangavel.k@hcl.com
+>
+> Thillaivasan Veeranathan,  thillaivasan-v@hcl.com
+>
+> Manikandan E, manikandan.e@hcl.com
+>
+> P. Priyatharshan,  priyatharshanp@hcl.com
+>
+> Velumani T-ERS,HCLTech,  velumanit@hcl.com
+>
+> Jayashree D,  jayashree-d@hcl.com
+>
+> Iswarya S,    iswarya-shan@hcl.com
+>
+> https://gerrit.openbmc-project.xyz/admin/groups/43,members
+>
+>
+>
+> Dear Mani,
+>
+> Please help to forward incase if this mail didn=E2=80=99t reach group sin=
+ce my HCL
+> mail ID has some issues and I am working on to fix.
+>
+>
+>
+> Regards,
+>
+> Dhanapal.S
+> ::DISCLAIMER::
+> ------------------------------
+> The contents of this e-mail and any attachment(s) are confidential and
+> intended for the named recipient(s) only. E-mail transmission is not
+> guaranteed to be secure or error-free as information could be intercepted=
+,
+> corrupted, lost, destroyed, arrive late or incomplete, or may contain
+> viruses in transmission. The e mail and its contents (with or without
+> referred errors) shall therefore not attach any liability on the originat=
+or
+> or HCL or its affiliates. Views or opinions, if any, presented in this
+> email are solely those of the author and may not necessarily reflect the
+> views or opinions of HCL or its affiliates. Any form of reproduction,
+> dissemination, copying, disclosure, modification, distribution and / or
+> publication of this message without the prior written consent of authoriz=
+ed
+> representative of HCL is strictly prohibited. If you have received this
+> email in error please delete it and notify the sender immediately. Before
+> opening any email and/or attachments, please check them for viruses and
+> other defects.
+> ------------------------------
+>
+
+--000000000000c8c9d005a6b59569
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Adding Brad from the OpenBMC project who manages the acces=
+s list.<div><br></div><div>Thanks,</div><div><br></div><div>Mike</div><div>=
+<br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
+ail_attr">On Thu, May 28, 2020 at 6:01 AM Dhanapal Subramaniam, ERS,HCLTech=
+ &lt;<a href=3D"mailto:dhanapals@hcl.com">dhanapals@hcl.com</a>&gt; wrote:<=
+br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_4021440736284013254WordSection1">
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Dear Team,<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Can you please help to upload attached CLA in GDrive.<u></u><u></u></span><=
+/p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Also please help to add<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Dhanapal S <a href=3D"mailto:dhanapals@hcl.com" target=3D"_blank">
+dhanapals@hcl.com</a> in below group<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<a href=3D"https://gerrit.openbmc-project.xyz/admin/groups/42,members" targ=
+et=3D"_blank">https://gerrit.openbmc-project.xyz/admin/groups/42,members</a=
+><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Following members to
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Dhanapal Subramaniam, <a href=3D"mailto:dhanapals@hcl.com" ta=
+rget=3D"_blank">dhanapals@hcl.com</a><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Kumar Thangavel, =C2=A0<a href=3D"mailto:thangavel.k@hcl.com"=
+ target=3D"_blank">thangavel.k@hcl.com</a><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Thillaivasan Veeranathan, =C2=A0<a href=3D"mailto:thillaivasa=
+n-v@hcl.com" target=3D"_blank">thillaivasan-v@hcl.com</a><u></u><u></u></sp=
+an></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Manikandan E, <a href=3D"mailto:manikandan.e@hcl.com" target=
+=3D"_blank">manikandan.e@hcl.com</a><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">P. Priyatharshan,=C2=A0 <a href=3D"mailto:priyatharshanp@hcl.=
+com" target=3D"_blank">priyatharshanp@hcl.com</a>=C2=A0
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Velumani T-ERS,HCLTech,=C2=A0 <a href=3D"mailto:velumanit@hcl=
+.com" target=3D"_blank">velumanit@hcl.com</a>=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Jayashree D,=C2=A0
+<a href=3D"mailto:jayashree-d@hcl.com" target=3D"_blank"><span style=3D"fon=
+t-size:11pt;font-family:Calibri,sans-serif;color:windowtext;text-decoration=
+:none">jayashree-d@hcl.com</span></a><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Myri=
+ad Pro&quot;">Iswarya S,=C2=A0=C2=A0=C2=A0 <a href=3D"mailto:iswarya-shan@h=
+cl.com" target=3D"_blank">iswarya-shan@hcl.com</a><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<a href=3D"https://gerrit.openbmc-project.xyz/admin/groups/43,members" targ=
+et=3D"_blank">https://gerrit.openbmc-project.xyz/admin/groups/43,members</a=
+><u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Dear Mani,<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+Please help to forward incase if this mail didn=E2=80=99t reach group since=
+ my HCL mail ID has some issues and I am working on to fix.<u></u><u></u></=
+span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:12pt;color:rgb(31,73,125)">=
+<u></u>=C2=A0<u></u></span></p>
 <div>
-<p class=3D"MsoNormal"><span style=3D"color:#1F497D">Regards,<o:p></o:p></s=
-pan></p>
-<p class=3D"MsoNormal"><span style=3D"color:#1F497D">Dhanapal.S<o:p></o:p><=
-/span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)">Regards,<u></u>=
+<u></u></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:rgb(31,73,125)">Dhanapal.S<u></=
+u><u></u></span></p>
 </div>
 </div>
 <font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
@@ -375,20 +286,20 @@ ly. Before opening any email and/or attachments, please check them for viru=
 ses and other defects.<br>
 <hr>
 </font>
-</body>
-</html>
+</div>
 
---_000_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_--
+</blockquote></div>
 
---_004_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_
-Content-Type: application/pdf;
+--000000000000c8c9d005a6b59569--
+
+--000000000000c8c9d205a6b5956b
+Content-Type: application/pdf; 
 	name="HCL TechnologiesSigned_092719_28May2020.pdf"
-Content-Description: HCL TechnologiesSigned_092719_28May2020.pdf
-Content-Disposition: attachment;
-	filename="HCL TechnologiesSigned_092719_28May2020.pdf"; size=96321;
-	creation-date="Thu, 28 May 2020 08:13:31 GMT";
-	modification-date="Thu, 28 May 2020 08:13:32 GMT"
+Content-Disposition: attachment; 
+	filename="HCL TechnologiesSigned_092719_28May2020.pdf"
 Content-Transfer-Encoding: base64
+Content-ID: <1725b89e36dba7845202>
+X-Attachment-Id: 1725b89e36dba7845202
 
 JVBERi0xLjcNJeLjz9MNCjUzIDAgb2JqDTw8L0xpbmVhcml6ZWQgMS9MIDk2MzIxL08gNTUvRSA1
 MTQ5NC9OIDUvVCA5NTkxNS9IIFsgNDg0IDIyMl0+Pg1lbmRvYmoNICAgICAgICAgICAgICAgICAg
@@ -2080,5 +1991,4 @@ VHlwZS9YUmVmL1dbMSAzIDFdPj5zdHJlYW0NCmjeYmIAASZGhpNqDExA1iwQyZgBJstBpIgvmL0f
 TM4GqwHLMh0Akoy6ciA28y0Qyf0brOYgWE0HmP0cTB4CqwGpZ2DpQKhh2QRWORcskgkmK8DiWxFq
 GA3ApCaYNAWTGmByBYjkmwIi2eTBus6BSPl9SCbIgklroO/+dyWC7WIDkwyM6CTXX3yyuEjGnwAB
 BgBcxhmRDQplbmRzdHJlYW0NZW5kb2JqDXN0YXJ0eHJlZg0KMTE2DQolJUVPRg0K
-
---_004_SG2PR04MB360909FD89E39097C5D1A99BBE8E0SG2PR04MB3609apcp_--
+--000000000000c8c9d205a6b5956b--
