@@ -2,60 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED30D1E78FA
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 11:04:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DD501E7962
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 11:25:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49YJY366TfzDqfP
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 19:04:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49YK1Z4d49zDqgj
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 19:25:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=vertiv.com (client-ip=40.107.94.65;
+ helo=nam10-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=troy.lee@vertiv.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ dmarc=none (p=none dis=none) header.from=vertiv.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=vertivco.onmicrosoft.com
+ header.i=@vertivco.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-vertivco-onmicrosoft-com header.b=Si+ljN+5; 
+ dkim-atps=neutral
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10on2065.outbound.protection.outlook.com [40.107.94.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YJXJ4vHwzDqfF
- for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 19:03:59 +1000 (AEST)
-IronPort-SDR: YtvmbgjVqRZB/eIwoI980ZAH1Jow0FWjSE0bTzIsxheg9YXjoJPaQmCVGhy7L/XLiADi1BJGSQ
- BB6VaIZnaSug==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2020 02:03:54 -0700
-IronPort-SDR: C03IMroUNp4UT5dc94J9ZbFS4FnfrifgGSYKrdxwDvhncRtdVGjdcUPcBzL8QdT27Qe3msgFbr
- MHA6533LHh1Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,448,1583222400"; d="scan'208";a="267501894"
-Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.89.33])
- ([10.252.89.33])
- by orsmga003.jf.intel.com with ESMTP; 29 May 2020 02:03:50 -0700
-Subject: Re: D-Bus interface to provide data to entity manager
-To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
- Patrick Williams <patrick@stwcx.xyz>
-References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
- <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
- <20200528120331.GC17541@heinlein>
- <0942393e-4475-5249-4918-4125e85ec554@linux.vnet.ibm.com>
- <17ad5a3d-e69b-0005-4bc3-950e590093bb@linux.intel.com>
- <20200528180555.GA1717@patrickw3-mbp.lan.stwcx.xyz>
- <fac63254-305a-fea2-36ba-a23597688da8@linux.vnet.ibm.com>
- <7e184454-b406-fc81-33e5-e03882743a95@linux.intel.com>
- <197ba71c-7b0a-d575-5370-bd43e741e9c6@linux.vnet.ibm.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <f3d0be87-4415-b98c-c410-5c32afde3e09@linux.intel.com>
-Date: Fri, 29 May 2020 14:33:49 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
-MIME-Version: 1.0
-In-Reply-To: <197ba71c-7b0a-d575-5370-bd43e741e9c6@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49YK0j4BSfzDqc4
+ for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 19:25:04 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DfvasZr5GvJpXLbVgH2Z7zfUf3BPCzznbjJEIczd/9hSeV9s8jTMMIrQrXqklawcnt8WEDozq/LHINHkHfUhbADbD+Xn9W18bZBAcs280fyxN18+IVZf1/pFkgB8AlXb9jt0VXI2BGkRA6+qnOgImk00+XSWSShRaCM/ppmOR0p+s0QBVlLpP7Z2/N/h4tGsT7qumbFnxue/w/CD09m0w5YIve2XKHT3uf2cjrzMfvY7mF3cpv0ch30UFcAkA8++ft0bPVvIIz4xbWum5J0IswyPKAL3q3wOVIpKiRLPiMmU4wYG1CWmrBEUPcKCKP0YqSrh34cRAYRPNleaHuwGsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MVlbXjmLpNiiHEg7sgVJTJwVqld+lvZIvWpdsKUMGi4=;
+ b=HiR4+dRVkXsTRoZMiBd2apppC5USWOvdO40aV5soP4nOiZYFGKEWMieuHV3r6cj9dxYz6IBH305lUrsLyrclnLu23YwFmS0x5Qnr4ISnmmUgSfscuTfu4ufLccDN57jdiXWjBxaO/qe22D2aUrjSsoeaSUqOxYN264JDDxFjjNjhYbL70YDsXsKef8YrSLwdXanELWFe6Ow5A3+1LrxaWYulfV54t5H44lGt9tTeQDNuxnDCH5DYwRJrWFeWvWVt7m1pCxlDnoKWMwXbWczc78RDtY3hy1+zQUGRMtQYnUxVft8js2SYUx/aW0YlsWsSiv3Ot+mjfI/UOERgkMNtAA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vertiv.com; dmarc=pass action=none header.from=vertiv.com;
+ dkim=pass header.d=vertiv.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=vertivco.onmicrosoft.com; s=selector2-vertivco-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MVlbXjmLpNiiHEg7sgVJTJwVqld+lvZIvWpdsKUMGi4=;
+ b=Si+ljN+5PKMbAJBhdrK0MGuODTck3e4MvnKtuFPvW7V7COqOpuNYTryXumEXXsVlbMjdv49EVZITMFHl8lojiEeptIA28GIAZsqPdUvvhqFicnsEWtAD7DMa5Crmjz94xctInPyvUlM6WpOOzzB8A0vBPRgbvkL32oOkLlt7VvA=
+Received: from BYAPR13MB2469.namprd13.prod.outlook.com (2603:10b6:a02:ca::28)
+ by BYAPR13MB2888.namprd13.prod.outlook.com (2603:10b6:a03:f5::26)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3066.7; Fri, 29 May
+ 2020 09:24:58 +0000
+Received: from BYAPR13MB2469.namprd13.prod.outlook.com
+ ([fe80::44b8:d3a4:d1aa:e7b6]) by BYAPR13MB2469.namprd13.prod.outlook.com
+ ([fe80::44b8:d3a4:d1aa:e7b6%7]) with mapi id 15.20.3066.007; Fri, 29 May 2020
+ 09:24:57 +0000
+From: "Troy.Lee@vertiv.com" <Troy.Lee@vertiv.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Duplicated SEL record in phosphor-sel-logger/rsyslog
+Thread-Topic: Duplicated SEL record in phosphor-sel-logger/rsyslog
+Thread-Index: AdY1munFIoCQABqmRAav95wkbyFzaQ==
+Date: Fri, 29 May 2020 09:24:57 +0000
+Message-ID: <BYAPR13MB2469979A315F956A0036BBF6ED8F0@BYAPR13MB2469.namprd13.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=vertiv.com;
+x-originating-ip: [103.83.160.36]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1687787a-9564-4d57-a7ff-08d803b227ce
+x-ms-traffictypediagnostic: BYAPR13MB2888:
+x-microsoft-antispam-prvs: <BYAPR13MB28884A1C333F7B5FA776D1F4ED8F0@BYAPR13MB2888.namprd13.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:7691;
+x-forefront-prvs: 04180B6720
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 8w9abizqZXZPc5ulKLluejR6BdXpIigs0Xm5vtLruLelOzLGgj+10IkarWxG6+QNMXdkcIsrsVRSCvC5602YcNY1w6D7kIue2agnwaZ1PF/mi+1cB2pJADDKtxyfVyfdQO7U9zex4cNj4BxHd+71lhcTtlqmWeOd0NuGokzlm2IqaqB8Fw9DQrhByOzxUhp8RVbNwFhXTm+kjJCxSF/0VVOW2kelzRTq32mfRATnk9l5ohR0pmRfcMBfWLKfArh1Sf7Rbw+RFUT+i1Aa0eN1yTt59oiXmtcWF/VJm45Tghl7Arn03wPPdTVxlm65ERdQOT86zyxwnjpCAqVPHgudnOBeFd3TZUZsU3WAvocqaaECZt3xjwAiU5JPTUmUUC4nbDpDfZ/97L08/M5MpcS+6g==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR13MB2469.namprd13.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(4636009)(39860400002)(136003)(376002)(366004)(396003)(346002)(7696005)(52536014)(5660300002)(8676002)(71200400001)(6916009)(9686003)(55016002)(478600001)(966005)(86362001)(316002)(186003)(26005)(33656002)(8936002)(6506007)(64756008)(2906002)(66476007)(66946007)(76116006)(66446008)(83380400001)(66556008);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata: d2JZ2RIsbW0js0tH1BAAl9muF0wVAYA/7fhvOpznOMfAf2rSdgapuWvcoBksDLGFiSXXhxKAPA+KXgCR9ACksV7BjmU+Kw0hrpliskBOnJWQ8AQOwBpz2iKqZNsSHdj/4JVwfnpckjUT/ZufSBI8fUADRWQevxJNb5EPNsgBkyKitlvxie2gqVVezOrfBZFCQ7NeoQN+kOwRRInc43e5+mp6EVHVB5YSvtkgm/5HQvhoBHlJxLIRoxDwsdvCNbFLLl0pW9qL8Gn8lCG7EWxrV3WJ5I1HZLI2smnS8FV4WZ58Xo/0LmtAZlow4zv4zXfbkuAzNa870m8FtM3UQhdogOEit1qsxqfyWOUR4NEb+rq8TmrdVcf8mvnfHCJaZtfc8ITO5uqW0VDbFjy8/LKdsBAZal4ni4789/tBkIlrc0BRwUnpCrMqPoSw75t+nOs6LgLVVxa7vJLOqoQiqLgCxhKGozflJM47iYPiCObUmQY=
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_BYAPR13MB2469979A315F956A0036BBF6ED8F0BYAPR13MB2469namp_"
+MIME-Version: 1.0
+X-OriginatorOrg: vertiv.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1687787a-9564-4d57-a7ff-08d803b227ce
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 May 2020 09:24:57.7583 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 74fe92c5-ef57-4d1a-a0e7-9451117d9272
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: I4xfSIefgmLo+Zf6nn8OrAtf0rmkXU+sqDiXxeq+3v4DdmAnnXzp40kl/0rd/Lvqn1LjFHxEIKDPyCvQKZr7qg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR13MB2888
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,176 +103,171 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_BYAPR13MB2469979A315F956A0036BBF6ED8F0BYAPR13MB2469namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/29/2020 1:01 PM, Deepak Kodihalli wrote:
-> On 29/05/20 12:47 pm, Thomaiyar, Richard Marian wrote:
->>
->> On 5/29/2020 10:39 AM, Deepak Kodihalli wrote:
->>> On 28/05/20 11:35 pm, Patrick Williams wrote:
->>>> On Thu, May 28, 2020 at 10:12:19PM +0530, Thomaiyar, Richard Marian 
->>>> wrote:
->>>>>
->>>>> On 5/28/2020 5:54 PM, Deepak Kodihalli wrote:
->>>>>> On 28/05/20 5:33 pm, Patrick Williams wrote:
->>>>
->>>>> Why do we need to have 2 different interfaces to represent the same
->>>>> information for FRU-to-inventory transformational (say 
->>>>> ProductName). This
->>>>> will make inventory manager to be updated for every FRU producer?. 
->>>>> Many of
->>>>> the properties are common, and we can form a common interface for 
->>>>> that, and
->>>>> rest can be maintained in it's specific interface. I understand 
->>>>> that current
->>>>> FRU to Entity-manager interface seems to be private, but we must 
->>>>> make a
->>>>> common interface to represent like Product Name, PartNumer, Serial 
->>>>> Number
->>>>> etc. (instead of maintaining it in different interface saying IPMI 
->>>>> / PLDM
->>>>> Source, with different types). How about?
->>>
->>> Richard, I have concerns with this approach. Like I mentioned in one 
->>> my earlier emails, and Patrick also alludes to below, if you try to 
->>> make this common (event if it's for a subset of the properties) then 
->>> you basically arrive at the existing phosphor Inventory interfaces 
->>> (eg Inventory.Decorator.Asset).
->>>
->>> My question in my earlier mail was, if you do such a thing, then why 
->>> do you even need inventory producers? FruDevice and PLDM could have 
->>> hosted inventory on their own. If they still rely on the inventory 
->>> producers (EM and PIM) with this "common interface" approach, then 
->>> it's basically re-implementation/duplications of the 
->>> (Inventory.Decorator.Asset like) interface by two processes.
->
-> Richard, what is your thought on the re-implementation/duplication 
-> concern above? I'm not sure if you answered that and I missed.
-[Richard]: FRU Consumers must be aware about each and every Format 
-specifically, even though it conveys same meaning.
->
->> [Richard]: Basically FRU information (either IPMI/PLDM) is needed for 
->> the inventory producers to expose configuration, which FRU will not 
->> have. Say, based on FRU Product name, either we will expose 4 temp 
->> sensor / 2 (Now along with this one, we need to inform the product 
->> name through Inventory.Decorator.Asset). Now from Redfish point of 
->> it, Inventory.Decorator is what it uses. This is what i was asking 
->> with 2 options in earlier mail (whether to change or stick with it 
->> (recommended)).
->
->>>
->>> The idea is for apps like FruDevice and PLDM, which are aware of a 
->>> specific FRU format, to host data in *that* format, to be consumed 
->>> *solely* by inventory producers (like EM and PIM).
->>>
->> [Richard]: Yes, but it doesn't need to expose those in that format?
->
-> Why not?
-[Richard]: What's the advantage in keeping it in that format itself? 
-This is used only by EM / PIM, and not by redfish directly right? Where 
-the intelligence must reside in the producer or consumer (With producer, 
-consumers can be in common form)
->
->> Say Manufacturer Name, it doesn't mater whether it is coming from 
->> PLDM FRU / IPMI FRU. Say we have a special handling for a particular 
->> manufacture / product, then irrespective of inventory producers both 
->> can handle the same.
->
-> This is what the Inventory.Decorator.Asset interface is for.
-[Richard]: Yes, That is exposed by EM / PIM in our case. Why EM / PIM 
-must rely on 2 different stuff, for common things is the question here.
->
->> If we have 2 different interface, then inventory producer may need to 
->> be aware about both and probe it accordingly.
->
-> No, the "FRU" properties producer needs to be concerned only about the 
-> format it understands.
+Hi Team,
 
-[Richard]: FRU property producer must know the format and produce the 
-interface with data (in common form as much as possible). E.g. IPMI FRU 
-Producer (say xyz.openbmc_project.FruDevice service) will read device A 
-FRU, and expose the Manufacturer name (It can read the EEPROM content 
-and decode it as per the IPMI FRU format, but the data it produces is 
-Manufacturer name). Simiarly PLDM FRU Producer (say 
-xyz.openbmc_project.PLDM.FruDevice service) will read the data using 
-PLDM FRU commands, and expose the Manufacturer name. Now why this 2 
-service need to have 2 different interface(one from 
-Inventory.Source.PLDM & another from Inventory.Source.IPMI, to expose 
-the Manufacturer name. ? Why Entity manager / PIM need to read the same 
-information from 2 different interface and expose it in 
-Inventory.Decorator.Asset. (It can do it with same interface). What 
-Entity manager / PIM needs to do is using Object Mapper query all the 
-FruDevices (IPMI / PLDM FRU), and accordingly expose the Inventory.
+We're using phosphor-sel-logger with rsyslog to store IPMI SEL. Sometimes w=
+e get duplicated SEL records in /var/log/ipmi_sel.
 
->> FRU producers code must be written in such a way that for these 
->> common properties it does the necessary conversion (Say make 
->> manufacturer as string, irrespective of any format it read through). 
->> Note: Specific stuff, we need to create a separate interface (as 
->> phosphor-dbus-interface at present doesn't support dynamic property 
->> addition/deletion). (Tomorrow, if we have any other proprietary way 
->> of producing FRU data, we can still work with this approach, with 
->> less or no change for other layers).
->>
->>> Also note that (as James pointed out in his email), the IPMI FRU 
->>> format distinguishes Board/Chassis/Product areas. PLDM FRU format 
->>> does not. So there are differences. If a new FRU format is 
->>> introduced, then yes we would expect a new interface to show up 
->>> under Inventory/Source/<FruFormat>
->> [Richard]: Fru producers should do this conversion.
+For example:
+1970-01-01T18:27:27.752917+00:00 63944,de,20000407A06F020001,,,
+1970-01-01T18:27:28.772865+00:00 63945,de,20000407A06F020001,,,
+1970-01-01T18:27:29.793016+00:00 63946,de,20000407A06F020001,,,
+1970-01-01T18:27:30.813187+00:00 63947,de,20000407A06F020001,,,
+1970-01-01T18:27:30.813187+00:00 63947,de,20000407A06F020001,,, <- Duplicat=
+ed
+1970-01-01T18:27:31.833018+00:00 63948,de,20000407A06F020001,,,
+1970-01-01T18:27:32.853137+00:00 63949,de,20000407A06F020001,,,
+
+This issue always happens when imjournal reloaded at the same time, so the =
+journal log will shows:
+Jan 01 18:27:31 evb rsyslogd[288]: imjournal: journal reloaded... [v8.1904.=
+0 try https://www.rsyslog.com/e/0 ]
+
+Does anyone meet this issue before or do you have any suggestion on the con=
+figuration?
+
+Thanks,
+Troy Lee
+CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with it are i=
+ntended solely for the use of the individual or entity to whom they are add=
+ressed and may contain confidential and privileged information protected by=
+ law. If you received this e-mail in error, any review, use, dissemination,=
+ distribution, or copying of the e-mail is strictly prohibited. Please noti=
+fy the sender immediately by return e-mail and delete all copies from your =
+system.
+
+--_000_BYAPR13MB2469979A315F956A0036BBF6ED8F0BYAPR13MB2469namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:x=3D"urn:schemas-microsoft-com:office:excel" xmlns:m=3D"http://schema=
+s.microsoft.com/office/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html=
+40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> I'm of the opinion that the inventory producer (like EM and PIM) 
-> should perform this conversion. Consider 
-> https://github.com/openbmc/entity-manager/blob/master/configurations/Intel%20Front%20Panel.json#L55 
-> for example. I don't think it's up to the FruDevice/PLDM kind of apps 
-> to decide that this is actually a Panel. You can design it that way, 
-> but like I said above that means the config knowledge moves into these 
-> apps, which I don't think we should head towards, since then every FRU 
-> producer app needs to do this. This is why we have apps like EM.
-[Richard]: Exactly. What we need to make sure is create abstraction 
-between Entity manager and FRU Producers as much as possible. FRU 
-Producer responsibility is to read the FRU in decode the FRU data as per 
-the spec and expose it in common form which Entity-manager / PIM will 
-rely on.
->
->> Say Chassis Type (Irrespective of what area it comes from it is 
->> same). PLDM FRU mostly represents the product as a whole, but 
->> technically we can point it to all the needed using the Fru Record 
->> set to the Entity type mapping in the PDR record. Accordingly it 
->> needs to be exposed.
->>>
->>>
->>>> Yes, I am in favor of common interfaces for this where ever possible.
->>>>
->>>> Is there someone that knows the existing FruDevice implementation well
->>>> enough that can be included in this work to propose common interfaces
->>>> where it is appropriate?
->>>>
->>>>> Inventory/Source/General/Fru (Maintain common things here Product 
->>>>> Name.
->>>>> This can be used by Inventory manager to advertise it (instead of 
->>>>> searching
->>>>> it in multiple interfaces/properties))
->>>>
->>>> Minor tweak here of 'Source/Common'?  When we have an existing 
->>>> Inventory
->>>> interface for this information should we mimic what is already in
->>>> Inventory?  At some point are we trying to be too common that we're
->>>> effectively reimplementing Inventory instances under a different name?
->>>>
->> [Richard]: Yes, currently, FRU to inventory and inventory to upper 
->> layer is what used. If we want to change it, we need to go with 
->> differnt option of using FRU to upper layer, but many of existing 
->> code will require change.
->
->
->> Regards,
->>
->> Richard
->>
->
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"blue" vlink=3D"purple" style=3D"text-justify-t=
+rim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Hi T=
+eam,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">We'r=
+e using phosphor-sel-logger with rsyslog to store IPMI SEL. Sometimes we ge=
+t duplicated SEL records in /var/log/ipmi_sel.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">For =
+example:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:27.752917&#43;00:00 63944,de,20000407A06F020001,,,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:28.772865&#43;00:00 63945,de,20000407A06F020001,,,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:29.793016&#43;00:00 63946,de,20000407A06F020001,,,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:30.813187&#43;00:00 63947,de,20000407A06F020001,,,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:30.813187&#43;00:00 63947,de,20000407A06F020001,,, &lt;- Dupli=
+cated<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:31.833018&#43;00:00 63948,de,20000407A06F020001,,,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">1970=
+-01-01T18:27:32.853137&#43;00:00 63949,de,20000407A06F020001,,,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">This=
+ issue always happens when imjournal reloaded at the same time, so the jour=
+nal log will shows:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Jan =
+01 18:27:31 evb rsyslogd[288]: imjournal: journal reloaded... [v8.1904.0 tr=
+y https://www.rsyslog.com/e/0 ]<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Does=
+ anyone meet this issue before or do you have any suggestion on the configu=
+ration?<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt"><o:p=
+>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Than=
+ks,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-size:12.0pt">Troy=
+ Lee<o:p></o:p></span></p>
+</div>
+CONFIDENTIALITY NOTICE: This e-mail and any files transmitted with it are i=
+ntended solely for the use of the individual or entity to whom they are add=
+ressed and may contain confidential and privileged information protected by=
+ law. If you received this e-mail
+ in error, any review, use, dissemination, distribution, or copying of the =
+e-mail is strictly prohibited. Please notify the sender immediately by retu=
+rn e-mail and delete all copies from your system.
+</body>
+</html>
+
+--_000_BYAPR13MB2469979A315F956A0036BBF6ED8F0BYAPR13MB2469namp_--
