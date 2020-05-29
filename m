@@ -1,61 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33CCE1E7AAD
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 12:34:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 387451E7B17
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 12:59:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49YLXy3pvpzDqfS
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:34:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49YM5D0chtzDqYk
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:59:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
+ helo=mail-pg1-x544.google.com; envelope-from=sunithaharish04@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=LrGZACFj; dkim-atps=neutral
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
+ [IPv6:2607:f8b0:4864:20::544])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YLXF0BsCzDqZL
- for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 20:34:03 +1000 (AEST)
-IronPort-SDR: j5gHFSp/UfZlWq/T/f0Pb+7SBNWzEINuNipoddHb8Zj3HuqiaGImlytAksnxkknBIPKZIYGawf
- Ek9vN7hABDpQ==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2020 03:34:00 -0700
-IronPort-SDR: B8Se0I9fo50oQndPl0Lpo7xm/thFXsNFmIZ5tCZ6KMbewx/iIXeiBahydqoWJ6hzcAE3jB/Ij9
- I1EkK24LAJ5g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,448,1583222400"; d="scan'208";a="267525007"
-Received: from rthomaiy-mobl2.gar.corp.intel.com (HELO [10.252.89.33])
- ([10.252.89.33])
- by orsmga003.jf.intel.com with ESMTP; 29 May 2020 03:33:57 -0700
-Subject: Re: D-Bus interface to provide data to entity manager
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49YM3p5kB7zDqc7
+ for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 20:57:58 +1000 (AEST)
+Received: by mail-pg1-x544.google.com with SMTP id 124so1322195pgi.9
+ for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 03:57:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:from:to:cc:references:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=bjp0SRyNWNKA5WaX+LpgOtDEZXbHX9sSDxnqkz/RKA0=;
+ b=LrGZACFj+y6xSkoy2jSwrwOl46hFlB8svGtQfgxpFLM99IApJzJNNVnSevs5MI8HHV
+ +Nqwq3KHMTll+gPwVfMWuxe34o6r2NkKbHUGrmhpHa8RqsmhXE0DtKcUSqiP51zhRavy
+ uJTcMsl71wKgy6z2nH97R8+hMzLjxuVqSnp4EL447IQqf3YwEtPtEymMmLcZyud7Zu59
+ hDtErb1TtQjpe8JME0qOvlT2/b0yMbwe9TS5z4bahuCsNRAdALRGAA2xdpzaH++5bCUr
+ byy6OmDLQRGig+3jYam/wmrIj9hKy8jSYGfkE2Q3uIYRTf2hDZ82/ET5a0Zx9V+Tpch4
+ YdIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=bjp0SRyNWNKA5WaX+LpgOtDEZXbHX9sSDxnqkz/RKA0=;
+ b=R0SEFayB449+StZII5YA1BbXo37zgB/6KBsz7wTocR4wcWuBfl0m83akl6mf2bn24g
+ uhrX2KwJp+JHlkk0I+lTBfh+vfWNMw0kMcZNCNouDSjThW/MOA/rnTgrYz8lPzRtDxfa
+ GCQSS0pzcrARqpi5kh+kPoSh4Zv06YrtWDTIn5j+4IIF3CGyDbgQ8rAb+UoK3cow5OKR
+ J38nGDFcweWBTOyBORrB18FfA2JyDJ+NbqqVi8ncucASR4FGlFN/lPyCvY5dp3d8Odgv
+ 4WzHkYeiB992rZsJFPovo6f1GSrbumKnA3YfXyYH7FQHz0x+U9Um/RZxnW+7p4vB9p4H
+ lLzA==
+X-Gm-Message-State: AOAM532xBqr3gf3payRgYjhnLPxHXGzno7avr18+m9VcOlZZlnfzgfEL
+ ZTAWTqOKsTO8wdiOlz1jfDOkUOpD
+X-Google-Smtp-Source: ABdhPJym14vlJKjrnbHijZr1LhynkmpLwad3o+5NL6JgYqE6hZgpG/9XepdmZEOiEzqz7z/IW2M8BQ==
+X-Received: by 2002:a62:6804:: with SMTP id d4mr8415161pfc.100.1590749870681; 
+ Fri, 29 May 2020 03:57:50 -0700 (PDT)
+Received: from ?IPv6:2405:204:5299:4617:91b8:7294:26a4:8fcf?
+ ([2405:204:5299:4617:91b8:7294:26a4:8fcf])
+ by smtp.gmail.com with ESMTPSA id a14sm6909136pfc.133.2020.05.29.03.57.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 May 2020 03:57:50 -0700 (PDT)
+Subject: Re: Storing host data on the BMC
+From: Sunitha Harish <sunithaharish04@gmail.com>
 To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
  Patrick Williams <patrick@stwcx.xyz>
-References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
- <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
- <20200528120331.GC17541@heinlein>
- <0942393e-4475-5249-4918-4125e85ec554@linux.vnet.ibm.com>
- <17ad5a3d-e69b-0005-4bc3-950e590093bb@linux.intel.com>
- <20200528180555.GA1717@patrickw3-mbp.lan.stwcx.xyz>
- <fac63254-305a-fea2-36ba-a23597688da8@linux.vnet.ibm.com>
- <7e184454-b406-fc81-33e5-e03882743a95@linux.intel.com>
- <197ba71c-7b0a-d575-5370-bd43e741e9c6@linux.vnet.ibm.com>
- <f3d0be87-4415-b98c-c410-5c32afde3e09@linux.intel.com>
- <8d6bac73-21c7-4c4c-6fd3-630095399375@linux.vnet.ibm.com>
- <dde772cc-a7ef-e507-02f7-0e1bdb0ac0cb@linux.vnet.ibm.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <66b344ab-64d6-9191-c2aa-8f708343fcf4@linux.intel.com>
-Date: Fri, 29 May 2020 16:03:56 +0530
+References: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
+ <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
+ <ec87d606-9fa9-014a-bfa4-e56f94f6747e@linux.vnet.ibm.com>
+ <342b5672-2adc-a6d1-f60a-085847d69584@gmail.com>
+ <43685475-b4fb-6d09-a248-01a52ca382fa@gmail.com>
+ <20200511120719.GA10214@heinlein>
+ <0000b55c-29a9-b0fa-b72f-c4f19d4c7d12@gmail.com>
+ <8db810a0-6bc4-5ad5-0f54-f739fe6dde81@gmail.com>
+ <20200513211857.GA1166713@heinlein>
+ <10275d64-bebd-cb33-0a16-21299b7b1880@linux.vnet.ibm.com>
+ <20200514123350.GB1166713@heinlein>
+ <7a159b9d-ec82-fed9-a9e1-23ffdf1c62e5@gmail.com>
+ <534fbbca-ffe2-450d-b5e3-ef664c2a3729@gmail.com>
+ <9de48a92-bb18-7c0f-0a68-68e9808a46d3@linux.vnet.ibm.com>
+ <fb32d35b-2a58-3eea-38df-ab9f7bf641f8@gmail.com>
+Message-ID: <c9e6ab3e-e9f3-a58c-69c1-d830da6e5cf0@gmail.com>
+Date: Fri, 29 May 2020 16:27:45 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.8.1
 MIME-Version: 1.0
-In-Reply-To: <dde772cc-a7ef-e507-02f7-0e1bdb0ac0cb@linux.vnet.ibm.com>
+In-Reply-To: <fb32d35b-2a58-3eea-38df-ab9f7bf641f8@gmail.com>
 Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -70,212 +98,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 5/29/2020 4:00 PM, Deepak Kodihalli wrote:
-> On 29/05/20 3:49 pm, Deepak Kodihalli wrote:
->> On 29/05/20 2:33 pm, Thomaiyar, Richard Marian wrote:
+On 22-05-2020 09:29, Sunitha Harish wrote:
+>
+> On 21-05-2020 10:46, Deepak Kodihalli wrote:
+>> On 21/05/20 10:42 am, Sunitha Harish wrote:
+>>> Hi,
 >>>
->>> On 5/29/2020 1:01 PM, Deepak Kodihalli wrote:
->>>> On 29/05/20 12:47 pm, Thomaiyar, Richard Marian wrote:
->>>>>
->>>>> On 5/29/2020 10:39 AM, Deepak Kodihalli wrote:
->>>>>> On 28/05/20 11:35 pm, Patrick Williams wrote:
->>>>>>> On Thu, May 28, 2020 at 10:12:19PM +0530, Thomaiyar, Richard 
->>>>>>> Marian wrote:
->>>>>>>>
->>>>>>>> On 5/28/2020 5:54 PM, Deepak Kodihalli wrote:
->>>>>>>>> On 28/05/20 5:33 pm, Patrick Williams wrote:
->>>>>>>
->>>>>>>> Why do we need to have 2 different interfaces to represent the 
->>>>>>>> same
->>>>>>>> information for FRU-to-inventory transformational (say 
->>>>>>>> ProductName). This
->>>>>>>> will make inventory manager to be updated for every FRU 
->>>>>>>> producer?. Many of
->>>>>>>> the properties are common, and we can form a common interface 
->>>>>>>> for that, and
->>>>>>>> rest can be maintained in it's specific interface. I understand 
->>>>>>>> that current
->>>>>>>> FRU to Entity-manager interface seems to be private, but we 
->>>>>>>> must make a
->>>>>>>> common interface to represent like Product Name, PartNumer, 
->>>>>>>> Serial Number
->>>>>>>> etc. (instead of maintaining it in different interface saying 
->>>>>>>> IPMI / PLDM
->>>>>>>> Source, with different types). How about?
->>>>>>
->>>>>> Richard, I have concerns with this approach. Like I mentioned in 
->>>>>> one my earlier emails, and Patrick also alludes to below, if you 
->>>>>> try to make this common (event if it's for a subset of the 
->>>>>> properties) then you basically arrive at the existing phosphor 
->>>>>> Inventory interfaces (eg Inventory.Decorator.Asset).
->>>>>>
->>>>>> My question in my earlier mail was, if you do such a thing, then 
->>>>>> why do you even need inventory producers? FruDevice and PLDM 
->>>>>> could have hosted inventory on their own. If they still rely on 
->>>>>> the inventory producers (EM and PIM) with this "common interface" 
->>>>>> approach, then it's basically re-implementation/duplications of 
->>>>>> the (Inventory.Decorator.Asset like) interface by two processes.
->>>>
->>>> Richard, what is your thought on the re-implementation/duplication 
->>>> concern above? I'm not sure if you answered that and I missed.
->>> [Richard]: FRU Consumers must be aware about each and every Format 
->>> specifically, even though it conveys same meaning.
->>
->> I agree with that, but my question was about FRU producers.
->>
->>
->>>>> [Richard]: Basically FRU information (either IPMI/PLDM) is needed 
->>>>> for the inventory producers to expose configuration, which FRU 
->>>>> will not have. Say, based on FRU Product name, either we will 
->>>>> expose 4 temp sensor / 2 (Now along with this one, we need to 
->>>>> inform the product name through Inventory.Decorator.Asset). Now 
->>>>> from Redfish point of it, Inventory.Decorator is what it uses. 
->>>>> This is what i was asking with 2 options in earlier mail (whether 
->>>>> to change or stick with it (recommended)).
->>>>
->>>>>>
->>>>>> The idea is for apps like FruDevice and PLDM, which are aware of 
->>>>>> a specific FRU format, to host data in *that* format, to be 
->>>>>> consumed *solely* by inventory producers (like EM and PIM).
->>>>>>
->>>>> [Richard]: Yes, but it doesn't need to expose those in that format?
->>>>
->>>> Why not?
->>> [Richard]: What's the advantage in keeping it in that format itself?
->>
->> The advantage I see is basically what you said on the next line.
->>
->>> This is used only by EM / PIM, and not by redfish directly right? 
->>> Where the intelligence must reside in the producer or consumer (With 
->>> producer, consumers can be in common form)
->>
->>>>> Say Manufacturer Name, it doesn't mater whether it is coming from 
->>>>> PLDM FRU / IPMI FRU. Say we have a special handling for a 
->>>>> particular manufacture / product, then irrespective of inventory 
->>>>> producers both can handle the same.
->>>>
->>>> This is what the Inventory.Decorator.Asset interface is for.
->>> [Richard]: Yes, That is exposed by EM / PIM in our case. Why EM / 
->>> PIM must rely on 2 different stuff, for common things is the 
->>> question here.
->>>>
->>>>> If we have 2 different interface, then inventory producer may need 
->>>>> to be aware about both and probe it accordingly.
->>>>
->>>> No, the "FRU" properties producer needs to be concerned only about 
->>>> the format it understands.
+>>> Any inputs?
 >>>
->>> [Richard]: FRU property producer must know the format and produce 
->>> the interface with data (in common form as much as possible). E.g. 
->>> IPMI FRU Producer (say xyz.openbmc_project.FruDevice service) will 
->>> read device A FRU, and expose the Manufacturer name (It can read the 
->>> EEPROM content and decode it as per the IPMI FRU format, but the 
->>> data it produces is Manufacturer name). Simiarly PLDM FRU Producer 
->>> (say xyz.openbmc_project.PLDM.FruDevice service) will read the data 
->>> using PLDM FRU commands, and expose the Manufacturer name. Now why 
->>> this 2 service need to have 2 different interface(one from 
->>> Inventory.Source.PLDM & another from Inventory.Source.IPMI, to 
->>> expose the Manufacturer name. ? Why Entity manager / PIM need to 
->>> read the same information from 2 different interface and expose it 
->>> in Inventory.Decorator.Asset. (It can do it with same interface).
+>>> Thanks & regards,
+>>> Sunitha
 >>
->> What is that interface?
->
->
-> @Richard - to elaborate further - on Gerrit you suggest moving things 
-> like Serial Number and Part Number to Inventory.Decorator.Asset. 
-> However, note that these are already present in 
-> Inventory.Decorator.Asset. Hence the question - why do want FruDevice, 
-> PLDM, EM, PIM to all implement Inventory.Decorator.Asset?
-[Richard]:  No. What i meant was to use Inventory.Source.Common for 
-serial Number, part number etc (Fru to Inventory) and inventory producer 
-will use the inventory.Decorator.Asset for redfish exposure.
->
->
->>> What Entity manager / PIM needs to do is using Object Mapper query 
->>> all the FruDevices (IPMI / PLDM FRU), and accordingly expose the 
->>> Inventory
->>>>> FRU producers code must be written in such a way that for these 
->>>>> common properties it does the necessary conversion (Say make 
->>>>> manufacturer as string, irrespective of any format it read 
->>>>> through). Note: Specific stuff, we need to create a separate 
->>>>> interface (as phosphor-dbus-interface at present doesn't support 
->>>>> dynamic property addition/deletion). (Tomorrow, if we have any 
->>>>> other proprietary way of producing FRU data, we can still work 
->>>>> with this approach, with less or no change for other layers).
->>>>>
->>>>>> Also note that (as James pointed out in his email), the IPMI FRU 
->>>>>> format distinguishes Board/Chassis/Product areas. PLDM FRU format 
->>>>>> does not. So there are differences. If a new FRU format is 
->>>>>> introduced, then yes we would expect a new interface to show up 
->>>>>> under Inventory/Source/<FruFormat>
->>>>> [Richard]: Fru producers should do this conversion.
->>>>
->>>> I'm of the opinion that the inventory producer (like EM and PIM) 
->>>> should perform this conversion. Consider 
->>>> https://github.com/openbmc/entity-manager/blob/master/configurations/Intel%20Front%20Panel.json#L55 
->>>> for example. I don't think it's up to the FruDevice/PLDM kind of 
->>>> apps to decide that this is actually a Panel. You can design it 
->>>> that way, but like I said above that means the config knowledge 
->>>> moves into these apps, which I don't think we should head towards, 
->>>> since then every FRU producer app needs to do this. This is why we 
->>>> have apps like EM.
->>> [Richard]: Exactly. What we need to make sure is create abstraction 
->>> between Entity manager and FRU Producers as much as possible. FRU 
->>> Producer responsibility is to read the FRU in decode the FRU data as 
->>> per the spec and expose it in common form which Entity-manager / PIM 
->>> will rely on.
+>> Hi Sunitha,
 >>
->> I don't see why the abstraction is necessary. There already is 
->> abstraction in terms of the phosphor interfaces.
+>> I believe you had got a direction based on the discussion below.
 >>
->>>>> Say Chassis Type (Irrespective of what area it comes from it is 
->>>>> same). PLDM FRU mostly represents the product as a whole, but 
->>>>> technically we can point it to all the needed using the Fru Record 
->>>>> set to the Entity type mapping in the PDR record. Accordingly it 
->>>>> needs to be exposed.
->>>>>>
->>>>>>
->>>>>>> Yes, I am in favor of common interfaces for this where ever 
->>>>>>> possible.
->>>>>>>
->>>>>>> Is there someone that knows the existing FruDevice 
->>>>>>> implementation well
->>>>>>> enough that can be included in this work to propose common 
->>>>>>> interfaces
->>>>>>> where it is appropriate?
->>>>>>>
->>>>>>>> Inventory/Source/General/Fru (Maintain common things here 
->>>>>>>> Product Name.
->>>>>>>> This can be used by Inventory manager to advertise it (instead 
->>>>>>>> of searching
->>>>>>>> it in multiple interfaces/properties))
->>>>>>>
->>>>>>> Minor tweak here of 'Source/Common'?  When we have an existing 
->>>>>>> Inventory
->>>>>>> interface for this information should we mimic what is already in
->>>>>>> Inventory?  At some point are we trying to be too common that we're
->>>>>>> effectively reimplementing Inventory instances under a different 
->>>>>>> name?
->>>>>>>
->>>>> [Richard]: Yes, currently, FRU to inventory and inventory to upper 
->>>>> layer is what used. If we want to change it, we need to go with 
->>>>> differnt option of using FRU to upper layer, but many of existing 
->>>>> code will require change.
->>>>
->>>>
->>>>> Regards,
->>>>>
->>>>> Richard
->>>>>
->>>>
+>>>>>> As far as Sunitha's question goes, my point is that not all host
+>>>>>> firmware generated data is a BIOS attribute. For eg if the host 
+>>>>>> tells me
+>>>>>> about the presence of certain FRUs, or their functional states, I
+>>>>>> wouldn't want to store those in the BIOS attributes backend, I'd 
+>>>>>> rather
+>>>>>> associates those with the existing D-Bus interfaces for the FRU
+>>>>>> inventory. I think the same applies to the Origin property that 
+>>>>>> has been
+>>>>>> described - associate with the networking D-Bus backend.
+>>>>> I think we're in agreement here.  Data which is interesting to 
+>>>>> represent
+>>>>> on the BMC, for which we already have a defined-interface, use 
+>>>>> it.  For
+>>>>> data which isn't interesting the to BMC, use the generic BIOS 
+>>>>> attribute
+>>>>> table.
 >>
+>> ^^ You use existing (or come up with new) D-Bus interfaces to 
+>> represent your data. Those D-Bus interfaces can be implemented by 
+>> settingsd or networkd or something else.
 >
+> If i am getting it correctly , the current changes which were made to 
+> the phosphor-settings-manager should be good enough to handle all the 
+> scenarios.
+>
+> In my last email i mentioned that ===>>
+> -------------------------------------------------------------------------------------------------------------------------- 
+>
+> When the Ethernet interface set to be DHCP enabled ( by setting the 
+> Bios attribute DHCPEnabled = true via redfish), the IPAddress, 
+> SubnetMask and Gateway along with the Origin property will not be Bios 
+> settings. Here the user setting is the DHCPEnabled property of ?
+>
+> However in the case of Static IP configuration(IPAddress, SubnetMask 
+> and Gateway) they will become bios setting.
+> --------------------------------------------------------------------------------------------------------------------------- 
+>
+> Currently we are using the xyz.openbmc_project.Network.IP and this 
+> interface is being implemented by settings object - 
+> https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30424/
+> Do you see any issue here?
+
+Hi , any feedback ?
+
+Thanks & regards,
+Sunitha
+>
+>> Thanks,
+>> Deepak
+>>
