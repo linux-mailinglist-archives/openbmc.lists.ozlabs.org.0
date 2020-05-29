@@ -2,75 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5208B1E79D9
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 11:51:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 997041E7A6D
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 12:21:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49YKZp0JsJzDqf9
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 19:51:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49YLFD5NyLzDqdw
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:21:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
- helo=mail-pf1-x443.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=RqGJS3FK; dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YKWb44WDzDqSt;
- Fri, 29 May 2020 19:48:27 +1000 (AEST)
-Received: by mail-pf1-x443.google.com with SMTP id f3so1037323pfd.11;
- Fri, 29 May 2020 02:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to
- :user-agent; bh=mPpjYDtVNFbOV3twkT62l0LyftrjpV9lJs5FQ+hBUJY=;
- b=RqGJS3FKuMyWpu1m3Hzc6I4POBM8lESMPYNIYKWdGRlvA8Kh4IUyw7F0hympeVZpd1
- yXWiFtzPY6j5UXa/C+hrN8clyWYIa55Iia4MqyCMWOIAKyuA8D7fPpKzOnHCb9wTJo+K
- wuYYrIN+1Uebl+YzdTKfCzPq2JRfKJAztns+u5u6kveazJvE361p23B2baTzk8oLw4rV
- O4eJ2mXLljPox04H1Jle4G9dzklK687lj4qCHFllOTt06dkwa7EWVHPslOjSUmJwpZFv
- JcegsnotpcOIrh168sH42B+nib3cjDhdNcgap8Abs7up2U86YnRPYnWc4twOvdKA2ZgT
- bJPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:content-transfer-encoding
- :in-reply-to:user-agent;
- bh=mPpjYDtVNFbOV3twkT62l0LyftrjpV9lJs5FQ+hBUJY=;
- b=GXpWkXMbwRrE07PN+R0pjKj/6kJi08/9Z4BPS53paXMtMapAWCIdhDbtsUjhWsi/6A
- uPf9Y58tay9ORJjnx98rqsMxEv989yn2PfJG8sefXVBf6faUWAzfCoD+4/xG8U2BMwWU
- pJ2deYXn67KIw7fwf8OHIvbO1GsJX0P8iUOcHfZpTguvyRBbRkM3PblpjGgq6DnmMMvE
- 7iSIQEvMOsGjmvNZMxEdOan0loSUinKfyHlppaB77gAxxCqbxBx7pxlcXMp/QBzEHsMB
- ugiQHHER0Qw+53oHJu7T03Zz3K5j5J2H26/fzjGrB5LdSLt6ulNBqCcCe5krppHuriC7
- 1TRg==
-X-Gm-Message-State: AOAM533w0eOP3+s+2o61kl6g2CWj3I+iJI8/Ucx8VpsZkQ/XXucX6l0r
- UmOSkBotpnHf9h/RjT0ibjA=
-X-Google-Smtp-Source: ABdhPJwWITnuWJvg76c3WAVB8NAsrXfY/9PtnbOchm4AlaChuKqAL/wfFo3hfttRROrUzG84B3Dqgw==
-X-Received: by 2002:a62:7610:: with SMTP id r16mr1467560pfc.70.1590745703981; 
- Fri, 29 May 2020 02:48:23 -0700 (PDT)
-Received: from cnn ([2401:4900:2654:9f89:a888:ed6a:9872:b822])
- by smtp.gmail.com with ESMTPSA id i22sm3987421pfo.92.2020.05.29.02.48.20
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 29 May 2020 02:48:23 -0700 (PDT)
-Date: Fri, 29 May 2020 15:18:13 +0530
-From: Manikandan <manikandan.hcl.ers.epl@gmail.com>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Subject: Re: [PATCH] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
-Message-ID: <20200529094813.GA29323@cnn>
-References: <20200528141523.GA8810@cnn>
- <76D2694A-C80C-49F8-B51D-8A74341CA4ED@fb.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49YLDL3MBbzDqdf
+ for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 20:20:17 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04T9WkSi081759; Fri, 29 May 2020 06:19:08 -0400
+Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com
+ [149.81.74.106])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 31as1k4asp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 29 May 2020 06:19:07 -0400
+Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
+ by ppma04fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04TAG5FN016054;
+ Fri, 29 May 2020 10:19:06 GMT
+Received: from b06cxnps4075.portsmouth.uk.ibm.com
+ (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
+ by ppma04fra.de.ibm.com with ESMTP id 316uf8cr0e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 29 May 2020 10:19:06 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04TAJ3k865339474
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 29 May 2020 10:19:03 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC99D5204F;
+ Fri, 29 May 2020 10:19:03 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.241.132])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id 127495204E;
+ Fri, 29 May 2020 10:19:01 +0000 (GMT)
+Subject: Re: D-Bus interface to provide data to entity manager
+To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <7d8ba039-377f-c567-6a3d-5a18c4789df2@linux.vnet.ibm.com>
+ <5fc67500-b0f4-c964-fc9a-d3f5346e47ab@linux.vnet.ibm.com>
+ <20200528120331.GC17541@heinlein>
+ <0942393e-4475-5249-4918-4125e85ec554@linux.vnet.ibm.com>
+ <17ad5a3d-e69b-0005-4bc3-950e590093bb@linux.intel.com>
+ <20200528180555.GA1717@patrickw3-mbp.lan.stwcx.xyz>
+ <fac63254-305a-fea2-36ba-a23597688da8@linux.vnet.ibm.com>
+ <7e184454-b406-fc81-33e5-e03882743a95@linux.intel.com>
+ <197ba71c-7b0a-d575-5370-bd43e741e9c6@linux.vnet.ibm.com>
+ <f3d0be87-4415-b98c-c410-5c32afde3e09@linux.intel.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <8d6bac73-21c7-4c4c-6fd3-630095399375@linux.vnet.ibm.com>
+Date: Fri, 29 May 2020 15:49:01 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <f3d0be87-4415-b98c-c410-5c32afde3e09@linux.intel.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <76D2694A-C80C-49F8-B51D-8A74341CA4ED@fb.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-05-29_02:2020-05-28,
+ 2020-05-29 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 cotscore=-2147483648 malwarescore=0 priorityscore=1501
+ suspectscore=0 mlxlogscore=999 bulkscore=0 adultscore=0 impostorscore=0
+ phishscore=0 clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2005290075
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,60 +93,189 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: manikandan.e@hcl.com, linux-aspeed@lists.ozlabs.org,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, patrickw3@fb.com,
- vijaykhemka@fb.com
+Cc: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, May 28, 2020 at 05:34:22PM +0000, Vijay Khemka wrote:
+On 29/05/20 2:33 pm, Thomaiyar, Richard Marian wrote:
 > 
+> On 5/29/2020 1:01 PM, Deepak Kodihalli wrote:
+>> On 29/05/20 12:47 pm, Thomaiyar, Richard Marian wrote:
+>>>
+>>> On 5/29/2020 10:39 AM, Deepak Kodihalli wrote:
+>>>> On 28/05/20 11:35 pm, Patrick Williams wrote:
+>>>>> On Thu, May 28, 2020 at 10:12:19PM +0530, Thomaiyar, Richard Marian 
+>>>>> wrote:
+>>>>>>
+>>>>>> On 5/28/2020 5:54 PM, Deepak Kodihalli wrote:
+>>>>>>> On 28/05/20 5:33 pm, Patrick Williams wrote:
+>>>>>
+>>>>>> Why do we need to have 2 different interfaces to represent the same
+>>>>>> information for FRU-to-inventory transformational (say 
+>>>>>> ProductName). This
+>>>>>> will make inventory manager to be updated for every FRU producer?. 
+>>>>>> Many of
+>>>>>> the properties are common, and we can form a common interface for 
+>>>>>> that, and
+>>>>>> rest can be maintained in it's specific interface. I understand 
+>>>>>> that current
+>>>>>> FRU to Entity-manager interface seems to be private, but we must 
+>>>>>> make a
+>>>>>> common interface to represent like Product Name, PartNumer, Serial 
+>>>>>> Number
+>>>>>> etc. (instead of maintaining it in different interface saying IPMI 
+>>>>>> / PLDM
+>>>>>> Source, with different types). How about?
+>>>>
+>>>> Richard, I have concerns with this approach. Like I mentioned in one 
+>>>> my earlier emails, and Patrick also alludes to below, if you try to 
+>>>> make this common (event if it's for a subset of the properties) then 
+>>>> you basically arrive at the existing phosphor Inventory interfaces 
+>>>> (eg Inventory.Decorator.Asset).
+>>>>
+>>>> My question in my earlier mail was, if you do such a thing, then why 
+>>>> do you even need inventory producers? FruDevice and PLDM could have 
+>>>> hosted inventory on their own. If they still rely on the inventory 
+>>>> producers (EM and PIM) with this "common interface" approach, then 
+>>>> it's basically re-implementation/duplications of the 
+>>>> (Inventory.Decorator.Asset like) interface by two processes.
+>>
+>> Richard, what is your thought on the re-implementation/duplication 
+>> concern above? I'm not sure if you answered that and I missed.
+> [Richard]: FRU Consumers must be aware about each and every Format 
+> specifically, even though it conveys same meaning.
+
+I agree with that, but my question was about FRU producers.
+
+
+>>> [Richard]: Basically FRU information (either IPMI/PLDM) is needed for 
+>>> the inventory producers to expose configuration, which FRU will not 
+>>> have. Say, based on FRU Product name, either we will expose 4 temp 
+>>> sensor / 2 (Now along with this one, we need to inform the product 
+>>> name through Inventory.Decorator.Asset). Now from Redfish point of 
+>>> it, Inventory.Decorator is what it uses. This is what i was asking 
+>>> with 2 options in earlier mail (whether to change or stick with it 
+>>> (recommended)).
+>>
+>>>>
+>>>> The idea is for apps like FruDevice and PLDM, which are aware of a 
+>>>> specific FRU format, to host data in *that* format, to be consumed 
+>>>> *solely* by inventory producers (like EM and PIM).
+>>>>
+>>> [Richard]: Yes, but it doesn't need to expose those in that format?
+>>
+>> Why not?
+> [Richard]: What's the advantage in keeping it in that format itself?
+
+The advantage I see is basically what you said on the next line.
+
+> This is used only by EM / PIM, and not by redfish directly right? Where 
+> the intelligence must reside in the producer or consumer (With producer, 
+> consumers can be in common form)
+
+>>> Say Manufacturer Name, it doesn't mater whether it is coming from 
+>>> PLDM FRU / IPMI FRU. Say we have a special handling for a particular 
+>>> manufacture / product, then irrespective of inventory producers both 
+>>> can handle the same.
+>>
+>> This is what the Inventory.Decorator.Asset interface is for.
+> [Richard]: Yes, That is exposed by EM / PIM in our case. Why EM / PIM 
+> must rely on 2 different stuff, for common things is the question here.
+>>
+>>> If we have 2 different interface, then inventory producer may need to 
+>>> be aware about both and probe it accordingly.
+>>
+>> No, the "FRU" properties producer needs to be concerned only about the 
+>> format it understands.
 > 
-> ï»¿On 5/28/20, 7:15 AM, "Manikandan Elumalai" <manikandan.hcl.ers.epl@gmail.com> wrote:
-> 
->     
->     The adm1278 temperature sysfs attribute need it for one of the our openbmc platform . 
->     This functionality is not enabled by default, so PMON_CONFIG needs to be modified in order to enable it.
-> 
-> There is no Signed-off-by.
->     
->     ---
->      drivers/hwmon/pmbus/adm1275.c | 15 +++++++++++++++
->      1 file changed, 15 insertions(+)
->     
->     diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
->     index 5caa37fb..47b293d 100644
->     --- a/drivers/hwmon/pmbus/adm1275.c
->     +++ b/drivers/hwmon/pmbus/adm1275.c
->     @@ -681,6 +681,21 @@ static int adm1275_probe(struct i2c_client *client,
->      			}
->      		}
->      
->     +		config = i2c_smbus_read_byte_data(client, ADM1275_PMON_CONFIG);
->     +		if (config < 0)
->     +			return config;
->     +
->     +		/* Enable TEMP1 by defult */
->     +		config |= ADM1278_TEMP1_EN;
->     +		ret = i2c_smbus_write_byte_data(client,
->     +					ADM1275_PMON_CONFIG,
->     +					config);
->     +		if (ret < 0) {
->     +		dev_err(&client->dev,
->     +			"Failed to enable temperature config\n");
->     +		return -ENODEV;
->     +		}
->     +
->      		if (config & ADM1278_TEMP1_EN)
-> 
-> This check becomes irrelevant as you are enabling it above then rather than
-> enabling it just remove this check.
-     Thanks for review Vijay. I will submit changes in v2.
-> 
->      			info->func[0] |=
->      				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
->     -- 
->     2.7.4
->     
->     
-> 
+> [Richard]: FRU property producer must know the format and produce the 
+> interface with data (in common form as much as possible). E.g. IPMI FRU 
+> Producer (say xyz.openbmc_project.FruDevice service) will read device A 
+> FRU, and expose the Manufacturer name (It can read the EEPROM content 
+> and decode it as per the IPMI FRU format, but the data it produces is 
+> Manufacturer name). Simiarly PLDM FRU Producer (say 
+> xyz.openbmc_project.PLDM.FruDevice service) will read the data using 
+> PLDM FRU commands, and expose the Manufacturer name. Now why this 2 
+> service need to have 2 different interface(one from 
+> Inventory.Source.PLDM & another from Inventory.Source.IPMI, to expose 
+> the Manufacturer name. ? Why Entity manager / PIM need to read the same 
+> information from 2 different interface and expose it in 
+> Inventory.Decorator.Asset. (It can do it with same interface).
+
+What is that interface?
+
+> What Entity manager / PIM needs to do is using Object Mapper query all the 
+> FruDevices (IPMI / PLDM FRU), and accordingly expose the Inventory
+>>> FRU producers code must be written in such a way that for these 
+>>> common properties it does the necessary conversion (Say make 
+>>> manufacturer as string, irrespective of any format it read through). 
+>>> Note: Specific stuff, we need to create a separate interface (as 
+>>> phosphor-dbus-interface at present doesn't support dynamic property 
+>>> addition/deletion). (Tomorrow, if we have any other proprietary way 
+>>> of producing FRU data, we can still work with this approach, with 
+>>> less or no change for other layers).
+>>>
+>>>> Also note that (as James pointed out in his email), the IPMI FRU 
+>>>> format distinguishes Board/Chassis/Product areas. PLDM FRU format 
+>>>> does not. So there are differences. If a new FRU format is 
+>>>> introduced, then yes we would expect a new interface to show up 
+>>>> under Inventory/Source/<FruFormat>
+>>> [Richard]: Fru producers should do this conversion.
+>>
+>> I'm of the opinion that the inventory producer (like EM and PIM) 
+>> should perform this conversion. Consider 
+>> https://github.com/openbmc/entity-manager/blob/master/configurations/Intel%20Front%20Panel.json#L55 
+>> for example. I don't think it's up to the FruDevice/PLDM kind of apps 
+>> to decide that this is actually a Panel. You can design it that way, 
+>> but like I said above that means the config knowledge moves into these 
+>> apps, which I don't think we should head towards, since then every FRU 
+>> producer app needs to do this. This is why we have apps like EM.
+> [Richard]: Exactly. What we need to make sure is create abstraction 
+> between Entity manager and FRU Producers as much as possible. FRU 
+> Producer responsibility is to read the FRU in decode the FRU data as per 
+> the spec and expose it in common form which Entity-manager / PIM will 
+> rely on.
+
+I don't see why the abstraction is necessary. There already is 
+abstraction in terms of the phosphor interfaces.
+
+>>> Say Chassis Type (Irrespective of what area it comes from it is 
+>>> same). PLDM FRU mostly represents the product as a whole, but 
+>>> technically we can point it to all the needed using the Fru Record 
+>>> set to the Entity type mapping in the PDR record. Accordingly it 
+>>> needs to be exposed.
+>>>>
+>>>>
+>>>>> Yes, I am in favor of common interfaces for this where ever possible.
+>>>>>
+>>>>> Is there someone that knows the existing FruDevice implementation well
+>>>>> enough that can be included in this work to propose common interfaces
+>>>>> where it is appropriate?
+>>>>>
+>>>>>> Inventory/Source/General/Fru (Maintain common things here Product 
+>>>>>> Name.
+>>>>>> This can be used by Inventory manager to advertise it (instead of 
+>>>>>> searching
+>>>>>> it in multiple interfaces/properties))
+>>>>>
+>>>>> Minor tweak here of 'Source/Common'?  When we have an existing 
+>>>>> Inventory
+>>>>> interface for this information should we mimic what is already in
+>>>>> Inventory?  At some point are we trying to be too common that we're
+>>>>> effectively reimplementing Inventory instances under a different name?
+>>>>>
+>>> [Richard]: Yes, currently, FRU to inventory and inventory to upper 
+>>> layer is what used. If we want to change it, we need to go with 
+>>> differnt option of using FRU to upper layer, but many of existing 
+>>> code will require change.
+>>
+>>
+>>> Regards,
+>>>
+>>> Richard
+>>>
+>>
+
