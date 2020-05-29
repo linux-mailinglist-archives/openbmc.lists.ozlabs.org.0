@@ -1,67 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 387451E7B17
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 12:59:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABED31E7B25
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 13:04:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49YM5D0chtzDqYk
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:59:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49YMC70K94zDqgp
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 21:04:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
- helo=mail-pg1-x544.google.com; envelope-from=sunithaharish04@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=LrGZACFj; dkim-atps=neutral
-Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
- [IPv6:2607:f8b0:4864:20::544])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YM3p5kB7zDqc7
- for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 20:57:58 +1000 (AEST)
-Received: by mail-pg1-x544.google.com with SMTP id 124so1322195pgi.9
- for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 03:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:from:to:cc:references:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=bjp0SRyNWNKA5WaX+LpgOtDEZXbHX9sSDxnqkz/RKA0=;
- b=LrGZACFj+y6xSkoy2jSwrwOl46hFlB8svGtQfgxpFLM99IApJzJNNVnSevs5MI8HHV
- +Nqwq3KHMTll+gPwVfMWuxe34o6r2NkKbHUGrmhpHa8RqsmhXE0DtKcUSqiP51zhRavy
- uJTcMsl71wKgy6z2nH97R8+hMzLjxuVqSnp4EL447IQqf3YwEtPtEymMmLcZyud7Zu59
- hDtErb1TtQjpe8JME0qOvlT2/b0yMbwe9TS5z4bahuCsNRAdALRGAA2xdpzaH++5bCUr
- byy6OmDLQRGig+3jYam/wmrIj9hKy8jSYGfkE2Q3uIYRTf2hDZ82/ET5a0Zx9V+Tpch4
- YdIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:from:to:cc:references:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=bjp0SRyNWNKA5WaX+LpgOtDEZXbHX9sSDxnqkz/RKA0=;
- b=R0SEFayB449+StZII5YA1BbXo37zgB/6KBsz7wTocR4wcWuBfl0m83akl6mf2bn24g
- uhrX2KwJp+JHlkk0I+lTBfh+vfWNMw0kMcZNCNouDSjThW/MOA/rnTgrYz8lPzRtDxfa
- GCQSS0pzcrARqpi5kh+kPoSh4Zv06YrtWDTIn5j+4IIF3CGyDbgQ8rAb+UoK3cow5OKR
- J38nGDFcweWBTOyBORrB18FfA2JyDJ+NbqqVi8ncucASR4FGlFN/lPyCvY5dp3d8Odgv
- 4WzHkYeiB992rZsJFPovo6f1GSrbumKnA3YfXyYH7FQHz0x+U9Um/RZxnW+7p4vB9p4H
- lLzA==
-X-Gm-Message-State: AOAM532xBqr3gf3payRgYjhnLPxHXGzno7avr18+m9VcOlZZlnfzgfEL
- ZTAWTqOKsTO8wdiOlz1jfDOkUOpD
-X-Google-Smtp-Source: ABdhPJym14vlJKjrnbHijZr1LhynkmpLwad3o+5NL6JgYqE6hZgpG/9XepdmZEOiEzqz7z/IW2M8BQ==
-X-Received: by 2002:a62:6804:: with SMTP id d4mr8415161pfc.100.1590749870681; 
- Fri, 29 May 2020 03:57:50 -0700 (PDT)
-Received: from ?IPv6:2405:204:5299:4617:91b8:7294:26a4:8fcf?
- ([2405:204:5299:4617:91b8:7294:26a4:8fcf])
- by smtp.gmail.com with ESMTPSA id a14sm6909136pfc.133.2020.05.29.03.57.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 May 2020 03:57:50 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49YMBT4yJTzDqf0
+ for <openbmc@lists.ozlabs.org>; Fri, 29 May 2020 21:03:44 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 04TB2IRb073799; Fri, 29 May 2020 07:03:41 -0400
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 31as1b5cbe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 29 May 2020 07:03:41 -0400
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 04TB2Krg074039;
+ Fri, 29 May 2020 07:03:40 -0400
+Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.99])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 31as1b5can-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 29 May 2020 07:03:40 -0400
+Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
+ by ppma04ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 04TAxe0F001302;
+ Fri, 29 May 2020 11:03:39 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com
+ (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+ by ppma04ams.nl.ibm.com with ESMTP id 316uf93t5d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 29 May 2020 11:03:38 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 04TB3ans59441252
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 29 May 2020 11:03:36 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C1E9A5204F;
+ Fri, 29 May 2020 11:03:35 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.241.132])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id AD3AE5207D;
+ Fri, 29 May 2020 11:03:34 +0000 (GMT)
 Subject: Re: Storing host data on the BMC
-From: Sunitha Harish <sunithaharish04@gmail.com>
-To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
+To: Sunitha Harish <sunithaharish04@gmail.com>,
  Patrick Williams <patrick@stwcx.xyz>
 References: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
  <843851ce-b802-05af-2949-c3aa828aead7@gmail.com>
@@ -78,15 +74,28 @@ References: <f4df91bd-d60c-5f4b-ef08-2e3fdd163b4e@linux.vnet.ibm.com>
  <534fbbca-ffe2-450d-b5e3-ef664c2a3729@gmail.com>
  <9de48a92-bb18-7c0f-0a68-68e9808a46d3@linux.vnet.ibm.com>
  <fb32d35b-2a58-3eea-38df-ab9f7bf641f8@gmail.com>
-Message-ID: <c9e6ab3e-e9f3-a58c-69c1-d830da6e5cf0@gmail.com>
-Date: Fri, 29 May 2020 16:27:45 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+ <c9e6ab3e-e9f3-a58c-69c1-d830da6e5cf0@gmail.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <42df1dd1-1c53-cdf1-a0cf-9cada6b5faff@linux.vnet.ibm.com>
+Date: Fri, 29 May 2020 16:33:33 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.1
 MIME-Version: 1.0
-In-Reply-To: <fb32d35b-2a58-3eea-38df-ab9f7bf641f8@gmail.com>
+In-Reply-To: <c9e6ab3e-e9f3-a58c-69c1-d830da6e5cf0@gmail.com>
 Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-05-29_06:2020-05-28,
+ 2020-05-29 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ phishscore=0 malwarescore=0 clxscore=1015 bulkscore=0 spamscore=0
+ impostorscore=0 cotscore=-2147483648 mlxlogscore=999 suspectscore=0
+ mlxscore=0 adultscore=0 priorityscore=1501 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2005290084
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,70 +111,78 @@ Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On 22-05-2020 09:29, Sunitha Harish wrote:
->
-> On 21-05-2020 10:46, Deepak Kodihalli wrote:
->> On 21/05/20 10:42 am, Sunitha Harish wrote:
->>> Hi,
+On 29/05/20 4:27 pm, Sunitha Harish wrote:
+> 
+> On 22-05-2020 09:29, Sunitha Harish wrote:
+>>
+>> On 21-05-2020 10:46, Deepak Kodihalli wrote:
+>>> On 21/05/20 10:42 am, Sunitha Harish wrote:
+>>>> Hi,
+>>>>
+>>>> Any inputs?
+>>>>
+>>>> Thanks & regards,
+>>>> Sunitha
 >>>
->>> Any inputs?
+>>> Hi Sunitha,
 >>>
->>> Thanks & regards,
->>> Sunitha
+>>> I believe you had got a direction based on the discussion below.
+>>>
+>>>>>>> As far as Sunitha's question goes, my point is that not all host
+>>>>>>> firmware generated data is a BIOS attribute. For eg if the host 
+>>>>>>> tells me
+>>>>>>> about the presence of certain FRUs, or their functional states, I
+>>>>>>> wouldn't want to store those in the BIOS attributes backend, I'd 
+>>>>>>> rather
+>>>>>>> associates those with the existing D-Bus interfaces for the FRU
+>>>>>>> inventory. I think the same applies to the Origin property that 
+>>>>>>> has been
+>>>>>>> described - associate with the networking D-Bus backend.
+>>>>>> I think we're in agreement here.  Data which is interesting to 
+>>>>>> represent
+>>>>>> on the BMC, for which we already have a defined-interface, use 
+>>>>>> it.  For
+>>>>>> data which isn't interesting the to BMC, use the generic BIOS 
+>>>>>> attribute
+>>>>>> table.
+>>>
+>>> ^^ You use existing (or come up with new) D-Bus interfaces to 
+>>> represent your data. Those D-Bus interfaces can be implemented by 
+>>> settingsd or networkd or something else.
 >>
->> Hi Sunitha,
+>> If i am getting it correctly , the current changes which were made to 
+>> the phosphor-settings-manager should be good enough to handle all the 
+>> scenarios.
 >>
->> I believe you had got a direction based on the discussion below.
+>> In my last email i mentioned that ===>>
+>> -------------------------------------------------------------------------------------------------------------------------- 
 >>
->>>>>> As far as Sunitha's question goes, my point is that not all host
->>>>>> firmware generated data is a BIOS attribute. For eg if the host 
->>>>>> tells me
->>>>>> about the presence of certain FRUs, or their functional states, I
->>>>>> wouldn't want to store those in the BIOS attributes backend, I'd 
->>>>>> rather
->>>>>> associates those with the existing D-Bus interfaces for the FRU
->>>>>> inventory. I think the same applies to the Origin property that 
->>>>>> has been
->>>>>> described - associate with the networking D-Bus backend.
->>>>> I think we're in agreement here.  Data which is interesting to 
->>>>> represent
->>>>> on the BMC, for which we already have a defined-interface, use 
->>>>> it.  For
->>>>> data which isn't interesting the to BMC, use the generic BIOS 
->>>>> attribute
->>>>> table.
+>> When the Ethernet interface set to be DHCP enabled ( by setting the 
+>> Bios attribute DHCPEnabled = true via redfish), the IPAddress, 
+>> SubnetMask and Gateway along with the Origin property will not be Bios 
+>> settings. Here the user setting is the DHCPEnabled property of ?
 >>
->> ^^ You use existing (or come up with new) D-Bus interfaces to 
->> represent your data. Those D-Bus interfaces can be implemented by 
->> settingsd or networkd or something else.
->
-> If i am getting it correctly , the current changes which were made to 
-> the phosphor-settings-manager should be good enough to handle all the 
-> scenarios.
->
-> In my last email i mentioned that ===>>
-> -------------------------------------------------------------------------------------------------------------------------- 
->
-> When the Ethernet interface set to be DHCP enabled ( by setting the 
-> Bios attribute DHCPEnabled = true via redfish), the IPAddress, 
-> SubnetMask and Gateway along with the Origin property will not be Bios 
-> settings. Here the user setting is the DHCPEnabled property of ?
->
-> However in the case of Static IP configuration(IPAddress, SubnetMask 
-> and Gateway) they will become bios setting.
-> --------------------------------------------------------------------------------------------------------------------------- 
->
-> Currently we are using the xyz.openbmc_project.Network.IP and this 
-> interface is being implemented by settings object - 
-> https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30424/
-> Do you see any issue here?
+>> However in the case of Static IP configuration(IPAddress, SubnetMask 
+>> and Gateway) they will become bios setting.
+>> --------------------------------------------------------------------------------------------------------------------------- 
+>>
+>> Currently we are using the xyz.openbmc_project.Network.IP and this 
+>> interface is being implemented by settings object - 
+>> https://gerrit.openbmc-project.xyz/#/c/openbmc/meta-ibm/+/30424/
+>> Do you see any issue here?
+> 
+> Hi , any feedback ?
 
-Hi , any feedback ?
+Sorry I forgot to respond to this. If your question is whether the 
+Origin property (and the interface it lies in) can be implemented by 
+phosphor-settingsd, then I think the answer is yes. We did say that we 
+can look at phosphor-settingsd as an arbitrary data holder (not limited 
+to user settings).
 
-Thanks & regards,
-Sunitha
->
->> Thanks,
->> Deepak
+> Thanks & regards,
+> Sunitha
 >>
+>>> Thanks,
+>>> Deepak
+>>>
+
