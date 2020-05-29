@@ -1,50 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 866E31E8686
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:21:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C61D61E8691
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:25:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49YXvz0RG0zDqk9
-	for <lists+openbmc@lfdr.de>; Sat, 30 May 2020 04:21:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49YXzq0bYkzDqk5
+	for <lists+openbmc@lfdr.de>; Sat, 30 May 2020 04:25:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
+ (client-ip=192.55.52.43; helo=mga05.intel.com;
  envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YXvH6q8rzDqgq
- for <openbmc@lists.ozlabs.org>; Sat, 30 May 2020 04:21:14 +1000 (AEST)
-IronPort-SDR: /cwpGwL/+0vI7Lv77bgxDFADRg+jpoXvTAQI/+SOqoV2kHLeR1nwQu0xHVyY339f8ogQPqfH/2
- ujSuYabDjZ1Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49YXz86G4GzDqhC
+ for <openbmc@lists.ozlabs.org>; Sat, 30 May 2020 04:24:36 +1000 (AEST)
+IronPort-SDR: fdRtusvTmd1GuEjcRuykv+f/zd6ppPl4E8SOQGOL/oPp+SGAP44jELEEzOdXUvOkTZ7sN/HnAs
+ 2eG138bgujWg==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2020 11:21:09 -0700
-IronPort-SDR: rCVgkqVrUi1j5o9F4xWw121zU4DxfY6KaAmgALueg5ssTvAkCJ14P3mnHwN7mb16KViWGmVTPI
- M46RyfR8JrbQ==
-X-IronPort-AV: E=Sophos;i="5.73,449,1583222400"; d="scan'208";a="267643762"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 May 2020 11:24:34 -0700
+IronPort-SDR: UKfXJbx7yIbGeoeP+5bMOliZm3h3pOzT4sPYTTuiEvqH9tYf7KYJJjO4CwyI3DN0AJYMhWNUCT
+ AvaN3QvB19UA==
+X-IronPort-AV: E=Sophos;i="5.73,449,1583222400"; d="scan'208";a="469588040"
 Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
  ([10.7.150.62])
- by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 May 2020 11:21:08 -0700
-Date: Fri, 29 May 2020 11:21:07 -0700
+ by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 May 2020 11:24:33 -0700
+Date: Fri, 29 May 2020 11:24:32 -0700
 From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: Sd_bus_call - ELOOP Issue
-Message-ID: <20200529182107.GA7478@mauery.jf.intel.com>
-References: <CAA7TbcvAOF-ThzEyZMkMr4T4XwBxXmCoO0MOL-WmywpFQuKpQQ@mail.gmail.com>
- <20200529180709.GH17541@heinlein>
+To: James Feist <james.feist@linux.intel.com>
+Subject: Re: Adding usb-ctrl from intel-bmc into phosphor-misc
+Message-ID: <20200529182432.GB7478@mauery.jf.intel.com>
+References: <CAGm54UEDRmEQVQ-WaRiUa+fpxL0UUe-OZ4rwRZHVLTUJBZZb=A@mail.gmail.com>
+ <555375f27645bf26067fba4cfbfc5f5f8ac8c101.camel@fuzziesquirrel.com>
+ <2856971c-8efc-cf48-a8c0-210bba71e92e@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20200529180709.GH17541@heinlein>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <2856971c-8efc-cf48-a8c0-210bba71e92e@linux.intel.com>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -57,49 +59,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: anoo@us.ibm.com, openbmc@lists.ozlabs.org,
- Kumar Thangavel <kumarthangavel.hcl@gmail.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, Vijay Khemka <vijaykhemka@fb.com>,
- ratagupt@linux.vnet.ibm.com
+Cc: openbmc@lists.ozlabs.org, Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ =?utf-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 29-May-2020 01:07 PM, Patrick Williams wrote:
->On Fri, May 29, 2020 at 09:29:48PM +0530, Kumar Thangavel wrote:
->
->>        6. As per our understanding, current  sd_bus_call not supported for
->> connection with the same bus/clients. (sender  and receiver are same
->>            application name ). Please confirm.
+On 29-May-2020 10:09 AM, James Feist wrote:
+>On 5/28/2020 5:48 AM, Brad Bishop wrote:
+>>On Wed, 2020-05-27 at 11:07 +0800, =E9=83=81=E9=9B=B7 wrote:
+>>>There is a script [usb-ctrl][1] hosted in intel-bmc.
+>>>It supports the VirtualMedia feature by insert/eject files to the host
+>>>as a USB mass-storage device.
+>>>Comparing to the existing [state_hook][2] in jsnbd, it supports
+>>>multiple UDCs, so it supports mount multiple files.
+>>>
+>>>In addition, I have some updates on the usb-ctrl script to make it
+>>>support the USB ECM device, which creates a USB ethernet device
+>>>between BMC and the host.
+>>>
+>>>So my proposal is to add the `usb-ctrl` script into the phosphor-misc
+>>>repo so that it gets reviewed and could be used by upstream.
+>>>
+>>>Any ideas?
+>>>
+>>>[1]:
+>>>https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-c=
+ommon/recipes-core/fw-update/files/usb-ctrl
+>>>[2]:
+>>>https://github.com/openbmc/openbmc/blob/master/meta-phosphor/aspeed-laye=
+r/recipes-connectivity/jsnbd/jsnbd/state_hook
+>>>
 >>
->>             Log :
->>             yosemitev2 ipmid[370]: sd_bus_call function called..
->>             yosemitev2 ipmid[370]: sd_bus_call function ELOOP .
->>             yosemitev2 ipmid[370]:  unique name = :1.71
->>             yosemitev2 ipmid[370]:  incoming sender = :1.71
->>             yosemitev2 ipmid[370]: executeCallback called. catch block
->>             yosemitev2 ipmid[370]: EXCEPTION=sd_bus_call:
->> System.Error.ELOOP: Too many levels of symbolic links
+>>I'm the current maintainer of phosphor-misc and I am looking for help
+>>with that.  I would be fine with adding this script to that repository.
+>>It would be nice, but not required, to hear from the Intel team that
+>>they would pull from the new location if we do this...
 >
->Yes, it appears that systemd has some code to specifically return ELOOP
->in this case:
->
->https://github.com/systemd/systemd/blob/master/src/libsystemd/sd-bus/sd-bus.c#L2236
->
->>
->>        So,  Could you please confirm sd_bus_call does not support the same
->> bus/clients with in the same process.
->>
->>        Also, Please let us know if any alternate method to  call the
->> execute dbus method with the same bus/connection.
->
->My suggestion would be to see if one of the functions in ipmid-new.cpp,
->such as executeIpmiCommand, can be exposed to providers for these kind
->of recursive callbacks.
->
->Maintainers of phosphor-host-ipmid have opinions here?
+>Yes, we could start using it from there. Just would have to move the=20
+>recipes to point to the right place. CCing Vernon who was the original=20
+>author.
 
-ipmid hosts a very small set of D-Bus objects/interfaces. I don't know 
-of any standard commands that would call back to itself though. There is 
-some context I seem to be missing here.
+That old thing? :) Seems like a long time since I wrote that. I am fine=20
+with it moving to a new home. That being said, it might be better off as=20
+a c++ binary that is controlled from D-Bus than a shell script. It=20
+started off as a script because we just needed it NOW.
 
 --Vernon
