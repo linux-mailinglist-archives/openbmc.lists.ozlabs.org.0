@@ -2,68 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 778761E8700
-	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:55:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C37991E8710
+	for <lists+openbmc@lfdr.de>; Fri, 29 May 2020 20:59:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49YYfn56XtzDqj4
-	for <lists+openbmc@lfdr.de>; Sat, 30 May 2020 04:55:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49YYlN6zyVzDqjJ
+	for <lists+openbmc@lfdr.de>; Sat, 30 May 2020 04:59:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
- helo=mail-pj1-x1042.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
+ helo=mail-pf1-x443.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Gycs5Jdk; dkim-atps=neutral
-Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
- [IPv6:2607:f8b0:4864:20::1042])
+ header.s=20161025 header.b=oCQL90tR; dkim-atps=neutral
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
+ [IPv6:2607:f8b0:4864:20::443])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YYbW5T2bzDqkT;
- Sat, 30 May 2020 04:52:38 +1000 (AEST)
-Received: by mail-pj1-x1042.google.com with SMTP id q9so1820362pjm.2;
- Fri, 29 May 2020 11:52:38 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49YYgC3WMbzDqhS;
+ Sat, 30 May 2020 04:55:51 +1000 (AEST)
+Received: by mail-pf1-x443.google.com with SMTP id y18so260438pfl.9;
+ Fri, 29 May 2020 11:55:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:subject:to:cc:references:from:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to;
- bh=hzq5CP06WE+rDQgMLM3t1qmEAoMARZTAExLtoppQY3s=;
- b=Gycs5Jdkqw5y4aA6YTe0aznWpCkMlZyRDPypCEmvOBdwBFX6i3XcJWwe7lm/WO/GBO
- 1AvSgQxNCngwWH+VR5TUxuAW5T6jgrD5tWbA/ciT2KjuPVFqMubuc/byw95UNRKdipEx
- 8eu3GoyM9a4BTQd4Tw3TCZkBHPDnwOJRRifO8jmduL8V5J7loVskh+NeU1/5BAaL6IM5
- dGNq6xfDuPsttWgJ+3LEJ0OV/kXyMl0XNn66uES9P+VqTuAOd/6oUMr8Rwl+imlkXv/T
- 3pMu/AYkxboWp5pyvRMtXTi5EEzq6lT0SV3bnnOq7fZcTWwhTceupsPxShexmp7hPyhs
- Yvkg==
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=fYjKDDeICBXrGG11GY9j9/rZl2s6XWCbpUSZjG1wuSk=;
+ b=oCQL90tRRA1d4mnvC9q35QF1rd6ofQhsrUylrXvdCbLKMu/iHwMQ9j78uz+T81b9pM
+ T/eGzZaUgKspgSJZ9+3B4wZqBXofXvZ+36TJ+eu9mwiD+LgAOk4tE26o+G2zEfZWqmnQ
+ GEFNbey+bS8pJcBdUcWxxdHiI8psbES3DKkKp8OcFIkvkWfq4CoJkQYtXdMIa2y9eIqt
+ HYaVbrsiEYwg6zA+OEU64Kq9mEpjkGym921/FtRD6UOZPVmKKaxyf/rVQS3gf7fDTFFd
+ WV2efgInTGoTSN1R69WHq/pqyeHFuPSnAkia5OBbfoTXdM6MAI1ELCbJHSKQY3EeI2ub
+ h6BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to;
- bh=hzq5CP06WE+rDQgMLM3t1qmEAoMARZTAExLtoppQY3s=;
- b=TK1ofOqibRXcpgyHJX4gOnktPPhcTOUgSQhayrSbwxkMRxtV20ZJuFTYOs2iBWpMtP
- i4iD28itq3fyTXXhrVdHjjWouJgT9vDmmgpx8frjj+vtdc3zI8v9UkuFQKyeBrD+x7Ze
- hhhN24PDXXKJ7ytURTZa4BIf+Ggdzk8NctyWpddNTqoKuxtYQ8cYc3z2I0Jqbo2EKluB
- mJNpDuGrXIWVRDb5RZbnJmFp79cx4WABEGuwPS/Wjilyr0sTDAgs8L9CPzBaE4b5vrB4
- KUX9CyXt8TT969EjF4QhaH4lxJEvtJGvVL+8EjlH6pebta3FjuWIGM5Sb9Loy+/p5ge/
- XBtA==
-X-Gm-Message-State: AOAM533ZSYgG3Pv3bqJqH+nmp9DDnF7sx0VU6Q1VnjLFMBJU/vSFkV09
- 3Jksqh0QInvkkfYRC9uhlg8=
-X-Google-Smtp-Source: ABdhPJySY1MJ/4FGL1qpg5ojXX5NRDuqHrhGcK+iN4Uvb1UvVjRA8TVDXXm3AHDVaMF2yV13gndnCQ==
-X-Received: by 2002:a17:90a:3ad1:: with SMTP id
- b75mr11081675pjc.216.1590778355795; 
- Fri, 29 May 2020 11:52:35 -0700 (PDT)
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-language:content-transfer-encoding;
+ bh=fYjKDDeICBXrGG11GY9j9/rZl2s6XWCbpUSZjG1wuSk=;
+ b=HkFibXEJzEQPVqGmf09fjSAQJnd+dHwLuWJ0hgjqzPfR2YHecLiHaQfXlK/Yy2LwDe
+ CzmODN7sKJI9fhlTO66qOF1g/fj/M/YtOMVbgDxCXcB8VbMHYzy7qg6jlsoMOP1ZD7CN
+ nl/iVomDJNDhzboYyAzL7Zv2ptdwUL8uJlKOV26DJ9my9C++T9lgmm+VsfKtDkytg80v
+ KLM2gJojhdnHG9Bs2ZjRTfXRwDaMNHlYDxEU+MvYSpOpyIORTA8LDC00b5jeZLAOA/Qp
+ 9BvUGWFpHSZLAHQQLA2pxTpqdD7AgD+zTP4kkXkAXm2n1yaHVg/qse5VsapXjfpM0qet
+ dzBg==
+X-Gm-Message-State: AOAM530zSLmXHc9yNdksafkKW92vbb1uv3/IC7EDTDll87mQ5qrfa6vU
+ P2JjK5YJV6P+kVyrikE/iz8=
+X-Google-Smtp-Source: ABdhPJwl7NePayUo4Bh0gkEE8JWwruDQ3zKRedRBd19GFObsXvihjoEyvAlF24fxdfwcWHkEb1sAzw==
+X-Received: by 2002:a63:5054:: with SMTP id q20mr9571150pgl.117.1590778547250; 
+ Fri, 29 May 2020 11:55:47 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
  by smtp.gmail.com with ESMTPSA id
- g18sm7401759pgn.47.2020.05.29.11.52.34
+ z29sm8150504pff.120.2020.05.29.11.55.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 29 May 2020 11:52:35 -0700 (PDT)
+ Fri, 29 May 2020 11:55:46 -0700 (PDT)
 Subject: Re: [PATCH v2] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
-To: Patrick Williams <patrick@stwcx.xyz>
+To: Vijay Khemka <vijaykhemka@fb.com>,
+ Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>,
+ "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 References: <20200529124607.GA3469@cnn>
- <49485085-7cc7-9e29-a719-98d1e184378b@roeck-us.net>
- <20200529174210.GF17541@heinlein>
+ <6F5BD2D3-997D-4607-BC0C-B36497B51D13@fb.com>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -108,15 +113,15 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <356db3d6-bc56-bd58-428f-d8e94311abee@roeck-us.net>
-Date: Fri, 29 May 2020 11:52:33 -0700
+Message-ID: <41b169b7-83cb-c814-179e-9e62f17f27d8@roeck-us.net>
+Date: Fri, 29 May 2020 11:55:45 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20200529174210.GF17541@heinlein>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="3DlYDZqgzYYzdUTaYkmBSX1UFcTispULy"
+In-Reply-To: <6F5BD2D3-997D-4607-BC0C-B36497B51D13@fb.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -128,104 +133,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, manikandan.e@hcl.com,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, vijaykhemka@fb.com, saipsdasari@fb.com,
- Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>, patrickw3@fb.com
+Cc: "saipsdasari@fb.com" <saipsdasari@fb.com>,
+ Patrick Williams <patrickw3@fb.com>,
+ "manikandan.e@hcl.com" <manikandan.e@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---3DlYDZqgzYYzdUTaYkmBSX1UFcTispULy
-Content-Type: multipart/mixed; boundary="PzSnpketLU5sr73i8NHQan8wbmrYTvdCO"
+On 5/29/20 10:57 AM, Vijay Khemka wrote:
+> 
+> 
+> ﻿On 5/29/20, 5:47 AM, "Manikandan Elumalai" <manikandan.hcl.ers.epl@gmail.com> wrote:
+> 
+>     The adm1278 temperature sysfs attribute need it for one of the openbmc platform . 
+>     This functionality is not enabled by default, so PMON_CONFIG needs to be modified in order to enable it.
+>     
+>     Signed-off-by   : Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+>     
+>     v2:
+>        - Add Signed-off-by.
+>        - Removed ADM1278_TEMP1_EN check.
+>     ---
+>      drivers/hwmon/pmbus/adm1275.c | 21 +++++++++++++++++----
+>      1 file changed, 17 insertions(+), 4 deletions(-)
+>     
+>     diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+>     index 5caa37fb..ab5fceb 100644
+>     --- a/drivers/hwmon/pmbus/adm1275.c
+>     +++ b/drivers/hwmon/pmbus/adm1275.c
+>     @@ -666,7 +666,23 @@ static int adm1275_probe(struct i2c_client *client,
+>      		tindex = 3;
+>      
+>      		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
+>     -			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
+>     +			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
+>     +			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+>     +
+>     +		config = i2c_smbus_read_byte_data(client, ADM1275_PMON_CONFIG);
+>     +		if (config < 0)
+>     +			return config;
+>     +
+>     +		/* Enable TEMP1 by default */
+>     +		config |= ADM1278_TEMP1_EN;
+>     +		ret = i2c_smbus_write_byte_data(client,
+>     +					ADM1275_PMON_CONFIG,
+>     +					config);
+>     +		if (ret < 0) {
+>     +		dev_err(&client->dev,
+>     +			"Failed to enable temperature config\n");
+>     +		return -ENODEV;
+>     +		}
+> You don't need this above code removing check as below should be enough  to
+> populate sysfs entry you need.
+> 
 
---PzSnpketLU5sr73i8NHQan8wbmrYTvdCO
-Content-Type: text/plain; charset=windows-1252
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+You mean you are only interested in having the attribute, even if it doesn't
+report anything useful because monitoring is disabled in the chip ?
+Sorry, I don't understand. Can you elaborate ?
 
-On 5/29/20 10:42 AM, Patrick Williams wrote:
-> Hi Guenter,
->=20
-> Thanks for the initial look at this.
->=20
-> One question for you below...
->=20
-> On Fri, May 29, 2020 at 10:30:16AM -0700, Guenter Roeck wrote:
->> On 5/29/20 5:46 AM, Manikandan Elumalai wrote:
->>> +		/* Enable TEMP1 by default */
->>> +		config |=3D ADM1278_TEMP1_EN;
->>> +		ret =3D i2c_smbus_write_byte_data(client,
->>> +					ADM1275_PMON_CONFIG,
->>> +					config);
->>> +		if (ret < 0) {
->>> +		dev_err(&client->dev,
->>> +			"Failed to enable temperature config\n");
->>> +		return -ENODEV;
->>> +		}
->>
->> This can be handled in a single operation, together with ADM1278_VOUT_=
-EN
->> below. There is no need for two separate write operations.
->=20
-> I don't know if you noticed here but the change ends up enabling
-> TEMP1_EN in all cases.  Is this acceptable?  If not, do you have any
-> preference on how it is selected for enablement?
->=20
-
-I did. We are doing the same for output voltage already, so I am not that=
-
-much concerned about it. If it is, we might consider adding _enable
-attribute support (see Documentation/hwmon/sysfs-interface.rst) to the
-PMBus core (presumably as virtual PMBus commands) and let the user
-enable/disable individual attributes as needed.
-
-What _should_ really be done, of course, is that the BIOS/ROMMON
-configures the chip as desired. Obviously that is not happening here.
-
+Thanks,
 Guenter
 
->>>  		/* Enable VOUT if not enabled (it is disabled by default) */
->>>  		if (!(config & ADM1278_VOUT_EN)) {
->>> @@ -681,9 +697,6 @@ static int adm1275_probe(struct i2c_client *clien=
-t,
->>>  			}
->>>  		}
->>> =20
->>> -		if (config & ADM1278_TEMP1_EN)
->>> -			info->func[0] |=3D
->>> -				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
->>>  		if (config & ADM1278_VIN_EN)
->>>  			info->func[0] |=3D PMBUS_HAVE_VIN;
->>>  		break;
->>>
->>
->=20
+>      		/* Enable VOUT if not enabled (it is disabled by default) */
+>      		if (!(config & ADM1278_VOUT_EN)) {
+>     @@ -681,9 +697,6 @@ static int adm1275_probe(struct i2c_client *client,
+>      			}
+>      		}
+>      
+>     -		if (config & ADM1278_TEMP1_EN)
+>     -			info->func[0] |=
+>     -				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+>      		if (config & ADM1278_VIN_EN)
+>      			info->func[0] |= PMBUS_HAVE_VIN;
+>      		break;
+>     -- 
+>     2.7.4
+>     
+>     
+> 
 
-
-
---PzSnpketLU5sr73i8NHQan8wbmrYTvdCO--
-
---3DlYDZqgzYYzdUTaYkmBSX1UFcTispULy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEiHPvMQj9QTOCiqgVyx8mb86fmYEFAl7RWfEACgkQyx8mb86f
-mYFj8Q/9FXJVYh+JNzgnGbNsTDqIEFGwqd0O5cn8rIPErMDkibL45IqGfyrgLX/K
-im/Uwe0c/S6wij2YpP1MHxpLYcQJWUR+pv2WxOf9jzVXRBpXDB+nBtxSE1DWlIvJ
-aEPO9TSSEp8Qmy2CQ9QIFKnxiQQ2n1hxrFmEQH0pkulAwL5rx6ZzfWC/laZsu/j4
-6ZKTtfqc36MscC6KwxcWtSjY8shHAAQof2XILFXC95lYUCO6fHwcAuHvWaXbeyoh
-3rrIHu75NTlYzT8fZtgAzHJ7AlSvSTTy98aYETxFNgLqoZq0i8SIpwYci6JrPraz
-JXtegLXtISvse145ayXshtBJ3tr3+lW4S7fpU0JY3jXcECIgdi+tZ2dNQT+7Tqt+
-BH9Me/wt67PMk+baSeQH48NYrSIjNitnxH5b35xjGqcPvNbTTKY0MzWjn0a6BvwE
-pDaDUQXlNrmDXKu+ot47dNpXdGtR3fOxh6VAiFPIfePXyKB7hVBUesDH1+/iEc8/
-QZYOUL/OVHxIIKcxGXtDta8Zoz7TwdKplfkmIdLHovHrAtU0EtGV+BeOD6budsTl
-DaL2J2jJ1UvPJbjmGWI423QMtyljV+8lvYgEdEB3ytNqfuQaCHhKZsKBIrgwul9f
-bXOLZKHFgcaZKEtGqGRyvnbSKONebZHDdwQXV51utOhnT0eN900=
-=rTYV
------END PGP SIGNATURE-----
-
---3DlYDZqgzYYzdUTaYkmBSX1UFcTispULy--
