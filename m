@@ -2,60 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF2A11E947F
-	for <lists+openbmc@lfdr.de>; Sun, 31 May 2020 01:21:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 891FE1E9480
+	for <lists+openbmc@lfdr.de>; Sun, 31 May 2020 01:24:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49ZHWN5fmqzDqll
-	for <lists+openbmc@lfdr.de>; Sun, 31 May 2020 09:21:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49ZHZK633BzDqkw
+	for <lists+openbmc@lfdr.de>; Sun, 31 May 2020 09:24:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::831;
- helo=mail-qt1-x831.google.com; envelope-from=venture@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::734;
+ helo=mail-qk1-x734.google.com; envelope-from=venture@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=fzu3Gtt6; dkim-atps=neutral
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
- [IPv6:2607:f8b0:4864:20::831])
+ header.s=20161025 header.b=FOFi3IVA; dkim-atps=neutral
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com
+ [IPv6:2607:f8b0:4864:20::734])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49ZHVG14PVzDqkB
- for <openbmc@lists.ozlabs.org>; Sun, 31 May 2020 09:20:36 +1000 (AEST)
-Received: by mail-qt1-x831.google.com with SMTP id y1so4968722qtv.12
- for <openbmc@lists.ozlabs.org>; Sat, 30 May 2020 16:20:36 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49ZHYk0RLZzDqkB
+ for <openbmc@lists.ozlabs.org>; Sun, 31 May 2020 09:23:36 +1000 (AEST)
+Received: by mail-qk1-x734.google.com with SMTP id c14so4771075qka.11
+ for <openbmc@lists.ozlabs.org>; Sat, 30 May 2020 16:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=4MhdqyzRzfIxZ8pz7Z/09IZTPGvqcNCWwO8b6ecZdBw=;
- b=fzu3Gtt6zJKF6ANJN6VUwbLr8qSGWTw9H4ivEwG64tBo9rPCzGhGYclzao/q3b3Uav
- lPQIvoNbUOtj8iatLo7H2o8WTRXB1fabX3agVcb7kz0G+7ut68mV1NaLEzaOCvDq8k2d
- MPPuowl02+Nujhc6VzTxf7U5J6Sj1IF1GsHfrFJ3qsNzRJeHhWNICEktKjbDkpJXeiXQ
- SbbOdQuMEtmqaGePAOeoTEFG5fFzpPkj/PUuL7yY9Y4z3YSXKNRzpVxS/LQ625SnD8Px
- RT1HAEwWdF8/b/GEY8Whf+yxXgvfCVXehVL79PUc1b6TI/m53G00Tp9qttn6wN7hu8Sq
- AjXQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=EZJabjQoeRqKPQ5dBxOPbwvFKhjFFqR2iZL1+I7MtEU=;
+ b=FOFi3IVAvzvk0Lys8X5WNZ26ahqih2T8HkcqchZrAWZx4cX2j8Y8K5A90z58+APAYs
+ bNDlxr/OJI9MY4t8/35JMNFYw7S34vF6bQbJ2w06RGqobZhaEv4Yc4jA0rn/ztho3E8Y
+ 1Ifp1KzQfMmlZ4rAcDV7DH7me1zMdp7CbiMvjap9B0mAzDklx5l+Q5KR43LvnGJ8l/0o
+ DjLrLfokoi60Ytp0xjn5OV/jw0uQ26JbS2gKtLniymnZeMvfvpHZNRoydHz9S2uNLLqw
+ CsWCEy3UR3oXzpbrudU+Xuu8tfQWSXuNZE8tyyvVjQ7kAEDRNymt0AU+C4gMR/UstT7u
+ sjCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=4MhdqyzRzfIxZ8pz7Z/09IZTPGvqcNCWwO8b6ecZdBw=;
- b=INscpGL15Ldq9EIsT+3mI1tISOl9XCTrgN03uzNXYOO6YsSf0JIg+QZij4L1VgRi14
- LvYb+f6Oea8wuTW+qvJuKt2gUK2yaQ0B79rPksmKS3TojZv5ihgUlOwFS2W1/zDg8N0K
- MbYjH0CsA+1oK6uLTl8JH3szIrVdedHcwCKCR194Wx96F0g4OJNv1JdpwIXHWgxGJKDq
- 2jDk3ZERwXsgo51l0SB107nuu00JKpvPod8/mHM5zx2CnrVHHqxc4GwANrns2e2DRM+1
- mxdrUCmA9PIB+TNzWEogM43KpFdOlLf/tGwYjhIcNFM/QWZWcgCIAmWRNYGdS/3aEguL
- Z3eA==
-X-Gm-Message-State: AOAM533Ntu0UR5cvD2yoCjxinRoWkBpoOF+obt1r4nWkHtjXcRZqTJuH
- mS2iZSX4CbY6iK9pObAgzjSYXso/SlIpiXWvuvIO0fbfy2M=
-X-Google-Smtp-Source: ABdhPJxFrHJSj2yDUs0JennqQLK+U7FzOKg1llZC9ruFvx1AGIjGmuY/N13FSlySI+sy3/+11TiywRDpluM6sjeM+wA=
-X-Received: by 2002:ac8:3066:: with SMTP id g35mr8276592qte.193.1590880833871; 
- Sat, 30 May 2020 16:20:33 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=EZJabjQoeRqKPQ5dBxOPbwvFKhjFFqR2iZL1+I7MtEU=;
+ b=bpxPpQPtdD9w9hA2y0BptaypsQ+XOACC9nPSW944ffBmKGhXrjr9m+mCUkAJzv06UO
+ 9oWd2Eb43WiAcfRUVsTc9f8X9efGnrOQHZE3wNqp5LNGilkCCtA3Hwk7umIeH099UXDW
+ Xq7yAUXhZXqoW3a0HStZXYVr8ZaVclMWA8CDHAtpswDplvXhZMicA59gnZhN5H/7B4ow
+ d3xLO3KFjPBw5ZmCh71va315H45XXKO38Bun6MBkAF6AM5Qwj6vIEL/goVlbR/MdaMLX
+ o3iIrzQwkCsj9Xoalvb5XbTo9n6G+wY71PvUQKSkZWln8/Xf7pcsGnLTUqx5hu9Rr7Ps
+ 2MHA==
+X-Gm-Message-State: AOAM530nPI2k3PomoLsDwwJuS1BYuoTI0FKXRFmGcpzXuEBIIi3xzBjz
+ E9idOT6nP2P6KY2pk2EmjieGXYSV0rihZ+djyVGxA+d4
+X-Google-Smtp-Source: ABdhPJzDJmAcWVzOTbKVeiSl25NLj/BM2dofcPh3lxO1wqmX2Kiey67KgN7SRfbcYOrSd8kRlYaoheM12C3Cd02YG6I=
+X-Received: by 2002:a37:a4ca:: with SMTP id
+ n193mr13261291qke.261.1590881012932; 
+ Sat, 30 May 2020 16:23:32 -0700 (PDT)
 MIME-Version: 1.0
+References: <CAO=notz682nVvnxtuj=vzEMBKbHQm01fd+=-JC9pXu+jGioMSg@mail.gmail.com>
+In-Reply-To: <CAO=notz682nVvnxtuj=vzEMBKbHQm01fd+=-JC9pXu+jGioMSg@mail.gmail.com>
 From: Patrick Venture <venture@google.com>
-Date: Sat, 30 May 2020 16:20:22 -0700
-Message-ID: <CAO=notz682nVvnxtuj=vzEMBKbHQm01fd+=-JC9pXu+jGioMSg@mail.gmail.com>
-Subject: Looking at intel-ipmi-oem
+Date: Sat, 30 May 2020 16:23:22 -0700
+Message-ID: <CAO=notxjf=TVko9zpGv6sD5-a4v7WyD4hzU2g5_RHe6otmCN2g@mail.gmail.com>
+Subject: Re: Looking at intel-ipmi-oem
 To: James Feist <james.feist@linux.intel.com>, 
  OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -73,16 +77,22 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-James;
+On Sat, May 30, 2020 at 4:20 PM Patrick Venture <venture@google.com> wrote:
+>
+> James;
+>
+> I'm looking at separating the sensor and storage commands in
+> intel-ipmi-oem from their interfaces, -- making them work without
+> dbus, so that they can be dropped into other environments.
+>
+> Re-familiarizing myself with the codebase, I found the matches
+> https://github.com/openbmc/intel-ipmi-oem/blob/fcd2d3a943c4fb518d399d8a0addd1cc661e5628/include/sdrutils.hpp#L66
+> don't appear to be referenced, they are declared in two places and
+> then the symbol doesn't appear to be used.  Can you verify this or
+> point me to how they're used?
 
-I'm looking at separating the sensor and storage commands in
-intel-ipmi-oem from their interfaces, -- making them work without
-dbus, so that they can be dropped into other environments.
+Nevermind, it appears to be that in their creation, they register
+their behavior.
 
-Re-familiarizing myself with the codebase, I found the matches
-https://github.com/openbmc/intel-ipmi-oem/blob/fcd2d3a943c4fb518d399d8a0addd1cc661e5628/include/sdrutils.hpp#L66
-don't appear to be referenced, they are declared in two places and
-then the symbol doesn't appear to be used.  Can you verify this or
-point me to how they're used?
-
-Patrick
+>
+> Patrick
