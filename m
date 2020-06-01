@@ -2,69 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1C2C1EB2E1
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 03:10:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AFB91EB2E3
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 03:12:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49bYrZ4FV4zDqGm
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 11:10:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49bYt92gYSzDqFJ
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 11:12:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yahoo.com (client-ip=98.137.68.83;
- helo=sonic306-20.consmr.mail.gq1.yahoo.com;
- envelope-from=geissonator@yahoo.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=bentyner@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=yahoo.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256
- header.s=s2048 header.b=acIiw9K7; dkim-atps=neutral
-Received: from sonic306-20.consmr.mail.gq1.yahoo.com
- (sonic306-20.consmr.mail.gq1.yahoo.com [98.137.68.83])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49YZvD4ss6zDqfv
- for <openbmc@lists.ozlabs.org>; Sat, 30 May 2020 05:51:15 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1590781866; bh=BS0ZEu8SGm/VLdbENG+oegS1Y2syadw5Ft3Wm9HwZRQ=;
- h=Subject:From:In-Reply-To:Date:Cc:References:To:From:Subject;
- b=acIiw9K7tzewMNDHdN+gXfJsiXpX47BCLvTPcw0pKvuOyqMJBeltc54SuNajnYrJrrwa3Pmk/G/+tdLGWd9lbcXDO1s+G7H2s9PJWgf/lvXm3iLRub4cE1TyR/6t/0qfPeKOzcTDYIsWJWbguMZxsb8iUA8VHHtyy5+ypKpR3LEfJIFmWV5JEgsWzOUyCN0qSX6xG2VOxSfN99wvq6lOuX5nWLe4qWPm+MQTEO7K6UH0QFkuZTVMA1QKZ9sOee6ipmDFWZKkebRXs/41vqD4A9PO7Yvr28Kdc1J69s4Tvv1z/upc0QXYWPheB53YcPEkZEah5yBYIIwBQu4y8n5KLA==
-X-YMail-OSG: lqG1K.EVM1lYrcm8PWQAy96EMUo2S446HOiRRwn.JCZUF4iO0VXSt2yeuSi8gRV
- YmuRPZM5n_BMJwu809Idojk4yqCeEiGQSSaWqDD2chjBVc5eFsOt_9S9TLIRrPn2LsFwMZ953H3E
- 2mKaF_snx1ePFILclsT1aiZZFbjHA1J3tiNEZhXhcZ8OpHM0f7377jpqT24PsuxrMp_SxsAnFAFg
- ica4lmKcMxvnmLoqnv8omsQnpYKqgUuYzMI_zr14b0XLI4EeVYfxpnrdn9PRd0oz8hw.7HRQ4uSM
- 9R8YoUvTXGThs6dRsM4XeYmYyb0EkQXQuIPDIGS6nvO.Z.am01W1Cp.BcJ6mfAcSFxXhRyv8zzDK
- 24BwpDGWZMVssspHxP6slpcN3Y25UbMSI4SoiEGUKq910J_B1ZL3pEMKSlnxsTjQitqqL_A9lenT
- 4bYxS.nGhVuEw2O_.Y2yrEYbYSOlpQtZu30gdzvdwYGgxjyBoi2jng7BG_WCHK89rzem1vZm.DID
- _ixC0OoK5zmAFlPhl_UClaFVQaXYBUZG0bEGqVz3KR.AcQEoDrok30L9VekOY2.svr3dLh_VfIWj
- 2yPh1VrKaWARSxb1G5t.8RxFhZGrhYLIfpNQDu4_I7BYEMKJHnlK7iL2cMtVtc9rUixaEZtSYQ0v
- FzNnwpX.pBSS2k_8r74StzedQD6XSXYB8PNqUuzPE7PzAiMLRCtypEfpl72Og.VAnhQ.rLWTq6E4
- 9TYulUAEdtw1QHfAnLTBC2jnSiK8hBvIwF0ax_smkgkUKvvnpDaMxQ9CGUCgDGMEl5hW5BkjM0K.
- msWseFvIHeS5pzNRAEyErDp1LLPyLaZXqGUk3MkS4RSuHJBy7z9PqwwWiTfF93qJSj6pUEPsaTc4
- 9csbCmgIa7liCIGk.4VqHdlslIBgpdzYFCJsrjdmg3ATZaZmKkFKxEQY6J3qY6fXbKUlMmekJ4ri
- ryxhfK1peo7XxCFbbZNtXis.W.erw6_CPnDruOkdL9cSYpBnNSGpwlFJGyG4UxY9Cz.f2K07CRBC
- qzJ9PI3QLvMWNv3aNq6M_O5Te9DZ_Y6zRll2_FuANuxWak.b8xLuOW.Y9bSSV1j.BhHl6_U_ughy
- krIWalmCgPFuLNW6ah6AzkwefnoHXB5Z7rPqI5Icw9fzxatGXd6hZLHSGxBc.kNuvfauhxiiHv8v
- KpVYEpFipxjLCgZzfWOa9UL7R06b9QlxXIntVYtUlfXTjeIfJFaNVVJi1c5YB80S43A4247lXamQ
- _4wo.yMB1M5.lSnWyiWvJZCshl9HMHEu6Ms8_MStVxngjJKJZQ92ZWOe89_H4_irWRQ79uhDvARa
- mSTi.5eKNC.orKPlQYxeQJkdWpW2aJDFIEzl24eUPDhWDfu7T5kotky4ca2ZEqU13z95UiDTqqN3
- JP.YO2kxM4M4ot8HBB8c-
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic306.consmr.mail.gq1.yahoo.com with HTTP; Fri, 29 May 2020 19:51:06 +0000
-Received: by smtp426.mail.bf1.yahoo.com (VZM Hermes SMTP Server) with ESMTPA
- ID 53cfee890207c30095a9ad13d800c398; 
- Fri, 29 May 2020 19:51:03 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: Re: request to add pfr-manager repo to CI
-From: Andrew Geissler <geissonator@yahoo.com>
-In-Reply-To: <63ac8cfd-86b9-43fe-91a0-60f60b4469ee@linux.intel.com>
-Date: Fri, 29 May 2020 14:51:01 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B5A32CFD-5E30-41C3-AA91-C0918DD79195@yahoo.com>
-References: <63ac8cfd-86b9-43fe-91a0-60f60b4469ee@linux.intel.com>
-To: "Puli, Apparao" <apparao.puli@linux.intel.com>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49bNlL058yzDqKK
+ for <openbmc@lists.ozlabs.org>; Tue,  2 Jun 2020 04:20:45 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 051I3an9004450; Mon, 1 Jun 2020 14:20:41 -0400
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 31bm077jeg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jun 2020 14:20:41 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 051IF00U002815;
+ Mon, 1 Jun 2020 18:20:40 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma04wdc.us.ibm.com with ESMTP id 31bf48nt92-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jun 2020 18:20:40 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 051IKdx652494732
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 1 Jun 2020 18:20:39 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D7C82805C;
+ Mon,  1 Jun 2020 18:20:39 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1E16F28059;
+ Mon,  1 Jun 2020 18:20:39 +0000 (GMT)
+Received: from xubuntu.austin.rr.com (unknown [9.65.200.226])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon,  1 Jun 2020 18:20:39 +0000 (GMT)
+From: bentyner@linux.ibm.com
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH] arm: dts: aspeed: tacoma: remove checkstop gpio-key
+Date: Mon,  1 Jun 2020 13:20:22 -0500
+Message-Id: <20200601182022.4031-1-bentyner@linux.ibm.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-06-01_12:2020-06-01,
+ 2020-06-01 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=580 phishscore=0
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
+ cotscore=-2147483648 priorityscore=1501 clxscore=1015 mlxscore=0
+ suspectscore=1 spamscore=0 adultscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2006010136
 X-Mailman-Approved-At: Tue, 02 Jun 2020 11:08:13 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -77,30 +82,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- vikram.bodireddy@linux.intel.com
+Cc: Ben Tyner <ben.tyner@ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+From: Ben Tyner <ben.tyner@ibm.com>
 
+Attention handler will monitor the checkstop gpio via the character
+device interface so it needs to not be defined.
 
-> On May 29, 2020, at 10:33 AM, Puli, Apparao =
-<apparao.puli@linux.intel.com> wrote:
->=20
-> Hi Andrew,
->=20
->    Can you please add "pfr-manager" repo to CI builds?
+Signed-off-by: Ben Tyner <ben.tyner@ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 6 ------
+ 1 file changed, 6 deletions(-)
 
-Hey Apparao, sure, done.
-
->=20
-> https://github.com/openbmc/pfr-manager
->=20
-> https://gerrit.openbmc-project.xyz/#/q/project:openbmc/pfr-manager
->=20
->=20
-> Thanks,
->=20
-> -Appu
->=20
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+index ba1f4cb7e..d2850956c 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -39,12 +39,6 @@
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+-		checkstop {
+-			label = "checkstop";
+-			gpios = <&gpio0 ASPEED_GPIO(E, 3) GPIO_ACTIVE_LOW>;
+-			linux,code = <ASPEED_GPIO(E, 3)>;
+-		};
+-
+ 		ps0-presence {
+ 			label = "ps0-presence";
+ 			gpios = <&gpio0 ASPEED_GPIO(H, 3) GPIO_ACTIVE_LOW>;
+-- 
+2.20.1
 
