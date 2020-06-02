@@ -2,64 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B071A1EC25F
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 21:09:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B97DF1EC278
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 21:13:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49c1mx1bQqzDqRX
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 05:09:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49c1sd1pxzzDqRy
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 05:13:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::230;
- helo=mail-oi1-x230.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
+ helo=mail-oi1-x22e.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=HO0mUnh5; dkim-atps=neutral
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [IPv6:2607:f8b0:4864:20::230])
+ header.s=20161025 header.b=YtoOM5H7; dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49c1lB2BprzDqPk
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 05:07:49 +1000 (AEST)
-Received: by mail-oi1-x230.google.com with SMTP id m67so13011174oif.4
- for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 12:07:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49c1lL6y2fzDqTl
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 05:07:58 +1000 (AEST)
+Received: by mail-oi1-x22e.google.com with SMTP id m67so13011968oif.4
+ for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 12:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=subject:to:references:from:message-id:date:user-agent:mime-version
  :in-reply-to:content-language:content-transfer-encoding;
  bh=At4MN+cb3VZfM9P6Pxyn/+T0K+TgdHSSJ51Bwdy3DRw=;
- b=HO0mUnh5bTPnyKrZEWrf2J7zrrIu8D+ieQ8NFsnNL8fX0fw8JZGWZcZ+gnrkLplKGj
- VKthM9+f4JHH9Z1bgBJ66WkhRnQHUHdTlnnAH1UFtcsQ69M//YvBtoPqpry7N1x+W7hl
- qnAdWKZqgY04w78c1or5T7guM5F3GcZdt5M9ltfcIarhGHn5StSwGnGxAoB20XPK9mjW
- WoEXsVyozFh2zJszCj7VE4R7uu9HIxje0OQ6oAsBvLxhW673uyf79v1j5pZBlmsDhxrz
- ErV4zsuBlycKTxOLIGe8L2TUMmeAfp6W7iARDEcIHI3Y8O/oqMm2D2yZef/nhhEJs3i8
- zDgA==
+ b=YtoOM5H7XzLFTpfaV4r/DRxbVUkcMbtBcMltsZzX7Fo6E78y98k0ToDSwkUd8W6WFB
+ T1b45NhYkxMzqy9lrPlTjx53adfRxsugSSRrrkDeprew+3aTynZsU3ywh7kzT+ukHNU8
+ brOpEC44D5jZYGQJr4agsP8E0NWp2UrEndAO8/nAnHHChlKtspM9F6znN5M6DpwJkz51
+ Yrb9o3nQs7STWXuS1MbfIVdW8rddoCrJQP/D7mQEtSDviwZ6oCuXtjaUOfrQE4x2R/3+
+ k6UzQB7iAflYM7N8dki0mPrfa5gDAzxJLfdKXKArlQdAgteASYYyRIeaf6/syzAYyDwq
+ T69A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:subject:to:references:from:message-id:date
  :user-agent:mime-version:in-reply-to:content-language
  :content-transfer-encoding;
  bh=At4MN+cb3VZfM9P6Pxyn/+T0K+TgdHSSJ51Bwdy3DRw=;
- b=r0OQQFiLIpC8iVo0JjTW/655gH1lrNGOBM0uUYBTE6Ou2y83AYz4Bo7h4+To31Ai/L
- t+KgsfxcTF6EvUxBULYr3ySlr2A9+QueXuFteIryViPVq5WDfrD1TMqrvTyz2ps8bqig
- MpcV2kxOuuh8zjh5tK9K1ynk2vN0n8lY/uF4p6tyJ2k02FinLlig/a16aXYcQ7DaU4Q6
- 61TGfPPmqQJkEU7l0Fxohdz1mDwuekdL8yaKm/4THu7I280LWWtxxN6luvN5i4/G/Ujx
- 7HDOarxlROlgIwzqzC5yl8ye4WCtfco00v+w3ELj90jncuFZvhELQyx8cupOWeliRPy7
- 2i8Q==
-X-Gm-Message-State: AOAM533NSyMKGErepyJrkIQhd+ZTVB5jY/hZ19juW9vvoA2sobNpwCjb
- 3vC5QyKc+/htY+bf2JbgQMy6/QzaxUw=
-X-Google-Smtp-Source: ABdhPJwz4oVMD1V+zayAXHJI0BeXUpnbKJCd9F0L1VUIuMOApJsMRWtAA3xlXbzDn3EJKOnKHDdCKQ==
-X-Received: by 2002:aca:51ca:: with SMTP id f193mr4048896oib.170.1591124865724; 
- Tue, 02 Jun 2020 12:07:45 -0700 (PDT)
+ b=BwwIrskwdvjUww1jcidtfOoqPeSYw/+J1ZLkW8OQHEuUmoKtx6pIxBYUeMMxRif81s
+ YTDhlokgkCevfbHb5C5WcIkGRhOqM5DFASuNpJFS0lGccO70CO8D/Bg+VAFdvgbAquks
+ nlZU7Z+acXSGImp9DUep+VIxoPKFzpIrTwSnduXTQFcIjXLkP5N3z01uz44qKOxn+Avq
+ s4BQ0HsLqSzY+NXlKVridFQNZbeAjIr/arHTHayJDuxj7KlcrjKlOetQuIR4pfG2yZX1
+ NzKVKQns+C6wy3+F/P87ETS+pvXP1EW/Y6Enncw9vpz1BhE+I9wkfSLkC6qr8ZtafyRs
+ 96mw==
+X-Gm-Message-State: AOAM530ou1Z8WGWKN7ey/giAyFv3jqIm+e9LurZl3EX8e3uxkW/8fdEK
+ gnWpxp9KEoLxfS42Bim2Cf49kiA06Jk=
+X-Google-Smtp-Source: ABdhPJyHwmDOwYXUS4x7ucQgbbfwGz/rO/gVzLR8UW7xIQeBTHH6Ybxqy5w2vcvy5SrZ2zX0oh86RQ==
+X-Received: by 2002:aca:d58d:: with SMTP id m135mr3815309oig.102.1591124876195; 
+ Tue, 02 Jun 2020 12:07:56 -0700 (PDT)
 Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
  [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id t6sm837330otb.27.2020.06.02.12.07.44
+ by smtp.gmail.com with ESMTPSA id c9sm891034oov.35.2020.06.02.12.07.55
  for <openbmc@lists.ozlabs.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jun 2020 12:07:44 -0700 (PDT)
+ Tue, 02 Jun 2020 12:07:55 -0700 (PDT)
 Subject: Re: OpenBMC 2.8 Release
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 References: <CAG5Oiwj+-OnkPMc+dfeo0P=MfREPz_7E+zBaMaYy6AHMLO+BxA@mail.gmail.com>
@@ -67,8 +67,8 @@ References: <CAG5Oiwj+-OnkPMc+dfeo0P=MfREPz_7E+zBaMaYy6AHMLO+BxA@mail.gmail.com>
  <6458b8d3-d460-40c0-9573-fa970cc8fd47@www.fastmail.com>
  <588ffcf2-f766-952c-1ab3-da271d84516f@linux.vnet.ibm.com>
 From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <93bd7bd1-6402-bf7e-850f-22dfa68b8164@gmail.com>
-Date: Tue, 2 Jun 2020 14:07:43 -0500
+Message-ID: <7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com>
+Date: Tue, 2 Jun 2020 14:07:55 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
  Gecko/20100101 Thunderbird/68.8.1
 MIME-Version: 1.0
