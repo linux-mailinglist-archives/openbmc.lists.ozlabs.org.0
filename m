@@ -1,58 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 546991EC4D0
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 00:13:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 834A51EC556
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 00:56:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49c5sd5BRczDqXJ
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 08:13:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49c6pJ25nrzDqYS
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 08:55:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::242;
- helo=mail-lj1-x242.google.com; envelope-from=rhanley@google.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=n9hlI3Pm; dkim-atps=neutral
-Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com
- [IPv6:2a00:1450:4864:20::242])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=g0hGtNII; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=Wpg6rkTX; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49c5rn48dczDqJR
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 08:12:50 +1000 (AEST)
-Received: by mail-lj1-x242.google.com with SMTP id m18so200968ljo.5
- for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 15:12:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=ptg090scJM1aY3e8c6WIA/rfwx8vXX2muhuh8xcVEUg=;
- b=n9hlI3Pm+7T4HlCDcK9zUD7/IZc6QSafPLzds/hqdOn9QdV1bl9NwoPONa573MEA/6
- iJWCdd9x0MbrlJLKNJEmT88AMEuyjtDTda/Tifa+v7kNfnxmx7QtNYVdolJEt3FeU2J9
- OkAlvY+z2JSdF21DXurUsoRQ8EqLPlu57+vilymsF5vcR/8XxilB/5IM6WtnZCf2LxHs
- M54q2gRIqJ0YcevQZziXgoaegeUS0+dnn0ElDJuxHWZqnE8mUAvPjXGyxjyy9Xm3geqC
- EKYTRSLn+OqPEoPFj0DzNmXv3eKdlmly3NeiL25KcszIoRajNHMoTfeceD7b1bOkOsri
- TpBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=ptg090scJM1aY3e8c6WIA/rfwx8vXX2muhuh8xcVEUg=;
- b=uUKhmzqH4bM71XEtLakQ8Sh38hP8kCzh0yd7tmJdpWA6rG9kMCv2qEXRYa9ipKP1Zx
- r808h38LPUMNx3T1wY+imc0IrgEEC8lAJbwPiLSwCtjlIp6cvsm48U6212RdWyBTT3V0
- v6JObV+1YEDAREg0ETB2btIitvpfSxHlSAHKl0P6T6FhbSGyM2I0rShimmE61Wd287Ef
- cfSEChC3ujVPuz8lufa7fn5K/brKQRxPDhb5eEvF2tKRZt1I0IMZ+9GqQLD4fFzfb5Xc
- IWD2eDtYrI/bU73QB6MdG/i41M7SJtEoQxy8VWZMr1mk41PnGds4WCudlg8t2nrcy9Ft
- YV1Q==
-X-Gm-Message-State: AOAM5310aB4k9oIP3e8QewuVKfOzydG+W1ysPzyJffvy1J8hGTPfn/68
- lTY8SifN8LhECGtDDfNY5lZmzW2axk6jYp4jXNrD7w==
-X-Google-Smtp-Source: ABdhPJx8ONGCApGObpJaZuMaj3XccBgfE6pbVTHQCkbVFgppXD8VqnSz4Oj7UAWYiNBNXwQy2B1iGZn4EPUNcwXMWjM=
-X-Received: by 2002:a2e:45d6:: with SMTP id s205mr598837lja.101.1591135963958; 
- Tue, 02 Jun 2020 15:12:43 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49c6nT03qTzDqXq
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 08:55:07 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id 264B75C0097;
+ Tue,  2 Jun 2020 18:55:04 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Tue, 02 Jun 2020 18:55:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=dK3nd3ko8s7vQdJome3rZNk1xqj
+ Gsvw6AFmuRFRifcY=; b=g0hGtNIIG2oaQ7U7V5DRPcfJfm60V6fB4mc9mXr3QaQ
+ aBEydfKN2Yi4C6c4wFRZeV+rzvJsULTI8/cIEVmm6SWuPRLVeu7LVkjvWaaTd4kr
+ 3Gtnx5yaEKY9KMQOwvpo3qzSntgtkbJ8KU4IaZPZklNz7Mv7TA5FeI9sSKWsVwJW
+ GnWTucGTEmQxzsHNRswP4HkNXrAJLgIPam3ll7P0WkT9SWKWkhItHzTPWpq+BKSA
+ pfhUxDRxyVZQevC7y1pp0RDHn/XUTbvnkdqQK62BtIfHZSOBXD7HKy3JNuMVQgqj
+ eg5n2F9jeQphW1gMHj8q6cQp8j05WpGblPsizmB8duA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=dK3nd3
+ ko8s7vQdJome3rZNk1xqjGsvw6AFmuRFRifcY=; b=Wpg6rkTX7S1ertnRNAbVeL
+ eHlquaI+EIPo7M+dhKCWGcF/gebTDDwXrQVbFopi7aePcvRAX2e1KCN1ew0JgTsC
+ zXEpAuKBgxotugYf+zdoyXshOJFf26Jff+X0t30pd3GrJV7DWQbOyRjK5YWsmSe0
+ pEkmf9DEttLp/kOgPoJnZa+cVqMbatu/nc12VCSCcV3JF4Gx0Hf/cDtoKMIwXX8d
+ IyX4b2SWxZBOGAXr5hMBuPA1NK2MfAAYm4Bn9W3xuMumh3X7KTznn9kelCiyV0k1
+ Bg16CBzQi2qJx8Eg6q/QY73Dz1wV80FEN2RIwpWSiLNUmqpYCjnx20eiGPaplxhw
+ ==
+X-ME-Sender: <xms:xtjWXl_AKrhxYRc-hTK0cQxmisJJKYeAXOK1Gc5HtzWDsuVXnVTd9g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudefkedgudefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:x9jWXptek9SY7gpzYgVe69EvzVXzdaLLGaQ25auvjtNSifqML3wrgQ>
+ <xmx:x9jWXjDiAoIjFxPJpXJPgGikYvGwyrog1X7nWoEd5zepjvsa3CBcBQ>
+ <xmx:x9jWXpfalFv-cGehdnUw6Tjbxn691bcECq5MvM-pkTKx1XdsWNsVjA>
+ <xmx:yNjWXkUVGDbNGBEzm7InUNmLL_nLW3b6cE5ORRXf4zIbcn0niENRfg>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id B1F5D3061CB6;
+ Tue,  2 Jun 2020 18:55:02 -0400 (EDT)
+Date: Tue, 2 Jun 2020 17:55:01 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Richard Hanley <rhanley@google.com>
+Subject: Re: Upstream Yocto Bringing in GCC 10
+Message-ID: <20200602225501.GJ17541@heinlein>
 References: <9871E71B-5B1F-4172-9F41-454F8C1F644D@gmail.com>
  <20200518000811.GI1166713@heinlein>
  <2E02F120-7D24-48BE-AFD8-9A7ADD0F08E5@gmail.com>
@@ -61,13 +84,12 @@ References: <9871E71B-5B1F-4172-9F41-454F8C1F644D@gmail.com>
  <78ffc9e9-816a-c420-2d51-8a635342e3c4@linux.intel.com>
  <MWHPR11MB1389439BC7F058A120F60D60F18B0@MWHPR11MB1389.namprd11.prod.outlook.com>
  <20200602200958.GI17541@heinlein>
-In-Reply-To: <20200602200958.GI17541@heinlein>
-From: Richard Hanley <rhanley@google.com>
-Date: Tue, 2 Jun 2020 15:12:32 -0700
-Message-ID: <CAH1kD+aCKNRY4sxPL0bwt0pzL+jW7QBmn7-_PTManZnn08kijg@mail.gmail.com>
-Subject: Re: Upstream Yocto Bringing in GCC 10
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="000000000000ec4cfe05a72135bf"
+ <CAH1kD+aCKNRY4sxPL0bwt0pzL+jW7QBmn7-_PTManZnn08kijg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="x+WOirvrtTKur1pg"
+Content-Disposition: inline
+In-Reply-To: <CAH1kD+aCKNRY4sxPL0bwt0pzL+jW7QBmn7-_PTManZnn08kijg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,165 +103,57 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "Khetan, Sharad" <sharad.khetan@intel.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- =?UTF-8?Q?Adrian_Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
+ Adrian =?utf-8?Q?Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000ec4cfe05a72135bf
-Content-Type: text/plain; charset="UTF-8"
 
-I found this thread on the gcc mailing list associated with the patches to
-support coroutines
-https://gcc.gnu.org/legacy-ml/gcc-patches/2020-01/msg01096.html
-
-It sounds like the main parts that are experimental are:
-1) There is some debate in the standards bodies about how to handle
-allocation and how to disable exceptions.
-2) There isn't an agreed upon way to handle ABI differences for calling
-coroutines built by another compiler
-
-I don't expect either of those issues to be particularly relevant to
-OpenBMC, which makes me more amenable to playing around with it at this
-stage.
-
-Does anyone have an idea of what a good test project would be? Something of
-modest size that we can look for any hidden dragons that still need taming.
-
-- Richard
-
-On Tue, Jun 2, 2020 at 1:11 PM Patrick Williams <patrick@stwcx.xyz> wrote:
-
-> On Tue, Jun 02, 2020 at 06:32:34PM +0000, Khetan, Sharad wrote:
-> > From: openbmc <openbmc-bounces+sharad.khetan=intel.com@lists.ozlabs.org>
-> On Behalf Of Adrian Ambrozewicz
-> > Sent: Tuesday, June 02, 2020 1:19 AM
-> > W dniu 5/26/2020 o 17:57, Patrick Williams pisze:
->
-> > >I can imagine some companies or communities might choose to be careful
-> in that matter. I was just wondering if there is some 'BKM' which states
-> 'experimental (unstable?) implementations are prohibited from use until
-> marked by software vendor as stable'. Maybe that's my problem - I could be
-> confusing 'experimental' with 'unstable' after all:)
-> >
-> > If experimental means potentially unstable, I would say we avoid such
-> implementation in the OpenBMC. We need to keep OpenBMC stable and such new
-> language / compiler features may be pretty gnarly to debug by the users.
->
-> Just a few thoughts:
->
-> 1. We've not historically had this distinction / restriction.  We've
->    tended to use the latest C++ standard soon after it is available in our
->    Yocto compiler toolchain and even used std::experimental pieces.
->     * Yocto supported GCC7 (C++17 support) in April 2018 and we enabled
->       it in October 2018.
->     * We used mapbox::variant with C++14, which was a C++14
->     * implementation of the proposed C++17 API, and then used std::variant
->       when it was available.
->     * We still have code referring to std::experimental::filesystem
->       which has almost identical API as std::filesystem.
->
-> 2. "Vendors" don't really give us an indication of stability, so we'd
->    need to define one.  Today, GCC's C++20 status is a simple "no
->    support" (red), "partial support" (yellow), "done" (green).  Most of
->    the C++20 support is in GCC-10 which we are now using.
->     * https://gcc.gnu.org/projects/cxx-status.html
->
-> 3. I suspect most of our locally written code is "less stable" than
->    anything coming out of GCC simply by nature of how many users and tests
->    they have.  Most of the C++ features accepted by the standard
->    committees have an implementation in at least 1 of the big 3
->    compilers (MS-VS, GCC, Clang) and so there is code around to use for
->    test suites.
->
-> --
-> Patrick Williams
->
-
---000000000000ec4cfe05a72135bf
-Content-Type: text/html; charset="UTF-8"
+--x+WOirvrtTKur1pg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">I found this thread on the gcc mailing list associated wit=
-h the patches to support coroutines<div><a href=3D"https://gcc.gnu.org/lega=
-cy-ml/gcc-patches/2020-01/msg01096.html">https://gcc.gnu.org/legacy-ml/gcc-=
-patches/2020-01/msg01096.html</a><br></div><div><br></div><div>It sounds li=
-ke the main parts that are experimental are:</div><div>1) There is some deb=
-ate in the standards bodies about how to handle allocation and how to disab=
-le exceptions.</div><div>2) There isn&#39;t an agreed upon way to handle AB=
-I differences for calling coroutines built by another compiler</div><div><b=
-r></div><div>I don&#39;t expect either of those issues to be particularly r=
-elevant to OpenBMC, which makes me more amenable to playing around with it =
-at this stage.</div><div><br></div><div>Does anyone have an idea of what a =
-good test project would be? Something of modest size that we can look for a=
-ny hidden dragons that still need taming.</div><div><br></div><div>- Richar=
-d</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
-_attr">On Tue, Jun 2, 2020 at 1:11 PM Patrick Williams &lt;<a href=3D"mailt=
-o:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">On Tue, Jun 02, 2020 at 06:32:34PM +0=
-000, Khetan, Sharad wrote:<br>
-&gt; From: openbmc &lt;openbmc-bounces+sharad.khetan=3D<a href=3D"mailto:in=
-tel.com@lists.ozlabs.org" target=3D"_blank">intel.com@lists.ozlabs.org</a>&=
-gt; On Behalf Of Adrian Ambrozewicz<br>
-&gt; Sent: Tuesday, June 02, 2020 1:19 AM<br>
-&gt; W dniu 5/26/2020 o=C2=A017:57, Patrick Williams pisze:<br>
-<br>
-&gt; &gt;I can imagine some companies or communities might choose to be car=
-eful in that matter. I was just wondering if there is some &#39;BKM&#39; wh=
-ich states &#39;experimental (unstable?) implementations are prohibited fro=
-m use until marked by software vendor as stable&#39;. Maybe that&#39;s my p=
-roblem - I could be confusing &#39;experimental&#39; with &#39;unstable&#39=
-; after all:)<br>
-&gt; <br>
-&gt; If experimental means potentially unstable, I would say we avoid such =
-implementation in the OpenBMC. We need to keep OpenBMC stable and such new =
-language / compiler features may be pretty gnarly to debug by the users.<br=
->
-<br>
-Just a few thoughts:<br>
-<br>
-1. We&#39;ve not historically had this distinction / restriction.=C2=A0 We&=
-#39;ve<br>
-=C2=A0 =C2=A0tended to use the latest C++ standard soon after it is availab=
-le in our<br>
-=C2=A0 =C2=A0Yocto compiler toolchain and even used std::experimental piece=
-s.<br>
-=C2=A0 =C2=A0 * Yocto supported GCC7 (C++17 support) in April 2018 and we e=
-nabled<br>
-=C2=A0 =C2=A0 =C2=A0 it in October 2018.<br>
-=C2=A0 =C2=A0 * We used mapbox::variant with C++14, which was a C++14<br>
-=C2=A0 =C2=A0 * implementation of the proposed C++17 API, and then used std=
-::variant<br>
-=C2=A0 =C2=A0 =C2=A0 when it was available.<br>
-=C2=A0 =C2=A0 * We still have code referring to std::experimental::filesyst=
-em<br>
-=C2=A0 =C2=A0 =C2=A0 which has almost identical API as std::filesystem.<br>
-<br>
-2. &quot;Vendors&quot; don&#39;t really give us an indication of stability,=
- so we&#39;d<br>
-=C2=A0 =C2=A0need to define one.=C2=A0 Today, GCC&#39;s C++20 status is a s=
-imple &quot;no<br>
-=C2=A0 =C2=A0support&quot; (red), &quot;partial support&quot; (yellow), &qu=
-ot;done&quot; (green).=C2=A0 Most of<br>
-=C2=A0 =C2=A0the C++20 support is in GCC-10 which we are now using.<br>
-=C2=A0 =C2=A0 * <a href=3D"https://gcc.gnu.org/projects/cxx-status.html" re=
-l=3D"noreferrer" target=3D"_blank">https://gcc.gnu.org/projects/cxx-status.=
-html</a><br>
-<br>
-3. I suspect most of our locally written code is &quot;less stable&quot; th=
-an<br>
-=C2=A0 =C2=A0anything coming out of GCC simply by nature of how many users =
-and tests<br>
-=C2=A0 =C2=A0they have.=C2=A0 Most of the C++ features accepted by the stan=
-dard<br>
-=C2=A0 =C2=A0committees have an implementation in at least 1 of the big 3<b=
-r>
-=C2=A0 =C2=A0compilers (MS-VS, GCC, Clang) and so there is code around to u=
-se for<br>
-=C2=A0 =C2=A0test suites.<br>
-<br>
--- <br>
-Patrick Williams<br>
-</blockquote></div>
+On Tue, Jun 02, 2020 at 03:12:32PM -0700, Richard Hanley wrote:
+> Does anyone have an idea of what a good test project would be? Something =
+of
+> modest size that we can look for any hidden dragons that still need tamin=
+g.
 
---000000000000ec4cfe05a72135bf--
+I'm starting work on adding coroutine support to sdbusplus as an
+alternative to Boost::ASIO.  I think it would be also interesting to
+look at sdeventplus for adding coroutine support and hopefully some
+convergance between the two of them to facilitate coroutine reuse
+(especially in the top-level scheduling portions).
+
+My main motivations are:
+    - Simplifying / flattening the callback lambdas associated with ASIO
+      by using coroutines instead.
+
+    - Use sdbusplus-coroutines as the basis for generating client
+      bindings.  Since the project is moving towards async applications,
+      there isn't much value in investing in sync client bindings.
+
+--=20
+Patrick Williams
+
+--x+WOirvrtTKur1pg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7W2MMACgkQqwNHzC0A
+wRkbIg//elm4JQEU9SF3/x/ksrpDl+xT5hYaB50/NUFtLBPAcQuiwwC+DhrHwySP
+ee3PHoJO4JD/Qbos6DcUI9MaZ72DgwiOoMcOkgiuY4YcF8ZkdkBTMC0/RdeYZBVJ
+NkJgekmEPqisumZQb+amTE3D3BOavu7OEpN1C9aR3Jdfk0QuFFFBCgg2roaaPEds
+bX9E6scpWyTim8rNdTyvqSnEndvE6sOsO81chWsxOcdK9cHSfIZQ/xoPsjrG6JwN
+ntpOtCj/vnbFgoR7nK82dLH8IBQei6YrpmqlZT+7PZ1zkwL/WbkLlI6GzbMJzv+Z
+Npi21XYoT/mbH9jUwWIHpZabzG3LLoz/P3kI1CE6op/Dp6YbDlhsVnJo6YeqQRhm
+jrHj35uiy954Ul1sr0IrnAVdKUA1wYeqL32TkBH0hw2Y8j73/pyKY0dFwwm3AOrN
+eoxDdyjPpT9Is96LrRQFuXQfzhN+ay2Lo1O4fxx1m3SuSKAa60nnNEXoUTjd+zIx
+VUFf0KCg6sFQ5Hh8GvlatN6k2bq5rnJ4HJN8HAKN1J6fIkaDLCXpceE956Tu7jcc
+Ku1lNZ6K0Rqmn+/QZ0HGHjqiAwEAuiGzhj68iiKSGLtsUbOHEXdo/RkPtIk5RW9j
+GVrQHb/uF/Yl28aMYcLwy1q22bRauRXKf0AitOqwUg26TLLZneo=
+=mvwu
+-----END PGP SIGNATURE-----
+
+--x+WOirvrtTKur1pg--
