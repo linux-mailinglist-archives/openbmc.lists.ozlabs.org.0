@@ -2,136 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 176FF1EC3F7
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 22:46:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 546991EC4D0
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 00:13:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49c3xS0Qr0zDqLr
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 06:46:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49c5sd5BRczDqXJ
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 08:13:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::242;
+ helo=mail-lj1-x242.google.com; envelope-from=rhanley@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=3422c753b8=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=eNkHQ6p0; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=GmfnqSy/; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=n9hlI3Pm; dkim-atps=neutral
+Received: from mail-lj1-x242.google.com (mail-lj1-x242.google.com
+ [IPv6:2a00:1450:4864:20::242])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49c3wX1Vf7zDqLn
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 06:45:56 +1000 (AEST)
-Received: from pps.filterd (m0109331.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 052KZH0F005688; Tue, 2 Jun 2020 13:45:53 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version; s=facebook;
- bh=yNg+BO6uhWmP2/ZfS+S1h6u2xriQlIIh8fSxnhIxN9M=;
- b=eNkHQ6p0/FVCHzQx6u3JtQAdTQDDGBmGsF8wyHk2Xo0iImcIg/BYGniHDjr0FVtt6j5u
- ZScMcZnmKEDn8IYaLDrKSXfXkDH3Vbq5vrcl8Nn7mmrgSzEh6iRw+Fv4WYB6ujUFlnJK
- ER7fYv/xsOfTJ546G5AIE/E4Hc1yQyqHMpk= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 31bnag35fm-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 02 Jun 2020 13:45:53 -0700
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Tue, 2 Jun 2020 13:45:51 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Zz62NEivAGK+3H++yXtS2jO3SEtdjre27avhLihUgndMiV9QKhbynwEd6lWGrlUp2nXvKEYy9GwUwxcOF8dnMaP5Ym56/gwJLeVozW999dHfFIn2wRbdbK9DQpLbxpjqHqzU4jPMuOO2PTeJIm/MbiI6HZpwXhtpQPGkLFEZfxr9TfZFqnRtxfcjpb+Z/vowARKuzE5/d0TCMU4qYCVbANGAnpAFZxmN0J1RtRuVBWugTYIsbsWzOBUXzlsB7Q+WPhCqI7hvak32iKeuPIvIUl8qlfeQR7+b7VtKAA78dS2PeMYnkJFhaJ7hlS9YjFagbIpXX/pLNpq8MDIh0nZ71w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yNg+BO6uhWmP2/ZfS+S1h6u2xriQlIIh8fSxnhIxN9M=;
- b=en1AJeyGYMq5QAJfISh+3xHT40FkUOGRcf6QmMLOR61jG6l++Q/T8cNb5BLZxfwI8MTCUAaiNsNjAhLViQFBkiFRke96zamir0TciyJQtIWNSxf0raXhHfyk2lBEUnwNd/xoYjJl5JQlgAuin5OKYVkM3fkDF7uaQAICVWx0EZqbzScxY8sIUJ2/nKzz7qaakfxd310q73CVR3eOJusH9ik+t6CRunRhuudsv8Uv2gHOkdIsZn/YKmtgp9TLPXcAIQxkdLz9vgm2RysiSfLSBqkaAcX04EU3gH7Q7mVYv0UHMmwKzWePr6HQz5L8bQMF/qsd3p7AGW+BOi3y/sspzQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yNg+BO6uhWmP2/ZfS+S1h6u2xriQlIIh8fSxnhIxN9M=;
- b=GmfnqSy//qtL1CK9CAEgRqjEOgPBiJzmLCGqur+9ArO96UnRybGO5pTrskNKP73ObY6WzkS+piTN3tzcxI/pYwAgUpM8sipWqe/UWjJNl92BTnwsZPBcso0ymrnxUMsVIDCaDD+c6KXCjPEt8hZKCU+TSLADV4Yc5RM3g2mUTls=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB3462.namprd15.prod.outlook.com (2603:10b6:a03:112::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3045.19; Tue, 2 Jun
- 2020 20:45:50 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::34b8:e690:6dfc:8faf]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::34b8:e690:6dfc:8faf%4]) with mapi id 15.20.3045.022; Tue, 2 Jun 2020
- 20:45:50 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: krtaylor <kurt.r.taylor@gmail.com>, OpenBMC Maillist
- <openbmc@lists.ozlabs.org>
-Subject: Re: OpenBMC 2.8 Release
-Thread-Topic: OpenBMC 2.8 Release
-Thread-Index: AQHWHj7da2d2Jv61wkuIdp56cEZ7MaiQUvuAgAcWCwCAABVVgIAuZ2WA//+mAgA=
-Date: Tue, 2 Jun 2020 20:45:50 +0000
-Message-ID: <42C59FC0-DBD8-4D1E-95D2-5EA20B3E9141@fb.com>
-References: <CAG5Oiwj+-OnkPMc+dfeo0P=MfREPz_7E+zBaMaYy6AHMLO+BxA@mail.gmail.com>
- <f44ba049-2678-c34e-4906-5ce0b9d416d3@linux.vnet.ibm.com>
- <6458b8d3-d460-40c0-9573-fa970cc8fd47@www.fastmail.com>
- <588ffcf2-f766-952c-1ab3-da271d84516f@linux.vnet.ibm.com>
- <7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com>
-In-Reply-To: <7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2601:647:4b00:fd70:18e2:66b5:5e3d:3d1a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c7ff5988-534a-407d-cddf-08d80735ef8c
-x-ms-traffictypediagnostic: BYAPR15MB3462:
-x-microsoft-antispam-prvs: <BYAPR15MB3462E0D7E5CC8D6211786075DD8B0@BYAPR15MB3462.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:6790;
-x-forefront-prvs: 0422860ED4
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: r2wPLTox5Ec+JKSzuBO/xTWBQ/bd4DRyENam7kYgA3HPyFH3YPlSaVURv8+bUx66jCz07Krzoj7ildv9SX81Z8Doz/01eXfzy9ax67TqjS69I9qKXPrmz+aYMgPtJYIAPzv+isOMkTkX/MfpexYtQZw5ly43ynyQmpCuaKeInoraV/tv1XCDca2Arx9fy1foNDSLrSMVIjIUaYpU6wLnEACQUXqCVcqzQw6S9hTJ11Bp4AqZXvYkriCgS8kyoTyYOkzsczsW4DkncTr2u0tLmKPbs40SkrCnO8fRx/JoxSVFGW8KCpFrMN+asFBykHZPqFgsjbQX/Uq5TJtaENhP5UqF+bfphHMmPLIQ24c5LoMqhoBOHkdlaigCgKMAvvDQPn+LOac2EkXg2yn804M5gQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(366004)(39860400002)(396003)(346002)(136003)(376002)(5660300002)(186003)(53546011)(6506007)(110136005)(316002)(8676002)(8936002)(83380400001)(2616005)(86362001)(7116003)(6486002)(6512007)(2906002)(71200400001)(36756003)(66476007)(33656002)(66556008)(64756008)(66446008)(478600001)(966005)(76116006)(66946007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: 9rCNLY8gNV12DJGCd/8SS/i1s94zjfFLq8jqwWKLVEi9I5tZ0csFp4jRvWtZlK7ph/eTspk5TT3KSgCV4Fy3izeVb4e8+dC7WKlD2ozj6WRtgMTxBLLA8Q8R/54JlPdKKN/L+7O7/17Q2/hY7W76GbP90rMPL4SBhXPbRncfiG4eyQ9cLMrRZvIbLrhroyNEpKvH39utRUpkbTUZ79vWjRX2JkjViePKGBFbJtubMHJ5UQ1IItZahtcKAYSdHrcW3OCdkXjhw2D0kHGDAi0MR9q1/kNvdvM8vZvMYcAWLQsKbliURnZjVzXxbHRUBJ/QPKDzQkbYBm3c4LrDlIQfm+lNdSN/BS+Ct8nl0YLCGirDSMEd+rhBS1iq/0y4p52SaUdQlmRNoy/fiJzQM9fKP3imRZ9yD5UsIci+Nltm3nhnp0IhrlMmDX33E3z8ie2GSQMJ7DDhUAChGmXZ5CpFeKnC+iuBL4Z1noDfaZZkuxIF33wQK+ygo3Frf5H7ryPlxL6Bdpf98IW2aCDLMTz8K4Z7rt5U3qpqSRyJNCiftwpeUBtXYrmk+O4W5muLPJbx
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E9D25BD66AF7E64EBE26858E600AFD30@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49c5rn48dczDqJR
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 08:12:50 +1000 (AEST)
+Received: by mail-lj1-x242.google.com with SMTP id m18so200968ljo.5
+ for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 15:12:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ptg090scJM1aY3e8c6WIA/rfwx8vXX2muhuh8xcVEUg=;
+ b=n9hlI3Pm+7T4HlCDcK9zUD7/IZc6QSafPLzds/hqdOn9QdV1bl9NwoPONa573MEA/6
+ iJWCdd9x0MbrlJLKNJEmT88AMEuyjtDTda/Tifa+v7kNfnxmx7QtNYVdolJEt3FeU2J9
+ OkAlvY+z2JSdF21DXurUsoRQ8EqLPlu57+vilymsF5vcR/8XxilB/5IM6WtnZCf2LxHs
+ M54q2gRIqJ0YcevQZziXgoaegeUS0+dnn0ElDJuxHWZqnE8mUAvPjXGyxjyy9Xm3geqC
+ EKYTRSLn+OqPEoPFj0DzNmXv3eKdlmly3NeiL25KcszIoRajNHMoTfeceD7b1bOkOsri
+ TpBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ptg090scJM1aY3e8c6WIA/rfwx8vXX2muhuh8xcVEUg=;
+ b=uUKhmzqH4bM71XEtLakQ8Sh38hP8kCzh0yd7tmJdpWA6rG9kMCv2qEXRYa9ipKP1Zx
+ r808h38LPUMNx3T1wY+imc0IrgEEC8lAJbwPiLSwCtjlIp6cvsm48U6212RdWyBTT3V0
+ v6JObV+1YEDAREg0ETB2btIitvpfSxHlSAHKl0P6T6FhbSGyM2I0rShimmE61Wd287Ef
+ cfSEChC3ujVPuz8lufa7fn5K/brKQRxPDhb5eEvF2tKRZt1I0IMZ+9GqQLD4fFzfb5Xc
+ IWD2eDtYrI/bU73QB6MdG/i41M7SJtEoQxy8VWZMr1mk41PnGds4WCudlg8t2nrcy9Ft
+ YV1Q==
+X-Gm-Message-State: AOAM5310aB4k9oIP3e8QewuVKfOzydG+W1ysPzyJffvy1J8hGTPfn/68
+ lTY8SifN8LhECGtDDfNY5lZmzW2axk6jYp4jXNrD7w==
+X-Google-Smtp-Source: ABdhPJx8ONGCApGObpJaZuMaj3XccBgfE6pbVTHQCkbVFgppXD8VqnSz4Oj7UAWYiNBNXwQy2B1iGZn4EPUNcwXMWjM=
+X-Received: by 2002:a2e:45d6:: with SMTP id s205mr598837lja.101.1591135963958; 
+ Tue, 02 Jun 2020 15:12:43 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: c7ff5988-534a-407d-cddf-08d80735ef8c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2020 20:45:50.5389 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XIhjvtBqm4Iz2EMIcBpUddI1z4gVw9tzzhcy2WFRcCuRnB//vQ5reRA+35cgNffA+3hPmiXGKJ0neajPEi8i6w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB3462
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-02_14:2020-06-02,
- 2020-06-02 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- lowpriorityscore=0
- malwarescore=0 mlxlogscore=999 impostorscore=0 bulkscore=0 clxscore=1015
- phishscore=0 suspectscore=0 adultscore=0 mlxscore=0 spamscore=0
- cotscore=-2147483648 priorityscore=1501 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006020150
-X-FB-Internal: deliver
+References: <9871E71B-5B1F-4172-9F41-454F8C1F644D@gmail.com>
+ <20200518000811.GI1166713@heinlein>
+ <2E02F120-7D24-48BE-AFD8-9A7ADD0F08E5@gmail.com>
+ <7f027233-e0c5-552d-82da-cd3a30d74009@linux.intel.com>
+ <20200526155756.GC3445@heinlein>
+ <78ffc9e9-816a-c420-2d51-8a635342e3c4@linux.intel.com>
+ <MWHPR11MB1389439BC7F058A120F60D60F18B0@MWHPR11MB1389.namprd11.prod.outlook.com>
+ <20200602200958.GI17541@heinlein>
+In-Reply-To: <20200602200958.GI17541@heinlein>
+From: Richard Hanley <rhanley@google.com>
+Date: Tue, 2 Jun 2020 15:12:32 -0700
+Message-ID: <CAH1kD+aCKNRY4sxPL0bwt0pzL+jW7QBmn7-_PTManZnn08kijg@mail.gmail.com>
+Subject: Re: Upstream Yocto Bringing in GCC 10
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="000000000000ec4cfe05a72135bf"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -143,49 +79,167 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Khetan, Sharad" <sharad.khetan@intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?Q?Adrian_Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SSB3aWxsIG1hcmsgdGhpcyBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6LyMvYy9v
-cGVuYm1jL3g4Ni1wb3dlci1jb250cm9sLysvMzI4NTIvIGFzIGFibG9ja2VyIGJlY2F1c2UgZmFu
-IGNvbnRyb2xsZXIgaXMgbm90IHN0YXJ0aW5nLg0KDQrvu79PbiA2LzIvMjAsIDEyOjE1IFBNLCAi
-b3BlbmJtYyBvbiBiZWhhbGYgb2Yga3J0YXlsb3IiIDxvcGVuYm1jLWJvdW5jZXMrdmlqYXlraGVt
-a2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmcgb24gYmVoYWxmIG9mIGt1cnQuci50YXlsb3JAZ21h
-aWwuY29tPiB3cm90ZToNCg0KICAgIE9uIDUvNC8yMCAxOjI5IEFNLCBEZWVwYWsgS29kaWhhbGxp
-IHdyb3RlOg0KICAgID4gT24gMDQvMDUvMjAgMTA6NDMgYW0sIEFuZHJldyBKZWZmZXJ5IHdyb3Rl
-Og0KICAgID4+DQogICAgPj4NCiAgICA+PiBPbiBUaHUsIDMwIEFwciAyMDIwLCBhdCAwMjozMCwg
-R3VubmFyIE1pbGxzIHdyb3RlOg0KICAgID4+PiBPbiA0LzI5LzIwMjAgMTA6NDggQU0sIEt1cnQg
-VGF5bG9yIHdyb3RlOg0KICAgID4+Pj4ganVzdCBhZGQgaXQgZGlyZWN0bHkgaGVyZToNCiAgICA+
-Pj4+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMvd2lraS9DdXJyZW50LVJlbGVh
-c2UtQ29udGVudA0KICAgID4+PiBBZGRlZDoNCiAgICA+Pj4gICAqIFlvY3RvIHJlZnJlc2ggdG8g
-IkR1bmZlbGwiIHZlcnNpb24gMy4xDQogICAgPj4+ICAgKiBSZWRmaXNoIHN1cHBvcnQgZm9yOiBm
-dWxsIGNlcnRpZmljYXRlIG1hbmFnZW1lbnQsIGNvbXBsZXRlIExEQVANCiAgICA+Pj4gbWFuYWdl
-bWVudCwgZnVsbCBzZW5zb3Igc3VwcG9ydCwgZXZlbnQgc2VydmljZSBzY2hlbWEsIHRhc2sgc2No
-ZW1hDQogICAgPj4+ICAgKiBNb3ZlIHRvIFJlZGZpc2ggU3BlY2lmaWNhdGlvbiAxLjkuMA0KICAg
-ID4+PiAgICogUmVkZmlzaCBzdXBwb3J0IGZvciAyMDE5LjQgU2NoZW1hcw0KICAgID4+PiAgICog
-R1VJIGVuaGFuY2VtZW50czogTERBUCwgY2VydGlmaWNhdGUgbWFuYWdlbWVudA0KDQogICAgV2Ug
-YXJlIHRhcmdldGluZyB0aGlzIEZyaWRheSwgSnVuZSA1dGggZm9yIHJlbGVhc2UgMi44LiBJJ20g
-bm90IHNlZWluZyANCiAgICBtdWNoIChvciBhbnkpIGRpc2N1c3Npb24gb24gdGVzdGluZy4gSWYg
-eW91IGhhdmUgdGVzdGVkIHRoZSByZWxlYXNlIHRhZyANCiAgICBwbGVhc2UgcG9zdCB0aGUgcmVz
-dWx0cyBmb3IgeW91ciBwbGF0Zm9ybS4gQW55IGJsb2NrZXJzPw0KDQogICAgaHR0cHM6Ly9naXRo
-dWIuY29tL29wZW5ibWMvb3BlbmJtYy9yZWxlYXNlcw0KDQogICAgQWxzbywgcGxlYXNlIHJldmll
-dyBhbmQgYWRkIGNvbnRlbnQgdG8gdGhlIHJlbGVhc2Ugbm90ZXMgaGVyZToNCg0KICAgIGh0dHBz
-Oi8vdXJsZGVmZW5zZS5wcm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fZ2Vycml0Lm9w
-ZW5ibWMtMkRwcm9qZWN0Lnh5el9jX29wZW5ibWNfZG9jc18tMkJfMzI0NDAmZD1Ed0lEYVEmYz01
-VkQwUlR0TmxUaDN5Y2Q0MWIzTVV3JnI9djlNVTBLaTlwV25UWENXd2pIUFZncG5DUjgwdlhra2Ny
-SWFxVTdVU2w1ZyZtPVNDVGZiUnpBMHhRekQ1cG5EMGxZd1JvNHNyRXdweFEwa2Nzdi1nUGdBNkkm
-cz1nOTI2R1ZrQmZZVGpPTGw3QUNvVGYtX1RYbVJUV2trN3RxQkt3OXFYTVljJmU9IA0KDQogICAg
-VGhhbmtzIGV2ZXJ5b25lIQ0KDQogICAgS3VydCBUYXlsb3IgKGtydGF5bG9yKQ0KDQogICAgPj4+
-DQogICAgPj4+IEFuZCByZW1vdmVkICJgUmVkZmlzaCBjb25maWd1cmF0aW9uIGJhY2t1cCBhbmQg
-cmVzdG9yZSBmdW5jdGlvbmAiLg0KICAgID4+PiBKYW1lcywgSmFzb24gYXJlIHlvdSBva2F5IHdp
-dGggdGhlIFJlZGZpc2ggbGlzdCBhYm92ZT8gU2hvdWxkIHdlIGFkZA0KICAgID4+PiBzb21ldGhp
-bmcgYWJvdXQgU3RvcmFnZSAmIERyaXZlcz8gQW55dGhpbmcgZWxzZT8NCiAgICA+Pj4NCiAgICA+
-Pj4gU2hvdWxkIHdlIGFkZCBzb21ldGhpbmcgYWJvdXQgdGhlIEtlcm5lbD8gIk1vdmUgdG8gNS40
-Ij8NCiAgICA+Pj4NCiAgICA+Pj4gQW55dGhpbmcgZm9yIFBMRE0gLyBNQ1RQPyBGb3IgdGhlIDIu
-NyByZWxlYXNlIGl0IHNheXMgIlBhcnRpYWwgUExETQ0KICAgID4+PiBTdXBwb3J0IiBhbmQgIlBh
-cnRpYWwgTUNUUCBTdXBwb3J0Ii4NCiAgICA+Pg0KICAgID4+IENlcnRhaW5seSBNQ1RQIHN1cHBv
-cnQgaXMgc3RpbGwgIlBhcnRpYWwiLiBTbG93bHkgcHJvZ3Jlc3Npbmcgd2l0aCANCiAgICA+PiBo
-ZWxwIGZyb20NCiAgICA+PiBJbnRlbC4NCiAgICA+IA0KICAgID4gU2FtZSBnb2VzIGZvciBQTERN
-LiBUaGVyZSdzIGRlZmluaXRlbHkgbW9yZSBQTERNIHNwZWNzIGFuZCBjb21tYW5kcyANCiAgICA+
-IGltcGxlbWVudGVkIGluIGxpYnBsZG0gc2luY2UgdGhlIDIuNyByZWxlYXNlIHRob3VnaC4NCiAg
-ICA+IA0KICAgID4+IEFuZHJldw0KICAgID4+DQogICAgPiANCg0KDQo=
+--000000000000ec4cfe05a72135bf
+Content-Type: text/plain; charset="UTF-8"
+
+I found this thread on the gcc mailing list associated with the patches to
+support coroutines
+https://gcc.gnu.org/legacy-ml/gcc-patches/2020-01/msg01096.html
+
+It sounds like the main parts that are experimental are:
+1) There is some debate in the standards bodies about how to handle
+allocation and how to disable exceptions.
+2) There isn't an agreed upon way to handle ABI differences for calling
+coroutines built by another compiler
+
+I don't expect either of those issues to be particularly relevant to
+OpenBMC, which makes me more amenable to playing around with it at this
+stage.
+
+Does anyone have an idea of what a good test project would be? Something of
+modest size that we can look for any hidden dragons that still need taming.
+
+- Richard
+
+On Tue, Jun 2, 2020 at 1:11 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+
+> On Tue, Jun 02, 2020 at 06:32:34PM +0000, Khetan, Sharad wrote:
+> > From: openbmc <openbmc-bounces+sharad.khetan=intel.com@lists.ozlabs.org>
+> On Behalf Of Adrian Ambrozewicz
+> > Sent: Tuesday, June 02, 2020 1:19 AM
+> > W dniu 5/26/2020 o 17:57, Patrick Williams pisze:
+>
+> > >I can imagine some companies or communities might choose to be careful
+> in that matter. I was just wondering if there is some 'BKM' which states
+> 'experimental (unstable?) implementations are prohibited from use until
+> marked by software vendor as stable'. Maybe that's my problem - I could be
+> confusing 'experimental' with 'unstable' after all:)
+> >
+> > If experimental means potentially unstable, I would say we avoid such
+> implementation in the OpenBMC. We need to keep OpenBMC stable and such new
+> language / compiler features may be pretty gnarly to debug by the users.
+>
+> Just a few thoughts:
+>
+> 1. We've not historically had this distinction / restriction.  We've
+>    tended to use the latest C++ standard soon after it is available in our
+>    Yocto compiler toolchain and even used std::experimental pieces.
+>     * Yocto supported GCC7 (C++17 support) in April 2018 and we enabled
+>       it in October 2018.
+>     * We used mapbox::variant with C++14, which was a C++14
+>     * implementation of the proposed C++17 API, and then used std::variant
+>       when it was available.
+>     * We still have code referring to std::experimental::filesystem
+>       which has almost identical API as std::filesystem.
+>
+> 2. "Vendors" don't really give us an indication of stability, so we'd
+>    need to define one.  Today, GCC's C++20 status is a simple "no
+>    support" (red), "partial support" (yellow), "done" (green).  Most of
+>    the C++20 support is in GCC-10 which we are now using.
+>     * https://gcc.gnu.org/projects/cxx-status.html
+>
+> 3. I suspect most of our locally written code is "less stable" than
+>    anything coming out of GCC simply by nature of how many users and tests
+>    they have.  Most of the C++ features accepted by the standard
+>    committees have an implementation in at least 1 of the big 3
+>    compilers (MS-VS, GCC, Clang) and so there is code around to use for
+>    test suites.
+>
+> --
+> Patrick Williams
+>
+
+--000000000000ec4cfe05a72135bf
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I found this thread on the gcc mailing list associated wit=
+h the patches to support coroutines<div><a href=3D"https://gcc.gnu.org/lega=
+cy-ml/gcc-patches/2020-01/msg01096.html">https://gcc.gnu.org/legacy-ml/gcc-=
+patches/2020-01/msg01096.html</a><br></div><div><br></div><div>It sounds li=
+ke the main parts that are experimental are:</div><div>1) There is some deb=
+ate in the standards bodies about how to handle allocation and how to disab=
+le exceptions.</div><div>2) There isn&#39;t an agreed upon way to handle AB=
+I differences for calling coroutines built by another compiler</div><div><b=
+r></div><div>I don&#39;t expect either of those issues to be particularly r=
+elevant to OpenBMC, which makes me more amenable to playing around with it =
+at this stage.</div><div><br></div><div>Does anyone have an idea of what a =
+good test project would be? Something of modest size that we can look for a=
+ny hidden dragons that still need taming.</div><div><br></div><div>- Richar=
+d</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
+_attr">On Tue, Jun 2, 2020 at 1:11 PM Patrick Williams &lt;<a href=3D"mailt=
+o:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">On Tue, Jun 02, 2020 at 06:32:34PM +0=
+000, Khetan, Sharad wrote:<br>
+&gt; From: openbmc &lt;openbmc-bounces+sharad.khetan=3D<a href=3D"mailto:in=
+tel.com@lists.ozlabs.org" target=3D"_blank">intel.com@lists.ozlabs.org</a>&=
+gt; On Behalf Of Adrian Ambrozewicz<br>
+&gt; Sent: Tuesday, June 02, 2020 1:19 AM<br>
+&gt; W dniu 5/26/2020 o=C2=A017:57, Patrick Williams pisze:<br>
+<br>
+&gt; &gt;I can imagine some companies or communities might choose to be car=
+eful in that matter. I was just wondering if there is some &#39;BKM&#39; wh=
+ich states &#39;experimental (unstable?) implementations are prohibited fro=
+m use until marked by software vendor as stable&#39;. Maybe that&#39;s my p=
+roblem - I could be confusing &#39;experimental&#39; with &#39;unstable&#39=
+; after all:)<br>
+&gt; <br>
+&gt; If experimental means potentially unstable, I would say we avoid such =
+implementation in the OpenBMC. We need to keep OpenBMC stable and such new =
+language / compiler features may be pretty gnarly to debug by the users.<br=
+>
+<br>
+Just a few thoughts:<br>
+<br>
+1. We&#39;ve not historically had this distinction / restriction.=C2=A0 We&=
+#39;ve<br>
+=C2=A0 =C2=A0tended to use the latest C++ standard soon after it is availab=
+le in our<br>
+=C2=A0 =C2=A0Yocto compiler toolchain and even used std::experimental piece=
+s.<br>
+=C2=A0 =C2=A0 * Yocto supported GCC7 (C++17 support) in April 2018 and we e=
+nabled<br>
+=C2=A0 =C2=A0 =C2=A0 it in October 2018.<br>
+=C2=A0 =C2=A0 * We used mapbox::variant with C++14, which was a C++14<br>
+=C2=A0 =C2=A0 * implementation of the proposed C++17 API, and then used std=
+::variant<br>
+=C2=A0 =C2=A0 =C2=A0 when it was available.<br>
+=C2=A0 =C2=A0 * We still have code referring to std::experimental::filesyst=
+em<br>
+=C2=A0 =C2=A0 =C2=A0 which has almost identical API as std::filesystem.<br>
+<br>
+2. &quot;Vendors&quot; don&#39;t really give us an indication of stability,=
+ so we&#39;d<br>
+=C2=A0 =C2=A0need to define one.=C2=A0 Today, GCC&#39;s C++20 status is a s=
+imple &quot;no<br>
+=C2=A0 =C2=A0support&quot; (red), &quot;partial support&quot; (yellow), &qu=
+ot;done&quot; (green).=C2=A0 Most of<br>
+=C2=A0 =C2=A0the C++20 support is in GCC-10 which we are now using.<br>
+=C2=A0 =C2=A0 * <a href=3D"https://gcc.gnu.org/projects/cxx-status.html" re=
+l=3D"noreferrer" target=3D"_blank">https://gcc.gnu.org/projects/cxx-status.=
+html</a><br>
+<br>
+3. I suspect most of our locally written code is &quot;less stable&quot; th=
+an<br>
+=C2=A0 =C2=A0anything coming out of GCC simply by nature of how many users =
+and tests<br>
+=C2=A0 =C2=A0they have.=C2=A0 Most of the C++ features accepted by the stan=
+dard<br>
+=C2=A0 =C2=A0committees have an implementation in at least 1 of the big 3<b=
+r>
+=C2=A0 =C2=A0compilers (MS-VS, GCC, Clang) and so there is code around to u=
+se for<br>
+=C2=A0 =C2=A0test suites.<br>
+<br>
+-- <br>
+Patrick Williams<br>
+</blockquote></div>
+
+--000000000000ec4cfe05a72135bf--
