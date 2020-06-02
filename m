@@ -1,81 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B97DF1EC278
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 21:13:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 693801EC2FE
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 21:44:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49c1sd1pxzzDqRy
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 05:13:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49c2Xq70tzzDqWk
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 05:43:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
- helo=mail-oi1-x22e.google.com; envelope-from=kurt.r.taylor@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=YtoOM5H7; dkim-atps=neutral
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
- [IPv6:2607:f8b0:4864:20::22e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49c1lL6y2fzDqTl
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 05:07:58 +1000 (AEST)
-Received: by mail-oi1-x22e.google.com with SMTP id m67so13011968oif.4
- for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 12:07:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=At4MN+cb3VZfM9P6Pxyn/+T0K+TgdHSSJ51Bwdy3DRw=;
- b=YtoOM5H7XzLFTpfaV4r/DRxbVUkcMbtBcMltsZzX7Fo6E78y98k0ToDSwkUd8W6WFB
- T1b45NhYkxMzqy9lrPlTjx53adfRxsugSSRrrkDeprew+3aTynZsU3ywh7kzT+ukHNU8
- brOpEC44D5jZYGQJr4agsP8E0NWp2UrEndAO8/nAnHHChlKtspM9F6znN5M6DpwJkz51
- Yrb9o3nQs7STWXuS1MbfIVdW8rddoCrJQP/D7mQEtSDviwZ6oCuXtjaUOfrQE4x2R/3+
- k6UzQB7iAflYM7N8dki0mPrfa5gDAzxJLfdKXKArlQdAgteASYYyRIeaf6/syzAYyDwq
- T69A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=At4MN+cb3VZfM9P6Pxyn/+T0K+TgdHSSJ51Bwdy3DRw=;
- b=BwwIrskwdvjUww1jcidtfOoqPeSYw/+J1ZLkW8OQHEuUmoKtx6pIxBYUeMMxRif81s
- YTDhlokgkCevfbHb5C5WcIkGRhOqM5DFASuNpJFS0lGccO70CO8D/Bg+VAFdvgbAquks
- nlZU7Z+acXSGImp9DUep+VIxoPKFzpIrTwSnduXTQFcIjXLkP5N3z01uz44qKOxn+Avq
- s4BQ0HsLqSzY+NXlKVridFQNZbeAjIr/arHTHayJDuxj7KlcrjKlOetQuIR4pfG2yZX1
- NzKVKQns+C6wy3+F/P87ETS+pvXP1EW/Y6Enncw9vpz1BhE+I9wkfSLkC6qr8ZtafyRs
- 96mw==
-X-Gm-Message-State: AOAM530ou1Z8WGWKN7ey/giAyFv3jqIm+e9LurZl3EX8e3uxkW/8fdEK
- gnWpxp9KEoLxfS42Bim2Cf49kiA06Jk=
-X-Google-Smtp-Source: ABdhPJyHwmDOwYXUS4x7ucQgbbfwGz/rO/gVzLR8UW7xIQeBTHH6Ybxqy5w2vcvy5SrZ2zX0oh86RQ==
-X-Received: by 2002:aca:d58d:: with SMTP id m135mr3815309oig.102.1591124876195; 
- Tue, 02 Jun 2020 12:07:56 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id c9sm891034oov.35.2020.06.02.12.07.55
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jun 2020 12:07:55 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49c2W853kHzDqYB
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 05:42:26 +1000 (AEST)
+IronPort-SDR: S+mcxlujJ8UQ200ysLrbOQWPxGaSY/gK222EpJAdMQHtmr9CMsnvHeGFmnYADtmmct5yjAJQGR
+ 2cUA7vEt2W/A==
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2020 12:42:23 -0700
+IronPort-SDR: 9P1RD10w6OLGgiPN/oJAPCZieZHloF5S7scAv3h9Y2TRdayRlp8DzOJcg3Q7KBHAJ/NUcqvYXW
+ /0H8U/y9DQPw==
+X-IronPort-AV: E=Sophos;i="5.73,465,1583222400"; 
+ d="asc'?scan'208,217";a="444823920"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2020 12:42:23 -0700
 Subject: Re: OpenBMC 2.8 Release
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+To: krtaylor <kurt.r.taylor@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 References: <CAG5Oiwj+-OnkPMc+dfeo0P=MfREPz_7E+zBaMaYy6AHMLO+BxA@mail.gmail.com>
  <f44ba049-2678-c34e-4906-5ce0b9d416d3@linux.vnet.ibm.com>
  <6458b8d3-d460-40c0-9573-fa970cc8fd47@www.fastmail.com>
  <588ffcf2-f766-952c-1ab3-da271d84516f@linux.vnet.ibm.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com>
-Date: Tue, 2 Jun 2020 14:07:55 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.1
+ <7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <072aa4a2-4bff-fa91-a113-9b80a96b933a@intel.com>
+Date: Tue, 2 Jun 2020 12:42:19 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.0
 MIME-Version: 1.0
-In-Reply-To: <588ffcf2-f766-952c-1ab3-da271d84516f@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="FToSiYdOwMihFtw0fDqaxG0pCcMbdt3s0"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,54 +89,222 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 5/4/20 1:29 AM, Deepak Kodihalli wrote:
-> On 04/05/20 10:43 am, Andrew Jeffery wrote:
->>
->>
->> On Thu, 30 Apr 2020, at 02:30, Gunnar Mills wrote:
->>> On 4/29/2020 10:48 AM, Kurt Taylor wrote:
->>>> just add it directly here:
->>>> https://github.com/openbmc/openbmc/wiki/Current-Release-Content
->>> Added:
->>>   * Yocto refresh to "Dunfell" version 3.1
->>>   * Redfish support for: full certificate management, complete LDAP
->>> management, full sensor support, event service schema, task schema
->>>   * Move to Redfish Specification 1.9.0
->>>   * Redfish support for 2019.4 Schemas
->>>   * GUI enhancements: LDAP, certificate management
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--FToSiYdOwMihFtw0fDqaxG0pCcMbdt3s0
+Content-Type: multipart/mixed; boundary="AG2uk5j4VhiR03ZQkrEaqsgjdlqP61g5S"
 
-We are targeting this Friday, June 5th for release 2.8. I'm not seeing 
-much (or any) discussion on testing. If you have tested the release tag 
-please post the results for your platform. Any blockers?
+--AG2uk5j4VhiR03ZQkrEaqsgjdlqP61g5S
+Content-Type: multipart/alternative;
+ boundary="------------C69DD6CF51CE99D094E8CDE0"
+Content-Language: en-US
 
-https://github.com/openbmc/openbmc/releases
+This is a multi-part message in MIME format.
+--------------C69DD6CF51CE99D094E8CDE0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Also, please review and add content to the release notes here:
+Kurt,
 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/32440
+I don't know if this is a "blocker".
+Using the dunfell code on FC32 an Ubuntu 20, there is a problem in
+"devtool modify" failing.
 
-Thanks everyone!
+Somewhere in the do_unpack code an invalid environment variable is
+autogenerated, and then fed to a Python eval() type call.
+This eventually loads /usr/lib64/python3.8/sysconfig.py.
+The autogenerated script does something with _PYTHON_SYSCONFIGDATA_NAME
+that sysconfig.py doesn't like. The "devtool modify" then fails to
+finish its job.
+I've hacked sysconfig.py, which I don't find ideal, to overcome the issue=
+=2E
+Geissonator did a similar thing by grabbing the poky tarball and
+changing the name of this variable.
+It would be nice if this hackery were not necessary prior to dunfell
+landing.
 
-Kurt Taylor (krtaylor)
-
+On 6/2/20 12:07 PM, krtaylor wrote:
+> On 5/4/20 1:29 AM, Deepak Kodihalli wrote:
+>> On 04/05/20 10:43 am, Andrew Jeffery wrote:
 >>>
->>> And removed "`Redfish configuration backup and restore function`".
->>> James, Jason are you okay with the Redfish list above? Should we add
->>> something about Storage & Drives? Anything else?
 >>>
->>> Should we add something about the Kernel? "Move to 5.4"?
->>>
->>> Anything for PLDM / MCTP? For the 2.7 release it says "Partial PLDM
->>> Support" and "Partial MCTP Support".
->>
->> Certainly MCTP support is still "Partial". Slowly progressing with 
->> help from
->> Intel.
-> 
-> Same goes for PLDM. There's definitely more PLDM specs and commands 
-> implemented in libpldm since the 2.7 release though.
-> 
->> Andrew
->>
-> 
+>>> On Thu, 30 Apr 2020, at 02:30, Gunnar Mills wrote:
+>>>> On 4/29/2020 10:48 AM, Kurt Taylor wrote:
+>>>>> just add it directly here:
+>>>>> https://github.com/openbmc/openbmc/wiki/Current-Release-Content
+>>>> Added:
+>>>> =C2=A0 * Yocto refresh to "Dunfell" version 3.1
+>>>> =C2=A0 * Redfish support for: full certificate management, complete =
+LDAP
+>>>> management, full sensor support, event service schema, task schema
+>>>> =C2=A0 * Move to Redfish Specification 1.9.0
+>>>> =C2=A0 * Redfish support for 2019.4 Schemas
+>>>> =C2=A0 * GUI enhancements: LDAP, certificate management
+>
+> We are targeting this Friday, June 5th for release 2.8. I'm not seeing
+> much (or any) discussion on testing. If you have tested the release
+> tag please post the results for your platform. Any blockers?
+>
+> https://github.com/openbmc/openbmc/releases
+>
+> Also, please review and add content to the release notes here:
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/32440
+>
+> Thanks everyone!
+>
+> Kurt Taylor (krtaylor)
+>
+>
 
+--=20
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
+
+
+--------------C69DD6CF51CE99D094E8CDE0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    Kurt,<br>
+    <br>
+    I don't know if this is a "blocker".<br>
+    Using the dunfell code on FC32 an Ubuntu 20, there is a problem in
+    "devtool modify" failing.<br>
+    <br>
+    Somewhere in the do_unpack code an invalid environment variable is
+    autogenerated, and then fed to a Python eval() type call.<br>
+    This eventually loads /usr/lib64/python3.8/sysconfig.py.<br>
+    The autogenerated script does something with
+    _PYTHON_SYSCONFIGDATA_NAME that sysconfig.py doesn't like. The
+    "devtool modify" then fails to finish its job.<br>
+    I've hacked sysconfig.py, which I don't find ideal, to overcome the
+    issue.<br>
+    Geissonator did a similar thing by grabbing the poky tarball and
+    changing the name of this variable.<br>
+    It would be nice if this hackery were not necessary prior to dunfell
+    landing.<br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 6/2/20 12:07 PM, krtaylor wrote:<br=
+>
+    </div>
+    <blockquote type=3D"cite"
+      cite=3D"mid:7075cca2-eaf0-786b-6ebc-1dad163c5d0c@gmail.com">On
+      5/4/20 1:29 AM, Deepak Kodihalli wrote:
+      <br>
+      <blockquote type=3D"cite">On 04/05/20 10:43 am, Andrew Jeffery
+        wrote:
+        <br>
+        <blockquote type=3D"cite">
+          <br>
+          <br>
+          On Thu, 30 Apr 2020, at 02:30, Gunnar Mills wrote:
+          <br>
+          <blockquote type=3D"cite">On 4/29/2020 10:48 AM, Kurt Taylor
+            wrote:
+            <br>
+            <blockquote type=3D"cite">just add it directly here:
+              <br>
+<a class=3D"moz-txt-link-freetext" href=3D"https://github.com/openbmc/ope=
+nbmc/wiki/Current-Release-Content">https://github.com/openbmc/openbmc/wik=
+i/Current-Release-Content</a>
+              <br>
+            </blockquote>
+            Added:
+            <br>
+            =C2=A0 * Yocto refresh to "Dunfell" version 3.1
+            <br>
+            =C2=A0 * Redfish support for: full certificate management,
+            complete LDAP
+            <br>
+            management, full sensor support, event service schema, task
+            schema
+            <br>
+            =C2=A0 * Move to Redfish Specification 1.9.0
+            <br>
+            =C2=A0 * Redfish support for 2019.4 Schemas
+            <br>
+            =C2=A0 * GUI enhancements: LDAP, certificate management
+            <br>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+      <br>
+      We are targeting this Friday, June 5th for release 2.8. I'm not
+      seeing much (or any) discussion on testing. If you have tested the
+      release tag please post the results for your platform. Any
+      blockers?
+      <br>
+      <br>
+      <a class=3D"moz-txt-link-freetext" href=3D"https://github.com/openb=
+mc/openbmc/releases">https://github.com/openbmc/openbmc/releases</a>
+      <br>
+      <br>
+      Also, please review and add content to the release notes here:
+      <br>
+      <br>
+      <a class=3D"moz-txt-link-freetext" href=3D"https://gerrit.openbmc-p=
+roject.xyz/c/openbmc/docs/+/32440">https://gerrit.openbmc-project.xyz/c/o=
+penbmc/docs/+/32440</a>
+      <br>
+      <br>
+      Thanks everyone!
+      <br>
+      <br>
+      Kurt Taylor (krtaylor)
+      <br>
+      <br>
+      <br>
+    </blockquote>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------C69DD6CF51CE99D094E8CDE0--
+
+--AG2uk5j4VhiR03ZQkrEaqsgjdlqP61g5S--
+
+--FToSiYdOwMihFtw0fDqaxG0pCcMbdt3s0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl7Wq5sACgkQ0EfviT3f
+Hwne3QgAkvq6RguaxyOcTG7h0pqErdrLkluyahio0qs+WvTV5mqdz2OE9zBxoOgX
+jTdwhf7mJZbVn2KMMe9kdBbUlu/vKLpouEUGyh5nGT7BOi7oLQdLRiHrP4qxWmW5
+xHtbiYyfZFB2V7ner/HiaNG9bTooMLJP3HX70wmF+fLF+ZBf6Ia5ctAwwhiQxY96
+PuqnDAbxkYRAN/XfcV1gS4ojlZHHcXtc28tuwlOJsXBDZuRDH2Syc/T0C1QIi4Z5
+NmSkPj8Hbji9BORLAi9riS/TUXfoNkr8VO8zcfqSsPxtu26KHGYGuqZBgQUhi0gl
+k4FRDWE3R9gSO9vr481hgzk2sahCpw==
+=wCLL
+-----END PGP SIGNATURE-----
+
+--FToSiYdOwMihFtw0fDqaxG0pCcMbdt3s0--
