@@ -1,64 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5D6C1EB32B
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 03:58:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CDC61EB338
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 04:06:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49bZv33trbzDqQl
-	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 11:58:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49bb4l3DwlzDqN9
+	for <lists+openbmc@lfdr.de>; Tue,  2 Jun 2020 12:06:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::543;
- helo=mail-ed1-x543.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::541;
+ helo=mail-ed1-x541.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=JyETxt2m; dkim-atps=neutral
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com
- [IPv6:2a00:1450:4864:20::543])
+ header.s=google header.b=EP4weNGA; dkim-atps=neutral
+Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com
+ [IPv6:2a00:1450:4864:20::541])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49bZtS0TcMzDqMV
- for <openbmc@lists.ozlabs.org>; Tue,  2 Jun 2020 11:57:35 +1000 (AEST)
-Received: by mail-ed1-x543.google.com with SMTP id s19so8776180edt.12
- for <openbmc@lists.ozlabs.org>; Mon, 01 Jun 2020 18:57:35 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49bb3m2xyczDqRj
+ for <openbmc@lists.ozlabs.org>; Tue,  2 Jun 2020 12:05:39 +1000 (AEST)
+Received: by mail-ed1-x541.google.com with SMTP id p18so8807553eds.7
+ for <openbmc@lists.ozlabs.org>; Mon, 01 Jun 2020 19:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=3NwwdAFLZm32HsXtK+QReh7GLM6bLao4y2XhXE2Moas=;
- b=JyETxt2mG2VmQ0oPa3NHWPk0p0IB/NvSSMiQMCccjlBVbe20cr9P/Liu2aydR5d+kc
- 7xoURcyhYs2rkCdiWlSeis9hs4MOT2rSbhWsFzHJ1DUS3l43FBICTfTzTXPbGncJY4lr
- YD364OLmaxsznBD7PHz8/hIMYwiaZVenVow7o=
+ :cc; bh=kBLimb4ELVPpqftxfV9TuFIS5UJvc6tuqCId2pa68/A=;
+ b=EP4weNGALw3jInlOBX1DIYSPvfu84vvbYauKgC/lGZ0XOknolavAlifX0ElQV9BYml
+ WzSnYwZSQPK7aJklU7BeFH2rrjQYzL/i1jsd4iSQEOIjw30PRcdSVYz6ORgHcURKRWnP
+ ahMeselxPjiGWVmpJTjdBrKiL8rc1VUr4Hwks=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=3NwwdAFLZm32HsXtK+QReh7GLM6bLao4y2XhXE2Moas=;
- b=QMIu70z0z8KGM2PNnXJWw3Y9D6dMLHlH44xHX1BHxRzf0bWfjUlOZNJsqbyFPmSGKx
- BBOXsJ4hQbqLymu9pwLGpn8mEU+24JP2j71OtHikNaNWLDm4ONJe4BJa9aWl3UpbxCA9
- uOpCv9F/HDddyziu3RDacwPaQh7+1pD+u/YDiIkTtbc7C9C6bcclxQA01lq6QeE37Mj7
- 3GeyYCY/90RRK9ZQJK1Zj95CczCEK9anTTfui/bjS5OTE343/uWO9ZXQEiP5NWoOUeUd
- f6CAzlb+0Yv+LbvHYvIFZHNRsszGorCiXlXQBrsAn4Sv1UQrrtDC0hS9jvTc245fXUUG
- loiw==
-X-Gm-Message-State: AOAM531/Ul01AXKFE+iN5mlmZ/GyapDJ/jrUHoEB41h81ftIlryDWHdB
- N6gyDdU8B08MLIBQZ3WW+IRbv0XRkhrlSpmqeIw4mYb9KDg=
-X-Google-Smtp-Source: ABdhPJwFVHg/k0Y7wYfoc1QWSmMFiFrZPoGs0xtp+dL9pB2LrWcahlH/V1szpBC07bxccGs8X/RrAJpa2QSaaqB6/UA=
-X-Received: by 2002:a50:f094:: with SMTP id v20mr24098444edl.77.1591063052964; 
- Mon, 01 Jun 2020 18:57:32 -0700 (PDT)
+ bh=kBLimb4ELVPpqftxfV9TuFIS5UJvc6tuqCId2pa68/A=;
+ b=iABSumZHHZ0SLBoE0R8SgdmmQrVhzfxIqK+DXMr4gDRfezlgadjkbBklTtfCksqh/z
+ fuHdOyxFs6PS6JBdOFPximcsGyE9DO1B1y90V9ytjDuFFj2H5I3bsJds5poogzWb5qim
+ 5kaFgSwxyzOT6yN1a+qu5yQ96xiF63p/26Yd9RR5Iq4BCS3Pl7QEI/Q1c6yaAHY/Mdx6
+ 24bYdEVJj05Ark+7F92CaWSfJWTVnsi8vUDZdAMlABY0NJAxggLTsOQw5pC9RPD0fKk5
+ HfGMI9eMMtBfwgghqF4DgE7JMEjwKuK6sn2OcQtrqXjyRG8Uc69VVGYpbv4aQvtOy2WX
+ eCMg==
+X-Gm-Message-State: AOAM533pfI7OOuU89Ifh6sA7LkV3iIk/Fs+V4ulHhJroR758cFk7XmSY
+ hnaQYgLHDW+NKSAQkb/04GQNPw+0K1526SNKU9Q=
+X-Google-Smtp-Source: ABdhPJxyamCfynJ65s3GHpX4KGoRuYHKhdBJ8ZSNRVV42tP1jhtttkmHKjC142Qavu1rZ14hxGZ0MVEKktT8ImvwJXU=
+X-Received: by 2002:aa7:c944:: with SMTP id h4mr23858547edt.383.1591063537181; 
+ Mon, 01 Jun 2020 19:05:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200519193936.7295-1-eajames@linux.ibm.com>
- <20200519193936.7295-3-eajames@linux.ibm.com>
-In-Reply-To: <20200519193936.7295-3-eajames@linux.ibm.com>
+References: <20200520181707.9235-1-eajames@linux.ibm.com>
+In-Reply-To: <20200520181707.9235-1-eajames@linux.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 2 Jun 2020 01:57:20 +0000
-Message-ID: <CACPK8XfzeUBCL8OGzMwF+Se41T9zakarLEEXB+ae-W6r6Ni4iA@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.4 2/2] i2c: fsi: Prevent adding adapters for
- ports without dts nodes
-To: Eddie James <eajames@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>
+Date: Tue, 2 Jun 2020 02:05:25 +0000
+Message-ID: <CACPK8Xet=vdApyKXPe0prWhtH3qqa2_NWnoXT=Rzwe+yjNNQ=g@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.4] fsi: core: Set slave local bus ownership
+ during init
+To: Eddie James <eajames@linux.ibm.com>, Jeremy Kerr <jk@ozlabs.org>, 
+ Andrew Jeffery <andrew@aj.id.au>, Alistair Popple <alistair@popple.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,52 +75,70 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 19 May 2020 at 19:39, Eddie James <eajames@linux.ibm.com> wrote:
+On Wed, 20 May 2020 at 18:17, Eddie James <eajames@linux.ibm.com> wrote:
 >
-> Ports should be defined in the devicetree if they are to be enabled on
-> the system.
+> The driver ought to claim local bus ownership of the slave it's
+> communicating with.
+
+I am not familiar with this register's purpose so feel free to explain
+the details.
+
+Should we also "un-claim" ownership at any point?
+
 >
 > Signed-off-by: Eddie James <eajames@linux.ibm.com>
 > ---
->  drivers/i2c/busses/i2c-fsi.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/fsi/fsi-core.c | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/i2c/busses/i2c-fsi.c b/drivers/i2c/busses/i2c-fsi.c
-> index 977d6f524649..d6ea502521a5 100644
-> --- a/drivers/i2c/busses/i2c-fsi.c
-> +++ b/drivers/i2c/busses/i2c-fsi.c
-> @@ -703,7 +703,7 @@ static int fsi_i2c_probe(struct device *dev)
+> diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
+> index 8244da8a7241..48424b672295 100644
+> --- a/drivers/fsi/fsi-core.c
+> +++ b/drivers/fsi/fsi-core.c
+> @@ -50,6 +50,7 @@ static const int engine_page_size = 0x400;
+>  #define FSI_SMODE              0x0     /* R/W: Mode register */
+>  #define FSI_SISC               0x8     /* R/W: Interrupt condition */
+>  #define FSI_SSTAT              0x14    /* R  : Slave status */
+> +#define FSI_SLBUS              0x30    /* W  : LBUS Ownership */
+>  #define FSI_LLMODE             0x100   /* R/W: Link layer mode register */
 >
->         for (port_no = 0; port_no < ports; port_no++) {
->                 np = fsi_i2c_find_port_of_node(dev->of_node, port_no);
-> -               if (np && !of_device_is_available(np))
-> +               if (!np || !of_device_is_available(np))
-
-I thought this was wrong, but the important part is that
-of_device_is_available() returns true if it can't find the status
-property (ie np is null), so we need to check for np being NULL, and
-if that's false we can check if it's "available".
-
-We could write it like this if you agree it's clearer:
-
-if (!np)
-   /* Port not defined in device tree */
-   continue;
-if (of_device_is_available())
-   continue;
-
-Or I can take your patch as-is. Let me know.
-
-Cheers,
-
-Joel
-
-
-
-
->                         continue;
+>  /*
+> @@ -66,6 +67,11 @@ static const int engine_page_size = 0x400;
+>  #define FSI_SMODE_LBCRR_SHIFT  8               /* Clk ratio shift */
+>  #define FSI_SMODE_LBCRR_MASK   0xf             /* Clk ratio mask */
 >
->                 port = kzalloc(sizeof(*port), GFP_KERNEL);
+> +/*
+> + * SLBUS fields
+> + */
+> +#define FSI_SLBUS_FORCE                0x80000000      /* Force LBUS ownership */
+> +
+>  /*
+>   * LLMODE fields
+>   */
+> @@ -981,7 +987,7 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+>         uint32_t cfam_id;
+>         struct fsi_slave *slave;
+>         uint8_t crc;
+> -       __be32 data, llmode;
+> +       __be32 data, llmode, slbus;
+>         int rc;
+>
+>         /* Currently, we only support single slaves on a link, and use the
+> @@ -1052,6 +1058,14 @@ static int fsi_slave_init(struct fsi_master *master, int link, uint8_t id)
+>
+>         }
+>
+> +       slbus = cpu_to_be32(FSI_SLBUS_FORCE);
+> +       rc = fsi_master_write(master, link, id, FSI_SLAVE_BASE + FSI_SLBUS,
+> +                             &slbus, sizeof(slbus));
+> +       if (rc)
+> +               dev_warn(&master->dev,
+> +                        "can't set slbus on slave:%02x:%02x %d\n", link, id,
+> +                        rc);
+> +
+>         rc = fsi_slave_set_smode(slave);
+>         if (rc) {
+>                 dev_warn(&master->dev,
 > --
 > 2.24.0
 >
