@@ -1,44 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 201911ECC9D
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 11:33:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 573561ECF45
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 14:03:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49cNxh2YQQzDqbw
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 19:33:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49cSHM6mTVzDqY7
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 22:03:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wistron.com (client-ip=103.200.3.19; helo=segapp02.wistron.com;
- envelope-from=ben_pai@wistron.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=wistron.com
-Received: from segapp02.wistron.com (segapp02.wistron.com [103.200.3.19])
- by lists.ozlabs.org (Postfix) with ESMTP id 49cNwn6B6bzDqGS
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 19:32:23 +1000 (AEST)
-Received: from EXCHAPP01.whq.wistron (unverified [10.37.38.24]) by 
- TWNHUMSW3.wistron.com (Clearswift SMTPRS 5.6.0) with ESMTP id 
- <Tdf87a67628c0a816718a8@TWNHUMSW3.wistron.com> for 
- <openbmc@lists.ozlabs.org>; Wed, 3 Jun 2020 17:32:20 +0800
-Received: from EXCHAPP01.whq.wistron (10.37.38.24) by EXCHAPP01.whq.wistron 
- (10.37.38.24) with Microsoft SMTP Server 
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 
- 15.1.1913.5; Wed, 3 Jun 2020 17:32:19 +0800
-Received: from gitserver.wistron.com (10.37.38.233) by EXCHAPP01.whq.wistron 
- (10.37.38.24) with Microsoft SMTP Server id 15.1.1913.5 via Frontend
- Transport; Wed, 3 Jun 2020 17:32:19 +0800
-From: Ben Pai <Ben_Pai@wistron.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: [PATCH linux dev-5.4 v1] ARM: dts: aspeed: mihawk: add aliases for
- i2c and add thermal sensor
-Date: Wed, 3 Jun 2020 17:32:17 +0800
-Message-ID: <20200603093217.2762-1-Ben_Pai@wistron.com>
-X-Mailer: git-send-email 2.17.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-X-TM-SNTS-SMTP: F72871529A6EDBC9DBAF2AA6A1F68F017BB2D2A8FE5E9224816BF9DF3988F9872000:8
-Content-Transfer-Encoding: 7bit
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=SVKIaHlw; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=tIV2YZ44; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49cSFl1TcHzDqQS
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 22:02:18 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 91B544C1;
+ Wed,  3 Jun 2020 08:02:14 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Wed, 03 Jun 2020 08:02:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type:content-transfer-encoding; s=fm2; bh=1uCZe
+ cZ8qhvQo+laOMD1sVASn+yv4Ee7/TPxqAIbbnU=; b=SVKIaHlw1yqJomJufQVTu
+ xyOCHbasVjqA5KkZvw6kH8l9um1E1VJ/pm38rRQjsK1TQllP1hPNNWzIdvDFm9I4
+ EomOFJCkAdRttWtSk9f3WXILPw24gJaqGksoPWzhGmdVdg/sgoaJev6enYMuCiLF
+ 4bZ6D8GFkcW5n1VLL+wVwgtJmt0BduY3h/P6FSCNa/JLk+/mG63s4z7x2iM7UQrb
+ VjqduBwj1u3w9QDkzE+3JPSgzabHERVkQ+TK/N8H26PS0YkN433Yh9pt/s6T5UMR
+ Fi+0wJu+1Dd/OjrFOl9hlnue56SOJpeuW5dzjqJHOB7LlV4D6MBPuvx3jZEMdU0f
+ A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-transfer-encoding:content-type
+ :date:from:in-reply-to:message-id:mime-version:references
+ :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; bh=1uCZecZ8qhvQo+laOMD1sVASn+yv4Ee7/TPxqAIbb
+ nU=; b=tIV2YZ44INyDCqMwY3NnvLIbIjEVL3DQjBax+48S2NCKOzbzWa9GeXeLj
+ cCvAS+YFcS1vm9wZPqEUZMT4HexcApFf/FpwxArPDrtje63I1sj+mQhNaM0oHi1X
+ XYgWSEq9KxdNrslTY0Mw82c6DhAZnqmG8LrXGO22/luSFQTGHH1H4h8MBzYCAYQ5
+ OT7TtykVoDBa3vfXpUeRBPLioZRyQjCbS75Z3zEE4XIsvqyOma2XVKv5kRXWFrCR
+ gvB9QSxvu4etNuUhmcskrRlou4hLtzCb9YU9H92m8ElEO3EoWJ6GChOao/keGIcq
+ A6wSqY+jBNUORaZ7EZQ0Dlv0laXpw==
+X-ME-Sender: <xms:RZHXXjUEHRMb3rDsS-8ks3Yu8zREnLVqytsxv0S27oQFcppE8ckVRg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudefledgfeefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
+ hqredtreerjeenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughr
+ vgifsegrjhdrihgurdgruheqnecuggftrfgrthhtvghrnhepheethefghfevheevgfektd
+ dvtddvjeetgfevudfhheeghfffffdukeelleevjedtnecuffhomhgrihhnpehkvghrnhgv
+ lhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:RZHXXrmE9FPJVb23orrmXBqO2MJA_HolBqx9iwgmYx-cnEIAFNR0eA>
+ <xmx:RZHXXvYQRy6aIxjto74_2OF9ope4RlLlHKt2djyd1ieYg2boFGKoIA>
+ <xmx:RZHXXuWoKsnasEc8L4R9uYwSwKCEzO2sHofuQPn3vDA9n-qalQYpYw>
+ <xmx:RpHXXpzgU4-rl-HysJEOvwE8yDElbi5HTVHV5gizjbI0uc6ms4fOdw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 508D9E00A9; Wed,  3 Jun 2020 08:02:13 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-519-g0f677ba-fm-20200601.001-g0f677ba6
+Mime-Version: 1.0
+Message-Id: <ee8302a6-4303-457b-add1-8fa9d532c4a9@www.fastmail.com>
+In-Reply-To: <tencent_1D864FA41CFA3E42D4A9B236FC75E41BA609@qq.com>
+References: <tencent_2D6AE7A4D981E94342BD340BC7DF4EBE7F05@qq.com>
+ <4813264f-fe81-4563-838d-f5356acb768a@www.fastmail.com>
+ <tencent_720F45F5C22C1BFF2BF99029CA933807E907@qq.com>
+ <b59bce6b-52d6-427b-84fa-defae872af10@www.fastmail.com>
+ <tencent_1D864FA41CFA3E42D4A9B236FC75E41BA609@qq.com>
+Date: Wed, 03 Jun 2020 21:31:53 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: =?UTF-8?Q?=E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=E3=82=A8=E3=83=A9?=
+ =?UTF-8?Q?=E3=82=B4?= <1181052146@qq.com>,
+ openbmc <openbmc@lists.ozlabs.org>
+Subject: =?UTF-8?Q?Re:_Re=EF=BC=9A_Re=EF=BC=9A_How_can_the_host_access_BMC's_SPI_?=
+ =?UTF-8?Q?Flash_via_LPC_and_How_do_BMC's_CPU_read_uboot_from_SPI_Flash_?=
+ =?UTF-8?Q?when_power_up=3F?=
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,564 +100,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ben Pai <Ben_Pai@wistron.com>, claire_ku@wistron.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-1.Set the bus id for each mux channel to avoid switching channels
-multiple times
-2.Set smbus_en of IO expander to 1 in order to be able to read tmp401
-sensor
-3.Add 8 tmp401 thermal sensors
+On Wed, 27 May 2020, at 22:30, =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=
+=B7=E3=82=A8=E3=83=A9=E3=82=B4 wrote:
+> Hi Mr. Andrew Jeffery
+>=20
+> Thank you very much for your help. I really thanks for your=20
+> explanations, very detail and very clear.
+> Now I am clear about the iLPC2AHB bridge. I found the iLPC2AHB bridge=20=
 
-Signed-off-by: Ben Pai <Ben_Pai@wistron.com>
----
- arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts | 449 +++++++++++++++++++-
- 1 file changed, 444 insertions(+), 5 deletions(-)
+> device in AST2500, but I do not find the LPC2AHB bridge. I think maybe=
+=20
+> it is integrated in LPC controller, and about how LPC2AHB work, perhap=
+s=20
+> I still need some time to study this.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
-index f7e935ede919..78451b283d93 100644
---- a/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-opp-mihawk.dts
-@@ -7,7 +7,52 @@
- / {
- 	model = "Mihawk BMC";
- 	compatible = "ibm,mihawk-bmc", "aspeed,ast2500";
--
-+	aliases {
-+		i2c215 = &bus6_mux215;
-+		i2c216 = &bus6_mux216;
-+		i2c217 = &bus6_mux217;
-+		i2c218 = &bus6_mux218;
-+		i2c219 = &bus6_mux219;
-+		i2c220 = &bus6_mux220;
-+		i2c221 = &bus6_mux221;
-+		i2c222 = &bus6_mux222;
-+		i2c223 = &bus7_mux223;
-+		i2c224 = &bus7_mux224;
-+		i2c225 = &bus7_mux225;
-+		i2c226 = &bus7_mux226;
-+		i2c227 = &bus7_mux227;
-+		i2c228 = &bus7_mux228;
-+		i2c229 = &bus7_mux229;
-+		i2c230 = &bus7_mux230;
-+		i2c231 = &bus9_mux231;
-+		i2c232 = &bus9_mux232;
-+		i2c233 = &bus9_mux233;
-+		i2c234 = &bus9_mux234;
-+		i2c235 = &bus9_mux235;
-+		i2c236 = &bus9_mux236;
-+		i2c237 = &bus9_mux237;
-+		i2c238 = &bus9_mux238;
-+		i2c239 = &bus10_mux239;
-+		i2c240 = &bus10_mux240;
-+		i2c241 = &bus10_mux241;
-+		i2c242 = &bus10_mux242;
-+		i2c243 = &bus10_mux243;
-+		i2c244 = &bus10_mux244;
-+		i2c245 = &bus10_mux245;
-+		i2c246 = &bus10_mux246;
-+		i2c247 = &bus12_mux247;
-+		i2c248 = &bus12_mux248;
-+		i2c249 = &bus12_mux249;
-+		i2c250 = &bus12_mux250;
-+		i2c251 = &bus13_mux251;
-+		i2c252 = &bus13_mux252;
-+		i2c253 = &bus13_mux253;
-+		i2c254 = &bus13_mux254;
-+		i2c255 = &bus13_mux255;
-+		i2c256 = &bus13_mux256;
-+		i2c257 = &bus13_mux257;
-+		i2c258 = &bus13_mux258;
-+	};
- 
- 	chosen {
- 		stdout-path = &uart5;
-@@ -630,6 +675,55 @@
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		reg = <0x70>;
-+
-+		bus6_mux215: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		bus6_mux216: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		bus6_mux217: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus6_mux218: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		bus6_mux219: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		bus6_mux220: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		bus6_mux221: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		bus6_mux222: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+
- 	};
- 
- };
-@@ -644,6 +738,55 @@
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		reg = <0x70>;
-+
-+		bus7_mux223: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		bus7_mux224: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		bus7_mux225: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus7_mux226: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		bus7_mux227: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		bus7_mux228: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		bus7_mux229: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		bus7_mux230: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+
- 	};
- 
- };
-@@ -684,6 +827,68 @@
- 		i2c-mux-idle-disconnect;
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
-+
-+		bus9_mux231: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus0 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus0";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus9_mux232: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus1 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus1";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus9_mux233: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus9_mux234: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
- 	};
- 
- 	pca9545@71 {
-@@ -695,6 +900,68 @@
- 		i2c-mux-idle-disconnect;
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
-+
-+		bus9_mux235: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus2 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus2";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus9_mux236: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus3 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus3";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus9_mux237: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus9_mux238: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
- 	};
- };
- 
-@@ -725,6 +992,68 @@
- 		i2c-mux-idle-disconnect;
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
-+
-+		bus10_mux239: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus4 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus4";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus10_mux240: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus5 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus5";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus10_mux241: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus10_mux242: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
- 	};
- 
- 	pca9545@71 {
-@@ -736,6 +1065,68 @@
- 		i2c-mux-idle-disconnect;
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
-+
-+		bus10_mux243: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus6 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus6";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus10_mux244: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			tca9554@39 {
-+				compatible = "ti,tca9554";
-+				reg = <0x39>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+
-+				smbus7 {
-+					gpio-hog;
-+					gpios = <4 GPIO_ACTIVE_HIGH>;
-+					output-high;
-+					line-name = "smbus7";
-+				};
-+			};
-+
-+			tmp431@4c {
-+				compatible = "ti,tmp401";
-+				reg = <0x4c>;
-+			};
-+		};
-+
-+		bus10_mux245: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus10_mux246: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
- 	};
- };
- 
-@@ -796,7 +1187,7 @@
- 		interrupt-controller;
- 		#interrupt-cells = <2>;
- 
--		i2c@0 {
-+		bus12_mux247: i2c@0 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			reg = <0>;
-@@ -807,7 +1198,7 @@
- 			};
- 		};
- 
--		i2c@1 {
-+		bus12_mux248: i2c@1 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			reg = <1>;
-@@ -818,7 +1209,7 @@
- 			};
- 		};
- 
--		i2c@2 {
-+		bus12_mux249: i2c@2 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			reg = <2>;
-@@ -829,7 +1220,7 @@
- 			};
- 		};
- 
--		i2c@3 {
-+		bus12_mux250: i2c@3 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			reg = <3>;
-@@ -857,6 +1248,54 @@
- 		#address-cells = <1>;
- 		#size-cells = <0>;
- 		reg = <0x70>;
-+
-+		bus13_mux251: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		bus13_mux252: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		bus13_mux253: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		bus13_mux254: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+
-+		bus13_mux255: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		bus13_mux256: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		bus13_mux257: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		bus13_mux258: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
- 	};
- };
- 
--- 
-2.17.1
+Right, yes, it is "hidden" in the LPC controller. You want to look at re=
+gisters=20
+HICR7 and HICR8. Now, the descriptions for these two registers in the da=
+tasheet=20
+are quite cryptic. You mentioned you had found the aspeed-lpc-ctrl drive=
+r in=20
+the kernel earlier. This is the code that drives the LPC2AHB bridge, and=
+ it has=20
+the following helpful comment:
 
+		/*
+		 * The top half of HICR7 is the MSB of the BMC address of the
+		 * mapping.
+		 * The bottom half of HICR7 is the MSB of the HOST LPC
+		 * firmware space address of the mapping.
+		 *
+		 * The 1 bits in the top of half of HICR8 represent the bits
+		 * (in the requested address) that should be ignored and
+		 * replaced with those from the top half of HICR7.
+		 * The 1 bits in the bottom half of HICR8 represent the bits
+		 * (in the requested address) that should be kept and pass
+		 * into the BMC address space.
+		 */
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------
-This email contains confidential or legally privileged information and is for the sole use of its intended recipient. 
-Any unauthorized review, use, copying or distribution of this email or the content of this email is strictly prohibited.
-If you are not the intended recipient, you may reply to the sender and should delete this e-mail immediately.
----------------------------------------------------------------------------------------------------------------------------------------------------------------
+		/*
+		 * It doesn't make sense to talk about a size or offset with
+		 * low 16 bits set. Both HICR7 and HICR8 talk about the top 16
+		 * bits of addresses and sizes.
+		 */
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/=
+drivers/soc/aspeed/aspeed-lpc-ctrl.c?h=3Dv5.7#n101
+
+Hope that clarifies how the LPC2AHB works!
+
+Andrew
