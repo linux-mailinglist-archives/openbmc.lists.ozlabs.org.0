@@ -2,79 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F6CC1EC600
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 02:00:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 289B31EC611
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 02:07:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49c8Dy1NV1zDqXV
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 10:00:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49c8PB2RLRzDqYS
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 10:07:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49c8D61CFmzDqWf
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 09:59:48 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 052NWOvR113244
- for <openbmc@lists.ozlabs.org>; Tue, 2 Jun 2020 19:59:46 -0400
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31dnxw4bp5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 19:59:46 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 052No0Lq010669
- for <openbmc@lists.ozlabs.org>; Tue, 2 Jun 2020 23:59:45 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma03dal.us.ibm.com with ESMTP id 31bf49pwgh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 02 Jun 2020 23:59:45 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 052Nxh3311534768
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 2 Jun 2020 23:59:44 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E3B047805E
- for <openbmc@lists.ozlabs.org>; Tue,  2 Jun 2020 23:59:43 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A12097805C
- for <openbmc@lists.ozlabs.org>; Tue,  2 Jun 2020 23:59:43 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.136.4])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue,  2 Jun 2020 23:59:43 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Isolate service privileges
-Message-ID: <09e6ee03-ce22-17b5-b19d-062effcd97c0@linux.ibm.com>
-Date: Tue, 2 Jun 2020 18:59:40 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.7.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49c8NV5X1nzDqXl
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 10:07:06 +1000 (AEST)
+IronPort-SDR: dZuE7Le+6VDyq5p8Ni9Ali51I5k105LehEQlT7MhMPbCFRssi4MWhBvIb4KoJrDCqr9s/CWX7E
+ gaMw+i7hLE4g==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2020 17:07:03 -0700
+IronPort-SDR: 9FiX0263/9LO0KOtMr6NUF2x4hYTSgbRUK1G5Y3z/85Pb94IzcX/OMhbEu9lhW6gF645MrmnEs
+ PLO/rFgG4a0Q==
+X-IronPort-AV: E=Sophos;i="5.73,466,1583222400"; d="scan'208";a="272544688"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2020 17:07:03 -0700
+Date: Tue, 2 Jun 2020 17:07:02 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: Re: OpenBMC Logging and Error Handling Dos and Don'ts
+Message-ID: <20200603000702.GC7478@mauery.jf.intel.com>
+References: <4c4aa12b1ffde80ebbf49ad78b6046889f4226c0.camel@fuzziesquirrel.com>
+ <CAGm54UGorGfE-0FKj_+o3faU6sO-DW5jRoqPxFzx0VKwuD6Juw@mail.gmail.com>
+ <CAPnigKku77Tc60TAAb_yTJaWNePYWM204BF8erJS7CjhxrAPRA@mail.gmail.com>
+ <20200602230639.GK17541@heinlein>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-02_15:2020-06-02,
- 2020-06-02 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- cotscore=-2147483648 priorityscore=1501 mlxscore=0 clxscore=1015
- adultscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 malwarescore=0
- bulkscore=0 mlxlogscore=999 spamscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006020160
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200602230639.GK17541@heinlein>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,87 +60,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ =?utf-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>,
+ William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 02-Jun-2020 06:06 PM, Patrick Williams wrote:
+>On Mon, Jun 01, 2020 at 11:07:46PM -0700, William Kennington wrote:
+>> If you use the fmt library it would only require one extra temporary str=
+ing
+>> to be constructed and it works trivially with something like phosphor
+>> logging.
+>>
+>> log<level::INFO>(fmt::format("My error: {}", filename));
+>>
+>> It also has the advantage of understanding basic c++ types like
+>> std::strings and std::string_views.
+>>
+>> On Mon, Jun 1, 2020 at 8:33 PM =E9=83=81=E9=9B=B7 <yulei.sh@bytedance.co=
+m> wrote:
+>>
+>> > I have a bit concern about this. The existing phosphor-logging API
+>> > does not support this well.
+>> > Specifically, it does not support the "printf" way to generate a
+>> > string with the variables to log.
+>> > So previously we typically put the variables in entries.
+>> > I do agree that logging the variables in the MESSAGE field is much bet=
+ter.
+>> > But to encourage such logging, the logging API should be enhanced to
+>> > support the "printf" way.
+>> > E.g.
+>> >     log<level::INFO>("Something is wrong: %s:%d", xx, xxx);
+>> > is much better than:
+>> >     std::string to_log =3D xxx; // generate the message manually
+>> >     log<level::INFO>(to_log);
+>> >
+>> > Otherwise, it's really not convenient to write such logging code.
+>> >
+>
+>Separate from this proposal from Brad, I'd like to work on a
+>next-generation of phosphor-logging.  When we originally implemented
+>phosphor-logging we were all pretty new to C++14.  I think there can be
+>some great improvement in the syntax of phosphor-logging now that we
+>have C++17 (and more experience).
+>
+>The biggest change I'd like to do is in the way the structured entries
+>are defined, but I think we can improve the verbosity of syntax in
+>making a log in general.
 
-Summary: This presents a requirement to isolate service functions and a 
-use case where the administrator does not have service privileges.  The 
-motivation for a new service representative role is presented along with 
-extensions to the Redfish privilege model. Additional changes needed to 
-make this work are described.
+One more change I would like to see is a way to actually have the real=20
+filename and line number show up in the systemd log. Right now the=20
+filename and line number are always the logger code:
+    CODE_LINE=3D76
+    CODE_FUNC=3Dhelper_log
+    CODE_FILE=3D.../usr/include/phosphor-logging/log.hpp
 
-Motivation
+It looks like C++20 has a shiny new helper for this: source_location
+https://en.cppreference.com/w/cpp/experimental/source_location
 
-A service representative is a person authorized to perform service on a 
-computer system, typically a high-end system, serviced by an independent 
-organization, and working under a service agreement.  An example service 
-call is to power off a PCIe slot, physically replace a defective FRU 
-device, then use BMC functions to update FRU data like serial number or 
-MAC address, mark error logs entries as handled, etc.  The service rep 
-needs access to enhanced service tools that allow deeper diagnostics and 
-repair procedures.
+--Vernon
 
-Why do we need to lock out the administrator from sensitive service 
-functions?  Updating FRU data can cause incorrect operations when done 
-improperly.  Marking error log entries as "handled" without following 
-repair procedures can cause incorrect diagnosis, unnecessary repair 
-actions, and cost more time.  These are examples of BMC functions that 
-the service rep must perform, and BMC admins must not be allowed to perform.
+>Some example syntax:
+>
+>// Current syntax (and I'm being especially verbose on the namespaces).
+>phosphor::logging::log<phosphor::logging::level::ERR>("Some message",
+>    phosphor::logging::entry("EXAMPLE=3D%s"), example_str);
+>
+>// Potential syntax
+>lg::error("Some message", "EXAMPLE"_s, example_str);
+>
+>In a code-review I was on, we had some discussions about how difficult
+>it is to create data that isn't in the "-o verbose" and I think William
+>and Lei are both referring to that as well.  I am concerned that a
+>generic format leads us more to unstructured logging, which personally I
+>don't like.  My suggestion is that we have some easy syntax to indicate
+>"also put this structured data into the raw message" so that my example
+>above the message becomes "Some message. EXAMPLE=3D'the string'".
+>
+>I'd be interested to hear what "next generation logging" others have in
+>mind.
+>
+>--=20
+>Patrick Williams
 
-To be clear, by default, the administrator will have full privileges 
-including service privileges.  There will be a new option (like an image 
-feature) to remove service privileges from the administrator role and 
-achieve the effect described in this note.
-
-The main pieces are:
-- Create a new ServiceRep role and service privilege.  These would be 
-available in the base implementation.
-- Require the service privilege to perform sensitive service 
-operations.  This affects the Redfish operation-to-privilege mapping and 
-its implementation in BMCWeb.
-- Have a build-time option to either allow the admin to perform service 
-operations or lock them out.
-
-When the Administrator is locked out of service privileges:
-- The admin maintains control of user management, for example, disabling 
-service rep accounts.
-- The admin must not be allowed to escalate to the ServiceRep role. For 
-example, they could create a ServiceRep account for themselves and then 
-try to use it to perform service operations.  Examples of how the system 
-can prevent this escalation:
-    + The admin must not be allowed to create or change any account to 
-have the ServiceRep role, or
-    + Using the service privilege must require additional authentication.
-- The admin must not be allowed to access the command shell as the root 
-user.  For example, the admin account must not be root, and if SSH is 
-available, the admin user must not have `sudo` authority or `su` 
-credentials.  Root can subvert access controls and perform service 
-functions.
-
-Next steps
-
-1. I will propose a new ServiceRep Role and related PerformService 
-privilege in a followup email.
-2. The mechanism to authenticate a service rep in a way an admin cannot 
-use is outside the scope of this design.  We had discussed a 
-certificate-based approach in the security working group.  I believe the 
-other items in this email have merit even without this piece.
-3. To prevent the admin from escalating to the service account, we can 
-have a new image feature to restrict use of the ServiceRep role (so the 
-admin cannot create or change existing accounts with this role) and then 
-pre-create the "service" account.
-4. As a prerequisite, I would like to move the project away from the 
-default "root" login to a new "admin" account.  The Administrator 
-accounts would then be able to use the `sudo` command to become root.  A 
-new image feature could disallow the admin from `sudo` access.
-
-All of these taken together will achieve the goal of isolating BMC 
-service functions.  I plan to start with the ServiceRep piece, first 
-gathering comments from the OpenBMC community, then presenting it to 
-Redfish.  Next priority is creating an admin account and disallowing 
-root logins.  I plan to send details for each piece as I go, and welcome 
-your participation.
-
-- Joseph
 
