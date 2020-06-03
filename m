@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 573561ECF45
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 14:03:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CA3AB1ECF6B
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 14:08:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49cSHM6mTVzDqY7
-	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 22:03:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49cSNH4yckzDqZw
+	for <lists+openbmc@lfdr.de>; Wed,  3 Jun 2020 22:07:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,78 +17,72 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=SVKIaHlw; 
+ header.s=fm2 header.b=W1IIRzLm; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=tIV2YZ44; 
+ header.a=rsa-sha256 header.s=fm2 header.b=wVXD/g+8; 
  dkim-atps=neutral
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
  [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49cSFl1TcHzDqQS
- for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 22:02:18 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49cSMF3LbZzDqZ9
+ for <openbmc@lists.ozlabs.org>; Wed,  3 Jun 2020 22:07:05 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 91B544C1;
- Wed,  3 Jun 2020 08:02:14 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id CE248307;
+ Wed,  3 Jun 2020 08:07:02 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Wed, 03 Jun 2020 08:02:14 -0400
+ by compute3.internal (MEProxy); Wed, 03 Jun 2020 08:07:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type:content-transfer-encoding; s=fm2; bh=1uCZe
- cZ8qhvQo+laOMD1sVASn+yv4Ee7/TPxqAIbbnU=; b=SVKIaHlw1yqJomJufQVTu
- xyOCHbasVjqA5KkZvw6kH8l9um1E1VJ/pm38rRQjsK1TQllP1hPNNWzIdvDFm9I4
- EomOFJCkAdRttWtSk9f3WXILPw24gJaqGksoPWzhGmdVdg/sgoaJev6enYMuCiLF
- 4bZ6D8GFkcW5n1VLL+wVwgtJmt0BduY3h/P6FSCNa/JLk+/mG63s4z7x2iM7UQrb
- VjqduBwj1u3w9QDkzE+3JPSgzabHERVkQ+TK/N8H26PS0YkN433Yh9pt/s6T5UMR
- Fi+0wJu+1Dd/OjrFOl9hlnue56SOJpeuW5dzjqJHOB7LlV4D6MBPuvx3jZEMdU0f
- A==
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm2; bh=GGRxWBEj0N4PRscHv+e9I1ezrOXqQuY
+ k4OyGPdCMRco=; b=W1IIRzLmAlH2N+sF7tnMDoShgD7K1s3D5ALic+lGpzvrd9H
+ cZKAn+TCZyrVzXCNTBoQLZOG3lSVSD1wm+Dnnvq6sRJysJYzp+jgGQyIIzvRrVp9
+ pEo15uIQenu/NMJC61ZUog0vVdKL+XuNYODVFZ1V1lnltAxSekzBWMwcxHM2mvGJ
+ SLderajDZAIDdWCXe6YLAW7xXpLPTASF2TRkItjN3ELY+vYwYUPEpECVxgYW37p4
+ uNyT1ExXk3t4F+keCl/10gOTLItMt1gIQVPauWSDW1dLRrkKyogA4f1byVOZmNED
+ Ets4oBt0qYqioCC7cj0Y0CO5EpTmhGPmie6Hb9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-transfer-encoding:content-type
- :date:from:in-reply-to:message-id:mime-version:references
- :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=1uCZecZ8qhvQo+laOMD1sVASn+yv4Ee7/TPxqAIbb
- nU=; b=tIV2YZ44INyDCqMwY3NnvLIbIjEVL3DQjBax+48S2NCKOzbzWa9GeXeLj
- cCvAS+YFcS1vm9wZPqEUZMT4HexcApFf/FpwxArPDrtje63I1sj+mQhNaM0oHi1X
- XYgWSEq9KxdNrslTY0Mw82c6DhAZnqmG8LrXGO22/luSFQTGHH1H4h8MBzYCAYQ5
- OT7TtykVoDBa3vfXpUeRBPLioZRyQjCbS75Z3zEE4XIsvqyOma2XVKv5kRXWFrCR
- gvB9QSxvu4etNuUhmcskrRlou4hLtzCb9YU9H92m8ElEO3EoWJ6GChOao/keGIcq
- A6wSqY+jBNUORaZ7EZQ0Dlv0laXpw==
-X-ME-Sender: <xms:RZHXXjUEHRMb3rDsS-8ks3Yu8zREnLVqytsxv0S27oQFcppE8ckVRg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudefledgfeefucetufdoteggodetrfdotf
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=GGRxWB
+ Ej0N4PRscHv+e9I1ezrOXqQuYk4OyGPdCMRco=; b=wVXD/g+8AIkWuyReVqQqWZ
+ I4nlsQwWV0mtzHjlFZwIpzMVfH43MENNKKuwEdZVcppfhrDF/336+oYgxUekQRbl
+ mromyhEGhEWoxS4xaFt0amF8AWPmzTsVSlbY0l3aSGfGxe1ULzdSeH6M1zm/B/HT
+ zJNhbcQoyDL/YoZ5Ao4FcBaqMAjTqcqATW4qKFo4LnpTaTGM7e4CHGnciDiUz23D
+ yqckKMN10BKtXzKFpI3Sfm8dy9YVkGolH7/ijlyQTDAIyiG5gXPLML7cVfcRkTEy
+ QO/M3i9EAPy7b2fNSa68olUi+1sfLhuLAuaX7MjTaQ3lvlsMcUciaDaM8YDTal2A
+ ==
+X-ME-Sender: <xms:ZZLXXt5yXyrobQhA1ET9IAEH7SxrPtkTo0kP7-Apl9uEhaDa35M4sA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudefledgfeegucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvufgtgfesth
- hqredtreerjeenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughr
- vgifsegrjhdrihgurdgruheqnecuggftrfgrthhtvghrnhepheethefghfevheevgfektd
- dvtddvjeetgfevudfhheeghfffffdukeelleevjedtnecuffhomhgrihhnpehkvghrnhgv
- lhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
- hmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:RZHXXrmE9FPJVb23orrmXBqO2MJA_HolBqx9iwgmYx-cnEIAFNR0eA>
- <xmx:RZHXXvYQRy6aIxjto74_2OF9ope4RlLlHKt2djyd1ieYg2boFGKoIA>
- <xmx:RZHXXuWoKsnasEc8L4R9uYwSwKCEzO2sHofuQPn3vDA9n-qalQYpYw>
- <xmx:RpHXXpzgU4-rl-HysJEOvwE8yDElbi5HTVHV5gizjbI0uc6ms4fOdw>
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:ZZLXXq54dXz34SFiEzCge77-347m7qc2rKKBgxceLYD_eX3atEXAzQ>
+ <xmx:ZZLXXkcOOaTNN4HyDebxacPqHiNDF5fUlMF-Ql4GMQujzs9ajTDYog>
+ <xmx:ZZLXXmJKdi_0rfT64P-U47_rH4ysYFsvF2dgDNvLncFf-U8C5nOBHw>
+ <xmx:ZpLXXknTAvSHv7LnS_ZrI2UHGSUIhKM8sHVr2yXtTHmIcHKlITnyvA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 508D9E00A9; Wed,  3 Jun 2020 08:02:13 -0400 (EDT)
+ id D43AFE00A9; Wed,  3 Jun 2020 08:07:01 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.3.0-dev0-519-g0f677ba-fm-20200601.001-g0f677ba6
 Mime-Version: 1.0
-Message-Id: <ee8302a6-4303-457b-add1-8fa9d532c4a9@www.fastmail.com>
-In-Reply-To: <tencent_1D864FA41CFA3E42D4A9B236FC75E41BA609@qq.com>
-References: <tencent_2D6AE7A4D981E94342BD340BC7DF4EBE7F05@qq.com>
- <4813264f-fe81-4563-838d-f5356acb768a@www.fastmail.com>
- <tencent_720F45F5C22C1BFF2BF99029CA933807E907@qq.com>
- <b59bce6b-52d6-427b-84fa-defae872af10@www.fastmail.com>
- <tencent_1D864FA41CFA3E42D4A9B236FC75E41BA609@qq.com>
-Date: Wed, 03 Jun 2020 21:31:53 +0930
+Message-Id: <36873484-3078-4ec5-981e-88e59e619926@www.fastmail.com>
+In-Reply-To: <2775.1590100786@dooku>
+References: <CAFaEeaFTP9v1xZefxzoU9E6h7SpjfbxVrnnSRCmJfJ3QjWRqhA@mail.gmail.com>
+ <20200514135723.GE1166713@heinlein>
+ <3d6db63b-f670-4e01-94c3-425f93d89708@www.fastmail.com>
+ <CAFaEeaGs0GSiPp9mGVrSMB1brG19ttroPcK-x-p+BN3SnHrU4g@mail.gmail.com>
+ <2775.1590100786@dooku>
+Date: Wed, 03 Jun 2020 21:36:40 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: =?UTF-8?Q?=E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=B7=E3=82=A8=E3=83=A9?=
- =?UTF-8?Q?=E3=82=B4?= <1181052146@qq.com>,
- openbmc <openbmc@lists.ozlabs.org>
-Subject: =?UTF-8?Q?Re:_Re=EF=BC=9A_Re=EF=BC=9A_How_can_the_host_access_BMC's_SPI_?=
- =?UTF-8?Q?Flash_via_LPC_and_How_do_BMC's_CPU_read_uboot_from_SPI_Flash_?=
- =?UTF-8?Q?when_power_up=3F?=
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: "Michael Richardson" <mcr@sandelman.ca>, "Sui Chen" <suichen6@gmail.com>
+Subject: Re: An IPMI Request Visualization Tool
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,56 +94,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 27 May 2020, at 22:30, =E5=8D=97=E9=87=8E=E3=83=A0=E3=83=AB=E3=82=
-=B7=E3=82=A8=E3=83=A9=E3=82=B4 wrote:
-> Hi Mr. Andrew Jeffery
->=20
-> Thank you very much for your help. I really thanks for your=20
-> explanations, very detail and very clear.
-> Now I am clear about the iLPC2AHB bridge. I found the iLPC2AHB bridge=20=
 
-> device in AST2500, but I do not find the LPC2AHB bridge. I think maybe=
-=20
-> it is integrated in LPC controller, and about how LPC2AHB work, perhap=
-s=20
-> I still need some time to study this.
 
-Right, yes, it is "hidden" in the LPC controller. You want to look at re=
-gisters=20
-HICR7 and HICR8. Now, the descriptions for these two registers in the da=
-tasheet=20
-are quite cryptic. You mentioned you had found the aspeed-lpc-ctrl drive=
-r in=20
-the kernel earlier. This is the code that drives the LPC2AHB bridge, and=
- it has=20
-the following helpful comment:
+On Fri, 22 May 2020, at 08:09, Michael Richardson wrote:
+> 
+> Sui Chen <suichen6@gmail.com> wrote:
+>     > Thanks for your interest! I'm also using dbus-pcap to track certain
+>     > issues on the BMC recently, and would like to add support for all DBus
+>     > messages to the visualization tool, making it somewhat resemble a GUI
+>     > version of dbus-pcap.  The goal would be to be able to use this tool to
+>     > investigate both DBus and IPMI. The way I plan to use it would be more
+>     > similar to how I use GPUView (full-system timeline rather than
+>     > inspecting individual packets)
+> 
+> Interestingly, I was not that clearly aware of dbus-pcap :-)
+> I ought to know more, as the lead libpcap maintainer.
+> Is this visualization tool part of openbmc, or is it a generic dbus
+> visualization tool?
 
-		/*
-		 * The top half of HICR7 is the MSB of the BMC address of the
-		 * mapping.
-		 * The bottom half of HICR7 is the MSB of the HOST LPC
-		 * firmware space address of the mapping.
-		 *
-		 * The 1 bits in the top of half of HICR8 represent the bits
-		 * (in the requested address) that should be ignored and
-		 * replaced with those from the top half of HICR7.
-		 * The 1 bits in the bottom half of HICR8 represent the bits
-		 * (in the requested address) that should be kept and pass
-		 * into the BMC address space.
-		 */
+It's not really a visualisation tool so much as a script that will interpret the D-Bus-specifics of a D-Bus pcap. It's a commandline script that provides filtering based on D-Bus match specifications. You can capture all traffic on the system bus in any systemd-based system with `busctl capture > /tmp/my.pcap` and then run `dbus-pcap my.pcap` to dump the packet contents.
 
-		/*
-		 * It doesn't make sense to talk about a size or offset with
-		 * low 16 bits set. Both HICR7 and HICR8 talk about the top 16
-		 * bits of addresses and sizes.
-		 */
+> 
+> We recently brought rpcapd into the mix; it can be invoked via ssh.
+> I wonder if that might help you as a debug tool?
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/=
-drivers/soc/aspeed/aspeed-lpc-ctrl.c?h=3Dv5.7#n101
+I'm not sure, I'm not familiar with rpcapd. I'll have a google.
 
-Hope that clarifies how the LPC2AHB works!
+> 
+>     > If you ask how this user interface might differ from the already
+>     > existing dbus visualizers such as bustle, my answer would be: it will
+>     > present information in a way that's more relevant to the BMC, putting a
+>     > bit more focus on BMC-specific DBus messages, such as HWMon and RedFish
+>     > DBus messages, to present information in a high signal-noise ratio way.
+> 
+> Would this need to run on the BMC itself?
+
+Hopefully not given `busctl capture` ?
 
 Andrew
