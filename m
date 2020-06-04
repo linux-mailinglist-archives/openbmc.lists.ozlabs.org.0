@@ -2,48 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 099551EDFAB
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 10:19:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 086D51EDFD9
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 10:33:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49czGT2ZCZzDqlJ
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 18:19:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49czZ61hKCzDqng
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 18:33:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=4177ded0a=davidwang@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::642;
+ helo=mail-ej1-x642.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 49czFj3J15zDq77
- for <openbmc@lists.ozlabs.org>; Thu,  4 Jun 2020 18:18:57 +1000 (AEST)
-IronPort-SDR: ZeMMz3v9/iK4d8G0HmRDpzxGO4adnIR8OJ1swlVYY6CKF1XU14Hkt3/yO2rjLcZ5j7bwxEXa2N
- GoP/eMm4OVhg==
-Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
- by mx02.quantatw.com with ESMTP; 04 Jun 2020 16:18:53 +0800
-Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
- (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 4 Jun 2020
- 16:18:48 +0800
-Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
- mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
- 15.01.1713.009; Thu, 4 Jun 2020 16:18:48 +0800
-From: =?big5?B?RGF2aWQgV2FuZyAopP2utqZ0KQ==?= <DavidWang@quantatw.com>
-To: George Keishing <gkeishin@in.ibm.com>
-Subject: bmc code update with automation/redfish
-Thread-Topic: bmc code update with automation/redfish
-Thread-Index: AdY6R4EZk1n8pcQvT7+icYI5vE1vvg==
-Date: Thu, 4 Jun 2020 08:18:48 +0000
-Message-ID: <77541f88b7b5412597769fe344682576@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: 61963A9F4F06DD80A78362FEE8B147A9B917FB320E0716C044827E8588DD077A2000:8
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=fGkqeUca; dkim-atps=neutral
+Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com
+ [IPv6:2a00:1450:4864:20::642])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49czYM4STTzDqW3
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Jun 2020 18:32:39 +1000 (AEST)
+Received: by mail-ej1-x642.google.com with SMTP id x1so5112720ejd.8
+ for <openbmc@lists.ozlabs.org>; Thu, 04 Jun 2020 01:32:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=1AuRE0AuSz1Dcafc63dQERov0niyM7+8vmaBb8F6Fzc=;
+ b=fGkqeUca0o35s+UryeUeoBdAohiaNg3kfMd+bxQWJyNHWhpzLy1Cr1ZcAjKHF8+WnL
+ QA+DS5hlfW9VNepBJ+oGxqr+ac8FDcs1OIPBlQl52vV/mW34uykJiE5ZJT3mW7lhSYZL
+ N4vom68WUkZGhqUpfeFd2DUOEWyFbBMFDByyY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=1AuRE0AuSz1Dcafc63dQERov0niyM7+8vmaBb8F6Fzc=;
+ b=uWFuBMSv00ga7JW4ly8F9AnrtyuE3W132SGPpU06yASkfLOvDFaB7Os1W8jgm8PQWU
+ TRFfoee53MkBhhUyGKyDX6GGkjGzFsBceFnXl+2k3pjDi9qYQnRe0rqylbUlT3QCyy5H
+ xZQSkFLDYAnuXuVH0QJcWbbzW2Cl/HSByH6f89V/Oxc0znDMyMoyPKKd9qe5RiscyHDL
+ 3PwAww3ykDYS61KUcfhTeX8a2j1FjbRPZokg2ySelaItrN6v7Z4s5QqT2nXhy/KY7gFX
+ ZwjqHas6dUG4P6Wp7r0byex6mlvzN4DpWhq4RzV38DMtPoxoB7wsHELrwyR4m9k9DdYn
+ 7nDg==
+X-Gm-Message-State: AOAM531+9WewsMjgaJ/fz/TexrM66iZ43V1SG68KhUIfaprGZ/GxXZJk
+ lgIjSacoqA9QO0/1UyWmhzlzhmd3TDNEKosP21A=
+X-Google-Smtp-Source: ABdhPJy5ctc5383qKNluaPDwm98VmrQIOXT9qbgA+PmD3daSJjnvtPCKWdZ3etbzj/j/2E6sMLG804CjxluMDKg+46Q=
+X-Received: by 2002:a17:906:3603:: with SMTP id
+ q3mr2981318ejb.477.1591259554440; 
+ Thu, 04 Jun 2020 01:32:34 -0700 (PDT)
 MIME-Version: 1.0
+References: <20200527200820.47359-1-tali.perry1@gmail.com>
+ <20200603202553.GB7684@kunai>
+In-Reply-To: <20200603202553.GB7684@kunai>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 4 Jun 2020 08:32:22 +0000
+Message-ID: <CACPK8Xe=66y+MkfogP4Gh6A9X7UDhOyAdUDwp=iqe7zitdxA8g@mail.gmail.com>
+Subject: Re: [PATCH v14 0/3] i2c: npcm7xx: add NPCM i2c controller driver
+To: Wolfram Sang <wsa@the-dreams.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,43 +71,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>,
+ devicetree <devicetree@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ kfting@nuvoton.com, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brendan Higgins <brendanhiggins@google.com>, ofery@google.com,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ linux-i2c@vger.kernel.org, andriy.shevchenko@linux.intel.com,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ kbuild test robot <lkp@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgR2VvcmdlLA0KDQpJoaZtIHRlc3RpbmcgQk1DIGJ5IGF1dG9tYXRpb24gd2l0aCB0ZXN0X3Jl
-ZGZpc2hfYm1jX2NvZGVfdXBkYXRlLnJvYm90Lg0KSXQgZmFpbGVkLiBIb3dldmVyIEkgY2FuIHN1
-Y2Nlc3NmdWxseSB1cGRhdGUgYm1jIG1hbnVhbGx5IHNvIEkgdHJ5IHRvIGZpbmQgdGhlIHJlYXNv
-biBvZiBmYWlsdXJlLg0KDQpXaGVuIEkgdXBsb2FkIGltYWdlIGJ5IFJFU1Q6DQoxLiAtWCBQT1NU
-IC1UIDx0YXJfZmlsZT4gaHR0cHM6Ly8ke2JtY30vdXBsb2FkL2ltYWdlDQoNCjIuIGxzIC1sIC90
-bXAvaW1hZ2VzDQogICBkcnd4LS0tLS0tICAgCTIgcm9vdCAgICAgcm9vdCAgICAgICAgICAgMjgw
-IEp1biAgNCAwNjo0NSBjNzhlNjc0YQ0KDQozLiAtWCBQVVQgLWQgJ3siZGF0YSI6ICJ4eXoub3Bl
-bmJtY19wcm9qZWN0LlNvZnR3YXJlLkFjdGl2YXRpb24uUmVxdWVzdGVkQWN0aXZhdGlvbnMuQWN0
-aXZlIn0nIFwNCiAgIGh0dHBzOi8vJHtibWN9L3h5ei9vcGVuYm1jX3Byb2plY3Qvc29mdHdhcmUv
-Yzc4ZTY3NGEvYXR0ci9SZXF1ZXN0ZWRBY3RpdmF0aW9uDQqhQKFADQo0LiBUaGVuIGJtYyB1bnRh
-ciB0aGUgdGFyIGZpbGUgdG8gL3J1bi9pbml0cmFtZnMvIGFuZCByZW1vdmUgdGhlIHRhciBmaWxl
-DQoJbHMgLWwgL3J1bi9pbml0cmFtZnMNCgktcnctci0tci0tICAgIDEgcm9vdCAgICAgcm9vdCAg
-ICAgICA0MjI5ODQ0IEp1biAgNCAwNjo0NiBpbWFnZS1rZXJuZWwNCgktcnctci0tci0tICAgIDEg
-cm9vdCAgICAgcm9vdCAgICAgIDIzNzAzNTUyIEp1biAgNCAwNjo0NiBpbWFnZS1yb2ZzDQoJLXJ3
-LXItLXItLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgIDg1MDMwNCBKdW4gIDQgMDY6NDYgaW1h
-Z2Utcndmcw0KCS1ydy1yLS1yLS0gICAgMSByb290ICAgICByb290ICAgICAgICA0MzM3MTIgSnVu
-ICA0IDA2OjQ2IGltYWdlLXUtYm9vdA0KDQpXaGVuIEkgdXBsb2FkIGltYWdlIGJ5IFJlZGZpc2gg
-KG9yIGF1dG9tYXRpb24pOiANCjEuIC1YIFBPU1QgLVQgPHRhcl9maWxlPiBodHRwczovLyR7Ym1j
-fS9yZWRmaXNoL3YxL1VwZGF0ZVNlcnZpY2UNCg0KMi4gQk1DIGltbWVkaWF0ZWx5IGNvbXBsZXRl
-cyBzdGVwcyAyIHRvIDQgYWJvdmUuIFNvIHRoZXJloaZzIG5vIGZvbGRlciBuYW1lZCChp2M3OGU2
-NzRhoaggaW4gL3RtcC9pbWFnZXMuIA0KCWxzIC1sIC9ydW4vaW5pdHJhbWZzDQqhQKFALXJ3LXIt
-LXItLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgNDIyOTg0NCBKdW4gIDQgMDY6NTMgaW1hZ2Ut
-a2VybmVsDQqhQKFALXJ3LXItLXItLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAyMzcwMzU1MiBK
-dW4gIDQgMDY6NTMgaW1hZ2Utcm9mcw0KoUChQC1ydy1yLS1yLS0gICAgMSByb290ICAgICByb290
-ICAgICAgICA4NTAzMDQgSnVuICA0IDA2OjUzIGltYWdlLXJ3ZnMNCqFAoUAtcnctci0tci0tICAg
-IDEgcm9vdCAgICAgcm9vdCAgICAgICAgNDMzNzEyIEp1biAgNCAwNjo1MyBpbWFnZS11LWJvb3QN
-CgkNCjMuIFRoZW4gcm9ib3QgdHJ5IHRvIKGnR2V0IExhdGVzdCBJbWFnZSBJRKGoIGJ5IGNvbW1h
-bmQNCqFAoUBjZCAvdG1wL2ltYWdlcy87IHN0YXQgLWMgJyVZICVuJyAqIHwgc29ydCAtazEsMW5y
-IHwgaGVhZCAtbiAxDQqhQKFAQnV0IHRoZSBmb2xkZXIgaGFzIGJlZW4gcmVtb3ZlZCwgc28gdGhl
-IHJvYm90IGZpbmRzIG5vdGhpbmcsIGFuZCB0aGVuIGZhaWxzLg0KCQ0KSGVyZaGmcyB0aGUgcXVl
-c3Rpb246DQpJdCBzZWVtcyB0aGF0IHRoZSByb2JvdCBleHBlY3RzIHRoZSBmb2xkZXIgImM3OGU2
-NzRhIiB0byBleGlzdC4gDQpIb3dldmVyLCB3aGVuIHVwbG9hZGluZyBhbiBpbWFnZSB0aHJvdWdo
-IFJlZGZpc2ggY29tbWFuZCwgb25jZSB0aGUgdGFyIGZpbGUgaXMgdXBsb2FkZWQsIGJtYyB1bnRh
-ciBhbmQgcmVtb3ZlIGl0Lg0KSG93IGNhbiBJIGZpeCBpdD8gRG8geW91IGhhdmUgYW55IHN1Z2dl
-c3Rpb24/DQpQbGVhc2UgbGVhdmUgYW55IGNvbW1lbnRzLCB0aGFuayB5b3UuDQoNClJlZ2FyZHMs
-DQpEYXZpZA0KDQo=
+On Wed, 3 Jun 2020 at 20:26, Wolfram Sang <wsa@the-dreams.de> wrote:
+>
+> On Wed, May 27, 2020 at 11:08:17PM +0300, Tali Perry wrote:
+> > This patch set adds i2c controller support
+> > for the Nuvoton NPCM Baseboard Management Controller (BMC).
+> >
+> > NPCM7xx includes 16 I2C controllers. This driver operates the controller.
+> > This module also includes a slave mode.
+> >
+> > ---
+> > v14 -> v13:
+> >       - Fix yaml example: add missing include.
+> >       - Replace all udelay to usleep_range, except one which is called from
+> >         irq.
+> >       - Fix compilation error (module_platfrom_init conflict).
+> >       - debugfs counters always updated. Counting till max value,
+> >         then stop counting.
+> >       - Rename bus-frequency to clock-frequency.
+> >       - Remove unused variables.
+>
+> I don't have time for a deeper review, but from what I can tell this
+> driver is good to go and we can fix things incrementally from now on.
+>
+> Applied to for-next (will go into 5.8), thanks!
+
+Thanks Wolfram. I encourage this approach to working with patches, and
+especially for our vendors who are trying to do the correct thing in
+mainlining their code.
+
+Congrats Tali on getting the driver in the tree. This has a been a long journey!
+
+Cheers,
+
+Joel
