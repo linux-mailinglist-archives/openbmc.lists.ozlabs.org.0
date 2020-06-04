@@ -2,86 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 436CA1EDF94
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 10:15:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 099551EDFAB
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 10:19:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49cz9L1T0YzDqkx
-	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 18:15:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49czGT2ZCZzDqlJ
+	for <lists+openbmc@lfdr.de>; Thu,  4 Jun 2020 18:19:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49cz8d2ptnzDqcy
- for <openbmc@lists.ozlabs.org>; Thu,  4 Jun 2020 18:14:41 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05481oU6027364; Thu, 4 Jun 2020 04:14:31 -0400
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
- [169.51.49.99])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31ek5r7ryq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 04 Jun 2020 04:14:30 -0400
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
- by ppma04ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0548AMU2017832;
- Thu, 4 Jun 2020 08:14:28 GMT
-Received: from b06cxnps3075.portsmouth.uk.ibm.com
- (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
- by ppma04ams.nl.ibm.com with ESMTP id 31bf481kkr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 04 Jun 2020 08:14:28 +0000
-Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com
- [9.149.105.62])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0548EQLb64749614
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 4 Jun 2020 08:14:26 GMT
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 12C9EAE051;
- Thu,  4 Jun 2020 08:14:26 +0000 (GMT)
-Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 31144AE045;
- Thu,  4 Jun 2020 08:14:23 +0000 (GMT)
-Received: from Deepaks-MacBook-Pro.local (unknown [9.79.250.6])
- by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Thu,  4 Jun 2020 08:14:22 +0000 (GMT)
-Subject: Re: add Node<x> as /redfish/v1/Systems/Node<x>/ for multi-node system
-To: "yugang.chen" <yugang.chen@linux.intel.com>,
- James Feist <james.feist@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "Leung, John" <john.leung@intel.com>, jason.m.bills@linux.intel.com,
- chunhui.jia@linux.intel.com, gmills@us.ibm.com
-References: <b6aab1d7-3437-c402-7574-c2dcbd5567b3@linux.intel.com>
- <ac5dd8bc-fc11-02ec-9701-193f2d68e284@linux.intel.com>
- <c611b757-ecea-0f40-df32-39e4fd88fee7@linux.intel.com>
-From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-Message-ID: <f0a98532-b26a-5730-b7ed-5d4cd9c250d2@linux.vnet.ibm.com>
-Date: Thu, 4 Jun 2020 13:44:21 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.1
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=4177ded0a=davidwang@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 49czFj3J15zDq77
+ for <openbmc@lists.ozlabs.org>; Thu,  4 Jun 2020 18:18:57 +1000 (AEST)
+IronPort-SDR: ZeMMz3v9/iK4d8G0HmRDpzxGO4adnIR8OJ1swlVYY6CKF1XU14Hkt3/yO2rjLcZ5j7bwxEXa2N
+ GoP/eMm4OVhg==
+Received: from unknown (HELO mailbx12.quanta.corp) ([10.243.91.109])
+ by mx02.quantatw.com with ESMTP; 04 Jun 2020 16:18:53 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx12.quanta.corp
+ (10.243.91.109) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Thu, 4 Jun 2020
+ 16:18:48 +0800
+Received: from mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05]) by
+ mailbx12.quanta.corp ([fe80::3581:3a50:e90e:3a05%4]) with mapi id
+ 15.01.1713.009; Thu, 4 Jun 2020 16:18:48 +0800
+From: =?big5?B?RGF2aWQgV2FuZyAopP2utqZ0KQ==?= <DavidWang@quantatw.com>
+To: George Keishing <gkeishin@in.ibm.com>
+Subject: bmc code update with automation/redfish
+Thread-Topic: bmc code update with automation/redfish
+Thread-Index: AdY6R4EZk1n8pcQvT7+icYI5vE1vvg==
+Date: Thu, 4 Jun 2020 08:18:48 +0000
+Message-ID: <77541f88b7b5412597769fe344682576@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-snts-smtp: 61963A9F4F06DD80A78362FEE8B147A9B917FB320E0716C044827E8588DD077A2000:8
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <c611b757-ecea-0f40-df32-39e4fd88fee7@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-04_04:2020-06-02,
- 2020-06-04 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- clxscore=1011 cotscore=-2147483648 phishscore=0 mlxlogscore=794
- impostorscore=0 suspectscore=0 mlxscore=0 spamscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006040052
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,69 +55,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 04/06/20 1:08 pm, yugang.chen wrote:
-> Dear Deepak,
-> 
-> I'm openbmc engineer working for redfish' slave log in multiple systems, 
-> we want to add slave node's log to redfish,  is there some design or 
-> documentation for systems schema based on associations to different 
-> systems interface? if so, we can work based on that common interface for 
-> slave logs on redfish, thanks.
-
-This is something I'm still working on (and should be able to post 
-something on Gerrit in a few days). Just so that we're on the same page 
-- the problem I am trying to solve is a D-Bus model based approach to 
-depict multiple systems and the parts contained within (the parts could 
-be physical containment as well as logical things like logs). This would 
-prevent writing code that assumes specific names in the D-Bus path 
-hierarchy. Daniel/James - does this help the problem you are trying to 
-solve?
-
-> Best Regards
-> 
-> Yugang(Daniel) Chen
-> 
-> 
-> On 6/3/2020 12:40 AM, James Feist wrote:
->> On 6/1/2020 11:39 PM, yugang.chen wrote:
->>> Dear All,
->>>
->>> May I have your attention? For a multi-node system,  there is an 
->>> option for master to use name "Node<x>" as ​{ComputerSystemId} to 
->>> stand for slave node, to show slave node's event log in master redfish,
->>>
->>> Could you please share your comment/idea for naming ("Node<x>")? thanks.
->>
->> Has there been any design docs for multiple systems in Redfish? This 
->> is much bigger than just adding support for multiple logs, this is 
->> adding support for multiple Systems interfaces, and many things need 
->> to be considered such as the mapping of multiple CPUs, Memory, logs, 
->> and how this fits into the inventory picture. On IRC a while back we 
->> had discussed making the systems schema based on associations to 
->> different systems interfaces, and I believe a design was going to be 
->> written on this topic by Deepak. The name should probably come from 
->> the Systems interfaces that are provided. I'm not sure why we would 
->> need to hardcode these. How these interfaces get created, and what 
->> they map to, needs to be discussed.
->>
->>
->>>
->>> here is the patch for code review:
->>> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/32971 ;
->>>
->>> for example, Node1:
->>>
->>> /​redfish/​v1/​Systems/​{ComputerSystemId}/​LogServices/​ 
->>> {LogServiceId}/ ​Entries/​{LogEntryId} -->
->>> /​redfish/​v1/​Systems/​Node1/​LogServices/​{LogServiceId}/​Entries/​ 
->>> {LogEntryId}
->>>
->>> Best Regards
->>>
->>> Daniel(Yugang)
->>>
-
+SGkgR2VvcmdlLA0KDQpJoaZtIHRlc3RpbmcgQk1DIGJ5IGF1dG9tYXRpb24gd2l0aCB0ZXN0X3Jl
+ZGZpc2hfYm1jX2NvZGVfdXBkYXRlLnJvYm90Lg0KSXQgZmFpbGVkLiBIb3dldmVyIEkgY2FuIHN1
+Y2Nlc3NmdWxseSB1cGRhdGUgYm1jIG1hbnVhbGx5IHNvIEkgdHJ5IHRvIGZpbmQgdGhlIHJlYXNv
+biBvZiBmYWlsdXJlLg0KDQpXaGVuIEkgdXBsb2FkIGltYWdlIGJ5IFJFU1Q6DQoxLiAtWCBQT1NU
+IC1UIDx0YXJfZmlsZT4gaHR0cHM6Ly8ke2JtY30vdXBsb2FkL2ltYWdlDQoNCjIuIGxzIC1sIC90
+bXAvaW1hZ2VzDQogICBkcnd4LS0tLS0tICAgCTIgcm9vdCAgICAgcm9vdCAgICAgICAgICAgMjgw
+IEp1biAgNCAwNjo0NSBjNzhlNjc0YQ0KDQozLiAtWCBQVVQgLWQgJ3siZGF0YSI6ICJ4eXoub3Bl
+bmJtY19wcm9qZWN0LlNvZnR3YXJlLkFjdGl2YXRpb24uUmVxdWVzdGVkQWN0aXZhdGlvbnMuQWN0
+aXZlIn0nIFwNCiAgIGh0dHBzOi8vJHtibWN9L3h5ei9vcGVuYm1jX3Byb2plY3Qvc29mdHdhcmUv
+Yzc4ZTY3NGEvYXR0ci9SZXF1ZXN0ZWRBY3RpdmF0aW9uDQqhQKFADQo0LiBUaGVuIGJtYyB1bnRh
+ciB0aGUgdGFyIGZpbGUgdG8gL3J1bi9pbml0cmFtZnMvIGFuZCByZW1vdmUgdGhlIHRhciBmaWxl
+DQoJbHMgLWwgL3J1bi9pbml0cmFtZnMNCgktcnctci0tci0tICAgIDEgcm9vdCAgICAgcm9vdCAg
+ICAgICA0MjI5ODQ0IEp1biAgNCAwNjo0NiBpbWFnZS1rZXJuZWwNCgktcnctci0tci0tICAgIDEg
+cm9vdCAgICAgcm9vdCAgICAgIDIzNzAzNTUyIEp1biAgNCAwNjo0NiBpbWFnZS1yb2ZzDQoJLXJ3
+LXItLXItLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgIDg1MDMwNCBKdW4gIDQgMDY6NDYgaW1h
+Z2Utcndmcw0KCS1ydy1yLS1yLS0gICAgMSByb290ICAgICByb290ICAgICAgICA0MzM3MTIgSnVu
+ICA0IDA2OjQ2IGltYWdlLXUtYm9vdA0KDQpXaGVuIEkgdXBsb2FkIGltYWdlIGJ5IFJlZGZpc2gg
+KG9yIGF1dG9tYXRpb24pOiANCjEuIC1YIFBPU1QgLVQgPHRhcl9maWxlPiBodHRwczovLyR7Ym1j
+fS9yZWRmaXNoL3YxL1VwZGF0ZVNlcnZpY2UNCg0KMi4gQk1DIGltbWVkaWF0ZWx5IGNvbXBsZXRl
+cyBzdGVwcyAyIHRvIDQgYWJvdmUuIFNvIHRoZXJloaZzIG5vIGZvbGRlciBuYW1lZCChp2M3OGU2
+NzRhoaggaW4gL3RtcC9pbWFnZXMuIA0KCWxzIC1sIC9ydW4vaW5pdHJhbWZzDQqhQKFALXJ3LXIt
+LXItLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgNDIyOTg0NCBKdW4gIDQgMDY6NTMgaW1hZ2Ut
+a2VybmVsDQqhQKFALXJ3LXItLXItLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAyMzcwMzU1MiBK
+dW4gIDQgMDY6NTMgaW1hZ2Utcm9mcw0KoUChQC1ydy1yLS1yLS0gICAgMSByb290ICAgICByb290
+ICAgICAgICA4NTAzMDQgSnVuICA0IDA2OjUzIGltYWdlLXJ3ZnMNCqFAoUAtcnctci0tci0tICAg
+IDEgcm9vdCAgICAgcm9vdCAgICAgICAgNDMzNzEyIEp1biAgNCAwNjo1MyBpbWFnZS11LWJvb3QN
+CgkNCjMuIFRoZW4gcm9ib3QgdHJ5IHRvIKGnR2V0IExhdGVzdCBJbWFnZSBJRKGoIGJ5IGNvbW1h
+bmQNCqFAoUBjZCAvdG1wL2ltYWdlcy87IHN0YXQgLWMgJyVZICVuJyAqIHwgc29ydCAtazEsMW5y
+IHwgaGVhZCAtbiAxDQqhQKFAQnV0IHRoZSBmb2xkZXIgaGFzIGJlZW4gcmVtb3ZlZCwgc28gdGhl
+IHJvYm90IGZpbmRzIG5vdGhpbmcsIGFuZCB0aGVuIGZhaWxzLg0KCQ0KSGVyZaGmcyB0aGUgcXVl
+c3Rpb246DQpJdCBzZWVtcyB0aGF0IHRoZSByb2JvdCBleHBlY3RzIHRoZSBmb2xkZXIgImM3OGU2
+NzRhIiB0byBleGlzdC4gDQpIb3dldmVyLCB3aGVuIHVwbG9hZGluZyBhbiBpbWFnZSB0aHJvdWdo
+IFJlZGZpc2ggY29tbWFuZCwgb25jZSB0aGUgdGFyIGZpbGUgaXMgdXBsb2FkZWQsIGJtYyB1bnRh
+ciBhbmQgcmVtb3ZlIGl0Lg0KSG93IGNhbiBJIGZpeCBpdD8gRG8geW91IGhhdmUgYW55IHN1Z2dl
+c3Rpb24/DQpQbGVhc2UgbGVhdmUgYW55IGNvbW1lbnRzLCB0aGFuayB5b3UuDQoNClJlZ2FyZHMs
+DQpEYXZpZA0KDQo=
