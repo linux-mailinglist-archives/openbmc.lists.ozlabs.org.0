@@ -2,74 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32B831EFF9D
-	for <lists+openbmc@lfdr.de>; Fri,  5 Jun 2020 20:05:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F0F31EFFE6
+	for <lists+openbmc@lfdr.de>; Fri,  5 Jun 2020 20:32:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49drDC4scfzDr0w
-	for <lists+openbmc@lfdr.de>; Sat,  6 Jun 2020 04:05:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49drpZ35nhzDqx5
+	for <lists+openbmc@lfdr.de>; Sat,  6 Jun 2020 04:32:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
- helo=mail-pf1-x443.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c34;
+ helo=mail-oo1-xc34.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=X12vqK2P; dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
+ header.s=20161025 header.b=bU6AYZ/9; dkim-atps=neutral
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com
+ [IPv6:2607:f8b0:4864:20::c34])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49drCG36CbzDr0x;
- Sat,  6 Jun 2020 04:04:56 +1000 (AEST)
-Received: by mail-pf1-x443.google.com with SMTP id s23so4011358pfh.7;
- Fri, 05 Jun 2020 11:04:56 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49drnk5DnKzDqdW
+ for <openbmc@lists.ozlabs.org>; Sat,  6 Jun 2020 04:31:22 +1000 (AEST)
+Received: by mail-oo1-xc34.google.com with SMTP id 18so2180826ooy.3
+ for <openbmc@lists.ozlabs.org>; Fri, 05 Jun 2020 11:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=Gl4m6hVinnfFSKepS1HCmQPY0u24GAicu5wcvYMKZIw=;
- b=X12vqK2PGSjxkksfrv2pFiM4EphDGJtMVGEYh8JCcpK34XvZXmzF76euZWI7GBZc4Y
- 6YF41JWbC8tjp2fB7ZNZQFWGcNb1XAkjTy+syWo66mQc56ZLazixBXle6Ab3j8GImT6r
- +fCufvtPbAMzBzzq64/8u66R10CrSeBuoyrqx5QASpKH0DI6vBAy589edsq3PUEBhxR0
- FHCOWrE4EFE+84b1zWV3mAei+AVsSMjzoR/+FuQRjAMBXXB4huFzlrPVdzb67xy1CzxD
- j/a1MscIATO6nxxl1EhYVmoOU/dchXkbofvSEce3z11okM0IxQNYejDdhgLVVwxhaMXT
- XHPA==
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=SAIpyVr3ugKC7BA/9m2f1VEHfWu398s4nRtOW6qKUTU=;
+ b=bU6AYZ/9aEn8cjVk6KsR6hLIkO5sFfoT809Rn4cUcMqNFM6/9Pd0Jvrlc6USfNssLt
+ qklkpoXAQRq3LNdLrbuUsSOFcIgc5Fr78oL3AjEdxYUfpB+fem4mWwVmJrvuNx+JqpGN
+ W6w6nafCYO0c8j9IAy07caukvFCB8CJciwNnGZQb2TAE7bLfYigDRflTa15ztz3OKZtY
+ OQok3zNt6Fhk/LKi3km8DeVJ5M+kVnCW/ez63MytDnAuZLisNF0TTFdFX1CHIWeRwk90
+ T4/A58LBttEFJyUES8VrQj/7kidlBUPAMrwQyNBFI33qvNHWXtiAoqIyrtq3tk6ZIjyW
+ kfuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=Gl4m6hVinnfFSKepS1HCmQPY0u24GAicu5wcvYMKZIw=;
- b=uVuDnLXj0LJIg4N3pse1jKmv8gG47Tw83Q9jcZ6v1F0wsBpYvOlY83p/wLGG9hyjeN
- 1BQz7thUcIqgbuy26vIRUnvT6D/woNp4t5zYjLhcC/9N6OGmjozpTnM4fQQ4X7dRoKBc
- gNDva6zpvKxd0GkUYnyME++Wgs4xVia0z70wZPEFwgWPoBx0laodSqM6FELWxWzLZebR
- mlpuH8ZeoUN7FUxuUoYV6/JeU9N1mU7top4R5eKihbNehjLVnLSQngT3Ne0Ri7wlhXf0
- nF6Mkbs2ie/IRDJnufaSCOYXKb8ZBD2Ep8F5YSn2c8S6iPnY0AcZhRdUFBCI3ePsXa5s
- BlmQ==
-X-Gm-Message-State: AOAM532Fz0k2kL5PiQ2imRyrfIjHjfaqq973vTW/0CdUeA6Ce1AIsrPR
- 4GcXzWo6lbfRtJTq6OVzRJI=
-X-Google-Smtp-Source: ABdhPJwgCcoTPGG55GUhS7/TIb6qAwSriEDk4pDmFHrsijuGGztrWxmW8DC9Zd1TgTmFAi0ScK2aGw==
-X-Received: by 2002:a63:3814:: with SMTP id f20mr10440957pga.266.1591380293630; 
- Fri, 05 Jun 2020 11:04:53 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id m24sm33379pgd.69.2020.06.05.11.04.52
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 05 Jun 2020 11:04:52 -0700 (PDT)
-Date: Fri, 5 Jun 2020 11:04:51 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Manikandan <manikandan.hcl.ers.epl@gmail.com>
-Subject: Re: [PATCH v2] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
-Message-ID: <20200605180451.GA201666@roeck-us.net>
-References: <20200529124607.GA3469@cnn>
- <49485085-7cc7-9e29-a719-98d1e184378b@roeck-us.net>
- <20200605164821.GA29990@cnn>
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=SAIpyVr3ugKC7BA/9m2f1VEHfWu398s4nRtOW6qKUTU=;
+ b=EquxxPMpQ93i5/QbUs+AEr1eVDBR2GXXXTUlRAwtiXy0sZocB3sXMXhzP5iapgFrSS
+ KKavtMQaW53pkDkttWGyE8p9uSIAZwQ9SoNajBkqLQvmz3OHKWlWA4I5apaIYy2uRlZZ
+ YF6DwKV2/OG8Pevi73nAaUMCcVU5KOloxiF90fn9GHQSCeVne+o77P6irkjyUK7N8wqQ
+ +qmiH+5/qyBJHDhIH8xR4T02JEmig6WK4Lly4joWGie2aqijHjiDjd8TzdMRhujEh7mK
+ DahTjG17fXNQih4EY8KSz5P9JfWqNm6napZq7f72M1drOGaEtd8+F+4lkJA5LHdlgUf/
+ Rqhg==
+X-Gm-Message-State: AOAM533vDHIdcOrnDXYd+gXnQnFMdRm4pTjYNken3MB7g16si+SmPZOY
+ Kv7BHhseMi4gquZ7F8F93Wu/T9KUB3s=
+X-Google-Smtp-Source: ABdhPJxTR8qjPhBC4e8nHREYF5iQsnsJDCQr+S0hpKdpGEGu+iOacg7yLENNI4M9Q9XEJGACYpp9MA==
+X-Received: by 2002:a4a:bf14:: with SMTP id r20mr8825296oop.18.1591381878768; 
+ Fri, 05 Jun 2020 11:31:18 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id i25sm834124oii.15.2020.06.05.11.31.17
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Jun 2020 11:31:17 -0700 (PDT)
+Subject: Re: Hello to OpenBMC Team
+To: openbmc@lists.ozlabs.org
+References: <DF4PR8401MB11451AC66E463D2EC408D2CA8F8B0@DF4PR8401MB1145.NAMPRD84.PROD.OUTLOOK.COM>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <bc9c9610-2b8d-a239-41c0-f9daf167a444@gmail.com>
+Date: Fri, 5 Jun 2020 13:31:16 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200605164821.GA29990@cnn>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <DF4PR8401MB11451AC66E463D2EC408D2CA8F8B0@DF4PR8401MB1145.NAMPRD84.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,138 +84,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, manikandan.e@hcl.com,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, vijaykhemka@fb.com, saipsdasari@fb.com,
- patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jun 05, 2020 at 10:18:21PM +0530, Manikandan wrote:
-> On Fri, May 29, 2020 at 10:30:16AM -0700, Guenter Roeck wrote:
-> > On 5/29/20 5:46 AM, Manikandan Elumalai wrote:
-> > > The adm1278 temperature sysfs attribute need it for one of the openbmc platform . 
-> > > This functionality is not enabled by default, so PMON_CONFIG needs to be modified in order to enable it.
-> > > 
-> > > Signed-off-by   : Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
-> > 
-> > This is not valid.
-> > 
-> > > 
-> > > v2:
-> > >    - Add Signed-off-by.
-> > >    - Removed ADM1278_TEMP1_EN check.
-> > 
-> > checkpatch reports:
-> > 
-> > > ---WARNING: Possible unwrapped commit description (prefer a maximum 75 chars per line)
-> > #14:
-> > The adm1278 temperature sysfs attribute need it for one of the openbmc platform .
-> > 
-> > CHECK: Alignment should match open parenthesis
-> > #45: FILE: drivers/hwmon/pmbus/adm1275.c:679:
-> > +		ret = i2c_smbus_write_byte_data(client,
-> > +					ADM1275_PMON_CONFIG,
-> > 
-> > WARNING: suspect code indent for conditional statements (16, 16)
-> > #47: FILE: drivers/hwmon/pmbus/adm1275.c:681:
-> > +		if (ret < 0) {
-> > +		dev_err(&client->dev,
-> > 
-> > ERROR: Missing Signed-off-by: line(s)
-> > 
-> > total: 1 errors, 2 warnings, 1 checks, 33 lines checked
-> > 
-> > Please follow published guidelines when submitting patches.
-> > 
-> > >  drivers/hwmon/pmbus/adm1275.c | 21 +++++++++++++++++----
-> > >  1 file changed, 17 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-> > > index 5caa37fb..ab5fceb 100644
-> > > --- a/drivers/hwmon/pmbus/adm1275.c
-> > > +++ b/drivers/hwmon/pmbus/adm1275.c
-> > > @@ -666,7 +666,23 @@ static int adm1275_probe(struct i2c_client *client,
-> > >  		tindex = 3;
-> > >  
-> > >  		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
-> > > -			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
-> > > +			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
-> > > +			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
-> > > +
-> > > +		config = i2c_smbus_read_byte_data(client, ADM1275_PMON_CONFIG);
-> > > +		if (config < 0)
-> > > +			return config;
-> > > +
-> > > +		/* Enable TEMP1 by default */
-> > > +		config |= ADM1278_TEMP1_EN;
-> > > +		ret = i2c_smbus_write_byte_data(client,
-> > > +					ADM1275_PMON_CONFIG,
-> > > +					config);
-> > > +		if (ret < 0) {
-> > > +		dev_err(&client->dev,
-> > > +			"Failed to enable temperature config\n");
-> > > +		return -ENODEV;
-> > > +		}
-> > 
-> > This can be handled in a single operation, together with ADM1278_VOUT_EN
-> > below. There is no need for two separate write operations.
-> >
->         Thanks for review Guenter, Patrick and Vijay.
->         Sorry for delay response. 
->         I have made changes to write ADM1278_VOUT_EN and ADM1278_TEMP1_EN in single
->         operation and tested in platfrom .
->         The changes given for quick look and will help if any misunderstand.
+On 6/2/20 3:56 PM, Garrett, Mike (HPE Server Firmware) wrote:
+> Hello OpenBMC team,
 > 
-> 	--- a/drivers/hwmon/pmbus/adm1275.c
-> 	+++ b/drivers/hwmon/pmbus/adm1275.c
-> 	@@ -666,11 +666,11 @@ static int adm1275_probe(struct i2c_client *client,
->  		tindex = 3;
->  
->  		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
-> 	-			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
-> 	+			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT | 
->         +			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
->  
->  		/* Enable VOUT if not enabled (it is disabled by default) */
->  		if (!(config & ADM1278_VOUT_EN)) {
+> My name is Mike Garrett and I work with a team at Hewlett Packard 
+> Enterprise creating a port of OpenBMC on our server hardware.  We have 
+> just signed the CCLA (attached) and uploaded it.  We look forward to 
+> working with the OpenBMC community.
 
-		if (config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN) !=
-						ADM1278_VOUT_EN | ADM1278_TEMP1_EN)
+Welcome HPE!
 
-> 	-			config |= ADM1278_VOUT_EN;
-> 	+			config |= (ADM1278_VOUT_EN | ADM1278_TEMP1_EN);
+I've worked with several great HPE engineers over the years, most 
+recently on OpenStack (Bruno with Redfish).
 
-( ) is unnecessary here.
+Thanks for uploading your CCLA, it looks fine and saves me having to do 
+it. :)
 
->  			ret = i2c_smbus_write_byte_data(client,
->  							ADM1275_PMON_CONFIG,
->  							config);
-> 	@@ -680,10 +680,6 @@ static int adm1275_probe(struct i2c_client *client,
->  				return -ENODEV;
->  			}
->  		}
-> 	-
-> 	-		if (config & ADM1278_TEMP1_EN)
-> 	-			info->func[0] |=
-> 	-				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
->  		if (config & ADM1278_VIN_EN)
->  			info->func[0] |= PMBUS_HAVE_VIN;
->  		break; 
-> > Guenter
-> > 
-> > > 
-> > >  		/* Enable VOUT if not enabled (it is disabled by default) */
-> > >  		if (!(config & ADM1278_VOUT_EN)) {
-> > > @@ -681,9 +697,6 @@ static int adm1275_probe(struct i2c_client *client,
-> > >  			}
-> > >  		}
-> > >  
-> > > -		if (config & ADM1278_TEMP1_EN)
-> > > -			info->func[0] |=
-> > > -				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
-> > >  		if (config & ADM1278_VIN_EN)
-> > >  			info->func[0] |= PMBUS_HAVE_VIN;
-> > >  		break;
-> > > 
-> > 
+Kurt Taylor (krtaylor)
+
+> 
+> To introduce myself, I am a firmware architect in HPE’s compute group 
+> with a background in BIOS and BMC firmware.  There will be a few other 
+> folks on our team working with me, all with BMC development experience.
+> 
+> The team has created a port of OpenBMC for our DL360 2-socket 1U rack 
+> server that runs in place of our iLO 5 firmware.  This has been shown as 
+> a proof of concept at a few venues including most recently the OCP 
+> Virtual Summit a couple of weeks ago.  Jean-Marie Verdun has used this 
+> proof of concept as the underlying hardware for an Open Source Firmware 
+> CI system.  We hope to the upstream the OpenBMC work soon.
+> 
+> I believe the next request is to ask for team members to be added to the 
+> gerrit system?
+> 
+> Here is our HPE team (at this point):
+> 
+> Mike Garrett – mike.garrett@hpe.com <mailto:mike.garrett@hpe.com>
+> 
+> Jorge Cisneros – jorge.cisneros@hpe.com <mailto:jorge.cisneros@hpe.com>
+> 
+> Gilbert Chen - gilbert.chen@hpe.com <mailto:gilbert.chen@hpe.com>
+> 
+> John Chung - john.chung@hpe.com <mailto:john.chung@hpe.com>
+> 
+> Edward Newman - edward.newman@hpe.com <mailto:edward.newman@hpe.com>
+> 
+> Renee Rodgers - renee.rodgers@hpe.com <mailto:renee.rodgers@hpe.com>
+> 
+> Jean-Marie Verdun - jean-marie.verdun@hpe.com 
+> <mailto:jean-marie.verdun@hpe.com>
+> 
+> Please let me know if there is anything else needed.
+> 
+> Regards,
+> 
+> Mike Garrett
+> 
+
