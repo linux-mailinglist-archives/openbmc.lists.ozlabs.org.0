@@ -1,65 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB2201F117F
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jun 2020 04:49:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3325E1F119F
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jun 2020 05:08:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49gHlV6jvXzDqWm
-	for <lists+openbmc@lfdr.de>; Mon,  8 Jun 2020 12:49:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49gJ982MwSzDqW5
+	for <lists+openbmc@lfdr.de>; Mon,  8 Jun 2020 13:08:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=sandelman.ca (client-ip=2607:f0b0:f:3:216:3eff:fe7c:d1f3;
+ helo=tuna.sandelman.ca; envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b42; helo=mail-yb1-xb42.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=A/+RFFj2; dkim-atps=neutral
-Received: from mail-yb1-xb42.google.com (mail-yb1-xb42.google.com
- [IPv6:2607:f8b0:4864:20::b42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=sandelman.ca
+Received: from tuna.sandelman.ca (tuna.sandelman.ca
+ [IPv6:2607:f0b0:f:3:216:3eff:fe7c:d1f3])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49gHkn0XR1zDqTm
- for <openbmc@lists.ozlabs.org>; Mon,  8 Jun 2020 12:48:43 +1000 (AEST)
-Received: by mail-yb1-xb42.google.com with SMTP id s1so3884650ybo.7
- for <openbmc@lists.ozlabs.org>; Sun, 07 Jun 2020 19:48:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=W+xsDt2ofOv3wfQ910H5dmK0X93Rv+5SofXu+lCrW/Q=;
- b=A/+RFFj2ICtjdPcN9EZ87zmVXBuyjrK3T0JVKs8urL1lZH6mC32dh7b7K3qt6dhZLX
- aibGYos4Yp2nnm9P1YfLHIqvlSgH4OjRwcxPwBOdSA7ceTW+yXs/Wd5G+yJZhTD8Jnsz
- OXl5wFmlR0ZVLXiFL1UnmXUmPU95XdPBx7W28450weDZkjRIYXnOMNk5W3E1c3O1fu+p
- WAZYSzWD1IRt/s6OG8YucLc3IGKa5t/xdCEEZTM10fxeJSQ2g609+TNQ1sB3Hp3IKKwX
- 2quNStbQQZak+cK4cCZV/iLPe8J/BbRNkrdF9bF1z8DQrfS+iMEU43b7qrsI8Y1EULIe
- ilPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=W+xsDt2ofOv3wfQ910H5dmK0X93Rv+5SofXu+lCrW/Q=;
- b=q22zY0/iyge6GwhXu42d5aKlYV2m138vNkpDPDINfIHkgx75m852V0fe1c0E6YV9te
- +bnSw7QT20HUoBSumIxPjAsYvWJuDUhdjWP9g19aulQBitpJK5sbPXHRTqSC8AN2RUkt
- T2iHQt+yJeH6l6ZrGRRS1vCmkNt0r6MRfBo/SKFamEC+WMXvTpgHK8+BDnWrNlb2q7mt
- fEc4/FTqIye5Az0ST+MVyo11fuBr5pT484Zj7vyIRUt3wE4/3zzR9yqd5AabfHSOxcFV
- SS0/Ejn5yAJClJ5r30twNCyWo8gsJg3LAWf/d5QyxlFakelwwSGEVsfYh8bZgqVPvpOm
- NHSQ==
-X-Gm-Message-State: AOAM531i3cBhSiXrFTCXzTye4IE6wUG3LAMhiGC7Xl7TVUIV9QEvMRHi
- vmO+3h0SZlY/zFLmfQD52YWWrt/p2b397MFwSLLkYOL2fQA=
-X-Google-Smtp-Source: ABdhPJz4lKSONXYzUtGw7rMCS8vsC7LinE7af9hfWUDVkJVWAUuj1p9DmfVEfQaY4QzWaUqc6KSaFPziJPMG+9faMTQ=
-X-Received: by 2002:a25:230a:: with SMTP id j10mr20345251ybj.148.1591584518986; 
- Sun, 07 Jun 2020 19:48:38 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49gJ8K0M6SzDqVN
+ for <openbmc@lists.ozlabs.org>; Mon,  8 Jun 2020 13:07:26 +1000 (AEST)
+Received: from localhost (localhost [127.0.0.1])
+ by tuna.sandelman.ca (Postfix) with ESMTP id E29BB389FA;
+ Sun,  7 Jun 2020 23:04:51 -0400 (EDT)
+Received: from tuna.sandelman.ca ([127.0.0.1])
+ by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id HSftr2k9uoG9; Sun,  7 Jun 2020 23:04:50 -0400 (EDT)
+Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
+ by tuna.sandelman.ca (Postfix) with ESMTP id 772D7389EB;
+ Sun,  7 Jun 2020 23:04:50 -0400 (EDT)
+Received: from localhost (localhost [IPv6:::1])
+ by sandelman.ca (Postfix) with ESMTP id 54ECD454;
+ Sun,  7 Jun 2020 23:07:17 -0400 (EDT)
+From: Michael Richardson <mcr@sandelman.ca>
+To: "Andrew Jeffery" <andrew@aj.id.au>
+Subject: Re: An IPMI Request Visualization Tool
+In-Reply-To: <36873484-3078-4ec5-981e-88e59e619926@www.fastmail.com>
+References: <CAFaEeaFTP9v1xZefxzoU9E6h7SpjfbxVrnnSRCmJfJ3QjWRqhA@mail.gmail.com>
+ <20200514135723.GE1166713@heinlein>
+ <3d6db63b-f670-4e01-94c3-425f93d89708@www.fastmail.com>
+ <CAFaEeaGs0GSiPp9mGVrSMB1brG19ttroPcK-x-p+BN3SnHrU4g@mail.gmail.com>
+ <2775.1590100786@dooku>
+ <36873484-3078-4ec5-981e-88e59e619926@www.fastmail.com>
+X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 26.1
+X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
+ <'$9xN5Ub#
+ z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
 MIME-Version: 1.0
-From: Ed Tanous <ed@tanous.net>
-Date: Sun, 7 Jun 2020 19:48:27 -0700
-Message-ID: <CACWQX80QSyf95+ibN24nwiAdNLCtdWOQdsgqaHvVbdEG9b8jbA@mail.gmail.com>
-Subject: RE: mTLS on bmcweb
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Sun, 07 Jun 2020 23:07:17 -0400
+Message-ID: <19628.1591585637@localhost>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,58 +62,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Sui Chen <suichen6@gmail.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
->> I did more testing and found the reason why it accepts any client
-certification.
+--=-=-=
+Content-Type: text/plain
 
-It looks like you never got a great answer to this.
 
-There's a slight conflict between needs here.  On the one hand, bmcweb
-needs to support multiple authentication mechanisms, some of which are
-compatible with standards that are more or less set in stone (Redfish,
-Dbus-rest api, ect).  On the other hand, a lot of people looking to
-turn on mutual TLS auth are doing so to reduce the scope of code they
-have to "trust" for authentication down to only the SSL library, which
-(hopefully) is rigorously tested.  The problem arises here that there
-are modes, like Redfish and the webui, that require certain assets to
-be available without authentication.  In the case of Redfish, it
-requires the introspectable schema files, in the case of the webui,
-the static pages that make it up need to be loaded so the UI launches
-and the user sees a login page.  (Unrelated note, we make more than is
-needed available here, but that's a different problem.)
+Andrew Jeffery <andrew@aj.id.au> wrote:
+    >> Interestingly, I was not that clearly aware of dbus-pcap :-) I ought
+    >> to know more, as the lead libpcap maintainer.  Is this visualization
+    >> tool part of openbmc, or is it a generic dbus visualization tool?
 
-When I first built the patch to do mutual TLS, my intention was to at
-least try to support as many authentication mechanisms as I could,
-hence the code you're looking at now that only uses the mutual TLS
-auth as a _possible_ authentication mechanism, leaving the final
-decision be made by the auth code in bmcweb.  One thing that seems to
-have gotten lost in translation somewhere between that code and when
-it hit master is that if mutual TLS is the only enabled authentication
-mechanism at that point in time, we know that we're not operating in
-any standards that would require static assets, and bmcweb can simply
-deny the connection on the front end, like you would expect, in the
-code that you've already found.
+    > It's not really a visualisation tool so much as a script that will
+    > interpret the D-Bus-specifics of a D-Bus pcap. It's a commandline
+    > script that provides filtering based on D-Bus match specifications. You
+    > can capture all traffic on the system bus in any systemd-based system
+    > with `busctl capture > /tmp/my.pcap` and then run `dbus-pcap my.pcap`
+    > to dump the packet contents.
 
-TL;DR;
+Is this something that you'd like to be able to invoke remotely in order to
+get diagnostics/debugging info?
 
-Add something like this:
+    >> We recently brought rpcapd into the mix; it can be invoked via ssh.  I
+    >> wonder if that might help you as a debug tool?
 
-// Get the current auth config
-AuthConfigMethods& methods =
-crow::persistent_data::SessionStore::getInstance().getAuthMethodsConfig();
-// if only mTLS is enabled, we can close the connection immediately,
-as no other auth methods will be tried.
-if (methods. xtoken == false &&
-methods.cookie == false &&
-methods.sessionToken == false &&
-methods.basic = false &&
-methods.tls == true){
-    return false;
-}
+    > I'm not sure, I'm not familiar with rpcapd. I'll have a google.
 
-Here:
-https://github.com/openbmc/bmcweb/blame/master/http/http_connection.h#L302
+https://www.ca.tcpdump.org/manpages/rpcapd.8.html
 
-...and I suspect it'll work like you want.
+    >> > If you ask how this user interface might differ from the already >
+    >> existing dbus visualizers such as bustle, my answer would be: it will
+    >> > present information in a way that's more relevant to the BMC,
+    >> putting a > bit more focus on BMC-specific DBus messages, such as
+    >> HWMon and RedFish > DBus messages, to present information in a high
+    >> signal-noise ratio way.
+    >>
+    >> Would this need to run on the BMC itself?
+
+    > Hopefully not given `busctl capture` ?
+
+Understood.
+
+--
+]               Never tell me the odds!                 | ipv6 mesh networks [
+]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
+]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
+
+
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl7dq2UACgkQgItw+93Q
+3WXpqQf+PGNTiNmsj3iqWdgiFBbr6bgQSoOLE7H4+SOOW90wRPgDg2zCE6N3rYMV
+lVF3kt4GKY38JoZspaaLNJ9VCATLu9AJq5XzfGZR68AAe/n+fDi8DgtQ6EpHcWeM
+RsyGfa1ZD011AOX9zXSo/zQYjqiyAY8iTh9T3FcRQKDF9FTR3ub+aNhJ+/4YMRTs
+AED3IPCWfMBfo7t9c5BW+V87CX8/84cYOBRZl3pCMwZitkpyHzwJ5Btbf7qPEnFm
+mEf25MHJOzcPulsO2DYb3PuFH3Wi9zqX+oiVOzRmtTKLt6jPWJbUyXsbopzqAEqz
+Ldb3Rssn2MDofz4iA5A1GbEbqowHLg==
+=hQwz
+-----END PGP SIGNATURE-----
+--=-=-=--
