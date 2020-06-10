@@ -2,77 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61EED1F48F9
-	for <lists+openbmc@lfdr.de>; Tue,  9 Jun 2020 23:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 824EE1F4BED
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jun 2020 05:51:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49hNrb6fD2zDqQN
-	for <lists+openbmc@lfdr.de>; Wed, 10 Jun 2020 07:42:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49hY1j2K5LzDqXq
+	for <lists+openbmc@lfdr.de>; Wed, 10 Jun 2020 13:51:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::c2f;
+ helo=mail-oo1-xc2f.google.com; envelope-from=ztai@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=fDS71Ceq; dkim-atps=neutral
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com
+ [IPv6:2607:f8b0:4864:20::c2f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49hNnJ1kfRzDqZL
- for <openbmc@lists.ozlabs.org>; Wed, 10 Jun 2020 07:39:47 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 059LVgM9141141; Tue, 9 Jun 2020 17:39:43 -0400
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31hys7hd3w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2020 17:39:43 -0400
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 059LYlwI006288;
- Tue, 9 Jun 2020 21:39:42 GMT
-Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
- [9.57.198.28]) by ppma02wdc.us.ibm.com with ESMTP id 31g2s8jxrd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jun 2020 21:39:42 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 059LdfvC43188500
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Jun 2020 21:39:41 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C4F7FAC05B;
- Tue,  9 Jun 2020 21:39:41 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1718CAC059;
- Tue,  9 Jun 2020 21:39:41 +0000 (GMT)
-Received: from ghost4.ibm.com (unknown [9.211.141.69])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue,  9 Jun 2020 21:39:40 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4 v2 2/2] fsi: core: Disable link when slave init
- fails
-Date: Tue,  9 Jun 2020 16:39:28 -0500
-Message-Id: <20200609213928.26545-3-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200609213928.26545-1-eajames@linux.ibm.com>
-References: <20200609213928.26545-1-eajames@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49hY0t18wpzDqKX
+ for <openbmc@lists.ozlabs.org>; Wed, 10 Jun 2020 13:50:21 +1000 (AEST)
+Received: by mail-oo1-xc2f.google.com with SMTP id e8so204305ooi.11
+ for <openbmc@lists.ozlabs.org>; Tue, 09 Jun 2020 20:50:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=v7Ug1lNZwnIwvG8nQAGnOjA9Fbh7nKpp3UH3mHsly4A=;
+ b=fDS71Ceq+kjZPoPbCZpHxeniSb53p/F3qdb5eEBWp7akWLXotZxy30PhPR2r4dLoFB
+ PE8MQq7X34vXe/8smO/Hn95SFXHGpDe7Lo1hlA12YjlWEWoBM6n0ML5kmTz7UG/mtBic
+ Ik3BptLT9qYFfnpzobvv+eJeiAmBTCThOoy3PwUjbfCnKR/tKdOT89JFg29Fm9sT8BTG
+ AXx0O8udHCfXqmOy2kcxE2yMa2aK7NNwjz93XLRJUOM/HfcVyfdoetmD6HRWasH6MYaw
+ N5d/zkIKgKSNecfeWht9MnPgwQ8GcOUoc8zvezCBcNIi5V8NY1rF9LaXBiQUUf8ZEnKg
+ C7nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=v7Ug1lNZwnIwvG8nQAGnOjA9Fbh7nKpp3UH3mHsly4A=;
+ b=R9wBjSWBmHmcle6FFS9ZZRo7tMiQjNIpS1YvhHboCt4d3Vi5zlyipF1V3nagxGwG83
+ kxCjAl+wvJ3mBRIPv2hPEvJfJ9IjEfdSu98tyJR4JTYeCY6uRfUj7iSPE+yVNk3nnODt
+ ewT3tyVJ4h7iVHUSKYNTDdmBUTS7VhDniHis03BkAXtLLcv19WV1/L5jOmh0D85L7nQf
+ VU9zPKO4uUsuaLxuEry7z8GMaD7v+tla4UCo9Szw8HVClkmuAAfN33bLQ51ylKtUx81r
+ cBlRfr/8vOUsVXW0iuXSoYP+kQv/MaQE2tLQ5A389aPDY9Pn7CSm+zDIuA0Hmx/r26hQ
+ AwBw==
+X-Gm-Message-State: AOAM530f6JBBEY3FSWQz5NyOpVSy4FmvF0NnQp3ZVwWdckB0LX3HmR05
+ t9APbqLEyY0dNYlv83pgBxzxP0RMDgSyqqmKnTkXew==
+X-Google-Smtp-Source: ABdhPJxI+tUA0WxbSzkKanynaVJhioke3+Bmj2LPrHJs4hSx0/h5JJfj6s6msFcxGAKn0KP6quZ+URCK578q+BHUXgM=
+X-Received: by 2002:a4a:b48d:: with SMTP id b13mr872242ooo.82.1591761016624;
+ Tue, 09 Jun 2020 20:50:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-09_14:2020-06-09,
- 2020-06-09 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 spamscore=0
- phishscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501
- adultscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015
- cotscore=-2147483648 bulkscore=0 suspectscore=1 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006090161
+References: <CACWQX80QSyf95+ibN24nwiAdNLCtdWOQdsgqaHvVbdEG9b8jbA@mail.gmail.com>
+In-Reply-To: <CACWQX80QSyf95+ibN24nwiAdNLCtdWOQdsgqaHvVbdEG9b8jbA@mail.gmail.com>
+From: Zhenfei Tai <ztai@google.com>
+Date: Tue, 9 Jun 2020 20:50:05 -0700
+Message-ID: <CAMXw96Mjuw7ci3kZcFAiF9mgKhYwiwo+b-bTHANB3YEwVwZ9fQ@mail.gmail.com>
+Subject: Re: mTLS on bmcweb
+To: Ed Tanous <ed@tanous.net>
+Content-Type: multipart/alternative; boundary="000000000000f6fe1205a7b2bd16"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,55 +72,156 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, Eddie James <eajames@linux.ibm.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In the case that links don't have slaves or fail to be accessed, the
-master should disable the link during the scan since it won't be using
-the slave.
+--000000000000f6fe1205a7b2bd16
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/fsi/fsi-core.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+Hi Ed,
 
-diff --git a/drivers/fsi/fsi-core.c b/drivers/fsi/fsi-core.c
-index 0743bba42757..c9c3842f6e62 100644
---- a/drivers/fsi/fsi-core.c
-+++ b/drivers/fsi/fsi-core.c
-@@ -1154,6 +1154,14 @@ static int fsi_master_write(struct fsi_master *master, int link,
- 	return rc;
- }
- 
-+static int fsi_master_link_disable(struct fsi_master *master, int link)
-+{
-+	if (master->link_enable)
-+		return master->link_enable(master, link, false);
-+
-+	return 0;
-+}
-+
- static int fsi_master_link_enable(struct fsi_master *master, int link)
- {
- 	if (master->link_enable)
-@@ -1192,12 +1200,15 @@ static int fsi_master_scan(struct fsi_master *master)
- 		}
- 		rc = fsi_master_break(master, link);
- 		if (rc) {
-+			fsi_master_link_disable(master, link);
- 			dev_dbg(&master->dev,
- 				"break to link %d failed: %d\n", link, rc);
- 			continue;
- 		}
- 
--		fsi_slave_init(master, link, 0);
-+		rc = fsi_slave_init(master, link, 0);
-+		if (rc)
-+			fsi_master_link_disable(master, link);
- 	}
- 
- 	return 0;
--- 
-2.24.0
+Thanks for the email with great details!
 
+I came to realize that it was my misunderstanding/assumption which caused
+the confusion.
+I've reviewed the bmcweb TLS documentation and learned mTLS was only one
+authentication option other than a requirement.
+
+Zhenfei
+
+On Sun, Jun 7, 2020 at 7:49 PM Ed Tanous <ed@tanous.net> wrote:
+
+> >> I did more testing and found the reason why it accepts any client
+> certification.
+>
+> It looks like you never got a great answer to this.
+>
+> There's a slight conflict between needs here.  On the one hand, bmcweb
+> needs to support multiple authentication mechanisms, some of which are
+> compatible with standards that are more or less set in stone (Redfish,
+> Dbus-rest api, ect).  On the other hand, a lot of people looking to
+> turn on mutual TLS auth are doing so to reduce the scope of code they
+> have to "trust" for authentication down to only the SSL library, which
+> (hopefully) is rigorously tested.  The problem arises here that there
+> are modes, like Redfish and the webui, that require certain assets to
+> be available without authentication.  In the case of Redfish, it
+> requires the introspectable schema files, in the case of the webui,
+> the static pages that make it up need to be loaded so the UI launches
+> and the user sees a login page.  (Unrelated note, we make more than is
+> needed available here, but that's a different problem.)
+>
+> When I first built the patch to do mutual TLS, my intention was to at
+> least try to support as many authentication mechanisms as I could,
+> hence the code you're looking at now that only uses the mutual TLS
+> auth as a _possible_ authentication mechanism, leaving the final
+> decision be made by the auth code in bmcweb.  One thing that seems to
+> have gotten lost in translation somewhere between that code and when
+> it hit master is that if mutual TLS is the only enabled authentication
+> mechanism at that point in time, we know that we're not operating in
+> any standards that would require static assets, and bmcweb can simply
+> deny the connection on the front end, like you would expect, in the
+> code that you've already found.
+>
+> TL;DR;
+>
+> Add something like this:
+>
+> // Get the current auth config
+> AuthConfigMethods& methods =
+> crow::persistent_data::SessionStore::getInstance().getAuthMethodsConfig();
+> // if only mTLS is enabled, we can close the connection immediately,
+> as no other auth methods will be tried.
+> if (methods. xtoken == false &&
+> methods.cookie == false &&
+> methods.sessionToken == false &&
+> methods.basic = false &&
+> methods.tls == true){
+>     return false;
+> }
+>
+> Here:
+> https://github.com/openbmc/bmcweb/blame/master/http/http_connection.h#L302
+>
+> ...and I suspect it'll work like you want.
+>
+
+--000000000000f6fe1205a7b2bd16
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Ed,<div><br></div><div>Thanks for the email with great =
+details!</div><div><br></div><div>I came to realize that it was my misunder=
+standing/assumption which caused the confusion.=C2=A0</div><div>I&#39;ve re=
+viewed the bmcweb TLS documentation=C2=A0and learned mTLS was only one auth=
+entication option other than a requirement.</div><div><br></div><div>Zhenfe=
+i</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
+_attr">On Sun, Jun 7, 2020 at 7:49 PM Ed Tanous &lt;<a href=3D"mailto:ed@ta=
+nous.net">ed@tanous.net</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">&gt;&gt; I did more testing and found the reason why=
+ it accepts any client<br>
+certification.<br>
+<br>
+It looks like you never got a great answer to this.<br>
+<br>
+There&#39;s a slight conflict between needs here.=C2=A0 On the one hand, bm=
+cweb<br>
+needs to support multiple authentication mechanisms, some of which are<br>
+compatible with standards that are more or less set in stone (Redfish,<br>
+Dbus-rest api, ect).=C2=A0 On the other hand, a lot of people looking to<br=
+>
+turn on mutual TLS auth are doing so to reduce the scope of code they<br>
+have to &quot;trust&quot; for authentication down to only the SSL library, =
+which<br>
+(hopefully) is rigorously tested.=C2=A0 The problem arises here that there<=
+br>
+are modes, like Redfish and the webui, that require certain assets to<br>
+be available without authentication.=C2=A0 In the case of Redfish, it<br>
+requires the introspectable schema files, in the case of the webui,<br>
+the static pages that make it up need to be loaded so the UI launches<br>
+and the user sees a login page.=C2=A0 (Unrelated note, we make more than is=
+<br>
+needed available here, but that&#39;s a different problem.)<br>
+<br>
+When I first built the patch to do mutual TLS, my intention was to at<br>
+least try to support as many authentication mechanisms as I could,<br>
+hence the code you&#39;re looking at now that only uses the mutual TLS<br>
+auth as a _possible_ authentication mechanism, leaving the final<br>
+decision be made by the auth code in bmcweb.=C2=A0 One thing that seems to<=
+br>
+have gotten lost in translation somewhere between that code and when<br>
+it hit master is that if mutual TLS is the only enabled authentication<br>
+mechanism at that point in time, we know that we&#39;re not operating in<br=
+>
+any standards that would require static assets, and bmcweb can simply<br>
+deny the connection on the front end, like you would expect, in the<br>
+code that you&#39;ve already found.<br>
+<br>
+TL;DR;<br>
+<br>
+Add something like this:<br>
+<br>
+// Get the current auth config<br>
+AuthConfigMethods&amp; methods =3D<br>
+crow::persistent_data::SessionStore::getInstance().getAuthMethodsConfig();<=
+br>
+// if only mTLS is enabled, we can close the connection immediately,<br>
+as no other auth methods will be tried.<br>
+if (methods. xtoken =3D=3D false &amp;&amp;<br>
+methods.cookie =3D=3D false &amp;&amp;<br>
+methods.sessionToken =3D=3D false &amp;&amp;<br>
+methods.basic =3D false &amp;&amp;<br>
+methods.tls =3D=3D true){<br>
+=C2=A0 =C2=A0 return false;<br>
+}<br>
+<br>
+Here:<br>
+<a href=3D"https://github.com/openbmc/bmcweb/blame/master/http/http_connect=
+ion.h#L302" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc=
+/bmcweb/blame/master/http/http_connection.h#L302</a><br>
+<br>
+...and I suspect it&#39;ll work like you want.<br>
+</blockquote></div>
+
+--000000000000f6fe1205a7b2bd16--
