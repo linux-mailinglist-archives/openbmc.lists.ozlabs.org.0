@@ -1,63 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56D491F68E0
-	for <lists+openbmc@lfdr.de>; Thu, 11 Jun 2020 15:12:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82B131F70A3
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jun 2020 00:53:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49jPRB5XDMzDqg8
-	for <lists+openbmc@lfdr.de>; Thu, 11 Jun 2020 23:12:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49jfKp4ys2zDqsy
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jun 2020 08:53:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52a;
- helo=mail-ed1-x52a.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=KuMSfC0O; dkim-atps=neutral
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com
- [IPv6:2a00:1450:4864:20::52a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49jPPr6rpwzDqdv
- for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 23:11:28 +1000 (AEST)
-Received: by mail-ed1-x52a.google.com with SMTP id q13so3896015edi.3
- for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 06:11:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=/2JesGaGuIiy4CP7EbOMoiRgYgGOtVXE6SRQ5ILo9zo=;
- b=KuMSfC0OU7sHcsu9pSVMjpCUo8zIOfB5hmbW1xKGB7evh2L1bj09Gm07WZREG1d1kT
- ocOBaBEil2Z4jnSKAIv4uRHYvSMK9SBAKX7P7r21hq8VK+2qMpYL2luu9FScG70No6K4
- JzpaVLzQFcDpDZOVrV7dajOAdZey9H9LVh/IA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=/2JesGaGuIiy4CP7EbOMoiRgYgGOtVXE6SRQ5ILo9zo=;
- b=qYDCIe+Tofu4jRdrG5hpfmzCBh747lyhX3YFvXqe2WViseubmICAewwLXjVBHRK4WK
- f+Gt7OsuotGU7656irGpY0Cn0Vy5sh9tpcvIWpPGVz+uY7ZMsCJ4dduhtoHrZRGS+GFi
- iOwWOfzYpzJLbb6P5Tdfji4ffrw0515VJsE6jqY3hLd90lX01bjXidHUmaQHSoMfQILQ
- geeSf0KlLzeqD+GMsQmG8Y/tmlJqTOpj+kIsF7Tv628N7a9Mx7X8IySoIO91Gs62GHYL
- mMLXc/yQyH3VAuVeAkRT+bBQ1t0rpouoUMFuWkOEtpHjFn/Rt1UbHoRog3HX5QqCh2oT
- rEqA==
-X-Gm-Message-State: AOAM531lFKrmBRpSBzNxp6azHxRqRmD87czhZU74kbmFNQgpdwhOtEyR
- 1Mcyeje+KTtF+obGbobMUi+ZVfs7k9ZA4GEV0JEhR6Gw
-X-Google-Smtp-Source: ABdhPJyWUlFbCL7VQ9JTyxN44qcxGmOPWHUqP5t6Q8X+szr4auK8w4KcseAKlOSe4HQAHFW4q69F6eYLdPhmpHpP7ys=
-X-Received: by 2002:aa7:cdc6:: with SMTP id h6mr6550142edw.191.1591881082293; 
- Thu, 11 Jun 2020 06:11:22 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49jfK34xv3zDqCB
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Jun 2020 08:53:11 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 05BMXKCf122095
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 18:53:08 -0400
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 31ktp14kff-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 18:53:08 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05BMntwM021936
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 22:53:07 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma04wdc.us.ibm.com with ESMTP id 31hdb3wpsb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 22:53:07 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 05BMr7vG53281214
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 22:53:07 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2A988AC068
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 22:53:07 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F2C62AC05E
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 22:53:06 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.80.200.8])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 22:53:06 +0000 (GMT)
+Subject: Re: Security Working Group meeting - Wednesday June 10 - results
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <16e34c29-29d2-32fb-5a76-70ae983009dc@linux.ibm.com>
+Message-ID: <aa8553af-fc61-5070-7e62-d667a7b9c41e@linux.ibm.com>
+Date: Thu, 11 Jun 2020 17:53:06 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <14ED9A00-19D1-43BF-ACFE-5B9937188DD4@fb.com>
-In-Reply-To: <14ED9A00-19D1-43BF-ACFE-5B9937188DD4@fb.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 11 Jun 2020 13:11:10 +0000
-Message-ID: <CACPK8XdyYGwtfETRxyPXDhWi0YWd_ZeXJTazRpC=hGPiW9LeuQ@mail.gmail.com>
-Subject: Re: OpenBMC Learning Series
-To: Sai Dasari <sdasari@fb.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <16e34c29-29d2-32fb-5a76-70ae983009dc@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-06-11_23:2020-06-11,
+ 2020-06-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 mlxscore=0
+ bulkscore=0 malwarescore=0 adultscore=0 cotscore=-2147483648 spamscore=0
+ impostorscore=0 phishscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2006110174
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,16 +86,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 3 Jun 2020 at 18:11, Sai Dasari <sdasari@fb.com> wrote:
+
+
+On 6/9/20 2:53 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday June 10 at 10:00am PDT.
 >
-> In addition to these ongoing efforts, I propose to start a video based learning series that aims to introduce OpenBMC stack for a potential contributor.
+> We'll discuss current development items, and anything else that comes up.
+>
+> 1. Can we simplify password rules per NIST SP 800-63B?
+No.  Downstream projects can easily change the password rules to 
+whatever they prefer.
+We also discussed recent code reviews about the IPMI 20 character limit 
+and enhancing the password change API to say why the new password was 
+not accepted.
 
-Great idea Sai. I have signed up to do a presentation on our Qemu efforts.
+>
+> 2. Requesting comments on proposed new ServiceRep role and privilege 
+> before it goes to Redfish.
+Joseph will propose this to Redfish.
 
-Cheers,
+>
+> 3. Idea: Would using the RunBMC spec help us create our threat model?
+Yes.  This idea was added to the security wiki.
 
-Joel
+>
+> 4. Do we have security input to the 2.8 release?
+No.  No input.
+
+- Joseph
+
+>
+>
+> Access, agenda, and notes are in the wiki:
+>
+> https://github.com/openbmc/openbmc/wiki/Security-working-group
+>
+> - Joseph
+
