@@ -1,70 +1,123 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68D7C1F77CB
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jun 2020 14:17:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21D0C1F77D0
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jun 2020 14:19:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49k09R41hzzDqyv
-	for <lists+openbmc@lfdr.de>; Fri, 12 Jun 2020 22:17:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49k0CK1z5QzDqyf
+	for <lists+openbmc@lfdr.de>; Fri, 12 Jun 2020 22:19:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.helo=nam02-cy1-obe.outbound.protection.outlook.com
+ (client-ip=40.107.76.73; helo=nam02-cy1-obe.outbound.protection.outlook.com;
+ envelope-from=supreeth.venkatesh@amd.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (domain owner discourages use of this
- host) smtp.mailfrom=lfprojects.org (client-ip=2607:f8b0:4864:20::d2e;
- helo=mail-io1-xd2e.google.com; envelope-from=manager@lfprojects.org;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=lfprojects.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=lfprojects-org.20150623.gappssmtp.com
- header.i=@lfprojects-org.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=aNaQ9Tbz; dkim-atps=neutral
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com
- [IPv6:2607:f8b0:4864:20::d2e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=amd.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=amdcloud.onmicrosoft.com
+ header.i=@amdcloud.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-amdcloud-onmicrosoft-com header.b=v1/MdosY; 
+ dkim-atps=neutral
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com
+ (mail-eopbgr760073.outbound.protection.outlook.com [40.107.76.73])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49jb5h6ZhNzDqpG
- for <openbmc@lists.ozlabs.org>; Fri, 12 Jun 2020 06:28:08 +1000 (AEST)
-Received: by mail-io1-xd2e.google.com with SMTP id y5so7828083iob.12
- for <openbmc@lists.ozlabs.org>; Thu, 11 Jun 2020 13:28:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49jch74WKyzDqgF
+ for <openbmc@lists.ozlabs.org>; Fri, 12 Jun 2020 07:39:33 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ew9qGd4Ne+LNMNIweUD3d/vpYfgfYinPYMoYYV0yLlk1BV/x64Y3lQC86X4q1SpvzIPrSlKYBLrObIZYQ/xYfOqMgZCd7wpIWY682RgetFlyIlvXM3lhrjOu7UPpoeLroKYlXAmLf/oyi3S+pJ5Sx2JcBWP8kdOo7PJq/IkM2HUYL0Sa5VhFumJ1YyHH3o8O1mreaNcBXLS3oXjbuS1aCNqExeZCbPTYLAKkfLB3HCmyqw3y7pJWH37mLa0gZEinhnssLKRAz+p29KA26GTt4FN7C/CU+Ov3nXnUyJtc7Jdfo8EQmcdmW2d+TfF7SRUOiqedv9+p54HbmgGQtk06/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=djOQpniXDQVqEQrqbWCqM/ZY6SvZtsJEj7CPuJq0QEs=;
+ b=Quk+WiwD5xA9pT1gtczTNk1Lbb3YrKqKoQGQMMPOl+OFwB+bIaAbQ9nkDlmDotQtfOenJ6BJnZ3B7PP5EPL23Hq2F2SoEaKxKS6QS4SE3mpiRKHRf3T6teyJVWNVOtrForXQY/TuKJyYOwgf1TNhKZKvicNY+aNnG6I+avdUgRE4mCDkwrwpiNOgZkEVC9NJmzn7j1OwJwWXeOP+wJD6U//8XlCzwRcoJmH/QmNqL42oWz0MwLzI0ArB4vyterjBfVDW2LqDhlr8H/LfSbZmxEUnYtalLjqbcQjt52b5n2lt/jy0+QGIGe9tkUIM1IsnJ9pgSK8FF1VpYII+Bq3uRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lfprojects-org.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=IkQED0JQnZ+39G+OcC+6PX6RelRCug5lJP359+wOB+4=;
- b=aNaQ9Tbz1yO16MfguoUbV1xoyws+W9emSsCAonVlADukXBr2JR1SMWK+T0esJEQD5o
- 52vWNHUaIkYSioxc1U1pWlwtn65dxZFFmPO3qbnUOScFsets9kZowQmiB+E6yOHW2txd
- ajA08pTE+fKRwHINb4oQHzO5jFtdJFLL343476s0X1u44E03n3PXgCu2xPo7XNo3m/fT
- TvT7MrmJZYajiW2xdBg7lKA7G2ps/a4vTUokYWVgaGuAoHCW7BT9C1D7ux0Hes8tm/7P
- 63o5hYoRPeqFUu7xJhCCjK5FUiCsty21vIR+ZBxUKrcOhRyTbVECDEL7miCXKuW57teT
- C36A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=IkQED0JQnZ+39G+OcC+6PX6RelRCug5lJP359+wOB+4=;
- b=TaULeW/Cp+fvCtB1OytEeM1uaIZITLtQf+3y9D3X6yILVdd2gBfrGRJjgfnHSz3e9v
- VNS3zpOER3iqNpWJJKQYr34vLANfvDffY1zQbi58Gd5x4w0VCGk5I7Bs5rSJfzIaw2E+
- BnpI2Z5EcSe7hK9aNs6eE4sE42PQVbwO8CsZfl8UVNJnkopVbqtEqjQEleNbJ0eaYTXn
- J9wy55aemcCIsSoGeyKnTIydU/4+DQjcWLrdlCHxG4ZXLnEhMiny0ve4SD2xfLvwALwK
- O7TPU0GkMyg7HvZGY2/Xr4fgnuqnyJhJBSdt11heApUIsPMtOKP80eXgGTpwvQUn/It1
- 6WGw==
-X-Gm-Message-State: AOAM53046HUiciyuf2wj/MzzaFf8V6/FEy8Fc8EZBYdAe674i/RQq9Wo
- cetWMSBG1XvFsQZS7QMJFYQKq1E+qFn2tNkgmU4R2w==
-X-Google-Smtp-Source: ABdhPJwolrnO+ndptUSKRb47JQEg2SdqcFJg1H33E2b9zmnWZEVqxJUNwtXOi+/pXaR0ADWky6KqXBVDY5C0cO4LNLs=
-X-Received: by 2002:a02:a70d:: with SMTP id k13mr4972731jam.100.1591907284785; 
- Thu, 11 Jun 2020 13:28:04 -0700 (PDT)
-MIME-Version: 1.0
+ d=amdcloud.onmicrosoft.com; s=selector2-amdcloud-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=djOQpniXDQVqEQrqbWCqM/ZY6SvZtsJEj7CPuJq0QEs=;
+ b=v1/MdosYkz92X+AG+k2m6qT1yEk3J3MMwgfkZktjXWLvyRaZsEzvoVUyHgd1s7BhKaHJ4M+lvsb4UkheHxFib/LQldndcWiLheyFu4dmr3FbJqnDRGTfP6T5kiYSHGscg5TBV+gbyKo+380hZp6L9FepZGY9jhwXYzYvR9ca6G4=
+Received: from SN1PR12MB2542.namprd12.prod.outlook.com (2603:10b6:802:26::28)
+ by SN1PR12MB2544.namprd12.prod.outlook.com (2603:10b6:802:2b::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3088.23; Thu, 11 Jun
+ 2020 21:39:27 +0000
+Received: from SN1PR12MB2542.namprd12.prod.outlook.com
+ ([fe80::2571:49d:affd:c175]) by SN1PR12MB2542.namprd12.prod.outlook.com
+ ([fe80::2571:49d:affd:c175%4]) with mapi id 15.20.3088.022; Thu, 11 Jun 2020
+ 21:39:27 +0000
+From: "Venkatesh, Supreeth" <Supreeth.Venkatesh@amd.com>
+To: Mike Dolan <manager@lfprojects.org>, Bradley W Bishop <bradleyb@us.ibm.com>
+Subject: RE: AMD's Signed CCLA
+Thread-Topic: AMD's Signed CCLA
+Thread-Index: AdY/MKmLvWwwQ29BR0ihLnuZG1S+MwA/h7uAAAJwJlA=
+Date: Thu, 11 Jun 2020 21:39:26 +0000
+Message-ID: <SN1PR12MB2542B7316775ABE7C8F5033F96800@SN1PR12MB2542.namprd12.prod.outlook.com>
 References: <SN1PR12MB25428FA4CD525DF87AC73F8496830@SN1PR12MB2542.namprd12.prod.outlook.com>
-In-Reply-To: <SN1PR12MB25428FA4CD525DF87AC73F8496830@SN1PR12MB2542.namprd12.prod.outlook.com>
-From: Mike Dolan <manager@lfprojects.org>
-Date: Thu, 11 Jun 2020 16:27:53 -0400
-Message-ID: <CALVHhecYnixzFTgxbFTcYcgTQNh8JSZpikBnmj4RDo2dax63sg@mail.gmail.com>
-Subject: Re: AMD's Signed CCLA
-To: "Venkatesh, Supreeth" <Supreeth.Venkatesh@amd.com>,
- Bradley W Bishop <bradleyb@us.ibm.com>
-Content-Type: multipart/related; boundary="00000000000039d3d905a7d4cc18"
+ <CALVHhecYnixzFTgxbFTcYcgTQNh8JSZpikBnmj4RDo2dax63sg@mail.gmail.com>
+In-Reply-To: <CALVHhecYnixzFTgxbFTcYcgTQNh8JSZpikBnmj4RDo2dax63sg@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_Enabled=true;
+ MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_SetDate=2020-06-11T21:39:04Z; 
+ MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_Method=Privileged;
+ MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_Name=Public_0;
+ MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
+ MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_ActionId=e882205b-0454-4a1d-a398-0000b189c0bc;
+ MSIP_Label_0d814d60-469d-470c-8cb0-58434e2bf457_ContentBits=1
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_enabled: true
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_setdate: 2020-06-11T21:39:25Z
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_method: Privileged
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_name: Public_0
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_siteid: 3dd8961f-e488-4e60-8e11-a82d994e183d
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_actionid: f998a5c6-1af1-40ab-b063-0000293c4523
+msip_label_0d814d60-469d-470c-8cb0-58434e2bf457_contentbits: 0
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_enabled: true
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_setdate: 2020-06-11T21:38:51Z
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_method: Standard
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_name: Internal Use Only -
+ Unrestricted
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_siteid: 3dd8961f-e488-4e60-8e11-a82d994e183d
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_actionid: fe38da8c-5633-4127-b9cd-0000bc157bb9
+msip_label_76546daa-41b6-470c-bb85-f6f40f044d7f_contentbits: 0
+authentication-results: lfprojects.org; dkim=none (message not signed)
+ header.d=none;lfprojects.org; dmarc=none action=none header.from=amd.com;
+x-originating-ip: [165.204.77.11]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 0a3fb011-3a2b-4191-c9d9-08d80e4fea5f
+x-ms-traffictypediagnostic: SN1PR12MB2544:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <SN1PR12MB2544CED7E02021FB38EA6EA596800@SN1PR12MB2544.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-forefront-prvs: 0431F981D8
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: TOfhcOBr1YYtA171wKzWWecodUYqwPy0DPNqUjcYsenAj1JReyOAT9ZXEGf0rEy46hK08qLwN9/x8thq2P94fsOiDy0aDs/1vAExDaOp506ryp00tlo7dRGYfxFPLoWiJm+uRRV5l+dNQEINIqN1MdRIADBe08bZfdq1AiKEQzGKEzSbK5+IHFuwcto4j6ts4joPP5spdxyFA2LWfdrVmbGLf5nLylB9poW45xDRJ+vhVMOz4YuCtZ1UWf+FZMIa0b7oGFqPZCAcepjHrVlnqaCfQt7uVWkMsLiSLgQgNw8y132N8Xz/92YJFf60Yh9bCM/sDSOhd1Xxx9ZCS2Qm9Et3DPBM0mTdQkWpSjf5d+aJyYa1Ev8zfRjLuBSLJqMz4hjYwbRAJDKKH/b5RjceCQ==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN1PR12MB2542.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(4636009)(136003)(39860400002)(366004)(376002)(396003)(346002)(316002)(4326008)(5660300002)(52536014)(478600001)(7696005)(54906003)(110136005)(9686003)(8676002)(76116006)(66616009)(8936002)(66556008)(2906002)(66476007)(64756008)(66946007)(99936003)(55016002)(86362001)(26005)(33656002)(186003)(53546011)(6506007)(166002)(66446008)(3480700007)(71200400001);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata: lJqPn+ipy6aLQvVKuuLaVl1NqHEooLlvMlDTa+23DYScTqft4+SZUTh8B30UK4438HgIiXHsoFyYsg37ePcSrchnBag4Baz3ffMnX6eQ8wHph3ceHziI8fpjFDPScPelLU8EvnUt1Z1QLnJRoGc9b19SYWwvCZbttIzGjX1AvE11ikGSxHuPYUtw07mVXyuw36RXJrx3gHleG+plkeUMIMuFB4nS3kEzcOZB4Cr5gEGQ++M/Q87KsipeuEH7ZUc4Tk9cI8U7moTsXTBQlgYjMxaIeMW5h3QHJjOaN+lAGZ7GTYPOPlnAOlNTiGREoR6xPXmuD0b9sU6Gv15e2aolcuUbw+YJA3qHJyl8un5Zkcr9Da3hQbgMqr2q2waUppR+UvWoN5BRAdy0ZgXI0lmaWXXasFHbKLT5mFkYIanltkci2WEdhOTqPDc+h8LBmU95SOrc1LSocjdFphHbgwq9dfpsQQd0E6BxlB895W3csT4=
+Content-Type: multipart/related;
+ boundary="_004_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_";
+ type="multipart/alternative"
+MIME-Version: 1.0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0a3fb011-3a2b-4191-c9d9-08d80e4fea5f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2020 21:39:26.8757 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: skjedg4Lfc7g2NAHlte4Gwz1JtLqRTFG1+R0+26cJeRvalp37MPt3b5aE2TPZUztG2XZKcUycAzBwbW0G+JAbA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1PR12MB2544
 X-Mailman-Approved-At: Fri, 12 Jun 2020 22:16:55 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -84,158 +137,345 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000039d3d905a7d4cc18
-Content-Type: multipart/alternative; boundary="00000000000039d3d705a7d4cc17"
+--_004_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_
+Content-Type: multipart/alternative;
+	boundary="_000_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_"
 
---00000000000039d3d705a7d4cc17
-Content-Type: text/plain; charset="UTF-8"
+--_000_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Hi everyone, I'm copying Brad Bishop from the project community who can get
-you setup for adding people.
+[AMD Public Use]
+
+Thanks Mike.
+
+Brad,
+Can you please help create meta-amd?
+
+Supreeth Venkatesh
+System Manageability Architect  |  AMD
+Server Software
+---------------------------------------------------------------------------=
+---------------------------------------
+7171 Southwest Parkway, Austin, TX 78735
+Facebook<https://www.facebook.com/AMD> |  Twitter<https://twitter.com/AMD> =
+|  amd.com<http://www.amd.com/>
+[cid:image001.png@01D4ACEA.20484940]
+
+From: Mike Dolan <manager@lfprojects.org>
+Sent: Thursday, June 11, 2020 3:28 PM
+To: Venkatesh, Supreeth <Supreeth.Venkatesh@amd.com>; Bradley W Bishop <bra=
+dleyb@us.ibm.com>
+Cc: openbmc@lists.ozlabs.org; bradleyb@fuzziesquirrel.com; kurt.r.taylor@gm=
+ail.com; Stephens, Christie <Christie.Stephens@amd.com>
+Subject: Re: AMD's Signed CCLA
+
+[CAUTION: External Email]
+Hi everyone, I'm copying Brad Bishop from the project community who can get=
+ you setup for adding people.
 
 Thanks,
 
 Mike Dolan
-manager@lfprojects.org
+manager@lfprojects.org<mailto:manager@lfprojects.org>
 
-On Wed, Jun 10, 2020 at 10:36 AM Venkatesh, Supreeth <
-Supreeth.Venkatesh@amd.com> wrote:
+On Wed, Jun 10, 2020 at 10:36 AM Venkatesh, Supreeth <Supreeth.Venkatesh@am=
+d.com<mailto:Supreeth.Venkatesh@amd.com>> wrote:
 
-> [AMD Public Use]
->
-> Please find the signed CCLA from AMD attached.
->
-> We look forward to working with the OpenBMC community.
->
->
->
-> In my previous role, I enjoyed working with the OpenBMC Community and
->
-> I look forward to continue collaboration with the OpenBMC Community.
->
->
->
-> We have ported OpenBMC on AMD customer reference boards and would like to
-> upstream OpenBMC support for AMD customer reference boards.
->
-> Can you please help create meta-amd?
->
->
->
->
-> Thanks,
->
-> *Supreeth Venkatesh*
->
-> System Manageability Architect  |*  AMD*
-> Server Software
->
->
-> *------------------------------------------------------------------------------------------------------------------*
->
-> 7171 Southwest Parkway, Austin, TX 78735
->
-> Facebook <https://www.facebook.com/AMD> |  Twitter
-> <https://twitter.com/AMD> |  amd.com <http://www.amd.com/>
->
-> [image: cid:image001.png@01D4ACEA.20484940]
->
->
->
+[AMD Public Use]
 
---00000000000039d3d705a7d4cc17
-Content-Type: text/html; charset="UTF-8"
+Please find the signed CCLA from AMD attached.
+We look forward to working with the OpenBMC community.
+
+In my previous role, I enjoyed working with the OpenBMC Community and
+I look forward to continue collaboration with the OpenBMC Community.
+
+We have ported OpenBMC on AMD customer reference boards and would like to u=
+pstream OpenBMC support for AMD customer reference boards.
+Can you please help create meta-amd?
+
+Thanks,
+Supreeth Venkatesh
+System Manageability Architect  |  AMD
+Server Software
+---------------------------------------------------------------------------=
+---------------------------------------
+7171 Southwest Parkway, Austin, TX 78735
+Facebook<https://nam11.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%=
+2Fwww.facebook.com%2FAMD&data=3D02%7C01%7CSupreeth.Venkatesh%40amd.com%7Cd1=
+2d90af11e5433a083508d80e45f268%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7=
+C637275040889497878&sdata=3Dx50oNAJhiToyY2t0V%2BWvQ%2FeMTt%2BTe%2BpCspEpAko=
+kADQ%3D&reserved=3D0> |  Twitter<https://nam11.safelinks.protection.outlook=
+.com/?url=3Dhttps%3A%2F%2Ftwitter.com%2FAMD&data=3D02%7C01%7CSupreeth.Venka=
+tesh%40amd.com%7Cd12d90af11e5433a083508d80e45f268%7C3dd8961fe4884e608e11a82=
+d994e183d%7C0%7C0%7C637275040889507872&sdata=3DoAgEBxiqCYwOBWaLQW8tbwZ5SRp8=
+rT9JbyadqXifMvw%3D&reserved=3D0> |  amd.com<https://nam11.safelinks.protect=
+ion.outlook.com/?url=3Dhttp%3A%2F%2Fwww.amd.com%2F&data=3D02%7C01%7CSupreet=
+h.Venkatesh%40amd.com%7Cd12d90af11e5433a083508d80e45f268%7C3dd8961fe4884e60=
+8e11a82d994e183d%7C0%7C0%7C637275040889507872&sdata=3Dwwwwk%2F7u8Z%2BZ1ropZ=
+HfY5QiK4Rg5tjIQ3t3DcKTpOGA%3D&reserved=3D0>
+[cid:image001.png@01D4ACEA.20484940]
+
+
+--_000_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_
+Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi everyone, I&#39;m copying Brad Bishop from the project =
-community who can get you setup for adding people.<div><br></div><div>Thank=
-s,</div><div><br></div><div>Mike Dolan</div><div><a href=3D"mailto:manager@=
-lfprojects.org">manager@lfprojects.org</a></div></div><br><div class=3D"gma=
-il_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 10, 2020 at 10:=
-36 AM Venkatesh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.com"=
->Supreeth.Venkatesh@amd.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"EN-US">
-<p align=3D"Left" style=3D"margin:0px"><span style=3D"font-size:10pt;font-f=
-amily:Arial;color:rgb(49,113,0)">[AMD Public Use]</span></p>
-<br>
-<div class=3D"gmail-m_1053515230859926111WordSection1">
-<p class=3D"MsoNormal">Please find the signed CCLA from AMD attached.<u></u=
-><u></u></p>
-<p class=3D"MsoNormal">We look forward to working with the OpenBMC communit=
-y.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">In my previous role, I enjoyed working with the Open=
-BMC Community and
-<u></u><u></u></p>
-<p class=3D"MsoNormal">I look forward to continue collaboration with the Op=
-enBMC Community.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">We have ported OpenBMC on AMD customer reference boa=
-rds and would like to upstream OpenBMC support for AMD customer reference b=
-oards.<u></u><u></u></p>
-<p class=3D"MsoNormal">Can you please help create meta-amd?<u></u><u></u></=
-p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-<u></u><u></u></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:Arial,sans=
--serif;color:black">Thanks,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><b><span style=3D"font-size:10pt;font-family:Arial,s=
-ans-serif;color:black">Supreeth Venkatesh</span></b><span style=3D"font-siz=
-e:10pt;font-family:Arial,sans-serif;color:black"><u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:9pt;font-family:Arial,sans-=
-serif;color:black">System Manageability Architect=C2=A0=C2=A0|<b>=C2=A0=C2=
-=A0AMD</b><br>
-Server Software<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><b><span style=3D"font-size:9pt;font-family:Arial,sa=
-ns-serif;color:rgb(196,187,160);letter-spacing:-1.4pt">--------------------=
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+span.EmailStyle18
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+p.msipheader251902e5, li.msipheader251902e5, div.msipheader251902e5
+	{mso-style-name:msipheader251902e5;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"msipheader251902e5" style=3D"margin:0in;margin-bottom:.0001pt">=
+<span style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;co=
+lor:#317100">[AMD Public Use]</span><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks Mike. <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Brad,<o:p></o:p></p>
+<p class=3D"MsoNormal">Can you please help create meta-amd?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:10.0pt;font-family:&quot=
+;Arial&quot;,sans-serif;color:black">Supreeth Venkatesh</span></b><span sty=
+le=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black=
+"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Ari=
+al&quot;,sans-serif;color:black">System Manageability Architect&nbsp;&nbsp;=
+|<b>&nbsp;&nbsp;AMD</b><br>
+Server Software<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:9.0pt;font-family:&quot;=
+Arial&quot;,sans-serif;color:#C4BBA0;letter-spacing:-1.4pt">---------------=
 ---------------------------------------------------------------------------=
--------------------</span></b><b><span style=3D"font-size:9pt;font-family:A=
-rial,sans-serif;color:rgb(196,187,160)"><u></u><u></u></span></b></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:9pt;font-family:Arial,sans-=
-serif;color:black">7171 Southwest Parkway, Austin, TX 78735<u></u><u></u></=
-span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:9pt;font-family:Arial,sans-=
-serif;color:black"><a href=3D"https://www.facebook.com/AMD" target=3D"_blan=
-k"><span style=3D"color:black">Facebook</span></a>=C2=A0|=C2=A0=C2=A0<a hre=
-f=3D"https://twitter.com/AMD" target=3D"_blank"><span style=3D"color:black"=
->Twitter</span></a>=C2=A0|=C2=A0=C2=A0<a href=3D"http://www.amd.com/" targe=
-t=3D"_blank"><span style=3D"color:black">amd.com</span></a></span><span sty=
-le=3D"font-size:10pt;font-family:Arial,sans-serif;color:black">=C2=A0=C2=A0=
-</span><span style=3D"font-family:Arial,sans-serif;color:black"><u></u><u><=
-/u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:Arial,sans-serif;color:bl=
-ack"><img border=3D"0" width=3D"150" height=3D"35" style=3D"width: 1.5625in=
-; height: 0.3645in;" id=3D"gmail-m_1053515230859926111Picture_x0020_11" src=
-=3D"cid:172a510ace34cff311" alt=3D"cid:image001.png@01D4ACEA.20484940"><u><=
-/u><u></u></span></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+------------------------</span></b><b><span style=3D"font-size:9.0pt;font-f=
+amily:&quot;Arial&quot;,sans-serif;color:#C4BBA0"><o:p></o:p></span></b></p=
+>
+<p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Ari=
+al&quot;,sans-serif;color:black">7171 Southwest Parkway, Austin, TX 78735<o=
+:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:9.0pt;font-family:&quot;Ari=
+al&quot;,sans-serif;color:black"><a href=3D"https://www.facebook.com/AMD"><=
+span style=3D"color:black">Facebook</span></a>&nbsp;|&nbsp;&nbsp;<a href=3D=
+"https://twitter.com/AMD"><span style=3D"color:black">Twitter</span></a>&nb=
+sp;|&nbsp;&nbsp;<a href=3D"http://www.amd.com/"><span style=3D"color:black"=
+>amd.com</span></a></span><span style=3D"font-size:10.0pt;font-family:&quot=
+;Arial&quot;,sans-serif;color:black">&nbsp;&nbsp;</span><span style=3D"font=
+-family:&quot;Arial&quot;,sans-serif;color:black"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Arial&quot;,sans-se=
+rif;color:black"><img border=3D"0" width=3D"150" height=3D"35" style=3D"wid=
+th:1.5625in;height:.3645in" id=3D"Picture_x0020_11" src=3D"cid:image001.png=
+@01D6400E.C9931DF0" alt=3D"cid:image001.png@01D4ACEA.20484940"></span><span=
+ style=3D"font-family:&quot;Arial&quot;,sans-serif;color:black"><o:p></o:p>=
+</span></p>
+</div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div>
+<div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0in =
+0in 0in">
+<p class=3D"MsoNormal"><b>From:</b> Mike Dolan &lt;manager@lfprojects.org&g=
+t; <br>
+<b>Sent:</b> Thursday, June 11, 2020 3:28 PM<br>
+<b>To:</b> Venkatesh, Supreeth &lt;Supreeth.Venkatesh@amd.com&gt;; Bradley =
+W Bishop &lt;bradleyb@us.ibm.com&gt;<br>
+<b>Cc:</b> openbmc@lists.ozlabs.org; bradleyb@fuzziesquirrel.com; kurt.r.ta=
+ylor@gmail.com; Stephens, Christie &lt;Christie.Stephens@amd.com&gt;<br>
+<b>Subject:</b> Re: AMD's Signed CCLA<o:p></o:p></p>
 </div>
 </div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">[CAUTION: External Email] <o:p></o:p></p>
+<div>
+<div>
+<p class=3D"MsoNormal">Hi everyone, I'm copying Brad Bishop from the projec=
+t community who can get you setup for adding people.
+<o:p></o:p></p>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Mike Dolan<o:p></o:p></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><a href=3D"mailto:manager@lfprojects.org">manager@lf=
+projects.org</a><o:p></o:p></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Wed, Jun 10, 2020 at 10:36 AM Venkatesh, Supreeth=
+ &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.com">Supreeth.Venkatesh@amd.c=
+om</a>&gt; wrote:<o:p></o:p></p>
+</div>
+<blockquote style=3D"border:none;border-left:solid #CCCCCC 1.0pt;padding:0i=
+n 0in 0in 6.0pt;margin-left:4.8pt;margin-top:5.0pt;margin-right:0in;margin-=
+bottom:5.0pt">
+<div>
+<p style=3D"margin:0in;margin-bottom:.0001pt"><span style=3D"font-size:10.0=
+pt;font-family:&quot;Arial&quot;,sans-serif;color:#317100">[AMD Public Use]=
+</span><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<div>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">Please find the signed CCLA from AMD attached.<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">We look forward to working with the OpenBMC community.<o:p></o:p><=
+/p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">&nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">In my previous role, I enjoyed working with the OpenBMC Community =
+and
+<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">I look forward to continue collaboration with the OpenBMC Communit=
+y.<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">&nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">We have ported OpenBMC on AMD customer reference boards and would =
+like to upstream OpenBMC support for AMD customer reference boards.<o:p></o=
+:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">Can you please help create meta-amd?<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,sans=
+-serif;color:black">Thanks,</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><b><span style=3D"font-size:10.0pt;font-family:&quot;Arial&quot;,s=
+ans-serif;color:black">Supreeth Venkatesh</span></b><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span style=3D"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-=
+serif;color:black">System Manageability Architect&nbsp;&nbsp;|<b>&nbsp;&nbs=
+p;AMD</b><br>
+Server Software</span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><b><span style=3D"font-size:9.0pt;font-family:&quot;Arial&quot;,sa=
+ns-serif;color:#C4BBA0;letter-spacing:-1.4pt">-----------------------------=
+---------------------------------------------------------------------------=
+----------</span></b><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span style=3D"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-=
+serif;color:black">7171 Southwest Parkway, Austin, TX 78735</span><o:p></o:=
+p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span style=3D"font-size:9.0pt;font-family:&quot;Arial&quot;,sans-=
+serif;color:black"><a href=3D"https://nam11.safelinks.protection.outlook.co=
+m/?url=3Dhttps%3A%2F%2Fwww.facebook.com%2FAMD&amp;data=3D02%7C01%7CSupreeth=
+.Venkatesh%40amd.com%7Cd12d90af11e5433a083508d80e45f268%7C3dd8961fe4884e608=
+e11a82d994e183d%7C0%7C0%7C637275040889497878&amp;sdata=3Dx50oNAJhiToyY2t0V%=
+2BWvQ%2FeMTt%2BTe%2BpCspEpAkokADQ%3D&amp;reserved=3D0" target=3D"_blank"><s=
+pan style=3D"color:black">Facebook</span></a>&nbsp;|&nbsp;&nbsp;<a href=3D"=
+https://nam11.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Ftwitter=
+.com%2FAMD&amp;data=3D02%7C01%7CSupreeth.Venkatesh%40amd.com%7Cd12d90af11e5=
+433a083508d80e45f268%7C3dd8961fe4884e608e11a82d994e183d%7C0%7C0%7C637275040=
+889507872&amp;sdata=3DoAgEBxiqCYwOBWaLQW8tbwZ5SRp8rT9JbyadqXifMvw%3D&amp;re=
+served=3D0" target=3D"_blank"><span style=3D"color:black">Twitter</span></a=
+>&nbsp;|&nbsp;&nbsp;<a href=3D"https://nam11.safelinks.protection.outlook.c=
+om/?url=3Dhttp%3A%2F%2Fwww.amd.com%2F&amp;data=3D02%7C01%7CSupreeth.Venkate=
+sh%40amd.com%7Cd12d90af11e5433a083508d80e45f268%7C3dd8961fe4884e608e11a82d9=
+94e183d%7C0%7C0%7C637275040889507872&amp;sdata=3Dwwwwk%2F7u8Z%2BZ1ropZHfY5Q=
+iK4Rg5tjIQ3t3DcKTpOGA%3D&amp;reserved=3D0" target=3D"_blank"><span style=3D=
+"color:black">amd.com</span></a></span><span style=3D"font-size:10.0pt;font=
+-family:&quot;Arial&quot;,sans-serif;color:black">&nbsp;&nbsp;</span><o:p><=
+/o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto"><span style=3D"font-family:&quot;Arial&quot;,sans-serif;color:blac=
+k"><img border=3D"0" width=3D"150" height=3D"35" style=3D"width:1.5625in;he=
+ight:.3645in" id=3D"gmail-m_1053515230859926111Picture_x0020_11" src=3D"cid=
+:image001.png@01D6400E.C9931DF0" alt=3D"cid:image001.png@01D4ACEA.20484940"=
+></span><o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"mso-margin-top-alt:auto;mso-margin-bottom-a=
+lt:auto">&nbsp;<o:p></o:p></p>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</body>
+</html>
 
-</blockquote></div>
+--_000_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_--
 
---00000000000039d3d705a7d4cc17--
-
---00000000000039d3d905a7d4cc18
+--_004_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_
 Content-Type: image/png; name="image001.png"
-Content-Disposition: inline; filename="image001.png"
+Content-Description: image001.png
+Content-Disposition: inline; filename="image001.png"; size=3608;
+	creation-date="Thu, 11 Jun 2020 21:39:26 GMT";
+	modification-date="Thu, 11 Jun 2020 21:39:26 GMT"
+Content-ID: <image001.png@01D6400E.C9931DF0>
 Content-Transfer-Encoding: base64
-Content-ID: <172a510ace34cff311>
-X-Attachment-Id: 172a510ace34cff311
 
 iVBORw0KGgoAAAANSUhEUgAAAJYAAAAjCAYAAAB2BvMkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
 bWFnZVJlYWR5ccllPAAAA0xpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
@@ -301,4 +541,5 @@ oeztrGFyL4RvREwrBNyjMeDaw8FAkvTDbn52cgeHWXegt2cW1Ooq6HZYVKj43cszEL0GmigvS0GS
 zL45cKpsge6RY7JIXX5XaZlV3utEBlRc166g2baFL8oTp42TuyXGKSOYtypK+v9fg5bKXfqhfRQZ
 sKabi1qnCj9v+VK4ZuM6ODU+AXmju0HeiaOd8kdZdeQ/E6VRUNV2f1p8QrQVV+hf0P6fAAMA0CcI
 PP9xuG0AAAAASUVORK5CYII=
---00000000000039d3d905a7d4cc18--
+
+--_004_SN1PR12MB2542B7316775ABE7C8F5033F96800SN1PR12MB2542namp_--
