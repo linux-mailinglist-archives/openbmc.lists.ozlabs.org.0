@@ -1,57 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DB8A1FBB46
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 18:18:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E3C41FBC81
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 19:13:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49mYKR71gnzDqXY
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 02:18:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49mZXb1srjzDqfD
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 03:13:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::82c;
+ helo=mail-qt1-x82c.google.com; envelope-from=venture@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=f31yLqgy; dkim-atps=neutral
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com
+ [IPv6:2607:f8b0:4864:20::82c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49mYFN1RggzDqjc
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 02:11:50 +1000 (AEST)
-IronPort-SDR: aekeds/Cz2mYfWPI2jJxjNLwvo9DYQg3hlh0hXiuJJpfLyeAN3O9UafkJjEhZHgKSElJMbPwGk
- yWbhToQammbA==
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2020 09:11:44 -0700
-IronPort-SDR: RmB8yUWy3jamxgJjO4Lnvkk/P9vtpdYAQPUxAcWqsqg4CGsMuiiJIA6OYDyhWp1T+tQzQ7gAkp
- oHxxI2sBfTrQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.73,518,1583222400"; d="scan'208";a="273202351"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.209.49.202])
- ([10.209.49.202])
- by orsmga003.jf.intel.com with ESMTP; 16 Jun 2020 09:11:44 -0700
-Subject: Re: Redfish EventService Implementation
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
-Date: Tue, 16 Jun 2020 09:11:43 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49mZWM3h8NzDqtS
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 03:12:14 +1000 (AEST)
+Received: by mail-qt1-x82c.google.com with SMTP id z1so16081343qtn.2
+ for <openbmc@lists.ozlabs.org>; Tue, 16 Jun 2020 10:12:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+ bh=S7ArzOUWxzz9/aE6D+AcbpyDxVfw/HU/O7GvPegs3aI=;
+ b=f31yLqgyB2bGhSRIkRwJcgBvrO358o/l95tCJHsKOVRMS4wLu1k3lEcwha9ySYbwv3
+ E/sehFnw5TzxEuH5NGAznVRFn28PgYEkfMko5o0X8Ai3Qd9HXxWta4kkQ/AGbeSGwcha
+ iCx+x9I3Ifamp/WTytjxqopVWIHCQghONaPjfuwMJMWWDKRxBFNXgdAiOPRIrClnK8bn
+ KRyznsFB4JCJxJ33aZ05tbMykCVOcKSwr7r438UhG8hvLxkA0UzkeEdTEVh/tKsleOpF
+ ihacg4EQfZFaJYxocVP3GUqYvZPDvoHcMkfn9ZyJCnqF+sQR5o0yddMZy07BJ7so01B4
+ mpkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to;
+ bh=S7ArzOUWxzz9/aE6D+AcbpyDxVfw/HU/O7GvPegs3aI=;
+ b=t3ih15ZXJqE8dwmzi4s5U8hxdOLCde3f58T2+ef3sX8VdLyhhfRhXpjDsIEf4lVrLU
+ mxgyOYdDn1sG/I7pmRlajLt4BScjZWmRDIahP+g3W/DoV4LuqzYn4LidBhanndbtTqwK
+ otuvsR6TWAfVCUgFXbYSqjoQ38EkZEeA3oRUpFjGLHY/WbxIExtHqRgjFvj89f32NcEP
+ KQWgw+FNjQ1IHFCFjjJiwo3wBvF3nb1WbXQC7eoDMsgqv/XWDChExMkOGCw3pp1lNNdL
+ hxUCzWpw7oq29S8KqHWQvP0aijjTAeyZ8N8qfuvYkB87pFNWpS6ZLDkD4XrFaNFykLU2
+ THzA==
+X-Gm-Message-State: AOAM533Kj+T05EY0CF6aubFC77YZ0P7KveUkaSiWH+jljMPfKnXeysM9
+ MJNU8ZdyIzeB0KEwvUrUpRL9jhZtpjwVPqarBlVoKw==
+X-Google-Smtp-Source: ABdhPJz9pnLssdokyqujpXJb73kI+JFGmMlzi57Fy8cq7a/kolFFjvFZZwVVlb6+ZtbGUnubUmNAgInjyNq/Ep5r6QI=
+X-Received: by 2002:ac8:3246:: with SMTP id y6mr22663467qta.146.1592327530834; 
+ Tue, 16 Jun 2020 10:12:10 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200616152428.GA4618@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <DM6PR11MB4658331045B0A03FCFEB44449D800@DM6PR11MB4658.namprd11.prod.outlook.com>
+ <CAO=notx-uT9hReCHgHhwujT16ps4A-Oj5KNXAk0vG2LVLrc8TA@mail.gmail.com>
+ <DM6PR11MB4658E239F0F3BB58109DB3FA9D9E0@DM6PR11MB4658.namprd11.prod.outlook.com>
+In-Reply-To: <DM6PR11MB4658E239F0F3BB58109DB3FA9D9E0@DM6PR11MB4658.namprd11.prod.outlook.com>
+From: Patrick Venture <venture@google.com>
+Date: Tue, 16 Jun 2020 10:11:59 -0700
+Message-ID: <CAO=notz7oegk5+TAOoKOHkyZJf7Dhb-5oN8-+P1VLnP-cqyEbQ@mail.gmail.com>
+Subject: Re: p2a control driver
+To: "Montag, Gil" <gil.montag@intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,57 +75,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Puli, Apparao" <apparao.puli@linux.intel.com>, "Bills,
- Jason M" <jason.m.bills@linux.intel.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, openbmc@lists.ozlabs.org,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/16/2020 8:24 AM, Patrick Williams wrote:
-> On Mon, Jun 15, 2020 at 02:42:11PM -0700, James Feist wrote:
->> On 6/15/2020 5:50 AM, Ratan Gupta wrote:
->>>       eg:
->>>           sd_journal_send("MESSAGE=%s", "Account Modified",
->>>               "PRIORITY=%i", LOG_INFO, "REDFISH_MESSAGE_ID=%s",
->>> "REDFISH_RESOURCE_PATH=/redfish/v1/AccountService/accounts/<id>",
->>>               "REDFISH_RESOURCE_TYPE=ComputerSystem"
->>>               "REDFISH_REGISTRY_PREFIX=Task/Base/Resource/Oem",
->>>               "REDFISH_MESSAGE_ARGS=%s", "Off", NULL);
->>
->> If we're going to go down the path of re-implementing logging, I think
->> the goal should be to stop logging things in the Journal that are
->> Redfish specific, and instead log them in some generic format that
->> phosphor logging controls the map. Right now we are bifurcated because
->> the dbus-event-logs, SEL, PEL, and Redfish are all using different
->> methods of logging, that play to their own set of rules.
-> 
-> Absolutely agree with you here.  There is zero reason that applications
-> should start logging specially formed messages with REDFISH_* meta-data.
-> We shouldn't have any applications explicitly know about Redfish except
-> the Redfish providers themselves.  This is no different from IPMI, PLDM,
-> or any other external interface.
-> 
-> The kind of information presented here as being interesting to expose
-> via Redfish is equally as interesting to me to be able to add to one of
-> our 'FFDC dumps', which could be used for security / forensic work.
-> 
->> Most repos use
->> phosphor-logging, so instead of creating yet another daemon, if we added
->> support to create a 'System Level' or 'External User' log that has
->> predefined dictionaries of required and optional keys, something like
->> phosphor-dbus-interfaces, we might be able to drop some of these
->> transport specific logs, and have the transports based on the same
->> database (the journal). Then each transport could filter these based on
->> journal entry type, and transform them into the correct log for that
->> transport. I think adding more Redfish specifics into the logs hinders
->> those who do not want Redfish in their systems.
-> 
-> Can't we do this already today by defining a simple errors/metadata file
-> in phosphor-dbus-interfaces and calling 'logging::report<...>' on it?
-> This will create a record on dbus in phosphor-logging.
-> 
-I think the original concern was with supporting on the order of 10,000 
-log entries, having this on d-bus seemed impractical. Also the free log 
-rotation the journal provides is useful. Now modifying the 
-logging::report<...> to conditionally log to the journal seems realistic.
+On Sat, Jun 13, 2020 at 10:47 AM Montag, Gil <gil.montag@intel.com> wrote:
+>
+> Hi Patrick,
+>
+> First. Thanks for the help!
+>
+> 1. If I'm getting it right, it's ok that I see the ASPEED PCI-PCI bridge regardless of the configuration and I am not expected to see the PCI-AHB on lspci, one as it's not a "real" PCI bridge.
+Correct.
+
+> 2, Can you please specify which items shall I enable in the kernel config and in the dts for the aspeed-p2a-ctrl driver to be loaded properly and functional?
+
+https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dts#L115
+
+You'll need to set aside a memory region.  The quanta-q71l has the VGA
+enabled on its ast2400, but it's not configured for use, so we just
+snagged that memory.  If you're using an ast2500, there is often
+memory set aside for the lpc mmio region, you should be able to
+leverage that.
+
+> 3. Do you have some usage example for the code you referenced below (bmc firmware updater?)
+
+The openbmc project has some users of this - I keep adding their
+mailing list onto these emails for visibility.  I'm not sure what you
+mean by examples, but, here's an example openbmc configuration for use
+with phosphor-ipmi-flash:
+
+meta-quanta-q71l/recipes-phosphor/ipmi/phosphor-ipmi-flash_%.bbappend
+
+PACKAGECONFIG_append_quanta-q71l = " aspeed-p2a"
+IPMI_FLASH_BMC_ADDRESS_quanta-q71l = "0x47FF0000"
+
+The address specified corresponds with the device-tree entry.
+
+>
+> Thanks,
+> Gil
+>
+>
+>
+> -----Original Message-----
+> From: Patrick Venture <venture@google.com>
+> Sent: Friday, June 12, 2020 21:58
+> To: Montag, Gil <gil.montag@intel.com>
+> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+> Subject: Re: p2a control driver
+>
+> On Thu, Jun 11, 2020 at 7:35 AM Montag, Gil <gil.montag@intel.com> wrote:
+> >
+> > Hi Patrick,
+> >
+> >
+> >
+> > I have an AST2500 BMC in my system.
+> >
+> > Doing lspci on the host connected to it via PCIe shows:
+> >
+> >
+> >
+> > 0e:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
+> > (rev 04) (prog-if 00 [Normal decode])
+> >
+> >         Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop-
+> > ParErr- Stepping- SERR- FastB2B- DisINTx-
+> >
+> >         Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort-
+> > <TAbort- <MAbort- >SERR- <PERR- INTx-
+> >
+> >         Latency: 0, Cache Line Size: 64 bytes
+> >
+> >         Interrupt: pin A routed to IRQ 17
+> >
+> >         Bus: primary=0e, secondary=0f, subordinate=0f, sec-latency=32
+> >
+> >         I/O behind bridge: 0000e000-0000efff
+> >
+> >         Memory behind bridge: f6000000-f70fffff
+> >
+> >         Prefetchable memory behind bridge:
+> > 00000000fff00000-00000000000fffff
+> >
+> >         Secondary status: 66MHz+ FastB2B- ParErr- DEVSEL=medium
+> > >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+> >
+> >         BridgeCtl: Parity- SERR+ NoISA- VGA- MAbort- >Reset- FastB2B-
+> >
+> >                 PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+> >
+> >         Capabilities: <access denied>
+> >
+> >
+> >
+> > This PCI-PCI bridge is shown regardless of the aspeed-p2a-ctrl driver loaded or not.
+> >
+> > Is this the bridge you refer in your patch https://patchwork.kernel.org/patch/10873949/  or should I see some downstream PCI-AHB bridge other than this one?
+>
+> The bridge is handled through MMIO, it's not specifically a bridge device, and the driver configures the PCI-to-AHB MMIO bridge - the PCI bridge itself exists regardless depending on the configuration.  If that makes sense.
+>
+> >
+> > If I should see such PCI-AHB bridge, what do I need to do to really see it?
+>
+> The bridge is controlled from the host side with a register in BAR0, and from the BMC via the control registers.
+>
+> https://github.com/openbmc/phosphor-ipmi-flash/tree/master/tools <-- this handles identifying the bridge from the host-side.
+>
+> >
+> >
+> >
+> > Thank you
+> >
+> > Gil
+> >
+> >
+> >
+> >
+> >
+> > ---------------------------------------------------------------------
+> > Intel Israel (74) Limited
+> >
+> > This e-mail and any attachments may contain confidential material for
+> > the sole use of the intended recipient(s). Any review or distribution
+> > by others is strictly prohibited. If you are not the intended
+> > recipient, please contact the sender and delete all copies.
+> ---------------------------------------------------------------------
+> Intel Israel (74) Limited
+>
+> This e-mail and any attachments may contain confidential material for
+> the sole use of the intended recipient(s). Any review or distribution
+> by others is strictly prohibited. If you are not the intended
+> recipient, please contact the sender and delete all copies.
