@@ -2,87 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E66561FBE54
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 20:43:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62E9F1FBED4
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 21:18:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49mcXB1jLDzDqZL
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 04:43:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49mdKD3gZmzDqwC
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 05:18:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=ZG8s7TSV; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=NtBk0q+7; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+ dmarc=none (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49mcW73GwDzDqsx
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 04:42:10 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 560C777E;
- Tue, 16 Jun 2020 14:42:06 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Tue, 16 Jun 2020 14:42:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=lgJQsu++xOwvyGid9cpDtBYk33R
- DES53kwIVytG/3is=; b=ZG8s7TSVaNQnOpSbT8nb/m2VASlGq+tHXfmBgORGzRK
- dWeaZ7zj63MCmSClbv5KKzPVOzKU2pbSSEZb/FY8zZeQJWVCceGfunqNZsDJTC3c
- P6fijBZpucl7r3wsU6OSkxvcg7FMsJ+5facLwi6JScNJiH2p/dymA2O6XjdwgUWG
- ecIr3r5XRRozKBZG+2N0WbhCmLEuWmEO7gwoQIfueAETu+m33MY3pW7AqUXnce/R
- 5HbtIg7VUFe+VE4tXfaEtHWNSbK+fwxU0OE6ZqLMYy5HVu9rQbaGigSmhzIZKBYd
- BTVGuiG1Amh3whBc4xOAAkn+3bOvs8PJs2LWmrXkAug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=lgJQsu
- ++xOwvyGid9cpDtBYk33RDES53kwIVytG/3is=; b=NtBk0q+7k7ewjX5rkX7QkT
- FjbMQ5jY5xfunnbTrwTSzuTFdaoLXfzCkohOh365E2Kd9MpJ3JGgXnOYFK3hAVFV
- HPEjpXkyJm38mVD2rewU9VxF7OUXNSSdZmJ13dEYMZ5kbHkVHmz0PB40cdgbZH59
- v7IM1yPzFKsA+HRggdGgE4JQ/M+YGnS1Aoq5Qv/5yT6UGTQ8Okq9toio2SuT+ZrP
- +adPN5BzZEgno1Nk7ftKXajLR5qVazU3Pm4L8V484vWK3fArgu6suV/bPOZAZycU
- /3MyuJegnzmlZ6ENjKjzfBgRMesjqml+UAkRATuj8M9GQZ0ZX3XYJZyGfpvnDb7Q
- ==
-X-ME-Sender: <xms:fRLpXn7OCplttBJDoQaLfIRWmC_W0VUB3Cfa_8oOh0O_wiqyX2MN1g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudejtddgudefudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
- tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduhfevieellefgffdttdelgfdt
- heegudevhffhgfefleehgeeiveefiefhtdejgeenucffohhmrghinhepihgvthhfrdhorh
- hgnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptden
- ucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:fRLpXs47PcegMZmID8d1du94VsGnFrT7txOPIV_2r5zfZROq0TJARA>
- <xmx:fRLpXufiFZbNnuRh55RdBRxTdWsIBuY6Q1A766ZO5jL4qCodCR4FsA>
- <xmx:fRLpXoKSBFVYU6cF7pSkhF6ubsQQcoU5t4WGEPDLyP-D1j3iTn9_LA>
- <xmx:fRLpXgVLKxenDOqoyu9tlSa7vvcTnzwhWJCM8CaASokzA6-VPWY-Vg>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 1C21D30614FA;
- Tue, 16 Jun 2020 14:42:05 -0400 (EDT)
-Date: Tue, 16 Jun 2020 13:42:04 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Justin Thaler <thalerj@linux.vnet.ibm.com>
-Subject: Re: Patch for telemetry design
-Message-ID: <20200616184204.GC4618@heinlein>
-References: <8428bc15cb234328a6148d47eb2581c6@intel.com>
- <db250ff2-db9b-5297-31bd-fcae911aab25@linux.vnet.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49mdJN5qCVzDqbl
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 05:17:56 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 05GIXY79140980; Tue, 16 Jun 2020 15:17:53 -0400
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 31q1m64bd8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Jun 2020 15:17:53 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05GJGC7w007071;
+ Tue, 16 Jun 2020 19:17:53 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma01dal.us.ibm.com with ESMTP id 31q26f9bv5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Jun 2020 19:17:53 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 05GJHqvu45220124
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 16 Jun 2020 19:17:52 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33F15AC05B;
+ Tue, 16 Jun 2020 19:17:52 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 065DEAC059;
+ Tue, 16 Jun 2020 19:17:51 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.177.12])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Tue, 16 Jun 2020 19:17:51 +0000 (GMT)
+Subject: Security announcement subscriptions (was: [Security Advisory]
+ CVE-2020-14156 ...)
+To: Lee Fisher <lee@preossec.com>, openbmc <openbmc@lists.ozlabs.org>
+References: <09a8c25d-fa77-a550-946c-7e721aa1d474@linux.ibm.com>
+ <599434a4-84cd-4281-d4ed-580427f61970@preossec.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <eeec1af5-e4ba-dc56-8673-fb8cf5177daf@linux.ibm.com>
+Date: Tue, 16 Jun 2020 14:17:51 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="m51xatjYGsM+13rf"
-Content-Disposition: inline
-In-Reply-To: <db250ff2-db9b-5297-31bd-fcae911aab25@linux.vnet.ibm.com>
+In-Reply-To: <599434a4-84cd-4281-d4ed-580427f61970@preossec.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-06-16_11:2020-06-16,
+ 2020-06-16 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 cotscore=-2147483648 clxscore=1011
+ phishscore=0 mlxscore=0 lowpriorityscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2006160131
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,47 +88,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 6/16/20 12:35 PM, Lee Fisher wrote:
+> Hi,
+>
+> In addition to a web page showing how to submit security issues, it
+> would be nice if there was a web page showing OpenBMC CVEs. And/or a
+> mailing list to announce OpenBMC security advisories. Having to
+> subscribe to the dev list and watch the issue tracking system for CVEs
+> will only keep security awareness isolated to OpenBMC devs.
 
---m51xatjYGsM+13rf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Lee,  +cc: openbmc email list
 
-On Tue, Jun 16, 2020 at 01:05:10PM -0500, Justin Thaler wrote:
-> Would there be an option of considering compressed data like BEJSON?=20
+I agree.  The security wiki [1] has a query to show all security 
+advisories [2].  We had discussed creating an 
+openbmc-public-security-announcements email list that you could 
+subscribe to.  I'll add an item to the security working group agenda [3] 
+to discuss the email again.
 
-Did you mean BSON here or something else?  I saw BSON come through in
-one design or interface review ~3 months back and I recommended we use
-CBOR instead and that change was made.  CBOR is a standardized binary
-representation of JSON that has wider support than BSON.
+- Joseph
 
-https://tools.ietf.org/html/rfc7049
+[1]: https://github.com/openbmc/openbmc/wiki/Security-working-group
+[2]: 
+https://github.com/openbmc/openbmc/issues?utf8=%E2%9C%93&q=Security+Advisory
+[3]: 
+https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI
 
---=20
-Patrick Williams
+>
+> Thanks,
+> Lee
+>
+> On 6/15/20 12:31 PM, Joseph Reynolds wrote:
+>> |The OpenBMC Security Response team has released an OpenBMC Security
+>> Advisory: https://github.com/openbmc/openbmc/issues/3670 Thanks to
+>> everyone who helped work on this. An OpenBMC Security Advisory
+>> explains a security vulnerability, its severity, and how to protect
+>> systems that are built on OpenBMC. For more information about OpenBMC
+>> Security Response, see:
+>> https://github.com/openbmc/docs/blob/master/security/obmc-security-response-team.md
+>> - Joseph |
+>>
 
---m51xatjYGsM+13rf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7pEnoACgkQqwNHzC0A
-wRnqAhAAgf/yCOpI0L4BwbwZ3jTQiL+6SVdhhkxzaADizqdS8ew//Nzf5abMPD9s
-qiOlVd3zCnSAiJxcWvUEGnbeN9DFYa4uiyiFONOxSn1w9pU6x5AB/Ni8Y1fyjK6R
-6hTuH5U8sJ7OPrr9aKj7O/IfNG9Gmx3/6ljiSHzHsz8FuZkLMkgXIcZTgDSapCSA
-VOoljToSt++dWvCpxyC8GgtF2o5l4yW1wzUg1ll3q9/AdiB8v5WuYb1EKgqYTmvD
-Bua1vWRha0EwbMH10NAwHJ2VSv9YPcIbCCX0tPjnO+o2Pjzce2rAy013Cvdt2Z4R
-aQ0FgVyO8BMBAjw+4Oior6H/lgQxpuezC3SE6Pqb41+gLBKcmEt+yHV7EwpUsN8z
-kMIxFkfoPpCYuaQDIA7sZTGEd9Y8tYxAdqcoWj2c2suYRtXh1Jy164SQkYwUz+sG
-yv0asgiPouxeyTFB+vtbhG4U11BfXwLEjueXQIf0ccy6chTXCmLoznR4Ht6dcm9T
-5m2eHY3RsVwR5yltVA8l3c+R4htpQpQ2LfpfxU3/nb/8s0k+egG4DeGucgaU3lfL
-QgAXUETZ9RkMspL0BtB0vePKx/WAt0Qc954CjaQh+0e1FGZ0SZZVpRsLCN6Ggme+
-L1V3ane+omYjF8aNrcwD4O1Zfn1MkoV5ko8gb0wtE1inygFTZMo=
-=wcoU
------END PGP SIGNATURE-----
-
---m51xatjYGsM+13rf--
