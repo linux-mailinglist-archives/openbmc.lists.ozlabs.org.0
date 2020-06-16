@@ -1,131 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4F4F1FC048
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 22:55:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 663F61FC03F
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 22:51:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49mgSh0xHlzDqwm
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 06:55:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49mgND4wMSzDqwf
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 06:51:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=nvidia.com (client-ip=203.18.50.4; helo=nat-hk.nvidia.com;
- envelope-from=vasantp@nvidia.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=nvidia.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=nvidia.com header.i=@nvidia.com header.a=rsa-sha256
- header.s=n1 header.b=cadZcPlm; dkim-atps=neutral
-X-Greylist: delayed 304 seconds by postgrey-1.36 at bilbo;
- Wed, 17 Jun 2020 06:54:22 AEST
-Received: from nat-hk.nvidia.com (nat-hk.nvidia.com [203.18.50.4])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=LkHwFbw/; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=Oh2D8u6V; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49mgRf57f1zDqvK
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 06:54:22 +1000 (AEST)
-Received: from hkpgpgate102.nvidia.com (Not Verified[10.18.92.77]) by
- nat-hk.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
- id <B5ee930460000>; Wed, 17 Jun 2020 04:49:10 +0800
-Received: from HKMAIL102.nvidia.com ([10.18.16.11])
- by hkpgpgate102.nvidia.com (PGP Universal service);
- Tue, 16 Jun 2020 13:49:10 -0700
-X-PGP-Universal: processed;
- by hkpgpgate102.nvidia.com on Tue, 16 Jun 2020 13:49:10 -0700
-Received: from HKMAIL101.nvidia.com (10.18.16.10) by HKMAIL102.nvidia.com
- (10.18.16.11) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 16 Jun
- 2020 20:49:10 +0000
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.176)
- by HKMAIL101.nvidia.com (10.18.16.10) with Microsoft SMTP Server (TLS) id
- 15.0.1473.3 via Frontend Transport; Tue, 16 Jun 2020 20:49:09 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GamI1dce3zwd+kJAobWefj8pugPrJDkcKNv3I1rK7EFL2U2GaM1MwP4FyVV4zmRfmyfeOSgeiaHOqqgVVawqzz796ONrOVcQmKJrckiH3EH6qzsJvoqGR2YhxL0y9JJg0WSMiyzJe2nq09UnWF+sYMocsMeA5v9RbbHK8zx/xRKsL7rQ9rpgj96ymdoxXerXJK8neoHGMbevAH779SCNZTN2ESUH3vqAZhvOQNaf9zixoSlx5YQ0lx5s9lb5bCmRlg9xFy4tY/4BuBb5vTPfH18XJyfr8u7PiIq2j1a74MzGF9y/nm/QK+s5kFWEZOrqTUaR3kWnkYaOvTEjCq2LNw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6TeF79am52KH9Vt4F9SPqM+SzRTcodpbScf8pjeqYk4=;
- b=MKqaMgTpEO/olDTIU9VwENd6+5Fz5jq9AEqdHtrDMOsAgMIVaqZCyH13Lcsl9oq3UP8FAIcDVV13a427iyhMa0as2B7yb+2W1lkrU4bs3A+reBiBAP+3NP+dUaMeT5W9eqfYW3fZ6u0TmEwDIJJg3b+RrODkHbA5Z2MZUCRPiVVTMP1VbuXC4lnJ/IELKCobM4ZV8Y+ZM8lMtE6c+LSFB5ak35j3nVWiBFEeknxQV0klPlPLENk2mrTX7LLHRaj5mMV3KOzN8twdiQ4EUI5gGL3t/4t/vXslalLjPbr0Kzh/pPcbv58XJXHDapWzDMlCJR/N1cmH4mQQ90g/+02kug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-Received: from BN8PR12MB3282.namprd12.prod.outlook.com (2603:10b6:408:9e::27)
- by BN8PR12MB3604.namprd12.prod.outlook.com (2603:10b6:408:45::31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3088.22; Tue, 16 Jun
- 2020 20:49:06 +0000
-Received: from BN8PR12MB3282.namprd12.prod.outlook.com
- ([fe80::7892:2d85:21b0:770a]) by BN8PR12MB3282.namprd12.prod.outlook.com
- ([fe80::7892:2d85:21b0:770a%3]) with mapi id 15.20.3088.028; Tue, 16 Jun 2020
- 20:49:05 +0000
-From: Vasant Patil <vasantp@nvidia.com>
-To: Patrick Williams <patrick@stwcx.xyz>, vasant patil <vasantpatil2@gmail.com>
-Subject: RE: Redfish Support
-Thread-Topic: Redfish Support
-Thread-Index: AQHWQ/NHeqMlay8pnU+ocy8mNH7E7Kjbtz0w
-Date: Tue, 16 Jun 2020 20:49:05 +0000
-Message-ID: <BN8PR12MB32825446B51E1A606C243744C79D0@BN8PR12MB3282.namprd12.prod.outlook.com>
-References: <CAERBOQ+x3aUmFu+pZUPjn4DOJ_iXKWpgG1Cq-Mza7F5hCS47mw@mail.gmail.com>
- <20200616153201.GB4618@heinlein>
-In-Reply-To: <20200616153201.GB4618@heinlein>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: stwcx.xyz; dkim=none (message not signed)
- header.d=none;stwcx.xyz; dmarc=none action=none header.from=nvidia.com;
-x-originating-ip: [12.22.141.131]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d76f7d77-2d5b-40b5-350d-08d81236b5c7
-x-ms-traffictypediagnostic: BN8PR12MB3604:
-x-microsoft-antispam-prvs: <BN8PR12MB36047A1CA979A66F3EEEB3F4C79D0@BN8PR12MB3604.namprd12.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:4941;
-x-forefront-prvs: 04362AC73B
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: /5Pvqc4LiuiYy9ZAS3qjhfhZElEdDMbkZSHfMZXMqKO1dd20PEqtZdhKSgIA+skwcCQh9ZItmNx3VDR6wkWlab82k1+VPlK4S/r6hO6U4ZfBOVxznQqb96ZmZQxXGtKT0tX5vurLvzmuVbArHCQTA498Y7gWWtp3kf+OCOfqlP6B1PEnZnNZeMJhmKWVe4tULoFBPC55XYchQq+m3vciVsvWflU0cumSQV+i5KJFGo/SuiNiPdQUKxijoQVp2OZn6Q6qxOBgeL3DgXnnsnWpyRGoiHTnu5LXxB+mTszB17x6Q2yysz1lURqaxgHofFWO6w3+rRz4qD/M9KbF8l+Nhj6rSWbtF7523qbRPYGhKvVGuTnjphz35+7VDSIAAMxdPlDl2N0a0xxWUitMQxwa7w==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BN8PR12MB3282.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(366004)(39860400002)(136003)(376002)(346002)(396003)(83380400001)(186003)(7696005)(53546011)(6506007)(55016002)(478600001)(26005)(86362001)(9686003)(76116006)(33656002)(66946007)(66476007)(66556008)(66446008)(64756008)(3480700007)(2906002)(71200400001)(4326008)(4744005)(8936002)(316002)(7116003)(8676002)(966005)(110136005)(52536014)(54906003)(5660300002);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: NNYmwtsmtP4czScUW2W5NpRWb8RTT5H/Qoovqn41iV5h6mwvkGBxEHQIM1QYnMOCfT65idDCAxCCi1UyCqFbdtWtOe35L5KF2M85w1jEbKSNobK1ujarBxPYDyvrJFTt7S9bEJDXxrqs5y14FI/e197nOSUH11UdxExN95OKP3/a0Cz6NH0b++zjU2e9CYLuUnleMg+u6PCRWxJ7PDrDKgWDbPQ70TFmkrfsnIpzxWH5mJ/DsGtsubLa+x9qwXHVXemOnAgyPel26JMyjQIKrbISK63Z53mAHDRrbJuI9sIRx/xD7ipbwwB+4KFuwP1NryAjSMBSU2sgsSMFIXvPVxoiJUpf8+vJIIwDBx0KrllPj7uTeUAcoEUf1eSucDamiNmWbjaz0UIhVXsIS0eCkvpSUgvSHrpFqnWrF2j++G3abGrCPrbci9oliApE+5e0BPMxrhqO4M1XcXchM6lEW2OeiVJDIWHyl+kd77PcvqTmw9zzUdtFeD/SQ4kx3ATH
-x-ms-exchange-transport-forked: True
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49mgMB4C6czDqsb
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 06:50:29 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 82BAE588;
+ Tue, 16 Jun 2020 16:50:25 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Tue, 16 Jun 2020 16:50:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=jtyZ0AvGEdsfypSUOXcxHcczCbE
+ /IgPB1igEnhXqL4I=; b=LkHwFbw/GH8bjA8lh6AgidAqAetP59isaAP2u42ZfuE
+ SxaE5F7YpESdb7jXSJriX9mZwN/PhlWO5phFrjHsleFCiRRuQcnp+yev+wIWJM/E
+ 5db2ZXgBScBaphyQvHl3XTVbcNM6pzAxoPQjeiSm42EQvzWw9ICbY1lgw3FxOPjj
+ 8y8gQSBE6nc2+lKdxC3bNJ9sFzYDqLBIu2Aax1vT/Tk913Ca3XxSSY+xnhPgqqK3
+ uVfAG2rktsZdou1zu9OZ8mVb7i1KRmVBFjeMsJQusur65tzO0s9T+Nv/eF3Q54oJ
+ PvHfXtmYxkVEcGwGKyYydaOFBOD+g4Wxd5zKggOXNwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=jtyZ0A
+ vGEdsfypSUOXcxHcczCbE/IgPB1igEnhXqL4I=; b=Oh2D8u6VKpo+I8xNJM3vBA
+ GULtuVog7wjxqYN4jwISa15PpbljFhLsgY2i4OMmHSnFDGX8PS0NDHvANvpkhNB7
+ tPfoI3PqwU31pePi01sGORuoIG7X9KUV91VkdSz6n+A7DJ76OrncLwI6kjNyX7zj
+ OjmVrIZg5LNOWeRse8n0PoZ80v98Xc0f3AzLDNNX3T9jI5/bmKpya+Mzdop10DAR
+ d9heXeMvnk2RaIe1IVsE/AuzZBkOR6PdQF0kFRipWll4QY3xl3176Qs8fdpXvfUN
+ HzjdiPlCUzPGNlYHz7bSIR2jqJ9CphDo5//jHEK8EWY9Cx96PYKOj/SHy3XtrwEQ
+ ==
+X-ME-Sender: <xms:jzDpXg-FaiQ1eBxB9diguJB-HQPK7H5-QDpiB2FenBPzG_UnVtbAiw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudejtddgudehjecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enfghrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
+ tddunecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpedtfeejteeutdefleefieeiveev
+ keegueevtdevfeeivdfhieeuuefghfekledvhfenucfkphepjeeirddvhedtrdekgedrvd
+ efieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
+ rghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:jzDpXos9sCgERTyWgpMVsv2RtiePsP1xUyzPGkCH3LRaNgM8LIqyfQ>
+ <xmx:jzDpXmBu2ed8qzDkLwnyc9COJQChei8RpYS7WMfEvNThfjrxEAJ0fw>
+ <xmx:jzDpXgerIVZFawpRaXHFQpp_mmGLs3vTLBzcG7oQX2Gk96Nytx8tuA>
+ <xmx:kTDpXsZ2zF7t1MeShYh_szRxZf8xsjk1xExoZ8uhwQyyrqLNR7ciiQ>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 9739C3061CB6;
+ Tue, 16 Jun 2020 16:50:23 -0400 (EDT)
+Date: Tue, 16 Jun 2020 15:50:22 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: James Feist <james.feist@linux.intel.com>
+Subject: Re: Message registries continuation
+Message-ID: <20200616205022.GD4618@heinlein>
+References: <74794819-3b3c-0c39-30e0-b2ca6c46d9fb@linux.ibm.com>
+ <85015a54-0de6-42e2-bd56-732c7f0a420d@linux.intel.com>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: d76f7d77-2d5b-40b5-350d-08d81236b5c7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2020 20:49:05.7242 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: I+/a4jXOtB3V64knvHEC05qt1/bkbYNjqEHju04XPeWfC64fCdDaPBvPQMXSZ6HokouD/GUCEdPKXlrTtvLCGw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR12MB3604
-X-OriginatorOrg: Nvidia.com
-Content-Language: en-US
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
- t=1592340550; bh=6TeF79am52KH9Vt4F9SPqM+SzRTcodpbScf8pjeqYk4=;
- h=X-PGP-Universal:ARC-Seal:ARC-Message-Signature:
- ARC-Authentication-Results:From:To:CC:Subject:Thread-Topic:
- Thread-Index:Date:Message-ID:References:In-Reply-To:
- Accept-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
- authentication-results:x-originating-ip:x-ms-publictraffictype:
- x-ms-office365-filtering-correlation-id:x-ms-traffictypediagnostic:
- x-microsoft-antispam-prvs:x-ms-oob-tlc-oobclassifiers:
- x-forefront-prvs:x-ms-exchange-senderadcheck:x-microsoft-antispam:
- x-microsoft-antispam-message-info:x-forefront-antispam-report:
- x-ms-exchange-antispam-messagedata:x-ms-exchange-transport-forked:
- MIME-Version:X-MS-Exchange-CrossTenant-Network-Message-Id:
- X-MS-Exchange-CrossTenant-originalarrivaltime:
- X-MS-Exchange-CrossTenant-fromentityheader:
- X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
- X-MS-Exchange-CrossTenant-userprincipalname:
- X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg:
- Content-Language:Content-Type:Content-Transfer-Encoding;
- b=cadZcPlmy4pxgaNrPnXN/xbf6zJHcFumdutylJCuL4amqbZ+u8KpneCaZNfG7qOpn
- q+T2XbThotJubEDfGjNPYW9iD3jZRcsKwsp0aremwarqRrSlHsJQoLhaUlydOExqjV
- sgWmZJlBn4Rz6NiKm7QRNHxrRKLz/y7Y8ysnXWotv2RoM4DdyIctwngqQnO1O/pCwM
- s1Hn1bfruiuNdkNq7sgo3g2d+4p2It2WvuITI4L3Ea18MaWPvV1kgBVHcPJKZghnob
- TEVtZj9wdQhiKA/KDjYIF/dkKCQc+pW0QEMJ2HvDl4pdlJsGHvsv3blAIoQWg+7zU/
- PCLx+Mexpw7Tg==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="lc9FT7cWel8HagAv"
+Content-Disposition: inline
+In-Reply-To: <85015a54-0de6-42e2-bd56-732c7f0a420d@linux.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,41 +94,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "suryakanth.sekar@linux.intel.com" <suryakanth.sekar@linux.intel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Matt Spinler <mspinler@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Patrick.=20
-This helps.=20
 
-Regards,
-Vasant=20
+--lc9FT7cWel8HagAv
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
------Original Message-----
-From: openbmc <openbmc-bounces+vasantp=3Dnvidia.com@lists.ozlabs.org> On Be=
-half Of Patrick Williams
-Sent: Tuesday, June 16, 2020 11:32 AM
-To: vasant patil <vasantpatil2@gmail.com>
-Cc: openbmc@lists.ozlabs.org; suryakanth.sekar@linux.intel.com
-Subject: Re: Redfish Support
-
-On Mon, Jun 15, 2020 at 04:25:23PM -0400, vasant patil wrote:
-
-Hello Vasant,
-
-> Is below two functions supported via redfish
+On Tue, Jun 16, 2020 at 01:39:18PM -0700, James Feist wrote:
+> On 6/16/2020 12:47 PM, Matt Spinler wrote:
+> > Also, it may be overkill to need to=A0 read in the same registry for ev=
+ery=20
+> > language, as there could
+> > be dozens and realistically they will never all be used on a single=20
+> > system, but if the desire is only
+> > to load them at startup before the current language is known I don't=20
+> > really see a way around it.
 >=20
->    1. System Boot order change
->    2. Changing SBIOS(UEFI) control & configuration parameters .
+> I think this would require a default language and a bmcweb reload if the=
+=20
+> language changed? Its probably ok to change languages after startup, as=
+=20
+> long as the default language is loaded immediately to lower the chances=
+=20
+> of run-time issues. As changing languages is probably a very infrequent=
+=20
+> operation.
 
-I just merged this design document from Suryakanth, which seems related to =
-this question.
+Couldn't two users of the same machine request / require different
+languages?  I know that any machine used by the Australian developers on
+this project I'd need to change the settings on so that I get the proper
+spelling of color.
 
-https://github.com/openbmc/docs/blob/master/designs/remoteBIOSConfiguration=
-.md
-
-I believe the implemention on BMCWeb is already in progress.
-
---
+--=20
 Patrick Williams
+
+--lc9FT7cWel8HagAv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7pMIwACgkQqwNHzC0A
+wRmQaw/+OgYqDv3SkZxXle81o7oO+gkgUqJtNqD/wW8EdcYPgmPeHPxaxOjuKBLF
+qS1rYsxrgHOdjW8q3bKGTpPNyCE2PITatwUKnJtcJrrsd8+f9+8oEWukK3hhbH3n
+BzfDF9J17MP8Gism6/iEkf5Er4GbCH3m9DG99Nk/91csk1RwVposIss3crt//Faw
+OkPoZwb25z/T4Tsh55Y+MqaEAndql+N0j6zI6zaRQyTJsHudNCrTc9HiwrerYAlA
+Gog/hSEagOVvS0FlwD/sW/C2gmYL9/el1XWrzfRkfhc87nPkZur6HoQ+4lNFYfK4
+4h1K4Qi94ywK3A0t6lMWhNarVQ9fKQcX8KfywfLHJpqBdMmHs0+QwGrlljYP6m/y
+YB9avTmQoueczKU/p/LAGYSR1GvJR8QtOchOO+TdxkOh1YHywLzNBb8FSdpQ/q3y
+9ohjV7JhXicYnjVgoyxdbwefkdVlDbqD8jvHE0wOSInNmgDHPLDaJSvbEpVza5AM
+RPKM5Qab9wdiLghd1d2L/UaNyuijneunK7xDU7f8sv+7MKX2Hvec2qSiqztolAu2
+sJkL7NEmXXzoOntQWFb/7CzQdULQ0GUC/lGJbQzDqBnTG/VDD/cAggd41MrNmVhq
+Mcz/EdtBOKwp7Q5oGr0QQipHNUNBP0nYSn7CRC/2xyqcAefgk/4=
+=ExkE
+-----END PGP SIGNATURE-----
+
+--lc9FT7cWel8HagAv--
