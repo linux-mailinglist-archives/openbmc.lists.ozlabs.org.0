@@ -2,68 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E3C41FBC81
-	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 19:13:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3778B1FBD81
+	for <lists+openbmc@lfdr.de>; Tue, 16 Jun 2020 20:04:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49mZXb1srjzDqfD
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 03:13:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49mbg14GK5zDqvT
+	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 04:03:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::82c;
- helo=mail-qt1-x82c.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mga17.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=f31yLqgy; dkim-atps=neutral
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com
- [IPv6:2607:f8b0:4864:20::82c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49mZWM3h8NzDqtS
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 03:12:14 +1000 (AEST)
-Received: by mail-qt1-x82c.google.com with SMTP id z1so16081343qtn.2
- for <openbmc@lists.ozlabs.org>; Tue, 16 Jun 2020 10:12:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
- bh=S7ArzOUWxzz9/aE6D+AcbpyDxVfw/HU/O7GvPegs3aI=;
- b=f31yLqgyB2bGhSRIkRwJcgBvrO358o/l95tCJHsKOVRMS4wLu1k3lEcwha9ySYbwv3
- E/sehFnw5TzxEuH5NGAznVRFn28PgYEkfMko5o0X8Ai3Qd9HXxWta4kkQ/AGbeSGwcha
- iCx+x9I3Ifamp/WTytjxqopVWIHCQghONaPjfuwMJMWWDKRxBFNXgdAiOPRIrClnK8bn
- KRyznsFB4JCJxJ33aZ05tbMykCVOcKSwr7r438UhG8hvLxkA0UzkeEdTEVh/tKsleOpF
- ihacg4EQfZFaJYxocVP3GUqYvZPDvoHcMkfn9ZyJCnqF+sQR5o0yddMZy07BJ7so01B4
- mpkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to;
- bh=S7ArzOUWxzz9/aE6D+AcbpyDxVfw/HU/O7GvPegs3aI=;
- b=t3ih15ZXJqE8dwmzi4s5U8hxdOLCde3f58T2+ef3sX8VdLyhhfRhXpjDsIEf4lVrLU
- mxgyOYdDn1sG/I7pmRlajLt4BScjZWmRDIahP+g3W/DoV4LuqzYn4LidBhanndbtTqwK
- otuvsR6TWAfVCUgFXbYSqjoQ38EkZEeA3oRUpFjGLHY/WbxIExtHqRgjFvj89f32NcEP
- KQWgw+FNjQ1IHFCFjjJiwo3wBvF3nb1WbXQC7eoDMsgqv/XWDChExMkOGCw3pp1lNNdL
- hxUCzWpw7oq29S8KqHWQvP0aijjTAeyZ8N8qfuvYkB87pFNWpS6ZLDkD4XrFaNFykLU2
- THzA==
-X-Gm-Message-State: AOAM533Kj+T05EY0CF6aubFC77YZ0P7KveUkaSiWH+jljMPfKnXeysM9
- MJNU8ZdyIzeB0KEwvUrUpRL9jhZtpjwVPqarBlVoKw==
-X-Google-Smtp-Source: ABdhPJz9pnLssdokyqujpXJb73kI+JFGmMlzi57Fy8cq7a/kolFFjvFZZwVVlb6+ZtbGUnubUmNAgInjyNq/Ep5r6QI=
-X-Received: by 2002:ac8:3246:: with SMTP id y6mr22663467qta.146.1592327530834; 
- Tue, 16 Jun 2020 10:12:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49mbdz107mzDqTm
+ for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 04:03:01 +1000 (AEST)
+IronPort-SDR: zq6HkjLzBqThqC7Ssj/YlT/52wB7vg1XRrbA/8T3QTTEtl+w3jWJ7ZWvdiBvEONE7EfmRD+R9H
+ Q+Dvo0WfVn+Q==
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2020 11:02:46 -0700
+IronPort-SDR: J8a9+4/GzPybN9QDUQo4oOVqL1GgpoDeCr+1VBLT65UMbEotaXMegiqaj6UTNAKqvq0mb0TbPS
+ GdA+oAJap0PQ==
+X-IronPort-AV: E=Sophos;i="5.73,519,1583222400"; 
+ d="asc'?scan'208,217";a="308538176"
+Received: from jmanteyx-desk.jf.intel.com ([10.54.51.75])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2020 11:02:46 -0700
+Subject: Re: Default Gateway for a system v/s Default gateway per Interface
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, wak@google.com,
+ openbmc@lists.ozlabs.org
+References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Autocrypt: addr=johnathanx.mantey@intel.com; prefer-encrypt=mutual; keydata=
+ mQENBFija08BCAC60TO2X22b0tJ2Gy2iQLWx20mGcD7ugBpm1o2IW2M+um3GR0BG/bUcLciw
+ dEnX9SWT30jx8TimenyUYeDS1CKML/e4JnCAUhSktNZRPBjzla991OkpqtFJEHj/pHrXTsz0
+ ODhmnSaZ49TsY+5BqtRMexICYOtSP8+xuftPN7g2pQNFi7xYlQkutP8WKIY3TacW/6MPiYek
+ pqVaaF0cXynCMDvbK0km7m0S4X01RZFKXUwlbuMireNk4IyZ/59hN+fh1MYMQ6RXOgmHqxSu
+ 04GjkbBLf2Sddplb6KzPMRWPJ5uNdvlkAfyT4P0R5EfkV5wCRdoJ1lNC9WI1bqHkbt07ABEB
+ AAG0JUpvaG5hdGhhbiBNYW50ZXkgPG1hbnRleWpnQGdtYWlsLmNvbT6JATcEEwEIACEFAlij
+ a08CGwMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQ0EfviT3fHwmcBAgAkENzQ8s0RK+f
+ nr4UogrCBS132lDdtlOypm1WgGDOVQNra7A1rvXFgN05RqrdRTpRevv7+S8ipbiG/kxn9P8+
+ VhhW1SvUT8Tvkb9YYHos6za3v0YblibFNbYRgQcybYMeKz2/DcVU+ioKZ1SxNJsFXx6wH71I
+ V2YumQRHAsh4Je6CmsiMVP4XNadzCQXzzcU9sstKV0A194JM/d8hjXfwMHZE6qnKgAkHIV3Q
+ 61YCuvkdr5SJSrOVo2IMN0pVxhhW7lqCAGBGb4oOhqePwGqOabU3Ui4qTbHP2BWP5UscehkK
+ 6TVKcpYApsUcWyxvvOARoktmlPnGYqJPnRwXpQBlqLkBDQRYo2tPAQgAyOv5Lgg2VkHO84R7
+ LJJDBxcaCDjyAvHBynznEEk11JHrPuonEWi6pqgB8+Kc588/GerXZqJ9AMkR43UW/5cPlyF2
+ wVO4aYaQwryDtiXEu+5rpbQfAvBpKTbrBfYIPc8thuAC2kdB4IO24T6PVSYVXYc/giOL0Iwb
+ /WZfMd5ajtKfa727xfbKCEHlzakqmUl0SyrARdrSynhX1R9Wnf2BwtUV7mxFxtMukak0zdTf
+ 2IXZXDltZC224vWqkXiI7Gt/FDc2y6gcsYY/4a2+vjhWuZk3lEzP0pbXQqOseDM1zZXln/m7
+ BFbJ6VUn1zWcrt0c82GTMqkeGUheUhDiYLQ7xwARAQABiQEfBBgBCAAJBQJYo2tPAhsMAAoJ
+ ENBH74k93x8JKEUH/3UPZryjmM0F3h8I0ZWuruxAxiqvksLOOtarU6RikIAHhwjvluEcTH4E
+ JsDjqtRUvBMU907XNotpqpW2e9jN8tFRyR4wW9CYkilB02qgrDm9DXVGb2BDtC/MY+6KUgsG
+ k5Ftr9uaXNd0K4IGRJSyU6ZZn0inTcXlqD+NgOE2eX9qpeKEhDufgF7fKHbKDkS4hj6Z09dT
+ Y8eW9d6d2Yf/RzTBJvZxjBFbIgeUGeykbSKztp2OBe6mecpVPhKooTq+X/mJehpRA6mAhuQZ
+ 28lvie7hbRFjqR3JB7inAKL4eT1/9bT/MqcPh43PXTAzB6/Iclg5B7GGgEFe27VL0hyqiqc=
+Message-ID: <b1d26a76-13e1-76ca-181c-c2b7b040cd66@intel.com>
+Date: Tue, 16 Jun 2020 11:02:40 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <DM6PR11MB4658331045B0A03FCFEB44449D800@DM6PR11MB4658.namprd11.prod.outlook.com>
- <CAO=notx-uT9hReCHgHhwujT16ps4A-Oj5KNXAk0vG2LVLrc8TA@mail.gmail.com>
- <DM6PR11MB4658E239F0F3BB58109DB3FA9D9E0@DM6PR11MB4658.namprd11.prod.outlook.com>
-In-Reply-To: <DM6PR11MB4658E239F0F3BB58109DB3FA9D9E0@DM6PR11MB4658.namprd11.prod.outlook.com>
-From: Patrick Venture <venture@google.com>
-Date: Tue, 16 Jun 2020 10:11:59 -0700
-Message-ID: <CAO=notz7oegk5+TAOoKOHkyZJf7Dhb-5oN8-+P1VLnP-cqyEbQ@mail.gmail.com>
-Subject: Re: p2a control driver
-To: "Montag, Gil" <gil.montag@intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="TzNJjuupMUOKkDmtZfVGB48eNjBy2us7p"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,132 +85,241 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Jun 13, 2020 at 10:47 AM Montag, Gil <gil.montag@intel.com> wrote:
->
-> Hi Patrick,
->
-> First. Thanks for the help!
->
-> 1. If I'm getting it right, it's ok that I see the ASPEED PCI-PCI bridge regardless of the configuration and I am not expected to see the PCI-AHB on lspci, one as it's not a "real" PCI bridge.
-Correct.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--TzNJjuupMUOKkDmtZfVGB48eNjBy2us7p
+Content-Type: multipart/mixed; boundary="VXLyAMHT6l3qCf9QW6K4yuIdZaqxpAWZY"
 
-> 2, Can you please specify which items shall I enable in the kernel config and in the dts for the aspeed-p2a-ctrl driver to be loaded properly and functional?
+--VXLyAMHT6l3qCf9QW6K4yuIdZaqxpAWZY
+Content-Type: multipart/alternative;
+ boundary="------------BB9BC590C46BB3A01FE77719"
+Content-Language: en-US
 
-https://github.com/torvalds/linux/blob/master/arch/arm/boot/dts/aspeed-bmc-quanta-q71l.dts#L115
+This is a multi-part message in MIME format.
+--------------BB9BC590C46BB3A01FE77719
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-You'll need to set aside a memory region.  The quanta-q71l has the VGA
-enabled on its ast2400, but it's not configured for use, so we just
-snagged that memory.  If you're using an ast2500, there is often
-memory set aside for the lpc mmio region, you should be able to
-leverage that.
+Ratan,
 
-> 3. Do you have some usage example for the code you referenced below (bmc firmware updater?)
+In the email trail for this topic on 27 April you indicated you were
+going to start work on the per NIC gateway.
+What is the current state of implementing this feature?
 
-The openbmc project has some users of this - I keep adding their
-mailing list onto these emails for visibility.  I'm not sure what you
-mean by examples, but, here's an example openbmc configuration for use
-with phosphor-ipmi-flash:
+On 4/24/20 8:06 AM, Ratan Gupta wrote:
+> Hi All,
+>
+> Currently, OpenBMC stack allows a single default gateway for the
+> system. Latest kernel allows to configure multiple default gateways.
+>
+> Eg: In a system with two interfaces eth0 and eth1,
+>
+> eth0 configured with static address and having gateway(192.168.2.1)
+> eth1 configured with DHCP and gets Gateway from DHCP server (10.10.10.1=
+)
+> ~~~~~~~~~~~~~
+> Kernel IP routing table
+> Destination=C2=A0=C2=A0=C2=A0=C2=A0 Gateway=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 Genmask=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ Flags=C2=A0=C2=A0 MSS Window=C2=A0
+> irtt Iface
+> 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 19.168.2.1=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> 0 eth0
+> 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 10.10.10.1=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> 0 eth1
+> ~~~~~~~~~~~~~~
+>
+> Kernel will first try using the default gateway having higher metric
+> value and then fall back to the lower.
+>
+> More references:
+> https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/=
+7/html/networking_guide/sec-configuring_the_default_gateway
+>
+> I'm proposing to make this change in the openBMC D-bus interfaces to
+> tie the gateway property with the Ethernet interface schema instead of
+> System configuration.
+>
+> Ethernet Interface Schema =3D>
+>
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/ope=
+nbmc_project/Network/EthernetInterface.interface.yaml
+>
+>
+> System Configuration Schema =3D>
+>
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/ope=
+nbmc_project/Network/SystemConfiguration.interface.yaml
+>
+>
+>
+> Please let me know your suggestions.
+>
+> Regards
+> Ratan Gupta
+>
 
-meta-quanta-q71l/recipes-phosphor/ipmi/phosphor-ipmi-flash_%.bbappend
+--=20
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com <mailto:johnathanx.mantey@intel.com>
 
-PACKAGECONFIG_append_quanta-q71l = " aspeed-p2a"
-IPMI_FLASH_BMC_ADDRESS_quanta-q71l = "0x47FF0000"
 
-The address specified corresponds with the device-tree entry.
+--------------BB9BC590C46BB3A01FE77719
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
->
-> Thanks,
-> Gil
->
->
->
-> -----Original Message-----
-> From: Patrick Venture <venture@google.com>
-> Sent: Friday, June 12, 2020 21:58
-> To: Montag, Gil <gil.montag@intel.com>
-> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> Subject: Re: p2a control driver
->
-> On Thu, Jun 11, 2020 at 7:35 AM Montag, Gil <gil.montag@intel.com> wrote:
-> >
-> > Hi Patrick,
-> >
-> >
-> >
-> > I have an AST2500 BMC in my system.
-> >
-> > Doing lspci on the host connected to it via PCIe shows:
-> >
-> >
-> >
-> > 0e:00.0 PCI bridge: ASPEED Technology, Inc. AST1150 PCI-to-PCI Bridge
-> > (rev 04) (prog-if 00 [Normal decode])
-> >
-> >         Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop-
-> > ParErr- Stepping- SERR- FastB2B- DisINTx-
-> >
-> >         Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort-
-> > <TAbort- <MAbort- >SERR- <PERR- INTx-
-> >
-> >         Latency: 0, Cache Line Size: 64 bytes
-> >
-> >         Interrupt: pin A routed to IRQ 17
-> >
-> >         Bus: primary=0e, secondary=0f, subordinate=0f, sec-latency=32
-> >
-> >         I/O behind bridge: 0000e000-0000efff
-> >
-> >         Memory behind bridge: f6000000-f70fffff
-> >
-> >         Prefetchable memory behind bridge:
-> > 00000000fff00000-00000000000fffff
-> >
-> >         Secondary status: 66MHz+ FastB2B- ParErr- DEVSEL=medium
-> > >TAbort- <TAbort- <MAbort- <SERR- <PERR-
-> >
-> >         BridgeCtl: Parity- SERR+ NoISA- VGA- MAbort- >Reset- FastB2B-
-> >
-> >                 PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
-> >
-> >         Capabilities: <access denied>
-> >
-> >
-> >
-> > This PCI-PCI bridge is shown regardless of the aspeed-p2a-ctrl driver loaded or not.
-> >
-> > Is this the bridge you refer in your patch https://patchwork.kernel.org/patch/10873949/  or should I see some downstream PCI-AHB bridge other than this one?
->
-> The bridge is handled through MMIO, it's not specifically a bridge device, and the driver configures the PCI-to-AHB MMIO bridge - the PCI bridge itself exists regardless depending on the configuration.  If that makes sense.
->
-> >
-> > If I should see such PCI-AHB bridge, what do I need to do to really see it?
->
-> The bridge is controlled from the host side with a register in BAR0, and from the BMC via the control registers.
->
-> https://github.com/openbmc/phosphor-ipmi-flash/tree/master/tools <-- this handles identifying the bridge from the host-side.
->
-> >
-> >
-> >
-> > Thank you
-> >
-> > Gil
-> >
-> >
-> >
-> >
-> >
-> > ---------------------------------------------------------------------
-> > Intel Israel (74) Limited
-> >
-> > This e-mail and any attachments may contain confidential material for
-> > the sole use of the intended recipient(s). Any review or distribution
-> > by others is strictly prohibited. If you are not the intended
-> > recipient, please contact the sender and delete all copies.
-> ---------------------------------------------------------------------
-> Intel Israel (74) Limited
->
-> This e-mail and any attachments may contain confidential material for
-> the sole use of the intended recipient(s). Any review or distribution
-> by others is strictly prohibited. If you are not the intended
-> recipient, please contact the sender and delete all copies.
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    Ratan,<br>
+    <br>
+    In the email trail for this topic on 27 April you indicated you were
+    going to start work on the per NIC gateway.<br>
+    What is the current state of implementing this feature?<br>
+    <br>
+    <div class=3D"moz-cite-prefix">On 4/24/20 8:06 AM, Ratan Gupta wrote:=
+<br>
+    </div>
+    <blockquote type=3D"cite"
+      cite=3D"mid:fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com=
+">Hi
+      All,
+      <br>
+      <br>
+      Currently, OpenBMC stack allows a single default gateway for the
+      system. Latest kernel allows to configure multiple default
+      gateways.
+      <br>
+      <br>
+      Eg: In a system with two interfaces eth0 and eth1,
+      <br>
+      <br>
+      eth0 configured with static address and having
+      gateway(192.168.2.1)
+      <br>
+      eth1 configured with DHCP and gets Gateway from DHCP server
+      (10.10.10.1)
+      <br>
+      ~~~~~~~~~~~~~
+      <br>
+      Kernel IP routing table
+      <br>
+      Destination=C2=A0=C2=A0=C2=A0=C2=A0 Gateway=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 Genmask=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 Flags=C2=A0=C2=A0 MSS
+      Window=C2=A0 irtt Iface
+      <br>
+      0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 19.168.2.1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
+      0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 eth0
+      <br>
+      0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 10.10.10.1=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 0.0.0.0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 UG=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
+      0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 eth1
+      <br>
+      ~~~~~~~~~~~~~~
+      <br>
+      <br>
+      Kernel will first try using the default gateway having higher
+      metric value and then fall back to the lower.
+      <br>
+      <br>
+      More references:
+<a class=3D"moz-txt-link-freetext" href=3D"https://access.redhat.com/docu=
+mentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-conf=
+iguring_the_default_gateway">https://access.redhat.com/documentation/en-u=
+s/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_the_de=
+fault_gateway</a><br>
+      <br>
+      I'm proposing to make this change in the openBMC D-bus interfaces
+      to tie the gateway property with the Ethernet interface schema
+      instead of System configuration.
+      <br>
+      <br>
+      Ethernet Interface Schema =3D&gt;
+      <br>
+      <br>
+<a class=3D"moz-txt-link-freetext" href=3D"https://github.com/openbmc/pho=
+sphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/EthernetInt=
+erface.interface.yaml">https://github.com/openbmc/phosphor-dbus-interface=
+s/blob/master/xyz/openbmc_project/Network/EthernetInterface.interface.yam=
+l</a>
+      <br>
+      <br>
+      System Configuration Schema =3D&gt;
+      <br>
+      <br>
+<a class=3D"moz-txt-link-freetext" href=3D"https://github.com/openbmc/pho=
+sphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/SystemConfi=
+guration.interface.yaml">https://github.com/openbmc/phosphor-dbus-interfa=
+ces/blob/master/xyz/openbmc_project/Network/SystemConfiguration.interface=
+=2Eyaml</a>
+      <br>
+      <br>
+      <br>
+      Please let me know your suggestions.
+      <br>
+      <br>
+      Regards
+      <br>
+      Ratan Gupta
+      <br>
+      <br>
+    </blockquote>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
+>johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------BB9BC590C46BB3A01FE77719--
+
+--VXLyAMHT6l3qCf9QW6K4yuIdZaqxpAWZY--
+
+--TzNJjuupMUOKkDmtZfVGB48eNjBy2us7p
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEVa822oZtYaVqAzq50EfviT3fHwkFAl7pCUEACgkQ0EfviT3f
+HwlzBwgAlkyblmAb5Co+SHa3DWc2Xa2FFx45f1ipQqCq0PaXKD5ONHb/clZbMxky
+9sFp4UY8tt8BtHqHK78JgvdSK8oVBrWNyU2w2dSHqTtGXqCaeA7q5InQ8oB3d2+E
+GL28D26mY+1+vhHibLsJ+moW0RY/ap1CzPQpgcZqmdG6zXuLndlHlbSfFfqZRL2q
+pGCGGUMaL5IfW+gSbTeugWqCQh6nSQxDiwzn2LauGCnCgolkpYHw+3ckJMhU7tzb
+lPxeuINj6CRe9UWFTqrt+VsCmLx3xVwWbhBgXFBUZTn9+h+Uj+9ULhUPmTPH6XGI
+V/QWYm2qjJ+A4QQKDRhl9HXEhn0H8Q==
+=DuwQ
+-----END PGP SIGNATURE-----
+
+--TzNJjuupMUOKkDmtZfVGB48eNjBy2us7p--
