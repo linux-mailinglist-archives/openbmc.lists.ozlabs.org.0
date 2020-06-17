@@ -2,55 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30A721FD91C
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 00:43:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DD8E1FD9B0
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 01:38:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49nKpk46XYzDqxZ
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 08:43:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49nM2L5TGTzDqxk
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 09:38:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.203; helo=m13203.mail.163.com;
- envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=RBcJmQEe; dkim-atps=neutral
-Received: from m13203.mail.163.com (m13203.mail.163.com [220.181.13.203])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49nKny43KwzDqsq
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 08:42:21 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=6qej+
- sWpb51nOb159C/WMDbegXDb0uxLR37VwXUnxTo=; b=RBcJmQEe570X4AmC6ESij
- vs0VL2mOgnqlmMlM482Odfq4YNptA+Xwjbf4c9NWRvpAmVAL7AoqAJyZyxDh9cmb
- I9cAej/G0gMhtOAvee5cL5xgqYC+RI9Omn2QlepgDgrPRAZeNXVfknl+kbLGI7Cv
- W5sZ6KnbYqKvfgU3zlHAGA=
-Received: from zhang_cy1989$163.com ( [111.199.186.197] ) by
- ajax-webmail-wmsvr198 (Coremail) ; Thu, 18 Jun 2020 06:42:06 +0800
- (GMT+08:00)
-X-Originating-IP: [111.199.186.197]
-Date: Thu, 18 Jun 2020 06:42:06 +0800 (GMT+08:00)
-From: zhang_cy1989 <zhang_cy1989@163.com>
-To: "kuiying.wang@intel.com" <kuiying.wang@intel.com>
-Subject: Re: How to use eSPI between Host and slave BMC in openbmc project
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20180820(5a019900) Copyright (c) 2002-2020 www.mailtech.cn 163com
-In-Reply-To: <3039e8f807114ae1a0269f9723214014@intel.com>
-References: <3039e8f807114ae1a0269f9723214014@intel.com>
-Content-Type: multipart/alternative; 
- boundary="----=_Part_120613_831324766.1592433726455"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49nM1Z3HmPzDq9S
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 09:37:37 +1000 (AEST)
+IronPort-SDR: ELZPVPqNyMcTCcM4lXJAB3WLnU+ZAwNFTY4apvAQc1J/Q5+x0eUZrjrCUWSL3Ka4Tpk/eiFoHG
+ kh//y+wv4SAg==
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jun 2020 16:37:35 -0700
+IronPort-SDR: vo+jYgBKDBb6WtUZf3BKY3DbE2hyuuekXzucoWmfapqi0YuEiuKU4LcBt/PyhehXWJtHKx6VlX
+ 0nOvYI6XjoVg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.73,523,1583222400"; d="scan'208";a="277438827"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga006.jf.intel.com with ESMTP; 17 Jun 2020 16:37:35 -0700
+Received: from [10.251.15.133] (jmbills-mobl.amr.corp.intel.com
+ [10.251.15.133])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 47207580223;
+ Wed, 17 Jun 2020 16:37:35 -0700 (PDT)
+Subject: Re: [EXTERNAL] how to get pci config space
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+To: openbmc@lists.ozlabs.org
+References: <584F7181-73DB-4090-93D7-87E0E7408F20@fuzziesquirrel.com>
+ <DM6PR21MB1388CB8A990972BA09EB5163C8500@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <3718EF06-C5DE-4D3D-B2B1-548FEF5A1919@fuzziesquirrel.com>
+ <DM6PR21MB138892F44E5B77CCE63F83D4C8530@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <D37CC7FB-0199-47A5-930A-B9BBFF02F0D8@fuzziesquirrel.com>
+ <DM6PR21MB138859ED52E4D8B7B1B634FEC8520@DM6PR21MB1388.namprd21.prod.outlook.com>
+ <187e72f2-3ecb-2693-4467-3da3752efde8@linux.intel.com>
+Message-ID: <cd4f6a11-2150-38b9-46a2-2319a3ef574f@linux.intel.com>
+Date: Wed, 17 Jun 2020 16:37:34 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Message-ID: <518e8a81.9f94.172c47253f7.Coremail.zhang_cy1989@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: hceowADHkZM+nOpeJEMnAA--.65181W
-X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiPRxFT1SIgaIFTQACse
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+In-Reply-To: <187e72f2-3ecb-2693-4467-3da3752efde8@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,187 +69,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: bradleyb@fuzziesquirrel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_120613_831324766.1592433726455
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Hi Brad,
 
-RGVhciBLd2luCiAgICBJJ20gdmVyeSBzb3JyeSBmb3IgdGhlIGxhdGUgcmVwbHkuCiAgICBJJ2xs
-IHRyeSBpdCBsYXRlci4gTWF5YmUgZGVsYXllZCBzb21lIGRheXMgZm9yIG90aGVyIHRoaW5ncy4K
-ICAgIEFueXdheSwgdGhlIHJlc3VsdCBhbmQgYW55IHByb2JsZW0gd2lsbCBiZSBzaG93IGhlcmUg
-YWZ0ZXIgbXkgZXhwZXJpbWVudC4KICAgIExvb2tpbmcgZm9yd2FyZCB0byBtb3JlIGNvbW11bmlj
-YXRpb24gd2l0aCB5b3UKICAgIFRoYW5rcwpCUgpGZWxpeAoKCnwgfAp6aGFuZ19jeTE5ODkKfAp8
-CnpoYW5nX2N5MTk4OUAxNjMuY29tCnwK562+5ZCN55Sx572R5piT6YKu566x5aSn5biI5a6a5Yi2
-Ck9uIDUvMjcvMjAyMCAxNTowM++8jFdhbmcsIEt1aXlpbmc8a3VpeWluZy53YW5nQGludGVsLmNv
-bT4gd3JvdGXvvJoKCkhpICBGZWxpeCwKCiAKCkJvdGggS0NTIGFuZCBlU1BJIGRyaXZlciBhcmUg
-cmVhZHkgeDg2IHBsYXRmb3Jtcy4KClBsZWFzZSByZWZlciBodHRwczovL2dpdGh1Yi5jb20vSW50
-ZWwtQk1DLwoKIAoKRXhhbXBsZToKCmh0dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJt
-Yy9ibG9iL2ludGVsL21ldGEtb3BlbmJtYy1tb2RzL21ldGEtYXN0MjUwMC9yZWNpcGVzLWJzcC91
-LWJvb3QvZmlsZXMvMDAyMi1LQ1MtZHJpdmVyLXN1cHBvcnQtaW4tdUJvb3QucGF0Y2gKCmh0dHBz
-Oi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJtYy9ibG9iL2ludGVsL21ldGEtb3BlbmJtYy1t
-b2RzL21ldGEtYXN0MjYwMC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwNS1Bc3QyNjAwLUVu
-YWJsZS1pbnRlcnJ1cHQtaW4tdS1ib290LnBhdGNoCgpodHRwczovL2dpdGh1Yi5jb20vSW50ZWwt
-Qk1DL29wZW5ibWMvYmxvYi9pbnRlbC9tZXRhLW9wZW5ibWMtbW9kcy9tZXRhLWNvbW1vbi9yZWNp
-cGVzLWtlcm5lbC9saW51eC9saW51eC1hc3BlZWQvMDAyMi1BZGQtQVNUMjUwMC1lU1BJLWRyaXZl
-ci5wYXRjaAoKIAoKIAoKQlRXOiB5b3UgY291bGQgc2V0IEFjdXRlIHRyYXZlbCBsb2dpYyB0byBh
-bmFseXplIGVTUEkgYnVzLiBUaGVyZSBpcyBlU1BJIGNvbm5lY3RvciBvbiBJbnRlbCBDUkIgcGxh
-dGZvcm0uCgogCgpUaGFua3MsCgpLd2luLgoKIAoKIAoKIAoKRGVhciBKYW1lcy9hbmRyZXcvT3Nr
-YXIKICAgIFRoYW5rcyBhIGxvdC4KICAgIEkgYW0gc3R1ZHlpbmcgZVNQSSBzcGVjLiBCdXQgaXQn
-cyBoYXJkIHRvIGZpbmQgYW55IHByb2R1Y3RzIHdpdGggZVNQSS4KICAgIFlvdXIgcmVwbHkgZ2l2
-ZXMgbW9yZSB1bmRlcnN0YW5kaW5nIGFib3V0IGVTUEkuCiAgICAKICAgIExvb2tpbmcgZm9yd2Fy
-ZCB0byBtb3JlIGFwcGxpY2F0aW9ucyB3aXRoIGVTUEkgaW4gb3BlbmJtYyBwcm9qZWN0LgogICAg
-VGhhbmtzIGFnYWluLgpCUgpGZWxpeAogICAgCiAKIAp8IHwKemhhbmdfY3kxOTg5CnwKfAp6aGFu
-Z19jeTE5ODkgYXQgMTYzLmNvbQoKIA==
-------=_Part_120613_831324766.1592433726455
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+On 4/30/2020 2:14 PM, Bills, Jason M wrote:
+> 
+> 
+> On 12/19/2019 12:45 AM, Neeraj Ladkani wrote:
+>> It depends on requirements like in our use case, our PCIe devices are 
+>> fixed so we can preprogram a array in JSON file to include all PCI 
+>> functions from a device but for someone else for example OEM who is 
+>> selling the servers, it not possible to predict all PCI device can be 
+>> connected on PCIe slot so we can let system firmware send this 
+>> information or do RdPCIRd via PECI.
+> 
+> Sorry for not replying earlier.  I had some legal questions that I was 
+> waiting to be resolved.
+> 
+> Intel has a downstream solution that uses PECI to get the PCIe 
+> information onto D-Bus which is then published to Redfish.  I can now 
+> share what we have upstream if there is interest.
+> 
+> If so, I guess I'd need a new 'peci-pcie' repo to check into?
+Not sure if anyone saw this or if there is just no interest. :)
 
-PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
-PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
-b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
-YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
-ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
-YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
-OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48L2Rpdj48ZGl2PgogICAgPGRpdj4K
-ICAgICAgICA8c3Bhbj5EZWFyIEt3aW4KICAgICAgICA8L3NwYW4+PC9kaXY+PGRpdj48Zm9udCBz
-aXplPSIyIiBzdHlsZT0iZm9udC1zaXplOiAxNHB4OyI+Jm5ic3A7ICZuYnNwOyZuYnNwOzxzcGFu
-IHN0eWxlPSJvcnBoYW5zOiAyOyB3aWRvd3M6IDI7Ij5JJ20gdmVyeSBzb3JyeSBmb3IgdGhlIGxh
-dGUgcmVwbHkuPC9zcGFuPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IHNpemU9IjIiIHN0eWxlPSJm
-b250LXNpemU6IDE0cHg7Ij4mbmJzcDsgJm5ic3A7IEknbGwgdHJ5IGl0IGxhdGVyLiBNYXliZSBk
-ZWxheWVkIHNvbWUgZGF5cyBmb3Igb3RoZXIgdGhpbmdzLjwvZm9udD48L2Rpdj48ZGl2Pjxmb250
-IHNpemU9IjIiIHN0eWxlPSJmb250LXNpemU6IDE0cHg7Ij4mbmJzcDsgJm5ic3A7IEFueXdheSwg
-dGhlIHJlc3VsdCBhbmQgYW55IHByb2JsZW0gd2lsbCBiZSBzaG93IGhlcmUgYWZ0ZXIgbXkgZXhw
-ZXJpbWVudC48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBzaXplPSIyIiBzdHlsZT0iZm9udC1zaXpl
-OiAxNHB4OyI+Jm5ic3A7ICZuYnNwOyZuYnNwOzxzcGFuIHN0eWxlPSJvcnBoYW5zOiAyOyB3aWRv
-d3M6IDI7Ij5Mb29raW5nIGZvcndhcmQgdG8gbW9yZSBjb21tdW5pY2F0aW9uIHdpdGggeW91PC9z
-cGFuPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IHNpemU9IjIiIHN0eWxlPSJmb250LXNpemU6IDE0
-cHg7Ij4mbmJzcDsgJm5ic3A7IFRoYW5rczwvZm9udD48L2Rpdj48ZGl2PkJSPC9kaXY+PGRpdj5G
-ZWxpeDwvZGl2PgogICAgPGRpdj4KICAgICAgICA8c3Bhbj4KICAgICAgICAgICAgPGJyPgogICAg
-ICAgIDwvc3Bhbj4KICAgIDwvZGl2PgogICAgPGRpdiBpZD0ibnRlcy1wY21hYy1zaWduYXR1cmUi
-IHN0eWxlPSJmb250LWZhbWlseTon5b6u6L2v6ZuF6buRJyI+CiAgICAgCiAgICA8ZGl2IHN0eWxl
-PSJmb250LXNpemU6MTRweDsgcGFkZGluZzogMDsgIG1hcmdpbjowO2xpbmUtaGVpZ2h0OjE0cHg7
-Ij4KICAgICAgICA8ZGl2IHN0eWxlPSJwYWRkaW5nLWJvdHRvbTo2cHg7bWFyZ2luLWJvdHRvbTox
-MHB4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkICNlNmU2ZTY7ZGlzcGxheTppbmxpbmUtYmxvY2s7
-Ij4KICAgICAgICAgICAgICAgICAgICA8YSBocmVmPSJodHRwczovL21hYXMubWFpbC4xNjMuY29t
-L2Rhc2hpLXdlYi1leHRlbmQvaHRtbC9wcm9TaWduYXR1cmUuaHRtbD9mdGxJZD0xJmFtcDtuYW1l
-PXpoYW5nX2N5MTk4OSZhbXA7dWlkPXpoYW5nX2N5MTk4OSU0MDE2My5jb20mYW1wO2ljb25Vcmw9
-aHR0cHMlM0ElMkYlMkZtYWlsLW9ubGluZS5ub3Nkbi4xMjcubmV0JTJGcWl5ZWxvZ28lMkZkZWZh
-dWx0QXZhdGFyLnBuZyZhbXA7aXRlbXM9JTVCJTIyemhhbmdfY3kxOTg5JTQwMTYzLmNvbSUyMiU1
-RCIgc3R5bGU9ImRpc3BsYXk6YmxvY2s7YmFja2dyb3VuZDojZmZmOyBtYXgtd2lkdGg6IDQwMHB4
-OyBfd2lkdGg6IDQwMHB4O3BhZGRpbmc6MTVweCAwIDEwcHggMDt0ZXh0LWRlY29yYXRpb246IG5v
-bmU7IG91dGxpbmU6bm9uZTstd2Via2l0LXRhcC1oaWdobGlnaHQtY29sb3I6dHJhbnNwYXJlbnQ7
-LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt0ZXh0LXNpemUtYWRqdXN0
-Om5vbmUgIWltcG9ydGFudDsiPgogICAgICAgICAgICA8dGFibGUgY2VsbHBhZGRpbmc9IjAiIHN0
-eWxlPSJ3aWR0aDogMTAwJTsgbWF4LXdpZHRoOiAxMDAlOyB0YWJsZS1sYXlvdXQ6IGZpeGVkOyBi
-b3JkZXItY29sbGFwc2U6IGNvbGxhcHNlO2NvbG9yOiAjOWI5ZWExO2ZvbnQtc2l6ZTogMTRweDts
-aW5lLWhlaWdodDoxLjM7LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt0
-ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDsiPgogICAgICAgICAgICAgICAgPHRib2R5
-IHN0eWxlPSJmb250LWZhbWlseTogJ1BpbmdGYW5nIFNDJywgJ0hpcmFnaW5vIFNhbnMgR0InLCdX
-ZW5RdWFuWWkgTWljcm8gSGVpJywgJ01pY3Jvc29mdCBZYWhlaScsICflvq7ova/pm4Xpu5EnLCB2
-ZXJkYW5hICFpbXBvcnRhbnQ7IHdvcmQtd3JhcDpicmVhay13b3JkOyB3b3JkLWJyZWFrOmJyZWFr
-LWFsbDstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50O3RleHQtc2l6ZS1h
-ZGp1c3Q6bm9uZSAhaW1wb3J0YW50OyI+CiAgICAgICAgICAgICAgICAgICAgPHRyIGNsYXNzPSJm
-aXJzdFJvdyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGQgd2lkdGg9IjM4IiBzdHls
-ZT0icGFkZGluZzowOyBib3gtc2l6aW5nOiBib3JkZXItYm94OyB3aWR0aDogMzhweDsiPgogICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpbWcgd2lkdGg9IjM4IiBoZWlnaHQ9IjM4IiBz
-dHlsZT0idmVydGljYWwtYWxpZ246bWlkZGxlOyB3aWR0aDogMzhweDsgaGVpZ2h0OiAzOHB4OyBi
-b3JkZXItcmFkaXVzOjUwJTsiIHNyYz0iaHR0cHM6Ly9tYWlsLW9ubGluZS5ub3Nkbi4xMjcubmV0
-L3FpeWVsb2dvL2RlZmF1bHRBdmF0YXIucG5nIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAg
-IDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGQgc3R5bGU9InBhZGRpbmc6IDAg
-MCAwIDEwcHg7IGNvbG9yOiAjMzEzNTNiOyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgPGRpdiBzdHlsZT0iZm9udC1zaXplOiAxNnB4O2ZvbnQtd2VpZ2h0OmJvbGQ7IHdpZHRoOjEw
-MCU7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93OmhpZGRlbjt0ZXh0LW92ZXJmbG93OiBl
-bGxpcHNpczsiPnpoYW5nX2N5MTk4OTwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICAgICAg
-PC90ZD4KICAgICAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAgICAgICAgICAgICAgICA8
-dHIgd2lkdGg9IjEwMCUiIHN0eWxlPSJmb250LXNpemU6IDE0cHggIWltcG9ydGFudDsgd2lkdGg6
-IDEwMCU7Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCBjb2xzcGFuPSIyIiBzdHls
-ZT0icGFkZGluZzoxMHB4IDAgMCAwOyBmb250LXNpemU6MTRweCAhaW1wb3J0YW50OyB3aWR0aDog
-MTAwJTsiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPSJ3
-aWR0aDogMTAwJTtmb250LXNpemU6IDE0cHggIWltcG9ydGFudDt3b3JkLXdyYXA6YnJlYWstd29y
-ZDt3b3JkLWJyZWFrOmJyZWFrLWFsbDsiPnpoYW5nX2N5MTk4OUAxNjMuY29tPC9kaXY+CiAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgICAgICA8L3Ry
-PgogICAgICAgICAgICAgICAgPC90Ym9keT4KICAgICAgICAgICAgPC90YWJsZT4KICAgICAgICA8
-L2E+CiAgICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgc3R5bGU9ImZvbnQtc2l6ZTox
-MnB4O2NvbG9yOiNiNWI5YmQ7bGluZS1oZWlnaHQ6MThweDsiPgogICAgICAgIDxzcGFuPuetvuWQ
-jeeUsTwvc3Bhbj4KICAgICAgICA8YSBzdHlsZT0idGV4dC1kZWNvcmF0aW9uOiBub25lO2NvbG9y
-OiM0MTk2ZmY7cGFkZGluZzowIDVweDsiIGhyZWY9Imh0dHBzOi8vbWFpbC4xNjMuY29tL2Rhc2hp
-L2RscHJvLmh0bWw/ZnJvbT1tYWlsODEiPue9keaYk+mCrueuseWkp+W4iDwvYT4KICAgICAgICA8
-c3Bhbj7lrprliLY8L3NwYW4+CiAgICA8L2Rpdj4KIDwvZGl2Pgo8L2Rpdj48ZGl2IGNsYXNzPSJK
-LXJlcGx5IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZjJmMmYyO2NvbG9yOmJsYWNrO3BhZGRp
-bmctdG9wOjZweDtwYWRkaW5nLWJvdHRvbTo2cHg7Ym9yZGVyLXJhZGl1czozcHg7LW1vei1ib3Jk
-ZXItcmFkaXVzOjNweDstd2Via2l0LWJvcmRlci1yYWRpdXM6M3B4O21hcmdpbi10b3A6NDVweDtt
-YXJnaW4tYm90dG9tOjIwcHg7Zm9udC1mYW1pbHk6J+W+rui9r+mbhem7kSc7Ij4KICAgIDxkaXYg
-c3R5bGU9ImZvbnQtc2l6ZToxMnB4O2xpbmUtaGVpZ2h0OjEuNTt3b3JkLWJyZWFrOmJyZWFrLWFs
-bDttYXJnaW4tbGVmdDoxMHB4O21hcmdpbi1yaWdodDoxMHB4Ij5PbiA8c3BhbiBjbGFzcz0ibWFp
-bC1kYXRlIj41LzI3LzIwMjAgMTU6MDM8L3NwYW4+77yMPGEgY2xhc3M9Im1haWwtdG8iIHN0eWxl
-PSJ0ZXh0LWRlY29yYXRpb246bm9uZTtjb2xvcjojMmE4M2YyOyIgaHJlZj0ibWFpbHRvOmt1aXlp
-bmcud2FuZ0BpbnRlbC5jb20iPldhbmcsIEt1aXlpbmcmbHQ7a3VpeWluZy53YW5nQGludGVsLmNv
-bSZndDs8L2E+IHdyb3Rl77yaIDwvZGl2Pgo8L2Rpdj4KPGJsb2NrcXVvdGUgaWQ9Im50ZXMtcGNt
-YWlsLXF1b3RlIiBzdHlsZT0ibWFyZ2luOiAwOyBwYWRkaW5nOiAwOyBmb250LXNpemU6IDE0cHg7
-IGZvbnQtZmFtaWx5OiAn5b6u6L2v6ZuF6buRJzsiPgoKPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24x
-Ij4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+SGkgJm5ic3A7RmVsaXgsPG86cD48L286cD48L3A+Cjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj5Cb3RoIEtDUyBhbmQgZVNQSSBkcml2ZXIgYXJlIHJlYWR5IHg4NiBwbGF0Zm9ybXMuPG86
-cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPlBsZWFzZSByZWZlciA8YSBocmVmPSJo
-dHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1DLyI+aHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJN
-Qy88L2E+CjxvOnA+PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwv
-bzpwPjwvcD4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+RXhhbXBsZTo8bzpwPjwvbzpwPjwvcD4KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9v
-cGVuYm1jL2Jsb2IvaW50ZWwvbWV0YS1vcGVuYm1jLW1vZHMvbWV0YS1hc3QyNTAwL3JlY2lwZXMt
-YnNwL3UtYm9vdC9maWxlcy8wMDIyLUtDUy1kcml2ZXItc3VwcG9ydC1pbi11Qm9vdC5wYXRjaCI+
-aHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9vcGVuYm1jL2Jsb2IvaW50ZWwvbWV0YS1vcGVu
-Ym1jLW1vZHMvbWV0YS1hc3QyNTAwL3JlY2lwZXMtYnNwL3UtYm9vdC9maWxlcy8wMDIyLUtDUy1k
-cml2ZXItc3VwcG9ydC1pbi11Qm9vdC5wYXRjaDwvYT48bzpwPjwvbzpwPjwvcD4KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9vcGVuYm1j
-L2Jsb2IvaW50ZWwvbWV0YS1vcGVuYm1jLW1vZHMvbWV0YS1hc3QyNjAwL3JlY2lwZXMtYnNwL3Ut
-Ym9vdC9maWxlcy8wMDA1LUFzdDI2MDAtRW5hYmxlLWludGVycnVwdC1pbi11LWJvb3QucGF0Y2gi
-Pmh0dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJtYy9ibG9iL2ludGVsL21ldGEtb3Bl
-bmJtYy1tb2RzL21ldGEtYXN0MjYwMC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwNS1Bc3Qy
-NjAwLUVuYWJsZS1pbnRlcnJ1cHQtaW4tdS1ib290LnBhdGNoPC9hPjxvOnA+PC9vOnA+PC9wPgo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1D
-L29wZW5ibWMvYmxvYi9pbnRlbC9tZXRhLW9wZW5ibWMtbW9kcy9tZXRhLWNvbW1vbi9yZWNpcGVz
-LWtlcm5lbC9saW51eC9saW51eC1hc3BlZWQvMDAyMi1BZGQtQVNUMjUwMC1lU1BJLWRyaXZlci5w
-YXRjaCI+aHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9vcGVuYm1jL2Jsb2IvaW50ZWwvbWV0
-YS1vcGVuYm1jLW1vZHMvbWV0YS1jb21tb24vcmVjaXBlcy1rZXJuZWwvbGludXgvbGludXgtYXNw
-ZWVkLzAwMjItQWRkLUFTVDI1MDAtZVNQSS1kcml2ZXIucGF0Y2g8L2E+PG86cD48L286cD48L3A+
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+QlRXOiB5
-b3UgY291bGQgc2V0IEFjdXRlIHRyYXZlbCBsb2dpYyB0byBhbmFseXplIGVTUEkgYnVzLiBUaGVy
-ZSBpcyBlU1BJIGNvbm5lY3RvciBvbiBJbnRlbCBDUkIgcGxhdGZvcm0uPG86cD48L286cD48L3A+
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj5UaGFua3MsPG86cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPkt3aW4u
-PG86cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
-Pgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJs
-YWNrIj5EZWFyIEphbWVzL2FuZHJldy9Pc2thcjxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8cHJl
-PjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IFRoYW5rcyBhIGxv
-dC48bzpwPjwvbzpwPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2si
-PiZuYnNwOyZuYnNwOyZuYnNwOyBJIGFtIHN0dWR5aW5nIGVTUEkgc3BlYy4gQnV0IGl0J3MgaGFy
-ZCB0byBmaW5kIGFueSBwcm9kdWN0cyB3aXRoIGVTUEkuPG86cD48L286cD48L3NwYW4+PC9wcmU+
-CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4mbmJzcDsmbmJzcDsmbmJzcDsgWW91ciBy
-ZXBseSBnaXZlcyBtb3JlIHVuZGVyc3RhbmRpbmcgYWJvdXQgZVNQSS48bzpwPjwvbzpwPjwvc3Bh
-bj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPiZuYnNwOyZuYnNwOyZuYnNw
-OyA8bzpwPjwvbzpwPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2si
-PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0xvb2tpbmcgZm9yd2FyZCB0byBtb3JlIGFwcGxpY2F0
-aW9ucyB3aXRoIGVTUEkgaW4gb3BlbmJtYyBwcm9qZWN0LjxvOnA+PC9vOnA+PC9zcGFuPjwvcHJl
-Pgo8cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IFRoYW5r
-cyBhZ2Fpbi48bzpwPjwvbzpwPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6
-YmxhY2siPkJSPG86cD48L286cD48L3NwYW4+PC9wcmU+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9y
-OmJsYWNrIj5GZWxpeDxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8cHJlPjxzcGFuIHN0eWxlPSJj
-b2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IDxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8
-cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9w
-cmU+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bh
-bj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPnw8aT4gfDxvOnA+PC9vOnA+
-PC9pPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPnpoYW5nX2N5
-MTk4OTxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFj
-ayI+fDxpPjxvOnA+PC9vOnA+PC9pPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29s
-b3I6YmxhY2siPnw8aT48bzpwPjwvbzpwPjwvaT48L3NwYW4+PC9wcmU+CjxwcmU+PHNwYW4gc3R5
-bGU9ImNvbG9yOmJsYWNrIj48YSBocmVmPSJodHRwczovL2xpc3RzLm96bGFicy5vcmcvbGlzdGlu
-Zm8vb3BlbmJtYyI+emhhbmdfY3kxOTg5IGF0IDE2My5jb208L2E+PG86cD48L286cD48L3NwYW4+
-PC9wcmU+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8L2Rpdj48
-L2Jsb2NrcXVvdGU+PCEtLfCfmIAtLT4KPC9kaXY+CjwvYm9keT4KPC9odG1sPg==
-------=_Part_120613_831324766.1592433726455--
+Could you please create a peci-pcie repo for this application?
 
+Thanks!
+-Jason
+
+> 
+> Thanks,
+> -Jason>
+>> I am not aware of any standards on "Implementation". I have seen 
+>> typical implementations where system firmware sends post PCIe data ( 
+>> exact schema) to BMC using redfish and BMC produces this data over 
+>> redfish ( just act like passthrough).
+>>
+>> Neeraj
+>>
+>> -----Original Message-----
+>> From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+>> Sent: Wednesday, December 18, 2019 4:35 AM
+>> To: Neeraj Ladkani <neladk@microsoft.com>
+>> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+>> Subject: Re: [EXTERNAL] how to get pci config space
+>>
+>> Thanks Neeraj
+>>
+>>> On Dec 18, 2019, at 2:18 AM, Neeraj Ladkani <neladk@microsoft.com> 
+>>> wrote:
+>>>
+>>> IMO, we only need DeviceID and VendorID fields from PCIe Config space
+>>
+>> This would probably meet my need to dynamically tune fan control 
+>> parameters.  Is it possible to populate instances of the pciedevice 
+>> schema based on devid and vendorid alone?
+>>
+>>> and we can let system firmware send this information during boot
+>>
+>> This is how it works on Power systems before OpenBMC, but we have a 
+>> custom protocol with a proprietary implementation.  The purpose of my 
+>> note was to find out if there are typical implementations or even 
+>> standards out there for doing this.
+>>
+>>> or preprogram the information to BMC using EntityManager.
+>>
+>> Can you elaborate on how this would work?  Given the number of pcie 
+>> devices out there this seems like it would be hard to do it this way 
+>> without a huge database of some kind on the bmc?
+>>
+>>> Regarding BMC-CPU(via PECI), BMC needs to send PECI command to CPU. 
+>>> CPU should support RdPCICfg as supported PECI command and thus 
+>>> respond with data.
+>>
+>> Ok - that sounds like its all in hardware.  But above it sounded like 
+>> you suggest we skip RdPCICfg and instead let system firmware push this 
+>> information down to the BMC - do I have it right?  If so why do you 
+>> prefer that mechanism?
+>>
+>> thx!
+>>
+>> -brad
+>>
