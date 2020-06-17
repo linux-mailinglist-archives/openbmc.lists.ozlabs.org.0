@@ -1,94 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83B0B1FD656
-	for <lists+openbmc@lfdr.de>; Wed, 17 Jun 2020 22:46:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30A721FD91C
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 00:43:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49nHDS0qMBzDqx6
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 06:46:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49nKpk46XYzDqxZ
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 08:43:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=nK+e5OfN; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=aSJ6h0jV; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.203; helo=m13203.mail.163.com;
+ envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=RBcJmQEe; dkim-atps=neutral
+Received: from m13203.mail.163.com (m13203.mail.163.com [220.181.13.203])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49nHBr322szDqyY
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 06:45:22 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id CEFD75C0184;
- Wed, 17 Jun 2020 16:45:18 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Wed, 17 Jun 2020 16:45:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=zebnbVtQ+aol5NRDsMPGLN+QFnQ
- huV/vRtHfTqend8c=; b=nK+e5OfNWn8U3Xk6+SPOzAomI57FYvAtvId1SW2xhJS
- J/qgJjSpJ2ZL63E5nFLGBr5VgyU8qQv3gIynRRiK6D3MhUhlGpuqIrKMAwxUcWGQ
- +MU5YIZHSvU3YfdgnMHob1tXN6X4BIX+6WNV5uExwnVqfwb2m7GzpyFgna9y6CfJ
- Wackne6HsgKcv4gcUbVTyP6QUPe2kU/2hsR2Ad/gmMba0/bVcxH2UbyQJ3gGhuPu
- iYlv7/RflcumUvSCMgB+s8HNBGdI8wLVfXf53bqyiEoD53Zw0c0QB84bFcJlnsvJ
- tmVrbjRuGV6n8fe7AicSTF+M5Tb2g/NumUU4W0lkuhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=zebnbV
- tQ+aol5NRDsMPGLN+QFnQhuV/vRtHfTqend8c=; b=aSJ6h0jVQIB3TqbLpnqFlg
- 3n/22lvF711I9D9EPRxqU0HBbewTckONMF85LUQKVfnGDe6qTXExLdKNFTO4pcd0
- g6scPr17RTX6VxgATbMGrtErRhR6YT9FoFxhSkJhWcn4QjGBsp8JNVg71CIXbxqI
- wIE5LKZY94Dg4FlRaK5mfoSVUGPa535NUu4XB/k30qTF4XzizkLVKI1lv7DL0HVn
- gDQst8G/sQXGSYsZTXeu3grs7n/oiLSebkgYovs9KjduqLj7ng6riRBf7us7v7Bu
- PbQO/oy0dSWIqBHkdnqYhhY3zR3DMR7g4uE9M70276+NElqUZw5XVD3MttjaXBmw
- ==
-X-ME-Sender: <xms:3oDqXkHhHNO-w-jK8Hzo3b1nNJTg4GtCswxpE1YyaKYrla2apv0adQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduhedrudejvddgudehfecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
- tddunecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeefffffvdfgtdeludefleefvdff
- kedvfeefueelveduiedtgeeuvefgtdeiueeuveenucffohhmrghinhepghhithhhuhgsrd
- gtohhmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgep
- tdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:3oDqXtVqjiOzMXb1Qdum_zFWI2vLjRE7ddk0-kfx07ee5YnLxYKdyQ>
- <xmx:3oDqXuIyW0HlEYRlASLbPDSxrPkUXSqo-YpXUf4XRu08UvttbrF87A>
- <xmx:3oDqXmEix-y_gsu2q20ooPe2d9lv30_apEMsT6bhASeGNMFxe8LFyw>
- <xmx:3oDqXnjKi53joY_aUkbUvv3ekAbdl3HRSvqrKAsUTunIsmDpMMoGag>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id DDF4930618B7;
- Wed, 17 Jun 2020 16:45:17 -0400 (EDT)
-Date: Wed, 17 Jun 2020 15:45:16 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Subject: Re: Redfish EventService Implementation
-Message-ID: <20200617204516.GE4618@heinlein>
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
- <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
- <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49nKny43KwzDqsq
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 08:42:21 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=6qej+
+ sWpb51nOb159C/WMDbegXDb0uxLR37VwXUnxTo=; b=RBcJmQEe570X4AmC6ESij
+ vs0VL2mOgnqlmMlM482Odfq4YNptA+Xwjbf4c9NWRvpAmVAL7AoqAJyZyxDh9cmb
+ I9cAej/G0gMhtOAvee5cL5xgqYC+RI9Omn2QlepgDgrPRAZeNXVfknl+kbLGI7Cv
+ W5sZ6KnbYqKvfgU3zlHAGA=
+Received: from zhang_cy1989$163.com ( [111.199.186.197] ) by
+ ajax-webmail-wmsvr198 (Coremail) ; Thu, 18 Jun 2020 06:42:06 +0800
+ (GMT+08:00)
+X-Originating-IP: [111.199.186.197]
+Date: Thu, 18 Jun 2020 06:42:06 +0800 (GMT+08:00)
+From: zhang_cy1989 <zhang_cy1989@163.com>
+To: "kuiying.wang@intel.com" <kuiying.wang@intel.com>
+Subject: Re: How to use eSPI between Host and slave BMC in openbmc project
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
+ 20180820(5a019900) Copyright (c) 2002-2020 www.mailtech.cn 163com
+In-Reply-To: <3039e8f807114ae1a0269f9723214014@intel.com>
+References: <3039e8f807114ae1a0269f9723214014@intel.com>
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_120613_831324766.1592433726455"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="0H629O+sVkh21xTi"
-Content-Disposition: inline
-In-Reply-To: <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
+Message-ID: <518e8a81.9f94.172c47253f7.Coremail.zhang_cy1989@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: hceowADHkZM+nOpeJEMnAA--.65181W
+X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/1tbiPRxFT1SIgaIFTQACse
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,122 +62,187 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Puli, Apparao" <apparao.puli@linux.intel.com>, "Bills,
- Jason M" <jason.m.bills@linux.intel.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- James Feist <james.feist@linux.intel.com>, openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+------=_Part_120613_831324766.1592433726455
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
---0H629O+sVkh21xTi
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+RGVhciBLd2luCiAgICBJJ20gdmVyeSBzb3JyeSBmb3IgdGhlIGxhdGUgcmVwbHkuCiAgICBJJ2xs
+IHRyeSBpdCBsYXRlci4gTWF5YmUgZGVsYXllZCBzb21lIGRheXMgZm9yIG90aGVyIHRoaW5ncy4K
+ICAgIEFueXdheSwgdGhlIHJlc3VsdCBhbmQgYW55IHByb2JsZW0gd2lsbCBiZSBzaG93IGhlcmUg
+YWZ0ZXIgbXkgZXhwZXJpbWVudC4KICAgIExvb2tpbmcgZm9yd2FyZCB0byBtb3JlIGNvbW11bmlj
+YXRpb24gd2l0aCB5b3UKICAgIFRoYW5rcwpCUgpGZWxpeAoKCnwgfAp6aGFuZ19jeTE5ODkKfAp8
+CnpoYW5nX2N5MTk4OUAxNjMuY29tCnwK562+5ZCN55Sx572R5piT6YKu566x5aSn5biI5a6a5Yi2
+Ck9uIDUvMjcvMjAyMCAxNTowM++8jFdhbmcsIEt1aXlpbmc8a3VpeWluZy53YW5nQGludGVsLmNv
+bT4gd3JvdGXvvJoKCkhpICBGZWxpeCwKCiAKCkJvdGggS0NTIGFuZCBlU1BJIGRyaXZlciBhcmUg
+cmVhZHkgeDg2IHBsYXRmb3Jtcy4KClBsZWFzZSByZWZlciBodHRwczovL2dpdGh1Yi5jb20vSW50
+ZWwtQk1DLwoKIAoKRXhhbXBsZToKCmh0dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJt
+Yy9ibG9iL2ludGVsL21ldGEtb3BlbmJtYy1tb2RzL21ldGEtYXN0MjUwMC9yZWNpcGVzLWJzcC91
+LWJvb3QvZmlsZXMvMDAyMi1LQ1MtZHJpdmVyLXN1cHBvcnQtaW4tdUJvb3QucGF0Y2gKCmh0dHBz
+Oi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJtYy9ibG9iL2ludGVsL21ldGEtb3BlbmJtYy1t
+b2RzL21ldGEtYXN0MjYwMC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwNS1Bc3QyNjAwLUVu
+YWJsZS1pbnRlcnJ1cHQtaW4tdS1ib290LnBhdGNoCgpodHRwczovL2dpdGh1Yi5jb20vSW50ZWwt
+Qk1DL29wZW5ibWMvYmxvYi9pbnRlbC9tZXRhLW9wZW5ibWMtbW9kcy9tZXRhLWNvbW1vbi9yZWNp
+cGVzLWtlcm5lbC9saW51eC9saW51eC1hc3BlZWQvMDAyMi1BZGQtQVNUMjUwMC1lU1BJLWRyaXZl
+ci5wYXRjaAoKIAoKIAoKQlRXOiB5b3UgY291bGQgc2V0IEFjdXRlIHRyYXZlbCBsb2dpYyB0byBh
+bmFseXplIGVTUEkgYnVzLiBUaGVyZSBpcyBlU1BJIGNvbm5lY3RvciBvbiBJbnRlbCBDUkIgcGxh
+dGZvcm0uCgogCgpUaGFua3MsCgpLd2luLgoKIAoKIAoKIAoKRGVhciBKYW1lcy9hbmRyZXcvT3Nr
+YXIKICAgIFRoYW5rcyBhIGxvdC4KICAgIEkgYW0gc3R1ZHlpbmcgZVNQSSBzcGVjLiBCdXQgaXQn
+cyBoYXJkIHRvIGZpbmQgYW55IHByb2R1Y3RzIHdpdGggZVNQSS4KICAgIFlvdXIgcmVwbHkgZ2l2
+ZXMgbW9yZSB1bmRlcnN0YW5kaW5nIGFib3V0IGVTUEkuCiAgICAKICAgIExvb2tpbmcgZm9yd2Fy
+ZCB0byBtb3JlIGFwcGxpY2F0aW9ucyB3aXRoIGVTUEkgaW4gb3BlbmJtYyBwcm9qZWN0LgogICAg
+VGhhbmtzIGFnYWluLgpCUgpGZWxpeAogICAgCiAKIAp8IHwKemhhbmdfY3kxOTg5CnwKfAp6aGFu
+Z19jeTE5ODkgYXQgMTYzLmNvbQoKIA==
+------=_Part_120613_831324766.1592433726455
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-On Wed, Jun 17, 2020 at 05:38:47PM +0530, Ratan Gupta wrote:
-> Hi James,Pattrick.
->=20
-> >> Can't we do this already today by defining a simple errors/metadata fi=
-le
-> >> in phosphor-dbus-interfaces and calling 'logging::report<...>' on it?
-> >> This will create a record on dbus in phosphor-logging.
-> >>
-> > I think the original concern was with supporting on the order of=20
-> > 10,000 log entries, having this on d-bus seemed impractical. Also the=
-=20
-> > free log rotation the journal provides is useful. Now modifying the=20
-> > logging::report<...> to conditionally log to the journal seems realisti=
-c.
-> My intention was not to re-implement the logging, my intention was to=20
-> extend/use the existing design which we already have it below.
->=20
-> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-=
-in-bmcweb.md
->=20
-> I was trying not to bring the Redfish specific stuff in each individual=
-=20
-> repo, instead each transport can listen for
-> Dbus events and write to the journal which goes to their app specific fil=
-e.
+PGh0bWw+CjxoZWFkPgogICAgPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50
+PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPgo8L2hlYWQ+Cjxib2R5Pgo8c3R5bGU+CiAgICBm
+b250ewogICAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7CiAgICB9CiAgICB1bCxvbHsKICAgICAgICBw
+YWRkaW5nLWxlZnQ6IDIwcHg7CiAgICAgICAgbGlzdC1zdHlsZS1wb3NpdGlvbjogaW5zaWRlOwog
+ICAgfQo8L3N0eWxlPgo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTrlvq7ova/pm4Xpu5EsVmVyZGFu
+YSwmcXVvdDtNaWNyb3NvZnQgWWFoZWkmcXVvdDssU2ltU3VuLHNhbnMtc2VyaWY7Zm9udC1zaXpl
+OjE0cHg7IGxpbmUtaGVpZ2h0OjEuNjsiPgogICAgPGRpdj48L2Rpdj48ZGl2PgogICAgPGRpdj4K
+ICAgICAgICA8c3Bhbj5EZWFyIEt3aW4KICAgICAgICA8L3NwYW4+PC9kaXY+PGRpdj48Zm9udCBz
+aXplPSIyIiBzdHlsZT0iZm9udC1zaXplOiAxNHB4OyI+Jm5ic3A7ICZuYnNwOyZuYnNwOzxzcGFu
+IHN0eWxlPSJvcnBoYW5zOiAyOyB3aWRvd3M6IDI7Ij5JJ20gdmVyeSBzb3JyeSBmb3IgdGhlIGxh
+dGUgcmVwbHkuPC9zcGFuPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IHNpemU9IjIiIHN0eWxlPSJm
+b250LXNpemU6IDE0cHg7Ij4mbmJzcDsgJm5ic3A7IEknbGwgdHJ5IGl0IGxhdGVyLiBNYXliZSBk
+ZWxheWVkIHNvbWUgZGF5cyBmb3Igb3RoZXIgdGhpbmdzLjwvZm9udD48L2Rpdj48ZGl2Pjxmb250
+IHNpemU9IjIiIHN0eWxlPSJmb250LXNpemU6IDE0cHg7Ij4mbmJzcDsgJm5ic3A7IEFueXdheSwg
+dGhlIHJlc3VsdCBhbmQgYW55IHByb2JsZW0gd2lsbCBiZSBzaG93IGhlcmUgYWZ0ZXIgbXkgZXhw
+ZXJpbWVudC48L2ZvbnQ+PC9kaXY+PGRpdj48Zm9udCBzaXplPSIyIiBzdHlsZT0iZm9udC1zaXpl
+OiAxNHB4OyI+Jm5ic3A7ICZuYnNwOyZuYnNwOzxzcGFuIHN0eWxlPSJvcnBoYW5zOiAyOyB3aWRv
+d3M6IDI7Ij5Mb29raW5nIGZvcndhcmQgdG8gbW9yZSBjb21tdW5pY2F0aW9uIHdpdGggeW91PC9z
+cGFuPjwvZm9udD48L2Rpdj48ZGl2Pjxmb250IHNpemU9IjIiIHN0eWxlPSJmb250LXNpemU6IDE0
+cHg7Ij4mbmJzcDsgJm5ic3A7IFRoYW5rczwvZm9udD48L2Rpdj48ZGl2PkJSPC9kaXY+PGRpdj5G
+ZWxpeDwvZGl2PgogICAgPGRpdj4KICAgICAgICA8c3Bhbj4KICAgICAgICAgICAgPGJyPgogICAg
+ICAgIDwvc3Bhbj4KICAgIDwvZGl2PgogICAgPGRpdiBpZD0ibnRlcy1wY21hYy1zaWduYXR1cmUi
+IHN0eWxlPSJmb250LWZhbWlseTon5b6u6L2v6ZuF6buRJyI+CiAgICAgCiAgICA8ZGl2IHN0eWxl
+PSJmb250LXNpemU6MTRweDsgcGFkZGluZzogMDsgIG1hcmdpbjowO2xpbmUtaGVpZ2h0OjE0cHg7
+Ij4KICAgICAgICA8ZGl2IHN0eWxlPSJwYWRkaW5nLWJvdHRvbTo2cHg7bWFyZ2luLWJvdHRvbTox
+MHB4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkICNlNmU2ZTY7ZGlzcGxheTppbmxpbmUtYmxvY2s7
+Ij4KICAgICAgICAgICAgICAgICAgICA8YSBocmVmPSJodHRwczovL21hYXMubWFpbC4xNjMuY29t
+L2Rhc2hpLXdlYi1leHRlbmQvaHRtbC9wcm9TaWduYXR1cmUuaHRtbD9mdGxJZD0xJmFtcDtuYW1l
+PXpoYW5nX2N5MTk4OSZhbXA7dWlkPXpoYW5nX2N5MTk4OSU0MDE2My5jb20mYW1wO2ljb25Vcmw9
+aHR0cHMlM0ElMkYlMkZtYWlsLW9ubGluZS5ub3Nkbi4xMjcubmV0JTJGcWl5ZWxvZ28lMkZkZWZh
+dWx0QXZhdGFyLnBuZyZhbXA7aXRlbXM9JTVCJTIyemhhbmdfY3kxOTg5JTQwMTYzLmNvbSUyMiU1
+RCIgc3R5bGU9ImRpc3BsYXk6YmxvY2s7YmFja2dyb3VuZDojZmZmOyBtYXgtd2lkdGg6IDQwMHB4
+OyBfd2lkdGg6IDQwMHB4O3BhZGRpbmc6MTVweCAwIDEwcHggMDt0ZXh0LWRlY29yYXRpb246IG5v
+bmU7IG91dGxpbmU6bm9uZTstd2Via2l0LXRhcC1oaWdobGlnaHQtY29sb3I6dHJhbnNwYXJlbnQ7
+LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt0ZXh0LXNpemUtYWRqdXN0
+Om5vbmUgIWltcG9ydGFudDsiPgogICAgICAgICAgICA8dGFibGUgY2VsbHBhZGRpbmc9IjAiIHN0
+eWxlPSJ3aWR0aDogMTAwJTsgbWF4LXdpZHRoOiAxMDAlOyB0YWJsZS1sYXlvdXQ6IGZpeGVkOyBi
+b3JkZXItY29sbGFwc2U6IGNvbGxhcHNlO2NvbG9yOiAjOWI5ZWExO2ZvbnQtc2l6ZTogMTRweDts
+aW5lLWhlaWdodDoxLjM7LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDt0
+ZXh0LXNpemUtYWRqdXN0Om5vbmUgIWltcG9ydGFudDsiPgogICAgICAgICAgICAgICAgPHRib2R5
+IHN0eWxlPSJmb250LWZhbWlseTogJ1BpbmdGYW5nIFNDJywgJ0hpcmFnaW5vIFNhbnMgR0InLCdX
+ZW5RdWFuWWkgTWljcm8gSGVpJywgJ01pY3Jvc29mdCBZYWhlaScsICflvq7ova/pm4Xpu5EnLCB2
+ZXJkYW5hICFpbXBvcnRhbnQ7IHdvcmQtd3JhcDpicmVhay13b3JkOyB3b3JkLWJyZWFrOmJyZWFr
+LWFsbDstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZSAhaW1wb3J0YW50O3RleHQtc2l6ZS1h
+ZGp1c3Q6bm9uZSAhaW1wb3J0YW50OyI+CiAgICAgICAgICAgICAgICAgICAgPHRyIGNsYXNzPSJm
+aXJzdFJvdyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGQgd2lkdGg9IjM4IiBzdHls
+ZT0icGFkZGluZzowOyBib3gtc2l6aW5nOiBib3JkZXItYm94OyB3aWR0aDogMzhweDsiPgogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxpbWcgd2lkdGg9IjM4IiBoZWlnaHQ9IjM4IiBz
+dHlsZT0idmVydGljYWwtYWxpZ246bWlkZGxlOyB3aWR0aDogMzhweDsgaGVpZ2h0OiAzOHB4OyBi
+b3JkZXItcmFkaXVzOjUwJTsiIHNyYz0iaHR0cHM6Ly9tYWlsLW9ubGluZS5ub3Nkbi4xMjcubmV0
+L3FpeWVsb2dvL2RlZmF1bHRBdmF0YXIucG5nIj4KICAgICAgICAgICAgICAgICAgICAgICAgICAg
+IDwvdGQ+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGQgc3R5bGU9InBhZGRpbmc6IDAg
+MCAwIDEwcHg7IGNvbG9yOiAjMzEzNTNiOyI+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgPGRpdiBzdHlsZT0iZm9udC1zaXplOiAxNnB4O2ZvbnQtd2VpZ2h0OmJvbGQ7IHdpZHRoOjEw
+MCU7IHdoaXRlLXNwYWNlOiBub3dyYXA7IG92ZXJmbG93OmhpZGRlbjt0ZXh0LW92ZXJmbG93OiBl
+bGxpcHNpczsiPnpoYW5nX2N5MTk4OTwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICAgICAg
+PC90ZD4KICAgICAgICAgICAgICAgICAgICA8L3RyPgogICAgICAgICAgICAgICAgICAgICAgICA8
+dHIgd2lkdGg9IjEwMCUiIHN0eWxlPSJmb250LXNpemU6IDE0cHggIWltcG9ydGFudDsgd2lkdGg6
+IDEwMCU7Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0ZCBjb2xzcGFuPSIyIiBzdHls
+ZT0icGFkZGluZzoxMHB4IDAgMCAwOyBmb250LXNpemU6MTRweCAhaW1wb3J0YW50OyB3aWR0aDog
+MTAwJTsiPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IHN0eWxlPSJ3
+aWR0aDogMTAwJTtmb250LXNpemU6IDE0cHggIWltcG9ydGFudDt3b3JkLXdyYXA6YnJlYWstd29y
+ZDt3b3JkLWJyZWFrOmJyZWFrLWFsbDsiPnpoYW5nX2N5MTk4OUAxNjMuY29tPC9kaXY+CiAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICA8L3RkPgogICAgICAgICAgICAgICAgICAgICAgICA8L3Ry
+PgogICAgICAgICAgICAgICAgPC90Ym9keT4KICAgICAgICAgICAgPC90YWJsZT4KICAgICAgICA8
+L2E+CiAgICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgc3R5bGU9ImZvbnQtc2l6ZTox
+MnB4O2NvbG9yOiNiNWI5YmQ7bGluZS1oZWlnaHQ6MThweDsiPgogICAgICAgIDxzcGFuPuetvuWQ
+jeeUsTwvc3Bhbj4KICAgICAgICA8YSBzdHlsZT0idGV4dC1kZWNvcmF0aW9uOiBub25lO2NvbG9y
+OiM0MTk2ZmY7cGFkZGluZzowIDVweDsiIGhyZWY9Imh0dHBzOi8vbWFpbC4xNjMuY29tL2Rhc2hp
+L2RscHJvLmh0bWw/ZnJvbT1tYWlsODEiPue9keaYk+mCrueuseWkp+W4iDwvYT4KICAgICAgICA8
+c3Bhbj7lrprliLY8L3NwYW4+CiAgICA8L2Rpdj4KIDwvZGl2Pgo8L2Rpdj48ZGl2IGNsYXNzPSJK
+LXJlcGx5IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZjJmMmYyO2NvbG9yOmJsYWNrO3BhZGRp
+bmctdG9wOjZweDtwYWRkaW5nLWJvdHRvbTo2cHg7Ym9yZGVyLXJhZGl1czozcHg7LW1vei1ib3Jk
+ZXItcmFkaXVzOjNweDstd2Via2l0LWJvcmRlci1yYWRpdXM6M3B4O21hcmdpbi10b3A6NDVweDtt
+YXJnaW4tYm90dG9tOjIwcHg7Zm9udC1mYW1pbHk6J+W+rui9r+mbhem7kSc7Ij4KICAgIDxkaXYg
+c3R5bGU9ImZvbnQtc2l6ZToxMnB4O2xpbmUtaGVpZ2h0OjEuNTt3b3JkLWJyZWFrOmJyZWFrLWFs
+bDttYXJnaW4tbGVmdDoxMHB4O21hcmdpbi1yaWdodDoxMHB4Ij5PbiA8c3BhbiBjbGFzcz0ibWFp
+bC1kYXRlIj41LzI3LzIwMjAgMTU6MDM8L3NwYW4+77yMPGEgY2xhc3M9Im1haWwtdG8iIHN0eWxl
+PSJ0ZXh0LWRlY29yYXRpb246bm9uZTtjb2xvcjojMmE4M2YyOyIgaHJlZj0ibWFpbHRvOmt1aXlp
+bmcud2FuZ0BpbnRlbC5jb20iPldhbmcsIEt1aXlpbmcmbHQ7a3VpeWluZy53YW5nQGludGVsLmNv
+bSZndDs8L2E+IHdyb3Rl77yaIDwvZGl2Pgo8L2Rpdj4KPGJsb2NrcXVvdGUgaWQ9Im50ZXMtcGNt
+YWlsLXF1b3RlIiBzdHlsZT0ibWFyZ2luOiAwOyBwYWRkaW5nOiAwOyBmb250LXNpemU6IDE0cHg7
+IGZvbnQtZmFtaWx5OiAn5b6u6L2v6ZuF6buRJzsiPgoKPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24x
+Ij4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+SGkgJm5ic3A7RmVsaXgsPG86cD48L286cD48L3A+Cjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj5Cb3RoIEtDUyBhbmQgZVNQSSBkcml2ZXIgYXJlIHJlYWR5IHg4NiBwbGF0Zm9ybXMuPG86
+cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPlBsZWFzZSByZWZlciA8YSBocmVmPSJo
+dHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1DLyI+aHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJN
+Qy88L2E+CjxvOnA+PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwv
+bzpwPjwvcD4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+RXhhbXBsZTo8bzpwPjwvbzpwPjwvcD4KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9v
+cGVuYm1jL2Jsb2IvaW50ZWwvbWV0YS1vcGVuYm1jLW1vZHMvbWV0YS1hc3QyNTAwL3JlY2lwZXMt
+YnNwL3UtYm9vdC9maWxlcy8wMDIyLUtDUy1kcml2ZXItc3VwcG9ydC1pbi11Qm9vdC5wYXRjaCI+
+aHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9vcGVuYm1jL2Jsb2IvaW50ZWwvbWV0YS1vcGVu
+Ym1jLW1vZHMvbWV0YS1hc3QyNTAwL3JlY2lwZXMtYnNwL3UtYm9vdC9maWxlcy8wMDIyLUtDUy1k
+cml2ZXItc3VwcG9ydC1pbi11Qm9vdC5wYXRjaDwvYT48bzpwPjwvbzpwPjwvcD4KPHAgY2xhc3M9
+Ik1zb05vcm1hbCI+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9vcGVuYm1j
+L2Jsb2IvaW50ZWwvbWV0YS1vcGVuYm1jLW1vZHMvbWV0YS1hc3QyNjAwL3JlY2lwZXMtYnNwL3Ut
+Ym9vdC9maWxlcy8wMDA1LUFzdDI2MDAtRW5hYmxlLWludGVycnVwdC1pbi11LWJvb3QucGF0Y2gi
+Pmh0dHBzOi8vZ2l0aHViLmNvbS9JbnRlbC1CTUMvb3BlbmJtYy9ibG9iL2ludGVsL21ldGEtb3Bl
+bmJtYy1tb2RzL21ldGEtYXN0MjYwMC9yZWNpcGVzLWJzcC91LWJvb3QvZmlsZXMvMDAwNS1Bc3Qy
+NjAwLUVuYWJsZS1pbnRlcnJ1cHQtaW4tdS1ib290LnBhdGNoPC9hPjxvOnA+PC9vOnA+PC9wPgo8
+cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vSW50ZWwtQk1D
+L29wZW5ibWMvYmxvYi9pbnRlbC9tZXRhLW9wZW5ibWMtbW9kcy9tZXRhLWNvbW1vbi9yZWNpcGVz
+LWtlcm5lbC9saW51eC9saW51eC1hc3BlZWQvMDAyMi1BZGQtQVNUMjUwMC1lU1BJLWRyaXZlci5w
+YXRjaCI+aHR0cHM6Ly9naXRodWIuY29tL0ludGVsLUJNQy9vcGVuYm1jL2Jsb2IvaW50ZWwvbWV0
+YS1vcGVuYm1jLW1vZHMvbWV0YS1jb21tb24vcmVjaXBlcy1rZXJuZWwvbGludXgvbGludXgtYXNw
+ZWVkLzAwMjItQWRkLUFTVDI1MDAtZVNQSS1kcml2ZXIucGF0Y2g8L2E+PG86cD48L286cD48L3A+
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4KPHAgY2xhc3M9Ik1zb05vcm1hbCI+QlRXOiB5
+b3UgY291bGQgc2V0IEFjdXRlIHRyYXZlbCBsb2dpYyB0byBhbmFseXplIGVTUEkgYnVzLiBUaGVy
+ZSBpcyBlU1BJIGNvbm5lY3RvciBvbiBJbnRlbCBDUkIgcGxhdGZvcm0uPG86cD48L286cD48L3A+
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj5UaGFua3MsPG86cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPkt3aW4u
+PG86cD48L286cD48L3A+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
+Pgo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJs
+YWNrIj5EZWFyIEphbWVzL2FuZHJldy9Pc2thcjxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8cHJl
+PjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IFRoYW5rcyBhIGxv
+dC48bzpwPjwvbzpwPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2si
+PiZuYnNwOyZuYnNwOyZuYnNwOyBJIGFtIHN0dWR5aW5nIGVTUEkgc3BlYy4gQnV0IGl0J3MgaGFy
+ZCB0byBmaW5kIGFueSBwcm9kdWN0cyB3aXRoIGVTUEkuPG86cD48L286cD48L3NwYW4+PC9wcmU+
+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4mbmJzcDsmbmJzcDsmbmJzcDsgWW91ciBy
+ZXBseSBnaXZlcyBtb3JlIHVuZGVyc3RhbmRpbmcgYWJvdXQgZVNQSS48bzpwPjwvbzpwPjwvc3Bh
+bj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPiZuYnNwOyZuYnNwOyZuYnNw
+OyA8bzpwPjwvbzpwPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2si
+PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0xvb2tpbmcgZm9yd2FyZCB0byBtb3JlIGFwcGxpY2F0
+aW9ucyB3aXRoIGVTUEkgaW4gb3BlbmJtYyBwcm9qZWN0LjxvOnA+PC9vOnA+PC9zcGFuPjwvcHJl
+Pgo8cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IFRoYW5r
+cyBhZ2Fpbi48bzpwPjwvbzpwPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6
+YmxhY2siPkJSPG86cD48L286cD48L3NwYW4+PC9wcmU+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9y
+OmJsYWNrIj5GZWxpeDxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8cHJlPjxzcGFuIHN0eWxlPSJj
+b2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IDxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8
+cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9w
+cmU+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bh
+bj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPnw8aT4gfDxvOnA+PC9vOnA+
+PC9pPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPnpoYW5nX2N5
+MTk4OTxvOnA+PC9vOnA+PC9zcGFuPjwvcHJlPgo8cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFj
+ayI+fDxpPjxvOnA+PC9vOnA+PC9pPjwvc3Bhbj48L3ByZT4KPHByZT48c3BhbiBzdHlsZT0iY29s
+b3I6YmxhY2siPnw8aT48bzpwPjwvbzpwPjwvaT48L3NwYW4+PC9wcmU+CjxwcmU+PHNwYW4gc3R5
+bGU9ImNvbG9yOmJsYWNrIj48YSBocmVmPSJodHRwczovL2xpc3RzLm96bGFicy5vcmcvbGlzdGlu
+Zm8vb3BlbmJtYyI+emhhbmdfY3kxOTg5IGF0IDE2My5jb208L2E+PG86cD48L286cD48L3NwYW4+
+PC9wcmU+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPgo8L2Rpdj48
+L2Jsb2NrcXVvdGU+PCEtLfCfmIAtLT4KPC9kaXY+CjwvYm9keT4KPC9odG1sPg==
+------=_Part_120613_831324766.1592433726455--
 
-Good.  This wasn't clear from the earlier email.  Thanks.
-
-
-> As we are in agreement that we want to use the journal for persistence=20
-> and log rotate feature.
-
-I'm not convinced there is agreement on this.  There has been
-disagreement about even using the journal for phosphor-logging use since
-the beginning and I suspect there would be less agreement on another
-application using it as its own IPC mechanism.
-
-Just because a hammer can be used to insert a nail into a board doesn't
-mean you use it insert any pointy thing into a flat thing.  [ Just
-because the journal provides log rotation and persistance doesn't mean
-you should use it for every feature needing log rotation and
-persistance. ]
-
-
-> ***** As per the Redfish one of the requirement is we need the log for=20
-> most of the Dbus Property update/interface added as they
-> are mapped to some Redfish Resource and the bmcweb has to send the=20
-> Resource updated/modified signal to the
-> Redfish client. ******
-
-I don't know Redfish well, so bear with me if there is something obvious
-I'm missing.  But, the first part of this "requirement" doesn't seem to
-follow from the second part of the "requirement" to me.
-
-Sending a signal of a property changing to the Redfish clients is
-straight-forwawrd; Redfish should subscribe to all the appropriate
-dbus-events.  I don't understand how this implies any sort of logging.
-Where does the logging part of this requirement come from?
-
-> We have two options:
->  =A0=A0=A0 1) Each transport interface listens for the Dbus signals and w=
-rite=20
-> it to their app specific file.
->  =A0=A0=A0 2) Each openbmc repo must use log::report for each D-bus prope=
-rty=20
-> update/ interface added.
-
-#2 is absolutely unworkable on the surface to me.  log::report is to
-create a error entry (xyz.openbmc_project.Logging.Entry), which creates
-a dbus-object, which would cause log::report to be called, which creates
-a dbus-object, which ...
-
-Even if what you meant was something like logging::log<info>, this seems
-pretty heavy.  I'm not sure this is something that can be inserted into
-sdbusplus, especially for the ASIO-based object servers, because in many
-cases applications register their own callback.  For the sdbus++
-generated server bindings we could squeeze it in.  But, what you're
-proposing here is essentially a "journal-as-dbus-monitor".  We'd
-certainly need to make some measurements on how many kB/s worth of
-journal entries this would create because I suspect we could end up
-burning out a NAND flash with as many writes as that would induce.
-
---=20
-Patrick Williams
-
---0H629O+sVkh21xTi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7qgNoACgkQqwNHzC0A
-wRkYUw//a07hvWuaKXHgQ2rpYBIp0gfXO2Na5HVLrNnI3RwRvOPZJDNcikEhkjsm
-1/wfqWkgWQtWiu25B0lmKXIvqVx8s5beXMntCoRs8IuQ5BexdcYv86dNmGpLPNlQ
-dwx3YIaKI6njbcRAuFO1Kxdh2g4z3msq7RoZ6t4CPxzmFEEO/G5Q6bt0D5Bf4hN8
-gcMgg+vP+4Rvrh19TaTnLXDJg2TvSFHMoANzGHZYJ99qqLA72Vp6GdOMU4JCDS1H
-Zj0bcgNqcvzE5rbYYO7NVoP8O2ETswl5uj7OptPF2JGQ0sSf51adSxA764ySwT2z
-mXgYG8ldGsdHcRKllb4NIbrLm7SwdDHlQxfTbERoEEDgzZkcsm+oDyQBVOkeEMiH
-iV8UeTVhP2pXeT6ZAeiVuED2YYV87TUM1DwuyUbMqlO0QGs1CicW/sVoGL/Sf56q
-pmhr+k0qd4I9/uikAgwf4L/jOaNsspwKBLOx230Mw5KKZujtUxgnN5ExgOMvi7tW
-UgMbXBd1PrnYPt1HkCf8FMGt560fJ13SZo9RmtXwEP5xcpDX5eYUBSQEEMiZBQ53
-pVmAiKHCEjeRYg29U5K4GxluZO0NgpNQSYv2PB6bS67zPcsGuyomH1Y8lc7Jgnig
-MRCiHrSavE2E2FWja0N0vC+SDex7mRteYyJtASJN2EOwaKfsR4o=
-=F/7Z
------END PGP SIGNATURE-----
-
---0H629O+sVkh21xTi--
