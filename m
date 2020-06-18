@@ -1,64 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BA281FFD60
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 23:28:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB03D1FFD62
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 23:29:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49nw5b4QB6zDr0k
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jun 2020 07:28:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49nw6q659PzDqB9
+	for <lists+openbmc@lfdr.de>; Fri, 19 Jun 2020 07:29:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::230;
- helo=mail-oi1-x230.google.com; envelope-from=xqiu@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32f;
+ helo=mail-ot1-x32f.google.com; envelope-from=xqiu@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=XmrH0mpG; dkim-atps=neutral
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [IPv6:2607:f8b0:4864:20::230])
+ header.s=20161025 header.b=uWpWy94p; dkim-atps=neutral
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
+ [IPv6:2607:f8b0:4864:20::32f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49nw3N3S7VzDrL9
- for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 07:26:08 +1000 (AEST)
-Received: by mail-oi1-x230.google.com with SMTP id k4so6490348oik.2
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 14:26:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49nw3Y3QpjzDrL9
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 07:26:17 +1000 (AEST)
+Received: by mail-ot1-x32f.google.com with SMTP id 97so5738920otg.3
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 14:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to:cc;
- bh=dRr3bHnwQXxRBB3j0go+ubIE9akxqFex3kKGuROFmtU=;
- b=XmrH0mpG6Ngdnu5O0U4dVQxHijWsMov0iLcx/DfFBoC1ETP3xf1db2TnyAk5/mkKZ2
- TbqoudqWuufMorTNOCtZi2UBZtikbBXyGDhf/9evMvq7f4WQTuZB5mwMMT6klTUiGTvg
- LTX4QpYXoKmEOUoTKvEnNBkMieNFTsuRZq+urzQkPizCgIdKRdJ/qgOohGrSHiLKTDW9
- Aam5inLKXthvOBCdKKehTgiJGHVfMSP35X9d7gcOR2BtL4MvTY/wHlUNQyh+tBrpaedP
- YBA0GRe3KV2gG/XLHorCRm88emJDQwi4uG0JA0h7ErxxRrkMhsKqk4Rq3aJ84t7zjboQ
- cbeQ==
+ bh=QCFCQl0tSEASSz3EB6TlJMMdXU1Lb9Ex9JHQD4fWld8=;
+ b=uWpWy94plxX4/DUveur2DHcQXc4fOd+pRmM6vMl1h+ZAAFSCNK795G23XVwht2iRVI
+ ld3swrLcInxO654Kx0YtwXZ5JkYu8eAyMXPR2ARfHfZYjDow9/zTR0sbvTkQWQHIycKF
+ BY/Qrze0jGK4MKI/O8wYzZml7P1C4bl6PYo7tYFHXfhYIn50rF3DpwvZQAhygJERMB65
+ 0OyG8g35V0zcM3eGFKSQZ/COeYOgb6LJaQOukzp879n7jLA3A6Y61UObniPqaecvitxn
+ 1Q35mSJWrVNpk7yTRzS24ZGgcgMj3Cp4Q5aHDxbIBWAcV6Cp51OwEunLvSqmWOKRj0Oj
+ i+IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=dRr3bHnwQXxRBB3j0go+ubIE9akxqFex3kKGuROFmtU=;
- b=KlC4lcHdpe1CAiMoQR7llTRwo3UTlnD7WKwUJDBjtxvRCqRbiaiO/3wDlLpmCxDiRk
- oQev5RKy+nF56VsTwYtsNoYdy4gBBmHWWVzIjgqHcyL7D8irQ9J03OQlsplZDkOlQUAR
- aJIz6qJ3tpuajDVQ5oUEco0hbHodvSpVY0YGgu4bGS+W5uQJpjEASJqiYW/lHaYTmZkA
- hNXxcYlxqTDKVqkiTjj0Vr/8lIeajCMAQJLANhpszOHSdv9WHhTiGHuFYUhgoy/kWpxH
- aJrc2GV3btZ6U2beMK97MJggZktiB627QrCQQt63Vl+AtKqZvIHPCBK+oZKrDF1m17qR
- me7g==
-X-Gm-Message-State: AOAM532c7sc5PVsRQppJvWPFGvU2XCNboEMA6NHrI4Rtz48dfAlewNEw
- CM/ci+YO7OeGzBIdBRlT2CiJ03pIZ/RltEcD2iEsndGPWEM=
-X-Google-Smtp-Source: ABdhPJzowbM7nBT0CL6j9b60pHIqT/TcC6V+ah/GsGzsPIkXjhn57pNEKksJ1C57Fo0wvW1qMTef3WTFZdi4Min6zGE=
-X-Received: by 2002:a54:4e9a:: with SMTP id c26mr738786oiy.62.1592515565210;
- Thu, 18 Jun 2020 14:26:05 -0700 (PDT)
+ bh=QCFCQl0tSEASSz3EB6TlJMMdXU1Lb9Ex9JHQD4fWld8=;
+ b=pwRyZ66dpwBLyhnQJiUeqVq2d6mJJTda1m7f3JJbwc9j8eTvzqv35Rfalg1vOpE4ZJ
+ lgwv9TeYaJwxZDbaI8gy6y0KJMZnOMqMTL+dN8GmvIbz9TLYBt3YXO4fepqyhtlcPIMr
+ TzMRJM8qQceXDhiKrXm1tQhFcuPtEr/FX4xCvY/UM9Rw6g/kKnmUQkf+a/M/5uUvIyCk
+ F6hIScTlhw/E386Z4QUtos79r7HIY/WEZrU9FnuQat5rIl9KOqIWsMrCAcK8lzZX3SXF
+ bnXk1uuemmfBI9cReSKJIQgXuAkP27NwU37mi0d/KUafI9gcK5t50YQN5p/gIS4n8pHD
+ /Crw==
+X-Gm-Message-State: AOAM531LSxycrzMwt1gBTj293maRtLv/UbslVmrvfmyz07d2egHmNvsQ
+ pf031htSG4l7bHA6jUAO874OQg3OGVeYc03ANwm3egR39rE=
+X-Google-Smtp-Source: ABdhPJxRABW6FRNcpCM2w+z8CL8SV5PvFc3/I0IntwIntARifW3hC4YuHzn+jEFyrPuRBnUFmYpLqmVnaZvV8ZhNpyg=
+X-Received: by 2002:a05:6830:3149:: with SMTP id
+ c9mr609698ots.302.1592515574278; 
+ Thu, 18 Jun 2020 14:26:14 -0700 (PDT)
 MIME-Version: 1.0
 From: Alex Qiu <xqiu@google.com>
-Date: Thu, 18 Jun 2020 14:25:54 -0700
-Message-ID: <CAA_a9xJJn16M2p-wu7-cMsWK3+CEqMTccCg7uhWo1=MMbdxXpw@mail.gmail.com>
+Date: Thu, 18 Jun 2020 14:26:03 -0700
+Message-ID: <CAA_a9xKn77KSnwPq2pEq36JGtfWctaBXOA_4vXtP+=JGszaPkg@mail.gmail.com>
 Subject: Feedback on Current OpenBMC and Proposing Some Improvements ----
- Difficulties and Issue Examples
+ "Improvements" Ideas
 To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000090a6d505a8626c41"
+Content-Type: multipart/alternative; boundary="0000000000001b19f905a8626d53"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,261 +75,246 @@ Cc: gBMC Discussions <gbmc-discuss@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000090a6d505a8626c41
+--0000000000001b19f905a8626d53
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 (Splitted from main email thread "Feedback on Current OpenBMC and Proposing
 Some Improvements")
 
-Difficulties
+"Improvements" Ideas
 
-The current architecture allows different JSON configuration files to be
-loaded to represent varieties of FRUs and boards, however, the architecture
-still emphasizes individual sensors internally, and there are no solid
-concepts of individual FRUs and entities as a whole object in memory. This
-data-driven architecture starts to cause difficulties on the implementation
-when some sensors require specialized treatments according to requirement
-of hardware platforms.
+With the issue examples described above, I came up with some general ideas
+on how "Improvements" should look like, which I concluded them into some
+high-level design ideas.
+Abstraction on entities
 
-Due to having no place for code as control flow around the sensors or data
-purely generated based on configuration files:
+I think we need some abstraction to gather the control flow and data into
+objects in the code to represent hardware entities. This will greatly
+improve debugging, hardware configuration and workaround implementation.
+The developers can easily find the code for the hardware or module that
+they are dealing with, and it is also clear on the location to implement a
+feature for a specific hardware. The control flow can be abstracted into
+some interface functions like: onBmcInit(), onHostPowerEvent(),
+updateSensorReadings(), readEepromContent(), etc. For most of the hardware,
+they can use a common default implementation; for special hardware, they
+can override the function to achieve their requirements. For example,
+reconfiguring a device register when host 12V power is up; aggregating lots
+of temperature sensors to expose only one temperature sensor with maximum
+temperature; applying special handling to the emulated EEPROM described
+above.
+Having a top-down framework of hardware topology
 
-   1.
+The existing JSON files used in the dynamic software stack can only
+represent data, but not any control flow. This led to difficulties where
+sometimes some code is preferred to have for aiding the discovery of
+hardware topology, condensing redundant configurations, etc. With a good
+framework for hardware topology, combining the entity abstraction described
+above, developers can easily find the best places to aid the topology
+discovery, implement hardware initialization logics, and optimize BMC tasks
+according to Linux behaviors.
+Better open source and proprietary part management
 
-   When the current configuration format cannot express a hardware topology
-   or topology discovery logic, a new schema is added case by case. This no=
-t
-   only causes burden to the configuration files themselves but also the
-   configuration file parser. In practice, some code is often preferred to
-   intervene around the hardware topology.
-   2.
+Construct "Improvements" like a proprietary software supporting plugins.
+The philosophy is that the architecture of "Improvements" should be solid
+enough that the community won't have to modify the upstream code much. The
+community can look at and reference the code upstream to develop their own
+code and configs according to their hardware, while the plugin-able part
+may be proprietary and can be kept downstream without conflicts.
+"Improvements" should have a reasonable plugin API to support common BMC
+functionality in the high level, and provide common low-level APIs to
+support the plugins by abstracting things like hwmon sysfs interface. This
+can be implemented using a plugin system or a flexible build system, as we
+are working on an open source project indeed. Whenever we find a potential
+conflict between upstream and downstream, let us work it out to see if it
+is appropriate to make it pluginable or configurable via config files.
+Flexibility for alternatives
 
-   It is hard for developers to debug against a certain hardware, as the
-   developer has to filter the log for it based on various condition
-   statements.
-   3.
+Although hwmon sysfs interface is a good starting point for getting sensor
+reads from devices, they have their own limitations. The interface does not
+abstract every register perfectly, especially when device registers are not
+designed to follow some common specs like PMBus, and it does not provide
+controls to the devices.
 
-   It is hard for new developers to ramp up on debugging, because there is
-   no symbol for developers to quickly look up and find the code related to
-   one hardware or module to put debug statements.
-   4.
+I propose a Device Abstraction Layer to wrap around devices. The underlying
+can completely map to hwmon sysfs, or allow user-space driver
+implementation if necessary, or even hybrid. This will easily provide an
+additional interface to bypass the driver and control the devices, while
+still maintaining the benefit to use an off-the-shelf Linux device driver.
+Decouple protocol layers more
 
-   Unfortunately, debugging hardware issues occupy the life of BMC
-   developers quite often, then debug codes are sometimes asked to be turne=
-d
-   into workarounds which will stay in the code base. The harder to debug, =
-the
-   even harder it is to put up an elegant workaround for hardware issues.
-   5.
+Quite some existing code is heavily bound to or influenced by the IPMI
+protocol layer that we are having right now: We use =E2=80=9Cuint8_t=E2=80=
+=9D type for I2C
+bus number in entity-manager for example, while Linux kernel can extend the
+logical I2C bus number to more than 512 without any issues. The current
+dynamic software stack emphasizes individual sensors, but the BMC handles
+many more tasks than just only sensors. The practicality of OpenBMC for
+hardware engineers is also hindered by the IPMI as described above in Issue
+Examples.
 
-   If the OpenBMC framework does not provide enough flexibility to
-   accommodate specialized code for specific requirements, they quickly bec=
-ome
-   downstream patches and technical debts, and they cause cost on maintenan=
-ce
-   as an open source software.
+We should have a core designed to consider varieties of tasks that BMC may
+be asked to handle: GPIO modifications, I2C manipulations,  The core should
+not be hindered by any protocol, but the protocol layer should find its own
+way to map the core APIs to its own protocol. This will help us to transit
+from IPMI to Redfish.
+Backward Compatibility
 
-Issue Examples
+Although the current dynamic software stack configuration file naming
+schema has already taken in some bad label naming like =E2=80=9CName1=E2=80=
+=9D, I
+understand that the community has also put in a lot of effort to the
+current dynamic software stack, and would like to maintain some backward
+compatibility somehow to mitigate the transition. I do not have too much
+understanding of the compatibility burden that we are dealing with right
+now, but just to give a couple of examples: The current JSON configuration
+files can be addressed by a common topology discovery module provided as a
+basis. For Device Abstraction Layer, we can start with a common module to
+still use hwmon sysfs interface for sensors as a basis.
 
-In this section, I will describe issues that we=E2=80=99re facing with the =
-existing
-dynamic software stack, and they should all be well handled by
-"Improvements".
-Configuring device registers according to needs
-
-For the context, related discussions can be found in the mailing list
-archive
-<https://lists.ozlabs.org/pipermail/openbmc/2020-January/020078.html>
-=E2=80=9CConfiguring shunt_resistor in hwmon=E2=80=9D. Although we managed =
-to properly
-adjust the IPMI readouts using scales, we later realized that it would
-still be better to configure it directly in hwmon sysfs. If we configure it
-in hwmon, we can have the correct reading right from the bottom. On the
-other hand, an implementation using the device tree is probably against the
-idea of having the dynamic software stack to configure hardware only when
-discovered.
-
-Also, hardware engineers came up with requests to configure the voltage
-regulator outputs, and from my understanding, this is not what hwmon sysfs
-interface intended to do, and we needed that within a very short time
-period. I had to use shell script to configure the device registers by
-issuing raw I2C commands using i2ctools.
-
-All these requirements ended up in shell scripts run as standalone services
-aside from OpenBMC applications, which had their own hardware topology
-discovery logic inside them. This may be redundant to what we do in the
-dynamic software stack.
-Handling special requirements and logics
-
-As our hardware program progresses, we are maintaining more and more
-patches in Yocto to apply upon entity-manager and dbus-sensors.
-
-We had to replace some code logic due to various reasons, for example, we
-found the existing 8-bit / 16-bit addressable EEPROM detection logic is not
-stable enough, and we were left with 8-bit addressable EEPROMs with their
-content corrupted in the first byte.
-
-
-(Continuing to thread "Feedback on Current OpenBMC and Proposing Some
-Improvements ---- "Improvements" Ideas")
-
+(Back to main thread)
 
 - Alex Qiu
 
---00000000000090a6d505a8626c41
+--0000000000001b19f905a8626d53
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>(Splitted=C2=A0from main email thread &quot;Feedback =
-on Current OpenBMC and Proposing Some Improvements&quot;)</div><div><br></d=
-iv><div><span style=3D"background-color:transparent;color:rgb(0,0,0);font-f=
-amily:Arial;font-size:20pt;white-space:pre-wrap">Difficulties</span><br></d=
-iv><div><span id=3D"gmail-docs-internal-guid-470c27a4-7fff-91bb-d765-70a5ac=
-732c72"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bott=
-om:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);ba=
-ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
-ian:normal;vertical-align:baseline;white-space:pre-wrap">The current archit=
-ecture allows different JSON configuration files to be loaded to represent =
-varieties of FRUs and boards, however, the architecture still emphasizes in=
-dividual sensors internally, and there are no solid concepts of individual =
-FRUs and entities as a whole object in memory. This data-driven architectur=
-e starts to cause difficulties on the implementation when some sensors requ=
-ire specialized treatments according to requirement of hardware platforms.<=
-/span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margi=
-n-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0=
-,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
-ast-asian:normal;vertical-align:baseline;white-space:pre-wrap">Due to havin=
-g no place for code as control flow around the sensors or data purely gener=
-ated based on configuration files:</span></p><ol style=3D"margin-top:0px;ma=
-rgin-bottom:0px"><li dir=3D"ltr" style=3D"list-style-type:decimal;font-size=
-:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-=
-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseli=
-ne;white-space:pre"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt=
-;margin-bottom:0pt"><span style=3D"font-size:11pt;background-color:transpar=
-ent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-ali=
-gn:baseline;white-space:pre-wrap">When the current configuration format can=
-not express a hardware topology or topology discovery logic, a new schema i=
-s added case by case. This not only causes burden to the configuration file=
-s themselves but also the configuration file parser. In practice, some code=
- is often preferred to intervene around the hardware topology.</span></p></=
-li><li dir=3D"ltr" style=3D"list-style-type:decimal;font-size:11pt;font-fam=
-ily:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numeri=
-c:normal;font-variant-east-asian:normal;vertical-align:baseline;white-space=
-:pre"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom=
-:0pt"><span style=3D"font-size:11pt;background-color:transparent;font-varia=
-nt-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;wh=
-ite-space:pre-wrap">It is hard for developers to debug against a certain ha=
-rdware, as the developer has to filter the log for it based on various cond=
-ition statements.</span></p></li><li dir=3D"ltr" style=3D"list-style-type:d=
-ecimal;font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:t=
-ransparent;font-variant-numeric:normal;font-variant-east-asian:normal;verti=
-cal-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-height:1.3=
-8;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;backgroun=
-d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
-mal;vertical-align:baseline;white-space:pre-wrap">It is hard for new develo=
-pers to ramp up on debugging, because there is no symbol for developers to =
-quickly look up and find the code related to one hardware or module to put =
-debug statements.</span></p></li><li dir=3D"ltr" style=3D"list-style-type:d=
-ecimal;font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:t=
-ransparent;font-variant-numeric:normal;font-variant-east-asian:normal;verti=
-cal-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-height:1.3=
-8;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;backgroun=
-d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
-mal;vertical-align:baseline;white-space:pre-wrap">Unfortunately, debugging =
-hardware issues occupy the life of BMC developers quite often, then debug c=
-odes are sometimes asked to be turned into workarounds which will stay in t=
-he code base. The harder to debug, the even harder it is to put up an elega=
-nt workaround for hardware issues.</span></p></li><li dir=3D"ltr" style=3D"=
-list-style-type:decimal;font-size:11pt;font-family:Arial;color:rgb(0,0,0);b=
-ackground-color:transparent;font-variant-numeric:normal;font-variant-east-a=
-sian:normal;vertical-align:baseline;white-space:pre"><p dir=3D"ltr" style=
-=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-=
-size:11pt;background-color:transparent;font-variant-numeric:normal;font-var=
-iant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">If the=
- OpenBMC framework does not provide enough flexibility to accommodate speci=
-alized code for specific requirements, they quickly become downstream patch=
-es and technical debts, and they cause cost on maintenance as an open sourc=
-e software.</span></p></li></ol><h1 dir=3D"ltr" style=3D"line-height:1.38;m=
-argin-top:20pt;margin-bottom:6pt"><span style=3D"font-size:20pt;font-family=
+<div dir=3D"ltr">(Splitted=C2=A0from main email thread &quot;Feedback on Cu=
+rrent OpenBMC and Proposing Some Improvements&quot;)=C2=A0<div><br><div><sp=
+an style=3D"background-color:transparent;color:rgb(0,0,0);font-family:Arial=
+;font-size:20pt;white-space:pre-wrap">&quot;Improvements&quot; Ideas</span>=
+<br></div><div><span id=3D"gmail-docs-internal-guid-a4273400-7fff-33bb-8fc2=
+-6a4c4ddc9314"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;marg=
+in-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,=
+0,0);background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap">With the is=
+sue examples described above, I came up with some general ideas on how &quo=
+t;Improvements&quot; should look like, which I concluded them into some hig=
+h-level design ideas.</span></p><h2 dir=3D"ltr" style=3D"line-height:1.38;m=
+argin-top:18pt;margin-bottom:6pt"><span style=3D"font-size:16pt;font-family=
 :Arial;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-v=
 ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
-e;white-space:pre-wrap">Issue Examples</span></h1><p dir=3D"ltr" style=3D"l=
-ine-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:=
-11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-v=
-ariant-numeric:normal;font-variant-east-asian:normal;vertical-align:baselin=
-e;white-space:pre-wrap">In this section, I will describe issues that we=E2=
-=80=99re facing with the existing dynamic software stack, and they should a=
-ll be well handled by &quot;Improvements&quot;.</span></p><h2 dir=3D"ltr" s=
-tyle=3D"line-height:1.38;margin-top:18pt;margin-bottom:6pt"><span style=3D"=
-font-size:16pt;font-family:Arial;color:rgb(0,0,0);background-color:transpar=
-ent;font-weight:400;font-variant-numeric:normal;font-variant-east-asian:nor=
-mal;vertical-align:baseline;white-space:pre-wrap">Configuring device regist=
-ers according to needs</span></h2><p dir=3D"ltr" style=3D"line-height:1.38;=
-margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family=
-:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:n=
-ormal;font-variant-east-asian:normal;vertical-align:baseline;white-space:pr=
-e-wrap">For the context, related discussions can be found in the </span><a =
-href=3D"https://lists.ozlabs.org/pipermail/openbmc/2020-January/020078.html=
-" style=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-fa=
-mily:Arial;background-color:transparent;font-variant-numeric:normal;font-va=
-riant-east-asian:normal;text-decoration-line:underline;vertical-align:basel=
-ine;white-space:pre-wrap">mailing list archive</span></a><span style=3D"fon=
-t-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent=
-;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:=
-baseline;white-space:pre-wrap"> =E2=80=9CConfiguring shunt_resistor in hwmo=
-n=E2=80=9D. Although we managed to properly adjust the IPMI readouts using =
-scales, we later realized that it would still be better to configure it dir=
-ectly in hwmon sysfs. If we configure it in hwmon, we can have the correct =
-reading right from the bottom. On the other hand, an implementation using t=
-he device tree is probably against the idea of having the dynamic software =
-stack to configure hardware only when discovered.</span></p><br><p dir=3D"l=
-tr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=
-=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:tran=
-sparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical=
--align:baseline;white-space:pre-wrap">Also, hardware engineers came up with=
- requests to configure the voltage regulator outputs, and from my understan=
-ding, this is not what hwmon sysfs interface intended to do, and we needed =
-that within a very short time period. I had to use shell script to configur=
-e the device registers by issuing raw I2C commands using i2ctools.</span></=
-p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom=
-:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);back=
-ground-color:transparent;font-variant-numeric:normal;font-variant-east-asia=
-n:normal;vertical-align:baseline;white-space:pre-wrap">All these requiremen=
-ts ended up in shell scripts run as standalone services aside from OpenBMC =
-applications, which had their own hardware topology discovery logic inside =
-them. This may be redundant to what we do in the dynamic software stack.</s=
-pan></p></span></div><div><span id=3D"gmail-docs-internal-guid-6ef74ed1-7ff=
-f-299c-aab0-533895e8949e"><h2 dir=3D"ltr" style=3D"line-height:1.38;margin-=
-top:18pt;margin-bottom:6pt"><span style=3D"font-size:16pt;font-family:Arial=
-;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-variant=
--numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whit=
-e-space:pre-wrap">Handling special requirements and logics</span></h2><p di=
-r=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span=
- style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-colo=
-r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
-rtical-align:baseline;white-space:pre-wrap">As our hardware program progres=
-ses, we are maintaining more and more patches in Yocto to apply upon entity=
--manager and dbus-sensors.</span></p><br><p dir=3D"ltr" style=3D"line-heigh=
-t:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font=
--family:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-nu=
-meric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-s=
-pace:pre-wrap">We had to replace some code logic due to various reasons, fo=
-r example, we found the existing 8-bit / 16-bit addressable EEPROM detectio=
-n logic is not stable enough, and we were left with 8-bit addressable EEPRO=
-Ms with their content corrupted in the first byte.</span></p><p dir=3D"ltr"=
- style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D=
-"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transpa=
-rent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-al=
-ign:baseline;white-space:pre-wrap"><br></span></p><p style=3D"line-height:1=
-.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-fa=
-mily:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-numer=
-ic:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spac=
-e:pre-wrap">(Continuing to thread &quot;Feedback on Current OpenBMC and Pro=
-posing Some Improvements ---- &quot;Improvements&quot; Ideas&quot;)</span><=
-/p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0p=
-t"><br></p></span></div><div><div dir=3D"ltr" class=3D"gmail_signature" dat=
-a-smartmail=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu</div></div></di=
-v></div>
+e;white-space:pre-wrap">Abstraction on entities</span></h2><p dir=3D"ltr" s=
+tyle=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"f=
+ont-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transpare=
+nt;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-alig=
+n:baseline;white-space:pre-wrap">I think we need some abstraction to gather=
+ the control flow and data into objects in the code to represent hardware e=
+ntities. This will greatly improve debugging, hardware configuration and wo=
+rkaround implementation. The developers can easily find the code for the ha=
+rdware or module that they are dealing with, and it is also clear on the lo=
+cation to implement a feature for a specific hardware. The control flow can=
+ be abstracted into some interface functions like: onBmcInit(), onHostPower=
+Event(), updateSensorReadings(), readEepromContent(), etc. For most of the =
+hardware, they can use a common default implementation; for special hardwar=
+e, they can override the function to achieve their requirements. For exampl=
+e, reconfiguring a device register when host 12V power is up; aggregating l=
+ots of temperature sensors to expose only one temperature sensor with maxim=
+um temperature; applying special handling to the emulated EEPROM described =
+above.</span></p><h2 dir=3D"ltr" style=3D"line-height:1.38;margin-top:18pt;=
+margin-bottom:6pt"><span style=3D"font-size:16pt;font-family:Arial;color:rg=
+b(0,0,0);background-color:transparent;font-weight:400;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap">Having a top-down framework of hardware topology</span></h2><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ver=
+tical-align:baseline;white-space:pre-wrap">The existing JSON files used in =
+the dynamic software stack can only represent data, but not any control flo=
+w. This led to difficulties where sometimes some code is preferred to have =
+for aiding the discovery of hardware topology, condensing redundant configu=
+rations, etc. With a good framework for hardware topology, combining the en=
+tity abstraction described above, developers can easily find the best place=
+s to aid the topology discovery, implement hardware initialization logics, =
+and optimize BMC tasks according to Linux behaviors.</span></p><h2 dir=3D"l=
+tr" style=3D"line-height:1.38;margin-top:18pt;margin-bottom:6pt"><span styl=
+e=3D"font-size:16pt;font-family:Arial;color:rgb(0,0,0);background-color:tra=
+nsparent;font-weight:400;font-variant-numeric:normal;font-variant-east-asia=
+n:normal;vertical-align:baseline;white-space:pre-wrap">Better open source a=
+nd proprietary part management</span></h2><p dir=3D"ltr" style=3D"line-heig=
+ht:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;fon=
+t-family:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-=
+space:pre-wrap">Construct &quot;Improvements&quot; like a proprietary softw=
+are supporting plugins. The philosophy is that the architecture of &quot;Im=
+provements&quot; should be solid enough that the community won&#39;t have t=
+o modify the upstream code much. The community can look at and reference th=
+e code upstream to develop their own code and configs according to their ha=
+rdware, while the plugin-able part may be proprietary and can be kept downs=
+tream without conflicts. &quot;Improvements&quot; should have a reasonable =
+plugin API to support common BMC functionality in the high level, and provi=
+de common low-level APIs to support the plugins by abstracting things like =
+hwmon sysfs interface. This can be implemented using a plugin system or a f=
+lexible build system, as we are working on an open source project indeed. W=
+henever we find a potential conflict between upstream and downstream, let u=
+s work it out to see if it is appropriate to make it pluginable or configur=
+able via config files.</span></p><h2 dir=3D"ltr" style=3D"line-height:1.38;=
+margin-top:18pt;margin-bottom:6pt"><span style=3D"font-size:16pt;font-famil=
+y:Arial;color:rgb(0,0,0);background-color:transparent;font-weight:400;font-=
+variant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseli=
+ne;white-space:pre-wrap">Flexibility for alternatives</span></h2><p dir=3D"=
+ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span styl=
+e=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline;white-space:pre-wrap">Although hwmon sysfs interface is a =
+good starting point for getting sensor reads from devices, they have their =
+own limitations. The interface does not abstract every register perfectly, =
+especially when device registers are not designed to follow some common spe=
+cs like PMBus, and it does not provide controls to the devices.</span></p><=
+br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0p=
+t"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgro=
+und-color:transparent;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;vertical-align:baseline;white-space:pre-wrap">I propose a Device Abst=
+raction Layer to wrap around devices. The underlying can completely map to =
+hwmon sysfs, or allow user-space driver implementation if necessary, or eve=
+n hybrid. This will easily provide an additional interface to bypass the dr=
+iver and control the devices, while still maintaining the benefit to use an=
+ off-the-shelf Linux device driver.</span></p><h2 dir=3D"ltr" style=3D"line=
+-height:1.38;margin-top:18pt;margin-bottom:6pt"><span style=3D"font-size:16=
+pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-wei=
+ght:400;font-variant-numeric:normal;font-variant-east-asian:normal;vertical=
+-align:baseline;white-space:pre-wrap">Decouple protocol layers more</span><=
+/h2><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0=
+pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgr=
+ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
+normal;vertical-align:baseline;white-space:pre-wrap">Quite some existing co=
+de is heavily bound to or influenced by the IPMI protocol layer that we are=
+ having right now: We use =E2=80=9Cuint8_t=E2=80=9D type for I2C bus number=
+ in entity-manager for example, while Linux kernel can extend the logical I=
+2C bus number to more than 512 without any issues. The current dynamic soft=
+ware stack emphasizes individual sensors, but the BMC handles many more tas=
+ks than just only sensors. The practicality of OpenBMC for hardware enginee=
+rs is also hindered by the IPMI as described above in Issue Examples.</span=
+></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bot=
+tom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);b=
+ackground-color:transparent;font-variant-numeric:normal;font-variant-east-a=
+sian:normal;vertical-align:baseline;white-space:pre-wrap">We should have a =
+core designed to consider varieties of tasks that BMC may be asked to handl=
+e: GPIO modifications, I2C manipulations,=C2=A0 The core should not be hind=
+ered by any protocol, but the protocol layer should find its own way to map=
+ the core APIs to its own protocol. This will help us to transit from IPMI =
+to Redfish.</span></p><h2 dir=3D"ltr" style=3D"line-height:1.38;margin-top:=
+18pt;margin-bottom:6pt"><span style=3D"font-size:16pt;font-family:Arial;col=
+or:rgb(0,0,0);background-color:transparent;font-weight:400;font-variant-num=
+eric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-sp=
+ace:pre-wrap">Backward Compatibility</span></h2><p dir=3D"ltr" style=3D"lin=
+e-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11=
+pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;=
+white-space:pre-wrap">Although the current dynamic software stack configura=
+tion file naming schema has already taken in some bad label naming like =E2=
+=80=9CName1=E2=80=9D, I understand that the community has also put in a lot=
+ of effort to the current dynamic software stack, and would like to maintai=
+n some backward compatibility somehow to mitigate the transition. I do not =
+have too much understanding of the compatibility burden that we are dealing=
+ with right now, but just to give a couple of examples: The current JSON co=
+nfiguration files can be addressed by a common topology discovery module pr=
+ovided as a basis. For Device Abstraction Layer, we can start with a common=
+ module to still use hwmon sysfs interface for sensors as a basis.</span></=
+p></span></div><div>=C2=A0</div><div>(Back to main thread)</div><div><br cl=
+ear=3D"all"><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=
+=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu</div></div></div></div></d=
+iv></div>
 
---00000000000090a6d505a8626c41--
+--0000000000001b19f905a8626d53--
