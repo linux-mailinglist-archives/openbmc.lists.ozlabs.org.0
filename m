@@ -1,74 +1,97 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35BA61FEA64
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 06:50:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A9751FEA68
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 06:51:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49nTyK2wGbzDqFY
-	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 14:50:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49nV010gM3zDrDp
+	for <lists+openbmc@lfdr.de>; Thu, 18 Jun 2020 14:51:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::232;
- helo=mail-lj1-x232.google.com; envelope-from=rhanley@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=outlook.com (client-ip=40.92.253.94;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=outlook.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=gZTQYcAR; dkim-atps=neutral
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com
- [IPv6:2a00:1450:4864:20::232])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
+ header.s=selector1 header.b=EG2AYYVx; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-oln040092253094.outbound.protection.outlook.com [40.92.253.94])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49nR6d1sdMzDqZS
- for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 12:42:16 +1000 (AEST)
-Received: by mail-lj1-x232.google.com with SMTP id n23so5361810ljh.7
- for <openbmc@lists.ozlabs.org>; Wed, 17 Jun 2020 19:42:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+/zikI/Skrwl+JnneIEAIDho7kQvMVidcmx2QgCYW+U=;
- b=gZTQYcARfUr1rO7uCHwekCJX4KOqt57+IZlSaYwS2NWUanoOD7FgqQeGcDQwQnAd4g
- jt0Y8zCX3F33kygEIgGuygLkLNeuURWhjYOlNIo0DhXyhTEXCZidetz+g8kj2xK1USoa
- XaCKE2OIQ4HgqonPUFyzNWAjlM3mwjOCUMogWgmmfsmpV0zqeSuYk2i1HnJLNkLFEGoT
- csCyzkM2JINWhks0TrkSeuuCWLQaT5c47EkB4YW217nLgjOgfH/+hLeHeKGiwpsuuuG+
- axcymasPltK88GB6Yrpy+aL+BaB0sKL81By5ejzR30qnd9rH9uC9bZ7rvwm/usR12Xuj
- 3tSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=+/zikI/Skrwl+JnneIEAIDho7kQvMVidcmx2QgCYW+U=;
- b=WmouVY7MeOdMDOCSAObwJS6dbWbAY59lqK+j+Mj4eBbLGnLvBlAWR6W9h50TN3sehI
- u5Tn5q7Tqxit4Xnwx5FoqYtF/VE84zsolOkhhPsDWZw/VNTdkJof7u4Dh/ahf1uJpsa+
- FXCaU33q+D9FNRPha6lekGSJe6HWEzB0LyqivkwNrV2H4YKoDJS8NzPUj0msO35TX3lN
- 4xpLULwbH5qUaYX4BGndySTVIPOPui9NADL5+ZOufcs/vu7+tIfbMXF7xB0xC6lVnw2f
- LW/PYQo23szkGQjmNawAS5ENfnJ8BaOgFWY7g4H0sxqjIaXkkqAuMErRd8WRbBpJHATr
- ac9g==
-X-Gm-Message-State: AOAM533QYSFOU8/jHGhqicSA79i3yEtc4UAZTjO34IIkBYSXkPjJl9Jz
- ug4u/Nr5YHtPcIwrdpTjE2x8w+pwlS89YcGNtCObiQ==
-X-Google-Smtp-Source: ABdhPJzgZpJFlQMUqBCIszEf0mPMeT6wIiyzpH5O7QV9P2oocFpck3NzqRfjTGbUEDGWrJDGBn10SzDQw9vfp22fZIw=
-X-Received: by 2002:a2e:9dcd:: with SMTP id x13mr1202874ljj.465.1592448130655; 
- Wed, 17 Jun 2020 19:42:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49nRdw2WxnzDr3r
+ for <openbmc@lists.ozlabs.org>; Thu, 18 Jun 2020 13:05:53 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=X9dqa5xURXqD5jOxCiYxM9w9m1GkoReokN/6rjOVbxvBjIUxrUwkjImx7L9I47d1FiI2e5tFBBbJziOkUjIa8KvtNKQrXgH9Z36OujKT47z2PcjuGqSBYxf+aCXnGjFxe/wZ6+T3vbaO76X+adX8tSno8jtm8JLOw1e1UQdhKFMuGGUaV4PlIrwyEjlbf0xJgEcGnE3HUnI6JFQNT3WgTOlFHEsoroiUjVateZsKkK7G/1MdEEsBmUPEkPN004X6nq+m5popLNA81sFrTm+LCjf5NVdfMCeT7hbNwRG1cXchTI3pycSwOxvLP0NhNEKAnjnYIP1hFSnVd3DIJcp53Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Tb5FWx7uFkqrwZYCTHK38gxThnFWwW1Q5AUbD73YI+U=;
+ b=W05ea0YD8TfpVzEtZ6TmN69KPQY/w5/PDQ4FnGke5t4oKrDhJOt+lMUu3LSFohZkVaZaNfGmnEr1E8UZ3mowriENkZ1J2U90a7J/g7h6lY3wDco6df09A0QcXp0EehVlDpWWUNUnYF0lK57lygRyBhxyGmjTcGp9LxHkFvYu0+pbTzJRL39DwIW6PFLYiPfIEXXtp6Drh0Z1FVFg6s/77Of2QGfsxhZpkFIHnkICRxKXrvIo3XxstPG4e4EHO0z0P3MtQVOknrBh2hmB1tOcXUgR3XhYf9zGX9CRFbQzptoDSuMNM4L2GIHzDhoWYzha7XUgt+b16cgxOiAeywxsBw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Tb5FWx7uFkqrwZYCTHK38gxThnFWwW1Q5AUbD73YI+U=;
+ b=EG2AYYVxSZcnWXXIufCNRZSELHmWA/NneiAJzsl8bV1pPIFb34yD7Cjg0jVOPS7F5hVLkYDAl0AKH9caSNDi7tPxB36e8aeIc31aaP2oiKSiaiBo5JjAmLGHgd3UtLxAbD6cX13jh09khPEbFdzZ9b6R3Yfg1C0aDu9khgXzGUGYFB7sjsO11234hac56BKKVQQWv8145seFi7o5EI/VVwb5PI9398u82R0o3kZlS9RMVPkTPNWrw3fI5I1EQlwyU9967eIb7etMX8gwm776oAKREZpw7gKw+rJ7dhiyyxHxIaYTPkNXm3HsrajurM0/R0mN5fw53dQ2J3Y7TU9FDg==
+Received: from PU1APC01FT063.eop-APC01.prod.protection.outlook.com
+ (2a01:111:e400:7ebe::41) by
+ PU1APC01HT021.eop-APC01.prod.protection.outlook.com (2a01:111:e400:7ebe::264)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3109.22; Thu, 18 Jun
+ 2020 03:05:50 +0000
+Received: from HK2PR04MB3826.apcprd04.prod.outlook.com
+ (2a01:111:e400:7ebe::4c) by PU1APC01FT063.mail.protection.outlook.com
+ (2a01:111:e400:7ebe::296) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3109.22 via Frontend
+ Transport; Thu, 18 Jun 2020 03:05:50 +0000
+Received: from HK2PR04MB3826.apcprd04.prod.outlook.com
+ ([fe80::88c3:5243:9944:700f]) by HK2PR04MB3826.apcprd04.prod.outlook.com
+ ([fe80::88c3:5243:9944:700f%6]) with mapi id 15.20.3088.029; Thu, 18 Jun 2020
+ 03:05:49 +0000
+From: =?gb2312?B?1twg1LbH5Q==?= <zhouyuanqing8@outlook.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: There is no kcs device in the /dev directory
+Thread-Topic: There is no kcs device in the /dev directory
+Thread-Index: AQHWRQ7NnKu+sXrNAki49Znemi3j0A==
+Date: Thu, 18 Jun 2020 03:05:49 +0000
+Message-ID: <HK2PR04MB3826A23CDAA3FC0CE9660D1BFE9B0@HK2PR04MB3826.apcprd04.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:80D0B76EE6966F7B31C3FDACEB62FD5F216817FB35F2E637C541699228C9D56E;
+ UpperCasedChecksum:3E590BBCBDC4ED8A915E89E89602E432089F131F5CB7DFB7378ECB64D1522F16;
+ SizeAsReceived:6677; Count:42
+x-tmn: [Rf388x4zTp64Cr+yBM5te+HmB9do4rFU]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: d80a912c-fb09-4db3-33bd-08d813348136
+x-ms-traffictypediagnostic: PU1APC01HT021:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: F4Sd+ETa5EROnIsXs4h1NoSslX4TjHUcYRUa/qYWJZEaQWjk1c0RVX/t4uWiwibUtGYDtNEZOyN6uIuxCaaN2m4q6nFLK4Owdpil8L236u4Je2HgBE9r2JbHAkUzMh6OTvYO5e9KKt27D7MkHJvjjCv5/dfW9giUWVAdGqRzQUMYwT3wSlg57MJx2pkcSBaXpiw7P4CcHtZvaTnAkEQB0w==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:0; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK2PR04MB3826.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:; SFS:; DIR:OUT; SFP:1901; 
+x-ms-exchange-antispam-messagedata: ckH8ldDkFi18snHe2wBuYyeQJSP4mOfl3ADva1mxGDvH04JF2HTjl/ydfLxIj1257jy4zUXx0WrRCGvY4Ep/PgJu6TvsU/t3vXdFG9vmTwAV+kyxhzU+ng1GaYbqh7ZeAk1kAxXs9djFPQXEya0Tpg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_HK2PR04MB3826A23CDAA3FC0CE9660D1BFE9B0HK2PR04MB3826apcp_"
 MIME-Version: 1.0
-References: <584F7181-73DB-4090-93D7-87E0E7408F20@fuzziesquirrel.com>
- <DM6PR21MB1388CB8A990972BA09EB5163C8500@DM6PR21MB1388.namprd21.prod.outlook.com>
- <3718EF06-C5DE-4D3D-B2B1-548FEF5A1919@fuzziesquirrel.com>
- <DM6PR21MB138892F44E5B77CCE63F83D4C8530@DM6PR21MB1388.namprd21.prod.outlook.com>
- <D37CC7FB-0199-47A5-930A-B9BBFF02F0D8@fuzziesquirrel.com>
- <DM6PR21MB138859ED52E4D8B7B1B634FEC8520@DM6PR21MB1388.namprd21.prod.outlook.com>
- <187e72f2-3ecb-2693-4467-3da3752efde8@linux.intel.com>
- <cd4f6a11-2150-38b9-46a2-2319a3ef574f@linux.intel.com>
-In-Reply-To: <cd4f6a11-2150-38b9-46a2-2319a3ef574f@linux.intel.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Wed, 17 Jun 2020 19:41:59 -0700
-Message-ID: <CAH1kD+YAVb0tDzRQRY==OSth8Jt689iMePpwQRewjHuKOn8RNg@mail.gmail.com>
-Subject: Re: [EXTERNAL] how to get pci config space
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
- Nancy Yuen <yuenn@google.com>
-Content-Type: multipart/alternative; boundary="00000000000027116b05a852b96b"
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: d80a912c-fb09-4db3-33bd-08d813348136
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Jun 2020 03:05:49.9215 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU1APC01HT021
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,238 +103,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: "uperic@163.com" <uperic@163.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000027116b05a852b96b
-Content-Type: text/plain; charset="UTF-8"
+--_000_HK2PR04MB3826A23CDAA3FC0CE9660D1BFE9B0HK2PR04MB3826apcp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Hi Jason,
+SGkgZXZlcnlvbmUsDQoNCiAgICBUaGVyZSBpcyBubyBrY3MgZGV2aWNlIGluIHRoZSAvZGV2IGRp
+cmVjdG9yeaOsSSB1c2VkIHRoZSBmb2xsb3dpbmcgY29tbWFuZCB0byBmaW5kIGl0IGluIHRoZSBy
+b290IGRpcmVjdG9yeSwgYW5kIEkgZGlkIG5vdCBmaW5kIGlwbWkta2NzIGRldmljZSwgcGxlYXNl
+IGhlbHAgZ3VpZGUsIHRoYW5rIHlvdS4NCg0KMS5maW5kIC8gLW5hbWUgKmtjcyoNCg0KMi5CZWxv
+dyBpcyBteSBrZXJuZWwgY29uZmlndXJhdGlvbg0KQ09ORklHX1NFUklBTF9NQ1RSTF9HUElPPXkN
+CiMgQ09ORklHX1NFUklBTF9ERVZfQlVTIGlzIG5vdCBzZXQNCiMgQ09ORklHX1RUWV9QUklOVEsg
+aXMgbm90IHNldA0KIyBDT05GSUdfSFZDX0RDQyBpcyBub3Qgc2V0DQpDT05GSUdfSVBNSV9IQU5E
+TEVSPXkNCiMgQ09ORklHX0lQTUlfUEFOSUNfRVZFTlQgaXMgbm90IHNldA0KIyBDT05GSUdfSVBN
+SV9ERVZJQ0VfSU5URVJGQUNFIGlzIG5vdCBzZXQNCiMgQ09ORklHX0lQTUlfU0kgaXMgbm90IHNl
+dA0KIyBDT05GSUdfSVBNSV9TU0lGIGlzIG5vdCBzZXQNCiMgQ09ORklHX0lQTUlfV0FUQ0hET0cg
+aXMgbm90IHNldA0KIyBDT05GSUdfSVBNSV9QT1dFUk9GRiBpcyBub3Qgc2V0DQpDT05GSUdfSVBN
+SV9LQ1NfQk1DPXkNCkNPTkZJR19BU1BFRURfS0NTX0lQTUlfQk1DPXkNCkNPTkZJR19BU1BFRURf
+QlRfSVBNSV9CTUM9eQ0KQ09ORklHX0hXX1JBTkRPTT15DQpDT05GSUdfSFdfUkFORE9NX1RJTUVS
+SU9NRU09eQ0KIyBDT05GSUdfUkFXX0RSSVZFUiBpcyBub3Qgc2V0DQojIENPTkZJR19UQ0dfVFBN
+IGlzIG5vdCBzZXQNCiMgQ09ORklHX1hJTExZQlVTIGlzIG5vdCBzZXQNCiMgZW5kIG9mIENoYXJh
+Y3RlciBkZXZpY2VzDQoNClRoYW5rcw0KSGFybGV5DQo=
 
-I guess I missed this conversation when it first started. We have some
-interest in getting PCIe metadata forwarded to the BMC. I kind of assumed
-that the only way was to use a side-band channel, but I getting it through
-PECI would be very interesting.
-
-Nancy should have a better idea what we'd be looking for.
-
-- Richard
-
-On Wed, Jun 17, 2020 at 4:38 PM Bills, Jason M <
-jason.m.bills@linux.intel.com> wrote:
-
-> Hi Brad,
->
-> On 4/30/2020 2:14 PM, Bills, Jason M wrote:
-> >
-> >
-> > On 12/19/2019 12:45 AM, Neeraj Ladkani wrote:
-> >> It depends on requirements like in our use case, our PCIe devices are
-> >> fixed so we can preprogram a array in JSON file to include all PCI
-> >> functions from a device but for someone else for example OEM who is
-> >> selling the servers, it not possible to predict all PCI device can be
-> >> connected on PCIe slot so we can let system firmware send this
-> >> information or do RdPCIRd via PECI.
-> >
-> > Sorry for not replying earlier.  I had some legal questions that I was
-> > waiting to be resolved.
-> >
-> > Intel has a downstream solution that uses PECI to get the PCIe
-> > information onto D-Bus which is then published to Redfish.  I can now
-> > share what we have upstream if there is interest.
-> >
-> > If so, I guess I'd need a new 'peci-pcie' repo to check into?
-> Not sure if anyone saw this or if there is just no interest. :)
->
-> Could you please create a peci-pcie repo for this application?
->
-> Thanks!
-> -Jason
->
-> >
-> > Thanks,
-> > -Jason>
-> >> I am not aware of any standards on "Implementation". I have seen
-> >> typical implementations where system firmware sends post PCIe data (
-> >> exact schema) to BMC using redfish and BMC produces this data over
-> >> redfish ( just act like passthrough).
-> >>
-> >> Neeraj
-> >>
-> >> -----Original Message-----
-> >> From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-> >> Sent: Wednesday, December 18, 2019 4:35 AM
-> >> To: Neeraj Ladkani <neladk@microsoft.com>
-> >> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> >> Subject: Re: [EXTERNAL] how to get pci config space
-> >>
-> >> Thanks Neeraj
-> >>
-> >>> On Dec 18, 2019, at 2:18 AM, Neeraj Ladkani <neladk@microsoft.com>
-> >>> wrote:
-> >>>
-> >>> IMO, we only need DeviceID and VendorID fields from PCIe Config space
-> >>
-> >> This would probably meet my need to dynamically tune fan control
-> >> parameters.  Is it possible to populate instances of the pciedevice
-> >> schema based on devid and vendorid alone?
-> >>
-> >>> and we can let system firmware send this information during boot
-> >>
-> >> This is how it works on Power systems before OpenBMC, but we have a
-> >> custom protocol with a proprietary implementation.  The purpose of my
-> >> note was to find out if there are typical implementations or even
-> >> standards out there for doing this.
-> >>
-> >>> or preprogram the information to BMC using EntityManager.
-> >>
-> >> Can you elaborate on how this would work?  Given the number of pcie
-> >> devices out there this seems like it would be hard to do it this way
-> >> without a huge database of some kind on the bmc?
-> >>
-> >>> Regarding BMC-CPU(via PECI), BMC needs to send PECI command to CPU.
-> >>> CPU should support RdPCICfg as supported PECI command and thus
-> >>> respond with data.
-> >>
-> >> Ok - that sounds like its all in hardware.  But above it sounded like
-> >> you suggest we skip RdPCICfg and instead let system firmware push this
-> >> information down to the BMC - do I have it right?  If so why do you
-> >> prefer that mechanism?
-> >>
-> >> thx!
-> >>
-> >> -brad
-> >>
->
-
---00000000000027116b05a852b96b
-Content-Type: text/html; charset="UTF-8"
+--_000_HK2PR04MB3826A23CDAA3FC0CE9660D1BFE9B0HK2PR04MB3826apcp_
+Content-Type: text/html; charset="gb2312"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Jason,<div><br></div><div>I guess I missed this convers=
-ation when it first started. We have some interest in getting PCIe metadata=
- forwarded to the BMC. I kind of assumed that the only way was to use a sid=
-e-band channel, but I getting=C2=A0it through PECI would=C2=A0be very=C2=A0=
-interesting.</div><div><br></div><div>Nancy should have a better idea what =
-we&#39;d be looking for.</div><div><br></div><div>- Richard</div></div><br>=
-<div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Ju=
-n 17, 2020 at 4:38 PM Bills, Jason M &lt;<a href=3D"mailto:jason.m.bills@li=
-nux.intel.com">jason.m.bills@linux.intel.com</a>&gt; wrote:<br></div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">Hi Brad,<br>
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Hi everyone,</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background: var(--white);"><br>
+</span></div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background: var(--white);">&nbsp; &nbsp; There is no kcs dev=
+ice in the /dev directory=A3=ACI used the following command to find it in t=
+he root directory, and I did not find ipmi-kcs device, please help guide, t=
+hank you.</span></div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-On 4/30/2020 2:14 PM, Bills, Jason M wrote:<br>
-&gt; <br>
-&gt; <br>
-&gt; On 12/19/2019 12:45 AM, Neeraj Ladkani wrote:<br>
-&gt;&gt; It depends on requirements like in our use case, our PCIe devices =
-are <br>
-&gt;&gt; fixed so we can preprogram a array in JSON file to include all PCI=
- <br>
-&gt;&gt; functions from a device but for someone else for example OEM who i=
-s <br>
-&gt;&gt; selling the servers, it not possible to predict all PCI device can=
- be <br>
-&gt;&gt; connected on PCIe slot so we can let system firmware send this <br=
->
-&gt;&gt; information or do RdPCIRd via PECI.<br>
-&gt; <br>
-&gt; Sorry for not replying earlier.=C2=A0 I had some legal questions that =
-I was <br>
-&gt; waiting to be resolved.<br>
-&gt; <br>
-&gt; Intel has a downstream solution that uses PECI to get the PCIe <br>
-&gt; information onto D-Bus which is then published to Redfish.=C2=A0 I can=
- now <br>
-&gt; share what we have upstream if there is interest.<br>
-&gt; <br>
-&gt; If so, I guess I&#39;d need a new &#39;peci-pcie&#39; repo to check in=
-to?<br>
-Not sure if anyone saw this or if there is just no interest. :)<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+1.find / -name *kcs*</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-Could you please create a peci-pcie repo for this application?<br>
-<br>
-Thanks!<br>
--Jason<br>
-<br>
-&gt; <br>
-&gt; Thanks,<br>
-&gt; -Jason&gt;<br>
-&gt;&gt; I am not aware of any standards on &quot;Implementation&quot;. I h=
-ave seen <br>
-&gt;&gt; typical implementations where system firmware sends post PCIe data=
- ( <br>
-&gt;&gt; exact schema) to BMC using redfish and BMC produces this data over=
- <br>
-&gt;&gt; redfish ( just act like passthrough).<br>
-&gt;&gt;<br>
-&gt;&gt; Neeraj<br>
-&gt;&gt;<br>
-&gt;&gt; -----Original Message-----<br>
-&gt;&gt; From: Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.co=
-m" target=3D"_blank">bradleyb@fuzziesquirrel.com</a>&gt;<br>
-&gt;&gt; Sent: Wednesday, December 18, 2019 4:35 AM<br>
-&gt;&gt; To: Neeraj Ladkani &lt;<a href=3D"mailto:neladk@microsoft.com" tar=
-get=3D"_blank">neladk@microsoft.com</a>&gt;<br>
-&gt;&gt; Cc: OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.or=
-g" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
-&gt;&gt; Subject: Re: [EXTERNAL] how to get pci config space<br>
-&gt;&gt;<br>
-&gt;&gt; Thanks Neeraj<br>
-&gt;&gt;<br>
-&gt;&gt;&gt; On Dec 18, 2019, at 2:18 AM, Neeraj Ladkani &lt;<a href=3D"mai=
-lto:neladk@microsoft.com" target=3D"_blank">neladk@microsoft.com</a>&gt; <b=
-r>
-&gt;&gt;&gt; wrote:<br>
-&gt;&gt;&gt;<br>
-&gt;&gt;&gt; IMO, we only need DeviceID and VendorID fields from PCIe Confi=
-g space<br>
-&gt;&gt;<br>
-&gt;&gt; This would probably meet my need to dynamically tune fan control <=
-br>
-&gt;&gt; parameters.=C2=A0 Is it possible to populate instances of the pcie=
-device <br>
-&gt;&gt; schema based on devid and vendorid alone?<br>
-&gt;&gt;<br>
-&gt;&gt;&gt; and we can let system firmware send this information during bo=
-ot<br>
-&gt;&gt;<br>
-&gt;&gt; This is how it works on Power systems before OpenBMC, but we have =
-a <br>
-&gt;&gt; custom protocol with a proprietary implementation.=C2=A0 The purpo=
-se of my <br>
-&gt;&gt; note was to find out if there are typical implementations or even =
-<br>
-&gt;&gt; standards out there for doing this.<br>
-&gt;&gt;<br>
-&gt;&gt;&gt; or preprogram the information to BMC using EntityManager.<br>
-&gt;&gt;<br>
-&gt;&gt; Can you elaborate on how this would work?=C2=A0 Given the number o=
-f pcie <br>
-&gt;&gt; devices out there this seems like it would be hard to do it this w=
-ay <br>
-&gt;&gt; without a huge database of some kind on the bmc?<br>
-&gt;&gt;<br>
-&gt;&gt;&gt; Regarding BMC-CPU(via PECI), BMC needs to send PECI command to=
- CPU. <br>
-&gt;&gt;&gt; CPU should support RdPCICfg as supported PECI command and thus=
- <br>
-&gt;&gt;&gt; respond with data.<br>
-&gt;&gt;<br>
-&gt;&gt; Ok - that sounds like its all in hardware.=C2=A0 But above it soun=
-ded like <br>
-&gt;&gt; you suggest we skip RdPCICfg and instead let system firmware push =
-this <br>
-&gt;&gt; information down to the BMC - do I have it right?=C2=A0 If so why =
-do you <br>
-&gt;&gt; prefer that mechanism?<br>
-&gt;&gt;<br>
-&gt;&gt; thx!<br>
-&gt;&gt;<br>
-&gt;&gt; -brad<br>
-&gt;&gt;<br>
-</blockquote></div>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background: var(--white);">2.Below is my kernel configuratio=
+n</span></div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"background: var(--white);">CONFIG_SERIAL_MCTRL_GPIO=3Dy</spa=
+n><br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<div># CONFIG_SERIAL_DEV_BUS is not set<br>
+</div>
+<div># CONFIG_TTY_PRINTK is not set<br>
+</div>
+<div># CONFIG_HVC_DCC is not set<br>
+</div>
+<div>CONFIG_IPMI_HANDLER=3Dy<br>
+</div>
+<div># CONFIG_IPMI_PANIC_EVENT is not set<br>
+</div>
+<div># CONFIG_IPMI_DEVICE_INTERFACE is not set<br>
+</div>
+<div># CONFIG_IPMI_SI is not set<br>
+</div>
+<div># CONFIG_IPMI_SSIF is not set<br>
+</div>
+<div># CONFIG_IPMI_WATCHDOG is not set<br>
+</div>
+<div># CONFIG_IPMI_POWEROFF is not set<br>
+</div>
+<div>CONFIG_IPMI_KCS_BMC=3Dy<br>
+</div>
+<div>CONFIG_ASPEED_KCS_IPMI_BMC=3Dy<br>
+</div>
+<div>CONFIG_ASPEED_BT_IPMI_BMC=3Dy<br>
+</div>
+<div>CONFIG_HW_RANDOM=3Dy<br>
+</div>
+<div>CONFIG_HW_RANDOM_TIMERIOMEM=3Dy<br>
+</div>
+<div># CONFIG_RAW_DRIVER is not set<br>
+</div>
+<div># CONFIG_TCG_TPM is not set<br>
+</div>
+<div># CONFIG_XILLYBUS is not set<br>
+</div>
+<div># end of Character devices<br>
+</div>
+<div><br>
+</div>
+<div>Thanks</div>
+<div>Harley</div>
+<span></span></div>
+</body>
+</html>
 
---00000000000027116b05a852b96b--
+--_000_HK2PR04MB3826A23CDAA3FC0CE9660D1BFE9B0HK2PR04MB3826apcp_--
