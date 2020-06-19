@@ -2,76 +2,123 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57A3C201A16
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jun 2020 20:13:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7AAA201A97
+	for <lists+openbmc@lfdr.de>; Fri, 19 Jun 2020 20:42:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49pRl6491LzDrTK
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 04:13:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49pSNS4QlVzDrSJ
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 04:42:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1042;
+ helo=mail-pj1-x1042.google.com; envelope-from=groeck7@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=us.ibm.com
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Frnj43hS; dkim-atps=neutral
+Received: from mail-pj1-x1042.google.com (mail-pj1-x1042.google.com
+ [IPv6:2607:f8b0:4864:20::1042])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49pRft1zBbzDrTK
- for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 04:10:06 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05JI3GM9092766
- for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 14:10:04 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.66])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31s0paat57-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 14:10:03 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Fri, 19 Jun 2020 18:10:03 -0000
-Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
- by smtp.notes.na.collabserv.com (10.106.227.127) with
- smtp.notes.na.collabserv.com ESMTP; Fri, 19 Jun 2020 18:09:55 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp03.a3.dal06.isc4sb.com
- with ESMTP id 2020061918095479-734599 ;
- Fri, 19 Jun 2020 18:09:54 +0000 
-In-Reply-To: <20200619165154.GA20461@cnn>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
-Date: Fri, 19 Jun 2020 18:09:55 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49pSLZ1J5zzDrSJ;
+ Sat, 20 Jun 2020 04:41:09 +1000 (AEST)
+Received: by mail-pj1-x1042.google.com with SMTP id i4so4643624pjd.0;
+ Fri, 19 Jun 2020 11:41:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:subject:to:cc:references:from:autocrypt:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=VAU12alREgfzl1CJUkH1Xyf+LPrf6Vg4/H6UXvCgEjw=;
+ b=Frnj43hSpy6OqDbFlHchyZgUeN8xJXe+NNAtJF0SqHkNJjfcSONvJ7CWcYUwZ0MTWX
+ z3/E9H+GrtTvfRYUYoj+XLlyPpL3eYldgt04FuoTkfsWSDoYHoBW8pIUV6pRiovieMal
+ 18IxP5GKHh/NI1lCvux+FlNhvobu90Q0sZp6dfYg3xgihblmmFJY2/lamoBjU0jnUDhj
+ Y/wZ+5n+MBluUeIM4ngm9eXDcRp+f5tAdTNRebbbsewCcCpVJJyyl7iTg8UZrfKX/9+S
+ OY9hGg0Q9QZpT5L5Hd225EjVM7f06CfDhUUTcuKJ8967EFsEdct8pkDfH1tGQ7IINilu
+ wbig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
+ :message-id:date:user-agent:mime-version:in-reply-to
+ :content-language:content-transfer-encoding;
+ bh=VAU12alREgfzl1CJUkH1Xyf+LPrf6Vg4/H6UXvCgEjw=;
+ b=OgsOQYfJoe90i9nWwArzlHMxwA4sAmwPDYuADyYDo8R4V0G+4yl/JEwTy2VF0YSHQq
+ hiy0hGzq3J+qfCKP7R30+toV1VoJ9zgdy/1SOJ6FuMjGsiyvJvKZlsvdof2EMg68JXNs
+ KZdS5bRS4ZJFW6NViGTIXpF44r7t+wZRPkecJ5wbOJYSDeQdtkazdxAqOFOR/fWVt+jl
+ HpbvyxW6ilsKecEGt/b9iQbzeVHKOSaSHPmtb/Yth5LsPSfQccOPiUUWrc8TYJpjjUq6
+ qm49qlJaT9gu2/MSw9xrVjmGrfx9X947h+UU+pTk15MDD+COUTkzt88OSPRfQTOYKRzt
+ Lfng==
+X-Gm-Message-State: AOAM5330oqHSLQDMeJ13ycMCZXM8jGreGl35gpYTXd08whtjRoHGfahz
+ wOeVKKRkD1HjWmehRB+vOc4=
+X-Google-Smtp-Source: ABdhPJwzBroFyD7Kf5Z6ryK0xToQZG1+4N8oESXbtwDlCrOlxoOWvn/dVIZRSFlfSctcSnAYiCNh6g==
+X-Received: by 2002:a17:90a:de0f:: with SMTP id
+ m15mr4587595pjv.21.1592592065824; 
+ Fri, 19 Jun 2020 11:41:05 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ b7sm6377360pfo.202.2020.06.19.11.41.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jun 2020 11:41:05 -0700 (PDT)
+Subject: Re: [PATCH v4] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
+To: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>,
+ Jean Delvare <jdelvare@suse.com>, linux-hwmon@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20200619165154.GA20461@cnn>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 37575
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20061918-4409-0000-0000-00000305A032
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.424974; ST=0; TS=0; UL=0; ISC=; MB=0.000960
-X-IBM-SpamModules-Versions: BY=3.00013312; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01393884; UDB=6.00746056; IPR=6.01176167; 
- MB=3.00032629; MTD=3.00000008; XFM=3.00000015; UTC=2020-06-19 18:10:01
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-06-19 16:54:29 - 6.00011502
-x-cbparentid: 20061918-4410-0000-0000-00006256AC0D
-Message-Id: <OFB20C104E.283BBF6D-ON0025858C.0062CC5B-0025858C.0063C8F2@notes.na.collabserv.com>
-Subject: Re:  [PATCH v4] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-19_20:2020-06-19,
- 2020-06-19 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
+Message-ID: <fa65b6de-b7ea-894b-7fd1-47676cc3c705@roeck-us.net>
+Date: Fri, 19 Jun 2020 11:41:03 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <20200619165154.GA20461@cnn>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,44 +130,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- manikandan.e@hcl.com, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, patrickw3@fb.com, saipsdasari@fb.com,
- vijaykhemka@fb.com, Guenter Roeck <linux@roeck-us.net>
+Cc: manikandan.e@hcl.com, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, vijaykhemka@fb.com, saipsdasari@fb.com,
+ patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On : 06/19/2020 abiout 12:46PM in some timezone,  Manikandan Elumalai  wrot=
-e:
+On 6/19/20 9:51 AM, Manikandan Elumalai wrote:
+> The adm1278 temp attribute need it for openbmc platform .
+> This feature not enabled by default, so PMON_CONFIG needs to enable it.
+> 
+> Signed-off-by: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
 
->The adm1278 temp attribute need it for openbmc platform .
->This feature not enabled by default, so PMON=5FCONFIG needs to enable
->it.
->
->Signed-off-by: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
->---
->---    v4 -Reported-by: kernel test robot <lkp@intel.com>
+In addition to the other comment - please never send a new version of a patch
+with the same sequence number. There are now two different versions of this patch,
+both tagged "v4".
 
-Thie above tag should be Adjacent to the Signed-off-by.
+Guenter
 
->---    v3 -fix invalid signed-off.
->---       -removed checkpath warnings.
->---       -write ADM1278=5FTEMP1=5FEN and ADM1278=5FVOUT=5FEN conf in sing=
-le
->line operation.
->---    v2 -add Signed-off-by.
->---       -removed ADM1278=5FTEMP1=5FEN check.
->---
-
-The canonical format is to have a line of 3 dashes then the trailing change=
-log=20
-
-Please read the documentation at=20
-
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html#usin=
-g-reported-by-tested-by-reviewed-by-suggested-by-and-fixes
-https://www.kernel.org/doc/html/latest/process/submitting-patches.html#the-=
-canonical-patch-format
-
-milton
+> ---
+> ---    v4 -Reported-by: kernel test robot <lkp@intel.com>
+> ---    v3 -fix invalid signed-off.
+> ---       -removed checkpath warnings.
+> ---       -write ADM1278_TEMP1_EN and ADM1278_VOUT_EN conf in single line operation.
+> ---    v2 -add Signed-off-by.
+> ---       -removed ADM1278_TEMP1_EN check.
+> ---
+> ---
+>  drivers/hwmon/pmbus/adm1275.c | 12 +++++-------
+>  1 file changed, 5 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+> index 5caa37fb..d4e1925 100644
+> --- a/drivers/hwmon/pmbus/adm1275.c
+> +++ b/drivers/hwmon/pmbus/adm1275.c
+> @@ -666,11 +666,12 @@ static int adm1275_probe(struct i2c_client *client,
+>  		tindex = 3;
+>  
+>  		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
+> -			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
+> +			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
+> +			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+>  
+> -		/* Enable VOUT if not enabled (it is disabled by default) */
+> -		if (!(config & ADM1278_VOUT_EN)) {
+> -			config |= ADM1278_VOUT_EN;
+> +		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
+> +		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) != (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
+> +			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+>  			ret = i2c_smbus_write_byte_data(client,
+>  							ADM1275_PMON_CONFIG,
+>  							config);
+> @@ -681,9 +682,6 @@ static int adm1275_probe(struct i2c_client *client,
+>  			}
+>  		}
+>  
+> -		if (config & ADM1278_TEMP1_EN)
+> -			info->func[0] |=
+> -				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+>  		if (config & ADM1278_VIN_EN)
+>  			info->func[0] |= PMBUS_HAVE_VIN;
+>  		break;
+> 
 
