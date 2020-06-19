@@ -2,52 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E3E0201DED
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 00:17:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 34762201DEF
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 00:19:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49pY8R5flbzDrB4
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 08:17:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49pYBp3ppxzDrVN
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 08:19:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49pY7j1f6zzDrS4
- for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 08:17:03 +1000 (AEST)
-IronPort-SDR: UH2vIWd590uzIr1dQCRte9CD+RvU70HTWe+ihqnD3eexC2nnu4XSvJ2HJA3zVwxjln4y8q0RrM
- QxiYu7D4QN9Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9657"; a="141415355"
-X-IronPort-AV: E=Sophos;i="5.75,256,1589266800"; d="scan'208";a="141415355"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49pYB26q4PzDqC8
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 08:19:06 +1000 (AEST)
+IronPort-SDR: 8t5i2n7k7LQpTWib/LsWf+1JXYviL92mjJm5amfpRKRV47sPJgzOKXhuiv1tHJfYaYMEV7Hu3d
+ nr0Y7xMSxl9Q==
+X-IronPort-AV: E=McAfee;i="6000,8403,9657"; a="143069531"
+X-IronPort-AV: E=Sophos;i="5.75,256,1589266800"; d="scan'208";a="143069531"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Jun 2020 15:17:00 -0700
-IronPort-SDR: pJHt37ss9rw2NvbPJrTY7AC5G+UYpPdjsLq0afc07yxmAWHCYTqLRvhgcYUwKZ2H28yDQ7Rv/z
- tGbwQ8hAyOBw==
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jun 2020 15:19:03 -0700
+IronPort-SDR: nEaWM1R8DQsP0vh/gzR2EWFUXgtRHd29EwfdYsCZ4MlRYVRs0V+0eDxDydue2R0rFkqcVeAJmg
+ U7I5+IPXkQRw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,256,1589266800"; d="scan'208";a="310306216"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.212.142.240])
- ([10.212.142.240])
- by fmsmga002.fm.intel.com with ESMTP; 19 Jun 2020 15:17:00 -0700
-Subject: Re: "Initial commit" with entire git history - possible?
-To: =?UTF-8?Q?Adrian_Ambro=c5=bcewicz?= <adrian.ambrozewicz@linux.intel.com>, 
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <6e3f0ebd-9ca0-c5b6-c49a-a533cea6c9ea@linux.intel.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <43a3c7b0-df25-b4a7-13e7-3d944f892420@linux.intel.com>
-Date: Fri, 19 Jun 2020 15:16:59 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.1
+X-IronPort-AV: E=Sophos;i="5.75,256,1589266800"; d="scan'208";a="310306558"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga002.fm.intel.com with ESMTP; 19 Jun 2020 15:19:03 -0700
+Received: from [10.213.174.95] (jmbills-mobl.amr.corp.intel.com
+ [10.213.174.95])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id C70AE580515
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 15:19:02 -0700 (PDT)
+Subject: Re: Redfish EventService Implementation
+To: openbmc@lists.ozlabs.org
+References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
+ <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
+ <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
+ <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
+ <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
+ <20200616152428.GA4618@heinlein>
+ <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
+ <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
+ <20200617204516.GE4618@heinlein>
+ <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <24353c42-dbcc-f950-1b75-c7ba3383b992@linux.intel.com>
+Date: Fri, 19 Jun 2020 15:19:02 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <6e3f0ebd-9ca0-c5b6-c49a-a533cea6c9ea@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -64,18 +77,113 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/19/2020 2:10 AM, Adrian AmbroÅ¼ewicz wrote:
-> Hello,
-> 
-> We're developing solution which will soon end as new openbmc-hosted 
-> repository.
-> 
-> It would be nice to keep previous commit history intact when moving to 
-> upstream. Is it possible with our gerrit-based integration?
 
-Maintainers should have push access to move code over, although it'd be 
-nice if code could be developed and reviewed in the open if possible.
+
+On 6/19/2020 6:26 AM, Ratan Gupta wrote:
+> 
+> On 6/18/20 2:15 AM, Patrick Williams wrote:
+>> On Wed, Jun 17, 2020 at 05:38:47PM +0530, Ratan Gupta wrote:
+>>> Hi James,Pattrick.
+>>>
+>>>>> Can't we do this already today by defining a simple errors/metadata file
+>>>>> in phosphor-dbus-interfaces and calling 'logging::report<...>' on it?
+>>>>> This will create a record on dbus in phosphor-logging.
+>>>>>
+>>>> I think the original concern was with supporting on the order of
+>>>> 10,000 log entries, having this on d-bus seemed impractical. Also the
+>>>> free log rotation the journal provides is useful. Now modifying the
+>>>> logging::report<...> to conditionally log to the journal seems realistic.
+>>> My intention was not to re-implement the logging, my intention was to
+>>> extend/use the existing design which we already have it below.
+>>>
+>>> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
+>>>
+>>> I was trying not to bring the Redfish specific stuff in each individual
+>>> repo, instead each transport can listen for
+>>> Dbus events and write to the journal which goes to their app specific file.
+>> Good.  This wasn't clear from the earlier email.  Thanks.
+>>
+>>
+>>> As we are in agreement that we want to use the journal for persistence
+>>> and log rotate feature.
+>> I'm not convinced there is agreement on this.  There has been
+>> disagreement about even using the journal for phosphor-logging use since
+>> the beginning and I suspect there would be less agreement on another
+>> application using it as its own IPC mechanism.
+>>
+>> Just because a hammer can be used to insert a nail into a board doesn't
+>> mean you use it insert any pointy thing into a flat thing.  [ Just
+>> because the journal provides log rotation and persistance doesn't mean
+>> you should use it for every feature needing log rotation and
+>> persistance. ]
+>>
+>>
+>>> ***** As per the Redfish one of the requirement is we need the log for
+>>> most of the Dbus Property update/interface added as they
+>>> are mapped to some Redfish Resource and the bmcweb has to send the
+>>> Resource updated/modified signal to the
+>>> Redfish client. ******
+> 
+> Jaosn: You asked the following query in other thread /*"Why do we want 
+> to log on D-Bus property updates?  This seems like it will be too noisy 
+> for the EventLog*"/
+> 
+> Eg: Client is interested for an event when ever there is any user 
+> add/delete or network configuration change or there is a log entry 
+> resource gets created,To handle this request the flow would be
+My understanding is for the first iteration we are only providing 
+notifications for event messages.  So, if it isn't in the message 
+registry, then you cannot register for that event?
+
+It seems like the full resource change event notification will be a 
+major feature and should probably get a dedicated design.
 
 > 
-> Regards,
-> Adrian
+> Redfish Client subscribe for "ResourceType" eg: 
+> "EthernetService,AccountService,LogService"  with subordinate resources 
+> property as truewhich means the Client is looking for updates on the 
+> subscribed resources and the subordinates resource, These redfish 
+> resources(EthernetInterface, IP address, ManagerAccount, AccountService) 
+> would be mapped to some D-bus Resources, hence some application/bmcweb  
+> would monitor the Dbus signals on the interested Dbus objects and send 
+> the Redfish event to the subscribed client.
+> 
+> Apparo: Please correct me if I am missing something.
+> 
+>> I don't know Redfish well, so bear with me if there is something obvious
+>> I'm missing.  But, the first part of this "requirement" doesn't seem to
+>> follow from the second part of the "requirement" to me.
+>>
+>> Sending a signal of a property changing to the Redfish clients is
+>> straight-forwawrd; Redfish should subscribe to all the appropriate
+>> dbus-events.  I don't understand how this implies any sort of logging.
+>> Where does the logging part of this requirement come from?
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749/16/designs/redfish-eventservice.md#474
+> 
+> While I am reading the redfish 
+> spec(https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.11.0.pdf) 
+> , it is not clear that the events need to be persisted.I will ask in the 
+> DMTF for the persistence of the events.
+> 
+>>> We have two options:
+>>>       1) Each transport interface listens for the Dbus signals and write
+>>> it to their app specific file.
+>>>       2) Each openbmc repo must use log::report for each D-bus property
+>>> update/ interface added.
+>> #2 is absolutely unworkable on the surface to me.  log::report is to
+>> create a error entry (xyz.openbmc_project.Logging.Entry), which creates
+>> a dbus-object, which would cause log::report to be called, which creates
+>> a dbus-object, which ...
+>>
+>> Even if what you meant was something like logging::log<info>, this seems
+>> pretty heavy.  I'm not sure this is something that can be inserted into
+>> sdbusplus, especially for the ASIO-based object servers, because in many
+>> cases applications register their own callback.  For the sdbus++
+>> generated server bindings we could squeeze it in.  But, what you're
+>> proposing here is essentially a "journal-as-dbus-monitor".  We'd
+>> certainly need to make some measurements on how many kB/s worth of
+>> journal entries this would create because I suspect we could end up
+>> burning out a NAND flash with as many writes as that would induce.
+> I would respond on the same once my query gets answered from DMTF.
+> If my query gets answered yes then we have to write on flash but let's
+> wait for it,
