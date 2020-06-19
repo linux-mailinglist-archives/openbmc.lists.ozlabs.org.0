@@ -1,68 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34762201DEF
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 00:19:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A067B201E23
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 00:41:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49pYBp3ppxzDrVN
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 08:19:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49pYh02qvTzDrSp
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 08:41:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=Squ0YR1O; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49pYB26q4PzDqC8
- for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 08:19:06 +1000 (AEST)
-IronPort-SDR: 8t5i2n7k7LQpTWib/LsWf+1JXYviL92mjJm5amfpRKRV47sPJgzOKXhuiv1tHJfYaYMEV7Hu3d
- nr0Y7xMSxl9Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9657"; a="143069531"
-X-IronPort-AV: E=Sophos;i="5.75,256,1589266800"; d="scan'208";a="143069531"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Jun 2020 15:19:03 -0700
-IronPort-SDR: nEaWM1R8DQsP0vh/gzR2EWFUXgtRHd29EwfdYsCZ4MlRYVRs0V+0eDxDydue2R0rFkqcVeAJmg
- U7I5+IPXkQRw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,256,1589266800"; d="scan'208";a="310306558"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga002.fm.intel.com with ESMTP; 19 Jun 2020 15:19:03 -0700
-Received: from [10.213.174.95] (jmbills-mobl.amr.corp.intel.com
- [10.213.174.95])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49pYgD6fZzzDrSp
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 08:40:56 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 1C2A04C8DA;
+ Fri, 19 Jun 2020 22:40:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-language:content-transfer-encoding:content-type
+ :content-type:in-reply-to:mime-version:user-agent:date:date
+ :message-id:from:from:references:subject:subject:received
+ :received:received; s=mta-01; t=1592606448; x=1594420849; bh=9XV
+ FbGLX//2QbdJsi1wY5z8RNi/D7ib8y8K10vklE6A=; b=Squ0YR1OgXYx/PbMOrD
+ l7EMaXVGOnHS0RNq6Z35IcB1IuLXffh0zx/+7Ex98u2PTvKqARmE903kKIw5XAoa
+ Ztnv3orr+2PfaeomGPxzoU8jJWSOizjIXP8fyXCbv3x0oA+0+JfPtGZwy4ejzexh
+ bF7nqQM8kmD2tF3dAMnomTbc=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id oOo6WkR5IQtq; Sat, 20 Jun 2020 01:40:48 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id C70AE580515
- for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 15:19:02 -0700 (PDT)
-Subject: Re: Redfish EventService Implementation
-To: openbmc@lists.ozlabs.org
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
- <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
- <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
- <20200617204516.GE4618@heinlein>
- <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <24353c42-dbcc-f950-1b75-c7ba3383b992@linux.intel.com>
-Date: Fri, 19 Jun 2020 15:19:02 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by mta-01.yadro.com (Postfix) with ESMTPS id 9D4F14C85A;
+ Sat, 20 Jun 2020 01:40:48 +0300 (MSK)
+Received: from [10.199.1.42] (10.199.1.42) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Sat, 20
+ Jun 2020 01:40:48 +0300
+Subject: Re: Default Gateway for a system v/s Default gateway per Interface
+To: <openbmc@lists.ozlabs.org>
+References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Message-ID: <6b23a265-c1dd-4c62-4c31-de4cb1cb74e7@yadro.com>
+Date: Sat, 20 Jun 2020 01:40:47 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-In-Reply-To: <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
+In-Reply-To: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [10.199.1.42]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,116 +75,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Please, Ratan, if you implement those per-interface gateways again, 
+could you leave an option to have a single system-wide default gateway 
+only?
 
+I honestly don't see any use for multiple gateways without policy 
+routing being implemented, and then I don't see any use for policy 
+routing in a BMC (as opposed to a router). So I would like to keep us 
+from unneeded questions from the customers, and so I would prefer to 
+have only a single gateway, as well as single sets of DNS and NTP 
+servers without having to patch across the whole OpenBMC codebase.
 
-On 6/19/2020 6:26 AM, Ratan Gupta wrote:
-> 
-> On 6/18/20 2:15 AM, Patrick Williams wrote:
->> On Wed, Jun 17, 2020 at 05:38:47PM +0530, Ratan Gupta wrote:
->>> Hi James,Pattrick.
->>>
->>>>> Can't we do this already today by defining a simple errors/metadata file
->>>>> in phosphor-dbus-interfaces and calling 'logging::report<...>' on it?
->>>>> This will create a record on dbus in phosphor-logging.
->>>>>
->>>> I think the original concern was with supporting on the order of
->>>> 10,000 log entries, having this on d-bus seemed impractical. Also the
->>>> free log rotation the journal provides is useful. Now modifying the
->>>> logging::report<...> to conditionally log to the journal seems realistic.
->>> My intention was not to re-implement the logging, my intention was to
->>> extend/use the existing design which we already have it below.
->>>
->>> https://github.com/openbmc/docs/blob/master/architecture/redfish-logging-in-bmcweb.md
->>>
->>> I was trying not to bring the Redfish specific stuff in each individual
->>> repo, instead each transport can listen for
->>> Dbus events and write to the journal which goes to their app specific file.
->> Good.  This wasn't clear from the earlier email.  Thanks.
->>
->>
->>> As we are in agreement that we want to use the journal for persistence
->>> and log rotate feature.
->> I'm not convinced there is agreement on this.  There has been
->> disagreement about even using the journal for phosphor-logging use since
->> the beginning and I suspect there would be less agreement on another
->> application using it as its own IPC mechanism.
->>
->> Just because a hammer can be used to insert a nail into a board doesn't
->> mean you use it insert any pointy thing into a flat thing.  [ Just
->> because the journal provides log rotation and persistance doesn't mean
->> you should use it for every feature needing log rotation and
->> persistance. ]
->>
->>
->>> ***** As per the Redfish one of the requirement is we need the log for
->>> most of the Dbus Property update/interface added as they
->>> are mapped to some Redfish Resource and the bmcweb has to send the
->>> Resource updated/modified signal to the
->>> Redfish client. ******
-> 
-> Jaosn: You asked the following query in other thread /*"Why do we want 
-> to log on D-Bus property updates?� This seems like it will be too noisy 
-> for the EventLog*"/
-> 
-> Eg: Client is interested for an event when ever there is any user 
-> add/delete or network configuration change or there is a log entry 
-> resource gets created,To handle this request the flow would be
-My understanding is for the first iteration we are only providing 
-notifications for event messages.  So, if it isn't in the message 
-registry, then you cannot register for that event?
+If there was a compile-time option (distro/machine feature?) to use 
+either per-interface or system-wide gateway/DNS/NTP, that would be very 
+nice.
 
-It seems like the full resource change event notification will be a 
-major feature and should probably get a dedicated design.
+Thank you.
+Alexander.
 
-> 
-> Redfish Client subscribe for "ResourceType" eg: 
-> "EthernetService,AccountService,LogService"� with subordinate resources 
-> property as truewhich means the Client is looking for updates on the 
-> subscribed resources and the subordinates resource, These redfish 
-> resources(EthernetInterface, IP address, ManagerAccount, AccountService) 
-> would be mapped to some D-bus Resources, hence some application/bmcweb  
-> would monitor the Dbus signals on the interested Dbus objects and send 
-> the Redfish event to the subscribed client.
-> 
-> Apparo: Please correct me if I am missing something.
-> 
->> I don't know Redfish well, so bear with me if there is something obvious
->> I'm missing.  But, the first part of this "requirement" doesn't seem to
->> follow from the second part of the "requirement" to me.
->>
->> Sending a signal of a property changing to the Redfish clients is
->> straight-forwawrd; Redfish should subscribe to all the appropriate
->> dbus-events.  I don't understand how this implies any sort of logging.
->> Where does the logging part of this requirement come from?
-> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/24749/16/designs/redfish-eventservice.md#474
-> 
-> While I am reading the redfish 
-> spec(https://www.dmtf.org/sites/default/files/standards/documents/DSP0266_1.11.0.pdf) 
-> , it is not clear that the events need to be persisted.I will ask in the 
-> DMTF for the persistence of the events.
-> 
->>> We have two options:
->>>   ��� 1) Each transport interface listens for the Dbus signals and write
->>> it to their app specific file.
->>>   ��� 2) Each openbmc repo must use log::report for each D-bus property
->>> update/ interface added.
->> #2 is absolutely unworkable on the surface to me.  log::report is to
->> create a error entry (xyz.openbmc_project.Logging.Entry), which creates
->> a dbus-object, which would cause log::report to be called, which creates
->> a dbus-object, which ...
->>
->> Even if what you meant was something like logging::log<info>, this seems
->> pretty heavy.  I'm not sure this is something that can be inserted into
->> sdbusplus, especially for the ASIO-based object servers, because in many
->> cases applications register their own callback.  For the sdbus++
->> generated server bindings we could squeeze it in.  But, what you're
->> proposing here is essentially a "journal-as-dbus-monitor".  We'd
->> certainly need to make some measurements on how many kB/s worth of
->> journal entries this would create because I suspect we could end up
->> burning out a NAND flash with as many writes as that would induce.
-> I would respond on the same once my query gets answered from DMTF.
-> If my query gets answered yes then we have to write on flash but let's
-> wait for it,
+P.S. Sorry for sending this twice, forgot to include the list the first 
+time.
+
+24.04.2020 18:06, Ratan Gupta пишет:
+> Hi All,
+>
+> Currently, OpenBMC stack allows a single default gateway for the 
+> system. Latest kernel allows to configure multiple default gateways.
+>
+> Eg: In a system with two interfaces eth0 and eth1,
+>
+> eth0 configured with static address and having gateway(192.168.2.1)
+> eth1 configured with DHCP and gets Gateway from DHCP server (10.10.10.1)
+> ~~~~~~~~~~~~~
+> Kernel IP routing table
+> Destination     Gateway         Genmask         Flags   MSS Window  
+> irtt Iface
+> 0.0.0.0         19.168.2.1      0.0.0.0         UG        0 0          
+> 0 eth0
+> 0.0.0.0         10.10.10.1      0.0.0.0         UG        0 0          
+> 0 eth1
+> ~~~~~~~~~~~~~~
+>
+> Kernel will first try using the default gateway having higher metric 
+> value and then fall back to the lower.
+>
+> More references: 
+> https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_the_default_gateway
+>
+> I'm proposing to make this change in the openBMC D-bus interfaces to 
+> tie the gateway property with the Ethernet interface schema instead of 
+> System configuration.
+>
+> Ethernet Interface Schema =>
+>
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/EthernetInterface.interface.yaml 
+>
+>
+> System Configuration Schema =>
+>
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/SystemConfiguration.interface.yaml 
+>
+>
+>
+> Please let me know your suggestions.
+>
+> Regards
+> Ratan Gupta
+>
