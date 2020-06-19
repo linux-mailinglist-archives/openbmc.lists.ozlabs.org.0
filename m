@@ -1,74 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0B70201987
-	for <lists+openbmc@lfdr.de>; Fri, 19 Jun 2020 19:36:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67B352019AE
+	for <lists+openbmc@lfdr.de>; Fri, 19 Jun 2020 19:46:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49pQvM0wL0zDqjc
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 03:35:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49pR7f5fs1zDqHk
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 03:46:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::643;
- helo=mail-pl1-x643.google.com; envelope-from=groeck7@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::543;
+ helo=mail-pg1-x543.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=HWs0f5DT; dkim-atps=neutral
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com
- [IPv6:2607:f8b0:4864:20::643])
+ header.s=20161025 header.b=lOWhq/zJ; dkim-atps=neutral
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
+ [IPv6:2607:f8b0:4864:20::543])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49pNHz1XbzzDqB2;
- Sat, 20 Jun 2020 01:38:38 +1000 (AEST)
-Received: by mail-pl1-x643.google.com with SMTP id y18so4068796plr.4;
- Fri, 19 Jun 2020 08:38:38 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49pPwk5fkhzDqSN;
+ Sat, 20 Jun 2020 02:52:05 +1000 (AEST)
+Received: by mail-pg1-x543.google.com with SMTP id e18so4732412pgn.7;
+ Fri, 19 Jun 2020 09:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=30oGrPF+Hf+5fkIfi8X9FX6JFyI5zPvG3i5GYaL/ATM=;
- b=HWs0f5DTlCe6wHSZpD0Kx7AlT2503FFuRMQCa52JL282WLeUj2vXNmK8TQkzIwv8Kp
- vwanqqR3iyR6IyftI0dVCMwlfh7vd0xBu9LZjOChvzKnDrpyupvb6O5PdGPYUNu0q26F
- XUgIKRC9GSHJyD0FcRzyFFCiDCIjuG1mb+SUWAGIvDHubTxWeXM3l+drjzE/DSBuC3Wp
- Shx0/aWeKApDjKJkPijjilf0AXi0ExE0n5H5mNoriUzq+HSvHDpSfnPNhfGRL8izRiFJ
- 3DDQvree2SB+ScvFIv+0LFwfDQmAXtzvr/Ipf2cS0TKv0X8r6mht2D16CtYIIZ54JOJh
- 0Qqg==
+ h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+ :user-agent; bh=MojqGVMm/N36ukD1qQOzNiKEH9Yim97rUfkXtpM0HIo=;
+ b=lOWhq/zJNBjesFgxGkSn+BtJRwxdpQomhyNHZjlONsvkEN01tr66aBIeORJjSlwrzc
+ FU5LcMVd9PShZF8KF7qWB2r9nJTDNzbUQFTIbtZEygCCvfx2SoWdYi3G4ThYpquzn7du
+ VjTaDYtDXrCRuMgvTdYBl0LSsSxePM1iVhw0O+4kHjzM9oruFsWA+9t6pDoSSEeytMUq
+ ztebVmkrP6goQODaIFcGYuFPm9xXGNRapQ4dceWSPlj7VfBr3vZitoPI5lAVO03aVVvO
+ 7w9bYuIMXzVmT0/+BmyJmMycx1Ctm9cPdZiWG8cDdpIyaj+6wWD9lfbEGHobj4s5ya5g
+ pTkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
- :references:mime-version:content-disposition:in-reply-to:user-agent;
- bh=30oGrPF+Hf+5fkIfi8X9FX6JFyI5zPvG3i5GYaL/ATM=;
- b=OJ5TuBf4alNeLJEyVdASgyydZ6A4O3WGcdyjl3urI/Ran9aRoqjxdsGeGzM8JRqdKS
- O9uh9AOd7sK2Ucyybb0My9HclR3GnXNOQ7a52vDHRMy+425k+lIKBN8MasYIrK53SeVt
- Cqsu9NdNAxPQwmtmwmO+iY5ZFasxia74AKoszrLBsCgoltsUzqJ4vEBzrfWGQ5V+EuSR
- PlZYwd9jyxYAS5UeZ2kFvw0x+8z7YtS8qMxEaUnztpIVAr0vlzXVEVBSmSqqw+zXJz3s
- XCmx2cPSrNd8UyhYaXP5MHbvAZBF1KErq9C0DribUT/krSajP+sNZLfu4mksSQklmufO
- wkWw==
-X-Gm-Message-State: AOAM5304xcP7XcF5x+riP4ovZc5brwYijqyjG715+qs8lEIFD3OzEn/O
- oAZvxfKl8CgCo+1v/Hwcdwc=
-X-Google-Smtp-Source: ABdhPJwNrLmfds9PVZ5VRHfJd3aIUKqd9W9ZW/0qWo/rH6dJ+grD/00L85ejW7y9jsBMojLxMKA0aQ==
-X-Received: by 2002:a17:90a:a58b:: with SMTP id
- b11mr4251156pjq.107.1592581114582; 
- Fri, 19 Jun 2020 08:38:34 -0700 (PDT)
-Received: from localhost ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id m14sm5511417pgt.6.2020.06.19.08.38.33
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 19 Jun 2020 08:38:33 -0700 (PDT)
-Date: Fri, 19 Jun 2020 08:38:32 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
-Subject: Re: [PATCH v4] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
-Message-ID: <20200619153832.GA57109@roeck-us.net>
-References: <20200619144853.GA18271@cnn>
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=MojqGVMm/N36ukD1qQOzNiKEH9Yim97rUfkXtpM0HIo=;
+ b=UfZm9KeHzoDA9A+HZeFPDV2QLZC5n0d3ay3itQhxMB7Ooso+egJJT9EoiSXVLECxg9
+ r87tOya5rPRLmdSvGe96U4R6oTLSyCoG4ilQS2lbgsDqjA9PzCkADVwCsiUMFMajg9Ns
+ YHxd7RlMq7PlSHopMbD2qTywuzV/5mQFs8eLitXfc8G3UTkwVasIw5+43ZW/0JWgbCqm
+ m2+Fmprax/ByAaqtWT9fs96+fJhBz3bArnUu27KYu0pKUOwMNVndhFA0QOmIJ6gft9rj
+ jJQ/+5Et1u32aIHNfd7EfTugLDgHVzfbMfN8dnH/H/D9j5rlkLbHKdVZQoNd2QkuEW8A
+ jDrw==
+X-Gm-Message-State: AOAM532qsAptKkBpJDOi4o3jMixeVuKzviAm1bgFTz9waFS+Rs51CBeH
+ cAqUTWaRtLCGvB/9qIe6WD0=
+X-Google-Smtp-Source: ABdhPJxQLpIde5crNDljO1wbiI8PDd931pTpWT7w4Fpd3YuE5eJBQnt/XfFKVMlmlaSaxcOe7PD3Rg==
+X-Received: by 2002:a62:8095:: with SMTP id j143mr8678422pfd.62.1592585522685; 
+ Fri, 19 Jun 2020 09:52:02 -0700 (PDT)
+Received: from cnn ([112.133.236.100])
+ by smtp.gmail.com with ESMTPSA id w18sm5580656pgj.31.2020.06.19.09.51.58
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 19 Jun 2020 09:52:02 -0700 (PDT)
+Date: Fri, 19 Jun 2020 22:21:54 +0530
+From: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
+ linux-hwmon@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
+Message-ID: <20200619165154.GA20461@cnn>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200619144853.GA18271@cnn>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,73 +77,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- manikandan.e@hcl.com, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, patrickw3@fb.com, saipsdasari@fb.com,
- vijaykhemka@fb.com
+Cc: manikandan.e@hcl.com, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, vijaykhemka@fb.com, saipsdasari@fb.com,
+ patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jun 19, 2020 at 08:18:53PM +0530, Manikandan Elumalai wrote:
-> The adm1278 temp attribute need it for openbmc platform .
-> This feature not enabled by default, so PMON_CONFIG needs to enable it.
-> 
-> v4:
-> ---
-> Reported-by: kernel test robot <lkp@intel.com>
-> v3:
-> ----
-> fix invalid signed-off.
-> removed checkpath warnings.
-> write ADM1278_TEMP1_EN and ADM1278_VOUT_EN conf in single line operation.
-> v2:
-> ----
-> add Signed-off-by.
-> removed ADM1278_TEMP1_EN check.
-> 
-> Signed-off-by: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+The adm1278 temp attribute need it for openbmc platform .
+This feature not enabled by default, so PMON_CONFIG needs to enable it.
 
-The problem is that this is after '---', meaning it is considered a comment.
-The Signed-off-by: tag needs to be located before the first '---'.
-The change log should not be part of the commit log and follow '---'.
+Signed-off-by: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+---
+---    v4 -Reported-by: kernel test robot <lkp@intel.com>
+---    v3 -fix invalid signed-off.
+---       -removed checkpath warnings.
+---       -write ADM1278_TEMP1_EN and ADM1278_VOUT_EN conf in single line operation.
+---    v2 -add Signed-off-by.
+---       -removed ADM1278_TEMP1_EN check.
+---
+---
+ drivers/hwmon/pmbus/adm1275.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-Guenter
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index 5caa37fb..d4e1925 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -666,11 +666,12 @@ static int adm1275_probe(struct i2c_client *client,
+ 		tindex = 3;
+ 
+ 		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
+-			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
++			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
++			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 
+-		/* Enable VOUT if not enabled (it is disabled by default) */
+-		if (!(config & ADM1278_VOUT_EN)) {
+-			config |= ADM1278_VOUT_EN;
++		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
++		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) != (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
++			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+ 			ret = i2c_smbus_write_byte_data(client,
+ 							ADM1275_PMON_CONFIG,
+ 							config);
+@@ -681,9 +682,6 @@ static int adm1275_probe(struct i2c_client *client,
+ 			}
+ 		}
+ 
+-		if (config & ADM1278_TEMP1_EN)
+-			info->func[0] |=
+-				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 		if (config & ADM1278_VIN_EN)
+ 			info->func[0] |= PMBUS_HAVE_VIN;
+ 		break;
+-- 
+2.7.4
 
-> ---
->  drivers/hwmon/pmbus/adm1275.c | 12 +++++-------
->  1 file changed, 5 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-> index 5caa37fb..d4e1925 100644
-> --- a/drivers/hwmon/pmbus/adm1275.c
-> +++ b/drivers/hwmon/pmbus/adm1275.c
-> @@ -666,11 +666,12 @@ static int adm1275_probe(struct i2c_client *client,
->  		tindex = 3;
->  
->  		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
-> -			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
-> +			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
-> +			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
->  
-> -		/* Enable VOUT if not enabled (it is disabled by default) */
-> -		if (!(config & ADM1278_VOUT_EN)) {
-> -			config |= ADM1278_VOUT_EN;
-> +		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
-> +		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) != (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
-> +			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
->  			ret = i2c_smbus_write_byte_data(client,
->  							ADM1275_PMON_CONFIG,
->  							config);
-> @@ -681,9 +682,6 @@ static int adm1275_probe(struct i2c_client *client,
->  			}
->  		}
->  
-> -		if (config & ADM1278_TEMP1_EN)
-> -			info->func[0] |=
-> -				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
->  		if (config & ADM1278_VIN_EN)
->  			info->func[0] |= PMBUS_HAVE_VIN;
->  		break;
-> -- 
-> 2.7.4
-> 
