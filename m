@@ -1,69 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A067B201E23
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 00:41:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B83EE201F43
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 02:39:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49pYh02qvTzDrSp
-	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 08:41:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49pcJ41NlhzDrbg
+	for <lists+openbmc@lfdr.de>; Sat, 20 Jun 2020 10:39:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::22f;
+ helo=mail-oi1-x22f.google.com; envelope-from=xqiu@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=Squ0YR1O; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=cLBHHQh1; dkim-atps=neutral
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com
+ [IPv6:2607:f8b0:4864:20::22f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49pYgD6fZzzDrSp
- for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 08:40:56 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 1C2A04C8DA;
- Fri, 19 Jun 2020 22:40:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-language:content-transfer-encoding:content-type
- :content-type:in-reply-to:mime-version:user-agent:date:date
- :message-id:from:from:references:subject:subject:received
- :received:received; s=mta-01; t=1592606448; x=1594420849; bh=9XV
- FbGLX//2QbdJsi1wY5z8RNi/D7ib8y8K10vklE6A=; b=Squ0YR1OgXYx/PbMOrD
- l7EMaXVGOnHS0RNq6Z35IcB1IuLXffh0zx/+7Ex98u2PTvKqARmE903kKIw5XAoa
- Ztnv3orr+2PfaeomGPxzoU8jJWSOizjIXP8fyXCbv3x0oA+0+JfPtGZwy4ejzexh
- bF7nqQM8kmD2tF3dAMnomTbc=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id oOo6WkR5IQtq; Sat, 20 Jun 2020 01:40:48 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 9D4F14C85A;
- Sat, 20 Jun 2020 01:40:48 +0300 (MSK)
-Received: from [10.199.1.42] (10.199.1.42) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Sat, 20
- Jun 2020 01:40:48 +0300
-Subject: Re: Default Gateway for a system v/s Default gateway per Interface
-To: <openbmc@lists.ozlabs.org>
-References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
-From: Alexander Amelkin <a.amelkin@yadro.com>
-Message-ID: <6b23a265-c1dd-4c62-4c31-de4cb1cb74e7@yadro.com>
-Date: Sat, 20 Jun 2020 01:40:47 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.4.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49pcHL1McjzDrQJ
+ for <openbmc@lists.ozlabs.org>; Sat, 20 Jun 2020 10:38:53 +1000 (AEST)
+Received: by mail-oi1-x22f.google.com with SMTP id a3so10060314oid.4
+ for <openbmc@lists.ozlabs.org>; Fri, 19 Jun 2020 17:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Ys75m3cVxvNApGx18NYT/oyhZFrROXwmk1rh5moIn/I=;
+ b=cLBHHQh1cdHWoNQ0tMuP1GLwv20GtY47ijxXATQroLV5cU9ZSpuuT4Pc7iHjKdHm/v
+ hqdJPvUIejhPCTvklU9FkE1G2fceJbM7EzcU4Kcf51BFyeVKvLQW83+HO7GqoLbF+j1w
+ lUpaK8nxWug6xyIxqqi/wZAHoRmVdgojODe5WQnosBUfnv7aweMEaVg3tMqL2j2b+0zt
+ q0PrCaFMgotiif6eZBER9roZmKeCTyZyW0kSYgz2BUFCU+L6MDlv3CBmMi4My8kYbdMW
+ /l8QATLlA8vMQlz1IE0tPAgBy0DRclKp8Y5pgiIyX7fnwfKatF3L59nGjgdryPDDF7vS
+ nldA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Ys75m3cVxvNApGx18NYT/oyhZFrROXwmk1rh5moIn/I=;
+ b=kBOQ2597eZlJ9NU1bJykMCaQxgT8aW8B5VrQCbqwT9Z8/E21Zc5Plkj4yKijK7j5SS
+ i7Pxd1VMqtBNunloWmGsY1wUtbShZtYbVBYVppzGO+8nAyOpu6Fz1LNtSjXFqL0zewXJ
+ idKnwWyPccHq1bfZa/g2tdkIL9WbryFBYZ4S5tdhmPlGbapjEkDszOzaXwqbr81lXdKr
+ 37obQ1V2XJMExybrk0tYLUlJK7dKRFeyT5j1m9pwj/jerBdhTBsqYk2SWGbRVBHqsiN7
+ 4OyP8o0leeEaOOjLMeZv60LVz+KfBZ3uf2x52Z2Cx2E5FwVf70RAWipGbp5rhiVtoMjZ
+ cj3g==
+X-Gm-Message-State: AOAM531J9oyh2HRkk5o1YDgjmFp/ZnPVZSeoRHRfSyQNeq5rWlmZp/gc
+ ZPdTcq8tD2L63BwqaVMjxkl2tgf1WxEUrdaS0Z4N5WOTGCA=
+X-Google-Smtp-Source: ABdhPJyflVg8nFaD8yP03cL978WFXBxJGX4DvBZp4u4ckcFuObJLrqvDjMmOpJiUIiKwXFRS5D5IJ7jc37HkI9DmIpQ=
+X-Received: by 2002:a54:4495:: with SMTP id v21mr4975698oiv.35.1592613528795; 
+ Fri, 19 Jun 2020 17:38:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [10.199.1.42]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+References: <CAA_a9xLB2PjJ7hYTrksY41LFhOk+Kuu-Hs4YCDTeJX4THZ1KQQ@mail.gmail.com>
+ <CAA_a9xKDS=342c+s3QUv8oECkjzqxxCZgHBigT2_CxdCQa5CuQ@mail.gmail.com>
+In-Reply-To: <CAA_a9xKDS=342c+s3QUv8oECkjzqxxCZgHBigT2_CxdCQa5CuQ@mail.gmail.com>
+From: Alex Qiu <xqiu@google.com>
+Date: Fri, 19 Jun 2020 17:38:37 -0700
+Message-ID: <CAA_a9xLqoikFZm0yYo21jBTAZzthZezYPpBmBEXGSB7Yod-JAg@mail.gmail.com>
+Subject: Re: Feedback on Current OpenBMC and Proposing Some Improvements
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="000000000000a685f305a8793b82"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,74 +73,174 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ Kais Belgaied <belgaied@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ Ofer Yehielli <ofery@google.com>, Josh Lehan <krellan@google.com>,
+ gBMC Discussions <gbmc-discuss@google.com>,
+ Richard Hanley <rhanley@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Please, Ratan, if you implement those per-interface gateways again, 
-could you leave an option to have a single system-wide default gateway 
-only?
+--000000000000a685f305a8793b82
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I honestly don't see any use for multiple gateways without policy 
-routing being implemented, and then I don't see any use for policy 
-routing in a BMC (as opposed to a router). So I would like to keep us 
-from unneeded questions from the customers, and so I would prefer to 
-have only a single gateway, as well as single sets of DNS and NTP 
-servers without having to patch across the whole OpenBMC codebase.
+As promised, I made a runnable Python 3 demo to illustrate my ideas:
+https://github.com/alex310110/bmc-proto-20q2
 
-If there was a compile-time option (distro/machine feature?) to use 
-either per-interface or system-wide gateway/DNS/NTP, that would be very 
-nice.
+Thank you!
 
-Thank you.
-Alexander.
+- Alex Qiu
 
-P.S. Sorry for sending this twice, forgot to include the list the first 
-time.
 
-24.04.2020 18:06, Ratan Gupta пишет:
-> Hi All,
+On Thu, Jun 18, 2020 at 2:40 PM Alex Qiu <xqiu@google.com> wrote:
+
+> Just sent out the additional email threads. You can also find them in
+> these links:
 >
-> Currently, OpenBMC stack allows a single default gateway for the 
-> system. Latest kernel allows to configure multiple default gateways.
+> Feedback on Current OpenBMC and Proposing Some Improvements ----
+> Difficulties and Issue Examples:
+> https://lists.ozlabs.org/pipermail/openbmc/2020-June/022065.html
 >
-> Eg: In a system with two interfaces eth0 and eth1,
+> Feedback on Current OpenBMC and Proposing Some Improvements ----
+> "Improvements" Ideas:
+> https://lists.ozlabs.org/pipermail/openbmc/2020-June/022067.html
 >
-> eth0 configured with static address and having gateway(192.168.2.1)
-> eth1 configured with DHCP and gets Gateway from DHCP server (10.10.10.1)
-> ~~~~~~~~~~~~~
-> Kernel IP routing table
-> Destination     Gateway         Genmask         Flags   MSS Window  
-> irtt Iface
-> 0.0.0.0         19.168.2.1      0.0.0.0         UG        0 0          
-> 0 eth0
-> 0.0.0.0         10.10.10.1      0.0.0.0         UG        0 0          
-> 0 eth1
-> ~~~~~~~~~~~~~~
+> Thank you!
 >
-> Kernel will first try using the default gateway having higher metric 
-> value and then fall back to the lower.
->
-> More references: 
-> https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_the_default_gateway
->
-> I'm proposing to make this change in the openBMC D-bus interfaces to 
-> tie the gateway property with the Ethernet interface schema instead of 
-> System configuration.
->
-> Ethernet Interface Schema =>
->
-> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/EthernetInterface.interface.yaml 
+> - Alex Qiu
 >
 >
-> System Configuration Schema =>
+> On Thu, Jun 18, 2020 at 2:25 PM Alex Qiu <xqiu@google.com> wrote:
 >
-> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/SystemConfiguration.interface.yaml 
+>> Hi OpenBMC community,
+>>
+>> It has been a while since Google has adopted the dynamic software stack
+>> of OpenBMC, namely using entity-manager for FRU discovery, dbus-sensors =
+for
+>> sensor reading, and intel-ipmi-oem for IPMI command handling. We discove=
+red
+>> issues and limitations with this dynamic software stack along the way, s=
+o
+>> I=E2=80=99m proposing some ideas on how OpenBMC may improve, which may l=
+ead to
+>> detailed designs about it. Let me call it "Improvements" in this email p=
+er
+>> say. I think the highlight of these ideas are: 1) having a robust framew=
+ork
+>> to handle hardware topology, and 2) having accommodations for code to
+>> intervene on varieties of BMC tasks.
+>>
+>>
+>> I'll split the content of this topic into two additional emails for
+>> easier digestion: 1) Difficulties and Issue Examples; 2) "Improvements"
+>> Ideas. The main discussion may still stay in this thread.
+>>
+>>
+>> Since this is a big architectural change compared to the existing dynami=
+c
+>> software stack, I would like to hear feedback or review on the conceptua=
+l
+>> ideas before we turn these ideas into more concrete designs or prototype=
+s.
+>> On the other hand, there is a high probability that I didn=E2=80=99t exp=
+ress my
+>> idea well enough to understand, and there may be a language barrier to g=
+et
+>> over. I=E2=80=99ll try to see if I can use some code to make a tiny prot=
+otype to
+>> illustrate the ideas better at some point. Thank you!
+>>
+>>
+>> - Alex Qiu
+>>
 >
->
->
-> Please let me know your suggestions.
->
-> Regards
-> Ratan Gupta
->
+
+--000000000000a685f305a8793b82
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>As promised, I made a runnable Python 3 demo to illus=
+trate my ideas:=C2=A0<a href=3D"https://github.com/alex310110/bmc-proto-20q=
+2">https://github.com/alex310110/bmc-proto-20q2</a></div><div><br></div><di=
+v>Thank you!</div><br clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail_si=
+gnature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu</di=
+v></div></div><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">On Thu, Jun 18, 2020 at 2:40 PM Alex Qiu &lt;<a href=3D"m=
+ailto:xqiu@google.com">xqiu@google.com</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div>Just sent out t=
+he additional email threads. You can also find them in these links:</div><d=
+iv><br></div><div>Feedback on Current OpenBMC and Proposing Some Improvemen=
+ts ---- Difficulties and Issue Examples:<br></div><div><a href=3D"https://l=
+ists.ozlabs.org/pipermail/openbmc/2020-June/022065.html" target=3D"_blank">=
+https://lists.ozlabs.org/pipermail/openbmc/2020-June/022065.html</a></div><=
+div><br></div><div>Feedback on Current OpenBMC and Proposing Some Improveme=
+nts ---- &quot;Improvements&quot; Ideas:<br><a href=3D"https://lists.ozlabs=
+.org/pipermail/openbmc/2020-June/022067.html" target=3D"_blank">https://lis=
+ts.ozlabs.org/pipermail/openbmc/2020-June/022067.html</a><br></div><div><br=
+></div><div>Thank you!</div><br clear=3D"all"><div><div dir=3D"ltr"><div di=
+r=3D"ltr">- Alex Qiu</div></div></div><br></div><br><div class=3D"gmail_quo=
+te"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 18, 2020 at 2:25 PM A=
+lex Qiu &lt;<a href=3D"mailto:xqiu@google.com" target=3D"_blank">xqiu@googl=
+e.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex"><div dir=3D"ltr"><span id=3D"gmail-m_8305637106486404367gmail-m_100762=
+8602065475378gmail-docs-internal-guid-17443d56-7fff-26a3-292e-564725539854"=
+><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"=
+><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline;white-space:pre-wrap">Hi OpenBMC community,</sp=
+an></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-b=
+ottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0)=
+;background-color:transparent;font-variant-numeric:normal;font-variant-east=
+-asian:normal;vertical-align:baseline;white-space:pre-wrap">It has been a w=
+hile since Google has adopted the dynamic software stack of OpenBMC, namely=
+ using entity-manager for FRU discovery, dbus-sensors for sensor reading, a=
+nd intel-ipmi-oem for IPMI command handling. We discovered issues and limit=
+ations with this dynamic software stack along the way, so I=E2=80=99m propo=
+sing some ideas on how OpenBMC may improve, which may lead to detailed desi=
+gns about it. Let me call it &quot;Improvements&quot; in this email per say=
+. I think the highlight of these ideas are: 1) having a robust framework to=
+ handle hardware topology, and 2) having accommodations for code to interve=
+ne on varieties of BMC tasks.</span></p><p dir=3D"ltr" style=3D"line-height=
+:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-=
+family:Arial;color:rgb(0,0,0);background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-sp=
+ace:pre-wrap"><br></span></p><p style=3D"line-height:1.38;margin-top:0pt;ma=
+rgin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial;color:rgb(=
+0,0,0);background-color:transparent;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">I&#39;ll =
+split the content of this topic into two additional emails for easier diges=
+tion: 1) Difficulties and Issue Examples; 2) &quot;Improvements&quot; Ideas=
+. The main discussion may still stay in this thread.</span></p><p style=3D"=
+line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size=
+:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;vertical-align:baseli=
+ne;white-space:pre-wrap"><br></span></p><p style=3D"line-height:1.38;margin=
+-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial=
+;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap=
+"><span id=3D"gmail-m_8305637106486404367gmail-m_1007628602065475378gmail-d=
+ocs-internal-guid-7fd06023-7fff-c2d3-8375-7d31c58ce52b"><span style=3D"font=
+-size:11pt;background-color:transparent;font-variant-numeric:normal;font-va=
+riant-east-asian:normal;vertical-align:baseline">Since this is a big archit=
+ectural change compared to the existing dynamic software stack, I would lik=
+e to hear feedback or review on the conceptual ideas before we turn these i=
+deas into more concrete designs or prototypes. On the other hand, there is =
+a high probability that I didn=E2=80=99t express my idea well enough to und=
+erstand, and there may be a language barrier to get over. I=E2=80=99ll try =
+to see if I can use some code to make a tiny prototype to illustrate the id=
+eas better at some point. Thank you!</span></span>
+</span></p><p style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><=
+span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;vertical-align:baseline;white-space:pre-wrap"><span><span style=3D"font-s=
+ize:11pt;background-color:transparent;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;vertical-align:baseline"><br></span></span></span></p=
+></span><div><div dir=3D"ltr"><div dir=3D"ltr">- Alex Qiu</div></div></div>=
+</div>
+</blockquote></div>
+</blockquote></div>
+
+--000000000000a685f305a8793b82--
