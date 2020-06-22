@@ -2,62 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C0FF203A52
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jun 2020 17:08:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 87F28203B40
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jun 2020 17:40:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49rCV66j15zDqNR
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 01:08:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49rDBh3GDrzDqWM
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 01:40:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::534;
- helo=mail-pg1-x534.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::543;
+ helo=mail-pg1-x543.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=iduapJNz; dkim-atps=neutral
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
- [IPv6:2607:f8b0:4864:20::534])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=VJEN13ez; dkim-atps=neutral
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
+ [IPv6:2607:f8b0:4864:20::543])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49rCSC2glDzDqTj
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 01:07:06 +1000 (AEST)
-Received: by mail-pg1-x534.google.com with SMTP id t6so450602pgq.1
- for <openbmc@lists.ozlabs.org>; Mon, 22 Jun 2020 08:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=n2DrSRqHFK0sjp3PpyyTXGeKhtBW9ttVTloqQqH4Nfg=;
- b=iduapJNzGo9WXI2u/uV0YGN3QwmI8M2i664WP4NY1ZWWNwuGivOUCN6ayQnw9aLRpT
- NWM03c9j4m6XAb02NbjPawvyxT2JEa3YWfpc8JknyC0bfvC52XvR8yXNFDbIgnoJvsLA
- GAfD4gtFOiqVuiPN0dXUZLVqYQPpg4BWP7h0cIMTtdcSNtvTGaCFWIyXXh/Nrt2w96yq
- xSohselN8Gkv/ezyzdYWLYyTprAhZskeXUfpR3x6ol1lb9f2rl8fdVfGI8pHRDYP8vGj
- /smTtCMMlXZCqD1IeLm5Wny2nY/hUqpSK0/tETBYj9XqvHI6i4Ubl/RYkOKdnelwJQJf
- btZA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49rD7R1LwZzDqVp;
+ Tue, 23 Jun 2020 01:37:38 +1000 (AEST)
+Received: by mail-pg1-x543.google.com with SMTP id d4so8316282pgk.4;
+ Mon, 22 Jun 2020 08:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+ :user-agent; bh=Es07PooiZSXxjxOYZMyYhw0eShmysXjcokuuPID8SBQ=;
+ b=VJEN13ezcBfitU/knBaJoVjUSPO7tRSy83x0iwvXUroVjfpM1abAak06Wby0HSJhjW
+ 3TAfZpgTv5+0lDjXEjJJlg4Ai0WaUmrBG8tLcFguItP0s4OInG1dE5CppJ4yEPr6CFvu
+ Le+uPayyeugMSGDo7/YB+3yVZh7NPR07n2yylWV2gnwIR5e77Mk/7B64mp/FAWkbSdI1
+ b5g0nUUh1on9k6+eN7HTXF48a/YBefUH8//I9p7iq0oK2Q1njJgntodYvewj7VCSpsT8
+ r6UfaGjUzB2Z496qnfeHts1VvCxbPOuCD3RSdxHoMHxZw430Oo/i4if0cUpTTuAqpQon
+ LoOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=n2DrSRqHFK0sjp3PpyyTXGeKhtBW9ttVTloqQqH4Nfg=;
- b=p4IIGLiclKDFDaNlWSNlEXqtaDjXCG68mJt1kNv4eWhMSkYrgj3xM0Vx7/W6tMlHyt
- vXYb6N/OuB+WBxrUfdFZAGLGljYr84WyViAO3XBJtnN+m7ATYo3oXQgSCBdVb6IS4Thm
- FOvyjJe5ByRS/cqCDfFiyqUYjx2qfaG3CgKp6aus3x6OtezmBmCZIMxOpoWDui6lq7HA
- nPBqtxGZpUE59xeyI+8WRJXvZiPVLnScfj6uSJAmMiRJo5zPjEQQhgFBEfPSh1M3KPY0
- SPeAbcaFokeh/GSd1+PkgaaT+zmttmvTHS/Em8aK+/8A0ZagG6k1eSqhPFRiF70AXgF6
- dnlA==
-X-Gm-Message-State: AOAM533XljKE+diLiPK248Z0s3LtnRASemjFEHOzv6tRCbM6tJNecr6x
- H8pUFj2fSuyXKzlWQoS827WJux1CXjLtS2pGs+AGqC5dSZI=
-X-Google-Smtp-Source: ABdhPJwnyj53uSkheV66ojsm+LTgaBELNGz1becnF4Ap2dwVE9hnfvEKFrRI1EqE2WxBrR5atMlv05+NXX6VrZeOhbU=
-X-Received: by 2002:a5d:860a:: with SMTP id f10mr19847258iol.11.1592838034552; 
- Mon, 22 Jun 2020 08:00:34 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+ :content-disposition:user-agent;
+ bh=Es07PooiZSXxjxOYZMyYhw0eShmysXjcokuuPID8SBQ=;
+ b=ktX4hv+COagiFycK7h5D5qjAWmTk3hjakVP5uPDK3WWC0utjMJyn7cW5lLur00d9sC
+ BK+YzdSeOvyUTgHhV5yA+onEZyz6nNEGmIltHUuQwEyClis3Mgdx89l4+it1IRDv+Fo9
+ H6ZMunyEUMzFLeDRpg+ZmdMhWNYhPHYQLn7n/ZjR6RGG2VxxoYZ9q9XiaTztwE7yvw6L
+ Hf7+3214AqIGA+UIBE4Nu02l3G9W9YIuR7MIyXGuig/tl8AvIlRjei3hpmlvQZGBjC6c
+ +LAaSYWiViV1xOoThy5wjXaMiQQtuY6zRZ4UFUIAPdyiSS/5xvnXGMsCFQkBBn0xTnde
+ t+nA==
+X-Gm-Message-State: AOAM5328eOn8vGimPW9UCfhGIeWQ5C4RN5PthFVLq35+rGGqGdsFU4Rz
+ bt50qOJ1jBIeu24Fva3/KLo=
+X-Google-Smtp-Source: ABdhPJyrpuylIa7V3BVep59iIW7Hr5hWwlEONFn+NSvjqQKwf6Zd3Di3SEEpmzlZnQBAKhFy8LxKJw==
+X-Received: by 2002:a62:7841:: with SMTP id t62mr19835568pfc.273.1592840256516; 
+ Mon, 22 Jun 2020 08:37:36 -0700 (PDT)
+Received: from cnn ([2402:3a80:462:12d4:244f:2b0c:295:2c0b])
+ by smtp.gmail.com with ESMTPSA id i12sm14333391pfk.180.2020.06.22.08.37.31
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 22 Jun 2020 08:37:36 -0700 (PDT)
+Date: Mon, 22 Jun 2020 21:07:27 +0530
+From: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+To: Guenter Roeck <linux@roeck-us.net>, miltonm@us.ibm.com,
+ Jean Delvare <jdelvare@suse.com>, linux-hwmon@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v6] hwmon:(adm1275) Enable adm1278 ADM1278_TEMP1_EN
+Message-ID: <20200622153727.GA9347@cnn>
 MIME-Version: 1.0
-From: Anton Kachalov <rnouse@google.com>
-Date: Mon, 22 Jun 2020 17:00:23 +0200
-Message-ID: <CADVsX88pzhA1eL1REB0GBXgpppbXsvdEzwDaXhUttSqxMbS1ow@mail.gmail.com>
-Subject: 4b32c9ae068beccc3755c48784253e96c31cfd46 brakes devtool
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000003c85af05a8ad8122"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,302 +78,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: manikandan.e@hcl.com, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, vijaykhemka@fb.com, saipsdasari@fb.com,
+ patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003c85af05a8ad8122
-Content-Type: text/plain; charset="UTF-8"
+The adm1278 temp attribute need it for openbmc platform .
+This feature not enabled by default, so PMON_CONFIG needs to enable it.
 
-The commit 4b32c9ae068beccc3755c48784253e96c31cfd46 brakes the command
-like: "devtool modify phosphor-dbus-interfaces" in a way:
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Manikandan Elumalai <manikandan.hcl.ers.epl@gmail.com>
+---
+v5 -> v6: 
+add Reported-by in commit log
+align commit and change log as per guidelines.
+v4 -> v5: 
+align commit and change log. 
+v3 -> v4: 
+kernel test robot CI warning
+v2 -> v3: 
+fix invalid signed-off.
+removed checkpath warnings.
+write ADM1278_TEMP1_EN and ADM1278_VOUT_EN conf in single line operation.
+v1 -> v2: 
+add Signed-off-by.
+removed ADM1278_TEMP1_EN check.
 
-Running on python 3.7.7.
+ drivers/hwmon/pmbus/adm1275.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-ERROR: Error executing a python function in exec_python_func()
-autogenerated:
+diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
+index 5caa37fb..d4e1925 100644
+--- a/drivers/hwmon/pmbus/adm1275.c
++++ b/drivers/hwmon/pmbus/adm1275.c
+@@ -666,11 +666,12 @@ static int adm1275_probe(struct i2c_client *client,
+ 		tindex = 3;
+ 
+ 		info->func[0] |= PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT |
+-			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
++			PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
++			PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 
+-		/* Enable VOUT if not enabled (it is disabled by default) */
+-		if (!(config & ADM1278_VOUT_EN)) {
+-			config |= ADM1278_VOUT_EN;
++		/* Enable VOUT & TEMP1 if not enabled (disabled by default) */
++		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) != (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
++			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
+ 			ret = i2c_smbus_write_byte_data(client,
+ 							ADM1275_PMON_CONFIG,
+ 							config);
+@@ -681,9 +682,6 @@ static int adm1275_probe(struct i2c_client *client,
+ 			}
+ 		}
+ 
+-		if (config & ADM1278_TEMP1_EN)
+-			info->func[0] |=
+-				PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP;
+ 		if (config & ADM1278_VIN_EN)
+ 			info->func[0] |= PMBUS_HAVE_VIN;
+ 		break;
+-- 
+2.7.4
 
-The stack trace of python calls that resulted in this exception/failure was:
-File: 'exec_python_func() autogenerated', lineno: 2, function: <module>
-     0001:
- *** 0002:devtool_post_unpack(d)
-     0003:
-File: '/.../openbmc/meta/classes/devtool-source.bbclass', lineno: 68,
-function: devtool_post_unpack
-     0064:}
-     0065:
-     0066:
-     0067:python devtool_post_unpack() {
- *** 0068:    import oe.recipeutils
-     0069:    import shutil
-     0070:    sys.path.insert(0, os.path.join(d.getVar('COREBASE'),
-'scripts', 'lib'))
-     0071:    import scriptutils
-     0072:    from devtool import setup_git_repo
-File: '/.../openbmc/meta/lib/oe/recipeutils.py', lineno: 21, function:
-<module>
-     0017:import shutil
-     0018:import re
-     0019:import fnmatch
-     0020:import glob
- *** 0021:import bb.tinfoil
-     0022:
-     0023:from collections import OrderedDict, defaultdict
-     0024:from bb.utils import vercmp_string
-     0025:
-File: '/.../openbmc/poky/bitbake/lib/bb/tinfoil.py', lineno: 19, function:
-<module>
-     0015:from collections import OrderedDict, defaultdict
-     0016:from functools import partial
-     0017:
-     0018:import bb.cache
- *** 0019:import bb.cooker
-     0020:import bb.providers
-     0021:import bb.taskdata
-     0022:import bb.utils
-     0023:import bb.command
-File: '/.../openbmc/poky/bitbake/lib/bb/cooker.py', lineno: 25, function:
-<module>
-     0021:import bb, bb.exceptions, bb.command
-     0022:from bb import utils, data, parse, event, cache, providers,
-taskdata, runqueue, build
-     0023:import queue
-     0024:import signal
- *** 0025:import prserv.serv
-     0026:import pyinotify
-     0027:import json
-     0028:import pickle
-     0029:import codecs
-File: '/.../openbmc/poky/bitbake/lib/prserv/serv.py', lineno: 7, function:
-<module>
-     0003:#
-     0004:
-     0005:import os,sys,logging
-     0006:import signal, time
- *** 0007:from xmlrpc.server import SimpleXMLRPCServer,
-SimpleXMLRPCRequestHandler
-     0008:import threading
-     0009:import queue
-     0010:import socket
-     0011:import io
-File: '/usr/lib/python3.7/xmlrpc/server.py', lineno: 117, function: <module>
-     0113:import socketserver
-     0114:import sys
-     0115:import os
-     0116:import re
- *** 0117:import pydoc
-     0118:import traceback
-     0119:try:
-     0120:    import fcntl
-     0121:except ImportError:
-File: '/usr/lib/python3.7/pydoc.py', lineno: 374, function: <module>
-     0370:    return module
-     0371:
-     0372:# ---------------------------------------------------- formatter
-base class
-     0373:
- *** 0374:class Doc:
-     0375:
-     0376:    PYTHONDOCS = os.environ.get("PYTHONDOCS",
-     0377:                                "
-https://docs.python.org/%d.%d/library"
-     0378:                                % sys.version_info[:2])
-File: '/usr/lib/python3.7/pydoc.py', lineno: 406, function: Doc
-     0402:        raise TypeError(message)
-     0403:
-     0404:    docmodule = docclass = docroutine = docother = docproperty =
-docdata = fail
-     0405:
- *** 0406:    def getdocloc(self, object,
-basedir=sysconfig.get_path('stdlib')):
-     0407:        """Return the location of module docs or None"""
-     0408:
-     0409:        try:
-     0410:            file = inspect.getabsfile(object)
-File: '/usr/lib/python3.7/sysconfig.py', lineno: 513, function: get_path
-     0509:    """Return a path corresponding to the scheme.
-     0510:
-     0511:    ``scheme`` is the install scheme name.
-     0512:    """
- *** 0513:    return get_paths(scheme, vars, expand)[name]
-     0514:
-     0515:
-     0516:def get_config_vars(*args):
-     0517:    """With no arguments, return a dictionary of all configuration
-File: '/usr/lib/python3.7/sysconfig.py', lineno: 503, function: get_paths
-     0499:    ``scheme`` is the install scheme name. If not provided, it
-will
-     0500:    return the default scheme for the current platform.
-     0501:    """
-     0502:    if expand:
- *** 0503:        return _expand_vars(scheme, vars)
-     0504:    else:
-     0505:        return _INSTALL_SCHEMES[scheme]
-     0506:
-     0507:
-File: '/usr/lib/python3.7/sysconfig.py', lineno: 172, function: _expand_vars
-     0168:def _expand_vars(scheme, vars):
-     0169:    res = {}
-     0170:    if vars is None:
-     0171:        vars = {}
- *** 0172:    _extend_dict(vars, get_config_vars())
-     0173:
-     0174:    for key, value in _INSTALL_SCHEMES[scheme].items():
-     0175:        if os.name in ('posix', 'nt'):
-     0176:            value = os.path.expanduser(value)
-File: '/usr/lib/python3.7/sysconfig.py', lineno: 551, function:
-get_config_vars
-     0547:
-     0548:        if os.name == 'nt':
-     0549:            _init_non_posix(_CONFIG_VARS)
-     0550:        if os.name == 'posix':
- *** 0551:            _init_posix(_CONFIG_VARS)
-     0552:        # For backward compatibility, see issue19555
-     0553:        SO = _CONFIG_VARS.get('EXT_SUFFIX')
-     0554:        if SO is not None:
-     0555:            _CONFIG_VARS['SO'] = SO
-File: '/usr/lib/python3.7/sysconfig.py', lineno: 422, function: _init_posix
-     0418:def _init_posix(vars):
-     0419:    """Initialize the module as appropriate for POSIX systems."""
-     0420:    # _sysconfigdata is generated at build time, see
-_generate_posix_vars()
-     0421:    name = _get_sysconfigdata_name()
- *** 0422:    _temp = __import__(name, globals(), locals(),
-['build_time_vars'], 0)
-     0423:    build_time_vars = _temp.build_time_vars
-     0424:    vars.update(build_time_vars)
-     0425:
-     0426:def _init_non_posix(vars):
-Exception: ModuleNotFoundError: No module named '_sysconfigdata'
-
---0000000000003c85af05a8ad8122
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">The commit=C2=A04b32c9ae068beccc3755c48784253e96c31cfd46 b=
-rakes the command like: &quot;devtool modify=C2=A0phosphor-dbus-interfaces&=
-quot; in a way:<div><br></div><div>Running on python 3.7.7.<br><div><br></d=
-iv><div>ERROR: Error executing a python function in exec_python_func() auto=
-generated:<br><br>The stack trace of python calls that resulted in this exc=
-eption/failure was:<br>File: &#39;exec_python_func() autogenerated&#39;, li=
-neno: 2, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =C2=A00001:<br>=C2=A0***=
- 0002:devtool_post_unpack(d)<br>=C2=A0 =C2=A0 =C2=A00003:<br>File: &#39;/..=
-./openbmc/meta/classes/devtool-source.bbclass&#39;, lineno: 68, function: d=
-evtool_post_unpack<br>=C2=A0 =C2=A0 =C2=A00064:}<br>=C2=A0 =C2=A0 =C2=A0006=
-5:<br>=C2=A0 =C2=A0 =C2=A00066:<br>=C2=A0 =C2=A0 =C2=A00067:python devtool_=
-post_unpack() {<br>=C2=A0*** 0068: =C2=A0 =C2=A0import oe.recipeutils<br>=
-=C2=A0 =C2=A0 =C2=A00069: =C2=A0 =C2=A0import shutil<br>=C2=A0 =C2=A0 =C2=
-=A00070: =C2=A0 =C2=A0sys.path.insert(0, os.path.join(d.getVar(&#39;COREBAS=
-E&#39;), &#39;scripts&#39;, &#39;lib&#39;))<br>=C2=A0 =C2=A0 =C2=A00071: =
-=C2=A0 =C2=A0import scriptutils<br>=C2=A0 =C2=A0 =C2=A00072: =C2=A0 =C2=A0f=
-rom devtool import setup_git_repo<br>File: &#39;/.../openbmc/meta/lib/oe/re=
-cipeutils.py&#39;, lineno: 21, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =
-=C2=A00017:import shutil<br>=C2=A0 =C2=A0 =C2=A00018:import re<br>=C2=A0 =
-=C2=A0 =C2=A00019:import fnmatch<br>=C2=A0 =C2=A0 =C2=A00020:import glob<br=
->=C2=A0*** 0021:import bb.tinfoil<br>=C2=A0 =C2=A0 =C2=A00022:<br>=C2=A0 =
-=C2=A0 =C2=A00023:from collections import OrderedDict, defaultdict<br>=C2=
-=A0 =C2=A0 =C2=A00024:from bb.utils import vercmp_string<br>=C2=A0 =C2=A0 =
-=C2=A00025:<br>File: &#39;/.../openbmc/poky/bitbake/lib/bb/tinfoil.py&#39;,=
- lineno: 19, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =C2=A00015:from coll=
-ections import OrderedDict, defaultdict<br>=C2=A0 =C2=A0 =C2=A00016:from fu=
-nctools import partial<br>=C2=A0 =C2=A0 =C2=A00017:<br>=C2=A0 =C2=A0 =C2=A0=
-0018:import bb.cache<br>=C2=A0*** 0019:import bb.cooker<br>=C2=A0 =C2=A0 =
-=C2=A00020:import bb.providers<br>=C2=A0 =C2=A0 =C2=A00021:import bb.taskda=
-ta<br>=C2=A0 =C2=A0 =C2=A00022:import bb.utils<br>=C2=A0 =C2=A0 =C2=A00023:=
-import bb.command<br>File: &#39;/.../openbmc/poky/bitbake/lib/bb/cooker.py&=
-#39;, lineno: 25, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =C2=A00021:impo=
-rt bb, bb.exceptions, bb.command<br>=C2=A0 =C2=A0 =C2=A00022:from bb import=
- utils, data, parse, event, cache, providers, taskdata, runqueue, build<br>=
-=C2=A0 =C2=A0 =C2=A00023:import queue<br>=C2=A0 =C2=A0 =C2=A00024:import si=
-gnal<br>=C2=A0*** 0025:import prserv.serv<br>=C2=A0 =C2=A0 =C2=A00026:impor=
-t pyinotify<br>=C2=A0 =C2=A0 =C2=A00027:import json<br>=C2=A0 =C2=A0 =C2=A0=
-0028:import pickle<br>=C2=A0 =C2=A0 =C2=A00029:import codecs<br>File: &#39;=
-/.../openbmc/poky/bitbake/lib/prserv/serv.py&#39;, lineno: 7, function: &lt=
-;module&gt;<br>=C2=A0 =C2=A0 =C2=A00003:#<br>=C2=A0 =C2=A0 =C2=A00004:<br>=
-=C2=A0 =C2=A0 =C2=A00005:import os,sys,logging<br>=C2=A0 =C2=A0 =C2=A00006:=
-import signal, time<br>=C2=A0*** 0007:from xmlrpc.server import SimpleXMLRP=
-CServer, SimpleXMLRPCRequestHandler<br>=C2=A0 =C2=A0 =C2=A00008:import thre=
-ading<br>=C2=A0 =C2=A0 =C2=A00009:import queue<br>=C2=A0 =C2=A0 =C2=A00010:=
-import socket<br>=C2=A0 =C2=A0 =C2=A00011:import io<br>File: &#39;/usr/lib/=
-python3.7/xmlrpc/server.py&#39;, lineno: 117, function: &lt;module&gt;<br>=
-=C2=A0 =C2=A0 =C2=A00113:import socketserver<br>=C2=A0 =C2=A0 =C2=A00114:im=
-port sys<br>=C2=A0 =C2=A0 =C2=A00115:import os<br>=C2=A0 =C2=A0 =C2=A00116:=
-import re<br>=C2=A0*** 0117:import pydoc<br>=C2=A0 =C2=A0 =C2=A00118:import=
- traceback<br>=C2=A0 =C2=A0 =C2=A00119:try:<br>=C2=A0 =C2=A0 =C2=A00120: =
-=C2=A0 =C2=A0import fcntl<br>=C2=A0 =C2=A0 =C2=A00121:except ImportError:<b=
-r>File: &#39;/usr/lib/python3.7/pydoc.py&#39;, lineno: 374, function: &lt;m=
-odule&gt;<br>=C2=A0 =C2=A0 =C2=A00370: =C2=A0 =C2=A0return module<br>=C2=A0=
- =C2=A0 =C2=A00371:<br>=C2=A0 =C2=A0 =C2=A00372:# -------------------------=
---------------------------- formatter base class<br>=C2=A0 =C2=A0 =C2=A0037=
-3:<br>=C2=A0*** 0374:class Doc:<br>=C2=A0 =C2=A0 =C2=A00375:<br>=C2=A0 =C2=
-=A0 =C2=A00376: =C2=A0 =C2=A0PYTHONDOCS =3D os.environ.get(&quot;PYTHONDOCS=
-&quot;,<br>=C2=A0 =C2=A0 =C2=A00377: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&q=
-uot;<a href=3D"https://docs.python.org/%d.%d/library">https://docs.python.o=
-rg/%d.%d/library</a>&quot;<br>=C2=A0 =C2=A0 =C2=A00378: =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0% sys.version_info[:2])<br>File: &#39;/usr/lib/python3.=
-7/pydoc.py&#39;, lineno: 406, function: Doc<br>=C2=A0 =C2=A0 =C2=A00402: =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0raise TypeError(message)<br>=C2=A0 =C2=A0 =C2=A0=
-0403:<br>=C2=A0 =C2=A0 =C2=A00404: =C2=A0 =C2=A0docmodule =3D docclass =3D =
-docroutine =3D docother =3D docproperty =3D docdata =3D fail<br>=C2=A0 =C2=
-=A0 =C2=A00405:<br>=C2=A0*** 0406: =C2=A0 =C2=A0def getdocloc(self, object,=
- basedir=3Dsysconfig.get_path(&#39;stdlib&#39;)):<br>=C2=A0 =C2=A0 =C2=A004=
-07: =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;&quot;&quot;Return the location of mod=
-ule docs or None&quot;&quot;&quot;<br>=C2=A0 =C2=A0 =C2=A00408:<br>=C2=A0 =
-=C2=A0 =C2=A00409: =C2=A0 =C2=A0 =C2=A0 =C2=A0try:<br>=C2=A0 =C2=A0 =C2=A00=
-410: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0file =3D inspect.getabsfile(o=
-bject)<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, lineno: 513, fun=
-ction: get_path<br>=C2=A0 =C2=A0 =C2=A00509: =C2=A0 =C2=A0&quot;&quot;&quot=
-;Return a path corresponding to the scheme.<br>=C2=A0 =C2=A0 =C2=A00510:<br=
->=C2=A0 =C2=A0 =C2=A00511: =C2=A0 =C2=A0``scheme`` is the install scheme na=
-me.<br>=C2=A0 =C2=A0 =C2=A00512: =C2=A0 =C2=A0&quot;&quot;&quot;<br>=C2=A0*=
-** 0513: =C2=A0 =C2=A0return get_paths(scheme, vars, expand)[name]<br>=C2=
-=A0 =C2=A0 =C2=A00514:<br>=C2=A0 =C2=A0 =C2=A00515:<br>=C2=A0 =C2=A0 =C2=A0=
-0516:def get_config_vars(*args):<br>=C2=A0 =C2=A0 =C2=A00517: =C2=A0 =C2=A0=
-&quot;&quot;&quot;With no arguments, return a dictionary of all configurati=
-on<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, lineno: 503, functio=
-n: get_paths<br>=C2=A0 =C2=A0 =C2=A00499: =C2=A0 =C2=A0``scheme`` is the in=
-stall scheme name. If not provided, it will<br>=C2=A0 =C2=A0 =C2=A00500: =
-=C2=A0 =C2=A0return the default scheme for the current platform.<br>=C2=A0 =
-=C2=A0 =C2=A00501: =C2=A0 =C2=A0&quot;&quot;&quot;<br>=C2=A0 =C2=A0 =C2=A00=
-502: =C2=A0 =C2=A0if expand:<br>=C2=A0*** 0503: =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-return _expand_vars(scheme, vars)<br>=C2=A0 =C2=A0 =C2=A00504: =C2=A0 =C2=
-=A0else:<br>=C2=A0 =C2=A0 =C2=A00505: =C2=A0 =C2=A0 =C2=A0 =C2=A0return _IN=
-STALL_SCHEMES[scheme]<br>=C2=A0 =C2=A0 =C2=A00506:<br>=C2=A0 =C2=A0 =C2=A00=
-507:<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, lineno: 172, funct=
-ion: _expand_vars<br>=C2=A0 =C2=A0 =C2=A00168:def _expand_vars(scheme, vars=
-):<br>=C2=A0 =C2=A0 =C2=A00169: =C2=A0 =C2=A0res =3D {}<br>=C2=A0 =C2=A0 =
-=C2=A00170: =C2=A0 =C2=A0if vars is None:<br>=C2=A0 =C2=A0 =C2=A00171: =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0vars =3D {}<br>=C2=A0*** 0172: =C2=A0 =C2=A0_extend=
-_dict(vars, get_config_vars())<br>=C2=A0 =C2=A0 =C2=A00173:<br>=C2=A0 =C2=
-=A0 =C2=A00174: =C2=A0 =C2=A0for key, value in _INSTALL_SCHEMES[scheme].ite=
-ms():<br>=C2=A0 =C2=A0 =C2=A00175: =C2=A0 =C2=A0 =C2=A0 =C2=A0if <a href=3D=
-"http://os.name">os.name</a> in (&#39;posix&#39;, &#39;nt&#39;):<br>=C2=A0 =
-=C2=A0 =C2=A00176: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0value =3D os.pa=
-th.expanduser(value)<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, li=
-neno: 551, function: get_config_vars<br>=C2=A0 =C2=A0 =C2=A00547:<br>=C2=A0=
- =C2=A0 =C2=A00548: =C2=A0 =C2=A0 =C2=A0 =C2=A0if <a href=3D"http://os.name=
-">os.name</a> =3D=3D &#39;nt&#39;:<br>=C2=A0 =C2=A0 =C2=A00549: =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0_init_non_posix(_CONFIG_VARS)<br>=C2=A0 =C2=
-=A0 =C2=A00550: =C2=A0 =C2=A0 =C2=A0 =C2=A0if <a href=3D"http://os.name">os=
-.name</a> =3D=3D &#39;posix&#39;:<br>=C2=A0*** 0551: =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0_init_posix(_CONFIG_VARS)<br>=C2=A0 =C2=A0 =C2=A00552: =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0# For backward compatibility, see issue19555<br>=
-=C2=A0 =C2=A0 =C2=A00553: =C2=A0 =C2=A0 =C2=A0 =C2=A0SO =3D _CONFIG_VARS.ge=
-t(&#39;EXT_SUFFIX&#39;)<br>=C2=A0 =C2=A0 =C2=A00554: =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0if SO is not None:<br>=C2=A0 =C2=A0 =C2=A00555: =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0_CONFIG_VARS[&#39;SO&#39;] =3D SO<br>File: &#39;/usr/li=
-b/python3.7/sysconfig.py&#39;, lineno: 422, function: _init_posix<br>=C2=A0=
- =C2=A0 =C2=A00418:def _init_posix(vars):<br>=C2=A0 =C2=A0 =C2=A00419: =C2=
-=A0 =C2=A0&quot;&quot;&quot;Initialize the module as appropriate for POSIX =
-systems.&quot;&quot;&quot;<br>=C2=A0 =C2=A0 =C2=A00420: =C2=A0 =C2=A0# _sys=
-configdata is generated at build time, see _generate_posix_vars()<br>=C2=A0=
- =C2=A0 =C2=A00421: =C2=A0 =C2=A0name =3D _get_sysconfigdata_name()<br>=C2=
-=A0*** 0422: =C2=A0 =C2=A0_temp =3D __import__(name, globals(), locals(), [=
-&#39;build_time_vars&#39;], 0)<br>=C2=A0 =C2=A0 =C2=A00423: =C2=A0 =C2=A0bu=
-ild_time_vars =3D _temp.build_time_vars<br>=C2=A0 =C2=A0 =C2=A00424: =C2=A0=
- =C2=A0vars.update(build_time_vars)<br>=C2=A0 =C2=A0 =C2=A00425:<br>=C2=A0 =
-=C2=A0 =C2=A00426:def _init_non_posix(vars):<br>Exception: ModuleNotFoundEr=
-ror: No module named &#39;_sysconfigdata&#39;<br></div></div></div>
-
---0000000000003c85af05a8ad8122--
