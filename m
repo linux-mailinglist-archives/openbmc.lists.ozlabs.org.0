@@ -1,76 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27680203B60
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jun 2020 17:46:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BD14203BA1
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jun 2020 17:56:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49rDL42Ph2zDqG9
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 01:46:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49rDXf461BzDqXf
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 01:56:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49rDJy47kCzDqCC
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 01:45:54 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05MFWZOL071443; Mon, 22 Jun 2020 11:45:49 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31ss0ht0wy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2020 11:45:49 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05MFZYv7030858;
- Mon, 22 Jun 2020 15:45:48 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma01dal.us.ibm.com with ESMTP id 31sa38mtey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2020 15:45:48 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 05MFjjCe6357594
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jun 2020 15:45:45 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B60E678063;
- Mon, 22 Jun 2020 15:45:46 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 745457805E;
- Mon, 22 Jun 2020 15:45:46 +0000 (GMT)
-Received: from ghost4.ibm.com (unknown [9.163.39.42])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon, 22 Jun 2020 15:45:46 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.4] leds: pca955x: Add a software implementation of
- the PCA9552 chip
-Date: Mon, 22 Jun 2020 10:45:42 -0500
-Message-Id: <20200622154542.20930-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.24.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49rDWZ5zdvzDqR6
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 01:55:06 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Message-ID: <1c18b5232c02f0fe704577a5efb6b593c08407f1.camel@fuzziesquirrel.com>
+Subject: Re: OpenBMC - how best to do meta-hpe commit
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: "Garrett, Mike (HPE Server Firmware)" <mike.garrett@hpe.com>, "Verdun,
+ Jean-Marie" <jean-marie.verdun@hpe.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Date: Mon, 22 Jun 2020 11:54:23 -0400
+In-Reply-To: <DF4PR8401MB11459191B8F682B8DAB4707A8F980@DF4PR8401MB1145.NAMPRD84.PROD.OUTLOOK.COM>
+References: <DF4PR8401MB11459191B8F682B8DAB4707A8F980@DF4PR8401MB1145.NAMPRD84.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-22_08:2020-06-22,
- 2020-06-22 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- adultscore=0 suspectscore=1 priorityscore=1501 cotscore=-2147483648
- phishscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0 clxscore=1011
- mlxlogscore=999 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2004280000 definitions=main-2006220114
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,60 +45,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, Eddie James <eajames@linux.ibm.com>
+Cc: "Shaffer, Scott" <scott.shaffer@hpe.com>, "Cisneros,
+ Jorge \(George\)" <jorge.cisneros@hpe.com>, "Rodgers,
+ Renee" <renee.rodgers@hpe.com>, "Chung, 
+ John \(TWN iLO\)" <john.chung@hpe.com>, "Chen, Gilbert" <gilbert.chen@hpe.com>,
+ "Newman, Edward \(iLO Firmware\)" <edward.newman@hpe.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-There is an implementation of the PCA9552 on a PIC16F microcontroller.
-The I2C device addresses are different from the hardware PCA9552, so add
-a new compatible string and associated platform data to be able to probe
-this device.
+On Fri, 2020-06-19 at 15:37 +0000, Garrett, Mike (HPE Server Firmware)
+wrote:
+> Hi Brad and all,
+> 
+> Thank you for creating meta-hpe.  I'd like your opinion on the best
+> way to do our initial meta-hpe commit.  Its currently 168 files split
+> into (1) a machine layer for our DL360, (2) a BMC SOC layer, (3) a
+> common layer for elements common to HPE platforms.  I know the team
+> prefers small commits but would like your thoughts on this since it is
+> more or less atomic.
+> 
+> I assume this would get committed to 
+> https://gerrit.openbmc-project.xyz/openbmc/meta-hpe and go through the
+> normal Gerrit review process right?  I've looked and not been able to
+> find good examples of other "1st commits" to see how it's been done in
+> the past.
+> 
+> Thanks,
+> 
+> Mike
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/leds/leds-pca955x.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Hi Mike
 
-diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
-index 4037c504589c..4d3a36538c6c 100644
---- a/drivers/leds/leds-pca955x.c
-+++ b/drivers/leds/leds-pca955x.c
-@@ -65,6 +65,7 @@ enum pca955x_type {
- 	pca9550,
- 	pca9551,
- 	pca9552,
-+	pca9552_soft,
- 	pca9553,
- };
- 
-@@ -90,6 +91,11 @@ static struct pca955x_chipdef pca955x_chipdefs[] = {
- 		.slv_addr	= /* 1100xxx */ 0x60,
- 		.slv_addr_shift	= 3,
- 	},
-+	[pca9552_soft] = {
-+		.bits		= 16,
-+		.slv_addr	= /* 0110xxx */ 0x30,
-+		.slv_addr_shift	= 3,
-+	},
- 	[pca9553] = {
- 		.bits		= 4,
- 		.slv_addr	= /* 110001x */ 0x62,
-@@ -101,6 +107,7 @@ static const struct i2c_device_id pca955x_id[] = {
- 	{ "pca9550", pca9550 },
- 	{ "pca9551", pca9551 },
- 	{ "pca9552", pca9552 },
-+	{ "pca9552-soft", pca9552_soft },
- 	{ "pca9553", pca9553 },
- 	{ }
- };
-@@ -412,6 +419,7 @@ static const struct of_device_id of_pca955x_match[] = {
- 	{ .compatible = "nxp,pca9550", .data = (void *)pca9550 },
- 	{ .compatible = "nxp,pca9551", .data = (void *)pca9551 },
- 	{ .compatible = "nxp,pca9552", .data = (void *)pca9552 },
-+	{ .compatible = "nxp,pca9552-soft", .data = (void *)pca9552_soft },
- 	{ .compatible = "nxp,pca9553", .data = (void *)pca9553 },
- 	{},
- };
--- 
-2.24.0
+I didn't have anything to add beyond what Andrew said in the other
+thread.
 
+> However, my guess at the best course of action is to push the one big
+> commit you have to gerrit,
+
+I agree with this ^ we can go from there.
+
+thx - brad
