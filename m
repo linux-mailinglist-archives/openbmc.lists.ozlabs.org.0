@@ -1,82 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE1F62038D7
-	for <lists+openbmc@lfdr.de>; Mon, 22 Jun 2020 16:11:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C0FF203A52
+	for <lists+openbmc@lfdr.de>; Mon, 22 Jun 2020 17:08:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49rBDS64mMzDqNv
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 00:11:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49rCV66j15zDqNR
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 01:08:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::534;
+ helo=mail-pg1-x534.google.com; envelope-from=gmouse@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=iduapJNz; dkim-atps=neutral
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
+ [IPv6:2607:f8b0:4864:20::534])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49rB9B0VSgzDqKs
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 00:09:00 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05ME2L9L190947; Mon, 22 Jun 2020 10:08:57 -0400
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31swph1tv6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2020 10:08:57 -0400
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05MDu1Rr012433;
- Mon, 22 Jun 2020 14:08:53 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma02wdc.us.ibm.com with ESMTP id 31sa38r280-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2020 14:08:53 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 05ME8rjM37290312
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jun 2020 14:08:53 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37A6B112066;
- Mon, 22 Jun 2020 14:08:53 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F3833112063;
- Mon, 22 Jun 2020 14:08:52 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.159.135])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS;
- Mon, 22 Jun 2020 14:08:52 +0000 (GMT)
-Subject: Re: OpenBMC 2.8 security audit results
-To: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>,
- openbmc@lists.ozlabs.org
-References: <a31fcd71-460d-86c4-7a07-b7c6800aa7be@linux.ibm.com>
- <2abafb26-29d5-0a0b-7969-19b32556adc5@linux.intel.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <21ebed5c-ad63-84a1-0b0e-8b5fdb83387d@linux.ibm.com>
-Date: Mon, 22 Jun 2020 09:08:52 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49rCSC2glDzDqTj
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 01:07:06 +1000 (AEST)
+Received: by mail-pg1-x534.google.com with SMTP id t6so450602pgq.1
+ for <openbmc@lists.ozlabs.org>; Mon, 22 Jun 2020 08:07:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=n2DrSRqHFK0sjp3PpyyTXGeKhtBW9ttVTloqQqH4Nfg=;
+ b=iduapJNzGo9WXI2u/uV0YGN3QwmI8M2i664WP4NY1ZWWNwuGivOUCN6ayQnw9aLRpT
+ NWM03c9j4m6XAb02NbjPawvyxT2JEa3YWfpc8JknyC0bfvC52XvR8yXNFDbIgnoJvsLA
+ GAfD4gtFOiqVuiPN0dXUZLVqYQPpg4BWP7h0cIMTtdcSNtvTGaCFWIyXXh/Nrt2w96yq
+ xSohselN8Gkv/ezyzdYWLYyTprAhZskeXUfpR3x6ol1lb9f2rl8fdVfGI8pHRDYP8vGj
+ /smTtCMMlXZCqD1IeLm5Wny2nY/hUqpSK0/tETBYj9XqvHI6i4Ubl/RYkOKdnelwJQJf
+ btZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=n2DrSRqHFK0sjp3PpyyTXGeKhtBW9ttVTloqQqH4Nfg=;
+ b=p4IIGLiclKDFDaNlWSNlEXqtaDjXCG68mJt1kNv4eWhMSkYrgj3xM0Vx7/W6tMlHyt
+ vXYb6N/OuB+WBxrUfdFZAGLGljYr84WyViAO3XBJtnN+m7ATYo3oXQgSCBdVb6IS4Thm
+ FOvyjJe5ByRS/cqCDfFiyqUYjx2qfaG3CgKp6aus3x6OtezmBmCZIMxOpoWDui6lq7HA
+ nPBqtxGZpUE59xeyI+8WRJXvZiPVLnScfj6uSJAmMiRJo5zPjEQQhgFBEfPSh1M3KPY0
+ SPeAbcaFokeh/GSd1+PkgaaT+zmttmvTHS/Em8aK+/8A0ZagG6k1eSqhPFRiF70AXgF6
+ dnlA==
+X-Gm-Message-State: AOAM533XljKE+diLiPK248Z0s3LtnRASemjFEHOzv6tRCbM6tJNecr6x
+ H8pUFj2fSuyXKzlWQoS827WJux1CXjLtS2pGs+AGqC5dSZI=
+X-Google-Smtp-Source: ABdhPJwnyj53uSkheV66ojsm+LTgaBELNGz1becnF4Ap2dwVE9hnfvEKFrRI1EqE2WxBrR5atMlv05+NXX6VrZeOhbU=
+X-Received: by 2002:a5d:860a:: with SMTP id f10mr19847258iol.11.1592838034552; 
+ Mon, 22 Jun 2020 08:00:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2abafb26-29d5-0a0b-7969-19b32556adc5@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-22_07:2020-06-22,
- 2020-06-22 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0
- spamscore=0 phishscore=0 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 bulkscore=0 clxscore=1011 malwarescore=0 adultscore=0
- priorityscore=1501 cotscore=-2147483648 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006220102
+From: Anton Kachalov <rnouse@google.com>
+Date: Mon, 22 Jun 2020 17:00:23 +0200
+Message-ID: <CADVsX88pzhA1eL1REB0GBXgpppbXsvdEzwDaXhUttSqxMbS1ow@mail.gmail.com>
+Subject: 4b32c9ae068beccc3755c48784253e96c31cfd46 brakes devtool
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000003c85af05a8ad8122"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,91 +72,299 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/22/20 4:30 AM, Alexander Tereschenko wrote:
-> On 20-Jun-20 03:26, Joseph Reynolds wrote:
->> Here are the results from my "security audit" on the planned OpenBMC 
->> 2.8 release.  The results are not intended as a complete analysis, 
->> but only offer highlights into the BMC's security configuration. 
->> Contributions are appreciated.
->> The script to perform these tests was presented here: 
->> https://lists.ozlabs.org/pipermail/openbmc/2020-April/021186.html and 
->> was followed more-or-less.
->>
->> $ echo "Checking test host openssl version"
->> Checking test host openssl version
->> $ openssl version
->> OpenSSL 1.0.2k-fips  26 Jan 2017
->>
-> I'm not sure I get this one - is "test host" a BMC or the one where 
-> the test script is being run? If the former, this is really old, no 
-> longer publicly supported by the OpenSSL team and has multiple CVEs 
-> against it [1], so should be upgraded.
->
-> [1] https://www.openssl.org/news/openssl-1.0.2-notes.html
+--0000000000003c85af05a8ad8122
+Content-Type: text/plain; charset="UTF-8"
 
-Alexander, thanks for your reply.  The "test host" is a Linux system 
-used to probe the BMC via network interfaces such as SSH, HTTPS, and 
-REST APIs.  To reflect actual customer use, I used a test host that has 
-an older operating system.  I've included the test host's software 
-versions to help answer questions about the results below, when the host 
-version factors into the results.  [I'll update my preamble with this 
-information.]
+The commit 4b32c9ae068beccc3755c48784253e96c31cfd46 brakes the command
+like: "devtool modify phosphor-dbus-interfaces" in a way:
 
->
->
->> debug1: Remote protocol version 2.0, remote software version 
->> dropbear_2019.78
->
-> There's a very recent 2020.79, which has one CVE fix and some useful 
-> changes (e.g. using getrandom(), AES-GCM and so on), would be good to 
-> update it for the next release.
+Running on python 3.7.7.
 
-Agreed.  Yocto will pull in the new dropbear release, and it will 
-downstream to OpenBMC.  We may want to update our dropbear/options.patch
+ERROR: Error executing a python function in exec_python_func()
+autogenerated:
 
-https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear/options.patch
+The stack trace of python calls that resulted in this exception/failure was:
+File: 'exec_python_func() autogenerated', lineno: 2, function: <module>
+     0001:
+ *** 0002:devtool_post_unpack(d)
+     0003:
+File: '/.../openbmc/meta/classes/devtool-source.bbclass', lineno: 68,
+function: devtool_post_unpack
+     0064:}
+     0065:
+     0066:
+     0067:python devtool_post_unpack() {
+ *** 0068:    import oe.recipeutils
+     0069:    import shutil
+     0070:    sys.path.insert(0, os.path.join(d.getVar('COREBASE'),
+'scripts', 'lib'))
+     0071:    import scriptutils
+     0072:    from devtool import setup_git_repo
+File: '/.../openbmc/meta/lib/oe/recipeutils.py', lineno: 21, function:
+<module>
+     0017:import shutil
+     0018:import re
+     0019:import fnmatch
+     0020:import glob
+ *** 0021:import bb.tinfoil
+     0022:
+     0023:from collections import OrderedDict, defaultdict
+     0024:from bb.utils import vercmp_string
+     0025:
+File: '/.../openbmc/poky/bitbake/lib/bb/tinfoil.py', lineno: 19, function:
+<module>
+     0015:from collections import OrderedDict, defaultdict
+     0016:from functools import partial
+     0017:
+     0018:import bb.cache
+ *** 0019:import bb.cooker
+     0020:import bb.providers
+     0021:import bb.taskdata
+     0022:import bb.utils
+     0023:import bb.command
+File: '/.../openbmc/poky/bitbake/lib/bb/cooker.py', lineno: 25, function:
+<module>
+     0021:import bb, bb.exceptions, bb.command
+     0022:from bb import utils, data, parse, event, cache, providers,
+taskdata, runqueue, build
+     0023:import queue
+     0024:import signal
+ *** 0025:import prserv.serv
+     0026:import pyinotify
+     0027:import json
+     0028:import pickle
+     0029:import codecs
+File: '/.../openbmc/poky/bitbake/lib/prserv/serv.py', lineno: 7, function:
+<module>
+     0003:#
+     0004:
+     0005:import os,sys,logging
+     0006:import signal, time
+ *** 0007:from xmlrpc.server import SimpleXMLRPCServer,
+SimpleXMLRPCRequestHandler
+     0008:import threading
+     0009:import queue
+     0010:import socket
+     0011:import io
+File: '/usr/lib/python3.7/xmlrpc/server.py', lineno: 117, function: <module>
+     0113:import socketserver
+     0114:import sys
+     0115:import os
+     0116:import re
+ *** 0117:import pydoc
+     0118:import traceback
+     0119:try:
+     0120:    import fcntl
+     0121:except ImportError:
+File: '/usr/lib/python3.7/pydoc.py', lineno: 374, function: <module>
+     0370:    return module
+     0371:
+     0372:# ---------------------------------------------------- formatter
+base class
+     0373:
+ *** 0374:class Doc:
+     0375:
+     0376:    PYTHONDOCS = os.environ.get("PYTHONDOCS",
+     0377:                                "
+https://docs.python.org/%d.%d/library"
+     0378:                                % sys.version_info[:2])
+File: '/usr/lib/python3.7/pydoc.py', lineno: 406, function: Doc
+     0402:        raise TypeError(message)
+     0403:
+     0404:    docmodule = docclass = docroutine = docother = docproperty =
+docdata = fail
+     0405:
+ *** 0406:    def getdocloc(self, object,
+basedir=sysconfig.get_path('stdlib')):
+     0407:        """Return the location of module docs or None"""
+     0408:
+     0409:        try:
+     0410:            file = inspect.getabsfile(object)
+File: '/usr/lib/python3.7/sysconfig.py', lineno: 513, function: get_path
+     0509:    """Return a path corresponding to the scheme.
+     0510:
+     0511:    ``scheme`` is the install scheme name.
+     0512:    """
+ *** 0513:    return get_paths(scheme, vars, expand)[name]
+     0514:
+     0515:
+     0516:def get_config_vars(*args):
+     0517:    """With no arguments, return a dictionary of all configuration
+File: '/usr/lib/python3.7/sysconfig.py', lineno: 503, function: get_paths
+     0499:    ``scheme`` is the install scheme name. If not provided, it
+will
+     0500:    return the default scheme for the current platform.
+     0501:    """
+     0502:    if expand:
+ *** 0503:        return _expand_vars(scheme, vars)
+     0504:    else:
+     0505:        return _INSTALL_SCHEMES[scheme]
+     0506:
+     0507:
+File: '/usr/lib/python3.7/sysconfig.py', lineno: 172, function: _expand_vars
+     0168:def _expand_vars(scheme, vars):
+     0169:    res = {}
+     0170:    if vars is None:
+     0171:        vars = {}
+ *** 0172:    _extend_dict(vars, get_config_vars())
+     0173:
+     0174:    for key, value in _INSTALL_SCHEMES[scheme].items():
+     0175:        if os.name in ('posix', 'nt'):
+     0176:            value = os.path.expanduser(value)
+File: '/usr/lib/python3.7/sysconfig.py', lineno: 551, function:
+get_config_vars
+     0547:
+     0548:        if os.name == 'nt':
+     0549:            _init_non_posix(_CONFIG_VARS)
+     0550:        if os.name == 'posix':
+ *** 0551:            _init_posix(_CONFIG_VARS)
+     0552:        # For backward compatibility, see issue19555
+     0553:        SO = _CONFIG_VARS.get('EXT_SUFFIX')
+     0554:        if SO is not None:
+     0555:            _CONFIG_VARS['SO'] = SO
+File: '/usr/lib/python3.7/sysconfig.py', lineno: 422, function: _init_posix
+     0418:def _init_posix(vars):
+     0419:    """Initialize the module as appropriate for POSIX systems."""
+     0420:    # _sysconfigdata is generated at build time, see
+_generate_posix_vars()
+     0421:    name = _get_sysconfigdata_name()
+ *** 0422:    _temp = __import__(name, globals(), locals(),
+['build_time_vars'], 0)
+     0423:    build_time_vars = _temp.build_time_vars
+     0424:    vars.update(build_time_vars)
+     0425:
+     0426:def _init_non_posix(vars):
+Exception: ModuleNotFoundError: No module named '_sysconfigdata'
 
->
->
->> observation: The BMC SSH server offers the algorithms shown above. 
->> Should we remove HMAC-SHA1?
->
-> While it's not [yet] formally broken in the HMAC setting, IMO SHA1 is 
-> "broken enough" to remove it everywhere, so yes, I'd vote for that.
->
->
->>
->> When logged into the BMC via SSH as testuser:
->> testuser$ ls -la /home/root
->> drwxr-xr-x    2 root     root           384 Jun 18 00:00 .
->> drwxr-xr-x    5 root     root           368 Jun 20 00:23 ..
->> -rw-------    1 root     root         12437 Jun 20 00:24 .bash_history
->> -rw-r-----    1 root     root           459 Jun 19 20:19 
->> bmcweb_persistent_data.json
->>
->> observation: Non-root user can list files in /home/root; that seems 
->> undesireable.  The files themselves are not readable.
->
-> Agree, it doesn't seem necessary, so should be restricted
->
->
->> /etc/ssl/certs:
->> drwx------    2 root     root           160 Jun 10 06:22 authority
->> drwx------    2 root     root           304 Jun 10 06:23 https
->>
->> observation: Certificates under /etc/ssl are protected from reading
->
-> This actually seems to be surplus - *certificates* are public by 
-> definition, it's the private parts of them (private keys corresponding 
-> to public ones in certificates) that need protection like that.
+--0000000000003c85af05a8ad8122
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the clarification.  I've heard a private certificate is 
-improperly being stored along with its public cert in there somewhere, 
-but I don't really know.
+<div dir=3D"ltr">The commit=C2=A04b32c9ae068beccc3755c48784253e96c31cfd46 b=
+rakes the command like: &quot;devtool modify=C2=A0phosphor-dbus-interfaces&=
+quot; in a way:<div><br></div><div>Running on python 3.7.7.<br><div><br></d=
+iv><div>ERROR: Error executing a python function in exec_python_func() auto=
+generated:<br><br>The stack trace of python calls that resulted in this exc=
+eption/failure was:<br>File: &#39;exec_python_func() autogenerated&#39;, li=
+neno: 2, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =C2=A00001:<br>=C2=A0***=
+ 0002:devtool_post_unpack(d)<br>=C2=A0 =C2=A0 =C2=A00003:<br>File: &#39;/..=
+./openbmc/meta/classes/devtool-source.bbclass&#39;, lineno: 68, function: d=
+evtool_post_unpack<br>=C2=A0 =C2=A0 =C2=A00064:}<br>=C2=A0 =C2=A0 =C2=A0006=
+5:<br>=C2=A0 =C2=A0 =C2=A00066:<br>=C2=A0 =C2=A0 =C2=A00067:python devtool_=
+post_unpack() {<br>=C2=A0*** 0068: =C2=A0 =C2=A0import oe.recipeutils<br>=
+=C2=A0 =C2=A0 =C2=A00069: =C2=A0 =C2=A0import shutil<br>=C2=A0 =C2=A0 =C2=
+=A00070: =C2=A0 =C2=A0sys.path.insert(0, os.path.join(d.getVar(&#39;COREBAS=
+E&#39;), &#39;scripts&#39;, &#39;lib&#39;))<br>=C2=A0 =C2=A0 =C2=A00071: =
+=C2=A0 =C2=A0import scriptutils<br>=C2=A0 =C2=A0 =C2=A00072: =C2=A0 =C2=A0f=
+rom devtool import setup_git_repo<br>File: &#39;/.../openbmc/meta/lib/oe/re=
+cipeutils.py&#39;, lineno: 21, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =
+=C2=A00017:import shutil<br>=C2=A0 =C2=A0 =C2=A00018:import re<br>=C2=A0 =
+=C2=A0 =C2=A00019:import fnmatch<br>=C2=A0 =C2=A0 =C2=A00020:import glob<br=
+>=C2=A0*** 0021:import bb.tinfoil<br>=C2=A0 =C2=A0 =C2=A00022:<br>=C2=A0 =
+=C2=A0 =C2=A00023:from collections import OrderedDict, defaultdict<br>=C2=
+=A0 =C2=A0 =C2=A00024:from bb.utils import vercmp_string<br>=C2=A0 =C2=A0 =
+=C2=A00025:<br>File: &#39;/.../openbmc/poky/bitbake/lib/bb/tinfoil.py&#39;,=
+ lineno: 19, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =C2=A00015:from coll=
+ections import OrderedDict, defaultdict<br>=C2=A0 =C2=A0 =C2=A00016:from fu=
+nctools import partial<br>=C2=A0 =C2=A0 =C2=A00017:<br>=C2=A0 =C2=A0 =C2=A0=
+0018:import bb.cache<br>=C2=A0*** 0019:import bb.cooker<br>=C2=A0 =C2=A0 =
+=C2=A00020:import bb.providers<br>=C2=A0 =C2=A0 =C2=A00021:import bb.taskda=
+ta<br>=C2=A0 =C2=A0 =C2=A00022:import bb.utils<br>=C2=A0 =C2=A0 =C2=A00023:=
+import bb.command<br>File: &#39;/.../openbmc/poky/bitbake/lib/bb/cooker.py&=
+#39;, lineno: 25, function: &lt;module&gt;<br>=C2=A0 =C2=A0 =C2=A00021:impo=
+rt bb, bb.exceptions, bb.command<br>=C2=A0 =C2=A0 =C2=A00022:from bb import=
+ utils, data, parse, event, cache, providers, taskdata, runqueue, build<br>=
+=C2=A0 =C2=A0 =C2=A00023:import queue<br>=C2=A0 =C2=A0 =C2=A00024:import si=
+gnal<br>=C2=A0*** 0025:import prserv.serv<br>=C2=A0 =C2=A0 =C2=A00026:impor=
+t pyinotify<br>=C2=A0 =C2=A0 =C2=A00027:import json<br>=C2=A0 =C2=A0 =C2=A0=
+0028:import pickle<br>=C2=A0 =C2=A0 =C2=A00029:import codecs<br>File: &#39;=
+/.../openbmc/poky/bitbake/lib/prserv/serv.py&#39;, lineno: 7, function: &lt=
+;module&gt;<br>=C2=A0 =C2=A0 =C2=A00003:#<br>=C2=A0 =C2=A0 =C2=A00004:<br>=
+=C2=A0 =C2=A0 =C2=A00005:import os,sys,logging<br>=C2=A0 =C2=A0 =C2=A00006:=
+import signal, time<br>=C2=A0*** 0007:from xmlrpc.server import SimpleXMLRP=
+CServer, SimpleXMLRPCRequestHandler<br>=C2=A0 =C2=A0 =C2=A00008:import thre=
+ading<br>=C2=A0 =C2=A0 =C2=A00009:import queue<br>=C2=A0 =C2=A0 =C2=A00010:=
+import socket<br>=C2=A0 =C2=A0 =C2=A00011:import io<br>File: &#39;/usr/lib/=
+python3.7/xmlrpc/server.py&#39;, lineno: 117, function: &lt;module&gt;<br>=
+=C2=A0 =C2=A0 =C2=A00113:import socketserver<br>=C2=A0 =C2=A0 =C2=A00114:im=
+port sys<br>=C2=A0 =C2=A0 =C2=A00115:import os<br>=C2=A0 =C2=A0 =C2=A00116:=
+import re<br>=C2=A0*** 0117:import pydoc<br>=C2=A0 =C2=A0 =C2=A00118:import=
+ traceback<br>=C2=A0 =C2=A0 =C2=A00119:try:<br>=C2=A0 =C2=A0 =C2=A00120: =
+=C2=A0 =C2=A0import fcntl<br>=C2=A0 =C2=A0 =C2=A00121:except ImportError:<b=
+r>File: &#39;/usr/lib/python3.7/pydoc.py&#39;, lineno: 374, function: &lt;m=
+odule&gt;<br>=C2=A0 =C2=A0 =C2=A00370: =C2=A0 =C2=A0return module<br>=C2=A0=
+ =C2=A0 =C2=A00371:<br>=C2=A0 =C2=A0 =C2=A00372:# -------------------------=
+--------------------------- formatter base class<br>=C2=A0 =C2=A0 =C2=A0037=
+3:<br>=C2=A0*** 0374:class Doc:<br>=C2=A0 =C2=A0 =C2=A00375:<br>=C2=A0 =C2=
+=A0 =C2=A00376: =C2=A0 =C2=A0PYTHONDOCS =3D os.environ.get(&quot;PYTHONDOCS=
+&quot;,<br>=C2=A0 =C2=A0 =C2=A00377: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&q=
+uot;<a href=3D"https://docs.python.org/%d.%d/library">https://docs.python.o=
+rg/%d.%d/library</a>&quot;<br>=C2=A0 =C2=A0 =C2=A00378: =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0% sys.version_info[:2])<br>File: &#39;/usr/lib/python3.=
+7/pydoc.py&#39;, lineno: 406, function: Doc<br>=C2=A0 =C2=A0 =C2=A00402: =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0raise TypeError(message)<br>=C2=A0 =C2=A0 =C2=A0=
+0403:<br>=C2=A0 =C2=A0 =C2=A00404: =C2=A0 =C2=A0docmodule =3D docclass =3D =
+docroutine =3D docother =3D docproperty =3D docdata =3D fail<br>=C2=A0 =C2=
+=A0 =C2=A00405:<br>=C2=A0*** 0406: =C2=A0 =C2=A0def getdocloc(self, object,=
+ basedir=3Dsysconfig.get_path(&#39;stdlib&#39;)):<br>=C2=A0 =C2=A0 =C2=A004=
+07: =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;&quot;&quot;Return the location of mod=
+ule docs or None&quot;&quot;&quot;<br>=C2=A0 =C2=A0 =C2=A00408:<br>=C2=A0 =
+=C2=A0 =C2=A00409: =C2=A0 =C2=A0 =C2=A0 =C2=A0try:<br>=C2=A0 =C2=A0 =C2=A00=
+410: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0file =3D inspect.getabsfile(o=
+bject)<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, lineno: 513, fun=
+ction: get_path<br>=C2=A0 =C2=A0 =C2=A00509: =C2=A0 =C2=A0&quot;&quot;&quot=
+;Return a path corresponding to the scheme.<br>=C2=A0 =C2=A0 =C2=A00510:<br=
+>=C2=A0 =C2=A0 =C2=A00511: =C2=A0 =C2=A0``scheme`` is the install scheme na=
+me.<br>=C2=A0 =C2=A0 =C2=A00512: =C2=A0 =C2=A0&quot;&quot;&quot;<br>=C2=A0*=
+** 0513: =C2=A0 =C2=A0return get_paths(scheme, vars, expand)[name]<br>=C2=
+=A0 =C2=A0 =C2=A00514:<br>=C2=A0 =C2=A0 =C2=A00515:<br>=C2=A0 =C2=A0 =C2=A0=
+0516:def get_config_vars(*args):<br>=C2=A0 =C2=A0 =C2=A00517: =C2=A0 =C2=A0=
+&quot;&quot;&quot;With no arguments, return a dictionary of all configurati=
+on<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, lineno: 503, functio=
+n: get_paths<br>=C2=A0 =C2=A0 =C2=A00499: =C2=A0 =C2=A0``scheme`` is the in=
+stall scheme name. If not provided, it will<br>=C2=A0 =C2=A0 =C2=A00500: =
+=C2=A0 =C2=A0return the default scheme for the current platform.<br>=C2=A0 =
+=C2=A0 =C2=A00501: =C2=A0 =C2=A0&quot;&quot;&quot;<br>=C2=A0 =C2=A0 =C2=A00=
+502: =C2=A0 =C2=A0if expand:<br>=C2=A0*** 0503: =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+return _expand_vars(scheme, vars)<br>=C2=A0 =C2=A0 =C2=A00504: =C2=A0 =C2=
+=A0else:<br>=C2=A0 =C2=A0 =C2=A00505: =C2=A0 =C2=A0 =C2=A0 =C2=A0return _IN=
+STALL_SCHEMES[scheme]<br>=C2=A0 =C2=A0 =C2=A00506:<br>=C2=A0 =C2=A0 =C2=A00=
+507:<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, lineno: 172, funct=
+ion: _expand_vars<br>=C2=A0 =C2=A0 =C2=A00168:def _expand_vars(scheme, vars=
+):<br>=C2=A0 =C2=A0 =C2=A00169: =C2=A0 =C2=A0res =3D {}<br>=C2=A0 =C2=A0 =
+=C2=A00170: =C2=A0 =C2=A0if vars is None:<br>=C2=A0 =C2=A0 =C2=A00171: =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0vars =3D {}<br>=C2=A0*** 0172: =C2=A0 =C2=A0_extend=
+_dict(vars, get_config_vars())<br>=C2=A0 =C2=A0 =C2=A00173:<br>=C2=A0 =C2=
+=A0 =C2=A00174: =C2=A0 =C2=A0for key, value in _INSTALL_SCHEMES[scheme].ite=
+ms():<br>=C2=A0 =C2=A0 =C2=A00175: =C2=A0 =C2=A0 =C2=A0 =C2=A0if <a href=3D=
+"http://os.name">os.name</a> in (&#39;posix&#39;, &#39;nt&#39;):<br>=C2=A0 =
+=C2=A0 =C2=A00176: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0value =3D os.pa=
+th.expanduser(value)<br>File: &#39;/usr/lib/python3.7/sysconfig.py&#39;, li=
+neno: 551, function: get_config_vars<br>=C2=A0 =C2=A0 =C2=A00547:<br>=C2=A0=
+ =C2=A0 =C2=A00548: =C2=A0 =C2=A0 =C2=A0 =C2=A0if <a href=3D"http://os.name=
+">os.name</a> =3D=3D &#39;nt&#39;:<br>=C2=A0 =C2=A0 =C2=A00549: =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0_init_non_posix(_CONFIG_VARS)<br>=C2=A0 =C2=
+=A0 =C2=A00550: =C2=A0 =C2=A0 =C2=A0 =C2=A0if <a href=3D"http://os.name">os=
+.name</a> =3D=3D &#39;posix&#39;:<br>=C2=A0*** 0551: =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0_init_posix(_CONFIG_VARS)<br>=C2=A0 =C2=A0 =C2=A00552: =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0# For backward compatibility, see issue19555<br>=
+=C2=A0 =C2=A0 =C2=A00553: =C2=A0 =C2=A0 =C2=A0 =C2=A0SO =3D _CONFIG_VARS.ge=
+t(&#39;EXT_SUFFIX&#39;)<br>=C2=A0 =C2=A0 =C2=A00554: =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0if SO is not None:<br>=C2=A0 =C2=A0 =C2=A00555: =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0_CONFIG_VARS[&#39;SO&#39;] =3D SO<br>File: &#39;/usr/li=
+b/python3.7/sysconfig.py&#39;, lineno: 422, function: _init_posix<br>=C2=A0=
+ =C2=A0 =C2=A00418:def _init_posix(vars):<br>=C2=A0 =C2=A0 =C2=A00419: =C2=
+=A0 =C2=A0&quot;&quot;&quot;Initialize the module as appropriate for POSIX =
+systems.&quot;&quot;&quot;<br>=C2=A0 =C2=A0 =C2=A00420: =C2=A0 =C2=A0# _sys=
+configdata is generated at build time, see _generate_posix_vars()<br>=C2=A0=
+ =C2=A0 =C2=A00421: =C2=A0 =C2=A0name =3D _get_sysconfigdata_name()<br>=C2=
+=A0*** 0422: =C2=A0 =C2=A0_temp =3D __import__(name, globals(), locals(), [=
+&#39;build_time_vars&#39;], 0)<br>=C2=A0 =C2=A0 =C2=A00423: =C2=A0 =C2=A0bu=
+ild_time_vars =3D _temp.build_time_vars<br>=C2=A0 =C2=A0 =C2=A00424: =C2=A0=
+ =C2=A0vars.update(build_time_vars)<br>=C2=A0 =C2=A0 =C2=A00425:<br>=C2=A0 =
+=C2=A0 =C2=A00426:def _init_non_posix(vars):<br>Exception: ModuleNotFoundEr=
+ror: No module named &#39;_sysconfigdata&#39;<br></div></div></div>
 
->
->
-> regards,
-> Alexander
->
-
+--0000000000003c85af05a8ad8122--
