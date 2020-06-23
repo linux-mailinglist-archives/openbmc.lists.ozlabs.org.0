@@ -1,82 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71F4D204D94
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 11:11:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27ECB204FB4
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 12:57:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49rgWM2nK2zDqRn
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 19:11:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49rjt203kFzDqQ8
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 20:57:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::235;
+ helo=mail-lj1-x235.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=bytedance.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=d2NVcfaB; dkim-atps=neutral
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
+ [IPv6:2a00:1450:4864:20::235])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49rgVb5TY9zDqP6
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 19:10:47 +1000 (AEST)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05N911nm042109; Tue, 23 Jun 2020 05:10:43 -0400
-Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
- [169.51.49.99])
- by mx0b-001b2d01.pphosted.com with ESMTP id 31tyry1p1w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2020 05:10:43 -0400
-Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
- by ppma04ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05N90QD0004387;
- Tue, 23 Jun 2020 09:10:41 GMT
-Received: from b06cxnps4076.portsmouth.uk.ibm.com
- (d06relay13.portsmouth.uk.ibm.com [9.149.109.198])
- by ppma04ams.nl.ibm.com with ESMTP id 31sa37vu4t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2020 09:10:41 +0000
-Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
- [9.149.105.59])
- by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 05N9AdYI14745616
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2020 09:10:39 GMT
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 972A1A405D;
- Tue, 23 Jun 2020 09:10:39 +0000 (GMT)
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAD8AA4051;
- Tue, 23 Jun 2020 09:10:38 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.79.217.185])
- by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2020 09:10:38 +0000 (GMT)
-Subject: Re: Default Gateway for a system v/s Default gateway per Interface
-To: Alexander Amelkin <a.amelkin@yadro.com>, openbmc@lists.ozlabs.org
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49rjs96m9XzDqPQ
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 20:56:59 +1000 (AEST)
+Received: by mail-lj1-x235.google.com with SMTP id 9so22877344ljv.5
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 03:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=3yMR2fqs6TUj2c7XkK5399m+51NoXO+ld1LsipL2FDc=;
+ b=d2NVcfaBfFwqLdOJnWz0iNOxWj7HyK5SFy4pBmwCrp3KOzAA/3WX+A7qAo3O5c3fKO
+ xRGHkiq+cCY/hO+taDNiR7aNQnegUWTIVZgK9/ntDlyPNXOhUeWcRr1B8dV3en8PPbrI
+ yQRfJZkDR25KjGUP7S2d0cHC+3MpRbDgrw+l84FF+dz7Otsaiif6ydG7Nfh64AnRX62Y
+ neFzZTokFqRUVBrQqf5FUSR1fBLwezgGby7ySDtKfoiQ6/BjYgv3/51bjyDHN+ySKFEU
+ fHHdOIjNQD8SMsfrx9ub/0KD4+DIP4KcSvpJdkR3U147GKwXQs+tYP7A3P5XnqbfveKK
+ kTKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=3yMR2fqs6TUj2c7XkK5399m+51NoXO+ld1LsipL2FDc=;
+ b=FsnGLNToLS3DM34CIGbpFPHNXQ+CvsQACMbKIX+HuNku5jDH1tk14JaANv1B4VPttA
+ +4BdLMxFitEQ5MSzrJMmz6hr77QyBBDYDy8k3cEd4v9pRHvnWRHe8Odv4cjjoGAkNwPp
+ A3ck892T18Vc1XjEkA2E6f0IHvQhie5UvPfiUfRTCnGokB+9pC0MXVT+dv4L0S7pnv6Q
+ /0gMV60BqlUwf8ntMreJzHJbU8Ln9NQoK28lX0IoFqY80Jnk3zbFSkhn24rp1GWnaAAT
+ 85PnN4/qMF5Gua0eiIOPNLvnR6L/oOIGdwoPlISw8QU3DhalQIs1Xvrm7SpMQ7CJMhPg
+ gApw==
+X-Gm-Message-State: AOAM532BMo0rofE4nwModgn+aPglM/Xc7+lVxO8SMYFeS1SEJhSFBYIp
+ i/L0FC9zxCkeXwt28GclpOE0z1ROQ/pli8+hq6QiEg==
+X-Google-Smtp-Source: ABdhPJzxo7FpJ7GD4rZSMMtRn221RIeoyUMEpGg0WphxnVZqtZ/W5+1+SzC/0c65oXU+xzF/Ydi2x7q713CJ2BJtQE8=
+X-Received: by 2002:a05:651c:1044:: with SMTP id
+ x4mr10262621ljm.409.1592909814864; 
+ Tue, 23 Jun 2020 03:56:54 -0700 (PDT)
+MIME-Version: 1.0
 References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
  <6b23a265-c1dd-4c62-4c31-de4cb1cb74e7@yadro.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Message-ID: <f68a5e8a-2f30-fe64-f285-d06cde6bfb41@linux.vnet.ibm.com>
-Date: Tue, 23 Jun 2020 14:40:37 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
-MIME-Version: 1.0
-In-Reply-To: <6b23a265-c1dd-4c62-4c31-de4cb1cb74e7@yadro.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-23_04:2020-06-22,
- 2020-06-23 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 phishscore=0 spamscore=0 mlxscore=0 impostorscore=0
- cotscore=-2147483648 suspectscore=0 mlxlogscore=999 clxscore=1011
- priorityscore=1501 bulkscore=0 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006230068
+ <f68a5e8a-2f30-fe64-f285-d06cde6bfb41@linux.vnet.ibm.com>
+In-Reply-To: <f68a5e8a-2f30-fe64-f285-d06cde6bfb41@linux.vnet.ibm.com>
+From: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
+Date: Tue, 23 Jun 2020 18:56:43 +0800
+Message-ID: <CAGm54UEx-HfVEJJv8w6UUYsmZmB9E6EG9RYbC-M=yMJW4qD30g@mail.gmail.com>
+Subject: Re: Default Gateway for a system v/s Default gateway per Interface
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,86 +77,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Alexander Amelkin <a.amelkin@yadro.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Alexender,
+On Tue, Jun 23, 2020 at 5:11 PM Ratan Gupta <ratagupt@linux.vnet.ibm.com> wrote:
+>
+> Hi Alexender,
+>
+> I am not sure how it can be achieved through some compile time option(as
+> the existing dbus interface requires changes. Might be version Dbus
+> Interfaces which is currently not supported.
+>
+> Phosphor-networkd uses systemd-networkd as backend which supports
+> multiple default gateway as fall back gateway without implementing
+> policy based routing(Both gateways are on the main routing table).
 
-I am not sure how it can be achieved through some compile time option(as 
-the existing dbus interface requires changes. Might be version Dbus 
-Interfaces which is currently not supported.
+What if we do NOT set DefaultGateway (in SystemConfiguration
+interface), and set Gateway in each IP interface?
+Will it work as interface-specific gateway per interface?
 
-Phosphor-networkd uses systemd-networkd as backend which supports 
-multiple default gateway as fall back gateway without implementing 
-policy based routing(Both gateways are on the main routing table).
-
-Ratan
-
-On 6/20/20 4:10 AM, Alexander Amelkin wrote:
-> Please, Ratan, if you implement those per-interface gateways again, 
-> could you leave an option to have a single system-wide default gateway 
-> only?
->
-> I honestly don't see any use for multiple gateways without policy 
-> routing being implemented, and then I don't see any use for policy 
-> routing in a BMC (as opposed to a router). So I would like to keep us 
-> from unneeded questions from the customers, and so I would prefer to 
-> have only a single gateway, as well as single sets of DNS and NTP 
-> servers without having to patch across the whole OpenBMC codebase.
->
-> If there was a compile-time option (distro/machine feature?) to use 
-> either per-interface or system-wide gateway/DNS/NTP, that would be 
-> very nice.
->
-> Thank you.
-> Alexander.
->
-> P.S. Sorry for sending this twice, forgot to include the list the 
-> first time.
->
-> 24.04.2020 18:06, Ratan Gupta пишет:
->> Hi All,
->>
->> Currently, OpenBMC stack allows a single default gateway for the 
->> system. Latest kernel allows to configure multiple default gateways.
->>
->> Eg: In a system with two interfaces eth0 and eth1,
->>
->> eth0 configured with static address and having gateway(192.168.2.1)
->> eth1 configured with DHCP and gets Gateway from DHCP server (10.10.10.1)
->> ~~~~~~~~~~~~~
->> Kernel IP routing table
->> Destination     Gateway         Genmask         Flags   MSS Window  
->> irtt Iface
->> 0.0.0.0         19.168.2.1      0.0.0.0         UG        0 
->> 0          0 eth0
->> 0.0.0.0         10.10.10.1      0.0.0.0         UG        0 
->> 0          0 eth1
->> ~~~~~~~~~~~~~~
->>
->> Kernel will first try using the default gateway having higher metric 
->> value and then fall back to the lower.
->>
->> More references: 
->> https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_the_default_gateway
->>
->> I'm proposing to make this change in the openBMC D-bus interfaces to 
->> tie the gateway property with the Ethernet interface schema instead 
->> of System configuration.
->>
->> Ethernet Interface Schema =>
->>
->> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/EthernetInterface.interface.yaml 
->>
->>
->> System Configuration Schema =>
->>
->> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/SystemConfiguration.interface.yaml 
->>
->>
->>
->> Please let me know your suggestions.
->>
->> Regards
->> Ratan Gupta
->>
+-- 
+BRs,
+Lei YU
