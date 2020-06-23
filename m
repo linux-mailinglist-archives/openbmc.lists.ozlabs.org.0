@@ -1,56 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC2CB204D62
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 11:06:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71F4D204D94
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 11:11:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49rgP86qBhzDqTX
-	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 19:06:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49rgWM2nK2zDqRn
+	for <lists+openbmc@lfdr.de>; Tue, 23 Jun 2020 19:11:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=aleksandr.v.tereschenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+ header.from=linux.vnet.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49rgNB3cyzzDqB9
- for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 19:05:12 +1000 (AEST)
-IronPort-SDR: 7dQ4YnpNGavqFU8cfGRvhv6hr+6mSLs6d4rF8E75iLN1wHlB2UxqzCrjf2Jjk4uaRBBuxPzEmY
- U5gfXR6w9g5w==
-X-IronPort-AV: E=McAfee;i="6000,8403,9660"; a="228679234"
-X-IronPort-AV: E=Sophos;i="5.75,270,1589266800"; d="scan'208";a="228679234"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jun 2020 02:05:10 -0700
-IronPort-SDR: p84GbDDYlIFG28td6OIhs1thOZ1Pezki8EEs46YXjuFqV1dcvKW0EnLpud1w1RhBT5yqTW+ShY
- pbfj7d6f5K0Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,270,1589266800"; d="scan'208";a="384789696"
-Received: from avteresc-mobl1.ger.corp.intel.com (HELO [10.213.26.51])
- ([10.213.26.51])
- by fmsmga001.fm.intel.com with ESMTP; 23 Jun 2020 02:05:09 -0700
-Subject: Re: OpenBMC 2.8 security audit results
-To: Joseph Reynolds <jrey@linux.ibm.com>, openbmc@lists.ozlabs.org
-References: <a31fcd71-460d-86c4-7a07-b7c6800aa7be@linux.ibm.com>
- <2abafb26-29d5-0a0b-7969-19b32556adc5@linux.intel.com>
- <21ebed5c-ad63-84a1-0b0e-8b5fdb83387d@linux.ibm.com>
-From: Alexander Tereschenko <aleksandr.v.tereschenko@linux.intel.com>
-Message-ID: <e6e6e9fc-ba58-37d7-e0ae-fc4ae4637aca@linux.intel.com>
-Date: Tue, 23 Jun 2020 11:05:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49rgVb5TY9zDqP6
+ for <openbmc@lists.ozlabs.org>; Tue, 23 Jun 2020 19:10:47 +1000 (AEST)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 05N911nm042109; Tue, 23 Jun 2020 05:10:43 -0400
+Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.99])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 31tyry1p1w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2020 05:10:43 -0400
+Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
+ by ppma04ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05N90QD0004387;
+ Tue, 23 Jun 2020 09:10:41 GMT
+Received: from b06cxnps4076.portsmouth.uk.ibm.com
+ (d06relay13.portsmouth.uk.ibm.com [9.149.109.198])
+ by ppma04ams.nl.ibm.com with ESMTP id 31sa37vu4t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2020 09:10:41 +0000
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 05N9AdYI14745616
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2020 09:10:39 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 972A1A405D;
+ Tue, 23 Jun 2020 09:10:39 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DAD8AA4051;
+ Tue, 23 Jun 2020 09:10:38 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.79.217.185])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Jun 2020 09:10:38 +0000 (GMT)
+Subject: Re: Default Gateway for a system v/s Default gateway per Interface
+To: Alexander Amelkin <a.amelkin@yadro.com>, openbmc@lists.ozlabs.org
+References: <fd2978a9-bd4b-a8ba-67ac-94a8537a9fcf@linux.vnet.ibm.com>
+ <6b23a265-c1dd-4c62-4c31-de4cb1cb74e7@yadro.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Message-ID: <f68a5e8a-2f30-fe64-f285-d06cde6bfb41@linux.vnet.ibm.com>
+Date: Tue, 23 Jun 2020 14:40:37 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <21ebed5c-ad63-84a1-0b0e-8b5fdb83387d@linux.ibm.com>
+In-Reply-To: <6b23a265-c1dd-4c62-4c31-de4cb1cb74e7@yadro.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
+ definitions=2020-06-23_04:2020-06-22,
+ 2020-06-23 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ adultscore=0 phishscore=0 spamscore=0 mlxscore=0 impostorscore=0
+ cotscore=-2147483648 suspectscore=0 mlxlogscore=999 clxscore=1011
+ priorityscore=1501 bulkscore=0 malwarescore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2004280000
+ definitions=main-2006230068
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,64 +91,83 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Alexender,
 
-On 22-Jun-20 16:08, Joseph Reynolds wrote:
-> On 6/22/20 4:30 AM, Alexander Tereschenko wrote:
->> On 20-Jun-20 03:26, Joseph Reynolds wrote:
->>> Here are the results from my "security audit" on the planned OpenBMC 
->>> 2.8 release.  The results are not intended as a complete analysis, 
->>> but only offer highlights into the BMC's security configuration. 
->>> Contributions are appreciated.
->>> The script to perform these tests was presented here: 
->>> https://lists.ozlabs.org/pipermail/openbmc/2020-April/021186.html 
->>> and was followed more-or-less.
->>>
->>> $ echo "Checking test host openssl version"
->>> Checking test host openssl version
->>> $ openssl version
->>> OpenSSL 1.0.2k-fips  26 Jan 2017
->>>
->> I'm not sure I get this one - is "test host" a BMC or the one where 
->> the test script is being run? If the former, this is really old, no 
->> longer publicly supported by the OpenSSL team and has multiple CVEs 
->> against it [1], so should be upgraded.
->>
->> [1] https://www.openssl.org/news/openssl-1.0.2-notes.html
+I am not sure how it can be achieved through some compile time option(as 
+the existing dbus interface requires changes. Might be version Dbus 
+Interfaces which is currently not supported.
+
+Phosphor-networkd uses systemd-networkd as backend which supports 
+multiple default gateway as fall back gateway without implementing 
+policy based routing(Both gateways are on the main routing table).
+
+Ratan
+
+On 6/20/20 4:10 AM, Alexander Amelkin wrote:
+> Please, Ratan, if you implement those per-interface gateways again, 
+> could you leave an option to have a single system-wide default gateway 
+> only?
 >
-> Alexander, thanks for your reply.  The "test host" is a Linux system 
-> used to probe the BMC via network interfaces such as SSH, HTTPS, and 
-> REST APIs.  To reflect actual customer use, I used a test host that 
-> has an older operating system.  I've included the test host's software 
-> versions to help answer questions about the results below, when the 
-> host version factors into the results. [I'll update my preamble with 
-> this information.]
-
-Got it, in this case that comment is not important, the text host may 
-have whatever versions :)
-
->>> /etc/ssl/certs:
->>> drwx------    2 root     root           160 Jun 10 06:22 authority
->>> drwx------    2 root     root           304 Jun 10 06:23 https
->>>
->>> observation: Certificates under /etc/ssl are protected from reading
->>
->> This actually seems to be surplus - *certificates* are public by 
->> definition, it's the private parts of them (private keys 
->> corresponding to public ones in certificates) that need protection 
->> like that.
+> I honestly don't see any use for multiple gateways without policy 
+> routing being implemented, and then I don't see any use for policy 
+> routing in a BMC (as opposed to a router). So I would like to keep us 
+> from unneeded questions from the customers, and so I would prefer to 
+> have only a single gateway, as well as single sets of DNS and NTP 
+> servers without having to patch across the whole OpenBMC codebase.
 >
-> Thanks for the clarification.  I've heard a private certificate is 
-> improperly being stored along with its public cert in there somewhere, 
-> but I don't really know.
-
-Ah, indeed, that reminds me - OpenBMC stores both private key and the 
-cert (with the public key) in one file, concatenated. That's how bmcweb 
-consumes that (unlike e.g. Apache or nginx, which have separate 
-settings/paths for private and public keys, though nginx also allows for 
-combining) and indeed that in turn necessitates closing down the 
-respective files/dirs - so your check is correct and my comment is not 
-applicable.
-
-regards,
-Alexander
-
+> If there was a compile-time option (distro/machine feature?) to use 
+> either per-interface or system-wide gateway/DNS/NTP, that would be 
+> very nice.
+>
+> Thank you.
+> Alexander.
+>
+> P.S. Sorry for sending this twice, forgot to include the list the 
+> first time.
+>
+> 24.04.2020 18:06, Ratan Gupta пишет:
+>> Hi All,
+>>
+>> Currently, OpenBMC stack allows a single default gateway for the 
+>> system. Latest kernel allows to configure multiple default gateways.
+>>
+>> Eg: In a system with two interfaces eth0 and eth1,
+>>
+>> eth0 configured with static address and having gateway(192.168.2.1)
+>> eth1 configured with DHCP and gets Gateway from DHCP server (10.10.10.1)
+>> ~~~~~~~~~~~~~
+>> Kernel IP routing table
+>> Destination     Gateway         Genmask         Flags   MSS Window  
+>> irtt Iface
+>> 0.0.0.0         19.168.2.1      0.0.0.0         UG        0 
+>> 0          0 eth0
+>> 0.0.0.0         10.10.10.1      0.0.0.0         UG        0 
+>> 0          0 eth1
+>> ~~~~~~~~~~~~~~
+>>
+>> Kernel will first try using the default gateway having higher metric 
+>> value and then fall back to the lower.
+>>
+>> More references: 
+>> https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-configuring_the_default_gateway
+>>
+>> I'm proposing to make this change in the openBMC D-bus interfaces to 
+>> tie the gateway property with the Ethernet interface schema instead 
+>> of System configuration.
+>>
+>> Ethernet Interface Schema =>
+>>
+>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/EthernetInterface.interface.yaml 
+>>
+>>
+>> System Configuration Schema =>
+>>
+>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Network/SystemConfiguration.interface.yaml 
+>>
+>>
+>>
+>> Please let me know your suggestions.
+>>
+>> Regards
+>> Ratan Gupta
+>>
