@@ -1,49 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA3C1207211
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jun 2020 13:30:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93F59207906
+	for <lists+openbmc@lfdr.de>; Wed, 24 Jun 2020 18:25:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49sLXk71mvzDqkj
-	for <lists+openbmc@lfdr.de>; Wed, 24 Jun 2020 21:29:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49sT5D6YsgzDqk7
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 02:25:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=4372650d3=spencer.ku@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (unknown [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 49sLX01S1KzDqfb
- for <openbmc@lists.ozlabs.org>; Wed, 24 Jun 2020 21:29:11 +1000 (AEST)
-IronPort-SDR: if9SeyYgfI31wSQoeTQJVpXZEOsYqmeHJPQ4VPSfFtE6icQJz8iZE3y0TpW/C2Ar5nuREjkzyZ
- bIulNYLuoZHA==
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx02.quantatw.com with ESMTP; 24 Jun 2020 19:28:59 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5; Wed, 24 Jun
- 2020 19:28:58 +0800
-Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
- ([192.168.57.11]) with mapi id 15.01.1713.009;
- Wed, 24 Jun 2020 19:28:58 +0800
-From: =?big5?B?U3BlbmNlciBLdSAopWqlQLfsKQ==?= <Spencer.Ku@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Question about some ipmi commands
-Thread-Topic: Question about some ipmi commands
-Thread-Index: AdZKGmlNH2iSMF1RSwiw0F/UzVaR9w==
-Date: Wed, 24 Jun 2020 11:28:57 +0000
-Message-ID: <20e77de6d7d14be88052e0158989b9bc@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: 02389C41170B4CBA3234E6D835458BB832057F6B158DD0F79521CB4EC16A3C142000:8
-Content-Type: multipart/alternative;
- boundary="_000_20e77de6d7d14be88052e0158989b9bcquantatwcom_"
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49sT496Y3fzDqZB
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jun 2020 02:24:08 +1000 (AEST)
+IronPort-SDR: Jf0fZe41N809QEQKIQCYo7WrqCfysLMot1nip5zU5cz8Uur+P4v+ks3ldS+qZeEwL/GC1+dDuq
+ d1U/qSYSn8Eg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9662"; a="209674314"
+X-IronPort-AV: E=Sophos;i="5.75,275,1589266800"; d="scan'208";a="209674314"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+ by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Jun 2020 09:24:04 -0700
+IronPort-SDR: XT1qa5fmHn0Hw9ZyQlKV5DTAK0fDYEM0f3wRcDvBnKBYTdFTKTgZvsZCeAPhIJn+vdPGmI30sN
+ T3SXpXoFklrQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,275,1589266800"; d="scan'208";a="319497452"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.213.181.61])
+ ([10.213.181.61])
+ by FMSMGA003.fm.intel.com with ESMTP; 24 Jun 2020 09:24:04 -0700
+Subject: Re: Redfish EventService Implementation
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
+ <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
+ <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
+ <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
+ <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
+ <20200616152428.GA4618@heinlein>
+ <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
+ <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
+ <20200617204516.GE4618@heinlein>
+ <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
+ <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <6d97d36c-b78f-44eb-f808-2ae82184925c@linux.intel.com>
+Date: Wed, 24 Jun 2020 09:24:03 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.8.1
 MIME-Version: 1.0
+In-Reply-To: <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,160 +71,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>, "Bills,
+ Jason M" <jason.m.bills@linux.intel.com>, "Puli,
+ Apparao" <apparao.puli@linux.intel.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_20e77de6d7d14be88052e0158989b9bcquantatwcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+> I have got an update from the DMTF that persistence is not required to 
+> be implemented for the 
+> events(https://redfish.dmtf.org/schemas/v1/Event.v1_5_0.json),
+> which implies we don't need to log the events in Journal.
+> 
+> More info(https://github.com/DMTF/Redfish/issues/3646)
+> 
+> Now updating the proposal where redfish client subscribed for Resource 
+> Type based events
+> 1) Client would subscribe for the Redfish Resource(eg:ManagerAccount) to 
+> receive events like Account add/delete/modify
+>       Hence need for mapping from (RedfishResource to Dbus Resource)
+> 
+> 2) Have the mapping info from Redfish resources to DBUS Resources (Some 
+> JSon file may have this mapping)
 
-SGkgRXZlcnlvbmUsDQoNCkkgaGF2ZSBzb21lIHF1ZXN0aW9uIGFib3V0IHRoYXQgc29tZSBpcG1p
-IGNvbW1hbmRzIGNhbqGmdCB3b3JrIG5vcm1hbGx5Og0KU2V0L0dldCBBQ1BJIFBvd2VyIFN0YXRl
-DQpHZXQgQ2hhc3NpcyBDYXBhYmlsaXRpZXMNCkdldCBQT0ggQ291bnRlcg0KDQpJIHRoaW5rIHRo
-ZSBxdWVzdGlvbnMgaGFzIGJlZW4gb2NjdXJyZWQgc2luY2UgdGhhdCBpdCBsb3N0IHRoZSByZWxh
-dGl2ZSBEYnVzIGluIG91ciBzeXN0ZW0sDQphbmQgaGVyZSBpcyB0aGUgbGlzdDoNCg0KDQpBQ1BJ
-Og0KDQp4eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wuUG93ZXIuQUNQSVBvd2VyU3RhdGUNCg0K
-DQoNCkNoYXNzaXMgQ2FwYWJpbGl0aWVzOg0KDQp4eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wu
-Q2hhc3Npc0NhcGFiaWxpdGllcw0KDQpQT0g6DQp4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLlBv
-d2VyT25Ib3Vycw0KDQoNCkFyZSB0aGVyZSBzb21lIHNldHRpbmdzIEkgZm9yZ2V0dGluZyB0byBh
-ZGQgaW50byBvdXIgc3lzdGVtPw0KDQpUaGFuayB5b3UuDQoNCg0KDQpTaW5jZXJlbHksDQoNClNw
-ZW5jZXIgS3UNCg0K
+This assumes the mapping is static, which on many systems it isn't, 
+right? I think this needs to be developed to see what it would be like.
 
---_000_20e77de6d7d14be88052e0158989b9bcquantatwcom_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
+> 
+> 2) Have the reverse mapping from DBUS Resources to Redfish Resources
+>       * This is needed to send the Redfish event if there is any changes 
+> in the corresponding D-bus resources.
+>         eg BMC state change/network change etc.
+> 
+> 3) bmcweb would monitor the DBUS events
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p
-	{mso-style-priority:99;
-	margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"=B7s=B2=D3=A9=FA=C5=E9",serif;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:24.0pt;
-	margin-bottom:.0001pt;
-	mso-para-margin-top:0cm;
-	mso-para-margin-right:0cm;
-	mso-para-margin-bottom:0cm;
-	mso-para-margin-left:2.0gd;
-	mso-para-margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">Hi Everyone,<o:p></o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">I have some question about that some ipmi commands can=A1=A6t=
- work normally:<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">Set/Get ACPI Power State<o:p=
-></o:p></span></b></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">Get Chassis Capabilities<o:p=
-></o:p></span></b></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">Get POH Counter<o:p></o:p></=
-span></b></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I think the questions has been =
-occurred since that it lost the relative Dbus in our system,<o:p></o:p></sp=
-an></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">and here is the list:<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p><b><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-se=
-rif;color:black">ACPI:</span></b><span lang=3D"EN-US" style=3D"font-family:=
-&quot;Calibri&quot;,sans-serif;color:black"><o:p></o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">xyz.openbmc_project.Control.Power.ACPIPowerState<o:p></o:p></=
-span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black"><o:p>&nbsp;</o:p></span></p>
-<p><b><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-se=
-rif;color:black">Chassis Capabilities:</span></b><span lang=3D"EN-US" style=
-=3D"font-family:&quot;Calibri&quot;,sans-serif;color:black"><o:p></o:p></sp=
-an></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">xyz.openbmc_project.Control.ChassisCapabilities<o:p></o:p></s=
-pan></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">POH:<o:p></o:p></span></b></=
-p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">xyz.openb=
-mc_project.State.PowerOnHours<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black"><o:p>&nbs=
-p;</o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">Are there some settings I forgetting to add into our system?<=
-o:p></o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">Thank you.<o:p></o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black"><o:p>&nbsp;</o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">Sincerely,<o:p></o:p></span></p>
-<p><span lang=3D"EN-US" style=3D"font-family:&quot;Calibri&quot;,sans-serif=
-;color:black">Spencer Ku<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+Which events specifically? It seems like it would be monitoring lots of 
+events in this proposal. Some examples could be useful.
 
---_000_20e77de6d7d14be88052e0158989b9bcquantatwcom_--
+> 
+> 4) Get the Redfish Path from the Mapping(2) and send the Redfish event
+> 
+> 5) Bmcweb would buffer N number of events that can be configurable by 
+> redfish client. Buffer would get cleaned up in case of bmcweb restart or 
+> BMC reset.
+> 
+
+Can you please push a patch to the event service design doc with the 
+change to the design you'd like? Some examples in the design would help 
+with understanding the proposal. This thread is quite long and hard to 
+follow for someone not involved, it'd be good to document the proposed 
+changes.
+
+https://github.com/openbmc/docs/blob/master/designs/redfish-eventservice.md
+
