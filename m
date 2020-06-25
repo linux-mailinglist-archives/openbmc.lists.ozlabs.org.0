@@ -2,44 +2,33 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B0F220A344
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 18:46:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00D8820A3F5
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 19:27:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49t5WH0Y5TzDqlf
-	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 02:46:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49t6R55cS6zDqwy
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 03:27:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49t5Tc1TD9zDqlf
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 02:44:51 +1000 (AEST)
-IronPort-SDR: wB5WXXNZd3BBQavNXoFa5jre9jphOwiPWhkXy6y9lW3Uj+XnnY15S1IX4FvpQnxuhsHg6zFHMW
- oJkPSnylzguA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9663"; a="146466440"
-X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="146466440"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2020 09:44:27 -0700
-IronPort-SDR: E8vBj6Du8v8zDOxn1PTZJ97IIHo4BqZwimhu7eKtlZfRVr+uegcBlSu/d+ILthR5EDARd0h1GS
- uPl8esJIteYA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="312049176"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.212.108.224])
- ([10.212.108.224])
- by fmsmga002.fm.intel.com with ESMTP; 25 Jun 2020 09:44:27 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49t6QB6LqqzDqb1
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 03:26:57 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Message-ID: <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
 Subject: Re: Redfish EventService Implementation
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- Ratan Gupta <ratagupt@linux.vnet.ibm.com>,
- Patrick Williams <patrick@stwcx.xyz>
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>, Patrick Williams
+ <patrick@stwcx.xyz>
+Date: Thu, 25 Jun 2020 13:26:14 -0400
+In-Reply-To: <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
 References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
  <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
  <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
@@ -51,18 +40,9 @@ References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
  <20200617204516.GE4618@heinlein>
  <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
  <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
- <6d97d36c-b78f-44eb-f808-2ae82184925c@linux.intel.com>
- <6c562e1bc3fa8873a67d6ceb398734d11de7d2e9.camel@fuzziesquirrel.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <bcc2f70b-3c17-916b-8316-c3b356c211c2@linux.intel.com>
-Date: Thu, 25 Jun 2020 09:44:27 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
-In-Reply-To: <6c562e1bc3fa8873a67d6ceb398734d11de7d2e9.camel@fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,23 +55,64 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, "Puli,
- Apparao" <apparao.puli@linux.intel.com>, openbmc@lists.ozlabs.org
+ Apparao" <apparao.puli@linux.intel.com>,
+ James Feist <james.feist@linux.intel.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/25/2020 8:49 AM, Brad Bishop wrote:
-> On Wed, 2020-06-24 at 09:24 -0700, James Feist wrote:
->> This thread is quite long and hard to follow for someone not involved,
->> it'd be good to document the proposed changes.
+On Tue, 2020-06-23 at 12:57 +0530, Ratan Gupta wrote:
+> 1) Client would subscribe for the Redfish Resource(eg:ManagerAccount)
+> to receive events like Account add/delete/modify.  Hence need for
+> mapping from (RedfishResource to Dbus Resource)
 > 
-> You are right of course that this thread has become hard to follow.  I
-> think careful selection of reply context really would have helped.
-> 
-> FWIW I have asked the team here at IBM to hash out designs to some level
-> of consensus here on the list before making design submissions to gerrit
-> because IMO reviews of half baked designs in gerrit are even harder to
-> follow than email threads like this one 🙂
-> 
+> 2) Have the mapping info from Redfish resources to DBUS Resources
+> (Some JSon file may have this mapping)
 
-That's good. Was just hoping that the 'final design' wasn't this email, 
-as it would be difficult to see we matched a design.
+It probably doesn't make sense to have any json files.  The application
+logic itself does the mapping.
+
+> 3) Have the reverse mapping from DBUS Resources to Redfish Resources
+> This is needed to send the Redfish event if there is any changes in
+> the corresponding D-bus resources. eg BMC state change/network change
+> etc.
+> 
+> 4) bmcweb would monitor the DBUS events
+> 
+> 5) Get the Redfish Path from the Mapping(3) and send the Redfish event
+
+Let me try to restate 3-5.  We already have application logic in bmcweb
+that maps redfish resources to dbus interfaces, triggered by redfish
+client requests (like a GET or PATCH).  The proposal here I think is to
+implement the reverse - add application logic in bmcweb that maps dbus
+interfaces to redfish resources, triggered by dbus signals.  I think
+this is more or less what was suggested by Patrick?
+
+> Don't we, in effect, have the mapping from Redfish to dbus by nature
+> of the Redfish providers that create their content from dbus objects?
+
+> James, Apparao: Please let me know if there is any more concern with 
+> this approach.
+
+Ratan you had 2x #2s in the flow above, which I fixed.  Please let me
+know if I got it wrong.
+
+The main concerns with this approach that I have heard are too many
+signal matches and complexity of the logic implementing the reverse map.
+I can definitely see how the logic will get complicated given our
+current dbus data model.
+
+One idea floating around to address these is inventing a journal
+metadata scheme that is management interface agnostic.  I understand the
+motivation behind that - it is much simpler for an application to slide
+a single journal entry into the journal with all the metadata needed to
+generate events, than it is for an application to snoop multiple signals
+off dbus and pull events out of that.
+
+But I wonder if inventing a management interface agnostic scheme for
+adding events to the journal is really just inventing a new data model
+for how we represent things in a server - e.g. are we just working
+around our dbus data model?  Maybe we should fix it instead, so that it
+isn't so difficult for applications to use it?  With that said I don't
+know how to do this and I could use more concrete details on which areas
+of the data model make it hard to consume signals.  Does anyone have any
+ideas or examples?
