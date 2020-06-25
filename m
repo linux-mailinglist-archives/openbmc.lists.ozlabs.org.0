@@ -1,50 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 918712099D4
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 08:26:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FDB020A062
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 15:57:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49sqmP15pDzDqkf
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 16:26:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49t1mt0lWlzDqwb
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 23:57:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Received: from ozlabs.org (bilbo.ozlabs.org [IPv6:2401:3900:2:1::2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49sqlf6RNpzDqgb
- for <openbmc@lists.ozlabs.org>; Thu, 25 Jun 2020 16:26:06 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ozlabs.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=ozlabs.org header.i=@ozlabs.org header.a=rsa-sha256
- header.s=201707 header.b=DWKnw2/w; dkim-atps=neutral
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 49sqlf3f30z9s1x;
- Thu, 25 Jun 2020 16:26:06 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ozlabs.org; s=201707;
- t=1593066366; bh=6cOL1t0E5J93PxFkI7gIXlwvfLeg7Dxsk+mOuoFarmY=;
- h=Subject:From:To:Date:In-Reply-To:References:From;
- b=DWKnw2/w4/GMhSXSU8ThhGGTGzBQjHsZrppWLiF4CTUqXvwng6+h5iLyv/6rWVli3
- LHufQlBAPT6QEN0iQUTHPrBmxi8rbzoUBrIM+XE0K50lXsSLvi8nhTEO0NcsACFf/Y
- xgZ8Q8PDgGaDSFp8wKlHFU9taUerLSpmCD2efJGXADGlBBEWkPL0UzXoAIO08F8wXL
- SAchMa0MnZwZytB/F4H3P5lv+YVcfvX1wJuWwucuiSSJD1RDX6T0KgvYTg+t6dcmDO
- BOgJrjI8ksZpQlUQfBCB+kHQsloqih6QxhDGLZtI0xr4RsjEe5gIUTBbd1wDAhr/cB
- MENIFOjGNGmMg==
-Message-ID: <f5ab3dea6acecfb865e98e9330a052c6a5d98474.camel@ozlabs.org>
-Subject: Re: Release 2.8 Continued
-From: Jeremy Kerr <jk@ozlabs.org>
-To: Kurt Taylor <kurt.r.taylor@gmail.com>, OpenBMC Maillist
- <openbmc@lists.ozlabs.org>
-Date: Thu, 25 Jun 2020 14:26:02 +0800
-In-Reply-To: <CAG5Oiwi4rXDd1M+YxdiXkx=mAxgt5pZOeEC3DZaRq1_cDB-qsQ@mail.gmail.com>
-References: <CAG5Oiwi4rXDd1M+YxdiXkx=mAxgt5pZOeEC3DZaRq1_cDB-qsQ@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49t1X14mwZzDqmX
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jun 2020 23:46:40 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Message-ID: <039ec920227046806532803f101345703348b003.camel@fuzziesquirrel.com>
+Subject: Re: Redfish EventService Implementation
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: James Feist <james.feist@linux.intel.com>, Ratan Gupta
+ <ratagupt@linux.vnet.ibm.com>, Patrick Williams <patrick@stwcx.xyz>
+Date: Thu, 25 Jun 2020 09:45:57 -0400
+In-Reply-To: <6d97d36c-b78f-44eb-f808-2ae82184925c@linux.intel.com>
+References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
+ <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
+ <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
+ <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
+ <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
+ <20200616152428.GA4618@heinlein>
+ <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
+ <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
+ <20200617204516.GE4618@heinlein>
+ <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
+ <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
+ <6d97d36c-b78f-44eb-f808-2ae82184925c@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.3-1 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -58,31 +55,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, "Puli,
+ Apparao" <apparao.puli@linux.intel.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Kurt,
+On Wed, 2020-06-24 at 09:24 -0700, James Feist wrote:
+> > 3) bmcweb would monitor the DBUS events
+> 
+> Which events specifically? It seems like it would be monitoring lots
+> of events in this proposal. 
 
-> SUMMARY
-> Release 2.8 is still pending. We need to either get these problems
-> fixed ASAP, or release and document the problems/limitations,
-> backporting as needed. I feel like too much time has passed and we
-> just need to release and move on. We'll do better next time.
-> Opinions?
-
-No opinions, but just a thanks for keeping track of things here.
-
-I'll take a look at the DHCP issue.
-
-> Any others? Anyone else testing the release?
-
-One thing I'm aware of: none of the IPMI assertion sensors will work on
-the 2.8 branch. Could we pull this one in?
-
-  https://github.com/openbmc/phosphor-host-ipmid/commit/3dc3558944
-
-Cheers,
-
-
-Jeremy
-
+Just curious what is the concern around monitoring lots of events?
