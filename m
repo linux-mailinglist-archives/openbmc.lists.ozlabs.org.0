@@ -1,41 +1,41 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2984C20A33E
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 18:44:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B0F220A344
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 18:46:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49t5TB73HPzDqwf
-	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 02:44:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49t5WH0Y5TzDqlf
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 02:46:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.100; helo=mga07.intel.com;
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
  envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49t5RT63zKzDqtR
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 02:43:00 +1000 (AEST)
-IronPort-SDR: UO0OMdF4zuBbgtTKWlB+jBlOnQefhUWbK9rbR6kJVBeFkmNxNFppEUq1vOGVwUcbtcYzAjPWli
- DmJrPeKuC+zA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9663"; a="210063936"
-X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="210063936"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49t5Tc1TD9zDqlf
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 02:44:51 +1000 (AEST)
+IronPort-SDR: wB5WXXNZd3BBQavNXoFa5jre9jphOwiPWhkXy6y9lW3Uj+XnnY15S1IX4FvpQnxuhsHg6zFHMW
+ oJkPSnylzguA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9663"; a="146466440"
+X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="146466440"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2020 09:42:57 -0700
-IronPort-SDR: QiysMI878nxDZ58oeZ1KspYKF9PpgQWCM+gyxlYqKiIjrrXVdPH7/VQ20xJEFym/VK+kVpZKem
- XAsW9OAjDbDQ==
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2020 09:44:27 -0700
+IronPort-SDR: E8vBj6Du8v8zDOxn1PTZJ97IIHo4BqZwimhu7eKtlZfRVr+uegcBlSu/d+ILthR5EDARd0h1GS
+ uPl8esJIteYA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="312048817"
+X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="312049176"
 Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.212.108.224])
  ([10.212.108.224])
- by fmsmga002.fm.intel.com with ESMTP; 25 Jun 2020 09:42:56 -0700
+ by fmsmga002.fm.intel.com with ESMTP; 25 Jun 2020 09:44:27 -0700
 Subject: Re: Redfish EventService Implementation
 To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
  Ratan Gupta <ratagupt@linux.vnet.ibm.com>,
@@ -52,17 +52,17 @@ References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
  <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
  <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
  <6d97d36c-b78f-44eb-f808-2ae82184925c@linux.intel.com>
- <039ec920227046806532803f101345703348b003.camel@fuzziesquirrel.com>
+ <6c562e1bc3fa8873a67d6ceb398734d11de7d2e9.camel@fuzziesquirrel.com>
 From: James Feist <james.feist@linux.intel.com>
-Message-ID: <b63ec624-3992-446f-8a0b-adef3d693d7d@linux.intel.com>
-Date: Thu, 25 Jun 2020 09:42:56 -0700
+Message-ID: <bcc2f70b-3c17-916b-8316-c3b356c211c2@linux.intel.com>
+Date: Thu, 25 Jun 2020 09:44:27 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
-In-Reply-To: <039ec920227046806532803f101345703348b003.camel@fuzziesquirrel.com>
+In-Reply-To: <6c562e1bc3fa8873a67d6ceb398734d11de7d2e9.camel@fuzziesquirrel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,15 +79,19 @@ Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, "Puli,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/25/2020 6:45 AM, Brad Bishop wrote:
+On 6/25/2020 8:49 AM, Brad Bishop wrote:
 > On Wed, 2020-06-24 at 09:24 -0700, James Feist wrote:
->>> 3) bmcweb would monitor the DBUS events
->>
->> Which events specifically? It seems like it would be monitoring lots
->> of events in this proposal.
+>> This thread is quite long and hard to follow for someone not involved,
+>> it'd be good to document the proposed changes.
 > 
-> Just curious what is the concern around monitoring lots of events?
+> You are right of course that this thread has become hard to follow.  I
+> think careful selection of reply context really would have helped.
+> 
+> FWIW I have asked the team here at IBM to hash out designs to some level
+> of consensus here on the list before making design submissions to gerrit
+> because IMO reviews of half baked designs in gerrit are even harder to
+> follow than email threads like this one 🙂
 > 
 
-Performance as always, depending on the number of matches needed. 
-Although a POC could prove this not an issue.
+That's good. Was just hoping that the 'final design' wasn't this email, 
+as it would be difficult to see we matched a design.
