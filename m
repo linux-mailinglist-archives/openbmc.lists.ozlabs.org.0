@@ -1,70 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D82D20A54B
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 20:56:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 485B520A6C0
+	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 22:27:18 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49t8PL1syvzDqxM
-	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 04:56:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49tBQC4pvJzDqxg
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 06:27:15 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
+ helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=dUDzgqc/; dkim-atps=neutral
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
+ [IPv6:2607:f8b0:4864:20::330])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49t8NV74BvzDqwp
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 04:55:37 +1000 (AEST)
-IronPort-SDR: k/+K3KIxnRldaYlj1/ILOYltcweDI41PxfJoVNuAn83DbC0H1iLt0j9mf4Oh7Cg6E73VbhA5+u
- rHpFNhyf6kSg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9663"; a="125279035"
-X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="125279035"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2020 11:55:33 -0700
-IronPort-SDR: xtGQOaN6v8sYEnCSRn6xjWXu0FAnvxtJmwSYBPHOfaOi7i2KgLsUty3jbcd96MxwTlH120knVQ
- AfNgEuDXuwAw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,280,1589266800"; d="scan'208";a="385553547"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga001.fm.intel.com with ESMTP; 25 Jun 2020 11:55:33 -0700
-Received: from [10.251.228.248] (jmbills-mobl.amr.corp.intel.com
- [10.251.228.248])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 29A1F5804B4
- for <openbmc@lists.ozlabs.org>; Thu, 25 Jun 2020 11:55:33 -0700 (PDT)
-Subject: Re: Redfish EventService Implementation
-To: openbmc@lists.ozlabs.org
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
- <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
- <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
- <20200617204516.GE4618@heinlein>
- <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
- <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
- <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <6fc4c66e-4a0a-1c59-3f77-a6fcff29b97e@linux.intel.com>
-Date: Thu, 25 Jun 2020 11:55:32 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49tBPM5SdbzDqwp
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 06:26:31 +1000 (AEST)
+Received: by mail-ot1-x330.google.com with SMTP id t6so6517136otk.9
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jun 2020 13:26:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=yUo7db6EHKnz0DqKUq9JGosB7Km4xXMFt82gYBSJoHg=;
+ b=dUDzgqc/OT5EVvT57VxO0GmwhDI4idWywmvlA1nnseDIeDkPjLRMpfy14kQm8fKCz5
+ DueMu4Aug3d/2ezbx8BS4rcpUqhLVkbuYtN2X9HiOi8VBLivVZZTZ5sUIjwwMGaiG0QK
+ sLl7PcPmglEY3GaVjldrT7HFKorEHj0K7JEE6X0d/rWYRO5lOZXZs8B3ijXBrcm4enWn
+ psuwbebeDUcmy7r3eMw68pCTPfLizw2iVPYInYi7ERNJ2uv8jMZxDPw6RyReq3zi25gr
+ MZlgbIB1NbGeKLEZ4NHPousYQ5EtVdfUSeihASDAlb0btLGF1N3L33PK9vvn8D3ir7+N
+ dUcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=yUo7db6EHKnz0DqKUq9JGosB7Km4xXMFt82gYBSJoHg=;
+ b=d+NnDxCcQqNNT9ylYYHbA0mdSsFZ03T4s2Q8SZusCYft9uniw1cWl+Q9Jg7BeO/+Xt
+ 0Kr9Lzt2eV2/cGyJ3x+D9JChsocbkOwONr5ysxvCBKd4f2C/IvPBz6zg0wTPfVl1cqwv
+ PU1p5tcIGOhZxt7yADwwJN288CdRrpUHU7oEpA+lz5/iBgtHn2oTVp+fBCkimOcCtwEv
+ banvcGL3jrTKmDLQXscBpGlkYtMZpV6SSq5q2vaNCuxzsK2bZU+wJcwRAHSW20WQw3Wt
+ Vvrv8wUQBmuYOjF3iE4J38OoMwWg2Zg/Q/V8oGKlseQs1z35mA/RRO6w9qfztQ9ImdZa
+ 3Qxg==
+X-Gm-Message-State: AOAM53367GrbP9hpapA3CxZEJrGrMfY2Vm4RdXaRky1il0HF/clFaLvC
+ OQ4RStk1gy9toc1HyV5tAaI=
+X-Google-Smtp-Source: ABdhPJy06fh6VJbAQnZYVya36EshYs8bgU9G4HP6P/H/jAYsFJ/nMBr6u8zB3HKEWLpTcO9catCAKA==
+X-Received: by 2002:a05:6830:22ee:: with SMTP id
+ t14mr29284385otc.92.1593116786445; 
+ Thu, 25 Jun 2020 13:26:26 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:3907:b988:f10a:cf9f])
+ by smtp.gmail.com with ESMTPSA id l195sm5618401oib.40.2020.06.25.13.26.25
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 25 Jun 2020 13:26:25 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: Expanding CI to live testing
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <B50DC7EF-D1F7-4D7F-B502-DEA4EA2A6145@hpe.com>
+Date: Thu, 25 Jun 2020 15:26:24 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3E8DA024-827D-4D4E-A90C-FC5BFE29910A@gmail.com>
+References: <B50DC7EF-D1F7-4D7F-B502-DEA4EA2A6145@hpe.com>
+To: "Verdun, Jean-Marie" <jean-marie.verdun@hpe.com>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,41 +82,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 6/25/2020 10:26 AM, Brad Bishop wrote:
-> One idea floating around to address these is inventing a journal
-> metadata scheme that is management interface agnostic.  I understand the
-> motivation behind that - it is much simpler for an application to slide
-> a single journal entry into the journal with all the metadata needed to
-> generate events, than it is for an application to snoop multiple signals
-> off dbus and pull events out of that.
-> 
-> But I wonder if inventing a management interface agnostic scheme for
-> adding events to the journal is really just inventing a new data model
-> for how we represent things in a server - e.g. are we just working
-> around our dbus data model?  Maybe we should fix it instead, so that it
-> isn't so difficult for applications to use it?  With that said I don't
-> know how to do this and I could use more concrete details on which areas
-> of the data model make it hard to consume signals.  Does anyone have any
-> ideas or examples?
-> 
+> On Jun 24, 2020, at 3:16 PM, Verdun, Jean-Marie =
+<jean-marie.verdun@hpe.com> wrote:
+>=20
+> Hi,
+> =20
+> As some of you are aware I am working on a Continuous Integration =
+system which allow developer to test their build on a real hardware. I =
+built a proof of concept before we had to lockdown our Houston Campus. =
+The good news is that it starts to work, and I am using it extensively =
+to work on linuxboot (it is available here: https://osfci.tech). So what =
+can I do ?
 
-On this, I think we may want to separate logging vs. eventing both in 
-this feature discussion and in the tools we want to use.
+Hi Jean-Marie, welcome to OpenBMC. My name is Andrew and I=E2=80=99m =
+involved with a lot of our OpenBMC CI efforts.
 
-When we were talking about logging, I think the journal made sense since 
-it is designed for logging and has benefits around that usage.  However, 
-I agree that it doesn't seem like the right tool for sending and 
-receiving events and signals and that D-Bus sounds like the right tool 
-for that.
+> =20
+> My secondary goal is to automatize live testing on real hardware and =
+probably interface the CTRL pool to a Robot server ( =
+https://robotframework.org/). This part still need to be developed, and =
+the current API has the basic coding to support it, but seriously need =
+renaming, and convention build up.
 
-I think I'm still a little confused at the scope.  My understanding was 
-that this initial design for EventService was only for monitoring event 
-messages and not resources in general.  It seems like it may not make 
-sense to try to use the same tools and approach for both message 
-monitoring and resource monitoring?  Do we need to treat them separately 
-for now to simplify the discussion?
+There are two types of CI in OpenBMC, repository CI, where we build and =
+compile an individual software based repository and run it=E2=80=99s =
+unit tests. This all happens within a docker container and does a =
+variety of other tests like code formatting and valgrind type checks.
+
+The second type of CI is where we do the full bitbake and build a real =
+image that can be verified within QEMU and on real hardware. This CI =
+happens once a change has been merged into a software repository.  This =
+CI is also all driven from within docker containers. Our public OpenBMC =
+jenkins builds a variety of system configurations. The systems built in =
+CI are chosen based on getting the most coverage of openbmc code. Once =
+HPE has a system in upstream, we could discuss adding it into our public =
+CI.
+
+=
+https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-Workgroup#i=
+nfrastructure-scripts has a somewhat dated but still relevant overview =
+of the scripts we use for CI within openbmc.
+
+> =20
+> My current challenge with OpenBMC is related to build time and not =
+compete with the existing infrastucture but more being integrated to it. =
+I tried to understand how we test new pull request and it looks like =
+that we are using Jenkins. I have no experience with it, but that is =
+fine (I used travisci and Appveyorci).
+
+Yes, it=E2=80=99s better to just get the system you need added to the =
+openbmc upstream CI.  The way we do hardware CI within IBM is the =
+following:
+
+- We have our own Jenkins running within our lab.
+- This jenkins monitors for the upstream jenkins to mark a gerrit commit =
+as Verified (i.e it=E2=80=99s passed all upstream CI)
+- Once this occurs, the downstream jenkins runs some logic to find the =
+flash image it needs from the upstream jenkins
+- It then uses the openbmc robot test framework suite =
+(https://github.com/openbmc/openbmc-test-automation) to flash the image =
+and run a set of test cases on one of our servers
+- Upon completion of the downstream hardware CI, the downstream jenkins =
+will add a comment to the gerrit review on whether it passed or failed=20=
+
+=20
+> So I do have a couple of questions:
+> =20
+> 	=E2=80=A2 Does the Jenkins build could be made into a Docker =
+image knowing that my compile node runs under Ubuntu (I believe 18.04)
+> 	=E2=80=A2 Could we find a way when our Jenkins cluster build is =
+done to extract the build result, automatize the transfer of it to =
+perhaps an object storage pool with a unique UUID identifier. The =
+challenge will be to retrieve that UUID into the gerrit page, or the =
+Jenkins log.
+> 	=E2=80=A2 If the build is successful, the end user could use =
+that unique UUID to test on a live system. The osfci system will then =
+extract from the object storage backend the build results and bootstrap =
+it on the first CTRL node available.
+> 	=E2=80=A2 Then an interactive session could start, or the robot =
+framework system could have a look to the results and feedback jenkins, =
+or the end user=20
+
+I think it would be great if we could have your infrastructure follow a =
+similar design as laid out above. Have it monitor gerrit for the Verify =
+tags and then kick off validating the image(s) on your collection of =
+hardware and report status back via a comment to the gerrit review.
+
+> vejmarie
+
