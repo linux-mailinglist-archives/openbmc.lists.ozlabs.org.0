@@ -1,124 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68B2420A6F8
-	for <lists+openbmc@lfdr.de>; Thu, 25 Jun 2020 22:44:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF9AB20AA16
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 03:09:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49tBpL1WMQzDqmq
-	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 06:44:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49tJgN4Qm3zDqmY
+	for <lists+openbmc@lfdr.de>; Fri, 26 Jun 2020 11:09:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::333;
+ helo=mail-ot1-x333.google.com; envelope-from=xqiu@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
- (client-ip=148.163.143.35; helo=mx0b-002e3701.pphosted.com;
- envelope-from=prvs=0445c3b92f=jean-marie.verdun@hpe.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hpe.com
-Received: from mx0b-002e3701.pphosted.com (mx0b-002e3701.pphosted.com
- [148.163.143.35])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=QR/qPdzM; dkim-atps=neutral
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com
+ [IPv6:2607:f8b0:4864:20::333])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49tBnY3NhtzDqWW
- for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 06:43:57 +1000 (AEST)
-Received: from pps.filterd (m0148664.ppops.net [127.0.0.1])
- by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05PKV077005244; Thu, 25 Jun 2020 20:31:53 GMT
-Received: from g9t5009.houston.hpe.com (g9t5009.houston.hpe.com [15.241.48.73])
- by mx0b-002e3701.pphosted.com with ESMTP id 31vn91x7rd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 25 Jun 2020 20:31:53 +0000
-Received: from G4W9121.americas.hpqcorp.net (g4w9121.houston.hp.com
- [16.210.21.16])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by g9t5009.houston.hpe.com (Postfix) with ESMTPS id 7219B6F;
- Thu, 25 Jun 2020 20:31:52 +0000 (UTC)
-Received: from G9W8454.americas.hpqcorp.net (2002:10d8:a104::10d8:a104) by
- G4W9121.americas.hpqcorp.net (2002:10d2:1510::10d2:1510) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Thu, 25 Jun 2020 20:31:18 +0000
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (15.241.52.13) by
- G9W8454.americas.hpqcorp.net (16.216.161.4) with Microsoft SMTP
- Server (TLS)
- id 15.0.1497.2 via Frontend Transport; Thu, 25 Jun 2020 20:31:17 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BblYm5M6Qs0YkE03jkgSzf0/XVuYS+nysGV/vhZdQ4eQcJxiChfVY5F1okvaIsYcuB5Tb1QE+GUYFzLUk/+4GwYBoe33VxaUgLAFf+hJkbzSyNANvBKzs4l+yvPcxqZbOccg7oziInXYezy/hF/9LpKeJPFRWUjV1IK/BdyVcp7UdKE1GKKEIeFd8B6WfGJY7VUIAWk0qxcDm2oyqOBQb4yITFuI5JdKvyhNnfULvv7ST1JT2vlzTL6QCsFLSigTHJd1YEdUCPtTSHm5cYSYBW7QkYfVyB0QmNZ9S+K+0zB8WqZqj4a1avUaNVDJAUP0A+SgHlGKMdnPmeqgqxDH2A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f5C9R++U+Fbnt++t3N5P2AUw49LSCIVgtV9ev2YEjNM=;
- b=RuDAA7CiJQquHWA+qd4EUbrhLJwQ1YyvWUq+dmUlauscCPWD03S3oCEO5qSBg67Ez9in+ZNGYv7dkDQBcWel4ovJnZsmw+1XaWVp/k2qIUwP7TUrIxULgZzFE/MU9iiREt0py4HMA5L87ux6QrCQvvqp/mKEX1YWbU7wntpPMrh3Fwye4ZhJXvMQ1aKIrH7mCMwu5yndo+GuHbWxIQfqVGll9BamLq2XToSffaRwfHPCvYTWX85b1N4QD+MoKwRQEUzpqPO7TuOhcftV59vuKJ9CkJr1AxArdHy0sQR/0V4lMMx/zsCVgNrg03YxfvoLm09wEMspIGpLYQtmujn5kg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7423::13) by AT5PR8401MB0498.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:741f::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3109.23; Thu, 25 Jun
- 2020 20:31:16 +0000
-Received: from AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::f8f6:4c42:56e7:1387]) by AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::f8f6:4c42:56e7:1387%12]) with mapi id 15.20.3131.021; Thu, 25 Jun
- 2020 20:31:16 +0000
-From: "Verdun, Jean-Marie" <jean-marie.verdun@hpe.com>
-To: Andrew Geissler <geissonator@gmail.com>
-Subject: Re: Expanding CI to live testing
-Thread-Topic: Expanding CI to live testing
-Thread-Index: AQHWSmRbu5SvVkFx3kqvJTpquFeoE6jpyQEA//++TgA=
-Date: Thu, 25 Jun 2020 20:31:16 +0000
-Message-ID: <A4D7F39A-744B-43C9-8FE5-885228EA94E9@hpe.com>
-References: <B50DC7EF-D1F7-4D7F-B502-DEA4EA2A6145@hpe.com>
- <3E8DA024-827D-4D4E-A90C-FC5BFE29910A@gmail.com>
-In-Reply-To: <3E8DA024-827D-4D4E-A90C-FC5BFE29910A@gmail.com>
-Accept-Language: fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.37.20051002
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=hpe.com;
-x-originating-ip: [2601:582:4681:bb70:78ab:4187:8cec:f96a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 893f2d8c-563e-4271-bb52-08d81946b639
-x-ms-traffictypediagnostic: AT5PR8401MB0498:
-x-microsoft-antispam-prvs: <AT5PR8401MB0498069DC67E4DAAA169367AA7920@AT5PR8401MB0498.NAMPRD84.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;
-x-forefront-prvs: 0445A82F82
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: LYUDGKNgADSKL05Bko6W+iqZk9naTVNytSqliCYn/T31DjWG3K5N8Jc1lkvRg7dglAOwgBGd/iia5uItWAxeOyIjqYr0GNSSfRnLMOXBoNB7s0++fhFpJ1LuKwk28mFCY9QNJQc2w1ZhZG2MljGRPgcz1gwULMA3ZeMv0YwczSab7tMZXWH3TaHQ3QXzQgJESQjccZBW+UAycld0+Hwu2kuuofwunC82HlPHitS6pbVY22ncni8KLbSlB6vgUN6wwghQ1z0+BaRLkODLAT1b8uEEKX6Sz3gS2BxsEqFt25UwddxwkBPQTYP7dSSbda3+YhFH8mYcKa18Uvo88WC52W7WKw1PlRBe/6VUFGiFPfF3vbWoD2RVDVSlzf41SR840F0NLT6ZjhOy/If+4Vn0Sg==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFTY:;
- SFS:(366004)(39860400002)(346002)(136003)(396003)(376002)(6486002)(2616005)(6512007)(8676002)(86362001)(36756003)(53546011)(6506007)(186003)(33656002)(4326008)(8936002)(478600001)(316002)(5660300002)(966005)(66476007)(64756008)(2906002)(71200400001)(6916009)(76116006)(66556008)(66946007)(66446008)(83380400001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: luCyBKS6vL0/ONYWnf21N6IiH1EJ/VlmCc+6pSZMHntLE6xxw7p8h2Atn7y7PY1AasUq5ZoHtVcRcyVUWUge65lRRSSc5zShsWJm7Fm3d/dsJXWfAimdfXibBrE7iBatlfqS2MkdoMD8fPM4cXucn2aesIXVw3sbVNjSJxQ4HtQkhz0lBFRfZBpWErQyTHiAdi9LfM0yvcJhFNHhwD8RZwKShAWznN/6y8EwgpvrsUKr3bFBYsQlRFSssiEt2xOtncmog88t0reVrfJZFeRrdG+u5DqAmmSgmYtRYxr0NFSGsHcxT47w8WuIY9Qyw/9zDT5wa6wkYjudhDaEUqsPBqOT3IEENRbe8LJKhJjyxCZDdu/ZQiU6sclbbbcGQJcXIF8HMLYzwCoqBWqUun/GHRILb5L3HAtSWF7LAxjoWtWMIxZYjig2//48qFKnsBXK2C/nnLsQByVotPInsMVXn3xNyYKroRIVP8Lj88UEFEf2QHpyG1Go//gFK/CMLPUzA9RVkBgQOwzFSlbVkhP1JMb/hZt7lOAvDPF6Sp0H+qXn3TomMrnNBo9Oza4cpoZ8
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <77830F83D933D6498A88A714F0FF6516@NAMPRD84.PROD.OUTLOOK.COM>
-X-MS-Exchange-CrossTenant-Network-Message-Id: 893f2d8c-563e-4271-bb52-08d81946b639
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jun 2020 20:31:16.6987 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 02zVbkxSDCVMoY4T5a0/1cZRJknCHn3Obph6WePDW26/BQEEvwEKEGbYFQe2FRlogqNSrKPoAGhtgHDidh63vJQGg3p5MnMe9XZvE6qOPwc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AT5PR8401MB0498
-X-OriginatorOrg: hpe.com
-Content-Transfer-Encoding: base64
-X-Proofpoint-UnRewURL: 2 URL's were un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49tJfV5nNjzDqd7
+ for <openbmc@lists.ozlabs.org>; Fri, 26 Jun 2020 11:08:17 +1000 (AEST)
+Received: by mail-ot1-x333.google.com with SMTP id m2so7101227otr.12
+ for <openbmc@lists.ozlabs.org>; Thu, 25 Jun 2020 18:08:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=WylzRE56AcXBeNZpZMR5XVPxjJlRebvmCLciK+lGE/A=;
+ b=QR/qPdzMjsw5F8I0GmqyBimRtIFxGCFf452jqCQX1aAh1SZCMzPvHpKlPgcVvvgCip
+ DVLpvlh2W4BJ/SRRny6KMK0lCScxbm0vJ5pZ9PUYdeWoGTL6cdtphXRi8Kwppdm61tQd
+ bl5NCQYBf3Yvib8yGy0O4aUBniNm6Oa6viCShub7dE5/GK/FJgu/GBTriW31uVK7ZBSD
+ CyOVJ7tC+Ofbr0U2xmU8CLOJxOSL8Wjj2tVBGvjTUDp4C1dM8+6Z8oM1BQKwWqyPpmtY
+ HdN8U/qVejmXP4Qi33HrlvcRwyZiKxcXDoubLx2V+w5LWNoIsRfyh51qOgDeHLE2j1Aa
+ 5PPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=WylzRE56AcXBeNZpZMR5XVPxjJlRebvmCLciK+lGE/A=;
+ b=Wd0Sq0h8YJFn7xTd1FIbLQn1V82yNsM5OJ9HMBn0VBZc43XE+ahq0N1TL0GuUse2f5
+ 9pzQdPrnMFwW0gdxEAqEbEDg1NgNtIYh4RQzqYp4hAJa/1wGvBRcslTgQXcIMNndDEym
+ JmlSBnd97Z0kEEYB9lPoichRBS/xh1UiwmMUeqrmw5xkBd6vWLfl/51mEQypvkdBymsf
+ ZIYGt7ef0pAGPVgxsyN5wWLiArMy8mpc3anAjB9L277y6PBZMoBHNAM0RoOvW9Fnvm8g
+ D4SErZZV57X+w574sxGvKDOjV6MLD9gOy1whv7IrA73UigDuNxGEEUSODeV1osoSxaK8
+ jvZg==
+X-Gm-Message-State: AOAM531N3HEO7ns/s25ePX+rIk9FAW/8CHbvb8mKOb8fCjZ9zcqZ/1h+
+ jj4wG/ROj5matpEp0kASFKWnxhW+vVdOntwt8JJ7Nw==
+X-Google-Smtp-Source: ABdhPJzYSdPRtzQxuGCN+/1jlX13UJ+LREl+RMw/xagNQL6OdUf8w9deP9XMGdkuLHdWt1XbzjymSieP+/bgnNefmtI=
+X-Received: by 2002:a4a:c806:: with SMTP id s6mr310224ooq.19.1593133694369;
+ Thu, 25 Jun 2020 18:08:14 -0700 (PDT)
 MIME-Version: 1.0
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
- definitions=2020-06-25_16:2020-06-25,
- 2020-06-25 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- suspectscore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0
- malwarescore=0 adultscore=0 clxscore=1011 cotscore=-2147483648 mlxscore=0
- phishscore=0 spamscore=0 lowpriorityscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006250120
+References: <CAA_a9xKn77KSnwPq2pEq36JGtfWctaBXOA_4vXtP+=JGszaPkg@mail.gmail.com>
+ <CACWQX82=MuAavxCqOerxi-Sdywh0xatb-f+1YzGyVSg74oNGqA@mail.gmail.com>
+ <CAA_a9xLUkr5rR5Q8YATphtmWUBEE6V=6N4=k74v8hr8PePMMAQ@mail.gmail.com>
+ <CACWQX80fbSwvmyNX1d=kfZEcsS30k1ziN8JtA9LtwFfkNC9ciw@mail.gmail.com>
+In-Reply-To: <CACWQX80fbSwvmyNX1d=kfZEcsS30k1ziN8JtA9LtwFfkNC9ciw@mail.gmail.com>
+From: Alex Qiu <xqiu@google.com>
+Date: Thu, 25 Jun 2020 18:08:03 -0700
+Message-ID: <CAA_a9x+7DLrwoN9YmjZneghnGaZHAqM9kzzPo2RThH=GgSFw6w@mail.gmail.com>
+Subject: Re: Feedback on Current OpenBMC and Proposing Some Improvements ----
+ "Improvements" Ideas
+To: Ed Tanous <ed@tanous.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,91 +78,401 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ Benjamin Fair <benjaminfair@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ofer Yehielli <ofery@google.com>,
+ Josh Lehan <krellan@google.com>, Richard Hanley <rhanley@google.com>,
+ Kais Belgaied <belgaied@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgQW5kcmV3LA0KDQpUaGFua3MgZm9yIHlvdXIgZmVlZGJhY2suIEkgbGlrZSB5b3VyIGFwcHJv
-YWNoLCBhbmQgd2lsbCByZXZpZXcgaXQgY2FyZWZ1bGx5LiBNaWdodCBoYXZlIGEgdG9uIG9mIHF1
-ZXN0aW9ucyBvciBub3QgKHdobyBrbm93cyksIGJ1dCBJIGhhdGUgdG8gcmUtaW52ZW50IHRoZSB3
-aGVlbCB3aGVuIHNvbWV0aGluZyB3b3JrcyBvbiB0aGUgYXV0b21hdGlvbiBzaWRlLg0KDQpEbyB5
-b3Ugb2ZmZXIgcHVibGljIGFjY2VzcyB0byBkZWJ1ZyBzeXN0ZW0gb24gdGhlIElCTSBwbGF0Zm9y
-bSAobWlnaHQgYmUgZnVuIHRvIGhhdmUgYSBsb29rIHRvIGl0IG9uIGEgcmVhbCBtYWNoaW5lLCBp
-dCBtYWtlcyBwcm9iYWJseSAyMCB5ZWFycyB0aGF0IEkgZGlkbid0IGhhZCB0aGUgb3Bwb3J0dW5p
-dHkgdG8gdXNlIGEgUG93ZXIgY2hpcCkgPw0KDQpIYXZlIGEgZ3JlYXQgZGF5LA0KDQp2ZWptYXJp
-ZQ0KDQrvu79PbiA2LzI1LzIwLCA0OjI2IFBNLCAiQW5kcmV3IEdlaXNzbGVyIiA8Z2Vpc3NvbmF0
-b3JAZ21haWwuY29tPiB3cm90ZToNCg0KDQoNCiAgICA+IE9uIEp1biAyNCwgMjAyMCwgYXQgMzox
-NiBQTSwgVmVyZHVuLCBKZWFuLU1hcmllIDxqZWFuLW1hcmllLnZlcmR1bkBocGUuY29tPiB3cm90
-ZToNCiAgICA+IA0KICAgID4gSGksDQogICAgPiAgDQogICAgPiBBcyBzb21lIG9mIHlvdSBhcmUg
-YXdhcmUgSSBhbSB3b3JraW5nIG9uIGEgQ29udGludW91cyBJbnRlZ3JhdGlvbiBzeXN0ZW0gd2hp
-Y2ggYWxsb3cgZGV2ZWxvcGVyIHRvIHRlc3QgdGhlaXIgYnVpbGQgb24gYSByZWFsIGhhcmR3YXJl
-LiBJIGJ1aWx0IGEgcHJvb2Ygb2YgY29uY2VwdCBiZWZvcmUgd2UgaGFkIHRvIGxvY2tkb3duIG91
-ciBIb3VzdG9uIENhbXB1cy4gVGhlIGdvb2QgbmV3cyBpcyB0aGF0IGl0IHN0YXJ0cyB0byB3b3Jr
-LCBhbmQgSSBhbSB1c2luZyBpdCBleHRlbnNpdmVseSB0byB3b3JrIG9uIGxpbnV4Ym9vdCAoaXQg
-aXMgYXZhaWxhYmxlIGhlcmU6IGh0dHBzOi8vb3NmY2kudGVjaCApLiBTbyB3aGF0IGNhbiBJIGRv
-ID8NCg0KICAgIEhpIEplYW4tTWFyaWUsIHdlbGNvbWUgdG8gT3BlbkJNQy4gTXkgbmFtZSBpcyBB
-bmRyZXcgYW5kIEnigJltIGludm9sdmVkIHdpdGggYSBsb3Qgb2Ygb3VyIE9wZW5CTUMgQ0kgZWZm
-b3J0cy4NCg0KICAgID4gIA0KICAgID4gTXkgc2Vjb25kYXJ5IGdvYWwgaXMgdG8gYXV0b21hdGl6
-ZSBsaXZlIHRlc3Rpbmcgb24gcmVhbCBoYXJkd2FyZSBhbmQgcHJvYmFibHkgaW50ZXJmYWNlIHRo
-ZSBDVFJMIHBvb2wgdG8gYSBSb2JvdCBzZXJ2ZXIgKCBodHRwczovL3JvYm90ZnJhbWV3b3JrLm9y
-Zy8gKS4gVGhpcyBwYXJ0IHN0aWxsIG5lZWQgdG8gYmUgZGV2ZWxvcGVkLCBhbmQgdGhlIGN1cnJl
-bnQgQVBJIGhhcyB0aGUgYmFzaWMgY29kaW5nIHRvIHN1cHBvcnQgaXQsIGJ1dCBzZXJpb3VzbHkg
-bmVlZCByZW5hbWluZywgYW5kIGNvbnZlbnRpb24gYnVpbGQgdXAuDQoNCiAgICBUaGVyZSBhcmUg
-dHdvIHR5cGVzIG9mIENJIGluIE9wZW5CTUMsIHJlcG9zaXRvcnkgQ0ksIHdoZXJlIHdlIGJ1aWxk
-IGFuZCBjb21waWxlIGFuIGluZGl2aWR1YWwgc29mdHdhcmUgYmFzZWQgcmVwb3NpdG9yeSBhbmQg
-cnVuIGl04oCZcyB1bml0IHRlc3RzLiBUaGlzIGFsbCBoYXBwZW5zIHdpdGhpbiBhIGRvY2tlciBj
-b250YWluZXIgYW5kIGRvZXMgYSB2YXJpZXR5IG9mIG90aGVyIHRlc3RzIGxpa2UgY29kZSBmb3Jt
-YXR0aW5nIGFuZCB2YWxncmluZCB0eXBlIGNoZWNrcy4NCg0KICAgIFRoZSBzZWNvbmQgdHlwZSBv
-ZiBDSSBpcyB3aGVyZSB3ZSBkbyB0aGUgZnVsbCBiaXRiYWtlIGFuZCBidWlsZCBhIHJlYWwgaW1h
-Z2UgdGhhdCBjYW4gYmUgdmVyaWZpZWQgd2l0aGluIFFFTVUgYW5kIG9uIHJlYWwgaGFyZHdhcmUu
-IFRoaXMgQ0kgaGFwcGVucyBvbmNlIGEgY2hhbmdlIGhhcyBiZWVuIG1lcmdlZCBpbnRvIGEgc29m
-dHdhcmUgcmVwb3NpdG9yeS4gIFRoaXMgQ0kgaXMgYWxzbyBhbGwgZHJpdmVuIGZyb20gd2l0aGlu
-IGRvY2tlciBjb250YWluZXJzLiBPdXIgcHVibGljIE9wZW5CTUMgamVua2lucyBidWlsZHMgYSB2
-YXJpZXR5IG9mIHN5c3RlbSBjb25maWd1cmF0aW9ucy4gVGhlIHN5c3RlbXMgYnVpbHQgaW4gQ0kg
-YXJlIGNob3NlbiBiYXNlZCBvbiBnZXR0aW5nIHRoZSBtb3N0IGNvdmVyYWdlIG9mIG9wZW5ibWMg
-Y29kZS4gT25jZSBIUEUgaGFzIGEgc3lzdGVtIGluIHVwc3RyZWFtLCB3ZSBjb3VsZCBkaXNjdXNz
-IGFkZGluZyBpdCBpbnRvIG91ciBwdWJsaWMgQ0kuDQoNCiAgICBodHRwczovL2dpdGh1Yi5jb20v
-b3BlbmJtYy9vcGVuYm1jL3dpa2kvT3BlbkJNQy1JbmZyYXN0cnVjdHVyZS1Xb3JrZ3JvdXAjaW5m
-cmFzdHJ1Y3R1cmUtc2NyaXB0cyBoYXMgYSBzb21ld2hhdCBkYXRlZCBidXQgc3RpbGwgcmVsZXZh
-bnQgb3ZlcnZpZXcgb2YgdGhlIHNjcmlwdHMgd2UgdXNlIGZvciBDSSB3aXRoaW4gb3BlbmJtYy4N
-Cg0KICAgID4gIA0KICAgID4gTXkgY3VycmVudCBjaGFsbGVuZ2Ugd2l0aCBPcGVuQk1DIGlzIHJl
-bGF0ZWQgdG8gYnVpbGQgdGltZSBhbmQgbm90IGNvbXBldGUgd2l0aCB0aGUgZXhpc3RpbmcgaW5m
-cmFzdHVjdHVyZSBidXQgbW9yZSBiZWluZyBpbnRlZ3JhdGVkIHRvIGl0LiBJIHRyaWVkIHRvIHVu
-ZGVyc3RhbmQgaG93IHdlIHRlc3QgbmV3IHB1bGwgcmVxdWVzdCBhbmQgaXQgbG9va3MgbGlrZSB0
-aGF0IHdlIGFyZSB1c2luZyBKZW5raW5zLiBJIGhhdmUgbm8gZXhwZXJpZW5jZSB3aXRoIGl0LCBi
-dXQgdGhhdCBpcyBmaW5lIChJIHVzZWQgdHJhdmlzY2kgYW5kIEFwcHZleW9yY2kpLg0KDQogICAg
-WWVzLCBpdOKAmXMgYmV0dGVyIHRvIGp1c3QgZ2V0IHRoZSBzeXN0ZW0geW91IG5lZWQgYWRkZWQg
-dG8gdGhlIG9wZW5ibWMgdXBzdHJlYW0gQ0kuICBUaGUgd2F5IHdlIGRvIGhhcmR3YXJlIENJIHdp
-dGhpbiBJQk0gaXMgdGhlIGZvbGxvd2luZzoNCg0KICAgIC0gV2UgaGF2ZSBvdXIgb3duIEplbmtp
-bnMgcnVubmluZyB3aXRoaW4gb3VyIGxhYi4NCiAgICAtIFRoaXMgamVua2lucyBtb25pdG9ycyBm
-b3IgdGhlIHVwc3RyZWFtIGplbmtpbnMgdG8gbWFyayBhIGdlcnJpdCBjb21taXQgYXMgVmVyaWZp
-ZWQgKGkuZSBpdOKAmXMgcGFzc2VkIGFsbCB1cHN0cmVhbSBDSSkNCiAgICAtIE9uY2UgdGhpcyBv
-Y2N1cnMsIHRoZSBkb3duc3RyZWFtIGplbmtpbnMgcnVucyBzb21lIGxvZ2ljIHRvIGZpbmQgdGhl
-IGZsYXNoIGltYWdlIGl0IG5lZWRzIGZyb20gdGhlIHVwc3RyZWFtIGplbmtpbnMNCiAgICAtIEl0
-IHRoZW4gdXNlcyB0aGUgb3BlbmJtYyByb2JvdCB0ZXN0IGZyYW1ld29yayBzdWl0ZSAoaHR0cHM6
-Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtYy10ZXN0LWF1dG9tYXRpb24pIHRvIGZsYXNoIHRo
-ZSBpbWFnZSBhbmQgcnVuIGEgc2V0IG9mIHRlc3QgY2FzZXMgb24gb25lIG9mIG91ciBzZXJ2ZXJz
-DQogICAgLSBVcG9uIGNvbXBsZXRpb24gb2YgdGhlIGRvd25zdHJlYW0gaGFyZHdhcmUgQ0ksIHRo
-ZSBkb3duc3RyZWFtIGplbmtpbnMgd2lsbCBhZGQgYSBjb21tZW50IHRvIHRoZSBnZXJyaXQgcmV2
-aWV3IG9uIHdoZXRoZXIgaXQgcGFzc2VkIG9yIGZhaWxlZCANCg0KICAgID4gU28gSSBkbyBoYXZl
-IGEgY291cGxlIG9mIHF1ZXN0aW9uczoNCiAgICA+ICANCiAgICA+IAnigKIgRG9lcyB0aGUgSmVu
-a2lucyBidWlsZCBjb3VsZCBiZSBtYWRlIGludG8gYSBEb2NrZXIgaW1hZ2Uga25vd2luZyB0aGF0
-IG15IGNvbXBpbGUgbm9kZSBydW5zIHVuZGVyIFVidW50dSAoSSBiZWxpZXZlIDE4LjA0KQ0KICAg
-ID4gCeKAoiBDb3VsZCB3ZSBmaW5kIGEgd2F5IHdoZW4gb3VyIEplbmtpbnMgY2x1c3RlciBidWls
-ZCBpcyBkb25lIHRvIGV4dHJhY3QgdGhlIGJ1aWxkIHJlc3VsdCwgYXV0b21hdGl6ZSB0aGUgdHJh
-bnNmZXIgb2YgaXQgdG8gcGVyaGFwcyBhbiBvYmplY3Qgc3RvcmFnZSBwb29sIHdpdGggYSB1bmlx
-dWUgVVVJRCBpZGVudGlmaWVyLiBUaGUgY2hhbGxlbmdlIHdpbGwgYmUgdG8gcmV0cmlldmUgdGhh
-dCBVVUlEIGludG8gdGhlIGdlcnJpdCBwYWdlLCBvciB0aGUgSmVua2lucyBsb2cuDQogICAgPiAJ
-4oCiIElmIHRoZSBidWlsZCBpcyBzdWNjZXNzZnVsLCB0aGUgZW5kIHVzZXIgY291bGQgdXNlIHRo
-YXQgdW5pcXVlIFVVSUQgdG8gdGVzdCBvbiBhIGxpdmUgc3lzdGVtLiBUaGUgb3NmY2kgc3lzdGVt
-IHdpbGwgdGhlbiBleHRyYWN0IGZyb20gdGhlIG9iamVjdCBzdG9yYWdlIGJhY2tlbmQgdGhlIGJ1
-aWxkIHJlc3VsdHMgYW5kIGJvb3RzdHJhcCBpdCBvbiB0aGUgZmlyc3QgQ1RSTCBub2RlIGF2YWls
-YWJsZS4NCiAgICA+IAnigKIgVGhlbiBhbiBpbnRlcmFjdGl2ZSBzZXNzaW9uIGNvdWxkIHN0YXJ0
-LCBvciB0aGUgcm9ib3QgZnJhbWV3b3JrIHN5c3RlbSBjb3VsZCBoYXZlIGEgbG9vayB0byB0aGUg
-cmVzdWx0cyBhbmQgZmVlZGJhY2sgamVua2lucywgb3IgdGhlIGVuZCB1c2VyIA0KDQogICAgSSB0
-aGluayBpdCB3b3VsZCBiZSBncmVhdCBpZiB3ZSBjb3VsZCBoYXZlIHlvdXIgaW5mcmFzdHJ1Y3R1
-cmUgZm9sbG93IGEgc2ltaWxhciBkZXNpZ24gYXMgbGFpZCBvdXQgYWJvdmUuIEhhdmUgaXQgbW9u
-aXRvciBnZXJyaXQgZm9yIHRoZSBWZXJpZnkgdGFncyBhbmQgdGhlbiBraWNrIG9mZiB2YWxpZGF0
-aW5nIHRoZSBpbWFnZShzKSBvbiB5b3VyIGNvbGxlY3Rpb24gb2YgaGFyZHdhcmUgYW5kIHJlcG9y
-dCBzdGF0dXMgYmFjayB2aWEgYSBjb21tZW50IHRvIHRoZSBnZXJyaXQgcmV2aWV3Lg0KDQogICAg
-PiB2ZWptYXJpZQ0KDQoNCg==
+Hi Ed,
+
+I used Python because I wanted to create a demo fast, and get back to
+the issues that I need to work on. The thing I'm doing here is kinda
+out of my direct work area based on the organization.
+
+Yes, there are some restrictions in my current demo, and I'm afraid
+that I may not have the bandwidth to cover it further alone. My point
+is that, sometimes hardwares is designed with some unexpected
+complexity on topology (EEPROM behind MUX for example). Having the
+ability to aid the topology discovery with code, and having the
+topology info available to other functionalities can help a lot. JSON
+config files are having a hard time bearing these logics, and any
+extra logic implemented in JSON config files requires some kind of
+script parser in daemons processing them. Based on your replies, the
+concept for functionally extensions that I was asking for should be
+implemented as daemons either standalone or plugged onto dbus?
+
+On "reading sensors within the BMC console", I'm actually using a
+script to directly read from hwmon right now, because we are having
+sensor number limit on IPMI and performance issues with IPMI and dbus.
+We are still actively investigating these performance issues now to
+unblock the project, but based on the current findings, I think it's
+better to have this tool before the protocol layers.
+
+On issues like uint8_t, yes, we've noted them down, but they are still
+tech debts on our backlog, and dealing with the performance issue
+described above remains as our priority right now.
+
+Thank you!
+
+- Alex Qiu
+
+
+On Thu, Jun 25, 2020 at 7:44 AM Ed Tanous <ed@tanous.net> wrote:
+>
+>
+> On Tue, Jun 23, 2020 at 6:31 PM Alex Qiu <xqiu@google.com> wrote:
+> >
+> > Hi Ed,
+> >
+> > -Internal email list
+> > +A couple of folks who might be interested in this topic
+> >
+> > I don't know if you saw the updated reply in the main thread, but I
+> > foresaw some possible communication gap, so I created a simple demo to
+> > illustrate my ideas: https://github.com/alex310110/bmc-proto-20q2
+> > Please note that I'm not trying to code a BMC with Python, but it's
+> > just for the ease to set up a demo fast. Other replies inlined.
+>
+> I did see it, and it shows a lot of my problems with that approach.  Out =
+of curiosity, why did you start with python, instead of something we could =
+try on a BMC?  Even if it doesn't compile, it might be a starting point for=
+ someone else?
+>
+> I see a few anti-patterns there that I'd like to see you address, you've =
+hardcoded lots of data that's not specific to the card.  At first glance in=
+ board_example_a.py
+>
+> 1. Line 22-23.  You've initialized 2 Muxes.  Both of these buses are pres=
+ent on your (guessing a little here) baseboard, and not the card itself.  T=
+his means that every single card will need to duplicate the initialization =
+of these muxes.  So first step, you need to break apart your baseboard into=
+ a separate entity, so the "board" does not own the card.  Also, you haven'=
+t provided any mapping of a PCIe mux lane to a physical user-facing name "S=
+lot 1, Slot 2, ect".  Entity-manager configs do both of these things.
+> 2. You've only expressed the slot topology here.  CardExampleG, and CardE=
+xampleV need to know what bus they're on, what muxes they need to go throug=
+h to get to that bus, and the organization of those things, as in your exam=
+ple, none of the busses have been created in the kernel, and some of the mu=
+x busses are shared.
+> 3. You've hardcoded to only search for 2 different cards (card_g, and car=
+d_v), at 1 address (0x52).  While it would be great if systems in practice =
+had that kind of consistency in addressing, PCIe add in cards have many dif=
+ferent eeprom addresses.  So you'd have to update your loops to search for =
+all possible.  Also, that loop scales great if you only support 2 cards.  W=
+hat happens when OpenBMC supports 100 cards?  1000?  You've hardcoded the l=
+ist of supported cards in the entity above it, which means every baseboard =
+needs to explicitly add support for every possible card.  This stops scalin=
+g really fast.
+> 4. You're looping over the PCIe slots as part of the board control flow. =
+ What if slots are based on a riser plugged into said slot?
+> 5. You've abstracted an eeprom to a simple device.  In practice, you need=
+ to parse the FRU data, which might be in several formats.  Sure, you could=
+ have a library function, but you still need a global structure to keep tha=
+t, in case some other control flow needs it downstream.
+> 6. You've hardcoded a mux address, and a physical channel again later on.
+> 7. Line 71-72.  Both of those are blocking calls.  For devices with a lar=
+ge number of sensors, those blocking calls will cause performance bottlenec=
+ks. also, see my previous comments about non-cyclic timing of some sensors.
+> 8. You're missing a lot of features that entity manager does today.  Fan =
+control configs being the most important, which have a relation to how the =
+chassis looks.  Can you add an example of a chassis with some fans and ther=
+mal configs in it?
+>
+> If you made all the changes I'm suggesting your code starts to look a LOT=
+ like entity manager, FRUDevice, and dbus-sensors combined into a single ap=
+p.  The biggest difference is you've replaced config files and exposes reco=
+rds for library functions.  There's nothing inherently wrong with combining=
+ them like that, but we wanted to isolate the topology scanning logic from =
+the config logic, so people would feel free to swap them out with their own=
+.  In the case of some systems, there's a complete database of the hardware=
+ inventory in a proprietary format.  In the case of infrastructure managed =
+systems, we wanted developers to have the ability to swap out the topology =
+scanning logic for some fixed "Here are the list of the hardware devices th=
+at should be present" type daemons that support the various formats, withou=
+t necessarily having to care about the implementations.  Said another way, =
+it separates "How do I determine if this device is present" from "Here's ho=
+w to interact with this device".  We could combine those again, but we lose=
+ out on the static case.  If nobody cares about the full config case, we co=
+uld certainly consider it.
+>  One other big thing I wanted to be able to support in the future with th=
+is was adding previously unknown devices at runtime, with zero need to comp=
+ile code.  Imagine being able to support a temp sensor on a new card by sim=
+ply uploading an entity manager config file to the webserver, having it rer=
+un the detect, and suddenly that card is "supported" by that image.  When y=
+ou mix the code in with the metadata or config, you lose that ability, as w=
+e can't easily upload unsigned code.  It's a tradeoff for sure, but being a=
+ble to hand tweak a config at runtime can be invaluable for quick turnaroun=
+d during debugging and platform bringup.
+>
+>
+> >
+> > On Sun, Jun 21, 2020 at 3:16 PM Ed Tanous <ed@tanous.net> wrote:
+> > >
+> > > On Thu, Jun 18, 2020 at 2:29 PM Alex Qiu <xqiu@google.com> wrote:
+> >
+> > I didn't start with multi-threading too much in mind, but It's not
+> > necessarily a single-threaded model. As you can see in the demo, each
+> > entity instance has its own function of update_sensors(), and the
+> > entities are collected in the main class, which may be implemented as
+> > a higher-level inter-process communication API for entities to adapt
+> > to instead of merely a single main function or thread. So this model
+> > can potentially be threaded on an entity basis, or even fork each
+> > entity into individual processes. The model can be further threaded
+> > within each entity into service threads: separating sensor polling
+> > loop and event handling loop for example. But I do wonder about the
+> > performance overhead of making every function call into IPC.
+> I'm not really following.  Could you give an example of calling 4 command=
+s, in parallel, to a MCTP/IPMB device and posting them as they are received=
+?  This is something that the existing sensor daemons do today.  Yeah, IPC =
+is expensive, but moving away from dbus, and onto something else is a much =
+bigger discussion.
+>
+>
+> >
+> > The base class for entities may have a default implementation that
+> > doesn't hurt, for example, throwing an exception or returning an error
+> > code to say that it doesn't have an EEPROM, so that inherited class
+> > doesn't need to necessarily implement functions around EEPROM. Devices
+> > are abstracted into the hwmon interface as the kernel does today, and
+> > we need to config the names of each input attribute to make them
+> > meaningful anyway.
+> >
+> > I do see your concerns, and I do believe this requires further
+> > research into if this model can handle all the concerns or
+> > requirements we have today.
+>
+> Looking forward to seeing it.
+>
+> >
+> > >
+> > > >
+> > > > The existing JSON files used in the dynamic software stack can only=
+ represent data, but not any control flow. This led to difficulties where s=
+ometimes some code is preferred to have for aiding the discovery of hardwar=
+e topology, condensing redundant configurations, etc. With a good framework=
+ for hardware topology, combining the entity abstraction described above, d=
+evelopers can easily find the best places to aid the topology discovery, im=
+plement hardware initialization logics, and optimize BMC tasks according to=
+ Linux behaviors.
+> > >
+> > > If you need code or control flow to aid in the discovery of hardware
+> > > topology, write an application that exposes an interface similar to
+> > > FruDevice, or the soon to be submitted peci-pcie.  These can be used
+> > > in entity manager configs.  I'm not quite following what "redundant
+> > > configurations" means in this context.  In my experience, most
+> > > redundant configurations tend to be for things like power supplies, o=
+r
+> > > drives, where a single device can fit in many different slots.  WIth
+> > > that said, we already have an abstraction for that, so I'm not quite
+> > > following.
+> >
+> > Please see this for a complicated discovery logic:
+> > https://github.com/alex310110/bmc-proto-20q2/blob/master/downstream/boa=
+rd_example_a.py
+> >
+> > Based on your reply, I have a concern that, if we have a hardware
+> > topology complicated enough, does that mean we should probably opt out
+> > of FruDevice and use downstream daemon to replace it?
+>
+> FruDevice is poorly named these days (sorry James).  It should really be =
+called I2cFruEepromLocator.  In theory, it can handle any I2C topology we w=
+ere able to throw at it, including one that I tested that was 4 levels deep=
+.  If you're trying to manage an automatically detected i2c eeprom/mux topo=
+logy, that is the tool I would expect to use.  With that said, you're welco=
+me to write others, if you need to handle other things on I2C, or the stati=
+c config case from above.
+> If you're managing a different source of data (like a host driven map, MC=
+TP, or out of band PCIe registers) I would expect you'd likely want to writ=
+e another daemon that's capable of posting that topology data to dbus, but =
+I would expect you can still use entity manager to consume it, and apply th=
+e correct settings to sensors/busses/kernel/Fans.
+>
+> >
+> > > >
+> > > > Better open source and proprietary part management
+> > > >
+> > > > Construct "Improvements" like a proprietary software supporting plu=
+gins. The philosophy is that the architecture of "Improvements" should be s=
+olid enough that the community won't have to modify the upstream code much.=
+ The community can look at and reference the code upstream to develop their=
+ own code and configs according to their hardware, while the plugin-able pa=
+rt may be proprietary and can be kept downstream without conflicts. "Improv=
+ements" should have a reasonable plugin API to support common BMC functiona=
+lity in the high level, and provide common low-level APIs to support the pl=
+ugins by abstracting things like hwmon sysfs interface. This can be impleme=
+nted using a plugin system or a flexible build system, as we are working on=
+ an open source project indeed. Whenever we find a potential conflict betwe=
+en upstream and downstream, let us work it out to see if it is appropriate =
+to make it pluginable or configurable via config files.
+> > >
+> > > I must be misreading this, as I feel like openbmc already has
+> > > "plugins" in the form of Dbus applications.  Many applications have
+> > > been written that required no modification to upstream code.  Tha API
+> > > you're looking for is reasonably well defined in phosphor dbus
+> > > interfaces, and is intended to be reasonably stable, even if it's not
+> > > guaranteed over time.  I'm also a little confused at what you're
+> > > calling low-level APIs.  hwmon sysfs is a low level API.  Are you
+> > > wanting to wrap it in yet another API that's OpenBMC specific?
+> > > "can be kept downstream without conflicts" - In my experience, you're
+> > > going to be hard pressed to find support for supporting closed source
+> > > development in an open source project.  That's not to say individuals
+> > > aren't out there, but they tend to keep their heads down :)
+> >
+> > Apologies for my wording; the low-level API may be probably called
+> > lower level libraries offered by OpenBMC. See I2CHwmonDevice in
+> > https://github.com/alex310110/bmc-proto-20q2/blob/master/i2c.py
+> I2CDevices, i2CMuxes, HWMonDevices, and i2ceeproms exist in the kernel al=
+ready, behind a well defined interface.  Your file feels a little bit like =
+it's reinventing some things.  I'm not sure whether or not I'd be against i=
+nventing libopenbmc, but that's likely where those types of interfaces woul=
+d need to go.
+> It should also be noted, all of those devices are addable with only EM co=
+nfiguration file changes today.
+>
+>
+> >
+> > Although we make a lot of efforts to upstream software to the open
+> > source community as much as possible, BMC is heavily involved with
+> > hardware, and we're also restricted to hardware's restrictions. We are
+> > having difficulties to upstream drivers or code containing
+> > confidential hardware code names, or containing part numbers under NDA
+> > with vendors. Personally I was also involved with a lengthy and
+> > exhausting internal legal review to publicize a part number which is
+> > under NDA with our vendor, involving email exchanges between attorneys
+> > in Google and our vendor's support engineer. I hope this explains my
+> > point. For today, these part numbers are required to pass onto dbus
+> > from entity-manager in order for dbus-sensors to determine the correct
+> > sensor daemon for them.
+>
+> Understood, and I've felt your pain before.  I'm not going to claim this =
+is easily solved, but the best way IMO, is to create a downstream applicati=
+on for each hardware device you need to manage, and patch your entity manag=
+er configs to add the configuration data for those components to your board=
+s (or keep the board configs totally private).  Any changes to the detectio=
+n logic, or entity manager itself can be easily upstreamed.  The applicatio=
+n boundary also means that there's a well defined dbus interface, and any l=
+icencing conflicts between GPL and proprietary code are resolved.
+>
+>
+> >
+> > >
+> > > >
+> > > > Flexibility for alternatives
+> > > >
+> > > > Although hwmon sysfs interface is a good starting point for getting=
+ sensor reads from devices, they have their own limitations. The interface =
+does not abstract every register perfectly, especially when device register=
+s are not designed to follow some common specs like PMBus, and it does not =
+provide controls to the devices.
+> > > >
+> > > >
+> > > > I propose a Device Abstraction Layer to wrap around devices. The un=
+derlying can completely map to hwmon sysfs, or allow user-space driver impl=
+ementation if necessary, or even hybrid. This will easily provide an additi=
+onal interface to bypass the driver and control the devices, while still ma=
+intaining the benefit to use an off-the-shelf Linux device driver.
+> > >
+> > > In this context, what are you calling a "device"?  I think everything
+> > > you're looking for exists, although it sounds like it's not in the
+> > > form you're wanting to see.  Dbus sensors already does a hwmon to Dbu=
+s
+> > > sensor abstraction conversion, that in some cases maps 1:1, or in som=
+e
+> > > cases is a "hybrid" as you call it.  Are you looking for something in
+> > > the middle, so instead of going hwmon -> Dbus  and libmctp -> Dbus yo=
+u
+> > > would want hwmon -> DAL -> Dbus  and libmctp -> DAL -> Dbus?  There
+> > > could be some advantages here, but I have a worry that it'll be
+> > > difficult to come up with a reasonable "device" api.  Devices take a
+> > > lot of forms, in band, out of band, all with varying requirements
+> > > around threading, permissions, and eventing.  While it's possible to
+> > > cover everything that's needed, I'd be worried we'd be able to cover =
+a
+> > > majority of them.
+> >
+> > Yep, that requires some research or others' experience; I'm mostly
+> > familiar with I2C devices in my area of work.
+> >
+> > >
+> > > >
+> > > > Quite some existing code is heavily bound to or influenced by the I=
+PMI protocol layer that we are having right now: We use =E2=80=9Cuint8_t=E2=
+=80=9D type for I2C bus number in entity-manager for example, while Linux k=
+ernel can extend the logical I2C bus number to more than 512 without any is=
+sues.
+> > > Can you come up with a better example?  We've tried to be very carefu=
+l
+> > > to not have IPMI-specific things in the interfaces, and to make them
+> > > as generic as possible.  In that case, uint8_t is used to represent
+> > > the 7 bit addressing (plus read write bit) on the I2C bus itself, not
+> > > the uint8_t in the IPMI spec.  The API you listed neglected to handle
+> > > the possibility of 11 bit I2C addressing, as it isn't very common in
+> > > practice, but the argument could certainly be made that the interface
+> > > should be changed to a uint16_t, and I would expect the IPMI layer to
+> > > simply filter addresses above 127 that it's not able to support.
+> >
+> > Please see getFruInfo() calls in FruDevice.cpp:
+> > https://github.com/openbmc/entity-manager/blob/master/src/FruDevice.cpp=
+#L1108
+> >
+> > The uint8_t bus of getFruInfo() restricted the number of logical I2C
+> > buses that we could implement in the sysfs interface, and it was
+> > unfortunately static_cast'ed to uint_8 which created a bug hard to
+> > debug. I don't have much experience to find you more examples,
+> > however... I believe some of these can be fixed within the current
+> > architecture, nevertheless I'm still trying to emphasize this concept.
+> OH, you mean you hit a uint8_t limit on busses!  I don't know of anyone t=
+hat has crossed the 256 bus limit, so you've clearly found a bug/missing fe=
+ature.  Now it's your time to shine.  You've found an issue, you know what =
+the fix is, exactly where the code needs to go and you have the ability to =
+test it.  Write a patch to fix it, test that it does what you want, write u=
+p a commit message explaining exactly what you detailed above, how you test=
+ed it, and submit it to gerrit with the maintainer as a reviewer.  The main=
+tainer is very responsive, and you'll have fixed something hard to debug fo=
+r the next person that runs into this.
+>
+>
+> >
+> > >
+> > > > The current dynamic software stack emphasizes individual sensors, b=
+ut the BMC handles many more tasks than just only sensors. The practicality=
+ of OpenBMC for hardware engineers is also hindered by the IPMI as describe=
+d above in Issue Examples.
+> > > Sensors were the first thing tackled, as those are the things that
+> > > tend to be the most different platform to platform, and have the most
+> > > peculiar settings.  We do also handle topology to some extent, as wel=
+l
+> > > as a lot of other commands that are not IPMI specific.  I agree, IPMI
+> > > has its flaws, but OpenBMC also has pretty good support for Redfish,
+> > > direct dbus, and upcoming MCTP if that's what you'd rather use as an
+> > > outbound interface.
+> >
+> > On that, I'm also looking forward to the ability to read sensors
+> > within the BMC console in a human-friendly way for hardware engineers,
+> > so that we don't have to rely on the host or network to read them
+> > during bring-up, or simply because we don't have RedFish ready yet,
+> > and hardware engineers just want to see tons of sensor readings for
+> > bring-up.
+>
+> I'm not following this as anything actionable.  OpenBMC has IPMItool, dbu=
+s tools, i2c-tools, the Redfish GUI, the rest-dbus GUI and the Webui to pic=
+k from for "human friendly way for hardware engineers".  Heck, if you're fe=
+eling really enterprising, you can install the HWmon devices in the bash co=
+nsole, and CAT out the values in another.  In this comment, are you wanting=
+ something else?  Surely one of those meets your prototyping needs?
+>
+>
+> >
+> > Sorry for any confusion. I think I'm trying to repeat myself by
+> > emphasizing on interleaving protocol layer in this paragraph. Today's
+> > OpenBMC does build with this in mind, but there are still some flaws
+> > left to improve, the uint8_t bus variable described above for example.
+> >
+> See above.  Let's get that uint8_t thing fixed on master so we're not all=
+ talking about it here again in 6 months when the next poor person hits the=
+ same issue and spends a week debugging it.
+> --
+> -Ed
