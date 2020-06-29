@@ -2,66 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAB9720CFEF
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 17:55:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E0DDE20D07D
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 19:54:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49wXC70D3jzDqYM
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 01:55:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49wZr805p8zDqXR
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 03:54:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=piotr.matuszczak@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::335;
+ helo=mail-ot1-x335.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=DpcA+LWB; dkim-atps=neutral
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com
+ [IPv6:2607:f8b0:4864:20::335])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49wX9r1H9KzDqWT
- for <openbmc@lists.ozlabs.org>; Tue, 30 Jun 2020 01:54:32 +1000 (AEST)
-IronPort-SDR: 6nBy3ZCzONcBvUVurqGN6IudSqy+99GQMXnfaJ0qBeytrGvAsJJNfqicLyDBwGBKEG//gH7yPm
- GBJo/YK1oGow==
-X-IronPort-AV: E=McAfee;i="6000,8403,9666"; a="145989071"
-X-IronPort-AV: E=Sophos;i="5.75,295,1589266800"; d="scan'208";a="145989071"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jun 2020 08:54:28 -0700
-IronPort-SDR: 5xQhe5Yz7KnH98tzmIdzDmRTxKU7yPmN+qcxl2HvRcDaFV9/xrMwzu229B944EIt+KtP+3d2ty
- tNqDvfJBh0GA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,295,1589266800"; d="scan'208";a="454238180"
-Received: from irsmsx103.ger.corp.intel.com ([163.33.3.157])
- by orsmga005.jf.intel.com with ESMTP; 29 Jun 2020 08:54:27 -0700
-Received: from irsmsx604.ger.corp.intel.com (163.33.146.137) by
- IRSMSX103.ger.corp.intel.com (163.33.3.157) with Microsoft SMTP Server (TLS)
- id 14.3.439.0; Mon, 29 Jun 2020 16:54:26 +0100
-Received: from irsmsx606.ger.corp.intel.com (163.33.146.139) by
- IRSMSX604.ger.corp.intel.com (163.33.146.137) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1713.5; Mon, 29 Jun 2020 16:54:26 +0100
-Received: from irsmsx606.ger.corp.intel.com ([163.33.146.139]) by
- IRSMSX606.ger.corp.intel.com ([163.33.146.139]) with mapi id 15.01.1713.004;
- Mon, 29 Jun 2020 16:54:26 +0100
-From: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: OpenBMC health statistics
-Thread-Topic: OpenBMC health statistics
-Thread-Index: AdZOLPWDDv1xqlasSdaTVfH5fJhasA==
-Date: Mon, 29 Jun 2020 15:54:26 +0000
-Message-ID: <f4e49a09aca2431e921866d1b6cbbe6c@intel.com>
-Accept-Language: pl-PL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-dlp-product: dlpe-windows
-dlp-version: 11.2.0.6
-dlp-reaction: no-action
-x-originating-ip: [163.33.253.164]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49wZq96dhzzDqWy
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Jun 2020 03:53:41 +1000 (AEST)
+Received: by mail-ot1-x335.google.com with SMTP id 5so14305808oty.11
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Jun 2020 10:53:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=qtiiE8iQFrvTAARN7IJDP/G68pZXnmmKUWUGhE2EgAQ=;
+ b=DpcA+LWBY6BJpIgu94hoco0laJEuuLLxPErInf59WIpT0VcLDNm25RCaceolxXZbJ5
+ FgRBVRsFblNq3uPJyh19TvUqbNOJqewZ/ABEz5i7ZszZexUrylXMgU8iBFZ6ViXyNwND
+ 1dnLPdeMFJWhdM70VNyoyPIOruibDvBMWx1F7V9TVYhqhrm1uE1nm5VSrSsNsIEEWkoF
+ p2fBD2iOW/l0OVZ5AnQsuvfzCFWuPnB2cj0z8tCVxoK3uJCj5uqFYVvllFPQ8Q3rDkur
+ /HNSGLMCLg/uiXqGBU4Ke2pGnazVUX9m5eX0bui8L28DYO1uhDZMHqsu8kaV1VWRc+jc
+ 2NaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=qtiiE8iQFrvTAARN7IJDP/G68pZXnmmKUWUGhE2EgAQ=;
+ b=lbLfk/MIoGiN8ZK63QatB8+MIy4tX8NxT15hINrPHsZI6kpeXX6ATkGQdoZjXIXFY7
+ 573fP7w+ZCleXjJQV8gfsUF2vwgEDT+ddeeCjSei1obpCcaerwjpIkqOO/VpqoPMUN9g
+ H3p39xVuJTzdC1o3xGJR3xrLBScRupDtYwmullRBQQtwSy8tsnMwHZkfrT5S9bRvTDTM
+ i4uP8uExwcjz1JkBmaiEoiSd49Qn6/CMs9PGWWkly0peE5ol8eiqwC421nymJPxj30wN
+ ZMUGoDKakKEoj/+l9mp0uVUTfU8SuLV55HSMKSY99mNGytlFkQHVSZjdxJYftuic9K6F
+ zotw==
+X-Gm-Message-State: AOAM533HZRSHsI3vyyrEHWVWjbFlaislcHWo1a5p75BufXC8TdE8WfHj
+ eJSSIU8bGr7JXtY+Uvi+XcYQwMz3
+X-Google-Smtp-Source: ABdhPJxcv5nEMx6U091fvE/HP4aKYRv3kYwIXRRJYcny4mjGK3WbDbJMyMUpdND7GkxdheMUGAAuaQ==
+X-Received: by 2002:a05:6830:19fc:: with SMTP id
+ t28mr13299490ott.99.1593453218062; 
+ Mon, 29 Jun 2020 10:53:38 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id d26sm149861otl.49.2020.06.29.10.53.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jun 2020 10:53:37 -0700 (PDT)
+Subject: Re: OpenBMC health statistics
+To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <f4e49a09aca2431e921866d1b6cbbe6c@intel.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <0a8a5506-0305-12aa-91c5-6c61d359a808@gmail.com>
+Date: Mon, 29 Jun 2020 12:53:36 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.9.0
 MIME-Version: 1.0
+In-Reply-To: <f4e49a09aca2431e921866d1b6cbbe6c@intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,20 +88,26 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,=20
+On 6/29/20 10:54 AM, Matuszczak, Piotr wrote:
+> Hello,
+> 
+> I would like to upload the OpenBMC health statistics design guide for people that would like to integrate the OpenBMC to their platforms. I would not like to put it into /docs/designs, since this is not exactly design how it will be implemented. This document was meant to guide the OpenBMC users how they can implement BMC health statistics themselves.
 
-I would like to upload the OpenBMC health statistics design guide for peopl=
-e that would like to integrate the OpenBMC to their platforms. I would not =
-like to put it into /docs/designs, since this is not exactly design how it =
-will be implemented. This document was meant to guide the OpenBMC users how=
- they can implement BMC health statistics themselves.=20
+I don't see a problem with a guidelines/best practices type guide living 
+in docs, but prob not in designs. Maybe in architecture or userguide or 
+development? Kind of hard to say without seeing it. You could also 
+always add it to the wiki.
 
-The question is, where would be the best place to upload such document? =20
+Kurt Taylor (krtaylor)
 
-Piotr Matuszczak
----------------------------------------------------------------------
-Intel Technology Poland sp. z o.o.=20
-ul. Slowackiego 173, 80-298 Gdansk
-KRS 101882
-NIP 957-07-52-316
+> 
+> The question is, where would be the best place to upload such document?
+> 
+> Piotr Matuszczak
+> ---------------------------------------------------------------------
+> Intel Technology Poland sp. z o.o.
+> ul. Slowackiego 173, 80-298 Gdansk
+> KRS 101882
+> NIP 957-07-52-316
+> 
 
