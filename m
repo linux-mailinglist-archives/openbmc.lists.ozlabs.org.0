@@ -2,72 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E759F20CF48
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 16:54:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 46A4920CFB4
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 17:34:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49wVrW5MQ4zDqYP
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 00:54:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49wWkd260vzDqWv
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 01:34:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=rI7GeYLN; dkim-atps=neutral
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com
- [IPv6:2607:f8b0:4864:20::b36])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49wVqQ52rdzDqKg
- for <openbmc@lists.ozlabs.org>; Tue, 30 Jun 2020 00:53:37 +1000 (AEST)
-Received: by mail-yb1-xb36.google.com with SMTP id k18so8506854ybm.13
- for <openbmc@lists.ozlabs.org>; Mon, 29 Jun 2020 07:53:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=nryZmdnNKPJW2ZMpu73zIy10tkQOTCVNdBi/PTqijSk=;
- b=rI7GeYLNt+HEA2W2TLGQOA43+Qj+7AVWoA3Gyl+aoPKjufzNaxBcKieBW6DWEQF3CW
- AN4OYpucHoi3onZ/caGSu1PLtkonjPRwkUqyQjQaSZ8+KUhok6IAXbA03xZsBjrURrU8
- xjg/vsn3RcMbKexYowozbw1CegjJFLCI9mHr5jqSK2/kvGdCA18xaiP8NmY8wl9meMdv
- CKcJgWYDOFe+YQG3SwH7qrplUjeiehtrDaQgfTcXE0d1dMg0PG4RCg8MIiQEjtNDRo9x
- 6WgN5JogN2zYzLJWPmreFAqQhDacAnWi0I0RoW9xEt5Jzq50xpImE6Si6bwPICV+vEcx
- zIQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=nryZmdnNKPJW2ZMpu73zIy10tkQOTCVNdBi/PTqijSk=;
- b=jrXLK1hzlh0NnxfC8x9LOZ1HAV2fxSclaPmyb6JqyGwcA+5xBPzt1kevjstxHgkxTZ
- DRa9pjoLrcWStbm6e/tcY7w7bGBA8Kxm+pyQUCof44Kgk9cNWSLxwt+ZFL2aC622QEfb
- 1f8SYY0F2+uuigbEFCDtyxscCXiZvN+ITeMVfpVjyodTsavVbU2hb7a92qmClta2ILGY
- hX8WvbsNrILeXilZU4V1n3cGbQNAX4iAAfb6BYpJ0Qbxk0AGvGkiiUi0/dPzmxIRuZ3F
- CZvSc8+b2SGFUK+HF2X/4dpmW48na/iseQ7Li6H7JVu3mGBEk8eaWLL2RLdNTovCZIhY
- kw4A==
-X-Gm-Message-State: AOAM530acmg2FgttYWQzom0LDXFUmODWEU4xSqFUxRiIP8y1XX6IbrkI
- lzXEFfWEajyXtM0RBDd3Sj+kcLEwmHqTEj18jjWbnQ==
-X-Google-Smtp-Source: ABdhPJyTBGQaEJtLyk2EtSKRHgWWX8u1UjiBubqMH4peCX+2XggqpA5Gn8qIaXUuwWTYNs9sPWI1knmgNNFpUDNvWBw=
-X-Received: by 2002:a25:384f:: with SMTP id f76mr25914434yba.170.1593442413233; 
- Mon, 29 Jun 2020 07:53:33 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49wWjM3X5czDqVp
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Jun 2020 01:33:25 +1000 (AEST)
+IronPort-SDR: sRsmRTwzi93P1g6InUl0ECcpgVYnEqXbO/8z4Qbg0SgfMLRLlcGrHWH+MomVdgz06YlPqO+Ynq
+ 3WKD1cBFtEbw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9666"; a="207497335"
+X-IronPort-AV: E=Sophos;i="5.75,295,1589266800"; d="scan'208";a="207497335"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Jun 2020 08:33:22 -0700
+IronPort-SDR: JYc85UTvF6X8X+ZxFilTamaqdgbETPn2m4MjnHUB6Ft9tkEvOEXQcuEI2pKjMp1M0D2YOAu9BT
+ P6wXOEDU776Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,295,1589266800"; d="scan'208";a="277113483"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga003.jf.intel.com with ESMTP; 29 Jun 2020 08:33:22 -0700
+Received: from [10.251.4.88] (jmbills-mobl.amr.corp.intel.com [10.251.4.88])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 1A81B58027C
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Jun 2020 08:33:22 -0700 (PDT)
+Subject: Re: Redfish EventService Implementation
+To: openbmc@lists.ozlabs.org
+References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
+ <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
+ <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
+ <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
+ <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
+ <20200616152428.GA4618@heinlein>
+ <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
+ <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
+ <20200617204516.GE4618@heinlein>
+ <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
+ <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
+ <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
+ <6fc4c66e-4a0a-1c59-3f77-a6fcff29b97e@linux.intel.com>
+ <ee2b81be-0aff-022f-e5a7-9f0f874c1f20@linux.vnet.ibm.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <8e342c33-25c8-5586-cbd4-e8662fcac6b5@linux.intel.com>
+Date: Mon, 29 Jun 2020 08:33:21 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-References: <CAA_a9xKn77KSnwPq2pEq36JGtfWctaBXOA_4vXtP+=JGszaPkg@mail.gmail.com>
- <CACWQX82=MuAavxCqOerxi-Sdywh0xatb-f+1YzGyVSg74oNGqA@mail.gmail.com>
- <CAA_a9xLUkr5rR5Q8YATphtmWUBEE6V=6N4=k74v8hr8PePMMAQ@mail.gmail.com>
- <CACWQX80fbSwvmyNX1d=kfZEcsS30k1ziN8JtA9LtwFfkNC9ciw@mail.gmail.com>
- <CAA_a9x+7DLrwoN9YmjZneghnGaZHAqM9kzzPo2RThH=GgSFw6w@mail.gmail.com>
-In-Reply-To: <CAA_a9x+7DLrwoN9YmjZneghnGaZHAqM9kzzPo2RThH=GgSFw6w@mail.gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 29 Jun 2020 07:53:22 -0700
-Message-ID: <CACWQX83XycCWC+oXXea8z6vB3Vm61_C=niUXyGXA9NO89Zwf-A@mail.gmail.com>
-Subject: Re: Feedback on Current OpenBMC and Proposing Some Improvements ----
- "Improvements" Ideas
-To: Alex Qiu <xqiu@google.com>
-Content-Type: multipart/alternative; boundary="00000000000002dc2d05a93a3982"
+In-Reply-To: <ee2b81be-0aff-022f-e5a7-9f0f874c1f20@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,173 +77,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>,
- Benjamin Fair <benjaminfair@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ofer Yehielli <ofery@google.com>,
- Josh Lehan <krellan@google.com>, Richard Hanley <rhanley@google.com>,
- Kais Belgaied <belgaied@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000002dc2d05a93a3982
-Content-Type: text/plain; charset="UTF-8"
-
-On Thu, Jun 25, 2020 at 6:08 PM Alex Qiu <xqiu@google.com> wrote:
-> Yes, there are some restrictions in my current demo, and I'm afraid
-> that I may not have the bandwidth to cover it further alone. My point
-> is that, sometimes hardwares is designed with some unexpected
-> complexity on topology (EEPROM behind MUX for example).
-To my understanding this case is already handled.  Assign the mux to the
-parent FRU config file, and the eeprom behind it will be detected
-correctly.  With that said, this type of hardware (optional mux with an
-eeprom behind it) is difficult to identify automatically with no other
-impact, hence needing to explicitly add it to the parent board.  Can you
-think of any other examples of unexpected topology that aren't covered?
 
 
-> Having the
-> ability to aid the topology discovery with code, and having the
-> topology info available to other functionalities can help a lot. JSON
-> config files are having a hard time bearing these logics, and any
-> extra logic implemented in JSON config files requires some kind of
-> script parser in daemons processing them.
-The majority of the config parsing is also able to be done at compile time,
-it just isn't implemented today.  With that said, the config file parsing
-in practice takes up very little CPU time in the last profile I did, so it
-hasn't been a priority.
+On 6/29/2020 1:07 AM, Ratan Gupta wrote:
+> 
+> On 6/26/20 12:25 AM, Bills, Jason M wrote:
+>>
+>>
+>> On 6/25/2020 10:26 AM, Brad Bishop wrote:
+>>> One idea floating around to address these is inventing a journal
+>>> metadata scheme that is management interface agnostic.  I understand the
+>>> motivation behind that - it is much simpler for an application to slide
+>>> a single journal entry into the journal with all the metadata needed to
+>>> generate events, than it is for an application to snoop multiple signals
+>>> off dbus and pull events out of that.
+>>>
+>>> But I wonder if inventing a management interface agnostic scheme for
+>>> adding events to the journal is really just inventing a new data model
+>>> for how we represent things in a server - e.g. are we just working
+>>> around our dbus data model?  Maybe we should fix it instead, so that it
+>>> isn't so difficult for applications to use it?  With that said I don't
+>>> know how to do this and I could use more concrete details on which areas
+>>> of the data model make it hard to consume signals.  Does anyone have any
+>>> ideas or examples?
+>>>
+>>
+>> On this, I think we may want to separate logging vs. eventing both in 
+>> this feature discussion and in the tools we want to use.
+>>
+>> When we were talking about logging, I think the journal made sense 
+>> since it is designed for logging and has benefits around that usage. 
+>> However, I agree that it doesn't seem like the right tool for sending 
+>> and receiving events and signals and that D-Bus sounds like the right 
+>> tool for that.
+>>
+>> I think I'm still a little confused at the scope.  My understanding 
+>> was that this initial design for EventService was only for monitoring 
+>> event messages and not resources in general. It seems like it may not 
+>> make sense to try to use the same tools and approach for both message 
+>> monitoring and resource monitoring? Do we need to treat them 
+>> separately for now to simplify the discussion?
+> Jason, When you say event messages? What do you mean, Do you mean to say 
+> "/redfish/v1/Systems/system/Logservices/eventlog"? >
+> If yes then this should also go as Resource Event, When ever any log 
+> entry gets created under System Log 
+> (/redfish/v1/Systems/system/Logservices/eventlog/entries), BMC would 
+> notify to the Redfish client saying that "ResourceCreated" with the URL 
+> of the Resource.
+Yes, new entries under 
+"/redfish/v1/Systems/system/Logservices/eventlog", but I thought you 
+could register for specific MessageIDs, so it's not just a generic "new 
+resource" event like others would be.
 
+> 
+> After receiving this event Redfish client will do a GET request on the 
+> URL(retrieved as part of event) to get the content of the log.
+> 
+> This will become generic infra for all types of events.
+What I'm saying is I don't know if there is a good generic solution to 
+cover both the EventLog and all other resources.  I believe the current 
+EventService implementation was designed only for EventLog and may not 
+work well for generic resource events.
 
-> Based on your replies, the
-> concept for functionally extensions that I was asking for should be
-> implemented as daemons either standalone or plugged onto dbus?
+> 
+> I would be coming up with few design approaches and downside with each 
+> approach to take it to conclusion.
+Thanks!  What I'm proposing is that we clarify or possibly separate the 
+discussions about EventLog vs. generic resources to avoid confusion and 
+come up with the right solutions for each.
 
-I'm not understanding the distinction of standalone vs plugged into dbus,
-but I'll hazard a guess, and say yes, the dbus interfaces to the rest of
-the system is (one of) the project's intended extension points.  You can
-either manipulate them from an existing daemon, or create an all new daemon
-that has exactly the behavior you want.
-
-
->
-> On "reading sensors within the BMC console", I'm actually using a
-> script to directly read from hwmon right now, because we are having
-> sensor number limit on IPMI and performance issues with IPMI and dbus.
-> We are still actively investigating these performance issues now to
-> unblock the project, but based on the current findings, I think it's
-> better to have this tool before the protocol layers.
-Have you considered opening a review with this tool to make it available to
-others?  I'd recommend opening a review to put it in here:
-https://github.com/openbmc/openbmc-tools
-This repo is much less formal, but gives people a place for these "might be
-useful to others" type scripts.  Write up a commit message with something
-to the effect of "I wrote this tool, this is how you use it, I find it
-makes platform development easier because X." and get it checked in.
-
-
->
-> On issues like uint8_t, yes, we've noted them down, but they are still
-> tech debts on our backlog, and dealing with the performance issue
-> described above remains as our priority right now.
-
-It sounds like you're swamped for time, which I can respect.  With that
-said, If you start by making technical improvements on small things like
-the above, you're much more likely to have feedback (and help) when you
-propose more wide sweeping changes, like your python example.
-If you ever get free time, and want to continue moving your proposal more
-toward an actionable change we can make, I'm happy to help discuss
-options.  To be clear, I think if you can resolve some of the technical
-limitations of your proposal, and put together a patchset that implements
-it in a language that the project can use on a majority of platforms, I
-think it could be a better developer experience.  We just can't remove some
-of the user facing features that are implemented and/or planned already.
--- 
--Ed
-
---00000000000002dc2d05a93a3982
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div><br>
-On Thu, Jun 25, 2020 at 6:08 PM Alex Qiu &lt;<a href=3D"mailto:xqiu@google.=
-com" target=3D"_blank">xqiu@google.com</a>&gt; wrote:<br>
-&gt; Yes, there are some restrictions in my current demo, and I&#39;m afrai=
-d<br>
-&gt; that I may not have the bandwidth to cover it further alone. My point<=
-br>
-&gt; is that, sometimes hardwares is designed with some unexpected<br>
-&gt; complexity on topology (EEPROM behind MUX for example).<br></div><div>
-To my understanding this case is already handled.=C2=A0 Assign the mux to t=
-he parent FRU config file, and the eeprom behind it will be detected correc=
-tly.=C2=A0 With that said, this type of hardware (optional mux with an eepr=
-om behind it) is difficult to identify automatically with no other impact, =
-hence needing to explicitly add it to the parent board.=C2=A0 Can you think=
- of any other examples of unexpected topology that aren&#39;t covered?</div=
-><div><br>
-<br>
-&gt; Having the<br>
-&gt; ability to aid the topology discovery with code, and having the<br>
-&gt; topology info available to other functionalities can help a lot. JSON<=
-br>
-&gt; config files are having a hard time bearing these logics, and any<br>
-&gt; extra logic implemented in JSON config files requires some kind of<br>
-&gt; script parser in daemons processing them.<br></div><div>
-The majority of the config parsing is also able to be done at compile time,=
- it just isn&#39;t implemented today.=C2=A0 With that said, the config file=
- parsing in practice takes up very little CPU time in the last profile I di=
-d, so it hasn&#39;t been a priority.</div><div><br>
-<br>
-&gt; Based on your replies, the<br>
-&gt; concept for functionally extensions that I was asking for should be<br=
->
-&gt; implemented as daemons either standalone or plugged onto dbus?<br>
-<br></div><div>
-I&#39;m not understanding the distinction of standalone vs plugged into dbu=
-s, but I&#39;ll hazard a guess, and say yes, the dbus interfaces to the res=
-t of the system is (one of) the project&#39;s intended extension points.=C2=
-=A0 You can either manipulate them from an existing daemon, or create an al=
-l new daemon that has exactly the behavior you want.</div><div><br>
-<br>
-&gt;<br>
-&gt; On &quot;reading sensors within the BMC console&quot;, I&#39;m actuall=
-y using a<br>
-&gt; script to directly read from hwmon right now, because we are having<br=
->
-&gt; sensor number limit on IPMI and performance issues with IPMI and dbus.=
-<br>
-&gt; We are still actively investigating these performance issues now to<br=
->
-&gt; unblock the project, but based on the current findings, I think it&#39=
-;s<br>
-&gt; better to have this tool before the protocol layers.<br></div><div>
-Have you considered opening a review with this tool to make it available to=
- others?=C2=A0 I&#39;d recommend opening a review to put it in here:<br>
-<a href=3D"https://github.com/openbmc/openbmc-tools" rel=3D"noreferrer" tar=
-get=3D"_blank">https://github.com/openbmc/openbmc-tools</a><br>
-This repo is much less formal, but gives people a place for these &quot;mig=
-ht be useful to others&quot; type scripts.=C2=A0 Write up a commit message =
-with something to the effect of &quot;I wrote this tool, this is how you us=
-e it, I find it makes platform development easier because X.&quot; and get =
-it checked in.</div><div><br>
-<br>
-&gt;<br>
-&gt; On issues like uint8_t, yes, we&#39;ve noted them down, but they are s=
-till<br>
-&gt; tech debts on our backlog, and dealing with the performance issue<br>
-&gt; described above remains as our priority right now.<br>
-<br></div><div>
-It sounds like you&#39;re swamped for time, which I can respect.=C2=A0 With=
- that said, If you start by making technical improvements on small things l=
-ike the above, you&#39;re much more likely to have feedback (and help) when=
- you propose more wide sweeping changes, like your python example.<br>
-If you ever get free time, and want to continue moving your proposal more t=
-oward an actionable change we can make, I&#39;m happy to help discuss optio=
-ns.=C2=A0 To be clear, I think if you can resolve some of the technical lim=
-itations of your proposal, and put together a patchset that implements it i=
-n a language that the project can use on a majority of platforms, I think i=
-t could be a better developer experience.=C2=A0 We just can&#39;t remove so=
-me of the user facing features that are implemented and/or planned already.=
-<br>
-</div>-- <br><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"g=
-mail_signature"><div dir=3D"ltr">-Ed</div></div>
-
---00000000000002dc2d05a93a3982--
+> 
+> Ratan
+> 
