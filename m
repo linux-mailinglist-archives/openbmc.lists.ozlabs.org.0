@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14DA320CD1E
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 10:03:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F80320CD27
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 10:08:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49wKk42Vb2zDqVn
-	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 18:03:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49wKqr40b6zDqNF
+	for <lists+openbmc@lfdr.de>; Mon, 29 Jun 2020 18:08:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
@@ -19,39 +19,39 @@ Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49wKfv2tl4zDqTM
- for <openbmc@lists.ozlabs.org>; Mon, 29 Jun 2020 18:00:38 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49wKqB3KWBzDqHn
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Jun 2020 18:07:50 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 05T7ZnNF028194; Mon, 29 Jun 2020 04:00:35 -0400
-Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com
- [149.81.74.106])
- by mx0a-001b2d01.pphosted.com with ESMTP id 31x7sk3079-1
+ 05T7xsMB009562; Mon, 29 Jun 2020 04:07:48 -0400
+Received: from ppma04ams.nl.ibm.com (63.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.99])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 31ycd3r8xd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2020 04:00:34 -0400
-Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
- by ppma04fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05T7tEhc013666;
- Mon, 29 Jun 2020 08:00:32 GMT
-Received: from b06cxnps3075.portsmouth.uk.ibm.com
- (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
- by ppma04fra.de.ibm.com with ESMTP id 31wwr80xh1-1
+ Mon, 29 Jun 2020 04:07:47 -0400
+Received: from pps.filterd (ppma04ams.nl.ibm.com [127.0.0.1])
+ by ppma04ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 05T85EBZ020172;
+ Mon, 29 Jun 2020 08:07:45 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com
+ (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+ by ppma04ams.nl.ibm.com with ESMTP id 31wwr89yjw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 29 Jun 2020 08:00:32 +0000
+ Mon, 29 Jun 2020 08:07:45 +0000
 Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
  [9.149.105.61])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 05T80UAf53411850
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 05T87hLS59572392
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 29 Jun 2020 08:00:30 GMT
+ Mon, 29 Jun 2020 08:07:43 GMT
 Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 958C611C070;
- Mon, 29 Jun 2020 08:00:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 263DE11C04C;
+ Mon, 29 Jun 2020 08:07:43 +0000 (GMT)
 Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E298F11C087;
- Mon, 29 Jun 2020 08:00:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7B00E11C054;
+ Mon, 29 Jun 2020 08:07:42 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.79.212.214])
  by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Mon, 29 Jun 2020 08:00:27 +0000 (GMT)
+ Mon, 29 Jun 2020 08:07:42 +0000 (GMT)
 Subject: Re: Redfish EventService Implementation
 To: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
 References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
@@ -68,8 +68,8 @@ References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
  <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
  <6fc4c66e-4a0a-1c59-3f77-a6fcff29b97e@linux.intel.com>
 From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Message-ID: <29e1e0e3-646d-b60b-1b5d-a9ac19e34281@linux.vnet.ibm.com>
-Date: Mon, 29 Jun 2020 13:30:26 +0530
+Message-ID: <ee2b81be-0aff-022f-e5a7-9f0f874c1f20@linux.vnet.ibm.com>
+Date: Mon, 29 Jun 2020 13:37:41 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.9.0
 MIME-Version: 1.0
@@ -82,12 +82,11 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.216, 18.0.687
  definitions=2020-06-29_07:2020-06-26,
  2020-06-29 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0
- cotscore=-2147483648 lowpriorityscore=0 phishscore=0 clxscore=1015
- bulkscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999
- malwarescore=0 spamscore=0 adultscore=0 impostorscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.12.0-2004280000
- definitions=main-2006290053
+ lowpriorityscore=0
+ spamscore=0 cotscore=-2147483648 malwarescore=0 mlxscore=0 mlxlogscore=999
+ adultscore=0 suspectscore=0 phishscore=0 impostorscore=0 clxscore=1015
+ priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2004280000 definitions=main-2006290053
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,7 +101,6 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jason,james
 
 On 6/26/20 12:25 AM, Bills, Jason M wrote:
 >
@@ -149,8 +147,10 @@ entry gets created under System Log
 notify to the Redfish client saying that "ResourceCreated" with the URL 
 of the Resource.
 
-After recieving this event Redfish client will do a GET request on the 
+After receiving this event Redfish client will do a GET request on the 
 URL(retrieved as part of event) to get the content of the log.
+
+This will become generic infra for all types of events.
 
 I would be coming up with few design approaches and downside with each 
 approach to take it to conclusion.
