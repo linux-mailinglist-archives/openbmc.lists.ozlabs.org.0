@@ -2,72 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8F7920E9F9
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 02:14:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EE5220EAEE
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 03:29:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49wlG95BqqzDqSv
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 10:14:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49wmww4hJ1zDqNP
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 11:29:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
- helo=mail-pg1-x542.google.com; envelope-from=rentao.bupt@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b41; helo=mail-yb1-xb41.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=NuiSCbQ0; dkim-atps=neutral
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
- [IPv6:2607:f8b0:4864:20::542])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=TgEjSrEb; dkim-atps=neutral
+Received: from mail-yb1-xb41.google.com (mail-yb1-xb41.google.com
+ [IPv6:2607:f8b0:4864:20::b41])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49wl8N07NFzDqcj;
- Tue, 30 Jun 2020 10:09:07 +1000 (AEST)
-Received: by mail-pg1-x542.google.com with SMTP id g67so8173727pgc.8;
- Mon, 29 Jun 2020 17:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=b+IGZ6PpnygOrvzFHrSSaDrACHYYVu9vYgrcmIAaoTc=;
- b=NuiSCbQ0oSqAv7iiF5qikfnPTsQDbEqi6aWPQHuzs/QkcqQ98qHp6wBqkD6XbBmDWk
- e82jReIUedwdHPM2bp/XHgPj8lOQUCRvzlE5Fpg93YgFr7BXdMuQmLA9Auf0CnmqCfnm
- JqZ9ExcPRomIBC5CqFQUyzTuF8/X+2uGLVZykeKD/ezb5WDzVxA3GJnQa5tSDieA2l3W
- /b/GVoFztFSupMHDyP84VziMeiYX9O2gKaU//U6xfzhxTVQ/nkULYGYsHI7BeVlJqsUG
- SJ8ynf2K3TM5BEJl5vWtijOHjiEHHk5dLXkHbfdj0QIOLkyxwKTidE+OD8Lqy/D5SjOV
- RQkg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49wmw25g3szDqBb
+ for <openbmc@lists.ozlabs.org>; Tue, 30 Jun 2020 11:28:33 +1000 (AEST)
+Received: by mail-yb1-xb41.google.com with SMTP id o4so9317127ybp.0
+ for <openbmc@lists.ozlabs.org>; Mon, 29 Jun 2020 18:28:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=zt08GdV+ME9j5iGwBs/Gf7zNqILZFEM2eCrXC2FRx2w=;
+ b=TgEjSrEb5W6Tfblya/tfh2gKkStB5SxxO1juWeYfsMGApr24cYQBVfypvEWDLaR+Mt
+ 6HKJY8gIVTIMIdJzlpBVg8shxN/iL6mgomtlFjyGWc7MAvTl2+hYXApcGXia/mg8KqDK
+ IFNNJCcOjSLMVzPtTptl/dQMW4kWyWiaiMNIzgEtemShEpTRlHkJNWRDui3imbuFAK1Z
+ DJC/XJD8qEdQfXW+9I0o2nDGpaMCuJ8O5iGiWA7WI86yVXV6X8KWqxVbA17xK6k2jtpj
+ IqGvOgs+3vwK1829cKQ9MsRqUIcpK2e/Bs2dt/0QfdnSkiueDpDhAsA4ysIjIsLJ6v3J
+ J7UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references;
- bh=b+IGZ6PpnygOrvzFHrSSaDrACHYYVu9vYgrcmIAaoTc=;
- b=IqqjLP5dUaa0iqHsHAvRo2hbu1fzpRgbbV4H3zt+LwjWLYzjFL1onHjNkVA4wwqoyE
- fGgzBE59EjEqtIiPiiVx3MCuYK9ORhZxdtlG1mNDErCAHOMsW10PTL1gkLeuqL3o5RHc
- oOA8wE130XHiGmmMlG8nx0r3dsyJxGJYJ+TkSuDtqnBuqSw4wkNmZKtKN5VJKoRdteMr
- vHhgDtgDjPCG3fl1UMtrIm7aOvIAqiMqD2AEWxH30qN4sh2kuQ9ELCU+Dw+0MMggdIZ8
- /v5jpClWV6Zv3JW1n/1LO5xI1J4f3tJ5dcCsiAr84Xj1uBPm1a1ZnpPLYpL1QE0aKPTO
- cj/w==
-X-Gm-Message-State: AOAM533AU29C+iGLLwqueSgOWT85k3fbCM0gLtKzqdjEVfULPakOqYnO
- XZriqriuW3mOK942BEAbr+w=
-X-Google-Smtp-Source: ABdhPJxJlzhlDCwbl4BKRLwMmmx7nhtrQm6pzWRE2A58IuRaPXG5n4u144jDdYNAnyapV80N6ZKJag==
-X-Received: by 2002:a65:63ca:: with SMTP id n10mr12762077pgv.252.1593475745495; 
- Mon, 29 Jun 2020 17:09:05 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91.thefacebook.com
- (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id m9sm754600pgq.61.2020.06.29.17.09.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2020 17:09:05 -0700 (PDT)
-From: rentao.bupt@gmail.com
-To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH 3/3] ARM: dts: aspeed: wedge40: enable pwm_tacho device
-Date: Mon, 29 Jun 2020 17:08:51 -0700
-Message-Id: <20200630000851.26879-4-rentao.bupt@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20200630000851.26879-1-rentao.bupt@gmail.com>
-References: <20200630000851.26879-1-rentao.bupt@gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=zt08GdV+ME9j5iGwBs/Gf7zNqILZFEM2eCrXC2FRx2w=;
+ b=k0Oz3Bwz3VxGn2w2HOfvCcFhQkUEPvHequKdZmWsxh2yn/QMoSeEQPP6jSjsqfyumX
+ 03HO2aNxIRf8ykT47E12MWHtuUkhHPvF9ZKwkwXfSKrK0G0nVZFkKKBL3kUoWaEAQYvr
+ Byg2jmxI3+MSi7M+KGrtFUM2eVLNcFzIJjHznQ4xNuabjwp+NxWp06aX7mwj3yya90B7
+ BlmDcHf81mi8vhyFPzfsZV/nTgUIxZDj3DuDvOSaVFumuTMTfyqfLrq+qkqepe6kyUqr
+ hthhiWDfJmi9Fbj/5qYfOzJWXetzbBYlfaNgMDZmB9zXEGaWaD8WDxRqhCK8ObnjVfkx
+ quwg==
+X-Gm-Message-State: AOAM533DfAVwx/3x4XKj413/nez7G9lz6D8WdDYy7PmKRx2aCJb9xZf0
+ SL5Hzuz9NhgmDKK2CSIEfV4ZL/02WRf+x6UYlFSXGw==
+X-Google-Smtp-Source: ABdhPJxJkZNCu7mybVXRqzh//WSUcYWXR8w82D9uy66v3PffTv1W/rXqVBDBgQgXq/wP6rwwyogfcBMDqtA6k5uqXl4=
+X-Received: by 2002:a25:aa44:: with SMTP id s62mr28276289ybi.480.1593480509421; 
+ Mon, 29 Jun 2020 18:28:29 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAA_a9xKn77KSnwPq2pEq36JGtfWctaBXOA_4vXtP+=JGszaPkg@mail.gmail.com>
+ <CACWQX82=MuAavxCqOerxi-Sdywh0xatb-f+1YzGyVSg74oNGqA@mail.gmail.com>
+ <CAA_a9xLUkr5rR5Q8YATphtmWUBEE6V=6N4=k74v8hr8PePMMAQ@mail.gmail.com>
+ <CACWQX80fbSwvmyNX1d=kfZEcsS30k1ziN8JtA9LtwFfkNC9ciw@mail.gmail.com>
+ <CAA_a9x+7DLrwoN9YmjZneghnGaZHAqM9kzzPo2RThH=GgSFw6w@mail.gmail.com>
+ <CACWQX83XycCWC+oXXea8z6vB3Vm61_C=niUXyGXA9NO89Zwf-A@mail.gmail.com>
+ <CAA_a9x+h61N1j3_OPvXeb7uCH+gcouy=r7_y8uSt3+XFh38ddA@mail.gmail.com>
+In-Reply-To: <CAA_a9x+h61N1j3_OPvXeb7uCH+gcouy=r7_y8uSt3+XFh38ddA@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Mon, 29 Jun 2020 18:28:18 -0700
+Message-ID: <CACWQX83baDkPtr6CxEUvBCQQF2YdOkfQDxc03c8YVpqX5qcpfQ@mail.gmail.com>
+Subject: Re: Feedback on Current OpenBMC and Proposing Some Improvements ----
+ "Improvements" Ideas
+To: Alex Qiu <xqiu@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,56 +83,196 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <rentao.bupt@gmail.com>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ Benjamin Fair <benjaminfair@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ofer Yehielli <ofery@google.com>,
+ Josh Lehan <krellan@google.com>, Richard Hanley <rhanley@google.com>,
+ Kais Belgaied <belgaied@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tao Ren <rentao.bupt@gmail.com>
+On Mon, Jun 29, 2020 at 3:09 PM Alex Qiu <xqiu@google.com> wrote:
+>
+> On Mon, Jun 29, 2020 at 7:53 AM Ed Tanous <ed@tanous.net> wrote:
+> >
+> >
+> > On Thu, Jun 25, 2020 at 6:08 PM Alex Qiu <xqiu@google.com> wrote:
+> > > Yes, there are some restrictions in my current demo, and I'm afraid
+> > > that I may not have the bandwidth to cover it further alone. My point
+> > > is that, sometimes hardwares is designed with some unexpected
+> > > complexity on topology (EEPROM behind MUX for example).
+> > To my understanding this case is already handled.  Assign the mux to th=
+e parent FRU config file, and the eeprom behind it will be detected correct=
+ly.  With that said, this type of hardware (optional mux with an eeprom beh=
+ind it) is difficult to identify automatically with no other impact, hence =
+needing to explicitly add it to the parent board.  Can you think of any oth=
+er examples of unexpected topology that aren't covered?
+>
+> There's no parent FRU in this case; the MUX belongs to the specific
+> FRU, and its EEPROM is behind the MUX.
 
-Enable pwm_tacho device for fan control and monitoring in Wedge40.
+I called the baseboard a FRU, that was my bad and I suspect you got
+confused.  I should've said baseboard "entity".  The FRU you're trying
+to detect is plugged into _something_ else.  If it's not detectable by
+other means, you need to add the circuity to the parent component.  If
+you've implemented entity manager as intended, you would have a
+configuration file for your baseboard/motherboard/primary comms board.
+That is the one I was suggesting you should put it in.  This is the
+exact reason the baseboard is a first class component in EM.
+Look at one of the *_baseboard.json as an example.  I believe Wolf
+Pass handles this exact case for a PCIe riser (although I'm not sure
+about the state of it in EM).
 
-Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
----
- .../boot/dts/aspeed-bmc-facebook-wedge40.dts  | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
+> Unfortunately, maybe usually we
+> only realize some hardware design is problematic to the software until
+> we see it? :) I haven't started in Google when these boards were
+> designed, and I'm not so sure if I could point it out even if I had
+> been started in Google.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-index 1049cfa80ac2..8ac23ff6b09e 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-@@ -135,3 +135,32 @@
- &adc {
- 	status = "okay";
- };
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default
-+		     &pinctrl_pwm1_default
-+		     &pinctrl_pwm6_default
-+		     &pinctrl_pwm7_default>;
-+
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-+	};
-+
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-+	};
-+
-+	fan@6 {
-+		reg = <0x06>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-+	};
-+
-+	fan@7 {
-+		reg = <0x07>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-+	};
-+};
--- 
-2.17.1
+To reiterate, I think this case is handled, in a similar way to what
+you'd have to implement in control flow code, given the fact that the
+card itself is undetectable through conventional scanning.  You have
+to make some assumption about "If I'm on Platform X, I MIGHT have an
+undetectable card behind a mux at address Y.  If I see something
+there, assume it's that type, and try to scan behind it.
 
+With that said, I'm still interested to see if there's a way to make
+your hardcoded approach viable for the things we need entity manager
+to do.  Again, if you have time, start hacking on it and see what you
+can integrate.
+
+>
+> >
+> >
+> > > Having the
+> > > ability to aid the topology discovery with code, and having the
+> > > topology info available to other functionalities can help a lot. JSON
+> > > config files are having a hard time bearing these logics, and any
+> > > extra logic implemented in JSON config files requires some kind of
+> > > script parser in daemons processing them.
+> > The majority of the config parsing is also able to be done at compile t=
+ime, it just isn't implemented today.  With that said, the config file pars=
+ing in practice takes up very little CPU time in the last profile I did, so=
+ it hasn't been a priority.
+>
+> I'm not quite concerned about CPU time on the parsing, but more on the
+> burden of developing. Because right now I feel like we need to
+> implement a parser per daemon for what it's consuming.
+
+I have no clue where you got that idea.  There is, by design, one json
+parser, and it lives in entity manager.  Entity manager runs the
+detection and posts the relevant interfaces to Dbus.  You do not have
+to reimplement it for every single daemon.  Can you point out any
+example of a json parser in one of the existing sensor daemons?  I
+suspect you're not quite understanding the code you're looking at.
+
+If you're talking about the sensor daemons "parsing" dbus, I agree,
+dbus interfaces are relatively complicated and error prone, but at
+this point, a non-dbus OpenBMC is probably a massive undertaking
+(although I'm sure you'd get a lot of support if you did it).
+
+> Unless we agree
+> on a format and implement an OpenBMC library for it. Take the Virtual
+> Sensor design doc under review for example:
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/32345/ I think it
+> will also have its own parser to deal with the "Algo" attribute.
+Yes, I agree.  If I'm honest, I think the virtual sensor design goes
+against some of the principles that EM was built on, as it moves large
+amounts of complexity into config files (in exactly the way you've
+noted), essentially ignores the dynamic nature of system topology, is
+parsing "code" at runtime and makes debugging issues difficult.  I
+think it will be hard to build, and even harder to maintain.  I (nor
+any of the EM/dbus-sensors maintainers last time I looked) have
+weighed in on it, so it's far from done (update, I just did).  Clearly
+I should've left feedback on it earlier, but I, like you, don't have
+much time for openbmc these days, so I pick my battles carefully.
+> To
+> make more fragments, right now entity-manager does the calculation
+> without support for parenthesis and does not follow arithmetic order
+> of operations, and we are trying to come up with one supporting
+> parenthesis without breaking the compatibility.
+
+Again, remember that you're looking at something not on master.  I had
+a bunch of comments staged on that review that I just pushed.  I'm
+glad to see you left some similar comments to what I posted.
+If you're talking about the parser in entity manager, I'm confused.
+There aren't any arithmetic operations (besides one hack), nor is it
+doing any DSL level parsing at that level.  That would go against a
+lot of the intent.
+
+One thing to remember is that so long as you update the relevant
+config files, you should feel free to change semantics of how some of
+these things work.  There aren't that many config files on master.
+
+>
+> >
+> >
+> > > Based on your replies, the
+> > > concept for functionally extensions that I was asking for should be
+> > > implemented as daemons either standalone or plugged onto dbus?
+> >
+> > I'm not understanding the distinction of standalone vs plugged into dbu=
+s, but I''ll hazard a guess, and say yes, the dbus interfaces to the rest o=
+f the system is (one of) the project's intended extension points.  You can =
+either manipulate them from an existing daemon, or create an all new daemon=
+ that has exactly the behavior you want.
+> >
+> >
+> > >
+> > > On "reading sensors within the BMC console", I'm actually using a
+> > > script to directly read from hwmon right now, because we are having
+> > > sensor number limit on IPMI and performance issues with IPMI and dbus=
+.
+> > > We are still actively investigating these performance issues now to
+> > > unblock the project, but based on the current findings, I think it's
+> > > better to have this tool before the protocol layers.
+> > Have you considered opening a review with this tool to make it availabl=
+e to others?  I'd recommend opening a review to put it in here:
+> > https://github.com/openbmc/openbmc-tools
+> > This repo is much less formal, but gives people a place for these "migh=
+t be useful to others" type scripts.  Write up a commit message with someth=
+ing to the effect of "I wrote this tool, this is how you use it, I find it =
+makes platform development easier because X." and get it checked in.
+>
+> It had topology information and sensor information that we would like
+> baked in as its major part, so unfortunately it's not an upstream-able
+> script...
+Here is yet another opportunity to make things better, and I feel like
+you're squandering it.  I like to complain about the current state as
+much as anyone, but if we're not putting up patchsets, it will never
+improve, and the next person will just come in with the same
+complaints.  If you have tools that you think are better, or provide
+the start to a better tool, consider putting them up under your
+username so other people can benefit, and see the ideas encapsulated
+within it.
+
+>
+> >
+> >
+> > >
+> > > On issues like uint8_t, yes, we've noted them down, but they are stil=
+l
+> > > tech debts on our backlog, and dealing with the performance issue
+> > > described above remains as our priority right now.
+> >
+> > It sounds like you're swamped for time, which I can respect.  With that=
+ said, If you start by making technical improvements on small things like t=
+he above, you're much more likely to have feedback (and help) when you prop=
+ose more wide sweeping changes, like your python example.
+> > If you ever get free time, and want to continue moving your proposal mo=
+re toward an actionable change we can make, I'm happy to help discuss optio=
+ns.  To be clear, I think if you can resolve some of the technical limitati=
+ons of your proposal, and put together a patchset that implements it in a l=
+anguage that the project can use on a majority of platforms, I think it cou=
+ld be a better developer experience.  We just can't remove some of the user=
+ facing features that are implemented and/or planned already.
+>
+> Makes sense. We'll see if we could gather enough resources at some
+> time to actually make it a concrete product, or we can come up with a
+> plan to improve the existing ones bit by bit. It's been a pleasure to
+> hear from you on what I haven't realized or taken into account yet,
+> because my team was more hardware project focused and had less
+> exposure to the general OpenBMC discussions or design philosophies.
+> Thank you!
+>
+You're very welcome.
