@@ -1,71 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5938920E9E5
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 02:10:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8F7920E9F9
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 02:14:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49wl9f3HMLzDqdf
-	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 10:10:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49wlG95BqqzDqSv
+	for <lists+openbmc@lfdr.de>; Tue, 30 Jun 2020 10:14:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::644;
- helo=mail-pl1-x644.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
+ helo=mail-pg1-x542.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=BgsP9okA; dkim-atps=neutral
-Received: from mail-pl1-x644.google.com (mail-pl1-x644.google.com
- [IPv6:2607:f8b0:4864:20::644])
+ header.s=20161025 header.b=NuiSCbQ0; dkim-atps=neutral
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49wl8M0XBqzDqcw;
- Tue, 30 Jun 2020 10:09:06 +1000 (AEST)
-Received: by mail-pl1-x644.google.com with SMTP id o1so1165097plk.1;
- Mon, 29 Jun 2020 17:09:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49wl8N07NFzDqcj;
+ Tue, 30 Jun 2020 10:09:07 +1000 (AEST)
+Received: by mail-pg1-x542.google.com with SMTP id g67so8173727pgc.8;
+ Mon, 29 Jun 2020 17:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=AYRl8pOAy8o2qO178aXaRH0fdWgs7Bra1sCO7acnTT8=;
- b=BgsP9okAqsbNdfU8Qix1naJZC6HZ/DB/tRSbhLZXsMdFJ3//c8ILFfjvIsdEtdbGe8
- WRNNeOa/ZbF+eJSGaDMTCfI/wS+aBk3qMC8p47zIvI8LMbSGVXMCJCT2J+XbFto6Phht
- u9IfBs6id4Woyr2Hz7pxGPdt5+63cbCRCUyetzRdWOuEDWVpVd/hpSdfjjLnKPOgKR+b
- Q1mXnrLYH4bXjUX3snuFbNYlE36BiCXwsXxAVUgD/SA/FYvVvyF1YITEafIic7jal7pj
- aWr1mhNFpjIaXjSzLdMpam2u7Jop5dpijsoH0GKhooN29zh9KQsueW/aWgIbBj6l/OVW
- s8Qg==
+ bh=b+IGZ6PpnygOrvzFHrSSaDrACHYYVu9vYgrcmIAaoTc=;
+ b=NuiSCbQ0oSqAv7iiF5qikfnPTsQDbEqi6aWPQHuzs/QkcqQ98qHp6wBqkD6XbBmDWk
+ e82jReIUedwdHPM2bp/XHgPj8lOQUCRvzlE5Fpg93YgFr7BXdMuQmLA9Auf0CnmqCfnm
+ JqZ9ExcPRomIBC5CqFQUyzTuF8/X+2uGLVZykeKD/ezb5WDzVxA3GJnQa5tSDieA2l3W
+ /b/GVoFztFSupMHDyP84VziMeiYX9O2gKaU//U6xfzhxTVQ/nkULYGYsHI7BeVlJqsUG
+ SJ8ynf2K3TM5BEJl5vWtijOHjiEHHk5dLXkHbfdj0QIOLkyxwKTidE+OD8Lqy/D5SjOV
+ RQkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=AYRl8pOAy8o2qO178aXaRH0fdWgs7Bra1sCO7acnTT8=;
- b=jUliad/v1fWxHtGldlhX8Zn/yO9B4r8cgrTah6mqozctmkfg9JSqY/M5OxJ5xNC4+x
- OJF8DHjVKKoBdGkr5sJdjMGX/4ZFNk9qA3AQPknNn82Un1H+xyagaiUCh/iyJh6XUylM
- 6zpy3OjM9NvhWKFvXG0k6/QNcASHQSRiJ0z6mPYVL4FwMbP/Z3JjRZZ/VcB/lPOeXDdD
- 5fX7SEecnrfNJxgaL/3NQjq3Wm8ft4drS13ffbD/gyX/K2oeg1geHcSEKju79c6jzdG+
- xmMXCHbWTnRot3tcMb18xCX2xlf7A4p9yjbnTJukgJZXtIY0Zfqciv0sFWN2jhY6tbVF
- FGMw==
-X-Gm-Message-State: AOAM532vTXEljz3YShd/5N/Dap17Ix/zzFlphUbWnXiTVVu6avm/43V1
- mmwOdKZ9Uac7dwAyot2+PgDK8uXDZP1O7Q==
-X-Google-Smtp-Source: ABdhPJw2TID2zawq32v23OdWSYQPmDRRXwFxa4iOa/bk/gIfLeZrz1CVQRgGVdgnQJcDErCNb42UDg==
-X-Received: by 2002:a17:90b:4910:: with SMTP id
- kr16mr10855811pjb.126.1593475744335; 
- Mon, 29 Jun 2020 17:09:04 -0700 (PDT)
+ bh=b+IGZ6PpnygOrvzFHrSSaDrACHYYVu9vYgrcmIAaoTc=;
+ b=IqqjLP5dUaa0iqHsHAvRo2hbu1fzpRgbbV4H3zt+LwjWLYzjFL1onHjNkVA4wwqoyE
+ fGgzBE59EjEqtIiPiiVx3MCuYK9ORhZxdtlG1mNDErCAHOMsW10PTL1gkLeuqL3o5RHc
+ oOA8wE130XHiGmmMlG8nx0r3dsyJxGJYJ+TkSuDtqnBuqSw4wkNmZKtKN5VJKoRdteMr
+ vHhgDtgDjPCG3fl1UMtrIm7aOvIAqiMqD2AEWxH30qN4sh2kuQ9ELCU+Dw+0MMggdIZ8
+ /v5jpClWV6Zv3JW1n/1LO5xI1J4f3tJ5dcCsiAr84Xj1uBPm1a1ZnpPLYpL1QE0aKPTO
+ cj/w==
+X-Gm-Message-State: AOAM533AU29C+iGLLwqueSgOWT85k3fbCM0gLtKzqdjEVfULPakOqYnO
+ XZriqriuW3mOK942BEAbr+w=
+X-Google-Smtp-Source: ABdhPJxJlzhlDCwbl4BKRLwMmmx7nhtrQm6pzWRE2A58IuRaPXG5n4u144jDdYNAnyapV80N6ZKJag==
+X-Received: by 2002:a65:63ca:: with SMTP id n10mr12762077pgv.252.1593475745495; 
+ Mon, 29 Jun 2020 17:09:05 -0700 (PDT)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id m9sm754600pgq.61.2020.06.29.17.09.03
+ by smtp.gmail.com with ESMTPSA id m9sm754600pgq.61.2020.06.29.17.09.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jun 2020 17:09:03 -0700 (PDT)
+ Mon, 29 Jun 2020 17:09:05 -0700 (PDT)
 From: rentao.bupt@gmail.com
 To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
  Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH 2/3] ARM: dts: aspeed: wedge40: enable adc device
-Date: Mon, 29 Jun 2020 17:08:50 -0700
-Message-Id: <20200630000851.26879-3-rentao.bupt@gmail.com>
+Subject: [PATCH 3/3] ARM: dts: aspeed: wedge40: enable pwm_tacho device
+Date: Mon, 29 Jun 2020 17:08:51 -0700
+Message-Id: <20200630000851.26879-4-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200630000851.26879-1-rentao.bupt@gmail.com>
 References: <20200630000851.26879-1-rentao.bupt@gmail.com>
@@ -86,37 +85,49 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tao Ren <rentao.bupt@gmail.com>
 
-Enable adc controller and corresponding voltage sensoring channels for
-Wedge40.
+Enable pwm_tacho device for fan control and monitoring in Wedge40.
 
 Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ .../boot/dts/aspeed-bmc-facebook-wedge40.dts  | 29 +++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-index aea23c313088..1049cfa80ac2 100644
+index 1049cfa80ac2..8ac23ff6b09e 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-@@ -27,6 +27,11 @@
- 	memory@40000000 {
- 		reg = <0x40000000 0x20000000>;
- 	};
-+
-+	ast-adc-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>;
-+	};
- };
- 
- &wdt1 {
-@@ -126,3 +131,7 @@
- &vhub {
+@@ -135,3 +135,32 @@
+ &adc {
  	status = "okay";
  };
 +
-+&adc {
++&pwm_tacho {
 +	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default
++		     &pinctrl_pwm1_default
++		     &pinctrl_pwm6_default
++		     &pinctrl_pwm7_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
++	};
++
++	fan@6 {
++		reg = <0x06>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
++	};
++
++	fan@7 {
++		reg = <0x07>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
++	};
 +};
 -- 
 2.17.1
