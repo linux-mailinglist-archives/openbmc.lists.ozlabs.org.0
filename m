@@ -1,55 +1,40 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B48F4210A1D
-	for <lists+openbmc@lfdr.de>; Wed,  1 Jul 2020 13:09:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 831AB210AE9
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jul 2020 14:18:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49xdlV4mjPzDr1P
-	for <lists+openbmc@lfdr.de>; Wed,  1 Jul 2020 21:09:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49xgGt4kg8zDr0y
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jul 2020 22:17:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=adrian.ambrozewicz@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49xdkl0YgZzDr0X
- for <openbmc@lists.ozlabs.org>; Wed,  1 Jul 2020 21:08:29 +1000 (AEST)
-IronPort-SDR: gn6ebyszD2uO72hbnJNHvyRZJWtcT7Q+1RA8Bbw708zjtbH98K65JwlfB5V5q4TgwROrQCBe9N
- c/WKzga5LKlw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9668"; a="148098271"
-X-IronPort-AV: E=Sophos;i="5.75,300,1589266800"; d="scan'208";a="148098271"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2020 04:08:25 -0700
-IronPort-SDR: 4wVKGM0WWTc3V63b7peJqm0iDjMW9Ps6V0t50M8s98pgGLWPUVW/Oq9P+3IBXA+OYg1PH96GXs
- ZUXjdftdb3WA==
-X-IronPort-AV: E=Sophos;i="5.75,300,1589266800"; d="scan'208";a="455067129"
-Received: from aambroze-mobl1.ger.corp.intel.com (HELO [10.249.154.40])
- ([10.249.154.40])
- by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2020 04:08:24 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49xgFd0nq6zDqxs
+ for <openbmc@lists.ozlabs.org>; Wed,  1 Jul 2020 22:16:51 +1000 (AEST)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Date: Wed, 1 Jul 2020 08:15:54 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Adrian =?utf-8?Q?Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
 Subject: Re: "Initial commit" with entire git history - possible?
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Message-ID: <20200701121554.bfkoh34xxiz7k5hr@thinkpad.dyn.fuzziesquirrel.com>
 References: <6e3f0ebd-9ca0-c5b6-c49a-a533cea6c9ea@linux.intel.com>
  <43a3c7b0-df25-b4a7-13e7-3d944f892420@linux.intel.com>
-From: =?UTF-8?Q?Adrian_Ambro=c5=bcewicz?= <adrian.ambrozewicz@linux.intel.com>
-Message-ID: <c7907f47-db04-12e2-9812-ee72cde822a9@linux.intel.com>
-Date: Wed, 1 Jul 2020 13:08:20 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+ <c7907f47-db04-12e2-9812-ee72cde822a9@linux.intel.com>
 MIME-Version: 1.0
-In-Reply-To: <43a3c7b0-df25-b4a7-13e7-3d944f892420@linux.intel.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <c7907f47-db04-12e2-9812-ee72cde822a9@linux.intel.com>
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,31 +51,29 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Brad,
+On Wed, Jul 01, 2020 at 01:08:20PM +0200, Adrian Ambro=C5=BCewicz wrote:
+> Brad,
+>
+> How (as a maintainer) I could 'move' code from our internal repository
+> to github/openbmc hosted one? Is it specified somewhere?
 
-How (as a maintainer) I could 'move' code from our internal repository 
-to github/openbmc hosted one? Is it specified somewhere?
+git push <remote> HEAD:master
 
-Currently I've pushed whole code to gerrit as usual review to gather 
-feedback, but after that I would still want to pursue path of pushing 
-entire git history + review changes on top  of that.
+The gerrit remote is something like:
+ssh://<user>@gerrit.openbmc-project.xyz:2918/openbmc/telemetry
 
-Regards,
-Adrian
+and the github remote is:
+ssh://git@github.com/openbmc/telemetry
 
-W dniu 6/20/2020 o 00:16, James Feist pisze:
-> On 6/19/2020 2:10 AM, Adrian Ambrożewicz wrote:
->> Hello,
->>
->> We're developing solution which will soon end as new openbmc-hosted 
->> repository.
->>
->> It would be nice to keep previous commit history intact when moving to 
->> upstream. Is it possible with our gerrit-based integration?
-> 
-> Maintainers should have push access to move code over, although it'd be 
-> nice if code could be developed and reviewed in the open if possible.
-> 
->>
->> Regards,
->> Adrian
+You'll need to have configured both github and gerrit to accept whatever
+ssh keys you present.
+
+> Currently I've pushed whole code to gerrit as usual review to gather
+> feedback, but after that I would still want to pursue path of pushing
+> entire git history + review changes on top  of that.
+
+I'm glad to see you are willing to entertain feedback but I'd be
+suprised if Intel let you spend time on making any meaningful changes
+(e.g. ones that cause significant rework and time investment on your
+part) at this point.  This is why code should be developed and reviewed
+in the open in the first place if you actually want others to use it.
