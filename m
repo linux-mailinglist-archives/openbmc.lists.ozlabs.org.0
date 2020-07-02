@@ -1,65 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0309D2116A3
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 01:27:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C106B211B52
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 07:00:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49xy6q6hpRzDqVH
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 09:26:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49y5Wm5n86zDqvP
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 15:00:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::542;
- helo=mail-ed1-x542.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=SSe2riey; dkim-atps=neutral
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
- [IPv6:2a00:1450:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=GViTw9tT; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=glRSqegQ; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49xy5b11MnzDqVW
- for <openbmc@lists.ozlabs.org>; Thu,  2 Jul 2020 09:25:55 +1000 (AEST)
-Received: by mail-ed1-x542.google.com with SMTP id n2so12585636edr.5
- for <openbmc@lists.ozlabs.org>; Wed, 01 Jul 2020 16:25:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=QxXK4a55JoxCdllnwx3R2lz1C+xX4zifXVoLMHSzzcQ=;
- b=SSe2rieyZlv4eqO2K1GuBbOPp1nHkrikKCtN80Y5YjNtKr8MK27ajsIog+UGA90cYt
- IYGGK+mb5GKEsEiKOJJ+GjsGJYNxv743woUoAcGqNb2phUacSBFw3zdhORdh7RYIANco
- +7p8R99GuniI8tnILjCpdSShO8L1pEHqg4UfU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=QxXK4a55JoxCdllnwx3R2lz1C+xX4zifXVoLMHSzzcQ=;
- b=SKP57qHid1li6p4stOBCeHEy//ikTZWfkLZoU3Lrx9mwIyAratFan+T7utuECENY8E
- bziSmK8RDrfGMbP1a8jifo7B4rhwkYHVELXTXQFa2C5v8PN1omwWEjSHEaZVaySO8VMj
- V2kGFrsXTaWe2DJyxisGiY9Buqd/354Ezt7l8jkC+DIZxqinPZMnavCo0hrL+nv1o+tH
- EBBrfzjSlJL73jA2nLHKvBkQRNjvgyc/YdliPiZxwdJF/ng36mjgCM9aVU78NjpDE6v2
- nGymMjdz2LxH460g91+dFv7xwq05uFSU5CWS906O2XjtkdEkOQqQZP4FQpZ8sGNNEPYU
- z3VQ==
-X-Gm-Message-State: AOAM5332dq5VIpHVwRiTYtLGbxkxR7gCeppxQhrJvwtB3QG5tJ3dMc0w
- oV8dL7y4vM0vtsRhIDd5cOc+8BQ+941TeM+2aIO5tKfJk6w=
-X-Google-Smtp-Source: ABdhPJzyFX1sBE+HmNcDq5FVvi4B36wnzLQcASZcG/Jz+OZ3p97R2MPuZEwj0jFBeftPOhTgk9c+Fsu7TxXTYucUiI8=
-X-Received: by 2002:a50:ee8a:: with SMTP id f10mr12043765edr.383.1593645950616; 
- Wed, 01 Jul 2020 16:25:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <OSAPR01MB310610C13FA7E0EEF11D5931D26C0@OSAPR01MB3106.jpnprd01.prod.outlook.com>
-In-Reply-To: <OSAPR01MB310610C13FA7E0EEF11D5931D26C0@OSAPR01MB3106.jpnprd01.prod.outlook.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 1 Jul 2020 23:25:38 +0000
-Message-ID: <CACPK8XdiGfDJ-iKufaHyU=Rg5dD7L8o52LfKywLvQW9_Xk1NVQ@mail.gmail.com>
-Subject: Re: Backport isl68137 hwmon Driver
-To: Adam Vaughn <adam.vaughn.xh@renesas.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49y5Vr1GYhzDqnc
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Jul 2020 14:59:47 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 6BF255C0127;
+ Thu,  2 Jul 2020 00:59:44 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Thu, 02 Jul 2020 00:59:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:date:from:to:cc:subject:content-type; s=
+ fm3; bh=HoUxohIIaPxCcHYc5GYHu/CkycD/0Ul1vwbhDZc+Rno=; b=GViTw9tT
+ e+9ra5Cgvnoi5NKK19ZRxCabFxS4soWlTD6gGEeqNWyLUFWzwfHGHYUNi7jShwcU
+ U2MqYYmhyVjXBQMVs0RF7HFNwfWgV4tniBdEWsVFvGOHsfsya7FXJOA8cRmLGzW/
+ ZCO3o25IG36GXWX5Yy/Ot+MFK5QNV4eNCDTLz9j9pml7YqXU4ZiKoqpq7TMcgyDo
+ 4FY1mvqW1o1AsXN/Wv2op32jygWv0+pF16Dc9s7JyflQpqP/+SbK6H2IRCn347+R
+ 73lwjgqguMmISkThM4hXQ5YJ0KorX4bcHztbKKJmn1JXXkx5hbhXh0FuywCFDuTh
+ Mu4Jew7yXJk9Eg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:message-id
+ :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
+ :x-me-sender:x-sasl-enc; s=fm3; bh=HoUxohIIaPxCcHYc5GYHu/CkycD/0
+ Ul1vwbhDZc+Rno=; b=glRSqegQnoX1c58KYTwDKt2MPkdBNAtc+iADCaz5BgM0m
+ d+xMGNnwNqfBmZpnNjYna3kH0NYdLXdWB5TVomc8p9BLyCz6ADuavT7FFVu6r56N
+ rlazIF9KyasabRpLlwkEIMC3ZCiWflxuZHfPrlk3a8EIzhOgMCZn3DcQy6a9i7Uu
+ ZB9cdsTw87PTBl6/tY4W8gNo0DYqkgWAjTMpD7FE581VDFuXhfTYlhW0tDC5afNJ
+ /wBNfHEPMYZ+ExqcYbLGoa7NckjeQJhVls/GQ5cK2dboruwih266qOmcbLjhGIgI
+ w0UOKOrTHvxw0blRdJ/Fr/L6GKOFe//l3Y8/hCIQg==
+X-ME-Sender: <xms:v2n9XkVKhhmxm1qWK8yWGS-YXD_8_fm7XsU7zY1Nb2D40dGqvnH9_A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrtdefgdekkecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkfffhvffutgesthdtredtreertden
+ ucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrih
+ gurdgruheqnecuggftrfgrthhtvghrnheptefgieeuvedtveegueelveeujefgieffgfek
+ keekleduhfegkeejvedtjeefjeffnecuffhomhgrihhnpehophgvnhgsmhgtqdhprhhojh
+ gvtghtrdighiiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+ rhhomheprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:v2n9Xom5eRpeBeFPW_ty5M4fhf_NC6F6u58ySwLHqt_S-ivHET2ezw>
+ <xmx:v2n9XoZtMXJha50FmdKBEBD5MTZw9SD4RuCFNjT-LQojJbjdqus_6A>
+ <xmx:v2n9XjVy3Xe7MMtS-SqoZJWRnIY-qAPP1BhLRc3VBi0YTTZ7tcnH5g>
+ <xmx:wGn9Xlt1EKL-eLCkSTEATGMNSgOfBLoG4IQg9my9LKzGcGyY5rGWrA>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D49CDE00ED; Thu,  2 Jul 2020 00:59:43 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-576-gfe2cd66-fm-20200629.001-gfe2cd668
+Mime-Version: 1.0
+Message-Id: <93c6a27a-db52-4bbb-a2e3-5c1b9837a093@www.fastmail.com>
+Date: Thu, 02 Jul 2020 14:28:53 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
+ "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Winiarska, Iwona" <iwona.winiarska@intel.com>
+Subject: MCTP bridging with one physical port per demux daemon instance
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,95 +90,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Grant Peltier <grant.peltier.jg@renesas.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Shea Petricek <shea.petricek.wz@renesas.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Adam,
+Hi all,
 
-On Wed, 1 Jul 2020 at 23:16, Adam Vaughn <adam.vaughn.xh@renesas.com> wrote=
-:
->
-> Hello, OpenBMC List,
->
->
->
-> Renesas recently published a patch to the kernel isl68137 hwmon driver wh=
-ich adds support for our current line of digital PWM voltage regulators. Th=
-is patch is included in the 5.7 release of the kernel. (See https://git.ker=
-nel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/?qt=3Dgrep&q=3Disl6=
-8137)
->
->
->
-> Many of our customers are OpenBMC users so we would like to integrate thi=
-s new functionality into your codebase to support their current system deve=
-lopments.
->
->
->
-> How may we best include our code in the OpenBMC tree?
+First up, I've pushed a series to gerrit implementing bridging and routing in 
+libmctp. If you're interested, please provide feedback:
 
-We have documentation on how to submit patches here:
+https://gerrit.openbmc-project.xyz/q/project:openbmc/libmctp+topic:%2522routing%2522+(status:open)
 
-https://github.com/openbmc/linux/wiki/SubmittingPatches
+The final patch in the series implements the provisional EID concept that we've 
+been discussing on the list.
 
-If you're not familiar with git there will be some work required to
-learn how to use the tooling to do what you're after. I'm on IRC in
-UTC+9.5 timezone if you would like to ask more questions.
+Back to the subject:
 
-The tldr is you want to cherry pick the patch on the current openbmc
-kernel branch (dev-5.4), create a patch file from that, and send it to
-the list. The git commands go something like this.
-
-First create a checkout of the openbmc kernel tree, and pull down the
-latest commits from Linus' tree:
-
-git clone https://github.com/openbmc/linux && cd linux
-git remote add upstream
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-git fetch upstream
-
-Now that we have the commits from Linus' tree, and the openbmc dev-5.4
-branch checked out, we can cherry pick the patches onto the openbmc
-tree.
-
-git cherry-pick -xs <mysha>
-git format-patch -1 --to=3Dopenbmc@lists.ozlabs.org
---subject-prefix=3D"PATCH linux dev-5.4"
-git send-email --suppress-cc=3Dbody 0001-my-great-patch
-
-If there are multiple patches, the workflow is as follows. Note that
-you will need to stop and edit the cover letter after the
-git-format-patch step.
-
-git cherry-pick -xs <mysha1>
-git cherry-pick -xs <mysha2>
-git cherry-pick -xs <mysha3>
-git format-patch HEAD~3..HEAD -o mypatches --cover-letter
---to=3Dopenbmc@lists.ozlabs.org --subject-prefix=3D"PATCH linux dev-5.4"
-git send-email --suppress-cc=3Dbody mypatches/*.patch
-
-I'm shenki on IRC if you have any further questions.
-
-Cheers,
-
-Joel
+I've had a short think about bridging in the configuration where we have one 
+mctp-demux-daemon instance per port. I'm not sure what plans you had with 
+endpoint ID assignment, so assuming I have free reign with it, one proposal 
+looks like below:
 
 
->
->
->
-> Regards,
->
->
->
-> Adam Vaughn
->
-> Staff Product Marketing Manager
->
-> Core Power Solutions
->
-> Mobility, Infrastructure, and IoT Power Business Division
+          demux A                             demux B
+      +------------+                       +------------+
+      |-----+      |                       |      +-----|
+      +--+  |   +--+      demux socket     +--+   |  +--+
++-----+P0|10|   |P1+-----------------------+P1|   |11|P0+-----+
+      +--+  |   +--+                       +--+   |  +--+
+      |-----+      |                       |      +-----|
+      +------------+                       +------------+
+
+'demux A' and 'demux B' are our two separate processes. Figure 9 of DSP0236 
+(v1.3.1) shows the different arrangements of endpoint assignments that are 
+supported by MCTP, and the key element is that ports in a bridge are not 
+required to be assigned endpoint IDs. In the diagram above I'm describing two 
+ports associated with each process; the physical port P0 which we're 
+associating with an mctp-demux-daemon instance, and P1 which we'll have as a 
+port for a vendor-defined binding. By configuration, one of either 'demux A' or 
+'demux B' connects to the other and establishes a "virtual bus" via P1. An 
+endpoint ID is assigned to P0 in both instances (10 and 11), but neither 
+instance assigns an EID to P1. Using null EID messages each side can send 'Get 
+Endpoint ID' over the virtual bus linking the two daemons to bootstrap the 
+(independent) route tables. From there, each side uses 'Get Routing Table 
+Entries' to pull the route table state from the other, and update their own 
+tables with the endpoints reachable through the remote.
+
+In this configuration there's no change necessary to the generic libmctp code 
+to handle forwarding packets between the different instances, it takes 
+advantage of bridging and routing to do the job for us in concert with a 
+vendor-defined binding to handle the socket.
+
+A problem arises with how applications should interact with the separate 
+daemons: Each application must connect to all the mctp-demux-daemon instances 
+to receive their locally delivered packets.
+
+To resolve this it might be possible to take advantage of the existing "bridge" 
+implementation in libmctp which really functions as an adapter that glues 
+together two ports of possibly different binding types. By inserting 
+appropriate route entries packets arriving on either interface are simply 
+forwarded to the other as there is no endpoint ID defined for the instance. 
+With this approach you could do the bridging in a third process:
+
+       adapter A                    demux               adapter B
+      +------------+             +------------+            +------------+
+      |            |             |------------|            |            |
+      +--+      +--+             +--+  ||  +--+            +--+      +--+
++-----+P0|      |P1+-------------+P0|10||11|P1+------------+P1|      |P0+-----+
+      +--+      +--+             +--+  ||  +--+            +--+      +--+
+      |            |             |------------|            |            |
+      +------------+             +------------+            +------------+
+
+We'd probably have to do some tinkering to make sure broadcast and null EID 
+messages are passed on. However, applications would then connect to just the 
+bridge's domain socket to receive messages for both EID 10 and 11.
+
+That's probably enough to spark some discussion.
+
+Let me know what you think.
+
+Andrew
