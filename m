@@ -1,84 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C106B211B52
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 07:00:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37A4A212DCC
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 22:21:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49y5Wm5n86zDqvP
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 15:00:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49yTy92Lv6zDqQ9
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jul 2020 06:21:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=GViTw9tT; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=glRSqegQ; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49y5Vr1GYhzDqnc
- for <openbmc@lists.ozlabs.org>; Thu,  2 Jul 2020 14:59:47 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 6BF255C0127;
- Thu,  2 Jul 2020 00:59:44 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 02 Jul 2020 00:59:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:date:from:to:cc:subject:content-type; s=
- fm3; bh=HoUxohIIaPxCcHYc5GYHu/CkycD/0Ul1vwbhDZc+Rno=; b=GViTw9tT
- e+9ra5Cgvnoi5NKK19ZRxCabFxS4soWlTD6gGEeqNWyLUFWzwfHGHYUNi7jShwcU
- U2MqYYmhyVjXBQMVs0RF7HFNwfWgV4tniBdEWsVFvGOHsfsya7FXJOA8cRmLGzW/
- ZCO3o25IG36GXWX5Yy/Ot+MFK5QNV4eNCDTLz9j9pml7YqXU4ZiKoqpq7TMcgyDo
- 4FY1mvqW1o1AsXN/Wv2op32jygWv0+pF16Dc9s7JyflQpqP/+SbK6H2IRCn347+R
- 73lwjgqguMmISkThM4hXQ5YJ0KorX4bcHztbKKJmn1JXXkx5hbhXh0FuywCFDuTh
- Mu4Jew7yXJk9Eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm3; bh=HoUxohIIaPxCcHYc5GYHu/CkycD/0
- Ul1vwbhDZc+Rno=; b=glRSqegQnoX1c58KYTwDKt2MPkdBNAtc+iADCaz5BgM0m
- d+xMGNnwNqfBmZpnNjYna3kH0NYdLXdWB5TVomc8p9BLyCz6ADuavT7FFVu6r56N
- rlazIF9KyasabRpLlwkEIMC3ZCiWflxuZHfPrlk3a8EIzhOgMCZn3DcQy6a9i7Uu
- ZB9cdsTw87PTBl6/tY4W8gNo0DYqkgWAjTMpD7FE581VDFuXhfTYlhW0tDC5afNJ
- /wBNfHEPMYZ+ExqcYbLGoa7NckjeQJhVls/GQ5cK2dboruwih266qOmcbLjhGIgI
- w0UOKOrTHvxw0blRdJ/Fr/L6GKOFe//l3Y8/hCIQg==
-X-ME-Sender: <xms:v2n9XkVKhhmxm1qWK8yWGS-YXD_8_fm7XsU7zY1Nb2D40dGqvnH9_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrtdefgdekkecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkfffhvffutgesthdtredtreertden
- ucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrih
- gurdgruheqnecuggftrfgrthhtvghrnheptefgieeuvedtveegueelveeujefgieffgfek
- keekleduhfegkeejvedtjeefjeffnecuffhomhgrihhnpehophgvnhgsmhgtqdhprhhojh
- gvtghtrdighiiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
- rhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:v2n9Xom5eRpeBeFPW_ty5M4fhf_NC6F6u58ySwLHqt_S-ivHET2ezw>
- <xmx:v2n9XoZtMXJha50FmdKBEBD5MTZw9SD4RuCFNjT-LQojJbjdqus_6A>
- <xmx:v2n9XjVy3Xe7MMtS-SqoZJWRnIY-qAPP1BhLRc3VBi0YTTZ7tcnH5g>
- <xmx:wGn9Xlt1EKL-eLCkSTEATGMNSgOfBLoG4IQg9my9LKzGcGyY5rGWrA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id D49CDE00ED; Thu,  2 Jul 2020 00:59:43 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-dev0-576-gfe2cd66-fm-20200629.001-gfe2cd668
-Mime-Version: 1.0
-Message-Id: <93c6a27a-db52-4bbb-a2e3-5c1b9837a093@www.fastmail.com>
-Date: Thu, 02 Jul 2020 14:28:53 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Bhat, Sumanth" <sumanth.bhat@intel.com>,
- "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
- "Winiarska, Iwona" <iwona.winiarska@intel.com>
-Subject: MCTP bridging with one physical port per demux daemon instance
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49yTS90lPDzDr6K
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Jul 2020 05:58:47 +1000 (AEST)
+IronPort-SDR: i6+6QaHhsW20JkvOkhrv0WHN6vzhWrI4dlnvsk4f/xZ6KgGxyGsRXJEqkVkvmWsK9eiwwM+mAQ
+ b9xeqC4INjxA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9670"; a="208539805"
+X-IronPort-AV: E=Sophos;i="5.75,305,1589266800"; d="scan'208";a="208539805"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2020 12:58:45 -0700
+IronPort-SDR: VasrYnZcc0dv1u8i/vb0jypjC6DHpd7ZKO9RZJ6pJOCR19BHqyrDq9XK+NFw9vLZx/gJau+U7l
+ KtJlz4LiyerQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,305,1589266800"; d="scan'208";a="278218908"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga003.jf.intel.com with ESMTP; 02 Jul 2020 12:58:45 -0700
+Received: from [10.209.134.10] (jmbills-mobl.amr.corp.intel.com
+ [10.209.134.10])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 3B8D8580708
+ for <openbmc@lists.ozlabs.org>; Thu,  2 Jul 2020 12:58:45 -0700 (PDT)
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Subject: Weird build dependency issue causing missing symbols
+Message-ID: <c99c6e23-a2b4-01de-7cb9-ab035dcf8e01@linux.intel.com>
+Date: Thu, 2 Jul 2020 12:58:43 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,83 +63,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all,
+Hi All,
 
-First up, I've pushed a series to gerrit implementing bridging and routing in 
-libmctp. If you're interested, please provide feedback:
+We are hitting a weird build dependency issue with Yocto and 
+phosphor-dbus-interfaces and are looking for any help or insight anyone 
+may have on how to fix it.  We have not been able to pinpoint exactly 
+when the issue started, but we believe it has come up since the dunfell 
+update.
 
-https://gerrit.openbmc-project.xyz/q/project:openbmc/libmctp+topic:%2522routing%2522+(status:open)
+The symptom of this issue is we see an undefined symbol error at runtime:
+[  101.733677] Jul 02 10:37:48 intel-obmc phosphor-ledcontroller[461]: 
+phosph
+or-ledcontroller: symbol lookup error: phosphor-ledcontroller: undefined 
+symbol: 
+_ZN9sdbusplus3xyz15openbmc_project3Led6server8Physical17setPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt7variantIJtNS4_7PaletteEhNS4_6ActionEEEb
 
-The final patch in the series implements the provisional EID concept that we've 
-been discussing on the list.
+Once we hit this error, it persists across rebuilds until we delete the 
+Yocto build directory (likely something in the cache) and start a fresh 
+build.
 
-Back to the subject:
+We have narrowed this down to being caused by two separate issues:
+1. When phosphor-dbus-interfaces is rebuilt it will sometimes change the 
+order of the PropertiesVariant in server.hpp.
+2. When the order of PropertiesVariant changes on a rebuild, the recipes 
+that already have an old copy of server.hpp are not triggered to rebuild 
+and are left with the old copy of server.hpp.
 
-I've had a short think about bridging in the configuration where we have one 
-mctp-demux-daemon instance per port. I'm not sure what plans you had with 
-endpoint ID assignment, so assuming I have free reign with it, one proposal 
-looks like below:
+I have a system that is in this state and have found that if I taint 
+phosphor-dbus-interfaces by running "bitbake -C fetch 
+phosphor-dbus-interfaces", I see many components rebuild and the symbol 
+issue goes away.  If I then remove the taint by running "bitbake -c 
+clean phosphor-dbus-interfaces" only phosphor-dbus-interfaces and any 
+components in my devtool status list rebuild and the symbol issue comes 
+back.
 
+We ran an experiment where we compared the contents of 
+".../Led/Physical/server.hpp" between components by running this command 
+(where the base file came from an existing build):
+for fname in $(find . -iname server.hpp|grep -i "led/physical"); do echo 
+"$fname"; diff 
+"./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-network/1.0+gitAUTOINC+d0679f9bb4-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp" 
+"$fname"; done
 
-          demux A                             demux B
-      +------------+                       +------------+
-      |-----+      |                       |      +-----|
-      +--+  |   +--+      demux socket     +--+   |  +--+
-+-----+P0|10|   |P1+-----------------------+P1|   |11|P0+-----+
-      +--+  |   +--+                       +--+   |  +--+
-      |-----+      |                       |      +-----|
-      +------------+                       +------------+
+With the tainted phosphor-dbus-interfaces, there is no diff in any of 
+the server.hpp files.
 
-'demux A' and 'demux B' are our two separate processes. Figure 9 of DSP0236 
-(v1.3.1) shows the different arrangements of endpoint assignments that are 
-supported by MCTP, and the key element is that ports in a bridge are not 
-required to be assigned endpoint IDs. In the diagram above I'm describing two 
-ports associated with each process; the physical port P0 which we're 
-associating with an mctp-demux-daemon instance, and P1 which we'll have as a 
-port for a vendor-defined binding. By configuration, one of either 'demux A' or 
-'demux B' connects to the other and establishes a "virtual bus" via P1. An 
-endpoint ID is assigned to P0 in both instances (10 and 11), but neither 
-instance assigns an EID to P1. Using null EID messages each side can send 'Get 
-Endpoint ID' over the virtual bus linking the two daemons to bootstrap the 
-(independent) route tables. From there, each side uses 'Get Routing Table 
-Entries' to pull the route table state from the other, and update their own 
-tables with the endpoints reachable through the remote.
+After cleaning the taint and rebuilding, I get the following results:
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-sel-logger/0.1+gitAUTOINC+761bf202ba-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+e4f710d7d9-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-dbus-interfaces/1.0+gitAUTOINC+26ff1c8446-r1/sysroot-destdir/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+66,67c66
+<                 Action,
+<                 uint16_t,
+---
+ >                 uint8_t,
+69c68,69
+<                 uint8_t>;
+---
+ >                 Action,
+ >                 uint16_t>;
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-ipmi-ipmb/0.1+gitAUTOINC+a86059348f-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-host-postd/0.1+gitAUTOINC+bf002b46d5-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-network/1.0+gitAUTOINC+d0679f9bb4-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/x86-power-control/1.0+gitAUTOINC+b0c613aa88-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+66,67c66
+<                 Action,
+<                 uint16_t,
+---
+ >                 uint8_t,
+69c68,69
+<                 uint8_t>;
+---
+ >                 Action,
+ >                 uint16_t>;
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-post-code-manager/1.0+gitAUTOINC+9d91a39a3a-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/obmc-ikvm/1.0+gitAUTOINC+861337e8ec-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/service-config-manager/0.1+gitAUTOINC+83241c09ec-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-ipmi-kcs/1.0+gitAUTOINC+d8594e9a62-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+./tmp/sysroots-components/arm1176jzs/phosphor-dbus-interfaces/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
+66,67c66
+<                 Action,
+<                 uint16_t,
+---
+ >                 uint8_t,
+69c68,69
+<                 uint8_t>;
+---
+ >                 Action,
+ >                 uint16_t>;
 
-In this configuration there's no change necessary to the generic libmctp code 
-to handle forwarding packets between the different instances, it takes 
-advantage of bridging and routing to do the job for us in concert with a 
-vendor-defined binding to handle the socket.
+The order of the variant changed in server.hpp in 
+phosphor-dbus-interfaces.  I had x86-power-control in my devtool status 
+list, so it rebuilt and got the new copy of server.hpp, but everything 
+else still had the old copy.
 
-A problem arises with how applications should interact with the separate 
-daemons: Each application must connect to all the mctp-demux-daemon instances 
-to receive their locally delivered packets.
+Does anyone have any ideas on what could be happening or if we're 
+missing something to properly trigger the rebuilds?
 
-To resolve this it might be possible to take advantage of the existing "bridge" 
-implementation in libmctp which really functions as an adapter that glues 
-together two ports of possibly different binding types. By inserting 
-appropriate route entries packets arriving on either interface are simply 
-forwarded to the other as there is no endpoint ID defined for the instance. 
-With this approach you could do the bridging in a third process:
-
-       adapter A                    demux               adapter B
-      +------------+             +------------+            +------------+
-      |            |             |------------|            |            |
-      +--+      +--+             +--+  ||  +--+            +--+      +--+
-+-----+P0|      |P1+-------------+P0|10||11|P1+------------+P1|      |P0+-----+
-      +--+      +--+             +--+  ||  +--+            +--+      +--+
-      |            |             |------------|            |            |
-      +------------+             +------------+            +------------+
-
-We'd probably have to do some tinkering to make sure broadcast and null EID 
-messages are passed on. However, applications would then connect to just the 
-bridge's domain socket to receive messages for both EID 10 and 11.
-
-That's probably enough to spark some discussion.
-
-Let me know what you think.
-
-Andrew
+Thanks for your help!
+-Jason
