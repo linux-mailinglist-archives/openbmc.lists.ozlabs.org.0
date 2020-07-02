@@ -2,56 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37A4A212DCC
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 22:21:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC36D212EED
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jul 2020 23:34:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 49yTy92Lv6zDqQ9
-	for <lists+openbmc@lfdr.de>; Fri,  3 Jul 2020 06:21:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 49yWZc12DszDr6l
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jul 2020 07:34:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.31; helo=mga06.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=ZxOEdrU7; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=BcpSehaI; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 49yTS90lPDzDr6K
- for <openbmc@lists.ozlabs.org>; Fri,  3 Jul 2020 05:58:47 +1000 (AEST)
-IronPort-SDR: i6+6QaHhsW20JkvOkhrv0WHN6vzhWrI4dlnvsk4f/xZ6KgGxyGsRXJEqkVkvmWsK9eiwwM+mAQ
- b9xeqC4INjxA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9670"; a="208539805"
-X-IronPort-AV: E=Sophos;i="5.75,305,1589266800"; d="scan'208";a="208539805"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2020 12:58:45 -0700
-IronPort-SDR: VasrYnZcc0dv1u8i/vb0jypjC6DHpd7ZKO9RZJ6pJOCR19BHqyrDq9XK+NFw9vLZx/gJau+U7l
- KtJlz4LiyerQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,305,1589266800"; d="scan'208";a="278218908"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga003.jf.intel.com with ESMTP; 02 Jul 2020 12:58:45 -0700
-Received: from [10.209.134.10] (jmbills-mobl.amr.corp.intel.com
- [10.209.134.10])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 3B8D8580708
- for <openbmc@lists.ozlabs.org>; Thu,  2 Jul 2020 12:58:45 -0700 (PDT)
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Subject: Weird build dependency issue causing missing symbols
-Message-ID: <c99c6e23-a2b4-01de-7cb9-ab035dcf8e01@linux.intel.com>
-Date: Thu, 2 Jul 2020 12:58:43 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 49yWYW58MBzDr6f
+ for <openbmc@lists.ozlabs.org>; Fri,  3 Jul 2020 07:33:34 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id 813885C0114;
+ Thu,  2 Jul 2020 17:33:30 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Thu, 02 Jul 2020 17:33:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=Zr95OTFnvA8FPbtTxUwVUxR+wjX
+ e0K9xpEqjTdhMAfw=; b=ZxOEdrU7hPCS+TcRiteW6AjiNjGEeO0TgbTDDTqhlE0
+ Re/0qnt/of4XgKBkNSLDmLXvqy8IhsBoGPpX3IyprKrVfonuDMajD9/BoV1LpkfS
+ 93jG3GtD+fXoWjfSX70XIfLDW9//qznRjxniORoup8PPtrqGY2BHrr1atOY0Xh9g
+ BkRdU5FbqLbTrjb3iWgyB2tc9zC7KfWPcXfQLcSHd/iKyvi1V8TKWGzHqCS16jlq
+ k2KaVQwLpt5O6czm6VvogpBBPh2uiEno2tka9b25qizExolylCGgFgSHOi8vCSZD
+ +wuZYloHAYvSdw+W7iHu9jUrSV0Eqt+HM/xijS4in1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Zr95OT
+ FnvA8FPbtTxUwVUxR+wjXe0K9xpEqjTdhMAfw=; b=BcpSehaIOIW3Mx+w778iWf
+ hixuDUqrs7LJtUveEAmsKmeEpixrsSh2MfkGvjjapNj67fUfZEsetezY7OiqOByx
+ feGLt340KyCdddP84unItarX75jURs1oxgbsd0VztG7AQnO7WOsbt0SoJ0ZV/IGC
+ bkqBsRGD1dfSd98yE/7jnu0cIu0dul6ENdyp3tBub5qq0yvbojWj+B8Bch5isiD4
+ LGxWMAU/EPigDs7kZWkN5aP6EA94E54IIoqVH9ipmnkY8A7iM5gI/Wa4GWU1+eoF
+ 8CsHgK/A7JPfxwNiGD3LySKJncUI8/NKsA/mctFvLt7BinRxAIN3/IKBskbEy6Ew
+ ==
+X-ME-Sender: <xms:qVL-XnABk-SUwhui_LcMgLjRN1CT7a1StnhdOuDuY8CNQsrDukKHuA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrtdeggdduheejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:qlL-XthYGCFZLySFN-8vGny5nyxoLUpw9BmhOnEj9u6x8-S7Rpr2lQ>
+ <xmx:qlL-Xik8sCUXPllhMM1LIVwfrVXTVnr0Z5YxkPuop1W7qBERJaYpLA>
+ <xmx:qlL-XpzfxaoIagITgEoTygfmKsuwPFywHF8wp2_6Hwnl_KG8Vy7qog>
+ <xmx:qlL-XjcqWBYO3qMseD7vmmmeZQm1mH6dE_qpLabg9HbR0GCs877Naw>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id BE5553060062;
+ Thu,  2 Jul 2020 17:33:29 -0400 (EDT)
+Date: Thu, 2 Jul 2020 16:33:28 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Subject: Re: Weird build dependency issue causing missing symbols
+Message-ID: <20200702213328.GD3922@heinlein>
+References: <c99c6e23-a2b4-01de-7cb9-ab035dcf8e01@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="jCrbxBqMcLqd4mOl"
+Content-Disposition: inline
+In-Reply-To: <c99c6e23-a2b4-01de-7cb9-ab035dcf8e01@linux.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,105 +93,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
 
-We are hitting a weird build dependency issue with Yocto and 
-phosphor-dbus-interfaces and are looking for any help or insight anyone 
-may have on how to fix it.  We have not been able to pinpoint exactly 
-when the issue started, but we believe it has come up since the dunfell 
-update.
+--jCrbxBqMcLqd4mOl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The symptom of this issue is we see an undefined symbol error at runtime:
-[  101.733677] Jul 02 10:37:48 intel-obmc phosphor-ledcontroller[461]: 
-phosph
-or-ledcontroller: symbol lookup error: phosphor-ledcontroller: undefined 
-symbol: 
-_ZN9sdbusplus3xyz15openbmc_project3Led6server8Physical17setPropertyByNameERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt7variantIJtNS4_7PaletteEhNS4_6ActionEEEb
+On Thu, Jul 02, 2020 at 12:58:43PM -0700, Bills, Jason M wrote:
+> We have narrowed this down to being caused by two separate issues:
+> 1. When phosphor-dbus-interfaces is rebuilt it will sometimes change the=
+=20
+> order of the PropertiesVariant in server.hpp.
 
-Once we hit this error, it persists across rebuilds until we delete the 
-Yocto build directory (likely something in the cache) and start a fresh 
-build.
+This sounds like a bug in sdbus++.  We should be sorting the variant
+parameters or issuing them in array order.  I'll look into it.
 
-We have narrowed this down to being caused by two separate issues:
-1. When phosphor-dbus-interfaces is rebuilt it will sometimes change the 
-order of the PropertiesVariant in server.hpp.
-2. When the order of PropertiesVariant changes on a rebuild, the recipes 
-that already have an old copy of server.hpp are not triggered to rebuild 
-and are left with the old copy of server.hpp.
+> 2. When the order of PropertiesVariant changes on a rebuild, the recipes=
+=20
+> that already have an old copy of server.hpp are not triggered to rebuild=
+=20
+> and are left with the old copy of server.hpp.
 
-I have a system that is in this state and have found that if I taint 
-phosphor-dbus-interfaces by running "bitbake -C fetch 
-phosphor-dbus-interfaces", I see many components rebuild and the symbol 
-issue goes away.  If I then remove the taint by running "bitbake -c 
-clean phosphor-dbus-interfaces" only phosphor-dbus-interfaces and any 
-components in my devtool status list rebuild and the symbol issue comes 
-back.
+This isn't surprising if what is triggering the rebuild is not a Yocto
+variable change (or git revision).  Yocto doesn't cache the contents of
+the packages, but caches the variables that went into a build step.  A
+hash of the variables are used to look up the potential 'sstate-cache'
+files so that it can skip build steps.
 
-We ran an experiment where we compared the contents of 
-".../Led/Physical/server.hpp" between components by running this command 
-(where the base file came from an existing build):
-for fname in $(find . -iname server.hpp|grep -i "led/physical"); do echo 
-"$fname"; diff 
-"./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-network/1.0+gitAUTOINC+d0679f9bb4-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp" 
-"$fname"; done
+If you think a variable or a git-revision should have changed with what
+you were doing, then maybe it is something else.
 
-With the tainted phosphor-dbus-interfaces, there is no diff in any of 
-the server.hpp files.
+--=20
+Patrick Williams
 
-After cleaning the taint and rebuilding, I get the following results:
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-sel-logger/0.1+gitAUTOINC+761bf202ba-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+e4f710d7d9-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-dbus-interfaces/1.0+gitAUTOINC+26ff1c8446-r1/sysroot-destdir/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-66,67c66
-<                 Action,
-<                 uint16_t,
----
- >                 uint8_t,
-69c68,69
-<                 uint8_t>;
----
- >                 Action,
- >                 uint16_t>;
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-ipmi-ipmb/0.1+gitAUTOINC+a86059348f-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-host-postd/0.1+gitAUTOINC+bf002b46d5-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-network/1.0+gitAUTOINC+d0679f9bb4-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/x86-power-control/1.0+gitAUTOINC+b0c613aa88-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-66,67c66
-<                 Action,
-<                 uint16_t,
----
- >                 uint8_t,
-69c68,69
-<                 uint8_t>;
----
- >                 Action,
- >                 uint16_t>;
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-post-code-manager/1.0+gitAUTOINC+9d91a39a3a-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/obmc-ikvm/1.0+gitAUTOINC+861337e8ec-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/service-config-manager/0.1+gitAUTOINC+83241c09ec-r0/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-ipmi-kcs/1.0+gitAUTOINC+d8594e9a62-r1/recipe-sysroot/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-./tmp/sysroots-components/arm1176jzs/phosphor-dbus-interfaces/usr/include/xyz/openbmc_project/Led/Physical/server.hpp
-66,67c66
-<                 Action,
-<                 uint16_t,
----
- >                 uint8_t,
-69c68,69
-<                 uint8_t>;
----
- >                 Action,
- >                 uint16_t>;
+--jCrbxBqMcLqd4mOl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-The order of the variant changed in server.hpp in 
-phosphor-dbus-interfaces.  I had x86-power-control in my devtool status 
-list, so it rebuilt and got the new copy of server.hpp, but everything 
-else still had the old copy.
+-----BEGIN PGP SIGNATURE-----
 
-Does anyone have any ideas on what could be happening or if we're 
-missing something to properly trigger the rebuilds?
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl7+UqYACgkQqwNHzC0A
+wRmh8A/+MIwg5e2o0E3N3OyrBBF3TRP2MXKip/Ak0FM8yj6fIUEoMFnji0JbawId
+/hXRTxkSBM03p79ze0RIJql/CHcTRBwgY6ATU8ER/jz1bqWe3eY7vTRjMo3w0rsd
+hNrniZ4XqBdkYrZBNBpACN2E34PXUi1OHE3GYo/inuPm38zlWe1XvOqh3JjLjT43
+PTGvm/O31CxqWvY9TyNSKWM3t2RXkXxZSjmlmb4nGcpGbo7G8rZfI42KDiu02MhZ
+uOlcc2zUpmDEFs69/B6ulXY18xVfv8cbMOW1NTGnanLdvQ8Roi2gavjOnml/hjsv
+HzkRykSeKHtrVtjdB5sA7StWgZV9Ou+Y7DABFmnW/8AaRVBau1eXoF8W8ZNkGkyL
+MXkeMKP29AB6e5sET+DI+iqx+yQpT6obhjNSl3rU3sdfA3EmYwQHiIohjRsiOVie
+o7Y+XKs8Z/Iu7VQHoRaa5xIiC2ICNB8T07FVhRXxo4YQinOpCXSCX0XO52Ig0JiY
+EfG5hBzSr5IPMcVv2VKXfS/OfMhb+Y6wgN8FXNS0dwFVgoL4SIYVx1Hia05wXZPq
+xW/FcLazak8KwPbEQ0zHbk2Rx+a+e281LTlmUL8YPrFbmoJx5nWhjr8Cl5PmpB2s
+ViYM8VQQgZKKHGilXDzz94iFIAYuU8pGnGUtCBIF2Lsl2YCotGU=
+=VezQ
+-----END PGP SIGNATURE-----
 
-Thanks for your help!
--Jason
+--jCrbxBqMcLqd4mOl--
