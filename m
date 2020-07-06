@@ -2,58 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EF77215516
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 12:04:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D0C0A215FF9
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 22:15:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B0h4q5m25zDqg1
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 20:04:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B0xd26ywwzDqdD
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 06:15:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::732;
+ helo=mail-qk1-x732.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
- envelope-from=suryakanth.sekar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=WyiekGZ8; dkim-atps=neutral
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com
+ [IPv6:2607:f8b0:4864:20::732])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B0h416szdzDqHg
- for <openbmc@lists.ozlabs.org>; Mon,  6 Jul 2020 20:04:00 +1000 (AEST)
-IronPort-SDR: +zVUxZ0oM98y83jCQq3wBtJHf1HhWPZoVgbQHOlTbZdtahrSfdCOOD/JntgQeM3ecseP1d10xr
- 7nnJKba2T7AA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9673"; a="127457773"
-X-IronPort-AV: E=Sophos;i="5.75,318,1589266800"; d="scan'208";a="127457773"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jul 2020 03:03:57 -0700
-IronPort-SDR: 3z20W96GYwukfhw+yX0SLirmbT4lNUKnE3ziUIOZoIpFF11byAytoYH/pHwcL+JuWy9v+02B6U
- HNm6kNdaYtcw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,318,1589266800"; d="scan'208";a="305233083"
-Received: from ssekar-mobl1.gar.corp.intel.com (HELO [10.215.206.224])
- ([10.215.206.224])
- by fmsmga004.fm.intel.com with ESMTP; 06 Jul 2020 03:03:56 -0700
-Subject: Re: Reg new repository for Remote BIOS Configuration feature
-To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
-References: <OF695C3E91.9C1FA4CC-ON00258598.00304468-00258598.00304971@LocalDomain>
- <8c52e6de-d785-6e28-c186-eb05bc405831@linux.intel.com>
- <OF4F9A7C8E.67B55B6A-ON00258598.00314874-00258598.003165E6@notes.na.collabserv.com>
- <3631d9fa-52b1-0918-bf9c-af8cb21e0c4f@linux.intel.com>
- <204b12fe-85c3-97f1-fd16-a2b5a64e9c6b@linux.vnet.ibm.com>
-From: "Sekar, Suryakanth" <suryakanth.sekar@linux.intel.com>
-Message-ID: <0a75da4d-0254-c2dc-562d-956bd8a21786@linux.intel.com>
-Date: Mon, 6 Jul 2020 15:33:55 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-MIME-Version: 1.0
-In-Reply-To: <204b12fe-85c3-97f1-fd16-a2b5a64e9c6b@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B0xcH02k6zDqbk
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 06:14:20 +1000 (AEST)
+Received: by mail-qk1-x732.google.com with SMTP id 80so36101399qko.7
+ for <openbmc@lists.ozlabs.org>; Mon, 06 Jul 2020 13:14:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=htGIuJKwNy/pb1NY51oWLpFSVPxHLzTcZwpsguVB+SA=;
+ b=WyiekGZ8E444uJoQ17dQKpIr3Jt1k/ugl8hR2RaGCx9alqzf8zHuPAGbPzC6nRT26Z
+ 5OzxjYh+lX9qDykwFGFwStkcqXaMfHNeSz6J/2h7MoeMNUls5DCjcpywla5nghfiaxkG
+ eLN1jJhfoFFd9JT6Tmi5Foa7iyURaHTZvj7vlDEwkLlC2ahBGvST0EXHYKUNTGji590L
+ RU0/mLVY0IhqeIZfdZR+OBN4Gx18ZujeJvWES16Tvrnmje2vFFxfei+5MNwCsMpFs9Kc
+ iWPph9GnplOx/dOdBN3oWpDnY+IEJ4iyEzpbMHGj5aPaL/F5ysjdHHUEaSmfvf9x11rK
+ D6sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=htGIuJKwNy/pb1NY51oWLpFSVPxHLzTcZwpsguVB+SA=;
+ b=hw9DeW4bto1OHNTB32slgOO/Bn8wH0XxaK5OWu5Db8MAHvJu0tqGwGNVgGtq0xPr4i
+ qLLnns7fAISALX8jPx98DBpGpc5KdeWuD/GTL/QvD9c4KWMDahh7sB28sWqJdSlqgwlq
+ rt5haxgzh+Rk8EBqoYHY5r161T6O4qV966L9xTeOHnsJHxjhyKv+NkaQ97GujK0LpK9p
+ V6U6IKdhmcuAb7btXWaOWym/Y9dl+h8kdZdof55p9GatinTUbkZmUEJSVr6Tvps5LjP2
+ UTWQHoaFv90A0i/+092OJXOFVcylFoJvNFr0kg8SJgrPzPA7Ng75Wll7/0G3db4fTn+t
+ lQSg==
+X-Gm-Message-State: AOAM532rOneFEfjCFWA+WfVwZ/Aa8tBUdFTFYjGNL//d99A76IFwc9W3
+ Pi4qIKMrCnsgvF2hOymSays=
+X-Google-Smtp-Source: ABdhPJw0nZ38BG4odVZ3ccgHKjYJrlVOasZqpMCPYl7Jv0Px54KtEUHF2wGkHhA7OsrjJkH0uFUJdA==
+X-Received: by 2002:a37:65d2:: with SMTP id
+ z201mr24087301qkb.351.1594066457319; 
+ Mon, 06 Jul 2020 13:14:17 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:3d62:4f68:17be:d26d])
+ by smtp.gmail.com with ESMTPSA id u58sm24222284qth.77.2020.07.06.13.14.16
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 06 Jul 2020 13:14:16 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: Multi-host support in ipmbbridged and phosphor-host-ipmid
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <SG2PR04MB316063EDE5B383B87F33D96BA76A0@SG2PR04MB3160.apcprd04.prod.outlook.com>
+Date: Mon, 6 Jul 2020 15:14:15 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A71CDDCD-C7D4-4ACB-80EE-EC03567F6B45@gmail.com>
+References: <SG2PR04MB316063EDE5B383B87F33D96BA76A0@SG2PR04MB3160.apcprd04.prod.outlook.com>
+To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,30 +82,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: Kumar Thangavel <thangavel.k@hcl.com>, Ed Tanous <ed.tanous@intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>, Vijay Khemka <vijaykhemka@fb.com>,
+ Dawid Frycki <dawid.frycki@intel.com>, Patrick Williams <patrickw3@fb.com>,
+ Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Ok bios-settings-mgr is fine.
 
-On 7/6/2020 3:13 PM, Deepak Kodihalli wrote:
->>>         ----- Original message -----
->>>         From: "Sekar, Suryakanth" <suryakanth.sekar@linux.intel.com>
->>>         To: dkodihal@in.ibm.com, bradleyb@fuzziesquirrel.com,
->>>         jason.m.bills@linux.intel.com, patrick@stwcx.xyz, "Thomaiyar,
->>>         Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
->>>         Cc:
->>>         Subject: [EXTERNAL] Reg new repository for Remote BIOS
->>>         Configuration feature
->>>         Date: Wed, Jul 1, 2020 2:12 PM
->>>         Hi Brad,
->>>
->>>         Can you please create new repository (repo name :
->>>         Remote-BIOSConfig )
->
->
-> Surya, would you be too opposed to the name bios-settings-mgr?
->
+
+> On Jul 3, 2020, at 12:22 PM, Velumani T-ERS,HCLTech =
+<velumanit@hcl.com> wrote:
+>=20
+> Hi All,
+> =20
+> We have a multi-host system and wanted to add support in openbmc to =
+handle all ipmi commands. We have come up with the design approach that =
+could help us in handling ipmi command with multihost system. Please =
+find the attached design proposal and provide feedback/suggestions.=20
+
+Hi Velu,
+
+Any reason we can=E2=80=99t just use the design template =
+(https://github.com/openbmc/docs/blob/master/designs/design-template.md) =
+and submit this up to gerrit? I tend to try and avoid opening any email =
+attachments now a days.
+
+Andrew
+
 > Regards,
-> Deepak
->
+> Velu
+
