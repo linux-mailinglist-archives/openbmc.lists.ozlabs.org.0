@@ -1,63 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D42C72160B8
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 22:58:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 204DF2160EC
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 23:20:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B0ybf141wzDqdW
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 06:58:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B0z4t2WT1zDqdL
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 07:20:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B0yZp1ZGzzDqYV
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 06:58:09 +1000 (AEST)
-IronPort-SDR: r7X7M3XSUiSRY/Cp3MkoMmmX+8lvq/peNFFebX44/gh3foE9HNPxzu969RwzcBlHLyZsTPPm1X
- LemISppJFQOg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9674"; a="146577665"
-X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="146577665"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B0z3z39lYzDqc4
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 07:19:54 +1000 (AEST)
+IronPort-SDR: UOVsab+bxs+I1GXkdANB/26AKy1MjzOvTmIsRf6kZH8bzCuHa5VpLG5ODXEKZxUP66m82JK/IB
+ XmFz3WrF28lw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9674"; a="147516225"
+X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="147516225"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jul 2020 13:58:04 -0700
-IronPort-SDR: 78Eu3yf7jD52KY0n0mg5vQTc/pNNI0Zpzbnape+LcJOB2ErkyrpRmSUk9TW9Lb4Zr7wj6PY2RM
- cMq+/OrKC1Zg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="315292462"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga002.fm.intel.com with ESMTP; 06 Jul 2020 13:58:04 -0700
-Received: from [10.251.158.177] (jmbills-mobl.amr.corp.intel.com
- [10.251.158.177])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 192655805A3
- for <openbmc@lists.ozlabs.org>; Mon,  6 Jul 2020 13:58:04 -0700 (PDT)
-Subject: Re: Weird build dependency issue causing missing symbols
-To: openbmc@lists.ozlabs.org
-References: <c99c6e23-a2b4-01de-7cb9-ab035dcf8e01@linux.intel.com>
- <20200702213328.GD3922@heinlein>
- <ac51ef67-40de-933e-a5a9-50d7506e073f@linux.intel.com>
- <DM6PR11MB441039521253333CFA3BEF22946A0@DM6PR11MB4410.namprd11.prod.outlook.com>
- <20200703052014.GF3922@heinlein>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <029604d7-7b79-4eaa-561c-b5334d05f994@linux.intel.com>
-Date: Mon, 6 Jul 2020 13:58:03 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jul 2020 14:19:50 -0700
+IronPort-SDR: qPN3kdizH1adcFqdURdRSzkaHGg9UvGZMSnEAa3VeU9nVGWgfDJ80nBvkA8fbpzB3L9uyeCPv5
+ yuN4/evkqsng==
+X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="456870142"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jul 2020 14:19:50 -0700
+Date: Mon, 6 Jul 2020 14:19:49 -0700
+From: Vernon Mauery <vernon.mauery@linux.intel.com>
+To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+Subject: Re: Multi-host support in ipmbbridged and phosphor-host-ipmid
+Message-ID: <20200706211949.GA47395@mauery.jf.intel.com>
+References: <SG2PR04MB316063EDE5B383B87F33D96BA76A0@SG2PR04MB3160.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-In-Reply-To: <20200703052014.GF3922@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <SG2PR04MB316063EDE5B383B87F33D96BA76A0@SG2PR04MB3160.apcprd04.prod.outlook.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,62 +59,211 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Kumar Thangavel <thangavel.k@hcl.com>, Ed Tanous <ed.tanous@intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Adriana Kobylak <anoo@us.ibm.com>, Vijay Khemka <vijaykhemka@fb.com>,
+ Dawid Frycki <dawid.frycki@intel.com>, Patrick Williams <patrickw3@fb.com>,
+ Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 03-Jul-2020 05:22 PM, Velumani T-ERS,HCLTech wrote:
+>Hi All,
+>
+>We have a multi-host system and wanted to add support in openbmc to handle=
+ all ipmi commands. We have come up with the design approach that could hel=
+p us in handling ipmi command with multihost system. Please find the attach=
+ed design proposal and provide feedback/suggestions.
+>
+>Regards,
+>Velu
+>
+>::DISCLAIMER::
+>________________________________
+>The contents of this e-mail and any attachment(s) are confidential and int=
+ended for the named recipient(s) only. E-mail transmission is not guarantee=
+d to be secure or error-free as information could be intercepted, corrupted=
+, lost, destroyed, arrive late or incomplete, or may contain viruses in tra=
+nsmission. The e mail and its contents (with or without referred errors) sh=
+all therefore not attach any liability on the originator or HCL or its affi=
+liates. Views or opinions, if any, presented in this email are solely those=
+ of the author and may not necessarily reflect the views or opinions of HCL=
+ or its affiliates. Any form of reproduction, dissemination, copying, discl=
+osure, modification, distribution and / or publication of this message with=
+out the prior written consent of authorized representative of HCL is strict=
+ly prohibited. If you have received this email in error please delete it an=
+d notify the sender immediately. Before opening any email and/or attachment=
+s, please check them for viruses and other defects.
+>________________________________
 
+>
+>
+># Multi-host IPMI design
+>------------------------
+>
+>Authors:
+>  Velumani T, [velumanit@hcl](mailto:velumanit@hcl.com)
+>  Kumar T, [thangavel.k@hcl.com](mailto:thangavel.k@hcl.com)
+>
+>Primary assignee:
+>
+>Other contributors:
+>
+>Created:
+>  2020-06-26
+>
+>1. Issue Descriptionption:
+>--------------------
+>The current version of openbmc does not support multi-host implementation =
+in ipmi
+>commands handling. We have a multi-host system and proposing the design to
+>support multi-host.
+>
+>As detailed below the hosts are connected in the ipmb interface, all host
+>related communication is based on ipmb. The openbmc uses ipmbbridged to ma=
+nage
+>ipmb busses and the ipmb messages are routed to ipmid.
+>
+>Issue 1: ipmbridged does not support more than 2 channels
 
-On 7/2/2020 10:20 PM, Patrick Williams wrote:
-> On Fri, Jul 03, 2020 at 12:18:34AM +0000, Ren, Zhikui wrote:
->> Maybe the problem is that this header server.hpp is generated not  a source.
->> Artifact created from the same source *should* be the same (except timestamp)
->> If the source did not update, just a forced rebuild to create new binaries,  I can see Yocto choose not to rebuild things depend on the package.
->> In the case of boost, since it is devtool modified and the header is a source and not build artifact, it make sense to trigger all the rebuild.
->>
->>
->> -----Original Message-----
->> From: openbmc <openbmc-bounces+zhikui.ren=intel.com@lists.ozlabs.org> On Behalf Of Bills, Jason M
->> Sent: Thursday, July 2, 2020 5:00 PM
->> To: openbmc@lists.ozlabs.org
->> Subject: Re: Weird build dependency issue causing missing symbols
->>
->>
->>
->> On 7/2/2020 2:33 PM, Patrick Williams wrote:
->>> On Thu, Jul 02, 2020 at 12:58:43PM -0700, Bills, Jason M wrote:
->>>> We have narrowed this down to being caused by two separate issues:
->>>> 1. When phosphor-dbus-interfaces is rebuilt it will sometimes change
->>>> the order of the PropertiesVariant in server.hpp.
->>>
->>> This sounds like a bug in sdbus++.  We should be sorting the variant
->>> parameters or issuing them in array order.  I'll look into it.
->>>
->>>> 2. When the order of PropertiesVariant changes on a rebuild, the
->>>> recipes that already have an old copy of server.hpp are not triggered
->>>> to rebuild and are left with the old copy of server.hpp.
->>>
->>> This isn't surprising if what is triggering the rebuild is not a Yocto
->>> variable change (or git revision).  Yocto doesn't cache the contents
->>> of the packages, but caches the variables that went into a build step.
->>> A hash of the variables are used to look up the potential 'sstate-cache'
->>> files so that it can skip build steps.
->>>
->>> If you think a variable or a git-revision should have changed with
->>> what you were doing, then maybe it is something else.
->>>
->> It seems like a header file change should trigger a rebuild, though?  If I manually edited something like a library header file, I'd expect everything that includes that library to be rebuilt with the new header change.
->>
->> I tried to devtool modify boost to check the behavior, but that causes boost to rebuild every time and correctly triggers the dependent builds.
->>    Maybe the case above of modifying a header file is invalid?
-> 
-> It doesn't matter what the content is: header, library, executable, data
-> file.  Yocto does not use contents in the decision of "does this need to
-> be rebuilt".  It only uses variables from recipes.  If the variables do
-> not change, the package is not rebuilt (unless explicitly tainted).
-> 
-> See https://www.yoctoproject.org/docs/latest/mega-manual/mega-manual.html#dev-invalidating-shared-state-to-force-a-task-to-run for example.
-> 
-Thanks, Patrick! I think I get it.  I was stuck on the behavior that I 
-see when I'm working with repo using 'devtool modify'.  I guess 'devtool 
-modify' must have some additional magic to force rebuilds on file 
-changes that doesn't apply to a standard build?
+ipmbbridged should support as many channels as are specified in the=20
+configuration file. A change like this would go in your bbappend in your=20
+platform layer.
+
+>Issue 2: ipmid does not have the information on which ipmb channel the req=
+uest
+>has come from. The ipmid handlers should have the host details to fetch the
+>host specific responses.
+
+It has enough information to map it to an IPMI channel and to send it=20
+back to the requester.
+
+>2. IPMI and IPMB System architecture:
+>--------------------------------------
+>       +-----------+       +------------+      +--------+
+>       |           |       |            | ipmb1|        |
+>       |           |       |            |------| Host-1 |
+>       |           |       |            |      |        |
+>       |           |       |            |      +--------+
+>       |           |       |            |
+>       |           |       |            |
+>       |           | dbus  |            |      +--------+
+>       | ipmid     |-------| Ipmbbridged| ipmb2|        |
+>       |           |       |            |------| Host-2 |
+>       |           |       |            |      |        |
+>       |           |       |            |      +--------+
+>       |           |       |            |
+>       |           |       |            |
+>       |           |       |            |      +--------+
+>       |           |       |            | ipmb |        |
+>       |           |       |            |------| Host-N |
+>       |           |       |            |      |        |
+>       +-----------+       +------------+      +--------+
+>=09
+>Hosts are connected with ipmb interface, the hosts can be 1 to N. The ipmb
+>request coming from the hosts are routed to ipmid by the ipmbbridged.
+>The ipmd requests are routed from ipmid or any service by d-bus interface =
+and
+>the ipmbbridged routes to ipmb interface.
+>
+>3. Proposed Design:
+>--------------------
+>To address issue1 and issue2, we propose the following design changes in
+>ipmbbridged and ipmid.
+>
+>3.1 Changes in ipmbbridged:
+>---------------------------
+>The current ipmbbridged supports only 2 channels and this needs to be
+>enhanced to more channels.
+>ipmbbridged to send the channel details from where the request is received
+>
+>3.1.1 Change1 : support more than 2 channels
+>---------------------------------------------
+>To support more than 2 channels, we propose to add additional channels nam=
+ed
+>"host1", "host2" ..."hostn"
+>
+>This can be decided by the config file "ipmb-channels.json", The change wi=
+ll
+>look like below
+>
+>{
+>  "channels": [
+>    {
+>      "type": "me",
+>      "slave-path": "/dev/ipmb-1",
+>      "bmc-addr": 32,
+>      "remote-addr": 44
+>    },
+>    {
+>      "type": "ipmb",
+>      "slave-path": "/dev/ipmb-2",
+>      "bmc-addr": 32,
+>      "remote-addr": 96
+>    }
+>	{
+>      "type": "host1",
+
+I don't understand why you need to have a new type here. Each of these=20
+channels are IPMB channels (according to the IPMI specification)=20
+
+You do need somewhere to mark the ID of the host, but I feel that would=20
+be better suited as a new entry
+       "host": 1,
+
+>      "slave-path": "/dev/ipmb-3",
+>      "bmc-addr": 32,
+>      "remote-addr": 64
+>    }
+>	{
+>      "type": "host2",
+>      "slave-path": "/dev/ipmb-4",
+>      "bmc-addr": 32,
+>      "remote-addr": 64
+>    }
+>	{
+>      "type": "host3",
+>      "slave-path": "/dev/ipmb-4",
+>      "bmc-addr": 32,
+>      "remote-addr": 64
+>    }
+>  ]
+>}
+>
+>Reading the json file ipmbbridged to support host channels optionally.
+>
+>3.1.2. Change 2: Sending Host detail as addional parameter
+>-----------------------------------------------------------
+>While routing the ipmb requests coming from the host channel, the ipmbbrid=
+ged
+>adds the ipmb bus details configured in the json file key "type".
+>In the above example the ipmb request coming from "/dev/ipmb-4" the ipmb w=
+ill
+>send "host2" as optional parameter in the d-bus interface to ipmid.
+
+Better would be a host:2 entry
+
+>3.2 Changes in ipmid:
+>---------------------
+>Receive the optional parameter sent by the ipmbbriged as host details, whi=
+le
+>receiving the parameter in the executionEntry method call the same will be
+>passed to the command handlers in both common and oem handlers.
+>The command handlers can make use of the host information to fetch host
+>specific data.
+
+I would suggest that this is a new item in the ipmi::Context class. It=20
+should default to 0 (first host), and can be set by by a bridge=20
+(ipmbbridged, kcsbridged, etc.).
+
+>For example, host1 send a request to get boot order from bmc, bmc maintains
+>data separately for each host. When this command comes to ipmid the comman=
+ds
+>handler gets the host in which the command received. The handler will fetch
+>host1 boot order details and respond from the command handler. This is
+>applicable for both common and oem handlers.
+
+It would be up to the handler to behave correctly by checking the=20
+ipmi::Context.
+
+--Vernon
