@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB6D9215123
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 04:18:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C6118215153
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 05:14:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B0TlJ0s2fzDqRk
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 12:18:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B0VzP3VtHzDqgF
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 13:14:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,68 +17,78 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=MS2tNCMm; 
+ header.s=fm3 header.b=gYNSYbAd; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=gxcZMK4O; 
+ header.a=rsa-sha256 header.s=fm3 header.b=rKl5aPS1; 
  dkim-atps=neutral
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
  [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B0TTG5LFzzDqCK
- for <openbmc@lists.ozlabs.org>; Mon,  6 Jul 2020 12:06:41 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B0VyL1zL0zDqf3
+ for <openbmc@lists.ozlabs.org>; Mon,  6 Jul 2020 13:13:29 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 30BF05C00E9;
- Sun,  5 Jul 2020 22:06:39 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 1EF235C00ED;
+ Sun,  5 Jul 2020 23:13:27 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 05 Jul 2020 22:06:39 -0400
+ by compute3.internal (MEProxy); Sun, 05 Jul 2020 23:13:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=SoGv2Ubtg3iNagNdOx2Wj8pBMpbmFt6
- jx/B93jEVOKc=; b=MS2tNCMmG3PF84/usPYdHfJ0E8UQmlurB8b5vYLLaRMe1Wv
- vGf/gAImPF/SpLksEOdBtlmLeD4TRPxQkAJK80MKl28aCg0OhpcruiRW3ffp+YXv
- IzamC5dgnN7NwwUASkdQ7nVV73D5CQNOSFkSpSrAUQfv9LE4fqjenKPPEY+tI4zh
- W2qXq1ieiYZbMRDnwFPf9Guiu6BdyILC8ACU2I1PbqrO3NJD3BidNc+QTINI8LZr
- ciUCgAJWWkdbWGsHz2e7hx++fnEeyaDS1GJxzj5XARxUrtFACLbm+ohrwmsBige9
- VyyJKJkSar8RIUUAPFfy0u1rgXimXxve4kMvMUg==
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=n/rB8dgpZt05OIXdy/VBHsrB1T8Fgdr
+ h/XfCS1jv4CA=; b=gYNSYbAdpGp0PV2AZ1uI7cp2oq86Nm4ie6REnEpJIGlTP64
+ sOk8kOKhpBeQyJoFRRcM3sbHmL8ZvyYO+DDgDp3bO3u16mTCW6CtATZ/zRa/7oKa
+ pvRNX6Qrbc89O56Mjgtit2ywM7i5JJY3yyXv7vbfrv8gDFnum3LQGSL/6I4AJGBB
+ vvg7Bz8ZBMHAp4clOIAgqu/ukcX/nB5xX+5uAfdsF+JFmhFk8rNChMlL5+jVazzh
+ xJZVQMh8NJSzlC5HNZQJTEHUTdRO9MdLMZgEQzo3t00xFCcygw7MccogNVNpkzjY
+ +GWIHnIJtPqFDtgJd1RxTo9ZZSO9sXankBKBDXg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ messagingengine.com; h=content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=SoGv2U
- btg3iNagNdOx2Wj8pBMpbmFt6jx/B93jEVOKc=; b=gxcZMK4O1lfOhdh4CpGaSV
- U2TcNAl9kPUJgSiYfFbHI3xJhqsqQw7PHCutc4OMOGxBF2obzlgfubBp/OddTObH
- 612qEVu65ybrE02X33Ect91PRzZ5OmasdY4L0wUpoZDSWQeQ4ftdVQHcKbCp1Ur/
- cj3+Yk1Cf2tnKN7Li7rjFzZFgli/TjcSa0Jx6E4//8HN7WQxcCzbNQp4fUyJvpN6
- kDbDi+oJXbykWtRFbxgvhia1i4VcdKXwxLZRuppIeu4f3mZjubKmmuuOx65gqa1O
- wfvZGvNliFaiDeEk74jVZvU8HgZW3m+AbRQKLte+sZphmi4vAu11yS7rih5o2TOA
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=n/rB8d
+ gpZt05OIXdy/VBHsrB1T8Fgdrh/XfCS1jv4CA=; b=rKl5aPS1G5F5Hl76j5m4+5
+ GlPGwh+hu0LzAR5vOek47d3X/4OFqUAixwE3CuDwkBqXDP30Gf2we/6kuP5AVSqq
+ vvb/G2XLgtZfEt/9ZlMxU1AB4cFzAl/bGqsWGgM0jrfpsFSf5LqfgZu6QVMws5ji
+ fvC2sQTKevii2JhFUZWluQ8oWlJFFdWROIQnDUO1MdlYial4fUxUSxo8N0KllGyc
+ fqxCbBy2FMhi1gp1TvlMSPiPMd2iN8i3SfN6bSDARLekL7tmWHg2Ju6N6ApTbNvX
+ 3jsrAgW5Jf7ImgRZMItq8swiXwuc2eGpZwdj3H7EniiyH9gaVDaOnot8MbHnj0CQ
  ==
-X-ME-Sender: <xms:LocCX_XohJBjYarhnQb8iRjBsaZB6M7X488wk05UQ9OhPJjvtYe-5Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvgdehvdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:1pYCXzTCry_Gn20DvpmVT8zUKerLPMMYnnR2Eoz88YxK33-ctvtJCw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvgdeihecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpedutddtkeeugeegvddttdeukeeiuddtgfeuuddtfeeiueetfeeileettedv
- tdfhieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:LocCX3lqtXHAmHLbIAWKXd_GsS3lP8c7VwoQpJRTcUywg8EvitW-Ug>
- <xmx:LocCX7Zj03QCRrrSbQ77VAKYpKPtDyHLg0md4uL7eO5Vlpi7bwZ8iQ>
- <xmx:LocCX6VkQq6SUh_7WNoegTlf6DjAMegZTwTX6YHvGz0tnhCHU61pMg>
- <xmx:L4cCX3QTxU8JKTKL8_1fjjlX6AlcMgOi4Zs9h78tef6uOasxKc87kg>
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepofgfggfkjghffffhvffutgesthdtredtreer
+ jeenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjh
+ drihgurdgruheqnecuggftrfgrthhtvghrnhepffefieegteejuefhtdetleelhfelgeek
+ vdektedtgfeuhfffkefhgeejtdfgveehnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+ dpohhpvghnsghmtgdqphhrohhjvggtthdrgiihiienucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:1pYCX0yENp6Ko51oxsswJZeQtHti54jlBEMzolLRl2GnYPR8LkyYOA>
+ <xmx:1pYCX430gi1uDL49zhuXD0e7C6OS2tbf23k4HaFjhjive0HtvEloHQ>
+ <xmx:1pYCXzA6WAX2i6LiLqhhnCDImhZbJsH7aFBdh9EYhFYlqq0PoVh-_w>
+ <xmx:15YCX4ZbytDD__FZ8W7EpuSYCnJ25eqlj1pCKoIFN6EmK38Fr4IEzw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 8318CE00AA; Sun,  5 Jul 2020 22:06:38 -0400 (EDT)
+ id 15E8DE00AA; Sun,  5 Jul 2020 23:13:26 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.3.0-dev0-576-gfe2cd66-fm-20200629.001-gfe2cd668
 Mime-Version: 1.0
-Message-Id: <c60ab529-5c64-48a3-bd74-9aa623a5be40@www.fastmail.com>
-In-Reply-To: <20200622154542.20930-1-eajames@linux.ibm.com>
-References: <20200622154542.20930-1-eajames@linux.ibm.com>
-Date: Mon, 06 Jul 2020 11:36:18 +0930
+Message-Id: <2b9de3db-222a-4a70-bbe9-36a0aec0e66e@www.fastmail.com>
+In-Reply-To: <be5a68c4-39b4-2d88-425d-0ab2121ed564@linux.intel.com>
+References: <b774a6d0-97f3-8cc7-9289-3792b5094cdd@linux.intel.com>
+ <7fdfa5dd-11a8-4566-a8b6-090b37506cf8@www.fastmail.com>
+ <54948e11-946b-49ad-945e-2d73c41c1a8a@linux.intel.com>
+ <8f92dcfd-c6b3-4625-a158-17e03a940687@www.fastmail.com>
+ <be5a68c4-39b4-2d88-425d-0ab2121ed564@linux.intel.com>
+Date: Mon, 06 Jul 2020 12:43:04 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.4]_leds:_pca955x:_Add_a_software_implem?=
- =?UTF-8?Q?entation_of_the_PCA9552_chip?=
+To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Jeremy Kerr" <jk@ozlabs.org>,
+ "sumanth.bhat@linux.intel.com" <sumanth.bhat@linux.intel.com>,
+ "Hawrylewicz Czarnowski,
+ Przemyslaw" <przemyslaw.hawrylewicz.czarnowski@intel.com>, 
+ "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
+Subject: =?UTF-8?Q?Re:_MCTP_Null_EID_-_Physical_addressing_support_-_Binding_priv?=
+ =?UTF-8?Q?ate_in_API?=
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -96,17 +106,42 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Tue, 23 Jun 2020, at 01:15, Eddie James wrote:
-> There is an implementation of the PCA9552 on a PIC16F microcontroller.
-> The I2C device addresses are different from the hardware PCA9552, so add
-> a new compatible string and associated platform data to be able to probe
-> this device.
+On Fri, 5 Jun 2020, at 12:53, Thomaiyar, Richard Marian wrote:
+> Thanks Andrew, 
 > 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> inline comments. Captured this as an agenda for our next work group 
+> call discussion https://github.com/openbmc/openbmc/wiki/OpenBMC-PMCI-WG
 
-I think we need to bikeshed the name a bit, and that might be best done 
-upstream. I feel like we should be putting "ibm" in the name to avoid the 
-haziness of "soft". Another company could do the same thing with different 
-choices for things like the device address parameters.
+I noted in another thread that I've pushed patches implementing bridging and 
+routing along with the provisional EID concept to gerrit:
+
+https://gerrit.openbmc-project.xyz/q/topic:%2522routing%2522+(status:open+OR+status:merged)+project:openbmc/libmctp
+
+In the end the implementation uses a "provisional" flag in both the mctp_eid_t 
+type and the route table as there was one race that couldn't be safely 
+eliminated without it.
+
+> 
+> [Richard]: We 
+> can't know which EID can be used as provisional. It may be real EID in 
+> a bridged network. Please educate me, if the same can be achieved 
+> without having a conflict. 
+
+Because the conflict shouldn't matter - it can be detected by the binding 
+receiving the message by looking up the source EID in the route table and 
+checking if the result is a provisional EID.
+
+However, the complication occurs when trying to remove the provisional EID from 
+the route table in order to deliver the message received from the endpoint that 
+has been formally allocated the same EID. If there's an outstanding command 
+whose response hasn't yet been sent which will need the provisional EID entry 
+from the table in order for the message to be routed, we can't deliver the 
+message received from the endpoint which is non-provisionally assigned the EID. 
+It's hard to unwind that properly and still account for issues like deadlocks 
+or application crashes which will lead to a denial of service.
+
+So the result is we have a route table with two separate address spaces, one 
+for formally assigned EIDs and another for provisional EIDs. This partition is 
+managed by a flag on the route table entries in the current implementation.
 
 Andrew
