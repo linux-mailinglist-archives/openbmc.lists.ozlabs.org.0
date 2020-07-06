@@ -2,73 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C793B216134
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 00:01:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E589216158
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 00:14:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B0zzn1yXLzDqfc
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 08:01:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B10GZ5Q5LzDqf9
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 08:14:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::729;
- helo=mail-qk1-x729.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=BVTMfN5T; dkim-atps=neutral
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com
- [IPv6:2607:f8b0:4864:20::729])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B0zyx2k0TzDqc2
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 08:00:40 +1000 (AEST)
-Received: by mail-qk1-x729.google.com with SMTP id r22so36346653qke.13
- for <openbmc@lists.ozlabs.org>; Mon, 06 Jul 2020 15:00:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=oPQnZv9ixC8t6ZOm7Ces8MOpvEgx45nP99uetIcrr1E=;
- b=BVTMfN5Tn7DK3DHGN3hifFSARYw28PY+kw5u7ovYpaF95f26qEAX0jSZX5X4x/g0WJ
- juOgU9XLc4ZQmi2C6bvkbC8QNT9y5oXCtoGGWvt+XfQLxfUrGcJ/Ei0olwCQ3UnnLe5a
- qSlepxSguM9XDp/iKSmUcJuJO01X81DiA4aeMP0DKHJrToySq8rvLZayQ+iA5+CH6LOw
- lNeUWKLAOrZF6r0BPW755rW4Fxbta61YDiBAG7ruiMviOV2eXXIL+j4HaNaqQ9K8Pdwr
- sVdTKAMbO1N2oWX0P9tV9VBNcMw6cFzqTJ5M1KpA9QZEAZSJ+CdzQF0btIaIi6gw2BYy
- J/jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=oPQnZv9ixC8t6ZOm7Ces8MOpvEgx45nP99uetIcrr1E=;
- b=Jvo8J6ylty2TXFu9rtEFYegeINS+FfXOsqAJDNGxVKv3LaRQ+ekJ/6QqmDdFMnWW2Z
- luzql1zt60wuWV73KCKlj+8D8H8ivSOSjV+V+gRhzjm50C+nOfygFg7E/V0/00AUIQSK
- 0uct3byYpqLAkKkYczZiIhIZ/jBE8xRPI36Br3swFwpM8eH7fZ/+IJmb25FwbQcARVf6
- DJLEbdGgbAQoSyMv7cfX+Iwax0xXsTADNKQCN2yo2VYk2IQNi+wFW9U79OIkAL4ZkFAF
- AxQoMbyTlKBT9uBRLfBB8ViWP6iunFKYIsB89wWRo+mvRYDNmfBbLxRk6tXTRTPK7i/j
- /pIA==
-X-Gm-Message-State: AOAM531X2zy7FYb0lmTQRfcLmiFyuyyxGP53GZ6/UaFOh9zA4PBJV/FR
- Fxzkgm2RTnhGYhTVjqAMSqZz4UEYLEg=
-X-Google-Smtp-Source: ABdhPJx3qxR68kV9mzklPiV/xZqUH08njiRrXLT1MR7vs12Cf4JuvNViJGFmXVMRZkruk06YBbMlfw==
-X-Received: by 2002:a05:620a:1301:: with SMTP id
- o1mr50864166qkj.223.1594072837695; 
- Mon, 06 Jul 2020 15:00:37 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:3d62:4f68:17be:d26d])
- by smtp.gmail.com with ESMTPSA id b7sm18358702qkl.18.2020.07.06.15.00.36
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 06 Jul 2020 15:00:37 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: OpenBMC Debug Wiki
-Message-Id: <D2975C77-7BD6-4643-BEBA-28564EC91841@gmail.com>
-Date: Mon, 6 Jul 2020 17:00:36 -0500
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B10Fq27lTzDqMg
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 08:13:34 +1000 (AEST)
+IronPort-SDR: R50FFA1CY3zM4EQmAKvbC3muH6EI67FcACZ8mq5n9Hz8EMDjFhoAV71lJl/pcG4Zt/vlq0tsai
+ F2qRo0R51p+w==
+X-IronPort-AV: E=McAfee;i="6000,8403,9674"; a="149021411"
+X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="149021411"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jul 2020 15:13:31 -0700
+IronPort-SDR: Maht9NXVdAC+/EkdzbU7v9BgGvxclXwhILluw+5bd600oh29GimKtQTB23MQ9KOJ3dbrRSTP3/
+ VdM2Fe/7W1lA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="314086111"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga008.jf.intel.com with ESMTP; 06 Jul 2020 15:13:31 -0700
+Received: from [10.251.158.177] (jmbills-mobl.amr.corp.intel.com
+ [10.251.158.177])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id E54465805A3;
+ Mon,  6 Jul 2020 15:13:30 -0700 (PDT)
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, john.leung@intel.com
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Subject: Redfish Processor Command
+Message-ID: <16576aa9-ae11-82b7-8f31-88f82684d703@linux.intel.com>
+Date: Mon, 6 Jul 2020 15:13:30 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,14 +66,19 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I=E2=80=99ve had it on my TODO list for a while to generate a document =
-of some sort
-to assist people with debugging OpenBMC systems.
+Hi All,
 
-I created the following:
-https://github.com/openbmc/openbmc/wiki/Debugging-OpenBMC
+Intel processors have an interface called PECI that allows commands to 
+be sent to the processor from the BMC, and we currently provide a 
+Redfish OEM action to send PECI commands to the processor.
 
-Any updates or reviews appreciated (feel free to update directly if you =
-like).
+We proposed to the DMTF to add a standard command action to the Redfish 
+Processor resource for this purpose, and their suggestion was to just 
+keep it as an OEM action.
 
-Andrew=
+We're now trying to figure out the right way to handle this capability 
+in OpenBMC.  Would anyone else have use of a generic processor command 
+action in our OpenBMC Redfish implementation?
+
+Thanks!
+-Jason
