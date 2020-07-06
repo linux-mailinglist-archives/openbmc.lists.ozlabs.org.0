@@ -2,73 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFF1D2160F6
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jul 2020 23:31:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C793B216134
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 00:01:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B0zJs0nykzDqdX
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 07:31:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B0zzn1yXLzDqfc
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jul 2020 08:01:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::729;
+ helo=mail-qk1-x729.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=BVTMfN5T; dkim-atps=neutral
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com
+ [IPv6:2607:f8b0:4864:20::729])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B0zHx0nsZzDqc9
- for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 07:30:20 +1000 (AEST)
-IronPort-SDR: HZmTSAGw1xwkOs+BENzMMQvKQwUIUvBwRjTUapFPUhW73rY9l2e/F4cKeWfSdBfR7mHXI7d+bD
- 2b8Bqih+x63Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9674"; a="165577993"
-X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="165577993"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jul 2020 14:30:18 -0700
-IronPort-SDR: 7BNCs1quIPHft3LS1N5BJIZF+qPjtT1ybhhsFielIvvTKqdYfVJzFGzhkk3BArbQdLAHg5nzJz
- MPiOuIX/Qh0A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,321,1589266800"; d="scan'208";a="315298594"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga002.fm.intel.com with ESMTP; 06 Jul 2020 14:30:17 -0700
-Received: from [10.251.158.177] (jmbills-mobl.amr.corp.intel.com
- [10.251.158.177])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id E71CE580428
- for <openbmc@lists.ozlabs.org>; Mon,  6 Jul 2020 14:30:16 -0700 (PDT)
-Subject: Re: Redfish EventService Implementation
-To: openbmc@lists.ozlabs.org
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
- <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
- <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
- <20200617204516.GE4618@heinlein>
- <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
- <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
- <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
- <6fc4c66e-4a0a-1c59-3f77-a6fcff29b97e@linux.intel.com>
- <ee2b81be-0aff-022f-e5a7-9f0f874c1f20@linux.vnet.ibm.com>
- <8e342c33-25c8-5586-cbd4-e8662fcac6b5@linux.intel.com>
- <5b2ab3f9-4e98-b9c3-128b-9eb161ea52f9@linux.vnet.ibm.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <b62c0b2d-55fb-ffc7-5e29-2716f665f86d@linux.intel.com>
-Date: Mon, 6 Jul 2020 14:30:16 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <5b2ab3f9-4e98-b9c3-128b-9eb161ea52f9@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B0zyx2k0TzDqc2
+ for <openbmc@lists.ozlabs.org>; Tue,  7 Jul 2020 08:00:40 +1000 (AEST)
+Received: by mail-qk1-x729.google.com with SMTP id r22so36346653qke.13
+ for <openbmc@lists.ozlabs.org>; Mon, 06 Jul 2020 15:00:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=oPQnZv9ixC8t6ZOm7Ces8MOpvEgx45nP99uetIcrr1E=;
+ b=BVTMfN5Tn7DK3DHGN3hifFSARYw28PY+kw5u7ovYpaF95f26qEAX0jSZX5X4x/g0WJ
+ juOgU9XLc4ZQmi2C6bvkbC8QNT9y5oXCtoGGWvt+XfQLxfUrGcJ/Ei0olwCQ3UnnLe5a
+ qSlepxSguM9XDp/iKSmUcJuJO01X81DiA4aeMP0DKHJrToySq8rvLZayQ+iA5+CH6LOw
+ lNeUWKLAOrZF6r0BPW755rW4Fxbta61YDiBAG7ruiMviOV2eXXIL+j4HaNaqQ9K8Pdwr
+ sVdTKAMbO1N2oWX0P9tV9VBNcMw6cFzqTJ5M1KpA9QZEAZSJ+CdzQF0btIaIi6gw2BYy
+ J/jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=oPQnZv9ixC8t6ZOm7Ces8MOpvEgx45nP99uetIcrr1E=;
+ b=Jvo8J6ylty2TXFu9rtEFYegeINS+FfXOsqAJDNGxVKv3LaRQ+ekJ/6QqmDdFMnWW2Z
+ luzql1zt60wuWV73KCKlj+8D8H8ivSOSjV+V+gRhzjm50C+nOfygFg7E/V0/00AUIQSK
+ 0uct3byYpqLAkKkYczZiIhIZ/jBE8xRPI36Br3swFwpM8eH7fZ/+IJmb25FwbQcARVf6
+ DJLEbdGgbAQoSyMv7cfX+Iwax0xXsTADNKQCN2yo2VYk2IQNi+wFW9U79OIkAL4ZkFAF
+ AxQoMbyTlKBT9uBRLfBB8ViWP6iunFKYIsB89wWRo+mvRYDNmfBbLxRk6tXTRTPK7i/j
+ /pIA==
+X-Gm-Message-State: AOAM531X2zy7FYb0lmTQRfcLmiFyuyyxGP53GZ6/UaFOh9zA4PBJV/FR
+ Fxzkgm2RTnhGYhTVjqAMSqZz4UEYLEg=
+X-Google-Smtp-Source: ABdhPJx3qxR68kV9mzklPiV/xZqUH08njiRrXLT1MR7vs12Cf4JuvNViJGFmXVMRZkruk06YBbMlfw==
+X-Received: by 2002:a05:620a:1301:: with SMTP id
+ o1mr50864166qkj.223.1594072837695; 
+ Mon, 06 Jul 2020 15:00:37 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:3d62:4f68:17be:d26d])
+ by smtp.gmail.com with ESMTPSA id b7sm18358702qkl.18.2020.07.06.15.00.36
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 06 Jul 2020 15:00:37 -0700 (PDT)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: OpenBMC Debug Wiki
+Message-Id: <D2975C77-7BD6-4643-BEBA-28564EC91841@gmail.com>
+Date: Mon, 6 Jul 2020 17:00:36 -0500
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,74 +83,14 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+I=E2=80=99ve had it on my TODO list for a while to generate a document =
+of some sort
+to assist people with debugging OpenBMC systems.
 
+I created the following:
+https://github.com/openbmc/openbmc/wiki/Debugging-OpenBMC
 
-On 7/3/2020 3:15 AM, Ratan Gupta wrote:
->>>> I think I'm still a little confused at the scope.  My understanding 
->>>> was that this initial design for EventService was only for 
->>>> monitoring event messages and not resources in general. It seems 
->>>> like it may not make sense to try to use the same tools and approach 
->>>> for both message monitoring and resource monitoring? Do we need to 
->>>> treat them separately for now to simplify the discussion?
->>> Jason, When you say event messages? What do you mean, Do you mean to 
->>> say "/redfish/v1/Systems/system/Logservices/eventlog"? >
->>> If yes then this should also go as Resource Event, When ever any log 
->>> entry gets created under System Log 
->>> (/redfish/v1/Systems/system/Logservices/eventlog/entries), BMC would 
->>> notify to the Redfish client saying that "ResourceCreated" with the 
->>> URL of the Resource.
->> Yes, new entries under 
->> "/redfish/v1/Systems/system/Logservices/eventlog", but I thought you 
->> could register for specific MessageIDs, so it's not just a generic 
->> "new resource" event like others would be.
-> 
-> Can we register for MessageID? I thought client can register for whole 
-> registry not a specific Message ID.
-> 
-I don't really know.  I thought that's what the current implementation 
-allowed, but I don't know for sure if it can or should.
+Any updates or reviews appreciated (feel free to update directly if you =
+like).
 
->>
->>
->>>
->>> After receiving this event Redfish client will do a GET request on 
->>> the URL(retrieved as part of event) to get the content of the log.
->>>
->>> This will become generic infra for all types of events.
->> What I'm saying is I don't know if there is a good generic solution to 
->> cover both the EventLog and all other resources.  I believe the 
->> current EventService implementation was designed only for EventLog and 
->> may not work well for generic resource events.
-> 
-> Can you get me the example payload for EventLog which is going to be 
-> sent with the current design? I am not sure how the eventlog and other 
-> resources are different.
-> 
-This is based on the assumption that for a LogService, you can register 
-for a MessageId.  If this is not possible, then they might be treated 
-the same.
-
-> For eventLogs also we have the associated D-bus 
-> objects(/xyz/openbmc_project/logging,/xyz/openbmc_project/dump etc)
-> 
-For Intel platforms, we don't use /xyz/openbmc_project/logging, so we 
-don't have D-Bus objects associated with each EventLog LogEntry.  We use 
-rsyslog to create a file that contains many LogEntries.
-
-However, as an unrelated side-thought: linking logging to 
-/xyz/openbmc_project/dump made me wonder if there is a possible solution 
-to the logging issue if we treat /xyz/openbmc_project/logging like 
-/xyz/openbmc_project/dump and place a pointer to the log in the D-Bus 
-object instead of the log itself?
-
->>
->>>
->>> I would be coming up with few design approaches and downside with 
->>> each approach to take it to conclusion.
->> Thanks!  What I'm proposing is that we clarify or possibly separate 
->> the discussions about EventLog vs. generic resources to avoid 
->> confusion and come up with the right solutions for each.
->>
->>>
->>> Ratan
->>>
+Andrew=
