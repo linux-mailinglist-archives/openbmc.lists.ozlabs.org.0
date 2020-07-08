@@ -1,68 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA55E218F74
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jul 2020 20:04:55 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4FAB218F77
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jul 2020 20:07:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B26dt0wV4zDqgV
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 04:04:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B26hl0VBDzDq5n
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 04:07:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::22d;
- helo=mail-oi1-x22d.google.com; envelope-from=jasonling@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b41; helo=mail-yb1-xb41.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=SZAxndSX; dkim-atps=neutral
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com
- [IPv6:2607:f8b0:4864:20::22d])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=OkCja4rA; dkim-atps=neutral
+Received: from mail-yb1-xb41.google.com (mail-yb1-xb41.google.com
+ [IPv6:2607:f8b0:4864:20::b41])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B26cy3lQszDqJW
- for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 04:04:01 +1000 (AEST)
-Received: by mail-oi1-x22d.google.com with SMTP id y22so25937299oie.8
- for <openbmc@lists.ozlabs.org>; Wed, 08 Jul 2020 11:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B26h02q3tzDq5f
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 04:06:38 +1000 (AEST)
+Received: by mail-yb1-xb41.google.com with SMTP id 133so5424396ybu.7
+ for <openbmc@lists.ozlabs.org>; Wed, 08 Jul 2020 11:06:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=uXB8sE10pmG+J6IW9euCvOdv7N10AgZrrBrZPtuN65E=;
- b=SZAxndSXmWq87OQGdrWkTIFgxSGfgpaqtY1DCS7EHGQMZUBN7GeN1X57Av4v93BtT3
- 78KgNJO6HjO96fhmAJ2CAxQfbzMnkTgfNQMRchiOmvEijSdMmP8bMgg39QoH4f8xuZnM
- 6nOclQRr2jiCct9+b3L8OwCBZVTKrWkukzA0A2s4OKy1eeBWjoRPRfADqbBOjP7SsVKs
- Fd9Tv/XejECRwvCAFZJm+Ems6DTXe/x3TZM0dhdwmBuXIeWOZSdnd8EiwMmPIXbPDLCq
- abEGfxNL0x213lQQKeTYGPbxq0EOKxbjzh5d+I6zorRe/K7UZMrLKTwTTRGcUu7dhYpY
- Cvdw==
+ :cc; bh=Fn/JIphlxqAWOAakcX2KWDqqqGxpI0LOAs+vyK4IYEc=;
+ b=OkCja4rA43cEovEE8iiCexJridTxFIOfWb9xpFsrWDjxGgwY4DMHtrsAK7NtTmoQfs
+ TshdF8Y1rUKeGdUFeyTaveNU0t3ufNsBqHn9sCzKmXCtLgQfBZxBEbrjtCoZoDACOidC
+ IVacWJC7l603JjOgbAk41H3ye7vUxaD3cJ+oOlO0kMkLJFzeyAGe1l9ftdC4Z/UbO9EY
+ ZyVbpNahfoXoJOnbwW1BwTY932Gq4ygb56+ntAejBUJ5Smzj6FHm5cNothmhsa/MNzs3
+ KCkl6UnDE56c8y8gu2RRMwc7bHFY9n7WQCgdSel6hBCnxW3aCnqxNmTcMbBSNMa7giFa
+ Zgng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=uXB8sE10pmG+J6IW9euCvOdv7N10AgZrrBrZPtuN65E=;
- b=FUeWb2PICEA5iqiCfiOaj96BuRw5RT1Bm15j86VZwHgAg14yafGgl9ylV631oSR1qF
- D5MROyGx90nXDaq75/7yRWOrXMrBCSGPISkdspmdAnby3tYwPDhUgPeNYKmB3d9L4lya
- PpnJIsSQ3G/AwlvTDBJ8j/+EGTKZv7m3ssmSMtK7O3rF4NJbS9mXs+kgUbScD16MWntL
- 3D7RdwVgHLZ8EENon43BiwlSiK4kA4SQDBLxWOWkD94o1OwVNVjEu+/FpKtfaBX8q3LI
- fhyAjspOuLdtTqVhPbuvNO2bQbLxPciiWvQ8R/FpPC8aTivu8nbXzmFTEwgD6SsNUz+V
- hNew==
-X-Gm-Message-State: AOAM532mqfQ55UKjyuySRPOXHXJF6YrPpORgVsfjULlxipP9t35YnaTO
- Kr8CLLE3cl4hT/cK5rmw2LwIenzFNJhDld4lS7U6+w==
-X-Google-Smtp-Source: ABdhPJzScBVx0jgUZiDApEIt2uPChGgwYHv05bMXh0u64EXs48umU4YAr2NpIlHWMYZZct28cnekdn6jnn6/M99wy7A=
-X-Received: by 2002:aca:fc87:: with SMTP id a129mr8430083oii.28.1594231437526; 
- Wed, 08 Jul 2020 11:03:57 -0700 (PDT)
+ bh=Fn/JIphlxqAWOAakcX2KWDqqqGxpI0LOAs+vyK4IYEc=;
+ b=MlkWP6PIOSnQLDS6cY7HhHvLQSUL6m+Lpye+rcmijYNU9I/E+88e/2dMq1p5QO2R+1
+ Ud17pjFUyhJFXUmJm/jRBfqa5kXqLhjFwOYay5YlUsfiz+cpao8pqgEJi51xtwsk2cJK
+ v3wSDW8BtTf980OoTYWsiWU1EnBPXD4V1XL1h0uz5KgP2T9+Zk31ylNG96rfn2LuELsL
+ OEi6i7hsuoBiSiwbiHlpKNIGDgwuwwM/mkfIV4Wl1/SY4yxdOU0KlcEJT5KNQgANl6Mq
+ IbyhfBahmKgPVwnqEt2QG4vi8KEMNYjNcBbxm7HUSX5WBAIo1ET85metOvtETSbgK1rb
+ LH0g==
+X-Gm-Message-State: AOAM531NuPh39ET0k0TmJ1WL+BI8PmRttFooyjSN7MQmwi0p4jRydyDN
+ uyR1Kxcnq3JPNGM8BaaOrQFVJ5qUojXWXE3ksXcu+A==
+X-Google-Smtp-Source: ABdhPJymK0ZugRdoRAWKVDWypL/RMC4b2DHOjuNJl+4EvMfLdrISi6Gr6XncXyJ6lhegNDAKkQgpNwpXH6qBDFjgt60=
+X-Received: by 2002:a25:a301:: with SMTP id d1mr2794148ybi.449.1594231594564; 
+ Wed, 08 Jul 2020 11:06:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHBbfcXKcxdbDG3c1hE6nFOs9kxejzWEPDw2J1xYo5emoxcr9A@mail.gmail.com>
- <CAO=notxk6prforcTO02_P-5VkcmpP-Qk2zhfH8sU5Q0YksusFQ@mail.gmail.com>
- <CACWQX83PR=XWon0ws7GmTA2S_RoWEVC7s5i+=ps2r2qSYe4f1A@mail.gmail.com>
-In-Reply-To: <CACWQX83PR=XWon0ws7GmTA2S_RoWEVC7s5i+=ps2r2qSYe4f1A@mail.gmail.com>
-From: Jason Ling <jasonling@google.com>
-Date: Wed, 8 Jul 2020 11:03:21 -0700
-Message-ID: <CAHBbfcWBJOm=eD=_B2gmb-GQd_wAKHCbc=42GphywcL4-Qvdeg@mail.gmail.com>
-Subject: Re: phosphor-pid-control: dbus tuning interface
-To: Ed Tanous <ed@tanous.net>
-Content-Type: multipart/alternative; boundary="0000000000008675df05a9f1ee21"
+References: <CAA_a9xKn77KSnwPq2pEq36JGtfWctaBXOA_4vXtP+=JGszaPkg@mail.gmail.com>
+ <CACWQX82=MuAavxCqOerxi-Sdywh0xatb-f+1YzGyVSg74oNGqA@mail.gmail.com>
+ <CAA_a9xLUkr5rR5Q8YATphtmWUBEE6V=6N4=k74v8hr8PePMMAQ@mail.gmail.com>
+ <CACWQX80fbSwvmyNX1d=kfZEcsS30k1ziN8JtA9LtwFfkNC9ciw@mail.gmail.com>
+ <CAA_a9x+7DLrwoN9YmjZneghnGaZHAqM9kzzPo2RThH=GgSFw6w@mail.gmail.com>
+ <CACWQX83XycCWC+oXXea8z6vB3Vm61_C=niUXyGXA9NO89Zwf-A@mail.gmail.com>
+ <CAA_a9x+h61N1j3_OPvXeb7uCH+gcouy=r7_y8uSt3+XFh38ddA@mail.gmail.com>
+ <CACWQX83baDkPtr6CxEUvBCQQF2YdOkfQDxc03c8YVpqX5qcpfQ@mail.gmail.com>
+ <CAA_a9x+6OfxGP+Sd6hYeBo3u1yEm1Z=OeXbk5+EOkcik9KyGdg@mail.gmail.com>
+ <CACWQX83treqBh2Xh6ycyK=3eO3HbGmZuPyqFPTEXt1dH8QheFA@mail.gmail.com>
+ <CAA_a9xLuCPRGawer58S-XUMo_2A27hLYsn=5_0LE4BUvqSLmtg@mail.gmail.com>
+In-Reply-To: <CAA_a9xLuCPRGawer58S-XUMo_2A27hLYsn=5_0LE4BUvqSLmtg@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 8 Jul 2020 11:06:22 -0700
+Message-ID: <CACWQX80nVRC_dXRiNYUmdmTubpVz3oVrv_DHiAeUPbpGKBVGYw@mail.gmail.com>
+Subject: Re: Feedback on Current OpenBMC and Proposing Some Improvements ----
+ "Improvements" Ideas
+To: Alex Qiu <xqiu@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,123 +85,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ Benjamin Fair <benjaminfair@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ofer Yehielli <ofery@google.com>,
+ Josh Lehan <krellan@google.com>, Richard Hanley <rhanley@google.com>,
+ Kais Belgaied <belgaied@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000008675df05a9f1ee21
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Jul 1, 2020 at 10:06 AM Alex Qiu <xqiu@google.com> wrote:
+>
+> On Tue, Jun 30, 2020 at 7:00 PM Ed Tanous <ed@tanous.net> wrote:
+> >
+> > I'm not following that statement.  "find the bus number" would occur
+> > whether or not you have the busses hardcoded.  Are you advocating for
+> > not using hwmon sensors here?  Needing to do a calculation for the new
+> > part you're adding would need to be done regardless.  If you turn it
+> > into a hwmon sensor, you could have the kernel do the math for you,
+> > and keep your debugability.
+>
+> Hardware engineers want to set the output voltage for voltage
+> regulators for debugging, which is not covered by hwmon interface or
+> drivers, so we need to send raw I2C commands.
+Or add support to the drivers.....
+I'm not against raw i2c commands for debugging, but long term, it's
+really hard to maintain (as you seem to be finding).
+
+> When a system is not
+> fully populated, I believe the kernel always assigns the largest
+> sequential numbers to newly created MUX channels, so that number will
+> vary based on the debug system configurations. On the other hand, our
+> current workaround to populate the MUXes in the device tree while they
+> may not exist fixes the bus numbers which can be calculated from a
+> formula, instead of tracing symlinks.
+It sounds like we have different priorities.  You want to make it easy
+to debug a single given hardware configuration, entity managers goal
+was to make it straightforward to debug any hardware configuration on
+any platform.  Different goals, neither are wrong, just different.
 
 >
+> For the concern of compatibility, we worry that other companies are
+> also using these features downstream. FYI, we are heavily relying on
+> it right now, even though we find out it's not following arithmetic
+> order of operations.
 >
-> This capability already exists if you're using phosphor-pid-control
->
->> with entity manager
->
->> ..
->
->> Entity manager essentially will trigger a reconfigure of
-> phosphor-pid-control on every change, so new parameters can be tested.
+With respect to those companies, their downstream is their problem.
+That's why upstreaming is important.  I'm not saying we need to break
+things unnecessarily, but it's a really poor excuse to say we can't
+change things because of an unknown entity that didn't share their
+code.  If they exist, they're using a feature that's relatively new to
+entity manager, and so far as I know, is only used in a single case,
+and in that case, mod operator is at the same or greater precedence
+than + operator, so you could make the change with zero impact to a
+anyone that I'm aware of.
 
 
-I see. Let me make sure my mental model is correct.
-You can modify PID configuration parameters published by entity-manager via
-dbus (is this a separate dbus path/interface than the pid-configuration
-interface?).
-Entity-manager detects the property change/method call and then updates its
-pid-configuration on dbus.
-phosphor-pid-control is listening on a signal/event and then essentially
-restarts itself and picks up the new configuration?
-
-
-> I'm guessing you didn't know that existed, and clearly Patrick didn't
-> either.  So the next question is, where did you go to look for this
-> kind of thing (ie, where should we document this)?  There might not be
-> a perfect place, but hopefully we can make this more clear in the
-> future when people have these needs.
-
-
-I sure didn't, thanks for pointing this out.  As far as documentation
-improvements:
-How to configure phosphor-pid-control
-<https://github.com/openbmc/phosphor-pid-control/blob/master/configure.md>
-should
-probably mention something about the capability of configuring
-phosphor-pid-control via dbus.
-As far as dbus pid-tuning goes, I suppose there should be some mention of
-it in https://github.com/openbmc/phosphor-pid-control/blob/master/tuning.md ..
-I guess something along the lines of "...dbus configuration changes will be
-reflected in the operation of phosphor-pid-control.".
-Intentionally left a bit vague because it doesn't HAVE to be entity-manager
-providing this configuration interface. It could be some other service that
-reads a config.json and publishes this information to dbus...
-Which brings me to my next question
-"Is the PID configuration interface formally defined as part of
-phosphor-dbus-interfaces?"
-
-
-Thanks for the brain-dump Ed, it's making me rethink my approach. Adding
-yet another tuning interface has a clear potential to bloat and over
-complicate phosphor-pid-control. It seems like even if a system was using
-phosphor-hwmon for sensor telemetry monitoring, you could still use
-entity-manager just to publish and modify PID configurations.
-
---0000000000008675df05a9f1ee21
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex"></blockquote><br><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
-gb(204,204,204);padding-left:1ex"></blockquote>This capability already exis=
-ts if you&#39;re using phosphor-pid-control<br><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0.8ex;border-left:1px solid rgb(204,204,204);bord=
-er-right:1px solid rgb(204,204,204);padding-left:1ex;padding-right:1ex"></b=
-lockquote>with entity manager<br><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0.8ex;border-left:1px solid rgb(204,204,204);border-right:1px s=
-olid rgb(204,204,204);padding-left:1ex;padding-right:1ex"></blockquote>..<b=
-r><blockquote class=3D"gmail_quote" style=3D"margin:0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);border-right:1px solid rgb(204,204,204);padding-l=
-eft:1ex;padding-right:1ex"></blockquote>Entity manager essentially will tri=
-gger a reconfigure of<br>phosphor-pid-control on every change, so new param=
-eters can be tested.=C2=A0</blockquote><div>=C2=A0</div><div>I see. Let me =
-make sure my mental model is correct.</div><div>You can modify PID configur=
-ation parameters published by entity-manager via dbus (is this a separate d=
-bus path/interface than the pid-configuration interface?).</div><div>Entity=
--manager detects the=C2=A0property change/method call and then updates its =
-pid-configuration on dbus.</div><div>phosphor-pid-control is listening on a=
- signal/event and then essentially restarts itself and picks up the new con=
-figuration?</div><div>=C2=A0<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">I&#39;m guessing you didn&#39;t know that existed, and clearly=
- Patrick didn&#39;t<br>either.=C2=A0 So the next question is, where did you=
- go to look for this<br>kind of thing (ie, where should we document this)?=
-=C2=A0 There might not be<br>a perfect place, but hopefully we can make thi=
-s more clear in the<br>future when people have these needs.</blockquote><di=
-v><br></div><div>I sure didn&#39;t, thanks for pointing this out.=C2=A0 As =
-far as documentation improvements:</div><div><a href=3D"https://github.com/=
-openbmc/phosphor-pid-control/blob/master/configure.md">How to configure pho=
-sphor-pid-control</a>=C2=A0should probably mention something about the capa=
-bility of configuring phosphor-pid-control via dbus.</div><div>As far as db=
-us pid-tuning goes, I suppose there should be some mention of it in=C2=A0<a=
- href=3D"https://github.com/openbmc/phosphor-pid-control/blob/master/tuning=
-.md">https://github.com/openbmc/phosphor-pid-control/blob/master/tuning.md<=
-/a>=C2=A0.. I guess something along the lines of &quot;...dbus configuratio=
-n changes will be reflected in the operation of phosphor-pid-control.&quot;=
-.</div><div>Intentionally left a bit vague because it doesn&#39;t HAVE to b=
-e entity-manager providing this configuration interface. It could be some o=
-ther service that reads a config.json and publishes this information to dbu=
-s...</div><div>Which brings me to my next question</div><div>&quot;Is the P=
-ID configuration interface formally defined as part of phosphor-dbus-interf=
-aces?&quot;</div><div><br></div><div><br></div><div>Thanks for the brain-du=
-mp Ed, it&#39;s making me rethink my approach. Adding yet another tuning in=
-terface has a clear potential to bloat and over complicate phosphor-pid-con=
-trol. It seems like even if a system was using phosphor-hwmon for sensor te=
-lemetry monitoring, you could still use entity-manager just to publish and =
-modify PID configurations.</div><div><br></div><div><br></div></div>
-
---0000000000008675df05a9f1ee21--
+We've gone several rounds on this email, with a lot of places where
+you could make improvements, including many that wouldn't break
+anything, but you always seem to come back to being too busy for it,
+or it not being "upstreamable".  Is there anything that the project
+could do to help convince you to at least share some changes that
+you've suggested?  The feedback is really great, but I was hoping with
+the level of interest you have in this, you'd be interested in putting
+together some patchsets to do some of these things, even if they're
+minor, like adding support for your new chip.
