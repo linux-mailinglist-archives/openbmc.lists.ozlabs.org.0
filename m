@@ -2,78 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4FAB218F77
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jul 2020 20:07:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 20DFC218FCB
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jul 2020 20:38:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B26hl0VBDzDq5n
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 04:07:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B27NZ2WxkzDqZN
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 04:38:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b41; helo=mail-yb1-xb41.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=OkCja4rA; dkim-atps=neutral
-Received: from mail-yb1-xb41.google.com (mail-yb1-xb41.google.com
- [IPv6:2607:f8b0:4864:20::b41])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B26h02q3tzDq5f
- for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 04:06:38 +1000 (AEST)
-Received: by mail-yb1-xb41.google.com with SMTP id 133so5424396ybu.7
- for <openbmc@lists.ozlabs.org>; Wed, 08 Jul 2020 11:06:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Fn/JIphlxqAWOAakcX2KWDqqqGxpI0LOAs+vyK4IYEc=;
- b=OkCja4rA43cEovEE8iiCexJridTxFIOfWb9xpFsrWDjxGgwY4DMHtrsAK7NtTmoQfs
- TshdF8Y1rUKeGdUFeyTaveNU0t3ufNsBqHn9sCzKmXCtLgQfBZxBEbrjtCoZoDACOidC
- IVacWJC7l603JjOgbAk41H3ye7vUxaD3cJ+oOlO0kMkLJFzeyAGe1l9ftdC4Z/UbO9EY
- ZyVbpNahfoXoJOnbwW1BwTY932Gq4ygb56+ntAejBUJ5Smzj6FHm5cNothmhsa/MNzs3
- KCkl6UnDE56c8y8gu2RRMwc7bHFY9n7WQCgdSel6hBCnxW3aCnqxNmTcMbBSNMa7giFa
- Zgng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Fn/JIphlxqAWOAakcX2KWDqqqGxpI0LOAs+vyK4IYEc=;
- b=MlkWP6PIOSnQLDS6cY7HhHvLQSUL6m+Lpye+rcmijYNU9I/E+88e/2dMq1p5QO2R+1
- Ud17pjFUyhJFXUmJm/jRBfqa5kXqLhjFwOYay5YlUsfiz+cpao8pqgEJi51xtwsk2cJK
- v3wSDW8BtTf980OoTYWsiWU1EnBPXD4V1XL1h0uz5KgP2T9+Zk31ylNG96rfn2LuELsL
- OEi6i7hsuoBiSiwbiHlpKNIGDgwuwwM/mkfIV4Wl1/SY4yxdOU0KlcEJT5KNQgANl6Mq
- IbyhfBahmKgPVwnqEt2QG4vi8KEMNYjNcBbxm7HUSX5WBAIo1ET85metOvtETSbgK1rb
- LH0g==
-X-Gm-Message-State: AOAM531NuPh39ET0k0TmJ1WL+BI8PmRttFooyjSN7MQmwi0p4jRydyDN
- uyR1Kxcnq3JPNGM8BaaOrQFVJ5qUojXWXE3ksXcu+A==
-X-Google-Smtp-Source: ABdhPJymK0ZugRdoRAWKVDWypL/RMC4b2DHOjuNJl+4EvMfLdrISi6Gr6XncXyJ6lhegNDAKkQgpNwpXH6qBDFjgt60=
-X-Received: by 2002:a25:a301:: with SMTP id d1mr2794148ybi.449.1594231594564; 
- Wed, 08 Jul 2020 11:06:34 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B27Ms2tP2zDqXR
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 04:37:44 +1000 (AEST)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 068IXaBR093680; Wed, 8 Jul 2020 14:37:41 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 325khdg449-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jul 2020 14:37:41 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 068IYhvl000715;
+ Wed, 8 Jul 2020 18:37:40 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma04dal.us.ibm.com with ESMTP id 325k2808mh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 08 Jul 2020 18:37:40 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 068IbdjK47251794
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 8 Jul 2020 18:37:39 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DD367124055;
+ Wed,  8 Jul 2020 18:37:39 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F3F6124053;
+ Wed,  8 Jul 2020 18:37:39 +0000 (GMT)
+Received: from [9.85.133.47] (unknown [9.85.133.47])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed,  8 Jul 2020 18:37:39 +0000 (GMT)
+Subject: Re: Sensor value is not accurate which is generated by phosphor-hwmon
+From: Matt Spinler <mspinler@linux.ibm.com>
+To: =?UTF-8?B?RHVrZSBEdSAo5p2c56Wl5ZiJKQ==?= <Duke.Du@quantatw.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <07175a7434c44797944ff8550006abbe@quantatw.com>
+ <07cbefdd-1768-91f2-37af-0918627b1f5b@linux.ibm.com>
+Message-ID: <1e29f5ac-8c97-3329-aeed-bf7c79eda7af@linux.ibm.com>
+Date: Wed, 8 Jul 2020 13:37:39 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.9.0
 MIME-Version: 1.0
-References: <CAA_a9xKn77KSnwPq2pEq36JGtfWctaBXOA_4vXtP+=JGszaPkg@mail.gmail.com>
- <CACWQX82=MuAavxCqOerxi-Sdywh0xatb-f+1YzGyVSg74oNGqA@mail.gmail.com>
- <CAA_a9xLUkr5rR5Q8YATphtmWUBEE6V=6N4=k74v8hr8PePMMAQ@mail.gmail.com>
- <CACWQX80fbSwvmyNX1d=kfZEcsS30k1ziN8JtA9LtwFfkNC9ciw@mail.gmail.com>
- <CAA_a9x+7DLrwoN9YmjZneghnGaZHAqM9kzzPo2RThH=GgSFw6w@mail.gmail.com>
- <CACWQX83XycCWC+oXXea8z6vB3Vm61_C=niUXyGXA9NO89Zwf-A@mail.gmail.com>
- <CAA_a9x+h61N1j3_OPvXeb7uCH+gcouy=r7_y8uSt3+XFh38ddA@mail.gmail.com>
- <CACWQX83baDkPtr6CxEUvBCQQF2YdOkfQDxc03c8YVpqX5qcpfQ@mail.gmail.com>
- <CAA_a9x+6OfxGP+Sd6hYeBo3u1yEm1Z=OeXbk5+EOkcik9KyGdg@mail.gmail.com>
- <CACWQX83treqBh2Xh6ycyK=3eO3HbGmZuPyqFPTEXt1dH8QheFA@mail.gmail.com>
- <CAA_a9xLuCPRGawer58S-XUMo_2A27hLYsn=5_0LE4BUvqSLmtg@mail.gmail.com>
-In-Reply-To: <CAA_a9xLuCPRGawer58S-XUMo_2A27hLYsn=5_0LE4BUvqSLmtg@mail.gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 8 Jul 2020 11:06:22 -0700
-Message-ID: <CACWQX80nVRC_dXRiNYUmdmTubpVz3oVrv_DHiAeUPbpGKBVGYw@mail.gmail.com>
-Subject: Re: Feedback on Current OpenBMC and Proposing Some Improvements ----
- "Improvements" Ideas
-To: Alex Qiu <xqiu@google.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <07cbefdd-1768-91f2-37af-0918627b1f5b@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-07-08_16:2020-07-08,
+ 2020-07-08 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 mlxlogscore=974 priorityscore=1501 suspectscore=0
+ clxscore=1015 bulkscore=0 impostorscore=0 malwarescore=0 spamscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2007080112
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,67 +87,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>,
- Benjamin Fair <benjaminfair@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ofer Yehielli <ofery@google.com>,
- Josh Lehan <krellan@google.com>, Richard Hanley <rhanley@google.com>,
- Kais Belgaied <belgaied@google.com>
+Cc: =?UTF-8?B?RWRkaWUgTHUgKOmZuOWuh+WyoSk=?= <Eddie.Lu@quantatw.com>,
+ =?UTF-8?B?RnJhbiBIc3UgKOW+kOiqjOismSk=?= <Fran.Hsu@quantatw.com>,
+ =?UTF-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jul 1, 2020 at 10:06 AM Alex Qiu <xqiu@google.com> wrote:
->
-> On Tue, Jun 30, 2020 at 7:00 PM Ed Tanous <ed@tanous.net> wrote:
-> >
-> > I'm not following that statement.  "find the bus number" would occur
-> > whether or not you have the busses hardcoded.  Are you advocating for
-> > not using hwmon sensors here?  Needing to do a calculation for the new
-> > part you're adding would need to be done regardless.  If you turn it
-> > into a hwmon sensor, you could have the kernel do the math for you,
-> > and keep your debugability.
->
-> Hardware engineers want to set the output voltage for voltage
-> regulators for debugging, which is not covered by hwmon interface or
-> drivers, so we need to send raw I2C commands.
-Or add support to the drivers.....
-I'm not against raw i2c commands for debugging, but long term, it's
-really hard to maintain (as you seem to be finding).
-
-> When a system is not
-> fully populated, I believe the kernel always assigns the largest
-> sequential numbers to newly created MUX channels, so that number will
-> vary based on the debug system configurations. On the other hand, our
-> current workaround to populate the MUXes in the device tree while they
-> may not exist fixes the bus numbers which can be calculated from a
-> formula, instead of tracing symlinks.
-It sounds like we have different priorities.  You want to make it easy
-to debug a single given hardware configuration, entity managers goal
-was to make it straightforward to debug any hardware configuration on
-any platform.  Different goals, neither are wrong, just different.
-
->
-> For the concern of compatibility, we worry that other companies are
-> also using these features downstream. FYI, we are heavily relying on
-> it right now, even though we find out it's not following arithmetic
-> order of operations.
->
-With respect to those companies, their downstream is their problem.
-That's why upstreaming is important.  I'm not saying we need to break
-things unnecessarily, but it's a really poor excuse to say we can't
-change things because of an unknown entity that didn't share their
-code.  If they exist, they're using a feature that's relatively new to
-entity manager, and so far as I know, is only used in a single case,
-and in that case, mod operator is at the same or greater precedence
-than + operator, so you could make the change with zero impact to a
-anyone that I'm aware of.
 
 
-We've gone several rounds on this email, with a lot of places where
-you could make improvements, including many that wouldn't break
-anything, but you always seem to come back to being too busy for it,
-or it not being "upstreamable".  Is there anything that the project
-could do to help convince you to at least share some changes that
-you've suggested?  The feedback is really great, but I was hoping with
-the level of interest you have in this, you'd be interested in putting
-together some patchsets to do some of these things, even if they're
-minor, like adding support for your new chip.
+On 7/7/2020 12:48 PM, Matt Spinler wrote:
+>
+>
+> On 7/6/2020 9:15 PM, Duke Du (杜祥嘉) wrote:
+>>
+>> Hi All,
+>>
+>>   I found sensor value type is changed to double in
+>>
+>> xyz/openbmc_project/Sensor/Value.interface.yaml,
+>>
+>> after this change, the sensor value on the interface
+>>
+>> xyz.openbmc_project.Sensor.Value which is generated by
+>>
+>> phosphor-hwmon is not accurate, for example, 0.99 volts
+>>
+>> would be record 0 volts on the interface. Do I miss some
+>>
+>> configuration for phosphor-hwmon ?
+>>
+>
+> Looks like that is indeed a problem.  I haven't looked closely yet,
+> but I wonder if how the code is attempting to support Sensor.Value
+> as both an int64 and a double at the same time has an issue.
+>
+> Maybe now would be a good time to just support the double version.
+> I can take a look.
+
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-hwmon/+/34481
+
+>
+>> Sensor value type is changed to double, which commit is :
+>>
+>> 4ec6587fa908fe9df41cc0962ab6ff6446fbd54f
+>> https://github.com/openbmc/phosphor-dbus-interfaces/commit/4ec6587fa908fe9df41cc0962ab6ff6446fbd54f 
+>>
+>>
+>> Thanks.
+>>
+>> Duke Du
+>>
+>
+
