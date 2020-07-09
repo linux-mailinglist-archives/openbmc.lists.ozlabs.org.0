@@ -2,83 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25AC5219F24
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 13:35:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB380219F62
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 13:54:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B2YyH0PxSzDqsy
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 21:35:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B2ZNB132CzDr1m
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 21:54:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=dbvGehWI; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=jU3+zd0m; 
- dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=pass (sender SPF authorized) smtp.mailfrom=163.com
+ (client-ip=220.181.13.130; helo=m13130.mail.163.com;
+ envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
+ header.s=s110527 header.b=hjBfkynh; dkim-atps=neutral
+Received: from m13130.mail.163.com (m13130.mail.163.com [220.181.13.130])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B2YxH4YYSzDqsy
- for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 21:34:43 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 46A4F7BA;
- Thu,  9 Jul 2020 07:34:38 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 09 Jul 2020 07:34:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to
- :subject:content-type; s=fm3; bh=kDC5AKwiFnwQnOxH4nQjxWMvh7BXrpN
- lKOQU30XFyJY=; b=dbvGehWImasnS/A2WITYOYk8YV8tHzNxhoRJXehTEKtlZf7
- RSZD9cxlNdzYRbF5ar1E8TK5ksnzDbXHPoGaNVqXsiJwlxLmzwuWfuaMqvyBCcOv
- wwmWiRM3agfg+IoEYdnS1c5drGGbG6J/rmzYv8tbgt5GvkNlsHscaJkd8h3yjqAk
- SUHhTsD7Hs7Ibe1LBhx0H95Rt/Y43TKbhikqGG0issmKdprJDqaWAY+HRwEO0OJR
- kbqC6YARbxGfJJYKXlZjWzzIQIjhi8MfAhvuLUAdwiGn0oNScrz7jsWak9Tdw/AZ
- 7B/h+DC08bJ5sECniXbZDJ3JSRT4CRpva0mGo+Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=kDC5AK
- wiFnwQnOxH4nQjxWMvh7BXrpNlKOQU30XFyJY=; b=jU3+zd0m+FeEJo7QzJGjaZ
- 9QzTsIeO5HlyhczjQbJLxHn7Jer9LI6EuEcf5E9xrgXUJVFLuVSC+1E0q38lt071
- gT8glNxMuWiBBrSPSGTvJCUeXKBT0+W2I+24iHesF/ipkv0qkbfNB/ziWAVMUTxA
- tXC1UyN+DmzSJAG9iGSYQ6d8cvOkkLjD7QWZhJsfXiPBSnvx83kzXIjDDb7GbF3u
- m/NnsbTFFsnpW7dX79FjD1cPdZQcxonfuP2bcUjkHM8szfGT5P77WCSG1CxpqDBA
- GYGKJDTsQiseA9FHgnVu9tfLqTm9yI/N7i0ey6IhgSe1QpjYM6jhnJXOg6ZyW0mA
- ==
-X-ME-Sender: <xms:zQAHX3mCraoezeMPUhXLKleCHbiMl5JwWx6-kZ40wdkWAOi92j9L9Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudelgdegvdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:zQAHX61fmwyuRhyJVC7M9elXbtlQyGBH6oLi-FqB9YRbMxWC4OghpA>
- <xmx:zQAHX9qC-SaT5HPX7-mJlNfv8qmH8QLNKjU0DTfkFZiGLfhykeW-Cw>
- <xmx:zQAHX_n-p7XQQjPEFmDc0mG2qj20hOGFrKTM7JJmez_4Fj-v-PCHYA>
- <xmx:zQAHX2BjNFMXAPzgD8nXa89M2kSo7-_iFuCv_QIcLozuctiPva8egQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 44681E00A6; Thu,  9 Jul 2020 07:34:37 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-dev0-613-g8a73ad6-fm-20200709.001-g8a73ad6e
-Mime-Version: 1.0
-Message-Id: <8b7b04d4-369f-4dbe-9201-4e1a6492c5e5@www.fastmail.com>
-In-Reply-To: <20200708202454.21333-1-eajames@linux.ibm.com>
-References: <20200708202454.21333-1-eajames@linux.ibm.com>
-Date: Thu, 09 Jul 2020 21:04:16 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH linux dev-5.4 1/2] clk: AST2600: Add mux for EMMC clock
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B2ZML5X2KzDr1Y
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 21:53:49 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=dV04x
+ WU33ku+WaOqBsNI1FxBh9uxfE/lv6uhrKw6+dI=; b=hjBfkynhZIiLYzCwVJjX1
+ jCPFLdWS7WwEFdJ2AWXwUiY2rj1EYY2wcLaEyrcwenMIfkHPx9BLuGovNyqjoAM0
+ 3AaqL1cufJLay6El3iAqZ3XjZloFAvEv3bOheiR7NX18FWSUWb/wCLA7E7jUi933
+ +F0VNwjG3gnTZUjHPD9UW0=
+Received: from zhang_cy1989$163.com ( [111.199.187.221] ) by
+ ajax-webmail-wmsvr130 (Coremail) ; Thu, 9 Jul 2020 19:53:43 +0800 (CST)
+X-Originating-IP: [111.199.187.221]
+Date: Thu, 9 Jul 2020 19:53:43 +0800 (CST)
+From: zhang_cy1989 <zhang_cy1989@163.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: ERROR: unknown option --disable-libssh
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
+ Copyright (c) 2002-2020 www.mailtech.cn 163com
+X-CM-CTRLDATA: pDqPlWZvb3Rlcl9odG09MjE0Njo1Ng==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_145946_639733099.1594295623532"
+MIME-Version: 1.0
+Message-ID: <688d0406.9a9d.173336c9f6c.Coremail.zhang_cy1989@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: gsGowAAnP69HBQdfEKleAA--.50467W
+X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/xtbBFQtcT1XllQzkqgACso
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,13 +63,81 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+------=_Part_145946_639733099.1594295623532
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
+RGVhciBBbGwKICAgICAgICAgSSBkbyB0aGlzIGNvbW1hbmQ6CiAgICAgICAgIGJpdGJha2UgaW50
+ZWwtcGxhdGZvcm1zIC1jIHBvcHVsYXRlX3Nka19leHQKICAgICAgICAgYnV0IGdldCB0aG9zZSBl
+cnJvciB0aXBzOgpFUlJPUjogcWVtdS1zeXN0ZW0tbmF0aXZlLTQuMS4wLXIwIGRvX2NvbmZpZ3Vy
+ZTogRXhlY3V0aW9uIG9mICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dv
+cmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC90ZW1wL3J1bi5kb19j
+b25maWd1cmUuMjg3NzknIGZhaWxlZCB3aXRoIGV4aXQgY29kZSAxOgpFUlJPUjogdW5rbm93biBv
+cHRpb24gLS1kaXNhYmxlLWxpYnNzaApUcnkgJy9mZWxpeHpoYW5nL29wZW5ibWMvb3BlbmJtYy9i
+dWlsZC90bXAvd29yay94ODZfNjQtbGludXgvcWVtdS1zeXN0ZW0tbmF0aXZlLzQuMS4wLXIwL2dp
+dC9jb25maWd1cmUgLS1oZWxwJyBmb3IgbW9yZSBpbmZvcm1hdGlvbgpXQVJOSU5HOiBleGl0IGNv
+ZGUgMSBmcm9tIGEgc2hlbGwgY29tbWFuZC4KCkVSUk9SOiBMb2dmaWxlIG9mIGZhaWx1cmUgc3Rv
+cmVkIGluOiAvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0
+LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC90ZW1wL2xvZy5kb19jb25maWd1cmUu
+Mjg3NzkKTG9nIGRhdGEgZm9sbG93czoKfCBERUJVRzogRXhlY3V0aW5nIHNoZWxsIGZ1bmN0aW9u
+IGRvX2NvbmZpZ3VyZQp8IEVSUk9SOiB1bmtub3duIG9wdGlvbiAtLWRpc2FibGUtbGlic3NoCnwg
+VHJ5ICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxp
+bnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC9naXQvY29uZmlndXJlIC0taGVscCcgZm9y
+IG1vcmUgaW5mb3JtYXRpb24KfCBXQVJOSU5HOiBleGl0IGNvZGUgMSBmcm9tIGEgc2hlbGwgY29t
+bWFuZC4KfCBFUlJPUjogRXhlY3V0aW9uIG9mICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMv
+YnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC90
+ZW1wL3J1bi5kb19jb25maWd1cmUuMjg3NzknIGZhaWxlZCB3aXRoIGV4aXQgY29kZSAxOgp8IEVS
+Uk9SOiB1bmtub3duIG9wdGlvbiAtLWRpc2FibGUtbGlic3NoCnwgVHJ5ICcvZmVsaXh6aGFuZy9v
+cGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5h
+dGl2ZS80LjEuMC1yMC9naXQvY29uZmlndXJlIC0taGVscCcgZm9yIG1vcmUgaW5mb3JtYXRpb24K
+fCBXQVJOSU5HOiBleGl0IGNvZGUgMSBmcm9tIGEgc2hlbGwgY29tbWFuZC4KfApFUlJPUjogVGFz
+ayAoL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL21ldGEvcmVjaXBlcy1kZXZ0b29scy9xZW11
+L3FlbXUtc3lzdGVtLW5hdGl2ZV80LjEuMC5iYjpkb19jb25maWd1cmUpIGZhaWxlZCB3aXRoIGV4
+aXQgY29kZSAnMScKTk9URTogVGFza3MgU3VtbWFyeTogQXR0ZW1wdGVkIDQzNzUgdGFza3Mgb2Yg
+d2hpY2ggNDIyNCBkaWRuJ3QgbmVlZCB0byBiZSByZXJ1biBhbmQgMSBmYWlsZWQuCgoKSG93IGNh
+biBJIHNvdmxlIHRoaXMgcHJvYmxlbT8KVGhhbmtzCkZlbGl4Cg==
+------=_Part_145946_639733099.1594295623532
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-On Thu, 9 Jul 2020, at 05:54, Eddie James wrote:
-> The EMMC clock can be derived from either the HPLL or the MPLL. Register
-> a clock mux so that the rate is calculated correctly based upon the
-> parent.
-> 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+RGVhciBBbGw8L2Rpdj48
+ZGl2IHN0eWxlPSJtYXJnaW46MDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyBJIGRvIHRoaXMgY29tbWFuZDo8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46
+MDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBiaXRi
+YWtlIGludGVsLXBsYXRmb3JtcyAtYyBwb3B1bGF0ZV9zZGtfZXh0PC9kaXY+PGRpdiBzdHlsZT0i
+bWFyZ2luOjA7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsgYnV0IGdldCB0aG9zZSBlcnJvciB0aXBzOjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+
+RVJST1I6IHFlbXUtc3lzdGVtLW5hdGl2ZS00LjEuMC1yMCBkb19jb25maWd1cmU6IEV4ZWN1dGlv
+biBvZiAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1s
+aW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9ydW4uZG9fY29uZmlndXJlLjI4
+Nzc5JyBmYWlsZWQgd2l0aCBleGl0IGNvZGUgMTo8YnI+RVJST1I6IHVua25vd24gb3B0aW9uIC0t
+ZGlzYWJsZS1saWJzc2g8YnI+VHJ5ICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQv
+dG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC9naXQvY29u
+ZmlndXJlIC0taGVscCcgZm9yIG1vcmUgaW5mb3JtYXRpb248YnI+V0FSTklORzogZXhpdCBjb2Rl
+IDEgZnJvbSBhIHNoZWxsIGNvbW1hbmQuPGJyPjxicj5FUlJPUjogTG9nZmlsZSBvZiBmYWlsdXJl
+IHN0b3JlZCBpbjogL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4
+Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9sb2cuZG9fY29uZmln
+dXJlLjI4Nzc5PGJyPkxvZyBkYXRhIGZvbGxvd3M6PGJyPnwgREVCVUc6IEV4ZWN1dGluZyBzaGVs
+bCBmdW5jdGlvbiBkb19jb25maWd1cmU8YnI+fCBFUlJPUjogdW5rbm93biBvcHRpb24gLS1kaXNh
+YmxlLWxpYnNzaDxicj58IFRyeSAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3Rt
+cC93b3JrL3g4Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2NvbmZp
+Z3VyZSAtLWhlbHAnIGZvciBtb3JlIGluZm9ybWF0aW9uPGJyPnwgV0FSTklORzogZXhpdCBjb2Rl
+IDEgZnJvbSBhIHNoZWxsIGNvbW1hbmQuPGJyPnwgRVJST1I6IEV4ZWN1dGlvbiBvZiAnL2ZlbGl4
+emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1saW51eC9xZW11LXN5
+c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9ydW4uZG9fY29uZmlndXJlLjI4Nzc5JyBmYWlsZWQg
+d2l0aCBleGl0IGNvZGUgMTo8YnI+fCBFUlJPUjogdW5rbm93biBvcHRpb24gLS1kaXNhYmxlLWxp
+YnNzaDxicj58IFRyeSAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3Jr
+L3g4Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2NvbmZpZ3VyZSAt
+LWhlbHAnIGZvciBtb3JlIGluZm9ybWF0aW9uPGJyPnwgV0FSTklORzogZXhpdCBjb2RlIDEgZnJv
+bSBhIHNoZWxsIGNvbW1hbmQuPGJyPnwgPGJyPkVSUk9SOiBUYXNrICgvZmVsaXh6aGFuZy9vcGVu
+Ym1jL29wZW5ibWMvbWV0YS9yZWNpcGVzLWRldnRvb2xzL3FlbXUvcWVtdS1zeXN0ZW0tbmF0aXZl
+XzQuMS4wLmJiOmRvX2NvbmZpZ3VyZSkgZmFpbGVkIHdpdGggZXhpdCBjb2RlICcxJzxicj5OT1RF
+OiBUYXNrcyBTdW1tYXJ5OiBBdHRlbXB0ZWQgNDM3NSB0YXNrcyBvZiB3aGljaCA0MjI0IGRpZG4n
+dCBuZWVkIHRvIGJlIHJlcnVuIGFuZCAxIGZhaWxlZC48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46
+MDsiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPkhvdyBjYW4gSSBzb3ZsZSB0aGlz
+IHByb2JsZW0/PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5UaGFua3M8L2Rpdj48ZGl2IHN0
+eWxlPSJtYXJnaW46MDsiPkZlbGl4PGJyPjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9
+Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
+------=_Part_145946_639733099.1594295623532--
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
