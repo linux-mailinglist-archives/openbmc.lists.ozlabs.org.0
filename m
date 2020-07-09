@@ -1,54 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB380219F62
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 13:54:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A47EF219F66
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 13:57:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B2ZNB132CzDr1m
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 21:54:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B2ZRf4xXyzDqFw
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 21:57:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.130; helo=m13130.mail.163.com;
- envelope-from=zhang_cy1989@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=hjBfkynh; dkim-atps=neutral
-Received: from m13130.mail.163.com (m13130.mail.163.com [220.181.13.130])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=qiDzE2FN; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=vTmE2DgH; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B2ZML5X2KzDr1Y
- for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 21:53:49 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=dV04x
- WU33ku+WaOqBsNI1FxBh9uxfE/lv6uhrKw6+dI=; b=hjBfkynhZIiLYzCwVJjX1
- jCPFLdWS7WwEFdJ2AWXwUiY2rj1EYY2wcLaEyrcwenMIfkHPx9BLuGovNyqjoAM0
- 3AaqL1cufJLay6El3iAqZ3XjZloFAvEv3bOheiR7NX18FWSUWb/wCLA7E7jUi933
- +F0VNwjG3gnTZUjHPD9UW0=
-Received: from zhang_cy1989$163.com ( [111.199.187.221] ) by
- ajax-webmail-wmsvr130 (Coremail) ; Thu, 9 Jul 2020 19:53:43 +0800 (CST)
-X-Originating-IP: [111.199.187.221]
-Date: Thu, 9 Jul 2020 19:53:43 +0800 (CST)
-From: zhang_cy1989 <zhang_cy1989@163.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: ERROR: unknown option --disable-libssh
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 163com
-X-CM-CTRLDATA: pDqPlWZvb3Rlcl9odG09MjE0Njo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_145946_639733099.1594295623532"
-MIME-Version: 1.0
-Message-ID: <688d0406.9a9d.173336c9f6c.Coremail.zhang_cy1989@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: gsGowAAnP69HBQdfEKleAA--.50467W
-X-CM-SenderInfo: x2kd0w5bf1imiyz6il2tof0z/xtbBFQtcT1XllQzkqgACso
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B2ZQX4090zDr1X
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 21:56:36 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 08FC1893;
+ Thu,  9 Jul 2020 07:56:33 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Thu, 09 Jul 2020 07:56:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=8jsW73gbZgNDvsmoU+sHsjnlAMTvPCM
+ 1jMLmSTh8LUA=; b=qiDzE2FNUE79oAn0vgvllXI+Dmx4i16s43d4KKubNqfCLia
+ T7d1wZUh+Ly84rMXZvp4sfdarVvgP6xai2ap25KSizuL6oi1YWyB/nEwwIPlXxhD
+ TNAVhEj6HPTMf+jFEXRHCjdeRlTqtBuhIPMHYh+eJ6N36H2jmHuKiwfHTdPiqfns
+ mXA+c42109pzBY9Q/nNNCFl1DxjdZxXJ+ioFhdT0j6WZstlzedMiQ/kWAkLeo5Qs
+ cR67P9GZ8OIbup2ynfnse+euDm1kcObH+jdlwecZoTyizeL5Mx5Iyff9qhuISrNM
+ NElNBDdOKtc3fyEEgaNIeet3+iyx43UOHCucZOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8jsW73
+ gbZgNDvsmoU+sHsjnlAMTvPCM1jMLmSTh8LUA=; b=vTmE2DgHM15FplUVotnJpp
+ ieW/mb2GclY9ArM8dDKAuHTUb2KZD1ANCil128620sDqsJfQeLC1lJTC2lsbofvO
+ bqLmzNwuGzjvdlsHSO9NC3DegTTf60TxdjBO5uDGQIhApuVS//iiqHv97XagEFLi
+ NPrbxacDgkQfdh47CJn/KEIx6FZEgmwAozKb4mOftqRTztQixFQNGO5tv21DUKeT
+ VL0pjCCs7o4Xi9ST32KchsCylwO5Z1hYw/9tkGbyE0K4equZu54pBNHY9xZAaOti
+ 2RPJUF+7UvSZF0LdXt7q44bB6x8yUVLvldOfyaEjSCkxXmd0i3Z3OBN1KoEhCPDg
+ ==
+X-ME-Sender: <xms:8QUHX0zqMaJQqkxe5NfeHu2kxMfz3VBNe2Ld0bym2p-0B60cF1Tmzw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudelgdegjecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpedutddtkeeugeegvddttdeukeeiuddtgfeuuddtfeeiueetfeeileettedv
+ tdfhieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:8QUHX4QmxxUzBbiOX3tTArPTokj7W1qyss-tLOGB86lfuoR7WR4sYw>
+ <xmx:8QUHX2VWdiNC-xOtDrJtSVRp2YiBYQcs8zyIVWv2KVMWlDlY001NIQ>
+ <xmx:8QUHXyjzAOtjyM6PbKAHaUDPaL7jCEks__TsKJMunIy3SSZsyc0e6A>
+ <xmx:8QUHX5PSQIY8Kr-uxaiV2ZAWuDLxJhkB5NHf9EsTZjbQjKNpojDUcQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 0B091E00A6; Thu,  9 Jul 2020 07:56:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-613-g8a73ad6-fm-20200709.001-g8a73ad6e
+Mime-Version: 1.0
+Message-Id: <4caf166b-a461-49a6-92df-dfee4f426213@www.fastmail.com>
+In-Reply-To: <20200708202454.21333-2-eajames@linux.ibm.com>
+References: <20200708202454.21333-1-eajames@linux.ibm.com>
+ <20200708202454.21333-2-eajames@linux.ibm.com>
+Date: Thu, 09 Jul 2020 21:26:11 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.4_2/2]_mmc:_sdhci-of-aspeed:_Prevent_cl?=
+ =?UTF-8?Q?ock_divider_of_zero?=
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,81 +95,31 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_145946_639733099.1594295623532
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
 
-RGVhciBBbGwKICAgICAgICAgSSBkbyB0aGlzIGNvbW1hbmQ6CiAgICAgICAgIGJpdGJha2UgaW50
-ZWwtcGxhdGZvcm1zIC1jIHBvcHVsYXRlX3Nka19leHQKICAgICAgICAgYnV0IGdldCB0aG9zZSBl
-cnJvciB0aXBzOgpFUlJPUjogcWVtdS1zeXN0ZW0tbmF0aXZlLTQuMS4wLXIwIGRvX2NvbmZpZ3Vy
-ZTogRXhlY3V0aW9uIG9mICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dv
-cmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC90ZW1wL3J1bi5kb19j
-b25maWd1cmUuMjg3NzknIGZhaWxlZCB3aXRoIGV4aXQgY29kZSAxOgpFUlJPUjogdW5rbm93biBv
-cHRpb24gLS1kaXNhYmxlLWxpYnNzaApUcnkgJy9mZWxpeHpoYW5nL29wZW5ibWMvb3BlbmJtYy9i
-dWlsZC90bXAvd29yay94ODZfNjQtbGludXgvcWVtdS1zeXN0ZW0tbmF0aXZlLzQuMS4wLXIwL2dp
-dC9jb25maWd1cmUgLS1oZWxwJyBmb3IgbW9yZSBpbmZvcm1hdGlvbgpXQVJOSU5HOiBleGl0IGNv
-ZGUgMSBmcm9tIGEgc2hlbGwgY29tbWFuZC4KCkVSUk9SOiBMb2dmaWxlIG9mIGZhaWx1cmUgc3Rv
-cmVkIGluOiAvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0
-LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC90ZW1wL2xvZy5kb19jb25maWd1cmUu
-Mjg3NzkKTG9nIGRhdGEgZm9sbG93czoKfCBERUJVRzogRXhlY3V0aW5nIHNoZWxsIGZ1bmN0aW9u
-IGRvX2NvbmZpZ3VyZQp8IEVSUk9SOiB1bmtub3duIG9wdGlvbiAtLWRpc2FibGUtbGlic3NoCnwg
-VHJ5ICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxp
-bnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC9naXQvY29uZmlndXJlIC0taGVscCcgZm9y
-IG1vcmUgaW5mb3JtYXRpb24KfCBXQVJOSU5HOiBleGl0IGNvZGUgMSBmcm9tIGEgc2hlbGwgY29t
-bWFuZC4KfCBFUlJPUjogRXhlY3V0aW9uIG9mICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMv
-YnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC90
-ZW1wL3J1bi5kb19jb25maWd1cmUuMjg3NzknIGZhaWxlZCB3aXRoIGV4aXQgY29kZSAxOgp8IEVS
-Uk9SOiB1bmtub3duIG9wdGlvbiAtLWRpc2FibGUtbGlic3NoCnwgVHJ5ICcvZmVsaXh6aGFuZy9v
-cGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5h
-dGl2ZS80LjEuMC1yMC9naXQvY29uZmlndXJlIC0taGVscCcgZm9yIG1vcmUgaW5mb3JtYXRpb24K
-fCBXQVJOSU5HOiBleGl0IGNvZGUgMSBmcm9tIGEgc2hlbGwgY29tbWFuZC4KfApFUlJPUjogVGFz
-ayAoL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL21ldGEvcmVjaXBlcy1kZXZ0b29scy9xZW11
-L3FlbXUtc3lzdGVtLW5hdGl2ZV80LjEuMC5iYjpkb19jb25maWd1cmUpIGZhaWxlZCB3aXRoIGV4
-aXQgY29kZSAnMScKTk9URTogVGFza3MgU3VtbWFyeTogQXR0ZW1wdGVkIDQzNzUgdGFza3Mgb2Yg
-d2hpY2ggNDIyNCBkaWRuJ3QgbmVlZCB0byBiZSByZXJ1biBhbmQgMSBmYWlsZWQuCgoKSG93IGNh
-biBJIHNvdmxlIHRoaXMgcHJvYmxlbT8KVGhhbmtzCkZlbGl4Cg==
-------=_Part_145946_639733099.1594295623532
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+RGVhciBBbGw8L2Rpdj48
-ZGl2IHN0eWxlPSJtYXJnaW46MDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyBJIGRvIHRoaXMgY29tbWFuZDo8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46
-MDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBiaXRi
-YWtlIGludGVsLXBsYXRmb3JtcyAtYyBwb3B1bGF0ZV9zZGtfZXh0PC9kaXY+PGRpdiBzdHlsZT0i
-bWFyZ2luOjA7Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsgYnV0IGdldCB0aG9zZSBlcnJvciB0aXBzOjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+
-RVJST1I6IHFlbXUtc3lzdGVtLW5hdGl2ZS00LjEuMC1yMCBkb19jb25maWd1cmU6IEV4ZWN1dGlv
-biBvZiAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1s
-aW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9ydW4uZG9fY29uZmlndXJlLjI4
-Nzc5JyBmYWlsZWQgd2l0aCBleGl0IGNvZGUgMTo8YnI+RVJST1I6IHVua25vd24gb3B0aW9uIC0t
-ZGlzYWJsZS1saWJzc2g8YnI+VHJ5ICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQv
-dG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1yMC9naXQvY29u
-ZmlndXJlIC0taGVscCcgZm9yIG1vcmUgaW5mb3JtYXRpb248YnI+V0FSTklORzogZXhpdCBjb2Rl
-IDEgZnJvbSBhIHNoZWxsIGNvbW1hbmQuPGJyPjxicj5FUlJPUjogTG9nZmlsZSBvZiBmYWlsdXJl
-IHN0b3JlZCBpbjogL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4
-Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9sb2cuZG9fY29uZmln
-dXJlLjI4Nzc5PGJyPkxvZyBkYXRhIGZvbGxvd3M6PGJyPnwgREVCVUc6IEV4ZWN1dGluZyBzaGVs
-bCBmdW5jdGlvbiBkb19jb25maWd1cmU8YnI+fCBFUlJPUjogdW5rbm93biBvcHRpb24gLS1kaXNh
-YmxlLWxpYnNzaDxicj58IFRyeSAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3Rt
-cC93b3JrL3g4Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2NvbmZp
-Z3VyZSAtLWhlbHAnIGZvciBtb3JlIGluZm9ybWF0aW9uPGJyPnwgV0FSTklORzogZXhpdCBjb2Rl
-IDEgZnJvbSBhIHNoZWxsIGNvbW1hbmQuPGJyPnwgRVJST1I6IEV4ZWN1dGlvbiBvZiAnL2ZlbGl4
-emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1saW51eC9xZW11LXN5
-c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9ydW4uZG9fY29uZmlndXJlLjI4Nzc5JyBmYWlsZWQg
-d2l0aCBleGl0IGNvZGUgMTo8YnI+fCBFUlJPUjogdW5rbm93biBvcHRpb24gLS1kaXNhYmxlLWxp
-YnNzaDxicj58IFRyeSAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3Jr
-L3g4Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2NvbmZpZ3VyZSAt
-LWhlbHAnIGZvciBtb3JlIGluZm9ybWF0aW9uPGJyPnwgV0FSTklORzogZXhpdCBjb2RlIDEgZnJv
-bSBhIHNoZWxsIGNvbW1hbmQuPGJyPnwgPGJyPkVSUk9SOiBUYXNrICgvZmVsaXh6aGFuZy9vcGVu
-Ym1jL29wZW5ibWMvbWV0YS9yZWNpcGVzLWRldnRvb2xzL3FlbXUvcWVtdS1zeXN0ZW0tbmF0aXZl
-XzQuMS4wLmJiOmRvX2NvbmZpZ3VyZSkgZmFpbGVkIHdpdGggZXhpdCBjb2RlICcxJzxicj5OT1RF
-OiBUYXNrcyBTdW1tYXJ5OiBBdHRlbXB0ZWQgNDM3NSB0YXNrcyBvZiB3aGljaCA0MjI0IGRpZG4n
-dCBuZWVkIHRvIGJlIHJlcnVuIGFuZCAxIGZhaWxlZC48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46
-MDsiPjxicj48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPkhvdyBjYW4gSSBzb3ZsZSB0aGlz
-IHByb2JsZW0/PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5UaGFua3M8L2Rpdj48ZGl2IHN0
-eWxlPSJtYXJnaW46MDsiPkZlbGl4PGJyPjwvZGl2PjwvZGl2Pjxicj48YnI+PHNwYW4gdGl0bGU9
-Im5ldGVhc2Vmb290ZXIiPjxwPiZuYnNwOzwvcD48L3NwYW4+
-------=_Part_145946_639733099.1594295623532--
+On Thu, 9 Jul 2020, at 05:54, Eddie James wrote:
+> The Aspeed specification forbids a clock divider of zero, which will be
+> calculated if the parent clock is equal to the desired clock. Testing
+> confirmed this broke the host controller.
+> 
+> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> ---
+>  drivers/mmc/host/sdhci-of-aspeed.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c 
+> b/drivers/mmc/host/sdhci-of-aspeed.c
+> index 8962f6664381..5aa72e80cae9 100644
+> --- a/drivers/mmc/host/sdhci-of-aspeed.c
+> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
+> @@ -74,6 +74,10 @@ static void aspeed_sdhci_set_clock(struct sdhci_host 
+> *host, unsigned int clock)
+>  	}
+>  	div >>= 1;
+>  
+> +	/* Aspeed forbids a clock div of 0 */
+> +	if (!div)
+> +		div = 1;
+> +
 
+Nah, the search loop needs to initialise with div = 2. The current implementation is busted.
