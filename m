@@ -1,77 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F3BE219EF9
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 13:18:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25AC5219F24
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 13:35:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B2YZP3mGYzDqY3
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 21:18:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B2YyH0PxSzDqsy
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jul 2020 21:35:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=dbvGehWI; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=jU3+zd0m; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B2YY92B36zDqsv
- for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 21:17:17 +1000 (AEST)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 069B30Sj168813; Thu, 9 Jul 2020 07:17:13 -0400
-Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com
- [159.122.73.71])
- by mx0b-001b2d01.pphosted.com with ESMTP id 325r2cedg8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2020 07:17:13 -0400
-Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
- by ppma02fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 069BFQgO009999;
- Thu, 9 Jul 2020 11:17:12 GMT
-Received: from b06avi18878370.portsmouth.uk.ibm.com
- (b06avi18878370.portsmouth.uk.ibm.com [9.149.26.194])
- by ppma02fra.de.ibm.com with ESMTP id 325mr2rs9v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 09 Jul 2020 11:17:11 +0000
-Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
- [9.149.105.58])
- by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 069BFsDB32899568
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 9 Jul 2020 11:15:54 GMT
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC9BF4C044;
- Thu,  9 Jul 2020 11:15:54 +0000 (GMT)
-Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F9464C052;
- Thu,  9 Jul 2020 11:15:54 +0000 (GMT)
-Received: from [9.85.95.123] (unknown [9.85.95.123])
- by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
- Thu,  9 Jul 2020 11:15:54 +0000 (GMT)
-From: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
-Subject: [PATCH 1/2] rainier: Add leds that are off 9551 on Operator Panel
-Message-Id: <F51AD272-73BB-412F-8FE0-55A54BCE6A32@linux.vnet.ibm.com>
-Date: Thu, 9 Jul 2020 16:45:52 +0530
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.80.23.2.2)
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-09_06:2020-07-09,
- 2020-07-09 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 spamscore=0 phishscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 mlxlogscore=963
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007090088
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B2YxH4YYSzDqsy
+ for <openbmc@lists.ozlabs.org>; Thu,  9 Jul 2020 21:34:43 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 46A4F7BA;
+ Thu,  9 Jul 2020 07:34:38 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Thu, 09 Jul 2020 07:34:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=kDC5AKwiFnwQnOxH4nQjxWMvh7BXrpN
+ lKOQU30XFyJY=; b=dbvGehWImasnS/A2WITYOYk8YV8tHzNxhoRJXehTEKtlZf7
+ RSZD9cxlNdzYRbF5ar1E8TK5ksnzDbXHPoGaNVqXsiJwlxLmzwuWfuaMqvyBCcOv
+ wwmWiRM3agfg+IoEYdnS1c5drGGbG6J/rmzYv8tbgt5GvkNlsHscaJkd8h3yjqAk
+ SUHhTsD7Hs7Ibe1LBhx0H95Rt/Y43TKbhikqGG0issmKdprJDqaWAY+HRwEO0OJR
+ kbqC6YARbxGfJJYKXlZjWzzIQIjhi8MfAhvuLUAdwiGn0oNScrz7jsWak9Tdw/AZ
+ 7B/h+DC08bJ5sECniXbZDJ3JSRT4CRpva0mGo+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=kDC5AK
+ wiFnwQnOxH4nQjxWMvh7BXrpNlKOQU30XFyJY=; b=jU3+zd0m+FeEJo7QzJGjaZ
+ 9QzTsIeO5HlyhczjQbJLxHn7Jer9LI6EuEcf5E9xrgXUJVFLuVSC+1E0q38lt071
+ gT8glNxMuWiBBrSPSGTvJCUeXKBT0+W2I+24iHesF/ipkv0qkbfNB/ziWAVMUTxA
+ tXC1UyN+DmzSJAG9iGSYQ6d8cvOkkLjD7QWZhJsfXiPBSnvx83kzXIjDDb7GbF3u
+ m/NnsbTFFsnpW7dX79FjD1cPdZQcxonfuP2bcUjkHM8szfGT5P77WCSG1CxpqDBA
+ GYGKJDTsQiseA9FHgnVu9tfLqTm9yI/N7i0ey6IhgSe1QpjYM6jhnJXOg6ZyW0mA
+ ==
+X-ME-Sender: <xms:zQAHX3mCraoezeMPUhXLKleCHbiMl5JwWx6-kZ40wdkWAOi92j9L9Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudelgdegvdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:zQAHX61fmwyuRhyJVC7M9elXbtlQyGBH6oLi-FqB9YRbMxWC4OghpA>
+ <xmx:zQAHX9qC-SaT5HPX7-mJlNfv8qmH8QLNKjU0DTfkFZiGLfhykeW-Cw>
+ <xmx:zQAHX_n-p7XQQjPEFmDc0mG2qj20hOGFrKTM7JJmez_4Fj-v-PCHYA>
+ <xmx:zQAHX2BjNFMXAPzgD8nXa89M2kSo7-_iFuCv_QIcLozuctiPva8egQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 44681E00A6; Thu,  9 Jul 2020 07:34:37 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-dev0-613-g8a73ad6-fm-20200709.001-g8a73ad6e
+Mime-Version: 1.0
+Message-Id: <8b7b04d4-369f-4dbe-9201-4e1a6492c5e5@www.fastmail.com>
+In-Reply-To: <20200708202454.21333-1-eajames@linux.ibm.com>
+References: <20200708202454.21333-1-eajames@linux.ibm.com>
+Date: Thu, 09 Jul 2020 21:04:16 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH linux dev-5.4 1/2] clk: AST2600: Add mux for EMMC clock
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,117 +94,12 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-These are LEDs that are controlled by 9551
 
-Signed-off-by: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 82 =
-++++++++++++++++++++++++++++
- 1 file changed, 82 insertions(+)
+On Thu, 9 Jul 2020, at 05:54, Eddie James wrote:
+> The EMMC clock can be derived from either the HPLL or the MPLL. Register
+> a clock mux so that the rate is calculated correctly based upon the
+> parent.
+> 
+> Signed-off-by: Eddie James <eajames@linux.ibm.com>
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts =
-b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 0b5c6cc..ecbce50 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -69,6 +69,38 @@
- 		};
- 	};
-=20
-+	leds {
-+		compatible =3D "gpio-leds";
-+
-+		/* System ID LED that is at front on Op Panel */
-+		front-sys-id0 {
-+			retain-state-shutdown;
-+			default-state =3D "keep";
-+			gpios =3D <&pca1 0 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		/* System Attention Indicator ID LED that is at front on =
-Op Panel */
-+		front-check-log0 {
-+			retain-state-shutdown;
-+			default-state =3D "keep";
-+			gpios =3D <&pca1 1 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		/* Enclosure Fault LED that is at front on Op Panel */
-+		front-enc-fault1 {
-+			retain-state-shutdown;
-+			default-state =3D "keep";
-+			gpios =3D <&pca1 2 GPIO_ACTIVE_LOW>;
-+		};
-+
-+		/* System PowerOn LED that is at front on Op Panel */
-+		front-sys-pwron0 {
-+				retain-state-shutdown;
-+			default-state =3D "keep";
-+			gpios =3D <&pca1 3 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
- };
-=20
- &gpio0 {
-@@ -514,6 +546,56 @@
- 		};
- 	};
-=20
-+	pca1: pca9551@60 {
-+		compatible =3D "nxp,pca9551";
-+		reg =3D <0x60>;
-+		#address-cells =3D <1>;
-+		#size-cells =3D <0>;
-+
-+		gpio-controller;
-+		#gpio-cells =3D <2>;
-+
-+		gpio@0 {
-+			reg =3D <0>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg =3D <1>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg =3D <2>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg =3D <3>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg =3D <4>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg =3D <5>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg =3D <6>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg =3D <7>;
-+			type =3D <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
- 	dps: dps310@76 {
- 		compatible =3D "infineon,dps310";
- 		reg =3D <0x76>;
---=20
-1.8.3.1
-
-
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
