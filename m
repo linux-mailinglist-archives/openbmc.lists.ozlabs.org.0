@@ -1,86 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 746EF21AC72
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jul 2020 03:16:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DC8921B1BD
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jul 2020 10:55:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B2w8t4tVCzDrFF
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jul 2020 11:15:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B36LV2lJPzDrNZ
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jul 2020 18:54:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=fjKuucBF; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=MhfNBEd9; 
- dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B2w7z2kNkzDr9T
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 11:15:11 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 2964E9BC;
- Thu,  9 Jul 2020 21:15:08 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Thu, 09 Jul 2020 21:15:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=LfxwM2a3zS+Wtdqj/pIZ6WZnqcPHD11
- 9FCYTUkIgPjA=; b=fjKuucBFtwbsp28uKdjw1VQl/SnERwvj0oG1Hx/F6c/Tglu
- XaaG+YPem7YTk0rl/2CyZwTqunETIPunGdKIGbROmDiD48mjSKTkOsYveqIM3fML
- ssDellm1+XmCIN0y1XVARMeqQplIT7ZVrCAKiB8Si7hUE6Ms5pvDT48ZMR8pY5hy
- ALGMffdjK5MUNKaA1kECDt+jgEbcR9Qz5xGv3EWfkIXGIkMCngwXJ3mdoeUBmUEx
- 4FlPshUXh60KTbU/63EndhAQPfvWas99a7oOMkVdiONHjr97GKEkPzMOU580Xz9e
- /e5NkcQWpp5wpf1NPbPFQQ061zkDKGKvf9jdZaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=LfxwM2
- a3zS+Wtdqj/pIZ6WZnqcPHD119FCYTUkIgPjA=; b=MhfNBEd9aXlJPwSlLNxGT7
- 4IRtG3L+spY8ympNpWpvZ8ConyM6IF9S6AuPEEnmgOk5AV88p20MGdsM2YkDa1co
- eP0PXBNWeXyg/FdIEWX9InycFYrQxRNTf7H2TDPAgwJSY5gNUBy4vY0fwtH8Os2O
- jTJm1K8F5EXwwZ0isAePn4ZidFANrgHq2SADLA3t1Z9y/tZr6VPrq7F79afwEsIR
- dRWqRjWa5GFj59x4a2DB52pRV9gpqbQ6MACJ7oucePbfnXJWCQ8AfSzvnhgDrS09
- NHYUC9poY4OETfUqGdpPP+7exS0HL6VDEjDrX9otkhC/d996cvT1zryh3oNNTXdA
- ==
-X-ME-Sender: <xms:G8EHXxlXaySS4qejK1VKvSX3esgVXTs4OL_kX6XMSt_Neb7bR6aJeg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrvddtgdeggecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderreejnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpedutddtkeeugeegvddttdeukeeiuddtgfeuuddtfeeiueetfeeileettedv
- tdfhieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:G8EHX82n9jKSHrsN05IpY54fCQipWLAM2ABQ1WJ1vV06flWn8ayCCA>
- <xmx:G8EHX3r4I7yFbzqTQGir0sM-4OFWGNGpKtP7C976_1nH75XBEjEPUQ>
- <xmx:G8EHXxnU6Y1-2gIKgLJl7hz0skLYz9tobMwlXcQCNvbf9acmy7Byaw>
- <xmx:G8EHX0gnacd4O_WF7_4_qoVx3Xte3gHJPwb1H4MI8aVSFXo7UPbFWA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 96489E00AA; Thu,  9 Jul 2020 21:15:07 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-dev0-613-g8a73ad6-fm-20200709.001-g8a73ad6e
-Mime-Version: 1.0
-Message-Id: <ff8adc4d-078e-4685-aa95-a355846774e1@www.fastmail.com>
-In-Reply-To: <20200709194113.12119-3-eajames@linux.ibm.com>
-References: <20200709194113.12119-1-eajames@linux.ibm.com>
- <20200709194113.12119-3-eajames@linux.ibm.com>
-Date: Fri, 10 Jul 2020 10:44:46 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Eddie James" <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-Subject: =?UTF-8?Q?Re:_[PATCH_linux_dev-5.7_v2_2/2]_mmc:_sdhci-of-aspeed:_Fix_clo?=
- =?UTF-8?Q?ck_divider_calculation?=
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B36KV3BmmzDrN9
+ for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 18:54:01 +1000 (AEST)
+IronPort-SDR: VFag/xWnpXWefabPRgIjfuIOsqF1j3lYt1xm0zrS8s418WSuhvRFEYMusjE29KmjlNGGZol9sd
+ DgeLFbCuGzcg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9677"; a="149639106"
+X-IronPort-AV: E=Sophos;i="5.75,335,1589266800"; 
+ d="scan'208,217";a="149639106"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jul 2020 01:53:58 -0700
+IronPort-SDR: BpR5ZpigORpq+qJd/RjNi6hMYpx5+tuE2wFWWkqIX8AyJW2lZJRiSpm816yGXuhVreegbKmhCd
+ yO5jdBGLIV+g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,335,1589266800"; 
+ d="scan'208,217";a="458219821"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga005.jf.intel.com with ESMTP; 10 Jul 2020 01:53:58 -0700
+Received: from SHWDE9518 (SHWDE9518.ccr.corp.intel.com [10.239.164.117])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 4708B5807FF;
+ Fri, 10 Jul 2020 01:53:57 -0700 (PDT)
+Date: Fri, 10 Jul 2020 16:53:57 +0800
+From: "chunhui.jia" <chunhui.jia@linux.intel.com>
+To: "zhang_cy1989" <zhang_cy1989@163.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re:  ERROR: unknown option --disable-libssh
+In-Reply-To: <688d0406.9a9d.173336c9f6c.Coremail.zhang_cy1989@163.com>
+References: <688d0406.9a9d.173336c9f6c.Coremail.zhang_cy1989@163.com>
+X-Mailer: NetEase FlashMail 2.4.1.32
+X-Priority: 3 (Normal)
+MIME-Version: 1.0
+Message-ID: <5F082CA2.7010607@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="NetEase-FlashMail-003-790547a6-2ab2-4e0d-a140-b24c695b6819"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,13 +69,122 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--NetEase-FlashMail-003-790547a6-2ab2-4e0d-a140-b24c695b6819
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
+VHJ5IHRvIHJlcGxhY2UgLS1kaXNhYmxlLWxpYnNzaCB3aXRoIC0tZGlzYWJsZS1saWJzc2gyLiAN
+Cg0KMjAyMC0wNy0xMCANCg0KY2h1bmh1aS5qaWEgDQoNCg0KDQrlj5Hku7bkurrvvJp6aGFuZ19j
+eTE5ODkgPHpoYW5nX2N5MTk4OUAxNjMuY29tPg0K5Y+R6YCB5pe26Ze077yaMjAyMC0wNy0wOSAx
+OTo1Mw0K5Li76aKY77yaRVJST1I6IHVua25vd24gb3B0aW9uIC0tZGlzYWJsZS1saWJzc2gNCuaU
+tuS7tuS6uu+8miJvcGVuYm1jQGxpc3RzLm96bGFicy5vcmciPG9wZW5ibWNAbGlzdHMub3psYWJz
+Lm9yZz4NCuaKhOmAge+8mg0KDQpEZWFyIEFsbA0KICAgICAgICAgSSBkbyB0aGlzIGNvbW1hbmQ6
+DQogICAgICAgICBiaXRiYWtlIGludGVsLXBsYXRmb3JtcyAtYyBwb3B1bGF0ZV9zZGtfZXh0DQog
+ICAgICAgICBidXQgZ2V0IHRob3NlIGVycm9yIHRpcHM6DQpFUlJPUjogcWVtdS1zeXN0ZW0tbmF0
+aXZlLTQuMS4wLXIwIGRvX2NvbmZpZ3VyZTogRXhlY3V0aW9uIG9mICcvZmVsaXh6aGFuZy9vcGVu
+Ym1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2
+ZS80LjEuMC1yMC90ZW1wL3J1bi5kb19jb25maWd1cmUuMjg3NzknIGZhaWxlZCB3aXRoIGV4aXQg
+Y29kZSAxOg0KRVJST1I6IHVua25vd24gb3B0aW9uIC0tZGlzYWJsZS1saWJzc2gNClRyeSAnL2Zl
+bGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1saW51eC9xZW11
+LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2NvbmZpZ3VyZSAtLWhlbHAnIGZvciBtb3JlIGlu
+Zm9ybWF0aW9uDQpXQVJOSU5HOiBleGl0IGNvZGUgMSBmcm9tIGEgc2hlbGwgY29tbWFuZC4NCg0K
+RVJST1I6IExvZ2ZpbGUgb2YgZmFpbHVyZSBzdG9yZWQgaW46IC9mZWxpeHpoYW5nL29wZW5ibWMv
+b3BlbmJtYy9idWlsZC90bXAvd29yay94ODZfNjQtbGludXgvcWVtdS1zeXN0ZW0tbmF0aXZlLzQu
+MS4wLXIwL3RlbXAvbG9nLmRvX2NvbmZpZ3VyZS4yODc3OQ0KTG9nIGRhdGEgZm9sbG93czoNCnwg
+REVCVUc6IEV4ZWN1dGluZyBzaGVsbCBmdW5jdGlvbiBkb19jb25maWd1cmUNCnwgRVJST1I6IHVu
+a25vd24gb3B0aW9uIC0tZGlzYWJsZS1saWJzc2gNCnwgVHJ5ICcvZmVsaXh6aGFuZy9vcGVuYm1j
+L29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80
+LjEuMC1yMC9naXQvY29uZmlndXJlIC0taGVscCcgZm9yIG1vcmUgaW5mb3JtYXRpb24NCnwgV0FS
+TklORzogZXhpdCBjb2RlIDEgZnJvbSBhIHNoZWxsIGNvbW1hbmQuDQp8IEVSUk9SOiBFeGVjdXRp
+b24gb2YgJy9mZWxpeHpoYW5nL29wZW5ibWMvb3BlbmJtYy9idWlsZC90bXAvd29yay94ODZfNjQt
+bGludXgvcWVtdS1zeXN0ZW0tbmF0aXZlLzQuMS4wLXIwL3RlbXAvcnVuLmRvX2NvbmZpZ3VyZS4y
+ODc3OScgZmFpbGVkIHdpdGggZXhpdCBjb2RlIDE6DQp8IEVSUk9SOiB1bmtub3duIG9wdGlvbiAt
+LWRpc2FibGUtbGlic3NoDQp8IFRyeSAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxk
+L3RtcC93b3JrL3g4Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2Nv
+bmZpZ3VyZSAtLWhlbHAnIGZvciBtb3JlIGluZm9ybWF0aW9uDQp8IFdBUk5JTkc6IGV4aXQgY29k
+ZSAxIGZyb20gYSBzaGVsbCBjb21tYW5kLg0KfCANCkVSUk9SOiBUYXNrICgvZmVsaXh6aGFuZy9v
+cGVuYm1jL29wZW5ibWMvbWV0YS9yZWNpcGVzLWRldnRvb2xzL3FlbXUvcWVtdS1zeXN0ZW0tbmF0
+aXZlXzQuMS4wLmJiOmRvX2NvbmZpZ3VyZSkgZmFpbGVkIHdpdGggZXhpdCBjb2RlICcxJw0KTk9U
+RTogVGFza3MgU3VtbWFyeTogQXR0ZW1wdGVkIDQzNzUgdGFza3Mgb2Ygd2hpY2ggNDIyNCBkaWRu
+J3QgbmVlZCB0byBiZSByZXJ1biBhbmQgMSBmYWlsZWQuDQoNCg0KSG93IGNhbiBJIHNvdmxlIHRo
+aXMgcHJvYmxlbT8NClRoYW5rcw0KRmVsaXg=
 
-On Fri, 10 Jul 2020, at 05:11, Eddie James wrote:
-> When calculating the clock divider, start dividing at 2 instead of 1.
-> The divider is divided by two at the end of the calculation, so starting
-> at 1 may result in a divider of 0, which shouldn't happen.
-> 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+--NetEase-FlashMail-003-790547a6-2ab2-4e0d-a140-b24c695b6819
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
+L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
+Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
+LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
+aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
+X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
+IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC45NjAwLjE5Njk5Ij48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
+PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
+IMOOwqLDiMOtw5HDhcK6w5o7IEJPUkRFUi1SSUdIVC1XSURUSDogMHB4OyBCT1JERVItQk9UVE9N
+LVdJRFRIOiAwcHg7IENPTE9SOiAjMDAwMDAwOyBNQVJHSU46IDEycHg7IExJTkUtSEVJR0hUOiAx
+LjU7IEJPUkRFUi1UT1AtV0lEVEg6IDBweCIgDQptYXJnaW5oZWlnaHQ9IjAiIG1hcmdpbndpZHRo
+PSIwIj4NCjxESVY+VHJ5IHRvIHJlcGxhY2UgLS1kaXNhYmxlLWxpYnNzaCB3aXRoIC0tZGlzYWJs
+ZS1saWJzc2gyLiA8L0RJVj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8RElWIHN0eWxlPSJGT05ULVNJ
+WkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJkYW5hOyBDT0xPUjogI2MwYzBjMCIgDQphbGlnbj1s
+ZWZ0PjIwMjAtMDctMTAgDQo8SFIgaWQ9U2lnbk5hbWVIUiANCnN0eWxlPSJCT1JERVItVE9QOiAj
+YzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdIVDogMHB4OyBXSURUSDog
+MTIycHg7IEJPUkRFUi1CT1RUT006IDBweDsgQk9SREVSLUxFRlQ6IDBweCIgDQphbGlnbj1sZWZ0
+Pg0KPFNQQU4gaWQ9X0ZsYXNoU2lnbk5hbWU+Y2h1bmh1aS5qaWE8L1NQQU4+IDwvRElWPg0KPEhS
+IA0Kc3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMwYzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFweDsgQk9S
+REVSLVJJR0hUOiAwcHg7IEJPUkRFUi1CT1RUT006IDBweDsgQk9SREVSLUxFRlQ6IDBweCI+DQoN
+CjxCTE9DS1FVT1RFIGlkPW50ZXMtZmxhc2htYWlsLXF1b3RlIA0Kc3R5bGU9IkZPTlQtU0laRTog
+MTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IFBBRERJTkctTEVGVDogMHB4OyBNQVJHSU4tTEVG
+VDogMHB4Ij4NCiAgPERJVj48U1RST05HPuWPkeS7tuS6uu+8mjwvU1RST05HPnpoYW5nX2N5MTk4
+OSAmbHQ7emhhbmdfY3kxOTg5QDE2My5jb20mZ3Q7PC9ESVY+DQogIDxESVY+PFNUUk9ORz7lj5Hp
+gIHml7bpl7TvvJo8L1NUUk9ORz4yMDIwLTA3LTA5Jm5ic3A7MTk6NTM8L0RJVj4NCiAgPERJVj48
+U1RST05HPuS4u+mimO+8mjwvU1RST05HPkVSUk9SOiB1bmtub3duIG9wdGlvbiAtLWRpc2FibGUt
+bGlic3NoPC9ESVY+DQogIDxESVY+PFNUUk9ORz7mlLbku7bkurrvvJo8L1NUUk9ORz4ib3BlbmJt
+Y0BsaXN0cy5vemxhYnMub3JnIiZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7PC9ESVY+
+DQogIDxESVY+PFNUUk9ORz7mioTpgIHvvJo8L1NUUk9ORz48L0RJVj4NCiAgPERJVj4mbmJzcDs8
+L0RJVj4NCiAgPERJVj4NCiAgPERJViANCiAgc3R5bGU9IkZPTlQtU0laRTogMTRweDsgRk9OVC1G
+QU1JTFk6IEFyaWFsOyBDT0xPUjogIzAwMDAwMDsgTElORS1IRUlHSFQ6IDEuNyI+DQogIDxESVYg
+c3R5bGU9Ik1BUkdJTjogMHB4Ij5EZWFyIEFsbDwvRElWPg0KICA8RElWIHN0eWxlPSJNQVJHSU46
+IDBweCI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IEkg
+ZG8gDQogIHRoaXMgY29tbWFuZDo8L0RJVj4NCiAgPERJViBzdHlsZT0iTUFSR0lOOiAwcHgiPiZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyANCiAgYml0YmFr
+ZSBpbnRlbC1wbGF0Zm9ybXMgLWMgcG9wdWxhdGVfc2RrX2V4dDwvRElWPg0KICA8RElWIHN0eWxl
+PSJNQVJHSU46IDBweCI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7IGJ1dCANCiAgZ2V0IHRob3NlIGVycm9yIHRpcHM6PC9ESVY+DQogIDxESVYgc3R5bGU9
+Ik1BUkdJTjogMHB4Ij5FUlJPUjogcWVtdS1zeXN0ZW0tbmF0aXZlLTQuMS4wLXIwIGRvX2NvbmZp
+Z3VyZTogDQogIEV4ZWN1dGlvbiBvZiANCiAgJy9mZWxpeHpoYW5nL29wZW5ibWMvb3BlbmJtYy9i
+dWlsZC90bXAvd29yay94ODZfNjQtbGludXgvcWVtdS1zeXN0ZW0tbmF0aXZlLzQuMS4wLXIwL3Rl
+bXAvcnVuLmRvX2NvbmZpZ3VyZS4yODc3OScgDQogIGZhaWxlZCB3aXRoIGV4aXQgY29kZSAxOjxC
+Uj5FUlJPUjogdW5rbm93biBvcHRpb24gLS1kaXNhYmxlLWxpYnNzaDxCUj5UcnkgDQogICcvZmVs
+aXh6aGFuZy9vcGVuYm1jL29wZW5ibWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUt
+c3lzdGVtLW5hdGl2ZS80LjEuMC1yMC9naXQvY29uZmlndXJlIA0KICAtLWhlbHAnIGZvciBtb3Jl
+IGluZm9ybWF0aW9uPEJSPldBUk5JTkc6IGV4aXQgY29kZSAxIGZyb20gYSBzaGVsbCANCiAgY29t
+bWFuZC48QlI+PEJSPkVSUk9SOiBMb2dmaWxlIG9mIGZhaWx1cmUgc3RvcmVkIGluOiANCiAgL2Zl
+bGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1saW51eC9xZW11
+LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9sb2cuZG9fY29uZmlndXJlLjI4Nzc5PEJSPkxv
+ZyANCiAgZGF0YSBmb2xsb3dzOjxCUj58IERFQlVHOiBFeGVjdXRpbmcgc2hlbGwgZnVuY3Rpb24g
+ZG9fY29uZmlndXJlPEJSPnwgRVJST1I6IA0KICB1bmtub3duIG9wdGlvbiAtLWRpc2FibGUtbGli
+c3NoPEJSPnwgVHJ5IA0KICAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93
+b3JrL3g4Nl82NC1saW51eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvZ2l0L2NvbmZpZ3Vy
+ZSANCiAgLS1oZWxwJyBmb3IgbW9yZSBpbmZvcm1hdGlvbjxCUj58IFdBUk5JTkc6IGV4aXQgY29k
+ZSAxIGZyb20gYSBzaGVsbCANCiAgY29tbWFuZC48QlI+fCBFUlJPUjogRXhlY3V0aW9uIG9mIA0K
+ICAnL2ZlbGl4emhhbmcvb3BlbmJtYy9vcGVuYm1jL2J1aWxkL3RtcC93b3JrL3g4Nl82NC1saW51
+eC9xZW11LXN5c3RlbS1uYXRpdmUvNC4xLjAtcjAvdGVtcC9ydW4uZG9fY29uZmlndXJlLjI4Nzc5
+JyANCiAgZmFpbGVkIHdpdGggZXhpdCBjb2RlIDE6PEJSPnwgRVJST1I6IHVua25vd24gb3B0aW9u
+IC0tZGlzYWJsZS1saWJzc2g8QlI+fCBUcnkgDQogICcvZmVsaXh6aGFuZy9vcGVuYm1jL29wZW5i
+bWMvYnVpbGQvdG1wL3dvcmsveDg2XzY0LWxpbnV4L3FlbXUtc3lzdGVtLW5hdGl2ZS80LjEuMC1y
+MC9naXQvY29uZmlndXJlIA0KICAtLWhlbHAnIGZvciBtb3JlIGluZm9ybWF0aW9uPEJSPnwgV0FS
+TklORzogZXhpdCBjb2RlIDEgZnJvbSBhIHNoZWxsIA0KICBjb21tYW5kLjxCUj58IDxCUj5FUlJP
+UjogVGFzayANCiAgKC9mZWxpeHpoYW5nL29wZW5ibWMvb3BlbmJtYy9tZXRhL3JlY2lwZXMtZGV2
+dG9vbHMvcWVtdS9xZW11LXN5c3RlbS1uYXRpdmVfNC4xLjAuYmI6ZG9fY29uZmlndXJlKSANCiAg
+ZmFpbGVkIHdpdGggZXhpdCBjb2RlICcxJzxCUj5OT1RFOiBUYXNrcyBTdW1tYXJ5OiBBdHRlbXB0
+ZWQgNDM3NSB0YXNrcyBvZiANCiAgd2hpY2ggNDIyNCBkaWRuJ3QgbmVlZCB0byBiZSByZXJ1biBh
+bmQgMSBmYWlsZWQuPC9ESVY+DQogIDxESVYgc3R5bGU9Ik1BUkdJTjogMHB4Ij48QlI+PC9ESVY+
+DQogIDxESVYgc3R5bGU9Ik1BUkdJTjogMHB4Ij5Ib3cgY2FuIEkgc292bGUgdGhpcyBwcm9ibGVt
+PzwvRElWPg0KICA8RElWIHN0eWxlPSJNQVJHSU46IDBweCI+VGhhbmtzPC9ESVY+DQogIDxESVYg
+c3R5bGU9Ik1BUkdJTjogMHB4Ij5GZWxpeDxCUj48L0RJVj48L0RJVj48QlI+PEJSPjxTUEFOIA0K
+ICB0aXRsZT1uZXRlYXNlZm9vdGVyPg0KICA8UD4mbmJzcDs8L1A+PC9TUEFOPjwvRElWPjwvQkxP
+Q0tRVU9URT48L0JPRFk+PC9IVE1MPg==
+
+--NetEase-FlashMail-003-790547a6-2ab2-4e0d-a140-b24c695b6819--
+
