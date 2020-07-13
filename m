@@ -2,95 +2,103 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAC0A21CFBA
-	for <lists+openbmc@lfdr.de>; Mon, 13 Jul 2020 08:33:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81F9A21D0E3
+	for <lists+openbmc@lfdr.de>; Mon, 13 Jul 2020 09:51:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B4v3Z6c1NzDq9C
-	for <lists+openbmc@lfdr.de>; Mon, 13 Jul 2020 16:33:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B4wnZ6FLlzDqTl
+	for <lists+openbmc@lfdr.de>; Mon, 13 Jul 2020 17:51:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=outlook.com (client-ip=40.92.254.33;
+ helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
+ header.s=selector1 header.b=tleXp+TM; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-oln040092254033.outbound.protection.outlook.com [40.92.254.33])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B4v2p10sSzDqP4
- for <openbmc@lists.ozlabs.org>; Mon, 13 Jul 2020 16:32:33 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06D644S8119839; Mon, 13 Jul 2020 02:32:29 -0400
-Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com
- [159.122.73.71])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3276afc6j0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Jul 2020 02:32:28 -0400
-Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
- by ppma02fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06D6LP6F018660;
- Mon, 13 Jul 2020 06:32:26 GMT
-Received: from b06avi18626390.portsmouth.uk.ibm.com
- (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
- by ppma02fra.de.ibm.com with ESMTP id 327527svwv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 13 Jul 2020 06:32:26 +0000
-Received: from d06av24.portsmouth.uk.ibm.com (mk.ibm.com [9.149.105.60])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 06D6V1cm13238724
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 13 Jul 2020 06:31:01 GMT
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 259B342042;
- Mon, 13 Jul 2020 06:32:24 +0000 (GMT)
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 524A04203F;
- Mon, 13 Jul 2020 06:32:23 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.85.80.218])
- by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP;
- Mon, 13 Jul 2020 06:32:23 +0000 (GMT)
-Subject: Re: Redfish EventService Implementation
-To: openbmc@lists.ozlabs.org, James Feist <james.feist@linux.intel.com>,
- "Jason >> Bills, Jason M" <jason.m.bills@linux.intel.com>
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <b80d18b2bc2766d58158e9c93f05201e87b445cd.camel@fuzziesquirrel.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
- <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
- <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
- <20200617204516.GE4618@heinlein>
- <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
- <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
- <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
- <6fc4c66e-4a0a-1c59-3f77-a6fcff29b97e@linux.intel.com>
- <ee2b81be-0aff-022f-e5a7-9f0f874c1f20@linux.vnet.ibm.com>
- <8e342c33-25c8-5586-cbd4-e8662fcac6b5@linux.intel.com>
- <5b2ab3f9-4e98-b9c3-128b-9eb161ea52f9@linux.vnet.ibm.com>
- <b62c0b2d-55fb-ffc7-5e29-2716f665f86d@linux.intel.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Message-ID: <09cf469e-ddc3-1206-efeb-54dd59a334d5@linux.vnet.ibm.com>
-Date: Mon, 13 Jul 2020 12:02:22 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B4wmn0DWhzDqTT
+ for <openbmc@lists.ozlabs.org>; Mon, 13 Jul 2020 17:50:31 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GKkdHpfe8k1YM49n8ZRdHTs+cHWFXB7yCQHn/I9DIGxHHd9La+hIeArMMW8c/PNjbSRtB5+81QgNnJjxSQE2T8lHhkAtoL26GRYrps4cUX4pRAx5fTJ8897Th2qlsqU8h5qMVs+BVc76lnI0y/U7bsUWTrYZdMKsGkcsQIVZ97MWjZ3pT2+bEdtJXEhFG/6Zy0RjJrMvqNaRLs7MHUaQ+Nhv7xXNRhKFK8Omfjz5SJGF7AIXdQNIGpVJ1FoYyeHG0Atn67lcPVRCnghNJ7FCkhPm23kkylpc2xDwpGJyRw15C9X+ZJgtzJpw6yOkD7dMZXuh9Oc8Svj65kDutr0qpg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zWGccYyDPS77YDYIscWDzJvujFI+13NtFv83hj3wX24=;
+ b=lyConGrzwMMGEUu/LFkFaS+iAaRZ0v36QetNpVbU3QpWAYQnvRh33bQdtpBJhVZl3fJNzN+iFJes3nL69aU45NwSR/Af+lm8uLv/7E9P7sqqGSuTLHgvNVSkZ5KAgSEdux52aWIwXU5TuId9bOL3gXKzwgwxTtaBzu2ZIrNPwBjNkSwHkPCKiEjD4z1H5dLnegbgMx1OdbsFBJO01G/ftCNsPrflFMQrwbRtghzjpQHj2Ukfd1JE1MJuFfqMc9aJKIbAMN9cKEQqELSme44t5Sr9g5G+RysBFyDQz9Zd5Oy47gJxYl9h5C6smdDKj7IhmvGlyHZCoie5kugFdotvLg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zWGccYyDPS77YDYIscWDzJvujFI+13NtFv83hj3wX24=;
+ b=tleXp+TMGYpSTj9OCdz8bWGBalgLGrTsygBXkymg2xfd5M9c/y/pKLUA7AWq0GxxQaQ26AEyDBBDksqV+wDKRRjX7QEhV45mrYCAXBkpRihZ9y5g8ydwurLQ6Mrp2GxevXtJ9Eal9eHrOOr8SIPA8yL6neUJqa0PNqwjNxB99SsNehLM1NZhSLFMcEJ/8vqDWg06d8mzWoNEeLuQc7Gp7kJz5V/Li0vreVPwW/7TJ2fKnmMaUCLAN5D8ZAKEFPspwnUiHJTLStVKYlxDm0j2hPYmwUWASq+6Bmb3pvUZr4+MHZ1s4S48LcQwjbLxkawsc9LskmGfOsR/6TD6Ye8/og==
+Received: from PU1APC01FT022.eop-APC01.prod.protection.outlook.com
+ (2a01:111:e400:7ebe::44) by
+ PU1APC01HT065.eop-APC01.prod.protection.outlook.com (2a01:111:e400:7ebe::290)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.21; Mon, 13 Jul
+ 2020 07:50:20 +0000
+Received: from HK2PR04MB3826.apcprd04.prod.outlook.com
+ (2a01:111:e400:7ebe::4c) by PU1APC01FT022.mail.protection.outlook.com
+ (2a01:111:e400:7ebe::339) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.21 via Frontend
+ Transport; Mon, 13 Jul 2020 07:50:20 +0000
+Received: from HK2PR04MB3826.apcprd04.prod.outlook.com
+ ([fe80::88c3:5243:9944:700f]) by HK2PR04MB3826.apcprd04.prod.outlook.com
+ ([fe80::88c3:5243:9944:700f%6]) with mapi id 15.20.3174.025; Mon, 13 Jul 2020
+ 07:50:20 +0000
+From: =?utf-8?B?5ZGoIOi/nOa4hQ==?= <zhouyuanqing8@outlook.com>
+To: =?utf-8?B?QWRyaWFuIEFtYnJvxbxld2ljeg==?=
+ <adrian.ambrozewicz@linux.intel.com>, openbmc <openbmc@lists.ozlabs.org>
+Subject: =?utf-8?B?5Zue5aSNOiBhYm91dCB2aXJ0dWFsIHZhcmlhYmxl?=
+Thread-Topic: about virtual variable
+Thread-Index: AQHWSJK9AQ4jrODwAkqVAEi5zh+8GqjkpTKAgAADLgCAIJlu3g==
+Date: Mon, 13 Jul 2020 07:50:20 +0000
+Message-ID: <HK2PR04MB38268BF789717CF88CEF4AD4FE600@HK2PR04MB3826.apcprd04.prod.outlook.com>
+References: <HK2PR04MB38261ACC44E9A3FE1236DF55FE970@HK2PR04MB3826.apcprd04.prod.outlook.com>
+ <b4aaf649-312c-ebc3-c8eb-e780973e17fc@linux.intel.com>,
+ <18282d9f-9c23-df77-8a11-099abda81b88@linux.intel.com>
+In-Reply-To: <18282d9f-9c23-df77-8a11-099abda81b88@linux.intel.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:962FE8E5B4667C09ACB1835D713650073978B87A470EEE80C68FA1AA95B1AA76;
+ UpperCasedChecksum:6E4A9959BB29E7665D357F0394C57FCDE195A9F657DFA49BAE27F72CDC524685;
+ SizeAsReceived:7070; Count:44
+x-tmn: [jtXZN0rhcg6wMoJPH8Gdh1XQVV7r5TK7]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 44
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: f8592ace-0e45-4b4a-e515-08d82701644d
+x-ms-traffictypediagnostic: PU1APC01HT065:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: OQoSdC8yZcB3GmCss3AmBBM+4LvnCoEyjAhUzmbumAIQPJPWGpk1FQckOVIb2S6vwHaOIjvxpizEpZNWXm4/Mb2IFuEfuG2vaDnJl1t7LoAf1+Dpq3IubCZz0+R/Yp+u/z7XiQfCao4OzZWQhvFeMRUJCyicfOVC5zun6q9ZmSUjW1MQLL3MQVsaaSEqbqT77UMwMIgmziejWXPOW5siB/PWisVeMj/wTW56qCsL5AAo049HlMAT5Ny/FcBTp6OO
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:0; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK2PR04MB3826.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:; SFS:; DIR:OUT; SFP:1901; 
+x-ms-exchange-antispam-messagedata: jQzTvOBnTl+0shMYovtolpA85kFrzgdsgK8nepE2QcK67koAcTJwALSuGU8nnBnHzbtiFe5RoNOKHeiCYRSggXvI9j3+UziXda62TTuwBOX83tRcNKoAgJEHfo/gvElfNikZNxDrNPte8Pc4dZrafw==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_HK2PR04MB38268BF789717CF88CEF4AD4FE600HK2PR04MB3826apcp_"
 MIME-Version: 1.0
-In-Reply-To: <b62c0b2d-55fb-ffc7-5e29-2716f665f86d@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-13_03:2020-07-10,
- 2020-07-13 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 adultscore=0
- mlxlogscore=999 malwarescore=0 phishscore=0 priorityscore=1501
- clxscore=1015 lowpriorityscore=0 suspectscore=0 spamscore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007130046
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT022.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: f8592ace-0e45-4b4a-e515-08d82701644d
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jul 2020 07:50:20.3562 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU1APC01HT065
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,135 +110,165 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "uperic@163.com" <uperic@163.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi James,
+--_000_HK2PR04MB38268BF789717CF88CEF4AD4FE600HK2PR04MB3826apcp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-As you asked for the examples in the 
-thread(https://lists.ozlabs.org/pipermail/openbmc/2020-June/022125.html), 
-I have created the mapping at the following location.
+SGkgQWRyaWFuLA0KDQogICAgVGhhbmsgeW91IHZlcnkgbXVjaCwgeW91ciBleHBsYW5hdGlvbiBi
+ZWxvdyBpcyBjbGVhci4gVGhlcmUgbWF5IGhhdmUgYmVlbiBhIGRlbGF5IGluIG15IG1haWwgc2Vy
+dmVyIGxhc3QgbW9udGggYW5kIEkgaGF2ZSByZWNlbnRseSByZWNlaXZlZCBtYWlsLg0KDQpoYXJs
+ZXkNCg0KX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCuWPkeS7tuS6ujogQWRyaWFu
+IEFtYnJvxbxld2ljeiA8YWRyaWFuLmFtYnJvemV3aWN6QGxpbnV4LmludGVsLmNvbT4NCuWPkemA
+geaXtumXtDogMjAyMOW5tDbmnIgyMuaXpSAyMTo1NQ0K5pS25Lu25Lq6OiB6aG91eXVhbnFpbmc4
+QG91dGxvb2suY29tIDx6aG91eXVhbnFpbmc4QG91dGxvb2suY29tPjsgb3BlbmJtYyA8b3BlbmJt
+Y0BsaXN0cy5vemxhYnMub3JnPg0K5oqE6YCBOiB1cGVyaWNAMTYzLmNvbSA8dXBlcmljQDE2My5j
+b20+DQrkuLvpopg6IFJlOiBhYm91dCB2aXJ0dWFsIHZhcmlhYmxlDQoNCkluIG90aGVyIHdvcmRz
+IC0gdmlydHVhbC9YWVogaXMgZXhwb3J0ZWQgYnkgcmVjaXBlcyBkZWxpdmVyaW5nIHRoZSBzYW1l
+DQpzdHVmZiwgY29uZmxpY3Rpbmcgd2l0aCBlYWNoIG90aGVyIC4gSW4geW91ciBzeXN0ZW0geW91
+IGhhdmUgdG8gY2hvb3NlDQp0aGUgY29tcGlsZXIsIGtlcm5lbCBldGMuIFdoaWxlIG1hbnkgcmVj
+aXBlcyBtaWdodCBkZWxpdmVyIHRob3NlDQpjb21wb25lbnRzLCByZWNpcGUgY3JlYXRvcnMgdXNl
+IHRoZSBzYW1lICdtZXRhLW5hbWUnIChmcm9tICd2aXJ0dWFsJw0KbmFtZXNwYWNlKSwgc28gdGhl
+biBieSBjaG9vc2luZyAiUFJFRkVSUkVEX1BST1ZJREVSIiB5b3UgY2FuIGRlY2lkZQ0Kd2hpY2gg
+b2YgdGhlICdpbXBsZW1lbnRhdGlvbnMnIHlvdSB3b3VsZCBsaWtlIHRvIGFjdHVhbGx5IHVzZS4N
+Cg0KV2l0aCAndmlydHVhbCcgdmFyaWFibGVzIHlvdSBjYW4gdXNlICd2aXJ0dWFsL3h5eicgYXMg
+YSBnZW5lcmljIGFsaWFzLg0KWW91IGNhbiB0aGVuIGludHJvZHVjZSBCaXRCYWtlIGNvZGUgZGVw
+ZW5kaW5nIG9uIG1hZ2ljICd2aXJ0dWFsL2tlcm5lbCcNCmluc3RlYWQgb2YgdXNpbmcgY29uY3Jl
+dGUgbmFtZSBvZiBpbXBsZW1lbnRhdGlvbnMgKGxpa2UgbGludXgtYXNwZWVkIC8NCmxpbnV4LW51
+dm90b24gLyBsaW51eC15b2N0byAvIGxpbnV4LXlvY3RvLXJ0KS4NCg0KUmVnYXJkcywNCkFkcmlh
+bg0KDQpXIGRuaXUgNi8yMi8yMDIwIG8gMTU6NDMsIEFkcmlhbiBBbWJyb8W8ZXdpY3ogcGlzemU6
+DQo+IEkgZmVlbCBydWRlIGZvciBwb2ludGluZyBvdXQgbGluayB0byBTdGFja092ZXJmbG93LCBi
+dXQgdGhpcyBndXkgcmVhbGx5DQo+IG5haWxlZCBpdCB3aGVuIGl0IGNvbWVzIHRvIGVhc3kgZXhw
+bGFuYXRpb24gb2YgJ3ZpcnR1YWwvJyB2YXJpYWJsZQ0KPiBuYW1lc3BhY2UgOikNCj4NCj4gaHR0
+cHM6Ly9zdGFja292ZXJmbG93LmNvbS9hLzM3ODIzNzQyLzgyMjY4ODQNCj4NCj4gVyBkbml1IDYv
+MjIvMjAyMCBvIDE0OjQ4LCB6aG91eXVhbnFpbmc4QG91dGxvb2suY29tIHBpc3plOg0KPj4gSGkg
+ZXZlcnlvbmUsDQo+Pg0KPj4gICAgICAgSSB3b3VsZCBsaWtlIHRvIGFzaywgaXMgdmlydHVhbCBh
+IHZhcmlhYmxlIGRlZmluZWQgYnkgYml0YmFrZT8gSQ0KPj4gZGlkIG5vdCBmaW5kIGl0IGluIHRo
+ZSBiaXRiYWtlIG1hbnVhbC4gV2hhdCBpcyB0aGUgdXNlIG9mIHRoZSB2aXJ0dWFsDQo+PiB2YXJp
+YWJsZT8gV2hhdCB3b3VsZCBiZSB0aGUgcHJvYmxlbSB3aXRob3V0IHRoaXMgdmFyaWFibGU/DQo+
+Pg0KPj4NCj4+ICAgICAyLjQuIFByZWZlcmVuY2VzwrYNCj4+DQo+PiA8aHR0cHM6Ly93d3cueW9j
+dG9wcm9qZWN0Lm9yZy9kb2NzL2xhdGVzdC9iaXRiYWtlLXVzZXItbWFudWFsL2JpdGJha2UtdXNl
+ci1tYW51YWwuaHRtbCNiYi1iaXRiYWtlLXByZWZlcmVuY2VzPg0KPj4NCj4+DQo+PiBUaGV8UFJP
+VklERVN8bGlzdCBpcyBvbmx5IHBhcnQgb2YgdGhlIHNvbHV0aW9uIGZvciBmaWd1cmluZyBvdXQg
+YQ0KPj4gdGFyZ2V0J3MgcmVjaXBlcy4gQmVjYXVzZSB0YXJnZXRzIG1pZ2h0IGhhdmUgbXVsdGlw
+bGUgcHJvdmlkZXJzLA0KPj4gQml0QmFrZSBuZWVkcyB0byBwcmlvcml0aXplIHByb3ZpZGVycyBi
+eSBkZXRlcm1pbmluZyBwcm92aWRlcg0KPj4gcHJlZmVyZW5jZXMuDQo+Pg0KPj4gQSBjb21tb24g
+ZXhhbXBsZSBpbiB3aGljaCBhIHRhcmdldCBoYXMgbXVsdGlwbGUgcHJvdmlkZXJzIGlzDQo+PiAi
+dmlydHVhbC9rZXJuZWwiLCB3aGljaCBpcyBvbiB0aGV8UFJPVklERVN8bGlzdCBmb3IgZWFjaCBr
+ZXJuZWwNCj4+IHJlY2lwZS4gRWFjaCBtYWNoaW5lIG9mdGVuIHNlbGVjdHMgdGhlIGJlc3Qga2Vy
+bmVsIHByb3ZpZGVyIGJ5IHVzaW5nIGENCj4+IGxpbmUgc2ltaWxhciB0byB0aGUgZm9sbG93aW5n
+IGluIHRoZSBtYWNoaW5lIGNvbmZpZ3VyYXRpb24gZmlsZToNCj4+DQo+PiAgICAgICBQUkVGRVJS
+RURfUFJPVklERVJfdmlydHVhbC9rZXJuZWwgPSAibGludXgteW9jdG8iDQo+Pg0KPj4NCg==
 
-https://gist.github.com/ratagupt/0aa4da098a60d49af90a7e4a6ea6d5f2
+--_000_HK2PR04MB38268BF789717CF88CEF4AD4FE600HK2PR04MB3826apcp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-1) Map1: Mapping between redfish resources to Dbus resources
-2) Map2: Mapping between redfish resource types to the ineterested Dbus 
-interfaces
-3) Map3: Mapping between Dbus resources to redfish resources
+PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
+dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyIgc3R5bGU9
+ImRpc3BsYXk6bm9uZTsiPiBQIHttYXJnaW4tdG9wOjA7bWFyZ2luLWJvdHRvbTowO30gPC9zdHls
+ZT4NCjwvaGVhZD4NCjxib2R5IGRpcj0ibHRyIj4NCjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBD
+YWxpYnJpLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNv
+bG9yOiByZ2IoMCwgMCwgMCk7Ij4NCjxzcGFuIHN0eWxlPSJjYXJldC1jb2xvcjogcmdiKDUwLCA0
+OSwgNDgpOyBjb2xvcjogcmdiKDUwLCA0OSwgNDgpOyBmb250LWZhbWlseTogJnF1b3Q7TWljcm9z
+b2Z0IFlhaGVpIFVJJnF1b3Q7LCBWZXJkYW5hLCBTaW1zdW4sICZxdW90O1NlZ29lIFVJJnF1b3Q7
+LCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIFJvYm90bywgJnF1b3Q7SGVsdmV0
+aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTQuNjY2NjY2OTg0NTU4MTA1
+cHg7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsgZGlzcGxheTogaW5saW5l
+ICFpbXBvcnRhbnQiPkhpDQogQWRyaWFuLDwvc3Bhbj48YnI+DQo8L2Rpdj4NCjxkaXYgc3R5bGU9
+ImZvbnQtZmFtaWx5OiBDYWxpYnJpLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250
+LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4NCjxzcGFuIHN0eWxlPSJjYXJldC1j
+b2xvcjogcmdiKDUwLCA0OSwgNDgpOyBjb2xvcjogcmdiKDUwLCA0OSwgNDgpOyBmb250LWZhbWls
+eTogJnF1b3Q7TWljcm9zb2Z0IFlhaGVpIFVJJnF1b3Q7LCBWZXJkYW5hLCBTaW1zdW4sICZxdW90
+O1NlZ29lIFVJJnF1b3Q7LCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIFJvYm90
+bywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTQu
+NjY2NjY2OTg0NTU4MTA1cHg7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsg
+ZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQiPjxicj4NCjwvc3Bhbj48L2Rpdj4NCjxkaXYgc3R5
+bGU9ImZvbnQtZmFtaWx5OiBDYWxpYnJpLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBm
+b250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4NCjxzcGFuIHN0eWxlPSJjYXJl
+dC1jb2xvcjogcmdiKDUwLCA0OSwgNDgpOyBjb2xvcjogcmdiKDUwLCA0OSwgNDgpOyBmb250LWZh
+bWlseTogJnF1b3Q7TWljcm9zb2Z0IFlhaGVpIFVJJnF1b3Q7LCBWZXJkYW5hLCBTaW1zdW4sICZx
+dW90O1NlZ29lIFVJJnF1b3Q7LCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIFJv
+Ym90bywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTog
+MTQuNjY2NjY2OTg0NTU4MTA1cHg7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1
+KTsgZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQiPiZuYnNwOw0KICZuYnNwOyZuYnNwO1RoYW5r
+IHlvdSB2ZXJ5IG11Y2gsIHlvdXIgZXhwbGFuYXRpb24gYmVsb3cgaXMgY2xlYXIuJm5ic3A7VGhl
+cmUgbWF5IGhhdmUgYmVlbiBhIGRlbGF5IGluIG15IG1haWwgc2VydmVyIGxhc3QgbW9udGggYW5k
+IEkgaGF2ZSByZWNlbnRseSByZWNlaXZlZCBtYWlsLjwvc3Bhbj48L2Rpdj4NCjxkaXYgc3R5bGU9
+ImZvbnQtZmFtaWx5OiBDYWxpYnJpLCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250
+LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7Ij4NCjxzcGFuIHN0eWxlPSJjYXJldC1j
+b2xvcjogcmdiKDUwLCA0OSwgNDgpOyBjb2xvcjogcmdiKDUwLCA0OSwgNDgpOyBmb250LWZhbWls
+eTogJnF1b3Q7TWljcm9zb2Z0IFlhaGVpIFVJJnF1b3Q7LCBWZXJkYW5hLCBTaW1zdW4sICZxdW90
+O1NlZ29lIFVJJnF1b3Q7LCAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsIFJvYm90
+bywgJnF1b3Q7SGVsdmV0aWNhIE5ldWUmcXVvdDssIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTQu
+NjY2NjY2OTg0NTU4MTA1cHg7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsg
+ZGlzcGxheTogaW5saW5lICFpbXBvcnRhbnQiPjxicj4NCjwvc3Bhbj48L2Rpdj4NCjxkaXY+PHNw
+YW4gc3R5bGU9ImZvbnQtc2l6ZTogMTQuNjY2NjY2OTg0NTU4MTA1cHg7Ij5oYXJsZXk8L3NwYW4+
+PC9kaXY+DQo8ZGl2Pg0KPGRpdiBpZD0iYXBwZW5kb25zZW5kIj48L2Rpdj4NCjxkaXYgc3R5bGU9
+ImZvbnQtZmFtaWx5OkNhbGlicmksQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7IGZvbnQtc2l6
+ZToxMnB0OyBjb2xvcjpyZ2IoMCwwLDApIj4NCjxicj4NCjwvZGl2Pg0KPGhyIHRhYmluZGV4PSIt
+MSIgc3R5bGU9ImRpc3BsYXk6aW5saW5lLWJsb2NrOyB3aWR0aDo5OCUiPg0KPGRpdiBpZD0iZGl2
+UnBseUZ3ZE1zZyIgZGlyPSJsdHIiPjxmb250IGZhY2U9IkNhbGlicmksIHNhbnMtc2VyaWYiIGNv
+bG9yPSIjMDAwMDAwIiBzdHlsZT0iZm9udC1zaXplOjExcHQiPjxiPuWPkeS7tuS6ujo8L2I+IEFk
+cmlhbiBBbWJyb8W8ZXdpY3ogJmx0O2Fkcmlhbi5hbWJyb3pld2ljekBsaW51eC5pbnRlbC5jb20m
+Z3Q7PGJyPg0KPGI+5Y+R6YCB5pe26Ze0OjwvYj4gMjAyMOW5tDbmnIgyMuaXpSAyMTo1NTxicj4N
+CjxiPuaUtuS7tuS6ujo8L2I+IHpob3V5dWFucWluZzhAb3V0bG9vay5jb20gJmx0O3pob3V5dWFu
+cWluZzhAb3V0bG9vay5jb20mZ3Q7OyBvcGVuYm1jICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmcmZ3Q7PGJyPg0KPGI+5oqE6YCBOjwvYj4gdXBlcmljQDE2My5jb20gJmx0O3VwZXJpY0AxNjMu
+Y29tJmd0Ozxicj4NCjxiPuS4u+mimDo8L2I+IFJlOiBhYm91dCB2aXJ0dWFsIHZhcmlhYmxlPC9m
+b250Pg0KPGRpdj4mbmJzcDs8L2Rpdj4NCjwvZGl2Pg0KPGRpdiBjbGFzcz0iQm9keUZyYWdtZW50
+Ij48Zm9udCBzaXplPSIyIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExcHQiPg0KPGRpdiBjbGFz
+cz0iUGxhaW5UZXh0Ij5JbiBvdGhlciB3b3JkcyAtIHZpcnR1YWwvWFlaIGlzIGV4cG9ydGVkIGJ5
+IHJlY2lwZXMgZGVsaXZlcmluZyB0aGUgc2FtZQ0KPGJyPg0Kc3R1ZmYsIGNvbmZsaWN0aW5nIHdp
+dGggZWFjaCBvdGhlciAuIEluIHlvdXIgc3lzdGVtIHlvdSBoYXZlIHRvIGNob29zZSA8YnI+DQp0
+aGUgY29tcGlsZXIsIGtlcm5lbCBldGMuIFdoaWxlIG1hbnkgcmVjaXBlcyBtaWdodCBkZWxpdmVy
+IHRob3NlIDxicj4NCmNvbXBvbmVudHMsIHJlY2lwZSBjcmVhdG9ycyB1c2UgdGhlIHNhbWUgJ21l
+dGEtbmFtZScgKGZyb20gJ3ZpcnR1YWwnIDxicj4NCm5hbWVzcGFjZSksIHNvIHRoZW4gYnkgY2hv
+b3NpbmcgJnF1b3Q7UFJFRkVSUkVEX1BST1ZJREVSJnF1b3Q7IHlvdSBjYW4gZGVjaWRlIDxicj4N
+CndoaWNoIG9mIHRoZSAnaW1wbGVtZW50YXRpb25zJyB5b3Ugd291bGQgbGlrZSB0byBhY3R1YWxs
+eSB1c2UuPGJyPg0KPGJyPg0KV2l0aCAndmlydHVhbCcgdmFyaWFibGVzIHlvdSBjYW4gdXNlICd2
+aXJ0dWFsL3h5eicgYXMgYSBnZW5lcmljIGFsaWFzLiA8YnI+DQpZb3UgY2FuIHRoZW4gaW50cm9k
+dWNlIEJpdEJha2UgY29kZSBkZXBlbmRpbmcgb24gbWFnaWMgJ3ZpcnR1YWwva2VybmVsJyA8YnI+
+DQppbnN0ZWFkIG9mIHVzaW5nIGNvbmNyZXRlIG5hbWUgb2YgaW1wbGVtZW50YXRpb25zIChsaWtl
+IGxpbnV4LWFzcGVlZCAvIDxicj4NCmxpbnV4LW51dm90b24gLyBsaW51eC15b2N0byAvIGxpbnV4
+LXlvY3RvLXJ0KS48YnI+DQo8YnI+DQpSZWdhcmRzLDxicj4NCkFkcmlhbjxicj4NCjxicj4NClcg
+ZG5pdSA2LzIyLzIwMjAgbyZuYnNwOzE1OjQzLCBBZHJpYW4gQW1icm/FvGV3aWN6IHBpc3plOjxi
+cj4NCiZndDsgSSBmZWVsIHJ1ZGUgZm9yIHBvaW50aW5nIG91dCBsaW5rIHRvIFN0YWNrT3ZlcmZs
+b3csIGJ1dCB0aGlzIGd1eSByZWFsbHkgPGJyPg0KJmd0OyBuYWlsZWQgaXQgd2hlbiBpdCBjb21l
+cyB0byBlYXN5IGV4cGxhbmF0aW9uIG9mICd2aXJ0dWFsLycgdmFyaWFibGUgPGJyPg0KJmd0OyBu
+YW1lc3BhY2UgOik8YnI+DQomZ3Q7IDxicj4NCiZndDsgPGEgaHJlZj0iaHR0cHM6Ly9zdGFja292
+ZXJmbG93LmNvbS9hLzM3ODIzNzQyLzgyMjY4ODQiPmh0dHBzOi8vc3RhY2tvdmVyZmxvdy5jb20v
+YS8zNzgyMzc0Mi84MjI2ODg0PC9hPjxicj4NCiZndDsgPGJyPg0KJmd0OyBXIGRuaXUgNi8yMi8y
+MDIwIG8mbmJzcDsxNDo0OCwgemhvdXl1YW5xaW5nOEBvdXRsb29rLmNvbSBwaXN6ZTo8YnI+DQom
+Z3Q7Jmd0OyBIaSBldmVyeW9uZSw8YnI+DQomZ3Q7Jmd0Ozxicj4NCiZndDsmZ3Q7ICZuYnNwOyZu
+YnNwOyAmbmJzcDsgJm5ic3A7SSB3b3VsZCBsaWtlIHRvIGFzaywgaXMgdmlydHVhbCBhIHZhcmlh
+YmxlIGRlZmluZWQgYnkgYml0YmFrZT8gSSA8YnI+DQomZ3Q7Jmd0OyBkaWQgbm90IGZpbmQgaXQg
+aW4gdGhlIGJpdGJha2UgbWFudWFsLiBXaGF0IGlzIHRoZSB1c2Ugb2YgdGhlIHZpcnR1YWwgPGJy
+Pg0KJmd0OyZndDsgdmFyaWFibGU/IFdoYXQgd291bGQgYmUgdGhlIHByb2JsZW0gd2l0aG91dCB0
+aGlzIHZhcmlhYmxlPzxicj4NCiZndDsmZ3Q7PGJyPg0KJmd0OyZndDs8YnI+DQomZ3Q7Jmd0OyAm
+bmJzcDsmbmJzcDsmbmJzcDsgMi40LiZuYnNwO1ByZWZlcmVuY2VzwrY8YnI+DQomZ3Q7Jmd0OyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyA8YnI+DQomZ3Q7Jmd0OyAmbHQ7PGEgaHJlZj0iaHR0cHM6
+Ly93d3cueW9jdG9wcm9qZWN0Lm9yZy9kb2NzL2xhdGVzdC9iaXRiYWtlLXVzZXItbWFudWFsL2Jp
+dGJha2UtdXNlci1tYW51YWwuaHRtbCNiYi1iaXRiYWtlLXByZWZlcmVuY2VzIj5odHRwczovL3d3
+dy55b2N0b3Byb2plY3Qub3JnL2RvY3MvbGF0ZXN0L2JpdGJha2UtdXNlci1tYW51YWwvYml0YmFr
+ZS11c2VyLW1hbnVhbC5odG1sI2JiLWJpdGJha2UtcHJlZmVyZW5jZXM8L2E+Jmd0Ow0KPGJyPg0K
+Jmd0OyZndDs8YnI+DQomZ3Q7Jmd0Ozxicj4NCiZndDsmZ3Q7IFRoZXxQUk9WSURFU3xsaXN0IGlz
+IG9ubHkgcGFydCBvZiB0aGUgc29sdXRpb24gZm9yIGZpZ3VyaW5nIG91dCBhIDxicj4NCiZndDsm
+Z3Q7IHRhcmdldCdzIHJlY2lwZXMuIEJlY2F1c2UgdGFyZ2V0cyBtaWdodCBoYXZlIG11bHRpcGxl
+IHByb3ZpZGVycywgPGJyPg0KJmd0OyZndDsgQml0QmFrZSBuZWVkcyB0byBwcmlvcml0aXplIHBy
+b3ZpZGVycyBieSBkZXRlcm1pbmluZyBwcm92aWRlciA8YnI+DQomZ3Q7Jmd0OyBwcmVmZXJlbmNl
+cy48YnI+DQomZ3Q7Jmd0Ozxicj4NCiZndDsmZ3Q7IEEgY29tbW9uIGV4YW1wbGUgaW4gd2hpY2gg
+YSB0YXJnZXQgaGFzIG11bHRpcGxlIHByb3ZpZGVycyBpcyA8YnI+DQomZ3Q7Jmd0OyAmcXVvdDt2
+aXJ0dWFsL2tlcm5lbCZxdW90Oywgd2hpY2ggaXMgb24gdGhlfFBST1ZJREVTfGxpc3QgZm9yIGVh
+Y2gga2VybmVsIDxicj4NCiZndDsmZ3Q7IHJlY2lwZS4gRWFjaCBtYWNoaW5lIG9mdGVuIHNlbGVj
+dHMgdGhlIGJlc3Qga2VybmVsIHByb3ZpZGVyIGJ5IHVzaW5nIGEgPGJyPg0KJmd0OyZndDsgbGlu
+ZSBzaW1pbGFyIHRvIHRoZSBmb2xsb3dpbmcgaW4gdGhlIG1hY2hpbmUgY29uZmlndXJhdGlvbiBm
+aWxlOjxicj4NCiZndDsmZ3Q7PGJyPg0KJmd0OyZndDsgJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7IFBSRUZFUlJFRF9QUk9WSURFUl92aXJ0dWFsL2tlcm5lbCA9ICZxdW90O2xpbnV4LXlv
+Y3RvJnF1b3Q7PGJyPg0KJmd0OyZndDs8YnI+DQomZ3Q7Jmd0Ozxicj4NCjwvZGl2Pg0KPC9zcGFu
+PjwvZm9udD48L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
-
-I tried to cover the following scenario in the above mapping.
-
-* Redfish resource is mapped to multiple Dbus Resources
-* Redfish Property is mapped to single Dbus property
-* Redfish Property(complex property) is mapped to multiple dbus property.
-* Same type of Redfish Resources are mapped to different Dbus Resources
-* Redfish node url having multiple regex : Yet to take a look on this.
-
-
-Flow would be like as below
-
-=> In bmcweb each Redfish node represents to a Redfish Resource.
-=> Each node will be having it's own mapping between Redfish properties 
-and the Dbus Resources.
-
-=> Some code on bmcweb will walkthrough on each node during startup , 
-get this mapping from each node and generate
-    two mappings
-    1) Reverse mapping (Dbus Resource to Redfish Resource)(MAP3) and
-    2) mapping between Resource Types to the interested Dbus 
-interfaces(MAP2)
-
-=> To start with we will support few resource types and then scale it up 
-as needed.
-
-=> Map2 would be used when the Redfish client subscribe for the 
-ResourceType to get the Dbus mappings.
-
-=> Map3 would be used when the Dbus signal gets generated and need the 
-Redfish mappings.
-
-=> Once we have all thsese mapping gets generated and loaded into the 
-memory, bmcweb would start listening
-    for the interfaces listed in map2.
-
-=> Once any Dbus signal gets generated map3 would be used to get the 
-Redfish mapping.
-
-Please let me know if you have any concerns with this approach.
-
-Ratan
-
-On 7/7/20 3:00 AM, Bills, Jason M wrote:
->
->
-> On 7/3/2020 3:15 AM, Ratan Gupta wrote:
->>>>> I think I'm still a little confused at the scope.  My 
->>>>> understanding was that this initial design for EventService was 
->>>>> only for monitoring event messages and not resources in general. 
->>>>> It seems like it may not make sense to try to use the same tools 
->>>>> and approach for both message monitoring and resource monitoring? 
->>>>> Do we need to treat them separately for now to simplify the 
->>>>> discussion?
->>>> Jason, When you say event messages? What do you mean, Do you mean 
->>>> to say "/redfish/v1/Systems/system/Logservices/eventlog"? >
->>>> If yes then this should also go as Resource Event, When ever any 
->>>> log entry gets created under System Log 
->>>> (/redfish/v1/Systems/system/Logservices/eventlog/entries), BMC 
->>>> would notify to the Redfish client saying that "ResourceCreated" 
->>>> with the URL of the Resource.
->>> Yes, new entries under 
->>> "/redfish/v1/Systems/system/Logservices/eventlog", but I thought you 
->>> could register for specific MessageIDs, so it's not just a generic 
->>> "new resource" event like others would be.
->>
->> Can we register for MessageID? I thought client can register for 
->> whole registry not a specific Message ID.
->>
-> I don't really know.  I thought that's what the current implementation 
-> allowed, but I don't know for sure if it can or should.
->
->>>
->>>
->>>>
->>>> After receiving this event Redfish client will do a GET request on 
->>>> the URL(retrieved as part of event) to get the content of the log.
->>>>
->>>> This will become generic infra for all types of events.
->>> What I'm saying is I don't know if there is a good generic solution 
->>> to cover both the EventLog and all other resources. I believe the 
->>> current EventService implementation was designed only for EventLog 
->>> and may not work well for generic resource events.
->>
->> Can you get me the example payload for EventLog which is going to be 
->> sent with the current design? I am not sure how the eventlog and 
->> other resources are different.
->>
-> This is based on the assumption that for a LogService, you can 
-> register for a MessageId.  If this is not possible, then they might be 
-> treated the same.
->
->> For eventLogs also we have the associated D-bus 
->> objects(/xyz/openbmc_project/logging,/xyz/openbmc_project/dump etc)
->>
-> For Intel platforms, we don't use /xyz/openbmc_project/logging, so we 
-> don't have D-Bus objects associated with each EventLog LogEntry.  We 
-> use rsyslog to create a file that contains many LogEntries.
->
-> However, as an unrelated side-thought: linking logging to 
-> /xyz/openbmc_project/dump made me wonder if there is a possible 
-> solution to the logging issue if we treat /xyz/openbmc_project/logging 
-> like /xyz/openbmc_project/dump and place a pointer to the log in the 
-> D-Bus object instead of the log itself?
->
->>>
->>>>
->>>> I would be coming up with few design approaches and downside with 
->>>> each approach to take it to conclusion.
->>> Thanks!  What I'm proposing is that we clarify or possibly separate 
->>> the discussions about EventLog vs. generic resources to avoid 
->>> confusion and come up with the right solutions for each.
->>>
->>>>
->>>> Ratan
->>>>
+--_000_HK2PR04MB38268BF789717CF88CEF4AD4FE600HK2PR04MB3826apcp_--
