@@ -2,65 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBAF32204F3
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 08:29:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BC6E2206DB
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 10:16:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B66t74h1hzDqKv
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 16:29:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B69G113pYzDqjn
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 18:16:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::236;
- helo=mail-lj1-x236.google.com; envelope-from=yulei.sh@bytedance.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=U6CC6WMA; dkim-atps=neutral
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com
- [IPv6:2a00:1450:4864:20::236])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B66sJ1Yh4zDqKP
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jul 2020 16:28:35 +1000 (AEST)
-Received: by mail-lj1-x236.google.com with SMTP id s9so1226482ljm.11
- for <openbmc@lists.ozlabs.org>; Tue, 14 Jul 2020 23:28:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=Zq6j6oLRviSESzhydeNumjd4mW3Ip78/eZMwxqcbSTg=;
- b=U6CC6WMA04XHS0PDUZrhBVA4FeSotnRQOBLrY+aY5F2SGrJCeXO6kJqZsM5sfLaq/N
- oNigwsN0mKIXkpuOscFdQZRg7RTxinmINuu3A+0ddGDxdyEBeXqOcfhyXeYG40DSiaFn
- CQMPnj3x+jRTrMp+Kbv4C4k4x9GKojX1A37ZUc8f4vOmNhqRa0muLlhU1nsKDgUxtDNh
- DylHD+xWi6gJfkbedHkp8lQES2ct5Ec21zmFzdspmwrY0SpHT9bvnztZ6WAghoGwCue2
- 0kiZoI2bgJSTrqeR0+uYy3YAPyvXOF+YPetI9Ln1JRfdP9PHdiZKTgktDLnhtBZ/UQUa
- 7Btw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=Zq6j6oLRviSESzhydeNumjd4mW3Ip78/eZMwxqcbSTg=;
- b=kQx8xt+oHaoHtNx2Oi5xobzXg8T2Zf5aToEtV2sbGg3yOsGUBtTLk+YC/dJUhMzqTa
- eGRa7rvdWZ22psao5CLPWGw7n8Q1iUH9hJ+pIa0ME3LCWoQkzxYU8efTr6xCBNzLU/mb
- ObzfvBYD3zV2LPt7SyMQHydqb9YjcwZ1/R/VJDurAMtJJ6nRKhutLZQPRkfZQJrgqwSZ
- jnpHQeHhT77TaB9EvTK+0Mqbo0dmER2+TzGXV6ejA9iSPgtZmkaOAgoXONhdDw9CfwJn
- shoPyhwSbb15CvZEWY6hpvPGBbw+dC5KDpHusL7Wx9joTyp9Iv+FpNkuycdjaV58tDQp
- yaVA==
-X-Gm-Message-State: AOAM531K0TXHCYH9t7sV2P+bl0uYO3vMpevx+5hK5+o+g4fN0ZsqGZ96
- IowBpmBnc2h48BUwA0CiDix9vH1aGPIvgb1Oa1R8RGeK/LLRUw==
-X-Google-Smtp-Source: ABdhPJx5vJ2JXeGquejtw4Qq8Ri9CdDOUTIwNTBnotC7PWLi6N5fEUshyBVoCOjvv2DxNrxGv1vLVOWJusw9Hda1M+Y=
-X-Received: by 2002:a2e:b4d8:: with SMTP id r24mr4041125ljm.19.1594794511376; 
- Tue, 14 Jul 2020 23:28:31 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B69DJ5HRrzDqXr
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Jul 2020 18:15:12 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 06F83Lgx141802; Wed, 15 Jul 2020 04:15:05 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 329d9hv3vb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2020 04:15:04 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06F84q5m022449;
+ Wed, 15 Jul 2020 08:14:59 GMT
+Received: from b06cxnps4075.portsmouth.uk.ibm.com
+ (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
+ by ppma03ams.nl.ibm.com with ESMTP id 327527v6n0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 15 Jul 2020 08:14:59 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 06F8EvoN60882946
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 15 Jul 2020 08:14:57 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8BA025204F;
+ Wed, 15 Jul 2020 08:14:57 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.227.161])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id 7E4F152050;
+ Wed, 15 Jul 2020 08:14:56 +0000 (GMT)
+Subject: Re: Redfish HealthRollup/LED question
+To: James Feist <james.feist@linux.intel.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>, vishwa@linux.vnet.ibm.com
+References: <56aeaf07-beb1-22ca-ab54-aa984ea82bf1@linux.vnet.ibm.com>
+ <a372f939-e33f-db57-5b46-09b7f8e569ff@linux.intel.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <6d013fd8-04f2-4a2a-5c73-90e65895103c@linux.vnet.ibm.com>
+Date: Wed, 15 Jul 2020 13:44:55 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.10.0
 MIME-Version: 1.0
-From: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
-Date: Wed, 15 Jul 2020 14:28:20 +0800
-Message-ID: <CAGm54UEhd6KH0676mqN3EUmEAtgJ81NPKboZUffmRUFNBaXV1Q@mail.gmail.com>
-Subject: Request to create new repo meta-bytedance
-To: openbmc <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <a372f939-e33f-db57-5b46-09b7f8e569ff@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-07-15_05:2020-07-15,
+ 2020-07-15 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=668
+ suspectscore=0 malwarescore=0 adultscore=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 spamscore=0 phishscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
+ definitions=main-2007150063
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,23 +85,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: xuxiaohan@bytedance.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Brad and all,
+On 15/07/20 2:40 am, James Feist wrote:
+> On 7/14/2020 4:44 AM, Deepak Kodihalli wrote:
+>> Hi James/Gunnar,
+>>
+>> On IBM platforms, a fault indicator LED associated with a FRU can 
+>> indicate the "Health Rollup" status of the FRU. For eg a CPU can be 
+>> healthy, but something contained within (eg a core) may be broken, so 
+>> the LED will be turned on. I think the Redfish HealthRollup property 
+>> is conceptually similar.
+>>
+>> Question is - do you see a problem if we add code in bmcweb that sets 
+>> the HealthRollup property for a FRU if an associated LED is turned on? 
+>> I believe this is aligned with 
+>> https://github.com/openbmc/docs/blob/master/designs/redfish-health-rolllup.md 
+>> (no new D-Bus objects/interfaces being added, etc). On IBM platforms, 
+>> a D-Bus association might exist between the FRU and the LED, and 
+>> setting the HealthRollup property will be based on this. If the said 
+>> association is missing on other platforms, the code will not do anything.
+> 
+> What changes does this require? I believe this is how the health roll up 
+> functions today.
 
-Bytedance is working on some projects using OpenBMC, and we would like
-to create meta-bytedance to hold the configs, and in the near future,
-we probably will upstream the machine configs as well.
+Yes, the bmcweb code around HealthRollup does look up association 
+endpoints today already. What I mentioned above might need code changes 
+to look at additional association types.
 
-The CCLA is already signed:
-https://drive.google.com/drive/folders/18Si2WEW0caKObqT9UWapAvD70X_JHnVG
-
-Could you kindly please help to create the meta-bytedance repo and add
-it into openbmc as subtree?
-Thanks!
-
--- 
-BRs,
-Lei YU
