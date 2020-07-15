@@ -2,63 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F7B2220CCC
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 14:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3886B221224
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 18:21:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B6Gcz0S7czDql8
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 22:18:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B6N1v43FPzDqnl
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jul 2020 02:21:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62a;
- helo=mail-ej1-x62a.google.com; envelope-from=qweran@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=jnWBof+y; dkim-atps=neutral
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
- [IPv6:2a00:1450:4864:20::62a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B6Gc62fc5zDqdS
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jul 2020 22:17:36 +1000 (AEST)
-Received: by mail-ej1-x62a.google.com with SMTP id dr13so1939695ejc.3
- for <openbmc@lists.ozlabs.org>; Wed, 15 Jul 2020 05:17:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=hah0+3fkElklJFKk3D7NnWFSzQag5OPkY8zTnUUJ8yY=;
- b=jnWBof+yYxPtc9EMYhoccLG8DSI87WWwMI+RUUadgc45e7VgQXBB4bUMq3gcDg6V/I
- DwpP5XqI42XILB0m6slt0defr5llKag5SdbYxsMVicPF0sGT1qTQ68cG0hQSRzKbdigK
- piXq1UOOtZlNhmI5Bhxf+vkd/Qp8yfVXCZxRwQZEKRwgh3EiLv6hqQIIbeoLIaXCaX7O
- WBgtYxsohd142IXQ3ghvHM8Ft8+S+Lr8JhjpAssCwRllWVZ5kf07Z7PI/zjtT7THzyfz
- I/lbdKLIzQAMXCzJiRdnz51kwYSTk/IZRJKMO1sTi6qmK1OA2f2GmQK3zh1W3jUNPu1O
- C9kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=hah0+3fkElklJFKk3D7NnWFSzQag5OPkY8zTnUUJ8yY=;
- b=gvdF1kLSM18EHq3t87aa45a0fHCOcoKm2j9HBFFeVDOasefj7ujBKZKimFOyhYGBrB
- m46tB0HxNDjEIBHwuVXV30K/FbPKL7Tlr9DpV8qqLBouhua5w/Age8fjO7TlfLwL1XAr
- K8tAF3Ix/ti1FtK0iSuslcGkQoyYS2S5oAlJTHY4w3NNA6CZrthcHgYlAzjBqZpCMwF8
- cNXab2+mfQVQrJjrR/3X1yIBIzUrSasVh0o5jwzTxfSpgSlJOlBMSlrgIVEVij1IyAkC
- x25ewQwFHhf9E6Lsm/X7Jo3vqqTMP2TRciqclkIP7NFYm7flkPGp6JuYD3kglmgBMQEV
- j32Q==
-X-Gm-Message-State: AOAM533wfaEw8lLxKHlsaAuHXNCV75mZLDxSYKPujmF+j0/+BlF42v+9
- euMLMQScr9Yfnzz5brfEpeUf4ozEzq/+E5Rx03Vztg==
-X-Google-Smtp-Source: ABdhPJzo/JO9ZPfYpMxXNw3U2CeIfkm+Pc9dYJAQ/2DbnjQSsWUbuNmHGD8HUYPVh2oOlwrk+kDN8s7odBnlI1QX90Q=
-X-Received: by 2002:a17:906:511:: with SMTP id
- j17mr9453416eja.434.1594815451787; 
- Wed, 15 Jul 2020 05:17:31 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B6N0g1HqYzDqnc
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jul 2020 02:20:48 +1000 (AEST)
+IronPort-SDR: EO/tiFRU3lYr55pt06WqO6B3jn9tzqEL27zRC0Akatp5z2tHqwU8AzJCVnSCtyikHjmeYYd7LV
+ viMgtZz6/iSQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9683"; a="128763350"
+X-IronPort-AV: E=Sophos;i="5.75,355,1589266800"; d="scan'208";a="128763350"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Jul 2020 09:20:25 -0700
+IronPort-SDR: PnwZVCKKF/rtY04DhEqUcDHiU3JaHL0Lm+1TgC9OWLtKUknJPpfNi6Vs0kvoOxQnol5+EFPFUZ
+ BxUCfHWTUpvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,355,1589266800"; d="scan'208";a="282149088"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.213.169.25])
+ ([10.213.169.25])
+ by orsmga003.jf.intel.com with ESMTP; 15 Jul 2020 09:20:24 -0700
+Subject: Re: Redfish HealthRollup/LED question
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>, vishwa@linux.vnet.ibm.com
+References: <56aeaf07-beb1-22ca-ab54-aa984ea82bf1@linux.vnet.ibm.com>
+ <a372f939-e33f-db57-5b46-09b7f8e569ff@linux.intel.com>
+ <6d013fd8-04f2-4a2a-5c73-90e65895103c@linux.vnet.ibm.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <672edf98-6522-f453-6692-8cd0835ba399@linux.intel.com>
+Date: Wed, 15 Jul 2020 09:20:24 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-From: Ilya Gousev <qweran@gmail.com>
-Date: Wed, 15 Jul 2020 15:17:20 +0300
-Message-ID: <CACS57oWum6NJghyv8904M+-GzrYy=LD93wvizGo8RagHOkOSZQ@mail.gmail.com>
-Subject: Tiogapass build
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000007c75e205aa79e8dc"
+In-Reply-To: <6d013fd8-04f2-4a2a-5c73-90e65895103c@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,31 +62,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000007c75e205aa79e8dc
-Content-Type: text/plain; charset="UTF-8"
+On 7/15/2020 1:14 AM, Deepak Kodihalli wrote:
+> On 15/07/20 2:40 am, James Feist wrote:
+>> On 7/14/2020 4:44 AM, Deepak Kodihalli wrote:
+>>> Hi James/Gunnar,
+>>>
+>>> On IBM platforms, a fault indicator LED associated with a FRU can 
+>>> indicate the "Health Rollup" status of the FRU. For eg a CPU can be 
+>>> healthy, but something contained within (eg a core) may be broken, so 
+>>> the LED will be turned on. I think the Redfish HealthRollup property 
+>>> is conceptually similar.
+>>>
+>>> Question is - do you see a problem if we add code in bmcweb that sets 
+>>> the HealthRollup property for a FRU if an associated LED is turned 
+>>> on? I believe this is aligned with 
+>>> https://github.com/openbmc/docs/blob/master/designs/redfish-health-rolllup.md 
+>>> (no new D-Bus objects/interfaces being added, etc). On IBM platforms, 
+>>> a D-Bus association might exist between the FRU and the LED, and 
+>>> setting the HealthRollup property will be based on this. If the said 
+>>> association is missing on other platforms, the code will not do 
+>>> anything.
+>>
+>> What changes does this require? I believe this is how the health roll 
+>> up functions today.
+> 
+> Yes, the bmcweb code around HealthRollup does look up association 
+> endpoints today already. What I mentioned above might need code changes 
+> to look at additional association types.
+> 
 
-Hi!
-
-I have tried to touch Tiogapass (by Wiwyn).
-I have added the devices for KVM. And it works.
-Now i want to get information about hardware (for example CPU and DIMM
-imformation, like model, clocks, etc.). How i can get it? Only from IPMI
-stack (like KCS)?
-
-Ilya
-
---0000000000007c75e205aa79e8dc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi!</div><div><br></div><div>I have tried to touch Ti=
-ogapass (by Wiwyn).=C2=A0</div><div>I have added the devices for KVM. And i=
-t works.<br></div><div>Now i want to get information about hardware (for ex=
-ample CPU and DIMM imformation, like model, clocks, etc.). How i can get it=
-? Only from IPMI stack (like KCS)?</div><div><br></div><div>Ilya<br></div><=
-/div>
-
---0000000000007c75e205aa79e8dc--
+I'd prefer we try to be consistent, but if that is not possible 
+additional associations are probably fine, as long as the documentation 
+is updated.
