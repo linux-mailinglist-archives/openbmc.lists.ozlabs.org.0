@@ -2,130 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 044912213D1
-	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 19:57:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33E5A22143D
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jul 2020 20:27:19 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B6Q8j0ZZMzDqnk
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jul 2020 03:57:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B6QpX46ztzDqpG
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jul 2020 04:27:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62a;
+ helo=mail-ej1-x62a.google.com; envelope-from=qweran@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=4465c697e1=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=nLTvGhSL; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=A6PEisyW; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Ds+HlNeX; dkim-atps=neutral
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
+ [IPv6:2a00:1450:4864:20::62a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B6Q7q0p2ZzDqnZ
- for <openbmc@lists.ozlabs.org>; Thu, 16 Jul 2020 03:57:02 +1000 (AEST)
-Received: from pps.filterd (m0109331.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06FHrRU7011804; Wed, 15 Jul 2020 10:56:59 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=Bh+Qjf+d5HzlcS7yctrVyrLuNyXcNbtCIul1MVbDlQQ=;
- b=nLTvGhSLJRSgm1vzrvQH/liNaNhkLghtJIQXRqrKlBEKeWdrSDT3hJdLXUVCgSHoK8po
- ajUfxeTPXRJKGOeuQjZQHEq7rx1S0xX0tzXGo6r5xRDrsh1SPLtX+z4lcwxmV2NJWy2w
- 0/+NCjOFz7WD1B5DLmxi2dxelrynFO+rCus= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 327b8j3xue-4
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Wed, 15 Jul 2020 10:56:58 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Wed, 15 Jul 2020 10:56:55 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G7b/KoMiS+PyQwVfsH//Em1AG4uVo8spKieE3oXgYjz5v0+7OryI2oCq38UBWYrIqyXECvQPMu3G+YeiqGgYXUURZgoUQ0nre9EHhGrA/hB2r3rc8FMssaNlOv1APHoyoVEtr4Du45Bg33vGSVgb6ggZUa8Drl0dVEk/ewgrN99qg8dYMO9D+oPlpRxE1+H/pRWhTz3UwJ6BeCh4ypZkGIP/1LD8qYUujJ/uDrpaHutTKwJkXlBJ7wFamqwIts2+XwR19nCoWz2oLLejf2rmCdnciAlbTvkQB3gwV/eF+97qGAlKzSaZ5l1197JyPutmRjUNclJg5KuWNaleJPDiEQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Bh+Qjf+d5HzlcS7yctrVyrLuNyXcNbtCIul1MVbDlQQ=;
- b=FNS92ivNZoN+sLipsb1xvRbinn1xt3E+YuLxSkiSHgN9LTuTDJSO8limU3H6X0WxO+LqRugeamfqn76Mg3DBGAXnAN4v2peUJN5joabuPlPacu/q5nz+kvZ/rcOXs/ayFlsH8K7QaknHnqGkQnwuya2md+Vwqf2OsJ6VCaDCbjpselxv6pc7ZYLNdEB/xXc0n/RYdgZ80qmLV+Byw8pfqRkAcNXmpWWi4DG2ABVXRfzTVfBiStRatB43joPwuhzo14d6ap48T6TLe2J+r/dOa8tnoPGQErnxiCeZBOIZQR2OO59ECB7pFW1GHNWZh6/GoeWgcQYzQXsSV3Nnhf6ybg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Bh+Qjf+d5HzlcS7yctrVyrLuNyXcNbtCIul1MVbDlQQ=;
- b=A6PEisyWuFQ3ImHCE2vlHGsUJHTHxjhjyoagrjKegu7VkmeHTSRRxl5uWQz6OpR5HBPB9IoswDaaUPOi/olfEuJC6CJcy9dPkl/LaL24yjkLVO+5Uvkud8p2XWBRitGS6rFqdy0xJ2aB7gKMfypT5/L8IHO1Dod89mvRYRQ/2ZE=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB2261.namprd15.prod.outlook.com (2603:10b6:a02:8e::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3174.23; Wed, 15 Jul
- 2020 17:56:53 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::34b8:e690:6dfc:8faf]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::34b8:e690:6dfc:8faf%4]) with mapi id 15.20.3174.026; Wed, 15 Jul 2020
- 17:56:53 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Ilya Gousev <qweran@gmail.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: Tiogapass build
-Thread-Topic: Tiogapass build
-Thread-Index: AQHWWqIZ1uNs0y8v+0yJT741t7RsUqkIeAWA
-Date: Wed, 15 Jul 2020 17:56:53 +0000
-Message-ID: <8B3F0342-9917-4929-B955-F226FE8EE0AA@fb.com>
-References: <CACS57oWum6NJghyv8904M+-GzrYy=LD93wvizGo8RagHOkOSZQ@mail.gmail.com>
-In-Reply-To: <CACS57oWum6NJghyv8904M+-GzrYy=LD93wvizGo8RagHOkOSZQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2601:647:4b00:fd70:18e2:66b5:5e3d:3d1a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 8b5d1276-11b3-4b11-c908-08d828e87509
-x-ms-traffictypediagnostic: BYAPR15MB2261:
-x-microsoft-antispam-prvs: <BYAPR15MB226142850173CFE4629C582ADD7E0@BYAPR15MB2261.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:3276;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 6PawbLIYIE/X7klkjESURdlxWsL/c6OroXfJkAGZYp3apzcE+M8279IlhHu19NphsTqJXcy6XuHMTbtJrKazNEI5vjx0bA/wZk2/HgQfpo7zTz71BgKsADUD4LJ/ocFVDKUXxBW2hR7P1Wcw1Xb1Vqm5Fg77Lupc8gwWi0dpzQVgjoSXFAK5X0+SkAlzssglgvhxYMZmkU/SbmWgAUx5j7dqG/S5K1Gm3wxxy5v3R9rMgXJzeWbMeHVnrTkeU0ANShEYg98vQFnn0LxoNDSXRuI1y61lPFVWZyYd6UDCcZ2/GZu3y23Kk6i7ye7d1qKWfTevR2suzhWTcZzyJFgTRQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(396003)(39860400002)(376002)(366004)(136003)(346002)(186003)(83380400001)(76116006)(66946007)(6506007)(3480700007)(7116003)(53546011)(8936002)(316002)(66556008)(110136005)(9326002)(8676002)(4744005)(66446008)(5660300002)(66476007)(64756008)(36756003)(33656002)(71200400001)(6512007)(6486002)(2906002)(478600001)(2616005)(86362001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: Acf8MGywJVpnVjDWNvJMUXz60i9Jv37FAfQFn2dU+VlKoB3MoSqMXIvkQ2fV973hJBoSYlE92pHs2MCPrzWQPuN3aiK5QLnX0EcGYhFy+l9aA6w69AqQGtoD9/Yomc3CIH5Vfc9kNm6Y0lkP+iJEsgGqdTh1wQ0YldBpeIfaoNXIoB3HGNTBgja7q928xNag5N0RvmDhaZ0Q/FV+DVfd1LNcxBIc63N1/owB4pXZXVCgXd6SlbrS9tvva56qpqRrhrT+fgN67O/SWzADrkWoEQ/W85UBHL9iXCljcY9YeIKbhCuPqBhA182A5JxSJhmME1S/TB+7mkJ5cBZPwDa+NavqPWzM4b+9e6pLNbTWgs062cwaHO9vXf58l2X38JqgkNgBlj01VybksxRn4ZXnUepYgwqZnWi8/0vgqwYcsT8ra4gYJlOkf9CmC3vzw1QO+r6I4JqBBnsw1HrDE/DdFzaZzWkzzmd0eStLi2Iys94Xr8vWBHrlPdnLESLHA/MegbLiuf4KCgP+hFYXgFRwRwjOVY13hWFf4L5qxKu69ccFJFAS0ruq0PBS0zIwacEc
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_8B3F034299174929B955F226FE8EE0AAfbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B6Qnl4FxZzDqf5
+ for <openbmc@lists.ozlabs.org>; Thu, 16 Jul 2020 04:26:35 +1000 (AEST)
+Received: by mail-ej1-x62a.google.com with SMTP id y10so3195671eje.1
+ for <openbmc@lists.ozlabs.org>; Wed, 15 Jul 2020 11:26:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=MpTP1CLS60o0tVNGH/1/DJNmFKEJ2nKOGH9cOwTGw20=;
+ b=Ds+HlNeXxa3+IHkzKOPDfGJ3LUqPQQH89gOQf8K0WMRPP+tURL7C4nVnjs5fae+s+4
+ xo/HhcFWXLnQ+J82uiPOGd3Mo7hN3EOVD2nuxb/BL2DOVkpHrqMzVuIrdDTec1M3tY91
+ HY50uKzhSI7NNWQuoUhQqF6TvjtQyOZjaZ+BDRkN92OaqkHRtrEbG7qtq/TiGZaEyjm8
+ pzWPZT8296B1C/CzME/MkHeqMtgza6HzQajfRlV6xbeuONw9MvecAuFf+5wKopc90in9
+ 8ieH2NqFoUcTbseZsZNxmO1RIrrArs5W9d1EH+YB9cZ+u1jLe/8xJ/PBTWEApXZOJs2r
+ 2YQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=MpTP1CLS60o0tVNGH/1/DJNmFKEJ2nKOGH9cOwTGw20=;
+ b=ZadH/P02e23yzjGmBckXH1rA/gq/8oSiIJuxEt9sS+NSggstBItOpM+aZEdsWg1sCu
+ 77E9pvg7sGfK36fdO9sTfXPjQ+uWZGZDm0zngudQAYSGRwy60avYrKBXAURkcYk1OQ1A
+ 5Q0KwKMjBzGXXDNuBe20Lfy+fOEEMuNBS3shd7o+RIPe+9QquqFpQRQR+2qptxoIt8hh
+ hzjhSvr3OkoZK2+Do2y/T9dZG/G+YmRCtGiniZMJOLU9G7iRZxH/RvR37gHCSND+NNqk
+ AvlnOKa0tz7pux+++q5feuzu/yvfJbPooVKKc/zvI0G1BNyPfUG/fF8gBxr2BPXX2SND
+ YJkg==
+X-Gm-Message-State: AOAM533t/5jQ3rkSig8/ty47eAB1TX3LDNiKvD0CC5UKuOI+JfXO8gpT
+ gOSNjM6tfPrCksVog6DfWjygzDSnW/qzb+yH/DA=
+X-Google-Smtp-Source: ABdhPJyYLdOyMQbarr9R8kXelLNAufFbjU6It3mj4noQT8la3jpTKl6V0JwXr8E1b8WmnBHN5hlZbZ2JHek3jfZEXtw=
+X-Received: by 2002:a17:906:fa92:: with SMTP id
+ lt18mr258205ejb.534.1594837590836; 
+ Wed, 15 Jul 2020 11:26:30 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR15MB2374.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b5d1276-11b3-4b11-c908-08d828e87509
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2020 17:56:53.2765 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: DGYfZ9bPTpIGkpoBPeMCMxjYeYmjqmnlvNGDmCoAQDRUUZDOxnDHqS7qHfyUVAkZNG50685YHwMCI/fl8fVenQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2261
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-15_12:2020-07-15,
- 2020-07-15 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- suspectscore=0
- mlxlogscore=817 phishscore=0 impostorscore=0 clxscore=1011 bulkscore=0
- spamscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007150139
-X-FB-Internal: deliver
+References: <CACS57oWum6NJghyv8904M+-GzrYy=LD93wvizGo8RagHOkOSZQ@mail.gmail.com>
+ <8B3F0342-9917-4929-B955-F226FE8EE0AA@fb.com>
+In-Reply-To: <8B3F0342-9917-4929-B955-F226FE8EE0AA@fb.com>
+From: Ilya Gousev <qweran@gmail.com>
+Date: Wed, 15 Jul 2020 21:26:19 +0300
+Message-ID: <CACS57oVN=vvisXABSihcRaxCbzWNbzbkyqX2PB1zRb3yOFi0TA@mail.gmail.com>
+Subject: Re: Tiogapass build
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: multipart/alternative; boundary="000000000000138c6005aa7f108a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,153 +74,216 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_8B3F034299174929B955F226FE8EE0AAfbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--000000000000138c6005aa7f108a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-SGkgSWx5YSwNClBsZWFzZSBzZWUgbXkgYW5zd2VycyBpbmxpbmUNCg0KRnJvbTogb3BlbmJtYyA8
-b3BlbmJtYy1ib3VuY2VzK3ZpamF5a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnPiBvbiBi
-ZWhhbGYgb2YgSWx5YSBHb3VzZXYgPHF3ZXJhbkBnbWFpbC5jb20+DQpEYXRlOiBXZWRuZXNkYXks
-IEp1bHkgMTUsIDIwMjAgYXQgNToxOCBBTQ0KVG86ICJvcGVuYm1jQGxpc3RzLm96bGFicy5vcmci
-IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0OiBUaW9nYXBhc3MgYnVpbGQNCg0K
-SGkhDQoNCj5JIGhhdmUgdHJpZWQgdG8gdG91Y2ggVGlvZ2FwYXNzIChieSBXaXd5bikuDQpHb29k
-Lg0KPkkgaGF2ZSBhZGRlZCB0aGUgZGV2aWNlcyBmb3IgS1ZNLiBBbmQgaXQgd29ya3MuDQpXaGF0
-IGFyZSB5b3UgdHJ5aW5nIGZvciBLVk0gaGVyZT8NCj5Ob3cgaSB3YW50IHRvIGdldCBpbmZvcm1h
-dGlvbiBhYm91dCBoYXJkd2FyZSAoZm9yIGV4YW1wbGUgQ1BVIGFuZCBESU1NIGltZm9ybWF0aW9u
-LCBsaWtlIG1vZGVsLCBjbG9ja3MsIGV0Yy4pLiBIb3cgaSBjYW4gZ2V0IGl0PyBPbmx5IGZyb20g
-SVBNSSBzdGFjayAobGlrZSBLQ1MpPw0KWWVzIGl0IGNhbiBiZSBhY2Nlc3NlcyBmcm9tIElQTUkg
-c3RhY2sgdmlhIGlwbWkgdG9vbHMsIHlvdSBjYW4gcnVuIGlwbWl0b29sIGZyb20gQk1DIGNvbnNv
-bGUgaXRzZWxmLiBBbmQgdGhlcmUgaXMgYSBmaWxlIGluIC9ldGMvYXBwRGF0YS5qc29uIHdoaWNo
-IHN0b3JlcyBhbGwgb2YgdGhlc2UgZGF0YS4NCg0KSWx5YQ0K
+Hi, Vijay!
 
---_000_8B3F034299174929B955F226FE8EE0AAfbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <EA7B8C3C3D346D4281C12BEF418BF7C5@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+About KVM:
+When I was build OpenBMC, KVM did not work. There was no vhub and video
+nodes in devicetree file. Is this done on purpose?
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseTpXaW5nZGluZ3M7DQoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAg
-MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
-OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
-Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25z
-ICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjow
-aW47DQoJbWFyZ2luLWJvdHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1m
-YW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0eWxlMTgNCgl7bXNvLXN0
-eWxlLXR5cGU6cGVyc29uYWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2Vy
-aWY7DQoJY29sb3I6d2luZG93dGV4dDt9DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5bGUtdHlw
-ZTpleHBvcnQtb25seTsNCglmb250LXNpemU6MTAuMHB0O30NCkBwYWdlIFdvcmRTZWN0aW9uMQ0K
-CXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4gMS4waW47fQ0K
-ZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQovKiBMaXN0IERlZmluaXRp
-b25zICovDQpAbGlzdCBsMA0KCXttc28tbGlzdC1pZDoxMTEzNjY4MDI3Ow0KCW1zby1saXN0LXR5
-cGU6aHlicmlkOw0KCW1zby1saXN0LXRlbXBsYXRlLWlkczoxNzgzMjk4NjI0IDM2ODUwMjI3NCA2
-NzY5ODY5MSA2NzY5ODY5MyA2NzY5ODY4OSA2NzY5ODY5MSA2NzY5ODY5MyA2NzY5ODY4OSA2NzY5
-ODY5MSA2NzY5ODY5Mzt9DQpAbGlzdCBsMDpsZXZlbDENCgl7bXNvLWxldmVsLXN0YXJ0LWF0OjA7
-DQoJbXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+DmDsN
-Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxl
-ZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OldpbmdkaW5nczsNCgltc28t
-ZmFyZWFzdC1mb250LWZhbWlseToiVGltZXMgTmV3IFJvbWFuIjsNCgltc28tYmlkaS1mb250LWZh
-bWlseTpDYWxpYnJpO30NCkBsaXN0IGwwOmxldmVsMg0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1h
-dDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ6bzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsN
-Cgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0K
-CWZvbnQtZmFtaWx5OiJDb3VyaWVyIE5ldyI7fQ0KQGxpc3QgbDA6bGV2ZWwzDQoJe21zby1sZXZl
-bC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDrvgqc7DQoJbXNvLWxldmVs
-LXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQt
-aW5kZW50Oi0uMjVpbjsNCglmb250LWZhbWlseTpXaW5nZGluZ3M7fQ0KQGxpc3QgbDA6bGV2ZWw0
-DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDrvgrc7
-DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjps
-ZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjsNCglmb250LWZhbWlseTpTeW1ib2w7fQ0KQGxpc3Qg
-bDA6bGV2ZWw1DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwt
-dGV4dDpvOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9z
-aXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6IkNvdXJpZXIg
-TmV3Ijt9DQpAbGlzdCBsMDpsZXZlbDYNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0
-Ow0KCW1zby1sZXZlbC10ZXh0Ou+CpzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28t
-bGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQt
-ZmFtaWx5OldpbmdkaW5nczt9DQpAbGlzdCBsMDpsZXZlbDcNCgl7bXNvLWxldmVsLW51bWJlci1m
-b3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+CtzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6
-bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4y
-NWluOw0KCWZvbnQtZmFtaWx5OlN5bWJvbDt9DQpAbGlzdCBsMDpsZXZlbDgNCgl7bXNvLWxldmVs
-LW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Om87DQoJbXNvLWxldmVsLXRh
-Yi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5k
-ZW50Oi0uMjVpbjsNCglmb250LWZhbWlseToiQ291cmllciBOZXciO30NCkBsaXN0IGwwOmxldmVs
-OQ0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ674Kn
-Ow0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246
-bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6V2luZ2RpbmdzO30NCkBs
-aXN0IGwxDQoJe21zby1saXN0LWlkOjEyNDMxMDY1MjI7DQoJbXNvLWxpc3QtdHlwZTpoeWJyaWQ7
-DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOi0xODc4MjE5MjQyIDE3MzUyODc2MDAgNjc2OTg2OTEg
-Njc2OTg2OTMgNjc2OTg2ODkgNjc2OTg2OTEgNjc2OTg2OTMgNjc2OTg2ODkgNjc2OTg2OTEgNjc2
-OTg2OTM7fQ0KQGxpc3QgbDE6bGV2ZWwxDQoJe21zby1sZXZlbC1zdGFydC1hdDowOw0KCW1zby1s
-ZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDrvg5g7DQoJbXNvLWxl
-dmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRl
-eHQtaW5kZW50Oi0uMjVpbjsNCglmb250LWZhbWlseTpXaW5nZGluZ3M7DQoJbXNvLWZhcmVhc3Qt
-Zm9udC1mYW1pbHk6IlRpbWVzIE5ldyBSb21hbiI7DQoJbXNvLWJpZGktZm9udC1mYW1pbHk6Q2Fs
-aWJyaTt9DQpAbGlzdCBsMTpsZXZlbDINCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0
-Ow0KCW1zby1sZXZlbC10ZXh0Om87DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxl
-dmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjsNCglmb250LWZh
-bWlseToiQ291cmllciBOZXciO30NCkBsaXN0IGwxOmxldmVsMw0KCXttc28tbGV2ZWwtbnVtYmVy
-LWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ674KnOw0KCW1zby1sZXZlbC10YWItc3Rv
-cDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDot
-LjI1aW47DQoJZm9udC1mYW1pbHk6V2luZ2RpbmdzO30NCkBsaXN0IGwxOmxldmVsNA0KCXttc28t
-bGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ674K3Ow0KCW1zby1s
-ZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0
-ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6U3ltYm9sO30NCkBsaXN0IGwxOmxldmVs
-NQ0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ6bzsN
-Cgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxl
-ZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OiJDb3VyaWVyIE5ldyI7fQ0K
-QGxpc3QgbDE6bGV2ZWw2DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28t
-bGV2ZWwtdGV4dDrvgqc7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51
-bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjsNCglmb250LWZhbWlseTpX
-aW5nZGluZ3M7fQ0KQGxpc3QgbDE6bGV2ZWw3DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1
-bGxldDsNCgltc28tbGV2ZWwtdGV4dDrvgrc7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJ
-bXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjsNCglm
-b250LWZhbWlseTpTeW1ib2w7fQ0KQGxpc3QgbDE6bGV2ZWw4DQoJe21zby1sZXZlbC1udW1iZXIt
-Zm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDpvOw0KCW1zby1sZXZlbC10YWItc3RvcDpu
-b25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1
-aW47DQoJZm9udC1mYW1pbHk6IkNvdXJpZXIgTmV3Ijt9DQpAbGlzdCBsMTpsZXZlbDkNCgl7bXNv
-LWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+CpzsNCgltc28t
-bGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJ
-dGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OldpbmdkaW5nczt9DQpvbA0KCXttYXJn
-aW4tYm90dG9tOjBpbjt9DQp1bA0KCXttYXJnaW4tYm90dG9tOjBpbjt9DQotLT48L3N0eWxlPg0K
-PC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIjOTU0Rjcy
-Ij4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5IaSBJ
-bHlhLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+UGxlYXNlIHNlZSBteSBh
-bnN3ZXJzIGlubGluZTxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4m
-bmJzcDs8L286cD48L3A+DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlk
-ICNCNUM0REYgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBpbiI+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+RnJv
-bTogPC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+
-b3BlbmJtYyAmbHQ7b3BlbmJtYy1ib3VuY2VzJiM0Mzt2aWpheWtoZW1rYT1mYi5jb21AbGlzdHMu
-b3psYWJzLm9yZyZndDsgb24gYmVoYWxmIG9mIElseWEgR291c2V2ICZsdDtxd2VyYW5AZ21haWwu
-Y29tJmd0Ozxicj4NCjxiPkRhdGU6IDwvYj5XZWRuZXNkYXksIEp1bHkgMTUsIDIwMjAgYXQgNTox
-OCBBTTxicj4NCjxiPlRvOiA8L2I+JnF1b3Q7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJnF1b3Q7
-ICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7PGJyPg0KPGI+U3ViamVjdDogPC9iPlRp
-b2dhcGFzcyBidWlsZDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkhpITxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxk
-aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mZ3Q7SSBoYXZlIHRyaWVkIHRvIHRvdWNoIFRpb2dh
-cGFzcyAoYnkgV2l3eW4pLiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+R29vZC48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPiZndDtJIGhhdmUgYWRkZWQgdGhlIGRldmljZXMgZm9yIEtWTS4gQW5kIGl0IHdvcmtzLjxv
-OnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+V2hhdCBhcmUgeW91IHRyeWluZyBm
-b3IgS1ZNIGhlcmU/PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj4mZ3Q7Tm93IGkgd2FudCB0byBnZXQgaW5mb3JtYXRpb24gYWJvdXQgaGFyZHdhcmUg
-KGZvciBleGFtcGxlIENQVSBhbmQgRElNTSBpbWZvcm1hdGlvbiwgbGlrZSBtb2RlbCwgY2xvY2tz
-LCBldGMuKS4gSG93IGkgY2FuIGdldCBpdD8gT25seSBmcm9tIElQTUkgc3RhY2sgKGxpa2UgS0NT
-KT88bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlllcyBpdCBjYW4gYmUgYWNj
-ZXNzZXMgZnJvbSBJUE1JIHN0YWNrIHZpYSBpcG1pIHRvb2xzLCB5b3UgY2FuIHJ1biBpcG1pdG9v
-bCBmcm9tIEJNQyBjb25zb2xlIGl0c2VsZi4gQW5kIHRoZXJlIGlzIGEgZmlsZSBpbiAvZXRjL2Fw
-cERhdGEuanNvbiB3aGljaCBzdG9yZXMgYWxsIG9mIHRoZXNlIGRhdGEuPG86cD48L286cD48L3A+
-DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwv
-cD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPklseWE8bzpwPjwvbzpwPjwv
-cD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+Right now I have problem with KCS Bridge, but i fix it with udev rule like
+this:
+KERNEL=3D=3D"ipmi-kcs3", SYMLINK+=3D"ipmi_kcs3"
+And fixing * phosphor-ipmi-kcs_git.bb <http://phosphor-ipmi-kcs_git.bb>*
 
---_000_8B3F034299174929B955F226FE8EE0AAfbcom_--
+
+*Right now i have a problem with starting ipmb service.*
+
+
+*Do you have such problems too?Or is it my fault?*
+
+
+*Thanks, *
+
+*Ilya*
+
+=D1=81=D1=80, 15 =D0=B8=D1=8E=D0=BB. 2020 =D0=B3. =D0=B2 20:56, Vijay Khemk=
+a <vijaykhemka@fb.com>:
+
+> Hi Ilya,
+>
+> Please see my answers inline
+>
+>
+>
+> *From: *openbmc <openbmc-bounces+vijaykhemka=3Dfb.com@lists.ozlabs.org> o=
+n
+> behalf of Ilya Gousev <qweran@gmail.com>
+> *Date: *Wednesday, July 15, 2020 at 5:18 AM
+> *To: *"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+> *Subject: *Tiogapass build
+>
+>
+>
+> Hi!
+>
+>
+>
+> >I have tried to touch Tiogapass (by Wiwyn).
+>
+> Good.
+>
+> >I have added the devices for KVM. And it works.
+>
+> What are you trying for KVM here?
+>
+> >Now i want to get information about hardware (for example CPU and DIMM
+> imformation, like model, clocks, etc.). How i can get it? Only from IPMI
+> stack (like KCS)?
+>
+> Yes it can be accesses from IPMI stack via ipmi tools, you can run
+> ipmitool from BMC console itself. And there is a file in /etc/appData.jso=
+n
+> which stores all of these data.
+>
+>
+>
+> Ilya
+>
+
+--000000000000138c6005aa7f108a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi, Vijay!</div><div><br></div><div>About KVM:<br></d=
+iv><div>When I was build OpenBMC, KVM did not work. The<span class=3D"gmail=
+-tlid-translation gmail-translation" lang=3D"en"><span title=3D"" class=3D"=
+gmail-">re was no vhub and video nodes in devicetree file. <span class=3D"g=
+mail-tlid-translation gmail-translation" lang=3D"en"><span title=3D"" class=
+=3D"gmail-">Is this done on purpose?</span></span></span></span></div><div>=
+<span class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span =
+title=3D"" class=3D"gmail-"><span class=3D"gmail-tlid-translation gmail-tra=
+nslation" lang=3D"en"><span title=3D"" class=3D"gmail-"><br></span></span><=
+/span></span></div><div><span class=3D"gmail-tlid-translation gmail-transla=
+tion" lang=3D"en"><span title=3D"" class=3D"gmail-"><span class=3D"gmail-tl=
+id-translation gmail-translation" lang=3D"en"><span title=3D"" class=3D"gma=
+il-">Right now I have problem with KCS Bridge, but i fix it with udev rule =
+like this:</span></span></span></span></div><div><span class=3D"gmail-tlid-=
+translation gmail-translation" lang=3D"en"><span title=3D"" class=3D"gmail-=
+"><span class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><spa=
+n title=3D"" class=3D"gmail-"><code>KERNEL=3D=3D&quot;ipmi-kcs3&quot;, SYML=
+INK+=3D&quot;ipmi_kcs3&quot;</code></span></span></span></span></div><div><=
+span class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span t=
+itle=3D"" class=3D"gmail-"><span class=3D"gmail-tlid-translation gmail-tran=
+slation" lang=3D"en"><span title=3D"" class=3D"gmail-"><code>And fixing <st=
+rong class=3D"gmail-file-title-name">
+<a href=3D"http://phosphor-ipmi-kcs_git.bb">phosphor-ipmi-kcs_git.bb</a></s=
+trong></code></span></span></span></span></div><div><span class=3D"gmail-tl=
+id-translation gmail-translation" lang=3D"en"><span title=3D"" class=3D"gma=
+il-"><span class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><=
+span title=3D"" class=3D"gmail-"><code><strong class=3D"gmail-file-title-na=
+me"><br></strong></code></span></span></span></span></div><div><span class=
+=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span title=3D"" =
+class=3D"gmail-"><span class=3D"gmail-tlid-translation gmail-translation" l=
+ang=3D"en"><span title=3D"" class=3D"gmail-"><code><strong class=3D"gmail-f=
+ile-title-name">Right now i have a problem with starting ipmb service.<br><=
+/strong></code></span></span></span></span></div><div><span class=3D"gmail-=
+tlid-translation gmail-translation" lang=3D"en"><span title=3D"" class=3D"g=
+mail-"><span class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"=
+><span title=3D"" class=3D"gmail-"><code><strong class=3D"gmail-file-title-=
+name"><br></strong></code></span></span></span></span></div><div><span clas=
+s=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span title=3D""=
+ class=3D"gmail-"><span class=3D"gmail-tlid-translation gmail-translation" =
+lang=3D"en"><span title=3D"" class=3D"gmail-"><code><strong class=3D"gmail-=
+file-title-name"><span class=3D"gmail-tlid-translation gmail-translation" l=
+ang=3D"en"><span title=3D"">Do you have such problems too?</span><br><span =
+title=3D"" class=3D"gmail-">Or is it my fault?</span></span></strong></code=
+></span></span></span></span></div><div><span class=3D"gmail-tlid-translati=
+on gmail-translation" lang=3D"en"><span title=3D"" class=3D"gmail-"><span c=
+lass=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span title=
+=3D"" class=3D"gmail-"><code><strong class=3D"gmail-file-title-name"><span =
+class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span title=
+=3D"" class=3D"gmail-"><br></span></span></strong></code></span></span></sp=
+an></span></div><div><span class=3D"gmail-tlid-translation gmail-translatio=
+n" lang=3D"en"><span title=3D"" class=3D"gmail-"><span class=3D"gmail-tlid-=
+translation gmail-translation" lang=3D"en"><span title=3D"" class=3D"gmail-=
+"><code><strong class=3D"gmail-file-title-name"><span class=3D"gmail-tlid-t=
+ranslation gmail-translation" lang=3D"en"><span title=3D"" class=3D"gmail-"=
+>Thanks, <br></span></span></strong></code></span></span></span></span></di=
+v><div><span class=3D"gmail-tlid-translation gmail-translation" lang=3D"en"=
+><span title=3D"" class=3D"gmail-"><span class=3D"gmail-tlid-translation gm=
+ail-translation" lang=3D"en"><span title=3D"" class=3D"gmail-"><code><stron=
+g class=3D"gmail-file-title-name"><span class=3D"gmail-tlid-translation gma=
+il-translation" lang=3D"en"><span title=3D"" class=3D"gmail-">Ilya<br></spa=
+n></span></strong></code></span></span></span></span></div><div><span class=
+=3D"gmail-tlid-translation gmail-translation" lang=3D"en"><span title=3D"" =
+class=3D"gmail-"><span class=3D"gmail-tlid-translation gmail-translation" l=
+ang=3D"en"><span title=3D"" class=3D"gmail-"><code><strong class=3D"gmail-f=
+ile-title-name"><br></strong></code></span></span></span></span></div><div =
+class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=D1=81=D1=80, 1=
+5 =D0=B8=D1=8E=D0=BB. 2020 =D0=B3. =D0=B2 20:56, Vijay Khemka &lt;<a href=
+=3D"mailto:vijaykhemka@fb.com">vijaykhemka@fb.com</a>&gt;:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_2049833802716390853WordSection1">
+<p class=3D"MsoNormal">Hi Ilya,<u></u><u></u></p>
+<p class=3D"MsoNormal">Please see my answers inline<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div style=3D"border-color:rgb(181,196,223) currentcolor currentcolor;borde=
+r-style:solid none none;border-width:1pt medium medium;padding:3pt 0in 0in"=
+>
+<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
+</span></b><span style=3D"font-size:12pt;color:black">openbmc &lt;openbmc-b=
+ounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_=
+blank">fb.com@lists.ozlabs.org</a>&gt; on behalf of Ilya Gousev &lt;<a href=
+=3D"mailto:qweran@gmail.com" target=3D"_blank">qweran@gmail.com</a>&gt;<br>
+<b>Date: </b>Wednesday, July 15, 2020 at 5:18 AM<br>
+<b>To: </b>&quot;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_bla=
+nk">openbmc@lists.ozlabs.org</a>&quot; &lt;<a href=3D"mailto:openbmc@lists.=
+ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
+<b>Subject: </b>Tiogapass build<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<div>
+<p class=3D"MsoNormal">Hi!<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt;I have tried to touch Tiogapass (by Wiwyn).=C2=
+=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">Good.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt;I have added the devices for KVM. And it works.<=
+u></u><u></u></p>
+<p class=3D"MsoNormal">What are you trying for KVM here?<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt;Now i want to get information about hardware (fo=
+r example CPU and DIMM imformation, like model, clocks, etc.). How i can ge=
+t it? Only from IPMI stack (like KCS)?<u></u><u></u></p>
+<p class=3D"MsoNormal">Yes it can be accesses from IPMI stack via ipmi tool=
+s, you can run ipmitool from BMC console itself. And there is a file in /et=
+c/appData.json which stores all of these data.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Ilya<u></u><u></u></p>
+</div>
+</div>
+</div>
+</div>
+
+</blockquote></div></div>
+
+--000000000000138c6005aa7f108a--
