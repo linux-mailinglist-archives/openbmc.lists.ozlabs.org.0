@@ -1,63 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 881242259DF
-	for <lists+openbmc@lfdr.de>; Mon, 20 Jul 2020 10:19:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4393225B52
+	for <lists+openbmc@lfdr.de>; Mon, 20 Jul 2020 11:22:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B9F5P6lfNzDqdW
-	for <lists+openbmc@lfdr.de>; Mon, 20 Jul 2020 18:19:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4B9GTC685PzDqcT
+	for <lists+openbmc@lfdr.de>; Mon, 20 Jul 2020 19:22:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::529;
- helo=mail-ed1-x529.google.com; envelope-from=asmithakarun@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=e+EFz1EL; dkim-atps=neutral
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com
- [IPv6:2a00:1450:4864:20::529])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B9F4b3DCCzDqCx
- for <openbmc@lists.ozlabs.org>; Mon, 20 Jul 2020 18:19:07 +1000 (AEST)
-Received: by mail-ed1-x529.google.com with SMTP id d18so12122947edv.6
- for <openbmc@lists.ozlabs.org>; Mon, 20 Jul 2020 01:19:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=lCIu6IgzmTvLVUB52zvdJK39nLTXMfRe5283gr8mOJI=;
- b=e+EFz1ELEukVOFz1rN/2WRR29UYf1/Xj9vPG09C6aGx+w7LR9qWFlgu9VA1UT3gf/0
- xBkcw5dTG4jCWOeAzBMTvXjysPwwYnR+0FdysDRE+IUAEcs80qpeWJ4P5MfPCiAuW2rA
- XT7KZ3X33MEoVoOW8YY54VVu1Rt81jSeYC12jXEhT+dCaocNngX15yx0MTPKZjyAd971
- MGknW0Q584YU5tTAHzB2UMemTNjKsQnfb0g2ym+WxP/fDT2rEMeb/DoL7GJUyJjBUKV/
- 8auVFmxF9RRu4uRAtn5hmXzPdUY++5V6ZjxBwJXqCmpXrgyFMxyyvnz27uFLyrqBZMgW
- oKTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=lCIu6IgzmTvLVUB52zvdJK39nLTXMfRe5283gr8mOJI=;
- b=Ti3nDMzRhfoqGbKXKXlr+f3LraanKWSukupXuzzK4FEEjjDzsdJy+ISBbAR3gpruqR
- vpAn+77CCJpOn/KNrDJem8q435w5INs9bueiWQy4mZ+TzPJ/UuO6Wg4/h/4EF3FD+bm7
- UL0LczLyoCZCU09yIMu6XNqtmcCrZQnZuI4FMCeKOJ2fUazki31J8IiJKLK6TDxqiIOe
- H8xrROcn2CN5IdF7TYYib0rtYtS6PDlPK1Y4fnnlPzrisIXDZW7ytSqc1JtS7JQ2vVVi
- aXJR23VKilzxSQFschzIZPUmzCNUt4MRPpDaV2Fs7ewc21EBBMKyVbivdm5isuWTuwda
- 1z7g==
-X-Gm-Message-State: AOAM5323XoPqYIleubxhB1Qtd2+KZwdsuZIayWAA1uVMsw9VUdGaFc4C
- SdRW7LvoTrNzmYP26tBWglDumg0UFo+wyhZJNT3Zd9RVR6I=
-X-Google-Smtp-Source: ABdhPJxkusP7x5zdtAbqcg/HmbxwpHpDlHQwjmBTUAXkAlWT6kMdHN6X4rMVOE+1eQ89ioGAfrgitzywgEXBQk39yqg=
-X-Received: by 2002:aa7:db53:: with SMTP id n19mr20771539edt.338.1595233143055; 
- Mon, 20 Jul 2020 01:19:03 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4B9GS663wSzDqbf
+ for <openbmc@lists.ozlabs.org>; Mon, 20 Jul 2020 19:21:09 +1000 (AEST)
+IronPort-SDR: vmacyrECOGO3fBy0AavrGx1QYIUiEZqsG2eGzJIWXq9eWMD9xiJ/yEF/idIULpSGXXIVZXurm1
+ hptBUPOfMAMA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9687"; a="149033767"
+X-IronPort-AV: E=Sophos;i="5.75,374,1589266800"; d="scan'208";a="149033767"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jul 2020 02:21:06 -0700
+IronPort-SDR: dT9cppy/pGa7vXFK9pWn4bogMMlNR9P0L+OZeQ3ntxBmOk/xUn0CnH4mb+QfHVliPIv29rjBsU
+ kyBtPvmR0qbA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,374,1589266800"; d="scan'208";a="487179832"
+Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.215.125.198])
+ ([10.215.125.198])
+ by fmsmga006.fm.intel.com with ESMTP; 20 Jul 2020 02:21:04 -0700
+Subject: Re: MCTP bridging with one physical port per demux daemon instance
+To: Andrew Jeffery <andrew@aj.id.au>, "Bhat, Sumanth"
+ <sumanth.bhat@intel.com>, "Winiarska, Iwona" <iwona.winiarska@intel.com>
+References: <93c6a27a-db52-4bbb-a2e3-5c1b9837a093@www.fastmail.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <c5f2ce1f-b8ee-c4cd-5e71-2740070b5db1@linux.intel.com>
+Date: Mon, 20 Jul 2020 14:51:03 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-From: Asmitha Karunanithi <asmithakarun@gmail.com>
-Date: Mon, 20 Jul 2020 13:48:26 +0530
-Message-ID: <CANGK-S5feyV1xPeYaTatfOGCZp4tY6Y8YyYHZGhpu4GF79gaFw@mail.gmail.com>
-Subject: Change in the redfish system dump URI
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000d3684a05aadb28de"
+In-Reply-To: <93c6a27a-db52-4bbb-a2e3-5c1b9837a093@www.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,41 +61,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d3684a05aadb28de
-Content-Type: text/plain; charset="UTF-8"
+Hi Andrew,
 
-Hi All,
+Reviewed the routing series and provided comments. Overall don't find 
+any major issues, and we are fine with having 2 separate demux with each 
+handling the tx/rx or single demux. Each having it's own advantage and 
+disadvantage as with single demux handling of multiple physical 
+interface packet is going to be delayed (i.e, when one Tx is in effect 
+another one is going to wait), as we are not starting multiple process 
+to handle as per the interface as of today.
 
-I found that the existing redfish system dump URI is:
-/redfish/v1/Systems/system/LogServices/System
+With multiple demux we will come up with the issue of client depending 
+on multiple daemons for the same.
 
-Since "System" is already there in the path, the LogService could be
-renamed as "Dump", as mentioned in the URI below, which would be more
-relevant than the existing one.
-/redfish/v1/Systems/system/LogServices/Dump
+Regards,
 
-Let me know your thoughts on this.
+Richard
 
--- 
-Thanks & Regards,
-Asmitha Karunanithi
-
---000000000000d3684a05aadb28de
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div><br></div><div>I found that the existing redfi=
-sh system dump URI is:<br>/redfish/v1/Systems/system/LogServices/System</di=
-v><div><br></div><div>Since &quot;System&quot; is already there in the path=
-, the LogService could be renamed as &quot;Dump&quot;, as mentioned in the =
-URI below, which would be more relevant than the existing one.<br clear=3D"=
-all"><div>/redfish/v1/Systems/system/LogServices/Dump<br></div><div><br></d=
-iv><div>Let me know your thoughts on this.</div><div><br></div>-- <br><div =
-dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><d=
-iv dir=3D"ltr"><div><div dir=3D"ltr">Thanks &amp; Regards,<div>Asmitha Karu=
-nanithi</div></div></div></div></div></div></div>
-
---000000000000d3684a05aadb28de--
+On 7/2/2020 10:28 AM, Andrew Jeffery wrote:
+> Hi all,
+>
+> First up, I've pushed a series to gerrit implementing bridging and routing in
+> libmctp. If you're interested, please provide feedback:
+>
+> https://gerrit.openbmc-project.xyz/q/project:openbmc/libmctp+topic:%2522routing%2522+(status:open)
+>
+> The final patch in the series implements the provisional EID concept that we've
+> been discussing on the list.
+>
+> Back to the subject:
+>
+> I've had a short think about bridging in the configuration where we have one
+> mctp-demux-daemon instance per port. I'm not sure what plans you had with
+> endpoint ID assignment, so assuming I have free reign with it, one proposal
+> looks like below:
+>
+>
+>            demux A                             demux B
+>        +------------+                       +------------+
+>        |-----+      |                       |      +-----|
+>        +--+  |   +--+      demux socket     +--+   |  +--+
+> +-----+P0|10|   |P1+-----------------------+P1|   |11|P0+-----+
+>        +--+  |   +--+                       +--+   |  +--+
+>        |-----+      |                       |      +-----|
+>        +------------+                       +------------+
+>
+> 'demux A' and 'demux B' are our two separate processes. Figure 9 of DSP0236
+> (v1.3.1) shows the different arrangements of endpoint assignments that are
+> supported by MCTP, and the key element is that ports in a bridge are not
+> required to be assigned endpoint IDs. In the diagram above I'm describing two
+> ports associated with each process; the physical port P0 which we're
+> associating with an mctp-demux-daemon instance, and P1 which we'll have as a
+> port for a vendor-defined binding. By configuration, one of either 'demux A' or
+> 'demux B' connects to the other and establishes a "virtual bus" via P1. An
+> endpoint ID is assigned to P0 in both instances (10 and 11), but neither
+> instance assigns an EID to P1. Using null EID messages each side can send 'Get
+> Endpoint ID' over the virtual bus linking the two daemons to bootstrap the
+> (independent) route tables.
+[Richard]: Yes, connecting ports must not have EID. Also, phyiscal 
+interface facing port can or can not have EID as per the MCTP 
+specification. But in either case, we must not advertise about it's 
+presence to the other side of the bus. Say in this diagram, devices 
+behind P0 EID 10 of demux A, must not indicate about EID 11 in the 
+routing table, but will indicate about all the EID's behind P0 EID 11 of 
+demux B.
+>   From there, each side uses 'Get Routing Table
+> Entries' to pull the route table state from the other, and update their own
+> tables with the endpoints reachable through the remote.
+>
+> In this configuration there's no change necessary to the generic libmctp code
+> to handle forwarding packets between the different instances, it takes
+> advantage of bridging and routing to do the job for us in concert with a
+> vendor-defined binding to handle the socket.
+>
+> A problem arises with how applications should interact with the separate
+> daemons: Each application must connect to all the mctp-demux-daemon instances
+> to receive their locally delivered packets.
+>
+> To resolve this it might be possible to take advantage of the existing "bridge"
+> implementation in libmctp which really functions as an adapter that glues
+> together two ports of possibly different binding types. By inserting
+> appropriate route entries packets arriving on either interface are simply
+> forwarded to the other as there is no endpoint ID defined for the instance.
+> With this approach you could do the bridging in a third process:
+>
+>         adapter A                    demux               adapter B
+>        +------------+             +------------+            +------------+
+>        |            |             |------------|            |            |
+>        +--+      +--+             +--+  ||  +--+            +--+      +--+
+> +-----+P0|      |P1+-------------+P0|10||11|P1+------------+P1|      |P0+-----+
+>        +--+      +--+             +--+  ||  +--+            +--+      +--+
+>        |            |             |------------|            |            |
+>        +------------+             +------------+            +------------+
+>
+> We'd probably have to do some tinkering to make sure broadcast and null EID
+> messages are passed on. However, applications would then connect to just the
+> bridge's domain socket to receive messages for both EID 10 and 11.
+[Richard]: Special EID's must not be forwarded or routed. i.e. Both NULL 
+EID and Broadcast EID's packets arising from P0 of adapter A must not be 
+routed / forwarded to P0 of Adapter B
+> That's probably enough to spark some discussion.
+>
+> Let me know what you think.
+>
+> Andrew
