@@ -1,87 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DB79228390
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jul 2020 17:22:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DAAE2283B7
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jul 2020 17:26:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BB2Q75Vy9zDqjx
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 01:22:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BB2WM3KJFzDqk9
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 01:26:39 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=Cvy09nCz; 
+ header.s=fm2 header.b=TyZ5hJGU; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=pHphytQZ; 
+ header.a=rsa-sha256 header.s=fm3 header.b=XFx4+SNC; 
  dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BB2Jc4FtbzDqZ3
- for <openbmc@lists.ozlabs.org>; Wed, 22 Jul 2020 01:17:19 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BB2N831nvzDqdT
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Jul 2020 01:20:24 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id C94ACA8F;
- Tue, 21 Jul 2020 11:17:13 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 21 Jul 2020 11:17:13 -0400
+ by mailout.nyi.internal (Postfix) with ESMTP id 060995C00CB;
+ Tue, 21 Jul 2020 11:20:19 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Tue, 21 Jul 2020 11:20:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=CJZmhLjM7foHSYSBw5UZedEWBJe
- kyv88QF1reqv665s=; b=Cvy09nCzI/rwykWml4A42y0PANs28qfGIx8osgwW2yC
- dGRFX4QDEKyBse+kd27BQuu6f/4VlVkTnircOHLNxmQGg4S4/A9nAxnuGolyFj6M
- aP16gSf6icX3cB/C2l+/u0gZerKWoJQYKcckEiP7lyLmUpDoE2Xjt4A0Ljk2gKa+
- ufkwLvY4ueKrqo3vKenyme3Lx3erTrHZinp4YNfcLf7yJSdFVYd6pW8qCKdBdwxO
- RsJma7fHFJcWIXfqkFd+uBkDSjc4E9NaNdxHFlz82VFRYPVOsnJXq3J+F8BrcRuX
- IZS9BZeeV+CUKjWohxyTUNCKavbU3EUGjT2vmYN4XCw==
+ :content-type:in-reply-to; s=fm2; bh=ZsGkphRfAM9Z+ac7H+BcPAFR9Ja
+ 7bJ2ekabDDgIhCA0=; b=TyZ5hJGUw+O15kkqHNJ5H6ruEDN/HpVxCwyQ+Pqvldo
+ KGJ0m3huGXLojhQNlZQSHhDWpOPlwCROmnpFXE+9Mqe+Kp/Kyixudp0xsfp8i3kF
+ vJ/iqTmEODPu3ndY+A8v1qA6RiDQzwxaeGJG0WURyPCkZYfcPqdmN0BBmwdvDiu8
+ xgEy8kNdpc+Bqw8+jZe67/wgnkIX4YplPx4OQOrQNAc0qAU7LjFtfy5oh0excM5C
+ GYO/SBgXjsJFaXL7hI08/kZvfxSwMnumIIUz5+01b/orU5HbjzTBzT5iKHS8rU/x
+ IKWRJ1/XTtDmMHnKrQtWrj1HsdFkj+HdcUyOd0UypCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=CJZmhL
- jM7foHSYSBw5UZedEWBJekyv88QF1reqv665s=; b=pHphytQZHWdEPprQdw+jOv
- Q4/viQc/qzJfg8cQZF7fO1X78zm97/Rej5TDtG/PQuX9Yu2RTiaei5bauPy6Q+WY
- +wk1xXXjAK+v8t+113lh5OIzdYjXPvdrxgyz2cTlkRstvoP2vwP95ZJbJC16vLSJ
- GG9Dlaii7L9uuOH0K/9794MSmnzelz9QERmqTvOTeI5XJIIgnPBKkc0nvmRZXGlX
- 5ZgYnfWZ4I/h2TYLaXtP3IJQbfLsKlBaNvWEbY9f0H56PJoPGfVlqroKjALQpgJb
- kcOqOtqBhIqhGE/55bDjpSc+dMnyjpgPbGGdX8YZQHoU1EATrIwvk6L21DsijxAQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=ZsGkph
+ RfAM9Z+ac7H+BcPAFR9Ja7bJ2ekabDDgIhCA0=; b=XFx4+SNCNMgG438QqSN2Bp
+ WWV1rQhuwZ4bqTOjJie9B/CLuwx2spG1ybGaTjC+Sd64FTFjL2EMHkekK1KYm5VX
+ xyD2SvaF7soovaNbGHIzelVWvXHpH6vu61XC6jUAgUszKCV/rnB+lur52tgV0Ems
+ PJN4bnO5iEpL+31Z+TYySLMGUou15DvfI8/Vm+QAM5rFPr4+sDBCLnipruW21ofR
+ GM/WjfC+ctl8hqzlpEFM/Z3tE1jEyv17/pp7z93aoSN3yoHNzBtIiw+OP9YxqZBv
+ Y+grd+dXONURDhrar4YGTXf754JSDOg6t1lXgzEJctzE3Czat2gUc2ko6QKqLZ6Q
  ==
-X-ME-Sender: <xms:-AYXX8E7GDXDVIaPAjQRMJ3-5z8Z7Wz33LesQYkRawOSwJcBuaO-2w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrgeeigdekfecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:sQcXXwjYTJt0PUNShrCs6l2x1DoQu2dbshqNQWbWghiFg_SXPZ-voA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrgeeigdekgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeelhfejfeekteevffegteffudefheel
- feehvdfggfdvgffhjefhfeffkeeiieevjeenucffohhmrghinhepghhithhhuhgsrdgtoh
- hmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptden
- ucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:-AYXX1Xz4hx_m9_WJea3q3QgveJyEEJd9nTx8s5iJnPEggfeApI1pQ>
- <xmx:-AYXX2JR_DJPdVbKWsLR63EGTVlgv538zEjMMXxfhflBJcc5StREmA>
- <xmx:-AYXX-EeyK3cG47xSV_U7Ii9F-Z_hsTAy2y-DkwK3jr8cQQAYnNSWg>
- <xmx:-QYXX6j9cfMJ-ACKIhJ37z4cuV7G3UzUSDkEJ0mU6KG1ysDk3g20gA>
+ uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepfffhvf
+ fukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhi
+ rghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpe
+ egheehfeffgeekveehtdfhgfduhfegfefgtdehhfektdelffevkefgueffhedtieenucfk
+ phepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+ grmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:sQcXX5BHJYnaQoXapSqhhJ3CINRVVLOOGTgOvE50SQ-rfOBalByAbA>
+ <xmx:sQcXX4EwS7PHyqMKrlU7h3F4De1-yR69BchpMCed3ZQxbvmL-kyWsg>
+ <xmx:sQcXXxT5Zr6wFrJ4h0f-h6vJf7h5Xp8vf7Cm7K8W2ke71Ns4MQCrzA>
+ <xmx:sgcXX-qSNAf_MASb0GDUA9ljyBOKwH1TjLnzGnv-F3XIqsuQ9uS8jg>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 7AD613280065;
- Tue, 21 Jul 2020 11:17:12 -0400 (EDT)
-Date: Tue, 21 Jul 2020 10:17:11 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 668C230600B2;
+ Tue, 21 Jul 2020 11:20:17 -0400 (EDT)
+Date: Tue, 21 Jul 2020 10:20:16 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Nancy Yuen <yuenn@google.com>
-Subject: Re: What do you want in a package manager?
-Message-ID: <20200721151711.GK3922@heinlein>
-References: <CADfYTpGaahSo5oJ5n-Y2TZ=NoF0uh=BcPHkxuDqY4zuek7qrjQ@mail.gmail.com>
+To: Manikandan <manikandan.hcl.ers.epl@gmail.com>
+Subject: Re: add multi-host support in the phosphor-post-code-manager
+Message-ID: <20200721152016.GL3922@heinlein>
+References: <20200720160013.GB17117@cnn>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="sU4rRG038CsJurvk"
+ protocol="application/pgp-signature"; boundary="Z1OTrj3C7qypP14j"
 Content-Disposition: inline
-In-Reply-To: <CADfYTpGaahSo5oJ5n-Y2TZ=NoF0uh=BcPHkxuDqY4zuek7qrjQ@mail.gmail.com>
+In-Reply-To: <20200720160013.GB17117@cnn>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,76 +92,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, velumanit@hcl.com, kuiying.wang@intel.com,
+ manikandan.e@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---sU4rRG038CsJurvk
+--Z1OTrj3C7qypP14j
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 21, 2020 at 12:57:00AM -0700, Nancy Yuen wrote:
-> I'm looking into package management for BMCs in our fleet.  I'm wondering
-> who else is interested in this, does it make sense for OpenBMC.  What kind
-> of features are important?  What kind of package format (rpm, deb,
-> something else)?
+On Mon, Jul 20, 2020 at 09:30:13PM +0530, Manikandan wrote:
+> Approach 1: << run the multiple process >>
+>=20
+> Create and run the multiple phosphor-post-code-manager process to handle =
+each host postcode history.
 
-We've similarly started playing with package management at Facebook.
-One of the reasons for us doing it is that we still have Python
-installed in the image and are running out of space, so we're moving
-some of the debug tools into packages that can be side-loaded as needed.
-We've also implemented 'ptest', which allows you to create packages
-containing your unit tests and run them on a real machine.
-
-We found that we had to switch to ipkg instead of rpm because the extra
-things rpm needed were too big to fit.  I recall it was on the order of
-5MB of content needed to make rpm work and ipkg was almost free. [1]
-
-One issue you'll want to be aware of, that many of our recipes have, is
-that they often are missing:
-
-    PACKAGE_ARCH =3D "${MACHINE_ARCH}"
-
-This causes the package to be specified as relevant for a generic ARM
-system, matching the architecture revision of your underlying AST2xxx
-chip, rather than your particular machine.  Any package which can be
-customized for a particular machine (such as by machine-specific compile
-flags, or YAML/JSON files) should have the above variable set so that a
-package compiled for Witherspoon cannot be installed onto a Zaius.
-
-If you look under your Yocto build tree under `tmp/work` you'll see
-`arm1176jzs-openbmc-linux-gnueabi` and
-`witherspoon-openbmc-linux-gnueabi`.  I suspect at least most of the
-phosphor-* packages under the arm1176jzs subdirectory are likely candidates
-for having this PACKAGE_ARCH fixed.  We might want to simply add it to
-any '.bbappend' we do in a machine layer.
-
-1. https://github.com/facebook/openbmc/commit/43430d38dfd0e5557f96940547594=
-e01373f863e
+I would lean towards this implementation because I think it is more
+flexible in the long term.  Some multi-host systems are hot-pluggable
+such that you do not statically know how many you're going to have.  In
+some cases you have cards that take up two or three slots, so you really
+don't know the correct topology until you've done discovery.
 
 --=20
 Patrick Williams
 
---sU4rRG038CsJurvk
+--Z1OTrj3C7qypP14j
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl8XBvQACgkQqwNHzC0A
-wRkK9A/+KATab5A5F4g0RQOzxo+s/wuCScZlxptv7WYVa+SF+BoY8NJ0xpSPdRxB
-eOb+gelzXXItAT+VtHZk6AgGgJ4i63yYSriR4as6H5YSfWzo6dQHWIQDPRUdvIKM
-//fN47TjXKVi9i52/6WkXeDkeXh9+e3S0jCgoP585YA2q0UL3RRzxr2JhBk4yeFY
-0SPYd88Oja2X+7QJMwWwOiSfu63LyRbIEeFD2d0reUaAyHXPiVgh3MMcEPapAb8F
-Q6oYN2L4RgQoCrGvtgXtr18VnCOfEoQk3rrSE5Nm/ZD4qmMrb+/tRj5t014S8GSB
-mTPcKOaNX8Zcptr5+zBMBnTjmH2TkBV4YnpDzVrn8t5GHbdAaykN7y9RvuT3fVMJ
-z5qGNUlskbQQllF0ixULpG6anTWX31fIKuCJqiKMF8ArWyBgsv/JvbU6xAcpXspC
-tXh9cq7zWFLTG3b3EYPYbHMdYZkL0Hrx4BI6HKtSQveHkQDMjHC/imhdjhdCoNBo
-MFduk+cJCrqqmzdzMMytkYTCa0GQ6PMwfZRCP0EZP5aj1y8u9lLRmeGhCxnayN9P
-C2uR3nOSxiS4Izrh5JCDzvIrPbTr359+u1Td/ApGRuW8ZnsGijLVxkUGV8/9ogaG
-NJP9/4sBaDRCmr3x9i9tX/PZg7klQNlpMaOdRpSORrU9m0Jr2Tc=
-=fMvs
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl8XB7AACgkQqwNHzC0A
+wRl6BQ/8CMgoUFHDdnLAOLcPFallUOQawjCLueWWD7k41w31CgsvxsAmddjmYnmc
+0pLoDGHBaaZrXFi0AuP81erVbYSO7ZR5kUCAXdIYR2Zjx6wm6IXQ+ssf4gX6B2eT
+poguG2NyI1w623BjFEMuhlABkKlL8ZyPmrSTKdOiK1BlUxrizrarHbB/XuqyUWYm
+/DD1/jUU4k1cxNV8ASNkIGRPint6QRYZ7D9gEGygL17ep4uRYDEwe0m+JMia/9ai
+TfKOCe/lC5cauMNEA6OU06cjWCIKnr19KwrZE/s/RTTLx8e+20VPO2JB5o1dEepp
+K4duJV2+LY1UXkXB5/P2H2ZKNtcN3MMeOA/F1Wy2uzHjmHeETp00aVDB/1Y0JeLr
+3nyF03O4HYtB6coog6+dop36IWeh7MVojwf1TLdYt38IjxiAxHdIaXp2sTDZb2pN
+laUbjNrvU03UAUShZ9VILslyQe0p9QgAy3kyI9AmzP2vqcpXcuW7rVoZ6tR/w8OV
+J16PqT103OEAgWPdkTSq1LBqq/JGldXERBwkHSKsiNY5J06cdePp91Y9Trbt1X/5
+a2pDLBdLFJF1pe6KJMN3Ya3uVzu+k6ek7ZGSLayPvbE+MZz0S3RygUMeLkqC/Znl
+4eSr2Wbhga3T5RXfMRz6M9njIiTE5+49DbPKk/a6LUsCE34FRmo=
+=P46P
 -----END PGP SIGNATURE-----
 
---sU4rRG038CsJurvk--
+--Z1OTrj3C7qypP14j--
