@@ -2,74 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41BA4229EC3
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 19:52:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4565822A0B5
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 22:25:59 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BBjjS4hyZzDr3G
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jul 2020 03:52:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BBn6D2Q6pzDr4Y
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jul 2020 06:25:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1041;
- helo=mail-pj1-x1041.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=kKZHpBo4; dkim-atps=neutral
-Received: from mail-pj1-x1041.google.com (mail-pj1-x1041.google.com
- [IPv6:2607:f8b0:4864:20::1041])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BBjhj4JfMzDqyJ
- for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 03:52:05 +1000 (AEST)
-Received: by mail-pj1-x1041.google.com with SMTP id 8so1906086pjj.1
- for <openbmc@lists.ozlabs.org>; Wed, 22 Jul 2020 10:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=VC6lV5F5+i8HDKqSmPxP1I4p/LgwyLnug16D6d1PVyI=;
- b=kKZHpBo4CQ+y4LykxD9UMVwxZ+R/k2LEyZwIiK/93zYXHiUEF3wTt3Hj3EEsIuUWy3
- vmL6yHpomSw8MvEiXdOZvArfm9Q/fd+NxN4YEPctpe6GXSAsOj7eCJT+SOeWGRNuLUg6
- WwxXR5+Zb4vMtgwTRcKJHkjlQ+1MFXZsu5vgcmUAElWKyadJQ3j+WqAhzPm7ozU+hubk
- eNhYqke69jVpU3o55r4z9tw0s2CTh7G+Rf676Or5+rPzTBf571559YqrSE9I9m7VNSPA
- tFzIbJ2s/ihyJNNtJ2YnRyHoDOzpvoTxgosN0QWo7wShZ9YvsEqyN/QGn0PxzI6XGjbj
- FMwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=VC6lV5F5+i8HDKqSmPxP1I4p/LgwyLnug16D6d1PVyI=;
- b=ARHbHywZqovAPh4631rm9sI3zO0pYzDo1OTzb8cCPUpWFNIzmBsJRAnvETA7NO/94L
- 5PS7T82l7+Z3VEDsR0ZBqXPOFgFFoe1ObHAR1GhNr3JWBzwJ+oDYJeY/71dSjjttiwwi
- mqfA5iLSHyrgbBgaxs5wmYGcpFrz4JrgL6TeVKLsANTBigcRKFgsSTKbrJ6j8W/16Bgh
- 8Mt4uWkv2PBK+KnFQcpdMxyAu5em7FuDWEfTIv7JzNfSf/SpqNVcLUTwQ0O54C9dmhVT
- SiPk8vkH2IFUqn+hzTNcbwT/klAa4N9H2U2R02F2wN7z0oI0CQN6Uo5tgSpU+D1bA525
- kllQ==
-X-Gm-Message-State: AOAM532Ld51LlXcYBQL832BegRjtOpjmZc6zJNbKR6d3roRjl5bvkNQJ
- 0rlZLBrNuAZo0pwf56x92Xc=
-X-Google-Smtp-Source: ABdhPJwe0UbchiujPpnj1rR04T4k8XmsCEapPISPNbWEde+vgatnHHXDaRpZjWDSrXnocLrz1I7UWQ==
-X-Received: by 2002:a17:90a:2681:: with SMTP id
- m1mr474245pje.204.1595440321961; 
- Wed, 22 Jul 2020 10:52:01 -0700 (PDT)
-Received: from cnn ([112.133.236.103])
- by smtp.gmail.com with ESMTPSA id 66sm241938pfg.63.2020.07.22.10.51.57
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 22 Jul 2020 10:51:59 -0700 (PDT)
-Date: Wed, 22 Jul 2020 23:21:54 +0530
-From: Manikandan <manikandan.hcl.ers.epl@gmail.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: add multi-host support in the phosphor-post-code-manager
-Message-ID: <20200722175154.GA23254@cnn>
-References: <20200720160013.GB17117@cnn>
- <20200721152016.GL3922@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BBn5L4xbyzDqMt
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 06:25:10 +1000 (AEST)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 06MKOvI9132744; Wed, 22 Jul 2020 16:25:07 -0400
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 32e1xxtyea-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Jul 2020 16:25:02 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06MKL5Qu007930;
+ Wed, 22 Jul 2020 20:23:40 GMT
+Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
+ [9.57.198.25]) by ppma03wdc.us.ibm.com with ESMTP id 32brq9ertj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 22 Jul 2020 20:23:40 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 06MKNdCL36635036
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 22 Jul 2020 20:23:39 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A385EB2066;
+ Wed, 22 Jul 2020 20:23:39 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4311CB205F;
+ Wed, 22 Jul 2020 20:23:39 +0000 (GMT)
+Received: from [9.85.181.22] (unknown [9.85.181.22])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 22 Jul 2020 20:23:39 +0000 (GMT)
+Subject: Re: Hwmon scale timing issue
+To: =?UTF-8?B?RHVrZSBEdSAo5p2c56Wl5ZiJKQ==?= <Duke.Du@quantatw.com>
+References: <e44cf80b68864cba9db6c71d23a5c5fb@quantatw.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <b9249355-ff8f-44fb-48a5-f7dacb60f174@linux.ibm.com>
+Date: Wed, 22 Jul 2020 15:23:39 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200721152016.GL3922@heinlein>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <e44cf80b68864cba9db6c71d23a5c5fb@quantatw.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-07-22_13:2020-07-22,
+ 2020-07-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ priorityscore=1501 bulkscore=0 mlxlogscore=921 clxscore=1015 phishscore=0
+ mlxscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2007220125
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,38 +85,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, velumanit@hcl.com, kuiying.wang@intel.com,
- manikandan.e@hcl.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ =?UTF-8?B?RWRkaWUgTHUgKOmZuOWuh+WyoSk=?= <Eddie.Lu@quantatw.com>,
+ =?UTF-8?B?RnJhbiBIc3UgKOW+kOiqjOismSk=?= <Fran.Hsu@quantatw.com>,
+ =?UTF-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 21, 2020 at 10:20:16AM -0500, Patrick Williams wrote:
-> On Mon, Jul 20, 2020 at 09:30:13PM +0530, Manikandan wrote:
-> > Approach 1: << run the multiple process >>
-> > 
-> > Create and run the multiple phosphor-post-code-manager process to handle each host postcode history.
-> 
-> I would lean towards this implementation because I think it is more
-> flexible in the long term.  Some multi-host systems are hot-pluggable
-> such that you do not statically know how many you're going to have.  In
-> some cases you have cards that take up two or three slots, so you really
-> don't know the correct topology until you've done discovery.
 
-   Thanks Patrick. 
 
-   Our platfrom is also based on hot-pluggable multi-host(four) card in chassis. 
-   we have either four host in slots or 2 host with two device card hardware topology.
-   As you mentioned above on multi-process , Do we need to start and stop each instance based 
-   on host present in the slot at start-up and runtime.
-      
-   For example if only 2 host connected in slot with other slots empty, do we need to start only 2 instance
-   and stop the instance when corresponding host card removed from slot at run time.
+On 7/22/2020 4:00 AM, Duke Du (杜祥嘉) wrote:
+>
+> Hi Matt,
+>
+>    Thanks for solving sensor type issue, but I found another issue, 
+> the scale would not apply when
+>
+> hwmon updated value in first time. For example, my battery 3.051 
+> voltage would record 3051 on dbus
+>
+> instead of 3.051 until hwmon update again. I think this is scale 
+> timing issue for hwmon update value
+>
+> in first time. Some sensors interval configuration is so long such as 
+> one day that would lead to
+>
+> record wrong value for a long time.
+>
+> I am not sure this line would lead to hwmon update value with 
+> incorrect scale in first time.
+>
+> https://github.com/openbmc/phosphor-hwmon/blob/master/sensor.cpp#L170
+>
 
-   I understand that you are refering the same design implemented in x86-power-control 
-   and obmc-console for multi-host..
-      
-> 
-> -- 
-> Patrick Williams
+Hi, nice catch!  The bug was that the adjustValue() call that was 
+supposed to apply
+the scale was running before the _scale variable was set.
 
+I put up a fix at 
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-hwmon/+/34983.
+
+> Thanks
+>
+> Duke
+>
 
