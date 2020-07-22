@@ -1,63 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E026229041
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 07:59:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C424322944D
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 11:01:26 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BBPsv75kJzDqjR
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 15:58:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BBTwM69ZhzDr6L
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jul 2020 19:01:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::542;
- helo=mail-ed1-x542.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=465f16df2=duke.du@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=XlgcqI4M; dkim-atps=neutral
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
- [IPv6:2a00:1450:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BBPrm2Cm1zDqG0;
- Wed, 22 Jul 2020 15:57:57 +1000 (AEST)
-Received: by mail-ed1-x542.google.com with SMTP id g20so732662edm.4;
- Tue, 21 Jul 2020 22:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=7HyvRxIrXJ94hpJJ10KYHhFfMdEOmHA2GHT0K+5iUXk=;
- b=XlgcqI4MvjemKHQVFDQvUzykkZRmP3lD/jG4aYdiM6hGOhyvXScttPI7hWy9rKRfuk
- 7J0QusowPX9dYB44LlAJBmavv5IOKWu71jWfGsTCuhQfavb8v/oc7Gq4CemDQBtbwA2A
- uio4InFKyFHp+HAVNkP3Xk0qQQOfYwlexvZpY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=7HyvRxIrXJ94hpJJ10KYHhFfMdEOmHA2GHT0K+5iUXk=;
- b=NbDjWMCsFjTUqvBaMxOcOUrc7L+9pjta+b6NaKafCOblx0o1y1o0qYwWSKvx59Mq2p
- VXXMJaVx40dVcnH0yaR9sljR65Uea0CiETYjD83Xa4sYJI3nE9YgH+jt9Y/BJS3jFjom
- oMFnjvE6oFCkq2in7ujRx9At9+/naF1aVu8AtM90lAVYa85a59kin0a5A1JBc5MSuOkl
- xgKi+boNt+oVNFwxC6arCaKDKNP5H9M69QtR0r4CUaxSVShvg+i6DBp9Oaa476Su5vPe
- Ge64Q2jRYLTeGOdW6xzUvpMt/tbAp5UlFkf5AK3hYSIHP0dv6xJaT99WdNG5Q6PYjpSK
- tQmg==
-X-Gm-Message-State: AOAM533TfdXHtT1BdsUrMySvaiKQwGYvBz4pCjIHPMFXAs9ed6ng++Eb
- dHkmDjfRa/znyNWtCoo3WaZJmsHGZYPQCYu8lmY=
-X-Google-Smtp-Source: ABdhPJyqwx7/7Ern/u8AfDOeaGdctpyl3n7V510LJKLg3E6NY/BORruzv1YBZDEOqkF3HbgrRGVMMg07hHLqxCPsRBY=
-X-Received: by 2002:a50:ee8a:: with SMTP id f10mr28623696edr.383.1595397473857; 
- Tue, 21 Jul 2020 22:57:53 -0700 (PDT)
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4BBTvQ0lPPzDqQZ
+ for <openbmc@lists.ozlabs.org>; Wed, 22 Jul 2020 19:00:25 +1000 (AEST)
+IronPort-SDR: PGAnCBJvjGEL7zK5A621QCm+ldvtmrNxvHY/x31O9QHHcBXj7K97A28xAy5d7u/uANF/G0OT2s
+ r5iepFPDlZaw==
+Received: from unknown (HELO mailbx06.quanta.corp) ([10.243.91.101])
+ by mx02.quantatw.com with ESMTP; 22 Jul 2020 17:00:22 +0800
+Received: from mailbx12.quanta.corp (10.243.91.109) by mailbx06.quanta.corp
+ (10.243.91.101) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Wed, 22 Jul
+ 2020 17:00:19 +0800
+Received: from mailbx12.quanta.corp ([192.168.57.12]) by mailbx12.quanta.corp
+ ([192.168.57.12]) with mapi id 15.01.2044.004;
+ Wed, 22 Jul 2020 17:00:19 +0800
+From: =?big5?B?RHVrZSBEdSAop/myu7nFKQ==?= <Duke.Du@quantatw.com>
+To: Matt Spinler <mspinler@linux.ibm.com>
+Subject: Hwmon scale timing issue
+Thread-Topic: Hwmon scale timing issue
+Thread-Index: AdZgBbqu9AOTYqxsRwKjfSZ6PyCHmw==
+Date: Wed, 22 Jul 2020 09:00:19 +0000
+Message-ID: <e44cf80b68864cba9db6c71d23a5c5fb@quantatw.com>
+Accept-Language: en-US, zh-TW
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+x-tm-snts-smtp: 8F4BE6400617BCC0EA7180CECD78F65FABE002288E1B5F12E9BA983964D445AA2000:8
+Content-Type: multipart/alternative;
+ boundary="_000_e44cf80b68864cba9db6c71d23a5c5fbquantatwcom_"
 MIME-Version: 1.0
-References: <20200720160147.22339-1-supreeth.venkatesh@amd.com>
-In-Reply-To: <20200720160147.22339-1-supreeth.venkatesh@amd.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 22 Jul 2020 05:57:41 +0000
-Message-ID: <CACPK8XfBPb85uXyYiphD9uEUG6a+acAzEMAsfaenT3t0jqUWNw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] ARM:dts:aspeed: Initial device tree for AMD EthanolX
-To: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,287 +55,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ =?big5?B?RWRkaWUgTHUgKLOwpnSpoyk=?= <Eddie.Lu@quantatw.com>,
+ =?big5?B?RnJhbiBIc3UgKK59u3jBvik=?= <Fran.Hsu@quantatw.com>,
+ =?big5?B?R2VvcmdlIEh1bmcgKKx4qb63cSk=?= <George.Hung@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 20 Jul 2020 at 16:02, Supreeth Venkatesh
-<supreeth.venkatesh@amd.com> wrote:
->
-> Initial introduction of AMD EthanolX platform equipped with an
-> Aspeed ast2500 BMC manufactured by AMD.
->
-> AMD EthanolX platform is an AMD customer reference board with an
-> Aspeed ast2500 BMC manufactured by AMD.
-> This adds AMD EthanolX device tree file including the flash layout
-> used by EthanolX BMC machines.
->
-> This also adds an entry of AMD EthanolX device tree file in Makefile.
->
-> Signed-off-by: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+--_000_e44cf80b68864cba9db6c71d23a5c5fbquantatwcom_
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+SGkgTWF0dCwNCiAgIFRoYW5rcyBmb3Igc29sdmluZyBzZW5zb3IgdHlwZSBpc3N1ZSwgYnV0IEkg
+Zm91bmQgYW5vdGhlciBpc3N1ZSwgdGhlIHNjYWxlIHdvdWxkIG5vdCBhcHBseSB3aGVuDQpod21v
+biB1cGRhdGVkIHZhbHVlIGluIGZpcnN0IHRpbWUuIEZvciBleGFtcGxlLCBteSBiYXR0ZXJ5IDMu
+MDUxIHZvbHRhZ2Ugd291bGQgcmVjb3JkIDMwNTEgb24gZGJ1cw0KaW5zdGVhZCBvZiAzLjA1MSB1
+bnRpbCBod21vbiB1cGRhdGUgYWdhaW4uIEkgdGhpbmsgdGhpcyBpcyBzY2FsZSB0aW1pbmcgaXNz
+dWUgZm9yIGh3bW9uIHVwZGF0ZSB2YWx1ZQ0KaW4gZmlyc3QgdGltZS4gU29tZSBzZW5zb3JzIGlu
+dGVydmFsIGNvbmZpZ3VyYXRpb24gaXMgc28gbG9uZyBzdWNoIGFzIG9uZSBkYXkgdGhhdCB3b3Vs
+ZCBsZWFkIHRvDQpyZWNvcmQgd3JvbmcgdmFsdWUgZm9yIGEgbG9uZyB0aW1lLg0KDQpJIGFtIG5v
+dCBzdXJlIHRoaXMgbGluZSB3b3VsZCBsZWFkIHRvIGh3bW9uIHVwZGF0ZSB2YWx1ZSB3aXRoIGlu
+Y29ycmVjdCBzY2FsZSBpbiBmaXJzdCB0aW1lLg0KaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
+cGhvc3Bob3ItaHdtb24vYmxvYi9tYXN0ZXIvc2Vuc29yLmNwcCNMMTcwDQoNClRoYW5rcw0KRHVr
+ZQ0K
 
-Looks good. One question about the licence.
+--_000_e44cf80b68864cba9db6c71d23a5c5fbquantatwcom_
+Content-Type: text/html; charset="big5"
+Content-Transfer-Encoding: quoted-printable
 
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Matt,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp; Thanks for solving=
+ sensor type issue, but I found another issue, the scale would not apply wh=
+en
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">hwmon updated value in first ti=
+me. For example, my battery 3.051 voltage would record 3051 on dbus
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">instead of 3.051 until hwmon up=
+date again. I think this is scale timing issue for hwmon update value
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">in first time. Some sensors int=
+erval configuration is so long such as one day that would lead to
+<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">record wrong value for a long t=
+ime. <o:p>
+</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I am not sure this line would l=
+ead to hwmon update value with incorrect scale in first time.<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">https://github.com/openbmc/phos=
+phor-hwmon/blob/master/sensor.cpp#L170<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Duke<o:p></o:p></span></p>
+</div>
+</body>
+</html>
 
-> +++ b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
-> @@ -0,0 +1,209 @@
-> +// SPDX-License-Identifier: Apache-2.0
-> +// Copyright (c) 2020 AMD Inc.
-
-Can you have a read of the licence rules and add a preferred licence.
-The rules are here:
-
- https://www.kernel.org/doc/html/latest/process/license-rules.html
-
-This very hacky one liner will give you an idea of common licences
-used by device trees:
-
-$ git grep -h SPDX -- arch/arm/boot/dts/ | cut -c3- |sort -b | uniq -c
-| sort -hr
-    579  SPDX-License-Identifier: GPL-2.0
-    305  SPDX-License-Identifier: GPL-2.0-only
-    222  SPDX-License-Identifier: GPL-2.0-or-later
-    188  SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-     91  SPDX-License-Identifier: GPL-2.0+
-     72  SPDX-License-Identifier: (GPL-2.0 OR MIT)
-     57  SPDX-License-Identifier: GPL-2.0+ OR MIT
-     46  SPDX-License-Identifier: GPL-2.0-or-later OR MIT
-     38  SPDX-License-Identifier: GPL-2.0 OR X11
-     29  SPDX-License-Identifier: GPL-2.0 OR MIT
-     19  SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-     16  SPDX-License-Identifier: GPL-2.0-only */
-      6  SPDX-License-Identifier: ISC
-      5  SPDX-License-Identifier: (GPL-2.0 OR BSD-3-Clause)
-      4  SPDX-License-Identifier: (GPL-2.0+ OR X11)
-      4  SPDX-License-Identifier: (GPL-2.0 or MIT)
-      4  SPDX-License-Identifier: GPL-2.0 */
-      3  SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-2-Clause)
-      2  SPDX-License-Identifier: (GPL-2.0-or-later OR BSD-3-Clause) */
-      2  SPDX-License-Identifier: GPL-2.0-or-later */
-      2  SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
-      2  SPDX-License-Identifier: (GPL-2.0+)
-      2  SPDX-License-Identifier: (GPL-2.0)
-      2 SPDX-License-Identifier: GPL-2.0
-      1  SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
-      1  SPDX-License-Identifier:  GPL-2.0+
-      1 SPDX-License-Identifier: GPL-2.0+
-      1   SPDX-License-Identifier: BSD-3-Clause
-
-
-> +// Author: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-> +/dts-v1/;
-> +
-> +#include "aspeed-g5.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +
-> +/ {
-> +       model = "AMD EthanolX BMC";
-> +       compatible = "amd,ethanolx-bmc", "aspeed,ast2500";
-> +
-> +       memory@80000000 {
-> +               reg = <0x80000000 0x20000000>;
-> +       };
-> +       aliases {
-> +               serial0 = &uart1;
-> +               serial4 = &uart5;
-> +       };
-> +       chosen {
-> +               stdout-path = &uart5;
-> +               bootargs = "console=ttyS4,115200 earlyprintk";
-> +       };
-> +       leds {
-> +               compatible = "gpio-leds";
-> +
-> +               fault {
-> +                       gpios = <&gpio ASPEED_GPIO(A, 2) GPIO_ACTIVE_LOW>;
-> +               };
-> +
-> +               identify {
-> +                       gpios = <&gpio ASPEED_GPIO(A, 3) GPIO_ACTIVE_LOW>;
-> +               };
-> +       };
-> +       iio-hwmon {
-> +               compatible = "iio-hwmon";
-> +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>;
-> +       };
-> +};
-> +
-> +&fmc {
-> +       status = "okay";
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               #include "openbmc-flash-layout.dtsi"
-> +       };
-> +};
-> +
-> +
-> +&mac0 {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rmii1_default>;
-> +       clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-> +                <&syscon ASPEED_CLK_MAC1RCLK>;
-> +       clock-names = "MACCLK", "RCLK";
-> +};
-> +
-> +&uart1 {
-> +       //Host Console
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_txd1_default
-> +                    &pinctrl_rxd1_default>;
-> +};
-> +
-> +&uart5 {
-> +       //BMC Console
-> +       status = "okay";
-> +};
-> +
-> +&adc {
-> +       status = "okay";
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_adc0_default
-> +                    &pinctrl_adc1_default
-> +                    &pinctrl_adc2_default
-> +                    &pinctrl_adc3_default
-> +                    &pinctrl_adc4_default>;
-> +};
-> +
-> +// Thermal Sensors
-> +&i2c7 {
-> +       status = "okay";
-> +
-> +       lm75a@48 {
-> +               compatible = "national,lm75a";
-> +               reg = <0x48>;
-> +       };
-> +
-> +       lm75a@49 {
-> +               compatible = "national,lm75a";
-> +               reg = <0x49>;
-> +       };
-> +
-> +       lm75a@4a {
-> +               compatible = "national,lm75a";
-> +               reg = <0x4a>;
-> +       };
-> +
-> +       lm75a@4b {
-> +               compatible = "national,lm75a";
-> +               reg = <0x4b>;
-> +       };
-> +
-> +       lm75a@4c {
-> +               compatible = "national,lm75a";
-> +               reg = <0x4c>;
-> +       };
-> +
-> +       lm75a@4d {
-> +               compatible = "national,lm75a";
-> +               reg = <0x4d>;
-> +       };
-> +
-> +       lm75a@4e {
-> +               compatible = "national,lm75a";
-> +               reg = <0x4e>;
-> +       };
-> +
-> +       lm75a@4f {
-> +               compatible = "national,lm75a";
-> +               reg = <0x4f>;
-> +       };
-> +};
-> +
-> +&kcs1 {
-> +       status = "okay";
-> +       kcs_addr = <0x60>;
-> +};
-> +
-> +&kcs2 {
-> +       status = "okay";
-> +       kcs_addr = <0x62>;
-> +};
-> +
-> +&kcs4 {
-> +       status = "okay";
-> +       kcs_addr = <0x97DE>;
-> +};
-> +
-> +&lpc_snoop {
-> +       status = "okay";
-> +       snoop-ports = <0x80>;
-> +};
-> +
-> +&lpc_ctrl {
-> +       //Enable lpc clock
-> +       status = "okay";
-> +};
-> +
-> +&pwm_tacho {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_pwm0_default
-> +       &pinctrl_pwm1_default
-> +       &pinctrl_pwm2_default
-> +       &pinctrl_pwm3_default
-> +       &pinctrl_pwm4_default
-> +       &pinctrl_pwm5_default
-> +       &pinctrl_pwm6_default
-> +       &pinctrl_pwm7_default>;
-> +
-> +       fan@0 {
-> +               reg = <0x00>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x00>;
-> +       };
-> +
-> +       fan@1 {
-> +               reg = <0x01>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x01>;
-> +       };
-> +
-> +       fan@2 {
-> +               reg = <0x02>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x02>;
-> +       };
-> +
-> +       fan@3 {
-> +               reg = <0x03>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x03>;
-> +       };
-> +
-> +       fan@4 {
-> +               reg = <0x04>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x04>;
-> +       };
-> +
-> +       fan@5 {
-> +               reg = <0x05>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x05>;
-> +       };
-> +
-> +       fan@6 {
-> +               reg = <0x06>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x06>;
-> +       };
-> +
-> +       fan@7 {
-> +               reg = <0x07>;
-> +               aspeed,fan-tach-ch = /bits/ 8 <0x07>;
-> +       };
-> +};
-> +
-> +
-> +
-> --
-> 2.17.1
->
+--_000_e44cf80b68864cba9db6c71d23a5c5fbquantatwcom_--
