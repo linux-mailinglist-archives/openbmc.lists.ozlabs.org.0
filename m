@@ -2,71 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94B1022B9FE
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 01:08:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9645E22BA03
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 01:09:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCSgK6SCqzDrfh
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 09:08:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCShz5s3hzDrfs
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 09:09:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::641;
- helo=mail-pl1-x641.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::542;
+ helo=mail-pg1-x542.google.com; envelope-from=rentao.bupt@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=VjTbA6AX; dkim-atps=neutral
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
- [IPv6:2607:f8b0:4864:20::641])
+ header.s=20161025 header.b=oKJuJgi3; dkim-atps=neutral
+Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com
+ [IPv6:2607:f8b0:4864:20::542])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCScJ0D2mzDrcP;
- Fri, 24 Jul 2020 09:05:51 +1000 (AEST)
-Received: by mail-pl1-x641.google.com with SMTP id t6so3392523plo.3;
- Thu, 23 Jul 2020 16:05:51 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCScL0DhfzDrcN;
+ Fri, 24 Jul 2020 09:05:53 +1000 (AEST)
+Received: by mail-pg1-x542.google.com with SMTP id g67so4065986pgc.8;
+ Thu, 23 Jul 2020 16:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=F2Pqk4mRzkFzX9xFSRvFyyP3SBKlsXCsdPwtf6+8Ajo=;
- b=VjTbA6AXBoaB0RDzYmJ3E0ciocAanVmLtik4kiAq/W3OZ8a+Tk3/9TfQT7UZUKQ1FH
- 0XMjd0X1PbRuix6Bd/doMNqBaQhPt8KpJCR4TQKZr0kpzi4DdrWCIDsRPwro4sol/rrC
- gLZMXonkP8qcFTn+SaHNNwJYEmsAAGJNliCU0Sil7g9HVd0NgnvUrqIHXVF4bKOwqR98
- y2+uW8U1pg60HJ7kI+7A746BawLg3pY9NOW2FB7i78gOZBkmqmyyM7h4HDLlsesIfX6p
- ctqj45kqdvxgF8iGptdR1pf1ZCK6EmHgd0FPa/tm570emRMcZCwhkUuLJZ1tKg21nwp1
- i84w==
+ bh=Zf3sEMsL0DPGCRUnLMz+Lz6K06ydPn+rQ+/2py+7OzE=;
+ b=oKJuJgi3jXl0gFItYfYerp5IuxM+KnI/XCd+fqR7+VKJwnwOZTDB3UxG9XC0UQsCey
+ aDPdu2Tb4JXmd/J3I3KcbxapdceIy8bznltwlbQ8vZwa9+AmhyO1CmAUB725E4bM+ONW
+ N35jTF8ny1KZpsWHE9VhjuTaL8xYOqD89qq8JhTpL7zr0v8iks0nyKknj1CGvux++7KH
+ Yidx/P7DfYyVOHv75uZniLyB3n8qhOKGM+QbYGd14sPARZXev81Aor5ml30g/SoWG/Po
+ N7VZlNg+8snGhUFW4i1OCn66fvIe7Kg4UGMo7Ox7uCWzukia7dSWj7ifSpIh1GmuPLRc
+ Q55g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=F2Pqk4mRzkFzX9xFSRvFyyP3SBKlsXCsdPwtf6+8Ajo=;
- b=rX4PFIb5iBEN01/TRz4wGSFHTj4L+FjeCbqujusozqiJaLGuTTtZa71YbYDuw8P5Yd
- JzLs3iAXdbe8P+797LDZ+n8AtG3zNr/7G6rS391eFk6PdTmuoqXDdQOv8NuXGfI1D/Ve
- JfNFXYK1iPhOZRxYXPRk1ipNQfoMtKug3TApxk+o8GFnZTc9I8uj/9Isbx+8p8jsirG8
- OTz1jzeNxaqHLaJoJJBIEfmDBfALiMgAezjgeuMJCVZgSu4cMd01MJGFeB1wg9fin+Uz
- UpEHVvCX5avuNvbzSXNuiTNsRpqzX8iZTgV9DVU3NFHOyYHcj3fhGhNOavqxRw/LMW+r
- ORnw==
-X-Gm-Message-State: AOAM5314cb2uOPsVgNvble7/pje0q14YlU9hJ54S7plenPJRgn6PBaA0
- snvxeZa4WAwD7HD5dvCo9EU=
-X-Google-Smtp-Source: ABdhPJxz4fyUslV21YIicSuEUXWODmfGNTJc5KJGMBlAZ1KMU5eHtvAW2G8fxTbZHRjaRg8ywL8E2Q==
-X-Received: by 2002:a17:902:b113:: with SMTP id
- q19mr5771431plr.170.1595545549701; 
- Thu, 23 Jul 2020 16:05:49 -0700 (PDT)
+ bh=Zf3sEMsL0DPGCRUnLMz+Lz6K06ydPn+rQ+/2py+7OzE=;
+ b=g/GR7EPKGmVuEzLjtnE0+1iyTb3JdEef5MxCZxIpR8OA09rp90uWqGnE4aZeFXCBJY
+ WmdL74dM147jc5cnIDRN3TatnXOHzs0BHLV7Rq8hCHAOmvx9jDOkR6AM09H1ODAyKyCv
+ ZWDOy/mD4zC4CO9qPfhfNOXX+qC2Pi+dmJxRdmHEU82jxeAu1YO1fXB29sr064xdH6Zb
+ 6154+DdpAjkdVCgsLp49hQ9E4sfLDH86OZ6K6dNF4H7lviMMsQJdCQTL95UKzcrf3cKA
+ Wt1Tj8ofl9tXuIdujry8Xjcl8yUeMUPROu38k/tyCBfNbwLiWnq5hzxmvPMhwwpNLY7p
+ B9og==
+X-Gm-Message-State: AOAM5330MoBGMm2/7dcS7N/lR1VEGvGDmx/exPZQnZUsbnWbU3oqd7sP
+ 8sLSN65o5yOX/ktDLx64cTQ=
+X-Google-Smtp-Source: ABdhPJzSr/qRS6pTZToh9J+O+BKWXJaU9VYurAj++Srk/ErDDZN8/HehZ/qFCw5K6+UHcK0Q1jzQfQ==
+X-Received: by 2002:a05:6a00:782:: with SMTP id
+ g2mr6316942pfu.126.1595545550863; 
+ Thu, 23 Jul 2020 16:05:50 -0700 (PDT)
 Received: from taoren-ubuntu-R90MNF91.thefacebook.com
  (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id gn5sm3644742pjb.23.2020.07.23.16.05.48
+ by smtp.gmail.com with ESMTPSA id gn5sm3644742pjb.23.2020.07.23.16.05.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2020 16:05:49 -0700 (PDT)
+ Thu, 23 Jul 2020 16:05:50 -0700 (PDT)
 From: rentao.bupt@gmail.com
 To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
  Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
  linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH v2 1/3] ARM: dts: aspeed: wedge40: disable a few i2c
- controllers
-Date: Thu, 23 Jul 2020 16:05:37 -0700
-Message-Id: <20200723230539.17860-2-rentao.bupt@gmail.com>
+Subject: [PATCH v2 2/3] ARM: dts: aspeed: wedge40: enable adc device
+Date: Thu, 23 Jul 2020 16:05:38 -0700
+Message-Id: <20200723230539.17860-3-rentao.bupt@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20200723230539.17860-1-rentao.bupt@gmail.com>
 References: <20200723230539.17860-1-rentao.bupt@gmail.com>
@@ -87,7 +86,7 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tao Ren <rentao.bupt@gmail.com>
 
-Disable i2c bus #9, #10 and #13 as these i2c controllers are not used on
+Enable adc controller and corresponding voltage sensoring channels for
 Wedge40.
 
 Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
@@ -96,39 +95,33 @@ Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
    - Nothing changed. Resending the patch just in case the previous
      email was not delivered.
 
- arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts | 12 ------------
- 1 file changed, 12 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-index 54e508530dce..aea23c313088 100644
+index aea23c313088..1049cfa80ac2 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge40.dts
-@@ -115,14 +115,6 @@
- 	status = "okay";
+@@ -27,6 +27,11 @@
+ 	memory@40000000 {
+ 		reg = <0x40000000 0x20000000>;
+ 	};
++
++	ast-adc-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 5>, <&adc 6>, <&adc 7>, <&adc 8>, <&adc 9>;
++	};
  };
  
--&i2c9 {
--	status = "okay";
--};
--
--&i2c10 {
--	status = "okay";
--};
--
- &i2c11 {
- 	status = "okay";
- };
-@@ -131,10 +123,6 @@
- 	status = "okay";
- };
- 
--&i2c13 {
--	status = "okay";
--};
--
+ &wdt1 {
+@@ -126,3 +131,7 @@
  &vhub {
  	status = "okay";
  };
++
++&adc {
++	status = "okay";
++};
 -- 
 2.17.1
 
