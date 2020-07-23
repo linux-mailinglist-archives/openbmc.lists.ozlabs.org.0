@@ -2,70 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 212E322B7AD
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jul 2020 22:26:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FA1022B7DD
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jul 2020 22:35:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCP4Q35zLzDrck
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 06:26:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCPHB3n47zDr2K
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 06:35:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102d;
+ helo=mail-pj1-x102d.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=uoituAER; dkim-atps=neutral
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com
- [IPv6:2607:f8b0:4864:20::b36])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=moZSrrj9; dkim-atps=neutral
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
+ [IPv6:2607:f8b0:4864:20::102d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCNhw433CzDrVT
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 06:09:36 +1000 (AEST)
-Received: by mail-yb1-xb36.google.com with SMTP id 133so3487134ybu.7
- for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 13:09:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=IEPXQBI3SDOsIPYh/eeh1SmSKMJ4z6d6LZHjgywObF8=;
- b=uoituAERr9fQt6SSzW5XrD8K4MBC3uIXogOW0SFonpKeDBDaQR6wxC+DOBQHwJpDcS
- ATK6M/Ye6Xq1srBI9PBZghZZIQYzyNhYr/AkF20o3hnN1r3rUaP7+K5QM9rF2cy90OqU
- Pjf8801MPNBzOMtx/EnksdZSblq128YWgzfOUaMgV48gBVhQAMNsngg/pQiZzuatkhZQ
- k1qw6U7uW2HuF7SJpSfm+mgxLf1lhvWH/G6xUPTaWLO/mgEMSaXQNaeKsZuadnFJEh85
- hdUUY4z/1Jajd2mWoNV+lSLNpd5yl7GBkP921myLZKz+XQu7SciNFb+9xw6CeL4y5aC8
- bm6Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCP9v4q8bzDrLw
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 06:31:15 +1000 (AEST)
+Received: by mail-pj1-x102d.google.com with SMTP id t15so3704623pjq.5
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 13:31:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=date:from:to:cc:subject:message-id:references:mime-version
+ :content-disposition:in-reply-to:user-agent;
+ bh=SoMKFcpv4t74SB8Z2NkuRMjIe/0+h4b+mMWIWDAYaYU=;
+ b=moZSrrj97a74Nc/pOoLkHdIxGkJMIBvaN4MCZyP/qddEjK4L2MWvoKPQD8uCVx831j
+ RfOtfgl9sqQfB502umQD1KhsSi5+67PIlFajeGRs+7yykXCT3AYW/c+fT6AxEZzPC16C
+ Z27Z5J0x1rBRsl/S4ZSjxIRKngZ4160Y0FM//W1yeUi7SPx0fMNZQaTo8xBcBkw14er8
+ j/eaqBnJdcbL65F0reIGMuUrckyoR36S9lA105nq3W54Vog9AryITBr5PGTccNC3mZ8v
+ Um1eBO/0UO34ysI/NfHuxM5ksgsySjEQJt7PQTFfiLnkZexUYT3ZDLJg0fC7TAVkmP8A
+ P/aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=IEPXQBI3SDOsIPYh/eeh1SmSKMJ4z6d6LZHjgywObF8=;
- b=dzDPGHUdBL5PhJfHnSvZKGXDSsHL78dewxVBxOvlWX+Z/s+6W1i1K3bne3t+b8a3Hz
- joAEwsJ6DfRUDVBkG15Az5QhBninI0IoCW3ky4cimbAGsqmIcvQbsJKTtpOhFZuQCdcC
- U54Id3NF7N4IaHdXZKyypqZIpzLkvCMF/bnCjqgC9QI3EbM16BnO/x4wFf8GOw+yaUq6
- JTLWV3FRpYE7m814xI44bMzE+n4VjqZhRoRk01veqHNPsXUwn8w+tOoBNVkBUN3gf3ax
- Me4/+3dYqyOC/fzkQQt64CvwGeEEeDh3S+dRLxdFkGgpkVTOHzqWZPQlYRgk/1nX68W3
- Zuaw==
-X-Gm-Message-State: AOAM532lPODsJMM6Ofp5NhEIu+562tiCiAQSPbcieAZAg2EZ8I0M4E5X
- R/o4hAfVJ/yoAfyxqJH8Jnl68Ek7fcrh+1W3PcvU8w==
-X-Google-Smtp-Source: ABdhPJzNj5k0eT9/gITJ4oTAX/9jxQYGef8SfLaxsfURGblg+hE6v952dD3zhD3N/wB9WPJ3QpeYq506Y4aNkcFrcWk=
-X-Received: by 2002:a5b:74d:: with SMTP id s13mr8362777ybq.170.1595534970079; 
- Thu, 23 Jul 2020 13:09:30 -0700 (PDT)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to:user-agent;
+ bh=SoMKFcpv4t74SB8Z2NkuRMjIe/0+h4b+mMWIWDAYaYU=;
+ b=p5qmga2pkILJLyuiedmkQgBfdHJnWPLiIF+ZXP4V0Gwh5SmAY/dxTywlLjBESYM4QU
+ a/y8ieHTHEwLSX978ep1D+8W5bSRT8YneymsHqTbgsk442qtzsNAU7nzCd2jQEgBVlkL
+ L3of96LTh8EukJG/6n/uSmJnwYkndYPOKWISq01ntZ1kcOtYydXW8hvqChtJmGrLd4fs
+ ZRkhUfeZ148Si2xHMLUVxgZYzTaXte9zxdoP4cIXBIen2P9PYDgqvIHkdPcHPyyIYVIc
+ 8/5728XG9XFubKOjl7LdKp9IdXBCDYQ3AiBR2V4ih1rSRQ0qX3RFGuF8uuLNBpSq+/ml
+ k+XQ==
+X-Gm-Message-State: AOAM533hPRAxlse6jJpG+zjacNyKoP3PU0zQdvjfadvZ9u7LRRDkQetM
+ w/NurOCX/6x530GOlLpYw+Y=
+X-Google-Smtp-Source: ABdhPJx2go2YkHBTuwtwoT4+X5KaYpS1F7Cy0YMI05T0ZKqVeW1Bp76GWNy4/si/a730W4IRFAtgVQ==
+X-Received: by 2002:a17:902:e903:: with SMTP id
+ k3mr5317399pld.148.1595536271659; 
+ Thu, 23 Jul 2020 13:31:11 -0700 (PDT)
+Received: from cnn ([112.133.236.10])
+ by smtp.gmail.com with ESMTPSA id p29sm3684201pgl.36.2020.07.23.13.31.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 23 Jul 2020 13:31:09 -0700 (PDT)
+Date: Fri, 24 Jul 2020 02:01:04 +0530
+From: Manikandan <manikandan.hcl.ers.epl@gmail.com>
+To: Vijay Khemka <vijaykhemka@fb.com>
+Subject: Re: add multi-host support in the phosphor-post-code-manager
+Message-ID: <20200723203104.GA4976@cnn>
+References: <20200720160013.GB17117@cnn>
+ <DM6PR11MB441079DE8A76ECF6C35E185094780@DM6PR11MB4410.namprd11.prod.outlook.com>
+ <2EFB6403-DA2F-434F-87CE-B9EA917A2BE4@fb.com>
 MIME-Version: 1.0
-References: <b8ec220b-56ca-45f7-99be-5ab197c4d881@linux.ibm.com>
- <b5f1c04f-eb6c-7dac-2945-cff9815a7ca6@linux.ibm.com>
- <CACWQX80aD212+JKwqGJoowyb4S7wLcnUCyVLwOMko8T_86yunA@mail.gmail.com>
- <8008.1595531126@localhost>
-In-Reply-To: <8008.1595531126@localhost>
-From: Ed Tanous <ed@tanous.net>
-Date: Thu, 23 Jul 2020 13:09:19 -0700
-Message-ID: <CACWQX83HPvOTRkf=K8BfBjAgJGaDi2_UEi3GvWMO8j3kNJ2Tqg@mail.gmail.com>
-Subject: Re: Security Working Group - Wednesday July 22 - results
-To: Michael Richardson <mcr@sandelman.ca>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2EFB6403-DA2F-434F-87CE-B9EA917A2BE4@fb.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,57 +82,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
+Cc: "Ren, Zhikui" <zhikui.ren@intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "velumanit@hcl.com" <velumanit@hcl.com>, "Wang,
+ Kuiying" <kuiying.wang@intel.com>,
+ "manikandan.e@hcl.com" <manikandan.e@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jul 23, 2020 at 12:05 PM Michael Richardson <mcr@sandelman.ca> wrote:
->
->
-> Ed Tanous <ed@tanous.net> wrote:
->     > One thing to note;  At one point, I had talked through how to
->     > prototype ACME protocol replacement of certificates automatically, so,
->     > given an ACME server on the network, the BMC could essentially
->     > automatically provision itself and keep its certs up to date.  If
->     > someone wanted to run with that, it might reduce some of the pain here
->     > (and be extremely cool).
->
-> I have running code, but to use ACME, requires some initial trust
-> relationship.  The manufacturer can do that if they want.
+On Tue, Jul 21, 2020 at 06:28:44PM +0000, Vijay Khemka wrote:
+> I would also prefer single process design but as Patrick mentioned about hot pluggable 
+> Host, either we can predefine maximum allowed host per platform or go for multi
+> process  approach for complete dynamic pluggable host.
+> 
+> We really need to assess what is the disadvantage in predefining maximum number of hosts
+> With single process because there will be limited slots available per platform.
+   
+Thanks Vijay for comment.
 
-Lots of (mostly private) meta layers have this set up already for
-internal use and add the relevant CA cert to the build.  Also, I think
-(I could be wrong) the ca-certificates package is included in most
-builds already so we can handle trust with foreign servers (for things
-like HTTP event push).  Presumably ACME uses the same trust
-relationship, or does it have a specific mechanism that's unique?
+The Multi-host on obmc-console and x86-power-control design and implemetation based on 
+multi-process as i checked source code.
 
->
-> One can also use draft-ietf-anima-bootstrapping-keyinfra + EST (RFC7030).
+As already obmc-console and x86-power-control agreed on multi-process , 
+Is there specific reason we need to go for the single process design to support 
+on multi-host postcode.
 
-... has been added to my nightly reading list.
+I understand that x86-power-control initially planned to have single process for multi-host
+and then later changed to the multi-process.      
 
-> These two are not mutually exclusive.
->
-> I hope to clear my plate enough before the end of the year to demonstrate
-> this on OpenBMC.
-
-Awesome.  Looking forward to it.
-
->     > It should be noted, most browsers (in my testing) seem to ignore the
->     > HTTP date header entirely, so the BMC doesn't even need the correct
->     > time to set up a proper encryption channel.
->
-> That's very surprising and counter to my experience.
-> The more likely case is that the OpenBMC has the wrong date.
->
-
-IIIIInteresting.  Clearly I need to do more testing.  Just to be
-clear, I'm talking about the HTTP response date:
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
-
-Not the validity dates in the TLS certificate.  There were a couple
-versions of bmcweb where the Date field was broken as well as systems
-with a reset CMOS where the date is incorrectly set to epoch.  In both
-cases, no browsers threw any kind of warning that I recall, we just
-happened to notice it on the debug output.
+ 
