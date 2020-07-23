@@ -2,75 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FA1022B7DD
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jul 2020 22:35:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2D7B22B8C3
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jul 2020 23:35:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCPHB3n47zDr2K
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 06:35:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCQbr2jsKzDrYb
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 07:35:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102d;
- helo=mail-pj1-x102d.google.com; envelope-from=manikandan.hcl.ers.epl@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
+ envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=moZSrrj9; dkim-atps=neutral
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
- [IPv6:2607:f8b0:4864:20::102d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=sandelman.ca
+Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCP9v4q8bzDrLw
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 06:31:15 +1000 (AEST)
-Received: by mail-pj1-x102d.google.com with SMTP id t15so3704623pjq.5
- for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 13:31:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=SoMKFcpv4t74SB8Z2NkuRMjIe/0+h4b+mMWIWDAYaYU=;
- b=moZSrrj97a74Nc/pOoLkHdIxGkJMIBvaN4MCZyP/qddEjK4L2MWvoKPQD8uCVx831j
- RfOtfgl9sqQfB502umQD1KhsSi5+67PIlFajeGRs+7yykXCT3AYW/c+fT6AxEZzPC16C
- Z27Z5J0x1rBRsl/S4ZSjxIRKngZ4160Y0FM//W1yeUi7SPx0fMNZQaTo8xBcBkw14er8
- j/eaqBnJdcbL65F0reIGMuUrckyoR36S9lA105nq3W54Vog9AryITBr5PGTccNC3mZ8v
- Um1eBO/0UO34ysI/NfHuxM5ksgsySjEQJt7PQTFfiLnkZexUYT3ZDLJg0fC7TAVkmP8A
- P/aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=SoMKFcpv4t74SB8Z2NkuRMjIe/0+h4b+mMWIWDAYaYU=;
- b=p5qmga2pkILJLyuiedmkQgBfdHJnWPLiIF+ZXP4V0Gwh5SmAY/dxTywlLjBESYM4QU
- a/y8ieHTHEwLSX978ep1D+8W5bSRT8YneymsHqTbgsk442qtzsNAU7nzCd2jQEgBVlkL
- L3of96LTh8EukJG/6n/uSmJnwYkndYPOKWISq01ntZ1kcOtYydXW8hvqChtJmGrLd4fs
- ZRkhUfeZ148Si2xHMLUVxgZYzTaXte9zxdoP4cIXBIen2P9PYDgqvIHkdPcHPyyIYVIc
- 8/5728XG9XFubKOjl7LdKp9IdXBCDYQ3AiBR2V4ih1rSRQ0qX3RFGuF8uuLNBpSq+/ml
- k+XQ==
-X-Gm-Message-State: AOAM533hPRAxlse6jJpG+zjacNyKoP3PU0zQdvjfadvZ9u7LRRDkQetM
- w/NurOCX/6x530GOlLpYw+Y=
-X-Google-Smtp-Source: ABdhPJx2go2YkHBTuwtwoT4+X5KaYpS1F7Cy0YMI05T0ZKqVeW1Bp76GWNy4/si/a730W4IRFAtgVQ==
-X-Received: by 2002:a17:902:e903:: with SMTP id
- k3mr5317399pld.148.1595536271659; 
- Thu, 23 Jul 2020 13:31:11 -0700 (PDT)
-Received: from cnn ([112.133.236.10])
- by smtp.gmail.com with ESMTPSA id p29sm3684201pgl.36.2020.07.23.13.31.07
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 23 Jul 2020 13:31:09 -0700 (PDT)
-Date: Fri, 24 Jul 2020 02:01:04 +0530
-From: Manikandan <manikandan.hcl.ers.epl@gmail.com>
-To: Vijay Khemka <vijaykhemka@fb.com>
-Subject: Re: add multi-host support in the phosphor-post-code-manager
-Message-ID: <20200723203104.GA4976@cnn>
-References: <20200720160013.GB17117@cnn>
- <DM6PR11MB441079DE8A76ECF6C35E185094780@DM6PR11MB4410.namprd11.prod.outlook.com>
- <2EFB6403-DA2F-434F-87CE-B9EA917A2BE4@fb.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCQZw1pWGzDqy9
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 07:34:30 +1000 (AEST)
+Received: from localhost (localhost [127.0.0.1])
+ by tuna.sandelman.ca (Postfix) with ESMTP id 299D738A30;
+ Thu, 23 Jul 2020 17:13:58 -0400 (EDT)
+Received: from tuna.sandelman.ca ([127.0.0.1])
+ by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id HXA4fZPyaHn5; Thu, 23 Jul 2020 17:13:57 -0400 (EDT)
+Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
+ by tuna.sandelman.ca (Postfix) with ESMTP id 1A6CB38A1A;
+ Thu, 23 Jul 2020 17:13:57 -0400 (EDT)
+Received: from localhost (localhost [IPv6:::1])
+ by sandelman.ca (Postfix) with ESMTP id 66E821CB;
+ Thu, 23 Jul 2020 17:34:24 -0400 (EDT)
+From: Michael Richardson <mcr@sandelman.ca>
+To: Ed Tanous <ed@tanous.net>, openbmc <openbmc@lists.ozlabs.org>
+Subject: Re: Security Working Group - Wednesday July 22 - results
+In-Reply-To: <CACWQX83HPvOTRkf=K8BfBjAgJGaDi2_UEi3GvWMO8j3kNJ2Tqg@mail.gmail.com>
+References: <b8ec220b-56ca-45f7-99be-5ab197c4d881@linux.ibm.com>
+ <b5f1c04f-eb6c-7dac-2945-cff9815a7ca6@linux.ibm.com>
+ <CACWQX80aD212+JKwqGJoowyb4S7wLcnUCyVLwOMko8T_86yunA@mail.gmail.com>
+ <8008.1595531126@localhost>
+ <CACWQX83HPvOTRkf=K8BfBjAgJGaDi2_UEi3GvWMO8j3kNJ2Tqg@mail.gmail.com>
+X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 26.1
+X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
+ <'$9xN5Ub#
+ z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2EFB6403-DA2F-434F-87CE-B9EA917A2BE4@fb.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 23 Jul 2020 17:34:24 -0400
+Message-ID: <13663.1595540064@localhost>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,32 +60,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Ren, Zhikui" <zhikui.ren@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "velumanit@hcl.com" <velumanit@hcl.com>, "Wang,
- Kuiying" <kuiying.wang@intel.com>,
- "manikandan.e@hcl.com" <manikandan.e@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 21, 2020 at 06:28:44PM +0000, Vijay Khemka wrote:
-> I would also prefer single process design but as Patrick mentioned about hot pluggable 
-> Host, either we can predefine maximum allowed host per platform or go for multi
-> process  approach for complete dynamic pluggable host.
-> 
-> We really need to assess what is the disadvantage in predefining maximum number of hosts
-> With single process because there will be limited slots available per platform.
-   
-Thanks Vijay for comment.
+--=-=-=
+Content-Type: text/plain
 
-The Multi-host on obmc-console and x86-power-control design and implemetation based on 
-multi-process as i checked source code.
 
-As already obmc-console and x86-power-control agreed on multi-process , 
-Is there specific reason we need to go for the single process design to support 
-on multi-host postcode.
+Ed Tanous <ed@tanous.net> wrote:
+    >> Ed Tanous <ed@tanous.net> wrote:
+    >> > One thing to note;  At one point, I had talked through how to
+    >> > prototype ACME protocol replacement of certificates automatically, so,
+    >> > given an ACME server on the network, the BMC could essentially
+    >> > automatically provision itself and keep its certs up to date.  If
+    >> > someone wanted to run with that, it might reduce some of the pain here
+    >> > (and be extremely cool).
+    >>
+    >> I have running code, but to use ACME, requires some initial trust
+    >> relationship.  The manufacturer can do that if they want.
 
-I understand that x86-power-control initially planned to have single process for multi-host
-and then later changed to the multi-process.      
+    > Lots of (mostly private) meta layers have this set up already for
+    > internal use and add the relevant CA cert to the build.  Also, I think
+    > (I could be wrong) the ca-certificates package is included in most
+    > builds already so we can handle trust with foreign servers (for things
+    > like HTTP event push).  Presumably ACME uses the same trust
+    > relationship, or does it have a specific mechanism that's unique?
 
- 
+yes, the ca-certificate package provides CABForum listed keys, but that won't
+include my local private-CA, unless I put a custom build in.
+
+ACME requires that the machine that wants a certificate has to prove it's
+name somehow.  The tools are https-01 or dns-01 challenge.
+
+https-01 trust requires that the ACME server be able to reach the server (the
+BMC) on port-443 to see the challenge.  And do so by DNS name!
+The public LetsEncrypt systems need this to be a public name, and there must
+be public port-443 connectivity.
+But, if you run your own ACME servers, then you can do something different.
+(but, you'd have to configure OpenBMC to talk to your servers, so you'd need
+a way to tell it do that, so you'd already need admin access...)
+
+If this is done by dns-01 challenge, then the ACME server needs to be able to
+do a Dynamic DNS Update.
+
+    >> One can also use draft-ietf-anima-bootstrapping-keyinfra + EST (RFC7030).
+
+    > ... has been added to my nightly reading list.
+
+waiting on a MISREF to become RFC.
+https://www.sandelman.ca/SSW/ietf/brski-links/ contains a few videos that
+might lighten your load.
+
+    >> > It should be noted, most browsers (in my testing) seem to ignore the
+    >> > HTTP date header entirely, so the BMC doesn't even need the correct
+    >> > time to set up a proper encryption channel.
+    >>
+    >> That's very surprising and counter to my experience.
+    >> The more likely case is that the OpenBMC has the wrong date.
+    >>
+
+    > IIIIInteresting.  Clearly I need to do more testing.  Just to be
+    > clear, I'm talking about the HTTP response date:
+    > https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date
+
+    > Not the validity dates in the TLS certificate.  There were a couple
+    > versions of bmcweb where the Date field was broken as well as systems
+    > with a reset CMOS where the date is incorrectly set to epoch.  In both
+    > cases, no browsers threw any kind of warning that I recall, we just
+    > happened to notice it on the debug output.
+
+So, the BMC has the wrong date, but the certificate was still valid.
+(Browser time >= notBefore, browser time <= notAfter)
+I don't expect the browser to care about the date the server thinks it is,
+only if the certificate has become invalid.
+
+The proposed code to kill the certificate if it was invalid would have
+rendered the certificate unuseable in this context.
+
+--
+]               Never tell me the odds!                 | ipv6 mesh networks [
+]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
+]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
+
+
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl8aAmAACgkQgItw+93Q
+3WVy7Qf/UM1dCGKcA7H4rzsVV1m7nUfOl+fkS7Cm5+CCcZQS+6yRuqYfjBeBzZBR
+Bkyie8ftx/hslr/VeHR9QKA6w/17HngO5kEmp/wjn5iHETMa0mBEr6O/E9CsI7sx
+H4/4wjZcE7o8Muap0tL2coiFgOfMibZoIvGPhrjB+qNMUJc9DOpo/+PQtOjhwfpR
+N8pzNjpKQ9MXSdUhqf+rYTC+WIcz8gFnkvRQNBSG4tfvci9ah6bm2HNh4utiGMRr
+wK8ycsCGBBTPouiyOpav/QZ8FyQiOWtQNhdz5weXWYENrdoPoGQF6hhm3nF0kldz
+QV5oZcX6o4+jnSOA+fB1c8bKGsnPmQ==
+=O9W2
+-----END PGP SIGNATURE-----
+--=-=-=--
