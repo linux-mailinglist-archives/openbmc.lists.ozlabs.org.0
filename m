@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F275322BC03
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:34:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31D4E22BC04
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:35:26 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYDh2F18zDrDr
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:34:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYG34Y4tzDrgQ
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:35:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,52 +17,53 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=TGSIQovg; dkim-atps=neutral
+ header.s=20161025 header.b=oILo+5Ur; dkim-atps=neutral
 Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
  [IPv6:2607:f8b0:4864:20::541])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCY9D3qqTzDrgF
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:31:12 +1000 (AEST)
-Received: by mail-pg1-x541.google.com with SMTP id j19so4367406pgm.11
- for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 19:31:12 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCY9G0kM4zDrgF
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:31:14 +1000 (AEST)
+Received: by mail-pg1-x541.google.com with SMTP id z5so4376918pgb.6
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 19:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=tgt1XMNUkp84RfxFGzAvZiXnEiWrl3ucf8rg7LDxYkQ=;
- b=TGSIQovg3/FXYiB85FvN2iAdH4f6gpK5p/Ak7SzlF00DBGDPDLClw6Qk3JxZyAfZkb
- 18gT+zi2QXwHXhIc7exeL1p655YdgEIHk7rqA3vo4iIp+ln03P1Mkd49ZmbcOFzTkN6o
- /skzecJyfip6eMklw4XRinWmeZCWdCUwaO6rIiLECpLLsXlmYzKv4xF6rUjPMKFE9fMS
- j1n2xr/5TyWw5D21bpuV7Xdt5BSln09uhK+7o3WWW18C+n9bgK9Td9/S00LF+J89ZUHN
- noCxlVGW8GecspjFom2e9qOwgaetURAkYJ3sYSGFF5zngYiEzWE5SrE9BuPOvUKY+/3P
- vMNA==
+ bh=dcQNWsDTo/w3nHavq5vp42ZbkFesx9ljXve0onI3iZM=;
+ b=oILo+5UrniBrZsR9h8Gges0mTUqtx6xahA506qQfqGS1utJnBt/AeqCdC7dcFEXK1w
+ HmRW7rjx1k2vZmFUjMKtRLYSFHllqCVIK/4sxQeUmwWOruNuqc3ekKR7+nqI0USTsB4i
+ 5D1b/Y64bTH0YIh9riejdjzQ9g72TaU1+BSZNRqlJgvpo5n9naHJ3gisX27mdIuQIfXy
+ 4j0HGjWjESeN3YEEr07NtWor3HCsBtYULtfgPzgA3wEtve12VzCpKaxRqE5+/pLE7cWa
+ YTJ7/0XnPLzq2VQUWV5mWLnA1LHsLL1IsgKSC+KMh96LCQ+YZR359LZ2UfIYBhZLO1Tk
+ /c6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=tgt1XMNUkp84RfxFGzAvZiXnEiWrl3ucf8rg7LDxYkQ=;
- b=Pb0pdIdgKxxg8A87r23kGa4tFlY6AbiRkj5UoZjUsHHUrnAIHrZEVRunAtRVtNSqhO
- dQlQawlXw5pGblEcIaK1byEjcU7i2kUuq7hl9zKXSZQzHxygcFuRMTp+zSbuxMQ0nVEo
- xJokN8kzRJP8AyfqmfPeWFOS4eCmDm05I7qVUaCKBVv9s4mljti9Bz8kQpQeifTN22vm
- HcgA5UA1WJ3fxSMVapaCAARWdezIpHGtoLpgLpoZdMnHWeHNSfhuHxxihqFroeM+tpBO
- Urx/nqEU9Vud+wrSDeh8uGMwn5NRZhnoRx5FbHZLkT1iw/RCmWYeB88ImZcwBrqaGmfA
- 0WmA==
-X-Gm-Message-State: AOAM531lyrYFjFFHO5ExzVJeZ4bj7gLZrwgGjTNfzt70stiqdqcZnexG
- ZDaBtqK+4qpZISmy9thy38phi5Hc2d8=
-X-Google-Smtp-Source: ABdhPJzfhvWRir1hLWtsFCubvmhmYuZKPre2bGG7jO3vwfKFnKVOZxU3PB3gDx19A5qZ6HgtazScNg==
-X-Received: by 2002:a63:380d:: with SMTP id f13mr6588498pga.16.1595557869190; 
- Thu, 23 Jul 2020 19:31:09 -0700 (PDT)
+ bh=dcQNWsDTo/w3nHavq5vp42ZbkFesx9ljXve0onI3iZM=;
+ b=K89VaIRSCBU6NcOEDNwU+KKKeNteM5MKgJl+LWiF+ETxPnn/G5C3ApYyxWxdsl2xx2
+ Z6d5UqedBJ59TlUu4QKpNYp3JcJmBYs2krWIxkNG1Idl5p94YGzFeNOE6OXK2gF4T98c
+ PSv8x4OTDPno3+cLjKq2eKqZ6EwFvzuwZW8SaKMabPJKyDlQ8ji119MOj1aXm5SMBUqo
+ ubMVnH8iOGsO1oz3lW3vfeZX+gT+fdodOfc78FskTGnqxrZVhd1sTFfNFLrcMSK+/iIU
+ /HqefkqPxy0/dfFobrhAbABw6bI7cmy4woW8x1uaShReg4RNg9y26UWkFy1/9U9KLVFU
+ dTDg==
+X-Gm-Message-State: AOAM530f2VPdzjbMzfZYFoPHwT82k1TV0UvRHQKUU7tDo3hpCoL5kwMM
+ ALqCpfu+Q3Cp55Z3bjW1iyxAb8II3KY=
+X-Google-Smtp-Source: ABdhPJzxpnnuEUIyyR47gb09c0m2e9GoqWsBUx/N5KzpXRrf9g8oVAbA4KChdijHKTKdRIlNuOac7g==
+X-Received: by 2002:a63:135b:: with SMTP id 27mr7013391pgt.37.1595557871998;
+ Thu, 23 Jul 2020 19:31:11 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.15])
- by smtp.gmail.com with ESMTPSA id w9sm3880239pfq.178.2020.07.23.19.31.06
+ by smtp.gmail.com with ESMTPSA id w9sm3880239pfq.178.2020.07.23.19.31.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2020 19:31:07 -0700 (PDT)
+ Thu, 23 Jul 2020 19:31:10 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org,
 	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.4 1/3] fsi: aspeed: Support CFAM reset GPIO
-Date: Fri, 24 Jul 2020 12:00:34 +0930
-Message-Id: <20200724023036.354310-2-joel@jms.id.au>
+Subject: [PATCH linux dev-5.4 2/3] ARM: dts: aspeed: rainier: Add CFAM reset
+ GPIO
+Date: Fri, 24 Jul 2020 12:00:35 +0930
+Message-Id: <20200724023036.354310-3-joel@jms.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200724023036.354310-1-joel@jms.id.au>
 References: <20200724023036.354310-1-joel@jms.id.au>
@@ -82,95 +83,35 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Systems have a line for restting the remote CFAM. This is not part of
-the FSI master, but is associated with it, so it makes sense to include
-it in the master driver.
+The GPIO on Q0 is used for resetting the CFAM of the processor that the
+ASPEED master is connected to.
 
-This exposes a sysfs interface to reset the cfam, abstracting away the
-direction and polarity of the GPIO, as well as the timing of the reset
-pulse. Userspace will be blocked until the reset pulse is finished.
-
-The reset is hard coded to be in the range of (900, 1000) us. It was
-observed with a scope to regularly be just over 1ms.
-
-If the device tree property is not preset the driver will silently
-continue.
+The signal is wired as active high on the first pass systems.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
-v2: Releasing the reset should set it to 0
+v2: Fix polarity
 ---
- drivers/fsi/fsi-master-aspeed.c | 43 +++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index b44f71f1f0a8..ef21362095f8 100644
---- a/drivers/fsi/fsi-master-aspeed.c
-+++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -22,6 +22,7 @@ struct fsi_master_aspeed {
- 	struct device		*dev;
- 	void __iomem		*base;
- 	struct clk		*clk;
-+	struct gpio_desc	*cfam_reset_gpio;
- };
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 0b5c6cc1c66a..18e0b22d5e48 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -126,6 +126,12 @@
+ 	#address-cells = <2>;
+ 	#size-cells = <0>;
  
- #define to_fsi_master_aspeed(m) \
-@@ -429,6 +430,43 @@ static int aspeed_master_init(struct fsi_master_aspeed *aspeed)
- 	return 0;
- }
- 
-+static ssize_t cfam_reset_store(struct device *dev, struct device_attribute *attr,
-+				const char *buf, size_t count)
-+{
-+	struct fsi_master_aspeed *aspeed = dev_get_drvdata(dev);
++	/*
++	 * CFAM Reset is supposed to be active low but pass1 hardware is wired
++	 * active high.
++	 */
++	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_HIGH>;
 +
-+	gpiod_set_value(aspeed->cfam_reset_gpio, 1);
-+	usleep_range(900, 1000);
-+	gpiod_set_value(aspeed->cfam_reset_gpio, 0);
-+
-+	return count;
-+}
-+
-+static DEVICE_ATTR(cfam_reset, 0200, NULL, cfam_reset_store);
-+
-+static int setup_cfam_reset(struct fsi_master_aspeed *aspeed)
-+{
-+	struct device *dev = aspeed->dev;
-+	struct gpio_desc *gpio;
-+	int rc;
-+
-+	gpio = devm_gpiod_get_optional(dev, "cfam-reset", GPIOD_OUT_LOW);
-+	if (IS_ERR(gpio))
-+		return PTR_ERR(gpio);
-+	if (!gpio)
-+		return 0;
-+
-+	aspeed->cfam_reset_gpio = gpio;
-+
-+	rc = device_create_file(dev, &dev_attr_cfam_reset);
-+	if (rc) {
-+		devm_gpiod_put(dev, gpio);
-+		return rc;
-+	}
-+
-+	return 0;
-+}
-+
- static int tacoma_cabled_fsi_fixup(struct device *dev)
- {
- 	struct gpio_desc *routing_gpio, *mux_gpio;
-@@ -511,6 +549,11 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 		return rc;
- 	}
- 
-+	rc = setup_cfam_reset(aspeed);
-+	if (rc) {
-+		dev_err(&pdev->dev, "CFAM reset GPIO setup failed\n");
-+	}
-+
- 	writel(0x1, aspeed->base + OPB_CLK_SYNC);
- 	writel(OPB1_XFER_ACK_EN | OPB0_XFER_ACK_EN,
- 			aspeed->base + OPB_IRQ_MASK);
+ 	cfam@0,0 {
+ 		reg = <0 0>;
+ 		#address-cells = <1>;
 -- 
 2.27.0
 
