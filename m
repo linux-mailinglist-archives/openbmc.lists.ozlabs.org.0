@@ -2,68 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31D4E22BC04
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:35:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 47C4222BC0A
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:36:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYG34Y4tzDrgQ
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:35:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYHY4qsczDqYM
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:36:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::541;
- helo=mail-pg1-x541.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::544;
+ helo=mail-pg1-x544.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=oILo+5Ur; dkim-atps=neutral
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com
- [IPv6:2607:f8b0:4864:20::541])
+ header.s=20161025 header.b=KxCcGmsX; dkim-atps=neutral
+Received: from mail-pg1-x544.google.com (mail-pg1-x544.google.com
+ [IPv6:2607:f8b0:4864:20::544])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCY9G0kM4zDrgF
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:31:14 +1000 (AEST)
-Received: by mail-pg1-x541.google.com with SMTP id z5so4376918pgb.6
- for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 19:31:14 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCY9K6QlxzDrgb
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:31:17 +1000 (AEST)
+Received: by mail-pg1-x544.google.com with SMTP id d4so4384449pgk.4
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 19:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=sender:from:to:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=dcQNWsDTo/w3nHavq5vp42ZbkFesx9ljXve0onI3iZM=;
- b=oILo+5UrniBrZsR9h8Gges0mTUqtx6xahA506qQfqGS1utJnBt/AeqCdC7dcFEXK1w
- HmRW7rjx1k2vZmFUjMKtRLYSFHllqCVIK/4sxQeUmwWOruNuqc3ekKR7+nqI0USTsB4i
- 5D1b/Y64bTH0YIh9riejdjzQ9g72TaU1+BSZNRqlJgvpo5n9naHJ3gisX27mdIuQIfXy
- 4j0HGjWjESeN3YEEr07NtWor3HCsBtYULtfgPzgA3wEtve12VzCpKaxRqE5+/pLE7cWa
- YTJ7/0XnPLzq2VQUWV5mWLnA1LHsLL1IsgKSC+KMh96LCQ+YZR359LZ2UfIYBhZLO1Tk
- /c6A==
+ bh=oV89y7toCU1yWvhFU+lccXM1w+Xzm7tvpw6pP0k/IQ8=;
+ b=KxCcGmsXG5Wh/3X/5rHtTYYybi5aRIWXzwcsnK6d9ylulh+I6vSBqjgK62g6aRdaaa
+ j63zRi98XxbViedyOR1Ik/2Xcr0KeXKfbWjiwcvCc3TkjatxP+FUjoFQDa4dSnUYKdUM
+ Yxw3V3UHkxVzqut83skEVzDln5LJHkNDBZj6ZlVBtI+v02zRoJjBmnt0Wjn5gvQi0/FG
+ Vb7FPpw5hDgIPkjBY9YjpQCAemu5Zm74dF5Lpx3AkOohkPchPGNY+1KZSNwVmLwF7TFc
+ Iun1eVnXDVS7biUec+FUOeYlU8Dx9PgzEzt5Sw/uh8Ami67mc79/p+R+g7hCgVmjLUCm
+ u8lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=dcQNWsDTo/w3nHavq5vp42ZbkFesx9ljXve0onI3iZM=;
- b=K89VaIRSCBU6NcOEDNwU+KKKeNteM5MKgJl+LWiF+ETxPnn/G5C3ApYyxWxdsl2xx2
- Z6d5UqedBJ59TlUu4QKpNYp3JcJmBYs2krWIxkNG1Idl5p94YGzFeNOE6OXK2gF4T98c
- PSv8x4OTDPno3+cLjKq2eKqZ6EwFvzuwZW8SaKMabPJKyDlQ8ji119MOj1aXm5SMBUqo
- ubMVnH8iOGsO1oz3lW3vfeZX+gT+fdodOfc78FskTGnqxrZVhd1sTFfNFLrcMSK+/iIU
- /HqefkqPxy0/dfFobrhAbABw6bI7cmy4woW8x1uaShReg4RNg9y26UWkFy1/9U9KLVFU
- dTDg==
-X-Gm-Message-State: AOAM530f2VPdzjbMzfZYFoPHwT82k1TV0UvRHQKUU7tDo3hpCoL5kwMM
- ALqCpfu+Q3Cp55Z3bjW1iyxAb8II3KY=
-X-Google-Smtp-Source: ABdhPJzxpnnuEUIyyR47gb09c0m2e9GoqWsBUx/N5KzpXRrf9g8oVAbA4KChdijHKTKdRIlNuOac7g==
-X-Received: by 2002:a63:135b:: with SMTP id 27mr7013391pgt.37.1595557871998;
- Thu, 23 Jul 2020 19:31:11 -0700 (PDT)
+ bh=oV89y7toCU1yWvhFU+lccXM1w+Xzm7tvpw6pP0k/IQ8=;
+ b=rTnCFu4seairsLbS8pNXfK3pMvwgLYY9lHpQb1xD826ch0O/INp6X88pA2ONDn8zyi
+ udbqBNR77TMWo6mNur7a6ITHTHofQ2sRJrl5J5pK1JnedUQ4bc22tY+AZExscfnY9lzE
+ /glwu2HHdY1N8nLj3RpInR14ot4wEuwpabBsBy6VUgMEj21fu+z/COmyKy0mI4PE5Z/J
+ FYY3ZwYtQRcpNAt2cjV7LJBS3dUhRjFaOxWxKhK6d2C2klP5rgw0po1XhNwkugdGjXb/
+ 5mYVbfOMwBp5x2xVvgbuhVSpEUB0ttl9bXEAcSlufN271dfr5ehLWYqqpVg3hy52ZoQo
+ CVXw==
+X-Gm-Message-State: AOAM533kwPEQ11gpU0kmpU0V4Xp1mJUpgjOPvGrnOyJ0ttX+ImC9XjAY
+ IuyeizqSvVD16dc/Bh6Rsv4KQsl/b/U=
+X-Google-Smtp-Source: ABdhPJyJYt1ziLBnf+Xnf24UFFyCJjw7jCWFWUkdB5j8TBfED7Cnp5P2zXIKz9iSg8w+SIvNYMHgRg==
+X-Received: by 2002:a63:6d48:: with SMTP id i69mr6752893pgc.354.1595557874918; 
+ Thu, 23 Jul 2020 19:31:14 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.15])
- by smtp.gmail.com with ESMTPSA id w9sm3880239pfq.178.2020.07.23.19.31.09
+ by smtp.gmail.com with ESMTPSA id w9sm3880239pfq.178.2020.07.23.19.31.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Jul 2020 19:31:10 -0700 (PDT)
+ Thu, 23 Jul 2020 19:31:13 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org,
 	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.4 2/3] ARM: dts: aspeed: rainier: Add CFAM reset
+Subject: [PATCH linux dev-5.4 3/3] ARM: dts: aspeed: tacoma: Add CFAM reset
  GPIO
-Date: Fri, 24 Jul 2020 12:00:35 +0930
-Message-Id: <20200724023036.354310-3-joel@jms.id.au>
+Date: Fri, 24 Jul 2020 12:00:36 +0930
+Message-Id: <20200724023036.354310-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20200724023036.354310-1-joel@jms.id.au>
 References: <20200724023036.354310-1-joel@jms.id.au>
@@ -86,32 +86,23 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 The GPIO on Q0 is used for resetting the CFAM of the processor that the
 ASPEED master is connected to.
 
-The signal is wired as active high on the first pass systems.
-
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
-v2: Fix polarity
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 0b5c6cc1c66a..18e0b22d5e48 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -126,6 +126,12 @@
- 	#address-cells = <2>;
- 	#size-cells = <0>;
+diff --git a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+index 96a45014b7e5..59f30c6c22d1 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts
+@@ -185,6 +185,7 @@
  
-+	/*
-+	 * CFAM Reset is supposed to be active low but pass1 hardware is wired
-+	 * active high.
-+	 */
-+	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_HIGH>;
-+
+ 	fsi-routing-gpios = <&gpio0 ASPEED_GPIO(Q, 7) GPIO_ACTIVE_HIGH>;
+ 	fsi-mux-gpios = <&gpio0 ASPEED_GPIO(B, 0) GPIO_ACTIVE_HIGH>;
++	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_LOW>;
+ 
  	cfam@0,0 {
  		reg = <0 0>;
- 		#address-cells = <1>;
 -- 
 2.27.0
 
