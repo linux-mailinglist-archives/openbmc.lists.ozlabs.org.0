@@ -2,56 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2958922BC01
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:33:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB74E22BBFF
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:31:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYCK2z6NzDrhd
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:33:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYB11PYNzDrgH
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:31:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::642;
+ helo=mail-pl1-x642.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.37; helo=m1337.mail.163.com;
- envelope-from=junhengdi@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=SjQOCF5q; dkim-atps=neutral
-X-Greylist: delayed 917 seconds by postgrey-1.36 at bilbo;
- Thu, 23 Jul 2020 20:10:28 AEST
-Received: from m1337.mail.163.com (m1337.mail.163.com [220.181.13.37])
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=HJSivD4I; dkim-atps=neutral
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
+ [IPv6:2607:f8b0:4864:20::642])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BC7Pc2R0dzDrGq
- for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 20:10:23 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=GXYYM
- iw3rkP/oa0vUY18IHCGjapljxUHAzFfHUdob1U=; b=SjQOCF5qyMaVfA0p8OlDc
- Y1xO7Ef5j8r1hxb7Ja1UiUjVYVlKeAzSbMmeRR9QRR8xEEZ7+lkngrragA6fhm2t
- Ihaxr23arLC4SGY5qpQCaIJEnIEsMANjGKcxREwQQ+RttU3ODy+s0WBoIqExRN6r
- TyTMY0EqhrF3soulS1/n3M=
-Received: from junhengdi$163.com ( [202.96.123.226] ) by
- ajax-webmail-wmsvr37 (Coremail) ; Thu, 23 Jul 2020 17:54:56 +0800 (CST)
-X-Originating-IP: [202.96.123.226]
-Date: Thu, 23 Jul 2020 17:54:56 +0800 (CST)
-From: =?GBK?B?srvT7w==?= <junhengdi@163.com>
-To: openbmc@lists.ozlabs.org
-Subject: how to change debug uart from uart5 to uart1 on ast2500 romulus?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 163com
-X-CM-CTRLDATA: ND8Kc2Zvb3Rlcl9odG09MTM3NDo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_129699_102065250.1595498096604"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCY9B6xH5zDrgF
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:31:10 +1000 (AEST)
+Received: by mail-pl1-x642.google.com with SMTP id 72so3650280ple.0
+ for <openbmc@lists.ozlabs.org>; Thu, 23 Jul 2020 19:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=rO17q3trvzVcMd4fMyAs4xFqR775pXB92W7uUhFV7lE=;
+ b=HJSivD4IIxO3iJRYYYOTFutimy6ZyJjSpQXknVm+D4phZnOhrBCEXLIHosdeOZrmhE
+ 1wrI10q6VIoMlMBASauNFDz8PslzXKgvZnbNZeck2CmIQWlpdWz9NYGaLdT502Hh3OUq
+ iVPLk3G5gnqwZflZeGPfUTZU8i9ld13ePTp91Gxs4Cv/HaBWT7pqZ8UesmPykZ6zAUGy
+ aRgJ7Jg5Uns4sAHCoM01GLsvr6UraWP1A9bJ9+oRxlkrBQWhglNo0bpUL+oaArf5KP2Y
+ JORbbgynX2FlWejAuk6WLphdJ0agCdd/JETbXGIwnMRKkMBB4JCTKa4PA5TQJgAPTWhF
+ CIbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:sender:from:to:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=rO17q3trvzVcMd4fMyAs4xFqR775pXB92W7uUhFV7lE=;
+ b=Y46DLDDINlTQrSlUoRTwiuhAcHU6tltX3VdwfT4Qt8rtRkNb4wpIbOpOotvE+zWnFw
+ Lc/hU3HE+WfWFM3YWYzbGIL6A40danLMxupjbyWzqdmrOogwl1SJHJP6WVkxj3XIFAz0
+ Igs8GGimgqtL8MzokTHdMQdQuYp3U/KfMQ6NpnMjZ5xWVyiEDsmUl++ackxtHJ+DNAi0
+ M2oXPZSxxgyZdqLQZi4YqzcGJm1LHv8+uwb6Kf573cgGTipcJ9HeoCDbaba7rQibsztA
+ bF2U+cERWmxSWKIya91Vm2yAiEjBu9fxEf8ISt/7S1RPv9TrjPMzF8uyMpA2noLPN7Pu
+ lIcA==
+X-Gm-Message-State: AOAM533W/K/lj6cTYzmwF3ICTd5JRwTV+pdZ0RsR/3kxZrOFbLlPqLIW
+ PbxL++Dx3NFFNHSm2StpLDFjrDPpLbc=
+X-Google-Smtp-Source: ABdhPJzXksmYIr7hfP5utJMUV3xh9McgbxJQmIZ50stg6kt3Q5KXSvlrzzKDLYO91pZ784m4ce4uiQ==
+X-Received: by 2002:a17:902:ff0c:: with SMTP id
+ f12mr6430091plj.254.1595557866115; 
+ Thu, 23 Jul 2020 19:31:06 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.15])
+ by smtp.gmail.com with ESMTPSA id w9sm3880239pfq.178.2020.07.23.19.31.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 23 Jul 2020 19:31:05 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org,
+	Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH linux dev-5.4 0/3] fsi: aspeed: CFAM reset support
+Date: Fri, 24 Jul 2020 12:00:33 +0930
+Message-Id: <20200724023036.354310-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Message-ID: <5e18b54e.8d5f.1737b18e7dc.Coremail.junhengdi@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: JcGowADXbj1wXhlflZFxAA--.8976W
-X-CM-SenderInfo: xmxqxvpqjgxqqrwthudrp/xtbBoQtkf1QHK1+glwACsj
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Mailman-Approved-At: Fri, 24 Jul 2020 12:32:24 +1000
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,49 +81,20 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_129699_102065250.1595498096604
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+See patch 1 for a description.
 
-RGVhciBvcGVtYm1jZXIsCgpJIGFtIGdyZWVuIHRvIG9wZW5ibWMgYW5kIEkgd2FudCB0byBsZWFy
-biBzb21ldGhpbmcgYWJvdXQgYXN0MjUwMC5Ob3cgSSBoYXZlIG9uZSBib2FyZCBhc3QyNTAwIGFu
-ZCAKCnVzZSBvcGVuYm1jIGNvZGUgcm9tdWx1cy5JIGtub3cgdGhlIGRlZmF1bHQgZGVidWcgdWFy
-dCBpcyB1YXJ0NSBhbmQgSSB3YW50IHRvIGNoYW5nZSBpdCB0byB1YXJ0MSxiZWNhdXNlCgpvbiBt
-eSBib2FyZCwgdWFydDEgaXMgcnMyMzIuSSBoYXZlIHRyaWVkIHRoZXNlICxidXQgbm90IGVmZmVj
-dGl2ZS4KCigxKSBzZXQgdGhlIGhhcmR3YXJlIHN0cmFwIHJlZ2lzdGVyIGJpdDI5IDAgb24gYXN0
-LWc1LmMKCigyKSBzZXQgQ09ORklHX1NZU19OUzE2NTUwX0NPTTEgZnJvbSAweDFFNzg0MDAwIHRv
-IDB4MUU3ODMwMDAKCgoKCkFueSBhZGR2aWNlIHdpbGwgYmUgYXBwcmljYXRlZC4KCiAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFRoYW5rcywKCiAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEp1bkhlbmc=
-------=_Part_129699_102065250.1595498096604
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+v2: Fix levels
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxwIHN0eWxlPSJtYXJnaW46MDsiPkRlYXIgb3BlbWJtY2VyLDwv
-cD48cCBzdHlsZT0ibWFyZ2luOjA7Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxl
-PSJ3aGl0ZS1zcGFjZTpwcmUiPgk8L3NwYW4+SSBhbSBncmVlbiB0byBvcGVuYm1jIGFuZCBJIHdh
-bnQgdG8gbGVhcm4gc29tZXRoaW5nIGFib3V0IGFzdDI1MDAuTm93IEkgaGF2ZSBvbmUgYm9hcmQg
-YXN0MjUwMCBhbmQmbmJzcDs8L3A+PHAgc3R5bGU9Im1hcmdpbjowOyI+dXNlIG9wZW5ibWMgY29k
-ZSByb211bHVzLkkga25vdyB0aGUgZGVmYXVsdCBkZWJ1ZyB1YXJ0IGlzIHVhcnQ1IGFuZCBJIHdh
-bnQgdG8gY2hhbmdlIGl0IHRvIHVhcnQxLGJlY2F1c2U8L3A+PHAgc3R5bGU9Im1hcmdpbjowOyI+
-b24gbXkgYm9hcmQsIHVhcnQxIGlzIHJzMjMyLkkgaGF2ZSB0cmllZCB0aGVzZSAsYnV0IG5vdCBl
-ZmZlY3RpdmUuPC9wPjxwIHN0eWxlPSJtYXJnaW46MDsiPigxKSBzZXQgdGhlIGhhcmR3YXJlIHN0
-cmFwIHJlZ2lzdGVyIGJpdDI5IDAgb24gYXN0LWc1LmM8L3A+PHAgc3R5bGU9Im1hcmdpbjowOyI+
-KDIpIHNldCBDT05GSUdfU1lTX05TMTY1NTBfQ09NMSBmcm9tIDB4MUU3ODQwMDAgdG8gMHgxRTc4
-MzAwMDwvcD48cCBzdHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46MDsi
-PjxzcGFuIGNsYXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNwYWNlOnByZSI+CTwv
-c3Bhbj5BbnkgYWRkdmljZSB3aWxsIGJlIGFwcHJpY2F0ZWQuPC9wPjxwIHN0eWxlPSJtYXJnaW46
-MDsiPjxzcGFuIGNsYXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNwYWNlOnByZSI+
-CQkJCQkJCQkJCQkJCTwvc3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7VGhhbmtzLDwvcD48cCBzdHlsZT0ibWFyZ2luOjA7Ij48c3BhbiBjbGFzcz0iQXBw
-bGUtdGFiLXNwYW4iIHN0eWxlPSJ3aGl0ZS1zcGFjZTpwcmUiPgkJCQkJCQkJCQkJCQk8L3NwYW4+
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO0p1bkhlbmc8L3A+
-PC9kaXY+PGJyPjxicj48c3BhbiB0aXRsZT0ibmV0ZWFzZWZvb3RlciI+PHA+Jm5ic3A7PC9wPjwv
-c3Bhbj4=
-------=_Part_129699_102065250.1595498096604--
+Joel Stanley (3):
+  fsi: aspeed: Support CFAM reset GPIO
+  ARM: dts: aspeed: rainier: Add CFAM reset GPIO
+  ARM: dts: aspeed: tacoma: Add CFAM reset GPIO
+
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts |  6 +++
+ arch/arm/boot/dts/aspeed-bmc-opp-tacoma.dts  |  1 +
+ drivers/fsi/fsi-master-aspeed.c              | 43 ++++++++++++++++++++
+ 3 files changed, 50 insertions(+)
+
+-- 
+2.27.0
 
