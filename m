@@ -1,76 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D31522C05A
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 10:00:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC45922C4A0
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 14:00:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BChSg2CcczDrQG
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 18:00:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCnp01MVTzF0c5
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 22:00:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::641;
- helo=mail-pl1-x641.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=shaikkhaderbasha601@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=MBDrRoFh; dkim-atps=neutral
-Received: from mail-pl1-x641.google.com (mail-pl1-x641.google.com
- [IPv6:2607:f8b0:4864:20::641])
+ header.s=20161025 header.b=f9phYXZ6; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BChQ61CfWzDsgr;
- Fri, 24 Jul 2020 17:57:49 +1000 (AEST)
-Received: by mail-pl1-x641.google.com with SMTP id x9so4027042plr.2;
- Fri, 24 Jul 2020 00:57:49 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCnn84VgkzF0Ys
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 21:59:40 +1000 (AEST)
+Received: by mail-pj1-x1034.google.com with SMTP id mn17so5107805pjb.4
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 04:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=xv1zcnsXMWiFNO1yGG77PvS7le6RI8NhBpIqWlz5EF8=;
- b=MBDrRoFhTThMwn4vuJaaJ1dUYtoHvJ9AvJUl0nf0zlaZSI6t6TWtrxf9QZLT16Cjac
- H23NM9EEsXLczUcARcfJgpW3/75JTNWtoVXlH1i8PJQYqMUT0IESJDkn6TJLdVsA1URB
- ZmMzUC35wS3XEC3figGP8sKiEVYd0Pxdb1pSLbN+YB9N14rqtIQaLMc8yI3lP1ATVkC0
- C7F6xEs3MNco4mv0eLNtiF+a5dTIWyog3K+3h57lmwPpu96CBzsjOk0L9KTnAfJmfJg/
- Zdl7/zxuRdCOtE2s5tYxBtXqjB1YznlEDwOmetthQnbq7IjCYMMoxf/PzdJjvpaibbjs
- VPWQ==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=yVRJ64FMioiaI0Mohp3AQnVoVwFvdw36rrZu5t7dmvI=;
+ b=f9phYXZ69tA+ScGnzE6xcFR97F7DT37BXrnhRFZlymX4QcgaZdQjXojm6BotYchw4g
+ 4E8waxwFEFLzF9Y7G5J3DhnaoxOt1zDRdwTJ/kU2ILy8o96Cs0k+QjvPW/mZ2TcfBAr+
+ KHyvFMWeAsJ6h84RfCCW1T2ggGjfMc2+IK6WGBF32ef8DI/mZpEc65Dk24evV6qIBIaG
+ 4prFnCJfnWWFp6pW7mAM0/DDNiOz4aBwQQS8lHb9gwWrntyR1uojt+daQVUM2VoVSNzf
+ ivwsIsrMzwCKG/OAhBcpYD+qjzfBKWzGRw1h0NqLsIGuwDjGH0+SCevqYaTnK4pNJ55N
+ ZCpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=xv1zcnsXMWiFNO1yGG77PvS7le6RI8NhBpIqWlz5EF8=;
- b=iyt5zoMB2SIsd7Xpu2X0F1rGO8ZkNZ4UZ4evB1eYIX0xAelQm2qqRbxjtPZ7GoU69s
- cbyLvbflcT8sre4dCcvZC4iVMAJAgfiQcaYVqnp9VY3tGblwr4Rry844uSrO3mzCy8aO
- BjjeeA+0pKaa9f32/3WItVeQnJnhE1QMOoShJjho1Q3E+qcvTNq2B4JRnVqlfVm42/me
- lot9MMO3nXfH0S1Jztpsj5yPwgNAa5tj+jcWrpFvs/2JgboKEF9RkxpLCc+RhGkx/8Qj
- o3ZqsA7qvnnH4uucb0z5CXdZ6q2tGQp7lbKulL9x01rxzJXyVQi0M4bX3qB/H84FuWM9
- nRjw==
-X-Gm-Message-State: AOAM531oOnrLSWqHm+0mQ5wO3zXcS9kU/I+cJUdWzJaC9XcBo4jrZfEn
- sODyB4xcQdlFPFNrTxVOZjk=
-X-Google-Smtp-Source: ABdhPJynechrOQSEPYvcFtvaqlpIS9gq+rCF/yyS8wRTv0ETsMXi1wl44AtzrxCRuDoo1r19Tx0gGA==
-X-Received: by 2002:a17:902:6941:: with SMTP id
- k1mr7207545plt.270.1595577467811; 
- Fri, 24 Jul 2020 00:57:47 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
- [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id b22sm4784117pju.26.2020.07.24.00.57.46
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Fri, 24 Jul 2020 00:57:47 -0700 (PDT)
-Date: Fri, 24 Jul 2020 00:57:40 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH v2 0/3] ARM: dts: aspeed: fixup wedge40 device tree
-Message-ID: <20200724075739.GA4327@taoren-ubuntu-R90MNF91>
-References: <20200723230539.17860-1-rentao.bupt@gmail.com>
- <CACPK8XdiHLcBBhXjCpTZotVPuRj4bFh0x8TFhSj1TBK2xB0SiQ@mail.gmail.com>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=yVRJ64FMioiaI0Mohp3AQnVoVwFvdw36rrZu5t7dmvI=;
+ b=E1cPXxZQwlxRrBxgCD7XFxx6TfzIzdX6MUoEp/DNc+N9p6GVBkxDszls9UAlDlSVgP
+ JKJokpHl+z/XAByQUK6QTId7iWRMYhpO/+KoM92PBJaQTpPcnuKqH7mV9Rt8BCZwKD8K
+ Nn0MU84YJc1Lg4FT9A5O1YmZfZUPBiL0nJQ8hczBFQX1NIH40H9HLN375fnSLvrW2ibE
+ L2l0mm+cAyZw66K3qj0j3e2nawbin6HGr09sORaXusjZ1PaWeCNy0g4aRwSqR1Q80i+4
+ SZRSBzncyiFAN81zi8+N1t+UBzzQ9i8wSu3mrP0QOAiWHjJ4ta2hzf0AjXMO4XSnAsMR
+ NOXQ==
+X-Gm-Message-State: AOAM531It4iYyes/JZggwsX4I8lBKm6E4j4+kie7ahruppLFlLIccSnj
+ 1nftLyjSUDq4Myu3hOBWrzcfoneUcxmRyDgKlno=
+X-Google-Smtp-Source: ABdhPJy0h6U0JKBWRGr3oz5WQSKQXiImAQWLEQdgzt0MnehDc4NZCaYbEfqz6z6CL+DmfhIAHhuPBxep84lu6zYISX8=
+X-Received: by 2002:a17:90a:110:: with SMTP id
+ b16mr4944473pjb.235.1595591976711; 
+ Fri, 24 Jul 2020 04:59:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACPK8XdiHLcBBhXjCpTZotVPuRj4bFh0x8TFhSj1TBK2xB0SiQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <CAD+gp9A-mBeKrFTZdVuQ6uz3snDAv2zF-db_=edR=4pOtFcUuQ@mail.gmail.com>
+ <CAD+gp9CSsZyhrzG+B+EqB+koBvUSpwB4s56RqrtRD3UHmQfu3w@mail.gmail.com>
+ <fb32bf4e-d6d8-15a2-14d8-3d3be3be3276@linux.ibm.com>
+In-Reply-To: <fb32bf4e-d6d8-15a2-14d8-3d3be3be3276@linux.ibm.com>
+From: khader basha shaik <shaikkhaderbasha601@gmail.com>
+Date: Fri, 24 Jul 2020 17:29:26 +0530
+Message-ID: <CAD+gp9D5RRCy=onUg-PdzD91eCom--4y9QvPjjFiFLRSvTf0jw@mail.gmail.com>
+Subject: Re: Query regarding using the Redfish in OpenBMC
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000fa7b8505ab2eb4a4"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,44 +75,166 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "openbmcbump-github@yahoo.com" <openbmcbump-github@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jul 24, 2020 at 05:32:30AM +0000, Joel Stanley wrote:
-> On Thu, 23 Jul 2020 at 23:05, <rentao.bupt@gmail.com> wrote:
-> >
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> >
-> > The patch series update several devices' settings in Facebook Wedge40
-> > device tree.
-> >
-> > Patch #1 disables a few i2c controllers as they are not being used at
-> > present.
-> >
-> > Patch #2 enables adc device for voltage monitoring.
-> >
-> > Patch #3 enables pwm_tacho device for fan control and monitoring.
-> >
-> > Tao Ren (3):
-> >   ARM: dts: aspeed: wedge40: disable a few i2c controllers
-> >   ARM: dts: aspeed: wedge40: enable adc device
-> >   ARM: dts: aspeed: wedge40: enable pwm_tacho device
-> 
-> I have merged this series into the aspeed dt-for-5.9 branch.
-> 
-> Cheers,
-> 
-> Joel
+--000000000000fa7b8505ab2eb4a4
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks a lot Joel. Have a great weekend.
+Hi Joseph,
+
+Thanks for your response.
+
+I will be using Raspberrypi3 system.
+
+Can you please guide what further steps I should take in order to view the
+/redfish/v1 content in the web(https://xxx.xxx.xxx:8000/redfish/v1).
+
+Any pointer on this is really helpful.
+
+I have gone through the documents the developer docs but could not find
+anything that points to enabling the redfish stuff in the browser.
+Please correct me if i am wrong
+
+Thanks & Regards,
+Khader B Shaik
 
 
-Cheers,
 
-Tao
+On Thu, 23 Jul 2020 at 19:25, Joseph Reynolds <jrey@linux.ibm.com> wrote:
+
+> On 7/23/20 5:48 AM, khader basha shaik wrote:
+> > Hi Team,
+> >
+> > I am newbiee to  Openbmc.  I want to view  the redfish/v1
+> > (https://10.xxx.xxx.xxx:8000/redfish/v1) contents in the browser
+> > .Could you please guide me on what changes i need to so that i view
+> > the /redfish/v1/ content in the browser .
+> >
+> > here are the steps i have followed:
+> >
+> >  1. Clone OpenBMC project : git clone
+> >     https://github.com/openbmc/openbmc.git in the server machine .
+> >  2. Compile using the following command:
+> >     TEMPLATECONF=meta-phosphor/conf  . openbmc-env
+> >  3. modify the following files:
+> >
+> >   *  #build vi conf/local.conf  (modify the  line "-MACHINE??=qemuarm"
+> >     " to "-MACHINE??=raspberrypi3-64" "
+> >   * #build vi conf/bblayer.conf (add the following line
+> >     "/home/khader<username>/openbmc/meta-raspberrypi \"  to the line
+> >     above /home/khader<username>/openbmc/metaphosphor \"
+> >
+> >        4. #build  bitbake obmc-phosphor-image
+> >
+> > The above steps I have used to build an Openbmc project.
+> >
+> >
+> > Can you help me what further steps should i need to do so that i can
+> > view the /redfish/v1/  content in the webbrowser.
+>
+> What BMC system will you use to upload, boot, and run the BMC firmware
+> image?  A QEMU virtual system?
+> Have you seen the developer docs here?
+> https://github.com/openbmc/docs/tree/master/development
+>
+> Good luck,
+> - Joseph
+>
+> >
+> > Note:- I am compiling the openbmc code in the server machine.
+> >
+> > Any help /guidelines on this will really help me alot.
+> > Appreciate all your help.
+> >
+> > Thanks & Regards,
+> > khader B Shaik
+>
+>
+
+--000000000000fa7b8505ab2eb4a4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Joseph,</div><div><br></div>Thanks for your respon=
+se.=C2=A0<br><div><br></div><div>I will be using Raspberrypi3 system.</div>=
+<div><br></div><div>Can you please guide what further steps I should take i=
+n order to view the /redfish/v1 content in the web(<a href=3D"https://xxx.x=
+xx.xxx:8000/redfish/v1">https://xxx.xxx.xxx:8000/redfish/v1</a>).</div><div=
+><br></div><div>Any pointer on this is really helpful.</div><div><br></div>=
+<div>I have gone through the documents the developer docs but could not fin=
+d anything that points to enabling the redfish stuff in the browser.</div><=
+div>Please correct me if i am wrong</div><div><br></div><div>Thanks &amp; R=
+egards,</div><div>Khader B Shaik</div><div><br></div><div><br></div></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu,=
+ 23 Jul 2020 at 19:25, Joseph Reynolds &lt;<a href=3D"mailto:jrey@linux.ibm=
+.com">jrey@linux.ibm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">On 7/23/20 5:48 AM, khader basha shaik wrote:<br>
+&gt; Hi Team,<br>
+&gt;<br>
+&gt; I am newbiee to=C2=A0 Openbmc.=C2=A0 I want to view=C2=A0 the redfish/=
+v1 <br>
+&gt; (<a href=3D"https://10.xxx.xxx.xxx:8000/redfish/v1" rel=3D"noreferrer"=
+ target=3D"_blank">https://10.xxx.xxx.xxx:8000/redfish/v1</a>) contents in =
+the browser <br>
+&gt; .Could you please guide me on what changes i need to so that=C2=A0i=C2=
+=A0view <br>
+&gt; the /redfish/v1/ content in the browser .<br>
+&gt;<br>
+&gt; here are the steps i have followed:<br>
+&gt;<br>
+&gt;=C2=A0 1. Clone OpenBMC project : git clone<br>
+&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://github.com/openbmc/openbmc.git" =
+rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/openbmc.git=
+</a>=C2=A0in the server machine .<br>
+&gt;=C2=A0 2. Compile using the following command:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0TEMPLATECONF=3Dmeta-phosphor/conf=C2=A0 . openbmc-e=
+nv<br>
+&gt;=C2=A0 3. modify the following files:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0* =C2=A0#build vi conf/local.conf =C2=A0(modify the=C2=A0 =
+line &quot;-MACHINE??=3Dqemuarm&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&quot; to &quot;-MACHINE??=3Draspberrypi3-64&quot; =
+&quot;<br>
+&gt;=C2=A0 =C2=A0* #build vi conf/bblayer.conf=C2=A0(add the following line=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&quot;/home/khader&lt;username&gt;/openbmc/meta-ras=
+pberrypi \&quot;=C2=A0 to the line=C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0above /home/khader&lt;username&gt;/openbmc/metaphos=
+phor \&quot;<br>
+&gt;<br>
+&gt; =C2=A0 =C2=A0 =C2=A0 =C2=A04. #build=C2=A0 bitbake obmc-phosphor-image=
+<br>
+&gt;<br>
+&gt; The above steps I have used to build an Openbmc project.<br>
+&gt;<br>
+&gt;<br>
+&gt; Can you help me what further steps should i need to do so that i can <=
+br>
+&gt; view the /redfish/v1/=C2=A0 content in the webbrowser.<br>
+<br>
+What BMC system will you use to upload, boot, and run the BMC firmware <br>
+image?=C2=A0 A QEMU virtual system?<br>
+Have you seen the developer docs here? <br>
+<a href=3D"https://github.com/openbmc/docs/tree/master/development" rel=3D"=
+noreferrer" target=3D"_blank">https://github.com/openbmc/docs/tree/master/d=
+evelopment</a><br>
+<br>
+Good luck,<br>
+- Joseph<br>
+<br>
+&gt;<br>
+&gt; Note:- I am compiling the openbmc code in the server machine.<br>
+&gt;<br>
+&gt; Any help /guidelines on this will really help me alot.<br>
+&gt; Appreciate all your help.<br>
+&gt;<br>
+&gt; Thanks &amp; Regards,<br>
+&gt; khader B Shaik<br>
+<br>
+</blockquote></div>
+
+--000000000000fa7b8505ab2eb4a4--
