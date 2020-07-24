@@ -1,129 +1,104 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 927A222CC6E
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 19:42:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CA5722CEA5
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 21:29:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCxNs60xzzF1RZ
-	for <lists+openbmc@lfdr.de>; Sat, 25 Jul 2020 03:42:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCzmL3mSbzF1Sc
+	for <lists+openbmc@lfdr.de>; Sat, 25 Jul 2020 05:29:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.helo=nam11-bn8-obe.outbound.protection.outlook.com
+ (client-ip=40.107.236.65; helo=nam11-bn8-obe.outbound.protection.outlook.com;
+ envelope-from=supreeth.venkatesh@amd.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=447423b922=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
+ dmarc=none (p=none dis=none) header.from=amd.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=gmVib+fN; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=jKnWxZ97; 
+ unprotected) header.d=amdcloud.onmicrosoft.com
+ header.i=@amdcloud.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-amdcloud-onmicrosoft-com header.b=d6nuEfJu; 
  dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com
+ (mail-bn8nam11on2065.outbound.protection.outlook.com [40.107.236.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCxMX0YrrzF1Hr
- for <openbmc@lists.ozlabs.org>; Sat, 25 Jul 2020 03:41:24 +1000 (AEST)
-Received: from pps.filterd (m0044010.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06OH0n2D028634
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 10:05:28 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : subject :
- date : message-id : content-type : mime-version; s=facebook;
- bh=+c4bUqNteCNulBAWrT5aaJhtkpCmmskLrLA/EjhWoJw=;
- b=gmVib+fNVwj4ABrSn2RYVAMPPs8L5Va+xmP/cJ0mtqZ0WCDuCZnbpVcnK3tBYgCbUvZZ
- uBDR++a2eV/9LGi3MkeeKOIwSg3USh3sr0fUAAdqdf7Wn07HQIZL+EvlHKLhoRHKrT7u
- nvs8mDTJyqBO4fDumGMI8tCngN5vX7hawpM= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 32etmwjkuw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 10:05:28 -0700
-Received: from NAM02-BL2-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Fri, 24 Jul 2020 10:05:27 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCzlP24ZqzDrnm;
+ Sat, 25 Jul 2020 05:28:47 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=L+xZ5b+QWkjk5goeXNhcojahMQ/U0nQoGeaZZ820E1kYHrNoAYhHqr6ZlLgMDhiHbP5sjXztiodJatFw4t1KiFGsy1pfrC20C9i2ffYI7A5mTXh+5zrCqJ822/6Fqqg/Juj17QtL8l39fcLTZn4qADwq+1HcQR6sUZ0GhXWOVgL52FHPFN66q+996fzVibghfOP9tuilapa/HpBIqI5mpvOgmUGVQCAA+s69iqePlPnTuJ0Chf6hQwviG0iM3UERehvB9jIGx4aNlcS3DctKexjv394DW8rJnceAEw7DZZkwzViksKtKgTHW9i3QgY871L5bv57r/px7798DqIHxsQ==
+ b=l6oups4hh2UkbAc5GAiRDixD+zJOa8JAgYs2C2g4b26R6F7fbhSDi1d6zW9ZHyh78lOV5ItShVkcq++BNluCowLiu95/2qcOLhmbMbA/tjR66h/xuzAxYCT/ov+sldO46Avgjy+ObCqRHXnf+iO8JGrDYp1SPx7Jnd3QLahomFzVV51gyoannlXsI9Mb1V+ADAmenAyM8Mwv2phlc1+HJmNskkii9J6Ub4HYv8E6fXihdvZh7cdW4OCTNcCoov6qVOV2sfeWyVfiTJyE+y1uRQCLidjk63F5sp9XOkXzEr32Xu7UrHaaLrbXQrgEnvujhp+4GYOiBynng6zSAAraXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+c4bUqNteCNulBAWrT5aaJhtkpCmmskLrLA/EjhWoJw=;
- b=DkaYUXZtjqGcXDFmdfxEoKnaARa+CIsQlcjHZ9Ij20T94GBcv8/j9l6lP5J49J3VyN1yRwmp5vksSwxu26BZfKDsqnpWL2dl0j89qm/tPYvk5bgB9PaiQVewlV/Bg3c6um9htGWSkTWDpq5urZe4SrzNjwfgURHk2YHnKZXg3wqTxQMDCJlZ1xS8InUOIwG5E5vpY85yHz9e0C6Kysm7FNUkoqeTgHSxh8A7xwqiElCioEvhcSu2MtNpcf8q2YczInfIRPGCl5lj0xfYzFcU/MLcEtexbDkduTx+8LoPQhMHZAf68wMga5xGAX2My0ePrid2xuLk8fj9LTw1ed0Pww==
+ bh=qzu39u+hsqS4T/zy1RmLmLQahWLLyCmRamt06m5PI80=;
+ b=bGozSzuwwonqT85PoDLhF0e39olAwCKTw/A8nWtBoxzAB1eeYrhXcoUmxSLSWfYZ8RwkxwI/x8mzNR9qhQEqgmfcgGrUllb+crfP844nKFhCJCj6zgaR3K3PG5bMWDm1G06QvXJVnFs9aU59RaZeJqI/9k4uMl//eguFEwH6as0+xdSncQEsl+x0gKm02T5X1itN2u1d5LoLZeafklMa9bUtveVOZ7efBVmzFra+rgFWOQmqFRXOjrYFRuQgfVWGKIaHpB72+zwY4X0CLiLudK+g92KOnGoF/MW9NwNzgmIMN6T05Eq6aCExAlozZ47aPiTfG1hFrc2rsk3xlTTzjQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amdcloud.onmicrosoft.com; s=selector2-amdcloud-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+c4bUqNteCNulBAWrT5aaJhtkpCmmskLrLA/EjhWoJw=;
- b=jKnWxZ97B87AIjAdLE33spSbY0pmqe9JfOO7hLBQKGM7H7EFJAGoHVJgmxf3ix/TGPmUsObKEAHWMt/z0QHi6a3h9hY0lwHVGZTsGmYWEfSpDd1Kp82memgHEtVd8rdqkkQv7bvDSJAwMHsCTPQzje8ZzYauNgajTTF4jTzK+WY=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BY5PR15MB3665.namprd15.prod.outlook.com (2603:10b6:a03:1f7::16)
+ bh=qzu39u+hsqS4T/zy1RmLmLQahWLLyCmRamt06m5PI80=;
+ b=d6nuEfJuHlgBb/LEXT6Kmn5rv/wA33uUVcImMHkVSzF8U7QtywWpNABGaicVRaREuodr+4xJYm7j842OVFhPQ8MqJMCx3ldyqVAvrQk9XZjf36/+tVQmyrK3jR3/5ouqCxXHJFEgTXda/wrzeafdl+BFCrlvHoBxZ0tpM+4gQHo=
+Authentication-Results: jms.id.au; dkim=none (message not signed)
+ header.d=none;jms.id.au; dmarc=none action=none header.from=amd.com;
+Received: from SN1PR12MB2542.namprd12.prod.outlook.com (2603:10b6:802:26::28)
+ by SA0PR12MB4525.namprd12.prod.outlook.com (2603:10b6:806:92::10)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.24; Fri, 24 Jul
- 2020 17:05:26 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::2908:ebc2:73a5:45b3]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::2908:ebc2:73a5:45b3%5]) with mapi id 15.20.3216.024; Fri, 24 Jul 2020
- 17:05:26 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: CPU utilization
-Thread-Topic: CPU utilization
-Thread-Index: AQHWYdyg+RWahH3Y1UKOkvnp0nWTvg==
-Date: Fri, 24 Jul 2020 17:05:26 +0000
-Message-ID: <B0EC058F-D2E2-40BE-932C-E8532585580A@fb.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2601:647:4b00:fd70:18e2:66b5:5e3d:3d1a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bc77351d-dfd8-498c-ebf1-08d82ff3c2f1
-x-ms-traffictypediagnostic: BY5PR15MB3665:
-x-microsoft-antispam-prvs: <BY5PR15MB3665A2CB6033224464C79FE4DD770@BY5PR15MB3665.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:4125;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: nN7FgsrIJfdFtuv0RcV4nIaIAWIDSpzApP/0rseizyGp9GMAb9z7hfA4ICL2duTEwY0NKKdQD5X5SGkMwrWhvNwks1xBvacfMHaoDhpVzNk42oL31ivp8ET1HUyIPkzo/IUVbZLROPNGRcgjZk94BZAVP3R7x2/cKQ13JpbAzybrIqIK1MMgiW36luCLQqNNS8WJgaiNLVBSyU77m13+4gtthQRCVWDOVcz3PVHwS7wEr1PYds6WxFtfDUgoRwrHsUVP+ZmPWqMawExidSYhCOAVY3Xo83ochq/tYUk2nz6OChKu6Cw7yc3SH1RJeG+gJEu61xx6Jif4/MVs0M+umA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(39860400002)(346002)(376002)(136003)(366004)(396003)(6506007)(86362001)(71200400001)(6486002)(186003)(478600001)(36756003)(2906002)(7116003)(66946007)(3480700007)(5660300002)(8676002)(8936002)(2616005)(4744005)(316002)(6916009)(33656002)(66556008)(66476007)(66446008)(6512007)(76116006)(64756008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: 82+WNyxMCmx3KMtVLgkOmzbMTp40mG0h0FJjz6sDn7WFI8tve7kY7n5DyNxl5FcBjs75Ny6LF04JNAaoVIPkHj4tSIScC9uA5RmhgcmhriFN95nkwQ034yXJmeu8WEgLLyqVLFMQcZKfn7fuX9k6VEkn+LWMmWxoEvUtiWPiHWE1ML3boURWrB18dabtrATbdvE5iOfyr/tWPKRtI++mVcQ9ONIANrc1emShLvsweY9HoP00GZ3mK7ZC8/fryndOxZtob/R4W50/dhaEdxchRNgAoXLMppO48xYbJdoZkJziKO1wnkBkxZ1brh7b+/vQiWyb0RG6lQcdpxifhfbroT2lwLsq6rLQbLEVHQ52GpIKNWUnS7VmkekaDCVxR3uRjJp7D8TeWGC+bCDUMJE56jYt7SpCj7Du2SoYkK8ox7UyNCLfTQfjrJ7YsLJ2+feSqZ83jASaF9Y0/epOE8fKsn3Q/qUj6BD7fwRPnoVJE0ibvagFKX0/yYnOKzv1UxfytY6yWL9ZFUyzDd0aEXpEtavZkWtlQtmGuAOJSchS1gnU5ssNpC29TroUEFNnpOqx
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_B0EC058FD2E240BE932CE8532585580Afbcom_"
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.23; Fri, 24 Jul
+ 2020 19:28:40 +0000
+Received: from SN1PR12MB2542.namprd12.prod.outlook.com
+ ([fe80::7d62:9500:521b:40a4]) by SN1PR12MB2542.namprd12.prod.outlook.com
+ ([fe80::7d62:9500:521b:40a4%6]) with mapi id 15.20.3216.023; Fri, 24 Jul 2020
+ 19:28:40 +0000
+From: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+To: joel@jms.id.au, andrew@aj.id.au, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, robh+dt@kernel.org
+Subject: [PATCH v3 1/1] ARM:dts:aspeed: Initial device tree for AMD EthanolX
+Date: Fri, 24 Jul 2020 14:28:18 -0500
+Message-Id: <20200724192818.68068-1-supreeth.venkatesh@amd.com>
+X-Mailer: git-send-email 2.17.1
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DM6PR21CA0009.namprd21.prod.outlook.com
+ (2603:10b6:5:174::19) To SN1PR12MB2542.namprd12.prod.outlook.com
+ (2603:10b6:802:26::28)
 MIME-Version: 1.0
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from BMCDEV-02.amd.com (165.204.78.1) by
+ DM6PR21CA0009.namprd21.prod.outlook.com (2603:10b6:5:174::19) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3239.1 via Frontend Transport; Fri, 24 Jul 2020 19:28:39 +0000
+X-Mailer: git-send-email 2.17.1
+X-Originating-IP: [165.204.78.1]
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-HT: Tenant
+X-MS-Office365-Filtering-Correlation-Id: ddde1527-1780-42b1-8e2c-08d83007c4c9
+X-MS-TrafficTypeDiagnostic: SA0PR12MB4525:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <SA0PR12MB4525D721DBB0CDE510B1029B96770@SA0PR12MB4525.namprd12.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:3276;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: pZ6UqTnOR2ej0LTmCgaEm/Kl7qCvDlExGhlMNBoRQOy0atJ7nvB18kfz2I6AbI6f9FGuMMkIug39yz9KKONt06uCXfpVgTqIbR8zn5bXcpbMCynJevcHmGVPnXPn86FfUPF1B+xFYagKf6IctwKRPF5fd2wdgOtHQyu5FyWm8CL7DJ5tvrkJpExXLVC3vngNzxJzwgyR44mcTtqx7hZnthOx9hkd1lYOPkLyQEOvm1o2N6xQ+7B5iouqFsZwLS1TEMc8oHhnd6UKCz/QjGb0TxOsx2GXCydUhx9/xZb+sNzvX15YEPOR2CRyp1Th6KMrmBnyz9yzlyho65Y+liFuLA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN1PR12MB2542.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(4636009)(346002)(39860400002)(366004)(376002)(136003)(396003)(4326008)(16526019)(186003)(2906002)(52116002)(26005)(86362001)(5660300002)(1076003)(8936002)(66556008)(83380400001)(36756003)(6666004)(956004)(6486002)(7696005)(478600001)(8676002)(66476007)(66946007)(2616005)(316002)(44832011);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData: CKYCTluRzuK7mfpkyFyXvoYKBFaJIt//Pb4ycG15rAhQx0oQHo8WfvTJI0fxXe2NFD8DUSMUSZFr3knCjngFhX68+UG9pYoFyL9Xlx9AsjzHnydYHc55bARBalKTO5AwOQhtEVGRnU+AcwE7cRS7HgH9/N/Liae9+mYP5JLexELif3PTHU6UUvn3nnyRliCjNHG9h9SwXTph+SHFTxprP8E6K0xpC3rmcK8CsiCfUTlrAXuSSqgCUXfFVvav03gk77Wbjp95mzUsfwdKGz+fhq0aLoIcAb6hsPLls2KmH3KJnpCjyMnHaPVjajbGldUkDohY3bK9GI9Qoua9xMoqItfY69ytBcH3uDJk0k9MhPrcRCKUYkmp2iEFMTwIhnQxiRrJg92QQG7f0ZHoqoX391pSimYNz59RWF7O5F4szn4tFlk9n++mlP/M92f12wduFw/4Mi5ngitjcUGlorV2mxkzFofMPTM+v3vW7BcVyUo=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ddde1527-1780-42b1-8e2c-08d83007c4c9
+X-MS-Exchange-CrossTenant-AuthSource: SN1PR12MB2542.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR15MB2374.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bc77351d-dfd8-498c-ebf1-08d82ff3c2f1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Jul 2020 17:05:26.6788 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: n02ltzYBfhlprcruu7I9xX73oV4lkBWuMMv6yPQ0zMxeoMIoPwkdlwQTd5Fd4g2hOI3MYY3OYA+w9Z5rckRZCQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3665
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-24_07:2020-07-24,
- 2020-07-24 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- lowpriorityscore=0
- suspectscore=0 bulkscore=0 spamscore=0 clxscore=1015 phishscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=627 priorityscore=1501
- impostorscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2006250000 definitions=main-2007240131
-X-FB-Internal: deliver
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2020 19:28:39.9042 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VycfIOsIgpI0tb3fjG2P39v91qvIA+W+1Qvx1lQPHaPcI4O5axVq5GU3vpbA23VHdE4yl9lTiv3armBCWirw/A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4525
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,68 +110,271 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_B0EC058FD2E240BE932CE8532585580Afbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Initial introduction of AMD EthanolX platform equipped with an
+Aspeed ast2500 BMC manufactured by AMD.
 
-VGVhbSwNCkkgYW0gZ2V0dGluZyB2ZXJ5IGhpZ2ggdmFsdWVzIG9mIGNwdSB1c2FnZSBhbmQgdmVy
-eSBsZXNzIENQVSBpZGxlIHRpbWUuIEZvbGxvd2luZyBpcyB0aGUgb3V0cHV0IG9mIC9wcm9jL3N0
-YXQgaHdlcmUgY3B1IGlkbGUgdGltZSBpcyAxNjcgd2hpY2ggaXMgbGVzcyB0aGFuIGEgMSUgb2Yg
-dG90YWwgY3B1IHRpbWUuIFBsZWFzZSBsb29rIGF0IHlvdXIgc3lzdGVtIGFuZCBwYXN0ZSB5b3Vy
-IG91dHB1dC4NCnJvb3RAdGlvZ2FwYXNzOn4jIGNhdCAvcHJvYy9zdGF0IGNwdSAxNjg5MzMwMiA5
-OTk2MzUgNjgyMzY1MCAxNjcgMCAwIDU2OTUwIDAgMCAwDQoNCkRvZXMgYW55b25lIGtub3cgb2Yg
-dGhpcyBpc3N1ZSBvciBhbSBJIG1pc3NpbmcgYW55IGtlcm5lbCBjb25maWd1cmF0aW9uPw0KDQpS
-ZWdhcmRzDQotVmlqYXkNCg==
+AMD EthanolX platform is an AMD customer reference board with an
+Aspeed ast2500 BMC manufactured by AMD.
+This adds AMD EthanolX device tree file including the flash layout
+used by EthanolX BMC machines.
 
---_000_B0EC058FD2E240BE932CE8532585580Afbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <C56A57B2DEE4C844A81590FD9D259C38@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+This also adds an entry of AMD EthanolX device tree file in Makefile.
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
-IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
-IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJBcHBsZSBD
-b2xvciBFbW9qaSI7DQoJcGFub3NlLTE6MCAwIDAgMCAwIDAgMCAwIDAgMDt9DQovKiBTdHlsZSBE
-ZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0K
-CXttYXJnaW46MGluOw0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmki
-LHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0eWxlMTcNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29u
-YWwtY29tcG9zZTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3
-aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5
-Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7
-fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBp
-biAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rp
-b24xO30NCi0tPjwvc3R5bGU+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iIzA1
-NjNDMSIgdmxpbms9IiM5NTRGNzIiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5UZWFtLDxvOnA+
-PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250
-LXNpemU6MTEuMHB0Ij5JIGFtIGdldHRpbmcgdmVyeSBoaWdoIHZhbHVlcyBvZiBjcHUgdXNhZ2Ug
-YW5kIHZlcnkgbGVzcyBDUFUgaWRsZSB0aW1lLiBGb2xsb3dpbmcgaXMgdGhlIG91dHB1dCBvZiAv
-cHJvYy9zdGF0IGh3ZXJlIGNwdSBpZGxlIHRpbWUgaXMgMTY3IHdoaWNoIGlzIGxlc3MgdGhhbiBh
-IDElIG9mIHRvdGFsIGNwdSB0aW1lLiBQbGVhc2UgbG9vayBhdCB5b3VyIHN5c3RlbQ0KIGFuZCBw
-YXN0ZSB5b3VyIG91dHB1dC4gPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS41cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXBw
-bGUgQ29sb3IgRW1vamkmcXVvdDs7Y29sb3I6d2hpdGU7YmFja2dyb3VuZDojMzczRTRDIj5yb290
-QHRpb2dhcGFzczp+IyBjYXQgL3Byb2Mvc3RhdCBjcHUgMTY4OTMzMDIgOTk5NjM1IDY4MjM2NTAg
-MTY3IDAgMCA1Njk1MCAwIDAgMDwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+
-PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9
-ImZvbnQtc2l6ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5Eb2VzIGFueW9uZSBr
-bm93IG9mIHRoaXMgaXNzdWUgb3IgYW0gSSBtaXNzaW5nIGFueSBrZXJuZWwgY29uZmlndXJhdGlv
-bj88bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHls
-ZT0iZm9udC1zaXplOjExLjBwdCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPlJlZ2FyZHM8bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdCI+LVZpamF5PG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8L2Jv
-ZHk+DQo8L2h0bWw+DQo=
+Signed-off-by: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+---
+Changes since v2:
+* Removed incorrect I2C0 and I2C1 Reg addresses
 
---_000_B0EC058FD2E240BE932CE8532585580Afbcom_--
+Changes since v1:
+* Addressed review comment regarding SPDX License Identifier
+* Added I2c0 and I2c1 which cater to AMD's APML Interface
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts | 219 ++++++++++++++++++
+ 2 files changed, 220 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index d6dfdf73e66b..55ed881d2ebc 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1281,6 +1281,7 @@ dtb-$(CONFIG_ARCH_ZX) += zx296702-ad1.dtb
+ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-ast2500-evb.dtb \
+ 	aspeed-ast2600-evb.dtb \
++	aspeed-bmc-amd-ethanolx.dtb \
+ 	aspeed-bmc-arm-centriq2400-rep.dtb \
+ 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
+ 	aspeed-bmc-facebook-cmm.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+new file mode 100644
+index 000000000000..60ba86f3e5bc
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+@@ -0,0 +1,219 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2020 AMD Inc.
++// Author: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
++/dts-v1/;
++
++#include "aspeed-g5.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++
++/ {
++	model = "AMD EthanolX BMC";
++	compatible = "amd,ethanolx-bmc", "aspeed,ast2500";
++
++	memory@80000000 {
++		reg = <0x80000000 0x20000000>;
++	};
++	aliases {
++		serial0 = &uart1;
++		serial4 = &uart5;
++	};
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200 earlyprintk";
++	};
++	leds {
++		compatible = "gpio-leds";
++
++		fault {
++			gpios = <&gpio ASPEED_GPIO(A, 2) GPIO_ACTIVE_LOW>;
++		};
++
++		identify {
++			gpios = <&gpio ASPEED_GPIO(A, 3) GPIO_ACTIVE_LOW>;
++		};
++	};
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>;
++	};
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		#include "openbmc-flash-layout.dtsi"
++	};
++};
++
++
++&mac0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii1_default>;
++	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
++		 <&syscon ASPEED_CLK_MAC1RCLK>;
++	clock-names = "MACCLK", "RCLK";
++};
++
++&uart1 {
++	//Host Console
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_txd1_default
++		     &pinctrl_rxd1_default>;
++};
++
++&uart5 {
++	//BMC Console
++	status = "okay";
++};
++
++&adc {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default
++		     &pinctrl_adc1_default
++		     &pinctrl_adc2_default
++		     &pinctrl_adc3_default
++		     &pinctrl_adc4_default>;
++};
++
++//APML for P0
++&i2c0 {
++	status = "okay";
++};
++
++//APML for P1
++&i2c1 {
++	status = "okay";
++};
++
++// Thermal Sensors
++&i2c7 {
++	status = "okay";
++
++	lm75a@48 {
++		compatible = "national,lm75a";
++		reg = <0x48>;
++	};
++
++	lm75a@49 {
++		compatible = "national,lm75a";
++		reg = <0x49>;
++	};
++
++	lm75a@4a {
++		compatible = "national,lm75a";
++		reg = <0x4a>;
++	};
++
++	lm75a@4b {
++		compatible = "national,lm75a";
++		reg = <0x4b>;
++	};
++
++	lm75a@4c {
++		compatible = "national,lm75a";
++		reg = <0x4c>;
++	};
++
++	lm75a@4d {
++		compatible = "national,lm75a";
++		reg = <0x4d>;
++	};
++
++	lm75a@4e {
++		compatible = "national,lm75a";
++		reg = <0x4e>;
++	};
++
++	lm75a@4f {
++		compatible = "national,lm75a";
++		reg = <0x4f>;
++	};
++};
++
++&kcs1 {
++	status = "okay";
++	kcs_addr = <0x60>;
++};
++
++&kcs2 {
++	status = "okay";
++	kcs_addr = <0x62>;
++};
++
++&kcs4 {
++	status = "okay";
++	kcs_addr = <0x97DE>;
++};
++
++&lpc_snoop {
++	status = "okay";
++	snoop-ports = <0x80>;
++};
++
++&lpc_ctrl {
++	//Enable lpc clock
++	status = "okay";
++};
++
++&pwm_tacho {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default
++	&pinctrl_pwm1_default
++	&pinctrl_pwm2_default
++	&pinctrl_pwm3_default
++	&pinctrl_pwm4_default
++	&pinctrl_pwm5_default
++	&pinctrl_pwm6_default
++	&pinctrl_pwm7_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x01>;
++	};
++
++	fan@2 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02>;
++	};
++
++	fan@3 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x03>;
++	};
++
++	fan@4 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04>;
++	};
++
++	fan@5 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x05>;
++	};
++
++	fan@6 {
++		reg = <0x06>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06>;
++	};
++
++	fan@7 {
++		reg = <0x07>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x07>;
++	};
++};
++
++
++
+-- 
+2.17.1
+
