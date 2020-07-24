@@ -1,60 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6C5A22BC13
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:39:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1290922BC18
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 04:41:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYLg1BtqzDrP2
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:39:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCYNn2nWyzDrhl
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 12:41:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=RSyNu4L7; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=Kr6msf0L; 
+ dkim-atps=neutral
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCYKk30ZVzDqLg
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:38:33 +1000 (AEST)
-IronPort-SDR: XdI2CSJqJr01w9KvlXRi/vOtSguKU0BwA68T07x4wiw5Qw2T3r+j0IK6paUgcWBGADr6fTTBeG
- e58vhSdEniZA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9691"; a="150636692"
-X-IronPort-AV: E=Sophos;i="5.75,389,1589266800"; 
- d="scan'208,217";a="150636692"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Jul 2020 19:38:30 -0700
-IronPort-SDR: /WSvzGnZvgOHJ8KcyX4EzK10NBJ3q+LXCt+6IaaNkfbs3tGZXlITpkl63RWkVppJ+BQOwcEsfS
- cEimDTsPDbwA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,389,1589266800"; 
- d="scan'208,217";a="432944780"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga004.jf.intel.com with ESMTP; 23 Jul 2020 19:38:30 -0700
-Received: from SHWDE9518 (SHWDE9518.ccr.corp.intel.com [10.239.164.117])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id D6C90580684;
- Thu, 23 Jul 2020 19:38:29 -0700 (PDT)
-Date: Fri, 24 Jul 2020 10:38:30 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "=?utf-8?B?5LiN6K+t?=" <junhengdi@163.com>,
- "openbmc" <openbmc@lists.ozlabs.org>
-Subject: Re: how to change debug uart from uart5 to uart1 on ast2500 romulus?
-In-Reply-To: <5e18b54e.8d5f.1737b18e7dc.Coremail.junhengdi@163.com>
-References: <5e18b54e.8d5f.1737b18e7dc.Coremail.junhengdi@163.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
-MIME-Version: 1.0
-Message-ID: <5F1A49A2.5040900@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-6b7421f0-4a84-43cd-bd6c-a963989853c0"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCYMH62jPzDqkR
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 12:39:54 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 3DFB6B66;
+ Thu, 23 Jul 2020 22:39:50 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Thu, 23 Jul 2020 22:39:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=10yd5wp6e3Io0Wuj2eAnbrWiNifKM4G
+ A7+ibzjbj/Jk=; b=RSyNu4L7X4paw9968kJhhj0TNHn6dgIoH0f6bRO709ybtSA
+ mGjGqR8UZS7Z90vqQau4CH1QKGagqy+KRP7j8+6UdSJ0FDELR+PSj3UxAVQ399KX
+ mQsXHWwwd21vNlJMEIlx/TUd5jmC3o1CeLgPJWqWi5QwyYC49Ok0yT4w86wsQls1
+ /2Eign0nB2H5AF2sWU6w3tlEmG/cNw9KWK1y39MHQFiVYP2vfJEj7pFTYpoOaEh8
+ 6fKeGLByr+BaUzMqWKoSn4ufktaE3STR9GRpTXJ9Nq5yvt/KmYI+kn9BCOWjRnYo
+ lXHUg9QBZPdPxEkk+9yGM5R3blXj16VrqYMoOLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=10yd5w
+ p6e3Io0Wuj2eAnbrWiNifKM4GA7+ibzjbj/Jk=; b=Kr6msf0Ly43JiFEN3Do6SM
+ Ao61mJQKLBUAX5b+wqz6KskwkFBHDGzIHVmxo8ei2kiF8jjPVYMcWKN3e7qVgfxz
+ dFeSerxP5Uehrqs/XShHKBqpGGRrLS5kJFaXe1uewWYHxkhjzkr0M2FGQQG+b0J8
+ ZR/+hBAQfi53XgISWuLq+0e8nxAKoJ0vQpdO+pzE7MZ/vsBq83ybJs+8nGRHqCnW
+ 5P1ELd4cSWDb4dHrubSmFRnimF0BkWy46RCY3+O/yAUJ9BEv8EK/rOl7luE/SvoW
+ wWk6M1ZGYQ62uU25baqdRG0GEyZd2dfXwLcklh2VqSg5GnPjc/Sl+VlhBmTFysyA
+ ==
+X-ME-Sender: <xms:9UkaX_jEqv88OJ3-0dRjHkIgu9PH6wMngUxzCBfrxa4sP88nNPWXsg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrhedvgdehlecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:9UkaX8DJQjWaK3eStVtcGp2_te4bemo_zdcz0_4E14YhpDtaFjutnA>
+ <xmx:9UkaX_G-EiNlNi75C1VymYcG7tBwwIemHZ8RYQyAVTM_PS_PCIiqhA>
+ <xmx:9UkaX8Q-lw_KyP787pnF40SvsWEuzr4cK6sZlp_8TL3qegsZOzhoiA>
+ <xmx:9UkaX7_WgRHZ-0t6yawzwz_VzLLC01nyesXGGMls03BgT8BdwikXog>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 1315BE00C9; Thu, 23 Jul 2020 22:39:49 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-92-g11c785d-fm-20200721.004-g11c785d5
+Mime-Version: 1.0
+Message-Id: <30f01c25-bf9e-4d54-ba01-544103819333@www.fastmail.com>
+In-Reply-To: <20200724023036.354310-2-joel@jms.id.au>
+References: <20200724023036.354310-1-joel@jms.id.au>
+ <20200724023036.354310-2-joel@jms.id.au>
+Date: Fri, 24 Jul 2020 12:09:28 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH linux dev-5.4 1/3] fsi: aspeed: Support CFAM reset GPIO
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,87 +94,23 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-6b7421f0-4a84-43cd-bd6c-a963989853c0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-SXMgaXQgQVNUMjUwMC1FVkI/DQoNCjIwMjAtMDctMjQgDQoNCmNodW5odWkuamlhIA0KDQoNCg0K
-5Y+R5Lu25Lq677ya5LiN6K+tIDxqdW5oZW5nZGlAMTYzLmNvbT4NCuWPkemAgeaXtumXtO+8mjIw
-MjAtMDctMjMgMTc6NTQNCuS4u+mimO+8mmhvdyB0byBjaGFuZ2UgZGVidWcgdWFydCBmcm9tIHVh
-cnQ1IHRvIHVhcnQxIG9uIGFzdDI1MDAgcm9tdWx1cz8NCuaUtuS7tuS6uu+8miJvcGVuYm1jIjxv
-cGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQrmioTpgIHvvJoNCg0KRGVhciBvcGVtYm1jZXIsDQpJ
-IGFtIGdyZWVuIHRvIG9wZW5ibWMgYW5kIEkgd2FudCB0byBsZWFybiBzb21ldGhpbmcgYWJvdXQg
-YXN0MjUwMC5Ob3cgSSBoYXZlIG9uZSBib2FyZCBhc3QyNTAwIGFuZCANCnVzZSBvcGVuYm1jIGNv
-ZGUgcm9tdWx1cy5JIGtub3cgdGhlIGRlZmF1bHQgZGVidWcgdWFydCBpcyB1YXJ0NSBhbmQgSSB3
-YW50IHRvIGNoYW5nZSBpdCB0byB1YXJ0MSxiZWNhdXNlDQpvbiBteSBib2FyZCwgdWFydDEgaXMg
-cnMyMzIuSSBoYXZlIHRyaWVkIHRoZXNlICxidXQgbm90IGVmZmVjdGl2ZS4NCigxKSBzZXQgdGhl
-IGhhcmR3YXJlIHN0cmFwIHJlZ2lzdGVyIGJpdDI5IDAgb24gYXN0LWc1LmMNCigyKSBzZXQgQ09O
-RklHX1NZU19OUzE2NTUwX0NPTTEgZnJvbSAweDFFNzg0MDAwIHRvIDB4MUU3ODMwMDANCg0KDQpB
-bnkgYWRkdmljZSB3aWxsIGJlIGFwcHJpY2F0ZWQuDQogICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBUaGFua3MsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBKdW5IZW5n
 
---NetEase-FlashMail-003-6b7421f0-4a84-43cd-bd6c-a963989853c0
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+On Fri, 24 Jul 2020, at 12:00, Joel Stanley wrote:
+> Systems have a line for restting the remote CFAM. This is not part of
+> the FSI master, but is associated with it, so it makes sense to include
+> it in the master driver.
+> 
+> This exposes a sysfs interface to reset the cfam, abstracting away the
+> direction and polarity of the GPIO, as well as the timing of the reset
+> pulse. Userspace will be blocked until the reset pulse is finished.
+> 
+> The reset is hard coded to be in the range of (900, 1000) us. It was
+> observed with a scope to regularly be just over 1ms.
+> 
+> If the device tree property is not preset the driver will silently
+> continue.
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
-IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC45NjAwLjE5Njk5Ij48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IHRpbWVzIG5ldyByb21hbjsgQk9SREVSLVJJR0hULVdJRFRIOiAwcHg7IEJPUkRFUi1CT1RUT00t
-V0lEVEg6IDBweDsgQ09MT1I6ICMwMDAwMDA7IE1BUkdJTjogMTJweDsgTElORS1IRUlHSFQ6IDEu
-NTsgQk9SREVSLVRPUC1XSURUSDogMHB4IiANCm1hcmdpbmhlaWdodD0iMCIgbWFyZ2lud2lkdGg9
-IjAiPg0KPERJVj5JcyBpdCBBU1QyNTAwLUVWQj88L0RJVj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8
-RElWIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJkYW5hOyBDT0xPUjog
-I2MwYzBjMCIgDQphbGlnbj1sZWZ0PjIwMjAtMDctMjQgDQo8SFIgaWQ9U2lnbk5hbWVIUiANCnN0
-eWxlPSJCT1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1S
-SUdIVDogMHB4OyBXSURUSDogMTIycHg7IEJPUkRFUi1CT1RUT006IDBweDsgQk9SREVSLUxFRlQ6
-IDBweCIgDQphbGlnbj1sZWZ0Pg0KPFNQQU4gaWQ9X0ZsYXNoU2lnbk5hbWU+Y2h1bmh1aS5qaWE8
-L1NQQU4+IDwvRElWPg0KPEhSIA0Kc3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMwYzAgMXB4IHNvbGlk
-OyBIRUlHSFQ6IDFweDsgQk9SREVSLVJJR0hUOiAwcHg7IEJPUkRFUi1CT1RUT006IDBweDsgQk9S
-REVSLUxFRlQ6IDBweCI+DQoNCjxCTE9DS1FVT1RFIGlkPW50ZXMtZmxhc2htYWlsLXF1b3RlIA0K
-c3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IFBBRERJTkctTEVG
-VDogMHB4OyBNQVJHSU4tTEVGVDogMHB4Ij4NCiAgPERJVj48U1RST05HPuWPkeS7tuS6uu+8mjwv
-U1RST05HPuS4jeivrSAmbHQ7anVuaGVuZ2RpQDE2My5jb20mZ3Q7PC9ESVY+DQogIDxESVY+PFNU
-Uk9ORz7lj5HpgIHml7bpl7TvvJo8L1NUUk9ORz4yMDIwLTA3LTIzJm5ic3A7MTc6NTQ8L0RJVj4N
-CiAgPERJVj48U1RST05HPuS4u+mimO+8mjwvU1RST05HPmhvdyB0byBjaGFuZ2UgZGVidWcgdWFy
-dCBmcm9tIHVhcnQ1IHRvIHVhcnQxIG9uIA0KICBhc3QyNTAwIHJvbXVsdXM/PC9ESVY+DQogIDxE
-SVY+PFNUUk9ORz7mlLbku7bkurrvvJo8L1NUUk9ORz4ib3BlbmJtYyImbHQ7b3BlbmJtY0BsaXN0
-cy5vemxhYnMub3JnJmd0OzwvRElWPg0KICA8RElWPjxTVFJPTkc+5oqE6YCB77yaPC9TVFJPTkc+
-PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+DQogIDxESVYgDQogIHN0eWxlPSJG
-T05ULVNJWkU6IDE0cHg7IEZPTlQtRkFNSUxZOiBBcmlhbDsgQ09MT1I6ICMwMDAwMDA7IExJTkUt
-SEVJR0hUOiAxLjciPg0KICA8UCBzdHlsZT0iTUFSR0lOOiAwcHgiPkRlYXIgb3BlbWJtY2VyLDwv
-UD4NCiAgPFAgc3R5bGU9Ik1BUkdJTjogMHB4Ij48U1BBTiBjbGFzcz1BcHBsZS10YWItc3BhbiAN
-CiAgc3R5bGU9IldISVRFLVNQQUNFOiBwcmUiPjwvU1BBTj5JIGFtIGdyZWVuIHRvIG9wZW5ibWMg
-YW5kIEkgd2FudCB0byBsZWFybiANCiAgc29tZXRoaW5nIGFib3V0IGFzdDI1MDAuTm93IEkgaGF2
-ZSBvbmUgYm9hcmQgYXN0MjUwMCBhbmQmbmJzcDs8L1A+DQogIDxQIHN0eWxlPSJNQVJHSU46IDBw
-eCI+dXNlIG9wZW5ibWMgY29kZSByb211bHVzLkkga25vdyB0aGUgZGVmYXVsdCBkZWJ1ZyB1YXJ0
-IA0KICBpcyB1YXJ0NSBhbmQgSSB3YW50IHRvIGNoYW5nZSBpdCB0byB1YXJ0MSxiZWNhdXNlPC9Q
-Pg0KICA8UCBzdHlsZT0iTUFSR0lOOiAwcHgiPm9uIG15IGJvYXJkLCB1YXJ0MSBpcyByczIzMi5J
-IGhhdmUgdHJpZWQgdGhlc2UgLGJ1dCBub3QgDQogIGVmZmVjdGl2ZS48L1A+DQogIDxQIHN0eWxl
-PSJNQVJHSU46IDBweCI+KDEpIHNldCB0aGUgaGFyZHdhcmUgc3RyYXAgcmVnaXN0ZXIgYml0Mjkg
-MCBvbiANCiAgYXN0LWc1LmM8L1A+DQogIDxQIHN0eWxlPSJNQVJHSU46IDBweCI+KDIpIHNldCBD
-T05GSUdfU1lTX05TMTY1NTBfQ09NMSBmcm9tIDB4MUU3ODQwMDAgdG8gDQogIDB4MUU3ODMwMDA8
-L1A+DQogIDxQIHN0eWxlPSJNQVJHSU46IDBweCI+PEJSPjwvUD4NCiAgPFAgc3R5bGU9Ik1BUkdJ
-TjogMHB4Ij48U1BBTiBjbGFzcz1BcHBsZS10YWItc3BhbiANCiAgc3R5bGU9IldISVRFLVNQQUNF
-OiBwcmUiPjwvU1BBTj5BbnkgYWRkdmljZSB3aWxsIGJlIGFwcHJpY2F0ZWQuPC9QPg0KICA8UCBz
-dHlsZT0iTUFSR0lOOiAwcHgiPjxTUEFOIGNsYXNzPUFwcGxlLXRhYi1zcGFuIA0KICBzdHlsZT0i
-V0hJVEUtU1BBQ0U6IHByZSI+PC9TUEFOPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7IA0KICAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IA0KICAmbmJzcDsgJm5ic3A7ICZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwO1RoYW5rcyw8L1A+DQogIDxQIHN0eWxlPSJNQVJHSU46IDBw
-eCI+PFNQQU4gY2xhc3M9QXBwbGUtdGFiLXNwYW4gDQogIHN0eWxlPSJXSElURS1TUEFDRTogcHJl
-Ij48L1NQQU4+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgDQogICZu
-YnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgDQogICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
-Jm5ic3A7SnVuSGVuZzwvUD48L0RJVj48QlI+PEJSPjxTUEFOIA0KICB0aXRsZT1uZXRlYXNlZm9v
-dGVyPg0KICA8UD4mbmJzcDs8L1A+PC9TUEFOPjwvRElWPjwvQkxPQ0tRVU9URT48L0JPRFk+PC9I
-VE1MPg==
-
---NetEase-FlashMail-003-6b7421f0-4a84-43cd-bd6c-a963989853c0--
-
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
