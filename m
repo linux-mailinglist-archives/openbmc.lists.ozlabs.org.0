@@ -1,58 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65DD222E3FC
-	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 04:28:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D61522E3FD
+	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 04:29:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BFNyP4HhLzDrdH
-	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 12:28:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BFNzh6H0WzDrCX
+	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 12:29:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22d;
+ helo=mail-oi1-x22d.google.com; envelope-from=suresh.11v@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=163.com
- (client-ip=220.181.13.37; helo=m1337.mail.163.com;
- envelope-from=junhengdi@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256
- header.s=s110527 header.b=qJ3DZJm5; dkim-atps=neutral
-Received: from m1337.mail.163.com (m1337.mail.163.com [220.181.13.37])
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=SJrRKLkt; dkim-atps=neutral
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com
+ [IPv6:2607:f8b0:4864:20::22d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCh5j3nH2zDsPf
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 17:43:33 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=IAaW7
- MNVcsNd3dWOHMJXLyKYLUGiiUv9kmh4X2XphX0=; b=qJ3DZJm57YSmP+m+9MZDQ
- ga/AeCyKv9TVkP9jLl1fBMH+DzNaTY19xQGFpQZSiuPLhAkNIy+bqNi7DJN1KviK
- ct5kgJNNJ2jbLd2za/bwZBc/L5KeaY1icO6eRwBnM/OF2Jd/iAe2LXqqM2FXPOGR
- K2bcGVh97HTjd6AkRagYTw=
-Received: from junhengdi$163.com ( [202.96.123.226] ) by
- ajax-webmail-wmsvr37 (Coremail) ; Fri, 24 Jul 2020 15:43:09 +0800 (CST)
-X-Originating-IP: [202.96.123.226]
-Date: Fri, 24 Jul 2020 15:43:09 +0800 (CST)
-From: =?GBK?B?srvT7w==?= <junhengdi@163.com>
-To: "chunhui.jia" <chunhui.jia@linux.intel.com>
-Subject: Re:Re:  how to change debug uart from uart5 to uart1 on ast2500
- romulus?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.10 build 20190724(ac680a23)
- Copyright (c) 2002-2020 www.mailtech.cn 163com
-In-Reply-To: <5F1A49A2.5040900@linux.intel.com>
-References: <5e18b54e.8d5f.1737b18e7dc.Coremail.junhengdi@163.com>
- <5F1A49A2.5040900@linux.intel.com>
-X-CM-CTRLDATA: zZ5Q3mZvb3Rlcl9odG09NTE0Nzo1Ng==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_102229_1115430203.1595576589737"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCx5447CJzDrSq
+ for <openbmc@lists.ozlabs.org>; Sat, 25 Jul 2020 03:28:52 +1000 (AEST)
+Received: by mail-oi1-x22d.google.com with SMTP id x83so8614159oif.10
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 10:28:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=LECeIUquZkdSYcTLY7+MC2231l7CESC3KN1/VeuJ1bM=;
+ b=SJrRKLktfOXoMP18gxYt+6L60ol1/syU5GReIjYmmH7gM/moVEi0gYqAp5Ve/z/hIH
+ XSfdoGbDPrhhU6Ufig9FmBzcV5+p+EgRq5IBwjdGhWSzbaEB5ZcsZFkDx41PfKW5oed/
+ +CI6C244n0EF2yKXXUb2oDMSZDLk5HPWj2Ye+SLvVGjbJo5MSCTd5/ZuoaI+asD5j1y1
+ u7ZQ0u+HKPjjCtsKShE2S8LU0bFIeCJMFSgsCwA7GN3iOWTP73X7Qyg2dWqr2UY5Mz01
+ v/LLK+7v71hWqOZYFtiXQQlH0G8F6+Cif2soly3ftGBA9oGbiBPmvWXGnbcWkQp8QOxF
+ 15UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=LECeIUquZkdSYcTLY7+MC2231l7CESC3KN1/VeuJ1bM=;
+ b=FBNjXhSaV66AbVCz48M/YmC5g1L8BGf2YF7UF+MLJTFpqSXZnG8lI/UecfWW2Bzw0X
+ 6gDpvJ5K/gFc2hPTiCL9vtEFLBRde6w7W5IEf1CLJ/KJBxOpGvnhuhuD6XomHss+zmIP
+ mEK6l7q3TTPH7TG/UEXMqB1Ca4iI6YbGEAsKWWMJePGLCI5jvW9ZgGmlMMfAWoa+XnYI
+ Ftfb2HIWZ7M9n8nziotgu1ewUDxebEw7yeKmUCYa5FXZeJPqQ7+gP92Tlo56yDgkq24n
+ JzBjPYlSSY3u9IdLKQUnkoIWp6DS1RA1jv09RcKgUqokMAOLSD2BO/v2mF6f0Dh0REV7
+ 0WlQ==
+X-Gm-Message-State: AOAM531TmXqAr5uoyciOQhAQzTf5XKValcDDeckFzijzxzvdIPh/Wo7i
+ TLqDQGtGOk/ar4OZ2iB8FjGIMCynQlcMHN3czZk4FJDt
+X-Google-Smtp-Source: ABdhPJxj6MubdTPqGDsuqi8SMd7xlx42vn+eNUfhDDSTSbZ51hkN4h8+ioTAmNbZsoT3BXaFsrvzYd19dZ87MLVf0Ys=
+X-Received: by 2002:aca:4b88:: with SMTP id y130mr8821886oia.36.1595611727644; 
+ Fri, 24 Jul 2020 10:28:47 -0700 (PDT)
 MIME-Version: 1.0
-Message-ID: <4416929b.6eb5.1737fc69da9.Coremail.junhengdi@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: JcGowADnfj0NkRpf03dyAA--.11191W
-X-CM-SenderInfo: xmxqxvpqjgxqqrwthudrp/1tbiTw9qf1sGVQe9jgADsq
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: suresh v <suresh.11v@gmail.com>
+Date: Fri, 24 Jul 2020 22:58:36 +0530
+Message-ID: <CAAO56wvAvc-__MdzQriFt4xze1HMRaToozqGL2ephXuMhYJmnA@mail.gmail.com>
+Subject: Reg Backplane Inventory Support in Open BMC
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000039cb3a05ab334e0d"
 X-Mailman-Approved-At: Mon, 27 Jul 2020 12:27:30 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -65,137 +70,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_102229_1115430203.1595576589737
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+--00000000000039cb3a05ab334e0d
+Content-Type: text/plain; charset="UTF-8"
 
-RGVhciBvcGVuYm1jZXIsCgogVGhhbmsgeW91IGZvciB5b3VyIHF1aWNrIHJlcGx5LgoKIE15IGNv
-ZGUgaXMgYmFzZWQgb24gb3BlbmJtYyBtZXRhLWlibS9tZXRhLXJvbXVsdXMuSSB0aGluayBpdCBp
-cyBzaW1pbGFyIHRvIGFzdDI1MDAuZXZiLiBJIHRyaWVkIHRvIGNoYW5nZSBkZWJ1ZyBjb25zb2xl
-IHVhcnQ1KHR0bCkgdG8gdWFydDEocnMyMzIpIG9uIHVib290IGFuZCBrZXJuZWwgbGludXguCgog
-SSByZWFkIHRoZSBhc3QyNTAwIG1hbnVhbCxmaW5kIHdlIGNhbiBzZXQgSGFyZHdhcmUgU3RyYXAg
-Z3BpbyBvciBIYXJkd2FyZSBTdHJhcCByZWdpc3RlciBiaXQyOSB0byBjaGFuZ2VkZWJ1ZyBjb25z
-b2xlIGJldHdlZW4gdWFydDUgYW5kIHVhcnQxIGJ1dCBub3QgZWZmZWN0aXZlLgoKIEkgYWxzbyB0
-cmllZCB0aGVzZToKCiAoMSkgbW9kaWZ5IENPTkZJR19CT09UQVJHUyB0byAiY29uc29sZT10dHlT
-MCwxMTUyMDBuOCByb290PS9kZXYvcmFtIHJ3IiBvbiB1Ym9vdCBhc3QtZzUuYwoKICgyKSBtb2Rp
-Znkgc3Rkb3V0LXBhdGggPSAmdWFydDE7IGJvb3RhcmdzID0gImNvbnNvbGU9dHR5UzAsMTE1MjAw
-IGVhcmx5cHJpbnRrIjsgIG9uIGtlcm5lbCBhc3BlZWQtYm1jLW9wcC1yb211bHVzLmR0cwoKIAoK
-IEFueSBhZHZpY2Ugd2lsbCBiZSBhcHByZWNpYXRlZC4KClRoYW5rcywKCkp1bkhlbmcKCgoKCgoK
-CgoKCgoKCgoKCkF0IDIwMjAtMDctMjQgMTA6Mzg6MzAsICJjaHVuaHVpLmppYSIgPGNodW5odWku
-amlhQGxpbnV4LmludGVsLmNvbT4gd3JvdGU6CgpJcyBpdCBBU1QyNTAwLUVWQj8KIAoyMDIwLTA3
-LTI0CmNodW5odWkuamlhCreivP7Iy6O6srvT7yA8anVuaGVuZ2RpQDE2My5jb20+Creiy83Ksbzk
-o7oyMDIwLTA3LTIzIDE3OjU0Ctb3zOKjumhvdyB0byBjaGFuZ2UgZGVidWcgdWFydCBmcm9tIHVh
-cnQ1IHRvIHVhcnQxIG9uIGFzdDI1MDAgcm9tdWx1cz8KytW8/sjLo7oib3BlbmJtYyI8b3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnPgqzrcvNo7oKIAoKRGVhciBvcGVtYm1jZXIsCgpJIGFtIGdyZWVu
-IHRvIG9wZW5ibWMgYW5kIEkgd2FudCB0byBsZWFybiBzb21ldGhpbmcgYWJvdXQgYXN0MjUwMC5O
-b3cgSSBoYXZlIG9uZSBib2FyZCBhc3QyNTAwIGFuZCAKCnVzZSBvcGVuYm1jIGNvZGUgcm9tdWx1
-cy5JIGtub3cgdGhlIGRlZmF1bHQgZGVidWcgdWFydCBpcyB1YXJ0NSBhbmQgSSB3YW50IHRvIGNo
-YW5nZSBpdCB0byB1YXJ0MSxiZWNhdXNlCgpvbiBteSBib2FyZCwgdWFydDEgaXMgcnMyMzIuSSBo
-YXZlIHRyaWVkIHRoZXNlICxidXQgbm90IGVmZmVjdGl2ZS4KCigxKSBzZXQgdGhlIGhhcmR3YXJl
-IHN0cmFwIHJlZ2lzdGVyIGJpdDI5IDAgb24gYXN0LWc1LmMKCigyKSBzZXQgQ09ORklHX1NZU19O
-UzE2NTUwX0NPTTEgZnJvbSAweDFFNzg0MDAwIHRvIDB4MUU3ODMwMDAKCgoKCkFueSBhZGR2aWNl
-IHdpbGwgYmUgYXBwcmljYXRlZC4KCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIFRoYW5rcywKCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIEp1bkhlbmcKCgoKCgog
-------=_Part_102229_1115430203.1595576589737
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Hi,
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxwIHN0eWxlPSJsaW5lLWhlaWdodDogMjMuOHB4OyBtYXJnaW46
-IDBweDsiPkRlYXIgb3BlbmJtY2VyLDwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6IDIzLjhweDsg
-bWFyZ2luOiAwcHg7Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxlPSJ3aGl0ZS1z
-cGFjZTogcHJlOyI+CTwvc3Bhbj4mbmJzcDtUaGFuayB5b3UgZm9yIHlvdXIgcXVpY2sgcmVwbHku
-PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDogMjMuOHB4OyBtYXJnaW46IDBweDsiPjxzcGFuIGNs
-YXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNwYWNlOiBwcmU7Ij4JPC9zcGFuPiZu
-YnNwO015IGNvZGUgaXMgYmFzZWQgb24gb3BlbmJtYyBtZXRhLWlibS9tZXRhLXJvbXVsdXMuSSB0
-aGluayBpdCBpcyBzaW1pbGFyIHRvIGFzdDI1MDAuZXZiLiBJIHRyaWVkIHRvIGNoYW5nZSBkZWJ1
-ZyBjb25zb2xlIHVhcnQ1KHR0bCkgdG8gdWFydDEocnMyMzIpIG9uIHVib290IGFuZCBrZXJuZWwg
-bGludXguPC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDogMjMuOHB4OyBtYXJnaW46IDBweDsiPjxz
-cGFuIGNsYXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNwYWNlOiBwcmU7Ij4JPC9z
-cGFuPiZuYnNwO0kgcmVhZCB0aGUgYXN0MjUwMCBtYW51YWwsZmluZCB3ZSBjYW4gc2V0IEhhcmR3
-YXJlIFN0cmFwIGdwaW8gb3IgSGFyZHdhcmUgU3RyYXAgcmVnaXN0ZXIgYml0MjkgdG8gY2hhbmdl
-ZGVidWcgY29uc29sZSBiZXR3ZWVuIHVhcnQ1IGFuZCB1YXJ0MSBidXQgbm90IGVmZmVjdGl2ZS48
-L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMy44cHg7IG1hcmdpbjogMHB4OyI+PHNwYW4gY2xh
-c3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZTsiPgk8L3NwYW4+Jm5i
-c3A7SSBhbHNvIHRyaWVkIHRoZXNlOjwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6IDIzLjhweDsg
-bWFyZ2luOiAwcHg7Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxlPSJ3aGl0ZS1z
-cGFjZTogcHJlOyI+CTwvc3Bhbj4mbmJzcDsoMSkgbW9kaWZ5IENPTkZJR19CT09UQVJHUyB0byAi
-Y29uc29sZT10dHlTMCwxMTUyMDBuOCByb290PS9kZXYvcmFtIHJ3IiBvbiB1Ym9vdCBhc3QtZzUu
-YzwvcD48cCBzdHlsZT0ibGluZS1oZWlnaHQ6IDIzLjhweDsgbWFyZ2luOiAwcHg7Ij48c3BhbiBj
-bGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxlPSJ3aGl0ZS1zcGFjZTogcHJlOyI+CTwvc3Bhbj4m
-bmJzcDsoMikgbW9kaWZ5IHN0ZG91dC1wYXRoID0gJmFtcDt1YXJ0MTsgYm9vdGFyZ3MgPSAiY29u
-c29sZT10dHlTMCwxMTUyMDAgZWFybHlwcmludGsiOyAmbmJzcDtvbiBrZXJuZWwgYXNwZWVkLWJt
-Yy1vcHAtcm9tdWx1cy5kdHM8L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMy44cHg7IG1hcmdp
-bjogMHB4OyI+PHNwYW4gY2xhc3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6
-IHByZTsiPgk8L3NwYW4+Jm5ic3A7PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDogMjMuOHB4OyBt
-YXJnaW46IDBweDsiPjxzcGFuIGNsYXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNw
-YWNlOiBwcmU7Ij4JPC9zcGFuPiZuYnNwO0FueSBhZHZpY2Ugd2lsbCBiZSBhcHByZWNpYXRlZC48
-L3A+PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMy44cHg7IG1hcmdpbjogMHB4OyI+PHNwYW4gY2xh
-c3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZTsiPgkJCQkJCQkJCQkJ
-CQkJCQkJCQkJCQkJCQkJCQk8L3NwYW4+PC9wPjxwIHN0eWxlPSJsaW5lLWhlaWdodDogMjMuOHB4
-OyBtYXJnaW46IDBweDsiPjxzcGFuIGNsYXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRl
-LXNwYWNlOiBwcmU7Ij4JCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJPC9zcGFuPlRoYW5rcyw8L3A+
-PHAgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMy44cHg7IG1hcmdpbjogMHB4OyI+PHNwYW4gY2xhc3M9
-IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZTsiPgkJCQkJCQkJCQkJCQkJ
-CQkJCQkJCQkJCQk8L3NwYW4+SnVuSGVuZzwvcD48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwv
-cD48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJy
-PjwvcD48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48ZGl2IHN0eWxlPSJwb3NpdGlvbjpy
-ZWxhdGl2ZTt6b29tOjEiPjwvZGl2PjxkaXYgaWQ9ImRpdk5ldGVhc2VNYWlsQ2FyZCI+PC9kaXY+
-PHAgc3R5bGU9Im1hcmdpbjogMDsiPjxicj48L3A+PHA+QXQgMjAyMC0wNy0yNCAxMDozODozMCwg
-ImNodW5odWkuamlhIiAmbHQ7Y2h1bmh1aS5qaWFAbGludXguaW50ZWwuY29tJmd0OyB3cm90ZTo8
-L3A+PGJsb2NrcXVvdGUgaWQ9ImlzUmVwbHlDb250ZW50IiBzdHlsZT0iUEFERElORy1MRUZUOiAx
-ZXg7IE1BUkdJTjogMHB4IDBweCAwcHggMC44ZXg7IEJPUkRFUi1MRUZUOiAjY2NjIDFweCBzb2xp
-ZCI+Cgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46
-MH0KaW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9Cjwvc3R5bGU+CgoKCjxkaXY+SXMg
-aXQgQVNUMjUwMC1FVkI/PC9kaXY+CjxkaXY+Jm5ic3A7PC9kaXY+CjxkaXYgc3R5bGU9IkZPTlQt
-U0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IENPTE9SOiAjYzBjMGMwIiBhbGlnbj0i
-bGVmdCI+MjAyMC0wNy0yNCAKPGhyIGlkPSJTaWduTmFtZUhSIiBzdHlsZT0iQk9SREVSLVRPUDog
-I2MwYzBjMCAxcHggc29saWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsgV0lEVEg6
-IDEyMnB4OyBCT1JERVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiIGFsaWduPSJsZWZ0
-Ij4KPHNwYW4gaWQ9Il9GbGFzaFNpZ25OYW1lIj5jaHVuaHVpLmppYTwvc3Bhbj4gPC9kaXY+Cjxo
-ciBzdHlsZT0iQk9SREVSLVRPUDogI2MwYzBjMCAxcHggc29saWQ7IEhFSUdIVDogMXB4OyBCT1JE
-RVItUklHSFQ6IDBweDsgQk9SREVSLUJPVFRPTTogMHB4OyBCT1JERVItTEVGVDogMHB4Ij4KCjxi
-bG9ja3F1b3RlIGlkPSJudGVzLWZsYXNobWFpbC1xdW90ZSIgc3R5bGU9IkZPTlQtU0laRTogMTBw
-dDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IFBBRERJTkctTEVGVDogMHB4OyBNQVJHSU4tTEVGVDog
-MHB4Ij4KICA8ZGl2PjxzdHJvbmc+t6K8/sjLo7o8L3N0cm9uZz6yu9PvICZsdDtqdW5oZW5nZGlA
-MTYzLmNvbSZndDs8L2Rpdj4KICA8ZGl2PjxzdHJvbmc+t6LLzcqxvOSjujwvc3Ryb25nPjIwMjAt
-MDctMjMmbmJzcDsxNzo1NDwvZGl2PgogIDxkaXY+PHN0cm9uZz7W98zio7o8L3N0cm9uZz5ob3cg
-dG8gY2hhbmdlIGRlYnVnIHVhcnQgZnJvbSB1YXJ0NSB0byB1YXJ0MSBvbiAKICBhc3QyNTAwIHJv
-bXVsdXM/PC9kaXY+CiAgPGRpdj48c3Ryb25nPsrVvP7Iy6O6PC9zdHJvbmc+Im9wZW5ibWMiJmx0
-O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs8L2Rpdj4KICA8ZGl2PjxzdHJvbmc+s63LzaO6
-PC9zdHJvbmc+PC9kaXY+CiAgPGRpdj4mbmJzcDs8L2Rpdj4KICA8ZGl2PgogIDxkaXYgc3R5bGU9
-IkZPTlQtU0laRTogMTRweDsgRk9OVC1GQU1JTFk6IEFyaWFsOyBDT0xPUjogIzAwMDAwMDsgTElO
-RS1IRUlHSFQ6IDEuNyI+CiAgPHAgc3R5bGU9Ik1BUkdJTjogMHB4Ij5EZWFyIG9wZW1ibWNlciw8
-L3A+CiAgPHAgc3R5bGU9Ik1BUkdJTjogMHB4Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4i
-IHN0eWxlPSJXSElURS1TUEFDRTogcHJlIj48L3NwYW4+SSBhbSBncmVlbiB0byBvcGVuYm1jIGFu
-ZCBJIHdhbnQgdG8gbGVhcm4gCiAgc29tZXRoaW5nIGFib3V0IGFzdDI1MDAuTm93IEkgaGF2ZSBv
-bmUgYm9hcmQgYXN0MjUwMCBhbmQmbmJzcDs8L3A+CiAgPHAgc3R5bGU9Ik1BUkdJTjogMHB4Ij51
-c2Ugb3BlbmJtYyBjb2RlIHJvbXVsdXMuSSBrbm93IHRoZSBkZWZhdWx0IGRlYnVnIHVhcnQgCiAg
-aXMgdWFydDUgYW5kIEkgd2FudCB0byBjaGFuZ2UgaXQgdG8gdWFydDEsYmVjYXVzZTwvcD4KICA8
-cCBzdHlsZT0iTUFSR0lOOiAwcHgiPm9uIG15IGJvYXJkLCB1YXJ0MSBpcyByczIzMi5JIGhhdmUg
-dHJpZWQgdGhlc2UgLGJ1dCBub3QgCiAgZWZmZWN0aXZlLjwvcD4KICA8cCBzdHlsZT0iTUFSR0lO
-OiAwcHgiPigxKSBzZXQgdGhlIGhhcmR3YXJlIHN0cmFwIHJlZ2lzdGVyIGJpdDI5IDAgb24gCiAg
-YXN0LWc1LmM8L3A+CiAgPHAgc3R5bGU9Ik1BUkdJTjogMHB4Ij4oMikgc2V0IENPTkZJR19TWVNf
-TlMxNjU1MF9DT00xIGZyb20gMHgxRTc4NDAwMCB0byAKICAweDFFNzgzMDAwPC9wPgogIDxwIHN0
-eWxlPSJNQVJHSU46IDBweCI+PGJyPjwvcD4KICA8cCBzdHlsZT0iTUFSR0lOOiAwcHgiPjxzcGFu
-IGNsYXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IldISVRFLVNQQUNFOiBwcmUiPjwvc3Bhbj5B
-bnkgYWRkdmljZSB3aWxsIGJlIGFwcHJpY2F0ZWQuPC9wPgogIDxwIHN0eWxlPSJNQVJHSU46IDBw
-eCI+PHNwYW4gY2xhc3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0iV0hJVEUtU1BBQ0U6IHByZSI+
-PC9zcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IAogICZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgCiAgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDtUaGFua3MsPC9wPgogIDxwIHN0eWxlPSJNQVJHSU46IDBweCI+PHNwYW4gY2xhc3M9IkFwcGxl
-LXRhYi1zcGFuIiBzdHlsZT0iV0hJVEUtU1BBQ0U6IHByZSI+PC9zcGFuPiZuYnNwOyAmbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IAogICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgCiAgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtKdW5IZW5nPC9wPjwvZGl2Pjxi
-cj48YnI+PHNwYW4gdGl0bGU9Im5ldGVhc2Vmb290ZXIiPgogIDxwPiZuYnNwOzwvcD48L3NwYW4+
-PC9kaXY+PC9ibG9ja3F1b3RlPjwvYmxvY2txdW90ZT48L2Rpdj48YnI+PGJyPjxzcGFuIHRpdGxl
-PSJuZXRlYXNlZm9vdGVyIj48cD4mbmJzcDs8L3A+PC9zcGFuPg==
-------=_Part_102229_1115430203.1595576589737--
+I'm Suresh looking for frame work support of backplane inventory via side
+band I2C from base board management controller in Open BMC. If there are
+any support in case, can you please give me some pointers to start of
+looking at it?
 
+Thanks,
+Suresh
+
+--00000000000039cb3a05ab334e0d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Hi,<div dir=3D"auto"><br></div><div dir=3D"auto">I&#39;m =
+Suresh looking for frame work support of backplane inventory via side band =
+I2C from base board management controller in Open BMC. If there are any sup=
+port in case, can you please give me some pointers to start of looking at i=
+t?<br><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks,</div><div dir=
+=3D"auto">Suresh</div></div></div>
+
+--00000000000039cb3a05ab334e0d--
