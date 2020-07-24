@@ -2,62 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71B6522D202
-	for <lists+openbmc@lfdr.de>; Sat, 25 Jul 2020 01:00:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE1DE22D218
+	for <lists+openbmc@lfdr.de>; Sat, 25 Jul 2020 01:13:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BD4Rn4kYhzF1Yx
-	for <lists+openbmc@lfdr.de>; Sat, 25 Jul 2020 09:00:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BD4kC1gT1zF1Z9
+	for <lists+openbmc@lfdr.de>; Sat, 25 Jul 2020 09:13:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::134;
- helo=mail-il1-x134.google.com; envelope-from=suichen6@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::243;
+ helo=mail-oi1-x243.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=QYiUzGaW; dkim-atps=neutral
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com
- [IPv6:2607:f8b0:4864:20::134])
+ header.s=20161025 header.b=n2ZHt30w; dkim-atps=neutral
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com
+ [IPv6:2607:f8b0:4864:20::243])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BD4Qq081xzF1SM
- for <openbmc@lists.ozlabs.org>; Sat, 25 Jul 2020 08:59:42 +1000 (AEST)
-Received: by mail-il1-x134.google.com with SMTP id t18so8550517ilh.2
- for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 15:59:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BD4jR1TPXzF1Wr
+ for <openbmc@lists.ozlabs.org>; Sat, 25 Jul 2020 09:12:25 +1000 (AEST)
+Received: by mail-oi1-x243.google.com with SMTP id l63so9363866oih.13
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 16:12:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=eU9bhq/2jIrNWR1RmRXTKnzYB0ItnYEB+sw0rBO7rB8=;
- b=QYiUzGaWUszwZmCBC5LKd84l0IO0BiVEbRfTWkzemwGgwDYxytxC6cP6k/8FBkrIwU
- mVKb6M/D6J2rlbzoGnDorXFiNgeaqAOoD9Quepg3cPFiENswBGZf//HcMynhzyhgrukx
- cAJmeo3hJWimEqwwu33zcKdoNxsjM7qWy97+qZehV8P5DT8h+snMULMWgN18AUzVBUX2
- 5+nbeXEykSodnOotf77vX8f0gC4UpQ3zXWhdspzZ/e5TYpSjAgSgygT4zhV2Y5WgW9n5
- POvylJIQdvnNxfF+gn0Fu8WAi2Z5hADZRd16ucMidrwjlK0dSp74IH7VbtjA4ptvwOfV
- dG+w==
+ h=content-transfer-encoding:mime-version:subject:from:in-reply-to:cc
+ :date:message-id:references:to;
+ bh=atGzp7KEZDmbG1GruYsYzkSJ3NTISXIK8VbjKExvUZI=;
+ b=n2ZHt30wOHOwD7fIw0DhNnSgDPvKFxyq9CKjcgBTenLPagQBs3O7v7fDXFQtcGKU/v
+ 2iexIBDMLzG0vNgFsMX02VsuGQcZgJiG44rFKiZPqBMwPtcUvaz6UTS3RgAKRaCPCjKJ
+ mONwkRAzp4SuE8qOzdGT0v3dyTt2gnL/cZPn15hmQ25BU5JkhidnGDfJNNwCb6p7aTrd
+ 2B3ipsvU8uBkZVJVAklXhtc9KWDtSl1bS7+sLZrjruP+xdona6Fxt5TQslMktmyCglmP
+ jtr0j5FNDGnBPcFUm8M+kWTc1k3NbnrtJ5j+flVr70NV01BDDiETbPenpE4d38gyImYu
+ wLWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=eU9bhq/2jIrNWR1RmRXTKnzYB0ItnYEB+sw0rBO7rB8=;
- b=tecuIBJhpMD4LdkV+/OZA5V8G7EiKDqMbJnkq29PKpIzpx9WTdABPQgX2Qof7E9L8u
- u1jyslTRrx0EwyiYJ/tih2Fz2fN/bVjzm2I/ckJtNbst67PIjL0ZN+B5cExokkTugeHK
- XGrnpN7uOwZrLPBhOID+vSj+RqlkvwvnT7vbZeV3n27TsxFFp7wfQhHNcEAnfd1TmHPn
- JB2p1i2dhzOQYUsSnaZ8BwyquoeUD1jvqafrQ6S1q8H8yEGNPia9G5XAnisUulFTVvLA
- +QfQ2M80AHQ1g6AgDS1MZLTZXGIUfLonAh5kKvFELubeHj+qGNAr/uWHIF8kzAS03FxR
- rkuA==
-X-Gm-Message-State: AOAM530HjTg2Nv8+r528Z1X3Mda+YuQc/5f5DM2shzrZQlpNlmWzVDfV
- BY2LLwixxV7wj0hA3JNbOM5s8wlsOzBVrCB6QAlBpYYcmLs=
-X-Google-Smtp-Source: ABdhPJySvgJf81iuar7ke3rc7UGTvuBik2rutqeBaYHsy3O8LZL6qbTRbR1L9duXhvQV+l5nuG3O8BMRfyyDR2c0Tq4=
-X-Received: by 2002:a92:6008:: with SMTP id u8mr12401592ilb.196.1595631578609; 
- Fri, 24 Jul 2020 15:59:38 -0700 (PDT)
-MIME-Version: 1.0
-From: Sui Chen <suichen6@gmail.com>
-Date: Fri, 24 Jul 2020 15:59:27 -0700
-Message-ID: <CAFaEeaE+xp89Q4dc0uS_-mdwy=ngb6-1XqnfdtTZ_1CW-GCE_A@mail.gmail.com>
-Subject: [openbmc-tools] dbus-vis: DBus capture visualization tool
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000006f83e505ab37ed2c"
+ h=x-gm-message-state:content-transfer-encoding:mime-version:subject
+ :from:in-reply-to:cc:date:message-id:references:to;
+ bh=atGzp7KEZDmbG1GruYsYzkSJ3NTISXIK8VbjKExvUZI=;
+ b=JVBd9ZvkPMDaVbZtRSRxKwSH/8p/LtrYmTQO+LwLPM6xStNHuQpOvyIgpItYptGiH2
+ CAEd9LvuRHj4/j1C29CCVlVmMUnNTBDe1GHQGehqdvs/UQWMiutH9ZhHByWzeHcyO2+R
+ duY932bUK+EcJmOjkIK/24D7ChQvEkq85ClgZnnfAeEEl71EQDGrx3UWoizsgjTaXOrT
+ KOuQkqHDxezcsEUYShSqLLTJK62LDd1aQb6RKhn9Dw2MLlogMs6P3A4x7iLyEBLIFHvu
+ iqeYca6kM650dMSJvju9wN0RPbDK07dNY7jNGoCB+w3eQHotMJEc0iIEOSK6MhsTQ62E
+ +IHQ==
+X-Gm-Message-State: AOAM531Uyzej4WiWG+GoUatkIguS1CUrI+fq9Jd+hXNYDaF0UaGQYiZM
+ nvYXEK7oUgQQ4zuTx9KetBI=
+X-Google-Smtp-Source: ABdhPJyWzvLdXPWAhNW/f694yl+kOD+6q8Izs6GhNyxH7xnW7DQUCnRB7TP941M5mBGkn605eHfjUg==
+X-Received: by 2002:aca:bb82:: with SMTP id
+ l124mr10228826oif.106.1595632341512; 
+ Fri, 24 Jul 2020 16:12:21 -0700 (PDT)
+Received: from ?IPv6:2601:281:c001:2359:dc25:70f9:d58b:a5c6?
+ ([2601:281:c001:2359:dc25:70f9:d58b:a5c6])
+ by smtp.gmail.com with ESMTPSA id x138sm431110oif.5.2020.07.24.16.12.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Jul 2020 16:12:20 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (1.0)
+Subject: Re: Query regarding using the Redfish in OpenBMC
+From: Mike Jones <proclivis@gmail.com>
+In-Reply-To: <30dabaf6-b18d-a94b-af46-3291233b5ad1@linux.ibm.com>
+Date: Fri, 24 Jul 2020 17:12:20 -0600
+Message-Id: <77906538-41BD-4600-B6FE-9886921BB0B9@gmail.com>
+References: <30dabaf6-b18d-a94b-af46-3291233b5ad1@linux.ibm.com>
+To: Joseph Reynolds <jrey@linux.ibm.com>
+X-Mailer: iPad Mail (17F80)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,80 +81,145 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: khader basha shaik <shaikkhaderbasha601@gmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "openbmcbump-github@yahoo.com" <openbmcbump-github@yahoo.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006f83e505ab37ed2c
-Content-Type: text/plain; charset="UTF-8"
+Some progress. On the hacked build, there were three problems:
 
-Hello,
+1) bmcweb failed at start
+2) Wrong port
+3) Can=E2=80=99t login
 
-dbus-vis is a GUI tool that does the following:
-- It visualizes busctl pcap files, the same format that dbus-pcap reads and
-parses.
-- It somewhat half-automates the process of doing a capture on the BMC and
-transferring back to the host for analysis (console access to the BMC is
-required for this purpose.)
+The failure was found by compiling it with logging. /var/log/redfish was mis=
+sing. Touching the file and executing bmcweb& got it up.
 
-dbus-vis started from an IPMI timeline visualization tool that only
-processes IPMI requests exposed on DBus. After I learned about dbus-pcap
-<https://github.com/openbmc/openbmc-tools/tree/master/amboar/obmc-scripts/dbus-pcap>,
-it turns out DBus visualization is a natural extension to this
-visualization tool. Because this tool currently accepts the same packet
-capture format that dbus-pcap uses (by using a slightly modified version of
-dbus-pcap), it kind of functions like a GUI version of dbus-pcap, and is
-therefore named "dbus-vis" to indicate what it does.
+Some doc said port 8080, but it is 18080.
 
-The main difference between this tool and other existing dbus visualizers
-(such as GNU bustle) is that dbus-vis shows data in a compact timeline
-format, making it possible to show >10K events simultaneously on the screen
-at an acceptable frame rate, as well as making it easier to focus on DBus
-performance rather than the dependency of different DBus units (that other
-existing tools seem to be focusing on.)
+DHCP is not working, so I boot to console with hdmi and keyboard and make a s=
+tatic address with ifconfig. Will deal with later.
 
-The changes for the first commit of dbus-vis is listed below; any comment
-is greatly appreciated.
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-tools/+/34263
+Login was because groups were missing. Found where that was in meta-phosphor=
+ and added.
 
-Thanks!
-Sui
+Now I have the webui up.
 
---0000000000006f83e505ab37ed2c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On the evb build, it is trying to build images that fail when checking file s=
+ize. I think this is because meta-phosphor has IMAGE_FSTYPES +=3D with some m=
+tb images, and meta-rasberrypi has IMAGE_FSTYPES ?=3D and I assume +=3D wins=
+ or mixes. I think if I add IMAGE_FSTYPES =3D in local.conf, it would overri=
+de it and probably work.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_defa=
-ult" style=3D"font-family:arial,helvetica,sans-serif"><div class=3D"gmail_d=
-efault">Hello,</div><div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_d=
-efault"><br></div><div class=3D"gmail_default"><div class=3D"gmail_default"=
->dbus-vis is a GUI tool that does the following:</div><div class=3D"gmail_d=
-efault">- It visualizes busctl pcap files, the same format that dbus-pcap r=
-eads and parses.</div><div class=3D"gmail_default">- It somewhat half-autom=
-ates the process of doing a capture on the BMC and transferring back to the=
- host for analysis (console access to the BMC is required for this purpose.=
-)</div></div><div class=3D"gmail_default"><br></div><div class=3D"gmail_def=
-ault">dbus-vis started from an IPMI timeline visualization tool that only p=
-rocesses IPMI requests exposed on DBus. After I learned about=C2=A0<a href=
-=3D"https://github.com/openbmc/openbmc-tools/tree/master/amboar/obmc-script=
-s/dbus-pcap">dbus-pcap</a>, it turns out DBus visualization is a natural ex=
-tension to this visualization tool. Because this tool currently accepts the=
- same packet capture format that dbus-pcap uses (by using a slightly modifi=
-ed version of dbus-pcap), it kind of functions like a GUI version of dbus-p=
-cap, and is therefore named &quot;dbus-vis&quot; to indicate what it does.<=
-/div><div class=3D"gmail_default"><br></div><div class=3D"gmail_default">Th=
-e main difference between this tool and other existing dbus visualizers (su=
-ch as GNU bustle) is that dbus-vis shows data in a compact timeline format,=
- making it possible to show &gt;10K events simultaneously on the screen at =
-an acceptable frame rate, as well as making it easier to focus on DBus perf=
-ormance rather than the dependency of different DBus units (that other exis=
-ting tools seem to be focusing on.)</div><div class=3D"gmail_default"><br><=
-/div><div class=3D"gmail_default">The changes for the first commit of dbus-=
-vis is listed below; any comment is greatly appreciated.</div><div class=3D=
-"gmail_default"><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/ope=
-nbmc-tools/+/34263">https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-to=
-ols/+/34263</a></div></div></div><br></div><div class=3D"gmail_default" sty=
-le=3D"font-family:arial,helvetica,sans-serif">Thanks!</div><div class=3D"gm=
-ail_default" style=3D"font-family:arial,helvetica,sans-serif">Sui</div></di=
-v></div></div>
+Waiting for a long rebuild...
 
---0000000000006f83e505ab37ed2c--
+Sent from my iPad
+
+>> On Jul 24, 2020, at 3:57 PM, Joseph Reynolds <jrey@linux.ibm.com> wrote:
+>>=20
+>> =EF=BB=BFOn 7/24/20 8:40 AM, Mike wrote:
+>> I=E2=80=99m trying to do the same and struggling to get it up on a Rasp P=
+i 4.
+>> My first approach was to add layers to meta-raspberrypi, and I got to the=
+ point where the web was up, but I could not log in with root. I added a mis=
+sing layer that adds groups to the accounts and will test later today.
+>> The second approach was to use the evb config files. But it can=E2=80=99t=
+ make the image. It seems to be using meta-phosphor image layers instead of m=
+eta-raspberrypi layers. I used openbmc tag 2.9. I will try 2.8 later and see=
+ if it compiles.
+>=20
+> I think your build configuration would include both the meta-raspberrypi a=
+nd meta-phosphor layers.
+> The meta-phosphor layer brings in the BMCWeb recipe [1] and BMCWeb enables=
+ Redfish by default [2].
+> So I think your approach should work, but I do not have experience setting=
+ up machines.
+> Andrew added a tutorial for this [3].
+>=20
+> [1]: https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-=
+phosphor/interfaces/bmcweb_git.bb
+> [2]: https://github.com/openbmc/bmcweb/blob/master/CMakeLists.txt#L37
+> [3]: https://gist.github.com/geissonator/77d4f6c6ed17bb0693b4251137f77fb4
+>=20
+> The root password is configured in the phosphor-defaults.inc [4] (and othe=
+r places such as in various EVB layers) and the root user is authorized to u=
+se redfish APIs per the bmcweb recipe ([1] again).
+>=20
+> [4]: https://github.com/openbmc/openbmc/blob/master/meta-phosphor/conf/dis=
+tro/include/phosphor-defaults.inc#L229
+>=20
+> Note the default port for BMCWeb is 443 (HTTPS).
+>=20
+> A few more questions:
+> 1. How are you getting the RPI's IP address?  Are you just looking for it,=
+ or do you learn it by using the RPI's serial connection and signing in?
+> 2. Are you using the RPI's serial port to debug?  If so, can you sign on a=
+s root?  If you can, does the systemctl command show the bmcweb service is r=
+unning?  If it is, does bmcweb show any error messages for failed attempts t=
+o use Redfish APIs?
+>=20
+> - Joseph
+>=20
+>> I will post more details later. I can provide config files etc. I am away=
+ from my computer for awhile.
+>> How are you building? Are you using an evb config? What tag are you using=
+?
+>> Sent from my iPhone
+>>>> On Jul 24, 2020, at 6:01 AM, khader basha shaik <shaikkhaderbasha601@gm=
+ail.com> wrote:
+>>> =EF=BB=BF
+>>> Hi Joseph,
+>>> Thanks for your response.
+>>> I will be using Raspberrypi3 system.
+>>> Can you please guide what further steps I should take in order to view t=
+he /redfish/v1 content in the web(https://xxx.xxx.xxx:8000/redfish/v1).
+>=20
+> The default port is 443 (HTTPS) unless you changed it in a recipe. (This i=
+s not common.)
+> If you continue to enter "https:" you should not need to specify port.
+>=20
+>>> Any pointer on this is really helpful.
+>>> I have gone through the documents the developer docs but could not find a=
+nything that points to enabling the redfish stuff in the browser.
+>>> Please correct me if i am wrong
+>>> Thanks & Regards,
+>>> Khader B Shaik
+>>>> On Thu, 23 Jul 2020 at 19:25, Joseph Reynolds <jrey@linux.ibm.com <mail=
+to:jrey@linux.ibm.com>> wrote:
+>>>>   On 7/23/20 5:48 AM, khader basha shaik wrote:
+>>>> Hi Team,
+>>>> I am newbiee to  Openbmc.  I want to view  the redfish/v1
+>>>> (https://10.xxx.xxx.xxx:8000/redfish/v1) contents in the browser
+>>>> .Could you please guide me on what changes i need to so
+>>>   that i view
+>>>> the /redfish/v1/ content in the browser .
+>>>> here are the steps i have followed:
+>>>> 1. Clone OpenBMC project : git clone
+>>>> https://github.com/openbmc/openbmc.git in the server machine .
+>>>> 2. Compile using the following command:
+>>>>    TEMPLATECONF=3Dmeta-phosphor/conf  . openbmc-env
+>>>> 3. modify the following files:
+>>>>  *  #build vi conf/local.conf  (modify the  line
+>>>   "-MACHINE??=3Dqemuarm"
+>>>>    " to "-MACHINE??=3Draspberrypi3-64" "
+>>>>  * #build vi conf/bblayer.conf (add the following line
+>>>> "/home/khader<username>/openbmc/meta-raspberrypi \"  to the line
+>>>>    above /home/khader<username>/openbmc/metaphosphor \"
+>>>>       4. #build  bitbake obmc-phosphor-image
+>>>> The above steps I have used to build an Openbmc project.
+>>>> Can you help me what further steps should i need to do so that
+>>>   i can
+>>>> view the /redfish/v1/  content in the webbrowser.
+>>>   What BMC system will you use to upload, boot, and run the BMC
+>>>   firmware
+>>>   image?  A QEMU virtual system?
+>>>   Have you seen the developer docs here?
+>>>   https://github.com/openbmc/docs/tree/master/development
+>>>   Good luck,
+>>>   - Joseph
+>>>> Note:- I am compiling the openbmc code in the server machine.
+>>>> Any help /guidelines on this will really help me alot.
+>>>> Appreciate all your help.
+>>>> Thanks & Regards,
+>>>> khader B Shaik
