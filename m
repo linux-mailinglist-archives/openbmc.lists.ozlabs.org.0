@@ -1,64 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E88522BD8D
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 07:35:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79FFC22BE50
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 08:53:47 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BCdFW5F0zzDrSG
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 15:35:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BCg061Nk0zDrph
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jul 2020 16:53:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::643;
- helo=mail-ej1-x643.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Di956j2a; dkim-atps=neutral
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com
- [IPv6:2a00:1450:4864:20::643])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=oS5wW1ZF; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=AgRArbI+; 
+ dkim-atps=neutral
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BCdBj5kL6zDrgK;
- Fri, 24 Jul 2020 15:32:45 +1000 (AEST)
-Received: by mail-ej1-x643.google.com with SMTP id o18so8677890eje.7;
- Thu, 23 Jul 2020 22:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=lxeF3MdXzIoVsbazhbqXkh5Gq8fRGjKClAu6VjOvpaQ=;
- b=Di956j2aZtrmMHcejr07uX82Ow70coVnOGXPMEEuPUjfwmVcAT2UMOPHutzGowc6ee
- PrcgaF2BmKXQcGyY3GplupS/zOgati5XyXj7L+kKf0sWU3xvRDx/o3eysq3xLNtd5B8d
- UIkRU1OgFsWoBWSJR53ArBd94RfbELr182ysY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=lxeF3MdXzIoVsbazhbqXkh5Gq8fRGjKClAu6VjOvpaQ=;
- b=rad1CoHcGYQ+DOKiwIasf4nyTlBThHQbSvhRAI5zShzETDt/DUsS94d7d/fhtOFcHp
- 0Fz0PHNtrUEcsOAMOzgsNKpev+VeK2GRsH+EuHoY4gPb3XKNB4JR3tWy9O6Iwv5+aiQN
- 41iK16nqNtolvsUEQCB/kAk9XOTBmk4lufbW1d1kayvbk8Q5Q8kZmLjXm5Hy4wETTeSO
- lco7BSct9bvtYY3dQViOzbBHJHcPgidxXsVXbiIXjdO1pt2aIJ4y6/oJXvaynx32+6+Y
- MLYrXeMkf81kfXI+U5yWrW/TRKM+lILDsIge/Lvs1uQ3wdIlVxb5I6SrcXRbBbDiTFl3
- SuEA==
-X-Gm-Message-State: AOAM530sqy5Gy7A/IBDYdqbHxN4jOdLKAkH1kbsDi94NUw/iQMSxquqT
- rpAmmlNxtyXGFXpIv5cSh58VxWJ3Vb5H84UpZ38=
-X-Google-Smtp-Source: ABdhPJyvBQHzeEYsM37+wecHEG0VWauRr3W7csro+jM1re12/9nqf22Nc6d1EFG2E/ReH5XyqMDpOAvaHjCnOFMBhaA=
-X-Received: by 2002:a17:906:c187:: with SMTP id
- g7mr8032732ejz.108.1595568762913; 
- Thu, 23 Jul 2020 22:32:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BCfzK5kGNzDrh8
+ for <openbmc@lists.ozlabs.org>; Fri, 24 Jul 2020 16:53:01 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id B063C5C00E8;
+ Fri, 24 Jul 2020 02:52:57 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Fri, 24 Jul 2020 02:52:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm3; bh=5qKmND7AhISRQOPghEvNtacFjl
+ 8Uwsf1t8RPpClglVI=; b=oS5wW1ZFkP7CMCGnvFmImlpAhghJJ9lrAssV0+vywr
+ Ax/CuL8GsfJO3VT/QdFWMOAcr9cOE5zgGw7e5BABTIBUUpkaNxoalHwhQRQRGQjQ
+ d6id8ai+4+vuSVzVjIt7ktHS7lQaK9JUvkgNK46aTg/d5J3wkPkkTu6UJ+VAxi29
+ LZFsqbZmYsoZMV4xPymP32RZYWC47adACjFUUedmkSnK0A2YBjOL91xa1ZFlqk9u
+ okQIciaLg1u07yBBvOgickrcCoB3rBWjGLxgYP4n2RdvUCRiyHAQuf/MdbYFpV4I
+ evIC8ZD/nvptCDptMaU1Cd301GJrpxYzOo4WllYw8hfA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=5qKmND7AhISRQOPgh
+ EvNtacFjl8Uwsf1t8RPpClglVI=; b=AgRArbI+J26VzEZ9WjSa5GwIg34HmSjog
+ lPX2uSAH97xYZ7A7eyO8YQ98fsIKA6SbpgNAhQkFvMuni1XAtdwBgTSpZxuh0jDD
+ 7EwTVouBJM4ubPXnN1Ef9zHvm7C96Ewkh3M9rCS6+0SCKfYl/Dq8vCLjT0RjKN/3
+ 9wyLJPxdGc20zH1Z/jasNua7t84y3CH8hJuKtFZ6IEW4w3rx/k/U3egSqMjVxRoe
+ CefaHEZgxj0yiJQlIDdfU5cm9Vj+EgIv67DYyyJ/faaFbmZOAlaJQTHug77K70vH
+ Z8knoDVLEreBmG969SjZecsQrHLlL8+2Qsv+gOP+ZM83iIAnic1oQ==
+X-ME-Sender: <xms:SIUaX_0Akmz5C6pFogZDy48yK9vBawJkH3B7qLEKUy77dzrw_U6eJg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrhedvgddutdelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+ dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
+ ihgurdgruheqnecuggftrfgrthhtvghrnhepkefhieffjeevfeevhedtieeihfefvdejle
+ dvvddthefftedujeethfeuueelfedtnecukfhppeeghedruddvgedrvddtfedrudehnecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvg
+ ifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:SIUaX-HVP_7fDbMKBl4WBFb4uP3fxlijz03Q_rWxBmRdqrPeGcl0ug>
+ <xmx:SIUaX_6OItw2kVuSFnpLflac6GTGX1MFBSaSMi7GwXz9Gc3-72TdHg>
+ <xmx:SIUaX02COiLmECuZylilTB3g_v_qg-g-BJv_uVIPFXDzL5Gu1ovzpw>
+ <xmx:SYUaX2SuUIGDrmWBHYFjdqpb2yxXX_JbIUmvijeDKnwDCC1vJnx9Zw>
+Received: from localhost.localdomain (unknown [45.124.203.15])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 96AF63280059;
+ Fri, 24 Jul 2020 02:52:55 -0400 (EDT)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.7] ARM: dts: rainier: Describe GPIO mux on I2C3
+Date: Fri, 24 Jul 2020 16:22:27 +0930
+Message-Id: <20200724065227.317412-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-References: <20200723230539.17860-1-rentao.bupt@gmail.com>
-In-Reply-To: <20200723230539.17860-1-rentao.bupt@gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 24 Jul 2020 05:32:30 +0000
-Message-ID: <CACPK8XdiHLcBBhXjCpTZotVPuRj4bFh0x8TFhSj1TBK2xB0SiQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] ARM: dts: aspeed: fixup wedge40 device tree
-To: Tao Ren <rentao.bupt@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,44 +87,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 23 Jul 2020 at 23:05, <rentao.bupt@gmail.com> wrote:
->
-> From: Tao Ren <rentao.bupt@gmail.com>
->
-> The patch series update several devices' settings in Facebook Wedge40
-> device tree.
->
-> Patch #1 disables a few i2c controllers as they are not being used at
-> present.
->
-> Patch #2 enables adc device for voltage monitoring.
->
-> Patch #3 enables pwm_tacho device for fan control and monitoring.
->
-> Tao Ren (3):
->   ARM: dts: aspeed: wedge40: disable a few i2c controllers
->   ARM: dts: aspeed: wedge40: enable adc device
->   ARM: dts: aspeed: wedge40: enable pwm_tacho device
+We have a 4-bus mux whose output is selected by two GPIO inputs. Wire it
+up in the devicetree and ensure the output is enabled by hogging the
+appropriate line.
 
-I have merged this series into the aspeed dt-for-5.9 branch.
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 46 ++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-Cheers,
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 1ae119afc2ab..e5ea680be121 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -12,6 +12,10 @@ / {
+ 
+ 	aliases {
+ 		serial4 = &uart5;
++		i2c16 = &i2c2mux0;
++		i2c17 = &i2c2mux1;
++		i2c18 = &i2c2mux2;
++		i2c19 = &i2c2mux3;
+ 	};
+ 
+ 	chosen {
+@@ -68,6 +72,41 @@ ps3-presence {
+ 		};
+ 	};
+ 
++	i2c2mux: i2cmux {
++		compatible = "i2c-mux-gpio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		status = "okay";
++
++		i2c-parent = <&i2c2>;
++		mux-gpios = <&gpio0 ASPEED_GPIO(G, 4) GPIO_ACTIVE_HIGH>,
++			    <&gpio0 ASPEED_GPIO(G, 5) GPIO_ACTIVE_HIGH>;
++		idle-state = <0>;
++
++		i2c2mux0: i2c@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0>;
++		};
++
++		i2c2mux1: i2c@1 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <1>;
++		};
++
++		i2c2mux2: i2c@2 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <2>;
++		};
++
++		i2c2mux3: i2c@3 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <3>;
++		};
++	};
+ };
+ 
+ &gpio0 {
+@@ -109,6 +148,13 @@ pin_mclr_vpp {
+ 		output-high;
+ 		line-name = "mclr_vpp";
+ 	};
++
++	i2c3_mux_oe_n {
++		gpio-hog;
++		gpios = <ASPEED_GPIO(G, 6) GPIO_ACTIVE_LOW>;
++		output-high;
++		line-name = "I2C3_MUX_OE_N";
++	};
+ };
+ 
+ &emmc_controller {
+-- 
+2.25.1
 
-Joel
-
->
->  .../boot/dts/aspeed-bmc-facebook-wedge40.dts  | 42 +++++++++++++++----
->  1 file changed, 34 insertions(+), 8 deletions(-)
->
-> --
-> 2.17.1
->
