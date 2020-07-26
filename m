@@ -2,125 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A987222DD11
-	for <lists+openbmc@lfdr.de>; Sun, 26 Jul 2020 09:56:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6334022E298
+	for <lists+openbmc@lfdr.de>; Sun, 26 Jul 2020 22:36:33 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BDwHG0zhczF12Y
-	for <lists+openbmc@lfdr.de>; Sun, 26 Jul 2020 17:56:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BFF8Z2X2NzF10g
+	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 06:36:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
+ envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
- (client-ip=148.163.147.86; helo=mx0a-002e3701.pphosted.com;
- envelope-from=prvs=0476dd2c0b=abner.chang@hpe.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hpe.com
-Received: from mx0a-002e3701.pphosted.com (mx0a-002e3701.pphosted.com
- [148.163.147.86])
+ dmarc=none (p=none dis=none) header.from=sandelman.ca
+Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BDwGH6s2fzF0x4
- for <openbmc@lists.ozlabs.org>; Sun, 26 Jul 2020 17:55:14 +1000 (AEST)
-Received: from pps.filterd (m0150242.ppops.net [127.0.0.1])
- by mx0a-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06Q7mmWf031609; Sun, 26 Jul 2020 07:55:07 GMT
-Received: from g4t3427.houston.hpe.com (g4t3427.houston.hpe.com
- [15.241.140.73])
- by mx0a-002e3701.pphosted.com with ESMTP id 32gcq2dn4k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 26 Jul 2020 07:55:07 +0000
-Received: from G9W8453.americas.hpqcorp.net (exchangepmrr1.us.hpecorp.net
- [16.216.160.211])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by g4t3427.houston.hpe.com (Postfix) with ESMTPS id 3FBB96F;
- Sun, 26 Jul 2020 07:55:06 +0000 (UTC)
-Received: from G4W9119.americas.hpqcorp.net (2002:10d2:14d6::10d2:14d6) by
- G9W8453.americas.hpqcorp.net (2002:10d8:a0d3::10d8:a0d3) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Sun, 26 Jul 2020 07:55:06 +0000
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (15.241.52.11) by
- G4W9119.americas.hpqcorp.net (16.210.20.214) with Microsoft SMTP
- Server (TLS)
- id 15.0.1497.2 via Frontend Transport; Sun, 26 Jul 2020 07:55:06 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=j0atzb26sFvw1WoNh6gWFKMTLVQjBa5zNACe4eLiRFSmcOl5rfIIG4IptYMPKllHUpFdDr8rYZ1Tst58BDeyZPqDPaGEmICAOx35fnVtmPnoPcg0M3scZkjGcrNirY3Y4uS9f4k3rgGrCVjpH0i76kN+9j4jo0VS8TGA+N7+JFC8gG/+zP7xKjeZV5D3JcuBGblUA9yhnoeZuCTfVnbPkppUHcBJsjwoBW1hmWA3YnGmaDOWR8uFEg/85Tw0FWHH0WdpRmJX8FLIuJrRWwViQyqYu8u/0YutJjCMv/ZWYdAURtlnmXTc++PIfHBwcE3PoggyADTBe+RbsiRo7pPBNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CGBfoUp5DwpX6wJw69iSlmcDgyGMuvf030cE1Anf7Q4=;
- b=M3dRci7WaEkIdFWjMbKugRdNh/iRc0adLvs76KPcvQ1zFgTefq0jBXDbmDCtaXd2boAeY7xL/DsVaSp87mWBk2okcGy7b2StNgPw39bPYY5upQLIG8paa0XcaXfdyu5ZHnx8tK87kF+eT9mGe5lTceuwof2PdUvth/glJPls7sxsLDXJLuLSJFZi8CWjam/wELdcWsPvpeCCepaLJs69h+R2b1/qts0Z67cqaKWsy4SmZB2pBENOWiZSUiIr7u7lP9dXWfBSgtmllmg5vGJbV7AQgwaYalozgJX+KP4nXMbN5GOfDalkIBdeUDyatFllsXl5cKtjpc9403WRoaH9Ng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7508::16) by CS1PR8401MB1047.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7512::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.23; Sun, 26 Jul
- 2020 07:55:03 +0000
-Received: from CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::58f4:cfb4:beb0:f5d5]) by CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::58f4:cfb4:beb0:f5d5%7]) with mapi id 15.20.3216.031; Sun, 26 Jul 2020
- 07:55:03 +0000
-From: "Chang, Abner (HPS SW/FW Technologist)" <abner.chang@hpe.com>
-To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
- "suryakanth.sekar@linux.intel.com" <suryakanth.sekar@linux.intel.com>,
- "Brad Bishop" <bradleyb@fuzziesquirrel.com>,
- Patrick Williams <patrick@stwcx.xyz>
-Subject: RE: Fix content rendering issue on RemoteBiosConfiguration doc
-Thread-Topic: Fix content rendering issue on RemoteBiosConfiguration doc
-Thread-Index: AdZiNn5KWJT9vXnOQm2LeRMxyQeKbAA6almAAABWi2A=
-Date: Sun, 26 Jul 2020 07:55:03 +0000
-Message-ID: <CS1PR8401MB1144271C5D55D6896ED55982FF750@CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM>
-References: <CS1PR8401MB11443DA57173714807F29080FF740@CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM>
- <877be4a0-fac1-1787-c31f-9a670e1cfa7e@linux.vnet.ibm.com>
-In-Reply-To: <877be4a0-fac1-1787-c31f-9a670e1cfa7e@linux.vnet.ibm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: linux.vnet.ibm.com; dkim=none (message not signed)
- header.d=none; linux.vnet.ibm.com; dmarc=none action=none header.from=hpe.com; 
-x-originating-ip: [1.34.113.40]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 588b1b25-0db6-437f-fd0e-08d831393488
-x-ms-traffictypediagnostic: CS1PR8401MB1047:
-x-microsoft-antispam-prvs: <CS1PR8401MB10471ED350843F90D5DF6945FF750@CS1PR8401MB1047.NAMPRD84.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: B+KMP5AbBcK2rWhNA2HySo2gFvURqgyr/EZA8JismRO/b52SS58u7CqfTv7FLhdbfp7MBzXE6ngufac+YxxTosYgxqfbbJFmNrK3EHCuuW6tLAzWZRjao1gvOYkDHsSb0TiaQH4U5rOMfPZsvcp1AK+YBQVMY8KxvlSt7B+vWehHyrmm1nKUC6nHizBQIFqtG0N6ibfbBwRSTv845vc/OmzWTPLpfoG1VjWfqW+vYnqy/1LcbxVe38EQJvsBJxCFLyQAVew55bkr7zIHy+wfJpl/k9HMEzBu0RqAh2wOkY/yw4QpiEVDWHkqJv+r9pBT2I197OWY7x7As7eOUoNbZ03aq+1Kg7bHdXv3NBpK1Ai44augslU9KNAnEPvhUWQhNI8U57SFP7C9X3+y0A2uxg==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFTY:;
- SFS:(376002)(136003)(346002)(366004)(39860400002)(396003)(52536014)(7696005)(110136005)(6506007)(2906002)(316002)(5660300002)(8936002)(8676002)(86362001)(66946007)(66446008)(64756008)(66556008)(66476007)(76116006)(478600001)(33656002)(55016002)(9686003)(26005)(186003)(966005)(71200400001)(53546011)(4326008)(83380400001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: aOvTF5e1x/a2k49ED5ZuTvH/RJIYDvZoVPztD8obwUREkS414FiC4BaQsy7OwxQ1v6J+YLgdNxwga1bNlRmFYFx2lSGVfO9ug4EwlvCtE6+bAZSUm3GbMK3GPxAoYR+bSnmyyawHHPLedHBdSK9TihyW+idlPuc7bzF0tmM8fGpsbBcpqCkrkj9bBXNK2lFydZJcrsXyYT1+cEAHr0FE1uCuqULhQwIlmNjyflm5oWHwnUgM+cFSoC/lx743lvDs9FdD2PAPopkw5nu33dpu/5/nMn1e4XvmEdsab18KDAkVVBkOTRPLFPdUqUukgpnz1gWxrBRYVoYAltre77J1K6Fw+Qzx+9xAKfj7+fHsAD7+XH+fOS798BsoIWIZ6tafEJIuREJNcFqib71X+/ub6/ftz4GSkWZ0bK6LgzVufolXdNKbYwbQR+lRFLgAuc4PdZKtNkL3EaSp/V/PcJaG8n0BOM085F9pvMEazJTdEeI=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CS1PR8401MB1144.NAMPRD84.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 588b1b25-0db6-437f-fd0e-08d831393488
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jul 2020 07:55:03.5525 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: TMuInHzflIUyIBo9MFYQSf0H/xZryLQ5vsqv9dbC7ZqIRKeNru+eGrVl+iF/7gLVPW8WfDuAwV9stodxJgHfwA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CS1PR8401MB1047
-X-OriginatorOrg: hpe.com
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BFF7T6bBdzDrMs
+ for <openbmc@lists.ozlabs.org>; Mon, 27 Jul 2020 06:35:33 +1000 (AEST)
+Received: from localhost (localhost [127.0.0.1])
+ by tuna.sandelman.ca (Postfix) with ESMTP id AFAFB38A54
+ for <openbmc@lists.ozlabs.org>; Sun, 26 Jul 2020 16:14:49 -0400 (EDT)
+Received: from tuna.sandelman.ca ([127.0.0.1])
+ by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id ZP7q4nSsNuaP for <openbmc@lists.ozlabs.org>;
+ Sun, 26 Jul 2020 16:14:49 -0400 (EDT)
+Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
+ by tuna.sandelman.ca (Postfix) with ESMTP id ED55238A1C
+ for <openbmc@lists.ozlabs.org>; Sun, 26 Jul 2020 16:14:48 -0400 (EDT)
+Received: from localhost (localhost [IPv6:::1])
+ by sandelman.ca (Postfix) with ESMTP id F202E1AA
+ for <openbmc@lists.ozlabs.org>; Sun, 26 Jul 2020 16:35:18 -0400 (EDT)
+From: Michael Richardson <mcr@sandelman.ca>
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: Re: BMCWeb policy for HTTPS site identity certificate
+In-Reply-To: <d50417a7-3cc2-1674-b4d1-09283c4ddaf5@linux.ibm.com>
+References: <d50417a7-3cc2-1674-b4d1-09283c4ddaf5@linux.ibm.com>
+X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 26.1
+X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
+ <'$9xN5Ub#
+ z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
 MIME-Version: 1.0
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-26_02:2020-07-24,
- 2020-07-26 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- malwarescore=0 clxscore=1011 phishscore=0 suspectscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2007260058
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Sun, 26 Jul 2020 16:35:18 -0400
+Message-ID: <14851.1595795718@localhost>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -132,42 +57,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Deepak, thanks for the reminder. Miller also mentioned this to me. Now I=
- am follow the steps mentioned in Contributions.md to activate me account. =
-I just signed OpenBMC ICLA and sent back to OpenBMC for the approval.
-Thanks
-Abner
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> -----Original Message-----
-> From: Deepak Kodihalli [mailto:dkodihal@linux.vnet.ibm.com]
-> Sent: Sunday, July 26, 2020 3:41 PM
-> To: Chang, Abner (HPS SW/FW Technologist) <abner.chang@hpe.com>;
-> suryakanth.sekar@linux.intel.com; Brad Bishop
-> <bradleyb@fuzziesquirrel.com>; Patrick Williams <patrick@stwcx.xyz>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: Fix content rendering issue on RemoteBiosConfiguration doc
->=20
-> On 25/07/20 9:18 am, Chang, Abner (HPS SW/FW Technologist) wrote:
-> > Hi Sakar and Deepak,
-> >
-> > I create a PR https://github.com/openbmc/docs/pull/53 to fix content
-> > rendering issue. Please take a look and merge it if you have no
-> > problem with it.
->=20
-> Hi Abner,
->=20
-> We use Gerrit as the code review tool. Do you think you can push the same
-> to Gerrit? Gerrit setup instructions are here -
-> https://github.com/openbmc/docs/blob/master/development/gerrit-
-> setup.md.
->=20
-> Brad and Patrick maintain the openbmc/docs repo, so I would like to ask
-> them - are you okay with merging PRs or must Abner push to Gerrit?
->=20
-> Thanks,
-> Deepak
 
+Joseph Reynolds <jrey@linux.ibm.com> wrote:
+    > Problem:
+    > BMCWeb apparently treats certificates that are either expired or not =
+valid
+    > until a future date as unusable (investigation needed).=C2=A0 And BMC=
+Web deletes
+    > unusable certificates.=C2=A0 This can confuse the administrator, espe=
+cially
+    > considering the BMC's time-of-day clock may not be set as expected.
+
+    > Proposal:
+    > What certificate management policy should BMCWeb use?=C2=A0 Here is a=
+n initial
+    > proposal:
+    > 1. certificate is perfectly good - Use the certificate.
+
+okay.
+
+    > 2. certificate is good but expired or not yet valid - Use the certifi=
+cate and
+    > log a warning.
+
+very good.
+
+    > 3. certificate is missing or bad format or algorithm too old - Use an=
+other
+    > certificate or self-generate a certificate (and log that action).
+    > In no case should BMCWeb should delete any certificate.
+
+I think that there is a problem in 3.
+
+"certificate is missing" is pretty much unambiguous.
+"bad format" depends a bit upon evolution of libraries.
+In particular, a new version of libssl might support some new algorithm, and
+then should the firmware be rolled back, it will "bad format".
+
+So I suggest that the certificate+keypair is never deleted, but may be rena=
+med.
+I think that we could have a debate about getting telemetry about bad
+certificates back via HTTP.
+
+I think that there are some operational considerations relating to
+determining root cause that may trump some security issues relating to
+telling bad actors whether they have succeeded in damaging a certificate.
+
+=2D-
+]               Never tell me the odds!                 | ipv6 mesh network=
+s [
+]   Michael Richardson, Sandelman Software Works        |    IoT architect =
+  [
+]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails  =
+  [
+
+
+
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl8d6QYACgkQgItw+93Q
+3WVHfwf+IUhCn6zPZxIDA2IW2Bd75XGQMVEGOdltF9XE4iZ5qtMwr52bN+PAaLpT
+wm/ACb9ZgLAthILlr9MJtfOfOdYWjm2ytK1UKhwNQn/jSxio00gMhF8xuW2kweF2
+HjnpyVJlT+z4ioN3xMjjk/fCSqwG6U/5VGjeprB73l1KfCXtThlgM772H1dap1O+
+F7F1hS8ukbFbifCmtO5RByBzcy4vOQ79WJa6sQ2PTbvHNU5d9uph5MQY0P1ws86p
+UBIcQ21h5UyZ31hM5DJi/Dd0Z27cFr6ty6bdpSjs01T/bososwZdslWvEWdnzyDi
+O2brSePQKTTFIEidbDXw9x9h//U0XA==
+=bHkb
+-----END PGP SIGNATURE-----
+--=-=-=--
