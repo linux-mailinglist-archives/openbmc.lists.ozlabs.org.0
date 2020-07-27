@@ -2,120 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0700022F3B6
-	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 17:20:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A165722F3A0
+	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 17:17:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BFk5c5lQVzDr1f
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 01:20:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BFk2D66qCzF0WH
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 01:17:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
- (client-ip=148.163.143.35; helo=mx0b-002e3701.pphosted.com;
- envelope-from=prvs=047783edc7=mike.garrett@hpe.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hpe.com
-X-Greylist: delayed 813 seconds by postgrey-1.36 at bilbo;
- Tue, 28 Jul 2020 01:17:01 AEST
-Received: from mx0b-002e3701.pphosted.com (mx0b-002e3701.pphosted.com
- [148.163.143.35])
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=StI5pHsh; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=lnX29KPJ; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BFk1T6RtdzDrdc
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 01:17:00 +1000 (AEST)
-Received: from pps.filterd (m0134425.ppops.net [127.0.0.1])
- by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06REtjoe030644
- for <openbmc@lists.ozlabs.org>; Mon, 27 Jul 2020 15:03:24 GMT
-Received: from g2t2354.austin.hpe.com (g2t2354.austin.hpe.com [15.233.44.27])
- by mx0b-002e3701.pphosted.com with ESMTP id 32ge1nq353-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 27 Jul 2020 15:03:24 +0000
-Received: from G9W8456.americas.hpqcorp.net (g9w8456.houston.hp.com
- [16.216.161.95])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by g2t2354.austin.hpe.com (Postfix) with ESMTPS id B2B9EAC
- for <openbmc@lists.ozlabs.org>; Mon, 27 Jul 2020 15:03:23 +0000 (UTC)
-Received: from G4W9120.americas.hpqcorp.net (2002:10d2:150f::10d2:150f) by
- G9W8456.americas.hpqcorp.net (2002:10d8:a15f::10d8:a15f) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Mon, 27 Jul 2020 15:03:23 +0000
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (15.241.52.11) by
- G4W9120.americas.hpqcorp.net (16.210.21.15) with Microsoft SMTP
- Server (TLS)
- id 15.0.1497.2 via Frontend Transport; Mon, 27 Jul 2020 15:03:23 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jXx7xNIRtvY0KQajzBs4z623vSocaGIBQwQrlbdiwcFtVa9ES2Z2fiyT2vdonecU3q8m7lUm1v0Hj+UZLIJh8XkWepToVFIxr7V0gbV+1RFgrImejzb05E9XuX33lTMJ4YrVZTO6fnht+b3qetk+b6WsM98li3jMdXqNIcdUZez7/o+tpTFKqfBgloj4+vZBHynFs3Q1qi1VWdCF6bvHzWAltWXbx/cftt1BisHNOwY2B5RW2bAtnIGXzAb9DpjiJMg/Bl7VzI2oreG2oFhqqvto5QQkW1kd7Al2leO3P8taiX0HFrg8YlnaGpp2JKa51SjA5JjUyvHaYsz4+pV9sA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nE/vSg63jdIkHjIbkyx09oD81m3VFzCMOXQIDPFrX7s=;
- b=SzhJIXtxCOkFUwIRanCueaWi44q9grUacSsdqxUqfIztwFZN3oMQOvYnvmMf3pRR4gjIPlSR6YCNINJZUgF1wgPNRm7sB3DlNjpVuJS5wTvJ2vCxhFgYjO6BA7qkwP71rlAPkKppXiLzeN3cuWVWV3AjkjppVGC72JDQrpx+vfhMt4suCLgfk0FJ3g1rVYWoWlzm/LeNq6T69ZqB/+5q//XazrQX5SJNGQ3BGHS7Eb9VSn6VWsq1QKvBfoDt8OVmGPkd+Vdrn1twA9MG3hlvZXN6AWTpGfKvnVaeb3yHsX5ONPGbh2lz8sF4CBoy3//QA+FROWe9BRpusfMYkNGaog==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7421::16) by AT5PR8401MB1025.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7429::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.21; Mon, 27 Jul
- 2020 15:03:22 +0000
-Received: from AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::fdaa:51cd:528c:f6c3]) by AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::fdaa:51cd:528c:f6c3%10]) with mapi id 15.20.3216.033; Mon, 27 Jul
- 2020 15:03:22 +0000
-From: "Garrett, Mike (HPE Server Firmware)" <mike.garrett@hpe.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: 2.9 planning/progress docs?
-Thread-Topic: 2.9 planning/progress docs?
-Thread-Index: AdZkJbvWnjJk2LgpSgqzmxj9m7NxPg==
-Date: Mon, 27 Jul 2020 15:03:21 +0000
-Message-ID: <AT5PR8401MB06263771D26D0EE53D41A5818F720@AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BFjzm0CtqzDr7M
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 01:15:28 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1595862924;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5otiXhyDToiIeOKUrBenT0QxdFE5wnjTfCM/8yU6fQs=;
+ b=StI5pHshcGA89yKM4BoaANrjWMuizd5ale8eI+wTrhO5r1FJTG5I2Dx0tlgVvMgwAw+zMk
+ KukvIrEM48oB/7qkFAr1WL8vTyKZVuNzpVpS5xlqO+oclrmi2OD4omUcoxikbQHj/McQ8A
+ 2Eroa59dTKv01r8X4IpA4V7SeaY9iqQ=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1595862925;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5otiXhyDToiIeOKUrBenT0QxdFE5wnjTfCM/8yU6fQs=;
+ b=lnX29KPJHKQGscmsPuu0tuNa6T4ZcmZfa4kfa4ZEEnIFHiDCMtEkKIXkwSIh9EOkEcskaz
+ x7ZlHlZU3Zv+McNZFEn7L1j3dRCX1suzwWaFDfBqkGd+Rtl/CQgtHr8MJ8dxo0avvOeEeL
+ UQ77LiSe1vHvQJry9k3Lg9IWCLR7Neg=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-198-l3l6FCgHPFCrzm_ZO06FMQ-1; Mon, 27 Jul 2020 11:15:22 -0400
+X-MC-Unique: l3l6FCgHPFCrzm_ZO06FMQ-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Mon, 27 Jul 2020 08:15:19 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Mon, 27 Jul 2020 08:15:19 -0700
+From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+To: Michael Richardson <mcr@sandelman.ca>, openbmc <openbmc@lists.ozlabs.org>
+Subject: RE: BMCWeb policy for HTTPS site identity certificate
+Thread-Topic: BMCWeb policy for HTTPS site identity certificate
+Thread-Index: AQHWYQW/V1kfQjtxV0GqYlSYRw4dLKkay9kAgADDJTA=
+Date: Mon, 27 Jul 2020 15:15:18 +0000
+Message-ID: <b7860a2905f04fc8b539a34f730f7b12@SCL-EXCHMB-13.phoenix.com>
+References: <d50417a7-3cc2-1674-b4d1-09283c4ddaf5@linux.ibm.com>
+ <14851.1595795718@localhost>
+In-Reply-To: <14851.1595795718@localhost>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none header.from=hpe.com;
-x-originating-ip: [73.76.19.133]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: f89cd28b-5146-45ef-a4c8-08d8323e345c
-x-ms-traffictypediagnostic: AT5PR8401MB1025:
-x-microsoft-antispam-prvs: <AT5PR8401MB102534331C765FB7F0D954388F720@AT5PR8401MB1025.NAMPRD84.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: e3f3Y5DJct8O6rweT2LYU5PVd9/ShNOJwq2xTjv0+Szm2akyIgeAdsTVPMzqVDpjQyrtUcbcmKMZt9LPBG2TIDcMgrJ/x5RLOevkI3GvRFgpXMxK/NrOvm065+17qEz8yWMQCmdQNaMj64WBKGCrMJboGbov4WUZ/qshDhlp/roF9CCOggJA7C9mxVUDaY63SUCqitZuBOmadCJOGhQebDdb+9cjhOl6tl8hgT9REC4Ogi8cDNbAlCbqMg3uCe0PSiOcFRHIteEa7KLqGwkIyhcP+UZ2MGnj7lvKiKvsZ6LLxAZiOn6jnQOgutWiM0lFBLcdaZUVtKqpizrILBsAPA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFTY:;
- SFS:(366004)(346002)(39860400002)(396003)(376002)(136003)(66946007)(64756008)(66476007)(66556008)(66446008)(5660300002)(52536014)(8676002)(86362001)(6506007)(9686003)(76116006)(7696005)(4744005)(478600001)(55016002)(316002)(186003)(71200400001)(26005)(8936002)(83380400001)(2906002)(9326002)(6916009)(33656002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: cbB7qlXRnw40bxvhIv4e7yB0ZJxfM1HNo2pFowStX955NTzzHdpb9y4yyzBpfF+PHYyWgNolSCpHkVbg3dx/+0V7xySHuTxVEB+fHT7YBxpqjFxK++u3reQJIXyc32d6O+Kc/nZA/mO2TXxGJ6O3oDbSZAv+fft2uBRjQV6YQcPlsowzSomWnD1R2LWN+kve5DXZvc5iBKa1j4lNK/isxLQ/5kyHgmJvTjlbhYSlUsOUZL7Xd85daakh8z6bWZJYAIU8ts25L+F4qdMhLYpoeDYn8AzPtKvq+L3kPrqkgN75aIn5vAkKXT3LJFzfTNJgUzUDXPgqwTfFsUlRtK1bJzKWAxkHYP8Ea6zLgnCW8uMlYSERYH1Dt+/OLe6j7PoubyJuOOI1Wb2HZdR6v4+Fn+i1Xe6uBPwcHMgpn/vGyV13pQl34yh3oIll8g1n4UwR8Ewlx0q2OSXYymlwR52yntJ1br/RorG59B9JDBtsdKo=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_AT5PR8401MB06263771D26D0EE53D41A5818F720AT5PR8401MB0626_"
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [98.246.252.115]
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: f89cd28b-5146-45ef-a4c8-08d8323e345c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jul 2020 15:03:21.9243 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FVfJ/+xJO3cL2SmgpY280LyUyMxOzy6pmGeXid7BCWY/x/Q011ICliThnXOQ1yuUwwK1vumaefHjTFpftxRxoA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AT5PR8401MB1025
-X-OriginatorOrg: hpe.com
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-27_08:2020-07-27,
- 2020-07-27 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0
- phishscore=0 clxscore=1015 adultscore=0 priorityscore=1501 malwarescore=0
- mlxscore=0 lowpriorityscore=0 spamscore=0 mlxlogscore=836 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2007270105
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,105 +94,45 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_AT5PR8401MB06263771D26D0EE53D41A5818F720AT5PR8401MB0626_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogb3BlbmJtYyBbbWFpbHRv
+Om9wZW5ibWMtDQo+IGJvdW5jZXMrYnJ1Y2VfbWl0Y2hlbGw9cGhvZW5peC5jb21AbGlzdHMub3ps
+YWJzLm9yZ10gT24gQmVoYWxmIE9mDQo+IE1pY2hhZWwgUmljaGFyZHNvbg0KPiBTZW50OiBTdW5k
+YXksIEp1bHkgMjYsIDIwMjAgMTM6MzUNCj4gVG86IG9wZW5ibWMNCj4gU3ViamVjdDogUmU6IEJN
+Q1dlYiBwb2xpY3kgZm9yIEhUVFBTIHNpdGUgaWRlbnRpdHkgY2VydGlmaWNhdGUNCj4gDQo+IA0K
+PiBKb3NlcGggUmV5bm9sZHMgPGpyZXlAbGludXguaWJtLmNvbT4gd3JvdGU6DQo+ICAgICA+IFBy
+b2JsZW06DQo+ICAgICA+IEJNQ1dlYiBhcHBhcmVudGx5IHRyZWF0cyBjZXJ0aWZpY2F0ZXMgdGhh
+dCBhcmUgZWl0aGVyIGV4cGlyZWQgb3Igbm90DQo+IHZhbGlkDQo+ICAgICA+IHVudGlsIGEgZnV0
+dXJlIGRhdGUgYXMgdW51c2FibGUgKGludmVzdGlnYXRpb24gbmVlZGVkKS4gIEFuZCBCTUNXZWIN
+Cj4gZGVsZXRlcw0KPiAgICAgPiB1bnVzYWJsZSBjZXJ0aWZpY2F0ZXMuICBUaGlzIGNhbiBjb25m
+dXNlIHRoZSBhZG1pbmlzdHJhdG9yLCBlc3BlY2lhbGx5DQo+ICAgICA+IGNvbnNpZGVyaW5nIHRo
+ZSBCTUMncyB0aW1lLW9mLWRheSBjbG9jayBtYXkgbm90IGJlIHNldCBhcyBleHBlY3RlZC4NCj4g
+DQo+ICAgICA+IFByb3Bvc2FsOg0KPiAgICAgPiBXaGF0IGNlcnRpZmljYXRlIG1hbmFnZW1lbnQg
+cG9saWN5IHNob3VsZCBCTUNXZWIgdXNlPyAgSGVyZSBpcyBhbg0KPiBpbml0aWFsDQo+ICAgICA+
+IHByb3Bvc2FsOg0KPiAgICAgPiAxLiBjZXJ0aWZpY2F0ZSBpcyBwZXJmZWN0bHkgZ29vZCAtIFVz
+ZSB0aGUgY2VydGlmaWNhdGUuDQo+IA0KPiBva2F5Lg0KPiANCj4gICAgID4gMi4gY2VydGlmaWNh
+dGUgaXMgZ29vZCBidXQgZXhwaXJlZCBvciBub3QgeWV0IHZhbGlkIC0gVXNlIHRoZSBjZXJ0aWZp
+Y2F0ZQ0KPiBhbmQNCj4gICAgID4gbG9nIGEgd2FybmluZy4NCj4gDQo+IHZlcnkgZ29vZC4NCj4g
+DQo+ICAgICA+IDMuIGNlcnRpZmljYXRlIGlzIG1pc3Npbmcgb3IgYmFkIGZvcm1hdCBvciBhbGdv
+cml0aG0gdG9vIG9sZCAtIFVzZQ0KPiBhbm90aGVyDQo+ICAgICA+IGNlcnRpZmljYXRlIG9yIHNl
+bGYtZ2VuZXJhdGUgYSBjZXJ0aWZpY2F0ZSAoYW5kIGxvZyB0aGF0IGFjdGlvbikuDQo+ICAgICA+
+IEluIG5vIGNhc2Ugc2hvdWxkIEJNQ1dlYiBzaG91bGQgZGVsZXRlIGFueSBjZXJ0aWZpY2F0ZS4N
+Cj4gDQo+IEkgdGhpbmsgdGhhdCB0aGVyZSBpcyBhIHByb2JsZW0gaW4gMy4NCj4gDQo+ICJjZXJ0
+aWZpY2F0ZSBpcyBtaXNzaW5nIiBpcyBwcmV0dHkgbXVjaCB1bmFtYmlndW91cy4NCj4gImJhZCBm
+b3JtYXQiIGRlcGVuZHMgYSBiaXQgdXBvbiBldm9sdXRpb24gb2YgbGlicmFyaWVzLg0KPiBJbiBw
+YXJ0aWN1bGFyLCBhIG5ldyB2ZXJzaW9uIG9mIGxpYnNzbCBtaWdodCBzdXBwb3J0IHNvbWUgbmV3
+IGFsZ29yaXRobSwNCj4gYW5kIHRoZW4gc2hvdWxkIHRoZSBmaXJtd2FyZSBiZSByb2xsZWQgYmFj
+aywgaXQgd2lsbCAiYmFkIGZvcm1hdCIuDQo+IA0KPiBTbyBJIHN1Z2dlc3QgdGhhdCB0aGUgY2Vy
+dGlmaWNhdGUra2V5cGFpciBpcyBuZXZlciBkZWxldGVkLCBidXQgbWF5IGJlDQo+IHJlbmFtZWQu
+DQo+IEkgdGhpbmsgdGhhdCB3ZSBjb3VsZCBoYXZlIGEgZGViYXRlIGFib3V0IGdldHRpbmcgdGVs
+ZW1ldHJ5IGFib3V0IGJhZA0KPiBjZXJ0aWZpY2F0ZXMgYmFjayB2aWEgSFRUUC4NCj4gDQo+IEkg
+dGhpbmsgdGhhdCB0aGVyZSBhcmUgc29tZSBvcGVyYXRpb25hbCBjb25zaWRlcmF0aW9ucyByZWxh
+dGluZyB0bw0KPiBkZXRlcm1pbmluZyByb290IGNhdXNlIHRoYXQgbWF5IHRydW1wIHNvbWUgc2Vj
+dXJpdHkgaXNzdWVzIHJlbGF0aW5nIHRvDQo+IHRlbGxpbmcgYmFkIGFjdG9ycyB3aGV0aGVyIHRo
+ZXkgaGF2ZSBzdWNjZWVkZWQgaW4gZGFtYWdpbmcgYSBjZXJ0aWZpY2F0ZS4NCg0KT25lIG1vcmUg
+dGhpbmcgaXMgZm9yIDMgaXMgdGhhdCB0aGUgaW5jaWRlbnQgbXVzdCBiZSBsb2dnZWQuDQoNCj4g
+DQo+IC0tDQo+IF0gICAgICAgICAgICAgICBOZXZlciB0ZWxsIG1lIHRoZSBvZGRzISAgICAgICAg
+ICAgICAgICAgfCBpcHY2IG1lc2gNCj4gbmV0d29ya3MgWw0KPiBdICAgTWljaGFlbCBSaWNoYXJk
+c29uLCBTYW5kZWxtYW4gU29mdHdhcmUgV29ya3MgICAgICAgIHwgICAgSW9UDQo+IGFyY2hpdGVj
+dCAgIFsNCj4gXSAgICAgbWNyQHNhbmRlbG1hbi5jYSAgaHR0cDovL3d3dy5zYW5kZWxtYW4uY2Ev
+ICAgICAgICB8ICAgcnVieSBvbg0KPiByYWlscyAgICBbDQo+IA0KPiANCj4gDQoNCg==
 
-Hello,
-
-Is there a good place to find the 2.9 change list, both in progress and pla=
-nned?  For instance, I noticed a lot of change occurring in the dbus-sensor=
-s repo, but I'd like to see what master plan is guiding these commits and w=
-hen they are "done" for 2.9.  I know things might be more fluid than that, =
-but if there is a doc, I'd like to keep an eye on it.
-
-We have some patches for dbus-sensors specific to our platforms that are fr=
-equently being invalidated by updates upstream, and instead of constantly r=
-egenerating our patches, it would be nice to know when the upstream has acc=
-omplished its goals for 2.9 and we can regenerate our patches once.  We are=
- still getting acquainted with the processes here.
-
-Thanks,
-
-Mike
-
---_000_AT5PR8401MB06263771D26D0EE53D41A5818F720AT5PR8401MB0626_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hello,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Is there a good place to find the 2.9 change list, b=
-oth in progress and planned?&nbsp; For instance, I noticed a lot of change =
-occurring in the dbus-sensors repo, but I&#8217;d like to see what master p=
-lan is guiding these commits and when they are
- &#8220;done&#8221; for 2.9.&nbsp; I know things might be more fluid than t=
-hat, but if there is a doc, I&#8217;d like to keep an eye on it.&nbsp;
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We have some patches for dbus-sensors specific to ou=
-r platforms that are frequently being invalidated by updates upstream, and =
-instead of constantly regenerating our patches, it would be nice to know wh=
-en the upstream has accomplished its
- goals for 2.9 and we can regenerate our patches once.&nbsp; We are still g=
-etting acquainted with the processes here.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Mike<o:p></o:p></p>
-</div>
-</body>
-</html>
-
---_000_AT5PR8401MB06263771D26D0EE53D41A5818F720AT5PR8401MB0626_--
