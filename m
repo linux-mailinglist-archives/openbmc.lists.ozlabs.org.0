@@ -1,81 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ED3822FB3B
-	for <lists+openbmc@lfdr.de>; Mon, 27 Jul 2020 23:22:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9740722FC98
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 01:06:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BFt6f5ng0zF1fN
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 07:22:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BFwQw2MJ4zDqnp
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 09:06:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ami.com
+ (client-ip=63.147.10.42; helo=atlmailgw2.ami.com; envelope-from=lucasp@ami.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=ami.com
+X-Greylist: delayed 909 seconds by postgrey-1.36 at bilbo;
+ Tue, 28 Jul 2020 08:52:19 AEST
+Received: from atlmailgw2.ami.com (atlmailgw2.ami.com [63.147.10.42])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BFt4h03g7zF1fk
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 07:20:19 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06RL3JEY168934; Mon, 27 Jul 2020 17:20:17 -0400
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32j2papx6t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2020 17:20:16 -0400
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06RL9Jcf013409;
- Mon, 27 Jul 2020 21:20:15 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma03wdc.us.ibm.com with ESMTP id 32gcy5c90u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 27 Jul 2020 21:20:15 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 06RLKC2W52560278
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Jul 2020 21:20:13 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D2DCBBE051;
- Mon, 27 Jul 2020 21:20:14 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A543DBE053;
- Mon, 27 Jul 2020 21:20:14 +0000 (GMT)
-Received: from [9.163.49.148] (unknown [9.163.49.148])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Mon, 27 Jul 2020 21:20:14 +0000 (GMT)
-Subject: Re: [PATCH 2/2] rainier: Add LEDs that are controlled by ASPEED
-To: vishwanatha subbanna <vishwa@linux.vnet.ibm.com>,
- devicetree@vger.kernel.org, joel@jms.id.au, openbmc@lists.ozlabs.org
-References: <FCA5474B-8A73-4D2B-9EF7-8B2E49DDFDD2@linux.vnet.ibm.com>
-From: Eddie James <eajames@linux.ibm.com>
-Message-ID: <898571b3-ceb7-98b6-b280-3fa3a653e32a@linux.ibm.com>
-Date: Mon, 27 Jul 2020 16:20:14 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
-MIME-Version: 1.0
-In-Reply-To: <FCA5474B-8A73-4D2B-9EF7-8B2E49DDFDD2@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BFw6q37TbzDqwN
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 08:52:18 +1000 (AEST)
+X-AuditID: ac10606f-4c5ff70000003ed3-9c-5f1f570d566c
+Received: from atlms2.us.megatrends.com (atlms2.us.megatrends.com
+ [172.16.96.152])
+ (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by atlmailgw2.ami.com (Symantec Messaging Gateway) with SMTP id
+ 47.00.16083.D075F1F5; Mon, 27 Jul 2020 18:37:01 -0400 (EDT)
+Received: from ATLMS1.us.megatrends.com ([fe80::8c55:daf0:ef05:5605]) by
+ atlms2.us.megatrends.com ([fe80::29dc:a91e:ea0c:cdeb%12]) with mapi id
+ 14.03.0468.000; Mon, 27 Jul 2020 18:37:01 -0400
+From: Lucas Panayioto <lucasp@ami.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: openBMC LDAP current state
+Thread-Topic: openBMC LDAP current state
+Thread-Index: AdZkZnHXtMhRMUGeQD6GURdSh1e9PQ==
+Date: Mon, 27 Jul 2020 22:37:01 +0000
+Message-ID: <F3BFABD31E77FC429077E1D70660C6D2022CAABC5A@atlms1.us.megatrends.com>
+Accept-Language: en-US
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-27_14:2020-07-27,
- 2020-07-27 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0
- spamscore=0 impostorscore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 mlxscore=0 suspectscore=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007270138
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.16.76.222]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrJIsWRmVeSWpSXmKPExsWyRiBhhi5vuHy8wdI3IhanWl6wODB6nJ+x
+ kDGAMaqB0SYxLy+/JLEkVSEltTjZVimgKLMsMblSSSEzxVbJUEmhICcxOTU3Na/EVimxoCA1
+ L0XJjksBA9gAlWXmKaTmJeenZOal2yp5BvvrWliYWuoaKtmFZKQqZOal5RflJpZk5ucpJOfn
+ lQBVp6YARRUSujkzZhz5xFqwnrniwULzBsZrTF2MHBwSAiYSHx9kdDFycggJ7GKSWL5DvYuR
+ C8g+zCix7c4DRpAEm4CaxKsLx9lBbBEBS4klD9rZQHqFBZQlvnWKQ4Q1JLYeewpVoicxdcF9
+ MJtFQFXizdpbzCA2r0CgRN+0L0wgNqOAmMT3U2vAbGYBcYlbT+aD2RICAhJL9pxnhrBFJV4+
+ /scKYStKrJrZzgpRryOxYPcnNghbW2LZwtdQ8wUlTs58wjKBUWgWkrGzkLTMQtIyC0nLAkaW
+ VYxCiSU5uYmZOenlRnqJuZl6yfm5mxgh8Zq/g/HjR/NDjEwcjIcYJTiYlUR4uUVl4oV4UxIr
+ q1KL8uOLSnNSiw8xOgE9PJFZihsU8sCojDc2MJAShXEMTcxMzI3MDS1NzI2NlcR5J61dEyck
+ kA5MEtmpqQWpRTBDmDg4pRoYp1fN+xnw7dOXIkN3yU8xel/E5m3ncdx7+K5aS38Jv/uH0r9N
+ F7yfyNrPiZk65dp28Z5I6dORajamq01mZq9591thSw/P9sCWM2s/RZz8vdmigTtuSejzjZ+T
+ pkre2SOd9tCj26t940w+e6m6N/OydML33jRRDPKKfyj9SfDawXXr3seEe8UEKbEUZyQaajEX
+ FScCAPO6l83sAgAA
+X-Mailman-Approved-At: Tue, 28 Jul 2020 09:05:25 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,66 +75,27 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi OpenBMC Commnunity,
 
-On 7/27/20 7:40 AM, vishwanatha subbanna wrote:
-> These are the LEDs that have direct GPIO connection from ASPEED
+I'm Lucas Panayioto from AMI. 
+I was looking into Phosphorus-User-Management 
+I wanted to get some clarity with the current state of LDAP user privilege a=
+nd LDAP group privilege.
 
+Currently LDAP Role groups do NOT check the LDAP server for members in the g=
+roup and LDAP users are given a default privilege, which is NoAccess.
 
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
+I wanted to know if this is correct or not
 
+Thanks,
+Lucas
 
->
-> Signed-off-by: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>
-> ---
-> arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 24 ++++++++++++++++++++++--
-> 1 file changed, 22 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index ecbce50..dc68c49 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -72,6 +72,26 @@
-> 	leds {
-> 		compatible = "gpio-leds";
->
-> +		/* BMC Card fault LED at the back */
-> +		bmc-ingraham0 {
-> +			gpios = <&gpio0 ASPEED_GPIO(H, 1) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +		/* Enclosure ID LED at the back */
-> +		rear-enc-id0 {
-> +			gpios = <&gpio0 ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +		/* Enclosure fault LED at the back */
-> +		rear-enc-fault0 {
-> +			gpios = <&gpio0 ASPEED_GPIO(H, 3) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> +		/* PCIE slot power LED */
-> +		pcieslot-power {
-> +			gpios = <&gpio0 ASPEED_GPIO(P, 4) GPIO_ACTIVE_LOW>;
-> +		};
-> +
-> 		/* System ID LED that is at front on Op Panel */
-> 		front-sys-id0 {
-> 			retain-state-shutdown;
-> @@ -112,7 +132,7 @@
-> 	/*E0-E7*/	"","","","","","","","",
-> 	/*F0-F7*/	"","","","","","","","",
-> 	/*G0-G7*/	"","","","","","","","",
-> -	/*H0-H7*/	"","","","","","","","",
-> +	/*H0-H7*/	"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
-> 	/*I0-I7*/	"","","","","","","","",
-> 	/*J0-J7*/	"","","","","","","","",
-> 	/*K0-K7*/	"","","","","","","","",
-> @@ -120,7 +140,7 @@
-> 	/*M0-M7*/	"","","","","","","","",
-> 	/*N0-N7*/	"","","","","","","","",
-> 	/*O0-O7*/	"","","","","","","","",
-> -	/*P0-P7*/	"","","","","","","","",
-> +	/*P0-P7*/	"","","","","pcieslot-power","","","",
-> 	/*Q0-Q7*/	"cfam-reset","","","","","","","",
-> 	/*R0-R7*/	"","","","","","","","",
-> 	/*S0-S7*/	"presence-ps0","presence-ps1","presence-ps2","presence-ps3",
+Please consider the environment before printing this email.
+
+The information contained in this message may be confidential and proprietar=
+y to American Megatrends (AMI).  This communication is intended to be read o=
+nly by the individual or entity to whom it is addressed or by their designee=
+. If the reader of this message is not the intended recipient, you are on no=
+tice that any distribution of this message, in any form, is strictly prohibi=
+ted.  Please promptly notify the sender by reply e-mail or by telephone at 7=
+70-246-8600, and then delete or destroy all copies of the transmission.
