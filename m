@@ -2,78 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DE54231002
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 18:43:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76EC323105C
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jul 2020 19:04:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BGMtP2MGgzDr0P
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 02:43:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BGNLZ5ysXzDr3N
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 03:04:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=sandelman.ca (client-ip=2607:f0b0:f:3:216:3eff:fe7c:d1f3;
+ helo=tuna.sandelman.ca; envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=sandelman.ca
+X-Greylist: delayed 160074 seconds by postgrey-1.36 at bilbo;
+ Wed, 29 Jul 2020 03:03:24 AEST
+Received: from tuna.sandelman.ca (tuna.sandelman.ca
+ [IPv6:2607:f0b0:f:3:216:3eff:fe7c:d1f3])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BGMsT051XzDqyp
- for <openbmc@lists.ozlabs.org>; Wed, 29 Jul 2020 02:42:19 +1000 (AEST)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06SGXYLQ000612
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 12:42:16 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32jpwsstyp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 12:42:16 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06SGTOFJ018793
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 16:42:15 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma01dal.us.ibm.com with ESMTP id 32gcy39jme-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 16:42:15 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 06SGgE7i44761364
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 16:42:14 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EE00F136055
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 16:42:13 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD66E136059
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 16:42:13 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.80.201.74])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 16:42:13 +0000 (GMT)
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Help needed: BMC vendors develop core root of trust
-To: openbmc <openbmc@lists.ozlabs.org>
-Message-ID: <792bd0f2-753e-6acb-c541-805c32ecfaea@linux.ibm.com>
-Date: Tue, 28 Jul 2020 11:42:12 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BGNKm5fmRzDqN2
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Jul 2020 03:03:23 +1000 (AEST)
+Received: from localhost (localhost [127.0.0.1])
+ by tuna.sandelman.ca (Postfix) with ESMTP id ABDF038A2F;
+ Tue, 28 Jul 2020 12:42:44 -0400 (EDT)
+Received: from tuna.sandelman.ca ([127.0.0.1])
+ by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+ with LMTP id IirdVvsMlG_S; Tue, 28 Jul 2020 12:42:43 -0400 (EDT)
+Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
+ by tuna.sandelman.ca (Postfix) with ESMTP id 3AC04389E3;
+ Tue, 28 Jul 2020 12:42:43 -0400 (EDT)
+Received: from localhost (localhost [IPv6:::1])
+ by sandelman.ca (Postfix) with ESMTP id DE6061AA;
+ Tue, 28 Jul 2020 13:03:14 -0400 (EDT)
+From: Michael Richardson <mcr@sandelman.ca>
+To: Ed Tanous <ed@tanous.net>, openbmc <openbmc@lists.ozlabs.org>
+Subject: Re: BMCWeb policy for HTTPS site identity certificate
+In-Reply-To: <CACWQX81hRk+syCoDmhnQRLEZx-usQRbos___vTDOCCBFF7LqVQ@mail.gmail.com>
+References: <d50417a7-3cc2-1674-b4d1-09283c4ddaf5@linux.ibm.com>
+ <14851.1595795718@localhost>
+ <CACWQX81hRk+syCoDmhnQRLEZx-usQRbos___vTDOCCBFF7LqVQ@mail.gmail.com>
+X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 26.1
+X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
+ <'$9xN5Ub#
+ z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-28_14:2020-07-28,
- 2020-07-28 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 bulkscore=0 clxscore=1015 priorityscore=1501
- mlxlogscore=680 suspectscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007280124
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Tue, 28 Jul 2020 13:03:14 -0400
+Message-ID: <17750.1595955794@localhost>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,25 +64,89 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--=-=-=
+Content-Type: text/plain
 
-Are representatives from BMC vendors such as ASPEED and Nuvoton part of 
-the OpenBMC community?
-Per the OCP security workgroup [1] disciussion on in 2020-07-28 (notes: 
-[2]) and with respect to BMC Secure and trusted boot designs [3], how 
-should we proceed to develop core root of trust in systems or platforms 
-that use BMCs?
 
-The OCP security workgroup is interested in creating standards for BMC 
-and platform-level core root of trust; these would cover the BMC 
-hardware, and OpenBMC could use them to implement a standard solution.  
-Quite frankly, this area is is beyond my knowledge: my only purpose here 
-is to make introductions needed to better secure future systems.
+Ed Tanous <ed@tanous.net> wrote:
+    >> "certificate is missing" is pretty much unambiguous.
 
-- Joseph
+    > Unfortunately, this ambiguity comes with the territory.  On first
+    > boot, bmcweb has no certificate, and doesn't know the difference
+    > between "missing" and "was never there".  Regardless, to bring up TLS
+    > it needs _some_ certificate, so the original behavior was that it
 
-[1]: https://www.opencompute.org/wiki/Security
-[2]: 
-https://docs.google.com/spreadsheets/d/1o5Vx8QFfHX_AO9pNw5wEjVNeCQ516P55ef71dhz4f6M/edit#gid=0
-[3]: 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/26169/2/security/OpenBMCSecureBoot.md
+This is reasonable behaviour, but given that browsers are trying very hard to
+make the certificate exception box go away, this does not really help
+long-term in my opinion.
 
+Missing means: "ENOFILE", not "Can we use this certificate file for starting
+up an SSL Connect".
+
+    >> "bad format" depends a bit upon evolution of libraries.
+
+    > Today this is defined as the above.  "Can we use this certificate file
+    > for starting up an SSL context?"  If the answer is no, we regenerate.
+    > In theory, the only library we rely on for this is OpenSSL, which I
+    > would hope doesn't have a backward incompatible evolution in this
+    > area.
+
+Yes, it does.
+For instance, you can't load 1024-bit RSA keys with 1.1.1.
+It refuses to start.
+Meanwhile, 1.0.x does not have any ECDSA support, and you won't find this out
+until the TLS session actually tries to start, at which point, it logs an
+obsure message to stderr, and returns an error that most programs don't know
+what to do with.
+(And the TCP connection just ends)
+
+    >> In particular, a new version of libssl might support some new algorithm, and
+    >> then should the firmware be rolled back, it will "bad format".
+
+    > In this hypothetical, you're thinking about a new, non x509
+    > certificate file format?  I vote let's cross that bridge when we get
+
+Nope, not about non-X.509.
+Algorithms and keysize changes.
+
+    > there, as it seems like there's a lot more discussion that would need
+    > to happen around upgrades and downgrades.  Today the assumption we
+    > make is that x509 certificate reading is backward and forward
+    > compatible since the begining of openbmc, which, to my knowledge, it
+    > is.
+
+Until... it isn't.
+But, the proposal would have considered a certificate with an invalid date as
+being invalid, and generated a new one.
+
+    >> So I suggest that the certificate+keypair is never deleted, but may be renamed.
+    >> I think that we could have a debate about getting telemetry about bad
+    >> certificates back via HTTP.
+
+    > We can have a discussion, but I suspect a lot of people would be very
+    > against using unencrypted HTTP for this purpose.
+
+I agree.
+So, how do you get information at this point?
+
+--
+]               Never tell me the odds!                 | ipv6 mesh networks [
+]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
+]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
+
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl8gWlIACgkQgItw+93Q
+3WXn1AgAnoG1Xj28QcEW4hYyMNmmuQw0JLfhBJO+yaNGX757K/FM9YU3w/ikt3Sl
+XtS5AgdOGuX7NC6R/liuPOFTqUqNiXa88aQs3iTFFzrL6IUl4BuqK8VJsjzGfPmR
+HWYflJ1dqZnSR81NsvkIOjq53jrpucoypv2VvwdtP4Pyqv9hS9Ii5o2jX9h98AYi
+J8+ELCCDu9QBtd7K9Zu0yeltevdnkUg2JRM0PGhXoQvnXOAu3lWYBEZ0b+mLZHDc
+sK/f2ABfX7sEQy8uEs1YGSxNpKgxA0lZxv9h8ChXG5g8T4IjkZi5kV7yj25Bq16H
+3kYn6Iet8FZY779rqyF+ElyhZZsFrQ==
+=/5kY
+-----END PGP SIGNATURE-----
+--=-=-=--
