@@ -2,69 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 643C22317A6
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 04:27:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6FFF2317AC
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 04:29:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BGcrd34qRzDqy1
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 12:27:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BGctS31rqzDr0Q
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 12:29:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com;
+ (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
  envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20150623.gappssmtp.com
  header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=gj9t+Tcb; dkim-atps=neutral
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com
- [IPv6:2607:f8b0:4864:20::b31])
+ header.s=20150623 header.b=iOSaTqaj; dkim-atps=neutral
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
+ [IPv6:2607:f8b0:4864:20::b30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BGcqm0scMzDqxc
- for <openbmc@lists.ozlabs.org>; Wed, 29 Jul 2020 12:26:42 +1000 (AEST)
-Received: by mail-yb1-xb31.google.com with SMTP id m200so7562488ybf.10
- for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 19:26:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BGcsf4CXMzDqxc
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Jul 2020 12:28:22 +1000 (AEST)
+Received: by mail-yb1-xb30.google.com with SMTP id m200so7564155ybf.10
+ for <openbmc@lists.ozlabs.org>; Tue, 28 Jul 2020 19:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=LABhCkWC0/D2d56CeOjpEfxF2te9J9ckum0bfOr3p5I=;
- b=gj9t+TcbVBH+QAJfJrgcGhmo7/gnSVlhCrKXx806jI8n8YOuCTe0/EWy5DBDWdkgCl
- 7fBoAHoR0zNVeQlf98K1KHAC5jOalwICcIHd/e9mPl8TGeJj43pGqsweIHTiV8yYhP+Z
- aG1xKcZedtr1VLFsqC8qOW5FvjenKfpb6slxHRlLeeRXuujvX+peMlE8LA7t9lvXEtFD
- otnBD9ndYb3gmEJMoE49ZQE0Vttl0Qp3Pgblc9JU5G366vQHw+6pN9RQM2mi4YHuUpV0
- s3uOyEbfta/p7tYpI2sK9YWarrz7+fa/oLAAvG9/6UErvjkMyVUdsFNWcyILd3kwVlMJ
- ZVXQ==
+ :cc; bh=GxZ4IQQf47YM3/c2/cq0RO2YqKlK6oA05+IfKK718Yg=;
+ b=iOSaTqajt1NjIZbjomyA7KVpJm+pwMsru47U8ssmblbOWIRdTBMQKQZGN7CD8+BhdU
+ mAntgBhXU8faTIpvcRm9D//eIAm/8WOdfYmu1eATax9h74nLABnM3PnCHZcklqDWlt5k
+ AtIsn2wyP468FtRe3YV4zbK+HbFmw9xXQBV1NHlelQ1RZXtIXjVqaF9JZjgWf5XBoAGO
+ V7/ghJ2npew4Bqoshi6tr9/dllviWq4WJ9iTiPli19e2WmHWUkeM5lSe9y+w1wOmkgBk
+ gCNsZH+an2qQcU1NSLIifU3jnE6TEAagasnMR3FjJ0qtndNqNem2qEFXBnXdNgNgf8ys
+ cKMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=LABhCkWC0/D2d56CeOjpEfxF2te9J9ckum0bfOr3p5I=;
- b=VlZQrXbHgoLDYF2XexGAcG0+99DdqXsZJ9QGjSy6eP5SO1zCAqxFrfveg7bkspBY8x
- 5Ic6nTjTbJRtolSyUpx2I4hYnFhbJq2UVGQpd9E0k7vhpANDbyNJYf1y10a8nYbhoTid
- 1dEpcZv8U0FhMhi4swUavU8dhEkMKoVJ7u6lKjTUHzN58KCT95gM2P3qKt0WyTC4ctRb
- Uwvu35q4QtMZP4Cgs4oE5qCTRmkwpJMQ6+HCSVXw0s38LC0JiOPlkf1pMETQe5LjU7yi
- On8o+hTFjWoIMcIIDzzfh6gaTrMSLDiWmirFUhmNSTTlwA5U5kZwpns50Udk+QAJpfuC
- N62w==
-X-Gm-Message-State: AOAM5318B7Vp40wQYyVYhG9m6KHoY71NYIu69V1+BiELzqyNsA/59QIw
- N/N/UkjHzhjHvSpd/cgDU5Ese1ybTukWu0H7lKAGsA==
-X-Google-Smtp-Source: ABdhPJzmdgnuK4Wy0QitUToxm21LPIoEVqaXXSJXvm8s4UW9ryJzzswb+xb8kny6hNvNjzx4TvIOgqrMBuCCbnD2kBs=
-X-Received: by 2002:a25:a162:: with SMTP id z89mr49832843ybh.449.1595989599295; 
- Tue, 28 Jul 2020 19:26:39 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=GxZ4IQQf47YM3/c2/cq0RO2YqKlK6oA05+IfKK718Yg=;
+ b=k9nccY6ZI+1OjX8PMtRE6IVJN7WHknsizKVDkf32g8HHPXJ6MnWZ3fvt4VL12f8NiO
+ avLpV31QXx22DQ90SqNgckOlnkB1u6Jeizva/gXqIdjtWowxVNMTPC9gKGiUJLqrbG/6
+ QVHTiSitVOAFhSw7Q+dK0uWLlrTgl3YLo2pkMpaHYynTdOM3M1tWKegdwuJ9DcUPBKD9
+ GRMDVtlb5l1fShKw54U8aUmudT8UNGioxaIbEzRLvQ3mL0TTIQ/2ranit+D5BzcTvHYF
+ 8J6NfmlO1puB+AWW5WOVaQuq5vOCPrtkYx8v6dmzPKaa1UH0j7Ts3Gqi9RrQ4pen1Pw1
+ Henw==
+X-Gm-Message-State: AOAM530lkqXvLvc1qq7t+DYV0Yjcy5oz3to7y/N9x1lIAvX0ckZyKaXG
+ ejfPX8BQ5wE2iLOKr68wMvLiX84s5EsDmfIkgHWvkv6uiuqllw==
+X-Google-Smtp-Source: ABdhPJyy+eFf+QEV1fdCl+9Ay8WtdTU1YUR3tIrmComVe+mgrhp3BwlJcKZMmNU+JEnkE3LWk+HaH+r90u9bqpAQFYI=
+X-Received: by 2002:a5b:74d:: with SMTP id s13mr42603402ybq.170.1595989698889; 
+ Tue, 28 Jul 2020 19:28:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <HK0PR04MB3153FFBD73CC1A4F35D88886A7730@HK0PR04MB3153.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB3153FFBD73CC1A4F35D88886A7730@HK0PR04MB3153.apcprd04.prod.outlook.com>
+References: <d50417a7-3cc2-1674-b4d1-09283c4ddaf5@linux.ibm.com>
+ <20200727173258.GQ3922@heinlein> <18129.1595955887@localhost>
+In-Reply-To: <18129.1595955887@localhost>
 From: Ed Tanous <ed@tanous.net>
-Date: Tue, 28 Jul 2020 19:26:29 -0700
-Message-ID: <CACWQX82P0wr22kJ2fw6WDZz9zEELzPWJqOaRu1wP-E2B81dD=w@mail.gmail.com>
-Subject: Re: x86-power-control - slot AC cycle
-To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+Date: Tue, 28 Jul 2020 19:28:08 -0700
+Message-ID: <CACWQX83hOUEVS4hjy3MSwhwUnb9U+SjktJPsWKkTzRygX4pxuw@mail.gmail.com>
+Subject: Re: BMCWeb policy for HTTPS site identity certificate
+To: Michael Richardson <mcr@sandelman.ca>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,72 +75,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jason Bills <jason.m.bills@intel.com>,
- Kuiying Wang <kuiying.wang@intel.com>, James Feist <james.feist@intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "P. Priyatharshan" <PriyatharshanP@hcl.com>, Vijay Khemka <vijaykhemka@fb.com>,
- Kumar Thangavel <thangavel.k@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jul 28, 2020 at 10:11 AM Velumani T-ERS,HCLTech
-<velumanit@hcl.com> wrote:
+On Tue, Jul 28, 2020 at 10:06 AM Michael Richardson <mcr@sandelman.ca> wrote:
 >
->
-> We are using a x86-power-control for host power control in a multi host s=
-ystem. We have the host as FRU and it can be plugged in to a slot. The slot=
- has an option to control slot power and this can be used for a AC cycle.
->
-> We propose to add the slot power control in the x86-power-control, The sl=
-ot power control can be configured in json and the same can be implemented =
-reading the json config. We can ensure the existing functionality remains u=
-nchnged and does not affect the other platforms.
->
->
->
-> The config file can have a gpio entry with the new key =E2=80=9CSlot_Powe=
-r=E2=80=9D. Only if this entry is present then the slot power will be handl=
-ed, Otherwise the existing functionality remains the same. Please provide y=
-our comments/suggestions for this proposed approach.
+>     > I'm less settled on using a certificate which is clearly expired, but it
+>     > is still likely better than using a newly-generated self-signed
+>     > certificate.
 
-One amendment, if you're setting this up for a single chassis type,
-please make this a compile time structure rather than a config file
-read from disk.  It's much easier to manage in the long run, as it
-pushes runtime errors to compile time, and means that we're less
-likely to break it.  Also, it sends a clear message that we shouldn't
-be changing the configuration at runtime.
+The original implementation just caught the
+X509_V_ERR_CERT_NOT_YET_VALID error and ignored it, but your idea
+would work as well.
 
-If you're using something like entity-manager, and you do want to
-support more than one chassis, you probably want to define some kind
-of "backplane" entity that owns the power configuration, so you can
-have multiple slot definitions configured at runtime in the same
-build, which might not be a problem for your system, but can be a
-problem for systems with multiple Chassis options.
-
-Ideally you would also add a new "node" slot definition type, similar
-to how we define M.2 slots and PCIe slots to make debugging easier.
-
-
->
-> ::DISCLAIMER::
-> ________________________________
-> The contents of this e-mail and any attachment(s) are confidential and in=
-tended for the named recipient(s) only. E-mail transmission is not guarante=
-ed to be secure or error-free as information could be intercepted, corrupte=
-d, lost, destroyed, arrive late or incomplete, or may contain viruses in tr=
-ansmission. The e mail and its contents (with or without referred errors) s=
-hall therefore not attach any liability on the originator or HCL or its aff=
-iliates. Views or opinions, if any, presented in this email are solely thos=
-e of the author and may not necessarily reflect the views or opinions of HC=
-L or its affiliates. Any form of reproduction, dissemination, copying, disc=
-losure, modification, distribution and / or publication of this message wit=
-hout the prior written consent of authorized representative of HCL is stric=
-tly prohibited. If you have received this email in error please delete it a=
-nd notify the sender immediately. Before opening any email and/or attachmen=
-ts, please check them for viruses and other defects.
-
-
-Sending "this email is confidential" to a public mailing list makes me
-think i got it in error.  I'm also not a "named recipient". You might
-want to consider removing it in the future, unless you really
-considered this to be confidential.
+One thing we had considered is requiring that the CERT date be at
+minimum AFTER the firmware build date, under the assumption that the
+build machine had a good grasp on what time it was at the time.  We
+could use this for gating the upload of a new cert, but can't use it
+for invalidating a cert that already exists, as we run into the
+"upgrade causes denial of service" problem.
