@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1DE2231D62
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 13:32:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98787231D65
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 13:33:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BGrxn032jzDqsN
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 21:32:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BGrz63kxwzDqsL
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jul 2020 21:33:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -19,47 +19,46 @@ Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BGrvZ5cJszDqfZ
- for <openbmc@lists.ozlabs.org>; Wed, 29 Jul 2020 21:30:50 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BGrvx5Gb1zDqsX
+ for <openbmc@lists.ozlabs.org>; Wed, 29 Jul 2020 21:31:09 +1000 (AEST)
 Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06TBAZ3w109152; Wed, 29 Jul 2020 07:30:47 -0400
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32jpwdkck5-1
+ 06TBAZ4d109152; Wed, 29 Jul 2020 07:31:07 -0400
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 32jpwdkcw3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2020 07:30:47 -0400
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06TBPNxZ004613;
- Wed, 29 Jul 2020 11:30:47 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma01dal.us.ibm.com with ESMTP id 32gcy3hm1q-1
+ Wed, 29 Jul 2020 07:31:07 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06TBPekt031562;
+ Wed, 29 Jul 2020 11:31:07 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma05wdc.us.ibm.com with ESMTP id 32gcy9s9qr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Jul 2020 11:30:47 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 06TBUgP0525036
+ Wed, 29 Jul 2020 11:31:07 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 06TBV6Qm45809938
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Jul 2020 11:30:42 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 597DDBE051;
- Wed, 29 Jul 2020 11:30:45 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44673BE053;
- Wed, 29 Jul 2020 11:30:45 +0000 (GMT)
+ Wed, 29 Jul 2020 11:31:06 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 68542124055;
+ Wed, 29 Jul 2020 11:31:06 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 59865124069;
+ Wed, 29 Jul 2020 11:31:06 +0000 (GMT)
 Received: from gfw170.aus.stglabs.ibm.com (unknown [9.3.62.224])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Wed, 29 Jul 2020 11:30:45 +0000 (GMT)
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Jul 2020 11:31:06 +0000 (GMT)
 Received: by gfw170.aus.stglabs.ibm.com (Postfix, from userid 298080)
- id 12682309; Wed, 29 Jul 2020 06:30:45 -0500 (CDT)
+ id 12E3130A; Wed, 29 Jul 2020 06:31:06 -0500 (CDT)
 From: vishwa@linux.vnet.ibm.com
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.7 2/2] rainier: Add LEDs that are controlled by
- ASPEED
-Date: Wed, 29 Jul 2020 06:30:43 -0500
-Message-Id: <1596022243-8788-1-git-send-email-vishwa@linux.vnet.ibm.com>
+Subject: [PATCH linux dev-5.7 1/2] rainier: Add leds that are off 9551 on
+ Operator Panel
+Date: Wed, 29 Jul 2020 06:31:04 -0500
+Message-Id: <1596022264-8856-1-git-send-email-vishwa@linux.vnet.ibm.com>
 X-Mailer: git-send-email 1.8.3.1
 X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
@@ -67,7 +66,7 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
  2020-07-29 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0
- mlxlogscore=994 mlxscore=0 bulkscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 impostorscore=0 spamscore=0
  adultscore=0 suspectscore=1 clxscore=1015 phishscore=0 lowpriorityscore=0
  priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2006250000 definitions=main-2007290070
@@ -88,63 +87,114 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Vishwanatha Subbanna <vishwa@linux.ibm.com>
 
-These are the LEDs that have direct GPIO connection from ASPEED
+These are LEDs that are controlled by 9551
 
 Signed-off-by: Vishwanatha Subbanna <vishwa@linux.ibm.com>
 Reviewed-by: Eddie James <eajames@linux.ibm.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 82 ++++++++++++++++++++++++++++
+ 1 file changed, 82 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 9b28a30..d1a588f 100644
+index 37e4123..9b28a30 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -124,6 +124,26 @@
- 	leds {
- 		compatible = "gpio-leds";
+@@ -120,6 +120,38 @@
+ 			reg = <3>;
+ 		};
+ 	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		/* System ID LED that is at front on Op Panel */
++		front-sys-id0 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
++		};
++
++		/* System Attention Indicator ID LED that is at front on Op Panel */
++		front-check-log0 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
++		};
++
++		/* Enclosure Fault LED that is at front on Op Panel */
++		front-enc-fault1 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
++		};
++
++		/* System PowerOn LED that is at front on Op Panel */
++		front-sys-pwron0 {
++			retain-state-shutdown;
++			default-state = "keep";
++			gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
++		};
++	};
+ };
  
-+		/* BMC Card fault LED at the back */
-+		bmc-ingraham0 {
-+			gpios = <&gpio0 ASPEED_GPIO(H, 1) GPIO_ACTIVE_LOW>;
+ &ehci1 {
+@@ -816,6 +848,56 @@
+ 		};
+ 	};
+ 
++	pca1: pca9551@60 {
++		compatible = "nxp,pca9551";
++		reg = <0x60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-controller;
++		#gpio-cells = <2>;
++
++		gpio@0 {
++			reg = <0>;
++			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		/* Enclosure ID LED at the back */
-+		rear-enc-id0 {
-+			gpios = <&gpio0 ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
++		gpio@1 {
++			reg = <1>;
++			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		/* Enclosure fault LED at the back */
-+		rear-enc-fault0 {
-+			gpios = <&gpio0 ASPEED_GPIO(H, 3) GPIO_ACTIVE_LOW>;
++		gpio@2 {
++			reg = <2>;
++			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
-+		/* PCIE slot power LED */
-+		pcieslot-power {
-+			gpios = <&gpio0 ASPEED_GPIO(P, 4) GPIO_ACTIVE_LOW>;
++		gpio@3 {
++			reg = <3>;
++			type = <PCA955X_TYPE_GPIO>;
 +		};
 +
- 		/* System ID LED that is at front on Op Panel */
- 		front-sys-id0 {
- 			retain-state-shutdown;
-@@ -167,7 +187,7 @@
- 	/*E0-E7*/	"","","","","","","","",
- 	/*F0-F7*/	"","","","","","","","",
- 	/*G0-G7*/	"","","","","","","","",
--	/*H0-H7*/	"","","","","","","","",
-+	/*H0-H7*/	"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
- 	/*I0-I7*/	"","","","","","","","",
- 	/*J0-J7*/	"","","","","","","","",
- 	/*K0-K7*/	"","","","","","","","",
-@@ -175,7 +195,7 @@
- 	/*M0-M7*/	"","","","","","","","",
- 	/*N0-N7*/	"","","","","","","","",
- 	/*O0-O7*/	"","","","usb-power","","","","",
--	/*P0-P7*/	"","","","","","","","",
-+	/*P0-P7*/	"","","","","pcieslot-power","","","",
- 	/*Q0-Q7*/	"cfam-reset","","","","","","","",
- 	/*R0-R7*/	"","","","","","","","",
- 	/*S0-S7*/	"presence-ps0","presence-ps1","presence-ps2","presence-ps3",
++		gpio@4 {
++			reg = <4>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@5 {
++			reg = <5>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@6 {
++			reg = <6>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++
++		gpio@7 {
++			reg = <7>;
++			type = <PCA955X_TYPE_GPIO>;
++		};
++	};
++
+ 	dps: dps310@76 {
+ 		compatible = "infineon,dps310";
+ 		reg = <0x76>;
 -- 
 1.8.3.1
 
