@@ -1,98 +1,137 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 203D8232F3B
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jul 2020 11:11:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 470CD2333B6
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jul 2020 16:02:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BHPmR2YkTzDqtK
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jul 2020 19:11:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BHXCj4ht9zDqxL
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 00:02:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=nvidia.com (client-ip=216.228.121.143;
+ helo=hqnvemgate24.nvidia.com; envelope-from=vasantp@nvidia.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=nvidia.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=nvidia.com header.i=@nvidia.com header.a=rsa-sha256
+ header.s=n1 header.b=B3iEhLii; dkim-atps=neutral
+X-Greylist: delayed 303 seconds by postgrey-1.36 at bilbo;
+ Fri, 31 Jul 2020 00:00:31 AEST
+Received: from hqnvemgate24.nvidia.com (hqnvemgate24.nvidia.com
+ [216.228.121.143])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BHPlP50G5zDqkV
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 19:10:40 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06U91wPT102166
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 05:10:37 -0400
-Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com
- [159.122.73.71])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32kretcxm9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 05:10:36 -0400
-Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
- by ppma02fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06U9AYOX007258
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 09:10:34 GMT
-Received: from b06avi18626390.portsmouth.uk.ibm.com
- (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
- by ppma02fra.de.ibm.com with ESMTP id 32gcq0upqu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 09:10:34 +0000
-Received: from d06av24.portsmouth.uk.ibm.com (d06av24.portsmouth.uk.ibm.com
- [9.149.105.60])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 06U997xv66585066
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 09:09:07 GMT
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A52142045
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 09:10:32 +0000 (GMT)
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B5CC84203F
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 09:10:31 +0000 (GMT)
-Received: from [9.79.214.119] (unknown [9.79.214.119])
- by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Thu, 30 Jul 2020 09:10:31 +0000 (GMT)
-Subject: Re: Redfish EventService Implementation
-To: openbmc@lists.ozlabs.org
-References: <019f5263-a7b2-9cb8-4420-cb597bd29afd@gmail.com>
- <c31b2941-dc48-349a-68cf-c5292ccfc621@linux.intel.com>
- <1d2ad757-826d-1993-b88a-e92010b984ed@linux.vnet.ibm.com>
- <05ec7793-2efa-42da-ef56-94cc1477d2bb@linux.intel.com>
- <20200616152428.GA4618@heinlein>
- <7e16df1c-38b0-d488-dbbf-75fe9ac818ab@linux.intel.com>
- <68f31493-6db6-8e8e-8486-e03c14685abe@linux.vnet.ibm.com>
- <20200617204516.GE4618@heinlein>
- <fde794a3-58f9-f332-fd3b-3cfcc116f239@linux.vnet.ibm.com>
- <20ab2d6a-00d8-edc6-a18a-c98d93c6cb3c@linux.vnet.ibm.com>
- <477bd1782b6c5f9cfea6f6340ecd207a9c01fb20.camel@fuzziesquirrel.com>
- <6fc4c66e-4a0a-1c59-3f77-a6fcff29b97e@linux.intel.com>
- <ee2b81be-0aff-022f-e5a7-9f0f874c1f20@linux.vnet.ibm.com>
- <8e342c33-25c8-5586-cbd4-e8662fcac6b5@linux.intel.com>
- <5b2ab3f9-4e98-b9c3-128b-9eb161ea52f9@linux.vnet.ibm.com>
- <b62c0b2d-55fb-ffc7-5e29-2716f665f86d@linux.intel.com>
- <09cf469e-ddc3-1206-efeb-54dd59a334d5@linux.vnet.ibm.com>
- <9f44403a-3852-4b41-2a68-89dc84d30a23@linux.intel.com>
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Message-ID: <d67f2e58-3eee-b02b-f9ca-2f6bf7de4ea7@linux.vnet.ibm.com>
-Date: Thu, 30 Jul 2020 14:40:30 +0530
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BHX9r0138zDqtK
+ for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 00:00:31 +1000 (AEST)
+Received: from hqpgpgate101.nvidia.com (Not Verified[216.228.121.13]) by
+ hqnvemgate24.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+ id <B5f22d0ec0000>; Thu, 30 Jul 2020 06:53:48 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+ by hqpgpgate101.nvidia.com (PGP Universal service);
+ Thu, 30 Jul 2020 06:55:21 -0700
+X-PGP-Universal: processed;
+ by hqpgpgate101.nvidia.com on Thu, 30 Jul 2020 06:55:21 -0700
+Received: from HQMAIL101.nvidia.com (172.20.187.10) by HQMAIL105.nvidia.com
+ (172.20.187.12) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Thu, 30 Jul
+ 2020 13:55:21 +0000
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.175)
+ by HQMAIL101.nvidia.com (172.20.187.10) with Microsoft SMTP Server (TLS) id
+ 15.0.1473.3 via Frontend Transport; Thu, 30 Jul 2020 13:55:21 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=m6Q4BRP8NDDv94E/x5TGs6O63mdo7mhOt9+ZkJBFgweY0dBp4FJc8IwlfhFsxrWS6c3gdULpJdecp+N0TQ52qOTLRW3obDTbY++fdaBH+WBCTGNwN96IXGVrLD9OnMLl3yX26bBi+RqxO4g7UZYFHfWXtV0H2kV3BmewjQZi6N3FxsO02fYny1AAdbdT9hMYJSLD1x5oxFfAbT+4snl7HxZCCwtjQ71qbvX4nzhISqGcwWe4iiS6nmecv6xNhkZancZM4CZe83nmP0Mxv8ymJCGCnwMVeFhm66OWuXfNsQbDkFno3bKbTgocK8Gj1zewgilzLW8Fen6U+Y66HRGROw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=b5+YP2wt0XTC6dDuCgiVUtyDmm/PkSFt06HNUK9PuNs=;
+ b=O2OLkvYnH1QDU+hdnII+iKjRJzaHooSFfx7L5DkDvTvAPj8MIyYsTSjltHNCtGJ4CmB4/8ZKDMnQC27x12AM9wbZJrKFF+rL5sow9cBfURZtwiNEbzvwI2V+s6CEDevRU3fdX1xyNCYqdv9pz0X6BnBtjBJZnEJtM/AxgHO+ULo/kuBku6uJWbtFJmImPASavB/8UtHwWvh0CqsfulZasudBbz2J1nOPFBGhcizBoYTuPnemo8nANBK43K9cXCix3QTKK5gwR4+Gs9eCsw6W7X8oa4ROVrZaEWTTtmZHRt0HuPHHCm8Kr24P8siS6OWRupCsadYynpv/VK9fCJkP+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+Received: from BN8PR12MB3282.namprd12.prod.outlook.com (2603:10b6:408:9e::27)
+ by BN8PR12MB3473.namprd12.prod.outlook.com (2603:10b6:408:65::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.25; Thu, 30 Jul
+ 2020 13:55:20 +0000
+Received: from BN8PR12MB3282.namprd12.prod.outlook.com
+ ([fe80::84fe:6445:1fd5:c099]) by BN8PR12MB3282.namprd12.prod.outlook.com
+ ([fe80::84fe:6445:1fd5:c099%5]) with mapi id 15.20.3239.018; Thu, 30 Jul 2020
+ 13:55:19 +0000
+From: Vasant Patil <vasantp@nvidia.com>
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Subject: RE: OpenBMC : FRU Inventory management
+Thread-Topic: OpenBMC : FRU Inventory management
+Thread-Index: AQHWZikWohxE++CpLkmJQpnCVvW7hakgJVwA
+Date: Thu, 30 Jul 2020 13:55:19 +0000
+Message-ID: <BN8PR12MB32820389DABEE2E32ED84E57C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+References: <BN8PR12MB32822ADFBBC19F6B2FB08F52C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+ <e00d409b-a845-85ee-16d7-0bb53f1e013e@linux.vnet.ibm.com>
+In-Reply-To: <e00d409b-a845-85ee-16d7-0bb53f1e013e@linux.vnet.ibm.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: linux.vnet.ibm.com; dkim=none (message not signed)
+ header.d=none;linux.vnet.ibm.com; dmarc=none action=none
+ header.from=nvidia.com;
+x-originating-ip: [24.112.224.16]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 0771db54-56b8-4a73-9d99-08d834903263
+x-ms-traffictypediagnostic: BN8PR12MB3473:
+x-microsoft-antispam-prvs: <BN8PR12MB34730ACAC278DCA9720E4112C7710@BN8PR12MB3473.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6108;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: OAzHx4/fx5OK9xE0j6mQQyhHO3bMZbJRMpNo7q0sWhob6z9rbTdqBLp6EJ1P61yHCgnCFC41mUnOm8j7QuujA1pwDIrRpGvzKCETbHiJwp6hD7Xn7zK/ky/iwn2NrGItygIYRzjtN6/OWs9AkwiP/dSpaFErJktJPoPOSV3jW3q7bzgjZN7RL1mmPjJ0wMdgc4nzGlFZY8CP4EeFLqoOzg3PwI4wPLAwJdkRPxB9pnSdl+fFtqcnjxTrB0PsgZBLmtVOwjb+yuCDGgtF7JnH39jVUP3c+2cN1Eclkdvn4boBlNix9sRNmb1ghunxOmF++yPRREFvK0iykfXYynHCfJd8VeS6LvwvZE3QHi69OOuZPgMmDaqQPvnzL0HEUbBSKU7IGN/4ingAhFevJwbPTg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN8PR12MB3282.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFTY:;
+ SFS:(4636009)(366004)(136003)(376002)(396003)(346002)(39860400002)(9686003)(52536014)(55016002)(316002)(5660300002)(2906002)(66446008)(64756008)(66556008)(71200400001)(7696005)(966005)(478600001)(33656002)(6506007)(53546011)(83380400001)(6916009)(26005)(66476007)(4326008)(86362001)(8936002)(8676002)(76116006)(186003)(66946007);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata: LEddTl70+LOqeSG9mIpmLQuSwaojSGyr/aMQr2Yk4R7kglZiQxZDL1pNiN66eKhznBuwMy2kPJsducGYbL0xRgBm1/u733KntTVlgwvhdPwrJIeF0Hg5MIP3GZartuO8GTGWmB6fOQDxY76fiSEo3HgvAiAdD7x/fn4oWjVJZt8Ez4+oFSW3dOm2Xwa5s09T0jSa9Lhsc4h49FDw2IG44ai7xFn1PcKkE4JwrZydZqYA+vAtAuXTLJ3Avaljjf8BSkjKR2VJL78gBrbqaSuQr1TfDCQzUvzWJrPl7GjRauVGnGQyvNFpIYEt8f/nZx6zKtjRvFF13uAkoRRX2JQiCyWiuOzmBC6r86mUSV2tgblaZ+oaBlNYyhUB4V6jUjtoo1Xt9GduDaJbSzwlpe/gIhlmszVMr8KHCtf1my0OmaD3VBL1O9Hmn1Bcnu2dzUH6MPKZQKvpWAmA/Oo7BNloybsYlCcU1YWQsFrAzb/fEPM=
+x-ms-exchange-transport-forked: True
 MIME-Version: 1.0
-In-Reply-To: <9f44403a-3852-4b41-2a68-89dc84d30a23@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR12MB3282.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0771db54-56b8-4a73-9d99-08d834903263
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jul 2020 13:55:19.5390 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ukKIFpizPQPWGeDeXG1n+I7a38m7jkvSINO8u1KzLgNROQiEcihPE5YjXVw0fB+IXHqIlH8NpiG3HIVcw72XkA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8PR12MB3473
+X-OriginatorOrg: Nvidia.com
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-30_05:2020-07-30,
- 2020-07-30 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0
- priorityscore=1501 mlxscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
- lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2007300063
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+ t=1596117228; bh=b5+YP2wt0XTC6dDuCgiVUtyDmm/PkSFt06HNUK9PuNs=;
+ h=X-PGP-Universal:ARC-Seal:ARC-Message-Signature:
+ ARC-Authentication-Results:From:To:CC:Subject:Thread-Topic:
+ Thread-Index:Date:Message-ID:References:In-Reply-To:
+ Accept-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:
+ authentication-results:x-originating-ip:x-ms-publictraffictype:
+ x-ms-office365-filtering-correlation-id:x-ms-traffictypediagnostic:
+ x-microsoft-antispam-prvs:x-ms-oob-tlc-oobclassifiers:
+ x-ms-exchange-senderadcheck:x-microsoft-antispam:
+ x-microsoft-antispam-message-info:x-forefront-antispam-report:
+ x-ms-exchange-antispam-messagedata:x-ms-exchange-transport-forked:
+ MIME-Version:X-MS-Exchange-CrossTenant-AuthAs:
+ X-MS-Exchange-CrossTenant-AuthSource:
+ X-MS-Exchange-CrossTenant-Network-Message-Id:
+ X-MS-Exchange-CrossTenant-originalarrivaltime:
+ X-MS-Exchange-CrossTenant-fromentityheader:
+ X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+ X-MS-Exchange-CrossTenant-userprincipalname:
+ X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg:
+ Content-Language:Content-Type:Content-Transfer-Encoding;
+ b=B3iEhLiis8ez50LUA3RA2xkmO1pdVUQEetYJdLDLLSPZo1Jdg95LchGeV6yP2zwOO
+ K3ouxR5vPpXBz4HWag5AULnqqHFyzRPXw2p85bLh9eEKHSHPL4jAtkVU20KSsC30GQ
+ MKrRMVP3H06slBbP5uxXmrgK/To9Hx2EhpZR+pgyPGmVAn3rJLlSiL8iVroaH4xrIH
+ adrGLeY4Py52o3g9IWPZU3pCTRLyVrvQsBlamnLAec/LYIQXC5C8FaPa7s3OyQwEWF
+ it5lKLbNX/cJg+2Q1Ti2m8YnkC4gDI2UsU/CpsyO0nBiSJyUfO3gUFxyZyyd5rASiR
+ Prkbe2zW1unEA==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,119 +143,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi James,
+Thanks Deepak.
+Yes, This help. We will go with entity-manager option.=20
 
-On 7/15/20 2:38 AM, James Feist wrote:
-> On 7/12/2020 11:32 PM, Ratan Gupta wrote:
->> Hi James,
->>
->> As you asked for the examples in the 
->> thread(https://lists.ozlabs.org/pipermail/openbmc/2020-June/022125.html), 
->> I have created the mapping at the following location.
->>
->> https://gist.github.com/ratagupt/0aa4da098a60d49af90a7e4a6ea6d5f2
->
-> Thanks for the examples.
->
->>
->> 1) Map1: Mapping between redfish resources to Dbus resources
->
-> How does this work when the mapping isn't 1:1 vs D-Bus? Most of the 
-> time the enums to not match the d-bus enum, or take multiple d-bus 
-> interface to distinguish what the value should be. Also how does this 
-> work for discovered things, like multiple chassis?
+Regards,
+Vasant=20
 
-I have not mentioned in the below use cases, but just look at the url 
-https://gist.github.com/ratagupt/0aa4da098a60d49af90a7e4a6ea6d5f2#file-gistfile1-txt-L77
-<https://gist.github.com/ratagupt/0aa4da098a60d49af90a7e4a6ea6d5f2#file-gistfile1-txt-L77>
+-----Original Message-----
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>=20
+Sent: Thursday, July 30, 2020 12:22 AM
+To: Vasant Patil <vasantp@nvidia.com>
+Cc: openbmc@lists.ozlabs.org
+Subject: Re: OpenBMC : FRU Inventory management
 
-There we are covering the resources which are getting added dynamically.
->
->
->> 2) Map2: Mapping between redfish resource types to the ineterested 
->> Dbus interfaces
->> 3) Map3: Mapping between Dbus resources to redfish resources
->>
->>
->> I tried to cover the following scenario in the above mapping.
->>
->> * Redfish resource is mapped to multiple Dbus Resources
->> * Redfish Property is mapped to single Dbus property
->> * Redfish Property(complex property) is mapped to multiple dbus 
->> property.
->> * Same type of Redfish Resources are mapped to different Dbus Resources
->> * Redfish node url having multiple regex : Yet to take a look on this.
->> >
->> Flow would be like as below
->>
->> => In bmcweb each Redfish node represents to a Redfish Resource.
->> => Each node will be having it's own mapping between Redfish 
->> properties and the Dbus Resources.
->>
->> => Some code on bmcweb will walkthrough on each node during startup , 
->> get this mapping from each node and generate
->>     two mappings
->>     1) Reverse mapping (Dbus Resource to Redfish Resource)(MAP3) and
->>     2) mapping between Resource Types to the interested Dbus 
->> interfaces(MAP2)
->>
->> => To start with we will support few resource types and then scale it 
->> up as needed.
->
-> I think we need an idea of what the final solution will look like for 
-> more complicated properties, or we'll be creating something that isn't 
-> future proof.
-I thought I covered the complicated one in the examples(gist link above) 
-but just let me know the other redfish resource which I can take it in 
-the examples.
->
->>
->> => Map2 would be used when the Redfish client subscribe for the 
->> ResourceType to get the Dbus mappings.
->>
->> => Map3 would be used when the Dbus signal gets generated and need 
->> the Redfish mappings.
->
-> Why can't these be the same mapping?
+External email: Use caution opening links or attachments
 
-To start monitoring for Dbus : We need Dbus Resource Path,
 
-Once we get any Dbus signal, we need to send redfish event which needs 
-redfish resource path hence we need reverse map
-
-Did I get you correctly?
-
-> I think having 3 different maps makes this very confusing. I also 
-> think this is attempting to generalize the problem too early. If you 
-> look at the Redfish code to determine some of the more complicated 
-> properties, sometimes it takes quite a bit of logic. That logic also 
-> would possibly be nice to reuse. Maybe we can take your idea of a 
-> match with a callback to some of the already existing property 
-> parsing? Obviously it would need some cleaning up, but I could see 
-> something with a map of schemas/properties to function pointers for 
-> property parsing.
+On 30/07/20 8:37 am, Vasant Patil wrote:
+> Hi Team,
 >
->>
->> => Once we have all thsese mapping gets generated and loaded into the 
->> memory, bmcweb would start listening
->>     for the interfaces listed in map2.
+> We are enabling OpenBMC on x86 system. We would like to know the=20
+> recommendation on FRU inventory management and corresponding pointers.
 >
-> Why aren't these compiled in? I don't see why they need to be loaded, 
-> could just be in code. Also, they shouldn't be added as matches until 
-> there is a subscriber, or we'll add many unneeded matches.
-
-They would be compiled in, they would be in memory(big std::map).
-
-Agree monitoring should start only when there is a subscriber.
-
+> There seems to be multiple options available
 >
->>
->> => Once any Dbus signal gets generated map3 would be used to get the 
->> Redfish mapping.
->>
->> Please let me know if you have any concerns with this approach.
->>
->> Ratan
+>  1. described in  "Adding new system to OpenBMC
+>     <https://github.com/openbmc/docs/blob/master/development/add-new-syst=
+em.md>"
+>     with  Yaml files (meta-romulus/recipes-phosphor/ipmi
+>    =20
+> <https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulus/
+> recipes-phosphor/ipmi>)
+>
+>  2. Entity manager <https://github.com/openbmc/entity-manager>=A0with JSO=
+N
+>     schema
+
+Hi Vasant,
+
+The commonly used option for this now is entity-manager. The entity-manager=
+ config JSONs enable entity-manager to monitor/probe FRU config information=
+ (FRU information read off of an EEPROM for eg) and then transform that to =
+an inventory D-Bus object that implements an xyz.openbmc_project.Inventory.=
+Item.<Type> interface. The webserver
+(bmcweb) then can relay this into a Redfish inventory representation.
+
+To make the FRU EEPROM content available on D-Bus, anther app typically rea=
+ds the EEPROM and then hosts the info on D-Bus. For eg the FruDevice daemon=
+ (which sits in the entity-manager repo) scans I2C connected EEPROMs, and c=
+an read IPMI FRU format data off of them. Now this info can actually be com=
+ing in via EEPROMs that the BMC can't access (and for eg the host CPU can) =
+- in that case I would expect the FRU information to be transported over IP=
+MI/PLDM, and then apps like host-ipmid or pldmd can place the FRU informati=
+on on D-Bus, for entity-manager to consume.
+
+> We are looking to enable below inventory (Both FRU and non-FRU):
+>
+>   * CPU
+>   * DIMM
+>   * M.2
+>   * U.2
+>   * Motherboard FRU EEPROM
+>   * Chassis FRU EEPROM
+>   * Add-on PCI cards
+>   * FANs
+>   * PSU
+>   * Etc.
+
+You can look at
+https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/openbmc=
+_project/Inventory/Item
+and define types that you don't find here.
+
+Regards,
+Deepak
+
