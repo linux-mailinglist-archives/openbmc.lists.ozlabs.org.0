@@ -2,130 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E7432339AB
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jul 2020 22:33:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9453C233ADF
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jul 2020 23:32:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BHhtj6G9kzDrDY
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 06:33:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BHkCD14ldzDrCM
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 07:32:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=54802f6fb6=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=qPX8HgFI; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=RFmqriNS; 
- dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
- [67.231.145.42])
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BHhsq6SjMzDrBh
- for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 06:32:09 +1000 (AEST)
-Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06UKSpcB001724; Thu, 30 Jul 2020 13:32:02 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=Qlk76Pdzd+KKvKyB3A3LRcP28vgttzF9457ZWw6Wrxs=;
- b=qPX8HgFImPNzBnRWOUdJqnBtH2Y0B6AtMzj2PKFRbsDTUy88iC+hREKSBY9TjyTKfb7o
- XzcIsO3qDPDVcBL8wnree5d/BURO/8UwhlHz9nqxkjIY94APXmU1kHHNiL5uyf2C1zu+
- jeY5su+X6qk9NIvwgfFjy60N4Xf3lTBMfsA= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 32m01cj261-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Thu, 30 Jul 2020 13:32:02 -0700
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.198) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Thu, 30 Jul 2020 13:32:01 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=a7d/xHrWGU9POmLi6gJTMjN46yiTn8nR4o+qGH/maXYn1Bn8lyoX+QzER9oj3Bs71J73Mt8Qeg6l7NpCu9AhBJNde2n1YLe51UHTw5Ses8TDKIMdOOWprloQsRjkJBgClJ+qzPMpAMoimGJk8FENlfkCz639+cpk9IHWXJE0Cs5tqyCmSHSkIe9iRt8o6y1nJmb9JuIfQIhy2U1o/jGz9EQuReJzuFWoMkruRQHvXun44UZ+Q1kiGIR7tVbX+95u/dxnJXEzLQnXSu3Gz5sDYjKmM7V1Ufr239l1acqQ+mkWcfpfEY74CAOJdzTJv2Xydko+RLW6y1EAs2oIMyIIZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qlk76Pdzd+KKvKyB3A3LRcP28vgttzF9457ZWw6Wrxs=;
- b=axJUklHceG6rZynvx0Q7GeMbyx+umxYoHCn9ZS8RyDB48frZg0e7uv8jeWeeLgMRraDn5Zh2m5AMjYJAq9NAZZ8g4YuUsOXAKiii3TnhtCH5vXDeplyjLWQbHx+AzcON+oliyrNnqMvXkanPUY+9RvL+kth5f+45Nn8jQTrZR2Vmn1TfTYW/sjl6UMHiB4uCvT0RaVfQknZvOTB7bEc7To/kpq0FEGpuGNjzUrEzf/h3B0W5yH4/x7KoOkBZX1MT6aCf9qFAXOJMPa6ogFHovTzAPio//8B8ThsQFnIjez8CgoB1tYqZxdesh4vzPO66jXh2W+2Nrweu5ltn38B2+A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Qlk76Pdzd+KKvKyB3A3LRcP28vgttzF9457ZWw6Wrxs=;
- b=RFmqriNS9ZQphB+AuD/f3j0AazrSVnkNWcKdofZuWA4anrRPzeh03pslP22ovZdm7qAHinIz6HPRKrFt1KxLNu7EErMfWWqBLthEy2HmXCeHjx8hmZvnTvnC3frHkTZB6e8YcdZr8FPaGPGlSNLzjrEDIBCXntTOwrEEdQnBLn4=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BY5PR15MB3716.namprd15.prod.outlook.com (2603:10b6:a03:1b4::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3216.20; Thu, 30 Jul
- 2020 20:32:00 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::2908:ebc2:73a5:45b3]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::2908:ebc2:73a5:45b3%5]) with mapi id 15.20.3216.033; Thu, 30 Jul 2020
- 20:32:00 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Nancy Yuen <yuenn@google.com>
-Subject: Re: using third party library
-Thread-Topic: using third party library
-Thread-Index: AQHWZeGP6ggmurFi9kuRanD6Bgh33qke+xiAgAEkwAA=
-Date: Thu, 30 Jul 2020 20:32:00 +0000
-Message-ID: <A698A001-88FC-464E-9D56-E7EFB69624DE@fb.com>
-References: <80EB1AD4-61FB-489C-8D6B-5FDDF7F46ED3@fb.com>
- <CADfYTpG3HBX2FPMwa4oQ8p_C6bv4Vno-LiJyRzf6dnRhBx15XA@mail.gmail.com>
-In-Reply-To: <CADfYTpG3HBX2FPMwa4oQ8p_C6bv4Vno-LiJyRzf6dnRhBx15XA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2620:10d:c090:400::5:2862]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 7275486b-76a1-481e-fff5-08d834c79cd1
-x-ms-traffictypediagnostic: BY5PR15MB3716:
-x-microsoft-antispam-prvs: <BY5PR15MB3716C1041183A4444C2654ADDD710@BY5PR15MB3716.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: F3rO3IcFns1qgJBqHH/PY44FpLTingNw6TNJPliysgACE6AqBONwnKZM/pEjfp65ZIIDqHWZ83EjUZ+WD+GE916Gb4hADWf1+rSKCe0g/hEM5G9d9QAt6RrKZrhh5Xo+2QyA6QyVXzjxhqn7lQhtO/gp4FMasqbHJq0oO2ZoLE9SoRANwqvAgPV5pl92Z93fqQeazmZEEMYI2P6fRk8mcbjC91PtfeUKyHZbIqrBxJzbXbrE2qMPsy4aIszdLK1mDi5ijxl058YjmfJ2sjPd9dVUhoo++vlMWrkUKsEECpMA2m01hB2w2Xdd1SVAouPxuDvSkxzRI17cMDF4+f+ImbKT2bsHGnlOT6VMg5bqqRdli6El+Tw5at1tKSD5BbQpK0L/DU1ul7JfsxKeK+9R+g==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFTY:;
- SFS:(396003)(366004)(136003)(39860400002)(376002)(346002)(966005)(8676002)(71200400001)(186003)(2906002)(6512007)(3480700007)(66446008)(66556008)(66946007)(66476007)(64756008)(2616005)(86362001)(4326008)(76116006)(53546011)(36756003)(316002)(166002)(33656002)(8936002)(6916009)(5660300002)(478600001)(6506007)(6486002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: QPvF0bAZfMT07TAwdIxschPoQ5LhTThaubxhadbqZ0t5AbS6xWydumrh19EoMJ2ZpgQk1aIvGMJNGG+o9557BXZhun8eqlSrHuDyOkvNgCtaa9rQyO86+rtv9y58lk1mqgA6TylJh7JKcm/aIYUSM7wdq1UqLxVFLWdnHQfr8SaOZ6J513jzBLv8MoHrmnIycsuKrcR4cWQxzQ0ybLJ06pmkl4w12KWV/GcCRrXE+jLj2aSERQWfY/19qiwg1UazEsn4yI+e2HMVObgyDuj3ctMsphrAUau4ngfX2hxzLIPVivY+PPkahNinUG6V9uyYJ5XOgJHMVGnKy+X5BjclN0wZ8YXZnIkkwZZqU2l9MyqRfFsgiNEDqQDI7zv7TzG5EuMbfnUK1fExiICg4QWuzo8kbFdhK2mPTa4L/WbjUqqrNqZ2kYbPbJsX0k/2DgZGuKntgl25Gj0cjqtb0lSDM492s9gk15xksCStb53OQo9bZNFoj1F2KP+2JwfcDAlUulWoljFZxcU3B0T+WxR8pQ==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_A698A00188FC464E9D56E7EFB69624DEfbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BHkBH2rQTzDrBd
+ for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 07:31:34 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 06UL2Krl041858; Thu, 30 Jul 2020 17:31:28 -0400
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
+ [169.63.121.186])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 32m2b3xcc7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2020 17:31:28 -0400
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+ by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06ULJRnI032163;
+ Thu, 30 Jul 2020 21:31:27 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma03wdc.us.ibm.com with ESMTP id 32gcy65fnn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Jul 2020 21:31:27 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 06ULVLjc44105998
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Jul 2020 21:31:21 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8518BE053;
+ Thu, 30 Jul 2020 21:31:23 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 88004BE058;
+ Thu, 30 Jul 2020 21:31:23 +0000 (GMT)
+Received: from [9.163.50.101] (unknown [9.163.50.101])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Jul 2020 21:31:23 +0000 (GMT)
+Subject: Re: [PATCH linux dev-5.7 2/6] spi: fsi: Fix clock running too fast
+To: Joel Stanley <joel@jms.id.au>, Dean Sanner <dsanner@us.ibm.com>,
+ Joachim Fenkes <FENKES@de.ibm.com>
+References: <20200729204528.15157-1-eajames@linux.ibm.com>
+ <20200729204528.15157-3-eajames@linux.ibm.com>
+ <CACPK8Xc48KTbw7ZnXTWgEaAiY_Rif-k_Q2Q5ZtZ0U9L+iCMEGA@mail.gmail.com>
+From: Eddie James <eajames@linux.ibm.com>
+Message-ID: <c3847a85-c58c-9019-ce97-cdd40eb3579c@linux.ibm.com>
+Date: Thu, 30 Jul 2020 16:31:23 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR15MB2374.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7275486b-76a1-481e-fff5-08d834c79cd1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jul 2020 20:32:00.5180 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: r/xXaSYqOsoJ53bREKCHFmXakIFBLvB38/CEr1CfCJsywQWPwGTI9MIrD+0DhnLtxhbAY0ynaugvKDxmIHBm3g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR15MB3716
-X-OriginatorOrg: fb.com
+In-Reply-To: <CACPK8Xc48KTbw7ZnXTWgEaAiY_Rif-k_Q2Q5ZtZ0U9L+iCMEGA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
  definitions=2020-07-30_15:2020-07-30,
  2020-07-30 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- malwarescore=0
- adultscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=999
- phishscore=0 clxscore=1015 impostorscore=0 bulkscore=0 mlxscore=0
- priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2006250000 definitions=main-2007300143
-X-FB-Internal: deliver
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 mlxlogscore=999
+ phishscore=0 adultscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ mlxscore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2007300144
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,171 +89,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_A698A00188FC464E9D56E7EFB69624DEfbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 
-VGhlcmUgaXMgbm8gcmVjaXBlIGF2YWlsYWJsZS4gSXQgaXMganVzdCBhIGdpdGh1YiBwcm9qZWN0
-IGFuZCBlaXRoZXIgd2UgY2FuIGFkZCBhcyBhIFNSQ19VUkkrIGludG8gb3VyIHJlY2lwZSBvciB3
-cml0ZSBhIG5ldyByZWNpcGUgdG8gYnVpbGQgYSBwYWNrYWdlLiBUaGlzIGlzIGhlYWRlciBvbmx5
-IGxpYnJhcnksIGFsbCBzb3VyY2VzIGFyZSBpbiBoZWFkZXIgZmlsZSBpdHNlbGYuIFNvIHdlIHNo
-b3VsZCBiZSBhYmxlIHRvIGp1c3QgYWRkIGFzIFNSQ19VUkkuIEkgaGF2ZSBubyBpZGVhIGFib3V0
-IGhvdyBsaWNlbnNpbmcgd2lsbCB3b3JrIGhlcmUuDQoNClJlZ2FyZHMNCi1WaWpheQ0KDQpGcm9t
-OiBOYW5jeSBZdWVuIDx5dWVubkBnb29nbGUuY29tPg0KRGF0ZTogV2VkbmVzZGF5LCBKdWx5IDI5
-LCAyMDIwIGF0IDE6MDQgUE0NClRvOiBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbT4N
-CkNjOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpTdWJqZWN0
-OiBSZTogdXNpbmcgdGhpcmQgcGFydHkgbGlicmFyeQ0KDQpXb3VsZCB0aGUgcmVjaXBlIGJlbG9u
-ZyBpbiBPcGVuRW1iZWRkZWQ8aHR0cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQuY29tL3YyL3Vy
-bD91PWh0dHBzLTNBX19sYXllcnMub3BlbmVtYmVkZGVkLm9yZ19sYXllcmluZGV4X2JyYW5jaF9t
-YXN0ZXJfcmVjaXBlc18mZD1Ed01GYVEmYz01VkQwUlR0TmxUaDN5Y2Q0MWIzTVV3JnI9djlNVTBL
-aTlwV25UWENXd2pIUFZncG5DUjgwdlhra2NySWFxVTdVU2w1ZyZtPVQ5M1pGc1h6LVZsYUVZUEYw
-SVBGdGhGUU5MRWRKY0hlcHEzamRFODZuWkEmcz14SVUzQWx6YVhGWVNDV2ZBSFFqUFFtcGs3U2NJ
-dzh4MFBPR2NCQmUwWHo0JmU9Pj8NCg0KT24gV2VkLCBKdWwgMjksIDIwMjAgYXQgMTI6NTIgUE0g
-VmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb208bWFpbHRvOnZpamF5a2hlbWthQGZiLmNv
-bT4+IHdyb3RlOg0KSGksDQpJIHdhbnQgdG8gdXNlIGZvbGxvd2luZyBsaWJyYXJ5IGZyb20gb3Bl
-biBzb3VyY2Ugd2hpY2ggaXMgdW5kZXIgTUlUIGxpY2Vuc2UsIHBsZWFzZSBsZXQgbWUga25vdyBp
-ZiB0aGVyZSBpcyBhbnkgcmVzdHJpY3Rpb24gdG8gdXNlIHRoaXMgaW4gb3VyIG9wZW5ibWMgcGFj
-a2FnZS4NCmh0dHBzOi8vZ2l0aHViLmNvbS9BcmFzaFBhcnRvdy9leHBydGsvDQoNCkFsc28gSSBu
-ZWVkIHRvIHdyaXRlIHNpbXBsZSByZWNpcGUgdG8gaW5jbHVkZSB0aGlzIHNvIHBsZWFzZSBsZXQg
-bWUga25vdyB3aGF0IGlzIHRoZSBiZXN0IGxvY2F0aW9uIHRvIHB1dCB0aGlzIHJlY2lwZSBhcyB3
-ZWxsLiBBcyBJIGFtIHRoaW5raW5nIG9mIHVzaW5nIHRoaXMgZm9yIHZpcnR1YWwgc2Vuc29ycyB0
-aGVuIEkgY2FuIHB1dCB1bmRlciBTZW5zb3JzIG9yIGlmIHRoZXJlIGlzIGJldHRlciBwbGFjZSB0
-byBwdXQgdGhpcyB0aGVuIHBsZWFzZSBhZHZpc2UuDQoNClJlZ2FyZHMNCi1WaWpheQ0KDQoNCi0t
-DQoNCk5hbmN5IFl1ZW4NCg0K4oCiDQoNCkdvb2dsZSBQbGF0Zm9ybXMNCg0K4oCiDQoNCnl1ZW5u
-QGdvb2dsZS5jb208bWFpbHRvOnl1ZW5uQGdvb2dsZS5jb20+DQoNCuKAog0KDQpHb29nbGUgTExD
-DQoNCg==
+On 7/29/20 6:25 PM, Joel Stanley wrote:
+> On Wed, 29 Jul 2020 at 20:45, Eddie James <eajames@linux.ibm.com> wrote:
+>> From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+>>
+>> Use a clock divider tuned to a 200MHz FSI clock.  Use of the previous
+>> divider at 200MHz results in corrupt data from endpoint devices. Ideally
+>> the clock divider would be calculated from the FSI clock, but that
+>> would require some significant work on the FSI driver.
+> This sounds like something we should fix, especially if we're
+> experimenting between 200/166/100 MHz FSI clocks?
 
---_000_A698A00188FC464E9D56E7EFB69624DEfbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <A7612E756A778E468901168D8B72C30F@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseToiQ2FtYnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2
-IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToy
-IDE1IDUgMiAyIDIgNCAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OlJvYm90bzsN
-CglwYW5vc2UtMToyIDAgMCAwIDAgMCAwIDAgMCAwO30NCi8qIFN0eWxlIERlZmluaXRpb25zICov
-DQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47
-DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9
-DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCglj
-b2xvcjpibHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0Kc3Bhbi5FbWFpbFN0eWxl
-MTkNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNhbGli
-cmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2luZG93dGV4dDt9DQouTXNvQ2hwRGVmYXVsdA0KCXtt
-c28tc3R5bGUtdHlwZTpleHBvcnQtb25seTsNCglmb250LXNpemU6MTAuMHB0O30NCkBwYWdlIFdv
-cmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4w
-aW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48
-L3N0eWxlPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9ImJsdWUiIHZsaW5rPSJw
-dXJwbGUiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PlRoZXJlIGlzIG5vIHJlY2lwZSBhdmFpbGFibGUuIEl0IGlzIGp1c3QgYSBnaXRodWIgcHJvamVj
-dCBhbmQgZWl0aGVyIHdlIGNhbiBhZGQgYXMgYSBTUkNfVVJJKyBpbnRvIG91ciByZWNpcGUgb3Ig
-d3JpdGUgYSBuZXcgcmVjaXBlIHRvIGJ1aWxkIGEgcGFja2FnZS4gVGhpcyBpcyBoZWFkZXIgb25s
-eSBsaWJyYXJ5LCBhbGwgc291cmNlcyBhcmUgaW4gaGVhZGVyIGZpbGUgaXRzZWxmLiBTbyB3ZSBz
-aG91bGQgYmUNCiBhYmxlIHRvIGp1c3QgYWRkIGFzIFNSQ19VUkkuIEkgaGF2ZSBubyBpZGVhIGFi
-b3V0IGhvdyBsaWNlbnNpbmcgd2lsbCB3b3JrIGhlcmUuPG86cD48L286cD48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PlJlZ2FyZHM8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi1WaWpheTxvOnA+
-PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8
-ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlkICNCNUM0REYgMS4wcHQ7cGFk
-ZGluZzozLjBwdCAwaW4gMGluIDBpbiI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+RnJvbTogPC9zcGFuPjwvYj48c3Bh
-biBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+TmFuY3kgWXVlbiAmbHQ7eXVl
-bm5AZ29vZ2xlLmNvbSZndDs8YnI+DQo8Yj5EYXRlOiA8L2I+V2VkbmVzZGF5LCBKdWx5IDI5LCAy
-MDIwIGF0IDE6MDQgUE08YnI+DQo8Yj5UbzogPC9iPlZpamF5IEtoZW1rYSAmbHQ7dmlqYXlraGVt
-a2FAZmIuY29tJmd0Ozxicj4NCjxiPkNjOiA8L2I+T3BlbkJNQyBNYWlsbGlzdCAmbHQ7b3BlbmJt
-Y0BsaXN0cy5vemxhYnMub3JnJmd0Ozxicj4NCjxiPlN1YmplY3Q6IDwvYj5SZTogdXNpbmcgdGhp
-cmQgcGFydHkgbGlicmFyeTxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+V291bGQgdGhlIHJlY2lwZSBiZWxvbmcgaW4gPGEgaHJlZj0i
-aHR0cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQuY29tL3YyL3VybD91PWh0dHBzLTNBX19sYXll
-cnMub3BlbmVtYmVkZGVkLm9yZ19sYXllcmluZGV4X2JyYW5jaF9tYXN0ZXJfcmVjaXBlc18mYW1w
-O2Q9RHdNRmFRJmFtcDtjPTVWRDBSVHRObFRoM3ljZDQxYjNNVXcmYW1wO3I9djlNVTBLaTlwV25U
-WENXd2pIUFZncG5DUjgwdlhra2NySWFxVTdVU2w1ZyZhbXA7bT1UOTNaRnNYei1WbGFFWVBGMElQ
-RnRoRlFOTEVkSmNIZXBxM2pkRTg2blpBJmFtcDtzPXhJVTNBbHphWEZZU0NXZkFIUWpQUW1wazdT
-Y0l3OHgwUE9HY0JCZTBYejQmYW1wO2U9Ij4NCk9wZW5FbWJlZGRlZDwvYT4/PG86cD48L286cD48
-L3A+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0K
-PGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5PbiBXZWQsIEp1bCAyOSwgMjAyMCBh
-dCAxMjo1MiBQTSBWaWpheSBLaGVta2EgJmx0OzxhIGhyZWY9Im1haWx0bzp2aWpheWtoZW1rYUBm
-Yi5jb20iPnZpamF5a2hlbWthQGZiLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0K
-PC9kaXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6c29saWQg
-I0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1sZWZ0OjQuOHB0
-O21hcmdpbi1yaWdodDowaW4iPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBz
-dHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8i
-PkhpLDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
-aW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj5JIHdhbnQgdG8gdXNl
-IGZvbGxvd2luZyBsaWJyYXJ5IGZyb20gb3BlbiBzb3VyY2Ugd2hpY2ggaXMgdW5kZXIgTUlUIGxp
-Y2Vuc2UsIHBsZWFzZSBsZXQgbWUga25vdyBpZiB0aGVyZSBpcyBhbnkgcmVzdHJpY3Rpb24gdG8g
-dXNlIHRoaXMgaW4gb3VyIG9wZW5ibWMgcGFja2FnZS48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJv
-dHRvbS1hbHQ6YXV0byI+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL0FyYXNoUGFydG93L2V4
-cHJ0ay8iIHRhcmdldD0iX2JsYW5rIj5odHRwczovL2dpdGh1Yi5jb20vQXJhc2hQYXJ0b3cvZXhw
-cnRrLzwvYT48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28t
-bWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86
-cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3At
-YWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPkFsc28gSSBuZWVkIHRvIHdyaXRl
-IHNpbXBsZSByZWNpcGUgdG8gaW5jbHVkZSB0aGlzIHNvIHBsZWFzZSBsZXQgbWUga25vdyB3aGF0
-IGlzIHRoZSBiZXN0IGxvY2F0aW9uIHRvIHB1dCB0aGlzIHJlY2lwZSBhcyB3ZWxsLiBBcyBJIGFt
-IHRoaW5raW5nIG9mIHVzaW5nIHRoaXMgZm9yIHZpcnR1YWwgc2Vuc29ycw0KIHRoZW4gSSBjYW4g
-cHV0IHVuZGVyIFNlbnNvcnMgb3IgaWYgdGhlcmUgaXMgYmV0dGVyIHBsYWNlIHRvIHB1dCB0aGlz
-IHRoZW4gcGxlYXNlIGFkdmlzZS48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-IHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0
-byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNv
-LW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPlJlZ2FyZHM8
-bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRv
-cC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+LVZpamF5PG86cD48L286cD48
-L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3RlPg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48YnIgY2xlYXI9ImFsbCI+DQo8bzpwPjwvbzpwPjwvcD4NCjxkaXY+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+LS0gPG86cD48L286cD48L3A+DQo8ZGl2Pg0KPGRpdj4NCjx0YWJsZSBjbGFzcz0i
-TXNvTm9ybWFsVGFibGUiIGJvcmRlcj0iMCIgY2VsbHNwYWNpbmc9IjAiIGNlbGxwYWRkaW5nPSIw
-IiBzdHlsZT0iYm9yZGVyLWNvbGxhcHNlOmNvbGxhcHNlIj4NCjx0Ym9keT4NCjx0ciBzdHlsZT0i
-aGVpZ2h0OjE1LjBwdCI+DQo8dGQgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29saWQg
-I0Q1MEYyNSAxLjVwdDtwYWRkaW5nOi43NXB0IC43NXB0IC43NXB0IC43NXB0O2hlaWdodDoxNS4w
-cHQ7b3ZlcmZsb3c6aGlkZGVuIj4NCjxwIGFsaWduPSJjZW50ZXIiIHN0eWxlPSJtYXJnaW46MGlu
-O3RleHQtYWxpZ246Y2VudGVyIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250
-LWZhbWlseTpSb2JvdG87Y29sb3I6IzY2NjY2NiI+TmFuY3kgWXVlbjwvc3Bhbj48L2I+PG86cD48
-L286cD48L3A+DQo8L3RkPg0KPHRkIHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlk
-ICM2NjY2NjYgMS41cHQ7cGFkZGluZzouNzVwdCAuNzVwdCAuNzVwdCAuNzVwdDtoZWlnaHQ6MTUu
-MHB0O292ZXJmbG93OmhpZGRlbiI+DQo8cCBhbGlnbj0iY2VudGVyIiBzdHlsZT0ibWFyZ2luOjBp
-bjt0ZXh0LWFsaWduOmNlbnRlciI+PGI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0Fy
-aWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6cmVkIj7igKI8L3NwYW4+PC9iPjxvOnA+PC9vOnA+
-PC9wPg0KPC90ZD4NCjx0ZCBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjMzM2
-OUU4IDEuNXB0O3BhZGRpbmc6Ljc1cHQgLjc1cHQgLjc1cHQgLjc1cHQ7aGVpZ2h0OjE1LjBwdDtv
-dmVyZmxvdzpoaWRkZW4iPg0KPHAgYWxpZ249ImNlbnRlciIgc3R5bGU9Im1hcmdpbjowaW47dGV4
-dC1hbGlnbjpjZW50ZXIiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFt
-aWx5OlJvYm90bztjb2xvcjojNjY2NjY2Ij5Hb29nbGUgUGxhdGZvcm1zJm5ic3A7PC9zcGFuPjwv
-Yj48bzpwPjwvbzpwPjwvcD4NCjwvdGQ+DQo8dGQgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10
-b3A6c29saWQgIzY2NjY2NiAxLjVwdDtwYWRkaW5nOi43NXB0IC43NXB0IC43NXB0IC43NXB0O2hl
-aWdodDoxNS4wcHQ7b3ZlcmZsb3c6aGlkZGVuIj4NCjxwIGFsaWduPSJjZW50ZXIiIHN0eWxlPSJt
-YXJnaW46MGluO3RleHQtYWxpZ246Y2VudGVyIj48Yj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6
-JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojM0Q4NUM2Ij7igKI8L3NwYW4+PC9i
-PjxvOnA+PC9vOnA+PC9wPg0KPC90ZD4NCjx0ZCBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRv
-cDpzb2xpZCAjMDA5OTM5IDEuNXB0O3BhZGRpbmc6Ljc1cHQgLjc1cHQgLjc1cHQgLjc1cHQ7aGVp
-Z2h0OjE1LjBwdDtvdmVyZmxvdzpoaWRkZW4iPg0KPHAgYWxpZ249ImNlbnRlciIgc3R5bGU9Im1h
-cmdpbjowaW47dGV4dC1hbGlnbjpjZW50ZXIiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAu
-MHB0O2ZvbnQtZmFtaWx5OlJvYm90bztjb2xvcjojNjY2NjY2Ij48YSBocmVmPSJtYWlsdG86eXVl
-bm5AZ29vZ2xlLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPnl1ZW5uQGdvb2dsZS5jb208L2E+PC9zcGFu
-PjwvYj48bzpwPjwvbzpwPjwvcD4NCjwvdGQ+DQo8dGQgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRl
-ci10b3A6c29saWQgIzY2NjY2NiAxLjVwdDtwYWRkaW5nOi43NXB0IC43NXB0IC43NXB0IC43NXB0
-O2hlaWdodDoxNS4wcHQ7b3ZlcmZsb3c6aGlkZGVuIj4NCjxwIGFsaWduPSJjZW50ZXIiIHN0eWxl
-PSJtYXJnaW46MGluO3RleHQtYWxpZ246Y2VudGVyIj48Yj48c3BhbiBzdHlsZT0iZm9udC1mYW1p
-bHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMDA5OTM5Ij7igKI8L3NwYW4+
-PC9iPjxvOnA+PC9vOnA+PC9wPg0KPC90ZD4NCjx0ZCBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVy
-LXRvcDpzb2xpZCAjRUVCMjExIDEuNXB0O3BhZGRpbmc6Ljc1cHQgLjc1cHQgLjc1cHQgLjc1cHQ7
-aGVpZ2h0OjE1LjBwdDtvdmVyZmxvdzpoaWRkZW4iPg0KPHAgYWxpZ249ImNlbnRlciIgc3R5bGU9
-Im1hcmdpbjowaW47dGV4dC1hbGlnbjpjZW50ZXIiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
-MTAuMHB0O2ZvbnQtZmFtaWx5OlJvYm90bztjb2xvcjojNjY2NjY2Ij5Hb29nbGUgTExDPC9zcGFu
-PjwvYj48bzpwPjwvbzpwPjwvcD4NCjwvdGQ+DQo8L3RyPg0KPC90Ym9keT4NCjwvdGFibGU+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9kaXY+
-DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+Yes, but I figured that can be done later. Since 200 is the fastest, 
+then using 19 will be safe until we can find the time to implement the 
+clock division properly.
 
---_000_A698A00188FC464E9D56E7EFB69624DEfbcom_--
+
+Thanks,
+
+Eddie
+
+
+>
+>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+>> Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
+>> ---
+>>   drivers/spi/spi-fsi.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/spi/spi-fsi.c b/drivers/spi/spi-fsi.c
+>> index 8f64af0140e0..559d0ff981f3 100644
+>> --- a/drivers/spi/spi-fsi.c
+>> +++ b/drivers/spi/spi-fsi.c
+>> @@ -350,7 +350,7 @@ static int fsi_spi_transfer_init(struct fsi_spi *ctx)
+>>          u64 status = 0ULL;
+>>          u64 wanted_clock_cfg = SPI_FSI_CLOCK_CFG_ECC_DISABLE |
+>>                  SPI_FSI_CLOCK_CFG_SCK_NO_DEL |
+>> -               FIELD_PREP(SPI_FSI_CLOCK_CFG_SCK_DIV, 4);
+>> +               FIELD_PREP(SPI_FSI_CLOCK_CFG_SCK_DIV, 19);
+>>
+>>          end = jiffies + msecs_to_jiffies(SPI_FSI_INIT_TIMEOUT_MS);
+>>          do {
+>> --
+>> 2.24.0
+>>
