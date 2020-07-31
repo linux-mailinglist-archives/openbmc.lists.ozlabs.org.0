@@ -1,78 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD83B233B24
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 00:12:21 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E4232341BF
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 11:01:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BHl5H0PLqzDqW0
-	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 08:12:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BJ1VV1cjhzDqd9
+	for <lists+openbmc@lfdr.de>; Fri, 31 Jul 2020 19:01:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=J66//oFX; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BHkvJ2hJczDrBd
- for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 08:03:40 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06UM3GqV007426; Thu, 30 Jul 2020 18:03:35 -0400
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32m3wuc7ns-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2020 18:03:35 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06UM0lkT031487;
- Thu, 30 Jul 2020 22:03:34 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma02dal.us.ibm.com with ESMTP id 32gcy514tk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Jul 2020 22:03:34 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 06UM3VLG20710070
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Jul 2020 22:03:31 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 949247806E;
- Thu, 30 Jul 2020 22:03:33 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 56BB878068;
- Thu, 30 Jul 2020 22:03:33 +0000 (GMT)
-Received: from ghost4.ibm.com (unknown [9.163.50.101])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu, 30 Jul 2020 22:03:33 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.7 v2 7/7] eeprom: at25: Split reads into chunks
- and cap write size
-Date: Thu, 30 Jul 2020 17:03:30 -0500
-Message-Id: <20200730220330.16368-8-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.24.0
-In-Reply-To: <20200730220330.16368-1-eajames@linux.ibm.com>
-References: <20200730220330.16368-1-eajames@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BJ1Tc1X22zDqZk
+ for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 19:00:47 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 50A9A412C5
+ for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 09:00:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1596186036; x=1598000437; bh=86tueO1y9veEjQMtmrP4JXD73
+ BdqEtqXgqxl75vki+0=; b=J66//oFXqhlc1THTwvDR5yZ2RbuOqtJvuDAe30+T4
+ 0HMmZo4cFTtwyy8B4j1rArb4I2mvbADqlAcAFAGm1tgbcQXwZrqdxK9SAth11JKV
+ lSC6G10uqK8L9vKiy1uYA6wYRRxKf/v2/kVSt+xIaRRbvCqmUDaRfEXGwQqC44ID
+ xY=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id TTr21yVjiRWM for <openbmc@lists.ozlabs.org>;
+ Fri, 31 Jul 2020 12:00:36 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 912A54C8A7
+ for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 12:00:36 +0300 (MSK)
+Received: from [10.199.0.34] (10.199.0.34) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 31
+ Jul 2020 12:00:36 +0300
+Message-ID: <3b6f8a090359d4ffebf3ef98a9aeb7e77df7b10f.camel@yadro.com>
+Subject: Re: OpenBMC : FRU Inventory management
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Date: Fri, 31 Jul 2020 12:00:35 +0300
+In-Reply-To: <BN8PR12MB32820389DABEE2E32ED84E57C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+References: <BN8PR12MB32822ADFBBC19F6B2FB08F52C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+ <e00d409b-a845-85ee-16d7-0bb53f1e013e@linux.vnet.ibm.com>
+ <BN8PR12MB32820389DABEE2E32ED84E57C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.4 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-30_18:2020-07-30,
- 2020-07-30 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=1 bulkscore=0
- impostorscore=0 spamscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- phishscore=0 mlxlogscore=999 clxscore=1015 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2007300153
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.34]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,157 +77,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: bradleyb@fuzziesquirrel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Hi Deepak,
 
-Make use of spi_max_transfer_size to avoid requesting transfers that are
-too large for some spi controllers.
+Saying about inventory management for non-BMC accessible resources like
+CPU/DIMM with EntityManager: is there good example demonstrated
+preffered way to do so?
+Trying to bring up system based on that Intel's fork, but looks like
+they have own way to do things ).
 
-Signed-off-by: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/misc/eeprom/at25.c | 94 ++++++++++++++++++++++----------------
- 1 file changed, 54 insertions(+), 40 deletions(-)
-
-diff --git a/drivers/misc/eeprom/at25.c b/drivers/misc/eeprom/at25.c
-index cde9a2fc1325..f3863929f8e3 100644
---- a/drivers/misc/eeprom/at25.c
-+++ b/drivers/misc/eeprom/at25.c
-@@ -64,12 +64,17 @@ static int at25_ee_read(void *priv, unsigned int offset,
- {
- 	struct at25_data *at25 = priv;
- 	char *buf = val;
-+	size_t max_chunk = spi_max_transfer_size(at25->spi);
-+	size_t num_msgs = DIV_ROUND_UP(count, max_chunk);
-+	size_t			nr_bytes = 0;
- 	u8			command[EE_MAXADDRLEN + 1];
- 	u8			*cp;
- 	ssize_t			status;
- 	struct spi_transfer	t[2];
- 	struct spi_message	m;
- 	u8			instr;
-+	unsigned int		msg_offset;
-+	size_t			msg_count;
- 
- 	if (unlikely(offset >= at25->chip.byte_len))
- 		return -EINVAL;
-@@ -78,57 +83,64 @@ static int at25_ee_read(void *priv, unsigned int offset,
- 	if (unlikely(!count))
- 		return -EINVAL;
- 
--	cp = command;
--
--	instr = AT25_READ;
--	if (at25->chip.flags & EE_INSTR_BIT3_IS_ADDR)
--		if (offset >= (1U << (at25->addrlen * 8)))
--			instr |= AT25_INSTR_BIT3;
--	*cp++ = instr;
--
--	/* 8/16/24-bit address is written MSB first */
--	switch (at25->addrlen) {
--	default:	/* case 3 */
--		*cp++ = offset >> 16;
--		/* fall through */
--	case 2:
--		*cp++ = offset >> 8;
--		/* fall through */
--	case 1:
--	case 0:	/* can't happen: for better codegen */
--		*cp++ = offset >> 0;
--	}
-+	msg_offset = (unsigned int)offset;
-+	msg_count = min(count, max_chunk);
-+	while (num_msgs) {
-+		cp = command;
- 
--	spi_message_init(&m);
--	memset(t, 0, sizeof(t));
-+		instr = AT25_READ;
-+		if (at25->chip.flags & EE_INSTR_BIT3_IS_ADDR)
-+			if (msg_offset >= (1U << (at25->addrlen * 8)))
-+				instr |= AT25_INSTR_BIT3;
-+		*cp++ = instr;
- 
--	t[0].tx_buf = command;
--	t[0].len = at25->addrlen + 1;
--	spi_message_add_tail(&t[0], &m);
-+		/* 8/16/24-bit address is written MSB first */
-+		switch (at25->addrlen) {
-+		default:	/* case 3 */
-+			*cp++ = msg_offset >> 16;
-+				/* fall through */
-+			case 2:
-+				*cp++ = msg_offset >> 8;
-+				/* fall through */
-+			case 1:
-+			case 0:	/* can't happen: for better codegen */
-+				*cp++ = msg_offset >> 0;
-+		}
- 
--	t[1].rx_buf = buf;
--	t[1].len = count;
--	spi_message_add_tail(&t[1], &m);
-+		spi_message_init(&m);
-+		memset(t, 0, sizeof(t));
- 
--	mutex_lock(&at25->lock);
-+		t[0].tx_buf = command;
-+		t[0].len = at25->addrlen + 1;
-+		spi_message_add_tail(&t[0], &m);
- 
--	/* Read it all at once.
--	 *
--	 * REVISIT that's potentially a problem with large chips, if
--	 * other devices on the bus need to be accessed regularly or
--	 * this chip is clocked very slowly
--	 */
--	status = spi_sync(at25->spi, &m);
--	dev_dbg(&at25->spi->dev, "read %zu bytes at %d --> %zd\n",
--		count, offset, status);
-+		t[1].rx_buf = buf + nr_bytes;
-+		t[1].len = msg_count;
-+		spi_message_add_tail(&t[1], &m);
- 
--	mutex_unlock(&at25->lock);
--	return status;
-+		mutex_lock(&at25->lock);
-+
-+		status = spi_sync(at25->spi, &m);
-+
-+		mutex_unlock(&at25->lock);
-+
-+		if (status)
-+			return status;
-+
-+		--num_msgs;
-+		msg_offset += msg_count;
-+		nr_bytes += msg_count;
-+	}
-+
-+	dev_dbg(&at25->spi->dev, "read %zu bytes at %d\n",
-+		count, offset);
-+	return 0;
- }
- 
- static int at25_ee_write(void *priv, unsigned int off, void *val, size_t count)
- {
- 	struct at25_data *at25 = priv;
-+	size_t maxsz = spi_max_transfer_size(at25->spi);
- 	const char *buf = val;
- 	int			status = 0;
- 	unsigned		buf_size;
-@@ -191,6 +203,8 @@ static int at25_ee_write(void *priv, unsigned int off, void *val, size_t count)
- 		segment = buf_size - (offset % buf_size);
- 		if (segment > count)
- 			segment = count;
-+		if (segment > maxsz)
-+			segment = maxsz;
- 		memcpy(cp, buf, segment);
- 		status = spi_write(at25->spi, bounce,
- 				segment + at25->addrlen + 1);
--- 
-2.24.0
+On Thu, 2020-07-30 at 13:55 +0000, Vasant Patil wrote:
+> Thanks Deepak.
+> Yes, This help. We will go with entity-manager option. 
+> 
+> Regards,
+> Vasant 
+> 
+> -----Original Message-----
+> From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com> 
+> Sent: Thursday, July 30, 2020 12:22 AM
+> To: Vasant Patil <vasantp@nvidia.com>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: OpenBMC : FRU Inventory management
+> 
+> External email: Use caution opening links or attachments
+> 
+> 
+> On 30/07/20 8:37 am, Vasant Patil wrote:
+> > Hi Team,
+> > 
+> > We are enabling OpenBMC on x86 system. We would like to know the 
+> > recommendation on FRU inventory management and corresponding
+> > pointers.
+> > 
+> > There seems to be multiple options available
+> > 
+> >  1. described in  "Adding new system to OpenBMC
+> >     <
+> > https://github.com/openbmc/docs/blob/master/development/add-new-system.md>
+> > ;"
+> >     with  Yaml files (meta-romulus/recipes-phosphor/ipmi
+> >     
+> > <
+> > https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulus/
+> > recipes-phosphor/ipmi>)
+> > 
+> >  2. Entity manager <https://github.com/openbmc/entity-manager> with
+> > JSON
+> >     schema
+> 
+> Hi Vasant,
+> 
+> The commonly used option for this now is entity-manager. The entity-
+> manager config JSONs enable entity-manager to monitor/probe FRU
+> config information (FRU information read off of an EEPROM for eg) and
+> then transform that to an inventory D-Bus object that implements an
+> xyz.openbmc_project.Inventory.Item.<Type> interface. The webserver
+> (bmcweb) then can relay this into a Redfish inventory representation.
+> 
+> To make the FRU EEPROM content available on D-Bus, anther app
+> typically reads the EEPROM and then hosts the info on D-Bus. For eg
+> the FruDevice daemon (which sits in the entity-manager repo) scans
+> I2C connected EEPROMs, and can read IPMI FRU format data off of them.
+> Now this info can actually be coming in via EEPROMs that the BMC
+> can't access (and for eg the host CPU can) - in that case I would
+> expect the FRU information to be transported over IPMI/PLDM, and then
+> apps like host-ipmid or pldmd can place the FRU information on D-Bus, 
+> for entity-manager to consume.
+> 
+> > We are looking to enable below inventory (Both FRU and non-FRU):
+> > 
+> >   * CPU
+> >   * DIMM
+> >   * M.2
+> >   * U.2
+> >   * Motherboard FRU EEPROM
+> >   * Chassis FRU EEPROM
+> >   * Add-on PCI cards
+> >   * FANs
+> >   * PSU
+> >   * Etc.
+> 
+> You can look at
+> https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/openbmc_project/Inventory/Item
+> and define types that you don't find here.
+> 
+> Regards,
+> Deepak
+> 
 
