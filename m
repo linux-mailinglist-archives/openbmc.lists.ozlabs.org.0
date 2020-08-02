@@ -1,79 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD2D6234F5C
-	for <lists+openbmc@lfdr.de>; Sat,  1 Aug 2020 03:58:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F6BF235842
+	for <lists+openbmc@lfdr.de>; Sun,  2 Aug 2020 17:55:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BJS485sXTzDqYK
-	for <lists+openbmc@lfdr.de>; Sat,  1 Aug 2020 11:58:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BKQZY4lX8zDqQq
+	for <lists+openbmc@lfdr.de>; Mon,  3 Aug 2020 01:55:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=us.ibm.com
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=fFRuDHEJ; dkim-atps=neutral
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
+ [IPv6:2607:f8b0:4864:20::b30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BJS3M3832zDqXB
- for <openbmc@lists.ozlabs.org>; Sat,  1 Aug 2020 11:58:06 +1000 (AEST)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 07113GWt023500
- for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 21:58:03 -0400
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.113])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32mu6kmf5t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 31 Jul 2020 21:58:02 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Sat, 1 Aug 2020 01:58:02 -0000
-Received: from us1b3-smtp07.a3dr.sjc01.isc4sb.com (10.122.203.198)
- by smtp.notes.na.collabserv.com (10.122.47.56) with
- smtp.notes.na.collabserv.com ESMTP; Sat, 1 Aug 2020 01:57:58 -0000
-Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
- by us1b3-smtp07.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020080101575843-804687 ;
- Sat, 1 Aug 2020 01:57:58 +0000 
-In-Reply-To: <SN6PR17MB2558B3606E296F4EE155BDB9964F0@SN6PR17MB2558.namprd17.prod.outlook.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: Mahesh Kurapati <mahesh.kurapati@keysight.com>
-Date: Sat, 1 Aug 2020 01:57:57 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BKQYf4S9mzDqPQ
+ for <openbmc@lists.ozlabs.org>; Mon,  3 Aug 2020 01:54:11 +1000 (AEST)
+Received: by mail-yb1-xb30.google.com with SMTP id q16so16692931ybk.6
+ for <openbmc@lists.ozlabs.org>; Sun, 02 Aug 2020 08:54:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=PNzBURBNg2Hm8madqaED2qTOOPT4O5cq5PRyekKE2Cw=;
+ b=fFRuDHEJmBDjwcPd7fht9Sf3kwPMh5Fg1aCg9QiMt5TUOZlUL4cSgC+9RrqblJBqJG
+ ozmowLGe7psvjGV8Gu7TYnpotg0WUFGUXXQQHw+C4iu+R/SD/GGvCdA6WoL3ucb4PIDD
+ Cax3J5xp9RKmLvqAfYl4jbpUVZDyosd7Un54oYLa2+wj4qgcqVEbvv7lJnNh6gAFHeSA
+ lW97mQrj+a1GC55O/W220L4Rf/LaX85vfIcd9b45HAaWU1PdXLgeY9HS5C3VJmVjQ+dq
+ UeqtrL81UDPDAhBnKwMUXLfMJvOn46726UBiwF3doToSILQRdsVaQHvpd9wvV4PBhg2w
+ vLKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=PNzBURBNg2Hm8madqaED2qTOOPT4O5cq5PRyekKE2Cw=;
+ b=btRE8KO1jPAnwktVOqjbAltz/nUxdZti1ULRnyywHgt4CM8/PVYwOumBjdCb8fuiuc
+ 2K1BQOaIuRV5Hjxbio4fpqqxenZWGjUFNYD36gWE6XTXRwJlYoFtN1qozTH+0XTtAUgP
+ 91t3XYC9Zlf2zB0n72sgWjr7Kox024FyNMDoXwBF3tYh6iKgVUzItLws3lpSQc3OOzbT
+ Wo5ovJAjU6hXDn4e91qJH17u/89TB/s+VqJBY+5DhSpNdfRY5qaxZcN+qJ2d/kTDRFbw
+ fl01+j6XjkzbWUd+3rfk+apzV+eecQ+vQJFoSug2fHF/s3LrwpHXxHfOPNtimoGQdV5T
+ s8WA==
+X-Gm-Message-State: AOAM531SasQqVPG3tVwJOVcwzLfO5PXQompzBAupB6tLB5I0bw51iBUH
+ hQ+s7MB5YIUqXnp3ZE5SyMhxCGmq49YVKa3AIbSnoymPt8lPTw==
+X-Google-Smtp-Source: ABdhPJyXDjVaCFjpW72A5iiucdu8+ZpgONCzrQO1SWEwGYOls08Iq/y66hR5Mq/pu/cnQLG9Gn4oHjNRY1mXTVdklj8=
+X-Received: by 2002:a25:d48e:: with SMTP id
+ m136mr19634166ybf.148.1596383646697; 
+ Sun, 02 Aug 2020 08:54:06 -0700 (PDT)
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <SN6PR17MB2558B3606E296F4EE155BDB9964F0@SN6PR17MB2558.namprd17.prod.outlook.com>,
- <SN6PR17MB25580E5C6278629955BE548B964E0@SN6PR17MB2558.namprd17.prod.outlook.com>
- <CAAD+EBpiQfqOnPrG1VaEg83EsMq0SwEJ0orGn-AqBAw+h+h5cA@mail.gmail.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 49823
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20080101-7691-0000-0000-00000D6973AF
-X-IBM-SpamModules-Scores: BY=0.099758; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.36301; ST=0; TS=0; UL=0; ISC=; MB=0.262537
-X-IBM-SpamModules-Versions: BY=3.00013572; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01413987; UDB=6.00758012; IPR=6.01196266; 
- MB=3.00033291; MTD=3.00000008; XFM=3.00000015; UTC=2020-08-01 01:58:00
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-07-31 23:30:01 - 6.00011668
-x-cbparentid: 20080101-7692-0000-0000-00002D8A81F9
-Message-Id: <OF5BB1C1D9.12A4C663-ON002585B7.000ACCBC-002585B7.000ACCC1@notes.na.collabserv.com>
-Subject: RE: OpenBMC build fails in VM ubuntu 16.04 for yosemitev2
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-07-31_09:2020-07-31,
- 2020-07-31 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+From: Ed Tanous <ed@tanous.net>
+Date: Sun, 2 Aug 2020 08:53:55 -0700
+Message-ID: <CACWQX82sSvONiMq53s39P42Sky5C+GsvLGyN42xvKUYSGHjyrQ@mail.gmail.com>
+Subject: Recent architecture breakages to bmcweb
+To: James Feist <james.feist@linux.intel.com>, apparao.puli@linux.intel.com, 
+ raviteja28031990@gmail.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,317 +73,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Drew Macrae <drewmacrae@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On July 31, 2020 around   08:37PM in some timezone, Mahesh Kurapati  wrote:=
-> Hello Drew,=20
-> =20
-> Thank you.  That fixed the issue. Now, I see the below error:=20
-> =20
-> DEBUG: Fetching
->http://downloads.yoctoproject.org/mirror/sources/git2=5Fgithub.com.open
->bmc.ipmbbridge.git.tar.gz using command '/usr/bin/env wget -t 2 -T 30
->--passive-ftp --no-check-certificate  -P
->/home/ixia/yosemite/openbmc/build/yosemitev2/downloads
->'http://downloads.yoctoproject.org/mirror/sources/git2=5Fgithub.com.ope
->nbmc.ipmbbridge.git.tar.gz''
-> DEBUG: Fetcher accessed the network with the command /usr/bin/env
->wget -t 2 -T 30 --passive-ftp --no-check-certificate -P
->/home/ixia/yosemite/openbmc/build/yosemitev2/downloads
->'http://downloads.yoctoproject.org/mirror/sources/git2=5Fgithub.com.ope
->nbmc.ipmbbridge.git.tar.gz'
-> DEBUG: Running export PSEUDO=5FDISABLED=3D1; unset
->=5FPYTHON=5FSYSCONFIGDATA=5FNAME; export
->DBUS=5FSESSION=5FBUS=5FADDRESS=3D"unix:abstract=3D/tmp/dbus-S3y80KQJZ9"; e=
-xport
->SSH=5FAUTH=5FSOCK=3D"/run/user/1000/keyring/ssh";  export
->GIT=5FSSL=5FCAINFO=3D"/home/ixia/yosemite/openbmc/poky/buildtools/sysroots/
->x86=5F64-pokysdk-linux/etc/ssl/certs/ca-certificates.crt"; export
->PATH=3D"/home/ixia/yosemite/openbmc/scripts:/home/ixia/yosemite/openbmc
->/build/yosemitev2/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-
->ipmi-ipmb/0.1+gitAUTOINC+a86059348f-r0/recipe-sysroot-native/usr/bin/
->arm-openbmc-linux-gnueabi:/home/ixia/yosemite/openbmc/build/yosemitev
->2/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-ipmi-ipmb/0.1+gi
->tAUTOINC+a86059348f-r0/recipe-sysroot/usr/bin/crossscripts:/home/ixia
->/yosemite/openbmc/build/yosemitev2/tmp/work/arm1176jzs-openbmc-linux-
->gnueabi/phosphor-ipmi-ipmb/0.1+gitAUTOINC+a86059348f-r0/recipe-sysroo
->t-native/usr/sbin:/home/ixia/yosemite/openbmc/build/yosemitev2/tmp/wo
->rk/arm1176jzs-openbmc-linux-gnueabi/phosphor-ipmi-ipmb/0.1+gitAUTOINC
->+a86059348f-r0/recipe-sysroot-native/usr/bin:/home/ixia/yosemite/open
->bmc/build/yosemitev2/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosph
->or-ipmi-ipmb/0.1+gitAUTOINC+a86059348f-r0/recipe-sysroot-native/sbin:
->/home/ixia/yosemite/openbmc/build/yosemitev2/tmp/work/arm1176jzs-open
->bmc-linux-gnueabi/phosphor-ipmi-ipmb/0.1+gitAUTOINC+a86059348f-r0/rec
->ipe-sysroot-native/bin:/home/ixia/yosemite/openbmc/poky/bitbake/bin:/
->home/ixia/yosemite/openbmc/build/yosemitev2/tmp/hosttools";  export
->HOME=3D"/home/ixia"; /usr/bin/env wget -t 2 -T 30 --passive-ftp
->--no-check-certificate -P
->/home/ixia/yosemite/openbmc/build/yosemitev2/downloads
->'http://downloads.yoctoproject.org/mirror/sources/git2=5Fgithub.com.ope
->nbmc.ipmbbridge.git.tar.gz' --progress=3Ddot  -v
-> --2020-08-01 00:03:19--
->http://downloads.yoctoproject.org/mirror/sources/git2=5Fgithub.com.open
->bmc.ipmbbridge.git.tar.gz
-> Resolving downloads.yoctoproject.org... 198.145.29.63
-> Connecting to downloads.yoctoproject.org|198.145.29.63|:80...
->connected.
-> HTTP request sent, awaiting response... 404 Not Found
-> 2020-08-01 00:03:19 ERROR
->  > DEBUG: Mirror fetch failure for url
->http://downloads.yoctoproject.org/mirror/sources/git2=5Fgithub.com.open
->bmc.ipmbbridge.git.tar.gz (original url:
->git://github.com/openbmc/ipmbbridge.git)
- 404: Not Found.
+I'm looking at a couple recent changes to bmcweb, and I'm finding a
+significant architecture problem has been injected.  Namely, it's
+these innocuous looking 4 lines here, which injects the socket adaptor
+into the request object for use later.
+https://github.com/openbmc/bmcweb/blob/30c58d581606b4484757e6ee9133c248de1514a6/http/http_request.h#L18
 
+The problem with this approach has a few roots:
+1. The Request class is meant to model a single request, single
+response model.  Adding the stream semantics breaks this in pretty
+significant ways, and forces a hard dependency between the streaming
+adapter and the Request, which was not the intent.  We have
+abstractions for "streaming" requests, but that was seemingly not
+used.
 
-Whlie OpenBMC uses Yocto as our upstream, we are not mirrored=20
-at yocto.org.
+2. In the code that existed before this, Adaptor was a template on
+purpose.  It is designed to implement the std::networking
+AsyncReadStream and AsyncWriteStream concepts.  This is designed to
+allow injection of Unit Tests at some point, as I've talked about
+before.  Hardcoding it in request to 2 forced stream types, based on
+the compiler flag is incorrect per asio standards, and removes the
+ability to inject arbitrary adapters, like test adaptors.  Also, the
+flag used is incorrect, as it's possible to inject a non-ssl socket
+even if SSL is enabled.
 
-You need to look prior why you are attempting to fetch from the=20
-mirror instead of the github hosted git repositories mentioned=20
-in the original URL.  If needed you can rewrite them to fetch=20
-with http but that is not as efficient.
+3. There is already a precedent and pattern for streaming interfaces
+in bmcweb that we adopted from Crow.  If you look at the Websocket
+request response type, it implements a way to request a route that
+streams dynamically.  Frustratingly, part of what this was used for
+was SSE, which I had already written a patch for that didn't have any
+of the above issues, and only hadn't merged it because we didn't have
+any SSE routes yet, and didn't want to check in dead code.
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/13948
 
-Perhaps you have some transports blocked?
+4. It opens the possibility for lifetime and possible (at the very
+least harder to audit) security issues, as now the "http server"
+component is no longer the only thing that can own sockets.
+Previously, the server owned the sockets until handed off, then there
+was no shared ownership between the websocket class, and the
+Connection class.  The Connection class could be completely destroyed
+(and memory freed) while the websocket was still connected and
+running.
 
-milton
+Moving to another track, you may ask, how did I come across this and
+why does it matter?  I'm trying to add 2 new features to bmcweb.  The
+first allows opening multiple sockets, and dynamically detecting TLS
+streams on them.  This allows bmcweb to handle both HTTPS redirects in
+band, and handle the case where users type in something erroneous,
+like "http://mybmc:443" and connect to an SSL socket with a non-ssl
+protocol.  In those cases, we can simply do the right thing.  It also
+allows bmcweb to host on multiple ports, which might be interesting
+for aggregator types.  More importantly, it cleans up some of the
+Adaptor abstraction to make way for unit testing, and being able to
+inject a "test" socket, that we can control the semantics of.  I'm
+hoping eventually to be able to mock dbus, and mock the TCP socket,
+and run a full Redfish validator run in a unit test.  I think that
+would save a lot of time overall for both committers and consumers.
 
-...
+The first of these patches is posted here, and simply comments out the
+above problems for now.
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35265
 
->  > Thank you,=20
-> Mahesh
-> =20
-> From: Drew Macrae <drewmacrae@google.com>=20
-> Sent: Friday, July 31, 2020 1:44 PM
-> To: Mahesh Kurapati <mahesh.kurapati@keysight.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: OpenBMC build fails in VM ubuntu 16.04 for yosemitev2
-> =20
->=20
->=20
->=20
-> Open Embedded has been updated recently to check for gcc-6 or later
->while ubuntu 16.04 is packaged with gcc 5.4.
-> =20
-> You'll have to install a newer version of gcc to build it or disable
->the sanity check. To install and use a newer version of gcc you can
->run:
-> =20
-> =20
-> =20
-> ```
-> =20
->=20
-> # Get and use gcc-9
-> =20
-> sudo apt-get install software-properties-common --assume-yes
->--fix-missing
-> =20
-> sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-> =20
-> sudo apt update
-> =20
-> sudo apt-get install gcc-9  g++-9 --assume-yes --fix-missing
-> =20
-> sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9
->90
-> =20
-> sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9
->90
-> =20
-> gcc -v 2>&1
-> =20
-> ```
->  =20
-> =20
-> =20
-> Hope that helps,
-> =20
-> Drew Macrae
->   =20
->=20
->=20
-> On Fri, Jul 31, 2020 at 2:37 PM Mahesh Kurapati
-><mahesh.kurapati@keysight.com> wrote:
->  =20
->=20
-> Hi all,=20
-> =20
-> I am new to the OpenBMC. I am building the OpenBMC yosemitev2 target
->in a VM and it is failing.  Below is the error I see from the
->do=5Fcompile  output.  Also attached the compile log file. What am I
->doing incorrectly? =20
-> =20
-> Error:=20
-> Provides: linux-libc-headers-dev =3D 5.4-r0
-> Requires(rpmlib): rpmlib(CompressedFileNames) <=3D 3.0.4-1
->rpmlib(FileDigests) <=3D 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <=3D
->4.0-1
-> Checking for unpackaged file(s):
->/home/ixia/yosemite/openbmc/build/yosemitev2/tmp/work/arm1176jzs-open
->bmc-linux-gnueabi/linux-libc-headers/5.4-r0/recipe-sysroot-native/usr
->/bin/../../usr/lib/rpm/check-files
->/home/ixia/yosemite/openbmc/build/yosemitev2/tmp/work/arm1176jzs-open
->bmc-linux-gnueabi/linux-libc-headers/5.4-r0/package
-> Segmentation fault (core dumped)
-> WARNING: exit code 139 from a shell command.
-> ERROR: Error executing a python function in exec=5Fpython=5Ffunc()
->autogenerated:
-> =20
-> The stack trace of python calls that resulted in this
->exception/failure was:
-> File: 'exec=5Fpython=5Ffunc() autogenerated', lineno: 2, function:
-><module>
->      0001:
-> *** 0002:do=5Fpackage=5Frpm(d)
->      0003:
-> File:
->'/home/ixia/yosemite/openbmc/meta/classes/package=5Frpm.bbclass',
->lineno: 716, function: do=5Fpackage=5Frpm
->      0712:
->      0713:    # Build the rpm package!
->      0714:    d.setVar('BUILDSPEC', cmd + "\n" + cleanupcmd + "\n")
->      0715:    d.setVarFlag('BUILDSPEC', 'func', '1')
-> *** 0716:    bb.build.exec=5Ffunc('BUILDSPEC', d)
->      0717:
->      0718:    if d.getVar('RPM=5FSIGN=5FPACKAGES') =3D=3D '1':
->      0719:        bb.build.exec=5Ffunc("sign=5Frpm", d)
->      0720:}
-> File: '/home/ixia/yosemite/openbmc/poky/bitbake/lib/bb/build.py',
->lineno: 251, function: exec=5Ffunc
-> =20
-> =20
-> VM Details:=20
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ cat /etc/os-release
->
-> NAME=3D"Ubuntu"
-> VERSION=3D"16.04.1 LTS (Xenial Xerus)"
-> ID=3Dubuntu
-> ID=5FLIKE=3Ddebian
-> PRETTY=5FNAME=3D"Ubuntu 16.04.1 LTS"
-> VERSION=5FID=3D"16.04"
-> HOME=5FURL=3D"http://www.ubuntu.com/"
-> SUPPORT=5FURL=3D"http://help.ubuntu.com/"
-> BUG=5FREPORT=5FURL=3D"http://bugs.launchpad.net/ubuntu/"
-> UBUNTU=5FCODENAME=3Dxenial
-> =20
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ uname -a
-> Linux ubuntu 4.4.0-31-generic #50-Ubuntu SMP Wed Jul 13 00:07:12 UTC
->2016 x86=5F64 x86=5F64 x86=5F64 GNU/Linux
-> =20
-> Below are the steps I did:=20
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-> ixia@ubuntu:~/yosemite$ git clone
->https://github.com/openbmc/openbmc.git
-> Cloning into 'openbmc'...
-> remote: Enumerating objects: 83, done.
-> remote: Counting objects: 100% (83/83), done.
-> remote: Compressing objects: 100% (56/56), done.
-> remote: Total 136476 (delta 39), reused 71 (delta 27), pack-reused
->136393
-> Receiving objects: 100% (136476/136476), 66.46 MiB | 2.79 MiB/s,
->done.
-> Resolving deltas: 100% (72806/72806), done.
-> Checking connectivity... done.
-> =20
-> ixia@ubuntu:~/yosemite/openbmc$ . setup yosemitev2
-> Machine yosemitev2 found in meta-facebook/meta-yosemitev2
-> You had no conf/local.conf file. This configuration file has
->therefore been
-> created for you with some default values. You may wish to edit it
->to, for
-> example, select a different MACHINE (target hardware). See
->conf/local.conf
-> for more information as common configuration options are commented.
-> =20
-> You had no conf/bblayers.conf file. This configuration file has
->therefore been
-> created for you with some default values. To add additional metadata
->layers
-> into your configuration please add entries to conf/bblayers.conf.
-> =20
-> The Yocto Project has extensive documentation about OE including a
->reference
-> manual which can be found at:
->      http://yoctoproject.org/documentation
-> =20
-> For more information about OpenEmbedded see their website:
->      http://www.openembedded.org/
-> =20
-> Common targets are:
->      obmc-phosphor-image
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$
-> =20
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ df -h
-> df: /mnt/hgfs: Protocol error
-> Filesystem      Size  Used Avail Use% Mounted on
-> udev            7.9G     0  7.9G   0% /dev
-> tmpfs           1.6G  9.4M  1.6G   1% /run
-> /dev/sda1        91G  5.4G   81G   7% /
-> tmpfs           7.9G  212K  7.9G   1% /dev/shm
-> tmpfs           5.0M  4.0K  5.0M   1% /run/lock
-> tmpfs           7.9G     0  7.9G   0% /sys/fs/cgroup
-> tmpfs           1.6G   52K  1.6G   1% /run/user/1000
-> /dev/sr0         46M   46M     0 100% /media/ixia/CDROM
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$
-> =20
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ bitbake
->obmc-phosphor-image
-> ERROR:  OE-core's config sanity checker detected a potential
->misconfiguration.
->     Either fix the cause of this error or at your own risk disable
->the checker (see sanity.conf).
->     Following is the list of potential problems / advisories:
-> =20
->     Your version of gcc is older than 6.0 and will break builds.
->Please install a newer version of gcc (you could use the  project's
->buildtools-extended-tarball or use scripts/install-buildtools).
-> =20
-> =20
-> Summary: There was 1 ERROR message shown, returning a non-zero exit
->code.
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$
-> =20
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ sudo
->../../scripts/install-buildtools
-> INFO: Fetching buildtools installer
-> INFO: Fetching buildtools installer checksum
-> INFO: Checksum success
-> INFO: Making installer executable
-> Extended Build tools installer version 3.1+snapshot
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-> You are about to install the SDK to
->"/home/ixia/yosemite/openbmc/poky/buildtools". Proceed [Y/n]? Y
-> Extracting SDK..................done
-> Setting it up...done
-> SDK has been successfully set up and is ready to be used.
-> Each time you wish to use the SDK in a new shell session, you need
->to source the environment setup script e.g.
-> $ .
->/home/ixia/yosemite/openbmc/poky/buildtools/environment-setup-x86=5F64-
->pokysdk-linux
-> INFO: Setting up the environment
-> INFO: Testing installation
-> INFO: Installation successful. Remember to source the environment
->setup script now and in any new session.
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ .
->/home/ixia/yosemite/openbmc/poky/buildtools/environment-setup-x86=5F64-
->pokysdk-linux
-> ixia@ubuntu:~/yosemite/openbmc/build/yosemitev2$ bitbake
->obmc-phosphor-image
-> =20
-> Thank you,=20
-> Mahesh
-> =20
-> =20
-> =20
-> =20
->        =20
+If I look through the commit logs, it looks like Ravi and Appu built
+the two small subsystems that rely on the above abstraction, one for
+SSE, and one for some NBD streamer.
+What do you two think about the above?  Was it something you
+considered when you wrote your patches?  Would you consider fixing
+them?
 
+  My recommendation would be to move both of those two over to
+something similar to the websocket abstraction we have, with, on
+connect, on data, and on close handlers.  This means that handlers no
+longer take a hard dependency on the transport, which will help for
+both unit testing, and if we ever want to support redfish device
+enablement (which relies on an i2c based transport). The SSE one can
+probably be used more or less as-is from my old patch.  The NBD one
+might need a "Dynamic body" type, which beast already has an
+abstraction for that seems to have been discounted.
+
+What do you guys think?
+
+-Ed
