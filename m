@@ -2,59 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B98C223AB8B
-	for <lists+openbmc@lfdr.de>; Mon,  3 Aug 2020 19:21:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A83823AC1C
+	for <lists+openbmc@lfdr.de>; Mon,  3 Aug 2020 20:04:33 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BL4Rd5DNTzDqRC
-	for <lists+openbmc@lfdr.de>; Tue,  4 Aug 2020 03:21:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BL5PV6XLVzDqTG
+	for <lists+openbmc@lfdr.de>; Tue,  4 Aug 2020 04:04:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2b;
+ helo=mail-io1-xd2b.google.com; envelope-from=proclivis@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Gr+7AKpG; dkim-atps=neutral
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com
+ [IPv6:2607:f8b0:4864:20::d2b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BL4QT047fzDqDF
- for <openbmc@lists.ozlabs.org>; Tue,  4 Aug 2020 03:20:12 +1000 (AEST)
-IronPort-SDR: GiWsncjPTpiXpclurTAREi6aLl4nGAoVPSkePx84JwCf75Vx+yTkP1WRG3qTAyDHTGUSbXG6cB
- 0IP8AeoAbjWQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9702"; a="152128931"
-X-IronPort-AV: E=Sophos;i="5.75,430,1589266800"; d="scan'208";a="152128931"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Aug 2020 10:20:08 -0700
-IronPort-SDR: pP0iP/pc4Qqiew4U0ZzFCOEP1p5NLhZvcG0rnzraF93XOKmkqnxDzOw4WuldB8uqMwrpbes8st
- Us5KwHCm0Sxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,430,1589266800"; d="scan'208";a="332043798"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga007.jf.intel.com with ESMTP; 03 Aug 2020 10:20:08 -0700
-Received: from [10.209.39.60] (jmbills-mobl.amr.corp.intel.com [10.209.39.60])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
- bits)) (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 0AE75580709
- for <openbmc@lists.ozlabs.org>; Mon,  3 Aug 2020 10:20:08 -0700 (PDT)
-Subject: Re: x86-power-control - slot AC cycle
-To: openbmc@lists.ozlabs.org
-References: <HK0PR04MB3153FFBD73CC1A4F35D88886A7730@HK0PR04MB3153.apcprd04.prod.outlook.com>
- <CACWQX82P0wr22kJ2fw6WDZz9zEELzPWJqOaRu1wP-E2B81dD=w@mail.gmail.com>
- <HK0PR04MB3153FE2CFB446AD6612FA127A74D0@HK0PR04MB3153.apcprd04.prod.outlook.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <26472249-5bbe-0490-a88e-5b8dd69d89a8@linux.intel.com>
-Date: Mon, 3 Aug 2020 10:20:07 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <HK0PR04MB3153FE2CFB446AD6612FA127A74D0@HK0PR04MB3153.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BL5Nk1brDzDqSt
+ for <openbmc@lists.ozlabs.org>; Tue,  4 Aug 2020 04:03:48 +1000 (AEST)
+Received: by mail-io1-xd2b.google.com with SMTP id s189so32226320iod.2
+ for <openbmc@lists.ozlabs.org>; Mon, 03 Aug 2020 11:03:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:mime-version:subject:message-id:date:to;
+ bh=0F8Y02PSPEiqvBMDQyqKxTJhSHdpqGNRh2SXa73C5WU=;
+ b=Gr+7AKpG02ctfMmo6JR/njrEJDDCtSjgHhZ3dkFlQIQajhQfeJxK2X2IrNX143SrTA
+ 0H+JwRE9E3assBwV6CtcCMJwVNqktkmsH361y+Qq/GN0/AZqok/OFQho5koabH94bkgg
+ lcciJnN7PiGyYqYdoRVKiiSCrHdX/BUa29Fna75GcAu45+tWxzswynXc42Ed1GM5IPgN
+ JgWUTi/6OoXkQ+cwfKctETulaZGCb/38tqcuCCDlm/C+73mBiDqZBtGhn569u7EL2uPf
+ VIZEiotVQyvnHb1+z6unhBtWWbvFnWYN3OegerpenGU+02NMhjWUuIO/PUGuErMoqhF9
+ RUxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:mime-version:subject:message-id:date:to;
+ bh=0F8Y02PSPEiqvBMDQyqKxTJhSHdpqGNRh2SXa73C5WU=;
+ b=Ef1piP+LZwIloYE+/NwxJekCWcLx/cq8mOu2kqWZTcAoraD0cgi/z6cKRK9a8+9KMv
+ WPcEw+xAfaylc6O7nPmcU58EN7TVwd3hoAO/emFuGys1m1hUM2Yd4pFGLhNicqyO9zXK
+ p3W9K+fqoqKsEeSE1wmt1NNKtKEry58aetaepLsIr1zfWX72yKUYE4NTnuFCr5pZfW7t
+ AafjPNrrBvBaayz0SWuOHDC/X/nTa925Qo8HMf/sa38N4cFE/YStQbyu8re16Ct+7EPl
+ ELXwFy0+3gXmoPO6VR73RWFtw7IXqZSrZUlCYfNzyJ/d2vZE7jwOoSUqc/Z6Ygz2K7n2
+ kwVA==
+X-Gm-Message-State: AOAM533PwMOOxhJa0lrNVqxdydvqLsS41lKkv7HHqvgers0Tgw8sKTRJ
+ KSStxd/PsbCTkrM47wNZi9DsblAgpdQ=
+X-Google-Smtp-Source: ABdhPJw3IgeYBGCNHQDl3LyZ5L98fYyuLlzjx8ZrgBgQmrFoRiBdnnGJb2v0XldHin4PQDxRHeyazw==
+X-Received: by 2002:a05:6638:1313:: with SMTP id
+ r19mr1013834jad.60.1596477823320; 
+ Mon, 03 Aug 2020 11:03:43 -0700 (PDT)
+Received: from [10.21.10.10] ([199.115.103.2])
+ by smtp.gmail.com with ESMTPSA id r7sm10534006ioj.42.2020.08.03.11.03.40
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 03 Aug 2020 11:03:42 -0700 (PDT)
+From: Mike Jones <proclivis@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_02FCAD1E-D6C7-411E-B658-233BE3D40604"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: How to put sensors into the ObjectMapper
+Message-Id: <34F75302-6F54-4EE1-849F-F5B1D7118259@gmail.com>
+Date: Mon, 3 Aug 2020 12:03:39 -0600
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,84 +80,155 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-DQoNCk9uIDgvMy8yMDIwIDk6NDUgQU0sIFZlbHVtYW5pIFQtRVJTLEhDTFRlY2ggd3JvdGU6
-DQo+IFRoYW5rcyBmb3IgeW91ciBzdWdnZXN0aW9ucy4gV2UgcGxhbiB0byBpbXBsZW1lbnQg
-dGhlIHNsb3QgQUMgY3ljbGUgZm9yIGEgc2luZ2xlIGNoYXNzaXMgc3lzdGVtIHdpdGggNCBz
-bG90cy4gV2Ugd2lsbCB1c2UgdGhlIGNvbXBpbGUgdGltZSBmbGFncyBhbmQgaW1wbGVtZW50
-IHRoaXMgZmVhdHVyZS4NCng4Ni1wb3dlci1jb250cm9sIGNvbXBsaWVzIHdpdGggdGhlIEhv
-c3QgYW5kIENoYXNzaXMgU3RhdGUgDQpkYnVzLWludGVyZmFjZXMsIHNvIG15IG1haW4gcmVx
-dWVzdCB3b3VsZCBiZSB0byBtYWtlIHN1cmUgdGhhdCB0aGlzIG5ldyANCnNsb3QgQUMgY3lj
-bGUgY29tcGxpZXMgd2l0aCB0aGUgZGJ1cy1pbnRlcmZhY2VzLg0KDQpUaGFua3MhDQotSmFz
-b24NCg0KPiANCj4gUmVnYXJkcywNCj4gVmVsdQ0KPiANCj4gLS0tLS1PcmlnaW5hbCBNZXNz
-YWdlLS0tLS0NCj4gRnJvbTogRWQgVGFub3VzIDxlZEB0YW5vdXMubmV0Pg0KPiBTZW50OiBX
-ZWRuZXNkYXksIEp1bHkgMjksIDIwMjAgNzo1NiBBTQ0KPiBUbzogVmVsdW1hbmkgVC1FUlMs
-SENMVGVjaCA8dmVsdW1hbml0QGhjbC5jb20+DQo+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmc7IEphc29uIEJpbGxzIDxqYXNvbi5tLmJpbGxzQGludGVsLmNvbT47IFAuIFByaXlh
-dGhhcnNoYW4gPFByaXlhdGhhcnNoYW5QQGhjbC5jb20+OyBKYW1lcyBGZWlzdCA8amFtZXMu
-ZmVpc3RAaW50ZWwuY29tPjsgS3VpeWluZyBXYW5nIDxrdWl5aW5nLndhbmdAaW50ZWwuY29t
-PjsgUGF0cmljayBXaWxsaWFtcyA8cGF0cmlja3czQGZiLmNvbT47IEt1bWFyIFRoYW5nYXZl
-bCA8dGhhbmdhdmVsLmtAaGNsLmNvbT47IFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIu
-Y29tPg0KPiBTdWJqZWN0OiBSZTogeDg2LXBvd2VyLWNvbnRyb2wgLSBzbG90IEFDIGN5Y2xl
-DQo+IA0KPiBbQ0FVVElPTjogVGhpcyBFbWFpbCBpcyBmcm9tIG91dHNpZGUgdGhlIE9yZ2Fu
-aXphdGlvbi4gVW5sZXNzIHlvdSB0cnVzdCB0aGUgc2VuZGVyLCBEb27igJl0IGNsaWNrIGxp
-bmtzIG9yIG9wZW4gYXR0YWNobWVudHMgYXMgaXQgbWF5IGJlIGEgUGhpc2hpbmcgZW1haWws
-IHdoaWNoIGNhbiBzdGVhbCB5b3VyIEluZm9ybWF0aW9uIGFuZCBjb21wcm9taXNlIHlvdXIg
-Q29tcHV0ZXIuXQ0KPiANCj4gT24gVHVlLCBKdWwgMjgsIDIwMjAgYXQgMTA6MTEgQU0gVmVs
-dW1hbmkgVC1FUlMsSENMVGVjaCA8dmVsdW1hbml0QGhjbC5jb20+IHdyb3RlOg0KPj4NCj4+
-DQo+PiBXZSBhcmUgdXNpbmcgYSB4ODYtcG93ZXItY29udHJvbCBmb3IgaG9zdCBwb3dlciBj
-b250cm9sIGluIGEgbXVsdGkgaG9zdCBzeXN0ZW0uIFdlIGhhdmUgdGhlIGhvc3QgYXMgRlJV
-IGFuZCBpdCBjYW4gYmUgcGx1Z2dlZCBpbiB0byBhIHNsb3QuIFRoZSBzbG90IGhhcyBhbiBv
-cHRpb24gdG8gY29udHJvbCBzbG90IHBvd2VyIGFuZCB0aGlzIGNhbiBiZSB1c2VkIGZvciBh
-IEFDIGN5Y2xlLg0KPj4NCj4+IFdlIHByb3Bvc2UgdG8gYWRkIHRoZSBzbG90IHBvd2VyIGNv
-bnRyb2wgaW4gdGhlIHg4Ni1wb3dlci1jb250cm9sLCBUaGUgc2xvdCBwb3dlciBjb250cm9s
-IGNhbiBiZSBjb25maWd1cmVkIGluIGpzb24gYW5kIHRoZSBzYW1lIGNhbiBiZSBpbXBsZW1l
-bnRlZCByZWFkaW5nIHRoZSBqc29uIGNvbmZpZy4gV2UgY2FuIGVuc3VyZSB0aGUgZXhpc3Rp
-bmcgZnVuY3Rpb25hbGl0eSByZW1haW5zIHVuY2huZ2VkIGFuZCBkb2VzIG5vdCBhZmZlY3Qg
-dGhlIG90aGVyIHBsYXRmb3Jtcy4NCj4+DQo+Pg0KPj4NCj4+IFRoZSBjb25maWcgZmlsZSBj
-YW4gaGF2ZSBhIGdwaW8gZW50cnkgd2l0aCB0aGUgbmV3IGtleSDigJxTbG90X1Bvd2Vy4oCd
-LiBPbmx5IGlmIHRoaXMgZW50cnkgaXMgcHJlc2VudCB0aGVuIHRoZSBzbG90IHBvd2VyIHdp
-bGwgYmUgaGFuZGxlZCwgT3RoZXJ3aXNlIHRoZSBleGlzdGluZyBmdW5jdGlvbmFsaXR5IHJl
-bWFpbnMgdGhlIHNhbWUuIFBsZWFzZSBwcm92aWRlIHlvdXIgY29tbWVudHMvc3VnZ2VzdGlv
-bnMgZm9yIHRoaXMgcHJvcG9zZWQgYXBwcm9hY2guDQo+IA0KPiBPbmUgYW1lbmRtZW50LCBp
-ZiB5b3UncmUgc2V0dGluZyB0aGlzIHVwIGZvciBhIHNpbmdsZSBjaGFzc2lzIHR5cGUsIHBs
-ZWFzZSBtYWtlIHRoaXMgYSBjb21waWxlIHRpbWUgc3RydWN0dXJlIHJhdGhlciB0aGFuIGEg
-Y29uZmlnIGZpbGUgcmVhZCBmcm9tIGRpc2suICBJdCdzIG11Y2ggZWFzaWVyIHRvIG1hbmFn
-ZSBpbiB0aGUgbG9uZyBydW4sIGFzIGl0IHB1c2hlcyBydW50aW1lIGVycm9ycyB0byBjb21w
-aWxlIHRpbWUsIGFuZCBtZWFucyB0aGF0IHdlJ3JlIGxlc3MgbGlrZWx5IHRvIGJyZWFrIGl0
-LiAgQWxzbywgaXQgc2VuZHMgYSBjbGVhciBtZXNzYWdlIHRoYXQgd2Ugc2hvdWxkbid0IGJl
-IGNoYW5naW5nIHRoZSBjb25maWd1cmF0aW9uIGF0IHJ1bnRpbWUuDQo+IA0KPiBJZiB5b3Un
-cmUgdXNpbmcgc29tZXRoaW5nIGxpa2UgZW50aXR5LW1hbmFnZXIsIGFuZCB5b3UgZG8gd2Fu
-dCB0byBzdXBwb3J0IG1vcmUgdGhhbiBvbmUgY2hhc3NpcywgeW91IHByb2JhYmx5IHdhbnQg
-dG8gZGVmaW5lIHNvbWUga2luZCBvZiAiYmFja3BsYW5lIiBlbnRpdHkgdGhhdCBvd25zIHRo
-ZSBwb3dlciBjb25maWd1cmF0aW9uLCBzbyB5b3UgY2FuIGhhdmUgbXVsdGlwbGUgc2xvdCBk
-ZWZpbml0aW9ucyBjb25maWd1cmVkIGF0IHJ1bnRpbWUgaW4gdGhlIHNhbWUgYnVpbGQsIHdo
-aWNoIG1pZ2h0IG5vdCBiZSBhIHByb2JsZW0gZm9yIHlvdXIgc3lzdGVtLCBidXQgY2FuIGJl
-IGEgcHJvYmxlbSBmb3Igc3lzdGVtcyB3aXRoIG11bHRpcGxlIENoYXNzaXMgb3B0aW9ucy4N
-Cj4gDQo+IElkZWFsbHkgeW91IHdvdWxkIGFsc28gYWRkIGEgbmV3ICJub2RlIiBzbG90IGRl
-ZmluaXRpb24gdHlwZSwgc2ltaWxhciB0byBob3cgd2UgZGVmaW5lIE0uMiBzbG90cyBhbmQg
-UENJZSBzbG90cyB0byBtYWtlIGRlYnVnZ2luZyBlYXNpZXIuDQo+IA0KPiANCj4+DQo+PiA6
-OkRJU0NMQUlNRVI6Og0KPj4gX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCj4+
-IFRoZSBjb250ZW50cyBvZiB0aGlzIGUtbWFpbCBhbmQgYW55IGF0dGFjaG1lbnQocykgYXJl
-IGNvbmZpZGVudGlhbCBhbmQgaW50ZW5kZWQgZm9yIHRoZSBuYW1lZCByZWNpcGllbnQocykg
-b25seS4gRS1tYWlsIHRyYW5zbWlzc2lvbiBpcyBub3QgZ3VhcmFudGVlZCB0byBiZSBzZWN1
-cmUgb3IgZXJyb3ItZnJlZSBhcyBpbmZvcm1hdGlvbiBjb3VsZCBiZSBpbnRlcmNlcHRlZCwg
-Y29ycnVwdGVkLCBsb3N0LCBkZXN0cm95ZWQsIGFycml2ZSBsYXRlIG9yIGluY29tcGxldGUs
-IG9yIG1heSBjb250YWluIHZpcnVzZXMgaW4gdHJhbnNtaXNzaW9uLiBUaGUgZSBtYWlsIGFu
-ZCBpdHMgY29udGVudHMgKHdpdGggb3Igd2l0aG91dCByZWZlcnJlZCBlcnJvcnMpIHNoYWxs
-IHRoZXJlZm9yZSBub3QgYXR0YWNoIGFueSBsaWFiaWxpdHkgb24gdGhlIG9yaWdpbmF0b3Ig
-b3IgSENMIG9yIGl0cyBhZmZpbGlhdGVzLiBWaWV3cyBvciBvcGluaW9ucywgaWYgYW55LCBw
-cmVzZW50ZWQgaW4gdGhpcyBlbWFpbCBhcmUgc29sZWx5IHRob3NlIG9mIHRoZSBhdXRob3Ig
-YW5kIG1heSBub3QgbmVjZXNzYXJpbHkgcmVmbGVjdCB0aGUgdmlld3Mgb3Igb3BpbmlvbnMg
-b2YgSENMIG9yIGl0cyBhZmZpbGlhdGVzLiBBbnkgZm9ybSBvZiByZXByb2R1Y3Rpb24sIGRp
-c3NlbWluYXRpb24sIGNvcHlpbmcsIGRpc2Nsb3N1cmUsIG1vZGlmaWNhdGlvbiwgZGlzdHJp
-YnV0aW9uIGFuZCAvIG9yIHB1YmxpY2F0aW9uIG9mIHRoaXMgbWVzc2FnZSB3aXRob3V0IHRo
-ZSBwcmlvciB3cml0dGVuIGNvbnNlbnQgb2YgYXV0aG9yaXplZCByZXByZXNlbnRhdGl2ZSBv
-ZiBIQ0wgaXMgc3RyaWN0bHkgcHJvaGliaXRlZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhp
-cyBlbWFpbCBpbiBlcnJvciBwbGVhc2UgZGVsZXRlIGl0IGFuZCBub3RpZnkgdGhlIHNlbmRl
-ciBpbW1lZGlhdGVseS4gQmVmb3JlIG9wZW5pbmcgYW55IGVtYWlsIGFuZC9vciBhdHRhY2ht
-ZW50cywgcGxlYXNlIGNoZWNrIHRoZW0gZm9yIHZpcnVzZXMgYW5kIG90aGVyIGRlZmVjdHMu
-DQo+IA0KPiANCj4gU2VuZGluZyAidGhpcyBlbWFpbCBpcyBjb25maWRlbnRpYWwiIHRvIGEg
-cHVibGljIG1haWxpbmcgbGlzdCBtYWtlcyBtZSB0aGluayBpIGdvdCBpdCBpbiBlcnJvci4g
-IEknbSBhbHNvIG5vdCBhICJuYW1lZCByZWNpcGllbnQiLiBZb3UgbWlnaHQgd2FudCB0byBj
-b25zaWRlciByZW1vdmluZyBpdCBpbiB0aGUgZnV0dXJlLCB1bmxlc3MgeW91IHJlYWxseSBj
-b25zaWRlcmVkIHRoaXMgdG8gYmUgY29uZmlkZW50aWFsLg0KPiANCg==
+
+--Apple-Mail=_02FCAD1E-D6C7-411E-B658-233BE3D40604
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
+
+My RaspPi work has progressed but I don=E2=80=99t know how to get =
+sensors in the ObjectMapper, which I hope will mean sensors end up in =
+webui.
+
+BASIC INFORMATION
+------------------------------
+
+At this point, I have my PMbus devices in the device tree like this =
+path:
+
+=
+/sys/firmware/devicetree/base/soc/i2c@7e804000/ltc2974@32/regulators/vout0=
+ to vout3
+
+And the config files like this path:
+
+/etc/default/obmc/hwmon/soc/i2c#7e804000/ltc2974@32/reg1@32.conf =
+<mailto:32/reg1@32.conf>
+
+The sensors show up here:
+
+/sys/bus/i2c/devices/1-0032/hwmon/hwmon2
+
+Indicating that the device tree is causing hwmon to offer its telemetry =
+nodes.
+
+=46rom my reading of the docs, it seems like the ObjectMapper keeps an =
+inventory of sensors.
+
+So to search, I did something like:
+
+dbus-send =E2=80=94system -print-reply \
+=E2=80=94dest=3Dxyz.openbmc_project.ObjectMapper \
+/xyz/openbmc_project/object_mapper \
+xyz.openbmc_project.ObjectMapper.GetAncestors \
+string:=E2=80=9D/xyz/openbmc_project/inventory.system=E2=80=9D =
+array:string: | grep ltc2974
+
+But none of my devices are there.
+
+I looked at meta-ibm and meta-hxt and could not see how to get the =
+devices into the ObjectMapper.
+
+ACTUAL QUESTIONS
+------------------------------
+
+So I have these questions:
+
+- What it the mechanism for getting these into the ObjectMapper?
+- Once there, will they show up in webui without any other files and =
+recipes?
+- What docs might describe what I need to know to connect the hwmon =
+devices to the ObjectMapper?
+- Is there something I have to do to start the ObjectMapper service? I =
+don=E2=80=99t see it with a grep through systemctl.
+- Is there an existing meta layer that would be a good example and a =
+pointer to the proper bb files to look at?
+
+THE CODE/LAYERS
+----------------------------
+
+My work so far is here:
+
+https://github.com/Proclivis/meta-pmbus =
+<https://github.com/Proclivis/meta-pmbus>
+
+Configured by:
+
+https://github.com/Proclivis/conf-meta-rasberrypi-evb =
+<https://github.com/Proclivis/conf-meta-rasberrypi-evb>
+
+Thanks, and sorry I am a newbie without tribal knowledge. I am trying to =
+find solutions on my own and only ask for help when stuck. =
+Unfortunately, I=E2=80=99m stuck.
+
+Mike=
+
+--Apple-Mail=_02FCAD1E-D6C7-411E-B658-233BE3D40604
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D"">My =
+RaspPi work has progressed but I don=E2=80=99t know how to get sensors =
+in the ObjectMapper, which I hope will mean sensors end up in webui.<div =
+class=3D""><br class=3D""></div><div class=3D"">BASIC =
+INFORMATION</div><div class=3D"">------------------------------<br =
+class=3D""><div class=3D""><br class=3D""></div><div class=3D"">At this =
+point, I have my PMbus devices in the device tree like this =
+path:</div><div class=3D""><br class=3D""></div><div =
+class=3D"">/sys/firmware/devicetree/base/soc/i2c@7e804000/ltc2974@32/regul=
+ators/vout0 to vout3</div><div class=3D""><br class=3D""></div><div =
+class=3D"">And the config files like this path:</div><div class=3D""><br =
+class=3D""></div><div =
+class=3D"">/etc/default/obmc/hwmon/soc/i2c#7e804000/ltc2974@<a =
+href=3D"mailto:32/reg1@32.conf" class=3D"">32/reg1@32.conf</a></div><div =
+class=3D""><br class=3D""></div><div class=3D"">The sensors show up =
+here:</div><div class=3D""><br class=3D""></div><div =
+class=3D"">/sys/bus/i2c/devices/1-0032/hwmon/hwmon2</div><div =
+class=3D""><br class=3D""></div><div class=3D"">Indicating that the =
+device tree is causing hwmon to offer its telemetry nodes.</div><div =
+class=3D""><br class=3D""></div><div class=3D"">=46rom my reading of the =
+docs, it seems like the ObjectMapper keeps an inventory of =
+sensors.</div><div class=3D""><br class=3D""></div><div class=3D"">So to =
+search, I did something like:</div><div class=3D""><br =
+class=3D""></div><div class=3D"">dbus-send =E2=80=94system -print-reply =
+\</div><div class=3D"">=E2=80=94dest=3Dxyz.openbmc_project.ObjectMapper =
+\</div><div class=3D"">/xyz/openbmc_project/object_mapper \</div><div =
+class=3D"">xyz.openbmc_project.ObjectMapper.GetAncestors \</div><div =
+class=3D"">string:=E2=80=9D/xyz/openbmc_project/inventory.system=E2=80=9D =
+array:string: | grep ltc2974</div><div class=3D""><br =
+class=3D""></div><div class=3D"">But none of my devices are =
+there.</div><div class=3D""><br class=3D""></div><div class=3D"">I =
+looked at meta-ibm and meta-hxt and could not see how to get the devices =
+into the ObjectMapper.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">ACTUAL QUESTIONS</div><div =
+class=3D"">------------------------------</div><div class=3D""><br =
+class=3D""></div><div class=3D"">So I have these questions:</div><div =
+class=3D""><br class=3D""></div><div class=3D"">- What it the mechanism =
+for getting these into the ObjectMapper?</div><div class=3D"">- Once =
+there, will they show up in webui without any other files and =
+recipes?</div><div class=3D"">- What docs might describe what I need to =
+know to connect the hwmon devices to the ObjectMapper?</div><div =
+class=3D"">- Is there something I have to do to start the ObjectMapper =
+service? I don=E2=80=99t see it with a grep through systemctl.</div><div =
+class=3D"">- Is there an existing meta layer that would be a good =
+example and a pointer to the proper bb files to look at?</div><div =
+class=3D""><br class=3D""></div><div class=3D"">THE =
+CODE/LAYERS</div><div class=3D"">----------------------------</div><div =
+class=3D""><br class=3D""></div><div class=3D"">My work so far is =
+here:</div><div class=3D""><br class=3D""></div><div class=3D""><a =
+href=3D"https://github.com/Proclivis/meta-pmbus" =
+class=3D"">https://github.com/Proclivis/meta-pmbus</a></div><div =
+class=3D""><br class=3D""></div><div class=3D"">Configured by:</div><div =
+class=3D""><br class=3D""></div><div class=3D""><a =
+href=3D"https://github.com/Proclivis/conf-meta-rasberrypi-evb" =
+class=3D"">https://github.com/Proclivis/conf-meta-rasberrypi-evb</a></div>=
+</div><div class=3D""><br class=3D""></div><div class=3D"">Thanks, and =
+sorry I am a newbie without tribal knowledge. I am trying to find =
+solutions on my own and only ask for help when stuck. Unfortunately, =
+I=E2=80=99m stuck.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Mike</div></body></html>=
+
+--Apple-Mail=_02FCAD1E-D6C7-411E-B658-233BE3D40604--
