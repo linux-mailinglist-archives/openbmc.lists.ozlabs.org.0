@@ -1,59 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7308C23C08C
-	for <lists+openbmc@lfdr.de>; Tue,  4 Aug 2020 22:09:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 848C923C175
+	for <lists+openbmc@lfdr.de>; Tue,  4 Aug 2020 23:28:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BLm7K2xRYzDqC3
-	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 06:09:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BLntk0wzMzDqbc
+	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 07:28:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236;
+ helo=mail-oi1-x236.google.com; envelope-from=obmc.developers@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=lFjkpVn1; dkim-atps=neutral
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
+ [IPv6:2607:f8b0:4864:20::236])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BLm3l4TXrzDqC3
- for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 06:06:26 +1000 (AEST)
-IronPort-SDR: B5M351V/nEcO+SSKBIyE1euqAps4Xh9Mo4enUMRJulkZZBE1YUUGaMjMsppeNbtbTfynPVCJWZ
- tgTRjroWlImQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9703"; a="153564208"
-X-IronPort-AV: E=Sophos;i="5.75,434,1589266800"; d="scan'208";a="153564208"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2020 13:06:19 -0700
-IronPort-SDR: 65EXMKuE/glpBaQphG1ZuNLQESYKZXAeMsB77/wjeoMvypgSucJehTh5nzH0JO7L5UBKJL5tFk
- FoagYIo7NLsg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,434,1589266800"; d="scan'208";a="492580124"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga006.fm.intel.com with ESMTP; 04 Aug 2020 13:06:19 -0700
-Received: from [10.213.170.246] (jmbills-mobl.amr.corp.intel.com
- [10.213.170.246])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id E8A545802A4
- for <openbmc@lists.ozlabs.org>; Tue,  4 Aug 2020 13:06:18 -0700 (PDT)
-Subject: Re: Redfish Mapped Commands
-To: openbmc@lists.ozlabs.org
-References: <SG2PR04MB30935D495AA522C5C4742004E14A0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <adda0f71-217c-70e9-4dd6-d7300a018e48@linux.intel.com>
-Date: Tue, 4 Aug 2020 13:06:18 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BLnsj4g1zzDqYh
+ for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 07:27:48 +1000 (AEST)
+Received: by mail-oi1-x236.google.com with SMTP id o21so16950445oie.12
+ for <openbmc@lists.ozlabs.org>; Tue, 04 Aug 2020 14:27:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=tJmmwCK3Ddfa/HbhJXOKhGsYE+0mb46MbJTw8TNGMU0=;
+ b=lFjkpVn1+CVzIkBr8g3oxetVEF0dVd5aiBoL7GH8cqmEXa6oiRA0NuvyMAz829Euc4
+ hjFlK4bE6SrkSHh8ZdLjxhIs6LWMeRGJJLDqgkBtRioTlnwEpzg/n7Jr+tHEwo6pFPq7
+ JhoSERHy7EMBdhJ1ddk2xo+AKGja35j0F/uFGm3Vcer9Gac/B9tJRyqTf/W8O8+NxGfC
+ kC0R7yw0v5B5MvineD8RdYkem6AVdEA+tJfTCHoDcB9cTThQOdG8jJ6kmzbJjKVZR40g
+ sskmv3gfJkXe/CtsbVpMKKU9MLQSoLzLO1mKxYk6j5SdkrxkGr0GWoe+8KPFugyNQ1tj
+ acFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=tJmmwCK3Ddfa/HbhJXOKhGsYE+0mb46MbJTw8TNGMU0=;
+ b=BuUPYLqPEnrunXDUHmy5D3IkCJZ/9UhGkrsikrcwYyEGNDRY5MoKYtN8D3QQqZW8gG
+ CFHr4VXPaXRkux9puJmD1D4Bn/TTmdGFWLLtEFi6gqFb3XZrFhnxy45++sxVsNOwC2e3
+ KAqiHp1eySViRBk/Kl4Qyx0I5q7WHdEUE1FNXpn/0F4tBeUVxFYdVSAjH57WJM1VRQIO
+ trycMi7Mwb15D3FoVZfei3n2tedg/s6VbKRguyZUcciWuhUlDr7nvtcqnYDgrKO+s6Qy
+ lz24x69ypcP4D4aEULtlQ1N41QvWEli5uUdbx/lrhPDa1U2aMDBjoSn3wpCEhNSi49h9
+ OrUQ==
+X-Gm-Message-State: AOAM533Sc7Q6Q1znyCFu/9YKoROvvnogPMqLXziWevlCT/zmaSfFQq7i
+ 1r9ozUYWJoR00TZcniF9tZ0wDl0iJtdyGFq/e90dCw==
+X-Google-Smtp-Source: ABdhPJzcwfo7J29ja1chdCH7iDoeWO+qvbTF5rOrg1wOHjgR52k+iMuYFtJRsHFuU0mrB10hG/Ge8IM1fuTKs5gXs4M=
+X-Received: by 2002:a54:4512:: with SMTP id l18mr296048oil.148.1596576465074; 
+ Tue, 04 Aug 2020 14:27:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <SG2PR04MB30935D495AA522C5C4742004E14A0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From: Anony Mous <obmc.developers@gmail.com>
+Date: Tue, 4 Aug 2020 14:27:34 -0700
+Message-ID: <CABbLDjM09zoW7xo0UdgJc=BsQ2ef7kVFbZFNVmdefc6RtHrz8Q@mail.gmail.com>
+Subject: yoctoproject restructured?
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000000ebd3205ac13edf6"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,70 +72,27 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000000ebd3205ac13edf6
+Content-Type: text/plain; charset="UTF-8"
 
+Hi:  I have been building without issues, but I just did a fresh git to do
+a new build, and I am now failing because the system cannot fetch the file
+http://downloads.yoctoproject.org/releases/opkg/opkg.0.4.2.tar.gz.
 
-On 8/4/2020 7:53 AM, Jayashree D wrote:
-> Hi All,
-> 
-> I am about to test redfish commands for the following features.
-> 
-> Can anyone point me the related redfish commands for those features?
-> 
-> 1. We are using X86 power control, is there any compatible commands in 
-> redfish to test?
- From the system resource (/redfish/v1/Systems/system), you can find the 
-ComputerSystem.Reset action which can be used to initiate resets:
-     "Actions": {
-         "#ComputerSystem.Reset": {
-             "@Redfish.ActionInfo": 
-"/redfish/v1/Systems/system/ResetActionInfo",
-             "target": 
-"/redfish/v1/Systems/system/Actions/ComputerSystem.Reset"
-         }
-     },
+Does anyone know of a workaround for this error.
 
-The allowable values for ResetType are here: 
-/redfish/v1/Systems/system/ResetActionInfo.
+Thank you!
 
-> 
-> 2. FRU information.
-> 
-> 3. obmc-console-client to connect the host.
-> 
-> 4. To set, start and stop the fan speed controller.
-> 
-> 5. Host Logger.
-If you mean the event log, it is here: 
-/redfish/v1/Systems/system/LogServices/EventLog.
+--0000000000000ebd3205ac13edf6
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> 6. LED
-> 
-> 7. BIOS Upgrade
-> 
-> 8. Settings Manager
-> 
-> Thanks,
-> 
-> Regards,
-> 
-> Jayashree
-> 
-> ::DISCLAIMER::
-> ------------------------------------------------------------------------
-> The contents of this e-mail and any attachment(s) are confidential and 
-> intended for the named recipient(s) only. E-mail transmission is not 
-> guaranteed to be secure or error-free as information could be 
-> intercepted, corrupted, lost, destroyed, arrive late or incomplete, or 
-> may contain viruses in transmission. The e mail and its contents (with 
-> or without referred errors) shall therefore not attach any liability on 
-> the originator or HCL or its affiliates. Views or opinions, if any, 
-> presented in this email are solely those of the author and may not 
-> necessarily reflect the views or opinions of HCL or its affiliates. Any 
-> form of reproduction, dissemination, copying, disclosure, modification, 
-> distribution and / or publication of this message without the prior 
-> written consent of authorized representative of HCL is strictly 
-> prohibited. If you have received this email in error please delete it 
-> and notify the sender immediately. Before opening any email and/or 
-> attachments, please check them for viruses and other defects.
-> ------------------------------------------------------------------------
+<div dir=3D"ltr">Hi:=C2=A0 I have been building without issues, but I just =
+did a fresh git to do a new build, and I am now failing because the system =
+cannot=C2=A0fetch the file <a href=3D"http://downloads.yoctoproject.org/rel=
+eases/opkg/opkg.0.4.2.tar.gz">http://downloads.yoctoproject.org/releases/op=
+kg/opkg.0.4.2.tar.gz</a>.<div><br></div><div>Does anyone know of a workarou=
+nd for this error.</div><div><br></div><div>Thank you!</div><div><br></div>=
+</div>
+
+--0000000000000ebd3205ac13edf6--
