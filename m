@@ -2,65 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 878DD23C1E6
-	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 00:25:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8032423C208
+	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 01:05:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BLq8N5Gg4zDqPQ
-	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 08:25:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BLr2X3hyZzDqRJ
+	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 09:05:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::135;
- helo=mail-il1-x135.google.com; envelope-from=ticotimo@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=cjciEAZg; dkim-atps=neutral
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com
- [IPv6:2607:f8b0:4864:20::135])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BLq7F4rZbzDq8t
- for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 08:24:36 +1000 (AEST)
-Received: by mail-il1-x135.google.com with SMTP id c6so561785ilo.13
- for <openbmc@lists.ozlabs.org>; Tue, 04 Aug 2020 15:24:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=CWIc7/mGjsfeIfFs8sItucGCBe1Hf+n3t/a329tzV/4=;
- b=cjciEAZgtFc+Iksc5UkjyRFcHQaZe5dWUgT36UrCZFlhT+AuIa2knM7oV9kDD+GETE
- QIcTIZvjR41JYMXAb98uQWUDKdaUjYiP/+MSnnWiQMuUvBoCS0T3HUxvKs6hthv2UmKD
- qhyvOmDYyq3t59KNFgvapqaF0fAzYWnIX3GZc7ed32pquvo1oy3puP5vO/tSn485cTTA
- qJbh89npCci37LrXrIbrPc4xf6S2pm8LVJrs2AJp5IFwoVtOrcVvM1yhVUVImb38xsd2
- Ewysm12YtYHUXQKJnuKHR1R7wauwbdkTb8IidxmIjBg9fORVYG/AxlrSMKXffewnhVQv
- 8WjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=CWIc7/mGjsfeIfFs8sItucGCBe1Hf+n3t/a329tzV/4=;
- b=DNJmHBhXBEVJEa91e6C9+qRpL2AimVBvq6tT9B2dbRmzBxp7Ay6B5kjMkz/+kRBQ6s
- 6odld1Vt0RSGUaLNYXMOA/OPrfoApd0lma8LlEEMOXWAr4aLs6+BKlv6kzFeTNGQ2YB6
- sKM3IOhbMl9RCszUsSSKxy/2erEXOUnH3DoeHTP2kIYI3GWriViDbi3g40PXperNWPCi
- jvC2dOYGaYDOiI2F5VV6b2j/8ZafGf6cqFoRL8AgJOO6vy3MyIbBQqS2SOpV1umjfrPd
- EX/LhRV3frYPf+P5EzOwPBBZqIYGKotOou5gOJ/ZXSoEzB5g9EiuaO2EoBOnC3gb7B5/
- cYlg==
-X-Gm-Message-State: AOAM531jwApWjp9bNPAPviDMA9O0/zxxwghXUupL4EE9B4GwvVHHXE20
- 9p+IfpUdIyyzdtHXxIY5u6sZgmz51OsLgUKHX24=
-X-Google-Smtp-Source: ABdhPJzcxb6QY86aIEiZPll70A0GurA043NWq2FpihnLaIDDNi86e2t7TmaX7oxmQQeCymrJHILj6ycEH5nZXv2BhnI=
-X-Received: by 2002:a92:ba17:: with SMTP id o23mr734990ili.198.1596579872870; 
- Tue, 04 Aug 2020 15:24:32 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BLr1h6pwNzDqLR
+ for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 09:04:55 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 074N30Rn096945
+ for <openbmc@lists.ozlabs.org>; Tue, 4 Aug 2020 19:04:52 -0400
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.90])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 32qcxhwv37-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 04 Aug 2020 19:04:52 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 4 Aug 2020 23:04:51 -0000
+Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
+ by smtp.notes.na.collabserv.com (10.106.227.141) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 4 Aug 2020 23:04:49 -0000
+Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
+ by us1a3-smtp06.a3.dal06.isc4sb.com
+ with ESMTP id 2020080423044849-859879 ;
+ Tue, 4 Aug 2020 23:04:48 +0000 
+In-Reply-To: <OF267B7054.D7CD8C1D-ON002585AC.007E7778-002585AC.007EE2EA@notes.na.collabserv.com>
+Subject: GUI Design Work Group - Wednesday 08/05/20 at 10:00 AM CDT
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Tue, 4 Aug 2020 23:04:48 +0000
 MIME-Version: 1.0
-References: <CABbLDjM09zoW7xo0UdgJc=BsQ2ef7kVFbZFNVmdefc6RtHrz8Q@mail.gmail.com>
-In-Reply-To: <CABbLDjM09zoW7xo0UdgJc=BsQ2ef7kVFbZFNVmdefc6RtHrz8Q@mail.gmail.com>
-From: Tim Orling <ticotimo@gmail.com>
-Date: Tue, 4 Aug 2020 15:24:22 -0700
-Message-ID: <CANx9H-C3bOT=Nbn4RqxjpCcmTFij1=YqOp8fUy2td6sVU3J-AQ@mail.gmail.com>
-Subject: Re: yoctoproject restructured?
-To: Anony Mous <obmc.developers@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000002d950905ac14b871"
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <OF267B7054.D7CD8C1D-ON002585AC.007E7778-002585AC.007EE2EA@notes.na.collabserv.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 32855
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20080423-3649-0000-0000-00000392B4FB
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.415652; ST=0; TS=0; UL=0; ISC=; MB=0.017831
+X-IBM-SpamModules-Versions: BY=3.00013595; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01415709; UDB=6.00759116; IPR=6.01198122; 
+ MB=3.00033358; MTD=3.00000008; XFM=3.00000015; UTC=2020-08-04 23:04:50
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-08-04 19:04:43 - 6.00011683
+x-cbparentid: 20080423-3650-0000-0000-00006E11B90F
+Message-Id: <OF1CFEA419.18EC8F04-ON002585BA.007E4F43-002585BA.007EC857@notes.na.collabserv.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-08-04_04:2020-08-03,
+ 2020-08-04 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,44 +83,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002d950905ac14b871
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-We are experiencing infrastructure issues on the NAS that feeds dl.yp.o
+At tomorrow's work group, we are planning to discuss: =20
 
-On Tue, Aug 4, 2020 at 2:28 PM Anony Mous <obmc.developers@gmail.com> wrote:
+- Adding "System Name" back to the GUI header - System name vs Host name
+- Process for sharing progress on GUI designs with community members
+- Server LED layout - https://github.com/openbmc/webui-vue/issues/18 (
+- Button styles on Local user management page -https://github.com/openbmc/w=
+ebui-vue/issues/12
+- Help wanted items
+- Design Review items
+- Demo of working Web UI
 
-> Hi:  I have been building without issues, but I just did a fresh git to do
-> a new build, and I am now failing because the system cannot fetch the file
-> http://downloads.yoctoproject.org/releases/opkg/opkg.0.4.2.tar.gz.
->
-> Does anyone know of a workaround for this error.
->
-> Thank you!
->
->
+=20
+Go to the GUI Design Work Group Wiki page for information on how
+to join the meeting.=20
 
---0000000000002d950905ac14b871
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
 
-<div><div dir=3D"auto">We are experiencing infrastructure issues on the NAS=
- that feeds dl.yp.o</div></div><div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Tue, Aug 4, 2020 at 2:28 PM Anony Mous &lt=
-;<a href=3D"mailto:obmc.developers@gmail.com">obmc.developers@gmail.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 =
-0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=3D"ltr">Hi:=C2=
-=A0 I have been building without issues, but I just did a fresh git to do a=
- new build, and I am now failing because the system cannot=C2=A0fetch the f=
-ile <a href=3D"http://downloads.yoctoproject.org/releases/opkg/opkg.0.4.2.t=
-ar.gz" target=3D"_blank">http://downloads.yoctoproject.org/releases/opkg/op=
-kg.0.4.2.tar.gz</a>.<div><br></div><div>Does anyone know of a workaround fo=
-r this error.</div><div><br></div><div>Thank you!</div><div><br></div></div=
->
-</blockquote></div></div>
+Derick Montague
+FED Lead | OpenBMC Design Team Lead
+Cognitive Systems User Experience
+    =20
+  =20
 
---0000000000002d950905ac14b871--
