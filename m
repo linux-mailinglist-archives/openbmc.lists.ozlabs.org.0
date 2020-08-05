@@ -1,81 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53BEA23D42B
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 01:28:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45C7B23D43A
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 01:43:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BMSTl4bZ4zDqjj
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 09:27:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BMSqc73cQzDqhm
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 09:43:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32b;
+ helo=mail-ot1-x32b.google.com; envelope-from=jasonling@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=imjrAGWI; dkim-atps=neutral
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
+ [IPv6:2607:f8b0:4864:20::32b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BMSSR4xwNzDqJV
- for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 09:26:46 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 075N326l005135
- for <openbmc@lists.ozlabs.org>; Wed, 5 Aug 2020 19:26:43 -0400
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32qcf2pkug-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 19:26:43 -0400
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 075NPhP9009609
- for <openbmc@lists.ozlabs.org>; Wed, 5 Aug 2020 23:26:42 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma03wdc.us.ibm.com with ESMTP id 32n019crrc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 23:26:42 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 075NQde458720560
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 5 Aug 2020 23:26:39 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A72D5136053
- for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 23:26:41 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6110613604F
- for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 23:26:41 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.80.201.74])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed,  5 Aug 2020 23:26:41 +0000 (GMT)
-Subject: Re: Security Working Group - Wednesday August 5 - results
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <cf68b3d3-9f1d-0f2e-cfa2-98afde52e243@linux.ibm.com>
-Message-ID: <e736ad6d-66fd-f24f-b1e5-74cc2c71e856@linux.ibm.com>
-Date: Wed, 5 Aug 2020 18:26:40 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.9.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BMSpt3XYVzDqgr
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 09:42:46 +1000 (AEST)
+Received: by mail-ot1-x32b.google.com with SMTP id v21so27498528otj.9
+ for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 16:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=BkflBEFReIZmAdhN08K/xHYM0EZGp5PG1/sH/ZMoz3I=;
+ b=imjrAGWIfIthlEcL2DgEQWFSaISNuohy75UY5o4fmqK20kIyPhGdPjGMB/rU1CiDg/
+ MJncGpnzt5Or0Xig52Ccu+7TdXkyGSoywIIxy+XujBVs4g2/ySTWXHPirTrZ/4TOPyNp
+ MyWPmzB5j4zffevhodlT9x9jYzfT44iydnadMfrJ3rn3Rb7FSzOvaCKPQEDEajL56e77
+ 9+OlZ3YUWFuZC77llVH/b4Hv1t/yBvdjJBkiJNQWye1qABr+UiHCih1n+gVWypEFZY/o
+ 9NhDrukK+JHTa9Kxqy/GM5uB94i/K3LNtAwaE86Kb/vAlAFuUyn7F3cocHV/itxB4zwC
+ 5rig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=BkflBEFReIZmAdhN08K/xHYM0EZGp5PG1/sH/ZMoz3I=;
+ b=UuOja7Vah+zaHEx9g5SoPMeJ2bfKitxz4Ujxvgx7wOyW9W+XPfX5ztHJkntcRCu0i/
+ 4N3/47WTrfWPen589ori2ffz2y3UmQdHmYDZ2SAnMhEk0ULuLs78lDOZvXZo2S6xHuXZ
+ UeLHTcQhVSloKTlLZNlDS7YFAULEKO/QKcPexfGbUhkxMSR/YOPfQJitMs2Po/vdq2L4
+ sWUatIMRwAcXi9JB2YV83ANKXrIXuCLC0cI7FXz+bTsQ8IMiRJjkroVc8RjpJZFsq+Wq
+ T7c3dNn3L6dNZvadrhJ8YsbPk1U4WmH5bJXutZJzhZL7WOHZUcUg9+LUFjY7IO3t+63/
+ zTvg==
+X-Gm-Message-State: AOAM530EGHidtfOzCI3KttprqA6z2vV4xXLkN1CVUOx1elhLffBiykqw
+ mbGSh+2VSQz913jYMOEezIsCjlx2nohFixQPUlu5Wwgity8=
+X-Google-Smtp-Source: ABdhPJz+CHNCalS6hM4YCcOKE+FUCsLjyoHa1+N7cArqzSrGDfD11V0gEUnpeAg6EbfOpY8jcDYo7XlQSe4Z34/WNsA=
+X-Received: by 2002:a9d:450a:: with SMTP id w10mr4956256ote.327.1596670962377; 
+ Wed, 05 Aug 2020 16:42:42 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cf68b3d3-9f1d-0f2e-cfa2-98afde52e243@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-08-05_18:2020-08-03,
- 2020-08-05 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0
- mlxlogscore=999 priorityscore=1501 spamscore=0 malwarescore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2008050169
+From: Jason Ling <jasonling@google.com>
+Date: Wed, 5 Aug 2020 16:42:06 -0700
+Message-ID: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
+Subject: dbus-sensors:hwmontemp: additional attribute proposal
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>
+Content-Type: multipart/alternative; boundary="00000000000089914c05ac29ed94"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,64 +73,56 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/3/20 4:09 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday August 5 at 10:00am PDT.
->
-> We'll discuss current development items, and anything else that comes up.
+--00000000000089914c05ac29ed94
+Content-Type: text/plain; charset="UTF-8"
 
-Bonus topic discussed before the meeting:
-We discussed the "security working group" email notices intended to get 
-folks to attend this meeting.  Parth volunteered to send these emails 
-beginning next meeting.
-We discussed the "security working group - results" email (this email) 
-that summarizes the discussion and may contain a call to action.
-See example emails archived here:
-invitation: https://lists.ozlabs.org/pipermail/openbmc/2020-July/022296.html
-results: https://lists.ozlabs.org/pipermail/openbmc/2020-July/022330.html
+*Problem:*
+There is a use case where temp1_input should be omitted from being exposed
+to dbus.
+A concrete example is if you have a temp sensor with 10 channels but only
+want to expose 2..10.
 
->
-> 1. Review/create OpenBMC security policy: 
-> https://github.com/openbmc/openbmc/security
-Sounds good.  Joseph to follow up.
+Currently dbus/hwmontemp doesn't allow this.
 
->
-> 2. Make OpenBMC security advisories available under: 
-> https://github.com/openbmc/openbmc/security
-Sounds good.  Joseph to follow up.
+*Solution:*
+In order to maintain backwards compatibility I am proposing an OmitList
+attribute that hwmontemp will attempt to retrieve.
+If the "Name"s of any temp sensor appears in the list, it will be skip
+sensor creation.
 
->
-> 3. Do we need a followup discussion for the recent HTTPS certificate 
-> email threads?
-No. The consensus from the email thread sounds good.
+I am proposing a list to support other use cases such as...
 
->
-> 4. Is there interest in enhancing OpenBMC firmware image update 
-> uploads using the Redfish-specified multipart HTTP push updates (that 
-> is, support the MultipartHttpPushUri property?
-Sounds good, but nobody is working on it.  We also discussed use cases 
-for golden/primary/active/alternate images.
+* you're doing BMC development and for whatever reason want to temporarily
+suppress a temperature and do some tests..you can add it to this list and
+then remove it instead of deleting and re-inserting.
 
+* lets you have non-contiguous temp sensors exposed (e.g temp2_input,
+temp5_input, temp7_input) . There is a better solution to this; but for now
+this enables this use-case.
 
-New topics after the invitation email was sent:
+*etc..*
+It's a simple feature; plan to have something within O(hours).
 
-5. Call for BMC hardware vendors (like ASPEED and Nuvaton) to 
-collaborate with OCP security - 
-https://lists.ozlabs.org/pipermail/openbmc/2020-July/022413.htmlto help 
-define platform root of trust.
+--00000000000089914c05ac29ed94
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-6. The Google GLOME project was introduced; this can be a way to 
-authorize BMC users.
-See https://github.com/google/glome/blob/master/docs/glome-login.md
-A GLOME talk is scheduled for the next meeting: Wednesday August 19.
+<div dir=3D"ltr"><div><b>Problem:</b></div>There is a use case where temp1_=
+input should be omitted from being exposed to dbus.<div>A concrete example =
+is if you have a temp sensor with 10 channels but only want to expose 2..10=
+.</div><div><br></div><div>Currently dbus/hwmontemp doesn&#39;t allow this.=
+</div><div><br></div><div><b>Solution:</b></div><div>In order to maintain b=
+ackwards compatibility I am proposing an OmitList attribute that hwmontemp =
+will attempt to retrieve.<br></div><div>If the &quot;Name&quot;s of any tem=
+p sensor appears in the list, it will be skip sensor creation.</div><div><b=
+r></div><div>I am proposing a list to support other use cases such as...</d=
+iv><div><br></div><div>* you&#39;re doing BMC development and for whatever =
+reason want to temporarily suppress=C2=A0a temperature and do some tests..y=
+ou can add it to this list and then remove it instead of deleting and re-in=
+serting.<br></div><div><br></div><div>* lets you have non-contiguous temp s=
+ensors exposed (e.g temp2_input, temp5_input, temp7_input) . There is a bet=
+ter solution to this; but for now this enables this use-case.</div><div><br=
+></div><div><b>etc..</b></div><div>It&#39;s a simple feature; plan to have =
+something within O(hours).</div></div>
 
-7. Can we add new “security” label for GitHub issues and for Gerrit? 
-ANSWER: Yes. Joseph to followup.
-8. The CSIS (Cloud Security Industry Summit) wants feedback on improving 
-BMC security. ANSWER: Joseph volunteered to attend the meetings.
->
-> Access, agenda, and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group
->
-> - Joseph
-
+--00000000000089914c05ac29ed94--
