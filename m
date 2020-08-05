@@ -2,67 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6B7E23CCA4
-	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 18:56:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AAA223D19A
+	for <lists+openbmc@lfdr.de>; Wed,  5 Aug 2020 22:03:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BMHp02CpGzDqfv
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 02:56:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BMMxW4md0zDqg3
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 06:03:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d32;
- helo=mail-io1-xd32.google.com; envelope-from=suichen6@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
+ helo=mail-ot1-x330.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=PotYEZ/Q; dkim-atps=neutral
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
- [IPv6:2607:f8b0:4864:20::d32])
+ header.s=20161025 header.b=qgYgFuLw; dkim-atps=neutral
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
+ [IPv6:2607:f8b0:4864:20::330])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BMHmz1Z1YzDqMV
- for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 02:55:30 +1000 (AEST)
-Received: by mail-io1-xd32.google.com with SMTP id a5so31375702ioa.13
- for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 09:55:30 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BMMvr3yC3zDqd2
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 06:01:44 +1000 (AEST)
+Received: by mail-ot1-x330.google.com with SMTP id x24so10218625otp.3
+ for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 13:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=1YskGxV5FGwzgr+FxKv1oDRtXLLtaocicC0kYR/iHuI=;
- b=PotYEZ/QpgVmh2paPllVwjBGhNc4KIs+jwF16ab+9zSPQN1ZTpEA9Wjzz/7aYMkfpf
- SBQRi82G2q0rAwiPPOgnOQ3aEfNhYP5E2k4jjkmgXZ9pd6LQcp0DZDRvvdDnUuikW2O2
- MMXWdI7+BSUQROKvLQjOLVGdeQil4bmVClv4/MvlmS08z2zYdirPmq8u9yxS68B5V0G2
- 2qYDabzhvDcBCD9U8NEesEbn03unURmhBAkJCyLuRqsP2Y8Byjet1uC+FyGTJe9gxN/C
- 6vyMrjxarbyF4Qdy1wkHtTUvzZ5fBbuAxvu0NapwJLBymYS6M5apovjoX1LwpZFxBmvp
- 0KJg==
+ h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+ :references; bh=RRcAmqG8i2lmtNM3gSLVjzanhZXCu6mH0ed/a27oZFE=;
+ b=qgYgFuLwtIr9j59TJF8ua4Cqy5UMZVif77+D/XwiElY0ANRqLUO2rJlN51wVYrrSuq
+ h2pCHAyv5OAjFoAvrkfS/Xpr969Hz748ZSBLF6Amkhg6AA0jXk+9iogjQJHyY013YJU8
+ gBJInq0r1xJ/WWFpJaDSAMam5IIzCJT2jW6IPDJwPAExrEEfckM/88K/pLtmCLZhTbz0
+ fsLU4OY01n/r1Yyzue945HBKm/CdR33ngqup5QDQWt4sp4ODTJIziSwPH5PxA99xOdxB
+ BOK8o4uHyAtl0ndFnxlAZ70HcWvOKSB6RIWI0OuoN6HBjS1jmropWrfRfhW6tQfnF7yW
+ XBCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=1YskGxV5FGwzgr+FxKv1oDRtXLLtaocicC0kYR/iHuI=;
- b=bLvpoA1fwMOE2R2mAZEGYq+uhhUsvHyCGP4GC0OmcW78awZ2uRRlGtrM+s9zHCscr2
- b016IMD9SQh0MD6Qzmtq1X2KCD93/33KW5p1/BOXUPSjsRBa3+hfOp3KWaB0y7PTljyD
- tT3KV0/SipD5fTaCpf+fCp7C3+3TDKNlPOpDWPxHm1tWPgn8j95xKQ1ozAa8PrB/LGXH
- m91NbrDBvP7DdB4D+TkU54gbO0mImWT8kWh6YIXGQBU8t0IioE487B9jWFwDqJY1zx3I
- Ncf94I0ZQfOSsIX1plk+17gylp0LGFh3GdEOfWZ6lBFm4NXtO5Hh5f2ZISy2dRH50BFg
- 4Lhw==
-X-Gm-Message-State: AOAM530SbULvK9wppXUT4pVWnrKoFV68UyFySpxVLPmLdjHYRsBqMXp9
- 43hxjQB6zY3VIxu1gekwXit1TuFVMiUN0ld6h/8=
-X-Google-Smtp-Source: ABdhPJy38bv8WsF/jwk93SgCbLB8ZM09qox4U8nFnedQbxYND77aDTXwoAQwR2xExnxwk/6xiSlwCFFPn2zDXKhTPg8=
-X-Received: by 2002:a5e:d90e:: with SMTP id n14mr4241973iop.197.1596646527620; 
- Wed, 05 Aug 2020 09:55:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAFaEeaE+xp89Q4dc0uS_-mdwy=ngb6-1XqnfdtTZ_1CW-GCE_A@mail.gmail.com>
- <1872ef34-0a74-4084-8098-424130f71848@beta.fastmail.com>
- <35326E4D-434F-407D-B79B-641F757C1AF3@gmail.com>
-In-Reply-To: <35326E4D-434F-407D-B79B-641F757C1AF3@gmail.com>
-From: Sui Chen <suichen6@gmail.com>
-Date: Wed, 5 Aug 2020 09:55:16 -0700
-Message-ID: <CAFaEeaGF82sTfKMn9PXBevPybbm9gOtEW+xuAES5sQdt-aBVTQ@mail.gmail.com>
-Subject: Re: [openbmc-tools] dbus-vis: DBus capture visualization tool
-To: Andrew Geissler <geissonator@gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000001c5c3405ac243d16"
+ h=x-gm-message-state:from:message-id:mime-version:subject:date
+ :in-reply-to:cc:to:references;
+ bh=RRcAmqG8i2lmtNM3gSLVjzanhZXCu6mH0ed/a27oZFE=;
+ b=Ri+AwZGSwvuYIyDB+B03SHylR7dvVuDCYZbNXajqqBAlda8EJiKW7E3pPFuU3E980W
+ l9xVelL6Bwkb3GVgE18ca5CoIYEfwdekI5z8ARfMNCS9awYiXt7H+wzEr98hcki0w+iG
+ sK4DFdX0+Hofoj4JCqQRZs9hjaRI9lQyVS8zecifrCNY19lEKnhHi21f8J/n0Dz5lQWf
+ jCYUdhoNkfhcmFGRFSTehyGb6l8LmSd1r4+8QNxP1H0DU9WirzvYtOj1UZPzNl2Cay66
+ aNMpqD0sSO6Gq0JbEf/jPScAxYMGHHySDn73SmjMm1QYgoo6ZBl5REQzL20Ay3vdw4wX
+ nkwA==
+X-Gm-Message-State: AOAM530H+vrfpLajVhM0WDh7A0QtC4K0/oWSchAOmAdeq878s4exVVrL
+ 9qB8+QG6peoRtbQkqGx+2Zr/qM2oz4o=
+X-Google-Smtp-Source: ABdhPJzQxYa3MaFhPj91YiKRhW2IaA6gFK8mCaySf1kAXjJguQtKKr9dYZGCSpeDri0DnypZspgLsQ==
+X-Received: by 2002:a05:6830:2149:: with SMTP id
+ r9mr4266991otd.92.1596657702304; 
+ Wed, 05 Aug 2020 13:01:42 -0700 (PDT)
+Received: from ?IPv6:2601:281:c001:2359:31c8:a5f7:f522:9334?
+ ([2601:281:c001:2359:31c8:a5f7:f522:9334])
+ by smtp.gmail.com with ESMTPSA id l17sm568167otp.70.2020.08.05.13.01.41
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 05 Aug 2020 13:01:41 -0700 (PDT)
+From: Mike Jones <proclivis@gmail.com>
+Message-Id: <53A2EEB8-24CE-4A27-85D3-92E5731E1255@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_D831442E-AB98-4E28-BA16-47E5928602AA"
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.80.23.2.2\))
+Subject: Re: How to put sensors into the ObjectMapper
+Date: Wed, 5 Aug 2020 14:01:41 -0600
+In-Reply-To: <14822464-CD32-4429-95C7-3B7F993A70A0@gmail.com>
+To: Matt Spinler <mspinler@linux.ibm.com>
+References: <34F75302-6F54-4EE1-849F-F5B1D7118259@gmail.com>
+ <8d5f2838-4fe2-d8ec-1874-03ac90c4cc7f@linux.ibm.com>
+ <14822464-CD32-4429-95C7-3B7F993A70A0@gmail.com>
+X-Mailer: Apple Mail (2.3608.80.23.2.2)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,152 +82,734 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000001c5c3405ac243d16
-Content-Type: text/plain; charset="UTF-8"
+
+--Apple-Mail=_D831442E-AB98-4E28-BA16-47E5928602AA
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Hello,
+Matt,
 
-(To Andrew Jeffery)
-Yes I had been using the original dbus-pcap since the start of dbus-vis;
-dbus-pcap was run twice to obtain both timestamps and JSON outputs. This
-approach had been working until I encountered truncated messages, where
-dbus-pcap had to be modified a bit so that those truncated messages do not
-get discarded.
-So far the only modification I need is to keep truncated messages (just
-like Wireshark does) and appending timestamps in JSON outputs (so we need
-to run dbus-pcap only once.)
+I figured this out. For those after me:
 
-(To Andrew Geissler)
-In my understanding, the "IPMI" part is OpenBMC-specific, as it's not very
-likely that someone runs the IPMI daemon on a regular computer.
-This tool was initially intended only for IPMI, so there are functions that
-look for text-encoded IPMI-related DBus calls in ipmi_parse.js . dbus-pcap
-was added later and it's this addition that enables more generic use.
+> the-date raspberrypi4 systemd[1]: Condition check resulted in Phosphor =
+Hwmon Poller being skipped.
 
-The question of generic use is an interesting one -- dbus-vis could be used
-outside of OpenBMC, and it may complement existing tools due to a few
-differences: It started something that resembles a performance analysis
-tool, so it focused on showing large amounts of events/information to focus
-in a compact way, with limited ability to inspect individual events. DBus
-traffic on the OpenBMC can easily reach hundreds of messages per second,
-whereas on desktop systems this number is generally a lot lower (based on
-my limited experience.) This seems to affect the design of tools as well,
-as existing tools like GNU Bustle seem to be designed for showing fewer
-messages per second and are more focused on finding the dependency between
-DBus function calls.
+This error comes from =
+ConditionFileNotEmpty=3D/etc/default/objc/hwmon/%I.conf
 
-Thanks,
-Sui
+In file xyz.openbmc_project.Hwmon@.service
+
+By looking at the code for phosphor-hwmon-readd and running it on a =
+command line, I eventually realized the conf files needed to be one =
+directory higher and named differently.
+
+Now I have telemetry in the webui.
+
+I pushed my code for anyone that is following along.
+
+Mike
+
+> On Aug 4, 2020, at 6:09 PM, Mike Jones <proclivis@gmail.com> wrote:
+>=20
+> Matt,
+>=20
+> Thanks for the help, I wish this was less painful. I think I know how =
+this is supposed to work, but it does not. So I will walk through all =
+the steps I took to manually debug, and hopefully you see a smoking gun. =
+It could be as simple as the service makes some path assumption that =
+does not hold when using raspberrypi=E2=80=99s hwmon paths which uses =
+soc rather than ahb paths on an aspeed.
+>=20
+> Sensors/phosphor-hwm adds 70-hwmon.rules and start_hwmon.sh.
+>=20
+> These are on the target file system.
+>=20
+> Then I tried to test starting Hwmon service manually like this:
+>=20
+> udevadm info /sys/bus/i2c/devices/1-0030
+>=20
+> Then using the variables=E2=80=A6
+>=20
+> /usr/bin/start_hwmon.sh start =
+/devices/platform/soc/fe804000.i2c/i2c-1/1-0030 =
+/soc/i2c@7e804000/ltc3880@30
+>=20
+> And a dbus query has no sensors. There is no process with hwmon in the =
+name, and systemctl has nothing with hwmon either.
+>=20
+> So I edit start_hwmon.sh to print the values and run the command =
+manually:
+>=20
+> systemctl =E2=80=94no-block start =
+xyz.openbmc_project.Hwmon@-soc-i2c\x407e804000-ltc3880\x4030.service
+>=20
+> Now, I am low on how the services use the @.
+>=20
+> In sensors/phosphor-hwmon is xyz.openbmc_project.Hwmon@.service
+>=20
+> I am assuming that text after the @ is a way of naming an instance of =
+the service, so that one service can be run per device. Perhaps you can =
+confirm that.
+>=20
+> In /lib/systed/system I find the xyz.openbmc_project.Hwmon@.service
+>=20
+> I assume that if this service was running, ps and systemctl would show =
+it. So perhaps it runs and exits. So I use
+>=20
+> Systemctl status  xyz.openbmc_project.Hwmon@.service
+>=20
+> And see it calls it Phosphor Hwmon Poller, says it is loaded and lists =
+a file:// long path to the service, static, vendor preset: enabled. But =
+it also shows
+>=20
+> Active:inactive (dead)
+>=20
+> The some lines like:
+>=20
+> the-date raspberrypi4 systemd[1]: Condition check resulted in Phosphor =
+Hwmon Poller being skipped.
+>=20
+> If I had to guess, it can=E2=80=99f find something in the /sys path.
+>=20
+> journalctl -u  xyz.openbmc_project.Hwmon@.service gives the same =
+messages.
+>=20
+> So going back to the start_hwmon.sh
+>=20
+> The udev variables are:
+>=20
+> DEVPATH =3D /devices/platform/soc/fe804000.i2c/i2c-1/1-0030
+> OF_FULLNAME =3D /soc/i2c@7e804000/ltc3880@30
+>=20
+> The start script cooks up this service name =
+@-soc-i2c\x407e804000-ltc3880\x4030.service
+>=20
+> Which is escaping OF_FULLNAME @ and replacing / with -
+>=20
+> I assume the service uses that to go a hunting for the hwmon device =
+and hopefully it knows to look in =
+/sys/devices/platform/soc/fe804000.i2c/i2c-1/1-0030, which is really a =
+directory to hwmon. That would mean the service has to know to look in =
+/sys/devices/platform, because that is not passed to the service.
+>=20
+> I noticed that the service file is really a configuration file. So I =
+cat it out.
+>=20
+> It has a ConditionFileNotEmpty=3D/etc/default/obmc/hwmon/%I.conf
+>=20
+> This is the parent with child soc=E2=80=A6 to the conf files. So I =
+should be a proper path. So I compare that path to the service name path =
+to see if they match in any way.
+>=20
+> The path to this device is
+>=20
+> soc/i2c/@7e804000/ltc3880@30
+>=20
+> So its a match with the name of the service. That looks good.
+>=20
+> Then it seems to run
+>=20
+> /usr/bin/env phosphor-hwmon-readd -o $I
+> With SyslogIdentifier phosphor-hwmon-readd
+>=20
+> I assume that the errors from the status somehow are consuming this =
+Syslog.
+>=20
+> So perhaps this comes down to the meaning of
+>=20
+> the-date raspberrypi4 systemd[1]: Condition check resulted in Phosphor =
+Hwmon Poller being skipped.
+>=20
+> A google search seems to indicate this is a systemd message and is =
+applied to disk checks, etc.
+>=20
+> Any ideas on how to debug, or what might be amiss?
+>=20
+> Also, I searched the source tree for phosphor-hwmon-readd* and come up =
+empty. So I am not sure how to find the source for this. It does end up =
+on the rootfs, so something is building. The name of the sources must be =
+different. So I could not look in code to see how it does its job when =
+it is run.
+>=20
+> Mike
+>=20
+>=20
+>=20
+>> On Aug 4, 2020, at 1:54 PM, Matt Spinler <mspinler@linux.ibm.com =
+<mailto:mspinler@linux.ibm.com>> wrote:
+>>=20
+>>=20
+>>=20
+>> On 8/3/2020 1:03 PM, Mike Jones wrote:
+>>> My RaspPi work has progressed but I don=E2=80=99t know how to get =
+sensors in the ObjectMapper, which I hope will mean sensors end up in =
+webui.
+>>>=20
+>>> BASIC INFORMATION
+>>> ------------------------------
+>>>=20
+>>> At this point, I have my PMbus devices in the device tree like this =
+path:
+>>>=20
+>>> =
+/sys/firmware/devicetree/base/soc/i2c@7e804000/ltc2974@32/regulators/vout0=
+ to vout3
+>>>=20
+>>> And the config files like this path:
+>>>=20
+>>> /etc/default/obmc/hwmon/soc/i2c#7e804000/ltc2974@32/reg1@32.conf =
+<mailto:32/reg1@32.conf> <mailto:32/reg1@32.conf =
+<mailto:32/reg1@32.conf>>
+>>>=20
+>>> The sensors show up here:
+>>>=20
+>>> /sys/bus/i2c/devices/1-0032/hwmon/hwmon2
+>>>=20
+>>> Indicating that the device tree is causing hwmon to offer its =
+telemetry nodes.
+>>>=20
+>>> =46rom my reading of the docs, it seems like the ObjectMapper keeps =
+an inventory of sensors.
+>>>=20
+>>> So to search, I did something like:
+>>>=20
+>>> dbus-send =E2=80=94system -print-reply \
+>>> =E2=80=94dest=3Dxyz.openbmc_project.ObjectMapper \
+>>> /xyz/openbmc_project/object_mapper \
+>>> xyz.openbmc_project.ObjectMapper.GetAncestors \
+>>> string:=E2=80=9D/xyz/openbmc_project/inventory.system=E2=80=9D =
+array:string: | grep ltc2974
+>>>=20
+>>> But none of my devices are there.
+>>>=20
+>>> I looked at meta-ibm and meta-hxt and could not see how to get the =
+devices into the ObjectMapper.
+>>>=20
+>>> ACTUAL QUESTIONS
+>>> ------------------------------
+>>>=20
+>>> So I have these questions:
+>>>=20
+>>> - What it the mechanism for getting these into the ObjectMapper?
+>>=20
+>> Hi,
+>> The mapper just adds some convenience functions to be able to find =
+things on D-Bus, so if the mapper
+>> can't find it, then it isn't on D-Bus.
+>>=20
+>> =
+https://github.com/openbmc/docs/blob/master/architecture/sensor-architectu=
+re.md =
+<https://github.com/openbmc/docs/blob/master/architecture/sensor-architect=
+ure.md> talks about how
+>> phosphor-hwmon-readd will put sensor values on D-Bus.  What I don't =
+think it mentions is that it
+>> uses a udev rule to start its service when udev sees the hwmon =
+subsystem hotplug.
+>>=20
+>>> - Once there, will they show up in webui without any other files and =
+recipes?
+>>=20
+>> Yea, they will show up as /xyz/openbmc_project/sensors/<type>/<name> =
+and bmcweb can find that.
+>>=20
+>>> - What docs might describe what I need to know to connect the hwmon =
+devices to the ObjectMapper?
+>>=20
+>> That sensors doc I mentioned above has the goal of describing that.
+>>=20
+>>> - Is there something I have to do to start the ObjectMapper service? =
+I don=E2=80=99t see it with a grep through systemctl.
+>>=20
+>> The service file for that is =
+/lib/systemd/system/xyz.openbmc_project.ObjectMapper.service. Hopefully
+>> that is present on your system.
+>>=20
+>>> - Is there an existing meta layer that would be a good example and a =
+pointer to the proper bb files to look at?
+>>=20
+>> The meta-ibm layer makes extensive use of phosphor-hwmon:
+>> meta-ibm/recipes-phoshpor/sensors/phosphor-hwmon_%.bbappend
+>>=20
+>>>=20
+>>> THE CODE/LAYERS
+>>> ----------------------------
+>>>=20
+>>> My work so far is here:
+>>>=20
+>>> https://github.com/Proclivis/meta-pmbus =
+<https://github.com/Proclivis/meta-pmbus>
+>>>=20
+>>> Configured by:
+>>>=20
+>>> https://github.com/Proclivis/conf-meta-rasberrypi-evb =
+<https://github.com/Proclivis/conf-meta-rasberrypi-evb>
+>>>=20
+>>> Thanks, and sorry I am a newbie without tribal knowledge. I am =
+trying to find solutions on my own and only ask for help when stuck. =
+Unfortunately, I=E2=80=99m stuck.
+>>>=20
+>>> Mike
+>=20
 
 
-On Tue, Jul 28, 2020 at 6:06 AM Andrew Geissler <geissonator@gmail.com>
-wrote:
-
->
->
-> > On Jul 24, 2020, at 10:01 PM, Andrew Jeffery <andrew@aj.id.au> wrote:
-> >
-> <snip>
-> >
-> > I'm also thinking it might be time to start (an) independent repo(s)
-> where we can develop the two, what we have is starting to grow a bit beyo=
-nd
-> the intended scope of openbmc-tools. Looping Brad and Andrew Geissler in
-> here to get their thoughts.
->
-> Unless there=E2=80=99s a pressing need to move it, I=E2=80=99d vote we ju=
-st keep it where
-> it is. Once it=E2=80=99s matured a bit, y=E2=80=99all could propose on a =
-move to a separate
-> repo. I wonder if this even needs to be under the openbmc namespace? Seem=
-s
-> like a fairly generic D-Bus tool that could be useful outside of openbmc?
->
-> >
-> > Cheers,
-> >
-> > Andrew
->
->
-
---0000000000001c5c3405ac243d16
-Content-Type: text/html; charset="UTF-8"
+--Apple-Mail=_D831442E-AB98-4E28-BA16-47E5928602AA
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
-<div dir=3D"ltr"><div class=3D"gmail_default" style=3D"font-family:arial,he=
-lvetica,sans-serif">Hello,</div><div class=3D"gmail_default" style=3D"font-=
-family:arial,helvetica,sans-serif"><br></div><div class=3D"gmail_default" s=
-tyle=3D"font-family:arial,helvetica,sans-serif">(To Andrew Jeffery)</div><d=
-iv class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-serif"=
->Yes I had been using the original dbus-pcap since the start of dbus-vis; d=
-bus-pcap was run twice to obtain both timestamps and JSON outputs. This app=
-roach had been working until I encountered truncated messages, where dbus-p=
-cap had to be modified a bit so that those truncated messages do not get di=
-scarded.</div><div class=3D"gmail_default" style=3D"font-family:arial,helve=
-tica,sans-serif">So far the only modification I need is to keep truncated m=
-essages (just like Wireshark does) and appending timestamps in JSON outputs=
- (so we need to run dbus-pcap only once.)</div><div class=3D"gmail_default"=
- style=3D"font-family:arial,helvetica,sans-serif"><br></div><div class=3D"g=
-mail_default" style=3D"font-family:arial,helvetica,sans-serif">(To Andrew G=
-eissler)</div><div class=3D"gmail_default" style=3D"font-family:arial,helve=
-tica,sans-serif">In my understanding, the &quot;IPMI&quot; part is OpenBMC-=
-specific, as it&#39;s not very likely that someone runs the IPMI daemon on =
-a regular computer.</div><div class=3D"gmail_default" style=3D"font-family:=
-arial,helvetica,sans-serif">This tool was initially intended=C2=A0only for =
-IPMI, so there are functions that look for text-encoded IPMI-related DBus c=
-alls in ipmi_parse.js . dbus-pcap was added later and it&#39;s this additio=
-n that enables more generic use.</div><div class=3D"gmail_default" style=3D=
-"font-family:arial,helvetica,sans-serif"><br></div><div class=3D"gmail_defa=
-ult" style=3D"font-family:arial,helvetica,sans-serif">The question of gener=
-ic use is an interesting one -- dbus-vis could be used outside of OpenBMC, =
-and it may complement existing tools due to a few differences: It started s=
-omething that resembles a performance analysis tool, so it focused on showi=
-ng large amounts of events/information to focus in a compact way, with limi=
-ted ability to inspect individual events. DBus traffic on the OpenBMC can e=
-asily reach hundreds of messages per second, whereas on desktop systems thi=
-s number is generally a lot lower (based on my limited experience.) This se=
-ems to affect the design of tools as well, as existing tools like GNU Bustl=
-e seem to be designed for showing fewer messages per second and are more fo=
-cused on finding the dependency between DBus function calls.</div><div clas=
-s=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-serif"><br></=
-div><div class=3D"gmail_default" style=3D"font-family:arial,helvetica,sans-=
-serif">Thanks,</div><div class=3D"gmail_default" style=3D"font-family:arial=
-,helvetica,sans-serif">Sui</div><div class=3D"gmail_default" style=3D"font-=
-family:arial,helvetica,sans-serif"><br></div></div><br><div class=3D"gmail_=
-quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul 28, 2020 at 6:06 A=
-M Andrew Geissler &lt;<a href=3D"mailto:geissonator@gmail.com">geissonator@=
-gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex"><br>
-<br>
-&gt; On Jul 24, 2020, at 10:01 PM, Andrew Jeffery &lt;<a href=3D"mailto:and=
-rew@aj.id.au" target=3D"_blank">andrew@aj.id.au</a>&gt; wrote:<br>
-&gt; <br>
-&lt;snip&gt;<br>
-&gt; <br>
-&gt; I&#39;m also thinking it might be time to start (an) independent repo(=
-s) where we can develop the two, what we have is starting to grow a bit bey=
-ond the intended scope of openbmc-tools. Looping Brad and Andrew Geissler i=
-n here to get their thoughts.<br>
-<br>
-Unless there=E2=80=99s a pressing need to move it, I=E2=80=99d vote we just=
- keep it where it is. Once it=E2=80=99s matured a bit, y=E2=80=99all could =
-propose on a move to a separate repo. I wonder if this even needs to be und=
-er the openbmc namespace? Seems like a fairly generic D-Bus tool that could=
- be useful outside of openbmc?<br>
-<br>
-&gt; <br>
-&gt; Cheers,<br>
-&gt; <br>
-&gt; Andrew<br>
-<br>
-</blockquote></div>
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D"">Matt,<div class=3D""><br class=3D""></div><div class=3D"">I =
+figured this out. For those after me:</div><div class=3D""><br =
+class=3D""></div><div class=3D""><blockquote type=3D"cite" class=3D""><div=
+ class=3D"" style=3D"word-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><div class=3D""><div class=3D""><div =
+class=3D"">the-date raspberrypi4 systemd[1]: Condition check resulted in =
+Phosphor Hwmon Poller being =
+skipped.</div></div></div></div></blockquote><div class=3D""><br =
+class=3D""></div>This error comes from =
+ConditionFileNotEmpty=3D/etc/default/objc/hwmon/%I.conf</div><div =
+class=3D""><br class=3D""></div><div class=3D"">In file =
+xyz.openbmc_project.Hwmon@.service</div><div class=3D""><br =
+class=3D""></div><div class=3D"">By looking at the code for =
+phosphor-hwmon-readd and running it on a command line, I eventually =
+realized the conf files needed to be one directory higher and named =
+differently.</div><div class=3D""><br class=3D""></div><div class=3D"">Now=
+ I have telemetry in the webui.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">I pushed my code for anyone that is =
+following along.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Mike<br class=3D""><div><br class=3D""><blockquote =
+type=3D"cite" class=3D""><div class=3D"">On Aug 4, 2020, at 6:09 PM, =
+Mike Jones &lt;<a href=3D"mailto:proclivis@gmail.com" =
+class=3D"">proclivis@gmail.com</a>&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div class=3D""><meta =
+http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" =
+class=3D""><div style=3D"word-wrap: break-word; -webkit-nbsp-mode: =
+space; line-break: after-white-space;" class=3D"">Matt,<div class=3D""><br=
+ class=3D""></div><div class=3D"">Thanks for the help, I wish this was =
+less painful. I think I know how this is supposed to work, but it does =
+not. So I will walk through all the steps I took to manually debug, and =
+hopefully you see a smoking gun. It could be as simple as the service =
+makes some path assumption that does not hold when using raspberrypi=E2=80=
+=99s hwmon paths which uses soc rather than ahb paths on an aspeed.<div =
+class=3D""><br class=3D""></div><div class=3D"">Sensors/phosphor-hwm =
+adds 70-hwmon.rules and start_hwmon.sh.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">These are on the target file =
+system.</div><div class=3D""><br class=3D""></div><div class=3D"">Then I =
+tried to test starting Hwmon service manually like this:</div><div =
+class=3D""><br class=3D""></div><div class=3D"">udevadm info =
+/sys/bus/i2c/devices/1-0030</div><div class=3D""><br class=3D""></div><div=
+ class=3D"">Then using the variables=E2=80=A6</div><div class=3D""><br =
+class=3D""></div><div class=3D"">/usr/bin/start_hwmon.sh start =
+/devices/platform/soc/fe804000.i2c/i2c-1/1-0030 =
+/soc/i2c@7e804000/ltc3880@30</div><div class=3D""><br =
+class=3D""></div><div class=3D"">And a dbus query has no sensors. There =
+is no process with hwmon in the name, and systemctl has nothing with =
+hwmon either.</div><div class=3D""><br class=3D""></div><div class=3D"">So=
+ I edit start_hwmon.sh to print the values and run the command =
+manually:</div><div class=3D""><br class=3D""></div><div =
+class=3D"">systemctl =E2=80=94no-block start =
+xyz.openbmc_project.Hwmon@-soc-i2c\x407e804000-ltc3880\x4030.service</div>=
+<div class=3D""><br class=3D""></div><div class=3D"">Now, I am low on =
+how the services use the @.</div><div class=3D""><br class=3D""></div><div=
+ class=3D"">In sensors/phosphor-hwmon is =
+xyz.openbmc_project.Hwmon@.service</div><div class=3D""><br =
+class=3D""></div><div class=3D"">I am assuming that text after the @ is =
+a way of naming an instance of the service, so that one service can be =
+run per device. Perhaps you can confirm that.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">In /lib/systed/system I find the =
+xyz.openbmc_project.Hwmon@.service</div><div class=3D""><br =
+class=3D""></div><div class=3D"">I assume that if this service was =
+running, ps and systemctl would show it. So perhaps it runs and exits. =
+So I use</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Systemctl status =
+&nbsp;xyz.openbmc_project.Hwmon@.service</div><div class=3D""><br =
+class=3D""></div><div class=3D"">And see it calls it Phosphor Hwmon =
+Poller, says it is loaded and lists a file:// long path to the service, =
+static, vendor preset: enabled. But it also shows</div><div class=3D""><br=
+ class=3D""></div><div class=3D"">Active:inactive (dead)</div><div =
+class=3D""><br class=3D""></div><div class=3D"">The some lines =
+like:</div><div class=3D""><br class=3D""></div><div class=3D"">the-date =
+raspberrypi4 systemd[1]: Condition check resulted in Phosphor Hwmon =
+Poller being skipped.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">If I had to guess, it can=E2=80=99f find something in the =
+/sys path.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">journalctl -u &nbsp;xyz.openbmc_project.Hwmon@.service gives =
+the same messages.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">So going back to the start_hwmon.sh</div><div class=3D""><br =
+class=3D""></div><div class=3D"">The udev variables are:</div><div =
+class=3D""><br class=3D""></div><div class=3D"">DEVPATH =3D =
+/devices/platform/soc/fe804000.i2c/i2c-1/1-0030</div><div =
+class=3D"">OF_FULLNAME =3D /soc/i2c@7e804000/ltc3880@30</div><div =
+class=3D""><br class=3D""></div><div class=3D"">The start script cooks =
+up this service name =
+@-soc-i2c\x407e804000-ltc3880\x4030.service</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Which is escaping OF_FULLNAME @ and =
+replacing / with -</div><div class=3D""><br class=3D""></div><div =
+class=3D"">I assume the service uses that to go a hunting for the hwmon =
+device and hopefully it knows to look in =
+/sys/devices/platform/soc/fe804000.i2c/i2c-1/1-0030, which is really a =
+directory to hwmon. That would mean the service has to know to look in =
+/sys/devices/platform, because that is not passed to the =
+service.</div><div class=3D""><br class=3D""></div><div class=3D"">I =
+noticed that the service file is really a configuration file. So I cat =
+it out.</div><div class=3D""><br class=3D""></div><div class=3D"">It has =
+a ConditionFileNotEmpty=3D/etc/default/obmc/hwmon/%I.conf</div><div =
+class=3D""><br class=3D""></div><div class=3D"">This is the parent with =
+child soc=E2=80=A6 to the conf files. So I should be a proper path. So I =
+compare that path to the service name path to see if they match in any =
+way.</div><div class=3D""><br class=3D""></div><div class=3D"">The path =
+to this device is</div><div class=3D""><br class=3D""></div><div =
+class=3D"">soc/i2c/@7e804000/ltc3880@30</div><div class=3D""><br =
+class=3D""></div><div class=3D"">So its a match with the name of the =
+service. That looks good.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Then it seems to run</div><div class=3D""><br =
+class=3D""></div><div class=3D"">/usr/bin/env phosphor-hwmon-readd -o =
+$I</div><div class=3D"">With SyslogIdentifier =
+phosphor-hwmon-readd</div><div class=3D""><br class=3D""></div><div =
+class=3D"">I assume that the errors from the status somehow are =
+consuming this Syslog.</div><div class=3D""><br class=3D""></div><div =
+class=3D"">So perhaps this comes down to the meaning of</div><div =
+class=3D""><br class=3D""></div><div class=3D""><div class=3D"">the-date =
+raspberrypi4 systemd[1]: Condition check resulted in Phosphor Hwmon =
+Poller being skipped.</div></div><div class=3D""><br class=3D""></div><div=
+ class=3D"">A google search seems to indicate this is a systemd message =
+and is applied to disk checks, etc.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Any ideas on how to debug, or what =
+might be amiss?</div><div class=3D""><br class=3D""></div><div =
+class=3D"">Also, I searched the source tree for phosphor-hwmon-readd* =
+and come up empty. So I am not sure how to find the source for this. It =
+does end up on the rootfs, so something is building. The name of the =
+sources must be different. So I could not look in code to see how it =
+does its job when it is run.</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Mike</div><div class=3D""><br =
+class=3D""></div><div class=3D""><br class=3D""></div><div class=3D""><div=
+ class=3D""><br class=3D""><blockquote type=3D"cite" class=3D""><div =
+class=3D"">On Aug 4, 2020, at 1:54 PM, Matt Spinler &lt;<a =
+href=3D"mailto:mspinler@linux.ibm.com" =
+class=3D"">mspinler@linux.ibm.com</a>&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;" class=3D"">On 8/3/2020 1:03 PM, Mike Jones =
+wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><blockquote type=3D"cite" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D"">My =
+RaspPi work has progressed but I don=E2=80=99t know how to get sensors =
+in the ObjectMapper, which I hope will mean sensors end up in webui.<br =
+class=3D""><br class=3D"">BASIC INFORMATION<br =
+class=3D"">------------------------------<br class=3D""><br class=3D"">At =
+this point, I have my PMbus devices in the device tree like this =
+path:<br class=3D""><br =
+class=3D"">/sys/firmware/devicetree/base/soc/i2c@7e804000/ltc2974@32/regul=
+ators/vout0 to vout3<br class=3D""><br class=3D"">And the config files =
+like this path:<br class=3D""><br =
+class=3D"">/etc/default/obmc/hwmon/soc/i2c#7e804000/ltc2974@<a =
+href=3D"mailto:32/reg1@32.conf" class=3D"">32/reg1@32.conf</a><span =
+class=3D"Apple-converted-space">&nbsp;</span>&lt;<a =
+href=3D"mailto:32/reg1@32.conf" =
+class=3D"">mailto:32/reg1@32.conf</a>&gt;<br class=3D""><br class=3D"">The=
+ sensors show up here:<br class=3D""><br =
+class=3D"">/sys/bus/i2c/devices/1-0032/hwmon/hwmon2<br class=3D""><br =
+class=3D"">Indicating that the device tree is causing hwmon to offer its =
+telemetry nodes.<br class=3D""><br class=3D"">=46rom my reading of the =
+docs, it seems like the ObjectMapper keeps an inventory of sensors.<br =
+class=3D""><br class=3D"">So to search, I did something like:<br =
+class=3D""><br class=3D"">dbus-send =E2=80=94system -print-reply \<br =
+class=3D"">=E2=80=94dest=3Dxyz.openbmc_project.ObjectMapper \<br =
+class=3D"">/xyz/openbmc_project/object_mapper \<br =
+class=3D"">xyz.openbmc_project.ObjectMapper.GetAncestors \<br =
+class=3D"">string:=E2=80=9D/xyz/openbmc_project/inventory.system=E2=80=9D =
+array:string: | grep ltc2974<br class=3D""><br class=3D"">But none of my =
+devices are there.<br class=3D""><br class=3D"">I looked at meta-ibm and =
+meta-hxt and could not see how to get the devices into the =
+ObjectMapper.<br class=3D""><br class=3D"">ACTUAL QUESTIONS<br =
+class=3D"">------------------------------<br class=3D""><br class=3D"">So =
+I have these questions:<br class=3D""><br class=3D"">- What it the =
+mechanism for getting these into the ObjectMapper?<br =
+class=3D""></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">Hi,</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">The mapper just adds some convenience functions to be able to =
+find things on D-Bus, so if the mapper</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">can't find it, then it isn't on D-Bus.</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><a =
+href=3D"https://github.com/openbmc/docs/blob/master/architecture/sensor-ar=
+chitecture.md" style=3D"font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: normal; =
+letter-spacing: normal; orphans: auto; text-align: start; text-indent: =
+0px; text-transform: none; white-space: normal; widows: auto; =
+word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px;" =
+class=3D"">https://github.com/openbmc/docs/blob/master/architecture/sensor=
+-architecture.md</a><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D""><span class=3D"Apple-converted-space">&nbsp;</span>talks =
+about how</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;" =
+class=3D"">phosphor-hwmon-readd will put sensor values on D-Bus.&nbsp; =
+What I don't think it mentions is that it</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">uses a udev rule to start its service when udev sees the =
+hwmon subsystem hotplug.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D"">- Once there, will they show up in =
+webui without any other files and recipes?<br class=3D""></blockquote><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;" class=3D"">Yea, they will show up as =
+/xyz/openbmc_project/sensors/&lt;type&gt;/&lt;name&gt; and bmcweb can =
+find that.</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><blockquote type=3D"cite" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D"">- =
+What docs might describe what I need to know to connect the hwmon =
+devices to the ObjectMapper?<br class=3D""></blockquote><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: =
+normal; letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;" class=3D"">That sensors doc I mentioned =
+above has the goal of describing that.</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D"">- Is there something I have to do to =
+start the ObjectMapper service? I don=E2=80=99t see it with a grep =
+through systemctl.<br class=3D""></blockquote><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: normal; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">The service file for that is =
+/lib/systemd/system/xyz.openbmc_project.ObjectMapper.service. =
+Hopefully</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none; float: none; display: inline !important;" class=3D"">that is =
+present on your system.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><blockquote type=3D"cite" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D"">- Is there an existing meta layer =
+that would be a good example and a pointer to the proper bb files to =
+look at?<br class=3D""></blockquote><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">The meta-ibm layer makes extensive use of =
+phosphor-hwmon:</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;" class=3D""><span style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;" =
+class=3D"">meta-ibm/recipes-phoshpor/sensors/phosphor-hwmon_%.bbappend</sp=
+an><br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
+none;" class=3D""><blockquote type=3D"cite" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: normal; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; =
+-webkit-text-stroke-width: 0px; text-decoration: none;" class=3D""><br =
+class=3D"">THE CODE/LAYERS<br class=3D"">----------------------------<br =
+class=3D""><br class=3D"">My work so far is here:<br class=3D""><br =
+class=3D""><a href=3D"https://github.com/Proclivis/meta-pmbus" =
+class=3D"">https://github.com/Proclivis/meta-pmbus</a><br class=3D""><br =
+class=3D"">Configured by:<br class=3D""><br class=3D""><a =
+href=3D"https://github.com/Proclivis/conf-meta-rasberrypi-evb" =
+class=3D"">https://github.com/Proclivis/conf-meta-rasberrypi-evb</a><br =
+class=3D""><br class=3D"">Thanks, and sorry I am a newbie without tribal =
+knowledge. I am trying to find solutions on my own and only ask for help =
+when stuck. Unfortunately, I=E2=80=99m stuck.<br class=3D""><br =
+class=3D"">Mike</blockquote></div></blockquote></div><br =
+class=3D""></div></div></div></div></blockquote></div><br =
+class=3D""></div></body></html>=
 
---0000000000001c5c3405ac243d16--
+--Apple-Mail=_D831442E-AB98-4E28-BA16-47E5928602AA--
