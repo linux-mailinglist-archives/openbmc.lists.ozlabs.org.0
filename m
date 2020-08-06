@@ -2,66 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2810023D59E
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 04:56:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E23ED23D66E
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 07:30:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BMY6r5zyjzDqN5
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 12:56:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BMcWm17bgzDqkR
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 15:30:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d35;
- helo=mail-io1-xd35.google.com; envelope-from=ticotimo@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=gGQPvUgR; dkim-atps=neutral
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com
- [IPv6:2607:f8b0:4864:20::d35])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=voXpwcOr; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BMY5t5FLjzDqKf
- for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 12:56:02 +1000 (AEST)
-Received: by mail-io1-xd35.google.com with SMTP id a5so32865620ioa.13
- for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 19:56:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Tk2DdJZQpJRn9EIQzszkJeifS32SlwtH7tfKiuDH7vY=;
- b=gGQPvUgRZ0T44+3GA0/kABYWhih15eQ8a4CYMN9nkeRSI5iQQR5I0fx8TpoQDPTlwF
- GZVZnuQyGjbhYEnPNsuV8+YGsk/N1ru2YxgesRoyaiIqTVsOzo6Zg+FjwJ+jxiCpLhMF
- 6hNa3Lg/3hxMNg+JUfRBDahZ5wYIMn1NDmrNTsOfoeoQdSUXTBFomBghpcd3OD344lo+
- HzbX564wPswfuHq9vuLs1rW6lNBsb7Zo62ALM1cQoBOnjdNd8kEygu2GYUr3TbeVTU70
- 6Btxe9YLM4wV8aF+hvlYEwzu/ygfH88VIjRXG1s0pdiZkapim/PoI0JEWdrU2Qsx5eMQ
- iQww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Tk2DdJZQpJRn9EIQzszkJeifS32SlwtH7tfKiuDH7vY=;
- b=FbetsR9AVIAdq+DDr8wAauQ77VytAOvgdvaXwdmhUDVjMggvU1JCLoFl1b9Q8hXZPQ
- 9wXYWiL8Ajc9Vsvmk03dDZEEPVPhJH64o8WJ8iJhhMMdOF0jq02IquFgtW8D281IR9ju
- mYjE5Lp2GsqPTMDoKN5l6n92n/kNs+F6d6Z6pxOSG8l7QNQuoeE6IC/RFWVvdPjgL2Pm
- p5sHGufe8+S3B0sRbn2hdEANA4XMam9I9z02Ahb3pmsx4LtX+zyDTLrUpOov9j5xNQEM
- fYbMk2KPjXysP3zZTgg+bzP8NyJRzjQEV42tfxUbvaHxB7foucbEYZYCfdTC1HB79DTi
- eiPQ==
-X-Gm-Message-State: AOAM530wThPk9gX91NnrpEBmmy1ETfKxkzMJH/NV4wnxviX2kIJDQXax
- hAGnZpqV+gU6xPzfa7p50blv2gF6FJ+Xw0qFH9g=
-X-Google-Smtp-Source: ABdhPJzEUZ+Hs7p5Y26czCtlBYZPyIDTX4g8VlQSw9ftr6uCbE70ehUX+N7CpUuW/q5oEliqI555ufwlTFFOP1914V0=
-X-Received: by 2002:a5d:8b4f:: with SMTP id c15mr6838837iot.146.1596682558964; 
- Wed, 05 Aug 2020 19:55:58 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BMcVp6NQCzDqjk
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 15:29:22 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id C49C94C878;
+ Thu,  6 Aug 2020 05:29:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1596691755; x=1598506156; bh=L9e/YeWwUR3zhDSmQ4rNjTMF+
+ 0oIT8uWJ3WXHwrNng4=; b=voXpwcOrj6IQvPMhF2Au2WGcSzq7Kqrxe+nIPm7h4
+ 6Ucr6tvXLDBdevGufjoLA7zUFTY1cXfBRnteAG45s20pS3WmRGgnXMpm2IQf7aaR
+ kXqpZD9uxmY+q+nq+TfKRJzLGXz3hufWtzihpXqENm8M6vL8+B+kuB7ECCr3T4vF
+ Tg=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 6ymQ8jzqMuT5; Thu,  6 Aug 2020 08:29:15 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id F307445F5F;
+ Thu,  6 Aug 2020 08:29:14 +0300 (MSK)
+Received: from [10.199.0.182] (10.199.0.182) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 6 Aug
+ 2020 08:29:14 +0300
+Message-ID: <07bcb95098af1835736e41793ee64d151ed881f5.camel@yadro.com>
+Subject: Re: OpenBMC : FRU Inventory management
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>, <openbmc@lists.ozlabs.org>
+Date: Thu, 6 Aug 2020 08:29:13 +0300
+In-Reply-To: <9a43f76f-0e19-428b-8e79-292c37e6f8f9@linux.vnet.ibm.com>
+References: <BN8PR12MB32822ADFBBC19F6B2FB08F52C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+ <e00d409b-a845-85ee-16d7-0bb53f1e013e@linux.vnet.ibm.com>
+ <BN8PR12MB32820389DABEE2E32ED84E57C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
+ <3b6f8a090359d4ffebf3ef98a9aeb7e77df7b10f.camel@yadro.com>
+ <9a43f76f-0e19-428b-8e79-292c37e6f8f9@linux.vnet.ibm.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.4 
 MIME-Version: 1.0
-References: <CABbLDjM09zoW7xo0UdgJc=BsQ2ef7kVFbZFNVmdefc6RtHrz8Q@mail.gmail.com>
- <CANx9H-C3bOT=Nbn4RqxjpCcmTFij1=YqOp8fUy2td6sVU3J-AQ@mail.gmail.com>
-In-Reply-To: <CANx9H-C3bOT=Nbn4RqxjpCcmTFij1=YqOp8fUy2td6sVU3J-AQ@mail.gmail.com>
-From: Tim Orling <ticotimo@gmail.com>
-Date: Wed, 5 Aug 2020 19:55:48 -0700
-Message-ID: <CANx9H-BHNknmx4Px67jd_fLUV06-cDonFn9ZHX2jTXjZtMYbMw@mail.gmail.com>
-Subject: Re: yoctoproject restructured?
-To: Anony Mous <obmc.developers@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000bf097b05ac2ca099"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.182]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,61 +78,155 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000bf097b05ac2ca099
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-The issue with the NAS infrastructure has been resolved. If you see any
-lingering issues please let me know or post an email to
-yocto@lists.openembedded.org or IRC on Freenode #yocto
+I tried to use EM + peci-pcie but faced strange issue: EM don't want to
+probe devices in xyz.openbmc_project.PCIe. I tried some other places
+like xyz.openbmc_project.Network but doesn't succeed also: the only way
+it works is with xyz.openbmc_project.FruDevice. But I can't find
+anything about interfaces filtering in EM sources, so I assume it
+should work.
+Is there any ideas, what I'm doing wrong?
+Did someone tried to use EM with anything else but FruDevice?
 
-On Tue, Aug 4, 2020 at 3:24 PM Tim Orling <ticotimo@gmail.com> wrote:
+PS: config example
+{
+    "Exposes": [
+        {
+            "Name": "my test",
+            "property": {"key": "value"}
+        }
+    ],
+    "Name": "PCIE Device",
+    "Probe": "xyz.openbmc_project.PCIe({'Function0FunctionType':
+'Physical'})",
+    "Type": "Board",
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+        "Manufacturer": "$Manufacturer",
+        "DeviceType": "$DeviceType",
+        "Function0DeviceClass": "$Function0DeviceClass",
+        "Function0DeviceId": "$Function0DeviceId"
+    }
+}
 
-> We are experiencing infrastructure issues on the NAS that feeds dl.yp.o
->
-> On Tue, Aug 4, 2020 at 2:28 PM Anony Mous <obmc.developers@gmail.com>
-> wrote:
->
->> Hi:  I have been building without issues, but I just did a fresh git to
->> do a new build, and I am now failing because the system cannot fetch the
->> file http://downloads.yoctoproject.org/releases/opkg/opkg.0.4.2.tar.gz.
->>
->> Does anyone know of a workaround for this error.
->>
->> Thank you!
->>
->>
+On Mon, 2020-08-03 at 13:01 +0530, Deepak Kodihalli wrote:
+> On 31/07/20 2:30 pm, Andrei Kartashev wrote:
+> > Hi Deepak,
+> > 
+> > Saying about inventory management for non-BMC accessible resources
+> > like
+> > CPU/DIMM with EntityManager: is there good example demonstrated
+> > preffered way to do so?
+> 
+> Hi Andrei,
+> 
+> I don't think there is code today that does this. We intend to do
+> this 
+> on IBM systems (using PLDM/MCTP). I had updated the PLDM design doc
+> to 
+> do something like this using entity manager : 
+> https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/.
+> 
+> Regards,
+> Deepak
+> 
+> > Trying to bring up system based on that Intel's fork, but looks
+> > like
+> > they have own way to do things ).
+> > 
+> > On Thu, 2020-07-30 at 13:55 +0000, Vasant Patil wrote:
+> > > Thanks Deepak.
+> > > Yes, This help. We will go with entity-manager option.
+> > > 
+> > > Regards,
+> > > Vasant
+> > > 
+> > > -----Original Message-----
+> > > From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+> > > Sent: Thursday, July 30, 2020 12:22 AM
+> > > To: Vasant Patil <vasantp@nvidia.com>
+> > > Cc: openbmc@lists.ozlabs.org
+> > > Subject: Re: OpenBMC : FRU Inventory management
+> > > 
+> > > External email: Use caution opening links or attachments
+> > > 
+> > > 
+> > > On 30/07/20 8:37 am, Vasant Patil wrote:
+> > > > Hi Team,
+> > > > 
+> > > > We are enabling OpenBMC on x86 system. We would like to know
+> > > > the
+> > > > recommendation on FRU inventory management and corresponding
+> > > > pointers.
+> > > > 
+> > > > There seems to be multiple options available
+> > > > 
+> > > >   1. described in  "Adding new system to OpenBMC
+> > > >      <
+> > > > https://github.com/openbmc/docs/blob/master/development/add-new-system.md>
+> > > > ;"
+> > > >      with  Yaml files (meta-romulus/recipes-phosphor/ipmi
+> > > >      
+> > > > <
+> > > > https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulus/
+> > > > recipes-phosphor/ipmi>)
+> > > > 
+> > > >   2. Entity manager <https://github.com/openbmc/entity-manager>
+> > > > with
+> > > > JSON
+> > > >      schema
+> > > 
+> > > Hi Vasant,
+> > > 
+> > > The commonly used option for this now is entity-manager. The
+> > > entity-
+> > > manager config JSONs enable entity-manager to monitor/probe FRU
+> > > config information (FRU information read off of an EEPROM for eg)
+> > > and
+> > > then transform that to an inventory D-Bus object that implements
+> > > an
+> > > xyz.openbmc_project.Inventory.Item.<Type> interface. The
+> > > webserver
+> > > (bmcweb) then can relay this into a Redfish inventory
+> > > representation.
+> > > 
+> > > To make the FRU EEPROM content available on D-Bus, anther app
+> > > typically reads the EEPROM and then hosts the info on D-Bus. For
+> > > eg
+> > > the FruDevice daemon (which sits in the entity-manager repo)
+> > > scans
+> > > I2C connected EEPROMs, and can read IPMI FRU format data off of
+> > > them.
+> > > Now this info can actually be coming in via EEPROMs that the BMC
+> > > can't access (and for eg the host CPU can) - in that case I would
+> > > expect the FRU information to be transported over IPMI/PLDM, and
+> > > then
+> > > apps like host-ipmid or pldmd can place the FRU information on D-
+> > > Bus,
+> > > for entity-manager to consume.
+> > > 
+> > > > We are looking to enable below inventory (Both FRU and non-
+> > > > FRU):
+> > > > 
+> > > >    * CPU
+> > > >    * DIMM
+> > > >    * M.2
+> > > >    * U.2
+> > > >    * Motherboard FRU EEPROM
+> > > >    * Chassis FRU EEPROM
+> > > >    * Add-on PCI cards
+> > > >    * FANs
+> > > >    * PSU
+> > > >    * Etc.
+> > > 
+> > > You can look at
+> > > https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/openbmc_project/Inventory/Item
+> > > and define types that you don't find here.
+> > > 
+> > > Regards,
+> > > Deepak
+> > > 
 
---000000000000bf097b05ac2ca099
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">The issue with the NAS infrastructure has been resolved. I=
-f you see any lingering issues please=C2=A0let me know or post an email to =
-<a href=3D"mailto:yocto@lists.openembedded.org">yocto@lists.openembedded.or=
-g</a> or IRC on Freenode #yocto</div><br><div class=3D"gmail_quote"><div di=
-r=3D"ltr" class=3D"gmail_attr">On Tue, Aug 4, 2020 at 3:24 PM Tim Orling &l=
-t;<a href=3D"mailto:ticotimo@gmail.com">ticotimo@gmail.com</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left-width:1px;border-left-style:solid;border-left-color:rgb(204,20=
-4,204);padding-left:1ex"><div><div dir=3D"auto">We are experiencing infrast=
-ructure issues on the NAS that feeds dl.yp.o</div></div><div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 4, 2020 =
-at 2:28 PM Anony Mous &lt;<a href=3D"mailto:obmc.developers@gmail.com" targ=
-et=3D"_blank">obmc.developers@gmail.com</a>&gt; wrote:<br></div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:=
-1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left=
-:1ex"><div dir=3D"ltr">Hi:=C2=A0 I have been building without issues, but I=
- just did a fresh git to do a new build, and I am now failing because the s=
-ystem cannot=C2=A0fetch the file <a href=3D"http://downloads.yoctoproject.o=
-rg/releases/opkg/opkg.0.4.2.tar.gz" target=3D"_blank">http://downloads.yoct=
-oproject.org/releases/opkg/opkg.0.4.2.tar.gz</a>.<div><br></div><div>Does a=
-nyone know of a workaround for this error.</div><div><br></div><div>Thank y=
-ou!</div><div><br></div></div>
-</blockquote></div></div>
-</blockquote></div>
-
---000000000000bf097b05ac2ca099--
