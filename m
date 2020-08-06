@@ -1,72 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E23ED23D66E
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 07:30:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C9AA23D6B2
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 08:08:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BMcWm17bgzDqkR
-	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 15:30:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BMdNP4T9QzDqcJ
+	for <lists+openbmc@lfdr.de>; Thu,  6 Aug 2020 16:08:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d;
+ helo=mail-pl1-x62d.google.com; envelope-from=zbigniewku@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=voXpwcOr; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=bo9w6b+8; dkim-atps=neutral
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
+ [IPv6:2607:f8b0:4864:20::62d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BMcVp6NQCzDqjk
- for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 15:29:22 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id C49C94C878;
- Thu,  6 Aug 2020 05:29:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1596691755; x=1598506156; bh=L9e/YeWwUR3zhDSmQ4rNjTMF+
- 0oIT8uWJ3WXHwrNng4=; b=voXpwcOrj6IQvPMhF2Au2WGcSzq7Kqrxe+nIPm7h4
- 6Ucr6tvXLDBdevGufjoLA7zUFTY1cXfBRnteAG45s20pS3WmRGgnXMpm2IQf7aaR
- kXqpZD9uxmY+q+nq+TfKRJzLGXz3hufWtzihpXqENm8M6vL8+B+kuB7ECCr3T4vF
- Tg=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 6ymQ8jzqMuT5; Thu,  6 Aug 2020 08:29:15 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id F307445F5F;
- Thu,  6 Aug 2020 08:29:14 +0300 (MSK)
-Received: from [10.199.0.182] (10.199.0.182) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 6 Aug
- 2020 08:29:14 +0300
-Message-ID: <07bcb95098af1835736e41793ee64d151ed881f5.camel@yadro.com>
-Subject: Re: OpenBMC : FRU Inventory management
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>, <openbmc@lists.ozlabs.org>
-Date: Thu, 6 Aug 2020 08:29:13 +0300
-In-Reply-To: <9a43f76f-0e19-428b-8e79-292c37e6f8f9@linux.vnet.ibm.com>
-References: <BN8PR12MB32822ADFBBC19F6B2FB08F52C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
- <e00d409b-a845-85ee-16d7-0bb53f1e013e@linux.vnet.ibm.com>
- <BN8PR12MB32820389DABEE2E32ED84E57C7710@BN8PR12MB3282.namprd12.prod.outlook.com>
- <3b6f8a090359d4ffebf3ef98a9aeb7e77df7b10f.camel@yadro.com>
- <9a43f76f-0e19-428b-8e79-292c37e6f8f9@linux.vnet.ibm.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BMdMb4MmczDqH5
+ for <openbmc@lists.ozlabs.org>; Thu,  6 Aug 2020 16:08:06 +1000 (AEST)
+Received: by mail-pl1-x62d.google.com with SMTP id t10so21626181plz.10
+ for <openbmc@lists.ozlabs.org>; Wed, 05 Aug 2020 23:08:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=/ucYskgPj33BidFRWCN/DSI05tXTj9NqYllKQ1kWso0=;
+ b=bo9w6b+8t6lKZmdz7Zh3l+TzAMxuKA2Mu13ks4Ojjhq5RieDEJDUWAclFt9ZFf3fgK
+ NTnHUtw9M+QTrHtIzBIeDzIhbg4EgPfLapVHLOL4dXpwGmb0As7UTZ+jw9XBdxC1K0ZA
+ w5l/2q6cxL9dExwMgv5LDwnNP0MlnJEED5ShXkwv0hn3OnVNJmvxUMbJyNomsgIN5qm5
+ LrkztvEYOJW2qdbNOUZId9If4FSaKXci2ISWlfH7/FHfAcaP7QcWD1FbLk032Q76bS6C
+ 88Mds9cz6hdhsvLLx2Nt6he0Woe2KdSbI8Pwu5e6s11V7zw+2mPlgGbvlJakfgJeLEqa
+ OAqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=/ucYskgPj33BidFRWCN/DSI05tXTj9NqYllKQ1kWso0=;
+ b=gPe9o94w2BEz8XW83tCyslCsiTGGTwu67QT60wprOWBAtgX/eizlmyTKN2DWLJ6B7y
+ rMwWNZtZ4omQAYpnaCBf+3Y09hB94/kV+LsQx1fOOtjzVLiGn7zHYejp1PQTJkRQ6GGh
+ Iz1BE9+KvL7ZlKEQG8zASkHqlLlmAtCJzYYhoXKXVRRS6BspYBjo75o2F7V9oMNMc4aJ
+ 1F3GC3ceJO8Fswu/rW47M0/yacnKNeHLIRu1ZD/nouFMMXa5G7zhvCjPPWFsRwnBqLUL
+ 5aNewF/LFZ+YjeuJcGruD+ycRIM64GhUQxsoGt3VSr4CK8rTzgewk6/4RD8PRvbeF/sC
+ lxgA==
+X-Gm-Message-State: AOAM533xEEvTqeSf9JUTzU1I2D31jjQOkCL81BRLMIM8rDnUGXpP08EP
+ Y7HNDoQ0zYls0CES9R23xyPrqAPc0kxd04syvfY=
+X-Google-Smtp-Source: ABdhPJw5jY9xoheGO1he3YCseDEHlZkzo0Tf65HpMt+agueZDstEf7gksJnFOHeYMiL7sgWJA7Qn2VLkuNq3ukURwp4=
+X-Received: by 2002:a17:90a:4e89:: with SMTP id
+ o9mr7282770pjh.178.1596694083448; 
+ Wed, 05 Aug 2020 23:08:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.0.182]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
+In-Reply-To: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
+From: Zbyszek <zbigniewku@gmail.com>
+Date: Thu, 6 Aug 2020 08:07:52 +0200
+Message-ID: <CAB_SOc7r2jzNAdWixDMcgf33Tu-RVordrg4baB8Medo32shWJA@mail.gmail.com>
+Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
+To: Jason Ling <jasonling@google.com>
+Content-Type: multipart/alternative; boundary="000000000000a8b62405ac2f4f51"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,155 +73,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+--000000000000a8b62405ac2f4f51
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I tried to use EM + peci-pcie but faced strange issue: EM don't want to
-probe devices in xyz.openbmc_project.PCIe. I tried some other places
-like xyz.openbmc_project.Network but doesn't succeed also: the only way
-it works is with xyz.openbmc_project.FruDevice. But I can't find
-anything about interfaces filtering in EM sources, so I assume it
-should work.
-Is there any ideas, what I'm doing wrong?
-Did someone tried to use EM with anything else but FruDevice?
+Doing some code changes I encountered this comment in PSUSensor.
+https://github.com/openbmc/dbus-sensors/blob/dfad1ffcf4d41d6b5c0fd578d1817c=
+0540631e29/src/PSUSensorMain.cpp#L762
+I didn't verify it but it looks like the mechanism for disabling the
+selected sensor is already there.
 
-PS: config example
-{
-    "Exposes": [
-        {
-            "Name": "my test",
-            "property": {"key": "value"}
-        }
-    ],
-    "Name": "PCIE Device",
-    "Probe": "xyz.openbmc_project.PCIe({'Function0FunctionType':
-'Physical'})",
-    "Type": "Board",
-    "xyz.openbmc_project.Inventory.Decorator.Asset": {
-        "Manufacturer": "$Manufacturer",
-        "DeviceType": "$DeviceType",
-        "Function0DeviceClass": "$Function0DeviceClass",
-        "Function0DeviceId": "$Function0DeviceId"
-    }
-}
 
-On Mon, 2020-08-03 at 13:01 +0530, Deepak Kodihalli wrote:
-> On 31/07/20 2:30 pm, Andrei Kartashev wrote:
-> > Hi Deepak,
-> > 
-> > Saying about inventory management for non-BMC accessible resources
-> > like
-> > CPU/DIMM with EntityManager: is there good example demonstrated
-> > preffered way to do so?
-> 
-> Hi Andrei,
-> 
-> I don't think there is code today that does this. We intend to do
-> this 
-> on IBM systems (using PLDM/MCTP). I had updated the PLDM design doc
-> to 
-> do something like this using entity manager : 
-> https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/32532/.
-> 
-> Regards,
-> Deepak
-> 
-> > Trying to bring up system based on that Intel's fork, but looks
-> > like
-> > they have own way to do things ).
-> > 
-> > On Thu, 2020-07-30 at 13:55 +0000, Vasant Patil wrote:
-> > > Thanks Deepak.
-> > > Yes, This help. We will go with entity-manager option.
-> > > 
-> > > Regards,
-> > > Vasant
-> > > 
-> > > -----Original Message-----
-> > > From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
-> > > Sent: Thursday, July 30, 2020 12:22 AM
-> > > To: Vasant Patil <vasantp@nvidia.com>
-> > > Cc: openbmc@lists.ozlabs.org
-> > > Subject: Re: OpenBMC : FRU Inventory management
-> > > 
-> > > External email: Use caution opening links or attachments
-> > > 
-> > > 
-> > > On 30/07/20 8:37 am, Vasant Patil wrote:
-> > > > Hi Team,
-> > > > 
-> > > > We are enabling OpenBMC on x86 system. We would like to know
-> > > > the
-> > > > recommendation on FRU inventory management and corresponding
-> > > > pointers.
-> > > > 
-> > > > There seems to be multiple options available
-> > > > 
-> > > >   1. described in  "Adding new system to OpenBMC
-> > > >      <
-> > > > https://github.com/openbmc/docs/blob/master/development/add-new-system.md>
-> > > > ;"
-> > > >      with  Yaml files (meta-romulus/recipes-phosphor/ipmi
-> > > >      
-> > > > <
-> > > > https://github.com/openbmc/openbmc/tree/master/meta-ibm/meta-romulus/
-> > > > recipes-phosphor/ipmi>)
-> > > > 
-> > > >   2. Entity manager <https://github.com/openbmc/entity-manager>
-> > > > with
-> > > > JSON
-> > > >      schema
-> > > 
-> > > Hi Vasant,
-> > > 
-> > > The commonly used option for this now is entity-manager. The
-> > > entity-
-> > > manager config JSONs enable entity-manager to monitor/probe FRU
-> > > config information (FRU information read off of an EEPROM for eg)
-> > > and
-> > > then transform that to an inventory D-Bus object that implements
-> > > an
-> > > xyz.openbmc_project.Inventory.Item.<Type> interface. The
-> > > webserver
-> > > (bmcweb) then can relay this into a Redfish inventory
-> > > representation.
-> > > 
-> > > To make the FRU EEPROM content available on D-Bus, anther app
-> > > typically reads the EEPROM and then hosts the info on D-Bus. For
-> > > eg
-> > > the FruDevice daemon (which sits in the entity-manager repo)
-> > > scans
-> > > I2C connected EEPROMs, and can read IPMI FRU format data off of
-> > > them.
-> > > Now this info can actually be coming in via EEPROMs that the BMC
-> > > can't access (and for eg the host CPU can) - in that case I would
-> > > expect the FRU information to be transported over IPMI/PLDM, and
-> > > then
-> > > apps like host-ipmid or pldmd can place the FRU information on D-
-> > > Bus,
-> > > for entity-manager to consume.
-> > > 
-> > > > We are looking to enable below inventory (Both FRU and non-
-> > > > FRU):
-> > > > 
-> > > >    * CPU
-> > > >    * DIMM
-> > > >    * M.2
-> > > >    * U.2
-> > > >    * Motherboard FRU EEPROM
-> > > >    * Chassis FRU EEPROM
-> > > >    * Add-on PCI cards
-> > > >    * FANs
-> > > >    * PSU
-> > > >    * Etc.
-> > > 
-> > > You can look at
-> > > https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/openbmc_project/Inventory/Item
-> > > and define types that you don't find here.
-> > > 
-> > > Regards,
-> > > Deepak
-> > > 
+czw., 6 sie 2020 o 01:43 Jason Ling <jasonling@google.com> napisa=C5=82(a):
 
+> *Problem:*
+> There is a use case where temp1_input should be omitted from being expose=
+d
+> to dbus.
+> A concrete example is if you have a temp sensor with 10 channels but only
+> want to expose 2..10.
+>
+> Currently dbus/hwmontemp doesn't allow this.
+>
+> *Solution:*
+> In order to maintain backwards compatibility I am proposing an OmitList
+> attribute that hwmontemp will attempt to retrieve.
+> If the "Name"s of any temp sensor appears in the list, it will be skip
+> sensor creation.
+>
+> I am proposing a list to support other use cases such as...
+>
+> * you're doing BMC development and for whatever reason want to temporaril=
+y
+> suppress a temperature and do some tests..you can add it to this list and
+> then remove it instead of deleting and re-inserting.
+>
+> * lets you have non-contiguous temp sensors exposed (e.g temp2_input,
+> temp5_input, temp7_input) . There is a better solution to this; but for n=
+ow
+> this enables this use-case.
+>
+> *etc..*
+> It's a simple feature; plan to have something within O(hours).
+>
+
+--000000000000a8b62405ac2f4f51
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Doing some code changes I encountered this comment in=
+ PSUSensor.</div><div dir=3D"ltr"><div><a href=3D"https://github.com/openbm=
+c/dbus-sensors/blob/dfad1ffcf4d41d6b5c0fd578d1817c0540631e29/src/PSUSensorM=
+ain.cpp#L762" target=3D"_blank">https://github.com/openbmc/dbus-sensors/blo=
+b/dfad1ffcf4d41d6b5c0fd578d1817c0540631e29/src/PSUSensorMain.cpp#L762</a><b=
+r></div><div>I didn&#39;t verify it but it looks like the mechanism for dis=
+abling the selected sensor is already there.</div><div><br></div><div></div=
+></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr"=
+>czw., 6 sie 2020 o 01:43=C2=A0Jason Ling &lt;<a href=3D"mailto:jasonling@g=
+oogle.com" target=3D"_blank">jasonling@google.com</a>&gt; napisa=C5=82(a):<=
+br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"=
+><div><b>Problem:</b></div>There is a use case where temp1_input should be =
+omitted from being exposed to dbus.<div>A concrete example is if you have a=
+ temp sensor with 10 channels but only want to expose 2..10.</div><div><br>=
+</div><div>Currently dbus/hwmontemp doesn&#39;t allow this.</div><div><br><=
+/div><div><b>Solution:</b></div><div>In order to maintain backwards compati=
+bility I am proposing an OmitList attribute that hwmontemp will attempt to =
+retrieve.<br></div><div>If the &quot;Name&quot;s of any temp sensor appears=
+ in the list, it will be skip sensor creation.</div><div><br></div><div>I a=
+m proposing a list to support other use cases such as...</div><div><br></di=
+v><div>* you&#39;re doing BMC development and for whatever reason want to t=
+emporarily suppress=C2=A0a temperature and do some tests..you can add it to=
+ this list and then remove it instead of deleting and re-inserting.<br></di=
+v><div><br></div><div>* lets you have non-contiguous temp sensors exposed (=
+e.g temp2_input, temp5_input, temp7_input) . There is a better solution to =
+this; but for now this enables this use-case.</div><div><br></div><div><b>e=
+tc..</b></div><div>It&#39;s a simple feature; plan to have something within=
+ O(hours).</div></div>
+</blockquote></div></div>
+
+--000000000000a8b62405ac2f4f51--
