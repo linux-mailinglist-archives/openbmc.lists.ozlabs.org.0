@@ -2,56 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D97CF23F2C5
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 20:31:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BE7E623F302
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 21:18:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BNYpl57m0zDqmh
-	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 04:31:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BNZsW5mWQzDqn1
+	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 05:18:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::334;
- helo=mail-ot1-x334.google.com; envelope-from=jasonling@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b2e; helo=mail-yb1-xb2e.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=LCyGWICH; dkim-atps=neutral
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com
- [IPv6:2607:f8b0:4864:20::334])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=iR7v95ve; dkim-atps=neutral
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [IPv6:2607:f8b0:4864:20::b2e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BNYnb3jvLzDqcX
- for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 04:30:25 +1000 (AEST)
-Received: by mail-ot1-x334.google.com with SMTP id t7so2349997otp.0
- for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 11:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BNZrk4684zDqSY
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 05:18:12 +1000 (AEST)
+Received: by mail-yb1-xb2e.google.com with SMTP id x2so1534142ybf.12
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 12:18:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=WQKP6U+0c/1GnGEG0X4C3haVJLIMBIt1mOx2c36h0L4=;
- b=LCyGWICH0TCj+VqwwNvVllEFxt3WgJNu11glghk28PLruYiaW2p4WiusfYsKHz36/2
- bYNCbU/AkxGJxPWhjPO8aQ6/tcbn0TAMKMtg94ccCN6/nyQSqFqaKSsllwR7czDRxbuO
- p1KQb/sB/Tucpb8yyc4gRDpMoyV7db52sMQ8ujjmucqakUz5hzoBp2EG4VjP2K01NUyx
- xUoJkopE3xYyS6Nni3vCkXBukft2a28L1qfUTjZ5GkJ791oIE8CNfyr31kjoLw+1T6oH
- h8HZvEO05IN84rEqVUacktqjEKhLZLJAIMTXT+thvRN4iJqhPotOYjUpxD80XQmkqNoj
- rBHg==
+ :cc; bh=F22g/OE4Y3G9K28Dw5OiQXoyCQb6wR5C6f6rJPPFBfQ=;
+ b=iR7v95veaH8aDs0X+OJiLi2b3YJ2kC0gDTvqUNzkSITyeNooaBJ60TYOJhdT+htXz8
+ GWLHDaE84BeMqaWDHUk7PBkPFbZLKUNWBYtwrG1orUNS9aZFj2fwJt57cRC++auzd1n6
+ 8gUsSsLMPGEbXH/iXghx+If5btx7r8Kd1wiMdkzPHg9BI8iWp3JPoJuF/UtWL1psZUJX
+ 7wshLgEXsAHP1gT1k9GHtnOfrx3QwMs6xYssWon4C1puSts5yBFLJOydEagAVAY6g+as
+ RzJBiJ3O9myzNjiFYUC8cjwLqGaFh1gDcD5mPJOnjFPQTKIUkf+R8hyQKuFu3ixNn1gR
+ gUFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=WQKP6U+0c/1GnGEG0X4C3haVJLIMBIt1mOx2c36h0L4=;
- b=LI/2/S3Fh3iomd6wwJm+olhQxam4dheHOalC3A2+P9hyP0njYjueSk3Q4OirH4IK8j
- ky6TIRQ8AdSH0/IhYAM+E18Ak3Z/DxEmRVrwrhEzeNS0ebyps61Az6WWTk9Se4UB36cG
- H/q/cJ+PokDl6xTEhTRR7sqkdXh4+BmnWMMHnKSgFHBqkllIRstGuHUuqBHkLtRFCHdC
- NT3McBJ51QMBnWOGHCMKX0PpmY3kQZjdageb2lz+eTJz/VwpKkEANzmCgEoUNiAQ5IA6
- eRjmpsV+3WFyfEESzn9gxN/kvBM0eqI1BQ5vWWvAAIYC+oKoZanx1vUKZoREWSbif11i
- gE2Q==
-X-Gm-Message-State: AOAM530fmMS57uhq/BidzRZxZgMtIltK4BWr7AstudHMMoczojm/2486
- Ht4cO+UteuJd6AsebSVkvGvuHTZ23NH6nCmccQn+lA==
-X-Google-Smtp-Source: ABdhPJziUly1XeayJzNsv6vKPbeTBIX0uDmoxs2sR4AHbWTBFxpv9mZck9P6smrE38PTRB+XJdcT4D+btzU7QklOmXU=
-X-Received: by 2002:a9d:450a:: with SMTP id w10mr13090580ote.327.1596825021987; 
- Fri, 07 Aug 2020 11:30:21 -0700 (PDT)
+ bh=F22g/OE4Y3G9K28Dw5OiQXoyCQb6wR5C6f6rJPPFBfQ=;
+ b=lsHjSvLLufxeVNxO+/r3MTcowPQ6MrqjIlaKgXcf8Uh5hJb4sJa/3kVmAGGHahGaJU
+ JMZfqGzh7Uns/SnAHRmT9QRMEe+yj0HB469BuAzIHYhQHobYHtLfoa+BRfajp5e6B3wY
+ ZhAqXELgIQivUEy6/QkD8REKoBMWOxvyeXk4RplTi9qU+KFv5yJ8UpBwyvzc1BEUlC3e
+ DA4szCjjeUMrmjpEYXQp2Gw7u6feX2gYGoZ+vZ9RXsXKWRvJe9hWF7OrECCA2OpyuNw4
+ SSBOs9zFqiolHp0z/xkYfbSBksJ+CSKztMN7GcDI96U7QUhRINkYiANF3M3VbRxaoHPh
+ 5WyA==
+X-Gm-Message-State: AOAM532BrUQU3B3n/7RX2hJ5P1yRD8IkmP/srt/Ymwym8QNTyXiZqX0M
+ SVgpwH5yiDUttPhyyv6S8VjdjEaCKidwFiwlzDcThQ==
+X-Google-Smtp-Source: ABdhPJxhKFIbBD8QOa6ItMD/GN6jzbHlz50VzPlIUA1kVUhfxFZuiynTId8r8UQRQwUDbVYs45w2vm9AFP0bMZjcA4k=
+X-Received: by 2002:a25:640e:: with SMTP id y14mr21022617ybb.340.1596827888464; 
+ Fri, 07 Aug 2020 12:18:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
  <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
@@ -64,14 +66,13 @@ References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
  <CAHBbfcXRO5ZB3S0T6SyRkWkLLAruKPdS8UhUkyG3qssU5YkHNw@mail.gmail.com>
  <9deda21d-aa01-d15e-464e-7ab0fb2f751c@linux.intel.com>
  <CAHBbfcX7TahfKcVcUqWKQGTK5s9Rzw3mT4_3v4tWtkAgHBgX6g@mail.gmail.com>
- <cf598e89-10ba-8cdd-f6c6-26f175e21e83@linux.intel.com>
-In-Reply-To: <cf598e89-10ba-8cdd-f6c6-26f175e21e83@linux.intel.com>
-From: Jason Ling <jasonling@google.com>
-Date: Fri, 7 Aug 2020 11:29:45 -0700
-Message-ID: <CAHBbfcW=r9=sCPkV-bEXuE-Fi_2w-REE3RuaAhLHYL3iMZdVxw@mail.gmail.com>
+In-Reply-To: <CAHBbfcX7TahfKcVcUqWKQGTK5s9Rzw3mT4_3v4tWtkAgHBgX6g@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Fri, 7 Aug 2020 12:17:57 -0700
+Message-ID: <CACWQX83AdMHFk5NUJmpoesghK_2YZ9MMo6h-KoWzDtZ-jrTYRw@mail.gmail.com>
 Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: multipart/alternative; boundary="00000000000034cdd605ac4dccad"
+To: Jason Ling <jasonling@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,161 +84,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Alex Qiu <xqiu@google.com>, Ed Tanous <ed@tanous.net>,
+Cc: Alex Qiu <xqiu@google.com>, James Feist <james.feist@linux.intel.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000034cdd605ac4dccad
-Content-Type: text/plain; charset="UTF-8"
-
+On Fri, Aug 7, 2020 at 11:05 AM Jason Ling <jasonling@google.com> wrote:
 >
-> What would happen if something wasn't in the approved devices list?
-> Print a warning? Assert? I don't have any problems with this approach.
 >
-I think currently in PSUSensors if the name of the device isn't in
-pmBusNames
-<https://github.com/openbmc/dbus-sensors/blob/master/src/PSUSensorMain.cpp#L59>
-then PSUSensors refuses to monitor that particular device (
-https://github.com/openbmc/dbus-sensors/blob/master/src/PSUSensorMain.cpp#L269
-).
-
-It would be nice if this list could be (in the future) extended to all
-> sensor types.
-
-Sure, I'll start with PSUSensors first.
-
-
-A quick word about the original topic of this thread; we picked
-hwmontemp sensors where possible because we've seen performance issues for
-PSUSensors (could be N seconds before Sensor.Value gets updated to dbus).
-This has undesirable implications for PID loops..
-thought was that spreading temp sensors over into hwmontemp sensor where
-possible would help mitigate the performance issue until we can figure out
-a better long term solution.
-
-
-On Fri, Aug 7, 2020 at 11:17 AM James Feist <james.feist@linux.intel.com>
-wrote:
-
-> On 8/7/2020 11:04 AM, Jason Ling wrote:
-> >
-> >     Yeah that's what I meant, a generic PSUSensor Type with a field
-> called
-> >     'Export' or something that EM can use to get the Export type.
-> >
-> > Sure, I think that handles the EM side of things.
-> >
-> >     I'm conflicted on that.  Part of the reason that list is there, and
-> >     not in the config files directly, is to convey that those are the
-> >     types that have been tested to work correctly, and the types that the
-> >     config files "promise" to work sanely.  The other thing is, if you've
-> >     done the testing, adding to that list is (should be) relatively
-> >     trivial and straightforward.  Opening up that list to runtime parsing
-> >     opens a lot of security questions I'm not prepared to answer.
-> >
-> > Sure, let's scrap runtime parsing and go for something far simpler.
-> > (1) have a base type, devices list that represents the approved device
-> list.
-> > (2) have an empty extended type, device list that represents user
-> > specified extensions.
-> > (3) factor these out into separate files and provide a method that
-> > returns the union of the base and extended types/devices.
-> >
-> > now we have a base type/device list that contains supported guaranteed
-> > devices and another extended type/device list that is easier to maintain
-> > patches for.
-> > I think that's a rather small change and accomplishes what I'd like
-> > while preserving the intent of keeping a list of supported types/devices.
-> > What do you think?
+>> Yeah that's what I meant, a generic PSUSensor Type with a field called
+>> 'Export' or something that EM can use to get the Export type.
 >
-> What would happen if something wasn't in the approved devices list?
-> Print a warning? Assert? I don't have any problems with this approach.
-> It would be nice if this list could be (in the future) extended to all
-> sensor types.
+> Sure, I think that handles the EM side of things.
 >
-
---00000000000034cdd605ac4dccad
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">What wou=
-ld happen if something wasn&#39;t in the approved devices list?<br>Print a =
-warning? Assert? I don&#39;t have any problems with this approach.<br></blo=
-ckquote><div>I think currently in PSUSensors if the name of the device isn&=
-#39;t in <a href=3D"https://github.com/openbmc/dbus-sensors/blob/master/src=
-/PSUSensorMain.cpp#L59">pmBusNames</a>=C2=A0 then PSUSensors refuses to mon=
-itor that particular device (<a href=3D"https://github.com/openbmc/dbus-sen=
-sors/blob/master/src/PSUSensorMain.cpp#L269">https://github.com/openbmc/dbu=
-s-sensors/blob/master/src/PSUSensorMain.cpp#L269</a>).=C2=A0</div><div><br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">It would be nice if=
- this list could be (in the future) extended to all<br>sensor types.</block=
-quote><div>Sure, I&#39;ll start with PSUSensors first.</div><div>=C2=A0</di=
-v><div></div><div><br></div><div>A quick word about the original topic of t=
-his thread; we picked hwmontemp=C2=A0sensors where possible because we&#39;=
-ve seen performance issues for PSUSensors (could be N seconds before Sensor=
-.Value gets updated to dbus). This has undesirable implications for PID loo=
-ps..<br></div><div>thought was that spreading temp sensors over into hwmont=
-emp sensor where possible would help mitigate the performance issue until w=
-e can figure out a better long term solution.</div><div>=C2=A0</div></div><=
-br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri,=
- Aug 7, 2020 at 11:17 AM James Feist &lt;<a href=3D"mailto:james.feist@linu=
-x.intel.com">james.feist@linux.intel.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">On 8/7/2020 11:04 AM, Jason Ling wr=
-ote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Yeah that&#39;s what I meant, a generic PSUSensor T=
-ype with a field called<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&#39;Export&#39; or something that EM can use to ge=
-t the Export type.<br>
-&gt; <br>
-&gt; Sure, I think that handles the EM side of things.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0I&#39;m conflicted on that.=C2=A0 Part of the reaso=
-n that list is there, and<br>
-&gt;=C2=A0 =C2=A0 =C2=A0not in the config files directly, is to convey that=
- those are the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0types that have been tested to work correctly, and =
-the types that the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0config files &quot;promise&quot; to work sanely.=C2=
-=A0 The other thing is, if you&#39;ve<br>
-&gt;=C2=A0 =C2=A0 =C2=A0done the testing, adding to that list is (should be=
-) relatively<br>
-&gt;=C2=A0 =C2=A0 =C2=A0trivial and straightforward.=C2=A0 Opening up that =
-list to runtime parsing<br>
-&gt;=C2=A0 =C2=A0 =C2=A0opens a lot of security questions I&#39;m not prepa=
-red to answer.<br>
-&gt; <br>
-&gt; Sure, let&#39;s scrap runtime parsing and go for something far simpler=
-.<br>
-&gt; (1) have a base type, devices list that represents the approved device=
- list.<br>
-&gt; (2) have an empty extended type, device list that represents user <br>
-&gt; specified extensions.<br>
-&gt; (3) factor these out into separate files and provide a method that <br=
+>> I'm conflicted on that.  Part of the reason that list is there, and
+>> not in the config files directly, is to convey that those are the
+>> types that have been tested to work correctly, and the types that the
+>> config files "promise" to work sanely.  The other thing is, if you've
+>> done the testing, adding to that list is (should be) relatively
+>> trivial and straightforward.  Opening up that list to runtime parsing
+>> opens a lot of security questions I'm not prepared to answer.
 >
-&gt; returns the union of the base and extended types/devices.<br>
-&gt; <br>
-&gt; now we have a base type/device list that contains supported guaranteed=
- <br>
-&gt; devices and another extended type/device list that is easier to mainta=
-in <br>
-&gt; patches for.<br>
-&gt; I think that&#39;s a rather small change and accomplishes what I&#39;d=
- like <br>
-&gt; while preserving the intent of keeping a list of supported types/devic=
-es.<br>
-&gt; What do you think?<br>
-<br>
-What would happen if something wasn&#39;t in the approved devices list? <br=
->
-Print a warning? Assert? I don&#39;t have any problems with this approach. =
-<br>
-It would be nice if this list could be (in the future) extended to all <br>
-sensor types.<br>
-</blockquote></div>
+> Sure, let's scrap runtime parsing and go for something far simpler.
 
---00000000000034cdd605ac4dccad--
+Unless you have a way to handle the cases where things need to be
+configurable at runtime (like adding a new entity config or fan
+control control without a recompile) I don't think we can "scrap"
+runtime parsing entirely, but if you have a plan for dealing with the
+aforementioned, I'd love to hear ideas!
+
+> (1) have a base type, devices list that represents the approved device list.
+> (2) have an empty extended type, device list that represents user specified extensions.
+> (3) factor these out into separate files and provide a method that returns the union of the base and extended types/devices.
+>
+> now we have a base type/device list that contains supported guaranteed devices and another extended type/device list that is easier to maintain patches for.
+> I think that's a rather small change and accomplishes what I'd like while preserving the intent of keeping a list of supported types/devices.
+> What do you think?
+
+
+I don't like the merging of base lists with extended lists, as it adds
+a dependency between how we represent that, and implies that we have a
+published plugin interface, which we definitely don't, nor do we want
+to maintain it at the entity manager level.  It also means that
+upstream never tests the "extended" list, which means it's a lot more
+likely to break.
+
+I originally wrote a big long idea about how to make the above work,
+but got to the end, and realized that I'm still trying to understand
+what we're trying to avoid here with the downstream/upstream lists
+thing.  It's easy enough to patch the existing list to add your new
+custom types, then when it comes time to merge because the
+project/component is public, the patch is ready and good to upstream.
+What are we buying by moving that info to a non-patch format?  I think
+moving it to a file means it's a lot less likely to be upstreamed, as
+it requires the next person to understand it to use it, and modify the
+patch rather than simply cleaning up the commit message, testing it,
+and firing it at gerrit.  Having done this pattern many times
+(including with that list specifically) I think the only thing we
+could improve would be to move that list to its own file (but still
+C++ code), so it gets fewer merge conflicts, and you can completely
+replace it if you like, but even that doesn't solve the problem if
+code is never upstreamed.  If you want to code that up, I'd support it
+(and I'd guess James would too).  Keep in mind, all your downstream
+patches against that list will break when you do that, causing the
+world irony meter to spike :)   With that said, i still think it's
+worth it.
+
+Disclaimer time: The way the project recommends to avoid this problem
+is to upstream your code.  Anything else is a half measure, and we can
+make no guarantees about your downstream fork.
