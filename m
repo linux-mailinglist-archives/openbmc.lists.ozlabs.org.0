@@ -1,50 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E13AB23E8CC
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 10:22:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72FD523F011
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 17:37:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BNJHm1qVXzDqwH
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 18:22:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BNTxc2XQZzDqrM
+	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 01:37:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=481899d08=spencer.ku@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::72e;
+ helo=mail-qk1-x72e.google.com; envelope-from=venture@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 4BNJGr10ZvzDqvZ
- for <openbmc@lists.ozlabs.org>; Fri,  7 Aug 2020 18:21:19 +1000 (AEST)
-IronPort-SDR: a1ZnTjorbBsYkZ35C2tLdOuXcOtcYFgJ763GzcFd5+012EVThzwKUZbRKujAV5RjkGmvm7kdAO
- Dk7Ao3DpNzIg==
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx02.quantatw.com with ESMTP; 07 Aug 2020 16:21:17 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Fri, 7 Aug 2020
- 16:21:11 +0800
-Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
- ([192.168.57.11]) with mapi id 15.01.2044.004;
- Fri, 7 Aug 2020 16:21:11 +0800
-From: =?ks_c_5601-1987?B?U3BlbmNlciBLdSAoza/hpuulKQ==?=
- <Spencer.Ku@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Current situation about IPv6 
-Thread-Topic: Current situation about IPv6 
-Thread-Index: AdZskCL0JJHGz8lXTOuHv6Ukk2sGwA==
-Date: Fri, 7 Aug 2020 08:21:11 +0000
-Message-ID: <f265f52bb0c14964ab663f4cd77e754d@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-x-tm-snts-smtp: DB61CB16D2339E12B9348DBC2029ACFA311D7BD6E8513837362B9F19309592232000:8
-Content-Type: multipart/mixed;
- boundary="_004_f265f52bb0c14964ab663f4cd77e754dquantatwcom_"
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=iPwAzX7t; dkim-atps=neutral
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com
+ [IPv6:2607:f8b0:4864:20::72e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BNTw66hqMzDqQL
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 01:35:50 +1000 (AEST)
+Received: by mail-qk1-x72e.google.com with SMTP id h7so2071908qkk.7
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 08:35:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=+O9HIA4XYgFHXtgk7fdlaSL7I4QLnS9HfRUgbi4/UEw=;
+ b=iPwAzX7tQh7GZ9NA1zvzXC6A0ReTp2qZZFGbtrpRTJisTNg+BUanIjKT2SbS4A8OEi
+ ihHlNNkub7t+yAtoznkdiWe1J5GVplR7xiX2R833QJk8yNTS3w5y57/sCuGEBI2suWun
+ WOxU2u0jWXAlsE9YP51YVGIpM2tyjOW/TjPPgKu+iemT7stz+ALDikax/04WEGg2c3Du
+ Z+F+0ggxV5sGOp7mSwmidHabYeqRfeBzcUNVTArBF3S8Ar7czzr5r2BncdXoMmOlTkO6
+ mEWarM+TrTBIrgJxtzKjvPITazxOmiPFbnYYFmajwQY3ME/zlLfPySvgE6hEZ8kfHqu3
+ JM3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=+O9HIA4XYgFHXtgk7fdlaSL7I4QLnS9HfRUgbi4/UEw=;
+ b=hIbyuhnmuw3HaZYo6VgBIBzlAF2X7FZzWfMNnsMqU1CDZ58CefpL+FHQNKy8ohgFwS
+ 2slo2Q4Q8zblQBtL+XgUY5rTSho3emJOR7QVBUCvhz5Io0pPVvq+PNHeo4oZVS/tWLBz
+ fxITD73XqxxYzYFG8uQwmqdBQKeb2DT/MJbqfbWgG6pE3sFuDBEs8i5536znsTi2XOeu
+ TOX/SiE+mCIGJ+9KwrzPHnvOoS8H0jlizmN2ljqDUhpWrYeeXjX/r2sceOJ7pAXIE7+q
+ LpiX/ogBtF96/79ihHCwNb8foQzwirFuzq5m6+oZFJV/L7Ike+tt3F1RMzFzmoPc9f+h
+ SNXg==
+X-Gm-Message-State: AOAM531He/Wxm4S4Uzpcb8g9ptH7k03jpuNHzJQG1uCa+HBDw9IcgS1o
+ UiRvJV3F4dVFCpgBwTRba8EEi98bMphzwVypO+8uFg==
+X-Google-Smtp-Source: ABdhPJy4AP6GS3vcTFDqxU6d+Qm6u16xQSNvJazWfl4DNs3X/PFCEUXIXpDJjfnirk9lcwUEKNPRzMBxMbUjmQL9RMo=
+X-Received: by 2002:a37:64d7:: with SMTP id
+ y206mr13732226qkb.133.1596814546445; 
+ Fri, 07 Aug 2020 08:35:46 -0700 (PDT)
 MIME-Version: 1.0
+References: <E27B8EFBB1796B4A8CF2A20BF59146F901AB3E@atlms1.us.megatrends.com>
+ <CAO=notyMGd9XNFP99DBq+BC9G91h41omzDhw_oQYiyHnwkt8KA@mail.gmail.com>
+ <E27B8EFBB1796B4A8CF2A20BF59146F901ADF4@atlms1.us.megatrends.com>
+In-Reply-To: <E27B8EFBB1796B4A8CF2A20BF59146F901ADF4@atlms1.us.megatrends.com>
+From: Patrick Venture <venture@google.com>
+Date: Fri, 7 Aug 2020 08:35:35 -0700
+Message-ID: <CAO=notyfmoRgzBvOUOUP3skeV1m7oJbDBO_F4T1B6hGZ-hV6MA@mail.gmail.com>
+Subject: Re: Query regarding the host LPC address in phosphor-ipmi-flash
+To: Connie Yin <ConnieY@ami.com>, Benjamin Fair <benjaminfair@google.com>, 
+ Brandon Kim <brandonkim@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,345 +78,198 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_004_f265f52bb0c14964ab663f4cd77e754dquantatwcom_
-Content-Type: multipart/alternative;
-	boundary="_000_f265f52bb0c14964ab663f4cd77e754dquantatwcom_"
-
---_000_f265f52bb0c14964ab663f4cd77e754dquantatwcom_
-Content-Type: text/plain; charset="ks_c_5601-1987"
-Content-Transfer-Encoding: base64
-
-SGkgVGVhbXMsDQpJIGFtIGludGVyZXN0aW5nIGFib3V0IHdoYXQgaXMgdGhlIGN1cnJlbnQgc2l0
-dWF0aW9uIGFib3V0IElQdjYuDQpOb3cgSSBhbSB0cnlpbmcgdG8gdXNlIGlwbWkgY29tbWFuZCB0
-byBnZXQvc2V0IElQdjYgc2V0dGluZ3MsIGJ1dCBJIGNhbm5vdCBnZXQgY3VycmVudCByZXN1bHQu
-DQpGb3IgZXhhbXBsZSwgaXBtaSBjb21tYW5kIHdpbGwgcmVzcG9uc2UgZW1wdHkgSVB2NiBhZGRy
-ZXNzIHRvIG1lIGV2ZW4gaWYgbXkgZW52aXJvbm1lbnQgaXMgYWxyZWFkeSBoYXZpbmcgSVB2NiBh
-ZGRyZXNzLg0KDQpBZnRlciB0aGF0LCBJIGZpbmQgYSBtYWlsIHdoaWNoIGlzIGRpc2N1c3Npbmcg
-YWJvdXQgdGhlIElQdjYgc2V0dGluZy4gQW5kIGhlcmUgaXMgcGFydCBvZiBkZXNjcmlwdGlvbiBm
-cm9tIG1haWw6DQoNCqiqICBDdXJyZW50bHkgcGhvc3Bob3ItbmV0d29ya2QgZG9lc24ndCBzdXBw
-b3J0IFNMQUFDKERIQ1BWNiwgUm91dGVyIGFkdmVydGlzZWQgYWRkcmVzcykNCg0KRG9lcyBpdCBt
-ZWFuIHRoYXQgSSBuZWVkIHRvIHNldCBhIHNwZWNpYWwgbmV0d29yayBlbnZpcm9ubWVudCB3aXRo
-b3V0IFNMQUFDIGFuZCB0aGF0IGNhbiBsZXQgSVB2NiBpcG1pIGNvbW1hbmQgd29yayBub3JtYWxs
-eT8NCg0KVGhhbmsgeW91Lg0KDQpTaW5jZXJlbHksDQpTcGVuY2VyDQo=
-
---_000_f265f52bb0c14964ab663f4cd77e754dquantatwcom_
-Content-Type: text/html; charset="ks_c_5601-1987"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dks_c_5601=
--1987">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0cm;
-	margin-right:0cm;
-	margin-bottom:0cm;
-	margin-left:24.0pt;
-	margin-bottom:.0001pt;
-	mso-para-margin-top:0cm;
-	mso-para-margin-right:0cm;
-	mso-para-margin-bottom:0cm;
-	mso-para-margin-left:2.0gd;
-	mso-para-margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:1339382737;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1429171318 1692808448 67698691 67698693 67698689 67=
-698691 67698693 67698689 67698691 67698693;}
-@list l0:level1
-	{mso-level-start-at:0;
-	mso-level-number-format:bullet;
-	mso-level-text:\F0D8;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:18.0pt;
-	text-indent:-18.0pt;
-	font-family:Wingdings;
-	mso-fareast-font-family:PMingLiU;
-	mso-bidi-font-family:"Times New Roman";}
-@list l0:level2
-	{mso-level-number-format:bullet;
-	mso-level-text:\F06E;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:48.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level3
-	{mso-level-number-format:bullet;
-	mso-level-text:\F075;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:72.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level4
-	{mso-level-number-format:bullet;
-	mso-level-text:\F06C;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:96.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level5
-	{mso-level-number-format:bullet;
-	mso-level-text:\F06E;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:120.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level6
-	{mso-level-number-format:bullet;
-	mso-level-text:\F075;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:144.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level7
-	{mso-level-number-format:bullet;
-	mso-level-text:\F06C;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:168.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level8
-	{mso-level-number-format:bullet;
-	mso-level-text:\F06E;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:192.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-@list l0:level9
-	{mso-level-number-format:bullet;
-	mso-level-text:\F075;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	margin-left:216.0pt;
-	text-indent:-24.0pt;
-	font-family:Wingdings;}
-ol
-	{margin-bottom:0cm;}
-ul
-	{margin-bottom:0cm;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Teams,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I am interesting about what is =
-the current situation about IPv6.
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Now I am trying to use ipmi com=
-mand to get/set IPv6 settings, but I cannot get current result.<o:p></o:p><=
-/span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">For example, ipmi command will =
-response empty IPv6 address to me even if my environment is already having =
-IPv6 address.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">After that, I find a mail which=
- is discussing about the IPv6 setting. And here is part of description from=
- mail:<o:p></o:p></span></p>
-<p class=3D"MsoListParagraph" style=3D"margin-left:18.0pt;mso-para-margin-l=
-eft:0gd;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
-<![if !supportLists]><span lang=3D"EN-US" style=3D"font-family:Wingdings"><=
-span style=3D"mso-list:Ignore">=A8=AA<span style=3D"font:7.0pt &quot;Times =
-New Roman&quot;">&nbsp;
-</span></span></span><![endif]><span lang=3D"EN-US">Currently phosphor-netw=
-orkd doesn't support SLAAC(DHCPV6, Router advertised address)<o:p></o:p></s=
-pan></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Does it mean that I need to set=
- a special network environment without SLAAC and that can let IPv6 ipmi com=
-mand work normally?<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thank you.<o:p></o:p></span></p=
+On Tue, Aug 4, 2020 at 11:11 AM Connie Yin <ConnieY@ami.com> wrote:
 >
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Sincerely,<o:p></o:p></span></p=
+> Hi, Patrick,
 >
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Spencer<o:p></o:p></span></p>
-</div>
-</body>
-</html>
+> Thanks a lot for the replay.
+>
+> I got an e820 map of this x86 system (with aspeed ast2500) as follows, an=
+d chose the host-lpc address as 0xfe410000 (Unused) alongwith --length 0x10=
+000
+>
+> +------------------------------------------------------------------------=
+-+
+>   | Size        | Start       | End         | Usage                      =
+   |
+>   | 16 MB       | 0xFD000000  | 0xFDFFFFFF  | SBREG                      =
+   |
+>   | 64 KB       | 0xFE000000  | 0xFE00FFFF  | PMC MBAR                   =
+   |
+>   | 4 KB        | 0xFE010000  | 0xFE010FFF  | SPI BAR0                   =
+   |
+>   | 88 KB       | 0xFE020000  | 0xFE035FFF  | SerialIo BAR in ACPI mode  =
+   |
+>   | 24 KB       | 0xFE036000  | 0xFE03BFFF  | Unused                     =
+   |
+>   | 4 KB        | 0xFE03C000  | 0xFE03CFFF  | Thermal Device in ACPI mode=
+   |
+>   | 524 KB      | 0xFE03D000  | 0xFE0BFFFF  | Unused                     =
+   |
+>   | 256 KB      | 0xFE0C0000  | 0xFE0FFFFF  | TraceHub FW BAR            =
+   |
+>   | 1 MB        | 0xFE100000  | 0xFE1FFFFF  | TraceHub MTB BAR           =
+   |
+>   | 2 MB        | 0xFE200000  | 0xFE3FFFFF  | TraceHub SW BAR            =
+   |
+>   | 64 KB       | 0xFE400000  | 0xFE40FFFF  | CIO2 MMIO BAR in ACPI mode =
+   |
+>   | 2 MB - 64KB | 0xFE410000  | 0xFE5FFFFF  | Unused                     =
+   |
+>   | 2 MB        | 0xFE600000  | 0xFE7FFFFF  | Temp address               =
+   |
+>   +----------------------------------------------------------------------=
+---+
+>
+> And configured in BMC with these lines:
+>
+> PACKAGECONFIG_append_xxx =3D " static-bmc"
+> PACKAGECONFIG_append_xxx =3D " aspeed-lpc"
+> PACKAGECONFIG_append_xxx =3D " reboot-update"
+> IPMI_FLASH_BMC_ADDRESS_xxx =3D "0x83000000"
 
---_000_f265f52bb0c14964ab663f4cd77e754dquantatwcom_--
+What's your device tree have for the lpc address?  It should be
+configured in there as well, see
+https://github.com/openbmc/linux/blob/dev-5.7/arch/arm/boot/dts/aspeed-bmc-=
+opp-zaius.dts#L27
+and:
 
---_004_f265f52bb0c14964ab663f4cd77e754dquantatwcom_
-Content-Type: message/rfc822
-Content-Disposition: attachment;
-	creation-date="Fri, 07 Aug 2020 08:21:10 GMT";
-	modification-date="Fri, 07 Aug 2020 08:21:10 GMT"
+&lpc_ctrl {
+status =3D "okay";
+memory-region =3D <&flash_memory>;
+flash =3D <&spi1>;
+};
 
-Received: from mailbx07.quanta.corp (10.243.91.102) by mailbx11.quanta.corp
- (10.243.91.108) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5 via Mailbox
- Transport; Fri, 10 Jul 2020 20:02:27 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Fri, 10 Jul
- 2020 20:02:21 +0800
-Received: from mx02.quantatw.com (10.240.65.139) by mailbx11.quanta.corp
- (10.243.91.108) with Microsoft SMTP Server id 15.1.1713.5 via Frontend
- Transport; Fri, 10 Jul 2020 20:02:27 +0800
-Received: from lists.ozlabs.org ([203.11.71.2])
-  by mx02.quantatw.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 10 Jul 2020 20:02:31 +0800
-Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4B3BVm5VrhzDrNZ
-	for <Spencer.Ku@quantatw.com>; Fri, 10 Jul 2020 22:02:24 +1000 (AEST)
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4B3BTh4PNJzDrK0
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 22:01:27 +1000 (AEST)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 06ABWC1h049762
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 08:01:23 -0400
-Received: from ppma05fra.de.ibm.com (6c.4a.5195.ip4.static.sl-reverse.com
- [149.81.74.108])
- by mx0a-001b2d01.pphosted.com with ESMTP id 326f1bwfph-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 08:01:23 -0400
-Received: from pps.filterd (ppma05fra.de.ibm.com [127.0.0.1])
- by ppma05fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 06ABkmnf022768
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 12:01:20 GMT
-Received: from b06avi18626390.portsmouth.uk.ibm.com
- (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
- by ppma05fra.de.ibm.com with ESMTP id 326bc909ds-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 12:01:20 +0000
-Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
- [9.149.105.59])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 06ABxuuu56951102
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 11:59:56 GMT
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5FF2AA4051
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 12:01:18 +0000 (GMT)
-Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0D584A4055
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 12:01:18 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.79.208.196])
- by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Fri, 10 Jul 2020 12:01:17 +0000 (GMT)
-From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Why IPv6AcceptRA is disabled in phosphor-network
-Thread-Topic: Why IPv6AcceptRA is disabled in phosphor-network
-Thread-Index: AdZUTe8tO+Ptvht9S2iy3iqkLOxtugCINO2A
-Sender: openbmc <openbmc-bounces+spencer.ku=quantatw.com@lists.ozlabs.org>
-Date: Fri, 10 Jul 2020 12:01:17 +0000
-Message-ID: <94f3de2f-f048-6fea-35c3-6b2b8d6d3239@linux.vnet.ibm.com>
-References: <6213f03910e14149a6964234961ae193@quantatw.com>
-List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
-List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
- <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-List-Unsubscribe: <https://lists.ozlabs.org/options/openbmc>,
- <mailto:openbmc-request@lists.ozlabs.org?subject=unsubscribe>
-In-Reply-To: <6213f03910e14149a6964234961ae193@quantatw.com>
-Content-Language: en-US
-X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-Exchange-Organization-AuthSource: mailbx11.quanta.corp
-X-MS-Has-Attach: 
-X-Auto-Response-Suppress: All
-X-MS-Exchange-Organization-Network-Message-Id: f3abfde3-00d5-4979-d8f0-08d824c91d42
-X-MS-Exchange-Organization-SCL: 0
-X-MS-TNEF-Correlator: 
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-x-ms-exchange-organization-originalclientipaddress: 10.240.65.139
-x-ms-exchange-organization-originalserveripaddress: 10.243.91.108
-Content-Type: text/plain; charset="big5"
-Content-ID: <94A60B2961851840A39615028F909156@quantatw.com>
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+If this is configured as well, then it should work, although try
+0x1000 instead of 0x10000 - even though you've set aside 64KiB.  Just
+as something to try.
 
-SGkgRGF2aWQsDQoNCk9uIDcvNy8yMCA0OjM5IFBNLCBEYXZpZCBXYW5nICik/a62pnQpIHdyb3Rl
-Og0KPiBIaSBhbGwsDQo+ICAgIEkgd2FudCB0byBzZXQgREhDUHY2IHRvIGVuYWJsZSBieSBkZWZh
-dWx0IGluIG15IEJNQy4NCj4gVGhhdCBpcywgSSBjYW4gZGVsZXRlIC9ldGMvc3lzdGVtZC9uZXR3
-b3JrLzAwLWJtYy1ldGgqLm5ldHdvcmsNCj4gYW5kIHJlYm9vdCBhbmQgc3RpbGwgaGF2ZSBESENQ
-djYgcmVhY2hhYmxlLg0KPg0KPiBCdXQgSSBub3RpY2UgdGhhdCBJUHY2QWNjZXB0UkEgaXMgZGlz
-YWJsZWQgaW4gcGhvc3Bob3ItbmV0d29yaw0KPiBpbiBvcmRlciBub3QgdG8gaGFuZGxlIHRoZSBp
-cHY2IHJvdXRpbmcgYWR2ZXJ0aXNlbWVudCBtZXNzYWdlIHBlcmlvZGljYWxseS4NCj4gU2VlOiBo
-dHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9waG9zcGhvci1uZXR3
-b3JrZC8rLzgzNjENCkN1cnJlbnRseSBwaG9zcGhvci1uZXR3b3JrZCBkb2Vzbid0IHN1cHBvcnQg
-U0xBQUMoREhDUFY2LCBSb3V0ZXIgDQphZHZlcnRpc2VkIGFkZHJlc3MpLg0KPg0KPiBXaHkgd2Ug
-bmVlZCB0byBhdm9pZCBoYW5kbGluZyBSQSBwZXJpb2RpY2FsbHk/DQoNCklmIHlvdSBoYXZlIGJh
-ZCByb3V0ZXIgY29uZmlndXJlZCBpbiBuZXR3b3JrIHdoaWNoIGtlZXBzIHNlbmRpbmcgdGhlIA0K
-cm91dGluZyBwcmVmaXggZnJlcXVlbnRseSwgcGhvcHNob3ItbmV0d29ya2QgZnJlcXVlbnRseSBy
-ZWZyZXNoaW5nIGl0cyANCkQtYnVzIG9iamVjdHMuSXQgY2FuIGJlIGZpeGVkIGFzIGlnbm9yZSB0
-aGUgcmVmcmVzaGluZyBvZiB0aGUgRGJ1cyANCm9iamVjdHMgaWYgdGhlcmUgaXMgYSBELWJ1cyBv
-YmplY3QgZW50cnkgZm9yIHRoZSBnaXZlbiBJUCBhZGRyZXNzLg0KDQo+IERvZXMgaXQgY2F1c2Ug
-YW55IGJhZCBlZmZlY3Q/DQo+IElmIEkgd2FudCB0byBrZWVwIHRoZSBhY2NlcHRhbmNlIFJBLCBo
-b3cgc2hvdWxkIEkgY29uZmlndXJlIGl0Pw0KPiBPciBzaG91bGQgSSBqdXN0IHBhdGNoICJJUHY2
-QWNjZXB0UkE9dHJ1ZSIgaW4gcGhvc3Bob3ItbmV0d29yayBvZiBteSBCTUM/DQpJZiB3ZSBmaXgg
-dGhlIGJlaGF2aW9yIGFzIHN1Z2dlc3RlZCBhYm92ZSB0aGVyZSBzaG91bGQgbm90IGJlIGEgcHJv
-YmxlbS4NCj4NCj4gVGhhbmsgeW91LA0KPg0KPiBSZWdhcmRzLA0KPiBEYXZpZA0K
+>
+>
+> And ran this app on host:
+>
+> ./burn_my_bmc
+>  --command update \
+>  --interface ipmilpc \
+>  --image image-bmc \
+>  --sig image-bmc.sig \
+>  --type image \
+>  --address 0xfe41000 \
+>  --length 0x10000
+>
+>
+> Sending over the firmware image.
+> sending writeMeta
+> writemeta sent
+> Progress: 100.00%
+> Sending over the hash file.
+> sending writeMeta
+> writemeta sent
+> Progress: 100.00%
+> Opening the verification file
+> Committing to /flash/verify to trigger service
+> Calling stat on /flash/verify session to check status
+> running
+> success
+> Returned success
+> succeeded
 
---_004_f265f52bb0c14964ab663f4cd77e754dquantatwcom_--
+So this means whatever validation service returned success.  What is
+your validation service?  I ask because this will be useful to address
+early - so that while you're getting the wrong bytes, you don't
+accidentally update your bmc.
+
+> Opening the update file
+> Committing to /flash/update to trigger service
+> Calling stat on /flash/update session to check status
+> running
+> Opening the cleanup blob
+> Exception received: blob exception received: Received IPMI_CC: 255
+>
+>
+>
+>
+> I was able to see there was a 32M size of image-bmc had been uploaded und=
+er /run/initramfs, but by using hexdump -C, finding this uploaded file was =
+not the correct image data as expected.
+
+Interesting, so
+
+>
+> Do you have any suggestions?
+>
+>
+> Thanks,
+> Connie
+>
+>
+>
+>
+>
+>
+>
+>
+>
+> -----Original Message-----
+> From: Patrick Venture [mailto:venture@google.com]
+> Sent: Friday, July 31, 2020 3:57 PM
+> To: Connie Yin
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: Query regarding the host LPC address in phosphor-ipmi-flash
+>
+> On Fri, Jul 31, 2020 at 11:21 AM Connie Yin <ConnieY@ami.com> wrote:
+> >
+> > Hi, Team,
+> >
+> >
+> >
+> > I am checking this OpemBMC firmware update interface on an x86 system, =
+and wondering how to construct this host LPC address at which the chunk is =
+to be mapped.
+> >
+> > I saw once when test on some platform,  0xfedc1000 was used as host LPC=
+ address.
+> >
+> >
+> >
+> > Would anyone please elaborate a little bit more?  To get this host LPC =
+address,  should I add/modify some drivers in BMC? What about host side?
+>
+> The host-side address is a region set aside in the BIOS that gets
+> reserved in the e820 map.  The BiOS dev adds it manually for this
+> purpose.
+>
+> >
+> >
+> >
+> >
+> >
+> > Thanks a lot.
+> >
+> > Connie
+> >
+> > P Please consider the environment before printing this email
+> >
+> > The information contained in this message may be confidential and propr=
+ietary to American Megatrends (AMI). This communication is intended to be r=
+ead only by the individual or entity to whom it is addressed or by their de=
+signee. If the reader of this message is not the intended recipient, you ar=
+e on notice that any distribution of this message, in any form, is strictly=
+ prohibited. Please promptly notify the sender by reply e-mail or by teleph=
+one at 770-246-8600, and then delete or destroy all copies of the transmiss=
+ion.
+>
+> Please consider the environment before printing this email.
+>
+> The information contained in this message may be confidential and proprie=
+tary to American Megatrends (AMI).  This communication is intended to be re=
+ad only by the individual or entity to whom it is addressed or by their des=
+ignee. If the reader of this message is not the intended recipient, you are=
+ on notice that any distribution of this message, in any form, is strictly =
+prohibited.  Please promptly notify the sender by reply e-mail or by teleph=
+one at 770-246-8600, and then delete or destroy all copies of the transmiss=
+ion.
