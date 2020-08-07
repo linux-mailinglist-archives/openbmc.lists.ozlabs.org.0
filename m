@@ -1,82 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC84B23F309
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 21:29:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 476A823F39A
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 22:11:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BNb5B1h29zDqlh
-	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 05:29:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BNc2J5SCbzDqlw
+	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 06:11:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::f2c;
+ helo=mail-qv1-xf2c.google.com; envelope-from=venture@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2c; helo=mail-yb1-xb2c.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=ibMSnq15; dkim-atps=neutral
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com
- [IPv6:2607:f8b0:4864:20::b2c])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=ZOhWKzEo; dkim-atps=neutral
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
+ [IPv6:2607:f8b0:4864:20::f2c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BNb4F1YgQzDqlQ
- for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 05:28:12 +1000 (AEST)
-Received: by mail-yb1-xb2c.google.com with SMTP id i10so1174961ybt.11
- for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 12:28:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=v33wQkQXCRwmyMJi7QXzW2ieVTKnP9MtDdjMlTFwKrM=;
- b=ibMSnq15n3tnDwh5RNPqICYQNKeyP8ImxIV18yqT+Uia/NVTXP+ZRM8JmbyD7Sp5AU
- qcq2daFkW5P8lvQ48ra92FYuT8k5S5ZAIhoGruXsqQYhw3C8MWMaPpDcFqh3dYNSMDFD
- zESVsItEVZXzRtyQ2uu/JRsTRDkG7bvkZpymVL3gZl96PZ80ODtcZUhjGW3OE5ladk2F
- WnkutR5V53IBkS3rbQ2uMGcjkx9QD3mBEuf5SX2bkTZcETYHL0O3fQDPz84xmxvszWKC
- bnRqZlN2HF/EMIz0nRfuPDwmLEtrWukjQ+iuuLlxyLDYDImVVeGTkWTuoCpSXaW/QNR4
- s0qQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BNc0W369DzDqjx
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 06:10:01 +1000 (AEST)
+Received: by mail-qv1-xf2c.google.com with SMTP id a19so1336394qvy.3
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 13:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=TviOiei7QWqigdMd37o7j3jJ7dONBQJLgt+1tmrOw+Y=;
+ b=ZOhWKzEouYIPNme5POl8oLlNIKSzbkIxV6z0qIwu5LOI1Hv+wFfHOnJ467fkpcUbeG
+ +Pg1Q+w00pYhK9uUmW8fxR3D7+1utpBAu+4GEY3iazGys80YJEzejbhHvLHY2sgmSJVZ
+ h1nQUc3YKfzGRlqpOVPZ8MTFjOTezfhApEcquR+UHcU/3uvhCth5HnPJGal0nGE51O7j
+ LadaKnMsJaswp6HFo17QsbgD7FgWzGAJBnjoqdNXQ8rmNYGrPWIzpfCH+QgdY9krAN4y
+ Yq+rtokq9L2nT034wyFsHnqWbfxKL+mIDe/VsKLQZyiwCb4fQusxFIZV1GZjMAIJ/kyJ
+ j+Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=v33wQkQXCRwmyMJi7QXzW2ieVTKnP9MtDdjMlTFwKrM=;
- b=AceD8vJSsX1u597O5vJGtTdEPMt9aVvte5qIeFdharY2WeShlDqZ80g38o5OJHVSYa
- AdBdwZyfUz9M+wmFdZ5LyRvmffUCGaeXmZBmbZPtgW0eFY2pFfPF3Xooferis0ztRkaT
- thmT79b07Gz26BmO7z1rcGYSXPcnEvpWButbnJMJFtuqDEhgtGYpWF1Mf3jGJ9l0RIsR
- EeBM2FHIIXZJx9+xxL8avm4EI4s2RCr+TxfCydfBOM9IckG3XPqmbRcvx1mNIGinJwaL
- k2Xaf4yzYtEk/BoO4DzK8JzTuXEcY7Ff38cTfySngAd/g8aFOrz3aDKX5uFe44Kh2+me
- eqUQ==
-X-Gm-Message-State: AOAM532OPtVaIGqRfguQOhp0IGaRMlcbpdOfskMqK2NCAYSp3lVKpJsl
- n5aNDUHn/SlKQTKLsUx4Pscv5IoL3ZwQhiZa09cm7g==
-X-Google-Smtp-Source: ABdhPJzVoX0Y34LShTMdUcPNKCnz8UJPMSm5zsBMGJ3hOKbBqASMcyp+C0rE6DsTgw3gGb+cx3rYDEXe9tzvpIC3Q2M=
-X-Received: by 2002:a25:8481:: with SMTP id v1mr23045784ybk.203.1596828488167; 
- Fri, 07 Aug 2020 12:28:08 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=TviOiei7QWqigdMd37o7j3jJ7dONBQJLgt+1tmrOw+Y=;
+ b=AqAVIDqMi+YlM41OQ90FyUR5nh1FZRQ4J9FatwXt6cILCMBLDacjCh3XMZtZuztUEp
+ Wdvz4kVS8l3KBoNECbL2W4m+W8W/dV0Y9XAABVxiOSGo7qFXadqmUa3w5Iz9qlDHe7Rj
+ LvAcvWONTMs76Z/2TeBgsYwnhswVcXX1zXqCQBp5iep3y/KNo9EW+YHl2rqZaw7N4EWY
+ u4Hi6Kz4p7xFsrZneheOXO3u5yGrRmFEk326PZeaK5Rj/GTuOV9ASUJ5IS7e17vVai1P
+ ujLEj3ibI4GhSVn8C0btM5RBy3/SDLefRLMcdBWqXV25ZUV/rd27dT47e9DBkxpnpiU/
+ 2R0g==
+X-Gm-Message-State: AOAM530IJGFWnF91JyjfrjggRnNZeSh97zf/d35Ng8YWXO29GGBB0LyM
+ 0GJoEPhqan9FJocm2n7bemh2/h4CEpIW1X3d2//nZA==
+X-Google-Smtp-Source: ABdhPJxKuXPeR8eKwggk327xiUG9NyfPk4arGkFqqLUUZHrmP9KUksy6ATM+w4lksZJiJzc4BnfS5xwgtOc2DIRkCcY=
+X-Received: by 2002:a0c:b312:: with SMTP id s18mr8880464qve.34.1596830995907; 
+ Fri, 07 Aug 2020 13:09:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
- <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
- <CAHBbfcUXLueZ3MZAP9b38B-fXyrNCMAeZcC7uk8uPrR5gw=3xQ@mail.gmail.com>
- <2bb88ede-4d35-8b9c-936f-be8dc9a453e5@linux.intel.com>
- <CAHBbfcUDMOZjxSvy8wVW_F9f3+NaX-WU3G5PF1oUoRx5VP7ZoQ@mail.gmail.com>
- <CACWQX82KAhmRbg-CYa8+Yjd8mE7qCM_vG_Q1_hYZVR77c3gdtw@mail.gmail.com>
- <CAHBbfcUJGnsW_dxONwjsT=w3ZM453-o0Ubc7DE7oOJQ8u28=ww@mail.gmail.com>
- <5a59238b-7653-b11f-701b-039d57dd5b98@linux.intel.com>
- <CAHBbfcXRO5ZB3S0T6SyRkWkLLAruKPdS8UhUkyG3qssU5YkHNw@mail.gmail.com>
- <9deda21d-aa01-d15e-464e-7ab0fb2f751c@linux.intel.com>
- <CAHBbfcX7TahfKcVcUqWKQGTK5s9Rzw3mT4_3v4tWtkAgHBgX6g@mail.gmail.com>
- <cf598e89-10ba-8cdd-f6c6-26f175e21e83@linux.intel.com>
- <CAHBbfcW=r9=sCPkV-bEXuE-Fi_2w-REE3RuaAhLHYL3iMZdVxw@mail.gmail.com>
-In-Reply-To: <CAHBbfcW=r9=sCPkV-bEXuE-Fi_2w-REE3RuaAhLHYL3iMZdVxw@mail.gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Fri, 7 Aug 2020 12:27:57 -0700
-Message-ID: <CACWQX81K_Nc4PaHet3R74M3Mn+Q13QzO7+LHW_KjV5cpYMggyg@mail.gmail.com>
-Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
-To: Jason Ling <jasonling@google.com>
+From: Patrick Venture <venture@google.com>
+Date: Fri, 7 Aug 2020 13:09:45 -0700
+Message-ID: <CAO=notwjyJJk5wfPBJ_=7ffS_988YwR7OJ-WAYCvJ1rBCq6oBA@mail.gmail.com>
+Subject: External Sensors - phosphor-pid-control
+To: James Feist <james.feist@linux.intel.com>, Josh Lehan <krellan@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,42 +69,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Alex Qiu <xqiu@google.com>, James Feist <james.feist@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Aug 7, 2020 at 11:30 AM Jason Ling <jasonling@google.com> wrote:
->
-> A quick word about the original topic of this thread; we picked hwmontemp=
- sensors where possible because we've seen performance issues for PSUSensor=
-s (could be N seconds before Sensor.Value gets updated to dbus). This has u=
-ndesirable implications for PID loops..
-> thought was that spreading temp sensors over into hwmontemp sensor where =
-possible would help mitigate the performance issue until we can figure out =
-a better long term solution.
->
+James;
 
-Have you filed a bug, or asked on the mailing list before now?  This
-is the kind of feedback the authors of that sensor need (Ideally
-before you move over to another subsystem like hwmontemp).  If I
-didn't see your message/bug and you did post it, I apologize, I'm not
-trying to call you out.
-If you have specifics, like the value of N, and the details around
-what chips you're interacting with and whatever debugging you've done,
-it would be helpful to put that in a bug for triage.
-Keep in mind, PSUSensor by default has a 1 second scan rate.
-https://github.com/openbmc/dbus-sensors/blob/41061e2c3198c0f597d4f6bb702b69=
-0a273ab45d/include/PSUSensor.hpp#L38
+As you know, the json configuration of phosphor-pid-control supports
+"external sensors" which are sensors that phosphor-pid-control creates
+itself and publishes to dbus, expecting IPMI (or other) to set the
+value.  This is used for cases where the host can read sensors or
+information that the BMC cannot, and basically give it some missing
+information.
 
-If it's not obeying that, clearly there's a bug to fix somewhere.
+From the query phosphor-pid-control does in dbusconfiguration, I don't
+see a way for it to find these sensors that it must create.  i was
+thinking, something in the profile that entity-manager publishes could
+tell it this.  But, since it doesn't show up in the sensor query, I
+think it'll be something more.
 
-On some platforms, I have seen very high rate polling of power values
-on the PSU I2c bus by other devices, and that tends to hold up
-transactions for other components.  If that bus is misbehaving or
-overloaded on your platform, it might have triggered a weird condition
-within the PSU sensor (like the scans taking longer than the scan
-rate).
+Thoughts?
 
-If you have any more details here, it's quite possible someone will
-have an idea where to look, or know exactly where the problem is.
+Patrick
