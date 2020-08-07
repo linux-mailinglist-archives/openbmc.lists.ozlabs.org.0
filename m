@@ -2,56 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 631CB23F418
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 23:06:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CD8F23F4A1
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 23:54:47 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BNdFs4GLRzDqYd
-	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 07:06:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BNfKJ4c6zzDqlh
+	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 07:54:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::342;
- helo=mail-ot1-x342.google.com; envelope-from=jasonling@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b44; helo=mail-yb1-xb44.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Wb0ZTdY+; dkim-atps=neutral
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
- [IPv6:2607:f8b0:4864:20::342])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=l9SrwWZ+; dkim-atps=neutral
+Received: from mail-yb1-xb44.google.com (mail-yb1-xb44.google.com
+ [IPv6:2607:f8b0:4864:20::b44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BNdDz5hmyzDqLW
- for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 07:05:54 +1000 (AEST)
-Received: by mail-ot1-x342.google.com with SMTP id r21so2649458ota.10
- for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 14:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BNfJQ4ld6zDqkP
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 07:53:58 +1000 (AEST)
+Received: by mail-yb1-xb44.google.com with SMTP id x2so1731218ybf.12
+ for <openbmc@lists.ozlabs.org>; Fri, 07 Aug 2020 14:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=pPd9i7AZodW3iV4J3ARM1j0x/fFXMER/arOvwaBxXcU=;
- b=Wb0ZTdY+15/mQTG40eoIDFhIGa2u9e2nf53G4AFYo5Z4H0+WbNgmzevI/rq0GIzirH
- PEy9+lH6ZnUsTBlNFw3OahQVsZBARWvPm9/jl4cLfteyRkmu48kHf878nFQPQMba2n53
- DvLlpi0OPlXCC/vc1hm9E2EPjoXAki5IF2XrbMQZVD3ihRH+QvDxalAkffC7hhY69Soj
- Z/+G27XfFJn8wTq1SnKxIIJVHKhjGzWL2QXetfYyAjeym65GsH8K5GE5k2X9sGMSh9Fm
- 0uPzCj1XvpNEhak/fSRd86tq3ME9O+TlOkjPxl7UjoHKHr+KTWCs1uorhJHC/4IShG0s
- wbiQ==
+ :cc:content-transfer-encoding;
+ bh=nOLWoo0hGKowz9NFNX2NALqhZFpgls1WWDWbApA6RDM=;
+ b=l9SrwWZ+h/xJIkIFYnwEhkOxMlc76cYlSk7f2pWzgCZxPndrlulNOfQMwQ8XSw0zor
+ 9LjT560K4YeRZ8CuK38ACJm/1DKOz//lngs4j11hulHtd/bUkOGMRLnSX2oYm0kNbrW8
+ /jzv6zG5PGBxgM6vnRXlsqzMZLR0P8cNPkgl/r4WzUkturFpGkRaNgKYbwMSoTjG9thZ
+ 2tgvdeNGOGAh0s+/beGrFtkgIunzKwUj+pRxraa7Fkkfpf0y1oa/A3mFn2ia03wLB+Rm
+ 3uMXaCkaGYi8hFnEcBPBd7UzZU/yFA6OGpcCCiAAhM2qNpvQttBx/94949HEkE15mY+B
+ 3RWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=pPd9i7AZodW3iV4J3ARM1j0x/fFXMER/arOvwaBxXcU=;
- b=ufBudMm5eM9GDFWK59CtPvRQ1k9kkghjFxOSGsyXmzSM0RFKACSgQg4jGYyLe6jcgc
- vVjJIqcnYdDtdc/zOXJO10v+u9v83rZo4V5ETHeZznJAftIbMXbYWqONgP83oYBjfpUj
- tmJEHpMtTT7OI2VwoWmIVQa0liQuLcW0x40SgFFfEyjmRZraKn4CcjDWpkH5efzOIrv6
- LMnDZRIcKeEZ1zTtAOUC/KqZoXrK+AEdoQAKUzZkKzHkHn1CSFNAhnhRLUtmdrkDsBEk
- HSNPL/XalbllJ0+L0Rbv4Bjm70DcUChhT34fHhYz7DHf83VP77nQUjHAhSi1q0OwitJ6
- E6lQ==
-X-Gm-Message-State: AOAM533RPQL4qDFYWSFwyNzWwzMVI0+zPF0zGU2/xWIL4l5hds1EB/ws
- K/QUmRV5yUTYjhmuDxPVbW5wpAqyhznUGVWhbnxryZ8yXUc=
-X-Google-Smtp-Source: ABdhPJzO/bQ8wDESKHtC9yyrxQXk54+dYd5USyVP3qgQXjTZ95OXhPYDazeUghNW3OC5o++j0tvwpXaIj4fSngA/WbQ=
-X-Received: by 2002:a9d:450a:: with SMTP id w10mr13622710ote.327.1596834351151; 
- Fri, 07 Aug 2020 14:05:51 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=nOLWoo0hGKowz9NFNX2NALqhZFpgls1WWDWbApA6RDM=;
+ b=G1+RTJMeAw1LV0yREQT6DzAl9/37ohvIKnsId7kv4RRHHo3FOu2h9tnF2j9cvDK9Te
+ BCEDJt4YQvbFyk2VkweWnGjRbcrGKs0a+ii4GVo6jaGKRH3LT79b5kKypEu86vOaIdH0
+ mgIBHzrviaEkhVUAKkwN1C19PaqbstrIqA1C700/Tv1NCKCBz/7wXN3nOEx8oTiAxjs2
+ MaX6l66mHufgDupqMV4GFbZc449V6/1NvgcB6sKYfdbMPqT21TA9avq0BAzfGBjEiGwg
+ Ee8zGG1pko5lImdUrcufx9hDaIWrs0j0QElRw+rBS+lvHQNsxjSr4e4v8srM7/MIMrs9
+ 74sQ==
+X-Gm-Message-State: AOAM531sBm6r4gCfoTZ+bgQcp7ca6IIykmRbIQgM5KCMuvf4NexSsPWh
+ C3y7G/Mch1cWvVNGx3zra4AYmTb/x2RA5DaxzdDLMQ==
+X-Google-Smtp-Source: ABdhPJx1luWHqZIba8Iz3A7wAWJc08jt5QyqrYIEOkvsCaWRMiW3LDOdjZrh23oQ0gjcaKKWRMZSBScFt7XZZC3jR78=
+X-Received: by 2002:a25:7344:: with SMTP id o65mr23443151ybc.417.1596837234282; 
+ Fri, 07 Aug 2020 14:53:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
  <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
@@ -65,13 +68,15 @@ References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
  <9deda21d-aa01-d15e-464e-7ab0fb2f751c@linux.intel.com>
  <CAHBbfcX7TahfKcVcUqWKQGTK5s9Rzw3mT4_3v4tWtkAgHBgX6g@mail.gmail.com>
  <CACWQX83AdMHFk5NUJmpoesghK_2YZ9MMo6h-KoWzDtZ-jrTYRw@mail.gmail.com>
-In-Reply-To: <CACWQX83AdMHFk5NUJmpoesghK_2YZ9MMo6h-KoWzDtZ-jrTYRw@mail.gmail.com>
-From: Jason Ling <jasonling@google.com>
-Date: Fri, 7 Aug 2020 14:05:14 -0700
-Message-ID: <CAHBbfcUBBUpO9o2pNSbr0YKXNRHPju4gNNHxxNxuda9k5D0BYQ@mail.gmail.com>
+ <CAHBbfcUBBUpO9o2pNSbr0YKXNRHPju4gNNHxxNxuda9k5D0BYQ@mail.gmail.com>
+In-Reply-To: <CAHBbfcUBBUpO9o2pNSbr0YKXNRHPju4gNNHxxNxuda9k5D0BYQ@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Fri, 7 Aug 2020 14:53:42 -0700
+Message-ID: <CACWQX809R7wx+qNt5PhZW-Snv0jdPnUVGSt+A_jobrTcYC8B2Q@mail.gmail.com>
 Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
-To: Ed Tanous <ed@tanous.net>
-Content-Type: multipart/alternative; boundary="000000000000448d1e05ac4ff8a1"
+To: Jason Ling <jasonling@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,230 +93,194 @@ Cc: Alex Qiu <xqiu@google.com>, James Feist <james.feist@linux.intel.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000448d1e05ac4ff8a1
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Aug 7, 2020 at 2:05 PM Jason Ling <jasonling@google.com> wrote:
+>>
+>>  don't like the merging of base lists with extended lists, as it adds
+>> a dependency between how we represent that, and implies that we have a
+>> published plugin interface, which we definitely don't, nor do we want
+>> to maintain it at the entity manager level.  It also means that
+>> upstream never tests the "extended" list, which means it's a lot more
+>> likely to break.
+>
+> My stance on devices added to the extended list is the same as devices ad=
+ded by downstream patches. Upstream maintainers aren't responsible for test=
+ing those, if you're patching in devices then you take the responsibility o=
+f testing those.
 
->
->  don't like the merging of base lists with extended lists, as it adds
-> a dependency between how we represent that, and implies that we have a
-> published plugin interface, which we definitely don't, nor do we want
-> to maintain it at the entity manager level.  It also means that
-> upstream never tests the "extended" list, which means it's a lot more
-> likely to break.
->
-My stance on devices added to the extended list is the same as devices
-added by downstream patches. Upstream maintainers aren't responsible for
-testing those, if you're patching in devices then you take the
-responsibility of testing those.
-My objective is to make it so devices that we don't want to upstream yet
+Sure, but upstream does bear the responsibility for testing that this
+"extended types" system works?
+
+> My objective is to make it so devices that we don't want to upstream yet =
 can be maintained more easily.
-First idea was a json file that extends types/lists but there are concerns
-with runtime parsing for devices for the purposes of exposing telemetry
-(I'd think runtime parsing of things like PID configurations would be more
-worrisome).
-So second idea was just to move data structures around in
-dbus-sensors/PSUSensor to make upstream changes less likely to result in
-merge conflicts for those who are maintaining downstream patches.
-Furthermore just split the data structure up into a portion that is
-upstream and downstream.
-Yes, it's definitely making it friendlier for those who want to maintain
-downstream patches to extend devices. I don't see how this increases
-maintenance or testing burden for the maintainers though.
-If however , the intent is to explicitly send the message
-"You shouldn't try to use this service for any devices that do not have
-explicit upstream support. Any patches that make it easier to do so will be
+
+Ever?  To be frank for a moment, you're going to have a hard time
+pushing that one forward in an open source project.  If there are a
+lot of users that are planning on maintaining private forks forever,
+maybe there's a case for this, but I think most uses of private forks
+tends to be temporary, even if it's longer term, and the long term
+intention is to upstream.
+
+> First idea was a json file that extends types/lists but there are concern=
+s with runtime parsing for devices for the purposes of exposing telemetry (=
+I'd think runtime parsing of things like PID configurations would be more w=
+orrisome).
+> So second idea was just to move data structures around in dbus-sensors/PS=
+USensor to make upstream changes less likely to result in merge conflicts f=
+or those who are maintaining downstream patches. Furthermore just split the=
+ data structure up into a portion that is upstream and downstream.
+> Yes, it's definitely making it friendlier for those who want to maintain =
+downstream patches to extend devices. I don't see how this increases mainte=
+nance or testing burden for the maintainers though.
+
+It increases burden because any time the maintainer wants to change
+the name of that file, change the name of the structure in that file,
+add a field, rename fields, or change compiler flags, that file will
+break in your downstream, and the maintainers will have no idea.  It
+definitely increases the maintenance burden, and all of the things
+I've mentioned and more have happened over the short life of entity
+manager.  I'm sure they will continue to happen as they evolve (or
+until EM is replaced by something better).
+
+> If however , the intent is to explicitly send the message
+> "You shouldn't try to use this service for any devices that do not have e=
+xplicit upstream support. Any patches that make it easier to do so will be =
 rejected."
-then I agree with your earlier suggestion that maybe the best approach is
-to create another service for those devices.
+> then I agree with your earlier suggestion that maybe the best approach is=
+ to create another service for those devices.
 
-I originally wrote a big long idea about how to make the above work,
-> but got to the end, and realized that I'm still trying to understand
-> what we're trying to avoid here with the downstream/upstream lists
-> thing.  It's easy enough to patch the existing list to add your new
-> custom types, then when it comes time to merge because the
-> project/component is public, the patch is ready and good to upstream.
-> What are we buying by moving that info to a non-patch format?
+I'm not the maintainer of this project anymore, so my opinion is just
+that, and I have no ability to reject patches :)  I would rephrase my
+position as: Modifying the source code directly is not an adequate
+long term API for making permanent, never to be upstreamed changes.
+The closest guarantee to that kind of API that is dbus, the second
+closest is an Entity manager config, each of which have their own pros
+and cons.  If we as a project can do anything to make the transition
+between downstream code to upstream code easier, like trying to make
+merge conflicts less likely on commonly modified files, without the
+expense of maintainability or complexity, I'm absolutely for it, but
+creating explicit data structures and hard guarantees about downstream
+code on a binary boundary needs a much larger discussion, and speaks
+to some of the project's main principles about the "Open" part of
+OpenBMC.
 
-You get the benefit of separating devices into two classes..
-(1) types that are upstream , have been tested by someone else and they are
-ready to go without additional work.
-(2) types that are not upstream, because the devices are not public yet or
-may never be public and need to be kept downstream for a long period of
-time (or forever).
-
-> I think
-> moving it to a file means it's a lot less likely to be upstreamed, as
-> it requires the next person to understand it to use it, and modify the
-> patch rather than simply cleaning up the commit message, testing it,
-> and firing it at gerrit.
-
-Yes, the file would be for those things that are never meant to be
-upstreamed or won't be upstreamed for a long while.
-
-> Having done this pattern many times
-> (including with that list specifically) I think the only thing we
-> could improve would be to move that list to its own file (but still
-> C++ code), so it gets fewer merge conflicts, and you can completely
-> replace it if you like, but even that doesn't solve the problem if
-> code is never upstreamed.
-
-Yup, the problem here are the following
-"I have patches I keep downstream and they keep getting broken whenever the
-types/device list gets updated. I wish these data structures were in a file
-that doesn't get patched often"
-and
-"I have patches to add devices to the type/list data structure and I can't
-upstream them for a long time (or ever). I don't want to waste time
-constantly fixing my broken patches everytime someone adds a new public
-supported type."
-Both approaches (parsing json and extending the list runtime and separating
-the data structs into a separate file + returning the union of base +
-extended) accomplish the same thing. One requires a recipe to copy a
-ExtendPSUSensorConfig.json in a recipe somewhere to usr/share/PSUSensors
-(or something) and the other is just a patch that gets applied. Talking it
-through, I now realize that the slight code refactoring approach is a lot
-less work and a lot more simple..and something that I'd actually have time
-to contribute.
-
-
-Have you filed a bug, or asked on the mailing list before now?  This
-> is the kind of feedback the authors of that sensor need (Ideally
-> before you move over to another subsystem like hwmontemp).
-
-I never really considered hwmontemp a different sub-system since they live
-in the same repo and seemed to be more specific towards monitoring
-temperature telemetry.
-As far as bugs go, I CC'ed Alex Qiu who has more experience with the
-performance of PSUSensors. I haven't personally ran into this problem; just
-know about it from talk amongst the larger team.
-
-> If I
-> didn't see your message/bug and you did post it, I apologize, I'm not
-> trying to call you out.
-> If you have specifics, like the value of N, and the details around
-> what chips you're interacting with and whatever debugging you've done,
-> it would be helpful to put that in a bug for triage.
 >
-Alex, maybe you can add some color here?
-
-> Keep in mind, PSUSensor by default has a 1 second scan rate.
+>> I originally wrote a big long idea about how to make the above work,
+>> but got to the end, and realized that I'm still trying to understand
+>> what we're trying to avoid here with the downstream/upstream lists
+>> thing.  It's easy enough to patch the existing list to add your new
+>> custom types, then when it comes time to merge because the
+>> project/component is public, the patch is ready and good to upstream.
+>> What are we buying by moving that info to a non-patch format?
 >
-> https://github.com/openbmc/dbus-sensors/blob/41061e2c3198c0f597d4f6bb702b690a273ab45d/include/PSUSensor.hpp#L38
-> If it's not obeying that, clearly there's a bug to fix somewhere.
-> On some platforms, I have seen very high rate polling of power values
-> on the PSU I2c bus by other devices, and that tends to hold up
-> transactions for other components.  If that bus is misbehaving or
-> overloaded on your platform, it might have triggered a weird condition
-> within the PSU sensor (like the scans taking longer than the scan
-> rate).
-> If you have any more details here, it's quite possible someone will
-> have an idea where to look, or know exactly where the problem is.
+> You get the benefit of separating devices into two classes..
+> (1) types that are upstream , have been tested by someone else and they a=
+re ready to go without additional work.
+> (2) types that are not upstream, because the devices are not public yet o=
+r may never be public and need to be kept downstream for a long period of t=
+ime (or forever).
 
---000000000000448d1e05ac4ff8a1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Don't you already have that distinction today?  Devices that are in
+your downstream patch fall into category 2, devices that are on
+openbmc master fall into category 1.  Maybe I'm missing something?
 
-<div dir=3D"ltr"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=C2=A0do=
-n&#39;t like the merging of base lists with extended lists, as it adds<br>a=
- dependency between how we represent that, and implies that we have a<br>pu=
-blished plugin interface, which we definitely don&#39;t, nor do we want<br>=
-to maintain it at the entity manager level.=C2=A0 It also means that<br>ups=
-tream never tests the &quot;extended&quot; list, which means it&#39;s a lot=
- more<br>likely to break.<br></blockquote><div>My stance on devices added t=
-o the extended list is the same as devices added by downstream patches. Ups=
-tream maintainers aren&#39;t responsible for testing those, if you&#39;re p=
-atching in devices then you take the responsibility of testing those.</div>=
-<div>My objective is to make it so devices that we don&#39;t want to upstre=
-am yet can be maintained more easily.</div><div>First idea was a json file =
-that extends types/lists but there are concerns with runtime parsing for de=
-vices for the purposes of exposing telemetry (I&#39;d think runtime parsing=
- of things like PID configurations would be more worrisome).</div><div>So s=
-econd idea was just to move data structures around in dbus-sensors/PSUSenso=
-r to make upstream changes less likely to result in merge conflicts for tho=
-se who are maintaining downstream patches. Furthermore just split the data =
-structure up into a portion that is upstream and downstream.<br>Yes, it&#39=
-;s definitely making it friendlier for those who want to maintain downstrea=
-m patches to extend devices. I don&#39;t see how this increases maintenance=
- or testing burden for the maintainers though.=C2=A0<br>If however , the in=
-tent is to explicitly send the message=C2=A0<br>&quot;You shouldn&#39;t try=
- to use this service for any devices that do not have explicit upstream sup=
-port. Any patches that make it easier to do so will be rejected.&quot;</div=
-><div>then I agree with your earlier suggestion that maybe the best approac=
-h is to create another service for those devices.</div><div><br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">I originally wrote a big long =
-idea about how to make the above work,<br>but got to the end, and realized =
-that I&#39;m still trying to understand<br>what we&#39;re trying to avoid h=
-ere with the downstream/upstream lists<br>thing.=C2=A0 It&#39;s easy enough=
- to patch the existing list to add your new<br>custom types, then when it c=
-omes time to merge because the<br>project/component is public, the patch is=
- ready and good to upstream.<br>What are we buying by moving that info to a=
- non-patch format?=C2=A0</blockquote><div>You get the benefit of separating=
- devices into two classes.. <br>(1) types that are upstream , have been tes=
-ted by someone else and they are ready to go without additional work.=C2=A0=
-<br>(2) types that are not upstream, because the devices are not public yet=
- or may never be public and need to be kept downstream for a long period of=
- time (or forever).</div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
- I think<br>moving it to a file means it&#39;s a lot less likely to be upst=
-reamed, as<br>it requires the next person to understand it to use it, and m=
-odify the<br>patch rather than simply cleaning up the commit message, testi=
-ng it,<br>and firing it at gerrit.=C2=A0</blockquote><div>Yes, the file wou=
-ld be for those things that are never meant to be upstreamed or won&#39;t b=
-e upstreamed for a long while.=C2=A0</div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex"> Having done this pattern many times<br>(including with th=
-at list specifically) I think the only thing we<br>could improve would be t=
-o move that list to its own file (but still<br>C++ code), so it gets fewer =
-merge conflicts, and you can completely<br>replace it if you like, but even=
- that doesn&#39;t solve the problem if<br>code is never upstreamed.=C2=A0=
-=C2=A0</blockquote><div>Yup, the problem here are the following</div><div>&=
-quot;I have patches I keep downstream and they keep getting broken whenever=
- the types/device list gets updated. I wish these data structures were in a=
- file that doesn&#39;t get patched often&quot;</div><div>and</div><div>&quo=
-t;I have patches to add devices to the type/list data structure and I can&#=
-39;t upstream them for a long time (or ever). I don&#39;t want to waste tim=
-e constantly fixing my broken patches everytime someone adds a new public s=
-upported type.&quot;</div><div>Both approaches (parsing json and extending =
-the list runtime and separating the data structs into a separate file=C2=A0=
-+ returning the union of base=C2=A0+ extended) accomplish the same thing. O=
-ne requires a recipe to copy a ExtendPSUSensorConfig.json in a recipe somew=
-here to usr/share/PSUSensors (or something) and the other is just a patch t=
-hat gets applied. Talking it through, I now realize that the slight code re=
-factoring approach is a lot less work and a lot more simple..and something =
-that I&#39;d actually have time to contribute.</div><div><br></div><div><br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">Have you filed a b=
-ug, or asked on the mailing list before now?=C2=A0 This<br>is the kind of f=
-eedback the authors of that sensor need (Ideally<br>before you move over to=
- another subsystem like hwmontemp).=C2=A0 </blockquote><div>I never really =
-considered hwmontemp=C2=A0a different sub-system since they live in the sam=
-e repo and seemed to be more specific towards monitoring temperature teleme=
-try.</div><div>As far as bugs go, I CC&#39;ed Alex Qiu who has more experie=
-nce with the performance of PSUSensors. I haven&#39;t personally ran into t=
-his problem; just know about it from talk amongst the larger team.=C2=A0</d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">If I<br>didn&#39;t see=
- your message/bug and you did post it, I apologize, I&#39;m not<br>trying t=
-o call you out.<br>If you have specifics, like the value of N, and the deta=
-ils around<br>what chips you&#39;re interacting with and whatever debugging=
- you&#39;ve done,<br>it would be helpful to put that in a bug for triage.<b=
-r></blockquote><div>Alex, maybe you can add some color here?=C2=A0</div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">Keep in mind, PSUSensor by d=
-efault has a 1 second scan rate.<br><a href=3D"https://github.com/openbmc/d=
-bus-sensors/blob/41061e2c3198c0f597d4f6bb702b690a273ab45d/include/PSUSensor=
-.hpp#L38" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/d=
-bus-sensors/blob/41061e2c3198c0f597d4f6bb702b690a273ab45d/include/PSUSensor=
-.hpp#L38</a><br>If it&#39;s not obeying that, clearly there&#39;s a bug to =
-fix somewhere.<br>On some platforms, I have seen very high rate polling of =
-power values<br>on the PSU I2c bus by other devices, and that tends to hold=
- up<br>transactions for other components.=C2=A0 If that bus is misbehaving =
-or<br>overloaded on your platform, it might have triggered a weird conditio=
-n<br>within the PSU sensor (like the scans taking longer than the scan<br>r=
-ate).<br>If you have any more details here, it&#39;s quite possible someone=
- will<br>have an idea where to look, or know exactly where the problem is.<=
-/blockquote><div><br></div></div>
+>>
+>> I think
+>> moving it to a file means it's a lot less likely to be upstreamed, as
+>> it requires the next person to understand it to use it, and modify the
+>> patch rather than simply cleaning up the commit message, testing it,
+>> and firing it at gerrit.
+>
+> Yes, the file would be for those things that are never meant to be upstre=
+amed or won't be upstreamed for a long while.
 
---000000000000448d1e05ac4ff8a1--
+See above.
+
+>>
+>> Having done this pattern many times
+>> (including with that list specifically) I think the only thing we
+>> could improve would be to move that list to its own file (but still
+>> C++ code), so it gets fewer merge conflicts, and you can completely
+>> replace it if you like, but even that doesn't solve the problem if
+>> code is never upstreamed.
+>
+> Yup, the problem here are the following
+> "I have patches I keep downstream and they keep getting broken whenever t=
+he types/device list gets updated. I wish these data structures were in a f=
+ile that doesn't get patched often"
+
+Moving that structure to its own file sounds totally reasonable,
+although (if I were the maintainer) it would have no guarantees
+granted.  Said file may change name, structure, naming, or compiler
+magic that will cause downstream to break.  Funnily enough, in the act
+of implementing that, you will ironically break a lot of peoples
+downstreams, and I'm personally ok with that.  You (and your team)
+needs to be ok when people break your downstream for similar reasons.
+
+On a personal note, if you haven't already, I highly recommend
+spending some learning time on getting a good setup and mental model
+for merging conflicting patches.  As a useful skill, it comes up
+ridiculously often in software, especially if you're a maintainer.  If
+you have the ability to resolve conflicts quickly and correctly it
+puts you at a significant time advantage to your peers that don't.
+
+> and
+> "I have patches to add devices to the type/list data structure and I can'=
+t upstream them for a long time (or ever). I don't want to waste time const=
+antly fixing my broken patches everytime someone adds a new public supporte=
+d type."
+> Both approaches (parsing json and extending the list runtime and separati=
+ng the data structs into a separate file + returning the union of base + ex=
+tended) accomplish the same thing. One requires a recipe to copy a ExtendPS=
+USensorConfig.json in a recipe somewhere to usr/share/PSUSensors (or someth=
+ing) and the other is just a patch that gets applied. Talking it through, I=
+ now realize that the slight code refactoring approach is a lot less work a=
+nd a lot more simple..and something that I'd actually have time to contribu=
+te.
+
+EXCELLENT!  Add me to the patch, and I'd be happy to review it for you
+(With that said, James is pretty fast and sometimes beats me to the
+punch).
+
+>
+>
+>> Have you filed a bug, or asked on the mailing list before now?  This
+>> is the kind of feedback the authors of that sensor need (Ideally
+>> before you move over to another subsystem like hwmontemp).
+>
+> I never really considered hwmontemp a different sub-system since they liv=
+e in the same repo and seemed to be more specific towards monitoring temper=
+ature telemetry.
+
+Ignore the above comment about subsystem.  I thought you were talking
+about phosphor-hwmon.  My bad.
+
+> As far as bugs go, I CC'ed Alex Qiu who has more experience with the perf=
+ormance of PSUSensors. I haven't personally ran into this problem; just kno=
+w about it from talk amongst the larger team.
+
+Excellent.  Looking forward to details.
+
+>>
+>> If I
+>> didn't see your message/bug and you did post it, I apologize, I'm not
+>> trying to call you out.
+>> If you have specifics, like the value of N, and the details around
+>> what chips you're interacting with and whatever debugging you've done,
+>> it would be helpful to put that in a bug for triage.
+>
+> Alex, maybe you can add some color here?
+>>
+>> Keep in mind, PSUSensor by default has a 1 second scan rate.
+>> https://github.com/openbmc/dbus-sensors/blob/41061e2c3198c0f597d4f6bb702=
+b690a273ab45d/include/PSUSensor.hpp#L38
+>> If it's not obeying that, clearly there's a bug to fix somewhere.
+>> On some platforms, I have seen very high rate polling of power values
+>> on the PSU I2c bus by other devices, and that tends to hold up
+>> transactions for other components.  If that bus is misbehaving or
+>> overloaded on your platform, it might have triggered a weird condition
+>> within the PSU sensor (like the scans taking longer than the scan
+>> rate).
+>> If you have any more details here, it's quite possible someone will
+>> have an idea where to look, or know exactly where the problem is.
+>
+>
