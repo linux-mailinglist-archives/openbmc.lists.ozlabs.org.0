@@ -1,70 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2887823F1F1
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 19:31:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DB5F23F210
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 19:41:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BNXTz4LGQzDqLT
-	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 03:31:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BNXjT3hhszDqhY
+	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 03:41:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ami.com
- (client-ip=63.147.10.42; helo=atlmailgw2.ami.com;
- envelope-from=conniey@ami.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=ami.com
-Received: from atlmailgw2.ami.com (atlmailgw2.ami.com [63.147.10.42])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BNXSz4vxSzDqW9
- for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 03:30:58 +1000 (AEST)
-X-AuditID: ac10606f-4c5ff70000003ed3-38-5f2d8fca1b08
-Received: from atlms2.us.megatrends.com (atlms2.us.megatrends.com
- [172.16.96.152])
- (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (Client did not present a certificate)
- by atlmailgw2.ami.com (Symantec Messaging Gateway) with SMTP id
- DB.3F.16083.ACF8D2F5; Fri,  7 Aug 2020 13:30:50 -0400 (EDT)
-Received: from ATLMS1.us.megatrends.com ([fe80::8c55:daf0:ef05:5605]) by
- atlms2.us.megatrends.com ([fe80::29dc:a91e:ea0c:cdeb%12]) with mapi id
- 14.03.0468.000; Fri, 7 Aug 2020 13:30:53 -0400
-From: Connie Yin <ConnieY@ami.com>
-To: Patrick Venture <venture@google.com>, Benjamin Fair
- <benjaminfair@google.com>, Brandon Kim <brandonkim@google.com>
-Subject: RE: Query regarding the host LPC address in phosphor-ipmi-flash
-Thread-Topic: Query regarding the host LPC address in phosphor-ipmi-flash
-Thread-Index: AdZnZ3h/CNq2Rn5VTSCbzdKI9r8vTgALsd6AALwzL+AAmre7gAAFtBRA
-Date: Fri, 7 Aug 2020 17:30:54 +0000
-Message-ID: <E27B8EFBB1796B4A8CF2A20BF59146F901B1DF@atlms1.us.megatrends.com>
-References: <E27B8EFBB1796B4A8CF2A20BF59146F901AB3E@atlms1.us.megatrends.com>
- <CAO=notyMGd9XNFP99DBq+BC9G91h41omzDhw_oQYiyHnwkt8KA@mail.gmail.com>
- <E27B8EFBB1796B4A8CF2A20BF59146F901ADF4@atlms1.us.megatrends.com>
- <CAO=notyfmoRgzBvOUOUP3skeV1m7oJbDBO_F4T1B6hGZ-hV6MA@mail.gmail.com>
-In-Reply-To: <CAO=notyfmoRgzBvOUOUP3skeV1m7oJbDBO_F4T1B6hGZ-hV6MA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.16.97.166]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BNXhT6933zDqc8
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 03:40:57 +1000 (AEST)
+IronPort-SDR: xDHBPJql+kN9c+4GyeKsBNd7eCwJPIpi13LrmlXMPsRaOv+i0Sl8Q9Pk2pJH3kRGopLhDuMSFY
+ XjtPfEMt1/BQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9706"; a="214698579"
+X-IronPort-AV: E=Sophos;i="5.75,446,1589266800"; d="scan'208";a="214698579"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Aug 2020 10:40:54 -0700
+IronPort-SDR: 5uxk5uc2qX8hBHgLTsnBmxyxBO/aDkcaCJyuK+vGYisfdB4zOxHRl/kFSiLkQBSmuoaPGqVRyB
+ Qm2Fn5qHRkKg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.75,446,1589266800"; d="scan'208";a="333609071"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.209.36.209])
+ ([10.209.36.209])
+ by orsmga007.jf.intel.com with ESMTP; 07 Aug 2020 10:40:53 -0700
+Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
+To: Jason Ling <jasonling@google.com>
+References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
+ <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
+ <CAHBbfcUXLueZ3MZAP9b38B-fXyrNCMAeZcC7uk8uPrR5gw=3xQ@mail.gmail.com>
+ <2bb88ede-4d35-8b9c-936f-be8dc9a453e5@linux.intel.com>
+ <CAHBbfcUDMOZjxSvy8wVW_F9f3+NaX-WU3G5PF1oUoRx5VP7ZoQ@mail.gmail.com>
+ <CACWQX82KAhmRbg-CYa8+Yjd8mE7qCM_vG_Q1_hYZVR77c3gdtw@mail.gmail.com>
+ <CAHBbfcUJGnsW_dxONwjsT=w3ZM453-o0Ubc7DE7oOJQ8u28=ww@mail.gmail.com>
+ <5a59238b-7653-b11f-701b-039d57dd5b98@linux.intel.com>
+ <CAHBbfcXRO5ZB3S0T6SyRkWkLLAruKPdS8UhUkyG3qssU5YkHNw@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <9deda21d-aa01-d15e-464e-7ab0fb2f751c@linux.intel.com>
+Date: Fri, 7 Aug 2020 10:40:53 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsWyRiBhhu6pft14g3nLlCxm7H3AbPFh/Uom
- i1MtL1gs9h7YyOLA4rFgU6nH+RkLGQOYohoYbRLz8vJLEktSFVJSi5NtlQKKMssSkyuVFDJT
- bJUMlRQKchKTU3NT80pslRILClLzUpTsuBQwgA1QWWaeQmpecn5KZl66rZJnsL+uhYWppa6h
- kl1IRqpCZl5aflFuYklmfp5Ccn5eCVB1agpQVCGhmzPj/NdtLAVrfCqWTfzM2MC4wauLkZND
- QsBEYtnzJUxdjFwcQgK7mCSeT7/BDJIQEjjEKNE7zQLEZhNQkvh66yMTiC0iUCHRe+sYI4jN
- LGApsfnjJXYQW1jAQ2L3mW9sEDWeEq3L97BD2G4SU85uBJvJIqAi0TpzB5jNK+ArMe/iNlaI
- xfOZJFb+7QdbwCkQKPHyTC/YIEYBMYnvp9YwQSwTl7j1ZD4TxNUCEkv2nGeGsEUlXj7+xwph
- K0qs2nMVqIYDqF5TYv0ufYhWRYkp3Q/ZIfYKSpyc+YRlAqPoLCRTZyF0zELSMQtJxwJGllWM
- QoklObmJmTnp5UZ6ibmZesn5uZsYIQkifwfjx4/mhxiZOBiBQcfBrCTCm/VCO16INyWxsiq1
- KD++qDQntfgQoxMwHCYyS3GD4gcY4fHGBgZSojCOoYmZibmRuaGlibmxsZI47ypzoAkC6cCE
- k52aWpBaBDOEiYNTqoFR7/aTrfoM5ScTn+Qzb3n7cnHDExnOJ6KRCqt9l69QKeYxF9+Rv7BG
- WmfK5byFPxlffrW0FpsoO6XjqubKf506uQuW6k3JMn7o9sioVa5Fe80a7fWNJ2e/CdDN1vr+
- YYVE9Lc9O/7tf7ZkN5eNxemv0Z/EFAMZ1h+sWJE2qVSM4VDsAkfTEz+fKrEUZyQaajEXFScC
- AHFe8WMlAwAA
+In-Reply-To: <CAHBbfcXRO5ZB3S0T6SyRkWkLLAruKPdS8UhUkyG3qssU5YkHNw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,151 +68,101 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGksIFBhdHJpY2sgYW5kIHRlYW0sDQoNClRoZSBwbGF0Zm9ybSBJIHVzZWQgaGFzIHRoZSBz
-YW1lICZscGNfY3RybCBhcyB0aGF0IG9mIHphaXVzLCBhbmQgdmVyaWZpY2F0aW9uIHNlcnZp
-Y2Ugd2lsbCBiZSBhZGRlZCBsYXRlciBhZnRlciB0aGlzIGluaXRpYWwgY2hlY2tpbmcgd29y
-a3MuDQoNCkFmdGVyIGRpZ2dpbmcgZGVwcGVyLCBJIGFtIG5vdCBzdXJlIGlmIHRoZSB0b29s
-cy9pby5jcHAgY2F1c2VzIGFueSBpc3N1ZSBvciBub3QuICBUaGVyZSBhcmUgbW1hcCBhbmQg
-bWVtY3B5IGhlcmU6DQoNCg0KDQovLyBhZGRyLCBsZW5ndGgsIHByb3QsIGZsYWdzLCBmZCwg
-b2Zmc2V0DQogICAgZGV2TWVtTWFwcGVkID0gc3lzLT5tbWFwKDAsIGFsaWduZWRTaXplLCBQ
-Uk9UX1dSSVRFLCBNQVBfU0hBUkVELCBkZXZNZW1GZCwNCiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgYWxpZ25lZE9mZnNldCk7DQoNCi4uLi4NCg0KLyogQ29weSB0aGUgYnl0ZXMu
-ICovDQogICAgc3RkOjptZW1jcHkoYWxpZ25lZERlc3RpbmF0aW9uLCBzb3VyY2UsIGxlbmd0
-aCk7DQoNCg0KDQpJIHdhcyBhYmxlIHRvIHByaW50IHNvdXJjZSdzIGNvbnRlbnQsIGFuZCB0
-aGV5IGFyZSBhbGwgZ29vZCwgYnV0IGFsaWduZWREZXN0aW5hdGlvbidzIHJlYWRiYWNrIGFy
-ZSBhbGwgMHhmZiwgc3VycHJpc2luZ2x5LiAgU2hvdWxkIHRoaXMgYmUgZXhwZWN0aW5nPyBD
-b3VsZCB0aGF0IG1lYW4gdGhlIEJJT1Mgc3RpbGwgZG9lc24ndCByZXNlcnZlIHRoZSBtZW1v
-cnkgcmVnaW9uIHByb3Blcmx5Pw0KDQpEbyB5b3UgaGF2ZSBhbnkgc3BlYyB3aGF0IG1lbW9y
-eSByZWdpb24gYmlvcyBoYXMgdG8gYXNzaWduIGFuZCBpZiB0aGVyZSBpcyBhbnkgc3RlcHMg
-dG8gZG8gdGhhdC4gVGhlIHBsYXRmb3JtIGlzIGFuIHg4Ni4gDQoNCg0KDQpUaGFua3MgYSBs
-b3QuDQpDb25uaWUNCg0KDQoNCg0KDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0N
-CkZyb206IFBhdHJpY2sgVmVudHVyZSBbbWFpbHRvOnZlbnR1cmVAZ29vZ2xlLmNvbV0gDQpT
-ZW50OiBGcmlkYXksIEF1Z3VzdCAwNywgMjAyMCAxMTozNiBBTQ0KVG86IENvbm5pZSBZaW47
-IEJlbmphbWluIEZhaXI7IEJyYW5kb24gS2ltDQpDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnDQpTdWJqZWN0OiBSZTogUXVlcnkgcmVnYXJkaW5nIHRoZSBob3N0IExQQyBhZGRyZXNz
-IGluIHBob3NwaG9yLWlwbWktZmxhc2gNCg0KKipUaGUgU2VuZGVyIG9mIHRoaXMgZW1haWwg
-aXMgZnJvbSBhIG5vbiBBTUkgZG9tYWluKioNCg0KT24gVHVlLCBBdWcgNCwgMjAyMCBhdCAx
-MToxMSBBTSBDb25uaWUgWWluIDxDb25uaWVZQGFtaS5jb20+IHdyb3RlOg0KPg0KPiBIaSwg
-UGF0cmljaywNCj4NCj4gVGhhbmtzIGEgbG90IGZvciB0aGUgcmVwbGF5Lg0KPg0KPiBJIGdv
-dCBhbiBlODIwIG1hcCBvZiB0aGlzIHg4NiBzeXN0ZW0gKHdpdGggYXNwZWVkIGFzdDI1MDAp
-IGFzIGZvbGxvd3MsIGFuZCBjaG9zZSB0aGUgaG9zdC1scGMgYWRkcmVzcyBhcyAweGZlNDEw
-MDAwIChVbnVzZWQpIGFsb25nd2l0aCAtLWxlbmd0aCAweDEwMDAwDQo+DQo+ICstLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tKw0KPiAgIHwgU2l6ZSAgICAgICAgfCBTdGFydCAgICAgICB8IEVuZCAg
-ICAgICAgIHwgVXNhZ2UgICAgICAgICAgICAgICAgICAgICAgICAgfA0KPiAgIHwgMTYgTUIg
-ICAgICAgfCAweEZEMDAwMDAwICB8IDB4RkRGRkZGRkYgIHwgU0JSRUcgICAgICAgICAgICAg
-ICAgICAgICAgICAgfA0KPiAgIHwgNjQgS0IgICAgICAgfCAweEZFMDAwMDAwICB8IDB4RkUw
-MEZGRkYgIHwgUE1DIE1CQVIgICAgICAgICAgICAgICAgICAgICAgfA0KPiAgIHwgNCBLQiAg
-ICAgICAgfCAweEZFMDEwMDAwICB8IDB4RkUwMTBGRkYgIHwgU1BJIEJBUjAgICAgICAgICAg
-ICAgICAgICAgICAgfA0KPiAgIHwgODggS0IgICAgICAgfCAweEZFMDIwMDAwICB8IDB4RkUw
-MzVGRkYgIHwgU2VyaWFsSW8gQkFSIGluIEFDUEkgbW9kZSAgICAgfA0KPiAgIHwgMjQgS0Ig
-ICAgICAgfCAweEZFMDM2MDAwICB8IDB4RkUwM0JGRkYgIHwgVW51c2VkICAgICAgICAgICAg
-ICAgICAgICAgICAgfA0KPiAgIHwgNCBLQiAgICAgICAgfCAweEZFMDNDMDAwICB8IDB4RkUw
-M0NGRkYgIHwgVGhlcm1hbCBEZXZpY2UgaW4gQUNQSSBtb2RlICAgfA0KPiAgIHwgNTI0IEtC
-ICAgICAgfCAweEZFMDNEMDAwICB8IDB4RkUwQkZGRkYgIHwgVW51c2VkICAgICAgICAgICAg
-ICAgICAgICAgICAgfA0KPiAgIHwgMjU2IEtCICAgICAgfCAweEZFMEMwMDAwICB8IDB4RkUw
-RkZGRkYgIHwgVHJhY2VIdWIgRlcgQkFSICAgICAgICAgICAgICAgfA0KPiAgIHwgMSBNQiAg
-ICAgICAgfCAweEZFMTAwMDAwICB8IDB4RkUxRkZGRkYgIHwgVHJhY2VIdWIgTVRCIEJBUiAg
-ICAgICAgICAgICAgfA0KPiAgIHwgMiBNQiAgICAgICAgfCAweEZFMjAwMDAwICB8IDB4RkUz
-RkZGRkYgIHwgVHJhY2VIdWIgU1cgQkFSICAgICAgICAgICAgICAgfA0KPiAgIHwgNjQgS0Ig
-ICAgICAgfCAweEZFNDAwMDAwICB8IDB4RkU0MEZGRkYgIHwgQ0lPMiBNTUlPIEJBUiBpbiBB
-Q1BJIG1vZGUgICAgfA0KPiAgIHwgMiBNQiAtIDY0S0IgfCAweEZFNDEwMDAwICB8IDB4RkU1
-RkZGRkYgIHwgVW51c2VkICAgICAgICAgICAgICAgICAgICAgICAgfA0KPiAgIHwgMiBNQiAg
-ICAgICAgfCAweEZFNjAwMDAwICB8IDB4RkU3RkZGRkYgIHwgVGVtcCBhZGRyZXNzICAgICAg
-ICAgICAgICAgICAgfA0KPiAgICstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tKw0KPg0KPiBBbmQgY29u
-ZmlndXJlZCBpbiBCTUMgd2l0aCB0aGVzZSBsaW5lczoNCj4NCj4gUEFDS0FHRUNPTkZJR19h
-cHBlbmRfeHh4ID0gIiBzdGF0aWMtYm1jIg0KPiBQQUNLQUdFQ09ORklHX2FwcGVuZF94eHgg
-PSAiIGFzcGVlZC1scGMiDQo+IFBBQ0tBR0VDT05GSUdfYXBwZW5kX3h4eCA9ICIgcmVib290
-LXVwZGF0ZSINCj4gSVBNSV9GTEFTSF9CTUNfQUREUkVTU194eHggPSAiMHg4MzAwMDAwMCIN
-Cg0KV2hhdCdzIHlvdXIgZGV2aWNlIHRyZWUgaGF2ZSBmb3IgdGhlIGxwYyBhZGRyZXNzPyAg
-SXQgc2hvdWxkIGJlDQpjb25maWd1cmVkIGluIHRoZXJlIGFzIHdlbGwsIHNlZQ0KaHR0cHM6
-Ly9naXRodWIuY29tL29wZW5ibWMvbGludXgvYmxvYi9kZXYtNS43L2FyY2gvYXJtL2Jvb3Qv
-ZHRzL2FzcGVlZC1ibWMtb3BwLXphaXVzLmR0cyNMMjcNCmFuZDoNCg0KJmxwY19jdHJsIHsN
-CnN0YXR1cyA9ICJva2F5IjsNCm1lbW9yeS1yZWdpb24gPSA8JmZsYXNoX21lbW9yeT47DQpm
-bGFzaCA9IDwmc3BpMT47DQp9Ow0KDQpJZiB0aGlzIGlzIGNvbmZpZ3VyZWQgYXMgd2VsbCwg
-dGhlbiBpdCBzaG91bGQgd29yaywgYWx0aG91Z2ggdHJ5DQoweDEwMDAgaW5zdGVhZCBvZiAw
-eDEwMDAwIC0gZXZlbiB0aG91Z2ggeW91J3ZlIHNldCBhc2lkZSA2NEtpQi4gIEp1c3QNCmFz
-IHNvbWV0aGluZyB0byB0cnkuDQoNCj4NCj4NCj4gQW5kIHJhbiB0aGlzIGFwcCBvbiBob3N0
-Og0KPg0KPiAuL2J1cm5fbXlfYm1jDQo+ICAtLWNvbW1hbmQgdXBkYXRlIFwNCj4gIC0taW50
-ZXJmYWNlIGlwbWlscGMgXA0KPiAgLS1pbWFnZSBpbWFnZS1ibWMgXA0KPiAgLS1zaWcgaW1h
-Z2UtYm1jLnNpZyBcDQo+ICAtLXR5cGUgaW1hZ2UgXA0KPiAgLS1hZGRyZXNzIDB4ZmU0MTAw
-MCBcDQo+ICAtLWxlbmd0aCAweDEwMDAwDQo+DQo+DQo+IFNlbmRpbmcgb3ZlciB0aGUgZmly
-bXdhcmUgaW1hZ2UuDQo+IHNlbmRpbmcgd3JpdGVNZXRhDQo+IHdyaXRlbWV0YSBzZW50DQo+
-IFByb2dyZXNzOiAxMDAuMDAlDQo+IFNlbmRpbmcgb3ZlciB0aGUgaGFzaCBmaWxlLg0KPiBz
-ZW5kaW5nIHdyaXRlTWV0YQ0KPiB3cml0ZW1ldGEgc2VudA0KPiBQcm9ncmVzczogMTAwLjAw
-JQ0KPiBPcGVuaW5nIHRoZSB2ZXJpZmljYXRpb24gZmlsZQ0KPiBDb21taXR0aW5nIHRvIC9m
-bGFzaC92ZXJpZnkgdG8gdHJpZ2dlciBzZXJ2aWNlDQo+IENhbGxpbmcgc3RhdCBvbiAvZmxh
-c2gvdmVyaWZ5IHNlc3Npb24gdG8gY2hlY2sgc3RhdHVzDQo+IHJ1bm5pbmcNCj4gc3VjY2Vz
-cw0KPiBSZXR1cm5lZCBzdWNjZXNzDQo+IHN1Y2NlZWRlZA0KDQpTbyB0aGlzIG1lYW5zIHdo
-YXRldmVyIHZhbGlkYXRpb24gc2VydmljZSByZXR1cm5lZCBzdWNjZXNzLiAgV2hhdCBpcw0K
-eW91ciB2YWxpZGF0aW9uIHNlcnZpY2U/ICBJIGFzayBiZWNhdXNlIHRoaXMgd2lsbCBiZSB1
-c2VmdWwgdG8gYWRkcmVzcw0KZWFybHkgLSBzbyB0aGF0IHdoaWxlIHlvdSdyZSBnZXR0aW5n
-IHRoZSB3cm9uZyBieXRlcywgeW91IGRvbid0DQphY2NpZGVudGFsbHkgdXBkYXRlIHlvdXIg
-Ym1jLg0KDQo+IE9wZW5pbmcgdGhlIHVwZGF0ZSBmaWxlDQo+IENvbW1pdHRpbmcgdG8gL2Zs
-YXNoL3VwZGF0ZSB0byB0cmlnZ2VyIHNlcnZpY2UNCj4gQ2FsbGluZyBzdGF0IG9uIC9mbGFz
-aC91cGRhdGUgc2Vzc2lvbiB0byBjaGVjayBzdGF0dXMNCj4gcnVubmluZw0KPiBPcGVuaW5n
-IHRoZSBjbGVhbnVwIGJsb2INCj4gRXhjZXB0aW9uIHJlY2VpdmVkOiBibG9iIGV4Y2VwdGlv
-biByZWNlaXZlZDogUmVjZWl2ZWQgSVBNSV9DQzogMjU1DQo+DQo+DQo+DQo+DQo+IEkgd2Fz
-IGFibGUgdG8gc2VlIHRoZXJlIHdhcyBhIDMyTSBzaXplIG9mIGltYWdlLWJtYyBoYWQgYmVl
-biB1cGxvYWRlZCB1bmRlciAvcnVuL2luaXRyYW1mcywgYnV0IGJ5IHVzaW5nIGhleGR1bXAg
-LUMsIGZpbmRpbmcgdGhpcyB1cGxvYWRlZCBmaWxlIHdhcyBub3QgdGhlIGNvcnJlY3QgaW1h
-Z2UgZGF0YSBhcyBleHBlY3RlZC4NCg0KSW50ZXJlc3RpbmcsIHNvDQoNCj4NCj4gRG8geW91
-IGhhdmUgYW55IHN1Z2dlc3Rpb25zPw0KPg0KPg0KPiBUaGFua3MsDQo+IENvbm5pZQ0KPg0K
-Pg0KPg0KPg0KPg0KPg0KPg0KPg0KPg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
-PiBGcm9tOiBQYXRyaWNrIFZlbnR1cmUgW21haWx0bzp2ZW50dXJlQGdvb2dsZS5jb21dDQo+
-IFNlbnQ6IEZyaWRheSwgSnVseSAzMSwgMjAyMCAzOjU3IFBNDQo+IFRvOiBDb25uaWUgWWlu
-DQo+IENjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4gU3ViamVjdDogUmU6IFF1ZXJ5
-IHJlZ2FyZGluZyB0aGUgaG9zdCBMUEMgYWRkcmVzcyBpbiBwaG9zcGhvci1pcG1pLWZsYXNo
-DQo+DQo+IE9uIEZyaSwgSnVsIDMxLCAyMDIwIGF0IDExOjIxIEFNIENvbm5pZSBZaW4gPENv
-bm5pZVlAYW1pLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBIaSwgVGVhbSwNCj4gPg0KPiA+DQo+
-ID4NCj4gPiBJIGFtIGNoZWNraW5nIHRoaXMgT3BlbUJNQyBmaXJtd2FyZSB1cGRhdGUgaW50
-ZXJmYWNlIG9uIGFuIHg4NiBzeXN0ZW0sIGFuZCB3b25kZXJpbmcgaG93IHRvIGNvbnN0cnVj
-dCB0aGlzIGhvc3QgTFBDIGFkZHJlc3MgYXQgd2hpY2ggdGhlIGNodW5rIGlzIHRvIGJlIG1h
-cHBlZC4NCj4gPg0KPiA+IEkgc2F3IG9uY2Ugd2hlbiB0ZXN0IG9uIHNvbWUgcGxhdGZvcm0s
-ICAweGZlZGMxMDAwIHdhcyB1c2VkIGFzIGhvc3QgTFBDIGFkZHJlc3MuDQo+ID4NCj4gPg0K
-PiA+DQo+ID4gV291bGQgYW55b25lIHBsZWFzZSBlbGFib3JhdGUgYSBsaXR0bGUgYml0IG1v
-cmU/ICBUbyBnZXQgdGhpcyBob3N0IExQQyBhZGRyZXNzLCAgc2hvdWxkIEkgYWRkL21vZGlm
-eSBzb21lIGRyaXZlcnMgaW4gQk1DPyBXaGF0IGFib3V0IGhvc3Qgc2lkZT8NCj4NCj4gVGhl
-IGhvc3Qtc2lkZSBhZGRyZXNzIGlzIGEgcmVnaW9uIHNldCBhc2lkZSBpbiB0aGUgQklPUyB0
-aGF0IGdldHMNCj4gcmVzZXJ2ZWQgaW4gdGhlIGU4MjAgbWFwLiAgVGhlIEJpT1MgZGV2IGFk
-ZHMgaXQgbWFudWFsbHkgZm9yIHRoaXMNCj4gcHVycG9zZS4NCj4NCj4gPg0KPiA+DQo+ID4N
-Cj4gPg0KPiA+DQo+ID4gVGhhbmtzIGEgbG90Lg0KPiA+DQo+ID4gQ29ubmllDQo+ID4NCj4g
-PiBQIFBsZWFzZSBjb25zaWRlciB0aGUgZW52aXJvbm1lbnQgYmVmb3JlIHByaW50aW5nIHRo
-aXMgZW1haWwNCj4gPg0KPiA+IFRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaW4gdGhpcyBt
-ZXNzYWdlIG1heSBiZSBjb25maWRlbnRpYWwgYW5kIHByb3ByaWV0YXJ5IHRvIEFtZXJpY2Fu
-IE1lZ2F0cmVuZHMgKEFNSSkuIFRoaXMgY29tbXVuaWNhdGlvbiBpcyBpbnRlbmRlZCB0byBi
-ZSByZWFkIG9ubHkgYnkgdGhlIGluZGl2aWR1YWwgb3IgZW50aXR5IHRvIHdob20gaXQgaXMg
-YWRkcmVzc2VkIG9yIGJ5IHRoZWlyIGRlc2lnbmVlLiBJZiB0aGUgcmVhZGVyIG9mIHRoaXMg
-bWVzc2FnZSBpcyBub3QgdGhlIGludGVuZGVkIHJlY2lwaWVudCwgeW91IGFyZSBvbiBub3Rp
-Y2UgdGhhdCBhbnkgZGlzdHJpYnV0aW9uIG9mIHRoaXMgbWVzc2FnZSwgaW4gYW55IGZvcm0s
-IGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIFBsZWFzZSBwcm9tcHRseSBub3RpZnkgdGhlIHNl
-bmRlciBieSByZXBseSBlLW1haWwgb3IgYnkgdGVsZXBob25lIGF0IDc3MC0yNDYtODYwMCwg
-YW5kIHRoZW4gZGVsZXRlIG9yIGRlc3Ryb3kgYWxsIGNvcGllcyBvZiB0aGUgdHJhbnNtaXNz
-aW9uLg0KPg0KPiBQbGVhc2UgY29uc2lkZXIgdGhlIGVudmlyb25tZW50IGJlZm9yZSBwcmlu
-dGluZyB0aGlzIGVtYWlsLg0KPg0KPiBUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRo
-aXMgbWVzc2FnZSBtYXkgYmUgY29uZmlkZW50aWFsIGFuZCBwcm9wcmlldGFyeSB0byBBbWVy
-aWNhbiBNZWdhdHJlbmRzIChBTUkpLiAgVGhpcyBjb21tdW5pY2F0aW9uIGlzIGludGVuZGVk
-IHRvIGJlIHJlYWQgb25seSBieSB0aGUgaW5kaXZpZHVhbCBvciBlbnRpdHkgdG8gd2hvbSBp
-dCBpcyBhZGRyZXNzZWQgb3IgYnkgdGhlaXIgZGVzaWduZWUuIElmIHRoZSByZWFkZXIgb2Yg
-dGhpcyBtZXNzYWdlIGlzIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCB5b3UgYXJlIG9u
-IG5vdGljZSB0aGF0IGFueSBkaXN0cmlidXRpb24gb2YgdGhpcyBtZXNzYWdlLCBpbiBhbnkg
-Zm9ybSwgaXMgc3RyaWN0bHkgcHJvaGliaXRlZC4gIFBsZWFzZSBwcm9tcHRseSBub3RpZnkg
-dGhlIHNlbmRlciBieSByZXBseSBlLW1haWwgb3IgYnkgdGVsZXBob25lIGF0IDc3MC0yNDYt
-ODYwMCwgYW5kIHRoZW4gZGVsZXRlIG9yIGRlc3Ryb3kgYWxsIGNvcGllcyBvZiB0aGUgdHJh
-bnNtaXNzaW9uLg0KDQpQbGVhc2UgY29uc2lkZXIgdGhlIGVudmlyb25tZW50IGJlZm9yZSBw
-cmludGluZyB0aGlzIGVtYWlsLg0KDQpUaGUgaW5mb3JtYXRpb24gY29udGFpbmVkIGluIHRo
-aXMgbWVzc2FnZSBtYXkgYmUgY29uZmlkZW50aWFsIGFuZCBwcm9wcmlldGFyeSB0byBBbWVy
-aWNhbiBNZWdhdHJlbmRzIChBTUkpLiAgVGhpcyBjb21tdW5pY2F0aW9uIGlzIGludGVuZGVk
-IHRvIGJlIHJlYWQgb25seSBieSB0aGUgaW5kaXZpZHVhbCBvciBlbnRpdHkgdG8gd2hvbSBp
-dCBpcyBhZGRyZXNzZWQgb3IgYnkgdGhlaXIgZGVzaWduZWUuIElmIHRoZSByZWFkZXIgb2Yg
-dGhpcyBtZXNzYWdlIGlzIG5vdCB0aGUgaW50ZW5kZWQgcmVjaXBpZW50LCB5b3UgYXJlIG9u
-IG5vdGljZSB0aGF0IGFueSBkaXN0cmlidXRpb24gb2YgdGhpcyBtZXNzYWdlLCBpbiBhbnkg
-Zm9ybSwgaXMgc3RyaWN0bHkgcHJvaGliaXRlZC4gIFBsZWFzZSBwcm9tcHRseSBub3RpZnkg
-dGhlIHNlbmRlciBieSByZXBseSBlLW1haWwgb3IgYnkgdGVsZXBob25lIGF0IDc3MC0yNDYt
-ODYwMCwgYW5kIHRoZW4gZGVsZXRlIG9yIGRlc3Ryb3kgYWxsIGNvcGllcyBvZiB0aGUgdHJh
-bnNtaXNzaW9uLg0K
+On 8/7/2020 10:17 AM, Jason Ling wrote:
+>       feel like this approach already isn't optimal as in reality most
+>     systems aren't going to have half of those sensors, and you're then
+>     creating useless matches for things that don't matter to your platform.
+> 
+> I'm assuming that you're referring to the general approach of PSUSensors 
+> and not referring to extending the list using a config file?
+> If so then I agree.
+> I'm also a bit confused about scanning every hwmon attribute on the 
+> system and seeing if has a name that is in the permit list..then seeing 
+> if it has an appropriate configuration. Why not just grab the 
+> configuration and using that information navigate to the appropriate 
+> hwmon path and take what is there? (Why even bother with validating the 
+> driver name?) . Any context would be helpful; I'm trying to grok the design.
+> 
+>     Maybe something like allowing a device to be exported with a different
+>     keyword other then 'type' in Entity Manager would allow us to just use
+>     one PSUSensor config type, then your export could be hidden in your EM
+>     config?
+> 
+> Sure, or maybe a catchall type for something PSUSensor can consume (and 
+> bypass the name check?)
+
+Yeah that's what I meant, a generic PSUSensor Type with a field called 
+'Export' or something that EM can use to get the Export type.
+
+> 
+> On Fri, Aug 7, 2020 at 10:06 AM James Feist <james.feist@linux.intel.com 
+> <mailto:james.feist@linux.intel.com>> wrote:
+> 
+>     On 8/7/2020 9:54 AM, Jason Ling wrote:
+>      >> What about making the device/type lists in PSUSensors extendable
+>     using JSON?
+>      >
+>      >     Say more about what you're wanting to do here.....
+>      >
+>      >   Take
+>      >
+>     https://github.com/openbmc/dbus-sensors/blob/master/src/PSUSensorMain.cpp#L43 and
+> 
+>      >
+>     https://github.com/openbmc/dbus-sensors/blob/master/src/PSUSensorMain.cpp#L59 and
+> 
+>      > make it so those can be extended using (for example) without an
+>     upstream
+>      > code change. I picked JSON as the easiest example.
+>      > IIRC PSUSensors does validity checks to make sure that the device
+>     emits
+>      > a name in its 'permit list' (hwmontempsensor is less picky) so
+>     tricking
+>      > PSUSensors into gathering telemetry for a non-public device is
+>     tricky.
+> 
+>     I feel like this approach already isn't optimal as in reality most
+>     systems aren't going to have half of those sensors, and you're then
+>     creating useless matches for things that don't matter to your platform.
+>     Maybe something like allowing a device to be exported with a different
+>     keyword other then 'type' in Entity Manager would allow us to just use
+>     one PSUSensor config type, then your export could be hidden in your EM
+>     config?
+> 
+> 
+>      >
+>      >     Can you give an
+>      >     example of what you would use it for?
+>      >
+>      > Sure, the primary use case would be
+>      > It's a non public device. Would rather not broadcast information
+>     about
+>      > it or have to obfuscate the device name. Really would rather not
+>      > maintain patches until the device is made public.
+>      >
+>      >
+>      >
+>      > On Fri, Aug 7, 2020 at 9:39 AM Ed Tanous <ed@tanous.net
+>     <mailto:ed@tanous.net>
+>      > <mailto:ed@tanous.net <mailto:ed@tanous.net>>> wrote:
+>      >
+>      >     On Fri, Aug 7, 2020 at 9:36 AM Jason Ling
+>     <jasonling@google.com <mailto:jasonling@google.com>
+>      >     <mailto:jasonling@google.com <mailto:jasonling@google.com>>>
+>     wrote:
+>      >      >
+>      >      > Slightly different topic:
+>      >      > What about making the device/type lists in PSUSensors
+>     extendable
+>      >     using JSON?
+>      >      >
+>      >
+>      >     Say more about what you're wanting to do here.....  Can you
+>     give an
+>      >     example of what you would use it for?
+>      >
+> 
