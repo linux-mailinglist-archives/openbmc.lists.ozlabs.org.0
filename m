@@ -2,57 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D82223F1AA
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 19:07:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49A4523F1C4
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 19:12:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BNWxZ3LtDzDqvD
-	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 03:07:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BNX3H5YZCzDqk9
+	for <lists+openbmc@lfdr.de>; Sat,  8 Aug 2020 03:12:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BNWwh1C4lzDqQ6
- for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 03:06:27 +1000 (AEST)
-IronPort-SDR: LX1ncGEA8KoLXQLbYr63RC8Sn1CFA2cv5cUNCUs/J1unAt6vDSJ2QzHzy9K1/5mnZo9qa5v1D1
- w4V0s8pOLQpA==
-X-IronPort-AV: E=McAfee;i="6000,8403,9706"; a="153112261"
-X-IronPort-AV: E=Sophos;i="5.75,446,1589266800"; d="scan'208";a="153112261"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BNX2F23hfzDqL5
+ for <openbmc@lists.ozlabs.org>; Sat,  8 Aug 2020 03:11:16 +1000 (AEST)
+IronPort-SDR: hH5A7DhuBt2fdXJ0BeeFM4iXFgXrX61JhysEhTmqUhySPa5/J6qW+G+2tMwepGrQKwcSTqs7IM
+ nbaj0t9xaTLA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9706"; a="150860117"
+X-IronPort-AV: E=Sophos;i="5.75,446,1589266800"; d="scan'208";a="150860117"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2020 10:06:24 -0700
-IronPort-SDR: IdYD6p3HEI0C54S3tyXLVXokTbx5Uhd0uHmip1FsIMJVfcCuZvhIikhTbXJrBNthEONiJNcI7g
- qWrLqLdTzTOA==
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Aug 2020 10:11:13 -0700
+IronPort-SDR: TQeMcD1F9FVX0RqhXfRt0AyVGYA6j0SEDwyaj/bjETw8Xa8g8PKMiZ/kXoKwXVl760/jxFeEYS
+ BX+dOes7pqWA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.75,446,1589266800"; d="scan'208";a="333600170"
-Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.209.36.209])
- ([10.209.36.209])
- by orsmga007.jf.intel.com with ESMTP; 07 Aug 2020 10:06:24 -0700
-Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
-To: Jason Ling <jasonling@google.com>, Ed Tanous <ed@tanous.net>
-References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
- <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
- <CAHBbfcUXLueZ3MZAP9b38B-fXyrNCMAeZcC7uk8uPrR5gw=3xQ@mail.gmail.com>
- <2bb88ede-4d35-8b9c-936f-be8dc9a453e5@linux.intel.com>
- <CAHBbfcUDMOZjxSvy8wVW_F9f3+NaX-WU3G5PF1oUoRx5VP7ZoQ@mail.gmail.com>
- <CACWQX82KAhmRbg-CYa8+Yjd8mE7qCM_vG_Q1_hYZVR77c3gdtw@mail.gmail.com>
- <CAHBbfcUJGnsW_dxONwjsT=w3ZM453-o0Ubc7DE7oOJQ8u28=ww@mail.gmail.com>
-From: James Feist <james.feist@linux.intel.com>
-Message-ID: <5a59238b-7653-b11f-701b-039d57dd5b98@linux.intel.com>
-Date: Fri, 7 Aug 2020 10:06:24 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+X-IronPort-AV: E=Sophos;i="5.75,446,1589266800"; d="scan'208";a="437963382"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga004.jf.intel.com with ESMTP; 07 Aug 2020 10:11:13 -0700
+Received: from [10.251.4.23] (jmbills-MOBL.amr.corp.intel.com [10.251.4.23])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 43B79580765
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Aug 2020 10:11:13 -0700 (PDT)
+Subject: Re: system power control
+To: openbmc@lists.ozlabs.org
+References: <BYAPR14MB2342FEAAE4DBA6383E3885FFCF490@BYAPR14MB2342.namprd14.prod.outlook.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <2b9f359f-019a-c6b4-d200-357124649cd7@linux.intel.com>
+Date: Fri, 7 Aug 2020 10:11:12 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CAHBbfcUJGnsW_dxONwjsT=w3ZM453-o0Ubc7DE7oOJQ8u28=ww@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <BYAPR14MB2342FEAAE4DBA6383E3885FFCF490@BYAPR14MB2342.namprd14.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -66,55 +64,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/7/2020 9:54 AM, Jason Ling wrote:
->> What about making the device/type lists in PSUSensors extendable using JSON?
-> 
->     Say more about what you're wanting to do here..... 
-> 
->  Â Take 
-> https://github.com/openbmc/dbus-sensors/blob/master/src/PSUSensorMain.cpp#L43Â and 
-> https://github.com/openbmc/dbus-sensors/blob/master/src/PSUSensorMain.cpp#L59Â and 
-> make it so those can be extended using (for example) without an upstream 
-> code change. I picked JSON as the easiest example.
-> IIRC PSUSensors does validity checks to make sure that the device emits 
-> a name in its 'permit list' (hwmontempsensor is less picky) so tricking 
-> PSUSensors into gathering telemetry for a non-public device is tricky.
-
-I feel like this approach already isn't optimal as in reality most 
-systems aren't going to have half of those sensors, and you're then 
-creating useless matches for things that don't matter to your platform. 
-Maybe something like allowing a device to be exported with a different 
-keyword other then 'type' in Entity Manager would allow us to just use 
-one PSUSensor config type, then your export could be hidden in your EM 
-config?
 
 
+On 8/6/2020 11:43 PM, Zhao Kun wrote:
+> Hi,
 > 
->     Can you give an
->     example of what you would use it for?
+> I’m new to learn how to make OpenBMC work on a X86 based system. 
+> Currently I met a problem of mapping the GPIOs about power 
+> on/off/reset/status into OpenBMC logic. I understand when user issue a 
+> power on request through any user interfaces like RESTful, IPMI, etc., 
+> some service (phosphor-state-manager?) will be triggered to check 
+> current status and roll out corresponding systemd services to do the 
+> job. (please correct me if I’m wrong)
 > 
-> Sure, the primary use case would be
-> It's a non public device. Would rather not broadcast information about 
-> it or have to obfuscate the device name. Really would rather not 
-> maintain patches until the device is made public.
+> But I’m just confused on how those services actually toggle or check the 
+> GPIOs, there seems be many choices,
 > 
+>  1. Device tree?
+>  2. Using Workbook gpio_defs.json?
+>  3. Create some services calling platform specific scripts to operate
+>     GPIO or I2C devices?
+>  4. Using x86-power-control?
 > 
+> So what’s the most recommended way to do it? Really appreciated If 
+> anyone can share some lights.
+On Intel reference platforms, we use x86-power-control and configure the 
+GPIO names using device tree.
+
 > 
-> On Fri, Aug 7, 2020 at 9:39 AM Ed Tanous <ed@tanous.net 
-> <mailto:ed@tanous.net>> wrote:
+> I thought there must be a mechanism to consume some kind of 
+> configuration file as the hardware abstraction layer. So I guess it 
+> might be gpio_defs.json or device tree.
 > 
->     On Fri, Aug 7, 2020 at 9:36 AM Jason Ling <jasonling@google.com
->     <mailto:jasonling@google.com>> wrote:
->      >
->      > Slightly different topic:
->      > What about making the device/type lists in PSUSensors extendable
->     using JSON?
->      >
+> Thanks.
 > 
->     Say more about what you're wanting to do here.....Â  Can you give an
->     example of what you would use it for?
+> Best regards,
+> 
+> Kun Zhao
+> 
+> /*
+> 
+> zkxz@hotmail.com <mailto:zkxz@hotmail.com>
+> 
+> */
 > 
