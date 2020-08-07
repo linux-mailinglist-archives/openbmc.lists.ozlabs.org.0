@@ -1,67 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5854723E428
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 00:54:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1262323E5DD
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 04:33:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BN3hK3CkYzDqss
-	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 08:54:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BN8YB0wpjzDqwN
+	for <lists+openbmc@lfdr.de>; Fri,  7 Aug 2020 12:33:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32c;
- helo=mail-ot1-x32c.google.com; envelope-from=jasonling@google.com;
+ smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=us.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=DBm0c4nF; dkim-atps=neutral
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
- [IPv6:2607:f8b0:4864:20::32c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=TVz9wfGL; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BN3gb1McGzDqss
- for <openbmc@lists.ozlabs.org>; Fri,  7 Aug 2020 08:53:29 +1000 (AEST)
-Received: by mail-ot1-x32c.google.com with SMTP id r21so153314ota.10
- for <openbmc@lists.ozlabs.org>; Thu, 06 Aug 2020 15:53:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=FJANOZ3gAYfu//ltQK0+4GfSCqpHOW64N7/jiQLE5UI=;
- b=DBm0c4nF8klRQWTyzROUBLAM6mmZq55HHTK1MXOu9PIRh+T2fs9vVQQH7nII24dWdT
- AyA4dL++VdhOQjKSeyukRr0mhh53Yg7nDJg+qjHkvaDx/U9nE6pXFcItxFWfckJDwIxD
- Rfah+IVpP9o41sazroBekESdLc03xxO3PqYfyU+bnqngNxrtL8HRGMvSKhok2uHrpcJV
- MELUv/sND2YRPWZFQ1gyv69YydhVlXwtMbfNIF+Tuz76DuJkHHkg/h65DJIjcWp31PZ6
- ojbKgCb4TI1iOBS5hzd5xLrypq07zPdeD1dNXOWMNhHLPtAGqVoNsbiMogn2nACcgeB7
- y3nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=FJANOZ3gAYfu//ltQK0+4GfSCqpHOW64N7/jiQLE5UI=;
- b=spyO6hsV430ItAqNtZxAJbKEeSI9b9bz43GdzzCjbdl2R0WAlcSAgJaEz+wsOIlJaZ
- 82Gpwo+zWBYCVHNgXOVtroz3pnl9wRLzil/ZHSs2Qdxh3IilXB/+GR2pZoM/BTBW4R6x
- m/ILgVDNcEyYzx5H0722DzAyhJiorXxKPogyh9OfLnH2b35UHk+CqRRj2/rEz3Kz3hOX
- 2jeMOEKpPb7Y0pJDYRcZtU49qIakhKCuDo6D9aCz6pT57oAD4JGhgBPkF23jBS6lr8Zc
- pjYuW7jpWb8TrUeLGmEqIE5dMIO86oFgZ/6H2/tJjNrB3doGb1yEkXJxyQkKuhecARde
- 1UiA==
-X-Gm-Message-State: AOAM530IIVcTojPakOj06YW1j/T+K0mT9CvWn/SsLHM+8sdlW0Ulz2E6
- 0cVaFSIdBmmkIf2ALWFYKi1ZSXoPLpic8zWn2EHjtOfU
-X-Google-Smtp-Source: ABdhPJx4XoGp3JNnxvy3Tr5RasmhXqtJgBbnF1U8ITT8ZjjCsMx5zaE6alxWwRPLTA+I5qSQC4Qh4M55t0kAo7q+6MU=
-X-Received: by 2002:a9d:450a:: with SMTP id w10mr9442699ote.327.1596754407111; 
- Thu, 06 Aug 2020 15:53:27 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BN8XM0TDCzDqty
+ for <openbmc@lists.ozlabs.org>; Fri,  7 Aug 2020 12:32:34 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 07723VRG114004
+ for <openbmc@lists.ozlabs.org>; Thu, 6 Aug 2020 22:32:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : mime-version : references : content-transfer-encoding :
+ content-type : message-id : subject; s=pp1;
+ bh=qSvirqkq944ox9BJ1y232hlKtI24KDn2UGwmtROhhi4=;
+ b=TVz9wfGLNMmir3jVimPRSth/xEB/efVdfzz/Npo3DaCpbAc+JzGDwup53ngcdN+EE7J7
+ 7Ji824BsQlqtBu1hEMuI4TH/kSHKDIaMi5dsPpQTTYU6JlqaIDuXubfWbFhmvPn6Lbo4
+ 99s5r7N3MbVCAiMFDZ6xe65NoFSZ/vVu2qV5Iz/tEIXZ3OLnst/T2Q9GTf400bc2n/fH
+ AFa75l6qIgl0uslQKEgdhiD/kHn6VVQb5UslZ0mmTj9ttyUW5O9RSr9WE9MuD51uGnEJ
+ Uwtqr3332Kg6R5T9crk33h/o5jxznXy+61QqKbhFXW8xsFYlEJeH0HDNhgSVoARSEpkQ zw== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.72])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 32ra0s8ypk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 06 Aug 2020 22:32:31 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
+ Fri, 7 Aug 2020 02:32:30 -0000
+Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
+ by smtp.notes.na.collabserv.com (10.106.227.158) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 7 Aug 2020 02:32:27 -0000
+Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
+ by us1a3-smtp03.a3.dal06.isc4sb.com
+ with ESMTP id 2020080702322682-1001518 ;
+ Fri, 7 Aug 2020 02:32:26 +0000 
+In-Reply-To: <F6868B82-B239-44DE-B90A-BD808FEA4C5B@gmail.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: Mike Jones <proclivis@gmail.com>
+Date: Fri, 7 Aug 2020 02:32:27 +0000
 MIME-Version: 1.0
-References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
- <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
-In-Reply-To: <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
-From: Jason Ling <jasonling@google.com>
-Date: Thu, 6 Aug 2020 15:52:50 -0700
-Message-ID: <CAHBbfcUXLueZ3MZAP9b38B-fXyrNCMAeZcC7uk8uPrR5gw=3xQ@mail.gmail.com>
-Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: multipart/alternative; boundary="0000000000003b1f3005ac3d5baa"
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <F6868B82-B239-44DE-B90A-BD808FEA4C5B@gmail.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 53143
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20080702-1335-0000-0000-00000493015F
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.081110
+X-IBM-SpamModules-Versions: BY=3.00013602; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01416684; UDB=6.00759703; IPR=6.01199107; 
+ MB=3.00033399; MTD=3.00000008; XFM=3.00000015; UTC=2020-08-07 02:32:28
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-08-06 19:17:43 - 6.00011693
+x-cbparentid: 20080702-1336-0000-0000-0000D5850148
+Message-Id: <OF66E559B6.C704B66F-ON002585BD.000DF51B-002585BD.000DF524@notes.na.collabserv.com>
+Subject: Re:  Power Supplies are Turned off after boot
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-08-07_01:2020-08-06,
+ 2020-08-07 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,53 +100,42 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003b1f3005ac3d5baa
-Content-Type: text/plain; charset="UTF-8"
+On August 5, 2020 Mike Jones wrote:
 
-Assuming that you mean "Omit Name attribute from the sensor configuration
-definition and then change hwmontemp to require any Name.*"
-This won't work since Entity-Manager requires Name (tried it,
-entity-manager does indeed complain about not finding name).
+>Now that I have webui displaying telemetry for multiple PMBus
+>devices, I want to solve a power supply problem.
+>
+>After boot, all PMBus devices have their power turned off via an
+>OPERATION command. This happens about 10-20 seconds after boot
+>completes. There is a message printed saying it is disabling them,
+>and one line per action. Like:
+>
+>VOUT 1: disabling
+>
+>Where VOUT 1 does not match the name of the rails in the config files
+>with the name and limits. It seems like a more generic term
+>indicating voltage.
+>
+>These devices are in the device tree and have hwmon running.
+>
+>What service would be capable of shutting off the supplies? It would
+>have to be able to discover them, perhaps by device tree, then issue
+>standard PMBus commands.
 
-My rationale for an omit list vs permit list
-(1) if it's a permit list then everytime you add another temp you want to
-monitor you need to add to this list..if you want to drop a temp then you
-have to modify the list again.
-(2) General assumption is that the primary use case is to display all named
-temperatures which means a permit list is typically large
-(3) adding a permit list also breaks all existing code. Everyone has to go
-back into their json config and add all the sensor values to the list.
+I'm guessing the host watchdog was not shutdown when your HOST=20
+completed boot and the watchdog requesed the system power off.
+Normally an IPMI message from the host will disable the watchdog.
 
-My rationale for using the value for the "Name" attribute rather than
-labels or referencing sysfs attributes
-(1) Looking at just the config , it's obvious as to what you're omitting.
-(2) If it's label base, a label change in a driver would mean a breakage in
-the userspace daemon. Not a big deal; but it can be annoying.
-(3) if it's sysfs attribute based then it's my opinion that it's not as
-readable.
+You should be able to see the transition files run in the systemd=20
+journal if this is the case.
 
---0000000000003b1f3005ac3d5baa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+if not try watching for activity by using journalctl to follow=20
+events live in a shell.
 
-<div dir=3D"ltr"><div>Assuming that you mean &quot;Omit Name attribute from=
- the sensor configuration definition and then change hwmontemp to require a=
-ny Name.*&quot;</div><div>This won&#39;t work since Entity-Manager requires=
- Name (tried it, entity-manager does indeed complain about not finding name=
-).</div><div><br></div><div>My rationale for an omit list vs permit list</d=
-iv><div>(1) if it&#39;s a permit list then everytime=C2=A0you add another t=
-emp you want to monitor you need to add to this list..if you want to drop a=
- temp then you have to modify the list again.</div><div>(2) General assumpt=
-ion is that the primary use case is to display all named temperatures which=
- means a permit list is typically large</div><div>(3) adding a permit list =
-also breaks all existing code. Everyone has to go back into their json conf=
-ig and add all the sensor values to the list.</div><div><br></div><div>My r=
-ationale for using the value for the &quot;Name&quot; attribute rather than=
- labels or referencing sysfs attributes</div><div>(1) Looking at just the c=
-onfig , it&#39;s obvious as to what you&#39;re omitting.</div><div>(2) If i=
-t&#39;s label base, a label change in a driver would mean a breakage in the=
- userspace daemon. Not a big deal; but it can be annoying.</div><div>(3) if=
- it&#39;s sysfs attribute based then it&#39;s my opinion that it&#39;s not =
-as readable.</div><div><br></div><div><br></div></div>
+>>Note: the Phosphor System Manager service fails at start up. I don=E2=80=
+=99t
+>know if this matters, I was going to figure out what it does later.
+>
+>Mike
+>
 
---0000000000003b1f3005ac3d5baa--
