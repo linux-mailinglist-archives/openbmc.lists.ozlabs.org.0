@@ -1,65 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38ACE2405A4
-	for <lists+openbmc@lfdr.de>; Mon, 10 Aug 2020 14:14:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB661240ADF
+	for <lists+openbmc@lfdr.de>; Mon, 10 Aug 2020 17:56:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BQFHy2dXVzDqTM
-	for <lists+openbmc@lfdr.de>; Mon, 10 Aug 2020 22:14:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BQLD84jXNzDqVF
+	for <lists+openbmc@lfdr.de>; Tue, 11 Aug 2020 01:56:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=tteq7dhG; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=UHQPT/pO; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BQFGz59bbzDqQt
- for <openbmc@lists.ozlabs.org>; Mon, 10 Aug 2020 22:13:12 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 2FD874C89B;
- Mon, 10 Aug 2020 12:13:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-type:content-type:content-transfer-encoding:mime-version
- :x-mailer:message-id:date:date:subject:subject:from:from
- :received:received:received; s=mta-01; t=1597061584; x=
- 1598875985; bh=bU7ug0SgBjL8PwNbvRh5+PzCf6qzBFDqBsJe4CQmANo=; b=t
- teq7dhGZaK4LFLIWKQK/d0BMVOTHD+8LMuKktdr6Vo89gidQsLtCK7H5ruusODZi
- PPrclEa9HDCI+eZADLA8GyOqFoVh1TOHVJAWhzwRtg7Tce5M0poGGW4hhazqGb6g
- eaOvCqrP3seUQ1MSNRtExaewCOrOabY+jF6iogNsFI=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FhX7i_ZSLZCg; Mon, 10 Aug 2020 15:13:04 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 05AB14C164;
- Mon, 10 Aug 2020 15:13:04 +0300 (MSK)
-Received: from bbwork.com (172.17.14.122) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 10
- Aug 2020 15:13:03 +0300
-From: Alexander Filippov <a.filippov@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: [PATCH u-boot v2016.07-aspeed-openbmc] drivers: ftgmac100: use
- hardware MAC by default
-Date: Mon, 10 Aug 2020 15:12:20 +0300
-Message-ID: <20200810121220.3220-1-a.filippov@yadro.com>
-X-Mailer: git-send-email 2.21.3
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BQLC21WFpzDqRL
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Aug 2020 01:55:09 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 07AFXY8o135199; Mon, 10 Aug 2020 11:55:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to :
+ references : cc : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=5JXPlslo9hslSMgWmZelcxUWZSLgXIGmVoBh7C3UHrQ=;
+ b=UHQPT/pOk3rKCJNRQdp6xNA2mUxmfzYBqFAs7IlABH7zOJHwPMbd5HMvvF7LV4n4g4RE
+ KjQw+HiJLRWV+ZOpbknRLKBSCgUEz9badW+K/coQooOe/KRgHOYUC+Ce1UtEEZWReaGi
+ //66FKn/zp2oCkkGBBZZyWOp9upUWU7c4WBYTLmdmqFM+QmQREZb9AaHvtaPZGov4SdF
+ 25KMoCAbcebeeazf5b01o4NzzkBt9dqba7fSvfRnih7hhPQcrysgtcmyjwDR5mb7Hu+u
+ 1HYkQaqVfKMVWpJZ0byz69eQsNT6CBMMzAmQ0So3YOLPfNBYd4PVdAbuDmmK/+LHIQng 2Q== 
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 32u4g1s4s7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Aug 2020 11:55:05 -0400
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07AFaG5h022267;
+ Mon, 10 Aug 2020 15:55:04 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com
+ (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+ by ppma04wdc.us.ibm.com with ESMTP id 32skp8tf5u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Aug 2020 15:55:04 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 07AFt3wE63701336
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Aug 2020 15:55:03 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F97E78064;
+ Mon, 10 Aug 2020 15:55:03 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E125F7805F;
+ Mon, 10 Aug 2020 15:55:02 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.80.201.154])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Mon, 10 Aug 2020 15:55:02 +0000 (GMT)
+Subject: BMCWeb payloads larger than than 64MB
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <ed.tanous@intel.com>
+References: <cf68b3d3-9f1d-0f2e-cfa2-98afde52e243@linux.ibm.com>
+ <e736ad6d-66fd-f24f-b1e5-74cc2c71e856@linux.ibm.com>
+Message-ID: <9d648ded-ed67-da73-1fa9-084cdc02713c@linux.ibm.com>
+Date: Mon, 10 Aug 2020 10:55:01 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.9.0
 MIME-Version: 1.0
+In-Reply-To: <e736ad6d-66fd-f24f-b1e5-74cc2c71e856@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [172.17.14.122]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-08-10_12:2020-08-06,
+ 2020-08-10 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 phishscore=0 mlxlogscore=999 impostorscore=0 clxscore=1011
+ priorityscore=1501 mlxscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008100115
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,76 +100,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Alexander Filippov <a.filippov@yadro.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: james.feist@intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-During the network interface initialization in ast_g5_phy based
-configurations the original hardware MAC address is ignored and the
-actual value is filled with zeros until the appropriate environment
-variable is set.
-Probably, others PHY-based configurations are also affected.
-For example: The MAC addresses specified in command line arguments for
-qemu are ignored and all ethernet interfaces have randomly generated MAC
-addresses.
+On 8/5/20 6:26 PM, Joseph Reynolds wrote:
+> On 8/3/20 4:09 PM, Joseph Reynolds wrote:
+>> This is a reminder of the OpenBMC Security Working Group meeting 
+>> scheduled for this Wednesday August 5 at 10:00am PDT.
+>>
+>> We'll discuss current development items, and anything else that comes 
+>> up.
 
-This commit makes ftg100 driver to read the hardware MAC address during
-device initialization and do not fill it with zeros if the environment
-has no definitions for this interface.
+...snip...
 
-Signed-off-by: Alexander Filippov <a.filippov@yadro.com>
----
- drivers/net/ftgmac100.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+>> 4. Is there interest in enhancing OpenBMC firmware image update 
+>> uploads using the Redfish-specified multipart HTTP push updates (that 
+>> is, support the MultipartHttpPushUri property?
+> Sounds good, but nobody is working on it.  We also discussed use cases 
+> for golden/primary/active/alternate images.
+>
+Ed,
 
-diff --git a/drivers/net/ftgmac100.c b/drivers/net/ftgmac100.c
-index 5779057ba8..5aaad533e5 100644
---- a/drivers/net/ftgmac100.c
-+++ b/drivers/net/ftgmac100.c
-@@ -481,6 +481,23 @@ static void ftgmac100_set_mac(struct eth_device *dev,
- 	__raw_writel(laddr, &ftgmac100->mac_ladr);
- }
- 
-+/*
-+ * Get actual MAC address
-+ */
-+static void ftgmac100_get_hw_mac(struct eth_device *dev)
-+{
-+	struct ftgmac100 *ftgmac100 = (struct ftgmac100 *)dev->iobase;
-+	unsigned int maddr = __raw_readl(&ftgmac100->mac_madr);
-+	unsigned int laddr = __raw_readl(&ftgmac100->mac_ladr);
-+
-+	dev->enetaddr[0] = (maddr >>  8) & 0xFF;
-+	dev->enetaddr[1] = (maddr >>  0) & 0xFF;
-+	dev->enetaddr[2] = (laddr >> 24) & 0xFF;
-+	dev->enetaddr[3] = (laddr >> 16) & 0xFF;
-+	dev->enetaddr[4] = (laddr >>  8) & 0xFF;
-+	dev->enetaddr[5] = (laddr >>  0) & 0xFF;
-+}
-+
- static void ftgmac100_set_mac_from_env(struct eth_device *dev)
- {
- #ifdef CONFIG_SYS_I2C_MAC_OFFSET
-@@ -513,7 +530,9 @@ static void ftgmac100_set_mac_from_env(struct eth_device *dev)
- 
- 	ftgmac100_set_mac(dev, dev->enetaddr);
- #else
--	eth_getenv_enetaddr_by_index("eth", dev->index, dev->enetaddr);
-+	unsigned char enetaddr[6];
-+	if (eth_getenv_enetaddr_by_index("eth", dev->index, enetaddr))
-+		memcpy(dev->enetaddr, enetaddr, sizeof(enetaddr));
- //	eth_getenv_enetaddr("ethaddr", dev->enetaddr);
- 	ftgmac100_set_mac(dev, dev->enetaddr);
- #endif
-@@ -794,6 +813,7 @@ int ftgmac100_initialize(bd_t *bd)
- 		ftgmac100_reset(dev);
- 
- 		/* set the ethernet address */
-+		ftgmac100_get_hw_mac(dev);
- 		ftgmac100_set_mac_from_env(dev);
- 
- 		card_number++;
--- 
-2.21.3
+You mentioned "For any payloads larger than 64MB, this stuff needs 
+revisited" on Jul 22 in 
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/34972 and I would 
+like to learn more about what you think the direction should be.
+
+In the mean time it seems like the current design can tolerate a 128Mb 
+payload.  Do you foresee additional problems other than we've already 
+seen?  Examples: resource use, slow connections, and the attending 
+security vulnerabilities.
+
+- Joseph
 
