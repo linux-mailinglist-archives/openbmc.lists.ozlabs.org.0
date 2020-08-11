@@ -1,45 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45F0E241630
-	for <lists+openbmc@lfdr.de>; Tue, 11 Aug 2020 08:09:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 52F9B241635
+	for <lists+openbmc@lfdr.de>; Tue, 11 Aug 2020 08:13:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BQj8b3cjrzDqLq
-	for <lists+openbmc@lfdr.de>; Tue, 11 Aug 2020 16:09:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BQjFT3NWkzDqFK
+	for <lists+openbmc@lfdr.de>; Tue, 11 Aug 2020 16:13:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=zd-tech.com.cn (client-ip=220.194.24.90;
- helo=mail-m2490.qiye.163.com; envelope-from=rxsun@zd-tech.com.cn;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::544;
+ helo=mail-ed1-x544.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=zd-tech.com.cn
-Received: from mail-m2490.qiye.163.com (mail-m2490.qiye.163.com
- [220.194.24.90])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=IoXmXhnc; dkim-atps=neutral
+Received: from mail-ed1-x544.google.com (mail-ed1-x544.google.com
+ [IPv6:2a00:1450:4864:20::544])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BQ7m22s9HzDqKD
- for <openbmc@lists.ozlabs.org>; Mon, 10 Aug 2020 18:04:26 +1000 (AEST)
-Received: from rxsun$zd-tech.com.cn ( [218.247.145.4] ) by
- ajax-webmail-sdy10 (Coremail) ; Mon, 10 Aug 2020 16:04:04 +0800 (GMT+08:00)
-Date: Mon, 10 Aug 2020 16:04:04 +0800
-From: "rxsun"<rxsun@zd-tech.com.cn>
-To: "Derick Montague"<Derick.Montague@ibm.com>
-Message-ID: <7f021423.2ebfc5.173d765e0a1.Coremail.rxsun@zd-tech.com.cn>
-In-Reply-To: <5F30F967.1080806@zd-tech.com.cn>
-References: <46248870.1c8dc3.170a87ecdc0.Coremail.rxsun@zd-tech.com.cn><OF66F85A09.1A6A1395-ON00258528.003FC677-00258528.00404CA3@notes.na.collabserv.com><5F30F967.1080806@zd-tech.com.cn>
-Subject: Re:  Re: Network Settings GUI
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BQjDf3LFdzDqLF
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Aug 2020 16:12:48 +1000 (AEST)
+Received: by mail-ed1-x544.google.com with SMTP id l23so8144907edv.11
+ for <openbmc@lists.ozlabs.org>; Mon, 10 Aug 2020 23:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=l1fH3iKHfY3Tpfx9rmQTNN18VnOj5mn67jJ2Gsmm9gI=;
+ b=IoXmXhncPS4+gmykZwJ0dvdkbPopm5V8iE6gFp1/Tzt865s7YW59IBTwvKjeZkE3Er
+ xcRH0lkaJNhM4ADRM5QOXB6fTIoH0Q1D8A8uhTRGsQUVPY3kPNSvlH6zIzdn39M8pKbl
+ ZjhVXyXxIM1PIbxmoSq2KAy8OCTFQPXm2NAu8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=l1fH3iKHfY3Tpfx9rmQTNN18VnOj5mn67jJ2Gsmm9gI=;
+ b=tL3VlhhqeYe4z1comnf0FRmR5SKq5w+FYmPzWaBCWyOjeyhSkfHiLZBvktnlzwW5MD
+ tdqyAiNeQxOaDZCYoKa8J9cPqhm2TcizwKcN15yIiUT7DeXhymbw8UOUpIjxCQquboWc
+ ooK0P7z2iAxn4RFR9P1A8PsUhO9B4Bt6iREMf/uTeo1Psqxi4RN2epMliYlFME35CNnz
+ Mvl9xUUyAETtJIyTdhTXXvsZluMOSh3nXJssCpX/vJOHBxWXnKjU3gDlNdVlr6p77J2d
+ FZl9xGqOWPhfYauuMPELTk4z1M/8RWygYoLoqbMsTBy2OMza5X3lfYhnFLJgrauA3iRq
+ jetA==
+X-Gm-Message-State: AOAM530Or/wC1dGG5U5UgbWK9SfD5AJBF6BhM+3RvI8ki8QyROE16EA5
+ Bc07ON3OUtuBgKX1bxmcyNLLk+oOVoa6KwHj4Qc=
+X-Google-Smtp-Source: ABdhPJwhvFFFhOT45vhzeCWNVzsJa18owuqq3O8w4GYEbsMjhp1B34CKyfoGU+/6AGlbYECdOaGGNIqEmVjhs9YbO7k=
+X-Received: by 2002:aa7:d304:: with SMTP id p4mr23550901edq.267.1597126363122; 
+ Mon, 10 Aug 2020 23:12:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="__=_Part_Boundary_004_001435.027627"
-X-Mailer: NetEase Flash Mail 2.4.1.32
-X-Priority: 3 (Normal)
-X-Originating-IP: [218.247.145.4]
-X-CM-TRANSID: WudpCgD3_6N0_zBfQ18oAA--.54731W
-X-CM-SenderInfo: pu0v30o62gg3xhfkhulrpou0/1tbiTQ18hVdqAjTRagABsI
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Mailman-Approved-At: Tue, 11 Aug 2020 16:07:19 +1000
+References: <20200810184446.GA14652@bbwork.lan>
+In-Reply-To: <20200810184446.GA14652@bbwork.lan>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 11 Aug 2020 06:12:30 +0000
+Message-ID: <CACPK8XdFNpsyzgY8n_3VTxS-Z88bT1pBEXPO+w=dWE6G1fj3jA@mail.gmail.com>
+Subject: Re: The Power9 host booting problem with OpenBMC kernel 5.7.x
+To: "Alexander A. Filippov" <a.filippov@yadro.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,129 +69,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>,
- "derick.montague" <derick.montague@gmail.com>,
- =?UTF-8?B?5oiQ5L+u5rK7?= <xzcheng@zd-tech.com.cn>,
- ratagupt <ratagupt@linux.vnet.ibm.com>
+Cc: Artem Senichev <artemsen@gmail.com>, openbmc <openbmc@lists.ozlabs.org>,
+ Alexander Amelkin <a.amelkin@yadro.com>, Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---__=_Part_Boundary_004_001435.027627
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+On Mon, 10 Aug 2020 at 18:48, Alexander A. Filippov
+<a.filippov@yadro.com> wrote:
+>
+> Since the kernel in OpenBMC was updated to 5.7.x we have a problem with the P9
+> hosts booting.
+> On host with one Power9 CPU the failure happens during the Petitboot is trying
+> to initialize the network and it leads to host restarts.
+> On host with two Power9 CPU the same failure happens during OS booting. It
+> increases boot time, but at the end the host OS is completely started.
 
-SGkgRGVyaWNrLA0KTXkgdGVhbSBoYXMgY29uZmlybWVkIHRoYXQgdGhlIE9wZW5ibWMgYmFja2Vu
-ZCBoYXMgc3VwcG9ydGVkIElQVjYgb24gdmVyc2lvbiB2MjgsIEkgYW0gZ29pbmcgdG8gaW1wbGVt
-ZW50IHRoZSBpcHY2IGNvbmZpZ3VyYXRpb24gaW4gd2VidWkgKHdpdGggYW5ndWxhckpTKSx3b3Vs
-ZCB5b3UgcGxlYXNlIHRlbGwgbWUgdGhlICBVWCBwcm90b3R5cGUgZGVzaWduIG9mIHdlYnVpIGZv
-ciBJUFY2IGlzIG9rPyBJIGhhdmUgc2lnbmVkIHRoZSAgQ29vcGVyYXRpb24gYW5kICBDb250cmli
-dXRpb24gTGljZW5zZSBBZ3JlZW1lbnQuDQpCVFc6SG93IHRvIHByb3Bvc2FsIG15IGNvZGUgdG8g
-d2VidWkgcHJvamVjdCDvvIx3b3VsZCB5b3UgbGlrZSB0byB0ZWxsIG1lIGRldGFpbD8NCg0KQmVz
-dCBSZWd1YXJkcywNCnJ1aXhpYSxzdW4NCg0KDQoyMDIwLTA4LTEwIA0KDQpyeHN1biANCg0KDQoN
-CuWPkeS7tuS6uu+8miJEZXJpY2sgTW9udGFndWUiIDxEZXJpY2suTW9udGFndWVAaWJtLmNvbT4N
-CuWPkemAgeaXtumXtO+8mjIwMjAtMDMtMTEgMTk6NDINCuS4u+mimO+8mlJlOiBOZXR3b3JrIFNl
-dHRpbmdzIEdVSQ0K5pS25Lu25Lq677yaInJ4c3VuIjxyeHN1bkB6ZC10ZWNoLmNvbS5jbj4NCuaK
-hOmAge+8miJkZXJpY2subW9udGFndWUiPGRlcmljay5tb250YWd1ZUBnbWFpbC5jb20+LCJvcGVu
-Ym1jIjxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+LCJyYXRhZ3VwdCI8cmF0YWd1cHRAbGludXgu
-dm5ldC5pYm0uY29tPg0KDQpIaSBSdXhpYSwgDQoNCj4gU29ycnkgZm9yIGxhdGUgcmVwbHkuIEkg
-aGFkIHJlYWQgIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bo
-b3NwaG9yLXdlYnVpLysvMjQzMTcgICwgIEkgc2F3IHRoZSBjYWxsaW5nIG9mIHJlZGZpc2ggIGlu
-IGFwaS11bHRpLmpzIC4gSSB3b25kZXIgaWYgdGhlIGlwdjYgaGFzIGJlZW4gZG9uZSBpbiB0aGlz
-IEJNQyBzeXN0ZW0uICBXb3VsZCB5b3UgbGlrZSB0byB0ZWxsIG1lIHRoZSBpcHY2IHN1cHBvcnQg
-c2NoZWR1bGUgb2YgIGJtYyBPUz8gDQoNCg0KICANCkphbmRyYSBpcyBubyBsb25nZXIgd29ya2lu
-ZyBvbiB0aGlzIHByb2plY3QgYW5kIHRoZSBJQk0gZGVzaWduIHRlYW0gaXMgd29ya2luZyBvbiBh
-IG5ldyB2ZXJzaW9uIG9mIHRoZSBHVUkgd3JpdHRlbiBpbiBWdWUuanMuIFdlIGFyZSBqdXN0IHN0
-YXJ0aW5nIHRvIHRhbGsgYWJvdXQgSVB2NiBhZ2FpbiBhbmQgSSBkbyB0aGluayBpdCBtYXkgYmUg
-cmVhZHkuIEkgc2VlIHRoYXQgUmF0YW4gaXMgb24gdGhpcyBtYWlsIHRocmVhZCBhbmQgaGUgc2hv
-dWxkIGJlIGFibGUgdG8gc3BlY2lmeSBmb3Igc3VyZSBpZiB0aGUgYmFja2VuZCBzdXBwb3J0aW5n
-IElQdjYgaXMgcmVhZHkuIA0KDQpUaGFua3MsIA0KRGVyaWNrIA0KDQogIA0KDQoNCiAgDQogIA0K
-ICA=
---__=_Part_Boundary_004_001435.027627
-Content-Type: text/html;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+Oh no. I have spent some time testing the 5.7 tree primarily on
+Tacoma, our ast2600/p9 platform. We saw some strange systemd failures,
+where services such as udevd and journald would be killed by systemd's
+watchdog functionality. I did some preliminary debugging but didn't
+find a root cause.
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT4NCjxNRVRBIG5hbWU9R0VORVJBVE9SIGNvbnRl
-bnQ9Ik1TSFRNTCAxMS4wMC4xMDU3MC4xMDAxIj48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IOW+rui9r+mbhem7kTsgQk9SREVSLVJJR0hULVdJRFRIOiAwcHg7IEJPUkRFUi1CT1RUT00tV0lE
-VEg6IDBweDsgQ09MT1I6ICMwMDAwMDA7IE1BUkdJTjogMTJweDsgTElORS1IRUlHSFQ6IDEuNTsg
-Qk9SREVSLVRPUC1XSURUSDogMHB4IiANCm1hcmdpbmhlaWdodD0iMCIgbWFyZ2lud2lkdGg9IjAi
-Pg0KPERJVj5IaSBEZXJpY2ssPC9ESVY+DQo8QkxPQ0tRVU9URSBpZD1udGVzLWZsYXNobWFpbC1x
-dW90ZSANCnN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBWZXJkYW5hOyBQQURE
-SU5HLUxFRlQ6IDBweDsgTUFSR0lOLUxFRlQ6IDBweCI+DQogIDxESVY+DQogIDxESVYgc3R5bGU9
-IkZPTlQtU0laRTogMTJwdDsgRk9OVC1GQU1JTFk6IOW+rui9r+mbhem7kTsgVEVYVC1JTkRFTlQ6
-IDJlbSI+TXkmbmJzcDt0ZWFtIA0KICBoYXMgY29uZmlybWVkIHRoYXQgdGhlIE9wZW5ibWMgYmFj
-a2VuZCBoYXMgc3VwcG9ydGVkIElQVjYgb24gdmVyc2lvbiB2MjgsIEkgYW0gDQogIGdvaW5nIHRv
-IGltcGxlbWVudCB0aGUgaXB2NiBjb25maWd1cmF0aW9uIGluIHdlYnVpICh3aXRoIGFuZ3VsYXJK
-Uyksd291bGQgeW91IA0KICBwbGVhc2UgdGVsbCBtZSB0aGUmbmJzcDsgVVggcHJvdG90eXBlIGRl
-c2lnbiBvZiB3ZWJ1aSBmb3IgSVBWNiBpcyBvaz8gSSBoYXZlIA0KICBzaWduZWQgdGhlJm5ic3A7
-IENvb3BlcmF0aW9uIGFuZCZuYnNwOyBDb250cmlidXRpb24gTGljZW5zZSANCiAgQWdyZWVtZW50
-LjxCUj5CVFc6SG93IHRvIHByb3Bvc2FsIG15IGNvZGUgdG8gd2VidWkgcHJvamVjdCDvvIx3b3Vs
-ZCB5b3UgbGlrZSB0byANCiAgdGVsbCBtZSBkZXRhaWw/PFNQQU4gc3R5bGU9IkZPTlQtU0laRTog
-MTJwdCI+PC9TUEFOPjwvRElWPg0KICA8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEycHQ7IEZPTlQt
-RkFNSUxZOiDlvq7ova/pm4Xpu5E7IFRFWFQtSU5ERU5UOiAyZW0iPjxTUEFOIA0KICBzdHlsZT0i
-Rk9OVC1TSVpFOiAxMnB0Ij48L1NQQU4+Jm5ic3A7PC9ESVY+DQogIDxESVYgc3R5bGU9IkZPTlQt
-U0laRTogMTJwdDsgRk9OVC1GQU1JTFk6IOW+rui9r+mbhem7kTsgVEVYVC1JTkRFTlQ6IDJlbSI+
-PFNQQU4gDQogIHN0eWxlPSJGT05ULVNJWkU6IDEycHQiPkJlc3QgUmVndWFyZHMsPC9TUEFOPjwv
-RElWPg0KICA8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEycHQ7IEZPTlQtRkFNSUxZOiDlvq7ova/p
-m4Xpu5E7IFRFWFQtSU5ERU5UOiAyZW0iPjxTUEFOIA0KICBzdHlsZT0iRk9OVC1TSVpFOiAxMnB0
-Ij5ydWl4aWEsc3VuPC9TUEFOPjwvRElWPg0KICA8RElWPiZuYnNwOzwvRElWPg0KICA8RElWPiZu
-YnNwOzwvRElWPg0KICA8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQtRkFNSUxZOiBW
-ZXJkYW5hOyBDT0xPUjogI2MwYzBjMCIgDQogIGFsaWduPWxlZnQ+MjAyMC0wOC0xMCANCiAgPEhS
-IGlkPVNpZ25OYW1lSFIgDQogIHN0eWxlPSJCT1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsg
-SEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdIVDogMHB4OyBXSURUSDogMTIycHg7IEJPUkRFUi1CT1RU
-T006IDBweDsgQk9SREVSLUxFRlQ6IDBweCIgDQogIGFsaWduPWxlZnQ+DQogIDxTUEFOIGlkPV9G
-bGFzaFNpZ25OYW1lPnJ4c3VuPC9TUEFOPiA8L0RJVj4NCiAgPEhSIA0KICBzdHlsZT0iQk9SREVS
-LVRPUDogI2MwYzBjMCAxcHggc29saWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsg
-Qk9SREVSLUJPVFRPTTogMHB4OyBCT1JERVItTEVGVDogMHB4Ij4NCg0KICA8QkxPQ0tRVU9URSBp
-ZD1udGVzLWZsYXNobWFpbC1xdW90ZSANCiAgc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1G
-QU1JTFk6IFZlcmRhbmE7IFBBRERJTkctTEVGVDogMHB4OyBNQVJHSU4tTEVGVDogMHB4Ij4NCiAg
-ICA8RElWPjxTVFJPTkc+5Y+R5Lu25Lq677yaPC9TVFJPTkc+IkRlcmljayBNb250YWd1ZSIgDQog
-ICAgJmx0O0Rlcmljay5Nb250YWd1ZUBpYm0uY29tJmd0OzwvRElWPg0KICAgIDxESVY+PFNUUk9O
-Rz7lj5HpgIHml7bpl7TvvJo8L1NUUk9ORz4yMDIwLTAzLTExJm5ic3A7MTk6NDI8L0RJVj4NCiAg
-ICA8RElWPjxTVFJPTkc+5Li76aKY77yaPC9TVFJPTkc+UmU6IE5ldHdvcmsgU2V0dGluZ3MgR1VJ
-PC9ESVY+DQogICAgPERJVj48U1RST05HPuaUtuS7tuS6uu+8mjwvU1RST05HPiJyeHN1biImbHQ7
-cnhzdW5AemQtdGVjaC5jb20uY24mZ3Q7PC9ESVY+DQogICAgPERJVj48U1RST05HPuaKhOmAge+8
-mjwvU1RST05HPiJkZXJpY2subW9udGFndWUiJmx0O2Rlcmljay5tb250YWd1ZUBnbWFpbC5jb20m
-Z3Q7LCJvcGVuYm1jIiZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7LCJyYXRhZ3VwdCIm
-bHQ7cmF0YWd1cHRAbGludXgudm5ldC5pYm0uY29tJmd0OzwvRElWPg0KICAgIDxESVY+Jm5ic3A7
-PC9ESVY+DQogICAgPERJVj4NCiAgICA8RElWPkhpJm5ic3A7UnV4aWEsJm5ic3A7PC9ESVY+DQog
-ICAgPERJVj4mbmJzcDs8L0RJVj4NCiAgICA8RElWPiZndDsmbmJzcDtTb3JyeSZuYnNwO2ZvciZu
-YnNwO2xhdGUmbmJzcDtyZXBseS4mbmJzcDtJJm5ic3A7aGFkJm5ic3A7cmVhZCZuYnNwOyZuYnNw
-O2h0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL3Bob3NwaG9yLXdl
-YnVpLysvMjQzMTcmbmJzcDsmbmJzcDssJm5ic3A7Jm5ic3A7SSZuYnNwO3NhdyZuYnNwO3RoZSZu
-YnNwO2NhbGxpbmcmbmJzcDtvZiZuYnNwO3JlZGZpc2gmbmJzcDsmbmJzcDtpbiZuYnNwO2FwaS11
-bHRpLmpzJm5ic3A7LiZuYnNwO0kmbmJzcDt3b25kZXImbmJzcDtpZiZuYnNwO3RoZSZuYnNwO2lw
-djYmbmJzcDtoYXMmbmJzcDtiZWVuJm5ic3A7ZG9uZSZuYnNwO2luJm5ic3A7dGhpcyZuYnNwO0JN
-QyZuYnNwO3N5c3RlbS4mbmJzcDsmbmJzcDtXb3VsZCZuYnNwO3lvdSZuYnNwO2xpa2UmbmJzcDt0
-byZuYnNwO3RlbGwmbmJzcDttZSZuYnNwO3RoZSZuYnNwO2lwdjYmbmJzcDtzdXBwb3J0Jm5ic3A7
-c2NoZWR1bGUmbmJzcDtvZiZuYnNwOyZuYnNwO2JtYyZuYnNwO09TPyZuYnNwOzwvRElWPg0KICAg
-IDxESVY+Jm5ic3A7PC9ESVY+DQogICAgPERJVj4mbmJzcDs8L0RJVj4NCiAgICA8RElWPiZuYnNw
-OyZuYnNwOzwvRElWPg0KICAgIDxESVY+SmFuZHJhJm5ic3A7aXMmbmJzcDtubyZuYnNwO2xvbmdl
-ciZuYnNwO3dvcmtpbmcmbmJzcDtvbiZuYnNwO3RoaXMmbmJzcDtwcm9qZWN0Jm5ic3A7YW5kJm5i
-c3A7dGhlJm5ic3A7SUJNJm5ic3A7ZGVzaWduJm5ic3A7dGVhbSZuYnNwO2lzJm5ic3A7d29ya2lu
-ZyZuYnNwO29uJm5ic3A7YSZuYnNwO25ldyZuYnNwO3ZlcnNpb24mbmJzcDtvZiZuYnNwO3RoZSZu
-YnNwO0dVSSZuYnNwO3dyaXR0ZW4mbmJzcDtpbiZuYnNwO1Z1ZS5qcy4mbmJzcDtXZSZuYnNwO2Fy
-ZSZuYnNwO2p1c3QmbmJzcDtzdGFydGluZyZuYnNwO3RvJm5ic3A7dGFsayZuYnNwO2Fib3V0Jm5i
-c3A7SVB2NiZuYnNwO2FnYWluJm5ic3A7YW5kJm5ic3A7SSZuYnNwO2RvJm5ic3A7dGhpbmsmbmJz
-cDtpdCZuYnNwO21heSZuYnNwO2JlJm5ic3A7cmVhZHkuJm5ic3A7SSZuYnNwO3NlZSZuYnNwO3Ro
-YXQmbmJzcDtSYXRhbiZuYnNwO2lzJm5ic3A7b24mbmJzcDt0aGlzJm5ic3A7bWFpbCZuYnNwO3Ro
-cmVhZCZuYnNwO2FuZCZuYnNwO2hlJm5ic3A7c2hvdWxkJm5ic3A7YmUmbmJzcDthYmxlJm5ic3A7
-dG8mbmJzcDtzcGVjaWZ5Jm5ic3A7Zm9yJm5ic3A7c3VyZSZuYnNwO2lmJm5ic3A7dGhlJm5ic3A7
-YmFja2VuZCZuYnNwO3N1cHBvcnRpbmcmbmJzcDtJUHY2Jm5ic3A7aXMmbmJzcDtyZWFkeS4mbmJz
-cDs8L0RJVj4NCiAgICA8RElWPiZuYnNwOzwvRElWPg0KICAgIDxESVY+VGhhbmtzLCZuYnNwOzwv
-RElWPg0KICAgIDxESVY+RGVyaWNrJm5ic3A7PC9ESVY+DQogICAgPERJVj4mbmJzcDs8L0RJVj4N
-CiAgICA8RElWPiZuYnNwOyZuYnNwOzwvRElWPg0KICAgIDxESVY+Jm5ic3A7PC9ESVY+DQogICAg
-PERJVj4mbmJzcDs8L0RJVj4NCiAgICA8RElWPiZuYnNwOyZuYnNwOzwvRElWPg0KICAgIDxESVY+
-Jm5ic3A7Jm5ic3A7PC9ESVY+DQogICAgPERJVj4mbmJzcDsmbmJzcDs8L0RJVj4NCiAgICA8RElW
-PiZuYnNwOzwvRElWPjwvRElWPjwvQkxPQ0tRVU9URT48L0RJVj48L0JMT0NLUVVPVEU+PC9CT0RZ
-PjwvSFRNTD4=
---__=_Part_Boundary_004_001435.027627--
+I have since published a 5.8 based tree that does not suffer from this
+issue. Could you give that a spin on your hardware and see if it
+recreates your issue?
 
+ https://gerrit.openbmc-project.xyz/c/openbmc/meta-aspeed/+/35315
+
+> So, I have two questions:
+> - Could you please, check if Romulus is also affected by this issue?
+> - Do you have any idea what is going wrong?
+
+I'll fire up a romulus and see if it reproduces.
+
+My guess is it's something to do with the timekeeping, irq or rcu
+code. All areas of complexity!
+
+Thanks for the report.
+
+Cheers,
+
+Joel
+
+> I've attached the tarball with full logs.
+> - poopsy is a system with two Power9 CPU
+> - whoopsy is a system with one Power9 CPU
+>
+> --
+> Regards,
+> Alexander
