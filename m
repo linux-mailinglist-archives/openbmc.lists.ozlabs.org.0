@@ -2,100 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBD7E242C19
-	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 17:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C46A242D16
+	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 18:23:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BRYMd0zwXzDqP6
-	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 01:21:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BRZkC44QczDqHh
+	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 02:22:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32c;
+ helo=mail-ot1-x32c.google.com; envelope-from=xqiu@google.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Iq1ccrC9; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=HR/GLod+; dkim-atps=neutral
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
+ [IPv6:2607:f8b0:4864:20::32c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BRYKg1tQ6zDqMt
- for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 01:20:05 +1000 (AEST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 07CF1pAs038000
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 11:20:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type; s=pp1; bh=Xhh4RAUlpCbH6UBM/gSQdHxcDKBrh2GGf4szgVBNRXs=;
- b=Iq1ccrC9XzreY2vG908v9BOiqG6KmiSRBhgHwXt9dETeB797t+dMK10ifRabA87vnByJ
- JLNUfqKfnE5Sr62Zg1B63hwtqjjIh/XBJsb/0pTv+eaAypAWiAAUGpLdmnGKrXKO+LUt
- GGA7GiTPhG2nXb6HBUSTtAG4+PL20kc6RfQC454dRzX09pSvUbeOP+5NRazeaTBd5Rhv
- sB5Cg00liroqv7fM/Azpn/tHwmUVIMFAaaWv5jOARD7Z7JaoqfIoCRNOA81Xf+CgL+uV
- cq0AGXJAcYia6eIGmClcWLkJMyuhmDQx7+oenAxqT4KXKXhGHU/bygSM/stjFPi0OSGY Nw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 32vcsxv8pb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 11:20:02 -0400
-Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 07CF2MBx040903
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 11:20:01 -0400
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
- [169.53.41.122])
- by mx0b-001b2d01.pphosted.com with ESMTP id 32vcsxv8nq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2020 11:20:01 -0400
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
- by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07CFF82e007660;
- Wed, 12 Aug 2020 15:20:01 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma04dal.us.ibm.com with ESMTP id 32skp9b4jc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2020 15:20:01 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 07CFJxTU56230266
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2020 15:19:59 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C54A13604F;
- Wed, 12 Aug 2020 15:19:59 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 41099136063;
- Wed, 12 Aug 2020 15:19:58 +0000 (GMT)
-Received: from [9.206.214.67] (unknown [9.206.214.67])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTP;
- Wed, 12 Aug 2020 15:19:57 +0000 (GMT)
-Subject: Re: Question about WEBUI
-To: =?UTF-8?B?5p2OIOaYn+aYnw==?= <ur.starklee@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <BN8PR20MB268985C7163EF6A03E9E47ADA7420@BN8PR20MB2689.namprd20.prod.outlook.com>
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Message-ID: <ddf722b4-5bac-cbfa-523e-850394627aa0@linux.vnet.ibm.com>
-Date: Wed, 12 Aug 2020 09:19:55 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BRZdy38HBzDqHh
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 02:19:16 +1000 (AEST)
+Received: by mail-ot1-x32c.google.com with SMTP id h22so2363513otq.11
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 09:19:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=H9Glef9d9t0YenWpm08Gzu912/TWVi7bLf5KHsEjN9I=;
+ b=HR/GLod+Ymg79TH/7Ji1Pcu2WR4zQyd5mI0//HvBRkdpML1csK6vjIOLy5NlmENlHf
+ T7fNmaJ/bnAjWCrA5hQZWKdA62K42RZ3q7qA1++S+xytwxUAPKlRRtRiabPxHKJnwipq
+ 7XEXTPyFeb/UTVMntXNwiBvWdNug8p80Hs0HvW1lnN2nux0rh8YCNv5VKsjwQFbgwjW2
+ qufAnvAa/RQvvvWjuGLgOmqGunhzPmNWHmyNn3QuScqpXn0DMxvii9zoVyRjJNkquUOL
+ Zarws3Ffqp5gOUdpxI2pKU9qUqkHJLKDSfvAJzR7Y2ISOWo7EI52YjM9bfRzLFChHkrR
+ rSSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=H9Glef9d9t0YenWpm08Gzu912/TWVi7bLf5KHsEjN9I=;
+ b=XbDAb2rEBzfEy0r+o4U2a7+bc9NHWbVklQnRYmTsrKEb1m0koC5qxZ38urw5CYbuTG
+ xVFomAVFSI+tPECxf/ZdKV1nIsCWduA4HulI3NTHKA/e2Tt7kmvwHhZtIlbXwVirJGMd
+ jkqB8buMagn4jPkiiPja9KMYvfIa1b5GV1J7o4fs9898B1E7zwgdXKvFIiQ57No0Wux8
+ xcYGzuM54t8lM6rDEriCI4ZVV6fICeFj2LvuP6g8Eb9sUqBvCJI6TIGjZQWYZTWjh2Ls
+ /R6iEpE6WIU4Hou0pMIyFPrz1ByWODbp2uKbsLJbOa9g5y1D7ZHlN3iXEPvjUVMUaA2h
+ mJzA==
+X-Gm-Message-State: AOAM532Z8ksro9mrtzYF0NcVvSOweM1i9ZUJYQDgLCRVUZxsPpQknrMH
+ CtyCLWhh2D38hsLluf1aDRJ6W9Z8bKPS15hBjRf9NQ==
+X-Google-Smtp-Source: ABdhPJwPzsS9k3SOd+k+E9Oy14+UF3DPf4WKm2Gkxql0HMccc8m+KgG4WYPKOme69zCDsAC6vf5/WxTYUguW1N4m5bU=
+X-Received: by 2002:a9d:d02:: with SMTP id 2mr425135oti.306.1597249152287;
+ Wed, 12 Aug 2020 09:19:12 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <BN8PR20MB268985C7163EF6A03E9E47ADA7420@BN8PR20MB2689.namprd20.prod.outlook.com>
-Content-Type: multipart/alternative;
- boundary="------------C9D4AC5E96ED8C0A622019E4"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-08-12_06:2020-08-11,
- 2020-08-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- clxscore=1015 adultscore=0 mlxlogscore=994 malwarescore=0 phishscore=0
- bulkscore=0 suspectscore=0 spamscore=0 impostorscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2008120104
+References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
+ <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
+ <CAHBbfcUXLueZ3MZAP9b38B-fXyrNCMAeZcC7uk8uPrR5gw=3xQ@mail.gmail.com>
+ <2bb88ede-4d35-8b9c-936f-be8dc9a453e5@linux.intel.com>
+ <CAHBbfcUDMOZjxSvy8wVW_F9f3+NaX-WU3G5PF1oUoRx5VP7ZoQ@mail.gmail.com>
+ <CACWQX82KAhmRbg-CYa8+Yjd8mE7qCM_vG_Q1_hYZVR77c3gdtw@mail.gmail.com>
+ <CAHBbfcUJGnsW_dxONwjsT=w3ZM453-o0Ubc7DE7oOJQ8u28=ww@mail.gmail.com>
+ <5a59238b-7653-b11f-701b-039d57dd5b98@linux.intel.com>
+ <CAHBbfcXRO5ZB3S0T6SyRkWkLLAruKPdS8UhUkyG3qssU5YkHNw@mail.gmail.com>
+ <9deda21d-aa01-d15e-464e-7ab0fb2f751c@linux.intel.com>
+ <CAHBbfcX7TahfKcVcUqWKQGTK5s9Rzw3mT4_3v4tWtkAgHBgX6g@mail.gmail.com>
+ <CACWQX83AdMHFk5NUJmpoesghK_2YZ9MMo6h-KoWzDtZ-jrTYRw@mail.gmail.com>
+ <CAHBbfcUBBUpO9o2pNSbr0YKXNRHPju4gNNHxxNxuda9k5D0BYQ@mail.gmail.com>
+ <CACWQX809R7wx+qNt5PhZW-Snv0jdPnUVGSt+A_jobrTcYC8B2Q@mail.gmail.com>
+ <CAA_a9xJhKikZR0rhZWfVfKF1VKMkP1yUkRJxhWSC37JA-2h7sA@mail.gmail.com>
+ <CACWQX80Y9WAjtW=xiq6PgHX3GnF2b6-CT3fL632OyfPBvk029A@mail.gmail.com>
+ <CAA_a9xJL=jO61H5k=_OjqoTg6enoaANT80PEeK2FOPDuqRyb3g@mail.gmail.com>
+ <CACWQX81wTLGDJqqrf1AGeNQQmRA2G1r5iPm-fW15fZYLB_rAMg@mail.gmail.com>
+In-Reply-To: <CACWQX81wTLGDJqqrf1AGeNQQmRA2G1r5iPm-fW15fZYLB_rAMg@mail.gmail.com>
+From: Alex Qiu <xqiu@google.com>
+Date: Wed, 12 Aug 2020 09:19:01 -0700
+Message-ID: <CAA_a9x+uOmZPCMH17p3bpaD=USvYzNWdKmHrDVbJPgfyBp+oag@mail.gmail.com>
+Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
+To: Ed Tanous <ed@tanous.net>
+Content-Type: multipart/alternative; boundary="000000000000576d0705acb08c0b"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,203 +89,221 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ James Feist <james.feist@linux.intel.com>, Jason Ling <jasonling@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------C9D4AC5E96ED8C0A622019E4
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--000000000000576d0705acb08c0b
+Content-Type: text/plain; charset="UTF-8"
 
-On 8/12/2020 2:38 AM, 李 星星 wrote:
+Hi Ed,
+
+I was talking about, if having one device in multiple daemons is expected,
+it would make sense to have some switch in the config to turn off the
+support for one device according to the setup. From your reply, I think I
+see this is not really preferred or expected from the design, so I'll leave
+it to Sui to come up with more data on the issue that we are having, and
+progress on the actual issue. In case the time is running out, we'll try
+local patches for workarounds. Thanks!
+
+- Alex Qiu
+
+
+On Tue, Aug 11, 2020 at 6:42 PM Ed Tanous <ed@tanous.net> wrote:
+
+> On Tue, Aug 11, 2020 at 5:46 PM Alex Qiu <xqiu@google.com> wrote:
+> >
+> > The question was more of a general ask on whether dbus-sensors plans for
+> this on record. If so, individual daemon should have the config option to
+> ignore a device completely. Currently, I think PSUSensor has the ability,
+> but HwmonTempSensor does not.
+> >
 >
-> Hi,
+> You're talking about ignoring a specific leg of a device?  Like
+> ignoring a particular sensor on an installed device?  Or are you
+> talking about ignoring a device class entirely?  Maybe calling out the
+> specific use case of what you're wanting to ignore might help here.
 >
->        I am stark and a newbee for openBMC development.
+> > The reason behind it may be complicated. One is if we can fix the
+> PSUSensor performance issue on time so that we can use it directly for PID
+> control based on VR temperatures. And then, if we can't fix it on time,
+> what work around can we have?
 >
-Welcome to OpenBMC!
-
-> Our company are planning to develop a customized software to manage 
-> BMC for our template. I am trying to use openBMC as framework and I 
-> have set up all required environment.
+> I'm assuming "on time" here refers to some product schedule?  Without
+> knowing your particular timelines, I will say this: we've solved
+> several orders of magnitude worse performance problems in dbus sensors
+> in the past.  I'm assuming this one just requires the proper
+> application of debugging, thought, and engineering.  I'm not sure how
+> to answer your question about workarounds:  You would have whatever
+> workarounds you're willing to build, that's the beauty of open source.
+> If using HwMonTempSensor is a workaround, and you're willing to live
+> with the patch, by all means, use it.
 >
-> For now I have set up a system based on Ubantu 16.0.4 and download all 
-> packages. Then I successfully build an image based on Romulus and use 
-> qemu to start it. And I can open localhost:2443 to manage it. All the 
-> steps have been done as Github procedures.
+> > Is it upstream-able or local patches
 >
-> But as requirement we want to customize the WebUI and I try to do as 
-> Github. I put phosphor-webui in build directory.
+> That would depend on what your workarounds entail.  If your
+> workarounds follow the principles of the project, don't duplicate
+> functionality, don't break any of the existing use cases, and are
+> maintainable, then they're probably upstreamable.  If you're
+> duplicating features between daemons unnecessarily for lack of wanting
+> to hunt down and understand a performance bug, that's probably
+> something you need to keep in a local patch until you have time to do
+> the appropriate debugging.
 >
-I would really recommend you give https://github.com/openbmc/webui-vue a 
-look, it is a replacement for phosphor-webui.
-webui-vue uses the Redfish API, is translatable, themeable, does not 
-suffer some the anti-patterns that exist in phosphor-webui today, and is 
-built on Vue.
-
-> And use npm start it. My npm version is 6.14.7. But when I try to 
-> login into my image with special IP address. It failed and show 
-> cors-xml problem and server unreachable.
+> > ? What's more, can we have different polling rates for temperature and
+> voltage/current/power by using multiple daemon for the same device?
 >
-To run the GUI locally you need to recompile bmcweb with 
-BMCWEB_INSECURE_DISABLE_XSS_PREVENTION and 
-BMCWEB_INSECURE_DISABLE_CSRF_PREVENTION turned on.
-These are insecure and should be used for development only.
-
-https://github.com/openbmc/phosphor-webui#logging-in
-
-> After that I find original code in 
-> /home/bmc/openbmc/build/tmp/work/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+2e1eec80de-r1/git/, 
-> and I try to change its logo picture. But it did not work. Can you 
-> give some advices how to do that? I can’t find some useful  tutorials.
+> Why don't we just make the polling rate configurable in the EM config?
+>  Each sensor has its own timer for exactly this reason.  In the
+> original design of dbus-sensors, each sensor instance also ran in its
+> own process.  We moved it to each sensor type running in a shared
+> process because the context switches were getting really bad, and a
+> lot of the sensors of similar types had very similar event matches, so
+> it allowed us to reduce the dbus load for things like power on.  We
+> could certainly revisit this, but for what you're wanting, I suspect
+> we can just configure the polling rates per sensor.  We hardcoded them
+> under the assumption that we could build one reasonable default that
+> worked for everyone, but clearly you've broken that assumption, so
+> lets throw it in a config file, put some reasonable defaults on it,
+> and call it good.  (note, this is subject to James' opinion as
+> maintainer, I'm not sure if he'll agree here).
 >
+> > Of course, ideally, we can go for a fast feature-enriched PSUSensor to
+> take care of everything and deprecate HwmonTempSensor, but you know I have
+> been talking about schedule for multiple times with you before...
+> >
 >
-Have you seen 
-https://github.com/openbmc/docs/blob/master/development/web-ui.md ?
+> I understand short schedules.  It always feels like there's not enough
+> time.  The best advice I have here is to try to break your problem
+> space down into small problems such that you can get a patch written,
+> tested, and pushed to gerrit out for that day.  Then use those patches
+> to slowly move toward what you want, even if you keep stacking them up
+> in upstream.  Eventually the maintainer will review them, or you'll
+> have solved someone else's problem before they hit it.  If enough
+> people do this, we'll be way ahead on these types of bugs.
+>
+> At some point James might need to school us on what the theoretical
+> difference is between PSUsensor and HwmonSensor.  I know one was
+> originally built for PSU modules, and the other was built for on board
+> hardware, but they're getting pretty similar, maybe it does make sense
+> to have certain devices in both?
+>
 
-- Gunnar
+--000000000000576d0705acb08c0b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Hi Ed,<div><br></div><div>I was talking about, if having o=
+ne device in multiple daemons is expected, it would make sense to have some=
+ switch in the config to turn off the support for one device according to t=
+he setup. From your reply, I think I see this is not really preferred=C2=A0=
+or expected from the design, so I&#39;ll leave it to Sui to come up with mo=
+re data on the issue that we are having, and progress on the actual issue. =
+In case the time is running out, we&#39;ll try local patches for workaround=
+s. Thanks!</div><div><br clear=3D"all"><div><div dir=3D"ltr" class=3D"gmail=
+_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">- Alex Qiu<=
+/div></div></div><br></div></div><br><div class=3D"gmail_quote"><div dir=3D=
+"ltr" class=3D"gmail_attr">On Tue, Aug 11, 2020 at 6:42 PM Ed Tanous &lt;<a=
+ href=3D"mailto:ed@tanous.net">ed@tanous.net</a>&gt; wrote:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">On Tue, Aug 11, 2020 at 5:46 PM=
+ Alex Qiu &lt;<a href=3D"mailto:xqiu@google.com" target=3D"_blank">xqiu@goo=
+gle.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; The question was more of a general ask on whether dbus-sensors plans f=
+or this on record. If so, individual daemon should have the config option t=
+o ignore a device completely. Currently, I think PSUSensor has the ability,=
+ but HwmonTempSensor does not.<br>
+&gt;<br>
+<br>
+You&#39;re talking about ignoring a specific leg of a device?=C2=A0 Like<br=
+>
+ignoring a particular sensor on an installed device?=C2=A0 Or are you<br>
+talking about ignoring a device class entirely?=C2=A0 Maybe calling out the=
+<br>
+specific use case of what you&#39;re wanting to ignore might help here.<br>
+<br>
+&gt; The reason behind it may be complicated. One is if we can fix the PSUS=
+ensor performance issue on time so that we can use it directly for PID cont=
+rol based on VR temperatures. And then, if we can&#39;t fix it on time, wha=
+t work around can we have?<br>
+<br>
+I&#39;m assuming &quot;on time&quot; here refers to some product schedule?=
+=C2=A0 Without<br>
+knowing your particular timelines, I will say this: we&#39;ve solved<br>
+several orders of magnitude worse performance problems in dbus sensors<br>
+in the past.=C2=A0 I&#39;m assuming this one just requires the proper<br>
+application of debugging, thought, and engineering.=C2=A0 I&#39;m not sure =
+how<br>
+to answer your question about workarounds:=C2=A0 You would have whatever<br=
+>
+workarounds you&#39;re willing to build, that&#39;s the beauty of open sour=
+ce.<br>
+If using HwMonTempSensor is a workaround, and you&#39;re willing to live<br=
+>
+with the patch, by all means, use it.<br>
+<br>
+&gt; Is it upstream-able or local patches<br>
+<br>
+That would depend on what your workarounds entail.=C2=A0 If your<br>
+workarounds follow the principles of the project, don&#39;t duplicate<br>
+functionality, don&#39;t break any of the existing use cases, and are<br>
+maintainable, then they&#39;re probably upstreamable.=C2=A0 If you&#39;re<b=
+r>
+duplicating features between daemons unnecessarily for lack of wanting<br>
+to hunt down and understand a performance bug, that&#39;s probably<br>
+something you need to keep in a local patch until you have time to do<br>
+the appropriate debugging.<br>
+<br>
+&gt; ? What&#39;s more, can we have different polling rates for temperature=
+ and voltage/current/power by using multiple daemon for the same device?<br=
+>
+<br>
+Why don&#39;t we just make the polling rate configurable in the EM config?<=
+br>
+=C2=A0Each sensor has its own timer for exactly this reason.=C2=A0 In the<b=
+r>
+original design of dbus-sensors, each sensor instance also ran in its<br>
+own process.=C2=A0 We moved it to each sensor type running in a shared<br>
+process because the context switches were getting really bad, and a<br>
+lot of the sensors of similar types had very similar event matches, so<br>
+it allowed us to reduce the dbus load for things like power on.=C2=A0 We<br=
+>
+could certainly revisit this, but for what you&#39;re wanting, I suspect<br=
+>
+we can just configure the polling rates per sensor.=C2=A0 We hardcoded them=
+<br>
+under the assumption that we could build one reasonable default that<br>
+worked for everyone, but clearly you&#39;ve broken that assumption, so<br>
+lets throw it in a config file, put some reasonable defaults on it,<br>
+and call it good.=C2=A0 (note, this is subject to James&#39; opinion as<br>
+maintainer, I&#39;m not sure if he&#39;ll agree here).<br>
+<br>
+&gt; Of course, ideally, we can go for a fast feature-enriched PSUSensor to=
+ take care of everything and deprecate HwmonTempSensor, but you know I have=
+ been talking about schedule for multiple times with you before...<br>
+&gt;<br>
+<br>
+I understand short schedules.=C2=A0 It always feels like there&#39;s not en=
+ough<br>
+time.=C2=A0 The best advice I have here is to try to break your problem<br>
+space down into small problems such that you can get a patch written,<br>
+tested, and pushed to gerrit out for that day.=C2=A0 Then use those patches=
+<br>
+to slowly move toward what you want, even if you keep stacking them up<br>
+in upstream.=C2=A0 Eventually the maintainer will review them, or you&#39;l=
+l<br>
+have solved someone else&#39;s problem before they hit it.=C2=A0 If enough<=
+br>
+people do this, we&#39;ll be way ahead on these types of bugs.<br>
+<br>
+At some point James might need to school us on what the theoretical<br>
+difference is between PSUsensor and HwmonSensor.=C2=A0 I know one was<br>
+originally built for PSU modules, and the other was built for on board<br>
+hardware, but they&#39;re getting pretty similar, maybe it does make sense<=
+br>
+to have certain devices in both?<br>
+</blockquote></div>
 
-
---------------C9D4AC5E96ED8C0A622019E4
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <div class="moz-cite-prefix">On 8/12/2020 2:38 AM, 李 星星 wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:BN8PR20MB268985C7163EF6A03E9E47ADA7420@BN8PR20MB2689.namprd20.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:"\@\7B49 \7EBF ";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Times;
-	panose-1:0 0 5 0 0 0 0 2 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	font-size:10.5pt;
-	font-family:DengXian;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:DengXian;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:DengXian;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style>
-      <div class="WordSection1">
-        <p class="MsoNormal"><span style="font-family:Times"
-            lang="EN-US">Hi,<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-family:Times"
-            lang="EN-US">       I am stark and a newbee for openBMC
-            development.</span></p>
-      </div>
-    </blockquote>
-    Welcome to OpenBMC!<br>
-    <br>
-    <blockquote type="cite"
-cite="mid:BN8PR20MB268985C7163EF6A03E9E47ADA7420@BN8PR20MB2689.namprd20.prod.outlook.com">
-      <div class="WordSection1">
-        <p class="MsoNormal"><span style="font-family:Times"
-            lang="EN-US">Our company are planning to develop a
-            customized software to manage BMC for our template. I am
-            trying to use openBMC as framework and I have set up all
-            required environment. <o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:21.0pt"><span
-            style="font-family:Times" lang="EN-US">For now I have set up
-            a system based on Ubantu 16.0.4 and download all packages.
-            Then I successfully build an image based on Romulus and use
-            qemu to start it. And I can open localhost:2443 to manage
-            it. All the steps have been done as Github procedures.
-            <o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:21.0pt"><span
-            style="font-family:Times" lang="EN-US">But as requirement we
-            want to customize the WebUI and I try to do as Github. I put
-            phosphor-webui in build directory. </span></p>
-      </div>
-    </blockquote>
-    I would really recommend you give
-    <a class="moz-txt-link-freetext" href="https://github.com/openbmc/webui-vue">https://github.com/openbmc/webui-vue</a> a look, it is a replacement for
-    phosphor-webui. <br>
-    <span id="output" class="style-scope gr-linked-text">webui-vue uses
-      the Redfish
-      API, is translatable, themeable, does not suffer some the
-      anti-patterns that
-      exist in phosphor-webui today, and is built on Vue.<br>
-      <br>
-    </span>
-    <blockquote type="cite"
-cite="mid:BN8PR20MB268985C7163EF6A03E9E47ADA7420@BN8PR20MB2689.namprd20.prod.outlook.com">
-      <div class="WordSection1">
-        <p class="MsoNormal" style="text-indent:21.0pt"><span
-            style="font-family:Times" lang="EN-US">And use npm start it.
-            My npm version is 6.14.7. But when I try to login into my
-            image with special IP address. It failed and show cors-xml
-            problem and server unreachable.
-          </span></p>
-      </div>
-    </blockquote>
-    <p>To run the GUI locally you need to recompile bmcweb with
-      BMCWEB_INSECURE_DISABLE_XSS_PREVENTION and
-      BMCWEB_INSECURE_DISABLE_CSRF_PREVENTION turned on.<br>
-      These are insecure and should be used for development only.<br>
-      <br>
-      <a class="moz-txt-link-freetext" href="https://github.com/openbmc/phosphor-webui#logging-in">https://github.com/openbmc/phosphor-webui#logging-in</a><br>
-      <br>
-    </p>
-    <blockquote type="cite"
-cite="mid:BN8PR20MB268985C7163EF6A03E9E47ADA7420@BN8PR20MB2689.namprd20.prod.outlook.com">
-      <div class="WordSection1">
-        <p class="MsoNormal" style="text-indent:21.0pt"><span
-            style="font-family:Times" lang="EN-US"><o:p></o:p></span></p>
-        <p class="MsoNormal" style="text-indent:21.0pt"><span
-            style="font-family:Times" lang="EN-US">After that I find
-            original code in
-/home/bmc/openbmc/build/tmp/work/all-openbmc-linux/phosphor-webui/1.0+gitAUTOINC+2e1eec80de-r1/git/,
-            and I try to change its logo picture. But it did not work.
-            Can you give some advices how to do that? I can’t find some
-            useful  tutorials.<o:p></o:p></span></p>
-        <p class="MsoNormal"><span style="font-family:Times"
-            lang="EN-US"><o:p> <br>
-            </o:p></span></p>
-      </div>
-    </blockquote>
-    <p>Have you seen
-      <a class="moz-txt-link-freetext" href="https://github.com/openbmc/docs/blob/master/development/web-ui.md">https://github.com/openbmc/docs/blob/master/development/web-ui.md</a>
-      ?<br>
-      <br>
-      - Gunnar<br>
-    </p>
-    <span id="output" class="style-scope gr-linked-text"></span>
-    <p><br>
-    </p>
-  </body>
-</html>
-
---------------C9D4AC5E96ED8C0A622019E4--
-
+--000000000000576d0705acb08c0b--
