@@ -1,93 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 547C1242E3B
-	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 19:45:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4825B242E7E
+	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 20:28:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BRcYh10HVzDqd9
-	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 03:45:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BRdW82jGczDqcL
+	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 04:28:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=tachyum.com (client-ip=66.160.133.170; helo=mail.tachyum.com;
+ envelope-from=molejar@tachyum.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=pmjD5TUB; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=none (p=none dis=none) header.from=tachyum.com
+X-Greylist: delayed 481 seconds by postgrey-1.36 at bilbo;
+ Thu, 13 Aug 2020 04:27:39 AEST
+Received: from mail.tachyum.com (mx1.tachyum.com [66.160.133.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BRcXd20FPzDqcK;
- Thu, 13 Aug 2020 03:44:48 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 07CHa9G8064927; Wed, 12 Aug 2020 13:44:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=mime-version :
- content-type : content-transfer-encoding : date : from : to : cc : subject
- : in-reply-to : references : message-id; s=pp1;
- bh=xpHH9ckC/WDv/YWbsfRZjaFUmnhGdi1m1E4Iwm8eTDU=;
- b=pmjD5TUBzIcDm6rMFZAQIfCu9F23a8RNRtOQiTt94gsO/5g7OSU7995LHOCAD5+6Gs2W
- 6JHGtxeYoMCFOUJnZVswuJ2WD/uLyV1wCWxA+D2spzzIi58vNREAHCAJb6brdBOTDkvd
- 6anffMGYSU6+Drbx5FQI/FdgfgNwkUHj4n8n585xHzz72gGnxQ+AOl6mOXkIuwrsaoq+
- E7H1lGSrV3oxxriFCgTPPDppYx6nhDFdMFXQh/nr0lbuY1n1ZSbZ1/F1+eWDdn6WUgiA
- tHtFeyVIDe0Cn3Big1tdsUUspNbFvodjoGxzdEGh6NjeP5p32TL88FaSLiACwgODf5cw CA== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 32v184rkx2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2020 13:44:36 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07CHJG1J014964;
- Wed, 12 Aug 2020 17:44:35 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma02dal.us.ibm.com with ESMTP id 32skp9maym-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 12 Aug 2020 17:44:35 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 07CHiZTK52625896
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 12 Aug 2020 17:44:35 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E9705AC059;
- Wed, 12 Aug 2020 17:44:34 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7D602AC05B;
- Wed, 12 Aug 2020 17:44:34 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 12 Aug 2020 17:44:34 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BRdV36XQRzDqYj
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 04:27:39 +1000 (AEST)
+Received: by mail.tachyum.com (Postfix, from userid 1001)
+ id C92A38B4; Wed, 12 Aug 2020 11:19:34 -0700 (PDT)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on mx1.tachyum.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,HTML_MESSAGE
+ autolearn=ham autolearn_force=no version=3.4.0
+Received: from THQ-EX2016.tachyum.com (unknown [10.7.1.16])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.tachyum.com (Postfix) with ESMTPS id 271A6245
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 11:19:34 -0700 (PDT)
+Received: from THQ-EX3.tachyum.com (10.7.1.26) by THQ-EX2016.tachyum.com
+ (10.7.1.16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1913.5; Wed, 12 Aug
+ 2020 11:19:33 -0700
+Received: from THQ-EX2016.tachyum.com (10.7.1.16) by THQ-EX3.tachyum.com
+ (10.7.1.26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1913.5; Wed, 12 Aug
+ 2020 11:19:33 -0700
+Received: from THQ-EX2016.tachyum.com ([10.7.1.16]) by THQ-EX2016.tachyum.com
+ ([10.7.1.16]) with mapi id 15.01.1913.010;
+ Wed, 12 Aug 2020 11:19:33 -0700
+From: Martin Olejar <molejar@tachyum.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: How to boot OpenBMC (AST2600) from SD Card?
+Thread-Topic: How to boot OpenBMC (AST2600) from SD Card?
+Thread-Index: AdZw1R//j80Wud1fSSeqcGptCVs1Wg==
+Date: Wed, 12 Aug 2020 18:19:33 +0000
+Message-ID: <eeeaaa21f1c34adba9047a3efb8aa66c@tachyum.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.40.108.124]
+Content-Type: multipart/alternative;
+ boundary="_000_eeeaaa21f1c34adba9047a3efb8aa66ctachyumcom_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Wed, 12 Aug 2020 12:44:34 -0500
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH linux dev-5.8] mtd: spi-nor: sfdp: Revert "default to
- addr_width of 3 for configurable widths"
-In-Reply-To: <20200812035847.2352277-1-joel@jms.id.au>
-References: <20200812035847.2352277-1-joel@jms.id.au>
-Message-ID: <361a6a5c27f19a4a2ce944a147f13b6b@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-08-12_13:2020-08-11,
- 2020-08-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 bulkscore=0
- priorityscore=1501 phishscore=0 impostorscore=0 suspectscore=0
- clxscore=1011 malwarescore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2008120113
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,50 +69,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- openbmc@lists.ozlabs.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2020-08-11 22:58, Joel Stanley wrote:
-> This reverts commit f9acd7fa80be6ee14aecdc54429f2a48e56224e8 which
-> breaks mounting of UBI volumes with the aspeed-smc driver:
-> 
->  ubi0: default fastmap pool size: 25
->  ubi0: default fastmap WL pool size: 12
->  ubi0: attaching mtd3
->  ubi0: scanning is finished
->  ubi0 error: ubi_read_volume_table: the layout volume was not found
->  ubi0 error: ubi_attach_mtd_dev: failed to attach mtd3, error -22
-> 
-> Found by bisecting between v5.7 and v5.8.
-> 
-> Fixes: f9acd7fa80be ("mtd: spi-nor: sfdp: default to addr_width of 3
-> for configurable widths")
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+--_000_eeeaaa21f1c34adba9047a3efb8aa66ctachyumcom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Tested-by: Adriana Kobylak <anoo@us.ibm.com>
+Hello,
 
-> ---
-> This identifies why we are seeing SPI NOR failures on v5.8. There is
-> potentially a fix that needs to be made in the aspeed-smc driver 
-> instead
-> of reverting the core spi-nor change.
-> 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  drivers/mtd/spi-nor/sfdp.c | 1 -
->  1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-> index 55c0c508464b..9db07182e9c8 100644
-> --- a/drivers/mtd/spi-nor/sfdp.c
-> +++ b/drivers/mtd/spi-nor/sfdp.c
-> @@ -456,7 +456,6 @@ static int spi_nor_parse_bfpt(struct spi_nor *nor,
->  	/* Number of address bytes. */
->  	switch (bfpt.dwords[BFPT_DWORD(1)] & BFPT_DWORD1_ADDRESS_BYTES_MASK) 
-> {
->  	case BFPT_DWORD1_ADDRESS_BYTES_3_ONLY:
-> -	case BFPT_DWORD1_ADDRESS_BYTES_3_OR_4:
->  		nor->addr_width = 3;
->  		break;
+Is there an option to boot AST2600 only from SD card?
+The meta-aspeed has option for generate eMMC image https://github.com/openb=
+mc/openbmc/tree/master/meta-aspeed/wic, is it the same as SD card. The eMMC=
+ periphery is supporting SD/SDIO protocols and 4bit mode, but is it the def=
+ault setting after power on reset? Or the boot is starting with FWSPI, and =
+in second stage it switch to eMMC/SD?
+
+Thanks
+
+Martn Olejar
+
+--_000_eeeaaa21f1c34adba9047a3efb8aa66ctachyumcom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hello,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Is there an option to boot AST2600 only from SD card=
+? <o:p></o:p></p>
+<p class=3D"MsoNormal">The meta-aspeed has option for generate eMMC image <=
+a href=3D"https://github.com/openbmc/openbmc/tree/master/meta-aspeed/wic">
+https://github.com/openbmc/openbmc/tree/master/meta-aspeed/wic</a>, is it t=
+he same as SD card. The eMMC periphery is supporting SD/SDIO protocols and =
+4bit mode, but is it the default setting after power on reset? Or the boot =
+is starting with FWSPI, and in second
+ stage it switch to eMMC/SD?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-AU" style=3D"font-size:10.0pt;fo=
+nt-family:&quot;Tahoma&quot;,sans-serif;color:black">Martn Olejar</span></b=
+><o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_eeeaaa21f1c34adba9047a3efb8aa66ctachyumcom_--
