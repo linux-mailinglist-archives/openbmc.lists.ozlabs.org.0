@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A308242471
-	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 05:59:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 167E7242533
+	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 08:07:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BRGDf5rgLzDqGZ
-	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 13:59:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BRK3Z1HjyzDqVV
+	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 16:07:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::543;
- helo=mail-pg1-x543.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::231;
+ helo=mail-lj1-x231.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=bytedance.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Q454ViY9; dkim-atps=neutral
-Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
- [IPv6:2607:f8b0:4864:20::543])
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=jYp1i32s; dkim-atps=neutral
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com
+ [IPv6:2a00:1450:4864:20::231])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BRGCv0gH5zDqF5
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 13:59:06 +1000 (AEST)
-Received: by mail-pg1-x543.google.com with SMTP id m34so340455pgl.11
- for <openbmc@lists.ozlabs.org>; Tue, 11 Aug 2020 20:59:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=u1PUS3lRHj7tHMcLsfvq1MSJH/0rj869hU2m+XxFH8g=;
- b=Q454ViY9yAK6TJhOcVqmjvdv8EnL+EITcz7t2jXHtwcKbwfTJMc3u00GbPo3FGqswS
- Ch6oj06c5kJ0V93iOOkxOi360IDofKpUELF7hf1P2+dCeGLF3woOBM1K9CDemOq7Y6/X
- EQtDK4sS51L7lmuYEk+jEMLXADZGKks6ZpvNnid293RSRUP0ZIik1KucvF7xQOVDqr5C
- GgB0i5fOSNCB0unZ4e8ZERz1k4CMTFlseuQ47SoL04CYk9rc8X9imyLJ7jVS8Q4TMpX3
- Qf4Dz9PKzmo3EsY1nnmff7XVoSrOL9Q/3Vep/NuTy/3NDx+fnJCaKY7C2lyJhvKhMqMp
- uipA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BRK2j6pRpzDqS0
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 16:06:19 +1000 (AEST)
+Received: by mail-lj1-x231.google.com with SMTP id t6so899591ljk.9
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Aug 2020 23:06:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=kms1SP86fI9d+gNBI7F5uPxyinvEB60E2XjISaE67XA=;
+ b=jYp1i32sVYO/mj3Az9VVd643rFsFGd0eeQ5K4Q1jBh3muCc3ipAIu0M7LFFTrWXQ6f
+ 5fLsvBJFEejTUu5ntTYLOMeRMIQptfrFTcY63r/pQqN0Z3dzwSe54QAPvt3zVv0lObDE
+ RQ5+HS3KxeHw5hJQj8fik67VKgvVkU0iNYxqYV1eF9kvmOh1vbIpS9whbehCA103eKlr
+ KpUDL75S+qxpJB8UQ/xrWKsOnMmfp0bJUur0Sr+1e8kY6x+PXa2zTn/klaOuquE4Qj9J
+ qBsKD6KNeLNBeuZ/mwm30pukQ/2+8W/1rFhBV7capg7InPE8J3teIc5Y8es+QvVL7Bha
+ K/Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=u1PUS3lRHj7tHMcLsfvq1MSJH/0rj869hU2m+XxFH8g=;
- b=IlebMcWKLCTUtnE3pm+icSmbUqrVTvxQBx7/qJ37UIsVe25zjXsBIwJDJ2S4UJcjSc
- cEk7MRRZ5yY8S4JCDzvU4W6HA1hk6WooAnjAjlj7CeFMbpueNtmVurym5ZQKEzRQZOQf
- LMYWxaY4lA0a73R9IN5lW4C0SzKf/+Chc2yUH0J7Y31/hayNZV7TntUpGr//RmZiGpgX
- qsIZXbaJCzDW4dgo2lCaI99wG9dD81NXqS7U1P/FaDopthne2cPfc/7bzelFqXEnvF59
- Sfumrq/7ar1id4Euzqz2xxN6T1bR5RUUO45u4I714+xQxCJMdULjb4iV1DMEkfoeh0Wt
- mLww==
-X-Gm-Message-State: AOAM530CoENW0Fzvarf0gcxHMFM23+Uq7amFgu8KhS2Vd4lvVezFHkF8
- 7oHyr3TwoZfPOgf0LP0xYLfn9idhJgI=
-X-Google-Smtp-Source: ABdhPJx4YqYAxdq/HXo9R7p4a93SVvqZlgWEwObPJmctkLq6aO44tgGmqRdwWBaxmTIBZZSMfLzEqA==
-X-Received: by 2002:a62:7f0e:: with SMTP id a14mr9490870pfd.320.1597204741161; 
- Tue, 11 Aug 2020 20:59:01 -0700 (PDT)
-Received: from localhost.localdomain ([45.124.203.19])
- by smtp.gmail.com with ESMTPSA id fv7sm10276801pjb.2.2020.08.11.20.58.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Aug 2020 20:58:59 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH linux dev-5.8] mtd: spi-nor: sfdp: Revert "default to
- addr_width of 3 for configurable widths"
-Date: Wed, 12 Aug 2020 13:28:47 +0930
-Message-Id: <20200812035847.2352277-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.28.0
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=kms1SP86fI9d+gNBI7F5uPxyinvEB60E2XjISaE67XA=;
+ b=TPGPDe8qndyyneFd2G/2F2nb1GZKgnjTw6QGzoc9FGioFiyfX6EOHqZP8NK5g1WCYr
+ 4DixsI+ZyVqiRTj/+Ihwf1Kq4nSWRvzw7TCfuUhPcqZI5da6IqWeyGbLcEzAQEVsmO1G
+ Rp/08jsUTBlSUhnQt+ix4MeihGLXwiWJcXzjza1PPhxf389f3HcVz6A7rhsEx+9xSlZ1
+ f+3ESQh9RnzL5+/uMgJvERaqRjq2jz2UnZ2CYAa1f/1zmJ3okybY0TSk+yRRZbfCJDPS
+ 3dO1O89nclGDov1HlJoIiET2GLtckX3g7+eXmfmWdAs8HC/ylJbDB7e+Z8JwTMEPThjs
+ gOVQ==
+X-Gm-Message-State: AOAM5328qj9ZHPpTGRkjhvsLZBxvzKL3MxO+qRBaAFSMvge/puzs7wb8
+ 3tvSfH+nn0HwAGA868Lc/VohOuQWHmxhEXGoDRAH8A==
+X-Google-Smtp-Source: ABdhPJyWFIKsLp4bZk4ESHhYXhwxw1s4k/LM11jTZtHOe7t5Hs+YM6xylER/pU0HGFvpM3qCB2RUeSfieRrKqMQvjfA=
+X-Received: by 2002:a05:651c:1105:: with SMTP id
+ d5mr5005154ljo.267.1597212372876; 
+ Tue, 11 Aug 2020 23:06:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGm54UEhd6KH0676mqN3EUmEAtgJ81NPKboZUffmRUFNBaXV1Q@mail.gmail.com>
+ <aa24752bc957748c8c241cee4b24402bb8e6fa1a.camel@fuzziesquirrel.com>
+In-Reply-To: <aa24752bc957748c8c241cee4b24402bb8e6fa1a.camel@fuzziesquirrel.com>
+From: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
+Date: Wed, 12 Aug 2020 14:06:01 +0800
+Message-ID: <CAGm54UHBnv6YkFqCGmJE3Jkx_5gTY0ryaUov+kJGMvsb71kacg@mail.gmail.com>
+Subject: Re: [Phishing Risk] [External] Re: Request to create new repo
+ meta-bytedance
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,45 +79,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>, xuxiaohan@bytedance.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This reverts commit f9acd7fa80be6ee14aecdc54429f2a48e56224e8 which
-breaks mounting of UBI volumes with the aspeed-smc driver:
+On Fri, Jul 17, 2020 at 2:53 AM Brad Bishop <bradleyb@fuzziesquirrel.com> w=
+rote:
+>
+> On Wed, 2020-07-15 at 14:28 +0800, =E9=83=81=E9=9B=B7 wrote:
+> >
+> > Could you kindly please help to create the meta-bytedance repo
+>
+> done!
+>
+> >  and add it into openbmc as subtree?
+>
+> I'll do this as soon as there is some content in meta-bytedance.  If I
+> forget please remind me.
 
- ubi0: default fastmap pool size: 25
- ubi0: default fastmap WL pool size: 12
- ubi0: attaching mtd3
- ubi0: scanning is finished
- ubi0 error: ubi_read_volume_table: the layout volume was not found
- ubi0 error: ubi_attach_mtd_dev: failed to attach mtd3, error -22
+A kindly reminder, please help to add meta-bytedance into openbmc as
+subtree, thanks!
 
-Found by bisecting between v5.7 and v5.8.
 
-Fixes: f9acd7fa80be ("mtd: spi-nor: sfdp: default to addr_width of 3 for configurable widths")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
-This identifies why we are seeing SPI NOR failures on v5.8. There is
-potentially a fix that needs to be made in the aspeed-smc driver instead
-of reverting the core spi-nor change.
-
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- drivers/mtd/spi-nor/sfdp.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-index 55c0c508464b..9db07182e9c8 100644
---- a/drivers/mtd/spi-nor/sfdp.c
-+++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -456,7 +456,6 @@ static int spi_nor_parse_bfpt(struct spi_nor *nor,
- 	/* Number of address bytes. */
- 	switch (bfpt.dwords[BFPT_DWORD(1)] & BFPT_DWORD1_ADDRESS_BYTES_MASK) {
- 	case BFPT_DWORD1_ADDRESS_BYTES_3_ONLY:
--	case BFPT_DWORD1_ADDRESS_BYTES_3_OR_4:
- 		nor->addr_width = 3;
- 		break;
- 
--- 
-2.28.0
-
+--=20
+BRs,
+Lei YU
