@@ -2,83 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 817372423D1
-	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 03:43:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A308242471
+	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 05:59:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BRCCC3kwczDqVC
-	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 11:43:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BRGDf5rgLzDqGZ
+	for <lists+openbmc@lfdr.de>; Wed, 12 Aug 2020 13:59:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::543;
+ helo=mail-pg1-x543.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b43; helo=mail-yb1-xb43.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=nLtxl4pd; dkim-atps=neutral
-Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com
- [IPv6:2607:f8b0:4864:20::b43])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=Q454ViY9; dkim-atps=neutral
+Received: from mail-pg1-x543.google.com (mail-pg1-x543.google.com
+ [IPv6:2607:f8b0:4864:20::543])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BRCBS2XWWzDqLq
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 11:42:37 +1000 (AEST)
-Received: by mail-yb1-xb43.google.com with SMTP id x10so476493ybj.13
- for <openbmc@lists.ozlabs.org>; Tue, 11 Aug 2020 18:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=rrClHP3NvCnlIlFkZ/5rGzCFot76gSJ0D6KCvFwUKL4=;
- b=nLtxl4pdOJaPskZGueSFj7G6Zahp0CBL+VyAYc1vG55zv67bvUsjBeVspZzrxOQOFq
- oOwJIzXUEY1ss20M6AL6I2UmO5hNSEwqSPkxFt17n0vHI8h5CChUN422kwCjOqqmjPXM
- w3DBoXkiNZDZRrCv5Q7XrV3b37Gzltf7xuC+uRd2vHVV+i9RSVItQTNJ7IByDZtI49sZ
- lSlpjjSKP7slaF1GUERwerVz4m4DrB7Gc3R9c3rNj7wpecXNoMg2Gs4aaIWtqqi54TPX
- I29yzKxjsbvR0XCFXjp3VuxRlRTxINLDBSGE80ww7H3udEZQ+6g8bB0ABHxLdfqFdhWs
- o7qQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BRGCv0gH5zDqF5
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 13:59:06 +1000 (AEST)
+Received: by mail-pg1-x543.google.com with SMTP id m34so340455pgl.11
+ for <openbmc@lists.ozlabs.org>; Tue, 11 Aug 2020 20:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=sender:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=u1PUS3lRHj7tHMcLsfvq1MSJH/0rj869hU2m+XxFH8g=;
+ b=Q454ViY9yAK6TJhOcVqmjvdv8EnL+EITcz7t2jXHtwcKbwfTJMc3u00GbPo3FGqswS
+ Ch6oj06c5kJ0V93iOOkxOi360IDofKpUELF7hf1P2+dCeGLF3woOBM1K9CDemOq7Y6/X
+ EQtDK4sS51L7lmuYEk+jEMLXADZGKks6ZpvNnid293RSRUP0ZIik1KucvF7xQOVDqr5C
+ GgB0i5fOSNCB0unZ4e8ZERz1k4CMTFlseuQ47SoL04CYk9rc8X9imyLJ7jVS8Q4TMpX3
+ Qf4Dz9PKzmo3EsY1nnmff7XVoSrOL9Q/3Vep/NuTy/3NDx+fnJCaKY7C2lyJhvKhMqMp
+ uipA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=rrClHP3NvCnlIlFkZ/5rGzCFot76gSJ0D6KCvFwUKL4=;
- b=LawPw5iJL/6rXmRzzismwGc8r/J66cVwxiZcw9SKU89rul87EbCNVQiS28gv7eanYD
- OFhsh4Co8jYInEwtSZg5lUXtJC0f+gwniPqpjar0GismJ0s/dehUY0sKjhnY0UnxKdKa
- /XEmRb5P6xwNAFeU5CoaESkv4Il5C7U7vx5rn121trrAbWPjNn2S9S/Zwp2BmFHeTY70
- xRGpp9nUIVHqDhT7N7Iwnhe3Hh6Wx974w2D2xU6tMBiDh0iGBNz8EIt0tzPS6j1fxPGl
- 2DwU2ppUGrDdii/PW34P+al/1UfpNYav/H5yJTPgWCHlSD3VdDa1Tiwh9xUR/6+Dpgxw
- EEZA==
-X-Gm-Message-State: AOAM532NrYtHfi3tA9gXzzplrAgIxuu8LoDGTjbhFP8ZljIqsPniXPUF
- PspARaNZyjtwpd5sk6OFA9LUKk7emi2m30kCCWv+YA==
-X-Google-Smtp-Source: ABdhPJwgir2AQyCA0EuMoa9EqIbG1JaIG9CL6dRK6aBEFD7h3Zoz6rXG2BYfJj6jo+QKVGM/wQHbeHrcXGqXa11aA1M=
-X-Received: by 2002:a25:640e:: with SMTP id y14mr48517371ybb.340.1597196554173; 
- Tue, 11 Aug 2020 18:42:34 -0700 (PDT)
+ h=x-gm-message-state:sender:from:to:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=u1PUS3lRHj7tHMcLsfvq1MSJH/0rj869hU2m+XxFH8g=;
+ b=IlebMcWKLCTUtnE3pm+icSmbUqrVTvxQBx7/qJ37UIsVe25zjXsBIwJDJ2S4UJcjSc
+ cEk7MRRZ5yY8S4JCDzvU4W6HA1hk6WooAnjAjlj7CeFMbpueNtmVurym5ZQKEzRQZOQf
+ LMYWxaY4lA0a73R9IN5lW4C0SzKf/+Chc2yUH0J7Y31/hayNZV7TntUpGr//RmZiGpgX
+ qsIZXbaJCzDW4dgo2lCaI99wG9dD81NXqS7U1P/FaDopthne2cPfc/7bzelFqXEnvF59
+ Sfumrq/7ar1id4Euzqz2xxN6T1bR5RUUO45u4I714+xQxCJMdULjb4iV1DMEkfoeh0Wt
+ mLww==
+X-Gm-Message-State: AOAM530CoENW0Fzvarf0gcxHMFM23+Uq7amFgu8KhS2Vd4lvVezFHkF8
+ 7oHyr3TwoZfPOgf0LP0xYLfn9idhJgI=
+X-Google-Smtp-Source: ABdhPJx4YqYAxdq/HXo9R7p4a93SVvqZlgWEwObPJmctkLq6aO44tgGmqRdwWBaxmTIBZZSMfLzEqA==
+X-Received: by 2002:a62:7f0e:: with SMTP id a14mr9490870pfd.320.1597204741161; 
+ Tue, 11 Aug 2020 20:59:01 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.19])
+ by smtp.gmail.com with ESMTPSA id fv7sm10276801pjb.2.2020.08.11.20.58.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Aug 2020 20:58:59 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH linux dev-5.8] mtd: spi-nor: sfdp: Revert "default to
+ addr_width of 3 for configurable widths"
+Date: Wed, 12 Aug 2020 13:28:47 +0930
+Message-Id: <20200812035847.2352277-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-References: <CAHBbfcUoAB_nmsaCh2-vAEAjE7Fuu3MNydHLUwBS7zkt7pcPkw@mail.gmail.com>
- <f1b0300f-06ac-c350-8fcc-24eae806cdb2@linux.intel.com>
- <CAHBbfcUXLueZ3MZAP9b38B-fXyrNCMAeZcC7uk8uPrR5gw=3xQ@mail.gmail.com>
- <2bb88ede-4d35-8b9c-936f-be8dc9a453e5@linux.intel.com>
- <CAHBbfcUDMOZjxSvy8wVW_F9f3+NaX-WU3G5PF1oUoRx5VP7ZoQ@mail.gmail.com>
- <CACWQX82KAhmRbg-CYa8+Yjd8mE7qCM_vG_Q1_hYZVR77c3gdtw@mail.gmail.com>
- <CAHBbfcUJGnsW_dxONwjsT=w3ZM453-o0Ubc7DE7oOJQ8u28=ww@mail.gmail.com>
- <5a59238b-7653-b11f-701b-039d57dd5b98@linux.intel.com>
- <CAHBbfcXRO5ZB3S0T6SyRkWkLLAruKPdS8UhUkyG3qssU5YkHNw@mail.gmail.com>
- <9deda21d-aa01-d15e-464e-7ab0fb2f751c@linux.intel.com>
- <CAHBbfcX7TahfKcVcUqWKQGTK5s9Rzw3mT4_3v4tWtkAgHBgX6g@mail.gmail.com>
- <CACWQX83AdMHFk5NUJmpoesghK_2YZ9MMo6h-KoWzDtZ-jrTYRw@mail.gmail.com>
- <CAHBbfcUBBUpO9o2pNSbr0YKXNRHPju4gNNHxxNxuda9k5D0BYQ@mail.gmail.com>
- <CACWQX809R7wx+qNt5PhZW-Snv0jdPnUVGSt+A_jobrTcYC8B2Q@mail.gmail.com>
- <CAA_a9xJhKikZR0rhZWfVfKF1VKMkP1yUkRJxhWSC37JA-2h7sA@mail.gmail.com>
- <CACWQX80Y9WAjtW=xiq6PgHX3GnF2b6-CT3fL632OyfPBvk029A@mail.gmail.com>
- <CAA_a9xJL=jO61H5k=_OjqoTg6enoaANT80PEeK2FOPDuqRyb3g@mail.gmail.com>
-In-Reply-To: <CAA_a9xJL=jO61H5k=_OjqoTg6enoaANT80PEeK2FOPDuqRyb3g@mail.gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Tue, 11 Aug 2020 18:42:22 -0700
-Message-ID: <CACWQX81wTLGDJqqrf1AGeNQQmRA2G1r5iPm-fW15fZYLB_rAMg@mail.gmail.com>
-Subject: Re: dbus-sensors:hwmontemp: additional attribute proposal
-To: Alex Qiu <xqiu@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,75 +78,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>, Jason Ling <jasonling@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Aug 11, 2020 at 5:46 PM Alex Qiu <xqiu@google.com> wrote:
->
-> The question was more of a general ask on whether dbus-sensors plans for this on record. If so, individual daemon should have the config option to ignore a device completely. Currently, I think PSUSensor has the ability, but HwmonTempSensor does not.
->
+This reverts commit f9acd7fa80be6ee14aecdc54429f2a48e56224e8 which
+breaks mounting of UBI volumes with the aspeed-smc driver:
 
-You're talking about ignoring a specific leg of a device?  Like
-ignoring a particular sensor on an installed device?  Or are you
-talking about ignoring a device class entirely?  Maybe calling out the
-specific use case of what you're wanting to ignore might help here.
+ ubi0: default fastmap pool size: 25
+ ubi0: default fastmap WL pool size: 12
+ ubi0: attaching mtd3
+ ubi0: scanning is finished
+ ubi0 error: ubi_read_volume_table: the layout volume was not found
+ ubi0 error: ubi_attach_mtd_dev: failed to attach mtd3, error -22
 
-> The reason behind it may be complicated. One is if we can fix the PSUSensor performance issue on time so that we can use it directly for PID control based on VR temperatures. And then, if we can't fix it on time, what work around can we have?
+Found by bisecting between v5.7 and v5.8.
 
-I'm assuming "on time" here refers to some product schedule?  Without
-knowing your particular timelines, I will say this: we've solved
-several orders of magnitude worse performance problems in dbus sensors
-in the past.  I'm assuming this one just requires the proper
-application of debugging, thought, and engineering.  I'm not sure how
-to answer your question about workarounds:  You would have whatever
-workarounds you're willing to build, that's the beauty of open source.
-If using HwMonTempSensor is a workaround, and you're willing to live
-with the patch, by all means, use it.
+Fixes: f9acd7fa80be ("mtd: spi-nor: sfdp: default to addr_width of 3 for configurable widths")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+This identifies why we are seeing SPI NOR failures on v5.8. There is
+potentially a fix that needs to be made in the aspeed-smc driver instead
+of reverting the core spi-nor change.
 
-> Is it upstream-able or local patches
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/mtd/spi-nor/sfdp.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-That would depend on what your workarounds entail.  If your
-workarounds follow the principles of the project, don't duplicate
-functionality, don't break any of the existing use cases, and are
-maintainable, then they're probably upstreamable.  If you're
-duplicating features between daemons unnecessarily for lack of wanting
-to hunt down and understand a performance bug, that's probably
-something you need to keep in a local patch until you have time to do
-the appropriate debugging.
+diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
+index 55c0c508464b..9db07182e9c8 100644
+--- a/drivers/mtd/spi-nor/sfdp.c
++++ b/drivers/mtd/spi-nor/sfdp.c
+@@ -456,7 +456,6 @@ static int spi_nor_parse_bfpt(struct spi_nor *nor,
+ 	/* Number of address bytes. */
+ 	switch (bfpt.dwords[BFPT_DWORD(1)] & BFPT_DWORD1_ADDRESS_BYTES_MASK) {
+ 	case BFPT_DWORD1_ADDRESS_BYTES_3_ONLY:
+-	case BFPT_DWORD1_ADDRESS_BYTES_3_OR_4:
+ 		nor->addr_width = 3;
+ 		break;
+ 
+-- 
+2.28.0
 
-> ? What's more, can we have different polling rates for temperature and voltage/current/power by using multiple daemon for the same device?
-
-Why don't we just make the polling rate configurable in the EM config?
- Each sensor has its own timer for exactly this reason.  In the
-original design of dbus-sensors, each sensor instance also ran in its
-own process.  We moved it to each sensor type running in a shared
-process because the context switches were getting really bad, and a
-lot of the sensors of similar types had very similar event matches, so
-it allowed us to reduce the dbus load for things like power on.  We
-could certainly revisit this, but for what you're wanting, I suspect
-we can just configure the polling rates per sensor.  We hardcoded them
-under the assumption that we could build one reasonable default that
-worked for everyone, but clearly you've broken that assumption, so
-lets throw it in a config file, put some reasonable defaults on it,
-and call it good.  (note, this is subject to James' opinion as
-maintainer, I'm not sure if he'll agree here).
-
-> Of course, ideally, we can go for a fast feature-enriched PSUSensor to take care of everything and deprecate HwmonTempSensor, but you know I have been talking about schedule for multiple times with you before...
->
-
-I understand short schedules.  It always feels like there's not enough
-time.  The best advice I have here is to try to break your problem
-space down into small problems such that you can get a patch written,
-tested, and pushed to gerrit out for that day.  Then use those patches
-to slowly move toward what you want, even if you keep stacking them up
-in upstream.  Eventually the maintainer will review them, or you'll
-have solved someone else's problem before they hit it.  If enough
-people do this, we'll be way ahead on these types of bugs.
-
-At some point James might need to school us on what the theoretical
-difference is between PSUsensor and HwmonSensor.  I know one was
-originally built for PSU modules, and the other was built for on board
-hardware, but they're getting pretty similar, maybe it does make sense
-to have certain devices in both?
