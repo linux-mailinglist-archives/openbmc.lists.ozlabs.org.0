@@ -2,64 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4E592432A2
-	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 05:16:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CD4C82432AA
+	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 05:19:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BRsDJ5W9NzDqbh
-	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 13:16:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BRsHN0KK1zDqYY
+	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 13:19:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::542;
- helo=mail-ed1-x542.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::644;
+ helo=mail-ej1-x644.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Hvt2NguY; dkim-atps=neutral
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
- [IPv6:2a00:1450:4864:20::542])
+ header.s=google header.b=AqkqPgIW; dkim-atps=neutral
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com
+ [IPv6:2a00:1450:4864:20::644])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BRsCN110wzDqYK
- for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 13:15:43 +1000 (AEST)
-Received: by mail-ed1-x542.google.com with SMTP id di22so3049411edb.12
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 20:15:43 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BRsGY1hwFzDqYK
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 13:18:27 +1000 (AEST)
+Received: by mail-ej1-x644.google.com with SMTP id p24so4523007ejf.13
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 20:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=LUoRiiS2f/wYcSnL51bB5jPauQU7hvabt9xaE8lkrxQ=;
- b=Hvt2NguYv5KYch6CY0Ow4To3rcHP+eZufxsmR1vN6Y9DYDVJjJNoDvzfwGXSCVIUov
- PxFSeSeP8arJJX2qP9t9n34N17RV/l2u7IL7jmgSwWuZEOYV7h81wmrrHUQf/kBm7UTP
- BmHV2geHv5ZplJHa0yUbVw8N/VwAbwMzaSiGk=
+ :cc; bh=B6eGTMAJCDtoLZ/vaK5GwhCVHfvA5r0OsLeUYHc7Yn0=;
+ b=AqkqPgIWZ33vKbShmg9DwdI7g0qm8nWujW5YipCfCF7LwEqCZ5jNNX98Os/g+pqFho
+ T5EuaXEhHUJtvr09oOVRTeynOEieamkCfJzUPfhoyMVp8wzhhsyyWAWeN4WzaGGYNmqU
+ 5b1YZ1reuLeSMypivZn4wiTDiGTHVF+X7ZSx8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=LUoRiiS2f/wYcSnL51bB5jPauQU7hvabt9xaE8lkrxQ=;
- b=tOsmMN1V1XWuXaiNqDzz8nAQddqUW9piW4RE+MP0+cXUyb+euSMmBQBjsTv3i1fyGk
- kiuQnXs8d/YZP1hw4nQZ7PGAEzPdna00sHN/Zxjq8SSb+OqTfliIt3ubb0Fxe/O/d6d8
- XIWy5alohgHv21A5IaxiBmn7Xv4H3uBJWGjgY4BmSMr5OoEEK1tpwFEbKcpYWnvdwbC/
- /3UUuzntY+aOhXlhx8oyvhuqXL0Q1jlLEhqyTzqwGcLOsOAeLWvOztIGfiYETj+yBV8G
- CgzYZz7/RBJDExVTv8qL5IsdNcUYqAPihz1jDGbZtlRaoYsBeJossNUU0+zbcGpMFqZW
- YcDw==
-X-Gm-Message-State: AOAM531paoWL2zxzTFcZ9W/y1WDI8Ic9xO7fq+7PKmSyObuNAfgV4cRy
- HwvRMmD5CRZlMjlqjwMNcqzZBM1qouhulhnmYi8=
-X-Google-Smtp-Source: ABdhPJwVAbmQC07LZ7R1PHw6DjdswV/7ELINKa7bjGyTHj21SBnuWPT1b4mcw/DOA9wpZvmBtwGQOW7p40szh0wxb5k=
-X-Received: by 2002:aa7:cd07:: with SMTP id b7mr2952777edw.172.1597288537748; 
- Wed, 12 Aug 2020 20:15:37 -0700 (PDT)
+ bh=B6eGTMAJCDtoLZ/vaK5GwhCVHfvA5r0OsLeUYHc7Yn0=;
+ b=Pepve7yq99LjsRBP6jh6glWpkH3PQVyfocMQowf7PZtjQrXd1dgWF6vKzthAfHlXW0
+ lft0c9QUiDpysqS1LBdbgg2Fb1NUlBlreU+FA3kLGFroEGnOw1CZsFoq0KNck2D+KwWh
+ ubJYiSVVPrQySOB1tthMaETBh2tAAtmA8C59G8WeXvXdHojw3S8DW4hD8vNhhrn0v7u6
+ xyw5ukTkVoejTAUoNFfHKWZzNE0KoK+Na+0/TMGXBrDokx87Yny0iEnxtcG3XTWwKFPU
+ 3bX+tCn6A0Pw8jbO5A4kJ3TP3DY6ZampO79xCz4syRytD14uHUCLSxiL3RWJR/LVwrT+
+ S48g==
+X-Gm-Message-State: AOAM533+egowgkNjenVbOpyS87UC1G3xz1kTy1g5YayzrdVt3wDK3Sev
+ wfUj4sRSWf1tInFOrIAGeKwovzQZYVf2C2U9TIqSNmi1
+X-Google-Smtp-Source: ABdhPJyEfWlVB64fqlZO190lvzv173FTsjhCWLMwVl+0NMKK75PE5D7uMKURt2nmN/pja6GWn7WtY8u9kY+R/ojwlXo=
+X-Received: by 2002:a17:906:198e:: with SMTP id
+ g14mr2777476ejd.266.1597288703540; 
+ Wed, 12 Aug 2020 20:18:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <1596022243-8788-1-git-send-email-vishwa@linux.vnet.ibm.com>
-In-Reply-To: <1596022243-8788-1-git-send-email-vishwa@linux.vnet.ibm.com>
+References: <1596022264-8856-1-git-send-email-vishwa@linux.vnet.ibm.com>
+In-Reply-To: <1596022264-8856-1-git-send-email-vishwa@linux.vnet.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 13 Aug 2020 03:15:25 +0000
-Message-ID: <CACPK8XdV8P4S2k+fkatMDBmDKHTHFto_sDbg1mJt_EOPR2LS+g@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.7 2/2] rainier: Add LEDs that are controlled
- by ASPEED
+Date: Thu, 13 Aug 2020 03:18:11 +0000
+Message-ID: <CACPK8XeetP+u1fTjJs8eHOXHDqZMJeZm8iVgB02g9BhKD2i-3w@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.7 1/2] rainier: Add leds that are off 9551 on
+ Operator Panel
 To: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>,
- Andrew Geissler <geissonator@yahoo.com>, 
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+ Brad Bishop <bradleyb@fuzziesquirrel.com>, 
+ Andrew Geissler <geissonator@yahoo.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -76,84 +77,129 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, vishwa@linux.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 29 Jul 2020 at 11:30, <vishwa@linux.vnet.ibm.com> wrote:
+On Wed, 29 Jul 2020 at 11:31, <vishwa@linux.vnet.ibm.com> wrote:
 >
 > From: Vishwanatha Subbanna <vishwa@linux.ibm.com>
 >
-> These are the LEDs that have direct GPIO connection from ASPEED
-
-Do you mean directly connected to the BMC, and not via a GPIO expander?
-
-Convetion is to name the patches with a prefix:
-
- ARM: dts: aspeed: rainier: Add directly controlled LEDs
-
-
+> These are LEDs that are controlled by 9551
 >
 > Signed-off-by: Vishwanatha Subbanna <vishwa@linux.ibm.com>
 > Reviewed-by: Eddie James <eajames@linux.ibm.com>
 > ---
->  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 24 ++++++++++++++++++++++--
->  1 file changed, 22 insertions(+), 2 deletions(-)
+>  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 82 ++++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
 >
 > diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index 9b28a30..d1a588f 100644
+> index 37e4123..9b28a30 100644
 > --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
 > +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -124,6 +124,26 @@
->         leds {
->                 compatible = "gpio-leds";
+> @@ -120,6 +120,38 @@
+>                         reg = <3>;
+>                 };
+>         };
+> +
+> +       leds {
+> +               compatible = "gpio-leds";
+> +
+> +               /* System ID LED that is at front on Op Panel */
+> +               front-sys-id0 {
+
+The naming here will need to follow whatever we decide in the first patch.
+
+> +                       retain-state-shutdown;
+> +                       default-state = "keep";
+> +                       gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
+> +               };
+> +
+> +               /* System Attention Indicator ID LED that is at front on Op Panel */
+> +               front-check-log0 {
+> +                       retain-state-shutdown;
+> +                       default-state = "keep";
+> +                       gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
+> +               };
+> +
+> +               /* Enclosure Fault LED that is at front on Op Panel */
+> +               front-enc-fault1 {
+> +                       retain-state-shutdown;
+> +                       default-state = "keep";
+> +                       gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
+> +               };
+> +
+> +               /* System PowerOn LED that is at front on Op Panel */
+> +               front-sys-pwron0 {
+> +                       retain-state-shutdown;
+> +                       default-state = "keep";
+> +                       gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
+> +               };
+> +       };
+>  };
 >
-> +               /* BMC Card fault LED at the back */
-> +               bmc-ingraham0 {
-> +                       gpios = <&gpio0 ASPEED_GPIO(H, 1) GPIO_ACTIVE_LOW>;
+>  &ehci1 {
+> @@ -816,6 +848,56 @@
+>                 };
+>         };
+>
+> +       pca1: pca9551@60 {
+
+I noticed we start to accumulate a lot of pcaX nodes. They will need
+to be unique per-device tree, so we will need to pick a unique
+identifier.
+
+How about the part number the schematic? (ie U32 or whatever)
+
+
+> +               compatible = "nxp,pca9551";
+> +               reg = <0x60>;
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +
+> +               gpio-controller;
+> +               #gpio-cells = <2>;
+> +
+> +               gpio@0 {
+> +                       reg = <0>;
+> +                       type = <PCA955X_TYPE_GPIO>;
 > +               };
 > +
-> +               /* Enclosure ID LED at the back */
-> +               rear-enc-id0 {
-> +                       gpios = <&gpio0 ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
+> +               gpio@1 {
+> +                       reg = <1>;
+> +                       type = <PCA955X_TYPE_GPIO>;
 > +               };
 > +
-> +               /* Enclosure fault LED at the back */
-> +               rear-enc-fault0 {
-> +                       gpios = <&gpio0 ASPEED_GPIO(H, 3) GPIO_ACTIVE_LOW>;
+> +               gpio@2 {
+> +                       reg = <2>;
+> +                       type = <PCA955X_TYPE_GPIO>;
 > +               };
 > +
-> +               /* PCIE slot power LED */
-> +               pcieslot-power {
-> +                       gpios = <&gpio0 ASPEED_GPIO(P, 4) GPIO_ACTIVE_LOW>;
+> +               gpio@3 {
+> +                       reg = <3>;
+> +                       type = <PCA955X_TYPE_GPIO>;
 > +               };
 > +
->                 /* System ID LED that is at front on Op Panel */
->                 front-sys-id0 {
->                         retain-state-shutdown;
-> @@ -167,7 +187,7 @@
->         /*E0-E7*/       "","","","","","","","",
->         /*F0-F7*/       "","","","","","","","",
->         /*G0-G7*/       "","","","","","","","",
-> -       /*H0-H7*/       "","","","","","","","",
-> +       /*H0-H7*/       "","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
-
-I think the guideline is to name GPIOs based on their use, so
-bmc-ingraham0 should be fault-bmc-ingraham0 if we follow the psu
-presence GPIO convention of function-name.
-
-I think we had some documentation written up on naming conventions.
-
-Brad, do you have any input here?
-
->         /*I0-I7*/       "","","","","","","","",
->         /*J0-J7*/       "","","","","","","","",
->         /*K0-K7*/       "","","","","","","","",
-> @@ -175,7 +195,7 @@
->         /*M0-M7*/       "","","","","","","","",
->         /*N0-N7*/       "","","","","","","","",
->         /*O0-O7*/       "","","","usb-power","","","","",
-> -       /*P0-P7*/       "","","","","","","","",
-> +       /*P0-P7*/       "","","","","pcieslot-power","","","",
->         /*Q0-Q7*/       "cfam-reset","","","","","","","",
->         /*R0-R7*/       "","","","","","","","",
->         /*S0-S7*/       "presence-ps0","presence-ps1","presence-ps2","presence-ps3",
+> +               gpio@4 {
+> +                       reg = <4>;
+> +                       type = <PCA955X_TYPE_GPIO>;
+> +               };
+> +
+> +               gpio@5 {
+> +                       reg = <5>;
+> +                       type = <PCA955X_TYPE_GPIO>;
+> +               };
+> +
+> +               gpio@6 {
+> +                       reg = <6>;
+> +                       type = <PCA955X_TYPE_GPIO>;
+> +               };
+> +
+> +               gpio@7 {
+> +                       reg = <7>;
+> +                       type = <PCA955X_TYPE_GPIO>;
+> +               };
+> +       };
+> +
+>         dps: dps310@76 {
+>                 compatible = "infineon,dps310";
+>                 reg = <0x76>;
 > --
 > 1.8.3.1
 >
