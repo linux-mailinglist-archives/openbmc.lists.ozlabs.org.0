@@ -1,63 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BDB42432F2
-	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 05:46:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 600E42432F5
+	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 05:51:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BRstt1lvKzDqbB
-	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 13:46:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BRt074RBmzDqb9
+	for <lists+openbmc@lfdr.de>; Thu, 13 Aug 2020 13:51:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::543;
- helo=mail-ed1-x543.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::641;
+ helo=mail-ej1-x641.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=iuZ9UBLy; dkim-atps=neutral
-Received: from mail-ed1-x543.google.com (mail-ed1-x543.google.com
- [IPv6:2a00:1450:4864:20::543])
+ header.s=google header.b=A4mkOraM; dkim-atps=neutral
+Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com
+ [IPv6:2a00:1450:4864:20::641])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BRssk3RvjzDqRN
- for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 13:45:28 +1000 (AEST)
-Received: by mail-ed1-x543.google.com with SMTP id cq28so3093358edb.10
- for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 20:45:28 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BRszK75PyzDqL4
+ for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 13:50:21 +1000 (AEST)
+Received: by mail-ej1-x641.google.com with SMTP id f24so4612190ejx.6
+ for <openbmc@lists.ozlabs.org>; Wed, 12 Aug 2020 20:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=XEaq1ltZUdp/fNvB6iQoRtFRx9BKMr9ZFWMRqUCB+bQ=;
- b=iuZ9UBLyfsJ08Gmlv3Y0CzRTQbYPmYKS0C1eqqKlQmF6RauhyZHrglK+mj319VAnYq
- JTXkbc5+0yKHyJEz1yrmmnmwSSMYhZ8dojoxzuBubAjVCrBxtLIMHJkaCuZvgCyy7Xfa
- URxeh02i6bSOaViz3PJboM8vPqatJAsgIEqAM=
+ :cc; bh=ZG0dvfm01m4/EVtmqX3FMZ6Mc4Y9wT7OCws8byvLRq8=;
+ b=A4mkOraMyQ/PKMKkMkFRDpe5tzbC8YlhmcGCMsmSbudXDdq2Pgz7i71LvHSiOwADuk
+ XjdHLUDmakNI7ACMuBdN2tpiY5xr98mxePEEfqdzsoe/rLLYEPax2xIrq3ZVltKieDQP
+ 400IeMpND58u1T5776+RX1oTAdxFdS6DAN62o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=XEaq1ltZUdp/fNvB6iQoRtFRx9BKMr9ZFWMRqUCB+bQ=;
- b=g8L6WlLkF4mvpP1FEpUW0HlhNBWBDCBWPBuAxs6PwlEe6DcCk+G6OprMqkNRNTJxDe
- GqvPL6cFCho2TdbjMmxGdZxQxbiPZI4x7wcUmo94HPnjt9g4NHW1KpDhlJWL4H1oWCtP
- RCVG8T01Iq4d/1XZnlFIeQX+8w6qksaQgaoddMHcIMWXMCpmzWATMcrPKeCxM0yjLUQB
- NC6NtFDtloDMP7WRJPNydHQpf9sDoCcyhlvfJCbroiWlZ5eKo9ngxzCLISAOde3RYSrO
- Q+a2OIi1SB7qhS+S7n+mfT4WArckfBHcZbhX1KzjMf1GGr9OMDj7FiFLREYM2xSUjWeq
- FIuA==
-X-Gm-Message-State: AOAM532wjXvzxiJ6S4Rqc1hhX9JjCpQEEt9YNooOZJtSNnWZNWjAn8c5
- zg4k9yiLr3DeXiIntsH8pddM9iEoQzbhwVGC95g=
-X-Google-Smtp-Source: ABdhPJxjkxq6BnAdhTzIczQ46esDfBSFKRS/Oegcw2b6PahPN/rq9oeG0QuWARYs500h0ct+g2629LsLvnuchjS6TzA=
-X-Received: by 2002:a50:a69a:: with SMTP id e26mr2840143edc.260.1597290323813; 
- Wed, 12 Aug 2020 20:45:23 -0700 (PDT)
+ bh=ZG0dvfm01m4/EVtmqX3FMZ6Mc4Y9wT7OCws8byvLRq8=;
+ b=V2wMvD0hXsQhz5v/fWmb8jCw58TejW9ebS88bJBbTlcRDa1c6/Nsw5nK/zqkeIGlzX
+ EugDTKSAxlwUhuNLKWAqp4Bl0R3wwWl4UOsGUB1WMij2vAIRY6iQdG8ATityKnTEuXud
+ 1KAgRaRFJuMGLtNL0utRmdpJe+26uzGscEbrb4N5YI7olnROtF14mt8K+E8XE55OPH20
+ kG3ESMqAzQGQ8Xn3Jl2MX/MWg9/e/r7lalejdqohTo5C+UOC4EfX3RdfgYKpkdxh2aqW
+ +vr2QSg+8FlFBBBbWnJfcw++joSwROgnBWuRPsuYFzLKPZy4SqIFHqXQY0eWc88rcaBA
+ c86w==
+X-Gm-Message-State: AOAM533gYfJJE4pmhcwUkYYPsqdPxnHaLPcP94gjOtlc3MsQn9JpVYui
+ DLXGGf5qiRnA9Z5lplq0K6PRXbldg/m2HUeKBGc=
+X-Google-Smtp-Source: ABdhPJwB8GeEjj0x6UE/PRqpKuwZuEK56wRdGd4KPai0c4YPEU2xHhdqC2vR5kJcquLwMq97ZDwFrhSGKSt8dI/4qm0=
+X-Received: by 2002:a17:906:c187:: with SMTP id
+ g7mr3071752ejz.108.1597290617243; 
+ Wed, 12 Aug 2020 20:50:17 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200730220330.16368-1-eajames@linux.ibm.com>
- <20200730220330.16368-7-eajames@linux.ibm.com>
-In-Reply-To: <20200730220330.16368-7-eajames@linux.ibm.com>
+In-Reply-To: <20200730220330.16368-1-eajames@linux.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 13 Aug 2020 03:45:11 +0000
-Message-ID: <CACPK8XfV_hWkvRdgEUwP84CcYgXcRCKRtWi+xXqDJrbSkub_ag@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.7 v2 6/7] spi: fsi: Check mux status before
- transfers
+Date: Thu, 13 Aug 2020 03:50:04 +0000
+Message-ID: <CACPK8XcvBTnW6syjHCVZADHfnFdR0qTj_znG-q0-ruqfLGb6FQ@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.7 v2 0/7] spi: Fix FSI-attached controller and
+ AT25 drivers
 To: Eddie James <eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -78,107 +78,37 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, 30 Jul 2020 at 22:03, Eddie James <eajames@linux.ibm.com> wrote:
 >
-> The SPI controllers are not accessible if the mux isn't set. Therefore,
-> check the mux status before starting a transfer and fail out if it isn't
-> set.
+> This series implements a number of fixes for the FSI-attached SPI controller
+> driver and the AT25 eeprom driver.
 >
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  drivers/spi/spi-fsi.c | 40 +++++++++++++++++++++++++++-------------
->  1 file changed, 27 insertions(+), 13 deletions(-)
->
-> diff --git a/drivers/spi/spi-fsi.c b/drivers/spi/spi-fsi.c
-> index 53cfa201e187..8949a64ec87d 100644
-> --- a/drivers/spi/spi-fsi.c
-> +++ b/drivers/spi/spi-fsi.c
-> @@ -12,6 +12,7 @@
->
->  #define FSI_ENGID_SPI                  0x23
->  #define FSI_MBOX_ROOT_CTRL_8           0x2860
-> +#define  FSI_MBOX_ROOT_CTRL_8_SPI       0xf0000000
+> Changes since v1:
+>  - Add patch 6 for checking the mux status before transfers
+>  - Minor fixes to at25 driver formatting and such.
 
-Could be called SPI_MUX or something similar.
+I've merged this series into dev-5.8. Please consider my review
+comments and send the series upstream.
+
+Cheers,
+
+Joel
 
 >
->  #define FSI2SPI_DATA0                  0x00
->  #define FSI2SPI_DATA1                  0x04
-> @@ -84,6 +85,26 @@ struct fsi_spi_sequence {
->         u64 data;
->  };
+> Brad Bishop (4):
+>   spi: fsi: Handle 9 to 15 byte transfers lengths
+>   spi: fsi: Fix clock running too fast
+>   spi: fsi: Fix use of the bneq+ sequencer instruction
+>   eeprom: at25: Split reads into chunks and cap write size
 >
-> +static int fsi_spi_check_mux(struct fsi_device *fsi, struct device *dev)
-> +{
-> +       int rc;
-> +       u32 root_ctrl_8;
-> +       __be32 root_ctrl_8_be;
-> +
-> +       rc = fsi_slave_read(fsi->slave, FSI_MBOX_ROOT_CTRL_8, &root_ctrl_8_be,
-> +                           sizeof(root_ctrl_8_be));
-> +       if (rc)
-> +               return rc;
-> +
-> +       root_ctrl_8 = be32_to_cpu(root_ctrl_8_be);
-> +       dev_dbg(dev, "Root control register 8: %08x\n", root_ctrl_8);
-> +       if ((root_ctrl_8 & FSI_MBOX_ROOT_CTRL_8_SPI) ==
-> +            FSI_MBOX_ROOT_CTRL_8_SPI)
-> +               return 0;
-> +
-> +       return -ENOLINK;
-
-We bubble this error up to device drivers. Are they ok with ENOLINK?
-
-> +}
-> +
->  static int fsi_spi_check_status(struct fsi_spi *ctx)
->  {
->         int rc;
-> @@ -449,11 +470,15 @@ static int fsi_spi_transfer_init(struct fsi_spi *ctx)
->  static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
->                                         struct spi_message *mesg)
->  {
-> -       int rc = 0;
-> +       int rc;
->         u8 seq_slave = SPI_FSI_SEQUENCE_SEL_SLAVE(mesg->spi->chip_select + 1);
->         struct spi_transfer *transfer;
->         struct fsi_spi *ctx = spi_controller_get_devdata(ctlr);
+> Eddie James (3):
+>   dt-bindings: fsi: fsi2spi: Document new restricted property
+>   spi: fsi: Implement restricted size for certain controllers
+>   spi: fsi: Check mux status before transfers
 >
-> +       rc = fsi_spi_check_mux(ctx->fsi, ctx->dev);
-> +       if (rc)
-> +               return rc;
-> +
->         list_for_each_entry(transfer, &mesg->transfers, transfer_list) {
->                 struct fsi_spi_sequence seq;
->                 struct spi_transfer *next = NULL;
-> @@ -537,24 +562,13 @@ static size_t fsi_spi_max_transfer_size(struct spi_device *spi)
->  static int fsi_spi_probe(struct device *dev)
->  {
->         int rc;
-> -       u32 root_ctrl_8;
->         struct device_node *np;
->         int num_controllers_registered = 0;
->         struct fsi_device *fsi = to_fsi_dev(dev);
+>  .../devicetree/bindings/fsi/ibm,fsi2spi.yaml  |  10 ++
+>  drivers/misc/eeprom/at25.c                    |  94 +++++++-----
+>  drivers/spi/spi-fsi.c                         | 139 ++++++++++++++----
+>  3 files changed, 172 insertions(+), 71 deletions(-)
 >
-> -       /*
-> -        * Check the SPI mux before attempting to probe. If the mux isn't set
-> -        * then the SPI controllers can't access their slave devices.
-> -        */
-> -       rc = fsi_slave_read(fsi->slave, FSI_MBOX_ROOT_CTRL_8, &root_ctrl_8,
-> -                           sizeof(root_ctrl_8));
-> +       rc = fsi_spi_check_mux(fsi, dev);
->         if (rc)
-> -               return rc;
-> -
-> -       if (!root_ctrl_8) {
-> -               dev_dbg(dev, "SPI mux not set, aborting probe.\n");
-
-Should we make this a dev_warn so it's clear why the driver did not "work"?
-
->                 return -ENODEV;
-
-> -       }
->
->         for_each_available_child_of_node(dev->of_node, np) {
->                 u32 base;
 > --
 > 2.24.0
 >
