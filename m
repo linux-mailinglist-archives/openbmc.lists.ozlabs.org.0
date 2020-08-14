@@ -1,65 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DAB2244426
-	for <lists+openbmc@lfdr.de>; Fri, 14 Aug 2020 06:19:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 836A0244938
+	for <lists+openbmc@lfdr.de>; Fri, 14 Aug 2020 13:49:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BSVYz3HRMzDqGY
-	for <lists+openbmc@lfdr.de>; Fri, 14 Aug 2020 14:19:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BShYV0fNmzDqmY
+	for <lists+openbmc@lfdr.de>; Fri, 14 Aug 2020 21:49:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::542;
- helo=mail-ed1-x542.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=venkata_chandrappa@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=EUCzJHw7; dkim-atps=neutral
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
- [IPv6:2a00:1450:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=cRhGd2rX; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=Mxzotnsf; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BSVY66HX1zDqg4
- for <openbmc@lists.ozlabs.org>; Fri, 14 Aug 2020 14:18:16 +1000 (AEST)
-Received: by mail-ed1-x542.google.com with SMTP id df16so5852476edb.9
- for <openbmc@lists.ozlabs.org>; Thu, 13 Aug 2020 21:18:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=d5Zj9iZSD2A9uPoidyItUrlCspsjLCmhnRZlWkifdio=;
- b=EUCzJHw7N9q+VdWr6kzibH3qT/LEwoJkE19/1tbFSwC6cJj3OgcW4kIutz6nl/eBQK
- KVaVrDXe8YzkRVWFHnU+sapG3ExMD4+COBmABWFE9zh6Ql5nB6ksu/s/PcP0GH0o8dA5
- 5rxt3X0F+NAMo/E6/L/4nqgEDEtke+6WXC7Fo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=d5Zj9iZSD2A9uPoidyItUrlCspsjLCmhnRZlWkifdio=;
- b=AEZM6Uo3YsJQn9GizQfh25dbjRKOFwLb7JFlwSjeJHL0OwXfG/I1PRstIhusyJxOa+
- OsWOel1PW3GkxgZ45Fo8UGzw2O5AXT5ZRzgqCLEEqBN3LSenwK1FZqNb2vSnE8VAUmoW
- EuY+v6jNj/Tnbr/QS56gqhgHbkCOSkOgyT+mnhMwhVOB3gcgCGz9rtslEiQ7FPbCwGnI
- +/U4qiZARoVrdSIj71y0gn2/DwuGd1C5+EMZppwqeplvDrdyc2p6k9NqB6Vp9nLPZ5Ov
- buk23f7GFqcW9aNB3Lco4tEhkj/qjONYLumANonCj1lm7Z6W2uXJRpaKgY6fsa2hkmKh
- EsHw==
-X-Gm-Message-State: AOAM530jZhCWkgH3upKDesElaF4Xjt3o2GTXBrXhjjEk/SHB+NZvAmAB
- f8ao35GcD6C1DdPdFrgMqLnTPf8pDwZ9h5e/ATA=
-X-Google-Smtp-Source: ABdhPJyOrtSAWRwuuJKF1mrohoYRdGKHN3NT18pQi3nDPSMa9dygi5pQmMnOEzALK/90hZk+GL92+Q1JkGV/LWAv5pY=
-X-Received: by 2002:aa7:c406:: with SMTP id j6mr531343edq.143.1597378691887;
- Thu, 13 Aug 2020 21:18:11 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BShXY2tvtzDqlZ
+ for <openbmc@lists.ozlabs.org>; Fri, 14 Aug 2020 21:48:26 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1597405702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=vwWGZfCWcm7HudFKoqbrWq2k5wKeA8mmA1j4sPdySbM=;
+ b=cRhGd2rX/IvBO95A1Kn3TMmuj+R+6St1YqpAXVyJ3DII9BbBDMQv/j1JHXsd6gyUNVMqar
+ rDt12K0SU24PcdqdVLiJzmSE8piZA0Y6DzWp6I8yAXgZtFYU0UAaMI5begruu/JtDJfgzd
+ nwDpQkpf+q6EXB73c1ACiXxwEXagUCk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1597405703;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=vwWGZfCWcm7HudFKoqbrWq2k5wKeA8mmA1j4sPdySbM=;
+ b=MxzotnsfOWaiE1C/zo0qFWqh/1RNYMkSIR8ZiIpsjeDEyS6dd34N0dufy/IyU4b/wAVQ36
+ vWGX/2kZjcXRTtPJZqERbdkGUklWk8ss6y1r8XzO2pUfA4bLKXQuYBHRlS65DKlvisMD2v
+ TEI5k0UDUyaHDetexLXvs0SsQBazZOQ=
+Received: from TWN-EXCHMB-13.phoenix.com (123.51.168.5 [123.51.168.5])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-37-voOMR6tlPzWGC6me9W-gmA-1; Fri, 14 Aug 2020 03:43:43 -0400
+X-MC-Unique: voOMR6tlPzWGC6me9W-gmA-1
+X-CrossPremisesHeadersFilteredBySendConnector: TWN-EXCHMB-13.phoenix.com
+Received: from TWN-EXCHMB-13.phoenix.com
+ (2607:f0dc:5001:ff01:bd71:dee3:623a:a76a) by TWN-EXCHMB-13.phoenix.com
+ (2607:f0dc:5001:ff01:bd71:dee3:623a:a76a) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Fri, 14 Aug 2020 15:43:40 +0800
+Received: from TWN-EXCHMB-13.phoenix.com ([fe80::bd71:dee3:623a:a76a]) by
+ TWN-EXCHMB-13.phoenix.com ([fe80::bd71:dee3:623a:a76a%12]) with mapi id
+ 15.00.1156.000; Fri, 14 Aug 2020 15:43:40 +0800
+From: Venkata Chandrappa <Venkata_Chandrappa@phoenix.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Generate Crashdump log via Redfish
+Thread-Topic: Generate Crashdump log via Redfish
+Thread-Index: AdZyDliBKsufoj1gRm+dHCJ12IIg5w==
+Date: Fri, 14 Aug 2020 07:43:40 +0000
+Message-ID: <51f516da2d844dd4b3b5bbce44f5acf7@TWN-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [2607:f0dc:5001:ff01:d5d4:cd6:1890:f4e9]
 MIME-Version: 1.0
-References: <1597308767-31538-1-git-send-email-vishwa@linux.vnet.ibm.com>
-In-Reply-To: <1597308767-31538-1-git-send-email-vishwa@linux.vnet.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 14 Aug 2020 04:17:59 +0000
-Message-ID: <CACPK8XeSaY+QaUuPc_5T-FomPDA8ZZnCbTn-=eLg7dZfjj4iPw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8 1/2] ARM: dts: aspeed: Add LEDs that are off
- 9551 on Operator Panel
-To: Vishwanatha Subbanna <vishwa@linux.vnet.ibm.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-OrganizationHeadersPreserved: TWN-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=venkata_chandrappa@phoenix.com
+X-Mimecast-Spam-Score: 0.0
+X-Mimecast-Originator: phoenix.com
+Content-Type: multipart/alternative;
+ boundary="_000_51f516da2d844dd4b3b5bbce44f5acf7TWNEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,93 +87,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Vishwanatha Subbanna <vishwa@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 13 Aug 2020 at 08:52, Vishwanatha Subbanna
-<vishwa@linux.vnet.ibm.com> wrote:
+--_000_51f516da2d844dd4b3b5bbce44f5acf7TWNEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+Hi Everyone,
+
+I'm looking for guidance on generating a crashdump log via the Redfish inte=
+rface. There are two actions available to the user to generate the dump - O=
+nDemand and SendRawPeci. But I'm not aware of the payload data I need to be=
+ sending along with the request to generate the dump in either of the cases=
+. Could you please share the payload that I need to attach to the request.
+
+      "#Crashdump.OnDemand": {
+        "target": "/redfish/v1/Systems/system/LogServices/Crashdump/Actions=
+/Oem/Crashdump.OnDemand"
+      },
+      "#Crashdump.SendRawPeci": {
+        "target": "/redfish/v1/Systems/system/LogServices/Crashdump/Actions=
+/Oem/Crashdump.SendRawPeci"
+
+Best Regards,
+Venka
+
+--_000_51f516da2d844dd4b3b5bbce44f5acf7TWNEXCHMB13phoenixcom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> From: Vishwanatha Subbanna <vishwa@linux.ibm.com>
->
-> These are LEDs that are controlled by 9551
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+=09{font-family:"\@PMingLiU";
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09margin-bottom:.0001pt;
+=09font-size:11.0pt;
+=09font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+=09{mso-style-priority:99;
+=09color:blue;
+=09text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+=09{mso-style-priority:99;
+=09color:purple;
+=09text-decoration:underline;}
+span.EmailStyle17
+=09{mso-style-type:personal-compose;
+=09font-family:"Calibri","sans-serif";
+=09color:windowtext;}
+.MsoChpDefault
+=09{mso-style-type:export-only;
+=09font-family:"Calibri","sans-serif";}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi Everyone,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I&#8217;m looking for guidance on generating a crash=
+dump log via the Redfish interface. There are two actions available to the =
+user to generate the dump &#8211; OnDemand and SendRawPeci. But I&#8217;m n=
+ot aware of the payload data I need to be sending along
+ with the request to generate the dump in either of the cases. Could you pl=
+ease share the payload that I need to attach to the request.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal" style=3D"line-height:12.0pt;background:#FFFFFE"><spa=
+n style=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"font-size:9.0pt;=
+font-family:&quot;Courier New&quot;;color:#A31515">&quot;#Crashdump.OnDeman=
+d&quot;</span><span style=3D"font-size:9.0pt;font-family:&quot;Courier New&=
+quot;;color:black">:&nbsp;{<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"line-height:12.0pt;background:#FFFFFE"><spa=
+n style=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"font=
+-size:9.0pt;font-family:&quot;Courier New&quot;;color:#A31515">&quot;target=
+&quot;</span><span style=3D"font-size:9.0pt;font-family:&quot;Courier New&q=
+uot;;color:black">:&nbsp;</span><span style=3D"font-size:9.0pt;font-family:=
+&quot;Courier New&quot;;color:#0451A5">&quot;/redfish/v1/Systems/system/Log=
+Services/Crashdump/Actions/Oem/Crashdump.OnDemand&quot;</span><span style=
+=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"><o:p><=
+/o:p></span></p>
+<p class=3D"MsoNormal" style=3D"line-height:12.0pt;background:#FFFFFE"><spa=
+n style=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"line-height:12.0pt;background:#FFFFFE"><spa=
+n style=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"font-size:9.0pt;=
+font-family:&quot;Courier New&quot;;color:#A31515">&quot;#Crashdump.SendRaw=
+Peci&quot;</span><span style=3D"font-size:9.0pt;font-family:&quot;Courier N=
+ew&quot;;color:black">:&nbsp;{<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"line-height:12.0pt;background:#FFFFFE"><spa=
+n style=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style=3D"font=
+-size:9.0pt;font-family:&quot;Courier New&quot;;color:#A31515">&quot;target=
+&quot;</span><span style=3D"font-size:9.0pt;font-family:&quot;Courier New&q=
+uot;;color:black">:&nbsp;</span><span style=3D"font-size:9.0pt;font-family:=
+&quot;Courier New&quot;;color:#0451A5">&quot;/redfish/v1/Systems/system/Log=
+Services/Crashdump/Actions/Oem/Crashdump.SendRawPeci&quot;</span><span styl=
+e=3D"font-size:9.0pt;font-family:&quot;Courier New&quot;;color:black"><o:p>=
+</o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Best Regards,<o:p></o:p></p>
+<p class=3D"MsoNormal">Venka<o:p></o:p></p>
+</div>
+</body>
+</html>
 
-This patch does not build:
+--_000_51f516da2d844dd4b3b5bbce44f5acf7TWNEXCHMB13phoenixcom_--
 
-  DTC     arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dtb
-../arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts:986.19-1073.4: ERROR
-(duplicate_label): /ahb/apb/bus@1e78a000/i2c-bus@480/pca9552@61:
-Duplicate label 'pca1' on /ahb/apb/bus@1e78a000/i2c-bus@480/pca9552@61
-and /ahb/apb/bus@1e78a000/i2c-bus@400/pca9551@60
-ERROR: Input tree has errors, aborting (use -f to force output)
-
-
->
-> +       pca1: pca9551@60 {
-
-As I explained in the last email, this label is a duplicate.
-
-$ git grep "pca1:" arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts:   pca1: pca9551@60 {
-arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts:   pca1: pca9552@61 {
-
-You can only have one label called 'pca1' per device tree. You will
-need to come up with a naming scheme for each. For example, this could
-be called pca_oppanel.
-
-> +               compatible = "nxp,pca9551";
-> +               reg = <0x60>;
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               gpio@0 {
-> +                       reg = <0>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@1 {
-> +                       reg = <1>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@2 {
-> +                       reg = <2>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@3 {
-> +                       reg = <3>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@4 {
-> +                       reg = <4>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@5 {
-> +                       reg = <5>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@6 {
-> +                       reg = <6>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +
-> +               gpio@7 {
-> +                       reg = <7>;
-> +                       type = <PCA955X_TYPE_GPIO>;
-> +               };
-> +       };
-> +
->         dps: dps310@76 {
->                 compatible = "infineon,dps310";
->                 reg = <0x76>;
-> --
-> 1.8.3.1
->
