@@ -1,64 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53363245A10
-	for <lists+openbmc@lfdr.de>; Mon, 17 Aug 2020 01:39:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D41B9245A15
+	for <lists+openbmc@lfdr.de>; Mon, 17 Aug 2020 01:40:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BVDD02vsgzDqPw
-	for <lists+openbmc@lfdr.de>; Mon, 17 Aug 2020 09:39:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BVDFL0rDxzDqPf
+	for <lists+openbmc@lfdr.de>; Mon, 17 Aug 2020 09:40:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62f;
- helo=mail-ej1-x62f.google.com; envelope-from=chalapathyvenkata619@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.88; helo=mga01.intel.com;
+ envelope-from=vernon.mauery@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=X/stCCoD; dkim-atps=neutral
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com
- [IPv6:2a00:1450:4864:20::62f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BSlX45KQjzDqlJ
- for <openbmc@lists.ozlabs.org>; Sat, 15 Aug 2020 00:03:13 +1000 (AEST)
-Received: by mail-ej1-x62f.google.com with SMTP id kq25so10048040ejb.3
- for <openbmc@lists.ozlabs.org>; Fri, 14 Aug 2020 07:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=qGB9r6Fiepe4jyF8wAmOz6CHFPinOzRa14p9Opulaak=;
- b=X/stCCoDHh0HOH8JciPvW5cbyorHkvFMeaTq6pRE9LJkm603UHXzjyP/Ubxog4tMrQ
- 0d2uaDS3TOlwfqaRxOrtAFIhAFTGtUVpzFsdmzp/QP871oISNAv2WyegNy9otRQTs3Az
- YneVH9NmIc6tL7ehq54lH+mNGdGN5DzTFyfeXgLzwkoCVxo/Ses5mtsyM9h7PoP2+3DK
- 3OsUDKWs4F8gbGeVLRmnBSG4LiGEa/KNKQu3RTHXBTqLWW1M5u/XFH+BbJ1twV/hdN65
- vDNoSyOm6ZIPaPggeZx4q/mM6kOqmsf6ir6FtfafjM12if5HMGYb5byAvvyaLHISGM4Q
- xyMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=qGB9r6Fiepe4jyF8wAmOz6CHFPinOzRa14p9Opulaak=;
- b=Wm54q/jXDfF9Q42RowftUn7PsvANiPA79tu/irDCpT3jUq+kpGIfFbOyaR2nvzbQSz
- LFxGCsRL9+jXRMqNEKydsRZMG6JrU2AOHEd4ZKEAtK7Pzn9i3zBLfgbT7wDpcNFBBan1
- YlvTcocr0hIp5khYQrA2Gtm7zhjGauIwGRWdHwDmg9Z5Ovjjt7zt8lwT1Jo/Hd+XZ+GU
- rM9Yao7lDoEVcVWJcZWn2qwJcSNXZiG9BIV0RcMZ6W5wu6tU6owbIQv1sBRawilExKsC
- vOPlc9J4j8ZsxFMy9bKoVs/IFmzk8L00dzx3LZJjk84Vio1pt2XYp8SCP4eNck9HeK4X
- sYZw==
-X-Gm-Message-State: AOAM530y02nm88UHRRdIbgFclXrDJ+OtOSzmar4C/yfnhMWpVyeZn/yZ
- P+HGY/YdytDbFKZyxxKfcQeBsLzdBMXYdHdfwqCKaOPse04=
-X-Google-Smtp-Source: ABdhPJwbx7r479+uns0CuW1TKEKMhiNLi9QIiMbkxp8DrVsLP63tIUg+Z0C7oAZuVPxbKWwe+27ATsgnN5uRV+nKUN0=
-X-Received: by 2002:a17:906:2a49:: with SMTP id
- k9mr2618844eje.117.1597413788272; 
- Fri, 14 Aug 2020 07:03:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BSzhc4PKyzDqml
+ for <openbmc@lists.ozlabs.org>; Sat, 15 Aug 2020 09:11:18 +1000 (AEST)
+IronPort-SDR: e6dRRZ2ndVUl9/FJTF34axAzRVMW3SIWUG/qcvTXejlpUB5Zau9gw6EkqSQ8Z2lX37mtMlR/8P
+ xDnerYwMUgiQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9713"; a="172549203"
+X-IronPort-AV: E=Sophos;i="5.76,313,1592895600"; d="scan'208";a="172549203"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Aug 2020 16:11:15 -0700
+IronPort-SDR: CkNjvZyLca153AVJyWsup5JkgATtT6Q6Tm+3ukOINRz0slF138i3OWJLfv32/YaX7J3Tv9gkw+
+ 6NaFbEmQPDVQ==
+X-IronPort-AV: E=Sophos;i="5.76,313,1592895600"; d="scan'208";a="496330329"
+Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com)
+ ([10.7.150.62])
+ by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Aug 2020 16:11:14 -0700
+Date: Fri, 14 Aug 2020 16:11:13 -0700
+From: "Mauery, Vernon" <vernon.mauery@intel.com>
+To: TOM JOSEPH <tomjose@linux.vnet.ibm.com>
+Subject: Re: IPMI implementation of Get Device ID command
+Message-ID: <20200814231020.GA16853@mauery.jf.intel.com>
+References: <ff39e855-d5b6-a789-bcbb-3b87bf786bd1@linux.vnet.ibm.com>
 MIME-Version: 1.0
-From: Venkata Chalapathy <chalapathyvenkata619@gmail.com>
-Date: Fri, 14 Aug 2020 22:02:57 +0800
-Message-ID: <CAB2jT4Yt5=biGEiOWYEdzix7ydc3XH8JcTs7VPoHdec+JhYVrw@mail.gmail.com>
-Subject: Generate Crashdump log via Redfish
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000068cb2a05acd6e105"
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ff39e855-d5b6-a789-bcbb-3b87bf786bd1@linux.vnet.ibm.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Mailman-Approved-At: Mon, 17 Aug 2020 09:37:30 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,125 +59,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, anoo@us.ibm.com,
+ benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000068cb2a05acd6e105
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 14-Aug-2020 11:04 PM, TOM JOSEPH wrote:
+>Hello,
+>
+>We have an implementation of this command https://github.com/openbmc/phosp=
+hor-host-ipmid/blob/master/apphandler.cpp#L571=20
+>. The current version of the code derives the major and minor firmware=20
+>revision from the VERSION_ID field, and the auxiliary firmware=20
+>revision is picked from dev_id.json. The auxiliary firmware revision=20
+>is populated at build time https://github.com/openbmc/openbmc/blob/master/=
+meta-ibm/recipes-phosphor/ipmi/phosphor-ipmi-config.bbappend.
+>
+>The implementation of the code is obsolete, as it was based on an=20
+>earlier format. The current format of VERSION_ID for example is,=20
+>2.9.0-dev-609-g56f86d23c. There is already a WIP patch to fix this for=20
+>the master tag format https://gerrit.openbmc-project.xyz/c/openbmc/phospho=
+r-host-ipmid/+/33893. <https://gerrit.openbmc-project.xyz/c/openbmc/phospho=
+r-host-ipmid/+/33893>
+>
+>IBM tagging format is different from the tag format of master builds.=20
+>One choice is to have the major and minor version added to the=20
+>dev_id.json and if the format of VERSION_ID does not match the master=20
+>tag format,=A0 pick from the json.
+>
+>How are other companies converting their arbitrary tag formats to IPMI=20
+>firmware revision fields? Does every company maintain their own=20
+>downstream implementation of this command?
+>
+We have a two-hash version scheme (one for openbmc, the other for the=20
+downstream meta-intel layer) that looks something like=20
+wht-0.2-3-gab3500-38384ac. We override the Get Device ID command
+https://github.com/openbmc/intel-ipmi-oem/blob/master/src/appcommands.cpp#L=
+200
+to expose part of both of those hashes in the aux bytes. But to get the=20
+full version string, we use redfish.
 
-Hi Everyone,
+>Is a common code possible for converting arbitrary tag formats to IPMI=20
+>firmware revision fields?
 
+Not that I am aware of. I think this leads to lots of string parsing.
 
-
-I=E2=80=99m looking for guidance on generating a crashdump log via the Redf=
-ish
-interface. There are two actions available to the user to generate the dump
-=E2=80=93 OnDemand and SendRawPeci. But I=E2=80=99m not aware of the payloa=
-d data I need to
-be sending along with the request to generate the dump in either of the
-cases. Could you please share the payload that I need to attach to the
-request.
-
-
-
-      "#Crashdump.OnDemand": {
-
-        "target":
-"/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.OnD=
-emand"
-
-      },
-
-      "#Crashdump.SendRawPeci": {
-
-        "target":
-"/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.Sen=
-dRawPeci"
-
-
-
-Best Regards,
-
-Venka
-
---00000000000068cb2a05acd6e105
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;fo=
-nt-size:11pt;font-family:Calibri,sans-serif">Hi Everyone,</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">I=E2=80=99m looking for guidance on generating =
-a crashdump log via
-the Redfish interface. There are two actions available to the user to gener=
-ate
-the dump =E2=80=93 OnDemand and SendRawPeci. But I=E2=80=99m not aware of t=
-he payload data I
-need to be sending along with the request to generate the dump in either of=
- the
-cases. Could you please share the payload that I need to attach to the requ=
-est.</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"line-height:12pt;background:rgb(255,255,254=
-);margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,sans-serif"><s=
-pan style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black"=
->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span><span style=3D"font-size:9pt;fo=
-nt-family:&quot;Courier New&quot;;color:rgb(163,21,21)">&quot;#Crashdump.On=
-Demand&quot;</span><span style=3D"font-size:9pt;font-family:&quot;Courier N=
-ew&quot;;color:black">:=C2=A0{</span></p>
-
-<p class=3D"MsoNormal" style=3D"line-height:12pt;background:rgb(255,255,254=
-);margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,sans-serif"><s=
-pan style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black"=
->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span><span style=3D"font=
--size:9pt;font-family:&quot;Courier New&quot;;color:rgb(163,21,21)">&quot;t=
-arget&quot;</span><span style=3D"font-size:9pt;font-family:&quot;Courier Ne=
-w&quot;;color:black">:=C2=A0</span><span style=3D"font-size:9pt;font-family=
-:&quot;Courier New&quot;;color:rgb(4,81,165)">&quot;/redfish/v1/Systems/sys=
-tem/LogServices/Crashdump/Actions/Oem/Crashdump.OnDemand&quot;</span><span =
-style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black"></s=
-pan></p>
-
-<p class=3D"MsoNormal" style=3D"line-height:12pt;background:rgb(255,255,254=
-);margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,sans-serif"><s=
-pan style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black"=
->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0},</span></p>
-
-<p class=3D"MsoNormal" style=3D"line-height:12pt;background:rgb(255,255,254=
-);margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,sans-serif"><s=
-pan style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black"=
->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span><span style=3D"font-size:9pt;fo=
-nt-family:&quot;Courier New&quot;;color:rgb(163,21,21)">&quot;#Crashdump.Se=
-ndRawPeci&quot;</span><span style=3D"font-size:9pt;font-family:&quot;Courie=
-r New&quot;;color:black">:=C2=A0{</span></p>
-
-<p class=3D"MsoNormal" style=3D"line-height:12pt;background:rgb(255,255,254=
-);margin:0in 0in 0.0001pt;font-size:11pt;font-family:Calibri,sans-serif"><s=
-pan style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black"=
->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0</span><span style=3D"font=
--size:9pt;font-family:&quot;Courier New&quot;;color:rgb(163,21,21)">&quot;t=
-arget&quot;</span><span style=3D"font-size:9pt;font-family:&quot;Courier Ne=
-w&quot;;color:black">:=C2=A0</span><span style=3D"font-size:9pt;font-family=
-:&quot;Courier New&quot;;color:rgb(4,81,165)">&quot;/redfish/v1/Systems/sys=
-tem/LogServices/Crashdump/Actions/Oem/Crashdump.SendRawPeci&quot;</span><sp=
-an style=3D"font-size:9pt;font-family:&quot;Courier New&quot;;color:black">=
-</span></p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">=C2=A0</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">Best Regards,</p>
-
-<p class=3D"MsoNormal" style=3D"margin:0in 0in 0.0001pt;font-size:11pt;font=
--family:Calibri,sans-serif">Venka</p></div>
-
---00000000000068cb2a05acd6e105--
+--Vernon
