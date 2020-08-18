@@ -1,58 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8390F2482B8
-	for <lists+openbmc@lfdr.de>; Tue, 18 Aug 2020 12:15:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53087248651
+	for <lists+openbmc@lfdr.de>; Tue, 18 Aug 2020 15:45:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BW6HQ1ZfQzDqbg
-	for <lists+openbmc@lfdr.de>; Tue, 18 Aug 2020 20:15:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BWBxX6THTzDqcH
+	for <lists+openbmc@lfdr.de>; Tue, 18 Aug 2020 23:45:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=178.32.125.2;
- helo=smtpout1.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1043;
+ helo=mail-pj1-x1043.google.com; envelope-from=santosh.puranik.ibm@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-Received: from smtpout1.mo529.mail-out.ovh.net
- (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=HB4LCYuN; dkim-atps=neutral
+Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com
+ [IPv6:2607:f8b0:4864:20::1043])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BW6GM38zWzDqYX
- for <openbmc@lists.ozlabs.org>; Tue, 18 Aug 2020 20:14:32 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.20.243])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 8C33E518ED22;
- Tue, 18 Aug 2020 12:14:26 +0200 (CEST)
-Received: from kaod.org (37.59.142.98) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1979.3; Tue, 18 Aug
- 2020 12:14:26 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-98R002d1f48bc4-0ba9-4304-a0d5-15f1a0a072ef,
- 5D4690BFF1A8204198846400511E4593F3B91EAC) smtp.auth=clg@kaod.org
-Subject: Re: Fwd: [ANNOUNCE] QEMU 5.1.0 is now available
-To: <openbmc@lists.ozlabs.org>
-References: <159718470399.12679.2525201344482512899@sif>
- <CACPK8XfoUdQRvQJX87oONgwVodHyrv72cJGj5U7ZT=J=uyVCSA@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <b1a37b43-ba74-8d39-40c0-32cdfe07a87d@kaod.org>
-Date: Tue, 18 Aug 2020 12:14:25 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BWBvf660DzDqZk
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Aug 2020 23:43:37 +1000 (AEST)
+Received: by mail-pj1-x1043.google.com with SMTP id mt12so9431313pjb.4
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Aug 2020 06:43:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:cc:from:message-id:date:user-agent
+ :mime-version:in-reply-to:content-transfer-encoding:content-language;
+ bh=rEySPxn91jNrWHXManLEZ47x9f/j5tD+xNfCokLeaC8=;
+ b=HB4LCYuNys2e7VqBnSf8celnDjWVQBgml/1Behvx8t3XitN74+wgjXMJzIvecDQ+AV
+ AT6g9d+gUcOTcL8SxK4+z/9R0/kjOFjfHbYALr6ovMUJl8nrX3m5jM1xlGy/ZtGAWfNA
+ rvbLTQduqn+emjvoKU9XZO69a6XCY2EtWgr59odPZWjAkYh7U4ynGwjB376o4Hos3G1p
+ IfeTZ9W9c+0rTv6Vnj35B81TGX5TSHMtWbqJBdXwb+KDi2BezVgGhEcAG6/kkilmwWL6
+ SP5crmQWfKQCM9l37iPZ8csntoPkPxZqeXEYdcLq6cUwJJE8jhKCC96De8HNS9s2a7s/
+ B8rQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-transfer-encoding
+ :content-language;
+ bh=rEySPxn91jNrWHXManLEZ47x9f/j5tD+xNfCokLeaC8=;
+ b=jKUcovULh5GFg9ABtRdFLwZPOXAXabXUD0OmBn80TUh6VihL8AhUyBSw6/A2CDKk4I
+ DtsvzRFas2XnDv58E97c9mHhcDwkpV40Yd23YVxBl+PBhSbyjQy71KZgDCeqh9K7GUxU
+ q/xMNCUAnvKamAg2otcFgCAL6F39Ns+08RCe9CYwKrvfdM/cGNe8tO7p+Z2uke2qcU1Y
+ d1odyy7+TwNZOEbvYowEwGCERg6meXqoGq+ezX8Ux9nvzxISr+vdk3DWvq/gjU6Yn7dy
+ WGiRishav4Im1WvdJSq6MTXXuZN5EXFwNr9vv+e9ieq8zBrdvNDl1QeQyPxfPeuhi86b
+ 0tJQ==
+X-Gm-Message-State: AOAM531UUhqeC1LNaa4pBgxJ6bTcApSeHYbmwBI7u3WhBjk8RO3NCBVV
+ 9eNc2IQa8JwM+BjfSC/5C7THoBhfUaU=
+X-Google-Smtp-Source: ABdhPJyY3rO4p6SMECVFLYWs0brj6UiGAyUthgLw0H16YtPrpPD5DceWpVZ9xs67YMy/O+012i+L5w==
+X-Received: by 2002:a17:90a:2224:: with SMTP id c33mr64958pje.56.1597758213301; 
+ Tue, 18 Aug 2020 06:43:33 -0700 (PDT)
+Received: from [192.168.1.6] ([49.207.206.140])
+ by smtp.gmail.com with ESMTPSA id w15sm53119pjk.13.2020.08.18.06.43.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2020 06:43:32 -0700 (PDT)
+Subject: Re: [PATCH linux dev-5.7 v1] ARM: dts: aspeed: rainier: Add I2c buses
+ for nvme use
+To: Jet.Li@ibm.com
+References: <20200721115942.27009-1-Jet.Le@ibm.com>
+From: Santosh Puranik <santosh.puranik.ibm@gmail.com>
+Message-ID: <16a09d4c-7499-b75d-6bf6-3ec8a0e0d51d@gmail.com>
+Date: Tue, 18 Aug 2020 19:13:30 +0530
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <CACPK8XfoUdQRvQJX87oONgwVodHyrv72cJGj5U7ZT=J=uyVCSA@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20200721115942.27009-1-Jet.Le@ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.98]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 654ff4be-2952-4d6f-99f1-3ca7a4deb19c
-X-Ovh-Tracer-Id: 12250353938358766490
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeduiedruddtiedgvdefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepuffvfhfhkffffgggjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepuddutdfhheetjeeljeeludevveehhfelueehveevfeeileffveelvdfgudduieetnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpohhpvghnsghmtgdrohhrghenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddrleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpqdhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrgh
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,272 +83,145 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Joel Stanley <jmstanle@au1.ibm.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/18/20 8:23 AM, Joel Stanley wrote:
-> Qemu 5.1 contains a number of enhancements for emulating aspeed
-> machines. In addition to the large amount of refactoring that was
-> performed, it gained support for:
-> 
->  - AST2600 SMP booting
->  - AST2600 A1 revision
->  - Fixes for running the AST2600 u-boot (particularly memory training
-> for the A1)
->  - Simplified network device command line
->  - Removed need to pass cpu count and memory size
->  - A new machine type from Facebook
+Hi Jet,
 
-5.2 will have a board model for Supermicro X11 BMC.
-
-> Qemu 5.1 has landed in Debian unstable as of today.
-> 
-> If you haven't used qemu before, here are some ways it can be used:
-> 
-> To boot an ast2600 EVB machine with an emmc device from your kernel
-> build tree tree:
-> 
-> qemu-system-arm -machine ast2600-evb \
->                 -nographic -no-reboot \
->                 -net nic,model=ftgmac100,netdev=netdev1 -netdev
-> user,id=netdev1 \
-
-'-nic user' should be enough now. ftgmac100 is the default model.
-
-I like adding 'hostfwd=::2222-:22' for ssh and 'tftp=/var/lib/tftpboot/'
-to tftpboot in U-Boot.
-
-
-If you have libvirt running, then :
-
-  -net nic,netdev=netdev0 
-  -netdev bridge,id=netdev0,helper=/usr/libexec/qemu-bridge-helper,br=virbr0
-
-will dhcp from the local machine bridge.
-
->                 -dtb arch/arm/boot/dts/aspeed-ast2600-evb.dtb \
->                 -drive file=rootfs.ext4.qcow2,if=sd,index=2" \
->                 -append "console=ttyS4 rootwait root=/dev/mmcblk0"
-> 
-> The rootfs.ext4.qcow2 can be grabbed from here:
-> https://github.com/shenki/continuous-integration/raw/master/images/arm/rootfs.ext4.qcow2.
-> 
-> Note that qemu doesn't yet support booting from eMMC directly with the
-> Aspeed machine type. Patches are welcome.
-
-yes ! 
-
-Thanks for the summary Joel,
-
-It would be nice to have some OpenBMC images hosted on GH that we could use 
-for the non-regression tests in QEMU.
- 
-Cheers,
-
-C. 
-
-> 
+On 7/21/20 5:29 PM, Jet Li wrote:
+> From: Jet Li <Jet.Li@ibm.com>
+>
+> Adding pca9552 exposes the presence detect lines for the cards
+> and tca9554 exposes the presence details for the cards.
+>
+> Signed-off-by: Jet Li <Jet.Li@ibm.com>
 > ---
-> 
-> To boot an openbmc image on the ast2500, such as Romulus, grab the
-> flash image from Jenkins:
-> 
-> https://jenkins.openbmc.org/view/latest/job/latest-master/label=docker-builder,target=romulus/lastSuccessfulBuild/artifact/openbmc/build/tmp/deploy/images/romulus/flash-romulus
-> 
-> and then boot it as follows:
-> 
-> qemu-system-arm -machine romulus-bmc \
->                 -nographic -no-reboot \
->                 -net nic,model=ftgmac100,netdev=netdev1 -netdev
-> user,id=netdev1 \
->                 -drive file=flash-romulus,format=raw,if=mtd
-> 
-> ---
-> 
-> You can use this to test a kernel built by yocto:
-> 
-> Download this file:
-> https://jenkins.openbmc.org/view/latest/job/latest-master/label=docker-builder,target=romulus/lastSuccessfulBuild/artifact/openbmc/build/tmp/deploy/images/romulus/image-kernel
-> 
-> Run qemu with the 'tftp' option set to the directory where you
-> downloaded the above image-kernel. You will need to halt it at the
-> u-boot prompt, set a ethaddr, and run 'dhcp image-kernel':
-> 
-> qemu-system-arm -machine romulus-bmc \
->                 -nographic -no-reboot \
->                 -net nic,model=ftgmac100,netdev=netdev1 -netdev
-> user,id=netdev1,tftp=$PWD \
->                 -drive file=flash-romulus,format=raw,if=mtd
-> U-Boot 2016.07 (Jan 16 2019 - 00:21:48 +0000)
-> 
-> Hit any key to stop autoboot:  1
-> ast# setenv ethaddr DE:AD:BE:EF:CA:FE
-> ast# dhcp image-kernel
-> aspeednic#0: PHY at 0x00
-> set_mac_control_register 1453
-> Found NCSI Network Controller at (0, 0)
-> Found NCSI Network Controller at (0, 1)
-> BOOTP broadcast 1
-> DHCP client bound to address 10.0.2.15 (2 ms)
-> Using  device
-> TFTP from server 10.0.2.2; our IP address is 10.0.2.15
-> Filename 'image-kernel'.
-> Load address: 0x83000000
-> Loading: #################################################################
->      #################################################################
->      #################################################################
->      #################################################################
->      ###############################################
->      62.2 MiB/s
-> done
-> Bytes transferred = 4372700 (42b8dc hex)
-> ast# bootm
-> ## Loading kernel from FIT Image at 83000000 ...
->    Using 'conf@aspeed-bmc-opp-romulus.dtb' configuration
->    Trying 'kernel@1' kernel subimage
->      Description:  Linux kernel
->      Type:         Kernel Image
-> 
-> ---
-> 
-> Here are the commit stats for aspeed code in Qemu 5.1:
-> 
-> $ git diff --stat v5.0.0..v5.1.0  -- hw/**/*aspeed* hw/net/ftgmac100.c
->  hw/arm/aspeed.c         | 350
-> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------------------------------------------------------------------------------
->  hw/arm/aspeed_ast2600.c | 261
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
->  hw/arm/aspeed_soc.c     | 181
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++---------------------------------------------------------------------------------------------------------------------------
->  hw/gpio/aspeed_gpio.c   |   9 +++------
->  hw/i2c/aspeed_i2c.c     |   3 +--
->  hw/misc/aspeed_scu.c    |  11 +++++------
->  hw/misc/aspeed_sdmc.c   |  72
-> ++++++++++++++++++++++++++++++++++++++++++++++++++++--------------------
->  hw/net/ftgmac100.c      |  31 +++++++++++++++++++++++++++----
->  hw/sd/aspeed_sdhci.c    |  15 ++++-----------
->  hw/ssi/aspeed_smc.c     |   1 -
->  10 files changed, 509 insertions(+), 425 deletions(-)
-> 
-> 
-> $ git shortlog  v5.0.0..v5.1.0  -- hw/**/*aspeed* hw/net/ftgmac100.c
-> Cédric Le Goater (2):
->       arm/aspeed: Compute the number of CPUs from the SoC definition
->       arm/aspeed: Rework NIC attachment
-> 
-> Erik Smit (1):
->       Implement configurable descriptor size in ftgmac100
-> 
-> Joel Stanley (3):
->       aspeed: Add boot stub for smp booting
->       aspeed: Support AST2600A1 silicon revision
->       aspeed: sdmc: Implement AST2600 locking behaviour
-> 
-> Markus Armbruster (22):
->       qom: Drop object_property_set_description() parameter @errp
->       qom: Drop parameter @errp of object_property_add() & friends
->       qdev: Convert uses of qdev_create() with Coccinelle
->       ssi: ssi_auto_connect_slaves() never does anything, drop
->       ssi: Convert uses of ssi_create_slave_no_init() with Coccinelle
->       qom: Tidy up a few object_initialize_child() calls
->       qom: Less verbose object_initialize_child()
->       sysbus: Drop useless OBJECT() in sysbus_init_child_obj() calls
->       sysbus: Convert qdev_set_parent_bus() use with Coccinelle, part 2
->       sysbus: Convert qdev_set_parent_bus() use with Coccinelle, part 4
->       qdev: Convert bus-less devices to qdev_realize() with Coccinelle
->       qdev: Make qdev_prop_set_drive() match the other helpers
->       arm/aspeed: Drop aspeed_board_init_flashes() parameter @errp
->       aspeed: Clean up roundabout error propagation
->       hw/arm: Drop useless object_property_set_link() error handling
->       aspeed: Fix realize error API violation
->       qdev: Use returned bool to check for qdev_realize() etc. failure
->       qapi: Use returned bool to check for failure, Coccinelle part
->       qom: Put name parameter before value / visitor parameter
->       qom: Use returned bool to check for failure, Coccinelle part
->       error: Avoid unnecessary error_propagate() after error_setg()
->       error: Eliminate error_propagate() with Coccinelle, part 1
-> 
-> Patrick Williams (1):
->       aspeed: Add support for the sonorapass-bmc board
-> 
-> Philippe Mathieu-Daudé (13):
->       hw/gpio/aspeed_gpio: Remove dead assignment
->       hw: Remove unnecessary DEVICE() cast
->       hw/arm/aspeed: Correct DRAM container region size
->       hw/arm/aspeed: Remove extraneous MemoryRegion object owner
->       hw/arm/aspeed: Rename AspeedBoardState as AspeedMachineState
->       hw/arm/aspeed: QOM'ify AspeedMachineState
->       hw/arm/aspeed: Describe each PCA9552 device
->       hw/arm/aspeed: Do not create and attach empty SD cards by default
->       hw/i2c/aspeed_i2c: Simplify aspeed_i2c_get_bus()
->       hw/i2c: Rename i2c_try_create_slave() as i2c_slave_new()
->       hw/i2c: Rename i2c_realize_and_unref() as i2c_slave_realize_and_unref()
->       hw/i2c: Rename i2c_create_slave() as i2c_slave_create_simple()
->       hw/misc/aspeed_sdmc: Fix incorrect memory size
-> 
-> erik-smit (1):
->       ftgmac100: fix dblac write test
-> 
-> 
-> ---------- Forwarded message ---------
-> From: Michael Roth <mdroth@linux.vnet.ibm.com>
-> Date: Tue, 11 Aug 2020 at 22:26
-> Subject: [ANNOUNCE] QEMU 5.1.0 is now available
-> To: <qemu-devel@nongnu.org>
-> Cc: <peter.maydell@linaro.org>
-> 
-> 
-> Hello,
-> 
-> On behalf of the QEMU Team, I'd like to announce the availability of
-> the QEMU 5.1.0 release. This release contains 2500+ commits from 235
-> authors.
-> 
-> You can grab the tarball from our download page here:
-> 
->   https://www.qemu.org/download/#source
-> 
-> The full list of changes are available at:
-> 
->   https://wiki.qemu.org/ChangeLog/5.1
-> 
-> Highlights include:
-> 
->  * ARM: support for ARMv8.2 TTS2UXN architecture feature
->  * ARM: support for ARMv8.5 MemTag architecture feature
->  * ARM: new board support for sonorapass-bmc
->  * ARM: virt: support for memory hot-unplug
->  * ARM: support for nvdimm hotplug for ACPI guests
->  * AVR: new architecture support for AVR CPUs
->  * AVR: new board support for Arduino Duemilanove, Arduino Mega 2560,
->    Arduino Mega, and Arduino UNO
->  * MIPS: support for Loongson 3A CPUs (R1 and R4)
->  * MIPS: performance improvements for FPU and MSA instruction
->    emulation
->  * PowerPC: support for guest error recovery via FWNMI
->  * RISC-V: support for SiFive E34 and Ibex CPUs
->  * RISC-V: new board support for HiFive1 revB and OpenTitan
->  * RISC-V: Spike machine now supports more than 1 CPU
->  * s390: KVM support for protected virtualization (secure execution mode)
->  * x86: improvements to HVF acceleration support on macOS
->  * x86: reduced virtualization overhead for non-enlightened Windows
->    guests via Windows ACPI Emulated Device Table
-> 
->  * block: support for 2MB logical/physical blocksizes for virtual
->    storage devices
->  * crypto: support for passing secrets to QEMU via Linux keyring
->  * crypto: support for LUKS keyslot management via qemu-img
->  * NVMe: support for Persistent Memory Region from NVMe 1.4 spec
->  * qemu-img: additional features added for map/convert/measure commands,
->    as well as support for zstd compression
->  * qemu-img: support for new 'bitmap' command for manipulating
->    persistent bitmaps in qcow2 files
->  * virtio: TCG guests can now use vhost-user threads
->  * virtio: vhost-user now supports registering more than 8 RAM slots
-> 
->  * and lots more...
-> 
-> Thank you to everyone involved!
-> 
-
+>   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 105 +++++++++++++++++++++++++++
+>   1 file changed, 105 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> index 1ae119a..76a7e82 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> @@ -248,6 +248,21 @@
+>   		compatible = "atmel,24c64";
+>   		reg = <0x51>;
+>   	};
+> +
+> +	tca9554@40 {
+> +		compatible = "ti,tca9554";
+> +		reg = <0x40>;
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +
+> +		smbus0 {
+> +			gpio-hog;
+> +			gpios = <4 GPIO_ACTIVE_HIGH>;
+> +			output-high;
+> +			line-name = "smbus0";
+> +		};
+> +	};
+> +
+This looks incorrect, I don't see such a device on I2C-0 in the system 
+workbook.
+>   };
+>   
+>   &i2c1 {
+> @@ -562,6 +577,96 @@
+>   		compatible = "atmel,24c64";
+>   		reg = <0x51>;
+>   	};
+> +
+> +	pca1: pca9552@61 {
+> +		compatible = "nxp,pca9552";
+> +		reg = <0x61>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		gpio-controller;
+> +		#gpio-cells = <2>;
+> +
+> +		gpio@0 {
+> +			reg = <0>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@1 {
+> +			reg = <1>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@2 {
+> +			reg = <2>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@3 {
+> +			reg = <3>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@4 {
+> +			reg = <4>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@5 {
+> +			reg = <5>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@6 {
+> +			reg = <6>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@7 {
+> +			reg = <7>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@8 {
+> +			reg = <8>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@9 {
+> +			reg = <9>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@10 {
+> +			reg = <10>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@11 {
+> +			reg = <11>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@12 {
+> +			reg = <12>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@13 {
+> +			reg = <13>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@14 {
+> +			reg = <14>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +
+> +		gpio@15 {
+> +			reg = <15>;
+> +			type = <PCA955X_TYPE_GPIO>;
+> +		};
+> +	};
+> +
+>   };
+>   
+>   &i2c9 {
