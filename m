@@ -1,64 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18010248DCC
-	for <lists+openbmc@lfdr.de>; Tue, 18 Aug 2020 20:16:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4124B248DD6
+	for <lists+openbmc@lfdr.de>; Tue, 18 Aug 2020 20:19:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BWJyJ6yR7zDqbv
-	for <lists+openbmc@lfdr.de>; Wed, 19 Aug 2020 04:16:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BWK254jDDzDqW5
+	for <lists+openbmc@lfdr.de>; Wed, 19 Aug 2020 04:19:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::632;
- helo=mail-ej1-x632.google.com; envelope-from=pparth@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::230;
+ helo=mail-oi1-x230.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=WpOPQN3w; dkim-atps=neutral
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com
- [IPv6:2a00:1450:4864:20::632])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=u6baKcq1; dkim-atps=neutral
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
+ [IPv6:2607:f8b0:4864:20::230])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BWHrd1V8dzDqZX
- for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 03:26:18 +1000 (AEST)
-Received: by mail-ej1-x632.google.com with SMTP id bo3so22989850ejb.11
- for <openbmc@lists.ozlabs.org>; Tue, 18 Aug 2020 10:26:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=uq2h3ZaM54uahW88JHOGoefuOeEkH6Wc3jrfveoYx/M=;
- b=WpOPQN3w5uvrkKSfz4YNzwCjVbwhulcSEocITEh2f3CD9BVrvROR5zFJSpR9G6xME/
- 8ojhVJ+mKUc8iC5YhFI0fMD1PsNv4/fAz7xhLr5yxjaPzZjm3/PJ8hFWEAnLfCacYr7d
- nM9QffhI8PXe2CRaS34CH58E/4/zSwVmhIBVRgtySOagKzWqaLmpY+WUIbmUKoH6Cki6
- T0B+xzxsk8rZ9VypZn/pdEE8jatkXoF6mlARhuscAIY8zmmPxL7mopP/afz5ZNmJ3c0Y
- Eyz0OY5liHy2iEvsMTLtUnS5cK/esqZMqytq4cmmUamZHevoY07bFKsIZT25dW072O2s
- 7twA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BWJdS2Sw0zDqsX
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 04:01:47 +1000 (AEST)
+Received: by mail-oi1-x230.google.com with SMTP id l84so18677185oig.10
+ for <openbmc@lists.ozlabs.org>; Tue, 18 Aug 2020 11:01:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=X3pwLY+yCrykp9jXz8SksFDUDqbAjhADNwb2ztbLNbA=;
+ b=u6baKcq1bsR6HTKNbV0rCQgWdNdPWG4/MTBWyetvLtq9zwg9MmYD2W4oGsW9roo7cZ
+ k9hOQ7KY8v8tjIi/JBSxlkSZfefOs3Ew7iqxe1z7+bEGUIKXO6aHDF/1xmz3/LoYcvfp
+ w4YL7FiBbgMzeVp9og65KM/jXV5dwYaQmQoA3atkvanhTRWgzvaSTI3EgGE75e/XfFJY
+ MPqvNyi1BO+A06VpHDYUsHItQZW+dbTEKVKW9Jr+u4kTCfkf+Nz8l4VKYPPGuKzS22qh
+ IhsE3jwu++2TQZmaqkUrWrEuGgOUQI3NfAlDbRxCNl0EgJR193/lzVrx+AMwrpyeyTCG
+ i8mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=uq2h3ZaM54uahW88JHOGoefuOeEkH6Wc3jrfveoYx/M=;
- b=q5wu4Gvcex6hVoBVezhAJNJ78RL247NIpL6BFs3CbP/2hA10Szi3H8U2wBYL1ktTtx
- 8473c5m5zGY/SSR2Oqr6ohpODYK7H3Tk7AJopldwwACP7QoJYlFbiyGKihgHPyGP97lJ
- zUfb+HlQaQKk/q1DBC6FZPky/1+06ux8VHSj+rFhCzaehyhrNAxhFocPxzPf05SAYmdv
- Q2tAiH8blIXEJ8YtWAEXAyIgP6gtiz9lVQwepD95Pw7UJYapN1R758st7H+FG2CQJBGo
- sr4MOpiwqAQOtYf32MUDQAfdPMltPvA8zyoZI6lbmhPegrx/GK5vtXSnY3JjyDKT7NQB
- 03YA==
-X-Gm-Message-State: AOAM533TAF8TRJo0Cv2CgcYjOGxtj2OKUl9DO3pbYh63zmg+WwuOowQS
- lk609/+4jZHft0FBF/Y4n1LNVK2Etl8fGgCvbPEBybteMe+nTg==
-X-Google-Smtp-Source: ABdhPJw26fqV/Hx6apBPpp9xSGjonvHwMHjLYBIoZWpbZSvLZPumySheH8n5UMm5751uyCaQoZywQ8JzT4L4oA8sneE=
-X-Received: by 2002:a17:906:8050:: with SMTP id
- x16mr20817603ejw.441.1597771573587; 
- Tue, 18 Aug 2020 10:26:13 -0700 (PDT)
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=X3pwLY+yCrykp9jXz8SksFDUDqbAjhADNwb2ztbLNbA=;
+ b=eFc07Hj6v7Ag5vxVjMwM9XZhJu9NFOVaOvfnBnmk7yw7zLlYKLEnpZSoE3EUYlOs+G
+ ERm6t8nwz8tFs+EVKj0TuQvYImgL6y7TbjZ+E86JNz2Ud4T+IltKW0/X8STbQgbT3i2G
+ OuVYNDwrau6R4dTPiYOQAaQXj/qFbrk85vhSJbPFaVps9ocuGXSbRbz3KeYKBBM+rKft
+ btbBSFKdJjzd7quoAS6Ks/y+blfcyxZvU3FinvVw2JRd/a2q44dPopS0hkTSUeR6sMQv
+ +Px29RFZCtSnL/Ge1o0YNQXYCPQeaEo/sa54vc9mAONOitq7UrBzo1dbUSn5GMTAA4+7
+ Pe+w==
+X-Gm-Message-State: AOAM533/8ibiWeinm2zhJobfC7yhPYsZDcjYvkobCp3JPiicCfwnvDV5
+ fslQslHcI0mn1rjqC7UhJTolcx0yhqSmPQ==
+X-Google-Smtp-Source: ABdhPJw9HjhJgB48tdqGhePiL6A98bILtqOC9O/HFqLDMriBeRuKSqrGsjk9HPvOlFwYqVGAU/vPag==
+X-Received: by 2002:a05:6808:8ef:: with SMTP id
+ d15mr888234oic.134.1597773702142; 
+ Tue, 18 Aug 2020 11:01:42 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id g1sm4066783ots.35.2020.08.18.11.01.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Aug 2020 11:01:41 -0700 (PDT)
+Subject: Re: Bytedance's CCLA Schedule A update 2020-08-12
+To: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>,
+ openbmc <openbmc@lists.ozlabs.org>
+References: <CAGm54UHjx2Mtrw19zfjqo2Mq05wyZkdusCcj+23ckzDPDYc_Dw@mail.gmail.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <bda80a20-a9df-d272-8a29-5b47cec034bf@gmail.com>
+Date: Tue, 18 Aug 2020 13:01:40 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
 MIME-Version: 1.0
-From: Parth Shukla <timevortex@google.com>
-Date: Tue, 18 Aug 2020 19:25:36 +0200
-Message-ID: <CAC1Cx+uU6LWYmWxCU_0vkPxw8NOdrLPeOXHzpdaQZhrPt7n3cQ@mail.gmail.com>
-Subject: Security Working Group Meeting - Wed 19 August
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000013f17e05ad2a2fdb"
+In-Reply-To: <CAGm54UHjx2Mtrw19zfjqo2Mq05wyZkdusCcj+23ckzDPDYc_Dw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,48 +88,17 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000013f17e05ad2a2fdb
-Content-Type: text/plain; charset="UTF-8"
+On 8/17/20 12:32 AM, 郁雷 wrote:
+> Hi,
+> 
+> This is an update of Schedule A from Bytedance.
+> Please help to review and update it.
 
-This is a reminder of the OpenBMC Security Working Group meeting scheduled
-for this Wednesday August 19 at 10:00am PDT.
+Received. Looks good, thanks for keeping this updated!
 
-We'll discuss the following items on the agenda, and anything else that
-comes up:
+Kurt Taylor (krtaylor)
 
-   1. Chris from Google will talk about GLOME:
-   https://github.com/google/glome
-   2. Gerrit code review: BMCWeb webUI login change:
-   https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35457
-   3. Gerrit code review: BMCWeb HTTP redirect to HTTPS:
-   https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35265
+> 
+> Thanks!
+> 
 
-Access, agenda, and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group
-
-Regards,
-Parth
-
---00000000000013f17e05ad2a2fdb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">This is a reminder of the OpenBMC Security Working Group m=
-eeting scheduled for this Wednesday August 19 at 10:00am PDT.<br><div><div =
-dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><d=
-iv dir=3D"ltr"><br></div><div dir=3D"ltr">We&#39;ll discuss the following i=
-tems on the agenda, and anything else that comes up:</div><div><ol><li>Chri=
-s from Google will talk about GLOME: <a href=3D"https://github.com/google/g=
-lome">https://github.com/google/glome</a></li><li>Gerrit code review: BMCWe=
-b webUI login change: <a href=3D"https://gerrit.openbmc-project.xyz/c/openb=
-mc/bmcweb/+/35457">https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35=
-457</a> </li><li>Gerrit code review: BMCWeb HTTP redirect to HTTPS: <a href=
-=3D"https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35265">https://ge=
-rrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35265</a>=C2=A0</li></ol></div>=
-<div dir=3D"ltr">Access, agenda, and notes are in the wiki:<br><a href=3D"h=
-ttps://github.com/openbmc/openbmc/wiki/Security-working-group" rel=3D"noref=
-errer" target=3D"_blank">https://github.com/openbmc/openbmc/wiki/Security-w=
-orking-group</a><br></div><div dir=3D"ltr"><br></div><div dir=3D"ltr">Regar=
-ds,<div>Parth</div></div></div></div></div>
-
---00000000000013f17e05ad2a2fdb--
