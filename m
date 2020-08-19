@@ -2,58 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7223324A619
-	for <lists+openbmc@lfdr.de>; Wed, 19 Aug 2020 20:39:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE65B24A69D
+	for <lists+openbmc@lfdr.de>; Wed, 19 Aug 2020 21:14:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BWxQj3FkQzDqxc
-	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 04:39:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BWyC56737zDr0L
+	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 05:14:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92b;
+ helo=mail-ua1-x92b.google.com; envelope-from=kwongyhue.chow@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ncl4EO1V; dkim-atps=neutral
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com
+ [IPv6:2607:f8b0:4864:20::92b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BWxPr4YmZzDqX0
- for <openbmc@lists.ozlabs.org>; Thu, 20 Aug 2020 04:38:55 +1000 (AEST)
-IronPort-SDR: KgFy2OQtf1svwBH9yxE3cr6m5ryZgdgwqLbIqvwoaHhuoUJOiiqPLAtpMWTTuZWvjd20vd89CY
- 0tSsz1wOySZg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9718"; a="142996645"
-X-IronPort-AV: E=Sophos;i="5.76,332,1592895600"; d="scan'208";a="142996645"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Aug 2020 11:38:52 -0700
-IronPort-SDR: 7gm/otuLmaxPaL4ymIq4bdZsWn5aVmyNBsrNSANrJXHJoba4jDYJnmObbQ4qr0ASqkWBddI6d7
- EZZ0j2/iKDHg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.76,332,1592895600"; d="scan'208";a="320580096"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga004.fm.intel.com with ESMTP; 19 Aug 2020 11:38:52 -0700
-Received: from [10.212.21.160] (jmbills-mobl.amr.corp.intel.com
- [10.212.21.160])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id CD2F558081E
- for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 11:38:51 -0700 (PDT)
-Subject: Re: Generate Crashdump log via Redfish
-To: openbmc@lists.ozlabs.org
-References: <CAB2jT4Yt5=biGEiOWYEdzix7ydc3XH8JcTs7VPoHdec+JhYVrw@mail.gmail.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <439e92d3-a9ae-8bf7-7edf-b9401dedea49@linux.intel.com>
-Date: Wed, 19 Aug 2020 11:38:50 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BWy8Z02qHzDqyg
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Aug 2020 05:12:23 +1000 (AEST)
+Received: by mail-ua1-x92b.google.com with SMTP id x17so7227674uao.5
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 12:12:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Gb4PLvlIvqScxYKhJaM9RXg2bJKqbEDvBiol+uMYHqI=;
+ b=ncl4EO1VzUN/1J4z0nTV5/ar6a5kfUJeqJ7MCBhxG3euU0l8AvBvXsZNMsLB8Oz2nS
+ AF8FaIBBV+4dFOZtHg4pVD1G+XdC6vLxQCXIaBBplnQ9e3Wkr/TTvXP7xk7vRr0hleC9
+ bIfuGyFPhVg1JKso/Bagr+b7mgLdTEUeJF0ZdpYzrCRD3trjK/4IKkUOyrmOur3GFOmu
+ SisYp4StEOYfyV8upTbAJsiJ2NhehbnxXefq0c/9ZGpSAscA1J3oS8XEWDxeKU/dhtCG
+ gwGF0hn7eTc/Ig8kOwXLlkVpc2i9PX+EzlzoD/a3GZoUvcKoXY1f6byMV5rZnmv+PRMJ
+ K6IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Gb4PLvlIvqScxYKhJaM9RXg2bJKqbEDvBiol+uMYHqI=;
+ b=ULDzMIWRw9alVMQIt69TImsspf8rKuQVkVCh6OkUdfVVgkN/JRfVqG0p672lzSOxlE
+ YXwlPbpG4zooa3amwJ5jwNWoVV7kgyMW4ieWoQkZKldSmCDdIwTlL4PiXCy/IHwAUJfV
+ avpLHpchoim0RcMMaTW7dvMfabshkEq65NuVtPh1Zj8KDRBngmNQaXcnbYcI88bb1dKm
+ M58XuI5z0vPy5csF52aECHisSQq8AndUrHmCApLz8WLHdEgL0TMgF+1K8BO9dhl7MnX0
+ I2W2QiQXlXOA8ii2Vmm2cg0U0dL5Eqnb+AW5mL5iEA4qMmJ0lpIEGHZyLvsPvF5WvXlN
+ FIDQ==
+X-Gm-Message-State: AOAM530HPVLRKp6kDVOznS+RCPO9pnvQfCSp5d9jZFa2Gmm/HEahm19l
+ aDcWzNzVMhU1+njiSlBhYxy2xIr2LAg0h46usE/DWFoh6Ow=
+X-Google-Smtp-Source: ABdhPJyjdSg39343iNy/5antAGEjO8D2KPyfBvOwU6rFyeReqs50ySxGWGyO50ZddVbuCULMJYoLO60Qxi8x56Y87Ck=
+X-Received: by 2002:ab0:6a5:: with SMTP id g34mr15164957uag.53.1597864339973; 
+ Wed, 19 Aug 2020 12:12:19 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAB2jT4Yt5=biGEiOWYEdzix7ydc3XH8JcTs7VPoHdec+JhYVrw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+From: Ryan Chow <kwongyhue.chow@gmail.com>
+Date: Wed, 19 Aug 2020 15:12:08 -0400
+Message-ID: <CABg4NFNhVXt59apmv331zRNXExvN23cS_vcNPddfVCQntPSCtw@mail.gmail.com>
+Subject: BIOS Configuration
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000062297205ad3fc8e3"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,50 +72,26 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--00000000000062297205ad3fc8e3
+Content-Type: text/plain; charset="UTF-8"
 
+Hello,
+I have seen some talk of remote BIOS configuration in the works, but I was
+wondering if anyone can point me where I can start looking to configure the
+BIOS locally. I would like to start by doing something relatively simple
+such as setting the default boot mode to UEFI/Legacy.
 
-On 8/14/2020 7:02 AM, Venkata Chalapathy wrote:
-> Hi Everyone,
-> 
-> I’m looking for guidance on generating a crashdump log via the Redfish 
-> interface. There are two actions available to the user to generate the 
-> dump – OnDemand and SendRawPeci. But I’m not aware of the payload data I 
-> need to be sending along with the request to generate the dump in either 
-> of the cases. Could you please share the payload that I need to attach 
-> to the request.
-> 
-> "#Crashdump.OnDemand": {
-> 
-> "target": 
-> "/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.OnDemand"
-> 
->        },
-This is the OEM action to trigger the Intel crashdump application. 
-There is no payload required for this action.
+Thanks,
+Ryan
 
-It's on my list to move this to the new standard dump service "Create" 
-action when it's finalized.
+--00000000000062297205ad3fc8e3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> "#Crashdump.SendRawPeci": {
-> 
-> "target": 
-> "/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.SendRawPeci"
-> 
-PECI is a communication protocol for BMC on Intel processors.  This is 
-an OEM action to send a PECI command to the CPU.  The payload is a 
-single "PECICommands" JSON object that is a double array of bytes where 
-each row is a raw PECI command.
-{
-     "PECICommands": [[48, 5, 9, 161, 0, 0, 0, 0],
-                      [48, 5, 9, 161, 0, 0, 4, 0]]
-}
+<div dir=3D"ltr">Hello,<div>I have seen some talk of remote BIOS configurat=
+ion in the works, but I was wondering if anyone can point me where I can st=
+art looking to configure the BIOS locally.=C2=A0I would like to start by do=
+ing something relatively simple such as setting the default boot mode to UE=
+FI/Legacy.</div><div><br></div><div>Thanks,</div><div>Ryan</div></div>
 
-We had proposed a standard Processor commands resource but the DMTF 
-rejected it and proposed we keep this as OEM.  We're still working out 
-how to handle it, but I'd like to make this standard as well.
-
-> Best Regards,
-> 
-> Venka
-> 
+--00000000000062297205ad3fc8e3--
