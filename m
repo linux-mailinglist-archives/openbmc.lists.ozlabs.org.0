@@ -2,62 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE65B24A69D
-	for <lists+openbmc@lfdr.de>; Wed, 19 Aug 2020 21:14:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AC8C024A9AA
+	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 00:42:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BWyC56737zDr0L
-	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 05:14:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BX2qK30NrzDqyX
+	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 08:42:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92b;
- helo=mail-ua1-x92b.google.com; envelope-from=kwongyhue.chow@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ncl4EO1V; dkim-atps=neutral
-Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com
- [IPv6:2607:f8b0:4864:20::92b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=cG/LX9Lw; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BWy8Z02qHzDqyg
- for <openbmc@lists.ozlabs.org>; Thu, 20 Aug 2020 05:12:23 +1000 (AEST)
-Received: by mail-ua1-x92b.google.com with SMTP id x17so7227674uao.5
- for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 12:12:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=Gb4PLvlIvqScxYKhJaM9RXg2bJKqbEDvBiol+uMYHqI=;
- b=ncl4EO1VzUN/1J4z0nTV5/ar6a5kfUJeqJ7MCBhxG3euU0l8AvBvXsZNMsLB8Oz2nS
- AF8FaIBBV+4dFOZtHg4pVD1G+XdC6vLxQCXIaBBplnQ9e3Wkr/TTvXP7xk7vRr0hleC9
- bIfuGyFPhVg1JKso/Bagr+b7mgLdTEUeJF0ZdpYzrCRD3trjK/4IKkUOyrmOur3GFOmu
- SisYp4StEOYfyV8upTbAJsiJ2NhehbnxXefq0c/9ZGpSAscA1J3oS8XEWDxeKU/dhtCG
- gwGF0hn7eTc/Ig8kOwXLlkVpc2i9PX+EzlzoD/a3GZoUvcKoXY1f6byMV5rZnmv+PRMJ
- K6IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=Gb4PLvlIvqScxYKhJaM9RXg2bJKqbEDvBiol+uMYHqI=;
- b=ULDzMIWRw9alVMQIt69TImsspf8rKuQVkVCh6OkUdfVVgkN/JRfVqG0p672lzSOxlE
- YXwlPbpG4zooa3amwJ5jwNWoVV7kgyMW4ieWoQkZKldSmCDdIwTlL4PiXCy/IHwAUJfV
- avpLHpchoim0RcMMaTW7dvMfabshkEq65NuVtPh1Zj8KDRBngmNQaXcnbYcI88bb1dKm
- M58XuI5z0vPy5csF52aECHisSQq8AndUrHmCApLz8WLHdEgL0TMgF+1K8BO9dhl7MnX0
- I2W2QiQXlXOA8ii2Vmm2cg0U0dL5Eqnb+AW5mL5iEA4qMmJ0lpIEGHZyLvsPvF5WvXlN
- FIDQ==
-X-Gm-Message-State: AOAM530HPVLRKp6kDVOznS+RCPO9pnvQfCSp5d9jZFa2Gmm/HEahm19l
- aDcWzNzVMhU1+njiSlBhYxy2xIr2LAg0h46usE/DWFoh6Ow=
-X-Google-Smtp-Source: ABdhPJyjdSg39343iNy/5antAGEjO8D2KPyfBvOwU6rFyeReqs50ySxGWGyO50ZddVbuCULMJYoLO60Qxi8x56Y87Ck=
-X-Received: by 2002:ab0:6a5:: with SMTP id g34mr15164957uag.53.1597864339973; 
- Wed, 19 Aug 2020 12:12:19 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BX2pB3TZNzDqxZ
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Aug 2020 08:41:52 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 07JMVoQF044533
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 18:41:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=wUocwh25LqNbzPNzFlDo9583eXcyO1ncMM6dacKCxuQ=;
+ b=cG/LX9Lwcs+UvFZ5GyG0zkrglH2ISaXoif/1VVfaJGMARNvwWyd4LS67/nplb7MjH8b2
+ SoAnvJogPnsE3t414vScFCL4hWfIXQkL80MNvewRIZW6bnNUzDs4SHLuMoUyBOyRyW0p
+ HlEXbHj/YKKpiFXar3zi7Y2x5l0WhgMY7XXfG4SEIOC9iLUXiQ7qy5hDYmMVzt9AY4iq
+ GUg2opqqv3MnxUUkuDtcTyNzC9snrBroDBSC+D6jX+kGI9QsmCMZRmY7+gJ9NDi2OQnH
+ LWpz0c9wp5c4fmr3VaTRxEz2ybZbY6NJnZDUXOXQtTF6PLMvknGz64voAK5A0On/s/MO tA== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3313ky29k6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 18:41:49 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07JMYJlP012486
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 22:41:48 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma02wdc.us.ibm.com with ESMTP id 3304scyd0p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 19 Aug 2020 22:41:48 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 07JMfi7064553458
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Aug 2020 22:41:44 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E2EC78063;
+ Wed, 19 Aug 2020 22:41:47 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 03EDF78060;
+ Wed, 19 Aug 2020 22:41:46 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.80.201.154])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Wed, 19 Aug 2020 22:41:46 +0000 (GMT)
+Subject: GUI Design Workgroup - BMCWeb login change
+To: Derick Montague <Derick.Montague@ibm.com>, openbmc@lists.ozlabs.org
+References: <OF638D78EB.A08769F2-ON002585C9.004C1612-002585C9.004C7B07@notes.na.collabserv.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <6fd33e23-9845-ed74-7784-75a3a1439f1f@linux.ibm.com>
+Date: Wed, 19 Aug 2020 17:41:45 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.10.0
 MIME-Version: 1.0
-From: Ryan Chow <kwongyhue.chow@gmail.com>
-Date: Wed, 19 Aug 2020 15:12:08 -0400
-Message-ID: <CABg4NFNhVXt59apmv331zRNXExvN23cS_vcNPddfVCQntPSCtw@mail.gmail.com>
-Subject: BIOS Configuration
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000062297205ad3fc8e3"
+In-Reply-To: <OF638D78EB.A08769F2-ON002585C9.004C1612-002585C9.004C7B07@notes.na.collabserv.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-08-19_13:2020-08-19,
+ 2020-08-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ mlxlogscore=713 malwarescore=0 suspectscore=0 phishscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008190178
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,26 +103,40 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000062297205ad3fc8e3
-Content-Type: text/plain; charset="UTF-8"
+On 8/19/20 8:55 AM, Derick Montague wrote:
+>   
+> Hello,
+>     
+> I apologize for the late notice. Here is the agenda for today's GUI Design Work Group.
+>     
+> - Changes to BMC Web Login and continued work on phosphor-webui
 
-Hello,
-I have seen some talk of remote BIOS configuration in the works, but I was
-wondering if anyone can point me where I can start looking to configure the
-BIOS locally. I would like to start by doing something relatively simple
-such as setting the default boot mode to UEFI/Legacy.
+Derick, the "BMCWeb login change" [1] also came up in the security 
+working group meeting.  Folks were interested in getting the questions 
+answered rather more quickly.
 
-Thanks,
-Ryan
+What is the best way to resolve the issues?  Email?  Video conference?  
+IRC chat?  Or continue with the gerrit review?
 
---00000000000062297205ad3fc8e3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+- Joseph
 
-<div dir=3D"ltr">Hello,<div>I have seen some talk of remote BIOS configurat=
-ion in the works, but I was wondering if anyone can point me where I can st=
-art looking to configure the BIOS locally.=C2=A0I would like to start by do=
-ing something relatively simple such as setting the default boot mode to UE=
-FI/Legacy.</div><div><br></div><div>Thanks,</div><div>Ryan</div></div>
+[1]: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35457
 
---00000000000062297205ad3fc8e3--
+> - Use utility classes
+> - Discuss Server LED layout -https://github.com/openbmc/webui-vue/issues/18 	
+> - Discuss button styles on Local user management page - https://github.com/openbmc/webui-vue/issues/12 	Help wanted items
+> - Design Review items
+> - Demo of working Web UI progress
+>     
+>     
+> Please visit the wiki for connection info and notes from past groups.
+> https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
+>     
+>   
+> Thank you!
+>     
+> Derick Montague
+> FED Lead | OpenBMC Design Team Lead
+> IBM Cognitive Systems User Experience
+>
+
