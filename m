@@ -2,88 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90DE224C345
-	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 18:21:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D86B24C348
+	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 18:24:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BXVJG4wRYzDr4Q
-	for <lists+openbmc@lfdr.de>; Fri, 21 Aug 2020 02:21:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BXVMx3clvzDqx2
+	for <lists+openbmc@lfdr.de>; Fri, 21 Aug 2020 02:24:13 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b33; helo=mail-yb1-xb33.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=BD3RtOkT; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=EONjY8Xf; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=0DJ8cgNE; dkim-atps=neutral
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com
+ [IPv6:2607:f8b0:4864:20::b33])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BXVD310pkzDqrT
- for <openbmc@lists.ozlabs.org>; Fri, 21 Aug 2020 02:17:23 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 999225C00B5;
- Thu, 20 Aug 2020 12:17:20 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Thu, 20 Aug 2020 12:17:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=8TetVE05eeZIZyf6muL5qRW46iK
- Px24DsfPlLPJ4oM4=; b=BD3RtOkT98z5Va6UoeC085djEdSprR+1WW7Xlk8fuFf
- B3iAwSP2dAphVAX+P71/3rEQQp6y9Th/mJs5Lq87jm4FSnSNwsR9urRWH8FyrWH0
- qZMLBcp5XiLyxF1b1Lq0Atfl9fBbLNNCYCG2Jf8dhPPqARWnkVPBJqLh0sgZfODn
- EZRcPfaXblyCUG7sLRNAeMr9Hf66HR+re+J70jL8bl+7rLPcCbouIavWYkF0e9iD
- S9gXHNq0pxamk1XGXwqLuK0U3pCrj1UUuC1c7GaROn47qBbb+W70Ts6M4tFgHCTS
- ssaBgOd1/Otry/dPN7mlkD/pQc66F25MQWbWFjjG4Xg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8TetVE
- 05eeZIZyf6muL5qRW46iKPx24DsfPlLPJ4oM4=; b=EONjY8XfvwSoUvAq27R0Ts
- 9IViMkEoY9fHth2vxdoh/aUDa3tHTaQ6vq/8qeNP7cXSNxB4xRrcLCFU12+zQTFf
- 3+pohsb7tmxVzhO7Ld6e+AA44yCTgjCPppjvye69SFYepNX+DyEblIV4bhl5frAm
- EgTFDIWNqP7Qs3yzEcBD1N+nbix5UENFMjQuialbrMQQS+e5q2EclV3TG3JDZ+t4
- DgaTHyBl9q89in0V4MwJ8zdJj311iA4FHi4phAz6OrzHIflZLo3CgKPGHZ838izo
- wuVzcdNoVzZumMxrH6SSWmW8kSCGfwUt3jWww/a60c/fKZE7tMS1EqEf7A82EGeA
- ==
-X-ME-Sender: <xms:EKI-X8edKAIhTHDch3YW1tmOns5LMAtDEItza2ZrjJSLC0n3WP5ukg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddutddgjedvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepuddufeelueehhfelheejjefgueej
- hefhtdeludefheekudduveekieduudfggeeknecuffhomhgrihhnpehophgvnhgsmhgtqd
- hprhhojhgvtghtrdighiiinecukfhppeduieeirddujedvrdduvdefrddvvdenucevlhhu
- shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghkse
- hsthiftgigrdighiii
-X-ME-Proxy: <xmx:EKI-X-MTdrYZOQm563WUrV_r73Z592ZEmHKTPWFaTK55-lOb_CVWzg>
- <xmx:EKI-X9jByOz-mQE0CjsOgryRiwAeBL-VzSi6Q9DCNurvPZTaDoJ98Q>
- <xmx:EKI-Xx8Fpne6sy3XbZ6IKCIZtjL4B3sQJs4dLR4I0XQiRNzZ_sSVEA>
- <xmx:EKI-Xx7AJSjwhPG1lugu4MD1IvtpzP7ZFQdm9FdcvdvSE7D0KzuTCw>
-Received: from localhost (mobile-166-172-123-22.mycingular.net
- [166.172.123.22])
- by mail.messagingengine.com (Postfix) with ESMTPA id 44A42328005E;
- Thu, 20 Aug 2020 12:17:20 -0400 (EDT)
-Date: Thu, 20 Aug 2020 11:17:19 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Maxim Sloyko <maxims@google.com>
-Subject: Re: Board Sensor Calibration
-Message-ID: <20200820161719.GB3532@heinlein>
-References: <CAFR_W8pG0gLhS5Ycxdhvx=1xdm7J2mCP0VfiHyuZOofB3gWHhw@mail.gmail.com>
- <20200820161532.GA3532@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BXVM51RLRzDqGF
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Aug 2020 02:23:28 +1000 (AEST)
+Received: by mail-yb1-xb33.google.com with SMTP id g3so1428166ybc.3
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Aug 2020 09:23:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=gADqIU20TF4kec+J+9r++6S/WxNoa+sZt0XCBIZ7Zus=;
+ b=0DJ8cgNELURG8VWDcwlbCcGeug7h375t00qfpYROXIWrhXSleHvfUI6ZqE2IcnZoiz
+ vPBJFBJRPS8VGe6eReZWyPlK4U/92R2yCTRw++WMvggniNMdGDJRtjZHFWLZSnwS9Rhs
+ Nkq3TvzQ6EVthXjVNWnUng4i+APgrD6KGyC0HzLNvXjxQiwfewpx476cgs1prUJDj3S4
+ E+A4ne65P+Q4uhtpS5sFgBlRWbV2YmVFL5WBsHQeDSKnH1STekmRTre8c2F2TJqHOxzx
+ dWZB8DzbNn7m7s9d2xDgJ/b9PZqCJWXlK5DTzBUDtdWJl2eUNtWQ1iZ8+sCUGbayasAc
+ KxXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=gADqIU20TF4kec+J+9r++6S/WxNoa+sZt0XCBIZ7Zus=;
+ b=bVnx/l7IiKyT3KnkR50Z2JH+5scm/BBjsroZ6szGKpvyYSkYBtTrApmFM8RkKtCrYp
+ Wc/lnbaTY8cgmMb0PGxJTim6LegIF+CW2qQZn0r7nwzfUv3aRgsw7hr7pUmqjdwgNk1X
+ R4x51MtdwLwMaeFZAKKPXcA1jU2O+yWOTy18u/zZn0ss+2N5kpixtD7y5WsoIp3CAnIk
+ pmYEyuR1MiBPbqF4zlWSlb8+v4GWyO2UrkEaF4RnV5zhC1YdhofFE5evOTe3IPt7Qv+1
+ wTmgpEoY1INZKEHGyaVi60Q5nFLhzGMdpYXDqw/JwouxjJX5+mlXcvIgzplprFLwd2LA
+ lHqw==
+X-Gm-Message-State: AOAM532/e00oR/edkOAU8pl63ywuX+CCokgRbEvZSU7e00SbLbEbBn9L
+ bXjXtFCzWEUAh8cGpO5WavO5JT36p6kva8cYzcOYB1/SyvXFpg==
+X-Google-Smtp-Source: ABdhPJwLdxNqP6zC/wsv3piUc2vxOIp8H/yt2+E9Op7ZBmdpB8bidRx7KorBeAvFCFtLrpvWf0RhDKOjy7pEMDF0g5Q=
+X-Received: by 2002:a25:d48e:: with SMTP id m136mr6104497ybf.148.1597940604882; 
+ Thu, 20 Aug 2020 09:23:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="gatW/ieO32f1wygP"
-Content-Disposition: inline
-In-Reply-To: <20200820161532.GA3532@heinlein>
+References: <CAFR_W8pG0gLhS5Ycxdhvx=1xdm7J2mCP0VfiHyuZOofB3gWHhw@mail.gmail.com>
+In-Reply-To: <CAFR_W8pG0gLhS5Ycxdhvx=1xdm7J2mCP0VfiHyuZOofB3gWHhw@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 20 Aug 2020 09:23:13 -0700
+Message-ID: <CACWQX821VpWvbnnv51hbwVSuhaQWjCeovvEBkLwAVp6pvGidkQ@mail.gmail.com>
+Subject: Re: Board Sensor Calibration
+To: Maxim Sloyko <maxims@google.com>
+Content-Type: multipart/alternative; boundary="000000000000205f4e05ad518aee"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,82 +74,183 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemka@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000205f4e05ad518aee
+Content-Type: text/plain; charset="UTF-8"
 
---gatW/ieO32f1wygP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Wed, Aug 19, 2020 at 10:41 AM Maxim Sloyko <maxims@google.com> wrote:
+
+>
+
+> Hi OpenBMC!
+
+
+
+Hi!
+
+
+
+
+>
+
+> We would like to have a value reported by a certain sensor changed
+according to our calibration results. This is a temperature sensor and the
+calibration has nothing to do with the sensor itself -- so no need to
+change the driver or anything -- but with a sensor placement on the board.
+Basically we want to infer the temperature at a different location by
+calibrating the sensor.
+
+
+
+Do you have more details on what the transfer function is?  Is it a simple
+offset, or is it a more complicated lookup table?  Does it include multiple
+sensors to generate this new value, or is it a single sensor?  Is it
+intended to "replace" the existing value, or is it intended to complement
+it?
+
+
+
+The ideas I've heard before that this might be:
+
+1. The temp sensor isn't that accurate, so we want to calibrate it to a
+better transfer function that we determined empirically.
+
+2. The temp sensor is adjacent to the thing we really want to measure, so
+we want to create an offset including the CFM that approximates the
+temperature of the thing we can't measure directly.
+
+3. I want to transform the value of the sensor into different units, (Power
++ CFM to exit air air, or power + time to energy)
+
+
+
+
+>
+
+> Are there any tools in OpenBMC that would allow us to add the calibration
+curve to, say, phosphor-hwmon and have it report the value different from
+the one reported by the underlying sensor? Did anybody else have to deal
+with something like this and what was your solution? Do people more
+familiar with sensor architecture have any recommendations on how best to
+handle this?
+
+
+
+The closest examples that come to mind for dbus-sensors type architectures
+are:
+
+CFM sensor and Exit air temp sensor.  Both pull in a number of other
+sensors, and run them through a math transform to come up with a "new"
+sensor value derived from the other inputs.  This sounds similar to what
+you want, although it's probably more complex than you're looking for.
+
+The "virtual sensor" proposal currently in review, which I personally have
+technical issues with, and have left comments as such.  I don't believe
+there's a working implementation of this yet, but there are those working
+on it.
+
+
+
+If it were me, and I wanted to add a simple lookup table to dbus sensors,
+I'd probably model it in an entity manager config for the temperature
+sensor, similar to how the stepwise controller models it, and add that into
+the Hwmon temp sensor daemon.  The below example adds a +5 celcius offset
+to the bmc temp sensor as an example.  Bear in mind, this wouldn't work
+today, you'd have to adjust hwmontempsensor to take this into account.
+
+
+
+{
+
+    "Address": "0x4A",
+
+    "Bus": 6,
+
+    "Name": "BMC Temp",
+
+    "Thresholds": [],
+
+    "Type": "TMP75",
+
+    "CalibrationOutput": [
+
+        5.0,
+
+        105.0
+
+    ],
+
+    "CalibrationReading": [
+
+         0.0,
+
+        100.0
+
+    ],
+
+}
+
+-- 
+-Ed
+
+--000000000000205f4e05ad518aee
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 20, 2020 at 11:15:33AM -0500, Patrick Williams wrote:
-> On Wed, Aug 19, 2020 at 10:39:15AM -0700, Maxim Sloyko wrote:
-> > Hi OpenBMC!
-> >=20
-> > We would like to have a value reported by a certain sensor changed
-> > according to our calibration results. This is a temperature sensor and =
-the
-> > calibration has nothing to do with the sensor itself -- so no need to
-> > change the driver or anything -- but with a sensor placement on the boa=
-rd.
-> > Basically we want to infer the temperature at a different location by
-> > calibrating the sensor.
-> >=20
-> > Are there any tools in OpenBMC that would allow us to add the calibrati=
-on
-> > curve to, say, phosphor-hwmon and have it report the value different fr=
-om
-> > the one reported by the underlying sensor? Did anybody else have to deal
-> > with something like this and what was your solution? Do people more
-> > familiar with sensor architecture have any recommendations on how best =
-to
-> > handle this?
-> >=20
-> > Thank you.
-> >=20
-> > --=20
-> > -MS
->=20
-> There is work being implemented now under phosphor-virtual-sensor[1]
-> which is intended to cover exactly this case (among others).  We have a
-> similar situation where sensors need to be calibrated based on values
-> from one or more other sensors.  An example might be a voltage regulator
-> which reads high as it gets hotter.  phosphor-virtual-sensor will allow
-> you to forumlate a secondary sensor (the "virtual" sensor) using math
-> applied to one or more real sensors.
->=20
-> --=20
-> Patrick Williams
+<div><br><br>On Wed, Aug 19, 2020 at 10:41 AM Maxim Sloyko &lt;<a href=3D"m=
+ailto:maxims@google.com" target=3D"_blank">maxims@google.com</a>&gt; wrote:=
+<br><br>&gt;<br><br>&gt; Hi OpenBMC!<br><br><br><br>Hi!</div><div><br><br><=
+br><br>&gt;<br><br>&gt; We would like to have a value reported by a certain=
+ sensor changed according to our calibration results. This is a temperature=
+ sensor and the calibration has nothing to do with the sensor itself -- so =
+no need to change the driver or anything -- but with a sensor placement on =
+the board. Basically we want to infer the temperature at a different locati=
+on by calibrating the sensor.<br><br><br></div><div><br>Do you have more de=
+tails on what the transfer function is?=C2=A0 Is it a simple offset, or is =
+it a more complicated lookup table?=C2=A0 Does it include multiple sensors =
+to generate this new value, or is it a single sensor?=C2=A0 Is it intended =
+to &quot;replace&quot; the existing value, or is it intended to complement =
+it?<br><br><br><br>The ideas I&#39;ve heard before that this might be:<br><=
+br>1. The temp sensor isn&#39;t that accurate, so we want to calibrate it t=
+o a better transfer function that we determined empirically.<br><br>2. The =
+temp sensor is adjacent to the thing we really want to measure, so we want =
+to create an offset including the CFM that approximates the temperature of =
+the thing we can&#39;t measure directly.<br><br>3. I want to transform the =
+value of the sensor into different units, (Power + CFM to exit air air, or =
+power + time to energy)</div><div><br><br><br><br>&gt;<br><br>&gt; Are ther=
+e any tools in OpenBMC that would allow us to add the calibration curve to,=
+ say, phosphor-hwmon and have it report the value different from the one re=
+ported by the underlying sensor? Did anybody else have to deal with somethi=
+ng like this and what was your solution? Do people more familiar with senso=
+r architecture have any recommendations on how best to handle this?<br><br>=
+<br></div><div><br>The closest examples that come to mind for dbus-sensors =
+type architectures are:<br><br>CFM sensor and Exit air temp sensor.=C2=A0 B=
+oth pull in a number of other sensors, and run them through a math transfor=
+m to come up with a &quot;new&quot; sensor value derived from the other inp=
+uts.=C2=A0 This sounds similar to what you want, although it&#39;s probably=
+ more complex than you&#39;re looking for.<br><br>The &quot;virtual sensor&=
+quot; proposal currently in review, which I personally have technical issue=
+s with, and have left comments as such.=C2=A0 I don&#39;t believe there&#39=
+;s a working implementation of this yet, but there are those working on it.=
+<br><br><br><br>If it were me, and I wanted to add a simple lookup table to=
+ dbus sensors, I&#39;d probably model it in an entity manager config for th=
+e temperature sensor, similar to how the stepwise controller models it, and=
+ add that into the Hwmon temp sensor daemon.=C2=A0 The below example adds a=
+ +5 celcius offset to the bmc temp sensor as an example.=C2=A0 Bear in mind=
+, this wouldn&#39;t work today, you&#39;d have to adjust hwmontempsensor to=
+ take this into account.<br><br><br><br>{<br><br>=C2=A0 =C2=A0 &quot;Addres=
+s&quot;: &quot;0x4A&quot;,<br><br>=C2=A0 =C2=A0 &quot;Bus&quot;: 6,<br><br>=
+=C2=A0 =C2=A0 &quot;Name&quot;: &quot;BMC Temp&quot;,<br><br>=C2=A0 =C2=A0 =
+&quot;Thresholds&quot;: [],<br><br>=C2=A0 =C2=A0 &quot;Type&quot;: &quot;TM=
+P75&quot;,<br><br>=C2=A0 =C2=A0 &quot;CalibrationOutput&quot;: [<br><br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 5.0,<br><br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 105.0<br><=
+br>=C2=A0 =C2=A0 ],<br><br>=C2=A0 =C2=A0 &quot;CalibrationReading&quot;: [<=
+br><br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00.0,<br><br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 100.0<br><br>=C2=A0 =C2=A0 ],<br><br>}<br><br></div>-- <br><div dir=
+=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div =
+dir=3D"ltr">-Ed</div></div>
 
-Forgot to include the link.
-
-1. https://gerrit.openbmc-project.xyz/q/status:open+project:openbmc/phospho=
-r-virtual-sensor
-
---=20
-Patrick Williams
-
---gatW/ieO32f1wygP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl8+og8ACgkQqwNHzC0A
-wRnE4A/+PQL9Oadtq8eFsqO3L+KPAfDB0GTEujxCR/lXc504wEqg5zzH0g1i0v8S
-/bIpimxly1mpCMF2zCZF0ASRWc+3dCUDEz9jcbqAr5xDVEQQ81KKqo5lyy51uQRN
-zndFz2L2+qd3YOQvEmgehdz8edgL9Bq8cIT1EB1wYLsCC5t7UaYDSMk+xDnaurza
-lu2vOsP83vf9skntn+9K5JPc9hiL8d2Jf9jukaX1ZkTBf3gRmGhjbNRNl2bnlK/R
-zWoBqcTPWokgpkbq7htO4inivYcHaDTLX6O+feBel1HU7qhkOg6SyxfAWnytN5+0
-oL9BCMoT03sOwi1nR8FTKxL1yR27QY9AEB6Gw0DGX189EwS2mtjbPSfN4H/7Bm6T
-89LkfGJlI74040+IRZx6M3J+Ek4V0rsO7YMKDprrprG7r+AM5B5xXZk3vMlglO6m
-pNP3poDmoCKCjP94ORQ8wzeMuvKwfiXERXhxqdqNydOZPI8NoCH9BY5oKJNMriVX
-v6K77GZ6hhR5xkHoVseyc5kWcShVYr9bz/Frp0tYyLJEvcPiJsqEfncj116+h/c8
-Quo64sSz6YIcUqBBjtBtx57TjlkgTKIVIP7ZfOu+nWcMvkrDEWfC8H5BowxZ/o0v
-1E+jN4bTztNUS+DvecBSWd/tI0HvRLL4Wi9SBokLHav4f6R1G9U=
-=Muic
------END PGP SIGNATURE-----
-
---gatW/ieO32f1wygP--
+--000000000000205f4e05ad518aee--
