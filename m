@@ -2,139 +2,138 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6660224C4A8
-	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 19:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1304A24C4B0
+	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 19:41:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BXX2D4cPtzDr4N
-	for <lists+openbmc@lfdr.de>; Fri, 21 Aug 2020 03:39:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BXX573nwmzDr5Q
+	for <lists+openbmc@lfdr.de>; Fri, 21 Aug 2020 03:41:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.131.135; helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ (client-ip=40.107.131.131; helo=apc01-sg2-obe.outbound.protection.outlook.com;
  envelope-from=velumanit@hcl.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=hcl.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=VY7P3pic; 
+ header.s=selector2 header.b=HVu+1QNa; 
  dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=VY7P3pic; 
+ header.a=rsa-sha256 header.s=selector2 header.b=HVu+1QNa; 
  dkim-atps=neutral
 Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310135.outbound.protection.outlook.com [40.107.131.135])
+ (mail-eopbgr1310131.outbound.protection.outlook.com [40.107.131.131])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BXX1Q39X8zDr42
- for <openbmc@lists.ozlabs.org>; Fri, 21 Aug 2020 03:38:15 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BXX4D0rRbzDq8x
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Aug 2020 03:40:42 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g/1dD1KE1KOAKY6auJExuc07G54JdE4Ea6cOFuM9LeA=;
- b=VY7P3picJ38mR9GeH46Y9qMgQZU/MvEMXIP5l/bHqmXjj3zGdgdaUu7blOWyqfBigMTno0PLP3rqDshI4tU/dtVJJMwmzduWlNYukvAPPnQuGkw23rLCdmd4R3e4zGa/CXWuyvrOn+QHBtG10yDauAWFBWhM7bE6hgZRemrD7uA=
-Received: from HK2PR0401CA0013.apcprd04.prod.outlook.com (2603:1096:202:2::23)
- by SG2PR0401MB2079.apcprd04.prod.outlook.com (2603:1096:3:8::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.25; Thu, 20 Aug
- 2020 17:38:01 +0000
-Received: from HK2APC01FT045.eop-APC01.prod.protection.outlook.com
- (2603:1096:202:2:cafe::74) by HK2PR0401CA0013.outlook.office365.com
- (2603:1096:202:2::23) with Microsoft SMTP Server (version=TLS1_2,
+ bh=doqMiatjV46HGdplhouNkwwTZNGeZIPRpwWWnYalunY=;
+ b=HVu+1QNaXGQYTqJkuCs8JpG3T77vlWmMTUF48l+OQd7D5o0TxZIDmMzVOVm1N8ESAXZF7jgTJ8YtI1TTFNeaxJIUgQaRonfszr21tgX8kvVApNxhSUeuzJ+Wgsf21oRaHcgv5zJDDjcj139t+r5xJ2wNtDvLDwDXlbvHlrDiQpE=
+Received: from PU1PR01CA0031.apcprd01.prod.exchangelabs.com
+ (2603:1096:803:16::19) by HK2PR04MB3588.apcprd04.prod.outlook.com
+ (2603:1096:202:33::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24; Thu, 20 Aug
+ 2020 17:40:34 +0000
+Received: from PU1APC01FT025.eop-APC01.prod.protection.outlook.com
+ (2603:1096:803:16:cafe::b4) by PU1PR01CA0031.outlook.office365.com
+ (2603:1096:803:16::19) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24 via Frontend
- Transport; Thu, 20 Aug 2020 17:38:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.52)
+ Transport; Thu, 20 Aug 2020 17:40:33 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.57)
  smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
  header.d=HCL.COM;lists.ozlabs.org; dmarc=permerror action=none
  header.from=hcl.com;
 Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.52 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.52; helo=APC01-SG2-obe.outbound.protection.outlook.com;
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.245.52) by
- HK2APC01FT045.mail.protection.outlook.com (10.152.249.139) with
+ 192.8.195.57 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.57; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.195.57) by
+ PU1APC01FT025.mail.protection.outlook.com (10.152.252.237) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3305.24 via Frontend Transport; Thu, 20 Aug 2020 17:38:00 +0000
+ 15.20.3305.24 via Frontend Transport; Thu, 20 Aug 2020 17:40:31 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nCYoW2MIivDNcBVp4HWuK1MD4Wae++CWNZPFkGh5DRd79jx97kHYFXfcCY2JuLwHamPvftpSzm5aMQ0o4BYzsIU3uASoGilU3iPXvDoboYnhEutLgZugtqVzahz6PwuxWHJP8bSfb68UQaniME4yyL8hzUg1vBGanWQqQYQzK5v8/m3tL3O5bo+2/oJAAtvhHiBnYkSHbDrkhKVi6zCHrVSAK6mM4ZIngpz0n6p0PRlzmLtRADzX+Wu4wnu7uHMkCCIiTQUSrMfS2+aj6YZGVxm3Y+YXSHQzfscTT/7xTJgW9lyxnI4pOniJnCFn1TQrmbfFsYvqgaYGID6HaZJoCw==
+ b=OItDkQFkrSDAvCkL1aFzfS48oWKcIDuPvoBGzqkHc/uY+b3KuTsImASs/FJ+tUR5PAN+VG7kygJB0majijA6gGbRW5MaFI3rHjcXSAQ5P4LKAH5hmbfqaxIF0wcoaObMwXGouhOb8HLnvwRtLBiafop2/4QJy38gcbVcHdvS9PBjYXoTyhAjRmupQKxqwdQSTYg0Ih74SnGrnOQinAzW6ot1q3IWCPUc16TrysN+FNh86/Y5wIhWSxadB8xVkzDr2IL4NEKclKc1XQHd7sYFHLa4/p/GzDpCGodGrGY/vZbH27kjDIAiG3mp9zZFW8RK7W97v+NZ1Jd4jm1C0AXAFw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g/1dD1KE1KOAKY6auJExuc07G54JdE4Ea6cOFuM9LeA=;
- b=Q+rgZ9nURKBZqY+HeIRVQvUF/MUtNo2SVzRMTzGvIzoyeScBYrbxIKRztjKhBugYrkaDThFPSRQ55nX2hSteUXIKYyBSR+53fF3ZI6myJamuTqJC0r8ogWUF+Q4kUYF+j4g2wpnn7IvXfqczX8iLioFEfbegjptGc91ynIh7YgR7zf0Wq4McIOhxa6M6JwiuAeesvgINJFenn6tftIQz78zthFWh4gWGs81KlO/htJZx+9O9ToYelO/LOj8xiKHV917yNw8H4Xw5aAZalDoqfETCOPK+x6I8mG/OiY7gvozLaKvyOsGIfpqigAZFPo3pkNL5DdzUSmIr5HK1nPVv1A==
+ bh=doqMiatjV46HGdplhouNkwwTZNGeZIPRpwWWnYalunY=;
+ b=O7w0LjSPHYEuQZUrjWSp50zEdxzK/NPxrJJOnkgntfDgqJEpfn9FrUKPRlFaH+SLtSqCFFXhOx2L53+n5jyWvehf8620ONac1AUIXl6D59cBsPUWXW/wBQBxEfgCofkw5uGhbWCakPWe+xPF6bwrQ06vdaCY4Gg1VeefAnXPoh4rUkR2atdevAdF6iMMi79MUkWanb9Mh+vk4/Us6jdjscjyWOfZ3lp1w2QFBuAF6Ehs+r+vlckpks3H0l78WLhIOEAmB9pB2mpB72tzuJEeQ7+ciCi4l/GFRiG2HB/T6lhqCa3yqmzbUj5ayWWWsmw90sAcikhZh8auYkog1Zte/Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
  header.d=hcl.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=g/1dD1KE1KOAKY6auJExuc07G54JdE4Ea6cOFuM9LeA=;
- b=VY7P3picJ38mR9GeH46Y9qMgQZU/MvEMXIP5l/bHqmXjj3zGdgdaUu7blOWyqfBigMTno0PLP3rqDshI4tU/dtVJJMwmzduWlNYukvAPPnQuGkw23rLCdmd4R3e4zGa/CXWuyvrOn+QHBtG10yDauAWFBWhM7bE6hgZRemrD7uA=
+ bh=doqMiatjV46HGdplhouNkwwTZNGeZIPRpwWWnYalunY=;
+ b=HVu+1QNaXGQYTqJkuCs8JpG3T77vlWmMTUF48l+OQd7D5o0TxZIDmMzVOVm1N8ESAXZF7jgTJ8YtI1TTFNeaxJIUgQaRonfszr21tgX8kvVApNxhSUeuzJ+Wgsf21oRaHcgv5zJDDjcj139t+r5xJ2wNtDvLDwDXlbvHlrDiQpE=
 Received: from HK0PR04MB3153.apcprd04.prod.outlook.com (2603:1096:203:80::9)
- by HK2PR04MB3842.apcprd04.prod.outlook.com (2603:1096:202:31::10) with
+ by HK2PR0401MB2161.apcprd04.prod.outlook.com (2603:1096:202:d::8) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3283.18; Thu, 20 Aug
- 2020 17:37:58 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3283.24; Thu, 20 Aug
+ 2020 17:40:27 +0000
 Received: from HK0PR04MB3153.apcprd04.prod.outlook.com
  ([fe80::f5af:ec35:8bbb:f9f]) by HK0PR04MB3153.apcprd04.prod.outlook.com
  ([fe80::f5af:ec35:8bbb:f9f%3]) with mapi id 15.20.3283.027; Thu, 20 Aug 2020
- 17:37:58 +0000
+ 17:40:27 +0000
 From: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
 To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Facing issues in adding the package 'phospohr-gpio-monitor' to the
- image.
-Thread-Topic: Facing issues in adding the package 'phospohr-gpio-monitor' to
- the image.
-Thread-Index: AdZ3GCH8MWt8ih5eR9SIpFYo5CHlvQ==
-Date: Thu, 20 Aug 2020 17:37:58 +0000
-Message-ID: <HK0PR04MB31532870F871F31DEDB4B94AA75A0@HK0PR04MB3153.apcprd04.prod.outlook.com>
+Subject: Pass the gpio value from phospohr-gpio-monitor to other applications
+Thread-Topic: Pass the gpio value from phospohr-gpio-monitor to other
+ applications
+Thread-Index: AdZ3GJGMYScRBou3TC+t0UOCurFJwg==
+Date: Thu, 20 Aug 2020 17:40:26 +0000
+Message-ID: <HK0PR04MB31534D7547F7008B8745213BA75A0@HK0PR04MB3153.apcprd04.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiOTFmMjlhZjQtZmVmMi00ZTZmLWJmYTItNWQzM2ZjNjk0ZjY3IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoibnVsbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IkhhVTlBWWdwTUFpa0FIV1V6MU14eEt2MXQ1NFhSMEZRMzhQRTVaTWpzM1pNZDRSanNDXC9MUUxzNWNPTjRIZFFkIn0=
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiMDc2MmU0MDUtNzMwZi00Y2RjLWIzNjgtYjFjNWFhZDQ0ZDU4IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoibnVsbCJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IlZjNVhaQU1WUWZvUjA3UTBtUXhxTlNTVHhyK3ZLcTNicTVxQ1o4TWVoMXR3NXV6MHhpTStKblpxcmlla3JkOWoifQ==
 x-hclclassification: null
 Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
  signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
  header.from=hcl.com;
 x-originating-ip: [171.61.236.0]
 x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 2a41f152-e22e-47db-24d8-08d8452fc907
-x-ms-traffictypediagnostic: HK2PR04MB3842:|SG2PR0401MB2079:
+X-MS-Office365-Filtering-Correlation-Id: 5575e595-4b57-486e-225f-08d845302315
+x-ms-traffictypediagnostic: HK2PR0401MB2161:|HK2PR04MB3588:
 x-ms-exchange-transport-forked: True
-X-Microsoft-Antispam-PRVS: <SG2PR0401MB207902755779B84DD1DDE372A75A0@SG2PR0401MB2079.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;OLM:6108;
+X-Microsoft-Antispam-PRVS: <HK2PR04MB35889BC7A6E39F38E7318D2FA75A0@HK2PR04MB3588.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;OLM:6790;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: C4LvuGSR1jgKKzVRqIwmANY5mOY6j48siqZU3AyWTqL6F2SVNjXMj3E/Rk7iUpexAkyFYJ7m+1Pp4jldjcTRVYenaf5C5uHtHjjjDNqy+iQhwky/WDbmkGvWAA7Lxc3mCVVqAKaMdwcAtOPct93aY266mMQDmmQzFe3UVJYZ5aH7IpHM8xhTrGFnpI9UcsAZF01klec/ETtZveAxYX0rBW1GwBmUuuV2lXz719dg6TLk16q0zTWfhEloITujf4i5Nu1aUzBgdU5WXCPgN0/rmg/YAi864uq7/udtAkevhpe8vk+m8TF9wHuXAyX0X0h/V4HEeuARZK9BdfcG4xjfSg==
+X-Microsoft-Antispam-Message-Info-Original: NBm+Y2lm+kO/8+Hj968s03ln5yffl7idyo8mYJ3LP0FkWjVcx9msNuY3FMrQcX6MQhNl1mFUPQle/jeSxCoPTSvWvtumq9r1LEgH2uqtibfxQQe430YVWrVLcEEqtrl76Zwt0kuCI9hqvnTBBkDbCtzHowMzAmuQfq4tpP7XHyYk16tAvbNIS/RQx0M3urASKPitviDyJB0h5bTzo/jCAFJcOUxZBa5G+fBpnwpLi+vL5xXo/LpErA73g63Furv8xKRvVs8WDS63M67o66Fbfgowyczf/x3Yxk0Id1YjCKaWAkHBUHbLhjBOHorbYgA+Ya5t1WqAHT4udRllzjt+bQ==
 X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
  SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB3153.apcprd04.prod.outlook.com;
  PTR:; CAT:NONE;
- SFS:(4636009)(376002)(39860400002)(136003)(346002)(396003)(366004)(33656002)(54906003)(76116006)(66446008)(5660300002)(7696005)(4326008)(9326002)(9686003)(52536014)(6916009)(186003)(26005)(64756008)(6506007)(66556008)(55016002)(66476007)(316002)(71200400001)(66946007)(8936002)(2906002)(86362001)(8676002)(478600001)(83380400001);
+ SFS:(4636009)(39860400002)(136003)(396003)(376002)(366004)(346002)(86362001)(6916009)(2906002)(9326002)(55016002)(9686003)(8936002)(8676002)(52536014)(26005)(66946007)(66476007)(83380400001)(64756008)(54906003)(66446008)(4326008)(316002)(478600001)(66556008)(6506007)(71200400001)(7696005)(5660300002)(76116006)(186003)(33656002);
  DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: x6Mi9VXtAFDd8dG8OfVmbGa16JAZC2t5slarqcuRuYWivxLiq/NGBddbOs4wVZO9B9q377AxPRMVORJ2r4uGsUp2FzpHDQPkqMNVcQ5WmfI7MOHSUUEFQMwoPPqHdPhkrQfkAXCu84D6TuysU3vU20K9CcP2xS/4ixf+Cp3aFZCTM2mEklXqgE0PGnm7B5K58MGea++tPV0zZMgW5QfL8MobN8c5E86RIq9tHEYUOIwWYiPqAP7Hab5yD6TnkxWK3TDtqJk16Jdw1eIpg8VTurs45PkkTCIG9ECSPj2b1EwYhpB5m6k/8opdBxaAmQlm5rWAw39L0KcthVnvUDfDS3mQCVA/6pZgBt/8JO9CO0XRaH0oMpP3cUtmZ/2gl6SAGIazRt9aUUrAdplb2xrymywsdHJ3TUdOoA6uXP9hoPSNb70pGypKZR+2+Y/cwIz3M+7KauNhj9QsYZTr5nrC11t4Xul09cgY4yX9eokvaxCVONH2qJdGc4oKARigAtF3g9QK4m3FPbCRL6KwiF6utot4lBpqeE+FATtahqZQd91E+HVQqu9hjPMw+HPWjFLoDXy8ZQpY7FHZhdPLEMbz2RABLh2SJx8HoehqgeZX1czz9GnVwJdwgMvcBoOL1tq5pHVn3SKk7C5BL4Ja2dY0GA==
+x-ms-exchange-antispam-messagedata: 8gEaehpKflDN+njnaBCusW5xosIPYlgTo815RsKTaSTY7os7yPLYwYjq2PIzZVKNRRuuhqDzMy8m87eYx6Q4pkxWnZiPbss1du92wcsJIEYyTLl5DSp8aUd1IkaJwCQDnUR19w5mBBpy1h1HIYuECDEwFXhMh0iyqFI0Onsql82J7kllzfiuCBpHbkGlDszQa0owqKjIiKwVXg3vUg0hutV2XuL0QfMVT/bb1TaHra57AJtWkuy0k7Zlc0qqO88BTzrzGTs+S0kOJc4gff+dm3q9mY1kJBp0T43kRU/I1w0ctLMBIJsZULsmGvV1JvDOt9cC2wTtIJ4QlkyyK+MIjS20vMGvDZAfYgxwfiOBanl+Dmmi2mTDPdAJ/2MpfGX3A+sbw9+KSZqQmWq88kpsbMQooBr4UMYXv9dSeOvATB95HfLkKLro6t87/Dv6FVXhxc3KRy/cqL0XqquV243de/0yJlF12+PGjx3Za/NBtmKbkIiEw9NsFQNVANPu2pG7Kvv1YK97/5WzpwmJIM1CoQKiRUpjMGc2fXjdJglGU/9lq2RCZ2PcF774WvlKQxSatpdlF1emRtxouJBdragZU8b8A8g60ldXSGshs0V4S0Eq6s8MWQ3ga6/Qi3warpaEcIybxFnTHY04yo1qDb6wZg==
 Content-Type: multipart/alternative;
- boundary="_000_HK0PR04MB31532870F871F31DEDB4B94AA75A0HK0PR04MB3153apcp_"
+ boundary="_000_HK0PR04MB31534D7547F7008B8745213BA75A0HK0PR04MB3153apcp_"
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR04MB3842
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR0401MB2161
 X-DLP: MSGProcess
 X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT045.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 5be1798d-4eaa-4b5a-5291-08d8452fc741
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT025.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 0ca4672a-932d-4f00-4ca9-08d845301fff
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: eApiKMHWC/zX8OdElMT6GA3HFPm0oj3w6QnFmpRpzRBqS+PYEX1g+/o//lyA8IM9z5f+f/0dQb/uYBJcWHIDl00gcL/ZxOC1jGlsIW88n5j4/bevxGshLsWrGTu4wy8ynPMt2zkNimkfVagIRaF4NLLXhF8TSdEK70BRnycZXz/1dnK17hVwISTIwDduE3//A4QZfhfjZd7eFU8eQTxVa1AUaZWHPsK2rRsuSsIhIGYXFcxboi1Z75KxlDOC1+9JCwFRDLwOc4LSItDA8WtwppiWBHmIrp2ggqjzqVW9YWzt1VY2KSZcUr7OIS9Vdth55LbGp8g0MogbqVE6XFqatzCP+VYcCdk7Lqy9YvG5X1ga9wSVPDvhIRMGIVjMn0r3p8kkJR2crn+c3QOBfbxAfg==
-X-Forefront-Antispam-Report: CIP:192.8.245.52; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
+X-Microsoft-Antispam-Message-Info: 4aCw/Wkf/hjigjoBo/GkKBaj1WDIOM9Mg5zZgj71KS7GEYeOrVXSER1BfXg0EVqAz9eVsvutoI3hb46M93986+izfwG4ohBUo9yF6eZEcjkTXHKHS6tVSCrUjpj1s+31ZVt38WqqTTntP+bhIgya/d4e6LaXjZfNp1v4CS3xZdCVaZlFV9aJgIhdwgrMAuvvNmJ+uDg2uZqyPutSvlqp+6jfxjnHaTgpVwFCCbkIfU74sNY1wT/1LDw1JsDyVls/CMfQY9hPy6c5j7gYTx7sfwaZiLo77bQHiv5cGMt/7OepOqTVMRqeoJ7erGot+hO0C0Ti9RV4MSC9AZw/UmyVe0f195Uf5g3+4mciwAvQWJ2w6GOfX2+lTyXGcSecOpQSAPmMkvaIgYPT5zcyZCSXKQ==
+X-Forefront-Antispam-Report: CIP:192.8.195.57; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
  PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(136003)(346002)(376002)(396003)(39860400002)(46966005)(336012)(83380400001)(6916009)(478600001)(9326002)(33656002)(86362001)(54906003)(47076004)(8936002)(81166007)(55016002)(9686003)(82740400003)(356005)(2906002)(36906005)(82310400002)(316002)(70586007)(4326008)(7696005)(70206006)(8676002)(186003)(5660300002)(6506007)(52536014)(26005);
+ SFS:(4636009)(136003)(376002)(346002)(39860400002)(396003)(46966005)(83380400001)(70586007)(5660300002)(9326002)(70206006)(52536014)(86362001)(82310400002)(8676002)(6916009)(8936002)(2906002)(356005)(4326008)(47076004)(478600001)(33656002)(55016002)(316002)(81166007)(82740400003)(186003)(7696005)(36906005)(336012)(6506007)(54906003)(26005)(9686003);
  DIR:OUT; SFP:1102; 
 X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2020 17:38:00.1877 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2a41f152-e22e-47db-24d8-08d8452fc907
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2020 17:40:31.0705 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5575e595-4b57-486e-225f-08d845302315
 X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.52];
- Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT045.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.57];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT025.eop-APC01.prod.protection.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR0401MB2079
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR04MB3588
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -151,23 +150,21 @@ Cc: "P. Priyatharshan" <PriyatharshanP@hcl.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK0PR04MB31532870F871F31DEDB4B94AA75A0HK0PR04MB3153apcp_
+--_000_HK0PR04MB31534D7547F7008B8745213BA75A0HK0PR04MB3153apcp_
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
 Hi Team,
 
-I have added the package name 'phosphor-gpio-monitor' to the packagegroup-a=
-pps.bb. While building I could see the package get included to the image, b=
-ut while the image is running, I could not find exe for phospohr-gpio-monit=
-or or respective systemd and D-bus services.
+I understand, when the gpio event occurs, phospohr-gpio-monitor starts the =
+target unit and exits.
 
-Am I missing anything or Should I add anything else. kindly help me on this=
+So whenever gpio event occurs, is there any way to pass the gpio value from=
+ phospohr-gpio-monitor to other running applications like x86-power-control=
 .
 
 Regards,
 Velu
-
 ::DISCLAIMER::
 ________________________________
 The contents of this e-mail and any attachment(s) are confidential and inte=
@@ -186,7 +183,7 @@ y prohibited. If you have received this email in error please delete it and=
 , please check them for viruses and other defects.
 ________________________________
 
---_000_HK0PR04MB31532870F871F31DEDB4B94AA75A0HK0PR04MB3153apcp_
+--_000_HK0PR04MB31534D7547F7008B8745213BA75A0HK0PR04MB3153apcp_
 Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
@@ -210,8 +207,8 @@ xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0in;
 	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
 a:link, span.MsoHyperlink
 	{mso-style-priority:99;
 	color:#0563C1;
@@ -243,21 +240,22 @@ div.WordSection1
 <div class=3D"WordSection1">
 <p class=3D"MsoNormal">Hi Team,<o:p></o:p></p>
 <p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"color:black">I have added the package=
- name 'phosphor-gpio-monitor' to the packagegroup-apps.bb. While building I=
- could see the package get included to the image, but while the image is ru=
-nning, I could not find exe for phospohr-gpio-monitor
- or respective systemd and D-bus services.</span><span style=3D"font-size:1=
-2.0pt;color:black"><o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:black"><o:p>&nbsp;</o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span style=3D"color:black">Am I missing anything or=
- Should I add anything else. kindly help me on this.
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Calibri&quot;,sans-=
+serif;color:black">I understand, when the gpio event occurs, phospohr-gpio-=
+monitor starts the target unit and exits.
 <o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">Velu<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Calibri&quot;,sans-=
+serif;color:black"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Calibri&quot;,sans-=
+serif;color:black">So whenever gpio event occurs, is there any way to pass =
+the gpio value from phospohr-gpio-monitor to other running applications lik=
+e x86-power-control.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ca=
+libri&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ca=
+libri&quot;,sans-serif">Regards,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:11.0pt;font-family:&quot;Ca=
+libri&quot;,sans-serif">Velu<o:p></o:p></span></p>
 </div>
 <font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
 <hr>
@@ -282,4 +280,4 @@ ses and other defects.<br>
 </body>
 </html>
 
---_000_HK0PR04MB31532870F871F31DEDB4B94AA75A0HK0PR04MB3153apcp_--
+--_000_HK0PR04MB31534D7547F7008B8745213BA75A0HK0PR04MB3153apcp_--
