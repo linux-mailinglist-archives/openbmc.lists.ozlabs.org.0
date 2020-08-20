@@ -1,86 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31D1B24C35D
-	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 18:31:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 802E324C3C9
+	for <lists+openbmc@lfdr.de>; Thu, 20 Aug 2020 18:55:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BXVX26TRTzDqbf
-	for <lists+openbmc@lfdr.de>; Fri, 21 Aug 2020 02:31:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BXW3g3x4PzDr5X
+	for <lists+openbmc@lfdr.de>; Fri, 21 Aug 2020 02:55:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b34;
+ helo=mail-yb1-xb34.google.com; envelope-from=maxims@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=gNGD/P1s; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=DRSwOk+l; 
- dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=an16JO4C; dkim-atps=neutral
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com
+ [IPv6:2607:f8b0:4864:20::b34])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BXVVb3LzCzDqbf
- for <openbmc@lists.ozlabs.org>; Fri, 21 Aug 2020 02:29:59 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id F04A65C005F;
- Thu, 20 Aug 2020 12:29:56 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Thu, 20 Aug 2020 12:29:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=FvvFM8OcuDbA/eqDqCk9QHM78Jj
- VIIHms/UEQ5MUt0w=; b=gNGD/P1s1vmOdX8F0GZrMM+PXOaXhpB8KlL+1o648av
- H9YhgY1y+/tn9LJwE/YzIXo5VfQU06po/xNKpKsELPr5yBsjksR24Pngos47EYc8
- FCkrP354LOmd1KvilsBBHjvCn0USGe3vRfqob/HhhKTz9tS34Ikg/WQPrVO5ryUy
- iWhZjmPP8E9fX3YkRhmHmgr7mvMiPC0kKdMnunKFDm0L81hFij2LtwBV2n/5UUlD
- cPqHMOK6PIlGHt3YMjeSbR7yWRu0P+gdrxCzczn1xkuiDBaVmKTaE6ulHkOtUA1P
- EibChgYAzLD0SEgEssHtTdT7Kr19pVe3KtMGt2tO4dw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=FvvFM8
- OcuDbA/eqDqCk9QHM78JjVIIHms/UEQ5MUt0w=; b=DRSwOk+lFpzZ6NPSDgMK8W
- OUjrb4r5BL9OPLq8Yge+zB1ipAhc9tkY3vcybkPS39qiwADI5UiASEAFPdOr1euY
- 0gHAOfxISUnQfdLcVDZ4zxrmqSbNr4UP7fC6pNUui4auXaaJrJS6+XCOfH9CZaOk
- X4xe6xlVVRgR4xtgJNox1YZRSeLCTt0bA5cusaIhPRS3d+nKXjLHruknaPaQqOPw
- EvB//hFf+noH99RpDsUVDKzgFovtbZevTAKklMB/rC4oAs9+YngPP7IJ49FFYfwG
- EJREA7z14rxqW96FGGYiDzaq6IXqfnzLR5HPktdKJYESDxjWm0QMkWZjnfYSoqrQ
- ==
-X-ME-Sender: <xms:BKU-X2MAHJ_vsciu3PSCRX2b21Utxg7bOFAzdFzit-N2xJBJ7UKMig>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddutddgjedvucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
- fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
- ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
- epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
- kfhppeduieeirddujedvrdduvdefrddvvdenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:BKU-X084f2RUF36itUcCW1awwskWj3JGh6tdXsQxmpw_3azJBnmYXA>
- <xmx:BKU-X9RL9ni79fkgIL101-dKxziRk5HQN8gZaF_6IMxmiR5N2YApTw>
- <xmx:BKU-X2stUs2qVu1WgK9ArqjLERk7ZmsWrMh6VzU4BnmhSvptnk-m3g>
- <xmx:BKU-X4r0eP6lutjpZZqswDqfbDmJrwSfPW1bEb4M7Mps-5wNq2rNaA>
-Received: from localhost (mobile-166-172-123-22.mycingular.net
- [166.172.123.22])
- by mail.messagingengine.com (Postfix) with ESMTPA id 60199328005A;
- Thu, 20 Aug 2020 12:29:56 -0400 (EDT)
-Date: Thu, 20 Aug 2020 11:29:55 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: Re: moving meta-{openpower, x86, arm} content to meta-phosphor
-Message-ID: <20200820162955.GC3532@heinlein>
-References: <d6d450e638d016d29496ef1713083e80551a84bd.camel@fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BXW2l1l84zDr0f
+ for <openbmc@lists.ozlabs.org>; Fri, 21 Aug 2020 02:54:21 +1000 (AEST)
+Received: by mail-yb1-xb34.google.com with SMTP id q16so1475942ybk.6
+ for <openbmc@lists.ozlabs.org>; Thu, 20 Aug 2020 09:54:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=r/oXjcvNk1ibhu7edUqNrlhuNFM8CfK6cd5qm4dqO0k=;
+ b=an16JO4CzbHbyfcqIkVaabU8EueZV9J6A0Pb7coDtjrbvegvinrAiK5SjH1Np+bvs9
+ jl7l5c5P64HOWuuxwcULXaXo+WY+5LJdijhdfznrUC840bJvwwdRl30BHhHr1K8Pk4c/
+ IF06v8q1+a5RUw1IV+XL1PEnY2n3qSPrF/3PT2CoI59vo7SMr69sHzkxdxvtb10rDa6a
+ rZ4iGsPSLVSAjERmQbKGlquhFaNrRjsC0KgkOvBRN5O/WG8w8qS5FTTroLQ4rDIQuzPf
+ 9sLhpkWNvoSbWPv3K814UJUXoZG3RTJ44HyIcYHBwuzz+RU2vhIVhAMhwScHKn+YlUtx
+ zCaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=r/oXjcvNk1ibhu7edUqNrlhuNFM8CfK6cd5qm4dqO0k=;
+ b=JHRaYHzQK1SGsd5oJ8aroKGKj2UJ8Elu1TP9MeQSu3sAF3K543NgJOiSPAfeM75bh8
+ RyTmSAwthHvLl7TKRU2S2RaUHEvyCLwqZ00DJTvfJFmFw+b6CBkRIYjt76mleK2m84UJ
+ iPKptuFg3eXP+HrQj6Va/Aa8mluSD3Vwp+cI67N1CR5cyVXS4xTOxDK9BIVaofrgLm4J
+ FPO0dmUGwRp/aTjM/5QXTW1CV8lNxOV236jt9g8CYGEkinDT3DwOzT+JuOQ/uDgDxA9o
+ J9DgSLC0ZHrDkngOhLM/EPEEJqAEzU6SP+5OF4TM+9REvVtuGXyscB1H7BZj1uJjgpJh
+ +3VA==
+X-Gm-Message-State: AOAM533DVGn3v2m4sv8yF3eeYpecA+mYuEpYPRtJjSDKHrq6acIjh3QP
+ wIz7eEx5J4akIyfsGeysODzVrexYytQ+thXMFqb02tX2OhpU5A==
+X-Google-Smtp-Source: ABdhPJzUwYgq3ZaiC1hz0qHXwxxu1C5o081AYG+GF8FZWMVX9ZdoY4Bd86Y0ecbE25F0HmwKWnKcr/O2UVk45WE8TJ8=
+X-Received: by 2002:a25:7453:: with SMTP id p80mr6064671ybc.441.1597942457174; 
+ Thu, 20 Aug 2020 09:54:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="Y5rl02BVI9TCfPar"
-Content-Disposition: inline
-In-Reply-To: <d6d450e638d016d29496ef1713083e80551a84bd.camel@fuzziesquirrel.com>
+References: <CAFR_W8pG0gLhS5Ycxdhvx=1xdm7J2mCP0VfiHyuZOofB3gWHhw@mail.gmail.com>
+ <CACWQX821VpWvbnnv51hbwVSuhaQWjCeovvEBkLwAVp6pvGidkQ@mail.gmail.com>
+In-Reply-To: <CACWQX821VpWvbnnv51hbwVSuhaQWjCeovvEBkLwAVp6pvGidkQ@mail.gmail.com>
+From: Maxim Sloyko <maxims@google.com>
+Date: Thu, 20 Aug 2020 09:54:05 -0700
+Message-ID: <CAFR_W8qRwvpae4Xe5s_e1tbhtr9wYt_cxvP2sHB3vvBf_8y80w@mail.gmail.com>
+Subject: Re: Board Sensor Calibration
+To: Ed Tanous <ed@tanous.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,65 +75,148 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Aug 20, 2020 at 9:23 AM Ed Tanous <ed@tanous.net> wrote:
+>
+>
+>
+> On Wed, Aug 19, 2020 at 10:41 AM Maxim Sloyko <maxims@google.com> wrote:
+>
+> >
+>
+> > Hi OpenBMC!
+>
+>
+>
+> Hi!
+>
+>
+>
+>
+> >
+>
+> > We would like to have a value reported by a certain sensor changed acco=
+rding to our calibration results. This is a temperature sensor and the cali=
+bration has nothing to do with the sensor itself -- so no need to change th=
+e driver or anything -- but with a sensor placement on the board. Basically=
+ we want to infer the temperature at a different location by calibrating th=
+e sensor.
+>
+>
+>
+> Do you have more details on what the transfer function is?  Is it a simpl=
+e offset, or is it a more complicated lookup table?
 
---Y5rl02BVI9TCfPar
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The calibration has not been done yet, so I don't know how complicated
+the transfer function will be. If simple offset will considerably
+simplify implementation, I can ask our thermal engineers to check if
+we can get away with simple offset.
 
-On Thu, Aug 20, 2020 at 09:15:52AM -0400, Brad Bishop wrote:
-> I propose we allow the creation of additional folders using this
-> convention e.g.
->=20
-> - recipes-power
+> Does it include multiple sensors to generate this new value, or is it a s=
+ingle sensor?  Is it intended to "replace" the existing value, or is it int=
+ended to complement it?
 
-I'd like to propose a change to the name of your processor
-architecture to avoid confusion between recipes involving the power
-subsystem, but I'm sure your marketing organization would have a thing
-or two to say about it.  In seriousness, it might be good to continue to
-use openpower in this project considering that the OpenPower Foundation
-holds the ISA specs and it avoids confusion with the power subsystem.
-
-> - recipes-x86-amd (we might want to look at renaming recipes-x86 to
-> recipes-x86-intel)
-
-I think it would be good to come up with a schema on how we represent
-the machine overrides and recipe subdirectories so there isn't
-inconsistency there.   Something like <arch>-<company>-<model>[1]?
-
-I do have slight concern about there becoming an enormous number of
-variable overrides, patch files, etc. as we support an increasing number
-of processors, but I suppose that points to an underlying problem in our
-implementation which needs refactoring.
+It is a single sensor and we intend to replace the existing value.
 
 
-1. What do we do about risc-v which has a dash in the architecture name?
+>
+>
+>
+>
+> The ideas I've heard before that this might be:
+>
+> 1. The temp sensor isn't that accurate, so we want to calibrate it to a b=
+etter transfer function that we determined empirically.
+
+We think that the sensor itself is OK.
+
+>
+> 2. The temp sensor is adjacent to the thing we really want to measure, so=
+ we want to create an offset including the CFM that approximates the temper=
+ature of the thing we can't measure directly.
+
+Yes, this is closer to the case that we have. I don't know what CFM is thou=
+gh.
+
+>
+> 3. I want to transform the value of the sensor into different units, (Pow=
+er + CFM to exit air air, or power + time to energy)
+>
+>
+>
+>
+> >
+>
+> > Are there any tools in OpenBMC that would allow us to add the calibrati=
+on curve to, say, phosphor-hwmon and have it report the value different fro=
+m the one reported by the underlying sensor? Did anybody else have to deal =
+with something like this and what was your solution? Do people more familia=
+r with sensor architecture have any recommendations on how best to handle t=
+his?
+>
+>
+>
+> The closest examples that come to mind for dbus-sensors type architecture=
+s are:
+>
+> CFM sensor and Exit air temp sensor.  Both pull in a number of other sens=
+ors, and run them through a math transform to come up with a "new" sensor v=
+alue derived from the other inputs.  This sounds similar to what you want, =
+although it's probably more complex than you're looking for.
+>
+> The "virtual sensor" proposal currently in review, which I personally hav=
+e technical issues with, and have left comments as such.  I don't believe t=
+here's a working implementation of this yet, but there are those working on=
+ it.
+>
+>
+>
+> If it were me, and I wanted to add a simple lookup table to dbus sensors,=
+ I'd probably model it in an entity manager config for the temperature sens=
+or, similar to how the stepwise controller models it, and add that into the=
+ Hwmon temp sensor daemon.  The below example adds a +5 celcius offset to t=
+he bmc temp sensor as an example.  Bear in mind, this wouldn't work today, =
+you'd have to adjust hwmontempsensor to take this into account.
+>
+>
+>
+> {
+>
+>     "Address": "0x4A",
+>
+>     "Bus": 6,
+>
+>     "Name": "BMC Temp",
+>
+>     "Thresholds": [],
+>
+>     "Type": "TMP75",
+>
+>     "CalibrationOutput": [
+>
+>         5.0,
+>
+>         105.0
+>
+>     ],
+>
+>     "CalibrationReading": [
+>
+>          0.0,
+>
+>         100.0
+>
+>     ],
+>
+> }
+>
+> --
+> -Ed
+
+Thanks, this sounds promising, I'll look into it.
 
 --=20
-Patrick Williams
-
---Y5rl02BVI9TCfPar
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl8+pQEACgkQqwNHzC0A
-wRnfgg/8Cy5R2Lx/Ah2SAk1WXmO7yNCM/+qNFtyQq6WGkupCaUpaypnGg+76VtOz
-6x0k8rlJjmeUrWsIMvx9lneu+tHEASDRwUL5BxLrierkxlXyUh4tkRmr9fUPFPen
-4NTsTKFkymVCKrW9m2bi8HSlmZIdeuyHJJW7V3mehzyP6q2dWvz1lznJ2X5Zk+JP
-wtikE5SigqUo7Jgp6S1gKUpiZe4IGq83Orr/y2QpBMTi/gvSmaix7geh96cvtDdF
-2CIA4GoD1uV7GOEZQ+BluQ+z0MYG7Xm6puIAtp7Wj8Zfsa4JkpgtC1F+F3IoJIJG
-nAgqAy2thUkVMRAUBHxn7DRiudHYD+p6BSoFP931Zs3yURmCNWgnxGE7lKI+pBy4
-tNAMJS1NEzWGcwJ76I+UM8tQEDWFMaYvWAzVa6qo1yRPuUtzkDI0r59CXxCHz4wW
-BYRJiAd4zCo1a74s9/br88wX8XDYpqvX8lpeVwYlZu5KiZ76XFMnkwXsaGEFLjBm
-2Hd9SDV3qw/OTj3B6+82DJUPb+W4GJ8FtELzrSoC3c+GY0Oll24JyBnVXiquz1cM
-J1NI6cM6FdjZm8mSo3nCXTrFoQQ6+BJQoDQnySYHQeMrk+36wQnxOsGVltscW8kt
-agbMpdf7uOaWoz/1d/JYOrV1Cg3EGyr76NWRLg3w54tSTGr7ySg=
-=WMsM
------END PGP SIGNATURE-----
-
---Y5rl02BVI9TCfPar--
+-MS
