@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 899D2250B76
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 00:11:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A39F4250B7D
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 00:15:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bb5vB3kNVzDqPW
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 08:11:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bb5yy18Q6zDqPn
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 08:15:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,59 +17,59 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=c/jBmCBq; dkim-atps=neutral
+ header.s=pp1 header.b=En/a+bO+; dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bb5tG0W0rzDqPC
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bb5tG1dfVzDqPN
  for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 08:11:01 +1000 (AEST)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
  by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 07OM1d3u148238; Mon, 24 Aug 2020 18:10:55 -0400
+ 07OM1s9d150924; Mon, 24 Aug 2020 18:10:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=x0tq565f/IcyaHEkY2+oNRRmdXQ71HL5oRWzZqyx3NA=;
- b=c/jBmCBqYERidBRUC5ZBAQGYfiQzxIOKc6ynwDwm0SImD1MVoJkYuW4W4g74ReWivPc0
- V1m1en45QjpeDBXAvSAcWVugmgzvMdIS8vb0S2UEGWJYgnvMXyGr+TSK/FtmKPCnoRia
- ThSiaRamUg9qyCsb1r9BCxYWvR2ehX6k0tLz6Ecq5bMk2VawWPKNrgYGMq3Szb68IvUO
- ANB/k/UwX/Rw0BYi/jAU1zzp53/EFmNh+VWfeXTzmqox6lH5uMppQhLLPmwPrbW4rA/V
- UvK0C8Ehd0M2bxiBE/i18u8duOVfORytL4LUvtKI9sgGTdD7zKe0qvmHR9/8rOO4O6B7 3w== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0b-001b2d01.pphosted.com with ESMTP id 334m6jugef-1
+ bh=soFHP+JZXwiPmsy2lUYT2HGcneXGEl9BA9jaeKuoSog=;
+ b=En/a+bO+85ff9ToUZomfu5dJAZuiJGbJRSWnXC/lrpSogP1fYOB5C4UoSo3LkkJ7WyXy
+ adI0xWQVi6M/wDXqe9genbUHABoQDa27G5jYnl6T+Gtefhyqn5K2In2V4o2AtuoCFTf5
+ ULjPnvI13ccH7dG8IOyIB/HDwtMsYGBYY2wlduVHv/Bn1S4jahgoFDCHrEnr/m8Dbhup
+ StrnGSNldH7TOKFmUeUJ14OHAkuBPYcZi+GNXrlxSTvtRo7ldRQfrAY88rTPvjRa+jr8
+ p1B6Z1NTvUJEtauRlUH32suqtuGTB8QA4v3lrGGwK2JIArxL9xpCczz7SawDeFOEIXrL rw== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 334kvgv29x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2020 18:10:55 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07OM2kqT022365;
- Mon, 24 Aug 2020 22:10:55 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma05wdc.us.ibm.com with ESMTP id 332uw74k04-1
+ Mon, 24 Aug 2020 18:10:57 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07OM2wBj003358;
+ Mon, 24 Aug 2020 22:10:56 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 332utt1ucd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Aug 2020 22:10:55 +0000
+ Mon, 24 Aug 2020 22:10:56 +0000
 Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
  [9.57.199.107])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 07OMAsJm54198674
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 07OMAtAQ48693688
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 24 Aug 2020 22:10:54 GMT
+ Mon, 24 Aug 2020 22:10:55 GMT
 Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CEB3012408D;
- Mon, 24 Aug 2020 22:10:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 87B1A124091;
+ Mon, 24 Aug 2020 22:10:55 +0000 (GMT)
 Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5BE1C124088;
- Mon, 24 Aug 2020 22:10:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0DD7C12408C;
+ Mon, 24 Aug 2020 22:10:55 +0000 (GMT)
 Received: from SHADE6A.ibmmodules.com (unknown [9.211.49.145])
  by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
  Mon, 24 Aug 2020 22:10:54 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.8 3/4] fsi: Aspeed master: Set clock frequency
- from devicetree
-Date: Mon, 24 Aug 2020 17:10:50 -0500
-Message-Id: <20200824221051.47972-4-eajames@linux.ibm.com>
+Subject: [PATCH linux dev-5.8 4/4] ARM: dts: Aspeed: Rainier: Set FSI clock
+ frequency
+Date: Mon, 24 Aug 2020 17:10:51 -0500
+Message-Id: <20200824221051.47972-5-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20200824221051.47972-1-eajames@linux.ibm.com>
 References: <20200824221051.47972-1-eajames@linux.ibm.com>
@@ -80,9 +80,9 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
  definitions=2020-08-24_12:2020-08-24,
  2020-08-24 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0
- bulkscore=0 suspectscore=1 mlxlogscore=999 spamscore=0 impostorscore=0
- mlxscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ spamscore=0
+ priorityscore=1501 adultscore=0 suspectscore=1 phishscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 bulkscore=0 mlxlogscore=922 mlxscore=0
  lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2006250000 definitions=main-2008240170
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -100,38 +100,25 @@ Cc: andrew@aj.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Set the FSI clock frequency based on the value encoded in the
-devicetree, if present.
+Set the FSI clock frequency to 166MHz.
 
 Signed-off-by: Eddie James <eajames@linux.ibm.com>
 ---
- drivers/fsi/fsi-master-aspeed.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index c006ec008a1a..aedcc9be48ca 100644
---- a/drivers/fsi/fsi-master-aspeed.c
-+++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -515,6 +515,7 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 	struct fsi_master_aspeed *aspeed;
- 	struct resource *res;
- 	int rc, links, reg;
-+	u32 clk_freq;
- 	__be32 raw;
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index cbc64a1d14d1..8a1d04feecb0 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -237,6 +237,7 @@ &emmc {
  
- 	rc = tacoma_cabled_fsi_fixup(&pdev->dev);
-@@ -539,6 +540,11 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 		dev_err(aspeed->dev, "couldn't get clock\n");
- 		return PTR_ERR(aspeed->clk);
- 	}
-+
-+	if (!of_property_read_u32(pdev->dev.of_node, "clock-frequency",
-+				  &clk_freq))
-+		clk_set_rate(aspeed->clk, clk_freq);
-+
- 	rc = clk_prepare_enable(aspeed->clk);
- 	if (rc) {
- 		dev_err(aspeed->dev, "couldn't enable clock\n");
+ &fsim0 {
+ 	status = "okay";
++	clock-frequency = <166666666>;
+ 
+ 	#address-cells = <2>;
+ 	#size-cells = <0>;
 -- 
 2.26.2
 
