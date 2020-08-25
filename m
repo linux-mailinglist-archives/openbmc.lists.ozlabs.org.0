@@ -2,76 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87D882521FF
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 22:27:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F372525223C
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 22:53:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbgXW6Lb8zDqXv
-	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 06:27:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bbh6Q2knDzDqXr
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 06:53:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::441;
- helo=mail-pf1-x441.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=CvyGmsYJ; dkim-atps=neutral
-Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com
- [IPv6:2607:f8b0:4864:20::441])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=aXQYvJVY; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbgWc5GrDzDqWX;
- Wed, 26 Aug 2020 06:26:52 +1000 (AEST)
-Received: by mail-pf1-x441.google.com with SMTP id d22so8234992pfn.5;
- Tue, 25 Aug 2020 13:26:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=hViqvBMVikZrtzrVDOIX1RxTOt+cw+ucTuPZjUrSRMo=;
- b=CvyGmsYJE8o29oOkb16rdJUytyHwpjTL1ouL7mheA5ViFyotFWyMuusPvKOVIzBbao
- HN1Ig6W+VoQ7ji2J5SeTMm9hgcmbJGc974ulDXgx5Cu5KtSkkeFVuRWgpfBuOG9L5Inq
- SSuCNeAm67gf3igbQQwKf2DGmEFDS6hemU2rSlNvD7NYXFUMYqXTTedtriqLwljgcA7m
- nPHZIIFT7+9I2t85zlwF5+FrQLikhSIbSnacdWTSbVy8Drlv/Rq1VTHBytSUOsCcJpPT
- 2TfQY0CnhmLmeH8JmHNmTA6lyAMr1ZFUn9cW9yaswKbCXx2xA4Bu/fTIU/lv14A92s4q
- VKTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=hViqvBMVikZrtzrVDOIX1RxTOt+cw+ucTuPZjUrSRMo=;
- b=hG0dvSzh11HntS8QwQNuZe7R76ftxlOtGqJggBKC/fybC0f4QJ7yA843x7iWutaLmm
- rLXvk5pk0DcMX6edRRvDpRSb97Ps7Kc8pB5iSYB2Jcte+lF/ntI4/iAd/0xS3IVgNnZM
- iMDUriD3N/kQSUIhCmzGrK0c65u7R0xJm3sQ3q/ZXKv2WCu6VcdhivSMTMhgNgk0B2aQ
- cnVhkfYGkm4rPTVTnRk6D4cuxVKzT0PEhLTC93TJ0tdhF8hjQkVAn47SwLVHv8g6A+9z
- noHivotv0CZ3ZK0n8x/YUK6phiqq00KDFZPtLjtFXrUiczgQ4gDWfr6QckVyd4+2KaL6
- dEZA==
-X-Gm-Message-State: AOAM53135Mc34QPTvSoSPbi9DqUV0IQZd3dfWpUAuHLWmhnQe/hUOdFL
- xncCk7JSv9WFiRriNBQc7r8=
-X-Google-Smtp-Source: ABdhPJzQ5pw3dFa8nSlHXAXCWo8jZx7k/xr4WSZtGq0OJpfhKUc1gXp8HphomS3PeFnoTJql1GICUw==
-X-Received: by 2002:a63:7e55:: with SMTP id o21mr8126549pgn.5.1598387210237;
- Tue, 25 Aug 2020 13:26:50 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
- [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id x15sm82677pfr.208.2020.08.25.13.26.49
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Tue, 25 Aug 2020 13:26:49 -0700 (PDT)
-Date: Tue, 25 Aug 2020 13:26:43 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: [PATCH 4/5] ARM: dts: aspeed: minipack: Update 64MB FMC flash
- layout
-Message-ID: <20200825202642.GA23335@taoren-ubuntu-R90MNF91>
-References: <20200824211948.12852-1-rentao.bupt@gmail.com>
- <20200824211948.12852-5-rentao.bupt@gmail.com>
- <20200825141808.GH3532@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bbh5Z1r4SzDqVR;
+ Wed, 26 Aug 2020 06:52:49 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 07PKkSVG066242; Tue, 25 Aug 2020 16:52:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=mime-version :
+ content-type : content-transfer-encoding : date : from : to : cc : subject
+ : in-reply-to : references : message-id; s=pp1;
+ bh=IJo532gRG0LinvkoR/w/OW6YQ4BsYZA/dqIPbD0yUwY=;
+ b=aXQYvJVYleke8Q95oBWFppwRBdSQ4deWE98Msw1At6zP/Sx9BKpOG0yN+a6fN19lQIa+
+ XVsA1xane6CP6ij+nNFV9E5sV+WKPxNCaztQJ7Nk3lZNxjw5S49qidCin2+tOEa4s3Hd
+ dLrGrARK1MG4SdEEVgrurLIESzHU8FMjpXVWJlODtCukf4Bjpyo4jbEHIHYWXFn0DOPI
+ 5RvCk/cRYsFmWjcWAymiBtxzYbv0l9P0l7WdlkWShPWa5VEXipIfpzFdidkSC8JrnNh9
+ O2wtNNFgvQ2qcYfI7poe2yWcI3saudsI9U/u2jWILfm6UjVfjZMHkLWcTjDR6bAAbus3 EQ== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3359yrg2w1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2020 16:52:45 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07PKqTh7020230;
+ Tue, 25 Aug 2020 20:52:44 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma02wdc.us.ibm.com with ESMTP id 332ujq4grm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2020 20:52:44 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 07PKqca920971900
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 25 Aug 2020 20:52:38 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 190586A04F;
+ Tue, 25 Aug 2020 20:52:43 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E67A76A047;
+ Tue, 25 Aug 2020 20:52:42 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Tue, 25 Aug 2020 20:52:42 +0000 (GMT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200825141808.GH3532@heinlein>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Tue, 25 Aug 2020 15:52:42 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: Re: sdbusplus - const/readonly flags
+In-Reply-To: <20200825150028.GK3532@heinlein>
+References: <20200825150028.GK3532@heinlein>
+Message-ID: <421fddd2a3f5b352f0cd5b260216bc8b@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-08-25_09:2020-08-25,
+ 2020-08-25 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0
+ mlxlogscore=738 spamscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1011 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008250155
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,35 +99,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, taoren@fb.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
+ OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Aug 25, 2020 at 09:18:08AM -0500, Patrick Williams wrote:
-> On Mon, Aug 24, 2020 at 02:19:47PM -0700, rentao.bupt@gmail.com wrote:
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > Set 64Mb FMC flash layout in Minipack device tree explicitly because the
-> > flash layout was removed from "ast2500-facebook-netbmc-common.dtsi".
-> > 
-> > Please note "data0" partition' size is updated to 4MB to be consistent
-> > with other Facebook OpenBMC platforms.
-> > 
-> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> > ---
-> >  .../boot/dts/aspeed-bmc-facebook-minipack.dts | 47 ++++++++++++++++++-
-> >  1 file changed, 45 insertions(+), 2 deletions(-)
-> > 
-> 
-> Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
+On 2020-08-25 10:00, Patrick Williams wrote:
 
-Thanks for the review, Patrick.
+>    * I expect some of the 'const' flags in phosphor-dbus-interfaces are
+>      wrong and should be changed to 'readonly'.  I have collected a 
+> list
+>      of them in a gist[4].  If you really intend to mean "this property
+>      will never change during the life of an object" continue to use
+>      'const', but if you mean "this property shall not be changed by
+>      clients", use 'readonly' (and probably also add 'emits_change').
 
+There are also some properties in phosphor-dbus-interfaces with 
+descriptions that say "read-only property", and the implementation is 
+enforcing it. It may good for the owners to revisit those as well and 
+see if a 'read-only' flag is applicable.
 
-Cheers,
-
-Tao
-
+> 1.
+> https://manpages.debian.org/experimental/libsystemd-dev/SD_BUS_WRITABLE_PROPERTY.3.en.html#Flags
+> 2. https://github.com/openbmc/sdbusplus/issues/48
+> 3.
+> https://github.com/openbmc/sdbusplus/commit/e1c73d3bf8f6cabc1c58f67a233dba55b6f76d74
+> 4. 
+> https://gist.github.com/williamspatrick/fa975c33f00640ca54a7aa246bbbfeb9
