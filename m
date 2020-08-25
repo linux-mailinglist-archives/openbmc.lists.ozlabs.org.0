@@ -1,72 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37C71251D19
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 18:22:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE0ED251D5A
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 18:40:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbZ5L2xK5zDqXZ
-	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 02:22:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BbZV65hkpzDqYV
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 02:40:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::135;
- helo=mail-il1-x135.google.com; envelope-from=proclivis@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=nfTtimnU; dkim-atps=neutral
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com
- [IPv6:2607:f8b0:4864:20::135])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=db389qLS; dkim-atps=neutral
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
+ [IPv6:2607:f8b0:4864:20::b30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbZ3z2GsFzDqXV
- for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 02:21:00 +1000 (AEST)
-Received: by mail-il1-x135.google.com with SMTP id f75so10608751ilh.3
- for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 09:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=s7ZGMLLAuvLR9fLcUnl7zreEouQU7qPa5wqBSM+721w=;
- b=nfTtimnUk2LynTy7U/tne1llAOcHA4XpBUJ/OJfeNC6cndBV7awe5yS+HnRKTKgghG
- ER0cRvNMND9GckVdJzcf4qYhg2eUw+KOiG9iMB3Zh7MVC5XcNGUmDTyLwOTdc14T+q2r
- gXpFjsG1jVXi3e9oG8J3z4VFnLykVmPXK8X8Gx65Htt5AVd4nUN9tdIhfY3oYoCuyMpi
- J/oNeFuJJ7HV6FDgUrwnZXRZkdjROKM4HY+02xoGPbTZEl+cSsw4cThlq2P089BqXaVt
- sgGaq+8HHUrwNopgzYxMyz3vE0aJrF5Mk3lvu7xEOcCDlGiSEPvXDF00PVVrF8/yYOGS
- GypQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BbZTD5qr7zDqXD
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 02:39:25 +1000 (AEST)
+Received: by mail-yb1-xb30.google.com with SMTP id x10so7478791ybj.13
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 09:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=n+3Gv2/mp829YrrNlrwBmFasCwghGAr6coX6UpixNuE=;
+ b=db389qLSTHsSCZw2JPiUCpxjHs/bUF+B6kqpeyJShKAtCTyAtzE79xjlj2gJkt3k2a
+ ONLNoLLtvt4pLtG+v3ygppJtpXKJcd63r2sv5SJ3bXCCrWkFRgKzOShCN4DIKS0RtWp8
+ wBbDjafr88l3FaWT8VTyDdicmzgGoKTPO+cdylNCva+j+qDB7d38PVDrEh61XAyOzfRW
+ DXO3vfBzPTD7NbG6npniz4ZEMyBBwlmGfH9fYhEqRmIh4DtZtH+DNBQlfIGRglmRPQaA
+ 3EIOaG6dMbVVhHa8iRPGWyor5LrCr6sUQc1QIEtBo3yXEoOX0UzbPW95LdcHa6SbyhG9
+ 0epA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=s7ZGMLLAuvLR9fLcUnl7zreEouQU7qPa5wqBSM+721w=;
- b=molYGuzjqIf1v5GdSEWvSi0wBA1Bxq/szkQHpzw/4ohicwjG5tUxZslYMKSHoCXJPm
- hwWmouIc/UB+pOpmmXjWYdku4kOhkt0OPsKlEoErvHvFXHxutPCp/uwyvzEv8U+hsnjb
- n6Dw6Z9/Wfi9YLFJ/aVAcumFiD+EU3IMgOxfP5VVe4UZNXHojfWLX7YDJdcfWS2zLanm
- 1xDr80TX/F82RlUQLo9Uw/VZOmW2nJZCPKN9aBVRHFt/TUN4bIndt26rQxwEYYhtcOHo
- cCHM3l6mMi1HnzIMn99LQ/5mcydyMS8DaeGAXx6yE5bLQC4iokcLExYbEbcqGYbuoL0h
- ufJw==
-X-Gm-Message-State: AOAM5300jG+XQ9aiRrIA51y+YB3IYG7RJRpaJwrCqfOkjqBu/r07VdmR
- uQMO0tP5VtxVNLNT9v4fB4lXYPrgywE6AQ==
-X-Google-Smtp-Source: ABdhPJyUiDo9u+ghSCwegomqHebpKzoLzNb6rvz5E+Y5Gp7kdzOOnM+d3r2eFeJxNUriIv1srsZoMA==
-X-Received: by 2002:a92:4995:: with SMTP id k21mr9507598ilg.30.1598372455542; 
- Tue, 25 Aug 2020 09:20:55 -0700 (PDT)
-Received: from [10.29.10.6] ([199.115.98.226])
- by smtp.gmail.com with ESMTPSA id q133sm5302750iod.38.2020.08.25.09.20.54
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 25 Aug 2020 09:20:55 -0700 (PDT)
-From: Mike Jones <proclivis@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: systemd clarification
-Message-Id: <C255655B-FA25-4CC3-9982-211D71352F74@gmail.com>
-Date: Tue, 25 Aug 2020 10:20:54 -0600
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=n+3Gv2/mp829YrrNlrwBmFasCwghGAr6coX6UpixNuE=;
+ b=PQzq+HLTkgPt5dsZ3IqsOSDgoK8WiDIoeStUmpXiYWsW94iQZWwdUCUVW47o8yQXTb
+ q5FLafNngmKtkv8CgsEGaB33qJ9MIAFyhfZxx+FP2/CqeAl8lT4OsNn7nbydQrtz7e2V
+ IjgPyn0UjeMRkLfWcphxcX1lrTbUpkZaDJ5wmgORM8EyYXEyM69SKKZdrdkq0mp5iwFI
+ jwoMuwKDVXdWYwgteZGaFvo2s1Q7CdLeuBKt/4Upi0FvlaJkuDosNeoqWgYlmj9g3F9n
+ uKJ3JeWJi34ttUSCbDBFhkmlwY6QSwDNb0tMCbkVPmGvGNQq3NccPAy64s/xAfSJHQim
+ SK2Q==
+X-Gm-Message-State: AOAM533JA0KYTJsSm3ZlDsZRMEGM6GInhWI7S5FfUsTRz0Cm7yjWApn4
+ aHxS8ktJoxHpyfPVz9yStZRdIHi0EpmElLzH0e+bqQ==
+X-Google-Smtp-Source: ABdhPJzEtQqamJKDGuSQQh0B8+BZO9ZTmwHD8oc/6OGEX1v3BL0YyQAPD+tJOc++nFPTQUzKr+x7MOxDrTLh3t/4eL8=
+X-Received: by 2002:a25:cc4a:: with SMTP id l71mr15667388ybf.417.1598373561655; 
+ Tue, 25 Aug 2020 09:39:21 -0700 (PDT)
+MIME-Version: 1.0
+From: Ed Tanous <ed@tanous.net>
+Date: Tue, 25 Aug 2020 09:39:10 -0700
+Message-ID: <CACWQX81Lj7w3nLRmXjnbaNto6T80SwR6H1gnyXV1QWNgAKUwsA@mail.gmail.com>
+Subject: bmcweb NBD proxy
+To: przemyslaw.hawrylewicz.czarnowski@intel.com, 
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,23 +75,41 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I would like to clarify some systemd behavior.
+I'm looking through the nbd proxy code in bmcweb, and I'm seeing some
+issues, and I'd like to understand why they were done this way.
 
-Related to:
+First off, nbd proxy has its own authorization code that's been
+injected, separate from the one all other handlers (including other
+websocket handlers) use.  Why was this done?  It feels like a hack,
+but for the life of me I can't imagine what's being hacked around.
+https://github.com/openbmc/bmcweb/blob/d139c2364bec98a5da1fe803414f3b02fdcd3092/include/nbd_proxy.hpp#L288
 
-/etc/systemd/system
-/lib/systemd/system
+We have other examples that existed before nbd was merged of doing
+this this recommended/right way.  Here's one from obmc_console:
+https://github.com/openbmc/bmcweb/blob/d4d77e399526671076936e9d9dd879dad2d24a2f/include/obmc_console.hpp#L108
 
-The lib path is not a search path in the systemd documentation, and the =
-etc path has links into the lib path. So I assume services in the lib =
-path are only run if they are linked into the etc path. Is this correct?
+Having individual handlers own their own authorization is a huge
+problem for maintenance, and significantly increases the likelihood
+that we make a mistake in a handler, and inject a security problem.
 
-If there is a an After=3D that lists something found only in the lib =
-path, I assume it will run because After is not strong enough to prevent =
-start. But if it was Requires=3D, then I assume it cannot start unless =
-it is linked into the etc path so that it is available. Is this correct?
+This came up because I started to do a security audit (like I did
+regularly when I was the bmcweb maintainer) and this route popped up
+as not having authorization checks, yet controlling something
+important.
 
-I just want to be certain systemd was not modified or configured in a =
-way to run things from lib directly.
+The patch in question is here:
+https://github.com/openbmc/bmcweb/commit/250b0ebb0e8d55882fa8e6b156f88828a7ba185d
+Which makes me think it _was_ a security issue prior to that patch,
+which further proves the point that doing this is a bad idea.  The
+commit message contains the statement: "I have chosen this approach,
+as generic privilege check for all websockets introduces significant
+changes in connection upgrade flow which makes implementaion vague and
+caused some memory issues difficult to track down."
 
-Mike=
+It sounds like this was done just for lack of wanting to debug doing
+this the right/existing way?  This seems like the wrong approach, and
+something we don't really want to promote for the project in general.
+
+Does anyone have more context on this?
+
+-Ed
