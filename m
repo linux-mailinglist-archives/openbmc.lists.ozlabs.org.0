@@ -1,65 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3861251051
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 06:09:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE98F2511EF
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 08:16:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbFqN66LBzDqDN
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 14:09:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BbJfC2T16zDqTL
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 16:16:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::542;
- helo=mail-ed1-x542.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=venkata_chandrappa@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=QByWUkIE; dkim-atps=neutral
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
- [IPv6:2a00:1450:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=vyMBzRLT; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=vyMBzRLT; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbFpQ1YdNzDqDL;
- Tue, 25 Aug 2020 14:08:13 +1000 (AEST)
-Received: by mail-ed1-x542.google.com with SMTP id m20so9997198eds.2;
- Mon, 24 Aug 2020 21:08:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=UITx1xORgQTs7pWtnOJgbslnkFhN6uaHw/ccxDHn3Lo=;
- b=QByWUkIEOTbEA8Jf+aWgoFiAOyXS4SamtG32JxFywYHgV6ql0w+BbmeUsIqe7Ov+o4
- ceBNPyh7Ek5VP9/vAyMwkg2U2IWjQKiRDYNGaL3dLKaF0wPCL4yQ0ucZY6InCpKarKV4
- pSubCcUTFf3YWQsLv48zBvz65c48bl5Yw1+ww=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=UITx1xORgQTs7pWtnOJgbslnkFhN6uaHw/ccxDHn3Lo=;
- b=L7BWp2mKuuVCt3hCNSQntDCyfZHPVZafxpxYxJ+Eojio9qai+4lfB/jH98pwP69SFe
- /WU1vDrHJiHdVINFCRu6ie7n8NaXfFSfEG27XmC7t+j1AKf5BqxW/tTLb3UED0CaIQSt
- vMpm7JoLe1IN6jWjXa8XQrcY4WjDgSeFi+KynTzbsytlUfT6s/BkTnmWl+7vvIQNwZTG
- +tBG6f4bAdl6KmGltHpKwBiJaBX8wfEkRjpE5i0ipusjzVTAmr+gQ0nsafapitEpnR8p
- ywuHhld0ZXOmd9B+zgpRQ1qmZxccC8jebfkDh2Q8Dcz4u8WRAA61OURQc8slbXxcC6Z7
- /wfQ==
-X-Gm-Message-State: AOAM532SjN6ZWH+idnVs+fNULZdJFcsBf/TKWh+KuKsw7PAnXX3sFdVj
- 9isfRFX8k+OvKAYtItaWwBK8KlkgpXRMzNTxkTo=
-X-Google-Smtp-Source: ABdhPJzACQ/tJPJIgL9w50RXk1UN59oHSrTNcBvG4NGCaUQla6YWK9+qc3RFtUQXq6Xdt9AAZZhD8Fonn18UJfI3iGo=
-X-Received: by 2002:a05:6402:36f:: with SMTP id
- s15mr375329edw.325.1598328488676; 
- Mon, 24 Aug 2020 21:08:08 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BbJcl5DfCzDqS9
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 16:15:00 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598336096;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oKS2Pco0DR84Bb5/UtpsFKDD9OOuUmLkDzOSC75c/+s=;
+ b=vyMBzRLTeyhHZrjFqEsUMmCgWu7qUhrN1srHjVqFNyyj98EA8Zef2qRnin+w7ysKLOVmzB
+ WalYo2yIyVcipAlJZQL43HPq5IRO1rnKue96DIA37S3Pjvk4P4ZO2OkeB6yBpeTKDDzcAW
+ RFPYl9hsTw88GnVQjM7PJb/M7Nh6EJk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598336096;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oKS2Pco0DR84Bb5/UtpsFKDD9OOuUmLkDzOSC75c/+s=;
+ b=vyMBzRLTeyhHZrjFqEsUMmCgWu7qUhrN1srHjVqFNyyj98EA8Zef2qRnin+w7ysKLOVmzB
+ WalYo2yIyVcipAlJZQL43HPq5IRO1rnKue96DIA37S3Pjvk4P4ZO2OkeB6yBpeTKDDzcAW
+ RFPYl9hsTw88GnVQjM7PJb/M7Nh6EJk=
+Received: from TWN-EXCHMB-13.phoenix.com (123.51.168.5 [123.51.168.5])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-369-kc3VHnNpNsWJFQvAQykqaQ-1; Tue, 25 Aug 2020 02:14:53 -0400
+X-MC-Unique: kc3VHnNpNsWJFQvAQykqaQ-1
+X-CrossPremisesHeadersFilteredBySendConnector: TWN-EXCHMB-13.phoenix.com
+Received: from TWN-EXCHMB-13.phoenix.com
+ (2607:f0dc:5001:ff01:bd71:dee3:623a:a76a) by TWN-EXCHMB-13.phoenix.com
+ (2607:f0dc:5001:ff01:bd71:dee3:623a:a76a) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Tue, 25 Aug 2020 14:14:50 +0800
+Received: from TWN-EXCHMB-13.phoenix.com ([fe80::bd71:dee3:623a:a76a]) by
+ TWN-EXCHMB-13.phoenix.com ([fe80::bd71:dee3:623a:a76a%12]) with mapi id
+ 15.00.1156.000; Tue, 25 Aug 2020 14:14:50 +0800
+From: Venkata Chandrappa <Venkata_Chandrappa@phoenix.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: Generate Crashdump log via Redfish
+Thread-Topic: Generate Crashdump log via Redfish
+Thread-Index: AdZ6pv2Jg/ytp56URfeA8Vl5TlOvPw==
+Date: Tue, 25 Aug 2020 06:14:49 +0000
+Message-ID: <1adc64abaca84bd899f61172a60de5b9@TWN-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [2607:f0dc:5001:ff01:c4ba:1913:25c8:c6b]
 MIME-Version: 1.0
-References: <20200824211948.12852-1-rentao.bupt@gmail.com>
- <20200824211948.12852-6-rentao.bupt@gmail.com>
-In-Reply-To: <20200824211948.12852-6-rentao.bupt@gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 25 Aug 2020 04:07:56 +0000
-Message-ID: <CACPK8XfbUt9W9xQ4Gxj0LMq=C99V1ExBbkOKvbOvCbJR4N_Bwg@mail.gmail.com>
-Subject: Re: [PATCH 5/5] ARM: dts: aspeed: Add Facebook Wedge400 BMC
-To: Tao Ren <rentao.bupt@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-OrganizationHeadersPreserved: TWN-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=venkata_chandrappa@phoenix.com
+X-Mimecast-Spam-Score: 1.001999
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,469 +89,358 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 24 Aug 2020 at 21:20, <rentao.bupt@gmail.com> wrote:
->
-> From: Tao Ren <rentao.bupt@gmail.com>
->
-> Add initial version of device tree for Facebook Wedge400 (AST2500) BMC.
->
-> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+Got it. Thanks for the information!
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+-----Original Message-----
+From: openbmc [mailto:openbmc-bounces+venkata_chandrappa=3Dphoenix.com@list=
+s.ozlabs.org] On Behalf Of openbmc-request@lists.ozlabs.org
+Sent: Thursday, August 20, 2020 9:12 AM
+To: openbmc@lists.ozlabs.org
+Subject: openbmc Digest, Vol 60, Issue 55
 
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../boot/dts/aspeed-bmc-facebook-wedge400.dts | 420 ++++++++++++++++++
->  2 files changed, 421 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-wedge400.dts
+Send openbmc mailing list submissions to
+=09openbmc@lists.ozlabs.org
+
+To subscribe or unsubscribe via the World Wide Web, visit
+=09https://lists.ozlabs.org/listinfo/openbmc
+or, via email, send a message with subject or body 'help' to
+=09openbmc-request@lists.ozlabs.org
+
+You can reach the person managing the list at
+=09openbmc-owner@lists.ozlabs.org
+
+When replying, please edit your Subject line so it is more specific
+than "Re: Contents of openbmc digest..."
+
+
+Today's Topics:
+
+   1. Re: Generate Crashdump log via Redfish (Bills, Jason M)
+   2. BIOS Configuration (Ryan Chow)
+   3. GUI Design Workgroup - BMCWeb login change (Joseph Reynolds)
+   4. Re: GUI Design Workgroup - BMCWeb login change (Derick Montague)
+   5. Re: GUI Design Workgroup - BMCWeb login change (Ed Tanous)
+   6. Re:  RE:  Re: Network Settings GUI (rxsun)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Wed, 19 Aug 2020 11:38:50 -0700
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+To: openbmc@lists.ozlabs.org
+Subject: Re: Generate Crashdump log via Redfish
+Message-ID: <439e92d3-a9ae-8bf7-7edf-b9401dedea49@linux.intel.com>
+Content-Type: text/plain; charset=3Dutf-8; format=3Dflowed
+
+
+
+On 8/14/2020 7:02 AM, Venkata Chalapathy wrote:
+> Hi Everyone,
+>=20
+> I?m looking for guidance on generating a crashdump log via the Redfish=20
+> interface. There are two actions available to the user to generate the=20
+> dump ? OnDemand and SendRawPeci. But I?m not aware of the payload data I=
+=20
+> need to be sending along with the request to generate the dump in either=
+=20
+> of the cases. Could you please share the payload that I need to attach=20
+> to the request.
+>=20
+> "#Crashdump.OnDemand":?{
+>=20
+> "target":=20
+> "/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.O=
+nDemand"
+>=20
+>  ??????},
+This is the OEM action to trigger the Intel crashdump application.=20
+There is no payload required for this action.
+
+It's on my list to move this to the new standard dump service "Create"=20
+action when it's finalized.
+
+>=20
+> "#Crashdump.SendRawPeci":?{
+>=20
+> "target":=20
+> "/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.S=
+endRawPeci"
+>=20
+PECI is a communication protocol for BMC on Intel processors.  This is=20
+an OEM action to send a PECI command to the CPU.  The payload is a=20
+single "PECICommands" JSON object that is a double array of bytes where=20
+each row is a raw PECI command.
+{
+     "PECICommands": [[48, 5, 9, 161, 0, 0, 0, 0],
+                      [48, 5, 9, 161, 0, 0, 4, 0]]
+}
+
+We had proposed a standard Processor commands resource but the DMTF=20
+rejected it and proposed we keep this as OEM.  We're still working out=20
+how to handle it, but I'd like to make this standard as well.
+
+> Best Regards,
+>=20
+> Venka
+>=20
+
+
+------------------------------
+
+Message: 2
+Date: Wed, 19 Aug 2020 15:12:08 -0400
+From: Ryan Chow <kwongyhue.chow@gmail.com>
+To: openbmc@lists.ozlabs.org
+Subject: BIOS Configuration
+Message-ID:
+=09<CABg4NFNhVXt59apmv331zRNXExvN23cS_vcNPddfVCQntPSCtw@mail.gmail.com>
+Content-Type: text/plain; charset=3D"utf-8"
+
+Hello,
+I have seen some talk of remote BIOS configuration in the works, but I was
+wondering if anyone can point me where I can start looking to configure the
+BIOS locally. I would like to start by doing something relatively simple
+such as setting the default boot mode to UEFI/Legacy.
+
+Thanks,
+Ryan
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.ozlabs.org/pipermail/openbmc/attachments/20200819/419b5d=
+25/attachment-0001.htm>
+
+------------------------------
+
+Message: 3
+Date: Wed, 19 Aug 2020 17:41:45 -0500
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: Derick Montague <Derick.Montague@ibm.com>,
+=09openbmc@lists.ozlabs.org
+Subject: GUI Design Workgroup - BMCWeb login change
+Message-ID: <6fd33e23-9845-ed74-7784-75a3a1439f1f@linux.ibm.com>
+Content-Type: text/plain; charset=3Dutf-8; format=3Dflowed
+
+On 8/19/20 8:55 AM, Derick Montague wrote:
+>  =20
+> Hello,
+>    =20
+> I apologize for the late notice. Here is the agenda for today's GUI Desig=
+n Work Group.
+>    =20
+> - Changes to BMC Web Login and continued work on phosphor-webui
+
+Derick, the "BMCWeb login change" [1] also came up in the security=20
+working group meeting.? Folks were interested in getting the questions=20
+answered rather more quickly.
+
+What is the best way to resolve the issues?? Email?? Video conference??=20
+IRC chat?? Or continue with the gerrit review?
+
+- Joseph
+
+[1]: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35457
+
+> - Use utility classes
+> - Discuss Server LED layout -https://github.com/openbmc/webui-vue/issues/=
+18 =09
+> - Discuss button styles on Local user management page - https://github.co=
+m/openbmc/webui-vue/issues/12 =09Help wanted items
+> - Design Review items
+> - Demo of working Web UI progress
+>    =20
+>    =20
+> Please visit the wiki for connection info and notes from past groups.
+> https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
+>    =20
+>  =20
+> Thank you!
+>    =20
+> Derick Montague
+> FED Lead | OpenBMC Design Team Lead
+> IBM Cognitive Systems User Experience
 >
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 77f1c95c4e1c..24f7acc0e2ee 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1354,6 +1354,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->         aspeed-bmc-facebook-tiogapass.dtb \
->         aspeed-bmc-facebook-wedge40.dtb \
->         aspeed-bmc-facebook-wedge100.dtb \
-> +       aspeed-bmc-facebook-wedge400.dtb \
->         aspeed-bmc-facebook-yamp.dtb \
->         aspeed-bmc-facebook-yosemitev2.dtb \
->         aspeed-bmc-ibm-rainier.dtb \
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-wedge400.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge400.dts
-> new file mode 100644
-> index 000000000000..ad1fcad3676c
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-wedge400.dts
-> @@ -0,0 +1,420 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +// Copyright (c) 2019 Facebook Inc.
-> +/dts-v1/;
-> +
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +#include "ast2500-facebook-netbmc-common.dtsi"
-> +
-> +/ {
-> +       model = "Facebook Wedge 400 BMC";
-> +       compatible = "facebook,wedge400-bmc", "aspeed,ast2500";
-> +
-> +       aliases {
-> +               /*
-> +                * PCA9548 (2-0070) provides 8 channels connecting to
-> +                * SCM (System Controller Module).
-> +                */
-> +               i2c16 = &imux16;
-> +               i2c17 = &imux17;
-> +               i2c18 = &imux18;
-> +               i2c19 = &imux19;
-> +               i2c20 = &imux20;
-> +               i2c21 = &imux21;
-> +               i2c22 = &imux22;
-> +               i2c23 = &imux23;
-> +
-> +               /*
-> +                * PCA9548 (8-0070) provides 8 channels connecting to
-> +                * SMB (Switch Main Board).
-> +                */
-> +               i2c24 = &imux24;
-> +               i2c25 = &imux25;
-> +               i2c26 = &imux26;
-> +               i2c27 = &imux27;
-> +               i2c28 = &imux28;
-> +               i2c29 = &imux29;
-> +               i2c30 = &imux30;
-> +               i2c31 = &imux31;
-> +
-> +               /*
-> +                * PCA9548 (11-0076) provides 8 channels connecting to
-> +                * FCM (Fan Controller Module).
-> +                */
-> +               i2c32 = &imux32;
-> +               i2c33 = &imux33;
-> +               i2c34 = &imux34;
-> +               i2c35 = &imux35;
-> +               i2c36 = &imux36;
-> +               i2c37 = &imux37;
-> +               i2c38 = &imux38;
-> +               i2c39 = &imux39;
-> +
-> +               spi2 = &spi_gpio;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path = &uart1;
-> +               bootargs = "console=ttyS0,9600n8 root=/dev/ram rw";
-> +       };
-> +
-> +       ast-adc-hwmon {
-> +               compatible = "iio-hwmon";
-> +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>, <&adc 4>;
-> +       };
-> +
-> +       /*
-> +        * GPIO-based SPI Master is required to access SPI TPM, because
-> +        * full-duplex SPI transactions are not supported by ASPEED SPI
-> +        * Controllers.
-> +        */
-> +       spi_gpio: spi-gpio {
-> +               status = "okay";
-> +               compatible = "spi-gpio";
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +
-> +               cs-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_LOW>;
-> +               gpio-sck = <&gpio ASPEED_GPIO(R, 3) GPIO_ACTIVE_HIGH>;
-> +               gpio-mosi = <&gpio ASPEED_GPIO(R, 4) GPIO_ACTIVE_HIGH>;
-> +               gpio-miso = <&gpio ASPEED_GPIO(R, 5) GPIO_ACTIVE_HIGH>;
-> +               num-chipselects = <1>;
-> +
-> +               tpmdev@0 {
-> +                       compatible = "tcg,tpm_tis-spi";
-> +                       spi-max-frequency = <33000000>;
-> +                       reg = <0>;
-> +               };
-> +       };
-> +};
-> +
-> +/*
-> + * Both firmware flashes are 128MB on Wedge400 BMC.
-> + */
-> +&fmc_flash0 {
-> +       partitions {
-> +               compatible = "fixed-partitions";
-> +               #address-cells = <1>;
-> +               #size-cells = <1>;
-> +
-> +               /*
-> +                * u-boot partition: 384KB.
-> +                */
-> +               u-boot@0 {
-> +                       reg = <0x0 0x60000>;
-> +                       label = "u-boot";
-> +               };
-> +
-> +               /*
-> +                * u-boot environment variables: 128KB.
-> +                */
-> +               u-boot-env@60000 {
-> +                       reg = <0x60000 0x20000>;
-> +                       label = "env";
-> +               };
-> +
-> +               /*
-> +                * FIT image: 123.5 MB.
-> +                */
-> +               fit@80000 {
-> +                       reg = <0x80000 0x7b80000>;
-> +                       label = "fit";
-> +               };
-> +
-> +               /*
-> +                * "data0" partition (4MB) is reserved for persistent
-> +                * data store.
-> +                */
-> +               data0@3800000 {
-> +                       reg = <0x7c00000 0x800000>;
-> +                       label = "data0";
-> +               };
-> +
-> +               /*
-> +                * "flash0" partition (covering the entire flash) is
-> +                * explicitly created to avoid breaking legacy applications.
-> +                */
-> +               flash0@0 {
-> +                       reg = <0x0 0x8000000>;
-> +                       label = "flash0";
-> +               };
-> +       };
-> +};
-> +
-> +&fmc_flash1 {
-> +       partitions {
-> +               compatible = "fixed-partitions";
-> +               #address-cells = <1>;
-> +               #size-cells = <1>;
-> +
-> +               flash1@0 {
-> +                       reg = <0x0 0x8000000>;
-> +                       label = "flash1";
-> +               };
-> +       };
-> +};
-> +
-> +&uart2 {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_txd2_default
-> +                    &pinctrl_rxd2_default>;
-> +};
-> +
-> +&uart4 {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_txd4_default
-> +                    &pinctrl_rxd4_default>;
-> +};
-> +
-> +/*
-> + * I2C bus #0 is multi-master environment dedicated for BMC and Bridge IC
-> + * communication.
-> + */
-> +&i2c0 {
-> +       status = "okay";
-> +       multi-master;
-> +       bus-frequency = <1000000>;
-> +};
-> +
-> +&i2c1 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c2 {
-> +       status = "okay";
-> +
-> +       i2c-switch@70 {
-> +               compatible = "nxp,pca9548";
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +               reg = <0x70>;
-> +               i2c-mux-idle-disconnect;
-> +
-> +               imux16: i2c@0 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <0>;
-> +               };
-> +
-> +               imux17: i2c@1 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <1>;
-> +               };
-> +
-> +               imux18: i2c@2 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <2>;
-> +               };
-> +
-> +               imux19: i2c@3 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <3>;
-> +               };
-> +
-> +               imux20: i2c@4 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <4>;
-> +               };
-> +
-> +               imux21: i2c@5 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <5>;
-> +               };
-> +
-> +               imux22: i2c@6 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <6>;
-> +               };
-> +
-> +               imux23: i2c@7 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <7>;
-> +               };
-> +       };
-> +};
-> +
-> +&i2c3 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c4 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c5 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c6 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c7 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c8 {
-> +       status = "okay";
-> +
-> +       i2c-switch@70 {
-> +               compatible = "nxp,pca9548";
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +               reg = <0x70>;
-> +               i2c-mux-idle-disconnect;
-> +
-> +               imux24: i2c@0 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <0>;
-> +               };
-> +
-> +               imux25: i2c@1 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <1>;
-> +               };
-> +
-> +               imux26: i2c@2 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <2>;
-> +               };
-> +
-> +               imux27: i2c@3 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <3>;
-> +               };
-> +
-> +               imux28: i2c@4 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <4>;
-> +               };
-> +
-> +               imux29: i2c@5 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <5>;
-> +               };
-> +
-> +               imux30: i2c@6 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <6>;
-> +               };
-> +
-> +               imux31: i2c@7 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <7>;
-> +               };
-> +
-> +       };
-> +};
-> +
-> +&i2c9 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c10 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c11 {
-> +       status = "okay";
-> +
-> +       i2c-switch@76 {
-> +               compatible = "nxp,pca9548";
-> +               #address-cells = <1>;
-> +               #size-cells = <0>;
-> +               reg = <0x76>;
-> +               i2c-mux-idle-disconnect;
-> +
-> +               imux32: i2c@0 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <0>;
-> +               };
-> +
-> +               imux33: i2c@1 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <1>;
-> +               };
-> +
-> +               imux34: i2c@2 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <2>;
-> +               };
-> +
-> +               imux35: i2c@3 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <3>;
-> +               };
-> +
-> +               imux36: i2c@4 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <4>;
-> +               };
-> +
-> +               imux37: i2c@5 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <5>;
-> +               };
-> +
-> +               imux38: i2c@6 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <6>;
-> +               };
-> +
-> +               imux39: i2c@7 {
-> +                       #address-cells = <1>;
-> +                       #size-cells = <0>;
-> +                       reg = <7>;
-> +               };
-> +
-> +       };
-> +};
-> +
-> +&i2c12 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c13 {
-> +       status = "okay";
-> +};
-> +
-> +&adc {
-> +       status = "okay";
-> +};
-> +
-> +&ehci1 {
-> +       status = "okay";
-> +};
-> +
-> +&uhci {
-> +       status = "okay";
-> +};
-> +
-> +&sdhci1 {
-> +       /*
-> +        * DMA mode needs to be disabled to avoid conflicts with UHCI
-> +        * Controller in AST2500 SoC.
-> +        */
-> +       sdhci-caps-mask = <0x0 0x580000>;
-> +};
-> --
-> 2.17.1
+
+
+
+------------------------------
+
+Message: 4
+Date: Wed, 19 Aug 2020 22:52:40 +0000
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: jrey@linux.ibm.com
+Cc: openbmc@lists.ozlabs.org
+Subject: Re: GUI Design Workgroup - BMCWeb login change
+Message-ID:
+=09<OFB642107F.4E5E7CE6-ON002585C9.007D46F4-002585C9.007DAC18@notes.na.coll=
+abserv.com>
+=09
+Content-Type: text/plain; charset=3DUTF-8
+
+> Derick, the "BMCWeb login change" [1] also came up in the security
+> working group meeting.  Folks were interested in getting the questions
+> answered rather more quickly.
+=20
+> What is the best way to resolve the issues?  Email?  Video conference?=20
+> IRC chat?  Or continue with the gerrit review?
+
+That is a great question for the community. We are trying to find a way to
+accommodate this WITHOUT having to manage the login page in BMC Web. Maybe
+we can gather a list of people that are interested and set up a Webex=20
+discussion. We should probably post the question in IRC also to make the=20
+request a bit broader than email.
+=20
+
+
+
+------------------------------
+
+Message: 5
+Date: Wed, 19 Aug 2020 16:06:15 -0700
+From: Ed Tanous <ed@tanous.net>
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Cc: Derick Montague <Derick.Montague@ibm.com>, OpenBMC Maillist
+=09<openbmc@lists.ozlabs.org>
+Subject: Re: GUI Design Workgroup - BMCWeb login change
+Message-ID:
+=09<CACWQX80KUxiRXtZv2Cd6UZ=3D0jTDKdg35JQFOfUAeFsss0kcg7Q@mail.gmail.com>
+Content-Type: text/plain; charset=3D"UTF-8"
+
+On Wed, Aug 19, 2020 at 3:43 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
 >
+> What is the best way to resolve the issues?  Email?  Video conference?
+> IRC chat?  Or continue with the gerrit review?
+
+Gerrit or the mailing list, that way it's documented for the next time
+it gets brought up, and we can point to the discussion later.
+
+
+------------------------------
+
+Message: 6
+Date: Thu, 20 Aug 2020 09:11:29 +0800
+From: "rxsun"<rxsun@zd-tech.com.cn>
+To: "Derick Montague"<Derick.Montague@ibm.com>
+Cc: "openbmc"<openbmc@lists.ozlabs.org>,
+=09"derick.montague"<derick.montague@gmail.com>,
+=09"xzcheng"<xzcheng@zd-tech.com.cn>,
+=09"ratagupt"<ratagupt@linux.vnet.ibm.com>
+Subject: Re:  RE:  Re: Network Settings GUI
+Message-ID:
+=09<3f858d5d.2facc1.174096bc131.Coremail.rxsun@zd-tech.com.cn>
+Content-Type: text/plain; charset=3D"utf-8"
+
+Hi , Derick!
+I'd like to work on IPV6  functionality of phosphor-webui and start to impl=
+iment it  on the phosphor-webui.
+would you please show me  the design that was originally completed for the =
+previous layout?
+
+And ,how to proposal my code to webui project ?would you like to tell me de=
+tail?
+
+Best Reguards,
+ruixia,sun
+
+
+
+2020-08-19=20
+
+rxsun=20
+
+
+
+????"Derick Montague" <Derick.Montague@ibm.com>
+?????2020-08-13 11:22
+???RE: Re: Network Settings GUI
+????"rxsun"<rxsun@zd-tech.com.cn>
+???"openbmc"<openbmc@lists.ozlabs.org>,"derick.montague"<derick.montague@gm=
+ail.com>,"xzcheng"<xzcheng@zd-tech.com.cn>,"ratagupt"<ratagupt@linux.vnet.i=
+bm.com>
+
+Hello ruxia, sun!
+
+We have started work on the webui-vue GUI that will expect to be a replacem=
+ent for phosphor-webui. The IPv6 functionality is not ready for the webui-v=
+ue GUI because we are transitioning from the REST API to Redfish. If you ar=
+e interested in adding the functionality to phosphor-webui, I can look for =
+the design that was originally completed for the previous layout. Is that s=
+omething you are interested in?
+
+Thank you!
+
+Derick Montague
+FED Lead | OpenBMC Design Team Lead
+IBM Cognitive Systems User Experience
+
+
+----- Original message -----
+From: "rxsun"<rxsun@zd-tech.com.cn>
+To: "Derick Montague"<Derick.Montague@ibm.com>
+Cc: "derick.montague"<derick.montague@gmail.com>, "openbmc"<openbmc@lists.o=
+zlabs.org>, "ratagupt"<ratagupt@linux.vnet.ibm.com>, "???"<xzcheng@zd-tech.=
+com.cn>
+Subject: [EXTERNAL] Re: Re: Network Settings GUI
+Date: Mon, Aug 10, 2020 3:04 AM
+=20
+
+Hi Derick,
+My team has confirmed that the Openbmc backend has supported IPV6 on versio=
+n v28, I am going to implement the ipv6 configuration in webui (with angula=
+rJS),would you please tell me the  UX prototype design of webui for IPV6 is=
+ ok? I have signed the  Cooperation and  Contribution License Agreement.
+BTW:How to proposal my code to webui project ?would you like to tell me det=
+ail?
+
+Best Reguards,
+ruixia,sun
+
+
+2020-08-10=20
+
+rxsun
+
+
+
+????"Derick Montague" <Derick.Montague@ibm.com>
+?????2020-03-11 19:42
+???Re: Network Settings GUI
+????"rxsun"<rxsun@zd-tech.com.cn>
+???"derick.montague"<derick.montague@gmail.com>,"openbmc"<openbmc@lists.ozl=
+abs.org>,"ratagupt"<ratagupt@linux.vnet.ibm.com>
+
+Hi Ruxia,=20
+
+> Sorry for late reply. I had read  https://gerrit.openbmc-project.xyz/c/op=
+enbmc/phosphor-webui/+/24317  ,  I saw the calling of redfish  in api-ulti.=
+js . I wonder if the ipv6 has been done in this BMC system.  Would you like=
+ to tell me the ipv6 support schedule of  bmc OS?=20
+
+
+ =20
+Jandra is no longer working on this project and the IBM design team is work=
+ing on a new version of the GUI written in Vue.js. We are just starting to =
+talk about IPv6 again and I do think it may be ready. I see that Ratan is o=
+n this mail thread and he should be able to specify for sure if the backend=
+ supporting IPv6 is ready.=20
+
+Thanks,=20
+Derick=20
+
+ =20
+
+
+ =20
+ =20
+ =20
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <http://lists.ozlabs.org/pipermail/openbmc/attachments/20200820/8016bf=
+4f/attachment.htm>
+
+End of openbmc Digest, Vol 60, Issue 55
+***************************************
+
