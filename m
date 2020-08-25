@@ -2,82 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE98F2511EF
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 08:16:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC736251AC6
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 16:26:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbJfC2T16zDqTL
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 16:16:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BbWWK4RryzDqX2
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 00:26:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=venkata_chandrappa@phoenix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24;
+ helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=vyMBzRLT; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=vyMBzRLT; 
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=WFQPwLMD; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=BsfasDi3; 
  dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
+ Wed, 26 Aug 2020 00:17:43 AEST
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
+ [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbJcl5DfCzDqS9
- for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 16:15:00 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1598336096;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=oKS2Pco0DR84Bb5/UtpsFKDD9OOuUmLkDzOSC75c/+s=;
- b=vyMBzRLTeyhHZrjFqEsUMmCgWu7qUhrN1srHjVqFNyyj98EA8Zef2qRnin+w7ysKLOVmzB
- WalYo2yIyVcipAlJZQL43HPq5IRO1rnKue96DIA37S3Pjvk4P4ZO2OkeB6yBpeTKDDzcAW
- RFPYl9hsTw88GnVQjM7PJb/M7Nh6EJk=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1598336096;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=oKS2Pco0DR84Bb5/UtpsFKDD9OOuUmLkDzOSC75c/+s=;
- b=vyMBzRLTeyhHZrjFqEsUMmCgWu7qUhrN1srHjVqFNyyj98EA8Zef2qRnin+w7ysKLOVmzB
- WalYo2yIyVcipAlJZQL43HPq5IRO1rnKue96DIA37S3Pjvk4P4ZO2OkeB6yBpeTKDDzcAW
- RFPYl9hsTw88GnVQjM7PJb/M7Nh6EJk=
-Received: from TWN-EXCHMB-13.phoenix.com (123.51.168.5 [123.51.168.5])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-369-kc3VHnNpNsWJFQvAQykqaQ-1; Tue, 25 Aug 2020 02:14:53 -0400
-X-MC-Unique: kc3VHnNpNsWJFQvAQykqaQ-1
-X-CrossPremisesHeadersFilteredBySendConnector: TWN-EXCHMB-13.phoenix.com
-Received: from TWN-EXCHMB-13.phoenix.com
- (2607:f0dc:5001:ff01:bd71:dee3:623a:a76a) by TWN-EXCHMB-13.phoenix.com
- (2607:f0dc:5001:ff01:bd71:dee3:623a:a76a) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Tue, 25 Aug 2020 14:14:50 +0800
-Received: from TWN-EXCHMB-13.phoenix.com ([fe80::bd71:dee3:623a:a76a]) by
- TWN-EXCHMB-13.phoenix.com ([fe80::bd71:dee3:623a:a76a%12]) with mapi id
- 15.00.1156.000; Tue, 25 Aug 2020 14:14:50 +0800
-From: Venkata Chandrappa <Venkata_Chandrappa@phoenix.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: Generate Crashdump log via Redfish
-Thread-Topic: Generate Crashdump log via Redfish
-Thread-Index: AdZ6pv2Jg/ytp56URfeA8Vl5TlOvPw==
-Date: Tue, 25 Aug 2020 06:14:49 +0000
-Message-ID: <1adc64abaca84bd899f61172a60de5b9@TWN-EXCHMB-13.phoenix.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [2607:f0dc:5001:ff01:c4ba:1913:25c8:c6b]
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BbWKg0jl5zDqNy;
+ Wed, 26 Aug 2020 00:17:42 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id BD52BE90;
+ Tue, 25 Aug 2020 10:17:39 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Tue, 25 Aug 2020 10:17:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=N0zFzCcbm2CQ4Rw0jLZGKfcRoOu
+ i7o5d7Rvm4cLzxwQ=; b=WFQPwLMD+Pw7hJuWWj21e75SaZetVYvwcXQGuO4muB7
+ d8t0nUVAWq6e35+6m9L5G+667Kn4dlf4bFk7LMHD1L+p4+IeaOcJ3L4YHsYZGpik
+ rWN651blf09udXrIhmgnG+hf2AyQI6aeVOUdYD/1OMw9yWIFzv/jwPZpb+sQd8Hg
+ HDphVEtOT+njNDSdIZq/9jWBx3n57Aqw7RRdGp6VOSmL8dGjE+joVrFxof7bGC4h
+ Ih36NM1m5e1JxaOlCl8YSJBPJUoqyuxu2LwffmHG/AmV8bOSz5ccleWMEhgUSMHM
+ hv2yqWL2jOhjbsWxpSQwJZOLBBYd5ZX8kkeSrp7+YIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=N0zFzC
+ cbm2CQ4Rw0jLZGKfcRoOui7o5d7Rvm4cLzxwQ=; b=BsfasDi3vj/Ta/t2qSDQbN
+ O+RvWZt3FQa/Q6uOW5UJ/78W9f9sG/isMLic9OFH8ORXy3oy0A8iB6FEmjkaPuTu
+ aVUVJqR5koWwWx4fQweCyBJRz/Z2SJL/kP7Arqr9irIEj3aP4A0MdoBGT5P4bn9z
+ eX7RTqwxopnmFhTDujWgTLplXbKLGeL48zNCd3CqhGbhFOfNDRFvqG1MMAFbaX8K
+ 6gsOYuHpv/0qNK6cxd4xnhur7ytwA2FedLI6geZgUqs21tC81Yi4XRS5EU/TIl/m
+ emzww7qg0k5KQgi9AGXiAuThAYu0D/D/aL6xw+w8TN9TzYVnIbTBHgejDM6INmZQ
+ ==
+X-ME-Sender: <xms:gx1FX4aYACmz6rxSQ3GEPPbw_T81hkXMM4Ox7jQszIVf586v_xOvXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvtddgjeejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:gx1FXzZxxxWVN9m8E4mwKDbsa35pNDahyhNdi9DwfaTnMlInjZDSGg>
+ <xmx:gx1FXy8Qyp7TB-Y5sDnEOElW0R3_FZ17M4AcPt2yuMKog2t2T2JkQw>
+ <xmx:gx1FXyqKyhjbFrgy8-FXJyBqP9X_xaHJ2dG6wGCf2-fypD-db3NQEA>
+ <xmx:gx1FX0crfXKrEzgzcswFTnvw8thXchZpJ6NZbSGNK5mvKabx0F1XJw>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id D965030606E9;
+ Tue, 25 Aug 2020 10:17:38 -0400 (EDT)
+Date: Tue, 25 Aug 2020 09:17:38 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: rentao.bupt@gmail.com
+Subject: Re: [PATCH 3/5] ARM: dts: aspeed: yamp: Set 32MB FMC flash layout
+Message-ID: <20200825141738.GG3532@heinlein>
+References: <20200824211948.12852-1-rentao.bupt@gmail.com>
+ <20200824211948.12852-4-rentao.bupt@gmail.com>
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: TWN-EXCHMB-13.phoenix.com
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=venkata_chandrappa@phoenix.com
-X-Mimecast-Spam-Score: 1.001999
-X-Mimecast-Originator: phoenix.com
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="qoTlaiD+Y2fIM3Ll"
+Content-Disposition: inline
+In-Reply-To: <20200824211948.12852-4-rentao.bupt@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,358 +96,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Andrew Jeffery <andrew@aj.id.au>, taoren@fb.com, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Got it. Thanks for the information!
 
------Original Message-----
-From: openbmc [mailto:openbmc-bounces+venkata_chandrappa=3Dphoenix.com@list=
-s.ozlabs.org] On Behalf Of openbmc-request@lists.ozlabs.org
-Sent: Thursday, August 20, 2020 9:12 AM
-To: openbmc@lists.ozlabs.org
-Subject: openbmc Digest, Vol 60, Issue 55
+--qoTlaiD+Y2fIM3Ll
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Send openbmc mailing list submissions to
-=09openbmc@lists.ozlabs.org
-
-To subscribe or unsubscribe via the World Wide Web, visit
-=09https://lists.ozlabs.org/listinfo/openbmc
-or, via email, send a message with subject or body 'help' to
-=09openbmc-request@lists.ozlabs.org
-
-You can reach the person managing the list at
-=09openbmc-owner@lists.ozlabs.org
-
-When replying, please edit your Subject line so it is more specific
-than "Re: Contents of openbmc digest..."
-
-
-Today's Topics:
-
-   1. Re: Generate Crashdump log via Redfish (Bills, Jason M)
-   2. BIOS Configuration (Ryan Chow)
-   3. GUI Design Workgroup - BMCWeb login change (Joseph Reynolds)
-   4. Re: GUI Design Workgroup - BMCWeb login change (Derick Montague)
-   5. Re: GUI Design Workgroup - BMCWeb login change (Ed Tanous)
-   6. Re:  RE:  Re: Network Settings GUI (rxsun)
-
-
-----------------------------------------------------------------------
-
-Message: 1
-Date: Wed, 19 Aug 2020 11:38:50 -0700
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-To: openbmc@lists.ozlabs.org
-Subject: Re: Generate Crashdump log via Redfish
-Message-ID: <439e92d3-a9ae-8bf7-7edf-b9401dedea49@linux.intel.com>
-Content-Type: text/plain; charset=3Dutf-8; format=3Dflowed
-
-
-
-On 8/14/2020 7:02 AM, Venkata Chalapathy wrote:
-> Hi Everyone,
+On Mon, Aug 24, 2020 at 02:19:46PM -0700, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
 >=20
-> I?m looking for guidance on generating a crashdump log via the Redfish=20
-> interface. There are two actions available to the user to generate the=20
-> dump ? OnDemand and SendRawPeci. But I?m not aware of the payload data I=
-=20
-> need to be sending along with the request to generate the dump in either=
-=20
-> of the cases. Could you please share the payload that I need to attach=20
-> to the request.
+> Set 32MB FMC flash layout in Yamp device tree explicitly because flash
+> layout settings were removed from "ast2500-facebook-netbmc-common.dtsi".
 >=20
-> "#Crashdump.OnDemand":?{
->=20
-> "target":=20
-> "/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.O=
-nDemand"
->=20
->  ??????},
-This is the OEM action to trigger the Intel crashdump application.=20
-There is no payload required for this action.
-
-It's on my list to move this to the new standard dump service "Create"=20
-action when it's finalized.
-
->=20
-> "#Crashdump.SendRawPeci":?{
->=20
-> "target":=20
-> "/redfish/v1/Systems/system/LogServices/Crashdump/Actions/Oem/Crashdump.S=
-endRawPeci"
->=20
-PECI is a communication protocol for BMC on Intel processors.  This is=20
-an OEM action to send a PECI command to the CPU.  The payload is a=20
-single "PECICommands" JSON object that is a double array of bytes where=20
-each row is a raw PECI command.
-{
-     "PECICommands": [[48, 5, 9, 161, 0, 0, 0, 0],
-                      [48, 5, 9, 161, 0, 0, 4, 0]]
-}
-
-We had proposed a standard Processor commands resource but the DMTF=20
-rejected it and proposed we keep this as OEM.  We're still working out=20
-how to handle it, but I'd like to make this standard as well.
-
-> Best Regards,
->=20
-> Venka
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> ---
+>  arch/arm/boot/dts/aspeed-bmc-facebook-yamp.dts | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
 >=20
 
+Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
 
-------------------------------
+--=20
+Patrick Williams
 
-Message: 2
-Date: Wed, 19 Aug 2020 15:12:08 -0400
-From: Ryan Chow <kwongyhue.chow@gmail.com>
-To: openbmc@lists.ozlabs.org
-Subject: BIOS Configuration
-Message-ID:
-=09<CABg4NFNhVXt59apmv331zRNXExvN23cS_vcNPddfVCQntPSCtw@mail.gmail.com>
-Content-Type: text/plain; charset=3D"utf-8"
+--qoTlaiD+Y2fIM3Ll
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Hello,
-I have seen some talk of remote BIOS configuration in the works, but I was
-wondering if anyone can point me where I can start looking to configure the
-BIOS locally. I would like to start by doing something relatively simple
-such as setting the default boot mode to UEFI/Legacy.
+-----BEGIN PGP SIGNATURE-----
 
-Thanks,
-Ryan
--------------- next part --------------
-An HTML attachment was scrubbed...
-URL: <http://lists.ozlabs.org/pipermail/openbmc/attachments/20200819/419b5d=
-25/attachment-0001.htm>
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9FHYIACgkQqwNHzC0A
+wRlFehAAilKhh9UL8jwqxfFRsBAEgd/0CfxdTYGbd8Hreo9J8iXVKJF+tS4dKuAH
+dH6LaS1W9dkGrXEcLGF+5KJi0fSQ3gcPA26ZB23b8A7nrADTPfczDywoULAhcU8E
+2HvQZOYDvqzqNqc9kvuOb/TynXx+h0dY2XORYWTb16t7sLzsyUAVma1VOTRUgd0x
+Re3/s3ogYlrtFRrlwZm+dONZPRGpYzbWLdZQT6xBf1PqhjPzLOVWSJISRTmW0AEc
+pH87vuWg27g+qyOBrdkmVeMB0I5sYrI/weNNjAORy65eAT6oK8ncvndgglVgxNwH
+Rr7B17MwoYDP4RETs3o/DO9AJWiu0krGZA/4IQXQqrzMCYjGWqkmOt8SAlW3mHRD
+aVVI1yZpIfiOudyV9noM1TV/BDHWnvFmWsSQEZ6B/72oV079jLSYHnIsCXgTLlbY
+6miVgwwVb3dpJP8igXuik2K2dn51dcimV05KK3A6trsJGmZLNoVrGgp5sICFpfvR
+0LF2HXxDewUcW7wguJRkevhp7ohIXnafYWZh2hCQhFMbM3gKzTRPsqg1CAjIlL6o
+5+Wr6ZEzWUu+iKFw3e0n8eW6H9u5gaoSXb2Mm+JdgoXhYDqmdP/GhPr6UI1abdg7
+yI4FP0ahPbgegkE8UhIHa0RVawh/x6P+MhU9n/QAzCxjIIBS4Mk=
+=IqLr
+-----END PGP SIGNATURE-----
 
-------------------------------
-
-Message: 3
-Date: Wed, 19 Aug 2020 17:41:45 -0500
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: Derick Montague <Derick.Montague@ibm.com>,
-=09openbmc@lists.ozlabs.org
-Subject: GUI Design Workgroup - BMCWeb login change
-Message-ID: <6fd33e23-9845-ed74-7784-75a3a1439f1f@linux.ibm.com>
-Content-Type: text/plain; charset=3Dutf-8; format=3Dflowed
-
-On 8/19/20 8:55 AM, Derick Montague wrote:
->  =20
-> Hello,
->    =20
-> I apologize for the late notice. Here is the agenda for today's GUI Desig=
-n Work Group.
->    =20
-> - Changes to BMC Web Login and continued work on phosphor-webui
-
-Derick, the "BMCWeb login change" [1] also came up in the security=20
-working group meeting.? Folks were interested in getting the questions=20
-answered rather more quickly.
-
-What is the best way to resolve the issues?? Email?? Video conference??=20
-IRC chat?? Or continue with the gerrit review?
-
-- Joseph
-
-[1]: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/35457
-
-> - Use utility classes
-> - Discuss Server LED layout -https://github.com/openbmc/webui-vue/issues/=
-18 =09
-> - Discuss button styles on Local user management page - https://github.co=
-m/openbmc/webui-vue/issues/12 =09Help wanted items
-> - Design Review items
-> - Demo of working Web UI progress
->    =20
->    =20
-> Please visit the wiki for connection info and notes from past groups.
-> https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
->    =20
->  =20
-> Thank you!
->    =20
-> Derick Montague
-> FED Lead | OpenBMC Design Team Lead
-> IBM Cognitive Systems User Experience
->
-
-
-
-------------------------------
-
-Message: 4
-Date: Wed, 19 Aug 2020 22:52:40 +0000
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: jrey@linux.ibm.com
-Cc: openbmc@lists.ozlabs.org
-Subject: Re: GUI Design Workgroup - BMCWeb login change
-Message-ID:
-=09<OFB642107F.4E5E7CE6-ON002585C9.007D46F4-002585C9.007DAC18@notes.na.coll=
-abserv.com>
-=09
-Content-Type: text/plain; charset=3DUTF-8
-
-> Derick, the "BMCWeb login change" [1] also came up in the security
-> working group meeting.  Folks were interested in getting the questions
-> answered rather more quickly.
-=20
-> What is the best way to resolve the issues?  Email?  Video conference?=20
-> IRC chat?  Or continue with the gerrit review?
-
-That is a great question for the community. We are trying to find a way to
-accommodate this WITHOUT having to manage the login page in BMC Web. Maybe
-we can gather a list of people that are interested and set up a Webex=20
-discussion. We should probably post the question in IRC also to make the=20
-request a bit broader than email.
-=20
-
-
-
-------------------------------
-
-Message: 5
-Date: Wed, 19 Aug 2020 16:06:15 -0700
-From: Ed Tanous <ed@tanous.net>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Cc: Derick Montague <Derick.Montague@ibm.com>, OpenBMC Maillist
-=09<openbmc@lists.ozlabs.org>
-Subject: Re: GUI Design Workgroup - BMCWeb login change
-Message-ID:
-=09<CACWQX80KUxiRXtZv2Cd6UZ=3D0jTDKdg35JQFOfUAeFsss0kcg7Q@mail.gmail.com>
-Content-Type: text/plain; charset=3D"UTF-8"
-
-On Wed, Aug 19, 2020 at 3:43 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
->
-> What is the best way to resolve the issues?  Email?  Video conference?
-> IRC chat?  Or continue with the gerrit review?
-
-Gerrit or the mailing list, that way it's documented for the next time
-it gets brought up, and we can point to the discussion later.
-
-
-------------------------------
-
-Message: 6
-Date: Thu, 20 Aug 2020 09:11:29 +0800
-From: "rxsun"<rxsun@zd-tech.com.cn>
-To: "Derick Montague"<Derick.Montague@ibm.com>
-Cc: "openbmc"<openbmc@lists.ozlabs.org>,
-=09"derick.montague"<derick.montague@gmail.com>,
-=09"xzcheng"<xzcheng@zd-tech.com.cn>,
-=09"ratagupt"<ratagupt@linux.vnet.ibm.com>
-Subject: Re:  RE:  Re: Network Settings GUI
-Message-ID:
-=09<3f858d5d.2facc1.174096bc131.Coremail.rxsun@zd-tech.com.cn>
-Content-Type: text/plain; charset=3D"utf-8"
-
-Hi , Derick!
-I'd like to work on IPV6  functionality of phosphor-webui and start to impl=
-iment it  on the phosphor-webui.
-would you please show me  the design that was originally completed for the =
-previous layout?
-
-And ,how to proposal my code to webui project ?would you like to tell me de=
-tail?
-
-Best Reguards,
-ruixia,sun
-
-
-
-2020-08-19=20
-
-rxsun=20
-
-
-
-????"Derick Montague" <Derick.Montague@ibm.com>
-?????2020-08-13 11:22
-???RE: Re: Network Settings GUI
-????"rxsun"<rxsun@zd-tech.com.cn>
-???"openbmc"<openbmc@lists.ozlabs.org>,"derick.montague"<derick.montague@gm=
-ail.com>,"xzcheng"<xzcheng@zd-tech.com.cn>,"ratagupt"<ratagupt@linux.vnet.i=
-bm.com>
-
-Hello ruxia, sun!
-
-We have started work on the webui-vue GUI that will expect to be a replacem=
-ent for phosphor-webui. The IPv6 functionality is not ready for the webui-v=
-ue GUI because we are transitioning from the REST API to Redfish. If you ar=
-e interested in adding the functionality to phosphor-webui, I can look for =
-the design that was originally completed for the previous layout. Is that s=
-omething you are interested in?
-
-Thank you!
-
-Derick Montague
-FED Lead | OpenBMC Design Team Lead
-IBM Cognitive Systems User Experience
-
-
------ Original message -----
-From: "rxsun"<rxsun@zd-tech.com.cn>
-To: "Derick Montague"<Derick.Montague@ibm.com>
-Cc: "derick.montague"<derick.montague@gmail.com>, "openbmc"<openbmc@lists.o=
-zlabs.org>, "ratagupt"<ratagupt@linux.vnet.ibm.com>, "???"<xzcheng@zd-tech.=
-com.cn>
-Subject: [EXTERNAL] Re: Re: Network Settings GUI
-Date: Mon, Aug 10, 2020 3:04 AM
-=20
-
-Hi Derick,
-My team has confirmed that the Openbmc backend has supported IPV6 on versio=
-n v28, I am going to implement the ipv6 configuration in webui (with angula=
-rJS),would you please tell me the  UX prototype design of webui for IPV6 is=
- ok? I have signed the  Cooperation and  Contribution License Agreement.
-BTW:How to proposal my code to webui project ?would you like to tell me det=
-ail?
-
-Best Reguards,
-ruixia,sun
-
-
-2020-08-10=20
-
-rxsun
-
-
-
-????"Derick Montague" <Derick.Montague@ibm.com>
-?????2020-03-11 19:42
-???Re: Network Settings GUI
-????"rxsun"<rxsun@zd-tech.com.cn>
-???"derick.montague"<derick.montague@gmail.com>,"openbmc"<openbmc@lists.ozl=
-abs.org>,"ratagupt"<ratagupt@linux.vnet.ibm.com>
-
-Hi Ruxia,=20
-
-> Sorry for late reply. I had read  https://gerrit.openbmc-project.xyz/c/op=
-enbmc/phosphor-webui/+/24317  ,  I saw the calling of redfish  in api-ulti.=
-js . I wonder if the ipv6 has been done in this BMC system.  Would you like=
- to tell me the ipv6 support schedule of  bmc OS?=20
-
-
- =20
-Jandra is no longer working on this project and the IBM design team is work=
-ing on a new version of the GUI written in Vue.js. We are just starting to =
-talk about IPv6 again and I do think it may be ready. I see that Ratan is o=
-n this mail thread and he should be able to specify for sure if the backend=
- supporting IPv6 is ready.=20
-
-Thanks,=20
-Derick=20
-
- =20
-
-
- =20
- =20
- =20
--------------- next part --------------
-An HTML attachment was scrubbed...
-URL: <http://lists.ozlabs.org/pipermail/openbmc/attachments/20200820/8016bf=
-4f/attachment.htm>
-
-End of openbmc Digest, Vol 60, Issue 55
-***************************************
-
+--qoTlaiD+Y2fIM3Ll--
