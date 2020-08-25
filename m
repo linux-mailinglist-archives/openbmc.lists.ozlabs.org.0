@@ -2,65 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE0ED251D5A
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 18:40:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90AE9251DA0
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 18:54:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbZV65hkpzDqYV
-	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 02:40:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BbZps19gkzDqYj
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 02:54:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+ spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
+ (client-ip=148.163.143.35; helo=mx0b-002e3701.pphosted.com;
+ envelope-from=prvs=0506b63299=bruno.cornec@hpe.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=db389qLS; dkim-atps=neutral
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
- [IPv6:2607:f8b0:4864:20::b30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=hpe.com
+Received: from mx0b-002e3701.pphosted.com (mx0b-002e3701.pphosted.com
+ [148.163.143.35])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbZTD5qr7zDqXD
- for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 02:39:25 +1000 (AEST)
-Received: by mail-yb1-xb30.google.com with SMTP id x10so7478791ybj.13
- for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 09:39:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=n+3Gv2/mp829YrrNlrwBmFasCwghGAr6coX6UpixNuE=;
- b=db389qLSTHsSCZw2JPiUCpxjHs/bUF+B6kqpeyJShKAtCTyAtzE79xjlj2gJkt3k2a
- ONLNoLLtvt4pLtG+v3ygppJtpXKJcd63r2sv5SJ3bXCCrWkFRgKzOShCN4DIKS0RtWp8
- wBbDjafr88l3FaWT8VTyDdicmzgGoKTPO+cdylNCva+j+qDB7d38PVDrEh61XAyOzfRW
- DXO3vfBzPTD7NbG6npniz4ZEMyBBwlmGfH9fYhEqRmIh4DtZtH+DNBQlfIGRglmRPQaA
- 3EIOaG6dMbVVhHa8iRPGWyor5LrCr6sUQc1QIEtBo3yXEoOX0UzbPW95LdcHa6SbyhG9
- 0epA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=n+3Gv2/mp829YrrNlrwBmFasCwghGAr6coX6UpixNuE=;
- b=PQzq+HLTkgPt5dsZ3IqsOSDgoK8WiDIoeStUmpXiYWsW94iQZWwdUCUVW47o8yQXTb
- q5FLafNngmKtkv8CgsEGaB33qJ9MIAFyhfZxx+FP2/CqeAl8lT4OsNn7nbydQrtz7e2V
- IjgPyn0UjeMRkLfWcphxcX1lrTbUpkZaDJ5wmgORM8EyYXEyM69SKKZdrdkq0mp5iwFI
- jwoMuwKDVXdWYwgteZGaFvo2s1Q7CdLeuBKt/4Upi0FvlaJkuDosNeoqWgYlmj9g3F9n
- uKJ3JeWJi34ttUSCbDBFhkmlwY6QSwDNb0tMCbkVPmGvGNQq3NccPAy64s/xAfSJHQim
- SK2Q==
-X-Gm-Message-State: AOAM533JA0KYTJsSm3ZlDsZRMEGM6GInhWI7S5FfUsTRz0Cm7yjWApn4
- aHxS8ktJoxHpyfPVz9yStZRdIHi0EpmElLzH0e+bqQ==
-X-Google-Smtp-Source: ABdhPJzEtQqamJKDGuSQQh0B8+BZO9ZTmwHD8oc/6OGEX1v3BL0YyQAPD+tJOc++nFPTQUzKr+x7MOxDrTLh3t/4eL8=
-X-Received: by 2002:a25:cc4a:: with SMTP id l71mr15667388ybf.417.1598373561655; 
- Tue, 25 Aug 2020 09:39:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BbZnv42qFzDqXW
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 02:53:47 +1000 (AEST)
+Received: from pps.filterd (m0150245.ppops.net [127.0.0.1])
+ by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 07PGrhXn029259; Tue, 25 Aug 2020 16:53:43 GMT
+Received: from g9t5009.houston.hpe.com (g9t5009.houston.hpe.com [15.241.48.73])
+ by mx0b-002e3701.pphosted.com with ESMTP id 334u9bngwu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 25 Aug 2020 16:53:43 +0000
+Received: from g4t3433.houston.hpecorp.net (g4t3433.houston.hpecorp.net
+ [16.208.49.245])
+ by g9t5009.houston.hpe.com (Postfix) with ESMTP id 9731F63;
+ Tue, 25 Aug 2020 16:52:59 +0000 (UTC)
+Received: from morley.fr.hpecorp.net (morley.fr.hpecorp.net [10.39.8.55])
+ by g4t3433.houston.hpecorp.net (Postfix) with ESMTP id 69CF447;
+ Tue, 25 Aug 2020 16:52:59 +0000 (UTC)
+Received: by morley.fr.hpecorp.net (Postfix, from userid 2000)
+ id 6FB41B48; Tue, 25 Aug 2020 18:52:58 +0200 (CEST)
+Date: Tue, 25 Aug 2020 18:52:58 +0200
+From: Bruno Cornec <Bruno.Cornec@hpe.com>
+To: Mike Jones <proclivis@gmail.com>
+Subject: Re: systemd clarification
+Message-ID: <20200825165258.GT20886@morley.fr.hpecorp.net>
+References: <C255655B-FA25-4CC3-9982-211D71352F74@gmail.com>
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+In-Reply-To: <C255655B-FA25-4CC3-9982-211D71352F74@gmail.com>
+X-Humor: Linux is to Windows what early music is to military music
+X-Operating-System: Linux morley.fr.hpecorp.net 5.3.7-server-4.mga7
+X-Current-Uptime: 10:07:01 up 231 days, 14:26, 22 users, load average: 0, 17, 
+ 0,13, 0,12
+X-HP-HOWTO-URL: http://www.HyPer-Linux.org/HP-HOWTO/current
+X-URL: http://eurolinux.fr.smktg.hpecorp.net/
+X-eurolinux: ftp://eurolinux.fr.smktg.hpecorp.net/pub/linux
+X-mondorescue: http://www.mondorescue.org ftp://ftp.mondorescue.org
+User-Agent: Mutt/1.11.4 (2019-03-13)
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-From: Ed Tanous <ed@tanous.net>
-Date: Tue, 25 Aug 2020 09:39:10 -0700
-Message-ID: <CACWQX81Lj7w3nLRmXjnbaNto6T80SwR6H1gnyXV1QWNgAKUwsA@mail.gmail.com>
-Subject: bmcweb NBD proxy
-To: przemyslaw.hawrylewicz.czarnowski@intel.com, 
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-08-25_08:2020-08-25,
+ 2020-08-25 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0
+ lowpriorityscore=0 adultscore=0 mlxscore=0 mlxlogscore=999 suspectscore=0
+ malwarescore=0 spamscore=0 phishscore=0 clxscore=1011 priorityscore=1501
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008250125
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,44 +78,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I'm looking through the nbd proxy code in bmcweb, and I'm seeing some
-issues, and I'd like to understand why they were done this way.
+Hello,
 
-First off, nbd proxy has its own authorization code that's been
-injected, separate from the one all other handlers (including other
-websocket handlers) use.  Why was this done?  It feels like a hack,
-but for the life of me I can't imagine what's being hacked around.
-https://github.com/openbmc/bmcweb/blob/d139c2364bec98a5da1fe803414f3b02fdcd3092/include/nbd_proxy.hpp#L288
+/etc/systemd is used to override or add locally units which are not delivered as part of the std systemd delivery which is under /lib/systemd (or /usr/lib/systemd depending on Linux distribuions). It's an easy way to modify a std unit file and change say the options used to start the daemon e.g.
+So:
 
-We have other examples that existed before nbd was merged of doing
-this this recommended/right way.  Here's one from obmc_console:
-https://github.com/openbmc/bmcweb/blob/d4d77e399526671076936e9d9dd879dad2d24a2f/include/obmc_console.hpp#L108
+Mike Jones said on Tue, Aug 25, 2020 at 10:20:54AM -0600:
+>The lib path is not a search path in the systemd documentation, and the etc path has links into the lib path. So I assume services in the lib path are only run if they are linked into the etc path. Is this correct?
 
-Having individual handlers own their own authorization is a huge
-problem for maintenance, and significantly increases the likelihood
-that we make a mistake in a handler, and inject a security problem.
+No. they are run if they are enabled (systemctl list-units to see that)
 
-This came up because I started to do a security audit (like I did
-regularly when I was the bmcweb maintainer) and this route popped up
-as not having authorization checks, yet controlling something
-important.
+>If there is a an After= that lists something found only in the lib path, I assume it will run because After is not strong enough to prevent start. But if it was Requires=, then I assume it cannot start unless it is linked into the etc path so that it is available. Is this correct?
 
-The patch in question is here:
-https://github.com/openbmc/bmcweb/commit/250b0ebb0e8d55882fa8e6b156f88828a7ba185d
-Which makes me think it _was_ a security issue prior to that patch,
-which further proves the point that doing this is a bad idea.  The
-commit message contains the statement: "I have chosen this approach,
-as generic privilege check for all websockets introduces significant
-changes in connection upgrade flow which makes implementaion vague and
-caused some memory issues difficult to track down."
+No. No link is necessary. 
 
-It sounds like this was done just for lack of wanting to debug doing
-this the right/existing way?  This seems like the wrong approach, and
-something we don't really want to promote for the project in general.
-
-Does anyone have more context on this?
-
--Ed
+Best regards,
+Bruno.
+-- 
+HPE WW FLOSS Technology Strategist      http://www.hpe.com/engage/opensource
+Open Source Profession, WW Linux Community Lead    http://github.com/bcornec
+FLOSS projects:     http://mondorescue.org        http://project-builder.org
+Musique ancienne?   http://www.musique-ancienne.org  http://www.medieval.org
