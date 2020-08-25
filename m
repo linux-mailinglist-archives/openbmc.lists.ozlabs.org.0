@@ -2,131 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA409251EBF
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 20:01:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61983251ED3
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 20:04:20 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbcHx3ssgzDqX7
-	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 04:01:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BbcM53yhLzDqXm
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 04:04:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d30;
+ helo=mail-io1-xd30.google.com; envelope-from=proclivis@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=55066ec44b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=X2QJYg1C; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=T3+DMhDS; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=RewzM95j; dkim-atps=neutral
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
+ [IPv6:2607:f8b0:4864:20::d30])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbcH00lbfzDqWw
- for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 04:00:42 +1000 (AEST)
-Received: from pps.filterd (m0109332.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 07PHswM6003718; Tue, 25 Aug 2020 11:00:32 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=2IB8rRhgO0+9CT266OOVNWhJ1k0EmhW2LGipK8jjmlc=;
- b=X2QJYg1C+yTzoA2M4BpkRIIC68m0DqVQBDkWOEesOV0bg52DkvWEgvLGVxQCWWGLY9PS
- lowXClUdLDRDQYs7ZmZ/iZYtMhOnctp2BM+mnkR3AD/IiUlX9M5nYETv3COeYNGgsC7s
- uXmUogyuRQdASKgClu4RVKd8naYa82wfglI= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com with ESMTP id 33313tq62b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Tue, 25 Aug 2020 11:00:31 -0700
-Received: from NAM02-BL2-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.228) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Tue, 25 Aug 2020 11:00:30 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=KbsLzB1hvLOUmvmYXnFo1vQEYjzT5IM+438mnaS59s9uZI/+LeYiWKqtziw3oRrYEQ3Bv0mVEeOSgmSyJXOcVcLw5LyOO/qezaQ8X4rSoAiRGmZ0RdsSbGL2bo4coKO8X/Y0L2WTGM6FtIM4D8JduXodCcwZe/rI5k54MDHqyj7NhXmAZflAiqP/kZfE078j5KzMIxdux28QPx7rfIgIMz3xibkyAu47jCzbAgHxbkNjBweoIyA6TrLGEIVjVIX1DH0rCMo/ZsmCjGlu0NNeYOYx7C35gtDiZvnBxaShaMiiFahK/I9p6BPXPiXfvvWiW54PSK3tPWM3M1cdM8yfRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2IB8rRhgO0+9CT266OOVNWhJ1k0EmhW2LGipK8jjmlc=;
- b=YYnbKnYzq+g1dx7hcg82ud70lQhzJRTLvvW170pOkBW7pI9vM/UHtwGeTf10FmC1ivBxdI/UuCKGE6Zy8gTwrvrx/wSfR5Ss3Ph0hR5i3CRH6Nf3gX9QzskGvHfZHl7toBdbbhW8e7ZQTJ4pYG0CsLVoD9ITIAqESLX9n1/qjhYqHfPCZtyr0PL8fWbbEe9DG9bGVFD+HDnOAvEp/2DLLrIwoKWEsvWINhwnjsImWxOUeuddhIbtya1bxxnegJT7d/mhuhQR9gImKDawzZtiKVU6GjZLtvMw4OStEpsCncM+JSYXC6xOAODnImNO9RhdNX6DAWZwNbLTKic7jNXXLw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2IB8rRhgO0+9CT266OOVNWhJ1k0EmhW2LGipK8jjmlc=;
- b=T3+DMhDS+iTYB+DhEXxrPrTEnpwTkvY+l/rXa+Mz1GrMUA8Eylv186hz/vzdDDaO6CF2os5+aQ9qgkn+Ng/C4x5x/yqUeqXGkB2orP+bVzKpOPiAWLv1lhgZ7CObdCYBTbVYdazhkMB8ZfDrXriDmtjR/otHB0vBuiuiU27IUhA=
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com (2603:10b6:a02:8b::16)
- by BYAPR15MB2488.namprd15.prod.outlook.com (2603:10b6:a02:90::30)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3305.24; Tue, 25 Aug
- 2020 18:00:26 +0000
-Received: from BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::2908:ebc2:73a5:45b3]) by BYAPR15MB2374.namprd15.prod.outlook.com
- ([fe80::2908:ebc2:73a5:45b3%5]) with mapi id 15.20.3305.026; Tue, 25 Aug 2020
- 18:00:26 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: "P. Priyatharshan" <PriyatharshanP@hcl.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: Facing issues in adding the package 'phospohr-gpio-monitor' to
- the image.
-Thread-Topic: Facing issues in adding the package 'phospohr-gpio-monitor' to
- the image.
-Thread-Index: AQHWdjyE9K8uF/j12EGMUJrPUoZwC6lIsWWA
-Date: Tue, 25 Aug 2020 18:00:26 +0000
-Message-ID: <74B3F438-44CB-4E7A-A9AA-C38CA0FB1A83@fb.com>
-References: <TY2PR04MB33117448BB99D5CF6AC2D3E6CA5D0@TY2PR04MB3311.apcprd04.prod.outlook.com>
-In-Reply-To: <TY2PR04MB33117448BB99D5CF6AC2D3E6CA5D0@TY2PR04MB3311.apcprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: hcl.com; dkim=none (message not signed)
- header.d=none;hcl.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2620:10d:c090:400::5:9589]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 055ed472-2534-47b8-8983-08d84920bf1f
-x-ms-traffictypediagnostic: BYAPR15MB2488:
-x-microsoft-antispam-prvs: <BYAPR15MB2488BFC137BBECB66507D3C3DD570@BYAPR15MB2488.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:7219;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 7UwScDJFuINuXyEae8k/vZ/q1Ze6LCSyLvqhr6BC+SCPMqYSI4B33HhsWT7SgHXui1XVbElvNpJw3K6ZaicKYf1vRtU/vn1JHEob86DGZmpPyFBXDbtYvlM7ibkw2c49x22wIA7mQWnjXU4JG/8FCh+n1Pd6g7x0NfueSVqFEX0qRApoWrbQNOVC390WEUFwNTF0iJTX5tTZu8QArBOvfcGB75aq0VussehFjPhObQfaMqyRQJua6K1YK0XkARB8160H1hhnDr1nyjAU4Zd7CEyjJ3O2Ag3GivtUjEwpQsgYEmuGRH1QgyN93Eii0jbzP84iakkCs5a06WuRNAA/nGaY3B6IaCJXUwG8OVoO1jWSOqTAnMVAZd59bMvhvjGU
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR15MB2374.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(366004)(136003)(39860400002)(346002)(396003)(376002)(86362001)(36756003)(71200400001)(8936002)(316002)(110136005)(6512007)(8676002)(2906002)(54906003)(478600001)(2616005)(66946007)(64756008)(53546011)(66556008)(66446008)(83380400001)(4326008)(186003)(33656002)(5660300002)(6486002)(66476007)(6506007)(76116006)(547064002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: D+OLtuypigHuZHd6bpa9Pw+t/bKKiMidSb5I1M8gzvhr3HYcFjLiZzERPdbU7D45eHqP7IhTzz34777LXDS9hH5A9LMo1ZBtsK+BZJqNjAaA7rgmScofAadHrgpHg6b7xzvGG7K6J7HajJW7LapBApJz55/iXBZmmMF6JrnK/5LrvwEckwqAhw6J5hQlAKey1Qqm05n8qEFdo2OCK5Zj0AHlzFwYJPWWEMEnnnZnvMDew8/forI26HSBHInQIaQh+VQXO3xfpDrNThqm3zHmtrvbaxN/LIdOIUcE348vQgGUvGWd3TQyqt0h/FeMfNMmOGSZ0silLZdxpI0kAdSIE5mNPsoMhQbjiMKdH4rAOaqWrLzs2anvs0bcVVVcTWS/+Xjjch8nFBIrKxoyKMA2hM1rrMRd+Zki6KStHpXXA5To0vXzs8a3QoUuUiP1KJYG1Ju9jN5UZtS2O9xtqyqJaUtad3Xdj4sXYa9cCYFaXHNwc+yojWZxZRrJsCUEsNrHggw5R8cC0mRi+tcSyV2/ebOs5I14djWNrQnim/inWc3DWgM25w3952QO30qJPhbEP31JxAKsVnKD3xLuE3InDnIcd1iL1JVU1HdIghJcaWiBFBV/2RMf306OUHjBq1ZRvA2nldfzvLiOLBapih34+0SXOrp6xxVTttIjwbDte6GGP8CqiY50/1dMIRx/e8X5
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_74B3F43844CB4E7AA9AAC38CA0FB1A83fbcom_"
-MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR15MB2374.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 055ed472-2534-47b8-8983-08d84920bf1f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Aug 2020 18:00:26.5622 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: U0Y8mz8TUO7qMlK5GA3NUeWVT9a5rhjjR5wS+eoxd8626OLRm/6o+IF8qzLsd2yhwO1IgQfgrOT8KlLnxhIz0g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR15MB2488
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-08-25_08:2020-08-25,
- 2020-08-25 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- priorityscore=1501
- clxscore=1011 lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0
- bulkscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2008250135
-X-FB-Internal: deliver
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BbcL92x7HzDqJV
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 04:03:28 +1000 (AEST)
+Received: by mail-io1-xd30.google.com with SMTP id g14so13443071iom.0
+ for <openbmc@lists.ozlabs.org>; Tue, 25 Aug 2020 11:03:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=N/5Nzr9ge0IfftaOmVPcs7Se5/DB7Fw0qeaR00mFPw0=;
+ b=RewzM95j0KctBT22gaXyczj99W+m9+MFrIcjrDD2Z32GggBUHsCsTwCFwVotbSh05A
+ WNcj8QSIzqTE153Gnx0pzbLEQ7kaEMJdyQ5rq1iU2Q476i9aVWgvcdIMDORax8KqgxCa
+ 4d7VP06JpEIXFWZ+19G2bXFb01LbiGJf7N0CSaOO3dU6l1q0urlDVC+OqukAl+W+meDQ
+ k4J2bKwNzbYX/YgnOhTwPWBHNc5TVgteWvr4tVzW6zwdYJTX0z/UotWoKY3PvZOVXr58
+ lPmCRa1gkjMTx73QuIj4tsGe0KctiwyNt+yUW4wXUBwD15yHKVw9hNy9hZisbgCiSVYQ
+ kgFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=N/5Nzr9ge0IfftaOmVPcs7Se5/DB7Fw0qeaR00mFPw0=;
+ b=R8zn/bOBEvPRGM7dXayR10e1Gj+ZXvBA3zYQJ+hQUCrU6i5gdIXi88QAjjqeO74rYX
+ tFjvIFDDqo6FCyPrQGEAojZ/vNt07XzRNqnNHAlk5FiTvAHtjGVyKuuQaisNpnnpGDh6
+ 3Ypx804HKcR+uTYX0SUxksdAaeejSiPJQXA4CmDxVmL6XQkAspxNDEfiS6GJDi9s1NKb
+ 3owSJDAgE8IdeMbjPXJQrth1HJR7VXY5fKh2ynQD4ERojoKFOqLEGTzCFc1QxxQ509ZH
+ 9mUYatvKcjndsUj4feANpmv02xq/4ESxqMBILZ4A+RXIDYYPpK3QSG8GuMhJHbS5x21Q
+ 71Tw==
+X-Gm-Message-State: AOAM533tL2homLy1MFw8P5IkqcPln7pClCtSx1zUe5ZYQgfcoyNQVFxK
+ HN3oqJmj5siBgMPtPn0NmsQ=
+X-Google-Smtp-Source: ABdhPJyzR68pGf1yGW9lDzJNW32Lgv19ph0n23tpOGvomURpR95knQ6cCzOt4NEeuVjD8Qm2Uy9Ufw==
+X-Received: by 2002:a6b:f608:: with SMTP id n8mr10042260ioh.148.1598378604600; 
+ Tue, 25 Aug 2020 11:03:24 -0700 (PDT)
+Received: from [10.86.10.6] ([174.128.226.18])
+ by smtp.gmail.com with ESMTPSA id c24sm8850578iom.46.2020.08.25.11.03.23
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 25 Aug 2020 11:03:24 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Re: systemd clarification
+From: Mike Jones <proclivis@gmail.com>
+In-Reply-To: <20200825165258.GT20886@morley.fr.hpecorp.net>
+Date: Tue, 25 Aug 2020 12:03:23 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B3E8FB77-80E3-4BB0-BFF0-A685403DF9B4@gmail.com>
+References: <C255655B-FA25-4CC3-9982-211D71352F74@gmail.com>
+ <20200825165258.GT20886@morley.fr.hpecorp.net>
+To: Bruno Cornec <Bruno.Cornec@hpe.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -138,150 +81,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_74B3F43844CB4E7AA9AAC38CA0FB1A83fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Bruno,
 
-QWRkICDigJx2aXJ0dWFsL29ibWMtZ3Bpby1tb25pdG9y4oCdIHRvIHlvdXIgcGFja2FnZS4NCg0K
-UmVnYXJkcw0KLVZpamF5DQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMtYm91bmNlcyt2aWpheWto
-ZW1rYT1mYi5jb21AbGlzdHMub3psYWJzLm9yZz4gb24gYmVoYWxmIG9mICJQLiBQcml5YXRoYXJz
-aGFuIiA8UHJpeWF0aGFyc2hhblBAaGNsLmNvbT4NCkRhdGU6IE1vbmRheSwgQXVndXN0IDI0LCAy
-MDIwIGF0IDc6MzcgUE0NClRvOiAib3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIiA8b3BlbmJtY0Bs
-aXN0cy5vemxhYnMub3JnPg0KQ2M6IEJyYWQgQmlzaG9wIDxicmFkbGV5YkBmdXp6aWVzcXVpcnJl
-bC5jb20+LCAiVmVsdW1hbmkgVC1FUlMsIEhDTFRlY2giIDx2ZWx1bWFuaXRAaGNsLmNvbT4NClN1
-YmplY3Q6IEZhY2luZyBpc3N1ZXMgaW4gYWRkaW5nIHRoZSBwYWNrYWdlICdwaG9zcG9oci1ncGlv
-LW1vbml0b3InIHRvIHRoZSBpbWFnZS4NCg0KSSBoYXZlIGFkZGVkIHRoZSBwYWNrYWdlIG5hbWUg
-J3Bob3NwaG9yLWdwaW8tbW9uaXRvcicgdG8gdGhlIHBhY2thZ2Vncm91cC1hcHBzLmJiLiBXaGls
-ZSBidWlsZGluZyBJIGNvdWxkIHNlZSB0aGUgcGFja2FnZSBnZXQgaW5jbHVkZWQgdG8gdGhlIGlt
-YWdlLCBidXQgd2hpbGUgdGhlIGltYWdlIGlzIHJ1bm5pbmcsIEkgY291bGQgbm90IGZpbmQgZXhl
-IGZvciBwaG9zcG9oci1ncGlvLW1vbml0b3Igb3IgcmVzcGVjdGl2ZSBzeXN0ZW1kIGFuZCBELWJ1
-cyBzZXJ2aWNlcy4NCg0KQW0gSSBtaXNzaW5nIGFueXRoaW5nIG9yIFNob3VsZCBJIGFkZCBhbnl0
-aGluZyBlbHNlLiBraW5kbHkgaGVscCBtZSBvbiB0aGlzLg0KDQpUaGFua3MsDQpQcml5YXRoYXJz
-aGFuIFANCjo6RElTQ0xBSU1FUjo6DQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0K
-VGhlIGNvbnRlbnRzIG9mIHRoaXMgZS1tYWlsIGFuZCBhbnkgYXR0YWNobWVudChzKSBhcmUgY29u
-ZmlkZW50aWFsIGFuZCBpbnRlbmRlZCBmb3IgdGhlIG5hbWVkIHJlY2lwaWVudChzKSBvbmx5LiBF
-LW1haWwgdHJhbnNtaXNzaW9uIGlzIG5vdCBndWFyYW50ZWVkIHRvIGJlIHNlY3VyZSBvciBlcnJv
-ci1mcmVlIGFzIGluZm9ybWF0aW9uIGNvdWxkIGJlIGludGVyY2VwdGVkLCBjb3JydXB0ZWQsIGxv
-c3QsIGRlc3Ryb3llZCwgYXJyaXZlIGxhdGUgb3IgaW5jb21wbGV0ZSwgb3IgbWF5IGNvbnRhaW4g
-dmlydXNlcyBpbiB0cmFuc21pc3Npb24uIFRoZSBlIG1haWwgYW5kIGl0cyBjb250ZW50cyAod2l0
-aCBvciB3aXRob3V0IHJlZmVycmVkIGVycm9ycykgc2hhbGwgdGhlcmVmb3JlIG5vdCBhdHRhY2gg
-YW55IGxpYWJpbGl0eSBvbiB0aGUgb3JpZ2luYXRvciBvciBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMu
-IFZpZXdzIG9yIG9waW5pb25zLCBpZiBhbnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFyZSBz
-b2xlbHkgdGhvc2Ugb2YgdGhlIGF1dGhvciBhbmQgbWF5IG5vdCBuZWNlc3NhcmlseSByZWZsZWN0
-IHRoZSB2aWV3cyBvciBvcGluaW9ucyBvZiBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIEFueSBmb3Jt
-IG9mIHJlcHJvZHVjdGlvbiwgZGlzc2VtaW5hdGlvbiwgY29weWluZywgZGlzY2xvc3VyZSwgbW9k
-aWZpY2F0aW9uLCBkaXN0cmlidXRpb24gYW5kIC8gb3IgcHVibGljYXRpb24gb2YgdGhpcyBtZXNz
-YWdlIHdpdGhvdXQgdGhlIHByaW9yIHdyaXR0ZW4gY29uc2VudCBvZiBhdXRob3JpemVkIHJlcHJl
-c2VudGF0aXZlIG9mIEhDTCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNl
-aXZlZCB0aGlzIGVtYWlsIGluIGVycm9yIHBsZWFzZSBkZWxldGUgaXQgYW5kIG5vdGlmeSB0aGUg
-c2VuZGVyIGltbWVkaWF0ZWx5LiBCZWZvcmUgb3BlbmluZyBhbnkgZW1haWwgYW5kL29yIGF0dGFj
-aG1lbnRzLCBwbGVhc2UgY2hlY2sgdGhlbSBmb3IgdmlydXNlcyBhbmQgb3RoZXIgZGVmZWN0cy4N
-Cl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQo=
+A related question.
 
---_000_74B3F43844CB4E7AA9AAC38CA0FB1A83fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <980DC6A36219E549AF9216CF38144805@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+When I look through the services and targets installed when including =
+meta-phosphor, power on/off seems to lead to dead ends, meaning no exe =
+to do the work.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtp
-ZiAhbXNvXT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kb1w6KiB7
-YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0
-I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwh
-W2VuZGlmXS0tPjxzdHlsZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNl
-DQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYg
-MyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIg
-MTUgNSAyIDIgMiA0IDMgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1h
-bCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47DQoJZm9udC1zaXpl
-OjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQpzcGFuLkVtYWls
-U3R5bGUxOQ0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250LWZhbWlseToi
-Q2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0
-DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBh
-Z2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBp
-biAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30N
-Ci0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6
-ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBn
-dGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2
-OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48L3htbD48IVtlbmRpZl0t
-LT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSIjMDU2M0MxIiB2bGluaz0iIzk1
-NEY3MiI+DQo8ZGl2IGNsYXNzPSJXb3JkU2VjdGlvbjEiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-QWRkJm5ic3A7IOKAnHZpcnR1YWwvb2JtYy1ncGlvLW1vbml0b3LigJ0gdG8geW91ciBwYWNrYWdl
-LjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5SZWdhcmRzPG86cD48L286cD48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj4tVmlqYXk8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRv
-cDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRpbmc6My4wcHQgMGluIDBpbiAwaW4iPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6Ymxh
-Y2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6
-YmxhY2siPm9wZW5ibWMgJmx0O29wZW5ibWMtYm91bmNlcyt2aWpheWtoZW1rYT1mYi5jb21AbGlz
-dHMub3psYWJzLm9yZyZndDsgb24gYmVoYWxmIG9mICZxdW90O1AuIFByaXlhdGhhcnNoYW4mcXVv
-dDsgJmx0O1ByaXlhdGhhcnNoYW5QQGhjbC5jb20mZ3Q7PGJyPg0KPGI+RGF0ZTogPC9iPk1vbmRh
-eSwgQXVndXN0IDI0LCAyMDIwIGF0IDc6MzcgUE08YnI+DQo8Yj5UbzogPC9iPiZxdW90O29wZW5i
-bWNAbGlzdHMub3psYWJzLm9yZyZxdW90OyAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0
-Ozxicj4NCjxiPkNjOiA8L2I+QnJhZCBCaXNob3AgJmx0O2JyYWRsZXliQGZ1enppZXNxdWlycmVs
-LmNvbSZndDssICZxdW90O1ZlbHVtYW5pIFQtRVJTLCBIQ0xUZWNoJnF1b3Q7ICZsdDt2ZWx1bWFu
-aXRAaGNsLmNvbSZndDs8YnI+DQo8Yj5TdWJqZWN0OiA8L2I+RmFjaW5nIGlzc3VlcyBpbiBhZGRp
-bmcgdGhlIHBhY2thZ2UgJ3Bob3Nwb2hyLWdwaW8tbW9uaXRvcicgdG8gdGhlIGltYWdlLjxvOnA+
-PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPkkgaGF2ZSBhZGRlZCB0
-aGUgcGFja2FnZSBuYW1lICdwaG9zcGhvci1ncGlvLW1vbml0b3InIHRvIHRoZSBwYWNrYWdlZ3Jv
-dXAtYXBwcy5iYi4gV2hpbGUgYnVpbGRpbmcgSSBjb3VsZCBzZWUgdGhlIHBhY2thZ2UgZ2V0IGlu
-Y2x1ZGVkIHRvIHRoZSBpbWFnZSwgYnV0IHdoaWxlIHRoZSBpbWFnZSBpcyBydW5uaW5nLCBJIGNv
-dWxkIG5vdA0KIGZpbmQgZXhlIGZvciBwaG9zcG9oci1ncGlvLW1vbml0b3Igb3IgcmVzcGVjdGl2
-ZSBzeXN0ZW1kIGFuZCBELWJ1cyBzZXJ2aWNlcy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rp
-dj4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMi4wcHQ7Y29sb3I6YmxhY2siPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjwv
-ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7
-Y29sb3I6YmxhY2siPkFtIEkgbWlzc2luZyBhbnl0aGluZyBvciBTaG91bGQgSSBhZGQgYW55dGhp
-bmcgZWxzZS4ga2luZGx5IGhlbHAgbWUgb24gdGhpcy4NCjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4N
-CjwvZGl2Pg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0i
-Zm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9w
-Pg0KPC9kaXY+DQo8ZGl2IGlkPSJTaWduYXR1cmUiPg0KPGRpdj4NCjxkaXY+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBwdDtjb2xvcjpibGFjayI+VGhh
-bmtzLDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5Qcml5YXRo
-YXJzaGFuIFA8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8
-L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6Ny41cHQ7
-Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpncmF5Ij46OkRJ
-U0NMQUlNRVI6OjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXYgY2xhc3M9Ik1zb05vcm1hbCIg
-YWxpZ249ImNlbnRlciIgc3R5bGU9InRleHQtYWxpZ246Y2VudGVyIj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjcuNXB0O2ZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29s
-b3I6Z3JheSI+DQo8aHIgc2l6ZT0iMCIgd2lkdGg9IjEwMCUiIGFsaWduPSJjZW50ZXIiPg0KPC9z
-cGFuPjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTo3
-LjVwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmdyYXki
-PlRoZSBjb250ZW50cyBvZiB0aGlzIGUtbWFpbCBhbmQgYW55IGF0dGFjaG1lbnQocykgYXJlIGNv
-bmZpZGVudGlhbCBhbmQgaW50ZW5kZWQgZm9yIHRoZSBuYW1lZCByZWNpcGllbnQocykgb25seS4g
-RS1tYWlsIHRyYW5zbWlzc2lvbiBpcyBub3QgZ3VhcmFudGVlZCB0byBiZSBzZWN1cmUNCiBvciBl
-cnJvci1mcmVlIGFzIGluZm9ybWF0aW9uIGNvdWxkIGJlIGludGVyY2VwdGVkLCBjb3JydXB0ZWQs
-IGxvc3QsIGRlc3Ryb3llZCwgYXJyaXZlIGxhdGUgb3IgaW5jb21wbGV0ZSwgb3IgbWF5IGNvbnRh
-aW4gdmlydXNlcyBpbiB0cmFuc21pc3Npb24uIFRoZSBlIG1haWwgYW5kIGl0cyBjb250ZW50cyAo
-d2l0aCBvciB3aXRob3V0IHJlZmVycmVkIGVycm9ycykgc2hhbGwgdGhlcmVmb3JlIG5vdCBhdHRh
-Y2ggYW55IGxpYWJpbGl0eSBvbiB0aGUNCiBvcmlnaW5hdG9yIG9yIEhDTCBvciBpdHMgYWZmaWxp
-YXRlcy4gVmlld3Mgb3Igb3BpbmlvbnMsIGlmIGFueSwgcHJlc2VudGVkIGluIHRoaXMgZW1haWwg
-YXJlIHNvbGVseSB0aG9zZSBvZiB0aGUgYXV0aG9yIGFuZCBtYXkgbm90IG5lY2Vzc2FyaWx5IHJl
-ZmxlY3QgdGhlIHZpZXdzIG9yIG9waW5pb25zIG9mIEhDTCBvciBpdHMgYWZmaWxpYXRlcy4gQW55
-IGZvcm0gb2YgcmVwcm9kdWN0aW9uLCBkaXNzZW1pbmF0aW9uLCBjb3B5aW5nLCBkaXNjbG9zdXJl
-LA0KIG1vZGlmaWNhdGlvbiwgZGlzdHJpYnV0aW9uIGFuZCAvIG9yIHB1YmxpY2F0aW9uIG9mIHRo
-aXMgbWVzc2FnZSB3aXRob3V0IHRoZSBwcmlvciB3cml0dGVuIGNvbnNlbnQgb2YgYXV0aG9yaXpl
-ZCByZXByZXNlbnRhdGl2ZSBvZiBIQ0wgaXMgc3RyaWN0bHkgcHJvaGliaXRlZC4gSWYgeW91IGhh
-dmUgcmVjZWl2ZWQgdGhpcyBlbWFpbCBpbiBlcnJvciBwbGVhc2UgZGVsZXRlIGl0IGFuZCBub3Rp
-ZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseS4gQmVmb3JlDQogb3BlbmluZyBhbnkgZW1haWwgYW5k
-L29yIGF0dGFjaG1lbnRzLCBwbGVhc2UgY2hlY2sgdGhlbSBmb3IgdmlydXNlcyBhbmQgb3RoZXIg
-ZGVmZWN0cy48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2IGNsYXNzPSJNc29Ob3JtYWwiIGFs
-aWduPSJjZW50ZXIiIHN0eWxlPSJ0ZXh0LWFsaWduOmNlbnRlciI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZTo3LjVwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9y
-OmdyYXkiPg0KPGhyIHNpemU9IjAiIHdpZHRoPSIxMDAlIiBhbGlnbj0iY2VudGVyIj4NCjwvc3Bh
-bj48L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+So I looked at meta-facebook, and it adds host-poweron.service, which =
+calls exec power-util=E2=80=A6
 
---_000_74B3F43844CB4E7AA9AAC38CA0FB1A83fbcom_--
+So it seems to me that meta-phosphor only puts in the infrastructure, =
+and a particular use/design requires adding services to do the actual =
+work of power on/off. This seems logical wrt factoring out behaviors. Is =
+this correct?
+
+This would mean in my cause of use meta-raspberrypi, I need to add the =
+missing pieces if I want power control of my externally connected =
+regulators to get powered on/off.
+
+Mike
+
+> On Aug 25, 2020, at 10:52 AM, Bruno Cornec <Bruno.Cornec@hpe.com> =
+wrote:
+>=20
+> Hello,
+>=20
+> /etc/systemd is used to override or add locally units which are not =
+delivered as part of the std systemd delivery which is under =
+/lib/systemd (or /usr/lib/systemd depending on Linux distribuions). It's =
+an easy way to modify a std unit file and change say the options used to =
+start the daemon e.g.
+> So:
+>=20
+> Mike Jones said on Tue, Aug 25, 2020 at 10:20:54AM -0600:
+>> The lib path is not a search path in the systemd documentation, and =
+the etc path has links into the lib path. So I assume services in the =
+lib path are only run if they are linked into the etc path. Is this =
+correct?
+>=20
+> No. they are run if they are enabled (systemctl list-units to see =
+that)
+>=20
+>> If there is a an After=3D that lists something found only in the lib =
+path, I assume it will run because After is not strong enough to prevent =
+start. But if it was Requires=3D, then I assume it cannot start unless =
+it is linked into the etc path so that it is available. Is this correct?
+>=20
+> No. No link is necessary.=20
+> Best regards,
+> Bruno.
+> --=20
+> HPE WW FLOSS Technology Strategist      =
+http://www.hpe.com/engage/opensource
+> Open Source Profession, WW Linux Community Lead    =
+http://github.com/bcornec
+> FLOSS projects:     http://mondorescue.org        =
+http://project-builder.org
+> Musique ancienne?   http://www.musique-ancienne.org  =
+http://www.medieval.org
+
