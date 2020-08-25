@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54A50251AE6
-	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 16:34:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49E08251AF8
+	for <lists+openbmc@lfdr.de>; Tue, 25 Aug 2020 16:37:51 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BbWjM3QSczDqX0
-	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 00:34:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BbWmr1rHszDqLP
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 00:37:48 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,72 +17,72 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=No0CuSot; 
+ header.s=fm2 header.b=OVDdgl4s; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=Ff1sMqy0; 
+ header.a=rsa-sha256 header.s=fm3 header.b=sPjxDMOI; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BbWWZ1z5rzDqWq;
- Wed, 26 Aug 2020 00:26:17 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BbWYW2pfmzDqN9
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 00:27:59 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 92F813AF;
- Tue, 25 Aug 2020 10:17:01 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Tue, 25 Aug 2020 10:17:02 -0400
+ by mailout.west.internal (Postfix) with ESMTP id 604EAC34;
+ Tue, 25 Aug 2020 10:27:56 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Tue, 25 Aug 2020 10:27:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=o4Lgifyp6W7gEhgYNRBq4AIfWx0
- xVuzp5rgo9pBKgBM=; b=No0CuSotdI6rBYOJZmSN6m8miWTATw9x7LO8FJbD5QQ
- m/HxjtATj8pORlb7Dde/zpSG6heMDm9e7RTvhonGyV4IIE2uYEz2zNazAgDt2dc7
- 4A6znrDdKu6hzYuGC5S2YZTNZ17tZwXHHsTIljMrlJmmBAJutKKRcmbF8okRSiqM
- iiK4D9jkM38OHGdzZIdOCnB+aORLMOyn7OASirDGcr51RxZcQoOrZfY7AVfYX7z/
- ucn9ZXZVH2orKW8DXU8sgzP5wFqQvQWt2cu3D2LG2nUNOCR1ynnhVpFVhfwLZqIo
- UnWkxnI0rpTx29xLbP0yosiiz2gy8Q4jU9xIgmnPFEA==
+ :content-type:in-reply-to; s=fm2; bh=SUYQNxewUQ7Zh1Y/mxbH3aCG1ho
+ otns3RIznbZUWwLk=; b=OVDdgl4s70Bl4xZXCuKXmiU9aOA0IjDgkhAzoNRQZSj
+ yIt39iQaIZovs6UpYE0xQo0jKpH+UxKYYDyaurK3g8l2XwWLEsjRtTdj74pxZPK5
+ gMuj714i5LbDZJXQBBiLLaF+31OCyYzzRJlkOpOHa49be5KMq1K1nQ3k0aSaHZ8L
+ a1914wA4cZg4e+s9z14OYzkVBSuTlsRRnnlOCQbgewlQiRI3PGl5X+z2K9xAPY4K
+ ZeSk1GQnf8BbDVKFQphmedfn/20KSPzWq8MZPP27U6kKC8b4yy+4ySH/AMF1QSXR
+ 5376rWCcCwffwyQRaEn11q40a/h182RpoLbMi5Da3Cg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=o4Lgif
- yp6W7gEhgYNRBq4AIfWx0xVuzp5rgo9pBKgBM=; b=Ff1sMqy0x1iaKl5oKb6FrK
- vITwkCDvOQaMbh7hiYTA7D714s6VzqvhHn/9PZ1Q0QgCoGKzFxLm9zbdCtnE+mVd
- RVS1sWY0DhfP6Nff4DJXPo7J1XOS5WAbbmQpgnCwFLogWQpcAVD+6VtjJukZXHJE
- RJocyM2zRyf3EVHNh/QXK5ue0gj95oaeOEn8CN86BOaVfoC8IK4sefgZ6q4kJY3E
- a3WghN3/i09pyic/RnKXFVVfQLxY6InSCvMbfx96VnxbS7yMtpQsVdJ4FqHqi/UR
- Qgnz7U01h+sHCxJNojDh+UkOaWRTTcc1c+6Rd/HF/lCOGXH5a0euU1O2RYvUWhuw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=SUYQNx
+ ewUQ7Zh1Y/mxbH3aCG1hootns3RIznbZUWwLk=; b=sPjxDMOIcZmuaFtbk0aKVi
+ +QncHqLe+W7ScLd5lm69jVRxAWqmi+x+M9wJUYZ+pcZCtv6d7XYDTsc6kKsvrxfJ
+ Jwov0mQ4SZVtKFj/Hf2ma7cWJFt3N/yubnl1ODtOLWAuYq5AV9M+cmJMlOydGfF+
+ plRmvQShNDQX9GbsiWAOd7tu1ZResa0nSixtYC5bF+XK8iYMtrR7pecXwRulZ4H0
+ uDHpFsYFp8R3P5YFXR3M0qJtv9vaCwed23R9JAwpy5Mf+hHXiB/Br62mivEsj75I
+ HWb/eCd87KaVYQ3AiBsKK4kI37BDRsa76uS3Jp15JKUyNd/gE9L4PTmhz/cOsL/A
  ==
-X-ME-Sender: <xms:XB1FX_23WUIRllq9I7ClalBpKp5UqhbKD8VkMm5SGarpQnZSTcLukg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvtddgjeejucetufdoteggodetrfdotf
+X-ME-Sender: <xms:6x9FX7plDuHQdso4f5y0EUd3oeihoJ6QJ65S4276DYFgO7yAlUN3Bw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvtddgjeelucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:XR1FX-HAsibN46gL8N_ZUtchWFogcS9yaCOdvdovIZjqLZXEqFkRLw>
- <xmx:XR1FX_6dMvgavyz0wDouI87qnxnFWEkZQEOYuIcmQDL5vf3DGttZZg>
- <xmx:XR1FX03lilZ2fK5mgJlbXTXLeTRJRTuCAMqgBxCckGNANM8KAvhqhA>
- <xmx:XR1FX34WSXav1jL3B1NFeRxoFHvnNYNJ4xPXZ6mou_INlHvEPG0Aqw>
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+ epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
+ kfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:6x9FX1qI9B2JHxq2M5Awbo2j054nglhJFd-NA1zSk2Ag1xtwFY_1wA>
+ <xmx:6x9FX4NC9ylaxT4b88k4QDMQU0J1q36YoAwo0UYNsk-HaLShomZKgA>
+ <xmx:6x9FX-5vsDMYOnrQb8eLfF3YZE_3VHQkbNiGXNQiEt3PFfUW3V8EnQ>
+ <xmx:6x9FX3Ws-8fKYFPEhRDuA9pUZkg3XtfyzsEwAJGtdcojQM0jX0oHnQ>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id B288730600DC;
- Tue, 25 Aug 2020 10:17:00 -0400 (EDT)
-Date: Tue, 25 Aug 2020 09:16:59 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 92A403280063;
+ Tue, 25 Aug 2020 10:27:55 -0400 (EDT)
+Date: Tue, 25 Aug 2020 09:27:54 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: rentao.bupt@gmail.com
-Subject: Re: [PATCH 2/5] ARM: dts: aspeed: cmm: Set 32MB FMC flash layout
-Message-ID: <20200825141659.GF3532@heinlein>
-References: <20200824211948.12852-1-rentao.bupt@gmail.com>
- <20200824211948.12852-3-rentao.bupt@gmail.com>
+To: Ed Tanous <ed@tanous.net>
+Subject: Re: moving meta-{openpower, x86, arm} content to meta-phosphor
+Message-ID: <20200825142754.GJ3532@heinlein>
+References: <d6d450e638d016d29496ef1713083e80551a84bd.camel@fuzziesquirrel.com>
+ <20200820162955.GC3532@heinlein>
+ <CACWQX80NWqfES4vA7M4+jwrfp9Z+HWt=_ni3cMzc4yaw9skekg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="qftxBdZWiueWNAVY"
+ protocol="application/pgp-signature"; boundary="x0KprKst+ZOYEj2z"
 Content-Disposition: inline
-In-Reply-To: <20200824211948.12852-3-rentao.bupt@gmail.com>
+In-Reply-To: <CACWQX80NWqfES4vA7M4+jwrfp9Z+HWt=_ni3cMzc4yaw9skekg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,54 +94,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, taoren@fb.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-arm-kernel@lists.infradead.org
+Cc: openbmc <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---qftxBdZWiueWNAVY
+--x0KprKst+ZOYEj2z
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Aug 24, 2020 at 02:19:45PM -0700, rentao.bupt@gmail.com wrote:
-> From: Tao Ren <rentao.bupt@gmail.com>
+On Fri, Aug 21, 2020 at 09:53:21AM -0700, Ed Tanous wrote:
+> On Thu, Aug 20, 2020 at 9:32 AM Patrick Williams <patrick@stwcx.xyz> wrot=
+e:
+> > 1. What do we do about risc-v which has a dash in the architecture name?
 >=20
-> Set 32MB FMC flash layout in CMM device tree explicitly because the flash
-> layout settings were removed from "ast2500-facebook-netbmc-common.dtsi".
->=20
-> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> ---
->  arch/arm/boot/dts/aspeed-bmc-facebook-cmm.dts | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->=20
+> Technically isn't RISC-V the same thing as power9, and we just drop
+> the version from it?  Or is the "5" an important part of the name?
+> RISC-V is definitely a case where having the company in the naming
+> convention is going to be important, given that (to my understanding)
+> the design can be picked up by anyone and modded as they see fit.
 
-Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
+risc-v is the full architecture name, not the chip model name.
+
+Linux has chosen to put it in a 'riscv' subdirectory though, so dropping
+the dash seems entirely reasonable.
 
 --=20
 Patrick Williams
 
---qftxBdZWiueWNAVY
+--x0KprKst+ZOYEj2z
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9FHVsACgkQqwNHzC0A
-wRkjWw/9FtRE8urbMeaUc/+Q93LgKAnLTuU8vpixijtbDKEVuKWgib/4SNMsTdxd
-IYR2elUt707beUXkDTXWJUxqLBFAfztUeI0bHy1b4ruP3GapIJgQK/439AQMBcx/
-ohfmqKHlL2fFva/3A6zzCOEZy8jmQbbwu26zrW1K+ieYIWaZh48cZf3cZVgDG9mz
-bcwnGOWmLRz4qo4CwN+XfMJ23mTOCQZSZUFt9Tn+tDqVRLWhosFVkSUAKwRjEbn+
-XeyhjoWHAwOwWkTfU43ssybrj/PqHBM+Gr8OV9X92kF7alA59chjs8fA2ukqzAzr
-/I4kqVlWguKb1tdFDuqTiJBKqOIZQtKBt0meWmHy0Auh2SL3ihR5WTiLpOdscOWy
-NIqgYbtbx2TmtHYG7iuYUIeXy6mqlTo5xQuHii7UAMEMjpphQNFbTb/VBhk5t/sO
-++PeSEkONdZSyBDZUUGcA2+EtspANKgi8gi41EHxcghhGaxmXKZSxWNqToOmVdbg
-xqozF0ezD18b5Wy8u+6aMZLWxqdVA2B7SrrECF0WxMK/0/rDbhTF5VshxB7HdUrY
-Y5F2XaX0PngEn9oQ25quTwkrO6rnHQR/B7trGPLQVI+Wj9OT/lmc7vCf6tXwtGIY
-fxvKNjdni0yEAMJqDy+nLKXgg0ddvftM+P4HA3b6HPg0mUhb0Mo=
-=n2kh
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9FH+oACgkQqwNHzC0A
+wRkilQ//QGgVRPed2jzGtWxlwOXZmQ5bJp0IynBg77KVReiwWMQbH0U7kIpv9Z4G
+Ujhtv5bDtOVMc5FQi5B2MEodgt7qSSaWmy+ijFNx6FT2T2YnnV8Ju74DKypBUk8m
+5x8FhnqEkrlLqnNzV/6w3VOGAdzxcyo6bBFR+9WyXsleH7TpHRWRKegGfy4pk1CP
+nSdfVd1HxiRroTOSi8ZGN5KZA+0xmhN85jPwW+OxcsilLTtV5qNyF7+izcc9i6jE
+1o3uga+fRGf3ZjxCTBMnE10pg+FhUfWN9kb/Na9yGqT61D6Or4+DY+EAeI/0w1gz
++rZub9t5j7D1TY9VQOT+VIgP/doYj2OhNDFSgDoQYV77QZ42lTCJeo+8fYVrJX2X
+vGfzm9jzoMzZg2+yMF/IvoPyYo2WgUeqYuJ5SIaRI8pyWylKlAzONKfXJ2RPMNFK
+0INaOnR4zLbhM92KhVGpHnkhbUngBP/jqCxJG/AvmMrnCNH0skhnQrHmM4oo7MnM
+9PBvlwJIVJ5TgMuTu2LFLIDYeoTUHWbUeNTw5hX6tcCLSBtCSt2GKek1Uv5rHw3D
+hGjQ063OwPiTIALZRzWXZdrZ/6uLo+FHpY756bmwE0hc92n/ygvviR1Q4u09utGO
+jK/+swO3PnFeKJOVO8+BitC5QqwiOyE+oImatUbTQCip2r7Gu1g=
+=3iWe
 -----END PGP SIGNATURE-----
 
---qftxBdZWiueWNAVY--
+--x0KprKst+ZOYEj2z--
