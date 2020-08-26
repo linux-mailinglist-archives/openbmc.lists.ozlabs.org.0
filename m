@@ -2,87 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CBC3253320
-	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 17:13:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C0FCB25338F
+	for <lists+openbmc@lfdr.de>; Wed, 26 Aug 2020 17:25:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bc8WK6CHtzDq9J
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 01:13:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bc8mm3BP3zDqXT
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 01:24:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22e;
+ helo=mail-oi1-x22e.google.com; envelope-from=kurt.r.taylor@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=WSAg4R0N; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=XxF7z0mR; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=DydIlJp+; dkim-atps=neutral
+Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com
+ [IPv6:2607:f8b0:4864:20::22e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bc8S33WMczDq9J;
- Thu, 27 Aug 2020 01:10:25 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 7624D1388;
- Wed, 26 Aug 2020 11:10:22 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Wed, 26 Aug 2020 11:10:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=8AnZ67KP5cho8T587AuNuRYl0TL
- vfffNNgGcIjTL4LY=; b=WSAg4R0Njaw1B/2ysuzupPQ8S6+CulKoED5mSJ50clU
- JqYSZIrZR113kMiMSjOMd8XfbRXGVkEP+uCQNYxU4yUaMrBf+ivZR3QyPttqBcr+
- uFPfRZOX2c6A1QDcluOE0Rk2cGh/8QOI0hGNt6rn+2JjmkDz6/eWuRLl1pvrqlBa
- oYzgcprHbourQtxdfn1JbnAus9i0e4r72g2K3BkWEbIl3CCOpU5f7dwIPxz0DQCp
- FIXRG9QA1iwHbTnzzyYKyWgfVYsCdKvoSwFE2bIb9AJgyG1DcxODtGSohgVQERJP
- 9rA0jLZ8k+reoZKbcCkzxiw0/ssQcCj2KQzITCwJ+1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8AnZ67
- KP5cho8T587AuNuRYl0TLvfffNNgGcIjTL4LY=; b=XxF7z0mRE7r+ybuLVHxYTP
- mYE8WkiR2XkfBc4mfQ+dP2tg9llHbsrbpPUotdKaurVQhq9zpsDvBKBqePpQg11c
- unF2L31Kqc2LJXXgolzXImmcBVI1hV5zaqfxh8Tqvsc4Y0Odq+hxk3t0Es1HjZVd
- v5kDHJ+WhoabPwWSFzcdamYFSnTwz+YzsMxZEBsY6ClniMPw1d/lrluTxa83tVlk
- Xp8BVmgiucg3q3R7uqqFvGLQpNKu3+y+zU9Hu92vpVZpC9kfNJ7yKp6ujxWmk/Uh
- 5ZJccD27bF+Y624Xn0RDMQieNoX8+H3dx3Gq1nBP/mJYW7xdZo7MCD6xXHFxLZVg
- ==
-X-ME-Sender: <xms:XXtGX5nPMv3flriw6d7PJt1EVG0KSA0reqv2SAYqS-FQzMHfzjbicw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvvddgkeefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
- leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
- homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:XXtGX032J8z6J0pzLsOLMUbx372TGpEZ6d1r1DHwGe9sNsGyhpSEKQ>
- <xmx:XXtGX_pkqaAj_Th_RHskme249SqEarC_H_YppBDXvtr_oH2rIYV5Pg>
- <xmx:XXtGX5kGNMBHSykD4dopoiYGIdsL1R2LI6Pb6H36nbLHuRcr9b6oNQ>
- <xmx:XntGX8jFBf9Y8n50HUpebvlxtb43TWF1Yo5wFWW0wO0ICtBYmyM-9A>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 571F430600A6;
- Wed, 26 Aug 2020 11:10:21 -0400 (EDT)
-Date: Wed, 26 Aug 2020 10:10:19 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Adriana Kobylak <anoo@linux.ibm.com>
-Subject: Re: sdbusplus - const/readonly flags
-Message-ID: <20200826151019.GM3532@heinlein>
-References: <20200825150028.GK3532@heinlein>
- <421fddd2a3f5b352f0cd5b260216bc8b@linux.vnet.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bc8X62qc0zDqM5
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 01:13:57 +1000 (AEST)
+Received: by mail-oi1-x22e.google.com with SMTP id b9so1826452oiy.3
+ for <openbmc@lists.ozlabs.org>; Wed, 26 Aug 2020 08:13:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=5jmAJtQrGPpL5BwX+OIwDkn9+Y577Y43xuXUxK6Uddo=;
+ b=DydIlJp+fCAlp5gZE0BkxU8IR8fxhEo7jY4gSMwOdpP+EelBeVvNEigRTJHBFLJwNp
+ FoUqlWn/PEgQPrSufEdKaDMg0d7dRxedSBatituCowuQ3t8N9CVvyk0bzMNqNEwrR4yp
+ 0Jy4zsNYOhPu02Q5mWMwSDWWjPaHc0TzRWmE53kPvyhlQ8luQpSDuuiNDYbuq/rQT+hp
+ hMLaqmWnS08wp1SXxq6+m2PyfCMsi66vcCEKynIgO64+0P2Zi6kiQ/nZlLBSldq3PqrC
+ fkK6Fr/EIjYweUloCPVkPLgH0SO1KkcDDwStDSnGMuBU3jB91WQ1c6FqgVsWav3oLWHT
+ 3FNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=5jmAJtQrGPpL5BwX+OIwDkn9+Y577Y43xuXUxK6Uddo=;
+ b=fAa0ZvdMXeJqxXwEAWTWHnwU/xLjy1l7wbpJLouIdxHT08E59yA2RD7C7cvwGinuPr
+ t8aU1naJsswxcw2HOlYxK9rR8hgJUKMPwZsh9iCYz4UpX3WM/zBDjenTahH28uqmJhwh
+ qH7AkTT/9matCv/5kIAOeovxPfXsur7ufi8RiPCQeOO53t3AI97lys61FZyauC+3LUF7
+ hYm9stpYs3MqSSZPiNZjvVFg/BXC4x21HgOrVzgcdVoDomEaXEuU9Xwe4V1CpuBB3Lkz
+ zTsmf2Dlof26qvC1+IVQSyQsxfvvFmEzvNaBG0+0cu0inYy+2PDHmC32W97pYE7Mi7mi
+ YG/A==
+X-Gm-Message-State: AOAM533xbVLhLZ0Z5hrqw5+rCX6nHOdWhzUWrbGhvbCDMZnH5AA78m6Q
+ 0BoO6o2OSxi4kbKro7uso0GVx7ft9YBSGA==
+X-Google-Smtp-Source: ABdhPJwbsVG9GxUIcwftNGOwaQlF9UBmdOXnKqj1BiEsOwIi7WQSQbQjgyObOlIw/X+LmMPHrtZvCA==
+X-Received: by 2002:aca:acd5:: with SMTP id v204mr4132145oie.35.1598454829488; 
+ Wed, 26 Aug 2020 08:13:49 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id w62sm554028otb.52.2020.08.26.08.13.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Aug 2020 08:13:48 -0700 (PDT)
+Subject: Re: Inspur's CCLA Schedule A update 2020-08-26
+To: George Liu <liuxiwei1013@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CANFuQ7DZf73XRfXDHxqERbsLaFN3tcRM5WCjvodAN-xn0y5QNQ@mail.gmail.com>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <bf7c5cd8-080a-e29a-e21f-6de929cca2f7@gmail.com>
+Date: Wed, 26 Aug 2020 10:13:47 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="8c07nsHwQobhlezh"
-Content-Disposition: inline
-In-Reply-To: <421fddd2a3f5b352f0cd5b260216bc8b@linux.vnet.ibm.com>
+In-Reply-To: <CANFuQ7DZf73XRfXDHxqERbsLaFN3tcRM5WCjvodAN-xn0y5QNQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,61 +84,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc-bounces+anoo=linux.ibm.com@lists.ozlabs.org>,
- OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 8/26/20 3:04 AM, George Liu wrote:
+> Hi,
+> 
+> Please find the updated Schedule A of CCLA from Inspur.
 
---8c07nsHwQobhlezh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Accepted. Thanks for keeping it up to date!
 
-On Tue, Aug 25, 2020 at 03:52:42PM -0500, Adriana Kobylak wrote:
-> On 2020-08-25 10:00, Patrick Williams wrote:
->=20
-> >    * I expect some of the 'const' flags in phosphor-dbus-interfaces are
-> >      wrong and should be changed to 'readonly'.  I have collected a=20
-> > list
-> >      of them in a gist[4].  If you really intend to mean "this property
-> >      will never change during the life of an object" continue to use
-> >      'const', but if you mean "this property shall not be changed by
-> >      clients", use 'readonly' (and probably also add 'emits_change').
->=20
-> There are also some properties in phosphor-dbus-interfaces with=20
-> descriptions that say "read-only property", and the implementation is=20
-> enforcing it. It may good for the owners to revisit those as well and=20
-> see if a 'read-only' flag is applicable.
+In the future, please have the CLA manager listed on your schedule A 
+send the update, else have yourself added in that role.
 
-Yes, that's also a good point.  If there are any descriptions that say
-read-only property we should transition those to using the read-only
-flag so it is enforced automatically at a code level.
+Kurt Taylor (krtaylor)
 
-Here is another gist with all the variations I found of "read-only".
-https://gist.github.com/williamspatrick/03d72260982332c786770d0678644f94
+> 
+> Please help review.
+> 
+> Thanks
+> 
 
---=20
-Patrick Williams
-
---8c07nsHwQobhlezh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9Ge1kACgkQqwNHzC0A
-wRnrKA//bkjZgye503UZdh+1+hGplYj4ZsVnYD7FGG1N1cWmEf4m1cnOqttszR1o
-BGqQVDCa3Wt+PeQ/L+DzGqdSWG7apnNVuh1RzzX3AH11YfD1mOnQrwzOhGniZmlT
-sLOYH5EDIHUP/f+28B3oM3M5HS56IOVFnFcG7vANaW0gU1Wr1BdMeLvsB5ygxk7h
-GFe5r/7Xw/yQWbde1hgOosxziTiOVstfLq0AL2KXAB8LNm4vWz5L2VPIb3zRRqlD
-VtL57rdF4489agaUvq7DxU9yxr56uFWaRa7bR4u1Y5hAFZqeuYxCPj+Ey8X0jYAT
-QeFgngUSNaqvFCcF2B138EbplZUhXcgntBpbZeK1SalfeMZw5fGEDO3c8dXQbFB9
-P3UhtX8CT7K8xqEPh2a98NLXWiksImOEjPdZYi9USPkYgnWB8m0vNydJVRiK4cx+
-WhK9geNmhJGH5jk4dej0eDt1JhSUPW5BeiQmKVHahKUFDq++UgtXGdQv1dU4WOJc
-FBUO2u0enAQlqnFpJp5ifWcolb8sRfIPMZxJ6Ndu3/z57rXMb5J/v3wC4xsBm371
-eL2ZG5jZvHhUglp4EkATRGHtceeYn0QlwOKLkvqef6hxTiC1jxF0Rsi7t7G0PKeQ
-5EhUJkAAfis8Ly84b7l/PKPPJKhZ/gfcg0uVPnkXeocWmy3VRRY=
-=WR/8
------END PGP SIGNATURE-----
-
---8c07nsHwQobhlezh--
