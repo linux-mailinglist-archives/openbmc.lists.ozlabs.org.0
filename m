@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D001E25460D
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F083F254619
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:40:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BckLy6Fj7zDqLw
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 23:38:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BckPB6xnbzDqjN
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 23:39:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,66 +17,68 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=HmBqcziV; 
+ header.s=fm3 header.b=J5zABpw+; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=FIrcxpQM; 
+ header.a=rsa-sha256 header.s=fm3 header.b=L+cuOAUx; 
  dkim-atps=neutral
-X-Greylist: delayed 345 seconds by postgrey-1.36 at bilbo;
- Thu, 27 Aug 2020 23:36:32 AEST
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BckKF03YszDqCM
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BckKF0tZGzDqgq
  for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 23:36:32 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 44E015C0312;
+ by mailout.nyi.internal (Postfix) with ESMTP id D46165C0077;
  Thu, 27 Aug 2020 09:30:43 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
  by compute3.internal (MEProxy); Thu, 27 Aug 2020 09:30:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm3; bh=PMs+6LTNtp05O79NL5wgPPQNQk
- fO8KQcdfIeIrWUeMI=; b=HmBqcziVdNIP9orzBnrBVbM7RTgkgstaniNnBFXLMf
- mGMxyxBv8tMVrvFY8nlw5CHEnoSd3HhZGzAa9kPC2V9yD9zE1SrRBTp03ZCBl/PQ
- p9Z/kgSwY5mUqNIjEm1AdIfAR3vD9z4hjcWW+EqAcL7/0p90v0jiRKPSWpzqrNKv
- v4yUC+zqusXQcpxcZa+ge5T+8bygkgnbLuDCwNvQNqk4aMnGwy+lCfwqvU47DtRK
- yaa6iEeuQC5jhrN1lN4Ar8Y8nDPRaoKlfH4TgaXMTkXW/B9LXzLUm3at8zXUTRQF
- 7tZ0xfm35ABT+LqZSBOeB6if4WkEqyRR40V8OWgNyePA==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=fm3; bh=6EIf2LGImcTk3
+ KN8YEp7FE9CDzy1PxgLn7xD/VwiMqY=; b=J5zABpw+y1iUXC0GfMtmCgmB9N1V2
+ ZMyn7+Z5euptMG99D3a9OFtrerzxt5eyw+EAulZPlBYnHKSKwwMc3NssUw1ysmmo
+ Kn37t+MbUpupY2kzz2fTJqSHZXrJuwa/L846K9q1ZCVXx0DobMeSngkEkyXuA0km
+ EjKfENbvHHBXR0LGGnOvqOQpC7z3cffPzC0bDFiyp/xd7HHOZmWKwn3wcvo2zTWS
+ tf31lk+SqPV0wAHImaqurAGuhKXUpk1Osti15h5WGL0BkhW0ix1Ci6CXk4uYo6BR
+ i4jJXyhy/e7Iu7JoUYJZU2NiGimRNAI7JTBzJfS2K7F8ry7PFvQujSzog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=PMs+6LTNtp05O79NL
- 5wgPPQNQkfO8KQcdfIeIrWUeMI=; b=FIrcxpQMedtzV4mrJ6xjnSsNITXDdFTiQ
- rI158rjwIpRpfXTF6HF8j3eWfQ6tV0e4gyj63Mft6XgvkMaUpJB/ZTgcfTHSmhPb
- LGRjgy0OkUWML9wd3RxSRG7u/mPlqlHnMVmeUeC7qRUHWYojHSwSC48Wlw7Cidov
- 5RdV//atRh1FmhhklYK0U278WtvP/I2NdiTYDqz1xf9Y1UGAeNzJUkzV4xuEAEMc
- zSVgVL8HKabSmzNgoQNbelM+zgW9jzHBRbebCP/Ezpi2bke4/WYI7Rdgf3OibjMu
- Earmv/yOorqyc+5PpZcX613f0DJYGJZh9tJfJHrsIR4dMN665w12A==
-X-ME-Sender: <xms:grVHXzKN7kfrkoLjisBQt6JNgvMwJ1H-ke6mgU7BLDrI_TkkH0edTg>
+ :in-reply-to:message-id:mime-version:references:subject:to
+ :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; bh=6EIf2LGImcTk3KN8YEp7FE9CDzy1PxgLn7xD/VwiMqY=; b=L+cuOAUx
+ nF2y6/cH3DMGSqcW1oWm5S76JCMmOlbevVRyMYriv1L814R/K5O0msci5L35H5Mb
+ n5Ptu4crO6TLETrNr92eVMOtLpjJpuXQkcv5fcRurXlpOh/axVVv7AfZrL7L9H+G
+ CslrkakisnDFadSGD+b348cUjEy83dQNMfo1UmfWaKPyELi9k+31Iea8RXFMrXkm
+ 1w+XGanFRkWQg2QRh+BxHzd6B3HUBST+Q2mNJMVQdauf75ggHYfL6XuqVrdIQVVh
+ nH0yfa8tmibRiBT3NVsO0KgfIrXU0MjW8d1oS/OJa0bVzfGjK9W058KS1YJYbx14
+ 0G56EmBbJLszEA==
+X-ME-Sender: <xms:g7VHXxcSa1_0xGNdU9kBUXcarKwqfiEkZ3Wx3bUMNDYQ8QQfd_dcLA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvgedgieehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
- dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
- ihgurdgruheqnecuggftrfgrthhtvghrnhepkefhieffjeevfeevhedtieeihfefvdejle
- dvvddthefftedujeethfeuueelfedtnecukfhppedugedrvddrudduiedruddtnecuvehl
- uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
- grjhdrihgurdgruh
-X-ME-Proxy: <xmx:grVHX3Ime8GEhm7ScG1VHbOJYa7uiEdLyHOj_Urgv8rzD_Sp2_D14w>
- <xmx:grVHX7sickourHuq-6oJStJr_OWBVQpv-2cHpxoVnduh0jmKgSVnOQ>
- <xmx:grVHX8Y3FLHs17eJ9fabE4j-MfqN5LW5ghHYyVShWTOwXtnTbKxnHQ>
- <xmx:g7VHXzms_HGEVuXwzVQEbbAK3v_Jnkugl7FADXBIi-W_9Rqa6wCulw>
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+ dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
+ jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
+ etjeffleffvdduudevieffgeetleevhfetnecukfhppedugedrvddrudduiedruddtnecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvg
+ ifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:g7VHX_N5AbraopCqAK6IHd-OKTuAh4Npx94yk8tl6gurkpLYFL5cHw>
+ <xmx:g7VHX6iWlaPFGdxCey4EuEJxvugzbYDl5Ix_8bewcJ65lMGlkOgv5A>
+ <xmx:g7VHX6-Bz-NXQK8yTpt61FnwYJ5OxTws-FWNRsItJ2dag_saUOJMzQ>
+ <xmx:g7VHX74IrT_3Hwkb7kHwVP1ZrdHPVyIR_LCfLSqSAqDikcIrkLkEdA>
 Received: from localhost.localdomain
  (ppp14-2-116-10.adl-apt-pir-bras32.tpg.internode.on.net [14.2.116.10])
- by mail.messagingengine.com (Postfix) with ESMTPA id 29255328005E;
- Thu, 27 Aug 2020 09:30:40 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id A34CC3280059;
+ Thu, 27 Aug 2020 09:30:42 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.8 0/3] MAX31785 Fan Controller Work-arounds
-Date: Thu, 27 Aug 2020 22:59:59 +0930
-Message-Id: <20200827133002.369439-1-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.8 1/3] pmbus: (max31785) Retry enabling fans after
+ writing MFR_FAN_CONFIG
+Date: Thu, 27 Aug 2020 23:00:00 +0930
+Message-Id: <20200827133002.369439-2-andrew@aj.id.au>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20200827133002.369439-1-andrew@aj.id.au>
+References: <20200827133002.369439-1-andrew@aj.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -94,43 +96,70 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+It has been observed across large fleets of systems that a small subset
+of those systems occasionally loose control of some number of fans
+across a BMC reboot (their hwmon fan attributes are missing from sysfs).
 
-This series works around reliability problems with the MAX31785 fan controller
-as observed in the field on some POWER systems.
+From extensive testing and tracing it was discovered that writes
+enabling a fan in FAN_CONFIG_1_2 failed to stick on the system under
+test with a frequency of about 1 in 1000 re-binds of the driver.
 
-I'm the first to admit the patches are not elegant, so feedback there is
-appreciated.
+The MAX31785 datasheet recommends in the documentation for
+MFR_FAN_CONFIG that the asssociated fan(s) be disabled before updating
+the register. The sequence in question implements this suggestion, and
+the observed loss-of-fans symptom occurs when the write to re-enable the
+fan in FAN_CONFIG_1_2 fails to stick.
 
-Separately, our previous workarounds have run aground upstream as the hwmon
-maintainer was unable to reproduce our observations on the MAX31785 evaluation
-kit. I've recently received an evaluation kit, so I plan on putting some of
-these issues to the test myself. Ultimately this will help determine whether we
-have issues with our fan card designs or whether the controller itself is at
-fault (I have to admit, given some of the failures, it's hard to see how the
-controller might not be at fault). Basically, this paragraph is my excuse for
-not pushing these patches further upstream for the moment; I will re-evaluate
-once I have the results from testing against the evkit.
+The trace data suggests a one-shot retry is enough to successfully
+update FAN_CONFIG_1_2. With the workaround, no loss of fans was observed
+in over 20,000 consecutive rebinds of the driver.
 
-In the mean time, these patches resolve issues we've seen in some system
-deployments. Taken together, I've put the driver through an unbind/bind loop
-of over 20,000 iterations with no "loss" of fans, where prior to the series we
-typically achieved only a few hundred. This feels like a significant
-improvement, so please consider merging despite their ugliness.
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
+ drivers/hwmon/pmbus/max31785.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-Cheers,
-
-Andrew
-
-Andrew Jeffery (3):
-  pmbus: (max31785) Retry enabling fans after writing MFR_FAN_CONFIG
-  pmbus: (max31785) Add a local pmbus_set_page() implementation
-  pmbus: (core) Add a one-shot retry in pmbus_set_page()
-
- drivers/hwmon/pmbus/max31785.c   | 55 ++++++++++++++++++++++++++------
- drivers/hwmon/pmbus/pmbus_core.c | 33 ++++++++++++-------
- 2 files changed, 66 insertions(+), 22 deletions(-)
-
+diff --git a/drivers/hwmon/pmbus/max31785.c b/drivers/hwmon/pmbus/max31785.c
+index cbcd0b2301f4..88b7156d777e 100644
+--- a/drivers/hwmon/pmbus/max31785.c
++++ b/drivers/hwmon/pmbus/max31785.c
+@@ -376,6 +376,7 @@ static int max31785_of_fan_config(struct i2c_client *client,
+ 	u32 page;
+ 	u32 uval;
+ 	int ret;
++	int i;
+ 
+ 	if (!of_device_is_compatible(child, "pmbus-fan"))
+ 		return 0;
+@@ -552,10 +553,24 @@ static int max31785_of_fan_config(struct i2c_client *client,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_FAN_CONFIG_12,
+-						 pb_cfg);
+-	if (ret < 0)
+-		return ret;
++	for (i = 0; i < 2; i++) {
++		ret = max31785_i2c_smbus_write_byte_data(client,
++							 PMBUS_FAN_CONFIG_12,
++							 pb_cfg);
++		if (ret < 0)
++			continue;
++
++		ret = max31785_i2c_smbus_read_byte_data(client,
++							PMBUS_FAN_CONFIG_12);
++		if (ret < 0)
++			continue;
++
++		if (ret == pb_cfg)
++			break;
++	}
++
++	if (i == 2)
++		return -EIO;
+ 
+ 	/*
+ 	 * Fans are on pages 0 - 5. If the page property of a fan node is
 -- 
 2.25.1
 
