@@ -1,143 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F259253E15
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 08:45:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D001E25460D
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:38:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BcYC94R18zDqY0
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 16:45:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BckLy6Fj7zDqLw
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 23:38:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0a-00082601.pphosted.com;
- envelope-from=prvs=5508e0cde0=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=iJssP6gS; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=Q9qfo5Sm; 
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=HmBqcziV; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=FIrcxpQM; 
  dkim-atps=neutral
-Received: from mx0a-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+X-Greylist: delayed 345 seconds by postgrey-1.36 at bilbo;
+ Thu, 27 Aug 2020 23:36:32 AEST
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BcYB1649TzDqY0
- for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 16:44:39 +1000 (AEST)
-Received: from pps.filterd (m0089730.ppops.net [127.0.0.1])
- by m0089730.ppops.net (8.16.0.42/8.16.0.42) with SMTP id 07R6daWh010761;
- Wed, 26 Aug 2020 23:44:37 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=HpaNEa8sC/wGC2GTwTWeK8drXmO6NNHaOvGxkQIyxQQ=;
- b=iJssP6gSino0SPjmNHk6tyh7lEvge2pDQfzqaREpaulvCkH078VfKsqYPT1eDdWzDiOP
- OxQj82MnTitZHttmpATrZiFFT/KLzsnhSw5A3DYjkrDYwmmnfcoVd17C5YA/VeszpWqA
- RPlWld06wVrfrriYjDNQ5nEy+ZqQPWsA9+o= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by m0089730.ppops.net with ESMTP id 335up6uqv9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Wed, 26 Aug 2020 23:44:37 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (100.104.98.9) by
- o365-in.thefacebook.com (100.104.94.229) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Wed, 26 Aug 2020 23:44:35 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QE8iQNW0JEMauWQqrYnMIKXQNzKbXVsRyyYhTQw6VRYbuLEdwebgHGf7hbLd9sAt3qIswfSU+L4/YgzwAQfhllKZo21zokMw+3DHEfbWRBPHo60ukW5q3dFFKJ4jpkM+94t5v06SzE15kniYZewLmALkcG2H8r5AOrhWehO4QZMXMS/+ir2JjlzA+eXIeYvwP5KBwXN6kM0pvdnXYuw5TssXvdWB/t7fjkjEbPKJv5gtpyP3UQ5EvyCyDv9fl5nAEihm9VALkSxTFQbSSWbfMESzRSDFMoDIiKESwyGUXwwsabzow8G+CZ5Fn4e1/wWcs290v81+/jz7u3U9Ut1Z3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HpaNEa8sC/wGC2GTwTWeK8drXmO6NNHaOvGxkQIyxQQ=;
- b=iDdchlAGQDChNCuRcWkHX3+++mh4BpwCQtSUtXQOhMwsjIHxKzCkrB9WbmS40oH6cxfEcH3rTtPxZ+hcHl/OMHymuriAbeZImLDwV7JAjrtdBgxiuHnxgzN0lewCLfEmlrGajPhmzE63SUDUfvjew01O/QlKwyh+nmM6LU5WqJCOuHkJace7Ler4k+a44wA/m7PbSIInMXh6O0dfoYU1FIzmt3fBtFbzyEfXHN9Ju1RVdc6b+PkrcnrAkisTmGSwYxkrsuF2SyJlol6tT/+ErmYxqwoYbpI71FwNcvRHIpEzhO7DBw/QZv8ipv+kkFpyJQGoL/J0Oz7f97gHShbEAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HpaNEa8sC/wGC2GTwTWeK8drXmO6NNHaOvGxkQIyxQQ=;
- b=Q9qfo5SmNa9zGU9+E45Zu+izH4Xq3+/0tERn7vcwYL/FQvC9T8ZI4hxu97YoV9U7izTWtjMA93LkvZlVJnEae8fuTJmtWIj9h5PyUXG+qQ9AUwKvJHOWuiEn7RnaaZ3kL6fkQVZ5i+9NzVxRx4qqr27ihyPzJVUERJHhmNh4MH8=
-Received: from DM6PR15MB2378.namprd15.prod.outlook.com (2603:10b6:5:8c::23) by
- DM6PR15MB3721.namprd15.prod.outlook.com (2603:10b6:5:1f7::29) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3305.26; Thu, 27 Aug 2020 06:44:35 +0000
-Received: from DM6PR15MB2378.namprd15.prod.outlook.com
- ([fe80::340f:8080:19ee:d547]) by DM6PR15MB2378.namprd15.prod.outlook.com
- ([fe80::340f:8080:19ee:d547%5]) with mapi id 15.20.3305.032; Thu, 27 Aug 2020
- 06:44:35 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Neil Bradley <Neil_Bradley@phoenix.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: Tioga Pass OpenBMC 2.8
-Thread-Topic: Tioga Pass OpenBMC 2.8
-Thread-Index: AdZ4G9/pZ44Ttxs7TiCWRTJU7JTTHQCA72kAAA7UvEAAALC0EP//pIUA//+ESKCAAIvbAP/+FToQgASWKQD//4oO4AAPAmyA//83aBD//mFVgP/8P4nQ//jwJQA=
-Date: Thu, 27 Aug 2020 06:44:34 +0000
-Message-ID: <15B14938-4BE1-4BD3-82A4-3B33743A74F0@fb.com>
-References: <c27c916296c14b7a973ce10ce462a574@SCL-EXCHMB-13.phoenix.com>
- <5F804DFD-B91D-4293-A410-62ED737423A7@fb.com>
- <6bc3d9da57d44f55ad66179e74a51bd1@SCL-EXCHMB-13.phoenix.com>
- <a5e34d90e0c34849a672189f8adf9cd7@SCL-EXCHMB-13.phoenix.com>
- <AA3AD0B7-CC74-4B6C-927D-101A3E721004@fb.com>
- <b62681c4a4c148b58cdd9ff1e614d400@SCL-EXCHMB-13.phoenix.com>
- <22D145E2-1328-428F-9AAF-54E138797994@fb.com>
- <ba0c0f989f1045f98a5186a57917c4b6@SCL-EXCHMB-13.phoenix.com>
- <E2ECF617-0F2B-4526-A2F9-20F343F317A3@fb.com>
- <b6891a4662b04509ae5ed0f8c54777ce@SCL-EXCHMB-13.phoenix.com>
- <868F639F-7878-4B90-8CAE-7C95EB57B26E@fb.com>
- <9b4d083d50ad4feba14f5c8848540ade@SCL-EXCHMB-13.phoenix.com>
- <58DA7165-A3A6-4939-B580-53A5AFD7C9C5@fb.com>
- <588c033deaf143059c0ebab0775ed071@SCL-EXCHMB-13.phoenix.com>
-In-Reply-To: <588c033deaf143059c0ebab0775ed071@SCL-EXCHMB-13.phoenix.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: phoenix.com; dkim=none (message not signed)
- header.d=none;phoenix.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2620:10d:c090:400::5:2030]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ed6a14b4-82bc-4091-6592-08d84a54a950
-x-ms-traffictypediagnostic: DM6PR15MB3721:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR15MB3721B628A7D7B3F736286735DD550@DM6PR15MB3721.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Q9+YPFZxykmMFxRAABoRJ6s1hkhZBhajo+TEVLUBKjb8iGP3+Zj1SWJJQgN3qoM1J7JRoLU5Jtfd8v1lWYW7KiEAaSzCXnpqDQ982bxrEHx0DjKG0eyMESbDPOzQXXHCDuLcWD6qmMlQkpOGhhkMYvcTrTQFM7vLAhGTJLdBirlIjHgPkMJ1ZRAx77Vo+WqV7ZdIgCsi4DRNzVDWcFxuvGwrHGdFHGgS+ER9sttbqOTCjTK5QBOGAfAAGd2ZTbyNsv4ieMlBXCC9T8G4synAYxgKhwawXmRqiYE+taezgt7Q4ykWA0WADFI7SOJjU0gTCxZBW4iPlOV9bEc/Ij0LKg==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR15MB2378.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39860400002)(346002)(366004)(376002)(136003)(396003)(6512007)(54906003)(8676002)(53546011)(7116003)(6506007)(8936002)(2616005)(86362001)(110136005)(5660300002)(33656002)(316002)(71200400001)(478600001)(4326008)(83380400001)(6486002)(2906002)(186003)(91956017)(76116006)(36756003)(66476007)(66556008)(66946007)(66446008)(64756008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: sGeH2H1sxFs/zis5ODBkzPNv/NSIHHCykboOUskqy1RGUyFx3Gn4wcdUjSREkX0wA7pmgGtKU3M0JGH8Vl6cHqyy7JjWNtolERXvbv83IYX8d8XM3mCYbLnxQKTIMc4+F93hvaxjYYoP0DU2YoQNDM3wSbkYziB1M9m2jPj4Q9KZEQdhsP6pPKNnqOmlZ1VBzcYd6Z5ObhN9Hr2Jjqlx6DvML8P7NwUWTYjdBTnzTS5cVPcC/lOHfu4sGHECJCTnwGkrIO6NRq4bCkgF2E9UkMunngAcilWJXgXrjcR4MxxqecPkS64kZyRL2bNbtqR2wMWzgbqztAn339lLYqo3O9cW9M9T11maqZRqTkTXLiWW4kOeCdMizFlGfxc6pSCdoabHtc/K0Y5oj23fOyPIcKT2z3Evmm7McJ3QdSwWrI6hkAAcZ75caIJHO6ykMU0wcHuuptgr96d4Nzgw9yjyH/6HR4I3hql5tmrssI4LBOQ+6NKThs6v008hy8tWqb+ULQ0ST+5jFv3nOdjwKr3OBElaxZEMEa7bcQUt/5xOSTZ9pJsEPEgJCuE79HRJo4PQrinHe1KMYaXAtTdReX9Y8Ljay/DtSWnlsG7BNelLjVhzwPy2WCvhBQjJJuAVzfoamANVk39wnLIw6rEX1W40n0BadEorHcKfE1jXGnv7h1xvajtMw/1wMVC7Eeaq3OZd
-Content-Type: multipart/alternative;
- boundary="_000_15B149384BE14BD382A43B33743A74F0fbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BckKF03YszDqCM
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 23:36:32 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 44E015C0312;
+ Thu, 27 Aug 2020 09:30:43 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute3.internal (MEProxy); Thu, 27 Aug 2020 09:30:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm3; bh=PMs+6LTNtp05O79NL5wgPPQNQk
+ fO8KQcdfIeIrWUeMI=; b=HmBqcziVdNIP9orzBnrBVbM7RTgkgstaniNnBFXLMf
+ mGMxyxBv8tMVrvFY8nlw5CHEnoSd3HhZGzAa9kPC2V9yD9zE1SrRBTp03ZCBl/PQ
+ p9Z/kgSwY5mUqNIjEm1AdIfAR3vD9z4hjcWW+EqAcL7/0p90v0jiRKPSWpzqrNKv
+ v4yUC+zqusXQcpxcZa+ge5T+8bygkgnbLuDCwNvQNqk4aMnGwy+lCfwqvU47DtRK
+ yaa6iEeuQC5jhrN1lN4Ar8Y8nDPRaoKlfH4TgaXMTkXW/B9LXzLUm3at8zXUTRQF
+ 7tZ0xfm35ABT+LqZSBOeB6if4WkEqyRR40V8OWgNyePA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=PMs+6LTNtp05O79NL
+ 5wgPPQNQkfO8KQcdfIeIrWUeMI=; b=FIrcxpQMedtzV4mrJ6xjnSsNITXDdFTiQ
+ rI158rjwIpRpfXTF6HF8j3eWfQ6tV0e4gyj63Mft6XgvkMaUpJB/ZTgcfTHSmhPb
+ LGRjgy0OkUWML9wd3RxSRG7u/mPlqlHnMVmeUeC7qRUHWYojHSwSC48Wlw7Cidov
+ 5RdV//atRh1FmhhklYK0U278WtvP/I2NdiTYDqz1xf9Y1UGAeNzJUkzV4xuEAEMc
+ zSVgVL8HKabSmzNgoQNbelM+zgW9jzHBRbebCP/Ezpi2bke4/WYI7Rdgf3OibjMu
+ Earmv/yOorqyc+5PpZcX613f0DJYGJZh9tJfJHrsIR4dMN665w12A==
+X-ME-Sender: <xms:grVHXzKN7kfrkoLjisBQt6JNgvMwJ1H-ke6mgU7BLDrI_TkkH0edTg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvgedgieehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+ dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
+ ihgurdgruheqnecuggftrfgrthhtvghrnhepkefhieffjeevfeevhedtieeihfefvdejle
+ dvvddthefftedujeethfeuueelfedtnecukfhppedugedrvddrudduiedruddtnecuvehl
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruh
+X-ME-Proxy: <xmx:grVHX3Ime8GEhm7ScG1VHbOJYa7uiEdLyHOj_Urgv8rzD_Sp2_D14w>
+ <xmx:grVHX7sickourHuq-6oJStJr_OWBVQpv-2cHpxoVnduh0jmKgSVnOQ>
+ <xmx:grVHX8Y3FLHs17eJ9fabE4j-MfqN5LW5ghHYyVShWTOwXtnTbKxnHQ>
+ <xmx:g7VHXzms_HGEVuXwzVQEbbAK3v_Jnkugl7FADXBIi-W_9Rqa6wCulw>
+Received: from localhost.localdomain
+ (ppp14-2-116-10.adl-apt-pir-bras32.tpg.internode.on.net [14.2.116.10])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 29255328005E;
+ Thu, 27 Aug 2020 09:30:40 -0400 (EDT)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: joel@jms.id.au
+Subject: [PATCH linux dev-5.8 0/3] MAX31785 Fan Controller Work-arounds
+Date: Thu, 27 Aug 2020 22:59:59 +0930
+Message-Id: <20200827133002.369439-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR15MB2378.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed6a14b4-82bc-4091-6592-08d84a54a950
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2020 06:44:34.9822 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ZmmoKNpx2DdNskWq2S1o/iqfp4L7n6kc5aNjqTMhoseFnMl2ItvImk+EkVnYUx1SyO9LpCpVN6OhY9arOlGUqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR15MB3721
-X-OriginatorOrg: fb.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-08-27_02:2020-08-27,
- 2020-08-27 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- adultscore=0
- mlxlogscore=999 priorityscore=1501 lowpriorityscore=0 impostorscore=0
- phishscore=0 suspectscore=0 clxscore=1015 spamscore=0 mlxscore=0
- bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2008270052
-X-FB-Internal: deliver
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,178 +90,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Amithash Prasad <amithash@fb.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_15B149384BE14BD382A43B33743A74F0fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hello,
 
-Tm8sIHlvdSBjYW4gc2F5IHRoYXQgcG93ZXIgY29udHJvbCBmb3IgdGlvZ2FwYXNzIHdhcyBhdmFp
-bGFibGUgZnJvbSBrZXJuZWwgNS43IG9ubHkuDQoNCkZyb206IE5laWwgQnJhZGxleSA8TmVpbF9C
-cmFkbGV5QHBob2VuaXguY29tPg0KRGF0ZTogV2VkbmVzZGF5LCBBdWd1c3QgMjYsIDIwMjAgYXQg
-MTE6MjkgUE0NClRvOiBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbT4sICJvcGVuYm1j
-QGxpc3RzLm96bGFicy5vcmciIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpDYzogQW1pdGhh
-c2ggUHJhc2FkIDxhbWl0aGFzaEBmYi5jb20+LCBTYWkgRGFzYXJpIDxzZGFzYXJpQGZiLmNvbT4N
-ClN1YmplY3Q6IFJFOiBUaW9nYSBQYXNzIE9wZW5CTUMgMi44DQoNCkRvZXMgdGhpcyBtZWFuIHRo
-ZSBvZmZpY2lhbCAyLjggcmVsZWFzZSB3YXMgYnJva2VuIGluIHRoaXMgcmVnYXJkPyBXZSBhcmVu
-4oCZdCB1c2luZyB0aGUgbGF0ZXN0ICYgZ3JlYXRlc3QsIGJ1dCBpdOKAmXMgd29ydGggYSBzaG90
-LiBXaWxsIGRvIHRvbW9ycm93IQ0KDQotLT5OZWlsDQoNCkZyb206IFZpamF5IEtoZW1rYSA8dmlq
-YXlraGVta2FAZmIuY29tPg0KU2VudDogV2VkbmVzZGF5LCBBdWd1c3QgMjYsIDIwMjAgMTA6NDAg
-UE0NClRvOiBOZWlsIEJyYWRsZXkgPE5laWxfQnJhZGxleUBwaG9lbml4LmNvbT47IG9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZw0KQ2M6IEFtaXRoYXNoIFByYXNhZCA8YW1pdGhhc2hAZmIuY29tPjsg
-U2FpIERhc2FyaSA8c2Rhc2FyaUBmYi5jb20+DQpTdWJqZWN0OiBSZTogVGlvZ2EgUGFzcyBPcGVu
-Qk1DIDIuOA0KDQpOZWlsLA0KVGhpcyBtZWFucyB0aGF0IHBvd2VyIGNvbnRyb2wgYXBwbGljYXRp
-b24gaXMgbm90IHJ1bm5pbmcuIEFuIEkga25vdyB3aHkgYmVjYXVzZSB3ZSBuZWVkIGtlcm5lbCBk
-ZXZpY2UgdHJlZSBmcm9tIDUuNysga2VybmVsIHRvIHN1cHBvcnQgcHJvcGVyIGdwaW8gcGlucyBh
-ZGRpdGlvbiBpbiBkZXZpY2UgIHRyZWUuDQoNClNvIHBsZWFzZSBkb3dubG9hZCBsYXRlc3Qgb3Bl
-bmJtYyBpbWFnZSwgeW91ciBhbGwgcHJvYmxlbSBmb3IgaXBtYiBhbmQgcG93ZXIgY29udHJvbCB3
-aWxsIGJlIHJlc29sdmVkLg0KDQpSZWdhcmRzDQotVmlqYXkNCg0KDQpGcm9tOiBOZWlsIEJyYWRs
-ZXkgPE5laWxfQnJhZGxleUBwaG9lbml4LmNvbTxtYWlsdG86TmVpbF9CcmFkbGV5QHBob2VuaXgu
-Y29tPj4NCkRhdGU6IFdlZG5lc2RheSwgQXVndXN0IDI2LCAyMDIwIGF0IDI6NTMgUE0NClRvOiBW
-aWpheSBLaGVta2EgPHZpamF5a2hlbWthQGZiLmNvbTxtYWlsdG86dmlqYXlraGVta2FAZmIuY29t
-Pj4sICJvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8bWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJz
-Lm9yZz4iIDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8bWFpbHRvOm9wZW5ibWNAbGlzdHMub3ps
-YWJzLm9yZz4+DQpDYzogQW1pdGhhc2ggUHJhc2FkIDxhbWl0aGFzaEBmYi5jb208bWFpbHRvOmFt
-aXRoYXNoQGZiLmNvbT4+LCBTYWkgRGFzYXJpIDxzZGFzYXJpQGZiLmNvbTxtYWlsdG86c2Rhc2Fy
-aUBmYi5jb20+Pg0KU3ViamVjdDogUkU6IFRpb2dhIFBhc3MgT3BlbkJNQyAyLjgNCg0KQSBiaXQg
-bW9yZSBpbmZvIOKAkyBkb2VzIHRoaXMgbWVhbiB0aGUgZGJ1cyBpbnRlcmZhY2UgZm9yIGNoYXNz
-aXMgY29udHJvbCBpcyBtaXNzaW5nPw0KDQpyb290QHRpb2dhcGFzczovZGV2IyBwb3dlci11dGls
-IG1iIHN0YXR1cw0KRmFpbGVkIHRvIGdldCBwcm9wZXJ0eSBDdXJyZW50UG93ZXJTdGF0ZSBvbiBp
-bnRlcmZhY2UgeHl6Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5DaGFzc2lzOiBUaGUgbmFtZSBpcyBu
-b3QgYWN0aXZhdGFibGUgb2ZmDQpyb290QHRpb2dhcGFzczovZGV2IyBwb3dlci11dGlsIG1iIG9u
-DQpGYWlsZWQgdG8gZ2V0IHByb3BlcnR5IEN1cnJlbnRQb3dlclN0YXRlIG9uIGludGVyZmFjZSB4
-eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBuYW1lIGlzIG5vdCBhY3RpdmF0
-YWJsZQ0KUG93ZXJpbmcgb24gU2VydmVyDQpGYWlsZWQgdG8gc2V0IHByb3BlcnR5IFJlcXVlc3Rl
-ZFBvd2VyVHJhbnNpdGlvbiBvbiBpbnRlcmZhY2UgeHl6Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5D
-aGFzc2lzOiBUaGUgbmFtZSBpcyBub3QgYWN0aXZhdGFibGUNCnJvb3RAdGlvZ2FwYXNzOi9kZXYj
-IHBvd2VyLXV0aWwgbWIgb2ZmDQpGYWlsZWQgdG8gZ2V0IHByb3BlcnR5IEN1cnJlbnRQb3dlclN0
-YXRlIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBu
-YW1lIGlzIG5vdCBhY3RpdmF0YWJsZQ0Kcm9vdEB0aW9nYXBhc3M6L2RldiMNCg0KLS0+TmVpbA0K
-DQo=
+This series works around reliability problems with the MAX31785 fan controller
+as observed in the field on some POWER systems.
 
---_000_15B149384BE14BD382A43B33743A74F0fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <6BA90B3E43F78D4AAFFA51BB3FC8C834@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+I'm the first to admit the patches are not elegant, so feedback there is
+appreciated.
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseTpXaW5nZGluZ3M7DQoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAg
-MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
-OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
-Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25z
-ICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjow
-aW47DQoJZm9udC1zaXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJp
-Zjt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsN
-Cgljb2xvcjpibHVlOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0Kc3Bhbi5FbWFpbFN0
-eWxlMTgNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwtcmVwbHk7DQoJZm9udC1mYW1pbHk6IkNh
-bGlicmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2luZG93dGV4dDt9DQouTXNvQ2hwRGVmYXVsdA0K
-CXttc28tc3R5bGUtdHlwZTpleHBvcnQtb25seTsNCglmb250LXNpemU6MTAuMHB0O30NCkBwYWdl
-IFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4g
-MS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQot
-LT48L3N0eWxlPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9ImJsdWUiIHZsaW5r
-PSJwdXJwbGUiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPk5vLCB5b3UgY2FuIHNheSB0aGF0IHBvd2VyIGNvbnRyb2wgZm9yIHRpb2dhcGFzcyB3YXMg
-YXZhaWxhYmxlIGZyb20ga2VybmVsIDUuNyBvbmx5LjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9u
-ZTtib3JkZXItdG9wOnNvbGlkICNCNUM0REYgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBp
-biI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBw
-dDtjb2xvcjpibGFjayI+RnJvbTogPC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEy
-LjBwdDtjb2xvcjpibGFjayI+TmVpbCBCcmFkbGV5ICZsdDtOZWlsX0JyYWRsZXlAcGhvZW5peC5j
-b20mZ3Q7PGJyPg0KPGI+RGF0ZTogPC9iPldlZG5lc2RheSwgQXVndXN0IDI2LCAyMDIwIGF0IDEx
-OjI5IFBNPGJyPg0KPGI+VG86IDwvYj5WaWpheSBLaGVta2EgJmx0O3ZpamF5a2hlbWthQGZiLmNv
-bSZndDssICZxdW90O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZxdW90OyAmbHQ7b3BlbmJtY0Bs
-aXN0cy5vemxhYnMub3JnJmd0Ozxicj4NCjxiPkNjOiA8L2I+QW1pdGhhc2ggUHJhc2FkICZsdDth
-bWl0aGFzaEBmYi5jb20mZ3Q7LCBTYWkgRGFzYXJpICZsdDtzZGFzYXJpQGZiLmNvbSZndDs8YnI+
-DQo8Yj5TdWJqZWN0OiA8L2I+UkU6IFRpb2dhIFBhc3MgT3BlbkJNQyAyLjg8bzpwPjwvbzpwPjwv
-c3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNw
-OzwvbzpwPjwvcD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+RG9lcyB0aGlzIG1lYW4g
-dGhlIG9mZmljaWFsIDIuOCByZWxlYXNlIHdhcyBicm9rZW4gaW4gdGhpcyByZWdhcmQ/IFdlIGFy
-ZW7igJl0IHVzaW5nIHRoZSBsYXRlc3QgJmFtcDsgZ3JlYXRlc3QsIGJ1dCBpdOKAmXMgd29ydGgg
-YSBzaG90LiBXaWxsIGRvIHRvbW9ycm93ITxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBz
-dHlsZT0iZm9udC1mYW1pbHk6V2luZ2RpbmdzIj7DoDwvc3Bhbj5OZWlsPG86cD48L286cD48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxkaXY+DQo8ZGl2
-IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlkICNFMUUxRTEgMS4wcHQ7cGFkZGlu
-ZzozLjBwdCAwaW4gMGluIDBpbiI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj5Gcm9tOjwvYj4g
-VmlqYXkgS2hlbWthICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7IDxicj4NCjxiPlNlbnQ6PC9i
-PiBXZWRuZXNkYXksIEF1Z3VzdCAyNiwgMjAyMCAxMDo0MCBQTTxicj4NCjxiPlRvOjwvYj4gTmVp
-bCBCcmFkbGV5ICZsdDtOZWlsX0JyYWRsZXlAcGhvZW5peC5jb20mZ3Q7OyBvcGVuYm1jQGxpc3Rz
-Lm96bGFicy5vcmc8YnI+DQo8Yj5DYzo8L2I+IEFtaXRoYXNoIFByYXNhZCAmbHQ7YW1pdGhhc2hA
-ZmIuY29tJmd0OzsgU2FpIERhc2FyaSAmbHQ7c2Rhc2FyaUBmYi5jb20mZ3Q7PGJyPg0KPGI+U3Vi
-amVjdDo8L2I+IFJlOiBUaW9nYSBQYXNzIE9wZW5CTUMgMi44PG86cD48L286cD48L3A+DQo8L2Rp
-dj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPk5laWwsPC9zcGFu
-PjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9y
-OmJsYWNrIj5UaGlzIG1lYW5zIHRoYXQgcG93ZXIgY29udHJvbCBhcHBsaWNhdGlvbiBpcyBub3Qg
-cnVubmluZy4gQW4gSSBrbm93IHdoeSBiZWNhdXNlIHdlIG5lZWQga2VybmVsIGRldmljZSB0cmVl
-IGZyb20gNS43KyBrZXJuZWwgdG8gc3VwcG9ydCBwcm9wZXIgZ3BpbyBwaW5zIGFkZGl0aW9uIGlu
-IGRldmljZSZuYnNwOyB0cmVlLjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7PC9zcGFuPjxvOnA+PC9vOnA+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5TbyBw
-bGVhc2UgZG93bmxvYWQgbGF0ZXN0IG9wZW5ibWMgaW1hZ2UsIHlvdXIgYWxsIHByb2JsZW0gZm9y
-IGlwbWIgYW5kIHBvd2VyIGNvbnRyb2wgd2lsbCBiZSByZXNvbHZlZC48L3NwYW4+PG86cD48L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPiZu
-YnNwOzwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0
-eWxlPSJjb2xvcjpibGFjayI+UmVnYXJkczwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+LVZpamF5PC9zcGFuPjxvOnA+
-PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJv
-cmRlcjpub25lO2JvcmRlci10b3A6c29saWQgI0I1QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0IDBp
-biAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNp
-emU6MTIuMHB0O2NvbG9yOmJsYWNrIj5Gcm9tOiA8L3NwYW4+PC9iPjxzcGFuIHN0eWxlPSJmb250
-LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5OZWlsIEJyYWRsZXkgJmx0OzxhIGhyZWY9Im1haWx0
-bzpOZWlsX0JyYWRsZXlAcGhvZW5peC5jb20iPk5laWxfQnJhZGxleUBwaG9lbml4LmNvbTwvYT4m
-Z3Q7PGJyPg0KPGI+RGF0ZTogPC9iPldlZG5lc2RheSwgQXVndXN0IDI2LCAyMDIwIGF0IDI6NTMg
-UE08YnI+DQo8Yj5UbzogPC9iPlZpamF5IEtoZW1rYSAmbHQ7PGEgaHJlZj0ibWFpbHRvOnZpamF5
-a2hlbWthQGZiLmNvbSI+dmlqYXlraGVta2FAZmIuY29tPC9hPiZndDssICZxdW90OzxhIGhyZWY9
-Im1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmciPm9wZW5ibWNAbGlzdHMub3psYWJzLm9y
-ZzwvYT4mcXVvdDsgJmx0OzxhIGhyZWY9Im1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmci
-Pm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzwvYT4mZ3Q7PGJyPg0KPGI+Q2M6IDwvYj5BbWl0aGFz
-aCBQcmFzYWQgJmx0OzxhIGhyZWY9Im1haWx0bzphbWl0aGFzaEBmYi5jb20iPmFtaXRoYXNoQGZi
-LmNvbTwvYT4mZ3Q7LCBTYWkgRGFzYXJpICZsdDs8YSBocmVmPSJtYWlsdG86c2Rhc2FyaUBmYi5j
-b20iPnNkYXNhcmlAZmIuY29tPC9hPiZndDs8YnI+DQo8Yj5TdWJqZWN0OiA8L2I+UkU6IFRpb2dh
-IFBhc3MgT3BlbkJNQyAyLjg8L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+QSBiaXQgbW9yZSBpbmZvIOKAkyBkb2VzIHRoaXMgbWVhbiB0aGUgZGJ1
-cyBpbnRlcmZhY2UgZm9yIGNoYXNzaXMgY29udHJvbCBpcyBtaXNzaW5nPzxvOnA+PC9vOnA+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVv
-dDsiPnJvb3RAdGlvZ2FwYXNzOi9kZXYjIHBvd2VyLXV0aWwgbWIgc3RhdHVzPC9zcGFuPjxvOnA+
-PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5
-OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5GYWlsZWQgdG8gZ2V0IHByb3BlcnR5IEN1cnJlbnRQ
-b3dlclN0YXRlIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6
-IFRoZSBuYW1lIGlzIG5vdCBhY3RpdmF0YWJsZSBvZmY8L3NwYW4+PG86cD48L286cD48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q291cmll
-ciBOZXcmcXVvdDsiPnJvb3RAdGlvZ2FwYXNzOi9kZXYjIHBvd2VyLXV0aWwgbWIgb248L3NwYW4+
-PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1m
-YW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDsiPkZhaWxlZCB0byBnZXQgcHJvcGVydHkgQ3Vy
-cmVudFBvd2VyU3RhdGUgb24gaW50ZXJmYWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hh
-c3NpczogVGhlIG5hbWUgaXMgbm90IGFjdGl2YXRhYmxlPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NvdXJp
-ZXIgTmV3JnF1b3Q7Ij5Qb3dlcmluZyBvbiBTZXJ2ZXI8L3NwYW4+PG86cD48L286cD48L3A+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q291cmll
-ciBOZXcmcXVvdDsiPkZhaWxlZCB0byBzZXQgcHJvcGVydHkgUmVxdWVzdGVkUG93ZXJUcmFuc2l0
-aW9uIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBu
-YW1lIGlzIG5vdCBhY3RpdmF0YWJsZTwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90
-OyI+cm9vdEB0aW9nYXBhc3M6L2RldiMgcG93ZXItdXRpbCBtYiBvZmY8L3NwYW4+PG86cD48L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1
-b3Q7Q291cmllciBOZXcmcXVvdDsiPkZhaWxlZCB0byBnZXQgcHJvcGVydHkgQ3VycmVudFBvd2Vy
-U3RhdGUgb24gaW50ZXJmYWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hhc3NpczogVGhl
-IG5hbWUgaXMgbm90IGFjdGl2YXRhYmxlPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1
-b3Q7Ij5yb290QHRpb2dhcGFzczovZGV2Izwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OldpbmdkaW5ncyI+w6A8L3NwYW4+TmVpbDxvOnA+PC9v
-OnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8L2Rp
-dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+Separately, our previous workarounds have run aground upstream as the hwmon
+maintainer was unable to reproduce our observations on the MAX31785 evaluation
+kit. I've recently received an evaluation kit, so I plan on putting some of
+these issues to the test myself. Ultimately this will help determine whether we
+have issues with our fan card designs or whether the controller itself is at
+fault (I have to admit, given some of the failures, it's hard to see how the
+controller might not be at fault). Basically, this paragraph is my excuse for
+not pushing these patches further upstream for the moment; I will re-evaluate
+once I have the results from testing against the evkit.
 
---_000_15B149384BE14BD382A43B33743A74F0fbcom_--
+In the mean time, these patches resolve issues we've seen in some system
+deployments. Taken together, I've put the driver through an unbind/bind loop
+of over 20,000 iterations with no "loss" of fans, where prior to the series we
+typically achieved only a few hundred. This feels like a significant
+improvement, so please consider merging despite their ugliness.
+
+Cheers,
+
+Andrew
+
+Andrew Jeffery (3):
+  pmbus: (max31785) Retry enabling fans after writing MFR_FAN_CONFIG
+  pmbus: (max31785) Add a local pmbus_set_page() implementation
+  pmbus: (core) Add a one-shot retry in pmbus_set_page()
+
+ drivers/hwmon/pmbus/max31785.c   | 55 ++++++++++++++++++++++++++------
+ drivers/hwmon/pmbus/pmbus_core.c | 33 ++++++++++++-------
+ 2 files changed, 66 insertions(+), 22 deletions(-)
+
+-- 
+2.25.1
+
