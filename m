@@ -1,142 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F2D7253D46
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 07:40:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0DFB253D4D
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 07:44:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BcWmL3GxxzDqc5
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:40:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BcWrg3g50zDqXS
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:44:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=5508e0cde0=vijaykhemka@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=fb.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=HJkJ5uVJ; 
- dkim=pass (1024-bit key;
- unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
- header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=Zo8Fslky; 
- dkim-atps=neutral
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=XBEatZUG; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BcWlR0NTszDqWv
- for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 15:40:01 +1000 (AEST)
-Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 07R5YpHQ025283; Wed, 26 Aug 2020 22:39:59 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type :
- mime-version; s=facebook; bh=AirNENON/JnNr+pPCYqLhCIYhMeiW82T3Xs0VjuXcP0=;
- b=HJkJ5uVJeLPFrC29lbLI7fqDW3TdlWD717EGHjT505hw0eXjfZa24l15k+I5UwtSTbz2
- mbuMvlt+3eTWWlyFzf1NAOWwRl0yPDDSYN0vLOCR5wQoakxJVIj6CsCmty8Fpt16A/I1
- mcTM9U3mRtNGWvasFuBkWWqacGJG5Z4Fr20= 
-Received: from maileast.thefacebook.com ([163.114.130.16])
- by mx0a-00082601.pphosted.com with ESMTP id 335up63fua-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
- Wed, 26 Aug 2020 22:39:59 -0700
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (100.104.31.183)
- by o365-in.thefacebook.com (100.104.35.173) with Microsoft SMTP
- Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1979.3; Wed, 26 Aug 2020 22:39:58 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GfxKtdlcz+EDKP8KjSX+sb4LZJvv/CIDZhdT+g/8Ey1a5QCciRMVuIcXUMz8BHkXSWCp/+/ds4VxFciwjYBwDNHwnBz44bq17SK1PStrkeT93X2va2Y1+ZSOP1zsCGPzQWtSmffVH9oxsT0iw4V5ZuIrcUqPVnZed92ZDuFrGRdrb5w0FcK+mFUyjGVpMKzafy83ctEr9M4HSxSO0X6Hqk+Lf4SafGODKz5xFehd64t7JMH8w97p0R0hcQjW8Oke1y0g5LkKu5GJcPO4nuGCnBopHXCiCK1oGg4c1NbFlMRsK6YALckVaSzBGihT0tFf7OgPo5+OAXBmDqkQG8i2oQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AirNENON/JnNr+pPCYqLhCIYhMeiW82T3Xs0VjuXcP0=;
- b=eKaldBigYPwhuJfS0iQ0LKWAbeI91SWYRnp7+X82xv5YuEpMvie/yIJwfdfUREXeqd2DyR+SO1D5O4x8rHfP3f1FLUEdyzG+M0ImQO/7yfy7sJSwlqQdnk3XfwpfxafTr5uE6zgFcJGFdoVAc64bfbm38l+6S3z1+OEQ6tr4usOJaLFRpfyQ7jDDa+yZ2sjmRrTFDG9jc6PdqcUsN5Bt3/l6qTcQM4p2l4UNiHjG0kvkMnst1tCvHnrH9syhSr1o20hdJpnD0J5+M/nDUfP3qDQpaohqPV3HeE5s+q24tvrL0HCNdfQv+0DcrgP6Nd72YuUoJGEYeW4Vrvv7mNshyA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
- header.d=fb.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
- s=selector2-fb-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AirNENON/JnNr+pPCYqLhCIYhMeiW82T3Xs0VjuXcP0=;
- b=Zo8Fslkyc5F8VBLS2NmprJqZaXPqU60V+PwslcABv7oYewOCAa+CuFuttXHzb7fooT/GbtuC/ytJmF7g5KM3dj34sX+Q4VWk20whfmwyQvk88pKPfVSv9vncEu1H+MtzR5gDArxNAMVh64NG6n8UFuU7wlUUX7mqyRLh3Io3yrM=
-Received: from DM6PR15MB2378.namprd15.prod.outlook.com (2603:10b6:5:8c::23) by
- DM5PR15MB1146.namprd15.prod.outlook.com (2603:10b6:3:b9::14) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3305.26; Thu, 27 Aug 2020 05:39:57 +0000
-Received: from DM6PR15MB2378.namprd15.prod.outlook.com
- ([fe80::340f:8080:19ee:d547]) by DM6PR15MB2378.namprd15.prod.outlook.com
- ([fe80::340f:8080:19ee:d547%5]) with mapi id 15.20.3305.032; Thu, 27 Aug 2020
- 05:39:57 +0000
-From: Vijay Khemka <vijaykhemka@fb.com>
-To: Neil Bradley <Neil_Bradley@phoenix.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: Re: Tioga Pass OpenBMC 2.8
-Thread-Topic: Tioga Pass OpenBMC 2.8
-Thread-Index: AdZ4G9/pZ44Ttxs7TiCWRTJU7JTTHQCA72kAAA7UvEAAALC0EP//pIUA//+ESKCAAIvbAP/+FToQgASWKQD//4oO4AAPAmyA//83aBD//mFVgA==
-Date: Thu, 27 Aug 2020 05:39:57 +0000
-Message-ID: <58DA7165-A3A6-4939-B580-53A5AFD7C9C5@fb.com>
-References: <c27c916296c14b7a973ce10ce462a574@SCL-EXCHMB-13.phoenix.com>
- <5F804DFD-B91D-4293-A410-62ED737423A7@fb.com>
- <6bc3d9da57d44f55ad66179e74a51bd1@SCL-EXCHMB-13.phoenix.com>
- <a5e34d90e0c34849a672189f8adf9cd7@SCL-EXCHMB-13.phoenix.com>
- <AA3AD0B7-CC74-4B6C-927D-101A3E721004@fb.com>
- <b62681c4a4c148b58cdd9ff1e614d400@SCL-EXCHMB-13.phoenix.com>
- <22D145E2-1328-428F-9AAF-54E138797994@fb.com>
- <ba0c0f989f1045f98a5186a57917c4b6@SCL-EXCHMB-13.phoenix.com>
- <E2ECF617-0F2B-4526-A2F9-20F343F317A3@fb.com>
- <b6891a4662b04509ae5ed0f8c54777ce@SCL-EXCHMB-13.phoenix.com>
- <868F639F-7878-4B90-8CAE-7C95EB57B26E@fb.com>
- <9b4d083d50ad4feba14f5c8848540ade@SCL-EXCHMB-13.phoenix.com>
-In-Reply-To: <9b4d083d50ad4feba14f5c8848540ade@SCL-EXCHMB-13.phoenix.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: phoenix.com; dkim=none (message not signed)
- header.d=none;phoenix.com; dmarc=none action=none header.from=fb.com;
-x-originating-ip: [2601:647:4b00:fd70:18e2:66b5:5e3d:3d1a]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: d604d2a3-df07-4110-ebdd-08d84a4ba21d
-x-ms-traffictypediagnostic: DM5PR15MB1146:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM5PR15MB11468205570251B411B87F7ADD550@DM5PR15MB1146.namprd15.prod.outlook.com>
-x-fb-source: Internal
-x-ms-oob-tlc-oobclassifiers: OLM:8273;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: EMwCJVmzMobOA9+Yom1SM2mSat7YSJH7IVgjLtlo63hHWwL0KNBQ7KeFsBm2EVP8KoA5/ZoLrVxPVS+EqJmYKd0J4RaeiGSHGKrVPDhR8qV/xlEWxCPrNDbig/VjA0Zdk4g/+Wz8U4tALr/ZgOXsXsw07xFcYkN2x+HJA67L54w+pcSBeIkwK/kXjFrS9ffoRY+WzXcNu04xo1aLW+kSmBRK07RZkG6SB8LwiwNFHFYpoNshD8a99durDXjCBtSAKn0g1Ev3zs76Zm0RFiRaz4PU5C2Kn2GqjeoxbUsNV9k03zKT+m1uX6kHFWPLODuf2sMmu5VZsVZPMTUmQkYn5g==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR15MB2378.namprd15.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39860400002)(366004)(396003)(376002)(346002)(136003)(91956017)(6506007)(36756003)(76116006)(66446008)(64756008)(66556008)(66476007)(186003)(53546011)(66946007)(5660300002)(2906002)(83380400001)(110136005)(54906003)(71200400001)(8676002)(8936002)(7116003)(478600001)(33656002)(6512007)(4326008)(86362001)(316002)(2616005)(6486002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: g9Xdcp7gvrk/lGr3J6dfMfqDckfInEEPFtT2NLq22pP0W2fEz9IN7G00chSWQY4GNcQv0DyY0Pg3Ft2Ind3+A1nf4qyO4U3eyHID/YDRI3VhYaKk2/npgY++Y8EAKLmRS5MPdcIPR6V/VRPZE36fr67vOoJ7wW408xBeJBg6Mmr/9uXfYkYHSrgF47nDEtRXqyca1xOFN89wTFcsa8k2W6wtIJHIBh6ldSlVyaZPq8FZAK12LRbck2W93toNdwPskXXR4uTvtvW9DAbWW3JB6idfZ7rTqseqs1qg4rcNf+8FD9IEFDEuRGgq00mUhQmdAbnBsleYT+sdso7NQ/GeL6hwQd1j8Ym0yNsHQm43EwZ3GdnEkPXPwXROP8y/Es/wOITF50m9BHhUzTZRM8vpOhW8K1C48G4KXfUy2XoHKyHIwepjrMUlbGxv2pL/IL+Yvl9xI7aHcDhOTgeJovIgDG8thnMEaIqn015iiNqeFxDxwIC8BBoDXE4Ib/+eySI8PFNUNAqOAtjWT3u3h2q7a9YXY40ManX/0EhJppmGuS/d+jFy0DlbeQM/i2hX3F3dAPcVCcGx5OKmIeyp55E8BIJROsyvRjvXyu3pyW0iHmEfJLgdOrYbCB0PDTh0r8pyraU/Jeluw0wsMDozNZEJ4c32Kbrzlj+Zke998y8oHJH4cpN6yEWXDUI7g+Ub/zjEbdDm1AMnVWbjT5MzreOuLQ==
-Content-Type: multipart/alternative;
- boundary="_000_58DA7165A3A64939B58053A5AFD7C9C5fbcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BcWqx5KRKzDqXM
+ for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 15:43:57 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 07R5XJ2o100724; Thu, 27 Aug 2020 01:43:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=FPS0FLc81ctLSKjHv/kEtmFMLbm7o/pEqGSfUp7ky8o=;
+ b=XBEatZUGZ4u3Kj2Q+QQu8LN+kvheRSOwjL1kkS0BLd7MSq8mVy8Wr8eh69WxijgqSh15
+ r8EXkwdanN5o8cEzQM7UyFVfHBTZ/Fj089O6PwXf88P1v9Px+BHEA5oxd0xpxfjm4OFj
+ SRUOxj9Hi59nG8VY0add9EjtyxT/I7fSKCbbIsWubPb9y8BKx1w+FbD6MWp55tgPOoFw
+ igxRaSnhe2CI4DuOawFqRttIUqAlH+K8PXgRmpmJC3Z29P1KYY9Ml5/5hhZAUt8/hA8g
+ GHBCVUzbnbJMpus0vpAMRbcIdVfERVLxrOdK52qH+lg1+i5ySt79JInjo8l97Pu6nnQ3 0A== 
+Received: from ppma06ams.nl.ibm.com (66.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.102])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3365p7hrpq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2020 01:43:51 -0400
+Received: from pps.filterd (ppma06ams.nl.ibm.com [127.0.0.1])
+ by ppma06ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 07R5cevx019341;
+ Thu, 27 Aug 2020 05:43:49 GMT
+Received: from b06cxnps3074.portsmouth.uk.ibm.com
+ (d06relay09.portsmouth.uk.ibm.com [9.149.109.194])
+ by ppma06ams.nl.ibm.com with ESMTP id 332uk6dakx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Aug 2020 05:43:48 +0000
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com
+ (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
+ by b06cxnps3074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 07R5hkL233489308
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Aug 2020 05:43:46 GMT
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8CC12A4054;
+ Thu, 27 Aug 2020 05:43:46 +0000 (GMT)
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 74E59A405F;
+ Thu, 27 Aug 2020 05:43:42 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.226.184])
+ by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Aug 2020 05:43:42 +0000 (GMT)
+Subject: Re: OpenBMC - FRU inventory with Entity Manager
+To: Vijay Khemka <vijaykhemka@fb.com>, Jiandi An <jan@nvidia.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Tom Joseph <tomjose@linux.vnet.ibm.com>, vernon.mauery@linux.intel.com
+References: <DM6PR12MB3020D6DD47C7E6DBBD6530A3CD550@DM6PR12MB3020.namprd12.prod.outlook.com>
+ <22E14C00-D87D-489F-AB22-6401DE8CDDF5@fb.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <5e71fa32-4547-fb5e-ed50-dffe19cefc09@linux.vnet.ibm.com>
+Date: Thu, 27 Aug 2020 11:13:41 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR15MB2378.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d604d2a3-df07-4110-ebdd-08d84a4ba21d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Aug 2020 05:39:57.4978 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: TSr1ja92a+XLTEYnXXsDmqEgMzjDstwE9uZVuZ4fQfSJu67Yq1AyIXo3jHe0RfXoUecahlM3FAt/w2T0Bg34fw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR15MB1146
-X-OriginatorOrg: fb.com
+In-Reply-To: <22E14C00-D87D-489F-AB22-6401DE8CDDF5@fb.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
  definitions=2020-08-27_01:2020-08-26,
  2020-08-27 signatures=0
-X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
- mlxscore=0
- priorityscore=1501 mlxlogscore=999 malwarescore=0 spamscore=0
- clxscore=1015 impostorscore=0 suspectscore=0 phishscore=0 bulkscore=0
- adultscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2006250000 definitions=main-2008270045
-X-FB-Internal: deliver
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 phishscore=0
+ impostorscore=0 adultscore=0 mlxlogscore=999 clxscore=1011
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2008270044
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,176 +102,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Amithash Prasad <amithash@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_58DA7165A3A64939B58053A5AFD7C9C5fbcom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+On 27/08/20 11:02 am, Vijay Khemka wrote:
+> I don't think ipmi fru command is pointing to the right dbus object of FruDevice. We may have to fix or add this support in ipmid for standard fru command. Currently this command has been overridden by intel-ipmi-oem and fb-ipmi-oem for their respective target. If you add intel-ipmi-oem to your image then it should work.
 
-TmVpbCwNClRoaXMgbWVhbnMgdGhhdCBwb3dlciBjb250cm9sIGFwcGxpY2F0aW9uIGlzIG5vdCBy
-dW5uaW5nLiBBbiBJIGtub3cgd2h5IGJlY2F1c2Ugd2UgbmVlZCBrZXJuZWwgZGV2aWNlIHRyZWUg
-ZnJvbSA1LjcrIGtlcm5lbCB0byBzdXBwb3J0IHByb3BlciBncGlvIHBpbnMgYWRkaXRpb24gaW4g
-ZGV2aWNlICB0cmVlLg0KDQpTbyBwbGVhc2UgZG93bmxvYWQgbGF0ZXN0IG9wZW5ibWMgaW1hZ2Us
-IHlvdXIgYWxsIHByb2JsZW0gZm9yIGlwbWIgYW5kIHBvd2VyIGNvbnRyb2wgd2lsbCBiZSByZXNv
-bHZlZC4NCg0KUmVnYXJkcw0KLVZpamF5DQoNCg0KRnJvbTogTmVpbCBCcmFkbGV5IDxOZWlsX0Jy
-YWRsZXlAcGhvZW5peC5jb20+DQpEYXRlOiBXZWRuZXNkYXksIEF1Z3VzdCAyNiwgMjAyMCBhdCAy
-OjUzIFBNDQpUbzogVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+LCAib3BlbmJtY0Bs
-aXN0cy5vemxhYnMub3JnIiA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KQ2M6IEFtaXRoYXNo
-IFByYXNhZCA8YW1pdGhhc2hAZmIuY29tPiwgU2FpIERhc2FyaSA8c2Rhc2FyaUBmYi5jb20+DQpT
-dWJqZWN0OiBSRTogVGlvZ2EgUGFzcyBPcGVuQk1DIDIuOA0KDQpBIGJpdCBtb3JlIGluZm8g4oCT
-IGRvZXMgdGhpcyBtZWFuIHRoZSBkYnVzIGludGVyZmFjZSBmb3IgY2hhc3NpcyBjb250cm9sIGlz
-IG1pc3Npbmc/DQoNCnJvb3RAdGlvZ2FwYXNzOi9kZXYjIHBvd2VyLXV0aWwgbWIgc3RhdHVzDQpG
-YWlsZWQgdG8gZ2V0IHByb3BlcnR5IEN1cnJlbnRQb3dlclN0YXRlIG9uIGludGVyZmFjZSB4eXou
-b3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBuYW1lIGlzIG5vdCBhY3RpdmF0YWJs
-ZSBvZmYNCnJvb3RAdGlvZ2FwYXNzOi9kZXYjIHBvd2VyLXV0aWwgbWIgb24NCkZhaWxlZCB0byBn
-ZXQgcHJvcGVydHkgQ3VycmVudFBvd2VyU3RhdGUgb24gaW50ZXJmYWNlIHh5ei5vcGVuYm1jX3By
-b2plY3QuU3RhdGUuQ2hhc3NpczogVGhlIG5hbWUgaXMgbm90IGFjdGl2YXRhYmxlDQpQb3dlcmlu
-ZyBvbiBTZXJ2ZXINCkZhaWxlZCB0byBzZXQgcHJvcGVydHkgUmVxdWVzdGVkUG93ZXJUcmFuc2l0
-aW9uIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBu
-YW1lIGlzIG5vdCBhY3RpdmF0YWJsZQ0Kcm9vdEB0aW9nYXBhc3M6L2RldiMgcG93ZXItdXRpbCBt
-YiBvZmYNCkZhaWxlZCB0byBnZXQgcHJvcGVydHkgQ3VycmVudFBvd2VyU3RhdGUgb24gaW50ZXJm
-YWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hhc3NpczogVGhlIG5hbWUgaXMgbm90IGFj
-dGl2YXRhYmxlDQpyb290QHRpb2dhcGFzczovZGV2Iw0KDQotLT5OZWlsDQoNCg==
+It seems like several ipmi-oem implementations (intel, fb and likely 
+several others) rely on the FruDevice to prepare IPMI FRU information, 
+so this code is likely getting duplicated across the ipmi-oem repos. 
+Should this be the other way around, i.e house the FruDevice based 
+implementation in phosphor-host-ipmid and the current 
+phosphor-host-ipmid implementation, which expects YAML config files, 
+should be in an ibm-ipmi-oem repo?
 
---_000_58DA7165A3A64939B58053A5AFD7C9C5fbcom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <3C95D5F1624D534ABB0A222F15FD2FF4@namprd15.prod.outlook.com>
-Content-Transfer-Encoding: base64
+Regards,
+Deepak
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseTpXaW5nZGluZ3M7DQoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAg
-MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
-OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
-Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1m
-YW1pbHk6TWVubG87DQoJcGFub3NlLTE6MiAxMSA2IDkgMyA4IDQgMiAyIDQ7fQ0KLyogU3R5bGUg
-RGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWwsIGRpdi5Nc29Ob3JtYWwN
-Cgl7bWFyZ2luOjBpbjsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJp
-IixzYW5zLXNlcmlmO30NCnNwYW4uRW1haWxTdHlsZTMwDQoJe21zby1zdHlsZS10eXBlOnBlcnNv
-bmFsLXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndp
-bmRvd3RleHQ7fQ0KLk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7
-DQoJZm9udC1zaXplOjEwLjBwdDt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAx
-MS4waW47DQoJbWFyZ2luOjEuMGluIDEuMGluIDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlv
-bjENCgl7cGFnZTpXb3JkU2VjdGlvbjE7fQ0KLyogTGlzdCBEZWZpbml0aW9ucyAqLw0KQGxpc3Qg
-bDANCgl7bXNvLWxpc3QtaWQ6NDc3MzAzNTEzOw0KCW1zby1saXN0LXRlbXBsYXRlLWlkczoxNjc5
-MDgxMDE4O30NCkBsaXN0IGwxDQoJe21zby1saXN0LWlkOjc0MDc1NDcxMTsNCgltc28tbGlzdC10
-eXBlOmh5YnJpZDsNCgltc28tbGlzdC10ZW1wbGF0ZS1pZHM6MjAzNDkzODIxMiA2NzY5ODcwNSA2
-NzY5ODcxMyA2NzY5ODcxNSA2NzY5ODcwMyA2NzY5ODcxMyA2NzY5ODcxNSA2NzY5ODcwMyA2NzY5
-ODcxMyA2NzY5ODcxNTt9DQpAbGlzdCBsMTpsZXZlbDENCgl7bXNvLWxldmVsLXRleHQ6IiUxXCki
-Ow0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246
-bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47fQ0KQGxpc3QgbDE6bGV2ZWwyDQoJe21zby1sZXZl
-bC1udW1iZXItZm9ybWF0OmFscGhhLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0K
-CW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47fQ0K
-QGxpc3QgbDE6bGV2ZWwzDQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxvd2VyOw0K
-CW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246cmln
-aHQ7DQoJdGV4dC1pbmRlbnQ6LTkuMHB0O30NCkBsaXN0IGwxOmxldmVsNA0KCXttc28tbGV2ZWwt
-dGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1p
-bmRlbnQ6LS4yNWluO30NCkBsaXN0IGwxOmxldmVsNQ0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1h
-dDphbHBoYS1sb3dlcjsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVt
-YmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluO30NCkBsaXN0IGwxOmxldmVs
-Ng0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpyb21hbi1sb3dlcjsNCgltc28tbGV2ZWwtdGFi
-LXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOnJpZ2h0Ow0KCXRleHQtaW5k
-ZW50Oi05LjBwdDt9DQpAbGlzdCBsMTpsZXZlbDcNCgl7bXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7
-DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjt9
-DQpAbGlzdCBsMTpsZXZlbDgNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxwaGEtbG93ZXI7
-DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjps
-ZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjt9DQpAbGlzdCBsMTpsZXZlbDkNCgl7bXNvLWxldmVs
-LW51bWJlci1mb3JtYXQ6cm9tYW4tbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJ
-bXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpyaWdodDsNCgl0ZXh0LWluZGVudDotOS4wcHQ7fQ0K
-QGxpc3QgbDINCgl7bXNvLWxpc3QtaWQ6MTUyMTQzMDIxNzsNCgltc28tbGlzdC10ZW1wbGF0ZS1p
-ZHM6MjcyMjk3MTQ4O30NCkBsaXN0IGwzDQoJe21zby1saXN0LWlkOjE3MDYzMjQzMjU7DQoJbXNv
-LWxpc3QtdHlwZTpoeWJyaWQ7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOjE3NTY5NTkyMiA2NzY5
-ODcwNSA2NzY5ODcxMyA2NzY5ODcxNSA2NzY5ODcwMyA2NzY5ODcxMyA2NzY5ODcxNSA2NzY5ODcw
-MyA2NzY5ODcxMyA2NzY5ODcxNTt9DQpAbGlzdCBsMzpsZXZlbDENCgl7bXNvLWxldmVsLXRleHQ6
-IiUxXCkiOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9z
-aXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47fQ0KQGxpc3QgbDM6bGV2ZWwyDQoJe21z
-by1sZXZlbC1udW1iZXItZm9ybWF0OmFscGhhLWxvd2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpu
-b25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1
-aW47fQ0KQGxpc3QgbDM6bGV2ZWwzDQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OnJvbWFuLWxv
-d2VyOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRp
-b246cmlnaHQ7DQoJdGV4dC1pbmRlbnQ6LTkuMHB0O30NCkBsaXN0IGwzOmxldmVsNA0KCXttc28t
-bGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJ
-dGV4dC1pbmRlbnQ6LS4yNWluO30NCkBsaXN0IGwzOmxldmVsNQ0KCXttc28tbGV2ZWwtbnVtYmVy
-LWZvcm1hdDphbHBoYS1sb3dlcjsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2
-ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluO30NCkBsaXN0IGwz
-OmxldmVsNg0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpyb21hbi1sb3dlcjsNCgltc28tbGV2
-ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOnJpZ2h0Ow0KCXRl
-eHQtaW5kZW50Oi05LjBwdDt9DQpAbGlzdCBsMzpsZXZlbDcNCgl7bXNvLWxldmVsLXRhYi1zdG9w
-Om5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0u
-MjVpbjt9DQpAbGlzdCBsMzpsZXZlbDgNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YWxwaGEt
-bG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3Np
-dGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjt9DQpAbGlzdCBsMzpsZXZlbDkNCgl7bXNv
-LWxldmVsLW51bWJlci1mb3JtYXQ6cm9tYW4tbG93ZXI7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5v
-bmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpyaWdodDsNCgl0ZXh0LWluZGVudDotOS4w
-cHQ7fQ0Kb2wNCgl7bWFyZ2luLWJvdHRvbTowaW47fQ0KdWwNCgl7bWFyZ2luLWJvdHRvbTowaW47
-fQ0KLS0+PC9zdHlsZT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSJibHVlIiB2
-bGluaz0icHVycGxlIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPk5laWwsPG86cD48L286cD48L3NwYW4+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5UaGlz
-IG1lYW5zIHRoYXQgcG93ZXIgY29udHJvbCBhcHBsaWNhdGlvbiBpcyBub3QgcnVubmluZy4gQW4g
-SSBrbm93IHdoeSBiZWNhdXNlIHdlIG5lZWQga2VybmVsIGRldmljZSB0cmVlIGZyb20gNS43KyBr
-ZXJuZWwgdG8gc3VwcG9ydCBwcm9wZXIgZ3BpbyBwaW5zIGFkZGl0aW9uIGluIGRldmljZSZuYnNw
-OyB0cmVlLjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
-IHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5TbyBwbGVhc2UgZG93bmxv
-YWQgbGF0ZXN0IG9wZW5ibWMgaW1hZ2UsIHlvdXIgYWxsIHByb2JsZW0gZm9yIGlwbWIgYW5kIHBv
-d2VyIGNvbnRyb2wgd2lsbCBiZSByZXNvbHZlZC48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPiZuYnNwOzxvOnA+PC9v
-OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjpi
-bGFjayI+UmVnYXJkczxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+LVZpamF5PG86cD48L286cD48L3NwYW4+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2Jv
-cmRlci10b3A6c29saWQgI0I1QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2Nv
-bG9yOmJsYWNrIj5Gcm9tOiA8L3NwYW4+PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0
-O2NvbG9yOmJsYWNrIj5OZWlsIEJyYWRsZXkgJmx0O05laWxfQnJhZGxleUBwaG9lbml4LmNvbSZn
-dDs8YnI+DQo8Yj5EYXRlOiA8L2I+V2VkbmVzZGF5LCBBdWd1c3QgMjYsIDIwMjAgYXQgMjo1MyBQ
-TTxicj4NCjxiPlRvOiA8L2I+VmlqYXkgS2hlbWthICZsdDt2aWpheWtoZW1rYUBmYi5jb20mZ3Q7
-LCAmcXVvdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmcXVvdDsgJmx0O29wZW5ibWNAbGlzdHMu
-b3psYWJzLm9yZyZndDs8YnI+DQo8Yj5DYzogPC9iPkFtaXRoYXNoIFByYXNhZCAmbHQ7YW1pdGhh
-c2hAZmIuY29tJmd0OywgU2FpIERhc2FyaSAmbHQ7c2Rhc2FyaUBmYi5jb20mZ3Q7PGJyPg0KPGI+
-U3ViamVjdDogPC9iPlJFOiBUaW9nYSBQYXNzIE9wZW5CTUMgMi44PG86cD48L286cD48L3NwYW4+
-PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286
-cD48L3A+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkEgYml0IG1vcmUgaW5mbyDigJMg
-ZG9lcyB0aGlzIG1lYW4gdGhlIGRidXMgaW50ZXJmYWNlIGZvciBjaGFzc2lzIGNvbnRyb2wgaXMg
-bWlzc2luZz88bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOzxvOnA+
-PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5
-OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5yb290QHRpb2dhcGFzczovZGV2IyBwb3dlci11dGls
-IG1iIHN0YXR1czwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxz
-cGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+RmFpbGVkIHRv
-IGdldCBwcm9wZXJ0eSBDdXJyZW50UG93ZXJTdGF0ZSBvbiBpbnRlcmZhY2UgeHl6Lm9wZW5ibWNf
-cHJvamVjdC5TdGF0ZS5DaGFzc2lzOiBUaGUgbmFtZSBpcyBub3QgYWN0aXZhdGFibGUgb2ZmPC9z
-cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
-bnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5yb290QHRpb2dhcGFzczovZGV2IyBw
-b3dlci11dGlsIG1iIG9uPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5GYWls
-ZWQgdG8gZ2V0IHByb3BlcnR5IEN1cnJlbnRQb3dlclN0YXRlIG9uIGludGVyZmFjZSB4eXoub3Bl
-bmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBuYW1lIGlzIG5vdCBhY3RpdmF0YWJsZTwv
-c3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJm
-b250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+UG93ZXJpbmcgb24gU2VydmVyPC9z
-cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
-bnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5GYWlsZWQgdG8gc2V0IHByb3BlcnR5
-IFJlcXVlc3RlZFBvd2VyVHJhbnNpdGlvbiBvbiBpbnRlcmZhY2UgeHl6Lm9wZW5ibWNfcHJvamVj
-dC5TdGF0ZS5DaGFzc2lzOiBUaGUgbmFtZSBpcyBub3QgYWN0aXZhdGFibGU8L3NwYW4+PG86cD48
-L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6
-JnF1b3Q7Q291cmllciBOZXcmcXVvdDsiPnJvb3RAdGlvZ2FwYXNzOi9kZXYjIHBvd2VyLXV0aWwg
-bWIgb2ZmPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
-c3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5GYWlsZWQgdG8gZ2V0
-IHByb3BlcnR5IEN1cnJlbnRQb3dlclN0YXRlIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9q
-ZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBuYW1lIGlzIG5vdCBhY3RpdmF0YWJsZTwvc3Bhbj48bzpw
-PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWls
-eTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+cm9vdEB0aW9nYXBhc3M6L2RldiM8L3NwYW4+PG86
-cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTpXaW5nZGluZ3Mi
-PsOgPC9zcGFuPk5laWw8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNw
-OzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
+> Regards
+> -Vijay
+> 
+> ﻿On 8/26/20, 5:54 PM, "openbmc on behalf of Jiandi An" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of jan@nvidia.com> wrote:
+> 
+>      Hi,
+> 
+>      Have a question related how IPMI fru command is handled when having FRU inventory handled by Entity Manager.
+>      I've enabled Entity Manager and through the config JSONs, got the entity manager to probe FRU config information off of EEPROM and getting the FruDevice inventory D-Bus object added.
+>      For example I I have /xyz/openbmc_project/FruDevice/My_FRU show up under xyz.openbmc_project.FruDevice.  And I can introspect it.  But I can't get that FRU to be handled and displayed when I ran "ipmitool fru"
+> 
+>      root@bmc:~# busctl tree --no-pager xyz.openbmc_project.FruDevice
+>      └/xyz
+>        └/xyz/openbmc_project
+>          └/xyz/openbmc_project/FruDevice
+>            └/xyz/openbmc_project/FruDevice/My_FRU
+> 
+>      root@bmc:~# busctl introspect --no-pager xyz.openbmc_project.FruDevice /xyz/openbmc_project/FruDevice/My_FRU
+>      NAME                                                          TYPE                   SIGNATURE   RESULT/VALUE                       FLAGS
+>      org.freedesktop.DBus.Introspectable   interface             -                      -                                                 -
+>      .Introspect                                                  method               -                      s                                                -
+>      org.freedesktop.DBus.Peer                     interface             -                      -                                                 -
+>      .GetMachineId                                           method               -                      s                                                -
+>      .Ping                                                             method               -                      -                                                 -
+>      org.freedesktop.DBus.Properties           interface             -                      -                                                 -
+>      .Get                                                              method               ss                    v                                                 -
+>      .GetAll                                                          method               s                     a{sv}                                          -
+>      .Set                                                               method               ssv                  -                                                 -
+>      .PropertiesChanged                                   signal                  sa{sv}as          -                                                 -
+>      xyz.openbmc_project.FruDevice            interface              -                      -                                                 -
+>      .ADDRESS                                                    property              u                     84                                             emits-change
+>      .BOARD_INFO_AM1                                  property              s                     "\001"                                      emits-change
+>      .BOARD_LANGUAGE_CODE                     property              s                     "25"                                          emits-change
+>      .BOARD_MANUFACTURER                       property              s                     "XYZ COMPANY"                    emits-change
+>      .BOARD_MANUFACTURE_DATE              property              s                     "2020-01-01 - 12:00:00"      emits-change
+>      .BOARD_PART_NUMBER                          property              s                      "123.ABCD.1234"                 emits-change
+>      .BOARD_PRODUCT_NAME                       property              s                      "My FRU"                               emits-change
+>      .BOARD_SERIAL_NUMBER                       property               s                     "123ABC"                                emits-change
+>      .BUS                                                              property              u                     2                                                emits-change
+>      .CHASSIS_PART_NUMBER                        property               s                     "123-12345-1234-000"         emits-change
+>      .CHASSIS_SERIAL_NUMBER                     property               s                     "1234567890123"                  emits-change
+>      .CHASSIS_TYPE                                           property               s                     "23"                                           emits-change
+>      .Common_Format_Version                     property               s                     "1"                                             emits-change
+>      .PRODUCT_ASSET_TAG                            property               s                     "0000000000000"                  emits-change
+>      .PRODUCT_FRU_VERSION_ID                 property               s                     "v0.5"                                        emits-change
+>      .PRODUCT_LANGUAGE_CODE                property               s                     "25"                                           emits-change
+>      .PRODUCT_MANUFACTURER                  property               s                     "XYZ COMPANY"                      emits-change
+>      .PRODUCT_PART_NUMBER                     property               s                     "123-12345-1234-000"          emits-change
+>      .PRODUCT_PRODUCT_NAME                  property               s                     "TBD"                                        emits-change
+>      .PRODUCT_SERIAL_NUMBER                  property               s                     "1234567890123"                   emits-change
+>      .PRODUCT_VERSION                                 property               s                     "v1.0"                                         emits-change
+> 
+>      When I ran the standard IPMI fru command, it always defaults to getting Builtin FRU Device, and dimm0, dimm1, cpu0, cpu1 FRUs and of course they are not there so it fails.  Is there anything that I'm missing to get the standard IPMI fru command to map to the DBUS object xyz.openbmc_project.FruDevice /xyz/openbmc_project/FruDevice/My_FRU under Entity Manger?
+> 
+>      root@dev-system:~# ipmitool -I lanplus -H $BMC_IP -U root -P 0penBmc -C 17 fru
+>      FRU Device Description : Builtin FRU Device (ID 0)
+>       Device not present (Unspecified error)
+> 
+>      FRU Device Description : dimm0 (ID 1)
+>       Device not present (Unspecified error)
+> 
+>      FRU Device Description : dimm1 (ID 2)
+>       Device not present (Unspecified error)
+> 
+>      FRU Device Description : cpu0 (ID 3)
+>       Device not present (Unspecified error)
+> 
+>      FRU Device Description : cpu1 (ID 4)
+>       Device not present (Unspecified error)
+> 
+>      Thanks
+>      - Jiandi
+> 
 
---_000_58DA7165A3A64939B58053A5AFD7C9C5fbcom_--
