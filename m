@@ -2,67 +2,98 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B02BD2550C0
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 23:50:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E24B2550D5
+	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 00:01:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BcxHR6dSQzDqk8
-	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 07:50:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BcxWP5kXTzDqmJ
+	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 08:01:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::c2e;
- helo=mail-oo1-xc2e.google.com; envelope-from=xqiu@google.com;
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com; envelope-from=neil_bradley@phoenix.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=PbCUmMD4; dkim-atps=neutral
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com
- [IPv6:2607:f8b0:4864:20::c2e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=mF6NAYyy; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=mF6NAYyy; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BcxGc5PT5zDqk8
- for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 07:49:57 +1000 (AEST)
-Received: by mail-oo1-xc2e.google.com with SMTP id m4so1578534oos.6
- for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 14:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=/91ofdiqY8i82ze4RCLLxQAurAunVWLghlNPzAXS/+Y=;
- b=PbCUmMD410PlsLcoA9yVN4vPOaLVr+F5Ie96vV6o7A/HB5LQzDrt6phtchxdgQ92N3
- YvcWiruoAq8AKIpLUV7cn3r8wkPDBViWs5iPYk37FKcBq6D29DQ+rC1Af2whXQ4lyehA
- MSCpmoVklQW2B4pRdt6YlXJRwImr1BVGBnsGCNfTos68yrorj9S+4rPGBBhD5DKRi2RZ
- du5Dcis+DmSzPiH5jx0U9JTHHHwuSxTrPoQzhn27p3iJX6TAhaMSvCh8xHxF9A5Q3JDA
- f/5I3FRE+RM92Xasr/k1O54ipmLb/uEaD/ijq8L1wmmGMil7ZxD8MJuKQfd5cx9mDAMs
- yrkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=/91ofdiqY8i82ze4RCLLxQAurAunVWLghlNPzAXS/+Y=;
- b=UORZHIsVQJAjChj+W3JDEC+vq3SEdpUHJznFzoDJgFjhQHx+XDVDaYeqETQCApFdrd
- e+NmxF9OW7J8CB2tpfkuZdbpR4BDXgkdirIP2CtFGIeAdOVjbDhtzwvXnT/XRO10JVHi
- Ul/0DlrVpp8QYGO1ve0dimPqgR/U+oxD24xOL7Hj5zs+8gnMMNBzRPFt8UkTgx8TU/XY
- 91AoUgij7NX1hBROqHsTwgP+d3PIaKBjdNxAesfrZ8VoXG5aOAKpa4d7w7FiRlsmNgit
- WYLSLYUGKUVhe2NxLdDernFJueIs9F48ngBd6xxM8GSOX7P7KGBOk/mAVtdoVgAaVPXT
- GCRA==
-X-Gm-Message-State: AOAM531C5+Oex62ws51iAR3737TjrlstdkMTuYBFRZs2NPWW1+Num7Bq
- ZbBIfCjZqaXVQISLjDwY6syAKwjlUv/6fQq15PUOgg==
-X-Google-Smtp-Source: ABdhPJweSmj1lOBPz1BhtRzMeYd4Kf2ooGoCGABciFvJL1dG6i88aFPiNaVNcd8d45TQZZVo9tWUhj0n0P4sJir5ZvY=
-X-Received: by 2002:a4a:c887:: with SMTP id t7mr15700213ooq.57.1598564993918; 
- Thu, 27 Aug 2020 14:49:53 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BcxVF00wrzDqkJ
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 08:00:02 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598565598;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1K3ssG02y12dqXVP9qGzFAPdtqD8nBVZqIgEaHAQ7Oo=;
+ b=mF6NAYyyWoCMOwYTDWtALtMDfR2s5/Ls0FO3380eVrciWW2spUZVt9K761ux7o+n+geTFg
+ wwwV8STteO3mrPq7cIrLubrvxKUsLfitfH73NUnRvH/JCKRt0mFxBcjDDM3oSL3dQ5nBT6
+ fHvEu4z/Fi1syKXRLQsq/GN5jCayLUc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598565598;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1K3ssG02y12dqXVP9qGzFAPdtqD8nBVZqIgEaHAQ7Oo=;
+ b=mF6NAYyyWoCMOwYTDWtALtMDfR2s5/Ls0FO3380eVrciWW2spUZVt9K761ux7o+n+geTFg
+ wwwV8STteO3mrPq7cIrLubrvxKUsLfitfH73NUnRvH/JCKRt0mFxBcjDDM3oSL3dQ5nBT6
+ fHvEu4z/Fi1syKXRLQsq/GN5jCayLUc=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-287-PdiMhEwqN9GSuT5ah13nyA-1; Thu, 27 Aug 2020 17:59:55 -0400
+X-MC-Unique: PdiMhEwqN9GSuT5ah13nyA-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Thu, 27 Aug 2020 14:59:52 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Thu, 27 Aug 2020 14:59:52 -0700
+From: Neil Bradley <Neil_Bradley@phoenix.com>
+To: Vijay Khemka <vijaykhemka@fb.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Subject: RE: Tioga Pass OpenBMC 2.8
+Thread-Topic: Tioga Pass OpenBMC 2.8
+Thread-Index: AdZ4G9/pZ44Ttxs7TiCWRTJU7JTTHQCA72kAAA7UvEAAALC0EP//pIUA//+ESKCAAIvbAP/+FToQgASWKQD//4oO4AAPAmyA//83aBD//mFVgP/8P4nQ//jwJQD/8GubIA==
+Date: Thu, 27 Aug 2020 21:59:52 +0000
+Message-ID: <92cafea4b80142b5970545ff78b179a4@SCL-EXCHMB-13.phoenix.com>
+References: <c27c916296c14b7a973ce10ce462a574@SCL-EXCHMB-13.phoenix.com>
+ <5F804DFD-B91D-4293-A410-62ED737423A7@fb.com>
+ <6bc3d9da57d44f55ad66179e74a51bd1@SCL-EXCHMB-13.phoenix.com>
+ <a5e34d90e0c34849a672189f8adf9cd7@SCL-EXCHMB-13.phoenix.com>
+ <AA3AD0B7-CC74-4B6C-927D-101A3E721004@fb.com>
+ <b62681c4a4c148b58cdd9ff1e614d400@SCL-EXCHMB-13.phoenix.com>
+ <22D145E2-1328-428F-9AAF-54E138797994@fb.com>
+ <ba0c0f989f1045f98a5186a57917c4b6@SCL-EXCHMB-13.phoenix.com>
+ <E2ECF617-0F2B-4526-A2F9-20F343F317A3@fb.com>
+ <b6891a4662b04509ae5ed0f8c54777ce@SCL-EXCHMB-13.phoenix.com>
+ <868F639F-7878-4B90-8CAE-7C95EB57B26E@fb.com>
+ <9b4d083d50ad4feba14f5c8848540ade@SCL-EXCHMB-13.phoenix.com>
+ <58DA7165-A3A6-4939-B580-53A5AFD7C9C5@fb.com>
+ <588c033deaf143059c0ebab0775ed071@SCL-EXCHMB-13.phoenix.com>
+ <15B14938-4BE1-4BD3-82A4-3B33743A74F0@fb.com>
+In-Reply-To: <15B14938-4BE1-4BD3-82A4-3B33743A74F0@fb.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.122.68.159]
 MIME-Version: 1.0
-References: <CAA_a9xLk5JhUjEkiWka6LSXJ1gD-BcH0PqgENqroisDKEUyztA@mail.gmail.com>
-In-Reply-To: <CAA_a9xLk5JhUjEkiWka6LSXJ1gD-BcH0PqgENqroisDKEUyztA@mail.gmail.com>
-From: Alex Qiu <xqiu@google.com>
-Date: Thu, 27 Aug 2020 14:49:42 -0700
-Message-ID: <CAA_a9xJ54rpnKm0y+hrEG2YjuFzzhqKBEJbStsu4Q126APgbVg@mail.gmail.com>
-Subject: Re: Dealing with a sensor which doesn't have valid reading until host
- is powered up
-To: James Feist <james.feist@linux.intel.com>, 
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000009d426005ade2ea75"
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=neil_bradley@phoenix.com
+X-Mimecast-Spam-Score: 0.002
+X-Mimecast-Originator: phoenix.com
+Content-Type: multipart/alternative;
+ boundary="_000_92cafea4b80142b5970545ff78b179a4SCLEXCHMB13phoenixcom_"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,68 +105,227 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>, Josh Lehan <krellan@google.com>,
- Jason Ling <jasonling@google.com>
+Cc: Amithash Prasad <amithash@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000009d426005ade2ea75
-Content-Type: text/plain; charset="UTF-8"
+--_000_92cafea4b80142b5970545ff78b179a4SCLEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-Hi James,
+VGhhbmtzIFZpamF5IOKAkyB3ZSB0cmllZCBpdCB3aXRoIHRoZSAyLjktZGV2IHJlbGVhc2UgYW5k
+IHRoZSBHUElPLiBXZeKAmWxsIGdvIHRoYXQgcm91dGUuDQoNCkFzIGFuIGFzaWRlLCBpcyB0aGVy
+ZSBhIHF1aWNrL2Vhc3kgd2F5IHRvIGVuYWJsZSB0aGUgaTIxMCBOQ1NJIGNvbm5lY3Rpb24gb24g
+dGhlIGJhc2Vib2FyZCBhbmQgdGhlIHNlY29uZCBwb3J0IG9uIHRoZSBtZXp6YW5pbmUgY2FyZD8g
+SeKAmW0gbmV3IHRvIE9wZW5CTUMgc28gc29ycnkgaWYgdGhpcyBpcyBhIGJhc2ljL3NpbXBsZSBM
+aW51eCBxdWVzdGlvbi4NCg0KQXBwcmVjaWF0ZSB0aGUgaGVscCB2ZXJ5IG11Y2ghDQoNCi0tPk5l
+aWwNCg0KRnJvbTogVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBmYi5jb20+DQpTZW50OiBXZWRu
+ZXNkYXksIEF1Z3VzdCAyNiwgMjAyMCAxMTo0NSBQTQ0KVG86IE5laWwgQnJhZGxleSA8TmVpbF9C
+cmFkbGV5QHBob2VuaXguY29tPjsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQpDYzogQW1pdGhh
+c2ggUHJhc2FkIDxhbWl0aGFzaEBmYi5jb20+OyBTYWkgRGFzYXJpIDxzZGFzYXJpQGZiLmNvbT4N
+ClN1YmplY3Q6IFJlOiBUaW9nYSBQYXNzIE9wZW5CTUMgMi44DQoNCk5vLCB5b3UgY2FuIHNheSB0
+aGF0IHBvd2VyIGNvbnRyb2wgZm9yIHRpb2dhcGFzcyB3YXMgYXZhaWxhYmxlIGZyb20ga2VybmVs
+IDUuNyBvbmx5Lg0KDQpGcm9tOiBOZWlsIEJyYWRsZXkgPE5laWxfQnJhZGxleUBwaG9lbml4LmNv
+bTxtYWlsdG86TmVpbF9CcmFkbGV5QHBob2VuaXguY29tPj4NCkRhdGU6IFdlZG5lc2RheSwgQXVn
+dXN0IDI2LCAyMDIwIGF0IDExOjI5IFBNDQpUbzogVmlqYXkgS2hlbWthIDx2aWpheWtoZW1rYUBm
+Yi5jb208bWFpbHRvOnZpamF5a2hlbWthQGZiLmNvbT4+LCAib3BlbmJtY0BsaXN0cy5vemxhYnMu
+b3JnPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+IiA8b3BlbmJtY0BsaXN0cy5vemxh
+YnMub3JnPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+Pg0KQ2M6IEFtaXRoYXNoIFBy
+YXNhZCA8YW1pdGhhc2hAZmIuY29tPG1haWx0bzphbWl0aGFzaEBmYi5jb20+PiwgU2FpIERhc2Fy
+aSA8c2Rhc2FyaUBmYi5jb208bWFpbHRvOnNkYXNhcmlAZmIuY29tPj4NClN1YmplY3Q6IFJFOiBU
+aW9nYSBQYXNzIE9wZW5CTUMgMi44DQoNCkRvZXMgdGhpcyBtZWFuIHRoZSBvZmZpY2lhbCAyLjgg
+cmVsZWFzZSB3YXMgYnJva2VuIGluIHRoaXMgcmVnYXJkPyBXZSBhcmVu4oCZdCB1c2luZyB0aGUg
+bGF0ZXN0ICYgZ3JlYXRlc3QsIGJ1dCBpdOKAmXMgd29ydGggYSBzaG90LiBXaWxsIGRvIHRvbW9y
+cm93IQ0KDQotLT5OZWlsDQoNCkZyb206IFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIuY29t
+PG1haWx0bzp2aWpheWtoZW1rYUBmYi5jb20+Pg0KU2VudDogV2VkbmVzZGF5LCBBdWd1c3QgMjYs
+IDIwMjAgMTA6NDAgUE0NClRvOiBOZWlsIEJyYWRsZXkgPE5laWxfQnJhZGxleUBwaG9lbml4LmNv
+bTxtYWlsdG86TmVpbF9CcmFkbGV5QHBob2VuaXguY29tPj47IG9wZW5ibWNAbGlzdHMub3psYWJz
+Lm9yZzxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KQ2M6IEFtaXRoYXNoIFByYXNh
+ZCA8YW1pdGhhc2hAZmIuY29tPG1haWx0bzphbWl0aGFzaEBmYi5jb20+PjsgU2FpIERhc2FyaSA8
+c2Rhc2FyaUBmYi5jb208bWFpbHRvOnNkYXNhcmlAZmIuY29tPj4NClN1YmplY3Q6IFJlOiBUaW9n
+YSBQYXNzIE9wZW5CTUMgMi44DQoNCk5laWwsDQpUaGlzIG1lYW5zIHRoYXQgcG93ZXIgY29udHJv
+bCBhcHBsaWNhdGlvbiBpcyBub3QgcnVubmluZy4gQW4gSSBrbm93IHdoeSBiZWNhdXNlIHdlIG5l
+ZWQga2VybmVsIGRldmljZSB0cmVlIGZyb20gNS43KyBrZXJuZWwgdG8gc3VwcG9ydCBwcm9wZXIg
+Z3BpbyBwaW5zIGFkZGl0aW9uIGluIGRldmljZSAgdHJlZS4NCg0KU28gcGxlYXNlIGRvd25sb2Fk
+IGxhdGVzdCBvcGVuYm1jIGltYWdlLCB5b3VyIGFsbCBwcm9ibGVtIGZvciBpcG1iIGFuZCBwb3dl
+ciBjb250cm9sIHdpbGwgYmUgcmVzb2x2ZWQuDQoNClJlZ2FyZHMNCi1WaWpheQ0KDQoNCkZyb206
+IE5laWwgQnJhZGxleSA8TmVpbF9CcmFkbGV5QHBob2VuaXguY29tPG1haWx0bzpOZWlsX0JyYWRs
+ZXlAcGhvZW5peC5jb20+Pg0KRGF0ZTogV2VkbmVzZGF5LCBBdWd1c3QgMjYsIDIwMjAgYXQgMjo1
+MyBQTQ0KVG86IFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIuY29tPG1haWx0bzp2aWpheWto
+ZW1rYUBmYi5jb20+PiwgIm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJtY0Bs
+aXN0cy5vemxhYnMub3JnPiIgPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxtYWlsdG86b3BlbmJt
+Y0BsaXN0cy5vemxhYnMub3JnPj4NCkNjOiBBbWl0aGFzaCBQcmFzYWQgPGFtaXRoYXNoQGZiLmNv
+bTxtYWlsdG86YW1pdGhhc2hAZmIuY29tPj4sIFNhaSBEYXNhcmkgPHNkYXNhcmlAZmIuY29tPG1h
+aWx0bzpzZGFzYXJpQGZiLmNvbT4+DQpTdWJqZWN0OiBSRTogVGlvZ2EgUGFzcyBPcGVuQk1DIDIu
+OA0KDQpBIGJpdCBtb3JlIGluZm8g4oCTIGRvZXMgdGhpcyBtZWFuIHRoZSBkYnVzIGludGVyZmFj
+ZSBmb3IgY2hhc3NpcyBjb250cm9sIGlzIG1pc3Npbmc/DQoNCnJvb3RAdGlvZ2FwYXNzOi9kZXYj
+IHBvd2VyLXV0aWwgbWIgc3RhdHVzDQpGYWlsZWQgdG8gZ2V0IHByb3BlcnR5IEN1cnJlbnRQb3dl
+clN0YXRlIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXM6IFRo
+ZSBuYW1lIGlzIG5vdCBhY3RpdmF0YWJsZSBvZmYNCnJvb3RAdGlvZ2FwYXNzOi9kZXYjIHBvd2Vy
+LXV0aWwgbWIgb24NCkZhaWxlZCB0byBnZXQgcHJvcGVydHkgQ3VycmVudFBvd2VyU3RhdGUgb24g
+aW50ZXJmYWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hhc3NpczogVGhlIG5hbWUgaXMg
+bm90IGFjdGl2YXRhYmxlDQpQb3dlcmluZyBvbiBTZXJ2ZXINCkZhaWxlZCB0byBzZXQgcHJvcGVy
+dHkgUmVxdWVzdGVkUG93ZXJUcmFuc2l0aW9uIG9uIGludGVyZmFjZSB4eXoub3BlbmJtY19wcm9q
+ZWN0LlN0YXRlLkNoYXNzaXM6IFRoZSBuYW1lIGlzIG5vdCBhY3RpdmF0YWJsZQ0Kcm9vdEB0aW9n
+YXBhc3M6L2RldiMgcG93ZXItdXRpbCBtYiBvZmYNCkZhaWxlZCB0byBnZXQgcHJvcGVydHkgQ3Vy
+cmVudFBvd2VyU3RhdGUgb24gaW50ZXJmYWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hh
+c3NpczogVGhlIG5hbWUgaXMgbm90IGFjdGl2YXRhYmxlDQpyb290QHRpb2dhcGFzczovZGV2Iw0K
+DQotLT5OZWlsDQoNCg==
+--_000_92cafea4b80142b5970545ff78b179a4SCLEXCHMB13phoenixcom_
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-After some debugging, I realized that the code I pointed out earlier wasn't
-the root cause. Update is that, the HwmonTempSensor stops updating after
-the hwmon driver returns EAGAIN as errno. I'll keep debugging...
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+V2luZ2RpbmdzOw0KCXBhbm9zZS0xOjUgMCAwIDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFjZQ0K
+CXtmb250LWZhbWlseTpQTWluZ0xpVTsNCglwYW5vc2UtMToyIDIgNSAwIDAgMCAwIDAgMCAwO30N
+CkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0
+IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJ
+cGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWls
+eToiXEBQTWluZ0xpVSI7DQoJcGFub3NlLTE6MiAyIDUgMCAwIDAgMCAwIDAgMDt9DQovKiBTdHls
+ZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1h
+bA0KCXttYXJnaW46MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGli
+cmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXttc28tc3R5bGUt
+cHJpb3JpdHk6OTk7DQoJY29sb3I6Ymx1ZTsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30N
+Ci5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6
+ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1h
+cmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6
+V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpz
+aGFwZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5k
+aWZdLS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRp
+dCI+DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48
+L3htbD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSJibHVl
+IiB2bGluaz0icHVycGxlIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj5UaGFua3MgVmlqYXkg4oCTIHdlIHRyaWVkIGl0IHdpdGggdGhlIDIuOS1kZXYg
+cmVsZWFzZSBhbmQgdGhlIEdQSU8uIFdl4oCZbGwgZ28gdGhhdCByb3V0ZS48bzpwPjwvbzpwPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9
+Ik1zb05vcm1hbCI+QXMgYW4gYXNpZGUsIGlzIHRoZXJlIGEgcXVpY2svZWFzeSB3YXkgdG8gZW5h
+YmxlIHRoZSBpMjEwIE5DU0kgY29ubmVjdGlvbiBvbiB0aGUgYmFzZWJvYXJkIGFuZCB0aGUgc2Vj
+b25kIHBvcnQgb24gdGhlIG1lenphbmluZSBjYXJkPyBJ4oCZbSBuZXcgdG8gT3BlbkJNQyBzbyBz
+b3JyeSBpZiB0aGlzIGlzIGEgYmFzaWMvc2ltcGxlIExpbnV4IHF1ZXN0aW9uLjxvOnA+PC9vOnA+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj5BcHByZWNpYXRlIHRoZSBoZWxwIHZlcnkgbXVjaCE8bzpwPjwvbzpwPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9
+Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtZmFtaWx5OldpbmdkaW5ncyI+w6A8L3NwYW4+
+TmVpbDxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286
+cD48L3A+DQo8ZGl2Pg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAj
+RTFFMUUxIDEuMHB0O3BhZGRpbmc6My4wcHQgMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCI+PGI+RnJvbTo8L2I+IFZpamF5IEtoZW1rYSAmbHQ7dmlqYXlraGVta2FAZmIuY29tJmd0
+OyA8YnI+DQo8Yj5TZW50OjwvYj4gV2VkbmVzZGF5LCBBdWd1c3QgMjYsIDIwMjAgMTE6NDUgUE08
+YnI+DQo8Yj5Ubzo8L2I+IE5laWwgQnJhZGxleSAmbHQ7TmVpbF9CcmFkbGV5QHBob2VuaXguY29t
+Jmd0Ozsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPGJyPg0KPGI+Q2M6PC9iPiBBbWl0aGFzaCBQ
+cmFzYWQgJmx0O2FtaXRoYXNoQGZiLmNvbSZndDs7IFNhaSBEYXNhcmkgJmx0O3NkYXNhcmlAZmIu
+Y29tJmd0Ozxicj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogVGlvZ2EgUGFzcyBPcGVuQk1DIDIuODxv
+OnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+
+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Tm8sIHlvdSBjYW4gc2F5IHRo
+YXQgcG93ZXIgY29udHJvbCBmb3IgdGlvZ2FwYXNzIHdhcyBhdmFpbGFibGUgZnJvbSBrZXJuZWwg
+NS43IG9ubHkuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNw
+OzwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci10b3A6c29saWQgI0I1
+QzRERiAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5Gcm9tOiA8
+L3NwYW4+PC9iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTIuMHB0O2NvbG9yOmJsYWNrIj5OZWls
+IEJyYWRsZXkgJmx0OzxhIGhyZWY9Im1haWx0bzpOZWlsX0JyYWRsZXlAcGhvZW5peC5jb20iPk5l
+aWxfQnJhZGxleUBwaG9lbml4LmNvbTwvYT4mZ3Q7PGJyPg0KPGI+RGF0ZTogPC9iPldlZG5lc2Rh
+eSwgQXVndXN0IDI2LCAyMDIwIGF0IDExOjI5IFBNPGJyPg0KPGI+VG86IDwvYj5WaWpheSBLaGVt
+a2EgJmx0OzxhIGhyZWY9Im1haWx0bzp2aWpheWtoZW1rYUBmYi5jb20iPnZpamF5a2hlbWthQGZi
+LmNvbTwvYT4mZ3Q7LCAmcXVvdDs8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMu
+b3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L2E+JnF1b3Q7ICZsdDs8YSBocmVmPSJtYWls
+dG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L2E+
+Jmd0Ozxicj4NCjxiPkNjOiA8L2I+QW1pdGhhc2ggUHJhc2FkICZsdDs8YSBocmVmPSJtYWlsdG86
+YW1pdGhhc2hAZmIuY29tIj5hbWl0aGFzaEBmYi5jb208L2E+Jmd0OywgU2FpIERhc2FyaSAmbHQ7
+PGEgaHJlZj0ibWFpbHRvOnNkYXNhcmlAZmIuY29tIj5zZGFzYXJpQGZiLmNvbTwvYT4mZ3Q7PGJy
+Pg0KPGI+U3ViamVjdDogPC9iPlJFOiBUaW9nYSBQYXNzIE9wZW5CTUMgMi44PG86cD48L286cD48
+L3NwYW4+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJz
+cDs8L286cD48L3A+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkRvZXMgdGhpcyBtZWFu
+IHRoZSBvZmZpY2lhbCAyLjggcmVsZWFzZSB3YXMgYnJva2VuIGluIHRoaXMgcmVnYXJkPyBXZSBh
+cmVu4oCZdCB1c2luZyB0aGUgbGF0ZXN0ICZhbXA7IGdyZWF0ZXN0LCBidXQgaXTigJlzIHdvcnRo
+IGEgc2hvdC4gV2lsbCBkbyB0b21vcnJvdyE8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
+c3R5bGU9ImZvbnQtZmFtaWx5OldpbmdkaW5ncyI+w6A8L3NwYW4+TmVpbDxvOnA+PC9vOnA+PC9w
+Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8ZGl2Pg0KPGRp
+diBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRp
+bmc6My4wcHQgMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+RnJvbTo8L2I+
+IFZpamF5IEtoZW1rYSAmbHQ7PGEgaHJlZj0ibWFpbHRvOnZpamF5a2hlbWthQGZiLmNvbSI+dmlq
+YXlraGVta2FAZmIuY29tPC9hPiZndDsNCjxicj4NCjxiPlNlbnQ6PC9iPiBXZWRuZXNkYXksIEF1
+Z3VzdCAyNiwgMjAyMCAxMDo0MCBQTTxicj4NCjxiPlRvOjwvYj4gTmVpbCBCcmFkbGV5ICZsdDs8
+YSBocmVmPSJtYWlsdG86TmVpbF9CcmFkbGV5QHBob2VuaXguY29tIj5OZWlsX0JyYWRsZXlAcGhv
+ZW5peC5jb208L2E+Jmd0OzsNCjxhIGhyZWY9Im1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmciPm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzwvYT48YnI+DQo8Yj5DYzo8L2I+IEFtaXRoYXNo
+IFByYXNhZCAmbHQ7PGEgaHJlZj0ibWFpbHRvOmFtaXRoYXNoQGZiLmNvbSI+YW1pdGhhc2hAZmIu
+Y29tPC9hPiZndDs7IFNhaSBEYXNhcmkgJmx0OzxhIGhyZWY9Im1haWx0bzpzZGFzYXJpQGZiLmNv
+bSI+c2Rhc2FyaUBmYi5jb208L2E+Jmd0Ozxicj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogVGlvZ2Eg
+UGFzcyBPcGVuQk1DIDIuODxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5OZWlsLDwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+VGhpcyBtZWFucyB0
+aGF0IHBvd2VyIGNvbnRyb2wgYXBwbGljYXRpb24gaXMgbm90IHJ1bm5pbmcuIEFuIEkga25vdyB3
+aHkgYmVjYXVzZSB3ZSBuZWVkIGtlcm5lbCBkZXZpY2UgdHJlZSBmcm9tIDUuNyYjNDM7IGtlcm5l
+bCB0byBzdXBwb3J0IHByb3BlciBncGlvIHBpbnMgYWRkaXRpb24gaW4gZGV2aWNlJm5ic3A7IHRy
+ZWUuPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5
+bGU9ImNvbG9yOmJsYWNrIj4mbmJzcDs8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPlNvIHBsZWFzZSBkb3dubG9hZCBs
+YXRlc3Qgb3BlbmJtYyBpbWFnZSwgeW91ciBhbGwgcHJvYmxlbSBmb3IgaXBtYiBhbmQgcG93ZXIg
+Y29udHJvbCB3aWxsIGJlIHJlc29sdmVkLjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7PC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNr
+Ij5SZWdhcmRzPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNw
+YW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4tVmlqYXk8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVy
+LXRvcDpzb2xpZCAjQjVDNERGIDEuMHB0O3BhZGRpbmc6My4wcHQgMGluIDBpbiAwaW4iPg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+PGI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29sb3I6
+YmxhY2siPkZyb206IDwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMi4wcHQ7Y29s
+b3I6YmxhY2siPk5laWwgQnJhZGxleSAmbHQ7PGEgaHJlZj0ibWFpbHRvOk5laWxfQnJhZGxleUBw
+aG9lbml4LmNvbSI+TmVpbF9CcmFkbGV5QHBob2VuaXguY29tPC9hPiZndDs8YnI+DQo8Yj5EYXRl
+OiA8L2I+V2VkbmVzZGF5LCBBdWd1c3QgMjYsIDIwMjAgYXQgMjo1MyBQTTxicj4NCjxiPlRvOiA8
+L2I+VmlqYXkgS2hlbWthICZsdDs8YSBocmVmPSJtYWlsdG86dmlqYXlraGVta2FAZmIuY29tIj52
+aWpheWtoZW1rYUBmYi5jb208L2E+Jmd0OywgJnF1b3Q7PGEgaHJlZj0ibWFpbHRvOm9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9hPiZxdW90OyAmbHQ7
+PGEgaHJlZj0ibWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5v
+emxhYnMub3JnPC9hPiZndDs8YnI+DQo8Yj5DYzogPC9iPkFtaXRoYXNoIFByYXNhZCAmbHQ7PGEg
+aHJlZj0ibWFpbHRvOmFtaXRoYXNoQGZiLmNvbSI+YW1pdGhhc2hAZmIuY29tPC9hPiZndDssIFNh
+aSBEYXNhcmkgJmx0OzxhIGhyZWY9Im1haWx0bzpzZGFzYXJpQGZiLmNvbSI+c2Rhc2FyaUBmYi5j
+b208L2E+Jmd0Ozxicj4NCjxiPlN1YmplY3Q6IDwvYj5SRTogVGlvZ2EgUGFzcyBPcGVuQk1DIDIu
+ODwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5B
+IGJpdCBtb3JlIGluZm8g4oCTIGRvZXMgdGhpcyBtZWFuIHRoZSBkYnVzIGludGVyZmFjZSBmb3Ig
+Y2hhc3NpcyBjb250cm9sIGlzIG1pc3Npbmc/PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
+IHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+cm9vdEB0aW9nYXBh
+c3M6L2RldiMgcG93ZXItdXRpbCBtYiBzdGF0dXM8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBO
+ZXcmcXVvdDsiPkZhaWxlZCB0byBnZXQgcHJvcGVydHkgQ3VycmVudFBvd2VyU3RhdGUgb24gaW50
+ZXJmYWNlIHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hhc3NpczogVGhlIG5hbWUgaXMgbm90
+IGFjdGl2YXRhYmxlIG9mZjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+cm9v
+dEB0aW9nYXBhc3M6L2RldiMgcG93ZXItdXRpbCBtYiBvbjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3Vy
+aWVyIE5ldyZxdW90OyI+RmFpbGVkIHRvIGdldCBwcm9wZXJ0eSBDdXJyZW50UG93ZXJTdGF0ZSBv
+biBpbnRlcmZhY2UgeHl6Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5DaGFzc2lzOiBUaGUgbmFtZSBp
+cyBub3QgYWN0aXZhdGFibGU8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj48c3BhbiBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDsiPlBv
+d2VyaW5nIG9uIFNlcnZlcjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+RmFp
+bGVkIHRvIHNldCBwcm9wZXJ0eSBSZXF1ZXN0ZWRQb3dlclRyYW5zaXRpb24gb24gaW50ZXJmYWNl
+IHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQ2hhc3NpczogVGhlIG5hbWUgaXMgbm90IGFjdGl2
+YXRhYmxlPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
+c3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij5yb290QHRpb2dhcGFz
+czovZGV2IyBwb3dlci11dGlsIG1iIG9mZjwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZx
+dW90OyI+RmFpbGVkIHRvIGdldCBwcm9wZXJ0eSBDdXJyZW50UG93ZXJTdGF0ZSBvbiBpbnRlcmZh
+Y2UgeHl6Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5DaGFzc2lzOiBUaGUgbmFtZSBpcyBub3QgYWN0
+aXZhdGFibGU8L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBzdHlsZT0iZm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDsiPnJvb3RAdGlvZ2Fw
+YXNzOi9kZXYjPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5i
+c3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9u
+dC1mYW1pbHk6V2luZ2RpbmdzIj7DoDwvc3Bhbj5OZWlsPG86cD48L286cD48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9o
+dG1sPg0K
+--_000_92cafea4b80142b5970545ff78b179a4SCLEXCHMB13phoenixcom_--
 
-- Alex Qiu
-
-
-On Tue, Aug 25, 2020 at 5:49 PM Alex Qiu <xqiu@google.com> wrote:
-
-> Hi James and OpenBMC community,
->
-> We have a sensor for HwmonTempSensor which doesn't have a valid reading
-> until the host is fully booted. Before it's becoming alive and useful, it's
-> getting disabled in code (
-> https://github.com/openbmc/dbus-sensors/blob/master/include/sensor.hpp#L266)
-> because of errors thrown up by the hwmon driver. Ideally, the thermal
-> control loop should kick the fan to fail safe mode until no more errors are
-> observed.
->
-> Any suggestions on how we should handle this kind of sensor properly?
->
-> Thank you!
->
-> - Alex Qiu
->
-
---0000000000009d426005ade2ea75
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi James,</div><div><br></div><div>After some debuggi=
-ng, I realized that the code I pointed out earlier wasn&#39;t the root caus=
-e. Update is that, the HwmonTempSensor stops updating after the hwmon drive=
-r returns EAGAIN as errno. I&#39;ll keep debugging...</div><br clear=3D"all=
-"><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_s=
-ignature"><div dir=3D"ltr">- Alex Qiu</div></div></div><br></div><br><div c=
-lass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 25, =
-2020 at 5:49 PM Alex Qiu &lt;<a href=3D"mailto:xqiu@google.com">xqiu@google=
-.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex"><div dir=3D"ltr"><div>Hi James and OpenBMC community,</div><div><br></d=
-iv><div>We have a sensor for HwmonTempSensor which doesn&#39;t have a valid=
- reading until the host is fully booted. Before it&#39;s becoming alive and=
- useful, it&#39;s getting disabled in code (<a href=3D"https://github.com/o=
-penbmc/dbus-sensors/blob/master/include/sensor.hpp#L266" target=3D"_blank">=
-https://github.com/openbmc/dbus-sensors/blob/master/include/sensor.hpp#L266=
-</a>) because of errors thrown up by the hwmon driver. Ideally, the thermal=
- control loop should kick the fan to fail safe mode until no more=C2=A0erro=
-rs are observed.</div><div><br></div><div>Any suggestions on how we should =
-handle this kind of sensor properly?<br></div><div><br></div><div>Thank you=
-!</div><br clear=3D"all"><div><div dir=3D"ltr"><div dir=3D"ltr">- Alex Qiu<=
-/div></div></div></div>
-</blockquote></div>
-
---0000000000009d426005ade2ea75--
