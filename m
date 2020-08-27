@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD91D254636
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:45:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C3ECF25462B
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 15:43:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BckW439MkzDqLw
-	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 23:45:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BckSp2RrjzDqdm
+	for <lists+openbmc@lfdr.de>; Thu, 27 Aug 2020 23:43:06 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,43 +17,43 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=Cf4BwQ2T; 
+ header.s=fm3 header.b=Bt3k5Xtb; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=VM8C4fHm; 
+ header.a=rsa-sha256 header.s=fm3 header.b=MOk+P2BH; 
  dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BckKF0QgCzDqM3
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BckKF0gC9zDqSh
  for <openbmc@lists.ozlabs.org>; Thu, 27 Aug 2020 23:36:32 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 6B63A5C0316;
- Thu, 27 Aug 2020 09:30:45 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id E676F5C031A;
+ Thu, 27 Aug 2020 09:30:46 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Thu, 27 Aug 2020 09:30:45 -0400
+ by compute3.internal (MEProxy); Thu, 27 Aug 2020 09:30:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=sw3c6eWGVj7V0
- vWAk3un+/GnrJLprKEwMeWYTD+JiqY=; b=Cf4BwQ2Tp3mX+0YPVVMk98aItHsNu
- 5zBfgi0m+c+aKXf5W1cckDHUpyqmQzn0JHQk9RxJKLKmgKPHOMsfndWsM73OSma8
- Jj5cjDxBvwJwUz1d2YHa7iWQkirLC/pY2X6tq7u3YicPCPiqlyEv1mSao+G8F0Jx
- WXtXoDp1nERFgCPWR1dV6DNr11ZDksBMx45Q9hrK5omlrho89hjtunS8TnOdvADb
- auvZtmJYCYwz5M4OirYmEcVg8HJbyc9Z7S7xqTypcA8DinqSA+UoEynpPOWo7XHP
- 78z9jhh02xHbF+ARNwg7WW4VDkoXZLCl4DJVXAmwmkJ2Ligz1ZSmuW30A==
+ :mime-version:content-transfer-encoding; s=fm3; bh=Kkcc9vN9QXP25
+ +selb3Q6qwT+96BRSbB1PImG5HrLwU=; b=Bt3k5XtblL3weuNT55h+XW1wK0kkl
+ khJ8VtPutL/m/b37CLq2xX5qt2rt7Cz97jgrNZdXqVikvH/H58IUWylue0pbMtH8
+ BgdLKrOL0fsiO+MzaIzkzCtrNoumJaYPUBB2EKxhh5RTBP/iOr2tNO4lqCeXeHHY
+ KFrW2JCfbiEejLnDq/a/7e5dg50FS5krd3geGPZTKP83BXD/hDNNywvHwnFpNqIk
+ djNd8pXOWF2j8YeJIE+1ASa4oVlNGOc/GmaKaiEgY194kpfnVzfR/8kFFvPTMrK/
+ uikwIyGEtk17i7ho2wRL4/F1cb2Zi8Dw9kFmmEAVkMYZtMDhpjsg2yDsQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
  :in-reply-to:message-id:mime-version:references:subject:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=sw3c6eWGVj7V0vWAk3un+/GnrJLprKEwMeWYTD+JiqY=; b=VM8C4fHm
- ZtAN3dOjSnAjN2Z8dcE/KMWOBA2XnvxXA8RihDZ14lTuCDIF/28PCVQJ0bp0oYGK
- PvB1tdZuXZA7H5ZOm/RZwbyC2IB1wQhhksSt8kze2ukYXs5Jc2KiZ08G1oR1iDyz
- O56Zt5W/Khbzel8RwzibmyAXCt3OWNAxfXNf7ADxRh+S6yjMnDxuQJTR6TfVFKIo
- Cgl2PlPM9sjnhsSCU2xHmJ00g98l+8PyErHVlEqUlr/OjsaDjDwzq+WgHvoeh4/w
- kRsaXW3b2g/6pjoSjPgeBcTMOmXgjMf/fG20+TKYJQ1IiDwQs5VLdsLGHj20798D
- tqp4g1P81iGX2w==
-X-ME-Sender: <xms:hbVHX5Zv9n0jJssMOL4A9sLjkbzxjxcmjhUQ2dxx_Rn25381lQIpsw>
+ fm3; bh=Kkcc9vN9QXP25+selb3Q6qwT+96BRSbB1PImG5HrLwU=; b=MOk+P2BH
+ PuHwxkpvWBYx7jrUr0j4CPK3kDKXnI383+QOH08jZ7Pyf9s8DqEeglzWb7iuoWaY
+ IPHeUlolREc9LqYZfh5HKiG1UCBQ1fbFrqNOvcuOwSd3PbP8/VnxxY5GHVx2lmBH
+ gAKB8oGwuBJ2dk5NJmrKLX5mj9br73T6MU5gycQCqT1IIm9eetZW4NN8FbXY9UuX
+ lEj33//xBhZay/QflTquF+09ivYq9NESMflmrbyjx3//dENPfZey7mYWl/YkhVLx
+ TgxZnmdYSY+dkGxnMF2TAodxm47Rxsepoiu7Lt/yx72OXEdJSAwSLYJ6A+/5t3Oa
+ fqP/OG2TI1Ewwg==
+X-ME-Sender: <xms:hrVHX1A3P5Aps0rWjM0vQwUbG4hH9_LUCXbWUw2KaZaWruhNWW3jJA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvgedgieehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
@@ -62,20 +62,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvgedgieehucetufdoteggod
  etjeffleffvdduudevieffgeetleevhfetnecukfhppedugedrvddrudduiedruddtnecu
  vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvg
  ifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:hbVHXwZjbEQz7EDbQI8XjyPi80nDOkiRZ0rrDgznBAAE8pXlV2k4AQ>
- <xmx:hbVHX7_lBfhc4wZxyh1veBUdrCVjX55O8BScg1dOtyhRZC5SSZOfvg>
- <xmx:hbVHX3rY45nTSIowMuDvVXEixRUk3CTVvUt2KysTKOHsoe-PWoLUMA>
- <xmx:hbVHXx33ECM9uzIy09k_ipH5dclIYZHplbUuKXScixasi7fVKuj-zg>
+X-ME-Proxy: <xmx:hrVHXziJUtx8yIC9tFFmzl3hzIB3HppnHGSER15a-vzIjD373OqvAA>
+ <xmx:hrVHXwkVbf2sL_IIRmqwJ6da5EtHuS1NJ3Yw5DUCSEhMvq7TTBeAAQ>
+ <xmx:hrVHX_x2h1-biaMUMXvWJgf71Z3XZQNh_Ks6xWZVCz4HpURIwS8_yA>
+ <xmx:hrVHXxc8YRYDDuHbt9lidu-C9h4QbclDBqYhqdniGs377ueyL59aUg>
 Received: from localhost.localdomain
  (ppp14-2-116-10.adl-apt-pir-bras32.tpg.internode.on.net [14.2.116.10])
- by mail.messagingengine.com (Postfix) with ESMTPA id 2CAFC3280059;
- Thu, 27 Aug 2020 09:30:43 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id B5B243280059;
+ Thu, 27 Aug 2020 09:30:45 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH linux dev-5.8 2/3] pmbus: (max31785) Add a local
- pmbus_set_page() implementation
-Date: Thu, 27 Aug 2020 23:00:01 +0930
-Message-Id: <20200827133002.369439-3-andrew@aj.id.au>
+Subject: [PATCH linux dev-5.8 3/3] pmbus: (core) Add a one-shot retry in
+ pmbus_set_page()
+Date: Thu, 27 Aug 2020 23:00:02 +0930
+Message-Id: <20200827133002.369439-4-andrew@aj.id.au>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20200827133002.369439-1-andrew@aj.id.au>
 References: <20200827133002.369439-1-andrew@aj.id.au>
@@ -96,99 +96,73 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Extensive testing and tracing has shown that the MAX31785 is unreliable
-in the face of PAGE write commands, ACK'ing the PAGE request but
-reporting a value of 0 on some subsequent PAGE reads. The trace data
-suggests that a one-shot retry of the PAGE write is enough to get the
-requested value to stick.
+From extensive testing and tracing it was discovered that the MAX31785
+occasionally fails to switch pages despite ACK'ing the PAGE PMBus data
+write. I suspect this behaviour had been seen on other devices as well,
+as pmbus_set_page() already read-back the freshly set value and errored
+out if it wasn't what we requested.
 
-As we configure the device before registering with the PMBus core,
-centralise PAGE handling inside the driver and implement the one-shot
-retry semantics there.
+In the case of the MAX31785 it was shown that a one-shot retry was
+enough to get the PAGE write to stick if the inital command failed. To
+improve robustness, only error out if the one-shot retry also fails to
+stick.
 
 Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 ---
- drivers/hwmon/pmbus/max31785.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ drivers/hwmon/pmbus/pmbus_core.c | 33 ++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/hwmon/pmbus/max31785.c b/drivers/hwmon/pmbus/max31785.c
-index 88b7156d777e..a392c0efe0a6 100644
---- a/drivers/hwmon/pmbus/max31785.c
-+++ b/drivers/hwmon/pmbus/max31785.c
-@@ -361,6 +361,27 @@ static int max31785_write_word_data(struct i2c_client *client, int page,
- 	return -ENXIO;
- }
+diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+index 702c25010369..7d0aac59af31 100644
+--- a/drivers/hwmon/pmbus/pmbus_core.c
++++ b/drivers/hwmon/pmbus/pmbus_core.c
+@@ -158,25 +158,34 @@ int pmbus_set_page(struct i2c_client *client, int page, int phase)
  
-+static int max31785_pmbus_set_page(struct i2c_client *client, int page)
-+{
-+	int ret;
-+	int i;
+ 	if (!(data->info->func[page] & PMBUS_PAGE_VIRTUAL) &&
+ 	    data->info->pages > 1 && page != data->currpage) {
++		int i;
 +
-+	for (i = 0; i < 2; i++) {
-+		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-+		if (ret < 0)
-+			return ret;
+ 		dev_dbg(&client->dev, "Want page %u, %u cached\n", page,
+ 			data->currpage);
+ 
+-		rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
+-		if (rv < 0) {
++		for (i = 0; i < 2; i++) {
+ 			rv = i2c_smbus_write_byte_data(client, PMBUS_PAGE,
+ 						       page);
+-			dev_dbg(&client->dev,
+-				"Failed to set page %u, performed one-shot retry %s: %d\n",
+-				page, rv ? "and failed" : "with success", rv);
 +
-+		ret = max31785_i2c_smbus_read_byte_data(client, PMBUS_PAGE);
-+		if (ret < 0)
-+			return ret;
++			if (rv)
++				continue;
 +
-+		if (ret == page)
-+			return 0;
-+	}
++			rv = i2c_smbus_read_byte_data(client, PMBUS_PAGE);
+ 			if (rv < 0)
+-				return rv;
++				continue;
 +
-+	return -EIO;
-+}
++			/* Success, exit loop */
++			if (rv == page)
++				break;
 +
- /*
-  * Returns negative error codes if an unrecoverable problem is detected, 0 if a
-  * recoverable problem is detected, or a positive value on success.
-@@ -392,7 +413,7 @@ static int max31785_of_fan_config(struct i2c_client *client,
- 		return -ENXIO;
++			rv = i2c_smbus_read_byte_data(client, PMBUS_STATUS_CML);
++			if (rv < 0)
++				continue;
++
++			if (rv & PB_CML_FAULT_INVALID_DATA)
++				return -EIO;
+ 		}
+-
+-		rv = i2c_smbus_read_byte_data(client, PMBUS_PAGE);
+-		if (rv < 0)
+-			return rv;
+-
+-		if (rv != page)
++		if (i == 2)
+ 			return -EIO;
  	}
- 
--	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-+	ret = max31785_pmbus_set_page(client, page);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -613,7 +634,7 @@ static int max31785_of_tmp_config(struct i2c_client *client,
- 		return -ENXIO;
- 	}
- 
--	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, page);
-+	ret = max31785_pmbus_set_page(client, page);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -714,7 +735,7 @@ static int max31785_configure_dual_tach(struct i2c_client *client,
- 	int i;
- 
- 	for (i = 0; i < MAX31785_NR_FAN_PAGES; i++) {
--		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, i);
-+		ret = max31785_pmbus_set_page(client, i);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -756,7 +777,7 @@ static int max31785_probe(struct i2c_client *client,
- 
- 	*info = max31785_info;
- 
--	ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE, 255);
-+	ret = max31785_pmbus_set_page(client, 255);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -798,8 +819,7 @@ static int max31785_probe(struct i2c_client *client,
- 		if (!have_fan || fan_configured)
- 			continue;
- 
--		ret = max31785_i2c_smbus_write_byte_data(client, PMBUS_PAGE,
--							 i);
-+		ret = max31785_pmbus_set_page(client, i);
- 		if (ret < 0)
- 			return ret;
- 
+ 	data->currpage = page;
 -- 
 2.25.1
 
