@@ -2,79 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDCCA2559F6
-	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 14:22:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8D50255A54
+	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 14:37:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BdJdT5glSzDqsp
-	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 22:22:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BdJyk6C7mzDqLs
+	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 22:37:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=183.3.255.121; helo=qq.com; envelope-from=1181052146@qq.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
- header.s=s201512 header.b=iS60x9oN; dkim-atps=neutral
-X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
- Fri, 28 Aug 2020 22:21:36 AEST
-Received: from qq.com (unknown [183.3.255.121])
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=cY7PIY1i; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=YdvepzPs; 
+ dkim-atps=neutral
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BdJcJ3zMMzDqpJ
- for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 22:21:35 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1598617196; bh=9XfcEsvJnasW+6cAtC3Z2dbY74NTouDye1aMa8mHOOM=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=iS60x9oN/CUIsFFElSRNgNjz97U3NlgUtlmjQlOpbEDkjnS7Z1TNSIl72Tmn0I2LE
- zpT6hAZgHvV4iln7lZ0wqzbINMdb7WD8ewLebE/VCIh9tqC8VY11puYZ+nwr9Nq7wf
- p4k+6I0uuOkHjl8ELFNP2YcbhS0GRLb5Mai73JwA=
-X-QQ-FEAT: dWhNifKHUN2CrqogfWm/XQ3kxuNolknvhyBrB5ldGJDgGj6MkSCK9OAr205zG
- rzNXS3tZPyPm1FACxXXVRbERtm2jaR1OHp54KyFgw4zHVug4SGPE9AwhHGpbeHKpt0K46wo
- seyhxN/HEcPS9U/joSJjVZiL9Ku0qnAE9NWKZLrdTCMq8hO+PHYKronePsJvJbVUCFivMy9
- x5greaao/XHQwpEPDHyrQNlv3o53wQBQgZXX2iHTjjsf449Ke8Cr1Y636gmfS3vaWZ6KEcY
- B+0jYsAQoFuSY1Rao8aqGsyRhtVItoYwmfFFdoD7eFPI6T
-X-QQ-SSF: 00000000000000F000000000000000S
-X-QQ-XMAILINFO: MfIYxfOdYVjpiI9mCTBE/jo6XO4k9RM/GXtRdlowTbKPVI8C0XhJD+kF1N/d87
- 2pyckdqRGFyPulRH1g10dM2CT24H/ponYgUCtoYdlxoY6EjqrrZx59G3Xd/oHLk02ZLcjQOHTqKeO
- 5Tzs9wc4t4A3gsEjwuFSA/GYbkwvc+0kTTt1JAfxMLlAanlI/mkqvRr2hDjeAqZecDKfiKxTEd5WG
- RGB6EVjGYLPhV3OMT/0x8cq6qPACjK8BNAYg6uRvfdpcKbwkm00wt8hcZ3llKYrbWTega5wQMbrXH
- 6Ax+HkKi97CPusoqE2UmdlvR4sBsRv18HPtzNG0fidQ1I4R/YfHu5z1iEWeySIIpxr4Fkm21D3GwQ
- 64Pf+gNKEDCuSxmHzGL3lpPegQYnt3LDAaPtXMmO4S7Iu2L+eGPTnizBa2+DWSGFwcQLmMJQuSfms
- HAqN9m6i+bUx5P4RQLJCML/MHv6nX7KhslA8/cQJHz0HS0RqnZWlD2wgWtnQK4sc9vibG+/jrRMtN
- WMNVceaW63Xo8+O6D933wTqWWZC1uBsoZ+azQZm06w4CSZPDa1+roitdpxBdHl8MKn+osGXDJPzxu
- aCwye3YpDJDjVgz3BK+QMweE3+X8pTCfcQ/RyYbhgnyPYhLtnG4YK6hDbfYpe2Yx7/9wwkC2FCgZT
- +SjLv6hMk08Q8TPZEP/8iRhEBs2QEiT1EY2Pm3VkAP44TwOCc=
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 211.75.18.137
-In-Reply-To: <23a6e0dde0144751b936877af5f049ef@TWMBX02.aspeed.com>
-References: <tencent_6FC98F43C847A4FA599681BF8ABCC554C006@qq.com>
- <23a6e0dde0144751b936877af5f049ef@TWMBX02.aspeed.com>
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1598617195t2371139
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?UnlhbiBDaGVu?=" <ryan_chen@aspeedtech.com>,
- "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: Re:RE: XDMA engine for AST2400
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5F48F66B_0E9545F0_02C219FD"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 28 Aug 2020 20:19:55 +0800
-X-Priority: 3
-Message-ID: <tencent_A039FC7D80A83F64ADF977C8AB4F859DC40A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-ReplyHash: 1912961882
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 28 Aug 2020 20:19:56 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign12
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BdJx93fQfzDqrV
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 22:36:12 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.west.internal (Postfix) with ESMTP id 9D1E7D25;
+ Fri, 28 Aug 2020 08:36:08 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Fri, 28 Aug 2020 08:36:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm2; bh=8ohfJwDdWDwKNegx5wtvXLRDQ7I
+ CJLA2O+teu3I5y4w=; b=cY7PIY1il/0wZX5vuNteV60cL/cuy5jPS+bnnqYIpNO
+ iaNb3x5F2N86vB9e3LD+ZVwNHTBKI39F8HZbvI4BqZjD4t4qg2fNVte01TJUiwOo
+ 0HJTstqnAqALlAPQgrcYLt+IwyZUW19rlitVfGoux1TvPGeeUF/ZYgEH1w78bqnO
+ nhMPDVzceCuO0tITdBT+xwR8dnMx/EeVS5kQQVxYLRSAA+7w5FVIWlBvQs+Utsp/
+ YH8uR3JPpqMJtClqhBtET1yUqYRf5a9E7ttJTm4O8NtZMTeQIrSi0VmXykOHj2Fl
+ E4HhRRYJKYMLzJm2RIh0eEzk9PZTzB+wKHo4KEsJdUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8ohfJw
+ DdWDwKNegx5wtvXLRDQ7ICJLA2O+teu3I5y4w=; b=YdvepzPsWT00/HjxT+giV/
+ cATmUXivhynNodGJiiPgWYpvrzTY0GND4wyJo1QKZoBorIN7bG2t9ixQbS64biPc
+ 2cwAzTvNSp2phaGg73a3VwvY3x3qg4sDgYW9jI7WPFrS4kotnit1wozUMNXB67w8
+ 80LpHyPTr/6PfpUGIruXrqdMDVUlnqWb5Hh4X1+0X2Qf7EPkjWE/v4tKHYeHX50f
+ zv4ypP3AGs8hj6dpYl7VM0+NnkNodWPh207UiOPd0i3VmSUiTOWmuauJ2JapzQJq
+ K/QoGmteXY2BstHO0uDclsvxZZmQxWNAHcLugJ/f5yBC9muqRoorI/P/WQZI2N4A
+ ==
+X-ME-Sender: <xms:N_pIX1_zc88U9hGIVylnZeHWapHm3BwaGhzcR6DSEHgj0xFKPwjKhg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedruddvjedgvddvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
+ leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:N_pIX5sVkIbtvw1awQQymJxeZ19-XuzFkdecZ_5N3d_zkcYrKbpvfQ>
+ <xmx:N_pIXzDNBgvXQgttSibK54Xiy30NKBoIIxaj7Jb2Dafo7AJk-Wx89Q>
+ <xmx:N_pIX5fpYduG-9049MeB4DDcfyqpaFjpoXK0fXXW_zTeRcpd_D5Ccg>
+ <xmx:OPpIXwbLJXwBYbVTHKKJthxvb5CMY40Tnb3ksCom_vfVVE7yk5a5Ag>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 891663280063;
+ Fri, 28 Aug 2020 08:36:07 -0400 (EDT)
+Date: Fri, 28 Aug 2020 07:36:06 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+Subject: Re: Is there any reason or practical value of staying with
+ https://github.com/openbmc/openbmc/tree/2.8.0
+Message-ID: <20200828123606.GN3532@heinlein>
+References: <fd8d46e97bc742b5b8dd9325f3835326@SCL-EXCHMB-13.phoenix.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="U6leaJ20qZQc29iB"
+Content-Disposition: inline
+In-Reply-To: <fd8d46e97bc742b5b8dd9325f3835326@SCL-EXCHMB-13.phoenix.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,93 +94,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
 
-------=_NextPart_5F48F66B_0E9545F0_02C219FD
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+--U6leaJ20qZQc29iB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-SGksIFJ5YW4NCg0KDQpUaGFuayB5b3UgdmVyeSBtdWNoIGZvciB5b3VyIGhlbHAuIEkgYW0g
-YSBiZWdpbm5lciBmb3IgWERNQSBlbmdpbmUsIHlldCBJIGRvIG5vdCBrbm93IGhvdyB0byB1
-c2UgaXQoJmd0Oy48KSAuLi4mbmJzcDsNCkkgbGVhcm4gWERNQSBmcm9tIHRoZSBkcml2ZXIo
-L2RyaXZlcnMvc29jL2FzcGVlZC9hc3BlZWQteGRtYS5jKSBhbmQgQVNUMjQwMCBkYXRhc2hl
-ZXQuDQpBcmUgdGhlcmUgYW55IG90aGVyIGV4YW1wbGVzIG9yIGd1aWRhbmNlcyBmb3IgbW9k
-aWZ5aW5nIHRoZSBkcml2ZXIgZm9yIEFTVDI0MDAgWERNQSBlbmdpbmU/DQoNCg0KQmVzdCBS
-ZWdhcmRzIQ0KTGl1IEhvbmd3ZWkNCg0KDQoNCg0KLS0tLS0tLS0tLS0tLS0tLS0tJm5ic3A7
-T3JpZ2luYWwmbmJzcDstLS0tLS0tLS0tLS0tLS0tLS0NCkZyb206ICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIlJ5
-YW4gQ2hlbiIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cnlhbl9jaGVuQGFzcGVl
-ZHRlY2guY29tJmd0OzsNCkRhdGU6Jm5ic3A7RnJpLCBBdWcgMjgsIDIwMjAgMTA6NTIgQU0N
-ClRvOiZuYnNwOyLEz9KwpeCl66W3pail6aW0IjwxMTgxMDUyMTQ2QHFxLmNvbSZndDs7Im9w
-ZW5ibWMiPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs7DQoNClN1YmplY3Q6Jm5ic3A7
-UkU6IFhETUEgZW5naW5lIGZvciBBU1QyNDAwDQoNCg0KDQpIZWxsbywgDQoJQVNUMjQwMCBz
-dXBwb3J0IHhETUEsIHRoZSBkaWZmZXJlbnQgd2lsbCBiZSBjb21tYW5kIGZvcm1hdC4gSXQg
-bmVlZCB0byBtb2RpZnkgZm9yIEFTVDI0MDAuDQoNCkZyb206IG9wZW5ibWMgPG9wZW5ibWMt
-Ym91bmNlcytyeWFuX2NoZW49YXNwZWVkdGVjaC5jb21AbGlzdHMub3psYWJzLm9yZyZndDsg
-T24gQmVoYWxmIE9mIMTP0rA/Pz8/Pz8NClNlbnQ6IEZyaWRheSwgQXVndXN0IDI4LCAyMDIw
-IDEwOjEzIEFNDQpUbzogb3BlbmJtYyA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ow0K
-U3ViamVjdDogWERNQSBlbmdpbmUgZm9yIEFTVDI0MDANCg0KR3JlZXRpbmdzLA0KDQpJIGFt
-IGxlYXJuaW5nIE9wZW5ibWMgd2l0aCBhIEFTVDI0MDAgQk1DLiBJIGFtIGxlYXJuaW5nIFhE
-TUEgZW5naW5lLiBJIHNhdyB0aGVyZSBpcyBhIGRyaXZlciBpbiB0aGUgbGludXgga2VybmVs
-KC9kcml2ZXJzL3NvYy9hc3BlZWQvYXNwZWVkLXhkbWEuYykgZm9yIFhETUEgZW5naW5lLiBC
-dXQgdGhpcyBkcml2ZXIncyAib2ZfbWF0Y2hfdGFibGUiIG9ubHkgc3VwcG9ydCBBU1QyNTAw
-IGFuZCBBU1QyNjAwLg0KRG9lcyBBU1QyNDAwIG5vdCBzdXBwb3J0IFhETUEgZW5naW5lPyBC
-dXQgaW4gdGhlIGRhdGFzaGVldCwgdGhlIEFTVDI0MDAgaGFzIGEgWERNQSBlbmdpbmUgYXMg
-d2l0aCBBU1QyNTAwLg0KQ2FuIHNvbWUgb25lIGhlbHAgbWU/IFRoYW5rcyENCg0KQmVzdCBS
-ZWdhcmRzIQ0KTGl1IEhvbmd3ZWk=
+On Thu, Aug 27, 2020 at 07:27:43PM +0000, Bruce Mitchell wrote:
+> Is there any reason or practical value of staying with https://github.com=
+/openbmc/openbmc/tree/2.8.0
+> vs just using https://github.com/openbmc/openbmc ?
 
-------=_NextPart_5F48F66B_0E9545F0_02C219FD
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+Hi Bruce,
 
-PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
-YXJzZXQ9R0IxODAzMCI+PGRpdj5IaSwgUnlhbjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+
-VGhhbmsgeW91IHZlcnkgbXVjaCBmb3IgeW91ciBoZWxwLiBJIGFtIGEgYmVnaW5uZXIgZm9y
-IFhETUEgZW5naW5lLCB5ZXQgSSBkbyBub3Qga25vdyBob3cgdG8gdXNlIGl0KCZndDsuJmx0
-OykgLi4uJm5ic3A7PC9kaXY+PGRpdj5JIGxlYXJuIFhETUEgZnJvbSB0aGUgZHJpdmVyKC9k
-cml2ZXJzL3NvYy9hc3BlZWQvYXNwZWVkLXhkbWEuYykgYW5kIEFTVDI0MDAgZGF0YXNoZWV0
-LjwvZGl2PjxkaXY+QXJlIHRoZXJlIGFueSBvdGhlciBleGFtcGxlcyBvciBndWlkYW5jZXMg
-Zm9yIG1vZGlmeWluZyB0aGUgZHJpdmVyIGZvciBBU1QyNDAwIFhETUEgZW5naW5lPzwvZGl2
-PjxkaXY+PGJyPjwvZGl2PjxkaXY+QmVzdCBSZWdhcmRzITwvZGl2PjxkaXY+TGl1IEhvbmd3
-ZWk8L2Rpdj48ZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXYgc3R5bGU9
-ImZvbnQtc2l6ZTogMTJweDtmb250LWZhbWlseTogQXJpYWwgTmFycm93O3BhZGRpbmc6MnB4
-IDAgMnB4IDA7Ij4tLS0tLS0tLS0tLS0tLS0tLS0mbmJzcDtPcmlnaW5hbCZuYnNwOy0tLS0t
-LS0tLS0tLS0tLS0tLTwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtc2l6ZTogMTJweDtiYWNrZ3Jv
-dW5kOiNlZmVmZWY7cGFkZGluZzo4cHg7Ij48ZGl2PjxiPkZyb206PC9iPiAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICJSeWFuIENoZW4iICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJmx0O3J5YW5fY2hl
-bkBhc3BlZWR0ZWNoLmNvbSZndDs7PC9kaXY+PGRpdj48Yj5EYXRlOjwvYj4mbmJzcDtGcmks
-IEF1ZyAyOCwgMjAyMCAxMDo1MiBBTTwvZGl2PjxkaXY+PGI+VG86PC9iPiZuYnNwOyLEz9Kw
-peCl66W3pail6aW0IiZsdDsxMTgxMDUyMTQ2QHFxLmNvbSZndDs7Im9wZW5ibWMiJmx0O29w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs7PHdicj48L2Rpdj48ZGl2PjwvZGl2PjxkaXY+
-PGI+U3ViamVjdDo8L2I+Jm5ic3A7UkU6IFhETUEgZW5naW5lIGZvciBBU1QyNDAwPC9kaXY+
-PC9kaXY+PGRpdj48YnI+PC9kaXY+SGVsbG8sIDxicj4JQVNUMjQwMCBzdXBwb3J0IHhETUEs
-IHRoZSBkaWZmZXJlbnQgd2lsbCBiZSBjb21tYW5kIGZvcm1hdC4gSXQgbmVlZCB0byBtb2Rp
-ZnkgZm9yIEFTVDI0MDAuPGJyPjxicj5Gcm9tOiBvcGVuYm1jICZsdDtvcGVuYm1jLWJvdW5j
-ZXMrcnlhbl9jaGVuPWFzcGVlZHRlY2guY29tQGxpc3RzLm96bGFicy5vcmcmZ3Q7IE9uIEJl
-aGFsZiBPZiDEz9KwPz8/Pz8/PGJyPlNlbnQ6IEZyaWRheSwgQXVndXN0IDI4LCAyMDIwIDEw
-OjEzIEFNPGJyPlRvOiBvcGVuYm1jICZsdDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmZ3Q7
-PGJyPlN1YmplY3Q6IFhETUEgZW5naW5lIGZvciBBU1QyNDAwPGJyPjxicj5HcmVldGluZ3Ms
-PGJyPjxicj5JIGFtIGxlYXJuaW5nIE9wZW5ibWMgd2l0aCBhIEFTVDI0MDAgQk1DLiBJIGFt
-IGxlYXJuaW5nIFhETUEgZW5naW5lLiBJIHNhdyB0aGVyZSBpcyBhIGRyaXZlciBpbiB0aGUg
-bGludXgga2VybmVsKC9kcml2ZXJzL3NvYy9hc3BlZWQvYXNwZWVkLXhkbWEuYykgZm9yIFhE
-TUEgZW5naW5lLiBCdXQgdGhpcyBkcml2ZXIncyAib2ZfbWF0Y2hfdGFibGUiIG9ubHkgc3Vw
-cG9ydCBBU1QyNTAwIGFuZCBBU1QyNjAwLjxicj5Eb2VzIEFTVDI0MDAgbm90IHN1cHBvcnQg
-WERNQSBlbmdpbmU/IEJ1dCBpbiB0aGUgZGF0YXNoZWV0LCB0aGUgQVNUMjQwMCBoYXMgYSBY
-RE1BIGVuZ2luZSBhcyB3aXRoIEFTVDI1MDAuPGJyPkNhbiBzb21lIG9uZSBoZWxwIG1lPyBU
-aGFua3MhPGJyPjxicj5CZXN0IFJlZ2FyZHMhPGJyPkxpdSBIb25nd2VpPGJyPjxicj48L2Rp
-dj4=
+I think the answer of if you should use a tag or master entirely depends
+on what you're trying to accomplish.
 
-------=_NextPart_5F48F66B_0E9545F0_02C219FD--
+If you are developing a new machine, you should do all your development
+work off master.  Working off a tag is only going to cause yourself more
+work because all of your work will have to be rebased in order to get
+merged.
 
+If you are releasing an image to production or customers, you need to
+decide what your release process looks like and in that case a tag
+_might_ align well with it. =20
 
+At Facebook, we strive for CI/CD in all of our codebases.  In general
+that means we "live at HEAD" and try to deploy directly from there.  We
+do not have a need for any long-term maintanence on any particular
+release because we are always releasing a new version anyhow and
+continuously deploying to our fleet.  Therefore, it is very reasonable
+for us to work off master in all cases.
 
+Previously I worked for a "commercial server" vendor, and fix-releases
+were very important for their customers.  There was an expectation that
+a major release version would get security and other critical fixes for
+years.  In a situation like that, I would certainly recommend starting
+with an OpenBMC tag as the underlying base for your own release.
+
+In any case of a release, I would expect that your company is taking
+some point-in-time from OpenBMC (master or tag) and then doing some
+qualification on it.  All software has bugs, so you're likely going to
+find a few, and you'll want to backport the fixes into your own 'release
+branch'.  Right now, there is not a strong process for qualifying an
+OpenBMC tag and/or backporting fixes onto it (for example to make
+2.8.1), so as a vendor you are left to do this on your own.  I suspect
+that this is an area where the "commercial vendors" could work together
+to create a stronger release qualification process and it would benefit
+the community as a whole.
+
+My understanding is that IBM's own release tags are available at [1], so
+maybe someone there can chime in on how they manage these and what
+collaboration they might like.
+
+You really could start at any random 'master' commit as the underlying
+base for your own release process and with today's process it is
+probably just as bug-full as the current tags.  I would still recommend
+starting with a tag because even today we align those tags with an
+underlying Yocto tag.  The Yocto community has a more well-defined long
+term support process on their tags, so you'll be able to get security
+fixes in all the underlying Yocto packages straight from there.  If you
+take a random commit, you're going to end up being responsible for all
+of the work with Yocto backports.
+
+Hopefully this helps.
+
+1. https://github.com/ibm-openbmc/openbmc/tags=20
+
+--=20
+Patrick Williams
+
+--U6leaJ20qZQc29iB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9I+jQACgkQqwNHzC0A
+wRkYCBAAjnNr90eHliqj0StR3Ol/m3JUkTQuXvBnq91GDgoLIh7S27852h7IXS2M
+b4Fccu589F7c+wO7ppTx/+Ae6p/uc4yyiOjNj3gOYgY+RbT3fS5GNHIXcQvmn6HK
+QskQWhmnByM0Yq9XM68veDcB4roHR8jUqt8W343+UlFToEOe79Wu96mZ2drwI8AU
+OzzCQAa+W+rbYYJ6k1oLYzwOWxkvB00JI6O8DtuuUETDY9RfrKiSqrcUG6V/l2TS
+by9hBpPZCc2CqAvrK+O/tI//xNbu/14z23guBZyQbtptxBDH1Up3iDoodt+siXJO
+iVAiXzWHk9XItk0SYIFOf4O/SjST5Dg5f3kclK2wLmUen37sxlcMfNGWEJbUDsyz
+b2IpqtUbC6ILtlWkZVDgGXvvxUv72GHE/+dA2dwwNp1A/P64Uy8M+91AVlOKnmjG
+HCEOFx7cUKDvNc3kVNChHXnA5TG4x9EJ0OConUFXJ+5vuXjDkSV6vWtFWw1ttoAn
+cLlQb6NT8AWvrycLmkfzEOxf9IEmpWxNlbwsdP1uza2h7m43m+NSNaynv1OeDmNb
+FXe+xC18bQPkV6ccQKXWLsaiEt1jEcGAoMqNcCpG7i9zTx2REzWi1s/M/gdTNt4o
+LmvDyjbcUhNd3NGQnIw4/lBO1FlL+QqB4k8a90NVZwx6lOgcTrs=
+=ORAi
+-----END PGP SIGNATURE-----
+
+--U6leaJ20qZQc29iB--
