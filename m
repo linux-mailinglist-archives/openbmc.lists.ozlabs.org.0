@@ -1,75 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70B832552F1
-	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 04:17:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2C6A25533B
+	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 05:17:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bd3Bg55N1zDqmf
-	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 12:16:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bd4XB5hq3zDqMn
+	for <lists+openbmc@lfdr.de>; Fri, 28 Aug 2020 13:17:14 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=59.36.132.97; helo=qq.com; envelope-from=1181052146@qq.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
- header.s=s201512 header.b=GzCyxVRM; dkim-atps=neutral
-X-Greylist: delayed 84 seconds by postgrey-1.36 at bilbo;
- Fri, 28 Aug 2020 12:14:45 AEST
-Received: from qq.com (smtpbg480.qq.com [59.36.132.97])
+ spf=none (no SPF record) smtp.mailfrom=aspeedtech.com
+ (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com;
+ envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=aspeedtech.com
+X-Greylist: delayed 1402 seconds by postgrey-1.36 at bilbo;
+ Fri, 28 Aug 2020 13:16:31 AEST
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bd3852QlMzDqdZ
- for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 12:14:44 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1598580775; bh=ourAk6914/rExH3Dr8LXOjMwXdlsR/ORSRNYuiHDHxs=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=GzCyxVRMwTFvFQbLo4DsSQn795uzUs773s+mKddHJHNwCf1+xT7+uOVN3PZjekYzW
- G+ePkaYVZsRs4jBlIXFkc6nw+JZdseB5TTEeeopV2dfiQuhYr0bqfjrfLVEeJAoO5X
- d9CUCpLYXSHjJArCCj9BhyIUyZkhi7XSeqjz/Adw=
-X-QQ-FEAT: Ui0iwQiQQaDNo7ESxfsdzVuDywxfS8vfzZKSP0f4b70NBEsao0ZeXEDCm+AnB
- mG56grqWF82B4afekLs3TpYaChp563NnXY8QFJTPpNczT8Ix6i7IODrxVJtYTLFLLsaKP6J
- fZtm+G6jGf9Rgz9zO2T30owZAeK4CTkrtBc/dqVx+R1tDT6RyXLMqzL4PlnLXKth1WIsJAO
- u+OvFb3jNnl8wACnvf5gY+6Woy7MN1+TGhIy9i4wgpm81fmPTr71Ra1cmXqrN5BPqPwoN4W
- 0UueZqV25llOTd
-X-QQ-SSF: 00000000000000F000000000000000S
-X-QQ-XMAILINFO: Ne9tFK0A+QeOAwQEuOPzjMprVXWHKrFgc9wsVhJatnqeVUMLGYAfOb+EQ4llYc
- BUR0aMH1vX5H4maccBftcLIWdA6f98Dc79pF/B+SRYmV/3kcyDUZhuJbxouMbpR1fc5xBNfMkWhKt
- mmozLX/z+5z2SH1TWoNNKu1Gg/E1g3xTcw3jMzgpogg2QFW41kEoeg858vttVKnoQs8V6w2I9i/m7
- YIzAnQKqFf9J3zGtU6rpkkJIDiEpyjMiOzUzhk8CgLKCNLFpcWdH8BAzIpEGFbtTl9gnmr1l9e6ZX
- kXlzt1d7Wtz+0zeJ+uPUUAzm+BZCUYUCVLXqGTbUIOpXwcuP9digNrJpdhmU7tmfM9Mc014P3cMLh
- X8cIiGfyaxF6SPS99PddnruaMTUUVp9gvdg00tS4XvMwgx869PjRFSlwkt87BvFZ/niGfhzyLQJ7R
- 4n5yQhTswjEJT9/wPDu+t1l3/U44jTrR63yvNxSvLNWz+PbRMW/aXipxahWgOawRb2nVvh97dUTLB
- Pq9ngmOY3UYY1aCYyy2Idp1lTMJeWDzDu01eteahDRtftxxT5KaY27RuYADs6X3qDYY42Y4Uil5Du
- NDcA0rWRM6bw/jYEPrjdDXLqpd0Ulamf6tMBX6DDYm0c85j98ltinLTqpT6vOzS2nPITD70batoj7
- 1JsY4cuAPO+bwXaUc=
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 211.75.18.137
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1598580773t9778912
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: XDMA engine for AST2400
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5F486825_0FE51D20_04A8E14D"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 28 Aug 2020 10:12:53 +0800
-X-Priority: 3
-Message-ID: <tencent_6FC98F43C847A4FA599681BF8ABCC554C006@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 28 Aug 2020 10:12:54 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign12
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bd4WM2XDhzDqkg
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 13:16:31 +1000 (AEST)
+Received: from twspam01.aspeedtech.com (localhost [127.0.0.2] (may be forged))
+ by twspam01.aspeedtech.com with ESMTP id 07S2Zph5067722
+ for <openbmc@lists.ozlabs.org>; Fri, 28 Aug 2020 10:35:51 +0800 (GMT-8)
+ (envelope-from ryan_chen@aspeedtech.com)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 07S2ZaLC067624;
+ Fri, 28 Aug 2020 10:35:36 +0800 (GMT-8)
+ (envelope-from ryan_chen@aspeedtech.com)
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 28 Aug
+ 2020 10:52:54 +0800
+Received: from TWMBX02.aspeed.com ([fe80::997d:c0a7:f01f:e1a7]) by
+ TWMBX02.aspeed.com ([fe80::997d:c0a7:f01f:e1a7%12]) with mapi id
+ 15.00.1497.000; Fri, 28 Aug 2020 10:52:54 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: =?iso-2022-jp?B?GyRCRm5MbiVgJWslNyUoJWklNBsoQg==?= <1181052146@qq.com>,
+ openbmc <openbmc@lists.ozlabs.org>
+Subject: RE: XDMA engine for AST2400
+Thread-Topic: XDMA engine for AST2400
+Thread-Index: AQHWfOFG9IgKj1kx+kumz5G2raFA66lM0pUQ
+Date: Fri, 28 Aug 2020 02:52:53 +0000
+Message-ID: <23a6e0dde0144751b936877af5f049ef@TWMBX02.aspeed.com>
+References: <tencent_6FC98F43C847A4FA599681BF8ABCC554C006@qq.com>
+In-Reply-To: <tencent_6FC98F43C847A4FA599681BF8ABCC554C006@qq.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [192.168.2.87]
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 07S2ZaLC067624
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,40 +72,25 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+Hello,=20
+	AST2400 support xDMA, the different will be command format. It need to mod=
+ify for AST2400.
 
-------=_NextPart_5F486825_0FE51D20_04A8E14D
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+From: openbmc <openbmc-bounces+ryan_chen=3Daspeedtech.com@lists.ozlabs.org>=
+ On Behalf Of =1B$BFnLn=1B(B??????
+Sent: Friday, August 28, 2020 10:13 AM
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: XDMA engine for AST2400
 
-R3JlZXRpbmdzLA0KDQoNCkkgYW0gbGVhcm5pbmcgT3BlbmJtYyB3aXRoIGEgQVNUMjQwMCBC
-TUMuIEkgYW0gbGVhcm5pbmcgWERNQSBlbmdpbmUuIEkgc2F3IHRoZXJlIGlzIGEgZHJpdmVy
-IGluIHRoZSBsaW51eCBrZXJuZWwoL2RyaXZlcnMvc29jL2FzcGVlZC9hc3BlZWQteGRtYS5j
-KSBmb3IgWERNQSBlbmdpbmUuIEJ1dCB0aGlzIGRyaXZlcidzICJvZl9tYXRjaF90YWJsZSIg
-b25seSBzdXBwb3J0IEFTVDI1MDAgYW5kIEFTVDI2MDAuDQpEb2VzIEFTVDI0MDAgbm90IHN1
-cHBvcnQgWERNQSBlbmdpbmU/IEJ1dCBpbiB0aGUgZGF0YXNoZWV0LCB0aGUgQVNUMjQwMCBo
-YXMgYSBYRE1BIGVuZ2luZSBhcyB3aXRoIEFTVDI1MDAuDQpDYW4gc29tZSBvbmUgaGVscCBt
-ZT8gVGhhbmtzIQ0KDQoNCkJlc3QgUmVnYXJkcyENCkxpdSBIb25nd2Vp
+Greetings,
 
-------=_NextPart_5F486825_0FE51D20_04A8E14D
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+I am learning Openbmc with a AST2400 BMC. I am learning XDMA engine. I saw =
+there is a driver in the linux kernel(/drivers/soc/aspeed/aspeed-xdma.c) fo=
+r XDMA engine. But this driver's "of_match_table" only support AST2500 and =
+AST2600.
+Does AST2400 not support XDMA engine? But in the datasheet, the AST2400 has=
+ a XDMA engine as with AST2500.
+Can some one help me? Thanks!
 
-PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
-YXJzZXQ9R0IxODAzMCI+PGRpdj5HcmVldGluZ3MsPC9kaXY+PGRpdj48YnI+PC9kaXY+PGRp
-dj5JIGFtIGxlYXJuaW5nIE9wZW5ibWMgd2l0aCBhIEFTVDI0MDAgQk1DLiBJIGFtIGxlYXJu
-aW5nIFhETUEgZW5naW5lLiBJIHNhdyB0aGVyZSBpcyBhIGRyaXZlciBpbiB0aGUgbGludXgg
-a2VybmVsKC9kcml2ZXJzL3NvYy9hc3BlZWQvYXNwZWVkLXhkbWEuYykgZm9yIFhETUEgZW5n
-aW5lLiBCdXQgdGhpcyBkcml2ZXIncyAib2ZfbWF0Y2hfdGFibGUiIG9ubHkgc3VwcG9ydCBB
-U1QyNTAwIGFuZCBBU1QyNjAwLjwvZGl2PjxkaXY+RG9lcyBBU1QyNDAwIG5vdCBzdXBwb3J0
-IFhETUEgZW5naW5lPyBCdXQgaW4gdGhlIGRhdGFzaGVldCwgdGhlIEFTVDI0MDAgaGFzIGEg
-WERNQSBlbmdpbmUgYXMgd2l0aCBBU1QyNTAwLjwvZGl2PjxkaXY+Q2FuIHNvbWUgb25lIGhl
-bHAgbWU/IFRoYW5rcyE8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkJlc3QgUmVnYXJkcyE8
-L2Rpdj48ZGl2PkxpdSBIb25nd2VpPC9kaXY+
-
-------=_NextPart_5F486825_0FE51D20_04A8E14D--
-
-
-
+Best Regards!
+Liu Hongwei
