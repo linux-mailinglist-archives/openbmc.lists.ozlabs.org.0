@@ -1,41 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE3C42570B9
-	for <lists+openbmc@lfdr.de>; Sun, 30 Aug 2020 23:32:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61BA72570D0
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 00:03:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BfmlJ25rmzDqQY
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 07:32:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BfnQs3F8mzDqPW
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 08:03:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=be6oZYEP; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=S6WovqYy; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BfmkV5ZVbzDq5f
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 07:31:58 +1000 (AEST)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 07ULVNUJ011608;
- Mon, 31 Aug 2020 00:31:23 +0300
-Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
- id BA033639D3; Mon, 31 Aug 2020 00:31:23 +0300 (IDT)
-From: Tali Perry <tali.perry1@gmail.com>
-To: kunyi@google.com, xqiu@google.com, benjaminfair@google.com,
- avifishman70@gmail.com, joel@jms.id.au, tmaimon77@gmail.com,
- wsa@the-dreams.de
-Subject: [PATCH v3] i2c: npcm7xx: Fix timeout calculation
-Date: Mon, 31 Aug 2020 00:31:21 +0300
-Message-Id: <20200830213121.239533-1-tali.perry1@gmail.com>
-X-Mailer: git-send-email 2.22.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BfnQ54B7KzDqBj
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 08:02:51 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598824967;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tEYVzgLOBIxRJuTAfWs4gC6Aj8GPEDkF+QydXmtWEjA=;
+ b=be6oZYEPwk5w9cBOsFzQaXoWlQPqZjfGUYSZh/ebhbAXz3D8pAdyn3g6lgsj2e3pez0GCJ
+ WLii9TsAnXtNI22AR7nnMeYHPdXLVTvdXp4mlirkKS8OKxAlY07G1B6BLqrbLUEkvws0DM
+ Q78qLmz2iHSGFUVMUcGrLiVEo4fXClk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598824968;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tEYVzgLOBIxRJuTAfWs4gC6Aj8GPEDkF+QydXmtWEjA=;
+ b=S6WovqYy61nHyuC5WyiSJxtJS1ZvKu/QyByzYuDdGGixA22uHK+JALis8Vw+Gd8p6D6T38
+ WL0PHNhg6xO9mThpW2sy/Jm2DXluI4FHQ33lA+OxIauvweHccjE4xnatC+yQyd9oouilXw
+ YWvpax4xOJ0n75mZmVIXnqTdSZ/s56o=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-533-QyqreER5NGqQRwsO1S1P2Q-1; Sun, 30 Aug 2020 18:02:45 -0400
+X-MC-Unique: QyqreER5NGqQRwsO1S1P2Q-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Sun, 30 Aug 2020 15:02:42 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Sun, 30 Aug 2020 15:02:42 -0700
+From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: When building OpenBMC . . . ?
+Thread-Topic: When building OpenBMC . . . ?
+Thread-Index: AdZ/GJ+lFWuwSqbeSoqGTbguwoelIQ==
+Date: Sun, 30 Aug 2020 22:02:41 +0000
+Message-ID: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [98.246.252.115]
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=bruce_mitchell@phoenix.com
+X-Mimecast-Spam-Score: 0.001
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -47,41 +88,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Tali Perry <tali.perry1@gmail.com>,
- linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-timeout_usec value calculation was wrong, the calculated value
-was in msec instead of usec.
+When selecting Target hardware https://github.com/openbmc/openbmc#3-target-=
+your-hardware
+to build for the is a tiogapass, now if I add a meta-phoenix/meta-tiogapass=
+/conf  how does
+=09source setup tiogapass build
+know which tiogapass to build?
 
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Reviewed-by: Avi Fishman <avifishman70@gmail.com>
----
- drivers/i2c/busses/i2c-npcm7xx.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Or am I not supposed to choose a name (i.e. tiogapass in this example) that=
+ is already in the list
+when I need to create a new meta-phoenix/meta-<machine>/conf?
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 75f07138a6fa..dfcf04e1967f 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2093,8 +2093,12 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
- 		}
- 	}
- 
--	/* Adaptive TimeOut: astimated time in usec + 100% margin */
--	timeout_usec = (2 * 10000 / bus->bus_freq) * (2 + nread + nwrite);
-+	/*
-+	 * Adaptive TimeOut: estimated time in usec + 100% margin:
-+	 * 2: double the timeout for clock stretching case
-+	 * 9: bits per transaction (including the ack/nack)
-+	 */
-+	timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
- 	timeout = max(msecs_to_jiffies(35), usecs_to_jiffies(timeout_usec));
- 	if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
- 		dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
+Thanks!
 
-base-commit: d012a7190fc1fd72ed48911e77ca97ba4521bccd
--- 
-2.22.0
+--=20
+Bruce
 
