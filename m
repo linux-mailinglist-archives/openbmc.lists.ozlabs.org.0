@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC40D257FF8
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 19:55:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BBDF25806A
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 20:11:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgHss26qNzDqRy
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 03:55:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgJDV4CWmzDqSy
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 04:11:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::343;
+ helo=mail-ot1-x343.google.com; envelope-from=xqiu@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=doeP+g22; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=vZaqRz6g; dkim-atps=neutral
+Received: from mail-ot1-x343.google.com (mail-ot1-x343.google.com
+ [IPv6:2607:f8b0:4864:20::343])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgHrx5tRYzDqR2
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 03:54:25 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id B5E00574E8
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 17:54:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:content-language:content-type
- :content-type:mime-version:user-agent:date:date:message-id
- :subject:subject:from:from:received:received:received; s=mta-01;
- t=1598896459; x=1600710860; bh=LlEUtXBBr0YCbg8QxM822ynT9cubEWoB
- pZMgxsHPf3s=; b=doeP+g22Ubm0pQx8U80CHIyXyWc+6yg2X7HolsaQuLCftQJj
- PX0UXhJt+Uv0gH/JAq8bEN1+vRBvE04FWdVhbBu6Dt/kVULcy05I6ga5+siz6BHC
- N+/ryk2wYHnZGC7poaEF60cNl9AT/dtKrKv+hj3jq9VFcYfs/ElaXKb/7jw=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id N_qf6tJVdWxD for <openbmc@lists.ozlabs.org>;
- Mon, 31 Aug 2020 20:54:19 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id AA0BE5436C
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 20:54:19 +0300 (MSK)
-Received: from [10.199.0.250] (10.199.0.250) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 31
- Aug 2020 20:54:19 +0300
-CC: <openbmc@lists.ozlabs.org>
-From: i.kononenko <i.kononenko@yadro.com>
-Subject: Naming DBus paths of CPU objects
-Message-ID: <65194bdf-93e7-0cf5-6fce-2b5b0aee5c9c@yadro.com>
-Date: Mon, 31 Aug 2020 20:54:18 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgJCS4jhMzDqRc
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 04:10:27 +1000 (AEST)
+Received: by mail-ot1-x343.google.com with SMTP id 37so4455553oto.4
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 11:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=VjcOX+O6+Q0wVLVy5iOGuljY1HLUCKGrM2Zx4jaHF0E=;
+ b=vZaqRz6gPaztwYQyRjYHR8xtBaNnsakq7VS7gV1Jc2XbRTtD3KOy2/T7zfVrl7Ux41
+ m1n0QBSe07CxKazXvcJNC0qphB0ZM+F/RZjGclPdxPOyRIHHRotMD2u8Reilqq3Myt9t
+ rgTYnm4TiWZ6QqaLHb5/J3a0tRHoXezu30kMr8imgBwyjdcnydc9nDu7FeRKyB6s3E4x
+ 6/yDTDyrcJg7rJiR9v10GikVAZHmp/mz1hT3K8ZvwaEwHbrwDRLYkgVQop12EIUogMcO
+ AvUJnuyQ5gFNW5MnufPLajm+bduenZYdgux9DfNckAmmArxY9lp3WMU2oFqRZAX56c5W
+ ajvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=VjcOX+O6+Q0wVLVy5iOGuljY1HLUCKGrM2Zx4jaHF0E=;
+ b=QmyhiiXczuPUAxbIVxcdmG2PdE1/PyyuWgk2RNF+ayfHFQ8U4LNRXMaFIjh1UYHzEh
+ z25JMF357U84lsP2vXSbC5bwBE5Gdzf9bU/+TFTBblPrF+/0SQSJYpU/5YW7Dr391VCF
+ IBHx1hcqlUuUVCubmeZqre/wZfomIhzp4TsEkbQDIjrHirXxcAj/W2lbq2FPCR09hfJ2
+ IIHowQ71PZYY4s0lT13bhuQC67O3zhRPSAxYFrwyUgz0vqH89xRP3Tf1bMh27Vy8nvim
+ RXjk8Evts1YlV69tGIHl7T5jN3imYZcpPPifS/Z/gMnBa7FDR17I10rDI85RImRyUxKW
+ Zk2A==
+X-Gm-Message-State: AOAM530TpdvHN732iv7KGdMTiISqoYhrEpy6nEES40O8x0qul11OqBlS
+ cMPov1iVP2XAIQvpUrL1rk0otq+VztSR7Ku90oCn1Q==
+X-Google-Smtp-Source: ABdhPJwOgUYMtjt9QOITuY87oezIiwUst1TAAS19PpHboVYHCLYkQhWhxobP65iEGxxUZlwrpCSiZH+ta1y30jMxkos=
+X-Received: by 2002:a9d:7f06:: with SMTP id j6mr1714141otq.274.1598897423402; 
+ Mon, 31 Aug 2020 11:10:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.0.250]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+References: <20200830213121.239533-1-tali.perry1@gmail.com>
+ <CACPK8Xev4w4BxrxR1zQPk=wiHCK2fSGD9tEeAQwPe_uayGw_CA@mail.gmail.com>
+In-Reply-To: <CACPK8Xev4w4BxrxR1zQPk=wiHCK2fSGD9tEeAQwPe_uayGw_CA@mail.gmail.com>
+From: Alex Qiu <xqiu@google.com>
+Date: Mon, 31 Aug 2020 11:10:12 -0700
+Message-ID: <CAA_a9xKVEA-6n=rMA8Sk6zJpWV4_qGCcXwN7kFUFpJKuDiG=Bg@mail.gmail.com>
+Subject: Re: [PATCH v3] i2c: npcm7xx: Fix timeout calculation
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,26 +73,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Benjamin Fair <benjaminfair@google.com>, Wolfram Sang <wsa@the-dreams.de>,
+ Avi Fishman <avifishman70@gmail.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, linux-i2c@vger.kernel.org,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
-
-I'm working on improving of the OpenBMC RedFISH API. In particular, the endpoint of the Processor.
-To provide all the properties of the applied RedFISH schema, we need to get from 
-DBus everything related to the CPU object.
-It can be CPU, Sensor CPU temp, Sensors Core CPU, etc.
-
-However, some services have different names for the same physical processor. 
-In particular it is about `entity-manager`, `dbus-sensros`, `smbios-mdr_v2`.
-`Smbios-mdr_v2` (just like `hwmon`) names the processor, indexing 
-it from 0; in `entity-manager` and `dbus-sensor` indexing starts from 1.
-
-I want to add dbus-associations between all Processor's object, 
-but for that I think we need to adopt a naming convention for the same DBus objects.
-
-I like to index it from 0, just like doing that the `hwmon`, for example.
-
--- 
-Best Regards!
-Igor Kononenko
+On Sun, Aug 30, 2020 at 8:35 PM Joel Stanley <joel@jms.id.au> wrote:
+>
+> On Sun, 30 Aug 2020 at 21:31, Tali Perry <tali.perry1@gmail.com> wrote:
+> >
+> > timeout_usec value calculation was wrong, the calculated value
+> > was in msec instead of usec.
+> >
+> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+> > Reviewed-by: Avi Fishman <avifishman70@gmail.com>
+>
+> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Alex Qiu <xqiu@google.com>
+>
+> Cheers,
+>
+> Joel
+>
+> > ---
+> >  drivers/i2c/busses/i2c-npcm7xx.c | 8 ++++++--
+> >  1 file changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+> > index 75f07138a6fa..dfcf04e1967f 100644
+> > --- a/drivers/i2c/busses/i2c-npcm7xx.c
+> > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
+> > @@ -2093,8 +2093,12 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+> >                 }
+> >         }
+> >
+> > -       /* Adaptive TimeOut: astimated time in usec + 100% margin */
+> > -       timeout_usec = (2 * 10000 / bus->bus_freq) * (2 + nread + nwrite);
+> > +       /*
+> > +        * Adaptive TimeOut: estimated time in usec + 100% margin:
+> > +        * 2: double the timeout for clock stretching case
+> > +        * 9: bits per transaction (including the ack/nack)
+> > +        */
+> > +       timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
+> >         timeout = max(msecs_to_jiffies(35), usecs_to_jiffies(timeout_usec));
+> >         if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
+> >                 dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
+> >
+> > base-commit: d012a7190fc1fd72ed48911e77ca97ba4521bccd
+> > --
+> > 2.22.0
+> >
