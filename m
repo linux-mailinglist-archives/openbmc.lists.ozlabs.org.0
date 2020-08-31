@@ -1,68 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 677FC2578F2
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 14:06:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6041257B33
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:22:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bg8701nFwzDqTd
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 22:06:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgC8c4g6TzDq9y
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:22:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::144;
- helo=mail-il1-x144.google.com; envelope-from=avifishman70@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=KOr9Qg+p; dkim-atps=neutral
-Received: from mail-il1-x144.google.com (mail-il1-x144.google.com
- [IPv6:2607:f8b0:4864:20::144])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=dWt5e0Eu; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=dWt5e0Eu; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bg85k3vCtzDqRF
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 22:04:58 +1000 (AEST)
-Received: by mail-il1-x144.google.com with SMTP id t4so792395iln.1
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 05:04:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RVDQx/5Q8O0no/oayEfb/rYh2QGwLeWVgd4QIaQ9KVU=;
- b=KOr9Qg+p497+M09E6ouEKz4/321jfNwRllwXVHV7s8tjWJdNSkoOqR7nAFYm7KzZlp
- 6sYFJ120y/KYbutta22YjS+bNwKkEY3vszYyEuv1LXnyOX28tLSaw2sEaNFovJZ1pVn7
- hTwokk2isRbexxzrPGkC5J0iu0T/hv2fJCnwcj8300Jl2pR8KfwID7gJoU4Z+wgyLo5W
- fFHT0hSt/5+QVbHorqyIbEnSf1i1hVFSeiGp8G+LltQk3+N5PXh0Ks4yuV1Ki5wXgc+z
- 4x3KzQsm0OHZBZa/0wyac1ABifPbjpZs8fv+AsJzJxyz7/8d97ph4ZcaKNEV3Rjx+/ij
- EIBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RVDQx/5Q8O0no/oayEfb/rYh2QGwLeWVgd4QIaQ9KVU=;
- b=lOtM/u4IFPWU6oZfj7cMTlslDv+kxbXPnLQ8m1ogxXdO3bmz/tT4CpWW8LyfECX7Z0
- Lz5aXHqjfinm6Qhe0idXq5Nr8YADux5Pt11l/rmkml9DsUeJ7bXwA8DpHq5adW3k4jtt
- VfrlvjK5dAbDLQqKAdIvzmQVo/loZ1vU09XzEHhLVqQyjO1fS3CfcJGIVYNW0QluhlBu
- J/gJXZ3VHr9s5FyJCDef70/psbtQdZ9ofQwBLMSMoPLsrs4tHQ644Y9PbZLbLXxSZoxp
- LxYlmBtzvWwgDlO6SK3C1xa0npQXlAiwZUeC1WudmYxtMKs5WKa+H7QYL1pQ48cRjHyS
- tQjw==
-X-Gm-Message-State: AOAM5304nVQ6sFd/Prv7fJCyWKlaw3l5fwSuJe/8d3+qRyYgCiG5kTgW
- 0jaIT0R5V4j8iAN9BT1c4S9KMJ9Nd3HAjcX1ww==
-X-Google-Smtp-Source: ABdhPJy/2RxfqWBVbmptzkzs0SLRso+GGnyPPFtOv7Ss3+nNUMZKXxx9jTL+DwuB/dl6lSNIuQm1ZDA8KFbroxwksZA=
-X-Received: by 2002:a92:d902:: with SMTP id s2mr968251iln.21.1598875496080;
- Mon, 31 Aug 2020 05:04:56 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgC5Y0Vc2zDqSr
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:19:57 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598883593;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s+yB9Lnlf3oi9VRJWFa5740FH4XMZ9zPZPXByP+3ybU=;
+ b=dWt5e0EuOMhxxEKc73Xw62Dfvtzl2GEaI0WQB2OjdL6Hpw9dOWarcDPS69fNloQUoVrSpS
+ /SfsbwdJtdT+o2vx9PHKTLrchVuH2CQ0Xf/9qBGU34d55e5gC6Dn/scaGqe3NOPm2MrD7i
+ sbKw3BThNundSYWzIkjANkQMzNQKO/U=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1598883593;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s+yB9Lnlf3oi9VRJWFa5740FH4XMZ9zPZPXByP+3ybU=;
+ b=dWt5e0EuOMhxxEKc73Xw62Dfvtzl2GEaI0WQB2OjdL6Hpw9dOWarcDPS69fNloQUoVrSpS
+ /SfsbwdJtdT+o2vx9PHKTLrchVuH2CQ0Xf/9qBGU34d55e5gC6Dn/scaGqe3NOPm2MrD7i
+ sbKw3BThNundSYWzIkjANkQMzNQKO/U=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-410-U-lV3DYGM3KoOq_gH2i7cw-1; Mon, 31 Aug 2020 10:19:50 -0400
+X-MC-Unique: U-lV3DYGM3KoOq_gH2i7cw-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Mon, 31 Aug 2020 07:19:48 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Mon, 31 Aug 2020 07:19:48 -0700
+From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: RE: When building OpenBMC . . . ?
+Thread-Topic: When building OpenBMC . . . ?
+Thread-Index: AdZ/GJ+lFWuwSqbeSoqGTbguwoelIQAp4sAAAAeh65A=
+Date: Mon, 31 Aug 2020 14:19:47 +0000
+Message-ID: <67f35707fd1844cea64708f64f41224e@SCL-EXCHMB-13.phoenix.com>
+References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+ <20200831105718.o2ic4dvqhde5qrh7@thinkpad.dyn.fuzziesquirrel.com>
+In-Reply-To: <20200831105718.o2ic4dvqhde5qrh7@thinkpad.dyn.fuzziesquirrel.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [98.246.252.115]
 MIME-Version: 1.0
-References: <20200830122051.197892-1-tali.perry1@gmail.com>
- <CAHp75VeX7OUeF=K_NmtXU4LACS9MxN1=nbSn01rvy-1MXoBL3Q@mail.gmail.com>
- <CAKKbWA46wSmvRshtMcShg8ka6aR2rYaB9b70EEYdQAHzJ=700g@mail.gmail.com>
-In-Reply-To: <CAKKbWA46wSmvRshtMcShg8ka6aR2rYaB9b70EEYdQAHzJ=700g@mail.gmail.com>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Mon, 31 Aug 2020 15:03:34 +0300
-Message-ID: <CAKKbWA71X7BJYPJg+iheaY+qXjc3hmOUb91Hmzr4Y-KZxdM_Jw@mail.gmail.com>
-Subject: Re: [PATCH v2] i2c: npcm7xx: bug fix timeout (usec instead of msec)
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=bruce_mitchell@phoenix.com
+X-Mimecast-Spam-Score: 0.001
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,78 +93,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: xqiu@google.com, Benjamin Fair <benjaminfair@google.com>,
- Wolfram Sang <wsa@the-dreams.de>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, linux-i2c <linux-i2c@vger.kernel.org>,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Please ignore my last mail, Tali already sent v3.
+We are building a separate port for Tioga Pass, so the question is should b=
+e not call it tiogapass?
 
-On Mon, Aug 31, 2020 at 10:57 AM Avi Fishman <avifishman70@gmail.com> wrote:
->
-> On Sun, Aug 30, 2020 at 9:01 PM Andy Shevchenko
-> <andy.shevchenko@gmail.com> wrote:
-> >
-> > On Sun, Aug 30, 2020 at 3:23 PM Tali Perry <tali.perry1@gmail.com> wrote:
-> >
-> > >
-> > > i2c: npcm7xx: bug fix timeout (usec instead of msec)
-> >
-> > This commit message is awful. Please read [1] as a tutorial how to
-> > write a commit messages.
-> >
->
-> Would this be better:
-> i2c: npcm7xx: Fix microsecond timeout calculation
->
-> Inside npcm_i2c_master_xfer() we calculate a timeout for the entire
-> transaction in microseconds, the calculation was wrong so big i2c
-> massages would timeout before they ended.
-> This commit fix that.
->
-> > [1]: https://chris.beams.io/posts/git-commit/
-> >
-> > ...
-> >
-> > > -       /* Adaptive TimeOut: astimated time in usec + 100% margin */
-> > > -       timeout_usec = (2 * 10000 / bus->bus_freq) * (2 + nread + nwrite);
-> > > +       /*
-> > > +        * Adaptive TimeOut: estimated time in usec + 100% margin:
-> > > +        * 2: double the timeout for clock stretching case
-> > > +        * 9: bits per transaction (including the ack/nack)
-> >
-> > > +        * 1000000: micro second in a second
-> >
-> > No need. See below.
-> >
-> > > +        */
-> >
-> > > +       timeout_usec = (2 * 9 * 1000000 / bus->bus_freq) * (2 + nread + nwrite);
-> >
-> > USEC_PER_SEC
->
-> OK
->
-> >
-> > >         timeout = max(msecs_to_jiffies(35), usecs_to_jiffies(timeout_usec));
-> > >         if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
-> > >                 dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
-> >
-> > --
-> > With Best Regards,
-> > Andy Shevchenko
->
->
->
-> --
-> Regards,
-> Avi
+> -----Original Message-----
+> From: openbmc [mailto:openbmc-
+> bounces+bruce_mitchell=3Dphoenix.com@lists.ozlabs.org] On Behalf Of
+> Brad Bishop
+> Sent: Monday, August 31, 2020 03:57
+> To: Bruce Mitchell
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: When building OpenBMC . . . ?
+>=20
+> On Sun, Aug 30, 2020 at 10:02:41PM +0000, Bruce Mitchell wrote:
+> >When selecting Target hardware
+> https://github.com/openbmc/openbmc#3-target-your-hardware
+> >to build for the is a tiogapass, now if I add a meta-phoenix/meta-
+> tiogapass/conf  how does
+> >=09source setup tiogapass build
+> >know which tiogapass to build?
+>=20
+> Are there two different systems called tiogapass?  I hope we are not
+> creating two distinct sets of bitbake metadata for the same system?
+>=20
+> -brad
 
-
-
--- 
-Regards,
-Avi
