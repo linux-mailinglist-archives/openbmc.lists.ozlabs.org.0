@@ -1,67 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B998257B45
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:27:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B29C257B54
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:33:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgCFb47LRzDqDG
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:26:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgCP03wBhzDqMd
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:33:24 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2a; helo=mail-yb1-xb2a.google.com;
+ (client-ip=2607:f8b0:4864:20::b2f; helo=mail-yb1-xb2f.google.com;
  envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20150623.gappssmtp.com
  header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=ztPqhzY3; dkim-atps=neutral
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com
- [IPv6:2607:f8b0:4864:20::b2a])
+ header.s=20150623 header.b=T3iXhn8x; dkim-atps=neutral
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com
+ [IPv6:2607:f8b0:4864:20::b2f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgCC24Q8gzDq9y
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:24:45 +1000 (AEST)
-Received: by mail-yb1-xb2a.google.com with SMTP id c17so242407ybe.0
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 07:24:45 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgCK36bhXzDqTY
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:29:59 +1000 (AEST)
+Received: by mail-yb1-xb2f.google.com with SMTP id u6so4153817ybf.1
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 07:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=fLpnPK7eu87XaGlByBpt38VRVqtsFoH87IpKb+ulU/k=;
- b=ztPqhzY36utzppcjgWDVzTihTfEDOCNo7oxf94MQtwuIsxbHg+8I1YpfRAiS12oYiz
- dG12fYxThTLN3owsv8uP+QFxroq/+dvUEizo0y6YmJSbgW6W0CpY8JHw1toKWyR4ZmM3
- DRpLd0VDQJ9xXVaXNcGGTDJqSWOeqJ7Gp5kGvcSqkAgnb/A0Y/JlYX5geNo4Z7AkuwO9
- e2Mi+0i4d86QDWeGIIhhwzlS5ZjGVHccSgd+KxW27S0l2RkRtJtfveSsWWI3whHALC1x
- i6fpiQgkjn//OGSqCvtOBkrVDLnEfZ0TuW2P0MYFTa9Er1jenB6k4fDwalpDipZ9y7zM
- 2X1w==
+ :cc; bh=OnznT+EL1JicoCMQZaMN8hxrRUpgUwm11cy+cs3e/cs=;
+ b=T3iXhn8xjM/Libplm+/fAqGC0XfGpUD41tJ2XiQbITwwOO7Rq5Puj0ZeJ1fMbKZ+Au
+ KWu3szA/RPuo5hYGnpcpL9SDKD3XI8DkHWLULNhVmnpAIrClrO8kD30fFBn1WV++D3R1
+ pf0nt/c1VszTZNeh41c1bQzeNfPB3qLoKsXGVSwi+UFH4Loqh7fz7rmkEx8TG7Ae3xqh
+ PSii9SXHDORw2myZW4B3/kW3VZ9zX+B5zmyYPTobjMlYuaUc1gGtgQkqPqTCE2vevjRu
+ w9A3/k4D5Owjt0Qk75d0RD+eFJBDslZ8h+Yzgfpbsk/KIVJcIYzHpajazcGMWLvYR8Is
+ Ij+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=fLpnPK7eu87XaGlByBpt38VRVqtsFoH87IpKb+ulU/k=;
- b=dwrBlyrJw1wFGEKEun8WIOBxenkpbcIPkRqjVoJxsj+PRJZz75jYtsnkDXDrRR42jw
- DljOdqZ4i0fP23ojenYo5cLxlzSBQGFiohzV2cMimtmhpQZLmSvja5sYYrhxN5u4JwUL
- NMsqkTvaZDFkpmhRWhd56LmzHe4ysk112yx7GqgUpPE5fJ8Q7Q0ZL9D8YDplGhkuOJvJ
- T02CGr8TX1TyYA1o21tElSLfTXR8n5XC9RYqeGX7PDX9A+7n4VwZHFtYvlpyFNuuVuY5
- A5GlWP+SNTo0lIS52UXfBrek3SYo2fXb/HOAPWkgUxmqWs9LrG7JO0P5Ml1ZPAed6puk
- /+nA==
-X-Gm-Message-State: AOAM533IrRyW1lihirOTyXU20XW4w+nU4eRL0iYy/cffZJAunsX/yOPA
- VGQZWmkvhg6tx4Na7TIcdWv794BQMZ6nihQRxwjV3w==
-X-Google-Smtp-Source: ABdhPJxSEQeKbC3f1TpvxcoRZpDXxJgMojGbAKW1KlVHns/WT3CECWVVmeEj84FlMwgHSzF1AI9zbdsdEAO7IkwfRbY=
-X-Received: by 2002:a25:2d69:: with SMTP id s41mr2506127ybe.417.1598883881688; 
- Mon, 31 Aug 2020 07:24:41 -0700 (PDT)
+ bh=OnznT+EL1JicoCMQZaMN8hxrRUpgUwm11cy+cs3e/cs=;
+ b=VaAVNyG8v4bjOHTZC0fht6vHYejr2Sx0/a/0hewaqV546Q007cBKLopReqoMOfWANW
+ uPNbA17Vn6cPOZ3A+UZA8rLXBIRtLb74uOxYjiruPTdiXNpW3xZ6le1jbcuutnz57pwg
+ ATRQ0GGAdtBNUcRqgPW18WBjsm1MMTTZ7jfJi4cot07oYj7+IcuHPEHEhycj1MQbo8AH
+ GIyl0pIplq2iu4890ZXARDBnpqvUrChzdN/saR3mrKRFTdzxz4yZg+UM7ihadXYbR2me
+ 2BSzR12PnrROvLLvtenzmVqXkttQcb2z70NvjpuNA0C/EBZH9q2wLBXi3LSLI7eNEifJ
+ CvNg==
+X-Gm-Message-State: AOAM5300rIzWbgIbwoYNWDpIUoKUFr/4gbWeribZqxmsdg3QHZT4CZLA
+ 888CVnriawAGZAEL1LRLsqh8J40p3xQIYWjqgr+5BQ==
+X-Google-Smtp-Source: ABdhPJzD7RuENmF/Cb+ztIho3hsDnTkOoO1GwbBkHpXKDqMEwsrj5xKfU50D3VWZNbdNmAbN8X8DmW3gA/sRiar+5t8=
+X-Received: by 2002:a25:f304:: with SMTP id c4mr2262617ybs.209.1598884195167; 
+ Mon, 31 Aug 2020 07:29:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <92e6ad599b10400885d44e9d6b9c28ef@SCL-EXCHMB-13.phoenix.com>
-In-Reply-To: <92e6ad599b10400885d44e9d6b9c28ef@SCL-EXCHMB-13.phoenix.com>
+References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+ <20200831105718.o2ic4dvqhde5qrh7@thinkpad.dyn.fuzziesquirrel.com>
+ <67f35707fd1844cea64708f64f41224e@SCL-EXCHMB-13.phoenix.com>
+In-Reply-To: <67f35707fd1844cea64708f64f41224e@SCL-EXCHMB-13.phoenix.com>
 From: Ed Tanous <ed@tanous.net>
-Date: Mon, 31 Aug 2020 07:24:30 -0700
-Message-ID: <CACWQX81DSFDNoLRKuidgMSDAkphPywLkb2ELBV=MEMi0f5nJWg@mail.gmail.com>
-Subject: Re: Looking to do multiple platform ports uniformly with the ability
- to easily add more to follow.
+Date: Mon, 31 Aug 2020 07:29:44 -0700
+Message-ID: <CACWQX81o5SMhoGrJwvJhTxNXa5iM77v+eFGYUEeH=6-7U3nxWg@mail.gmail.com>
+Subject: Re: When building OpenBMC . . . ?
 To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -75,26 +76,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 27, 2020 at 1:08 PM Bruce Mitchell
+On Mon, Aug 31, 2020 at 7:23 AM Bruce Mitchell
 <Bruce_Mitchell@phoenix.com> wrote:
 >
-> Our desire is to have our own platform ports for Wolf Pass and Tioga Pass, with more to come, with a consistent unified meta-phoenix/meta-<platform>
+> We are building a separate port for Tioga Pass, so the question is should be not call it tiogapass?
+>
 
-What is a "platform port" in this case?  There's already meta layers
-for both platforms in upstream, and that would be the best place to
-check in any platform specific fixes or functionality.  Please do not
-check in platform-specific code into meta-phoenix.
+Don't create a separate "port".  Check your fixes into the Tioga pass
+machine and get them reviewed.  If there's conflicts with featuresets
+with other tioga pass users (as I'm sure there will be) determine what
+they are, then roll the required configurability options up to the
+project level layers so users can select the features they want in a
+build.
 
-> And looking to choose the best know methods and (re-)starting point(s).
-> Need to row with the OpenBMC community and get it correct from the start.
->
-> Thanks!
->
-> --
-> Bruce
->
->
+Please do not add meta-phoenix/meta-tioga.  The per-machine meta
+layers are complicated enough as-is.
