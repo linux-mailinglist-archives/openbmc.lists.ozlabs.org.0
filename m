@@ -2,62 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A78C257261
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 05:36:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EAE002574E7
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 10:01:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BfwqD2cQ4zDqSh
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 13:36:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bg2hy1tQ3zDqTM
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 18:01:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::541;
- helo=mail-ed1-x541.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d42;
+ helo=mail-io1-xd42.google.com; envelope-from=avifishman70@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Np8eJ16y; dkim-atps=neutral
-Received: from mail-ed1-x541.google.com (mail-ed1-x541.google.com
- [IPv6:2a00:1450:4864:20::541])
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=AOdCeQxT; dkim-atps=neutral
+Received: from mail-io1-xd42.google.com (mail-io1-xd42.google.com
+ [IPv6:2607:f8b0:4864:20::d42])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BfwpN3zLQzDqRc
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 13:35:53 +1000 (AEST)
-Received: by mail-ed1-x541.google.com with SMTP id a12so4064374eds.13
- for <openbmc@lists.ozlabs.org>; Sun, 30 Aug 2020 20:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bg2dv0tKVzDqSM
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 17:58:58 +1000 (AEST)
+Received: by mail-io1-xd42.google.com with SMTP id l8so4955281ios.2
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 00:58:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Es49Pktfv7cyRBR2isn8kE0O0ZV8xR4yhOVye/VQUrk=;
- b=Np8eJ16yZ5iMi3JnVsjqeMJX6+O7o5Ri0YyeWM6xIP2rHgwlMYXKwdrjJFPowbg/BA
- Qnr2rsfVzQudIyB4cK4lD/oNRmPcWdr8Tm3bCZG9DNxyK38R0k0EkF38KUbtIzV7ScCs
- 44b/yRnPTi24WZi3x+sC4lM5sLHPLrC56iNp8=
+ :cc; bh=ZGpi+5qwZTXlfGi+xb+oDjdA7kPA3G9h6znjI9BQew0=;
+ b=AOdCeQxT2jAza4/PKUwlGY32t9Nu7VJ5ktqVkH9a1b+k0F12J3MfmkECzbTg4jufCA
+ jCLvQ2XJtHbIS7gI8U9W7STv4m4hPisAQzGqLu7M/q/P0enBWtyOWHIHtgGAufrSB7dg
+ tBqkJuASBrVp+c5X0GQPi5qcvxUNK7P/wxe4Vkx+HCr6visW3UrptXnjGezadJCgGNwe
+ /W6hhR4r5K9nnR3Rvj9IhbSYddF5UfI0wyYgXi4vjl5iID0mdpVHCiB82Z9WXdLmZvhQ
+ eP8hGLezFV+mc0u9s8IQQdaMS43NOxx+B/DkjqKmXCoN3P2VLa1bEwwm+iD/z9qZ3DP+
+ d0Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=Es49Pktfv7cyRBR2isn8kE0O0ZV8xR4yhOVye/VQUrk=;
- b=ndi3CyEl/92xc7K+PVELtWZJoaf9uMtju8VeOdwvQmgMZIoonzyvki6MGqiE8wudUh
- GVaZ+pjMEn3RpHfyd38IJpTVzbREKTRqpcOjS0RK3FLxtCAkSLmmkRtQx5Q3Jg6JA/U1
- YTgbkIuWgxHvaheOpE/JgaPVnCmJzKnugQ23i+wVeY/q2S81Pqbhx8oJ8Ki+YG8hk75O
- aU/+HhxRNCgHXKm4Hoz2UbV61K1totmJGKEuka7uF0BywYlkOguODnNvcdfroHPUjLgF
- 8v2FjEHJo+P31zVyOi9lY64b3hmupVoOEgl2KrTadJol+x5IB3HaUPvrbh/VivOXFGDq
- 3RLg==
-X-Gm-Message-State: AOAM531bAQkjmJpx79tt8ZEdm9dNZuKU4YlBmjm94Nb4zlMii3IUSxyW
- TYnczvdpwrVQFLrTQMNGE3ff4ws1Z2DA5jJ7DO8=
-X-Google-Smtp-Source: ABdhPJx7qh+mNkv4fszmTyhwOjH5PtQGv7TcGVXG2A3V0/1q8FyjFJn4lSFRahcWP+iQ09eNAAQjowrra3y2n+LSM3I=
-X-Received: by 2002:a05:6402:ca7:: with SMTP id
- cn7mr1902945edb.143.1598844949735; 
- Sun, 30 Aug 2020 20:35:49 -0700 (PDT)
+ bh=ZGpi+5qwZTXlfGi+xb+oDjdA7kPA3G9h6znjI9BQew0=;
+ b=VuyvvzIKiEkPn38+jAD8WvTcNkswPXLcqgiXDerKkYR7+GThwJp+PZix4w3HO0i6kH
+ vzTiTZQcvfsS2BDzEw4h2qCrC4yhET7VzPnleBBxvUSKUrGmXbYFrkjHfsWRTZ1mgEnD
+ LTlnrgme3IUZy+6ykQFxMEjWx1aqTmbCidTPlpDMLE/a4WZGSkMJE+hWofeG+i6LjP7G
+ ayNriIyLsZLWFSwxcI6QnnH2sovOybTgF2ibEdXnJjj1j9A6hrvrJrAQh2DqoSYyoNIC
+ ZXqP5tYqgcC/bDzdhsPPpXaP0kpOUbfmUPRWsuaS8B5MOQGE6nMQne+B0zMgoIb+1sc2
+ 0U4Q==
+X-Gm-Message-State: AOAM533Kw3ZJMDkGdDIfA2GqF24ltX8hjfUsOHj6Po8cHJ2XnVMexjwP
+ iB1dXmTagNOwgCuQpjmPsKXLXLEaiu2l+kMCzA==
+X-Google-Smtp-Source: ABdhPJyzPNmQVuqnQsiy0uTVTWNT0Qbgcw6B7+74VyKPKvBv+1lPzo8yJnHlFDeW92m9d2egkd4N7kv/NrWlfHp+aTI=
+X-Received: by 2002:a5d:954f:: with SMTP id a15mr361144ios.53.1598860733041;
+ Mon, 31 Aug 2020 00:58:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200830213121.239533-1-tali.perry1@gmail.com>
-In-Reply-To: <20200830213121.239533-1-tali.perry1@gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 31 Aug 2020 03:35:36 +0000
-Message-ID: <CACPK8Xev4w4BxrxR1zQPk=wiHCK2fSGD9tEeAQwPe_uayGw_CA@mail.gmail.com>
-Subject: Re: [PATCH v3] i2c: npcm7xx: Fix timeout calculation
-To: Tali Perry <tali.perry1@gmail.com>
+References: <20200830122051.197892-1-tali.perry1@gmail.com>
+ <CAHp75VeX7OUeF=K_NmtXU4LACS9MxN1=nbSn01rvy-1MXoBL3Q@mail.gmail.com>
+In-Reply-To: <CAHp75VeX7OUeF=K_NmtXU4LACS9MxN1=nbSn01rvy-1MXoBL3Q@mail.gmail.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Mon, 31 Aug 2020 10:57:31 +0300
+Message-ID: <CAKKbWA46wSmvRshtMcShg8ka6aR2rYaB9b70EEYdQAHzJ=700g@mail.gmail.com>
+Subject: Re: [PATCH v2] i2c: npcm7xx: bug fix timeout (usec instead of msec)
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,53 +74,67 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: xqiu@google.com, Benjamin Fair <benjaminfair@google.com>,
- Wolfram Sang <wsa@the-dreams.de>, Avi Fishman <avifishman70@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Wolfram Sang <wsa@the-dreams.de>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- linux-i2c@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+ Tali Perry <tali.perry1@gmail.com>, linux-i2c <linux-i2c@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, 30 Aug 2020 at 21:31, Tali Perry <tali.perry1@gmail.com> wrote:
+On Sun, Aug 30, 2020 at 9:01 PM Andy Shevchenko
+<andy.shevchenko@gmail.com> wrote:
 >
-> timeout_usec value calculation was wrong, the calculated value
-> was in msec instead of usec.
+> On Sun, Aug 30, 2020 at 3:23 PM Tali Perry <tali.perry1@gmail.com> wrote:
 >
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-> Reviewed-by: Avi Fishman <avifishman70@gmail.com>
+> >
+> > i2c: npcm7xx: bug fix timeout (usec instead of msec)
+>
+> This commit message is awful. Please read [1] as a tutorial how to
+> write a commit messages.
+>
 
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+Would this be better:
+i2c: npcm7xx: Fix microsecond timeout calculation
 
-Cheers,
+Inside npcm_i2c_master_xfer() we calculate a timeout for the entire
+transaction in microseconds, the calculation was wrong so big i2c
+massages would timeout before they ended.
+This commit fix that.
 
-Joel
+> [1]: https://chris.beams.io/posts/git-commit/
+>
+> ...
+>
+> > -       /* Adaptive TimeOut: astimated time in usec + 100% margin */
+> > -       timeout_usec = (2 * 10000 / bus->bus_freq) * (2 + nread + nwrite);
+> > +       /*
+> > +        * Adaptive TimeOut: estimated time in usec + 100% margin:
+> > +        * 2: double the timeout for clock stretching case
+> > +        * 9: bits per transaction (including the ack/nack)
+>
+> > +        * 1000000: micro second in a second
+>
+> No need. See below.
+>
+> > +        */
+>
+> > +       timeout_usec = (2 * 9 * 1000000 / bus->bus_freq) * (2 + nread + nwrite);
+>
+> USEC_PER_SEC
 
-> ---
->  drivers/i2c/busses/i2c-npcm7xx.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+OK
+
 >
-> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-> index 75f07138a6fa..dfcf04e1967f 100644
-> --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> @@ -2093,8 +2093,12 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
->                 }
->         }
+> >         timeout = max(msecs_to_jiffies(35), usecs_to_jiffies(timeout_usec));
+> >         if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
+> >                 dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
 >
-> -       /* Adaptive TimeOut: astimated time in usec + 100% margin */
-> -       timeout_usec = (2 * 10000 / bus->bus_freq) * (2 + nread + nwrite);
-> +       /*
-> +        * Adaptive TimeOut: estimated time in usec + 100% margin:
-> +        * 2: double the timeout for clock stretching case
-> +        * 9: bits per transaction (including the ack/nack)
-> +        */
-> +       timeout_usec = (2 * 9 * USEC_PER_SEC / bus->bus_freq) * (2 + nread + nwrite);
->         timeout = max(msecs_to_jiffies(35), usecs_to_jiffies(timeout_usec));
->         if (nwrite >= 32 * 1024 || nread >= 32 * 1024) {
->                 dev_err(bus->dev, "i2c%d buffer too big\n", bus->num);
->
-> base-commit: d012a7190fc1fd72ed48911e77ca97ba4521bccd
 > --
-> 2.22.0
->
+> With Best Regards,
+> Andy Shevchenko
+
+
+
+-- 
+Regards,
+Avi
