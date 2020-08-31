@@ -2,86 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6041257B33
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:22:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B998257B45
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:27:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgC8c4g6TzDq9y
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:22:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgCFb47LRzDqDG
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:26:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=dWt5e0Eu; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=dWt5e0Eu; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [63.128.21.170])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b2a; helo=mail-yb1-xb2a.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=ztPqhzY3; dkim-atps=neutral
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com
+ [IPv6:2607:f8b0:4864:20::b2a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgC5Y0Vc2zDqSr
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:19:57 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1598883593;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s+yB9Lnlf3oi9VRJWFa5740FH4XMZ9zPZPXByP+3ybU=;
- b=dWt5e0EuOMhxxEKc73Xw62Dfvtzl2GEaI0WQB2OjdL6Hpw9dOWarcDPS69fNloQUoVrSpS
- /SfsbwdJtdT+o2vx9PHKTLrchVuH2CQ0Xf/9qBGU34d55e5gC6Dn/scaGqe3NOPm2MrD7i
- sbKw3BThNundSYWzIkjANkQMzNQKO/U=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1598883593;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s+yB9Lnlf3oi9VRJWFa5740FH4XMZ9zPZPXByP+3ybU=;
- b=dWt5e0EuOMhxxEKc73Xw62Dfvtzl2GEaI0WQB2OjdL6Hpw9dOWarcDPS69fNloQUoVrSpS
- /SfsbwdJtdT+o2vx9PHKTLrchVuH2CQ0Xf/9qBGU34d55e5gC6Dn/scaGqe3NOPm2MrD7i
- sbKw3BThNundSYWzIkjANkQMzNQKO/U=
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-410-U-lV3DYGM3KoOq_gH2i7cw-1; Mon, 31 Aug 2020 10:19:50 -0400
-X-MC-Unique: U-lV3DYGM3KoOq_gH2i7cw-1
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Mon, 31 Aug 2020 07:19:48 -0700
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Mon, 31 Aug 2020 07:19:48 -0700
-From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: RE: When building OpenBMC . . . ?
-Thread-Topic: When building OpenBMC . . . ?
-Thread-Index: AdZ/GJ+lFWuwSqbeSoqGTbguwoelIQAp4sAAAAeh65A=
-Date: Mon, 31 Aug 2020 14:19:47 +0000
-Message-ID: <67f35707fd1844cea64708f64f41224e@SCL-EXCHMB-13.phoenix.com>
-References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
- <20200831105718.o2ic4dvqhde5qrh7@thinkpad.dyn.fuzziesquirrel.com>
-In-Reply-To: <20200831105718.o2ic4dvqhde5qrh7@thinkpad.dyn.fuzziesquirrel.com>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [98.246.252.115]
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgCC24Q8gzDq9y
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:24:45 +1000 (AEST)
+Received: by mail-yb1-xb2a.google.com with SMTP id c17so242407ybe.0
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 07:24:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=fLpnPK7eu87XaGlByBpt38VRVqtsFoH87IpKb+ulU/k=;
+ b=ztPqhzY36utzppcjgWDVzTihTfEDOCNo7oxf94MQtwuIsxbHg+8I1YpfRAiS12oYiz
+ dG12fYxThTLN3owsv8uP+QFxroq/+dvUEizo0y6YmJSbgW6W0CpY8JHw1toKWyR4ZmM3
+ DRpLd0VDQJ9xXVaXNcGGTDJqSWOeqJ7Gp5kGvcSqkAgnb/A0Y/JlYX5geNo4Z7AkuwO9
+ e2Mi+0i4d86QDWeGIIhhwzlS5ZjGVHccSgd+KxW27S0l2RkRtJtfveSsWWI3whHALC1x
+ i6fpiQgkjn//OGSqCvtOBkrVDLnEfZ0TuW2P0MYFTa9Er1jenB6k4fDwalpDipZ9y7zM
+ 2X1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=fLpnPK7eu87XaGlByBpt38VRVqtsFoH87IpKb+ulU/k=;
+ b=dwrBlyrJw1wFGEKEun8WIOBxenkpbcIPkRqjVoJxsj+PRJZz75jYtsnkDXDrRR42jw
+ DljOdqZ4i0fP23ojenYo5cLxlzSBQGFiohzV2cMimtmhpQZLmSvja5sYYrhxN5u4JwUL
+ NMsqkTvaZDFkpmhRWhd56LmzHe4ysk112yx7GqgUpPE5fJ8Q7Q0ZL9D8YDplGhkuOJvJ
+ T02CGr8TX1TyYA1o21tElSLfTXR8n5XC9RYqeGX7PDX9A+7n4VwZHFtYvlpyFNuuVuY5
+ A5GlWP+SNTo0lIS52UXfBrek3SYo2fXb/HOAPWkgUxmqWs9LrG7JO0P5Ml1ZPAed6puk
+ /+nA==
+X-Gm-Message-State: AOAM533IrRyW1lihirOTyXU20XW4w+nU4eRL0iYy/cffZJAunsX/yOPA
+ VGQZWmkvhg6tx4Na7TIcdWv794BQMZ6nihQRxwjV3w==
+X-Google-Smtp-Source: ABdhPJxSEQeKbC3f1TpvxcoRZpDXxJgMojGbAKW1KlVHns/WT3CECWVVmeEj84FlMwgHSzF1AI9zbdsdEAO7IkwfRbY=
+X-Received: by 2002:a25:2d69:: with SMTP id s41mr2506127ybe.417.1598883881688; 
+ Mon, 31 Aug 2020 07:24:41 -0700 (PDT)
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=bruce_mitchell@phoenix.com
-X-Mimecast-Spam-Score: 0.001
-X-Mimecast-Originator: phoenix.com
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+References: <92e6ad599b10400885d44e9d6b9c28ef@SCL-EXCHMB-13.phoenix.com>
+In-Reply-To: <92e6ad599b10400885d44e9d6b9c28ef@SCL-EXCHMB-13.phoenix.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Mon, 31 Aug 2020 07:24:30 -0700
+Message-ID: <CACWQX81DSFDNoLRKuidgMSDAkphPywLkb2ELBV=MEMi0f5nJWg@mail.gmail.com>
+Subject: Re: Looking to do multiple platform ports uniformly with the ability
+ to easily add more to follow.
+To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,32 +75,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We are building a separate port for Tioga Pass, so the question is should b=
-e not call it tiogapass?
+On Thu, Aug 27, 2020 at 1:08 PM Bruce Mitchell
+<Bruce_Mitchell@phoenix.com> wrote:
+>
+> Our desire is to have our own platform ports for Wolf Pass and Tioga Pass, with more to come, with a consistent unified meta-phoenix/meta-<platform>
 
-> -----Original Message-----
-> From: openbmc [mailto:openbmc-
-> bounces+bruce_mitchell=3Dphoenix.com@lists.ozlabs.org] On Behalf Of
-> Brad Bishop
-> Sent: Monday, August 31, 2020 03:57
-> To: Bruce Mitchell
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: When building OpenBMC . . . ?
->=20
-> On Sun, Aug 30, 2020 at 10:02:41PM +0000, Bruce Mitchell wrote:
-> >When selecting Target hardware
-> https://github.com/openbmc/openbmc#3-target-your-hardware
-> >to build for the is a tiogapass, now if I add a meta-phoenix/meta-
-> tiogapass/conf  how does
-> >=09source setup tiogapass build
-> >know which tiogapass to build?
->=20
-> Are there two different systems called tiogapass?  I hope we are not
-> creating two distinct sets of bitbake metadata for the same system?
->=20
-> -brad
+What is a "platform port" in this case?  There's already meta layers
+for both platforms in upstream, and that would be the best place to
+check in any platform specific fixes or functionality.  Please do not
+check in platform-specific code into meta-phoenix.
 
+> And looking to choose the best know methods and (re-)starting point(s).
+> Need to row with the OpenBMC community and get it correct from the start.
+>
+> Thanks!
+>
+> --
+> Bruce
+>
+>
