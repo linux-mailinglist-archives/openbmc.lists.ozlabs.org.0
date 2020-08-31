@@ -1,71 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A88F25839C
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 23:33:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 586832583A6
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 23:36:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgNjw4z0xzDqN9
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 07:33:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgNnV4WhszDqNJ
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 07:36:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::230;
- helo=mail-oi1-x230.google.com; envelope-from=xqiu@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::62b;
+ helo=mail-ej1-x62b.google.com; envelope-from=krellan@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=FXlyNp/s; dkim-atps=neutral
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [IPv6:2607:f8b0:4864:20::230])
+ header.s=20161025 header.b=qjmF0aMc; dkim-atps=neutral
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com
+ [IPv6:2a00:1450:4864:20::62b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgNj93vvRzDqJS
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 07:32:59 +1000 (AEST)
-Received: by mail-oi1-x230.google.com with SMTP id d189so2275003oig.12
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 14:32:58 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgNmf42BhzDqJS
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 07:35:55 +1000 (AEST)
+Received: by mail-ej1-x62b.google.com with SMTP id a26so10511646ejc.2
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 14:35:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=QJ207ezI1hYox/7x8ue/6IMozUxpP6Wl3TCwxgxgNGk=;
- b=FXlyNp/ssVeZ8CgjwJ1ztXUUvl/SawpAvsiqegyS0IGDYDaTAA3vEJTJjn+xuluU0w
- I2ur+AIL0oLXENLgp4EODIkoBageAAtuSQFUyOAlJwfCmpxM+d6drxhjRPNl8SEESNL0
- mHKEMTXl//iRAHFhD3ybClO5vLSaYhGMOnc5fMf03p1Pxfoevu9t2DxpeH81wfCWMmAp
- hRmFqenDTszPYnV34FqvxxYvBXFgmlAKIyE9rGUkl2K7vY/aONfoXT2mugJYTrFUlfrO
- XFY2h8B79Wb0O9QcrkxPXPXvTND7LrMjA+y6puPOy74RWGFNjpwjS3WQZp7sVAV5vSJj
- sicg==
+ :cc; bh=g0Ul2LeRiUVT9m+685L1ARoQfHnfv83J+D8uw6/+u0I=;
+ b=qjmF0aMcOpYz0+aTRrix/MRoMkh57xT0t/dIdlXLJ9I/s06YmvCnXVlPouNr3Wlluy
+ 8+v6bmM5fd0v/BNn5c8K3bYKLk31FByMrcq8bMU7HpZSKMh4vlejq2oe+jcBGUsNX0Iz
+ d/6/CVHj80LjfEnNfM02/3bniSlIZ2wrxuD9uIM3+V5TNa7p3JOWkjYmhia9FECaOxj0
+ +KvmtHCPkUt9UyjYo4nygaCXvIkYVvxbv+RLmr5IuaUqgxhhLP9QNo6tJd2YopVOHbwI
+ U8nMc/9E5Uy/qnYuIraF+yxASQigTvCd7W6X2qhXfoPiSdPnKbrzp3/3t3ufQZCFCdbv
+ l7CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=QJ207ezI1hYox/7x8ue/6IMozUxpP6Wl3TCwxgxgNGk=;
- b=SJv2C2oZYllgeyVUZRotyASklm4+Npr6go6jWyRVS5Ercnfa+Em/dS06V9H3Np3V5T
- sCv1hBucXJufwOIopGZA2eSsZxBFP7z3rjiVOJQJhwB/tQ485CJlSl2SBhuKXdgVy9pB
- SSgKEp8JEFkegcIFFuLZBy4n6MF4ARc1tGyvFbuBv8gzgz/Fiz5V32fvimI7CfQDpw1X
- iDRXnT5mI1TeGJZgACT4JC4lezyLwgBuShNd5iGLxFdyOEk+ZjxuYIqH6yjT0GxB98pc
- 0Dgxy0CweIg8tSe9aiRDs+mTdEWZrNLo8N4K012lXaEY3MJu06Q82YEIMP+3XjmgQPMi
- ln0w==
-X-Gm-Message-State: AOAM530HB2876TNWatNj/r0AjEVIydNxqJ2C1EhWFdQsi6NqJVT4X/ol
- xMk+xrMTx9yv7q50UZDJe4ajjTUaPcuGl1oXj1ugYg==
-X-Google-Smtp-Source: ABdhPJw8+lag9wJFtEmeH36+590YKB8f6jhj/mEtGYyA3Hrx+N2vvtqnJrm0egtqOxQd5vgziwcuWROxIH+7MDWQkDg=
-X-Received: by 2002:aca:abc2:: with SMTP id u185mr841618oie.62.1598909575352; 
- Mon, 31 Aug 2020 14:32:55 -0700 (PDT)
+ bh=g0Ul2LeRiUVT9m+685L1ARoQfHnfv83J+D8uw6/+u0I=;
+ b=HagDbIpQlOF/GqFU63CEzvLstSKYmTNKrRUaN9aPBWahVb7bO1bVBjvv27ji35bBeQ
+ iOa9KSfQ8Sq5sEz8AWhQF9VP5BDL9sqmHfJo68omv29WnoBC7nN5v0Tzn+ruLw2pOw4A
+ boffz1Et9CC84n1/Ksc6Z8MnFSn42pEXd7yGQiForDaclbvpa8mYL7aeh+vSePpr/E1l
+ Jqu1vE+F8VdFeMPDugbWcDu9X4FhPXsQSOLg9TgCpGTiZ+0nQ7YsbWwXBi7/RnR73D4P
+ YBI3KFFOVZpM7rTLMUtYKIt2FRC/jdUlQYeuqjaC7s4es5XtleD4rTyv1Sc6N0fmWERd
+ LxeQ==
+X-Gm-Message-State: AOAM530+Ez/z9tmnVpdGYTkXvvp6hfDOkyKEM2PUaSXqD6p8W3y9DzYR
+ wq59PdgEI/BiKTwvha7/AFmctue5l2AV7kyLazELiA==
+X-Google-Smtp-Source: ABdhPJwWSCUg4+9kFD+Nm8tn/Otg/y7IjxbDtWOGsTLrn0RHlUMplM2SIdXuB4IqsFNLIY2QojH3+kWzYjq+aupR2OU=
+X-Received: by 2002:a17:906:77d1:: with SMTP id
+ m17mr2831438ejn.96.1598909748923; 
+ Mon, 31 Aug 2020 14:35:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAA_a9xLk5JhUjEkiWka6LSXJ1gD-BcH0PqgENqroisDKEUyztA@mail.gmail.com>
- <CAA_a9xJ54rpnKm0y+hrEG2YjuFzzhqKBEJbStsu4Q126APgbVg@mail.gmail.com>
- <9129e6cf-76a8-deea-7e8c-1ac17cf45b4b@linux.intel.com>
- <CAA_a9x+A+OkbdTW_M4KT=6eV982Lg_0PoWaYvW47c0Aoh676-w@mail.gmail.com>
- <9679c401-28ce-3197-f871-2cccd2940885@linux.intel.com>
-In-Reply-To: <9679c401-28ce-3197-f871-2cccd2940885@linux.intel.com>
-From: Alex Qiu <xqiu@google.com>
-Date: Mon, 31 Aug 2020 14:32:44 -0700
-Message-ID: <CAA_a9xLXDPP-4SodzEnnASupm7GTtB_My+6GbPrtR9A0S23KLg@mail.gmail.com>
-Subject: Re: Dealing with a sensor which doesn't have valid reading until host
- is powered up
-To: James Feist <james.feist@linux.intel.com>
-Content-Type: multipart/alternative; boundary="00000000000044ac6b05ae332590"
+References: <CAA_a9xKze8pBf1zH0icAhQX55ESbtnqQMaTe-aTxnxBx5tfcCA@mail.gmail.com>
+ <CACWQX82Or8bnTA8WDqrogpp16vEff7PoEB4ZK4b3tFwYKWSQZQ@mail.gmail.com>
+ <CAJOps0swEoyi3kmbGWQ_xMVEUt+ZL+SGrYm2Fq4SCGd8wZtDFw@mail.gmail.com>
+ <CACWQX80XASFj_5LBOeH6iQ84PO14suc34jZip9B7g-y4YYo_cQ@mail.gmail.com>
+ <CAJOps0t=HyM7sLgj9aamBBQD2hReMcZYP1icJjLc8Sr-8bx7zA@mail.gmail.com>
+ <CACWQX83vxiO9QrqbyxEpUPgZ_bmiZNnhgYhMC4WH4wUUR8c1mA@mail.gmail.com>
+In-Reply-To: <CACWQX83vxiO9QrqbyxEpUPgZ_bmiZNnhgYhMC4WH4wUUR8c1mA@mail.gmail.com>
+From: Josh Lehan <krellan@google.com>
+Date: Mon, 31 Aug 2020 14:35:22 -0700
+Message-ID: <CANPkJS_f1zkP1YK43UDt7eYM2WjG3AKB4US206ndnudZPh-i0Q@mail.gmail.com>
+Subject: Re: Inconsistent performance of dbus call GetManagedObjects to
+ PSUSensor in dbus-sensors
+To: Ed Tanous <ed@tanous.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,244 +79,108 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Peter Lundgren <peterlundgren@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Jason Ling <jasonling@google.com>,
- Ed Tanous <ed@tanous.net>, Josh Lehan <krellan@google.com>
+Cc: Peter Lundgren <peterlundgren@google.com>, Alex Qiu <xqiu@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Drew Macrae <drewmacrae@google.com>, Jie Yang <jjy@google.com>,
+ Sui Chen <suichen@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000044ac6b05ae332590
-Content-Type: text/plain; charset="UTF-8"
-
-Hi James,
-
-I think BiosPist power state might not suffice, because the host needs to
-load firmware onto the device in order to enable the sensors at a certain
-stage in the OS boot, which is very close to boot completion.
-
-However, we can tolerate the fan being noisy before boot completion, and I
-believe the root cause the issue is the HwmonTempSensor freezes once the
-control flow hitting boost::asio::async_read_until (
-https://github.com/openbmc/dbus-sensors/blob/master/src/HwmonTempSensor.cpp#L92).
-Do you know if this function has something special to do with a file that
-can have errno EAGAIN? Based on that, replacing the errno in the driver
-with sth other than EAGAIN also seems to be a viable fix.
-
-Thanks!
-
-- Alex Qiu
-
-
-
-- Alex Qiu
-
-
-On Fri, Aug 28, 2020 at 10:54 AM James Feist <james.feist@linux.intel.com>
-wrote:
-
-> On 8/28/2020 9:43 AM, Alex Qiu wrote:
-> > Hi James,
-> >
-> > Thx for the reply! So right now, one thing is that the sensor is not
-> > dependent on the power state of the host solely, but also dependent on
-> > the boot progress of the host.
+On Sat, Aug 15, 2020 at 7:05 AM Ed Tanous <ed@tanous.net> wrote:
+> On Thu, Aug 13, 2020 at 4:33 PM Sui Chen <suichen@google.com> wrote:
+> > > What patches did you apply?
+> > This one: https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/30348
 >
-> Would the BiosPost power state not suffice?
->
-> > And the more serious issue is that
-> > returning EAGAIN from the driver freezes the sensor, which is what I'm
-> > debugging right now. Do we have special treatment on errno returned by
-> > the driver? Thx.
->
-> I ran into a similar issue with the CPUSensor and this was my fix:
->
-> https://github.com/openbmc/dbus-sensors/commit/c22b842bfa8cfe798d83f99fa7aa9f142278c21d#diff-ccbe0562fe1d501b4c1c42d967a02ea0
->
-> I haven't hit this issue with hwmon sensor though.
->
-> >
-> > - Alex Qiu
-> >
-> >
-> > On Fri, Aug 28, 2020 at 9:38 AM James Feist <james.feist@linux.intel.com
-> > <mailto:james.feist@linux.intel.com>> wrote:
-> >
-> >     On 8/27/2020 2:49 PM, Alex Qiu wrote:
-> >      > Hi James,
-> >      >
-> >      > After some debugging, I realized that the code I pointed out
-> earlier
-> >      > wasn't the root cause. Update is that, the HwmonTempSensor stops
-> >      > updating after the hwmon driver returns EAGAIN as errno. I'll keep
-> >      > debugging...
-> >      >
-> >      > - Alex Qiu
-> >      >
-> >      >
-> >      > On Tue, Aug 25, 2020 at 5:49 PM Alex Qiu <xqiu@google.com
-> >     <mailto:xqiu@google.com>
-> >      > <mailto:xqiu@google.com <mailto:xqiu@google.com>>> wrote:
-> >      >
-> >      >     Hi James and OpenBMC community,
-> >      >
-> >      >     We have a sensor for HwmonTempSensor which doesn't have a
-> valid
-> >      >     reading until the host is fully booted. Before it's becoming
-> >     alive
-> >      >     and useful, it's getting disabled in code
-> >      >
-> >       (
-> https://github.com/openbmc/dbus-sensors/blob/master/include/sensor.hpp#L266
-> )
-> >      >     because of errors thrown up by the hwmon driver. Ideally, the
-> >      >     thermal control loop should kick the fan to fail safe mode
-> >     until no
-> >      >     more errors are observed.
-> >      >
-> >      >     Any suggestions on how we should handle this kind of sensor
-> >     properly?
-> >
-> >     For what its worth we use the PowerState property that has options of
-> >     power on or BiosPost to disable scanning when the state is invalid:
-> >
-> https://github.com/openbmc/dbus-sensors/blob/f27a55c775383a3fb1ac655f3eda785f6845f214/src/HwmonTempMain.cpp#L208
-> >
-> >
-> >      >
-> >      >     Thank you!
-> >      >
-> >      >     - Alex Qiu
-> >      >
-> >
->
+> Looking at this patch, I get the feeling this is specifically the
+> cause of your problems.  Have you tried your things on master yet,
+> without that patch, to see if it exhibits the same behavior?  There's
+> a good reason each sensor has an independent timer instance;  The
+> intent is that when the sensor system gets overloaded, the readings
+> get delayed, and each individual timer introduces its own
+> load-specific delays as it's started after the read completes.  Said
+> another way, technically, a sensor scan rate isn't exactly 1 second,
+> it's 1 second + queuing time + the time it takes to read the sensor,
+> so if the sensor takes a long time to read (because the system is
+> overloaded) the sensor scans don't collapse into one another and cause
+> problems like you're seeing, and you still (hopefully) have
+> significant idle time in the io_context to handle other things, like
+> managing dbus connections.  (as a side note, for i2c based sensors,
+> this keeps the latency of other operations on the bus down as well.
 
---00000000000044ac6b05ae332590
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+That's a good point.
 
-<div dir=3D"ltr">Hi James,<div><br></div><div>I think BiosPist power state =
-might not suffice, because the host needs to load firmware onto the device =
-in order to enable the sensors at a certain stage in the OS boot, which is =
-very close to boot completion.</div><div><br></div><div>However, we can tol=
-erate the fan being noisy before boot completion, and I believe the root ca=
-use the issue is the HwmonTempSensor freezes once the control flow hitting =
-boost::asio::async_read_until (<a href=3D"https://github.com/openbmc/dbus-s=
-ensors/blob/master/src/HwmonTempSensor.cpp#L92">https://github.com/openbmc/=
-dbus-sensors/blob/master/src/HwmonTempSensor.cpp#L92</a>). Do you know if t=
-his function has something special to do with a file that can have errno EA=
-GAIN? Based=C2=A0on that, replacing the errno in the driver with sth other =
-than EAGAIN also seems to be a viable fix.</div><div><br></div><div>Thanks!=
-</div><div><br>- Alex Qiu<br><br></div></div><br clear=3D"all"><div><div di=
-r=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div><br></div>- Alex =
-Qiu</div></div></div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" cl=
-ass=3D"gmail_attr">On Fri, Aug 28, 2020 at 10:54 AM James Feist &lt;<a href=
-=3D"mailto:james.feist@linux.intel.com">james.feist@linux.intel.com</a>&gt;=
- wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 8/28/=
-2020 9:43 AM, Alex Qiu wrote:<br>
-&gt; Hi James,<br>
-&gt; <br>
-&gt; Thx for the reply! So right=C2=A0now, one thing is that the sensor is =
-not <br>
-&gt; dependent on the power state of the host solely, but also dependent on=
- <br>
-&gt; the boot progress of the host.<br>
-<br>
-Would the BiosPost power state not suffice?<br>
-<br>
-&gt; And the more serious issue is that <br>
-&gt; returning EAGAIN from the driver freezes the sensor, which is what I&#=
-39;m <br>
-&gt; debugging right now. Do we have special treatment on errno returned by=
- <br>
-&gt; the driver? Thx.<br>
-<br>
-I ran into a similar issue with the CPUSensor and this was my fix:<br>
-<a href=3D"https://github.com/openbmc/dbus-sensors/commit/c22b842bfa8cfe798=
-d83f99fa7aa9f142278c21d#diff-ccbe0562fe1d501b4c1c42d967a02ea0" rel=3D"noref=
-errer" target=3D"_blank">https://github.com/openbmc/dbus-sensors/commit/c22=
-b842bfa8cfe798d83f99fa7aa9f142278c21d#diff-ccbe0562fe1d501b4c1c42d967a02ea0=
-</a><br>
-<br>
-I haven&#39;t hit this issue with hwmon sensor though.<br>
-<br>
-&gt; <br>
-&gt; - Alex Qiu<br>
-&gt; <br>
-&gt; <br>
-&gt; On Fri, Aug 28, 2020 at 9:38 AM James Feist &lt;<a href=3D"mailto:jame=
-s.feist@linux.intel.com" target=3D"_blank">james.feist@linux.intel.com</a> =
-<br>
-&gt; &lt;mailto:<a href=3D"mailto:james.feist@linux.intel.com" target=3D"_b=
-lank">james.feist@linux.intel.com</a>&gt;&gt; wrote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 8/27/2020 2:49 PM, Alex Qiu wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hi James,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; After some debugging, I realized that the cod=
-e I pointed out earlier<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; wasn&#39;t the root cause. Update is that, th=
-e HwmonTempSensor stops<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; updating after the hwmon driver returns EAGAI=
-N as errno. I&#39;ll keep<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; debugging...<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; - Alex Qiu<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Tue, Aug 25, 2020 at 5:49 PM Alex Qiu &lt;=
-<a href=3D"mailto:xqiu@google.com" target=3D"_blank">xqiu@google.com</a><br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:xqiu@google.com" targe=
-t=3D"_blank">xqiu@google.com</a>&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; &lt;mailto:<a href=3D"mailto:xqiu@google.com"=
- target=3D"_blank">xqiu@google.com</a> &lt;mailto:<a href=3D"mailto:xqiu@go=
-ogle.com" target=3D"_blank">xqiu@google.com</a>&gt;&gt;&gt; wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Hi James and OpenBMC commu=
-nity,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0We have a sensor for Hwmon=
-TempSensor which doesn&#39;t have a valid<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0reading until the host is =
-fully booted. Before it&#39;s becoming<br>
-&gt;=C2=A0 =C2=A0 =C2=A0alive<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0and useful, it&#39;s getti=
-ng disabled in code<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0(<a href=3D"https://github.com/openbmc/dbus-=
-sensors/blob/master/include/sensor.hpp#L266" rel=3D"noreferrer" target=3D"_=
-blank">https://github.com/openbmc/dbus-sensors/blob/master/include/sensor.h=
-pp#L266</a>)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0because of errors thrown u=
-p by the hwmon driver. Ideally, the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0thermal control loop shoul=
-d kick the fan to fail safe mode<br>
-&gt;=C2=A0 =C2=A0 =C2=A0until no<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0more=C2=A0errors are obser=
-ved.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Any suggestions on how we =
-should handle this kind of sensor<br>
-&gt;=C2=A0 =C2=A0 =C2=A0properly?<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0For what its worth we use the PowerState property t=
-hat has options of<br>
-&gt;=C2=A0 =C2=A0 =C2=A0power on or BiosPost to disable scanning when the s=
-tate is invalid:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://github.com/openbmc/dbus-sensors/=
-blob/f27a55c775383a3fb1ac655f3eda785f6845f214/src/HwmonTempMain.cpp#L208" r=
-el=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/dbus-sensors=
-/blob/f27a55c775383a3fb1ac655f3eda785f6845f214/src/HwmonTempMain.cpp#L208</=
-a><br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Thank you!<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0- Alex Qiu<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt; <br>
-</blockquote></div>
+With each sensor having its own free-running timer, which auto-extends
+time if the system is delayed as you mentioned, that does provide a
+way for the timers to automatically slow down when the system is under
+heavy load and can't respond as quickly.
 
---00000000000044ac6b05ae332590--
+I wonder if it would be worth adding some timing to detect this, and
+perhaps try to back off the timer duration somewhat? For example, if
+1-second timers are bogging down too much, back the timer off to
+2-second timers, and so on, until they have been slowed down enough to
+give the system enough time to avoid falling behind.
+
+> Unfortunately, that patch kinda puts all that design on its head.
+> "Avoid timer skew" is in the commit message.  That skew is there on
+> purpose, to prevent the problem you're seeing.  With that said, I'm
+> sure Josh was trying to fix something there, but in the commit message
+> he doesn't actually outline what the problem is.  Do you know?  My
+> best guess is maybe he was trying to get more accurate scan rates?  We
+> could think up designs that have some logic that, in the base case
+> handles the loop more accurately but spreading out the sensor scans is
+> a good thing in general and reduces the peak work queue size (as
+> you've already found out).
+> Maybe there were some different performance issues that putting all
+> the sensor scans together solved?
+
+The sensor reading was causing the rest of the system to become
+unusably slow, even before making any changes. I had 3 goals in mind:
+
+1) The pmbus driver seems to ask the hardware for new data if it has
+been long enough (HZ, roughly one second) since the last read, by
+comparing the system jiffies clock. As all sensors would have their
+own free-running timers, the driver readings would be smeared
+throughout time, causing this interval to be quickly and repeatedly
+reached. We suspected a driver was being slow, perhaps because of I2C,
+so we were seeing a system slowdown every second. By reading more
+sensors simultaneously, and then pausing for a while, I was hoping to
+avoid triggering this interval as often, thus taking advantage of some
+caching. The pmbus driver does a complete read of the chip every time
+this interval is triggered, thus if I can satisfy more sensors at a
+single interval, I don't need to do as many complete readings.
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/hwmon/pmbus/pmbus_core.c#n584
+
+2) In general, it's good practice to read sensors at fixed intervals,
+to avoid skew between sensor readings. An example is voltage and
+amperage. Ideally, you would sample them simultaneously, so that
+computations such as obtaining wattage (volts * amps) would be
+correct. If the sensor readings were staggered, and you were reading
+something that was changing, your calculated wattage would be
+incorrect. Many embedded sensor networks have a command that
+broadcasts out to the worker nodes, to "lock" a sensor reading into
+local sensor memory, then, as time permits, the leader node can issue
+commands individually to collect data from each worker, knowing that
+the data was earlier all captured simultaneously. This technique
+improves the quality of collected data, and is often used in industry.
+I was hoping to bring PSUSensor a little closer to this ideal.
+
+3) By synchronizing to one master timer, it becomes possible to slow
+down the sensor collection interval, and introduce some resting time
+between sensor data collection. The system became almost unusably slow
+during sensor data collection. By introducing a rest time between the
+readings, I was able to "PWM" the system load, and thus dial it down
+to make the system usable again, by changing the duty cycle to
+something like 70% instead of 100%.
+
+I wonder if it would be worth it, instead of having each sensor have
+its own free-running timer, to still have a single master time for all
+sensor collection, but stagger it? For example, let's say you need to
+read 200 sensors, and you need to do a complete reading once every 5
+seconds. Have the timer fire at intervals of 15 milliseconds. Collect
+one sensor reading each tick. This completes 200 sensors in 3000
+milliseconds. The system can then be quiet for the remaining 2000
+milliseconds of the interval, giving it a chance to catch up and
+remain responsive.
+
+Josh
