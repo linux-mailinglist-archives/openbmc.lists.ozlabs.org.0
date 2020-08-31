@@ -1,68 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBE2225847C
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 01:40:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B62BE258499
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 01:59:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgRWp1h8gzDqVH
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 09:40:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgRxf47pFzDqW6
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 09:59:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32e;
+ helo=mail-ot1-x32e.google.com; envelope-from=xqiu@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2c; helo=mail-yb1-xb2c.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=gSeoYqBS; dkim-atps=neutral
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com
- [IPv6:2607:f8b0:4864:20::b2c])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=Yk2uaCPi; dkim-atps=neutral
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com
+ [IPv6:2607:f8b0:4864:20::32e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgRW05TDHzDqT7
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 09:39:22 +1000 (AEST)
-Received: by mail-yb1-xb2c.google.com with SMTP id q3so5036166ybp.7
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 16:39:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgRwv4dyYzDqRG
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 09:58:21 +1000 (AEST)
+Received: by mail-ot1-x32e.google.com with SMTP id k20so6991775otr.1
+ for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 16:58:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GiJwcqwWyH9Oqci0ti292MRlW01eqKT5URAXVuGyMuk=;
- b=gSeoYqBSUC86DIw/H4pEYFwlDuLF/SQ7mRIrP3NvtmPqkPr72mxwDqcUHfF8WMQizX
- EEfHrQsPLyfUk3u+oJqeXOx9eehXgt/FjN87Hp7Fc14vYmVYMlJQEHu3Yuo6UsWGlreC
- 2+pPRpKVgnifKjbXxs3k1m5GSyh86IbUOL5gNaqcw0iw54gU7moLseuIMft+l/pizr2K
- 1G/gHuGCyWG8Q6pPor0eO4ex220G2SF9LBA3MJUpo3eSX0vzUUA5O+qcdkjTv1kf/0bx
- ptFmWs7Be30QNK7yqKb5BXt7aKYY0lNBU5BLRv5kumhHxfuTiHBj6nY7WcY1VNpUgnib
- KArw==
+ :cc; bh=zWeALq85D+Th52H5L2FN41cYOqExy6JWTv+2Xh37164=;
+ b=Yk2uaCPiRwcoWcYReMlhHAXcbrkfiFxgGrypN0+4M0Gu0Y3zFN7KWNCIlyMgU8a011
+ vX1cK9D4gy1tVF5H3k8PQjWnC7XVPkWd+bsCU3BzVgphpjUrJvKnXBHg1M58sEIpojeO
+ LL69e5zFLKt8U0kX89CMzOoxkTciWqXpmvpaYQP8RFZRDzdSifBQdaOmM2iL0yM/zcfW
+ xjQI+DVIX+mzd2x5pFgFOO38/jrlqztkMK1hSiksRhmMQX22bWQu17d8iqi5W53d+vIg
+ XH0nO20xCLyyXu1U5wt+fhsp7sBQfRykwVVIGbqIBh447uWA4gQ7VgG9kfNFQA0K6a3P
+ oqfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=GiJwcqwWyH9Oqci0ti292MRlW01eqKT5URAXVuGyMuk=;
- b=dZgFzCxL//UIOQbmLaal+wqSEfUWYi8jvDZ/S1IBgwtGqOKmRpbaJHO9DmARljZRd6
- 2pGK0G8aAFWW05R4+NX/dTV/MNf8S1VScGgtCTaP//f2LM//8eTRXeqQSj8ojBughM4n
- pQDhu52S/bsJfaTe5ROAiHj34fatLP2GcaDd7BPafDkFBLwPf9cxJEzooBUarIaaDK3b
- 9D2Kad0SvCFywGnVZJKhEImvEm5ihBNBpn7ucgaOYGnggc9RUwDwP39ildHdEgtJU+hJ
- wjwTW0hrAIz4q/iAK8EYfc0egpXvwKwIocf17iX55FghgJ4ZndvS9iv0HxTBZFHvY+Ez
- 8T6w==
-X-Gm-Message-State: AOAM531mEd2HyUJbNDxQFIQwLz8gYVPtrZDT96HqBbNwCNGZKHYlyEG3
- V7vr2gKOvOUYuC+oMh4fqlbuXxXC6zjDdFzlqQ1cZLet6pNy6Q==
-X-Google-Smtp-Source: ABdhPJyGNS+zcSQ25PWopcsDZqh89lEQMXALYWUWwVt0NaCvW/chFP16I3K5Nv4pxguorwJehFeL+/5TGqiHdV/Od0Q=
-X-Received: by 2002:a25:2d69:: with SMTP id s41mr5739431ybe.417.1598917157455; 
- Mon, 31 Aug 2020 16:39:17 -0700 (PDT)
+ bh=zWeALq85D+Th52H5L2FN41cYOqExy6JWTv+2Xh37164=;
+ b=uLw6dVVkbE91N0xheYuLzhgLZeeS6dHKnWmbYHVr1n9G8nRwAh0ivBFoATu/1MkfzQ
+ JKlQJqxKvO/mnuohY1VHxYoifFlkQ8Rj5rjiwxS3r/RSmCBgrDvvky5N0bV186zZnse/
+ Z21dpd5W/r7MKOPvmF9luNu506n/sgoihkkQFUTtjzwkrKYOGNojuE/ml3+NbaKUvRRV
+ enapZByxPzeYJ4TRTBjAqtafRAeCIsiPnsoEhHRBjFIQSKfeHTGnIJKo4yBFMYfXJyy4
+ sDLCGj091zIODSEl3IeGTcyCD+s2jQkz9tW55d89z7eBqpRrEy7mnxQeHumVJyi834gv
+ Ohbg==
+X-Gm-Message-State: AOAM531NMZ4QG538KdnoG9s6c6W7U6bqOwEZ7jz4VuGnYaHT5aQ2UNJD
+ HjO+eUfZ/i/a3CZcf3KbceG4G1wtRPRUqBw5vYa8hQ==
+X-Google-Smtp-Source: ABdhPJxR9+tYNAHldaIaH8wXJ572TR56OdmYIgmvobN2AD+Y8O8buMFh8SnIot6WlCad+25O6W0s8YJ03/rR50GJBIU=
+X-Received: by 2002:a05:6830:30a1:: with SMTP id
+ g1mr2528660ots.302.1598918299494; 
+ Mon, 31 Aug 2020 16:58:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <65194bdf-93e7-0cf5-6fce-2b5b0aee5c9c@yadro.com>
-In-Reply-To: <65194bdf-93e7-0cf5-6fce-2b5b0aee5c9c@yadro.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 31 Aug 2020 16:39:06 -0700
-Message-ID: <CACWQX80Fj2fiF9fW56meL0kQucKfkQc4QbL5-nC-_amRb8O-zg@mail.gmail.com>
-Subject: Re: Naming DBus paths of CPU objects
-To: "i.kononenko" <i.kononenko@yadro.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAA_a9xLk5JhUjEkiWka6LSXJ1gD-BcH0PqgENqroisDKEUyztA@mail.gmail.com>
+ <CAA_a9xJ54rpnKm0y+hrEG2YjuFzzhqKBEJbStsu4Q126APgbVg@mail.gmail.com>
+ <9129e6cf-76a8-deea-7e8c-1ac17cf45b4b@linux.intel.com>
+ <CAA_a9x+A+OkbdTW_M4KT=6eV982Lg_0PoWaYvW47c0Aoh676-w@mail.gmail.com>
+ <9679c401-28ce-3197-f871-2cccd2940885@linux.intel.com>
+ <CAA_a9xLXDPP-4SodzEnnASupm7GTtB_My+6GbPrtR9A0S23KLg@mail.gmail.com>
+ <CAA_a9x+dyj+K7Zr-3nPUoOp35WjVRjHDo7L0AJ2BSp6sV9M_bA@mail.gmail.com>
+ <CABXOdTdZiUT23eU6fgFZ7DMh7LFEaWhKzXZF2hrFahj0m2vN=A@mail.gmail.com>
+In-Reply-To: <CABXOdTdZiUT23eU6fgFZ7DMh7LFEaWhKzXZF2hrFahj0m2vN=A@mail.gmail.com>
+From: Alex Qiu <xqiu@google.com>
+Date: Mon, 31 Aug 2020 16:58:08 -0700
+Message-ID: <CAA_a9xLWYLyMVp0xCQdzC6wCwvJvDTsr1wV109tCLZVe=hSRGg@mail.gmail.com>
+Subject: Re: Dealing with a sensor which doesn't have valid reading until host
+ is powered up
+To: Guenter Roeck <groeck@google.com>
+Content-Type: multipart/alternative; boundary="0000000000004490b105ae352d6a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,61 +81,365 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
+ Josh Lehan <krellan@google.com>, James Feist <james.feist@linux.intel.com>,
+ Jason Ling <jasonling@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Aug 31, 2020 at 10:55 AM i.kononenko <i.kononenko@yadro.com> wrote:
->
-> Hi,
->
-> I'm working on improving of the OpenBMC RedFISH API. In particular, the endpoint of the Processor.
-> To provide all the properties of the applied RedFISH schema, we need to get from
-> DBus everything related to the CPU object.
-> It can be CPU, Sensor CPU temp, Sensors Core CPU, etc.
+--0000000000004490b105ae352d6a
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Guenter,
+
+FYI, the boot_asio call freezes on EAGAIN, even the driver later recovers
+to a normal state, which can be verified by reading the hwmon file directly.
+
+I'm switching to ENODATA and ENOMSG. Thanks!
+
+- Alex Qiu
 
 
-I'm a little confused.  The Processor schema doesn't have a Thermal
-property (did they add one?) so CPU temperatures and core temps would
-need to go under an equivalent Assembly or Chassis.  I think today for
-some platforms they're added under the baseboard, which isn't
-"correct" but is close enough.  Can you talk a little more about what
-you're wanting to accomplish in your improvements?  What would the end
-result look like?
+On Mon, Aug 31, 2020 at 4:54 PM Guenter Roeck <groeck@google.com> wrote:
 
+> On Mon, Aug 31, 2020 at 3:09 PM Alex Qiu <xqiu@google.com> wrote:
+> >
+> > Hi James,
+> >
+> > I just came through this doc (
+> https://www.boost.org/doc/libs/1_74_0/doc/html/boost_asio/overview/posix/stream_descriptor.html).
+> Looks like that it's a terrible idea for hwmon driver to return EAGAIN for
+> dbus-sensors. With that, I think the proper fix is also to use other errno
+> instead in our driver, and this caveat should be probably documented
+> somewhere.
+> >
+> > Hi Guenter,
+> >
+> > Is it reasonable for hwmon drivers to return EAGAIN? Is it something
+> that has special meaning and should be avoided in hwmon drivers?
+> >
 >
+> Not sure how to relate the link above with -EAGAIN, but ... -EAGAIN
+> might trigger userspace to try again immediately, which would
+> potentially be quite bad. We had seen that effect at a previous
+> company, where it ended up overwhelming userspace. So I am not
+> entirely in favor of it. How about -ENODATA ? that might make more
+> sense unless the problem is known to be a short term glitch.
 >
-> However, some services have different names for the same physical processor.
-> In particular it is about `entity-manager`, `dbus-sensros`, `smbios-mdr_v2`.
-> `Smbios-mdr_v2` (just like `hwmon`) names the processor, indexing
-> it from 0; in `entity-manager` and `dbus-sensor` indexing starts from 1.
+> Thanks,
+> Guenter
 >
-> I want to add dbus-associations between all Processor's object,
-> but for that I think we need to adopt a naming convention for the same DBus objects.
+> > Thank you!
+> >
+> > - Alex Qiu
+> >
+> >
+> > On Mon, Aug 31, 2020 at 2:32 PM Alex Qiu <xqiu@google.com> wrote:
+> >>
+> >> Hi James,
+> >>
+> >> I think BiosPist power state might not suffice, because the host needs
+> to load firmware onto the device in order to enable the sensors at a
+> certain stage in the OS boot, which is very close to boot completion.
+> >>
+> >> However, we can tolerate the fan being noisy before boot completion,
+> and I believe the root cause the issue is the HwmonTempSensor freezes once
+> the control flow hitting boost::asio::async_read_until (
+> https://github.com/openbmc/dbus-sensors/blob/master/src/HwmonTempSensor.cpp#L92).
+> Do you know if this function has something special to do with a file that
+> can have errno EAGAIN? Based on that, replacing the errno in the driver
+> with sth other than EAGAIN also seems to be a viable fix.
+> >>
+> >> Thanks!
+> >>
+> >> - Alex Qiu
+> >>
+> >>
+> >>
+> >> - Alex Qiu
+> >>
+> >>
+> >> On Fri, Aug 28, 2020 at 10:54 AM James Feist <
+> james.feist@linux.intel.com> wrote:
+> >>>
+> >>> On 8/28/2020 9:43 AM, Alex Qiu wrote:
+> >>> > Hi James,
+> >>> >
+> >>> > Thx for the reply! So right now, one thing is that the sensor is not
+> >>> > dependent on the power state of the host solely, but also dependent
+> on
+> >>> > the boot progress of the host.
+> >>>
+> >>> Would the BiosPost power state not suffice?
+> >>>
+> >>> > And the more serious issue is that
+> >>> > returning EAGAIN from the driver freezes the sensor, which is what
+> I'm
+> >>> > debugging right now. Do we have special treatment on errno returned
+> by
+> >>> > the driver? Thx.
+> >>>
+> >>> I ran into a similar issue with the CPUSensor and this was my fix:
+> >>>
+> https://github.com/openbmc/dbus-sensors/commit/c22b842bfa8cfe798d83f99fa7aa9f142278c21d#diff-ccbe0562fe1d501b4c1c42d967a02ea0
+> >>>
+> >>> I haven't hit this issue with hwmon sensor though.
+> >>>
+> >>> >
+> >>> > - Alex Qiu
+> >>> >
+> >>> >
+> >>> > On Fri, Aug 28, 2020 at 9:38 AM James Feist <
+> james.feist@linux.intel.com
+> >>> > <mailto:james.feist@linux.intel.com>> wrote:
+> >>> >
+> >>> >     On 8/27/2020 2:49 PM, Alex Qiu wrote:
+> >>> >      > Hi James,
+> >>> >      >
+> >>> >      > After some debugging, I realized that the code I pointed out
+> earlier
+> >>> >      > wasn't the root cause. Update is that, the HwmonTempSensor
+> stops
+> >>> >      > updating after the hwmon driver returns EAGAIN as errno. I'll
+> keep
+> >>> >      > debugging...
+> >>> >      >
+> >>> >      > - Alex Qiu
+> >>> >      >
+> >>> >      >
+> >>> >      > On Tue, Aug 25, 2020 at 5:49 PM Alex Qiu <xqiu@google.com
+> >>> >     <mailto:xqiu@google.com>
+> >>> >      > <mailto:xqiu@google.com <mailto:xqiu@google.com>>> wrote:
+> >>> >      >
+> >>> >      >     Hi James and OpenBMC community,
+> >>> >      >
+> >>> >      >     We have a sensor for HwmonTempSensor which doesn't have a
+> valid
+> >>> >      >     reading until the host is fully booted. Before it's
+> becoming
+> >>> >     alive
+> >>> >      >     and useful, it's getting disabled in code
+> >>> >      >
+> >>> >       (
+> https://github.com/openbmc/dbus-sensors/blob/master/include/sensor.hpp#L266
+> )
+> >>> >      >     because of errors thrown up by the hwmon driver. Ideally,
+> the
+> >>> >      >     thermal control loop should kick the fan to fail safe mode
+> >>> >     until no
+> >>> >      >     more errors are observed.
+> >>> >      >
+> >>> >      >     Any suggestions on how we should handle this kind of
+> sensor
+> >>> >     properly?
+> >>> >
+> >>> >     For what its worth we use the PowerState property that has
+> options of
+> >>> >     power on or BiosPost to disable scanning when the state is
+> invalid:
+> >>> >
+> https://github.com/openbmc/dbus-sensors/blob/f27a55c775383a3fb1ac655f3eda785f6845f214/src/HwmonTempMain.cpp#L208
+> >>> >
+> >>> >
+> >>> >      >
+> >>> >      >     Thank you!
+> >>> >      >
+> >>> >      >     - Alex Qiu
+> >>> >      >
+> >>> >
+>
 
+--0000000000004490b105ae352d6a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Can you talk about why you need this?  Keep in mind, there are lots of
-systems that have processors on add in cards, or separate
-accelerators.  Making the statement "all" makes me think you're
-wanting to make a blanket association from system->processor, which
-I'm not sure we can do as a generalization without breaking those use
-cases (which admittedly aren't modeled very well today).  I would hope
-we don't need to rely on a common naming convention to do it.
-
+<div dir=3D"ltr">Hi Guenter,<div><br></div><div>FYI, the boot_asio call fre=
+ezes on EAGAIN, even the driver later recovers to a normal state, which can=
+ be verified by reading the hwmon file directly.</div><div><br></div><div>I=
+&#39;m switching to ENODATA and ENOMSG. Thanks!<br clear=3D"all"><div><div =
+dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><d=
+iv dir=3D"ltr"><div><br></div>- Alex Qiu</div></div></div><br></div></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon,=
+ Aug 31, 2020 at 4:54 PM Guenter Roeck &lt;<a href=3D"mailto:groeck@google.=
+com">groeck@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">On Mon, Aug 31, 2020 at 3:09 PM Alex Qiu &lt;<a href=
+=3D"mailto:xqiu@google.com" target=3D"_blank">xqiu@google.com</a>&gt; wrote=
+:<br>
+&gt;<br>
+&gt; Hi James,<br>
+&gt;<br>
+&gt; I just came through this doc (<a href=3D"https://www.boost.org/doc/lib=
+s/1_74_0/doc/html/boost_asio/overview/posix/stream_descriptor.html" rel=3D"=
+noreferrer" target=3D"_blank">https://www.boost.org/doc/libs/1_74_0/doc/htm=
+l/boost_asio/overview/posix/stream_descriptor.html</a>). Looks like that it=
+&#39;s a terrible idea for hwmon driver to return EAGAIN for dbus-sensors. =
+With that, I think the proper fix is also to use other errno instead in our=
+ driver, and this caveat should be probably documented somewhere.<br>
+&gt;<br>
+&gt; Hi Guenter,<br>
+&gt;<br>
+&gt; Is it reasonable for hwmon drivers to return EAGAIN? Is it something t=
+hat has special meaning and should be avoided in hwmon drivers?<br>
+&gt;<br>
+<br>
+Not sure how to relate the link above with -EAGAIN, but ... -EAGAIN<br>
+might trigger userspace to try again immediately, which would<br>
+potentially be quite bad. We had seen that effect at a previous<br>
+company, where it ended up overwhelming userspace. So I am not<br>
+entirely in favor of it. How about -ENODATA ? that might make more<br>
+sense unless the problem is known to be a short term glitch.<br>
+<br>
+Thanks,<br>
+Guenter<br>
+<br>
+&gt; Thank you!<br>
+&gt;<br>
+&gt; - Alex Qiu<br>
+&gt;<br>
+&gt;<br>
+&gt; On Mon, Aug 31, 2020 at 2:32 PM Alex Qiu &lt;<a href=3D"mailto:xqiu@go=
+ogle.com" target=3D"_blank">xqiu@google.com</a>&gt; wrote:<br>
+&gt;&gt;<br>
+&gt;&gt; Hi James,<br>
+&gt;&gt;<br>
+&gt;&gt; I think BiosPist power state might not suffice, because the host n=
+eeds to load firmware onto the device in order to enable the sensors at a c=
+ertain stage in the OS boot, which is very close to boot completion.<br>
+&gt;&gt;<br>
+&gt;&gt; However, we can tolerate the fan being noisy before boot completio=
+n, and I believe the root cause the issue is the HwmonTempSensor freezes on=
+ce the control flow hitting boost::asio::async_read_until (<a href=3D"https=
+://github.com/openbmc/dbus-sensors/blob/master/src/HwmonTempSensor.cpp#L92"=
+ rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/dbus-senso=
+rs/blob/master/src/HwmonTempSensor.cpp#L92</a>). Do you know if this functi=
+on has something special to do with a file that can have errno EAGAIN? Base=
+d on that, replacing the errno in the driver with sth other than EAGAIN als=
+o seems to be a viable fix.<br>
+&gt;&gt;<br>
+&gt;&gt; Thanks!<br>
+&gt;&gt;<br>
+&gt;&gt; - Alex Qiu<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; - Alex Qiu<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; On Fri, Aug 28, 2020 at 10:54 AM James Feist &lt;<a href=3D"mailto=
+:james.feist@linux.intel.com" target=3D"_blank">james.feist@linux.intel.com=
+</a>&gt; wrote:<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; On 8/28/2020 9:43 AM, Alex Qiu wrote:<br>
+&gt;&gt;&gt; &gt; Hi James,<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; Thx for the reply! So right now, one thing is that the se=
+nsor is not<br>
+&gt;&gt;&gt; &gt; dependent on the power state of the host solely, but also=
+ dependent on<br>
+&gt;&gt;&gt; &gt; the boot progress of the host.<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; Would the BiosPost power state not suffice?<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; &gt; And the more serious issue is that<br>
+&gt;&gt;&gt; &gt; returning EAGAIN from the driver freezes the sensor, whic=
+h is what I&#39;m<br>
+&gt;&gt;&gt; &gt; debugging right now. Do we have special treatment on errn=
+o returned by<br>
+&gt;&gt;&gt; &gt; the driver? Thx.<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; I ran into a similar issue with the CPUSensor and this was my =
+fix:<br>
+&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/dbus-sensors/commit/c22b=
+842bfa8cfe798d83f99fa7aa9f142278c21d#diff-ccbe0562fe1d501b4c1c42d967a02ea0"=
+ rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc/dbus-senso=
+rs/commit/c22b842bfa8cfe798d83f99fa7aa9f142278c21d#diff-ccbe0562fe1d501b4c1=
+c42d967a02ea0</a><br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; I haven&#39;t hit this issue with hwmon sensor though.<br>
+&gt;&gt;&gt;<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; - Alex Qiu<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt; On Fri, Aug 28, 2020 at 9:38 AM James Feist &lt;<a href=
+=3D"mailto:james.feist@linux.intel.com" target=3D"_blank">james.feist@linux=
+.intel.com</a><br>
+&gt;&gt;&gt; &gt; &lt;mailto:<a href=3D"mailto:james.feist@linux.intel.com"=
+ target=3D"_blank">james.feist@linux.intel.com</a>&gt;&gt; wrote:<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0On 8/27/2020 2:49 PM, Alex Qiu wrote:<=
+br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hi James,<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; After some debugging, I realized=
+ that the code I pointed out earlier<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; wasn&#39;t the root cause. Updat=
+e is that, the HwmonTempSensor stops<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; updating after the hwmon driver =
+returns EAGAIN as errno. I&#39;ll keep<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; debugging...<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; - Alex Qiu<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Tue, Aug 25, 2020 at 5:49 PM =
+Alex Qiu &lt;<a href=3D"mailto:xqiu@google.com" target=3D"_blank">xqiu@goog=
+le.com</a><br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:xqiu@goog=
+le.com" target=3D"_blank">xqiu@google.com</a>&gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt; &lt;mailto:<a href=3D"mailto:xqi=
+u@google.com" target=3D"_blank">xqiu@google.com</a> &lt;mailto:<a href=3D"m=
+ailto:xqiu@google.com" target=3D"_blank">xqiu@google.com</a>&gt;&gt;&gt; wr=
+ote:<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Hi James and =
+OpenBMC community,<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0We have a sen=
+sor for HwmonTempSensor which doesn&#39;t have a valid<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0reading until=
+ the host is fully booted. Before it&#39;s becoming<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0alive<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0and useful, i=
+t&#39;s getting disabled in code<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0(<a href=3D"https://github.com/=
+openbmc/dbus-sensors/blob/master/include/sensor.hpp#L266" rel=3D"noreferrer=
+" target=3D"_blank">https://github.com/openbmc/dbus-sensors/blob/master/inc=
+lude/sensor.hpp#L266</a>)<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0because of er=
+rors thrown up by the hwmon driver. Ideally, the<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0thermal contr=
+ol loop should kick the fan to fail safe mode<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0until no<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0more errors a=
+re observed.<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Any suggestio=
+ns on how we should handle this kind of sensor<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0properly?<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0For what its worth we use the PowerSta=
+te property that has options of<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0power on or BiosPost to disable scanni=
+ng when the state is invalid:<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0<a href=3D"https://github.com/openbmc/=
+dbus-sensors/blob/f27a55c775383a3fb1ac655f3eda785f6845f214/src/HwmonTempMai=
+n.cpp#L208" rel=3D"noreferrer" target=3D"_blank">https://github.com/openbmc=
+/dbus-sensors/blob/f27a55c775383a3fb1ac655f3eda785f6845f214/src/HwmonTempMa=
+in.cpp#L208</a><br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Thank you!<br=
 >
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0- Alex Qiu<br=
 >
-> I like to index it from 0, just like doing that the `hwmon`, for example.
+&gt;&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;&gt;&gt; &gt;<br>
+</blockquote></div>
 
-
-I completely agree that we should standardize the naming convention
-where we can, the only problem here is that the overarching goal is
-that we match the silkscreen mask on the board, some of which zero
-index, some of which one index.  With that said, I know that a lot of
-the existing configs don't currently match the silkscreen.
-smbios-mdr_v2 to my understanding should be using 1 indexing.
-
->
->
-> --
-> Best Regards!
-> Igor Kononenko
+--0000000000004490b105ae352d6a--
