@@ -1,75 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6483B257B59
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:35:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91990257B5E
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 16:37:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgCRL4lfRzDqVQ
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:35:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgCTJ0vq4zDqPg
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 00:37:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
  helo=us-smtp-delivery-170.mimecast.com;
  envelope-from=bruce_mitchell@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=phoenix.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=E1ts/RTp; 
+ header.s=mimecast20170203 header.b=Y8MaxCQ0; 
  dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=c8440fAs; 
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=Y8MaxCQ0; 
  dkim-atps=neutral
 Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgCNK0CgBzDqC7
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:32:47 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgCQ62Z11zDqV1
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 00:34:21 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1598884363;
+ s=mimecast20170203; t=1598884459;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Jj4eXpRHEWYm3EGPYvSatTbSz1p+nnNO7PDmdIYQVug=;
- b=E1ts/RTp+kNvfGvnQFvaZ5fh1PhnI982G70agVcxLBPMRsvVfPnHa8iMFUJxa71LCF87rb
- N0jAIwy7sEXe07QLPVSHZc3syZxys1LPHuSi6B//sV+qW+MUHjTHRD/Ab5EkZB06OyR/93
- VXlB/Kf0OVOO7XDuS0ozbwQxlQKDV5w=
+ bh=L4ngFWscbTNtkwa5ksyyyz6qJlobdUwEwNaDrmh3CQg=;
+ b=Y8MaxCQ0Vp8e1A/G65Q8VuB/W36TTmDkFJYKbgSxyZ4zq60ZCpUbPWiZ7/d72HFZv+7pUZ
+ 3j7e/CVPArFJmr1YcY5KywqUCPp0Fj588b7P+CotdTP0/gdOuFVSOVkOcoijLblJKkOD7O
+ uyvB4Nt8hwoFUcXmYTdsK3erDvUuQoI=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1598884364;
+ s=mimecast20170203; t=1598884459;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Jj4eXpRHEWYm3EGPYvSatTbSz1p+nnNO7PDmdIYQVug=;
- b=c8440fAsD08IaJaOmWEhSj37R427Bzz6r1TAzWSzY5WBjns/YCEn29cda8pIZRZjKTPXUH
- fZ87DDjbqQVYqo3c6X/j1vY0SeTyIGXcoPEQAJsZH9CIUACmuXB7CbO2aYXppMt3Z+kIzn
- Ukd7CLwwD3FmPCsIB1cDC63UAQzpURQ=
+ bh=L4ngFWscbTNtkwa5ksyyyz6qJlobdUwEwNaDrmh3CQg=;
+ b=Y8MaxCQ0Vp8e1A/G65Q8VuB/W36TTmDkFJYKbgSxyZ4zq60ZCpUbPWiZ7/d72HFZv+7pUZ
+ 3j7e/CVPArFJmr1YcY5KywqUCPp0Fj588b7P+CotdTP0/gdOuFVSOVkOcoijLblJKkOD7O
+ uyvB4Nt8hwoFUcXmYTdsK3erDvUuQoI=
 Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
  (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-181-usBJeqB3PteDxR6BKV89MQ-1; Mon, 31 Aug 2020 10:32:41 -0400
-X-MC-Unique: usBJeqB3PteDxR6BKV89MQ-1
+ us-mta-480-ANmHod9mOvqx6EEW4zHO3g-1; Mon, 31 Aug 2020 10:34:15 -0400
+X-MC-Unique: ANmHod9mOvqx6EEW4zHO3g-1
 X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
 Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
  SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Mon, 31 Aug 2020 07:32:39 -0700
+ 15.0.1156.6; Mon, 31 Aug 2020 07:34:13 -0700
 Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
  SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Mon, 31 Aug 2020 07:32:39 -0700
+ 15.00.1156.000; Mon, 31 Aug 2020 07:34:13 -0700
 From: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
 To: Ed Tanous <ed@tanous.net>
-Subject: RE: Looking to do multiple platform ports uniformly with the ability
- to easily add more to follow.
-Thread-Topic: Looking to do multiple platform ports uniformly with the ability
- to easily add more to follow.
-Thread-Index: AdZ8rYI+aL15o6qDRKG4658L6my7NADL5p0AAA5o/uA=
-Date: Mon, 31 Aug 2020 14:32:38 +0000
-Message-ID: <3aae208e29aa47d59222d721404f21d9@SCL-EXCHMB-13.phoenix.com>
-References: <92e6ad599b10400885d44e9d6b9c28ef@SCL-EXCHMB-13.phoenix.com>
- <CACWQX81DSFDNoLRKuidgMSDAkphPywLkb2ELBV=MEMi0f5nJWg@mail.gmail.com>
-In-Reply-To: <CACWQX81DSFDNoLRKuidgMSDAkphPywLkb2ELBV=MEMi0f5nJWg@mail.gmail.com>
+Subject: RE: When building OpenBMC . . . ?
+Thread-Topic: When building OpenBMC . . . ?
+Thread-Index: AdZ/GJ+lFWuwSqbeSoqGTbguwoelIQAp4sAAAAeh65D///5LAIAAdEcQ
+Date: Mon, 31 Aug 2020 14:34:12 +0000
+Message-ID: <33455399c4c748e9b8304b4ade883061@SCL-EXCHMB-13.phoenix.com>
+References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+ <20200831105718.o2ic4dvqhde5qrh7@thinkpad.dyn.fuzziesquirrel.com>
+ <67f35707fd1844cea64708f64f41224e@SCL-EXCHMB-13.phoenix.com>
+ <CACWQX81o5SMhoGrJwvJhTxNXa5iM77v+eFGYUEeH=6-7U3nxWg@mail.gmail.com>
+In-Reply-To: <CACWQX81o5SMhoGrJwvJhTxNXa5iM77v+eFGYUEeH=6-7U3nxWg@mail.gmail.com>
 Accept-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
@@ -95,28 +95,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-VGhhbmsgeW91IEVkLA0KSSB3aWxsIHdvcmsgd2l0aCBvdXIgYnVpbGQgYW5kIGFyY2hpdGVjdHMu
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRWQgVGFub3VzIFttYWls
-dG86ZWRAdGFub3VzLm5ldF0NCj4gU2VudDogTW9uZGF5LCBBdWd1c3QgMzEsIDIwMjAgMDc6MjUN
-Cj4gVG86IEJydWNlIE1pdGNoZWxsDQo+IENjOiBPcGVuQk1DIE1haWxsaXN0DQo+IFN1YmplY3Q6
-IFJlOiBMb29raW5nIHRvIGRvIG11bHRpcGxlIHBsYXRmb3JtIHBvcnRzIHVuaWZvcm1seSB3aXRo
-IHRoZQ0KPiBhYmlsaXR5IHRvIGVhc2lseSBhZGQgbW9yZSB0byBmb2xsb3cuDQo+IA0KPiBPbiBU
-aHUsIEF1ZyAyNywgMjAyMCBhdCAxOjA4IFBNIEJydWNlIE1pdGNoZWxsDQo+IDxCcnVjZV9NaXRj
-aGVsbEBwaG9lbml4LmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBPdXIgZGVzaXJlIGlzIHRvIGhhdmUg
-b3VyIG93biBwbGF0Zm9ybSBwb3J0cyBmb3IgV29sZiBQYXNzIGFuZCBUaW9nYQ0KPiBQYXNzLCB3
-aXRoIG1vcmUgdG8gY29tZSwgd2l0aCBhIGNvbnNpc3RlbnQgdW5pZmllZCBtZXRhLXBob2VuaXgv
-bWV0YS0NCj4gPHBsYXRmb3JtPg0KPiANCj4gV2hhdCBpcyBhICJwbGF0Zm9ybSBwb3J0IiBpbiB0
-aGlzIGNhc2U/ICBUaGVyZSdzIGFscmVhZHkgbWV0YSBsYXllcnMNCj4gZm9yIGJvdGggcGxhdGZv
-cm1zIGluIHVwc3RyZWFtLCBhbmQgdGhhdCB3b3VsZCBiZSB0aGUgYmVzdCBwbGFjZSB0bw0KPiBj
-aGVjayBpbiBhbnkgcGxhdGZvcm0gc3BlY2lmaWMgZml4ZXMgb3IgZnVuY3Rpb25hbGl0eS4gIFBs
-ZWFzZSBkbyBub3QNCj4gY2hlY2sgaW4gcGxhdGZvcm0tc3BlY2lmaWMgY29kZSBpbnRvIG1ldGEt
-cGhvZW5peC4NCj4gDQo+ID4gQW5kIGxvb2tpbmcgdG8gY2hvb3NlIHRoZSBiZXN0IGtub3cgbWV0
-aG9kcyBhbmQgKHJlLSlzdGFydGluZw0KPiBwb2ludChzKS4NCj4gPiBOZWVkIHRvIHJvdyB3aXRo
-IHRoZSBPcGVuQk1DIGNvbW11bml0eSBhbmQgZ2V0IGl0IGNvcnJlY3QgZnJvbSB0aGUNCj4gc3Rh
-cnQuDQo+ID4NCj4gPiBUaGFua3MhDQo+ID4NCj4gPiAtLQ0KPiA+IEJydWNlDQo+ID4NCj4gPg0K
-DQo=
+VGhhbmsgeW91IEVkLA0KQWdhaW4gSSB3aWxsIG5lZWQgdG8gd29yayB3aXRoIG91ciBidWlsZCBw
+ZW9wbGUgYW5kIGFyY2hpdGVjdHMuDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4g
+RnJvbTogRWQgVGFub3VzIFttYWlsdG86ZWRAdGFub3VzLm5ldF0NCj4gU2VudDogTW9uZGF5LCBB
+dWd1c3QgMzEsIDIwMjAgMDc6MzANCj4gVG86IEJydWNlIE1pdGNoZWxsDQo+IENjOiBCcmFkIEJp
+c2hvcDsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+IFN1YmplY3Q6IFJlOiBXaGVuIGJ1aWxk
+aW5nIE9wZW5CTUMgLiAuIC4gPw0KPiANCj4gT24gTW9uLCBBdWcgMzEsIDIwMjAgYXQgNzoyMyBB
+TSBCcnVjZSBNaXRjaGVsbA0KPiA8QnJ1Y2VfTWl0Y2hlbGxAcGhvZW5peC5jb20+IHdyb3RlOg0K
+PiA+DQo+ID4gV2UgYXJlIGJ1aWxkaW5nIGEgc2VwYXJhdGUgcG9ydCBmb3IgVGlvZ2EgUGFzcywg
+c28gdGhlIHF1ZXN0aW9uIGlzDQo+IHNob3VsZCBiZSBub3QgY2FsbCBpdCB0aW9nYXBhc3M/DQo+
+ID4NCj4gDQo+IERvbid0IGNyZWF0ZSBhIHNlcGFyYXRlICJwb3J0Ii4gIENoZWNrIHlvdXIgZml4
+ZXMgaW50byB0aGUgVGlvZ2EgcGFzcw0KPiBtYWNoaW5lIGFuZCBnZXQgdGhlbSByZXZpZXdlZC4g
+IElmIHRoZXJlJ3MgY29uZmxpY3RzIHdpdGggZmVhdHVyZXNldHMNCj4gd2l0aCBvdGhlciB0aW9n
+YSBwYXNzIHVzZXJzIChhcyBJJ20gc3VyZSB0aGVyZSB3aWxsIGJlKSBkZXRlcm1pbmUgd2hhdA0K
+PiB0aGV5IGFyZSwgdGhlbiByb2xsIHRoZSByZXF1aXJlZCBjb25maWd1cmFiaWxpdHkgb3B0aW9u
+cyB1cCB0byB0aGUNCj4gcHJvamVjdCBsZXZlbCBsYXllcnMgc28gdXNlcnMgY2FuIHNlbGVjdCB0
+aGUgZmVhdHVyZXMgdGhleSB3YW50IGluIGENCj4gYnVpbGQuDQo+IA0KPiBQbGVhc2UgZG8gbm90
+IGFkZCBtZXRhLXBob2VuaXgvbWV0YS10aW9nYS4gIFRoZSBwZXItbWFjaGluZSBtZXRhDQo+IGxh
+eWVycyBhcmUgY29tcGxpY2F0ZWQgZW5vdWdoIGFzLWlzLg0KDQo=
 
