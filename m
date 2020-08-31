@@ -2,60 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D0922575EB
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 10:58:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C20C22576FA
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 11:55:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bg3yV2xJPzDqR0
-	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 18:58:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bg5DG3FrGzDqTP
+	for <lists+openbmc@lfdr.de>; Mon, 31 Aug 2020 19:55:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::641;
- helo=mail-ej1-x641.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=balbi@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=VHcRW9VO; dkim-atps=neutral
-Received: from mail-ej1-x641.google.com (mail-ej1-x641.google.com
- [IPv6:2a00:1450:4864:20::641])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=default header.b=vJO2ySKK; dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bg3xg559zzDqNv
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 18:57:43 +1000 (AEST)
-Received: by mail-ej1-x641.google.com with SMTP id d11so7370714ejt.13
- for <openbmc@lists.ozlabs.org>; Mon, 31 Aug 2020 01:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:from:date:message-id:subject:to;
- bh=zR8rf+bjGv03fmgEi6yu0vTJ5tajgy9RGi4RI72XmFg=;
- b=VHcRW9VOxEpyS7dHAPuj+3iZ91VS4rE4fPJJMfbSeRT9/3b7BjX/HHioFZwlvhaw3r
- 8+4hn0QM+3s7UZObRSslX4oK2jb+nOCsjWh0MbuDnHOtpWe3+kY2GKJ/jF9OfEP88d6M
- p2UYsEWZH19nKntVWTOK7TFlnwvaK39oC/2N4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=zR8rf+bjGv03fmgEi6yu0vTJ5tajgy9RGi4RI72XmFg=;
- b=cgEly+mQidI7pCh3yO7C3wu+XS0V7td+Di1BXx/VcJ4o7kxPZN8xcgSIJ62MaXxkvm
- wzrsEvEfusplp1r5xWYNpHp+7js6/tHnEHuEpvLDAlDMIFXWLvLhaBUEvz1Zv+pVEaEG
- FdKDZizJqs68wo5tWzxZcuIhUl27BLsmAzjYfZNh1pBaok+I7Rp5Ygo8lMXv7+JQJ0rZ
- +ph9a6bS3BN94MTqcPVSE99iQMdCAZJDT1X7A1pjFJqKkFgqQKHoiAaKVopzH6+bFY/D
- ohSPz651Ih76LqOsTRFY8MgxOVArDf+Vg8wJQFcTa5FKKPQ1dsvVT40JnqQTWRbWhZuC
- lTxw==
-X-Gm-Message-State: AOAM533k1S6D4BnPXWvZ84LzGIOe/szr+L/QcFIjhOkR7045DacQ1mwW
- PIBfYIAtZ62R52xiNLl4647Qqz/Z2ITFMZj1tPqkqoolNU0b9g==
-X-Google-Smtp-Source: ABdhPJzaW4SjIVkgJsoR5BBR+ECquNmoDPxyh8ZWMFXHwTNoH0kdrIkqZmDW/b8CK7owF9ans+nCpfTbH5uiWRBN/Uc=
-X-Received: by 2002:a17:906:4c58:: with SMTP id
- d24mr209771ejw.108.1598864259184; 
- Mon, 31 Aug 2020 01:57:39 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bg5C21S0fzDqBK;
+ Mon, 31 Aug 2020 19:54:22 +1000 (AEST)
+Received: from saruman (91-155-214-58.elisa-laajakaista.fi [91.155.214.58])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 6BF2A20EDD;
+ Mon, 31 Aug 2020 09:54:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1598867659;
+ bh=05SB4QyhMRQEVhQuA76tAzTplfJxOwcQAfl8qdw+ScA=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=vJO2ySKK2PRG4joUm75ogezdndbhgzjUDQ745LoRUyXOLGew7GRZ770bVHmzV4m5f
+ 9WEBzxLHjfBpHSLBd2E3hXVsXcEu57+pv9z7rj2/Irudt8TkfV9TzoGt3JH6Oxxi6I
+ trdvhQOhTGEnlh0iqxSOXRgs6gjhWLE4j01xCGeA=
+From: Felipe Balbi <balbi@kernel.org>
+To: Tao Ren <rentao.bupt@gmail.com>
+Subject: Re: [PATCH] usb: gadget: aspeed: fixup vhub port irq handling
+In-Reply-To: <20200817225603.GA21228@taoren-ubuntu-R90MNF91>
+References: <20200528011154.30355-1-rentao.bupt@gmail.com>
+ <875z9hz8k3.fsf@kernel.org>
+ <20200817225603.GA21228@taoren-ubuntu-R90MNF91>
+Date: Mon, 31 Aug 2020 12:54:10 +0300
+Message-ID: <87zh6b9m4d.fsf@kernel.org>
 MIME-Version: 1.0
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 31 Aug 2020 08:57:27 +0000
-Message-ID: <CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com>
-Subject: PECI patchset status
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha256; protocol="application/pgp-signature"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,37 +57,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, taoren@fb.com,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Stephen Boyd <swboyd@chromium.org>, Chunfeng Yun <chunfeng.yun@mediatek.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello OpenBMCers,
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-The PECI patchset has been carried in the openbmc tree in some form
-since it was first posted in December 2017.
 
-It has not made it upstream in that time, placing the maintenance
-burden on me as the kernel maintainer. Generally this isn't a large
-amount of work, although in some cases it has held up releasing kernel
-branches. Today I noticed that the icotl number it chose has been
-claimed by a different ioctl in linux-next, meaning we are guaranteed
-to have future kernel/userspace incompatibility.
+Hi,
 
-OpenBMC has strong rules about upstreaming kernel patches, and in
-particular userspace facing code, to avoid this issue.
+Tao Ren <rentao.bupt@gmail.com> writes:
+> On Mon, Aug 17, 2020 at 04:49:32PM +0300, Felipe Balbi wrote:
+>>=20
+>> Hi,
+>>=20
+>> rentao.bupt@gmail.com writes:
+>> > From: Tao Ren <rentao.bupt@gmail.com>
+>> >
+>> > This is a follow-on patch for commit a23be4ed8f48 ("usb: gadget: aspee=
+d:
+>> > improve vhub port irq handling"): for_each_set_bit() is replaced with
+>> > simple for() loop because for() loop runs faster on ASPEED BMC.
+>> >
+>> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+>> > ---
+>> >  drivers/usb/gadget/udc/aspeed-vhub/core.c | 10 +++-------
+>> >  drivers/usb/gadget/udc/aspeed-vhub/vhub.h |  3 +++
+>> >  2 files changed, 6 insertions(+), 7 deletions(-)
+>> >
+>> > diff --git a/drivers/usb/gadget/udc/aspeed-vhub/core.c b/drivers/usb/g=
+adget/udc/aspeed-vhub/core.c
+>> > index cdf96911e4b1..be7bb64e3594 100644
+>> > --- a/drivers/usb/gadget/udc/aspeed-vhub/core.c
+>> > +++ b/drivers/usb/gadget/udc/aspeed-vhub/core.c
+>> > @@ -135,13 +135,9 @@ static irqreturn_t ast_vhub_irq(int irq, void *da=
+ta)
+>> >=20=20
+>> >  	/* Handle device interrupts */
+>> >  	if (istat & vhub->port_irq_mask) {
+>> > -		unsigned long bitmap =3D istat;
+>> > -		int offset =3D VHUB_IRQ_DEV1_BIT;
+>> > -		int size =3D VHUB_IRQ_DEV1_BIT + vhub->max_ports;
+>> > -
+>> > -		for_each_set_bit_from(offset, &bitmap, size) {
+>> > -			i =3D offset - VHUB_IRQ_DEV1_BIT;
+>> > -			ast_vhub_dev_irq(&vhub->ports[i].dev);
+>> > +		for (i =3D 0; i < vhub->max_ports; i++) {
+>> > +			if (istat & VHUB_DEV_IRQ(i))
+>> > +				ast_vhub_dev_irq(&vhub->ports[i].dev);
+>>=20
+>> how have you measured your statement above? for_each_set_bit() does
+>> exactly what you did. Unless your architecture has an instruction which
+>> helps finds the next set bit (like cls on ARM), which, then, makes it
+>> much faster.
+>
+> I did some testing and result shows for() loop runs faster than
+> for_each_set_bit() loop. Please refer to details below (discussion with
+> Benjamin in the original patch) and kindly let me know your suggestions.
 
-Given the lack of progress I propose dropping it from the OpenBMC
-kernel tree until it is merged upstream. This would necessitate
-removing tiogapass from the OpenBMC CI, as it relies on PECI support
-in the kernel to build.
+no strong feelings, just surprised that you're already worried about
+20~40 cycles of cpu time ;-)
 
-If you have an interest in the patchset staying in openbmc, we would
-need someone (or a team) to take the patchset (v11 is the latest[1])
-and submit for inclusion in the mainline kernel, including an entry in
-MAINTAINERS to commit to future maintenance. Now is the perfect time
-to submit for inclusion in 5.10.
+Patch applied for next merge window
 
-[1] https://lore.kernel.org/linux-hwmon/20191211194624.2872-1-jae.hyun.yoo@linux.intel.com/
+=2D-=20
+balbi
 
-Cheers,
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Joel
+-----BEGIN PGP SIGNATURE-----
+
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAl9MyMIRHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQaifA//Si7r2rDSXtDMDrTep0yeVpCJA9vk3Ajp
+K1rz3FtJaOInbRADPFu4rEKMCiz2bYBB/kT+iiFDUzpw3AOiQvjxyXbS4IqETV5p
++yxIaRE8Hr4dYGobRps9aykJfpMO4fZhSVfm99DLPXyFlmVBhE3AO9iz2bn1yC/X
+lq5ObwFqNnWya7yX7xOXLez4hM5waO621Fj45bWyXQFbO5Q+BaF5Tu+B0y0OptK0
+7dhNBFDe8xXTLjlvgsATtByfcYYi5Ip83xNfOLev4gH49alc6QGmcIjeVR5fLaPb
+YPJjsKi+NB1PsRHc1eKjKlKWiIVunvZ8zxnTKGec+PWsAF0dgOC8ARb3IMJhYxbD
+bIRcK2qvmkrWa24KiMUIwguHyWRkVm2Wmd14rBTg2Q2REJThn/lTr/O+hxai7ZBL
+V55vc/6E2l/ZMxDwNi8tvlxE6gu3qxYJeY07bFTXqXf4RiNPyT1vIpdzcSQzN4ZR
+gjMSjNNXdTpvLLXfHYt1o29oBl1IhrvP4TzTPzPvxj3afMrgm8O9roOpeK9F7nCN
+8Hp4PkQUE7PTwens37vC+sGCYXJUDAp5FU9Enzdansz0+QBCvRnJslNQq73P9vQB
+HR6/1JvhJzQRr9K6YHY5xzo9HZtp+QqKtzZZV27M1dZr+w6/g83knFJUuDdwm0zx
+jeRhoV3yH28=
+=5dAd
+-----END PGP SIGNATURE-----
+--=-=-=--
