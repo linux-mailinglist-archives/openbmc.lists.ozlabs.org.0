@@ -1,100 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B6B6258EB8
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 14:55:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9736125974D
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 18:13:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bgn9t0SybzDqWG
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 22:55:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgsZV11sJzDqV7
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 02:13:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=tomjose@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b2f; helo=mail-yb1-xb2f.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=pwaTqE1o; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=ca/f/Q+W; dkim-atps=neutral
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com
+ [IPv6:2607:f8b0:4864:20::b2f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bgn7j0PtCzDqVl
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 22:53:52 +1000 (AEST)
-Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 081CWkVK177117; Tue, 1 Sep 2020 08:53:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=O2tbumbJB24/W3aZoqEXUrAiyRzJP+mR+l6hl96mgkQ=;
- b=pwaTqE1o4c30jKJqx6zlisVmivh/I5gjEqPhxiZ8PXV3yACueIW3MJworgThGrcgSCaG
- hQFB1DDZCiTvXq0t8gMlpuW5m27hGXupqunhKv1899ilRCiVhDAH5aj9sFC3JagbLlBK
- qGTEaz/7ILUBxGTekWmpuAH9eP9TFmnkT478ZPZJVaBrtMiPSz4mgvtM7ASusdvCtj/I
- Pt94ugywPpks/T8qhNdIjPvVUq6DVCydSvNSd561keAN3Y8Ij52OcC3pS9eq/5+Rqv0b
- ihq0mDrLtKLAe1kILPjKAJrdLP5nzKBzCz7EaCleLhOiOha58uG3dpynJ+ihb9u6Gjo0 gQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 339n80auh7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2020 08:53:45 -0400
-Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 081CWxns178305;
- Tue, 1 Sep 2020 08:53:44 -0400
-Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com
- [159.122.73.71])
- by mx0b-001b2d01.pphosted.com with ESMTP id 339n80augt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2020 08:53:44 -0400
-Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
- by ppma02fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 081CqTb8031133;
- Tue, 1 Sep 2020 12:53:43 GMT
-Received: from b06avi18626390.portsmouth.uk.ibm.com
- (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
- by ppma02fra.de.ibm.com with ESMTP id 337en7j3u8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 01 Sep 2020 12:53:42 +0000
-Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
- [9.149.105.232])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 081Cq9iE62325046
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 1 Sep 2020 12:52:09 GMT
-Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 74CBB52059;
- Tue,  1 Sep 2020 12:53:40 +0000 (GMT)
-Received: from [9.85.70.94] (unknown [9.85.70.94])
- by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 327795204E;
- Tue,  1 Sep 2020 12:53:38 +0000 (GMT)
-Subject: Re: IPMI implementation of Get Device ID command
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <ff39e855-d5b6-a789-bcbb-3b87bf786bd1@linux.vnet.ibm.com>
- <20200814231020.GA16853@mauery.jf.intel.com>
- <4cde2763-88b0-447b-1aba-5bb884fae251@linux.vnet.ibm.com>
- <20200824212702.GD3532@heinlein>
-From: TOM JOSEPH <tomjose@linux.vnet.ibm.com>
-Message-ID: <a5114308-309d-3c66-adb3-3da4e35b1b7b@linux.vnet.ibm.com>
-Date: Tue, 1 Sep 2020 18:23:36 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.11.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgsXL1hG5zDqDB
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 02:09:49 +1000 (AEST)
+Received: by mail-yb1-xb2f.google.com with SMTP id v78so1103765ybv.5
+ for <openbmc@lists.ozlabs.org>; Tue, 01 Sep 2020 09:09:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=y5vxRbKmbecWnlE6MJhiOB1gVlRkbLa+rv7rNQ8bMfE=;
+ b=ca/f/Q+Wy9Kp0ri2dPwjFawiH4jEDRNbxCsm66CStN/RO8X06VxhM7V1PXegViyJUK
+ rrKPaBjwl5XJNuEuIxR+YVuyT8qf9JV9FWjN267Qj5oCkDn8QZNaKaN3LogGsi1xcJcs
+ AsAc4nk6ZD9lt1xhuLcbLuNCsuV5a00C+KGmyPQ26+omfuyoHN6yg+t2wLWbtbJ/n3MW
+ ufD0B9/b2Qm9yRVqL6oiT1n7FlceuUaBzyU7TDVPOnXLcIlVAslj+frCBMwvU9l442rL
+ onKWO563Yx8WECXDJYr20c8+DGEKFrsEeVLVL8IdfeOIEyoSEiadmWe9Jzq/WGt41tFN
+ f/CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=y5vxRbKmbecWnlE6MJhiOB1gVlRkbLa+rv7rNQ8bMfE=;
+ b=SHfWL7Eg5lCkHboRSIB74VF05frbrlaJSm8whQ6H0NUi2r7czE6YItwyxXSdfQnwEq
+ 04yxIXPl131k/5An6vX8nm5yeRTukorvPVt0f/YQgowZK6ZbCYLJ8FTxmfJyTfN2TCIf
+ s6K9F8pZDvM73BiCzP2vpidQihUxOReMY+d4fBQ+0lQceN4/iFCSlDAGLYiLYwmow7xa
+ ntvi/7M0PbKSnWbxyf7GFY3Ng9SQl4Axio9GVCHvOE4r+XoMIUVX4xu9/TagwSy7dNBD
+ AuzGsFWXVsga06TM0nsZjlTUHiOV1TApbrtzYeWqgpwagmX5LCvhTMtxeEENMM0Hr7ap
+ eVTA==
+X-Gm-Message-State: AOAM532d8f2ZajZoT5g+asjCLpDzHe1qKxpoamqGutgBVtJjYAKlPAsv
+ hwMML/JBal3fyuZxPelkexXwguk6M8wwETO/qT7Mvw==
+X-Google-Smtp-Source: ABdhPJznB1u1RN89xmMUFqtH3punLmFhULOLH5whA+4sFyLoAsb9c1pQo9pYy+F1NweEm07eu4ldSBiGNJYpAODWpnI=
+X-Received: by 2002:a25:2d69:: with SMTP id s41mr3730741ybe.417.1598976585348; 
+ Tue, 01 Sep 2020 09:09:45 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20200824212702.GD3532@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-01_08:2020-09-01,
- 2020-09-01 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- bulkscore=0 mlxlogscore=999 clxscore=1015 spamscore=0 adultscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2009010109
+References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+ <20200901122409.GQ3532@heinlein>
+In-Reply-To: <20200901122409.GQ3532@heinlein>
+From: Ed Tanous <ed@tanous.net>
+Date: Tue, 1 Sep 2020 09:09:33 -0700
+Message-ID: <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
+Subject: Re: When building OpenBMC . . . ?
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,39 +75,87 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, anoo@us.ibm.com,
- benjaminfair@google.com, "Mauery, Vernon" <vernon.mauery@intel.com>
+Cc: Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Patrick,
-
-For translating IBM firmware revision to IPMI firmware version, the plan 
-is to continue using VERSION_ID in os-release. This translation is 
-obsolete 
-(https://github.com/openbmc/openbmc/blob/master/meta-ibm/recipes-phosphor/ipmi/phosphor-ipmi-config.bbappend), 
-but I will update this to handle the major and minor firmware revision. 
-I will work on pushing a patch for that.
-
-Regards,
-Tom
-
-On 25-08-2020 02:57, Patrick Williams wrote:
-> On Mon, Aug 24, 2020 at 05:27:55PM +0530, TOM JOSEPH wrote:
->> My proposal is to add major and minor version to the dev_id.json and
->> this can be populated in the meta-xxx layer (something like this
->> https://github.com/openbmc/openbmc/blob/master/meta-ibm/recipes-phosphor/ipmi/phosphor-ipmi-config.bbappend).
->> If the format of the VERSION_ID does not match the master tag format,
->> then major and minor version will be picked from the dev_id.json. With
->> this approach every company can share the upstream implementation of the
->> command. Thoughts?
-> Hi Tom,
+On Tue, Sep 1, 2020 at 5:26 AM Patrick Williams <patrick@stwcx.xyz> wrote:
 >
-> Would you be able to work out an example where the git-describe is used
-> to create this, similar to what we do with os-release?  I think this is
-> going to be the typical use case and we had a huge trouble getting
-> os-release to be done "correctly" at the beginning.  I think having a
-> well-tested example to copy from should limit the issues others will
-> have in trying to implement their own.
+> On Sun, Aug 30, 2020 at 10:02:41PM +0000, Bruce Mitchell wrote:
+> > When selecting Target hardware https://github.com/openbmc/openbmc#3-target-your-hardware
+> > to build for the is a tiogapass, now if I add a meta-phoenix/meta-tiogapass/conf  how does
+> >       source setup tiogapass build
+> > know which tiogapass to build?
 >
+> https://github.com/openbmc/openbmc/blob/master/setup#L34
+>
+> The setup script just does a wildcard, which means you'll get the
+> alphabetically ordered machine.  In this case, you should get the
+> meta-facebook one selected before the meta-phoenix (supposing they both
+> exist).
+>
+> > Or am I not supposed to choose a name (i.e. tiogapass in this example) that is already in the list
+> > when I need to create a new meta-phoenix/meta-<machine>/conf?
+>
+> The overwhelming preference seems to be to not make another
+> configuration with the same machine, and as one of the maintainers of
+> meta-facebook, I agree in this case.  But, this answer doesn't solve
+> your underlying question.
+>
+> I suspect you're going to make two kinds of changes:
+>   1. Features you want to enable on Tiogapass that Facebook isn't
+>      interested in.  (I would cover bmcweb 'branding' changes here
+>      also).
+
+bmcweb branding is a machine independent feature.  At some point we
+might have the webui feature enable/disable things again, and who
+knows, maybe we need machine specific branding, but I want to avoid it
+wherever possible.
+
+>   2. Fixes and configuration due to features we haven't enabled yet or
+>      fully vetted.
+>
+> #2 should go into either meta-facebook (or the underlying code
+> repository where the fix is needed).  These will be common for any
+
++1
+
+Could we also make the statement that as a project, we will enable
+every platform feature we are able to for every platform by default,
+and if a company wants to specifically disable some features for their
+use because they haven't vetted them, they should do that in a
+specific distro?  Said another way, the "default" for every machine
+should be every feature enabled, as that's what helps users and
+developers the most.
+
+>
+> #1 should go into meta-phoenix.  You're likely the first one doing this,
+> so we may need some experimentation on the best option.  I have two
+> ideas (there are probably others):
+>
+>   * Make an alternative tiogapass variant, like tiogapass-phoenix, which
+>     ends up including all the common tiogapass code from meta-facebook.
+>
+>   * Create a new distro type for phoenix, which enhances the underlying
+>     openbmc distribution with your own branding tweaks.  You'd still
+>     build meta-facebook/tiogapass but with a different distro flavor.
+
+This one would be my vote between the two, and I think there's
+precedent with other companies doing similar things.  Isn't this the
+way yocto recommends?
+
+>
+> I believe IBM has experiemented with both of these approaches for
+> witherspoon (see witherspoon-tacoma and
+> meta-ibm/conf/distro/openbmc-witherspoon.conf) and might have some
+> insight into what has worked well for them.
+>
+> I'm more than willing to work with you and your team to help refactor
+> meta-facebook/tiogapass in a way that makes it more condusive to what
+> your team is interested in doing.  I suspect we'll need to create some
+> additional bitbake '.inc' files and move some of the content we have in
+> '.conf' to '.inc'.  Catch me here or on IRC as needed.
+>
+> --
+> Patrick Williams
