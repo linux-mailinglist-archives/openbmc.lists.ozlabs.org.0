@@ -1,71 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 055CE259B30
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 18:59:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32A67259B98
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 19:04:59 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgtZz0T6WzDqGN
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 02:59:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgtjL2ZtGzDqQq
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 03:04:54 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::635;
+ helo=mail-ej1-x635.google.com; envelope-from=pparth@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b32; helo=mail-yb1-xb32.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=NWMTkGKR; dkim-atps=neutral
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com
- [IPv6:2607:f8b0:4864:20::b32])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=vhsMUWBE; dkim-atps=neutral
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com
+ [IPv6:2a00:1450:4864:20::635])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgtXG4zwGzDqQd
- for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 02:56:59 +1000 (AEST)
-Received: by mail-yb1-xb32.google.com with SMTP id h126so1200963ybg.4
- for <openbmc@lists.ozlabs.org>; Tue, 01 Sep 2020 09:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=hL/wsCEtfAoDawU5XuheNKUT92YVFIYe+MIClRmd/5U=;
- b=NWMTkGKRDLrCu4Fg+mqtZB+TkIsjuopkgXcCpnazrLXTmzjhni29kT7FAL0b/SWS1y
- 5nNM2exXDi5n4D+ojxrwe2cVZtsn7sOWtrEWhZwm7P0yhatZQMb3kLe+xRztHdBYSskA
- 3YN9xguxIAI0GRDqk9UtvksJLLUwFLlDCP5S6MqIPHhZNfAQmz5Gj1eT+yyEs9OdSNun
- eGOldLwkvEwPJbiaupGJvOmDnHL785zHxmampInV15tYusSnsZNv5GsEn4RW3c46QMwS
- W4oXunuaMMeWSKrBZIQFHSbsFUEwPKSlYxn6rDEgC7cA54slBdOPUl91q6RpW3bI1lOd
- W80Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BgtgV0yrhzDqL8
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 03:03:16 +1000 (AEST)
+Received: by mail-ej1-x635.google.com with SMTP id a26so2728991ejc.2
+ for <openbmc@lists.ozlabs.org>; Tue, 01 Sep 2020 10:03:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=g2/CbzCsp+F40gsDqea5VRy9BwYKjDE0ckHph8f0iSs=;
+ b=vhsMUWBEh+/6VgRNixNS1XisTU59NlSAkBOnVZxZOtcI5XhkX6B2PZC2hNFtGNVP15
+ cYZOHfTxBU+Uq7aT3HgwH3LQ/kpyXP+HnyCuNpCn1Wp9K4M9eVE11jJ374i/wl9hjyTF
+ KbDU7XErKmqc/h3IwJCJi14Mc5rG+9TEF5NW0EFRXnDs3FeN/duQUbmYnxYqNZeBK3dk
+ nCXMZB1MSrNms/s9EeF81tgBAT7HWcw/izD6PdOkeCP0D2GV3G0xorF5IbY1ShFz3XHD
+ kW8iGaVvHa/ar1rvKWX0q8gLGV/4GU67GtiXTNOheThg4fCvBzaSHfuwEc7THw4foxml
+ UGxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=hL/wsCEtfAoDawU5XuheNKUT92YVFIYe+MIClRmd/5U=;
- b=tdnEw6kAguA8bu9eedittU5+rH2guQBASglq/vuHvwcjj+ErbSqMPf082HWIq1QlyD
- 6+ee4qlGanSTSyrZ4HidDTBOwBERv8B9NpAFaZE5kahNZFYoWtV8Z9Ng0U7S0EPEPrCd
- OhYrK9BJU1htkunHL5538zhqkuRZwri8wt2PYI2XTU09ok8FFK5T5lSSnKVhqF1lIsp2
- 7jZXZKAQM/1/BNwFrFfc65NDlaKzfaH8GJ7PCWoxFkWTdffq/8uj9r5SY7U7ZPKLmCOY
- ukMaldsoyr+mEkztojIiMBlajV1vLYZv6DyL92buFxtV34nEaXNuVKMzdtSsneQlHy9B
- kuwQ==
-X-Gm-Message-State: AOAM533+qbTqR2uC629a/JgdLDyuVmOPwriOexP1744tXu0xEzSYSUIM
- JFJBwIkA+DOPeM9FPo+HGOqm6hpUD/yZRnb1uES9Ug==
-X-Google-Smtp-Source: ABdhPJyxmRMbRAGpADNN+Fb/gqW3fFq6dtYbxpC4AycOp3ZLqHCGzjBu6N0DtLVRhHeSbCJ//5C9Erutjsqk/qzKgqw=
-X-Received: by 2002:a25:d4e:: with SMTP id 75mr3818843ybn.480.1598979414961;
- Tue, 01 Sep 2020 09:56:54 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=g2/CbzCsp+F40gsDqea5VRy9BwYKjDE0ckHph8f0iSs=;
+ b=TkoLMIWjFPSlzFmiLwTohrlrxV0WlERyJsaD6L1HDsXaAZxXYASaXLr2mUERtJVbd9
+ yK74IXNBuZvTPPoIn+aQtm4jk7yGM2/2dxBWKZlHf1IJm6ZNd07rcWMMEJfCiv9UwZih
+ /+FfrHy/xiwqNRPJNbk+LlHpUDY49ZJNNh1rqAlMY3E5YfOlj8UYEi9qCfC37sM8iQZj
+ FN2+lNg+0M1+CCSKQ5NgHFbvYpGuDfFy5RPeVlLDXpjLUWMYmw7als9WmVFkbDREwsus
+ jI5wrqTXVZpHpFMpLWG0NQgrdmIxmsux5gPVtRI1AkHzolHWHIiTyNeyzYvQp8hbAyD5
+ BZAQ==
+X-Gm-Message-State: AOAM532TUJnk+Q/ZAWxTvZzcWUjiajotRqIdL4wzq/5kVU3/bOTrff9X
+ vUOgjl505GUIrRBXHEuchVsnmOoCLAEJYueLuuzWexaUVTR1APy2
+X-Google-Smtp-Source: ABdhPJyCQVSlbt6WTyCu0omq5dSFJ+qsn8qUc7BjsGaTA9nezB5mmviPnAk2A/G07MxluqrXpQQfeKyJ+uVQxb/AnUU=
+X-Received: by 2002:a17:907:270f:: with SMTP id
+ w15mr2503832ejk.141.1598979791194; 
+ Tue, 01 Sep 2020 10:03:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
- <20200901122409.GQ3532@heinlein>
- <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
- <20200901162025.GS3532@heinlein>
-In-Reply-To: <20200901162025.GS3532@heinlein>
-From: Ed Tanous <ed@tanous.net>
-Date: Tue, 1 Sep 2020 09:56:42 -0700
-Message-ID: <CACWQX82tn757sPn2zF7moN=GjdkkzSdS8aNsfq59c9taLG7fLg@mail.gmail.com>
-Subject: Re: When building OpenBMC . . . ?
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+From: Parth Shukla <timevortex@google.com>
+Date: Tue, 1 Sep 2020 19:02:35 +0200
+Message-ID: <CAC1Cx+tv22v5ZfjD-UndFC6VL9z1zDSBoV3ZcSYzBiKvnbGa3A@mail.gmail.com>
+Subject: Security Working Group Meeting - Wed 2 September
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000758e1505ae437e46"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,68 +70,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 1, 2020 at 9:20 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> On Tue, Sep 01, 2020 at 09:09:33AM -0700, Ed Tanous wrote:
-> > On Tue, Sep 1, 2020 at 5:26 AM Patrick Williams <patrick@stwcx.xyz> wrote:
-> > > On Sun, Aug 30, 2020 at 10:02:41PM +0000, Bruce Mitchell wrote:
-> > >
-> > > #2 should go into either meta-facebook (or the underlying code
-> > > repository where the fix is needed).  These will be common for any
-> >
-> > +1
-> >
-> > Could we also make the statement that as a project, we will enable
-> > every platform feature we are able to for every platform by default,
-> > and if a company wants to specifically disable some features for their
-> > use because they haven't vetted them, they should do that in a
-> > specific distro?  Said another way, the "default" for every machine
-> > should be every feature enabled, as that's what helps users and
-> > developers the most.
->
-> I think this is where we get some conflict between, for lack of better
-> words, commercial and hyperscale philosphies.  We may make a decision
-> that we don't want net-ipmi in our datacenter, for security reasons, so
-> we have it disabled in our meta-facebook layer.  Yes, we could disable
-> it dynamically like a customer of a commercial vendor might do, but it
-> is simpler to not even have the code in the image.
->
-> Today we've combined machine definition and image definition into a
-> single meta-layer across the board.  This is probably reasonable for
-> a single vendor who designs their own machine in-house
+--000000000000758e1505ae437e46
+Content-Type: text/plain; charset="UTF-8"
 
-Single vendors have the same problem.  Customers of said vendor want a
-build that "just works the way they want", and don't want to mess
-around with changing configurations per-machine, uploading public
-certificates, uploading webui customization, or having the possibility
-that an insecure protocol accidentally gets enabled in prod.
+This is a reminder of the OpenBMC Security Working Group meeting scheduled
+for this Wednesday September 2 at 10:00am PDT.
 
->, but is less
-> reasonable for cases like Facebook where we do our work within OCP and
-> others can order the servers we've designed from various ODMs.
+We'll discuss the following items on the agenda, and anything else that
+comes up:
 
-There are companies using hyperscaler platforms that have net-ipmi
-enabled.  There are companies that have transition plans to replace
-one protocol with another, and at some point, will "flip the switch"
-moving from one protocol to another.  I think explicitly separating an
-OpenBMC featureset (for lack of a better word) from an OpenBMC
-supported machine will lead to a better result overall.  I also think
-it has some nice scaling properties as hyperscalers ratchet up the
-number of system types they support, they can have more reuse of
-featuresets between machines.  Also, when debugging said machines,
-it's really nice to have a folder (meta layer) of "what's different
-between machines" that's separate from "what's different between our
-build".  I've used that many....many times to do A-B compares to find
-elusive bugs.
+   1. Common Remote API for TLS certificate management?
+      1. Certificate management = installation, rotation, revocation
+   2. Email: stable branches and security fixes -
+   https://lists.ozlabs.org/pipermail/openbmc/2020-August/022762.html
 
-Anywho, I think we're mostly agreeing.
+Access, agenda, and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group
 
+Regards,
+Parth
 
->
-> --
-> Patrick Williams
+--000000000000758e1505ae437e46
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>This is a reminder of the OpenBMC Security Working Gr=
+oup meeting scheduled for this Wednesday September 2 at 10:00am PDT.<br><di=
+v><div dir=3D"ltr"><div dir=3D"ltr"><br></div><div dir=3D"ltr">We&#39;ll di=
+scuss the following items on the agenda, and anything else that comes up:</=
+div></div></div></div><div><ol><li>Common Remote API for TLS certificate ma=
+nagement?</li><ol><li>Certificate management =3D installation, rotation, re=
+vocation</li></ol><li>Email: stable branches and security fixes - <a href=
+=3D"https://lists.ozlabs.org/pipermail/openbmc/2020-August/022762.html">htt=
+ps://lists.ozlabs.org/pipermail/openbmc/2020-August/022762.html</a>=C2=A0</=
+li></ol></div><div>Access, agenda, and notes are in the wiki:<br><a href=3D=
+"https://github.com/openbmc/openbmc/wiki/Security-working-group" rel=3D"nor=
+eferrer" target=3D"_blank">https://github.com/openbmc/openbmc/wiki/Security=
+-working-group</a><br></div><br clear=3D"all"><div><div dir=3D"ltr" class=
+=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">Re=
+gards,<div>Parth</div></div></div></div></div>
+
+--000000000000758e1505ae437e46--
