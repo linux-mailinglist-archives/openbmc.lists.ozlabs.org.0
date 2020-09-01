@@ -1,88 +1,100 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF7C9258E45
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 14:36:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B6B6258EB8
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 14:55:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgmlG16PQzDqXd
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 22:36:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bgn9t0SybzDqWG
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 22:55:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=tomjose@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=I7Gth4NR; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=D1f/s3NU; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=pwaTqE1o; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bgmk62kV4zDqXB
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 22:35:10 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id BBCE25C00E8;
- Tue,  1 Sep 2020 08:35:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 01 Sep 2020 08:35:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=iMaHZcaVvpIq4p8uP8CnhXeN0FM
- CXd9JR35cwhuLmq0=; b=I7Gth4NR/ARip6afJRDJE4vC65SlZjkp+auGPRNICEd
- tepC88Mh8CLbz68otUfst7gY3E4xtkB3+eBRYsN1h1jqHz9/m1dCNDBWGOVx8dPv
- TphmlZeFdoUa8Rk4fxAJ58q3jfIPFnf50V/HhLV/4bcXQ6T2CWAXtUdErxq2j85L
- pELOZgQfOEuytgAfuRJ/uAtf3/ocBo6iA7siBA47fwkoYE8Qg2udp+izjL6sLYl9
- BPquoazGHhzyoh/6a9GOKymzPIeQ8sc0rIHtVYk7JdMhzWSEbkgy3RZtxF66gW+P
- uUh5wrOIsUt7dYmFi31H6uhGkHNBPW8q8CKxam7L6ew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iMaHZc
- aVvpIq4p8uP8CnhXeN0FMCXd9JR35cwhuLmq0=; b=D1f/s3NUx2Z4r2ErXJADAy
- FAamHTs+zBjl9dhtGnSnvnO1FUivrspjWHUK7AwxSw5y2nTgqEJCtZDKvTRKz061
- 5QL/ro04MqLliP7d5NJ3mzJwfueNmM71wNovLMbgBN5WL4UcOdwIfO3XY2kkWAh0
- WSeJ8VvGtsLWOWa1vXg7tx/jSygjELfrmmgH0yHFx94sz/sOJzOsREmSIUML312L
- +y3MoR23yGUp2utC1e27lCARPFsxIkaxjHNqeukgR3GEc+9heUPX/+gX0SxAXnq1
- Bv2BrQV7jE52quUPRdZSbcj3/Ap74R/8u8TX3UO7PQHwMD4+ZiBZj2bOm/05SVRw
- ==
-X-ME-Sender: <xms:-z9OXwwyxwyA-vpK-wkreONWs2iaVH7k_OCgHY3ZbyVq7_3jK2QYLw>
- <xme:-z9OX0QzzTrppuqvqReuwi7rvcOIJKwuK4LahbqbWFoPE0zBGXJgMxTomCtOkqRqh
- t1RdWlmfTRa-kVmREE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudefjedgheehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
- fvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
- ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
- epkeduuedtfeeihfehfeehfedvjeeujeeikedtteehledvhfelheekgedvieevkefhnecu
- kfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
- hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:-z9OXyVEfpcX5BzblQSetMgOgGmgwQHvDpPath7du68QcR3Duk_QSw>
- <xmx:-z9OX-it-x75gxm4jpF4K-ZoyeYdB4DvjYL4MWVGeKQQ1KDbBuvS0A>
- <xmx:-z9OXyBAiw24VVqfiLYc35oQAU9SUxMTWefxMBcGyQmdmJLPMql78w>
- <xmx:-z9OX58K4xtsVZ-ZsrfrtfgOINknVRJWok70XfhlRJr78N191j1xDg>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 4E7C7328005E;
- Tue,  1 Sep 2020 08:35:07 -0400 (EDT)
-Date: Tue, 1 Sep 2020 07:35:06 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Kun Zhao <zkxz@hotmail.com>
-Subject: Re: SQUASHFS errors and OpenBMC hang
-Message-ID: <20200901123506.GR3532@heinlein>
-References: <BYAPR14MB2342C9C346B57B87F44E3200CF530@BYAPR14MB2342.namprd14.prod.outlook.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bgn7j0PtCzDqVl
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 22:53:52 +1000 (AEST)
+Received: from pps.filterd (m0098414.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 081CWkVK177117; Tue, 1 Sep 2020 08:53:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=O2tbumbJB24/W3aZoqEXUrAiyRzJP+mR+l6hl96mgkQ=;
+ b=pwaTqE1o4c30jKJqx6zlisVmivh/I5gjEqPhxiZ8PXV3yACueIW3MJworgThGrcgSCaG
+ hQFB1DDZCiTvXq0t8gMlpuW5m27hGXupqunhKv1899ilRCiVhDAH5aj9sFC3JagbLlBK
+ qGTEaz/7ILUBxGTekWmpuAH9eP9TFmnkT478ZPZJVaBrtMiPSz4mgvtM7ASusdvCtj/I
+ Pt94ugywPpks/T8qhNdIjPvVUq6DVCydSvNSd561keAN3Y8Ij52OcC3pS9eq/5+Rqv0b
+ ihq0mDrLtKLAe1kILPjKAJrdLP5nzKBzCz7EaCleLhOiOha58uG3dpynJ+ihb9u6Gjo0 gQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 339n80auh7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Sep 2020 08:53:45 -0400
+Received: from m0098414.ppops.net (m0098414.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 081CWxns178305;
+ Tue, 1 Sep 2020 08:53:44 -0400
+Received: from ppma02fra.de.ibm.com (47.49.7a9f.ip4.static.sl-reverse.com
+ [159.122.73.71])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 339n80augt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Sep 2020 08:53:44 -0400
+Received: from pps.filterd (ppma02fra.de.ibm.com [127.0.0.1])
+ by ppma02fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 081CqTb8031133;
+ Tue, 1 Sep 2020 12:53:43 GMT
+Received: from b06avi18626390.portsmouth.uk.ibm.com
+ (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
+ by ppma02fra.de.ibm.com with ESMTP id 337en7j3u8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Sep 2020 12:53:42 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id 081Cq9iE62325046
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 1 Sep 2020 12:52:09 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 74CBB52059;
+ Tue,  1 Sep 2020 12:53:40 +0000 (GMT)
+Received: from [9.85.70.94] (unknown [9.85.70.94])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTPS id 327795204E;
+ Tue,  1 Sep 2020 12:53:38 +0000 (GMT)
+Subject: Re: IPMI implementation of Get Device ID command
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <ff39e855-d5b6-a789-bcbb-3b87bf786bd1@linux.vnet.ibm.com>
+ <20200814231020.GA16853@mauery.jf.intel.com>
+ <4cde2763-88b0-447b-1aba-5bb884fae251@linux.vnet.ibm.com>
+ <20200824212702.GD3532@heinlein>
+From: TOM JOSEPH <tomjose@linux.vnet.ibm.com>
+Message-ID: <a5114308-309d-3c66-adb3-3da4e35b1b7b@linux.vnet.ibm.com>
+Date: Tue, 1 Sep 2020 18:23:36 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="0Qexx6XJGNEACt6j"
-Content-Disposition: inline
-In-Reply-To: <BYAPR14MB2342C9C346B57B87F44E3200CF530@BYAPR14MB2342.namprd14.prod.outlook.com>
+In-Reply-To: <20200824212702.GD3532@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-01_08:2020-09-01,
+ 2020-09-01 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ bulkscore=0 mlxlogscore=999 clxscore=1015 spamscore=0 adultscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 phishscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2009010109
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,119 +106,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, anoo@us.ibm.com,
+ benjaminfair@google.com, "Mauery, Vernon" <vernon.mauery@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hello Patrick,
 
---0Qexx6XJGNEACt6j
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+For translating IBM firmware revision to IPMI firmware version, the plan 
+is to continue using VERSION_ID in os-release. This translation is 
+obsolete 
+(https://github.com/openbmc/openbmc/blob/master/meta-ibm/recipes-phosphor/ipmi/phosphor-ipmi-config.bbappend), 
+but I will update this to handle the major and minor firmware revision. 
+I will work on pushing a patch for that.
 
-On Sat, Aug 29, 2020 at 12:40:31AM +0000, Kun Zhao wrote:
-> Hi Team,
->=20
-> I=E2=80=99m working on validating OpenBMC on our POC system for a while, =
-but starting from 2 weeks ago, the BMC filesystem sometimes report failures=
-, and after that sometimes the BMC will hang after running for a while. It =
-started to happen on one system and then on another. Tried to use programme=
-r to re-flash, still see this issue. Tried to flash back to the very first =
-known good OpenBMC image we built, still see the same symptoms. It seems li=
-ke a SPI ROM failure. But when flash back the POC system original 3rd-party=
- BMC, no such issue at all. Not sure if anyone ever met similar issues befo=
-re?
+Regards,
+Tom
 
-Yeah, this does look like a bad SPI NOR.  Have you tried flashing on a
-fresh image to the NOR and then reading it back to confirm all the bits
-keep their values?  It is possible that the corruption is hitting the
-other BMC code in a less-important location.
-
-> [ 3.372932] jffs2: notice: (78) jffs2_get_inode_nodes: Node header CRC fa=
-iled at 0x3e0aa4. {1985,e002,0000004a,78280c2e}
-
-I'm surprised to see anyone using jffs2.  Don't we generally use ubifs
-in OpenBMC?  Is there a reason you've chosen to use jffs2?
-
-I don't necessarily think jffs2 will be better or worse in this
-particular scenario but we've seen lots of upgrade issues over the years
-with jffs2.
-
-> BMC debug console shows the same SQUASHFS error as above, by checking fil=
-esystem usage we could see rwfs usage keep increasing like this,
->=20
-> root@dgx:~# df
-> Filesystem 1K-blocks Used Available Use% Mounted on
-> dev 212904 0 212904 0% /dev
-> tmpfs 246728 20172 226556 8% /run
-> /dev/mtdblock4 22656 22656 0 100% /run/initramfs/ro
-> /dev/mtdblock5 4096 880 3216 21% /run/initramfs/rw
-> cow 4096 880 3216 21% /
-> tmpfs 246728 8 246720 0% /dev/shm
-> tmpfs 246728 0 246728 0% /sys/fs/cgroup
-> tmpfs 246728 0 246728 0% /tmp
-> tmpfs 246728 8 246720 0% /var/volatile
->=20
-> and can see more and more ipmid coredump files,
-
-This implies to me that we need to adjust the systemd recovery for
-ipmid.  We shouldn't just keep re-launching the same process over and
-over after a coredump.  Systemd has some thresholding capability.
-
-> I found the following actions could trigger this failure,
->=20
->=20
->   1.  do SSH login to BMC debug console remotely, it will show this error=
- when triggered,
-> $ ssh root@<bmc ip>
-> ssh_exchange_identification: read: Connection reset by peer
->=20
->=20
->   1.  set BMC MAC address by fw_setenv in BMC debug console, reboot BMC, =
-and do 'ip -a'.
-
-I have no idea why this procedure would solve SPI NOR issues.  It
-doesn't seem connected on the surface.
-
-> The code is based on upstream commit 5ddb5fa99ec259 on master branch.
-> The flash layout definition is the default openbmc-flash-layout.dtsi.
-> The SPI ROM is Macronix MX25L25635F
->=20
-> Some questions,
->=20
->   1.  Any SPI lock feature enabled in OpenBMC?
->   2.  If yes, do I have to unlock u-boot-env partition before fw_setenv?
-
-There is not, to my knowledge, a software SPI lock.  Some machines have
-a 'golden' NOR which they enable by, in hardware, setting the
-write-protect input pin on the SPI NOR (with a strapping resistor).
-Does your machine do this mechanism?  If so, it is possible that you're
-booting onto the 'wrong' NOR flash in some conditions and a reboot
-resets the chip-select logic in the SPI controller.  (Usually, you have
-the watchdog configured to automatically swap the chip-select after some
-number of boot failures.)
-
---=20
-Patrick Williams
-
---0Qexx6XJGNEACt6j
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9OP/gACgkQqwNHzC0A
-wRmX2w/8Cl5LOLn3jgN3mNjsTRhJafMnIwVb6DCwlkDh0iWjxj7pQBAhqu50iWbB
-fem3xFeVqnJH7gnaRPDUlUYwyAQeg2IG8H3YILVHvNjahS0QR2HMGJLbif/CBMJL
-ftjTyBOEuwfDxYM2S/Ju1mqpPNg5k/+5hdrq+hRKvkdSKaSVkl0NWj/gcYo6KcZ7
-zG3fGu4bogv2okdcNGWWAWfLmE95ipbghzpxCSDrY28zL+7XSL5zw7pZkKQ/Ko9G
-4dyZqJ4wICcOXZKC4CyaoudGUwd0srLkkF4xoyKkLVvImRTWuPAQmw2XKDzNvYGd
-emHgRlJyyXNtGWjRUhU36bGLC0TLCHq6ocdCTO+JHaVfZVZMZjeOkybdmZO0y+qQ
-w0QIgPfeQAnaYrI5tqW+MFPQFqt0I9fpkvIOTU5Z066dgOalbJrsVlVIznqR60bm
-ipaxitiLQt5KKXwH5ipHLz/l5Q+4ygNcmiWnihzsnChOKVFLtBVZsFcM5ZtaJtZ5
-No9xtjnVKRwlCmZ3uoB1diyDcowEn7oGCR+Hiqh+16L5W2AuqVFaaQL8l3vhDPlg
-H+mi7dfW1Gr/1osNXbyKmx+SdoXnkDBQpGb1mxKg0duCVvmpxbG6JIaRkrW/noRA
-02iJEdEnaAJSSkB5u+yXVzlYcw62TQytlRgrhHUd5cf7gPIB0i8=
-=NoBg
------END PGP SIGNATURE-----
-
---0Qexx6XJGNEACt6j--
+On 25-08-2020 02:57, Patrick Williams wrote:
+> On Mon, Aug 24, 2020 at 05:27:55PM +0530, TOM JOSEPH wrote:
+>> My proposal is to add major and minor version to the dev_id.json and
+>> this can be populated in the meta-xxx layer (something like this
+>> https://github.com/openbmc/openbmc/blob/master/meta-ibm/recipes-phosphor/ipmi/phosphor-ipmi-config.bbappend).
+>> If the format of the VERSION_ID does not match the master tag format,
+>> then major and minor version will be picked from the dev_id.json. With
+>> this approach every company can share the upstream implementation of the
+>> command. Thoughts?
+> Hi Tom,
+>
+> Would you be able to work out an example where the git-describe is used
+> to create this, similar to what we do with os-release?  I think this is
+> going to be the typical use case and we had a huge trouble getting
+> os-release to be done "correctly" at the beginning.  I think having a
+> well-tested example to copy from should limit the issues others will
+> have in trying to implement their own.
+>
