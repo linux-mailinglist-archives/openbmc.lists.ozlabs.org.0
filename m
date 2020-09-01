@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F214258E28
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 14:25:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EF7C9258E45
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 14:36:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BgmVf3VrwzDqYP
-	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 22:25:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BgmlG16PQzDqXd
+	for <lists+openbmc@lfdr.de>; Tue,  1 Sep 2020 22:36:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,73 +17,72 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=PjZwoBGP; 
+ header.s=fm2 header.b=I7Gth4NR; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=bcEHQyI/; 
+ header.a=rsa-sha256 header.s=fm3 header.b=D1f/s3NU; 
  dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
  [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BgmTV52yYzDqXB
- for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 22:24:14 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bgmk62kV4zDqXB
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Sep 2020 22:35:10 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 5ABA65C0295;
- Tue,  1 Sep 2020 08:24:12 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Tue, 01 Sep 2020 08:24:12 -0400
+ by mailout.nyi.internal (Postfix) with ESMTP id BBCE25C00E8;
+ Tue,  1 Sep 2020 08:35:07 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Tue, 01 Sep 2020 08:35:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=CeFRjb7fVPsF2pbbe7kVZpUoQiH
- z3BMHM5TBiS72pU0=; b=PjZwoBGPUosDSkKwb/Jw0DkD3utLmp/JLZLqSr/7bCv
- uQObo4/eQMrIDxVdNfezUJw/IocKmqRjV8wcVwKotsRqI4ftNdiLlMtjaV8lm+no
- 3tQmi7ECfhCqcxSDDqw+8Z5v8YijW9NtXfUN7PniPbwNCXexf4vvCI/cUj983klV
- 14CJEZXgmcJVsHIqPLPI9A0CEA0Tf3dalVFREyIiGUZu2RI+AkJve1F1EK8NWvjW
- jgdMiu7BHEXYN/nal2NJja1ukLSzMTbSYaZ9AKst6XM34sm+DZ/l4VRcZYUtaY6U
- na3zi5p/THCyuDrbaptpj5X0+tLS85aixXOWWxnQFaw==
+ :content-type:in-reply-to; s=fm2; bh=iMaHZcaVvpIq4p8uP8CnhXeN0FM
+ CXd9JR35cwhuLmq0=; b=I7Gth4NR/ARip6afJRDJE4vC65SlZjkp+auGPRNICEd
+ tepC88Mh8CLbz68otUfst7gY3E4xtkB3+eBRYsN1h1jqHz9/m1dCNDBWGOVx8dPv
+ TphmlZeFdoUa8Rk4fxAJ58q3jfIPFnf50V/HhLV/4bcXQ6T2CWAXtUdErxq2j85L
+ pELOZgQfOEuytgAfuRJ/uAtf3/ocBo6iA7siBA47fwkoYE8Qg2udp+izjL6sLYl9
+ BPquoazGHhzyoh/6a9GOKymzPIeQ8sc0rIHtVYk7JdMhzWSEbkgy3RZtxF66gW+P
+ uUh5wrOIsUt7dYmFi31H6uhGkHNBPW8q8CKxam7L6ew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=CeFRjb
- 7fVPsF2pbbe7kVZpUoQiHz3BMHM5TBiS72pU0=; b=bcEHQyI/FBYkNbirrVn775
- uLNc82blNSUAWTsRYOAgUVqp2HHOFTcYGcEao0D/37qkmvO4E0TrMYl+iQ0XB4to
- sI6e5IT0xSNWK8EyUGhUZWsCXxSQA9oQ21CxL6oP8ERBeAvml8we8707f0eiA5Eu
- COm9yQLOnXGuEIV+YpxG4PN5NvBbzF+SD98DkS0/CllNhVbbwIQkEcqZ0e8Z000z
- QxTHM5CWYuEIslsyhYjkC07lfTZv99a7QdQZfODxnIicU2F0GClHnlYUVBuulfB9
- hhO4sLzu/V5QIrGc5pkDvg17KfBJAcnX1Z5jFrsPNvAo7EV6W3R40U1HTDG/j47g
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=iMaHZc
+ aVvpIq4p8uP8CnhXeN0FMCXd9JR35cwhuLmq0=; b=D1f/s3NUx2Z4r2ErXJADAy
+ FAamHTs+zBjl9dhtGnSnvnO1FUivrspjWHUK7AwxSw5y2nTgqEJCtZDKvTRKz061
+ 5QL/ro04MqLliP7d5NJ3mzJwfueNmM71wNovLMbgBN5WL4UcOdwIfO3XY2kkWAh0
+ WSeJ8VvGtsLWOWa1vXg7tx/jSygjELfrmmgH0yHFx94sz/sOJzOsREmSIUML312L
+ +y3MoR23yGUp2utC1e27lCARPFsxIkaxjHNqeukgR3GEc+9heUPX/+gX0SxAXnq1
+ Bv2BrQV7jE52quUPRdZSbcj3/Ap74R/8u8TX3UO7PQHwMD4+ZiBZj2bOm/05SVRw
  ==
-X-ME-Sender: <xms:az1OX0wRLu6IyEaTZZ3sIwYwO6nN7a-QIYxHLUDgVQoGuHmKLPGO4A>
- <xme:az1OX4TBLe-Ruha6uxmmx8VnJvkItOQNly82OHa43TZxhy0I5n07vYKPf0zUd9fjA
- oNSZOEIKuE8RKczNOc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudefjedghedvucetufdoteggodetrfdotf
+X-ME-Sender: <xms:-z9OXwwyxwyA-vpK-wkreONWs2iaVH7k_OCgHY3ZbyVq7_3jK2QYLw>
+ <xme:-z9OX0QzzTrppuqvqReuwi7rvcOIJKwuK4LahbqbWFoPE0zBGXJgMxTomCtOkqRqh
+ t1RdWlmfTRa-kVmREE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudefjedgheehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
- leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
- homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:az1OX2VVaMfevf7f-hGz__dSEST3K0RE9-JCcAzhBkqf6csN-2MXww>
- <xmx:az1OXyiGJDgoli_YxO_mGNUeDBs-kZyduq9G4uE4vq2XeC081mRfKA>
- <xmx:az1OX2DTOFGuRuZOkAsCk2PS3DRXXilTmZlKBLVdkRiejC16oEfigQ>
- <xmx:bD1OX98g76MocTJX14FJ5eHMW5z2qDrVTFqXJfD-_RwKwVdiv6PQVw>
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdljedtmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+ epkeduuedtfeeihfehfeehfedvjeeujeeikedtteehledvhfelheekgedvieevkefhnecu
+ kfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+ hrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:-z9OXyVEfpcX5BzblQSetMgOgGmgwQHvDpPath7du68QcR3Duk_QSw>
+ <xmx:-z9OX-it-x75gxm4jpF4K-ZoyeYdB4DvjYL4MWVGeKQQ1KDbBuvS0A>
+ <xmx:-z9OXyBAiw24VVqfiLYc35oQAU9SUxMTWefxMBcGyQmdmJLPMql78w>
+ <xmx:-z9OX58K4xtsVZ-ZsrfrtfgOINknVRJWok70XfhlRJr78N191j1xDg>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 54C8E3060067;
- Tue,  1 Sep 2020 08:24:11 -0400 (EDT)
-Date: Tue, 1 Sep 2020 07:24:09 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 4E7C7328005E;
+ Tue,  1 Sep 2020 08:35:07 -0400 (EDT)
+Date: Tue, 1 Sep 2020 07:35:06 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-Subject: Re: When building OpenBMC . . . ?
-Message-ID: <20200901122409.GQ3532@heinlein>
-References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+To: Kun Zhao <zkxz@hotmail.com>
+Subject: Re: SQUASHFS errors and OpenBMC hang
+Message-ID: <20200901123506.GR3532@heinlein>
+References: <BYAPR14MB2342C9C346B57B87F44E3200CF530@BYAPR14MB2342.namprd14.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="2D20dG0OqTzqkNh7"
+ protocol="application/pgp-signature"; boundary="0Qexx6XJGNEACt6j"
 Content-Disposition: inline
-In-Reply-To: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+In-Reply-To: <BYAPR14MB2342C9C346B57B87F44E3200CF530@BYAPR14MB2342.namprd14.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,89 +99,114 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---2D20dG0OqTzqkNh7
-Content-Type: text/plain; charset=us-ascii
+--0Qexx6XJGNEACt6j
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Aug 30, 2020 at 10:02:41PM +0000, Bruce Mitchell wrote:
-> When selecting Target hardware https://github.com/openbmc/openbmc#3-targe=
-t-your-hardware
-> to build for the is a tiogapass, now if I add a meta-phoenix/meta-tiogapa=
-ss/conf  how does
-> 	source setup tiogapass build
-> know which tiogapass to build?
+On Sat, Aug 29, 2020 at 12:40:31AM +0000, Kun Zhao wrote:
+> Hi Team,
+>=20
+> I=E2=80=99m working on validating OpenBMC on our POC system for a while, =
+but starting from 2 weeks ago, the BMC filesystem sometimes report failures=
+, and after that sometimes the BMC will hang after running for a while. It =
+started to happen on one system and then on another. Tried to use programme=
+r to re-flash, still see this issue. Tried to flash back to the very first =
+known good OpenBMC image we built, still see the same symptoms. It seems li=
+ke a SPI ROM failure. But when flash back the POC system original 3rd-party=
+ BMC, no such issue at all. Not sure if anyone ever met similar issues befo=
+re?
 
-https://github.com/openbmc/openbmc/blob/master/setup#L34
+Yeah, this does look like a bad SPI NOR.  Have you tried flashing on a
+fresh image to the NOR and then reading it back to confirm all the bits
+keep their values?  It is possible that the corruption is hitting the
+other BMC code in a less-important location.
 
-The setup script just does a wildcard, which means you'll get the
-alphabetically ordered machine.  In this case, you should get the
-meta-facebook one selected before the meta-phoenix (supposing they both
-exist).
+> [ 3.372932] jffs2: notice: (78) jffs2_get_inode_nodes: Node header CRC fa=
+iled at 0x3e0aa4. {1985,e002,0000004a,78280c2e}
 
-> Or am I not supposed to choose a name (i.e. tiogapass in this example) th=
-at is already in the list
-> when I need to create a new meta-phoenix/meta-<machine>/conf?
+I'm surprised to see anyone using jffs2.  Don't we generally use ubifs
+in OpenBMC?  Is there a reason you've chosen to use jffs2?
 
-The overwhelming preference seems to be to not make another
-configuration with the same machine, and as one of the maintainers of
-meta-facebook, I agree in this case.  But, this answer doesn't solve
-your underlying question.
+I don't necessarily think jffs2 will be better or worse in this
+particular scenario but we've seen lots of upgrade issues over the years
+with jffs2.
 
-I suspect you're going to make two kinds of changes:
-  1. Features you want to enable on Tiogapass that Facebook isn't
-     interested in.  (I would cover bmcweb 'branding' changes here
-     also).
-  2. Fixes and configuration due to features we haven't enabled yet or
-     fully vetted.
+> BMC debug console shows the same SQUASHFS error as above, by checking fil=
+esystem usage we could see rwfs usage keep increasing like this,
+>=20
+> root@dgx:~# df
+> Filesystem 1K-blocks Used Available Use% Mounted on
+> dev 212904 0 212904 0% /dev
+> tmpfs 246728 20172 226556 8% /run
+> /dev/mtdblock4 22656 22656 0 100% /run/initramfs/ro
+> /dev/mtdblock5 4096 880 3216 21% /run/initramfs/rw
+> cow 4096 880 3216 21% /
+> tmpfs 246728 8 246720 0% /dev/shm
+> tmpfs 246728 0 246728 0% /sys/fs/cgroup
+> tmpfs 246728 0 246728 0% /tmp
+> tmpfs 246728 8 246720 0% /var/volatile
+>=20
+> and can see more and more ipmid coredump files,
 
-#2 should go into either meta-facebook (or the underlying code
-repository where the fix is needed).  These will be common for any
-tiogapass hardware, so lets keep it in the common location.
+This implies to me that we need to adjust the systemd recovery for
+ipmid.  We shouldn't just keep re-launching the same process over and
+over after a coredump.  Systemd has some thresholding capability.
 
-#1 should go into meta-phoenix.  You're likely the first one doing this,
-so we may need some experimentation on the best option.  I have two
-ideas (there are probably others):
+> I found the following actions could trigger this failure,
+>=20
+>=20
+>   1.  do SSH login to BMC debug console remotely, it will show this error=
+ when triggered,
+> $ ssh root@<bmc ip>
+> ssh_exchange_identification: read: Connection reset by peer
+>=20
+>=20
+>   1.  set BMC MAC address by fw_setenv in BMC debug console, reboot BMC, =
+and do 'ip -a'.
 
-  * Make an alternative tiogapass variant, like tiogapass-phoenix, which
-    ends up including all the common tiogapass code from meta-facebook.
+I have no idea why this procedure would solve SPI NOR issues.  It
+doesn't seem connected on the surface.
 
-  * Create a new distro type for phoenix, which enhances the underlying
-    openbmc distribution with your own branding tweaks.  You'd still
-    build meta-facebook/tiogapass but with a different distro flavor.
+> The code is based on upstream commit 5ddb5fa99ec259 on master branch.
+> The flash layout definition is the default openbmc-flash-layout.dtsi.
+> The SPI ROM is Macronix MX25L25635F
+>=20
+> Some questions,
+>=20
+>   1.  Any SPI lock feature enabled in OpenBMC?
+>   2.  If yes, do I have to unlock u-boot-env partition before fw_setenv?
 
-I believe IBM has experiemented with both of these approaches for
-witherspoon (see witherspoon-tacoma and
-meta-ibm/conf/distro/openbmc-witherspoon.conf) and might have some
-insight into what has worked well for them.
-
-I'm more than willing to work with you and your team to help refactor
-meta-facebook/tiogapass in a way that makes it more condusive to what
-your team is interested in doing.  I suspect we'll need to create some
-additional bitbake '.inc' files and move some of the content we have in
-'.conf' to '.inc'.  Catch me here or on IRC as needed.
+There is not, to my knowledge, a software SPI lock.  Some machines have
+a 'golden' NOR which they enable by, in hardware, setting the
+write-protect input pin on the SPI NOR (with a strapping resistor).
+Does your machine do this mechanism?  If so, it is possible that you're
+booting onto the 'wrong' NOR flash in some conditions and a reboot
+resets the chip-select logic in the SPI controller.  (Usually, you have
+the watchdog configured to automatically swap the chip-select after some
+number of boot failures.)
 
 --=20
 Patrick Williams
 
---2D20dG0OqTzqkNh7
+--0Qexx6XJGNEACt6j
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9OPWcACgkQqwNHzC0A
-wRlG5g/7BfJE53WZYZI9dkpamDOXOMJ+s/XDe8XlzROlXg9H8+9rVDL8nNASKnFd
-i6oCRGh1wtwuM/qJRj5E2IEclQl0tw0n4+cqHHFKFGTQfPO95ADaJNGSFDQ18NC4
-gu9n8613T00ul34SN83eIKRc63HZSbkE9q0Y5/PJB+5T8Ub08RGOfYxalnnvCoy8
-5x1AgHA6fluO7Zw6/KzOCbirneDGMsVE5acORdMEzMqqZoljibBOFDUfh2wcenkr
-8sNYfay4YlHHHLPbgvn43ofBA2dQvWTGe8NdktZubwGR+JJFN24hD/goHHBqBce9
-+4dVCBzRnTroOq3olINzAHrsJLnA5pmcZxpFgD7LcR9pviMETvp0J1BTh+P+i03o
-DgmLFMaDCW1L2sGckdjQHuCy9txbWaWIBvPxXQYfY+kikdLItUkm0M+Hpornou/u
-4FnOIVQS/VQ7Gk1nFlEOmxgF9eonN0aiNoT2rceKbRcph+OsxSugxmlx3/B1XjgK
-qYWHNmj7ZMZ8facIn6QXQT2vS11i3lgqijgrWdU2apQDi2MjgxZIC6LUSX/1T6mR
-3ZG27knfP9ss6top39uFudtMPUYjpZy2OYlOEFcxawFjyVr6wQvgQb2LMAG9KTht
-evdhGz3Zslc8234tO9MSI5aZL27CPSHHncblktHGzV8hy41EnKA=
-=tNDx
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9OP/gACgkQqwNHzC0A
+wRmX2w/8Cl5LOLn3jgN3mNjsTRhJafMnIwVb6DCwlkDh0iWjxj7pQBAhqu50iWbB
+fem3xFeVqnJH7gnaRPDUlUYwyAQeg2IG8H3YILVHvNjahS0QR2HMGJLbif/CBMJL
+ftjTyBOEuwfDxYM2S/Ju1mqpPNg5k/+5hdrq+hRKvkdSKaSVkl0NWj/gcYo6KcZ7
+zG3fGu4bogv2okdcNGWWAWfLmE95ipbghzpxCSDrY28zL+7XSL5zw7pZkKQ/Ko9G
+4dyZqJ4wICcOXZKC4CyaoudGUwd0srLkkF4xoyKkLVvImRTWuPAQmw2XKDzNvYGd
+emHgRlJyyXNtGWjRUhU36bGLC0TLCHq6ocdCTO+JHaVfZVZMZjeOkybdmZO0y+qQ
+w0QIgPfeQAnaYrI5tqW+MFPQFqt0I9fpkvIOTU5Z066dgOalbJrsVlVIznqR60bm
+ipaxitiLQt5KKXwH5ipHLz/l5Q+4ygNcmiWnihzsnChOKVFLtBVZsFcM5ZtaJtZ5
+No9xtjnVKRwlCmZ3uoB1diyDcowEn7oGCR+Hiqh+16L5W2AuqVFaaQL8l3vhDPlg
+H+mi7dfW1Gr/1osNXbyKmx+SdoXnkDBQpGb1mxKg0duCVvmpxbG6JIaRkrW/noRA
+02iJEdEnaAJSSkB5u+yXVzlYcw62TQytlRgrhHUd5cf7gPIB0i8=
+=NoBg
 -----END PGP SIGNATURE-----
 
---2D20dG0OqTzqkNh7--
+--0Qexx6XJGNEACt6j--
