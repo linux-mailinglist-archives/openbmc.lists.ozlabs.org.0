@@ -1,90 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 136DF25B41A
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:52:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB10E25B42A
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:59:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BhY340mmvzDr1g
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:52:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BhYCY6G6GzDr1D
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:59:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=eMWhA660; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=eMWhA660; 
- dkim-atps=neutral
-X-Greylist: delayed 69 seconds by postgrey-1.36 at bilbo;
- Thu, 03 Sep 2020 04:51:37 AEST
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BhY2205T6zDr0Q
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 04:51:37 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1599072695;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U80B7Dle62SzqXfv0kHeu6HI5pFvIJk69Aq2Z1wckFM=;
- b=eMWhA660eek4fAul3Y3pZJ6rIRaJV73B2NfKFhpzoZqd2AoAtXkSCDv1ChU4RjJ5Mp1vAM
- +FMxn2LFL/vK91+3muKNX51ySF9mzCtqz/VD1Ky6xhctCUVojHWGtDj6CuNsOMKLCvRD7O
- NZCBW1ovZRvPqAY9A7c75HbVYbwIJ5U=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1599072695;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U80B7Dle62SzqXfv0kHeu6HI5pFvIJk69Aq2Z1wckFM=;
- b=eMWhA660eek4fAul3Y3pZJ6rIRaJV73B2NfKFhpzoZqd2AoAtXkSCDv1ChU4RjJ5Mp1vAM
- +FMxn2LFL/vK91+3muKNX51ySF9mzCtqz/VD1Ky6xhctCUVojHWGtDj6CuNsOMKLCvRD7O
- NZCBW1ovZRvPqAY9A7c75HbVYbwIJ5U=
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-228-PbM4lE_ZN6SrUnhI-VONDQ-1; Wed, 02 Sep 2020 14:50:04 -0400
-X-MC-Unique: PbM4lE_ZN6SrUnhI-VONDQ-1
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Wed, 2 Sep 2020 11:50:02 -0700
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Wed, 2 Sep 2020 11:50:02 -0700
-From: Patrick Voelker <Patrick_Voelker@phoenix.com>
-To: Ed Tanous <ed@tanous.net>, Patrick Williams <patrick@stwcx.xyz>
-Subject: RE: When building OpenBMC . . . ?
-Thread-Topic: When building OpenBMC . . . ?
-Thread-Index: AdZ/GJ+lFWuwSqbeSoqGTbguwoelIQBfNdqAAAffPIAAKQSfMA==
-Date: Wed, 2 Sep 2020 18:50:01 +0000
-Message-ID: <2249bb47512947dab406345cfee1206d@SCL-EXCHMB-13.phoenix.com>
-References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
- <20200901122409.GQ3532@heinlein>
- <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
-In-Reply-To: <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [50.39.166.255]
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhYBq23mJzDqxb
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 04:59:13 +1000 (AEST)
+IronPort-SDR: YUKT4HsMbI9xu3FBdm1L7WKxTXI66KQGBHW/G8C3W+tw52DmfvTj2egUV69QaNh1jsOOeUHIQS
+ vo5b7dxvuyrQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="136982082"
+X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="136982082"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2020 11:59:10 -0700
+IronPort-SDR: c1fmEXjwEMZPHjIUpMILXHd4JOQzYslD6qMr4JBwr7ccjNyenVVJJ5v6y4eXMFSqmV8aoaqq54
+ rvi4z3O9/cQg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="502236046"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga006.fm.intel.com with ESMTP; 02 Sep 2020 11:59:10 -0700
+Received: from [10.212.148.106] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.148.106])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 9C51C58010E
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 11:59:10 -0700 (PDT)
+Subject: Re: Seek feedback: BMC console and debug info
+To: openbmc@lists.ozlabs.org
+References: <CAMXw96MQ-=Ftc5HjNThKd8A6X0hdBdjC43d6RJfzyDoN+b=7YQ@mail.gmail.com>
+ <CACWQX82jRpfpeqc9a3kFA+08-CgyOjc8+jYU2Xh307hq-0_DHQ@mail.gmail.com>
+ <419f732a-8d73-0450-fca6-b89d82fcd96c@linux.intel.com>
+ <CAMXw96Onss5O3dRzV-vSV4bK=ri=QV0932cBSYpZS7U3G+_5kw@mail.gmail.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <17248f66-6879-1118-9fdf-30295070d5d2@linux.intel.com>
+Date: Wed, 2 Sep 2020 11:59:10 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=patrick_voelker@phoenix.com
-X-Mimecast-Spam-Score: 0.001
-X-Mimecast-Originator: phoenix.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+In-Reply-To: <CAMXw96Onss5O3dRzV-vSV4bK=ri=QV0932cBSYpZS7U3G+_5kw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,39 +67,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SSdtIGdpdmluZyB0aGUgZmlyc3Qgb3B0aW9uIGJlbG93IGEgdHJ5LiAgSSd2ZSBkZWZpbmVkIGFu
-IGFsdGVybmF0aXZlIHZhcmlhbnQgYW5kIGhhdmUgaW5jbHVkZWQgdGhlIG1ldGEtZmFjZWJvb2sv
-bWV0YS10aW9nYXBhc3MgbGF5ZXIgaW4gbXkgYnVpbGQuDQoNCk9uZSBwcm9ibGVtIEknbSBydW5u
-aW5nIGludG8gaXMgdGhhdCBtZXRhLXRpb2dhcGFzcyBpbmNsdWRlcyBhIHJzeXNsb2cqLmJiYXBw
-ZW5kIGFuZCBvbmUgb2YgdGhlIG90aGVyIGxheWVycyBJJ20gdXNpbmcgYWxzbyBoYXMgYSBzaW1p
-bGFyIHJzeXNsb2cqLmJiYXBwZW5kLg0KDQpFYWNoIGRvIGFuIGFwcGVuZCB0byBkb19pbnN0YWxs
-KCkgYW5kIGVhY2ggb25lIHRyaWVzIHRvIHJlbW92ZSAke0R9JHtzeXNjb25mZGlyfS9yc3lzbG9n
-LmQvaW1qb3VybmFsLmNvbmYuICBPZiBjb3Vyc2UgdGhhdCBmaWxlIGNhbiBvbmx5IGJlIHJlbW92
-ZWQgb25jZSBzbyB0aGUgYnVpbGQgZmFpbHMuDQoNCk15IHF1ZXN0aW9uIG5vdywgaXMgd2hhdCdz
-IHRoZSBiZXN0IHdheSB0byB3b3JrIGFyb3VuZCB0aGlzPyAgSSBkb24ndCBuZWVkIHJzeXNsb2cg
-ZnJvbSBtZXRhLXRpb2dhcGFzcywganVzdCB0aGUgbWFjaGluZSBzcGVjaWZpY3MuDQoNCg0KPiAt
-LS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJt
-Yy0NCj4gYm91bmNlcytwYXRyaWNrX3ZvZWxrZXI9cGhvZW5peC5jb21AbGlzdHMub3psYWJzLm9y
-Z10gT24gQmVoYWxmIE9mIEVkDQo+IFRhbm91cw0KPiBTZW50OiBUdWVzZGF5LCBTZXB0ZW1iZXIg
-MSwgMjAyMCA5OjEwIEFNDQo+IFRvOiBQYXRyaWNrIFdpbGxpYW1zDQo+IENjOiBCcnVjZSBNaXRj
-aGVsbDsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+IFN1YmplY3Q6IFJlOiBXaGVuIGJ1aWxk
-aW5nIE9wZW5CTUMgLiAuIC4gPw0KPiANCjxzbmlwPg0KPiA+ICMxIHNob3VsZCBnbyBpbnRvIG1l
-dGEtcGhvZW5peC4gIFlvdSdyZSBsaWtlbHkgdGhlIGZpcnN0IG9uZSBkb2luZyB0aGlzLA0KPiA+
-IHNvIHdlIG1heSBuZWVkIHNvbWUgZXhwZXJpbWVudGF0aW9uIG9uIHRoZSBiZXN0IG9wdGlvbi4g
-IEkgaGF2ZSB0d28NCj4gPiBpZGVhcyAodGhlcmUgYXJlIHByb2JhYmx5IG90aGVycyk6DQo+ID4N
-Cj4gPiAgICogTWFrZSBhbiBhbHRlcm5hdGl2ZSB0aW9nYXBhc3MgdmFyaWFudCwgbGlrZSB0aW9n
-YXBhc3MtcGhvZW5peCwgd2hpY2gNCj4gPiAgICAgZW5kcyB1cCBpbmNsdWRpbmcgYWxsIHRoZSBj
-b21tb24gdGlvZ2FwYXNzIGNvZGUgZnJvbSBtZXRhLWZhY2Vib29rLg0KPiA+DQo+ID4gICAqIENy
-ZWF0ZSBhIG5ldyBkaXN0cm8gdHlwZSBmb3IgcGhvZW5peCwgd2hpY2ggZW5oYW5jZXMgdGhlIHVu
-ZGVybHlpbmcNCj4gPiAgICAgb3BlbmJtYyBkaXN0cmlidXRpb24gd2l0aCB5b3VyIG93biBicmFu
-ZGluZyB0d2Vha3MuICBZb3UnZCBzdGlsbA0KPiA+ICAgICBidWlsZCBtZXRhLWZhY2Vib29rL3Rp
-b2dhcGFzcyBidXQgd2l0aCBhIGRpZmZlcmVudCBkaXN0cm8gZmxhdm9yLg0KPiANCj4gVGhpcyBv
-bmUgd291bGQgYmUgbXkgdm90ZSBiZXR3ZWVuIHRoZSB0d28sIGFuZCBJIHRoaW5rIHRoZXJlJ3MN
-Cj4gcHJlY2VkZW50IHdpdGggb3RoZXIgY29tcGFuaWVzIGRvaW5nIHNpbWlsYXIgdGhpbmdzLiAg
-SXNuJ3QgdGhpcyB0aGUNCj4gd2F5IHlvY3RvIHJlY29tbWVuZHM/DQo=
 
+
+On 8/29/2020 8:53 PM, Zhenfei Tai wrote:
+> Thanks a lot for the feedback and we're glad that it's something the 
+> community is interested in!
+> We'll incorporate the advice and improve the patchset.
+> 
+> Jason - If you have time, could you share the findings of the 
+> "AdditionalDataURI" schema change? I've only managed to find some slides 
+> <https://www.dmtf.org/sites/default/files/Redfish_Diagnostic_Data_Logging_Proposal_05-2020-WIP_0.pdf> 
+> from May.
+Sorry, I don't know much about it besides that the schema change is 
+coming.  I checked on the DMTF website and it doesn't look like the new 
+schema has been posted, yet.
+
+> 
+> Thanks,
+> Zhenfei
+> 
+> On Wed, Aug 26, 2020 at 1:00 PM Bills, Jason M 
+> <jason.m.bills@linux.intel.com <mailto:jason.m.bills@linux.intel.com>> 
+> wrote:
+> 
+> 
+> 
+>     On 8/25/2020 8:35 PM, Ed Tanous wrote:
+>      > Yes, this would be useful to others.  A number of commercial stacks
+>      > (including some I helped write) have this feature, and I had hoped
+>      > someone would tackle it at some point in the future.
+>      >
+>      > My only comment is I'd rather that we don't duplicate the
+>     endpoints in
+>      > Redfish, and have both a Console and a ConsoleDownload
+>     collection.  If
+>      > we need a mechanism to download the full log files, I'd recommend
+>     that
+>      > the Console endpoint obey an Accept header of "text/plain;
+>      > charset=utf-8" and an Accept-Encoding header of "gzip".  That way,
+>      > we're still meeting the intent of the HTTP and Redfish specs, even if
+>      > we're providing more data download options than they require.
+>     I still need to go dig into it, but I think the new Redfish schemas
+>     that
+>     were added to support the Dump service, added an "AdditionalDataURI"
+>     property that can provide a URI to download a larger set of additional
+>     dump data.  It may be what you need for the log file download.
+> 
+>      >
+>      > Other than that, yeah, sounds great, lets see the patchset.
+>      >
+>      > -Ed
+>      >
+>      > On Tue, Aug 25, 2020 at 8:24 PM Zhenfei Tai <ztai@google.com
+>     <mailto:ztai@google.com>> wrote:
+>      >>
+>      >> Hi,
+>      >>
+>      >> We have worked with our vendor on a system that provides console
+>     and debug information, which can be useful in times of debugging BMC
+>     issues.
+>      >>
+>      >> On a high level, we use obmc-console and
+>     phosphor-debug-collector to collect data.
+>      >>
+>      >> obmc-console: We collect console inputs from the host and save
+>     to local log files (max 8 files of 1 MB size with rotation.)
+>      >> phosphor-debug-collector: We run this process on the BMC with no
+>     modification.
+>      >>
+>      >> For the interface, the data is exposed via bmcweb where there
+>     are a pair of URIs for console inputs and debug collector respectively.
+>      >> e.g.
+>      >>
+>      >> /redfish/v1/Systems/system/LogServices/Console -- Enable/disable
+>     console inputs data collection.
+>      >> /redfish/v1/Systems/system/LogServices/ConsoleDownload --
+>     Download the log files in a zipped file.
+>      >>
+>      >> It will be great if we can get some feedback on whether the
+>     community finds such a system useful and advice to improve the design.
+>      >>
+>      >> Thanks,
+>      >> Zhenfei
+> 
