@@ -2,63 +2,133 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2443B25B60B
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 23:40:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1021625B621
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 23:47:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bhcmx1C9pzDr0T
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 07:40:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BhcxM21d2zDqpH
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 07:47:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=zhikui.ren@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
+ header.b=PVFX7SfU; dkim-atps=neutral
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bhclx4YkMzDr02
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 07:39:40 +1000 (AEST)
-IronPort-SDR: Y1lNMy30gau1zgyU8N46dkO9UKSIQQ5QWRG7oz4vykTgS83vD9TC3PmK04CZqMLP6bvdhy+Lro
- U/vI3kbRcUOQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="156753058"
-X-IronPort-AV: E=Sophos;i="5.76,384,1592895600"; d="scan'208";a="156753058"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhcwG10JGzDr0v
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 07:46:51 +1000 (AEST)
+IronPort-SDR: mnAduQQzJxr6sViSZUl46EEyMwERu/RKB8BIYdXhS+JlijaD0N3zPxRqRT/IrxEwSMcRoaSzcE
+ 6ahBcmygG8Yw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="219037726"
+X-IronPort-AV: E=Sophos;i="5.76,384,1592895600"; d="scan'208";a="219037726"
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
 Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2020 14:39:37 -0700
-IronPort-SDR: /vNhvVlqF8aDkRe3sw8KFg3+OPRh9myxpP1L0CoR253LWsdQjE1Q3y4OO9ST/sAKSL+gk18G58
- TyNP78QucFLw==
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2020 14:46:48 -0700
+IronPort-SDR: Vefvoz2cKKvKxTcuvLQ3Zl7BfXoNuxm3bUxyhdz18CDL1vXQq+HxGcE7DKy7sRjhU7hwdNZWSj
+ wiKahxT1pT6w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.76,384,1592895600"; d="scan'208";a="339056040"
-Received: from linux.intel.com ([10.54.29.200])
- by FMSMGA003.fm.intel.com with ESMTP; 02 Sep 2020 14:39:37 -0700
-Received: from [10.212.148.106] (jmbills-MOBL.amr.corp.intel.com
- [10.212.148.106])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id CDECC5807AA
- for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 14:39:36 -0700 (PDT)
-Subject: Re: When building OpenBMC . . . ?
-To: openbmc@lists.ozlabs.org
-References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
- <20200901122409.GQ3532@heinlein>
- <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
- <2249bb47512947dab406345cfee1206d@SCL-EXCHMB-13.phoenix.com>
- <20200902191019.GY3532@heinlein>
- <5455ced096a74069b08230ad9a46a945@SCL-EXCHMB-13.phoenix.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <3d601f16-2a80-bbac-d8f2-010e20a8b482@linux.intel.com>
-Date: Wed, 2 Sep 2020 14:39:36 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <5455ced096a74069b08230ad9a46a945@SCL-EXCHMB-13.phoenix.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+X-IronPort-AV: E=Sophos;i="5.76,384,1592895600"; d="scan'208";a="339057951"
+Received: from orsmsx606.amr.corp.intel.com ([10.22.229.19])
+ by FMSMGA003.fm.intel.com with ESMTP; 02 Sep 2020 14:46:48 -0700
+Received: from orsmsx606.amr.corp.intel.com (10.22.229.19) by
+ ORSMSX606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 2 Sep 2020 14:46:48 -0700
+Received: from orsmsx105.amr.corp.intel.com (10.22.225.132) by
+ orsmsx606.amr.corp.intel.com (10.22.229.19) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
+ via Frontend Transport; Wed, 2 Sep 2020 14:46:48 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ ORSMSX105.amr.corp.intel.com (10.22.225.132) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Wed, 2 Sep 2020 14:46:47 -0700
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com (104.47.46.59) by
+ edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1713.5; Wed, 2 Sep 2020 14:46:47 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZMfQxt7TyS4TvsddSpX1NvAFLzn/AiqZ0z643A7S6BI4xcEBbZhT0EGcfTHmEngWDWGtb+8ouHD9NmD6Cr9+AL58RetCe3xpgnEjzssLke9dT5sLz892WTZPy+JHhpM00u+ttJW+7Er5Ik0nOgfzzTF4v1iTpRISy+LPHMtVgk6wdnkvHWTDICTv6isZjTU6zWRethvzvKSPK5Nyt1jF2GxLPsd+EaLf48RMJl/urZaWI4H19CTE74X7e0Jf901VzdkjiaFXRsCTBVrEBap4v+rmiUQpbuw0b6dlfTjvyFF1nmhmg0tFb+Gdq0TAFUqHCO7wpcgrODDLq1/n2UCz4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CG+WiyhmQkYqe5Vui2rxM9+63lpqB2rRkzBTrNIW7dM=;
+ b=AcDQMPG/lzmtnHXDwvjrUKdznYail+UZ/55DAEmZ1hNqgwtmVGrKJRILAnEeQYoTY3X0zSqEnPHT+4tFLe0O8h8CfpeK3LZV2f3t2wfUyr3BfXUKLBiagC37geUK6FCbGkGt/QMz4xrDaveyJPOB48lSfQXJ4RVAz5OrvRS+nuSOgBNQy2vPom5jQKmsfF9DrSZWxLASBHhuMCI4KZJTMDjIOC1es6Cek01haHQeAw7RHzPoG7hROGjmuVqBTVOFcMHmWAwLZexS98eAt5pTtUQ5zLyKLUk9xR4t2MLpH1WXB6X4MhmRSpe/NqkMSESaSUuWCckHEhD8r93kV0+gxA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CG+WiyhmQkYqe5Vui2rxM9+63lpqB2rRkzBTrNIW7dM=;
+ b=PVFX7SfU1OfZ3b0eUsKW8jkCOsGjOFZ4kpYFiEt7RDvIAyLPsW9qPlvZ8Z9c96d67VMavjn8BUR1RqKHKjCm1gLbX0W/QC98zu6Uqk4fhm3BKkd8dvIyTYPv1n2vIwxI+e+egv9Oqmqhe1jWAsTl3qzEFkss+aPzN2B3nabeYhQ=
+Received: from DM6PR11MB4410.namprd11.prod.outlook.com (2603:10b6:5:1d9::11)
+ by DM5PR11MB1561.namprd11.prod.outlook.com (2603:10b6:4:a::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3326.21; Wed, 2 Sep 2020 21:46:46 +0000
+Received: from DM6PR11MB4410.namprd11.prod.outlook.com
+ ([fe80::d02d:3a87:869f:1544]) by DM6PR11MB4410.namprd11.prod.outlook.com
+ ([fe80::d02d:3a87:869f:1544%5]) with mapi id 15.20.3326.025; Wed, 2 Sep 2020
+ 21:46:46 +0000
+From: "Ren, Zhikui" <zhikui.ren@intel.com>
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: RE: Need update CI build config for new repo smbios-mdr.
+Thread-Topic: Need update CI build config for new repo smbios-mdr.
+Thread-Index: AdZ8T8WMWe7UjTu1QQafCbbBYikJpQBJL32AAHDrLbAAUQMGgAAAodOAABNvhOAAHQrrAAAFaJ4AAASRQIA=
+Date: Wed, 2 Sep 2020 21:46:45 +0000
+Message-ID: <DM6PR11MB4410D360CFFE2F5EF99B64F3942F0@DM6PR11MB4410.namprd11.prod.outlook.com>
+References: <SN6PR11MB35203BE16B23BAD1193FCB9F90550@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <5a9a43046be525f9ed5d23bc40eac14d4ed8d53c.camel@fuzziesquirrel.com>
+ <SN6PR11MB35205154DB67E625EF74388A90510@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200901162333.GT3532@heinlein> <20200901164139.GV3532@heinlein>
+ <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200902154944.GW3532@heinlein>
+ <5e9cb6fe-ae95-422b-2d06-1ad2db40916e@linux.intel.com>
+In-Reply-To: <5e9cb6fe-ae95-422b-2d06-1ad2db40916e@linux.intel.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-reaction: no-action
+dlp-version: 11.5.1.3
+dlp-product: dlpe-windows
+authentication-results: linux.intel.com; dkim=none (message not signed)
+ header.d=none;linux.intel.com; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [73.11.44.68]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 5639995d-217a-4b56-320b-08d84f89b092
+x-ms-traffictypediagnostic: DM5PR11MB1561:
+x-microsoft-antispam-prvs: <DM5PR11MB156173AAC950A66334A3475B942F0@DM5PR11MB1561.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8882;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: XRiaK2cBeXuDEbzY8P6147ZDv0uV8jmG3Preua2jPefrCOfgyAjMnVBBIjRfDehs/oYN0csCrgxsgWq/4ck90Y5t9067/dYZfvx4hn5khd8TK1Mcj6DmuTGXNg3krgOJOg6NxkvD6MPf1M6TIK+THBlEt522IEP30Ei96+bjJCtbeBb8u1oKIQPOCANTf1g+awQUy03TagAjp6c8iu9lA64uWfjI38YiP3EIR/wnbqH+cCSq1oa5E7Yur4xXgJfvp8EQA9Pgl/6+VvUXX4hvoZluJo/NMoNcFYwDrT5WyS7T+qOP8wYePn3dnP+6tasKZbebAiFwxPPZBSM0/xt7ivyimW/oN72nqZ9+SxU5ERpky/uyuFzsP+KCvyJsifnN7ALYxLqcF0DqfjIuHidVhw==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR11MB4410.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(376002)(346002)(136003)(39860400002)(366004)(2906002)(66946007)(66446008)(66556008)(110136005)(66476007)(76116006)(26005)(316002)(186003)(64756008)(55016002)(9686003)(33656002)(5660300002)(71200400001)(8936002)(66574015)(83380400001)(966005)(6506007)(53546011)(52536014)(86362001)(478600001)(7696005)(15650500001)(8676002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: zXBRB9p7TMUCt6pnARmX9m5HgGOvvmQSKi5nbgpuEcLy7xCJokS+gBDCeCnD6JF8LVD39jeuOFciPpU0shU2FKT4XksbXOUXBwE9F9N0BZKW8lShx4uDH0pDx2l3p6zVrz3QEVeFCl+8itFlmDpf4ACP0WEPG3wC3h/8jokkWPg+YMElSrlxS9adk6DhxvBvpD9yP18b5m4dhKFsxYvkAFUXHuUSuVrUZeV89qUmw+p9v73JyXzLjSW30IBB/R7o2KnLa6RoYYG1SsGGBbPzw0cOm4SorI8wrFrYE7khF+xHU2xVDOebtl/WpuEgBiCh0IvLP8G2kiwx2zmlQlKaQbrNoWxwSaKOBWKvvz6U3/jReOSdh1TOJm2VpsFj/AKXa0D/TyUtDyhKAwEqXSYkr4DOEpSWrpkndpkdBfuUPFHaFSTs6bTaBvA6Ttyj8CNWUZHZJGyWS4w/fnLjHcaehheNvFZlJ25jdoqCMHEpqolGeYo4f1NRAJhzFY/JmVYsho3JxRGuK2UxN0vmXZXd6OF6+wsixHHbmwXx5TWabLvm7VeVxS7nKO2a0faotZHh8vXP6R16JL1hs51vW0N5r8K3WbqwUxIL2impGXmrt7HYyu6FpcjWBmrpf46BkoTMNzUwujL8ho4BUimr+wMedw==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR11MB4410.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5639995d-217a-4b56-320b-08d84f89b092
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2020 21:46:46.2960 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 24YO2qY2Q7zFG007oFV3jDj0bFPA1GrAWcly3EDCjJAiZylnM7GdWffSAiE7WrPjOK/bHVV0AoyWo4LBbg85Vw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR11MB1561
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,66 +143,85 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Thanks, Jason.
+
+Kwin,
+
+I have updated the patch that is compatible with the current dbus interface=
+, it builds successfully now.
+https://gerrit.openbmc-project.xyz/c/openbmc/smbios-mdr/+/36177
+
+Thanks,
+Zhikui
 
 
-On 9/2/2020 12:50 PM, Patrick Voelker wrote:
->   
->> On Wed, Sep 02, 2020 at 06:50:01PM +0000, Patrick Voelker wrote:
->>> I'm giving the first option below a try.  I've defined an alternative variant
->> and have included the meta-facebook/meta-tiogapass layer in my build.
->>>
->>> One problem I'm running into is that meta-tiogapass includes a
->> rsyslog*.bbappend and one of the other layers I'm using also has a similar
->> rsyslog*.bbappend.
->>>
->>> Each do an append to do_install() and each one tries to remove
->> ${D}${sysconfdir}/rsyslog.d/imjournal.conf.  Of course that file can only be
->> removed once so the build fails.
->>>
->>> My question now, is what's the best way to work around this?  I don't need
->> rsyslog from meta-tiogapass, just the machine specifics.
+
+-----Original Message-----
+From: openbmc <openbmc-bounces+zhikui.ren=3Dintel.com@lists.ozlabs.org> On =
+Behalf Of Bills, Jason M
+Sent: Wednesday, September 2, 2020 11:25 AM
+To: openbmc@lists.ozlabs.org
+Subject: Re: Need update CI build config for new repo smbios-mdr.
+
+
+
+On 9/2/2020 8:49 AM, Patrick Williams wrote:
+> On Wed, Sep 02, 2020 at 02:02:00AM +0000, Wang, Kuiying wrote:
+>> Hi Williams,
+>> The key thing is sdbusplus interface is not match.
+>> You could config CI based on this patch=20
+>> https://gerrit.openbmc-project.xyz/#/c/openbmc/smbios-mdr/+/36011/
+>> That's ok, if it can pass the build.
 >>
->> If this is a common pattern, we should try to contribute it upstream to Yocto
->> as a PACKAGECONFIG option.  Then we can add to the PACKAGECONFIG in
->> the bbappend (you can do that as many times as you want).
+>> Thanks,
+>> Kwin.
 >>
->> If we don't think Yocto would accept it, or they reject it, but it is still
->> something we're seeing often in our systems we can similarly add it as a
->> common bbappend in meta-phosphor (ideally triggered by a
->> PACKAGECONFIG).
-> 
-> Thanks for the response but I'm having a hard time connecting the dots.
-> 
-> My understanding of PACKAGECONFIG is that it's a way to provide build options for individual packages.  In this case, what PACKAGECONFIG option would we be contributing?
-> 
-> Is there a way now for me to force bitbake to ignore (or not use) rsyslog*.bbappend in meta-tiogapass from another layer?
-> 
-> The two appends that are conflicting are:
-> meta-facebook/meta-tiogapass/recipes-extended/rsyslog/rsyslog_%.bbappend
-> meta-intel/meta-common/recipes-extended/rsyslog/rsyslog_%.bbappend
-I hit a similar issue when moving this recipe out of my downstream 
-build.  I was able to resolve it by putting this change in my downstream 
-version:
-diff --git a/meta-common/recipes-extended/rsyslog/rsyslog_%.bbappend 
-b/meta-common/recipes-extended/rsyslog/rsyslog_%.bbappend
-index 7e282804..ef670451 100644
---- a/meta-common/recipes-extended/rsyslog/rsyslog_%.bbappend
-+++ b/meta-common/recipes-extended/rsyslog/rsyslog_%.bbappend
-@@ -17,7 +17,7 @@ do_install_append() {
-          install -d ${D}${systemd_system_unitdir}/rsyslog.service.d
-          install -m 0644 ${WORKDIR}/rsyslog-override.conf \
- 
-${D}${systemd_system_unitdir}/rsyslog.service.d/rsyslog-override.conf
--        rm ${D}${sysconfdir}/rsyslog.d/imjournal.conf
-+        rm -f ${D}${sysconfdir}/rsyslog.d/imjournal.conf
-  }
+>=20
+> Here is a snippet of the compile log:
+>=20
+> /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/src/cpuinf=
+o_main.cpp:34:10: fatal error: peci.h: No such file or directory
+>     34 | #include <peci.h>
+>        |          ^~~~~~~~
+> compilation terminated.
+>=20
+>=20
+> This one might be a missing dependency?  Where is 'peci.h' from?  Is=20
+> it from a kernel header for the ioctls or some other repository?  Do=20
+> you need to stub this out when building on x86?
+peci.h comes from libpeci which needs to be pulled in as an ExternalProject=
+ in CMake when not building with Yocto.
 
-  SYSTEMD_SERVICE_${PN} += " rotate-event-logs.service 
-rotate-event-logs.timer"
+Here is an example of how I got libpeci working for the host-error-monitor =
+to pass CI:=20
+https://gerrit.openbmc-project.xyz/c/openbmc/host-error-monitor/+/32545/1/C=
+MakeLists.txt.
 
-We can apply a similar change to one or both of these upstream recipes. 
-Or, is this a candidate for meta-phosphor?
-
-> 
-> Can I choose one over the other instead of having them build upon eachother?
-> 
+>=20
+>=20
+> make[2]: *** [CMakeFiles/cpuinfoapp.dir/build.make:63:=20
+> CMakeFiles/cpuinfoapp.dir/src/cpuinfo_main.cpp.o] Error 1
+> make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/cpuinfoapp.dir/all]=20
+> Error 2
+> make[1]: *** Waiting for unfinished jobs....
+> In file included from /home/jenkins-slave/workspace/ci-repository/openbmc=
+/smbios-mdr/src/cpu.cpp:17:
+> /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/include/cp=
+u.hpp:113:17: error: =E2std::string phosphor::smbios::Cpu::processorSocket(=
+std::string)=E2 marked =E2override=E2, but does not override
+>    113 |     std::string processorSocket(std::string value) override;
+>=20
+> This appears to be a case where the current phosphor-dbus-interfaces=20
+> doesn't match whatever your commit is trying to do.  You've got=20
+> additional methods for handling dbus properties, but those properties=20
+> do not exist in phosphor-dbus-interface's Cpu interface.
+>=20
+> I suspect you're trying to implement
+> xyz/openbmc_project/Inventory/Item/Cpu, which has a 'Socket' property=20
+> but not a 'ProcessorSocket'.  If I recall, this happened in the code=20
+> review where the "Processor" part was requested to be removed since it=20
+> was redundant.
+>=20
+> There are a number of other properties in your compile fail that need=20
+> similar updating.
+>=20
