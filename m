@@ -1,102 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B13825B34F
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:03:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D69125B3B0
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:25:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BhWxz01f6zDr0f
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:03:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BhXRr4YX9zDr27
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:25:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=HThNYyJP; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BhWwy6KTzzDqf6
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 04:02:10 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 082I208l165604; Wed, 2 Sep 2020 14:02:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=g4W7HbxdWHhmIGhflqKfIrGFbRYmc97Y5ejt1PsAFrE=;
- b=HThNYyJPNMLyKZYhctyvdRUHy3/Zz4SfD7zhU20DDY4CA0lCzbLhOSFLw/ABjSFn+PN4
- HJjDMqsMU+emmFR4S54JW9vuw/I5XUf/lYEy2zUJQYBj2ZzjmzWOGBJb6WSWxIW6FoBv
- f8vTMEiJ/zXYXfK5sYe8I3uPCu9bsYxZg2FI51i8/btpn8nXhY/ofNEEE3xZIrchEaX5
- SKYiE0UQfetnMUqiquahXOgKb1CuLHielLaT82+SfzFcJE5T5cofWNsqbLDwnNVhuj5r
- n+o4puLw2fNO4JKVPy85CumIJZ01W8cEd2lo1Nau2krbVJMlNcrtDJZVGBBS4yNqCIxu RQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 33ag61879r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2020 14:02:07 -0400
-Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 082I20fS165680;
- Wed, 2 Sep 2020 14:02:06 -0400
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 33ag61879c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2020 14:02:06 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 082HwAeA022364;
- Wed, 2 Sep 2020 18:02:05 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma02dal.us.ibm.com with ESMTP id 337ena27t2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 02 Sep 2020 18:02:05 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
- [9.57.199.106])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 082I21u252101550
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 2 Sep 2020 18:02:01 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 520822805C;
- Wed,  2 Sep 2020 18:02:01 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E1D932805E;
- Wed,  2 Sep 2020 18:02:00 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.80.201.154])
- by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS;
- Wed,  2 Sep 2020 18:02:00 +0000 (GMT)
-Subject: Re: Disable specific URLs in bmcweb
-To: Ed Tanous <ed@tanous.net>, Richard Hanley <rhanley@google.com>
-References: <98b9d39aa9004df78f8072ee6bdf4901@quantatw.com>
- <CACWQX82NP+SPyHoPhkri=3eT+7jJYqmuTdwcTy2qDV0mTzrWkw@mail.gmail.com>
- <CAH1kD+bHghGN_Gy-rXNyOZuyYJm585GK9KVCp0YOH-z8TOsnVQ@mail.gmail.com>
- <CACWQX81tzqMcYrGYFVQaF3O7zE8wsLjV-3XKx1FQ2pWZEs0JDg@mail.gmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <3bb7f5d7-ad1d-58f3-740e-c2769c4ca964@linux.ibm.com>
-Date: Wed, 2 Sep 2020 13:02:00 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.10.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhXQz3hzSzDqx2
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 04:24:41 +1000 (AEST)
+IronPort-SDR: KRqWRK1YU0ZBvEQOU8IHxqGe8qG2vLObdMLuXwnNplE+gtW778naRaoiM2KYG6v5KR+p3nMliX
+ XUIna5rYMIxQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="136974442"
+X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="136974442"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2020 11:24:37 -0700
+IronPort-SDR: 6Rj+bATD+BkLDPH1fu344TehGS28+kQ9DIXHZNIyS5Kv3K6KCOrF8h1WXPf8cO9Y4l/bbZp6zT
+ r0AWdRyHTXPg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="331520541"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga008.jf.intel.com with ESMTP; 02 Sep 2020 11:24:37 -0700
+Received: from [10.212.148.106] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.148.106])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 1D9C758010E
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 11:24:37 -0700 (PDT)
+Subject: Re: Need update CI build config for new repo smbios-mdr.
+To: openbmc@lists.ozlabs.org
+References: <SN6PR11MB35203BE16B23BAD1193FCB9F90550@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <5a9a43046be525f9ed5d23bc40eac14d4ed8d53c.camel@fuzziesquirrel.com>
+ <SN6PR11MB35205154DB67E625EF74388A90510@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200901162333.GT3532@heinlein> <20200901164139.GV3532@heinlein>
+ <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200902154944.GW3532@heinlein>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <5e9cb6fe-ae95-422b-2d06-1ad2db40916e@linux.intel.com>
+Date: Wed, 2 Sep 2020 11:24:36 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CACWQX81tzqMcYrGYFVQaF3O7zE8wsLjV-3XKx1FQ2pWZEs0JDg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200902154944.GW3532@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-02_12:2020-09-02,
- 2020-09-02 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- bulkscore=0 adultscore=0 malwarescore=0 clxscore=1011 priorityscore=1501
- suspectscore=0 impostorscore=0 spamscore=0 mlxscore=0 phishscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2009020167
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,88 +69,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?QWxhbiBLdW8gKOmDreaMr+e2rSk=?= <Alan_Kuo@quantatw.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/2/20 12:46 PM, Ed Tanous wrote:
-> On Wed, Sep 2, 2020 at 9:57 AM Richard Hanley <rhanley@google.com> wrote:
->> Hi Ed,
+
+
+On 9/2/2020 8:49 AM, Patrick Williams wrote:
+> On Wed, Sep 02, 2020 at 02:02:00AM +0000, Wang, Kuiying wrote:
+>> Hi Williams,
+>> The key thing is sdbusplus interface is not match.
+>> You could config CI based on this patch https://gerrit.openbmc-project.xyz/#/c/openbmc/smbios-mdr/+/36011/
+>> That's ok, if it can pass the build.
 >>
->> In this particular case, I think Alan is talking about disabling the POST for certain resources, effectively making them readonly. One example I remember talking to him about was disabling the addition of new users via bmcweb.
+>> Thanks,
+>> Kwin.
 >>
-> Gotcha.
->
-> In that particular case, Redfish PrivilegeRegistry schema is probably
-> what you're looking for.  To handle that specific case, you would add
+> 
+> Here is a snippet of the compile log:
+> 
+> /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/src/cpuinfo_main.cpp:34:10: fatal error: peci.h: No such file or directory
+>     34 | #include <peci.h>
+>        |          ^~~~~~~~
+> compilation terminated.
+> 
+> 
+> This one might be a missing dependency?  Where is 'peci.h' from?  Is it
+> from a kernel header for the ioctls or some other repository?  Do you
+> need to stub this out when building on x86?
+peci.h comes from libpeci which needs to be pulled in as an 
+ExternalProject in CMake when not building with Yocto.
 
-Here is an alternate solution: use the administrator account (currently 
-"root") to create a new user with the Operator role, then use that new 
-account and discontinue using the Administrator account.Â  For example 
-(change the password):
+Here is an example of how I got libpeci working for the 
+host-error-monitor to pass CI: 
+https://gerrit.openbmc-project.xyz/c/openbmc/host-error-monitor/+/32545/1/CMakeLists.txt.
 
-|curl -x POST https://${bmc}/redfish/v1/AccountService/Accounts/ -d 
-'{"UserName": "joeoperator", "Password": "0penBmc1", "RoleId": "Operator"}'|
-
-- Joseph
-
-> a mapping that looks like:
->          {
->              "Entity": "ManagerAccount",
->              "OperationMap": {
->                  "GET": [
->                      {
->                          "Privilege": [
->                              "Login"
->                          ]
->                      }
->                  ],
->                  "HEAD": [
->                      {
->                          "Privilege": [
->                              "Login"
->                          ]
->                      }
->                  ],
->                  "PATCH": [
->                      {
->                          "Privilege": []
->                      }
->                  ],
->                  "POST": [
->                      {
->                          "Privilege": [,
->                  "PUT": [
->                      {
->                          "Privilege": []
->                      }
->                  ],
->                  "DELETE": [
->                      {
->                          "Privilege": []
->                      }
->                  ]
->              }
->          },
->
-> I don't believe there's an implementation of PrivilegeRegistry for
-> bmcweb today, although we kept it in mind (ish) when we built the
-> privileges system.  If you want to chat more about how you could add
-> it, I'm happy to talk more specifics with you.
->
-> -Ed
->
->> - Richard
->>
->> On Tue, Sep 1, 2020 at 10:55 PM Ed Tanous <ed@tanous.net> wrote:
->>> On Tue, Sep 1, 2020 at 10:40 PM Alan Kuo (éƒ­æŒ¯ç¶­) <Alan_Kuo@quantatw.com> wrote:
->>>> Are there some configuration files in bmcweb that can be used to disable specific URLs and HTTP methods ?
->>>>
->>> There are compile time options that can disable features (and
->>> therefore URLs associated).  They're listed in the CMakeLists.txt
->>> file.
->>>
->>> As far as disabling particular methods, why are you wanting to disable
->>> them?  It seems odd to want to disable a few particular HTTP verbs.
-
+> 
+> 
+> make[2]: *** [CMakeFiles/cpuinfoapp.dir/build.make:63: CMakeFiles/cpuinfoapp.dir/src/cpuinfo_main.cpp.o] Error 1
+> make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/cpuinfoapp.dir/all] Error 2
+> make[1]: *** Waiting for unfinished jobs....
+> In file included from /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/src/cpu.cpp:17:
+> /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/include/cpu.hpp:113:17: error: âstd::string phosphor::smbios::Cpu::processorSocket(std::string)â marked âoverrideâ, but does not override
+>    113 |     std::string processorSocket(std::string value) override;
+> 
+> This appears to be a case where the current phosphor-dbus-interfaces
+> doesn't match whatever your commit is trying to do.  You've got
+> additional methods for handling dbus properties, but those properties do
+> not exist in phosphor-dbus-interface's Cpu interface.
+> 
+> I suspect you're trying to implement
+> xyz/openbmc_project/Inventory/Item/Cpu, which has a 'Socket' property
+> but not a 'ProcessorSocket'.  If I recall, this happened in the code
+> review where the "Processor" part was requested to be removed since it
+> was redundant.
+> 
+> There are a number of other properties in your compile fail that need
+> similar updating.
+> 
