@@ -2,71 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F9C025B32A
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 19:47:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33ED225B347
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:00:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BhWcV5TCgzDqj1
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 03:47:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BhWtY3Db0zDr1F
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:00:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=j012eMvA; dkim-atps=neutral
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
- [IPv6:2607:f8b0:4864:20::b30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BhWbg0z0HzDqj1
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 03:47:08 +1000 (AEST)
-Received: by mail-yb1-xb30.google.com with SMTP id r7so91228ybl.6
- for <openbmc@lists.ozlabs.org>; Wed, 02 Sep 2020 10:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=8WU1d1E5AY9M99kOkBe+v/96gWJBLYzNC0iThEEXBhk=;
- b=j012eMvAW1KpGLzzpvtySmOmdJIvNB+TCCGs8zdq7Nm/Fk9LrIWBVymzE1oanRtVjI
- 6oEQ/vO42fTzfIhWdBeLvIWx1DtK0eushZabPn8WBXCb4GMzu2T2mlBeC1Rjg8qhD1Hj
- nHr203rC6N+H+3aHNGqEF7+Bd+KsdNdgoHKVPXhzmntoVAXyvUJGRogefcqRwAoO/q3a
- LAE5T76Q1iwCyqN5x2YS2cW47ZIjeZcJSaQdMtfWqTry3zkV6hM03soERdkl1XR/Yzei
- rNeEruUceiQ7ifLoLPhGV3gj/YKEf8cUHkYZ1r9C7Y84q3qpT7QedqGIJjNQETuqHlMI
- spvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=8WU1d1E5AY9M99kOkBe+v/96gWJBLYzNC0iThEEXBhk=;
- b=f1fxMEpHdkrjgJ95TrMULrFDPVWa/gjkyxYGsOhiHt6IPGa165wNGozDMbDyrBhzcq
- MWUmIxHrXCofOBs+cNamxpiIEkSZVSj4+U9xtzIHc03CKvf5832eZ5aZs/QrcpuZF/QM
- CVUzZlPT6y/IMvP2MptUzTBaVOaytE5Ii6imqgzwLYGUwdT7xAINSnOweCajOFs4McDI
- 64c80jyS0qIuK1ohPdyLuMRuNg5ov9x7curYPa2a4PwX5pHbcb48eDDr3XymgUeVTcd+
- snVmgzF/McsD1/8WkhzReyWVU9mh9ZtiqUbyWeI73GOXWalpLx5GgyTzKXOghD5Lad8O
- u2PA==
-X-Gm-Message-State: AOAM530WYL2RdyQR6Hd4bFCiF6clIAa8qVuKkpHuix4n+3W+bkWlnUcK
- K7MDN9IcDzkT5WKkU9duzyCbSl/v2txXBkQii768Ow==
-X-Google-Smtp-Source: ABdhPJzMaZ1/0nEXPcd+j8uWDWrNBgBwDVXG3e45Cw2RWteRGjUdX1fKCQuf+1UIkPtH7xl1V8lDxSSKRmdk4ae+Hms=
-X-Received: by 2002:a25:f304:: with SMTP id c4mr10248887ybs.209.1599068824544; 
- Wed, 02 Sep 2020 10:47:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhWsd3KtJzDqwv
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 03:59:16 +1000 (AEST)
+IronPort-SDR: UN0rW6U4IfOfsO3JwFwZYXkKmKglX0nhKL+ILvfrjLb1eStu7nM4U9Gu5l/xqinjHlsqMqs40f
+ MKgBXNiahjVQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="157452502"
+X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="157452502"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2020 10:59:13 -0700
+IronPort-SDR: ejgsnMMBZBki00Jiu0bJ5Mw+WX2WW6Sz4vWhbFnrT9bcYqw69zzMnD0l5Dohp8qe4jmfhgnQHS
+ 3MhJ+n0LLVcQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="446607635"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.212.28.117])
+ ([10.212.28.117])
+ by orsmga004.jf.intel.com with ESMTP; 02 Sep 2020 10:59:13 -0700
+Subject: Re: Dealing with a sensor which doesn't have valid reading until host
+ is powered up
+To: Alex Qiu <xqiu@google.com>, Guenter Roeck <groeck@google.com>
+References: <CAA_a9xLk5JhUjEkiWka6LSXJ1gD-BcH0PqgENqroisDKEUyztA@mail.gmail.com>
+ <CAA_a9xJ54rpnKm0y+hrEG2YjuFzzhqKBEJbStsu4Q126APgbVg@mail.gmail.com>
+ <9129e6cf-76a8-deea-7e8c-1ac17cf45b4b@linux.intel.com>
+ <CAA_a9x+A+OkbdTW_M4KT=6eV982Lg_0PoWaYvW47c0Aoh676-w@mail.gmail.com>
+ <9679c401-28ce-3197-f871-2cccd2940885@linux.intel.com>
+ <CAA_a9xLXDPP-4SodzEnnASupm7GTtB_My+6GbPrtR9A0S23KLg@mail.gmail.com>
+ <CAA_a9x+dyj+K7Zr-3nPUoOp35WjVRjHDo7L0AJ2BSp6sV9M_bA@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <e9f84dab-54c2-d254-6767-14cfc2197318@linux.intel.com>
+Date: Wed, 2 Sep 2020 10:59:12 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.11.0
 MIME-Version: 1.0
-References: <98b9d39aa9004df78f8072ee6bdf4901@quantatw.com>
- <CACWQX82NP+SPyHoPhkri=3eT+7jJYqmuTdwcTy2qDV0mTzrWkw@mail.gmail.com>
- <CAH1kD+bHghGN_Gy-rXNyOZuyYJm585GK9KVCp0YOH-z8TOsnVQ@mail.gmail.com>
-In-Reply-To: <CAH1kD+bHghGN_Gy-rXNyOZuyYJm585GK9KVCp0YOH-z8TOsnVQ@mail.gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 2 Sep 2020 10:46:52 -0700
-Message-ID: <CACWQX81tzqMcYrGYFVQaF3O7zE8wsLjV-3XKx1FQ2pWZEs0JDg@mail.gmail.com>
-Subject: Re: Disable specific URLs in bmcweb
-To: Richard Hanley <rhanley@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAA_a9x+dyj+K7Zr-3nPUoOp35WjVRjHDo7L0AJ2BSp6sV9M_bA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,84 +67,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?QWxhbiBLdW8gKOmDreaMr+e2rSk=?= <Alan_Kuo@quantatw.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Peter Lundgren <peterlundgren@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>,
+ Josh Lehan <krellan@google.com>, Jason Ling <jasonling@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Sep 2, 2020 at 9:57 AM Richard Hanley <rhanley@google.com> wrote:
->
-> Hi Ed,
->
-> In this particular case, I think Alan is talking about disabling the POST=
- for certain resources, effectively making them readonly. One example I rem=
-ember talking to him about was disabling the addition of new users via bmcw=
-eb.
->
+On 8/31/2020 3:08 PM, Alex Qiu wrote:
+> Hi James,
+> 
+> I just came through this doc 
+> (https://www.boost.org/doc/libs/1_74_0/doc/html/boost_asio/overview/posix/stream_descriptor.html). 
+> Looks like that it's a terrible idea for hwmon driver to return EAGAIN 
+> for dbus-sensors. With that, I think the proper fix is also to use other 
+> errno instead in our driver, and this caveat should be probably 
+> documented somewhere.
+> 
 
-Gotcha.
+Hi Alex,
 
-In that particular case, Redfish PrivilegeRegistry schema is probably
-what you're looking for.  To handle that specific case, you would add
-a mapping that looks like:
-        {
-            "Entity": "ManagerAccount",
-            "OperationMap": {
-                "GET": [
-                    {
-                        "Privilege": [
-                            "Login"
-                        ]
-                    }
-                ],
-                "HEAD": [
-                    {
-                        "Privilege": [
-                            "Login"
-                        ]
-                    }
-                ],
-                "PATCH": [
-                    {
-                        "Privilege": []
-                    }
-                ],
-                "POST": [
-                    {
-                        "Privilege": [,
-                "PUT": [
-                    {
-                        "Privilege": []
-                    }
-                ],
-                "DELETE": [
-                    {
-                        "Privilege": []
-                    }
-                ]
-            }
-        },
+I hit something similar with peci where timeouts was causing the scan 
+loop to hang. I remembered that back when we were developing ipmbbridge 
+we hit something similar with i2c, and the work around was to use the 
+tcp socket instead 
+https://www.boost.org/doc/libs/1_74_0/doc/html/boost_asio/reference/ip__tcp/socket.html 
+as it could correctly handle the errors. This worked for me for the 
+CpuSensor and is a easy to implement change that might be worth trying 
+for other sensors 
+https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/36181.
 
-I don't believe there's an implementation of PrivilegeRegistry for
-bmcweb today, although we kept it in mind (ish) when we built the
-privileges system.  If you want to chat more about how you could add
-it, I'm happy to talk more specifics with you.
+Thanks
 
--Ed
-
-> - Richard
->
-> On Tue, Sep 1, 2020 at 10:55 PM Ed Tanous <ed@tanous.net> wrote:
->>
->> On Tue, Sep 1, 2020 at 10:40 PM Alan Kuo (=E9=83=AD=E6=8C=AF=E7=B6=AD) <=
-Alan_Kuo@quantatw.com> wrote:
->> >
->> > Are there some configuration files in bmcweb that can be used to disab=
-le specific URLs and HTTP methods ?
->> >
->> There are compile time options that can disable features (and
->> therefore URLs associated).  They're listed in the CMakeLists.txt
->> file.
->>
->> As far as disabling particular methods, why are you wanting to disable
->> them?  It seems odd to want to disable a few particular HTTP verbs.
+James
