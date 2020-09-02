@@ -2,62 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D69125B3B0
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:25:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 136DF25B41A
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 20:52:35 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BhXRr4YX9zDr27
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:25:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BhY340mmvzDr1g
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 04:52:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=eMWhA660; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=eMWhA660; 
+ dkim-atps=neutral
+X-Greylist: delayed 69 seconds by postgrey-1.36 at bilbo;
+ Thu, 03 Sep 2020 04:51:37 AEST
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BhXQz3hzSzDqx2
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 04:24:41 +1000 (AEST)
-IronPort-SDR: KRqWRK1YU0ZBvEQOU8IHxqGe8qG2vLObdMLuXwnNplE+gtW778naRaoiM2KYG6v5KR+p3nMliX
- XUIna5rYMIxQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="136974442"
-X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="136974442"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Sep 2020 11:24:37 -0700
-IronPort-SDR: 6Rj+bATD+BkLDPH1fu344TehGS28+kQ9DIXHZNIyS5Kv3K6KCOrF8h1WXPf8cO9Y4l/bbZp6zT
- r0AWdRyHTXPg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.76,383,1592895600"; d="scan'208";a="331520541"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga008.jf.intel.com with ESMTP; 02 Sep 2020 11:24:37 -0700
-Received: from [10.212.148.106] (jmbills-MOBL.amr.corp.intel.com
- [10.212.148.106])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 1D9C758010E
- for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 11:24:37 -0700 (PDT)
-Subject: Re: Need update CI build config for new repo smbios-mdr.
-To: openbmc@lists.ozlabs.org
-References: <SN6PR11MB35203BE16B23BAD1193FCB9F90550@SN6PR11MB3520.namprd11.prod.outlook.com>
- <5a9a43046be525f9ed5d23bc40eac14d4ed8d53c.camel@fuzziesquirrel.com>
- <SN6PR11MB35205154DB67E625EF74388A90510@SN6PR11MB3520.namprd11.prod.outlook.com>
- <20200901162333.GT3532@heinlein> <20200901164139.GV3532@heinlein>
- <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
- <20200902154944.GW3532@heinlein>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <5e9cb6fe-ae95-422b-2d06-1ad2db40916e@linux.intel.com>
-Date: Wed, 2 Sep 2020 11:24:36 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhY2205T6zDr0Q
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 04:51:37 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1599072695;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U80B7Dle62SzqXfv0kHeu6HI5pFvIJk69Aq2Z1wckFM=;
+ b=eMWhA660eek4fAul3Y3pZJ6rIRaJV73B2NfKFhpzoZqd2AoAtXkSCDv1ChU4RjJ5Mp1vAM
+ +FMxn2LFL/vK91+3muKNX51ySF9mzCtqz/VD1Ky6xhctCUVojHWGtDj6CuNsOMKLCvRD7O
+ NZCBW1ovZRvPqAY9A7c75HbVYbwIJ5U=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1599072695;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U80B7Dle62SzqXfv0kHeu6HI5pFvIJk69Aq2Z1wckFM=;
+ b=eMWhA660eek4fAul3Y3pZJ6rIRaJV73B2NfKFhpzoZqd2AoAtXkSCDv1ChU4RjJ5Mp1vAM
+ +FMxn2LFL/vK91+3muKNX51ySF9mzCtqz/VD1Ky6xhctCUVojHWGtDj6CuNsOMKLCvRD7O
+ NZCBW1ovZRvPqAY9A7c75HbVYbwIJ5U=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-228-PbM4lE_ZN6SrUnhI-VONDQ-1; Wed, 02 Sep 2020 14:50:04 -0400
+X-MC-Unique: PbM4lE_ZN6SrUnhI-VONDQ-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Wed, 2 Sep 2020 11:50:02 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Wed, 2 Sep 2020 11:50:02 -0700
+From: Patrick Voelker <Patrick_Voelker@phoenix.com>
+To: Ed Tanous <ed@tanous.net>, Patrick Williams <patrick@stwcx.xyz>
+Subject: RE: When building OpenBMC . . . ?
+Thread-Topic: When building OpenBMC . . . ?
+Thread-Index: AdZ/GJ+lFWuwSqbeSoqGTbguwoelIQBfNdqAAAffPIAAKQSfMA==
+Date: Wed, 2 Sep 2020 18:50:01 +0000
+Message-ID: <2249bb47512947dab406345cfee1206d@SCL-EXCHMB-13.phoenix.com>
+References: <c9737b1c67174a4fa9666b1d8afde380@SCL-EXCHMB-13.phoenix.com>
+ <20200901122409.GQ3532@heinlein>
+ <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
+In-Reply-To: <CACWQX83AjdYMXYzsjed0p6GgEMBb18CtC9qb-9OPcU8HbzK7Bw@mail.gmail.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [50.39.166.255]
 MIME-Version: 1.0
-In-Reply-To: <20200902154944.GW3532@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=patrick_voelker@phoenix.com
+X-Mimecast-Spam-Score: 0.001
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,60 +96,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Bruce Mitchell <Bruce_Mitchell@phoenix.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+SSdtIGdpdmluZyB0aGUgZmlyc3Qgb3B0aW9uIGJlbG93IGEgdHJ5LiAgSSd2ZSBkZWZpbmVkIGFu
+IGFsdGVybmF0aXZlIHZhcmlhbnQgYW5kIGhhdmUgaW5jbHVkZWQgdGhlIG1ldGEtZmFjZWJvb2sv
+bWV0YS10aW9nYXBhc3MgbGF5ZXIgaW4gbXkgYnVpbGQuDQoNCk9uZSBwcm9ibGVtIEknbSBydW5u
+aW5nIGludG8gaXMgdGhhdCBtZXRhLXRpb2dhcGFzcyBpbmNsdWRlcyBhIHJzeXNsb2cqLmJiYXBw
+ZW5kIGFuZCBvbmUgb2YgdGhlIG90aGVyIGxheWVycyBJJ20gdXNpbmcgYWxzbyBoYXMgYSBzaW1p
+bGFyIHJzeXNsb2cqLmJiYXBwZW5kLg0KDQpFYWNoIGRvIGFuIGFwcGVuZCB0byBkb19pbnN0YWxs
+KCkgYW5kIGVhY2ggb25lIHRyaWVzIHRvIHJlbW92ZSAke0R9JHtzeXNjb25mZGlyfS9yc3lzbG9n
+LmQvaW1qb3VybmFsLmNvbmYuICBPZiBjb3Vyc2UgdGhhdCBmaWxlIGNhbiBvbmx5IGJlIHJlbW92
+ZWQgb25jZSBzbyB0aGUgYnVpbGQgZmFpbHMuDQoNCk15IHF1ZXN0aW9uIG5vdywgaXMgd2hhdCdz
+IHRoZSBiZXN0IHdheSB0byB3b3JrIGFyb3VuZCB0aGlzPyAgSSBkb24ndCBuZWVkIHJzeXNsb2cg
+ZnJvbSBtZXRhLXRpb2dhcGFzcywganVzdCB0aGUgbWFjaGluZSBzcGVjaWZpY3MuDQoNCg0KPiAt
+LS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBvcGVuYm1jIFttYWlsdG86b3BlbmJt
+Yy0NCj4gYm91bmNlcytwYXRyaWNrX3ZvZWxrZXI9cGhvZW5peC5jb21AbGlzdHMub3psYWJzLm9y
+Z10gT24gQmVoYWxmIE9mIEVkDQo+IFRhbm91cw0KPiBTZW50OiBUdWVzZGF5LCBTZXB0ZW1iZXIg
+MSwgMjAyMCA5OjEwIEFNDQo+IFRvOiBQYXRyaWNrIFdpbGxpYW1zDQo+IENjOiBCcnVjZSBNaXRj
+aGVsbDsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+IFN1YmplY3Q6IFJlOiBXaGVuIGJ1aWxk
+aW5nIE9wZW5CTUMgLiAuIC4gPw0KPiANCjxzbmlwPg0KPiA+ICMxIHNob3VsZCBnbyBpbnRvIG1l
+dGEtcGhvZW5peC4gIFlvdSdyZSBsaWtlbHkgdGhlIGZpcnN0IG9uZSBkb2luZyB0aGlzLA0KPiA+
+IHNvIHdlIG1heSBuZWVkIHNvbWUgZXhwZXJpbWVudGF0aW9uIG9uIHRoZSBiZXN0IG9wdGlvbi4g
+IEkgaGF2ZSB0d28NCj4gPiBpZGVhcyAodGhlcmUgYXJlIHByb2JhYmx5IG90aGVycyk6DQo+ID4N
+Cj4gPiAgICogTWFrZSBhbiBhbHRlcm5hdGl2ZSB0aW9nYXBhc3MgdmFyaWFudCwgbGlrZSB0aW9n
+YXBhc3MtcGhvZW5peCwgd2hpY2gNCj4gPiAgICAgZW5kcyB1cCBpbmNsdWRpbmcgYWxsIHRoZSBj
+b21tb24gdGlvZ2FwYXNzIGNvZGUgZnJvbSBtZXRhLWZhY2Vib29rLg0KPiA+DQo+ID4gICAqIENy
+ZWF0ZSBhIG5ldyBkaXN0cm8gdHlwZSBmb3IgcGhvZW5peCwgd2hpY2ggZW5oYW5jZXMgdGhlIHVu
+ZGVybHlpbmcNCj4gPiAgICAgb3BlbmJtYyBkaXN0cmlidXRpb24gd2l0aCB5b3VyIG93biBicmFu
+ZGluZyB0d2Vha3MuICBZb3UnZCBzdGlsbA0KPiA+ICAgICBidWlsZCBtZXRhLWZhY2Vib29rL3Rp
+b2dhcGFzcyBidXQgd2l0aCBhIGRpZmZlcmVudCBkaXN0cm8gZmxhdm9yLg0KPiANCj4gVGhpcyBv
+bmUgd291bGQgYmUgbXkgdm90ZSBiZXR3ZWVuIHRoZSB0d28sIGFuZCBJIHRoaW5rIHRoZXJlJ3MN
+Cj4gcHJlY2VkZW50IHdpdGggb3RoZXIgY29tcGFuaWVzIGRvaW5nIHNpbWlsYXIgdGhpbmdzLiAg
+SXNuJ3QgdGhpcyB0aGUNCj4gd2F5IHlvY3RvIHJlY29tbWVuZHM/DQo=
 
-
-On 9/2/2020 8:49 AM, Patrick Williams wrote:
-> On Wed, Sep 02, 2020 at 02:02:00AM +0000, Wang, Kuiying wrote:
->> Hi Williams,
->> The key thing is sdbusplus interface is not match.
->> You could config CI based on this patch https://gerrit.openbmc-project.xyz/#/c/openbmc/smbios-mdr/+/36011/
->> That's ok, if it can pass the build.
->>
->> Thanks,
->> Kwin.
->>
-> 
-> Here is a snippet of the compile log:
-> 
-> /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/src/cpuinfo_main.cpp:34:10: fatal error: peci.h: No such file or directory
->     34 | #include <peci.h>
->        |          ^~~~~~~~
-> compilation terminated.
-> 
-> 
-> This one might be a missing dependency?  Where is 'peci.h' from?  Is it
-> from a kernel header for the ioctls or some other repository?  Do you
-> need to stub this out when building on x86?
-peci.h comes from libpeci which needs to be pulled in as an 
-ExternalProject in CMake when not building with Yocto.
-
-Here is an example of how I got libpeci working for the 
-host-error-monitor to pass CI: 
-https://gerrit.openbmc-project.xyz/c/openbmc/host-error-monitor/+/32545/1/CMakeLists.txt.
-
-> 
-> 
-> make[2]: *** [CMakeFiles/cpuinfoapp.dir/build.make:63: CMakeFiles/cpuinfoapp.dir/src/cpuinfo_main.cpp.o] Error 1
-> make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/cpuinfoapp.dir/all] Error 2
-> make[1]: *** Waiting for unfinished jobs....
-> In file included from /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/src/cpu.cpp:17:
-> /home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/include/cpu.hpp:113:17: error: âstd::string phosphor::smbios::Cpu::processorSocket(std::string)â marked âoverrideâ, but does not override
->    113 |     std::string processorSocket(std::string value) override;
-> 
-> This appears to be a case where the current phosphor-dbus-interfaces
-> doesn't match whatever your commit is trying to do.  You've got
-> additional methods for handling dbus properties, but those properties do
-> not exist in phosphor-dbus-interface's Cpu interface.
-> 
-> I suspect you're trying to implement
-> xyz/openbmc_project/Inventory/Item/Cpu, which has a 'Socket' property
-> but not a 'ProcessorSocket'.  If I recall, this happened in the code
-> review where the "Processor" part was requested to be removed since it
-> was redundant.
-> 
-> There are a number of other properties in your compile fail that need
-> similar updating.
-> 
