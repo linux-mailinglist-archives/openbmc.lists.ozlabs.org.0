@@ -2,47 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B89DA25A51B
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 07:39:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EA6325A52E
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 07:47:35 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BhCS05y3FzDqP4
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 15:39:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BhCdJ1G4WzDqbC
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 15:47:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
- envelope-from=prvs=507cc29b7=alan_kuo@quantatw.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::234;
+ helo=mail-lj1-x234.google.com; envelope-from=yulei.sh@bytedance.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=quantatw.com
-Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
- by lists.ozlabs.org (Postfix) with ESMTP id 4BhCRG3y1nzDqLx
- for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 15:38:46 +1000 (AEST)
-IronPort-SDR: /mjdcRIYvzvGzMve22ihNOQvhUHJGgXBBOLtlhstFW40Al0Dq/5WMlGW7HGfl+vWPOlZ2VKMH8
- TBu46ixBW3cQ==
-Received: from unknown (HELO mailbx07.quanta.corp) ([10.243.91.102])
- by mx02.quantatw.com with ESMTP; 02 Sep 2020 13:38:43 +0800
-Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx07.quanta.corp
- (10.243.91.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Wed, 2 Sep 2020
- 13:38:42 +0800
-Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
- ([192.168.57.11]) with mapi id 15.01.2044.004;
- Wed, 2 Sep 2020 13:38:42 +0800
-From: =?big5?B?QWxhbiBLdW8gKLOirra6+yk=?= <Alan_Kuo@quantatw.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Disable specific URLs in bmcweb
-Thread-Topic: Disable specific URLs in bmcweb
-Thread-Index: AdaA60/8H1etup8sTmSD3pVremFiRg==
-Date: Wed, 2 Sep 2020 05:38:42 +0000
-Message-ID: <98b9d39aa9004df78f8072ee6bdf4901@quantatw.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.243.91.252]
-Content-Type: multipart/alternative;
- boundary="_000_98b9d39aa9004df78f8072ee6bdf4901quantatwcom_"
+ dmarc=pass (p=none dis=none) header.from=bytedance.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=O72/0/l9; dkim-atps=neutral
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com
+ [IPv6:2a00:1450:4864:20::234])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhCcR08TszDqbC
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 15:46:43 +1000 (AEST)
+Received: by mail-lj1-x234.google.com with SMTP id w3so4364303ljo.5
+ for <openbmc@lists.ozlabs.org>; Tue, 01 Sep 2020 22:46:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=WRbh1872771d6vmCXi6NaHjC8BpI5GzKkN+A+PmICl4=;
+ b=O72/0/l9TOC+B+a+mFYygSC90FklfE9vjXgvL/oXyz7/MD86r6qqbqrqiTBB5W2hDL
+ 3RhAOS9NL9+5TcdPfoequQSXquGmGAjEpToRsutgxkXWBfDCLz5mf8Z/O62SVybqG4d7
+ NGeZQQMqT3fVc2kXtRWZGR6JbNql687cJZSRfmlQ3RCumbsGhsu4r4pHbvSM9cNsdCk0
+ ScRWuJaY0vcvE+74hktZZklZrhNXpYU98/0dLU1d/cCLOm4obLfcpbXkQ9nmmMXhoDg6
+ EGNp1PdZebFnGi9iFSCZdW48vRBykTB+xn6lkwYgbG6tvy/rM6KhnlLiDZW+8l5mejwb
+ gvrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=WRbh1872771d6vmCXi6NaHjC8BpI5GzKkN+A+PmICl4=;
+ b=PZj/K98v4pUX0nt3eroBhTBPB/e8nY1aT09WtVQDqrfEeXknqKrZtkrBa3BHTMTg67
+ 8LE5uuXrDHFmhGQelearkLfGs7UCRvK9sxX2vQP/lWgLhVdg2juQXlGUQAkS105TYHyN
+ qC+9ZZccDktPvQcMZ62Ncvw+6l9CZ2jk9ugkKbt1aAXaSHmICyvQ0w3705JxXXFS9IVm
+ nbj4f192TzJniAQ55CFhMGVL1v9rZvwi84t0y71J4r6NNuaqilAb2iU7/a27BWXVC9z2
+ kjCUT1hW7teeiG1lc417bct+O/6gRw2BAZ/NIk1aZkgZxIsDUHyQhf+0I2XUpsYaKIkN
+ BN0g==
+X-Gm-Message-State: AOAM531dVxVq+NEI2tFrSxw99qSV9G3M903oBUlUpRazPogdhSexn63e
+ p9I71t5PTWLGLcwVdKYIp64EATeGTo4hMqSDYKF1TA==
+X-Google-Smtp-Source: ABdhPJwDpuBcxgXuiGDZIyWhUey97T2rLz/MWmna+ygYpLtdMm4q//OTl/NTe+yKcLpfGEl2JxSyMXwlcV6bZD8B0CU=
+X-Received: by 2002:a2e:b543:: with SMTP id a3mr2445626ljn.19.1599025596371;
+ Tue, 01 Sep 2020 22:46:36 -0700 (PDT)
 MIME-Version: 1.0
+References: <SN6PR11MB35203BE16B23BAD1193FCB9F90550@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <5a9a43046be525f9ed5d23bc40eac14d4ed8d53c.camel@fuzziesquirrel.com>
+ <SN6PR11MB35205154DB67E625EF74388A90510@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200901162333.GT3532@heinlein> <20200901164139.GV3532@heinlein>
+ <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
+In-Reply-To: <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
+From: =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>
+Date: Wed, 2 Sep 2020 13:46:25 +0800
+Message-ID: <CAGm54UFR1rk4F19ucr6N0kS69k405YWa=8XDuaCyLUchKgM-Xg@mail.gmail.com>
+Subject: RE: Need update CI build config for new repo smbios-mdr.
+To: "Wang, Kuiying" <kuiying.wang@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,89 +78,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_98b9d39aa9004df78f8072ee6bdf4901quantatwcom_
-Content-Type: text/plain; charset="big5"
-Content-Transfer-Encoding: base64
+On Wed, Sep 2, 2020 at 10:04 AM Wang, Kuiying <kuiying.wang@intel.com> wrote:
+>
+> Hi Williams,
+> The key thing is sdbusplus interface is not match.
 
-SGksDQoNCkFyZSB0aGVyZSBzb21lIGNvbmZpZ3VyYXRpb24gZmlsZXMgaW4gYm1jd2ViIHRoYXQg
-Y2FuIGJlIHVzZWQgdG8gZGlzYWJsZSBzcGVjaWZpYyBVUkxzIGFuZCBIVFRQIG1ldGhvZHMgPw0K
-DQpUaGFua3MsDQpBbGFuDQo=
+The sdbusplus in openbmc-build-scripts always pick the latest one [1],
+so I would guess that smbios-mdr is not using the latest sdbusplus.
+Could you check that?
 
---_000_98b9d39aa9004df78f8072ee6bdf4901quantatwcom_
-Content-Type: text/html; charset="big5"
-Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Are there some configuration fi=
-les in bmcweb that can be used to disable specific URLs and HTTP methods ?<=
-o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Alan<o:p></o:p></span></p>
-</div>
-</body>
-</html>
-
---_000_98b9d39aa9004df78f8072ee6bdf4901quantatwcom_--
+[1]: https://github.com/openbmc/openbmc-build-scripts/blob/master/build-unit-test-docker.sh#L54
