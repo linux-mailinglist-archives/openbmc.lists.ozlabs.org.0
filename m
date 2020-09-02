@@ -2,90 +2,132 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B70825A1CC
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 01:08:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0167B25A2D4
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 04:04:30 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bh2mz2CbHzDqP0
-	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 09:08:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bh6gw11sJzDqbw
+	for <lists+openbmc@lfdr.de>; Wed,  2 Sep 2020 12:04:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mga05.intel.com;
+ envelope-from=kuiying.wang@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=us.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=FpuUobF9; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
+ header.b=xNcWnUMg; dkim-atps=neutral
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bh2mC3MTBzDqJV
- for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 09:07:54 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 081N0o5J132819
- for <openbmc@lists.ozlabs.org>; Tue, 1 Sep 2020 19:07:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : mime-version : references : content-transfer-encoding :
- content-type : message-id : subject; s=pp1;
- bh=33j4zCmBEILDO/utovpcKcWUpDNhQ+kXzgT1H972f20=;
- b=FpuUobF9wlUGHizqJor0oxMYo/mRVuIqVszdity7FH7/khMU81K1u+Se2yHaBqS4g08e
- lg18g5qOItkB2p93bX9FIWNhI6pteVGq8npq0HaAFZMLMdk3O0IuqX7a49NnR3Yts8yN
- c2DmmT3fja1A0FTqQ22qiR88QQFxy+M/HwyBx4jswP7m4fnWKJ5/kVVvAguA5wjeOnJa
- oQKg3hwluvC4g2lGVFMVjvmi93cCtKf4OADvdGoty6BaqPckVzfP7SX/VKN79KUEz/N3
- WxtbOPiNpBlXJmaSBRzhrUQK0WuW545kxM+JQOcomly+DI9UuQ7cnJsdDg3RU4q+KKP1 IA== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.81])
- by mx0b-001b2d01.pphosted.com with ESMTP id 339y5r8p7v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 01 Sep 2020 19:07:50 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Tue, 1 Sep 2020 23:07:49 -0000
-Received: from us1a3-smtp01.a3.dal06.isc4sb.com (10.106.154.95)
- by smtp.notes.na.collabserv.com (10.106.227.88) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 1 Sep 2020 23:07:46 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp01.a3.dal06.isc4sb.com
- with ESMTP id 2020090123074605-937455 ;
- Tue, 1 Sep 2020 23:07:46 +0000 
-In-Reply-To: <20200901123506.GR3532@heinlein>
-From: "Milton Miller II" <miltonm@us.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bh6g30mL7zDqTx
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Sep 2020 12:03:41 +1000 (AEST)
+IronPort-SDR: 9jvCcmPgLeN70U0pr4Lkgg9EY4fK9tCKnA9CQ5Kz4zPtOxl5mbsKSV5Ob0Zs5MZfNCp337g6X5
+ ynOkFn5ky3WQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9731"; a="242125760"
+X-IronPort-AV: E=Sophos;i="5.76,381,1592895600"; d="scan'208";a="242125760"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Sep 2020 19:03:37 -0700
+IronPort-SDR: rcv7AI/UVSkmihTCkS39uUj5I8OMvcNYhWhYV6apTepI8aTfOnkDYncvwAQdWvf5aMC7l6K405
+ 2GtmqG+KDrTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,381,1592895600"; d="scan'208";a="375369633"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by orsmga001.jf.intel.com with ESMTP; 01 Sep 2020 19:03:38 -0700
+Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Tue, 1 Sep 2020 19:02:09 -0700
+Received: from fmsmsx106.amr.corp.intel.com (10.18.124.204) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1713.5
+ via Frontend Transport; Tue, 1 Sep 2020 19:02:09 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ FMSMSX106.amr.corp.intel.com (10.18.124.204) with Microsoft SMTP Server (TLS)
+ id 14.3.439.0; Tue, 1 Sep 2020 19:02:02 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.108)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1713.5; Tue, 1 Sep 2020 19:02:02 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=E9Tkmue7/CKFwMCI1BvSXO95eOGFRfZ4d+TwA2371oGob45fVHj/uOUxl4G4Jqi/5EC7vmMpW13kNHs5eKxuzmIyJM+PMVlarOnJfq7J1HU/7W2Pi1Y8qWX/N8NFf3mGuhS4Ej3DpS/NsrqhlveKKndjJzbIYHATZNTS7qIw4TiXfpXFpqFVvMsjhPwHKRACnfRKlKuLb770h6q+RMFhGTBFGmMz7Iz4KiS2oHoOdzUwiTZv1w2H1bo9FuxMlwO0HlvzM/TmHGsL3RAouAaJ+j//+soelKbyAnEztW5uQAS9tHHE+W7deEC8mI2htJLHATpa5QodlJmnNIVcMvActw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G3GFuwOFhgrXnMSxaZBnbqa59TgxY3+OqZFzFvljL7Y=;
+ b=eX3e1LsT1U9zVaP2n53iuFyWAvJ3HqzcIDX9uHjJxj3zUqUHsIE5PMCUdS0PaQG/CBrF8ForcN7Pcq5oPrfIiyWCJjjojtFsZYURMsppZZGapb1R3iVwNJ8Q9u6rF3OZ2pOGnWeQeSsZfe3LHujzxDEne+LE/Qfb89Jd/32A4TklFRzwnYW4XTBqwPV/UtCNEfBLMUdibMTVBo0ZFg0lHcFPHDVEOKG513BYNa0oXy9CjtHWq0IhNi6pyRl28ZL4FSyzxMkdkOZXrLybEo02QFF8zmNrA9OIfnW8ER+NOTlnP8oD8qvGW4eT38gCxaNsFFjtHskasMOidg5Gq8ZwrA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G3GFuwOFhgrXnMSxaZBnbqa59TgxY3+OqZFzFvljL7Y=;
+ b=xNcWnUMgfODjxdE1quIHYMYsGNwcGXLsiaaChF5ch8RNvw1yowK8P3boFDy+gqJAiMxLtgnOwBhk/zNXwvo7LqTij3IXt8bvdF0eilmwdnkRfToJr4P+Y0cjNPLN1mXyEhfJll7kBHu8aUpU5pcZhmAkSQS1C8iH97b/egq5qlo=
+Received: from SN6PR11MB3520.namprd11.prod.outlook.com (2603:10b6:805:cf::12)
+ by SN6PR11MB3230.namprd11.prod.outlook.com (2603:10b6:805:b8::29)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3348.15; Wed, 2 Sep
+ 2020 02:02:01 +0000
+Received: from SN6PR11MB3520.namprd11.prod.outlook.com
+ ([fe80::d933:53ea:b87a:f917]) by SN6PR11MB3520.namprd11.prod.outlook.com
+ ([fe80::d933:53ea:b87a:f917%4]) with mapi id 15.20.3326.025; Wed, 2 Sep 2020
+ 02:02:01 +0000
+From: "Wang, Kuiying" <kuiying.wang@intel.com>
 To: Patrick Williams <patrick@stwcx.xyz>
-Date: Tue, 1 Sep 2020 23:07:45 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <20200901123506.GR3532@heinlein>,
- <BYAPR14MB2342C9C346B57B87F44E3200CF530@BYAPR14MB2342.namprd14.prod.outlook.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 9915
-X-TNEFEvaluated: 1
+Subject: RE: Need update CI build config for new repo smbios-mdr.
+Thread-Topic: Need update CI build config for new repo smbios-mdr.
+Thread-Index: AdZ8T8WMWe7UjTu1QQafCbbBYikJpQBJL32AAHDrLbAAUQMGgAAAodOAABNvhOA=
+Date: Wed, 2 Sep 2020 02:02:00 +0000
+Message-ID: <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
+References: <SN6PR11MB35203BE16B23BAD1193FCB9F90550@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <5a9a43046be525f9ed5d23bc40eac14d4ed8d53c.camel@fuzziesquirrel.com>
+ <SN6PR11MB35205154DB67E625EF74388A90510@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200901162333.GT3532@heinlein> <20200901164139.GV3532@heinlein>
+In-Reply-To: <20200901164139.GV3532@heinlein>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiYzIwOTBjNjktYzZmMi00ODhkLThiY2ItNTZjNzljYjdmNGE0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiaXlwVHlQUVh0TGVjbTdtNjl6QjZ2bzJ6WXpDOThZbkZ1allFV3BvaXU0NmZEK2xNODMxWjdiUUhEWk53dWxTZyJ9
+dlp-version: 11.5.1.3
+dlp-reaction: no-action
+dlp-product: dlpe-windows
+x-ctpclassification: CTP_NT
+authentication-results: stwcx.xyz; dkim=none (message not signed)
+ header.d=none;stwcx.xyz; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [192.55.46.46]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: b0dcd7c9-01b5-4615-af5c-08d84ee42e64
+x-ms-traffictypediagnostic: SN6PR11MB3230:
+x-microsoft-antispam-prvs: <SN6PR11MB32303EBBF8CC40375A0041BF902F0@SN6PR11MB3230.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: iTfwwXOou74nBfLDlAIgN546XhIxCs+r0b8Ib4LY9VAWbfr3OFkZloUFxlvUF+3u4I1tsWsSDuQ+5U3yqUqoEJf+rYU2atuzqq8LoUCaj2mUo4GCgPF0NLr3xXbuHuD43qrucsvTJm8tL44/VXQrHNiE2D1kDRcq+W1bqe5ZVdm/pAkLucrAxVOWsy9CTH8mcRLA5A3Uh2j9mEiRiGTfsIlrM94Tp/yV9XvlaOI5b+RNZZGiiNrJypVX6b7kL+KFl+8Gb9tEBmby495KIlkLFRFio1vPC9DEhe+wo/KZPp7nm26+ZMWq61MZUizzdI7ync+5xqTL1lsKh6kTRtJrT99Bn5J9b6iEdAQ7pfqOXUU1R7zr5ajVnxGHu+ll2uvefGEIRtOAIBd+TjZRzHk7YQ==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN6PR11MB3520.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(39860400002)(396003)(366004)(346002)(376002)(7696005)(52536014)(316002)(9686003)(6506007)(5660300002)(66556008)(76116006)(66476007)(53546011)(4326008)(64756008)(66446008)(71200400001)(33656002)(66946007)(966005)(26005)(86362001)(83380400001)(8676002)(55016002)(8936002)(15650500001)(6916009)(2906002)(54906003)(478600001)(186003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: 6f3kAa2HF2lxhiYu7NARyTilG4LqZPT9fx/noSjcXOtgY7ezLVR5VRi3NC/IvESIeVuxJJ81BYOlycfVg76mPdlswiPp7dW+1pv/SJJE6AqwvlrKhbOmRtfd/bQ7d5SAw8BelGiwz52mG1/NhnnIaQyHwUFhmMl8mx7QI3i5aKIq9p+qDxj8Biz0tOjEINyYaHksV8QCWZ4Zn0ZSA/Vox6Bxa3A2wY0hZneCx00TB8oZusAqSmE1ArQqTDT7VAVoZBuk42UYkVZeFNIy9cZBoAXNpngNDBDnwyF10fMsTIPkR07zJakw6wMiJvbShoKeYwqC1gn2dbq7PP+L6L3DWsQviHZDZzOOY0EwfupAcQ0omcsKprFer3+oEQER9rxIsFMddWWdaA+hYNmdZO7QSuwczKe5RhREsX6hT1kYgpgS6Z8G4bTD7Jvd2w5BVbYRee9+ZtUCbqk5Ybc/X4H5bG8WIJcatrw+BFmVQ4Y3DTAM0YTmCcZoFqVOUnxMg6pGwk1vArckDzUfPwv5VQcMH9YhGhCIoRu1+BjpQZARh/GQobZc+5zEPDFt0AbgcjsPNiG/g0TSFBqdMFTObxZOxlmddaDGdd+C5QumBJyxLorgVxuuoBF3O1/G0zi4I3GyJPjplsRLrnM5OyowIx0tFg==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20090123-3067-0000-0000-000003EFB750
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.268680
-X-IBM-SpamModules-Versions: BY=3.00013758; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01428699; UDB=6.00767032; IPR=6.01211425; 
- MB=3.00033828; MTD=3.00000008; XFM=3.00000015; UTC=2020-09-01 23:07:48
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-09-01 18:39:49 - 6.00011791
-x-cbparentid: 20090123-3068-0000-0000-0000C540BD59
-Message-Id: <OF007CF2C7.B7F26EA3-ON002585D6.007E6189-002585D6.007F0DAA@notes.na.collabserv.com>
-Subject: RE: SQUASHFS errors and OpenBMC hang
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-01_10:2020-09-01,
- 2020-09-01 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SN6PR11MB3520.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0dcd7c9-01b5-4615-af5c-08d84ee42e64
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Sep 2020 02:02:00.9286 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ePL8MnRT2uL+yNoQSGnIFtaUW1CWx8BD7v3iB6Jly8Hdav/nNf6iUTDellg4URO5cNlBG76VVQfab0Xwjztgqg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR11MB3230
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,137 +140,58 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Kun Zhao <zkxz@hotmail.com>
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On September 1, 2020 around 7:36AM in some timezone, Patrick Williams wrote:
->On Sat, Aug 29, 2020 at 12:40:31AM +0000, Kun Zhao wrote:
->> I=E2=80=99m working on validating OpenBMC on our POC system for a while,
->but starting from 2 weeks ago, the BMC filesystem sometimes report
->failures, and after that sometimes the BMC will hang after running
->for a while. It started to happen on one system and then on another.
->Tried to use programmer to re-flash, still see this issue. Tried to
->flash back to the very first known good OpenBMC image we built, still
->see the same symptoms. It seems like a SPI ROM failure. But when
->flash back the POC system original 3rd-party BMC, no such issue at
->all. Not sure if anyone ever met similar issues before?
->
->Yeah, this does look like a bad SPI NOR.  Have you tried flashing on
->a
->fresh image to the NOR and then reading it back to confirm all the
->bits
->keep their values?  It is possible that the corruption is hitting the
->other BMC code in a less-important location.
->
->> [ 3.372932] jffs2: notice: (78) jffs2=5Fget=5Finode=5Fnodes: Node header
->CRC failed at 0x3e0aa4. {1985,e002,0000004a,78280c2e}
->
->I'm surprised to see anyone using jffs2.  Don't we generally use
->ubifs
->in OpenBMC?  Is there a reason you've chosen to use jffs2?
->
->I don't necessarily think jffs2 will be better or worse in this
->particular scenario but we've seen lots of upgrade issues over the
->years
->with jffs2.
+Hi Williams,
+The key thing is sdbusplus interface is not match.
+You could config CI based on this patch https://gerrit.openbmc-project.xyz/=
+#/c/openbmc/smbios-mdr/+/36011/
+That's ok, if it can pass the build.
 
-The default layout is static partitions with squashfs over mtdblock=20
-for the read-only layer and jffs2 for the read-write layer.
+Thanks,
+Kwin.
 
-The ubifs option is opt-in and the code update supports two images=20
-so that a new image is always available.  These options should be=20
-orthogonal but in practice are probably tied in the code update=20
-repository.
+-----Original Message-----
+From: Patrick Williams <patrick@stwcx.xyz>=20
+Sent: Wednesday, September 2, 2020 12:42 AM
+To: Wang, Kuiying <kuiying.wang@intel.com>
+Cc: openbmc@lists.ozlabs.org; Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: Need update CI build config for new repo smbios-mdr.
 
-The third option is eMMC support on the sdhci controller.  This=20
-was prototyped on ast2500 and in use on the ast2600.
+Also, a few minor comments on your proposed dependencies.
 
-There are some differences in the overlay strategy in the current=20
-builds but I will support anyone willing to test to merge the new=20
-limited writable directories from ubifs and emmc to the static mtd=20
-layout.   This means I'm willing to update the init scripts.
+On Tue, Sep 01, 2020 at 11:23:33AM -0500, Patrick Williams wrote:
+> On Mon, Aug 31, 2020 at 01:45:17AM +0000, Wang, Kuiying wrote:
+> >  DEPENDS +=3D " \
+> >      autoconf-archive-native \
 
->
->> BMC debug console shows the same SQUASHFS error as above, by
->checking filesystem usage we could see rwfs usage keep increasing
->like this,
->>=20
->> root@dgx:~# df
->> Filesystem 1K-blocks Used Available Use% Mounted on
->> dev 212904 0 212904 0% /dev
->> tmpfs 246728 20172 226556 8% /run
->> /dev/mtdblock4 22656 22656 0 100% /run/initramfs/ro
->> /dev/mtdblock5 4096 880 3216 21% /run/initramfs/rw
->> cow 4096 880 3216 21% /
->> tmpfs 246728 8 246720 0% /dev/shm
->> tmpfs 246728 0 246728 0% /sys/fs/cgroup
->> tmpfs 246728 0 246728 0% /tmp
->> tmpfs 246728 8 246720 0% /var/volatile
->>=20
->> and can see more and more ipmid coredump files,
->
->This implies to me that we need to adjust the systemd recovery for
->ipmid.  We shouldn't just keep re-launching the same process over and
->over after a coredump.  Systemd has some thresholding capability.
->
+Your repository appears to be cmake-based, so I don't think there is any re=
+ason for you to have autoconf-archive as a dependency.
 
-I've seen problems in the past where the squashfs image was bigger=20
-than the aloted space and it became partially overwritten by the=20
-jffs2 writable filesystem.   We added code that tries to catch this=20
-and have seen such reports but wanted to bring it up.  Also we don't=20
-support the host accessing the flash controller while linux is up in=20
-case your host is trying to flash the bmc bios (or even read it
-directly; all data must go through API such as IPMI or REST.
+> >      sdbusplus-native \
 
->> I found the following actions could trigger this failure,
->>=20
->>=20
->>   1.  do SSH login to BMC debug console remotely, it will show this
->error when triggered,
->> $ ssh root@<bmc ip>
->> ssh=5Fexchange=5Fidentification: read: Connection reset by peer
->>=20
->>=20
->>   1.  set BMC MAC address by fw=5Fsetenv in BMC debug console, reboot
->BMC, and do 'ip -a'.
->
->I have no idea why this procedure would solve SPI NOR issues.  It
->doesn't seem connected on the surface.
->
->> The code is based on upstream commit 5ddb5fa99ec259 on master
->branch.
->> The flash layout definition is the default
->openbmc-flash-layout.dtsi.
->> The SPI ROM is Macronix MX25L25635F
->>=20
->> Some questions,
->>=20
->>   1.  Any SPI lock feature enabled in OpenBMC?
->>   2.  If yes, do I have to unlock u-boot-env partition before
->fw=5Fsetenv?
->
->There is not, to my knowledge, a software SPI lock.  Some machines
->have
->a 'golden' NOR which they enable by, in hardware, setting the
->write-protect input pin on the SPI NOR (with a strapping resistor).
->Does your machine do this mechanism?  If so, it is possible that
->you're
->booting onto the 'wrong' NOR flash in some conditions and a reboot
->resets the chip-select logic in the SPI controller.  (Usually, you
->have
->the watchdog configured to automatically swap the chip-select after
->some
->number of boot failures.)
->
->--=20
->Patrick Williams
+This alias is only provided for convenience but should not be used any long=
+er.  Please use '${PYTHONPN}-sdbus++-native' instead if you really have a d=
+ependency on using the sdbus++ tool within your repository.
+There should be fairly few cases where you actually have this dependency th=
+ough, so if you're not calling `sdbus++` in your own build process, don't a=
+dd it.
 
-Our default is that the os is in control of the flash an we do not=20
-mark any areas as read-only.
+`git grep sdbusplus-native` shows only a recipe added on Aug 3rd, which is =
+incorrect.
 
-milton
----
-I speak only for myself.  But I have written or reviewed the layouts=20
-and initrd scripting.
+> >      phosphor-dbus-interfaces-native \
 
+This no longer exists.  I suspect you don't need this either.  There is a f=
+airly rare case when you might now need 'phosphor-dbus-interfaces-yaml' but=
+ I suspect this repository isn't one.
+Probably your existing dependency on 'phosphor-dbus-interfaces' is all you =
+need.
+
+`git grep interfaces-native` shows no hits.
+`git grep interfaces-yaml` shows only a hit on an sdk package group.
+
+--
+Patrick Williams
