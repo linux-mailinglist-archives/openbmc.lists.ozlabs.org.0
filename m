@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75E4F260C66
-	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 09:49:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18830260C68
+	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 09:51:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bly3k4sXTzDqP1
-	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 17:49:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bly550RqszDqQF
+	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 17:51:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,24 +16,22 @@ Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
  header.from=crapouillou.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=crapouillou.net header.i=@crapouillou.net
- header.a=rsa-sha256 header.s=mail header.b=jYQYUggT; 
+ header.a=rsa-sha256 header.s=mail header.b=tnYD6IS4; 
  dkim-atps=neutral
-X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
- Thu, 03 Sep 2020 21:27:18 AEST
 Received: from crapouillou.net (crapouillou.net [89.234.176.41])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bhz6t5LBYzDqgw
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 21:27:18 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bhz741kvYzDqkc
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 21:27:28 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
- s=mail; t=1599132381; h=from:from:sender:reply-to:subject:subject:date:date:
+ s=mail; t=1599132384; h=from:from:sender:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q++myQyFVGc5viHm1my4fERz4BkgXBYuJlPFvw347zc=;
- b=jYQYUggTNuQ1S6/3AD+ZmojFJNLvAFPZAu3nlpl+R3Zxjg7o0i+1ZV9A/w9OncyVirf37r
- RDUjJo7sVHvcVRBsCymTMBSH3cp4BYuaJq2KJjp3ncoaZ+8635HCMWW3Twt/Oy+vizidMX
- QmnPSvEHoqj0+1aIe8xKa3yGbcwpIp0=
+ bh=2TQYLxc3aHxXcFDX5qciZlfYToGuHk7NHkGdcnudwus=;
+ b=tnYD6IS4snnHJrlJyjB0BhU2Y/BNORywG/8Sfqgkjf31/Cy4M08Lt84RUw4tdSFSBZEYNu
+ wfXt8hsktCQiQYAsXl8BVqtqjHbOxuVdH6NI4gHmY0iUyY4RsQ8r0fjQOY9a19Cqpxz/T3
+ yUCZWhbC7JHjcKvR2k1SabcdznHa1ig=
 From: Paul Cercueil <paul@crapouillou.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Peter Chen <Peter.Chen@nxp.com>,
@@ -50,9 +48,9 @@ To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Sascha Hauer <s.hauer@pengutronix.de>,
  Pengutronix Kernel Team <kernel@pengutronix.de>,
  Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>
-Subject: [PATCH 07/20] usb/misc: usb3503: Use pm_ptr() macro
-Date: Thu,  3 Sep 2020 13:25:41 +0200
-Message-Id: <20200903112554.34263-8-paul@crapouillou.net>
+Subject: [PATCH 08/20] usb/misc: usb4604: Use pm_ptr() macro
+Date: Thu,  3 Sep 2020 13:25:42 +0200
+Message-Id: <20200903112554.34263-9-paul@crapouillou.net>
 In-Reply-To: <20200903112554.34263-1-paul@crapouillou.net>
 References: <20200903112554.34263-1-paul@crapouillou.net>
 MIME-Version: 1.0
@@ -83,85 +81,49 @@ simply be discarded by the compiler.
 
 Signed-off-by: Paul Cercueil <paul@crapouillou.net>
 ---
- drivers/usb/misc/usb3503.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/usb/misc/usb4604.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/misc/usb3503.c b/drivers/usb/misc/usb3503.c
-index 116bd789e568..48099c6bf04c 100644
---- a/drivers/usb/misc/usb3503.c
-+++ b/drivers/usb/misc/usb3503.c
-@@ -322,8 +322,7 @@ static int usb3503_platform_remove(struct platform_device *pdev)
- 	return 0;
+diff --git a/drivers/usb/misc/usb4604.c b/drivers/usb/misc/usb4604.c
+index 1b4de651e697..2142af9bbdec 100644
+--- a/drivers/usb/misc/usb4604.c
++++ b/drivers/usb/misc/usb4604.c
+@@ -112,8 +112,7 @@ static int usb4604_i2c_probe(struct i2c_client *i2c,
+ 	return usb4604_probe(hub);
  }
  
 -#ifdef CONFIG_PM_SLEEP
--static int usb3503_suspend(struct usb3503 *hub)
-+static int __maybe_unused usb3503_suspend(struct usb3503 *hub)
+-static int usb4604_i2c_suspend(struct device *dev)
++static int __maybe_unused usb4604_i2c_suspend(struct device *dev)
  {
- 	usb3503_switch_mode(hub, USB3503_MODE_STANDBY);
- 	clk_disable_unprepare(hub->clk);
-@@ -331,7 +330,7 @@ static int usb3503_suspend(struct usb3503 *hub)
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct usb4604 *hub = i2c_get_clientdata(client);
+@@ -123,7 +122,7 @@ static int usb4604_i2c_suspend(struct device *dev)
  	return 0;
  }
  
--static int usb3503_resume(struct usb3503 *hub)
-+static int __maybe_unused usb3503_resume(struct usb3503 *hub)
+-static int usb4604_i2c_resume(struct device *dev)
++static int __maybe_unused usb4604_i2c_resume(struct device *dev)
  {
- 	clk_prepare_enable(hub->clk);
- 	usb3503_switch_mode(hub, hub->mode);
-@@ -339,30 +338,29 @@ static int usb3503_resume(struct usb3503 *hub)
+ 	struct i2c_client *client = to_i2c_client(dev);
+ 	struct usb4604 *hub = i2c_get_clientdata(client);
+@@ -132,7 +131,6 @@ static int usb4604_i2c_resume(struct device *dev)
+ 
  	return 0;
- }
- 
--static int usb3503_i2c_suspend(struct device *dev)
-+static int __maybe_unused usb3503_i2c_suspend(struct device *dev)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 
- 	return usb3503_suspend(i2c_get_clientdata(client));
- }
- 
--static int usb3503_i2c_resume(struct device *dev)
-+static int __maybe_unused usb3503_i2c_resume(struct device *dev)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 
- 	return usb3503_resume(i2c_get_clientdata(client));
- }
- 
--static int usb3503_platform_suspend(struct device *dev)
-+static int __maybe_unused usb3503_platform_suspend(struct device *dev)
- {
- 	return usb3503_suspend(dev_get_drvdata(dev));
- }
- 
--static int usb3503_platform_resume(struct device *dev)
-+static int __maybe_unused usb3503_platform_resume(struct device *dev)
- {
- 	return usb3503_resume(dev_get_drvdata(dev));
  }
 -#endif
  
- static SIMPLE_DEV_PM_OPS(usb3503_i2c_pm_ops, usb3503_i2c_suspend,
- 		usb3503_i2c_resume);
-@@ -388,7 +386,7 @@ MODULE_DEVICE_TABLE(of, usb3503_of_match);
- static struct i2c_driver usb3503_i2c_driver = {
+ static SIMPLE_DEV_PM_OPS(usb4604_i2c_pm_ops, usb4604_i2c_suspend,
+ 		usb4604_i2c_resume);
+@@ -154,7 +152,7 @@ MODULE_DEVICE_TABLE(of, usb4604_of_match);
+ static struct i2c_driver usb4604_i2c_driver = {
  	.driver = {
- 		.name = USB3503_I2C_NAME,
--		.pm = &usb3503_i2c_pm_ops,
-+		.pm = pm_ptr(&usb3503_i2c_pm_ops),
- 		.of_match_table = of_match_ptr(usb3503_of_match),
+ 		.name = "usb4604",
+-		.pm = &usb4604_i2c_pm_ops,
++		.pm = pm_ptr(&usb4604_i2c_pm_ops),
+ 		.of_match_table = of_match_ptr(usb4604_of_match),
  	},
- 	.probe		= usb3503_i2c_probe,
-@@ -400,7 +398,7 @@ static struct platform_driver usb3503_platform_driver = {
- 	.driver = {
- 		.name = USB3503_I2C_NAME,
- 		.of_match_table = of_match_ptr(usb3503_of_match),
--		.pm = &usb3503_platform_pm_ops,
-+		.pm = pm_ptr(&usb3503_platform_pm_ops),
- 	},
- 	.probe		= usb3503_platform_probe,
- 	.remove		= usb3503_platform_remove,
+ 	.probe		= usb4604_i2c_probe,
 -- 
 2.28.0
 
