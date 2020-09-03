@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02FBC260CCA
-	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 09:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 40761260D16
+	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 10:09:07 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BlyGR5rClzDqR6
-	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 17:59:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BlyTr3KtszDqCY
+	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 18:09:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,22 +16,21 @@ Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
  header.from=crapouillou.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=crapouillou.net header.i=@crapouillou.net
- header.a=rsa-sha256 header.s=mail header.b=u9xFXq2E; 
+ header.a=rsa-sha256 header.s=mail header.b=rfr/QNV5; 
  dkim-atps=neutral
 Received: from crapouillou.net (crapouillou.net [89.234.176.41])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bhz852N4wzDqnD
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 21:28:21 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhzDs5nj0zDqjg
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 21:32:28 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
- s=mail; t=1599132400; h=from:from:sender:reply-to:subject:subject:date:date:
+ s=mail; t=1599132362; h=from:from:sender:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kBW+nkOsYyeAelK/KG7Nm9NdYHdCT7/Y8hAy7PO36OI=;
- b=u9xFXq2EP+7d+LmlwYPr2PlDeGx8LofH5vlp6CbMdTA7PVyuq7p56wjFh7Kr3Iz/7YZUHh
- 6PAiCm4bE5jSsLrmXg3T1mnmLyfJvsTxHh36tbIvQn2EKg4aNICx1RVLaBCkornN3obBEM
- cDJ9dheuf5Xxpis21nnQ1SKic7lnxyY=
+ in-reply-to:references; bh=SR+iHQciNK1Dv29p/vdSQ9gduW5dmKiBTrl2NLxMY20=;
+ b=rfr/QNV5RzywkcrtwTfLhKPhjdrJfEhu9mfs28GozR5K5U8TlPo9A01AW4BtxUR0RBNi1G
+ wp1us28vEA+MBOzKHcKM5g0SmOT77V5i42hS1PHUdaVWF/CjlRncgOuu0whBvXUbmSWVwR
+ h6uZjr6MxNY4Y4dlFC9WpuGu+k9PXQk=
 From: Paul Cercueil <paul@crapouillou.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Peter Chen <Peter.Chen@nxp.com>,
@@ -48,14 +47,12 @@ To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Sascha Hauer <s.hauer@pengutronix.de>,
  Pengutronix Kernel Team <kernel@pengutronix.de>,
  Fabio Estevam <festevam@gmail.com>, NXP Linux Team <linux-imx@nxp.com>
-Subject: [PATCH 14/20] usb/phy: mxs-usb: Use pm_ptr() macro
-Date: Thu,  3 Sep 2020 13:25:48 +0200
-Message-Id: <20200903112554.34263-15-paul@crapouillou.net>
-In-Reply-To: <20200903112554.34263-1-paul@crapouillou.net>
-References: <20200903112554.34263-1-paul@crapouillou.net>
+Subject: [PATCH 00/20] usb: Use new pm_ptr() macro
+Date: Thu,  3 Sep 2020 13:25:34 +0200
+Message-Id: <20200903112554.34263-1-paul@crapouillou.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Tue, 08 Sep 2020 17:47:24 +1000
+X-Mailman-Approved-At: Tue, 08 Sep 2020 17:47:25 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,67 +70,58 @@ Cc: Paul Cercueil <paul@crapouillou.net>, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Use the newly introduced pm_ptr() macro, and mark the suspend/resume
-functions __maybe_unused. These functions can then be moved outside the
-CONFIG_PM_SUSPEND block, and the compiler can then process them and
-detect build failures independently of the config. If unused, they will
-simply be discarded by the compiler.
+The pm_ptr() macro was introduced to avoid conditional compilation of
+the PM code. Instead of having the .suspend/.resume functions compiled
+conditionally if CONFIG_PM_SLEEP, they are now always visible by the
+compiler, which can then detect bugs, and will be discarded if unused.
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
----
- drivers/usb/phy/phy-mxs-usb.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+Cheers,
+-Paul
 
-diff --git a/drivers/usb/phy/phy-mxs-usb.c b/drivers/usb/phy/phy-mxs-usb.c
-index 67b39dc62b37..c5e32d51563f 100644
---- a/drivers/usb/phy/phy-mxs-usb.c
-+++ b/drivers/usb/phy/phy-mxs-usb.c
-@@ -815,8 +815,8 @@ static int mxs_phy_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--#ifdef CONFIG_PM_SLEEP
--static void mxs_phy_enable_ldo_in_suspend(struct mxs_phy *mxs_phy, bool on)
-+static void __maybe_unused
-+mxs_phy_enable_ldo_in_suspend(struct mxs_phy *mxs_phy, bool on)
- {
- 	unsigned int reg = on ? ANADIG_ANA_MISC0_SET : ANADIG_ANA_MISC0_CLR;
- 
-@@ -832,7 +832,7 @@ static void mxs_phy_enable_ldo_in_suspend(struct mxs_phy *mxs_phy, bool on)
- 			reg, BM_ANADIG_ANA_MISC0_STOP_MODE_CONFIG_SL);
- }
- 
--static int mxs_phy_system_suspend(struct device *dev)
-+static int __maybe_unused mxs_phy_system_suspend(struct device *dev)
- {
- 	struct mxs_phy *mxs_phy = dev_get_drvdata(dev);
- 
-@@ -842,7 +842,7 @@ static int mxs_phy_system_suspend(struct device *dev)
- 	return 0;
- }
- 
--static int mxs_phy_system_resume(struct device *dev)
-+static int __maybe_unused mxs_phy_system_resume(struct device *dev)
- {
- 	struct mxs_phy *mxs_phy = dev_get_drvdata(dev);
- 
-@@ -851,7 +851,6 @@ static int mxs_phy_system_resume(struct device *dev)
- 
- 	return 0;
- }
--#endif /* CONFIG_PM_SLEEP */
- 
- static SIMPLE_DEV_PM_OPS(mxs_phy_pm, mxs_phy_system_suspend,
- 		mxs_phy_system_resume);
-@@ -862,7 +861,7 @@ static struct platform_driver mxs_phy_driver = {
- 	.driver = {
- 		.name = DRIVER_NAME,
- 		.of_match_table = mxs_phy_dt_ids,
--		.pm = &mxs_phy_pm,
-+		.pm = pm_ptr(&mxs_phy_pm),
- 	 },
- };
- 
+Paul Cercueil (20):
+  usb/host: ohci-platform: Use pm_ptr() macro
+  usb/host: ehci-spear: Use pm_ptr() macro
+  usb/host: ehci-npcm7xx: Use pm_ptr() macro
+  usb/host: ehci-platform: Use pm_ptr() macro
+  usb/cdns3: core: Use pm_ptr() macro
+  usb/chipidea: core: Use pm_ptr() macro
+  usb/misc: usb3503: Use pm_ptr() macro
+  usb/misc: usb4604: Use pm_ptr() macro
+  usb/musb: am35x: Use pm_ptr() macro
+  usb/musb: da8xx: Use pm_ptr() macro
+  usb/musb: musb_dsps: Use pm_ptr() macro
+  usb/musb: ux500: Use pm_ptr() macro
+  usb/phy: am335x: Use pm_ptr() macro
+  usb/phy: mxs-usb: Use pm_ptr() macro
+  usb/gadget/udc: atmel: Use pm_ptr() macro
+  usb/gadget/udc: bdc: Use pm_ptr() macro
+  usb/gadget/udc: mv-u3d: Use pm_ptr() macro
+  usb/gadget/udc: pch: Use pm_ptr() macro
+  usb/gadget/udc: renesas: Use pm_ptr() macro
+  usb/gadget/udc: snps: Use pm_ptr() macro
+
+ drivers/usb/cdns3/core.c                | 13 ++++---------
+ drivers/usb/chipidea/core.c             | 26 +++++++++++--------------
+ drivers/usb/gadget/udc/atmel_usba_udc.c |  8 +++-----
+ drivers/usb/gadget/udc/bdc/bdc_core.c   |  9 +++------
+ drivers/usb/gadget/udc/mv_u3d_core.c    |  8 +++-----
+ drivers/usb/gadget/udc/pch_udc.c        | 11 +++--------
+ drivers/usb/gadget/udc/renesas_usb3.c   |  8 +++-----
+ drivers/usb/gadget/udc/snps_udc_plat.c  | 16 +++++----------
+ drivers/usb/host/ehci-npcm7xx.c         |  8 +++-----
+ drivers/usb/host/ehci-platform.c        |  8 +++-----
+ drivers/usb/host/ehci-spear.c           |  8 +++-----
+ drivers/usb/host/ohci-platform.c        | 19 ++++++++----------
+ drivers/usb/misc/usb3503.c              | 18 ++++++++---------
+ drivers/usb/misc/usb4604.c              |  8 +++-----
+ drivers/usb/musb/am35x.c                |  8 +++-----
+ drivers/usb/musb/da8xx.c                |  8 +++-----
+ drivers/usb/musb/musb_dsps.c            | 20 +++++++------------
+ drivers/usb/musb/ux500.c                |  8 +++-----
+ drivers/usb/phy/phy-am335x.c            |  8 +++-----
+ drivers/usb/phy/phy-mxs-usb.c           | 11 +++++------
+ 20 files changed, 87 insertions(+), 144 deletions(-)
+
 -- 
 2.28.0
 
