@@ -1,70 +1,135 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29D6E25B937
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 05:30:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7947925B992
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 06:18:34 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BhmXY0WNrzDr3D
-	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 13:30:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bhnc75FzFzDqwL
+	for <lists+openbmc@lfdr.de>; Thu,  3 Sep 2020 14:18:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::234;
- helo=mail-lj1-x234.google.com; envelope-from=rhanley@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=kuiying.wang@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=J/h99prE; dkim-atps=neutral
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com
- [IPv6:2a00:1450:4864:20::234])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
+ header.b=xomgxfKS; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BhmWl6Z0tzDqw8
- for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 13:29:38 +1000 (AEST)
-Received: by mail-lj1-x234.google.com with SMTP id w3so1771277ljo.5
- for <openbmc@lists.ozlabs.org>; Wed, 02 Sep 2020 20:29:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=DCetx3NO7xTVFsMWjejSnEIlHar0hjsqYkAhv27sXEI=;
- b=J/h99prEYI/2X0L1YJCH0YoCpHTGZomMgBcZ0gq2wvpK4btrFjje+fy/nVuuvuzNad
- vDlOVQx7U+g1zsks7c1u61sSiq7N49Z6RP2cU3BAuJ9hzOodsu8y5sA//Df1Re1N+FlW
- ZOj7kRhbRDOrDKgNbCcQuyBPl6H4AoS4Nds2PdTz7OKalNkVZQi0PhqNLDSWIq7zIMcJ
- TZ3PNVQDDzlSiQYQElwDiTRkcfKpMjjvGPEjUVM/yzOzLp2AyWv9FH6V7T9nLJU6is6r
- lFbsTgTI6OVfiHrexYcJyISRAvOjt1AXRmjHElKeEW0l+WMrprGM8qm6FqjTsMqw3JyM
- 5qUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=DCetx3NO7xTVFsMWjejSnEIlHar0hjsqYkAhv27sXEI=;
- b=MqI9avzioL8Ou6pvdxQ9vg2ZK0a+pglt09w292pK4E+lQdppfT+OEDpiJJ7WDp84c+
- 2QPOQO/SIUrJ1zLgPb2t7F+oCqOBhBileNBTLX95cK+7953Hc+59ElcphK7N1EAAZPgR
- 8tBP0KkJipYU7yxLp9aKy8SAa3dfKLWzdwTv5qSHGIfPOz4oUnorTM1pCN5S2zbnq95N
- xiB6MNDEr0LYA7lidk/L17SQETvtVeS9sFX1ta0wDnOV0jA+G7aBjDKmOEP5GvAkdeCR
- KkZZIlH8QSA2YmsXD46wJ7Dgv4nFMlLGJ72wwhS5h9uk//ljJSSgSOSfAuX7DHfx63C1
- svTw==
-X-Gm-Message-State: AOAM532VRVcNDLuF7Ds/F9mg2vIxXTNcryekfy1+BnSC2nVIfcIPIqsn
- cl0G173t2Ps3bdc9OPAjbo29tTPtQ35Pb2fQUQE5nYk+gbg=
-X-Google-Smtp-Source: ABdhPJyGAMTKrp26LFhn4dSEAqSIvLUBnH9EwTmlgh8p1akWIDqKL1XuEsrvao83g0LWnGBNwkiNb8lzzhxmholZzas=
-X-Received: by 2002:a2e:5857:: with SMTP id x23mr8945ljd.360.1599103773967;
- Wed, 02 Sep 2020 20:29:33 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BhnbC1RdVzDqfc
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Sep 2020 14:17:37 +1000 (AEST)
+IronPort-SDR: pCdil/XdjtQDK3nlfCeRE9MGbjnTH9AR8VyDI2pXWs8PKVQQl1Ij0znkse088GJBVmGJai2bpT
+ MsSrj60SzecQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9732"; a="156786400"
+X-IronPort-AV: E=Sophos;i="5.76,385,1592895600"; d="scan'208";a="156786400"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Sep 2020 21:17:32 -0700
+IronPort-SDR: b900p1r8Bhn0KwLCjyaVUb4UZBhv9A8Ul3m/d/n+AgdH31XGZAw/LvVH+csFw1cIJinzZ0Pa8m
+ /CfrlrWmFgSw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.76,385,1592895600"; d="scan'208";a="283957815"
+Received: from fmsmsx606.amr.corp.intel.com ([10.18.126.86])
+ by fmsmga008.fm.intel.com with ESMTP; 02 Sep 2020 21:17:32 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx606.amr.corp.intel.com (10.18.126.86) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 2 Sep 2020 21:17:32 -0700
+Received: from fmsmsx605.amr.corp.intel.com (10.18.126.85) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 2 Sep 2020 21:17:31 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx605.amr.corp.intel.com (10.18.126.85) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Wed, 2 Sep 2020 21:17:31 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.100)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1713.5; Wed, 2 Sep 2020 21:17:31 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=FfzRC5B/L/zpfil+wj5zxSf7ZT6MKWZ/2k2dYFonVRZV2C/E8jKT+7i5eYZsDILyOXwx9gk3V5Dikpk0EVL5teQvJImnXJSpTGJBELy6di3onjWIT+320/rt8zyrCLD+uK/x/wils0bhMiZOfVCRsrlygwi+EEtOEir3A9qV0lSlwVbWuKw6bHTT1t9N5c9T05ixrT2HHlD+GqLbmzOSAIbVOZHVwSZ6a0dL+vCuxJH5ftLxnZr8y0o9vfWqui88+RkIWBQfscGi15odIqwTQfy6gj2dvaSKdm05j70OCj0hn9Nt8D7YPP8oR0bdqwsGymEpJJZsQY5uy7adK5R7Jg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+OiU9QJxMlj5sE5lb0jxqfH32s/aiwHuUuIm4KL7BuY=;
+ b=eikZU0dtOuQBvW7yNQ+taxDfpyDnq6FhtPLf/a6SBloF4daw7nzQGqWh6R9oEeyacnmGW87zyQEFpAvYPp9JsXW6e/wA+ATmPHD0oFSmChuFVylxHj1QVz4xvFdNPDIO5asH4UmeO78qqcA6r/V1J4o/DY7aptKZJm2nFYswfNKe7IMVopCKpiDsS62j7LuEpuG1osvuQL5b9gVeJWzK7ccEn//mAk87Mg25Q3s/W5UwgUo7tTLomqLNu6VHxzFWsz8CViEdFwbs1d1UCC6cT9T7I/6Qc6V33WHQ4paSZHTBGRJ/hMZlvNUvnjrQ7dW5k+QNQiVagirpZ0u/f4qNFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+OiU9QJxMlj5sE5lb0jxqfH32s/aiwHuUuIm4KL7BuY=;
+ b=xomgxfKS7yBMdRBXX6auNCxqbXCk13jvCJZnOAOv6rjQrSX9qfU531ATceW+maagIwjyYJONas8oFCVDIqM0XrTtADKmeTZoKtteLrmJIVRbFBnkhVUM9O2GQcmUjfYjanYlJfvjW0E9LKG++v5IiiJ7+/tZRJJ9T3axIy4R1tE=
+Received: from BYAPR11MB3511.namprd11.prod.outlook.com (20.177.224.158) by
+ BY5PR11MB4212.namprd11.prod.outlook.com (52.132.255.145) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3326.22; Thu, 3 Sep 2020 04:17:30 +0000
+Received: from BYAPR11MB3511.namprd11.prod.outlook.com
+ ([fe80::3c94:3dee:85c8:3b85]) by BYAPR11MB3511.namprd11.prod.outlook.com
+ ([fe80::3c94:3dee:85c8:3b85%7]) with mapi id 15.20.3326.025; Thu, 3 Sep 2020
+ 04:17:30 +0000
+From: "Wang, Kuiying" <kuiying.wang@intel.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: RE: Need update CI build config for new repo smbios-mdr.
+Thread-Topic: Need update CI build config for new repo smbios-mdr.
+Thread-Index: AdZ8T8WMWe7UjTu1QQafCbbBYikJpQBJL32AAHDrLbAAUQMGgAAAodOAABNvhOAAHQrrAAAaGLEw
+Date: Thu, 3 Sep 2020 04:17:29 +0000
+Message-ID: <BYAPR11MB35115A7732F2DE1AA4872096902C0@BYAPR11MB3511.namprd11.prod.outlook.com>
+References: <SN6PR11MB35203BE16B23BAD1193FCB9F90550@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <5a9a43046be525f9ed5d23bc40eac14d4ed8d53c.camel@fuzziesquirrel.com>
+ <SN6PR11MB35205154DB67E625EF74388A90510@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200901162333.GT3532@heinlein> <20200901164139.GV3532@heinlein>
+ <SN6PR11MB352047845E48681E8F71B139902F0@SN6PR11MB3520.namprd11.prod.outlook.com>
+ <20200902154944.GW3532@heinlein>
+In-Reply-To: <20200902154944.GW3532@heinlein>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL0ludGVsMyIsImlkIjoiMGNlYTA1NmMtN2YxNy00OGQ1LWJkZDMtNjA2N2M3NGNkNWM0IiwicHJvcHMiOlt7Im4iOiJDVFBDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiQ1RQX05UIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE3LjEwLjE4MDQuNDkiLCJUcnVzdGVkTGFiZWxIYXNoIjoiMFRySG9KK3IyKzYzZHFCeDBJazhFMXNrcTJTTkZzZ0dMMldqUXo5dFA0MmIzNnFwS2kxakpmMW02bERpMm8zRyJ9
+dlp-version: 11.5.1.3
+dlp-reaction: no-action
+dlp-product: dlpe-windows
+x-ctpclassification: CTP_NT
+authentication-results: stwcx.xyz; dkim=none (message not signed)
+ header.d=none;stwcx.xyz; dmarc=none action=none header.from=intel.com;
+x-originating-ip: [192.102.204.37]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 250a027d-fbcb-4317-8450-08d84fc04632
+x-ms-traffictypediagnostic: BY5PR11MB4212:
+x-microsoft-antispam-prvs: <BY5PR11MB42129F5AC63A4E7D0286CFA3902C0@BY5PR11MB4212.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Jmtgxxy2aco67djcD0pzCtpNQcKlRk33GCbAOOlfkr1Eyr2NIdP1B7ISTubQvMX9T4gI3O13HhQgrjGvWyYx9eu2gjBzfSJ68NaMEqIMBYi6P5IwKrFsSZpw34wb0GmDwZigWf0dVQB7Y19xqvLKCJK6k0pyRi1sucJfpTGKlPuNDWkIHzs4JRlz7240mNXKpXoc9uIRfd21a7KQj6E44pM5x+AoKUmx4tJGc7xT3fqfcDBFez0BD3ANVsISrilvy0qLYNP4E65Mjpu+hmxwuNrRSg1RTjAtoL1U0Ih5y9Nmx3IUgmrgDq5pJdDXKuvkbyqCJBsVsgPSF8blVjTdxswSr1RM7Fm0Ck/e9mKqy+hxwJxZyrlE1PNdnK/tFHEocoS4bXcvRaB8jX4+4SWQGg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR11MB3511.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(39860400002)(136003)(396003)(366004)(376002)(6916009)(7696005)(8676002)(33656002)(186003)(2906002)(26005)(4326008)(71200400001)(5660300002)(66946007)(76116006)(6506007)(8936002)(66446008)(66556008)(64756008)(53546011)(52536014)(66476007)(15650500001)(478600001)(316002)(86362001)(54906003)(55016002)(66574015)(83380400001)(9686003)(966005);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: TK1/cXWAHvnfHOaG4TqmZmRgb0IulVai+kpPESgOp/oygxzYofPjfgQirPiTonfvrZT01cjdtCZLpS07+Fj7gzOahw0IP1eO1RFqfMoCD12llTjtveN7fNzb4h+r4VFddbGnltbdU6kViv49z61QvF0UN7WLsoV7UAiKX+F5oHizEbCP+VaK5+nALaO1l0v4Xp9UfvR4V018HsLnmrIMjUGFEEMVs07d9eXD5Kep9IBe/pcE+RRxi63kd14U/2u6xOuiwbRWv1NJK7nXZDiGzjjTtkuUvcJkyc8RUbJgSB9d7ea0lqg0LZ5pYzJS3KJpuDkux7s9kxrbRkOsYlEaX0fKzhCRAnPZP1vmfZRuPMoPOnWUhLM9SuitAaz8CZQRsqZN4H5ezJgmEJXENImdI8QWCx3FjBTMESzb9UhZKveKWkSFLkOHX8eWjYYsCSkO+qIjEoJRvWK2KCR4MqvoRi7lLrjy8itpfpUeQXmQwOK6OyaULTaZvo8JOn2X8KU3RmrgEsfyUvb1ydKZlkcHvYO3euXx6EsnBl5W1G8tlP0mRPM1ckccYTYlZDeKN77sWlTXsOv7p0C12w7nbsvmJwAI53i4Li7y6mt3ay1SnmYZGi7SMn67v2EnbfrnNYGpdT9cgB4CiT0OLe+febvQYw==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <CAMXw96MQ-=Ftc5HjNThKd8A6X0hdBdjC43d6RJfzyDoN+b=7YQ@mail.gmail.com>
- <CACWQX82jRpfpeqc9a3kFA+08-CgyOjc8+jYU2Xh307hq-0_DHQ@mail.gmail.com>
- <419f732a-8d73-0450-fca6-b89d82fcd96c@linux.intel.com>
- <CAMXw96Onss5O3dRzV-vSV4bK=ri=QV0932cBSYpZS7U3G+_5kw@mail.gmail.com>
- <17248f66-6879-1118-9fdf-30295070d5d2@linux.intel.com>
-In-Reply-To: <17248f66-6879-1118-9fdf-30295070d5d2@linux.intel.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Wed, 2 Sep 2020 20:29:22 -0700
-Message-ID: <CAH1kD+Yo8Yq-cHhRfYwvZbNXaG1_hbr0qCwNMOxT+PAB9rELHw@mail.gmail.com>
-Subject: Re: Seek feedback: BMC console and debug info
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Content-Type: multipart/alternative; boundary="00000000000068631f05ae605c24"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3511.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 250a027d-fbcb-4317-8450-08d84fc04632
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Sep 2020 04:17:30.1057 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: DryIKpQtBvtA9UsTiqpzIryoEGKAAuJlgqM79rseWsNbk7KYAtF430R1hHpbmmUDiONGIgzHyvaZhu/Iy+vTyg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR11MB4212
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,249 +141,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000068631f05ae605c24
-Content-Type: text/plain; charset="UTF-8"
+Thanks a lot.
+It's done https://gerrit.openbmc-project.xyz/#/c/openbmc/smbios-mdr/+/36177=
+/
 
-I've been out of the loop on this for a while. Does anyone know if progress
-has been made on the DumpService in DMTF. I remember there were some
-proposals a while back, but I can't remember where they left off.
 
-- Richard
+Thanks,
+Kwin.
 
-On Wed, Sep 2, 2020 at 12:00 PM Bills, Jason M <
-jason.m.bills@linux.intel.com> wrote:
+-----Original Message-----
+From: Patrick Williams <patrick@stwcx.xyz>=20
+Sent: Wednesday, September 2, 2020 11:50 PM
+To: Wang, Kuiying <kuiying.wang@intel.com>
+Cc: openbmc@lists.ozlabs.org; Brad Bishop <bradleyb@fuzziesquirrel.com>
+Subject: Re: Need update CI build config for new repo smbios-mdr.
 
->
->
-> On 8/29/2020 8:53 PM, Zhenfei Tai wrote:
-> > Thanks a lot for the feedback and we're glad that it's something the
-> > community is interested in!
-> > We'll incorporate the advice and improve the patchset.
-> >
-> > Jason - If you have time, could you share the findings of the
-> > "AdditionalDataURI" schema change? I've only managed to find some slides
-> > <
-> https://www.dmtf.org/sites/default/files/Redfish_Diagnostic_Data_Logging_Proposal_05-2020-WIP_0.pdf>
->
-> > from May.
-> Sorry, I don't know much about it besides that the schema change is
-> coming.  I checked on the DMTF website and it doesn't look like the new
-> schema has been posted, yet.
->
-> >
-> > Thanks,
-> > Zhenfei
-> >
-> > On Wed, Aug 26, 2020 at 1:00 PM Bills, Jason M
-> > <jason.m.bills@linux.intel.com <mailto:jason.m.bills@linux.intel.com>>
-> > wrote:
-> >
-> >
-> >
-> >     On 8/25/2020 8:35 PM, Ed Tanous wrote:
-> >      > Yes, this would be useful to others.  A number of commercial
-> stacks
-> >      > (including some I helped write) have this feature, and I had hoped
-> >      > someone would tackle it at some point in the future.
-> >      >
-> >      > My only comment is I'd rather that we don't duplicate the
-> >     endpoints in
-> >      > Redfish, and have both a Console and a ConsoleDownload
-> >     collection.  If
-> >      > we need a mechanism to download the full log files, I'd recommend
-> >     that
-> >      > the Console endpoint obey an Accept header of "text/plain;
-> >      > charset=utf-8" and an Accept-Encoding header of "gzip".  That way,
-> >      > we're still meeting the intent of the HTTP and Redfish specs,
-> even if
-> >      > we're providing more data download options than they require.
-> >     I still need to go dig into it, but I think the new Redfish schemas
-> >     that
-> >     were added to support the Dump service, added an "AdditionalDataURI"
-> >     property that can provide a URI to download a larger set of
-> additional
-> >     dump data.  It may be what you need for the log file download.
-> >
-> >      >
-> >      > Other than that, yeah, sounds great, lets see the patchset.
-> >      >
-> >      > -Ed
-> >      >
-> >      > On Tue, Aug 25, 2020 at 8:24 PM Zhenfei Tai <ztai@google.com
-> >     <mailto:ztai@google.com>> wrote:
-> >      >>
-> >      >> Hi,
-> >      >>
-> >      >> We have worked with our vendor on a system that provides console
-> >     and debug information, which can be useful in times of debugging BMC
-> >     issues.
-> >      >>
-> >      >> On a high level, we use obmc-console and
-> >     phosphor-debug-collector to collect data.
-> >      >>
-> >      >> obmc-console: We collect console inputs from the host and save
-> >     to local log files (max 8 files of 1 MB size with rotation.)
-> >      >> phosphor-debug-collector: We run this process on the BMC with no
-> >     modification.
-> >      >>
-> >      >> For the interface, the data is exposed via bmcweb where there
-> >     are a pair of URIs for console inputs and debug collector
-> respectively.
-> >      >> e.g.
-> >      >>
-> >      >> /redfish/v1/Systems/system/LogServices/Console -- Enable/disable
-> >     console inputs data collection.
-> >      >> /redfish/v1/Systems/system/LogServices/ConsoleDownload --
-> >     Download the log files in a zipped file.
-> >      >>
-> >      >> It will be great if we can get some feedback on whether the
-> >     community finds such a system useful and advice to improve the
-> design.
-> >      >>
-> >      >> Thanks,
-> >      >> Zhenfei
-> >
->
+On Wed, Sep 02, 2020 at 02:02:00AM +0000, Wang, Kuiying wrote:
+> Hi Williams,
+> The key thing is sdbusplus interface is not match.
+> You could config CI based on this patch=20
+> https://gerrit.openbmc-project.xyz/#/c/openbmc/smbios-mdr/+/36011/
+> That's ok, if it can pass the build.
+>=20
+> Thanks,
+> Kwin.
+>=20
 
---00000000000068631f05ae605c24
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Here is a snippet of the compile log:
 
-<div dir=3D"ltr">I&#39;ve been out of the loop on this for a while. Does an=
-yone know if progress has been made on the DumpService in DMTF. I remember =
-there were some proposals a while back, but I can&#39;t remember where they=
- left off.<div><br></div><div>- Richard</div></div><br><div class=3D"gmail_=
-quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Sep 2, 2020 at 12:00 P=
-M Bills, Jason M &lt;<a href=3D"mailto:jason.m.bills@linux.intel.com">jason=
-.m.bills@linux.intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex"><br>
-<br>
-On 8/29/2020 8:53 PM, Zhenfei Tai wrote:<br>
-&gt; Thanks a lot for the feedback=C2=A0and we&#39;re glad that it&#39;s so=
-mething the <br>
-&gt; community is interested in!<br>
-&gt; We&#39;ll incorporate the advice and improve the patchset.<br>
-&gt; <br>
-&gt; Jason - If you have time, could you share the findings of the <br>
-&gt; &quot;AdditionalDataURI&quot; schema change? I&#39;ve only managed to =
-find some slides <br>
-&gt; &lt;<a href=3D"https://www.dmtf.org/sites/default/files/Redfish_Diagno=
-stic_Data_Logging_Proposal_05-2020-WIP_0.pdf" rel=3D"noreferrer" target=3D"=
-_blank">https://www.dmtf.org/sites/default/files/Redfish_Diagnostic_Data_Lo=
-gging_Proposal_05-2020-WIP_0.pdf</a>&gt; <br>
-&gt; from May.<br>
-Sorry, I don&#39;t know much about it besides that the schema change is <br=
->
-coming.=C2=A0 I checked on the DMTF website and it doesn&#39;t look like th=
-e new <br>
-schema has been posted, yet.<br>
-<br>
-&gt; <br>
-&gt; Thanks,<br>
-&gt; Zhenfei<br>
-&gt; <br>
-&gt; On Wed, Aug 26, 2020 at 1:00 PM Bills, Jason M <br>
-&gt; &lt;<a href=3D"mailto:jason.m.bills@linux.intel.com" target=3D"_blank"=
->jason.m.bills@linux.intel.com</a> &lt;mailto:<a href=3D"mailto:jason.m.bil=
-ls@linux.intel.com" target=3D"_blank">jason.m.bills@linux.intel.com</a>&gt;=
-&gt; <br>
-&gt; wrote:<br>
-&gt; <br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 8/25/2020 8:35 PM, Ed Tanous wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Yes, this would be useful to others.=C2=A0 A =
-number of commercial stacks<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; (including some I helped write) have this fea=
-ture, and I had hoped<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; someone would tackle it at some point in the =
-future.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; My only comment is I&#39;d rather that we don=
-&#39;t duplicate the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0endpoints in<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Redfish, and have both a Console and a Consol=
-eDownload<br>
-&gt;=C2=A0 =C2=A0 =C2=A0collection.=C2=A0 If<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; we need a mechanism to download the full log =
-files, I&#39;d recommend<br>
-&gt;=C2=A0 =C2=A0 =C2=A0that<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; the Console endpoint obey an Accept header of=
- &quot;text/plain;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; charset=3Dutf-8&quot; and an Accept-Encoding =
-header of &quot;gzip&quot;.=C2=A0 That way,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; we&#39;re still meeting the intent of the HTT=
-P and Redfish specs, even if<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; we&#39;re providing more data download option=
-s than they require.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0I still need to go dig into it, but I think the new=
- Redfish schemas<br>
-&gt;=C2=A0 =C2=A0 =C2=A0that<br>
-&gt;=C2=A0 =C2=A0 =C2=A0were added to support the Dump service, added an &q=
-uot;AdditionalDataURI&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0property that can provide a URI to download a large=
-r set of additional<br>
-&gt;=C2=A0 =C2=A0 =C2=A0dump data.=C2=A0 It may be what you need for the lo=
-g file download.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Other than that, yeah, sounds great, lets see=
- the patchset.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; -Ed<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Tue, Aug 25, 2020 at 8:24 PM Zhenfei Tai &=
-lt;<a href=3D"mailto:ztai@google.com" target=3D"_blank">ztai@google.com</a>=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:ztai@google.com" targe=
-t=3D"_blank">ztai@google.com</a>&gt;&gt; wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Hi,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; We have worked with our vendor on a syste=
-m that provides console<br>
-&gt;=C2=A0 =C2=A0 =C2=A0and debug information, which can be useful in times=
- of debugging BMC<br>
-&gt;=C2=A0 =C2=A0 =C2=A0issues.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; On a high level, we use obmc-console and<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0phosphor-debug-collector to collect data.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; obmc-console: We collect console inputs f=
-rom the host and save<br>
-&gt;=C2=A0 =C2=A0 =C2=A0to local log files (max 8 files of 1 MB size with r=
-otation.)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; phosphor-debug-collector: We run this pro=
-cess on the BMC with no<br>
-&gt;=C2=A0 =C2=A0 =C2=A0modification.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; For the interface, the data is exposed vi=
-a bmcweb where there<br>
-&gt;=C2=A0 =C2=A0 =C2=A0are a pair of URIs for console inputs and debug col=
-lector respectively.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; e.g.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; /redfish/v1/Systems/system/LogServices/Co=
-nsole -- Enable/disable<br>
-&gt;=C2=A0 =C2=A0 =C2=A0console inputs data collection.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; /redfish/v1/Systems/system/LogServices/Co=
-nsoleDownload --<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Download the log files in a zipped file.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; It will be great if we can get some feedb=
-ack on whether the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0community finds such a system useful and advice to =
-improve the design.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Thanks,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;&gt; Zhenfei<br>
-&gt; <br>
-</blockquote></div>
+/home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/src/cpuinfo_=
+main.cpp:34:10: fatal error: peci.h: No such file or directory
+   34 | #include <peci.h>
+      |          ^~~~~~~~
+compilation terminated.
 
---00000000000068631f05ae605c24--
+
+This one might be a missing dependency?  Where is 'peci.h' from?  Is it fro=
+m a kernel header for the ioctls or some other repository?  Do you need to =
+stub this out when building on x86?
+
+
+make[2]: *** [CMakeFiles/cpuinfoapp.dir/build.make:63: CMakeFiles/cpuinfoap=
+p.dir/src/cpuinfo_main.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/cpuinfoapp.dir/all] Error=
+ 2
+make[1]: *** Waiting for unfinished jobs....
+In file included from /home/jenkins-slave/workspace/ci-repository/openbmc/s=
+mbios-mdr/src/cpu.cpp:17:
+/home/jenkins-slave/workspace/ci-repository/openbmc/smbios-mdr/include/cpu.=
+hpp:113:17: error: =E2std::string phosphor::smbios::Cpu::processorSocket(st=
+d::string)=E2 marked =E2override=E2, but does not override
+  113 |     std::string processorSocket(std::string value) override;
+
+This appears to be a case where the current phosphor-dbus-interfaces doesn'=
+t match whatever your commit is trying to do.  You've got additional method=
+s for handling dbus properties, but those properties do not exist in phosph=
+or-dbus-interface's Cpu interface.
+
+I suspect you're trying to implement
+xyz/openbmc_project/Inventory/Item/Cpu, which has a 'Socket' property but n=
+ot a 'ProcessorSocket'.  If I recall, this happened in the code review wher=
+e the "Processor" part was requested to be removed since it was redundant.
+
+There are a number of other properties in your compile fail that need simil=
+ar updating.
+
+--
+Patrick Williams
