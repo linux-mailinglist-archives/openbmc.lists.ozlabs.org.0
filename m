@@ -2,96 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 949E125E477
-	for <lists+openbmc@lfdr.de>; Sat,  5 Sep 2020 02:03:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A84225E5FE
+	for <lists+openbmc@lfdr.de>; Sat,  5 Sep 2020 09:36:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BjvsH6bH4zDqwJ
-	for <lists+openbmc@lfdr.de>; Sat,  5 Sep 2020 10:03:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bk5vc2dCszDqkg
+	for <lists+openbmc@lfdr.de>; Sat,  5 Sep 2020 17:36:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=hotmail.com (client-ip=40.92.18.41;
- helo=nam11-co1-obe.outbound.protection.outlook.com;
- envelope-from=zkxz@hotmail.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::631;
+ helo=mail-ej1-x631.google.com; envelope-from=asmithakarun@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hotmail.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
- header.s=selector1 header.b=D3qk/9TI; 
- dkim-atps=neutral
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com
- (mail-co1nam11olkn2041.outbound.protection.outlook.com [40.92.18.41])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=NKaE1kKB; dkim-atps=neutral
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com
+ [IPv6:2a00:1450:4864:20::631])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BjvrT3nZ0zDqlK
- for <openbmc@lists.ozlabs.org>; Sat,  5 Sep 2020 10:03:04 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b2ryJsExcjM3FzFwxrPeokm6yILp1dcKrx3v6xl7/EDmYsvrdUinPbM8yOctX8p19SUoYUCyamRfnFlZ+gVjwou0Ca2ZFnhA9XcJS2zAALj8cMRDsLKoHJjVpoKhJQ1oTFyp7saUwVT32umWGtKUWXDiApj3nbTotsE+R0Wcx1zPOiKc2U5E0YRnZuTVOaBY30FM/o44aPQfxhmrpQqUOSzPvjxEvygaQZZsDWvA9IqsidPRPtpCcYxivplYNcjqJek+biNa6QKyGHmDIRxCEAbZEa9uqn7sJ87y86XCVZVW4Wmez/zb2wZeoZ3GaaKgY8qGTLjGsli8BCqMuC2hRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YEXHP+c71Q/0sImF+wk3be7hJxKC8F4hdO5Qocdv7nM=;
- b=BEC/lhaFGAMwWWgANK05bbUiOjf+1tTvFcwquEVVEx1iyjwcmjBdEimZ7XQHuWCoteHdzsrg7lYJY8g/0DEshkG5ZwpOjat8BzwZNbTpIFiGlUyQ3OukNTKsyPpvmptYDzk0aXsqR1rZTxUuR7rztSRptSA0KX7ros6NwYd8/3p1U9GeVWW3HW+zwz/I+fC4XYsQmYAwxOtzpBR8Dm9GymSravTNLTmRaDg1cN0z2tY90ja/RKTfxIOJF4X5PhgIWi5jokVDWB2IDEuw/C6vBXmhjsGgWvLHXm38vUvW8/1OLzDDckg6rxwMHUzzhpgNtF6jImKN4gYIwC4/Ay/fBg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YEXHP+c71Q/0sImF+wk3be7hJxKC8F4hdO5Qocdv7nM=;
- b=D3qk/9TInw788xxlNlAiihiYnLl+Lg6U0LzgttzuliX7koaW8OtWOQIjJlOqIu0TFBNKC9mAKBSh+mrCCVJC177hV709/d6BK3pfP+hfy6dTYXLgPLRpFl0N/ZRXf2HqDf9k3k4t5VcTeDe95g7lRaZ8W0OvRUA3YP8I8PVKHCQZWhJFangq5VYnonu2JTPAZh0V9DiwgdYgZ6bHWTeCns/1HCpEnjvtEzNScZiksGTHuopAxXFFbZMsd5HutON+kduSR0opsBoLnUJC1PkCj5ph1Q+MhGVSdNXeDO8Qo5Yd58W+6fiR1LrF9ScS2wXLedr0SSeS0d3htBcJ+paN7w==
-Received: from BN8NAM11FT023.eop-nam11.prod.protection.outlook.com
- (2a01:111:e400:fc4b::45) by
- BN8NAM11HT183.eop-nam11.prod.protection.outlook.com (2a01:111:e400:fc4b::79)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3326.19; Sat, 5 Sep
- 2020 00:02:59 +0000
-Received: from BYAPR14MB2342.namprd14.prod.outlook.com
- (2a01:111:e400:fc4b::4e) by BN8NAM11FT023.mail.protection.outlook.com
- (2a01:111:e400:fc4b::359) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3326.19 via Frontend
- Transport; Sat, 5 Sep 2020 00:02:59 +0000
-Received: from BYAPR14MB2342.namprd14.prod.outlook.com
- ([fe80::952a:28d1:bf4c:83a]) by BYAPR14MB2342.namprd14.prod.outlook.com
- ([fe80::952a:28d1:bf4c:83a%7]) with mapi id 15.20.3348.017; Sat, 5 Sep 2020
- 00:02:59 +0000
-From: Kun Zhao <zkxz@hotmail.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Enable UBI support for a platform
-Thread-Topic: Enable UBI support for a platform
-Thread-Index: AQHWgxUUsfcLfr+u/UKWYAqBzK09TQ==
-Date: Sat, 5 Sep 2020 00:02:59 +0000
-Message-ID: <BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0@BYAPR14MB2342.namprd14.prod.outlook.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:7096AAD22DD49578DC0D76B9AC31DAA462276136ADA0A30708D88E772506BFCF;
- UpperCasedChecksum:4D8F9C7840FC285EC72995FB5C3A4D33738DB9DC1A34A431D3E156E1846D844C;
- SizeAsReceived:6681; Count:42
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [ldGB+XGveh/PTCh5WfV6xhOKzDzcO58w]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 1156b76a-44a6-4674-ddd3-08d8512f0d22
-x-ms-traffictypediagnostic: BN8NAM11HT183:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PK3QIc1j+GDam7QhtzxdTtZJSjAyZNbaS8CLOKGD/yUhbywBdOiNp7o6LIdRYhctZ/GLgrZO1iWDc6IrJwPaJJMaXCGtqYwsYrYlFBVNqOQvx7rSyQu0ZSI3cR/3G3t6B2xbaC/ysOs3h/zvAQc44g+35dU8JcAHNCwu0+y2Mqy+WNOlsB1qzsY8Lel3dkbn4hxw2yT74xtdxV62ldM7XA==
-x-ms-exchange-antispam-messagedata: Z1maMFsZDG1ikGWUMpvwcNkz1JInxl+C7PebWv4A94MD1CJTMV0ODXLFxuvZO+bi39evDX6o+wt7G4esfb3YcRoUnrdi085kRsyCMUx/DJ7t2I3TMY4puBCd+lrtlUF1wvzBFRHYGrYV3IO4H9+EmA==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0BYAPR14MB2342namp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bk5tp4rwqzDqkf
+ for <openbmc@lists.ozlabs.org>; Sat,  5 Sep 2020 17:35:44 +1000 (AEST)
+Received: by mail-ej1-x631.google.com with SMTP id a15so11400722ejf.11
+ for <openbmc@lists.ozlabs.org>; Sat, 05 Sep 2020 00:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=D1MXzo7t8UF95N8mpZ4u+3GvIu3NYZgPl01E0u1Qaw4=;
+ b=NKaE1kKBWBTV8fIWWFDcSdtj3Li5jZc5L2cY+6oAPhIGKzKNEgeEujVUW4ssw3/pR/
+ ywiBmCrMo99k5z7zDa9N7AHyLF6UTuV0AoPvNBrdlayXQPiwDzv7TKtfjr7wxWDqrDPV
+ EWx2GQ5Tde+GLaPoNkW/lU7YCdR6scmypstvYZ4xgoUenJG9pMDziz1zIZ+eVs9/v+4s
+ 5SfqiouEKB1GaMVzSkvb4g/JrFFC8EYzwioaC/fV7Bgy+xXjaEVIQlsIxloozvS0oNKz
+ qgTCeKXJJiaZFTihDfNP18V7VzzcWCkNP5p7XzVJOwhO7H2V+SA1c0YEsw3exVs+jbDj
+ s5XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=D1MXzo7t8UF95N8mpZ4u+3GvIu3NYZgPl01E0u1Qaw4=;
+ b=rzrKugUohN3nI58rp8j3zN5KDXhosBRy7tdQQbqRhBmxT45ehSHPzrM6Ds+9vjJ7yk
+ P3s7O5T04VWd7fsBmEmSbQ0HJ9hJJulapyFXQYH7egYPyDGcmknjx+CcZar/cC4soTI8
+ uLRr9G/GYFIs5qbOVgrHaYZhxL0seq/oXMQ2PaWezQuAKYMKRZBe9/4dgNlibjZEKcxx
+ 1UWVV2hmFjzKw3skQOV24kJ7sJAo+VLajfQvV3dK/+gmaPIfBIXr5KBFqvIR1aTGuWYz
+ h1+4ytelzY9ZujUOwZ1IpuoHvLw+nqckRKK6uAheu3o3leh1mBtx8Ej4QfTbge0pNnop
+ gwaQ==
+X-Gm-Message-State: AOAM532LRcqosV+oYbqaoPgNxYT7v3g1mwpUzfGlothU77S6kH3VYuXM
+ hi18YjshBENE9tvC6HXABafCP0QAgqSGirbp8D4=
+X-Google-Smtp-Source: ABdhPJwEGAziuBvHzzZ5h82qK3wM+4i9phEfOAl7dHnMvlOl7Jnuvp8t7DJYmOVT7E7fCGEu5YygoDN1gQBYEks8nNM=
+X-Received: by 2002:a17:906:a88a:: with SMTP id
+ ha10mr12084965ejb.532.1599291340439; 
+ Sat, 05 Sep 2020 00:35:40 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: hotmail.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM11FT023.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1156b76a-44a6-4674-ddd3-08d8512f0d22
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Sep 2020 00:02:59.7537 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8NAM11HT183
+References: <CANGK-S5k=Dy+nf9cDPwNxcU_DELyaAkbmXjsotgpunQscaQ9Bw@mail.gmail.com>
+ <e2ff765d96571e247a812bbd8b039b5396eb5a98.camel@ozlabs.org>
+ <20200904163742.GB3532@heinlein>
+In-Reply-To: <20200904163742.GB3532@heinlein>
+From: Asmitha Karunanithi <asmithakarun@gmail.com>
+Date: Sat, 5 Sep 2020 13:05:03 +0530
+Message-ID: <CANGK-S6ww83OQkvdSCmjs5VA4Ttk+UBUsnnkD6_8j35YU-Sdgw@mail.gmail.com>
+Subject: Re: Resolving service name conflicts
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="0000000000003d41da05ae8c082d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,254 +75,190 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0BYAPR14MB2342namp_
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+--0000000000003d41da05ae8c082d
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Team,
+Hi Patrick, Jeremy, and Micheal,
 
-My platform is based on ast2500, and I=92ve already been able to built out =
-the ubi image. But when I tried to test it with qemu, it just stopped at u-=
-boot because =91can=92t get kernel image,
-
-qemu-system-arm: Aspeed iBT has no chardev backend
+Thanks for your response on this.
 
 
-U-Boot 2016.07 (Sep 04 2020 - 19:47:48 +0000)
+> There is a deconflict system is there for a purpose, and avahi handles it
+> well, and being able to find all the *ssh* services is actually useful.
 
-       Watchdog enabled
-DRAM:  496 MiB
-Flash: 32 MiB
-*** Warning - bad CRC, using default environment
+Agree.
 
-In:    serial
-Out:   serial
-Err:   serial
-Net:   MAC0 : RGMII
-MAC1 : RGMII
-FTGMAC100#0
-Error: FTGMAC100#0 address not set.
-, FTGMAC100#1
-Error: FTGMAC100#1 address not set.
+Likely this is due to the hostname being
 
-Hit any key to stop autoboot:  0
-Wrong Image Format for bootm command
-ERROR: can't get kernel image!
-ast#
+different on all of them.
 
-And I found the bootargs is not right,
+Even in my case, the hostname will be unique.
 
-ast# print
-baudrate=3D115200
-bootargs=3Dconsole=3DttyS4,115200n8 root=3D/dev/ram rw
-bootcmd=3Dbootm 20080000
-bootdelay=3D2
-
-Checked in the build folder for tmp/work/myplatform-openbmc-linux-gnueabi/u=
--boot-aspeed/1_v2016.07+gitAUTOINC+1ded9fa3a2-r0/ and found the none of the=
- following patches are there,
-0002-config-ast-common-hack-bootopts.patch
-0003-config-ast-common-Add-bootopts-to-support-ubi-and-mt.patch
-0004-config-ast-common-Add-conditional-factory-reset-comm.patch
-0005-config-ast-common-Fall-back-to-secondary-flash-on-fa.patch
-
-I think that=92s why the bootargs is not correct.
-
-This is the details of how I enabled the ubi support in my platform recipes=
-,
-
-1. In meta-myplatform/conf/distro/openbmc-myplatform.conf, I added,
-require conf/distro/include/phosphor-base.inc
-require conf/distro/include/phosphor-ubi.inc
-
-2. In meta-myplatform/conf/machine/myplatform.conf, I added,
-IMAGE_FSTYPES +=3D " mtd-ubi mtd-ubi-tar"
-OBMC_MACHINE_FEATURES +=3D " obmc-ubi-fs"
-
-Do I miss anything?
-
-Thanks.
-
-Best regards,
-
-Kun Zhao
-/*
-  zkxz@hotmail.com<mailto:zkxz@hotmail.com>
-*/
+I hope, the commit that Jeremy pushed would resolve this service name
+conflict issue.
 
 
---_000_BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0BYAPR14MB2342namp_
-Content-Type: text/html; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+On Fri, Sep 4, 2020 at 10:07 PM Patrick Williams <patrick@stwcx.xyz> wrote:
 
-<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
-hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
-fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
-252">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:DengXian;
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"\@DengXian";
-	panose-1:2 1 6 0 3 1 1 1 1 1;}
-@font-face
-	{font-family:Consolas;
-	panose-1:2 11 6 9 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style>
-</head>
-<body lang=3D"EN-US" link=3D"blue" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi Team,</p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">My platform is based on ast2500, and I=92ve already =
-been able to built out the ubi image. But when I tried to test it with qemu=
-, it just stopped at u-boot because =91can=92t get kernel image,</p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">qemu-system-arm: Aspeed iBT has no chardev backend<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">U-Boot 2016.07 (Sep 04 2020 - 19:47:48 +0000)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Watchdog enabled<o:p></o:p></span></=
-p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">DRAM:&nbsp; 496 MiB<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Flash: 32 MiB<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">*** Warning - bad CRC, using default environment<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">In:&nbsp;&nbsp;&nbsp; serial<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Out:&nbsp;&nbsp; serial<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Err:&nbsp;&nbsp; serial<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Net:&nbsp;&nbsp; MAC0 : RGMII<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">MAC1 : RGMII<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">FTGMAC100#0<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Error: FTGMAC100#0 address not set.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">, FTGMAC100#1<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Error: FTGMAC100#1 address not set.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Hit any key to stop autoboot:&nbsp; 0<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">Wrong Image Format for bootm command<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">ERROR: can't get kernel image!<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">ast#<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal">And I found the bootargs is not right,<o:p></o:p></p=
+> On Thu, Sep 03, 2020 at 06:15:50PM +0800, Jeremy Kerr wrote:
+> > Hi Asmitha,
+> >
+> > > To resolve this, the idea is to append the hostname of the client
+> > > with the service name (whenever the service is being published),
+> > > given that the hostname will always be unique in my case.
+> > >
+> > > So, the service file would look like: (example.service)
+> > > > > <service-group>
+> > > > >        <name>example-hostname</name>
+> > > > >        <service>
+> > > > >                <type>...</type>
+> > > > >                <port>...</port>
+> > > > >        </service>
+> > > > > </service-group>
+> >
+> > The typical way to do this is just with the hostname only - the service
+> > type distinguishes different services. So, yes: for better usability,
+> > you'll want to include the hostname in the <name> tag, rather than a
+> > fixed string.
+> >
+> > The .service definitions support wildcards, which makes this super
+> > easy. Something like this, from our current ssh config:
+> >
+> >    <service-group>
+> >      <name replace-wildcards="yes">%h</name>
+> >      <service>
+> >        <type>_ssh._tcp</type>
+> >        <port>22</port>
+> >      </service>
+> >    </service-group>
+> >
+> > Otherwise, as you've noticed, the tooling will just show multiple
+> > (indistinguishable) entries for each BMC.
 >
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">ast# print<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">baudrate=3D115200<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">bootargs=3Dconsole=3DttyS4,115200n8 root=3D/dev/ram rw<o:p></o:p></span><=
-/p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">bootcmd=3Dbootm 20080000<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">bootdelay=3D2<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Checked in the build folder for tmp/work/myplatform-=
-openbmc-linux-gnueabi/u-boot-aspeed/1_v2016.07+gitAUTOINC+1ded9fa3a2-r0/ an=
-d found the none of the following patches are there,<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">0002-config-ast-common-hack-bootopts.patch<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">0003-config-ast-common-Add-bootopts-to-support-ubi-and-mt.patch<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">0004-config-ast-common-Add-conditional-factory-reset-comm.patch<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">0005-config-ast-common-Fall-back-to-secondary-flash-on-fa.patch<o:p></o:p=
-></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I think that=92s why the bootargs is not correct.<o:=
-p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">This is the details of how I enabled the ubi support=
- in my platform recipes,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">1. In meta-myplatform/conf/distro/openbmc-myplatform=
-.conf, I added,<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">require conf/distro/include/phosphor-base.inc<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">require conf/distro/include/phosphor-ubi.inc<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">2. In meta-myplatform/conf/machine/myplatform.conf, =
-I added,<o:p></o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">IMAGE_FSTYPES +=3D &quot; mtd-ubi mtd-ubi-tar&quot;<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.0pt;font-family:Consolas=
-">OBMC_MACHINE_FEATURES +=3D &quot; obmc-ubi-fs&quot;<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Do I miss anything?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Best regards,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Kun Zhao<o:p></o:p></p>
-<p class=3D"MsoNormal">/*<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; <a href=3D"mailto:zkxz@hotmail.com">zkxz@hotm=
-ail.com</a><o:p></o:p></p>
-<p class=3D"MsoNormal">*/<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
+> Yep, I agree with this direction.  I have many systems on my home
+> network that advertise "_ssh._tcp" and I don't have problems with Avahi
+> adding the "#N" mentioned.  Likely this is due to the hostname being
+> different on all of them.
+>
+> > Given that the meta-phosphor configuration is to use the service name
+> > (resulting in those duplicates), I've proposed a change to use the
+> > hostname as the default instead:
+> >
+> >  https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/36199
+> >
+> > Cheers,
+> >
+> >
+> > Jeremy
+> >
+>
+> --
+> Patrick Williams
+>
 
---_000_BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0BYAPR14MB2342namp_--
+
+-- 
+Thanks & Regards,
+Asmitha Karunanithi
+
+--0000000000003d41da05ae8c082d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Patrick, Jeremy, and Micheal,</div><div><br></div>=
+<div>Thanks for your response on this.</div><div>=C2=A0</div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">There is a deconflict system is there f=
+or a purpose, and avahi handles it<br>well, and being able to find all the =
+*ssh* services is actually useful.</blockquote><div>Agree.</div><div><br></=
+div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
+der-left:1px solid rgb(204,204,204);padding-left:1ex">Likely this is due to=
+ the hostname being</blockquote><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">different on all of them.</blockquote>Even in my case, the hostname =
+will be unique.<div><br></div><div>I hope, the commit that Jeremy pushed wo=
+uld resolve this service name conflict issue.</div><div><br></div></div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, S=
+ep 4, 2020 at 10:07 PM Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx=
+.xyz">patrick@stwcx.xyz</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">On Thu, Sep 03, 2020 at 06:15:50PM +0800, Jeremy Ker=
+r wrote:<br>
+&gt; Hi Asmitha,<br>
+&gt; <br>
+&gt; &gt; To resolve this, the idea is to append the hostname of the client=
+<br>
+&gt; &gt; with the service name (whenever the service is being published),<=
+br>
+&gt; &gt; given that the hostname will always be unique in my case.<br>
+&gt; &gt; <br>
+&gt; &gt; So, the service file would look like: (example.service)<br>
+&gt; &gt; &gt; &gt; &lt;service-group&gt;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;name&gt;example-hostname=
+&lt;/name&gt;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;service&gt;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+&lt;type&gt;...&lt;/type&gt;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+&lt;port&gt;...&lt;/port&gt;<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;/service&gt;<br>
+&gt; &gt; &gt; &gt; &lt;/service-group&gt;<br>
+&gt; <br>
+&gt; The typical way to do this is just with the hostname only - the servic=
+e<br>
+&gt; type distinguishes different services. So, yes: for better usability,<=
+br>
+&gt; you&#39;ll want to include the hostname in the &lt;name&gt; tag, rathe=
+r than a<br>
+&gt; fixed string.<br>
+&gt; <br>
+&gt; The .service definitions support wildcards, which makes this super<br>
+&gt; easy. Something like this, from our current ssh config:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 &lt;service-group&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &lt;name replace-wildcards=3D&quot;yes&quot;&gt;%h=
+&lt;/name&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &lt;service&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;type&gt;_ssh._tcp&lt;/type&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;port&gt;22&lt;/port&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &lt;/service&gt;<br>
+&gt;=C2=A0 =C2=A0 &lt;/service-group&gt;<br>
+&gt; <br>
+&gt; Otherwise, as you&#39;ve noticed, the tooling will just show multiple<=
+br>
+&gt; (indistinguishable) entries for each BMC.<br>
+<br>
+Yep, I agree with this direction.=C2=A0 I have many systems on my home<br>
+network that advertise &quot;_ssh._tcp&quot; and I don&#39;t have problems =
+with Avahi<br>
+adding the &quot;#N&quot; mentioned.=C2=A0 Likely this is due to the hostna=
+me being<br>
+different on all of them.<br>
+<br>
+&gt; Given that the meta-phosphor configuration is to use the service name<=
+br>
+&gt; (resulting in those duplicates), I&#39;ve proposed a change to use the=
+<br>
+&gt; hostname as the default instead:<br>
+&gt; <br>
+&gt;=C2=A0 <a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/meta-pho=
+sphor/+/36199" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc-=
+project.xyz/c/openbmc/meta-phosphor/+/36199</a><br>
+&gt; <br>
+&gt; Cheers,<br>
+&gt; <br>
+&gt; <br>
+&gt; Jeremy<br>
+&gt; <br>
+<br>
+-- <br>
+Patrick Williams<br>
+</blockquote></div><br clear=3D"all"><div><br></div>-- <br><div dir=3D"ltr"=
+ class=3D"gmail_signature"><div dir=3D"ltr"><div><div dir=3D"ltr">Thanks &a=
+mp; Regards,<div>Asmitha Karunanithi</div></div></div></div></div>
+
+--0000000000003d41da05ae8c082d--
