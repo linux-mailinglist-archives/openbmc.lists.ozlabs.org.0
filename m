@@ -2,62 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E370E25F2FE
-	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 08:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85ADC25F59F
+	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 10:49:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BlHs10pBxzDqPf
-	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 16:08:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BlMR42wHfzDqJW
+	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 18:49:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=balbi@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
+ dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=default header.b=L705h4Ju; dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=gXIsWssE; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BlHrB0xpCzDqKW
- for <openbmc@lists.ozlabs.org>; Mon,  7 Sep 2020 16:07:37 +1000 (AEST)
-Received: from saruman (91-155-214-58.elisa-laajakaista.fi [91.155.214.58])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BlMQF3ZvvzDqMp
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Sep 2020 18:48:52 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 5BEA2574F6;
+ Mon,  7 Sep 2020 08:48:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1599468525; x=1601282926; bh=/1HbLJDvNoCP8KnWV4FeV7NKj
+ +B5lwVTTqUUQddyTjY=; b=gXIsWssEGVKw7pSdy2FJ2sQAyEAuJBLC8vviC3rOt
+ GtJvMdO4Nhmk0PMn2LlUSqLWWSWPwwd8VP2Pq1B33gnXg8aDRxwUDHnqFOScW3mL
+ X8kCEAIUpa3pGDxdpR3CUECLzLbXyakW28+afJvX7bKj2U5LH/Ydvts+OiZgg/sf
+ 2Q=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id f1dHPBdAc-ku; Mon,  7 Sep 2020 11:48:45 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id C429D20796;
- Mon,  7 Sep 2020 06:07:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1599458854;
- bh=42wmz1tNUoc8rMX4UkRPfnr1oWjTPa9W6uMU998imG4=;
- h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
- b=L705h4JuI2ZUeoBIT8VwRj5QgJWuYDMrhAi5MzIn3x2cNLw+roON/1kqMeQHWbcz0
- z/LqwBn77XIqTFmrYZYIYGugl5hBlTbHZdoycTvPY9Af6BovqpMaif4i+ZNKvsGo8z
- rL4nM9UHlgs0z4yUVcUs5jHWO8m+ZHbWAHXPY6vc=
-From: Felipe Balbi <balbi@kernel.org>
-To: Paul Cercueil <paul@crapouillou.net>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Peter Chen <Peter.Chen@nxp.com>, Cristian
- Birsan <cristian.birsan@microchip.com>, Nicolas Ferre
- <nicolas.ferre@microchip.com>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, Ludovic Desroches
- <ludovic.desroches@microchip.com>, Avi Fishman <avifishman70@gmail.com>,
- Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
- Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
- Benjamin
- Fair <benjaminfair@google.com>, Alan Stern <stern@rowland.harvard.edu>,
- Tony Prisk <linux@prisktech.co.nz>, Bin Liu <b-liu@ti.com>, Shawn Guo
- <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
- Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
- NXP Linux Team <linux-imx@nxp.com>
-Subject: Re: [PATCH 14/20] usb/phy: mxs-usb: Use pm_ptr() macro
-In-Reply-To: <20200903112554.34263-15-paul@crapouillou.net>
-References: <20200903112554.34263-1-paul@crapouillou.net>
- <20200903112554.34263-15-paul@crapouillou.net>
-Date: Mon, 07 Sep 2020 09:07:24 +0300
-Message-ID: <87sgbu15nn.fsf@kernel.org>
+ by mta-01.yadro.com (Postfix) with ESMTPS id 434ED5625E;
+ Mon,  7 Sep 2020 11:48:45 +0300 (MSK)
+Received: from [10.199.2.182] (10.199.2.182) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 7 Sep
+ 2020 11:48:44 +0300
+Message-ID: <ad11a66510115769d1bda99bc15bbd1a7a04117b.camel@yadro.com>
+Subject: Re: What is the purpose of Phosphor Inventory Manager
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Brad Chou <bradc@hyvedesignsolutions.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>
+Date: Mon, 7 Sep 2020 11:48:43 +0300
+In-Reply-To: <CY4PR04MB1033C04444A28A488631A5ABB9280@CY4PR04MB1033.namprd04.prod.outlook.com>
+References: <CY4PR04MB1033C04444A28A488631A5ABB9280@CY4PR04MB1033.namprd04.prod.outlook.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.4 
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha256; protocol="application/pgp-signature"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.2.182]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,50 +75,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Cercueil <paul@crapouillou.net>, openbmc@lists.ozlabs.org,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+Hi, 
 
-Paul Cercueil <paul@crapouillou.net> writes:
+You right, if you already use EntityManager, you should not need
+Phosphor Inventory Manager since EM aimed to replace PIM.
 
-> Use the newly introduced pm_ptr() macro, and mark the suspend/resume
-> functions __maybe_unused. These functions can then be moved outside the
-> CONFIG_PM_SUSPEND block, and the compiler can then process them and
-> detect build failures independently of the config. If unused, they will
-> simply be discarded by the compiler.
->
-> Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-> ---
+On Mon, 2020-09-07 at 03:37 +0000, Brad Chou wrote:
+> Hi,
+> I am doing some study of what Phosphor Inventory Manage does.
+> After read the README.md and the examples directory, I think it does
+> two things.
+> Create/Delete/Update Object or Properties based on some other
+> property changes.
+> Create Associations between sensors and it’s belonging hardware.
+>  
+> There is no enough example to tell me when should I
+> create/delete/update objects and properties based on other
+> properties.
+> Is it necessary ?
+>  
+> Also, when I use entity-manager with dbus-sensors to expose my
+> sensors, I found the dbus-sensors create the associations of all
+> sensors for me.
+> I don’t need to write another YAML file in the Phosphor Inventory
+> Manage to generate it.
+> Does it mean I don’t need to use Phosphor Inventory Manage because
+> dbus-sensors already doing the same thing ?
+>  
+> Thanks.
 
-Acked-by: Felipe Balbi <balbi@kernel.org>
-
-=2D-=20
-balbi
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAl9VzhwRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzL64meEamQa/Gg//bd3IcQSisxN9NwJ0buGWxN2zcQEzeylT
-kwICmOS/yflI8+18moVfFWWA0Xsofz67WiemzxLSWBCtZ7tlrtZQOK4YM64qTqLK
-fbbbUHwPxR0kwzLkJvXDohgFWMGuqf24ym6l6xCBAFh8AhNoR3ZtS9DNfz4tC3Po
-hJ+Th9JUQu9HOc4dfBt1ftdbZNafnb8Fhs5Rr+93foHUVQbnbYbsDoOr0kG7n47q
-oyUKuyf6lJjYFbverN6N86CkFenRAkIhERHY+FDmmjbnoVo8QbQiQ537+rHDrY6t
-qf5K6NuSZpVOylau8GLJiTJBqDQWYUJnRTgqD3Egdkp8wkygAZS+dP8Y+eAMKzKx
-+kz/MS9v5t2Kf7FTRdGD1ylfd27Fx14NxNBp485018lup1y0tYsYTOeXshKl1x8j
-L5fs01r2IC9lB+WgRiL+8wRgyPOjNux28aklk+XiTIslaFHW66ShgW+41dvWo9ip
-62gdC8FAjjDxOVEBW3/OH0ukI/mPOstXUYXxJNdCcCS5RKBC7H654viXhPHLbXpk
-i3EOA2LLRipFSwnAbVZokJ9/7ga+4fLJ4LovreKb7VjBfSksaJRREVzNkpo/GAgN
-eKevHXu324UpIBWdo2uM1DO7wxsNVzIStWqZvL9wtFnycDfG1PQblP1zpzBBBR1h
-q8e02bA+PtY=
-=6T5m
------END PGP SIGNATURE-----
---=-=-=--
