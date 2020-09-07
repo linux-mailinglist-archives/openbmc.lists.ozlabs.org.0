@@ -2,61 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0EBBD25F29E
-	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 07:28:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E370E25F2FE
+	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 08:08:25 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BlGzQ24KszDqQl
-	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 15:28:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BlHs10pBxzDqPf
+	for <lists+openbmc@lfdr.de>; Mon,  7 Sep 2020 16:08:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=balbi@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=default header.b=L705h4Ju; dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BlGyk0McqzDqJl
- for <openbmc@lists.ozlabs.org>; Mon,  7 Sep 2020 15:28:12 +1000 (AEST)
-IronPort-SDR: 8chtNEYbIeWbirgkY3hJptnzMN5vPxJAKnZCXHWeeVkI3FBTHzn7UTuHtV7hq7H38skzLjQFnN
- FxkyYN0FcWJg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9736"; a="145664412"
-X-IronPort-AV: E=Sophos;i="5.76,400,1592895600"; d="scan'208";a="145664412"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Sep 2020 22:28:08 -0700
-IronPort-SDR: jLhLN2hTyjAlkLVFHR4zqMW1KYHzRo2od15ZPFG1uUMKHxhTEmFDp8LsFuqsjTZBVvmnYrmR9d
- jFkcXzIjQubw==
-X-IronPort-AV: E=Sophos;i="5.76,400,1592895600"; d="scan'208";a="479511614"
-Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.213.67.233])
- ([10.213.67.233])
- by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Sep 2020 22:28:06 -0700
-Subject: Today's OpenBMC PMCI WG 9/7/2020 meeting - cancelled
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-To: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>,
- Andrew Jeffery <andrew@aj.id.au>, "Bhat, Sumanth" <sumanth.bhat@intel.com>,
- "Winiarska, Iwona" <iwona.winiarska@intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <f1dbd9cf-e5a9-4d3c-9206-115c1a6b68e0@beta.fastmail.com>
- <54aed124-b607-f061-5edf-f1bd35a96d8a@linux.intel.com>
- <f56abe8e-cd11-3e8f-5484-82a58072deed@linux.vnet.ibm.com>
- <d6bd54fc-1cf0-398d-c10f-18dcd7859364@linux.intel.com>
- <f289a7ed-f792-a08d-07e4-64152b92502a@linux.intel.com>
- <79065c17-8d6b-8595-c1db-62f638de966c@linux.intel.com>
-Message-ID: <e7e61307-1f9a-73c5-406c-aa52961b8273@linux.intel.com>
-Date: Mon, 7 Sep 2020 10:58:02 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BlHrB0xpCzDqKW
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Sep 2020 16:07:37 +1000 (AEST)
+Received: from saruman (91-155-214-58.elisa-laajakaista.fi [91.155.214.58])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id C429D20796;
+ Mon,  7 Sep 2020 06:07:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1599458854;
+ bh=42wmz1tNUoc8rMX4UkRPfnr1oWjTPa9W6uMU998imG4=;
+ h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+ b=L705h4JuI2ZUeoBIT8VwRj5QgJWuYDMrhAi5MzIn3x2cNLw+roON/1kqMeQHWbcz0
+ z/LqwBn77XIqTFmrYZYIYGugl5hBlTbHZdoycTvPY9Af6BovqpMaif4i+ZNKvsGo8z
+ rL4nM9UHlgs0z4yUVcUs5jHWO8m+ZHbWAHXPY6vc=
+From: Felipe Balbi <balbi@kernel.org>
+To: Paul Cercueil <paul@crapouillou.net>, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, Peter Chen <Peter.Chen@nxp.com>, Cristian
+ Birsan <cristian.birsan@microchip.com>, Nicolas Ferre
+ <nicolas.ferre@microchip.com>, Alexandre Belloni
+ <alexandre.belloni@bootlin.com>, Ludovic Desroches
+ <ludovic.desroches@microchip.com>, Avi Fishman <avifishman70@gmail.com>,
+ Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
+ Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
+ Benjamin
+ Fair <benjaminfair@google.com>, Alan Stern <stern@rowland.harvard.edu>,
+ Tony Prisk <linux@prisktech.co.nz>, Bin Liu <b-liu@ti.com>, Shawn Guo
+ <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
+ Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>,
+ NXP Linux Team <linux-imx@nxp.com>
+Subject: Re: [PATCH 14/20] usb/phy: mxs-usb: Use pm_ptr() macro
+In-Reply-To: <20200903112554.34263-15-paul@crapouillou.net>
+References: <20200903112554.34263-1-paul@crapouillou.net>
+ <20200903112554.34263-15-paul@crapouillou.net>
+Date: Mon, 07 Sep 2020 09:07:24 +0300
+Message-ID: <87sgbu15nn.fsf@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <79065c17-8d6b-8595-c1db-62f638de966c@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha256; protocol="application/pgp-signature"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,14 +69,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Paul Cercueil <paul@crapouillou.net>, openbmc@lists.ozlabs.org,
+ linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-All,
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-As there is no specific agenda to be discussed, today's OpenBMC PMCI WG 
-meeting is cancelled.
+Paul Cercueil <paul@crapouillou.net> writes:
 
-Regards,
+> Use the newly introduced pm_ptr() macro, and mark the suspend/resume
+> functions __maybe_unused. These functions can then be moved outside the
+> CONFIG_PM_SUSPEND block, and the compiler can then process them and
+> detect build failures independently of the config. If unused, they will
+> simply be discarded by the compiler.
+>
+> Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+> ---
 
-Richard
+Acked-by: Felipe Balbi <balbi@kernel.org>
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJFBAEBCAAvFiEElLzh7wn96CXwjh2IzL64meEamQYFAl9VzhwRHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzL64meEamQa/Gg//bd3IcQSisxN9NwJ0buGWxN2zcQEzeylT
+kwICmOS/yflI8+18moVfFWWA0Xsofz67WiemzxLSWBCtZ7tlrtZQOK4YM64qTqLK
+fbbbUHwPxR0kwzLkJvXDohgFWMGuqf24ym6l6xCBAFh8AhNoR3ZtS9DNfz4tC3Po
+hJ+Th9JUQu9HOc4dfBt1ftdbZNafnb8Fhs5Rr+93foHUVQbnbYbsDoOr0kG7n47q
+oyUKuyf6lJjYFbverN6N86CkFenRAkIhERHY+FDmmjbnoVo8QbQiQ537+rHDrY6t
+qf5K6NuSZpVOylau8GLJiTJBqDQWYUJnRTgqD3Egdkp8wkygAZS+dP8Y+eAMKzKx
++kz/MS9v5t2Kf7FTRdGD1ylfd27Fx14NxNBp485018lup1y0tYsYTOeXshKl1x8j
+L5fs01r2IC9lB+WgRiL+8wRgyPOjNux28aklk+XiTIslaFHW66ShgW+41dvWo9ip
+62gdC8FAjjDxOVEBW3/OH0ukI/mPOstXUYXxJNdCcCS5RKBC7H654viXhPHLbXpk
+i3EOA2LLRipFSwnAbVZokJ9/7ga+4fLJ4LovreKb7VjBfSksaJRREVzNkpo/GAgN
+eKevHXu324UpIBWdo2uM1DO7wxsNVzIStWqZvL9wtFnycDfG1PQblP1zpzBBBR1h
+q8e02bA+PtY=
+=6T5m
+-----END PGP SIGNATURE-----
+--=-=-=--
