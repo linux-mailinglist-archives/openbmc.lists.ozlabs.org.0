@@ -1,70 +1,149 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 392D7260A81
-	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 08:02:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B186260A96
+	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 08:08:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Blvgb1KsvzDqQb
-	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 16:02:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BlvpW14mszDqNw
+	for <lists+openbmc@lfdr.de>; Tue,  8 Sep 2020 16:08:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=nvidia.com (client-ip=216.228.121.143;
+ helo=hqnvemgate24.nvidia.com; envelope-from=jan@nvidia.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2b; helo=mail-yb1-xb2b.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=none dis=none) header.from=nvidia.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=E1i8A7QI; dkim-atps=neutral
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
- [IPv6:2607:f8b0:4864:20::b2b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=nvidia.com header.i=@nvidia.com header.a=rsa-sha256
+ header.s=n1 header.b=okkTL/+d; dkim-atps=neutral
+X-Greylist: delayed 306 seconds by postgrey-1.36 at bilbo;
+ Tue, 08 Sep 2020 16:07:10 AEST
+Received: from hqnvemgate24.nvidia.com (hqnvemgate24.nvidia.com
+ [216.228.121.143])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BlvfH0T08zDqMw
- for <openbmc@lists.ozlabs.org>; Tue,  8 Sep 2020 16:01:07 +1000 (AEST)
-Received: by mail-yb1-xb2b.google.com with SMTP id q3so10559891ybp.7
- for <openbmc@lists.ozlabs.org>; Mon, 07 Sep 2020 23:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=kM42Z6PyzMLCaKwBPGySli/yPMryKwGLMsidsbv4rdE=;
- b=E1i8A7QI766kt9+eKqYnJ9s9Hc+QhZJv0dQP4+F/qTcm54dGkUQCP87Fga77zXILlj
- FHASvsWG1bTuF391uz+5QhNtvPRgoz1fXlbuVe/bNO9pXS/cVePcqgi8z2KkDb1DFEA+
- Zlehi0HXYHiJOPs5Ks7o9kp9t/1lb3WYT9/pmPW/vBuYZ6ezs+sUv2RBqhXPX8VDOCWs
- 8x5N3EZsL24c+nBEiBPPGCkwWFYGa5CP8Ab/8hqEFhYWEgk6nymi6H+k9bWvviV6fYdj
- aIQNVuxYBHaM/+jGn6tHqxQtfz9TlkBFBfylLvjdPkDgmyTGyBtCbuBms+6MiwFEO3Pp
- HZlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=kM42Z6PyzMLCaKwBPGySli/yPMryKwGLMsidsbv4rdE=;
- b=h8/aJ6IxH3aLJoCJ6wSWTP+QibHVS4TdIpRmJ+wQWKvi/22Nk0Q34eeU0wOsr7bgKx
- u4Z16TYkMho9R0W5Bbyq067pvHDi2x6hFUELQHDv/2iyGJG4ociSTh9e0Y2sSXJV/+79
- UFunSYY6t5PpxsIdi3VIcrD/2deHm8PZ2z8v/BAEmQzXjZ6N9UVz5AAo2i/qq4EKvXlX
- ERK9wBVd72B9NR83nyrY/XSWPnjAmT/sFNPVeprfPTFsNnyz9jKGCg4MHu5KvAYRhXpq
- /Gmpx+BEn9ac/AT1AOsEKi2RudqoBvExiAlYG73eM2SDp47n2PldSki/fHrOMA5Wz/1j
- KwZA==
-X-Gm-Message-State: AOAM531m24NCROJCK74U1czP0HDkKMe1GT2EvBu0tOvgTdq0r9jMydld
- qy9AUEOpYJoQ+NraDTAi7kdv6N84bCXDvXEPGxB9sQ==
-X-Google-Smtp-Source: ABdhPJyAS1dIL7yepZccH6NxPNdNx8AYtSdzc0ZjelHbqVRKSuKrulPEvoT5Xw6up5SR06SUVtPSX9QWYsioUUD2PJs=
-X-Received: by 2002:a25:2d69:: with SMTP id s41mr31813476ybe.417.1599544863746; 
- Mon, 07 Sep 2020 23:01:03 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BlvnB2vlpzDqHg
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Sep 2020 16:07:09 +1000 (AEST)
+Received: from hqpgpgate102.nvidia.com (Not Verified[216.228.121.13]) by
+ hqnvemgate24.nvidia.com (using TLS: TLSv1.2, DES-CBC3-SHA)
+ id <B5f571dd00000>; Mon, 07 Sep 2020 22:59:44 -0700
+Received: from hqmail.nvidia.com ([172.20.161.6])
+ by hqpgpgate102.nvidia.com (PGP Universal service);
+ Mon, 07 Sep 2020 23:01:58 -0700
+X-PGP-Universal: processed;
+ by hqpgpgate102.nvidia.com on Mon, 07 Sep 2020 23:01:58 -0700
+Received: from HQMAIL109.nvidia.com (172.20.187.15) by HQMAIL109.nvidia.com
+ (172.20.187.15) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Tue, 8 Sep
+ 2020 06:01:57 +0000
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.109)
+ by HQMAIL109.nvidia.com (172.20.187.15) with Microsoft SMTP Server (TLS) id
+ 15.0.1473.3 via Frontend Transport; Tue, 8 Sep 2020 06:01:57 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GUioCg5cgKeC2/yOUWg0At3qb2FZX9TOwebXJ7aOaTHEKgPwsdRWC6Nezhun6cm6v69pdU97248USFvTyNPCYr4+JLW7CqRVlTEw3veDNKaE5oAa6ze6MV/9/8UJ/K7loQ0arm/8MiHCIoy3Awki+XE+b+htasVxibDhvE+i5Z0geZi1zqYAasZUkE24ZaAj+lE4mH6GdwEI44jwktJ/bfOu6NYvL1KJQnvjb05x92J2uqlCGS1ljd91ExyTMg1Txc6kDVqBQWY57hEwk3rwna4OTOKK+UhEANuwcG/HsEeHYpb0uyFOqvpg8dSN7oTQTi47IMaNnTPKg4gFBZWzSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=08DK4WsvaQkGF/UGlgZcnfinWjWOjjgXCfXKO3PyCUc=;
+ b=JjipZjB6vqGy8shb8+VdJbBBadPWn1NR0uqySsGhDgSV3E4KrRV786FBq8cJUhXu6DQhOBtddWzOzvISj868sH00Pumrhz/d0cColJy19+5rP4BeCsFB+DRkP79fF/1OI1q3F27h1QMBGENhQPJv2gEhXltrOhPhO7R9lvcdqE56sD66u5StgU0jQE5QSvs3MqddA2nxf8YTjFeuSavaBSY+E1J3PIcQrbhE7e7RKKj+UcKk9hXd0k3B5OEjqLcY5FRZ25I1NXkBxgzvekyghtwKExTWEc4jvwadsAM6zb2bCAEGneMMSLnmy/0h7Yo0n30w8PJex03s/0yamHe+bQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+Received: from DM6PR12MB3020.namprd12.prod.outlook.com (2603:10b6:5:11f::15)
+ by DM6PR12MB3210.namprd12.prod.outlook.com (2603:10b6:5:185::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3348.15; Tue, 8 Sep
+ 2020 06:01:56 +0000
+Received: from DM6PR12MB3020.namprd12.prod.outlook.com
+ ([fe80::b5a1:ab5d:a3aa:273f]) by DM6PR12MB3020.namprd12.prod.outlook.com
+ ([fe80::b5a1:ab5d:a3aa:273f%3]) with mapi id 15.20.3348.019; Tue, 8 Sep 2020
+ 06:01:55 +0000
+From: Jiandi An <jan@nvidia.com>
+To: Ed Tanous <ed@tanous.net>, Andrei Kartashev <a.kartashev@yadro.com>
+Subject: RE: OpenBMC - FRU inventory with Entity Manager
+Thread-Topic: OpenBMC - FRU inventory with Entity Manager
+Thread-Index: AdZ8BXDmk1ugNPOnSNWhMxi+CJGThv//5pQAgAB4k4CAAAddAIAHAxCAgAN8EACAAC7MgP/36xQw
+Date: Tue, 8 Sep 2020 06:01:55 +0000
+Message-ID: <DM6PR12MB302048450BC68C4E79711B2CCD290@DM6PR12MB3020.namprd12.prod.outlook.com>
+References: <DM6PR12MB3020D6DD47C7E6DBBD6530A3CD550@DM6PR12MB3020.namprd12.prod.outlook.com>
+ <22E14C00-D87D-489F-AB22-6401DE8CDDF5@fb.com>
+ <5e71fa32-4547-fb5e-ed50-dffe19cefc09@linux.vnet.ibm.com>
+ <b9f035732b62a4bd58ea67e2ea936bdce2cec790.camel@yadro.com>
+ <CACWQX83AXKZiTdhrXhuXg8r-2ZfJstqGANumOBzVtNHzFGonDA@mail.gmail.com>
+ <ceef9c9e30992d6d9fe85ec19b1c87da1191fc39.camel@yadro.com>
+ <CACWQX83+BO7WuZBW6ubJwvYOhKee=F0Hf5WBWm2uX2bhBV3ZMA@mail.gmail.com>
+In-Reply-To: <CACWQX83+BO7WuZBW6ubJwvYOhKee=F0Hf5WBWm2uX2bhBV3ZMA@mail.gmail.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_Enabled=True;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_SiteId=43083d15-7273-40c1-b7db-39efd9ccc17a;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_Owner=jan@nvidia.com;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_SetDate=2020-09-08T06:01:53.8744003Z;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_Name=Unrestricted;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_Application=Microsoft Azure
+ Information Protection;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_ActionId=7c20eefb-6429-4b98-a45a-8f9ad2c2efca;
+ MSIP_Label_6b558183-044c-4105-8d9c-cea02a2a3d86_Extended_MSFT_Method=Automatic
+authentication-results: tanous.net; dkim=none (message not signed)
+ header.d=none;tanous.net; dmarc=none action=none header.from=nvidia.com;
+x-originating-ip: [216.228.112.22]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 23d2e4a7-9d46-4002-e701-08d853bcb0e9
+x-ms-traffictypediagnostic: DM6PR12MB3210:
+x-microsoft-antispam-prvs: <DM6PR12MB32104E796112FDDD3F99FDA5CD290@DM6PR12MB3210.namprd12.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6430;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Pdl00bnU1VUapqItxARWXd9Y1LPSDvExY/3hCu7PQrIAk20ochhUH7sAvgbAV+VHf8TcsNSFtAV5taSx06hVHT8wdNZKijB3mi/xsNPMukpjIELuHwkmhSMbBVLw9WIdk2bc00c3vrUhfuAC6yA7lKOUG2pGr0w5kDW/nzMDqYbX2COkuYdXd7i+PGJiqSJQg11EPxSOXoQMIYz8ThyAdcXItjryFEI//3SjhhJmEPwiNdP4GYT11uSWEtGcoQRwWZTUUT2dTMjbgHvliFE3mLUiVlkqANU3T3Y7vtembrZvI7lL8PcJ17AHYvzlAib/Xu/H+swHMjMqs+WW2NStAwGbGLnp/fSdYfWoTaw7U1PYvCcw6OgyLzTHEaqAqqp/8Ule9hoh5sbXwNbXNebz/A==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB3020.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(39860400002)(136003)(396003)(366004)(376002)(478600001)(53546011)(6506007)(316002)(26005)(966005)(86362001)(8936002)(55016002)(33656002)(9686003)(7696005)(110136005)(8676002)(83380400001)(66446008)(4326008)(66946007)(66476007)(64756008)(66556008)(76116006)(186003)(2906002)(71200400001)(52536014)(5660300002);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata: JkBUnC8YMu6IAU4Vs4AuYLsDI9kOJnz978dFGRdecKxxnT0oYZzPVPpI2erj8A/vsmugvQplaMxVugHtVckuhqZbYpBRQ9Z/K72cW9+TlVdzHI/gfRGN32q+/AaUKKV7OlNo4ZTml9CqLBEh2NG2JWlGiWOmhLbxDZiy/C1sW0/iYt+WhY/G6yWXJWsbmQu6p1VBeHnnefiGxxqa+7Rqlv5S94detWbu/99QOioj4Sh0OyW82qngmb6IduJl1ZfKfULibkDEyRYMrpGx1e2vLlbXJCE8157KSXBns6oY6guZkeYZr/XF2f5G1RYmSpM54YDjmkIVSHunGESZKk8ZSDMSfT2R//QDFXARh2MVnFr2HuMVA5NCRzk4k10wAmH2wkgtFyFD13ia+QxGiU7N2HX8kVtTeuA3BnukVpCVbZzDa/sTisBirH84h56rYMa2Ij+zUtI5tIbQaaqurPxvgCOY5su1SxqZSNLZFiE79OP97g/6DRhrniHzmP6vcyKVhMDghcWEbe7ZMckCQwtYWqqTcuIVJVmw2DDvoj/+uYQdtFNjX9vPlepM35SqIvV9YS1/e5uHluOkOSe5aE0E2p5I/OZGWOfVbBuRhevnOVdVwFX48BUZ699kP7dmAuJNAAfbRdL+kG6cwDUDFvtCKg==
+x-ms-exchange-transport-forked: True
 MIME-Version: 1.0
-References: <b114645e-1736-db35-5e35-027b60b02a44@linux.intel.com>
-In-Reply-To: <b114645e-1736-db35-5e35-027b60b02a44@linux.intel.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 7 Sep 2020 23:00:52 -0700
-Message-ID: <CACWQX839okH5F=BcYcYHV91SjkFLChP_sMPpyzZCr4_CNjsBig@mail.gmail.com>
-Subject: Re: openbmc\telemetry - upstreaming process boost
-To: =?UTF-8?Q?Adrian_Ambro=C5=BCewicz?= <adrian.ambrozewicz@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3020.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23d2e4a7-9d46-4002-e701-08d853bcb0e9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Sep 2020 06:01:55.8482 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: R4Z0Av5WyBxXrxZlsoa65osdzEOIeOMpT0RTGuetAbwar5+cvHNOQR8iFM1DiJMu
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB3210
+X-OriginatorOrg: Nvidia.com
+Content-Language: en-US
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvidia.com; s=n1;
+ t=1599544784; bh=08DK4WsvaQkGF/UGlgZcnfinWjWOjjgXCfXKO3PyCUc=;
+ h=X-PGP-Universal:ARC-Seal:ARC-Message-Signature:
+ ARC-Authentication-Results:From:To:CC:Subject:Thread-Topic:
+ Thread-Index:Date:Message-ID:References:In-Reply-To:
+ Accept-Language:X-MS-Has-Attach:X-MS-TNEF-Correlator:msip_labels:
+ authentication-results:x-originating-ip:x-ms-publictraffictype:
+ x-ms-office365-filtering-correlation-id:x-ms-traffictypediagnostic:
+ x-microsoft-antispam-prvs:x-ms-oob-tlc-oobclassifiers:
+ x-ms-exchange-senderadcheck:x-microsoft-antispam:
+ x-microsoft-antispam-message-info:x-forefront-antispam-report:
+ x-ms-exchange-antispam-messagedata:x-ms-exchange-transport-forked:
+ MIME-Version:X-MS-Exchange-CrossTenant-AuthAs:
+ X-MS-Exchange-CrossTenant-AuthSource:
+ X-MS-Exchange-CrossTenant-Network-Message-Id:
+ X-MS-Exchange-CrossTenant-originalarrivaltime:
+ X-MS-Exchange-CrossTenant-fromentityheader:
+ X-MS-Exchange-CrossTenant-id:X-MS-Exchange-CrossTenant-mailboxtype:
+ X-MS-Exchange-CrossTenant-userprincipalname:
+ X-MS-Exchange-Transport-CrossTenantHeadersStamped:X-OriginatorOrg:
+ Content-Language:Content-Type:Content-Transfer-Encoding;
+ b=okkTL/+dfKX2aMyT4WLxQkyrAl8Jr7ag8xw3NxuOfxRJPxVkjdPGNXPg0/Dp12qsk
+ 39gGd6wQAW2sn7iqSai8emJjn/M+zE+jXyvJ8rGYFoouCdbdmI+ra6VCln1vOkb4kM
+ S10iu/8brL58A5JUS9Iv0en/xUOrwvXEgxaEJCbSVxSGJw9OBnV6vxcIYHSOGCVb32
+ iS8MXG9Yjw/LV+JKaf71cTUV4C3ALEoElTVUlEq46n/L25z4x1jAnRWx4NyNFROr0x
+ zpQv/rO9NVCqW4r2Gzo0f0E6+WKVXcvqyyjyzIUp+wIxXB6+M/16ehvV620zlvi952
+ QNqZn457hFhkw==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,169 +155,176 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Sep 7, 2020 at 3:03 AM Adrian Ambro=C5=BCewicz
-<adrian.ambrozewicz@linux.intel.com> wrote:
->
-> Hi all,
->
-> For those who don't know - we are currently in the process of
-> upstreaming first iteration of DMTF TelemetryService D-Bus back-end at
-> https://gerrit.openbmc-project.xyz/c/openbmc/telemetry/+/34273 . After 2
-> months of review and almost 300 comments and discussions, together with
-> team we've decided to propose slight change in the process to speed up
-> development time.
-
-Can you estimate how long this was in development before being
-upstreamed?  There's a lot of code here;  A decent rule of thumb is
-that it takes as long (calendar time) to upstream as it took to build.
-
->
-> =3D=3D The past =3D=3D
-> Let me admit to several faults and mistakes first, so we could all know
-> our lessons learned:
-> - patch is too big for the review, even as an initial commit.
-
-+1
-
-> Unfortunately it was not our decisions, but unpleasant side effect of
-> legal processes;
-
-There's a number of developers from your company that somehow are able
-to upstream code in pieces, using small, logical commits, even for
-large projects.  You might look to them for how they were able to
-bypass the "legal processes" in those cases.
-
-> - we didn't expect amount of effort nor prepare properly for
-> simultaneous upstreaming and developing the same code;
-> - because of above - we have two separate implementations to maintain,
-> test and fix, which are diverging over time;
-> - part of discussions in upstream code aim to rework parts of
-> implementation, which in some cases doesn't apply for downstream (more
-> ahead) implementation, making both ours and reviewers efforts .
-
-With respect to the fine work you've done, the project cannot be in
-charge of your downstream process.  With that said, I took a look at
-the Intel downstream (in Intel-BMC) and I'm not seeing telemetry
-service there, nor has the repo been pushed to the org.  What
-"downstream" are you referring to?  From what it appears, it doesn't
-even look like it's enabled there.
-
->
-> In short - we've screwed up, ask for community understanding and
-> forgiveness, and the most importantly - we ask for help.
->
-> =3D=3D The present =3D=3D
-> Current situation and arguments for change are the following:
-> - we have big chunk of code in the review with many discussions already
-> resolved. It looks like the most crucial issues were resolved, leaving
-> mostly coding style or micro-optimizations.
-
-I fundamentally disagree with this statement.  The code as a whole
-still doesn't follow coding standard #1 "Code should be clear and
-concise." and breaks a number of other coding standards as well.  It
-should be noted, I'm not talking about variable naming or something
-small here.  I have legitimate concerns that this code will be
-difficult to extend in the future.
-
-> - we're working on new features (i estimate that around 50% of planned
-> scope is completed).
-
-Your upstreaming process would be accelerated if you focused on
-cleaning up the existing code to get it into mergeable shape, THEN
-worked on new features.
-
-> Due to limited resources we cannot afford to keep
-> maintaining two versions of the code and we want to switch to
-> upstream-only as soon as possible.
-> - upstream code is becoming more and more behind our downstream 'top',
-> and the incoming task to sync them will be harder the longer we wait.
-
-See above.  As you push forward, you solidify the constructs you're
-hoping to get merged, and you make your problem harder as people
-review it.  I would also add, at present, you haven't even opened a
-review for bitbake file to build this as part of the project, so the
-idea that enough people have reviewed it such that it's ready for
-merge is a little odd, considering there's no way for people to
-actually try it.
-
-It should be noted, there's so much code there that I haven't even
-made it through the full code review of all the files.  Looking at the
-review comments, it doesn't look like anyone else has either.
-
->
-> =3D=3D The future =3D=3D
-
-Before we start this section, I'd like to point out, this daemon is
-something I'm hoping to be able to use in the future.  As-written, its
-complexity would prevent me from doing so, and would likely lead to me
-either rewriting it from scratch, or significantly refactoring it
-before I used it.  This is why I'm reviewing it now, so we can ensure
-its utility in the future.
-
-> So.. Having said all that we would like to propose a solution which will
-> not only allow to continue the usual review and improvement process,
-> while enabling working on next iterations and making life easier for
-> both reviewers and maintainers. Seems like a good trade, right?:) I
-> would like to propose a plan of resolving that situations and seek for
-> your advice and acceptance.
-
-What does "acceptance" mean to you?  That we allow it on master?  That
-we turn it on by default?  What would the post-merge review process
-look like?  Would you commit to an SLA for fixes?
-
->
-> Plan is to do the following:
-> 1) Merge current big-bang review as-is, opening GitHub issues for all
-> existing comments to address them at convenient time.
-
-What does "convenient" mean here?
-
-> 2) Sync downstream implementation with upstream. Split changes in chain
-> of reviews to separate them as much as possible.
-
-I'm not really following why you're asking for permission to do this
-part.  You could've been doing this all along.  Gerrit reviews chain
-nicely.  We've had significant efforts in the past (like the
-phosphor-webui) that opened LOTS of changesets all dependent on one
-another.  While it was a lot of code, it eventually got reworked and
-merged in, and we learned a lot of valuable things in the process.
-
-> 3) Work on the chain of reviews and addressing aforementioned issues
-> until in usual manner.
-> 4) As soon as code is more stable - work on new features.
->
-> As you can see - only 1st step of the plan is diverging from usual
-> Gerrit flow.
-
-Yet... It's the arguably most important step.
-
->
-> We really hope for your understanding and count on acceptance of such
-> workflow. Let us know what you think.
->
-
-Overall, I really don't like the above idea, disagree that the
-projects process is broken here, and disagree that we should bypass
-it.  I also don't like the lack of review the code has gotten, despite
-the interest on the earlier threads in the past.  So far as I can
-tell, only Krzysztof and myself have commented on the "inital commit"
-review, I haven't even made it all the way through the code.  I'm
-assuming Krzysztof was part of the internal development based on some
-of his responses, and how quickly he came up to speed on it  I see no
-reviews from the existing Intel maintainers, nor do I see it checked
-into the public facing fork, which makes me wonder about the level of
-testing and review this has gotten internally (although I have no
-actual knowledge of that, so maybe it did).  The testing statements in
-the commit message also leave a lot to be desired, and don't come
-close to covering the functionality this daemon produces.
-
-On the whole, I really think that this resistance you're feeling is
-the project process working, and the trouble you're seeing with
-merging is healthy.  As the project's stability and maintainability
-goals get rolled back into your process, you and your team will get
-more efficient at getting stuff merged.  With that end goal in mind, I
-think the above reviews need to continue, with no special allowances.
+DQo+IE9uIFdlZCwgU2VwIDIsIDIwMjAgYXQgMzoyNyBQTSBBbmRyZWkgS2FydGFzaGV2IDxhLmth
+cnRhc2hldkB5YWRyby5jb20+IHdyb3RlOg0KPiA+DQo+ID4gT24gTW9uLCAyMDIwLTA4LTMxIGF0
+IDEwOjE0IC0wNzAwLCBFZCBUYW5vdXMgd3JvdGU6DQo+ID4gPg0KPiA+ID4gT24gV2VkLCBBdWcg
+MjYsIDIwMjAgYXQgMTE6MTEgUE0gQW5kcmVpIEthcnRhc2hldiA8IA0KPiA+ID4gYS5rYXJ0YXNo
+ZXZAeWFkcm8uY29tPiB3cm90ZToNCj4gPiA+ID4gU2luY2UgdGhlcmUgaXMgYSBwbGFuIHRvIG1v
+dmUgdG8gRU0gZm9yIGludmVudG9yeSwgSSBiZWxpZXZlIGl0IGlzIA0KPiA+ID4gPiByZWFsbHkg
+Z29vZCBpZGVhIHRvIGFsc28gaGF2ZSBzdXBwb3J0IGZvciBGcnVEZXZpY2UgaW4gcGhvc3Bob3It
+DQo+ID4gPiA+IGhvc3QtDQo+ID4gPiA+IGlwbWlkLiBUaGVuIHdlIGNhbiBoYXZlIGEgY29tbW9u
+IHdheSBvbiBob3cgdG8gaGFuZGxlIGl0Lg0KPiA+ID4gPiBTYW1lIGZvciBTRFIgQlRXLg0KPiA+
+ID4NCj4gPiA+ICsxLiAgVGhpcyB3YXMgYXR0ZW1wdGVkIGEgbG9uZyB0aW1lIGFnbywgYnV0IG5v
+Ym9keSB3YXMgYWJsZSB0byBjb21lDQo+ID4gPiB1cCB3aXRoIGEgZGVzaWduIHRoYXQga2VwdCB0
+aGUgIm9sZCIgd2F5IHdvcmtpbmcgZm9yIHRob3NlIHRoYXQgDQo+ID4gPiBuZWVkZWQgaXQsIGFu
+ZCBhdCB0aGUgdGltZSB0aGVyZSB3ZXJlIHNvbWUgbWlzc2luZyBmZWF0dXJlcy4gIEdpdmVuIA0K
+PiA+ID4gd2hlcmUgZW50aXR5IG1hbmFnZXIgaGFzIGdvdHRlbiwgaXQncyBwcm9iYWJseSB0aW1l
+IHRvIHN0YXJ0IHRoYXQgDQo+ID4gPiBkaXNjdXNzaW9uIHVwIGFnYWluLiAgRG8geW91IHRoaW5r
+IHlvdSBjb3VsZCBwdXQgdG9nZXRoZXIgYSBwYXRjaCANCj4gPiA+IHRoYXQgZG9lcyB3aGF0IHlv
+dSBkZXNjcmliZT8NCj4gPiA+DQo+ID4gV2VsbCwgSSBjdXJyZW50bHkgaGF2ZSBudW1iZXIgb2Yg
+bW9yZSBjcml0aWNhbCB0YXNrcyBmb3IgcGxhdGZvcm0gDQo+ID4gYnJpbmctdXAsIGJ1dCBJIGNh
+biB0YWtlIGEgbG9vay4NCj4NCj4gSWYgeW91IGdldCB0aGUgdGltZSwgSSdkIGFwcHJlY2lhdGUg
+aXQuICBJZiBub3QsIEkgc3RpbGwgYXBwcmVjaWF0ZSB5b3VyIGlucHV0IHNvZmFyLg0KPiANCj4g
+Pg0KPiA+ID4gPiBCdXQgdGhlcmUgaXMgb3RoZXIgdGhpbmc6IHRoZXJlIGlzIGNhdGFzdHJvcGhp
+Y2FsbHkgbm90IGVub3VnaCANCj4gPiA+ID4gZG9jdW1lbnRhdGlvbiBmb3IgRW50aXR5TWFuYWdl
+ci9kYnVzLXNlbnNvcnMuIExvb2tzIGxpa2UgY29tbW9uIA0KPiA+ID4gPiB3YXkganVzdCB0byBh
+ZGp1c3QgZXhpc3RpbmcgY29uZmlnIGFuZCBob3BlIHRoYXQgaXQgc3RpbGwgd2lsbCB3b3JrLg0K
+PiA+ID4gPiA8c29ycnksIHdhcyBhbGwgdGhlIGRheSB0cnlpbmcgdG8gZ2V0IGFkY3NlbnNvcnMg
+d29yayB5ZXN0ZXJkYXk+DQo+ID4gPg0KPiA+ID4gVGhhdCBiZWluZyB0aGUgY2FzZSwgd291bGQg
+eW91IG1pbmQgdGFraW5nIGEgbG9vayBhdCB0aGUgZG9jcyANCj4gPiA+IGNoYW5nZXMgSSBqdXN0
+IHB1dCB1cC4gIEl0J3MgdHJ5aW5nIHRvIGltcHJvdmUgdGhlIEVNIGRvY3VtZW50YXRpb24gDQo+
+ID4gPiBhIGJpdCwgYWx0aG91Z2ggSSByZWFsaXplIGl0IGRvZXNuJ3QgZ2V0IGFsbCB0aGUgd2F5
+IHRvIHdoZXJlIGl0IA0KPiA+ID4gbmVlZHMgdG8gYmUuDQo+ID4gPiBodHRwczovL2dlcnJpdC5v
+cGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9lbnRpdHktbWFuYWdlci8rLzM2MTEwDQo+ID4N
+Cj4gPiBHcmVhdCBkb2MhIEkgd2lzaCBJIGhhZCBpdCBtb250aCBhZ28gKQ0KPg0KPiBBdCBsZWFz
+dCBpdCdsbCBiZSB0aGVyZSBmb3IgdGhlIG5leHQgcGVyc29uLg0KDQpMaW5lIDcyIG9mIHRoZSBk
+b2Mgc2F5cyB0aGUgM3JkIGNvbXBvbmVudCB0byBlbnRpdHktbWFuYWdlciBpcyB0aGUgcmVhY3Rv
+ci4NCkl0IG1lbnRpb25zIG9uZSBleGFtcGxlIGlzIGRidXMtc2Vuc29ycywgd2hpY2ggY29udGFp
+bnMgYSBzdWl0ZSBvZiBhcHBsaWNhdGlvbiB0aGF0DQppbnB1dCB0aGUgRXhwb3NlcyByZWNvcmRz
+IGZvciBzZW5zb3IgZGV2aWNlcywgdGhlbiBjb25uZWN0IHRvIHRoZSBmaWxlc3lzdGVtIHRvIGNy
+ZWF0ZQ0KdGhlIHNlbnNvcnMgYW5kIHNjYW4gbG9vcHMgdG8gc2NhbiBzZW5zb3JzIGZvciB0aG9z
+ZSBkZXZpY2VzLg0KDQpDb3VsZCBzb21lb25lIHBvaW50IGEgc2FtcGxlIGNvZGUgdGhhdCBhIHBs
+YXRmb3JtIGlzIGRvaW5nIHRoZSBmbG93IGRlc2NyaWJlZCBhYm92ZT8NCg0KRm9yIGV4YW1wbGUg
+YWZ0ZXIgZW5hYmxlIGVudGl0eS1tYW5hZ2VyIGFuZCBwdXQgaW4gdGhlIGRldmljZSB0cmVlIGZv
+ciB0ZW1wIHNlbnNvcnMNCmFuZCBGUlUgRUVQUk9NIGRldmljZXMsIGFuZCB0aGUgRXhwb3Nlcywg
+cHJvYmUgY29uZmlnIGJsb2NrcyBpbiB0aGUganNvbiBmaWxlLCBzdGlsbA0Kc3RydWdnbGluZyB0
+byBnZXQgaXBtaXRvb2wgc2Vuc29yIGxpc3QgYW5kIGlwbWl0b29sIGZydSB0byB3b3JrLiAgImlw
+bWl0b29sIGZydSIgaXNzdWUgaXMNCmNsZWFyIGJhc2VkIG9uIHRoZSBmZWVkYmFjayBpbiB0aGlz
+IHRocmVhZC4gIEJ1dCByZWFsbHkgd2FudCB0byBoYXZlIGEgdHV0b3JpYWwgb3IgY29kZQ0KZXhh
+bXBsZSB0byB3YWxrIHRocm91Z2ggdG8gdW5kZXJzdGFuZCB0aGUgcmVhY3RvciBzaWRlIG9mIHRo
+aW5ncy4NCg0KPg0KPiA+DQo+ID4gPiBBbHNvLCBpdCdkIGJlIGdyZWF0IGlmIHlvdSBjYW4gY29t
+ZSB1cCB3aXRoIHNvbWUgY29uY3JldGUgZXhhbXBsZXMgDQo+ID4gPiBvZiB3aGF0IGVsc2Ugd2Ug
+Y2FuIGltcHJvdmUgaW4gdGhpcyByZWdhcmQuICBVbmZvcnR1bmF0ZWx5IHRoZSAiY29weSANCj4g
+PiA+IGFuIGV4aXN0aW5nIGNvbmZpZyBhbmQgbW9kaWZ5IiBhcHByb2FjaCB3YXMgdGhlIGJlc3Qg
+d2F5IHdlIGZvdW5kIHRvIA0KPiA+ID4gbWFrZSBwbGF0Zm9ybSBwb3J0cyBlYXN5LiAgQSBsb3Qg
+b2Ygc3lzdGVtcyB0ZW5kIHRvIGxvb2sgcHJldHR5IA0KPiA+ID4gc2ltaWxhciwgYmFzZWQgb24g
+c2ltaWxhciByZWZlcmVuY2UgcGxhdGZvcm1zLCBzbyB1c3VhbGx5IHRoZXJlJ3MgDQo+ID4gPiBz
+b21ldGhpbmcgdG8gdXNlIGFzIGEgc3RhcnRpbmcgcG9pbnQuICBCdWlsZGluZyBhIGNvbmZpZyBm
+cm9tIA0KPiA+ID4gc2NyYXRjaCB1c2luZyBmaXJzdCBwcmluY2lwYWxzIGFuZCBkb2N1bWVudGF0
+aW9uIGlzIGtpbmQgb2YgDQo+ID4gPiBkYXVudGluZywgYW5kIGJlY2FtZSBhIG5vbi1zdGFydGVy
+IGZvciBtb3N0IHBlb3BsZSwgZ2l2ZW4gdGhhdCB0aGUgDQo+ID4gPiBjb25maWcgZmlsZXMgdGVu
+ZCB0byBiZSBsYXJnZS4NCj4gPg0KPiA+IFllcywgZXZlcnlvbmUgbGlrZXMgImNvcHktcGFzdGUi
+IGFuZCB0aGlzIGlzIHdvcmtpbmcgYXBwcm9hY2guIFVubGVzcyANCj4gPiB5b3UgdW5kZXJzdGFu
+ZCB3aGF0IGV4YWN0bHkgeW91IHBhc3RpbmcuIEUuZy4gRmFuL1BJRCBjb25maWd1cmF0aW9uIA0K
+PiA+IGxvb2tzIGxpa2UgYSBoZWxsIGFuZCBpdCBkb2Vzbid0IG1hdGNoIG9uZSB0aGF0IGRlc2Ny
+aWJlZCBpbiBwaG9zcGhvci0gDQo+ID4gcGlkLW1hbmFnZXIgKS4NCj4gDQo+IFRoYXQncyBkZWZp
+bml0ZWx5IGEgbG93IGVmZm9ydC9oaWdoIHJld2FyZCBwbGFjZSB3aGVyZSB3ZSBzaG91bGQgZG8g
+YSBiZXR0ZXIgam9iIGRvY3VtZW50aW5nIGVhY2ggcGFyYW1ldGVyIGFuZCB0aGVpciBjb25zdHJh
+aW50cy4NCj4gDQo+ID4gU28sIG5vdyB3ZSBoYXZlIGJyaWxsaWFudCB0b3AtbGV2ZWwgb3ZlcnZp
+ZXcsIG5leHQgc3RlcCBpcyB0byBkZXNjcmliZSANCj4gPiBob3cgdG8gdXNlIGFuZCBleHRlbmQg
+aXQuIFRoYXQgaXMgbW9zdGx5IG9uIHJlYWN0b3Igc2lkZSwgb2YgY291cnNlLCANCj4gPiBidXQg
+b24gRU0gc2lkZSB3ZSBzaG91bGQgY2xlYXJseSBkZXNjcmliZSBob3cgY29uZmlnIGlzIHRyYW5z
+bGF0ZWQgdG8gDQo+ID4gZGJ1cyBvYmplY3RzLg0KPiANCj4gVGhpcyBoYXMgZXZvbHZlZCBxdWl0
+ZSBhIGJpdCBvdmVyIHRoZSBsaWZlIG9mIEVudGl0eSBNYW5hZ2VyLCBidXQgYWdhaW4sIHRoaXMg
+aXMgZ3JlYXQgZmVlZGJhY2ssIGFuZCBzb21ldGhpbmcgdGhhdCBpdCdzIHByb2JhYmx5IHRpbWUg
+dG8gZG9jdW1lbnQgYmV0dGVyIGluY2x1ZGluZyBkb2N1bWVudGluZyB0aGUgcGxhY2VzIHRoYXQg
+YXJlICJ3cm9uZyIsIGJ1dCBoYWNrZWQgYXJvdW5kIGEgcHJvYmxlbS4NCj4NCj4gPiBBbm90aGVy
+IHRoaW5nIEkgd291bGQgbGlrZSB0byBoYXZlIGlzIGV2ZW4gbW9yZSBoaWdoLSBsZXZlbCBkb2N1
+bWVudCANCj4gPiBkZXNjcmliaW5nIHRoZSBjb21tb24gYXJjaGl0ZWN0dXJlIG9mIEVNLWJhc2Vk
+IGludmVudG9yeS4NCj4gPiBJIGNhbiBzdGFydCB3aXRoIHNvbWUgZHJhZnRzIG9mIHdoYXQgSSBk
+aWcsIHRvIG1ha2UgaXQgbW9yZSBjbGVhci4NCg0KUmVhbGx5IGFwcHJlY2lhdGUgZm9yIHRoaXMg
+dHlwZSBvZiBkb2N1bWVudCBpZiB0aGV5IGFyZSBhdmFpbGFibGUuICBXZSBhcmUgYWRvcHRpbmcN
+CmVudGl0eS1tYW5hZ2VyIGluIG91ciBwcm9vZi1vZi1jb25jZXB0IHByb2plY3QgYnV0IHJlYWxs
+eSBzdHJ1Z2dsaW5nIHRvIGZpbmQgZGV0YWlsZWQNCmRvY3VtZW50YXRpb24gYW5kIGVuZCB1cCBq
+dXN0IGNvcHlpbmcgYW5kIHBhc3RpbmcgZXhpc3RpbmcgZW50aXR5IG1hbmFnZXIganNvbg0KY29u
+ZmlnIGZpbGVzIGFuZCB0d2Vha2luZyB0aGVtLg0KVGhlIHR3byBsaW5rcyB3ZSBmb2xsb3cga2lu
+ZCBvZiBhcyBiaWJsZXMgZm9yIGVudGl0eSBtYW5hZ2VyIGRvZXNuJ3QgcHJvdmlkZSBhIGRldGFp
+bCBndWlkZQ0KZm9yIGV4YW1wbGUgaW4gdGhlIGpzb24gY29uZmlnIGZpbGUsIHdoYXQgZWFjaCBm
+aWVsZCBtZWFucyBhbmQgaG93IHRoYXQgZmllbGQgaXMgYmVpbmcNCmNvbnN1bWVkLCBjYXVzZXMg
+d2hhdCB0byBiZSBjcmVhdGVkIG9uIHRoZSBkLWJ1cyBzaWRlLCBhbmQgYmVpbmcgY29uc3VtZWQg
+Ynkgd2hhdCByZWFjdG9yLg0KDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9lbnRpdHktbWFu
+YWdlci9ibG9iL21hc3Rlci9kb2NzL215X2ZpcnN0X3NlbnNvcnMubWQNCmh0dHBzOi8vZ2l0aHVi
+LmNvbS9vcGVuYm1jL2VudGl0eS1tYW5hZ2VyL2Jsb2IvbWFzdGVyL1JFQURNRS5tZA0KDQpGb3Ig
+ZXhhbXBsZSBmb3Igc2Vuc29ycyB3aXRoIGVudGl0eSBtYW5hZ2VyIGRvIHdlIHN0aWxsIG5lZWQg
+dGhlIElQTUkgWUFNTA0KY29uZmlndXJhdGlvbiBmaWxlIGRlc2NyaWJlZCBoZXJlPw0KaHR0cHM6
+Ly9naXRodWIuY29tL29wZW5ibWMvZG9jcy9ibG9iL21hc3Rlci9hcmNoaXRlY3R1cmUvc2Vuc29y
+LWFyY2hpdGVjdHVyZS5tZCNkZWZpbmluZy1zZW5zb3JzLWluLWFuLWlwbWkteWFtbC1jb25maWd1
+cmF0aW9uLWZpbGUNCmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3Bob3NwaG9yLWhvc3QtaXBt
+aWQvYmxvYi9tYXN0ZXIvc2NyaXB0cy9zZW5zb3ItZXhhbXBsZS55YW1sDQoNCkZvciBGUlVzLCBm
+b3IgZXhhbXBsZSBkbyB3ZSBzdGlsbCBuZWVkIGh0dHBzOi8vZ2l0aHViLmNvbS9pYm0tb3BlbmJt
+Yy9vcGVuYm1jL2Jsb2IvT1A5NDAvbWV0YS1pYm0vbWV0YS1yb211bHVzL3JlY2lwZXMtcGhvc3Bo
+b3IvY29uZmlndXJhdGlvbi9yb211bHVzLXlhbWwtY29uZmlnL3JvbXVsdXMtaXBtaS1mcnUueWFt
+bCANCkJlY2F1c2UgSSBmb3VuZCBvdXQgd2hlbiBkb2luZyAiaXBtaXRvb2wgZnJ1IiBpdCBhbHdh
+eXMgZ29lcyBvZmYgb2YgdGhlIGRlZmF1bHQgQnVpbHRpbiBGUlUgRGV2aWNlIElEIDAsIGRpbW0w
+IElEMSwgZGltbTEgSUQyLCBjcHUwIElEIDMsIGFuZCBjcHUxIElEIDQuICANCiQgaXBtaXRvb2wg
+LUkgbGFucGx1cyAtSCAkQk1DX0lQIC1VIHJvb3QgLVAgMHBlbkJtYyAtQyAxNyBmcnUNCkZSVSBE
+ZXZpY2UgRGVzY3JpcHRpb24gOiBCdWlsdGluIEZSVSBEZXZpY2UgKElEIDApDQogRGV2aWNlIG5v
+dCBwcmVzZW50IChVbnNwZWNpZmllZCBlcnJvcikNCg0KRlJVIERldmljZSBEZXNjcmlwdGlvbiA6
+IGRpbW0wIChJRCAxKQ0KIERldmljZSBub3QgcHJlc2VudCAoVW5zcGVjaWZpZWQgZXJyb3IpDQoN
+CkZSVSBEZXZpY2UgRGVzY3JpcHRpb24gOiBkaW1tMSAoSUQgMikNCiBEZXZpY2Ugbm90IHByZXNl
+bnQgKFVuc3BlY2lmaWVkIGVycm9yKQ0KDQpGUlUgRGV2aWNlIERlc2NyaXB0aW9uIDogY3B1MCAo
+SUQgMykNCiBEZXZpY2Ugbm90IHByZXNlbnQgKFVuc3BlY2lmaWVkIGVycm9yKQ0KDQpGUlUgRGV2
+aWNlIERlc2NyaXB0aW9uIDogY3B1MSAoSUQgNCkNCiBEZXZpY2Ugbm90IHByZXNlbnQgKFVuc3Bl
+Y2lmaWVkIGVycm9yKQ0KDQpBbmQgdGhhdCdzIGJlY2F1c2UgaHR0cHM6Ly9naXRodWIuY29tL29w
+ZW5ibWMvcGhvc3Bob3ItaG9zdC1pcG1pZC9ibG9iL21hc3Rlci9zY3JpcHRzL2ZydV9nZW4ucHkg
+YWx3YXlzDQp0YWtpbmcgaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvcGhvc3Bob3ItaG9zdC1p
+cG1pZC9ibG9iL21hc3Rlci9zY3JpcHRzL2ZydS1yZWFkLWV4YW1wbGUueWFtbA0KZnJvbSB0aGUg
+YXMgdGhlIGRlZmF1bHQgZnJ1IGludmVudG9yeSB5YW1sIGNvbmZpZy4NCnVubGVzcyBjdXN0b20g
+ZnJ1IHlhbWwgbGlrZSB0aGUgYWJvdmUgaXMgc3BlY2lmaWVkLg0KDQpFdmVuIGFmdGVyIHBvcnRp
+bmcgb3ZlciBpbnRlbC1pcG1pLW9lbSBvciBmYi1pcG1pLW9lbSdzIG9lbSBjb21tYW5kIGZydSBo
+YW5kbGVyIGZvciBlbnRpdHkgbWFuYWdlciwNCnN0aWxsIGhhcyB0aGUgYWJvdmUgYmVoYXZpb3Ig
+d2hlbiBkb2luZyAiaXBtaXRvb2wgZnJ1Ii4gIEp1c3QgcmVhbGx5IHRyeWluZyB0byBsb29rIGZv
+ciBhIGhpZ2ggbGV2ZWwgZmxvdw0Kb2YgdGhlIHJlYWN0b3Igc2lkZSB1bmRlciBlbnRpdHkgbWFu
+YWdlciwgc2Vuc29yIGFuZCBmcnUgdG8gYmVnaW4gd2l0aC4NCg0KSW4gcG9ydGluZyBpbnRlbC1p
+cG1pLW9lbSdzIGZydSBjb21tYW5kIGhhbmRsZXIgZm9yIGVudGl0eS1tYW5hZ2VyLCBmaXJzdCBw
+aG9zcGhvci1pcG1pZC1ob3N0LnNlcnZpY2UNCndvdWxkIGNvcmVkdW1wLiAgRGVidWdnZWQgaXQg
+dG8gYmUgdGhlIHN0YXJ0TWF0Y2goKSBpbiByZWdpc3RlclN0b3JhZ2VGdW5jdGlvbnMoKSB3aGVy
+ZSBpdCdzIGNhbGxpbmcNCmJvb3N0Ojphc2lvOjpzcGF3biB3aXRoIHJlcGxhY2VDYWNoZUZydSgp
+DQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9pbnRlbC1pcG1pLW9lbS9ibG9iL21hc3Rlci9z
+cmMvc3RvcmFnZWNvbW1hbmRzLmNwcCNMMTMxMQ0KaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
+aW50ZWwtaXBtaS1vZW0vYmxvYi9tYXN0ZXIvc3JjL3N0b3JhZ2Vjb21tYW5kcy5jcHAjTDM2MQ0K
+DQpTbyBzd2l0Y2hlZCB0byBmYi1pcG1pLW9lbSdzIGltcGxlbWVudGF0aW9uIHdoaWNoIGRvZXNu
+J3QgZG8gdGhlIHJlcGxhY2VDYWNoZUZydSB3aXRoDQp0aGUgYXN5bmMgaGFuZGxlci4NCmh0dHBz
+Oi8vZ2l0aHViLmNvbS9vcGVuYm1jL2ZiLWlwbWktb2VtL2Jsb2IvbWFzdGVyL3NyYy9zdG9yYWdl
+Y29tbWFuZHMuY3BwI0wxODUNCkJ1dCBzdGlsbCAiaXBtaSBmcnUiIHdvdWxkIHN0aWxsIGRpc3Bs
+YXkgdGhlIGRlZmF1bHQgQnVpbHRpbiBGUlUgRGV2aWNlIElEIDAsIGRpbW0wIElEMSwgZGltbTEg
+SUQyLCBjcHUwIElEIDMsIGFuZCBjcHUxIElEIDQuIA0KDQpTbyBJIGd1ZXNzIG5lZWQgdG8gZ28g
+YmFjayBhbmQgcmVhbGx5IHVuZGVyc3RhbmQgdGhlIHJlYWN0b3Igc2lkZSB1bmRlciBlbnRpdHkt
+bWFuYWdlcg0KYW5kIGhvdyB0aGUgZC1idXMgb2JqZWN0cyBhcmUgY3JlYXRlZCBieSB0aGUgZW50
+aXR5LW1hbmFnZXIgYW5kIGhvdyB0aGV5IGFyZSBjb25zdW1lZA0KYnkgdGhlIHJlYWN0b3JzIGZv
+ciBlYWNoIGNvbXBvbmVudHMgKHNlbnNvcnMsIGZydSwgZXRjLikgIEFueSBkb2N1bWVudGF0aW9u
+IG9uIHRoYXQgd2lsbCBiZSBzbw0KaGVscGZ1bCBhcyBhIG5ldyBhZG9wdGVyIG9mIGVudGl0eS1t
+YW5hZ2VyIHRyeWluZyB0byBkaWcgaW4gb24gd2hhdCBkaWZmZXJlbnQgcGllY2VzIG5lZWQgdG8g
+bGluZQ0KdXAgd2hlbiBzd2l0Y2hpbmcgdG8gZW50aXR5LW1hbmFnZXIuDQoNCg0KPg0KPiBHcmVh
+dCENCj4NCj4NCj4gPiA+IFdoYXQgd2VyZSB0aGUgYmlnZ2VzdCByb2FkYmxvY2tzIHlvdSBoaXQg
+dHJ5aW5nIHRvIGdldCBBRENTZW5zb3IgDQo+ID4gPiB3b3JraW5nPw0KPiA+ID4NCj4gPg0KPiA+
+IEFEQyBpcyBraW5nIG9mIGVhc2llc3Qgc2Vuc29yIHlvdSBjYW4gaGF2ZSwgSSB0aG91Z2h0ICku
+DQo+DQo+IEkgdGhpbmsgTE03NSBiZWF0cyBpdCA6KQ0KPg0KPiA+IEJ1dCBzdGlsbCBJDQo+ID4g
+ZmFjZSBzdG9uZXMuIEZvciBleGFtcGxlLCBpZiB5b3UgcmVtb3ZlICJQb3dlclN0YXRlIjogIk9u
+IiBmcm9tIGFsbCANCj4gPiBjaGFubmVscywgeW91IHdpbGwgZ2V0IGNyYXNoIHdpdGggIlBvd2Vy
+IE1hdGNoIE5vdCBDcmVhdGVkIi4gT3IgdGhpcyANCj4gPiBjb25maWd1cmF0aW9uIGVudHJ5IGlu
+IFdvbGZwYXNzIGNvbmZpZzoNCj4NCj4gVGhhdCdzIGEgYnVnIGZvciBzdXJlLiAgV2hhdCBob3N0
+IHBvd2VyIHN0YXRlIG1hbmFnZW1lbnQgc3lzdGVtIGFyZSB5b3UgdXNpbmc/DQo+DQo+ID4gICAg
+ICAgICAgICAgIkJyaWRnZUdwaW8iOiBbDQo+ID4gICAgICAgICAgICAgICAgIHsNCj4gPiAgICAg
+ICAgICAgICAgICAgICAgICJOYW1lIjogIlAzVkJBVF9CUklER0VfRU4iLA0KPiA+ICAgICAgICAg
+ICAgICAgICAgICAgIlBvbGFyaXR5IjogIkhpZ2giDQo+ID4gICAgICAgICAgICAgICAgIH0NCj4g
+PiAgICAgICAgICAgICBdLA0KPiA+IHdoaWNoIHNlZW1zIHRvIGJlIGNvcHktcGFzdGVkIGZyb20g
+c29tZXdoZXJlIGVsc2UsIHNpbmNlIGl0IHByZXNlbnQgaW4gDQo+ID4gYWxsIG90aGVyIGNvbmZp
+Z3MsIGJ1dCBub3QgaW4gYm9hcmQgc2NoZW1hdGljcyApIFRoYXQgaXMsIG9mIGNhdXNlLCANCj4g
+PiBub3QgYSBwcm9ibGVtIG9mIEVNIG9yIGRidXMtc2Vuc29yLCBidXQgdGhpcyBpcyBleGFtcGxl
+IGZvciANCj4gPiBjb3B5LXBhc3RpbmcgaXNzdWVzLg0KPiA+DQo+DQo+IEkganVzdCBsb29rZWQs
+IGFuZCB0aGVyZSdzIDIgcGxhdGZvcm1zIHRoYXQgaGF2ZSBhIGJyaWRnZUdwaW8gZGVmaW5pdGlv
+biwgYW5kIFdvbGYgUGFzcyBmb3Igc3VyZSBoYXMgaXQgb24gdGhlIHNjaGVtYXRpYywgbm90IHN1
+cmUgYWJvdXQgRkJUUC4gIFdoaWNoIHBsYXRmb3JtIHdlcmUgeW91IGxvb2tpbmcgYXQgdGhhdCBk
+aWRuJ3QgaGF2ZSBpdD8NCj4gQURDcyBoYXZlIGEgdmVyeSBoaWdoIHBhcmFzaXRpYyBkcmFpbiBv
+biB0aGUgY21vcyBiYXR0ZXJ5LCB0byB0aGUgcG9pbnQgd2hlcmUgaXQgYWZmZWN0cyB0aGVpciBs
+b25nZXZpdHkuICBUaGlzIGlzIGFuIGltcGxlbWVudGF0aW9uIG9mIGEgRkVUIHRoYXQgZXhwbGlj
+aXRseSBlbmFibGVzIHRoZSBjaXJjdWl0IHdoZW4gdGhlIGJhdHRlcnkgaXMgYmVpbmcgcmVhZC4g
+IE1vc3QgbW9kZXJuIEFzcGVlZCBwbGF0Zm9ybXMgc2hvdWxkIGhhdmUgdGhpcyBjaXJjdWl0Lg0K
+Pg0KPiBQb2ludCBtYWRlLCBjb3B5LXBhc3RlIGlzIG5vdCBhIHN1YnN0aXR1dGUgZm9yIGRvY3Vt
+ZW50aW5nIHdoYXQgdGhpbmdzIGRvIHNvIHdoZW4geW91IGNvcHkgcGFzdGUsIHlvdSBjYW4ga25v
+dyB3aGF0IG5lZWRzIG1vZGlmaWVkLg0K
