@@ -1,77 +1,140 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC74E263963
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 01:33:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CCB826396C
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 02:17:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bmyxz0f5PzDqbg
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 09:33:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BmzwM5XZvzDqZ3
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 10:17:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::734;
- helo=mail-qk1-x734.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
+ (client-ip=148.163.147.86; helo=mx0a-002e3701.pphosted.com;
+ envelope-from=prvs=0520f53b0d=matt.muggeridge2@hpe.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=hpe.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=MGNzd7lS; dkim-atps=neutral
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com
- [IPv6:2607:f8b0:4864:20::734])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=hpe.com header.i=@hpe.com header.a=rsa-sha256
+ header.s=pps0720 header.b=dH05iEnd; dkim-atps=neutral
+X-Greylist: delayed 2103 seconds by postgrey-1.36 at bilbo;
+ Wed, 09 Sep 2020 08:57:46 AEST
+Received: from mx0a-002e3701.pphosted.com (mx0a-002e3701.pphosted.com
+ [148.163.147.86])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BmyxF2W4hzDqZT
- for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 09:32:48 +1000 (AEST)
-Received: by mail-qk1-x734.google.com with SMTP id p4so4274029qkf.0
- for <openbmc@lists.ozlabs.org>; Wed, 09 Sep 2020 16:32:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=7wb7ic5TkTX3iOcaqXcZLiNVaNt311Op0YrJJvLgc7s=;
- b=MGNzd7lSfZd2PWN+BAcnwd8kn/fcd5V82vEbZfWqdiTurJBpdiiw0qqy6LHH7g4jkH
- hjXUVaEQ427StFaIDYtDaMXcSm3cUnrFpEWCNAe6Pjl67Cw0WVSMIKR0vmyOgU9VHxMF
- 22Ny/CAn+08bylg+t2PMG5RqZHUw1dxZCAuxfc+6Y+aKE8wmOsv9gCDm54GjZaYAm3Q2
- Yba8msiduyhAkvwWMzpD07WOuqVnTIKCvp2rrur6PJZbUOUGIqQK8KgSPDVAqAHJ14sY
- H7eg4LT4sgksL9RgLbvx7oDYwpvoEqOojqvlRFRFBl2bF2e0MCol7NF3I+Lla8jZ0OhJ
- yftw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=7wb7ic5TkTX3iOcaqXcZLiNVaNt311Op0YrJJvLgc7s=;
- b=t3/PfyJy6/mBm572Pan8Vc2LH0tyDu+ybhihFl+Hd8wTlm3sHbKqwbE6QlYSs0QoY5
- oblnLlZ/9u1uM7+PwgejveegCp1OyP14ncqi9tv6czU+jvALZ4gkNCswIUa+XyXuQtjO
- oHILkTWoxTO7ZH+k5OE1BFpxczUEL9NSja1UHFwlhgxs0V/ef4+nJEbcZcTalQKarUCj
- SIXHv3VddAelSy4AZl9gyAmSlpz15HgGOecZgnI3uzXuBSRoNobmfl9umq8PQr77XiTU
- kgRheE9zkv6UFeGL6bzb4vL4vAf73knZMpdfKmFPi3xhevEWsG/DPbpIMKAAHycDNQCv
- j9Mg==
-X-Gm-Message-State: AOAM531B1yoBnh+22WuZzgMFN+xkVHSe6DwECvxNHgeb4AsGpIwqgKN9
- 77VjL/onrPnlGkufu2Ug//XiJIyx6ezbFw==
-X-Google-Smtp-Source: ABdhPJwgOi3CC5TgQjUuc160/Upm2GfOEar/7y9FIeqNg6UtiTmFXK/AKw6KmfiYlZlJYhZx/qMNCw==
-X-Received: by 2002:a37:a3cf:: with SMTP id m198mr5642783qke.410.1599694363650; 
- Wed, 09 Sep 2020 16:32:43 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- (45-18-127-186.lightspeed.austtx.sbcglobal.net. [45.18.127.186])
- by smtp.gmail.com with ESMTPSA id d10sm4014053qkk.1.2020.09.09.16.32.42
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 09 Sep 2020 16:32:43 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Re: meta-amd repository
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <28643e5c-e0ae-9cf7-5593-af82899ace1f@amd.com>
-Date: Wed, 9 Sep 2020 18:32:41 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BmLCG6xtDzDqRW
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Sep 2020 08:57:44 +1000 (AEST)
+Received: from pps.filterd (m0134422.ppops.net [127.0.0.1])
+ by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 088MLgpK007785; Tue, 8 Sep 2020 22:22:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hpe.com;
+ h=from : to : subject :
+ date : message-id : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pps0720;
+ bh=Ra+GN8X1HIXO7yFIGrXXlyWZ9pEI/f03VeKMQYfrzsg=;
+ b=dH05iEndPWwvxbVOkEPBZqxVjona0pTRtN8Pg+Iibc3jSpsDKo1vEscICHRdabd+d00p
+ oxRICxk0je7+WE1VigjIPm9G4Q/flBZs5ridLar+gBZCSXtyJHfR9R0su4kYTDEbcEIJ
+ OhhQB6j+qB6bGJsqJPFbwXrrYp2ldh+9Q7PsKorO+ImIRBrwgnodTitGIHemV3P1Kg7l
+ SO8XuFWj1xhP9rsEjCKHYO5cSDex4/nxVG+YbWLu6duo0OKRy7xuAtGaiXL/oscFnqHD
+ RQPlqGoQ4LU327N87UiWkuq3qwRK/q4bG+KOQC8kvsOSsnknVljsq9OywsI06Njv6c/l 9w== 
+Received: from g4t3427.houston.hpe.com (g4t3427.houston.hpe.com
+ [15.241.140.73])
+ by mx0b-002e3701.pphosted.com with ESMTP id 33cmd5edkr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 08 Sep 2020 22:22:35 +0000
+Received: from G1W8107.americas.hpqcorp.net (g1w8107.austin.hp.com
+ [16.193.72.59])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by g4t3427.houston.hpe.com (Postfix) with ESMTPS id 470EF74;
+ Tue,  8 Sep 2020 22:22:34 +0000 (UTC)
+Received: from G1W8108.americas.hpqcorp.net (2002:10c1:483c::10c1:483c) by
+ G1W8107.americas.hpqcorp.net (2002:10c1:483b::10c1:483b) with Microsoft SMTP
+ Server (TLS) id 15.0.1497.2; Tue, 8 Sep 2020 22:22:34 +0000
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (15.241.52.11) by
+ G1W8108.americas.hpqcorp.net (16.193.72.60) with Microsoft SMTP
+ Server (TLS)
+ id 15.0.1497.2 via Frontend Transport; Tue, 8 Sep 2020 22:22:33 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MVfyMUiqPAu2CrPYduz25FRYfLfKZONqAwNKIoRDURpmQjKYnFhNqIhLjQWcYfgHqJaRHpV2iFv6osHuXebWgXPSVXh4pcoisqXExJH6xV+wpvQwtbiLdhGqNWDNIAC/AnCrAb19B2dWVz+jro7FSPmi0W3H5AINa5EIstC9W4uzQTKdKRdRoPYLHGdln4sfAgi9FayHwoSJ4Zx5bTq56g8jpQvySNGs31SuNOxWdApF0ljG+LHTqbtW+05HYxA7qkPDeI/Rs5+5k72+B0scLifX0X1AwncoJECxxxAxlYpNFLQ/XqHwGgmvCd66gyhaf2hijWRcPJ0qOZOkgYjwYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rVFedwUeufoXec7liZayyHANqsE0W1mdDkGx2LzHBU0=;
+ b=mrFs1ycavzpL0OKK/YTCn1162k4Ig/4AAfRg571XmnnTUsHifx7LCzK9mCJ0wJuSBcw/Ab09lREtxGzcBLxgt7Yh1E8FCOACADAhdceWA5NNUyS/RJVbyRJMzEJlSv26/u7295TQy3Cd0/XsTUtUGpn14hBgiW8hQFEj7NZFbQbWbpIO+q/AHrrbthpPNq/HhlKCf5XzAbqYQcuABEnRlioJ46MOp1DjFzL/Jn0j7QbTlPcjSfxeHvffTGbPYPyTAdU650uWQySNmAkrgbzCl9fHMirJ2oZW8ncNk3tVQN+0NejyjeZk21s9AGOxUAxJLWT7BMstBax0Txz05ts0UQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
+ header.d=hpe.com; arc=none
+Received: from AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM
+ (2a01:111:e400:742a::14) by AT5PR8401MB1172.NAMPRD84.PROD.OUTLOOK.COM
+ (2a01:111:e400:742a::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3370.16; Tue, 8 Sep
+ 2020 22:22:33 +0000
+Received: from AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::5594:258e:ba5d:ff9c]) by AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::5594:258e:ba5d:ff9c%7]) with mapi id 15.20.3348.019; Tue, 8 Sep 2020
+ 22:22:33 +0000
+From: "Muggeridge, Matt" <matt.muggeridge2@hpe.com>
+To: Joseph Reynolds <jrey@linux.ibm.com>, Gunnar Mills
+ <gmills@linux.vnet.ibm.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: RE: How to comprehensively search the OpenBMC Archives
+Thread-Topic: How to comprehensively search the OpenBMC Archives
+Thread-Index: AdaCT4037hVOiC8xQnSMcBhx9fHJOgDwZReAAAVb8wAAAA1MkA==
+Date: Tue, 8 Sep 2020 22:22:32 +0000
+Message-ID: <AT5PR8401MB121967BF331D182D97CA4089D8290@AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM>
+References: <AT5PR8401MB12193C196089B8572EE50F05D82D0@AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM>
+ <5b0e1534-379a-837c-89be-53ef74049fc8@linux.vnet.ibm.com>
+ <d6f36d91-5456-c40f-68a6-bd6998fda69d@linux.ibm.com>
+In-Reply-To: <d6f36d91-5456-c40f-68a6-bd6998fda69d@linux.ibm.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: linux.ibm.com; dkim=none (message not signed)
+ header.d=none;linux.ibm.com; dmarc=none action=none header.from=hpe.com;
+x-originating-ip: [2001:8003:79bf:e900:4c64:b428:2252:500f]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: 7347ad47-6711-4acf-1d1e-08d85445ae87
+x-ms-traffictypediagnostic: AT5PR8401MB1172:
+x-microsoft-antispam-prvs: <AT5PR8401MB11722A60AB76879ED6A2279AD8290@AT5PR8401MB1172.NAMPRD84.PROD.OUTLOOK.COM>
+x-ms-oob-tlc-oobclassifiers: OLM:1751;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: DeEBCHPd5Bn1V4LLDKpSihtZurt1FzqDMRE30Fd0lPq4kX3tZ8sPP2/Y9fc6prYfurWQHQlz6LmiGfmIDUmOTEal8b0xQUjeRxdIgwt6TiIkx9DzbtB53BC697gU/vC6LimCa9YoWzEQx9IbcNvPlmJK/GQfZGpIVLr5NyiSI1SijMQ2WQTuQyesjxz09Kr/Zx/xsNzxwB0U/QeBpXLpQBeWGsSHbMXkKEH62pNBfKIluHSdADFFpw11WSOGxP0ASrwskp9b/ec+XA0LsOE5G79po+IZveZJtlBrMdwgow8U46JcY5GN35+G8kPwrGd3dWq4qLi+VhPLYp8c2DcpNucxshLrMY7hda1asX9v/ESlr5TtE7fzefAIA7TajfYsg3C6S6A1YRgdgwTr5VbbOg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(346002)(376002)(366004)(39860400002)(136003)(396003)(66446008)(66476007)(8676002)(966005)(2906002)(7696005)(55016002)(19627235002)(6506007)(53546011)(110136005)(83380400001)(316002)(76116006)(64756008)(86362001)(9686003)(66946007)(66556008)(478600001)(71200400001)(186003)(52536014)(8936002)(5660300002)(33656002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: nyEPFSTOWR04t2vWGB5qD8dh4N3p9WLPf2Bs/CLhAz1KwRJ6i3HdkEkPmLfa6dJNU1ZVw5ujmErlwyz0S3hgT3HX9XOk2P8OeoSfa5acDCspO9Dc7l2Xv+LEtxZS7ltEMdAODVlPdi1w+VdtKgHD6hC39WBF2amToZScT+Vsse4soBYV/kVf3U4oSqJMayIX3EkZqKR5MFTXeNmIZERYqB9OkuZbmbayaqSM9JSoLXMn6Kv0L//FHBE4PNxBrmnafK44cnkpGNvv6BTJwVHuuHBUW8kllbLLBNN4uxgGuZaoTuGbi4dBrCvO3IoctrhyCqIIebt0HeBy42vuafqtdslUyKB4c1heYBIs5l0ioNCnaLGcb82eI2f5V1jdJXnh9oTumixNlXgTe+ib8ivLcnamrhx9SjNdVrX7/6KU9oaRLaIQWX1Y151WVMd9hrWqgFrHxT33GrpMRRcI4lNfiNvdDRyt97Gnq+vu4a7h0tZgf3X0EN07S+3/R/ZP8EThgS5ccFvyIVKG3duZGvg4WcyIonvVkSOkIxjQvYZbbiQhEbJ6IFIrFXYRVo7ht9SjO2HMDOSQ0+XkcJiwnrm/LjFY260FBKWcUyhY5E1LcYP3H08cY1H/1vxutAHiPh+AAQ2muPvaMpSgu7XD+ppJfRSIAOx+vPkJ1vTQxEkjKumV9Zv4xdOF+keeOtYrQCLb5S1ts6Xn/BnnYxiY3uA9nw==
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="iso-8859-1"
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7347ad47-6711-4acf-1d1e-08d85445ae87
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Sep 2020 22:22:32.9802 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qYLBMgkdiIIYjPWZjbCHxuaoo7CzONKv7vGS0e3pPMfCpAQIjd/bJEm4L+Uku/ca8i3yzFubE8ge7mBDXYzd52vU0XmgTGPijQVzyKdMT6c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AT5PR8401MB1172
+X-OriginatorOrg: hpe.com
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <C4E0C15E-3558-4CBC-8EDE-DBE1B8CB964D@gmail.com>
-References: <3e858b31-2547-a114-75f5-4ccd740641d3@amd.com>
- <20200909141816.by4hbfaqbbeud2fm@thinkpad.dyn.fuzziesquirrel.com>
- <28643e5c-e0ae-9cf7-5593-af82899ace1f@amd.com>
-To: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-08_09:2020-09-08,
+ 2020-09-08 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 spamscore=0 bulkscore=0 phishscore=0
+ adultscore=0 clxscore=1011 impostorscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2009080199
+X-Mailman-Approved-At: Thu, 10 Sep 2020 10:16:27 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,92 +146,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+I am impressed Joseph!  Thank you.  That certainly highlights the lengths o=
+thers have gone to for a comprehensive search feature.
 
+There is a lot of very valuable content locked up in these archives.  I'm h=
+opeful admins will agree that comprehensive searching of the archives needs=
+ to be made easier and more accessible to the masses.
 
-> On Sep 9, 2020, at 12:12 PM, Supreeth Venkatesh =
-<supreeth.venkatesh@amd.com> wrote:
+Matt.
+
+> -----Original Message-----
+> From: Joseph Reynolds <jrey@linux.ibm.com>
+> Sent: Wednesday, 9 September 2020 7:25 AM
+> To: Gunnar Mills <gmills@linux.vnet.ibm.com>; Muggeridge, Matt
+> <matt.muggeridge2@hpe.com>; OpenBMC Maillist
+> <openbmc@lists.ozlabs.org>
+> Subject: Re: How to comprehensively search the OpenBMC Archives
 >=20
-> Brad,
-> Much appreciated.
+> On 9/8/20 1:51 PM, Gunnar Mills wrote:
+> > On 9/3/2020 6:14 PM, Muggeridge, Matt wrote:
+> >>
+> >> Is there a more comprehensive/reliable way to search through these
+> >> mamil archives?
+> >>
 >=20
-> A related question:=20
-> I see only the following targets being triggered for CI
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,romulus
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,zaius
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,witherspoon-tacoma
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,tiogapass
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,witherspoon
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,gsj
-> Triggering ci-openbmc =C2=BB ubuntu,docker-builder,palmetto
+> I used the following (bash) script to download the entire openbmc email
+> archive to my workstation's storage.=A0 (And then I use my local search
+> capability (grep,=A0 spotlight search, Windows-f, etc.) to locate the des=
+ired
+> content.
 >=20
-> What is the process to get AMD reference platform added as a target =
-for OpenBMC CI?=20
-> It is **not** required in the short term, but eventually would like to =
-contribute to OpenBMC CI infrastructure in the long run.
-> We will be happy to collaborate by means of providing AMD reference =
-platform, help with Jenkins script update, etc.
-> Please let me know, how we can help.
-
-Hey Supreeth, I always like to see some interest in CI!
-
-The best way to get a machine on the CI list is to donate a server to be
-used as a jenkins build worker :)
-
-=
-https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-Workgroup#c=
-urrent-infrastructure=20
-covers our current infrastructure.
-
-The goal with CI is to test as much as possible, as quickly as possible. =
-The machines
-selected for CI try and cover as many different meta-* layers as =
-possible. So the second
-way is to make the argument that your machine and the layers it test =
-would provide
-good testing and coverage for the community.
-
-=
-https://github.com/openbmc/openbmc/wiki/Adding-a-System-to-Hardware-Contin=
-uous-Integration could
-also be used as a way to build and test your system via your own CI =
-process and=20
-build machines and then updating the gerrit review with your results.
-
-I do feel like we=E2=80=99ve been looking for a long time for a easy to =
-get and cheap
-OpenBMC reference platform that people could utilize for development. Be
-great if y=E2=80=99all were working on something like that!
-
-Andrew
-
+> - Joseph
 >=20
-> Thanks,
-> Supreeth Venkatesh
-> System Manageability Architect  |  AMD
-> Server Software
+> wget --no-check-certificate
+> INVALID URI REMOVED
+> 3A__lists.ozlabs.org_pipermail_openbmc&d=3DDwID-
+> g&c=3DC5b8zRQO1miGmBeVZ2LFWg&r=3DXhm647cJDeqUETccV2yvBRCeNJXBtz6
+> 14MxJzMR9PZk&m=3DtjRnWO2f8md0hwPIF4dbkqaJbj-
+> OhYZN2fNFoROxHeM&s=3DoUgen4rG7u90Uby5812hA_y0dDnG41oD1ZuA4K7K
+> NiU&e=3D
+> set -x
+> for f in $(grep '<td>.*.txt.gz' index.html | cut -d\" -f2); do
+>  =A0 wget --no-check-certificate
+> INVALID URI REMOVED
+> 3A__lists.ozlabs.org_pipermail_openbmc_-24f&d=3DDwID-
+> g&c=3DC5b8zRQO1miGmBeVZ2LFWg&r=3DXhm647cJDeqUETccV2yvBRCeNJXBtz6
+> 14MxJzMR9PZk&m=3DtjRnWO2f8md0hwPIF4dbkqaJbj-
+> OhYZN2fNFoROxHeM&s=3DAVV8sFghgocf1nC9Vf7UGQtg9m1A63Yeux7DAywt
+> cRs&e=3D
+>  =A0 gunzip "$f"
+> done
 >=20
 >=20
-> On 9/9/20 9:18 AM, Brad Bishop wrote:
->> [CAUTION: External Email]
->>=20
->> On Wed, Sep 02, 2020 at 02:55:20PM -0500, Supreeth Venkatesh wrote:
->>> Hi Brad,
->>>=20
->>> Please help add meta-amd repsoitory into openbmc as a subtree.
->>> meta-amd repository has been populated with basic bring up code.
->>=20
->> Hi Supreeth.  Done:
->> =
-https://nam11.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgerrit=
-.openbmc-project.xyz%2Fc%2Fopenbmc%2Fopenbmc%2F%2B%2F36339&amp;data=3D02%7=
-C01%7Csupreeth.venkatesh%40amd.com%7C9958fcee95a54f96a06c08d854cb33ff%7C3d=
-d8961fe4884e608e11a82d994e183d%7C0%7C0%7C637352579007884384&amp;sdata=3DA6=
-HowV1WotfXfg9dcawpvMfAsyD20jG2yqQXKAxAiFI%3D&amp;reserved=3D0
->>=20
->> -brad
+> > +1. Could we look at moving to Mailman v3 and like
+> > INVALID URI REMOVED
+> 3A__docs.mailman3.org_projects_hyperkitty_en_latest_&d=3DDwID-
+> g&c=3DC5b8zRQO1miGmBeVZ2LFWg&r=3DXhm647cJDeqUETccV2yvBRCeNJXBtz6
+> 14MxJzMR9PZk&m=3DtjRnWO2f8md0hwPIF4dbkqaJbj-
+> OhYZN2fNFoROxHeM&s=3DHWwrQzEzVNtANfa8DBfvdGnK_2nRlSp-
+> peNmEl1y6n0&e=3D  ?
+> >
+> >
+> >> I have been using google to search the archives, but have noticed the
+> >> results are not complete.
+> >>
+> >>
+> >
 
