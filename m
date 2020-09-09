@@ -2,68 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79462262E0A
-	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 13:43:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51B44262E14
+	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 13:45:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BmgBZ1ybXzDqV8
-	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 21:43:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BmgDj623bzDq6l
+	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 21:45:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=VAeB0MOm; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=pjWnANMo; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=SRdJuAV/; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bmg5M0wCszDqNp
- for <openbmc@lists.ozlabs.org>; Wed,  9 Sep 2020 21:38:45 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id B5581574FB;
- Wed,  9 Sep 2020 11:38:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1599651519; x=1601465920; bh=Ol3ikWiBZtMkCeafL3FbA797T
- vxK6xSfrUTKYioELqY=; b=VAeB0MOmiph07/VCSqrFXO+W9XY+K+RQnzKNZshzF
- XY5sUktOylq69kd94/ytfOsCyKfDd+X0igcPaCgoKY3TFS+Pp/L6kqIYsNv+Jt2z
- BrR/PGlilzJlzLLYyX1bVFpDGxLMYAmItgrxzVYYxIoEmaQohE1KR0iTKaZoNYbX
- Z4=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id FGlyP9HOPcs6; Wed,  9 Sep 2020 14:38:39 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 0A7C9535F4;
- Wed,  9 Sep 2020 14:38:38 +0300 (MSK)
-Received: from localhost.localdomain (10.199.3.14) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 9 Sep
- 2020 14:38:38 +0300
-Message-ID: <d1efa5565fd0884d332c449f3a95075e20ff540e.camel@yadro.com>
-Subject: Re: time control on wolfpass BMC
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: James Feist <james.feist@linux.intel.com>
-Date: Wed, 9 Sep 2020 14:41:53 +0300
-In-Reply-To: <e1bb6593-63a7-4460-b5cd-f53d0e85384b@linux.intel.com>
-References: <a140b8dd494792d0d814cd20e6e4ab4b2714c16c.camel@yadro.com>
- <e1bb6593-63a7-4460-b5cd-f53d0e85384b@linux.intel.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BmgBn5xtYzDqV8;
+ Wed,  9 Sep 2020 21:43:29 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 915B7B12;
+ Wed,  9 Sep 2020 07:43:25 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Wed, 09 Sep 2020 07:43:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=fm3; bh=IeoBvfYVc4Im06yQD+pxOyrxlm
+ Y/+Hex5uW2NfYlC4o=; b=pjWnANMor34uCQOJohh/rld/EEFZc0UosIinK3d9QS
+ XayGD5TLHvZHMGEgVCf44OvYZC0TMSyya/vL5dXrFv1Nyst1KSNCu4Qu0ea9wbvd
+ rG6wHz+nqWfOpeyxggBUWJT/CAcOpZ213uUIOOCpRtfct47VGvhs1AY2Z8eXUL3J
+ r5Lx1o/1fN+ls+0sTZRXiFWmEwVQedIN3+y7KFV++Z//WRmZZSei3fwxVO8dAQNR
+ cmYi7DTrCRGuno162UDtbtDOj1CU3L/CveGrvNg3+THNeur7HLTFntmJyfL0ULxR
+ XBN8+V97LOiaI12YBzRQn56Ke0I41EueLcmWLZWI4R6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:date:from
+ :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=IeoBvfYVc4Im06yQD
+ +pxOyrxlmY/+Hex5uW2NfYlC4o=; b=SRdJuAV/upsVfD3GHCrgmudbEhZYcNChF
+ CcktFNPbjmmcfjWvkLAeXBQVrVoOz0REyitsgovvhE+larHzYMCV0OAYZCMViYx8
+ JQ4LLQhu+Y41B3GbLfxTp/xdiBbCp+gFtZBdHqmDjXD7XR0DmneNCnvk6NRMmQru
+ +YyE+QE8Jwlq3Z2zX1GpZWcFkiaOSDzoCV94LYNluDEMgIm/5EjgxZaqCef3hDSD
+ InWFWA1rexsiz6eVnRudeJRNorV/KwV2vlI34006FjsqoFU/6SCw/OPCw3Pw+8BH
+ IUJfL6qMAgVUAlNZ1Lv6bo1YH1hNx9fNYT9+wi5r1T1rhM1iNsB4A==
+X-ME-Sender: <xms:2r9YX41CXZFARNB0cvRrJvpRQsP9ME2Kaw5DRo3l1BGDXkZD0GH3CQ>
+ <xme:2r9YXzEgcpaFxrOkgie1iUuNF7Jqe_73bxz4Du9F9_1_wTm2-cUj-tAtjXptpjExc
+ 5SVJn4k23xdxlP71g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudehhedggedtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+ dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
+ ihgurdgruheqnecuggftrfgrthhtvghrnhepkefhieffjeevfeevhedtieeihfefvdejle
+ dvvddthefftedujeethfeuueelfedtnecukfhppedugedrvddruddtledrkeehnecuvehl
+ uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifse
+ grjhdrihgurdgruh
+X-ME-Proxy: <xmx:2r9YXw4TELryIczh5Xaagxs2FH5ivCya275pTlsOHFPLyU4xuk3d3g>
+ <xmx:2r9YXx0dwqN1ZJL3SX5_RyKVPEqIuP8-n0Gi2O7Wi0Ko0dOsRKqc6Q>
+ <xmx:2r9YX7E3zlgNLcuiH9r57icHisrn_g-HNRhsGk822r-GYIboRsHf-g>
+ <xmx:3b9YX8OTvr-a032_Sld4L8_3bSqS6lNQ36xRnW0r2LdBP7Jz435Otg>
+Received: from localhost.localdomain
+ (ppp14-2-109-85.adl-apt-pir-bras32.tpg.internode.on.net [14.2.109.85])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 1C3C63065B97;
+ Wed,  9 Sep 2020 07:43:19 -0400 (EDT)
+From: Andrew Jeffery <andrew@aj.id.au>
+To: linux-gpio@vger.kernel.org
+Subject: [PATCH 0/3] pinctrl: aspeed: AST2600 pinconf fixes
+Date: Wed,  9 Sep 2020 21:13:09 +0930
+Message-Id: <20200909114312.2863675-1-andrew@aj.id.au>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.3.14]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,27 +90,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Ed Tanous <ed@tanous.net>
+Cc: johnny_huang@aspeedtech.com, linux-aspeed@lists.ozlabs.org,
+ linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2020-09-08 at 10:53 -0700, James Feist wrote:
-> On 9/8/2020 7:47 AM, Ivan Mikhaylov wrote:
-> > Hey James, Ed, Is there any way to control RTC/PCH time inside BMC on
-> > wolfpass?In intel-bmc rep there is the pch-time-sync service which is doing
-> > sync.
-> > The service just reads out date via i2c regs and do the sync with system
-> > time. I
-> > didn't find any other utilities or something which can help with time set
-> > from
-> > BMC.
-> 
-> We default to NTP and use pch-time-sync as a fallback. NTP is configured 
-> by systemd-timesyncd https://wiki.archlinux.org/index.php/Systemd-timesyncd.
-> 
+Hello,
 
-James, do you know this PCH time sets on the host side as regular sync hwclock
-action? Are those i2c regs writable only from host side?
+The AST2600 pinctrl driver was missing support for bias control on the 1.8V
+GPIO pins, and in the process of resolving that I discovered a couple of other
+bugs that are fixed in the first two patches of the series.
 
-Thanks a lot for clarification.
+Please review!
+
+Andrew
+
+Andrew Jeffery (3):
+  pinctrl: aspeed: Format pinconf debug consistent with pinmux
+  pinctrl: aspeed: Use the right pinconf mask
+  pinctrl: aspeed-g6: Add bias controls for 1.8V GPIO banks
+
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 17 +++++++++++++++++
+ drivers/pinctrl/aspeed/pinctrl-aspeed.c    |  8 ++++----
+ 2 files changed, 21 insertions(+), 4 deletions(-)
+
+-- 
+2.25.1
 
