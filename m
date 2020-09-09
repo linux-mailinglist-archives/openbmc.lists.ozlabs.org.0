@@ -2,74 +2,101 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 949B1262A60
-	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 10:33:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC2C5262B09
+	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 10:55:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BmZz03J6TzDqSF
-	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 18:33:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BmbT43pRZzDqDp
+	for <lists+openbmc@lfdr.de>; Wed,  9 Sep 2020 18:55:36 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=GooLdv1b; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=cFAV1HZo; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BmZxp1dlVzDqR2
- for <openbmc@lists.ozlabs.org>; Wed,  9 Sep 2020 18:31:57 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 151205714B;
- Wed,  9 Sep 2020 08:31:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1599640310; x=1601454711; bh=yT8EZl6wOEe7PA9y2HgerQiUc
- LeSflCjJ+1ZsyWpIbM=; b=GooLdv1blcFuYfWrm7qYLykxPrY9kzrG5TrKkrt98
- itwJEkWms7I0Z+p7sY/j2kH3O1TmXcuhmVjdfkEf44Qg8vto/UL66U5BPmPxnh/p
- P2vsR92mDLUppRXxU0VxQwN0IXSw6gf+MrktQU9URUHKUx2JW5H1ROqME0HkTGgd
- WQ=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id 47bsCkVCbJ-P; Wed,  9 Sep 2020 11:31:50 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
- [172.17.10.102])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 4A9C3521BA;
- Wed,  9 Sep 2020 11:31:50 +0300 (MSK)
-Received: from [10.199.1.2] (10.199.1.2) by T-EXCH-02.corp.yadro.com
- (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 9 Sep
- 2020 11:31:50 +0300
-Message-ID: <04f295ab0f95c491442054958c103f651409cd40.camel@yadro.com>
-Subject: Re: OpenBMC - FRU inventory with Entity Manager
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Jiandi An <jan@nvidia.com>
-Date: Wed, 9 Sep 2020 11:31:49 +0300
-In-Reply-To: <DM6PR12MB302048450BC68C4E79711B2CCD290@DM6PR12MB3020.namprd12.prod.outlook.com>
-References: <DM6PR12MB3020D6DD47C7E6DBBD6530A3CD550@DM6PR12MB3020.namprd12.prod.outlook.com>
- <22E14C00-D87D-489F-AB22-6401DE8CDDF5@fb.com>
- <5e71fa32-4547-fb5e-ed50-dffe19cefc09@linux.vnet.ibm.com>
- <b9f035732b62a4bd58ea67e2ea936bdce2cec790.camel@yadro.com>
- <CACWQX83AXKZiTdhrXhuXg8r-2ZfJstqGANumOBzVtNHzFGonDA@mail.gmail.com>
- <ceef9c9e30992d6d9fe85ec19b1c87da1191fc39.camel@yadro.com>
- <CACWQX83+BO7WuZBW6ubJwvYOhKee=F0Hf5WBWm2uX2bhBV3ZMA@mail.gmail.com>
- <DM6PR12MB302048450BC68C4E79711B2CCD290@DM6PR12MB3020.namprd12.prod.outlook.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BmbRR59XdzDqRM
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Sep 2020 18:54:11 +1000 (AEST)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0898Wm1p061928; Wed, 9 Sep 2020 04:54:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=Hsne5Zma2MUUQF1iB/lxF7RhqluXCVUEo1ZMjPKoU6M=;
+ b=cFAV1HZoIc9Jsa37pMsu2QvihWZpUJnTrmPCnHXux6i0Zj1m190m2lzCKYKIjP8/oKF3
+ K0UBrjPyps/8Gu+409Sssq7tawMhkSUwlI8TjNWul+8MPZg9NZa0zuiu52TU4UeRfQex
+ +Wm96PBW+YdjVPdE+a7ZF7Xz6CSpZyKA0enpQl52VkTm9IyX/gTsSi2zM2eostXLssvn
+ 9ErxlTLSoMXTkSJGa2c6DtEaWt546izJ6zSlBZU1xEwyYM5Sdu67FkEsLxsNkr3C9GtL
+ V86z+D1HEdSvHDHcsETWZXIUe99iDj+/F329rlpyFF3wbJbfU2s8MnUBhr88/lxRHodJ Vw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 33et9ub8k9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Sep 2020 04:54:08 -0400
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 0898aQMf073251;
+ Wed, 9 Sep 2020 04:54:07 -0400
+Received: from ppma06ams.nl.ibm.com (66.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.102])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 33et9ub8jq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Sep 2020 04:54:07 -0400
+Received: from pps.filterd (ppma06ams.nl.ibm.com [127.0.0.1])
+ by ppma06ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0898qn4H016677;
+ Wed, 9 Sep 2020 08:54:06 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com
+ (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+ by ppma06ams.nl.ibm.com with ESMTP id 33dxdr1fw5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Sep 2020 08:54:06 +0000
+Received: from d06av21.portsmouth.uk.ibm.com (d06av21.portsmouth.uk.ibm.com
+ [9.149.105.232])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0898s3e29109822
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 9 Sep 2020 08:54:03 GMT
+Received: from d06av21.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8641852052;
+ Wed,  9 Sep 2020 08:54:03 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.228.115])
+ by d06av21.portsmouth.uk.ibm.com (Postfix) with ESMTP id 1166A5204F;
+ Wed,  9 Sep 2020 08:54:01 +0000 (GMT)
+Subject: Re: Enable UBI support for a platform
+To: Jiandi An <jan@nvidia.com>, Kun Zhao <zkxz@hotmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <242dee50-7e1b-3fc3-5105-ca33f288d959@linux.vnet.ibm.com>
+ <BYAPR14MB2342A17C9B9BE853C0616E9CDC280@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <4e89c963-1ddd-2627-47c8-be13b903bc64@linux.vnet.ibm.com>
+ <DM6PR12MB3020FE5674F3DBE642D392C8CD260@DM6PR12MB3020.namprd12.prod.outlook.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <fffe9522-2c57-8ef0-4132-5d7c9cc831d4@linux.vnet.ibm.com>
+Date: Wed, 9 Sep 2020 14:24:01 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.1.2]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-02.corp.yadro.com (172.17.10.102)
+In-Reply-To: <DM6PR12MB3020FE5674F3DBE642D392C8CD260@DM6PR12MB3020.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-09_03:2020-09-08,
+ 2020-09-09 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999
+ bulkscore=0 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 suspectscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2009090073
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,141 +108,200 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 09/09/20 6:15 am, Jiandi An wrote:
+> 
+>> On 08/09/20 12:39 am, Kun Zhao wrote:
+>>>
+>>> On 9/5/20 5:49 AM, Deepak Kodihalli wrote:
+>>>> Hi Kun,
+>>>>
+>>>> On 05/09/20 5:32 am, Kun Zhao wrote:
+>>>>> Hi Team,
+>>>>>
+>>>>> My platform is based on ast2500, and I’ve already been able to built
+>>>>> out the ubi image. But when I tried to test it with qemu, it just
+>>>>> stopped at u-boot because ‘can’t get kernel image,
+>>>>>
+>>>>> qemu-system-arm: Aspeed iBT has no chardev backend
+>>>>>
+>>>>> U-Boot 2016.07 (Sep 04 2020 - 19:47:48 +0000)
+>>>>>
+>>>>>           Watchdog enabled
+>>>>>
+>>>>> DRAM:  496 MiB
+>>>>>
+>>>>> Flash: 32 MiB
+>>>>>
+>>>>> *** Warning - bad CRC, using default environment
+>>>>>
+>>>>> In:    serial
+>>>>>
+>>>>> Out:   serial
+>>>>>
+>>>>> Err:   serial
+>>>>>
+>>>>> Net:   MAC0 : RGMII
+>>>>>
+>>>>> MAC1 : RGMII
+>>>>>
+>>>>> FTGMAC100#0
+>>>>>
+>>>>> Error: FTGMAC100#0 address not set.
+>>>>>
+>>>>> , FTGMAC100#1
+>>>>>
+>>>>> Error: FTGMAC100#1 address not set.
+>>>>>
+>>>>> Hit any key to stop autoboot:  0
+>>>>>
+>>>>> Wrong Image Format for bootm command
+>>>>>
+>>>>> ERROR: can't get kernel image!
+>>>>>
+>>>>> ast#
+>>>>>
+>>>>> And I found the bootargs is not right,
+>>>>>
+>>>>> ast# print
+>>>>>
+>>>>> baudrate=115200
+>>>>>
+>>>>> bootargs=console=ttyS4,115200n8 root=/dev/ram rw
+>>>>>
+>>>>> bootcmd=bootm 20080000
+>>>>>
+>>>>> bootdelay=2
+>>>>>
+>>>>> Checked in the build folder for
+>>>>> tmp/work/myplatform-openbmc-linux-gnueabi/u-boot-aspeed/1_v2016.07+g
+>>>>> itAUTOINC+1ded9fa3a2-r0/ and found the none of the following patches
+>>>>> are there,
+>>>>>
+>>>>> 0002-config-ast-common-hack-bootopts.patch
+>>>>>
+>>>>> 0003-config-ast-common-Add-bootopts-to-support-ubi-and-mt.patch
+>>>>>
+>>>>> 0004-config-ast-common-Add-conditional-factory-reset-comm.patch
+>>>>>
+>>>>> 0005-config-ast-common-Fall-back-to-secondary-flash-on-fa.patch
+>>>>>
+>>>>> I think that’s why the bootargs is not correct.
+>>>>>
+>>>>> This is the details of how I enabled the ubi support in my platform
+>>>>> recipes,
+>>>>>
+>>>>> 1. In meta-myplatform/conf/distro/openbmc-myplatform.conf, I added,
+>>>>>
+>>>>> require conf/distro/include/phosphor-base.inc
+>>>>>
+>>>>> require conf/distro/include/phosphor-ubi.inc
+>>>>
+>>>> You should just need the one line above, plus a device tree change for your
+>> system. The default openbmc-flash-layout.dtsi doesn't make a ubifs partition.
+>> You can for eg look at witherspoon's dts, which uses ubifs.
+>>> Hi Deepak, thank you for reply. I've tried to use the witherspoon's flash layout
+>> per your tips here. But it still stops at u-boot with "can't get kernel image!" error.
+>> Do I need to enable any kernel config options?
+>>
+>>
+>> Hi Kun, I don't think you need additional kernel config updates. I suspect
+>> something wrong with the way the image is built. Are you able to see expected
+>> values for the u-boot environment variables and MTD partitions? For eg:
+>>
+>> ast# mtdparts
+>> device nor0 <bmc>, # parts = 3
+>>    #: name               size            offset          mask_flags
+>>    0: u-boot              0x00060000     0x00000000      0
+>>    1: u-boot-env          0x00020000     0x00060000      0
+>>    2: obmc-ubi            0x01f80000     0x00080000      0
+>> active partition: nor0,0 - (u-boot) 0x00060000 @ 0x00000000
+>>
+> 
+> Hi Deepak,
+> One thing is no mtdparts command from u-boot.  Do we need to add CONFIG_CMD_MTDPARTS?
+> Here the comment says adding CONFIG_CMD_MTDPARTS won't work.
+> https://lists.denx.de/pipermail/u-boot/2012-December/142837.html
 
-> > 
-> > At least it'll be there for the next person.
-> 
-> Line 72 of the doc says the 3rd component to entity-manager is the
-> reactor.
-> It mentions one example is dbus-sensors, which contains a suite of
-> application that
-> input the Exposes records for sensor devices, then connect to the
-> filesystem to create
-> the sensors and scan loops to scan sensors for those devices.
-> 
-> Could someone point a sample code that a platform is doing the flow
-> described above?
-> 
-> For example after enable entity-manager and put in the device tree
-> for temp sensors
-> and FRU EEPROM devices, and the Exposes, probe config blocks in the
-> json file, still
-> struggling to get ipmitool sensor list and ipmitool fru to
-> work.  "ipmitool fru" issue is
-> clear based on the feedback in this thread.  But really want to have
-> a tutorial or code
-> example to walk through to understand the reactor side of things.
-> 
+Hi Jiandi, the comment you pointed to is in the context if a very old 
+u-boot release, so I don't think it applies to the u-boot release that 
+OpenBMC uses. MTD and UBI support is optional in the u-boot AST config, 
+and is enabled if MTDPARTS_DEFAULT is set. This flag further sets 
+CONFIG_MTD_PARTITIONS. MTDPARTS_DEFAULT is enabled via a u-boot patch 
+that we carry, and that is picked up if the 'obmc-ubi-fs' distro feature 
+is enabled (see 
+meta-phosphor/aspeed-layer/recipes-bsp/u-boot/u-boot-aspeed.inc). So it 
+still seems like this feature is not enabled in the image or there is 
+some other issue with building the image.
 
-This reactors are just a services that are expected to read their
-configuration from dbus. EM expose something to dbus and then these
-services are read what they need.
+> Actually using witherspoon's flash layout
+> https://github.com/ibm-openbmc/openbmc/blob/OP940/meta-ibm/meta-witherspoon/recipes-kernel/linux/linux-aspeed/0001-ARM-dts-Aspeed-Witherspoon-128-Update-BMC-partitioni.patch
+> 
+> So the one we have in the device tree is as follows..
 
-> > > Another thing I would like to have is even more high- level
-> > > document 
-> > > describing the common architecture of EM-based inventory.
-> > > I can start with some drafts of what I dig, to make it more
-> > > clear.
-> 
-> Really appreciate for this type of document if they are
-> available.  We are adopting
-> entity-manager in our proof-of-concept project but really struggling
-> to find detailed
-> documentation and end up just copying and pasting existing entity
-> manager json
-> config files and tweaking them.
-> The two links we follow kind of as bibles for entity manager doesn't
-> provide a detail guide
-> for example in the json config file, what each field means and how
-> that field is being
-> consumed, causes what to be created on the d-bus side, and being
-> consumed by what reactor.
-> 
-> https://github.com/openbmc/entity-manager/blob/master/docs/my_first_sensors.md
-> https://github.com/openbmc/entity-manager/blob/master/README.md
-> 
-> For example for sensors with entity manager do we still need the IPMI
-> YAML
-> configuration file described here?
-> https://github.com/openbmc/docs/blob/master/architecture/sensor-architecture.md#defining-sensors-in-an-ipmi-yaml-configuration-file
-> https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/sensor-example.yaml
-> 
-> For FRUs, for example do we still need 
-> https://github.com/ibm-openbmc/openbmc/blob/OP940/meta-ibm/meta-romulus/recipes-phosphor/configuration/romulus-yaml-config/romulus-ipmi-fru.yaml
->  
-> Because I found out when doing "ipmitool fru" it always goes off of
-> the default Builtin FRU Device ID 0, dimm0 ID1, dimm1 ID2, cpu0 ID 3,
-> and cpu1 ID 4.  
-> $ ipmitool -I lanplus -H $BMC_IP -U root -P 0penBmc -C 17 fru
-> FRU Device Description : Builtin FRU Device (ID 0)
->  Device not present (Unspecified error)
-> 
-> FRU Device Description : dimm0 (ID 1)
->  Device not present (Unspecified error)
-> 
-> FRU Device Description : dimm1 (ID 2)
->  Device not present (Unspecified error)
-> 
-> FRU Device Description : cpu0 (ID 3)
->  Device not present (Unspecified error)
-> 
-> FRU Device Description : cpu1 (ID 4)
->  Device not present (Unspecified error)
-> 
-> And that's because 
-> https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/fru_gen.py
-> always
-> taking 
-> https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/fru-read-example.yaml
-> from the as the default fru inventory yaml config.
-> unless custom fru yaml like the above is specified.
-> 
-> Even after porting over intel-ipmi-oem or fb-ipmi-oem's oem command
-> fru handler for entity manager,
-> still has the above behavior when doing "ipmitool fru".  Just really
-> trying to look for a high level flow
-> of the reactor side under entity manager, sensor and fru to begin
-> with.
-> 
-> In porting intel-ipmi-oem's fru command handler for entity-manager,
-> first phosphor-ipmid-host.service
-> would coredump.  Debugged it to be the startMatch() in
-> registerStorageFunctions() where it's calling
-> boost::asio::spawn with replaceCacheFru()
-> https://github.com/openbmc/intel-ipmi-oem/blob/master/src/storagecommands.cpp#L1311
-> https://github.com/openbmc/intel-ipmi-oem/blob/master/src/storagecommands.cpp#L361
-> 
-> So switched to fb-ipmi-oem's implementation which doesn't do the
-> replaceCacheFru with
-> the async handler.
-> https://github.com/openbmc/fb-ipmi-oem/blob/master/src/storagecommands.cpp#L185
-> But still "ipmi fru" would still display the default Builtin FRU
-> Device ID 0, dimm0 ID1, dimm1 ID2, cpu0 ID 3, and cpu1 ID 4. 
-> 
-> So I guess need to go back and really understand the reactor side
-> under entity-manager
-> and how the d-bus objects are created by the entity-manager and how
-> they are consumed
-> by the reactors for each components (sensors, fru, etc.)  Any
-> documentation on that will be so
-> helpful as a new adopter of entity-manager trying to dig in on what
-> different pieces need to line
-> up when switching to entity-manager.
+Witherspoon-128's (which has a different device tree than witherspoon) 
+BMC has a 128M flash (you can see the sizes of the partitions below in 
+the device tree add up to 128M). So this would work if your BMC has a 
+128M flash. The obmc-ubi partition would be smaller for eg for a 32M flash.
 
-
-You don't need any YAML files when you use EM. However to get ipmitool
-fru list to work you need to replace ipmi command handlers by that from
-intel-ipmi-oem. If you have output like you show, then you probably
-make something wrong and you still have default handlers from phosphor-
-ipmid-host.
-Reactors are not related to what you see in fru list. They will
-construct sensors list, setup some parts of the system and so on, but
-fru list in the new model is only defined by FruDevice service: you
-will get there only devices that actually have I2C EEPROMs with FRU
-data written.
-
+> &fmc {
+> 	status = "okay";
+> 	flash@0 {
+> 		status = "okay";
+> 		m25p,fast-read;
+> 		label = "bmc";
+> //#include "openbmc-flash-layout.dtsi"
+> 
+> 		partitions {
+> 			#address-cells = < 1 >;
+> 			#size-cells = < 1 >;
+> 			compatible = "fixed-partitions";
+> 			u-boot@0 {
+> 				reg = < 0 0x60000 >;
+> 				label = "u-boot";
+> 			};
+> 			u-boot-env@60000 {
+> 				reg = < 0x60000 0x20000 >;
+> 				label = "u-boot-env";
+> 			};
+> 			obmc-ubi@80000 {
+> 				reg = <0x80000 0x7F80000>;
+> 				label = "obmc-ubi";
+> 			};
+> 		};
+> 	};
+> };
+> 
+>>
+>>>> Does anyone know why the default is static partitions, and not ubifs?
+>>>>
+>>>> Regards,
+>>>> Deepak
+>>>>
+>>>>> 2. In meta-myplatform/conf/machine/myplatform.conf, I added,
+>>>>>
+>>>>> IMAGE_FSTYPES += " mtd-ubi mtd-ubi-tar"
+>>>>>
+>>>>> OBMC_MACHINE_FEATURES += " obmc-ubi-fs"
+>>>>>
+>>>>> Do I miss anything?
+>>>>>
+>>>>> Thanks.
+>>>>>
+>>>>> Best regards,
+>>>>>
+>>>>> Kun Zhao
+>>>>>
+>>>>> /*
+>>>>>
+>>>>> zkxz@hotmail.com <mailto:zkxz@hotmail.com>
+>>>>>
+>>>>> */
+>>>>>
+>>>>
+>>> Kun
+>>>
+> 
 
