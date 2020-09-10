@@ -1,65 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 782C62639C9
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 04:03:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFE8E2639EF
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 04:15:05 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bn2HQ6syDzDqb9
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 12:03:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bn2XR1QBRzDqDL
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 12:15:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::542;
- helo=mail-ed1-x542.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=nBsz6061; dkim-atps=neutral
-Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
- [IPv6:2a00:1450:4864:20::542])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=Scp8KEq5; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=C8wmE0Ze; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bn2GC0K4bzDqPb;
- Thu, 10 Sep 2020 12:02:42 +1000 (AEST)
-Received: by mail-ed1-x542.google.com with SMTP id w1so4680310edr.3;
- Wed, 09 Sep 2020 19:02:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=142NeoCcx3wHhBUQEiqLvgYqCFhcu9mCRWA11xQEdVg=;
- b=nBsz6061VcS6cYSgt5yHM+R707WWE5ZZd412JS1mVQWo22/CqWZA4jbCYWRRKRySc5
- LstyfExbNbtK4mWp/VqaQIk0dnYfPY8Gyv2JmR7CDjI6X5l81dgMIb40FSENPz8VrftB
- erSBKmbxWGVQJ3/4S7wPVYfmwN/IPSDi5dyvM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=142NeoCcx3wHhBUQEiqLvgYqCFhcu9mCRWA11xQEdVg=;
- b=qpjW9ATYquV9KYt8ih3S+AJaJwre626nrlfzNIj3hjgdeYBHL+NMW/cKGgi8fZXxHb
- ZmqIxaCQbP6HvFNfLFIRmVOYiDCOvVDY5OHRhuU8HiH1WKfb0sDpB1/xDrsK7vHW9aNE
- eg2fNA2VM7HhiZ0Wq5x9WLgSgj+0pRByBEHDTX/eozJE4gO1DIL1TjZEq/rOcSZc9Yvs
- 9aJLoJsXArzChU05kHjYaNYYWbCafcwjzTPj14vTFDgQvhcEsc5ulmaccjf12APuMvt0
- hKdRaUXA7yH4hcdaVo9u1Exux6WfUa9tsHPitSbrFMimJQQ+lJXTlaYIChul0RITkYG6
- CSLw==
-X-Gm-Message-State: AOAM533ArfcIWvTfFV0ReaQ94aRzuQDQmIsO09tTDg6OsHGgObBALvbB
- ayRrWpH280ajdOgHkoyC84ikddAGxKaDAgy5l54=
-X-Google-Smtp-Source: ABdhPJyp05MBzEqBviRTff7yzhFYD8zxQ47BHJ7qdCVuj6D4R7LJpyBwxAt5/LL+KaXatY3R5CwSh2ltSkkRFgzQfeI=
-X-Received: by 2002:aa7:de03:: with SMTP id h3mr7240898edv.232.1599703358638; 
- Wed, 09 Sep 2020 19:02:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200909114312.2863675-1-andrew@aj.id.au>
- <20200909114312.2863675-4-andrew@aj.id.au>
-In-Reply-To: <20200909114312.2863675-4-andrew@aj.id.au>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 10 Sep 2020 02:02:26 +0000
-Message-ID: <CACPK8Xd5rE_s680Y0wdktoP4RwDzACCaetUxBrbWSTGnwBMWVQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] pinctrl: aspeed-g6: Add bias controls for 1.8V GPIO
- banks
-To: Andrew Jeffery <andrew@aj.id.au>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bn2V34jHvzDqc1
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 12:12:59 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id A4DA95C00C9;
+ Wed,  9 Sep 2020 22:12:56 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Wed, 09 Sep 2020 22:12:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=HckUuM4up1+hrv2p57Agpc2r033Xop1
+ H6JnAlq3zBCU=; b=Scp8KEq5+XaNWIzu37zalER5/GfPwnWsWzBFti5s9JUxI10
+ hQrJCy49sDfEp27lbGO8wcpv7CxmWoBaU9Oy/PCEoi0yUNu0eIURk68sLMLGUzoi
+ 9N/d5zk3MfRO5hiTpjGPiuSO82b6NX9e2i8C5wdXgDM/8bBAYVLmgd6hruERI2OD
+ oCywMdn8R2ZPq6BFgikOMGrcDRieyA60pxZKIf2827kvJGbsSnzwcpSNNAlsKFC0
+ /ux0Etc/WqKm/z4GysjIE4ChctSDGX7wxab3z78Kw5pu37Ocs2w7I7mTJRBJU5r4
+ MnDix4ecAnCQWRGjB3MrpHU6jGYfJrSTiPEnY8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=HckUuM
+ 4up1+hrv2p57Agpc2r033Xop1H6JnAlq3zBCU=; b=C8wmE0Zea0bG/Bt8GaSfDu
+ Rlwzj6x3tzrTmjKnzI+cbLG/EakziIC7s7Fyy9EWd306zcoqjpoZD9IGy8neGh3i
+ r9kRgLkxNAKR86bkhXM9gvprLuxlPNmEzZP0yE4BPGrDr+tNgQRuBE9lt6Xy7p5J
+ aUPII/xl6EQb8gHSGJJuMADQXN8xg5bSLwWaRG/VOAVeOVP4vB55TQLXE7siLthd
+ UlJljhN8OnrMgZVJKP0ZkQDXiC/akXOyhcBW+omKTcf8lX9eKlI3g0JLqcpjMeYh
+ fUOTZ5uOJQLDnnWr2YKC39XHf5pP7nhE8h3m6ePBFURwLlGfyqcXN4fryuwmzimg
+ ==
+X-ME-Sender: <xms:qItZX5WM5w6enPhs6qvO7yX49dJTnCL-aBeahzS81Dv8uTszTsf-AQ>
+ <xme:qItZX5nVNnhkCsXvAugBA0SD5uImoKe61o_Svli1ZXL2hNd1S1OsdUmTWGW4Esr8p
+ S315KM5NgD1Kot2JA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduiedrudehiedgheehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:qItZX1bArAFZacrRP9hUGq0qBEEN4VZOGfnT8zjA7dWYiTebE7Pb3g>
+ <xmx:qItZX8WUhhMfF1y2RQQCgwW37xvW-f-x6vv-oFy3QRE3UkKyvI02qw>
+ <xmx:qItZXzka1nGTmfJzAxeIYqairg07nR58UnHCw9Vi7TZ3aVAftT8KaQ>
+ <xmx:qItZX4zV6pQG4Sw0faCDmFym-y3ZBRXnjDTmS1QAySeVMlHd0YGDag>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id AF09DE00A6; Wed,  9 Sep 2020 22:12:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-259-g88fbbfa-fm-20200903.003-g88fbbfa3
+Mime-Version: 1.0
+Message-Id: <9eea0291-f225-466a-ba01-df3210bd8ead@www.fastmail.com>
+In-Reply-To: <4f2de881-1391-b1b1-18b3-8d3a06653da9@roeck-us.net>
+References: <20200909132411.2906159-1-andrew@aj.id.au>
+ <4f2de881-1391-b1b1-18b3-8d3a06653da9@roeck-us.net>
+Date: Thu, 10 Sep 2020 11:42:34 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Guenter Roeck" <linux@roeck-us.net>, linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH] hwmon: (pmbus) Expose PEC debugfs attribute
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,64 +93,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: johnny_huang@aspeedtech.com, linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: openbmc@lists.ozlabs.org, Jean Delvare <jdelvare@suse.com>,
+ linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 9 Sep 2020 at 11:43, Andrew Jeffery <andrew@aj.id.au> wrote:
->
-> These were skipped in the original patches adding pinconf support for
-> the AST2600.
->
-> Cc: Johnny Huang <johnny_huang@aspeedtech.com>
-> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-> ---
->  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> index 7efe6dbe4398..34803a6c7664 100644
-> --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> @@ -19,6 +19,7 @@
->
->  #define SCU400         0x400 /* Multi-function Pin Control #1  */
->  #define SCU404         0x404 /* Multi-function Pin Control #2  */
-> +#define SCU40C         0x40C /* Multi-function Pin Control #3  */
->  #define SCU410         0x410 /* Multi-function Pin Control #4  */
->  #define SCU414         0x414 /* Multi-function Pin Control #5  */
->  #define SCU418         0x418 /* Multi-function Pin Control #6  */
-> @@ -2591,6 +2592,22 @@ static struct aspeed_pin_config aspeed_g6_configs[] = {
->         /* MAC4 */
->         { PIN_CONFIG_POWER_SOURCE,   { F24, B24 }, SCU458, BIT_MASK(5)},
->         { PIN_CONFIG_DRIVE_STRENGTH, { F24, B24 }, SCU458, GENMASK(3, 2)},
-> +
-> +       /* GPIO18E */
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_PULL_DOWN, Y1, Y4, SCU40C, 4),
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_DISABLE,   Y1, Y4, SCU40C, 4),
-> +       /* GPIO18D */
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_PULL_DOWN, AB4, AC5, SCU40C, 3),
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_DISABLE,   AB4, AC5, SCU40C, 3),
-> +       /* GPIO18C */
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_PULL_DOWN, E4, E1, SCU40C, 2),
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_DISABLE,   E4, E1, SCU40C, 2),
-> +       /* GPIO18B */
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_PULL_DOWN, B2, D3, SCU40C, 1),
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_DISABLE,   B2, D3, SCU40C, 1),
-> +       /* GPIO18A */
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_PULL_DOWN, C6, A2, SCU40C, 0),
-> +       ASPEED_SB_PINCONF(PIN_CONFIG_BIAS_DISABLE,   C6, A2, SCU40C, 0),
->  };
->
->  /**
-> --
-> 2.25.1
->
+On Thu, 10 Sep 2020, at 01:01, Guenter Roeck wrote:
+> On 9/9/20 6:24 AM, Andrew Jeffery wrote:
+> > Enable runtime debug control of whether the PEC byte is exchanged with
+> > the PMBus device.
+> > 
+> > Some manufacturers have asked for the PEC to be disabled as part of
+> > debugging driver communication issues with devices.
+> > 
+> > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+> > ---
+> >  drivers/hwmon/pmbus/pmbus_core.c | 39 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 39 insertions(+)
+> > 
+> > diff --git a/drivers/hwmon/pmbus/pmbus_core.c b/drivers/hwmon/pmbus/pmbus_core.c
+> > index 44535add3a4a..51c8502b35e9 100644
+> > --- a/drivers/hwmon/pmbus/pmbus_core.c
+> > +++ b/drivers/hwmon/pmbus/pmbus_core.c
+> > @@ -2346,6 +2346,42 @@ static int pmbus_debugfs_get_status(void *data, u64 *val)
+> >  DEFINE_DEBUGFS_ATTRIBUTE(pmbus_debugfs_ops_status, pmbus_debugfs_get_status,
+> >  			 NULL, "0x%04llx\n");
+> >  
+> > +static int pmbus_debugfs_get_pec(void *data, u64 *val)
+> > +{
+> > +	struct i2c_client *client = data;
+> > +
+> > +	*val = !!(client->flags & I2C_CLIENT_PEC);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int pmbus_debugfs_set_pec(void *data, u64 val)
+> > +{
+> > +	int rc;
+> > +	struct i2c_client *client = data;
+> > +
+> > +	if (!val) {
+> > +		client->flags &= ~I2C_CLIENT_PEC;
+> > +		return 0;
+> > +	}
+> > +
+> > +	if (val != 1)
+> > +		return -EINVAL;
+> > +
+> > +	rc = i2c_smbus_read_byte_data(client, PMBUS_CAPABILITY);
+> > +	if (rc < 0)
+> > +		return rc;
+> > +
+> > +	if (!(rc & PB_CAPABILITY_ERROR_CHECK))
+> > +		return -ENOTSUPP;
+> 
+> WARNING: ENOTSUPP is not a SUSV4 error code, prefer EOPNOTSUPP
+> 
+> > +
+> > +	client->flags |= I2C_CLIENT_PEC;
+> > +
+> > +	return 0;
+> > +}
+> > +DEFINE_DEBUGFS_ATTRIBUTE(pmbus_debugfs_ops_pec, pmbus_debugfs_get_pec,
+> > +			 pmbus_debugfs_set_pec, "0x%1llu\n");
+> 
+> ERROR: Prefixing 0x with decimal output is defective
+> 
+> (since the displayed value is a boolean, it is also quite useless).
+
+Indeed. I overlooked running checkpatch, sorry for the noise.
+
+I've sent v2 which checkpatch claims to be clean.
+
+Andrew
