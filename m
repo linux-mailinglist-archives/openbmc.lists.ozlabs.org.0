@@ -2,62 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2144A263990
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 03:48:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33B7C263992
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 03:53:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bn1xd6d8JzDqZR
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 11:48:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bn2354hFPzDqbm
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 11:53:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::644;
- helo=mail-ej1-x644.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::643;
+ helo=mail-ej1-x643.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=hvhtKVdy; dkim-atps=neutral
-Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com
- [IPv6:2a00:1450:4864:20::644])
+ header.s=google header.b=eY/LjwZi; dkim-atps=neutral
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com
+ [IPv6:2a00:1450:4864:20::643])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bn1wp6K9yzDqZD
- for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 11:47:37 +1000 (AEST)
-Received: by mail-ej1-x644.google.com with SMTP id p9so6328580ejf.6
- for <openbmc@lists.ozlabs.org>; Wed, 09 Sep 2020 18:47:37 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bn22H3hPzzDqZD;
+ Thu, 10 Sep 2020 11:52:23 +1000 (AEST)
+Received: by mail-ej1-x643.google.com with SMTP id e23so6350376eja.3;
+ Wed, 09 Sep 2020 18:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=D9x2Zhi2lg5uPTAfHLFGxNCn0iabawo2/+Ma9lrchJA=;
- b=hvhtKVdyAJnFvh/bCKTB1zRzNTIpEtC4MyVmVunclxEwr3xWyI2dqFKP+pR6fx7Xt0
- 0BB0WGXqNOiTRmauAtmKESnMdjTNxCEFqRThoLo2mtZJ+hzHqHJhmihCsgHuKcJzRFBq
- Hfl1hwT0Hw0yvbjIjafv2+B2iyZLBkJeUwMo4=
+ :cc; bh=ANFj5tNe+lX75IxFcz7eloVwZ6bcS0GGRGo9xs5qe80=;
+ b=eY/LjwZiqAFgu2Bw+bKjgsL4dHaWSO+afec/4IFa+vrNiuMztpznLUltZ/Wl9vUCja
+ 1acXY3/TubX6dHKDPPvCbx8YITTKM9cJ8pwLe8grJkSE70P7HJiHb2lFt5NBgjipFLen
+ sOF+sNTAqF3DuLyHiT1ZKbMlgEOwcHgvWqh68=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=D9x2Zhi2lg5uPTAfHLFGxNCn0iabawo2/+Ma9lrchJA=;
- b=fser6SYVB7EARfc3UxFYND2UagLFX/9bnO98LYPB4hIy/ggyo8yZ5zVkZ9Cjn+rH2W
- 7n+IP+r1kUo6bzQvAafSgHZp4mF1429YL/6QdcaMQpn4FCNplM5ImtzTevrojt19Rb7I
- zDm2sUnLRosJO2A/XASv8kQtw1kc0kjZJ25/l6zHn6wCyW6OICQaAx4SyeHig86qdsAu
- wOTdND44VL+kFwS6G/iTtyoLBIfCrS3eByIQjDy5Kyj8/o15VVyf/mSbRcMewOCKBwNs
- ihJ1kOnuns74H5gwBu1G9CTvQZGRvgW1zpzEuP2DFaFSRtvMiDkm/F+IWOLaN2LD6z8r
- wQbA==
-X-Gm-Message-State: AOAM531x8JIDAPkeJjlqUnDuBkO8SZX9kE19SyIq4Pwzr5vEGq76WYz6
- OGxdrmdhx3vjWAN5r6G1zaDW0d+mke+freA5+xDM5SD3
-X-Google-Smtp-Source: ABdhPJwDlQvMzL44oHV+oRVcPHYjxdUKPPK3ydVHNCHOyJrZaIRoY/cKKckIrkHS2CeLqBMohwUSo0xUZMowTQ4yLgw=
+ bh=ANFj5tNe+lX75IxFcz7eloVwZ6bcS0GGRGo9xs5qe80=;
+ b=r5zdnfs/nKlSK7onP+44b50sgNRLVl9Zk9K6opZOJvImX6A6KpqK4sifeM3jdgYU8U
+ Xbzxj3kU4vhSy9xllGaMgIB9wNgFsXkCwjfDibTiNR4kryoBBnqucr6N8F+ySBwUjkG9
+ 7usLFjnt4mqr5qdQQg4ZunI/M3a/4itZ80eU3aH8twI2+KLiG+xVmPI/R2VQJSvsIvcq
+ 0FjAi3l8FLi2Ejnhfh7uVWpKwwk4tNPlAHLgmFQ7HK4J/+uySuXlDXVjvqhptlBuMtC0
+ 0X9bak2m9/gZYDpdjx3BcMG12iC4AgTL0vxMcNCvg865wKTlsJYJTM0ti7KUzM0+HGIA
+ r7lQ==
+X-Gm-Message-State: AOAM533CaGCqp5Nu2OwGR1pL0FDXTVe5ZJALeG//U5uSYcSgCiiFS5ox
+ hgnbyNO6g5BSrdkQAcBJqHTbsvy098vzcEBUHNg=
+X-Google-Smtp-Source: ABdhPJymYXgKXZhXuS4fxzTpM1mvEDSS4tHQKzZ/RE+4BnTasu7Ht25VWClSxo4tpoAl7IAuWPBMYKW8xN97aQwJFMk=
 X-Received: by 2002:a17:906:7cc6:: with SMTP id
- h6mr6465102ejp.266.1599702453489; 
- Wed, 09 Sep 2020 18:47:33 -0700 (PDT)
+ h6mr6478279ejp.266.1599702736442; 
+ Wed, 09 Sep 2020 18:52:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200909112825.2862827-1-andrew@aj.id.au>
-In-Reply-To: <20200909112825.2862827-1-andrew@aj.id.au>
+References: <20200909114312.2863675-1-andrew@aj.id.au>
+ <20200909114312.2863675-2-andrew@aj.id.au>
+In-Reply-To: <20200909114312.2863675-2-andrew@aj.id.au>
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 10 Sep 2020 01:47:21 +0000
-Message-ID: <CACPK8Xeza+vDZYDQW8zuibon-p--EGvvvCBjLT7RH_WQOxWm_w@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8] ARM: dts: rainier: Disable internal
- pull-downs on eMMC pins
+Date: Thu, 10 Sep 2020 01:52:04 +0000
+Message-ID: <CACPK8XeOf1H2Cdo434DsAjDNGrohip_MZTSMMOh1nhspz2y7dA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] pinctrl: aspeed: Format pinconf debug consistent with
+ pinmux
 To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -71,45 +72,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: johnny_huang@aspeedtech.com, linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 9 Sep 2020 at 11:29, Andrew Jeffery <andrew@aj.id.au> wrote:
+On Wed, 9 Sep 2020 at 11:43, Andrew Jeffery <andrew@aj.id.au> wrote:
 >
-> There's a veritable tug-of-war going on in the design, so disable one of
-> the warring parties.
+> When displaying which pinconf register and field is being touched, format the
+> field mask so that it's consistent with the way the pinmux portion
+> formats the mask.
 >
 > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-
-Upstream?
-
-Applied to dev-5.8.
-
-Cheers,
-
-Joel
-
-
 > ---
->  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/pinctrl/aspeed/pinctrl-aspeed.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index cbc64a1d14d1..04fd9e5a34de 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -231,6 +231,10 @@ &emmc_controller {
->         status = "okay";
->  };
+> diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+> index 53f3f8aec695..d8972911d505 100644
+> --- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+> +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+> @@ -539,9 +539,9 @@ int aspeed_pin_config_set(struct pinctrl_dev *pctldev, unsigned int offset,
+>                 if (rc < 0)
+>                         return rc;
 >
-> +&pinctrl_emmc_default {
-> +       bias-disable;
-> +};
-> +
->  &emmc {
->         status = "okay";
->  };
+> -               pr_debug("%s: Set SCU%02X[%lu]=%d for param %d(=%d) on pin %d\n",
+> -                               __func__, pconf->reg, __ffs(pconf->mask),
+> -                               pmap->val, param, arg, offset);
+> +               pr_debug("%s: Set SCU%02X[0x%08X]=%d for param %d(=%d) on pin %d\n",
+
+
+The pr_debug in pinmux-aspeed.c prints val as 0x%X. Did you want to do
+that here?
+
+> +                               __func__, pconf->reg, pconf->mask,
+> +                               val, param, arg, offset);
+>         }
+>
+>         return 0;
 > --
 > 2.25.1
 >
