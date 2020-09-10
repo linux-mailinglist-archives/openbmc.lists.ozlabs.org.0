@@ -2,57 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41FBB264783
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 15:54:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EB0692647DF
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 16:20:16 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BnL3t0NdlzDqYp
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 23:54:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BnLd66VSszDqRM
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 00:20:10 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c33;
+ helo=mail-oo1-xc33.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=qSlN/ZoC; dkim-atps=neutral
+Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com
+ [IPv6:2607:f8b0:4864:20::c33])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BnL275bZbzDqXZ
- for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 23:53:18 +1000 (AEST)
-IronPort-SDR: Fxy4AhZ2wxueZXscypZtoRJ0vnq838g4OfrvYMGgaevCGvWgOxS0nZ8+rsVe8BCnwNotiYVMKC
- u0Pm49dpLMdQ==
-X-IronPort-AV: E=McAfee;i="6000,8403,9739"; a="159483260"
-X-IronPort-AV: E=Sophos;i="5.76,413,1592895600"; 
- d="scan'208,217";a="159483260"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2020 06:53:15 -0700
-IronPort-SDR: 046fXh6+MWTaYRp6tOPNsbVBsbw3bvx59F7AFw96IoHGBONp8n07AZB8IGHg9/F2LvXbHW/5wP
- xkaalU7+rFAA==
-X-IronPort-AV: E=Sophos;i="5.76,413,1592895600"; 
- d="scan'208,217";a="480897254"
-Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.252.157.229])
- ([10.252.157.229])
- by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Sep 2020 06:53:11 -0700
-Subject: Re: OpenBMC LDAP server configuration assistance
-To: "Gerhart, Donnie" <Donnie.Gerhart@dell.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- ratagupt@linux.vnet.ibm.com, gkeishin@in.ibm.com
-References: <BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <6b1406cd-1d70-7f62-6e2d-c33d80d02f1c@linux.intel.com>
-Date: Thu, 10 Sep 2020 19:23:07 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BnLYP4hdyzDqdn
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Sep 2020 00:16:57 +1000 (AEST)
+Received: by mail-oo1-xc33.google.com with SMTP id z1so1474106ooj.3
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 07:16:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=subject:to:references:from:message-id:date:user-agent:mime-version
+ :in-reply-to:content-language:content-transfer-encoding;
+ bh=7vbI096pjVDn6oMRxWB8t5fXFFL+VDJ1WUryL0zuSts=;
+ b=qSlN/ZoC8ACvd1eUfvM1V18jeKyW+xFbWBZAhetpFI6GovdX3LjN7Nl9+RqwpmykUf
+ 5VmLn68gydz0bGSE7rLZVlc/E5qo34KwRfmJVlh5nzLwmHIGTaK2ubg+sn7W29vkg1nW
+ iCX0+mxOCahOk6zrhZKg9u3sN4F4BClFg+1Uh+/snjNf4Nl5Jq++IJeAqvSSUyGV1sP2
+ ceDURGHMGQamqnAf1FF7FJVJmcjLsae3+5Dmtm3d39LemY+WqwnSN/FZaSTPmbz4PlWl
+ T0lnWyXvgjf4h6tdLA4LWq7LbMEAm33xGPS89ei+EZLp7Y4QX7gIw0PKdjE9b7OqBa/j
+ iV0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:subject:to:references:from:message-id:date
+ :user-agent:mime-version:in-reply-to:content-language
+ :content-transfer-encoding;
+ bh=7vbI096pjVDn6oMRxWB8t5fXFFL+VDJ1WUryL0zuSts=;
+ b=c96lMI8hDcpVIMvrwHZEt3dp7uP62LecIiQqQcpIIg0jPKrBRgRK/FitNqUkDHrex6
+ bJ1H1jtm9gFd9G1IsgF0MBh4ka/q5vT75y1FaaQW1KeYShjonq9PRsG6mEDL58jv44x9
+ wHpt5+xj1fZJOE1kRb1os/PrXWwr3SVXQhusyqlip8iD+iKFDiN1DZ4Q92eD8tCJzNTy
+ Vko8ANYnsMxJDKmc1SglZ5Ouc+dllU4x+F1yk2scqEMZQH1/UOnva32l3xdGbEGQjt2Q
+ URc4brzDta9uZ+hzxdtOo7DS2WIv1I+0eKkWWymmSPbBO31xTt+lhoPlJodZqlbebyRg
+ 2Kuw==
+X-Gm-Message-State: AOAM532U29L2RfPkuXH43BH+PJeyPiwHzxD2qf0sbWRUbkJAKxhqy5jo
+ 9fyoTZQiwmy6KLdpdz58ScZ5GTPDdpLOmQ==
+X-Google-Smtp-Source: ABdhPJyuOYMfPNS8/iB53wmjLNlrP9hCy0Skoi4md2Gdkf+naU7h14rWgZJcph1BKARPkMcJD0HCbg==
+X-Received: by 2002:a4a:986d:: with SMTP id z42mr4631648ooi.65.1599747414351; 
+ Thu, 10 Sep 2020 07:16:54 -0700 (PDT)
+Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
+ [72.182.100.19])
+ by smtp.gmail.com with ESMTPSA id h28sm678416ote.28.2020.09.10.07.16.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 10 Sep 2020 07:16:53 -0700 (PDT)
+Subject: Re: How to comprehensively search the OpenBMC Archives
+To: "Muggeridge, Matt" <matt.muggeridge2@hpe.com>,
+ Joseph Reynolds <jrey@linux.ibm.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <AT5PR8401MB12193C196089B8572EE50F05D82D0@AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM>
+ <5b0e1534-379a-837c-89be-53ef74049fc8@linux.vnet.ibm.com>
+ <d6f36d91-5456-c40f-68a6-bd6998fda69d@linux.ibm.com>
+ <AT5PR8401MB121967BF331D182D97CA4089D8290@AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM>
+From: krtaylor <kurt.r.taylor@gmail.com>
+Message-ID: <daf3b7b4-1fa6-21b1-622f-d9064c4846a6@gmail.com>
+Date: Thu, 10 Sep 2020 09:16:52 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.11.0
 MIME-Version: 1.0
-In-Reply-To: <BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com>
-Content-Type: multipart/alternative;
- boundary="------------E165A6D163DA1FD59A6ADCED"
+In-Reply-To: <AT5PR8401MB121967BF331D182D97CA4089D8290@AT5PR8401MB1219.NAMPRD84.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,399 +89,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Mugunda, Chandra" <Chandra.Mugunda@dell.com>, "Giles,
- Joshua" <Joshua.Giles@dell.com>, "Cockrell, Trevor" <Trevor.Cockrell@dell.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------E165A6D163DA1FD59A6ADCED
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On 9/8/20 5:22 PM, Muggeridge, Matt wrote:
+> I am impressed Joseph!  Thank you.  That certainly highlights the lengths others have gone to for a comprehensive search feature.
+> 
+> There is a lot of very valuable content locked up in these archives.  I'm hopeful admins will agree that comprehensive searching of the archives needs to be made easier and more accessible to the masses.
 
-Hi Donnie,
+As always, feel free to add wish list items for future services to this 
+page, we can vet potential services there. (I have added this one)
 
-Didn't tested it in latest tree, but you already cross verified this 
-right --> 
-https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot
+https://docs.google.com/document/d/1QCFRGCRofcR3K8clSLtJHw10-Cu9zkp0dvwXPWzQSCc/edit?usp=sharing
 
-++ Ratan & George.
+Kurt Taylor (krtaylor)
 
-Regards,
+> Matt.
+> 
+>> -----Original Message-----
+>> From: Joseph Reynolds <jrey@linux.ibm.com>
+>> Sent: Wednesday, 9 September 2020 7:25 AM
+>> To: Gunnar Mills <gmills@linux.vnet.ibm.com>; Muggeridge, Matt
+>> <matt.muggeridge2@hpe.com>; OpenBMC Maillist
+>> <openbmc@lists.ozlabs.org>
+>> Subject: Re: How to comprehensively search the OpenBMC Archives
+>>
+>> On 9/8/20 1:51 PM, Gunnar Mills wrote:
+>>> On 9/3/2020 6:14 PM, Muggeridge, Matt wrote:
+>>>>
+>>>> Is there a more comprehensive/reliable way to search through these
+>>>> mamil archives?
+>>>>
+>>
+>> I used the following (bash) script to download the entire openbmc email
+>> archive to my workstation's storage.  (And then I use my local search
+>> capability (grep,  spotlight search, Windows-f, etc.) to locate the desired
+>> content.
+>>
+>> - Joseph
+>>
+>> wget --no-check-certificate
+>> INVALID URI REMOVED
+>> 3A__lists.ozlabs.org_pipermail_openbmc&d=DwID-
+>> g&c=C5b8zRQO1miGmBeVZ2LFWg&r=Xhm647cJDeqUETccV2yvBRCeNJXBtz6
+>> 14MxJzMR9PZk&m=tjRnWO2f8md0hwPIF4dbkqaJbj-
+>> OhYZN2fNFoROxHeM&s=oUgen4rG7u90Uby5812hA_y0dDnG41oD1ZuA4K7K
+>> NiU&e=
+>> set -x
+>> for f in $(grep '<td>.*.txt.gz' index.html | cut -d\" -f2); do
+>>     wget --no-check-certificate
+>> INVALID URI REMOVED
+>> 3A__lists.ozlabs.org_pipermail_openbmc_-24f&d=DwID-
+>> g&c=C5b8zRQO1miGmBeVZ2LFWg&r=Xhm647cJDeqUETccV2yvBRCeNJXBtz6
+>> 14MxJzMR9PZk&m=tjRnWO2f8md0hwPIF4dbkqaJbj-
+>> OhYZN2fNFoROxHeM&s=AVV8sFghgocf1nC9Vf7UGQtg9m1A63Yeux7DAywt
+>> cRs&e=
+>>     gunzip "$f"
+>> done
+>>
+>>
+>>> +1. Could we look at moving to Mailman v3 and like
+>>> INVALID URI REMOVED
+>> 3A__docs.mailman3.org_projects_hyperkitty_en_latest_&d=DwID-
+>> g&c=C5b8zRQO1miGmBeVZ2LFWg&r=Xhm647cJDeqUETccV2yvBRCeNJXBtz6
+>> 14MxJzMR9PZk&m=tjRnWO2f8md0hwPIF4dbkqaJbj-
+>> OhYZN2fNFoROxHeM&s=HWwrQzEzVNtANfa8DBfvdGnK_2nRlSp-
+>> peNmEl1y6n0&e=  ?
+>>>
+>>>
+>>>> I have been using google to search the archives, but have noticed the
+>>>> results are not complete.
+>>>>
+>>>>
+>>>
+> 
 
-Richard
-
-On 9/9/2020 10:02 PM, Gerhart, Donnie wrote:
->
-> Hello OpenBMC Community\SMEs,
->
-> We are investigating LDAP functionality on the 2.8 ‘top of tree’ 
-> build; however, we are having some issues I believe you can help with 
-> straight away.  Some of the many real failures we’ve encountered are:
->
->   * Bricked system due to locking out all users
->
-<Richard> You meant to say even `root` user is locked out is OpenBMC 
-repo master or made more changes. By default user lock out is disabled, 
-and still won't lock root user to avoid DOS attack.
->
->   * Ladap_result() failed:  Can’t contact LDAP server
->       o Believe we’ve fixed this one
->
-<Richard> Hope this as LDAP configuration issue you faced, and not 
-related to OpenBMC code as such.
->
->   * Logins are restricted to the group priv-admin of but user
->     ‘testuser’ is not a member
->
-<Richard>: Is this failure due to SSH login. Because SSH won't make use 
-of ldap privilege mapping. You may need to change 
-https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default 
-if needs LDAP testing in SSH.
-
-Have you tried bmcweb LDAP login ? Whether you are able to succeed in that ?
-
->   * Pam_authenticate() failed, rc=7, Authentication failure
->   * Bad PAM password attempt for ‘testuser’ from: <LDAP server IP>
->
-> Some of these issues we’ve worked through; however, some are still 
-> dogging us.  To that end, can someone possibly list\post a basic LDAP 
-> server LDIF file with a single user, privilege role and group mapping 
-> that you’ve successfully used with OpenBMC?  We assume we are stuck on 
-> some trivial LDAP server topology anomaly that is completely escaping 
-> us at the moment.
->
-> As an fyi we have looked at:
->
->  1. Gone through everything obviously ‘ldap’ in the mailing lists:
->     https://lists.ozlabs.org/pipermail/openbmc/
->  2. Looked at OpenBMC learning series:
->     https://github.com/openbmc/openbmc/wiki/Presentations
->  3. Gone through the documents here:
->     https://github.com/openbmc/docs/blob/master/architecture/user-management.md
->  4. Looked at ldap tests and server:
->     https://github.com/openbmc/openbmc-test-automation
->  5. Spent more time tweaking Linux files and creating ldap server
->     configs that I care to admit 😊
->
-> BIG thanks in advance!
->
-> Best,
->
-> Donnie
->
-
---------------E165A6D163DA1FD59A6ADCED
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    Hi Donnie, <br>
-    <p>Didn't tested it in latest tree, but you already cross verified
-      this right --&gt;
-<a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot">https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot</a></p>
-    <p>++ Ratan &amp; George.</p>
-    <p>Regards,</p>
-    <p>Richard<br>
-    </p>
-    <div class="moz-cite-prefix">On 9/9/2020 10:02 PM, Gerhart, Donnie
-      wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Segoe UI Emoji";
-	panose-1:2 11 5 2 4 2 4 2 2 3;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:80760137;
-	mso-list-type:hybrid;
-	mso-list-template-ids:1014133672 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
-@list l0:level1
-	{mso-level-number-format:bullet;
-	mso-level-text:;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level2
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level3
-	{mso-level-number-format:bullet;
-	mso-level-text:;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level4
-	{mso-level-number-format:bullet;
-	mso-level-text:;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level5
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level6
-	{mso-level-number-format:bullet;
-	mso-level-text:;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level7
-	{mso-level-number-format:bullet;
-	mso-level-text:;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level8
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level9
-	{mso-level-number-format:bullet;
-	mso-level-text:;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l1
-	{mso-list-id:780489114;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1797343294 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
-@list l1:level1
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l1:level2
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l1:level3
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-@list l1:level4
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l1:level5
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l1:level6
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-@list l1:level7
-	{mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l1:level8
-	{mso-level-number-format:alpha-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;}
-@list l1:level9
-	{mso-level-number-format:roman-lower;
-	mso-level-tab-stop:none;
-	mso-level-number-position:right;
-	text-indent:-9.0pt;}
-ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal">Hello OpenBMC Community\SMEs,<o:p></o:p></p>
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <p class="MsoNormal">We are investigating LDAP functionality on
-          the 2.8 ‘top of tree’ build; however, we are having some
-          issues I believe you can help with straight away.  Some of the
-          many real failures we’ve encountered are:<o:p></o:p></p>
-        <ul style="margin-top:0in" type="disc">
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l0 level1 lfo1">Bricked
-            system due to locking out all users</li>
-        </ul>
-      </div>
-    </blockquote>
-    &lt;Richard&gt; You meant to say even `root` user is locked out is
-    OpenBMC repo master or made more changes. By default user lock out
-    is disabled, and still won't lock root user to avoid DOS attack.
-    <blockquote type="cite"
-cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
-      <div class="WordSection1">
-        <ul style="margin-top:0in" type="disc">
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l0 level1 lfo1">Ladap_result()
-            failed:  Can’t contact LDAP server<o:p></o:p></li>
-          <ul style="margin-top:0in" type="circle">
-            <li class="MsoListParagraph"
-              style="margin-left:0in;mso-list:l0 level2 lfo1">Believe
-              we’ve fixed this one</li>
-          </ul>
-        </ul>
-      </div>
-    </blockquote>
-    &lt;Richard&gt; Hope this as LDAP configuration issue you faced, and
-    not related to OpenBMC code as such.<br>
-    <blockquote type="cite"
-cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
-      <div class="WordSection1">
-        <ul style="margin-top:0in" type="disc">
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l0 level1 lfo1">Logins are
-            restricted to the group priv-admin of but user ‘testuser’ is
-            not a member</li>
-        </ul>
-      </div>
-    </blockquote>
-    <p>&lt;Richard&gt;: Is this failure due to SSH login. Because SSH
-      won't make use of ldap privilege mapping. You may need to change
-<a class="moz-txt-link-freetext" href="https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default">https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default</a>
-      if needs LDAP testing in SSH.</p>
-    <p>Have you tried bmcweb LDAP login ? Whether you are able to
-      succeed in that ?<br>
-    </p>
-    <blockquote type="cite"
-cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
-      <div class="WordSection1">
-        <ul style="margin-top:0in" type="disc">
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l0 level1 lfo1">Pam_authenticate()
-            failed, rc=7, Authentication failure<o:p></o:p></li>
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l0 level1 lfo1">Bad PAM
-            password attempt for ‘testuser’ from: &lt;LDAP server IP&gt;<o:p></o:p></li>
-        </ul>
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <p class="MsoNormal">Some of these issues we’ve worked through;
-          however, some are still dogging us.  To that end, can someone
-          possibly list\post a basic LDAP server LDIF file with a single
-          user, privilege role and group mapping that you’ve
-          successfully used with OpenBMC?  We assume we are stuck on
-          some trivial LDAP server topology anomaly that is completely
-          escaping us at the moment.<o:p></o:p></p>
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <p class="MsoNormal">As an fyi we have looked at:<o:p></o:p></p>
-        <ol style="margin-top:0in" type="1" start="1">
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l1 level1 lfo2">Gone through
-            everything obviously ‘ldap’ in the mailing lists: 
-            <a href="https://lists.ozlabs.org/pipermail/openbmc/"
-              moz-do-not-send="true">https://lists.ozlabs.org/pipermail/openbmc/</a><o:p></o:p></li>
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l1 level1 lfo2">Looked at
-            OpenBMC learning series: 
-            <a
-              href="https://github.com/openbmc/openbmc/wiki/Presentations"
-              moz-do-not-send="true">https://github.com/openbmc/openbmc/wiki/Presentations</a><o:p></o:p></li>
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l1 level1 lfo2">Gone through
-            the documents here: 
-            <a
-href="https://github.com/openbmc/docs/blob/master/architecture/user-management.md"
-              moz-do-not-send="true">
-https://github.com/openbmc/docs/blob/master/architecture/user-management.md</a><o:p></o:p></li>
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l1 level1 lfo2">Looked at
-            ldap tests and server: 
-            <a href="https://github.com/openbmc/openbmc-test-automation"
-              moz-do-not-send="true">https://github.com/openbmc/openbmc-test-automation</a><o:p></o:p></li>
-          <li class="MsoListParagraph"
-            style="margin-left:0in;mso-list:l1 level1 lfo2">Spent more
-            time tweaking Linux files and creating ldap server configs
-            that I care to admit
-            <span style="font-family:&quot;Segoe UI
-              Emoji&quot;,sans-serif">😊</span><o:p></o:p></li>
-        </ol>
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <p class="MsoNormal">BIG thanks in advance!<o:p></o:p></p>
-        <p class="MsoNormal"><o:p> </o:p></p>
-        <p class="MsoNormal">Best,<o:p></o:p></p>
-        <p class="MsoNormal">Donnie<o:p></o:p></p>
-        <p class="MsoNormal"><o:p> </o:p></p>
-      </div>
-    </blockquote>
-  </body>
-</html>
-
---------------E165A6D163DA1FD59A6ADCED--
