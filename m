@@ -2,123 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98B61264709
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 15:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 41FBB264783
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 15:54:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BnKbV3dSPzDqgM
-	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 23:33:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BnL3t0NdlzDqYp
+	for <lists+openbmc@lfdr.de>; Thu, 10 Sep 2020 23:54:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::241;
- helo=mail-oi1-x241.google.com; envelope-from=groeck7@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=jQ+sIiio; dkim-atps=neutral
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com
- [IPv6:2607:f8b0:4864:20::241])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BnKYt5fVzzDq9Z
- for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 23:32:17 +1000 (AEST)
-Received: by mail-oi1-x241.google.com with SMTP id y6so5904058oie.5
- for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 06:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:subject:to:cc:references:from:autocrypt:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=LGZhpI1u0iTKM9cmTm80fwqZ2nxu550/OcLkA47cd4c=;
- b=jQ+sIiio9/mNvQNxXrAHxqGLToGgxJ0q59MH0rt8EQ+5rDdl9QDgaqyjOS0UemAOOv
- quejELK95RU6jXlfTuEJvg/thwd1tnSrgvYqP/Zv7HZUVLgHhNu/UnIVimHKgVb/Toy/
- ARLDq3GzpX+W/YxKmn2gTotCtahRhLt+oJsTtuAJuc98BrV30wadsVjMNJlheJdapiIj
- 5QiiE+TjsBVxnSWkccDA8jSGX1c8DSB08MNCz+1oEF/jwABMV/JYYnXkuPqAa+Go4Fka
- MISoonTWHavnjh6ckKh8mH3o0c3ixSAApXJA2C/ghuwXoHl9jOI8KSmf0aUR0X/TNulx
- dJxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:subject:to:cc:references:from:autocrypt
- :message-id:date:user-agent:mime-version:in-reply-to
- :content-language:content-transfer-encoding;
- bh=LGZhpI1u0iTKM9cmTm80fwqZ2nxu550/OcLkA47cd4c=;
- b=qw+e44G7BpOKH7SKkCFACf6x2rTzu2d6szA4+Ep6R9TJ2/UeiENEJM26ZnAi/lUd4G
- 23F76uuqdR54OoskaqBP3BSjNv1vy0CdM1hQ+7RZUB/sF2mgErXr0X9CZgsRMupsZIez
- RcK6rnx/3CKh+r+Y/zICgV+S87/SgUwmbZNrAFXFNwmzSnz3aPdeUN8rDHjbNJFB6amF
- DLU1vlwQwaWt0OlYdW1Q4HfU997eVDhmUC++COBGlUyAQZUwCBX3M/rWIo3e+xvmQX6g
- +TE/Zyq54BBVaBm/LBQPTQy3uacfJ3qjowReDxmpsspp5My4hLvrWHCUZQKMlMJJz7As
- AKAw==
-X-Gm-Message-State: AOAM532AJfYNNAiGgWNfPQeEZi4dbRLG5K2LX9liDvQdeFvLH+utfjmX
- 0wTSHEGpQRF/977dOYDFRlM=
-X-Google-Smtp-Source: ABdhPJzVYL2nk8PW9W25kgnQjs//6rdhzV9Y58aVZw9/t8k4GUJWBC+sUXo+/dSXbufiq5FXZ3gZdQ==
-X-Received: by 2002:a05:6808:2c5:: with SMTP id a5mr48077oid.123.1599744732547; 
- Thu, 10 Sep 2020 06:32:12 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
- by smtp.gmail.com with ESMTPSA id
- n10sm925780ooj.19.2020.09.10.06.32.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 10 Sep 2020 06:32:11 -0700 (PDT)
-Subject: Re: [PATCH] hwmon: (pmbus) Expose PEC debugfs attribute
-To: Andrew Jeffery <andrew@aj.id.au>, Dan Carpenter
- <dan.carpenter@oracle.com>, kbuild@lists.01.org, linux-hwmon@vger.kernel.org
-References: <20200910100516.GE12635@kadam>
- <92b193b6-7912-1823-ca38-58cf208e68c4@roeck-us.net>
- <1e1dbb10-1628-4498-9ce2-8c4ce79162c8@www.fastmail.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-Message-ID: <5f1dc45b-433c-4f07-b1cb-1afff985e852@roeck-us.net>
-Date: Thu, 10 Sep 2020 06:32:10 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BnL275bZbzDqXZ
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Sep 2020 23:53:18 +1000 (AEST)
+IronPort-SDR: Fxy4AhZ2wxueZXscypZtoRJ0vnq838g4OfrvYMGgaevCGvWgOxS0nZ8+rsVe8BCnwNotiYVMKC
+ u0Pm49dpLMdQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9739"; a="159483260"
+X-IronPort-AV: E=Sophos;i="5.76,413,1592895600"; 
+ d="scan'208,217";a="159483260"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Sep 2020 06:53:15 -0700
+IronPort-SDR: 046fXh6+MWTaYRp6tOPNsbVBsbw3bvx59F7AFw96IoHGBONp8n07AZB8IGHg9/F2LvXbHW/5wP
+ xkaalU7+rFAA==
+X-IronPort-AV: E=Sophos;i="5.76,413,1592895600"; 
+ d="scan'208,217";a="480897254"
+Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.252.157.229])
+ ([10.252.157.229])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Sep 2020 06:53:11 -0700
+Subject: Re: OpenBMC LDAP server configuration assistance
+To: "Gerhart, Donnie" <Donnie.Gerhart@dell.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ ratagupt@linux.vnet.ibm.com, gkeishin@in.ibm.com
+References: <BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <6b1406cd-1d70-7f62-6e2d-c33d80d02f1c@linux.intel.com>
+Date: Thu, 10 Sep 2020 19:23:07 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-In-Reply-To: <1e1dbb10-1628-4498-9ce2-8c4ce79162c8@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com>
+Content-Type: multipart/alternative;
+ boundary="------------E165A6D163DA1FD59A6ADCED"
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,77 +64,399 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Jean Delvare <jdelvare@suse.com>,
- kbuild-all@lists.01.org, kbuild test robot <lkp@intel.com>,
- linux-kernel@vger.kernel.org
+Cc: "Mugunda, Chandra" <Chandra.Mugunda@dell.com>, "Giles,
+ Joshua" <Joshua.Giles@dell.com>, "Cockrell, Trevor" <Trevor.Cockrell@dell.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/10/20 3:51 AM, Andrew Jeffery wrote:
-> 
-> 
-> On Thu, 10 Sep 2020, at 20:04, Guenter Roeck wrote:
->> On 9/10/20 3:05 AM, Dan Carpenter wrote:
->>> Hi Andrew,
->>>
->>> url:    https://github.com/0day-ci/linux/commits/Andrew-Jeffery/hwmon-pmbus-Expose-PEC-debugfs-attribute/20200910-010642
->>> base:   https://git.kernel.org/pub/scm/linux/kernel/git/groeck/linux-staging.git hwmon-next
->>> config: x86_64-randconfig-m001-20200909 (attached as .config)
->>> compiler: gcc-9 (Debian 9.3.0-15) 9.3.0
->>>
->>> If you fix the issue, kindly add following tag as appropriate
->>> Reported-by: kernel test robot <lkp@intel.com>
->>> Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
->>>
->>> smatch warnings:
->>> drivers/hwmon/pmbus/pmbus_core.c:2415 pmbus_debugfs_ops_pec_open() warn: '0x' prefix is confusing together with '%1llu' specifier
->>>
->>> # https://github.com/0day-ci/linux/commit/705b8b5588d4102256d0954086ed16c9bdf9804f
->>> git remote add linux-review https://github.com/0day-ci/linux
->>> git fetch --no-tags linux-review Andrew-Jeffery/hwmon-pmbus-Expose-PEC-debugfs-attribute/20200910-010642
->>> git checkout 705b8b5588d4102256d0954086ed16c9bdf9804f
->>> vim +2415 drivers/hwmon/pmbus/pmbus_core.c
->>>
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2391  static int pmbus_debugfs_set_pec(void *data, u64 val)
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2392  {
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2393  	int rc;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2394  	struct i2c_client *client = data;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2395  
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2396  	if (!val) {
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2397  		client->flags &= ~I2C_CLIENT_PEC;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2398  		return 0;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2399  	}
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2400  
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2401  	if (val != 1)
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2402  		return -EINVAL;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2403  
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2404  	rc = i2c_smbus_read_byte_data(client, PMBUS_CAPABILITY);
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2405  	if (rc < 0)
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2406  		return rc;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2407  
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2408  	if (!(rc & PB_CAPABILITY_ERROR_CHECK))
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2409  		return -ENOTSUPP;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2410  
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2411  	client->flags |= I2C_CLIENT_PEC;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2412  
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2413  	return 0;
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2414  }
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09 @2415  DEFINE_DEBUGFS_ATTRIBUTE(pmbus_debugfs_ops_pec, pmbus_debugfs_get_pec,
->>> 705b8b5588d410 Andrew Jeffery 2020-09-09  2416  			 pmbus_debugfs_set_pec, "0x%1llu\n");
->>>                                                                                                  ^^^^^^^
->>> Was the 1 intentional?  Anyway, you probably want to remove the 0x so
->>> it doesn't look like hex.
->>>
->>
->> Nice catch; I didn't notice the 1. It is still there in v2, but it does 
->> seem quite useless.
-> 
-> Do you want to just rebase it out, or would you like me to send
-> a patch removing the stray 1 from v2?
-> 
+This is a multi-part message in MIME format.
+--------------E165A6D163DA1FD59A6ADCED
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I'll rebase it.
+Hi Donnie,
 
-Thanks,
-Guenter
+Didn't tested it in latest tree, but you already cross verified this 
+right --> 
+https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot
 
+++ Ratan & George.
+
+Regards,
+
+Richard
+
+On 9/9/2020 10:02 PM, Gerhart, Donnie wrote:
+>
+> Hello OpenBMC Community\SMEs,
+>
+> We are investigating LDAP functionality on the 2.8 ‘top of tree’ 
+> build; however, we are having some issues I believe you can help with 
+> straight away.  Some of the many real failures we’ve encountered are:
+>
+>   * Bricked system due to locking out all users
+>
+<Richard> You meant to say even `root` user is locked out is OpenBMC 
+repo master or made more changes. By default user lock out is disabled, 
+and still won't lock root user to avoid DOS attack.
+>
+>   * Ladap_result() failed:  Can’t contact LDAP server
+>       o Believe we’ve fixed this one
+>
+<Richard> Hope this as LDAP configuration issue you faced, and not 
+related to OpenBMC code as such.
+>
+>   * Logins are restricted to the group priv-admin of but user
+>     ‘testuser’ is not a member
+>
+<Richard>: Is this failure due to SSH login. Because SSH won't make use 
+of ldap privilege mapping. You may need to change 
+https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default 
+if needs LDAP testing in SSH.
+
+Have you tried bmcweb LDAP login ? Whether you are able to succeed in that ?
+
+>   * Pam_authenticate() failed, rc=7, Authentication failure
+>   * Bad PAM password attempt for ‘testuser’ from: <LDAP server IP>
+>
+> Some of these issues we’ve worked through; however, some are still 
+> dogging us.  To that end, can someone possibly list\post a basic LDAP 
+> server LDIF file with a single user, privilege role and group mapping 
+> that you’ve successfully used with OpenBMC?  We assume we are stuck on 
+> some trivial LDAP server topology anomaly that is completely escaping 
+> us at the moment.
+>
+> As an fyi we have looked at:
+>
+>  1. Gone through everything obviously ‘ldap’ in the mailing lists:
+>     https://lists.ozlabs.org/pipermail/openbmc/
+>  2. Looked at OpenBMC learning series:
+>     https://github.com/openbmc/openbmc/wiki/Presentations
+>  3. Gone through the documents here:
+>     https://github.com/openbmc/docs/blob/master/architecture/user-management.md
+>  4. Looked at ldap tests and server:
+>     https://github.com/openbmc/openbmc-test-automation
+>  5. Spent more time tweaking Linux files and creating ldap server
+>     configs that I care to admit 😊
+>
+> BIG thanks in advance!
+>
+> Best,
+>
+> Donnie
+>
+
+--------------E165A6D163DA1FD59A6ADCED
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    Hi Donnie, <br>
+    <p>Didn't tested it in latest tree, but you already cross verified
+      this right --&gt;
+<a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot">https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot</a></p>
+    <p>++ Ratan &amp; George.</p>
+    <p>Regards,</p>
+    <p>Richard<br>
+    </p>
+    <div class="moz-cite-prefix">On 9/9/2020 10:02 PM, Gerhart, Donnie
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:80760137;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1014133672 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:780489114;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1797343294 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p class="MsoNormal">Hello OpenBMC Community\SMEs,<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">We are investigating LDAP functionality on
+          the 2.8 ‘top of tree’ build; however, we are having some
+          issues I believe you can help with straight away.  Some of the
+          many real failures we’ve encountered are:<o:p></o:p></p>
+        <ul style="margin-top:0in" type="disc">
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l0 level1 lfo1">Bricked
+            system due to locking out all users</li>
+        </ul>
+      </div>
+    </blockquote>
+    &lt;Richard&gt; You meant to say even `root` user is locked out is
+    OpenBMC repo master or made more changes. By default user lock out
+    is disabled, and still won't lock root user to avoid DOS attack.
+    <blockquote type="cite"
+cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
+      <div class="WordSection1">
+        <ul style="margin-top:0in" type="disc">
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l0 level1 lfo1">Ladap_result()
+            failed:  Can’t contact LDAP server<o:p></o:p></li>
+          <ul style="margin-top:0in" type="circle">
+            <li class="MsoListParagraph"
+              style="margin-left:0in;mso-list:l0 level2 lfo1">Believe
+              we’ve fixed this one</li>
+          </ul>
+        </ul>
+      </div>
+    </blockquote>
+    &lt;Richard&gt; Hope this as LDAP configuration issue you faced, and
+    not related to OpenBMC code as such.<br>
+    <blockquote type="cite"
+cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
+      <div class="WordSection1">
+        <ul style="margin-top:0in" type="disc">
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l0 level1 lfo1">Logins are
+            restricted to the group priv-admin of but user ‘testuser’ is
+            not a member</li>
+        </ul>
+      </div>
+    </blockquote>
+    <p>&lt;Richard&gt;: Is this failure due to SSH login. Because SSH
+      won't make use of ldap privilege mapping. You may need to change
+<a class="moz-txt-link-freetext" href="https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default">https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default</a>
+      if needs LDAP testing in SSH.</p>
+    <p>Have you tried bmcweb LDAP login ? Whether you are able to
+      succeed in that ?<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com">
+      <div class="WordSection1">
+        <ul style="margin-top:0in" type="disc">
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l0 level1 lfo1">Pam_authenticate()
+            failed, rc=7, Authentication failure<o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l0 level1 lfo1">Bad PAM
+            password attempt for ‘testuser’ from: &lt;LDAP server IP&gt;<o:p></o:p></li>
+        </ul>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Some of these issues we’ve worked through;
+          however, some are still dogging us.  To that end, can someone
+          possibly list\post a basic LDAP server LDIF file with a single
+          user, privilege role and group mapping that you’ve
+          successfully used with OpenBMC?  We assume we are stuck on
+          some trivial LDAP server topology anomaly that is completely
+          escaping us at the moment.<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">As an fyi we have looked at:<o:p></o:p></p>
+        <ol style="margin-top:0in" type="1" start="1">
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo2">Gone through
+            everything obviously ‘ldap’ in the mailing lists: 
+            <a href="https://lists.ozlabs.org/pipermail/openbmc/"
+              moz-do-not-send="true">https://lists.ozlabs.org/pipermail/openbmc/</a><o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo2">Looked at
+            OpenBMC learning series: 
+            <a
+              href="https://github.com/openbmc/openbmc/wiki/Presentations"
+              moz-do-not-send="true">https://github.com/openbmc/openbmc/wiki/Presentations</a><o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo2">Gone through
+            the documents here: 
+            <a
+href="https://github.com/openbmc/docs/blob/master/architecture/user-management.md"
+              moz-do-not-send="true">
+https://github.com/openbmc/docs/blob/master/architecture/user-management.md</a><o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo2">Looked at
+            ldap tests and server: 
+            <a href="https://github.com/openbmc/openbmc-test-automation"
+              moz-do-not-send="true">https://github.com/openbmc/openbmc-test-automation</a><o:p></o:p></li>
+          <li class="MsoListParagraph"
+            style="margin-left:0in;mso-list:l1 level1 lfo2">Spent more
+            time tweaking Linux files and creating ldap server configs
+            that I care to admit
+            <span style="font-family:&quot;Segoe UI
+              Emoji&quot;,sans-serif">😊</span><o:p></o:p></li>
+        </ol>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">BIG thanks in advance!<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Best,<o:p></o:p></p>
+        <p class="MsoNormal">Donnie<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------E165A6D163DA1FD59A6ADCED--
