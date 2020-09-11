@@ -2,95 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 574EC2669EC
-	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 23:13:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 452BD266A34
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 23:43:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bp7l03MgzzDqwb
-	for <lists+openbmc@lfdr.de>; Sat, 12 Sep 2020 07:13:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bp8Pl3NctzDqtl
+	for <lists+openbmc@lfdr.de>; Sat, 12 Sep 2020 07:43:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com; envelope-from=neil_bradley@phoenix.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=qOlM9YjH; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=GAcVXGqf; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=Rv0vrzsF; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bp7hP1jjkzDqfy
- for <openbmc@lists.ozlabs.org>; Sat, 12 Sep 2020 07:10:44 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 08BL4hq4157539; Fri, 11 Sep 2020 17:10:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=odSxFBOrkDIom1+7hcGak7BSPqGQ/h7pqHJLfHUL8Xc=;
- b=qOlM9YjHkPTIaxRlXa+07RCNraGaPWb7xeKZocajjABM8xLl1iHIMWPEfE3KSVoYGxla
- 4g2OocaS7NNOTnJVPIeWxHzaqQe8f0Jnu4i2SsKnckP/6VIZPATwRBEGJBOUQStQXDAE
- qlRzrjmNh8qzL0l7dCQrViE/f0U5H0GGeXEgYfcKvmndjyKrbctAYo57ml1CYd/Ff1Dl
- pdMr0ftvJl6fnZ9dppJhXSjbP3V6ffdB9wHxw4IUfLf2PQTXuzLL6B1/iyHcBtKy26xK
- yeQbGmSpgb5NeM5wi+SWn8Y+gO/y5ZymwGDzzaEOhzwsrLIO8hJxs/LzVcA0OGoumV75 FA== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 33ggm98eps-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Sep 2020 17:10:40 -0400
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08BL8NwL021894;
- Fri, 11 Sep 2020 21:10:39 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma03dal.us.ibm.com with ESMTP id 33c2a9yc9b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 11 Sep 2020 21:10:39 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 08BLAZ4G27329276
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 11 Sep 2020 21:10:35 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69C8C136051;
- Fri, 11 Sep 2020 21:10:38 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B337413604F;
- Fri, 11 Sep 2020 21:10:37 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.80.216.162])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Fri, 11 Sep 2020 21:10:37 +0000 (GMT)
-Subject: Re: bmcweb 30 second lockout
-To: Neil Bradley <Neil_Bradley@phoenix.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bp8Nm4mZ6zDqfC
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Sep 2020 07:42:14 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1599860528;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zXzTlnb9YasUiABLowvjnuiWiRtZ/bHv5xDKrj+mKNE=;
+ b=GAcVXGqfEwOJNt2JR3tsZ3IaaU0asPiHmQwxqv90vzinmvrsgI8iLmPxl3IELKe56/DJ7D
+ wID26B4jPz8f90mjG8Z0oUW08qaDNh0EOkC3QR5GQYtnUNisEWjFEtiHXTrSiIHI2L9NUu
+ m1of8HNV9y8EJzFoc5P16YqCyPtaVjg=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1599860529;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zXzTlnb9YasUiABLowvjnuiWiRtZ/bHv5xDKrj+mKNE=;
+ b=Rv0vrzsFvvy7bxQ9YmRULpy10QFhWJg9DZ4g6FRsqfFO4O1bgwnVvaZQglbQAgjhk0GpuY
+ ZGd0XsfZzs5q9oi6rJ8fPSv0fEyrbwjMlkH+cnAJPcrcGc6SzcVv3nGcWT5wtPS/nEHgtd
+ ubI8uBavh2YuJGzaKsT1eKs+y81SapU=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-142-H3XaY6UdOOmNFiSU-3kbsg-1; Fri, 11 Sep 2020 17:42:06 -0400
+X-MC-Unique: H3XaY6UdOOmNFiSU-3kbsg-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Fri, 11 Sep 2020 14:42:05 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Fri, 11 Sep 2020 14:42:05 -0700
+From: Neil Bradley <Neil_Bradley@phoenix.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: RE: bmcweb 30 second lockout
+Thread-Topic: bmcweb 30 second lockout
+Thread-Index: AdaG9iozMxnfwn4/QwqseainYVjCAAARGHAAAA6OQQAAUXliAAAOAMVw
+Date: Fri, 11 Sep 2020 21:42:03 +0000
+Message-ID: <a9d812ca6d134e568a278db9693f1e66@SCL-EXCHMB-13.phoenix.com>
 References: <1f5b34f7029a48f39a5dfdbf9aad9e93@SCL-EXCHMB-13.phoenix.com>
  <063c4d06-8e54-4682-8d41-573ce08839b5@linux.ibm.com>
  <bd56cc8d9bdc4bdea49046d9444e2a9f@SCL-EXCHMB-13.phoenix.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <39b0c34a-d780-d4c8-ae23-b536d999df58@linux.ibm.com>
-Date: Fri, 11 Sep 2020 16:10:36 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.10.0
+ <39b0c34a-d780-d4c8-ae23-b536d999df58@linux.ibm.com>
+In-Reply-To: <39b0c34a-d780-d4c8-ae23-b536d999df58@linux.ibm.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [50.43.115.202]
 MIME-Version: 1.0
-In-Reply-To: <bd56cc8d9bdc4bdea49046d9444e2a9f@SCL-EXCHMB-13.phoenix.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=neil_bradley@phoenix.com
+X-Mimecast-Spam-Score: 0.003
+X-Mimecast-Originator: phoenix.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-11_12:2020-09-10,
- 2020-09-11 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- malwarescore=0 priorityscore=1501 suspectscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2009110172
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,99 +98,125 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/9/20 6:26 PM, Neil Bradley wrote:
-> Thanks Joseph! I'll look at this in more detail in a bit but I noticed your comments here:
->
-> " This issue is to add capability for "authentication rate limiting" for BMCWeb (login and Basic Auth), SSH login, and ideally for IPMI authentication. This capability is to be independent from account lockouts, specifically so someone could use the auth rate limiting as an effective defense and not need to lock accounts."
->
-> This is precisely what I was getting at. I'm not a fan of lockouts generally because they can be abused (depending upon implementation of course), and adding in auth rate limiting (just delaying a few seconds when credentials are wrong) winds up making brute force attacks ineffective.
-
-Thanks Neil.  Its you and me against the world.
-
-Let's be clear about the problem we want to solve: stop brute force 
-password-guessing attacks but not deny service to legitimate users. Is 
-that also your problem?  That is a difficult problem, and I think 
-solving it will require defenses in multiple layers.
-
-I believe the most promising solution is limiting the number of 
-authentication attempts after too many failures (item 1 in the email 
-below).  I think a PAM authentication module like pam_abl could be a 
-solution here.  Would that work for you?  But I want to go a step 
-farther and actually notify the person logging in when their attempt was 
-rejected because authentication rate-limiting is in effect. Right now 
-they get an "authentication failure" message which leads them to believe 
-their password was wrong, or their account is missing, and that confuses 
-them.  My issues with linux-pam and pam_abl are to help provide clarity 
-to the user what happeded to their login attempt.  Is this what you want?
-
-The approach you mentioned ("delay a few seconds when credentials are 
-wrong") defends against a single-threaded attacker (or a misbehaving 
-tool), but it breaks down in (at least) two ways:
-- When the attacker establishes multiple connections to the BMC.  A 
-defense against this might be limiting the number of connections.
-- When the attacker has a long time to attack, for example, a year or 
-more.  A defense might be password expiration.
-
-Which of these were you thinking?  I would be happy to make progress on 
-any of them.
-
-- Joseph
-
-> -->Neil
->
->
-> -----Original Message-----
-> From: Joseph Reynolds <jrey@linux.ibm.com>
-> Sent: Wednesday, September 9, 2020 4:21 PM
-> To: Neil Bradley <Neil_Bradley@phoenix.com>; OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> Subject: Re: bmcweb 30 second lockout
->
-> On 9/9/20 5:13 PM, Neil Bradley wrote:
->> I had recently read somewhere on the OpenBMC mailing list (forgive me,
->> as I can't find it anywhere now) recently indicating that there'd be a
->> 30 second lockout for a given user if there were 3 consecutive failed
->> login attempts. My question is firstly, is this the case, and
->> secondly, is it tied to the user globally regardless of connection or
->> is it per user and connection? The reason I ask is that the former
->> would still allow for a denial of service attack and want to make sure
->> that's not actually the case.
->>
-> I can think of two items:
->
-> 1. I had pushed an experimental gerrit code review to do what you described.
-> Here: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/31841
-> My idea has not gained much traction and is recorded here:
-> https://github.com/ibm-openbmc/dev/issues/2434
-> and here: https://github.com/linux-pam/linux-pam/issues/216
-> and here: https://github.com/deksai/pam_abl/issues/4
-> and other places.
-> If this ever gets merged, it would NOT the be default behavior.
->
-> 2. The user lockouts for failed authentication attempts is handled by
-> pam_tally2 and controlled by Redfish APIs.
-> See
-> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-extended/pam/libpam/pam.d/common-auth
-> In pam.d/common-auth, the default pam_tally2 deny=0 means "accounts are
-> never locked because of failed authentication attempts".
->
-> The Redfish APIs are implemented here:
-> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/account_service.hpp
-> Specifically, PATCHing /redfish/v1/AccountService/ property
-> AccountLockoutDurationor AccountLockoutThreshold invokes a D-Bus method
-> which ultimately modifies the pam.d/common-auth config file above.
->
-> Note that downstream projects may typically want to modify these default
-> settings.
->
-> 3. I don't think you mean this: There is a current code review for a
-> BMCWeb enhancement to allow the BMC admin to control the idle session
-> SessionTimeout property.  The minimum is 30 seconds. See
-> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/36016
->
-> - Joseph
->
->> Thanks!
->>
->> àNeil
->>
+SGkgSm9zZXBoIQ0KDQpDb3JyZWN0OiBUaGUgcHJvYmxlbSB3ZSB3aXNoIHRvIHNvbHZlIGlzIHRv
+IHN0b3Agb3IgbWFrZSBicnV0ZSBmb3JjZSBwYXNzd29yZCBhdHRhY2tzIGxvZ2lzdGljYWxseSBp
+bXBvc3NpYmxlL3VzZWxlc3MsIGJ1dCBzdGlsbCBhbGxvdyBjcmVkZW50aWFsZWQgaW5kaXZpZHVh
+bHMgaW4uIA0KDQpJIGRvbid0IGhhdmUgYW55IHBhcnRpY3VsYXIgb2JqZWN0aW9uIHRvIGEgc2hv
+cnQgbG9ja291dCBwZXJpb2QsIHByb3ZpZGVkIHRoYXQgbG9ja291dCBwZXJpb2QgaXMgYm91bmQg
+dG8gYm90aCB0aGUgdXNlciBhbmQgdGhlIGFjdHVhbCBUQ1AgY29ubmVjdGlvbiAoYXNzdW1pbmcg
+YSBUQ1AgbGluayBpcyBtYWludGFpbmVkIGR1cmluZyB0aGUgbG9naW4gcHJvY2Vzcykgb3IgcGVy
+aGFwcyB0aGUgc291cmNlIElQIGFkZHJlc3MuIA0KDQpJIHN0aWxsIHRoaW5rIGEgc2ltcGxlIDIt
+NCBzZWNvbmQgZGVsYXkgKHdpdGhvdXQgdGhlIDMwIHNlY29uZCBkZWxheSkgaXMgbW9yZSB0aGFu
+IHN1ZmZpY2llbnQuIEZvciBleGFtcGxlLCBsZXQncyBzYXkgdGhlcmUncyA5NiBwb3NzaWJsZSBj
+aGFyYWN0ZXJzIGFuZCBhbiA4IGNoYXJhY3RlciBwYXNzd29yZC4gVGhhdCdzIDcsMjEzLDg5NSw3
+ODksODM4LDMzNiBwb3NzaWJpbGl0aWVzLiBMZXQncyBhbHNvIHNheSB0aGVyZSBhcmUgODAwMCBp
+bmNvbWluZyBUQ1AgY29ubmVjdGlvbnMgdG8gdGhlIHdlYiBzZXJ2ZXIgLSBJIGtub3csIGl0J3Mg
+a2luZCBvZiBhYnN1cmQsIGJ1dCBsZXQncyBhc3N1bWUgYSBtYXNzaXZlbHkgY29vcmRpbmF0ZWQg
+YXR0YWNrLiAvODAwMD05MDEsNzM2LDk3Myw3MjkuIE11bHRpcGx5IHRoYXQgYnkgMiBzZWNvbmRz
+LCBhbmQgeW91IGdldCByb3VnaGx5IDU3LDE4NyB5ZWFycyB0byBleGhhdXN0IGFsbCBwb3NzaWJp
+bGl0aWVzLiBHcmFudGVkLCBpdCdzIGxpa2VseSB0aGUgcGFzc3dvcmQgd291bGQgYmUgZm91bmQg
+aW4gYSBxdWFydGVyIG9mIHRoYXQgdGltZSwgYnV0IHRoYXQncyBzdGlsbCAxNCwyOTYgeWVhcnMu
+IFRoZSBwcm9ibGVtIGdldHMgbG90cyB3b3JzZSBxdWlja2x5IHdoZW4gdGhlIHBhc3N3b3JkIGlz
+IGxvbmdlci4gRXZlbiBhIDQgY2hhcmFjdGVyIHBhc3N3b3JkIGlzIDg0LDkzNCw2NTYgcG9zc2li
+aWxpdGllcyBhbmQgODAwMCBpbmNvbWluZyBjb25uZWN0aW9ucyBpdCdkIHN0aWxsIHRha2UgNS44
+IGhvdXJzIHRvIGV4aGF1c3QgZXZlcnl0aGluZywgYW5kIGJ5IHRoZW4gdGhlIHN5c3RlbSB3b3Vs
+ZCBoYXZlIGxvdHMgb2Ygb3RoZXIgcHJvYmxlbXMgd2l0aCB0aGF0IG1hbnkgYXR0ZW1wdHMuIFRo
+b3VnaCBpdCBhbHNvIGNvdWxkIGJlIHN1Y2Nlc3NmdWxseSBhcmd1ZWQgdGhhdCBhbnlvbmUgdXNp
+bmcgYSA0IGNoYXJhY3RlciBwYXNzd29yZCBpcyBhc2tpbmcgZm9yIGl0LiDwn5iJDQoNClVubGVz
+cyBJJ20gY29tcGxldGVseSBtaXNzaW5nIHNvbWV0aGluZywgSSBkb24ndCBzZWUgdGhhdCBhIGxv
+bmdlciBsb2Nrb3V0IHBlcmlvZCBpcyBuZWNlc3Nhcnkgb3IgYXQgYWxsLiBJIGRvIHVuZGVyc3Rh
+bmQgdGhlIGNvbmZ1c2lvbiBvZiBhIHVzZXIgd2hvIGRvZXNuJ3Qga25vdyBpZiB0aGV5J3JlIGJl
+aW5nIGxvY2tlZCBvdXQgYmVjYXVzZSB0aGVpciBwYXNzd29yZCAsIGhvd2V2ZXIsIGJ1dCB3aXRo
+b3V0IGEgbG9ja291dCBwZXJpb2QsIHRoYXQgcHJvYmxlbSBnb2VzIGF3YXkuDQoNCkxldCBtZSBr
+bm93IHdoYXQgeW91IHRoaW5rLg0KDQotLT5OZWlsDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0t
+LS0tDQpGcm9tOiBKb3NlcGggUmV5bm9sZHMgPGpyZXlAbGludXguaWJtLmNvbT4gDQpTZW50OiBG
+cmlkYXksIFNlcHRlbWJlciAxMSwgMjAyMCAyOjExIFBNDQpUbzogTmVpbCBCcmFkbGV5IDxOZWls
+X0JyYWRsZXlAcGhvZW5peC5jb20+OyBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96
+bGFicy5vcmc+DQpTdWJqZWN0OiBSZTogYm1jd2ViIDMwIHNlY29uZCBsb2Nrb3V0DQoNCk9uIDkv
+OS8yMCA2OjI2IFBNLCBOZWlsIEJyYWRsZXkgd3JvdGU6DQo+IFRoYW5rcyBKb3NlcGghIEknbGwg
+bG9vayBhdCB0aGlzIGluIG1vcmUgZGV0YWlsIGluIGEgYml0IGJ1dCBJIG5vdGljZWQgeW91ciBj
+b21tZW50cyBoZXJlOg0KPg0KPiAiIFRoaXMgaXNzdWUgaXMgdG8gYWRkIGNhcGFiaWxpdHkgZm9y
+ICJhdXRoZW50aWNhdGlvbiByYXRlIGxpbWl0aW5nIiBmb3IgQk1DV2ViIChsb2dpbiBhbmQgQmFz
+aWMgQXV0aCksIFNTSCBsb2dpbiwgYW5kIGlkZWFsbHkgZm9yIElQTUkgYXV0aGVudGljYXRpb24u
+IFRoaXMgY2FwYWJpbGl0eSBpcyB0byBiZSBpbmRlcGVuZGVudCBmcm9tIGFjY291bnQgbG9ja291
+dHMsIHNwZWNpZmljYWxseSBzbyBzb21lb25lIGNvdWxkIHVzZSB0aGUgYXV0aCByYXRlIGxpbWl0
+aW5nIGFzIGFuIGVmZmVjdGl2ZSBkZWZlbnNlIGFuZCBub3QgbmVlZCB0byBsb2NrIGFjY291bnRz
+LiINCj4NCj4gVGhpcyBpcyBwcmVjaXNlbHkgd2hhdCBJIHdhcyBnZXR0aW5nIGF0LiBJJ20gbm90
+IGEgZmFuIG9mIGxvY2tvdXRzIGdlbmVyYWxseSBiZWNhdXNlIHRoZXkgY2FuIGJlIGFidXNlZCAo
+ZGVwZW5kaW5nIHVwb24gaW1wbGVtZW50YXRpb24gb2YgY291cnNlKSwgYW5kIGFkZGluZyBpbiBh
+dXRoIHJhdGUgbGltaXRpbmcgKGp1c3QgZGVsYXlpbmcgYSBmZXcgc2Vjb25kcyB3aGVuIGNyZWRl
+bnRpYWxzIGFyZSB3cm9uZykgd2luZHMgdXAgbWFraW5nIGJydXRlIGZvcmNlIGF0dGFja3MgaW5l
+ZmZlY3RpdmUuDQoNClRoYW5rcyBOZWlsLsKgIEl0cyB5b3UgYW5kIG1lIGFnYWluc3QgdGhlIHdv
+cmxkLg0KDQpMZXQncyBiZSBjbGVhciBhYm91dCB0aGUgcHJvYmxlbSB3ZSB3YW50IHRvIHNvbHZl
+OiBzdG9wIGJydXRlIGZvcmNlIHBhc3N3b3JkLWd1ZXNzaW5nIGF0dGFja3MgYnV0IG5vdCBkZW55
+IHNlcnZpY2UgdG8gbGVnaXRpbWF0ZSB1c2Vycy4gSXMgdGhhdCBhbHNvIHlvdXIgcHJvYmxlbT/C
+oCBUaGF0IGlzIGEgZGlmZmljdWx0IHByb2JsZW0sIGFuZCBJIHRoaW5rIHNvbHZpbmcgaXQgd2ls
+bCByZXF1aXJlIGRlZmVuc2VzIGluIG11bHRpcGxlIGxheWVycy4NCg0KSSBiZWxpZXZlIHRoZSBt
+b3N0IHByb21pc2luZyBzb2x1dGlvbiBpcyBsaW1pdGluZyB0aGUgbnVtYmVyIG9mIGF1dGhlbnRp
+Y2F0aW9uIGF0dGVtcHRzIGFmdGVyIHRvbyBtYW55IGZhaWx1cmVzIChpdGVtIDEgaW4gdGhlIGVt
+YWlsIGJlbG93KS7CoCBJIHRoaW5rIGEgUEFNIGF1dGhlbnRpY2F0aW9uIG1vZHVsZSBsaWtlIHBh
+bV9hYmwgY291bGQgYmUgYSBzb2x1dGlvbiBoZXJlLsKgIFdvdWxkIHRoYXQgd29yayBmb3IgeW91
+P8KgIEJ1dCBJIHdhbnQgdG8gZ28gYSBzdGVwIGZhcnRoZXIgYW5kIGFjdHVhbGx5IG5vdGlmeSB0
+aGUgcGVyc29uIGxvZ2dpbmcgaW4gd2hlbiB0aGVpciBhdHRlbXB0IHdhcyByZWplY3RlZCBiZWNh
+dXNlIGF1dGhlbnRpY2F0aW9uIHJhdGUtbGltaXRpbmcgaXMgaW4gZWZmZWN0LiBSaWdodCBub3cg
+dGhleSBnZXQgYW4gImF1dGhlbnRpY2F0aW9uIGZhaWx1cmUiIG1lc3NhZ2Ugd2hpY2ggbGVhZHMg
+dGhlbSB0byBiZWxpZXZlIHRoZWlyIHBhc3N3b3JkIHdhcyB3cm9uZywgb3IgdGhlaXIgYWNjb3Vu
+dCBpcyBtaXNzaW5nLCBhbmQgdGhhdCBjb25mdXNlcyB0aGVtLsKgIE15IGlzc3VlcyB3aXRoIGxp
+bnV4LXBhbSBhbmQgcGFtX2FibCBhcmUgdG8gaGVscCBwcm92aWRlIGNsYXJpdHkgdG8gdGhlIHVz
+ZXIgd2hhdCBoYXBwZWRlZCB0byB0aGVpciBsb2dpbiBhdHRlbXB0LsKgIElzIHRoaXMgd2hhdCB5
+b3Ugd2FudD8NCg0KVGhlIGFwcHJvYWNoIHlvdSBtZW50aW9uZWQgKCJkZWxheSBhIGZldyBzZWNv
+bmRzIHdoZW4gY3JlZGVudGlhbHMgYXJlDQp3cm9uZyIpIGRlZmVuZHMgYWdhaW5zdCBhIHNpbmds
+ZS10aHJlYWRlZCBhdHRhY2tlciAob3IgYSBtaXNiZWhhdmluZyB0b29sKSwgYnV0IGl0IGJyZWFr
+cyBkb3duIGluIChhdCBsZWFzdCkgdHdvIHdheXM6DQotIFdoZW4gdGhlIGF0dGFja2VyIGVzdGFi
+bGlzaGVzIG11bHRpcGxlIGNvbm5lY3Rpb25zIHRvIHRoZSBCTUMuwqAgQSBkZWZlbnNlIGFnYWlu
+c3QgdGhpcyBtaWdodCBiZSBsaW1pdGluZyB0aGUgbnVtYmVyIG9mIGNvbm5lY3Rpb25zLg0KLSBX
+aGVuIHRoZSBhdHRhY2tlciBoYXMgYSBsb25nIHRpbWUgdG8gYXR0YWNrLCBmb3IgZXhhbXBsZSwg
+YSB5ZWFyIG9yIG1vcmUuwqAgQSBkZWZlbnNlIG1pZ2h0IGJlIHBhc3N3b3JkIGV4cGlyYXRpb24u
+DQoNCldoaWNoIG9mIHRoZXNlIHdlcmUgeW91IHRoaW5raW5nP8KgIEkgd291bGQgYmUgaGFwcHkg
+dG8gbWFrZSBwcm9ncmVzcyBvbiBhbnkgb2YgdGhlbS4NCg0KLSBKb3NlcGgNCg0KPiAtLT5OZWls
+DQo+DQo+DQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEpvc2VwaCBSZXlu
+b2xkcyA8anJleUBsaW51eC5pYm0uY29tPg0KPiBTZW50OiBXZWRuZXNkYXksIFNlcHRlbWJlciA5
+LCAyMDIwIDQ6MjEgUE0NCj4gVG86IE5laWwgQnJhZGxleSA8TmVpbF9CcmFkbGV5QHBob2VuaXgu
+Y29tPjsgT3BlbkJNQyBNYWlsbGlzdCANCj4gPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCj4g
+U3ViamVjdDogUmU6IGJtY3dlYiAzMCBzZWNvbmQgbG9ja291dA0KPg0KPiBPbiA5LzkvMjAgNTox
+MyBQTSwgTmVpbCBCcmFkbGV5IHdyb3RlOg0KPj4gSSBoYWQgcmVjZW50bHkgcmVhZCBzb21ld2hl
+cmUgb24gdGhlIE9wZW5CTUMgbWFpbGluZyBsaXN0IChmb3JnaXZlIA0KPj4gbWUsIGFzIEkgY2Fu
+J3QgZmluZCBpdCBhbnl3aGVyZSBub3cpIHJlY2VudGx5IGluZGljYXRpbmcgdGhhdCB0aGVyZSdk
+IA0KPj4gYmUgYQ0KPj4gMzAgc2Vjb25kIGxvY2tvdXQgZm9yIGEgZ2l2ZW4gdXNlciBpZiB0aGVy
+ZSB3ZXJlIDMgY29uc2VjdXRpdmUgZmFpbGVkIA0KPj4gbG9naW4gYXR0ZW1wdHMuIE15IHF1ZXN0
+aW9uIGlzIGZpcnN0bHksIGlzIHRoaXMgdGhlIGNhc2UsIGFuZCANCj4+IHNlY29uZGx5LCBpcyBp
+dCB0aWVkIHRvIHRoZSB1c2VyIGdsb2JhbGx5IHJlZ2FyZGxlc3Mgb2YgY29ubmVjdGlvbiBvciAN
+Cj4+IGlzIGl0IHBlciB1c2VyIGFuZCBjb25uZWN0aW9uPyBUaGUgcmVhc29uIEkgYXNrIGlzIHRo
+YXQgdGhlIGZvcm1lciANCj4+IHdvdWxkIHN0aWxsIGFsbG93IGZvciBhIGRlbmlhbCBvZiBzZXJ2
+aWNlIGF0dGFjayBhbmQgd2FudCB0byBtYWtlIA0KPj4gc3VyZSB0aGF0J3Mgbm90IGFjdHVhbGx5
+IHRoZSBjYXNlLg0KPj4NCj4gSSBjYW4gdGhpbmsgb2YgdHdvIGl0ZW1zOg0KPg0KPiAxLiBJIGhh
+ZCBwdXNoZWQgYW4gZXhwZXJpbWVudGFsIGdlcnJpdCBjb2RlIHJldmlldyB0byBkbyB3aGF0IHlv
+dSBkZXNjcmliZWQuDQo+IEhlcmU6IGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXov
+Yy9vcGVuYm1jL2JtY3dlYi8rLzMxODQxDQo+IE15IGlkZWEgaGFzIG5vdCBnYWluZWQgbXVjaCB0
+cmFjdGlvbiBhbmQgaXMgcmVjb3JkZWQgaGVyZToNCj4gaHR0cHM6Ly9naXRodWIuY29tL2libS1v
+cGVuYm1jL2Rldi9pc3N1ZXMvMjQzNA0KPiBhbmQgaGVyZTogaHR0cHM6Ly9naXRodWIuY29tL2xp
+bnV4LXBhbS9saW51eC1wYW0vaXNzdWVzLzIxNg0KPiBhbmQgaGVyZTogaHR0cHM6Ly9naXRodWIu
+Y29tL2Rla3NhaS9wYW1fYWJsL2lzc3Vlcy80DQo+IGFuZCBvdGhlciBwbGFjZXMuDQo+IElmIHRo
+aXMgZXZlciBnZXRzIG1lcmdlZCwgaXQgd291bGQgTk9UIHRoZSBiZSBkZWZhdWx0IGJlaGF2aW9y
+Lg0KPg0KPiAyLiBUaGUgdXNlciBsb2Nrb3V0cyBmb3IgZmFpbGVkIGF1dGhlbnRpY2F0aW9uIGF0
+dGVtcHRzIGlzIGhhbmRsZWQgYnkNCj4gcGFtX3RhbGx5MiBhbmQgY29udHJvbGxlZCBieSBSZWRm
+aXNoIEFQSXMuDQo+IFNlZQ0KPiBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL2Js
+b2IvbWFzdGVyL21ldGEtcGhvc3Bob3IvcmVjaXBlcy1lDQo+IHh0ZW5kZWQvcGFtL2xpYnBhbS9w
+YW0uZC9jb21tb24tYXV0aA0KPiBJbiBwYW0uZC9jb21tb24tYXV0aCwgdGhlIGRlZmF1bHQgcGFt
+X3RhbGx5MiBkZW55PTAgbWVhbnMgImFjY291bnRzIA0KPiBhcmUgbmV2ZXIgbG9ja2VkIGJlY2F1
+c2Ugb2YgZmFpbGVkIGF1dGhlbnRpY2F0aW9uIGF0dGVtcHRzIi4NCj4NCj4gVGhlIFJlZGZpc2gg
+QVBJcyBhcmUgaW1wbGVtZW50ZWQgaGVyZToNCj4gaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
+Ym1jd2ViL2Jsb2IvbWFzdGVyL3JlZGZpc2gtY29yZS9saWIvYWNjb3VudA0KPiBfc2VydmljZS5o
+cHAgU3BlY2lmaWNhbGx5LCBQQVRDSGluZyAvcmVkZmlzaC92MS9BY2NvdW50U2VydmljZS8gDQo+
+IHByb3BlcnR5IEFjY291bnRMb2Nrb3V0RHVyYXRpb25vciBBY2NvdW50TG9ja291dFRocmVzaG9s
+ZCBpbnZva2VzIGEgDQo+IEQtQnVzIG1ldGhvZCB3aGljaCB1bHRpbWF0ZWx5IG1vZGlmaWVzIHRo
+ZSBwYW0uZC9jb21tb24tYXV0aCBjb25maWcgDQo+IGZpbGUgYWJvdmUuDQo+DQo+IE5vdGUgdGhh
+dCBkb3duc3RyZWFtIHByb2plY3RzIG1heSB0eXBpY2FsbHkgd2FudCB0byBtb2RpZnkgdGhlc2Ug
+DQo+IGRlZmF1bHQgc2V0dGluZ3MuDQo+DQo+IDMuIEkgZG9uJ3QgdGhpbmsgeW91IG1lYW4gdGhp
+czogVGhlcmUgaXMgYSBjdXJyZW50IGNvZGUgcmV2aWV3IGZvciBhIA0KPiBCTUNXZWIgZW5oYW5j
+ZW1lbnQgdG8gYWxsb3cgdGhlIEJNQyBhZG1pbiB0byBjb250cm9sIHRoZSBpZGxlIHNlc3Npb24g
+DQo+IFNlc3Npb25UaW1lb3V0IHByb3BlcnR5LsKgIFRoZSBtaW5pbXVtIGlzIDMwIHNlY29uZHMu
+IFNlZQ0KPiBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9ibWN3
+ZWIvKy8zNjAxNg0KPg0KPiAtIEpvc2VwaA0KPg0KPj4gVGhhbmtzIQ0KPj4NCj4+IMOgTmVpbA0K
+Pj4NCg0K
 
