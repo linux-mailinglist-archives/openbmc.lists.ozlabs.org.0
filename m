@@ -1,65 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFA292669D9
-	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 23:01:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 574EC2669EC
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 23:13:03 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bp7TT3RVfzDqvR
-	for <lists+openbmc@lfdr.de>; Sat, 12 Sep 2020 07:01:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bp7l03MgzzDqwb
+	for <lists+openbmc@lfdr.de>; Sat, 12 Sep 2020 07:13:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2c;
- helo=mail-qv1-xf2c.google.com; envelope-from=vivekgani@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=m0fYFXJo; dkim-atps=neutral
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com
- [IPv6:2607:f8b0:4864:20::f2c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=qOlM9YjH; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bp7SM0ClSzDqvR
- for <openbmc@lists.ozlabs.org>; Sat, 12 Sep 2020 07:00:14 +1000 (AEST)
-Received: by mail-qv1-xf2c.google.com with SMTP id cv8so5889399qvb.12
- for <openbmc@lists.ozlabs.org>; Fri, 11 Sep 2020 14:00:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:reply-to:from:date:message-id:subject:to;
- bh=Hfihzj5siEGAeJTBZqf21dGPMIyzaCZv6JTvPc4DHu8=;
- b=m0fYFXJo6l+rxdpwb/OC9YLFoARlctRhWqkW/gK4xS1Lja80NnXc8m2HCpeuZUn+gQ
- fasDzzVqULXhgVdG5AmdC5XkRG/iw52ZoJB7wyKsgQPf22tYXtlZzsbPr5UEK+hJ5tF3
- sHZace3Fr+9VCh+hF/PNAOj4Pp3Z7ow1Jtl2JVDnos87hSju2MyQe7QaIX+Scoz9QFMy
- ZDHMJudIv9CzrwBaVcAzwg4GIjrR+JpWMEhnMv2ap2LwWvDBP/JyrX1/n2MAjoKWT17P
- Drhgmf9cwVzLuU8pQI/4SfTUPxcgNjf+BUzcgc70stlR8W9o42nSNjOQpSoRfNC6KRAo
- 1zUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:reply-to:from:date:message-id
- :subject:to;
- bh=Hfihzj5siEGAeJTBZqf21dGPMIyzaCZv6JTvPc4DHu8=;
- b=YFWRZNt9khYi/BohnLjH04peT/zkt5PLe+vKVVDoG5ekYobf/2lgxSypG8oEY0WMtJ
- DhHJPZAluX601B49QVDKTTGPHZdvBwB44Mgo+bqEPnA/SYWi4yw6A/gYLn/JFBUxuZl4
- mWKhjltl9PV5tX8/JrT7GfkajXUlniqYa+PljQ/DT+DlsdoxJSTH46jvaqbjhSfztEzf
- RDNU3U3DcH26xVZU0JP9rMlGl6nxVdejlQcS+c9FV33YdxPWmDTUKrZA+a94P4K8sx8N
- 4pqSn1ywsxgOFs+oeTqIyIhTiWvNQdQT5lbg9KwX4RnEmY4sBM89RUVb5mskaGTDRlh9
- 0erA==
-X-Gm-Message-State: AOAM530lBdbEOS7WYU6dKT522bN9HaBua0DRh6qfpN3WXusS2QLkrXBh
- DJgBNB1Jb5LUdzduG0xVe4diHSj9IHCLNBZXiEdOLTf7WVs=
-X-Google-Smtp-Source: ABdhPJxsTBf0xTqOSaYl5u5w7pxWPxr1J5D8eD1OMZHyplGR1Maq4Zp6UCqony23wT8xdUsB+LN+oKrfr/tRfpaYUaY=
-X-Received: by 2002:a0c:fb47:: with SMTP id b7mr3758780qvq.48.1599858011369;
- Fri, 11 Sep 2020 14:00:11 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bp7hP1jjkzDqfy
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Sep 2020 07:10:44 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08BL4hq4157539; Fri, 11 Sep 2020 17:10:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=odSxFBOrkDIom1+7hcGak7BSPqGQ/h7pqHJLfHUL8Xc=;
+ b=qOlM9YjHkPTIaxRlXa+07RCNraGaPWb7xeKZocajjABM8xLl1iHIMWPEfE3KSVoYGxla
+ 4g2OocaS7NNOTnJVPIeWxHzaqQe8f0Jnu4i2SsKnckP/6VIZPATwRBEGJBOUQStQXDAE
+ qlRzrjmNh8qzL0l7dCQrViE/f0U5H0GGeXEgYfcKvmndjyKrbctAYo57ml1CYd/Ff1Dl
+ pdMr0ftvJl6fnZ9dppJhXSjbP3V6ffdB9wHxw4IUfLf2PQTXuzLL6B1/iyHcBtKy26xK
+ yeQbGmSpgb5NeM5wi+SWn8Y+gO/y5ZymwGDzzaEOhzwsrLIO8hJxs/LzVcA0OGoumV75 FA== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33ggm98eps-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Sep 2020 17:10:40 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08BL8NwL021894;
+ Fri, 11 Sep 2020 21:10:39 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com
+ (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+ by ppma03dal.us.ibm.com with ESMTP id 33c2a9yc9b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Sep 2020 21:10:39 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 08BLAZ4G27329276
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Sep 2020 21:10:35 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69C8C136051;
+ Fri, 11 Sep 2020 21:10:38 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B337413604F;
+ Fri, 11 Sep 2020 21:10:37 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.80.216.162])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Fri, 11 Sep 2020 21:10:37 +0000 (GMT)
+Subject: Re: bmcweb 30 second lockout
+To: Neil Bradley <Neil_Bradley@phoenix.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <1f5b34f7029a48f39a5dfdbf9aad9e93@SCL-EXCHMB-13.phoenix.com>
+ <063c4d06-8e54-4682-8d41-573ce08839b5@linux.ibm.com>
+ <bd56cc8d9bdc4bdea49046d9444e2a9f@SCL-EXCHMB-13.phoenix.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <39b0c34a-d780-d4c8-ae23-b536d999df58@linux.ibm.com>
+Date: Fri, 11 Sep 2020 16:10:36 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.10.0
 MIME-Version: 1.0
-From: Vivek Gani <vivekgani@gmail.com>
-Date: Fri, 11 Sep 2020 14:00:00 -0700
-Message-ID: <CAB-qw-hpuKJbuqoafpZpFBCZYdZhKrRHbjeUjgziX2pgxYGBRg@mail.gmail.com>
-Subject: Defining a Power Supply Configuration Format with the PMBus Standards
- Working Group
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000075755f05af0ff85e"
+In-Reply-To: <bd56cc8d9bdc4bdea49046d9444e2a9f@SCL-EXCHMB-13.phoenix.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-11_12:2020-09-10,
+ 2020-09-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ malwarescore=0 priorityscore=1501 suspectscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2009110172
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,133 +102,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: vivek@gani.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000075755f05af0ff85e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 9/9/20 6:26 PM, Neil Bradley wrote:
+> Thanks Joseph! I'll look at this in more detail in a bit but I noticed your comments here:
+>
+> " This issue is to add capability for "authentication rate limiting" for BMCWeb (login and Basic Auth), SSH login, and ideally for IPMI authentication. This capability is to be independent from account lockouts, specifically so someone could use the auth rate limiting as an effective defense and not need to lock accounts."
+>
+> This is precisely what I was getting at. I'm not a fan of lockouts generally because they can be abused (depending upon implementation of course), and adding in auth rate limiting (just delaying a few seconds when credentials are wrong) winds up making brute force attacks ineffective.
 
-Hello,
+Thanks Neil.  Its you and me against the world.
 
-My name is Vivek Gani and I=E2=80=99m representing the Power Management Bus
-(PMBus(r)) Forum (https://PMBus.org), part of the System Management
-Interface Forum (SMIF), Inc (http://smiforum.org/). Our group is composed
-of both power supply vendors and chip/system manufacturers. Together we
-create digital power protocols (PMBus, AVSBus(tm)) supported by a number of
-power supplies on the market.
+Let's be clear about the problem we want to solve: stop brute force 
+password-guessing attacks but not deny service to legitimate users. Is 
+that also your problem?  That is a difficult problem, and I think 
+solving it will require defenses in multiple layers.
 
-Lately we have been discussing how to define a standard file format for
-digital power supplies. Currently each power supply vendor has their own
-format. This causes a burden for the system designer and manufacturer using
-a mixture of power supplies from different vendors. On the power supply
-vendor (and procurement manager) end this has also led to more logistics in
-order to ship power supplies 'preconfigured' when in many cases an
-'off-the-shelf' product could have been used then configured during system
-board manufacture or even in-system.
+I believe the most promising solution is limiting the number of 
+authentication attempts after too many failures (item 1 in the email 
+below).  I think a PAM authentication module like pam_abl could be a 
+solution here.  Would that work for you?  But I want to go a step 
+farther and actually notify the person logging in when their attempt was 
+rejected because authentication rate-limiting is in effect. Right now 
+they get an "authentication failure" message which leads them to believe 
+their password was wrong, or their account is missing, and that confuses 
+them.  My issues with linux-pam and pam_abl are to help provide clarity 
+to the user what happeded to their login attempt.  Is this what you want?
 
-Our focus is currently around power supply configuration and updates over
-PMBus, though we want it to be open-ended to support other usecases too. As
-far as stakeholders, initially this started out within the PMBus Standards
-Working Group where power supply vendors were focused on board bringup
-scenarios but thanks to people like Mike Jones (Analog Devices) and Mariusz
-Oriol (Intel) we=E2=80=99re now realizing such an effort will make more sen=
-se if
-done while keeping in mind the needs of groups like OpenBMC & Redfish.
-Specifically we want to try and create a configuration format and toolchain
-that will find a balance between:
+The approach you mentioned ("delay a few seconds when credentials are 
+wrong") defends against a single-threaded attacker (or a misbehaving 
+tool), but it breaks down in (at least) two ways:
+- When the attacker establishes multiple connections to the BMC.  A 
+defense against this might be limiting the number of connections.
+- When the attacker has a long time to attack, for example, a year or 
+more.  A defense might be password expiration.
 
-- Being human editable.
-In theory files could be generated in syntactically verbose formats like
-XML, but in practice as an applications engineer being able to easily edit
-configuration files by hand has proven very helpful in resolving customer
-issues.
+Which of these were you thinking?  I would be happy to make progress on 
+any of them.
 
-- Protocol generic enough to support minimum data to perform a PMBus
-transaction.
-Specifically, one can use just address, command code, data (in hex/binary),
-and PMBus transaction type data to configure a device. Additional
-specifiers such as numeric format & named bitfields are optional.
+- Joseph
 
-- Facilitates conditional/stateful aspects in the configuration process.
-While in theory things would be purely declarative in practice most power
-supply devices may be in certain states (that change as commands are sent)
-that necessitate management of state, dependencies, and ordering.
+> -->Neil
+>
+>
+> -----Original Message-----
+> From: Joseph Reynolds <jrey@linux.ibm.com>
+> Sent: Wednesday, September 9, 2020 4:21 PM
+> To: Neil Bradley <Neil_Bradley@phoenix.com>; OpenBMC Maillist <openbmc@lists.ozlabs.org>
+> Subject: Re: bmcweb 30 second lockout
+>
+> On 9/9/20 5:13 PM, Neil Bradley wrote:
+>> I had recently read somewhere on the OpenBMC mailing list (forgive me,
+>> as I can't find it anywhere now) recently indicating that there'd be a
+>> 30 second lockout for a given user if there were 3 consecutive failed
+>> login attempts. My question is firstly, is this the case, and
+>> secondly, is it tied to the user globally regardless of connection or
+>> is it per user and connection? The reason I ask is that the former
+>> would still allow for a denial of service attack and want to make sure
+>> that's not actually the case.
+>>
+> I can think of two items:
+>
+> 1. I had pushed an experimental gerrit code review to do what you described.
+> Here: https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/31841
+> My idea has not gained much traction and is recorded here:
+> https://github.com/ibm-openbmc/dev/issues/2434
+> and here: https://github.com/linux-pam/linux-pam/issues/216
+> and here: https://github.com/deksai/pam_abl/issues/4
+> and other places.
+> If this ever gets merged, it would NOT the be default behavior.
+>
+> 2. The user lockouts for failed authentication attempts is handled by
+> pam_tally2 and controlled by Redfish APIs.
+> See
+> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-extended/pam/libpam/pam.d/common-auth
+> In pam.d/common-auth, the default pam_tally2 deny=0 means "accounts are
+> never locked because of failed authentication attempts".
+>
+> The Redfish APIs are implemented here:
+> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/account_service.hpp
+> Specifically, PATCHing /redfish/v1/AccountService/ property
+> AccountLockoutDurationor AccountLockoutThreshold invokes a D-Bus method
+> which ultimately modifies the pam.d/common-auth config file above.
+>
+> Note that downstream projects may typically want to modify these default
+> settings.
+>
+> 3. I don't think you mean this: There is a current code review for a
+> BMCWeb enhancement to allow the BMC admin to control the idle session
+> SessionTimeout property.  The minimum is 30 seconds. See
+> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/36016
+>
+> - Joseph
+>
+>> Thanks!
+>>
+>> àNeil
+>>
 
-- Having a verification mechanism with common format for =E2=80=98proof of =
-content=E2=80=99.
-Format could be something standard like sha1/md5 sum though the
-instructions to perform verification may be vendor-specific. May be limited
-to RAM-only though some vendors may offer non-volatile memory verification
-methods.
-
-Here=E2=80=99s a high-level graphic of what we have in mind:
-https://www.dropbox.com/s/8ey0errn7fe9gc0/2020-09-11%20-%20standard%20confi=
-g%20groups%20and%20collateral.png
-
-We want to first present the idea here and see what the OpenBMC community
-thinks about this effort. Is power supply configuration and updates
-something of interest to this community? Have there been any pain points
-experienced so far from the system engineering side you could see solved
-through collaboration on a common format?
-
-Regards,
-
-Vivek
-
---00000000000075755f05af0ff85e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello,<br><br>My name is Vivek Gani and I=E2=80=99m repres=
-enting the Power Management Bus (PMBus(r)) Forum (<a href=3D"https://PMBus.=
-org">https://PMBus.org</a>), part of the System Management Interface Forum =
-(SMIF), Inc (<a href=3D"http://smiforum.org/">http://smiforum.org/</a>). Ou=
-r group is composed of both power supply vendors and chip/system manufactur=
-ers. Together we create digital power protocols (PMBus, AVSBus(tm)) support=
-ed by a number of power supplies on the market.<br><br>Lately we have been =
-discussing how to define a standard file format for digital power supplies.=
- Currently each power supply vendor has their own format. This causes a bur=
-den for the system designer and manufacturer using a mixture of power suppl=
-ies from different vendors. On the power supply vendor (and procurement man=
-ager) end this has also led to more logistics in order to ship power suppli=
-es &#39;preconfigured&#39; when in many cases an &#39;off-the-shelf&#39; pr=
-oduct could have been used then configured during system board manufacture =
-or even in-system.<br><br>Our focus is currently around power supply config=
-uration and updates over PMBus, though we want it to be open-ended to suppo=
-rt other usecases too. As far as stakeholders, initially this started out w=
-ithin the PMBus Standards Working Group where power supply vendors were foc=
-used on board bringup scenarios but thanks to people like Mike Jones (Analo=
-g Devices) and Mariusz Oriol (Intel) we=E2=80=99re now realizing such an ef=
-fort will make more sense if done while keeping in mind the needs of groups=
- like OpenBMC &amp; Redfish.=E2=80=A8=E2=80=A8Specifically we want to try a=
-nd create a configuration format and toolchain that will find a balance bet=
-ween:<br><br>- Being human editable.<br>In theory files could be generated =
-in syntactically verbose formats like XML, but in practice as an applicatio=
-ns engineer being able to easily edit configuration files by hand has prove=
-n very helpful in resolving customer issues.<br><br>=E2=80=A8- Protocol gen=
-eric enough to support minimum data to perform a PMBus transaction.<br>Spec=
-ifically, one can use just address, command code, data (in hex/binary), and=
- PMBus transaction type data to configure a device. Additional specifiers s=
-uch as numeric format &amp; named bitfields are optional.<br>=E2=80=A8<br>-=
- Facilitates conditional/stateful aspects in the configuration process.<br>=
-While in theory things would be purely declarative in practice most power s=
-upply devices may be in certain states (that change as commands are sent) t=
-hat necessitate management of state, dependencies, and ordering.<br>=E2=80=
-=A8<br>- Having a verification mechanism with common format for =E2=80=98pr=
-oof of content=E2=80=99.<br>Format could be something standard like sha1/md=
-5 sum though the instructions to perform verification may be vendor-specifi=
-c. May be limited to RAM-only though some vendors may offer non-volatile me=
-mory verification methods.<br><br><div>Here=E2=80=99s a high-level graphic =
-of what we have in mind: <a href=3D"https://www.dropbox.com/s/8ey0errn7fe9g=
-c0/2020-09-11%20-%20standard%20config%20groups%20and%20collateral.png">http=
-s://www.dropbox.com/s/8ey0errn7fe9gc0/2020-09-11%20-%20standard%20config%20=
-groups%20and%20collateral.png</a><br></div><div><br></div><div>We want to f=
-irst present the idea here and see what the OpenBMC community thinks about =
-this effort. Is power supply configuration and updates something of interes=
-t to this community? Have there been any pain points experienced so far fro=
-m the system engineering side you could see solved through collaboration on=
- a common format?<br><br>Regards,<br><br>Vivek</div></div>
-
---00000000000075755f05af0ff85e--
