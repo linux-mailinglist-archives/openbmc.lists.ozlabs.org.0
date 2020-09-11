@@ -2,72 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D875265ECF
-	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 13:34:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 037D1265F03
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 13:49:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BntvY4pP1zDqjM
-	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 21:34:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BnvDm1GZszDqnw
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 21:49:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::530;
- helo=mail-pg1-x530.google.com; envelope-from=sunithaharish04@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=P6xV748T; dkim-atps=neutral
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com
- [IPv6:2607:f8b0:4864:20::530])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=sQ4WZH/p; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bntth4rVVzDqgZ
- for <openbmc@lists.ozlabs.org>; Fri, 11 Sep 2020 21:33:43 +1000 (AEST)
-Received: by mail-pg1-x530.google.com with SMTP id y1so141710pgk.8
- for <openbmc@lists.ozlabs.org>; Fri, 11 Sep 2020 04:33:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=to:from:subject:message-id:date:user-agent:mime-version
- :content-transfer-encoding:content-language;
- bh=KAWYFLS0TscBNvlX1qVUcn0iPsTwBoWoaDuZHJzjym4=;
- b=P6xV748Ti53hPfisF5wnnEU8DD5eoyRAZbxbR/OwZTOyH0W92mLJSRxmAbpPBwz7Aw
- UVg4B1X9irmbB1JpsuQOdy7JvIdlIjruMA+mW50B+GsVuJRDfF/RCCqIgMzoeGU5426p
- rr0fo+0UgqIba1VlepyMFkLRI7SwUbEwkq1hMKjiKa2GyjQdHi+P9/QImYCz1GZQpcKf
- 3WtHKcLlX9iZseUB61Tg5Y4nLY5Vg42dNzAjj9XRcAhSE9mODX21LV8ThYlo9K8Hk6xM
- 36Ti0dBdEHK3dM7ZCEZFpyMUMviPTJKbJTGyIq1Y0lQ774CaM8VnwqsRdlMOIf1uCYpY
- dwEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:to:from:subject:message-id:date:user-agent
- :mime-version:content-transfer-encoding:content-language;
- bh=KAWYFLS0TscBNvlX1qVUcn0iPsTwBoWoaDuZHJzjym4=;
- b=M9KapZ9bCFMUeL/SnvYp9hAUCmkagLGXOlNW+0k0sgxDwgGFQJ7GdRUJ9fqE+W+1YH
- +cAPEEAddsreHW4ueLsBQek+0k5XGB8Cc9XS/9I0lj3z7b6ieGF6jgkmqM5Cp7tD3edh
- yl7KWUGO1muAVX8OQPz10tU+9MwSlNb/QsF1Lhz4Tz7RYX0uN77ENn1Zue26wdBY8sGv
- g/j889OBYmX49nQpmwjccgoMVyjPFvWBDou+Ta1yRyVzkY/TP8fDRshCtrLiJbxR52H7
- C/iylOWajGUK9hQj+q9ggmB5o2d1QCcDqnEcdeVdSNeevQUMH9emoiYAVAMOc8Z3OuwO
- 039w==
-X-Gm-Message-State: AOAM530JdjMoTZFRtNkTpaBaXeV7dDNlwO97Q3vBHh3OHmHK/YeCaRh+
- 63BUPe97BMII2C4shtp8WfQ68uhwt7Aw+A==
-X-Google-Smtp-Source: ABdhPJyh6l5LpWGJrkZE5n3YlZ3CG2hahxKTb6iXR2Kh1GK+fJI0WS3WlTkAGpz6DTRuadJWqm0z3w==
-X-Received: by 2002:a17:902:326:: with SMTP id 35mr1618591pld.1.1599824019378; 
- Fri, 11 Sep 2020 04:33:39 -0700 (PDT)
-Received: from [192.168.0.104] ([124.123.107.198])
- by smtp.gmail.com with ESMTPSA id y29sm2242628pfq.207.2020.09.11.04.33.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Sep 2020 04:33:39 -0700 (PDT)
-To: apparao.puli@linux.intel.com, openbmc <openbmc@lists.ozlabs.org>
-From: Sunitha Harish <sunithaharish04@gmail.com>
-Subject: bmcweb : https client support
-Message-ID: <5c93d1fa-102b-61a1-1dd8-4a371d7c2a2a@gmail.com>
-Date: Fri, 11 Sep 2020 17:03:36 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BnvD03rRWzDqnR
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Sep 2020 21:48:44 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 5271F57546;
+ Fri, 11 Sep 2020 11:48:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-language:content-transfer-encoding:content-type
+ :content-type:in-reply-to:mime-version:user-agent:date:date
+ :message-id:from:from:references:subject:subject:received
+ :received:received; s=mta-01; t=1599824918; x=1601639319; bh=q/C
+ 8xOnNJrbA0PJFTzR6Gjajgtpto/SxpIBSHUSpCTw=; b=sQ4WZH/p/tBEEgM5qw4
+ iVqNMbOrc6BHMNasXe/aH2kuGSl0kDkRMrh3eXsT6H/N8zlI7wgZKFnhI92qiTHl
+ 8n71Fs/ubhaBuPncksdfYKDNjXLksM4nfg4mhj9zHvbahmWakN5MVhBP8RGNyiiZ
+ bDNmwYoeL0ejyuMfO9Ra2xe4=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id E8s5EjX9Bw0B; Fri, 11 Sep 2020 14:48:38 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id E289857548;
+ Fri, 11 Sep 2020 14:48:38 +0300 (MSK)
+Received: from [10.199.0.18] (10.199.0.18) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 11
+ Sep 2020 14:48:38 +0300
+Subject: Re: Design proposal for dual BMC flash with "golden image"
+To: <openbmc@lists.ozlabs.org>, Ivan Mikhaylov <i.mikhaylov@yadro.com>,
+ <yulei.sh@bytedance.com>
+References: <CAGm54UETBZ-EAR-2tha+qHTH7h3H_1vZUe2Tp5kOTzY0isKLtw@mail.gmail.com>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Message-ID: <636cd7a2-8b60-2868-104f-70378bf30a08@yadro.com>
+Date: Fri, 11 Sep 2020 14:48:37 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CAGm54UETBZ-EAR-2tha+qHTH7h3H_1vZUe2Tp5kOTzY0isKLtw@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
+X-Originating-IP: [10.199.0.18]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,18 +79,22 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Apparao,
+Hi Lei!
 
-This is about the https client support at bmcweb. Commit: 
-https://gerrit.openbmc-project.xyz/#/c/openbmc/bmcweb/+/31735/. IBM is 
-interested in this commit. We have a use-case requiring the redfish 
-client to be able to subscribe for event notifications over secure channel.
+11.09.2020 11:49, Lei Yu пишет:
+> We are working on a system that has two BMC chips, and one of them is
+> designed to be used as a golden image.
+>
+> The current OpenBMC does not support this usage, so a design proposal
+> is sent to gerrit, please help to review if you are interested.
+>
+> https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/36407
+>
+> Thanks!
 
-Can you please share your plan to get this commit to the master? Do you 
-have plans to implement the client certificate support as well ?
+We have this support implemented for YADRO VESNIN in our private repository.
 
-Thanks & regards,
-Sunitha
+Ivan will send a description of how it is implemented for us.
 
-
+Alexander.
 
