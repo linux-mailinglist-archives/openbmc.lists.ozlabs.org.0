@@ -1,90 +1,107 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB950265B78
-	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 10:22:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AF25265BC2
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 10:37:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bnpdn4zLDzDqpK
-	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 18:22:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bnpyq1F9QzDqpC
+	for <lists+openbmc@lfdr.de>; Fri, 11 Sep 2020 18:37:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=apc01-sg2-obe.outbound.protection.outlook.com
- (client-ip=40.107.131.124; helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-eopbgr1310124.outbound.protection.outlook.com [40.107.131.124])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=GEMQLW1R; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bnpcq1LzpzDqcD;
- Fri, 11 Sep 2020 18:21:27 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fDyl7wHCWqxb70FuwCgNceX6IqIolCoBT6EBbd3qg9Ofjmaprwd5njN5BAk4PQp6I9Oet9l25+7BqmZjiAXaKgvZbIzVaD0bc3iJMaKeAJ0dhqipJEUCcafXTBDa0ZhjCWxj9UfQ5bYZ9rrVnMqhIuLB842IY/6sNvSUwcmDFcAi6jiw90AfgiquvGJxES3nsCJ2/9ucXJBgUEpK0+P2uYqdKwGIf6Ek1ZOrqX0pI6urcSTb3GW8VEwpZAiH3Y084M64J/IXqo8E2/SkN6bFMVJkjK0ms+6UCEekdBXIgaeHFAX0sPAFoNxGqBD9HE/aYi/D10IbOIOlMra8CcozRw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fIIRRq4waapDUQZyCpl09E9og3a81y4WoizfSd8wtkc=;
- b=FiruDCC50Qel1fFR2u1J4WttAWh1BS5V9aGv84x5MdQ3FlqdLEHORfmaCZElzXcI4JmDmRA2/JjPkLM/7UUEW+UB0c0H3SksXpRciQHWqg+hzSaGp6M6v7M7pGeMYQMVPrqBppgICbwd5UVmnnyDkry5vb+mqeLSCR80pUJxHdoUMVo767TUVOxsO0FDC/LvYkxxvVEDVln4IcbB4vYLE4WNxUuUVBncvG3ac3WIDcPXqT/LOGFAPhtLh+hxS2tzfnb9d4sji6Nz2ApwnOM13EWz9ROm8hs0VsanyYjvyJfl8djjyfhSXJrw8xChJP74HYs/47MKE7ACZfXVfTFdtQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-Received: from HK0PR06MB3779.apcprd06.prod.outlook.com (2603:1096:203:b8::10)
- by HK0PR06MB3668.apcprd06.prod.outlook.com (2603:1096:203:b7::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3370.16; Fri, 11 Sep
- 2020 08:21:17 +0000
-Received: from HK0PR06MB3779.apcprd06.prod.outlook.com
- ([fe80::1c00:7cfc:b795:e043]) by HK0PR06MB3779.apcprd06.prod.outlook.com
- ([fe80::1c00:7cfc:b795:e043%7]) with mapi id 15.20.3370.016; Fri, 11 Sep 2020
- 08:21:17 +0000
-From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
-To: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>
-Subject: RE: [PATCH 0/4] Remove LPC register partitioning
-Thread-Topic: [PATCH 0/4] Remove LPC register partitioning
-Thread-Index: AQHWh+7F/kBF9JQr+U229w2dj+FSMali0RCAgAAL8QCAABZ/UA==
-Date: Fri, 11 Sep 2020 08:21:17 +0000
-Message-ID: <HK0PR06MB37796D91EC7290A69F2655E491240@HK0PR06MB3779.apcprd06.prod.outlook.com>
-References: <20200911034631.8473-1-chiawei_wang@aspeedtech.com>
- <CACPK8XcYvUj3W-CPzXKugp3wx7rcLEJ_8f2-Bi6V7QHZpopBbA@mail.gmail.com>
- <551926fc-7bd4-4a0e-8fcf-4675dcdba22b@www.fastmail.com>
-In-Reply-To: <551926fc-7bd4-4a0e-8fcf-4675dcdba22b@www.fastmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: aj.id.au; dkim=none (message not signed)
- header.d=none;aj.id.au; dmarc=none action=none header.from=aspeedtech.com;
-x-originating-ip: [211.20.114.70]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 28851d9a-bce5-4118-6ab1-08d8562ba80c
-x-ms-traffictypediagnostic: HK0PR06MB3668:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK0PR06MB36683DAEBAF5E38A12D2767E91240@HK0PR06MB3668.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: gkhnZDM875oc5U0x8uG0LVW7LO9LSO9m0GuMDgk307Uvi8vzZFE4c9IXQYx0vA7fgBtkRZDTVq4wqKbVmDKVD2j6HMkNtBz4HTt2yjirEA/KLeXVhYUWyb6+jyurmUAwBCXhbqerVz3o6tLmrh911j7nECqrg2KJ1SHmvNfA3c++E6o6sTREoMrHfFKWSJQck508LDTWXC+HpjyC45ydAXIkRto7PALJ5lYvYGvtcNuuglYa7YIS5mhBJVslKjT703KrIcCrYnp2d2uzz9wY37MzQU/Wfj0mURxu2mNAk1wq+gi/lsjaEnBjbpWpUriW4gD3qX46yCS0K2G25gqKG9fY5ZNMaRDK3QUIeQdLOeSZ/hxmbYfnxvYqZGHtE6gu7h2ltu5aEFZzhXVMVw4FpA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB3779.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39840400004)(346002)(136003)(396003)(366004)(376002)(34096005)(186003)(53546011)(8676002)(4326008)(316002)(55236004)(6506007)(86362001)(83380400001)(26005)(478600001)(107886003)(8936002)(55016002)(54906003)(9686003)(7416002)(52536014)(2906002)(33656002)(966005)(66946007)(110136005)(5660300002)(76116006)(7696005)(66476007)(71200400001)(66556008)(66446008)(64756008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: Z6e5qNnkx32WACAaz4M5CIFhGyGpwzKBiLNXUgwhMHgEEZZMVxgoC+7Q4uj4TuhVxe2CS4p32aemvIObvVySdLTkRxdPwMmFBgAPeGQLKRNcppvxKUXkE2REH502OQ58CszL4XPSBYH1+jwk6LnY8mA/h3VzI+D1ZAPw0TGEi5m29ntAUOf0a8G9m22Exf5J7fz5iqqCLI1lqHxWvkO2fF5YgO0u6kKIz2FXmKg/W1oNtbiT+2ghKufeNLv8JRxgYy95mtxohGgbc/3mYKV9zyvP+Kcr/1SYlvxR8ZC+hXqCwcCuru2k3kmtgiU2jx/tbzjlPJx0aEQll4iJ4oy0wxlfeIXeZo+qsm868VyXpLFvvv/eXXhLIVdOSgGKtVjGGaFjYSIL/FJL2N4j7H7YD2xAhm9GNbQU9vU20JLyo9wrw/JTi7oKkFao7Qnd6BlKIdvTtYwARcFlqzVp3YJd+JY5/CkTK/JsnqhXhCVg3KVSM4FZTDqDhSSP+LTR8HuVTv9o1trdMZhGQLWO6taysLS00tUdMlOKv4sZ4T+f9d1xZC9gA6RKDnIOd4j+bYlRTVL3UhlFl9JFYak6A6PL5Vmn0o2Fy+oggeEkVSkWCSMWPEsosLGn/ONFA4Lu+4cjiBd24zfJbeOGZSU/5+jglQ==
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bnpxs4DNfzDqXw
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Sep 2020 18:36:16 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08B8WHdF075294; Fri, 11 Sep 2020 04:36:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=dvkXauouSp8mziq/qsYcuqmJcB9/uyz0ds73TxBNNE4=;
+ b=GEMQLW1Rik//vT58uadTCyJKAXFS5bBFe1DlsjXZnekxrrkLCsLamUYgC1laX2hx8nb3
+ wwWMaBffLIMm8FZN/BgFrPpPfv+Ck8gmlUGmS/ysG4rlQrQDLOF49+E1hK55Ip97QbPa
+ XfurNXG2yQm5aCj6pV2C3PlxRfg1fiiI6ySaw20Bpkv4/o2Az1219ymCh0tblUW6XoyZ
+ 40jce4Ea8IxJqLaFeJn2bSD5+D2N7VGYdSrrr+zu7tWWjnrGHddHkYci8Bz2MNF1ZV3o
+ gsWoCeGjGVSutW6Y28wUwvwBFwl3Pr8+6v9CAezPyyTHeSTUl1wTgTouGgQOkVCNyBGA 4g== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33g5ab92dj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Sep 2020 04:36:12 -0400
+Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 08B8Ymkg083233;
+ Fri, 11 Sep 2020 04:36:11 -0400
+Received: from ppma06ams.nl.ibm.com (66.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.102])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33g5ab92b4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Sep 2020 04:36:11 -0400
+Received: from pps.filterd (ppma06ams.nl.ibm.com [127.0.0.1])
+ by ppma06ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08B8Wqkg007349;
+ Fri, 11 Sep 2020 08:36:09 GMT
+Received: from b06avi18878370.portsmouth.uk.ibm.com
+ (b06avi18878370.portsmouth.uk.ibm.com [9.149.26.194])
+ by ppma06ams.nl.ibm.com with ESMTP id 33dxdr467g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 11 Sep 2020 08:36:09 +0000
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id 08B8a7JS57606546
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 11 Sep 2020 08:36:07 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33301A405F;
+ Fri, 11 Sep 2020 08:36:07 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EA690A4057;
+ Fri, 11 Sep 2020 08:36:05 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.230.26])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Fri, 11 Sep 2020 08:36:05 +0000 (GMT)
+Subject: Re: Enable UBI support for a platform
+To: Jiandi An <jan@nvidia.com>, Kun Zhao <zkxz@hotmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <242dee50-7e1b-3fc3-5105-ca33f288d959@linux.vnet.ibm.com>
+ <BYAPR14MB2342A17C9B9BE853C0616E9CDC280@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <4e89c963-1ddd-2627-47c8-be13b903bc64@linux.vnet.ibm.com>
+ <DM6PR12MB3020FE5674F3DBE642D392C8CD260@DM6PR12MB3020.namprd12.prod.outlook.com>
+ <fffe9522-2c57-8ef0-4132-5d7c9cc831d4@linux.vnet.ibm.com>
+ <DM6PR12MB3020425CE8126F5A3FECCFE8CD260@DM6PR12MB3020.namprd12.prod.outlook.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <f9c4970c-dfc6-c7e3-8a80-067523b699b9@linux.vnet.ibm.com>
+Date: Fri, 11 Sep 2020 14:06:04 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.0
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3779.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 28851d9a-bce5-4118-6ab1-08d8562ba80c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2020 08:21:17.5204 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kC+9CrIn/n8VDgOIOqjsyC3MH/iMKeC56MDh6MgGf+9dyqgBV4P4c9rbF+9DaORZ3WgirihTlA39t4pc+DQdvW89uTErMhvjhRCSZBYhfXk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB3668
+In-Reply-To: <DM6PR12MB3020425CE8126F5A3FECCFE8CD260@DM6PR12MB3020.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-11_02:2020-09-10,
+ 2020-09-11 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0
+ impostorscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
+ priorityscore=1501 mlxscore=0 clxscore=1015 phishscore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2009110063
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,100 +113,287 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Corey Minyard <minyard@acm.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Cyril Bur <cyrilbur@gmail.com>, Haiyue Wang <haiyue.wang@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Hi Jiandi,
 
-Thanks for your prompt feedback.
+On 09/09/20 10:00 pm, Jiandi An wrote:
+>> On 09/09/20 6:15 am, Jiandi An wrote:
+>>>
+>>>> On 08/09/20 12:39 am, Kun Zhao wrote:
+>>>>>
+>>>>> On 9/5/20 5:49 AM, Deepak Kodihalli wrote:
+>>>>>> Hi Kun,
+>>>>>>
+>>>>>> On 05/09/20 5:32 am, Kun Zhao wrote:
+>>>>>>> Hi Team,
+>>>>>>>
+>>>>>>> My platform is based on ast2500, and I’ve already been able to
+>>>>>>> built out the ubi image. But when I tried to test it with qemu, it
+>>>>>>> just stopped at u-boot because ‘can’t get kernel image,
+>>>>>>>
+>>>>>>> qemu-system-arm: Aspeed iBT has no chardev backend
+>>>>>>>
+>>>>>>> U-Boot 2016.07 (Sep 04 2020 - 19:47:48 +0000)
+>>>>>>>
+>>>>>>>            Watchdog enabled
+>>>>>>>
+>>>>>>> DRAM:  496 MiB
+>>>>>>>
+>>>>>>> Flash: 32 MiB
+>>>>>>>
+>>>>>>> *** Warning - bad CRC, using default environment
+>>>>>>>
+>>>>>>> In:    serial
+>>>>>>>
+>>>>>>> Out:   serial
+>>>>>>>
+>>>>>>> Err:   serial
+>>>>>>>
+>>>>>>> Net:   MAC0 : RGMII
+>>>>>>>
+>>>>>>> MAC1 : RGMII
+>>>>>>>
+>>>>>>> FTGMAC100#0
+>>>>>>>
+>>>>>>> Error: FTGMAC100#0 address not set.
+>>>>>>>
+>>>>>>> , FTGMAC100#1
+>>>>>>>
+>>>>>>> Error: FTGMAC100#1 address not set.
+>>>>>>>
+>>>>>>> Hit any key to stop autoboot:  0
+>>>>>>>
+>>>>>>> Wrong Image Format for bootm command
+>>>>>>>
+>>>>>>> ERROR: can't get kernel image!
+>>>>>>>
+>>>>>>> ast#
+>>>>>>>
+>>>>>>> And I found the bootargs is not right,
+>>>>>>>
+>>>>>>> ast# print
+>>>>>>>
+>>>>>>> baudrate=115200
+>>>>>>>
+>>>>>>> bootargs=console=ttyS4,115200n8 root=/dev/ram rw
+>>>>>>>
+>>>>>>> bootcmd=bootm 20080000
+>>>>>>>
+>>>>>>> bootdelay=2
+>>>>>>>
+>>>>>>> Checked in the build folder for
+>>>>>>> tmp/work/myplatform-openbmc-linux-gnueabi/u-boot-aspeed/1_v2016.07
+>>>>>>> +g
+>>>>>>> itAUTOINC+1ded9fa3a2-r0/ and found the none of the following
+>>>>>>> itAUTOINC+patches
+>>>>>>> are there,
+>>>>>>>
+>>>>>>> 0002-config-ast-common-hack-bootopts.patch
+>>>>>>>
+>>>>>>> 0003-config-ast-common-Add-bootopts-to-support-ubi-and-mt.patch
+>>>>>>>
+>>>>>>> 0004-config-ast-common-Add-conditional-factory-reset-comm.patch
+>>>>>>>
+>>>>>>> 0005-config-ast-common-Fall-back-to-secondary-flash-on-fa.patch
+>>>>>>>
+>>>>>>> I think that’s why the bootargs is not correct.
+>>>>>>>
+>>>>>>> This is the details of how I enabled the ubi support in my
+>>>>>>> platform recipes,
+>>>>>>>
+>>>>>>> 1. In meta-myplatform/conf/distro/openbmc-myplatform.conf, I
+>>>>>>> added,
+>>>>>>>
+>>>>>>> require conf/distro/include/phosphor-base.inc
+>>>>>>>
+>>>>>>> require conf/distro/include/phosphor-ubi.inc
+>>>>>>
+>>>>>> You should just need the one line above, plus a device tree change
+>>>>>> for your
+>>>> system. The default openbmc-flash-layout.dtsi doesn't make a ubifs partition.
+>>>> You can for eg look at witherspoon's dts, which uses ubifs.
+>>>>> Hi Deepak, thank you for reply. I've tried to use the witherspoon's
+>>>>> flash layout
+>>>> per your tips here. But it still stops at u-boot with "can't get kernel image!"
+>> error.
+>>>> Do I need to enable any kernel config options?
+>>>>
+>>>>
+>>>> Hi Kun, I don't think you need additional kernel config updates. I
+>>>> suspect something wrong with the way the image is built. Are you able
+>>>> to see expected values for the u-boot environment variables and MTD
+>> partitions? For eg:
+>>>>
+>>>> ast# mtdparts
+>>>> device nor0 <bmc>, # parts = 3
+>>>>     #: name               size            offset          mask_flags
+>>>>     0: u-boot              0x00060000     0x00000000      0
+>>>>     1: u-boot-env          0x00020000     0x00060000      0
+>>>>     2: obmc-ubi            0x01f80000     0x00080000      0
+>>>> active partition: nor0,0 - (u-boot) 0x00060000 @ 0x00000000
+>>>>
+>>>
+>>> Hi Deepak,
+>>> One thing is no mtdparts command from u-boot.  Do we need to add
+>> CONFIG_CMD_MTDPARTS?
+>>> Here the comment says adding CONFIG_CMD_MTDPARTS won't work.
+>>> https://lists.denx.de/pipermail/u-boot/2012-December/142837.html
+>>
+>> Hi Jiandi, the comment you pointed to is in the context if a very old u-boot release,
+>> so I don't think it applies to the u-boot release that OpenBMC uses. MTD and UBI
+>> support is optional in the u-boot AST config, and is enabled if
+>> MTDPARTS_DEFAULT is set. This flag further sets CONFIG_MTD_PARTITIONS.
+>> MTDPARTS_DEFAULT is enabled via a u-boot patch that we carry, and that is
+>> picked up if the 'obmc-ubi-fs' distro feature is enabled (see meta-
+>> phosphor/aspeed-layer/recipes-bsp/u-boot/u-boot-aspeed.inc). So it still seems
+>> like this feature is not enabled in the image or there is some other issue with
+>> building the image.
+>>
+>>> Actually using witherspoon's flash layout
+>>> https://github.com/ibm-openbmc/openbmc/blob/OP940/meta-ibm/meta-
+>> wither
+>>> spoon/recipes-kernel/linux/linux-aspeed/0001-ARM-dts-Aspeed-Witherspoo
+>>> n-128-Update-BMC-partitioni.patch
+>>>
+>>> So the one we have in the device tree is as follows..
+>>
+>> Witherspoon-128's (which has a different device tree than witherspoon) BMC has
+>> a 128M flash (you can see the sizes of the partitions below in the device tree add
+>> up to 128M). So this would work if your BMC has a 128M flash. The obmc-ubi
+>> partition would be smaller for eg for a 32M flash.
+> 
+> Thanks Deepak.  So I tried with aspeed-bmc-opp-witherspoon.dts now
+> https://elixir.bootlin.com/linux/latest/source/arch/arm/boot/dts/aspeed-bmc-opp-witherspoon.dts#L231
+> with obmc-ubi starting at 0x80000 with size 0x1F80000
+> 
+> &fmc {
+> 	status = "okay";
+> 	flash@0 {
+> 		status = "okay";
+> 		m25p,fast-read;
+> 		label = "bmc";
+> //#include "openbmc-flash-layout.dtsi"
+> 
+> 		partitions {
+> 			#address-cells = < 1 >;
+> 			#size-cells = < 1 >;
+> 			compatible = "fixed-partitions";
+> 			u-boot@0 {
+> 				reg = < 0 0x60000 >;
+> 				label = "u-boot";
+> 			};
+> 			u-boot-env@60000 {
+> 				reg = < 0x60000 0x20000 >;
+> 				label = "u-boot-env";
+> 			};
+> 			obmc-ubi@80000 {
+> 				reg = <0x80000 0x1F80000>;
+> 				label = "obmc-ubi";
+> 			};
+> 		};
+> 	};
+> };
+> 
+> Still seeing during kernel boot that /dev/mtdblock: can't open blockdev
+> 
+> [    1.356025] Checked W+X mappings: passed, no W+X pages found
+> [    1.356346] Run /init as init process
+> rofs = squashfs rwfs = jffs2
+> [    2.033408] /dev/mtdblock: Can't open blockdev
+> mount: mounting /dev/mtdblock on run/initramfs/ro failed: No such file or directory
+> [    2.043247] MTD: Couldn't look up '/dev/mtdblock': -2
+> mount: mounting /dev/mtdblock on run/initramfs/rw failed: No such file or directory
+> 
+> Mounting read-write /dev/mtdblock filesystem failed.  Please fix and run
+> 	mount /dev/mtdblock run/initramfs/rw -t jffs2 -o rw
+> to to continue, or do change nothing to run from RAM for this boot.
+> Enter password to try to manually fix.
+> After fixing run exit to continue this script, or reboot -f to retry, or
+> touch /takeover and exit to become PID 1 allowing editing of this script.
+> Give root password for system maintenance
+> (or type Control-D for normal startup):
+> 
+> I searched and saw this feature discussion
+> https://github.com/openbmc/openbmc/issues/3177
+> which has a commit for uboot: Add support for ubi and mtd partitioning
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/5911
+> It went in meta-phosphor/common/recipes-bsp/u-boot/files/ as a patch.
+> https://github.com/openbmc/openbmc/commit/dd7015393fdab93426aab61a08b48a698c9c100d
 
-> -----Original Message-----
-> From: Andrew Jeffery <andrew@aj.id.au>
-> Sent: Friday, September 11, 2020 12:46 PM
-> To: Joel Stanley <joel@jms.id.au>; ChiaWei Wang
-> <chiawei_wang@aspeedtech.com>
-> Subject: Re: [PATCH 0/4] Remove LPC register partitioning
->=20
->=20
-> On Fri, 11 Sep 2020, at 13:33, Joel Stanley wrote:
-> > Hello,
-> >
-> > On Fri, 11 Sep 2020 at 03:46, Chia-Wei, Wang
-> > <chiawei_wang@aspeedtech.com> wrote:
-> > >
-> > > The LPC controller has no concept of the BMC and the Host partitions.
-> > > The incorrect partitioning can impose unnecessary range restrictions
-> > > on register access through the syscon regmap interface.
-> > >
-> > > For instance, HICRB contains the I/O port address configuration of
-> > > KCS channel 1/2. However, the KCS#1/#2 drivers cannot access HICRB
-> > > as it is located at the other LPC partition.
->=20
-> Thanks for addressing this, I've regretted that choice for a while now.
->=20
-> The split was rooted in trying to support pinmux while not being across e=
-very
-> detail of the LPC controller, and so I made some poor decisions.
->=20
-> > >
-> > > In addition, to be backward compatible, the newly added HW control
-> > > bits could be added at any reserved bits over the LPC addressing spac=
-e.
-> > >
-> > > Thereby, this patch series aims to remove the LPC partitioning for
-> > > better driver development and maintenance.
-> >
-> > I support this cleanup. The only consideration is to be careful with
-> > breaking the driver/device-tree relationship. We either need to ensure
-> > the drivers remain compatible with  both device trees.
-> >
-> > Another solution is to get agreement from all parties that for the LPC
-> > device the device tree is always the one shipped with the kernel, so
-> > it is okay to make incompatible changes.
-If it is possible, I would prefer this solution to avoid adding additional =
-if-logic for the compatibility support in the driver implementation.
-As the patch can be less change made to register offset definitions and lea=
-ve the core logic untouched.
-> >
-> > While we are doing a cleanup, Andrew suggested we remove the detailed
-> > description of LPC out of the device tree. We would have the one LPC
-> > node, and create a LPC driver that creates all of the sub devices
-> > (snoop, FW cycles, kcs, bt, vuart). Andrew, can  you elaborate on this
-> > plan?
->=20
-> I dug up the conversation I had with Rob over a year ago about being unha=
-ppy
-> with what I'd cooked up.
->=20
-> https://lore.kernel.org/linux-arm-kernel/CAL_JsqJ+sFDG8eKbV3gvmqVHx+otW
-> bki4dY213apzXgfhbXXEw@mail.gmail.com/
->=20
-> But I think you covered most of the idea there: We have the LPC driver cr=
-eate
-> the subdevices and that moves the details out of the devicetree.
-> However, I haven't thought about it more than that, and I think there are=
- still
-> problems with that idea. For instance, how we manage configuration of tho=
-se
-> devices, and how to enable only the devices a given platform actually car=
-es
-> about (i.e. the problems that devicetree solves for us).
-Another concern to make centralized LPC driver implementation more complica=
-ted is the relationship with eSPI driver.
-AST2500 binds the reset control of LPC and eSPI together. If eSPI is used f=
-or the Host communication, the behavior in current "lpc-ctrl" should be ski=
-pped but not for KCS, BT, Snoop, etc.
-And this will be much easier to achieve by devicetree if LPC sub devices ar=
-e individually described.
->=20
-> It may be that the only way to do that is with platform code, and that's =
-not
-> really a direction we should be going either.
->
+Yes, you do need the patch above, along with few other patches. See my 
+previous mail in this thread about the 'obmc-ubi-fs' distro feature. If 
+this is enabled, the u-boot patches should be applied. This distro 
+feature is enabled by including conf/distro/include/phosphor-ubi.inc.
+
+> There is also this
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/10577
+
+I'd have to check this one, but I'm certain you don't need this just to 
+boot with ubifs.
+
+> These are not in our code base.
+> Do we need these patches?
+> 
+>>
+>>> &fmc {
+>>>        status = "okay";
+>>>        flash@0 {
+>>>                status = "okay";
+>>>                m25p,fast-read;
+>>>                label = "bmc";
+>>> //#include "openbmc-flash-layout.dtsi"
+>>>
+>>>                partitions {
+>>>                        #address-cells = < 1 >;
+>>>                        #size-cells = < 1 >;
+>>>                        compatible = "fixed-partitions";
+>>>                        u-boot@0 {
+>>>                                reg = < 0 0x60000 >;
+>>>                                label = "u-boot";
+>>>                        };
+>>>                        u-boot-env@60000 {
+>>>                                reg = < 0x60000 0x20000 >;
+>>>                                label = "u-boot-env";
+>>>                        };
+>>>                        obmc-ubi@80000 {
+>>>                                reg = <0x80000 0x7F80000>;
+>>>                                label = "obmc-ubi";
+>>>                        };
+>>>                };
+>>>        };
+>>> };
+>>>
+>>>>
+>>>>>> Does anyone know why the default is static partitions, and not ubifs?
+>>>>>>
+>>>>>> Regards,
+>>>>>> Deepak
+>>>>>>
+>>>>>>> 2. In meta-myplatform/conf/machine/myplatform.conf, I added,
+>>>>>>>
+>>>>>>> IMAGE_FSTYPES += " mtd-ubi mtd-ubi-tar"
+>>>>>>>
+>>>>>>> OBMC_MACHINE_FEATURES += " obmc-ubi-fs"
+>>>>>>>
+>>>>>>> Do I miss anything?
+>>>>>>>
+>>>>>>> Thanks.
+>>>>>>>
+>>>>>>> Best regards,
+>>>>>>>
+>>>>>>> Kun Zhao
+>>>>>>>
+>>>>>>> /*
+>>>>>>>
+>>>>>>> zkxz@hotmail.com <mailto:zkxz@hotmail.com>
+>>>>>>>
+>>>>>>> */
+>>>>>>>
+>>>>>>
+>>>>> Kun
+>>>>>
+>>>
+> 
+
