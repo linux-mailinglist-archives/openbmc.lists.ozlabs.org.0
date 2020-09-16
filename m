@@ -1,72 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16CDA26D00C
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 02:39:59 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BCCD26D022
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 02:46:32 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BsJ5S0B5zzDqq0
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 10:39:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BsJF12p7DzDr7s
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 10:46:29 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.219.66; helo=mail-qv1-f66.google.com;
- envelope-from=rentao.bupt@gmail.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=cRSvvi0Y; dkim-atps=neutral
-Received: from mail-qv1-f66.google.com (mail-qv1-f66.google.com
- [209.85.219.66])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=gsvTVMUl; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=d0NLfsFY; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BsHqH49pQzDqGp;
- Thu, 17 Sep 2020 10:27:36 +1000 (AEST)
-Received: by mail-qv1-f66.google.com with SMTP id f11so149540qvw.3;
- Wed, 16 Sep 2020 17:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id;
- bh=KTEiXWsrNTTNF4brX7sslTaA27Wj3jCvRMzdzjVA1+k=;
- b=cRSvvi0YE0LJjsNnQLFLiwPLRVlEijDhvdRIBIBr8yhwSaTr23O6/FkV3eUeZHWNH1
- 5dd5sqPqaj0uMn7SPpHv3fgzwI8kR2tF+zHRYDm9JKnO65URipWWSVxohnglZHVlq1Nx
- /Zb8A3yC5nKh2vBpN1z43jRgUMkDNJKbY6jHt8QZDZdp67hKaPTshyMQomOmgn6xcImw
- lBZKQzybZDMWY7QifXzwjoQqOi8oZBHeKuXdhKTEt2mD/cm4DVLNcf2UkPYItgsQ5Lwr
- u0TsOa468276YYmj4N326UMVf4BMH19Cnt+s8qGBOwtzEwGtw34AmhAXkpr9eBNTVEVp
- lt2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=KTEiXWsrNTTNF4brX7sslTaA27Wj3jCvRMzdzjVA1+k=;
- b=gjiEUvrbdMD+i50TO0u3lh1uBLl+zmaxbeh4/ouqItpAzYNSwF39QvdrY8+EGmX0Aq
- SWKLVPOrEFhk8Lt3NXHgJsM+xYfytItwjbU5SnkqfAn6zZGbPbeOI3qkcKx4Mt9EXRkC
- suRARJ+KjgUuibFo+pK3uo/vBI9CptLoFpFcBzZ+o2ujfPdLj9tMyB4k2u5C4ubHPIME
- D0e3zgwbbpWrt4d/hVk1Zd+I+hjdexfrbEfho3NqoB/YE4zDISjTd01VoLCU5NtgK+US
- 6FZPkAsl/puWlvQXiq7lCJE6MPmOqKirSH4SeeWAoufgZJRjYbcgISlkO7poI9u8AsBl
- PdQQ==
-X-Gm-Message-State: AOAM530ZJRaHBEiduNU45hrzuZoY7KhvrhkO8z7LcLbU0Vwhi/qp70xr
- prvTLRseDnAls59Gfs6CQGa0xXJ3+6WMpw==
-X-Google-Smtp-Source: ABdhPJz3bA82VJkPymAABgFmCsDwVkj3PWIi1CeckDZIOwQIJJc3547a8fhdrIhdpnvHex5U0dmVMQ==
-X-Received: by 2002:a17:902:10f:b029:d1:e5e7:bdd7 with SMTP id
- 15-20020a170902010fb02900d1e5e7bdd7mr8126307plb.55.1600288945769; 
- Wed, 16 Sep 2020 13:42:25 -0700 (PDT)
-Received: from taoren-ubuntu-R90MNF91.thefacebook.com
- (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id n9sm10071276pgi.2.2020.09.16.13.42.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 16 Sep 2020 13:42:24 -0700 (PDT)
-From: rentao.bupt@gmail.com
-To: Linus Walleij <linus.walleij@linaro.org>,
- Bartosz Golaszewski <bgolaszewski@baylibre.com>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org, taoren@fb.com
-Subject: [PATCH] gpio: aspeed: fix ast2600 bank properties
-Date: Wed, 16 Sep 2020 13:42:16 -0700
-Message-Id: <20200916204216.9423-1-rentao.bupt@gmail.com>
-X-Mailer: git-send-email 2.17.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BsHvX1bTYzDqKX;
+ Thu, 17 Sep 2020 10:31:13 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id B0FE75C0A37;
+ Wed, 16 Sep 2020 19:12:49 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Wed, 16 Sep 2020 19:12:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm3; bh=wWsRwlVvP8+43MZ6dwzJ2Fdj/0px7Bt
+ Uhpq3T6t85KU=; b=gsvTVMUl3GJG8bCr0WIzqog4pLruzE0o4Dawa2TPuJ1t/qx
+ Ren3Xs5Qkpl7qXc4qf34+KXoRLNhrJ9Zcofm8gsyhv+JrxO4yNj4JlTJlcvRCySs
+ /tyC8uQwzmz7olHkRvJm969w6a+j5PG9qcekak2B6lS3M4VIJ7vPv9bi45YabCnF
+ zvT7okIv6bjkxuV+6waXzQPCldibUjPx2NOWXVi1Xjz6JhgzuI7vX3K3ETLqXJoC
+ IoeySVWrHW75AljKifV21TErzU/qzU+KaxwqVi3vSkpAsVUd25ZlyHrLBKygp0mJ
+ 9RXfG7iEyQAaiFrmu/yG3E5y5xwhhC3rXGsPuLg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=wWsRwl
+ VvP8+43MZ6dwzJ2Fdj/0px7BtUhpq3T6t85KU=; b=d0NLfsFYhpCurbF8wtJvhY
+ jLZ+YJR2/D2BW81nT5LGL2+zM3VQ0N5eU9cXoRtc6xSNm3EeiLatKpGHUxXIywFs
+ GaETtjGrLqbxhxv+OzHr5pJaTAFub0sCD+GJdr2NdxTDT6jQcNwCbkC9bmyIw0Hi
+ uzKqhnAnFNnnB3lLbaxPaX0EbAHI4G6mtDTQew7aDM3H76FvnmC9p69SiWc/qLcc
+ ArDjMi8DPiF8ldqrpcPaNLJUPAwDHPE//nWqaQ5RDDNog6YJxTwt1QIAJYfv4YBS
+ aOd9FZEdLSwJdQgNlVVG1mfhEUMFPfImmOJtV/cUD989NVnrv5W0BLl6zrU39Ijw
+ ==
+X-ME-Sender: <xms:8JtiX95Q1ko-nid23vEXX398tgQo5c9I3NFfnybjHjJFpMd05BzhSw>
+ <xme:8JtiX67-hcL---jVisrikvraUXrrh2bAbXOHORYgkUz2rxHwNOtfu11BunuZpZ2H_
+ IZ13g2PKuZ_JPA1kA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtdefgddulecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
+ vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
+ htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
+ veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:8JtiX0ccptkrtNtXU672t5kq8HR2WJkyq-2L3QmQr24hF3KfZ_VcqQ>
+ <xmx:8JtiX2JAedFucucSNridRRpeaj-470-pL_IEsuoPz3-srrAT9qawJA>
+ <xmx:8JtiXxI6FLPVJTlF0P-pZHf2l65LRjzhMrW5C0RtQr8PeR_bSlvjtw>
+ <xmx:8ZtiX2qQRAk9cVvc4LR0PA6HqrLNIU8wdRJi0I6fmOKDJHxLAsQGfw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 847BEE00D1; Wed, 16 Sep 2020 19:12:47 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-324-g0f99587-fm-20200916.004-g0f995879
+Mime-Version: 1.0
+Message-Id: <60f9f14a-c9be-45ac-b3a8-516ab73d9bee@www.fastmail.com>
+In-Reply-To: <20200916204216.9423-1-rentao.bupt@gmail.com>
+References: <20200916204216.9423-1-rentao.bupt@gmail.com>
+Date: Thu, 17 Sep 2020 08:42:27 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Tao Ren" <rentao.bupt@gmail.com>,
+ "Linus Walleij" <linus.walleij@linaro.org>,
+ "Bartosz Golaszewski" <bgolaszewski@baylibre.com>,
+ "Joel Stanley" <joel@jms.id.au>, linux-gpio@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
+ "Tao Ren" <taoren@fb.com>
+Subject: Re: [PATCH] gpio: aspeed: fix ast2600 bank properties
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,42 +98,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tao Ren <rentao.bupt@gmail.com>
 
-GPIO_U is mapped to the least significant byte of input/output mask, and
-the byte in "output" mask should be 0 because GPIO_U is input only. All
-the other bits need to be 1 because GPIO_V/W/X support both input and
-output modes.
 
-Similarly, GPIO_Y/Z are mapped to the 2 least significant bytes, and the
-according bits need to be 1 because GPIO_Y/Z support both input and
-output modes.
+On Thu, 17 Sep 2020, at 06:12, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
+> 
+> GPIO_U is mapped to the least significant byte of input/output mask, and
+> the byte in "output" mask should be 0 because GPIO_U is input only. All
+> the other bits need to be 1 because GPIO_V/W/X support both input and
+> output modes.
+> 
+> Similarly, GPIO_Y/Z are mapped to the 2 least significant bytes, and the
+> according bits need to be 1 because GPIO_Y/Z support both input and
+> output modes.
+> 
+> Fixes: ab4a85534c3e ("gpio: aspeed: Add in ast2600 details to Aspeed driver")
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
 
-Fixes: ab4a85534c3e ("gpio: aspeed: Add in ast2600 details to Aspeed driver")
-Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
----
- drivers/gpio/gpio-aspeed.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks Tao,
 
-diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
-index 879db23d8454..d07bf2c3f136 100644
---- a/drivers/gpio/gpio-aspeed.c
-+++ b/drivers/gpio/gpio-aspeed.c
-@@ -1114,8 +1114,8 @@ static const struct aspeed_gpio_config ast2500_config =
- 
- static const struct aspeed_bank_props ast2600_bank_props[] = {
- 	/*     input	  output   */
--	{5, 0xffffffff,  0x0000ffff}, /* U/V/W/X */
--	{6, 0xffff0000,  0x0fff0000}, /* Y/Z */
-+	{5, 0xffffffff,  0xffffff00}, /* U/V/W/X */
-+	{6, 0x0000ffff,  0x0000ffff}, /* Y/Z */
- 	{ },
- };
- 
--- 
-2.17.1
-
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
