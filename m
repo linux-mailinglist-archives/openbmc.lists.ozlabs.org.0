@@ -2,88 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F68E26D074
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 03:14:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 68AF326D083
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 03:21:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BsJsc6LxlzDsRF
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 11:14:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BsK0m3KmtzDqLt
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 11:20:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29;
- helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=209.85.215.169;
+ helo=mail-pg1-f169.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=K9NT+5pd; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=uGj4DzGy; 
- dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
- [66.111.4.29])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=o88sS7AA; dkim-atps=neutral
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com
+ [209.85.215.169])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BsJ6q1bLQzDqrC
- for <openbmc@lists.ozlabs.org>; Thu, 17 Sep 2020 10:41:05 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id B47355C12BD
- for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 14:57:53 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Wed, 16 Sep 2020 14:57:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=tvKdBNVb8FQ7A85uS5W5bX+a/37
- WulZ/l3cr90/g+x8=; b=K9NT+5pdu9RG0E/x0AlxgSejWA0XZg8cb+T3CZ/qyTm
- 0D8AINEpadIQf/+rsrUKvXTYj0xyakGbfFIjeM/0ObquLNf+j1GVkcnLpNQj57Xe
- Y8XdZsIN9VffUDfe8n3DH1h32GMCOJVylP8Uc90iNsYfxMxDiyiBmWZEJuy5s7a/
- 1zpv6PDnuwS99ek9Gdj9xFp3/c6wUw7Z+2DmXMOu0eCLeyzCb77vNcFp3Mm1EdM1
- P/dwbJiKWITNiWi5ezHRAfG/oEsF4LgprpPvOqW0GFUtsCaxa9glfp2MJltMRumD
- s+SsXsUhv0kM+4tpwrZ2Z9P7aqxHC0/Om5ai/JaStWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=tvKdBN
- Vb8FQ7A85uS5W5bX+a/37WulZ/l3cr90/g+x8=; b=uGj4DzGyAtc+etzlHw8lvY
- Kf/495US/BrXVlOTY5/Ob9L3kywASm8Zr5SkKboYhChdRXeS8fzZpgCYmZIEfHns
- Mdb7UJA4NpwE83/iLcQ+zZzLSaHB39rZVrUG+jZuRk1go8M6goq8BeJ1skR/qe6A
- qiCqQ6qQUfvMzTyquSM624dWwXEWYJN6Y+/F2hZmw+8xE1jfkPmZ/EUebI4MB4++
- rO0sFCc0DItRVcw/r/MLPJM+rx9zcEFuoU2FPLTaBuojCXjIdwnONuv5xP3mnMB0
- qogfz9YH4RVwqEml+GKTPbKixxOpUm6pOGiwmPcNZWLYZATyTwmPwgTtL4vB468Q
- ==
-X-ME-Sender: <xms:MWBiX5WEQLED9aU9Zev87S3hyYg9LjtHsCrR5s5FR_FBXg7VphIG_A>
- <xme:MWBiX5lt6CZDfNXvagNm2d0eGQbRavOWMcf_O7yTcC8S5cW8BxigqNBWqB0Uo8bHG
- SXIQIw7Ok81I42GUE4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtddvgddufeduucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:MWBiX1Z42hH6j69uyUiXc_kd02oeUqLC2CKz4xMtVamvhz6kXkINRg>
- <xmx:MWBiX8XsTaoroFqd0a45kXubHVpoPba8iGJvKQ2a7QM_Gnh8NdBk1w>
- <xmx:MWBiXzmSxt2T7gcjFc4SUjKXfHsdZB0DY5PpUnBtygGE7_XSFGH-8w>
- <xmx:MWBiX_wMgyzrdCXf-_V7zdkctHwNOnhtze44vBWokJSUQKY2YTDDIw>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id F1F573280063
- for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 14:57:52 -0400 (EDT)
-Date: Wed, 16 Sep 2020 13:57:51 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: phosphor-dbus-interfaces transitioning to meson
-Message-ID: <20200916185751.GF6152@heinlein>
-References: <20200905170407.GA6152@heinlein>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="27ZtN5FSuKKSZcBU"
-Content-Disposition: inline
-In-Reply-To: <20200905170407.GA6152@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BsJNG0VHhzDrFS
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Sep 2020 10:52:45 +1000 (AEST)
+Received: by mail-pg1-f169.google.com with SMTP id 34so324451pgo.13
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 17:52:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:message-id:date
+ :to; bh=Pw1aKFgM0qIszALMtD/6DI1YR7dVopsfYz6Pd+5G5wA=;
+ b=o88sS7AAHbxgt4fwE1QmVKm78Wn1R52Ux5zRUHUw46HN4fyUnuVWTajRgIYX7wBWdN
+ bVcKo6aOVDKiYxnTPpFk5gzQ/O9STf91/tBwXf+IzPevcT5jKzNANWqybAkx2wNSzxts
+ lG4wsqOHmcVu0EX4fsXBj2SFlkNaQ8BIf8F7LVnuXSFxUy7wrtplQsI3AAxyMw0W5HlW
+ PG5WoTeSgdydTVQrOkwh63e0Lhe2/NLn9VTEXC2cuV5Mwpr2JO8Pr3/Pg6r3kEqeqNVi
+ zzVq7W+VDtlJ0VN8dhS0gNmm3YMiKoul/pLMByc7E6Kr52pk4QOmN2EK9uawl77l1lew
+ i2yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:message-id:date:to;
+ bh=Pw1aKFgM0qIszALMtD/6DI1YR7dVopsfYz6Pd+5G5wA=;
+ b=ie9Z5awkvwTsE9Rot2sesRb0btgodrOuPOR+Yh05EHHuq0/e9rYLg1jL063wMGC96E
+ kMsnShz1Z5zeUrqjcuApulRPW5WPLPvU8c9lZolqiw2vqnr9URjwHJ6PlHE8L2p9nE7/
+ yRc95nlsKUAP8Ib9mreTCPa8FtV5/4j3Zi9lT7XYBeCfikVYiUhVHxDKV+VW9v4AlSzd
+ ELl/RP89xnONbpA2pcQnKiqO+sILPAKqMAnZ12Z8UYHB9ySQ7WWOvPr7dZ6piRDwcj9J
+ 2LJ5pRrfUfjILj2ZprGS5fcp58XzUnv/jgNFtW+/UYoWfVrWwhDlQGz6iA7RsdLx7FEd
+ r8iA==
+X-Gm-Message-State: AOAM530QKtxsRhJjosA/3zo+GCQfBhohIJWDMRlqg8CLwfKGYbU852QO
+ CoZW9HPgCWdxXqaf0JGeLd2+GmYq4s8xbA==
+X-Google-Smtp-Source: ABdhPJx9jKlssZM0feI5wCSlQPC5Ub41xv6qB07TUXQd2IvPwYL8A7Uhbjs+RsnkWHGREPK0EIFqyg==
+X-Received: by 2002:a05:6602:2f0c:: with SMTP id
+ q12mr21634437iow.76.1600293340456; 
+ Wed, 16 Sep 2020 14:55:40 -0700 (PDT)
+Received: from [10.42.10.6] ([174.128.225.114])
+ by smtp.gmail.com with ESMTPSA id t22sm10194178ili.9.2020.09.16.14.55.39
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 16 Sep 2020 14:55:39 -0700 (PDT)
+From: Mike Jones <proclivis@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Removing watchdog and ipmi
+Message-Id: <BAB0B8A7-DC0E-44EB-93F7-98A2DBEE77C0@gmail.com>
+Date: Wed, 16 Sep 2020 15:55:37 -0600
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,42 +82,23 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi,
 
---27ZtN5FSuKKSZcBU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What is the proper way to remove phosphor-watchdog and ipmi from a =
+project?
 
-On Sat, Sep 05, 2020 at 12:04:08PM -0500, Patrick Williams wrote:
-> Hello,
->=20
-> I will begin transitioning
-> the bitbake recipes to use the meson as well and then after that I will
-> clean up the autotools support.
+The goal is to not have the watchdog interfere in a raspberrypi project =
+because there is no host, and there is no need for ipmi for my purposes.
 
-The recipes now use meson and autotools support is now removed.
+I have created host-poweron and host-poweroff services and can manually =
+start/stop them and see my regulators go on/off. I want the webui server =
+power widget to power on/off using these services, but I think the =
+watchdog is interfering. My understanding is obmc-chassis-poweron/off =
+will trigger host-poweron/off.
 
---=20
-Patrick Williams
+Based on meta-quanta, I don=E2=80=99t see any other services I have to =
+define to hook up host-poweron/off. This is why I think removing the =
+watchdog is enough. But if there is any other interfering factor in a =
+hostless system, I need to know that as well.
 
---27ZtN5FSuKKSZcBU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9iYC0ACgkQqwNHzC0A
-wRlauBAAn7OwYE3tPBE60tzD9qkZGAVOJDLmQdlvC0k3rRV9NrN+QRoOLd4MbTjZ
-Uv7E+DE1VcSCiU+92cjLbew4CYIdLItU2UOfHdjxsTKi8htPnwrbjnEyuEOBZovS
-NSQjONPmp+eIxJHYiIRScAGbrYhhMnB4lCbboOIQcl0bFSPBiEj3r5U4Izv9PKM1
-4zP2MFAWednsgnTvjqZbzyDGhhHJ3d4nqClmOd3uplYCZ7E0yhmgTvZeYOVyibz6
-N8nP8Dv1xS8Ap1szU88UlSArZ4g0TJ8H/uzzq6Bla7hcMVDx617zpQkrZHsn/7/S
-n54YVfiWSYvuc4h1kRI8OPIz4kKyJYtAi4gNWA9XQufzOYANqhtL6qvw61U7v3cU
-lAEYLOXa+ExU0UX/qs2IAgtTibZZ1TecxsVST6mZSmn3ix5jQJ9Qmgtx2bUVJLdR
-doIKcb9KtsSjpqHg8vYuCcnd4ZwlMWBDaiK7f5ogUmdPEF7D8hLQhNlnY0A3YcHn
-cedI9dD7GEKcwY3LKqIa3fwvHFBvpsu4pbLjq/IMsnhNzWTM6c3ROufI9tPuxVpa
-jesWfNTxkUag5AgsfVeHnmAddJaHQ1Db6TJoCjubiNck2b82DH8PNbnXGuk/lxl8
-02jiTRZ9TysZmjjTW1qqHuhPJfVXSt1wkilbUyJvfhJlv59ICqg=
-=zZSn
------END PGP SIGNATURE-----
-
---27ZtN5FSuKKSZcBU--
+Mike=
