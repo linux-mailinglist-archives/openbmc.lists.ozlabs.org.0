@@ -1,63 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9680B26C32D
-	for <lists+openbmc@lfdr.de>; Wed, 16 Sep 2020 15:15:59 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E99026C330
+	for <lists+openbmc@lfdr.de>; Wed, 16 Sep 2020 15:17:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bs0wD6YXWzDqBl
-	for <lists+openbmc@lfdr.de>; Wed, 16 Sep 2020 23:15:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bs0yH0VDMzDqKj
+	for <lists+openbmc@lfdr.de>; Wed, 16 Sep 2020 23:17:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::643;
- helo=mail-ej1-x643.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::644;
+ helo=mail-ej1-x644.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Em6XgWp6; dkim-atps=neutral
-Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com
- [IPv6:2a00:1450:4864:20::643])
+ header.s=google header.b=aOjRMHCW; dkim-atps=neutral
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com
+ [IPv6:2a00:1450:4864:20::644])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bs0v41J50zDqVk
- for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 23:14:55 +1000 (AEST)
-Received: by mail-ej1-x643.google.com with SMTP id i22so10300007eja.5
- for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 06:14:55 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bs0vn0nzqzDqWY
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 23:15:32 +1000 (AEST)
+Received: by mail-ej1-x644.google.com with SMTP id gr14so10347380ejb.1
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 06:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=L8c70bjdvGVrcsac+XpFC4DW7+UbOmn2FO+QEpKETtU=;
- b=Em6XgWp6dhDu4a2sVPZc1dCkrMGHLQvdRAi+t0cgxe6Z2wZ4BP+F/sVngK1Z+kkLis
- uDZT2tBXQlDep2WXS1WMr2OBzVgIravmSa/gd9+DJeWGuD3UOkJZyORqmQP4J/r90n4v
- 6eHKLQdKoLYSbUpg/7FGjXbE/rwfe0Lu+ZEgk=
+ :cc; bh=eRMx2QCwn5J/0i/9dBFngMRBPtGNscayn9tnZ8FVVFA=;
+ b=aOjRMHCWqaqetdVLoUYuPlq5bRuzANX9B9dYMATnSb6zxf1X2ynUB/pM+Jcu/wIGFJ
+ CETwdhBeykYZYFurNTuKFqKoPiTebzRARzBs3zLDY0Mywtjd8ftxHEo34U+GLb/I4Uhk
+ f9bYiM6j36GU/kbtBa9PYsxJpCM+Q4uVZOB4U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=L8c70bjdvGVrcsac+XpFC4DW7+UbOmn2FO+QEpKETtU=;
- b=YKbAUrIy7Jy06nLMvuglzxv1rFffmzuPc/Bc4HgcQyrIyzZqlikBBKujYyOBhzCStm
- 3J82qtMSx89Ao6ZxEfKmwq7TneI5Q51UZEE6nPG0HXc+DgonvadApW2ngmk8AB55oasV
- RWREPWCFQhMo9bTMt1wMO3f5Fvrr4tky/aX6AnQYG9UwmsG5QOr7Ql8N5ZvRcBqC4ALC
- y++IKjmoaPZmrWQ2TuSBuLKxV2vLNSIPbwFltwLW6tN1ocgikcCyIVeMTrXD3TtpvZBC
- mwCPaFGhS4i2OTAu4YDoWa3C3MHIVEinGfk7efxesaliYW8J0SdxV6mhCJVnuQwHbTTw
- +pdg==
-X-Gm-Message-State: AOAM530IgtK0/FjU5kWrbFKat4/H5LWL9pYto8rdZ9W8Uh1g315OH+H0
- PISuyNtxeFnIDFBSnE282ikhGUwTnwYLslcdMzo=
-X-Google-Smtp-Source: ABdhPJyEymYowEXN9Sqs2b7MV5IulS2sjphlMu8IRCGDHXmKJR9ZNsWTTJa6UtJWYJncIfBGvRQ86hfTja+eDRuW9Os=
-X-Received: by 2002:a17:906:441:: with SMTP id
- e1mr2604781eja.396.1600262092781; 
- Wed, 16 Sep 2020 06:14:52 -0700 (PDT)
+ bh=eRMx2QCwn5J/0i/9dBFngMRBPtGNscayn9tnZ8FVVFA=;
+ b=fvLAFoW8b3Le38p5+jmHUjORHzk0WMprEiNy8Og9YC8RhDckCBk6/u4UdOhZv/uHRJ
+ zHBaTrGVZe8oYQ56EkqYYExQbRKXqKWxgIb+vsw0B3A8sVpykvyXdBLaZspXAZn+wZ3M
+ w5pVemm6D3Q+QHLsF8LaVaALaKvE3F6FThnoOJwporqzcZvlJCdrRZfpEqeEBAYTMnD+
+ 7e3eSBCh59GzhuXI0JG6luJjeHlzVw4Sf1tJX7I9l6sUtsghA2sSKcvbMkUH/wAC77AH
+ rR5/aUrUahUVqLoX2phSW1zRNk28t1CLu8nLrSQT1Ly7K35wPAcV/aOdEOQVMNshi4Gf
+ O3xQ==
+X-Gm-Message-State: AOAM530B92NfKLt9lhZmRjmeTWe2YJxTlVjMdELPZRw8WuAxN7nAPw1C
+ arReMFGryzRu7Rz28xbjvSLHDf6QXsw18zyIbMw=
+X-Google-Smtp-Source: ABdhPJwi2H60iamWSa4O+4BL2u/KxUFqRG+Fw+HbvWBjnoKrJkZiredljzBkenv3Dmr1y6tI6FfmOewXLd5CP/Y2Nks=
+X-Received: by 2002:a17:906:e918:: with SMTP id
+ ju24mr24683358ejb.442.1600262124914; 
+ Wed, 16 Sep 2020 06:15:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <20200916125554.195749-1-tmaimon77@gmail.com>
-In-Reply-To: <20200916125554.195749-1-tmaimon77@gmail.com>
+ <20200916125554.195749-2-tmaimon77@gmail.com>
+In-Reply-To: <20200916125554.195749-2-tmaimon77@gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 16 Sep 2020 13:14:40 +0000
-Message-ID: <CACPK8XcobhqHG1tQgjY2PH_Lvf3LLfzn7Ex=DVhBO58cUKv2jQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/3] arm: dts: add and modify device node in NPCM7xx
- device tree
+Date: Wed, 16 Sep 2020 13:15:12 +0000
+Message-ID: <CACPK8Xfr8KQkKAtxC4FaWk-HKkSvgBnkrpF6yMBT0qxY16zmWQ@mail.gmail.com>
+Subject: Re: [PATCH v5 1/3] arm: dts: modify NPCM7xx device tree clock
+ parameter
 To: Tomer Maimon <tmaimon77@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -81,72 +82,142 @@ Cc: Mark Rutland <mark.rutland@arm.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tomer,
-
 On Wed, 16 Sep 2020 at 12:56, Tomer Maimon <tmaimon77@gmail.com> wrote:
 >
-> This patch set adds and modify device tree nodes in the NPCM7xx
-> Baseboard Management Controller (BMC) device tree.
+> Modify NPCM7xx device tree clock parameter to clock constants that
+> define at include/dt-bindings/clock/nuvoton,npcm7xx-clock.h file.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
-Thanks Tomer. I smoke tested these by booting on the npcm730 qemu
-machine. Are you able to submit the gsj device tree (or get someone
-who has worked on that to do so?) for inclusion too? Similarly for the
-runbmc device tree.
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-We also lack a nuvoton configuration. We can submit one, or rely on
-the multi_v7 for upstream testing. What would you prefer?
-
-> The following device node add:
->         - NPCM7xx Pin controller and GPIO
->         - NPCM7xx PWM and FAN.
->         - NPCM7xx EHCI USB.
->         - NPCM7xx KCS.
->         - NPCM Reset.
->         - NPCM Peripheral SPI.
->         - NPCM FIU SPI.
->         - NPCM HWRNG.
->         - NPCM I2C.
->         - STMicro STMMAC.
-
-Does the STMMAC only appear in the 750 (and not the 730)? I was
-wondering why it appeared in the 750 dtsi and not the common dtsi.
-
-Cheers,
-
-Joel
-
+> ---
+>  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 19 ++++++++++---------
+>  arch/arm/boot/dts/nuvoton-npcm750.dtsi        |  6 +++---
+>  2 files changed, 13 insertions(+), 12 deletions(-)
 >
-> The following device node modified:
->         - NPCM7xx timer.
->         - NPCM7xx clock constants parameters.
+> diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> index d2d0761295a4..16a28c5c4131 100644
+> --- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> @@ -3,6 +3,7 @@
+>  // Copyright 2018 Google, Inc.
 >
-> NPCM7xx device tree tested on NPCM750 evaluation board.
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
 >
-> Changes since version 4:
->  - Tested patches in Linux kernel 5.9.
+>  / {
+>         #address-cells = <1>;
+> @@ -80,7 +81,7 @@
+>                         interrupts = <GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH>;
+>                         cache-unified;
+>                         cache-level = <2>;
+> -                       clocks = <&clk 10>;
+> +                       clocks = <&clk NPCM7XX_CLK_AXI>;
+>                         arm,shared-override;
+>                 };
 >
-> Changes since version 3:
->  - Tested patches in Linux kernel 5.6.
+> @@ -120,7 +121,7 @@
+>                                 compatible = "nuvoton,npcm750-timer";
+>                                 interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0x8000 0x50>;
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
 >
-> Changes since version 2:
->  - Remove unnecessary output-enable flags.
+>                         watchdog0: watchdog@801C {
+> @@ -128,7 +129,7 @@
+>                                 interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0x801C 0x4>;
+>                                 status = "disabled";
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
 >
-> Changes since version 1:
->  - Add NPCM reset device node.
->  - Add reset parameters to NPCM driver device nodes.
+>                         watchdog1: watchdog@901C {
+> @@ -136,7 +137,7 @@
+>                                 interrupts = <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0x901C 0x4>;
+>                                 status = "disabled";
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
 >
-> Tomer Maimon (3):
->   arm: dts: modify NPCM7xx device tree clock parameter
->   arm: dts: modify NPCM7xx device tree timer register size
->   arm: dts: add new device nodes to NPCM750 device tree
+>                         watchdog2: watchdog@a01C {
+> @@ -144,13 +145,13 @@
+>                                 interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0xa01C 0x4>;
+>                                 status = "disabled";
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
 >
->  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 974 +++++++++++++++++-
->  arch/arm/boot/dts/nuvoton-npcm750-evb.dts     | 404 +++++++-
->  .../boot/dts/nuvoton-npcm750-pincfg-evb.dtsi  | 157 +++
->  arch/arm/boot/dts/nuvoton-npcm750.dtsi        |  24 +-
->  4 files changed, 1522 insertions(+), 37 deletions(-)
->  create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
->
+>                         serial0: serial@1000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x1000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> @@ -159,7 +160,7 @@
+>                         serial1: serial@2000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x2000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> @@ -168,7 +169,7 @@
+>                         serial2: serial@3000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x3000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> @@ -177,7 +178,7 @@
+>                         serial3: serial@4000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x4000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> diff --git a/arch/arm/boot/dts/nuvoton-npcm750.dtsi b/arch/arm/boot/dts/nuvoton-npcm750.dtsi
+> index 6ac340533587..a37bb2294b8f 100644
+> --- a/arch/arm/boot/dts/nuvoton-npcm750.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton-npcm750.dtsi
+> @@ -17,7 +17,7 @@
+>                 cpu@0 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a9";
+> -                       clocks = <&clk 0>;
+> +                       clocks = <&clk NPCM7XX_CLK_CPU>;
+>                         clock-names = "clk_cpu";
+>                         reg = <0>;
+>                         next-level-cache = <&l2>;
+> @@ -26,7 +26,7 @@
+>                 cpu@1 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a9";
+> -                       clocks = <&clk 0>;
+> +                       clocks = <&clk NPCM7XX_CLK_CPU>;
+>                         clock-names = "clk_cpu";
+>                         reg = <1>;
+>                         next-level-cache = <&l2>;
+> @@ -38,7 +38,7 @@
+>                         reg = <0x3fe600 0x20>;
+>                         interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) |
+>                                                   IRQ_TYPE_LEVEL_HIGH)>;
+> -                       clocks = <&clk 5>;
+> +                       clocks = <&clk NPCM7XX_CLK_AHB>;
+>                 };
+>         };
+>  };
 > --
 > 2.22.0
 >
