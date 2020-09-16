@@ -2,72 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68AF326D083
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 03:21:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BD4326D0A4
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 03:33:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BsK0m3KmtzDqLt
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 11:20:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BsKGf2yrNzDqVp
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 11:32:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.215.169;
- helo=mail-pg1-f169.google.com; envelope-from=proclivis@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=o88sS7AA; dkim-atps=neutral
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com
- [209.85.215.169])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=DO6ADrCr; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BsJNG0VHhzDrFS
- for <openbmc@lists.ozlabs.org>; Thu, 17 Sep 2020 10:52:45 +1000 (AEST)
-Received: by mail-pg1-f169.google.com with SMTP id 34so324451pgo.13
- for <openbmc@lists.ozlabs.org>; Wed, 16 Sep 2020 17:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=Pw1aKFgM0qIszALMtD/6DI1YR7dVopsfYz6Pd+5G5wA=;
- b=o88sS7AAHbxgt4fwE1QmVKm78Wn1R52Ux5zRUHUw46HN4fyUnuVWTajRgIYX7wBWdN
- bVcKo6aOVDKiYxnTPpFk5gzQ/O9STf91/tBwXf+IzPevcT5jKzNANWqybAkx2wNSzxts
- lG4wsqOHmcVu0EX4fsXBj2SFlkNaQ8BIf8F7LVnuXSFxUy7wrtplQsI3AAxyMw0W5HlW
- PG5WoTeSgdydTVQrOkwh63e0Lhe2/NLn9VTEXC2cuV5Mwpr2JO8Pr3/Pg6r3kEqeqNVi
- zzVq7W+VDtlJ0VN8dhS0gNmm3YMiKoul/pLMByc7E6Kr52pk4QOmN2EK9uawl77l1lew
- i2yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=Pw1aKFgM0qIszALMtD/6DI1YR7dVopsfYz6Pd+5G5wA=;
- b=ie9Z5awkvwTsE9Rot2sesRb0btgodrOuPOR+Yh05EHHuq0/e9rYLg1jL063wMGC96E
- kMsnShz1Z5zeUrqjcuApulRPW5WPLPvU8c9lZolqiw2vqnr9URjwHJ6PlHE8L2p9nE7/
- yRc95nlsKUAP8Ib9mreTCPa8FtV5/4j3Zi9lT7XYBeCfikVYiUhVHxDKV+VW9v4AlSzd
- ELl/RP89xnONbpA2pcQnKiqO+sILPAKqMAnZ12Z8UYHB9ySQ7WWOvPr7dZ6piRDwcj9J
- 2LJ5pRrfUfjILj2ZprGS5fcp58XzUnv/jgNFtW+/UYoWfVrWwhDlQGz6iA7RsdLx7FEd
- r8iA==
-X-Gm-Message-State: AOAM530QKtxsRhJjosA/3zo+GCQfBhohIJWDMRlqg8CLwfKGYbU852QO
- CoZW9HPgCWdxXqaf0JGeLd2+GmYq4s8xbA==
-X-Google-Smtp-Source: ABdhPJx9jKlssZM0feI5wCSlQPC5Ub41xv6qB07TUXQd2IvPwYL8A7Uhbjs+RsnkWHGREPK0EIFqyg==
-X-Received: by 2002:a05:6602:2f0c:: with SMTP id
- q12mr21634437iow.76.1600293340456; 
- Wed, 16 Sep 2020 14:55:40 -0700 (PDT)
-Received: from [10.42.10.6] ([174.128.225.114])
- by smtp.gmail.com with ESMTPSA id t22sm10194178ili.9.2020.09.16.14.55.39
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 16 Sep 2020 14:55:39 -0700 (PDT)
-From: Mike Jones <proclivis@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Removing watchdog and ipmi
-Message-Id: <BAB0B8A7-DC0E-44EB-93F7-98A2DBEE77C0@gmail.com>
-Date: Wed, 16 Sep 2020 15:55:37 -0600
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BsKBh5PnLzDqDf
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Sep 2020 11:29:32 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 6EDB657540;
+ Wed, 16 Sep 2020 17:50:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1600278600; x=1602093001; bh=ECm/Fsli9JgD6E+MxFn7TS//B
+ 7a3LC1rnRXFM0ey/Ow=; b=DO6ADrCr81zB1w1II5X/Sj9iwZU4GSrwQrPTiTBmR
+ RyXNlvmW13OI/0y4UeAcFCP9ePGFueL4cDsO9cWI6xtfJQkMHABEKL6AH9I3W8t6
+ cq4LdAtdxSkhvtnL1VcYHqyPGRtQhifU2prTm6s8SS9Smz87MrpjxHa6un2VKKZr
+ r0=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 3pp5PtAyjf7x; Wed, 16 Sep 2020 20:50:00 +0300 (MSK)
+Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com
+ [172.17.10.102])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id D739357524;
+ Wed, 16 Sep 2020 20:49:59 +0300 (MSK)
+Received: from [10.199.0.126] (10.199.0.126) by T-EXCH-02.corp.yadro.com
+ (172.17.10.102) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 16
+ Sep 2020 20:49:59 +0300
+Message-ID: <fa3c22c977a01d391aef1a850180b269d49f620a.camel@yadro.com>
+Subject: Re: dbus-sensors: Unit property for
+ xyz.openbmc_project.Sensor.Value interface
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Ed Tanous <ed@tanous.net>, James Feist <james.feist@linux.intel.com>
+Date: Wed, 16 Sep 2020 20:49:58 +0300
+In-Reply-To: <CACWQX82wHxHz9VLAjeSv_s+J1Ovh985o31ekB0oPdr8A8UBavw@mail.gmail.com>
+References: <4456d953b1ea5debbc65a282fd62faf4f42d6a20.camel@yadro.com>
+ <a824162a-3c7e-810b-5c9a-e41332a0cd22@linux.intel.com>
+ <CACWQX82wHxHz9VLAjeSv_s+J1Ovh985o31ekB0oPdr8A8UBavw@mail.gmail.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.126]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-02.corp.yadro.com (172.17.10.102)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,26 +77,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+On Wed, 2020-09-16 at 09:24 -0700, Ed Tanous wrote:
+> On Wed, Sep 16, 2020 at 8:23 AM James Feist <
+> james.feist@linux.intel.com> wrote:
+> > On 9/16/2020 6:28 AM, Andrei Kartashev wrote:
+> > > Hi,
+> > > 
+> > > We noticed that dbus-sensors doesn't fully implement
+> > > xyz.openbmc_project.Sensor.Value interface: there is no Unit
+> > > property
+> > > for all the sensors, defined by dbus-sensors.
+> > > I believe it was intentionally, but I still wondering what was
+> > > the
+> > > reason?
+> > 
+> > It was originally as the information seemed redundant. If the
+> > information is needed I'm fine with someone adding it, it just
+> > hasn't
+> > seemed to be a high priority.
+> 
+> Considering we've gone this long with no impact (considering the path
+> can be used to lookup the unit) I wonder if we should consider
+> removing unit from the sensor Value API?  It doesn't seem used.
+> 
+> > > I noticed that in intel-ipmi-oem units are determined based on
+> > > object
+> > > paths, but that looks ugly since there is well-defined natural
+> > > interface for units in dbus.
+> > > Lack of the "Unit" property in the interface breaks some existing
+> > > logic.
+> > > 
+> 
+> Technically the way the interfaces define it, both are valid to use
+> to
+> determine the Units, and both would need to be lookup tables.  Is
+> using the path any more ugly than using the property?
 
-What is the proper way to remove phosphor-watchdog and ipmi from a =
-project?
+I really don't like this approach to determine Unit based on Path. It
+is really not logical, I was surprised to find that "Objects
+implementing Sensor.Value must be instantiated in the correct hierarchy
+within the sensors namespace." Isn't interfaces are supposed to break
+out hierarchy dependency?
+More of then, now we have same algorithm if determining units in
+different places - this is potential source of inconsistency.
+I vote for implementing "Unit" property and removing calculation units
+based on path everywhere.
 
-The goal is to not have the watchdog interfere in a raspberrypi project =
-because there is no host, and there is no need for ipmi for my purposes.
+-- 
+Best regards,
+Andrei Kartashev
 
-I have created host-poweron and host-poweroff services and can manually =
-start/stop them and see my regulators go on/off. I want the webui server =
-power widget to power on/off using these services, but I think the =
-watchdog is interfering. My understanding is obmc-chassis-poweron/off =
-will trigger host-poweron/off.
 
-Based on meta-quanta, I don=E2=80=99t see any other services I have to =
-define to hook up host-poweron/off. This is why I think removing the =
-watchdog is enough. But if there is any other interfering factor in a =
-hostless system, I need to know that as well.
-
-Mike=
