@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5537426D05E
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 03:08:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD8E726D06E
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 03:12:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BsJjt6nH8zDrh2
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 11:08:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BsJqQ4w53zDsGv
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 11:12:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,76 +17,73 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=ALcw/T7I; 
+ header.s=fm2 header.b=bgRlWIJU; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=nJ0LaxKe; 
+ header.a=rsa-sha256 header.s=fm3 header.b=hHWmtSWO; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BsJ6q1czFzDqrM
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BsJ6p5b35zDqq7
  for <openbmc@lists.ozlabs.org>; Thu, 17 Sep 2020 10:41:05 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 74DA15C0E90;
- Wed, 16 Sep 2020 13:08:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Wed, 16 Sep 2020 13:08:16 -0400
+ by mailout.nyi.internal (Postfix) with ESMTP id C84DE5C11B6;
+ Wed, 16 Sep 2020 13:20:47 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute7.internal (MEProxy); Wed, 16 Sep 2020 13:20:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=dtiVuPrhY4fM+yxIT5k73SedT01
- 6IFsfvutS8b4ivCI=; b=ALcw/T7IV3L6jSqso+4VUiLJalZKSi/cIfBalR5sfm3
- U2fwNW2UKWuGIiTYqvSHv31FexVAFOLIMkUoXiCtSWiyH7bEybg0XZWBFqAEyEbL
- 8ykzQfxrpW+P1fBHlCfnsSVT0/KBHtoYGxsG+88p7VbgbCDW9XBl9BcVJ2uGrK9V
- YAHS/Qbh2K/Ls2ZWdwS9K5rR9tRSanXAzliO1XSj3AOW2NSpSxEBySK2BtclARIx
- /HItCrTWCC7lU/eex+Xr7nhQ2Kyiav5pXP7u5KchQqi4DEu6zCVUCf101k4p1B5X
- 9zpHomJQ8M66GzoZvWPgGLdh7hnZzoPowE/9ZS6LmYw==
+ :content-type:in-reply-to; s=fm2; bh=acxrLTMk2MXDlZDypAv5Pl/rGEV
+ 2/9oq2CUt6/1fer8=; b=bgRlWIJUwHy4TdsZOsWmzhkUjL/zqjwOehKCVAZh+uk
+ vJQ0+xEEpFhYkP/QFZaIur26yrfUqzhyblmXhjuL+13W0Fi90Nsnbtjy0v3nxpui
+ Mtkika6BqUcAuZgej+ZACSFc8M062OECwuXid5k2OVaZVuF/AHb6cOueyQ5R6uys
+ uRf1V7Gwllnd9+xYRXM1PrXu76rgpUCzcK9wGuqwz7fShDuMCCZFhay3uDFTHMGE
+ Y2Pt2maLeUBuei12yeccJ6yxknnQccRBmOiGl593DRG1dKGrLlRYC311+JXsohDV
+ j6S+Er81Blxm9AVuD+S2VwwJW7t15MOIsmxKwOCNEaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=dtiVuP
- rhY4fM+yxIT5k73SedT016IFsfvutS8b4ivCI=; b=nJ0LaxKeNg+brG81OuHRVY
- Jxfo5MuoSSo3UtfmQTXGhgqszd2UUXtgGA1OKgjXaT2EIn1QZBS6zTDiul7RDHIC
- LOMG2c8uYc7Bc5meSPp+HCeSWihcMapBgfcF4MosOqHeD61SNJaGk6rqTzKQD1+W
- +z/faQMlaVVoasn2v479H6AItCgJTiNOlwmfdIFbKqHWClbhOJzEqmqPt97pWhCh
- byrd1BITNXuQE+exOO6LnjhDP5dISuBbvvmttLeeAH+XYmfxSKKZC46oh054PC/i
- 1WwBaxjCCPODpT+lSChoQnCKxgASkMP7SEeA8+exU/r4GFeGRrdkLUDH4/2wWh9Q
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=acxrLT
+ Mk2MXDlZDypAv5Pl/rGEV2/9oq2CUt6/1fer8=; b=hHWmtSWO8P+PjJJG99Efr9
+ t32pjK2Ht+2b7qFiza/kpNhwoZfQNfR1HDohMTYP0Ob2miK96w6NiQ+PKJwlOD98
+ fpFxh3D9QoyPiPotO+6Ci4M6rMSYyAb971wgTGCbXV3zjF3wLOJ2Am6BEP1PKnOF
+ YSUEatzI0ZDt70IjSHidjTIWNyDSWjH9nxwQsDj1kXSP/5iSk0tFJ50NcQbB8aW9
+ lLXKfNHYqQe160grezjuptALZyY+mqw+93LxP0097HEN+7h/4X8km25GJ/95uscM
+ JYiL10C+h18GJ+NXFJ7nnO1vXtM551yygFqRzeU9zp+Zhxx2g+sTYVpl4p05oVvA
  ==
-X-ME-Sender: <xms:fkZiXwmhi0XUi8m6fyActIDyw_YRquNnfUoXNMrePQV-eY6fEhQcew>
- <xme:fkZiX_3CY5myIPZ-hBhJxGa8dm59MJHeLyHVA_wa9L0l2GBhTClHW2t4SShYzmdBl
- 3_iVXxj8JzcrYuuuRc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtddvgddutdelucetufdoteggodetrfdotf
+X-ME-Sender: <xms:bkliX1_Ulmb0m1x2oUqXCw8M38n58BpODSeiIdre4FLYNQ2G3urAzg>
+ <xme:bkliX5vij6K7i2RgVtXVcpnjwt6_1J_XcFpZWFgzdTS4gP-wh2hzOig9ZKH4V_P53
+ CNo1igx1aP0778bYzg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtddvgdduudduucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
- leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
- homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:fkZiX-qrRQ9hwC-gekyYjdgiuX7KOfpz0TNyUVLo6rI1TjzH6dsGMw>
- <xmx:fkZiX8naucXOw-iVwT63MsAmBZ9gWWpNTRhGN9jtHhldUPNBWFCc6w>
- <xmx:fkZiX-2BQmaUxocXN8q8Iqu87GyZetJkk5TZZ2VI8CVsFhYpDHn8JQ>
- <xmx:gEZiXz8WPH1yt5onuNmRrEV7WJA4tl3r8fquYi9aSxquh5IKXyjTmA>
+ uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
+ fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+ ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+ epudeiteeiueeiudevleffteeijeektdejtefgvdfgtdeiuefggfelgeeihedtvddunecu
+ ffhomhgrihhnpehprhhovhhiuggvrhdrnhgvthdpghhithhhuhgsrdgtohhmnecukfhppe
+ ejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+ pehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:bkliXzAWH8UWixQG99YKWkocYCp4dsvuZPwpyOTZyhReSjsIump7Aw>
+ <xmx:bkliX5f-TjVcMNp4dg_MQEhvfYDiTsUgfHwSgtha3goOVxqAz4ytsg>
+ <xmx:bkliX6PU1YwctpGwghyyQcLSNoBIftyr4_iNsuK6jib_9fnuGbSxbw>
+ <xmx:b0liX82leJ9dWg0PdcATQ4DP7a1BeFtywJ_QgwtvA5XVwZ1hFk_rbw>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id C4A51306467E;
- Wed, 16 Sep 2020 13:08:13 -0400 (EDT)
-Date: Wed, 16 Sep 2020 12:08:11 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 8F48E3280059;
+ Wed, 16 Sep 2020 13:20:46 -0400 (EDT)
+Date: Wed, 16 Sep 2020 12:20:45 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Ed Tanous <ed@tanous.net>
-Subject: Re: dbus-sensors: Unit property for xyz.openbmc_project.Sensor.Value
- interface
-Message-ID: <20200916170811.GC6152@heinlein>
-References: <4456d953b1ea5debbc65a282fd62faf4f42d6a20.camel@yadro.com>
- <a824162a-3c7e-810b-5c9a-e41332a0cd22@linux.intel.com>
- <CACWQX82wHxHz9VLAjeSv_s+J1Ovh985o31ekB0oPdr8A8UBavw@mail.gmail.com>
+To: manoj kiran <manojkiran.eda@gmail.com>
+Subject: Re: Using bios-settings-mgr for setting hypervisor network attributes
+Message-ID: <20200916172045.GD6152@heinlein>
+References: <C9C88F03-4715-444E-9B1A-3834995458EA@getmailspring.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="kVXhAStRUZ/+rrGn"
+ protocol="application/pgp-signature"; boundary="EY/WZ/HvNxOox07X"
 Content-Disposition: inline
-In-Reply-To: <CACWQX82wHxHz9VLAjeSv_s+J1Ovh985o31ekB0oPdr8A8UBavw@mail.gmail.com>
+In-Reply-To: <C9C88F03-4715-444E-9B1A-3834995458EA@getmailspring.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,113 +95,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>,
- Andrei Kartashev <a.kartashev@yadro.com>,
- James Feist <james.feist@linux.intel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "ed@tanous.net" <ed@tanous.net>,
+ "james.feist@linux.intel.com" <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---kVXhAStRUZ/+rrGn
+--EY/WZ/HvNxOox07X
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-I would prefer we implement Units in dbus-sensors.  Reasons below.
-
-On Wed, Sep 16, 2020 at 09:24:19AM -0700, Ed Tanous wrote:
-> On Wed, Sep 16, 2020 at 8:23 AM James Feist <james.feist@linux.intel.com>=
- wrote:
-> >
-> > On 9/16/2020 6:28 AM, Andrei Kartashev wrote:
-> > > Hi,
-> > >
-> > > We noticed that dbus-sensors doesn't fully implement
-> > > xyz.openbmc_project.Sensor.Value interface: there is no Unit property
-> > > for all the sensors, defined by dbus-sensors.
-> > > I believe it was intentionally, but I still wondering what was the
-> > > reason?
-> >
-> > It was originally as the information seemed redundant. If the
-> > information is needed I'm fine with someone adding it, it just hasn't
-> > seemed to be a high priority.
+On Wed, Sep 16, 2020 at 08:17:01PM +0530, manoj kiran wrote:
+> Hi Ed & James,
 >=20
-> Considering we've gone this long with no impact (considering the path
-> can be used to lookup the unit) I wonder if we should consider
-> removing unit from the sensor Value API?  It doesn't seem used.
+> Till now IBM was using phosphor-settings infrastructure as back-end and u=
+ses Ethernet Schema for Hypervisor computer system(hypervisor_ethernet.hpp)=
+ for setting the IP address of hypervisor. And now we are planning to lever=
+age the capabilities of bios-settings-mgr(backend) as well to set the hyper=
+visor attributes.
+> do you see any concerns here ?
+> Thanks,
+> Manoj
 
-The redundancy comes about from this list: [1].  I don't really recall
-why we went with that approach where sensors were required to be in a
-particular place in the object hierarchy.
+These end up being two quite different implementations from a dbus
+perspective, which could have implications to Redfish and webui users.
 
-I think we only "got away" with "no impact" from the lack of
-implementation because the particular implementations that work well
-with dbus-sensors also didn't implement it because dbus-sensors didn't
-provide it.  That's kind of circular logic as a reason to eliminate it.
+With 'settings' there is no generic settings interfacess on dbus; every
+setting is required to have some modeled interface.  This is great when
+you are exposing some hypervisor setting that the BMC also has for
+itself, such as network.  We have a single dbus interface for all
+network end-points and it doesn't matter if it is for the BMC or the
+Hypervisor.
 
->=20
-> >
-> > > I noticed that in intel-ipmi-oem units are determined based on object
-> > > paths, but that looks ugly since there is well-defined natural
-> > > interface for units in dbus.
-> > > Lack of the "Unit" property in the interface breaks some existing
-> > > logic.
-> > >
->=20
-> Technically the way the interfaces define it, both are valid to use to
-> determine the Units, and both would need to be lookup tables.  Is
-> using the path any more ugly than using the property?
+With 'bios-settings-mgr' there are only generic free-form settings
+values, which presently can be either int64 or string[1].  This means
+there is no overlap with any similar settings we have on the BMC and
+there is no programatic way to ensure the data is of the right type and
+named with the right key.  This approach is better when you have large
+numbers of attributes for concepts which the BMC doesn't have itself.
 
-There isn't really a programatic way to define and enforce object paths
-presently.  There is a programatic way to define and enforce
-enum values.  The enums don't actually need a lookup table, if you're
-using the sdbusplus generated headers and bindings.
+My understanding was that the 'bios-settings-mgr' was typically going to be
+used for uploading a large blob of configuration values and the external
+interfaces would have fairly minimal code related to individual
+settings.  My concern with using 'bios-settings-mgr' in general is that
+it will end up being very tight coupling between external interfaces
+(Redfish / webui) and BIOS implementations.  When you use 'settings',
+you can implement much more generic external interface code and likely
+limit the coupling, if any, to the PLDM provider.
 
-If I were to guess which of the requirements would be more likely to be
-changed it would be the object path.  There are very few other places
-where we have such strict requirements on object paths (though we do
-have places where the object path has meaning).  The current definition
-is a bit ambiguous by what is meant by "the correct hierarchy within the
-sensors namespace[2]", but the current implementations seem to take this
-to mean `/xyz/openbmc_project/sensors/...`[3].  I don't know that this is
-particular convenient for a multi-host system or any case where a BMC
-is aggregating sensors from other BMCs.
+Net is, if you're expecting to be able to modify hypervisor values
+through Redfish or WebUI, I think the best approach is to use
+'settings'.
 
-Unless we get some stronger definition on what is meant by [2], the only
-completely correct code is to look for the type at all the various
-segments of the object path (ex. "fan_tach" could be found at
-/xyz/openbmc_project/sensors/fan_tach/node2/fan0 or
-/node2/xyz/openbmc_project/sensors/fan_tach/fan0).  Using the enum value
-is far easier in this case.
-
-1. https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/open=
-bmc_project/Sensor/Value.interface.yaml#L37
-2. https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/open=
-bmc_project/Sensor/Value.interface.yaml#L3
-3. https://github.com/openbmc/bmcweb/blob/cb13a39253848ece442971301ade9c09d=
-98bf08e/redfish-core/lib/sensors.hpp#L56
+1. https://github.com/openbmc/phosphor-dbus-interfaces/blob/77a742627edde54=
+aec625d7c1a200d9f4832f0ba/xyz/openbmc_project/BIOSConfig/Manager.interface.=
+yaml#L44
 
 --=20
 Patrick Williams
 
---kVXhAStRUZ/+rrGn
+--EY/WZ/HvNxOox07X
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9iRngACgkQqwNHzC0A
-wRn1Rw//YWoRIscudl+VSPI8Ud318kLMGV5gkiM2LQ7Hmjiwv+b1PK6d3Yjj/TOe
-mKlieezBLGfh+WDrFg3VnBNmNJbUOT4gKKudkvqGqUNYAW0zGR8YUifOVITW7F2i
-KL4m3Krce4B3mwyTf2PtqDHTuqETb4jZSlK6pLyghrSSn5H9t7n8tbqqWMWDMvuZ
-I/TdcRBZ5Y0ksgE/6ygbvAjl0zwxhFoSo1ixkEnLDRkPobZCENJo7w+UgKkNNVQm
-WjPsIuNPg7CcpjVn+P3sxaYYUUe6jJ84pFQI0RjCAlqZRgWBwPm2xr0ME/6Pr3Xx
-DLk646Xp1DsxdcqLzs+qlXGsvlXpS32hP96M456AzeRNrhb3YlwnWZVovZnI4ITg
-y//oN8Gn0RLi6d3dJBlmkBTo4/E6sE3AG922OgbAt2TUgGyngBerbYR0wgi522Vn
-hwP0/vWuR30dIS9E1aLuNFqp9TbPGgEA3EQlJfr8WfOA7HlszAcPT4XBoRvagqVZ
-g0Vklnq21eyjOL7Mg91wDJiWrNDheorOGLymCjk18eMk3ZwyU5c2+YjBm6BYrg8x
-KmB5/jAIpcD2ppFxCNCvOsTYkz5rPzTHrGR7Bj+oWnzoex2k5NrzD4A4/odV+2Ar
-lDhozi1/9RdInJeLsYIMEnpV9q/GdLkocd18vgZx96ip/DLsg90=
-=h+Gu
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9iSWsACgkQqwNHzC0A
+wRkX7g//bDbHElt9rDtnadq0MhW5a3Nfp4uQL2LdeJXZVcnZVeTf8uxfxMKT3QYC
+eHmjN0aeEPxRm3eSOkmh3L+WzmCr2qruHffdSyMcK+w8AXaOEbe0a9EMN7E9drNE
+sC+YdVgB2Y86tOMHLDtbcZTCCYgbo9Kspq1Rnvod0q67qGAc3yCmxxS2d0WQ8Bw6
+OKFdhlB0iDIjYrDu1Tarb5flFZb+Ula7zoMR2psMaJLkPx/MzVr+C0Tm1llgLaX4
+GC0TkVtfrdSGCaiSyHz1X7XsQ6uhR33FclvGxNeSj8AZMdsjr5YTX+zMHw+F8YfE
+VuB2Ersdr+nrSWzhvwbc1vXfEnPmVhplPrsH35jYsN2kp9Gvwm8NXrw60haBMv0q
+qD/JEzvno3LjpbYPZaMtkChdLI7vHcwss6R7hP67JlFd2PBbXm4XyraMVcMFwhnb
+tupc0SsOL5EhxbvRWXRpYrl72E3NRGEQ7DPN4640SczE8vS14gT4VHQ1GU7JDPiG
+nWzoTVH2OhDgor9pkAXBjI84caTkbzb9ppTMLY44NYAQSVw6e39dIPlo1YnCY7Pq
+qrDECrSEgDa8vrtOPQRVzbku3Pyp+RV5Pmg7kBRHEDRzm9HhHt1xZacmnbkf3nIt
+c3DADc34PnlSyernP9vkLZT6ro3iOfWMJK42LGtjklvOzhXl7iA=
+=2JJd
 -----END PGP SIGNATURE-----
 
---kVXhAStRUZ/+rrGn--
+--EY/WZ/HvNxOox07X--
