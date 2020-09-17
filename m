@@ -2,70 +2,41 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0C5326E984
-	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 01:37:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 294AA26E996
+	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 01:46:50 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bstfp1qFWzDqfK
-	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 09:37:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bstsg3mj4zDqf4
+	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 09:46:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2a;
- helo=mail-io1-xd2a.google.com; envelope-from=benjaminfair@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=LxOp4eNm; dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
- [IPv6:2607:f8b0:4864:20::d2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bstdn3GFtzDqbm
- for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 09:36:25 +1000 (AEST)
-Received: by mail-io1-xd2a.google.com with SMTP id y74so4438490iof.12
- for <openbmc@lists.ozlabs.org>; Thu, 17 Sep 2020 16:36:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=oeS9Drs3nbmcJxlwm/F6BbAO52SYud0SPmQhM21L4Sw=;
- b=LxOp4eNmhtYijKcs0NY1I5lZjjFAj2pNoHt2NJ4HyGPRd9hzNMyQIP+8rItsUu3XK5
- Lr3vR2fANRLPDCx2luKir2ZI3rVoxCEAIrHMCFsKucUNUHBbrf7qk3UrkB85988VBqDy
- Okbl0SxBqqBxPQ9uIYuR2SqoxY0nPUSptcYeg5kfPLD71La6oNNdY+FDj9+Lsq9bmuD2
- 85Bg1HyzwR8GYysXczlwUSgsHkR+YarOZrZIrjxdeThbsCXNZZngipWI2tmFSxzcR/8f
- yBeIbUX66brxpbyxDQDGpvA/Pmd2gxW5m8fT/8dEcw43y+ljOAV+N9jyG7G5jQYyck8R
- xNQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=oeS9Drs3nbmcJxlwm/F6BbAO52SYud0SPmQhM21L4Sw=;
- b=WrwV5CCHd74V+5emJN6UOsgxAMOjmvMaTg4auJGcSEsmjM3J65G5270YYL/h4TRWn3
- mFXFyM7Mvn+oBQU1cpnjJnBia7atqAWdhAzQuIrRbzSuiBvk003cQa3lsxPKE8pSivO1
- Uyz0LJ8DhcpgkADMMgayUsYW3c/rc+goE9Ivj4IRSmPWMSq9yJAw6Gcq1d/u4xbzTIh/
- hLpmKeBkMiFvd94E8adiBNzw0RZwo1NLuTDNcwXdf0beNfpOPI1Uj5bntZp6gKA6ffYw
- BUHuy/f0AVgK4dRhMqTZG04GKuol61QdQgWhlG46+fOjl145dHD+ggEiY5U1zD5R4NcD
- eNTg==
-X-Gm-Message-State: AOAM531u+1giCG21Shk0bRQJzKJTInQeWoNxzLhBO74DDegUP9P0ulKA
- 4jHCOhCK1VNBSKu3yQyySO/r1pzhpnMFltYFSyTt0w==
-X-Google-Smtp-Source: ABdhPJwki6l6EWR30gvfF9dJP0yvP5/BSR6oKyH6JLJYhB3TZX/cc4CkAg79P6eFy8Jh4MiuCt/M8Ykf0hDXl5UAkrU=
-X-Received: by 2002:a02:ce46:: with SMTP id y6mr27569487jar.102.1600385781734; 
- Thu, 17 Sep 2020 16:36:21 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BstqR2hdBzDqfZ
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 09:44:49 +1000 (AEST)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08HNiMqK008721;
+ Fri, 18 Sep 2020 02:44:22 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+ id 6EE6A639D6; Fri, 18 Sep 2020 02:44:22 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: robh+dt@kernel.org, mark.rutland@arm.com, avifishman70@gmail.com,
+ tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
+ benjaminfair@google.com, joel@jms.id.au
+Subject: [PATCH v6 0/3] arm: dts: add and modify device node in NPCM7xx device
+ tree
+Date: Fri, 18 Sep 2020 02:44:17 +0300
+Message-Id: <20200917234420.86137-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <a3919f2a61844f9f89f8e1f8dc0d5972@quantatw.com>
- <CADKL2t5YWsjREnFZ36ZA0ZR4ObOqY-noazEc-+wwVePF9bo8vA@mail.gmail.com>
- <CANPkJS_p9iTJJCue_cSePsgsJ71ztv06XEvEpqe1Y294ne5UYQ@mail.gmail.com>
- <20200917152912.GG6152@heinlein>
-In-Reply-To: <20200917152912.GG6152@heinlein>
-From: Benjamin Fair <benjaminfair@google.com>
-Date: Thu, 17 Sep 2020 16:35:44 -0700
-Message-ID: <CADKL2t5npwwBs6ecKAqscJ8=BoakpwDNMjuSiZOSXTkCNcLryA@mail.gmail.com>
-Subject: Re: Quanta requests to create a repo in OpenBMC github
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,99 +48,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Josh Lehan <krellan@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>,
- =?UTF-8?B?RnJhbiBIc3UgKOW+kOiqjOismSk=?= <Fran.Hsu@quantatw.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 17 Sep 2020 at 08:29, Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> Would someone mind giving a 1-2 sentence explaination of what "sensor
-> margin values" are?  I'm certainly not a thermal control expert.
+This patch set adds and modify device tree nodes in the NPCM7xx
+Baseboard Management Controller (BMC) device tree.
 
-This daemon is intended to be used in combination with
-phosphor-pid-control. You define a configuration file with two
-sections: sensors and zones.
+The following device node add:
+        - NPCM7xx Pin controller and GPIO
+        - NPCM7xx PWM and FAN.
+        - NPCM7xx EHCI USB.
+        - NPCM7xx KCS.
+        - NPCM Reset.
+        - NPCM Peripheral SPI.
+        - NPCM FIU SPI.
+        - NPCM HWRNG.
+        - NPCM I2C.
+        - STMicro STMMAC.
 
-Sensors have a D-Bus path to read from along with a target temperature
-and some other parameters. The daemon subtracks the current
-temperature from the target temperature to get the "margin". A smaller
-margin means the temperature is closer to the limit.
+The following device node modified:
+        - NPCM7xx timer.
+        - NPCM7xx clock constants parameters.
 
-Zones group sensors together and look for the worst (lowest) margin
-value within that group. This value is then exported for use in
-phosphor-pid-control.
+NPCM7xx device tree tested on NPCM750 evaluation board.
 
->
-> I don't care if there are multiple implementations of similar
-> functionality, but there is also work going on for a repository called
-> 'phosphor-virtual-sensors'.  What little I could understand of
-> read-margin-temp's role seems to somewhat overlap with that effort.
+Changes since version 5:
+Address comments from Joel Stanely: https://lkml.org/lkml/2020/9/16/994
+ 
+Changes since version 4:
+ - Tested patches in Linux kernel 5.9.
 
-It may be possible to implement this using the functionality provided
-by phosphor-virtual-sensors, but the resulting configuration would
-likely be complicated and difficult to maintain. Margin calculation is
-a common enough use case that I think it's worth having a dedicated
-service.
+Changes since version 3:
+ - Tested patches in Linux kernel 5.6.
 
->
-> On Wed, Sep 16, 2020 at 10:37:14PM -0700, Josh Lehan wrote:
-> > Yay, this is great to see. I have some bug fixes to read-margin-temp an=
-d
-> > was just wondering how to contribute them. I'm really hoping this makes=
- it
-> > into OpenBMC. It's the perfect preprocessor for phosphor-pid-control, I
-> > have found.
-> >
-> > Josh
-> >
-> > Josh Lehan | Software Engineer | krellan@google.com | +1 650-733-8941
-> >
-> >
-> >
-> > On Wed, Sep 16, 2020 at 7:15 PM Benjamin Fair <benjaminfair@google.com>
-> > wrote:
-> >
-> > > On Wed, 16 Sep 2020 at 06:31, Fran Hsu (=E5=BE=90=E8=AA=8C=E8=AC=99) =
-<Fran.Hsu@quantatw.com>
-> > > wrote:
-> > > >
-> > > > Hi Brad,
-> > > >         This is Fran from Quanta Computer.
-> > > > Quanta OpenBMC team would like to share some useful tools to the Op=
-enBMC
-> > > community.
-> > > > Such as the read-margin-temp daemon (
-> > > https://github.com/quanta-bmc/read-margin-temp), we are using this da=
-emon
-> > > to fill sensor margin value to PID to do fan control.
-> > >
-> > > read-margin-temp seems useful and widely applicable enough that I
-> > > think it's worth having a dedicated repo for it.
-> > >
-> > > The quanta-misc repo could possibly be used for smaller, more
-> > > Quanta-specific things.
-> > >
-> > > >
-> > > > We would like to have a repo named "quanta-misc" under the OpenBMC
-> > > github.
-> > > >
-> > > > Here is the maintainer list:
-> > > > M:  Benjamin Fair <benjaminfair@google.com> <benjaminfair!>
-> > > > M:  Brandon Kim <brandonkim@google.com> <brandonk!>
-> > > > M:  Fran Hsu <fran.hsu@quantatw.com> <franhsu!>
-> > > > M:  George Hung <george.hung@quantatw.com> <ghung!>
-> > > > M:  Buddy Huang <buddy.huang@quantatw.com> <buddyhunag!>
-> > > >
-> > > > Thank you.
-> > > > Fran Hsu
-> > > > E-Mail : Fran.Hsu@QuantaTW.com
-> > > > Tel: +886-3-327-2345 Ext: 16935 <+886%203%20327%202345>
-> > > >
-> > > >
-> > >
->
-> --
-> Patrick Williams
+Changes since version 2:
+ - Remove unnecessary output-enable flags.
+
+Changes since version 1:
+ - Add NPCM reset device node.
+ - Add reset parameters to NPCM driver device nodes.
+
+Tomer Maimon (3):
+  arm: dts: modify NPCM7xx device tree clock parameter
+  arm: dts: modify NPCM7xx device tree timer register size
+  arm: dts: add new device nodes to NPCM750 device tree
+
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 968 +++++++++++++++++-
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts     | 404 +++++++-
+ .../boot/dts/nuvoton-npcm750-pincfg-evb.dtsi  | 157 +++
+ arch/arm/boot/dts/nuvoton-npcm750.dtsi        |  24 +-
+ 4 files changed, 1516 insertions(+), 37 deletions(-)
+ create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
+
+-- 
+2.22.0
+
