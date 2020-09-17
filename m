@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEEF226DFC6
-	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 17:37:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B57B26DFFD
+	for <lists+openbmc@lfdr.de>; Thu, 17 Sep 2020 17:47:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bsh0n1R3qzDqf5
-	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 01:37:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BshDj2ggxzDqfS
+	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 01:47:33 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,76 +17,78 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=A7Dc44ae; 
+ header.s=fm2 header.b=I8VvqbJA; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=HtLjfAl3; 
+ header.a=rsa-sha256 header.s=fm3 header.b=m6JxjpfS; 
  dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
  [66.111.4.29])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BsgzV1rwjzDqTJ
- for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 01:36:06 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BshBY30JzzDqXM
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 01:45:41 +1000 (AEST)
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 49A625C0063;
- Thu, 17 Sep 2020 11:36:03 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id E5C2C5C0135;
+ Thu, 17 Sep 2020 11:45:38 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Thu, 17 Sep 2020 11:36:03 -0400
+ by compute7.internal (MEProxy); Thu, 17 Sep 2020 11:45:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm2; bh=nvlUGjiqGs3wc50ElAMAq59J2P3
- BTLaA6c6J9dF2upM=; b=A7Dc44aeYUb3+SjzuDVezu5Tw2VvoBbiGHRG4uDYwYH
- Nwe98nsP+XwdqsYIfOOIMVvbVIgsw6kDJk1kCSA2oqHIPtknb1LjeiNd3DDrIlDd
- v/DNYB87X4iKDqRGJ+kQCj//OTQbCiwAA1LaXifHcTvnK2DQb9IWjKEOSfOGgyCj
- iOJMqH2hsU19PN8Mbbm9BWTIR7OMrrC2QShFwNh3dFaBANSOr4/aeKZ+rb99wV7a
- Kv1jbDgcw07o3EJjsYo5aqVYlc5BG7h9kl0L5V7h85yULDAUTwHJzjT5So9GCf3f
- 4ehOh+ygwtaKANQB0FArlHCmTGM+/8QuqcfhJn1uF4w==
+ :content-type:in-reply-to; s=fm2; bh=8RuT7smzSRkCKtxp1ehvCPD2bq2
+ P2TKyuGtlB41pc2c=; b=I8VvqbJA5v77dGwjUiVIG86h5krvVb7paCWyHJs7jZl
+ kPfkTV5Er95nyT8g9HBP497f1+5YPDbm9l1gZZeClgUGJRvhRhHFx3Q9qPXCduxx
+ l24UgfIuqJMz5+Tb7nwYpnIxvrVIyGBHw5pYdHeYHdxQZbTnLcUXKS4oosG6P5mf
+ BRjgeZHDIn+z5p+O9YFEktxjxD7DuPALbI/M9X+6eAIzdEfpC66wCVC1Cc2coYGo
+ OEb3s/4orqV2mQSt/dwqdtd3yrR/D/n9te5IXIqr4zmK/8qMbhlUgXorrQVX3op8
+ jS1V5ajW2xXmEQpzKn0k56NmB/idhjo8bJ5eVilcQqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=nvlUGj
- iqGs3wc50ElAMAq59J2P3BTLaA6c6J9dF2upM=; b=HtLjfAl3JWKkO/Vr5qBQ8U
- 2hGNV7FKRtrXVgjebrDhHrifs+mR6I/J8yPlqm3ofVYrJAQqxPVgVepiET+hp3W3
- YU8uhmNBXSjWFdGwvjcj8AVht3P2LPNcB5e2q+UqqanOayvSE/hAwFM7VNkf7X4s
- +K1VdlP8h/trxBFc9CUFVNPhCVUYDlx6pxIQoIv976A5blnuknsGtjzMgbJokILA
- TTtZfs1ZvohdkfJwj5vibwrRyldCeba687JdWd17ztGsmGUVzhzL08R713fBhsEG
- Ksxn6Hsbq20ltQJT6dU+eGQsrN/U0x3+Wh2IRoTFT2GUhlez5SzBdbbvZFHrg4XQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8RuT7s
+ mzSRkCKtxp1ehvCPD2bq2P2TKyuGtlB41pc2c=; b=m6JxjpfS5m9AcQQbpP4RCn
+ E9LtamcNLBINIRG0UbRWYKTmiinHZN7ah7JoDUYGAuqXytiz8zCezB/EQ38PP4EZ
+ mIBmnf1spqANBJmwmD3J9vj3omvyoY7haRw/hE/ERE9EOZCuRsEqJsNutQHMH07G
+ QIeFwzI/Qq9PSGKOmOoyWSsWKPxmHm+UF0WaH2YohJWpdQgBQvPIGEid4ikKwxOE
+ KhodoHWiTppbiDX2oT2LEWPJiQJKm9P+I9iKmr6Gv2yAbLF8R1RIeiCnkmrcLtwR
+ yl2DL0M7ThvS1MCuywsq4/JadBI38kBdpsNJA4Y6+0UzjuU5umoC7xPxQLABLaRg
  ==
-X-ME-Sender: <xms:YoJjX2BK7QvfgwjPxNtZm_-TosEGHt3htwUxqRHb3tP3Xezu4iPuWQ>
- <xme:YoJjXwgHUV196NCddbrAph4Iv3Uja1c4Lv0908-_1VdKYlNHVeUJfQA5TGOcFFCnf
- qWT-HSJq4BmJCpNu8Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtdeggdeludcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:oIRjX9kS1ELCthoaQjq6C_J2FxiJnn0xmHQaJpKiSpJ8joL03-iVvQ>
+ <xme:oIRjX40YPdOTH_5p9Xv4pwyXZQqaL_Bkzzf11-rOhM-G9XuNV2ttlNSWMK0kLFymN
+ SeVdC_id-CYhedKRxg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrtdeggdelgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ hrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
  necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucfkphepjeeirddvhedtrdekgedrvdefie
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:YoJjX5mGkep9npMBSzfGUQ7MLR0zQUnM1JRtNm-peTjhbjuTCr5AuQ>
- <xmx:YoJjX0wx06bZVdWhbrSgxRd3EULjO1aHiKZlX-gP_NuoLOvWDh15HA>
- <xmx:YoJjX7QJilzAGf_2R5pRjiYj14hMM9sbWajTXBmWXLc7YbnFVhuHqw>
- <xmx:Y4JjX-MSvMbhRMvGEDqcqLNP7v3jUblrDNlYiCKK4BkVS8sjpfpswg>
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpedvfeelkedtleejhfeitdduhfeviedu
+ jeelheektefgieefiedtjeegvdeggfffffenucffohhmrghinhepohiilhgrsghsrdhorh
+ hgnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptden
+ ucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:oIRjXzp6brS4LdLJb6xZV_SZ8hBw_cSQd6yGftXSx-uWH1q4AFAnEA>
+ <xmx:oIRjX9mSNVOXrDl0kteSuANLhEnGr5eFwXtFDRARUPBKUA8D-hRB7w>
+ <xmx:oIRjX71ADlqCalUBLkI0RYMco90KBn-6jTRavhcTR85AN4BWeBRIvw>
+ <xmx:ooRjX4_k1riSc0ckPr2euMmAs7Pnc0LmJhGQ3whhVf1tXK44mGbWuA>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id AB077306468D;
- Thu, 17 Sep 2020 11:36:02 -0400 (EDT)
-Date: Thu, 17 Sep 2020 10:36:01 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 6846F3064674;
+ Thu, 17 Sep 2020 11:45:36 -0400 (EDT)
+Date: Thu, 17 Sep 2020 10:45:34 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-Subject: Re: Using bios-settings-mgr for setting hypervisor network attributes
-Message-ID: <20200917153601.GH6152@heinlein>
-References: <C9C88F03-4715-444E-9B1A-3834995458EA@getmailspring.com>
- <20200916172045.GD6152@heinlein>
- <CACWQX80BYYwPTN1PsbLfjFN5fQyjNGC1SxM9iyBKvxNiLh=WLQ@mail.gmail.com>
- <a5f0245d-703d-e0ba-0344-442c49a60cdf@linux.vnet.ibm.com>
+To: Jayashree D <jayashree-d@hcl.com>
+Subject: Re: Connection issue in OpenBMC image
+Message-ID: <20200917154534.GI6152@heinlein>
+References: <SG2PR04MB30932185827E6DCADD02F422E1240@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <SG2PR04MB3093E7C8F543D9AD318B4653E1230@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <68131600080119@mail.yandex-team.ru>
+ <SG2PR04MB309303A2C979A689DE8B67CFE1200@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <18221600180837@mail.yandex-team.ru>
+ <SG2PR04MB3093A564F0482CE5FF12BA42E1210@SG2PR04MB3093.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="4C6bbPZ6c/S1npyF"
+ protocol="application/pgp-signature"; boundary="jaTU8Y2VLE5tlY1O"
 Content-Disposition: inline
-In-Reply-To: <a5f0245d-703d-e0ba-0344-442c49a60cdf@linux.vnet.ibm.com>
+In-Reply-To: <SG2PR04MB3093A564F0482CE5FF12BA42E1210@SG2PR04MB3093.apcprd04.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,73 +100,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Konstantin Klubnichkin <kitsok@yandex-team.ru>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---4C6bbPZ6c/S1npyF
+--jaTU8Y2VLE5tlY1O
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 17, 2020 at 01:10:06PM +0530, Ratan Gupta wrote:
-> We need to address the below two concerns with the existing settings infr=
-a.
+Hello Jayashree,
 
-Both of these seem like missing features based on our now greater
-understanding of the problem domain from where we were 3-4 years ago
-when phosphor-settings-manager was originally written, right?  That
-doesn't seem like a good reason to entirely throw out the approach.
+I saw an output `ssh -v` from you earlier, but there really wasn't any
+useful information there.  It looked like the connection was being made
+and keys were exchanged and then the log just stopped abruptly.  This
+tells me it likely isn't a networking issue but an issue in the
+handshake between the ssh-client (your computer) and ssh-server
+(dropbear).  You can continue to add '-v' parameters up to `ssh -vvv`
+and you'll get increasingly more information.
 
->   * Pending v/s configured value: Currently settings have single Dbus
->     Object, Some properties which is for host firmware we need to have
->     two placeholders one for Pending values and one for Configured
->     values. Bios settings have this concept.
->       o Should we add two Dbus objects in settings infra?
+Joseph Reynolds recently posted a reminder about dropbear disabling weak
+ciphers[1].  Is it possible that your client is using an old cipher?
 
-This was going to be my suggestion, yes.  You could have two sets of the
-objects: current and pending.  'current' objects may not be written by
-dbus-clients.  These are the same terms used by the BIOSConfig proposal.
+On Wed, Sep 16, 2020 at 11:35:28AM +0000, Jayashree D wrote:
+> root@tiogapass:~# journalctl | grep drop
+=2E..
+> Jan 01 00:15:28 tiogapass systemd[1]: dropbear@0-10.0.128.108:22-10.0.0.1=
+:51810.service: Succeeded.
+> Jan 01 00:15:44 tiogapass dropbear[2753]: Child connection from ::ffff:10=
+=2E0.0.1:51944
+> Jan 01 00:15:50 tiogapass dropbear[2753]: PAM password auth succeeded for=
+ 'root' from ::ffff:10.0.0.1:51944
 
-What I am not seeing in BIOSConfig and is equally applicable here is
-_when_ pending is applied to current.  You will need some interface that
-IPMI / PLDM can call to apply those settings?  Or, do you monitor host
-state signals automatically?
+This looks like a valid connection was established.
 
->   * Dynamic Dbus objects: Currently settings infrastructure is only for
->     static objects, Objects which gets added on runtime, settings infra
->     doesn't support that.
->       o Eg: IP address on ethernet interface is dynamic in nature, An
->         ethernet interface can have multiple IP address on it.
->         considering if SLAAC is enabled(ipV6).
->       o Seems this problem is common for both(settings v/s bios-settings)
+> 15.09.2020, 16:12, "Jayashree D" <jayashree-d@hcl.com<mailto:jayashree-d@=
+hcl.com>>:
+>=20
+> OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017
+> debug1: Reading configuration data /etc/ssh/ssh_config
+> debug1: /etc/ssh/ssh_config line 58: Applying options for *
+> debug1: Connecting to 10.0.128.108 [10.0.128.108] port 22.
+> debug1: Connection established.
+> debug1: permanently_set_uid: 0/0
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_rsa type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_rsa-cert type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_dsa type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_dsa-cert type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_ecdsa type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_ecdsa-cert type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_ed25519 type -1
+> debug1: key_load_public: No such file or directory
+> debug1: identity file /root/.ssh/id_ed25519-cert type -1
+> debug1: Enabling compatibility mode for protocol 2.0
+> debug1: Local version string SSH-2.0-OpenSSH_7.4
 
-I assume these would be requested for creation by IPMI / PLDM?  We could
-use a similar model to xyz.openbmc_project.Inventory.Manager where
-objects are requested for creation dynamically through a method.
+This is the log that also looks like a good connection.  Identity files
+were attempted to be exchanged.  Version strings were exchanged.  And
+then the log just abruptly stops.  Was the connection dropped?  Is it
+hung?
+
+1. https://lists.ozlabs.org/pipermail/openbmc/2020-September/023071.html
 
 --=20
 Patrick Williams
 
---4C6bbPZ6c/S1npyF
+--jaTU8Y2VLE5tlY1O
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9jgmEACgkQqwNHzC0A
-wRl2MBAAkQWh3GHEjGy4zOXY2m9yX8qUd61ITxj2ZHZcoZR+Skmh067aU1DzVWQM
-ceFyUay0xlynCIROGYulxKiAEAFHRikhEeBNCjvnUlG4ngpYECgKoZ9Lc6lU9FLI
-qLwO1mCNoyLLLWXWzNCry6Icf692j5xIRAeljpS2zUx12cRY+znEN4gxJ9Y8haab
-xjEhw45bt4AgJn8mZPSCiUAYVc/KC0FGqLB1cqxXnHiRkM3yvhkutomQAme4Lofl
-dIMHZ5uyFlZHupIFVncXcWaVxmEF+gF2/7MvkPETW4voTzhYYQTXdYpYG1iauf3X
-/crQrKMScdOfp9l5S1+BzRL7QQTeoHDte8kAHqvXzEGel3LTADbKDGd+1COSPSII
-7WuQ/fgNnjVuC7d/Y5OKRl+oGFFiRL++jmPzXBkQpJOBU0HQgEK0jRvKz2HRPcaF
-WfaDRwMyrFyP4/n1xGz7a3xD4U89DoFBpY6Ltd3oCnbDgdjH5RVx1T5v1D9JUANd
-mqyw4QNmuoBXSnYQSjDlxyfSCpGE40K3z8HldkFj0pUQuY6kTsV7PD6XKDOsQ/t5
-gMYZofm3ODQAfXLMW8z/POtIKUFCeUjoLAlZ27exp4lzXbsJbQfoqo7ygGhCdIQP
-YF8MKv1E6FoMLUJ9UOMTXbKWoln6te8mwbNXtTUX0vcMZ4tCJnU=
-=FkIZ
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9jhJ4ACgkQqwNHzC0A
+wRkewA/+IgCcMOeZpKWwq53Y1FV8fF/v9/kzvCMK3W2rW9E3z1kWrvbeAT2eNIbE
+lcNrXZrq316tj1l836GfUsfLiG4fyJU0BFjJTf8uhimXhjSGEQ5We6LjZXi6SSLt
+2KOeCfjZ+LqfBiIVmEByHJ/7OmWk+H7lb1bF0ufUWZ2t/oGaY+9WBD0tEPNggknB
+xo2lTpyAB/GNCRVEX4QcheMN7S8UHkRMbc95aX+N3Lytl5m5KkjcTs53qK+M+d5n
+FqCd6NurkMsX4UCbeaLm/710gkqJmD5wH2wrCefoxspO8P9sMKpKqLh7zz1iNTjq
+P1kR3rSqThyI9EPJJJhR9A1fADdQ2vBYLeDYxGGb9eakuVoWEj7MCx8KcGUB8ENu
+7pKSUPVVGYYDiAIssavCRP3w85f6GuT20kJn+4qt8cVVefRVZb5puhdhSAKmNcCo
+sM+H94H1AFDa1HoKVXcbsbJnaw8X5EDoNzmPQroubg0QyyH6ss/53tjbPLlDbihG
+FJwlLZXOO1bGdI4Gj0gSEmolrVQZEWL/JrLf20Jnjs4ZfjMXdsEmbDI+T6s7ReW0
+j3HZDoE38Uh4ofkYJvBuwkGIdVaQYV2TqC9oGJyxK2A1B/v/y10TEyYbxvYWS4qD
+sn5pL0HreebryDFY6nm9IAuFZFATDaWIjUALwV0induuMekQYl4=
+=gjgJ
 -----END PGP SIGNATURE-----
 
---4C6bbPZ6c/S1npyF--
+--jaTU8Y2VLE5tlY1O--
