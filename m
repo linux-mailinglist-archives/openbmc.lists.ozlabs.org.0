@@ -2,144 +2,107 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AD3626F996
-	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 11:49:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1697B26FE16
+	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 15:19:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bt8FX6bh6zDqnn
-	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 19:49:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BtDvZ4LWHzDqkX
+	for <lists+openbmc@lfdr.de>; Fri, 18 Sep 2020 23:19:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.128.113; helo=kor01-ps2-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hcl.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=O2OE9V3f; 
- dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=O2OE9V3f; 
- dkim-atps=neutral
-Received: from KOR01-PS2-obe.outbound.protection.outlook.com
- (mail-eopbgr1280113.outbound.protection.outlook.com [40.107.128.113])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=dkodihal@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=HSNE71qM; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bt8CC1zmQzDqpR
- for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 19:47:49 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e0H+k5+nvs1L8bY97OhZH9W+swaL3Lwp8mZwYWO4l94=;
- b=O2OE9V3fAipzoPYGoiJRUqYHylMv1OBj8wmlrluEwWHmJEPIwNlUGu5/BsHXBq7472y53jkBC44F66mVkaw8QTF5hCQABNYAQIGRkn2kyABmzHTERr8kRrazqnLi5Mp7SGe+mBfpTgAU6sLJj8kG0U9jUjUG9+7kfhDCmj108BM=
-Received: from SG2PR04CA0179.apcprd04.prod.outlook.com (2603:1096:4:14::17) by
- PS2PR04MB3654.apcprd04.prod.outlook.com (2603:1096:300:6d::15) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3391.13; Fri, 18 Sep 2020 09:47:43 +0000
-Received: from SG2APC01FT060.eop-APC01.prod.protection.outlook.com
- (2603:1096:4:14:cafe::ad) by SG2PR04CA0179.outlook.office365.com
- (2603:1096:4:14::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.11 via Frontend
- Transport; Fri, 18 Sep 2020 09:47:42 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.56)
- smtp.mailfrom=hcl.com; stwcx.xyz; dkim=pass (signature was verified)
- header.d=HCL.COM;stwcx.xyz; dmarc=pass action=none header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.195.56 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.195.56; helo=APC01-SG2-obe.outbound.protection.outlook.com;
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.195.56) by
- SG2APC01FT060.mail.protection.outlook.com (10.152.251.153) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3391.15 via Frontend Transport; Fri, 18 Sep 2020 09:47:41 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Z3s3xngG2NyzDv2osFxsKBSWxPznAXMCj+tRwn9FFjWOEvSfmovm4x0n/F/rg8iPPuUwOt9HRH71Z8SVZRBEpMcOimSjUE22DNJGQM5mNc/un/4kff1FMmClsnCFtMy6ReHVx2xoMmmylEO6kc4gDz05dc6SlQ6ZVkOOmQfffzqgvhkDwIiiLDWknnp4pA877yeMfD/9v0Qh5ZAfQ8wFM2DYvjn7AY2o4F1HzH10CD9hlESQPL5zlYgvV5CJUenaGG7iJ1u4oHFPubvgABmyhTZcQx6Kbos4Pn2BYvkibESVYvC3k65LP3+0qoHH/uxJTPVSq/RWlPzCESTkITHMdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e0H+k5+nvs1L8bY97OhZH9W+swaL3Lwp8mZwYWO4l94=;
- b=K01fEIdDHWwkHAzy4jRL9t6xp3npzhnzsKYduPhBsl+gRNeoWtNxq4HFaHZDQDJwuydL19mzM0YmvcGScyR+9G8giFmrkSAsBi6t4DuZZOi/S6VXZMMRWTlaa6posYR8A7AdGSactfexB2b0UnFLYmaKP8e3v0Ledm40oZyEy7eI4Fgcgfl7YgAVzh2HcsCxZZnHpsRAHgUKgpeIwkhvbTSbnucBqD31LgA7teVOjETIAfVybV2jK3NQzhZBkjVYUSg2HHxplnyo2ZtOUT1hOdqfM7pl/7qIlkj9sTnRm/jnZXzM/lmVRR1WDttm7hgx/AbgTA883eI/AUk8a90Ilg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e0H+k5+nvs1L8bY97OhZH9W+swaL3Lwp8mZwYWO4l94=;
- b=O2OE9V3fAipzoPYGoiJRUqYHylMv1OBj8wmlrluEwWHmJEPIwNlUGu5/BsHXBq7472y53jkBC44F66mVkaw8QTF5hCQABNYAQIGRkn2kyABmzHTERr8kRrazqnLi5Mp7SGe+mBfpTgAU6sLJj8kG0U9jUjUG9+7kfhDCmj108BM=
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB3771.apcprd04.prod.outlook.com (2603:1096:4:9d::20) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3391.17; Fri, 18 Sep 2020 09:47:32 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::b93f:17bd:c016:eec7]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::b93f:17bd:c016:eec7%4]) with mapi id 15.20.3391.017; Fri, 18 Sep 2020
- 09:47:32 +0000
-From: Jayashree D <jayashree-d@hcl.com>
-To: Patrick Williams <patrick@stwcx.xyz>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>
-Subject: RE: Connection issue in OpenBMC image
-Thread-Topic: Connection issue in OpenBMC image
-Thread-Index: AdaIK6vt31RmicRFTiOQBEztxwnvYACTHsXgAAMSy4AANSDeAAAFmmiAACmSOpAAPPsWAAAkyl4A
-Date: Fri, 18 Sep 2020 09:47:32 +0000
-Message-ID: <SG2PR04MB30932DB1D5C88B0447DBC7F7E13F0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-References: <SG2PR04MB30932185827E6DCADD02F422E1240@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <SG2PR04MB3093E7C8F543D9AD318B4653E1230@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <68131600080119@mail.yandex-team.ru>
- <SG2PR04MB309303A2C979A689DE8B67CFE1200@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <18221600180837@mail.yandex-team.ru>
- <SG2PR04MB3093A564F0482CE5FF12BA42E1210@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <20200917154534.GI6152@heinlein>
-In-Reply-To: <20200917154534.GI6152@heinlein>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiN2JlZDBkNDYtMWE1My00NjJjLThhNWItNmY3NDM5ZWQ1NTk0IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzXzFudDNybmFsIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE4LjQuMTg0My4xMjMiLCJUcnVzdGVkTGFiZWxIYXNoIjoiMFBmOFFXR3lUU1wveFwvTkZzWmJuQzhXeCtXVGhPTzNidUE5VW8zRWdlWlJJT0F0cFhpRkFGMWtHYmdYVm9Na0tBIn0=
-x-hclclassification: HCL_Cla5s_1nt3rnal
-Authentication-Results-Original: stwcx.xyz; dkim=none (message not signed)
- header.d=none;stwcx.xyz; dmarc=none action=none header.from=hcl.com;
-x-originating-ip: [2409:4072:38a:3b6c:6803:5d93:396b:e1d3]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 1b51b104-7b0c-4e02-2b28-08d85bb7e2e8
-x-ms-traffictypediagnostic: SG2PR04MB3771:|PS2PR04MB3654:
-X-Microsoft-Antispam-PRVS: <PS2PR04MB3654D143A6363E9A2C9DDC48E13F0@PS2PR04MB3654.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;OLM:9508;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: clSM9xsXI5BuTArGdTAEEkX/3pp9laOTKCCjm9FrZzb75vF3+aR6zLaxjzRFxLPRD2exSpk3rNJfuCnQOCyUQZLu5XmNr6SvNE9HA2cKJrh+4Nl/pI1AuN8lB69630kVryrErM9APYDPKIFP/R2SEvnJc5hdXoRUzsd2mgTCXmK6q1pwgEimVl4zmmoqrJZr1k2QRqzt/UGQEMOvSogLMTU+64sngoBaYTBM4LMdZKugfZ9pPF2fi4grT95O3MqdJI0fZRvfrp1eEUv8MCMluZq/dU6z8hAeYh+eOKelq2MQuZYTYnBSTxgvpRDRnd9X3saB+zla9JjgeLvTsLzVF/QzFgyMhZxf5v2jdusyw12tYFOkeGCdBkq2v8rsF8AdQ5UTWCPBzL4LzdChdHDNug==
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(396003)(366004)(346002)(39860400002)(136003)(376002)(33656002)(110136005)(55016002)(30864003)(5660300002)(66476007)(52536014)(76116006)(66946007)(66556008)(64756008)(9686003)(66446008)(71200400001)(86362001)(6506007)(186003)(53546011)(83380400001)(8676002)(4326008)(8936002)(966005)(7696005)(316002)(478600001)(2906002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: EBh/mDhrOKtLIOqDF+KdUHYrOQF18TRCKFKvfOn3j27A7kAahJ076WqaoJQGXy3NgToybhJ9BemcROr/KXvHwQBrIT2oD3iYXut4s4Ef6/Khy6CKFPSG91JzdVN0HwnE67WIsExT5BvKbUZ5zSnugrgEEiUzSUivuQ9NDu0AlwRAKfCYPUa3kgchJ0jueucMDJ5mpj6o1a61X7odW6e6YcDYFDVTMITCdJyZbl8/Uq/OZClF6MSwHYFF2Dn2LHPEX3sRU1KcKqMUnPK0JWaUxXAso6MKNZNsbGWW9q2pNEqmaLfheG790xXKRNUXFW9mK3byQIURmZRuvILbIZU3bW/jNBmEuVr62M/lnJFXKFPyQdPOq/v9MKy+VCJYg0vphLGEfFQjvoVFVXFrYxd0sJTNkvzFLKV+Sj/8iR1s+06rDjruwq1AIjd57eaIJC63h1/LTouNI/KoylucNkPlLfZRYLHL3edaj/ZnIwnFgkbDSfSMWINYrCavyGx//AR0feteWUnEm3mk9Ajynvwd38euO6b9ULp7wf6YW4Jek6gBAC3P+F+EWUz+jRAGDoGgb1g2npR9c/2n4cIxYo+wwSdsXv4dcMm/i9T5MxnMOADQjep//cLmFhEaeyeSzR8yZ8Gi9DwNWh21AD6ud3mhBtQ4R9V4xdPwqs6yLoMMtEcy+xkp0g1nIbja9LdW+yox+XgxUpYGPyLvnrWfBFXQ+Q==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BtDcp1x4MzDqCG
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 23:06:49 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08ID4Q7T156989
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 09:06:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=VKyIaDba/+RhBznr1Kebysu28n9OuSPt60wK+mHHb9k=;
+ b=HSNE71qMidx2/ujUouHiSLScF6pgtAqRfsGEj5Nl+mLXF36BDI7YaAbmlrtEdt5UMboV
+ Wo+j78iC2rLav9xb1XTht7cbXfjYiW+adrvGWOwvpqNIuGrB3X1EdUPjRbiH36FvuRvu
+ viiiAYoW001Zt/LJWDNn9AIPzMSKVMxK4vQD26DVjfv+lWTJQKR4lyZ6tTrwW90ThPc9
+ GoVL7TYMN9v/3PmfEUTjwt5oINZBQ4N5/XP3dscYcRDFqpkTSiF0jSAVF/csmJkOgNIL
+ VCcw7XjSoJwvsefdqW7w16j0AmZAS6CzCZA+LY3sWwuPzrPAd7mHwzsJfyFj/4sK2ZTy ZA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33mvq3sbdx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 09:06:45 -0400
+Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 08ID4vWC158073
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Sep 2020 09:06:45 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33mvq3sbd9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 18 Sep 2020 09:06:45 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08ID6hED001082;
+ Fri, 18 Sep 2020 13:06:43 GMT
+Received: from b06cxnps4076.portsmouth.uk.ibm.com
+ (d06relay13.portsmouth.uk.ibm.com [9.149.109.198])
+ by ppma03ams.nl.ibm.com with ESMTP id 33k6esk6f4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 18 Sep 2020 13:06:43 +0000
+Received: from d06av22.portsmouth.uk.ibm.com (d06av22.portsmouth.uk.ibm.com
+ [9.149.105.58])
+ by b06cxnps4076.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 08ID6eOT27197896
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 18 Sep 2020 13:06:40 GMT
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A92A24C046;
+ Fri, 18 Sep 2020 13:06:40 +0000 (GMT)
+Received: from d06av22.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7BAFA4C044;
+ Fri, 18 Sep 2020 13:06:39 +0000 (GMT)
+Received: from Deepaks-MacBook-Pro.local (unknown [9.79.240.231])
+ by d06av22.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Fri, 18 Sep 2020 13:06:39 +0000 (GMT)
+Subject: Re: Enable UBI support for a platform
+To: Kun Zhao <zkxz@hotmail.com>, Adriana Kobylak <anoo@linux.ibm.com>
+References: <BYAPR14MB23426A9032F9FDAF87F1BC19CF2D0@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <242dee50-7e1b-3fc3-5105-ca33f288d959@linux.vnet.ibm.com>
+ <BYAPR14MB2342A17C9B9BE853C0616E9CDC280@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <4e89c963-1ddd-2627-47c8-be13b903bc64@linux.vnet.ibm.com>
+ <BYAPR14MB23426BE881262C70C81FFDAEDC200@BYAPR14MB2342.namprd14.prod.outlook.com>
+ <b7c9296d-00a1-0137-ae67-4d2d24a6cfac@linux.vnet.ibm.com>
+ <07d8dc67fb6a451151d77c035313c936@linux.vnet.ibm.com>
+ <BYAPR14MB234246D31202193B89B1E713DC3F0@BYAPR14MB2342.namprd14.prod.outlook.com>
+From: Deepak Kodihalli <dkodihal@linux.vnet.ibm.com>
+Message-ID: <1cdecd8a-4382-45ad-7932-a604001d7ed8@linux.vnet.ibm.com>
+Date: Fri, 18 Sep 2020 18:36:38 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.0
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3771
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT060.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 456a856e-fb55-4088-af31-08d85bb7dd90
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Tmq/doZ8UAVUE3p7QDLTVNlgTi6v1qjq+paTCci9H1olNd2UPjJ0mgLpSTQUeW8w/PSLdkrfLWzsNoREb+q8lczytbplGv5vCAtgPPsKT2leae56YOzOgoPeosXPaYCuQGrgAITUAzxkOZBPD32M4H3ykPIpXqdQy9qt3OM8E9aOLnhatkPpEyLGhu31nTw/08SvONEzby9fASw++5u/BnqJozloewIvg09arLvMD+Tsc7TF307SKpJJUiKr0PbSoCGdTC6scN1S99a3gXjq8djpi93sdrIzIX5yCZ4cyPwuKL047F+FOogNeasy8AWbuvdllZCZ1gEU+7SvziWS2fVFDpyBmj7ykvO50bY6Swc0LDgM3D1qZRDnZadcRKm8UICm6yjh9cjkuqCExQicY1Mkoddd36FGZhHXQbjneP8ztmMjYubsBWXjpW5OdXpWRWP4v79Et37ACbAkak4ZWUvVyyggcyFj4AAVbuu6iCZEXMc62gw88GhxViJtPwLtZk1AnhzCcpmZji8tK8dmsw1RLBPDWaYz2v6y95f/XO1TQSbZgeYMUph4o85yFG6u
-X-Forefront-Antispam-Report: CIP:192.8.195.56; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(136003)(396003)(376002)(39860400002)(346002)(46966005)(9686003)(478600001)(33656002)(966005)(70586007)(70206006)(316002)(8936002)(36906005)(52536014)(47076004)(7696005)(8676002)(2906002)(53546011)(81166007)(356005)(6506007)(5660300002)(4326008)(110136005)(82310400003)(55016002)(30864003)(336012)(86362001)(186003)(34020700004)(83380400001)(82740400003)(26005);
- DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Sep 2020 09:47:41.2796 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b51b104-7b0c-4e02-2b28-08d85bb7e2e8
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.56];
- Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT060.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR04MB3654
+In-Reply-To: <BYAPR14MB234246D31202193B89B1E713DC3F0@BYAPR14MB2342.namprd14.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-18_14:2020-09-16,
+ 2020-09-18 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 mlxscore=0
+ adultscore=0 mlxlogscore=999 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ phishscore=0 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
+ definitions=main-2009180105
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -151,282 +114,213 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Classification: HCL Internal
+On 18/09/20 12:07 pm, Kun Zhao wrote:
+> Hi Adriana, Deepak,
+> 
+> 
+> On 9/16/20 1:05 PM, Adriana Kobylak wrote:
+>>
+>>>> |
+>>>> . done
+>>>> UBI init error 12
+>>>> Error, no UBI device/partition selected!
+>>>> Wrong Image Format for bootm command
+>>>> ERROR: can't get kernel image!
+>>>>
+>>>> Any thought?
+>>>
+>>> Some thoughts:
+>>>
+>>> - Have you validated your recipe and device tree changes by trying to
+>>> boot on QEMU an existing supported platform (for eg
+>>> Romulus/Tiogapass)?
+> 
+> Hi Deepak,
+> 
+> I've tried qemu with romuslus/tiogapass machine type, but still has the same problem. I'm using 2.9-dev branch latest code, does it matter?
 
-Hello Patrick,
+Hi Kun,
 
-I saw the post about dropbear, but that commit was updated on July16 and my=
- target is connecting till August last week image. I don't think that will =
-be an issue. Also on working image, I tried with 'ssh -vvv ' and I got belo=
-w information.
+That could matter. Is there a reason you're on that branch? There are 
+800+ commits to master since that branch. In general what we follow is 
+"live at head" of the master branch.
 
-OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017
-debug1: Reading configuration data /etc/ssh/ssh_config
-debug1: /etc/ssh/ssh_config line 58: Applying options for *
-debug2: resolving "10.0.128.108" port 22
-debug2: ssh_connect_direct: needpriv 0
-debug1: Connecting to 10.0.128.108 [10.0.128.108] port 22.
-debug1: Connection established.
-debug1: permanently_set_uid: 0/0
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_rsa type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_rsa-cert type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_dsa type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_dsa-cert type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ecdsa type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ecdsa-cert type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ed25519 type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ed25519-cert type -1
-debug1: Enabling compatibility mode for protocol 2.0
-debug1: Local version string SSH-2.0-OpenSSH_7.4
-debug1: Remote protocol version 2.0, remote software version dropbear_2020.=
-80
-debug1: no match: dropbear_2020.80
-debug2: fd 3 setting O_NONBLOCK
-debug1: Authenticating to 10.0.128.108:22 as 'root'
-debug3: hostkeys_foreach: reading file "/root/.ssh/known_hosts"
-debug3: record_hostkey: found key type RSA in file /root/.ssh/known_hosts:6=
-8
-debug3: load_hostkeys: loaded 1 keys from 10.0.128.108
-debug3: order_hostkeyalgs: prefer hostkeyalgs: ssh-rsa-cert-v01@openssh.com=
-,rsa-sha2-512,rsa-sha2-256,ssh-rsa
-debug3: send packet: type 20
-debug1: SSH2_MSG_KEXINIT sent
-debug3: receive packet: type 20
-debug1: SSH2_MSG_KEXINIT received
-debug2: local client KEXINIT proposal
-debug2: KEX algorithms: curve25519-sha256,curve25519-sha256@libssh.org,ecdh=
--sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-e=
-xchange-sha256,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,=
-diffie-hellman-group-exchange-sha1,diffie-hellman-group14-sha256,diffie-hel=
-lman-group14-sha1,diffie-hellman-group1-sha1,ext-info-c
-debug2: host key algorithms: ssh-rsa-cert-v01@openssh.com,rsa-sha2-512,rsa-=
-sha2-256,ssh-rsa,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp3=
-84-cert-v01@openssh.com,ecdsa-sha2-nistp521-cert-v01@openssh.com,ssh-ed2551=
-9-cert-v01@openssh.com,ssh-dss-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecd=
-sa-sha2-nistp384,ecdsa-sha2-nistp521,ssh-ed25519,ssh-dss
-debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,a=
-es256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-c=
-bc,aes256-cbc
-debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,a=
-es256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-c=
-bc,aes256-cbc
-debug2: MACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sh=
-a2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.=
-com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hm=
-ac-sha1
-debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sh=
-a2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.=
-com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hm=
-ac-sha1
-debug2: compression ctos: none,zlib@openssh.com,zlib
-debug2: compression stoc: none,zlib@openssh.com,zlib
-debug2: languages ctos:
-debug2: languages stoc:
-debug2: first_kex_follows 0
-debug2: reserved 0
-debug2: peer server KEXINIT proposal
-debug2: KEX algorithms: curve25519-sha256,curve25519-sha256@libssh.org,ecdh=
--sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group14=
--sha256,kexguess2@matt.ucc.asn.au
-debug2: host key algorithms: rsa-sha2-256,ssh-rsa
-debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes256-ctr
-debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes256-ctr
-debug2: MACs ctos: hmac-sha1,hmac-sha2-256
-debug2: MACs stoc: hmac-sha1,hmac-sha2-256
-debug2: compression ctos: zlib@openssh.com,none
-debug2: compression stoc: zlib@openssh.com,none
-debug2: languages ctos:
-debug2: languages stoc:
-debug2: first_kex_follows 0
-debug2: reserved 0
-debug1: kex: algorithm: curve25519-sha256
-debug1: kex: host key algorithm: rsa-sha2-256
-debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <imp=
-licit> compression: none
-debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <imp=
-licit> compression: none
-debug1: kex: curve25519-sha256 need=3D64 dh_need=3D64
-debug1: kex: curve25519-sha256 need=3D64 dh_need=3D64
-debug3: send packet: type 30
-debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
-debug3: receive packet: type 31
-debug1: Server host key: ssh-rsa SHA256:3WwhPmIIxzrw0+cm/0vN3hifY4kh9sJhClV=
-Nw6zrJ7Y
-debug3: hostkeys_foreach: reading file "/root/.ssh/known_hosts"
-debug3: record_hostkey: found key type RSA in file /root/.ssh/known_hosts:6=
-8
-debug3: load_hostkeys: loaded 1 keys from 10.0.128.108
-debug1: Host '10.0.128.108' is known and matches the RSA host key.
-debug1: Found key in /root/.ssh/known_hosts:68
-debug3: send packet: type 21
-debug2: set_newkeys: mode 1
-debug1: rekey after 134217728 blocks
-debug1: SSH2_MSG_NEWKEYS sent
-debug1: expecting SSH2_MSG_NEWKEYS
-debug3: receive packet: type 21
-debug1: SSH2_MSG_NEWKEYS received
-debug2: set_newkeys: mode 0
-debug1: rekey after 134217728 blocks
-debug2: key: /root/.ssh/id_rsa (0x558ea3ad3640), agent
-debug2: key: /root/.ssh/id_rsa ((nil))
-debug2: key: /root/.ssh/id_dsa ((nil))
-debug2: key: /root/.ssh/id_ecdsa ((nil))
-debug2: key: /root/.ssh/id_ed25519 ((nil))
-debug3: send packet: type 5
-debug3: receive packet: type 7
-debug1: SSH2_MSG_EXT_INFO received
-debug1: kex_input_ext_info: server-sig-algs=3D<ssh-ed25519,ecdsa-sha2-nistp=
-256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521,rsa-sha2-256,ssh-rsa,ssh-dss>
-debug3: receive packet: type 6
-debug2: service_accept: ssh-userauth
-debug1: SSH2_MSG_SERVICE_ACCEPT received
-debug3: send packet: type 50
-debug3: receive packet: type 51
-debug1: Authentications that can continue: publickey,password
-debug3: start over, passed a different list publickey,password
-debug3: preferred gssapi-keyex,gssapi-with-mic,publickey,keyboard-interacti=
-ve,password
-debug3: authmethod_lookup publickey
-debug3: remaining preferred: keyboard-interactive,password
-debug3: authmethod_is_enabled publickey
-debug1: Next authentication method: publickey
-debug1: Offering RSA public key: /root/.ssh/id_rsa
-debug3: send_pubkey_test
-debug3: send packet: type 50
-debug2: we sent a publickey packet, wait for reply
-debug3: receive packet: type 51
-debug1: Authentications that can continue: publickey,password
-debug1: Trying private key: /root/.ssh/id_rsa
-debug3: sign_and_send_pubkey: RSA SHA256:YfteufmWUV8W7EQEycZ+38skgUWGDTYFHw=
-93a7SwwLM
-debug3: send packet: type 50
-debug2: we sent a publickey packet, wait for reply
-debug3: receive packet: type 51
-debug1: Authentications that can continue: publickey,password
-debug1: Trying private key: /root/.ssh/id_dsa
-debug3: no such identity: /root/.ssh/id_dsa: No such file or directory
-debug1: Trying private key: /root/.ssh/id_ecdsa
-debug3: no such identity: /root/.ssh/id_ecdsa: No such file or directory
-debug1: Trying private key: /root/.ssh/id_ed25519
-debug3: no such identity: /root/.ssh/id_ed25519: No such file or directory
-debug2: we did not send a packet, disable method
-debug3: authmethod_lookup password
-debug3: remaining preferred: ,password
-debug3: authmethod_is_enabled password
-debug1: Next authentication method: password
+Also, I was able to boot Tiogapass QEMU with the UBIFS layout with the 
+following changes (I'm based off of the latest master) :
+
+diff --git a/meta-facebook/meta-tiogapass/conf/machine/tiogapass.conf 
+b/meta-facebook/meta-tiogapass/conf/machine/tiogapass.conf
+index 1e6ee08..6b2bf83 100644
+--- a/meta-facebook/meta-tiogapass/conf/machine/tiogapass.conf
++++ b/meta-facebook/meta-tiogapass/conf/machine/tiogapass.conf
+@@ -1,3 +1,5 @@
++require conf/distro/include/phosphor-ubi.inc
++
+  KMACHINE = "aspeed"
+  KERNEL_DEVICETREE = "${KMACHINE}-bmc-facebook-${MACHINE}.dtb"
+
+diff --git 
+a/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed/tp_ubi.patch 
+b/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed/tp_ubi.patch
+new file mode 100644
+index 0000000..b31bdaa
+--- /dev/null
++++ 
+b/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed/tp_ubi.patch
+@@ -0,0 +1,30 @@
++diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts 
+b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
++index 2d44d9a..e4183fd 100644
++--- a/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
+++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-tiogapass.dts
++@@ -57,7 +57,24 @@
++       flash@0 {
++               status = "okay";
++               m25p,fast-read;
++-#include "openbmc-flash-layout.dtsi"
+++
+++                partitions {
+++                        #address-cells = < 1 >;
+++                        #size-cells = < 1 >;
+++                        compatible = "fixed-partitions";
+++                        u-boot@0 {
+++                                reg = < 0 0x60000 >;
+++                                label = "u-boot";
+++                        };
+++                        u-boot-env@60000 {
+++                                reg = < 0x60000 0x20000 >;
+++                                label = "u-boot-env";
+++                        };
+++                        obmc-ubi@80000 {
+++                                reg = < 0x80000 0x1F80000 >;
+++                                label = "obmc-ubi";
+++                        };
+++                };
++       };
++ };
++
+diff --git 
+a/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed_%.bbappend 
+b/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed_%.bbappend
+index 0eb0884..5b58d8b 100644
+--- 
+a/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed_%.bbappend
++++ 
+b/meta-facebook/meta-tiogapass/recipes-kernel/linux/linux-aspeed_%.bbappend
+@@ -1,2 +1,3 @@
+  FILESEXTRAPATHS_prepend := "${THISDIR}/linux-aspeed:"
+-SRC_URI += "file://tiogapass.cfg"
++SRC_URI += "file://tiogapass.cfg \
++            file://tp_ubi.patch
 
 
-In non-working image, the logs are stopped after below lines and it is not =
-providing any errors.
 
-debug1: Enabling compatibility mode for protocol 2.0
-debug1: Local version string SSH-2.0-OpenSSH_7.4
+And then on QEMU :
 
-Also one more observation in UART-Console, after flashing latest image.
+root@tiogapass:~# ubinfo -a
+UBI version:                    1
+Count of UBI devices:           1
+UBI control device major/minor: 10:57
+Present UBI devices:            ubi0
 
-1. reboot command is not working.
-2. systemctl status <service_name> is not providing any status. ( Failed to=
- get properties: Connection timed out)
-3. I can able to ping the ip address but scp is not working.
+ubi0
+Volumes count:                           3
+Logical eraseblock size:                 65408 bytes, 63.8 KiB
+Total amount of logical eraseblocks:     504 (32965632 bytes, 31.4 MiB)
+Amount of available logical eraseblocks: 56 (3662848 bytes, 3.4 MiB)
+Maximum count of volumes                 128
+Count of bad physical eraseblocks:       0
+Count of reserved physical eraseblocks:  0
+Current maximum erase counter value:     2
+Minimum input/output unit size:          1 byte
+Character device major/minor:            246:0
+Present volumes:                         0, 1, 2
 
-Thanks,
-Jayashree
+Volume ID:   0 (on ubi0)
+Type:        static
+Alignment:   1
+Size:        46 LEBs (3008768 bytes, 2.8 MiB)
+Data bytes:  2992192 bytes (2.8 MiB)
+State:       OK
+Name:        kernel-e537a16b
+Character device major/minor: 246:1
+-----------------------------------
+Volume ID:   1 (on ubi0)
+Type:        static
+Alignment:   1
+Size:        299 LEBs (19556992 bytes, 18.6 MiB)
+Data bytes:  19550208 bytes (18.6 MiB)
+State:       OK
+Name:        rofs-e537a16b
+Character device major/minor: 246:2
+-----------------------------------
+Volume ID:   2 (on ubi0)
+Type:        dynamic
+Alignment:   1
+Size:        97 LEBs (6344576 bytes, 6.0 MiB)
+State:       OK
+Name:        rwfs
+Character device major/minor: 246:3
 
+Regards,
+Deepak
 
------Original Message-----
-From: Patrick Williams <patrick@stwcx.xyz>
-Sent: Thursday, September 17, 2020 9:16 PM
-To: Jayashree D <jayashree-d@hcl.com>
-Cc: Konstantin Klubnichkin <kitsok@yandex-team.ru>; openbmc@lists.ozlabs.or=
-g
-Subject: Re: Connection issue in OpenBMC image
+>>>
+>>> - I don't think not having the partitions for the alt side in your
+>>> devicetree should be a problem, unless the BMC is actually switching
+>>> to the secondary flash. 'md.l 0x1e785030 1' at the u-boot prompt can
+>>> tell us the boot side.
+>>>
+>>> Adriana - do you have any thoughts on this problem?
+>>>
+>>
+>> Check if you can list the ubi partitions from u-boot:
+>>
+>> ast# ubi part obmc-ubi
+>> ast# ubi info layout
+>>
+>> It should print some output like this:
+>>
+>> Volume information dump:
+>>          vol_id          0
+>> ...
+>>          name            kernel-3a859116
+>> Volume information dump:
+>>          vol_id          1
+>> ...
+>>          name            rofs-3a859116
+>>
+>>
+>> Check that the kernel name on that output is "kernel-3a859116" which is the value that your kernelname variable is set to,
+> 
+> Hi Adriana,
+> 
+> Here is the output,
+> 
+> ast# ubi part obmc-ubi
+> ubi0: attaching mtd1
+> ubi0: scanning is finished
+> UBI init error 12
+> ast# ubi info layout
+> Error, no UBI device/partition selected!
+> ast# print kernelname
+> kernelname=kernel-a39b2d07
+> ast#
+> 
+> Seems ubi can't find any valid ubi partitions. What's the error 12?
+> 
+>> and also check that the rofs volume is in volume 1 since the root and ubiblock variables are set to (primary chip (0) volume 1 (ubiblock=0,1)).
+> 
+> And how to check rofs volume index?
+> 
+> 
+> BTW, Adriana, could you also take a look at this email thread https://lists.ozlabs.org/pipermail/openbmc/2020-September/022834.html? It was why I was going to enable ubifs but I'm not sure if ubifs can solve that problem.
+> 
+> 
+> Kun
+> 
 
-Hello Jayashree,
-
-I saw an output `ssh -v` from you earlier, but there really wasn't any usef=
-ul information there.  It looked like the connection was being made and key=
-s were exchanged and then the log just stopped abruptly.  This tells me it =
-likely isn't a networking issue but an issue in the handshake between the s=
-sh-client (your computer) and ssh-server (dropbear).  You can continue to a=
-dd '-v' parameters up to `ssh -vvv` and you'll get increasingly more inform=
-ation.
-
-Joseph Reynolds recently posted a reminder about dropbear disabling weak ci=
-phers[1].  Is it possible that your client is using an old cipher?
-
-On Wed, Sep 16, 2020 at 11:35:28AM +0000, Jayashree D wrote:
-> root@tiogapass:~# journalctl | grep drop
-...
-> Jan 01 00:15:28 tiogapass systemd[1]: dropbear@0-10.0.128.108:22-10.0.0.1=
-:51810.service: Succeeded.
-> Jan 01 00:15:44 tiogapass dropbear[2753]: Child connection from
-> ::ffff:10.0.0.1:51944 Jan 01 00:15:50 tiogapass dropbear[2753]: PAM
-> password auth succeeded for 'root' from ::ffff:10.0.0.1:51944
-
-This looks like a valid connection was established.
-
-> 15.09.2020, 16:12, "Jayashree D" <jayashree-d@hcl.com<mailto:jayashree-d@=
-hcl.com>>:
->
-> OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017
-> debug1: Reading configuration data /etc/ssh/ssh_config
-> debug1: /etc/ssh/ssh_config line 58: Applying options for *
-> debug1: Connecting to 10.0.128.108 [10.0.128.108] port 22.
-> debug1: Connection established.
-> debug1: permanently_set_uid: 0/0
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_rsa type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_rsa-cert type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_dsa type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_dsa-cert type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ecdsa type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ecdsa-cert type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ed25519 type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ed25519-cert type -1
-> debug1: Enabling compatibility mode for protocol 2.0
-> debug1: Local version string SSH-2.0-OpenSSH_7.4
-
-This is the log that also looks like a good connection.  Identity files wer=
-e attempted to be exchanged.  Version strings were exchanged.  And then the=
- log just abruptly stops.  Was the connection dropped?  Is it hung?
-
-1. https://lists.ozlabs.org/pipermail/openbmc/2020-September/023071.html
-
---
-Patrick Williams
-::DISCLAIMER::
-________________________________
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
-smission. The e mail and its contents (with or without referred errors) sha=
-ll therefore not attach any liability on the originator or HCL or its affil=
-iates. Views or opinions, if any, presented in this email are solely those =
-of the author and may not necessarily reflect the views or opinions of HCL =
-or its affiliates. Any form of reproduction, dissemination, copying, disclo=
-sure, modification, distribution and / or publication of this message witho=
-ut the prior written consent of authorized representative of HCL is strictl=
-y prohibited. If you have received this email in error please delete it and=
- notify the sender immediately. Before opening any email and/or attachments=
-, please check them for viruses and other defects.
-________________________________
