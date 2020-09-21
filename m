@@ -1,72 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66D41272AE0
-	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 17:59:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5B3D272B5F
+	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 18:14:45 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bw8JC5mV5zDqpk
-	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 01:59:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bw8fC12SRzDqr6
+	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 02:14:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29;
+ helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=vHCG8voe; dkim-atps=neutral
-Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com
- [IPv6:2607:f8b0:4864:20::b31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=Gmq8Mven; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=Lflh0CZC; 
+ dkim-atps=neutral
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com
+ [66.111.4.29])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bw76k3CsJzDqYL
- for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 01:05:48 +1000 (AEST)
-Received: by mail-yb1-xb31.google.com with SMTP id 67so10539431ybt.6
- for <openbmc@lists.ozlabs.org>; Mon, 21 Sep 2020 08:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=7CssO0syQI881+hui9JB/hlFiKzlUBEOIm0aBrbAtF8=;
- b=vHCG8voeZt1AhMq4+qd0duDQL+aGUXyNOMeQe0SGKLxqpAS4nSnCJM6TGqp4IJer/G
- t5MJAOiRfQof2NEW/QmyaKPfEtt6IAn7J9widMyq/gdb0yQ5STAE3pBctiTeSO1v6W0i
- h/0Qmigc+oLTCLrhdZspar4O8Er7k9AEyOgyR2WuzMrDUNRldI/KtnFcaeDNwaJD0Tb4
- e6h4bYfDk/0gs/v9lLrkmrYuowrM4MKcf+KSVk2CL/ZB1ZWB7pX0XTSqCN5Mvt1Adta0
- QHjBVn/C2mGfgx/ADW6+ZgmvLarEyJfQWcymX3PWm7NdyZt8UNaVsP9y/FS9WOcM6nyO
- KvqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=7CssO0syQI881+hui9JB/hlFiKzlUBEOIm0aBrbAtF8=;
- b=jQnKeHImFhUsW4uWmWL5RgGjFAzgW8GubwLiFn3BzZmYgKHVNQPFT8pU7h49zl/Irb
- yozKOxnDlbiZdt/NYn/WUMOMku3MNXfjgfEknKJVRFd6GTwPb4uBVXKDcFggzaQRivLO
- iExBUF+lROssxPIwRy0oCajVolYCYrlCV9lZ7f/OhcZKewjbxqSLp+NQdfoy17HHfjbH
- ihB5810IQasKoFcvMPnr8ZzGtIowzVDkGV0M+rEHJL/3+JiuXO+iWKLVNbiuWAgLN0qF
- cOXc1dYsjOkdMLi67kiLJNoNk2Vj9HNCaJO498WqW0NpnivLmlVq+fbX4rpTKt4FZntn
- SGuQ==
-X-Gm-Message-State: AOAM531loU1pOEYXGsGOoxzW4fFrdQnenNNnLm1w829z+e7JLlXdON1u
- THnobuOP6TpML8A13XtXQ4+9ySpfyuWHMNyO5TCKVA==
-X-Google-Smtp-Source: ABdhPJz5im6fkXVlR0pkR71ZEaCnlY+THLgVYgPEsMerTihEhRzeLWZhMrV7GKmKrfEEGBawkqkOTeAsrSkZFzsH2Xk=
-X-Received: by 2002:a25:ef03:: with SMTP id g3mr412833ybd.340.1600700744079;
- Mon, 21 Sep 2020 08:05:44 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bw7WQ0DFZzDqm6
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 01:23:45 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id CFCE05C0238;
+ Mon, 21 Sep 2020 11:23:40 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Mon, 21 Sep 2020 11:23:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=SWYQpuzyDDAljjhyMQQpwWOL1oC
+ 1jlFZEYmw5FJTznU=; b=Gmq8Mvenz9wHPt6+teoG1GPb/HJJIoe8/j8wTt/UmWY
+ NfZuq+MlDTEL4LBdR1Vz9E6v1QeJxp5duvkS2tS+WkmR14PxaA4IV4F0K33f4mg1
+ iFmreMsUsXx78EFRSQ48wiA5yDTnEj14CiEthZhpsUZUzor8r0NQXZde38ZO9bGm
+ vz8xNIwMiKvW1wxGghPIHkSyhfpKfm0fXfoBhi/wGmXzO6vutDipqBPA10JwgffR
+ aMBND7scy8KqLUkosReceniDVd1SoYNh1jPV99rkFbrv8xejbn0dsvMiac0YWMo/
+ lUDNS3BgMp4cUeUoYg3mz5iPkpYJuFAAH8S8Bb25Aaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=SWYQpu
+ zyDDAljjhyMQQpwWOL1oC1jlFZEYmw5FJTznU=; b=Lflh0CZCaqGqaNOGQb6Wd6
+ Uvfm17QQPW+RjJryD+jRxOiEohSSFthgnOUcuM1PFT5ujtvTTuOF+BTA/Q3lJPeq
+ 6TjnWk1TYYbWYIcGboyhiQjqVni2KUQGXAwRU5JxnvP1kBJdYMEOyd29WEZjvTOD
+ KY7vFgw7PdEoDJYBglX4v/DAJAeScOBNB7yCmk8AblPUoeO8w3taY4jfonagvf+V
+ /tj92f5nPC0uyG4Kt74/S6bJ7gHJRymPnFvWcmmS+pXn/jmfC9uk00fI00b45wP/
+ eB7L3TRJT7ixMW9vtx5WW8RSU77lQGbfJdVLzGjvzomW72xo74FccCweDrvzMx6w
+ ==
+X-ME-Sender: <xms:e8VoX_Ni_wTg0xmvfQujMwrDoOlFMGKdz9J0JUeP_fpBhqswfvu3kg>
+ <xme:e8VoX5-Pnc1z9Jpd8q3GHD4ij0XvOXh_UsyzsrCYhSRMfd52I6xC_to_JO-QTsPIj
+ 9I8dISHVc3TEuT_8B0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddvgdeltdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeelhfejfeekteevffegteffudefheel
+ feehvdfggfdvgffhjefhfeffkeeiieevjeenucffohhmrghinhepghhithhhuhgsrdgtoh
+ hmnecukfhppedutdejrdelvddrheekrddvvdeknecuvehluhhsthgvrhfuihiivgeptden
+ ucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:e8VoX-RYE1sFEZ9LjOnbujiB3fmyha1cHHVfM1plb1O0O4MD1rwEvw>
+ <xmx:e8VoXzsdLRhrMcSIhSQTMrtOsD8V7xkJ4b1ai_rZUtdvAueuUiJklw>
+ <xmx:e8VoX3c4ICybgxPbEiZT7K-gaZyPVtJoNkXqq8PZyGUkroV-KUssDA>
+ <xmx:fMVoX3ku9V40vVGK3dn0nURqr_LP5RPVhHXJ_AXdEApe7hPi9IE1Uw>
+Received: from localhost (mobile-107-92-58-228.mycingular.net [107.92.58.228])
+ by mail.messagingengine.com (Postfix) with ESMTPA id D7834306467E;
+ Mon, 21 Sep 2020 11:23:38 -0400 (EDT)
+Date: Mon, 21 Sep 2020 10:23:37 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Jayashree D <jayashree-d@hcl.com>
+Subject: Re: Read Firmware Versions
+Message-ID: <20200921152337.GJ6152@heinlein>
+References: <SG2PR04MB3093CAA5913439BB892C16E5E13A0@SG2PR04MB3093.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-References: <20200915202832.rq3os62pdj7mzaco@thinkpad.fuzziesquirrel.com>
- <CACWQX80tELWA-EW0A8-DnJGFmJyMxDC04YTq4B+--bRaoV8rOQ@mail.gmail.com>
- <MWHPR11MB004670BBADCA48F5EE9BE9C7F13E0@MWHPR11MB0046.namprd11.prod.outlook.com>
-In-Reply-To: <MWHPR11MB004670BBADCA48F5EE9BE9C7F13E0@MWHPR11MB0046.namprd11.prod.outlook.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 21 Sep 2020 08:05:33 -0700
-Message-ID: <CACWQX82k+zN8ZgE6Fm+wEQWS4Fsnndy7vTaV4K8ChQL2QR_THA@mail.gmail.com>
-Subject: Re: interest in a minimal image recipe
-To: "Khetan, Sharad" <sharad.khetan@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="9Q2l3mYpK16UQ/iv"
+Content-Disposition: inline
+In-Reply-To: <SG2PR04MB3093CAA5913439BB892C16E5E13A0@SG2PR04MB3093.apcprd04.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,120 +94,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
+ HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Sep 17, 2020 at 3:22 PM Khetan, Sharad <sharad.khetan@intel.com> wr=
-ote:
->
-> Ed, welcome back .
+
+--9Q2l3mYpK16UQ/iv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Sep 21, 2020 at 02:12:55PM +0000, Jayashree D wrote:
+> We are working on a platform which has multi host and each host have firm=
+ware versions such as CPLD, ME, BIOS, Bridge IC and VR.
+> We have to display it in dbus objects.
+> Can you please provide your comments on which dbus objects it will be sui=
+table to store all firmware versions.
+>=20
+> Also in phosphor-dbus-interfaces, I am seeing "System.interface.yaml" in =
+/xyz/openbmc_project/Inventory/Item/.
+> Whether it will be suitable to store all the firmware versions (/xyz/open=
+bmc_project/Inventory/Item/System/HostN).
+
+All software versions should be modelled per [1].  The sub-section [2]
+tells how to associate an inventory object to a software version (to
+show which BIOS version a specific host card is running for example).
+
+I don't think 'Inventory.Item.System' is intended to represent a single
+host in a multi-host system; 'System' would represent the entire
+chassis.  You may want to use 'Chassis' or 'Board' to model a
+sub-assembly.
 
 
-Thanks!  Glad to be here.
+1. https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/open=
+bmc_project/Software
+2. https://github.com/openbmc/phosphor-dbus-interfaces/tree/master/xyz/open=
+bmc_project/Software#find-all-software-versions-on-a-managed-element
 
->
->
-> -----Original Message-----
-> From: openbmc <openbmc-bounces+sharad.khetan=3Dintel.com@lists.ozlabs.org=
-> On Behalf Of Ed Tanous
-> Sent: Thursday, September 17, 2020 1:57 PM
-> To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-> Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> Subject: Re: interest in a minimal image recipe
->
-> On Tue, Sep 15, 2020 at 1:31 PM Brad Bishop <bradleyb@fuzziesquirrel.com>=
- wrote:
-> >
-> > I've heard a handful of times that meta-phosphor users often have to
-> > remove the latest feature added by default to obmc-phosphor-image.
-> >
-> > I have an RFC for an empty image that these users could bbappend and
-> > opt-in to specific image features instead of having to repeatedly
-> > opt-out.
-> >
-> > If you like the opt-in approach, please drop a +1 and/or review my patc=
-h:
-> >
-> > https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/36516
-> >
-> > I bring this up now because I, and others have been adding new image
-> > features to obmc-phosphor-image (e.g. turned on by default), and I
-> > would like to start a discussion about what it means for an
-> > application to be in the OpenBMC github organization.  I would propose
-> > that it means it is enabled and turned on by default in obmc-phosphor-i=
-mage.
-> >
-> > Looking forward to your thoughts.
-> >
-> > -brad
->
-> As a general description, this sounds great, but as always the devil is i=
-n the details.  The biggest obstacle to this I see is that we'd need a poli=
-cy and design around supporting mix-and-match on features, which I don't th=
-ink we really have today. Today, most features don't mix and match well, on=
-e example of this being entity-manager requiring intel-ipmi-oem.  Thus far =
-for that simple example, nobody has stepped up to make it a generic yocto f=
-eature and separate out the code, despite pretty widespread adoption.  I th=
-ink the idea that we're suddenly going to just start doing a better job of =
-feature separation because of a single patch is a little naive, and I'd rea=
-lly like to see the project make steps forward toward that before we create=
- a minimal image.
->
-> If we want to do this going forward, my personal opinion is that:
-> 1. Someone needs to go figure out an example for one non-trival, cross ap=
-plication feature with multiple options, and get yocto sorted such that sai=
-d "feature" enables the right component options.  Entity manager might be a=
- good one, phosphor-webui vs webui-vue might be another good one (I'm looki=
-ng into this currently), or individual Redfish resources in bmcweb might be=
- another.  There are a bunch of examples of this you could start with.
-> 2. Document a policy around what it means to be a "feature" including som=
-e relevant examples.  Is Redfish a feature?  Is IPMI a feature?  or are tho=
-se just interfaces to access other features?  Do we need a hierarchy of fea=
-tures?  When/where should we use DBus to determine feature enablement, and =
-when should it be a compile option?  We've been very inconsistent about the=
-se questions in the past, and it's part of the reason that adding "features=
-" properly is hard.
-> 3. Someone needs to go through the user-facing clients (phosphor-ipmi, bm=
-cweb, ect) as well as the recipes, and make sure command handlers are organ=
-ized in such a way that they're enabled or disabled by feature, and we can =
-successfully enable one feature at a time.  This will likely expose some in=
-teresting dependencies (like how IPMI commands have to be enabled/disabled =
-by library) that we'll likely need to tackle.
->
-> If the above tasks just fall onto the subsystem maintainers, who now have=
- to field the "I enabled X on my minimal build and it doesn't work" type bu=
-gs, that seems like a non-starter, and likely to cause more confusion than =
-the current status quo.  If someone or group of someones is willing to go d=
-o the work, I think it'd be a great benefit to the project, and something t=
-hat would help a lot of people.  I'm happy to pitch in as well where I'm ab=
-le.
->
-> [Sharad]
-> All the issues (and considerations to resolve), you bring up are great. I=
-t will need policies, definitions, and categorizations as you point out. I =
-think it will take quite some time to get there and its unlikely that we wi=
-ll achieve perfection. So we may have to start with basic, add a bunch of t=
-hings to make it a minimum BMC (I think the first step will be agree what t=
-hose minimum feature set is), and then be able to add from there. It may no=
-t be very granular (as there will be interdependencies), but even if we hav=
-e a few such configurations/combination of feature it will be useful for so=
-meone to start with. I realize this doesn=E2=80=99t solve the problem fully=
-, but I think it's much less effort and hence easier to start with.
->
->
+--=20
+Patrick Williams
 
-I like to think that's what I proposed, starting small, with 1 example
-of how to do it "right", then building on it.  I'm not looking for
-perfection, but I'm looking for commitment that we'll continue to push
-this forward in places where we haven't been that successful in the
-past.  If not, I think it has the potential to confuse what is already
-a complex and bifurcated build environment even further.
+--9Q2l3mYpK16UQ/iv
+Content-Type: application/pgp-signature; name="signature.asc"
 
-One minor thing to clarify:  I had imagined Brads proposal of a
-"minimum" BMC would have essentially nothing added, and would just be
-a kernel that boots, with no interfaces, services, or handling.  Is
-that what you were thinking?  I had not imagined that we would never
-"add a bunch of things".  If so, maybe I misunderstood what Brad
-proposed?
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9oxXcACgkQqwNHzC0A
+wRnAjw/9FuY0t0rKlq45e3M4NWjLlnkQgCjpNry+IDoO/tfjzs5cKYf4/b9KzxAs
+DXJY0Ic1CC6MazyBBGNaoYccMgsQ/Zs0KDvuxZmtexrd/BwQ/NGirgOQ58rUUWeh
+3eQmSJQtxlBgOxiyhQa0l3YZJSD1fnqHL+VjzuSv7w86wHZB9eSFNLMPmkTFrf4X
+bjWbM0yh2Bu3DSo4W7JVe9NtuaXMFpkYN1fJgRVt6MalcdnVGTMPqrfFZgh7ac9u
+9csTMcG1b6dnkUBbUlJN6d2SU1BESaraWNgbIpAFjsyiA4fJ+kMG+V9dTyCwlmf3
+KXuVxlynoHgePefegzS5DYJ4uuULvI4adKe2em3g9tr1ahTqe5n6uF3laRuMX0oo
+e4AhruuU3AkEzehf8jI2/zwfwx2RJR3UZ9RQs1bL9v1Cd2XDINppGHcjha/mHZoI
+UajAaQb/utvN+8Acjxh1UawLWpWU2aUqeGJPuao8uzxEcsQ5ny2fVgMDrcUknf3K
+rNJB9mPQPK/uOED4PZigxcZW/NIxqtt4bik8nxnGsamFZJEZP0gQ72ecjXN1JQSS
+qDy9yuOS1dLRiDuRV+aGHkSgnap0dE20khoUz726BW99PfRtbtS5sG+AD4qmJdn5
+IA8c/jRovR0WoIPMZTESAsExqjleZgHu6tmnvw/fehIxvSQlW9A=
+=YrHQ
+-----END PGP SIGNATURE-----
+
+--9Q2l3mYpK16UQ/iv--
