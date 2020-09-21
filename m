@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CBAE273148
-	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 19:56:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A3EA2731CC
+	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 20:21:10 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BwBvN4ltXzDqgL
-	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 03:56:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BwCS34DgKzDqW8
+	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 04:21:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -19,14 +19,14 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BwBq73QYXzDqhC
- for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 03:52:32 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BwCQs0z92zDqfZ
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 04:20:04 +1000 (AEST)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Date: Mon, 21 Sep 2020 13:52:27 -0400
+Date: Mon, 21 Sep 2020 14:20:00 -0400
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
 To: Ed Tanous <ed@tanous.net>
 Subject: Re: interest in a minimal image recipe
-Message-ID: <20200921175227.zmdjbmixbwvstd4m@thinkpad.fuzziesquirrel.com>
+Message-ID: <20200921182000.twlx3epiawrlfs55@thinkpad.fuzziesquirrel.com>
 References: <20200915202832.rq3os62pdj7mzaco@thinkpad.fuzziesquirrel.com>
  <CACWQX80tELWA-EW0A8-DnJGFmJyMxDC04YTq4B+--bRaoV8rOQ@mail.gmail.com>
  <20200921125540.4d6amvus3wt57igg@thinkpad.fuzziesquirrel.com>
@@ -53,45 +53,39 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 On Mon, Sep 21, 2020 at 08:53:26AM -0700, Ed Tanous wrote:
 >On Mon, Sep 21, 2020 at 5:55 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
 >>
->> In what way does EM require intel-ipmi-oem?  I am using EM without
->> intel-ipmi-oem without (I thought anyway) issue.
+>> Ok but those are autotools/cmake/meson options which correlate to a
+>> distro feature or maybe a packageconfig.  Those are orthogonal to image
+>> features and image recipes, which is what I've proposed.  I've not
+>> proposed a minimal distro policy.
 >
->You're running Entity Manager, without intel-ipmi-oem, and you can run
->a successful "ipmitool sensor list" or "ipmitool fru print" command,
->and have it return the entity manager/dbus-sensors/FruDevice results?
+>Maybe this has all been a wash then.  I had thought you were proposing
+>a minimal distro, and didn't realize you were building a minimal image
+>with the existing distro.  My bad.
 
-Ah, now I understand.  No, I can't do that.  But I don't need to because 
-the default IPMI handler implementations in phosphor-host-ipmid work for 
-me (the YAML based ones), and those don't need entity-manager.  I'm 
-using entity-manager for other reasons.
+No worries.  To have a minimal distro, we first need a set of default 
+distro features from which to subtract some to have a minimal set.  We 
+don't really have any real distro features defined yet - the ones we do 
+are non-sensical IMO - they are artifacts of my lack of bitbake-fu from 
+5 years ago.  I would like to hear about areas where you think it might 
+make sense to define distro features.
 
-As an aside - I think a majority are using the intel-ipmi-oem handlers 
-now so I'd support moving those into phosphor-host-ipmid and using them 
-as the defaults.  But that must not be easy, otherwise Intel would have 
-just done that rather than forking the handlers in intel-ipmi-oem in the 
-first place.
+>With that said, the images description is "Basic OpenBMC image with
+>full support for the hardware supported by the system".  Was it
+>intentional to call out "full support"?  Maybe I've misinterpreted the
+>long term intent of this patch?
 
-But in any case, intel-ipmi-oem requires entity-manager, not the other 
-way around right?  The "feature" being selected here is the Intel IPMI 
-handler forks, and that would simply depend on entity-manager.  A 
-strawman:
+I can see how my summary would cause confusion.  FWIW I used the summary 
+in core-image-base as a template.  Is there a better summary?
 
-obmc-phosphor-image.bbclass:
-FEATURE_PACKAGES_intel-ipmi-handler-forks = "packagegroup-intel-ipmi-handler-forks"
+Maybe this helps - I was trying to replicate oe-core:
 
-packagegroup-obmc-apps.bb:
-RDEPENDS_packagegroup-obmc-apps-intel-ipmi-handler-forks = "intel-ipmi-oem"
+  core-image-sato -> obmc-phosphor-image (all/most of the image features 
+                                          are enabled by default)
+  core-image-base -> obmc-phosphor-image-base (a minimal set of packages)
 
-intel-ipmi-oem.bb:
-RDEPENDS_${PN} = "entity-manager"
-
-One prerequisite to this is that the intel-ipmi-oem recipe would need to 
-move to meta-phosphor.  Perhaps its time for the repo to be renamed into 
-something else.
-
->In my understanding, this shouldn't work, and we've had many reports
->of "I enabled entity manager, and my sensors don't show up in IPMI".
-I don't think the answer to "how do I enable IPMI sensors" was ever 
-"enable entity manager" was it?  To enable IPMI, you have always needed 
-to enable either the original YAML based handlers or the intel-ipmi-oem 
-forks.
+What is the minimal set of packages?  I don't think we know yet.  I 
+expect many to bbappend obmc-phosphor-image-base, and select specific 
+image features (IMAGE_FEATURES) or directly install packages 
+(IMAGE_INSTALL).  After enough time has passed, we can use those as an 
+input for identifying what makes sense to use in the base image recipe 
+as the default.
