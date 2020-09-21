@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CF16272A6C
-	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 17:41:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D403272A91
+	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 17:45:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bw7vx1Qx3zDqd7
-	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 01:41:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bw80435xdzDqmY
+	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 01:45:08 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,35 +16,35 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=kernel.org
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=default header.b=NdN31+VD; dkim-atps=neutral
+ header.s=default header.b=U3Tg7a/t; dkim-atps=neutral
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bw6Yl1THwzDqSD;
- Tue, 22 Sep 2020 00:40:43 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bw6ZC4LnjzDqRW;
+ Tue, 22 Sep 2020 00:41:07 +1000 (AEST)
 Received: from sasha-vm.mshome.net (c-73-47-72-35.hsd1.nh.comcast.net
  [73.47.72.35])
  (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 69BFD235FC;
- Mon, 21 Sep 2020 14:40:37 +0000 (UTC)
+ by mail.kernel.org (Postfix) with ESMTPSA id 27A0A23600;
+ Mon, 21 Sep 2020 14:41:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1600699238;
- bh=oQsBq+CnHlR+V9v4/Bx2lGJ9uMC9L2bhMPGikWBh58U=;
+ s=default; t=1600699264;
+ bh=m6VntauJMDSn9rRbPBvIGiZJuUNIY4Q+haPvrNHbwj0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=NdN31+VDNl/JsvEB93oQt1XSORxCfgFNl5r6duyQ4CYZwgK0WRR6BK84LqniNjWmn
- DBqwYrwezij1LQDmXrbYP8sgl9jueGb/JGLNHtdbh5Gux/Lq9pXhxxVh0gPnpBdCS+
- 9wU5prxTl8ohVDEIpIqd4kXBrGxIk1AVbOLhMGkc=
+ b=U3Tg7a/tVPClKLVRp/1JN5xZjugTzdSJK/0LRGrcCxfmnQILLIGW+Fob3TJKwd3LZ
+ mv1MIMLc+GYRnm8cWd4Id1LNGuldQ7prMBX3dQw8lEiUYB03WALifO3ItDLGUoiu+8
+ 0Z+dwLnj52xWyjFBKJj3YCihBbHjSXrz36Aw+SDo=
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.8 08/20] i2c: aspeed: Mask IRQ status to relevant
+Subject: [PATCH AUTOSEL 5.4 07/15] i2c: aspeed: Mask IRQ status to relevant
  bits
-Date: Mon, 21 Sep 2020 10:40:15 -0400
-Message-Id: <20200921144027.2135390-8-sashal@kernel.org>
+Date: Mon, 21 Sep 2020 10:40:46 -0400
+Message-Id: <20200921144054.2135602-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200921144027.2135390-1-sashal@kernel.org>
-References: <20200921144027.2135390-1-sashal@kernel.org>
+In-Reply-To: <20200921144054.2135602-1-sashal@kernel.org>
+References: <20200921144054.2135602-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -84,7 +84,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index f51702d86a90e..1ad74efcab372 100644
+index dad6e432de89f..bdcc3c9d0abe5 100644
 --- a/drivers/i2c/busses/i2c-aspeed.c
 +++ b/drivers/i2c/busses/i2c-aspeed.c
 @@ -69,6 +69,7 @@
