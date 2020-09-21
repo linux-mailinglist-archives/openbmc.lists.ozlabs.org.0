@@ -2,96 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 177402718A6
-	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 01:48:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 428C32718E3
+	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 03:03:33 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bvkmc3CSwzDqjQ
-	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 09:48:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BvmQp4KyJzDqlc
+	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 11:03:30 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=hotmail.com (client-ip=40.92.47.43;
- helo=nam04-bn8-obe.outbound.protection.outlook.com;
- envelope-from=zkxz@hotmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hotmail.com
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=tomjose@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256
- header.s=selector1 header.b=obHkHPNT; 
- dkim-atps=neutral
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam08olkn2043.outbound.protection.outlook.com [40.92.47.43])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=iwjRfYHf; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bvkll3CM7zDqhD
- for <openbmc@lists.ozlabs.org>; Mon, 21 Sep 2020 09:48:02 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kjNnBTkBzd554RUV9NKjnDdhMouaB5pFLqqkGnKBzyfJNNfCgubyv0GtNA5asGLepKfuKmFDYIQvak1p4uDHUh1GdRPQqG7PrSAaw3l8OORubMZ6HUnUUxvcQG9u1TIkUfN/Y9sbnEuBTEqdyNdFTN4gVSxr2xnbB+Yfql0DDrR3A+lfbnBEByP/Nkd7MK7OvCvtmPfVfOeyqWbhnTBoXB8hlibttTpLYt16Sc9V5vcJuezZs+6CUJgX0HoeETckv3pRlBZEx0u3NjASUGLW+iv9hVeoxlmuXW4PYAoWowQJh/wrF9vD++iv2nVWHbLoKkuKDGYGoXElYr2VyNomzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k41RQFn1w/HaLuGSJ/yV0h44BxntwXNvFNxmPJTHEDU=;
- b=D+H++8/1RDHBRBtv8eFmU4uh3i7AoiyOeUwz7mvpZHU4hoiWE5no3+8C6/L7vT7ShSz46LkIk5xZAzZhqgfRBFtBucGStB9aMLZWn16KTBSNTN2+6fW87LWfPT8fTKverCdnqqhJPM/9uYsmnOBd2RdUxRPeCAcYaIs4+e3yeXk9If6M44sWwNTTkY5TUY1GoHYuXS1RzUOADHBF7mrTrAMWNDxWbon45bg6ZYVJaJIbM7QwOEkuFdrBOKb4OUyFNow7bpC1G04CtsLi37qi1dy6TqDvEBPvN5mnrWvybQA6g+G0HKPhiTXAt2MTfW+sA9F4W4XU7bKjdVd1IQYVlg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k41RQFn1w/HaLuGSJ/yV0h44BxntwXNvFNxmPJTHEDU=;
- b=obHkHPNTPbXDBUlnCKpkTGBVefKUACgJzzVPnknWCbQ18/YHttDEHVDkYfZ9uPthhGfjK7WGuHtpiUJ19jcPM/wsWLFs00JUggrtJnUf1NQrhvjNxFsp4+opyj2Aaw9YfZuVccvMs/qH0rqLHcRDQNkTCyZn/Zecf3X5FFCIAGax1KaDNFDC2TffSAjkGlUWhehjEDQTGkylPkH3nSVW/oC7pXrg1K6EMCDpwwQFhy1z0hW7TlI4sgYO14OI3753NxnoSj9r9RrkGblm1G3B0ou9dDT8iafDAcCVvp0Rrj/Dno7+FM23OCnibYNT/2Y8OpNX+2Pujn8T8wED12kAlA==
-Received: from BN8NAM04FT027.eop-NAM04.prod.protection.outlook.com
- (2a01:111:e400:7e85::47) by
- BN8NAM04HT230.eop-NAM04.prod.protection.outlook.com (2a01:111:e400:7e85::375)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.15; Sun, 20 Sep
- 2020 23:47:53 +0000
-Received: from BYAPR14MB2342.namprd14.prod.outlook.com
- (2a01:111:e400:7e85::53) by BN8NAM04FT027.mail.protection.outlook.com
- (2a01:111:e400:7e85::396) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.15 via Frontend
- Transport; Sun, 20 Sep 2020 23:47:53 +0000
-Received: from BYAPR14MB2342.namprd14.prod.outlook.com
- ([fe80::952a:28d1:bf4c:83a]) by BYAPR14MB2342.namprd14.prod.outlook.com
- ([fe80::952a:28d1:bf4c:83a%7]) with mapi id 15.20.3391.024; Sun, 20 Sep 2020
- 23:47:53 +0000
-From: Kun Zhao <zkxz@hotmail.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: OpenBMC Security Advisory - CVE-2019-6260
-Thread-Topic: OpenBMC Security Advisory - CVE-2019-6260
-Thread-Index: AQHWj6ZTNl2tx3WOCkCa1TJvpl8NWA==
-Date: Sun, 20 Sep 2020 23:47:53 +0000
-Message-ID: <BYAPR14MB234222A907DAA5A640E1DABACF3D0@BYAPR14MB2342.namprd14.prod.outlook.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:A4D71F214AE389250732F0E95439E720E4AD96F4A2D185A0E6C63287832EBF13;
- UpperCasedChecksum:8DDBE5AC423E541BBCB2F6853F76D2262173268A05FEF6017E0C0E5D4A14FF29;
- SizeAsReceived:6674; Count:42
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [JacH5RTQFK2fB6V8cga8hcn54CxbbtYH]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 8f787cd5-df56-4f1c-78d2-08d85dbf9767
-x-ms-traffictypediagnostic: BN8NAM04HT230:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: o2eJ+AndpU64LNqEoWJWHV3eafV18FxyocmWraYPaxAwOZSvIwcAGBRN4ODcKyZKfA7/jWes1Gox+VqteUnos1n31Kw4dUwpEBNARfcZ2SzNNnrSvj4KAVwj7Dvx6LhnTCw+SxteMk8FIe/YyBcbAKq8RIE3lyhX/flrtlkbBRCi1XcSO5beE3889ba0+eaW/xb7UFi6DW56GPO6AI0qCtF6UlsUr+JzZtiWh6vq958LabqunLzFTXIy1Th2rpAX
-x-ms-exchange-antispam-messagedata: h0lKiRpUmMWziFbL8SMVFiHOCq1UcW2wAmfSW4E3kgQre/bwsHfuddjL+M+nmES/f0RjZgy7C9GkqH7JXfrNAmV9hNh4gWZor3+WaBsgbFC90dd0cQAWDkLKox+pIl7q+EfoGBm18o3tPS9wYxkoSg==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_BYAPR14MB234222A907DAA5A640E1DABACF3D0BYAPR14MB2342namp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BvmPz6KGXzDqhm
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Sep 2020 11:02:46 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08L0XAi6097509
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Sep 2020 21:02:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type; s=pp1; bh=XAPAAH+eh1qqymCV1vJ0xcuMjfwJwxFhisQRoN5OD4M=;
+ b=iwjRfYHfzzOYx5t+RNoDZGd/bDyLZLxOXPPV/kFouRFxQSjWC55BtztXnY3d/Ig3oIBt
+ ZbyZpey3tKL+XE2Tqeavo5ejOqoUyQMbBwYn4+++vTP0ShCL2ej1QtsOnVPZxl0aDmPj
+ xM1HpGmz2jkkC+9DTQIVAH8TyHvi4EPqwRRAy8Rr79aE+uepQkZtc7ICTAW3HyIciYkP
+ Rie4Mc3OtNoFp2TDV/G3Sz/onXqo0KywwbdHzZIYO/XYh6/AmRkPqLnat9s5xxcLujlN
+ MuT5dCd0SWuh0/RDjma+NLC1m+ETcWAYYByYELytnYLb1gcw2C9Cg/ka+AboFSmY8Joc OQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33pg5da1k1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Sep 2020 21:02:43 -0400
+Received: from m0127361.ppops.net (m0127361.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 08L0XGTQ098073
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Sep 2020 21:02:42 -0400
+Received: from ppma03ams.nl.ibm.com (62.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.98])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33pg5da1jh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 20 Sep 2020 21:02:42 -0400
+Received: from pps.filterd (ppma03ams.nl.ibm.com [127.0.0.1])
+ by ppma03ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08L0koPS031695;
+ Mon, 21 Sep 2020 01:02:41 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com
+ (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+ by ppma03ams.nl.ibm.com with ESMTP id 33n9m89gct-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Sep 2020 01:02:41 +0000
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com
+ (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 08L12cCx22086118
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Sep 2020 01:02:39 GMT
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C35B3A405C;
+ Mon, 21 Sep 2020 01:02:38 +0000 (GMT)
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4D3B7A405B;
+ Mon, 21 Sep 2020 01:02:38 +0000 (GMT)
+Received: from [9.102.3.142] (unknown [9.102.3.142])
+ by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
+ Mon, 21 Sep 2020 01:02:38 +0000 (GMT)
+Subject: Re: OpenBMC Security Advisory - CVE-2019-6260
+To: Kun Zhao <zkxz@hotmail.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <BYAPR14MB234222A907DAA5A640E1DABACF3D0@BYAPR14MB2342.namprd14.prod.outlook.com>
+From: TOM JOSEPH <tomjose@linux.vnet.ibm.com>
+Message-ID: <a06ec8b9-0b1b-8817-d33c-6256289df9e1@linux.vnet.ibm.com>
+Date: Mon, 21 Sep 2020 06:32:36 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
-X-OriginatorOrg: hotmail.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-AuthSource: BN8NAM04FT027.eop-NAM04.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8f787cd5-df56-4f1c-78d2-08d85dbf9767
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Sep 2020 23:47:53.2273 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN8NAM04HT230
+In-Reply-To: <BYAPR14MB234222A907DAA5A640E1DABACF3D0@BYAPR14MB2342.namprd14.prod.outlook.com>
+Content-Type: multipart/alternative;
+ boundary="------------17CB5F36C2AC71275D6067AE"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-20_13:2020-09-16,
+ 2020-09-20 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 clxscore=1015
+ impostorscore=0 spamscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
+ definitions=main-2009210000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,36 +110,95 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_BYAPR14MB234222A907DAA5A640E1DABACF3D0BYAPR14MB2342namp_
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------17CB5F36C2AC71275D6067AE
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Team,
+Hello Kun,
 
-This link here described the =91pantsdown=92 vulnerability found in OpenBMC=
-,
-https://github.com/openbmc/openbmc/issues/3475
+The OpenBMC side of the fixes are captured in this link.
 
-So what are the commits for fixing it?
+https://www.flamingspork.com/blog/2019/01/23/cve-2019-6260-gaining-control-of-bmc-from-the-host-processor/
 
+Regards,
+Tom
 
-Thanks.
+On 21-09-2020 05:17, Kun Zhao wrote:
+> Hi Team, This link here described the ‘pantsdown’ vulnerability found 
+> in OpenBMC,...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> Hi Team,
+>
+> This link here described the ‘pantsdown’ vulnerability found in OpenBMC,
+>
+> https://github.com/openbmc/openbmc/issues/3475
+>
+> So what are the commits for fixing it?
+>
+> Thanks.
+>
+> Kun
+>
 
-Kun
+--------------17CB5F36C2AC71275D6067AE
+Content-Type: text/html; charset=windows-1252
+Content-Transfer-Encoding: 8bit
 
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=windows-1252">
+  </head>
+  <body>
+    <p>Hello Kun,<br>
+      <br>
+      The OpenBMC side of the fixes are captured in this link.<br>
+      <br>
+      <a
+href="https://www.flamingspork.com/blog/2019/01/23/cve-2019-6260-gaining-control-of-bmc-from-the-host-processor/">https://www.flamingspork.com/blog/2019/01/23/cve-2019-6260-gaining-control-of-bmc-from-the-host-processor/<br>
+        <br>
+      </a></p>
+    Regards,<br>
+    Tom<br>
+    <br>
+    <div class="moz-cite-prefix">On 21-09-2020 05:17, Kun Zhao wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:BYAPR14MB234222A907DAA5A640E1DABACF3D0@BYAPR14MB2342.namprd14.prod.outlook.com"><!-- BaNnErBlUrFlE-HeAdEr-start -->
+      <meta name="viewport" content="width=device-width;
+        initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+      <style>
+      /* Mobile */
+      @media screen and (max-width: 630px){
+        * {-webkit-text-size-adjust: none}
+        a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: none; }
+        .pfptTitle { font-size:22px !important; line-height:26px !important; text-align: center !important; }
+        .pfptSubtitle { font-size:14px !important; line-height:18px !important; text-align: center !important; }
+        
+        .pfptMainWrapper { margin-top: 0 !important; margin-right: 0 !important; margin-left: 0 !important; }
+        th[class="pfptTableColumnLeft"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
+        th[class="pfptTableColumnRight"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
 
---_000_BYAPR14MB234222A907DAA5A640E1DABACF3D0BYAPR14MB2342namp_
-Content-Type: text/html; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
-hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
-fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
-252">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
+        .pfptButton { font-size:16px !important; line-height:16px !important; width: 50% !important; display:block !important; margin-right: auto!important; margin-left: auto!important; }   
+        .pfptButton a { font-size: 16px; } 
+        .pfptButton span { font-size: 16px; }     
+      }
+      /* Tablet, Laptop, Desktop */
+      @media screen and (min-width: 631px){
+        th[class="pfptTableColumnLeft"] { width: 50% !important; height:auto !important; }
+        th[class="pfptTableColumnRight"] { width: 50% !important; height:auto !important; text-align: right !important; } 
+      }
+      .pfptPreheader { display:none !important; visibility:hidden; mso-hide:all; font-size:1px; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; }
+    </style>
+      <!-- BaNnErBlUrFlE-HeAdEr-end -->
+      <meta http-equiv="Content-Type" content="text/html;
+        charset=windows-1252">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
 /* Font Definitions */
 @font-face
 	{font-family:"Cambria Math";
@@ -166,25 +229,119 @@ a:link, span.MsoHyperlink
 div.WordSection1
 	{page:WordSection1;}
 --></style>
-</head>
-<body lang=3D"EN-US" link=3D"blue" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi Team,</p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">This link here described the =91pantsdown=92 vulnera=
-bility found in OpenBMC,</p>
-<p class=3D"MsoNormal"><a href=3D"https://github.com/openbmc/openbmc/issues=
-/3475">https://github.com/openbmc/openbmc/issues/3475</a></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">So what are the commits for fixing it?</p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Kun<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
+      <!-- BaNnErBlUrFlE-BoDy-start -->
+      <!-- Preheader Text : BEGIN --> <span class="pfptPreheader"
+        style="display:none
+!important;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+        Hi Team, This link here described the ‘pantsdown’ vulnerability
+        found in OpenBMC,... 
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+              </span>
+      <!-- Preheader Text : END -->
+      <!-- Email Banner : BEGIN -->
+      <table style="width:100%;border-radius:4px;margin-bottom:16px;"
+        width="100%" cellspacing="0" cellpadding="16" border="0"
+        bgcolor="#9CA3A7">
+        <tbody>
+          <tr>
+            <td align="center">
+              <table class="pfptMainWrapper" style="width:100%;"
+                width="100%" cellspacing="0" cellpadding="0" border="0"
+                align="center">
+                <tbody>
+                  <tr>
+                    <td style="border-radius:4px;" valign="top"
+                      align="center">
+                      <table style="max-width:100%; width:100%;"
+                        width="100%" cellspacing="0" cellpadding="0"
+                        border="0" bgcolor="#9CA3A7" align="center">
+                        <tbody>
+                          <tr>
+                            <!-- Message : BEGIN --> <th
+                              class="pfptTableColumnLeft"
+style="font-weight:normal;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;width:100%;height:auto;"
+                              valign="top">
+                              <table
+                                style="width:100%;height:auto;text-align:left;vertical-align:middle;"
+                                width="100%" cellspacing="0"
+                                cellpadding="0">
+                                <tbody>
+                                  <tr>
+                                    <td> <span class="pfptTitle"
+style="font-family:'Roboto','Helvetica','Arial',sans-serif;font-weight:bold;font-size:18px;line-height:20px;display:block;margin-bottom:4px;word-wrap:normal;">This
+                                        Message Is From an External
+                                        Sender</span> </td>
+                                  </tr>
+                                  <tr>
+                                    <td> <span class="pfptSubtitle"
+style="font-weight:normal;font-family:'Roboto','Helvetica','Arial',sans-serif;font-size:13px;line-height:16px;display:block;word-wrap:normal;">This
+                                        message came from outside your
+                                        organization.</span> </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </th>
+                            <!-- Message : END --> </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Email Banner : END -->
+      <!-- BaNnErBlUrFlE-BoDy-end -->
+      <div class="WordSection1">
+        <p class="MsoNormal">Hi Team,</p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">This link here described the ‘pantsdown’
+          vulnerability found in OpenBMC,</p>
+        <p class="MsoNormal"><a
+            href="https://github.com/openbmc/openbmc/issues/3475"
+            moz-do-not-send="true">https://github.com/openbmc/openbmc/issues/3475</a></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">So what are the commits for fixing it?</p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Thanks.<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Kun<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+      </div>
+    </blockquote>
+  </body>
 </html>
 
---_000_BYAPR14MB234222A907DAA5A640E1DABACF3D0BYAPR14MB2342namp_--
+--------------17CB5F36C2AC71275D6067AE--
+
