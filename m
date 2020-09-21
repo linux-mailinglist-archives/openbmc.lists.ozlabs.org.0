@@ -1,138 +1,98 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 210A72726C3
-	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 16:15:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EE4C272716
+	for <lists+openbmc@lfdr.de>; Mon, 21 Sep 2020 16:33:01 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bw60l25xdzDqB0
-	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 00:15:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bw6Np234hzDqfZ
+	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 00:32:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.128.137; helo=kor01-ps2-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hcl.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=IUkyiLA5; 
- dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=IUkyiLA5; 
- dkim-atps=neutral
-Received: from KOR01-PS2-obe.outbound.protection.outlook.com
- (mail-eopbgr1280137.outbound.protection.outlook.com [40.107.128.137])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Si3qjZ+z; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bw5y62ZNYzDqZP
- for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 00:13:14 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cUH1EDdONSqs4ct2aY3r6L3J/E6WVgue3GR9K1D/4yg=;
- b=IUkyiLA5nrJ2ZvdbWmx+WTTvb8NUjHT3K/t7EUD03XNNbISqjDpseksWU+rvUA6iiy8Q9/4Gl1brGCK8JhDT1/eDyX3HIzb1+CFBKJttWaFxNM4IEdFUSqTitPBFMBf0+lfCuf1ow9E80LgF3JpsayV6/sBRbWljGdErghguk90=
-Received: from SL2P216CA0011.KORP216.PROD.OUTLOOK.COM (2603:1096:100:18::21)
- by PS2PR04MB3560.apcprd04.prod.outlook.com (2603:1096:300:60::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.11; Mon, 21 Sep
- 2020 14:13:04 +0000
-Received: from PU1APC01FT049.eop-APC01.prod.protection.outlook.com
- (2603:1096:100:18:cafe::b6) by SL2P216CA0011.outlook.office365.com
- (2603:1096:100:18::21) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3391.13 via Frontend
- Transport; Mon, 21 Sep 2020 14:13:04 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.57)
- smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
- header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
- header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.195.57 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.195.57; helo=APC01-HK2-obe.outbound.protection.outlook.com;
-Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.195.57) by
- PU1APC01FT049.mail.protection.outlook.com (10.152.253.9) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3391.15 via Frontend Transport; Mon, 21 Sep 2020 14:13:02 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nSLvl8iqRkDyElwAgKmdc8Q4u0+79Lflta52o2v+lBJr2VQylwR0B9mbnv37QOP0NBgq3glpfDHfkjWD43WJSL2oH0wA/ve1/5FfyAfJ7H9/qFK2YQ+m5PRKttjgA6aILphQPSUqt901Y+iGNFMY75oXSW3Y5rZzO9+n2WOJ7Ff7/JKBilux+vKJ2AwcibkqLmvaBiCAnTi9hBZLqTxebCZ3oAIkhB7ScHjWKSrQ7jFXguXVGg5TYQ6WpMwINb6oKuztt1vrY/YEl6FY2Gu2i04AtL6DYoLBAxwUsXV7YsCMO/yREEgp/oQyHPNLhBO4IvYbylPCB6uLJoI5EfutLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cUH1EDdONSqs4ct2aY3r6L3J/E6WVgue3GR9K1D/4yg=;
- b=k3p8TgVHolCZX/g8zkH8LmF47RF+ICDk4Zz48w5BKLP5pY7+I8I8bkiXzeBR9y8Ow8/BVwjSEapL1hCpLZbS2fjApQRHPiPBxVQAh1q56Inxx4T5mWRtUGMvY4Zg0O6hXGNVHcbMMXazLYEmDRx2z5qwve8G9Y1JSF6ko+u0sO+wECPA8U72yUjrpOOF3q6C8oMQte7CjywxfNkAC+f5EfRiVS3Ihuv9mlCyuSP6kwpFHciqlsWF8BLsWvwAhsoSRtY3heOywLENmcwJh//TRS+/ZLD11mtYZvyRSOadesJPugtcjkem3a3UW+hhsRoR4CTUkYvDnolvGFPWXz/RZg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cUH1EDdONSqs4ct2aY3r6L3J/E6WVgue3GR9K1D/4yg=;
- b=IUkyiLA5nrJ2ZvdbWmx+WTTvb8NUjHT3K/t7EUD03XNNbISqjDpseksWU+rvUA6iiy8Q9/4Gl1brGCK8JhDT1/eDyX3HIzb1+CFBKJttWaFxNM4IEdFUSqTitPBFMBf0+lfCuf1ow9E80LgF3JpsayV6/sBRbWljGdErghguk90=
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB2490.apcprd04.prod.outlook.com (2603:1096:4:b::11) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3391.14; Mon, 21 Sep 2020 14:12:55 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::b93f:17bd:c016:eec7]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::b93f:17bd:c016:eec7%4]) with mapi id 15.20.3391.026; Mon, 21 Sep 2020
- 14:12:55 +0000
-From: Jayashree D <jayashree-d@hcl.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Read Firmware Versions
-Thread-Topic: Read Firmware Versions
-Thread-Index: AdaQIMU5ljsiRzlYTUW3d3oi6MD/gw==
-Date: Mon, 21 Sep 2020 14:12:55 +0000
-Message-ID: <SG2PR04MB3093CAA5913439BB892C16E5E13A0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNDdjYzQzMGQtZGI2OS00MTQwLWFlNmUtNGYyNDhmNTAwMTAzIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzXzFudDNybmFsIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE4LjQuMTg0My4xMjMiLCJUcnVzdGVkTGFiZWxIYXNoIjoiTWtnb3JQKzVTNW50dGFLbFM4MHJNdFZKOWU1b3NRMTd5cHpaWE5xNkNUbk5seklmRURXc3N0Vm1OMWs0RWJYdyJ9
-x-hclclassification: HCL_Cla5s_1nt3rnal
-Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
- signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=hcl.com;
-x-originating-ip: [2409:4072:38a:3b6c:9027:e359:d122:4b57]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 5678fdff-7fd2-46f7-a66c-08d85e387451
-x-ms-traffictypediagnostic: SG2PR04MB2490:|PS2PR04MB3560:
-x-ms-exchange-transport-forked: True
-X-Microsoft-Antispam-PRVS: <PS2PR04MB3560B4EDBCC1D189527B3938E13A0@PS2PR04MB3560.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;OLM:5516;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: v6a4mToQGN3qUyeeRzpaR16SgwthzsSMZ707FrV3sYOxTqAQlQl3LJBCf74TmQAKMFVjf9Go3DMzDwjwIG1hPzoABktrUXCQGOWAgeQpe9coI+iscZdxuydeWbukhfQQxi5AWJvjmTwKCkKVvqJrDbJbAVVY/5pHjyHlEZNC1AGoPu/PMk4eZDzn2cVjjLP89ia/QHvQfbI1aC3+CsRSFATlqfCWEDMeATALPj+3bhoKmiJxsW5H5qs1MzQKHdi7zahUjYXqO+SBW6CSQ0aivVPUpODgc+w77Q1w9TcP2/d/JItAf6Va0ODMwRyC3wHk
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(366004)(346002)(376002)(396003)(39860400002)(136003)(66946007)(6506007)(33656002)(66476007)(7696005)(4326008)(316002)(83380400001)(76116006)(64756008)(66446008)(66556008)(2906002)(478600001)(7116003)(8676002)(6916009)(55016002)(86362001)(9686003)(52536014)(8936002)(3480700007)(71200400001)(186003)(5660300002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: Zse/7hBNArHDcTpHNBcPYRXVBjd3Gwgf67r2cmoUtY+exVLQuFTqLv2MpTAn7RMVgb/rqLN9AYolzmb1GDkY+lJJKGf7vPoU875NUgQrxuCUa+cM62E95D6CeHeTe1+H9h9lqNSP1im3sZ8XZk7HE+tMbJXVlQBe1qTlaDNcA/Z6X9QgGhdnHfx9+7BNbPEXAT3SZeBZCxp4Qbq3I3Dh5uW1XNlcW9L4yV9U/JSOwkaOqBIHh7X8pkrTSvtM0hZQJjI9uU2/8h2JtrhaMsr6LtFL0vGk6M3+TAXGNY09+ygnjzGk7m0AIZu+aanM6K7l4kbHD6R0GK5Tm5LfsFWpbU7rEpFqAv5qXakj90lF5HaijNCwpuskokTpDimv3/VWRBVcqson5K55dYLL6HDgdNoTao5ltSeJYASHpD2DMvnGtqFfKj0LQCRy1vwxgSZWwBdHs53mfgWOSQOO71SuAjpf5th8cxcycouMfaJRtOBgMWCrgUmhaw7IV9JVc0PB+UMWLO4jt+oq7qnZCQySjTTeSD5/ZKGt07TRY+RdbsxxUqV/TSqG3dyLKT/9lCq1BPh1Vlxad7+uxQKBnTk/g8IbqLYkr1vWoMsL1eW60ocbqWCh4GoElESDvLU1rIulO5ECcOn5NPB5gWx9VxGNPwzhxpGfXPJz41R1sOG+hitwUIeGiL0SL6GMgKXXwg6ztDsHX9y4JuHdmbQ/7O+/Bw==
-Content-Type: multipart/alternative;
- boundary="_000_SG2PR04MB3093CAA5913439BB892C16E5E13A0SG2PR04MB3093apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bw6L81ngWzDqHf
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 00:30:38 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08LEMDbn142036; Mon, 21 Sep 2020 10:29:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type; s=pp1; bh=IWermD3g0NsvydtygBczpSMF696TQEWTEXftPQThiGU=;
+ b=Si3qjZ+zdAjBrg/J9af4NEmACvDBV0QcIN9fESMpmgahuDm/+RCe9CC0d6dsMPUHG7uy
+ E8HQkL96SoNFufi/wv0Tz/O/VuBcUeaELX4OMzYuBZQvLSRTfYco2v0DW5dRwACOLdOR
+ NxXy4pmP9dlYFMhq39TmpL4tKjLxq3NkMhWNj76Wn/Uek9O6g3KWotzGkPoBEiBnBpo+
+ MUlxjsqzR3B2sMuLmlJnqgA4Ow128vUAOVmP7Jhgp44LZfZZIYGoAw1/slee4idHxin1
+ DTheRyrEesk91r60jmkAeZ0tyyPuI+O9LiVW/JLGefgYn0KswdQTzmkL7hnrwwz3SqNQ Xg== 
+Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com
+ [149.81.74.106])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33pwa89pgv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Sep 2020 10:29:32 -0400
+Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
+ by ppma04fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08LESHWb030370;
+ Mon, 21 Sep 2020 14:29:29 GMT
+Received: from b06cxnps4074.portsmouth.uk.ibm.com
+ (d06relay11.portsmouth.uk.ibm.com [9.149.109.196])
+ by ppma04fra.de.ibm.com with ESMTP id 33n9m7s3f5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 21 Sep 2020 14:29:29 +0000
+Received: from d06av24.portsmouth.uk.ibm.com (d06av24.portsmouth.uk.ibm.com
+ [9.149.105.60])
+ by b06cxnps4074.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 08LETReo25231808
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 21 Sep 2020 14:29:27 GMT
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4F64A42041;
+ Mon, 21 Sep 2020 14:29:27 +0000 (GMT)
+Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6B20A42042;
+ Mon, 21 Sep 2020 14:29:25 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.79.217.195])
+ by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Mon, 21 Sep 2020 14:29:25 +0000 (GMT)
+Subject: Re: OpenBMC LDAP server configuration assistance
+To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Gerhart, Donnie" <Donnie.Gerhart@dell.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "gkeishin@in.ibm.com" <gkeishin@in.ibm.com>
+References: <BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com>
+ <6b1406cd-1d70-7f62-6e2d-c33d80d02f1c@linux.intel.com>
+ <BLAPR19MB433888EAE75ED273319EC97193240@BLAPR19MB4338.namprd19.prod.outlook.com>
+ <a3c9f148-d624-ab31-b59b-8c6dcf126679@linux.intel.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Message-ID: <8349ffa4-a809-6960-5eba-2583b070badd@linux.vnet.ibm.com>
+Date: Mon, 21 Sep 2020 19:59:24 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2490
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT049.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 4e5f2909-e02a-44b9-ee7a-08d85e386fb4
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: X7uzqdZl17ukMs+cXHtwUQCrEYyqZzl3Z+2cxYFH8ZTSQWxFAgxTHIerqKkvhgBVbYqyw8ShCuClmxDjEjesWoRU4WpF5hlt7F5AoAl/uHbyzQ0QntZWr2pCtJX+21M2aLEnhJiD1kQEhSUjdxxcAKtsJeYJ8zPP28XIqP0UwTf33OCf4vfqeu5x5tMAfozS3q8pWMoBy3dxs+vDjteEg1T81Y5GWEUWBgTrJrRnNYZ1203Nl5S/n4gfSTZUVrn0qGBMEo9NLVH35gyBIAlBZiwwc9NTmnu9qR1YOW7I2YY/B+zOWMIglWzxbeecK4j+ZpaQcqRV1Tp7hdoaZ4tlyQC2GhxDqqt99n0QVq+gj+9VVHD7bThvYU1srpvjrYVIdKIvI+RwjErtFWIlFcdiz9SAY52S99lS8H/VaC4g10QwCWa0iYc23zct3d4IEvg0
-X-Forefront-Antispam-Report: CIP:192.8.195.57; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(396003)(136003)(39860400002)(346002)(376002)(46966005)(81166007)(36906005)(86362001)(33656002)(316002)(82740400003)(4326008)(52536014)(70586007)(70206006)(2906002)(7116003)(83380400001)(9686003)(356005)(34020700004)(82310400003)(55016002)(186003)(7696005)(3480700007)(5660300002)(26005)(6916009)(478600001)(336012)(8936002)(8676002)(47076004)(6506007);
- DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Sep 2020 14:13:02.4818 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5678fdff-7fd2-46f7-a66c-08d85e387451
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.57];
- Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT049.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR04MB3560
+In-Reply-To: <a3c9f148-d624-ab31-b59b-8c6dcf126679@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------365A01D800F389C5FBBECC41"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-21_05:2020-09-21,
+ 2020-09-21 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ impostorscore=0 mlxscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0 clxscore=1011
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2009210102
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,63 +104,319 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+Cc: "Mugunda, Chandra" <Chandra.Mugunda@dell.com>, "Giles,
+ Joshua" <Joshua.Giles@dell.com>, "Cockrell, Trevor" <Trevor.Cockrell@dell.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR04MB3093CAA5913439BB892C16E5E13A0SG2PR04MB3093apcp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------365A01D800F389C5FBBECC41
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Classification: HCL Internal
-Hi Team,
+Hi Donnie,
 
-We are working on a platform which has multi host and each host have firmwa=
-re versions such as CPLD, ME, BIOS, Bridge IC and VR.
-We have to display it in dbus objects.
-Can you please provide your comments on which dbus objects it will be suita=
-ble to store all firmware versions.
+We didn't create the cheatsheet for ldap server configuration, we 
+thought the enough documentation is there on the net to configure the 
+ldap server.
 
-Also in phosphor-dbus-interfaces, I am seeing "System.interface.yaml" in /x=
-yz/openbmc_project/Inventory/Item/.
-Whether it will be suitable to store all the firmware versions (/xyz/openbm=
-c_project/Inventory/Item/System/HostN).
+But it is good to have this documentation, Are you doing it for openLDAP 
+or the Active Directory also?
 
-Regards,
-Jayashree
+I thought George & team was having this when I was working with him.
 
-::DISCLAIMER::
-________________________________
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
-smission. The e mail and its contents (with or without referred errors) sha=
-ll therefore not attach any liability on the originator or HCL or its affil=
-iates. Views or opinions, if any, presented in this email are solely those =
-of the author and may not necessarily reflect the views or opinions of HCL =
-or its affiliates. Any form of reproduction, dissemination, copying, disclo=
-sure, modification, distribution and / or publication of this message witho=
-ut the prior written consent of authorized representative of HCL is strictl=
-y prohibited. If you have received this email in error please delete it and=
- notify the sender immediately. Before opening any email and/or attachments=
-, please check them for viruses and other defects.
-________________________________
+Ratan
 
---_000_SG2PR04MB3093CAA5913439BB892C16E5E13A0SG2PR04MB3093apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On 9/21/20 10:01 AM, Thomaiyar, Richard Marian wrote:
+> Hi Donnie, Yes, Please go ahead and create Cheatsheet for LDAP 
+> configuration....
+> This Message Is From an External Sender
+> This message came from outside your organization.
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
+> Hi Donnie,
+>
+> Yes, Please go ahead and create Cheatsheet for LDAP configuration.
+>
+> Regards,
+>
+> Richard
+>
+> On 9/12/2020 12:44 AM, Gerhart, Donnie wrote:
+>>
+>> Hey Richard/Folks,
+>>
+>> Thanks for reaching out.  We really appreciate it.
+>>
+>> Per usual, shortly after we hit send, we found a GID anomaly that 
+>> once corrected everything OpenBMC LDAP connected up and logged in nicely.
+>>
+>> To keep others from spinning in such an anomaly we’d be more than 
+>> happy to post (ourselves or through you) a simple Ldap diff (LDIF) 
+>> file containing a small working joe and jane LDAP server config.  The 
+>> two places we thought such an example might valuable are phosphor 
+>> user manager arch documentation and/or the LDAP test in 
+>> openbmc-test-automation but we are happy to defer to your guidance 
+>> regarding same.  Let us know your thoughts and we can post or provide 
+>> the applicable file straight away.
+>>
+>> Thanks again!
+>>
+>> Best,
+>>
+>> Donnie
+>>
+>> *From:* Thomaiyar, Richard Marian 
+>> <richard.marian.thomaiyar@linux.intel.com>
+>> *Sent:* Thursday, September 10, 2020 8:53 AM
+>> *To:* Gerhart, Donnie; openbmc@lists.ozlabs.org; 
+>> ratagupt@linux.vnet.ibm.com; gkeishin@in.ibm.com
+>> *Cc:* Mugunda, Chandra; Giles, Joshua; Cockrell, Trevor
+>> *Subject:* Re: OpenBMC LDAP server configuration assistance
+>>
+>> [EXTERNAL EMAIL]
+>>
+>> Hi Donnie,
+>>
+>> Didn't tested it in latest tree, but you already cross verified this 
+>> right --> 
+>> https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot
+>>
+>> ++ Ratan & George.
+>>
+>> Regards,
+>>
+>> Richard
+>>
+>> On 9/9/2020 10:02 PM, Gerhart, Donnie wrote:
+>>
+>>     Hello OpenBMC Community\SMEs,
+>>
+>>     We are investigating LDAP functionality on the 2.8 ‘top of tree’
+>>     build; however, we are having some issues I believe you can help
+>>     with straight away. Some of the many real failures we’ve
+>>     encountered are:
+>>
+>>       * Bricked system due to locking out all users
+>>
+>> <Richard> You meant to say even `root` user is locked out is OpenBMC 
+>> repo master or made more changes. By default user lock out is 
+>> disabled, and still won't lock root user to avoid DOS attack.
+>>
+>>       * Ladap_result() failed:  Can’t contact LDAP server
+>>
+>>           o Believe we’ve fixed this one
+>>
+>> <Richard> Hope this as LDAP configuration issue you faced, and not 
+>> related to OpenBMC code as such.
+>>
+>>       * Logins are restricted to the group priv-admin of but user
+>>         ‘testuser’ is not a member
+>>
+>> <Richard>: Is this failure due to SSH login. Because SSH won't make 
+>> use of ldap privilege mapping. You may need to change 
+>> https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default 
+>> if needs LDAP testing in SSH.
+>>
+>> Have you tried bmcweb LDAP login ? Whether you are able to succeed in 
+>> that ?
+>>
+>>       * Pam_authenticate() failed, rc=7, Authentication failure
+>>       * Bad PAM password attempt for ‘testuser’ from: <LDAP server IP>
+>>
+>>     Some of these issues we’ve worked through; however, some are
+>>     still dogging us.  To that end, can someone possibly list\post a
+>>     basic LDAP server LDIF file with a single user, privilege role
+>>     and group mapping that you’ve successfully used with OpenBMC?  We
+>>     assume we are stuck on some trivial LDAP server topology anomaly
+>>     that is completely escaping us at the moment.
+>>
+>>     As an fyi we have looked at:
+>>
+>>      1. Gone through everything obviously ‘ldap’ in the mailing
+>>         lists: https://lists.ozlabs.org/pipermail/openbmc/
+>>      2. Looked at OpenBMC learning series:
+>>         https://github.com/openbmc/openbmc/wiki/Presentations
+>>      3. Gone through the documents here:
+>>         https://github.com/openbmc/docs/blob/master/architecture/user-management.md
+>>      4. Looked at ldap tests and server:
+>>         https://github.com/openbmc/openbmc-test-automation
+>>      5. Spent more time tweaking Linux files and creating ldap server
+>>         configs that I care to admit 😊
+>>
+>>     BIG thanks in advance!
+>>
+>>     Best,
+>>
+>>     Donnie
+>>
+
+--------------365A01D800F389C5FBBECC41
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Donnie,</p>
+    <p>We didn't create the cheatsheet for ldap server configuration, we
+      thought the enough documentation is there on the net to configure
+      the ldap server.</p>
+    <p>But it is good to have this documentation, Are you doing it for
+      openLDAP or the Active Directory also?</p>
+    <p>I thought George &amp; team was having this when I was working
+      with him.<br>
+    </p>
+    <p>Ratan<br>
+    </p>
+    <div class="moz-cite-prefix">On 9/21/20 10:01 AM, Thomaiyar, Richard
+      Marian wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:a3c9f148-d624-ab31-b59b-8c6dcf126679@linux.intel.com">
+      <!-- BaNnErBlUrFlE-HeAdEr-start -->
+      <meta name="viewport" content="width=device-width;
+        initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+      <style>
+      /* Mobile */
+      @media screen and (max-width: 630px){
+        * {-webkit-text-size-adjust: none}
+        a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: none; }
+        .pfptTitle { font-size:22px !important; line-height:26px !important; text-align: center !important; }
+        .pfptSubtitle { font-size:14px !important; line-height:18px !important; text-align: center !important; }
+        
+        .pfptMainWrapper { margin-top: 0 !important; margin-right: 0 !important; margin-left: 0 !important; }
+        th[class="pfptTableColumnLeft"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
+        th[class="pfptTableColumnRight"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
+
+        .pfptButton { font-size:16px !important; line-height:16px !important; width: 50% !important; display:block !important; margin-right: auto!important; margin-left: auto!important; }   
+        .pfptButton a { font-size: 16px; } 
+        .pfptButton span { font-size: 16px; }     
+      }
+      /* Tablet, Laptop, Desktop */
+      @media screen and (min-width: 631px){
+        th[class="pfptTableColumnLeft"] { width: 50% !important; height:auto !important; }
+        th[class="pfptTableColumnRight"] { width: 50% !important; height:auto !important; text-align: right !important; } 
+      }
+      .pfptPreheader { display:none !important; visibility:hidden; mso-hide:all; font-size:1px; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; }
+    </style>
+      <!-- BaNnErBlUrFlE-HeAdEr-end -->
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <!-- BaNnErBlUrFlE-BoDy-start -->
+      <!-- Preheader Text : BEGIN --> <span class="pfptPreheader"
+        style="display:none
+!important;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+        Hi Donnie, Yes, Please go ahead and create Cheatsheet for LDAP
+        configuration.... 
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+              </span>
+      <!-- Preheader Text : END -->
+      <!-- Email Banner : BEGIN -->
+      <table style="width:100%;border-radius:4px;margin-bottom:16px;"
+        width="100%" cellspacing="0" cellpadding="16" border="0"
+        bgcolor="#9CA3A7">
+        <tbody>
+          <tr>
+            <td align="center">
+              <table class="pfptMainWrapper" style="width:100%;"
+                width="100%" cellspacing="0" cellpadding="0" border="0"
+                align="center">
+                <tbody>
+                  <tr>
+                    <td style="border-radius:4px;" valign="top"
+                      align="center">
+                      <table style="max-width:100%; width:100%;"
+                        width="100%" cellspacing="0" cellpadding="0"
+                        border="0" bgcolor="#9CA3A7" align="center">
+                        <tbody>
+                          <tr>
+                            <!-- Message : BEGIN --> <th
+                              class="pfptTableColumnLeft"
+style="font-weight:normal;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;width:100%;height:auto;"
+                              valign="top">
+                              <table
+                                style="width:100%;height:auto;text-align:left;vertical-align:middle;"
+                                width="100%" cellspacing="0"
+                                cellpadding="0">
+                                <tbody>
+                                  <tr>
+                                    <td> <span class="pfptTitle"
+style="font-family:'Roboto','Helvetica','Arial',sans-serif;font-weight:bold;font-size:18px;line-height:20px;display:block;margin-bottom:4px;word-wrap:normal;">This
+                                        Message Is From an External
+                                        Sender</span> </td>
+                                  </tr>
+                                  <tr>
+                                    <td> <span class="pfptSubtitle"
+style="font-weight:normal;font-family:'Roboto','Helvetica','Arial',sans-serif;font-size:13px;line-height:16px;display:block;word-wrap:normal;">This
+                                        message came from outside your
+                                        organization.</span> </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </th>
+                            <!-- Message : END --> </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Email Banner : END -->
+      <!-- BaNnErBlUrFlE-BoDy-end -->
+      <p>Hi Donnie, <br>
+      </p>
+      <p>Yes, Please go ahead and create Cheatsheet for LDAP
+        configuration.</p>
+      <p>Regards,</p>
+      <p>Richard<br>
+      </p>
+      <div class="moz-cite-prefix">On 9/12/2020 12:44 AM, Gerhart,
+        Donnie wrote:<br>
+      </div>
+      <blockquote type="cite"
+cite="mid:BLAPR19MB433888EAE75ED273319EC97193240@BLAPR19MB4338.namprd19.prod.outlook.com">
+        <meta http-equiv="Content-Type" content="text/html;
+          charset=UTF-8">
+        <meta name="Generator" content="Microsoft Word 15 (filtered
+          medium)">
+        <style><!--
 /* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
 @font-face
 	{font-family:"Cambria Math";
 	panose-1:2 4 5 3 5 4 6 3 2 4;}
@@ -208,7 +424,7 @@ xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
 	{font-family:Calibri;
 	panose-1:2 15 5 2 2 2 4 3 2 4;}
 @font-face
-	{font-family:"Segoe UI";
+	{font-family:"Segoe UI Emoji";
 	panose-1:2 11 5 2 4 2 4 2 2 3;}
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
@@ -224,75 +440,650 @@ a:visited, span.MsoHyperlinkFollowed
 	{mso-style-priority:99;
 	color:#954F72;
 	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle20
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle21
+	{mso-style-type:personal-reply;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
 .MsoChpDefault
 	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
+	font-size:10.0pt;}
 @page WordSection1
 	{size:8.5in 11.0in;
 	margin:1.0in 1.0in 1.0in 1.0in;}
 div.WordSection1
 	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:80760137;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1014133672 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:384136804;
+	mso-list-template-ids:1822620116;}
+@list l2
+	{mso-list-id:391270505;
+	mso-list-template-ids:830654476;}
+@list l2:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3
+	{mso-list-id:639195202;
+	mso-list-template-ids:1631762344;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:780489114;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1797343294 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5
+	{mso-list-id:1160468196;
+	mso-list-template-ids:1271148706;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6
+	{mso-list-id:1941138384;
+	mso-list-template-ids:-1364811478;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l6:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
 --></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+<o:shapedefaults v:ext="edit" spidmax="1026" />
 </xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
 </o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
-pan style=3D"color:#08298A">HCL Internal</span></b><span style=3D"font-size=
-:12.0pt"><o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif">Hi Team,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif">We are working on a platform which has multi host =
-and each host have firmware versions such as CPLD, ME, BIOS, Bridge IC and =
-VR.
-<br>
-We have to display it in dbus objects.<br>
-Can you please provide your comments on which dbus objects it will be suita=
-ble to store all firmware versions.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif">&nbsp;<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif">Also in phosphor-dbus-interfaces, I am seeing &quo=
-t;System.interface.yaml&quot; in /xyz/openbmc_project/Inventory/Item/.<br>
-Whether it will be suitable to store all the firmware versions (/xyz/openbm=
-c_project/Inventory/Item/System/HostN).<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">Jayashree<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
-<hr>
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or
- incomplete, or may contain viruses in transmission. The e mail and its con=
-tents (with or without referred errors) shall therefore not attach any liab=
-ility on the originator or HCL or its affiliates. Views or opinions, if any=
-, presented in this email are solely
- those of the author and may not necessarily reflect the views or opinions =
-of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
- disclosure, modification, distribution and / or publication of this messag=
-e without the prior written consent
- of authorized representative of HCL is strictly prohibited. If you have re=
-ceived this email in error please delete it and notify the sender immediate=
-ly. Before opening any email and/or attachments, please check them for viru=
-ses and other defects.<br>
-<hr>
-</font>
-</body>
+        <div class="WordSection1">
+          <p class="MsoNormal">Hey Richard/Folks,<o:p></o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <p class="MsoNormal">Thanks for reaching out.  We really
+            appreciate it.<o:p></o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <p class="MsoNormal">Per usual, shortly after we hit send, we
+            found a GID anomaly that once corrected everything OpenBMC
+            LDAP connected up and logged in nicely.<o:p></o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <p class="MsoNormal">To keep others from spinning in such an
+            anomaly we’d be more than happy to post (ourselves or
+            through you) a simple Ldap diff (LDIF) file containing a
+            small working joe and jane LDAP server config.  The two
+            places we thought such an example might valuable are
+            phosphor user manager arch documentation and/or the LDAP
+            test in openbmc-test-automation but we are happy to defer to
+            your guidance regarding same.  Let us know your thoughts and
+            we can post or provide the applicable file straight away.  <o:p></o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <p class="MsoNormal">Thanks again!<o:p></o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <p class="MsoNormal">Best,<o:p></o:p></p>
+          <p class="MsoNormal">Donnie<o:p></o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <div>
+            <div style="border:none;border-top:solid #E1E1E1
+              1.0pt;padding:3.0pt 0in 0in 0in">
+              <p class="MsoNormal"><b>From:</b> Thomaiyar, Richard
+                Marian <a class="moz-txt-link-rfc2396E"
+                  href="mailto:richard.marian.thomaiyar@linux.intel.com"
+                  moz-do-not-send="true">&lt;richard.marian.thomaiyar@linux.intel.com&gt;</a>
+                <br>
+                <b>Sent:</b> Thursday, September 10, 2020 8:53 AM<br>
+                <b>To:</b> Gerhart, Donnie; <a
+                  class="moz-txt-link-abbreviated"
+                  href="mailto:openbmc@lists.ozlabs.org"
+                  moz-do-not-send="true">openbmc@lists.ozlabs.org</a>; <a
+                  class="moz-txt-link-abbreviated"
+                  href="mailto:ratagupt@linux.vnet.ibm.com"
+                  moz-do-not-send="true">ratagupt@linux.vnet.ibm.com</a>;
+                <a class="moz-txt-link-abbreviated"
+                  href="mailto:gkeishin@in.ibm.com"
+                  moz-do-not-send="true">gkeishin@in.ibm.com</a><br>
+                <b>Cc:</b> Mugunda, Chandra; Giles, Joshua; Cockrell,
+                Trevor<br>
+                <b>Subject:</b> Re: OpenBMC LDAP server configuration
+                assistance<o:p></o:p></p>
+            </div>
+          </div>
+          <p class="MsoNormal"><o:p> </o:p></p>
+          <div>
+            <p><span style="color:#CE1126">[EXTERNAL EMAIL] <o:p></o:p></span></p>
+          </div>
+          <p class="MsoNormal">Hi Donnie, <o:p></o:p></p>
+          <p>Didn't tested it in latest tree, but you already cross
+            verified this right --&gt; <a
+href="https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot"
+              moz-do-not-send="true">
+https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot</a><o:p></o:p></p>
+          <p>++ Ratan &amp; George.<o:p></o:p></p>
+          <p>Regards,<o:p></o:p></p>
+          <p>Richard<o:p></o:p></p>
+          <div>
+            <p class="MsoNormal">On 9/9/2020 10:02 PM, Gerhart, Donnie
+              wrote:<o:p></o:p></p>
+          </div>
+          <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+            <p class="MsoNormal">Hello OpenBMC Community\SMEs,<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">We are investigating LDAP functionality
+              on the 2.8 ‘top of tree’ build; however, we are having
+              some issues I believe you can help with straight away. 
+              Some of the many real failures we’ve encountered are:<o:p></o:p></p>
+            <ul style="margin-top:0in" type="disc">
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l0 level1 lfo3">Bricked
+                system due to locking out all users<o:p></o:p></li>
+            </ul>
+          </blockquote>
+          <p class="MsoNormal">&lt;Richard&gt; You meant to say even
+            `root` user is locked out is OpenBMC repo master or made
+            more changes. By default user lock out is disabled, and
+            still won't lock root user to avoid DOS attack. <o:p></o:p></p>
+          <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+            <ul style="margin-top:0in" type="disc">
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l0 level1 lfo3">Ladap_result()
+                failed:  Can’t contact LDAP server<o:p></o:p></li>
+            </ul>
+            <ul style="margin-top:0in" type="disc">
+              <ul style="margin-top:0in" type="circle">
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l0 level2 lfo3">Believe
+                  we’ve fixed this one<o:p></o:p></li>
+              </ul>
+            </ul>
+          </blockquote>
+          <p class="MsoNormal">&lt;Richard&gt; Hope this as LDAP
+            configuration issue you faced, and not related to OpenBMC
+            code as such.<br>
+            <br>
+            <o:p></o:p></p>
+          <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+            <ul style="margin-top:0in" type="disc">
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l0 level1 lfo3">Logins
+                are restricted to the group priv-admin of but user
+                ‘testuser’ is not a member<o:p></o:p></li>
+            </ul>
+          </blockquote>
+          <p>&lt;Richard&gt;: Is this failure due to SSH login. Because
+            SSH won't make use of ldap privilege mapping. You may need
+            to change <a
+href="https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default"
+              moz-do-not-send="true">
+https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default</a>
+            if needs LDAP testing in SSH.<o:p></o:p></p>
+          <p>Have you tried bmcweb LDAP login ? Whether you are able to
+            succeed in that ?<o:p></o:p></p>
+          <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+            <ul style="margin-top:0in" type="disc">
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l0 level1 lfo3">Pam_authenticate()
+                failed, rc=7, Authentication failure<o:p></o:p></li>
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l0 level1 lfo3">Bad PAM
+                password attempt for ‘testuser’ from: &lt;LDAP server
+                IP&gt;<o:p></o:p></li>
+            </ul>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">Some of these issues we’ve worked
+              through; however, some are still dogging us.  To that end,
+              can someone possibly list\post a basic LDAP server LDIF
+              file with a single user, privilege role and group mapping
+              that you’ve successfully used with OpenBMC?  We assume we
+              are stuck on some trivial LDAP server topology anomaly
+              that is completely escaping us at the moment.<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">As an fyi we have looked at:<o:p></o:p></p>
+            <ol style="margin-top:0in" type="1" start="1">
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l4 level1 lfo9">Gone
+                through everything obviously ‘ldap’ in the mailing
+                lists:  <a
+                  href="https://lists.ozlabs.org/pipermail/openbmc/"
+                  moz-do-not-send="true">https://lists.ozlabs.org/pipermail/openbmc/</a><o:p></o:p></li>
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l4 level1 lfo9">Looked
+                at OpenBMC learning series:  <a
+                  href="https://github.com/openbmc/openbmc/wiki/Presentations"
+                  moz-do-not-send="true">https://github.com/openbmc/openbmc/wiki/Presentations</a><o:p></o:p></li>
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l4 level1 lfo9">Gone
+                through the documents here:  <a
+href="https://github.com/openbmc/docs/blob/master/architecture/user-management.md"
+                  moz-do-not-send="true">
+https://github.com/openbmc/docs/blob/master/architecture/user-management.md</a><o:p></o:p></li>
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l4 level1 lfo9">Looked
+                at ldap tests and server:  <a
+                  href="https://github.com/openbmc/openbmc-test-automation"
+                  moz-do-not-send="true">https://github.com/openbmc/openbmc-test-automation</a><o:p></o:p></li>
+              <li class="MsoListParagraph"
+                style="margin-left:0in;mso-list:l4 level1 lfo9">Spent
+                more time tweaking Linux files and creating ldap server
+                configs that I care to admit <span
+                  style="font-family:&quot;Segoe UI
+                  Emoji&quot;,sans-serif">😊</span><o:p></o:p></li>
+            </ol>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">BIG thanks in advance!<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">Best,<o:p></o:p></p>
+            <p class="MsoNormal">Donnie<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+          </blockquote>
+        </div>
+      </blockquote>
+    </blockquote>
+  </body>
 </html>
 
---_000_SG2PR04MB3093CAA5913439BB892C16E5E13A0SG2PR04MB3093apcp_--
+--------------365A01D800F389C5FBBECC41--
+
