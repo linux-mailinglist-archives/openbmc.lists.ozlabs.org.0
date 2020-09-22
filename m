@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCFCD2749D8
-	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 22:14:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59CCD274A0B
+	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 22:21:19 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bwsw20ywtzDqSy
-	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 06:14:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Bwt4D2wCKzDqWx
+	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 06:21:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -18,54 +18,57 @@ Authentication-Results: lists.ozlabs.org;
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20150623.gappssmtp.com
  header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=U0OnUT3r; dkim-atps=neutral
+ header.s=20150623 header.b=0LlDUt/q; dkim-atps=neutral
 Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
  [IPv6:2607:f8b0:4864:20::b2e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BwsvH03kpzDqPv
- for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 06:13:26 +1000 (AEST)
-Received: by mail-yb1-xb2e.google.com with SMTP id 133so6476681ybg.11
- for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 13:13:26 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bwt3Q5n86zDqNb
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 06:20:31 +1000 (AEST)
+Received: by mail-yb1-xb2e.google.com with SMTP id k2so13753244ybp.7
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 13:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MKACa69ml9lR9uS4Bbh1fkI5mBhtyAQfI+3J/c1e9es=;
- b=U0OnUT3r73yiXg5cbJ+yg9akkCxMS4qP02z1j6wpr7/Mljz0fRarud7KreVbGThtJL
- PU11IN20xxHLEMnPPKHIgVfe3qZwFpskH2140kVhD6Xi5mMujHsQQ9zvQXnI9W7v6THX
- B6ye+sJ82zlIHIqdTgGAfF4O/QnllGB13dvZGQObbB99T/ae2rWIBQvTbiWE7T6rNsy0
- JxjdB62VF25ImRiWgkiWy6dIboF6h6CsAN3nX6t+0I5XSa0X0A1Uuwvr4zQTUSx+VeLK
- jMzrSxibMMWDFtvIWIxlFhikbSNoPJGlrCji93lPTxo/aDya65TSrDgdfHVNdCkLLlkA
- IKrA==
+ :cc:content-transfer-encoding;
+ bh=M8gva64w3L5lpkJnHAmUBP99NgwRkGKT4hig382twsI=;
+ b=0LlDUt/qpaRCNnp+LbKWIpWeQKgwQVXfBEHRceFvHyB1z2ukhp6fCorTpi/+RIQigm
+ DJjWVXupr6CCzabYG2OvxNT281uBzwqI4/f8dEOnNByTA/dPILxMQfguJ5E4fkSzBsqH
+ dmju8kwlrysaVM2n/Zf1u5YO1ph+SJWmwGQwS4ebYZqsh9Rthx4zXfDBhWQPzYF86UbS
+ CrvToJfbyIZnx6BvhrPL4G3YMAF6difN/TJuyQbH2knYEHnyZg364FGHu/0qp4sDUhMj
+ O+0HcCOA2yqxkiLQEEaE3QFjoNN87O9eaS+YogBGCDc0snyAvddnORNKU+fRWPMBZq5R
+ TbNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MKACa69ml9lR9uS4Bbh1fkI5mBhtyAQfI+3J/c1e9es=;
- b=lvGHO1b/zwGVXM+zkVzRK/2XDo/6BmI49NDjfaFy7AqmwKOYCGkVWxEncOKwIoje2p
- 7X0fXgLKdwKIYcJlkaVmc10C4gb3t7kYVwcswWOyXW8a6SRL2WG+iwkj6oI47DvUJRZX
- 3xnFDVdxo3BBemn9s5zxBKgOBq2JM5MW9VIkB6pcIbHnVjA7hEUN6wpS+CibKKcpBNYa
- cE/eH3f4JEpouUGaI8omHlvp5yOzph3StIW2X1mC+z8kNJaCEExPCjdqVBm/IrhLobd3
- yBps4MPrklQUrGh+KKxI8FehzIOA6hIBuRXzE3LC6cpq6OKGaLNLdi4MU0lqNODE8MYv
- EYgQ==
-X-Gm-Message-State: AOAM530GpTXnbK+6ywJPIYIOMwr2t7vk4fi3vnMjjdM9/Tzge9CtTuu/
- T9pXJ3AR8v+E008+r+0941mld5j83nF0VkRqefJcRsMhIkLBK1ZeEeE=
-X-Google-Smtp-Source: ABdhPJwlCGeMpEzz8y0DGK17FGKtkuCLERqwjX2m4hCNZ8WpBRKf6RWnazGSBIdLpNLtVZTDIlQ9CB2fcvFsahU8Phc=
-X-Received: by 2002:a25:19d6:: with SMTP id 205mr1886084ybz.170.1600805602439; 
- Tue, 22 Sep 2020 13:13:22 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=M8gva64w3L5lpkJnHAmUBP99NgwRkGKT4hig382twsI=;
+ b=g0yfnhnrurM4izN5BDR53c/FR2tber1bHryqypn+jbvL+yVm00kAotRDtmWDldGF2I
+ outcYQ8F1xgCxz5vsfGDwAAiOgq+pKCz1TZgNYqJs6E8rRoHMqa/8Hpyq2tL+MwNfBBS
+ MQQ4AQWfRscULDx41MD/l0eWfnZ+ntJUq5K/0vauQRGoutSMvKbahFcu52x8Yp8kWTsd
+ dLpo0i5kPgxjb8UmUBY+NTALshiFJrg8rzkRB4k8G5R4wl39slzA3CW5krMsMCnBFsMB
+ WboUef0nBlOIHEmgo+2zAqkt9CeofpfYcZ0EzzSILz+j8NcDvmuwrH9gdA3i/9osmgi9
+ zcgA==
+X-Gm-Message-State: AOAM530ReGYiTXf2zBz0lY2fJYUT059A45zf/I0rnpmCDKr0F307uikN
+ HYxXg36Jtw5DFaEAhITeTJ+Cl36VYfnrtJ42sYG5vl3N36xO6HPw
+X-Google-Smtp-Source: ABdhPJw4zO59z37EdI4v8JU+j3eaEM43XfYNR8pZ09UDRAhiQMP8DePSaxKE3GNNp6fdcgB5zELd/tzyYWEDrmdINrE=
+X-Received: by 2002:a25:aaf4:: with SMTP id t107mr8407199ybi.209.1600806028990; 
+ Tue, 22 Sep 2020 13:20:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <HK0PR04MB2964FFC6D5EF008F106FFC13FD230@HK0PR04MB2964.apcprd04.prod.outlook.com>
  <CACWQX80fpcLGEjuvUnj4JpinY=SS6eXbHR0i6wdEtjNpMsAHMg@mail.gmail.com>
  <3D149923-0A95-4CE6-82EF-8338677EF831@fb.com>
- <5be978dc22cab7b5443c7d256b1cc06a8350363f.camel@yadro.com>
-In-Reply-To: <5be978dc22cab7b5443c7d256b1cc06a8350363f.camel@yadro.com>
+ <HK0PR04MB29649824A0F904C61F35152AFD3A0@HK0PR04MB2964.apcprd04.prod.outlook.com>
+ <3858C398-1F6C-40AC-AD7D-B266646BE3EF@fb.com>
+In-Reply-To: <3858C398-1F6C-40AC-AD7D-B266646BE3EF@fb.com>
 From: Ed Tanous <ed@tanous.net>
-Date: Tue, 22 Sep 2020 13:13:11 -0700
-Message-ID: <CACWQX814cJ7WkSJCW6=_ZiEaMooQHcGv=6Eexxdk2=YJGKs28g@mail.gmail.com>
+Date: Tue, 22 Sep 2020 13:20:18 -0700
+Message-ID: <CACWQX83XmOJ7a7O_R8pLec-NdrYiP18VVoyAEWacS6wM5Xfd3g@mail.gmail.com>
 Subject: Re: Read FRU of host through ipmi in Entity manager.
-To: Andrei Kartashev <a.kartashev@yadro.com>
+To: Vijay Khemka <vijaykhemka@fb.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,87 +80,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Kumar Thangavel <thangavel.k@hcl.com>,
+ James Feist <james.feist@linux.intel.com>, "Velumani T-ERS,
+ HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 22, 2020 at 12:52 AM Andrei Kartashev <a.kartashev@yadro.com> wrote:
+On Tue, Sep 22, 2020 at 12:57 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
 >
 >
-> >     Minor amendment again.  I'd much rather the IPMBSensor daemon
-> > simply
-> >     create the same interface that fru device does, rather than
-> > adding
-> >     IPMB logic to FruDevice.  In this way, platforms that don't have
-> > IPMB
-> >     don't need to include the feature at all.  Also, all the IO can
-> > be
-> >     managed in one place.
-> >
-> > https://github.com/openbmc/dbus-sensors/blob/master/src/IpmbSensor.cpp
-> >     Ideally, your IPMB device would also have an SDR that details
-> > what
-> >     FRUs and sensors exist, so that the inventory can be read and
-> > posted
-> >     to DBus at startup.  If they don't then we might need a static
-> > mapping
-> >     from an EM config once the device on the other end is detected
-> > via get
-> >     device ID.
-> >
-> > I agree with Ed here, all ipmb related interfaces should be
-> > implemented here.
-> >
 >
+> =EF=BB=BFOn 9/21/20, 9:45 AM, "Kumar Thangavel" <thangavel.k@hcl.com> wro=
+te:
 >
-> I disagree here.
-> First of all, IPMBSensor located in dbus-sensors package and it is
-> suppose to handle SENSORS.
-> FRU is not sensor, it would be big illogical
-> mistake to put FruDevice code there.
+>     Classification: HCL Internal
+>
+>     Hi All,
+>
+>                 Thanks for your comments and suggestions.
+>
+>                 As suggested, we are planning to implement a new process/=
+service like  xyz.openbmc_project.IPMB.FruDevice in entity manager module t=
+o support Host FRU through ipmb rather than using dbus-sensors/ipmbsensors =
+file.
+>
+>                 Following are the advantages, if host FRU handling in ent=
+ity manager repo.
+>
+>                 1. All the FRU information is handling in the same repo.
+>                 2. Entity manager Probe can work.
+>                 3. All the FRU Functions are in the same repo. We can try=
+ to reuse most of the functions.
+>                 4. Adding Fru object to dbus handling are done.
+>                 5. All FRU validations are done here like Format fru, upd=
+ate fru property, validate header, Fru AreaLen and checksum. We can try to =
+reuse those validations.
+>
+> What will happen if user is not using fru-device from entity manager, rat=
+her choose to use phosphor-ipmi-fru. Here you are restricting user to use f=
+ru-device only.
 
-WIth respect, dbus-sensors is a repo that's not aptly named these
-days.  Ideally when this first started we would've called it
-dbus-entities, but alas, that's history, and unlikely that we'll
-change it (although I'd support you if you wanted to propose that).
-There should be no expectation that dbus-sensors contains only
-sensors, nor that dbus-sensors is the only place a sensor can be put
-to dbus from, neither of which are true in the codebase today.
-
-> Then there are already number of places in OpenBMC and related projects
-> uses FRU and implements encoding/decoding by its own. I already spend
-> lot of time debugging different behaviour of FruDevice and ipmitool...
-> You propose to fragment FRU handling code even more and I against this.
-
-Lets centralize the logic in a library, and move the other
-implementations over to it.  Then we have a single source of FRU
-parsing that all can use.  This is likely to be a problem in another
-spot now that NVMe has adopted IPMI for their VPD format, we'll need
-to duplicate the logic there as well, so we'd be solving future
-problems (hopefully).
-
-> We at least should then extract data-source independent code from
-> FruDevice to a kind of library to use from different daemons. But I
-> prefer to do opposite - extract impb i/o code to library and use it
-> from both IPMBSensor and FruDevice.
-
-My issue with that is that we're birfurcating the control of the IPMB
-device in multiple places.  The easiest example of a problem this
-causes is an IPMB device that needs the sensors to stop scanning while
-it's doing a firmware update.  Having the control of the device
-centralized in a single process like that avoids cluttering dbus, and
-makes it more likely that IPMB code can be reused between the
-use-cases.
-
-Also, keep in mind that IPMBSensor is far from done, nor what I'd
-really like to see.  In the next few years, I very much expect that it
-will need to parse the SDR as well to automatically populate sensors.
-Doing that in 2 places (FRUDevice and IPMBSensor) is inefficient, when
-they could simply share the SDR parsing code in a single place.
+phosphor-ipmi-fru is not compatible with IPMB Frus, as the
+specification requires them to be dynamically scanned based on the
+SDR.  I guess you could hardcode them, but you'd still have to have
+some auxiliary "does my device exist" scanning that starts to look a
+lot like entity manager/fru device.  Is the use case you present a
+real one, or hypothetical?
 
 >
-> --
-> Best regards,
-> Andrei Kartashev
+>                 For scanning the /dev/ipmi-* nodes, we are thinking to us=
+e ipmb-channels.json cofig entries in entity manager repo since this config=
+ file has valid slave path and bus address.
+
+Please don't.  Entity-manager is dynamic, and the config should be
+based on a detected entity.  Mixing the dynamic and static use cases
+in this way would mean that we get to rewrite all of this when we have
+to support IPMB add-in-cards, which are 99% the same, but need to be
+detected instead of hardcoded.
+If you want this to be relatively static, attach an exposes record to
+your baseboard config that has the information you need (if your IPMB
+devices are on the baseboard).
+
+>
+>                 Please share your comments if any.
+>
+>     Thanks,
+>     Kumar.
 >
 >
