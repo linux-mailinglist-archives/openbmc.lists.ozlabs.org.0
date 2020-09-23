@@ -1,77 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B1BA275BF3
-	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 17:33:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id F404C275BFB
+	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 17:36:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BxMdt4MDtzDqXb
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 01:33:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BxMhh3ZH0zDqDK
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 01:36:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::329;
- helo=mail-ot1-x329.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=DdTnygyZ; dkim-atps=neutral
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
- [IPv6:2607:f8b0:4864:20::329])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=wGO6wcWk; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=lZsgw4br; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BxMcM0BDfzDqYt
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 01:32:17 +1000 (AEST)
-Received: by mail-ot1-x329.google.com with SMTP id g96so70599otb.12
- for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 08:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:references:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=1gT/usYDCHoK31QBvreP4RTuN/w/zj2M2tUKlBugn/s=;
- b=DdTnygyZOBRHqFPodMI2otM7o9RNhiDFzyQaulUHZuoJOx2+7ILvKw5Z9OSfF78J3j
- fhi/VoERMgZhdE69eL7XI/bIrH+yzde8Z8LSkB54g2WXCOCweAnI9BE8SspByUuIsJvi
- gJxugtSexp2bbsVg0EfAyzbdVaC4HQ/M5+CvU2eGejrm50iTQj6iR/A/R84ENsNDateI
- IfJxGAUMPNygmqeEjA8+fvpFy0FGCQjr5dh68zc9llolDsmwn+04YZzUz71bm3K3+MOd
- ZlS4VtnzjS4gHty3FFvD/OWVqHRKhnfgDecIrtnq0nuQZMFGDZivdVBKTGjalmKyz+Uq
- e9uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=1gT/usYDCHoK31QBvreP4RTuN/w/zj2M2tUKlBugn/s=;
- b=IVy2fH42j54/CWsPwf4aePQZD8IYrGekuoto+tdSPW/yrySzGOJKKpw4bdFeC83QTi
- geuzOReWO784pVh5+NJ5xdcGTA86nbDLzmj/moZUQii15lcsPqdUz1emUS5vPli0uoRH
- QKcRgSL4IWZKNkkwLqUi9EEYfB1GtZv2eTtivVOxAv+Ymktk/LWG38SXJIm73RFmN58t
- 6smSJ2DSTFcLzzI4Ryt/Okk5V/H60LFV7JwGObnaCp2kZzSDXPEUwmuO1I8zcLiu7SFN
- E98KAjIjHQNRg+8ZvGfNkWZS4nLABrrxGJalXDun4s8auKVzVipmaEr4+ah1U0gRje3Q
- Vj2g==
-X-Gm-Message-State: AOAM533UmygUpwd4u/+m1fLoFtrRNN1QTDFt9tqQAafAtrV3NbprvhO4
- 5D8GLNXlr16LUkEyUvOzQHNcB4pxM4D3gw==
-X-Google-Smtp-Source: ABdhPJwTdC3HcPOz4tjeQyz109aRRtGGgr4GJthiR3PUJ4039fIyoXGl+LzusNeRoA1Rkqh5Cou+bg==
-X-Received: by 2002:a9d:6d0b:: with SMTP id o11mr180086otp.114.1600875132634; 
- Wed, 23 Sep 2020 08:32:12 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id c25sm18049oot.42.2020.09.23.08.32.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Sep 2020 08:32:12 -0700 (PDT)
-Subject: Re: OpenBMC Office Hours
-To: Nancy Yuen <yuenn@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <CADfYTpFQoiQ6BcoVeT1Mi2oF+tORtjvbkmSkvyFB4FA_nR3p3Q@mail.gmail.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <bb31004c-7f6a-e71e-c336-f75272e48913@gmail.com>
-Date: Wed, 23 Sep 2020 10:32:11 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BxMgk3k2MzDq9k
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 01:35:14 +1000 (AEST)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
+ by mailout.nyi.internal (Postfix) with ESMTP id D20115C021E;
+ Wed, 23 Sep 2020 11:35:11 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute7.internal (MEProxy); Wed, 23 Sep 2020 11:35:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=wl/GjHWcZJ3oPiKy8ddCFaeONaA
+ vukq0ut4fqO1Zj04=; b=wGO6wcWkE6gzF5kIeh70hlevI07F4J6qClv4SPyBIT9
+ nMnXQZUw+4zwaz2t6MuH0EZJmkYbJXVcgXBRlE+EVLPbFBV3guD8gOgsWeS4xN05
+ iMFeLx4qooALxMnly+xw/U9RHY+6hmMGobwD9K3eFSiXyPXyj0264sVhFKTQ75+S
+ xdw3NLr9p8EGiKnoaBSRhBJwvOstzuOzC37+KNLsmh0x/XYg7RGDWvVFGKhxVvly
+ evOoaW87CbLKbZLi7Rh9Szi41JthKxMmkPic2tkMszABp+66f0J6C7hXvpf+gron
+ Ye6U/qGY3uSo7pm1xRUfipWQQ0fE0/uuUqlD0L39f8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=wl/GjH
+ WcZJ3oPiKy8ddCFaeONaAvukq0ut4fqO1Zj04=; b=lZsgw4br7r5N+xpYRh4Amj
+ iiDaxBgHuHerI6jjgM3Xsjo8sVmI7JQbDXHxOZDPhlLEFctzxT0P8bvTsPSc+B7A
+ wCIrCuhwJP4hfvnfnyASL9rLLJcpIGYHz39X2xntiEjRAD8ClY5XZ77ZSeXENkWA
+ May1dXbU6fDYPLPuSGc1Y4smlueQ5HWRAD2qDAeQpuzkoGWVDwdFIb65K7y/qj/V
+ n2zDLVpF+Wmjhn90TX+pA+vpzVDGL0XwBPS5h8XruaIUhcYdavqlFasnSK5BahiI
+ I7PNSHtKG68X0DYbnGv6Gkdb8U7vO2aB1ebHwNs0ruMvTLNl1GPB7XJx8rwAnATw
+ ==
+X-ME-Sender: <xms:L2trX9i5PqnvYspbfhgFpUZQOBzBWa3Pz4rkzgmBshMUtshY38a0Jg>
+ <xme:L2trXyBNw1VYzpOQjVUi8si0j-Z6_NYVefAiNpHxlfbIRnp3TMJu7hPRC6gED7MHy
+ dmFcXnNKLerxO8vifU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeigdeludcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
+ fefgtdehhfektdelffevkefgueffhedtieenucfkphepjeeirddvhedtrdekgedrvdefie
+ enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
+ rhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:L2trX9HuUsyfloi4lvxs1WHyA4VB6dGP04ZhFnPy7cdiMho52g6wxA>
+ <xmx:L2trXyThbi2YJExB2QA6MQDsNPGsErmzDn-uScngxuu7ZPH3YFpDRQ>
+ <xmx:L2trX6z47_e0r-uew8UrUawtmoMhKWUBMJ3vbMcfURUUnTZ-mhHOXA>
+ <xmx:L2trXwa1hlR6jHcxGFLA73f_9y2eifZ2zwIo4fGsECszkddLMcDeag>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id E25C93064687;
+ Wed, 23 Sep 2020 11:35:10 -0400 (EDT)
+Date: Wed, 23 Sep 2020 10:35:10 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Jayashree D <jayashree-d@hcl.com>
+Subject: Re: Read Firmware Versions
+Message-ID: <20200923153510.GP6152@heinlein>
+References: <SG2PR04MB3093CAA5913439BB892C16E5E13A0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <20200921152337.GJ6152@heinlein>
+ <SG2PR04MB3093A25A217B7E1FFD65D8A8E13B0@SG2PR04MB3093.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-In-Reply-To: <CADfYTpFQoiQ6BcoVeT1Mi2oF+tORtjvbkmSkvyFB4FA_nR3p3Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="nVYOjVWOcH+Ezkzp"
+Content-Disposition: inline
+In-Reply-To: <SG2PR04MB3093A25A217B7E1FFD65D8A8E13B0@SG2PR04MB3093.apcprd04.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,39 +97,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
+ HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/22/20 12:17 PM, Nancy Yuen wrote:
-> Hi Team OpenBMC,
-> 
-> As Sai stated in his learning series post, OpenBMC can appear complex
-> to people learning or evaluating OpenBMC.
-> 
-> I propose office hours, staffed by experienced volunteers where
-> newcomers can dial in and ask questions.  The reasoning is newcomers
-> aren't always sure what questions to ask and/or are intimidated by
-> IRC.  Office hours would be a more direct, 1:1 forum for newcomers to
-> get answers.  And of course volunteers would encourage the use of the
-> mailing list and IRC for follow up discussions.
 
-Thank you Nancy, this is great!
+--nVYOjVWOcH+Ezkzp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Kurt Taylor (krtaylor)
+On Tue, Sep 22, 2020 at 01:34:50PM +0000, Jayashree D wrote:
+> Classification: HCL Internal
+>=20
+> Thanks Patrick for your response.
+>=20
+> In phosphor-bmc-code-mgmt, I am seeing the software image is upgraded and=
+ based on the image update, version is updated.
+> But in my platform, I have to read firmware versions using oem commands a=
+nd that version should be displayed under dbus objects.
+> Whether phosphor-bmc-code-mgmt repo will be suitable to display the firmw=
+are version using dbus objects?
 
-> I would like this to be low overhead for volunteers and I'm hoping to
-> have enough volunteers to do monthly office hours, in the volunteer's
-> local timezone.  Please sign up here if you're willing to volunteer.
-> Ideally we would have 6-12 volunteers so it would just be one hour
-> once or twice a year for everyone.  Please sign up by 10/16 @
-> https://docs.google.com/spreadsheets/d/1hOzYDq6kRl8RCj9Kk_kzpiUjt5bABxVRH87StK2oKnY/edit?usp=sharing
-> if you're interested in volunteering!
-> 
-> I'd also like each office hour to have signups, to make efficient use
-> of everyone's time.  If there are no signups within 24hrs, the office
-> hour would be canceled.
-> 
-> Thanks,
-> Nancy
-> 
+Vijay recently added a simple BIOS flash management to
+phosphor-bmc-code-mgmt, but there is also a openpower-pnor-code-mgmt for
+the equivalent of BIOS management on openpower systems.  Since your code
+update scheme is likely to be specific to your IPMB commands, I don't
+know if that would be best in a separate repository or an extension onto
+phosphor-bmc-code-mgmt.
 
+Adriana, any opinions?
+
+--nVYOjVWOcH+Ezkzp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9ray4ACgkQqwNHzC0A
+wRlKQg//Y//h6dQY/ozDpls+/qOYSEzdu+KJJGmDeZ6SA20pMp4MgWGXCopACSR0
+LVOPD9Ohq96YvVyjihNEXFneAqwn3riXTFKr4Kqm/1TchlZ+TXPiwao2bcFmsZNL
+x5l21OP77JM8aFB1zZ90pSs4Mtc46vlbHFgLXARSrDi81oQWvPbM8tfv7DKwFYmF
+Oo4r1ObMY1UkAZxPe+kO1PTNxREGpuRlObTmVju7IDGXjb1nNn6MPEYXp6h5q6G+
+qaywyw2aNtLperiqWncW3tbfngOFECYu779bF8/w4SpqIkN3CAdz9trhlEVbYD3Y
+Rasqg0fMiF1sQfWMRFNdlQGbj2zTyov2lFif5Tdo9UkDxk7rqUVYkPuQoXq4Zbef
+pONuZMRbGy/oNlWRePh0I+XAjP181iepwyveAwTIoRFHLLdqRMhK++9cguIUWW/R
+Et0iSTZ7ukeSZ4Ib2oFSaaLp1pNeWlm5Zu1jayJ67g0C9bOOYolV259+llA91D3N
+Bl55EphnBBybDr8VzRrV28pbLHbQ8e84aqlYoi6mll2Ow3xW2Ms5YpPpo8o8T80/
+3Uf6VoKdZbQwK4dEu9A1rR0rg6dVyFi19rkmx+I4k6EGjZfNoFs4H0zr/keJnPJu
+W96ryXCZEVRIZ3bWexD1d4eJ7iJfhftYVBsvqyiYF9QHo0r5+go=
+=zGY3
+-----END PGP SIGNATURE-----
+
+--nVYOjVWOcH+Ezkzp--
