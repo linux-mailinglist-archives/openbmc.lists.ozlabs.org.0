@@ -1,69 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22BB7276372
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 00:00:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 144D72763CF
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 00:34:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BxXDd1jxfzDqdV
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 08:00:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BxXzz2BfzzDqcV
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 08:34:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=apple.com (client-ip=17.171.2.72;
+ helo=ma1-aaemail-dr-lapp03.apple.com; envelope-from=cyang999@apple.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=apple.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=apple.com header.i=@apple.com header.a=rsa-sha256
+ header.s=20180706 header.b=wlOIUP4z; dkim-atps=neutral
+X-Greylist: delayed 17884 seconds by postgrey-1.36 at bilbo;
+ Thu, 24 Sep 2020 08:34:13 AEST
+Received: from ma1-aaemail-dr-lapp03.apple.com
+ (ma1-aaemail-dr-lapp03.apple.com [17.171.2.72])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BxXCf56bczDqRJ
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 07:59:57 +1000 (AEST)
-IronPort-SDR: FfZQ9fIZaBhny7ffDPnpsAQS39t8LbXeyzBZ8wbmLYKkRJ0l9KJzAU6G1Joxz1paGhR/zy7Dlf
- V5yvxBgXQT5g==
-X-IronPort-AV: E=McAfee;i="6000,8403,9753"; a="148772707"
-X-IronPort-AV: E=Sophos;i="5.77,295,1596524400"; d="scan'208";a="148772707"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Sep 2020 14:59:53 -0700
-IronPort-SDR: p0kyjV7wy1Ot1z+1xq7ZTzjMce1KAJ+gOf7/BILHiUQ+21MvhuF1hhZwstKH00lhCHODUVEEJ2
- 4cOlmEtchHYA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,295,1596524400"; d="scan'208";a="486617120"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga005.jf.intel.com with ESMTP; 23 Sep 2020 14:59:53 -0700
-Received: from [10.251.15.151] (jmbills-MOBL.amr.corp.intel.com
- [10.251.15.151])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 82EDC580699
- for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 14:59:53 -0700 (PDT)
-Subject: Re: Chassis reset
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BxXz92PpYzDqWG
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 08:34:12 +1000 (AEST)
+Received: from pps.filterd (ma1-aaemail-dr-lapp03.apple.com [127.0.0.1])
+ by ma1-aaemail-dr-lapp03.apple.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08NHNQDT014382
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 10:36:05 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com;
+ h=from : content-type :
+ mime-version : subject : message-id : date : to; s=20180706;
+ bh=yBPl6L4AvgBdhCqJKSPUBfIoWQ6dgZUKDZvkgpunMDY=;
+ b=wlOIUP4zdsqSP5f98/SQkXHirRe+LbJXn1dPRjhLIulCSQY882xYZhbc9W/YS+ZEDW1U
+ +xghPr13U5sUYe55liPGzsilz9fwq5cBhZSHwftyqZh7ye8OfkbPTN+mJeDE5o9VEntV
+ Oe0IBH+yUkvSn5SAPYzIUxEEA1BvJ5FwXkoZMrbrNZ8S3CzrTPi5qEHD6duAXQVliOKy
+ WXyq3AwAMkemVzCqTWLj/0Y3M3McJ96D+fzqxRg8GkohT2D5TSMkvl/TGNpul0KPEOC5
+ flhO0om3UBnLmmjC2PL85kA2yc4U56ExzTcGfyCFRn9iovMGgsmiGL9dbqlQ4CJBt4Ia nA== 
+Received: from rn-mailsvcp-mta-lapp03.rno.apple.com
+ (rn-mailsvcp-mta-lapp03.rno.apple.com [10.225.203.151])
+ by ma1-aaemail-dr-lapp03.apple.com with ESMTP id 33ngyux6gk-2
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 10:36:05 -0700
+Received: from rn-mailsvcp-mmp-lapp02.rno.apple.com
+ (rn-mailsvcp-mmp-lapp02.rno.apple.com [17.179.253.15])
+ by rn-mailsvcp-mta-lapp03.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
+ 2020)) with ESMTPS id <0QH4005KTGW4DRF0@rn-mailsvcp-mta-lapp03.rno.apple.com>
+ for openbmc@lists.ozlabs.org; Wed, 23 Sep 2020 10:36:04 -0700 (PDT)
+Received: from process_milters-daemon.rn-mailsvcp-mmp-lapp02.rno.apple.com by
+ rn-mailsvcp-mmp-lapp02.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
+ 2020)) id <0QH400V00GE13900@rn-mailsvcp-mmp-lapp02.rno.apple.com> for
+ openbmc@lists.ozlabs.org; Wed, 23 Sep 2020 10:36:04 -0700 (PDT)
+X-Va-A: 
+X-Va-T-CD: 7f756ecb4ebb78a0f8c33d43d0fca5a4
+X-Va-E-CD: 37e0ec64c89d9dd4a93c888602c865cc
+X-Va-R-CD: 9a5a7dcc7aa34fd5b98e10bb67547cea
+X-Va-CD: 0
+X-Va-ID: ddea5364-7f49-441c-8750-e840c057410c
+X-V-A: 
+X-V-T-CD: 7f756ecb4ebb78a0f8c33d43d0fca5a4
+X-V-E-CD: 37e0ec64c89d9dd4a93c888602c865cc
+X-V-R-CD: 9a5a7dcc7aa34fd5b98e10bb67547cea
+X-V-CD: 0
+X-V-ID: 114c58c3-4fa3-4b38-b7f4-26514cb87445
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-23_13:2020-09-23,
+ 2020-09-23 signatures=0
+Received: from [17.234.36.26] by rn-mailsvcp-mmp-lapp02.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
+ 2020)) with ESMTPSA id <0QH40048TGW32Z10@rn-mailsvcp-mmp-lapp02.rno.apple.com>
+ for openbmc@lists.ozlabs.org; Wed, 23 Sep 2020 10:36:04 -0700 (PDT)
+From: Cheng Yang <cyang999@apple.com>
+Content-type: multipart/alternative;
+ boundary="Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9"
+MIME-version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
+Subject: Difficulty booting on Raspberry Pi 4.
+Message-id: <CDC90A55-957D-47BB-9B42-4283BB6706AF@apple.com>
+Date: Wed, 23 Sep 2020 10:36:03 -0700
 To: openbmc@lists.ozlabs.org
-References: <CACWQX802HpRT20Zj2YFEnVE7XXBOJXx66-8B1E7TEZdCNwPbsQ@mail.gmail.com>
- <9EC0D657-2D58-4544-BA9E-65D3C4148A81@fb.com>
- <CACWQX80SivNLLE3gAUk+Ao=0eHf_ooezumXGmkkkVhVPFyyNSA@mail.gmail.com>
- <C6292DFD-EAF1-4658-85A7-F81941B12D5A@fb.com>
- <CACWQX83GJ9V9--5WGmVjvacYnw2=fr7URhqOcwkSq4C8GpFoiQ@mail.gmail.com>
- <F46D657F-D4DA-49BD-B78D-CDD420768728@fb.com>
- <20200923191051.GR6152@heinlein>
- <CACWQX81tyY1Wo6a8e4hnk3fvinfV-x3ogRK1q1W5cfx28tpfrw@mail.gmail.com>
- <20200923202113.GT6152@heinlein>
- <CACWQX8135vU++ztaVaaKjJyq2C=DdqDti623xGdCeT9fSJDQAA@mail.gmail.com>
- <20200923214237.GV6152@heinlein>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <e6cbdf1e-8504-d9d5-2554-fe2d4986e54b@linux.intel.com>
-Date: Wed, 23 Sep 2020 14:59:52 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-In-Reply-To: <20200923214237.GV6152@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-23_13:2020-09-23,
+ 2020-09-23 signatures=0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,31 +101,100 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-On 9/23/2020 2:42 PM, Patrick Williams wrote:
-> 
-> I'm not understanding what you mean by "come up with an API to steer the
-> Redfish..."  I think everything is specified here at a dbus level.  The
-> issue is figuring out the appropriate Redfish model of
-> Chassis/ComputerSystem objects (along with the included Resource.Reset
-> types).  To a casual reader, who hasn't been involved much in Redfish
-> implementation, the current mapping of these ResetTypes seems fairly
-> arbitrary.
-> 
-> With CIM there use to be these Profile documents that showed "the right
-> way" to fit all these pieces together.  Does that not exist with
-> Redfish?  How does any external application consume Redfish in a
-> consistent way?
+Hi,  I=E2=80=99m openbmc noob here.
 
-I'm not sure it helps with the overall consistency question, but for 
-OpenBMC, we defined our mapping of Redfish ResetType values to Chassis 
-and Host State Transitions on D-Bus, here: 
-https://github.com/openbmc/docs/blob/838fa962b73deb1ef7908ee8dfa1203fa5263517/designs/state-management-and-external-interfaces.md#proposed-design.
+I follow the instruction of =
+https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/README.md =
+<https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/README.md=
+>
 
-This is what x86-power-control aspires to match and I think what led to 
-creating new D-Bus interfaces for the chassis_system and AC power state 
-changes (since we didn't want to break this mapping).
+After 2.5 hours everything built, (I used either x86 ubuntu 18.04 or =
+20.04 same result)
+However after I copied to the image to micro SD, raspberry Pi 4 won=E2=80=99=
+t boot.
+No video output, no serial output at all.  (The board works fine with =
+ubuntu 18.04.)
 
-Perhaps we need to separate the Host and Chassis on the Redfish side and 
-extend the D-Bus interfaces to support all the needed ResetTypes?
-> 
+Any tip/cheat sheet to get openbmc running on Raspberry Pi 4?
+
+The steps I did, anything I missed? Is the recipe correct?
+git clone the openbmc code.
+source poky/oe-init-build-env rpi-build  <=3D=3D  yes I did this.
+Add this layer to bblayers.conf and the dependencies above  <=3D=3D yes =
+I added /var/openbmc/openbmc/meta-raspberrypi (where I=E2=80=99m using =
+/var/openbmc as the source code dir.)
+Set MACHINE in local.conf to one of the supported boards  <=3D=3D I =
+added MACHINE ??=3D =E2=80=9Craspberrypi4=E2=80=9D (replacing the =
+original qemu line)
+bitbake core-image-base  <=3D=3D  went through, only 5 warnings, no =
+error, everything successful.
+Use bmaptool to copy the generated .wic.bz2 file to the SD card  <=3D=3D =
+with =E2=80=9Csudo ~/bmap-tools/bmaptool copy =
+core-image-base-raspberrypi4.wic.bz2 /dev/sdc1=E2=80=9D no error copied =
+successfully.
+Boot your RPI  <=3D=3D  nothing happen, no VGA, can=E2=80=99t be =
+ping=E2=80=99ed, no console serial output either (no uboot messages).
+
+Any tip/pointer will be greatly appreciated.
+
+Cheng=
+
+--Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D"">Hi, =
+&nbsp;I=E2=80=99m openbmc noob here.<div class=3D""><br =
+class=3D""></div><div class=3D"">I follow the instruction of <a =
+href=3D"https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/RE=
+ADME.md" =
+class=3D"">https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi=
+/README.md</a></div><div class=3D""><br class=3D""></div><div =
+class=3D"">After 2.5 hours everything built, (I used either x86 ubuntu =
+18.04 or 20.04 same result)</div><div class=3D"">However after I copied =
+to the image to micro SD, raspberry Pi 4 won=E2=80=99t boot.</div><div =
+class=3D"">No video output, no serial output at all. &nbsp;(The board =
+works fine with ubuntu 18.04.)</div><div class=3D""><br =
+class=3D""></div><div class=3D"">Any tip/cheat sheet to get openbmc =
+running on Raspberry Pi 4?</div><div class=3D""><br class=3D""></div><div =
+class=3D"">The steps I did, anything I missed? Is the recipe =
+correct?</div><div class=3D""><ol class=3D"" style=3D"caret-color: =
+rgb(0, 0, 0); color: rgb(0, 0, 0);"><li class=3D""><span class=3D"">git =
+clone the openbmc code.</span></li><li class=3D""><span class=3D"">source =
+poky/oe-init-build-env rpi-build &nbsp;&lt;=3D=3D &nbsp;yes I did =
+this.</span></li><li class=3D""><font color=3D"#000000" class=3D"">Add =
+this layer to bblayers.conf and the dependencies above &nbsp;&lt;=3D=3D =
+yes I added&nbsp;/var/openbmc/openbmc/meta-raspberrypi (where I=E2=80=99m =
+using /var/openbmc as the source code dir.)</font></li><li =
+class=3D""><font color=3D"#000000" class=3D"">Set MACHINE in local.conf =
+to one of the supported boards &nbsp;&lt;=3D=3D I added MACHINE =
+??=3D&nbsp;=E2=80=9Craspberrypi4=E2=80=9D&nbsp;(replacing the original =
+qemu line)</font></li><li class=3D""><span class=3D"">bitbake =
+core-image-base &nbsp;&lt;=3D=3D &nbsp;went through, only 5 warnings, no =
+error, everything successful.</span></li><li class=3D""><font =
+color=3D"#000000" class=3D"">Use bmaptool to copy the generated .wic.bz2 =
+file to the SD card &nbsp;&lt;=3D=3D with&nbsp;=E2=80=9Csudo =
+~/bmap-tools/bmaptool copy core-image-base-raspberrypi4.wic.bz2 =
+/dev/sdc1=E2=80=9D no error copied successfully.</font></li><li =
+class=3D""><font color=3D"#000000" class=3D"">Boot your RPI &nbsp;&lt;=3D=3D=
+ &nbsp;nothing happen, no VGA, can=E2=80=99t be ping=E2=80=99ed, no =
+console serial output either (no uboot messages).</font></li></ol><div =
+class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0);" class=3D""><br class=3D""></span></font></div><div =
+class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0);" class=3D"">Any tip/pointer will be greatly =
+appreciated.</span></font></div><div class=3D""><font color=3D"#000000" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" class=3D""><br =
+class=3D""></span></font></div><div class=3D""><font color=3D"#000000" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
+class=3D"">Cheng</span></font></div></div></body></html>=
+
+--Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9--
