@@ -1,73 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7860D274A75
-	for <lists+openbmc@lfdr.de>; Tue, 22 Sep 2020 22:57:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8926274DC2
+	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 02:21:22 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bwtsv6VbMzDqV6
-	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 06:57:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BwzPD1t5vzDqZj
+	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 10:21:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b30; helo=mail-yb1-xb30.google.com;
+ (client-ip=2607:f8b0:4864:20::b2e; helo=mail-yb1-xb2e.google.com;
  envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=tanous-net.20150623.gappssmtp.com
  header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=Xk4VSbu/; dkim-atps=neutral
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com
- [IPv6:2607:f8b0:4864:20::b30])
+ header.s=20150623 header.b=trbDpMam; dkim-atps=neutral
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com
+ [IPv6:2607:f8b0:4864:20::b2e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bwts757PNzDqTy
- for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 06:56:41 +1000 (AEST)
-Received: by mail-yb1-xb30.google.com with SMTP id c17so13864264ybe.0
- for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 13:56:41 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BwzK53R93zDqb9
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 10:17:44 +1000 (AEST)
+Received: by mail-yb1-xb2e.google.com with SMTP id s19so14147541ybc.5
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Sep 2020 17:17:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=8nb9xPpOJ+DKPh8Vu+Ch+x2GuhGwM47cbUOMkO1JESs=;
- b=Xk4VSbu/juHfu6s4QUArMhbTkfwpBlyjnU7PV+MgCkRB2cEyRO9C9xDqH/nApbKXja
- gqU0wqN7kGx0kYqgnRXIfB3YMnbL2BvYCoYypMg9V9fdfH+vsmoEAjh5Z8HzyCHEa7fZ
- T/2HCjygUGTqY5V1c0uTyu2EHaY0P6cYTgl+uB6b+3llNTjCVIPdLFCOoxr/b0tRTMAj
- sAJtnVxvMjWi1B336PyPm5FxX+EqMygu0klOJRysvqW+h8tKhxGQgnTYnQeOKLwKj5ue
- 7b4qQhBBwNEbUTSQ/bKD9qCdKCEU5MjYLdl9GMRZiq9srrq4D7U7N+kiG6JDHdsKW8KF
- eI0g==
+ bh=WJtIBSzDaPEhH8EH5BhKr/hbRhzhYqyDc3F4uflNWpg=;
+ b=trbDpMamgBpDnA8TpdWfUjnFE1g6TQ8uLgbfOuHxjL4IosPLOG9P5ZE1gEgKSumGEe
+ +6SYQFsWq8QbpnAF+F/jgJ+OXq3EKVnny4DPFO7T2aIacf681WKouEsYOtsuZV9T2N0T
+ bQasD8RjlllZOhSxaJ+5SlfBwc68rsDM2j0D+AtYzv7roGtfkfAnnDmNkYWwyAzH8LhH
+ /yIXxU0p3YJ7kct1AJGhy+5zcGdSdw8Tk7MIAcmi5kWGFLRuPtfs7qzwRHzX+7L3tBrj
+ c4utTzlt5xeKSr07mG/8gBvBfsjpedjfBzbyvdXtz7XyRWSv2y9tlof+ltoHmRNhSrMQ
+ TdBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=8nb9xPpOJ+DKPh8Vu+Ch+x2GuhGwM47cbUOMkO1JESs=;
- b=T3HmFTFA+B7yjBtInbQy2bgpSJ6IFBXMHXNCSpb4aBAsXc5RSmcc7/UPLIgzRsDfXV
- Y5AwhQWQBZuNcZR78wkPTE6a9mH3rxNN/a7mP0koMmLacEtaTnHn7AtO7J5lcqGkjtm7
- haeILyW0MIMBb74j7labJrf3fL1ZXTc97fJdd6c0EH1W+G4InCy7Q9P/vGh7do/qiPZc
- KlvWQeS1PKl6hCb4/YcgCSFOYOpuxdfT5M+0RRQpm0PjLXyteHpFDCO8VDwPQKhqCcl6
- EXRcRxU0w/9Xz+O0ifiB/F1Xxh1DgOyF2gW5QQuqPILY8Hlhgpve50gt63/FwyKp4m/s
- M3eA==
-X-Gm-Message-State: AOAM530UviC0QgccSTROsUHsVICJjKk9eGJNs9WchTdxVYGNrh04joA6
- nO0atS0UtIRCRlw/iCGHJrk/6Z+sbmJZuoQkdPRArw==
-X-Google-Smtp-Source: ABdhPJw7Sr5cfkBRJTyRs8GerQ4U9X5ra2/VSsbOUHNlrgCTjFxJ5yIVbnHd8pidfuSlmmxhIZZ1dYMnNVNL+dImzm4=
-X-Received: by 2002:a25:1581:: with SMTP id 123mr8761163ybv.480.1600808195122; 
- Tue, 22 Sep 2020 13:56:35 -0700 (PDT)
+ bh=WJtIBSzDaPEhH8EH5BhKr/hbRhzhYqyDc3F4uflNWpg=;
+ b=ApsRyNMKdoAVIDfb6hbPQKNjiyjjfi0F6Sjq6JA+zoe4VsjOJ2Pd15q/Z8tNd3hirN
+ /6I0BKQypUBhW33amdgGOJfzLKd1OQbJinwOO/wWkDY3l0fCENVNS2MEZ3QF8u8qRvyg
+ qYe++OqmQqUoW0EvG0hDNzayru7iZPFul48/XiyguL9c81u5FWjhHA29mAtUOq99B1Tu
+ 603TJZ4RJQrF8MtcZQaiFTyAiO4+98/IVsWf2aRgzgjhjGJyG2Xy3odEYNeqPZ8MHWYI
+ WVAsk9ZliiTdua+SV4oY7Jsh9hOk1SarCN8ZEzBYihHeM5VBDvImKoDMWSIE0mt/31la
+ RXCA==
+X-Gm-Message-State: AOAM531mSjUJuOdk2GNNU1KnC5Ou5dlMRi3siRuWCCspxqvZQ0m7nFeu
+ hbDexrE1FROkjHchD1TKSfwhCSeNIMY8eCpDqrpXmA==
+X-Google-Smtp-Source: ABdhPJy1ZXn5STo8nIXuMPhkH/gdvP8SrlpbjaHv9xZ9xGaXU7D9UEecg4n+eKAwjd+RA2eUNzjp3I4YKAWqxMUqLMw=
+X-Received: by 2002:a25:aaf4:: with SMTP id t107mr9465822ybi.209.1600820260604; 
+ Tue, 22 Sep 2020 17:17:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <HK0PR04MB2964FFC6D5EF008F106FFC13FD230@HK0PR04MB2964.apcprd04.prod.outlook.com>
- <CACWQX80fpcLGEjuvUnj4JpinY=SS6eXbHR0i6wdEtjNpMsAHMg@mail.gmail.com>
- <3D149923-0A95-4CE6-82EF-8338677EF831@fb.com>
- <HK0PR04MB29649824A0F904C61F35152AFD3A0@HK0PR04MB2964.apcprd04.prod.outlook.com>
- <3858C398-1F6C-40AC-AD7D-B266646BE3EF@fb.com>
- <CACWQX83XmOJ7a7O_R8pLec-NdrYiP18VVoyAEWacS6wM5Xfd3g@mail.gmail.com>
- <2F15FFE5-4A4A-4652-B3BF-6B8CD5B17CCF@fb.com>
-In-Reply-To: <2F15FFE5-4A4A-4652-B3BF-6B8CD5B17CCF@fb.com>
+References: <46F3C05C-7CEC-42FD-A9B7-8E55AE56FE3F@fb.com>
+ <CACWQX802HpRT20Zj2YFEnVE7XXBOJXx66-8B1E7TEZdCNwPbsQ@mail.gmail.com>
+ <9EC0D657-2D58-4544-BA9E-65D3C4148A81@fb.com>
+ <CACWQX80SivNLLE3gAUk+Ao=0eHf_ooezumXGmkkkVhVPFyyNSA@mail.gmail.com>
+ <C6292DFD-EAF1-4658-85A7-F81941B12D5A@fb.com>
+In-Reply-To: <C6292DFD-EAF1-4658-85A7-F81941B12D5A@fb.com>
 From: Ed Tanous <ed@tanous.net>
-Date: Tue, 22 Sep 2020 13:56:24 -0700
-Message-ID: <CACWQX81uOYUbgzSKaLGgTP6-NT+h7CLykdcDDe19+CJvdw2nxw@mail.gmail.com>
-Subject: Re: Read FRU of host through ipmi in Entity manager.
+Date: Tue, 22 Sep 2020 17:17:29 -0700
+Message-ID: <CACWQX83GJ9V9--5WGmVjvacYnw2=fr7URhqOcwkSq4C8GpFoiQ@mail.gmail.com>
+Subject: Re: Chassis reset
 To: Vijay Khemka <vijaykhemka@fb.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -82,91 +80,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Kumar Thangavel <thangavel.k@hcl.com>,
- James Feist <james.feist@linux.intel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 22, 2020 at 1:26 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+On Tue, Sep 22, 2020 at 12:16 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
 >
+> After a bit of study on redfish, I got some basic definition for chassis =
+from redfish document  as below.
+> https://redfish.dmtf.org/schemas/v1/Chassis.v1_13_0.json
+>        "Chassis": {
+>             "additionalProperties": false,
+>             "description": "The Chassis schema represents the physical co=
+mponents of a system.  This resource represents the sheet-metal confined sp=
+aces and logical zones such as racks, enclosures, chassis and all other con=
+tainers.  Subsystems, such as sensors, that operate outside of a system's d=
+ata plane are linked either directly or indirectly through this resource.  =
+A subsystem that operates outside of a system's data plane are not accessib=
+le to software that runs on the system.",
+>             "longDescription": "This resource shall represent a chassis o=
+r other physical enclosure for a Redfish implementation.",
 >
->
-> =EF=BB=BFOn 9/22/20, 1:20 PM, "Ed Tanous" <ed@tanous.net> wrote:
->
->     On Tue, Sep 22, 2020 at 12:57 PM Vijay Khemka <vijaykhemka@fb.com> wr=
-ote:
->     >
->     >
->     >
->     > On 9/21/20, 9:45 AM, "Kumar Thangavel" <thangavel.k@hcl.com> wrote:
->     >
->     >     Classification: HCL Internal
->     >
->     >     Hi All,
->     >
->     >                 Thanks for your comments and suggestions.
->     >
->     >                 As suggested, we are planning to implement a new pr=
-ocess/service like  xyz.openbmc_project.IPMB.FruDevice in entity manager mo=
-dule to support Host FRU through ipmb rather than using dbus-sensors/ipmbse=
-nsors file.
->     >
->     >                 Following are the advantages, if host FRU handling =
-in entity manager repo.
->     >
->     >                 1. All the FRU information is handling in the same =
-repo.
->     >                 2. Entity manager Probe can work.
->     >                 3. All the FRU Functions are in the same repo. We c=
-an try to reuse most of the functions.
->     >                 4. Adding Fru object to dbus handling are done.
->     >                 5. All FRU validations are done here like Format fr=
-u, update fru property, validate header, Fru AreaLen and checksum. We can t=
-ry to reuse those validations.
->     >
->     > What will happen if user is not using fru-device from entity manage=
-r, rather choose to use phosphor-ipmi-fru. Here you are restricting user to=
- use fru-device only.
->
->     phosphor-ipmi-fru is not compatible with IPMB Frus, as the
->     specification requires them to be dynamically scanned based on the
->     SDR.  I guess you could hardcode them, but you'd still have to have
->     some auxiliary "does my device exist" scanning that starts to look a
->     lot like entity manager/fru device.  Is the use case you present a
->     real one, or hypothetical?
->
->     >
->     >                 For scanning the /dev/ipmi-* nodes, we are thinking=
- to use ipmb-channels.json cofig entries in entity manager repo since this =
-config file has valid slave path and bus address.
->
->     Please don't.  Entity-manager is dynamic, and the config should be
->     based on a detected entity.  Mixing the dynamic and static use cases
->     in this way would mean that we get to rewrite all of this when we hav=
-e
->     to support IPMB add-in-cards, which are 99% the same, but need to be
->     detected instead of hardcoded.
->     If you want this to be relatively static, attach an exposes record to
->     your baseboard config that has the information you need (if your IPMB
->     devices are on the baseboard).
->
-> Rather than having hardcoded config, can we can scan all available ipmb
-> devices under /dev/ipmb-* and send proper ipmb command to get fru
-> data.
+> In my understanding, chassis reset should be treated as complete power cy=
+cle of whole chassis and we can use redfish command "ForceRestart or PowerC=
+ycle"
 
-When an IPMB card is installed, who is in charge of creating the
-/dev/ipmb-* node?
+I'd probably guess that in this case we'd map both ForceRestart and
+PowerCycle to the same action, if we're just pulling the power rail.
 
 >
->     >
->     >                 Please share your comments if any.
->     >
->     >     Thanks,
->     >     Kumar.
->     >
->     >
+> As per our implementation in bmcweb, we have implemented 2 interface (sya=
+tem and chassis) where we deal with chassis reset
+> 1.  https://github.com/openbmc/bmcweb/blob/684bb4b89f88b394b00b140d71c161=
+143393f80b/redfish-core/lib/systems.hpp#L1754
+> In this system interface every reset type except ForceOff is calling acti=
+on for host and for ForceOff command, it is calling chassis poweroff.
+>
+> 2. https://github.com/openbmc/bmcweb/blob/684bb4b89f88b394b00b140d71c1611=
+43393f80b/redfish-core/lib/chassis.hpp#L585
+> Here we only implement "PowerCycle" command.
+>
+> Why did we implement chassis reset command at 2 different interface, I mi=
+ght be missing something here.
+>
+> As per x86-power-control, in both above cases chassis command point to ac=
+tion on host only
+> https://github.com/openbmc/x86-power-control/blob/e63dea0875a70ff50f430a4=
+bdc84b646a56b9ce7/power-control-x86/src/power_control.cpp#L2389
+
+Because most systems don't have the ability to do a complete AC reset,
+so today we tend to map a Chassis reset to a host reset for
+compatibility.  I suspect your use case is the first system that will
+add the ability to do the "right" thing, and actually cycle power to
+the chassis.
+
+>
+> where can we implement action on chassis.
+>
+> Can I add ForceRestart for chassis in redfish chassis interface as chassi=
+s sled (complete power removal and restore)
+> https://github.com/openbmc/bmcweb/blob/684bb4b89f88b394b00b140d71c1611433=
+93f80b/redfish-core/lib/chassis.hpp#L585
+
+You can add ForceRestart, but you need to implement it in such a way
+that it's selecting it per-chassis, given that you'll have 2 chassis
+instances, one capable of an AC reset, one that isn't.  Today, the
+code does the wrong thing, and maps all chassis resets to the
+/org/xyz/openbmc_project/chassis0 path, because there was no
+association for power state mapping back to a chassis path.  You'll
+likely need to do some engineering in this regard, or just map
+/org/xyz/openbmc_project/chassis0 to your "chassis" reset.
+
+>
+> I understand that it is not very clear from refish how to map each resour=
+ce and command.
+>
+> Please suggest a direction here.
+>
+> Regards
+> -Vijay
 >
