@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 926D4275E04
-	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 18:55:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD9A9275DDC
+	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 18:50:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BxPS66vGhzDqN6
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 02:55:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BxPLk6HsMzDqW7
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 02:50:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,20 +19,21 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BxPJ04z9JzDqWb
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 02:48:15 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BxPHv6s2lzDqW2
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 02:48:11 +1000 (AEST)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08NGlh5M021310;
- Wed, 23 Sep 2020 19:47:43 +0300
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08NGliYV021313;
+ Wed, 23 Sep 2020 19:47:44 +0300
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 9F56A639D6; Wed, 23 Sep 2020 19:47:43 +0300 (IDT)
+ id 1933C639D6; Wed, 23 Sep 2020 19:47:44 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: robh+dt@kernel.org, mark.rutland@arm.com, avifishman70@gmail.com,
  tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
  benjaminfair@google.com, joel@jms.id.au
-Subject: [PATCH v7 4/5] arm: dts: add new device nodes to NPCM7XX device tree
-Date: Wed, 23 Sep 2020 19:47:29 +0300
-Message-Id: <20200923164730.176881-5-tmaimon77@gmail.com>
+Subject: [PATCH v7 5/5] arm: dts: add new device nodes to NPCM750 device tree
+ EVB
+Date: Wed, 23 Sep 2020 19:47:30 +0300
+Message-Id: <20200923164730.176881-6-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20200923164730.176881-1-tmaimon77@gmail.com>
 References: <20200923164730.176881-1-tmaimon77@gmail.com>
@@ -54,8 +55,10 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the following new device nodes to NPCM7XX:
+Add the following new device nodes to
+NPCM750 evolution board device tree:
 
+        - NPCM7xx Pin controller and GPIO
         - NPCM7xx PWM and FAN.
         - NPCM7xx EHCI USB.
         - NPCM7xx KCS.
@@ -68,479 +71,604 @@ Add the following new device nodes to NPCM7XX:
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 382 +++++++++++++++++-
- arch/arm/boot/dts/nuvoton-npcm750.dtsi        |  18 +
- 2 files changed, 394 insertions(+), 6 deletions(-)
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts     | 405 +++++++++++++++++-
+ .../boot/dts/nuvoton-npcm750-pincfg-evb.dtsi  | 157 +++++++
+ 2 files changed, 546 insertions(+), 16 deletions(-)
+ create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
 
-diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-index 5df77a617e77..4a69a9f31668 100644
---- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-+++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-@@ -4,6 +4,7 @@
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+index 15f744f1beea..1623a18ac29b 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -4,36 +4,409 @@
  
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
-+#include <dt-bindings/reset/nuvoton,npcm7xx-reset.h>
+ /dts-v1/;
+ #include "nuvoton-npcm750.dtsi"
++#include "dt-bindings/gpio/gpio.h"
++#include "nuvoton-npcm750-pincfg-evb.dtsi"
  
  / {
- 	#address-cells = <1>;
-@@ -64,12 +65,6 @@
- 		interrupt-parent = <&gic>;
- 		ranges = <0x0 0xf0000000 0x00900000>;
+ 	model = "Nuvoton npcm750 Development Board (Device Tree)";
+ 	compatible = "nuvoton,npcm750";
  
--		gcr: gcr@800000 {
--			compatible = "nuvoton,npcm750-gcr", "syscon",
--				"simple-mfd";
--			reg = <0x800000 0x1000>;
--		};
--
- 		scu: scu@3fe000 {
- 			compatible = "arm,cortex-a9-scu";
- 			reg = <0x3fe000 0x1000>;
-@@ -92,6 +87,16 @@
- 			reg = <0x3ff000 0x1000>,
- 				<0x3fe100 0x100>;
- 		};
++	aliases {
++		ethernet2 = &gmac0;
++		ethernet3 = &gmac1;
++		serial0 = &serial0;
++		serial1 = &serial1;
++		serial2 = &serial2;
++		serial3 = &serial3;
++		i2c0 = &i2c0;
++		i2c1 = &i2c1;
++		i2c2 = &i2c2;
++		i2c3 = &i2c3;
++		i2c4 = &i2c4;
++		i2c5 = &i2c5;
++		i2c6 = &i2c6;
++		i2c7 = &i2c7;
++		i2c8 = &i2c8;
++		i2c9 = &i2c9;
++		i2c10 = &i2c10;
++		i2c11 = &i2c11;
++		i2c12 = &i2c12;
++		i2c13 = &i2c13;
++		i2c14 = &i2c14;
++		i2c15 = &i2c15;
++		spi0 = &spi0;
++		spi1 = &spi1;
++		fiu0 = &fiu0;
++		fiu1 = &fiu3;
++		fiu2 = &fiux;
++	};
 +
-+		gcr: gcr@800000 {
-+			compatible = "nuvoton,npcm750-gcr", "syscon", "simple-mfd";
-+			reg = <0x800000 0x1000>;
-+		};
-+
-+		rst: rst@801000 {
-+			compatible = "nuvoton,npcm750-rst", "syscon", "simple-mfd";
-+			reg = <0x801000 0x6C>;
-+		};
+ 	chosen {
+ 		stdout-path = &serial3;
  	};
  
- 	ahb {
-@@ -101,6 +106,12 @@
- 		interrupt-parent = <&gic>;
- 		ranges;
+ 	memory {
+-		reg = <0 0x40000000>;
++		device_type = "memory";
++		reg = <0x0 0x20000000>;
+ 	};
+-};
  
-+		rstc: rstc@f0801000 {
-+			compatible = "nuvoton,npcm750-reset";
-+			reg = <0xf0801000 0x70>;
-+			#reset-cells = <2>;
-+		};
-+
- 		clk: clock-controller@f0801000 {
- 			compatible = "nuvoton,npcm750-clk", "syscon";
- 			#clock-cells = <1>;
-@@ -110,6 +121,63 @@
- 			clocks = <&clk_refclk>, <&clk_sysbypck>, <&clk_mcbypck>;
- 		};
- 
+-&watchdog1 {
+-	status = "okay";
+-};
++	ahb {
 +		gmac0: eth@f0802000 {
-+			device_type = "network";
-+			compatible = "snps,dwmac";
-+			reg = <0xf0802000 0x2000>;
-+			interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq";
-+			ethernet = <0>;
-+			clocks	= <&clk_rg1refck>, <&clk NPCM7XX_CLK_AHB>;
-+			clock-names = "stmmaceth", "clk_gmac";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&rg1_pins
-+					&rg1mdio_pins>;
-+			status = "disabled";
++			phy-mode = "rgmii-id";
++			status = "okay";
 +		};
-+
+ 
+-&serial0 {
+-	status = "okay";
+-};
++		gmac1: eth@f0804000 {
++			phy-mode = "rgmii-id";
++			status = "okay";
++		};
+ 
+-&serial1 {
+-	status = "okay";
+-};
 +		ehci1: usb@f0806000 {
-+			compatible = "nuvoton,npcm750-ehci";
-+			reg = <0xf0806000 0x1000>;
-+			interrupts = <GIC_SPI 61 IRQ_TYPE_LEVEL_HIGH>;
-+			status = "disabled";
++			status = "okay";
 +		};
-+
+ 
+-&serial2 {
+-	status = "okay";
+-};
 +		fiu0: spi@fb000000 {
-+			compatible = "nuvoton,npcm750-fiu";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0xfb000000 0x1000>;
-+			reg-names = "control", "memory";
-+			clocks = <&clk NPCM7XX_CLK_SPI0>;
-+			clock-names = "clk_spi0";
-+			status = "disabled";
++			status = "okay";
++			spi-nor@0 {
++				compatible = "jedec,spi-nor";
++				#address-cells = <1>;
++				#size-cells = <1>;
++				spi-rx-bus-width = <2>;
++				reg = <0>;
++				spi-max-frequency = <5000000>;
++				partitions@80000000 {
++					compatible = "fixed-partitions";
++					#address-cells = <1>;
++					#size-cells = <1>;
++					bbuboot1@0 {
++						label = "bb-uboot-1";
++						reg = <0x0000000 0x80000>;
++						read-only;
++						};
++					bbuboot2@80000 {
++						label = "bb-uboot-2";
++						reg = <0x0080000 0x80000>;
++						read-only;
++						};
++					envparam@100000 {
++						label = "env-param";
++						reg = <0x0100000 0x40000>;
++						read-only;
++						};
++					spare@140000 {
++						label = "spare";
++						reg = <0x0140000 0xC0000>;
++						};
++					kernel@200000 {
++						label = "kernel";
++						reg = <0x0200000 0x400000>;
++						};
++					rootfs@600000 {
++						label = "rootfs";
++						reg = <0x0600000 0x700000>;
++						};
++					spare1@D00000 {
++						label = "spare1";
++						reg = <0x0D00000 0x200000>;
++						};
++					spare2@0F00000 {
++						label = "spare2";
++						reg = <0x0F00000 0x200000>;
++						};
++					spare3@1100000 {
++						label = "spare3";
++						reg = <0x1100000 0x200000>;
++						};
++					spare4@1300000 {
++						label = "spare4";
++						reg = <0x1300000 0x0>;
++					};
++				};
++			};
 +		};
 +
 +		fiu3: spi@c0000000 {
-+			compatible = "nuvoton,npcm750-fiu";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0xc0000000 0x1000>;
-+			reg-names = "control", "memory";
-+			clocks = <&clk NPCM7XX_CLK_SPI3>;
-+			clock-names = "clk_spi3";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&spi3_pins>;
-+			status = "disabled";
++			pinctrl-0 = <&spi3_pins>, <&spi3quad_pins>;
++			status = "okay";
++			spi-nor@0 {
++				compatible = "jedec,spi-nor";
++				#address-cells = <1>;
++				#size-cells = <1>;
++				spi-rx-bus-width = <2>;
++				reg = <0>;
++				spi-max-frequency = <5000000>;
++				partitions@A0000000 {
++					compatible = "fixed-partitions";
++					#address-cells = <1>;
++					#size-cells = <1>;
++					system1@0 {
++						label = "spi3-system1";
++						reg = <0x0 0x0>;
++					};
++				};
++			};
 +		};
 +
 +		fiux: spi@fb001000 {
-+			compatible = "nuvoton,npcm750-fiu";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0xfb001000 0x1000>;
-+			reg-names = "control", "memory";
-+			clocks = <&clk NPCM7XX_CLK_SPIX>;
-+			clock-names = "clk_spix";
-+			status = "disabled";
++			spix-mode;
 +		};
 +
- 		apb {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -117,6 +185,68 @@
- 			interrupt-parent = <&gic>;
- 			ranges = <0x0 0xf0000000 0x00300000>;
- 
++		apb {
++
++			watchdog1: watchdog@901C {
++				status = "okay";
++			};
++
++			rng: rng@b000 {
++				status = "okay";
++			};
++
++			serial0: serial@1000 {
++				status = "okay";
++			};
++
++			serial1: serial@2000 {
++				status = "okay";
++			};
++
++			serial2: serial@3000 {
++				status = "okay";
++			};
++
++			serial3: serial@4000 {
++				status = "okay";
++			};
++
++			adc: adc@c000 {
++				status = "okay";
++			};
++
++			otp:otp@189000 {
++				status = "okay";
++			};
++
 +			lpc_kcs: lpc_kcs@7000 {
-+				compatible = "nuvoton,npcm750-lpc-kcs", "simple-mfd", "syscon";
-+				reg = <0x7000 0x40>;
-+				reg-io-width = <1>;
-+
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				ranges = <0x0 0x7000 0x40>;
-+
 +				kcs1: kcs1@0 {
-+					compatible = "nuvoton,npcm750-kcs-bmc";
-+					reg = <0x0 0x40>;
-+					interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+					kcs_chan = <1>;
-+					status = "disabled";
++					status = "okay";
 +				};
-+
+ 
+-&serial3 {
+-	status = "okay";
 +				kcs2: kcs2@0 {
-+					compatible = "nuvoton,npcm750-kcs-bmc";
-+					reg = <0x0 0x40>;
-+					interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+					kcs_chan = <2>;
-+					status = "disabled";
++					status = "okay";
 +				};
 +
 +				kcs3: kcs3@0 {
-+					compatible = "nuvoton,npcm750-kcs-bmc";
-+					reg = <0x0 0x40>;
-+					interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+					kcs_chan = <3>;
-+					status = "disabled";
++					status = "okay";
++				};
++			};
++
++			/* lm75 on SVB */
++			i2c0: i2c@80000 {
++				clock-frequency = <100000>;
++				status = "okay";
++				lm75@48 {
++					compatible = "lm75";
++					reg = <0x48>;
++					status = "okay";
++				};
++			};
++
++			/* lm75 on EB */
++			i2c1: i2c@81000 {
++				clock-frequency = <100000>;
++				status = "okay";
++				lm75@48 {
++					compatible = "lm75";
++					reg = <0x48>;
++					status = "okay";
++				};
++			};
++
++			/* tmp100 on EB */
++			i2c2: i2c@82000 {
++				clock-frequency = <100000>;
++				status = "okay";
++				tmp100@48 {
++					compatible = "tmp100";
++					reg = <0x48>;
++					status = "okay";
++				};
++			};
++
++			i2c3: i2c@83000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			i2c5: i2c@85000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			/* tmp100 on SVB */
++			i2c6: i2c@86000 {
++				clock-frequency = <100000>;
++				status = "okay";
++				tmp100@48 {
++					compatible = "tmp100";
++					reg = <0x48>;
++					status = "okay";
++				};
++			};
++
++			i2c7: i2c@87000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			i2c8: i2c@88000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			i2c9: i2c@89000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			i2c10: i2c@8a000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			i2c11: i2c@8b000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			i2c14: i2c@8e000 {
++				clock-frequency = <100000>;
++				status = "okay";
++			};
++
++			pwm_fan:pwm-fan-controller@103000 {
++				status = "okay";
++				fan@0 {
++					reg = <0x00>;
++					fan-tach-ch = /bits/ 8 <0x00 0x01>;
++					cooling-levels = <127 255>;
++				};
++				fan@1 {
++					reg = <0x01>;
++					fan-tach-ch = /bits/ 8 <0x02 0x03>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@2 {
++					reg = <0x02>;
++					fan-tach-ch = /bits/ 8 <0x04 0x05>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@3 {
++					reg = <0x03>;
++					fan-tach-ch = /bits/ 8 <0x06 0x07>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@4 {
++					reg = <0x04>;
++					fan-tach-ch = /bits/ 8 <0x08 0x09>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@5 {
++					reg = <0x05>;
++					fan-tach-ch = /bits/ 8 <0x0A 0x0B>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@6 {
++					reg = <0x06>;
++					fan-tach-ch = /bits/ 8 <0x0C 0x0D>;
++					cooling-levels = /bits/ 8 <127 255>;
++				};
++				fan@7 {
++					reg = <0x07>;
++					fan-tach-ch = /bits/ 8 <0x0E 0x0F>;
++					cooling-levels = /bits/ 8 <127 255>;
 +				};
 +			};
 +
 +			spi0: spi@200000 {
-+				compatible = "nuvoton,npcm750-pspi";
-+				reg = <0x200000 0x1000>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&pspi1_pins>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>;
-+				clocks = <&clk NPCM7XX_CLK_APB5>;
-+				clock-names = "clk_apb5";
-+				resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_PSPI1>;
-+				status = "disabled";
++				cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
++				status = "okay";
++				Flash@0 {
++					compatible = "winbond,w25q128",
++					"jedec,spi-nor";
++					reg = <0x0>;
++					#address-cells = <1>;
++					#size-cells = <1>;
++					spi-max-frequency = <5000000>;
++					partition@0 {
++						label = "spi0_spare1";
++						reg = <0x0000000 0x800000>;
++					};
++					partition@1 {
++						label = "spi0_spare2";
++						reg = <0x800000 0x0>;
++					};
++				};
 +			};
 +
 +			spi1: spi@201000 {
-+				compatible = "nuvoton,npcm750-pspi";
-+				reg = <0x201000 0x1000>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&pspi2_pins>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
-+				clocks = <&clk NPCM7XX_CLK_APB5>;
-+				clock-names = "clk_apb5";
-+				resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_PSPI2>;
-+				status = "disabled";
++				cs-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
++				status = "okay";
++				Flash@0 {
++					compatible = "winbond,w25q128fw",
++					"jedec,spi-nor";
++					reg = <0x0>;
++					#address-cells = <1>;
++					#size-cells = <1>;
++					spi-max-frequency = <5000000>;
++					partition@0 {
++						label = "spi1_spare1";
++						reg = <0x0000000 0x800000>;
++					};
++					partition@1 {
++						label = "spi1_spare2";
++						reg = <0x800000 0x0>;
++					};
++				};
 +			};
-+
- 			timer0: timer@8000 {
- 				compatible = "nuvoton,npcm750-timer";
- 				interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
-@@ -183,6 +313,246 @@
- 				reg-shift = <2>;
- 				status = "disabled";
- 			};
-+
-+			rng: rng@b000 {
-+				compatible = "nuvoton,npcm750-rng";
-+				reg = <0xb000 0x8>;
-+				status = "disabled";
-+			};
-+
-+			adc: adc@c000 {
-+				compatible = "nuvoton,npcm750-adc";
-+				reg = <0xc000 0x8>;
-+				interrupts = <GIC_SPI 0 IRQ_TYPE_LEVEL_HIGH>;
-+				clocks = <&clk NPCM7XX_CLK_ADC>;
-+				resets = <&rstc NPCM7XX_RESET_IPSRST1 NPCM7XX_RESET_ADC>;
-+				status = "disabled";
-+			};
-+
-+			pwm_fan: pwm-fan-controller@103000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				compatible = "nuvoton,npcm750-pwm-fan";
-+				reg = <0x103000 0x2000>, <0x180000 0x8000>;
-+				reg-names = "pwm", "fan";
-+				clocks = <&clk NPCM7XX_CLK_APB3>,
-+					<&clk NPCM7XX_CLK_APB4>;
-+				clock-names = "pwm","fan";
-+				interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
-+						<GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&pwm0_pins &pwm1_pins
-+						&pwm2_pins &pwm3_pins
-+						&pwm4_pins &pwm5_pins
-+						&pwm6_pins &pwm7_pins
-+						&fanin0_pins &fanin1_pins
-+						&fanin2_pins &fanin3_pins
-+						&fanin4_pins &fanin5_pins
-+						&fanin6_pins &fanin7_pins
-+						&fanin8_pins &fanin9_pins
-+						&fanin10_pins &fanin11_pins
-+						&fanin12_pins &fanin13_pins
-+						&fanin14_pins &fanin15_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c0: i2c@80000 {
-+				reg = <0x80000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb0_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c1: i2c@81000 {
-+				reg = <0x81000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb1_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c2: i2c@82000 {
-+				reg = <0x82000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 66 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb2_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c3: i2c@83000 {
-+				reg = <0x83000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 67 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb3_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c4: i2c@84000 {
-+				reg = <0x84000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb4_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c5: i2c@85000 {
-+				reg = <0x85000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb5_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c6: i2c@86000 {
-+				reg = <0x86000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb6_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c7: i2c@87000 {
-+				reg = <0x87000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb7_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c8: i2c@88000 {
-+				reg = <0x88000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb8_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c9: i2c@89000 {
-+				reg = <0x89000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb9_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c10: i2c@8a000 {
-+				reg = <0x8a000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb10_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c11: i2c@8b000 {
-+				reg = <0x8b000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 75 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb11_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c12: i2c@8c000 {
-+				reg = <0x8c000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 76 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb12_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c13: i2c@8d000 {
-+				reg = <0x8d000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 77 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb13_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c14: i2c@8e000 {
-+				reg = <0x8e000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 78 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb14_pins>;
-+				status = "disabled";
-+			};
-+
-+			i2c15: i2c@8f000 {
-+				reg = <0x8f000 0x1000>;
-+				compatible = "nuvoton,npcm750-i2c";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				clocks = <&clk NPCM7XX_CLK_APB2>;
-+				interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&smb15_pins>;
-+				status = "disabled";
-+			};
- 		};
- 	};
- 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750.dtsi b/arch/arm/boot/dts/nuvoton-npcm750.dtsi
-index a37bb2294b8f..13eee0fe5642 100644
---- a/arch/arm/boot/dts/nuvoton-npcm750.dtsi
-+++ b/arch/arm/boot/dts/nuvoton-npcm750.dtsi
-@@ -32,6 +32,7 @@
- 			next-level-cache = <&l2>;
- 		};
- 	};
-+
- 	soc {
- 		timer@3fe600 {
- 			compatible = "arm,cortex-a9-twd-timer";
-@@ -41,4 +42,21 @@
- 			clocks = <&clk NPCM7XX_CLK_AHB>;
- 		};
- 	};
-+
-+	ahb {
-+		gmac1: eth@f0804000 {
-+			device_type = "network";
-+			compatible = "snps,dwmac";
-+			reg = <0xf0804000 0x2000>;
-+			interrupts = <GIC_SPI 17 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq";
-+			ethernet = <1>;
-+			clocks	= <&clk_rg2refck>, <&clk NPCM7XX_CLK_AHB>;
-+			clock-names = "stmmaceth", "clk_gmac";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&rg2_pins
-+					&rg2mdio_pins>;
-+			status = "disabled";
 +		};
 +	};
++
++	pinctrl: pinctrl@f0800000 {
++		pinctrl-names = "default";
++		pinctrl-0 = <	&iox1_pins
++				&pin8_input
++				&pin9_output_high
++				&pin10_input
++				&pin11_output_high
++				&pin16_input
++				&pin24_output_high
++				&pin25_output_low
++				&pin32_output_high
++				&jtag2_pins
++				&pin61_output_high
++				&pin62_output_high
++				&pin63_output_high
++				&lpc_pins
++				&pin160_input
++				&pin162_input
++				&pin168_input
++				&pin169_input
++				&pin170_input
++				&pin187_output_high
++				&pin190_input
++				&pin191_output_high
++				&pin192_output_high
++				&pin197_output_low
++				&ddc_pins
++				&pin218_input
++				&pin219_output_low
++				&pin220_output_low
++				&pin221_output_high
++				&pin222_input
++				&pin223_output_low
++				&spix_pins
++				&pin228_output_low
++				&pin231_output_high
++				&pin255_input>;
++	};
  };
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi b/arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
+new file mode 100644
+index 000000000000..edb4190826e6
+--- /dev/null
++++ b/arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
+@@ -0,0 +1,157 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2018 Nuvoton Technology tomer.maimon@nuvoton.com
++
++/ {
++	pinctrl: pinctrl@f0800000 {
++		pin8_input: pin8-input {
++			pins = "GPIO8/LKGPO1";
++			bias-disable;
++			input-enable;
++		};
++		pin9_output_high: pin9-output-high {
++			pins = "GPIO9/LKGPO2";
++			bias-disable;
++			output-high;
++		};
++		pin10_input: pin10-input {
++			pins = "GPIO10/IOXHLD";
++			bias-disable;
++			input-enable;
++		};
++		pin11_output_high: pin11-output-high {
++			pins = "GPIO11/IOXHCK";
++			bias-disable;
++			output-high;
++		};
++		pin16_input: pin16-input {
++			pins = "GPIO16/LKGPO0";
++			bias-disable;
++			input-enable;
++		};
++		pin24_output_high: pin24-output-high {
++			pins = "GPIO24/IOXHDO";
++			bias-disable;
++			output-high;
++		};
++		pin25_output_low: pin25-output-low {
++			pins = "GPIO25/IOXHDI";
++			bias-disable;
++			output-low;
++		};
++		pin32_output_high: pin32-output-high {
++			pins = "GPIO32/nSPI0CS1";
++			bias-disable;
++			output-high;
++		};
++		pin61_output_high: pin61-output-high {
++			pins = "GPO61/nDTR1_BOUT1/STRAP6";
++			bias-disable;
++			output-high;
++		};
++		pin62_output_high: pin62-output-high {
++			pins = "GPO62/nRTST1/STRAP5";
++			bias-disable;
++			output-high;
++		};
++		pin63_output_high: pin63-output-high {
++			pins = "GPO63/TXD1/STRAP4";
++			bias-disable;
++			output-high;
++		};
++		pin160_input: pin160-input {
++			pins = "GPIO160/CLKOUT/RNGOSCOUT";
++			bias-disable;
++			input-enable;
++		};
++		pin162_input: pin162-input {
++			pins = "GPIO162/SERIRQ";
++			bias-disable;
++			input-enable;
++		};
++		pin168_input: pin168-input {
++			pins = "GPIO168/nCLKRUN/nESPIALERT";
++			bias-disable;
++			input-enable;
++		};
++		pin169_input: pin169-input {
++			pins = "GPIO169/nSCIPME";
++			bias-disable;
++			input-enable;
++		};
++		pin170_input: pin170-input {
++			pins = "GPIO170/nSMI";
++			bias-disable;
++			input-enable;
++		};
++		pin187_output_high: pin187-output-high {
++			pins = "GPIO187/nSPI3CS1";
++			bias-disable;
++			output-high;
++		};
++		pin190_input: pin190-input {
++			pins = "GPIO190/nPRD_SMI";
++			bias-disable;
++			input-enable;
++		};
++		pin191_output_high: pin191-output-high {
++			pins = "GPIO191";
++			bias-disable;
++			output-high;
++		};
++		pin192_output_high: pin192-output-high {
++			pins = "GPIO192";
++			bias-disable;
++			output-high;
++		};
++		pin197_output_low: pin197-output-low {
++			pins = "GPIO197/SMB0DEN";
++			bias-disable;
++			output-low;
++		};
++		pin218_input: pin218-input {
++			pins = "GPIO218/nWDO1";
++			bias-disable;
++			input-enable;
++		};
++		pin219_output_low: pin219-output-low {
++			pins = "GPIO219/nWDO2";
++			bias-disable;
++			output-low;
++		};
++		pin220_output_low: pin220-output-low {
++			pins = "GPIO220/SMB12SCL";
++			bias-disable;
++			output-low;
++		};
++		pin221_output_high: pin221-output-high {
++			pins = "GPIO221/SMB12SDA";
++			bias-disable;
++			output-high;
++		};
++		pin222_input: pin222-input {
++			pins = "GPIO222/SMB13SCL";
++			bias-disable;
++			input-enable;
++		};
++		pin223_output_low: pin223-output-low {
++			pins = "GPIO223/SMB13SDA";
++			bias-disable;
++			output-low;
++		};
++		pin228_output_low: pin228-output-low {
++			pins = "GPIO228/nSPIXCS1";
++			bias-disable;
++			output-low;
++		};
++		pin231_output_high: pin231-output-high {
++			pins = "GPIO230/SPIXD3";
++			bias-disable;
++			output-high;
++		};
++		pin255_input: pin255-input {
++			pins = "GPI255/DACOSEL";
++			bias-disable;
++			input-enable;
++		};
++	};
++};
 -- 
 2.22.0
 
