@@ -1,97 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8972B2761EE
-	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 22:22:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C767827628E
+	for <lists+openbmc@lfdr.de>; Wed, 23 Sep 2020 22:52:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BxV2c5jc5zDqSs
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 06:22:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BxVk624blzDqVD
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 06:52:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b44; helo=mail-yb1-xb44.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=fkPZaTJy; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=kYLo5tzW; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=a2mJRFtG; dkim-atps=neutral
+Received: from mail-yb1-xb44.google.com (mail-yb1-xb44.google.com
+ [IPv6:2607:f8b0:4864:20::b44])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BxV1q2L24zDqRt
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 06:21:18 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.nyi.internal (Postfix) with ESMTP id 97C325C0189;
- Wed, 23 Sep 2020 16:21:15 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Wed, 23 Sep 2020 16:21:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=pH3IavX3Z74PJXMEW/WF6wgpLU5
- g6gwnE8n6E/1WMpY=; b=fkPZaTJyQUVKQjJBo/+PevlD7q2KEkGs901vQfB01zc
- jd+9krz3930hGs7rup7KqA4q5DDt84zvJmODAyReE39ggTMjgjqh6g4+vK1eIPUK
- ZsqMsH0DdrKTmIgYFdVi6DvouQ07ISwLtSW6Js3rbnmcdbWk273AdWXduj8mITwL
- QNOMT8D3UdcnFatwBQRPbgnQZGZiEfNSq+mmVFWG3WrPdITTuGvRWFXUMigRGqf6
- WGqoGN869DUbyO5JCv4fd+7Wvgi1H1TNVvZ06d9JHrvEq/M2yJQpqn9DKXhgp7n0
- pXakAQMiLHgiShCa1hDhJ1AAPFk6+HUZDtdjhk4Fw3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=pH3Iav
- X3Z74PJXMEW/WF6wgpLU5g6gwnE8n6E/1WMpY=; b=kYLo5tzWfdYafGnejnQ7PG
- BSEVwS+r/tthbAjOFy8P0yER1ipEkEiZxQFRMlTHoO/x2xX2BxX3pacjLJ4e0Z8e
- D6vLm3mp0LTT+JeK4D/DK3IFH2h/SwNdb23kopVQEv3r/Zl8KNvpQrbXcYBPNL4F
- 6/9IycL4hQgYEzm5SVXKQQ3hECg4vtr7B88V04ch9SqOwsj8ziNNzYb12A8EBFYD
- hrNSkI6L4gNPfj8H9mqGSA63JT4PHTT69JsznnrrFIpN6DFcw0mTRbSbqxE/iuN7
- Vx0xyyxSiwTO5uKFHTh0oR7tgn3vG5TRmQ7sZY6NOkH6c11hsYIABLYC0LwbSMqw
- ==
-X-ME-Sender: <xms:O65rX9xG6M8sXsoukxAZBwApqJqZC-3CEBECKijqnQn072DB2OgM2g>
- <xme:O65rX9TvVZiDWUrXe4fJKyNQ_O8l8QLbMNUid1GUbyycWrBA8TWyGSMeiT6RVY0eo
- xi0DiNOFFspuZTL6qo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeigddugeelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:O65rX3Xt3_h68Wt2H2m669V_LYKGFUkmxSkAbKuDZv_cvpvN3NrFLQ>
- <xmx:O65rX_ikbsnvLr9ydvaRLU2Cj2BQg-yKJH9D_SSnp_lJr_4s012KTw>
- <xmx:O65rX_DRNo2BQGVf49Y3XFSSFeWmvooKvfHXqsJT4JWBrexaZNYVsQ>
- <xmx:O65rXypkj07tI1dWbO6n5b3XvoebSs5VzdjzjQGTOvIdWNDmhZWEKA>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id B4D883064680;
- Wed, 23 Sep 2020 16:21:14 -0400 (EDT)
-Date: Wed, 23 Sep 2020 15:21:13 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Ed Tanous <ed@tanous.net>
-Subject: Re: Chassis reset
-Message-ID: <20200923202113.GT6152@heinlein>
-References: <46F3C05C-7CEC-42FD-A9B7-8E55AE56FE3F@fb.com>
- <CACWQX802HpRT20Zj2YFEnVE7XXBOJXx66-8B1E7TEZdCNwPbsQ@mail.gmail.com>
- <9EC0D657-2D58-4544-BA9E-65D3C4148A81@fb.com>
- <CACWQX80SivNLLE3gAUk+Ao=0eHf_ooezumXGmkkkVhVPFyyNSA@mail.gmail.com>
- <C6292DFD-EAF1-4658-85A7-F81941B12D5A@fb.com>
- <CACWQX83GJ9V9--5WGmVjvacYnw2=fr7URhqOcwkSq4C8GpFoiQ@mail.gmail.com>
- <F46D657F-D4DA-49BD-B78D-CDD420768728@fb.com>
- <20200923191051.GR6152@heinlein>
- <CACWQX81tyY1Wo6a8e4hnk3fvinfV-x3ogRK1q1W5cfx28tpfrw@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BxVj46dnKzDqS6
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 06:51:49 +1000 (AEST)
+Received: by mail-yb1-xb44.google.com with SMTP id x8so687050ybe.12
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 13:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Ff1CSStvUE5PNN8pEdPHHhoRzANWkHXw1E62HFtDBEU=;
+ b=a2mJRFtG5obVloWDaRg8N0THYniIbL0D+oCCRGfuziqKmrmeaRYrECphqTmc5ATQec
+ T5I0tqqs3I8BL9n2EOlQuQwCyCihli/13ZYVLpl/QuOPi2bkdrkJbx8k7c8U8STksXcF
+ sKN43LOrjQtBBINoh3thVH6+mTKtix5rFPeD9CnzMTUey+fik6OygCMCeF/7XAQTnTPB
+ 8qsA1+/y2CRvdj6dTq1/MhIW5R5MwYzGl7bwPCB6xPXRosIxc2Il2FCEv0MKIe7gGslp
+ df118ZsKGKkdGLbKXVn4QvCjJT28PqbfgpOy1MwSQ5JYc7rdUqOYuK1NV0Qrg8J/a7BA
+ nLvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Ff1CSStvUE5PNN8pEdPHHhoRzANWkHXw1E62HFtDBEU=;
+ b=EDo0/OQW14ifR6rnfFzvHLQZRA+7NjvEV7+iVpt9uf2ldxsiD80hD7pNBVNqlgMskX
+ kUe6PkLComOMWLkO/andf6Z0/ZlB1lX7y+A0dkA1MiR8OnZ9Mp9x5j+nCBWYSoyxuTp3
+ //oFOs+3QA9kM07EkAKlHh61jJ/D41gtyNZg0er3JmWE1781xrxbFc4NFmd6GEMoUbHD
+ XeB2deOC1XPhFyu6iL6NGE+NIlfkYbdvkHuGaXRAhpBCPUHbuVl0zxqQshh5Yw9qcZ76
+ LJGnwnerXvfF5q3ft98tg+IIhOkK/UuyJB1AOtRy42gjDWOF9V8e9gzFiZ9YSxHR3gIm
+ LKng==
+X-Gm-Message-State: AOAM533RWKs7CMJku2vB5I+o+jTNCoZtBSu0J/gdp6y1PaXv7+PIgv+e
+ +NdWEX1s4a9kXA+9UItlEwyegMdwIUBlTq9oOFEueQ==
+X-Google-Smtp-Source: ABdhPJyoB6aMBNK84PYtS1UUdeZbp9TPAc8HggK4GJpl6z36yNeSzl3NBW+K/x+Q0UjjGW8zhKbkEyLJOSFBBUdDaEk=
+X-Received: by 2002:a5b:601:: with SMTP id d1mr2679312ybq.417.1600894304904;
+ Wed, 23 Sep 2020 13:51:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="h/77pM/XNBmEJr8g"
-Content-Disposition: inline
-In-Reply-To: <CACWQX81tyY1Wo6a8e4hnk3fvinfV-x3ogRK1q1W5cfx28tpfrw@mail.gmail.com>
+References: <C9C88F03-4715-444E-9B1A-3834995458EA@getmailspring.com>
+ <20200916172045.GD6152@heinlein>
+ <CACWQX80BYYwPTN1PsbLfjFN5fQyjNGC1SxM9iyBKvxNiLh=WLQ@mail.gmail.com>
+ <a5f0245d-703d-e0ba-0344-442c49a60cdf@linux.vnet.ibm.com>
+ <20200917153601.GH6152@heinlein>
+ <c007630e-54e2-df13-e6da-0af0b2998279@linux.vnet.ibm.com>
+ <e7dc17f5-191c-b24f-4b92-1020cf77a54a@linux.vnet.ibm.com>
+ <20200923192457.GS6152@heinlein>
+In-Reply-To: <20200923192457.GS6152@heinlein>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 23 Sep 2020 13:51:33 -0700
+Message-ID: <CACWQX83TAW8TfAUaNSkO7UA0VrYKjut8uFnd6pF3RgcJm_EDrA@mail.gmail.com>
+Subject: Re: Using bios-settings-mgr for setting hypervisor network attributes
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,96 +81,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemka@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ratan Gupta <ratagupt@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---h/77pM/XNBmEJr8g
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Sep 23, 2020 at 12:26:58PM -0700, Ed Tanous wrote:
-> On Wed, Sep 23, 2020 at 12:10 PM Patrick Williams <patrick@stwcx.xyz> wro=
-te:
+On Wed, Sep 23, 2020 at 12:24 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Tue, Sep 22, 2020 at 02:39:04PM +0530, Ratan Gupta wrote:
+> > Hi All,
 > >
-> > On Wed, Sep 23, 2020 at 05:45:51AM +0000, Vijay Khemka wrote:
-> > >
-> > > Yes I have 2 chassis instance xyz/openbmc_project/chassis0 and xyz/op=
-enbmc_project/chassis_system0.
-> > > Later one is used for AC reset.
+> > Adding one more problem here with settings infra and with some proposed
+> > solutions.
 > >
-> > Can we do a query to see if 'chassis_system0' exists and use it first
-> > and then 'chassis0' if not?
->=20
-> I don't think it's that simple.  The way the dbus APIs are defined,
-> one Redfish chassis needs to call the chassis0 path, the other needs
-> to call the chassis_system0 path.  We'd need a way to key off which
-> one is which.  I haven't seen any entity-manager configs get checked
-> in for a "multinode chassis" entity type, so whatever interface we use
-> to describe that will probably be what we need to key off to make that
-> path distinction.
-
-In Redfish this would be the system path that maps to chassis_system0
-and not the chassis path.  In Redfish today, chassis doesn't do a whole
-lot except allow you to power cycle the host.  Most of the control is in
-System.
-
->=20
+> > Problem Domain:
 > >
-> > I think we need to do some enhancement to x86-power-control though also
-> > to only create this 'chassis_system0' object if configured.  I believe
-> > the current code change you did does it always, even if the
-> > systemd-target is empty.
->=20
-> I keep getting the feeling that xyz/openbmc_project/chassis_system0 is
-> just overloading what /xyz/openbmc_project/chassis0 is intended to do,
-> x86-power-control just had that already defined, so we went another
-> direction.  I wonder if we just need to make the "Can I do a real AC
-> reset" configurable, and have it change the behavior of
-> /xyz/openbmc_project/chassis0 in that case.
+> >        - With multi property update from redfish , webserver updates the
+> > settings object
+> >        - PLDM on bmc listens on the property update of settings object
+> > and notifies to Hypervisor
+> >        - As there can be multiple properties in single PATCH operation,
+> > PLDM on bmc sends
+> >          multiple Notifications to Hypervisor
+> >        - Specifically in case of network config,  single property update
+> > on phyp may lead to network inconsistency.
+>
+> The original bios config seemed to only apply settings at specific times
+> (ie. when the BIOS restarts) but your problem seems to indicate that
+> you're immediately sending settings up to the host whenever they change?
 
-No, these are not overloading each other.  They are vastly different.
+I have a very similar use case that I will need to build out in the
+next year.  Yes, if the host is on, we'd like them to be pushed
+immediately, ideally with error codes returned to dbus if the
+operation fails.
 
-host0 + chassis0 make up the 'BIOS/OS control' and '12V power on rails'
-portions of host power control respectively.  chassis_system0 controls the
-'12v + 5V standby rails' part of the system.  In my opinion, it should
-only be present when a system actually allows manipulation of the
-standby power, but that isn't how it is currently implemented.
+>
+> > How can we solve this?
+> >
+> >   * Proposal 1: Add one more property in the settings Dbus object itself
+> >     which tells that it is ready to be read, PLDM on the BMC watching on
+> >     that property and read the whole network configuration and notifies
+> >     Hypervisor.
+> >
+> >   * Proposal 2: Hypervisor runs the timer if the bios attr belongs to
+> >     network configuration and once the timer expires,it reads the bios
+> >     attr related to network and applies it.
+> >
+> >   * Proposal 3: Add one more bios attribute in the bios table which
+> >     tells that Bios configuration can be read and applied by the
+> >     Hypervisor for the network configuration.
+>
+> It is unfortunate that org.freedesktop.DBus.Properties doesn't have a
+> way to set multiple properties as the analogous operation to 'GetAll'.
 
-> Also, I'll reiterate that a chassis reset really should be going in a
-> separate repo/application from x86-power-control.  x86-power-control
-> should be focused on managing the host.
+It was proposed we (OpenBMC) add one while back.  I think it muddies
+the water of what it means to be a method call, and what it means to
+be a property, especially for the use case that it was being proposed
+to cover.
 
-No disagreement from me; that was my recommendation originally.  But,
-the current implementation landed there and was accepted by the
-maintainer.  I don't honestly think that matters much at a "how should
-Redfish APIs map to these dbus objects" perspective though, which is the
-current discussion.
+>
+> In the case of networking, how do we handle this for the BMC settings?
+> Don't we have a similar situation where multiple properties are changed
+> via some interface and could leave the network in an unusual state?  I'm
+> thinking IPMI does this.
 
---=20
-Patrick Williams
+I think today the behavior is that the network is left in an unusual
+state until it's not.  If the config is invalid, and can't be
+written(because of depdent properties) we just don't push it down
+until it's valid.
 
---h/77pM/XNBmEJr8g
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> When all of our DBus objects were serial we likely never had this issue
+> because the request to read the properties (to send to the hypervisor)
+> would come behind the signal and subsequent property updates.  Now that
+> we're moving towards more ASIO we likely will see this kind of issue
+> more often.  I don't like it but we could certainly proposal a
+> 'SetMultiple' extension to org.freedesktop or create our own interface.
 
------BEGIN PGP SIGNATURE-----
+If you have properties that need to be set in lockstep with one
+another to be valid, I suspect that indicates that properties are not
+the right tool.  Redfish hits this a lot, where each resource is
+expected that any property is modifiable independently, and certain
+implementations need an atomic "unit" of update.  bmcweb doesn't want
+to have to cache properties that are collectively invalid right now,
+but might become valid in the future, so there's an impasse.  Who
+keeps the state while it's invalid?  Thus Far, that falls to the
+dbus-daemons to store.
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9rrjcACgkQqwNHzC0A
-wRnpDBAApdbiNVi/8gaEGUIJD8aWJmFlOeSpttZNly4isEJGDH2Zlg29zSudVGU5
-dK7doUhIUyAyCypEtH8WEBcLrHLSqQi0yWeYB2aQ4VInmq1iUQx8oXTJbz2ZGgsK
-JpyNnMBDwhdBAwPTW2oHEPZs7LL0ofllFapyGF8ib3Oeaz4FYVaxVKANdthEc7uK
-HiNsc8sj7/VuplAj5vVNcZ/4JMggp0yScCybKIXkmiJ+NPZN2AIv9A/wTvIfk8jy
-0k+ZTRLSHIFi3jV22yrRV89ybFLqSVtjSczKnxS9ouB8kMvUETjiU2wQQ4/Yu3Zw
-weYfoD5OOPd2GIZi2UcvRbi5l6Aby/Ej1Ru6v3In3KIv2pwLh5rH/piwB8cJamrr
-NCAFPpaEz5A2wblf/SFOICNpTrawgJbdOC7OWCbTwCyn93fIA+XDbL6j7NR/oBme
-R8SFtePzqLxnrjAi/ta8DA4zJPMreTltcnROmmZJZ157oiq1njtND6M33cUOWpIN
-Do/qUTdsLxHr3ngS1+718mdZXL4PJVuGQwJcsxafhdhr1THlibKtBkxQwSwHpsdW
-y7IRNQqTD4Ca+dt60rXN1BnXgt4L6C6hqLyOo7TeuU/F3+CKidHZX5R2e1eJNzH+
-agkR8R/mQ4iMALzz1LMP/IzL05i+bcn3lHkmAOJ9Ncx9egHx2Tw=
-=oYkh
------END PGP SIGNATURE-----
+In terms of this issue, most (all?) ASIO clients are single threaded,
+so I think you have the same dependencies.
 
---h/77pM/XNBmEJr8g--
+>
+> Proposal #2 isn't great because, well, how long do you wait?  In the
+> case of hypervisor updates, delaying something on the order of a second
+> is probably sufficient for Redfish/PLDM, but that doesn't really
+> generally solve the problem.
+
+This tends to be what I've recommended in the past (assuming the
+"update" is computationally expensive).  If the update is
+computationally "cheap", just go ahead and do it on every transaction.
+Ideally PLDM would be modeled such that transactional changes are
+"cheap", and don't require a full payload update on every property
+change.
+
+>
+> We could define an interface to implement something like Proposal #1,
+> but we would need a new interface and not a property we tack onto
+> existing interfaces.  We'd probably need to revisit a lot of our
+> interface definitions and see which ones typicallly have multi-property
+> updates and does an intermediate state leave us in a bad situation.
+>
+> Specifically for BIOS/Hypervisor settings, I mentioned before that it
+> isn't clear to me what the proposal is for applying Pending to Current.
+> Again, this isn't general, but we could define an interface specific for
+> BIOS/Hypervisor settings which has a way to indicate 'Pending
+> transaction is complete' (set by entities like Redfish) and 'Pending
+> values applied to Current' (set by entities like PLDM).  For the current
+> settings-style values though, this requires external interfaces to
+> somehow know that the setting is associated with the Host in order to do
+> the application, since BMC-owned properties won't have or need this.
+
+Dumb question: Does anyone actually need to know the "current" value?
+Redfish certainly would need to return  the "pending" value in all
+cases, as it's required so the restful API emulates ACID-like
+compliance to the user.  Could we just have an optional interface that
+indicates "values might not be loaded yet" and simplify the dbus API a
+little?
+
+>
+> --
+> Patrick Williams
