@@ -2,90 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 144D72763CF
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 00:34:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E63672763CE
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 00:32:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BxXzz2BfzzDqcV
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 08:34:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BxXxG4RRkzDqbD
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 08:32:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=apple.com (client-ip=17.171.2.72;
- helo=ma1-aaemail-dr-lapp03.apple.com; envelope-from=cyang999@apple.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=apple.com
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b33; helo=mail-yb1-xb33.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=apple.com header.i=@apple.com header.a=rsa-sha256
- header.s=20180706 header.b=wlOIUP4z; dkim-atps=neutral
-X-Greylist: delayed 17884 seconds by postgrey-1.36 at bilbo;
- Thu, 24 Sep 2020 08:34:13 AEST
-Received: from ma1-aaemail-dr-lapp03.apple.com
- (ma1-aaemail-dr-lapp03.apple.com [17.171.2.72])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=08HdHg6k; dkim-atps=neutral
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com
+ [IPv6:2607:f8b0:4864:20::b33])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BxXz92PpYzDqWG
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 08:34:12 +1000 (AEST)
-Received: from pps.filterd (ma1-aaemail-dr-lapp03.apple.com [127.0.0.1])
- by ma1-aaemail-dr-lapp03.apple.com (8.16.0.42/8.16.0.42) with SMTP id
- 08NHNQDT014382
- for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 10:36:05 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com;
- h=from : content-type :
- mime-version : subject : message-id : date : to; s=20180706;
- bh=yBPl6L4AvgBdhCqJKSPUBfIoWQ6dgZUKDZvkgpunMDY=;
- b=wlOIUP4zdsqSP5f98/SQkXHirRe+LbJXn1dPRjhLIulCSQY882xYZhbc9W/YS+ZEDW1U
- +xghPr13U5sUYe55liPGzsilz9fwq5cBhZSHwftyqZh7ye8OfkbPTN+mJeDE5o9VEntV
- Oe0IBH+yUkvSn5SAPYzIUxEEA1BvJ5FwXkoZMrbrNZ8S3CzrTPi5qEHD6duAXQVliOKy
- WXyq3AwAMkemVzCqTWLj/0Y3M3McJ96D+fzqxRg8GkohT2D5TSMkvl/TGNpul0KPEOC5
- flhO0om3UBnLmmjC2PL85kA2yc4U56ExzTcGfyCFRn9iovMGgsmiGL9dbqlQ4CJBt4Ia nA== 
-Received: from rn-mailsvcp-mta-lapp03.rno.apple.com
- (rn-mailsvcp-mta-lapp03.rno.apple.com [10.225.203.151])
- by ma1-aaemail-dr-lapp03.apple.com with ESMTP id 33ngyux6gk-2
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
- for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 10:36:05 -0700
-Received: from rn-mailsvcp-mmp-lapp02.rno.apple.com
- (rn-mailsvcp-mmp-lapp02.rno.apple.com [17.179.253.15])
- by rn-mailsvcp-mta-lapp03.rno.apple.com
- (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
- 2020)) with ESMTPS id <0QH4005KTGW4DRF0@rn-mailsvcp-mta-lapp03.rno.apple.com>
- for openbmc@lists.ozlabs.org; Wed, 23 Sep 2020 10:36:04 -0700 (PDT)
-Received: from process_milters-daemon.rn-mailsvcp-mmp-lapp02.rno.apple.com by
- rn-mailsvcp-mmp-lapp02.rno.apple.com
- (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
- 2020)) id <0QH400V00GE13900@rn-mailsvcp-mmp-lapp02.rno.apple.com> for
- openbmc@lists.ozlabs.org; Wed, 23 Sep 2020 10:36:04 -0700 (PDT)
-X-Va-A: 
-X-Va-T-CD: 7f756ecb4ebb78a0f8c33d43d0fca5a4
-X-Va-E-CD: 37e0ec64c89d9dd4a93c888602c865cc
-X-Va-R-CD: 9a5a7dcc7aa34fd5b98e10bb67547cea
-X-Va-CD: 0
-X-Va-ID: ddea5364-7f49-441c-8750-e840c057410c
-X-V-A: 
-X-V-T-CD: 7f756ecb4ebb78a0f8c33d43d0fca5a4
-X-V-E-CD: 37e0ec64c89d9dd4a93c888602c865cc
-X-V-R-CD: 9a5a7dcc7aa34fd5b98e10bb67547cea
-X-V-CD: 0
-X-V-ID: 114c58c3-4fa3-4b38-b7f4-26514cb87445
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-23_13:2020-09-23,
- 2020-09-23 signatures=0
-Received: from [17.234.36.26] by rn-mailsvcp-mmp-lapp02.rno.apple.com
- (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
- 2020)) with ESMTPSA id <0QH40048TGW32Z10@rn-mailsvcp-mmp-lapp02.rno.apple.com>
- for openbmc@lists.ozlabs.org; Wed, 23 Sep 2020 10:36:04 -0700 (PDT)
-From: Cheng Yang <cyang999@apple.com>
-Content-type: multipart/alternative;
- boundary="Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9"
-MIME-version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
-Subject: Difficulty booting on Raspberry Pi 4.
-Message-id: <CDC90A55-957D-47BB-9B42-4283BB6706AF@apple.com>
-Date: Wed, 23 Sep 2020 10:36:03 -0700
-To: openbmc@lists.ozlabs.org
-X-Mailer: Apple Mail (2.3608.120.23.2.1)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-23_13:2020-09-23,
- 2020-09-23 signatures=0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BxXwV1kJRzDqWG
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 08:31:52 +1000 (AEST)
+Received: by mail-yb1-xb33.google.com with SMTP id j76so905283ybg.3
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Sep 2020 15:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=CeNDDyMvBCHbXNEN9owXyGWp6zh6N/tY1OnQI7RN/fQ=;
+ b=08HdHg6ktfk7/9QasYivNH0ZuRltwSTt9ukNQO+zYk/wN3FtTQRTegR1wf/K3MDSe3
+ 5rsP1TexbRfsGD5ujlcNpVJ5WR74SQztkqqmXFxubABfjsu9f9O4kSCEoWJbwzrl5oBc
+ hcF+jzBZtxd4PMOfXnnKIFnkKWJo3eT/Qo/Ai9DQth7+Dke9UxJN+1o4nmk6DCHIxwhT
+ cpIX6YGS3L3V7RsXR7MI3USpycDM1/sLpwyZoVS9g1dymZPGsna3vnwAvqUTwyO3P461
+ eQkSBtnxgZE4NDo2fYiVRYqtC+DGvfBI/My6SZ6lmfaXIq6rCRA/qkkGZpGE3fbmgxJH
+ nfxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=CeNDDyMvBCHbXNEN9owXyGWp6zh6N/tY1OnQI7RN/fQ=;
+ b=pzfD0o/9DestFUC9hXQG9KEvKsef76VcTfOHjNdJZ+PGgPCFAZ1+5c1e3cta8EDNVJ
+ +HBAME1RAWrR6pE+1L/sULVwLMdrPZeKuTO0elcd8Z9XVgER62sjdsn555+Ha76atzfG
+ ra9J5RD+z9xpIaTmbURraO85WCiSFb/3nYGZyniJW/Fiu3ZYjU3P7/UdRwO48/gxLAN/
+ 0qSbLC6oitaCoFJMjELjWYuWANzWiarsvJkL9cwK9myJn//GXcaFnCwRMUKSr4zgahqQ
+ 88fyHC3atRbIr6kVTzCL+0ghOCEPdhlV/ZFGiFxldPt5vwX8Lt1ExFW8n/z3JWvZ12ze
+ tOrQ==
+X-Gm-Message-State: AOAM532Gj6orxBYg9667uvgyPjiEXnd69CYey24pzDXWWT8Zp8DOKZRZ
+ zMb8KTyZuM9E7K9D6hPoE6UcoQabmvFpluyNjhvc+Q==
+X-Google-Smtp-Source: ABdhPJyXVvzhyRRPl9un2fhIbWwK8p85SLz8HbfH73Q9LwZaqcotmYpGbVY57sgDTO65jmwqXBaYueVnq9dJ015Cb+I=
+X-Received: by 2002:a25:1581:: with SMTP id 123mr2926482ybv.480.1600900305840; 
+ Wed, 23 Sep 2020 15:31:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <CACWQX802HpRT20Zj2YFEnVE7XXBOJXx66-8B1E7TEZdCNwPbsQ@mail.gmail.com>
+ <9EC0D657-2D58-4544-BA9E-65D3C4148A81@fb.com>
+ <CACWQX80SivNLLE3gAUk+Ao=0eHf_ooezumXGmkkkVhVPFyyNSA@mail.gmail.com>
+ <C6292DFD-EAF1-4658-85A7-F81941B12D5A@fb.com>
+ <CACWQX83GJ9V9--5WGmVjvacYnw2=fr7URhqOcwkSq4C8GpFoiQ@mail.gmail.com>
+ <F46D657F-D4DA-49BD-B78D-CDD420768728@fb.com> <20200923191051.GR6152@heinlein>
+ <CACWQX81tyY1Wo6a8e4hnk3fvinfV-x3ogRK1q1W5cfx28tpfrw@mail.gmail.com>
+ <20200923202113.GT6152@heinlein>
+ <CACWQX8135vU++ztaVaaKjJyq2C=DdqDti623xGdCeT9fSJDQAA@mail.gmail.com>
+ <20200923214237.GV6152@heinlein>
+In-Reply-To: <20200923214237.GV6152@heinlein>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 23 Sep 2020 15:31:34 -0700
+Message-ID: <CACWQX82uw_PEWouQ0tu=vKL_Wh_G8t-yUiEQ64RJh=0O=vDSAA@mail.gmail.com>
+Subject: Re: Chassis reset
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,104 +83,171 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-Hi,  I=E2=80=99m openbmc noob here.
-
-I follow the instruction of =
-https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/README.md =
-<https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/README.md=
+On Wed, Sep 23, 2020 at 2:42 PM Patrick Williams <patrick@stwcx.xyz> wrote:
 >
+> On Wed, Sep 23, 2020 at 02:12:10PM -0700, Ed Tanous wrote:
+> > On Wed, Sep 23, 2020 at 1:21 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+> > >
+> > > On Wed, Sep 23, 2020 at 12:26:58PM -0700, Ed Tanous wrote:
+> > > > On Wed, Sep 23, 2020 at 12:10 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+> > > > >
+> > > > > On Wed, Sep 23, 2020 at 05:45:51AM +0000, Vijay Khemka wrote:
+> > > > > >
+> > > > > > Yes I have 2 chassis instance xyz/openbmc_project/chassis0 and xyz/openbmc_project/chassis_system0.
+> > > > > > Later one is used for AC reset.
+> > > > >
+> > > > > Can we do a query to see if 'chassis_system0' exists and use it first
+> > > > > and then 'chassis0' if not?
+> > > >
+> > > > I don't think it's that simple.  The way the dbus APIs are defined,
+> > > > one Redfish chassis needs to call the chassis0 path, the other needs
+> > > > to call the chassis_system0 path.  We'd need a way to key off which
+> > > > one is which.  I haven't seen any entity-manager configs get checked
+> > > > in for a "multinode chassis" entity type, so whatever interface we use
+> > > > to describe that will probably be what we need to key off to make that
+> > > > path distinction.
+> > >
+> > > In Redfish this would be the system path that maps to chassis_system0
+> > > and not the chassis path.  In Redfish today, chassis doesn't do a whole
+> > > lot except allow you to power cycle the host.  Most of the control is in
+> > > System.
+> >
+> > The way Vijay describes it, it's resetting the Chassis (ie, removing
+> > power from the board itself). The redfish System resource is meant to
+> > model the host, and shouldn't be resetting the BMC.  Maybe I
+> > misunderstood, and this is actually just a host reset?
+>
+> How do you determine this about Redfish's ComputerSystem?  It seems
+> really ambiguous.  The only words I can find are this:
+>
+> | The ComputerSystem schema represents a computer or system instance
+> | and the software-visible resources, or items within the data plane, such as
+> | memory, CPU, and other devices that it can access.  Details of those resources
+> | or subsystems are also linked through this resource.
 
-After 2.5 hours everything built, (I used either x86 ubuntu 18.04 or =
-20.04 same result)
-However after I copied to the image to micro SD, raspberry Pi 4 won=E2=80=99=
-t boot.
-No video output, no serial output at all.  (The board works fine with =
-ubuntu 18.04.)
+I'm not sure where I got that interpretation;  Maybe by looking at a
+lot of Redfish systems?  Maybe from having access to DMTF discussions?
+ I'm not really sure.  There's a lot of intent like this that doesn't
+get captured in the spec, or is captured in discussions.
 
-Any tip/cheat sheet to get openbmc running on Raspberry Pi 4?
+In this case, I think the key in the above is "software visible
+resources" and "items within the dataplane", of which the power rails
+generally are not within the dataplane.  In practice, it tends to
+expose a place where you need separation of privileges.  A cloud user
+with access to a System node might have permission to power
+cycle/reset their System resource, but shouldn't have access to AC
+cycle the whole platform/chassis/bmc, hence, the resources need
+separated.
+There's also the "PoweredBy" links that kinda hint (in a really round
+about way) about how the power relationships are supposed to be
+organized.
 
-The steps I did, anything I missed? Is the recipe correct?
-git clone the openbmc code.
-source poky/oe-init-build-env rpi-build  <=3D=3D  yes I did this.
-Add this layer to bblayers.conf and the dependencies above  <=3D=3D yes =
-I added /var/openbmc/openbmc/meta-raspberrypi (where I=E2=80=99m using =
-/var/openbmc as the source code dir.)
-Set MACHINE in local.conf to one of the supported boards  <=3D=3D I =
-added MACHINE ??=3D =E2=80=9Craspberrypi4=E2=80=9D (replacing the =
-original qemu line)
-bitbake core-image-base  <=3D=3D  went through, only 5 warnings, no =
-error, everything successful.
-Use bmaptool to copy the generated .wic.bz2 file to the SD card  <=3D=3D =
-with =E2=80=9Csudo ~/bmap-tools/bmaptool copy =
-core-image-base-raspberrypi4.wic.bz2 /dev/sdc1=E2=80=9D no error copied =
-successfully.
-Boot your RPI  <=3D=3D  nothing happen, no VGA, can=E2=80=99t be =
-ping=E2=80=99ed, no console serial output either (no uboot messages).
 
-Any tip/pointer will be greatly appreciated.
+>
+> You understood correctly though.  This is effectively the same as if you
+> had a PDU and toggled power on the whole device.  Or pulled it from an OCP
+> rack and plugged it back in.
+>
+> > > > > I think we need to do some enhancement to x86-power-control though also
+> > > > > to only create this 'chassis_system0' object if configured.  I believe
+> > > > > the current code change you did does it always, even if the
+> > > > > systemd-target is empty.
+> > > >
+> > > > I keep getting the feeling that xyz/openbmc_project/chassis_system0 is
+> > > > just overloading what /xyz/openbmc_project/chassis0 is intended to do,
+> > > > x86-power-control just had that already defined, so we went another
+> > > > direction.  I wonder if we just need to make the "Can I do a real AC
+> > > > reset" configurable, and have it change the behavior of
+> > > > /xyz/openbmc_project/chassis0 in that case.
+> > >
+> > > No, these are not overloading each other.  They are vastly different.
+> > >
+> > > host0 + chassis0 make up the 'BIOS/OS control' and '12V power on rails'
+> > > portions of host power control respectively.
+> >
+> > Right, I think what I was saying is that we need a mode where chassis0
+> > is freed from host control, and that would simplify the problem a bit,
+> > as the chassis0 api would just do the "right" thing for the platform.
+> > If the platform is capable of an AC reset, do that, if it's not, do a
+> > host reset as x86-power-control currently does.
+>
+> 'chassis0', in dbus, is the DC power control that goes along with booting
+> the host though.  It is not ever related to AC reset.
 
-Cheng=
+Gotcha.  On most of my platforms, there's no separation between 12V
+rail and host power state.  One cannot exist (for more than a couple
+seconds) without the other, so there's no need to independently
+control them.
 
---Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+>
+> >
+> > >  chassis_system0 controls the
+> > > '12v + 5V standby rails' part of the system.  In my opinion, it should
+> > > only be present when a system actually allows manipulation of the
+> > > standby power, but that isn't how it is currently implemented.
+> >
+> > Sure, that seems like a fine way to model it, but then we need to come
+> > up with an API to "steer" the Redfish API to the right resource so we
+> > don't break backward compatibility for the things that work today.
+> > That seems harder, and more error prone, but could certainly be
+> > defined.  Whether that shows up as chassis0, or we just redirect to
+> > host0 if chassis0 doesn't exist seems fine to me.
+> >
+> > If I can clarify what you're proposing.
+> >
+> > host0 controls the host.
+> > chassis0 also controls the host.
+> > chassis_system0 controls the chassis power unit.
+>
+> The only clarification I'd say here is that 'chassis_system0' controls
+> the Host + BMC.
 
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" class=3D"">Hi, =
-&nbsp;I=E2=80=99m openbmc noob here.<div class=3D""><br =
-class=3D""></div><div class=3D"">I follow the instruction of <a =
-href=3D"https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/RE=
-ADME.md" =
-class=3D"">https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi=
-/README.md</a></div><div class=3D""><br class=3D""></div><div =
-class=3D"">After 2.5 hours everything built, (I used either x86 ubuntu =
-18.04 or 20.04 same result)</div><div class=3D"">However after I copied =
-to the image to micro SD, raspberry Pi 4 won=E2=80=99t boot.</div><div =
-class=3D"">No video output, no serial output at all. &nbsp;(The board =
-works fine with ubuntu 18.04.)</div><div class=3D""><br =
-class=3D""></div><div class=3D"">Any tip/cheat sheet to get openbmc =
-running on Raspberry Pi 4?</div><div class=3D""><br class=3D""></div><div =
-class=3D"">The steps I did, anything I missed? Is the recipe =
-correct?</div><div class=3D""><ol class=3D"" style=3D"caret-color: =
-rgb(0, 0, 0); color: rgb(0, 0, 0);"><li class=3D""><span class=3D"">git =
-clone the openbmc code.</span></li><li class=3D""><span class=3D"">source =
-poky/oe-init-build-env rpi-build &nbsp;&lt;=3D=3D &nbsp;yes I did =
-this.</span></li><li class=3D""><font color=3D"#000000" class=3D"">Add =
-this layer to bblayers.conf and the dependencies above &nbsp;&lt;=3D=3D =
-yes I added&nbsp;/var/openbmc/openbmc/meta-raspberrypi (where I=E2=80=99m =
-using /var/openbmc as the source code dir.)</font></li><li =
-class=3D""><font color=3D"#000000" class=3D"">Set MACHINE in local.conf =
-to one of the supported boards &nbsp;&lt;=3D=3D I added MACHINE =
-??=3D&nbsp;=E2=80=9Craspberrypi4=E2=80=9D&nbsp;(replacing the original =
-qemu line)</font></li><li class=3D""><span class=3D"">bitbake =
-core-image-base &nbsp;&lt;=3D=3D &nbsp;went through, only 5 warnings, no =
-error, everything successful.</span></li><li class=3D""><font =
-color=3D"#000000" class=3D"">Use bmaptool to copy the generated .wic.bz2 =
-file to the SD card &nbsp;&lt;=3D=3D with&nbsp;=E2=80=9Csudo =
-~/bmap-tools/bmaptool copy core-image-base-raspberrypi4.wic.bz2 =
-/dev/sdc1=E2=80=9D no error copied successfully.</font></li><li =
-class=3D""><font color=3D"#000000" class=3D"">Boot your RPI &nbsp;&lt;=3D=3D=
- &nbsp;nothing happen, no VGA, can=E2=80=99t be ping=E2=80=99ed, no =
-console serial output either (no uboot messages).</font></li></ol><div =
-class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
-rgb(0, 0, 0);" class=3D""><br class=3D""></span></font></div><div =
-class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
-rgb(0, 0, 0);" class=3D"">Any tip/pointer will be greatly =
-appreciated.</span></font></div><div class=3D""><font color=3D"#000000" =
-class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" class=3D""><br =
-class=3D""></span></font></div><div class=3D""><font color=3D"#000000" =
-class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
-class=3D"">Cheng</span></font></div></div></body></html>=
+If it's really host+bmc, and not a complete reset of the board then
+redfish doesn't really have a combined resource that can be used here.
+BMC (which maps to the Manager resource) and Host (which maps to the
+System resource) are treated as separate things.  If you want to reset
+both, I suspect you need to issue 2 redfish actions.
 
---Apple-Mail=_2804A531-9D19-4F8E-AB33-FDC9FF52DAE9--
+>
+> I'm not understanding what you mean by "come up with an API to steer the
+> Redfish..."  I think everything is specified here at a dbus level.  The
+> issue is figuring out the appropriate Redfish model of
+> Chassis/ComputerSystem objects (along with the included Resource.Reset
+> types).  To a casual reader, who hasn't been involved much in Redfish
+> implementation, the current mapping of these ResetTypes seems fairly
+> arbitrary.
+
+Some might be arbitrary, but most are explicit and chosen on purpose,
+especially in the case of the System schema.  The Chassis schema is a
+little more lax, as it's more of a backward compatibility thing today.
+I think you (Vijay) are the first person trying to model it
+"properly".
+
+What I mean is that the current Redfish definition of Chassis points
+the PowerCycle action to chassis0.  That PowerCycle action now needs
+to point at multiple things, chassis0 if we don't support AC reset, or
+chassis_system0 if we do.  That is the "steering" I was referring to.
+
+>
+> With CIM there use to be these Profile documents that showed "the right
+> way" to fit all these pieces together.  Does that not exist with
+> Redfish?
+
+>:-|   Unfortunately, no, and this gives me no end of heartache.  DMTF has some slightly better resources and discussions like this behind member logins.
+
+>  How does any external application consume Redfish in a
+> consistent way?
+
+Very carefully, and ideally with a Redfish profile that defines what
+resources your application requires, and tests that verify that your
+profile is fully supported, which is a whole other level of
+indirection on top of the Redfish spec.
+
+>
+> --
+> Patrick Williams
