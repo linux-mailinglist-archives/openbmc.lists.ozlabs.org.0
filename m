@@ -1,71 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19C00277677
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 18:19:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6744127770E
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 18:44:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4By0bk4BjFzDqjb
-	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 02:18:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4By18g4yCCzDqgq
+	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 02:44:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=r/ftU+Fa; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=james.feist@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4By0Zf12hlzDqRs
- for <openbmc@lists.ozlabs.org>; Fri, 25 Sep 2020 02:18:02 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 7BE50579F2
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 16:17:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1600964277; x=1602778678; bh=dxCe+pIUfLoxYSNR7syRE3hX4
- 3jp+YdPoGNvKPA0gW8=; b=r/ftU+FaJj7Q1TRovTjWI7jV4butWTbkW4J65+cDx
- 3KdJWZgEWqZFRhvsKg427QHG2u76DjHuimWuTGcbue2578wXS4MeJYx7b/r++IMs
- r3gzDwRA3jwcFCoo0+wjS7kOcnlHbZGWPYqNesaESncTq/YW34N/mK3NvO53KeBz
- S0=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PJzoDRx7fz2w for <openbmc@lists.ozlabs.org>;
- Thu, 24 Sep 2020 19:17:57 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 18CAD57953
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 19:17:57 +0300 (MSK)
-Received: from [10.199.3.26] (10.199.3.26) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 24
- Sep 2020 19:17:56 +0300
-Message-ID: <0b1e848f0f47c4cd8f1faeabfa60bfd285e23d60.camel@yadro.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4By12g5wfLzDqfj
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Sep 2020 02:38:48 +1000 (AEST)
+IronPort-SDR: wGjGwfL9yJhFdAUK4ca/JxneTDlA2XxAbS/GXAYUNH6Obh/yONHaEk676Qz6XaEwPQO2S25kxv
+ 7khJ24Gacfjw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9754"; a="158616872"
+X-IronPort-AV: E=Sophos;i="5.77,298,1596524400"; d="scan'208";a="158616872"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Sep 2020 09:38:43 -0700
+IronPort-SDR: LUB1szhS7DgiagWqrXNYDUmlVpd+jby6DEywq5gDhsQc07vTqXeTXlwBMsk/+fw2TIg4Iv6RWf
+ HtHZGbovg3Ew==
+X-IronPort-AV: E=Sophos;i="5.77,298,1596524400"; d="scan'208";a="305887219"
+Received: from jfeist-mobl2.amr.corp.intel.com (HELO [10.209.117.65])
+ ([10.209.117.65])
+ by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Sep 2020 09:38:43 -0700
 Subject: Re: entity manager configurations and dbus interfaces
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-Date: Thu, 24 Sep 2020 19:17:55 +0300
-In-Reply-To: <CACWQX83msYLyZxcNfoMKWd5LmoQ+OZpK302=irPedea46ziZrw@mail.gmail.com>
+To: Ed Tanous <ed@tanous.net>, Brad Bishop <bradleyb@fuzziesquirrel.com>
 References: <20200924143036.inmugtvxkj3f6zny@thinkpad.fuzziesquirrel.com>
- <d4761f08a2beca775827171d4d1934cd76641cb5.camel@yadro.com>
- <CACWQX83msYLyZxcNfoMKWd5LmoQ+OZpK302=irPedea46ziZrw@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+ <CACWQX82BLnW9joot+VmLZGydCBm2riQ88Ncq9twqyf0UJdrtNw@mail.gmail.com>
+From: James Feist <james.feist@linux.intel.com>
+Message-ID: <cc51f754-93d2-c2be-ba29-17ecb50ecac0@linux.intel.com>
+Date: Thu, 24 Sep 2020 09:38:42 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.0
 MIME-Version: 1.0
+In-Reply-To: <CACWQX82BLnW9joot+VmLZGydCBm2riQ88Ncq9twqyf0UJdrtNw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.3.26]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,76 +61,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Well, I didn't meant EM is bad, it was "I don't understand well how all
-this supposed to work".
-Now I have number of inputs from you in different topics but I still
-need to bring things together to get the picture.
-
-On Thu, 2020-09-24 at 08:54 -0700, Ed Tanous wrote:
-> On Thu, Sep 24, 2020 at 8:43 AM Andrei Kartashev <
-> a.kartashev@yadro.com> wrote:
-> > Hi Brad,
-> > 
-> > Thank for bring up this question.
-> > Same as you we have slightly bad view on EM architecture since
-> > before
-> > we had only Power-based platforms and now we are working on our
-> > first
-> > x86-based one.
+On 9/24/2020 8:50 AM, Ed Tanous wrote:
+> On Thu, Sep 24, 2020 at 7:30 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+>>
+>> Hi Ed
+>>
+>> Will quote a comment from this EM review:
+>>
+>> https://gerrit.openbmc-project.xyz/36702
+>>
+>>> entity-manager was designed with the tenant that it config files have
+>>> no knowledge of dbus.
+>>
+>> FWIW I had no idea this was the case.
+>>
+>>> We've broken that a little with the inventory interfaces on the entity
+>>> as a short term patch to gain some compatibility, but its easy enough
+>>> to roll back in the future.
+>>
+>> Interesting - so there is a vision here, but I have no idea what it is.
+>> Can you elaborate on how you envision inventory working if EM is not
+>> implementing the inventory dbus interfaces?
 > 
-> Can you go into more specifics about what you don't like about it?  I
-> know a lot of the complaints I've heard revolves around
-> documentation.
-> I'm trying to hammer away at that as I get time.  Is there any other
-> low hanging fruit that we can fix that's entity-manager specific?
+> In the simplest terms, one goal of entity-manager is for an engineer
+> unfamiliar with OpenBMC to be able to add support for a new component,
+> be it a baseboard, drive, or add in card, in less than a day.  Dbus
+> APIs take more than a day to learn, so we need to find a way to
+> provide a syntax that is self describing (and ideally well documented,
+> but that's another issue that I'm hoping to tackle soon) as well as
+> relatively isolated from the complexities of the OpenBMC core.
 > 
-> > Following up the discussion in the review and also mailing
-> > discussion
-> > we had early, I now preparing some Implementation Proposal document
-> > for
-> > EM-based inventory. I gonna to submit it to docs repo for
-> > discussing
-> > and finding our common understanding of how it supposed to be.
-> > 
-> > 
-> > On Thu, 2020-09-24 at 10:30 -0400, Brad Bishop wrote:
-> > > Hi Ed
-> > > 
-> > > Will quote a comment from this EM review:
-> > > 
-> > > https://gerrit.openbmc-project.xyz/36702
-> > > 
-> > > > entity-manager was designed with the tenant that it config
-> > > > files
-> > > > have
-> > > > no knowledge of dbus.
-> > > 
-> > > FWIW I had no idea this was the case.
-> > > 
-> > > > We've broken that a little with the inventory interfaces on the
-> > > > entity
-> > > > as a short term patch to gain some compatibility, but its easy
-> > > > enough
-> > > > to roll back in the future.
-> > > 
-> > > Interesting - so there is a vision here, but I have no idea what
-> > > it
-> > > is.
-> > > Can you elaborate on how you envision inventory working if EM is
-> > > not
-> > > implementing the inventory dbus interfaces?
-> > > 
-> > > thx - brad
-> > --
-> > Best regards,
-> > Andrei Kartashev
-> > 
-> > 
--- 
-Best regards,
-Andrei Kartashev
+> Another advantage of this is portability, if any wide sweeping
+> architecture changes happen (ex, we rewrite the core in rust or we
+> build a DBusless OpenBMC) we have a minimum definition of the things
+> that are unique about the pieces of hardware we support, and don't
+> have to re-engineer every piece of hardware that's in the list.
+> 
 
+While I agree with this, to fit in the current architecture, I'm not 
+sure its entirely possible. We already expose some d-bus interfaces from 
+the configuration files: 
+https://github.com/openbmc/entity-manager/blob/0a2ab3c911d35c4c8421c47a7ce83d9341237785/configurations/WFT%20Baseboard.json#L1601. 
+This particular change does add a new prescience to be able to add them 
+anywhere, which I don't think should be taken lightly. However I'm not 
+sure if there's any better way to support lower level assets interfaces 
+such as a Fan FRU, unless you think it'd be better to add that to the 
+FanSensor? I'm not sure I like that idea any better.
 
+> 
+>>
+>> thx - brad
