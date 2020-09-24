@@ -2,67 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 896B52775A9
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 17:44:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 79ECC2775DA
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 17:51:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4BxzrH40zRzDqc6
-	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 01:44:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4By00L6mN2zDqYq
+	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 01:51:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=WSrw2VGN; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b35; helo=mail-yb1-xb35.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=GPzFNpye; dkim-atps=neutral
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com
+ [IPv6:2607:f8b0:4864:20::b35])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bxzq34y6bzDqM5
- for <openbmc@lists.ozlabs.org>; Fri, 25 Sep 2020 01:43:43 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 8F47B579F2;
- Thu, 24 Sep 2020 15:43:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1600962217; x=1602776618; bh=rkLaGMxbYsTDLvExDdijUp2gc
- zhJlTaKCKWQ6sIv9hQ=; b=WSrw2VGNrRQQtfuqVxA8HNycR1zM7eshZ6htKfz00
- NWsiIWjckRseoVKmmNfHsbv+1+1p/5HuZp9pRkg3Fb8xSXz2voG+KZ58JsIR6dSS
- wjIDEmFVWE0MMfOAlaV8w85wxy6rVlevka/YdRxw3TGPlie7bWn27kEIligXQloz
- V0=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id RIbGKnomICkC; Thu, 24 Sep 2020 18:43:37 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 420675791A;
- Thu, 24 Sep 2020 18:43:37 +0300 (MSK)
-Received: from [10.199.3.26] (10.199.3.26) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 24
- Sep 2020 18:43:36 +0300
-Message-ID: <d4761f08a2beca775827171d4d1934cd76641cb5.camel@yadro.com>
-Subject: Re: entity manager configurations and dbus interfaces
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>, <ed@tanous.net>
-Date: Thu, 24 Sep 2020 18:43:35 +0300
-In-Reply-To: <20200924143036.inmugtvxkj3f6zny@thinkpad.fuzziesquirrel.com>
-References: <20200924143036.inmugtvxkj3f6zny@thinkpad.fuzziesquirrel.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bxzys3dsYzDqNv
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Sep 2020 01:50:25 +1000 (AEST)
+Received: by mail-yb1-xb35.google.com with SMTP id 67so2621307ybt.6
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 08:50:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=JkmlAq5vXBqOB9UBj5P3OcSEkPHEdnb4hm4/jR04YaY=;
+ b=GPzFNpyeY99WV6ax3MyZru2QUJiZ9fzCs6436nHhgsUdcttP5IpE0oqmQA/+tBn7qN
+ 7LnqTDIC5774Lej98KkG9zSOM0gweneeMV0hcuEGsS1jaSZ4amumYdOjvp6zzaQvngeK
+ OiYtradz4MRr/tvf5YEeWawqkWQLUBIniP6lWat3nc9Z+8tCRPgNNM423QXTUNpY1oh3
+ b2OFbAoQezYRKb6TqjBvRpqM8IWtRaUrJnHlbi6Aq6EYkDSi83ICVFQuwvoyaESRqrIv
+ sghZzQBSBOvk3SFFkLrcMNDqzQRD+PH18l/OKrMtQaOfJTtUeFqGpOu25TtQ/vJ+w/IA
+ zvxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=JkmlAq5vXBqOB9UBj5P3OcSEkPHEdnb4hm4/jR04YaY=;
+ b=dN8S6lJ3cDzL/jbpgX9omWSI671qqcPFloQ3fyCIf5s9WACrCQO3x6fZdEqAYYP8ar
+ 32lbV0Uw+neyQkiAGxgSjBfsh92BbnuEZRTj9drJAaDL2CTggEgSmtOm3aCDpAH26AAx
+ us2J5C6m8iPG0VILMYSfzu0p0MTPWhrwOK3XAzhPa22Pt7VytBtvhvH44oVuKahPckWS
+ jgTUKcklUVMlGSlK0ayMmNZow1qIvKMxvdb09/nz8LSGtmD+q3Ma5YDgFWbscqn78bGp
+ tL5GTAhSyiF3qMePJzNUkxpYvKOq2+FocJfmE+XcUz8D7oEWuEV4PcJh+gbiHXOxgR9U
+ 1L4Q==
+X-Gm-Message-State: AOAM5322bH1J3JFWX/HwDnS5UGNWKHwPNKiozQxvXVweMoknc0NQl33w
+ nhO7lXeIVVBUqoWyoZRJzNbameN3IG86sk5uSwL+pydQ02Vw6n0D
+X-Google-Smtp-Source: ABdhPJzg5TTqczy3hWh+kh7w3G7Z02grxw/Aq7ajo664fEDwakBQPLopwbBoN7II9UHjjirYG+L4lFf7GitTQk8a3Lk=
+X-Received: by 2002:a25:1581:: with SMTP id 123mr258811ybv.480.1600962621406; 
+ Thu, 24 Sep 2020 08:50:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.3.26]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+References: <20200924143036.inmugtvxkj3f6zny@thinkpad.fuzziesquirrel.com>
+In-Reply-To: <20200924143036.inmugtvxkj3f6zny@thinkpad.fuzziesquirrel.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 24 Sep 2020 08:50:10 -0700
+Message-ID: <CACWQX82BLnW9joot+VmLZGydCBm2riQ88Ncq9twqyf0UJdrtNw@mail.gmail.com>
+Subject: Re: entity manager configurations and dbus interfaces
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,50 +74,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Brad,
-
-Thank for bring up this question.
-Same as you we have slightly bad view on EM architecture since before
-we had only Power-based platforms and now we are working on our first
-x86-based one.
-
-Following up the discussion in the review and also mailing discussion
-we had early, I now preparing some Implementation Proposal document for
-EM-based inventory. I gonna to submit it to docs repo for discussing
-and finding our common understanding of how it supposed to be.
-
-
-On Thu, 2020-09-24 at 10:30 -0400, Brad Bishop wrote:
+On Thu, Sep 24, 2020 at 7:30 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+>
 > Hi Ed
-> 
+>
 > Will quote a comment from this EM review:
-> 
+>
 > https://gerrit.openbmc-project.xyz/36702
-> 
-> > entity-manager was designed with the tenant that it config files
-> > have 
+>
+> > entity-manager was designed with the tenant that it config files have
 > > no knowledge of dbus.
-> 
+>
 > FWIW I had no idea this was the case.
-> 
-> > We've broken that a little with the inventory interfaces on the
-> > entity 
-> > as a short term patch to gain some compatibility, but its easy
-> > enough 
+>
+> > We've broken that a little with the inventory interfaces on the entity
+> > as a short term patch to gain some compatibility, but its easy enough
 > > to roll back in the future.
-> 
-> Interesting - so there is a vision here, but I have no idea what it
-> is.  
-> Can you elaborate on how you envision inventory working if EM is not 
+>
+> Interesting - so there is a vision here, but I have no idea what it is.
+> Can you elaborate on how you envision inventory working if EM is not
 > implementing the inventory dbus interfaces?
-> 
+
+In the simplest terms, one goal of entity-manager is for an engineer
+unfamiliar with OpenBMC to be able to add support for a new component,
+be it a baseboard, drive, or add in card, in less than a day.  Dbus
+APIs take more than a day to learn, so we need to find a way to
+provide a syntax that is self describing (and ideally well documented,
+but that's another issue that I'm hoping to tackle soon) as well as
+relatively isolated from the complexities of the OpenBMC core.
+
+Another advantage of this is portability, if any wide sweeping
+architecture changes happen (ex, we rewrite the core in rust or we
+build a DBusless OpenBMC) we have a minimum definition of the things
+that are unique about the pieces of hardware we support, and don't
+have to re-engineer every piece of hardware that's in the list.
+
+
+>
 > thx - brad
--- 
-Best regards,
-Andrei Kartashev
-
-
