@@ -2,50 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A65AA277833
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 20:03:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC16B277FCA
+	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 07:11:13 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4By2wV0Xd5zDqk9
-	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 04:03:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ByKkl2zZXzDqQm
+	for <lists+openbmc@lfdr.de>; Fri, 25 Sep 2020 15:11:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=209.87.249.19; helo=tuna.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
+ smtp.mailfrom=baylibre.com (client-ip=2a00:1450:4864:20::542;
+ helo=mail-ed1-x542.google.com; envelope-from=bgolaszewski@baylibre.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=sandelman.ca
-Received: from tuna.sandelman.ca (tuna.sandelman.ca [209.87.249.19])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=baylibre-com.20150623.gappssmtp.com
+ header.i=@baylibre-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=bZq4o3WQ; dkim-atps=neutral
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com
+ [IPv6:2a00:1450:4864:20::542])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4By2vb4KCkzDqV8
- for <openbmc@lists.ozlabs.org>; Fri, 25 Sep 2020 04:02:45 +1000 (AEST)
-Received: from localhost (localhost [127.0.0.1])
- by tuna.sandelman.ca (Postfix) with ESMTP id C03C3389A6;
- Thu, 24 Sep 2020 13:41:13 -0400 (EDT)
-Received: from tuna.sandelman.ca ([127.0.0.1])
- by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
- with LMTP id xhXsoELyGKf6; Thu, 24 Sep 2020 13:41:06 -0400 (EDT)
-Received: from sandelman.ca (obiwan.sandelman.ca [IPv6:2607:f0b0:f:2::247])
- by tuna.sandelman.ca (Postfix) with ESMTP id 13335389A4;
- Thu, 24 Sep 2020 13:41:06 -0400 (EDT)
-Received: from localhost (localhost [IPv6:::1])
- by sandelman.ca (Postfix) with ESMTP id E04124DB;
- Thu, 24 Sep 2020 14:02:29 -0400 (EDT)
-From: Michael Richardson <mcr@sandelman.ca>
-To: Joel Stanley <joel@jms.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>
-Subject: Re: u-boot branches
-In-Reply-To: <CACPK8XeB3r+-6MaAO30xsj4iWpS55d7K8weUDVDAH1rw0FjOBQ@mail.gmail.com>
-References: <CACPK8XeB3r+-6MaAO30xsj4iWpS55d7K8weUDVDAH1rw0FjOBQ@mail.gmail.com>
-X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 26.1
-X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;
- <'$9xN5Ub#
- z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bxx272HJxzDqYt
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 23:38:05 +1000 (AEST)
+Received: by mail-ed1-x542.google.com with SMTP id n22so3408181edt.4
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 06:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=baylibre-com.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=xik+LU5D4/fnn9O5Zg87zvohwDV0OOxnMU6Rsd+HY5c=;
+ b=bZq4o3WQtLEJr2hF7mu9T4voHEBiRZ/TRwujICZ9S7HZhEwolwqG/vQ7kdo5O4CyP4
+ oLSU+r7N7Xllvo9LRKTKkXdRSl06zc1J1mF+kRJI9EUJdNLfEb0Zd5227/HqtRZuMK1b
+ YdKMV32umoR833Fj8DoHg5lE7GpkmpqmyqQD8penWeGszWRjo6JbNdwNTXj9Y/f3NRDQ
+ E7DpO2ULfgrybDDJtmMI/eTqX6pRyQEQSHOL4FZULVTe1MLBStA1OGaqljfBHPhAFcZ0
+ WLSe32GdalfrwK8CwaBPP2Vp9KvNvg2Kq/eXn9z1QeJMTTihSei/Ae+OXG/zu8nJ+EFl
+ PSMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=xik+LU5D4/fnn9O5Zg87zvohwDV0OOxnMU6Rsd+HY5c=;
+ b=hkh0nIGeByBYVtgdI6Shu9xVf5kTJtlDoJ7BOSQP2go9PTSp48feFSq4ssWqcRW9uG
+ w8RrXwP7cRkkH3gS4IL9+jrnjUuFLzzvxiVuyibl7wk00jfPVTa2r8x+CVMsYOrFK4tz
+ /hDZlD8gQ/ogjHOGKDCiKd3TDvp4QDSwUVmbjfZzbwQKmWdHxT/R8x62xcBqz2PAo913
+ dMxh4mOtbdAytPX7RZGmwx6bZf9UvT6CBITWxIbXPhTKTaVqfS2SZ+3/x2CoyZekJKyM
+ /aLqXe4ZRDQz0U/gEIK2jiH8NPvh+UO/ZS6+JUjVTaoMd5eiTRmEFxboPRojVuf9JFUS
+ YpfQ==
+X-Gm-Message-State: AOAM533ikyQ3LIQ53wAgjLdwWMjsrlFyyW9IBA/Kj9sBkwKQfRocnzuG
+ br9CoEZtUF8c29Ha6d3tV1sRUnsbeGmiBdmbFRo9nQ==
+X-Google-Smtp-Source: ABdhPJwUCSvUnwIjhMwXdH5/5JtzPZNKnNR+yIgd72G5d87Unxa+rzC+LUlKdHxuhlTagtPeDVImVhVFGvN3yixC0jU=
+X-Received: by 2002:a50:e79c:: with SMTP id b28mr1109705edn.371.1600954680607; 
+ Thu, 24 Sep 2020 06:38:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="==-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 24 Sep 2020 14:02:29 -0400
-Message-ID: <22496.1600970549@localhost>
+References: <20200916204216.9423-1-rentao.bupt@gmail.com>
+In-Reply-To: <20200916204216.9423-1-rentao.bupt@gmail.com>
+From: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Date: Thu, 24 Sep 2020 15:37:49 +0200
+Message-ID: <CAMpxmJWR7VqU9urj=-KypKLm3aFooMd9iyusYtr5dNY2oOgXQQ@mail.gmail.com>
+Subject: Re: [PATCH] gpio: aspeed: fix ast2600 bank properties
+To: rentao.bupt@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+X-Mailman-Approved-At: Fri, 25 Sep 2020 15:05:20 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,54 +75,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>, taoren@fb.com,
+ Linus Walleij <linus.walleij@linaro.org>, LKML <linux-kernel@vger.kernel.org>,
+ linux-gpio <linux-gpio@vger.kernel.org>, openbmc@lists.ozlabs.org,
+ arm-soc <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---==-=-=
-Content-Type: multipart/mixed; boundary="=-=-="
+On Wed, Sep 16, 2020 at 10:42 PM <rentao.bupt@gmail.com> wrote:
+>
+> From: Tao Ren <rentao.bupt@gmail.com>
+>
+> GPIO_U is mapped to the least significant byte of input/output mask, and
+> the byte in "output" mask should be 0 because GPIO_U is input only. All
+> the other bits need to be 1 because GPIO_V/W/X support both input and
+> output modes.
+>
+> Similarly, GPIO_Y/Z are mapped to the 2 least significant bytes, and the
+> according bits need to be 1 because GPIO_Y/Z support both input and
+> output modes.
+>
+> Fixes: ab4a85534c3e ("gpio: aspeed: Add in ast2600 details to Aspeed driver")
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> ---
+>  drivers/gpio/gpio-aspeed.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpio/gpio-aspeed.c b/drivers/gpio/gpio-aspeed.c
+> index 879db23d8454..d07bf2c3f136 100644
+> --- a/drivers/gpio/gpio-aspeed.c
+> +++ b/drivers/gpio/gpio-aspeed.c
+> @@ -1114,8 +1114,8 @@ static const struct aspeed_gpio_config ast2500_config =
+>
+>  static const struct aspeed_bank_props ast2600_bank_props[] = {
+>         /*     input      output   */
+> -       {5, 0xffffffff,  0x0000ffff}, /* U/V/W/X */
+> -       {6, 0xffff0000,  0x0fff0000}, /* Y/Z */
+> +       {5, 0xffffffff,  0xffffff00}, /* U/V/W/X */
+> +       {6, 0x0000ffff,  0x0000ffff}, /* Y/Z */
+>         { },
+>  };
+>
+> --
+> 2.17.1
+>
 
---=-=-=
-Content-Type: text/plain
+Queued for fixes, thanks!
 
-
-Joel Stanley <joel@jms.id.au> wrote:
-    > I've chosen to rebase the openbmc changes on top of their branch. The
-    > old branch is still accessible at archive/v2019.04-aspeed-openbmc-1.
-    > The bitbake recipe will continue to work as it uses the nobranch=1
-    > flag, and specifies the version based on the SHA.
-
-    > The new branch contains their aspeed-master-v2019.04 tree as of today,
-    > with the OpenBMC changes applied on top.
-
-Is this any closer to upstream u-boot?
-Or is it diverging further?
-
-
---=-=-=
-Content-Type: text/plain
-Content-Disposition: inline
-Content-Description: Signature
-
---
-]               Never tell me the odds!                 | ipv6 mesh networks [
-]   Michael Richardson, Sandelman Software Works        |    IoT architect   [
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
-
-
---=-=-=--
-
---==-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAl9s3zUACgkQgItw+93Q
-3WUP7QgAnKB3GejicJqtcOeISHszDGbLPtmGTapQHT7sifgsjHvg7HeNsjnoI3o9
-nnoqA4aXzXr9M7W75Y4NYesCKSLtYv4xBTeeBJzyWD70IXsvHVpbK5m6Z4n7w3Ut
-N2rrhGF8+IrWS3YRVI0r8fba0vVVpEBlOGauDu802sywIO4BCvxWdgsoSaqU988w
-XcfuwRcO5oly4bnNqMcnSAeH7CKUSWU+9Zom1IeGZwoYV+XgOCtGkCspZdzVz8ze
-WyXOWzOuEF8r9eLFrhR8kgOqdthbpQkNrLHmYDTZxwI1oa+hrY95E/e0k1/roOe/
-hwLantqKGAGqlPP8HOrbznUN7IrRTg==
-=H500
------END PGP SIGNATURE-----
---==-=-=--
+Bartosz
