@@ -1,89 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9E252764E8
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 02:11:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69F96276530
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 02:35:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Bxb7q4s83zDqZG
-	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 10:11:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4BxbgX4xf0zDqBV
+	for <lists+openbmc@lfdr.de>; Thu, 24 Sep 2020 10:35:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=apple.com (client-ip=17.171.2.68;
+ helo=ma1-aaemail-dr-lapp02.apple.com; envelope-from=cyang999@apple.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=apple.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=lKJqRNsu; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=eJHLmXoG; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+ unprotected) header.d=apple.com header.i=@apple.com header.a=rsa-sha256
+ header.s=20180706 header.b=iD7JIFgr; dkim-atps=neutral
+Received: from ma1-aaemail-dr-lapp02.apple.com
+ (ma1-aaemail-dr-lapp02.apple.com [17.171.2.68])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Bxb6t53j6zDqKr
- for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 10:11:00 +1000 (AEST)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
- by mailout.west.internal (Postfix) with ESMTP id 7291DB05;
- Wed, 23 Sep 2020 20:10:57 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Wed, 23 Sep 2020 20:10:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=5RCXIh1mYur+tCF/uTt1VipfDb7
- VokZfk23i2Phtw2U=; b=lKJqRNsuj/v7p/VDC8zG6eaKAjd3NX//JZ3oHDS7uhZ
- K2JJrkQCRq0VdS+qAhCGb3zgy5aMb3af+03o5cXRYBRFyOjyGys/Y/rzdRoVA/Ho
- I/Bdy3eCxpLGkO6qLvzKDLwk+k3OYrJOF4U7r19I5eJuwALAIZ72e6mm/4P2Klrk
- jiDKdhJ42QGth7TZ8gnen3IeH4QHnOpCDfw457CEepwSEr4cqPmykMPLddheAooa
- ZEihnz3qMObIrUN1r+m8hEAjxETz62Dw2D09SOBhbKCeHcSDxr0hPSe0DMwUOece
- YvREYymt/3cPLHIL31bx1kkkSv1u24J+bZLpd1OVEWQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=5RCXIh
- 1mYur+tCF/uTt1VipfDb7VokZfk23i2Phtw2U=; b=eJHLmXoGF8l38frrjCtMYY
- 5ePunrEFhSeOQq7QGEg17MUKym09RAZf1m+0Xw9KfMz0b48XxlMr0nTPwbIg0xg8
- tRJaUiH2tfrIpKnT4C8lT3cROqU+lqjvNVC4ZUWxuj+WIJmku/78SlqTAVLxDOvR
- OJ4UBdY0Aass9t7dxWZ59h6qraSOkeZVzM6tn/fLRkNQ33ctrT48two08TMYY5sR
- oJ4vmXQuxu8xLbBajGZQrEX4U8EO8GOwxreXzNPv6O3cKzqzV9bVcv1UE568z8ec
- OmLBk/wzoqPF8zTDk9EwwSQ3OwShcgCVqFXICtzD0IQQSWYH79LkJqM7nrMTCXRw
- ==
-X-ME-Sender: <xms:EORrX1gk5SuOUKNXpHJH-YQmKVZ9EEIkFZdoLFp1Pt6a-w9X7igUHA>
- <xme:EORrX6ClTajvdFPFNae9dc18MYlUmHzXPhtH0ZW9Zp8AJD6hsChFTEhtoyWC9lclC
- Sl9BtNQrI_gEuNomYM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudejgddvlecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdej
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekvdehudevkefhuedvteethfeflefh
- vdehiefgudegvdfggfetffevkeetudegudenucffohhmrghinhepghhithhhuhgsrdgtoh
- hmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptden
- ucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:EORrX1GdvdL1_72zOD-wvxKyx_Sg0-nkL4JeTRjU4fzF92BizAKhuw>
- <xmx:EORrX6Qtop-lKZ7GRamxAKa1RlzUK4rTAF8Ui43RcF3-c63-SRNhzg>
- <xmx:EORrXyyLgjQUaKg1yGh0CYZYAmgw4L2Rey-__XwYa4yq71Vavnl9Lg>
- <xmx:EeRrX3vsxKs-19-APRNGuk1sBG2Bt3Iev1pEUCRmM-X0LygOZF4K8w>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 108E13064680;
- Wed, 23 Sep 2020 20:10:56 -0400 (EDT)
-Date: Wed, 23 Sep 2020 19:10:55 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Cheng Yang <cyang999@apple.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Bxbfc5f9HzDqB3
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Sep 2020 10:35:04 +1000 (AEST)
+Received: from pps.filterd (ma1-aaemail-dr-lapp02.apple.com [127.0.0.1])
+ by ma1-aaemail-dr-lapp02.apple.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08O0XWKJ006813; Wed, 23 Sep 2020 17:35:00 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com;
+ h=from : message-id :
+ content-type : mime-version : subject : date : in-reply-to : cc : to :
+ references; s=20180706; bh=ddapmJehNJzjq/UbKEwlMT2n9AXTmZRr15PdKEfAbd0=;
+ b=iD7JIFgrhpdaG5jKb6vxpX6pAZ2GDPZLGLinDO+Y8Akc9nK8kuQH5LiOL7VliNSx/6TJ
+ w5+vTlsz0Xp/RWrqxY0Uch2k1faFp1DU955i56gJXiprQ98JQ8DvEYFSgMZc2y0lnMyh
+ HZYc7vRyFTNMRmK3Fx4Vh7/Be0iVNAymb2sSsUrAHBHQtWWSkHFA4z9jxQ+pTfUBMQ+x
+ pglxJ3GzjgJ2VMrmjtJdcD882tBB+SlyRHFXEYEJ6HdgAyRMx/UhgZ09EDugnxj0faMa
+ Fi028wmWVLYN0z/4CadeT7lJZO/F9JoRlOmZ4g9K6YUP4CXbe8CUKqntOHuSCJZX42PT 8A== 
+Received: from rn-mailsvcp-mta-lapp03.rno.apple.com
+ (rn-mailsvcp-mta-lapp03.rno.apple.com [10.225.203.151])
+ by ma1-aaemail-dr-lapp02.apple.com with ESMTP id 33nent49sk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Wed, 23 Sep 2020 17:35:00 -0700
+Received: from rn-mailsvcp-mmp-lapp03.rno.apple.com
+ (rn-mailsvcp-mmp-lapp03.rno.apple.com [17.179.253.16])
+ by rn-mailsvcp-mta-lapp03.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
+ 2020)) with ESMTPS id <0QH5003MA0AB1MR0@rn-mailsvcp-mta-lapp03.rno.apple.com>; 
+ Wed, 23 Sep 2020 17:34:59 -0700 (PDT)
+Received: from process_milters-daemon.rn-mailsvcp-mmp-lapp03.rno.apple.com by
+ rn-mailsvcp-mmp-lapp03.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
+ 2020)) id <0QH500R00079OF00@rn-mailsvcp-mmp-lapp03.rno.apple.com>; Wed,
+ 23 Sep 2020 17:34:59 -0700 (PDT)
+X-Va-A: 
+X-Va-T-CD: 52471ebc1ff85ed47608efb744b483da
+X-Va-E-CD: 9f0ac0506bfbbd3a98cbe06d5bcbf383
+X-Va-R-CD: ba0899e27aebf5adb0b2c3182f537d00
+X-Va-CD: 0
+X-Va-ID: 0582c912-0553-42c4-9cee-b23310de93ca
+X-V-A: 
+X-V-T-CD: 52471ebc1ff85ed47608efb744b483da
+X-V-E-CD: 9f0ac0506bfbbd3a98cbe06d5bcbf383
+X-V-R-CD: ba0899e27aebf5adb0b2c3182f537d00
+X-V-CD: 0
+X-V-ID: 5031457c-77ca-4701-b69f-2ae4ef8ddc1a
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-23_19:2020-09-23,
+ 2020-09-23 signatures=0
+Received: from [17.234.22.226] by rn-mailsvcp-mmp-lapp03.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.6.20200729 64bit (built Jul 29
+ 2020))
+ with ESMTPSA id <0QH500LD70ABWR00@rn-mailsvcp-mmp-lapp03.rno.apple.com>; Wed,
+ 23 Sep 2020 17:34:59 -0700 (PDT)
+From: Cheng Yang <cyang999@apple.com>
+Message-id: <16A211E0-3906-42D6-B8DB-E8E13CDAA176@apple.com>
+Content-type: multipart/alternative;
+ boundary="Apple-Mail=_F76C6E2F-2C6F-4B92-BDDF-CE1CAD3873CA"
+MIME-version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.1\))
 Subject: Re: Difficulty booting on Raspberry Pi 4.
-Message-ID: <20200924001055.GW6152@heinlein>
+Date: Wed, 23 Sep 2020 17:34:58 -0700
+In-reply-to: <20200924001055.GW6152@heinlein>
+To: Patrick Williams <patrick@stwcx.xyz>
 References: <CDC90A55-957D-47BB-9B42-4283BB6706AF@apple.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="tuYRN1zEaS85jg/Y"
-Content-Disposition: inline
-In-Reply-To: <CDC90A55-957D-47BB-9B42-4283BB6706AF@apple.com>
+ <20200924001055.GW6152@heinlein>
+X-Mailer: Apple Mail (2.3608.120.23.2.1)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-23_19:2020-09-23,
+ 2020-09-23 signatures=0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,62 +103,126 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---tuYRN1zEaS85jg/Y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--Apple-Mail=_F76C6E2F-2C6F-4B92-BDDF-CE1CAD3873CA
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-On Wed, Sep 23, 2020 at 10:36:03AM -0700, Cheng Yang wrote:
-> Hi,  I=E2=80=99m openbmc noob here.
+Patrick and Ed,
 
-Welcome.
+Ed replied early and as soon as I added the line for SDImage=20
+IMAGE_FSTYPES=3D"rpi-sdimg=E2=80=9D
+It boots now. =20
 
-> I follow the instruction of https://github.com/openbmc/openbmc/blob/maste=
-r/meta-raspberrypi/README.md <https://github.com/openbmc/openbmc/blob/maste=
-r/meta-raspberrypi/README.md>
+Thanks everyone, very helpful!
 
-I don't think there are really many people using the meta-raspberrypi
-with OpenBMC.  This comes from elsewhere outside the project as one of
-the Yocto community meta-layers and isn't related to OpenBMC.
+Cheng
 
-What happened was that someone had an idea to use a rpi as an
-easily-accessible experimental platform for running OpenBMC code and
-they asked to have the meta-layer added to our tree.  We keep it in
-sync, but I don't think that experiment really went much farther.
 
-See https://github.com/openbmc/openbmc/issues/399 for some of the
-origin.
+> On Sep 23, 2020, at 5:10 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+> On Wed, Sep 23, 2020 at 10:36:03AM -0700, Cheng Yang wrote:
+>> Hi,  I=E2=80=99m openbmc noob here.
+>=20
+> Welcome.
+>=20
+>> I follow the instruction of =
+https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/README.md =
+<https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/README.md=
+>
+>=20
+> I don't think there are really many people using the meta-raspberrypi
+> with OpenBMC.  This comes from elsewhere outside the project as one of
+> the Yocto community meta-layers and isn't related to OpenBMC.
+>=20
+> What happened was that someone had an idea to use a rpi as an
+> easily-accessible experimental platform for running OpenBMC code and
+> they asked to have the meta-layer added to our tree.  We keep it in
+> sync, but I don't think that experiment really went much farther.
+>=20
+> See https://github.com/openbmc/openbmc/issues/399 for some of the
+> origin.
+>=20
+> If you're doing just a simple rpi4 image build, without any of the
+> OpenBMC layers, and it won't even boot, that seems like something you
+> could tackle with the upstream community.  The README suggests that
+> the general Yocto mailing list is where to go:
+>=20
+> ```
+> * Mailing list (yocto mailing list): <yocto@yoctoproject.org>
+> ```
+>=20
+> --=20
+> Patrick Williams
 
-If you're doing just a simple rpi4 image build, without any of the
-OpenBMC layers, and it won't even boot, that seems like something you
-could tackle with the upstream community.  The README suggests that
-the general Yocto mailing list is where to go:
 
-```
-* Mailing list (yocto mailing list): <yocto@yoctoproject.org>
-```
+--Apple-Mail=_F76C6E2F-2C6F-4B92-BDDF-CE1CAD3873CA
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
 
---=20
-Patrick Williams
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" =
+class=3D"">Patrick and Ed,<div class=3D""><br class=3D""></div><div =
+class=3D"">Ed replied early and as soon as I added the line for =
+SDImage&nbsp;<div class=3D""><span style=3D"caret-color: rgb(0, 0, 0); =
+color: rgb(0, 0, 0);" class=3D"">IMAGE_FSTYPES=3D"rpi-sdimg</span><font =
+color=3D"#000000" class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
+class=3D"">=E2=80=9D</span></font><div class=3D""><font color=3D"#000000" =
+class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" class=3D"">It =
+boots now. &nbsp;</span></font></div><div class=3D""><font =
+color=3D"#000000" class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
+class=3D""><br class=3D""></span></font></div><div class=3D""><font =
+color=3D"#000000" class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
+class=3D"">Thanks everyone, very helpful!</span></font></div><div =
+class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0);" class=3D""><br class=3D""></span></font></div><div =
+class=3D""><font color=3D"#000000" class=3D""><span style=3D"caret-color: =
+rgb(0, 0, 0);" class=3D"">Cheng</span></font></div><div class=3D""><font =
+color=3D"#000000" class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
+class=3D""><br class=3D""></span></font></div><div class=3D""><font =
+color=3D"#000000" class=3D""><span style=3D"caret-color: rgb(0, 0, 0);" =
+class=3D""><br class=3D""></span></font><div><blockquote type=3D"cite" =
+class=3D""><div class=3D"">On Sep 23, 2020, at 5:10 PM, Patrick Williams =
+&lt;<a href=3D"mailto:patrick@stwcx.xyz" =
+class=3D"">patrick@stwcx.xyz</a>&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div class=3D""><div class=3D"">On =
+Wed, Sep 23, 2020 at 10:36:03AM -0700, Cheng Yang wrote:<br =
+class=3D""><blockquote type=3D"cite" class=3D"">Hi, &nbsp;I=E2=80=99m =
+openbmc noob here.<br class=3D""></blockquote><br class=3D"">Welcome.<br =
+class=3D""><br class=3D""><blockquote type=3D"cite" class=3D"">I follow =
+the instruction of <a =
+href=3D"https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/RE=
+ADME.md" =
+class=3D"">https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi=
+/README.md</a> &lt;<a =
+href=3D"https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi/RE=
+ADME.md" =
+class=3D"">https://github.com/openbmc/openbmc/blob/master/meta-raspberrypi=
+/README.md</a>&gt;<br class=3D""></blockquote><br class=3D"">I don't =
+think there are really many people using the meta-raspberrypi<br =
+class=3D"">with OpenBMC. &nbsp;This comes from elsewhere outside the =
+project as one of<br class=3D"">the Yocto community meta-layers and =
+isn't related to OpenBMC.<br class=3D""><br class=3D"">What happened was =
+that someone had an idea to use a rpi as an<br =
+class=3D"">easily-accessible experimental platform for running OpenBMC =
+code and<br class=3D"">they asked to have the meta-layer added to our =
+tree. &nbsp;We keep it in<br class=3D"">sync, but I don't think that =
+experiment really went much farther.<br class=3D""><br class=3D"">See <a =
+href=3D"https://github.com/openbmc/openbmc/issues/399" =
+class=3D"">https://github.com/openbmc/openbmc/issues/399</a> for some of =
+the<br class=3D"">origin.<br class=3D""><br class=3D"">If you're doing =
+just a simple rpi4 image build, without any of the<br class=3D"">OpenBMC =
+layers, and it won't even boot, that seems like something you<br =
+class=3D"">could tackle with the upstream community. &nbsp;The README =
+suggests that<br class=3D"">the general Yocto mailing list is where to =
+go:<br class=3D""><br class=3D"">```<br class=3D"">* Mailing list (yocto =
+mailing list): &lt;<a href=3D"mailto:yocto@yoctoproject.org" =
+class=3D"">yocto@yoctoproject.org</a>&gt;<br class=3D"">```<br =
+class=3D""><br class=3D"">-- <br class=3D"">Patrick Williams<br =
+class=3D""></div></div></blockquote></div><br =
+class=3D""></div></div></div></body></html>=
 
---tuYRN1zEaS85jg/Y
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9r5A0ACgkQqwNHzC0A
-wRldAA/+MPNKVyV7ldUlOmxDCoHAp6ZOT5jLj5poQHLU8/hF2FDv9y7zYmdXbpj7
-uz+FZuBEcYTQ1FGLT/xOD+sgouLMGuFfg6mQZFg991NDrkkhBsnC/b1bmRxu2Muc
-UZN8l8hK5oosVwN/AI0sb9Z5TbssD+DY0+1UFMT/vlPJsBCUFE0NHZzPi0oBp/xb
-6TUPLRKp5TeohZVN1o/m2Tv3FSr46zDCXAnqK5KSvUDTOg4rrWosy47REU0xo40J
-MlVkuuqKvm8FatgfF5eRFAYBmaHdUh7imGB+qR6F5JY5XQ1V7Rb0k3oOd3Xi6n0H
-MUrBHyB/ZYryHYMvGmaRf9SL0tWArvR1HeTvKwEohfEwwbOjOAyVWU12Ku5a666o
-bmQEwc69sK2HVBC48sYhVcDjXdPmmARijpsw7FneAoWXgKOeL36uzd1o9NXWmWqa
-E+xSom+sQcDTEQhuzuMap/LBBsmJnHVYEEuidXQ08xI+GHP3CqcgQEXgISAC+cRJ
-UZFy+ZdfJZaAXp99N5CKs0Pn4uZ9E1qefVM2jM9FKZvfaKGLI/MjGZ2v1rNdJHGt
-e9MNL+yKDtupObZ75N/F98ozfiqUSE1lXgYSXHkrg6hi+ZbP4/R+4AJ08ktXTJw+
-NYfEW39kK1A0trSZ2zb3ubcZq2N7vAgJcNQy1BeKb48AGHNmiOU=
-=g+Bi
------END PGP SIGNATURE-----
-
---tuYRN1zEaS85jg/Y--
+--Apple-Mail=_F76C6E2F-2C6F-4B92-BDDF-CE1CAD3873CA--
