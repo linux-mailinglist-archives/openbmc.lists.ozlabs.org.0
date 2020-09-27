@@ -1,71 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6B3C27A551
-	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 04:06:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAC7627A552
+	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 04:07:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C05V93LCmzDqWL
-	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 12:06:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C05Wc0r4HzDqWL
+	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 12:07:40 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::143;
- helo=mail-lf1-x143.google.com; envelope-from=rikard.falkeborn@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=RQzNrdvY; dkim-atps=neutral
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com
- [IPv6:2a00:1450:4864:20::143])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=kernel.org
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=default header.b=YwrArF11; dkim-atps=neutral
+Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BzKxY68j6zDqLr
- for <openbmc@lists.ozlabs.org>; Sun, 27 Sep 2020 06:23:57 +1000 (AEST)
-Received: by mail-lf1-x143.google.com with SMTP id y17so6611416lfa.8
- for <openbmc@lists.ozlabs.org>; Sat, 26 Sep 2020 13:23:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=5MPEzNOA663F2rbjDyQib41GdeOlEXoHbEZvlfAz7eM=;
- b=RQzNrdvY6AYSPQcJGWRfkOM6T2i/eaj9EGcRCa0kEzvG1P50i4qXD9mvIarbsDRRtf
- SJz2sYkmsOE4Z7294LlKo0QuC+4y71IUr2XBDjYT0rCXRhmZ8IXjr+nsdW8r5kdseA7H
- d3Cf6HPYZ8El9qA2M/zJp85aKxc6lDQ/lqpH0rsQR7ACnf0au6YhRZoP14Csg8+l3eBn
- N9AMjc8X4VpP2aa9vS0642DNQZiGpWOUcL7jKkJlAErXP05y2IbVdz2ivUbY9WeINNkk
- GQMLKkDgwBt5tT3+lWK7hM4M7BE7mVze8e4HSbOWALy1h9iCR2wYeTVo1WhErVhiNho7
- N/Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=5MPEzNOA663F2rbjDyQib41GdeOlEXoHbEZvlfAz7eM=;
- b=g/ApMnrkvNCPi+0JG5vh27tyiOD+Iw7Nt9+POhrbCiS1ynd2rGN73nHH/G1rM0xxYY
- kHir5A7Jb3ArmE2Bipe+ngBqSBf4FgkW4/y1wznIUPDyFfBbmS1aTL6CgvXSF6cd+mpq
- EhO9fvSk50lIJhF0IEk8bcHmho78DKckhU5apfRJTXQlw3PH2PgTvXkTLagJbzEbDWhL
- mOuMnI6nhecGuIAk8AgVi4j9AHNHa4ybzoT6nW5H8GwT04iYqBMScQSy+hhTZ5z7aD7D
- NNgZiI69W6JlMa9LG2RV5T7qadwgKxdCFWnF42DdrXS/nupvAc9+EX77y10o7NByENml
- t83g==
-X-Gm-Message-State: AOAM531QeRqKEJxrw4x/puCjDlm4FDWnOQIUew1l/dsJ/2jhJp9A8/+t
- QqnD77BJAzr5sl9wz8CHQ18=
-X-Google-Smtp-Source: ABdhPJwvlM+PuoX2Ouzgz9XavCdjxvsRaA1aV0KE5QcQDoUGGnRIhnb+WJZFgPn01LVFSPzbmotHkg==
-X-Received: by 2002:a19:560a:: with SMTP id k10mr1427446lfb.599.1601151831498; 
- Sat, 26 Sep 2020 13:23:51 -0700 (PDT)
-Received: from localhost.localdomain (h-82-196-111-59.NA.cust.bahnhof.se.
- [82.196.111.59])
- by smtp.gmail.com with ESMTPSA id s20sm2108883lfs.135.2020.09.26.13.23.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Sep 2020 13:23:50 -0700 (PDT)
-From: Rikard Falkeborn <rikard.falkeborn@gmail.com>
-To: Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH] pinctrl: nuvoton: npcm7xx: Constify static ops structs
-Date: Sat, 26 Sep 2020 22:23:42 +0200
-Message-Id: <20200926202342.31014-1-rikard.falkeborn@gmail.com>
-X-Mailer: git-send-email 2.28.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4BztrG2CtQzDqNP
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Sep 2020 04:06:22 +1000 (AEST)
+Received: from localhost (router.4pisysteme.de [80.79.225.122])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.kernel.org (Postfix) with ESMTPSA id 3C29823A05;
+ Sun, 27 Sep 2020 18:06:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=default; t=1601229978;
+ bh=2G9SbJ/cJpywKU3C9LDI23sdvEaOKHzPJIaoxw96RnA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=YwrArF11uS67h3nQpwyvKAdyGkuArwYeZC7BVinQI3FmyVa+oiuq75RckZTCbjxMu
+ eB7X645Flqjj75iWFIiATsZyAiLq084vg3xPg9RWIMVkB1fMFMuL1jK9jgrg+uS26I
+ lAwDWwA2wCn60JtroaeaosvZrSzxAvZZC8TqJ7XQ=
+Date: Sun, 27 Sep 2020 20:06:16 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Tali Perry <tali.perry1@gmail.com>
+Subject: Re: [PATCH v1] i2c: npcm7xx: Clear LAST bit after a failed
+ transaction.
+Message-ID: <20200927180616.GG19475@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>,
+ andriy.shevchenko@linux.intel.com, kunyi@google.com,
+ benjaminfair@google.com, avifishman70@gmail.com, joel@jms.id.au,
+ tmaimon77@gmail.com, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+References: <20200920204809.132911-1-tali.perry1@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="cyV/sMl4KAhiehtf"
+Content-Disposition: inline
+In-Reply-To: <20200920204809.132911-1-tali.perry1@gmail.com>
 X-Mailman-Approved-At: Mon, 28 Sep 2020 12:05:45 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,54 +64,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, linux-gpio@vger.kernel.org,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Rikard Falkeborn <rikard.falkeborn@gmail.com>,
- Tali Perry <tali.perry1@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>
+Cc: benjaminfair@google.com, avifishman70@gmail.com, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ andriy.shevchenko@linux.intel.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The only usage of these structs is to assign their address to various
-ops fields in the pinctrl_desc struct, which are const pointers. Make
-them const to allow the compiler to put them in read-only memory.
 
-Signed-off-by: Rikard Falkeborn <rikard.falkeborn@gmail.com>
----
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+--cyV/sMl4KAhiehtf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-index a935065cdac4..6de31b5ee358 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -1601,7 +1601,7 @@ static void npcm7xx_dt_free_map(struct pinctrl_dev *pctldev,
- 	kfree(map);
- }
- 
--static struct pinctrl_ops npcm7xx_pinctrl_ops = {
-+static const struct pinctrl_ops npcm7xx_pinctrl_ops = {
- 	.get_groups_count = npcm7xx_get_groups_count,
- 	.get_group_name = npcm7xx_get_group_name,
- 	.get_group_pins = npcm7xx_get_group_pins,
-@@ -1701,7 +1701,7 @@ static int npcm_gpio_set_direction(struct pinctrl_dev *pctldev,
- 	return 0;
- }
- 
--static struct pinmux_ops npcm7xx_pinmux_ops = {
-+static const struct pinmux_ops npcm7xx_pinmux_ops = {
- 	.get_functions_count = npcm7xx_get_functions_count,
- 	.get_function_name = npcm7xx_get_function_name,
- 	.get_function_groups = npcm7xx_get_function_groups,
-@@ -1842,7 +1842,7 @@ static int npcm7xx_config_set(struct pinctrl_dev *pctldev, unsigned int pin,
- 	return 0;
- }
- 
--static struct pinconf_ops npcm7xx_pinconf_ops = {
-+static const struct pinconf_ops npcm7xx_pinconf_ops = {
- 	.is_generic = true,
- 	.pin_config_get = npcm7xx_config_get,
- 	.pin_config_set = npcm7xx_config_set,
--- 
-2.28.0
+On Sun, Sep 20, 2020 at 11:48:09PM +0300, Tali Perry wrote:
+> Due to a HW issue, in some scenarios the LAST bit might remain set.
+> This will cause an unexpected NACK after reading 16 bytes on the next
+> read.
+>=20
+> Example: if user tries to read from a missing device, get a NACK,
+> then if the next command is a long read ( > 16 bytes),
+> the master will stop reading after 16 bytes.
+> To solve this, if a command fails, check if LAST bit is still
+> set. If it does, reset the module.
+>=20
+> Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
+> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 
+Applied to for-current, thanks!
+
+
+--cyV/sMl4KAhiehtf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl9w1JgACgkQFA3kzBSg
+KbZh3g//XYIGDk4pDY8HrG7y81c38n5KYK+HXD635lZxwr0D3Hp/DVeAw2YWmS4f
+15It6nyQIk9ENrURatSHh2fVbh5EAhdXlnmHVWF5Ey2XS7Rv/RL6QLxanBHl385E
+3q+FHqSMrcSjfQqqPILlGEDpHfOmVEDLV+pwcxbeku5P8CPzThXT1ZVfxB5Ild9j
+eysaEdluZ/KFtDQnnzLupeOUYsTt69a0Kz/8vSvfFOS1QnLQfObyZoW9801odQEl
+b2SzGSPYKMaiZLX+rSlONIA9ZLzyIsB1YE0R3gU1V4blzdHdxkVtK1tyaW69UPxs
+kIP5WnjTvAHKxeN9juz+61qH5NpEUg8vrBjRM8Ey6FSZf6g+672Q6vVQcnqO7MNm
+PG0LgmVwd0GzDlSDt4pHZLt2o9OkVcYgyul5ZoFV5rDatILSlOGPiCUTUWG7QgK4
+hZEhhlgyib7o7S9eEzB5ORiMw4pF+C4cPpQmPryQetnvWmkxU/PIQgAHzSfS+Jvo
+UaEKWzlZrdfx7SKSikJEDXn6y6FFWyIyD/S/WRBTolvqP9XXmiHIhdDrEc95Mqwu
+/r4x4GP/k5ec4qkwAu4JTdup2WUs+lD5ZEzRu8SelWURCKp2in0Yu2ZZLeMlYFZD
+zUO2lAkwE/LbQuflJ0MVqHcMiJz/W22FkxYDttpvATSoq0f7wig=
+=gCdm
+-----END PGP SIGNATURE-----
+
+--cyV/sMl4KAhiehtf--
