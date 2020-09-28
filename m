@@ -2,57 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC7627A552
-	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 04:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C938227A751
+	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 08:18:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C05Wc0r4HzDqWL
-	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 12:07:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C0C4q1md5zDqVF
+	for <lists+openbmc@lfdr.de>; Mon, 28 Sep 2020 16:18:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::643;
+ helo=mail-ej1-x643.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=default header.b=YwrArF11; dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=LGn8ICS8; dkim-atps=neutral
+Received: from mail-ej1-x643.google.com (mail-ej1-x643.google.com
+ [IPv6:2a00:1450:4864:20::643])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4BztrG2CtQzDqNP
- for <openbmc@lists.ozlabs.org>; Mon, 28 Sep 2020 04:06:22 +1000 (AEST)
-Received: from localhost (router.4pisysteme.de [80.79.225.122])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 3C29823A05;
- Sun, 27 Sep 2020 18:06:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1601229978;
- bh=2G9SbJ/cJpywKU3C9LDI23sdvEaOKHzPJIaoxw96RnA=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=YwrArF11uS67h3nQpwyvKAdyGkuArwYeZC7BVinQI3FmyVa+oiuq75RckZTCbjxMu
- eB7X645Flqjj75iWFIiATsZyAiLq084vg3xPg9RWIMVkB1fMFMuL1jK9jgrg+uS26I
- lAwDWwA2wCn60JtroaeaosvZrSzxAvZZC8TqJ7XQ=
-Date: Sun, 27 Sep 2020 20:06:16 +0200
-From: Wolfram Sang <wsa@kernel.org>
-To: Tali Perry <tali.perry1@gmail.com>
-Subject: Re: [PATCH v1] i2c: npcm7xx: Clear LAST bit after a failed
- transaction.
-Message-ID: <20200927180616.GG19475@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
- Tali Perry <tali.perry1@gmail.com>,
- andriy.shevchenko@linux.intel.com, kunyi@google.com,
- benjaminfair@google.com, avifishman70@gmail.com, joel@jms.id.au,
- tmaimon77@gmail.com, linux-i2c@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
-References: <20200920204809.132911-1-tali.perry1@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C0C440bbkzDqST
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Sep 2020 16:17:39 +1000 (AEST)
+Received: by mail-ej1-x643.google.com with SMTP id q13so6820876ejo.9
+ for <openbmc@lists.ozlabs.org>; Sun, 27 Sep 2020 23:17:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=jmIsrL21BptfR5lJ33xzvPrHdSqSoSVQqC25q5Isc/M=;
+ b=LGn8ICS8ctZzhVfqCQip2GCoVki9orhRbfsAdo9BI2+KhMOTAsFwf4QfbuqbLNoP/o
+ LdqZ3mQxwtcvePufLvvrBmkYpiBTza7FFI4udnd+jVqq+0R/aVEcEgtjpNfLci/mqone
+ HzqoIEFSyAUFxalwc+xfs/90u1N2rVybxNk8s=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=jmIsrL21BptfR5lJ33xzvPrHdSqSoSVQqC25q5Isc/M=;
+ b=HzhkzObqXmXucFD6gSw6gUocDWUASk7GKzcxwNXyaLZC76NpHsD11skjeR5v8IOK0m
+ OEvmXmqaKZ8YtYU8uX2CCxPhaCBahpd+QQqfBNOsgWjjWkRZZiEeSd5mAx5CsBdtaGkg
+ Nn9ok794o8QIKxxRyAXqG2g2RMGLn/rwRdAssXagfcu4zD4hIdRF+iy9CpkBla0+2XKM
+ y8X5CG7TeS0lRRmFYDShGR2NdbvklKGq327a9UZU+zzHY/QtmVht5mCNF1CiONJmeumY
+ o8KKzYJ4pnO/HUeWneNsysg39NNFCteMidP23tzlHj+/kLBpFelQRVD2zculzY00NORL
+ doyQ==
+X-Gm-Message-State: AOAM531Ov05IcTR8AEimQ3SbXx43egoOKAWv/9CoqvlFLkR6isYVaGX7
+ hmCb2svehnVF/dBvTgRyQnvlocwxhsk1zgwbU5M=
+X-Google-Smtp-Source: ABdhPJyjw9nB8TsNlSWIyVYCkMy3y2oX+ivBLxQmxtsNIz2AymSLafeF8rCGnldJSE3Wj8V7dt+C9F2CGT3qrm9tFUA=
+X-Received: by 2002:a17:906:7d0d:: with SMTP id
+ u13mr184055ejo.448.1601273856198; 
+ Sun, 27 Sep 2020 23:17:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="cyV/sMl4KAhiehtf"
-Content-Disposition: inline
-In-Reply-To: <20200920204809.132911-1-tali.perry1@gmail.com>
-X-Mailman-Approved-At: Mon, 28 Sep 2020 12:05:45 +1000
+References: <20200923164730.176881-1-tmaimon77@gmail.com>
+ <20200923164730.176881-2-tmaimon77@gmail.com>
+In-Reply-To: <20200923164730.176881-2-tmaimon77@gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 28 Sep 2020 06:17:21 +0000
+Message-ID: <CACPK8Xc8dnYFATxj11oJnM_nWvUuQ71J_eyU9L+=O+ss_34gbw@mail.gmail.com>
+Subject: Re: [PATCH v7 1/5] arm: dts: modify NPCM7xx device tree clock
+ parameter
+To: Tomer Maimon <tmaimon77@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,53 +72,161 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- andriy.shevchenko@linux.intel.com, tmaimon77@gmail.com
+Cc: Mark Rutland <mark.rutland@arm.com>,
+ devicetree <devicetree@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, 23 Sep 2020 at 16:48, Tomer Maimon <tmaimon77@gmail.com> wrote:
+>
+> Modify NPCM7xx device tree clock parameter to clock constants that
+> define at include/dt-bindings/clock/nuvoton,npcm7xx-clock.h file.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
---cyV/sMl4KAhiehtf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-On Sun, Sep 20, 2020 at 11:48:09PM +0300, Tali Perry wrote:
-> Due to a HW issue, in some scenarios the LAST bit might remain set.
-> This will cause an unexpected NACK after reading 16 bytes on the next
-> read.
->=20
-> Example: if user tries to read from a missing device, get a NACK,
-> then if the next command is a long read ( > 16 bytes),
-> the master will stop reading after 16 bytes.
-> To solve this, if a command fails, check if LAST bit is still
-> set. If it does, reset the module.
->=20
-> Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Tomer, for next time: when sending new versions of a patch series you
+can add the reviewed-by lines to patches that you have not changed.
+This one is a good case of that. It saves the reviewer having to go
+look at it again.
 
-Applied to for-current, thanks!
+Cheers,
 
+Joel
 
---cyV/sMl4KAhiehtf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAl9w1JgACgkQFA3kzBSg
-KbZh3g//XYIGDk4pDY8HrG7y81c38n5KYK+HXD635lZxwr0D3Hp/DVeAw2YWmS4f
-15It6nyQIk9ENrURatSHh2fVbh5EAhdXlnmHVWF5Ey2XS7Rv/RL6QLxanBHl385E
-3q+FHqSMrcSjfQqqPILlGEDpHfOmVEDLV+pwcxbeku5P8CPzThXT1ZVfxB5Ild9j
-eysaEdluZ/KFtDQnnzLupeOUYsTt69a0Kz/8vSvfFOS1QnLQfObyZoW9801odQEl
-b2SzGSPYKMaiZLX+rSlONIA9ZLzyIsB1YE0R3gU1V4blzdHdxkVtK1tyaW69UPxs
-kIP5WnjTvAHKxeN9juz+61qH5NpEUg8vrBjRM8Ey6FSZf6g+672Q6vVQcnqO7MNm
-PG0LgmVwd0GzDlSDt4pHZLt2o9OkVcYgyul5ZoFV5rDatILSlOGPiCUTUWG7QgK4
-hZEhhlgyib7o7S9eEzB5ORiMw4pF+C4cPpQmPryQetnvWmkxU/PIQgAHzSfS+Jvo
-UaEKWzlZrdfx7SKSikJEDXn6y6FFWyIyD/S/WRBTolvqP9XXmiHIhdDrEc95Mqwu
-/r4x4GP/k5ec4qkwAu4JTdup2WUs+lD5ZEzRu8SelWURCKp2in0Yu2ZZLeMlYFZD
-zUO2lAkwE/LbQuflJ0MVqHcMiJz/W22FkxYDttpvATSoq0f7wig=
-=gCdm
------END PGP SIGNATURE-----
-
---cyV/sMl4KAhiehtf--
+> ---
+>  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 19 ++++++++++---------
+>  arch/arm/boot/dts/nuvoton-npcm750.dtsi        |  6 +++---
+>  2 files changed, 13 insertions(+), 12 deletions(-)
+>
+> diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> index d2d0761295a4..16a28c5c4131 100644
+> --- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> @@ -3,6 +3,7 @@
+>  // Copyright 2018 Google, Inc.
+>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +#include <dt-bindings/clock/nuvoton,npcm7xx-clock.h>
+>
+>  / {
+>         #address-cells = <1>;
+> @@ -80,7 +81,7 @@
+>                         interrupts = <GIC_SPI 21 IRQ_TYPE_LEVEL_HIGH>;
+>                         cache-unified;
+>                         cache-level = <2>;
+> -                       clocks = <&clk 10>;
+> +                       clocks = <&clk NPCM7XX_CLK_AXI>;
+>                         arm,shared-override;
+>                 };
+>
+> @@ -120,7 +121,7 @@
+>                                 compatible = "nuvoton,npcm750-timer";
+>                                 interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0x8000 0x50>;
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
+>
+>                         watchdog0: watchdog@801C {
+> @@ -128,7 +129,7 @@
+>                                 interrupts = <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0x801C 0x4>;
+>                                 status = "disabled";
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
+>
+>                         watchdog1: watchdog@901C {
+> @@ -136,7 +137,7 @@
+>                                 interrupts = <GIC_SPI 48 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0x901C 0x4>;
+>                                 status = "disabled";
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
+>
+>                         watchdog2: watchdog@a01C {
+> @@ -144,13 +145,13 @@
+>                                 interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg = <0xa01C 0x4>;
+>                                 status = "disabled";
+> -                               clocks = <&clk 5>;
+> +                               clocks = <&clk NPCM7XX_CLK_TIMER>;
+>                         };
+>
+>                         serial0: serial@1000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x1000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 2 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> @@ -159,7 +160,7 @@
+>                         serial1: serial@2000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x2000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 3 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> @@ -168,7 +169,7 @@
+>                         serial2: serial@3000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x3000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 4 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> @@ -177,7 +178,7 @@
+>                         serial3: serial@4000 {
+>                                 compatible = "nuvoton,npcm750-uart";
+>                                 reg = <0x4000 0x1000>;
+> -                               clocks = <&clk 6>;
+> +                               clocks = <&clk NPCM7XX_CLK_UART>;
+>                                 interrupts = <GIC_SPI 5 IRQ_TYPE_LEVEL_HIGH>;
+>                                 reg-shift = <2>;
+>                                 status = "disabled";
+> diff --git a/arch/arm/boot/dts/nuvoton-npcm750.dtsi b/arch/arm/boot/dts/nuvoton-npcm750.dtsi
+> index 6ac340533587..a37bb2294b8f 100644
+> --- a/arch/arm/boot/dts/nuvoton-npcm750.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton-npcm750.dtsi
+> @@ -17,7 +17,7 @@
+>                 cpu@0 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a9";
+> -                       clocks = <&clk 0>;
+> +                       clocks = <&clk NPCM7XX_CLK_CPU>;
+>                         clock-names = "clk_cpu";
+>                         reg = <0>;
+>                         next-level-cache = <&l2>;
+> @@ -26,7 +26,7 @@
+>                 cpu@1 {
+>                         device_type = "cpu";
+>                         compatible = "arm,cortex-a9";
+> -                       clocks = <&clk 0>;
+> +                       clocks = <&clk NPCM7XX_CLK_CPU>;
+>                         clock-names = "clk_cpu";
+>                         reg = <1>;
+>                         next-level-cache = <&l2>;
+> @@ -38,7 +38,7 @@
+>                         reg = <0x3fe600 0x20>;
+>                         interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) |
+>                                                   IRQ_TYPE_LEVEL_HIGH)>;
+> -                       clocks = <&clk 5>;
+> +                       clocks = <&clk NPCM7XX_CLK_AHB>;
+>                 };
+>         };
+>  };
+> --
+> 2.22.0
+>
