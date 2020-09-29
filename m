@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1CA927CF0D
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 15:25:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8091B27CF2D
+	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 15:30:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C10Vj0vNnzDqH6
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 23:25:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C10d04Br5zDqTn
+	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 23:30:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,22 +19,24 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C10MQ5N4TzDqRy
- for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 23:18:39 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C10MW33cPzDqNW
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 23:18:46 +1000 (AEST)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08TDIAKZ026515;
- Tue, 29 Sep 2020 16:18:10 +0300
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08TDIBZu026517;
+ Tue, 29 Sep 2020 16:18:11 +0300
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 4CB63639D6; Tue, 29 Sep 2020 16:18:10 +0300 (IDT)
+ id 660D2639D8; Tue, 29 Sep 2020 16:18:11 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: robh+dt@kernel.org, mark.rutland@arm.com, avifishman70@gmail.com,
  tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
  benjaminfair@google.com, joel@jms.id.au
-Subject: [PATCH v8 0/5] arm: dts: add and modify device node in NPCM7xx device
- tree
-Date: Tue, 29 Sep 2020 16:18:02 +0300
-Message-Id: <20200929131807.15378-1-tmaimon77@gmail.com>
+Subject: [PATCH v8 2/5] arm: dts: modify NPCM7xx device tree timer register
+ size
+Date: Tue, 29 Sep 2020 16:18:04 +0300
+Message-Id: <20200929131807.15378-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20200929131807.15378-1-tmaimon77@gmail.com>
+References: <20200929131807.15378-1-tmaimon77@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -53,64 +55,29 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch set adds and modify device tree nodes in the NPCM7xx
-Baseboard Management Controller (BMC) device tree.
+Modify NPCM7xx device tree timer register size
+from 0x50 to 0x1C to control only the timer registers
+and not other hw modules.
 
-The following device node add:
-        - NPCM7xx Pin controller and GPIO
-        - NPCM7xx PWM and FAN.
-        - NPCM7xx EHCI USB.
-        - NPCM7xx KCS.
-        - NPCM Reset.
-        - NPCM Peripheral SPI.
-        - NPCM FIU SPI.
-        - NPCM HWRNG.
-        - NPCM I2C.
-        - STMicro STMMAC.
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The following device node modified:
-        - NPCM7xx timer.
-        - NPCM7xx clock constants parameters.
-
-NPCM7xx device tree tested on NPCM750 evaluation board.
-
-Changes since version 7:
-Address comments from Joel Stanely: https://www.spinics.net/lists/devicetree/msg380191.html
-
-Changes since version 6:
-Split commits.
+diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+index 16a28c5c4131..72e364054e72 100644
+--- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
++++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+@@ -120,7 +120,7 @@
+ 			timer0: timer@8000 {
+ 				compatible = "nuvoton,npcm750-timer";
+ 				interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x8000 0x50>;
++				reg = <0x8000 0x1C>;
+ 				clocks = <&clk NPCM7XX_CLK_TIMER>;
+ 			};
  
-Changes since version 5:
-Address comments from Joel Stanely: https://lkml.org/lkml/2020/9/16/994
- 
-Changes since version 4:
- - Tested patches in Linux kernel 5.9.
-
-Changes since version 3:
- - Tested patches in Linux kernel 5.6.
-
-Changes since version 2:
- - Remove unnecessary output-enable flags.
-
-Changes since version 1:
- - Add NPCM reset device node.
- - Add reset parameters to NPCM driver device nodes.
-
-
-Tomer Maimon (5):
-  arm: dts: modify NPCM7xx device tree clock parameter
-  arm: dts: modify NPCM7xx device tree timer register size
-  arm: dts: add pinctrl and GPIO node to NPCM7XX device tree
-  arm: dts: add new device nodes to NPCM7XX device tree
-  arm: dts: add new device nodes to NPCM750 device tree EVB
-
- arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 967 +++++++++++++++++-
- arch/arm/boot/dts/nuvoton-npcm750-evb.dts     | 367 ++++++-
- .../boot/dts/nuvoton-npcm750-pincfg-evb.dtsi  | 157 +++
- arch/arm/boot/dts/nuvoton-npcm750.dtsi        |  24 +-
- 4 files changed, 1495 insertions(+), 20 deletions(-)
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
-
 -- 
 2.22.0
 
