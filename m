@@ -2,76 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EBB927BD3E
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 08:41:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BACC27BDC7
+	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 09:14:24 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C0qXb1hP7zDqW6
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 16:41:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C0rH11gl6zDqG0
+	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 17:14:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::1044;
- helo=mail-pj1-x1044.google.com; envelope-from=wangzhiqiang.bj@bytedance.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=1HBdXbm2; dkim-atps=neutral
-Received: from mail-pj1-x1044.google.com (mail-pj1-x1044.google.com
- [IPv6:2607:f8b0:4864:20::1044])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=FQIk37D7; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C0qWV6KmWzDqVc
- for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 16:40:05 +1000 (AEST)
-Received: by mail-pj1-x1044.google.com with SMTP id a9so2130607pjg.1
- for <openbmc@lists.ozlabs.org>; Mon, 28 Sep 2020 23:40:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=from:to:subject:date:message-id:in-reply-to:references:mime-version
- :content-transfer-encoding;
- bh=igo8wxv+qblw1fnAfuB4qISBJ9T3ycjEIxqHTymX5ig=;
- b=1HBdXbm2NIHJ+kpoX7I03etcAs6WHqO6n2edjqLwXZdcjWpRRM3IvsN2GojQh5Ml3Z
- mUipp++P5xGPKVfB9KF+Q/O525/qXBOmMq7XoHp4o4bR0sIC9OjwaYJJjQYU0g9uOvim
- FPiiCJlNxBEf1KnYKGeap99bxeblzRXuBqSGo/AEPVCbH824KkTrx/ZF/oKAmxSF4DW6
- fcx3dIgPRDAR/UcZm8jZIZKWYxQu5mLhCO0CwEwcYmZamZlQqa9AolNdWp5SCNVIraC0
- eM2ebWf7BblZfHE/catU3t0cXZXZovA6Q7TYzodEnUaXZwI2HWY4RPcB94heCbKwsYmK
- TE8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
- :references:mime-version:content-transfer-encoding;
- bh=igo8wxv+qblw1fnAfuB4qISBJ9T3ycjEIxqHTymX5ig=;
- b=GIjfwbSH9QULuF5pYjaEMZEOs9An1n9lO1+EYPGnYodhIqCR0qLfRu8a2jdkT7RFie
- lk0va534GVjQBOiNiuPctkg+NC3ltMfqQK/D37TSTAdnTLngzO5UEbudmYgbG4S0elBI
- c8yMWJU8XtDqzzGNbhqorUS0SutctMYmU8MD/yqqA7D8M72PdfgM1hzfQlbBWjhzENuq
- /143tQZmQ8fJfYJpoU3GCyo+wmoNEYj0KqIJXOfzhSc7B5LK6TQwbvHb4GOAPx2GNKSj
- ISXnAFUBvE8RS9hz+XGjUcDuMrvExfw8+dKUssUHIzWKMAL2tJSz5VY7w6OdCDAjCCxw
- 6/lA==
-X-Gm-Message-State: AOAM532beMtR6U1Z2wYdDCiiBLYbKx6geNuaVg4R7HwZDE/6lZP3odWo
- cZkXtp9J+dkJJfahk4mY14b6GA==
-X-Google-Smtp-Source: ABdhPJzV7Lz9YlhbSSDqP3lQNiATjHlIMykTKKf/RXaSydRYqwUFVyTpLd7NlEFHWORr+R0h3iuFWw==
-X-Received: by 2002:a17:90a:e2cd:: with SMTP id
- fr13mr2515046pjb.156.1601361603177; 
- Mon, 28 Sep 2020 23:40:03 -0700 (PDT)
-Received: from localhost ([61.120.150.74])
- by smtp.gmail.com with ESMTPSA id mh8sm3264410pjb.32.2020.09.28.23.40.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Sep 2020 23:40:02 -0700 (PDT)
-From: John Wang <wangzhiqiang.bj@bytedance.com>
-To: yulei.sh@bytedance.com, xuxiaohan@bytedance.com, openbmc@lists.ozlabs.org,
- joel@jms.id.au
-Subject: [PATCH linux dev-5.8 v3 2/2] ARM: dts: aspeed: Add Bytedance g220a
- BMC machine
-Date: Tue, 29 Sep 2020 14:39:55 +0800
-Message-Id: <20200929063955.1206-2-wangzhiqiang.bj@bytedance.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20200929063955.1206-1-wangzhiqiang.bj@bytedance.com>
-References: <20200929063955.1206-1-wangzhiqiang.bj@bytedance.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C0rFx53QkzDqMK
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 17:13:24 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 08T72blZ043406; Tue, 29 Sep 2020 03:13:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type; s=pp1; bh=Z36B5QwiMoPuP1GC5FSKRKgfmHXoENXK4+sof+ZBROY=;
+ b=FQIk37D7l9H0ok1To6xOZADJ6qdAO71qtDCYek8e4LpnOWCSTlbyHVSP+SX8ewsXQlZW
+ Wg0WNR3JXCy3xg5C4qQJpPteQ7CrwowYRQvrUy9BVPDcl8MuqyGGe0ms1ZJq0FVmB6OV
+ j9TrLXGjzXDxIS58UDhoGhcm4pB9cRP5zahSLpa1hLYCQxADuh5bUA48zn1l/cEE7dOh
+ vDPSXsCLtjl26s8ysNmTA/SLokyZGTldSXXkxprBve6BgN7jQkKSAhwlWmICSdXWmjav
+ FWP8mbKLUFaDyglJnx0+pI8i0N+Bh245HM0tKcQsbS1s88yZshvWS5FptII9eWo7qZYY 7w== 
+Received: from ppma06ams.nl.ibm.com (66.31.33a9.ip4.static.sl-reverse.com
+ [169.51.49.102])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33uyguspm8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Sep 2020 03:13:20 -0400
+Received: from pps.filterd (ppma06ams.nl.ibm.com [127.0.0.1])
+ by ppma06ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08T7BxF7032532;
+ Tue, 29 Sep 2020 07:13:18 GMT
+Received: from b06avi18626390.portsmouth.uk.ibm.com
+ (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
+ by ppma06ams.nl.ibm.com with ESMTP id 33u5r9hc3r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Sep 2020 07:13:17 +0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com
+ [9.149.105.62])
+ by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id 08T7DFCs15598076
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 29 Sep 2020 07:13:15 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E598AE055;
+ Tue, 29 Sep 2020 07:13:15 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2CA9AE051;
+ Tue, 29 Sep 2020 07:13:13 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.199.32.168])
+ by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Tue, 29 Sep 2020 07:13:13 +0000 (GMT)
+Subject: Re: OpenBMC LDAP server configuration assistance
+To: "Cockrell, Trevor" <Trevor.Cockrell@dell.com>,
+ "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ "Gerhart, Donnie" <Donnie.Gerhart@dell.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "gkeishin@in.ibm.com" <gkeishin@in.ibm.com>
+References: <BLAPR19MB43381522D073D4BFD348A7B993260@BLAPR19MB4338.namprd19.prod.outlook.com>
+ <6b1406cd-1d70-7f62-6e2d-c33d80d02f1c@linux.intel.com>
+ <BLAPR19MB433888EAE75ED273319EC97193240@BLAPR19MB4338.namprd19.prod.outlook.com>
+ <a3c9f148-d624-ab31-b59b-8c6dcf126679@linux.intel.com>
+ <8349ffa4-a809-6960-5eba-2583b070badd@linux.vnet.ibm.com>
+ <DS7PR19MB4439778D56A4323F8FA43BB4F0350@DS7PR19MB4439.namprd19.prod.outlook.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Message-ID: <3c4d2490-c180-7453-6de3-a0361859d26b@linux.vnet.ibm.com>
+Date: Tue, 29 Sep 2020 12:43:12 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <DS7PR19MB4439778D56A4323F8FA43BB4F0350@DS7PR19MB4439.namprd19.prod.outlook.com>
+Content-Type: multipart/alternative;
+ boundary="------------DAC4AAFAFD016AE42F77D3C1"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-09-29_01:2020-09-29,
+ 2020-09-29 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ mlxlogscore=999 malwarescore=0 priorityscore=1501 spamscore=0
+ clxscore=1015 mlxscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2006250000 definitions=main-2009290062
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,978 +107,1420 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "Mugunda, Chandra" <Chandra.Mugunda@dell.com>, "Giles,
+ Joshua" <Joshua.Giles@dell.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Lotus Xu <xuxiaohan@bytedance.com>
+This is a multi-part message in MIME format.
+--------------DAC4AAFAFD016AE42F77D3C1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-The g220a is a server platform with an ASPEED AST2500 BMC.
+Hi Trevor,
 
-Signed-off-by: Lotus Xu <xuxiaohan@bytedance.com>
-Signed-off-by: John Wang <wangzhiqiang.bj@bytedance.com>
+You can have doc under phosphor-user-manager for configuring the LDAP 
+server.
 
----
-v2:
-  - Add copyright notice
-  - Remove GFX device node
-  - Change the module to system name
-v3:
-  - Add spi device node
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/aspeed-bmc-bytedance-g220a.dts   | 931 ++++++++++++++++++
- 2 files changed, 932 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts
+Ratan Gupta
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 56fd8c8a2ba9..7e4d3600e16d 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1351,6 +1351,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-amd-ethanolx.dtb \
- 	aspeed-bmc-arm-centriq2400-rep.dtb \
- 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
-+	aspeed-bmc-bytedance-g220a.dtb \
- 	aspeed-bmc-facebook-cmm.dtb \
- 	aspeed-bmc-facebook-minipack.dtb \
- 	aspeed-bmc-facebook-tiogapass.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts b/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts
-new file mode 100644
-index 000000000000..2ae2684c115c
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-bytedance-g220a.dts
-@@ -0,0 +1,931 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * Copyright (C) 2020 Bytedance.
-+ */
-+
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+#include <dt-bindings/i2c/i2c.h>
-+#include <dt-bindings/leds/leds-pca955x.h>
-+
-+/ {
-+	model = "Bytedance G220A BMC";
-+	compatible = "bytedance,g220a-bmc", "aspeed,ast2500";
-+
-+	aliases {
-+		serial4 = &uart5;
-+		i2c14 = &channel_3_0;
-+		i2c15 = &channel_3_1;
-+		i2c16 = &channel_3_2;
-+		i2c17 = &channel_3_3;
-+		i2c18 = &channel_6_0;
-+		i2c19 = &channel_6_1;
-+		i2c20 = &channel_6_2;
-+		i2c21 = &channel_6_3;
-+		i2c22 = &channel_6_4;
-+		i2c23 = &channel_6_5;
-+		i2c24 = &channel_6_6;
-+		i2c25 = &channel_6_7;
-+		i2c26 = &channel_6_8;
-+		i2c27 = &channel_6_9;
-+		i2c28 = &channel_6_10;
-+		i2c29 = &channel_6_11;
-+		i2c30 = &channel_6_12;
-+		i2c31 = &channel_6_13;
-+		i2c32 = &channel_6_14;
-+		i2c33 = &channel_6_15;
-+		i2c34 = &channel_6_16;
-+		i2c35 = &channel_6_17;
-+		i2c36 = &channel_6_18;
-+		i2c37 = &channel_6_19;
-+		i2c38 = &channel_6_20;
-+		i2c39 = &channel_6_21;
-+		i2c40 = &channel_6_22;
-+		i2c41 = &channel_6_23;
-+		i2c42 = &channel_6_24;
-+		i2c43 = &channel_6_25;
-+		i2c44 = &channel_10_0;
-+		i2c45 = &channel_10_1;
-+		i2c46 = &channel_10_2;
-+		i2c47 = &channel_10_3;
-+		i2c48 = &channel_10_4;
-+		i2c49 = &channel_10_5;
-+		i2c50 = &channel_10_6;
-+		i2c51 = &channel_10_7;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=ttyS4,115200 earlyprintk";
-+	};
-+
-+	memory@80000000 {
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@bc000000 {
-+			no-map;
-+			reg = <0xbc000000 0x04000000>; /* 64M */
-+		};
-+
-+		video_engine_memory: jpegbuffer {
-+			size = <0x02000000>;	/* 32M */
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-+			<&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-+			<&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		bmc_alive {
-+			label = "bmc_alive";
-+			gpios = <&gpio ASPEED_GPIO(B, 0) GPIO_ACTIVE_LOW>;
-+			linux,default-trigger = "timer";
-+			led-pattern = <1000 1000>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		burn-in-signal {
-+			label = "burn-in";
-+			gpios = <&gpio ASPEED_GPIO(R, 5) GPIO_ACTIVE_LOW>;
-+			linux,code = <ASPEED_GPIO(R, 5)>;
-+		};
-+	};
-+
-+	gpio-keys-polled {
-+		compatible = "gpio-keys-polled";
-+		poll-interval = <1000>;
-+
-+		rear-riser1-presence {
-+			label = "rear-riser1-presence";
-+			gpios = <&pca0 1 GPIO_ACTIVE_LOW>;
-+			linux,code = <1>;
-+		};
-+
-+		alrt-pvddq-cpu0 {
-+			label = "alrt-pvddq-cpu0";
-+			gpios = <&pca0 8 GPIO_ACTIVE_LOW>;
-+			linux,code = <2>;
-+		};
-+
-+		rear-riser0-presence {
-+			label = "rear-riser0-presence";
-+			gpios = <&pca0 9 GPIO_ACTIVE_LOW>;
-+			linux,code = <3>;
-+		};
-+
-+		fault-pvddq-cpu0 {
-+			label = "fault-pvddq-cpu0";
-+			gpios = <&pca0 10 GPIO_ACTIVE_LOW>;
-+			linux,code = <4>;
-+		};
-+
-+		alrt-pvddq-cpu1 {
-+			label = "alrt-pvddq-cpu1";
-+			gpios = <&pca0 11 GPIO_ACTIVE_LOW>;
-+			linux,code = <5>;
-+		};
-+
-+		fault-pvddq-cpu1 {
-+			label = "alrt-pvddq-cpu1";
-+			gpios = <&pca0 12 GPIO_ACTIVE_LOW>;
-+			linux,code = <6>;
-+		};
-+
-+		fault-pvccin-cpu1 {
-+			label = "fault-pvccin-cpuq";
-+			gpios = <&pca0 13 GPIO_ACTIVE_LOW>;
-+			linux,code = <7>;
-+		};
-+
-+		bmc-rom0-wp {
-+			label = "bmc-rom0-wp";
-+			gpios = <&pca1 0 GPIO_ACTIVE_LOW>;
-+			linux,code = <8>;
-+		};
-+
-+		bmc-rom1-wp {
-+			label = "bmc-rom1-wp";
-+			gpios = <&pca1 1 GPIO_ACTIVE_LOW>;
-+			linux,code = <9>;
-+		};
-+
-+		fan0-presence {
-+			label = "fan0-presence";
-+			gpios = <&pca1 2 GPIO_ACTIVE_LOW>;
-+			linux,code = <10>;
-+		};
-+
-+		fan1-presence {
-+			label = "fan1-presence";
-+			gpios = <&pca1 3 GPIO_ACTIVE_LOW>;
-+			linux,code = <11>;
-+		};
-+
-+		fan2-presence {
-+			label = "fan2-presence";
-+			gpios = <&pca1 4 GPIO_ACTIVE_LOW>;
-+			linux,code = <12>;
-+		};
-+
-+		fan3-presence {
-+			label = "fan3-presence";
-+			gpios = <&pca1 5 GPIO_ACTIVE_LOW>;
-+			linux,code = <13>;
-+		};
-+
-+		fan4-presence {
-+			label = "fan4-presence";
-+			gpios = <&pca1 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <14>;
-+		};
-+
-+		fan5-presence {
-+			label = "fan5-presence";
-+			gpios = <&pca1 7 GPIO_ACTIVE_LOW>;
-+			linux,code = <15>;
-+		};
-+
-+		front-bp1-presence {
-+			label = "front-bp1-presence";
-+			gpios = <&pca1 8 GPIO_ACTIVE_LOW>;
-+			linux,code = <16>;
-+		};
-+
-+		rear-bp-presence {
-+			label = "rear-bp-presence";
-+			gpios = <&pca1 9 GPIO_ACTIVE_LOW>;
-+			linux,code = <17>;
-+		};
-+
-+		fault-pvccin-cpu0 {
-+			label = "fault-pvccin-cpu0";
-+			gpios = <&pca1 10 GPIO_ACTIVE_LOW>;
-+			linux,code = <18>;
-+		};
-+
-+		alrt-p1v05-pvcc {
-+			label = "alrt-p1v05-pvcc1";
-+			gpios = <&pca1 11 GPIO_ACTIVE_LOW>;
-+			linux,code = <19>;
-+		};
-+
-+		fault-p1v05-pvccio {
-+			label = "alrt-p1v05-pvcc1";
-+			gpios = <&pca1 12 GPIO_ACTIVE_LOW>;
-+			linux,code = <20>;
-+		};
-+
-+		alrt-p1v8-pvccio {
-+			label = "alrt-p1v8-pvccio";
-+			gpios = <&pca1 13 GPIO_ACTIVE_LOW>;
-+			linux,code = <21>;
-+		};
-+
-+		fault-p1v8-pvccio {
-+			label = "fault-p1v8-pvccio";
-+			gpios = <&pca1 14 GPIO_ACTIVE_LOW>;
-+			linux,code = <22>;
-+		};
-+
-+		front-bp0-presence {
-+			label = "front-bp0-presence";
-+			gpios = <&pca1 15 GPIO_ACTIVE_LOW>;
-+			linux,code = <23>;
-+		};
-+	};
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		label = "bmc";
-+		m25p,fast-read;
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout-64.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bios";
-+		spi-max-frequency = <100000000>;
-+	};
-+};
-+
-+&peci0{
-+	status = "okay";
-+};
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&gpio {
-+	status = "okay";
-+	gpio-line-names =
-+	/*A0-A7*/	"SMRST_OCP_N","MAC2_LINK","BMC_CPLD_SMB_RST_R_N","BMC_CPLD_GPIO0",
-+			"","","","",
-+	/*B0-B7*/	"BMC_INIT_R_OK","FM_BOARD_REV_ID2","FM_PROJECT_ID7","FAULT_P12V_STBY_N",
-+			"","CPU0_PROCHOT_LVT3_N","","BIOS_LOAD_DEFAULT_R_N",
-+	/*C0-C7*/	"","","","","","","","",
-+	/*D0-D7*/	"","","","","","","","",
-+	/*E0-E7*/	"FM_PROJECT_ID0","FM_PROJECT_ID1","FM_PROJECT_ID2","FM_PROJECT_ID3",
-+			"FM_PROJECT_ID4","FM_PROJECT_ID5","","",
-+	/*F0-F7*/	"PSU0_PRSNT_N","PSU1_PRSNT_N","","FAULT_P12V_NVME_N",
-+			"BIOS_DEBUG_MODE_R_N","DISABLE_CPU_DDR_R_SPD","COOLING_STRATEGY",
-+			"PCH_GLB_RST_N",
-+	/*G0-G7*/	"P12V_PMBUS_ALERT_N","CPLD_ALERT_N","BMC_RELOAD_N",
-+			"P12V_PVDDQ_PMBUS_ALERT_N","BMC_JTAG_TCK_MUX_R_SEL","","NMI_OUT",
-+			"NMI_BUTTON",
-+	/*H0-H7*/	"BMC_CPLD_JTAG_TDI","BMC_CPLD_JTAG_TDO","BMC_CPLD_JTAG_TCK",
-+			"BMC_CPLD_JTAG_TMS","FM_PROJECT_ID6","FM_BOARD_REV_ID0",
-+			"PCA9546_U70_RST_N","IRQ_SML0_ALERT_N",
-+	/*I0-I7*/	"FAULT_FRONT_RISER_P12V_N","FAULT_OCP_P12V_N","FM_BMC_PCH_SCI_R_N",
-+			"","","","","",
-+	/*J0-J7*/	"FM_CPU0_SKTOCC_N","FM_CPU1_SKTOCC_N","FM_CPU1_DISABLE_COD_N",
-+			"","","","","",
-+	/*K0-K7*/	"","","","","","","","",
-+	/*L0-L7*/	"P12V_FAULT_N","PWRGD_P12V_PCIE_RISER","","LEAKAGE_DETECT_INPUT_N",
-+			"","IRQ_SML1_PMBUS_ALERT_N","","",
-+	/*M0-M7*/	"","","","","","","","",
-+	/*N0-N7*/	"","","","","","","","",
-+	/*O0-O7*/	"","","","","","","","",
-+	/*P0-P7*/	"","","","","","","","",
-+	/*Q0-Q7*/	"","","","","","","FM_PCH_THERMTRIP_N","INTRUDER_N",
-+	/*R0-R7*/	"","PVCCIN_CPU1_SMBALERT_N","BMC_PREQ_R_N","FAULT_P12V_PCIE_RISER_N",
-+			"ALT_P12V_PCIE_RISER_N","BURN_BOARD_N","PVCCIN_CPU0_SMBALERT_N","",
-+	/*S0-S7*/	"BMC_PRDY_N","SIO_POWER_GOOD","FM_BMC_PWR_DEBUG_R_N",
-+			"FM_BMC_XDP_DEBUG_EN","","","","",
-+	/*T0-T7*/	"","","","","","","","",
-+	/*U0-U7*/	"","","","","","","","",
-+	/*V0-V7*/	"","","","","","","","",
-+	/*W0-W7*/	"","","","","","","","",
-+	/*X0-X7*/	"","","","","","","","",
-+	/*Y0-Y7*/	"","PWRGD_PSU0_PWROK","CPU1_PROCHOT_LVT3_N","IRQ_BMC_PCH_SMI_LPC_N",
-+			"","","","",
-+	/*Z0-Z7*/	"XDP_PRSNT_N","BMC_XDP_SYS_PWROK","BMC_XDP_JTAG_SEL",
-+			"PCH_BMC_SMI_ACTIVE_R_N","","","","",
-+	/*AA0-AA7*/	"PWRGD_P12V_STBY_OCP","PS_PWROK","RST_PLTRST_BMC_R_N","HDA_SDO_R",
-+			"FM_SLPS4_R_N","PWRGD_PSU1_PWROK","POWER_BUTTON","POWER_OUT",
-+	/*AB0-AB7*/	"","RESET_OUT","SPI_BIOS_MODE_SELECT","POST_COMPLETE","","","","",
-+	/*AC0-AC7*/	"","","","","","","","CPLD_PLTRST_B_N";
-+};
-+
-+&kcs3 {
-+	kcs_addr = <0xCA2>;
-+	status = "okay";
-+};
-+
-+&kcs4 {
-+	kcs_addr = <0xCA4>;
-+	status = "okay";
-+};
-+
-+&lpc_snoop {
-+	snoop-ports = <0x80>;
-+	status = "okay";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+			&pinctrl_rxd1_default
-+			&pinctrl_nrts1_default
-+			&pinctrl_ndtr1_default
-+			&pinctrl_ndsr1_default
-+			&pinctrl_ncts1_default
-+			&pinctrl_ndcd1_default
-+			&pinctrl_nri1_default>;
-+};
-+
-+&uart2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd2_default
-+			&pinctrl_rxd2_default
-+			&pinctrl_nrts2_default
-+			&pinctrl_ndtr2_default
-+			&pinctrl_ndsr2_default
-+			&pinctrl_ncts2_default
-+			&pinctrl_ndcd2_default
-+			&pinctrl_nri2_default>;
-+};
-+
-+&uart3 {
-+	status = "okay";
-+};
-+
-+&uart4 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
-+	use-ncsi;
-+};
-+
-+&mac1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9546";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		channel_3_0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_3_1: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_3_2: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_3_3: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+	i2c-switch@72 {
-+		compatible = "nxp,pca9548";
-+		reg = <0x72>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		channel_6_0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_6_1: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_6_2: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_6_3: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+		channel_6_4: i2c@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+		};
-+
-+		channel_6_5: i2c@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+		};
-+
-+		channel_6_6: i2c@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+		};
-+
-+		channel_6_7: i2c@7 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+		};
-+	};
-+
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9546";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		channel_6_8: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+			i2c-switch@71 {
-+				compatible = "nxp,pca9546";
-+				reg = <0x71>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				channel_6_12: i2c@0 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0>;
-+
-+				};
-+
-+				channel_6_13: i2c@1 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <1>;
-+				};
-+
-+				channel_6_14: i2c@2 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <2>;
-+				};
-+
-+				channel_6_15: i2c@3 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <3>;
-+				};
-+			};
-+		 };
-+
-+		channel_6_9: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+			i2c-switch@71 {
-+				compatible = "nxp,pca9546";
-+				reg = <0x71>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				channel_6_16: i2c@0 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0>;
-+
-+				};
-+
-+				channel_6_17: i2c@1 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <1>;
-+				};
-+
-+				channel_6_18: i2c@2 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <2>;
-+				};
-+
-+				channel_6_19: i2c@3 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <3>;
-+				};
-+			};
-+		 };
-+
-+		channel_6_10: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+			i2c-switch@71 {
-+				compatible = "nxp,pca9546";
-+				reg = <0x71>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				channel_6_20: i2c@0 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0>;
-+				};
-+
-+				channel_6_21: i2c@1 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <1>;
-+				};
-+
-+				channel_6_22: i2c@2 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <2>;
-+				};
-+
-+				channel_6_23: i2c@3 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <3>;
-+				};
-+			};
-+		 };
-+
-+		channel_6_11: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+			i2c-switch@71 {
-+				compatible = "nxp,pca9546";
-+				reg = <0x71>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				channel_6_24: i2c@0 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0>;
-+				};
-+
-+				channel_6_25: i2c@1 {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <1>;
-+				};
-+			 };
-+		};
-+	};
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+	pca0:pca9555@24 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x24>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@8 {
-+			reg = <8>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@9 {
-+			reg = <9>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@10 {
-+			reg = <10>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@11 {
-+			reg = <11>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@12 {
-+			reg = <12>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@13 {
-+			reg = <13>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+
-+	pca1:pca9555@25 {
-+		compatible = "nxp,pca9555";
-+		reg = <0x25>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+
-+		gpio@0 {
-+			reg = <0>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@1 {
-+			reg = <1>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@2 {
-+			reg = <2>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@3 {
-+			reg = <3>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@4 {
-+			reg = <4>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@5 {
-+			reg = <5>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@6 {
-+			reg = <6>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@7 {
-+			reg = <7>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+		gpio@8 {
-+			reg = <8>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@9 {
-+			reg = <9>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@10 {
-+			reg = <10>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@11 {
-+			reg = <11>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@12 {
-+			reg = <12>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@13 {
-+			reg = <13>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@14 {
-+			reg = <14>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+
-+		gpio@15 {
-+			reg = <15>;
-+			type = <PCA955X_TYPE_GPIO>;
-+		};
-+	};
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+	i2c-switch@70 {
-+		compatible = "nxp,pca9546";
-+		reg = <0x70>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		channel_10_0: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_10_1: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_10_2: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_10_3: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+
-+	i2c-switch@71 {
-+		compatible = "nxp,pca9546";
-+		reg = <0x71>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		channel_10_4: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		channel_10_5: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		channel_10_6: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		channel_10_7: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
-+	};
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
-+			 &pinctrl_pwm2_default &pinctrl_pwm3_default
-+			 &pinctrl_pwm4_default &pinctrl_pwm5_default>;
-+
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
-+	};
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
-+	};
-+	fan@2 {
-+		reg = <0x02>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
-+	};
-+	fan@3 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
-+	};
-+	fan@4 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
-+	};
-+	fan@5 {
-+		reg = <0x05>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
-+	};
-+};
-+
-+&gpio {
-+	pin_gpio_i3 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(I, 3) GPIO_ACTIVE_LOW>;
-+		output-low;
-+		line-name = "NCSI_BMC_R_SEL";
-+	};
-+
-+	pin_gpio_b6 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(B, 6) GPIO_ACTIVE_LOW>;
-+		output-low;
-+		line-name = "EN_NCSI_SWITCH_N";
-+	};
-+};
-+
-+&video {
-+	status = "okay";
-+	memory-region = <&video_engine_memory>;
-+};
-+
-+&vhub {
-+	status = "okay";
-+};
--- 
-2.25.1
+On 9/28/20 8:35 PM, Cockrell, Trevor wrote:
+> Internal Use - Confidential Hey Ratan, Richard, The issue that we ran 
+> into when...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> Internal Use - Confidential
+>
+>
+> Hey Ratan, Richard,
+>
+> The issue that we ran into when using openLDAP was a small but key bit 
+> of configuration that I personally did not see on the web – the 
+> gidNumber property of a posix user/group.
+>
+> The below documentation/notes (currently just for openLDAP) I have 
+> from my investigation would have helped us get to the root of our 
+> problem much quicker.
+>
+> It might be beneficial to others to add this or something similar 
+> enough that clarifies the gidNumber requirements into the Phosphor 
+> User Manager README. If not, would there be a better place?
+>
+> I could adjust/edit or I can leave it to you. 😊
+>
+> Thanks!
+>
+> Trevor Cockrell
+>
+> User ‘John’ was created with the ldif below for an ldap server 
+> ‘example.com’:
+>
+> dn: uid=John,dc=example,dc=com
+> objectClass: top
+> objectClass: account
+> objectClass: posixAccount
+> objectClass: shadowAccount
+> cn: John
+> uid: John
+> uidNumber: 1024
+> *gidNumber*: 100
+> homeDirectory: /home/John
+> loginShell: /bin/bash
+> gecos: John
+> userPassword: {crypt}x
+> shadowLastChange: -1
+> shadowMax: -1
+> shadowWarning: -1
+>
+> In order for John to access any WebUI or redfish implementation, he 
+> must then be organized into a posix group with gidNumber 1004. This is 
+> because OpenBMC performs a group check for redfish on any user 
+> attempting redfish or WebUI interaction methods. The posix group was 
+> created with the following ldif:
+>
+> dn: cn=redfish,dc=example,dc=com
+> cn: redfish
+> objectClass: posixGroup
+> objectClass: top
+> *gidNumber*: 1004
+> *memberUid*: John
+>
+> The name of the posix group does not matter – only the gidNumber which 
+> is set to 1004, locally ‘redfish’ on the OpenBMC. Field memberUidmaps 
+> John into the redfish group, allowing him access to both the WebUI and 
+> redfish methods of interacting with OpenBMC.
+>
+> If desired, John can also be placed in posix-group ‘priv-admin’ with 
+> gidNumber 1000, granting him SSH access to the system. Privilege 
+> mapping does not affect the ability of a user in group 1000 to access 
+> the OpenBMC via SSH.
+>
+> With a user placed in a group, a privilege mapping must then be 
+> assigned. The above gidNumber 100 relates to group ‘users’ on the 
+> local OpenBMC machine. When the mapping is assigned, any users within 
+> the mapped gidNumber will have the privilege level that has been 
+> mapped to their group. For example, if Jane were to be assigned 
+> gidNumber 100 she would have the same privileges as John. The 
+> privilege mapping must have the same name as the group referenced by 
+> the gidNumber. In this case, the role mapping must be explicitly for 
+> ‘users’. If there is no mapping assigned, connection via redfish is 
+> refused while the WebUI allows login with no interaction.
+>
+> *From:* Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+> *Sent:* Monday, September 21, 2020 9:29 AM
+> *To:* Thomaiyar, Richard Marian; Gerhart, Donnie; 
+> openbmc@lists.ozlabs.org; gkeishin@in.ibm.com
+> *Cc:* Mugunda, Chandra; Giles, Joshua; Cockrell, Trevor
+> *Subject:* Re: OpenBMC LDAP server configuration assistance
+>
+> [EXTERNAL EMAIL]
+>
+> Hi Donnie,
+>
+> We didn't create the cheatsheet for ldap server configuration, we 
+> thought the enough documentation is there on the net to configure the 
+> ldap server.
+>
+> But it is good to have this documentation, Are you doing it for 
+> openLDAP or the Active Directory also?
+>
+> I thought George & team was having this when I was working with him.
+>
+> Ratan
+>
+> On 9/21/20 10:01 AM, Thomaiyar, Richard Marian wrote:
+>
+>     Hi Donnie, Yes, Please go ahead and create Cheatsheet for LDAP
+>     configuration....
+>
+>     *This Message Is From an External Sender*
+>
+>     This message came from outside your organization.
+>
+>     Hi Donnie,
+>
+>     Yes, Please go ahead and create Cheatsheet for LDAP configuration.
+>
+>     Regards,
+>
+>     Richard
+>
+>     On 9/12/2020 12:44 AM, Gerhart, Donnie wrote:
+>
+>         Hey Richard/Folks,
+>
+>         Thanks for reaching out.  We really appreciate it.
+>
+>         Per usual, shortly after we hit send, we found a GID anomaly
+>         that once corrected everything OpenBMC LDAP connected up and
+>         logged in nicely.
+>
+>         To keep others from spinning in such an anomaly we’d be more
+>         than happy to post (ourselves or through you) a simple Ldap
+>         diff (LDIF) file containing a small working joe and jane LDAP
+>         server config.  The two places we thought such an example
+>         might valuable are phosphor user manager arch documentation
+>         and/or the LDAP test in openbmc-test-automation but we are
+>         happy to defer to your guidance regarding same.  Let us know
+>         your thoughts and we can post or provide the applicable file
+>         straight away.
+>
+>         Thanks again!
+>
+>         Best,
+>
+>         Donnie
+>
+>         *From:* Thomaiyar, Richard Marian
+>         <richard.marian.thomaiyar@linux.intel.com>
+>         <mailto:richard.marian.thomaiyar@linux.intel.com>
+>         *Sent:* Thursday, September 10, 2020 8:53 AM
+>         *To:* Gerhart, Donnie; openbmc@lists.ozlabs.org
+>         <mailto:openbmc@lists.ozlabs.org>; ratagupt@linux.vnet.ibm.com
+>         <mailto:ratagupt@linux.vnet.ibm.com>; gkeishin@in.ibm.com
+>         <mailto:gkeishin@in.ibm.com>
+>         *Cc:* Mugunda, Chandra; Giles, Joshua; Cockrell, Trevor
+>         *Subject:* Re: OpenBMC LDAP server configuration assistance
+>
+>         [EXTERNAL EMAIL]
+>
+>         Hi Donnie,
+>
+>         Didn't tested it in latest tree, but you already cross
+>         verified this right -->
+>         https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot
+>
+>         ++ Ratan & George.
+>
+>         Regards,
+>
+>         Richard
+>
+>         On 9/9/2020 10:02 PM, Gerhart, Donnie wrote:
+>
+>             Hello OpenBMC Community\SMEs,
+>
+>             We are investigating LDAP functionality on the 2.8 ‘top of
+>             tree’ build; however, we are having some issues I believe
+>             you can help with straight away.  Some of the many real
+>             failures we’ve encountered are:
+>
+>               * Bricked system due to locking out all users
+>
+>         <Richard> You meant to say even `root` user is locked out is
+>         OpenBMC repo master or made more changes. By default user lock
+>         out is disabled, and still won't lock root user to avoid DOS
+>         attack.
+>
+>               * Ladap_result() failed:  Can’t contact LDAP server
+>
+>                   o Believe we’ve fixed this one
+>
+>         <Richard> Hope this as LDAP configuration issue you faced, and
+>         not related to OpenBMC code as such.
+>
+>
+>               * Logins are restricted to the group priv-admin of but
+>                 user ‘testuser’ is not a member
+>
+>         <Richard>: Is this failure due to SSH login. Because SSH won't
+>         make use of ldap privilege mapping. You may need to change
+>         https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default
+>         if needs LDAP testing in SSH.
+>
+>         Have you tried bmcweb LDAP login ? Whether you are able to
+>         succeed in that ?
+>
+>               * Pam_authenticate() failed, rc=7, Authentication failure
+>               * Bad PAM password attempt for ‘testuser’ from: <LDAP
+>                 server IP>
+>
+>             Some of these issues we’ve worked through; however, some
+>             are still dogging us.  To that end, can someone possibly
+>             list\post a basic LDAP server LDIF file with a single
+>             user, privilege role and group mapping that you’ve
+>             successfully used with OpenBMC?  We assume we are stuck on
+>             some trivial LDAP server topology anomaly that is
+>             completely escaping us at the moment.
+>
+>             As an fyi we have looked at:
+>
+>              1. Gone through everything obviously ‘ldap’ in the
+>                 mailing lists: https://lists.ozlabs.org/pipermail/openbmc/
+>              2. Looked at OpenBMC learning series:
+>                 https://github.com/openbmc/openbmc/wiki/Presentations
+>              3. Gone through the documents here:
+>                 https://github.com/openbmc/docs/blob/master/architecture/user-management.md
+>              4. Looked at ldap tests and server:
+>                 https://github.com/openbmc/openbmc-test-automation
+>              5. Spent more time tweaking Linux files and creating ldap
+>                 server configs that I care to admit 😊
+>
+>             BIG thanks in advance!
+>
+>             Best,
+>
+>             Donnie
+>
+
+--------------DAC4AAFAFD016AE42F77D3C1
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Trevor,</p>
+    <p>You can have doc under phosphor-user-manager for configuring the
+      LDAP server.<br>
+    </p>
+    <p>Ratan Gupta<br>
+    </p>
+    <div class="moz-cite-prefix">On 9/28/20 8:35 PM, Cockrell, Trevor
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:DS7PR19MB4439778D56A4323F8FA43BB4F0350@DS7PR19MB4439.namprd19.prod.outlook.com"><!-- BaNnErBlUrFlE-HeAdEr-start -->
+      <meta name="viewport" content="width=device-width;
+        initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
+      <style>
+      /* Mobile */
+      @media screen and (max-width: 630px){
+        * {-webkit-text-size-adjust: none}
+        a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: none; }
+        .pfptTitle { font-size:22px !important; line-height:26px !important; text-align: center !important; }
+        .pfptSubtitle { font-size:14px !important; line-height:18px !important; text-align: center !important; }
+        
+        .pfptMainWrapper { margin-top: 0 !important; margin-right: 0 !important; margin-left: 0 !important; }
+        th[class="pfptTableColumnLeft"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
+        th[class="pfptTableColumnRight"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
+
+        .pfptButton { font-size:16px !important; line-height:16px !important; width: 50% !important; display:block !important; margin-right: auto!important; margin-left: auto!important; }   
+        .pfptButton a { font-size: 16px; } 
+        .pfptButton span { font-size: 16px; }     
+      }
+      /* Tablet, Laptop, Desktop */
+      @media screen and (min-width: 631px){
+        th[class="pfptTableColumnLeft"] { width: 50% !important; height:auto !important; }
+        th[class="pfptTableColumnRight"] { width: 50% !important; height:auto !important; text-align: right !important; } 
+      }
+      .pfptPreheader { display:none !important; visibility:hidden; mso-hide:all; font-size:1px; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; }
+    </style>
+      <!-- BaNnErBlUrFlE-HeAdEr-end -->
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Helvetica;
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI Emoji";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Consolas;
+	panose-1:2 11 6 9 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.pfptpreheader, li.pfptpreheader, div.pfptpreheader
+	{mso-style-name:pfptpreheader;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-line-height-alt:.75pt;
+	font-size:1.0pt;
+	font-family:"Calibri",sans-serif;
+	display:none;}
+span.pfptpreheader1
+	{mso-style-name:pfptpreheader1;
+	display:none;}
+span.pfpttitle
+	{mso-style-name:pfpttitle;}
+span.pfptsubtitle
+	{mso-style-name:pfptsubtitle;}
+span.EmailStyle23
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle24
+	{mso-style-type:personal;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+span.EmailStyle25
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:80760137;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1014133672 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:686247321;
+	mso-list-template-ids:1173233468;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:780489114;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1797343294 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3
+	{mso-list-id:925727601;
+	mso-list-template-ids:-148967306;}
+@list l3:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l3:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4
+	{mso-list-id:1170869837;
+	mso-list-template-ids:-1190216262;}
+@list l4:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l4:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5
+	{mso-list-id:1884632024;
+	mso-list-template-ids:801661478;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l5:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6
+	{mso-list-id:1896812947;
+	mso-list-template-ids:-551126886;}
+@list l6:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l6:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l6:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:;
+	mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	mso-ansi-font-size:10.0pt;
+	font-family:Symbol;}
+@list l7
+	{mso-list-id:2134595468;
+	mso-list-template-ids:-1348934854;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <!-- BaNnErBlUrFlE-BoDy-start -->
+      <!-- Preheader Text : BEGIN --> <span class="pfptPreheader"
+        style="display:none
+!important;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
+        Internal Use - Confidential Hey Ratan, Richard, The issue that
+        we ran into when... 
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+              </span>
+      <!-- Preheader Text : END -->
+      <!-- Email Banner : BEGIN -->
+      <table style="width:100%;border-radius:4px;margin-bottom:16px;"
+        width="100%" cellspacing="0" cellpadding="16" border="0"
+        bgcolor="#9CA3A7">
+        <tbody>
+          <tr>
+            <td align="center">
+              <table class="pfptMainWrapper" style="width:100%;"
+                width="100%" cellspacing="0" cellpadding="0" border="0"
+                align="center">
+                <tbody>
+                  <tr>
+                    <td style="border-radius:4px;" valign="top"
+                      align="center">
+                      <table style="max-width:100%; width:100%;"
+                        width="100%" cellspacing="0" cellpadding="0"
+                        border="0" bgcolor="#9CA3A7" align="center">
+                        <tbody>
+                          <tr>
+                            <!-- Message : BEGIN --> <th
+                              class="pfptTableColumnLeft"
+style="font-weight:normal;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;width:100%;height:auto;"
+                              valign="top">
+                              <table
+                                style="width:100%;height:auto;text-align:left;vertical-align:middle;"
+                                width="100%" cellspacing="0"
+                                cellpadding="0">
+                                <tbody>
+                                  <tr>
+                                    <td> <span class="pfptTitle"
+style="font-family:'Roboto','Helvetica','Arial',sans-serif;font-weight:bold;font-size:18px;line-height:20px;display:block;margin-bottom:4px;word-wrap:normal;">This
+                                        Message Is From an External
+                                        Sender</span> </td>
+                                  </tr>
+                                  <tr>
+                                    <td> <span class="pfptSubtitle"
+style="font-weight:normal;font-family:'Roboto','Helvetica','Arial',sans-serif;font-size:13px;line-height:16px;display:block;word-wrap:normal;">This
+                                        message came from outside your
+                                        organization.</span> </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </th>
+                            <!-- Message : END --> </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Email Banner : END -->
+      <!-- BaNnErBlUrFlE-BoDy-end -->
+      <p class="msipheader8eb7d5eb" style="margin:0" align="Left"><span
+          style="font-size:10.0pt;font-family:Calibri;color:#737373">Internal
+          Use - Confidential</span></p>
+      <br>
+      <div class="WordSection1">
+        <p class="MsoNormal">Hey Ratan, Richard,<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">The issue that we ran into when using
+          openLDAP was a small but key bit of configuration that I
+          personally did not see on the web – the gidNumber property of
+          a posix user/group.
+          <o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">The below <span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">documentation/notes
+            (currently just for openLDAP) </span>I have from my
+          investigation would have helped us get to the root of our
+          problem much quicker.
+          <o:p></o:p></p>
+        <p class="MsoNormal">It might be beneficial to others to add
+          this or something similar enough that clarifies the gidNumber
+          requirements into the Phosphor User Manager README. If not,
+          would there be a better place?<o:p></o:p></p>
+        <p class="MsoNormal">I could adjust/edit or I can leave it to
+          you. <span style="font-family:&quot;Segoe UI
+            Emoji&quot;,sans-serif">
+            😊</span><o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Thanks!<o:p></o:p></p>
+        <p class="MsoNormal">Trevor Cockrell<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal" style="margin-left:.5in"><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">User
+            ‘John’ was created with the ldif below for an ldap server
+            ‘example.com’:</span><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%"><o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:1.0in"><span
+style="font-size:10.0pt;font-family:Consolas;color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">dn:
+            uid=John,dc=example,dc=com<br>
+            objectClass: top<br>
+            objectClass: account<br>
+            objectClass: posixAccount<br>
+            objectClass: shadowAccount<br>
+            cn: John<br>
+            uid: John<br>
+            uidNumber: 1024<br>
+            <b>gidNumber</b>: 100<br>
+            homeDirectory: /home/John<br>
+            loginShell: /bin/bash<br>
+            gecos: John<br>
+            userPassword: {crypt}x<br>
+            shadowLastChange: -1<br>
+            shadowMax: -1<br>
+            shadowWarning: -1<br>
+            <br>
+            <o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:.5in"><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">In
+            order for John to access any WebUI or redfish
+            implementation, he must then be organized into a posix group
+            with gidNumber 1004. This is because OpenBMC performs a
+            group check for redfish on any user attempting redfish or
+            WebUI interaction methods. The posix group was created with
+            the following ldif:<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:1.0in"><span
+style="font-size:10.0pt;font-family:Consolas;color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">dn:
+            cn=redfish,dc=example,dc=com<br>
+            cn: redfish<br>
+            objectClass: posixGroup<br>
+            objectClass: top<br>
+            <b>gidNumber</b>: 1004<br>
+            <b>memberUid</b>: John      <br>
+                           </span><span
+style="font-family:Consolas;color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%"><o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:.5in"><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">The
+            name of the posix group does not matter – only the gidNumber
+            which is set to 1004, locally ‘redfish’ on the OpenBMC.
+            Field </span><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">memberUid</span><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">
+            maps John into the redfish group, allowing him access to
+            both the WebUI and redfish methods of interacting with
+            OpenBMC.
+            <o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:.5in"><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">If
+            desired, John can also be placed in posix-group ‘priv-admin’
+            with gidNumber 1000, granting him SSH access to the system.
+            Privilege mapping does not affect the ability of a user in
+            group 1000 to access the OpenBMC via SSH.<o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:.5in"><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%">With
+            a user placed in a group, a privilege mapping must then be
+            assigned. The above gidNumber 100 relates to group ‘users’
+            on the local OpenBMC machine. When the mapping is assigned,
+            any users within the mapped gidNumber will have the
+            privilege level that has been mapped to their group. For
+            example, if Jane were to be assigned gidNumber 100 she would
+            have the same privileges as John. The privilege mapping must
+            have the same name as the group referenced by the gidNumber.
+            In this case, the role mapping must be explicitly for
+            ‘users’. If there is no mapping assigned, connection via
+            redfish is refused while the WebUI allows login with no
+            interaction. <o:p></o:p></span></p>
+        <p class="MsoNormal" style="margin-left:.5in"><span
+style="color:#2E75B6;mso-style-textfill-fill-color:#2E75B6;mso-style-textfill-fill-alpha:100.0%"><o:p> </o:p></span></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <div>
+          <div style="border:none;border-top:solid #E1E1E1
+            1.0pt;padding:3.0pt 0in 0in 0in">
+            <p class="MsoNormal"><b>From:</b> Ratan Gupta
+              <a class="moz-txt-link-rfc2396E" href="mailto:ratagupt@linux.vnet.ibm.com">&lt;ratagupt@linux.vnet.ibm.com&gt;</a> <br>
+              <b>Sent:</b> Monday, September 21, 2020 9:29 AM<br>
+              <b>To:</b> Thomaiyar, Richard Marian; Gerhart, Donnie;
+              <a class="moz-txt-link-abbreviated" href="mailto:openbmc@lists.ozlabs.org">openbmc@lists.ozlabs.org</a>; <a class="moz-txt-link-abbreviated" href="mailto:gkeishin@in.ibm.com">gkeishin@in.ibm.com</a><br>
+              <b>Cc:</b> Mugunda, Chandra; Giles, Joshua; Cockrell,
+              Trevor<br>
+              <b>Subject:</b> Re: OpenBMC LDAP server configuration
+              assistance<o:p></o:p></p>
+          </div>
+        </div>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <div>
+          <p><span style="color:#CE1126">[EXTERNAL EMAIL] <o:p></o:p></span></p>
+        </div>
+        <p>Hi Donnie,<o:p></o:p></p>
+        <p>We didn't create the cheatsheet for ldap server
+          configuration, we thought the enough documentation is there on
+          the net to configure the ldap server.<o:p></o:p></p>
+        <p>But it is good to have this documentation, Are you doing it
+          for openLDAP or the Active Directory also?<o:p></o:p></p>
+        <p>I thought George &amp; team was having this when I was
+          working with him.<o:p></o:p></p>
+        <p>Ratan<o:p></o:p></p>
+        <div>
+          <p class="MsoNormal">On 9/21/20 10:01 AM, Thomaiyar, Richard
+            Marian wrote:<o:p></o:p></p>
+        </div>
+        <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+          <p class="MsoNormal"><span class="pfptpreheader1"><span
+                style="font-size:1.0pt;color:white">Hi Donnie, Yes,
+                Please go ahead and create Cheatsheet for LDAP
+                configuration....                                     
+                                                                     
+                                                                     
+                                                   
+              </span></span><o:p></o:p></p>
+          <table class="MsoNormalTable"
+            style="width:100.0%;background:#9CA3A7;border-radius:4px"
+            width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+              <tr>
+                <td style="padding:12.0pt 12.0pt 12.0pt
+                  12.0pt;border-radius:4px">
+                  <div align="center">
+                    <table class="MsoNormalTable"
+                      style="width:100.0%;border-radius:4px"
+                      width="100%" cellspacing="0" cellpadding="0"
+                      border="0">
+                      <tbody>
+                        <tr>
+                          <td style="padding:0in 0in 0in
+                            0in;max-width:100%" valign="top">
+                            <div align="center">
+                              <table class="MsoNormalTable"
+                                style="width:100.0%;background:#9CA3A7"
+                                width="100%" cellspacing="0"
+                                cellpadding="0" border="0">
+                                <tbody>
+                                  <tr>
+                                    <td style="width:100.0%;padding:0in
+                                      0in 0in 0in" width="100%"
+                                      valign="top">
+                                      <div align="center">
+                                        <table class="MsoNormalTable"
+                                          style="width:100.0%"
+                                          width="100%" cellspacing="0"
+                                          cellpadding="0" border="0">
+                                          <tbody>
+                                            <tr>
+                                              <td style="padding:0in 0in
+                                                0in 0in">
+                                                <p class="MsoNormal"><span
+                                                    class="pfpttitle"><b><span
+style="font-size:13.5pt;font-family:&quot;Helvetica&quot;,sans-serif">This
+                                                        Message Is From
+                                                        an External
+                                                        Sender</span></b></span>
+                                                  <o:p></o:p></p>
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td style="padding:0in 0in
+                                                0in 0in">
+                                                <p class="MsoNormal"><span
+                                                    class="pfptsubtitle"><span
+style="font-size:10.0pt;font-family:&quot;Helvetica&quot;,sans-serif">This
+                                                      message came from
+                                                      outside your
+                                                      organization.</span></span>
+                                                  <o:p></o:p></p>
+                                              </td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Hi Donnie, <o:p></o:p></p>
+          <p>Yes, Please go ahead and create Cheatsheet for LDAP
+            configuration.<o:p></o:p></p>
+          <p>Regards,<o:p></o:p></p>
+          <p>Richard<o:p></o:p></p>
+          <div>
+            <p class="MsoNormal">On 9/12/2020 12:44 AM, Gerhart, Donnie
+              wrote:<o:p></o:p></p>
+          </div>
+          <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+            <p class="MsoNormal">Hey Richard/Folks,<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">Thanks for reaching out.  We really
+              appreciate it.<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">Per usual, shortly after we hit send,
+              we found a GID anomaly that once corrected everything
+              OpenBMC LDAP connected up and logged in nicely.<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">To keep others from spinning in such an
+              anomaly we’d be more than happy to post (ourselves or
+              through you) a simple Ldap diff (LDIF) file containing a
+              small working joe and jane LDAP server config.  The two
+              places we thought such an example might valuable are
+              phosphor user manager arch documentation and/or the LDAP
+              test in openbmc-test-automation but we are happy to defer
+              to your guidance regarding same.  Let us know your
+              thoughts and we can post or provide the applicable file
+              straight away. 
+              <o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">Thanks again!<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal">Best,<o:p></o:p></p>
+            <p class="MsoNormal">Donnie<o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <div>
+              <div style="border:none;border-top:solid #E1E1E1
+                1.0pt;padding:3.0pt 0in 0in 0in">
+                <p class="MsoNormal"><b>From:</b> Thomaiyar, Richard
+                  Marian <a
+                    href="mailto:richard.marian.thomaiyar@linux.intel.com"
+                    moz-do-not-send="true">
+                    &lt;richard.marian.thomaiyar@linux.intel.com&gt;</a>
+                  <br>
+                  <b>Sent:</b> Thursday, September 10, 2020 8:53 AM<br>
+                  <b>To:</b> Gerhart, Donnie; <a
+                    href="mailto:openbmc@lists.ozlabs.org"
+                    moz-do-not-send="true">openbmc@lists.ozlabs.org</a>;
+                  <a href="mailto:ratagupt@linux.vnet.ibm.com"
+                    moz-do-not-send="true">ratagupt@linux.vnet.ibm.com</a>;
+                  <a href="mailto:gkeishin@in.ibm.com"
+                    moz-do-not-send="true">
+                    gkeishin@in.ibm.com</a><br>
+                  <b>Cc:</b> Mugunda, Chandra; Giles, Joshua; Cockrell,
+                  Trevor<br>
+                  <b>Subject:</b> Re: OpenBMC LDAP server configuration
+                  assistance<o:p></o:p></p>
+              </div>
+            </div>
+            <p class="MsoNormal"> <o:p></o:p></p>
+            <div>
+              <p><span style="color:#CE1126">[EXTERNAL EMAIL] </span><o:p></o:p></p>
+            </div>
+            <p class="MsoNormal">Hi Donnie, <o:p></o:p></p>
+            <p>Didn't tested it in latest tree, but you already cross
+              verified this right --&gt;
+              <a
+href="https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot"
+                moz-do-not-send="true">
+https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/account_service/test_ldap_configuration.robot</a><o:p></o:p></p>
+            <p>++ Ratan &amp; George.<o:p></o:p></p>
+            <p>Regards,<o:p></o:p></p>
+            <p>Richard<o:p></o:p></p>
+            <div>
+              <p class="MsoNormal">On 9/9/2020 10:02 PM, Gerhart, Donnie
+                wrote:<o:p></o:p></p>
+            </div>
+            <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+              <p class="MsoNormal">Hello OpenBMC Community\SMEs,<o:p></o:p></p>
+              <p class="MsoNormal"> <o:p></o:p></p>
+              <p class="MsoNormal">We are investigating LDAP
+                functionality on the 2.8 ‘top of tree’ build; however,
+                we are having some issues I believe you can help with
+                straight away.  Some of the many real failures we’ve
+                encountered are:<o:p></o:p></p>
+              <ul style="margin-top:0in" type="disc">
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l0 level1 lfo3">Bricked
+                  system due to locking out all users<o:p></o:p></li>
+              </ul>
+            </blockquote>
+            <p class="MsoNormal">&lt;Richard&gt; You meant to say even
+              `root` user is locked out is OpenBMC repo master or made
+              more changes. By default user lock out is disabled, and
+              still won't lock root user to avoid DOS attack.
+              <o:p></o:p></p>
+            <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+              <ul style="margin-top:0in" type="disc">
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l0 level1 lfo3">Ladap_result()
+                  failed:  Can’t contact LDAP server<o:p></o:p></li>
+              </ul>
+              <ul style="margin-top:0in" type="disc">
+                <ul style="margin-top:0in" type="circle">
+                  <li class="MsoListParagraph"
+                    style="margin-left:0in;mso-list:l0 level2 lfo3">Believe
+                    we’ve fixed this one<o:p></o:p></li>
+                </ul>
+              </ul>
+            </blockquote>
+            <p class="MsoNormal">&lt;Richard&gt; Hope this as LDAP
+              configuration issue you faced, and not related to OpenBMC
+              code as such.<br>
+              <br>
+              <br>
+              <o:p></o:p></p>
+            <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+              <ul style="margin-top:0in" type="disc">
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l0 level1 lfo3">Logins
+                  are restricted to the group priv-admin of but user
+                  ‘testuser’ is not a member<o:p></o:p></li>
+              </ul>
+            </blockquote>
+            <p>&lt;Richard&gt;: Is this failure due to SSH login.
+              Because SSH won't make use of ldap privilege mapping. You
+              may need to change
+              <a
+href="https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default"
+                moz-do-not-send="true">
+https://github.com/openbmc/meta-phosphor/blob/master/recipes-core/dropbear/dropbear/dropbear.default</a>
+              if needs LDAP testing in SSH.<o:p></o:p></p>
+            <p>Have you tried bmcweb LDAP login ? Whether you are able
+              to succeed in that ?<o:p></o:p></p>
+            <blockquote style="margin-top:5.0pt;margin-bottom:5.0pt">
+              <ul style="margin-top:0in" type="disc">
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l0 level1 lfo3">Pam_authenticate()
+                  failed, rc=7, Authentication failure<o:p></o:p></li>
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l0 level1 lfo3">Bad
+                  PAM password attempt for ‘testuser’ from: &lt;LDAP
+                  server IP&gt;<o:p></o:p></li>
+              </ul>
+              <p class="MsoNormal"> <o:p></o:p></p>
+              <p class="MsoNormal">Some of these issues we’ve worked
+                through; however, some are still dogging us.  To that
+                end, can someone possibly list\post a basic LDAP server
+                LDIF file with a single user, privilege role and group
+                mapping that you’ve successfully used with OpenBMC?  We
+                assume we are stuck on some trivial LDAP server topology
+                anomaly that is completely escaping us at the moment.<o:p></o:p></p>
+              <p class="MsoNormal"> <o:p></o:p></p>
+              <p class="MsoNormal">As an fyi we have looked at:<o:p></o:p></p>
+              <ol style="margin-top:0in" type="1" start="1">
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l2 level1 lfo10">Gone
+                  through everything obviously ‘ldap’ in the mailing
+                  lists: 
+                  <a href="https://lists.ozlabs.org/pipermail/openbmc/"
+                    moz-do-not-send="true">https://lists.ozlabs.org/pipermail/openbmc/</a><o:p></o:p></li>
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l2 level1 lfo10">Looked
+                  at OpenBMC learning series: 
+                  <a
+                    href="https://github.com/openbmc/openbmc/wiki/Presentations"
+                    moz-do-not-send="true">https://github.com/openbmc/openbmc/wiki/Presentations</a><o:p></o:p></li>
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l2 level1 lfo10">Gone
+                  through the documents here: 
+                  <a
+href="https://github.com/openbmc/docs/blob/master/architecture/user-management.md"
+                    moz-do-not-send="true">
+https://github.com/openbmc/docs/blob/master/architecture/user-management.md</a><o:p></o:p></li>
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l2 level1 lfo10">Looked
+                  at ldap tests and server: 
+                  <a
+                    href="https://github.com/openbmc/openbmc-test-automation"
+                    moz-do-not-send="true">https://github.com/openbmc/openbmc-test-automation</a><o:p></o:p></li>
+                <li class="MsoListParagraph"
+                  style="margin-left:0in;mso-list:l2 level1 lfo10">Spent
+                  more time tweaking Linux files and creating ldap
+                  server configs that I care to admit
+                  <span style="font-family:&quot;Segoe UI
+                    Emoji&quot;,sans-serif">😊</span><o:p></o:p></li>
+              </ol>
+              <p class="MsoNormal"> <o:p></o:p></p>
+              <p class="MsoNormal">BIG thanks in advance!<o:p></o:p></p>
+              <p class="MsoNormal"> <o:p></o:p></p>
+              <p class="MsoNormal">Best,<o:p></o:p></p>
+              <p class="MsoNormal">Donnie<o:p></o:p></p>
+              <p class="MsoNormal"> <o:p></o:p></p>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </div>
+    </blockquote>
+  </body>
+</html>
+
+--------------DAC4AAFAFD016AE42F77D3C1--
 
