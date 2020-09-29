@@ -1,44 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF70327CFAC
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 15:43:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79E3427D52A
+	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 19:54:28 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C10vn3SjMzDqYj
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 23:43:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C16TJ5ftQzDqY5
+	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 03:54:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::529;
+ helo=mail-ed1-x529.google.com; envelope-from=pparth@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=UWlB2LEZ; dkim-atps=neutral
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com
+ [IPv6:2a00:1450:4864:20::529])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C10Mb2LMWzDqPy
- for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 23:18:50 +1000 (AEST)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08TDIC15026530;
- Tue, 29 Sep 2020 16:18:12 +0300
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id 8DFF5639D6; Tue, 29 Sep 2020 16:18:12 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: robh+dt@kernel.org, mark.rutland@arm.com, avifishman70@gmail.com,
- tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
- benjaminfair@google.com, joel@jms.id.au
-Subject: [PATCH v8 5/5] arm: dts: add new device nodes to NPCM750 device tree
- EVB
-Date: Tue, 29 Sep 2020 16:18:07 +0300
-Message-Id: <20200929131807.15378-6-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20200929131807.15378-1-tmaimon77@gmail.com>
-References: <20200929131807.15378-1-tmaimon77@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C16Rt0Kk2zDqWG
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 03:52:54 +1000 (AEST)
+Received: by mail-ed1-x529.google.com with SMTP id l24so2228589edj.8
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 10:52:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=F84W3UnjNzg4PzK54Faj7L3rmt8hjDAXc2lbv1QoLBM=;
+ b=UWlB2LEZ+2dCUWpvqWpxK+l65wxx1iiSyX4BfrFT7rvEeD7KRImpJDtXyJjWqnYhGc
+ ocu/nvbcNKTPOnn9vjiDm+zqOt3/JFl2iRwschHQehsVfD/Uq0ZjBJn5DOCWeKwMIPoK
+ 4qUI9iIOCf+85WYInhhnE0UiCB01BmIKqYAA0KxaiwQqPTsXGH/RkFlk+baOv49FptOS
+ 4cSvljZHUyl4YK8xkmBJiT+r6A2QrPndZ3bv4JwxWX7UYQRJac1Mj/b7g1eAXqNBwRpH
+ QVZpGNU7RPex6HH8D+5Fn8Cg9u/MUNWpMe+zLMgiKpavQ1LBGFznU5szExEz+9LeKxbE
+ F+6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=F84W3UnjNzg4PzK54Faj7L3rmt8hjDAXc2lbv1QoLBM=;
+ b=J0cLaMIHz9+yColy55M9cZ1u2lhMAVedoFPeOj722FtsdjBYPFfRTLm3zJTdkU/Gv3
+ aebDX7v+0SX36hk9vpxePqVJ/QWKuHnf/peH6cy33JyNfrt2zCI+nqXpUMTjJ+ArQl6L
+ qF4eiSiXqSACqeCaCFxecmTZka/oOJAO42tS+qLEm34fDACWxXJut38fNyMhLf4PH+jT
+ QjN60XSaQ9lB9j8NVWcC54L5EtNhmUk7Mru4Tfghx8xNNmujFZExvei6dMFgILVTA6aj
+ kGD+pv3hHAxAWitdRCGVAvxAQw8dC/mIhxaXAgT2jZuJMoitKI48ZefWqtXOrpHwAfvf
+ jk9A==
+X-Gm-Message-State: AOAM5336xjm5D1iak/chN7dXKyODvVy7Ug+5WMA1WxUW7Z6quSSikvVR
+ kCPVCdYKBvUuG742HGe7rnNU/RyBzCVJh3TbH1zEI7afjdwbJg==
+X-Google-Smtp-Source: ABdhPJzt83CGneHV7V2brX6ZrXzsHJqOWfRvWSZLT1DverVw6kM/4tWoWgXTBIzNf2Htc3EIaLBjKQnhiLqZ3UBZUk0=
+X-Received: by 2002:aa7:d417:: with SMTP id z23mr4416355edq.62.1601401963271; 
+ Tue, 29 Sep 2020 10:52:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Parth Shukla <timevortex@google.com>
+Date: Tue, 29 Sep 2020 19:52:07 +0200
+Message-ID: <CAC1Cx+sLnCCWG3UVqaO0ohpsy4ggTQvzQhZHJQBV+EUYb33cQw@mail.gmail.com>
+Subject: Security Working Group Meeting - Wed 30 September
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000002a4f5e05b07773c0"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,594 +69,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the following new device nodes to
-NPCM750 evolution board device tree:
+--0000000000002a4f5e05b07773c0
+Content-Type: text/plain; charset="UTF-8"
 
-        - NPCM7xx Pin controller and GPIO
-        - NPCM7xx PWM and FAN.
-        - NPCM7xx EHCI USB.
-        - NPCM7xx KCS.
-        - NPCM Reset.
-        - NPCM Peripheral SPI.
-        - NPCM FIU SPI.
-        - NPCM HWRNG.
-        - NPCM I2C.
-        - STMicro STMMAC.
+This is a reminder of the OpenBMC Security Working Group meeting scheduled
+for this Wednesday September 30 at 10:00am PDT.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- arch/arm/boot/dts/nuvoton-npcm750-evb.dts     | 367 +++++++++++++++++-
- .../boot/dts/nuvoton-npcm750-pincfg-evb.dtsi  | 157 ++++++++
- 2 files changed, 523 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
+There are currently no items on the agenda
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>.
+Assuming no items are added before the meeting then we have the option of
+1) cancelling or 2) joining to see if anyone wants to bring up any topics
+for discussion. What are people's preferences?
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-index 15f744f1beea..9f13d08f5804 100644
---- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-@@ -4,24 +4,161 @@
- 
- /dts-v1/;
- #include "nuvoton-npcm750.dtsi"
-+#include "dt-bindings/gpio/gpio.h"
-+#include "nuvoton-npcm750-pincfg-evb.dtsi"
- 
- / {
- 	model = "Nuvoton npcm750 Development Board (Device Tree)";
- 	compatible = "nuvoton,npcm750";
- 
-+	aliases {
-+		ethernet2 = &gmac0;
-+		ethernet3 = &gmac1;
-+		serial0 = &serial0;
-+		serial1 = &serial1;
-+		serial2 = &serial2;
-+		serial3 = &serial3;
-+		i2c0 = &i2c0;
-+		i2c1 = &i2c1;
-+		i2c2 = &i2c2;
-+		i2c3 = &i2c3;
-+		i2c4 = &i2c4;
-+		i2c5 = &i2c5;
-+		i2c6 = &i2c6;
-+		i2c7 = &i2c7;
-+		i2c8 = &i2c8;
-+		i2c9 = &i2c9;
-+		i2c10 = &i2c10;
-+		i2c11 = &i2c11;
-+		i2c12 = &i2c12;
-+		i2c13 = &i2c13;
-+		i2c14 = &i2c14;
-+		i2c15 = &i2c15;
-+		spi0 = &spi0;
-+		spi1 = &spi1;
-+		fiu0 = &fiu0;
-+		fiu1 = &fiu3;
-+		fiu2 = &fiux;
-+	};
-+
- 	chosen {
- 		stdout-path = &serial3;
- 	};
- 
- 	memory {
--		reg = <0 0x40000000>;
-+		device_type = "memory";
-+		reg = <0x0 0x20000000>;
-+	};
-+};
-+
-+&gmac0 {
-+	phy-mode = "rgmii-id";
-+	status = "okay";
-+};
-+
-+&gmac1 {
-+	phy-mode = "rgmii-id";
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&fiu0 {
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		spi-rx-bus-width = <2>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		partitions@80000000 {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			bbuboot1@0 {
-+				label = "bb-uboot-1";
-+				reg = <0x0000000 0x80000>;
-+				read-only;
-+				};
-+			bbuboot2@80000 {
-+				label = "bb-uboot-2";
-+				reg = <0x0080000 0x80000>;
-+				read-only;
-+				};
-+			envparam@100000 {
-+				label = "env-param";
-+				reg = <0x0100000 0x40000>;
-+				read-only;
-+				};
-+			spare@140000 {
-+				label = "spare";
-+				reg = <0x0140000 0xC0000>;
-+				};
-+			kernel@200000 {
-+				label = "kernel";
-+				reg = <0x0200000 0x400000>;
-+				};
-+			rootfs@600000 {
-+				label = "rootfs";
-+				reg = <0x0600000 0x700000>;
-+				};
-+			spare1@D00000 {
-+				label = "spare1";
-+				reg = <0x0D00000 0x200000>;
-+				};
-+			spare2@0F00000 {
-+				label = "spare2";
-+				reg = <0x0F00000 0x200000>;
-+				};
-+			spare3@1100000 {
-+				label = "spare3";
-+				reg = <0x1100000 0x200000>;
-+				};
-+			spare4@1300000 {
-+				label = "spare4";
-+				reg = <0x1300000 0x0>;
-+			};
-+		};
-+	};
-+};
-+
-+&fiu3 {
-+	pinctrl-0 = <&spi3_pins>, <&spi3quad_pins>;
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		spi-rx-bus-width = <2>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		partitions@A0000000 {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			system1@0 {
-+				label = "spi3-system1";
-+				reg = <0x0 0x0>;
-+			};
-+		};
- 	};
- };
- 
-+&fiux {
-+	spix-mode;
-+};
-+
- &watchdog1 {
- 	status = "okay";
- };
- 
-+&rng {
-+	status = "okay";
-+};
-+
- &serial0 {
- 	status = "okay";
- };
-@@ -37,3 +174,231 @@
- &serial3 {
- 	status = "okay";
- };
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&lpc_kcs {
-+	kcs1: kcs1@0 {
-+		status = "okay";
-+	};
-+
-+	kcs2: kcs2@0 {
-+		status = "okay";
-+	};
-+
-+	kcs3: kcs3@0 {
-+		status = "okay";
-+	};
-+};
-+
-+/* lm75 on SVB */
-+&i2c0 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+	lm75@48 {
-+		compatible = "lm75";
-+		reg = <0x48>;
-+		status = "okay";
-+	};
-+};
-+
-+/* lm75 on EB */
-+&i2c1 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+	lm75@48 {
-+		compatible = "lm75";
-+		reg = <0x48>;
-+		status = "okay";
-+	};
-+};
-+
-+/* tmp100 on EB */
-+&i2c2 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+	tmp100@48 {
-+		compatible = "tmp100";
-+		reg = <0x48>;
-+		status = "okay";
-+	};
-+};
-+
-+&i2c3 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+/* tmp100 on SVB */
-+&i2c6 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+	tmp100@48 {
-+		compatible = "tmp100";
-+		reg = <0x48>;
-+		status = "okay";
-+	};
-+};
-+
-+&i2c7 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c9 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c14 {
-+	clock-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&pwm_fan {
-+	status = "okay";
-+	fan@0 {
-+		reg = <0x00>;
-+		fan-tach-ch = /bits/ 8 <0x00 0x01>;
-+		cooling-levels = <127 255>;
-+	};
-+	fan@1 {
-+		reg = <0x01>;
-+		fan-tach-ch = /bits/ 8 <0x02 0x03>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+	fan@2 {
-+		reg = <0x02>;
-+		fan-tach-ch = /bits/ 8 <0x04 0x05>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+	fan@3 {
-+		reg = <0x03>;
-+		fan-tach-ch = /bits/ 8 <0x06 0x07>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+	fan@4 {
-+		reg = <0x04>;
-+		fan-tach-ch = /bits/ 8 <0x08 0x09>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+	fan@5 {
-+		reg = <0x05>;
-+		fan-tach-ch = /bits/ 8 <0x0A 0x0B>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+	fan@6 {
-+		reg = <0x06>;
-+		fan-tach-ch = /bits/ 8 <0x0C 0x0D>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+	fan@7 {
-+		reg = <0x07>;
-+		fan-tach-ch = /bits/ 8 <0x0E 0x0F>;
-+		cooling-levels = /bits/ 8 <127 255>;
-+	};
-+};
-+
-+&spi0 {
-+	cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+	Flash@0 {
-+		compatible = "winbond,w25q128",
-+		"jedec,spi-nor";
-+		reg = <0x0>;
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		spi-max-frequency = <5000000>;
-+		partition@0 {
-+			label = "spi0_spare1";
-+			reg = <0x0000000 0x800000>;
-+		};
-+		partition@1 {
-+			label = "spi0_spare2";
-+			reg = <0x800000 0x0>;
-+		};
-+	};
-+};
-+
-+&spi1 {
-+	cs-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+	Flash@0 {
-+		compatible = "winbond,w25q128fw",
-+		"jedec,spi-nor";
-+		reg = <0x0>;
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		spi-max-frequency = <5000000>;
-+		partition@0 {
-+			label = "spi1_spare1";
-+			reg = <0x0000000 0x800000>;
-+		};
-+		partition@1 {
-+			label = "spi1_spare2";
-+			reg = <0x800000 0x0>;
-+		};
-+	};
-+};
-+
-+&pinctrl {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <	&iox1_pins
-+			&pin8_input
-+			&pin9_output_high
-+			&pin10_input
-+			&pin11_output_high
-+			&pin16_input
-+			&pin24_output_high
-+			&pin25_output_low
-+			&pin32_output_high
-+			&jtag2_pins
-+			&pin61_output_high
-+			&pin62_output_high
-+			&pin63_output_high
-+			&lpc_pins
-+			&pin160_input
-+			&pin162_input
-+			&pin168_input
-+			&pin169_input
-+			&pin170_input
-+			&pin187_output_high
-+			&pin190_input
-+			&pin191_output_high
-+			&pin192_output_high
-+			&pin197_output_low
-+			&ddc_pins
-+			&pin218_input
-+			&pin219_output_low
-+			&pin220_output_low
-+			&pin221_output_high
-+			&pin222_input
-+			&pin223_output_low
-+			&spix_pins
-+			&pin228_output_low
-+			&pin231_output_high
-+			&pin255_input>;
-+};
-+
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi b/arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
-new file mode 100644
-index 000000000000..3b3806274adf
---- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-pincfg-evb.dtsi
-@@ -0,0 +1,157 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2018 Nuvoton Technology
-+
-+/ {
-+	pinctrl: pinctrl@f0800000 {
-+		pin8_input: pin8-input {
-+			pins = "GPIO8/LKGPO1";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin9_output_high: pin9-output-high {
-+			pins = "GPIO9/LKGPO2";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin10_input: pin10-input {
-+			pins = "GPIO10/IOXHLD";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin11_output_high: pin11-output-high {
-+			pins = "GPIO11/IOXHCK";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin16_input: pin16-input {
-+			pins = "GPIO16/LKGPO0";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin24_output_high: pin24-output-high {
-+			pins = "GPIO24/IOXHDO";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin25_output_low: pin25-output-low {
-+			pins = "GPIO25/IOXHDI";
-+			bias-disable;
-+			output-low;
-+		};
-+		pin32_output_high: pin32-output-high {
-+			pins = "GPIO32/nSPI0CS1";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin61_output_high: pin61-output-high {
-+			pins = "GPO61/nDTR1_BOUT1/STRAP6";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin62_output_high: pin62-output-high {
-+			pins = "GPO62/nRTST1/STRAP5";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin63_output_high: pin63-output-high {
-+			pins = "GPO63/TXD1/STRAP4";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin160_input: pin160-input {
-+			pins = "GPIO160/CLKOUT/RNGOSCOUT";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin162_input: pin162-input {
-+			pins = "GPIO162/SERIRQ";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin168_input: pin168-input {
-+			pins = "GPIO168/nCLKRUN/nESPIALERT";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin169_input: pin169-input {
-+			pins = "GPIO169/nSCIPME";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin170_input: pin170-input {
-+			pins = "GPIO170/nSMI";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin187_output_high: pin187-output-high {
-+			pins = "GPIO187/nSPI3CS1";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin190_input: pin190-input {
-+			pins = "GPIO190/nPRD_SMI";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin191_output_high: pin191-output-high {
-+			pins = "GPIO191";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin192_output_high: pin192-output-high {
-+			pins = "GPIO192";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin197_output_low: pin197-output-low {
-+			pins = "GPIO197/SMB0DEN";
-+			bias-disable;
-+			output-low;
-+		};
-+		pin218_input: pin218-input {
-+			pins = "GPIO218/nWDO1";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin219_output_low: pin219-output-low {
-+			pins = "GPIO219/nWDO2";
-+			bias-disable;
-+			output-low;
-+		};
-+		pin220_output_low: pin220-output-low {
-+			pins = "GPIO220/SMB12SCL";
-+			bias-disable;
-+			output-low;
-+		};
-+		pin221_output_high: pin221-output-high {
-+			pins = "GPIO221/SMB12SDA";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin222_input: pin222-input {
-+			pins = "GPIO222/SMB13SCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		pin223_output_low: pin223-output-low {
-+			pins = "GPIO223/SMB13SDA";
-+			bias-disable;
-+			output-low;
-+		};
-+		pin228_output_low: pin228-output-low {
-+			pins = "GPIO228/nSPIXCS1";
-+			bias-disable;
-+			output-low;
-+		};
-+		pin231_output_high: pin231-output-high {
-+			pins = "GPIO230/SPIXD3";
-+			bias-disable;
-+			output-high;
-+		};
-+		pin255_input: pin255-input {
-+			pins = "GPI255/DACOSEL";
-+			bias-disable;
-+			input-enable;
-+		};
-+	};
-+};
--- 
-2.22.0
+I'll assume option 2 as the default and dial in unless we get some
+consensus on this thread to cancel the meeting instead.
 
+Access, and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group
+
+Regards,
+Parth
+
+--0000000000002a4f5e05b07773c0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">This is a reminder of the OpenBMC Security Working Group m=
+eeting scheduled for this Wednesday September 30 at 10:00am PDT.<div><br></=
+div><div>There are currently no items on the <a href=3D"https://docs.google=
+.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit">agenda</=
+a>. Assuming no items are added before the meeting then we have the option =
+of 1) cancelling or 2) joining to see if anyone wants to bring up any topic=
+s for discussion. What are people&#39;s preferences?</div><div><br></div><d=
+iv>I&#39;ll assume option 2 as the default and dial in unless we get some c=
+onsensus=C2=A0on this thread to cancel the meeting instead.</div><div><br><=
+/div><div>Access, and notes are in the wiki:<br><a href=3D"https://github.c=
+om/openbmc/openbmc/wiki/Security-working-group" rel=3D"noreferrer" target=
+=3D"_blank">https://github.com/openbmc/openbmc/wiki/Security-working-group<=
+/a></div><div><br></div><div>Regards,</div><div>Parth</div><div></div></div=
+>
+
+--0000000000002a4f5e05b07773c0--
