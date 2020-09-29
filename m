@@ -1,86 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8EC027D61E
-	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 20:50:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F28C27D703
+	for <lists+openbmc@lfdr.de>; Tue, 29 Sep 2020 21:35:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C17k00dcLzDqXq
-	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 04:50:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C18kL4sjzzDqX2
+	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 05:35:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Xp+oQ7/F; dkim-atps=neutral
+ header.s=pp1 header.b=YpmlHQOs; dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C17j42gtDzDqVK
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 04:49:27 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C18jS5zywzDqWK
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 05:34:52 +1000 (AEST)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 08TIZKO9171969; Tue, 29 Sep 2020 14:49:22 -0400
+ 08TJWSDs061274
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 15:34:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=E5cY1/tjOEoeCJNAjelZAr+oxtXfR0fCeruUpai2mZE=;
- b=Xp+oQ7/F2jg7IwqzX03Q2mIO56gxcY8sbZyIXDX7tTZxOGC3+USYQJvS7awUzfnefxpo
- dWJTiqtl/ITq3U6a1DA0UamjYnHNsSK+FDJo6d10J0FjUhkzTKtkME+Lv+/zMzWPIphC
- pwNuY9Djzcvt4uDEPTE1JNmvfckhgVZjxN9C9bs73PtvRRhDUSdE4xSc8KlHx+zbbtr+
- BOOMX59vW0wwVN4kHcCF46Xkeg2smprPChlhWZgTraLCYBz5Hw4AmjdUML2E7ModLvn3
- evcRl5eaKyZDHE/jPSpH0Jte/7GBREAa23+WFaPRnlsHAHXDnD+lHdl8BeY0Oeg0IUes tg== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0a-001b2d01.pphosted.com with ESMTP id 33v8p83nn4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2020 14:49:22 -0400
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08TIl3BV010034;
- Tue, 29 Sep 2020 18:49:21 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma01wdc.us.ibm.com with ESMTP id 33sw996nm8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Sep 2020 18:49:21 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 08TInKcM30736818
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Sep 2020 18:49:21 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D7510AC05F;
- Tue, 29 Sep 2020 18:49:20 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6CCD0AC05B;
- Tue, 29 Sep 2020 18:49:20 +0000 (GMT)
-Received: from SHADE6A.ibmuc.com (unknown [9.211.100.223])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue, 29 Sep 2020 18:49:20 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.8] fsi: Aspeed: Add mutex to protect HW access
-Date: Tue, 29 Sep 2020 13:49:16 -0500
-Message-Id: <20200929184916.33247-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.26.2
+ h=in-reply-to : subject :
+ from : to : cc : date : mime-version : references :
+ content-transfer-encoding : content-type : message-id; s=pp1;
+ bh=0qAV8aiSmw7NO+Gl1lQ3j8d2f83FWmp95UsxZgdwpaI=;
+ b=YpmlHQOswbQ5rM21iQcMeVbtAPYrnh1rLDh/1UpzEPlYJOVpnzSX0/r2wergyI3jkFsb
+ mTZCLCT4FoSp2Vy6WRN9UMvkmwk9jMGd4c8hskqDYut79SW4gDqio7mMw2tnDw7Lv09a
+ nu6Nqptwtgn9b7zxy1D4Fuc3fIQCw11ofX5ZPShDOWSLa2bn/oGhHhzpJYh7+3vlRMNc
+ RqSHRePp8r+O4WSL4MK413ATeDVkJCGDf8wiEgMHl+gIAiyHZ5hr7jFPHGvSM0AOPMCL
+ ZQlGRH6eomG7EdA7sQ+dIy3acXeEWNmd7YMG9JS73j+wEERzN5hsT7gxAvu6MHLo5q6I 4w== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.67])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 33vavr0hts-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Sep 2020 15:34:49 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 29 Sep 2020 19:34:48 -0000
+Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
+ by smtp.notes.na.collabserv.com (10.106.227.16) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 29 Sep 2020 19:34:48 -0000
+Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
+ by us1a3-smtp03.a3.dal06.isc4sb.com
+ with ESMTP id 2020092919344774-682394 ;
+ Tue, 29 Sep 2020 19:34:47 +0000 
+In-Reply-To: <OF79D1C142.B81E873F-ON002585F1.004CE438-002585F1.004D87B5@notes.na.collabserv.com>
+Subject: Re: GUI Design Work Group - Wednesday, 9/30
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: "Derick Montague" <Derick.Montague@ibm.com>
+Date: Tue, 29 Sep 2020 19:34:47 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <OF79D1C142.B81E873F-ON002585F1.004CE438-002585F1.004D87B5@notes.na.collabserv.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 44619
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20092919-7279-0000-0000-000003C89F25
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.000000
+X-IBM-SpamModules-Versions: BY=3.00013918; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01441989; UDB=6.00774898; IPR=6.01224675; 
+ MB=3.00034311; MTD=3.00000008; XFM=3.00000015; UTC=2020-09-29 19:34:48
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-09-29 14:46:11 - 6.00011898
+x-cbparentid: 20092919-7280-0000-0000-00009A6FA7F3
+Message-Id: <OF9DA9FB3B.B9448043-ON002585F2.006B6CE8-002585F2.006B8E4C@notes.na.collabserv.com>
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
  definitions=2020-09-29_11:2020-09-29,
  2020-09-29 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1011
- impostorscore=0 mlxscore=0 spamscore=0 mlxlogscore=995 adultscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=1 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2009290153
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,148 +96,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-There is nothing to prevent multiple commands being executed
-simultaneously. Add a mutex to prevent this.
+> The IBM Design team is out this week for a Design Summit. I am planning t=
+o cancel this week's =20
+> work group and would like to know if regular attendees would prefer to ke=
+ep the schedule in place =20
+> with our next meeting  in two weeks on Wednesday, October 14th or shift t=
+he =20
+> schedule and meet next Wednesday, October 7th? =20
+  =20
+Tomorrow's GUI Work Group will be cancelled. The next =20
+one will be in two weeks on Wednesday, October 14th. =20
+  =20
+  =20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
+=20
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/fsi/fsi-master-aspeed.c | 48 ++++++++++++++++++++-------------
- 1 file changed, 30 insertions(+), 18 deletions(-)
-
-diff --git a/drivers/fsi/fsi-master-aspeed.c b/drivers/fsi/fsi-master-aspeed.c
-index c006ec008a1a..c71d7e9a32b0 100644
---- a/drivers/fsi/fsi-master-aspeed.c
-+++ b/drivers/fsi/fsi-master-aspeed.c
-@@ -8,6 +8,7 @@
- #include <linux/io.h>
- #include <linux/mfd/syscon.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
-@@ -19,6 +20,7 @@
- 
- struct fsi_master_aspeed {
- 	struct fsi_master	master;
-+	struct mutex		lock;	/* protect HW access */
- 	struct device		*dev;
- 	void __iomem		*base;
- 	struct clk		*clk;
-@@ -254,6 +256,8 @@ static int aspeed_master_read(struct fsi_master *master, int link,
- 	addr |= id << 21;
- 	addr += link * FSI_HUB_LINK_SIZE;
- 
-+	mutex_lock(&aspeed->lock);
-+
- 	switch (size) {
- 	case 1:
- 		ret = opb_readb(aspeed, fsi_base + addr, val);
-@@ -265,14 +269,14 @@ static int aspeed_master_read(struct fsi_master *master, int link,
- 		ret = opb_readl(aspeed, fsi_base + addr, val);
- 		break;
- 	default:
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto done;
- 	}
- 
- 	ret = check_errors(aspeed, ret);
--	if (ret)
--		return ret;
--
--	return 0;
-+done:
-+	mutex_unlock(&aspeed->lock);
-+	return ret;
- }
- 
- static int aspeed_master_write(struct fsi_master *master, int link,
-@@ -287,6 +291,8 @@ static int aspeed_master_write(struct fsi_master *master, int link,
- 	addr |= id << 21;
- 	addr += link * FSI_HUB_LINK_SIZE;
- 
-+	mutex_lock(&aspeed->lock);
-+
- 	switch (size) {
- 	case 1:
- 		ret = opb_writeb(aspeed, fsi_base + addr, *(u8 *)val);
-@@ -298,14 +304,14 @@ static int aspeed_master_write(struct fsi_master *master, int link,
- 		ret = opb_writel(aspeed, fsi_base + addr, *(__be32 *)val);
- 		break;
- 	default:
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto done;
- 	}
- 
- 	ret = check_errors(aspeed, ret);
--	if (ret)
--		return ret;
--
--	return 0;
-+done:
-+	mutex_unlock(&aspeed->lock);
-+	return ret;
- }
- 
- static int aspeed_master_link_enable(struct fsi_master *master, int link,
-@@ -317,20 +323,23 @@ static int aspeed_master_link_enable(struct fsi_master *master, int link,
- 
- 	idx = link / 32;
- 	bit = link % 32;
--
- 	reg = cpu_to_be32(0x80000000 >> bit);
- 
--	if (!enable)
--		return opb_writel(aspeed, ctrl_base + FSI_MCENP0 + (4 * idx),
--				  reg);
-+	mutex_lock(&aspeed->lock);
- 
--	ret = opb_writel(aspeed, ctrl_base + FSI_MSENP0 + (4 * idx), reg);
-+	if (!enable)
-+		ret = opb_writel(aspeed, ctrl_base + FSI_MCENP0 + (4 * idx),
-+				 reg);
-+	else
-+		ret = opb_writel(aspeed, ctrl_base + FSI_MSENP0 + (4 * idx),
-+				 reg);
- 	if (ret)
--		return ret;
-+		goto done;
- 
- 	mdelay(FSI_LINK_ENABLE_SETUP_TIME);
--
--	return 0;
-+done:
-+	mutex_unlock(&aspeed->lock);
-+	return ret;
- }
- 
- static int aspeed_master_term(struct fsi_master *master, int link, uint8_t id)
-@@ -431,9 +440,11 @@ static ssize_t cfam_reset_store(struct device *dev, struct device_attribute *att
- {
- 	struct fsi_master_aspeed *aspeed = dev_get_drvdata(dev);
- 
-+	mutex_lock(&aspeed->lock);
- 	gpiod_set_value(aspeed->cfam_reset_gpio, 1);
- 	usleep_range(900, 1000);
- 	gpiod_set_value(aspeed->cfam_reset_gpio, 0);
-+	mutex_unlock(&aspeed->lock);
- 
- 	return count;
- }
-@@ -597,6 +608,7 @@ static int fsi_master_aspeed_probe(struct platform_device *pdev)
- 
- 	dev_set_drvdata(&pdev->dev, aspeed);
- 
-+	mutex_init(&aspeed->lock);
- 	aspeed_master_init(aspeed);
- 
- 	rc = fsi_master_register(&aspeed->master);
--- 
-2.26.2
+  =20
 
