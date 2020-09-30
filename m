@@ -2,92 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063BD27F1BE
-	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 20:58:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E84F927F28D
+	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 21:26:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C1lrN65fKzDqVR
-	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 04:57:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C1mTT23tMzDqVC
+	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 05:26:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=GZrGBiCR; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=mFo8tsX3; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=TsYfho/M; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C1lpP4xCDzDqQC
- for <openbmc@lists.ozlabs.org>; Thu,  1 Oct 2020 04:56:12 +1000 (AEST)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 08UIXTjD149889
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 14:56:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=U+vKF+9x7CydU8BYjo9UL2BgJq4v6C9Ddrvv+ysqF0g=;
- b=GZrGBiCRoq36DSW22EF3pDsbIaw92ldSNokjOHq/BYFMGK0PKyMCmFlBJl8dBsTsIKGt
- a/WJlaXo5z3c2serFci6PdBcAu9ZICR5wrlnDJs+WQ5ElJiUWXy+uki0DtMvU/jIav84
- 7fKExzlBvvDZzuK0Nt2szf3EVpu0HC3dCjc9glvFgXO6CVdqZbsvLHj3SKSoge27iI3m
- /gAnZaB7HBJYZk+zJ3vdqczQbormXl/xJsZ0gdPwnxzaxeX3JwIVZN1Pf8iHVd2fFY5R
- jVcOA0sXsqpRESoENODDw3HJqDPhm8ZGgNCB2thzhNHXzUQQ0MmXcuApQm+7EwJiaYk6 lA== 
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 33vw7vmrhp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 14:56:08 -0400
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 08UIr1E6007092
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 18:56:08 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
- [9.57.198.26]) by ppma02wdc.us.ibm.com with ESMTP id 33sw99ftqk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 18:56:08 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 08UIu7ee10617560
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 18:56:07 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A03E3124053
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 18:56:07 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 73738124052
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 18:56:07 +0000 (GMT)
-Received: from [9.85.190.196] (unknown [9.85.190.196])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 18:56:07 +0000 (GMT)
-Subject: Re: Security Working Group Meeting - Wed 30 September - results
-To: openbmc@lists.ozlabs.org
-References: <CAC1Cx+sLnCCWG3UVqaO0ohpsy4ggTQvzQhZHJQBV+EUYb33cQw@mail.gmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <b08bd188-9a9b-c0a1-fbf4-ce96ca98b400@linux.ibm.com>
-Date: Wed, 30 Sep 2020 13:56:06 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C1mSW6PBXzDqSB
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Oct 2020 05:25:47 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+ by mailout.nyi.internal (Postfix) with ESMTP id 6B9E45C0153;
+ Wed, 30 Sep 2020 15:25:43 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Wed, 30 Sep 2020 15:25:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=c67w7xdhnfuIWY2XA+ks+uDX3o5
+ e+fJYoaArAWNiZUk=; b=mFo8tsX3JIjyEJ1JuT5rf7Tq6ooAVT2Rik5iedFd2h7
+ uQI6RjDam1TiXXfXRArgJLWx3DzmoOGg6c3UonStt4U/8lRJEpJ3K2gcW6MX4IHB
+ YKmyrNyjOEbcTXPz2QW+44q59f+RJ2KXaNJADeoXMQA5mwRYg6Zzjkz8GaqDcp/L
+ lkEKnSBU9PP2SAH2q5SU7Rgyp0ed0Lfe5OJ/MsgZt8GyMEcNsZljTwYi620QWunB
+ c3EiXUTLMGIVuuqJ1aO/Y490bp2JdTwakp1Kh8z9toxqApKtBrDzOQtlcNkS9yjj
+ UYHM+LxT5dS6T0SVKuFmDKzVFc0fbQigim+J0f2ELyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=c67w7x
+ dhnfuIWY2XA+ks+uDX3o5e+fJYoaArAWNiZUk=; b=TsYfho/MRjW6VqqP8Kl9aO
+ Rhej+giwRIuUpEQOUyFf65KDq23dwXZvhOV135jCBfj+OyM5x9ZAcy/Th1ymTFFN
+ /CXAqspOJGh7OEBxJX/lqn2IJhoF6KmPes5AtC5uBsafV3Z/Kg0NUKZiUYgaiKMy
+ S3Q4G6RvuQoANcmWt7p13aDro6sfi5wBNP+lvQTA7Mlb9+A3j/xdCz/bFYGyeqiD
+ ZHQine+o0pHeFcwP+qFvoX7ybEJ7gijKWCKwPGHAtao8kMfjtApVlIYp+Liut6Tq
+ MgvuJJJkIYOFmEEcKzqkn88KKxh0L5r0QilVDVYoxz8gHmUoyKuRX0BE03Np8J6Q
+ ==
+X-ME-Sender: <xms:ttt0X2VqbSP0bY_ZZIcYSc0dq__dlYRJs-H-AffOXguSymi7w6wTLA>
+ <xme:ttt0XyknP1bxGMLvSs8KO-i_dEW6ojtw7m0oJqAwLyIaCTY3QbWXU5KQDMfZqCEJm
+ er2NSXQi7b9PRRnhRk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrfedvgddufeefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepkeduuedtfeeihfehfeehfedvjeeu
+ jeeikedtteehledvhfelheekgedvieevkefhnecukfhppeejiedrvdehtddrkeegrddvfe
+ einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
+ thhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:ttt0X6baPhWIVr-KDhmZLGui9MbkfhN3DUNE1H3k-oiAGQ3G4nVcbw>
+ <xmx:ttt0X9WoH07AA6E-BIxe1MaO2scJUZmBfElEkhDe2D6GIv8PLNCeZA>
+ <xmx:ttt0XwkFyktase221680m1IxdwDI1xdmETDbCKUnzWNoE6ejc1YVzA>
+ <xmx:t9t0X3tmMqOTtD4xnojNIXFNiY1r_qhj9fsCwyCBbRcxfgPTxtR8RA>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 60FAC3280065;
+ Wed, 30 Sep 2020 15:25:42 -0400 (EDT)
+Date: Wed, 30 Sep 2020 14:25:39 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Oskar Senft <osk@google.com>
+Subject: Re: Human readable POST code messages
+Message-ID: <20200930192539.GB6152@heinlein>
+References: <CY4PR04MB1033438E15ECB1EBE2E1D02CB9330@CY4PR04MB1033.namprd04.prod.outlook.com>
+ <CABoTLcQQFTCnyv0xxtHoDNQDYOF3JeBrFah2fFjk1BRG+WB-GQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAC1Cx+sLnCCWG3UVqaO0ohpsy4ggTQvzQhZHJQBV+EUYb33cQw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-09-30_10:2020-09-30,
- 2020-09-30 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 mlxscore=0 clxscore=1015
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2006250000 definitions=main-2009300148
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="2VcK7Ezgm4IMdfSa"
+Content-Disposition: inline
+In-Reply-To: <CABoTLcQQFTCnyv0xxtHoDNQDYOF3JeBrFah2fFjk1BRG+WB-GQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,113 +96,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Brad Chou <bradc@hyvedesignsolutions.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--2VcK7Ezgm4IMdfSa
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 9/29/20 12:52 PM, Parth Shukla wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this...
-> This Message Is From an External Sender
-> This message came from outside your organization.
->
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday September 30 at 10:00am PDT.
->
-> There are currently no items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>. 
-> Assuming no items are added before the meeting then we have the option 
-> of 1) cancelling or 2) joining to see if anyone wants to bring up any 
-> topics for discussion. What are people's preferences?
+On Wed, Sep 30, 2020 at 07:42:47AM -0400, Oskar Senft wrote:
+> Hi Brad
+>=20
+> I had thought about this before. The main issue I found is that the meani=
+ng
+> of the POST code messages are highly dependent on the particular platform
+> (i.e. BIOS) emitting them, i.e. there's no generic mapping that's always
+> correct.
+>=20
+> Having said that, given that there are only a limited number of BIOS
+> vendors, it might be possible to generate a few lists and make the BIOS
+> vendor a config option to select the right mapping.
+>=20
+> What's your use case?
 
-Thanks Parth.  We added 4 agenda items and discussed them, as summarized 
-below.
+I would like to know more about the underlying use-case.  How do you
+intend to expose these?  Is this "WithMessage" usable for Redfish and
+the WebUI or is it only for internal use by CLI tools?
 
-- Joseph
+I think a bigger question is how we handle translation.  I think it is a
+bad direction to have individual processes providing "human consumable"
+strings because you need to translate them at some point.  We maybe
+should look at a message registry design of some sort that can help
+facilitate translation.
 
+Putting very little thought behind it, we might want to define some kind
+of interface (ex. MessageRegistry) with a method:
 
-1 Call for “Additional Topics for Learning Series” includes a security 
-topic: how project report/handle CVEs, designing for security, secure 
-boot, privileges etc.  What topics should this cover?
+    Message(language, interface, property, value) -> string
 
-ANSWER:
+> On Wed, Sep 30, 2020, 7:23 AM Brad Chou <bradc@hyvedesignsolutions.com>
+> wrote:
+>=20
+> > Hi,
+> >
+> > Is it possible to implement an interface that decode each post code int=
+o a
+> > manful string ?
+> >
+> > For example, if code 0x10 is mapped to =E2=80=9CPower-on initialization=
+ of the
+> > host processor=E2=80=9D.
+> >
+> > Then, in the
+> > phosphor-dbus-interfaces/xyz/openbmc_project/State/Boot/PostCode.interf=
+ace.yaml,
+> >
+> > We have the GetPostCodes method, that can return the post codes =E2=80=
+=9C0x10=E2=80=9D.
+> >
+> > Can we add another method GetPostCodesWithMessage to return the post co=
+de
+> > 0x10 and its human readable message =E2=80=9CPower-on initialization of=
+ the host
+> > processor=E2=80=9D ?
+> >
+> >
+> >
+> > Thanks.
+> >
 
-Joseph will email an outline for the talk.
+--=20
+Patrick Williams
 
+--2VcK7Ezgm4IMdfSa
+Content-Type: application/pgp-signature; name="signature.asc"
 
-2 Do we want to look at items from our “security assurance workflow” 
-linked above?  For example, what items from the CSIS paper are high 
-priority for OpenBMC?
+-----BEGIN PGP SIGNATURE-----
 
-DISCUSSION:
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9027EACgkQqwNHzC0A
+wRnOOA//buWuUBj8Wz4B5Cd5xAZuL6KX+A6mYFjVONb16MhIz1FUc4JgTrDJTDBp
+xSWvBLB7nhPCqm7QkeBOJwZFna+17aUCp1ASwnZ5ZL5TbCijMqBem1850yx2jPWR
+uoCYNYeuGJKPYYSDD1C/ho9GX6rFLvYzFjbOFCaULqUCoAcYpAOF5fsUqVgOnC7s
+pw4wO4an2+WB3EaMmJTsVgFnRrtrn52ayRPYSd+dAuhujn+/M2FDISf+Af36fhCP
+hHvrqV93ke16i8SS2ZaAThBr+w2srkfev3NqsnHyf2GS2vH6xVQsIuf0vLAE4aJl
+U3eZFXHznHlcLyZ2bhau6IXkNKG+8/aKOQSi9AUZtQFph2zLYWJwjmZTdQiLHCBB
+PWMH2my9QYcN/475LWHAMkcPwHn25ffF0B5MMyodnG8tB14dHzfEUWFBCtSk5SDN
+RY9qbxvrKGkmSH5DBrA+rgdRCUwdBLAwqp5PixT22A7URiFHE7de3apY9NITqi17
+5Tf2JWZG1xE+X3LWi+1B6RGQqqZLP5Ti/l6gKmq2muTaPcSiKquIW3E+S0l+S5EH
+DkuVcCNwpLRa24hpDXFUpUSnnN3lRE8b8vmsTCBplrQdHpGtre6BKm2xUtf2rC9+
+5oMY0ptK4lLkDzkaHuOFgxuEaTD4Vv9f3LqvY1DVXk/vKOYmqd8=
+=de3u
+-----END PGP SIGNATURE-----
 
-Which processes should the OpenBMC project prioritize? Example:
-
-  *
-
-    Follow the code review process to prevent malicious code being inserted.
-
-  *
-
-    Inadequate project docs.
-
-  *
-
-    Use interface docs to move toward threat modeling.
-
-  *
-
-    What will OpenBMC do if github fails and loses the source code?  How
-    do we implement secure disaster recovery?  (Ideas discussed were to
-    establish a secure server and then collaborate to merge our private
-    copies into the “official” source.)
-
-NEXT Step: Joseph to send email.
-
-
-3 Getting mTLS-only option to be supported by Redfish standard: 
-https://redfishforum.com/thread/375/mtls-enforcement-openbmcs-redfish-implementation
-
-ANSWER:
-
-There is interest in OpenBMC supporting mTLS-only use case.  This is a 
-good example of disabling interfaces that are not needed (specifically, 
-password authentication).
-
-Please contribute to the Redfish thread.  Attend the private Redfish 
-forum meeting to push this forward.
-
-
-4 Short update on privilege separation progress
-
-ANSWER:
-
-Anton walked us through his progress, including:
-
-  *
-
-    D-bus broker has support for ACLs.
-
-  *
-
-    Enable systemd-nss - Use supplementary groups for dynamic users.
-
-  *
-
-    Working on net ipmid privileges, next is bmcweb.
-
-Start a wiki to track daemons capabilities needed, sandboxing models, 
-file access, etc.
-
-
->
-> I'll assume option 2 as the default and dial in unless we get some 
-> consensus on this thread to cancel the meeting instead.
->
-> Access, and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group
->
-> Regards,
-> Parth
-
+--2VcK7Ezgm4IMdfSa--
