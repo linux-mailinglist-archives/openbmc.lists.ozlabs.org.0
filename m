@@ -2,38 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3009F27E264
-	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 09:15:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FB6C27E30C
+	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 09:52:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C1SFy4kKgzDqXN
-	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 17:15:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C1T5058LtzDqW9
+	for <lists+openbmc@lfdr.de>; Wed, 30 Sep 2020 17:52:52 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::243;
+ helo=mail-lj1-x243.google.com; envelope-from=aladyshev22@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=nuvoton.com
- (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
- envelope-from=tali.perry@nuvoton.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=gmail.com
-Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
- [212.199.177.27])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=e6OQ/6ii; dkim-atps=neutral
+Received: from mail-lj1-x243.google.com (mail-lj1-x243.google.com
+ [IPv6:2a00:1450:4864:20::243])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C1SF465gyzDqDG
- for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 17:14:44 +1000 (AEST)
-Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 08U7DuH7016068;
- Wed, 30 Sep 2020 10:13:56 +0300
-Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
- id D7798639D5; Wed, 30 Sep 2020 10:13:55 +0300 (IDT)
-From: Tali Perry <tali.perry1@gmail.com>
-To: wsa@kernel.org, andriy.shevchenko@linux.intel.com, xqiu@google.com,
- kunyi@google.com, benjaminfair@google.com, avifishman70@gmail.com,
- joel@jms.id.au, tmaimon77@gmail.com
-Subject: [PATCH v1] i2c: npcm7xx: Support changing bus speed using debugfs.
-Date: Wed, 30 Sep 2020 10:13:42 +0300
-Message-Id: <20200930071342.98691-1-tali.perry1@gmail.com>
-X-Mailer: git-send-email 2.22.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C1T4C0CnSzDqW7
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 17:52:07 +1000 (AEST)
+Received: by mail-lj1-x243.google.com with SMTP id b19so731098lji.11
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 00:52:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=1c5OyVXbGVrRIGQ31bSb8EMeT1TKCNaKbCqWw/eY1rw=;
+ b=e6OQ/6iiFYWMWHAitUHmwvrPUU3oxubvcaJgKgJuoHD4ow0cjFLLK7vB5Tet2Xkt0B
+ ZZJ3PIVNVH7XBTQOOf0otpFRRYLXtaZl6bSeMidUYKqSA5/vS4LaiDlRKQ3LwvmElvQ/
+ HYe1E6N2UL8i9dSFxgMxun+nFbWa9OVZnNSHMD+mivx0i40UtHKdji5W2ffQVQE5BUL8
+ +CY0ypgv97VE2YsH+7DZVezR8JkumsYssYe3aJ4Qdh3TpiZsNuKQk5oS9zlExZVxrDcD
+ hKYGDqEe92whCVTI3PzBb042FqWu6TZnO2w8xwhwWVgWrUXqS3bIXq3gn8exicdQ2Ix9
+ zrRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=1c5OyVXbGVrRIGQ31bSb8EMeT1TKCNaKbCqWw/eY1rw=;
+ b=czCWlophzwQ66pHkgHyHxD3RJyGAkBTVRvqm6h43a33Zuh2ZRPxaSS2donIAUP9Dw9
+ kbYkGBamv/AEYP7/sG+Sm5ccBr7gcGdZYuwhH30c5ltsoU97q/u4D16qTGdr0vQSF8PE
+ NJOOmypt3IKvabVzru9CVRnnt3CZX2/g7cIwt4+5J5Tq+7sOHu3ckkWuFSl/Qk4HloUn
+ W/fkkB4doo4Zj5rGVivjxgGjx5RMWMFv0cEWNeMEiLvWutSX62SmECgMUXk9oiE7ijFO
+ gEF76S0YjQJ0zDtasPfu6iAHBW+3zBWFSEvPdhK13kTbDTGlFrfoAjcr8kgzOHvGNGA3
+ xvWQ==
+X-Gm-Message-State: AOAM532jU5AFYS8dh608p+H1jY1B3B1yQGrSYYJYbCAY3BLgDqG7Fi2Q
+ hZPqDoWph15+2rfcVmtOt3A=
+X-Google-Smtp-Source: ABdhPJzzl+Gh1yUgNSEl0LPkcxctavTHVz3KGQLyuUu5JOJfQJ0jYFLPSW8bNK0YfnyQ9I1jMvTIMA==
+X-Received: by 2002:a2e:b8d4:: with SMTP id s20mr450558ljp.232.1601452321447; 
+ Wed, 30 Sep 2020 00:52:01 -0700 (PDT)
+Received: from PC10319.localdomain ([82.97.198.254])
+ by smtp.gmail.com with ESMTPSA id c19sm97275lfc.222.2020.09.30.00.52.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Sep 2020 00:52:00 -0700 (PDT)
+From: Konstantin Aladyshev <aladyshev22@gmail.com>
+To: Joel Stanley <joel@jms.id.au>,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.8] ARM: dts: aspeed: amd-ethanolx: Update KCS
+ nodes to use v2 binding
+Date: Wed, 30 Sep 2020 10:51:53 +0300
+Message-Id: <20200930075153.2115-1-aladyshev22@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -47,78 +78,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Tali Perry <tali.perry1@gmail.com>,
- linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Konstantin Aladyshev <aladyshev22@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Systems that can dinamically add and remove slave devices
-often need to change the bus speed in runtime.
-This patch exposes the bus frequency to the user.
-This feature can also be used for test automation.
+KCS nodes compatible property in the 'aspeed-g5.dtsi' file was
+changed to use v2 binding in the commit fa4c8ec6feaa
+(ARM: dts: aspeed: Change KCS nodes to v2 binding).
+For the proper initialization of /dev/ipmi-kcs* devices
+KCS node variables also need to be changed to use v2 binding.
 
-Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Konstantin Aladyshev <aladyshev22@gmail.com>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 36 ++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 2ad166355ec9..44e2340c1893 100644
---- a/drivers/i2c/busses/i2c-npcm7xx.c
-+++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2208,6 +2208,41 @@ static const struct i2c_algorithm npcm_i2c_algo = {
- /* i2c debugfs directory: used to keep health monitor of i2c devices */
- static struct dentry *npcm_i2c_debugfs_dir;
+diff --git a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+index 60ba86f3e5bc..89ddc3847222 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+@@ -139,17 +139,17 @@ lm75a@4f {
  
-+static int i2c_speed_get(void *data, u64 *val)
-+{
-+	struct npcm_i2c *bus = data;
-+
-+	*val = (u64)bus->bus_freq;
-+	return 0;
-+}
-+
-+static int i2c_speed_set(void *data, u64 val)
-+{
-+	struct npcm_i2c *bus = data;
-+	int ret;
-+
-+	if (val < (u64)I2C_FREQ_MIN_HZ || val > (u64)I2C_FREQ_MAX_HZ)
-+		return -EINVAL;
-+
-+	if (val == (u64)bus->bus_freq)
-+		return 0;
-+
-+	i2c_lock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
-+
-+	npcm_i2c_int_enable(bus, false);
-+
-+	ret = npcm_i2c_init_module(bus, I2C_MASTER, (u32)val);
-+
-+	i2c_unlock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
-+
-+	if (ret)
-+		return -EAGAIN;
-+
-+	return 0;
-+}
-+
-+DEFINE_DEBUGFS_ATTRIBUTE(i2c_clock_ops, i2c_speed_get, i2c_speed_set, "%lld\n");
-+
- static void npcm_i2c_init_debugfs(struct platform_device *pdev,
- 				  struct npcm_i2c *bus)
- {
-@@ -2223,6 +2258,7 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
- 	debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
- 	debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
- 	debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
-+	debugfs_create_file("i2c_speed", 0644, d, bus, &i2c_clock_ops);
+ &kcs1 {
+ 	status = "okay";
+-	kcs_addr = <0x60>;
++	aspeed,lpc-io-reg = <0x60>;
+ };
  
- 	bus->debugfs = d;
- }
-
-base-commit: 06d56c38d7d411c162e4d406a9864bed32e30e61
+ &kcs2 {
+ 	status = "okay";
+-	kcs_addr = <0x62>;
++	aspeed,lpc-io-reg = <0x62>;
+ };
+ 
+ &kcs4 {
+ 	status = "okay";
+-	kcs_addr = <0x97DE>;
++	aspeed,lpc-io-reg = <0x97DE>;
+ };
+ 
+ &lpc_snoop {
 -- 
-2.22.0
+2.25.1
 
