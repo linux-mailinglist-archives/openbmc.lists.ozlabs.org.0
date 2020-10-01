@@ -1,89 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D364B27F6D4
-	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 02:43:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86A5527F90C
+	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 07:30:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C1vWN54ChzDqTn
-	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 10:43:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C21tT3jQLzDqSt
+	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 15:30:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.224;
- helo=new2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
+ helo=mail-qk1-x742.google.com; envelope-from=tali.perry1@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=mLcvBBsy; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=ZDfBzDoE; 
- dkim-atps=neutral
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com
- [66.111.4.224])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=uSUNB1YV; dkim-atps=neutral
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
+ [IPv6:2607:f8b0:4864:20::742])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C1vVS6CtgzDqSy;
- Thu,  1 Oct 2020 10:42:56 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailnew.nyi.internal (Postfix) with ESMTP id 29CFF5800FB;
- Wed, 30 Sep 2020 20:42:53 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute4.internal (MEProxy); Wed, 30 Sep 2020 20:42:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm3; bh=EAxp7TOknCizBkBbVqypDZ9urDOLrts
- qdGCCWqFKxMA=; b=mLcvBBsyfUNEdQKt6/kQngIHD8LwfD4zYZpm5VL8L3L1Iiq
- JPVt33Nk+QPj7ZM43nl/DKHDid5vSZYhraWFsS+BJpdf4z2dV98GZwOjW37JM2aC
- OUr9IlZgaztLyz5AtUPNuv6qJB1Rc8g3KqGsAWmLFLBBEF8iilbDAwzx/k7lPE+I
- Eg76fa49VEV40lNjoVeYtGKXnm8MJDl0U2Zikew1rizsXewQzC7K1ZOOjgnQe95n
- hsYCtk2pzMI3iRGCRvQsKDMaqoepWrqVeYcReTof+ilFV1Yg/Qy6m30v7TlqIXaG
- FuB+IQqW13nLwzKVb9oHj51GgSvcnpNysgHC+VA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=EAxp7T
- OknCizBkBbVqypDZ9urDOLrtsqdGCCWqFKxMA=; b=ZDfBzDoEbEUuoiPnm7hBs9
- KGPnwcGR/M8s0FcLCv/WKDOJIIdNBXFFMSe2V1dC/xyq10q+D1cRQWWlwJB/2wSg
- kWuMcBHPcieG0uPma+lw/nOiG+kSOePHcyeZFpENYN3M3jY9oYWpY/LUaTamCuA2
- 5pYbhif8SoAriqFxYa3nDtm31MbpK50+unXd+b6a2PMi49ljUz/HnCXDrmMxBs3x
- 1GyIOz2t1RQRLcNiLrPxU58o8zB+c3gXAML7SSb9mouYfCb6MB3D8zQq0jhSPO2P
- 8CPc4NUQ/shZzsvPMAbaitSEfqwTycN/FH/CWn8etY8jaapvjbA32WClAk2/Ey8g
- ==
-X-ME-Sender: <xms:CyZ1X-x6oNm9na-EyRNLO6h_WwH0PTrSQGgZ5NQcaN7A-Ho0RdBFxg>
- <xme:CyZ1X6R6Shkq3t7CorpIsonnhN0Vew45nroSVwFmoi5rq8pnN5-fapJkXCSCDzctM
- BFNG_f79yT1XIMNfw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrfeefgdeflecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:CyZ1XwXode2iKrrxnWGE0M3n_DxBzfn2RWwpYaSUvDCgIL8zMOp4GA>
- <xmx:CyZ1X0i0J4nE8C7FJwaCMeC0gLUsIiQF3DKqpX-x8RXyEs6o75pmkw>
- <xmx:CyZ1XwA3hPBavTpqqG-hVGona3FdbYAgEGsnOAEK8UjXOGTTR6wbBA>
- <xmx:DSZ1X06JZpbiquTh9jjC-u9w3A8tu9AyzufgNL6xCUi2rPR2Z_Dbig>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E221BE0181; Wed, 30 Sep 2020 20:42:49 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-382-ge235179-fm-20200928.002-ge2351794
-Mime-Version: 1.0
-Message-Id: <3755eb41-e939-41b4-93ff-7bfcbdbc9f5b@www.fastmail.com>
-In-Reply-To: <CACRpkdbn9294JnddMsmGooCe7KCxMiGbuAZ+OAuLwPkZUYD10A@mail.gmail.com>
-References: <20200911034631.8473-1-chiawei_wang@aspeedtech.com>
- <20200911034631.8473-5-chiawei_wang@aspeedtech.com>
- <CACRpkdbn9294JnddMsmGooCe7KCxMiGbuAZ+OAuLwPkZUYD10A@mail.gmail.com>
-Date: Thu, 01 Oct 2020 10:12:30 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Linus Walleij" <linus.walleij@linaro.org>,
- "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
-Subject: Re: [PATCH 4/4] pinctrl: aspeed-g5: Fix LPC register offsets
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C21sZ64CszDqSt
+ for <openbmc@lists.ozlabs.org>; Thu,  1 Oct 2020 15:29:47 +1000 (AEST)
+Received: by mail-qk1-x742.google.com with SMTP id w16so4154742qkj.7
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Sep 2020 22:29:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=zhY5hxIQkMTQaQ3nm7tEbfUHYEvpPQmlr9WcnS8917k=;
+ b=uSUNB1YV1xnHksocWCene6AYfImFzQe38OeAIIpF2pXuVPgqmJebEZzs8DSzWz0od8
+ ji7f+nFXQmoXXiaeKy4UaG2djRyE6mZ3fUvHR5/agPA2dTlaMar/T5nIasN+tnOpbJ0f
+ o+0Ja2Ard0/NH5M4gE0Xpt1ErwFWKISSg8q72J3Fw3uK6IQebb99cSLlCpcui73d+M20
+ NXvbv2S0mPg+nlPWb8IfcxKHdFURFLmKElqnXZnt6dHLVTKHcgofpf3vqVCfTK6idjBS
+ KdWrKH//+EWHMBOiex0fSBIBy0wPjvZ6z6wbakp48M3guMWBoSZyCjgqpZpJa4JEaLMx
+ vNxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=zhY5hxIQkMTQaQ3nm7tEbfUHYEvpPQmlr9WcnS8917k=;
+ b=Vbox5+M2KsVoOyQo/BLc3ZNDJTFOSULg4m2W0yR1jScfR/fXb7Wf7Lq2lqsGlBDo4L
+ v2O1Yul6duItXsxpmKoKC0ypmM6+C6gVaaq7VfGUR2dIGaAr3NqhV0MxJq+4/GtWS8mD
+ RJy9z+LbMXMiG5TJHUi1gc8he20HPHAcCAzP1GdDfIA/0Lgzw/M4rBsqFK47m5mzsQmV
+ PrHqiWNBgZ0Wjt+Act2dJ77bCG0i8gNUzokWRGr8I93PZxI6+MgCH9h1u3K5LdB29XVg
+ fmobggskQT7irzyJzWgNzqRKgHOUEPyTl2+2MkrKJ9CH4zSsabQNomgod6WzLO6ZoIms
+ ppew==
+X-Gm-Message-State: AOAM530GX3ehrQOgXNFNTYkLd5vkN7StkDYkBPy3GMkQugPZmgeCt5wZ
+ 35jgaS88tl+u0u+XX2WMlyiUn0/SXiWCxVgsc0s=
+X-Google-Smtp-Source: ABdhPJwFIcT/1nd4aA8mRqtPX7Afn5mDgHKLPqj0BEqHV6EY6auuZ5x+TyxSUGlFdRvfF7aKpN4c+3WG+ng0xQs5nPw=
+X-Received: by 2002:ae9:e914:: with SMTP id x20mr5979986qkf.163.1601530181916; 
+ Wed, 30 Sep 2020 22:29:41 -0700 (PDT)
+MIME-Version: 1.0
+References: <20200930071342.98691-1-tali.perry1@gmail.com>
+ <20200930093117.GY3956970@smile.fi.intel.com>
+In-Reply-To: <20200930093117.GY3956970@smile.fi.intel.com>
+From: Tali Perry <tali.perry1@gmail.com>
+Date: Thu, 1 Oct 2020 08:32:02 +0300
+Message-ID: <CAHb3i=sWxiVLCC0hfY+6-_x92ZEMY7Ctyyuz9CbMYxrH_BqAZQ@mail.gmail.com>
+Subject: Re: [PATCH v1] i2c: npcm7xx: Support changing bus speed using debugfs.
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,36 +73,132 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linux ARM <linux-arm-kernel@lists.infradead.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Corey Minyard <minyard@acm.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Cyril Bur <cyrilbur@gmail.com>,
- Haiyue Wang <haiyue.wang@linux.intel.com>
+Cc: Alex Qiu <xqiu@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ avifishman70@gmail.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, Linux I2C <linux-i2c@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Wed, Sep 30, 2020 at 12:31 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Wed, Sep 30, 2020 at 10:13:42AM +0300, Tali Perry wrote:
+> > Systems that can dinamically add and remove slave devices
+>
+> dynamically
+>
+> > often need to change the bus speed in runtime.
+>
+> > This patch exposes the bus frequency to the user.
+>
+> Expose the bus frequency to the user.
+>
+> > This feature can also be used for test automation.
+>
+> In general I think that DT overlays or so should be user rather than this.
+> If we allow to change bus speed settings for debugging purposes it might make
+> sense to do this on framework level for all drivers which support that (via
+> additional callback or so).
+
+Do you mean adding something like this:
+
+struct i2c_algorithm {
+/*
+* If an adapter algorithm can't do I2C-level access, set master_xfer
+* to NULL. If an adapter algorithm can do SMBus access, set
+* smbus_xfer. If set to NULL, the SMBus protocol is simulated
+* using common I2C messages.
+*
+* master_xfer should return the number of messages successfully
+* processed, or a negative value on error
+*/
+int (*master_xfer)(struct i2c_adapter *adap, struct i2c_msg *msgs,
+  int num);
+....
+int (*set_speed)(struct i2c_adapter *adap, unsigned int speed);
+....
+/* To determine what the adapter supports */
+u32 (*functionality)(struct i2c_adapter *adap);
+
+...
+};
+
+And expose this feature in functionality?
 
 
-On Tue, 29 Sep 2020, at 22:12, Linus Walleij wrote:
-> On Fri, Sep 11, 2020 at 5:47 AM Chia-Wei, Wang
-> <chiawei_wang@aspeedtech.com> wrote:
-> 
-> > The LPC register offsets are fixed to adapt to the LPC DTS change,
-> > where the LPC partitioning is removed.
+>
+> > Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
+> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+> > ---
+> >  drivers/i2c/busses/i2c-npcm7xx.c | 36 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 36 insertions(+)
 > >
-> > Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
-> 
-> I can apply this one patch if I get a review from one of the
-> Aspeed pinctrl maintainer.
-> 
-> Andrew?
-
-There needs to be a v2 of the series that fixes the binding documentation, 
-which will drive some discussion about backwards compatibility. So lets not 
-apply this patch just yet.
-
-Thanks for touching base!
-
-Andrew
+> > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+> > index 2ad166355ec9..44e2340c1893 100644
+> > --- a/drivers/i2c/busses/i2c-npcm7xx.c
+> > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
+> > @@ -2208,6 +2208,41 @@ static const struct i2c_algorithm npcm_i2c_algo = {
+> >  /* i2c debugfs directory: used to keep health monitor of i2c devices */
+> >  static struct dentry *npcm_i2c_debugfs_dir;
+> >
+> > +static int i2c_speed_get(void *data, u64 *val)
+> > +{
+> > +     struct npcm_i2c *bus = data;
+> > +
+> > +     *val = (u64)bus->bus_freq;
+> > +     return 0;
+> > +}
+> > +
+> > +static int i2c_speed_set(void *data, u64 val)
+> > +{
+> > +     struct npcm_i2c *bus = data;
+> > +     int ret;
+> > +
+> > +     if (val < (u64)I2C_FREQ_MIN_HZ || val > (u64)I2C_FREQ_MAX_HZ)
+> > +             return -EINVAL;
+> > +
+> > +     if (val == (u64)bus->bus_freq)
+> > +             return 0;
+> > +
+> > +     i2c_lock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
+> > +
+> > +     npcm_i2c_int_enable(bus, false);
+> > +
+> > +     ret = npcm_i2c_init_module(bus, I2C_MASTER, (u32)val);
+> > +
+> > +     i2c_unlock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
+>
+> While all these explicit castings?
+>
+> > +
+> > +     if (ret)
+> > +             return -EAGAIN;
+> > +
+> > +     return 0;
+> > +}
+>
+> > +
+>
+> No need to have this blank line
+>
+> > +DEFINE_DEBUGFS_ATTRIBUTE(i2c_clock_ops, i2c_speed_get, i2c_speed_set, "%lld\n");
+> > +
+> >  static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+> >                                 struct npcm_i2c *bus)
+> >  {
+> > @@ -2223,6 +2258,7 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+> >       debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
+> >       debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
+> >       debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
+> > +     debugfs_create_file("i2c_speed", 0644, d, bus, &i2c_clock_ops);
+> >
+> >       bus->debugfs = d;
+> >  }
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
