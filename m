@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A2FE280D88
-	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 08:36:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EEBE280D8E
+	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 08:39:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C2gHL0JKMzDqch
-	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 16:35:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C2gMY4lhQzDqLT
+	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 16:39:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,67 +17,70 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=kDgT+l7e; 
+ header.s=fm3 header.b=XBC2cGXN; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=AqKQIe9A; 
+ header.a=rsa-sha256 header.s=fm3 header.b=iLz3hH2l; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C2gGJ2Cp8zDqDf
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C2gGJ2FlNzDqDr
  for <openbmc@lists.ozlabs.org>; Fri,  2 Oct 2020 16:35:02 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 13A288E1;
+ by mailout.west.internal (Postfix) with ESMTP id AF910917;
  Fri,  2 Oct 2020 02:34:59 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
  by compute3.internal (MEProxy); Fri, 02 Oct 2020 02:34:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=fm3; bh=p5JF5pnpGkbGSYyJlhXCg3sjgN
- U9Fd9BRqw5p/OorIw=; b=kDgT+l7etZ3YcskvP2+5APsX7RWouS6d4vaeK8nJIs
- SkWGUFfJvvti6p8l1NlHiYuDc+NZYoh07E1yjxEymikngi6xYbh7Oa9iPPKg2y5I
- j1an657VGFl0IIjDXgT5pP3QgQN9RO0Xun20jmGLj8drKyBiB9Vez3wjgHHTrjV5
- /md8lxiU/bb5+sKFbart7XjtryE9Ly8rq+9zJjorFBkxhigIJhJy3ifTVe/2Qkib
- Xn19/Nxk+rOYkF7UF0pUBf4F4LRXmDZnsP56GyZng01cu4+rWq7CBgjJDqkZxgwR
- d3EvKLazcr/VW5OgEal3iwYItKdqaRpJoMp4IGrrEtiA==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=fm3; bh=dnuu51apKzkSW
+ yyFZhbwMJUaR/W7hcBh9deHqhIeOyo=; b=XBC2cGXNkkmVZAze9EKipOaoWeWJF
+ vZBEcElShEE1x4LdMGtegyR70fPFOBKV+8gNUvWfn5xPBJNC+eiTI1vJXEzIhTAE
+ +XqLS/bMJSN85Z2tbjbIuHWAGL1jUNl2PJQ4SoWGT29vx3/GJaP7K9DPgSjQdf+z
+ amMSw35GBiWrl6Vrb94CE2EsoTLTsohrt+gXFfXmJeYR/2DqPLMtdJlFnhmXa6wd
+ GM+fisstykh3sM0jIgmg1+h/+SJtV8SJTvdziv3XKv8IYTMNILb7/iNauRv4amVv
+ 0nfBYnjCjipJa/n50YqI+n41CT93p9e5rYMrwGshaH8/GIX/M9ajQydLw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-transfer-encoding:date:from
- :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=p5JF5pnpGkbGSYyJl
- hXCg3sjgNU9Fd9BRqw5p/OorIw=; b=AqKQIe9Ab9pz2hEQmYcpHyW8Imt3XOaKC
- ivVEeTVgb9x3/qO0eEseWQD1RQCuQoK7w7wkF/4VXh1hWopQpxz/JvvSBmWuF0cp
- DqoNhxEgUv9fREAm40Qh/J5C+A4Gzxe9ifJgFm45PBsNNOuiQldLtTcMnFK9iG+f
- C8nf3n9bHA3yKr05jpxlPWc5DL/SnUMe2GR1mLccHTOSz39e9qj4WGS9DlSrjeee
- 7203GjH6XSxwK7VGmuznOdPBEa4xxKQ+o/2Ta288SsFAi3Hl/vaOOIyJ0I3qxcEn
- elaBglbWHTHrZ0m7fNGqlnuhbg58RsmJqd2lVt5kqf7GwN8w/zdxA==
-X-ME-Sender: <xms:Ecp2Xw14J9qCly6iUBCYC_IVFMpMJHqoOfbysZ2gqiVE44FV6lq-XA>
- <xme:Ecp2X7Hnm5JtyJcYW-WLEFO_sNEq_E56bnnvJ_Y6pdm0x2HV1OIeF8HcGOsOK3OEF
- DYws878vgLSlmQ5Ug>
+ :in-reply-to:message-id:mime-version:references:subject:to
+ :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; bh=dnuu51apKzkSWyyFZhbwMJUaR/W7hcBh9deHqhIeOyo=; b=iLz3hH2l
+ 7G+RVKueu/qz7Bm3EYmNp8Rhk6UMEoLAFMqijIFY6p7ijyL9edfA1bVI6QYgBxQB
+ Mqsg63EBoNmrpaqBSEHZDV0SCcuwlC/95mliqt1KF7IUeAnshrY86xvZY/puNP64
+ nA3O2w5J4VBENooOQh//CfUazn408ot2iWzwHrYmkezoZWQhmwZgryw1IuKXcyvQ
+ 0TpRKOgruO1WCnOrm7fWDvEOHlhOVtqe361exOGZDyHnYhR8Z+mWSxACOd836X63
+ GdM4yPgtB8XVJvdony7f7PZ5eiObjT3mE3K2BXHuDKhQO6ntYlTGiNfY3JBuxQ0f
+ gk8DzfD6xE7mfg==
+X-ME-Sender: <xms:E8p2X0hdcZ2Ze1lFYVz_LFZr6c5bdGpQcuRJvp0QeDN01SUZ8zmY_A>
+ <xme:E8p2X9CDaZnEJfnpLGkTT3lh6e6R0Ws7HE8tnphzB2nKsxhNLeJWU4TJYbFZbG3jk
+ xhC2Gpn9k-INB3jdw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrfeehgddutdehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
- dttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegrjhdr
- ihgurdgruheqnecuggftrfgrthhtvghrnhepkefhieffjeevfeevhedtieeihfefvdejle
- dvvddthefftedujeethfeuueelfedtnecukfhppeduudekrddvuddtrddukeekrddujeeh
- necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnug
- hrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:Ecp2X44EF4vaEf5BPU04Y2flKd1rbNFvax0ZZoGHNxXm9SkEPFPuAQ>
- <xmx:Ecp2X53wr4KM4dedDGF6KMnHoc_dxzSKp5NdAtL7qx-eYWh9R_tYDA>
- <xmx:Ecp2XzFFFuo2Wmy7bbNbufczjv_LNCVQkHiMZH7tXCQxvvQtfekZbg>
- <xmx:Esp2X6z_WJZ9a1kVPTPkFpnr71xFRDBBL-NaLpDhB9Uk_sZEta94HA>
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
+ dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
+ jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
+ etjeffleffvdduudevieffgeetleevhfetnecukfhppeduudekrddvuddtrddukeekrddu
+ jeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+ hnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:E8p2X8FXevlxKX9jIV8CfUfsUObLHfM0iZaHXDbCD4jZn-tRYM4l8g>
+ <xmx:E8p2X1QvvqwEvqaXeGWCdJVGmSyJyFHzGK938CLd6YVRdg45j4Wa1g>
+ <xmx:E8p2XxxjMyHqk-HCLsnGDKMwlBbj0kOXW7QL4rcC-24MbctCoQ42mg>
+ <xmx:E8p2X6tgTPyk2yBvLMvI2jec0obbY8fq3cpMVYYor8B2fhqjE8Gg0Q>
 Received: from localhost.localdomain
  (ppp118-210-188-175.adl-adc-lon-bras34.tpg.internode.on.net
  [118.210.188.175])
- by mail.messagingengine.com (Postfix) with ESMTPA id 97B24306467E;
- Fri,  2 Oct 2020 02:34:56 -0400 (EDT)
+ by mail.messagingengine.com (Postfix) with ESMTPA id 2A4553064686;
+ Fri,  2 Oct 2020 02:34:57 -0400 (EDT)
 From: Andrew Jeffery <andrew@aj.id.au>
 To: joel@jms.id.au
-Subject: [PATCH 0/3] Enable pstore for Rainier
-Date: Fri,  2 Oct 2020 16:04:11 +0930
-Message-Id: <20201002063414.275161-1-andrew@aj.id.au>
+Subject: [PATCH 1/3] ARM: dts: rainier: Add reserved memory for ramoops
+Date: Fri,  2 Oct 2020 16:04:12 +0930
+Message-Id: <20201002063414.275161-2-andrew@aj.id.au>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20201002063414.275161-1-andrew@aj.id.au>
+References: <20201002063414.275161-1-andrew@aj.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -95,27 +98,34 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Reserve a 1MiB region of memory to record kmsg dumps and console state
+into 16kiB ring-buffer slots. The sizing allows for up to 32 dumps to be
+captured and read out.
 
-This series adds pstore support to the Rainier platform for recovery of oopses
-and panics.
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Patch 3/3 is a minor cleanup. Only patch 1/3 is a requirement as 2/3 is handled
-by the config snippet in the bitbake metadata.
-
-Please review!
-
-Andrew
-
-Andrew Jeffery (3):
-  ARM: dts: rainier: Add reserved memory for ramoops
-  ARM: config: Enable PSTORE in aspeed_g5_defconfig
-  ARM: dts: rainier: Don't shout addresses
-
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 12 ++++++++++--
- arch/arm/configs/aspeed_g5_defconfig         |  4 ++++
- 2 files changed, 14 insertions(+), 2 deletions(-)
-
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index e6f422edf454..46a0e95049fd 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -47,6 +47,14 @@ reserved-memory {
+ 		#size-cells = <1>;
+ 		ranges;
+ 
++		ramoops@b7f00000 {
++			compatible = "ramoops";
++			reg = <0xb7f00000 0x100000>;
++			record-size = <0x4000>;
++			console-size = <0x4000>;
++			pmsg-size = <0x4000>;
++		};
++
+ 		flash_memory: region@B8000000 {
+ 			no-map;
+ 			reg = <0xB8000000 0x04000000>; /* 64M */
 -- 
 2.25.1
 
