@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62E01280D8D
-	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 08:38:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F458280D91
+	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 08:40:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C2gLJ4cbGzDqfD
-	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 16:38:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C2gP11n3wzDqdn
+	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 16:40:53 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,72 +17,70 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=W7/5GVaq; 
+ header.s=fm3 header.b=o3eHthi1; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=YXrpij+X; 
+ header.a=rsa-sha256 header.s=fm3 header.b=UD5+W5mT; 
  dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
  [64.147.123.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C2gGK2cm6zDqGm
- for <openbmc@lists.ozlabs.org>; Fri,  2 Oct 2020 16:35:05 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C2gL94qdQzDqd9
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Oct 2020 16:38:25 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id C49228D5;
- Fri,  2 Oct 2020 02:35:02 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Fri, 02 Oct 2020 02:35:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=fm3; bh=pmcqke0rJgtfD
- ftwRhvbuVVxltLD+4H2257Rk9nuVNU=; b=W7/5GVaqCT4ZwlMNHLLcJ0cGzKYuR
- 3/2P+ng3C8hpeM+peLBqAHhw1iu2IF2+RW49UaI4/zeffnjqNE6y5JTJD8PENNfN
- r7+iHH1oMsD4ujl18Von5Yq84WbyzJwjy2yX0nqYBaoaMBeekrI+TRhd+GW1ehBP
- HDd31ayNPgUcnj8xydN6EuMU3ovgm8HHIU95L+0DDvzcGcwFcddtfwXghNlrZyeq
- OvqYCBNT7t4ozxqRSe9lSo1JPaxNiHiM1q8XQt65yGcwzY3d+4+BAcyAfejwbQbP
- uDnn84FU9C+a/HxsG/krExMUsv+Yp4GhFoT7w4F838JjFgJl8AqylZ4qg==
+ by mailout.west.internal (Postfix) with ESMTP id BC39D962;
+ Fri,  2 Oct 2020 02:38:22 -0400 (EDT)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Fri, 02 Oct 2020 02:38:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm3; bh=D0PMBdn/wTvznX82sgNZM7vVGXxnoKD
+ SpiAyvlQLC3w=; b=o3eHthi1QwJSs6IcOyc+L2ELEeD8+wE/aZLPhiWLsJC2IB/
+ VbiY/LqO9Q0hp3hEMO6KoeBP3V171v07U4v/+eBSyLQLdkT5n7dL43CQ10QIjI2f
+ wbTSx9IuNWQ/mGtjVzQwzIcJ3nl6fkfPBbKiVAzhlog/lX/mWYWUzyVjzcK9kG3t
+ 0JpaSSTZE3SxDJDU3rO84rgumer3PYoPiTIZPQJgkD9DQR0h8ZeYbMZoCqDCXh3q
+ gFDF/Q1yuMB0JfeOXGifWl+vaSuGVCfpB3ZVwsSo+On95VBXRukEYpGy77m+BGy2
+ Y0kIWVE0Un0lA1I76XB5KTy0ynbHYr1yx6qPelQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:date:from
- :in-reply-to:message-id:mime-version:references:subject:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; bh=pmcqke0rJgtfDftwRhvbuVVxltLD+4H2257Rk9nuVNU=; b=YXrpij+X
- bhADy+Njh39q9R6KsBGOPGWYqGlqSryabhGYa/G2aUmzlQLL/pnSeBL5aJFbWx4Y
- KCyPTXwtQ8BRWw6xnG6cETi4X2K3CpQls/Ph9t7bNFCO349JGTXrM1jIT4e65273
- MVEM/nCZEeGwyn0gwTB70R6PHozqEKhnwmONglXJY+jEHhfdvch50PRa/aESyFa6
- 5UwDZODD8Eb3TGJpqYTYIseJ2/GkI13lww47OKTy5awakMd9GKorfGnTIhGpBruQ
- o3jY0zkjXkkaAEF778g+qfIhr0iwer1fjomDev2j9139mY8Bfisq0ob7A8ttNf6O
- dxg2DS7EpJ9CeA==
-X-ME-Sender: <xms:Fsp2X4KMEwYfjcyGv2XDtzaMoBbNZj-y08vjrZfpWzQj2lRq1cYgJA>
- <xme:Fsp2X4K7XbLbogbaC92ZY4892g8I5W85PHI33F-HOSCRAHX1zDG80iGBmEiuNV6C5
- 0MFAmVPc6ezkeDMnQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrfeehgddutdehucetufdoteggodetrfdotf
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=D0PMBd
+ n/wTvznX82sgNZM7vVGXxnoKDSpiAyvlQLC3w=; b=UD5+W5mTXMuGviSilBriAh
+ +05bzliymxeflS9gY4e5PtcsBvW+psorXIFSl3lPN1bSnDDkVxAXRXHeicb5OtIK
+ bZC8oDS1MaHmXw+FtF1bqiy/gF3+Zql/Scr+nOz7GbUzOFDpKu9ot3gZKk60w+79
+ jzDtjPC4ifTKWjFlvqSANUr8QJb3fzhX5TUxPtKKdMRbDo3EGxlieMLV0AxqoqK4
+ L6vAJE1m9/NhwQ+4WjJc3WQiRO6J5UNwvAM58mtNY1D64XmrbE88K+L42fso8LeX
+ tEzs9qH2nnjnqYhbpsZ27Zpg0pNeRHeGOPGlSbbgAO72FGiByUmOj6rpqAxd6P+A
+ ==
+X-ME-Sender: <xms:3cp2XzJxbE_kPWDdelsT5VNYnPyzC6ilDRpbLwgEMOMxG9zPGNrbfg>
+ <xme:3cp2X3I67TziiMiQburXk370PDMI6Udvp8-o2Z2AG7JZanfaL3Xc8-uSE-nz4qKgn
+ Bwe3Gf2nJGGPtu_vA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrfeehgddutdeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgjfhgggfestdekre
- dtredttdenucfhrhhomheptehnughrvgifucflvghffhgvrhihuceorghnughrvgifsegr
- jhdrihgurdgruheqnecuggftrfgrthhtvghrnhepjefgvdevheetkeevgeegleelgfelte
- etjeffleffvdduudevieffgeetleevhfetnecukfhppeduudekrddvuddtrddukeekrddu
- jeehnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomheprg
- hnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:Fsp2X4v6l7fHk7fEwit6CXqfiY05h_doNKQ4pmyvuoMxEmFLJzmVSA>
- <xmx:Fsp2X1b71X2KtZ36z77asau6r5WSvy4XEJM5Cm_O2Te1i6TtmxAQNA>
- <xmx:Fsp2X_YLd1fzSf1zSv1OgkSbkRoWIPfHyBQvWqhf7AY2hRr096YJTg>
- <xmx:Fsp2X50cGX0jcl3Kp9ZuIyh-eURVOBEwygRZW7UeCbOl4l16Ffptzw>
-Received: from localhost.localdomain
- (ppp118-210-188-175.adl-adc-lon-bras34.tpg.internode.on.net
- [118.210.188.175])
- by mail.messagingengine.com (Postfix) with ESMTPA id 2D9533064688;
- Fri,  2 Oct 2020 02:35:00 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: joel@jms.id.au
-Subject: [PATCH 3/3] ARM: dts: rainier: Don't shout addresses
-Date: Fri,  2 Oct 2020 16:04:14 +0930
-Message-Id: <20201002063414.275161-4-andrew@aj.id.au>
-X-Mailer: git-send-email 2.25.1
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:3cp2X7um_McYbnyCJzoTcHhviHLpFIkJIhQXM00_qYDWRgx7_OxBbw>
+ <xmx:3cp2X8ZrpkdvtaFU7MGqS6VJWB1Z5cE9pmYeT97F_tEIZuxamLDp3w>
+ <xmx:3cp2X6aLe1ExmGW8JVktvUzwwHiUD1bc5Y4uiHs7W7UwmFCe3Yuz5g>
+ <xmx:3sp2X42JH-IicpqBEg9zoBf5Y4FbRa-B6mVaYY89NxvhHKq6q_6CBQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id AD30AE0120; Fri,  2 Oct 2020 02:38:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-382-ge235179-fm-20200928.002-ge2351794
+Mime-Version: 1.0
+Message-Id: <8e00a2c4-af03-4ff7-b631-fd81d0aad9fc@www.fastmail.com>
 In-Reply-To: <20201002063414.275161-1-andrew@aj.id.au>
 References: <20201002063414.275161-1-andrew@aj.id.au>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Fri, 02 Oct 2020 16:08:00 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joel Stanley" <joel@jms.id.au>
+Subject: Re: [PATCH 0/3] Enable pstore for Rainier
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,29 +96,17 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Make them lowercase.
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 46a0e95049fd..2e9206b65883 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -55,9 +55,9 @@ ramoops@b7f00000 {
- 			pmsg-size = <0x4000>;
- 		};
- 
--		flash_memory: region@B8000000 {
-+		flash_memory: region@b8000000 {
- 			no-map;
--			reg = <0xB8000000 0x04000000>; /* 64M */
-+			reg = <0xb8000000 0x04000000>; /* 64M */
- 		};
- 
- 		vga_memory: region@bf000000 {
--- 
-2.25.1
+On Fri, 2 Oct 2020, at 16:04, Andrew Jeffery wrote:
+> Hello,
+> 
+> This series adds pstore support to the Rainier platform for recovery of oopses
+> and panics.
+> 
+> Patch 3/3 is a minor cleanup. Only patch 1/3 is a requirement as 2/3 is handled
+> by the config snippet in the bitbake metadata.
+> 
+> Please review!
 
+`--subject-prefix "PATCH linux dev-5.8"` etc
