@@ -1,74 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D70CD28093E
-	for <lists+openbmc@lfdr.de>; Thu,  1 Oct 2020 23:12:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A817280C29
+	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 03:53:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C2Qmw53dVzDqcS
-	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 07:12:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C2Y1Z5gTrzDqcq
+	for <lists+openbmc@lfdr.de>; Fri,  2 Oct 2020 11:53:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::342;
- helo=mail-ot1-x342.google.com; envelope-from=xqiu@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::135;
+ helo=mail-lf1-x135.google.com; envelope-from=suichen@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=fPG28hR3; dkim-atps=neutral
-Received: from mail-ot1-x342.google.com (mail-ot1-x342.google.com
- [IPv6:2607:f8b0:4864:20::342])
+ header.s=20161025 header.b=keufmztz; dkim-atps=neutral
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
+ [IPv6:2a00:1450:4864:20::135])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C2Qls53spzDqbr
- for <openbmc@lists.ozlabs.org>; Fri,  2 Oct 2020 07:11:16 +1000 (AEST)
-Received: by mail-ot1-x342.google.com with SMTP id a2so88863otr.11
- for <openbmc@lists.ozlabs.org>; Thu, 01 Oct 2020 14:11:16 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C2Y0f2nTYzDqck
+ for <openbmc@lists.ozlabs.org>; Fri,  2 Oct 2020 11:52:47 +1000 (AEST)
+Received: by mail-lf1-x135.google.com with SMTP id y11so982587lfl.5
+ for <openbmc@lists.ozlabs.org>; Thu, 01 Oct 2020 18:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=m+YYuOGfjR+pz1ug1JOX4HfqWyfMVXMcD5ez2Q2W6EY=;
- b=fPG28hR3+ElDHaok1coAb15VBGOxPHvavjn1+R2FlD8REunHXkZlvsDfEGH9wiQaF2
- KvyY8Ze9/EThbpGscdJNDIMWBpg1/2tElBbq/9omzMP3EN6TPdZwGn649zkEKiVJ9Jwb
- W1jn97DnlnWyxRMBeA/fcnGrMzGABs4bb/r0g3jh7kYB2xorJADT8psq/Y+vsSmA+Y1K
- GaZhSJxk2gh2zpHyYVRCwUGmC8gdakJGc8PlRiK4gcJk0ihVf+ZuwNaG0NqHAQasV+zI
- xT7cOItLxZKesH2VycqKmgqh9slqqANIseUSv/Rk3cmRVp7zznL2PQBH+5DygN1ldF8o
- RueA==
+ :cc:content-transfer-encoding;
+ bh=tRv3+w2WAt5mrG0sV0rb+dch8F/Ngpzkdi+A/mUk3lU=;
+ b=keufmztzVRtpGNdOSpgGGErVeqqVSSOOOv1gNBNyiO7Ig+ZtC5KrHA0f+ohHQI8yqB
+ Oi8WNDisEdCwGHKNtQDchUdXoNW2lCqmKyXM9YTz3FgnnbG//YepkljPF4yNo+PZu/5Y
+ GBWooXLgwinPK9pMSqH2d4EbZzJZHrwSIRI3b7f6Mq3E7HVBZDKZgtdQoXU8+3OnhLWM
+ HxUzE43Ar6I5CBkGqcfCuyQjQibc12ET6+3FeweIF8QJMFJsclg0yAG3Hb6Qef1A7I/G
+ J7sG531X1vVZT3ZPTSrwV8Yt14/N+3XKxMQ67y7p/0XB1xDWoWiJkTAyo82w6LPFiuSM
+ UZ0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=m+YYuOGfjR+pz1ug1JOX4HfqWyfMVXMcD5ez2Q2W6EY=;
- b=X6Hy6uM2HNtARzjAj2tC511F9+eLYXEu3mfZ9ONOB0LztYZyJs4wauYtkHYODY+6Ci
- VJ9Z0NMdjo2anWj+mkORtoTfTUexU/Ox0zjbqsK1w17osZtFwDGb1Uh7M3GPGd3P6K+u
- QKCtzDixm3hZZjuZGKPwGwjpu9R7kuLivMZ4txkNCtHc46uxbLd/rOkiD1s24/uhzWhX
- qU+Oo8sVobKe+SN7SmtdKhXUG2RQwuNYvV+M79yPhIde0W4kWFBUuRKmgj6MWejqE/GC
- wCZwc+94Gj+UhRs6QGGKtO/3nWWkzWQNAS5EvKg7WQmrswHPpgKHN+jIcJwmxgKLJPLj
- OXMw==
-X-Gm-Message-State: AOAM531JBPC4d2U0P5rpcLuX2cw5dd+WyyHj9pwTG/0XJC1SnSTMpNqI
- bHgM2jWHh1Cj5ZgkKuO9SZs+CsGqsAnutNY6ZcV2Fw==
-X-Google-Smtp-Source: ABdhPJxGJ6qQVW6nndRug8X+BSvf0baEKqe+DQDcXeAnDZDLc7BtQWlfudbLCsaMAbs7xkE+Dw/9iUIJKsv6dsfPnXs=
-X-Received: by 2002:a9d:7448:: with SMTP id p8mr6252420otk.306.1601586673364; 
- Thu, 01 Oct 2020 14:11:13 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=tRv3+w2WAt5mrG0sV0rb+dch8F/Ngpzkdi+A/mUk3lU=;
+ b=lB9DDYaAQYmjJHNXpOq//qRLT0vIwvmgtBFvSDKMAzXPqlfm0lNC461DUl5B0uEj+p
+ BToKhbILe5Ji7jnxP5mL0tBvppdGRFGkDf/WDXADkNEJgfY0SWhal1SEKXsUNROWEObm
+ 4r1UmmYRjr8fpxzeUxsc4r2sBT85uFleGVQWP1H8zw+5dp3I2RqUT/FeXE7qaXpwzCm4
+ jVL8gd1QpBNPJ/+na5iRpKvoCGdCYGA6/ELqj0BbhIy8VCZS5fZIzv+lxsLiuYk6C5Cf
+ 4df+g+l53eDlM6561IL/Dprzcc1X10g8gRa2+PyCN6D4wQSxPezoiEUShgPoJr4NNPji
+ J5MQ==
+X-Gm-Message-State: AOAM532DTKejNhg77P8w06M87+CqRM2rZlspdN8AeUacjeprhKJqhHDJ
+ PkhE5X536NPr25sPzUbG6phyTttMuiAt9u2ioZk61Q==
+X-Google-Smtp-Source: ABdhPJwHs2Rij3CZ60/nk95nnWR9CATZhQAb6116I2XoWOQ07fUYu7g8155JepRQLn5QoOnpOonR/sXgUUaRfwMyMuA=
+X-Received: by 2002:a19:910b:: with SMTP id t11mr3968193lfd.394.1601603558853; 
+ Thu, 01 Oct 2020 18:52:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200930071342.98691-1-tali.perry1@gmail.com>
- <20200930093117.GY3956970@smile.fi.intel.com>
- <CAHb3i=sWxiVLCC0hfY+6-_x92ZEMY7Ctyyuz9CbMYxrH_BqAZQ@mail.gmail.com>
- <CAHp75Vc3Bw-dTpEmpeUpB4n5-8-xGPx+jm_HkB5Pj6Qr8U=CAw@mail.gmail.com>
- <CAKKbWA4gHobXFGi5CiPnawWoMOi0GFrCbzanuOFZ+Aky6=9Mpg@mail.gmail.com>
- <20201001174046.GK3956970@smile.fi.intel.com>
- <CAA_a9xL+qP3zOy=oKHjCuR+CvsXeoU5EX9WgEhUH0Fza2Vs5DA@mail.gmail.com>
- <CAKKbWA62G+B7p-bc7TRoa22iJNGdTUaopQVj3S3_FHh43ntasA@mail.gmail.com>
- <CAHp75Ver-O8=3eKHsHoKgpdd0sBQhLiC+UAqM=4C-gUfMBteuA@mail.gmail.com>
-In-Reply-To: <CAHp75Ver-O8=3eKHsHoKgpdd0sBQhLiC+UAqM=4C-gUfMBteuA@mail.gmail.com>
-From: Alex Qiu <xqiu@google.com>
-Date: Thu, 1 Oct 2020 14:11:02 -0700
-Message-ID: <CAA_a9xL98fV8Rd=vBLBZBcFCUo8iE6O=Q4WsOcB0Z-tFa1GtoQ@mail.gmail.com>
-Subject: Re: [PATCH v1] i2c: npcm7xx: Support changing bus speed using debugfs.
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
+References: <CAJOps0sd-YFr5P+_N0i78pd9akBJS6DP99wugKvUDOGpXw2pcA@mail.gmail.com>
+ <D355FA68-E163-4DA8-861E-7E9DB68F5EEB@fb.com>
+In-Reply-To: <D355FA68-E163-4DA8-861E-7E9DB68F5EEB@fb.com>
+From: Sui Chen <suichen@google.com>
+Date: Thu, 1 Oct 2020 18:52:28 -0700
+Message-ID: <CAJOps0uX9K25NgXpi3M45F=pvvW5Am+9R=wYTLN0SZ2vPUcX-A@mail.gmail.com>
+Subject: Re: Request to create repository google-ipmi-bmc-health
+To: Vijay Khemka <vijaykhemka@fb.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,36 +75,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>,
- Avi Fishman <avifishman70@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, Wolfram Sang <wsa@kernel.org>,
- Linux I2C <linux-i2c@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 1, 2020 at 11:51 AM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
->
-> I see. So, there are following statements:
->  - the elaboration is good but I guess needs to be added somewhere in
-> form of the documentation
->  - the internal schedules or so are not crucial for the upstream (it
-> rather sounds like a bribing the judge)
->  - the current approach, if I'm not mistaken, is using debugfs, which
-> is not ABI and it's good
->  - I'm not a maintainer here, but I don't like the approach
->
-> Let the maintainer decide.
->
-> --
-> With Best Regards,
-> Andy Shevchenko
+Hi Vijay,
 
-Hi Andy,
+We can use whatever means that gets health monitoring done.
+I have the following questions on how to merge the proposed IPMI
+Blob-based implementation, google-ipmi-bmc-health (referred to as
+"IPMI health blob") with phosphor-health-monitor. The intent of having
+a separate "google-ipmi-bmc-health" was to avoid these questions:
 
-That makes perfect sense. We may keep it downstream to unblock our own
-work if it's not accepted upstream. Thanks for your review!
+1) The IPMI health blob is a library, not a daemon, so after the IPMI
+health blob is added, phosphor-health-monitor will have both a library
+and a daemon. The user needs to have a way to configure it. What is
+the recommended way of doing this configuration?
 
-- Alex Qiu
+2) We are sending a protocol buffer through the IPMI interface to the
+BMC, and the protocol buffer may be only used for the IPMI path and
+not anywhere else. Would there be any concerns on the usage of a
+protocol buffer here?
+
+Other than these two things I think adding new metrics to
+phosphor-health-monitor should be manageable. I can start by trying to
+add the IPMI blob handler to phosphor-health-monitor; my first attempt
+might not look very elegant, but if we find answers to the two
+questions above, the merged result will look a lot better. Hopefully
+we can find a solution that works well for everyone.
+
+Thanks,
+Sui
+
+On Thu, Oct 1, 2020 at 12:06 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+>
+> Hi Sui,
+>
+> =EF=BB=BFOn 9/30/20, 8:30 AM, "openbmc on behalf of Sui Chen" <openbmc-bo=
+unces+vijaykhemka=3Dfb.com@lists.ozlabs.org on behalf of suichen@google.com=
+> wrote:
+>
+>     Hello OpenBMC community,
+>
+>     We are working on an IPMI blob-based implementation of BMC health
+>     monitoring. We currently have an internal working prototype version
+>     and would like to upload it to this newly proposed repository,
+>     openbmc/google-ipmi-bmc-health .
+>
+> In my opinion, we can enhance existing health-monitor and add your featur=
+es.
+>
+>     We are aware of existing BMC health monitoring designs such as:
+>     1. https://github.com/openbmc/phosphor-health-monitor and its
+>     documentation https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__=
+gerrit.openbmc-2Dproject.xyz_c_openbmc_docs_-2B_31957&d=3DDwIBaQ&c=3D5VD0RT=
+tNlTh3ycd41b3MUw&r=3Dv9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&m=3DZ-_Rsu=
+e1ZHBD_TgPw7EDIc8dh8E8o8dlUe8aKr7I5VA&s=3DHTKEM8tcIgwzwL4OQVP1Kcve6ZfnhSToh=
+dwPmIrjwe4&e=3D
+>     2. https://urldefense.proofpoint.com/v2/url?u=3Dhttps-3A__gerrit.open=
+bmc-2Dproject.xyz_c_openbmc_docs_-2B_34766&d=3DDwIBaQ&c=3D5VD0RTtNlTh3ycd41=
+b3MUw&r=3Dv9MU0Ki9pWnTXCWwjHPVgpnCR80vXkkcrIaqU7USl5g&m=3DZ-_Rsue1ZHBD_TgPw=
+7EDIc8dh8E8o8dlUe8aKr7I5VA&s=3DEcxSrU1PC6Akfy1FR0wo-5TC_QvMld9SDT7pJAh5QcM&=
+e=3D
+>
+>     Main differences between this implementation and existing ones are:
+>     - google-ipmi-bmc-health is implemented with the IPMI blob handler
+>     framework and exists as an IPMI blob handler, while
+>     phosphor-health-monitor runs as a daemon and exposes BMC health
+>     metrics on DBus in the same manner sensors are exposed.
+>
+> Is this going to be a library or daemon, Same health-monitor daemon can
+> Be enhanced to add these functionalities.
+>
+>     - This implementation does not check health metric values against
+>     thresholds or perform actions when thresholds are crossed.
+>
+> If you don't define threshold in configuration file, health-monitor will
+> also not monitor metrics defined.
+>
+>     - This implementation currently reports uptime, memory usage, free
+>     disk space, CPU time consumed by processes, and file descriptor stats=
+.
+>
+> Same can be added as extra metrics. That was the goal of this repo as to
+> start with basic metrics and add more as required.
+>
+>     - This implementation does not read a configuration file yet. It
+>     always reads the hard-coded set of health metrics listed above.
+>
+> We can enable or disable certain metrics through this configuration file.
+>
+>     - This implementation does not post-process sensor readings such as
+>     compute the average CPU usage over a certain time window.
+>
+> Window size 1 can give latest data rather than averaged data.
+>
+>     As such, this implementation differs enough from existing ones such
+>     that we believe we have enough reasons to have a separate repository
+>     for it.
+>
+> I will strongly prefer to add all of the features in the existing repo.
+>
+>     Thanks!
+>
