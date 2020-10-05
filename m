@@ -2,134 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1283E283DCC
-	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 19:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C388283DF9
+	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 20:08:11 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C4pC16hNVzDqll
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 04:54:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C4pR80LMyzDr80
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 05:05:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b2b;
+ helo=mail-yb1-xb2b.google.com; envelope-from=pashag@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Void lookup limit
- of 2 exceeded) smtp.mailfrom=hcl.com (client-ip=2a01:111:f400:febc::70e;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hcl.com
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-hk2apc01on070e.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:febc::70e])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
+ [IPv6:2607:f8b0:4864:20::b2b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C4pBH64smzDqpq
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 04:53:57 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pR8+RK7TGfZfKZusRlLez3EoUK0JPevMVTzcMd6TiH4=;
- b=l4nksChSTSA49vfG7BoSNBSEZC7shKFUXtYmhPspbo2GD5d8GRc+j9o6m8IvJD73k1DJyRR/mzCjTuBfNugMmH0J3gzv70QuZVUHGnBoDUMD3a0gddL0DAyTtSJKKZoTHMP0F3LRXKD0OZ0xdPeZOUCvggZWIus3qGJVA0TPCcA=
-Received: from PU1PR04CA0014.apcprd04.prod.outlook.com (2603:1096:803:29::26)
- by SG2PR04MB4058.apcprd04.prod.outlook.com (2603:1096:0:1::14) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3433.38; Mon, 5 Oct 2020 17:53:13 +0000
-Received: from PU1APC01FT058.eop-APC01.prod.protection.outlook.com
- (2603:1096:803:29:cafe::55) by PU1PR04CA0014.outlook.office365.com
- (2603:1096:803:29::26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3433.34 via Frontend
- Transport; Mon, 5 Oct 2020 17:53:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.54)
- smtp.mailfrom=hcl.com; tanous.net; dkim=pass (signature was verified)
- header.d=HCL.COM;tanous.net; dmarc=pass action=none header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.54 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.54; helo=APC01-HK2-obe.outbound.protection.outlook.com;
-Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.245.54) by
- PU1APC01FT058.mail.protection.outlook.com (10.152.253.17) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3433.34 via Frontend Transport; Mon, 5 Oct 2020 17:53:11 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lTRk+okOc/0XC/j0zpS662UyOAMvhz+a7Q9qb5HTQIi1DCoVNKyG15kIp8479eIOaq1h6J0DNxLFxzJ72EnC+I1fS1hwr52gHTQ+DOT8nXfLVKXVkYjCZ5qkIdyX2xda99DLgswHYn/oQVJevdD8UW3YwBKP12mt39p5ijtZDQ60/bCTEIUFZvjrMQRt77AY6as/9OOiRYuE4Mh49HnXhg9OvHNnzZEjjisnj7VcBvQ8MBf8lSREwOaBMleYNIF7dbYJlLcPijyVx+KSPfF4RR9fPPlUz7fqu/O2vN+5huIv7/KIpSMQ23KmKv/+rDIG+GK8xSX3UJwGE56uwQVnnA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pR8+RK7TGfZfKZusRlLez3EoUK0JPevMVTzcMd6TiH4=;
- b=CyvWpg8Pv4BQ7h7wgwa9KG8CSQjARP2wvh79olMlqYBTaef5GaiRJ/zOGHKdi4wCcxkbWbBAuAudG2f1Qb0jjuxEGQMahim1et2kLnBUQ7cY3MWoJMTLyt25x39zRdxOYYyG4Ojy1FjsrhpBqPT037aMnf3K++Zt5zde+AySd6uWniuXnNUgZl57wXvMDnkDSRM9gLUzqMpMsFSML04xCzzcCgWgkFGTNPa2K5JTj2WFBRVNu36530iauvpH8wTR/CJS67Hl96kcVZjmfFOF8Qwc0opEI1dDZPokol8twjkZSuVV+4CzKKKAUPn77+auYirskMP6/pih/T4d8J8wDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pR8+RK7TGfZfKZusRlLez3EoUK0JPevMVTzcMd6TiH4=;
- b=l4nksChSTSA49vfG7BoSNBSEZC7shKFUXtYmhPspbo2GD5d8GRc+j9o6m8IvJD73k1DJyRR/mzCjTuBfNugMmH0J3gzv70QuZVUHGnBoDUMD3a0gddL0DAyTtSJKKZoTHMP0F3LRXKD0OZ0xdPeZOUCvggZWIus3qGJVA0TPCcA=
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB2812.apcprd04.prod.outlook.com (2603:1096:4:25::10) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3433.34; Mon, 5 Oct 2020 17:53:06 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::b93f:17bd:c016:eec7]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::b93f:17bd:c016:eec7%4]) with mapi id 15.20.3433.040; Mon, 5 Oct 2020
- 17:53:06 +0000
-From: Jayashree D <jayashree-d@hcl.com>
-To: Ed Tanous <ed@tanous.net>
-Subject: RE: Firmware version under IPMB sensors
-Thread-Topic: Firmware version under IPMB sensors
-Thread-Index: Adaa20OW/+EXJZ2dS0eTjnxobOGmeQASBjKAAAK9sbA=
-Date: Mon, 5 Oct 2020 17:53:06 +0000
-Message-ID: <SG2PR04MB3093F45D8E9B246CDD6D7143E10C0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-References: <SG2PR04MB3093F4B562F454122B7F4596E10C0@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <CACWQX83t7k5iVRAsL+7EcGr2QL3LgbM2N09iOiro747cMqDe1w@mail.gmail.com>
-In-Reply-To: <CACWQX83t7k5iVRAsL+7EcGr2QL3LgbM2N09iOiro747cMqDe1w@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiMzE4ZTE0OTUtOWIxNC00ZGZhLTgyYWUtYzYyOTFhZDk0OGJlIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzXzFudDNybmFsIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE4LjQuMTg0My4xMjMiLCJUcnVzdGVkTGFiZWxIYXNoIjoibjF3R1ZcL3M1a3lGT2tLS0daMDkzdWtETjBZU0dXV3BwTTJ0ZlBtK0dcL0dwK3JQaVdPdVRLMXMyWndYRU9yYXhwIn0=
-x-hclclassification: HCL_Cla5s_1nt3rnal
-Authentication-Results-Original: tanous.net; dkim=none (message not signed)
- header.d=none;tanous.net; dmarc=none action=none header.from=hcl.com;
-x-originating-ip: [2409:4072:381:c1a3:f972:360d:9d73:c99]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: afcf2b28-b7c3-452e-ab9d-08d869578760
-x-ms-traffictypediagnostic: SG2PR04MB2812:|SG2PR04MB4058:
-x-ms-exchange-transport-forked: True
-X-Microsoft-Antispam-PRVS: <SG2PR04MB40587CAAEEA76C567079F5DDE10C0@SG2PR04MB4058.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;OLM:4502;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: NIpuWAI2KYP+fKcBkm+xNutclkZ5YflJhjagzjXLAosSZTKHgj9LhHPZ6VK5FnxP4KzFNGnZrmPavQdSv0MGRh8+nq61GgTqplgoZ1WiQvpvRWbCFfKn2V2Ux6/ibThsS038SMD7dSoVCxuIeV17oM4FWt8yaB++IvXXm0eB/S4F5giwtOaLFkNFq6yhc9HSTmwTmo6EYxFyYEQOc5UvydcnHy09t4H2LjehcpP0mdUTbHyEbKAyXMGVXqMLC4JMaVu3H4sZNqb7EP0Hi/rOI9nJWQcZg6F0fj6vIpBPDInbkmW/wSXuO05pnl5SQU+XsxO8qjULcn1IkOE8yyZGaQ==
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(136003)(39860400002)(396003)(346002)(376002)(366004)(478600001)(8676002)(316002)(5660300002)(55016002)(52536014)(6916009)(7696005)(2906002)(83380400001)(8936002)(9686003)(66446008)(64756008)(66556008)(66476007)(186003)(86362001)(66946007)(76116006)(4326008)(33656002)(71200400001)(54906003)(6506007)(53546011);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: Jps8AYg+kLsIlG8Zv6K0bdj/1rAqght4HqTSP1z5WunuusJzIdD6i9AbNmcjZhTQyQFx33Gj6vEQr7iUhbEoKlvH0cDLbdqMjv1EZSohW+y126IF136rGv4Sr1YYbsGQlIXQaTFU0AAdd/PHD8gKW6RZDv3dL1hAThKvFt8cQSOcIGRa8hd4ne8Q9mFcUfW9UXbgKzsdR7esuQbZ/X4pye8FO8EfAA8lUfslOBv1ejx6p2JHg0kjJtpQjxiOshNvWSZOT6aNQT7WwkJO+1+Mp2MEXc12/yjamVmGaXgGluHnhoaOgc1uY50FUdZLe4epHusbV+m42D52WWvPURQyn591LfQI6wL9AuIef0atF9gJ6/ftFicUciz7x2WyONS8/jA3ZdcSai0sSk7WgaxX09hcw7Dmd5KQs+kmkPunAKTGNcsVf51K3OQS8JoACaBmWslAJf5gSB7nj4+paxDlSgJXA0efGv6NM338va5ZJG9RAFOjWtwBxMv3gNt7cQiRksSfeofRvrSKCDNicpbXeJXhg/JnrxiC0FTQgpFZ3GhG3Dupiv2sz4t5hb/wqkr42FzgGqvnHNo6/aJT0gGoYfqGHKX4mCNf2yPiT070bDu/Wo81aLnivbt2hT/arSApDQd0TeTi/rJCijZis/1DpY+5Sh23X8VRTLbf5ytiGVGlX2/gs+8ZUfHWHTls/3LE4ydRz+ipLQAljjDAzHFn+w==
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C4pQN2m5LzDqWj
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 05:04:22 +1100 (AEDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id x8so7335527ybe.12
+ for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 11:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=9ew90SXu8kTTO99lFQ++FuIl22x4VvwSac3YCASvaqI=;
+ b=WIPBLz5gkb/q7YvU3ILnMVBxcu+/E4Xx4nvOi+wU0e46trqv2JNfO9T9Q1cSktIH9d
+ H+nSXnamkF7bWCafF5N8Czd93oRgH3bHMnAMBArB6dha2xmvhq7HcqMKbLqKrNk7VMtS
+ +gnt6T3xb9vjwNFrB31/wNVUVYAjuI9z9f/U+CJQ7TdhW1uaSnC7y6mfEUGHPo1Zy/+q
+ 4DUlL6YMMQV9D+FbDe7t0tndmW2Ql91nlkPlEpaJ1eqA3NlICeO7pjhsRS42J74x0vJg
+ eUl36NUQEtZ74v3HvFn1+ih1SJcJOtwCdjs7aPkn/KUsMKJQ83lRjG7SkG2sXz9znILH
+ L2HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=9ew90SXu8kTTO99lFQ++FuIl22x4VvwSac3YCASvaqI=;
+ b=mlC+FMO/R2Ag9c4WeXoQwvuh8KjZXay8Jx9NgKeck8+J7NOswjNSX04yxsfD41F2zd
+ wH9l14Hy8GtPHEk0dBTJ7VN0IB0efP/Dg6whk1eIJOZJzf/IMqeXO08ScmS0AOvB3nfc
+ Cfo3F+3g1yZbCL1CiEyORAujM/dfKA2KMyFZZSEPguV6zPWq9HniY9C5aJzsF/i2JIbi
+ ZpMrCEwTUZ0dCSmOvvx0yjrKdvwxNG6Ic2tQMcbZery/pzggJbeYaFrmhO6TlT+jEXYM
+ JBQtVCOgmSvqIcHoLIq1jclS7OpiW+A3iewffw//nGziw0QAADHHf6Y122R5EMDEAw1w
+ q+OQ==
+X-Gm-Message-State: AOAM531OiMaBdBmeGO16zzseviNsU6pWx7HQlF8Ue1iGnVw7w6LL7TWA
+ tVkC+Zifvc/XaP+k71vUgBsP7ljdqqQz0XkZklthTOK0NRGpOQ==
+X-Google-Smtp-Source: ABdhPJxKliKeWJc2sBjmU7WCrBvKHrKOJ+DobBtuTVJCcTYgejb2sPwoKP9RBGnMrWpgH+9a6JSagjOTu8JZvL/m+Zw=
+X-Received: by 2002:a9d:7095:: with SMTP id l21mr374683otj.224.1601920671332; 
+ Mon, 05 Oct 2020 10:57:51 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2812
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT058.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 695b1bc0-b21d-469e-1466-08d8695783a7
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GEOmsc6hqb6XrSQWFeoDeCce7zx+VuVCu3HG0+Gbysa8sSSduMcrip22N7+OyUmnOUulQnwNVvpxQBVcKyrqrVqRfQdml969Xdf8SJvHIbw6Way+FSPoggdenyCGrlGJaRT3NVZzJutfO4H/Yjgn1YLBJwlcE6jLSvY7eShc1EpYFYBTKIJFnZ+fvlAQoFxDtGsw/MoFrTkpAlOUUgTFEJG/jlDl2EVgrkjskqMLCT64dHh50xov4Xlhr8MXnAGPlCJu88XZ8kEUZ5FHMnUy/V60SgsF0vra9ebRvMbb7IQWjJcjBZWQposQ2AS4FPi32QCMkK2sr4xs/gmoziHg02ll3U8fyd0uLTIs3YXIjyIAUExn5xGjY7TbaSFnAeyJC2Ssxh94I3pVzyQ1pcYQNCPkrNbCq0YRpvsCEhXlvniSx8PbAkL7h3yD1G6vT8xL
-X-Forefront-Antispam-Report: CIP:192.8.245.54; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(376002)(39860400002)(396003)(346002)(136003)(46966005)(55016002)(54906003)(70586007)(7696005)(26005)(8676002)(6916009)(86362001)(186003)(34020700004)(82310400003)(9686003)(53546011)(6506007)(356005)(33656002)(316002)(336012)(2906002)(83380400001)(4326008)(8936002)(478600001)(70206006)(5660300002)(81166007)(82740400003)(47076004)(36906005)(52536014);
- DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Oct 2020 17:53:11.9709 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: afcf2b28-b7c3-452e-ab9d-08d869578760
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.54];
- Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT058.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB4058
+From: Pasha Ghabussi <pashag@google.com>
+Date: Mon, 5 Oct 2020 13:57:41 -0400
+Message-ID: <CA+-TXo_C3pP=5zn+O7dtP4wHu9JwhubdUC6aqSMK_J742Cpkaw@mail.gmail.com>
+Subject: BMC Performance Profiler
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000931b4205b0f038ce"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,51 +66,272 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani
- T-ERS,HCLTech" <velumanit@hcl.com>
+Cc: Ed Tanous <edtanous@google.com>, Sui Chen <suichen@google.com>,
+ Ofer Yehielli <ofery@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Q2xhc3NpZmljYXRpb246IEhDTCBJbnRlcm5hbA0KDQpIaSBFZCBUYW5vdXMsDQoNCldlIGFyZSB1
-c2luZyBUd2lubGFrZSBmb3IgSVBNQiBhbmQgcGxhbiB0byByZWFkIGFsbCB0aGUgZmlybXdhcmUg
-dmVyc2lvbnMgKCBDUExELCBNRSwgQnJpZGdlIElDLCBWUikgdXNpbmcgT0VNIGNvbW1hbmRzLiBB
-bHNvIGRpc3BsYXkgdGhlIGZpcm13YXJlIHZlcnNpb25zIHVzaW5nIGRidXMgb2JqZWN0cy4NCg0K
-UmVnYXJkcywNCkpheWFzaHJlZQ0KDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZy
-b206IEVkIFRhbm91cyA8ZWRAdGFub3VzLm5ldD4NClNlbnQ6IE1vbmRheSwgT2N0b2JlciA1LCAy
-MDIwIDc6NTUgUE0NClRvOiBKYXlhc2hyZWUgRCA8amF5YXNocmVlLWRAaGNsLmNvbT4NCkNjOiBv
-cGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IFZlbHVtYW5pIFQtRVJTLEhDTFRlY2ggPHZlbHVtYW5p
-dEBoY2wuY29tPg0KU3ViamVjdDogUmU6IEZpcm13YXJlIHZlcnNpb24gdW5kZXIgSVBNQiBzZW5z
-b3JzDQoNCltDQVVUSU9OOiBUaGlzIEVtYWlsIGlzIGZyb20gb3V0c2lkZSB0aGUgT3JnYW5pemF0
-aW9uLiBVbmxlc3MgeW91IHRydXN0IHRoZSBzZW5kZXIsIERvbuKAmXQgY2xpY2sgbGlua3Mgb3Ig
-b3BlbiBhdHRhY2htZW50cyBhcyBpdCBtYXkgYmUgYSBQaGlzaGluZyBlbWFpbCwgd2hpY2ggY2Fu
-IHN0ZWFsIHlvdXIgSW5mb3JtYXRpb24gYW5kIGNvbXByb21pc2UgeW91ciBDb21wdXRlci5dDQoN
-Ck9uIFN1biwgT2N0IDQsIDIwMjAgYXQgMTE6NDMgUE0gSmF5YXNocmVlIEQgPGpheWFzaHJlZS1k
-QGhjbC5jb20+IHdyb3RlOg0KPg0KPiBDbGFzc2lmaWNhdGlvbjogSENMIEludGVybmFsDQo+DQo+
-IEhpIFRlYW0sDQo+DQo+DQo+DQo+IEluIG15IHN5c3RlbSwgaG9zdCBpcyBjb25uZWN0ZWQgdG8g
-SVBNQiBhbmQgaG9zdCByZWxhdGVkIGluZm9ybWF0aW9uIGlzIHJldHJpZXZlZCB1c2luZyBJUE1C
-IGJ1cy4NCj4gSSBwbGFuIHRvIGFkZCBmaXJtd2FyZSB2ZXJzaW9ucyBpbiB0aGUgZGJ1cy1zZW5z
-b3JzLiBBZGRpbmcgdGhpcyBhcyBhbm90aGVyIGVudGl0eSBhcyBsaWtlIGlwbWJzZW5zb3IuDQo+
-IFRoaXMgd2lsbCBoZWxwIGluIGhhdmluZyBhbGwgdHJhbnNhY3Rpb24gaW4gSVBNQiBzZW5zb3Iu
-DQoNClNvdW5kcyByZWFzb25hYmxlLiAgRG8geW91IGludGVuZCBvbiB1c2luZyB0aGUgZ2V0IGRl
-dmljZSBpZCBjb21tYW5kIHRvIGRldGVybWluZSB0aGUgdmVyc2lvbiBudW1iZXI/ICBXaGF0IHBp
-ZWNlIG9mIGhhcmR3YXJlIGFyZSB5b3UgY29ubmVjdGluZyB0bz8NCjo6RElTQ0xBSU1FUjo6DQpf
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KVGhlIGNvbnRlbnRzIG9mIHRoaXMgZS1t
-YWlsIGFuZCBhbnkgYXR0YWNobWVudChzKSBhcmUgY29uZmlkZW50aWFsIGFuZCBpbnRlbmRlZCBm
-b3IgdGhlIG5hbWVkIHJlY2lwaWVudChzKSBvbmx5LiBFLW1haWwgdHJhbnNtaXNzaW9uIGlzIG5v
-dCBndWFyYW50ZWVkIHRvIGJlIHNlY3VyZSBvciBlcnJvci1mcmVlIGFzIGluZm9ybWF0aW9uIGNv
-dWxkIGJlIGludGVyY2VwdGVkLCBjb3JydXB0ZWQsIGxvc3QsIGRlc3Ryb3llZCwgYXJyaXZlIGxh
-dGUgb3IgaW5jb21wbGV0ZSwgb3IgbWF5IGNvbnRhaW4gdmlydXNlcyBpbiB0cmFuc21pc3Npb24u
-IFRoZSBlIG1haWwgYW5kIGl0cyBjb250ZW50cyAod2l0aCBvciB3aXRob3V0IHJlZmVycmVkIGVy
-cm9ycykgc2hhbGwgdGhlcmVmb3JlIG5vdCBhdHRhY2ggYW55IGxpYWJpbGl0eSBvbiB0aGUgb3Jp
-Z2luYXRvciBvciBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIFZpZXdzIG9yIG9waW5pb25zLCBpZiBh
-bnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFyZSBzb2xlbHkgdGhvc2Ugb2YgdGhlIGF1dGhv
-ciBhbmQgbWF5IG5vdCBuZWNlc3NhcmlseSByZWZsZWN0IHRoZSB2aWV3cyBvciBvcGluaW9ucyBv
-ZiBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIEFueSBmb3JtIG9mIHJlcHJvZHVjdGlvbiwgZGlzc2Vt
-aW5hdGlvbiwgY29weWluZywgZGlzY2xvc3VyZSwgbW9kaWZpY2F0aW9uLCBkaXN0cmlidXRpb24g
-YW5kIC8gb3IgcHVibGljYXRpb24gb2YgdGhpcyBtZXNzYWdlIHdpdGhvdXQgdGhlIHByaW9yIHdy
-aXR0ZW4gY29uc2VudCBvZiBhdXRob3JpemVkIHJlcHJlc2VudGF0aXZlIG9mIEhDTCBpcyBzdHJp
-Y3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0aGlzIGVtYWlsIGluIGVycm9y
-IHBsZWFzZSBkZWxldGUgaXQgYW5kIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5LiBCZWZv
-cmUgb3BlbmluZyBhbnkgZW1haWwgYW5kL29yIGF0dGFjaG1lbnRzLCBwbGVhc2UgY2hlY2sgdGhl
-bSBmb3IgdmlydXNlcyBhbmQgb3RoZXIgZGVmZWN0cy4NCl9fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fX19fDQo=
+--000000000000931b4205b0f038ce
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello all,
+
+We would really appreciate it if you can take a few minutes to read the
+following proposal and let us know your thoughts and suggestions.
+
+We are developing a tool to investigate performance problems by looking at
+DBus traffic dumps. Current DBus inspection and visualization tools do not
+represent the DBus events similar to a typical performance profiler.
+Additionally, these tools do not address typical BMC workloads such as IPMI
+and ASIO. Hence, identifying potential performance problems requires
+inspecting the raw BMC DBus traffic, which can become a long and complex
+process. We want to add a graphical interface to webui-vue to visualize the
+DBus traffic to address the abovementioned problem.
+
+There have been DBus and IPMI performance-related discussions in the
+OpenBMC community, both of which can be helped by this work: IPMI-related
+issues started to appear as early as in 2017. One issue (#2630)
+<https://github.com/openbmc/openbmc/issues/2630> describes a problem
+related to large numbers of sensors. Its follow-up (#3098)
+<https://github.com/openbmc/openbmc/issues/3098> mentions =E2=80=9Chostboot=
+ crashes
+due to poor IPMI performance=E2=80=9D. Another issue (#2519)
+<https://github.com/openbmc/openbmc/issues/2519> describes a commonly-seen
+problem of IPMI taking very long to respond (> 5s).
+There are also discussions on RedFish performance
+<https://lists.ozlabs.org/pipermail/openbmc/2018-February/010735.html> on
+the mailing list; A patch
+<https://lists.ozlabs.org/pipermail/openbmc/2016-June/003380.html>
+optimized DBus performance by introducing a cache for name translation.
+
+All the performance investigations listed above involve DBus and may be
+helped by this work.
+
+We are planning to use the BMCweb file hosting functionality to access the
+DBus event dumps and visualize the events in the web UI. The available
+profiling tools such as dbus-pcap
+<https://github.com/openbmc/openbmc-tools/tree/master/amboar/obmc-scripts/d=
+bus-pcap>,
+Wireshark <https://www.wireshark.org/>, Bustle
+<https://gitlab.freedesktop.org/bustle/bustle>, Snyh
+<https://github.com/snyh/dbus-profiler>, or DFeet
+<https://wiki.gnome.org/action/show/Apps/DFeet?action=3Dshow&redirect=3DDFe=
+et>
+do not provide the exact functionality we are looking for. Our goal is to
+develop functionalities similar to other widely used profilers such as
+GPUView or VTune Profiler.
+
+One alternative solution considered was to stream DBus requests over
+websocket, but the existing websocket endpoints available on BMC webserver
+do not provide the exact information we need.
+
+Requirements and Scalability:
+
+   -
+
+   Should provide the adequate functionalities to filter, visualize the
+   events timeline, and group the DBus traffic based on multiple criteria s=
+uch
+   as type, source, destination, path, interface, demon signatures, and mor=
+e.
+   -
+
+   Should support capture of DBus messages using as little resources as
+   possible.
+   -
+
+   Should be able to show many (~thousands of) entries on screen
+   simultaneously
+   -
+
+   Integration with webui-vue
+
+
+Thank you
+
+--000000000000931b4205b0f038ce
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><span id=3D"gmail-docs-internal-guid-dce10fd1-7fff-c3f6-07=
+4a-86b4e551c8e4"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:10pt;m=
+argin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Roboto,sans-ser=
+if;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:norma=
+l;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wr=
+ap">Hello all,</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-to=
+p:10pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Roboto,=
+sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numer=
+ic:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spac=
+e:pre-wrap">We would really appreciate it if you can take a few minutes to =
+read the following proposal and let us know your thoughts and suggestions.<=
+/span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:10pt;margin-b=
+ottom:0pt"><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;colo=
+r:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-=
+variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">We =
+are developing a tool to investigate performance problems by looking at DBu=
+s traffic dumps. Current DBus inspection and visualization tools do not rep=
+resent the DBus events similar to a typical performance profiler. Additiona=
+lly, these tools do not address typical BMC workloads such as IPMI and ASIO=
+. Hence, identifying potential performance problems requires inspecting the=
+ raw BMC DBus traffic, which can become a long and complex process. We want=
+ to add a graphical interface to webui-vue to visualize the DBus traffic to=
+ address the abovementioned problem.</span></p><br><p dir=3D"ltr" style=3D"=
+line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size=
+:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:trans=
+parent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-=
+align:baseline;white-space:pre-wrap">There have been DBus and IPMI performa=
+nce-related discussions in the OpenBMC community, both of which can be help=
+ed by this work: IPMI-related issues started to appear as early as in 2017.=
+ </span><a href=3D"https://github.com/openbmc/openbmc/issues/2630" style=3D=
+"text-decoration-line:none"><span style=3D"font-size:11pt;font-family:Robot=
+o,sans-serif;background-color:transparent;font-variant-numeric:normal;font-=
+variant-east-asian:normal;text-decoration-line:underline;vertical-align:bas=
+eline;white-space:pre-wrap">One issue (#2630)</span></a><span style=3D"font=
+-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:=
+transparent;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
+ical-align:baseline;white-space:pre-wrap"> describes a problem related to l=
+arge numbers of sensors. </span><a href=3D"https://github.com/openbmc/openb=
+mc/issues/3098" style=3D"text-decoration-line:none"><span style=3D"font-siz=
+e:11pt;font-family:Roboto,sans-serif;background-color:transparent;font-vari=
+ant-numeric:normal;font-variant-east-asian:normal;text-decoration-line:unde=
+rline;vertical-align:baseline;white-space:pre-wrap">Its follow-up (#3098)</=
+span></a><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:=
+rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-va=
+riant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"> ment=
+ions =E2=80=9Chostboot crashes due to poor IPMI performance=E2=80=9D. </spa=
+n><a href=3D"https://github.com/openbmc/openbmc/issues/2519" style=3D"text-=
+decoration-line:none"><span style=3D"font-size:11pt;font-family:Roboto,sans=
+-serif;background-color:transparent;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;text-decoration-line:underline;vertical-align:baseline;=
+white-space:pre-wrap">Another issue (#2519)</span></a><span style=3D"font-s=
+ize:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:tr=
+ansparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertic=
+al-align:baseline;white-space:pre-wrap"> describes a commonly-seen problem =
+of IPMI taking very long to respond (&gt; 5s).</span><span style=3D"font-si=
+ze:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:tra=
+nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
+l-align:baseline;white-space:pre-wrap"><br></span><span style=3D"font-size:=
+11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:transp=
+arent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-a=
+lign:baseline;white-space:pre-wrap">There are also discussions on </span><a=
+ href=3D"https://lists.ozlabs.org/pipermail/openbmc/2018-February/010735.ht=
+ml" style=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-=
+family:Roboto,sans-serif;background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;text-decoration-line:underline;vertic=
+al-align:baseline;white-space:pre-wrap">RedFish performance</span></a><span=
+ style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);bac=
+kground-color:transparent;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;vertical-align:baseline;white-space:pre-wrap"> on the mailing lis=
+t; </span><a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2016-June/0=
+03380.html" style=3D"text-decoration-line:none"><span style=3D"font-size:11=
+pt;font-family:Roboto,sans-serif;background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;text-decoration-line:underlin=
+e;vertical-align:baseline;white-space:pre-wrap">A patch</span></a><span sty=
+le=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);backgro=
+und-color:transparent;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;vertical-align:baseline;white-space:pre-wrap"> optimized DBus perform=
+ance by introducing a cache for name translation.</span></p><p dir=3D"ltr" =
+style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"=
+font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-co=
+lor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;=
+vertical-align:baseline;white-space:pre-wrap">All the performance investiga=
+tions listed above involve DBus and may be helped by this work.</span></p><=
+br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0p=
+t"><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,=
+0,0);background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;vertical-align:baseline;white-space:pre-wrap">We are plan=
+ning to use the BMCweb file hosting functionality to access the DBus event =
+dumps and visualize the events in the web UI. The available profiling tools=
+ such as </span><a href=3D"https://github.com/openbmc/openbmc-tools/tree/ma=
+ster/amboar/obmc-scripts/dbus-pcap" style=3D"text-decoration-line:none"><sp=
+an style=3D"font-size:11pt;font-family:&quot;Courier New&quot;;background-c=
+olor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal=
+;text-decoration-line:underline;vertical-align:baseline;white-space:pre-wra=
+p">dbus-pcap</span></a><span style=3D"font-size:11pt;font-family:Roboto,san=
+s-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
+re-wrap">, </span><a href=3D"https://www.wireshark.org/" style=3D"text-deco=
+ration-line:none"><span style=3D"font-size:11pt;font-family:Arial;backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;text-decoration-line:underline;vertical-align:baseline;white-space:pre-=
+wrap">Wireshark</span></a><span style=3D"font-size:11pt;font-family:Roboto,=
+sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numer=
+ic:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spac=
+e:pre-wrap">, </span><a href=3D"https://gitlab.freedesktop.org/bustle/bustl=
+e" style=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-f=
+amily:Roboto,sans-serif;background-color:transparent;font-variant-numeric:n=
+ormal;font-variant-east-asian:normal;text-decoration-line:underline;vertica=
+l-align:baseline;white-space:pre-wrap">Bustle</span></a><span style=3D"font=
+-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:=
+transparent;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
+ical-align:baseline;white-space:pre-wrap">, </span><a href=3D"https://githu=
+b.com/snyh/dbus-profiler" style=3D"text-decoration-line:none"><span style=
+=3D"font-size:11pt;font-family:Roboto,sans-serif;background-color:transpare=
+nt;font-variant-numeric:normal;font-variant-east-asian:normal;text-decorati=
+on-line:underline;vertical-align:baseline;white-space:pre-wrap">Snyh</span>=
+</a><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0=
+,0,0);background-color:transparent;font-variant-numeric:normal;font-variant=
+-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">, or </spa=
+n><a href=3D"https://wiki.gnome.org/action/show/Apps/DFeet?action=3Dshow&am=
+p;redirect=3DDFeet" style=3D"text-decoration-line:none"><span style=3D"font=
+-size:11pt;font-family:Roboto,sans-serif;background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;text-decoration-line:=
+underline;vertical-align:baseline;white-space:pre-wrap">DFeet</span></a><sp=
+an style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);b=
+ackground-color:transparent;font-variant-numeric:normal;font-variant-east-a=
+sian:normal;vertical-align:baseline;white-space:pre-wrap"> do not provide t=
+he exact functionality we are looking for. Our goal is to develop functiona=
+lities similar to other widely used profilers </span><span style=3D"font-si=
+ze:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
+line;white-space:pre-wrap">such as GPUView or VTune Profiler.</span></p><br=
+><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"=
+><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline;white-space:pre-wrap">One alternative solution =
+considered was to stream DBus requests over websocket, but the existing web=
+socket endpoints available on BMC webserver do not provide the exact inform=
+ation we need.</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margi=
+n-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Robo=
+to,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-nu=
+meric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-s=
+pace:pre-wrap">Requirements and Scalability:</span></p><ul style=3D"margin-=
+top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"list-style-type:disc;fo=
+nt-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-colo=
+r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
+rtical-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-height:=
+1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;backgr=
+ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
+normal;vertical-align:baseline;white-space:pre-wrap">Should provide the ade=
+quate functionalities to filter, visualize the events timeline, and group t=
+he DBus traffic based on multiple criteria such as type, source, destinatio=
+n, path, interface, demon signatures, and more.</span></p></li><li dir=3D"l=
+tr" style=3D"list-style-type:disc;font-size:11pt;font-family:Roboto,sans-se=
+rif;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:norm=
+al;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre">=
+<p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt">=
+<span style=3D"font-size:11pt;background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-sp=
+ace:pre-wrap">Should support capture of DBus messages using as little resou=
+rces as possible.</span></p></li><li dir=3D"ltr" style=3D"list-style-type:d=
+isc;font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);backgroun=
+d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
+mal;vertical-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-h=
+eight:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;=
+background-color:transparent;font-variant-numeric:normal;font-variant-east-=
+asian:normal;vertical-align:baseline;white-space:pre-wrap">Should be able t=
+o show many (~thousands of) entries on screen simultaneously</span></p></li=
+><li dir=3D"ltr" style=3D"list-style-type:disc;font-size:11pt;font-family:R=
+oboto,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant=
+-numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whit=
+e-space:pre"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin=
+-bottom:0pt"><span style=3D"font-size:11pt;background-color:transparent;fon=
+t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
+line;white-space:pre-wrap">Integration with webui-vue</span></p></li></ul><=
+div><font color=3D"#000000" face=3D"Roboto, sans-serif"><span style=3D"font=
+-size:14.6667px;white-space:pre-wrap"><br></span></font></div><div><font co=
+lor=3D"#000000" face=3D"Roboto, sans-serif"><span style=3D"font-size:14.666=
+7px;white-space:pre-wrap">Thank you</span></font></div></span></div>
+
+--000000000000931b4205b0f038ce--
