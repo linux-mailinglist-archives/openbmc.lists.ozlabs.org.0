@@ -2,67 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DAF428422B
-	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 23:37:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9609628423C
+	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 23:42:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C4v8J6zQXzDqMr
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 08:37:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C4vG74z8dzDqP1
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 08:42:39 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::734; helo=mail-qk1-x734.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=lcjN5Lq4; dkim-atps=neutral
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com
- [IPv6:2607:f8b0:4864:20::734])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=iWGgPDOo; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C4v6T3f5zzDqB2
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 08:35:59 +1100 (AEDT)
-Received: by mail-qk1-x734.google.com with SMTP id s7so8156348qkh.11
- for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 14:35:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=SqDPVbHTzdlzHHdvWXWJxM0A4l9wDCajFawk+NsDnLA=;
- b=lcjN5Lq4k7QuT1fqzqQpLP25Lkme2sdSEqvuSIsah9KLkOF4IpBs9Gr77vC0ZdcxIH
- PasAdhnPWf760oPnWzjTRYlAOTeK7YVDGXrfUXh8dVee5AGG0iHSNQw0aDHjY+dYYBWv
- QjQF7e98xnvjJhouEmyoT6lsZPEYc7gfSbgzZvnQeEemZY9BtQkrwZ3KNt6HFL2/NEEy
- b7P/dcV4NRjWcMw+uAR4j/etdG2Za2T2LfncLOaOqF9qRjohIy7wamrnglDNvNK6Pcx9
- pD8vGTQhkunWBh4RQtRhLWDSvvJR/8WvNnuFs8Ivpr1apJ/n0tXZL1XS+KkTF3tk/z9F
- b81A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=SqDPVbHTzdlzHHdvWXWJxM0A4l9wDCajFawk+NsDnLA=;
- b=sbfxghLDLQ1hNAhC1wgzCi0mIPRX0Fyyj7FpfiYM+W0BGqW9I+0VnNgvmzPgzBYLRP
- xjbVxlzwd3H+rbUnmqvP3cOEfGTRLxeOivbl91nO4nOebSdmCMpEx5axR4ghofvQ9oTU
- C7lwBm7UHEVFGvtMqX0TFF5o5FBdMOf275NCsOQ7R0y0yc2nED2VymDl92+XmrjMgWJX
- 9/9bhcDS8MPQ2ndO+MF235mbhoXyyrZLfDpxDeFAS8SofMAYvb9TU4pgNsE1RLofV4QX
- ZEDUlpePIx72DY9BKd9Uuo6Mes0jcvHIAcVQHqYTyZRy7Rzx+PGKYk1HMJ2g8fksaPA7
- udAw==
-X-Gm-Message-State: AOAM533VpopGyiumyQlRB8F3cH8S5XhMP1/jVqRrhhJ5bDWxsATyvFWh
- MkqiGZnhnUh5EVcCZKZFyG79CQKpBR6onI0xxQlyWmX62npTbv9X
-X-Google-Smtp-Source: ABdhPJyCXW2qJzqaUBQPx2GLKylP7dKMXIXZ64zfxjgG7OSNUfGKq0SYakSlbvW9eZr/5gvoZO3xOnVXvafRmZpU/1I=
-X-Received: by 2002:a25:cd08:: with SMTP id d8mr2786560ybf.449.1601933754554; 
- Mon, 05 Oct 2020 14:35:54 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C4vDh0Z8VzDqMr
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 08:41:22 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 095LYwgh071064; Mon, 5 Oct 2020 17:41:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=mime-version :
+ content-type : content-transfer-encoding : date : from : to : cc : subject
+ : in-reply-to : references : message-id; s=pp1;
+ bh=YVXrYj9tlyG2o7Xs9yu7VXzlDYBJc87GS1y+R09zwdw=;
+ b=iWGgPDOoNuVTP929EY2Do6pCmWQsHH1NMOZpFrwPAYufq5tlHH2UjOjsY22dNZD7d+Vy
+ 0PcaDfj55a40meglNHq+maiuEMrd5Z7EiE0wyjXnfXnBcoTXFSMaqNA2t2u2AgZIpLbm
+ u2Ra2LHkO7IOQBqXe82nvy+YSizmF8PYAKF9pjP/p15nbbw7Avkddpw7PBDAyP0SopFN
+ xEc2f2DHJSQD26qOQzwp/D6Aoqz2NFfEX7HGbfyJmxkdZrlvgAjltAVbLaQcuxH7rwN8
+ QmvhEPIepO/PYlJkunqzcbhXHtHM1uPKMlZCLBRAJaHvDpkHHQuywq90GzQVMeEFXMdQ AQ== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 340aub95j9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2020 17:41:16 -0400
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 095LWYDO004692;
+ Mon, 5 Oct 2020 21:41:15 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
+ [9.57.198.24]) by ppma05wdc.us.ibm.com with ESMTP id 33xgx8tmvc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2020 21:41:15 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 095LfDir39715086
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Oct 2020 21:41:13 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BABB9AC059;
+ Mon,  5 Oct 2020 21:41:13 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 038E8AC05E;
+ Mon,  5 Oct 2020 21:41:12 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Oct 2020 21:41:12 +0000 (GMT)
 MIME-Version: 1.0
-References: <1a66bd6f-4095-2357-c860-80435c63bbe5@linux.vnet.ibm.com>
-In-Reply-To: <1a66bd6f-4095-2357-c860-80435c63bbe5@linux.vnet.ibm.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 5 Oct 2020 14:35:43 -0700
-Message-ID: <CACWQX80ZxZuvzLzCoEvENYPSHd0yFiR8O=eu0oovptw4zYgzxQ@mail.gmail.com>
-Subject: Re: Redfish: Supporting deprecated properties
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Mon, 05 Oct 2020 16:41:12 -0500
+From: Adriana Kobylak <anoo@linux.ibm.com>
+To: "P. Priyatharshan" <PriyatharshanP@hcl.com>
+Subject: Re: Multi host bios upgrade support in phosphor-bmc-code-mgmt:
+In-Reply-To: <TY2PR04MB3311812DB85A11934F044FB4CA0C0@TY2PR04MB3311.apcprd04.prod.outlook.com>
+References: <TY2PR04MB33112E61CA54FE1A17D30B70CA3A0@TY2PR04MB3311.apcprd04.prod.outlook.com>
+ <20200921194614.GL6152@heinlein>,
+ <b6cd8ac0b56a372391bd108dbf84fb0f@linux.vnet.ibm.com>,
+ <TY2PR04MB33117717F809C0804A00B365CA300@TY2PR04MB3311.apcprd04.prod.outlook.com>
+ <TY2PR04MB3311812DB85A11934F044FB4CA0C0@TY2PR04MB3311.apcprd04.prod.outlook.com>
+Message-ID: <893bbe2bbfe35c6ccdea0988c8ec1de9@linux.vnet.ibm.com>
+X-Sender: anoo@linux.ibm.com
+User-Agent: Roundcube Webmail/1.0.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-05_16:2020-10-05,
+ 2020-10-05 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 clxscore=1015
+ bulkscore=0 phishscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2010050153
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,121 +102,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, anoo@us.ibm.com, ojayanth@in.ibm.com,
+ gmills@linux.vnet.ibm.com, "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ ratagupt@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 5, 2020 at 1:34 PM Gunnar Mills <gmills@linux.vnet.ibm.com> wrote:
->
-> Felt this needed some broader discussion. Although Redfish tries to
-> avoid, it does deprecate properties. In the future, Redfish plans to
-> deprecate whole schemas. One of these deprecated properties was the
-> IndicatorLED property, replaced by the LocationIndicatorActive property.
-> More information on this can be found at (Slide 11):
-> http://www.dmtf.org/sites/default/files/Redfish_Release_2020.3_Overview.pdf
->
-> On https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/36886, it was
-> proposed supporting both the deprecated and new property for some time.
-> This would introduce a new Redfish Validator warning about implementing
-> a deprecated property. We have other warnings today so maybe not a big deal.
-> How long do we need to support both properties?
-> Based on releases? 6 months? That feels too long.
+Hi Priyatharshan,
 
-Based on releases feels too long?  Can you elaborate on why that's
-"too long".  Supporting it for N+2 releases with a deprecation warning
-return seems reasonable to me, considering the number of
-implementations that we'd break if we did the cutover quickly, and
-considering the alternative hasn't existed very long (a matter of
-weeks it looks like).  Maybe I'm over/under thinking something here.
+>  Object : /xyz/openbmc_project/software/[FIRMWARE_VERSION]_[DEVICE]
+> where device could be host1, 2, ...,N
+>  Interface : xyz.openbmc_project.Software.Activation
+> 
+>  Please confirm if our understanding is correct.
 
-> Are our releases used
-> broadly enough and release process mature enough?
-> If it is not a replacement and just deprecating a property, can we just
-> drop the deprecated property immediately when switching to a new schema
-> version that deprecates?
+I meant that to generate the id, which currently uses the version 
+string, would instead use the version string plus the string for the 
+name of the device where it's stored in order to generate the hash. For 
+example, today the code calls "SHA512_Update("version")", where 
+"version" is for example "2.9.0-dev-663-g2e34bb673". Instead the code 
+would detect this version is stored let's say in device "mtd1" or 
+"mmcblk0p1", it'd then append that device string to version, ex: 
+"2.9.0-dev-663-g2e34bb673-mmcblk0p1" and pass that string to 
+SHA512_Update(), therefore creating a different hash depending where 
+that version of bmc code is stored.
 
-I don't think so.  That would break clients, many of whom aren't
-connected enough to the mailing list, but would be broken all the
-same.
+Note that this is for BMC versions only. We discussed that for host 
+versions, we'd need to modify the code to add a "os-release" file under 
+/media/ that contained the host version information similar to the BMC's 
+os-release file. In addition, we'd need to somehow determine that those 
+files were for host (Bios) versions instead of BMC ones. Perhaps 
+os-release could have an additional field added to specify the purpose.
 
-> Do we need to do the same when a schema is deprecated?
 
-Depends on the schema, and I'd say we come up with this posture once
-it happens, and depending on impact.  For example, if they deprecate
-SessionService (something that every tool in the world uses) that's a
-very different posture than if they deprecate the Fan schema, which
-very few implementations actually implement in the client side
-correctly to the spec.
+> Adriana, Any tentative timeline on your commits availability [generate
+> the id based on firmware version plus the device or volume ]
 
-> This matters
-> because Redfish is targeting 2020.4 for new Power and Thermal Subsystem
-> Schemas. Redfish plans to deprecate the old Power and Thermal Schemas
-> and release new schemas.
-
-In this specific case, I suspect a compile time flag would be my
-recommendation, because it's not just a pure deprecation, it's
-changing the meaning and intent of a lot of collections.  We already
-did this with the "single chassis" flag a long time back, and it
-worked quite well.  Those that wanted new behavior got it, those that
-wanted old behavior, got it.  It was a nightmare to maintain, but I
-suspect this changeover will be a little easier maintenance wise.
-
->
-> I think it is reasonable we support both IndicatorLED and
-> LocationIndicatorActive for some time, I'll throw out 2 months.
-
-Not nearly enough time IMO.  It takes longer than that for the spec to
-go from PR merged to a versioned API release.  Some gerrit reviews
-alone take longer than that.  Also, supporting both for some time is
-trivial code-wise.  Are you just worried about the warning, or are you
-expecting a significant revamp of the LED stuff in the near future?
-
-> Our
-> Redfish implementation is young and I am not sure it is worth the
-> developmental and support costs, at least at this time, to maintain
-> deprecated properties and schemas for long.
-
-In this case, I'm looking at what would be maybe 3 lines of code?  If
-redfish starts deprecating properties every other release, then I
-agree, that's not maintainable, but in this case, this seems
-unimportant.  One thing I would like to understand: it looks like the
-new property doesn't support Blink?  How is that handled in the new
-schema?
-
-It should be noted, OCPServerHardwareManagement v0.2.3 requires
-IndicatorLED;  Are we ok with breaking our OCP compliance more?  At
-this point in time, I'd rather not, so I'd like to see OCP also ratify
-the deprecation, and release a new version of their profile before
-anything other deprecation happens.
-
-In this specific case, what if we did this:
-Now;  Upstream backward compatible LocationIndicatorActive property to
-bmcweb.  Upstream changes to OCP schema to also deprecate
-IndicatorLed.  Time starts counting once both patches have been
-accepted into their respective mainline branches.
-N+1 release;  Implement returning a deprecation warning to the user
-attempting to use the IndicatorLED PATCH API.
-N+2 release; Remove the IndicatorLED property from GET requests, but
-continue to accept the property for PATCH requests (we've done this in
-other cases).
-N+3 release; Disallow PATCH to that property entirely, and continue
-with new implementation.  Ideally hold the deprecation warning, but
-use judgement about technical debt.
-
-?????
-
-Profit!
-
->
-> Clients can use the schema version to determine which properties are
-> available. If needed companies in a fork could maintain backward
-> compatibility for longer.
-
-In practice, many clients don't check the schema at all.  I really
-wish Redfish had a way for a client to say "I support X version of the
-schema, give me the things compatible with that", but I'm not aware of
-anything like that.
-
->
-> Thanks,
-> Gunnar
+I'd say by early next year at the latest.
