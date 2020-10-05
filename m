@@ -1,62 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4C24283339
-	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 11:30:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 097292834A8
+	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 13:09:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C4b0w0FFHzDqDm
-	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 20:30:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C4dC92n6CzDqG9
+	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 22:09:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=in.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=gkeishin@in.ibm.com;
+ smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1472:2741:0:8b6:217;
+ helo=forwardcorp1p.mail.yandex.net; envelope-from=kitsok@yandex-team.ru;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=in.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Aplis9Ve; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=yandex-team.ru
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru
+ header.a=rsa-sha256 header.s=default header.b=QICzT+N8; 
+ dkim-atps=neutral
+Received: from forwardcorp1p.mail.yandex.net (forwardcorp1p.mail.yandex.net
+ [IPv6:2a02:6b8:0:1472:2741:0:8b6:217])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C4b001kg0zDqDf
- for <openbmc@lists.ozlabs.org>; Mon,  5 Oct 2020 20:29:15 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 09592X4n103137
- for <openbmc@lists.ozlabs.org>; Mon, 5 Oct 2020 05:29:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : to : cc :
- from : date : references : content-type : message-id : mime-version :
- subject; s=pp1; bh=6p7TwyGcBaR3nSGQxNQj/M1dI4b8z3DcZQHd6uAXk+c=;
- b=Aplis9VeFbiegraFVN6Lqz11MPZxwnuCVW8+z1LhgpHwRE8080ZlSRYo3DGOJe6LXxXh
- ah2qLiuO+dCfaO7IBCMY3lT+NTL2Ox1TqfNuMGxTjdOqscVsfw9pjBxYp2dYNMFIjuL0
- ppGehW5x8Rv/vIsIcgg1N9b7I4bGlqtga184NDAKAjuC6fUQryK8UfZQ8p3XguAvDcmh
- WD9UbkQOMyxgygW4OG/EHMQxR9xejMMvOYj4iWIbGRAtHRhvqVRv94gNP77EXZ6NBKeY
- A0E0t0Ngp3Rci4jHqDSQnJtKZdpgERXonwmiGRD+ThD2a/T4YYCIePsph3AXYeOCxOvz GQ== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.75])
- by mx0a-001b2d01.pphosted.com with ESMTP id 33yxjdvcsg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 05:29:12 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <gkeishin@in.ibm.com>;
- Mon, 5 Oct 2020 09:29:11 -0000
-Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
- by smtp.notes.na.collabserv.com (10.106.227.123) with
- smtp.notes.na.collabserv.com ESMTP; Mon, 5 Oct 2020 09:29:10 -0000
-Received: from us1a3-mail113.a3.dal06.isc4sb.com ([10.146.6.4])
- by us1a3-smtp03.a3.dal06.isc4sb.com
- with ESMTP id 2020100509290933-219068 ;
- Mon, 5 Oct 2020 09:29:09 +0000 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C4dB718KTzDqFL
+ for <openbmc@lists.ozlabs.org>; Mon,  5 Oct 2020 22:08:03 +1100 (AEDT)
+Received: from myt5-23f0be3aa648.qloud-c.yandex.net
+ (myt5-23f0be3aa648.qloud-c.yandex.net
+ [IPv6:2a02:6b8:c12:3e29:0:640:23f0:be3a])
+ by forwardcorp1p.mail.yandex.net (Yandex) with ESMTP id AC4302E14DE;
+ Mon,  5 Oct 2020 14:07:52 +0300 (MSK)
+Received: from localhost (localhost [::1])
+ by myt5-23f0be3aa648.qloud-c.yandex.net (mxbackcorp/Yandex) with ESMTP id
+ 7HLYh42eYI-7qx8WPGm; Mon, 05 Oct 2020 14:07:52 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; 
+ t=1601896072; bh=DZ6JjNSJSfCPsaI540lOXwpyDuWswgH92ImFD4mWn2I=;
+ h=Message-Id:Cc:Subject:In-Reply-To:Date:References:To:From;
+ b=QICzT+N8PvdCNd0Z50KS2nvz8a+i+eYIUGVs7m7BKW3vQiqzIWYL140dH8F7QIYnA
+ HLA0vAxw1fUraT4DAoXhUruobFYzR9EwpuI1uXidqXn8f+X2Blv7CJl9V4d9FBAsPq
+ 7RjiB3qQ5tyHUB5WSMJ+D12IKTE0MqXlzDWdw0j4=
+Authentication-Results: myt5-23f0be3aa648.qloud-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+X-Yandex-Sender-Uid: 1120000000049860
+Received: by myt4-457577cc370d.qloud-c.yandex.net with HTTP;
+ Mon, 05 Oct 2020 14:07:52 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+To: Jayashree D <jayashree-d@hcl.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 In-Reply-To: <SG2PR04MB30938A1CCFE5499A7B017852E10C0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-To: Jayashree D <jayashree-d@hcl.com>
-From: "George Keishing" <gkeishin@in.ibm.com>
-Date: Mon, 5 Oct 2020 14:59:03 +0530
 References: <SG2PR04MB30932185827E6DCADD02F422E1240@SG2PR04MB3093.apcprd04.prod.outlook.com>
  <SG2PR04MB3093E7C8F543D9AD318B4653E1230@SG2PR04MB3093.apcprd04.prod.outlook.com>
  <68131600080119@mail.yandex-team.ru>
@@ -67,31 +59,13 @@ References: <SG2PR04MB30932185827E6DCADD02F422E1240@SG2PR04MB3093.apcprd04.prod.
  <SG2PR04MB30932DB1D5C88B0447DBC7F7E13F0@SG2PR04MB3093.apcprd04.prod.outlook.com>
  <SG2PR04MB30930AE9AE508E17FB788D66E1360@SG2PR04MB3093.apcprd04.prod.outlook.com>
  <SG2PR04MB30938A1CCFE5499A7B017852E10C0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-X-KeepSent: 9260DEF9:CE15534B-002585F8:00334FE5;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 10.0.1 November 29, 2018
-X-LLNOutbound: False
-X-Disclaimed: 54471
-X-TNEFEvaluated: 1
-Content-type: multipart/related; 
- Boundary="0__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975"
-x-cbid: 20100509-6875-0000-0000-000003A98CEB
-X-IBM-SpamModules-Scores: BY=0.033805; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.421136; ST=0; TS=0; UL=0; ISC=; MB=0.253527
-X-IBM-SpamModules-Versions: BY=3.00013955; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01444640; UDB=6.00776488; IPR=6.01227342; 
- MB=3.00034391; MTD=3.00000008; XFM=3.00000015; UTC=2020-10-05 09:29:10
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-10-05 04:14:08 - 6.00011917
-x-cbparentid: 20100509-6876-0000-0000-000025289449
-Message-Id: <OF9260DEF9.CE15534B-ON002585F8.00334FE5-652585F8.0034197D@notes.na.collabserv.com>
-X-Proofpoint-UnRewURL: 16 URL's were un-rewritten
+Subject: Re: Connection issue in OpenBMC image
 MIME-Version: 1.0
-Subject: RE: Connection issue in OpenBMC image
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-10-05_06:2020-10-02,
- 2020-10-05 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Mon, 05 Oct 2020 14:07:52 +0300
+Message-Id: <22341601893954@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,774 +77,402 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+Cc: George Keishing <gkeishin@in.ibm.com>,
  "geissonator@yahoo.com" <geissonator@yahoo.com>,
- openbmc <openbmc-bounces+gkeishin=in.ibm.com@lists.ozlabs.org>,
- Konstantin Klubnichkin <kitsok@yandex-team.ru>,
  Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975
-Content-type: multipart/alternative; 
-	Boundary="1__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975"
-
-
---1__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975
-Content-type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-
-Jayashree,
-
-Couple places where it checks for the SSH to BMC and SOL as well, that
-should catch those in your HW test CI environment
-
-Example:
-
-https://github.com/openbmc/openbmc-test-automation/blob/master/test_lists/H=
-W_CI#L2
-Test_SSH_And_IPMI_Connections
-
-https://github.com/openbmc/openbmc-test-automation/blob/master/test_lists/H=
-W_CI#L4
--i Verify_Redfish_Host_PowerOn
--i Verify_Redfish_Host_PowerOff
-
-Here SOL connection done as part of the above setup/teardown
-https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/syst=
-ems/test_power_operations.robot#L87
-https://github.com/openbmc/openbmc-test-automation/blob/master/redfish/syst=
-ems/test_power_operations.robot#L95
-
-
-
-Those tests are currently running in upstream community HW Jenkins test CI.
-So it would have caught those SSH related for generic ports in general and
-you can use similar in your environment.
-
-Thanks and Regards,
-   George Keishing
-
-
-
-
-
-From:	Jayashree D <jayashree-d@hcl.com>
-To:	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Cc:	George Keishing <gkeishin@in.ibm.com>, "geissonator@yahoo.com"
-            <geissonator@yahoo.com>, Vijay Khemka <vijaykhemka@fb.com>,
-            Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Date:	05-10-2020 02:09 PM
-Subject:	[EXTERNAL] RE: Connection issue in OpenBMC image
-Sent by:	"openbmc" <openbmc-bounces
-            +gkeishin=3Din.ibm.com@lists.ozlabs.org>
-
-
-
-Classification: HCL Internal
-
-Regarding SSH connection, an issue has been created in openbmc and I also
-see others having this same issue.
-From the comments, I have run "dropbear -E -p 5022" in the target
-(UART-console) and tried to connect the target using "ssh -p 5022 <ip>" and
-ssh connection established.
-But, reboot and systemctl commands hangs.
-
-Issue -
-https://github.com/openbmc/openbmc/issues/3701
-
-
-root@tiogapass:~# dropbear -E -p 5022
-[348] Jan 01 00:06:48 Failed loading /etc/dropbear/dropbear_dss_host_key
-[348] Jan 01 00:06:48 Failed loading /etc/dropbear/dropbear_ecdsa_host_key
-[348] Jan 01 00:06:48 Failed
-loading /etc/dropbear/dropbear_ed25519_host_key
-[349] Jan 01 00:06:48 Running in background
-
-[root@odc ~]# ssh -p 5022 root@10.0.128.108 root@10.0.128.108's password:
-root@tiogapass:~#
-
-Hi George,
-
-We are facing connection issue in accessing the target after flashing the
-latest image.
-In openbmc-test-automation, whether any test cases are present in CI to
-identify these issues ?
-Please let us know your comments on this.
-
-Regards,
-Jayashree
-
------Original Message-----
-From: Jayashree D
-Sent: Friday, September 25, 2020 10:29 AM
-To: openbmc@lists.ozlabs.org
-Cc: Konstantin Klubnichkin <kitsok@yandex-team.ru>; Vijay Khemka
-<vijaykhemka@fb.com>; geissonator@yahoo.com; joel@jms.id.au; Patrick
-Williams <patrick@stwcx.xyz>
-Subject: RE: Connection issue in OpenBMC image
-
-Classification: HCL Internal
-
-Hi Team,
-
-In the latest openbmc build, after image upgradation in the target, not
-able to connect the target through SSH but able to ping the IP Address.
-
-After analysing the latest commits, reverted the below commit in the latest
-build and checked by flashing the image. Now the target is connecting
-through SSH. Please help us on fixing this issue.
-
-Commit Link -
-https://github.com/openbmc/openbmc/commit/635e0e4637e40ba03f69204265427550f=
-d404f4c
-
-
-
-Observation on UART-console after flashing latest image without any
-changes:
-
-1. reboot command is not working.
-2. systemctl status <service_name> is not providing any status. ( Failed to
-get properties: Connection timed out) 3. I tried "ssh -vvv <ip>" and logs
-are attached for working and non-working image.
-4. From controller, I tried to upgrade image using redfish and image is
-being copied and following logs shown.
-root@tiogapass:~# journalctl | grep image Jan 01 00:00:37 tiogapass
-phosphor-image-updater[246]: Error in mapper GetSubTreePath Jan 01 10:43:59
-tiogapass phosphor-image-updater[246]: BMC image activating - BMC reboots
-are disabled.
-
-5. Using Rest API command,
-
-[root@odc ]# curl -k -H "X-Auth-Token: $token" -H "Content-Type:
-application/json" -X PUT -d
-'{"data":"xyz.openbmc_project.Software.Activation.RequestedActivations.Acti=
-ve"}'
-
-https://$%7Bbmc%7D/xyz/openbmc_project/software/a77348be/attr/RequestedActi=
-vation
-
-{
-  "data": {
-    "description": "org.freedesktop.DBus.Error.NoReply"
-  },
-  "message": "Method call timed out",
-  "status": "error"
-}
-
-
-Regards,
-Jayashree
-
------Original Message-----
-From: Jayashree D
-Sent: Friday, September 18, 2020 3:18 PM
-To: Patrick Williams <patrick@stwcx.xyz>; openbmc@lists.ozlabs.org
-Cc: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-Subject: RE: Connection issue in OpenBMC image
-
-Classification: HCL Internal
-
-Hello Patrick,
-
-I saw the post about dropbear, but that commit was updated on July16 and my
-target is connecting till August last week image. I don't think that will
-be an issue. Also on working image, I tried with 'ssh -vvv ' and I got
-below information.
-
-OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017
-debug1: Reading configuration data /etc/ssh/ssh_config
-debug1: /etc/ssh/ssh_config line 58: Applying options for *
-debug2: resolving "10.0.128.108" port 22
-debug2: ssh_connect_direct: needpriv 0
-debug1: Connecting to 10.0.128.108 [10.0.128.108] port 22.
-debug1: Connection established.
-debug1: permanently_set_uid: 0/0
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_rsa type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_rsa-cert type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_dsa type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_dsa-cert type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ecdsa type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ecdsa-cert type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ed25519 type -1
-debug1: key_load_public: No such file or directory
-debug1: identity file /root/.ssh/id_ed25519-cert type -1
-debug1: Enabling compatibility mode for protocol 2.0
-debug1: Local version string SSH-2.0-OpenSSH_7.4
-debug1: Remote protocol version 2.0, remote software version
-dropbear_2020.80
-debug1: no match: dropbear_2020.80
-debug2: fd 3 setting O_NONBLOCK
-debug1: Authenticating to 10.0.128.108:22 as 'root'
-debug3: hostkeys_foreach: reading file "/root/.ssh/known_hosts"
-debug3: record_hostkey: found key type RSA in
-file /root/.ssh/known_hosts:68
-debug3: load_hostkeys: loaded 1 keys from 10.0.128.108
-debug3: order_hostkeyalgs: prefer hostkeyalgs:
-ssh-rsa-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,ssh-rsa
-debug3: send packet: type 20
-debug1: SSH2_MSG_KEXINIT sent
-debug3: receive packet: type 20
-debug1: SSH2_MSG_KEXINIT received
-debug2: local client KEXINIT proposal
-debug2: KEX algorithms:
-curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2=
--nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-he=
-llman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellman-group-exc=
-hange-sha1,diffie-hellman-group14-sha256,diffie-hellman-group14-sha1,diffie=
--hellman-group1-sha1,ext-info-c
-
-debug2: host key algorithms:
-ssh-rsa-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,ssh-rsa,ecdsa-sha2-n=
-istp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa=
--sha2-nistp521-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,ssh-ds=
-s-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-n=
-istp521,ssh-ed25519,ssh-dss
-
-debug2: ciphers ctos:
-chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@o=
-penssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc
-
-debug2: ciphers stoc:
-chacha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@o=
-penssh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc
-
-debug2: MACs ctos:
-umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.=
-com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh=
-.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
-
-debug2: MACs stoc:
-umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.=
-com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh=
-.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1
-
-debug2: compression ctos: none,zlib@openssh.com,zlib
-debug2: compression stoc: none,zlib@openssh.com,zlib
-debug2: languages ctos:
-debug2: languages stoc:
-debug2: first_kex_follows 0
-debug2: reserved 0
-debug2: peer server KEXINIT proposal
-debug2: KEX algorithms:
-curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2=
--nistp384,ecdh-sha2-nistp256,diffie-hellman-group14-sha256,kexguess2@matt.u=
-cc.asn.au
-
-debug2: host key algorithms: rsa-sha2-256,ssh-rsa
-debug2: ciphers ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes256-ctr
-debug2: ciphers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes256-ctr
-debug2: MACs ctos: hmac-sha1,hmac-sha2-256
-debug2: MACs stoc: hmac-sha1,hmac-sha2-256
-debug2: compression ctos: zlib@openssh.com,none
-debug2: compression stoc: zlib@openssh.com,none
-debug2: languages ctos:
-debug2: languages stoc:
-debug2: first_kex_follows 0
-debug2: reserved 0
-debug1: kex: algorithm: curve25519-sha256
-debug1: kex: host key algorithm: rsa-sha2-256
-debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC:
-<implicit> compression: none
-debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC:
-<implicit> compression: none
-debug1: kex: curve25519-sha256 need=3D64 dh_need=3D64
-debug1: kex: curve25519-sha256 need=3D64 dh_need=3D64
-debug3: send packet: type 30
-debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
-debug3: receive packet: type 31
-debug1: Server host key: ssh-rsa SHA256:3WwhPmIIxzrw0
-+cm/0vN3hifY4kh9sJhClVNw6zrJ7Y
-debug3: hostkeys_foreach: reading file "/root/.ssh/known_hosts"
-debug3: record_hostkey: found key type RSA in
-file /root/.ssh/known_hosts:68
-debug3: load_hostkeys: loaded 1 keys from 10.0.128.108
-debug1: Host '10.0.128.108' is known and matches the RSA host key.
-debug1: Found key in /root/.ssh/known_hosts:68
-debug3: send packet: type 21
-debug2: set_newkeys: mode 1
-debug1: rekey after 134217728 blocks
-debug1: SSH2_MSG_NEWKEYS sent
-debug1: expecting SSH2_MSG_NEWKEYS
-debug3: receive packet: type 21
-debug1: SSH2_MSG_NEWKEYS received
-debug2: set_newkeys: mode 0
-debug1: rekey after 134217728 blocks
-debug2: key: /root/.ssh/id_rsa (0x558ea3ad3640), agent
-debug2: key: /root/.ssh/id_rsa ((nil))
-debug2: key: /root/.ssh/id_dsa ((nil))
-debug2: key: /root/.ssh/id_ecdsa ((nil))
-debug2: key: /root/.ssh/id_ed25519 ((nil))
-debug3: send packet: type 5
-debug3: receive packet: type 7
-debug1: SSH2_MSG_EXT_INFO received
-debug1: kex_input_ext_info:
-server-sig-algs=3D<ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecds=
-a-sha2-nistp521,rsa-sha2-256,ssh-rsa,ssh-dss>
-
-debug3: receive packet: type 6
-debug2: service_accept: ssh-userauth
-debug1: SSH2_MSG_SERVICE_ACCEPT received
-debug3: send packet: type 50
-debug3: receive packet: type 51
-debug1: Authentications that can continue: publickey,password
-debug3: start over, passed a different list publickey,password
-debug3: preferred
-gssapi-keyex,gssapi-with-mic,publickey,keyboard-interactive,password
-debug3: authmethod_lookup publickey
-debug3: remaining preferred: keyboard-interactive,password
-debug3: authmethod_is_enabled publickey
-debug1: Next authentication method: publickey
-debug1: Offering RSA public key: /root/.ssh/id_rsa
-debug3: send_pubkey_test
-debug3: send packet: type 50
-debug2: we sent a publickey packet, wait for reply
-debug3: receive packet: type 51
-debug1: Authentications that can continue: publickey,password
-debug1: Trying private key: /root/.ssh/id_rsa
-debug3: sign_and_send_pubkey: RSA SHA256:YfteufmWUV8W7EQEycZ
-+38skgUWGDTYFHw93a7SwwLM
-debug3: send packet: type 50
-debug2: we sent a publickey packet, wait for reply
-debug3: receive packet: type 51
-debug1: Authentications that can continue: publickey,password
-debug1: Trying private key: /root/.ssh/id_dsa
-debug3: no such identity: /root/.ssh/id_dsa: No such file or directory
-debug1: Trying private key: /root/.ssh/id_ecdsa
-debug3: no such identity: /root/.ssh/id_ecdsa: No such file or directory
-debug1: Trying private key: /root/.ssh/id_ed25519
-debug3: no such identity: /root/.ssh/id_ed25519: No such file or directory
-debug2: we did not send a packet, disable method
-debug3: authmethod_lookup password
-debug3: remaining preferred: ,password
-debug3: authmethod_is_enabled password
-debug1: Next authentication method: password
-
-
-In non-working image, the logs are stopped after below lines and it is not
-providing any errors.
-
-debug1: Enabling compatibility mode for protocol 2.0
-debug1: Local version string SSH-2.0-OpenSSH_7.4
-
-Also one more observation in UART-Console, after flashing latest image.
-
-1. reboot command is not working.
-2. systemctl status <service_name> is not providing any status. ( Failed to
-get properties: Connection timed out) 3. I can able to ping the ip address
-but scp is not working.
-
-Thanks,
-Jayashree
-
-
------Original Message-----
-From: Patrick Williams <patrick@stwcx.xyz>
-Sent: Thursday, September 17, 2020 9:16 PM
-To: Jayashree D <jayashree-d@hcl.com>
-Cc: Konstantin Klubnichkin <kitsok@yandex-team.ru>;
-openbmc@lists.ozlabs.org
-Subject: Re: Connection issue in OpenBMC image
-
-Hello Jayashree,
-
-I saw an output `ssh -v` from you earlier, but there really wasn't any
-useful information there.  It looked like the connection was being made and
-keys were exchanged and then the log just stopped abruptly.  This tells me
-it likely isn't a networking issue but an issue in the handshake between
-the ssh-client (your computer) and ssh-server (dropbear).  You can continue
-to add '-v' parameters up to `ssh -vvv` and you'll get increasingly more
-information.
-
-Joseph Reynolds recently posted a reminder about dropbear disabling weak
-ciphers[1].  Is it possible that your client is using an old cipher?
-
-On Wed, Sep 16, 2020 at 11:35:28AM +0000, Jayashree D wrote:
-> root@tiogapass:~# journalctl | grep drop
-...
-> Jan 01 00:15:28 tiogapass systemd[1]:
-dropbear@0-10.0.128.108:22-10.0.0.1:51810.service: Succeeded.
-> Jan 01 00:15:44 tiogapass dropbear[2753]: Child connection from
-> ::ffff:10.0.0.1:51944 Jan 01 00:15:50 tiogapass dropbear[2753]: PAM
-> password auth succeeded for 'root' from ::ffff:10.0.0.1:51944
-
-This looks like a valid connection was established.
-
-> 15.09.2020, 16:12, "Jayashree D" <jayashree-d@hcl.com<
-mailto:jayashree-d@hcl.com>>:
->
-> OpenSSH_7.4p1, OpenSSL 1.0.2k-fips  26 Jan 2017
-> debug1: Reading configuration data /etc/ssh/ssh_config
-> debug1: /etc/ssh/ssh_config line 58: Applying options for *
-> debug1: Connecting to 10.0.128.108 [10.0.128.108] port 22.
-> debug1: Connection established.
-> debug1: permanently_set_uid: 0/0
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_rsa type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_rsa-cert type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_dsa type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_dsa-cert type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ecdsa type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ecdsa-cert type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ed25519 type -1
-> debug1: key_load_public: No such file or directory
-> debug1: identity file /root/.ssh/id_ed25519-cert type -1
-> debug1: Enabling compatibility mode for protocol 2.0
-> debug1: Local version string SSH-2.0-OpenSSH_7.4
-
-This is the log that also looks like a good connection.  Identity files
-were attempted to be exchanged.  Version strings were exchanged.  And then
-the log just abruptly stops.  Was the connection dropped?  Is it hung?
-
-1.
-https://lists.ozlabs.org/pipermail/openbmc/2020-September/023071.html
-
-
---
-Patrick Williams
-::DISCLAIMER::
-________________________________
-The contents of this e-mail and any attachment(s) are confidential and
-intended for the named recipient(s) only. E-mail transmission is not
-guaranteed to be secure or error-free as information could be intercepted,
-corrupted, lost, destroyed, arrive late or incomplete, or may contain
-viruses in transmission. The e mail and its contents (with or without
-referred errors) shall therefore not attach any liability on the originator
-or HCL or its affiliates. Views or opinions, if any, presented in this
-email are solely those of the author and may not necessarily reflect the
-views or opinions of HCL or its affiliates. Any form of reproduction,
-dissemination, copying, disclosure, modification, distribution and / or
-publication of this message without the prior written consent of authorized
-representative of HCL is strictly prohibited. If you have received this
-email in error please delete it and notify the sender immediately. Before
-opening any email and/or attachments, please check them for viruses and
-other defects.
-________________________________
-
-
-
-
---1__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975
-Content-type: text/html; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-<html><body><p><font size=3D"2">Jayashree,</font><br><br><font size=3D"2">C=
-ouple places where it checks for the SSH to BMC and SOL as well, that shoul=
-d catch those in your HW test CI environment</font><br><br><font size=3D"2"=
->Example:</font><br><br><a href=3D"https://github.com/openbmc/openbmc-test-=
-automation/blob/master/test_lists/HW_CI#L2"><font size=3D"2">https://github=
-.com/openbmc/openbmc-test-automation/blob/master/test_lists/HW_CI#L2</font>=
-</a><br><font color=3D"#24292E" face=3D"Consolas">Test_SSH_And_IPMI_Connect=
-ions</font> <br><br><a href=3D"https://github.com/openbmc/openbmc-test-auto=
-mation/blob/master/test_lists/HW_CI#L4"><font size=3D"2">https://github.com=
-/openbmc/openbmc-test-automation/blob/master/test_lists/HW_CI#L4</font></a>=
-<br><font color=3D"#24292E" face=3D"Consolas">-i Verify_Redfish_Host_PowerO=
-n</font> <br><font color=3D"#24292E" face=3D"Consolas">-i Verify_Redfish_Ho=
-st_PowerOff</font> <br><font size=3D"2"><br>Here SOL connection done as par=
-t of the above setup/teardown<br></font><a href=3D"https://github.com/openb=
-mc/openbmc-test-automation/blob/master/redfish/systems/test_power_operation=
-s.robot#L87"><font size=3D"2">https://github.com/openbmc/openbmc-test-autom=
-ation/blob/master/redfish/systems/test_power_operations.robot#L87</font></a=
-><br><a href=3D"https://github.com/openbmc/openbmc-test-automation/blob/mas=
-ter/redfish/systems/test_power_operations.robot#L95"><font size=3D"2">https=
-://github.com/openbmc/openbmc-test-automation/blob/master/redfish/systems/t=
-est_power_operations.robot#L95</font></a><font size=3D"2"><br><br></font><b=
-r><font size=3D"2">Those tests are currently running in upstream community =
-HW Jenkins test CI. So it would have caught those SSH related for generic p=
-orts in general and you can use similar in your environment.</font><br><br>=
-<b><font size=3D"2" color=3D"#0000FF">Thanks and Regards,</font></b><br><fo=
-nt size=3D"2" color=3D"#0000FF">   George Keishing</font><br><font size=3D"=
-2" color=3D"#0000FF"> </font><br><br><br><img width=3D"16" height=3D"16" sr=
-c=3D"cid:1__=3D8FBB0F6BDFA0C9758f9e8a93df938690918c8FB@" border=3D"0" alt=
-=3D"Inactive hide details for Jayashree D ---05-10-2020 02:09:58 PM---Class=
-ification: HCL Internal Regarding SSH connection, an iss"><font size=3D"2" =
-color=3D"#424282">Jayashree D ---05-10-2020 02:09:58 PM---Classification: H=
-CL Internal Regarding SSH connection, an issue has been created in openbmc =
-and I al</font><br><br><font size=3D"2" color=3D"#5F5F5F">From:        </fo=
-nt><font size=3D"2">Jayashree D &lt;jayashree-d@hcl.com&gt;</font><br><font=
- size=3D"2" color=3D"#5F5F5F">To:        </font><font size=3D"2">&quot;open=
-bmc@lists.ozlabs.org&quot; &lt;openbmc@lists.ozlabs.org&gt;</font><br><font=
- size=3D"2" color=3D"#5F5F5F">Cc:        </font><font size=3D"2">George Kei=
-shing &lt;gkeishin@in.ibm.com&gt;, &quot;geissonator@yahoo.com&quot; &lt;ge=
-issonator@yahoo.com&gt;, Vijay Khemka &lt;vijaykhemka@fb.com&gt;, Konstanti=
-n Klubnichkin &lt;kitsok@yandex-team.ru&gt;</font><br><font size=3D"2" colo=
-r=3D"#5F5F5F">Date:        </font><font size=3D"2">05-10-2020 02:09 PM</fon=
-t><br><font size=3D"2" color=3D"#5F5F5F">Subject:        </font><font size=
-=3D"2">[EXTERNAL] RE: Connection issue in OpenBMC image</font><br><font siz=
-e=3D"2" color=3D"#5F5F5F">Sent by:        </font><font size=3D"2">&quot;ope=
-nbmc&quot; &lt;openbmc-bounces+gkeishin=3Din.ibm.com@lists.ozlabs.org&gt;</=
-font><br><hr width=3D"100%" size=3D"2" align=3D"left" noshade style=3D"colo=
-r:#8091A5; "><br><br><br><tt><font size=3D"2">Classification: HCL Internal<=
-br><br>Regarding SSH connection, an issue has been created in openbmc and I=
- also see others having this same issue.<br>From the comments, I have run &=
-quot;dropbear -E -p 5022&quot; in the target (UART-console) and tried to co=
-nnect the target using &quot;ssh -p 5022 &lt;ip&gt;&quot; and ssh connectio=
-n established.<br>But, reboot and systemctl commands hangs.<br><br>Issue - =
-</font></tt><tt><font size=3D"2"><a href=3D"https://github.com/openbmc/open=
-bmc/issues/3701">https://github.com/openbmc/openbmc/issues/3701</a></font><=
-/tt><tt><font size=3D"2">&nbsp;<br><br>root@tiogapass:~# dropbear -E -p 502=
-2<br>[348] Jan 01 00:06:48 Failed loading /etc/dropbear/dropbear_dss_host_k=
-ey<br>[348] Jan 01 00:06:48 Failed loading /etc/dropbear/dropbear_ecdsa_hos=
-t_key<br>[348] Jan 01 00:06:48 Failed loading /etc/dropbear/dropbear_ed2551=
-9_host_key<br>[349] Jan 01 00:06:48 Running in background<br><br>[root@odc =
-~]# ssh -p 5022 root@10.0.128.108 root@10.0.128.108's password:<br>root@tio=
-gapass:~#<br><br>Hi George,<br><br>We are facing connection issue in access=
-ing the target after flashing the latest image.<br>In openbmc-test-automati=
-on, whether any test cases are present in CI to identify these issues ?<br>=
-Please let us know your comments on this.<br><br>Regards,<br>Jayashree<br><=
-br>-----Original Message-----<br>From: Jayashree D<br>Sent: Friday, Septemb=
-er 25, 2020 10:29 AM<br>To: openbmc@lists.ozlabs.org<br>Cc: Konstantin Klub=
-nichkin &lt;kitsok@yandex-team.ru&gt;; Vijay Khemka &lt;vijaykhemka@fb.com&=
-gt;; geissonator@yahoo.com; joel@jms.id.au; Patrick Williams &lt;patrick@st=
-wcx.xyz&gt;<br>Subject: RE: Connection issue in OpenBMC image<br><br>Classi=
-fication: HCL Internal<br><br>Hi Team,<br><br>In the latest openbmc build, =
-after image upgradation in the target, not able to connect the target throu=
-gh SSH but able to ping the IP Address.<br><br>After analysing the latest c=
-ommits, reverted the below commit in the latest build and checked by flashi=
-ng the image. Now the target is connecting through SSH. Please help us on f=
-ixing this issue.<br><br>Commit Link - </font></tt><tt><font size=3D"2"><a =
-href=3D"https://github.com/openbmc/openbmc/commit/635e0e4637e40ba03f6920426=
-5427550fd404f4c">https://github.com/openbmc/openbmc/commit/635e0e4637e40ba0=
-3f69204265427550fd404f4c</a></font></tt><tt><font size=3D"2">&nbsp;<br><br>=
-<br>Observation on UART-console after flashing latest image without any cha=
-nges:<br><br>1. reboot command is not working.<br>2. systemctl status &lt;s=
-ervice_name&gt; is not providing any status. ( Failed to get properties: Co=
-nnection timed out) 3. I tried &quot;ssh -vvv &lt;ip&gt;&quot; and logs are=
- attached for working and non-working image.<br>4. From controller, I tried=
- to upgrade image using redfish and image is being copied and following log=
-s shown.<br>root@tiogapass:~# journalctl | grep image Jan 01 00:00:37 tioga=
-pass phosphor-image-updater[246]: Error in mapper GetSubTreePath Jan 01 10:=
-43:59 tiogapass phosphor-image-updater[246]: BMC image activating - BMC reb=
-oots are disabled.<br><br>5. Using Rest API command,<br><br>[root@odc ]# cu=
-rl -k -H &quot;X-Auth-Token: $token&quot; -H &quot;Content-Type: applicatio=
-n/json&quot; -X PUT -d '{&quot;data&quot;:&quot;xyz.openbmc_project.Softwar=
-e.Activation.RequestedActivations.Active&quot;}' </font></tt><tt><font size=
-=3D"2"><a href=3D"https://$%7Bbmc%7D/xyz/openbmc_project/software/a77348be/=
-attr/RequestedActivation">https://$%7Bbmc%7D/xyz/openbmc_project/software/a=
-77348be/attr/RequestedActivation</a></font></tt><tt><font size=3D"2">&nbsp;=
-<br>{<br> &nbsp;&quot;data&quot;: {<br> &nbsp; &nbsp;&quot;description&quot=
-;: &quot;org.freedesktop.DBus.Error.NoReply&quot;<br> &nbsp;},<br> &nbsp;&q=
-uot;message&quot;: &quot;Method call timed out&quot;,<br> &nbsp;&quot;statu=
-s&quot;: &quot;error&quot;<br>}<br><br><br>Regards,<br>Jayashree<br><br>---=
---Original Message-----<br>From: Jayashree D<br>Sent: Friday, September 18,=
- 2020 3:18 PM<br>To: Patrick Williams &lt;patrick@stwcx.xyz&gt;; openbmc@li=
-sts.ozlabs.org<br>Cc: Konstantin Klubnichkin &lt;kitsok@yandex-team.ru&gt;<=
-br>Subject: RE: Connection issue in OpenBMC image<br><br>Classification: HC=
-L Internal<br><br>Hello Patrick,<br><br>I saw the post about dropbear, but =
-that commit was updated on July16 and my target is connecting till August l=
-ast week image. I don't think that will be an issue. Also on working image,=
- I tried with 'ssh -vvv ' and I got below information.<br><br>OpenSSH_7.4p1=
-, OpenSSL 1.0.2k-fips &nbsp;26 Jan 2017<br>debug1: Reading configuration da=
-ta /etc/ssh/ssh_config<br>debug1: /etc/ssh/ssh_config line 58: Applying opt=
-ions for *<br>debug2: resolving &quot;10.0.128.108&quot; port 22<br>debug2:=
- ssh_connect_direct: needpriv 0<br>debug1: Connecting to 10.0.128.108 [10.0=
-.128.108] port 22.<br>debug1: Connection established.<br>debug1: permanentl=
-y_set_uid: 0/0<br>debug1: key_load_public: No such file or directory<br>deb=
-ug1: identity file /root/.ssh/id_rsa type -1<br>debug1: key_load_public: No=
- such file or directory<br>debug1: identity file /root/.ssh/id_rsa-cert typ=
-e -1<br>debug1: key_load_public: No such file or directory<br>debug1: ident=
-ity file /root/.ssh/id_dsa type -1<br>debug1: key_load_public: No such file=
- or directory<br>debug1: identity file /root/.ssh/id_dsa-cert type -1<br>de=
-bug1: key_load_public: No such file or directory<br>debug1: identity file /=
-root/.ssh/id_ecdsa type -1<br>debug1: key_load_public: No such file or dire=
-ctory<br>debug1: identity file /root/.ssh/id_ecdsa-cert type -1<br>debug1: =
-key_load_public: No such file or directory<br>debug1: identity file /root/.=
-ssh/id_ed25519 type -1<br>debug1: key_load_public: No such file or director=
-y<br>debug1: identity file /root/.ssh/id_ed25519-cert type -1<br>debug1: En=
-abling compatibility mode for protocol 2.0<br>debug1: Local version string =
-SSH-2.0-OpenSSH_7.4<br>debug1: Remote protocol version 2.0, remote software=
- version dropbear_2020.80<br>debug1: no match: dropbear_2020.80<br>debug2: =
-fd 3 setting O_NONBLOCK<br>debug1: Authenticating to 10.0.128.108:22 as 'ro=
-ot'<br>debug3: hostkeys_foreach: reading file &quot;/root/.ssh/known_hosts&=
-quot;<br>debug3: record_hostkey: found key type RSA in file /root/.ssh/know=
-n_hosts:68<br>debug3: load_hostkeys: loaded 1 keys from 10.0.128.108<br>deb=
-ug3: order_hostkeyalgs: prefer hostkeyalgs: ssh-rsa-cert-v01@openssh.com,rs=
-a-sha2-512,rsa-sha2-256,ssh-rsa<br>debug3: send packet: type 20<br>debug1: =
-SSH2_MSG_KEXINIT sent<br>debug3: receive packet: type 20<br>debug1: SSH2_MS=
-G_KEXINIT received<br>debug2: local client KEXINIT proposal<br>debug2: KEX =
-algorithms: curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp2=
-56,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha2=
-56,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512,diffie-hellm=
-an-group-exchange-sha1,diffie-hellman-group14-sha256,diffie-hellman-group14=
--sha1,diffie-hellman-group1-sha1,ext-info-c<br>debug2: host key algorithms:=
- ssh-rsa-cert-v01@openssh.com,rsa-sha2-512,rsa-sha2-256,ssh-rsa,ecdsa-sha2-=
-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecds=
-a-sha2-nistp521-cert-v01@openssh.com,ssh-ed25519-cert-v01@openssh.com,ssh-d=
-ss-cert-v01@openssh.com,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-=
-nistp521,ssh-ed25519,ssh-dss<br>debug2: ciphers ctos: chacha20-poly1305@ope=
-nssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm=
-@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc<br>debug2: ciphers stoc: chac=
-ha20-poly1305@openssh.com,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@opens=
-sh.com,aes256-gcm@openssh.com,aes128-cbc,aes192-cbc,aes256-cbc<br>debug2: M=
-ACs ctos: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-et=
-m@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-=
-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1<b=
-r>debug2: MACs stoc: umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-=
-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openss=
-h.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,=
-hmac-sha1<br>debug2: compression ctos: none,zlib@openssh.com,zlib<br>debug2=
-: compression stoc: none,zlib@openssh.com,zlib<br>debug2: languages ctos:<b=
-r>debug2: languages stoc:<br>debug2: first_kex_follows 0<br>debug2: reserve=
-d 0<br>debug2: peer server KEXINIT proposal<br>debug2: KEX algorithms: curv=
-e25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nis=
-tp384,ecdh-sha2-nistp256,diffie-hellman-group14-sha256,kexguess2@matt.ucc.a=
-sn.au<br>debug2: host key algorithms: rsa-sha2-256,ssh-rsa<br>debug2: ciphe=
-rs ctos: chacha20-poly1305@openssh.com,aes128-ctr,aes256-ctr<br>debug2: cip=
-hers stoc: chacha20-poly1305@openssh.com,aes128-ctr,aes256-ctr<br>debug2: M=
-ACs ctos: hmac-sha1,hmac-sha2-256<br>debug2: MACs stoc: hmac-sha1,hmac-sha2=
--256<br>debug2: compression ctos: zlib@openssh.com,none<br>debug2: compress=
-ion stoc: zlib@openssh.com,none<br>debug2: languages ctos:<br>debug2: langu=
-ages stoc:<br>debug2: first_kex_follows 0<br>debug2: reserved 0<br>debug1: =
-kex: algorithm: curve25519-sha256<br>debug1: kex: host key algorithm: rsa-s=
-ha2-256<br>debug1: kex: server-&gt;client cipher: chacha20-poly1305@openssh=
-.com MAC: &lt;implicit&gt; compression: none<br>debug1: kex: client-&gt;ser=
-ver cipher: chacha20-poly1305@openssh.com MAC: &lt;implicit&gt; compression=
-: none<br>debug1: kex: curve25519-sha256 need=3D64 dh_need=3D64<br>debug1: =
-kex: curve25519-sha256 need=3D64 dh_need=3D64<br>debug3: send packet: type =
-30<br>debug1: expecting SSH2_MSG_KEX_ECDH_REPLY<br>debug3: receive packet: =
-type 31<br>debug1: Server host key: ssh-rsa SHA256:3WwhPmIIxzrw0+cm/0vN3hif=
-Y4kh9sJhClVNw6zrJ7Y<br>debug3: hostkeys_foreach: reading file &quot;/root/.=
-ssh/known_hosts&quot;<br>debug3: record_hostkey: found key type RSA in file=
- /root/.ssh/known_hosts:68<br>debug3: load_hostkeys: loaded 1 keys from 10.=
-0.128.108<br>debug1: Host '10.0.128.108' is known and matches the RSA host =
-key.<br>debug1: Found key in /root/.ssh/known_hosts:68<br>debug3: send pack=
-et: type 21<br>debug2: set_newkeys: mode 1<br>debug1: rekey after 134217728=
- blocks<br>debug1: SSH2_MSG_NEWKEYS sent<br>debug1: expecting SSH2_MSG_NEWK=
-EYS<br>debug3: receive packet: type 21<br>debug1: SSH2_MSG_NEWKEYS received=
-<br>debug2: set_newkeys: mode 0<br>debug1: rekey after 134217728 blocks<br>=
-debug2: key: /root/.ssh/id_rsa (0x558ea3ad3640), agent<br>debug2: key: /roo=
-t/.ssh/id_rsa ((nil))<br>debug2: key: /root/.ssh/id_dsa ((nil))<br>debug2: =
-key: /root/.ssh/id_ecdsa ((nil))<br>debug2: key: /root/.ssh/id_ed25519 ((ni=
-l))<br>debug3: send packet: type 5<br>debug3: receive packet: type 7<br>deb=
-ug1: SSH2_MSG_EXT_INFO received<br>debug1: kex_input_ext_info: server-sig-a=
-lgs=3D&lt;ssh-ed25519,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-ni=
-stp521,rsa-sha2-256,ssh-rsa,ssh-dss&gt;<br>debug3: receive packet: type 6<b=
-r>debug2: service_accept: ssh-userauth<br>debug1: SSH2_MSG_SERVICE_ACCEPT r=
-eceived<br>debug3: send packet: type 50<br>debug3: receive packet: type 51<=
-br>debug1: Authentications that can continue: publickey,password<br>debug3:=
- start over, passed a different list publickey,password<br>debug3: preferre=
-d gssapi-keyex,gssapi-with-mic,publickey,keyboard-interactive,password<br>d=
-ebug3: authmethod_lookup publickey<br>debug3: remaining preferred: keyboard=
--interactive,password<br>debug3: authmethod_is_enabled publickey<br>debug1:=
- Next authentication method: publickey<br>debug1: Offering RSA public key: =
-/root/.ssh/id_rsa<br>debug3: send_pubkey_test<br>debug3: send packet: type =
-50<br>debug2: we sent a publickey packet, wait for reply<br>debug3: receive=
- packet: type 51<br>debug1: Authentications that can continue: publickey,pa=
-ssword<br>debug1: Trying private key: /root/.ssh/id_rsa<br>debug3: sign_and=
-_send_pubkey: RSA SHA256:YfteufmWUV8W7EQEycZ+38skgUWGDTYFHw93a7SwwLM<br>deb=
-ug3: send packet: type 50<br>debug2: we sent a publickey packet, wait for r=
-eply<br>debug3: receive packet: type 51<br>debug1: Authentications that can=
- continue: publickey,password<br>debug1: Trying private key: /root/.ssh/id_=
-dsa<br>debug3: no such identity: /root/.ssh/id_dsa: No such file or directo=
-ry<br>debug1: Trying private key: /root/.ssh/id_ecdsa<br>debug3: no such id=
-entity: /root/.ssh/id_ecdsa: No such file or directory<br>debug1: Trying pr=
-ivate key: /root/.ssh/id_ed25519<br>debug3: no such identity: /root/.ssh/id=
-_ed25519: No such file or directory<br>debug2: we did not send a packet, di=
-sable method<br>debug3: authmethod_lookup password<br>debug3: remaining pre=
-ferred: ,password<br>debug3: authmethod_is_enabled password<br>debug1: Next=
- authentication method: password<br><br><br>In non-working image, the logs =
-are stopped after below lines and it is not providing any errors.<br><br>de=
-bug1: Enabling compatibility mode for protocol 2.0<br>debug1: Local version=
- string SSH-2.0-OpenSSH_7.4<br><br>Also one more observation in UART-Consol=
-e, after flashing latest image.<br><br>1. reboot command is not working.<br=
->2. systemctl status &lt;service_name&gt; is not providing any status. ( Fa=
-iled to get properties: Connection timed out) 3. I can able to ping the ip =
-address but scp is not working.<br><br>Thanks,<br>Jayashree<br><br><br>----=
--Original Message-----<br>From: Patrick Williams &lt;patrick@stwcx.xyz&gt;<=
-br>Sent: Thursday, September 17, 2020 9:16 PM<br>To: Jayashree D &lt;jayash=
-ree-d@hcl.com&gt;<br>Cc: Konstantin Klubnichkin &lt;kitsok@yandex-team.ru&g=
-t;; openbmc@lists.ozlabs.org<br>Subject: Re: Connection issue in OpenBMC im=
-age<br><br>Hello Jayashree,<br><br>I saw an output `ssh -v` from you earlie=
-r, but there really wasn't any useful information there. &nbsp;It looked li=
-ke the connection was being made and keys were exchanged and then the log j=
-ust stopped abruptly. &nbsp;This tells me it likely isn't a networking issu=
-e but an issue in the handshake between the ssh-client (your computer) and =
-ssh-server (dropbear). &nbsp;You can continue to add '-v' parameters up to =
-`ssh -vvv` and you'll get increasingly more information.<br><br>Joseph Reyn=
-olds recently posted a reminder about dropbear disabling weak ciphers[1]. &=
-nbsp;Is it possible that your client is using an old cipher?<br><br>On Wed,=
- Sep 16, 2020 at 11:35:28AM +0000, Jayashree D wrote:<br>&gt; root@tiogapas=
-s:~# journalctl | grep drop<br>...<br>&gt; Jan 01 00:15:28 tiogapass system=
-d[1]: dropbear@0-10.0.128.108:22-10.0.0.1:51810.service: Succeeded.<br>&gt;=
- Jan 01 00:15:44 tiogapass dropbear[2753]: Child connection from<br>&gt; ::=
-ffff:10.0.0.1:51944 Jan 01 00:15:50 tiogapass dropbear[2753]: PAM<br>&gt; p=
-assword auth succeeded for 'root' from ::ffff:10.0.0.1:51944<br><br>This lo=
-oks like a valid connection was established.<br><br>&gt; 15.09.2020, 16:12,=
- &quot;Jayashree D&quot; &lt;jayashree-d@hcl.com&lt;</font></tt><tt><font s=
-ize=3D"2"><a href=3D"mailto:jayashree-d@hcl.com">mailto:jayashree-d@hcl.com=
-</a></font></tt><tt><font size=3D"2">&gt;&gt;:<br>&gt;<br>&gt; OpenSSH_7.4p=
-1, OpenSSL 1.0.2k-fips &nbsp;26 Jan 2017<br>&gt; debug1: Reading configurat=
-ion data /etc/ssh/ssh_config<br>&gt; debug1: /etc/ssh/ssh_config line 58: A=
-pplying options for *<br>&gt; debug1: Connecting to 10.0.128.108 [10.0.128.=
-108] port 22.<br>&gt; debug1: Connection established.<br>&gt; debug1: perma=
-nently_set_uid: 0/0<br>&gt; debug1: key_load_public: No such file or direct=
-ory<br>&gt; debug1: identity file /root/.ssh/id_rsa type -1<br>&gt; debug1:=
- key_load_public: No such file or directory<br>&gt; debug1: identity file /=
-root/.ssh/id_rsa-cert type -1<br>&gt; debug1: key_load_public: No such file=
- or directory<br>&gt; debug1: identity file /root/.ssh/id_dsa type -1<br>&g=
-t; debug1: key_load_public: No such file or directory<br>&gt; debug1: ident=
-ity file /root/.ssh/id_dsa-cert type -1<br>&gt; debug1: key_load_public: No=
- such file or directory<br>&gt; debug1: identity file /root/.ssh/id_ecdsa t=
-ype -1<br>&gt; debug1: key_load_public: No such file or directory<br>&gt; d=
-ebug1: identity file /root/.ssh/id_ecdsa-cert type -1<br>&gt; debug1: key_l=
-oad_public: No such file or directory<br>&gt; debug1: identity file /root/.=
-ssh/id_ed25519 type -1<br>&gt; debug1: key_load_public: No such file or dir=
-ectory<br>&gt; debug1: identity file /root/.ssh/id_ed25519-cert type -1<br>=
-&gt; debug1: Enabling compatibility mode for protocol 2.0<br>&gt; debug1: L=
-ocal version string SSH-2.0-OpenSSH_7.4<br><br>This is the log that also lo=
-oks like a good connection. &nbsp;Identity files were attempted to be excha=
-nged. &nbsp;Version strings were exchanged. &nbsp;And then the log just abr=
-uptly stops. &nbsp;Was the connection dropped? &nbsp;Is it hung?<br><br>1. =
-</font></tt><tt><font size=3D"2"><a href=3D"https://lists.ozlabs.org/piperm=
-ail/openbmc/2020-September/023071.html">https://lists.ozlabs.org/pipermail/=
-openbmc/2020-September/023071.html</a></font></tt><tt><font size=3D"2">&nbs=
-p;<br><br>--<br>Patrick Williams<br>::DISCLAIMER::<br>_____________________=
-___________<br>The contents of this e-mail and any attachment(s) are confid=
-ential and intended for the named recipient(s) only. E-mail transmission is=
- not guaranteed to be secure or error-free as information could be intercep=
-ted, corrupted, lost, destroyed, arrive late or incomplete, or may contain =
-viruses in transmission. The e mail and its contents (with or without refer=
-red errors) shall therefore not attach any liability on the originator or H=
-CL or its affiliates. Views or opinions, if any, presented in this email ar=
-e solely those of the author and may not necessarily reflect the views or o=
-pinions of HCL or its affiliates. Any form of reproduction, dissemination, =
-copying, disclosure, modification, distribution and / or publication of thi=
-s message without the prior written consent of authorized representative of=
- HCL is strictly prohibited. If you have received this email in error pleas=
-e delete it and notify the sender immediately. Before opening any email and=
-/or attachments, please check them for viruses and other defects.<br>______=
-__________________________<br><br></font></tt><br><br><BR>
-</body></html>
-
---1__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975--
-
-
---0__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975
-Content-type: image/gif; 
-	name="graycol.gif"
-Content-Disposition: inline; filename="graycol.gif"
-Content-ID: <1__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FB@>
-Content-Transfer-Encoding: base64
-
-R0lGODlhEAAQAKECAMzMzAAAAP///wAAACH5BAEAAAIALAAAAAAQABAAAAIXlI+py+0PopwxUbpu
-ZRfKZ2zgSJbmSRYAIf4fT3B0aW1pemVkIGJ5IFVsZWFkIFNtYXJ0U2F2ZXIhAAA7
-
-
---0__=8FBB0F6BDFA0C9758f9e8a93df938690918c8FBB0F6BDFA0C975--
-
+PGRpdj5IZWxsbyBhbGwhPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+TG9va3MgbGlrZSBJJ20gc3Ry
+dWdnbGluZyB3aXRoIHRoZSBzYW1lIGlzc3VlLCBoZXJlIGlzIGhvdyBpdCBsb29rczo8L2Rpdj48
+ZGl2PkFmdGVyIG5vcm1hbCByZWJvb3QgQk1DIHJlcGxpZXMgdG8gcGluZ3MsIGNvbm5lY3Rpb24g
+dG8gcG9ydCAyMiAoU1NIKSBpcyBvcGVuZWQgYnV0IHNzaCBoYW5kc2hha2UgaXMgbm90IHBhc3Np
+bmcuPC9kaXY+PGRpdj5Nb3Jlb3ZlciBCTUMgZGVidWcgY29uc29sZSBkb2VzIG5vdCByZXNwb25k
+IHRvIGlucHV0LjwvZGl2PjxkaXY+SSdtIGFibGUgdG8gcmVzZXQgU29DIGJ5IGV4dGVybmFsIHN5
+c3RlbSwgdXN1YWxseSBpdCBoZWxwcyBhbmQgYWZ0ZXIgcmVib290IEJNQyBiZWhhdmVzIG5vcm1h
+bGx5LCBidXQgc29tZXRpbWVzIHRoaXMgaGFuZyBoYXBwZW5zIGFnYWluLjwvZGl2PjxkaXY+VG8g
+aW52ZXN0aWdhdGUgdGhpcyBJJ3ZlIGRldGFjaGVkIGRyb3BiZWFyIGZyb20gc3lzdGVtZCBzb2Nr
+ZXQsIG5vdyBpdCdzIG1vcmUgb3IgbGVzcyBpbmRlcGVuZGVudCBmcm9tIHN5c3RlbWQgYW5kIHN0
+YXJ0cyByaWdodCBhZnRlciBuZXR3b3JrLnNlcnZpY2UsIHNvIEkgY2FuIGxvZyBpbiB0byBCTUMu
+PC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+U28gSSd2ZSBjYXRjaGVkIHRoaXMgc3RhbGwgYW5kIGZv
+dW5kIHRoYXQgZGJ1cy1icm9rZXIgcHJvY2VzcyBjb25zdW1lcyBhIGxvdCBvZiBDUFUsIHN5c3Rl
+bWN0bCBkb2VzIG5vdCB3b3JrIChqdXN0IG5vIG91dHB1dCksIHJlYm9vdCBwcm9jZXNzIGp1c3Qg
+c3RheXMgaW4gYSBwcm9jZXNzIGxpc3QuIFRvIGF0IGxlYXN0IGJlIGFibGUgdG8gcmVib290IEJN
+QyBJJ3ZlIGtpbGxlZCBkYnVzLWJyb2tlciwgdGhlbiBpdCB3YXMgcmVzdGFydGVkIGFuZCBCTUMg
+cmVib290ZWQuPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+SSB0aGluayBhbGwgdGhpcyBwb2ludHMg
+dG8gYSBkZWFkbG9jayBpbiBkYnVzLiBBcyBpdCBkb2Vzbid0IGhhcHBlbiBlYWNoIHRpbWUsIEkg
+dGhpbmsgdGhlcmUgaXMgYSByYWNlIGNvbmRpdGlvbiBzb21ld2hlcmUuPC9kaXY+PGRpdj7CoDwv
+ZGl2PjxkaXY+SSBoYXZlIG5vIGlkZWEgeWV0IGhvdyB0byBmaW5kIHdoYXQgY2F1c2VzIGRidXMt
+YnJva2VyIHN0YWxsLCBidXQgd2lsbCB0cnkgdG8gZGlnIGludG8gaXQuPC9kaXY+PGRpdj7CoDwv
+ZGl2PjxkaXY+VGhhbmsgeW91ITwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjA1LjEwLjIwMjAsIDEx
+OjMwLCAiSmF5YXNocmVlIEQiICZsdDtqYXlhc2hyZWUtZEBoY2wuY29tJmd0Ozo8L2Rpdj48Ymxv
+Y2txdW90ZT48cD5DbGFzc2lmaWNhdGlvbjogSENMIEludGVybmFsPGJyIC8+PGJyIC8+UmVnYXJk
+aW5nIFNTSCBjb25uZWN0aW9uLCBhbiBpc3N1ZSBoYXMgYmVlbiBjcmVhdGVkIGluIG9wZW5ibWMg
+YW5kIEkgYWxzbyBzZWUgb3RoZXJzIGhhdmluZyB0aGlzIHNhbWUgaXNzdWUuPGJyIC8+RnJvbSB0
+aGUgY29tbWVudHMsIEkgaGF2ZSBydW4gImRyb3BiZWFyIC1FIC1wIDUwMjIiIGluIHRoZSB0YXJn
+ZXQgKFVBUlQtY29uc29sZSkgYW5kIHRyaWVkIHRvIGNvbm5lY3QgdGhlIHRhcmdldCB1c2luZyAi
+c3NoIC1wIDUwMjIgJmx0O2lwJmd0OyIgYW5kIHNzaCBjb25uZWN0aW9uIGVzdGFibGlzaGVkLjxi
+ciAvPkJ1dCwgcmVib290IGFuZCBzeXN0ZW1jdGwgY29tbWFuZHMgaGFuZ3MuPGJyIC8+PGJyIC8+
+SXNzdWUgLSA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL2lzc3Vl
+cy8zNzAxIj5odHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL2lzc3Vlcy8zNzAxPC9h
+PjxiciAvPjxiciAvPjxhIGhyZWY9Im1haWx0bzpyb290QHRpb2dhcGFzcyI+cm9vdEB0aW9nYXBh
+c3M8L2E+On4jIGRyb3BiZWFyIC1FIC1wIDUwMjI8YnIgLz5bMzQ4XSBKYW4gMDEgMDA6MDY6NDgg
+RmFpbGVkIGxvYWRpbmcgL2V0Yy9kcm9wYmVhci9kcm9wYmVhcl9kc3NfaG9zdF9rZXk8YnIgLz5b
+MzQ4XSBKYW4gMDEgMDA6MDY6NDggRmFpbGVkIGxvYWRpbmcgL2V0Yy9kcm9wYmVhci9kcm9wYmVh
+cl9lY2RzYV9ob3N0X2tleTxiciAvPlszNDhdIEphbiAwMSAwMDowNjo0OCBGYWlsZWQgbG9hZGlu
+ZyAvZXRjL2Ryb3BiZWFyL2Ryb3BiZWFyX2VkMjU1MTlfaG9zdF9rZXk8YnIgLz5bMzQ5XSBKYW4g
+MDEgMDA6MDY6NDggUnVubmluZyBpbiBiYWNrZ3JvdW5kPGJyIC8+PGJyIC8+WzxhIGhyZWY9Im1h
+aWx0bzpyb290QG9kYyI+cm9vdEBvZGM8L2E+IH5dIyBzc2ggLXAgNTAyMiA8YSBocmVmPSJtYWls
+dG86cm9vdEAxMC4wLjEyOC4xMDgiPnJvb3RAMTAuMC4xMjguMTA4PC9hPiA8YSBocmVmPSJtYWls
+dG86cm9vdEAxMC4wLjEyOC4xMDgiPnJvb3RAMTAuMC4xMjguMTA4PC9hPidzIHBhc3N3b3JkOjxi
+ciAvPjxhIGhyZWY9Im1haWx0bzpyb290QHRpb2dhcGFzcyI+cm9vdEB0aW9nYXBhc3M8L2E+On4j
+PGJyIC8+PGJyIC8+SGkgR2VvcmdlLDxiciAvPjxiciAvPldlIGFyZSBmYWNpbmcgY29ubmVjdGlv
+biBpc3N1ZSBpbiBhY2Nlc3NpbmcgdGhlIHRhcmdldCBhZnRlciBmbGFzaGluZyB0aGUgbGF0ZXN0
+IGltYWdlLjxiciAvPkluIG9wZW5ibWMtdGVzdC1hdXRvbWF0aW9uLCB3aGV0aGVyIGFueSB0ZXN0
+IGNhc2VzIGFyZSBwcmVzZW50IGluIENJIHRvIGlkZW50aWZ5IHRoZXNlIGlzc3VlcyA/PGJyIC8+
+UGxlYXNlIGxldCB1cyBrbm93IHlvdXIgY29tbWVudHMgb24gdGhpcy48YnIgLz48YnIgLz5SZWdh
+cmRzLDxiciAvPkpheWFzaHJlZTxiciAvPjxiciAvPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0t
+PGJyIC8+RnJvbTogSmF5YXNocmVlIEQ8YnIgLz5TZW50OiBGcmlkYXksIFNlcHRlbWJlciAyNSwg
+MjAyMCAxMDoyOSBBTTxiciAvPlRvOiA8YSBocmVmPSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxh
+YnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L2E+PGJyIC8+Q2M6IEtvbnN0YW50aW4g
+S2x1Ym5pY2hraW4gJmx0OzxhIGhyZWY9Im1haWx0bzpraXRzb2tAeWFuZGV4LXRlYW0ucnUiPmtp
+dHNva0B5YW5kZXgtdGVhbS5ydTwvYT4mZ3Q7OyBWaWpheSBLaGVta2EgJmx0OzxhIGhyZWY9Im1h
+aWx0bzp2aWpheWtoZW1rYUBmYi5jb20iPnZpamF5a2hlbWthQGZiLmNvbTwvYT4mZ3Q7OyA8YSBo
+cmVmPSJtYWlsdG86Z2Vpc3NvbmF0b3JAeWFob28uY29tIj5nZWlzc29uYXRvckB5YWhvby5jb208
+L2E+OyA8YSBocmVmPSJtYWlsdG86am9lbEBqbXMuaWQuYXUiPmpvZWxAam1zLmlkLmF1PC9hPjsg
+UGF0cmljayBXaWxsaWFtcyAmbHQ7PGEgaHJlZj0ibWFpbHRvOnBhdHJpY2tAc3R3Y3gueHl6Ij5w
+YXRyaWNrQHN0d2N4Lnh5ejwvYT4mZ3Q7PGJyIC8+U3ViamVjdDogUkU6IENvbm5lY3Rpb24gaXNz
+dWUgaW4gT3BlbkJNQyBpbWFnZTxiciAvPjxiciAvPkNsYXNzaWZpY2F0aW9uOiBIQ0wgSW50ZXJu
+YWw8YnIgLz48YnIgLz5IaSBUZWFtLDxiciAvPjxiciAvPkluIHRoZSBsYXRlc3Qgb3BlbmJtYyBi
+dWlsZCwgYWZ0ZXIgaW1hZ2UgdXBncmFkYXRpb24gaW4gdGhlIHRhcmdldCwgbm90IGFibGUgdG8g
+Y29ubmVjdCB0aGUgdGFyZ2V0IHRocm91Z2ggU1NIIGJ1dCBhYmxlIHRvIHBpbmcgdGhlIElQIEFk
+ZHJlc3MuPGJyIC8+PGJyIC8+QWZ0ZXIgYW5hbHlzaW5nIHRoZSBsYXRlc3QgY29tbWl0cywgcmV2
+ZXJ0ZWQgdGhlIGJlbG93IGNvbW1pdCBpbiB0aGUgbGF0ZXN0IGJ1aWxkIGFuZCBjaGVja2VkIGJ5
+IGZsYXNoaW5nIHRoZSBpbWFnZS4gTm93IHRoZSB0YXJnZXQgaXMgY29ubmVjdGluZyB0aHJvdWdo
+IFNTSC4gUGxlYXNlIGhlbHAgdXMgb24gZml4aW5nIHRoaXMgaXNzdWUuPGJyIC8+PGJyIC8+Q29t
+bWl0IExpbmsgLSA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL2Nv
+bW1pdC82MzVlMGU0NjM3ZTQwYmEwM2Y2OTIwNDI2NTQyNzU1MGZkNDA0ZjRjIj5odHRwczovL2dp
+dGh1Yi5jb20vb3BlbmJtYy9vcGVuYm1jL2NvbW1pdC82MzVlMGU0NjM3ZTQwYmEwM2Y2OTIwNDI2
+NTQyNzU1MGZkNDA0ZjRjPC9hPjxiciAvPjxiciAvPjxiciAvPk9ic2VydmF0aW9uIG9uIFVBUlQt
+Y29uc29sZSBhZnRlciBmbGFzaGluZyBsYXRlc3QgaW1hZ2Ugd2l0aG91dCBhbnkgY2hhbmdlczo8
+YnIgLz48YnIgLz4xLiByZWJvb3QgY29tbWFuZCBpcyBub3Qgd29ya2luZy48YnIgLz4yLiBzeXN0
+ZW1jdGwgc3RhdHVzICZsdDtzZXJ2aWNlX25hbWUmZ3Q7IGlzIG5vdCBwcm92aWRpbmcgYW55IHN0
+YXR1cy4gKCBGYWlsZWQgdG8gZ2V0IHByb3BlcnRpZXM6IENvbm5lY3Rpb24gdGltZWQgb3V0KSAz
+LiBJIHRyaWVkICJzc2ggLXZ2diAmbHQ7aXAmZ3Q7IiBhbmQgbG9ncyBhcmUgYXR0YWNoZWQgZm9y
+IHdvcmtpbmcgYW5kIG5vbi13b3JraW5nIGltYWdlLjxiciAvPjQuIEZyb20gY29udHJvbGxlciwg
+SSB0cmllZCB0byB1cGdyYWRlIGltYWdlIHVzaW5nIHJlZGZpc2ggYW5kIGltYWdlIGlzIGJlaW5n
+IGNvcGllZCBhbmQgZm9sbG93aW5nIGxvZ3Mgc2hvd24uPGJyIC8+PGEgaHJlZj0ibWFpbHRvOnJv
+b3RAdGlvZ2FwYXNzIj5yb290QHRpb2dhcGFzczwvYT46fiMgam91cm5hbGN0bCB8IGdyZXAgaW1h
+Z2UgSmFuIDAxIDAwOjAwOjM3IHRpb2dhcGFzcyBwaG9zcGhvci1pbWFnZS11cGRhdGVyWzI0Nl06
+IEVycm9yIGluIG1hcHBlciBHZXRTdWJUcmVlUGF0aCBKYW4gMDEgMTA6NDM6NTkgdGlvZ2FwYXNz
+IHBob3NwaG9yLWltYWdlLXVwZGF0ZXJbMjQ2XTogQk1DIGltYWdlIGFjdGl2YXRpbmcgLSBCTUMg
+cmVib290cyBhcmUgZGlzYWJsZWQuPGJyIC8+PGJyIC8+NS4gVXNpbmcgUmVzdCBBUEkgY29tbWFu
+ZCw8YnIgLz48YnIgLz5bPGEgaHJlZj0ibWFpbHRvOnJvb3RAb2RjIj5yb290QG9kYzwvYT4gXSMg
+Y3VybCAtayAtSCAiWC1BdXRoLVRva2VuOiAkdG9rZW4iIC1IICJDb250ZW50LVR5cGU6IGFwcGxp
+Y2F0aW9uL2pzb24iIC1YIFBVVCAtZCAneyJkYXRhIjoieHl6Lm9wZW5ibWNfcHJvamVjdC5Tb2Z0
+d2FyZS5BY3RpdmF0aW9uLlJlcXVlc3RlZEFjdGl2YXRpb25zLkFjdGl2ZSJ9JyBodHRwczovLyR7
+Ym1jfS94eXovb3BlbmJtY19wcm9qZWN0L3NvZnR3YXJlL2E3NzM0OGJlL2F0dHIvUmVxdWVzdGVk
+QWN0aXZhdGlvbjxiciAvPns8IS0tIC0tPjxiciAvPsKgwqAiZGF0YSI6IHs8IS0tIC0tPjxiciAv
+PsKgwqDCoMKgImRlc2NyaXB0aW9uIjogIm9yZy5mcmVlZGVza3RvcC5EQnVzLkVycm9yLk5vUmVw
+bHkiPGJyIC8+wqDCoH0sPGJyIC8+wqDCoCJtZXNzYWdlIjogIk1ldGhvZCBjYWxsIHRpbWVkIG91
+dCIsPGJyIC8+wqDCoCJzdGF0dXMiOiAiZXJyb3IiPGJyIC8+fTxiciAvPjxiciAvPjxiciAvPlJl
+Z2FyZHMsPGJyIC8+SmF5YXNocmVlPGJyIC8+PGJyIC8+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0t
+LS08YnIgLz5Gcm9tOiBKYXlhc2hyZWUgRDxiciAvPlNlbnQ6IEZyaWRheSwgU2VwdGVtYmVyIDE4
+LCAyMDIwIDM6MTggUE08YnIgLz5UbzogUGF0cmljayBXaWxsaWFtcyAmbHQ7PGEgaHJlZj0ibWFp
+bHRvOnBhdHJpY2tAc3R3Y3gueHl6Ij5wYXRyaWNrQHN0d2N4Lnh5ejwvYT4mZ3Q7OyA8YSBocmVm
+PSJtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIj5vcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmc8L2E+PGJyIC8+Q2M6IEtvbnN0YW50aW4gS2x1Ym5pY2hraW4gJmx0OzxhIGhyZWY9Im1haWx0
+bzpraXRzb2tAeWFuZGV4LXRlYW0ucnUiPmtpdHNva0B5YW5kZXgtdGVhbS5ydTwvYT4mZ3Q7PGJy
+IC8+U3ViamVjdDogUkU6IENvbm5lY3Rpb24gaXNzdWUgaW4gT3BlbkJNQyBpbWFnZTxiciAvPjxi
+ciAvPkNsYXNzaWZpY2F0aW9uOiBIQ0wgSW50ZXJuYWw8YnIgLz48YnIgLz5IZWxsbyBQYXRyaWNr
+LDxiciAvPjxiciAvPkkgc2F3IHRoZSBwb3N0IGFib3V0IGRyb3BiZWFyLCBidXQgdGhhdCBjb21t
+aXQgd2FzIHVwZGF0ZWQgb24gSnVseTE2IGFuZCBteSB0YXJnZXQgaXMgY29ubmVjdGluZyB0aWxs
+IEF1Z3VzdCBsYXN0IHdlZWsgaW1hZ2UuIEkgZG9uJ3QgdGhpbmsgdGhhdCB3aWxsIGJlIGFuIGlz
+c3VlLiBBbHNvIG9uIHdvcmtpbmcgaW1hZ2UsIEkgdHJpZWQgd2l0aCAnc3NoIC12dnYgJyBhbmQg
+SSBnb3QgYmVsb3cgaW5mb3JtYXRpb24uPGJyIC8+PGJyIC8+T3BlblNTSF83LjRwMSwgT3BlblNT
+TCAxLjAuMmstZmlwcyAgMjYgSmFuIDIwMTc8YnIgLz5kZWJ1ZzE6IFJlYWRpbmcgY29uZmlndXJh
+dGlvbiBkYXRhIC9ldGMvc3NoL3NzaF9jb25maWc8YnIgLz5kZWJ1ZzE6IC9ldGMvc3NoL3NzaF9j
+b25maWcgbGluZSA1ODogQXBwbHlpbmcgb3B0aW9ucyBmb3IgKjxiciAvPmRlYnVnMjogcmVzb2x2
+aW5nICIxMC4wLjEyOC4xMDgiIHBvcnQgMjI8YnIgLz5kZWJ1ZzI6IHNzaF9jb25uZWN0X2RpcmVj
+dDogbmVlZHByaXYgMDxiciAvPmRlYnVnMTogQ29ubmVjdGluZyB0byAxMC4wLjEyOC4xMDggWzEw
+LjAuMTI4LjEwOF0gcG9ydCAyMi48YnIgLz5kZWJ1ZzE6IENvbm5lY3Rpb24gZXN0YWJsaXNoZWQu
+PGJyIC8+ZGVidWcxOiBwZXJtYW5lbnRseV9zZXRfdWlkOiAwLzA8YnIgLz5kZWJ1ZzE6IGtleV9s
+b2FkX3B1YmxpYzogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeTxiciAvPmRlYnVnMTogaWRlbnRp
+dHkgZmlsZSAvcm9vdC8uc3NoL2lkX3JzYSB0eXBlIC0xPGJyIC8+ZGVidWcxOiBrZXlfbG9hZF9w
+dWJsaWM6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3Rvcnk8YnIgLz5kZWJ1ZzE6IGlkZW50aXR5IGZp
+bGUgL3Jvb3QvLnNzaC9pZF9yc2EtY2VydCB0eXBlIC0xPGJyIC8+ZGVidWcxOiBrZXlfbG9hZF9w
+dWJsaWM6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3Rvcnk8YnIgLz5kZWJ1ZzE6IGlkZW50aXR5IGZp
+bGUgL3Jvb3QvLnNzaC9pZF9kc2EgdHlwZSAtMTxiciAvPmRlYnVnMToga2V5X2xvYWRfcHVibGlj
+OiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5PGJyIC8+ZGVidWcxOiBpZGVudGl0eSBmaWxlIC9y
+b290Ly5zc2gvaWRfZHNhLWNlcnQgdHlwZSAtMTxiciAvPmRlYnVnMToga2V5X2xvYWRfcHVibGlj
+OiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5PGJyIC8+ZGVidWcxOiBpZGVudGl0eSBmaWxlIC9y
+b290Ly5zc2gvaWRfZWNkc2EgdHlwZSAtMTxiciAvPmRlYnVnMToga2V5X2xvYWRfcHVibGljOiBO
+byBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5PGJyIC8+ZGVidWcxOiBpZGVudGl0eSBmaWxlIC9yb290
+Ly5zc2gvaWRfZWNkc2EtY2VydCB0eXBlIC0xPGJyIC8+ZGVidWcxOiBrZXlfbG9hZF9wdWJsaWM6
+IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3Rvcnk8YnIgLz5kZWJ1ZzE6IGlkZW50aXR5IGZpbGUgL3Jv
+b3QvLnNzaC9pZF9lZDI1NTE5IHR5cGUgLTE8YnIgLz5kZWJ1ZzE6IGtleV9sb2FkX3B1YmxpYzog
+Tm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeTxiciAvPmRlYnVnMTogaWRlbnRpdHkgZmlsZSAvcm9v
+dC8uc3NoL2lkX2VkMjU1MTktY2VydCB0eXBlIC0xPGJyIC8+ZGVidWcxOiBFbmFibGluZyBjb21w
+YXRpYmlsaXR5IG1vZGUgZm9yIHByb3RvY29sIDIuMDxiciAvPmRlYnVnMTogTG9jYWwgdmVyc2lv
+biBzdHJpbmcgU1NILTIuMC1PcGVuU1NIXzcuNDxiciAvPmRlYnVnMTogUmVtb3RlIHByb3RvY29s
+IHZlcnNpb24gMi4wLCByZW1vdGUgc29mdHdhcmUgdmVyc2lvbiBkcm9wYmVhcl8yMDIwLjgwPGJy
+IC8+ZGVidWcxOiBubyBtYXRjaDogZHJvcGJlYXJfMjAyMC44MDxiciAvPmRlYnVnMjogZmQgMyBz
+ZXR0aW5nIE9fTk9OQkxPQ0s8YnIgLz5kZWJ1ZzE6IEF1dGhlbnRpY2F0aW5nIHRvIDEwLjAuMTI4
+LjEwODoyMiBhcyAncm9vdCc8YnIgLz5kZWJ1ZzM6IGhvc3RrZXlzX2ZvcmVhY2g6IHJlYWRpbmcg
+ZmlsZSAiL3Jvb3QvLnNzaC9rbm93bl9ob3N0cyI8YnIgLz5kZWJ1ZzM6IHJlY29yZF9ob3N0a2V5
+OiBmb3VuZCBrZXkgdHlwZSBSU0EgaW4gZmlsZSAvcm9vdC8uc3NoL2tub3duX2hvc3RzOjY4PGJy
+IC8+ZGVidWczOiBsb2FkX2hvc3RrZXlzOiBsb2FkZWQgMSBrZXlzIGZyb20gMTAuMC4xMjguMTA4
+PGJyIC8+ZGVidWczOiBvcmRlcl9ob3N0a2V5YWxnczogcHJlZmVyIGhvc3RrZXlhbGdzOiA8YSBo
+cmVmPSJtYWlsdG86c3NoLXJzYS1jZXJ0LXYwMUBvcGVuc3NoLmNvbSI+c3NoLXJzYS1jZXJ0LXYw
+MUBvcGVuc3NoLmNvbTwvYT4scnNhLXNoYTItNTEyLHJzYS1zaGEyLTI1Nixzc2gtcnNhPGJyIC8+
+ZGVidWczOiBzZW5kIHBhY2tldDogdHlwZSAyMDxiciAvPmRlYnVnMTogU1NIMl9NU0dfS0VYSU5J
+VCBzZW50PGJyIC8+ZGVidWczOiByZWNlaXZlIHBhY2tldDogdHlwZSAyMDxiciAvPmRlYnVnMTog
+U1NIMl9NU0dfS0VYSU5JVCByZWNlaXZlZDxiciAvPmRlYnVnMjogbG9jYWwgY2xpZW50IEtFWElO
+SVQgcHJvcG9zYWw8YnIgLz5kZWJ1ZzI6IEtFWCBhbGdvcml0aG1zOiA8YSBocmVmPSJtYWlsdG86
+Y3VydmUyNTUxOS1zaGEyNTYsY3VydmUyNTUxOS1zaGEyNTZAbGlic3NoLm9yZyI+Y3VydmUyNTUx
+OS1zaGEyNTYsY3VydmUyNTUxOS1zaGEyNTZAbGlic3NoLm9yZzwvYT4sZWNkaC1zaGEyLW5pc3Rw
+MjU2LGVjZGgtc2hhMi1uaXN0cDM4NCxlY2RoLXNoYTItbmlzdHA1MjEsZGlmZmllLWhlbGxtYW4t
+Z3JvdXAtZXhjaGFuZ2Utc2hhMjU2LGRpZmZpZS1oZWxsbWFuLWdyb3VwMTYtc2hhNTEyLGRpZmZp
+ZS1oZWxsbWFuLWdyb3VwMTgtc2hhNTEyLGRpZmZpZS1oZWxsbWFuLWdyb3VwLWV4Y2hhbmdlLXNo
+YTEsZGlmZmllLWhlbGxtYW4tZ3JvdXAxNC1zaGEyNTYsZGlmZmllLWhlbGxtYW4tZ3JvdXAxNC1z
+aGExLGRpZmZpZS1oZWxsbWFuLWdyb3VwMS1zaGExLGV4dC1pbmZvLWM8YnIgLz5kZWJ1ZzI6IGhv
+c3Qga2V5IGFsZ29yaXRobXM6IDxhIGhyZWY9Im1haWx0bzpzc2gtcnNhLWNlcnQtdjAxQG9wZW5z
+c2guY29tIj5zc2gtcnNhLWNlcnQtdjAxQG9wZW5zc2guY29tPC9hPixyc2Etc2hhMi01MTIscnNh
+LXNoYTItMjU2LHNzaC1yc2EsPGEgaHJlZj0ibWFpbHRvOmVjZHNhLXNoYTItbmlzdHAyNTYtY2Vy
+dC12MDFAb3BlbnNzaC5jb20iPmVjZHNhLXNoYTItbmlzdHAyNTYtY2VydC12MDFAb3BlbnNzaC5j
+b208L2E+LDxhIGhyZWY9Im1haWx0bzplY2RzYS1zaGEyLW5pc3RwMzg0LWNlcnQtdjAxQG9wZW5z
+c2guY29tIj5lY2RzYS1zaGEyLW5pc3RwMzg0LWNlcnQtdjAxQG9wZW5zc2guY29tPC9hPiw8YSBo
+cmVmPSJtYWlsdG86ZWNkc2Etc2hhMi1uaXN0cDUyMS1jZXJ0LXYwMUBvcGVuc3NoLmNvbSI+ZWNk
+c2Etc2hhMi1uaXN0cDUyMS1jZXJ0LXYwMUBvcGVuc3NoLmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRv
+OnNzaC1lZDI1NTE5LWNlcnQtdjAxQG9wZW5zc2guY29tIj5zc2gtZWQyNTUxOS1jZXJ0LXYwMUBv
+cGVuc3NoLmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRvOnNzaC1kc3MtY2VydC12MDFAb3BlbnNzaC5j
+b20iPnNzaC1kc3MtY2VydC12MDFAb3BlbnNzaC5jb208L2E+LGVjZHNhLXNoYTItbmlzdHAyNTYs
+ZWNkc2Etc2hhMi1uaXN0cDM4NCxlY2RzYS1zaGEyLW5pc3RwNTIxLHNzaC1lZDI1NTE5LHNzaC1k
+c3M8YnIgLz5kZWJ1ZzI6IGNpcGhlcnMgY3RvczogPGEgaHJlZj0ibWFpbHRvOmNoYWNoYTIwLXBv
+bHkxMzA1QG9wZW5zc2guY29tIj5jaGFjaGEyMC1wb2x5MTMwNUBvcGVuc3NoLmNvbTwvYT4sYWVz
+MTI4LWN0cixhZXMxOTItY3RyLGFlczI1Ni1jdHIsPGEgaHJlZj0ibWFpbHRvOmFlczEyOC1nY21A
+b3BlbnNzaC5jb20iPmFlczEyOC1nY21Ab3BlbnNzaC5jb208L2E+LDxhIGhyZWY9Im1haWx0bzph
+ZXMyNTYtZ2NtQG9wZW5zc2guY29tIj5hZXMyNTYtZ2NtQG9wZW5zc2guY29tPC9hPixhZXMxMjgt
+Y2JjLGFlczE5Mi1jYmMsYWVzMjU2LWNiYzxiciAvPmRlYnVnMjogY2lwaGVycyBzdG9jOiA8YSBo
+cmVmPSJtYWlsdG86Y2hhY2hhMjAtcG9seTEzMDVAb3BlbnNzaC5jb20iPmNoYWNoYTIwLXBvbHkx
+MzA1QG9wZW5zc2guY29tPC9hPixhZXMxMjgtY3RyLGFlczE5Mi1jdHIsYWVzMjU2LWN0ciw8YSBo
+cmVmPSJtYWlsdG86YWVzMTI4LWdjbUBvcGVuc3NoLmNvbSI+YWVzMTI4LWdjbUBvcGVuc3NoLmNv
+bTwvYT4sPGEgaHJlZj0ibWFpbHRvOmFlczI1Ni1nY21Ab3BlbnNzaC5jb20iPmFlczI1Ni1nY21A
+b3BlbnNzaC5jb208L2E+LGFlczEyOC1jYmMsYWVzMTkyLWNiYyxhZXMyNTYtY2JjPGJyIC8+ZGVi
+dWcyOiBNQUNzIGN0b3M6IDxhIGhyZWY9Im1haWx0bzp1bWFjLTY0LWV0bUBvcGVuc3NoLmNvbSI+
+dW1hYy02NC1ldG1Ab3BlbnNzaC5jb208L2E+LDxhIGhyZWY9Im1haWx0bzp1bWFjLTEyOC1ldG1A
+b3BlbnNzaC5jb20iPnVtYWMtMTI4LWV0bUBvcGVuc3NoLmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRv
+OmhtYWMtc2hhMi0yNTYtZXRtQG9wZW5zc2guY29tIj5obWFjLXNoYTItMjU2LWV0bUBvcGVuc3No
+LmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRvOmhtYWMtc2hhMi01MTItZXRtQG9wZW5zc2guY29tIj5o
+bWFjLXNoYTItNTEyLWV0bUBvcGVuc3NoLmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRvOmhtYWMtc2hh
+MS1ldG1Ab3BlbnNzaC5jb20iPmhtYWMtc2hhMS1ldG1Ab3BlbnNzaC5jb208L2E+LDxhIGhyZWY9
+Im1haWx0bzp1bWFjLTY0QG9wZW5zc2guY29tIj51bWFjLTY0QG9wZW5zc2guY29tPC9hPiw8YSBo
+cmVmPSJtYWlsdG86dW1hYy0xMjhAb3BlbnNzaC5jb20iPnVtYWMtMTI4QG9wZW5zc2guY29tPC9h
+PixobWFjLXNoYTItMjU2LGhtYWMtc2hhMi01MTIsaG1hYy1zaGExPGJyIC8+ZGVidWcyOiBNQUNz
+IHN0b2M6IDxhIGhyZWY9Im1haWx0bzp1bWFjLTY0LWV0bUBvcGVuc3NoLmNvbSI+dW1hYy02NC1l
+dG1Ab3BlbnNzaC5jb208L2E+LDxhIGhyZWY9Im1haWx0bzp1bWFjLTEyOC1ldG1Ab3BlbnNzaC5j
+b20iPnVtYWMtMTI4LWV0bUBvcGVuc3NoLmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRvOmhtYWMtc2hh
+Mi0yNTYtZXRtQG9wZW5zc2guY29tIj5obWFjLXNoYTItMjU2LWV0bUBvcGVuc3NoLmNvbTwvYT4s
+PGEgaHJlZj0ibWFpbHRvOmhtYWMtc2hhMi01MTItZXRtQG9wZW5zc2guY29tIj5obWFjLXNoYTIt
+NTEyLWV0bUBvcGVuc3NoLmNvbTwvYT4sPGEgaHJlZj0ibWFpbHRvOmhtYWMtc2hhMS1ldG1Ab3Bl
+bnNzaC5jb20iPmhtYWMtc2hhMS1ldG1Ab3BlbnNzaC5jb208L2E+LDxhIGhyZWY9Im1haWx0bzp1
+bWFjLTY0QG9wZW5zc2guY29tIj51bWFjLTY0QG9wZW5zc2guY29tPC9hPiw8YSBocmVmPSJtYWls
+dG86dW1hYy0xMjhAb3BlbnNzaC5jb20iPnVtYWMtMTI4QG9wZW5zc2guY29tPC9hPixobWFjLXNo
+YTItMjU2LGhtYWMtc2hhMi01MTIsaG1hYy1zaGExPGJyIC8+ZGVidWcyOiBjb21wcmVzc2lvbiBj
+dG9zOiA8YSBocmVmPSJtYWlsdG86bm9uZSx6bGliQG9wZW5zc2guY29tIj5ub25lLHpsaWJAb3Bl
+bnNzaC5jb208L2E+LHpsaWI8YnIgLz5kZWJ1ZzI6IGNvbXByZXNzaW9uIHN0b2M6IDxhIGhyZWY9
+Im1haWx0bzpub25lLHpsaWJAb3BlbnNzaC5jb20iPm5vbmUsemxpYkBvcGVuc3NoLmNvbTwvYT4s
+emxpYjxiciAvPmRlYnVnMjogbGFuZ3VhZ2VzIGN0b3M6PGJyIC8+ZGVidWcyOiBsYW5ndWFnZXMg
+c3RvYzo8YnIgLz5kZWJ1ZzI6IGZpcnN0X2tleF9mb2xsb3dzIDA8YnIgLz5kZWJ1ZzI6IHJlc2Vy
+dmVkIDA8YnIgLz5kZWJ1ZzI6IHBlZXIgc2VydmVyIEtFWElOSVQgcHJvcG9zYWw8YnIgLz5kZWJ1
+ZzI6IEtFWCBhbGdvcml0aG1zOiA8YSBocmVmPSJtYWlsdG86Y3VydmUyNTUxOS1zaGEyNTYsY3Vy
+dmUyNTUxOS1zaGEyNTZAbGlic3NoLm9yZyI+Y3VydmUyNTUxOS1zaGEyNTYsY3VydmUyNTUxOS1z
+aGEyNTZAbGlic3NoLm9yZzwvYT4sZWNkaC1zaGEyLW5pc3RwNTIxLGVjZGgtc2hhMi1uaXN0cDM4
+NCxlY2RoLXNoYTItbmlzdHAyNTYsZGlmZmllLWhlbGxtYW4tZ3JvdXAxNC1zaGEyNTYsPGEgaHJl
+Zj0ibWFpbHRvOmtleGd1ZXNzMkBtYXR0LnVjYy5hc24uYXUiPmtleGd1ZXNzMkBtYXR0LnVjYy5h
+c24uYXU8L2E+PGJyIC8+ZGVidWcyOiBob3N0IGtleSBhbGdvcml0aG1zOiByc2Etc2hhMi0yNTYs
+c3NoLXJzYTxiciAvPmRlYnVnMjogY2lwaGVycyBjdG9zOiA8YSBocmVmPSJtYWlsdG86Y2hhY2hh
+MjAtcG9seTEzMDVAb3BlbnNzaC5jb20iPmNoYWNoYTIwLXBvbHkxMzA1QG9wZW5zc2guY29tPC9h
+PixhZXMxMjgtY3RyLGFlczI1Ni1jdHI8YnIgLz5kZWJ1ZzI6IGNpcGhlcnMgc3RvYzogPGEgaHJl
+Zj0ibWFpbHRvOmNoYWNoYTIwLXBvbHkxMzA1QG9wZW5zc2guY29tIj5jaGFjaGEyMC1wb2x5MTMw
+NUBvcGVuc3NoLmNvbTwvYT4sYWVzMTI4LWN0cixhZXMyNTYtY3RyPGJyIC8+ZGVidWcyOiBNQUNz
+IGN0b3M6IGhtYWMtc2hhMSxobWFjLXNoYTItMjU2PGJyIC8+ZGVidWcyOiBNQUNzIHN0b2M6IGht
+YWMtc2hhMSxobWFjLXNoYTItMjU2PGJyIC8+ZGVidWcyOiBjb21wcmVzc2lvbiBjdG9zOiA8YSBo
+cmVmPSJtYWlsdG86emxpYkBvcGVuc3NoLmNvbSI+emxpYkBvcGVuc3NoLmNvbTwvYT4sbm9uZTxi
+ciAvPmRlYnVnMjogY29tcHJlc3Npb24gc3RvYzogPGEgaHJlZj0ibWFpbHRvOnpsaWJAb3BlbnNz
+aC5jb20iPnpsaWJAb3BlbnNzaC5jb208L2E+LG5vbmU8YnIgLz5kZWJ1ZzI6IGxhbmd1YWdlcyBj
+dG9zOjxiciAvPmRlYnVnMjogbGFuZ3VhZ2VzIHN0b2M6PGJyIC8+ZGVidWcyOiBmaXJzdF9rZXhf
+Zm9sbG93cyAwPGJyIC8+ZGVidWcyOiByZXNlcnZlZCAwPGJyIC8+ZGVidWcxOiBrZXg6IGFsZ29y
+aXRobTogY3VydmUyNTUxOS1zaGEyNTY8YnIgLz5kZWJ1ZzE6IGtleDogaG9zdCBrZXkgYWxnb3Jp
+dGhtOiByc2Etc2hhMi0yNTY8YnIgLz5kZWJ1ZzE6IGtleDogc2VydmVyLSZndDtjbGllbnQgY2lw
+aGVyOiA8YSBocmVmPSJtYWlsdG86Y2hhY2hhMjAtcG9seTEzMDVAb3BlbnNzaC5jb20iPmNoYWNo
+YTIwLXBvbHkxMzA1QG9wZW5zc2guY29tPC9hPiBNQUM6ICZsdDtpbXBsaWNpdCZndDsgY29tcHJl
+c3Npb246IG5vbmU8YnIgLz5kZWJ1ZzE6IGtleDogY2xpZW50LSZndDtzZXJ2ZXIgY2lwaGVyOiA8
+YSBocmVmPSJtYWlsdG86Y2hhY2hhMjAtcG9seTEzMDVAb3BlbnNzaC5jb20iPmNoYWNoYTIwLXBv
+bHkxMzA1QG9wZW5zc2guY29tPC9hPiBNQUM6ICZsdDtpbXBsaWNpdCZndDsgY29tcHJlc3Npb246
+IG5vbmU8YnIgLz5kZWJ1ZzE6IGtleDogY3VydmUyNTUxOS1zaGEyNTYgbmVlZD02NCBkaF9uZWVk
+PTY0PGJyIC8+ZGVidWcxOiBrZXg6IGN1cnZlMjU1MTktc2hhMjU2IG5lZWQ9NjQgZGhfbmVlZD02
+NDxiciAvPmRlYnVnMzogc2VuZCBwYWNrZXQ6IHR5cGUgMzA8YnIgLz5kZWJ1ZzE6IGV4cGVjdGlu
+ZyBTU0gyX01TR19LRVhfRUNESF9SRVBMWTxiciAvPmRlYnVnMzogcmVjZWl2ZSBwYWNrZXQ6IHR5
+cGUgMzE8YnIgLz5kZWJ1ZzE6IFNlcnZlciBob3N0IGtleTogc3NoLXJzYSBTSEEyNTY6M1d3aFBt
+SUl4enJ3MCtjbS8wdk4zaGlmWTRraDlzSmhDbFZOdzZ6cko3WTxiciAvPmRlYnVnMzogaG9zdGtl
+eXNfZm9yZWFjaDogcmVhZGluZyBmaWxlICIvcm9vdC8uc3NoL2tub3duX2hvc3RzIjxiciAvPmRl
+YnVnMzogcmVjb3JkX2hvc3RrZXk6IGZvdW5kIGtleSB0eXBlIFJTQSBpbiBmaWxlIC9yb290Ly5z
+c2gva25vd25faG9zdHM6Njg8YnIgLz5kZWJ1ZzM6IGxvYWRfaG9zdGtleXM6IGxvYWRlZCAxIGtl
+eXMgZnJvbSAxMC4wLjEyOC4xMDg8YnIgLz5kZWJ1ZzE6IEhvc3QgJzEwLjAuMTI4LjEwOCcgaXMg
+a25vd24gYW5kIG1hdGNoZXMgdGhlIFJTQSBob3N0IGtleS48YnIgLz5kZWJ1ZzE6IEZvdW5kIGtl
+eSBpbiAvcm9vdC8uc3NoL2tub3duX2hvc3RzOjY4PGJyIC8+ZGVidWczOiBzZW5kIHBhY2tldDog
+dHlwZSAyMTxiciAvPmRlYnVnMjogc2V0X25ld2tleXM6IG1vZGUgMTxiciAvPmRlYnVnMTogcmVr
+ZXkgYWZ0ZXIgPHNwYW4gY2xhc3M9IjFmMWVhMTkzZjY3MzVjZjB3bWktY2FsbHRvIj4xMzQyMTc3
+Mjg8L3NwYW4+IGJsb2NrczxiciAvPmRlYnVnMTogU1NIMl9NU0dfTkVXS0VZUyBzZW50PGJyIC8+
+ZGVidWcxOiBleHBlY3RpbmcgU1NIMl9NU0dfTkVXS0VZUzxiciAvPmRlYnVnMzogcmVjZWl2ZSBw
+YWNrZXQ6IHR5cGUgMjE8YnIgLz5kZWJ1ZzE6IFNTSDJfTVNHX05FV0tFWVMgcmVjZWl2ZWQ8YnIg
+Lz5kZWJ1ZzI6IHNldF9uZXdrZXlzOiBtb2RlIDA8YnIgLz5kZWJ1ZzE6IHJla2V5IGFmdGVyIDxz
+cGFuIGNsYXNzPSIxZjFlYTE5M2Y2NzM1Y2Ywd21pLWNhbGx0byI+MTM0MjE3NzI4PC9zcGFuPiBi
+bG9ja3M8YnIgLz5kZWJ1ZzI6IGtleTogL3Jvb3QvLnNzaC9pZF9yc2EgKDB4NTU4ZWEzYWQzNjQw
+KSwgYWdlbnQ8YnIgLz5kZWJ1ZzI6IGtleTogL3Jvb3QvLnNzaC9pZF9yc2EgKChuaWwpKTxiciAv
+PmRlYnVnMjoga2V5OiAvcm9vdC8uc3NoL2lkX2RzYSAoKG5pbCkpPGJyIC8+ZGVidWcyOiBrZXk6
+IC9yb290Ly5zc2gvaWRfZWNkc2EgKChuaWwpKTxiciAvPmRlYnVnMjoga2V5OiAvcm9vdC8uc3No
+L2lkX2VkMjU1MTkgKChuaWwpKTxiciAvPmRlYnVnMzogc2VuZCBwYWNrZXQ6IHR5cGUgNTxiciAv
+PmRlYnVnMzogcmVjZWl2ZSBwYWNrZXQ6IHR5cGUgNzxiciAvPmRlYnVnMTogU1NIMl9NU0dfRVhU
+X0lORk8gcmVjZWl2ZWQ8YnIgLz5kZWJ1ZzE6IGtleF9pbnB1dF9leHRfaW5mbzogc2VydmVyLXNp
+Zy1hbGdzPSZsdDtzc2gtZWQyNTUxOSxlY2RzYS1zaGEyLW5pc3RwMjU2LGVjZHNhLXNoYTItbmlz
+dHAzODQsZWNkc2Etc2hhMi1uaXN0cDUyMSxyc2Etc2hhMi0yNTYsc3NoLXJzYSxzc2gtZHNzJmd0
+OzxiciAvPmRlYnVnMzogcmVjZWl2ZSBwYWNrZXQ6IHR5cGUgNjxiciAvPmRlYnVnMjogc2Vydmlj
+ZV9hY2NlcHQ6IHNzaC11c2VyYXV0aDxiciAvPmRlYnVnMTogU1NIMl9NU0dfU0VSVklDRV9BQ0NF
+UFQgcmVjZWl2ZWQ8YnIgLz5kZWJ1ZzM6IHNlbmQgcGFja2V0OiB0eXBlIDUwPGJyIC8+ZGVidWcz
+OiByZWNlaXZlIHBhY2tldDogdHlwZSA1MTxiciAvPmRlYnVnMTogQXV0aGVudGljYXRpb25zIHRo
+YXQgY2FuIGNvbnRpbnVlOiBwdWJsaWNrZXkscGFzc3dvcmQ8YnIgLz5kZWJ1ZzM6IHN0YXJ0IG92
+ZXIsIHBhc3NlZCBhIGRpZmZlcmVudCBsaXN0IHB1YmxpY2tleSxwYXNzd29yZDxiciAvPmRlYnVn
+MzogcHJlZmVycmVkIGdzc2FwaS1rZXlleCxnc3NhcGktd2l0aC1taWMscHVibGlja2V5LGtleWJv
+YXJkLWludGVyYWN0aXZlLHBhc3N3b3JkPGJyIC8+ZGVidWczOiBhdXRobWV0aG9kX2xvb2t1cCBw
+dWJsaWNrZXk8YnIgLz5kZWJ1ZzM6IHJlbWFpbmluZyBwcmVmZXJyZWQ6IGtleWJvYXJkLWludGVy
+YWN0aXZlLHBhc3N3b3JkPGJyIC8+ZGVidWczOiBhdXRobWV0aG9kX2lzX2VuYWJsZWQgcHVibGlj
+a2V5PGJyIC8+ZGVidWcxOiBOZXh0IGF1dGhlbnRpY2F0aW9uIG1ldGhvZDogcHVibGlja2V5PGJy
+IC8+ZGVidWcxOiBPZmZlcmluZyBSU0EgcHVibGljIGtleTogL3Jvb3QvLnNzaC9pZF9yc2E8YnIg
+Lz5kZWJ1ZzM6IHNlbmRfcHVia2V5X3Rlc3Q8YnIgLz5kZWJ1ZzM6IHNlbmQgcGFja2V0OiB0eXBl
+IDUwPGJyIC8+ZGVidWcyOiB3ZSBzZW50IGEgcHVibGlja2V5IHBhY2tldCwgd2FpdCBmb3IgcmVw
+bHk8YnIgLz5kZWJ1ZzM6IHJlY2VpdmUgcGFja2V0OiB0eXBlIDUxPGJyIC8+ZGVidWcxOiBBdXRo
+ZW50aWNhdGlvbnMgdGhhdCBjYW4gY29udGludWU6IHB1YmxpY2tleSxwYXNzd29yZDxiciAvPmRl
+YnVnMTogVHJ5aW5nIHByaXZhdGUga2V5OiAvcm9vdC8uc3NoL2lkX3JzYTxiciAvPmRlYnVnMzog
+c2lnbl9hbmRfc2VuZF9wdWJrZXk6IFJTQSBTSEEyNTY6WWZ0ZXVmbVdVVjhXN0VRRXljWiszOHNr
+Z1VXR0RUWUZIdzkzYTdTd3dMTTxiciAvPmRlYnVnMzogc2VuZCBwYWNrZXQ6IHR5cGUgNTA8YnIg
+Lz5kZWJ1ZzI6IHdlIHNlbnQgYSBwdWJsaWNrZXkgcGFja2V0LCB3YWl0IGZvciByZXBseTxiciAv
+PmRlYnVnMzogcmVjZWl2ZSBwYWNrZXQ6IHR5cGUgNTE8YnIgLz5kZWJ1ZzE6IEF1dGhlbnRpY2F0
+aW9ucyB0aGF0IGNhbiBjb250aW51ZTogcHVibGlja2V5LHBhc3N3b3JkPGJyIC8+ZGVidWcxOiBU
+cnlpbmcgcHJpdmF0ZSBrZXk6IC9yb290Ly5zc2gvaWRfZHNhPGJyIC8+ZGVidWczOiBubyBzdWNo
+IGlkZW50aXR5OiAvcm9vdC8uc3NoL2lkX2RzYTogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeTxi
+ciAvPmRlYnVnMTogVHJ5aW5nIHByaXZhdGUga2V5OiAvcm9vdC8uc3NoL2lkX2VjZHNhPGJyIC8+
+ZGVidWczOiBubyBzdWNoIGlkZW50aXR5OiAvcm9vdC8uc3NoL2lkX2VjZHNhOiBObyBzdWNoIGZp
+bGUgb3IgZGlyZWN0b3J5PGJyIC8+ZGVidWcxOiBUcnlpbmcgcHJpdmF0ZSBrZXk6IC9yb290Ly5z
+c2gvaWRfZWQyNTUxOTxiciAvPmRlYnVnMzogbm8gc3VjaCBpZGVudGl0eTogL3Jvb3QvLnNzaC9p
+ZF9lZDI1NTE5OiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5PGJyIC8+ZGVidWcyOiB3ZSBkaWQg
+bm90IHNlbmQgYSBwYWNrZXQsIGRpc2FibGUgbWV0aG9kPGJyIC8+ZGVidWczOiBhdXRobWV0aG9k
+X2xvb2t1cCBwYXNzd29yZDxiciAvPmRlYnVnMzogcmVtYWluaW5nIHByZWZlcnJlZDogLHBhc3N3
+b3JkPGJyIC8+ZGVidWczOiBhdXRobWV0aG9kX2lzX2VuYWJsZWQgcGFzc3dvcmQ8YnIgLz5kZWJ1
+ZzE6IE5leHQgYXV0aGVudGljYXRpb24gbWV0aG9kOiBwYXNzd29yZDxiciAvPjxiciAvPjxiciAv
+PkluIG5vbi13b3JraW5nIGltYWdlLCB0aGUgbG9ncyBhcmUgc3RvcHBlZCBhZnRlciBiZWxvdyBs
+aW5lcyBhbmQgaXQgaXMgbm90IHByb3ZpZGluZyBhbnkgZXJyb3JzLjxiciAvPjxiciAvPmRlYnVn
+MTogRW5hYmxpbmcgY29tcGF0aWJpbGl0eSBtb2RlIGZvciBwcm90b2NvbCAyLjA8YnIgLz5kZWJ1
+ZzE6IExvY2FsIHZlcnNpb24gc3RyaW5nIFNTSC0yLjAtT3BlblNTSF83LjQ8YnIgLz48YnIgLz5B
+bHNvIG9uZSBtb3JlIG9ic2VydmF0aW9uIGluIFVBUlQtQ29uc29sZSwgYWZ0ZXIgZmxhc2hpbmcg
+bGF0ZXN0IGltYWdlLjxiciAvPjxiciAvPjEuIHJlYm9vdCBjb21tYW5kIGlzIG5vdCB3b3JraW5n
+LjxiciAvPjIuIHN5c3RlbWN0bCBzdGF0dXMgJmx0O3NlcnZpY2VfbmFtZSZndDsgaXMgbm90IHBy
+b3ZpZGluZyBhbnkgc3RhdHVzLiAoIEZhaWxlZCB0byBnZXQgcHJvcGVydGllczogQ29ubmVjdGlv
+biB0aW1lZCBvdXQpIDMuIEkgY2FuIGFibGUgdG8gcGluZyB0aGUgaXAgYWRkcmVzcyBidXQgc2Nw
+IGlzIG5vdCB3b3JraW5nLjxiciAvPjxiciAvPlRoYW5rcyw8YnIgLz5KYXlhc2hyZWU8YnIgLz48
+YnIgLz48YnIgLz4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLTxiciAvPkZyb206IFBhdHJpY2sg
+V2lsbGlhbXMgJmx0OzxhIGhyZWY9Im1haWx0bzpwYXRyaWNrQHN0d2N4Lnh5eiI+cGF0cmlja0Bz
+dHdjeC54eXo8L2E+Jmd0OzxiciAvPlNlbnQ6IFRodXJzZGF5LCBTZXB0ZW1iZXIgMTcsIDIwMjAg
+OToxNiBQTTxiciAvPlRvOiBKYXlhc2hyZWUgRCAmbHQ7PGEgaHJlZj0ibWFpbHRvOmpheWFzaHJl
+ZS1kQGhjbC5jb20iPmpheWFzaHJlZS1kQGhjbC5jb208L2E+Jmd0OzxiciAvPkNjOiBLb25zdGFu
+dGluIEtsdWJuaWNoa2luICZsdDs8YSBocmVmPSJtYWlsdG86a2l0c29rQHlhbmRleC10ZWFtLnJ1
+Ij5raXRzb2tAeWFuZGV4LXRlYW0ucnU8L2E+Jmd0OzsgPGEgaHJlZj0ibWFpbHRvOm9wZW5ibWNA
+bGlzdHMub3psYWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9hPjxiciAvPlN1Ympl
+Y3Q6IFJlOiBDb25uZWN0aW9uIGlzc3VlIGluIE9wZW5CTUMgaW1hZ2U8YnIgLz48YnIgLz5IZWxs
+byBKYXlhc2hyZWUsPGJyIC8+PGJyIC8+SSBzYXcgYW4gb3V0cHV0IGBzc2ggLXZgIGZyb20geW91
+IGVhcmxpZXIsIGJ1dCB0aGVyZSByZWFsbHkgd2Fzbid0IGFueSB1c2VmdWwgaW5mb3JtYXRpb24g
+dGhlcmUuICBJdCBsb29rZWQgbGlrZSB0aGUgY29ubmVjdGlvbiB3YXMgYmVpbmcgbWFkZSBhbmQg
+a2V5cyB3ZXJlIGV4Y2hhbmdlZCBhbmQgdGhlbiB0aGUgbG9nIGp1c3Qgc3RvcHBlZCBhYnJ1cHRs
+eS4gIFRoaXMgdGVsbHMgbWUgaXQgbGlrZWx5IGlzbid0IGEgbmV0d29ya2luZyBpc3N1ZSBidXQg
+YW4gaXNzdWUgaW4gdGhlIGhhbmRzaGFrZSBiZXR3ZWVuIHRoZSBzc2gtY2xpZW50ICh5b3VyIGNv
+bXB1dGVyKSBhbmQgc3NoLXNlcnZlciAoZHJvcGJlYXIpLiAgWW91IGNhbiBjb250aW51ZSB0byBh
+ZGQgJy12JyBwYXJhbWV0ZXJzIHVwIHRvIGBzc2ggLXZ2dmAgYW5kIHlvdSdsbCBnZXQgaW5jcmVh
+c2luZ2x5IG1vcmUgaW5mb3JtYXRpb24uPGJyIC8+PGJyIC8+Sm9zZXBoIFJleW5vbGRzIHJlY2Vu
+dGx5IHBvc3RlZCBhIHJlbWluZGVyIGFib3V0IGRyb3BiZWFyIGRpc2FibGluZyB3ZWFrIGNpcGhl
+cnNbMV0uICBJcyBpdCBwb3NzaWJsZSB0aGF0IHlvdXIgY2xpZW50IGlzIHVzaW5nIGFuIG9sZCBj
+aXBoZXI/PGJyIC8+PGJyIC8+T24gV2VkLCBTZXAgMTYsIDIwMjAgYXQgMTE6MzU6MjhBTSArMDAw
+MCwgSmF5YXNocmVlIEQgd3JvdGU6PGJyIC8+PC9wPjxibG9ja3F1b3RlIGNsYXNzPSIyMTBlN2E4
+NDhlOGZjYjQ1d21pLXF1b3RlIj7CoDxhIGhyZWY9Im1haWx0bzpyb290QHRpb2dhcGFzcyI+cm9v
+dEB0aW9nYXBhc3M8L2E+On4jIGpvdXJuYWxjdGwgfCBncmVwIGRyb3A8YnIgLz48L2Jsb2NrcXVv
+dGU+PHA+Li4uPGJyIC8+PC9wPjxibG9ja3F1b3RlIGNsYXNzPSIyMTBlN2E4NDhlOGZjYjQ1d21p
+LXF1b3RlIj7CoEphbiAwMSAwMDoxNToyOCB0aW9nYXBhc3Mgc3lzdGVtZFsxXTogPGEgaHJlZj0i
+bWFpbHRvOmRyb3BiZWFyQDAtMTAuMC4xMjguMTA4Ij5kcm9wYmVhckAwLTEwLjAuMTI4LjEwODwv
+YT46MjItMTAuMC4wLjE6NTE4MTAuc2VydmljZTogU3VjY2VlZGVkLjxiciAvPsKgSmFuIDAxIDAw
+OjE1OjQ0IHRpb2dhcGFzcyBkcm9wYmVhclsyNzUzXTogQ2hpbGQgY29ubmVjdGlvbiBmcm9tPGJy
+IC8+wqA6OmZmZmY6MTAuMC4wLjE6NTE5NDQgSmFuIDAxIDAwOjE1OjUwIHRpb2dhcGFzcyBkcm9w
+YmVhclsyNzUzXTogUEFNPGJyIC8+wqBwYXNzd29yZCBhdXRoIHN1Y2NlZWRlZCBmb3IgJ3Jvb3Qn
+IGZyb20gOjpmZmZmOjEwLjAuMC4xOjUxOTQ0PGJyIC8+PC9ibG9ja3F1b3RlPjxwPjxiciAvPlRo
+aXMgbG9va3MgbGlrZSBhIHZhbGlkIGNvbm5lY3Rpb24gd2FzIGVzdGFibGlzaGVkLjxiciAvPjxi
+ciAvPjwvcD48YmxvY2txdW90ZSBjbGFzcz0iMjEwZTdhODQ4ZThmY2I0NXdtaS1xdW90ZSI+wqAx
+NS4wOS4yMDIwLCAxNjoxMiwgIkpheWFzaHJlZSBEIiAmbHQ7PGEgaHJlZj0ibWFpbHRvOmpheWFz
+aHJlZS1kQGhjbC5jb20iPmpheWFzaHJlZS1kQGhjbC5jb208L2E+Jmx0OzxhIGhyZWY9Im1haWx0
+bzpqYXlhc2hyZWUtZEBoY2wuY29tIj5tYWlsdG86amF5YXNocmVlLWRAaGNsLmNvbTwvYT4mZ3Q7
+Jmd0Ozo8YnIgLz48YnIgLz7CoE9wZW5TU0hfNy40cDEsIE9wZW5TU0wgMS4wLjJrLWZpcHMgIDI2
+IEphbiAyMDE3PGJyIC8+wqBkZWJ1ZzE6IFJlYWRpbmcgY29uZmlndXJhdGlvbiBkYXRhIC9ldGMv
+c3NoL3NzaF9jb25maWc8YnIgLz7CoGRlYnVnMTogL2V0Yy9zc2gvc3NoX2NvbmZpZyBsaW5lIDU4
+OiBBcHBseWluZyBvcHRpb25zIGZvciAqPGJyIC8+wqBkZWJ1ZzE6IENvbm5lY3RpbmcgdG8gMTAu
+MC4xMjguMTA4IFsxMC4wLjEyOC4xMDhdIHBvcnQgMjIuPGJyIC8+wqBkZWJ1ZzE6IENvbm5lY3Rp
+b24gZXN0YWJsaXNoZWQuPGJyIC8+wqBkZWJ1ZzE6IHBlcm1hbmVudGx5X3NldF91aWQ6IDAvMDxi
+ciAvPsKgZGVidWcxOiBrZXlfbG9hZF9wdWJsaWM6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3Rvcnk8
+YnIgLz7CoGRlYnVnMTogaWRlbnRpdHkgZmlsZSAvcm9vdC8uc3NoL2lkX3JzYSB0eXBlIC0xPGJy
+IC8+wqBkZWJ1ZzE6IGtleV9sb2FkX3B1YmxpYzogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9yeTxi
+ciAvPsKgZGVidWcxOiBpZGVudGl0eSBmaWxlIC9yb290Ly5zc2gvaWRfcnNhLWNlcnQgdHlwZSAt
+MTxiciAvPsKgZGVidWcxOiBrZXlfbG9hZF9wdWJsaWM6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3Rv
+cnk8YnIgLz7CoGRlYnVnMTogaWRlbnRpdHkgZmlsZSAvcm9vdC8uc3NoL2lkX2RzYSB0eXBlIC0x
+PGJyIC8+wqBkZWJ1ZzE6IGtleV9sb2FkX3B1YmxpYzogTm8gc3VjaCBmaWxlIG9yIGRpcmVjdG9y
+eTxiciAvPsKgZGVidWcxOiBpZGVudGl0eSBmaWxlIC9yb290Ly5zc2gvaWRfZHNhLWNlcnQgdHlw
+ZSAtMTxiciAvPsKgZGVidWcxOiBrZXlfbG9hZF9wdWJsaWM6IE5vIHN1Y2ggZmlsZSBvciBkaXJl
+Y3Rvcnk8YnIgLz7CoGRlYnVnMTogaWRlbnRpdHkgZmlsZSAvcm9vdC8uc3NoL2lkX2VjZHNhIHR5
+cGUgLTE8YnIgLz7CoGRlYnVnMToga2V5X2xvYWRfcHVibGljOiBObyBzdWNoIGZpbGUgb3IgZGly
+ZWN0b3J5PGJyIC8+wqBkZWJ1ZzE6IGlkZW50aXR5IGZpbGUgL3Jvb3QvLnNzaC9pZF9lY2RzYS1j
+ZXJ0IHR5cGUgLTE8YnIgLz7CoGRlYnVnMToga2V5X2xvYWRfcHVibGljOiBObyBzdWNoIGZpbGUg
+b3IgZGlyZWN0b3J5PGJyIC8+wqBkZWJ1ZzE6IGlkZW50aXR5IGZpbGUgL3Jvb3QvLnNzaC9pZF9l
+ZDI1NTE5IHR5cGUgLTE8YnIgLz7CoGRlYnVnMToga2V5X2xvYWRfcHVibGljOiBObyBzdWNoIGZp
+bGUgb3IgZGlyZWN0b3J5PGJyIC8+wqBkZWJ1ZzE6IGlkZW50aXR5IGZpbGUgL3Jvb3QvLnNzaC9p
+ZF9lZDI1NTE5LWNlcnQgdHlwZSAtMTxiciAvPsKgZGVidWcxOiBFbmFibGluZyBjb21wYXRpYmls
+aXR5IG1vZGUgZm9yIHByb3RvY29sIDIuMDxiciAvPsKgZGVidWcxOiBMb2NhbCB2ZXJzaW9uIHN0
+cmluZyBTU0gtMi4wLU9wZW5TU0hfNy40PGJyIC8+PC9ibG9ja3F1b3RlPjxwPjxiciAvPlRoaXMg
+aXMgdGhlIGxvZyB0aGF0IGFsc28gbG9va3MgbGlrZSBhIGdvb2QgY29ubmVjdGlvbi4gIElkZW50
+aXR5IGZpbGVzIHdlcmUgYXR0ZW1wdGVkIHRvIGJlIGV4Y2hhbmdlZC4gIFZlcnNpb24gc3RyaW5n
+cyB3ZXJlIGV4Y2hhbmdlZC4gIEFuZCB0aGVuIHRoZSBsb2cganVzdCBhYnJ1cHRseSBzdG9wcy4g
+IFdhcyB0aGUgY29ubmVjdGlvbiBkcm9wcGVkPyAgSXMgaXQgaHVuZz88YnIgLz48YnIgLz4xLiA8
+YSBocmVmPSJodHRwczovL2xpc3RzLm96bGFicy5vcmcvcGlwZXJtYWlsL29wZW5ibWMvMjAyMC1T
+ZXB0ZW1iZXIvMDIzMDcxLmh0bWwiPmh0dHBzOi8vbGlzdHMub3psYWJzLm9yZy9waXBlcm1haWwv
+b3BlbmJtYy8yMDIwLVNlcHRlbWJlci8wMjMwNzEuaHRtbDwvYT48YnIgLz48YnIgLz48L3A+PHNw
+YW4gY2xhc3M9ImY1NWJiYjRlZWVmMjA4ZTh3bWktc2lnbiI+LS0gPGJyIC8+UGF0cmljayBXaWxs
+aWFtczxiciAvPjo6RElTQ0xBSU1FUjo6PGJyIC8+X19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX188YnIgLz5UaGUgY29udGVudHMgb2YgdGhpcyBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50
+KHMpIGFyZSBjb25maWRlbnRpYWwgYW5kIGludGVuZGVkIGZvciB0aGUgbmFtZWQgcmVjaXBpZW50
+KHMpIG9ubHkuIEUtbWFpbCB0cmFuc21pc3Npb24gaXMgbm90IGd1YXJhbnRlZWQgdG8gYmUgc2Vj
+dXJlIG9yIGVycm9yLWZyZWUgYXMgaW5mb3JtYXRpb24gY291bGQgYmUgaW50ZXJjZXB0ZWQsIGNv
+cnJ1cHRlZCwgbG9zdCwgZGVzdHJveWVkLCBhcnJpdmUgbGF0ZSBvciBpbmNvbXBsZXRlLCBvciBt
+YXkgY29udGFpbiB2aXJ1c2VzIGluIHRyYW5zbWlzc2lvbi4gVGhlIGUgbWFpbCBhbmQgaXRzIGNv
+bnRlbnRzICh3aXRoIG9yIHdpdGhvdXQgcmVmZXJyZWQgZXJyb3JzKSBzaGFsbCB0aGVyZWZvcmUg
+bm90IGF0dGFjaCBhbnkgbGlhYmlsaXR5IG9uIHRoZSBvcmlnaW5hdG9yIG9yIEhDTCBvciBpdHMg
+YWZmaWxpYXRlcy4gVmlld3Mgb3Igb3BpbmlvbnMsIGlmIGFueSwgcHJlc2VudGVkIGluIHRoaXMg
+ZW1haWwgYXJlIHNvbGVseSB0aG9zZSBvZiB0aGUgYXV0aG9yIGFuZCBtYXkgbm90IG5lY2Vzc2Fy
+aWx5IHJlZmxlY3QgdGhlIHZpZXdzIG9yIG9waW5pb25zIG9mIEhDTCBvciBpdHMgYWZmaWxpYXRl
+cy4gQW55IGZvcm0gb2YgcmVwcm9kdWN0aW9uLCBkaXNzZW1pbmF0aW9uLCBjb3B5aW5nLCBkaXNj
+bG9zdXJlLCBtb2RpZmljYXRpb24sIGRpc3RyaWJ1dGlvbiBhbmQgLyBvciBwdWJsaWNhdGlvbiBv
+ZiB0aGlzIG1lc3NhZ2Ugd2l0aG91dCB0aGUgcHJpb3Igd3JpdHRlbiBjb25zZW50IG9mIGF1dGhv
+cml6ZWQgcmVwcmVzZW50YXRpdmUgb2YgSENMIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIElmIHlv
+dSBoYXZlIHJlY2VpdmVkIHRoaXMgZW1haWwgaW4gZXJyb3IgcGxlYXNlIGRlbGV0ZSBpdCBhbmQg
+bm90aWZ5IHRoZSBzZW5kZXIgaW1tZWRpYXRlbHkuIEJlZm9yZSBvcGVuaW5nIGFueSBlbWFpbCBh
+bmQvb3IgYXR0YWNobWVudHMsIHBsZWFzZSBjaGVjayB0aGVtIGZvciB2aXJ1c2VzIGFuZCBvdGhl
+ciBkZWZlY3RzLjxiciAvPl9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fPGJyIC8+PC9z
+cGFuPjwvYmxvY2txdW90ZT48ZGl2PsKgPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+LS3CoDwvZGl2
+PjxkaXY+QmVzdCByZWdhcmRzLDwvZGl2PjxkaXY+S29uc3RhbnRpbiBLbHVibmljaGtpbiw8L2Rp
+dj48ZGl2PmxlYWQgZmlybXdhcmUgZW5naW5lZXIsPC9kaXY+PGRpdj5zZXJ2ZXIgaGFyZHdhcmUg
+UiZhbXA7RCBncm91cCw8L2Rpdj48ZGl2PllhbmRleCBNb3Njb3cgb2ZmaWNlLjwvZGl2PjxkaXY+
+dGVsOiArNy05MDMtNTEwLTMzLTMzPC9kaXY+PGRpdj7CoDwvZGl2Pg==
