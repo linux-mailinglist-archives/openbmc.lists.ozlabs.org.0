@@ -2,59 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C388283DF9
-	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 20:08:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F4D0284249
+	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 23:48:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C4pR80LMyzDr80
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 05:05:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C4vPJ53mwzDqNT
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 08:48:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::b2b;
- helo=mail-yb1-xb2b.google.com; envelope-from=pashag@google.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
- [IPv6:2607:f8b0:4864:20::b2b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=VM7SF6Zf; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C4pQN2m5LzDqWj
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 05:04:22 +1100 (AEDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id x8so7335527ybe.12
- for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 11:04:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=9ew90SXu8kTTO99lFQ++FuIl22x4VvwSac3YCASvaqI=;
- b=WIPBLz5gkb/q7YvU3ILnMVBxcu+/E4Xx4nvOi+wU0e46trqv2JNfO9T9Q1cSktIH9d
- H+nSXnamkF7bWCafF5N8Czd93oRgH3bHMnAMBArB6dha2xmvhq7HcqMKbLqKrNk7VMtS
- +gnt6T3xb9vjwNFrB31/wNVUVYAjuI9z9f/U+CJQ7TdhW1uaSnC7y6mfEUGHPo1Zy/+q
- 4DUlL6YMMQV9D+FbDe7t0tndmW2Ql91nlkPlEpaJ1eqA3NlICeO7pjhsRS42J74x0vJg
- eUl36NUQEtZ74v3HvFn1+ih1SJcJOtwCdjs7aPkn/KUsMKJQ83lRjG7SkG2sXz9znILH
- L2HQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=9ew90SXu8kTTO99lFQ++FuIl22x4VvwSac3YCASvaqI=;
- b=mlC+FMO/R2Ag9c4WeXoQwvuh8KjZXay8Jx9NgKeck8+J7NOswjNSX04yxsfD41F2zd
- wH9l14Hy8GtPHEk0dBTJ7VN0IB0efP/Dg6whk1eIJOZJzf/IMqeXO08ScmS0AOvB3nfc
- Cfo3F+3g1yZbCL1CiEyORAujM/dfKA2KMyFZZSEPguV6zPWq9HniY9C5aJzsF/i2JIbi
- ZpMrCEwTUZ0dCSmOvvx0yjrKdvwxNG6Ic2tQMcbZery/pzggJbeYaFrmhO6TlT+jEXYM
- JBQtVCOgmSvqIcHoLIq1jclS7OpiW+A3iewffw//nGziw0QAADHHf6Y122R5EMDEAw1w
- q+OQ==
-X-Gm-Message-State: AOAM531OiMaBdBmeGO16zzseviNsU6pWx7HQlF8Ue1iGnVw7w6LL7TWA
- tVkC+Zifvc/XaP+k71vUgBsP7ljdqqQz0XkZklthTOK0NRGpOQ==
-X-Google-Smtp-Source: ABdhPJxKliKeWJc2sBjmU7WCrBvKHrKOJ+DobBtuTVJCcTYgejb2sPwoKP9RBGnMrWpgH+9a6JSagjOTu8JZvL/m+Zw=
-X-Received: by 2002:a9d:7095:: with SMTP id l21mr374683otj.224.1601920671332; 
- Mon, 05 Oct 2020 10:57:51 -0700 (PDT)
-MIME-Version: 1.0
-From: Pasha Ghabussi <pashag@google.com>
-Date: Mon, 5 Oct 2020 13:57:41 -0400
-Message-ID: <CA+-TXo_C3pP=5zn+O7dtP4wHu9JwhubdUC6aqSMK_J742Cpkaw@mail.gmail.com>
-Subject: BMC Performance Profiler
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C4vMs5j53zDqMh
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 08:47:37 +1100 (AEDT)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 095KWFZs089807; Mon, 5 Oct 2020 16:34:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : subject : to : cc
+ : message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=+PhuZLfUVT3oCbxIQ8dfJHAwGioYZSoXiw0fYIZSu1I=;
+ b=VM7SF6ZfIwVdzCKYH2XcuyQ51GTvl77lrTQIfM1VUxCa3MBdWICfLSx0Ho+OPPcxBsqC
+ bUmA+POtF75UWxvsQQxBcyO4ErGhtJt5ItQBzUUNA2Hy5jSSlUSt6gIGZOzus094O8O0
+ vUrTWai7mDqgOgZKe7sCkkFghZwtSqjXVy4WprIee/wHkfFqkoBP/eHIqjsnDP83rc6W
+ 9VKC6ryQLAb+2sRSO9yk53B5JOVmlIaLIcZ766fBkmMp3/Ilb5vtQXOW+8sFQ1nH2Vgs
+ u47C2pH/PORl1zhm/kPOrLWHONZO1xdNyzsNQoX0UKVAnHTrrbVGSpl3UoOVj0/nC+Tm fg== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 340a4s8xva-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2020 16:34:52 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 095KXGoq016325;
+ Mon, 5 Oct 2020 20:34:52 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma02wdc.us.ibm.com with ESMTP id 33xgx9aa3e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 05 Oct 2020 20:34:52 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 095KYpZD46268804
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 5 Oct 2020 20:34:52 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C679EAE05C;
+ Mon,  5 Oct 2020 20:34:51 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 87C68AE05F;
+ Mon,  5 Oct 2020 20:34:50 +0000 (GMT)
+Received: from [9.206.182.230] (unknown [9.206.182.230])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon,  5 Oct 2020 20:34:50 +0000 (GMT)
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Subject: Redfish: Supporting deprecated properties
 To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000931b4205b0f038ce"
+Message-ID: <1a66bd6f-4095-2357-c860-80435c63bbe5@linux.vnet.ibm.com>
+Date: Mon, 5 Oct 2020 14:34:48 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-05_15:2020-10-05,
+ 2020-10-05 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 spamscore=0
+ mlxlogscore=999 suspectscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1011
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2010050141
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,272 +96,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, Sui Chen <suichen@google.com>,
- Ofer Yehielli <ofery@google.com>
+Cc: ed@tanous.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000931b4205b0f038ce
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Felt this needed some broader discussion. Although Redfish tries to 
+avoid, it does deprecate properties. In the future, Redfish plans to 
+deprecate whole schemas. One of these deprecated properties was the 
+IndicatorLED property, replaced by the LocationIndicatorActive property. 
+More information on this can be found at (Slide 11): 
+http://www.dmtf.org/sites/default/files/Redfish_Release_2020.3_Overview.pdf
 
-Hello all,
+On https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/36886, it was 
+proposed supporting both the deprecated and new property for some time.
+This would introduce a new Redfish Validator warning about implementing 
+a deprecated property. We have other warnings today so maybe not a big deal.
+How long do we need to support both properties?
+Based on releases? 6 months? That feels too long. Are our releases used 
+broadly enough and release process mature enough?
+If it is not a replacement and just deprecating a property, can we just 
+drop the deprecated property immediately when switching to a new schema 
+version that deprecates?
+Do we need to do the same when a schema is deprecated? This matters 
+because Redfish is targeting 2020.4 for new Power and Thermal Subsystem 
+Schemas. Redfish plans to deprecate the old Power and Thermal Schemas 
+and release new schemas.
 
-We would really appreciate it if you can take a few minutes to read the
-following proposal and let us know your thoughts and suggestions.
+I think it is reasonable we support both IndicatorLED and 
+LocationIndicatorActive for some time, I'll throw out 2 months. Our 
+Redfish implementation is young and I am not sure it is worth the 
+developmental and support costs, at least at this time, to maintain 
+deprecated properties and schemas for long.
 
-We are developing a tool to investigate performance problems by looking at
-DBus traffic dumps. Current DBus inspection and visualization tools do not
-represent the DBus events similar to a typical performance profiler.
-Additionally, these tools do not address typical BMC workloads such as IPMI
-and ASIO. Hence, identifying potential performance problems requires
-inspecting the raw BMC DBus traffic, which can become a long and complex
-process. We want to add a graphical interface to webui-vue to visualize the
-DBus traffic to address the abovementioned problem.
+Clients can use the schema version to determine which properties are 
+available. If needed companies in a fork could maintain backward 
+compatibility for longer.
 
-There have been DBus and IPMI performance-related discussions in the
-OpenBMC community, both of which can be helped by this work: IPMI-related
-issues started to appear as early as in 2017. One issue (#2630)
-<https://github.com/openbmc/openbmc/issues/2630> describes a problem
-related to large numbers of sensors. Its follow-up (#3098)
-<https://github.com/openbmc/openbmc/issues/3098> mentions =E2=80=9Chostboot=
- crashes
-due to poor IPMI performance=E2=80=9D. Another issue (#2519)
-<https://github.com/openbmc/openbmc/issues/2519> describes a commonly-seen
-problem of IPMI taking very long to respond (> 5s).
-There are also discussions on RedFish performance
-<https://lists.ozlabs.org/pipermail/openbmc/2018-February/010735.html> on
-the mailing list; A patch
-<https://lists.ozlabs.org/pipermail/openbmc/2016-June/003380.html>
-optimized DBus performance by introducing a cache for name translation.
-
-All the performance investigations listed above involve DBus and may be
-helped by this work.
-
-We are planning to use the BMCweb file hosting functionality to access the
-DBus event dumps and visualize the events in the web UI. The available
-profiling tools such as dbus-pcap
-<https://github.com/openbmc/openbmc-tools/tree/master/amboar/obmc-scripts/d=
-bus-pcap>,
-Wireshark <https://www.wireshark.org/>, Bustle
-<https://gitlab.freedesktop.org/bustle/bustle>, Snyh
-<https://github.com/snyh/dbus-profiler>, or DFeet
-<https://wiki.gnome.org/action/show/Apps/DFeet?action=3Dshow&redirect=3DDFe=
-et>
-do not provide the exact functionality we are looking for. Our goal is to
-develop functionalities similar to other widely used profilers such as
-GPUView or VTune Profiler.
-
-One alternative solution considered was to stream DBus requests over
-websocket, but the existing websocket endpoints available on BMC webserver
-do not provide the exact information we need.
-
-Requirements and Scalability:
-
-   -
-
-   Should provide the adequate functionalities to filter, visualize the
-   events timeline, and group the DBus traffic based on multiple criteria s=
-uch
-   as type, source, destination, path, interface, demon signatures, and mor=
-e.
-   -
-
-   Should support capture of DBus messages using as little resources as
-   possible.
-   -
-
-   Should be able to show many (~thousands of) entries on screen
-   simultaneously
-   -
-
-   Integration with webui-vue
-
-
-Thank you
-
---000000000000931b4205b0f038ce
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><span id=3D"gmail-docs-internal-guid-dce10fd1-7fff-c3f6-07=
-4a-86b4e551c8e4"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:10pt;m=
-argin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Roboto,sans-ser=
-if;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:norma=
-l;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wr=
-ap">Hello all,</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-to=
-p:10pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Roboto,=
-sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numer=
-ic:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spac=
-e:pre-wrap">We would really appreciate it if you can take a few minutes to =
-read the following proposal and let us know your thoughts and suggestions.<=
-/span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:10pt;margin-b=
-ottom:0pt"><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;colo=
-r:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-=
-variant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">We =
-are developing a tool to investigate performance problems by looking at DBu=
-s traffic dumps. Current DBus inspection and visualization tools do not rep=
-resent the DBus events similar to a typical performance profiler. Additiona=
-lly, these tools do not address typical BMC workloads such as IPMI and ASIO=
-. Hence, identifying potential performance problems requires inspecting the=
- raw BMC DBus traffic, which can become a long and complex process. We want=
- to add a graphical interface to webui-vue to visualize the DBus traffic to=
- address the abovementioned problem.</span></p><br><p dir=3D"ltr" style=3D"=
-line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size=
-:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:trans=
-parent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-=
-align:baseline;white-space:pre-wrap">There have been DBus and IPMI performa=
-nce-related discussions in the OpenBMC community, both of which can be help=
-ed by this work: IPMI-related issues started to appear as early as in 2017.=
- </span><a href=3D"https://github.com/openbmc/openbmc/issues/2630" style=3D=
-"text-decoration-line:none"><span style=3D"font-size:11pt;font-family:Robot=
-o,sans-serif;background-color:transparent;font-variant-numeric:normal;font-=
-variant-east-asian:normal;text-decoration-line:underline;vertical-align:bas=
-eline;white-space:pre-wrap">One issue (#2630)</span></a><span style=3D"font=
--size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:=
-transparent;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
-ical-align:baseline;white-space:pre-wrap"> describes a problem related to l=
-arge numbers of sensors. </span><a href=3D"https://github.com/openbmc/openb=
-mc/issues/3098" style=3D"text-decoration-line:none"><span style=3D"font-siz=
-e:11pt;font-family:Roboto,sans-serif;background-color:transparent;font-vari=
-ant-numeric:normal;font-variant-east-asian:normal;text-decoration-line:unde=
-rline;vertical-align:baseline;white-space:pre-wrap">Its follow-up (#3098)</=
-span></a><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:=
-rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-va=
-riant-east-asian:normal;vertical-align:baseline;white-space:pre-wrap"> ment=
-ions =E2=80=9Chostboot crashes due to poor IPMI performance=E2=80=9D. </spa=
-n><a href=3D"https://github.com/openbmc/openbmc/issues/2519" style=3D"text-=
-decoration-line:none"><span style=3D"font-size:11pt;font-family:Roboto,sans=
--serif;background-color:transparent;font-variant-numeric:normal;font-varian=
-t-east-asian:normal;text-decoration-line:underline;vertical-align:baseline;=
-white-space:pre-wrap">Another issue (#2519)</span></a><span style=3D"font-s=
-ize:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:tr=
-ansparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertic=
-al-align:baseline;white-space:pre-wrap"> describes a commonly-seen problem =
-of IPMI taking very long to respond (&gt; 5s).</span><span style=3D"font-si=
-ze:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:tra=
-nsparent;font-variant-numeric:normal;font-variant-east-asian:normal;vertica=
-l-align:baseline;white-space:pre-wrap"><br></span><span style=3D"font-size:=
-11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:transp=
-arent;font-variant-numeric:normal;font-variant-east-asian:normal;vertical-a=
-lign:baseline;white-space:pre-wrap">There are also discussions on </span><a=
- href=3D"https://lists.ozlabs.org/pipermail/openbmc/2018-February/010735.ht=
-ml" style=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-=
-family:Roboto,sans-serif;background-color:transparent;font-variant-numeric:=
-normal;font-variant-east-asian:normal;text-decoration-line:underline;vertic=
-al-align:baseline;white-space:pre-wrap">RedFish performance</span></a><span=
- style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);bac=
-kground-color:transparent;font-variant-numeric:normal;font-variant-east-asi=
-an:normal;vertical-align:baseline;white-space:pre-wrap"> on the mailing lis=
-t; </span><a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2016-June/0=
-03380.html" style=3D"text-decoration-line:none"><span style=3D"font-size:11=
-pt;font-family:Roboto,sans-serif;background-color:transparent;font-variant-=
-numeric:normal;font-variant-east-asian:normal;text-decoration-line:underlin=
-e;vertical-align:baseline;white-space:pre-wrap">A patch</span></a><span sty=
-le=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);backgro=
-und-color:transparent;font-variant-numeric:normal;font-variant-east-asian:n=
-ormal;vertical-align:baseline;white-space:pre-wrap"> optimized DBus perform=
-ance by introducing a cache for name translation.</span></p><p dir=3D"ltr" =
-style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"=
-font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-co=
-lor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;=
-vertical-align:baseline;white-space:pre-wrap">All the performance investiga=
-tions listed above involve DBus and may be helped by this work.</span></p><=
-br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0p=
-t"><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,=
-0,0);background-color:transparent;font-variant-numeric:normal;font-variant-=
-east-asian:normal;vertical-align:baseline;white-space:pre-wrap">We are plan=
-ning to use the BMCweb file hosting functionality to access the DBus event =
-dumps and visualize the events in the web UI. The available profiling tools=
- such as </span><a href=3D"https://github.com/openbmc/openbmc-tools/tree/ma=
-ster/amboar/obmc-scripts/dbus-pcap" style=3D"text-decoration-line:none"><sp=
-an style=3D"font-size:11pt;font-family:&quot;Courier New&quot;;background-c=
-olor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal=
-;text-decoration-line:underline;vertical-align:baseline;white-space:pre-wra=
-p">dbus-pcap</span></a><span style=3D"font-size:11pt;font-family:Roboto,san=
-s-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:=
-normal;font-variant-east-asian:normal;vertical-align:baseline;white-space:p=
-re-wrap">, </span><a href=3D"https://www.wireshark.org/" style=3D"text-deco=
-ration-line:none"><span style=3D"font-size:11pt;font-family:Arial;backgroun=
-d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
-mal;text-decoration-line:underline;vertical-align:baseline;white-space:pre-=
-wrap">Wireshark</span></a><span style=3D"font-size:11pt;font-family:Roboto,=
-sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numer=
-ic:normal;font-variant-east-asian:normal;vertical-align:baseline;white-spac=
-e:pre-wrap">, </span><a href=3D"https://gitlab.freedesktop.org/bustle/bustl=
-e" style=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-f=
-amily:Roboto,sans-serif;background-color:transparent;font-variant-numeric:n=
-ormal;font-variant-east-asian:normal;text-decoration-line:underline;vertica=
-l-align:baseline;white-space:pre-wrap">Bustle</span></a><span style=3D"font=
--size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-color:=
-transparent;font-variant-numeric:normal;font-variant-east-asian:normal;vert=
-ical-align:baseline;white-space:pre-wrap">, </span><a href=3D"https://githu=
-b.com/snyh/dbus-profiler" style=3D"text-decoration-line:none"><span style=
-=3D"font-size:11pt;font-family:Roboto,sans-serif;background-color:transpare=
-nt;font-variant-numeric:normal;font-variant-east-asian:normal;text-decorati=
-on-line:underline;vertical-align:baseline;white-space:pre-wrap">Snyh</span>=
-</a><span style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0=
-,0,0);background-color:transparent;font-variant-numeric:normal;font-variant=
--east-asian:normal;vertical-align:baseline;white-space:pre-wrap">, or </spa=
-n><a href=3D"https://wiki.gnome.org/action/show/Apps/DFeet?action=3Dshow&am=
-p;redirect=3DDFeet" style=3D"text-decoration-line:none"><span style=3D"font=
--size:11pt;font-family:Roboto,sans-serif;background-color:transparent;font-=
-variant-numeric:normal;font-variant-east-asian:normal;text-decoration-line:=
-underline;vertical-align:baseline;white-space:pre-wrap">DFeet</span></a><sp=
-an style=3D"font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);b=
-ackground-color:transparent;font-variant-numeric:normal;font-variant-east-a=
-sian:normal;vertical-align:baseline;white-space:pre-wrap"> do not provide t=
-he exact functionality we are looking for. Our goal is to develop functiona=
-lities similar to other widely used profilers </span><span style=3D"font-si=
-ze:11pt;font-family:Arial;color:rgb(0,0,0);background-color:transparent;fon=
-t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
-line;white-space:pre-wrap">such as GPUView or VTune Profiler.</span></p><br=
-><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"=
-><span style=3D"font-size:11pt;font-family:Arial;color:rgb(0,0,0);backgroun=
-d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
-mal;vertical-align:baseline;white-space:pre-wrap">One alternative solution =
-considered was to stream DBus requests over websocket, but the existing web=
-socket endpoints available on BMC webserver do not provide the exact inform=
-ation we need.</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margi=
-n-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Robo=
-to,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-nu=
-meric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-s=
-pace:pre-wrap">Requirements and Scalability:</span></p><ul style=3D"margin-=
-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"list-style-type:disc;fo=
-nt-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);background-colo=
-r:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;ve=
-rtical-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-height:=
-1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;backgr=
-ound-color:transparent;font-variant-numeric:normal;font-variant-east-asian:=
-normal;vertical-align:baseline;white-space:pre-wrap">Should provide the ade=
-quate functionalities to filter, visualize the events timeline, and group t=
-he DBus traffic based on multiple criteria such as type, source, destinatio=
-n, path, interface, demon signatures, and more.</span></p></li><li dir=3D"l=
-tr" style=3D"list-style-type:disc;font-size:11pt;font-family:Roboto,sans-se=
-rif;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:norm=
-al;font-variant-east-asian:normal;vertical-align:baseline;white-space:pre">=
-<p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt">=
-<span style=3D"font-size:11pt;background-color:transparent;font-variant-num=
-eric:normal;font-variant-east-asian:normal;vertical-align:baseline;white-sp=
-ace:pre-wrap">Should support capture of DBus messages using as little resou=
-rces as possible.</span></p></li><li dir=3D"ltr" style=3D"list-style-type:d=
-isc;font-size:11pt;font-family:Roboto,sans-serif;color:rgb(0,0,0);backgroun=
-d-color:transparent;font-variant-numeric:normal;font-variant-east-asian:nor=
-mal;vertical-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-h=
-eight:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;=
-background-color:transparent;font-variant-numeric:normal;font-variant-east-=
-asian:normal;vertical-align:baseline;white-space:pre-wrap">Should be able t=
-o show many (~thousands of) entries on screen simultaneously</span></p></li=
-><li dir=3D"ltr" style=3D"list-style-type:disc;font-size:11pt;font-family:R=
-oboto,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant=
--numeric:normal;font-variant-east-asian:normal;vertical-align:baseline;whit=
-e-space:pre"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin=
--bottom:0pt"><span style=3D"font-size:11pt;background-color:transparent;fon=
-t-variant-numeric:normal;font-variant-east-asian:normal;vertical-align:base=
-line;white-space:pre-wrap">Integration with webui-vue</span></p></li></ul><=
-div><font color=3D"#000000" face=3D"Roboto, sans-serif"><span style=3D"font=
--size:14.6667px;white-space:pre-wrap"><br></span></font></div><div><font co=
-lor=3D"#000000" face=3D"Roboto, sans-serif"><span style=3D"font-size:14.666=
-7px;white-space:pre-wrap">Thank you</span></font></div></span></div>
-
---000000000000931b4205b0f038ce--
+Thanks,
+Gunnar
