@@ -2,95 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9609628423C
-	for <lists+openbmc@lfdr.de>; Mon,  5 Oct 2020 23:42:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7E152842D4
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 01:07:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C4vG74z8dzDqP1
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 08:42:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C4x7b41xjzDqGv
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 10:07:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::843;
+ helo=mail-qt1-x843.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=iWGgPDOo; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=OKZAR4QY; dkim-atps=neutral
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C4vDh0Z8VzDqMr
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 08:41:22 +1100 (AEDT)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 095LYwgh071064; Mon, 5 Oct 2020 17:41:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=mime-version :
- content-type : content-transfer-encoding : date : from : to : cc : subject
- : in-reply-to : references : message-id; s=pp1;
- bh=YVXrYj9tlyG2o7Xs9yu7VXzlDYBJc87GS1y+R09zwdw=;
- b=iWGgPDOoNuVTP929EY2Do6pCmWQsHH1NMOZpFrwPAYufq5tlHH2UjOjsY22dNZD7d+Vy
- 0PcaDfj55a40meglNHq+maiuEMrd5Z7EiE0wyjXnfXnBcoTXFSMaqNA2t2u2AgZIpLbm
- u2Ra2LHkO7IOQBqXe82nvy+YSizmF8PYAKF9pjP/p15nbbw7Avkddpw7PBDAyP0SopFN
- xEc2f2DHJSQD26qOQzwp/D6Aoqz2NFfEX7HGbfyJmxkdZrlvgAjltAVbLaQcuxH7rwN8
- QmvhEPIepO/PYlJkunqzcbhXHtHM1uPKMlZCLBRAJaHvDpkHHQuywq90GzQVMeEFXMdQ AQ== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 340aub95j9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2020 17:41:16 -0400
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 095LWYDO004692;
- Mon, 5 Oct 2020 21:41:15 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
- [9.57.198.24]) by ppma05wdc.us.ibm.com with ESMTP id 33xgx8tmvc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 Oct 2020 21:41:15 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 095LfDir39715086
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 Oct 2020 21:41:13 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BABB9AC059;
- Mon,  5 Oct 2020 21:41:13 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 038E8AC05E;
- Mon,  5 Oct 2020 21:41:12 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.16.170.189])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon,  5 Oct 2020 21:41:12 +0000 (GMT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C4x6W4H1rzDqGG
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 10:06:07 +1100 (AEDT)
+Received: by mail-qt1-x843.google.com with SMTP id 19so11353430qtp.1
+ for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 16:06:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=vxxQ9gocXfWXOuxXjHODE4zl7ezUzHUPAtWaBg80uZI=;
+ b=OKZAR4QYHSO4bSHxOPrCpeKjDrid9Vx2YG1bpq2HD5DvySWLBmumwv4DDrG/ASBkkO
+ L3ZHzC9+JQdi4jFZx2cj6BwHO0vhb0ILG/ip9OQovNrat0nObEJYRmvvqWAMHVHDFzyL
+ ZXp6hnLIVxS50EEE83+72GXmyCOKmwDxi4beY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=vxxQ9gocXfWXOuxXjHODE4zl7ezUzHUPAtWaBg80uZI=;
+ b=ZxMMmMm0Wggs1Qr+3X6othpODUD3mJ3hCZZ8Jk4R/pPwf4tBbLHGNY3UzBkXu9Sx1g
+ F/MNQ/9zV1BjBLy/wS9zdnxR2r4eOuhZAyl6D2sTwzyMh2ygz6gQlS2w3kAybm+tngqq
+ 8kXxy3xIZn3CtTbSO7/QNL+C1dSPXK2wP778hjNosxbLW16Vh6bKKM5MpCMR9ud9m6O9
+ JvAQCLJtD4AP578LqZvyxv7aYEChbmdBgyoFvTWPvExXgaag/INgqOl80OEtP9POiNyy
+ uWDOh5jLS6cVtjbAFsI9R42m6BSmiq5VZiTD3a64XVIWKJLaktQbf8YDiBXeSgZMuXgk
+ 8aFg==
+X-Gm-Message-State: AOAM531CdnZmBjTUNkDMGJQbNZs3qE6EwJSA4+/yeDjBU13y168Gtb4O
+ 9pAPHAX1j99GFWkzmT+DNOyh4zzm71icGPC5uSw=
+X-Google-Smtp-Source: ABdhPJwlqhxTg6QiPUsq1lIx7VWPSYa7cf+CzELJzw9BudDY1a4FEUG1/WPq1FhIt3yC6bJ2JGCN4Eemy8FyMmw+Fu8=
+X-Received: by 2002:ac8:5b82:: with SMTP id a2mr2419882qta.176.1601939165341; 
+ Mon, 05 Oct 2020 16:06:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Mon, 05 Oct 2020 16:41:12 -0500
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: "P. Priyatharshan" <PriyatharshanP@hcl.com>
-Subject: Re: Multi host bios upgrade support in phosphor-bmc-code-mgmt:
-In-Reply-To: <TY2PR04MB3311812DB85A11934F044FB4CA0C0@TY2PR04MB3311.apcprd04.prod.outlook.com>
-References: <TY2PR04MB33112E61CA54FE1A17D30B70CA3A0@TY2PR04MB3311.apcprd04.prod.outlook.com>
- <20200921194614.GL6152@heinlein>,
- <b6cd8ac0b56a372391bd108dbf84fb0f@linux.vnet.ibm.com>,
- <TY2PR04MB33117717F809C0804A00B365CA300@TY2PR04MB3311.apcprd04.prod.outlook.com>
- <TY2PR04MB3311812DB85A11934F044FB4CA0C0@TY2PR04MB3311.apcprd04.prod.outlook.com>
-Message-ID: <893bbe2bbfe35c6ccdea0988c8ec1de9@linux.vnet.ibm.com>
-X-Sender: anoo@linux.ibm.com
-User-Agent: Roundcube Webmail/1.0.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-10-05_16:2020-10-05,
- 2020-10-05 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015
- bulkscore=0 phishscore=0 mlxlogscore=999 spamscore=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2010050153
+References: <1601504817-16752-1-git-send-email-lancelot.kao@fii-usa.com>
+ <20201001123249.GC6152@heinlein>
+In-Reply-To: <20201001123249.GC6152@heinlein>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 5 Oct 2020 23:05:53 +0000
+Message-ID: <CACPK8XewuMZTvhh7QA6iBbkH5AqQWS9RVeZXaAF-XzAYhYsG1A@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.8] hwmon: Ampere Computing ALTRA SMPMPRO
+ sensor driver
+To: Patrick Williams <patrick@stwcx.xyz>, linux-hwmon@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,40 +71,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, anoo@us.ibm.com, ojayanth@in.ibm.com,
- gmills@linux.vnet.ibm.com, "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
- ratagupt@linux.vnet.ibm.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Lancelot <lancelot.kao@fii-usa.com>,
+ Xiaopeng XP Chen <xiao-peng.chen@fii-na.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Priyatharshan,
+On Thu, 1 Oct 2020 at 12:32, Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Wed, Sep 30, 2020 at 05:26:57PM -0500, Lancelot wrote:
+> > From: Lancelot Kao <lancelot.kao@fii-usa.com>
+> >
+> > Add SMPMPro-hwmon driver to monitor Ampere CPU/Memory/VR via an
+> > i2c interface of the CPU's smpmpro management device.
+> >
+> > Signed-off-by: Xiaopeng XP Chen <xiao-peng.chen@fii-na.com>
+> > Signed-off-by: Lancelot Kao <lancelot.kao@fii-usa.com>
+>
+> Nice work at adding this driver.
+>
+> It does look like you've missed CC'ing upstream though.  Was this
+> intentional?  (linux-hwmon@vger.kernel.org)
 
->  Object : /xyz/openbmc_project/software/[FIRMWARE_VERSION]_[DEVICE]
-> where device could be host1, 2, ...,N
->  Interface : xyz.openbmc_project.Software.Activation
-> 
->  Please confirm if our understanding is correct.
+As Patrick mentioned, let's review this on the upstream list.
 
-I meant that to generate the id, which currently uses the version 
-string, would instead use the version string plus the string for the 
-name of the device where it's stored in order to generate the hash. For 
-example, today the code calls "SHA512_Update("version")", where 
-"version" is for example "2.9.0-dev-663-g2e34bb673". Instead the code 
-would detect this version is stored let's say in device "mtd1" or 
-"mmcblk0p1", it'd then append that device string to version, ex: 
-"2.9.0-dev-663-g2e34bb673-mmcblk0p1" and pass that string to 
-SHA512_Update(), therefore creating a different hash depending where 
-that version of bmc code is stored.
+Cheers,
 
-Note that this is for BMC versions only. We discussed that for host 
-versions, we'd need to modify the code to add a "os-release" file under 
-/media/ that contained the host version information similar to the BMC's 
-os-release file. In addition, we'd need to somehow determine that those 
-files were for host (Bios) versions instead of BMC ones. Perhaps 
-os-release could have an additional field added to specify the purpose.
+Joel
 
-
-> Adriana, Any tentative timeline on your commits availability [generate
-> the id based on firmware version plus the device or volume ]
-
-I'd say by early next year at the latest.
+>
+> > +/* Capability Registers  */
+> > +#define TEMP_SENSOR_SUPPORT_REG      0x05
+> > +#define PWR_SENSOR_SUPPORT_REG       0x06
+> > +#define VOLT_SENSOR_SUPPORT_REG      0x07
+> > +#define OTHER_CAP_REG                    0x08
+> > +#define CORE_CLUSTER_CNT_REG 0x0B
+> > +#define SYS_CACHE_PCIE_CNT_REG       0x0C
+> > +#define SOCKET_INFO_REG              0x0D
+>
+> There seems to be some sporatic indentation throughout all the #defines
+> in this file, where it appears you attempted to align the values.  Make
+> sure you have tabs set to 8-step spacing for kernel code.
+>
+> > +static void smpmpro_init_device(struct i2c_client *client,
+> > +                             struct smpmpro_data *data)
+> > +{
+> > +     u16 ret;
+> > +
+> > +     ret = i2c_smbus_read_word_swapped(client, TEMP_SENSOR_SUPPORT_REG);
+> > +     if (ret < 0)
+> > +             return;
+> > +     data->temp_support_regs = ret;
+>
+> i2c_smbus_read_word_swapped returns a s32 even though you're looking for
+> a u16.  By setting `ret` to u16 you've caused two problems:
+>
+>     * You are immediately truncating -ERRNO values into a u16 so that
+>       you are unable to differentiate values like 0xFFFFFFFF as a
+>       register value and -1 as an errno.
+>
+>     * The if condition here can never be true, so you're never catching
+>       error conditions.  (An u16 can never be negative, so ret < 0 can
+>       never be true.)
+>
+> This issue occurs throughout the driver.
+>
+> > +static int smpmpro_read_temp(struct device *dev, u32 attr, int channel,
+> > +                          long *val)
+> > +{
+> > +     struct smpmpro_data *data = dev_get_drvdata(dev);
+> > +     struct i2c_client *client = data->client;
+> > +     int ret;
+>
+> You might want a sized int on this one?  Repeated in most other
+> functions.
+>
+> > +static int smpmpro_read_power(struct device *dev, u32 attr, int channel,
+> > +                          long *val)
+> > +{
+> > +     struct smpmpro_data *data = dev_get_drvdata(dev);
+> > +     struct i2c_client *client = data->client;
+> > +     int ret, ret_mw;
+> > +     int ret2 = 0, ret2_mw = 0;
+>
+> Any reason to not initialize ret/ret_mw?  By it being different from
+> ret2/ret2_mw it makes me question "is this ok?", which spends more time
+> in review.
+>
+> > +static int smpmpro_i2c_probe(struct i2c_client *client,
+> > +                       const struct i2c_device_id *id)
+> ...
+> > +     /* Initialize the Altra SMPMPro chip */
+> > +     smpmpro_init_device(client, data);
+>
+> I didn't see anything in the smpmpro_init_device function, but is there
+> anything you can or should do to ensure this device really is an
+> SMPMPro rather than exclusively relying on the device tree compatible?
+>
+> > +static struct i2c_driver smpmpro_driver = {
+> > +     .class          = I2C_CLASS_HWMON,
+> > +     .probe          = smpmpro_i2c_probe,
+> > +     .driver = {
+> > +             .name   = "smpmpro",
+> > +     },
+> > +     .id_table       = smpmpro_i2c_id,
+> > +};
+> > +
+> > +module_i2c_driver(smpmpro_driver);
+>
+> Are you missing the .of_match_table inside .driver?  Is that necessary
+> or useful for your use?  I'm not sure if you can have device tree
+> entries that automatically instantiate the hwmon driver otherwise.
+>
+> --
+> Patrick Williams
