@@ -2,65 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BC88285402
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 23:42:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4590C2854CC
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 00:58:31 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5WCk1DMKzDqF0
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 08:42:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5Xv75FXMzDqJ1
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 09:58:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::131;
- helo=mail-lf1-x131.google.com; envelope-from=rhanley@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::22d;
+ helo=mail-lj1-x22d.google.com; envelope-from=suichen@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=RJ1GVXPP; dkim-atps=neutral
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
- [IPv6:2a00:1450:4864:20::131])
+ header.s=20161025 header.b=BU0uJjV3; dkim-atps=neutral
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
+ [IPv6:2a00:1450:4864:20::22d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5WBt3Y76zDq8g
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 08:41:48 +1100 (AEDT)
-Received: by mail-lf1-x131.google.com with SMTP id a9so7336638lfc.7
- for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 14:41:47 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5XtM5f9lzDqB9
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 09:57:46 +1100 (AEDT)
+Received: by mail-lj1-x22d.google.com with SMTP id i2so36597ljg.4
+ for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 15:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=lj9e8DNnMCFR7kMCuVGvATQ9jMUIpLF08UrN5zfHgnk=;
- b=RJ1GVXPPfn5a89s74h5wWlp4MnfXOX1YwMRwGZkiZiQsMFc3jrsaiFv3S1DVR5Jd/F
- shw89m7ZsO3tsHm+SkPryOrowlC34TZGmE+TNWzxFfniWAVuhAmVzfp8t/5i7EyTeiRy
- JQooSxTQB8WSJvGv4/ZNKSjI24QAeB1Rna2tIH4bdaAd7T5leGVJu9iL0bju27zBUSNb
- 5yVCXMI/zoqeYnCyJr+yVCqLlObupG+zO3UCbPI/tXHDvBa7b6wKMRGthWcYiUJaCgrI
- 5kVIBlkuZsmSvGMqGiR07NTYoThCg2wAsc/nInW7x2Yi2ZyHlhwV+WBQAyxnIo9p6AeM
- doPw==
+ :cc:content-transfer-encoding;
+ bh=9jwerf0VVXEP70YLHyNooaWXxyPBGPdoAJgjoLV/4ng=;
+ b=BU0uJjV3oGo+kWS81TxdnFcQnhKZ3f1OK4tq9g8UVsHe1Rx2DFVmoAEaCpyACAV05/
+ 2JaUp5daasIItTRvjGuEzEa3sXNF5nFzCG+m6Ida8ka1rtd2tVYuXLMZu/W2hiro+7aV
+ LQgibzXzMy0w7SOc5OyJhppa44F/krfTP+8BVU6L24tgRLs55HBRJV6V3moW1YjVVg/Q
+ WcAfcmGFjVbsP4hp3pM2LYtL+AGioN+695HIq/6CgjH9KZ7rqVgqxdbr3DkvdWk+EiZK
+ LwxfgQYgiBijXjYpuSzb9YZJh/S9JmcJt7YcrSjnZwZa8KX9yCtvukkgIM04WAEsmi1o
+ hLWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=lj9e8DNnMCFR7kMCuVGvATQ9jMUIpLF08UrN5zfHgnk=;
- b=kXvY2eyiekKKJif7Nx8Tm7lTvwWdD7wl1LuZ0oEuVTbjTEM2kHEFmoieA542rbaKt2
- oiBCmNch52xbm6Zg1drmNxq6bTjrBOIyWKh0gKFPWJhkb4pEzXY14L5qK5E1FAY4hwp7
- 0ed2ZEp7JyCfPzGuOLlC4BYQ0AmWEet+lwqIoU9195gd917PJsWBXgNiPJiZHg29BoYH
- zQv3/V7Z8Fduv9uhq1Bys+32Nwq9MTpEqOxq+4zKdChQM3vHHvVLW60xcHopdo7y2XPv
- PKhjY87gLhxQPKKSR/boaYKQa7Hi6QcbUMiaNdIjlQAZMYKiONXbHpTT23tpwAfcXyGh
- GogQ==
-X-Gm-Message-State: AOAM532gwwDNKYquoMF7I97o4TAGh3MoNsyDkRinQNqaRJ41VFCKS1hj
- JnSHznMQnxVRgVCkbQ3RO/P+rg3cFksUO21AwrDeGg==
-X-Google-Smtp-Source: ABdhPJxiVh5m9RtT7N+K7EEnSrHu5vfOTLeqjNahLumoasGw8fXCbh/qtTh+z1nJacChpk++h4qVrv5GZILujIk9Bdo=
-X-Received: by 2002:ac2:4576:: with SMTP id k22mr1095804lfm.247.1602020500321; 
- Tue, 06 Oct 2020 14:41:40 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=9jwerf0VVXEP70YLHyNooaWXxyPBGPdoAJgjoLV/4ng=;
+ b=feGmW01Oh8D2PYnlTPVHCddO6OX9ZitWZ35n3FqMFQJCX+ZAyHaOBzCdIZWoZ9Eub3
+ bT0TGS4We3wE6sXJ/rHPB+dywpBRNisgkY5Hh8POijyt+RTbw+icFy1iJhbDt2nT8O7a
+ HzTBYdzy2fl9G5e0oXWtXSVY1lSwrt8seJrcwI1FLVSstRprblRcd3967X1hYzh66Q9N
+ 7Gr5gi8Jggs/mhPPRGGZNoY7vTAD+nPlaSUMtBp8/SifdzgzgFwOn0L+n62+OIz3gZh+
+ mnjjUzhQ28GoKbhxEuq0nZcox3wqbipx/szeRa4D1YfMtJpjAUC4iVi+e9VrzV6d5ytR
+ 5FhA==
+X-Gm-Message-State: AOAM5331TTyJh9GmqAx5a1KBeXUF4+aduwlnW/E+k9BS+Z8as/2rr5J2
+ AsG1VazooVHKW/8Xawc5QCeCcQPCA2Ackeg+67JCrw==
+X-Google-Smtp-Source: ABdhPJxMHHUeztWg13p0IEgujQikrb4IJ6+yrcHI7NSvTNb9Cu2Yk9kGmhN9i2CuRzZOisQGlabXXQcuY11UTuMqGnY=
+X-Received: by 2002:a2e:9d94:: with SMTP id c20mr85608ljj.445.1602025061275;
+ Tue, 06 Oct 2020 15:57:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <PU1PR04MB2248961AEF87BA87C7749050A70D0@PU1PR04MB2248.apcprd04.prod.outlook.com>
-In-Reply-To: <PU1PR04MB2248961AEF87BA87C7749050A70D0@PU1PR04MB2248.apcprd04.prod.outlook.com>
-From: Richard Hanley <rhanley@google.com>
-Date: Tue, 6 Oct 2020 14:41:29 -0700
-Message-ID: <CAH1kD+b=4NhQ=XUmtGXov2WErqLB1T=ZZBYgYBkuVLT=-hdfvw@mail.gmail.com>
-Subject: Re: adding sync method in phosphor-time-manager
-To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
-Content-Type: multipart/alternative; boundary="000000000000d8b9bb05b1077633"
+References: <CAJOps0sd-YFr5P+_N0i78pd9akBJS6DP99wugKvUDOGpXw2pcA@mail.gmail.com>
+ <D355FA68-E163-4DA8-861E-7E9DB68F5EEB@fb.com>
+ <CAJOps0uX9K25NgXpi3M45F=pvvW5Am+9R=wYTLN0SZ2vPUcX-A@mail.gmail.com>
+ <EF663847-4E98-4AC2-8A8C-E37B853C131F@fb.com>
+In-Reply-To: <EF663847-4E98-4AC2-8A8C-E37B853C131F@fb.com>
+From: Sui Chen <suichen@google.com>
+Date: Tue, 6 Oct 2020 15:57:30 -0700
+Message-ID: <CAJOps0tR5t4sJQX0-fhBJuKJSnQZJm12gWV9S0OYv4xWU7uzKQ@mail.gmail.com>
+Subject: Re: Request to create repository google-ipmi-bmc-health
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,193 +77,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Patrick Williams <patrickw3@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d8b9bb05b1077633
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Oct 2, 2020 at 1:54 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+>
+> Hi Sui,
+>
+> =EF=BB=BFOn 10/1/20, 6:52 PM, "Sui Chen" <suichen@google.com> wrote:
+>
+>     Hi Vijay,
+>
+>     We can use whatever means that gets health monitoring done.
+>     I have the following questions on how to merge the proposed IPMI
+>     Blob-based implementation, google-ipmi-bmc-health (referred to as
+>     "IPMI health blob") with phosphor-health-monitor. The intent of havin=
+g
+>     a separate "google-ipmi-bmc-health" was to avoid these questions:
+>
+>     1) The IPMI health blob is a library, not a daemon, so after the IPMI
+>     health blob is added, phosphor-health-monitor will have both a librar=
+y
+>     and a daemon. The user needs to have a way to configure it. What is
+>     the recommended way of doing this configuration?
+>
+> Yes the same repo can generate library as well as daemon. Currently it is
+> configuring 2 metrics cpu and memory, we can add another entry like
+> IPMI blob and if it is there then only it will build ipmi blobs.
+>
+>     2) We are sending a protocol buffer through the IPMI interface to the
+>     BMC, and the protocol buffer may be only used for the IPMI path and
+>     not anywhere else. Would there be any concerns on the usage of a
+>     protocol buffer here?
+>
+> If I understand correctly, protocol buffer will be used by daemon who
+> Is responding to the IPMI request and connecting to this daemon via
+> library call, then it is completely restricted for the use of protocol bu=
+ffer.
+> If you are passing protocol buffer to this daemon then we have to define
+> some policy here.
 
-I think it makes a lot of sense to make this configurable. However, I
-wonder if we should consider making it a collection with a priority levels
-instead of a single enum. I can envision a need for someone to say, "Use
-NTP when it's available, but if the network is down then use the host."
+The Protocol buffer is only for serializing the data to be sent
+outside of the BMC. It is not used for communication inside
+phosphor-health-monitor and will not be passed to the daemon.
 
-While we're on the subject, has anyone ever taken a look at using roughtime
-on a BMC? I imagine it could a really valuable extension to
-phosphor-time-manager some time in the future.
-https://blog.cloudflare.com/roughtime/
+>
+>     Other than these two things I think adding new metrics to
+>     phosphor-health-monitor should be manageable. I can start by trying t=
+o
+>     add the IPMI blob handler to phosphor-health-monitor; my first attemp=
+t
+>     might not look very elegant, but if we find answers to the two
+>     questions above, the merged result will look a lot better. Hopefully
+>     we can find a solution that works well for everyone.
+>
+> I am looking forward to your patches
 
-Regards,
-Richard
+Please check out this WIP:
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-health-monitor/+/3709=
+2
 
-On Tue, Oct 6, 2020 at 10:40 AM Velumani T-ERS,HCLTech <velumanit@hcl.com>
-wrote:
+This WIP currently just adds the IPMI blob-based code to
+phosphor-health-monitor almost as-is.
+It also shows what we already have now.
 
-> Classification:
->
-> Hi Team,
->
->
->
-> We wanted to add another time sync method in phosphor-time-manager to get
-> the time from the host and set it to BMC. To have this option configurable
-> I propose a dbus property in the time interface(given below). Please
-> provide your feedback/comments.
->
->
->
->
-> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Time/Synchronization.interface.yaml
->
-> enumerations:
->
->     - name: Method
->
->       description: >
->
->         Possible methods of time synchronization.
->
->       values:
->
->         - name: NTP
->
->           description: >
->
->             Sync by using the Network Time Protocol.
->
->         - name: Manual
->
->           description: >
->
->             Sync time manually.
->
->          - name: HostSync
->
->           description: >
->
->             Sync the time from host.
->
->
->
-> Regards,
->
-> Velu
-> ::DISCLAIMER::
-> ------------------------------
-> The contents of this e-mail and any attachment(s) are confidential and
-> intended for the named recipient(s) only. E-mail transmission is not
-> guaranteed to be secure or error-free as information could be intercepted,
-> corrupted, lost, destroyed, arrive late or incomplete, or may contain
-> viruses in transmission. The e mail and its contents (with or without
-> referred errors) shall therefore not attach any liability on the originator
-> or HCL or its affiliates. Views or opinions, if any, presented in this
-> email are solely those of the author and may not necessarily reflect the
-> views or opinions of HCL or its affiliates. Any form of reproduction,
-> dissemination, copying, disclosure, modification, distribution and / or
-> publication of this message without the prior written consent of authorized
-> representative of HCL is strictly prohibited. If you have received this
-> email in error please delete it and notify the sender immediately. Before
-> opening any email and/or attachments, please check them for viruses and
-> other defects.
-> ------------------------------
->
+There will be some work to merge the daemon and the blob handler in an
+organic way, and I am open to discussion with you how to do that. The
+first step I think I can do is to put the code for extracting the
+metrics (metrics.cpp, blob/metric.cpp) into a single file and share
+that between the daemon and the IPMI blob handler.
 
---000000000000d8b9bb05b1077633
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Another issue I found is I am not using the latest sdbusplus so I have
+to comment out the usage of ValueIface::Unit::Percent for now.
 
-<div dir=3D"ltr">I think it makes a lot of sense to make this configurable.=
- However, I wonder if we should consider making it a collection with a prio=
-rity levels instead of a single enum. I can envision a need for someone to =
-say, &quot;Use NTP when it&#39;s available, but if the network is down then=
- use the host.&quot;=C2=A0<div><br></div><div>While we&#39;re on the subjec=
-t, has anyone ever taken a look at using roughtime on a BMC? I imagine it c=
-ould a really valuable extension to phosphor-time-manager some time in the =
-future.</div><div><a href=3D"https://blog.cloudflare.com/roughtime/">https:=
-//blog.cloudflare.com/roughtime/</a><br></div><div><br></div><div>Regards,<=
-/div><div>Richard</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr=
-" class=3D"gmail_attr">On Tue, Oct 6, 2020 at 10:40 AM Velumani T-ERS,HCLTe=
-ch &lt;<a href=3D"mailto:velumanit@hcl.com">velumanit@hcl.com</a>&gt; wrote=
-:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
-8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+To build this requires 1) adding a pkgconfig file to
+phosphor-ipmi-blobs (before
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-ipmi-blobs/+/37133
+gets merged) and 2) adding phosphor-ipmi-blobs and protobuf to DEPENDS
+in phosphor-health-monitor's Bitbake recipe.
 
+Hope this WIP change illustrates our intention clearly.
 
-
-
-
-<div lang=3D"EN-US">
-<div class=3D"gmail-m_8573633271051800730WordSection1">
-<p class=3D"MsoNormal" style=3D"margin-bottom:12pt">Classification: <span s=
-tyle=3D"font-size:12pt">
-<u></u><u></u></span></p>
-<p class=3D"MsoNormal">Hi Team,<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">We wanted to add another time sync method in phospho=
-r-time-manager to get the time from the host and set it to BMC. To have thi=
-s option configurable I propose a dbus property in the time interface(given=
- below). Please provide your feedback/comments.
-<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><a href=3D"https://github.com/openbmc/phosphor-dbus-=
-interfaces/blob/master/xyz/openbmc_project/Time/Synchronization.interface.y=
-aml" target=3D"_blank">https://github.com/openbmc/phosphor-dbus-interfaces/=
-blob/master/xyz/openbmc_project/Time/Synchronization.interface.yaml</a><u><=
-/u><u></u></p>
-<p class=3D"MsoNormal">enumerations:<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 - name: Method<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 description: &gt;<u><=
-/u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Possible =
-methods of time synchronization.<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 values:<u></u><u></u>=
-</p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - name: N=
-TP<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 description: &gt;<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 Sync by using the Network Time Protocol.<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - name: M=
-anual<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 description: &gt;<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 Sync time manually.<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - n=
-ame: HostSync<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 description: &gt;<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 Sync the time from host.<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <u></u><u=
-></u></p>
-<p class=3D"MsoNormal">Regards,<u></u><u></u></p>
-<p class=3D"MsoNormal">Velu<u></u><u></u></p>
-</div>
-<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
-<hr>
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or
- incomplete, or may contain viruses in transmission. The e mail and its con=
-tents (with or without referred errors) shall therefore not attach any liab=
-ility on the originator or HCL or its affiliates. Views or opinions, if any=
-, presented in this email are solely
- those of the author and may not necessarily reflect the views or opinions =
-of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
- disclosure, modification, distribution and / or publication of this messag=
-e without the prior written consent
- of authorized representative of HCL is strictly prohibited. If you have re=
-ceived this email in error please delete it and notify the sender immediate=
-ly. Before opening any email and/or attachments, please check them for viru=
-ses and other defects.<br>
-<hr>
-</font>
-</div>
-
-</blockquote></div>
-
---000000000000d8b9bb05b1077633--
+Thanks!
