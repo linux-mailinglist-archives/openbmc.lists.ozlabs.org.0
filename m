@@ -2,132 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9BC9285123
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 19:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD478285137
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 19:53:00 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5PzD0KjZzDqHp
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 04:46:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5Q6d618hzDqDh
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 04:52:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
- (client-ip=148.163.147.86; helo=mx0a-002e3701.pphosted.com;
- envelope-from=prvs=0548b096d6=jean-marie.verdun@hpe.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hpe.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hpe.com header.i=@hpe.com header.a=rsa-sha256
- header.s=pps0720 header.b=FFRL9uJT; dkim-atps=neutral
-Received: from mx0a-002e3701.pphosted.com (mx0a-002e3701.pphosted.com
- [148.163.147.86])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5Pxt2xH9zDqH4
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 04:45:13 +1100 (AEDT)
-Received: from pps.filterd (m0148663.ppops.net [127.0.0.1])
- by mx0a-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 096HhsrD016876
- for <openbmc@lists.ozlabs.org>; Tue, 6 Oct 2020 17:45:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hpe.com;
- h=from : to : subject :
- date : message-id : content-type : mime-version; s=pps0720;
- bh=QIsuGFmTx+Ddop2HwKowxigjMB0RTbEoAIwV5sGsPKM=;
- b=FFRL9uJTH01Fvsypsgs3AQ4cLsLi9flRBdmlGcYh6IjtmQN6tN4U43H2HmVfO37K3EH4
- u+Se5rkEaqQUNnakfUYf/pmHS929cidEo0OvVlA0/w3ixaDs3amnOsQhiDbPTjDegDul
- RXyHghW78r130nQLiYmbL4Y70s8tkmsfkc54W/BMk8Lo12C111bdTRikAAVom5FwsHox
- bEIEXUbpcTDTSMEIbw17XdEVEN3QaM6ngA4rou0Be1wJI6egqO2Sk1pnd5Dv57kam79Q
- F621kLiJfAPLsFf9bWKlLjE5F79EooJorOX7geIBwFWP1ZUGmULM4HEIhb0bw1FXNC0E 7w== 
-Received: from g4t3427.houston.hpe.com (g4t3427.houston.hpe.com
- [15.241.140.73])
- by mx0a-002e3701.pphosted.com with ESMTP id 340pqmbgkc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 17:45:09 +0000
-Received: from G9W8455.americas.hpqcorp.net (g9w8455.houston.hp.com
- [16.216.161.94])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by g4t3427.houston.hpe.com (Postfix) with ESMTPS id 052575C
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 17:45:08 +0000 (UTC)
-Received: from G9W8455.americas.hpqcorp.net (2002:10d8:a15e::10d8:a15e) by
- G9W8455.americas.hpqcorp.net (2002:10d8:a15e::10d8:a15e) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Tue, 6 Oct 2020 17:45:09 +0000
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (15.241.52.10) by
- G9W8455.americas.hpqcorp.net (16.216.161.94) with Microsoft SMTP
- Server (TLS)
- id 15.0.1497.2 via Frontend Transport; Tue, 6 Oct 2020 17:45:08 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=KfazMfbZ0vLu0RjpMtQaNZOj+Ppsgsd9iBD2sL7a+aD8xDmqRNWpRahjIYEnYWq1BhmJU26bVq48NLXnN9d5WkfvIPuc54ceskapZUGTROcnTbkaY9/oUQI/HnpPQiudoFgt3M+HeIT33qx64lsTN9Ob1qN/4wVXyP4hxS0X0ZcgGP5cvqBHg30KWu8AmkIdc78EmtdJVuhVVrU9Ag9AmjrQDBdd0bQ/HUWGOd48briEUb4E10y4fDyROM5mRz9mHTXLiLZWTztHi8EicZj88CQFN/cYeV1h1wfsRObGYjdMnC2v1r8F1GQShoqEmW83VC+/DDOwscM4XlGxLlGsSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QIsuGFmTx+Ddop2HwKowxigjMB0RTbEoAIwV5sGsPKM=;
- b=Bj2xkH8QNMcWjZsB3ktbOL37tEKQkoHAUbvXmIOsj/Z2qAqzDTNiLxotfbNm4fBNTYGPTgDPXO7sTxZXHAfJS1eqyiQ1bkKaU9oca9qi8l+YhCUI12niUxJUuH2y0kLXQQg2whLZyGV8JuX563Ue47Nk2lO3QmLBOXNnX5m1ZrsEYG0yfn7qb0d+EjMm+1m25nDXVBTpFiw6xhRf6S7prNri2MJKyQlNNVNN2kGoBSjWZMNyE7iOrKHhlpUChrqjZM+MKptM3Bs6MJ1UjPqWGaWoj8z9sF9DtMdrBkQZmKcRb9WD7BQ78bgrkCHT12AzPVlt8JBTXUnEpqaw2DnlvQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7423::13) by AT5PR8401MB1009.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7429::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3433.38; Tue, 6 Oct
- 2020 17:45:07 +0000
-Received: from AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::5cca:ec38:7520:111c]) by AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::5cca:ec38:7520:111c%11]) with mapi id 15.20.3433.045; Tue, 6 Oct 2020
- 17:45:07 +0000
-From: "Verdun, Jean-Marie" <jean-marie.verdun@hpe.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Injecting public key into openbmc image for CI integration
-Thread-Topic: Injecting public key into openbmc image for CI integration
-Thread-Index: AQHWnAhtZcyfngjJ4EqLHQuK9jyaxA==
-Date: Tue, 6 Oct 2020 17:45:07 +0000
-Message-ID: <FDDD3DE1-6228-4BFE-BAA2-96CC549D2CEB@hpe.com>
-Accept-Language: fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.40.20081000
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none header.from=hpe.com;
-x-originating-ip: [2601:646:8600:a:4c30:5992:dfc4:ad95]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 090c3790-8bd0-4bd4-48af-08d86a1f9084
-x-ms-traffictypediagnostic: AT5PR8401MB1009:
-x-microsoft-antispam-prvs: <AT5PR8401MB1009D99708AD1972D0E8F5CEA70D0@AT5PR8401MB1009.NAMPRD84.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: fDG9uay1y0TatpwxIIM8qFasNyvdZCETt26+KEwc88sDP7Gw4P5uAd7tcUnYtnhpiHx6YeJSkFn3cqVatVH4a97gUujpYaWXT/KDnzJjKxAeJRA+2U8hbnQtmNnUboUkQ/QnXtaIT7tC2MOifh8WHeYAImGTHVRx9e37BBlyc+6qdhmAyWD4oqtu0+Tk86DK2wdKzZm7gM3U7JWfxVTcLBaj1w+s3Iq1z7qg4HBcOF5hbDrJGeSouutDNoGjnNI38wU2PsTjfiqx8FCufZ6XX71mTZkU0wGOby4o2e7wPqbdSV5Q0Dgi2Oq5Tk63Ec2cQ5dJVXe6noGz4DRrCY4YG9aYNZtugoBzWbdHjWi8Oqt0T517t9rm4j3XyfkIQNVFI73JvxHq/Q7uCghtRzyiFA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(366004)(346002)(376002)(136003)(39860400002)(396003)(9326002)(6512007)(5660300002)(8936002)(8676002)(86362001)(33656002)(36756003)(2906002)(66946007)(66476007)(76116006)(91956017)(83080400001)(316002)(6916009)(2616005)(64756008)(66556008)(66446008)(6486002)(71200400001)(186003)(478600001)(166002)(83380400001)(6506007);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: LQ6pBYBY8R7CCrjoPrmYa0mtsRmdb0ndEXPv3v6OvYVocvRDv9hNox2LPrYx9LxSZU1v37aSnGBGnqhjnI3xUoDC7MPDgknco3WNkHALJvtjbbXc+/H0A6tJXURQ5f1jUykSvvfFrMErEhtc7QlNw7QWwleiQzIxPrX0FsGI2Y6lM2z22aNU6uJUqCMYVjwPl3/o3kVB+JUqV/sqO8JNGXjwaAPaW40/Zsa8hftXEj90wHbr86bA3fYgW+9KaB0XjncWjib4dVu4VGDh9gNdW9SyCVKX4lv1sZfDhkKRWj3/8IRDZgMXdper3Jg2Zj9UNATlQoZEfK/6QEdwnzS41ibLmwRk1g5zc/FKiY7BeeifN6/bpWyhayG5k6XyTMVqPcbvnHqRpIbULoCsNJrF17pB8faX7ufiZ58jRK8bOKBqNnXXnRFfnC2M5/c9bOcU8jO9nx3B53Ijs6B06IuxMB0+Pq+JuTqk6W8G38b0BHXhg9eJnbh+FU4piTbt2IYBqayoF8x9y1yv4P2Mfe5RlUbGFjgNCYhhsqW8SNhqcy/pF+hhMyA6P7h7BO2hK5vHV7nkNZJdHKqRQgRVUI0KykFcXjIn2p6MJ7u8HBYe2cCYg4G8KtxXVUZYnGE1ZC9eYYFokirJEsOq9tvnqA9f89aLaT3ZNnczYPohIXk1s1/TgWAipf1FtUprr2+u/QpL+aGVMw40oU5uqs/ZtJMl9w==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_FDDD3DE162284BFEBAA296CC549D2CEBhpecom_"
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 090c3790-8bd0-4bd4-48af-08d86a1f9084
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Oct 2020 17:45:07.2154 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: igiC5do/zSXVNkzNTc5JgyxeJSufVpLq2QwDTRg5U4Y6gnBGW1GPVdQ8ROO8gDrjLN180i4L1sU1xN5G0d5V2qEQDm4PAvgXq1TKQOY2v5c=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AT5PR8401MB1009
-X-OriginatorOrg: hpe.com
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5Q5t1GpTzDqDb
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 04:52:17 +1100 (AEDT)
+IronPort-SDR: NQEQ0pAUsHKnCO0da5A77hP22yBINfMu//2xUh++GxjMlTDySAGJtRdxOC4rPSgNy2Dh0SXUix
+ VUtNXTtGzMfw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9765"; a="152371561"
+X-IronPort-AV: E=Sophos;i="5.77,343,1596524400"; d="scan'208";a="152371561"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Oct 2020 10:52:08 -0700
+IronPort-SDR: XbwmFRn+9781+ya6Ph2r/jNrSusBX7YT1hK6MJlXQnbCgveNecAJIfTFcv4tLeAyzUGYFqUgzm
+ iQzVzOUJMkXA==
+X-IronPort-AV: E=Sophos;i="5.77,343,1596524400"; d="scan'208";a="315763518"
+Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.255.228.213])
+ ([10.255.228.213])
+ by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Oct 2020 10:52:06 -0700
+Subject: Re: PECI patchset status
+To: Joel Stanley <joel@jms.id.au>, "Mihm, James" <james.mihm@intel.com>
+References: <CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com>
+ <DM5PR11MB188419A3302F33CE6FE80740902C0@DM5PR11MB1884.namprd11.prod.outlook.com>
+ <20200903152753.GA57949@patrickw3-mbp.lan.stwcx.xyz>
+ <20200903171556.GA32795@mauery.jf.intel.com> <20200904163430.GA3532@heinlein>
+ <DM5PR11MB188420C2AF67DA8C09C4689F90240@DM5PR11MB1884.namprd11.prod.outlook.com>
+ <CACPK8XeXm4_JP-pt9OzcHQwA2sqpHMVnW1kpNUQRh+ULRmG-Cw@mail.gmail.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <251ba84a-a2ce-4000-e7bd-90685b9d3854@linux.intel.com>
+Date: Tue, 6 Oct 2020 10:51:54 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-10-06_10:2020-10-06,
- 2020-10-06 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1011
- impostorscore=0 phishscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 adultscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2006250000
- definitions=main-2010060114
+In-Reply-To: <CACPK8XeXm4_JP-pt9OzcHQwA2sqpHMVnW1kpNUQRh+ULRmG-Cw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -139,201 +65,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Vernon Mauery <vernon.mauery@linux.intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_FDDD3DE162284BFEBAA296CC549D2CEBhpecom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi Joel,
 
-SGksDQoNCkkgYW0gd29ya2luZyBhdCBicmlkZ2luZyBvc2ZjaS50ZWNoIGludGVyYWN0aXZlIENJ
-IHRvIGEgdGVzdGluZyBhdXRvbWF0aW9uIGZyYW1ld29yayBhcyB0byBzY2FsZSBiYXNpYyB0ZXN0
-aW5nIGFuZCBvZmZlciBib3RoIG1vZGUuIEkgc3BlbnQgc29tZSB0aW1lIGxvb2tpbmcgYXQgdmFy
-aW91cyBvcHRpb25zLCBhbmQgbXVzdCBhZG1pdCB0aGF0IEkgYW0gY3VyaW91cyB0byBsb29rIGF0
-IHRoZSBjb250ZXN0IGZyYW1ld29yayB0aGF0IGZhY2Vib29rIHB1Ymxpc2hlZCBhIGNvdXBsZSBv
-ZiBtb250aHMgYWdvIChodHRwczovL2dpdGh1Yi5jb20vZmFjZWJvb2tpbmN1YmF0b3IvY29udGVz
-dCkuIEl0IGlzIHdyaXR0ZW4gaW4gR28gbGlrZSBtYW55IHBhcnQgb2Ygb3NmY2ksIGFuZCBzZWVt
-cyB0byBiZSBsaWdodHdlaWdodCBhcyB3ZWxsIGFzIGVhc3kgdG8gdW5kZXJzdGFuZC4NCg0KT25l
-IG9mIHRoZSBjaGFsbGVuZ2UgdG8gdXNlIGl0IG1pZ2h0IGJlIHRoYXQgdGhlcmUgaXMgbm8gcHVi
-bGlzaGVkIHRlc3QsIGFuZCB3ZSBtaWdodCBoYXZlIHRvIHdyaXRlIHNvbWUsIGJ1dCB0aGF0IGlz
-IG1vc3RseSB0aGUgY2FzZSB3aXRoIHRoZSBtYW55IG90aGVyIGZyYW1ld29yayBJIGxvb2tlZCBh
-dC4NCg0KQXMgdG8gbWFuYWdlIHN1Y2ggZnJhbWV3b3JrIG9zZmNpIHdpbGwgd29yayBpbiBhIGNs
-aWVudCBzZXJ2ZXIgbW9kZSwgYW5kIEkgd2FzIGxvb2tpbmcgYXQgbGF1bmNoaW5nIGNvbW1hbmQg
-dGhyb3VnaCBzc2ggKHRoaXMgYXNzdW1lIHRoYXQgdGhlIG5ldHdvcmsgc3RhY2sgaXMgcHJvcGVy
-bHkgc2V0dXAgb24gb3BlbmJtYyBhbmQgbGludXhib290LCBidXQgdGhlIENJIGlzIHNvb24gYWJs
-ZSB0byBpZGVudGlmeSBzdWNoIGZhaWx1cmUpLCBhbmQgdXNpbmcgYSBwcml2YXRlL3B1YmxpYyBr
-ZXkgc29sdXRpb24uDQoNCkkgbG9va2VkIGludG8gb3BlbmJtYyBhbmQgaXQgZG9lc27igJl0IHNl
-ZW0gdGhhdCB0aGVyZSBpcyBhbnkgc3RhbmRhcmQgcmVjaXBlcyB0byBjcmVhdGUgYSB0ZXN0IHVz
-ZXIgYW5kIGluamVjdCBpbnRvIHRoZSBhY2NvdW50IGEgcHVibGljIGtleS4gRG9lcyBJIGFtIHdy
-b25nID8gSSB3cm90ZSBhIHZlcnkgYmFzaWMgcmVjaXBlIHRvIG1ha2UgaXQgaGFwcGVucywgYW5k
-IHdhcyB3b25kZXJpbmcgaWYgaXQgY291bGQgYmUgcmVsZXZhbnQgdG8gdXBzdHJlYW0gaXQgPw0K
-DQpPU0ZDSSB3b3JrZmxvdyBpcyBzdGFydGluZyBmcm9tIGEgZ2l0aHViIHJlcG8gYW5kIGEgYnJh
-bmNoLiBJIHdvdWxkIGxpa2UgdG8gYXZvaWQgYXMgbXVjaCBhcyBwb3NzaWJsZSB0byBwYXRjaCB0
-aGUgaW5wdXQgcHJvdmlkZWQgYnkgdGhlIGVuZCB1c2VyIHdpdGggYSByZWNpcGUgd2hpY2ggd291
-bGQgYmUgcmVxdWlyZWQgdG8gaW5qZWN0IHRoZSBwdWJsaWMga2V5IGJlZm9yZSB0aGF0IHRoZSBi
-dWlsZCBoYXBwZW5zLiBEb2VzIGFueWJvZHkgZWxzZSBldmVyIG1ldCBzdWNoIHJlcXVpcmVtZW50
-ID8gSWYgeWVzIGhvdyBkaWQgeW91IGFkZHJlc3NlZCBpdCA/DQoNClJpZ2h0IG5vdyB0aGUgc3Rh
-Y2sgaXMgYWJsZSB0bzoNCg0KICAqICAgR2V0IGEgZ2l0aHViIHJlcG8gYW5kIGEgYnJhbmNoIGZy
-b20gb3BlbmJtYyAsIGNvbXBpbGUgaXQgYW5kIGdlbmVyYXRlIGEgcmVhZHkgdG8gdXNlIE9wZW5C
-TUMgSFBFIGltYWdlDQogICogICBHZXQgYSBnaXRodWIgcmVwbyBhbmQgYSBicmFuY2ggZnJvbSBs
-aW51eGJvb3QsIGNvbXBpbGUgaXQgYW5kIGdlbmVyYXRlIGEgcmVhZHkgdG8gdXNlIGhvc3QgYmlv
-cyBIUEUgaW1hZ2UNCiAgKiAgIFByb3ZpZGUgYSBVU0IgaW5zdGFsbGVkIE8vUyBpbWFnZSB0byB2
-YWxpZGF0ZSB0aGF0IE8vUyBpbnN0YWxsZXIgd29ya3MgYW5kIHdlIGNvdWxkIGRlcGxveSBsaW51
-eCBvbiB0aGUgbmV3bHkgY3JlYXRlIGZpcm13YXJlIHN0YWNrDQogICogICBCb290IHRoZXNlIGlt
-YWdlcyBvbiBhIHBoeXNpY2FsIG1hY2hpbmUgdG8gdmFsaWRhdGUgdGhhdCBldmVyeXRoaW5nIHN0
-YXJ0cyBzbW9vdGhseQ0KICAqICAgQWxsIG9mIHRoaXMgaXMgdW5kZXIgdGhlIGNvbnRyb2wgb2Yg
-dGhlIGVuZCB1c2VyIHRocm91Z2ggaW50ZXJhY3RpdmUgc2Vzc2lvbiwgdGhlIG5leHQgc3RlcCBp
-cyB0byBhdXRvbWF0aXplIGV2ZXJ5dGhpbmcgYW5kIGZvY3VzIG9uIHdyaXRpbmcgdGVzdC4gUmln
-aHQgbm93IGV2ZXJ5IHVzZXIgYWN0aW9ucyBhcmUgcGVyZm9ybWVkIHRocm91Z2ggdGhlIGNvbnRy
-b2wgb2YgYSB3ZWIgQVBJIHdyaXR0ZW4gaW4gZ28gd2hpY2ggaXMgZGlzcGF0Y2hpbmcgY29tbWFu
-ZHMgdG8gdGhlIHJlbGV2YW50IGJhY2tlbmQgc3lzdGVtcw0KDQpUaGFua3MsIGhhdmUgYSBncmVh
-dCBkYXksDQoNCnZlam1hcmllDQoNCg==
+On 9/28/2020 10:49 PM, Joel Stanley wrote:
+> On Fri, 11 Sep 2020 at 01:20, Mihm, James <james.mihm@intel.com> wrote:
+> 
+>> Would it be acceptable for all of the 84+ Intel patches to reside in the openbmc repo while we work through the upstreaming process?
+>> Some of the patches require design changes and will take much longer to upstream.
+> 
+> This is the intent of the openbmc tree. THe patches need to be posted,
+> in reviewable series, to be included.
+> 
+> As discussed in this thread regarding the PECI patches, they have been
+> around for a long time without submission. They will need to be posted
+> upstream again before I put them in the OpenBMC tree.
+> 
+> Early September, when this thread was started, was a great time to
+> make the PECI submission in terms of the upstream kernel development
+> cycle. The next best time is now.
 
---_000_FDDD3DE162284BFEBAA296CC549D2CEBhpecom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <409F7019BD01F2459F18CE1F1D4FFCB2@NAMPRD84.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+Thank you for carrying the out-of-tree PECI patch set so far. I really
+appreciate it.
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseTpXaW5nZGluZ3M7DQoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAg
-MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
-OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
-Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25z
-ICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjow
-aW47DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJp
-Zjt9DQphOmxpbmssIHNwYW4uTXNvSHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsN
-Cgljb2xvcjojMDU2M0MxOw0KCXRleHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KcC5Nc29MaXN0
-UGFyYWdyYXBoLCBsaS5Nc29MaXN0UGFyYWdyYXBoLCBkaXYuTXNvTGlzdFBhcmFncmFwaA0KCXtt
-c28tc3R5bGUtcHJpb3JpdHk6MzQ7DQoJbWFyZ2luLXRvcDowaW47DQoJbWFyZ2luLXJpZ2h0OjBp
-bjsNCgltYXJnaW4tYm90dG9tOjBpbjsNCgltYXJnaW4tbGVmdDouNWluOw0KCWZvbnQtc2l6ZTox
-Mi4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0
-eWxlMTcNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwtY29tcG9zZTsNCglmb250LWZhbWlseToi
-Q2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0
-DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9u
-dC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3Np
-emU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYu
-V29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi8qIExpc3QgRGVmaW5pdGlvbnMg
-Ki8NCkBsaXN0IGwwDQoJe21zby1saXN0LWlkOjEwODE3NTg4NDE7DQoJbXNvLWxpc3QtdHlwZTpo
-eWJyaWQ7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOjEyNDk5MzQ1ODggLTg2ODQ3MzY4IDY3Njk4
-NjkxIDY3Njk4NjkzIDY3Njk4Njg5IDY3Njk4NjkxIDY3Njk4NjkzIDY3Njk4Njg5IDY3Njk4Njkx
-IDY3Njk4NjkzO30NCkBsaXN0IGwwOmxldmVsMQ0KCXttc28tbGV2ZWwtc3RhcnQtYXQ6MDsNCglt
-c28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ6LTsNCgltc28t
-bGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJ
-dGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0K
-CW1zby1mYXJlYXN0LWZvbnQtZmFtaWx5OkNhbGlicmk7fQ0KQGxpc3QgbDA6bGV2ZWwyDQoJe21z
-by1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDpvOw0KCW1zby1s
-ZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0
-ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6IkNvdXJpZXIgTmV3Ijt9DQpAbGlzdCBs
-MDpsZXZlbDMNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10
-ZXh0Ou+CpzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBv
-c2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OldpbmdkaW5n
-czt9DQpAbGlzdCBsMDpsZXZlbDQNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0K
-CW1zby1sZXZlbC10ZXh0Ou+CtzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2
-ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFt
-aWx5OlN5bWJvbDt9DQpAbGlzdCBsMDpsZXZlbDUNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6
-YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Om87DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJ
-bXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjsNCglm
-b250LWZhbWlseToiQ291cmllciBOZXciO30NCkBsaXN0IGwwOmxldmVsNg0KCXttc28tbGV2ZWwt
-bnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ674KnOw0KCW1zby1sZXZlbC10
-YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWlu
-ZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6V2luZ2RpbmdzO30NCkBsaXN0IGwwOmxldmVsNw0K
-CXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ674K3Ow0K
-CW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRpb246bGVm
-dDsNCgl0ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6U3ltYm9sO30NCkBsaXN0IGww
-OmxldmVsOA0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRl
-eHQ6bzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0
-aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OiJDb3VyaWVyIE5l
-dyI7fQ0KQGxpc3QgbDA6bGV2ZWw5DQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsN
-Cgltc28tbGV2ZWwtdGV4dDrvgqc7DQoJbXNvLWxldmVsLXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxl
-dmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50Oi0uMjVpbjsNCglmb250LWZh
-bWlseTpXaW5nZGluZ3M7fQ0Kb2wNCgl7bWFyZ2luLWJvdHRvbTowaW47fQ0KdWwNCgl7bWFyZ2lu
-LWJvdHRvbTowaW47fQ0KLS0+PC9zdHlsZT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBs
-aW5rPSIjMDU2M0MxIiB2bGluaz0iIzk1NEY3MiI+DQo8ZGl2IGNsYXNzPSJXb3JkU2VjdGlvbjEi
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPkhp
-LDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxl
-PSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+SSBhbSB3b3JraW5n
-IGF0IGJyaWRnaW5nIG9zZmNpLnRlY2ggaW50ZXJhY3RpdmUgQ0kgdG8gYSB0ZXN0aW5nIGF1dG9t
-YXRpb24gZnJhbWV3b3JrIGFzIHRvIHNjYWxlIGJhc2ljIHRlc3RpbmcgYW5kIG9mZmVyIGJvdGgg
-bW9kZS4gSSBzcGVudCBzb21lIHRpbWUgbG9va2luZyBhdCB2YXJpb3VzIG9wdGlvbnMsIGFuZCBt
-dXN0IGFkbWl0IHRoYXQgSSBhbSBjdXJpb3VzDQogdG8gbG9vayBhdCB0aGUgY29udGVzdCBmcmFt
-ZXdvcmsgdGhhdCBmYWNlYm9vayBwdWJsaXNoZWQgYSBjb3VwbGUgb2YgbW9udGhzIGFnbyAoPGEg
-aHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL2ZhY2Vib29raW5jdWJhdG9yL2NvbnRlc3QiPmh0dHBz
-Oi8vZ2l0aHViLmNvbS9mYWNlYm9va2luY3ViYXRvci9jb250ZXN0PC9hPikuIEl0IGlzIHdyaXR0
-ZW4gaW4gR28gbGlrZSBtYW55IHBhcnQgb2Ygb3NmY2ksIGFuZCBzZWVtcyB0byBiZSBsaWdodHdl
-aWdodA0KIGFzIHdlbGwgYXMgZWFzeSB0byB1bmRlcnN0YW5kLjxvOnA+PC9vOnA+PC9zcGFuPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48
-bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOjExLjBwdCI+T25lIG9mIHRoZSBjaGFsbGVuZ2UgdG8gdXNlIGl0IG1p
-Z2h0IGJlIHRoYXQgdGhlcmUgaXMgbm8gcHVibGlzaGVkIHRlc3QsIGFuZCB3ZSBtaWdodCBoYXZl
-IHRvIHdyaXRlIHNvbWUsIGJ1dCB0aGF0IGlzIG1vc3RseSB0aGUgY2FzZSB3aXRoIHRoZSBtYW55
-IG90aGVyIGZyYW1ld29yayBJIGxvb2tlZCBhdC48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+PG86cD4mbmJz
-cDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZv
-bnQtc2l6ZToxMS4wcHQiPkFzIHRvIG1hbmFnZSBzdWNoIGZyYW1ld29yayBvc2ZjaSB3aWxsIHdv
-cmsgaW4gYSBjbGllbnQgc2VydmVyIG1vZGUsIGFuZCBJIHdhcyBsb29raW5nIGF0IGxhdW5jaGlu
-ZyBjb21tYW5kIHRocm91Z2ggc3NoICh0aGlzIGFzc3VtZSB0aGF0IHRoZSBuZXR3b3JrIHN0YWNr
-IGlzIHByb3Blcmx5IHNldHVwIG9uIG9wZW5ibWMgYW5kIGxpbnV4Ym9vdCwgYnV0IHRoZQ0KIENJ
-IGlzIHNvb24gYWJsZSB0byBpZGVudGlmeSBzdWNoIGZhaWx1cmUpLCBhbmQgdXNpbmcgYSBwcml2
-YXRlL3B1YmxpYyBrZXkgc29sdXRpb24uPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9v
-OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNp
-emU6MTEuMHB0Ij5JIGxvb2tlZCBpbnRvIG9wZW5ibWMgYW5kIGl0IGRvZXNu4oCZdCBzZWVtIHRo
-YXQgdGhlcmUgaXMgYW55IHN0YW5kYXJkIHJlY2lwZXMgdG8gY3JlYXRlIGEgdGVzdCB1c2VyIGFu
-ZCBpbmplY3QgaW50byB0aGUgYWNjb3VudCBhIHB1YmxpYyBrZXkuIERvZXMgSSBhbSB3cm9uZyA/
-IEkgd3JvdGUgYSB2ZXJ5IGJhc2ljIHJlY2lwZSB0byBtYWtlIGl0IGhhcHBlbnMsDQogYW5kIHdh
-cyB3b25kZXJpbmcgaWYgaXQgY291bGQgYmUgcmVsZXZhbnQgdG8gdXBzdHJlYW0gaXQgPyA8bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPk9TRkNJIHdvcmtmbG93IGlz
-IHN0YXJ0aW5nIGZyb20gYSBnaXRodWIgcmVwbyBhbmQgYSBicmFuY2guIEkgd291bGQgbGlrZSB0
-byBhdm9pZCBhcyBtdWNoIGFzIHBvc3NpYmxlIHRvIHBhdGNoIHRoZSBpbnB1dCBwcm92aWRlZCBi
-eSB0aGUgZW5kIHVzZXIgd2l0aCBhIHJlY2lwZSB3aGljaCB3b3VsZCBiZSByZXF1aXJlZCB0byBp
-bmplY3QgdGhlIHB1YmxpYw0KIGtleSBiZWZvcmUgdGhhdCB0aGUgYnVpbGQgaGFwcGVucy4gRG9l
-cyBhbnlib2R5IGVsc2UgZXZlciBtZXQgc3VjaCByZXF1aXJlbWVudCA/IElmIHllcyBob3cgZGlk
-IHlvdSBhZGRyZXNzZWQgaXQgPzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwv
-c3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEx
-LjBwdCI+UmlnaHQgbm93IHRoZSBzdGFjayBpcyBhYmxlIHRvOjxvOnA+PC9vOnA+PC9zcGFuPjwv
-cD4NCjx1bCBzdHlsZT0ibWFyZ2luLXRvcDowaW4iIHR5cGU9ImRpc2MiPg0KPGxpIGNsYXNzPSJN
-c29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFyZ2luLWxlZnQ6MGluO21zby1saXN0OmwwIGxldmVs
-MSBsZm8xIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+R2V0IGEgZ2l0aHViIHJlcG8g
-YW5kIGEgYnJhbmNoIGZyb20gb3BlbmJtYyAsIGNvbXBpbGUgaXQgYW5kIGdlbmVyYXRlIGEgcmVh
-ZHkgdG8gdXNlIE9wZW5CTUMgSFBFIGltYWdlPG86cD48L286cD48L3NwYW4+PC9saT48bGkgY2xh
-c3M9Ik1zb0xpc3RQYXJhZ3JhcGgiIHN0eWxlPSJtYXJnaW4tbGVmdDowaW47bXNvLWxpc3Q6bDAg
-bGV2ZWwxIGxmbzEiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5HZXQgYSBnaXRodWIg
-cmVwbyBhbmQgYSBicmFuY2ggZnJvbSBsaW51eGJvb3QsIGNvbXBpbGUgaXQgYW5kIGdlbmVyYXRl
-IGEgcmVhZHkgdG8gdXNlIGhvc3QgYmlvcyBIUEUgaW1hZ2U8bzpwPjwvbzpwPjwvc3Bhbj48L2xp
-PjxsaSBjbGFzcz0iTXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBpbjttc28t
-bGlzdDpsMCBsZXZlbDEgbGZvMSI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPlByb3Zp
-ZGUgYSBVU0IgaW5zdGFsbGVkIE8vUyBpbWFnZSB0byB2YWxpZGF0ZSB0aGF0IE8vUyBpbnN0YWxs
-ZXIgd29ya3MgYW5kIHdlIGNvdWxkIGRlcGxveSBsaW51eCBvbiB0aGUgbmV3bHkgY3JlYXRlIGZp
-cm13YXJlIHN0YWNrPG86cD48L286cD48L3NwYW4+PC9saT48bGkgY2xhc3M9Ik1zb0xpc3RQYXJh
-Z3JhcGgiIHN0eWxlPSJtYXJnaW4tbGVmdDowaW47bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPjxz
-cGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5Cb290IHRoZXNlIGltYWdlcyBvbiBhIHBoeXNp
-Y2FsIG1hY2hpbmUgdG8gdmFsaWRhdGUgdGhhdCBldmVyeXRoaW5nIHN0YXJ0cyBzbW9vdGhseTxv
-OnA+PC9vOnA+PC9zcGFuPjwvbGk+PGxpIGNsYXNzPSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0i
-bWFyZ2luLWxlZnQ6MGluO21zby1saXN0OmwwIGxldmVsMSBsZm8xIj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdCI+QWxsIG9mIHRoaXMgaXMgdW5kZXIgdGhlIGNvbnRyb2wgb2YgdGhlIGVu
-ZCB1c2VyIHRocm91Z2ggaW50ZXJhY3RpdmUgc2Vzc2lvbiwgdGhlIG5leHQgc3RlcCBpcyB0byBh
-dXRvbWF0aXplIGV2ZXJ5dGhpbmcgYW5kIGZvY3VzIG9uIHdyaXRpbmcgdGVzdC4gUmlnaHQNCiBu
-b3cgZXZlcnkgdXNlciBhY3Rpb25zIGFyZSBwZXJmb3JtZWQgdGhyb3VnaCB0aGUgY29udHJvbCBv
-ZiBhIHdlYiBBUEkgd3JpdHRlbiBpbiBnbyB3aGljaCBpcyBkaXNwYXRjaGluZyBjb21tYW5kcyB0
-byB0aGUgcmVsZXZhbnQgYmFja2VuZCBzeXN0ZW1zPG86cD48L286cD48L3NwYW4+PC9saT48L3Vs
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0
-eWxlPSJmb250LXNpemU6MTEuMHB0Ij5UaGFua3MsIGhhdmUgYSBncmVhdCBkYXksPG86cD48L286
-cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6
-ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij52ZWptYXJpZTxvOnA+PC9vOnA+PC9z
-cGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEu
-MHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRt
-bD4NCg==
+I agree with you that the PECI upstreaming should make a progress now
+but I'm still in unbalanced task priorities. I'll try to make it done as
+soon as possible but it's not available right now.
 
---_000_FDDD3DE162284BFEBAA296CC549D2CEBhpecom_--
+As James already said, we'll use a forked tree if PECI patches are
+dropped off from OpenBMC linux tree v5.9, and it'll not be a permanent
+fork but just for a temporary and alternative way to minimize impact of
+dropping off the PECI patch set. Thanks for your understanding in
+advance.
+
+Best,
+
+Jae
