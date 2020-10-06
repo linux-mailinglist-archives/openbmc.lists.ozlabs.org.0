@@ -1,95 +1,110 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BEB6284509
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 06:45:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE79B284937
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 11:20:42 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C54dY4YQ3zDqJH
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 15:45:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5BlM3tZszDqKT
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 20:20:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=hyvedesignsolutions.com (client-ip=66.46.24.197;
+ helo=smtp5.synnex.com; envelope-from=bradc@hyvedesignsolutions.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=us.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=UMYy9cy2; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=hyvedesignsolutions.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=synnexcorp.onmicrosoft.com
+ header.i=@synnexcorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-synnexcorp-onmicrosoft-com header.b=Hybd3AVm; 
+ dkim-atps=neutral
+Received: from smtp5.synnex.com (smtp5.synnex.com [66.46.24.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C54cm2cX9zDqHK
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 15:44:23 +1100 (AEDT)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0964WV3l068153
- for <openbmc@lists.ozlabs.org>; Tue, 6 Oct 2020 00:44:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : cc : date : references : content-type : message-id :
- content-transfer-encoding : mime-version : subject; s=pp1;
- bh=fJOec2ka0BlNAHYtwE/ozY/tP0uZ1BGzjre57xILNKE=;
- b=UMYy9cy2Ez/HpVZVzzHfvzZ+wTRhgoNGduZwmi+G3S20gmlZq+wUs7M4djyeMqHZS9Qn
- FH0jCuI7dOykBMeG1xfeingRbCGDtf2UwwOrrUZH7jfmxUMfJUR1fluRiTuhaNds9JSE
- Nf7W5NqzbQFViievcQuZOOpDj53fI9aho7Mk8RNmoBVPMN1NzZQC0bkPXL0CBADRgNKe
- hJL7ngn0U0ra+q7wrBbgJ9i+Fd6BWz+HpEnaBKAkidOqLkAMmdNGPptpcGYWuaUdsM1r
- 6+Fb8pfmFxyKoubZX7OdMi/F8F1EPxr3EKDHC6AzXUwdWlTOuzNDGzD2ZErXPRLHT80l vQ== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.108])
- by mx0a-001b2d01.pphosted.com with ESMTP id 340h8err5a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 00:44:21 -0400
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Tue, 6 Oct 2020 04:44:20 -0000
-Received: from us1b3-smtp02.a3dr.sjc01.isc4sb.com (10.122.7.175)
- by smtp.notes.na.collabserv.com (10.122.47.46) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 6 Oct 2020 04:44:18 -0000
-Received: from us1b3-mail228.a3dr.sjc03.isc4sb.com ([10.168.214.55])
- by us1b3-smtp02.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020100604441885-48147 ;
- Tue, 6 Oct 2020 04:44:18 +0000 
-In-Reply-To: <43278529-11a5-4892-b965-96c69ff1a772@beta.fastmail.com>
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "Andrew Jeffery" <andrew@aj.id.au>
-Date: Tue, 6 Oct 2020 04:44:18 +0000
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <43278529-11a5-4892-b965-96c69ff1a772@beta.fastmail.com>,
- <CACPK8Xd-3e+6EO1dz7aQZqTpxamDcVPfqAgbneg2_W=vpto3Kw@mail.gmail.com>
- <20201002063414.275161-1-andrew@aj.id.au>
- <20201002063414.275161-2-andrew@aj.id.au>
- <OF049DC1D4.E5E0E847-ON002585F9.0017C7A1-002585F9.00184577@notes.na.collabserv.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 30131
-X-TNEFEvaluated: 1
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20100604-3017-0000-0000-0000039C9829
-X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.404685; ST=0; TS=0; UL=0; ISC=; MB=0.001817
-X-IBM-SpamModules-Versions: BY=3.00013960; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01445021; UDB=6.00776715; IPR=6.01227726; 
- MB=3.00034403; MTD=3.00000008; XFM=3.00000015; UTC=2020-10-06 04:44:19
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-10-05 23:22:38 - 6.00011920
-x-cbparentid: 20100604-3018-0000-0000-00006E639C73
-Message-Id: <OF18978832.D50C6D4D-ON002585F9.001A076C-002585F9.001A0773@notes.na.collabserv.com>
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5BkP205VzDqKL
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 20:19:39 +1100 (AEDT)
+Received: from GSC-EXCH6.synnex.org ([10.84.32.34])
+ by smtp5.synnex.com  with ESMTP id 0969JZEI030107-0969JZEK030107
+ (version=TLSv1.2 cipher=AES256-SHA256 bits=256 verify=CAFAIL)
+ for <openbmc@lists.ozlabs.org>; Tue, 6 Oct 2020 05:19:35 -0400
+Received: from GSC-EXCH6.synnex.org (10.84.32.34) by GSC-EXCH6.synnex.org
+ (10.84.32.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1979.3; Tue, 6 Oct 2020
+ 05:20:09 -0400
+Received: from NAM04-BN3-obe.outbound.protection.outlook.com (104.47.46.53) by
+ gsc-exch6.synnex.org (10.84.32.34) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1979.3
+ via Frontend Transport; Tue, 6 Oct 2020 05:20:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=f5XACMDkFkkz/iPz998UwxP67vlMj8D/4R0a6VEoEJO1vdZO26NF8/OSCrnLKBc//0n1gpMvYbp1/qrvs+jKSSm43glqWUnw3JM4OoNmDfG75fVONxqtBMC9bgVY9+tIdvidmhDJ8kc2lQyK5CT3Yl0314xXmX72skShik97LMFY2CjSJ1Xa1d9/Pqm08dOolAPyqpikzP+wtRWMIoyGtq5Hc+7QNVf7hXQNjyXjiD30XW4w+9tpPhnySEaAOs3bBHyKC6m7W9E3ja/6Xl1rTGgwtsdaod0777+u0Fi/e3D9x1yMNwIjHhcXPIvdI44DaGViwku7lF4hWPgyiGbVbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OvE2BYFAb0sYDilqeVgyBMe4YCH1Yv1PdFS3deVPlbQ=;
+ b=AXaf6wAxdBc9aUdsUgM8xW6lWZkS7WQtwnNLxaKywfICDyKHB4Y0EIbuxpIWoMBQOvKdt6LTcmZogDKGdWSBNdnC7CR0oESJX/NqMQDjNprMzOg22gdqpZTwE/y+BidbvNYVpYu7oDhr+yJeQWfs2ZAJ0OVHeh94SjE5xjAyxCgJybW/Fk7yz8eBjyk0ibVBrJUhYuchqYJ0H/8Pochcl+m7VBDt/h3mbC6nQsRbV0tLf8eWEizYYAfFYLixpD4vqT6eMf2+4IjIOyUKMWvWysnBXCUW6NLLiyPgqFKly9Ic6eqBtp53bVlUCLY8Ry0QyV9SBxVGcIOzBZGpC5fngg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hyvedesignsolutions.com; dmarc=pass action=none
+ header.from=hyvedesignsolutions.com; dkim=pass
+ header.d=hyvedesignsolutions.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=synnexcorp.onmicrosoft.com; s=selector1-synnexcorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OvE2BYFAb0sYDilqeVgyBMe4YCH1Yv1PdFS3deVPlbQ=;
+ b=Hybd3AVmc1CywrGEVCcc/jug6FM1420zgr1lwml9+Hk5wBW+OJDRsfzVh6MQ65PUxmGz0HRheyMzuHwM/lME7cNqo5qUooBGYiOqMTH9g4jkozHSY1hGGU/z2wk7VoV1oQqgs4Uryi5eJ0KDz3gI5xecbWJ7YvcFhFe3FISbSrw=
+Received: from CY4PR04MB1033.namprd04.prod.outlook.com (2603:10b6:910:54::14)
+ by CY4PR0401MB3587.namprd04.prod.outlook.com (2603:10b6:910:8d::33)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3433.43; Tue, 6 Oct
+ 2020 09:19:33 +0000
+Received: from CY4PR04MB1033.namprd04.prod.outlook.com
+ ([fe80::e5de:5693:5146:f150]) by CY4PR04MB1033.namprd04.prod.outlook.com
+ ([fe80::e5de:5693:5146:f150%6]) with mapi id 15.20.3433.044; Tue, 6 Oct 2020
+ 09:19:33 +0000
+From: Brad Chou <bradc@hyvedesignsolutions.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Redfish Virtual Media return InternalError
+Thread-Topic: Redfish Virtual Media return InternalError
+Thread-Index: AdabwQovvDxZ0hPaSxCdO4+IIXE1eQ==
+Date: Tue, 6 Oct 2020 09:19:33 +0000
+Message-ID: <CY4PR04MB1033E4D796F88C0BA457B3AEB90D0@CY4PR04MB1033.namprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=hyvedesignsolutions.com;
+x-originating-ip: [61.222.103.61]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 267c4e7a-ef85-44f8-880b-08d869d8f01e
+x-ms-traffictypediagnostic: CY4PR0401MB3587:
+x-microsoft-antispam-prvs: <CY4PR0401MB358702F7A830CEB2ECD5474BB90D0@CY4PR0401MB3587.namprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6430;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: Sxe9NbDMhK8WIWUYOZ9kG9iGz/8I5wVxGkqib07sO+fpxoDOXjR9URv8L81ul95qUKAA89LxkEVvsQeMwBxdn/J/ajT4HHFO5Ms39MwW55pxulsa+pS6PftLYYgClgVFIO/nKik9binCdqSd360H0C5N2/4fMmFXV5dCnU8nez1ieob9fsDpZLucnIhodlrIJI+SLWotoseDH0/6knbDZm6WM7BW0diwA3Xo6VeR5FW3NJiElD2DwAKNXNQ4K0piiwCAgy9TH36YSZqIaIS1SK33ktJAaPV/ibq+gs1r/fc8Y+TN1zqawnMBk0KA53+f1HDqa4w6noGgfkcsXyLoyQ==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CY4PR04MB1033.namprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(136003)(366004)(376002)(346002)(39860400002)(33656002)(6506007)(8936002)(55016002)(66476007)(66446008)(66946007)(76116006)(7696005)(66556008)(2906002)(8676002)(64756008)(86362001)(71200400001)(83380400001)(316002)(52536014)(4744005)(9686003)(966005)(5660300002)(9326002)(478600001)(186003)(6916009)(26005);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: 4CQ5aBTvPAibCSFcvwMhpdD6uPhvr1xO7HbEiX/zMYSg905wMAf/RKWaOmSkSzWZ8nCJzdYb4Bvlplusi19rEPNgIkkgJ1LMpOTU3bNsPNqmzisddre5JKCePx2NNxT3Qwok65SQwhVp3lS+kjszI9xCWNd5qxr2IQL/kf3YBq3wxg4fRLTUb7R2Du/LSCC76ih6QkV5t0hz3y//OKQIJFNo590omQ/V1IlzgaTawmkyQuxZ8pecYXDz/RNY3tvksMtb/PDzd9yhNCcbZfN6mTTUcgpvtOVE9O93r1ivWd+IkGTHZcxXm6pElg4gnihujDAyq4AzADNAhFimMKvhJ2skttOkk/a3+DPHpv4SY0I+YPjmkV2vWFzeAh2+BloU5wBP36uU2UvRlfgXzP6eL28+t85FIoGJR/TtDuovIIGVqmhSdGeg1Le223f9E4Mi0xFTU01vacwFKvfgBVHFpgN9yc6rU4rP01BFAHbysogmCEzBEqVDDC8lrtOrg0PFMpSm4PfB1ovb8iSFYS9OqkRj8MAI9UkAJyINMEA2vFEA8Us0av5L+3tqw3CXGJva4T0lQqSkMEzJSKRmbZTcBbxyo46POd0+pE6MSqJyEl1Pxx8OxuPAm/lNt6PO6hHmpS49lu7PkSUJcTIp5TbGPA==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_CY4PR04MB1033E4D796F88C0BA457B3AEB90D0CY4PR04MB1033namp_"
 MIME-Version: 1.0
-Subject: RE: [PATCH 1/3] ARM: dts: rainier: Add reserved memory for ramoops
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-10-06_01:2020-10-05,
- 2020-10-06 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CY4PR04MB1033.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 267c4e7a-ef85-44f8-880b-08d869d8f01e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Oct 2020 09:19:33.3241 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 972a0e27-c355-4fd7-9225-9266c8f332ac
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qf41MOWYGvbVAUiUYCnhQmGVwlVSDrXnZjDmUjGUGIVt8uuJxEJmKiUG8SUSYy7Giq/rrr1B1srdDgnUuS++Pg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR0401MB3587
+X-OriginatorOrg: hyvedesignsolutions.com
+X-FE-Policy-ID: 6:1:1:SYSTEM
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,48 +116,161 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On October 5, 2020 at about 11:30PM in some timezone, Andrew Jeffery wrote:
->On Tue, 6 Oct 2020, at 14:55, Milton Miller II wrote:
->> On October 5, 2020 about 10:23 in some timezone, Joel Stanley
->wrote:
->> >Subject: [EXTERNAL] Re: [PATCH 1/3] ARM: dts: rainier: Add
->reserved
->> >memory for ramoops
->> >
->> >On Fri, 2 Oct 2020 at 06:35, Andrew Jeffery <andrew@aj.id.au>
->wrote:
->> >>
->> >> Reserve a 1MiB region of memory to record kmsg dumps and console
->> >state
->> >> into 16kiB ring-buffer slots. The sizing allows for up to 32
->dumps
->> >to be
->> >> captured and read out.
->> >>
->> >> Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-...
->> The admin guide lists KMSG_DUMP_OOPS and KMSG_DUMP_PANIC ?>>
->INVALID URI REMOVED
->oc_html_latest_admin-2Dguide_ramoops.html&d=3DDwIBAg&c=3Djf_iaSHvJObTbx-s
->iA1ZOg&r=3Dbvv7AJEECoRKBU02rcu4F5DWd-EwX8As2xrXeO9ZSo4&m=3D223EDL7j0GQPUf
->WYDv8kduEPnexbpo3b00uQAlK8YSo&s=3DMfYAUnU2h1TdWyBC7tQoG3fVUTBTwXTFurBsK
->oZw34E&e=3D=20
->>=20
->> We could have something monitoring for OOPS , copying to a log and=20
->> then unlinking the pstore after committed.
+--_000_CY4PR04MB1033E4D796F88C0BA457B3AEB90D0CY4PR04MB1033namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+I enable the "DBMCWEB_ENABLE_VM_NBDPROXY" flag in bmcweb by bbappend it :
+EXTRA_OECMAKE_append =3D " \
+    -DBMCWEB_ENABLE_VM_NBDPROXY=3DON \
+"
+
+Then try to use redfish virtual media.
+But I got an error return when get into the collection :
+
+$  curl -k -H "X-Auth-Token: $token" https://${bmc}/redfish/v1/Managers/bmc=
+/VirtualMedia
+{
+  "@odata.id": "/redfish/v1/Managers/bmc/VirtualMedia/",
+  "@odata.type": "#VirtualMediaCollection.VirtualMediaCollection",
+  "Name": "Virtual Media Services",
+  "error": {
+    "@Message.ExtendedInfo": [
+      {
+        "@odata.type": "#Message.v1_0_0.Message",
+        "Message": "The request failed due to an internal service error.  T=
+he service is still operational.",
+        "MessageArgs": [],
+        "MessageId": "Base.1.4.0.InternalError",
+        "Resolution": "Resubmit the request.  If the problem persists, cons=
+ider resetting the service.",
+        "Severity": "Critical"
+      }
+    ],
+    "code": "Base.1.4.0.InternalError",
+    "message": "The request failed due to an internal service error.  The s=
+ervice is still operational."
+  }
+}
+
+
+Any idea ?
+
+
+
+--_000_CY4PR04MB1033E4D796F88C0BA457B3AEB90D0CY4PR04MB1033namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
->systemd-pstore already does this for us, no further configuration
->required.
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@PMingLiU";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi,<o:p></o:p></p>
+<p class=3D"MsoNormal">I enable the &#8220;DBMCWEB_ENABLE_VM_NBDPROXY&#8221=
+; flag in bmcweb by bbappend it :<o:p></o:p></p>
+<p class=3D"MsoNormal">EXTRA_OECMAKE_append =3D &quot; \<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; -DBMCWEB_ENABLE_VM_NBDPROXY=3DON =
+\<o:p></o:p></p>
+<p class=3D"MsoNormal">&quot;<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Then try to use redfish virtual media.<o:p></o:p></p=
+>
+<p class=3D"MsoNormal">But I got an error return when get into the collecti=
+on :<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">$&nbsp; curl -k -H &quot;X-Auth-Token: $token&quot; =
+https://${bmc}/redfish/v1/Managers/bmc/VirtualMedia<o:p></o:p></p>
+<p class=3D"MsoNormal">{<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp; &quot;@odata.id&quot;: &quot;/redfish/v1/Mana=
+gers/bmc/VirtualMedia/&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp; &quot;@odata.type&quot;: &quot;#VirtualMediaC=
+ollection.VirtualMediaCollection&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp; &quot;Name&quot;: &quot;Virtual Media Service=
+s&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp; &quot;error&quot;: {<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; &quot;@Message.ExtendedInfo&quot;=
+: [<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;@od=
+ata.type&quot;: &quot;#Message.v1_0_0.Message&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Mes=
+sage&quot;: &quot;The request failed due to an internal service error.&nbsp=
+; The service is still operational.&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Mes=
+sageArgs&quot;: [],<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Mes=
+sageId&quot;: &quot;Base.1.4.0.InternalError&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Res=
+olution&quot;: &quot;Resubmit the request.&nbsp; If the problem persists, c=
+onsider resetting the service.&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Sev=
+erity&quot;: &quot;Critical&quot;<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; ],<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; &quot;code&quot;: &quot;Base.1.4.=
+0.InternalError&quot;,<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; &quot;message&quot;: &quot;The re=
+quest failed due to an internal service error.&nbsp; The service is still o=
+perational.&quot;<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp; }<o:p></o:p></p>
+<p class=3D"MsoNormal">}<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Any idea ?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
 
-Do we have something that creates service records for these messages?=20=20
-I was hoping for something like a PEL for the bmc software.
-
-Not as part of this kernel series though.
-
-milton
-
-
+--_000_CY4PR04MB1033E4D796F88C0BA457B3AEB90D0CY4PR04MB1033namp_--
