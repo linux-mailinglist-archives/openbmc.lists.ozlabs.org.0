@@ -1,62 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CAB6285152
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 20:02:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BC88285402
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 23:42:46 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5QKn2FlMzDqJL
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 05:02:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5WCk1DMKzDqF0
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 08:42:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::131;
+ helo=mail-lf1-x131.google.com; envelope-from=rhanley@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=RJ1GVXPP; dkim-atps=neutral
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com
+ [IPv6:2a00:1450:4864:20::131])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5QJv0BF4zDqDP
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 05:01:49 +1100 (AEDT)
-IronPort-SDR: DHTaKvKtGWpGGbniQgkAhb1kJtI1+TsUZYLsUCzi/v4i1LO/xqDo2eMCR4otpg+iyZzDJInnzN
- Dy7o/XJhdEDw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9765"; a="161990548"
-X-IronPort-AV: E=Sophos;i="5.77,343,1596524400"; d="scan'208";a="161990548"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Oct 2020 11:01:39 -0700
-IronPort-SDR: xRME3X+wvdQ8tnZ1YA8YpIwMIfqq1f5fohlOR2RUD331a0cZ2B20U+v3fCOVKCSeCejrbWqIvF
- z2IG/TToYuMg==
-X-IronPort-AV: E=Sophos;i="5.77,343,1596524400"; d="scan'208";a="315767136"
-Received: from yoojae-mobl1.amr.corp.intel.com (HELO [10.255.228.213])
- ([10.255.228.213])
- by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Oct 2020 11:01:39 -0700
-Subject: Re: [PATCH 2/2] peci-cputemp: label CPU cores from zero instead of one
-To: Joel Stanley <joel@jms.id.au>, Zev Weiss <zev@bewilderbeest.net>
-References: <20200926212734.23836-1-zev@bewilderbeest.net>
- <20200926212734.23836-3-zev@bewilderbeest.net>
- <51512c43-ee82-17b5-71c4-35849b1f0922@linux.intel.com>
- <20200928195423.3kftebgltdmpronq@hatter.bewilderbeest.net>
- <28b289f1-0ef0-2432-f71b-0ca4420a39e2@linux.intel.com>
- <20200928210917.idrpngkpduwxe2rf@hatter.bewilderbeest.net>
- <b79f8dfb-8257-943b-3c2b-062840aa2515@linux.intel.com>
- <20200928220124.k47kocdvi2ahgtc6@hatter.bewilderbeest.net>
- <CACPK8XdzjEhxKHbajMXbMpktOAhm_xFqUW7rY67WdmQ4p8PXPg@mail.gmail.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <f4185310-6695-75ee-df3b-41b89b0baac3@linux.intel.com>
-Date: Tue, 6 Oct 2020 11:01:38 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5WBt3Y76zDq8g
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 08:41:48 +1100 (AEDT)
+Received: by mail-lf1-x131.google.com with SMTP id a9so7336638lfc.7
+ for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 14:41:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=lj9e8DNnMCFR7kMCuVGvATQ9jMUIpLF08UrN5zfHgnk=;
+ b=RJ1GVXPPfn5a89s74h5wWlp4MnfXOX1YwMRwGZkiZiQsMFc3jrsaiFv3S1DVR5Jd/F
+ shw89m7ZsO3tsHm+SkPryOrowlC34TZGmE+TNWzxFfniWAVuhAmVzfp8t/5i7EyTeiRy
+ JQooSxTQB8WSJvGv4/ZNKSjI24QAeB1Rna2tIH4bdaAd7T5leGVJu9iL0bju27zBUSNb
+ 5yVCXMI/zoqeYnCyJr+yVCqLlObupG+zO3UCbPI/tXHDvBa7b6wKMRGthWcYiUJaCgrI
+ 5kVIBlkuZsmSvGMqGiR07NTYoThCg2wAsc/nInW7x2Yi2ZyHlhwV+WBQAyxnIo9p6AeM
+ doPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=lj9e8DNnMCFR7kMCuVGvATQ9jMUIpLF08UrN5zfHgnk=;
+ b=kXvY2eyiekKKJif7Nx8Tm7lTvwWdD7wl1LuZ0oEuVTbjTEM2kHEFmoieA542rbaKt2
+ oiBCmNch52xbm6Zg1drmNxq6bTjrBOIyWKh0gKFPWJhkb4pEzXY14L5qK5E1FAY4hwp7
+ 0ed2ZEp7JyCfPzGuOLlC4BYQ0AmWEet+lwqIoU9195gd917PJsWBXgNiPJiZHg29BoYH
+ zQv3/V7Z8Fduv9uhq1Bys+32Nwq9MTpEqOxq+4zKdChQM3vHHvVLW60xcHopdo7y2XPv
+ PKhjY87gLhxQPKKSR/boaYKQa7Hi6QcbUMiaNdIjlQAZMYKiONXbHpTT23tpwAfcXyGh
+ GogQ==
+X-Gm-Message-State: AOAM532gwwDNKYquoMF7I97o4TAGh3MoNsyDkRinQNqaRJ41VFCKS1hj
+ JnSHznMQnxVRgVCkbQ3RO/P+rg3cFksUO21AwrDeGg==
+X-Google-Smtp-Source: ABdhPJxiVh5m9RtT7N+K7EEnSrHu5vfOTLeqjNahLumoasGw8fXCbh/qtTh+z1nJacChpk++h4qVrv5GZILujIk9Bdo=
+X-Received: by 2002:ac2:4576:: with SMTP id k22mr1095804lfm.247.1602020500321; 
+ Tue, 06 Oct 2020 14:41:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACPK8XdzjEhxKHbajMXbMpktOAhm_xFqUW7rY67WdmQ4p8PXPg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <PU1PR04MB2248961AEF87BA87C7749050A70D0@PU1PR04MB2248.apcprd04.prod.outlook.com>
+In-Reply-To: <PU1PR04MB2248961AEF87BA87C7749050A70D0@PU1PR04MB2248.apcprd04.prod.outlook.com>
+From: Richard Hanley <rhanley@google.com>
+Date: Tue, 6 Oct 2020 14:41:29 -0700
+Message-ID: <CAH1kD+b=4NhQ=XUmtGXov2WErqLB1T=ZZBYgYBkuVLT=-hdfvw@mail.gmail.com>
+Subject: Re: adding sync method in phosphor-time-manager
+To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+Content-Type: multipart/alternative; boundary="000000000000d8b9bb05b1077633"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,68 +72,193 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jason M Biils <jason.m.bills@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- James Feist <james.feist@linux.intel.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Patrick Williams <patrickw3@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Zev,
+--000000000000d8b9bb05b1077633
+Content-Type: text/plain; charset="UTF-8"
 
-On 9/28/2020 11:00 PM, Joel Stanley wrote:
-> On Mon, 28 Sep 2020 at 22:02, Zev Weiss <zev@bewilderbeest.net> wrote:
->>
->> On Mon, Sep 28, 2020 at 04:32:31PM CDT, Jae Hyun Yoo wrote:
->>>> Oh I see -- I had thought you were referring to other existing hwmon
->>>> drivers in the kernel.
->>>>
->>>> As far as I can tell, all those instances appear to be numbering CPU
->>>> *sockets* though -- which as Jason mentioned in a call earlier today
->>>> I gather is done to line up with motherboard silkscreen labeling.
->>>> But in the code in question here we're labeling *cores* within a
->>>> given socket, which I don't see arising anywhere in any existing
->>>> entity-manager configs.  So I'm still unclear on why we want to use
->>>> one-based indexing here instead of zero-based -- I'd think we'd want
->>>> the PECI driver to match the PECI spec?
->>>
->>> PECI driver uses zero-based index for PECI command handling but label is
->>> user facing stuff which shouldn't make confusion to users. We can modify
->>> driver like you did in this patch and previous driver also used
->>> zero-based indexing but I changed it to natural number based indexing
->>> to avoid confusion between driver labels and dbus-sensors names.
->>> Any specific reason for the zero-based indexing? Any benefit?
->>>
->>
->> [Re-adding CCs...]
-> 
-> Thanks. Please keep the discussion on the list.
-> 
->>
->> Well, as I see it basically just consistency with a larger set of
->> things.  Most other related numbering schemes I'm aware of are
->> zero-based -- userspace tools like 'taskset' and 'lscpu', system APIs
->> like the <sched.h> CPU_SET() routines, and the kernel's own numbering
->> (e.g. what's shown in /proc/cpuinfo) all number processors starting from
->> zero, so dbus-sensors seems kind of like the odd one out there.
->> (Personally I'd be fully in support of changing it to be zero-based as
->> well, though I have no idea offhand about how distruptive a change that
->> would be.)
->>
->> It also seems pretty OpenBMC-specific, whereas I'd expect we want to aim
->> for greater generality in things going into mainline.
-> 
-> Agreed. The hwmon numbering varies; some attributes are zero indexed
-> and some start at 1. More commonly we start counting from zero in the
-> kernel, so I would expect PECI to do the same.
-> 
-> If there's some userspace that depends on the behaviour of these out
-> of tree PECI patches, then that userspace will need to change. This
-> reminds us why the project prefers patches exposing userspace ABI are
-> merged to mainline first.
+I think it makes a lot of sense to make this configurable. However, I
+wonder if we should consider making it a collection with a priority levels
+instead of a single enum. I can envision a need for someone to say, "Use
+NTP when it's available, but if the network is down then use the host."
 
-Okay. Not a big deal. The coretemp module for local CPU also uses zero
-starting label index for core numbers so better match up. Thanks for
-your patch.
+While we're on the subject, has anyone ever taken a look at using roughtime
+on a BMC? I imagine it could a really valuable extension to
+phosphor-time-manager some time in the future.
+https://blog.cloudflare.com/roughtime/
 
-Reviewed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Regards,
+Richard
 
+On Tue, Oct 6, 2020 at 10:40 AM Velumani T-ERS,HCLTech <velumanit@hcl.com>
+wrote:
+
+> Classification:
+>
+> Hi Team,
+>
+>
+>
+> We wanted to add another time sync method in phosphor-time-manager to get
+> the time from the host and set it to BMC. To have this option configurable
+> I propose a dbus property in the time interface(given below). Please
+> provide your feedback/comments.
+>
+>
+>
+>
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Time/Synchronization.interface.yaml
+>
+> enumerations:
+>
+>     - name: Method
+>
+>       description: >
+>
+>         Possible methods of time synchronization.
+>
+>       values:
+>
+>         - name: NTP
+>
+>           description: >
+>
+>             Sync by using the Network Time Protocol.
+>
+>         - name: Manual
+>
+>           description: >
+>
+>             Sync time manually.
+>
+>          - name: HostSync
+>
+>           description: >
+>
+>             Sync the time from host.
+>
+>
+>
+> Regards,
+>
+> Velu
+> ::DISCLAIMER::
+> ------------------------------
+> The contents of this e-mail and any attachment(s) are confidential and
+> intended for the named recipient(s) only. E-mail transmission is not
+> guaranteed to be secure or error-free as information could be intercepted,
+> corrupted, lost, destroyed, arrive late or incomplete, or may contain
+> viruses in transmission. The e mail and its contents (with or without
+> referred errors) shall therefore not attach any liability on the originator
+> or HCL or its affiliates. Views or opinions, if any, presented in this
+> email are solely those of the author and may not necessarily reflect the
+> views or opinions of HCL or its affiliates. Any form of reproduction,
+> dissemination, copying, disclosure, modification, distribution and / or
+> publication of this message without the prior written consent of authorized
+> representative of HCL is strictly prohibited. If you have received this
+> email in error please delete it and notify the sender immediately. Before
+> opening any email and/or attachments, please check them for viruses and
+> other defects.
+> ------------------------------
+>
+
+--000000000000d8b9bb05b1077633
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I think it makes a lot of sense to make this configurable.=
+ However, I wonder if we should consider making it a collection with a prio=
+rity levels instead of a single enum. I can envision a need for someone to =
+say, &quot;Use NTP when it&#39;s available, but if the network is down then=
+ use the host.&quot;=C2=A0<div><br></div><div>While we&#39;re on the subjec=
+t, has anyone ever taken a look at using roughtime on a BMC? I imagine it c=
+ould a really valuable extension to phosphor-time-manager some time in the =
+future.</div><div><a href=3D"https://blog.cloudflare.com/roughtime/">https:=
+//blog.cloudflare.com/roughtime/</a><br></div><div><br></div><div>Regards,<=
+/div><div>Richard</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr=
+" class=3D"gmail_attr">On Tue, Oct 6, 2020 at 10:40 AM Velumani T-ERS,HCLTe=
+ch &lt;<a href=3D"mailto:velumanit@hcl.com">velumanit@hcl.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US">
+<div class=3D"gmail-m_8573633271051800730WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12pt">Classification: <span s=
+tyle=3D"font-size:12pt">
+<u></u><u></u></span></p>
+<p class=3D"MsoNormal">Hi Team,<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">We wanted to add another time sync method in phospho=
+r-time-manager to get the time from the host and set it to BMC. To have thi=
+s option configurable I propose a dbus property in the time interface(given=
+ below). Please provide your feedback/comments.
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal"><a href=3D"https://github.com/openbmc/phosphor-dbus-=
+interfaces/blob/master/xyz/openbmc_project/Time/Synchronization.interface.y=
+aml" target=3D"_blank">https://github.com/openbmc/phosphor-dbus-interfaces/=
+blob/master/xyz/openbmc_project/Time/Synchronization.interface.yaml</a><u><=
+/u><u></u></p>
+<p class=3D"MsoNormal">enumerations:<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 - name: Method<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 description: &gt;<u><=
+/u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Possible =
+methods of time synchronization.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 values:<u></u><u></u>=
+</p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - name: N=
+TP<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 description: &gt;<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 Sync by using the Network Time Protocol.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - name: M=
+anual<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 description: &gt;<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 Sync time manually.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - n=
+ame: HostSync<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 description: &gt;<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 Sync the time from host.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <u></u><u=
+></u></p>
+<p class=3D"MsoNormal">Regards,<u></u><u></u></p>
+<p class=3D"MsoNormal">Velu<u></u><u></u></p>
+</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</div>
+
+</blockquote></div>
+
+--000000000000d8b9bb05b1077633--
