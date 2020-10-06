@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A605628443C
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 05:23:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F834284462
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 05:52:14 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C52qD1BK8zDqHp
-	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 14:23:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C53SW2ksBzDqJT
+	for <lists+openbmc@lfdr.de>; Tue,  6 Oct 2020 14:52:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::844;
- helo=mail-qt1-x844.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
+ helo=mail-qt1-x841.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=YeSzy3k4; dkim-atps=neutral
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
- [IPv6:2607:f8b0:4864:20::844])
+ header.s=google header.b=i6gFPjcs; dkim-atps=neutral
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
+ [IPv6:2607:f8b0:4864:20::841])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C52pL2FGtzDqGt
- for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 14:22:34 +1100 (AEDT)
-Received: by mail-qt1-x844.google.com with SMTP id g3so11890322qtq.10
- for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 20:22:33 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C53Rn4CXSzDqHK
+ for <openbmc@lists.ozlabs.org>; Tue,  6 Oct 2020 14:51:30 +1100 (AEDT)
+Received: by mail-qt1-x841.google.com with SMTP id m9so11295652qth.7
+ for <openbmc@lists.ozlabs.org>; Mon, 05 Oct 2020 20:51:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=4RtzM2p7XTCt6afUxkhKizxc+DcNPnWDoOipy2MIXsA=;
- b=YeSzy3k4O8Rv857gu1tK2ACckUn1uFusNqvJi6D2Aj/06J/1la4zOxCirS8wrPSRcj
- A5HVK9PkY3HhSa1Hfqxibn7BVFJ760GvEM4FYu0TTXjs9ZZL+pPXFNQ5Yx1IvAzhVoY8
- 5/akwa6ajwrWknIaadukp8vMpLU122mL9n/nI=
+ :cc; bh=vVPvRXE5CRLSWV7myUGVbbxhTr2X6WdeR4tA6o158vw=;
+ b=i6gFPjcsL5M4sVABliWh6WwwX3ZVyiBxmXXcTMGJsp/cCdQ4cU3UERxIgSvXS0NJrG
+ JLYq3izNE8BNF3bH1xjmNIJ0PoWmVh1vDgeT0O0ppQ525xhPlJDPkoCZ6OJ9hiOmq6SM
+ ypqedUYQ4PMYQ5HbSmyqSIi1NB4Un88K075/c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=4RtzM2p7XTCt6afUxkhKizxc+DcNPnWDoOipy2MIXsA=;
- b=qgCvd/giR5N61N1KtziHCyrfHoGomxCWYVxnFGAYp6JmdOhsa12xDkcZjLH74CjgFI
- bOX4qrnaKAU/aNJLQM9sdWslmOLsHyR73c0jj9OMyQtj/ocETn3bW8yUyFqP6JANwxud
- n/JzOvQBO0rVs78JwOQ1xUFrTvrfc+T2y8hdpp2KLIfMlHZ0zdJy1Et4pe0RvK/LG5ZV
- bzdkDOAHT6gCzwFZ2VVHRCV4552iOZ5sIlFZx/AbKyh0Obfpwzqt5NSTBKdjAz5zwV6c
- CgKIZRoUZB7CrQb7zhZXjOCzWV8SliE8TlwKE/ECdWWmhjr1ENU2e6ja18u059wJib+4
- uLUQ==
-X-Gm-Message-State: AOAM532cxxvS/9pSLIxZESrW2aJ3GAXrHkIbEoyquieIRU1LYXQX+8Xw
- ONt13gs+md9oNomp38bY/tPYR2PuYqXQjdMIls4=
-X-Google-Smtp-Source: ABdhPJwkoXz8xJpgyrHX/7tIJTBdBJo7QNh8Lxi+YIBwGIA1vNayaF/q77mmHRKONjUrlrz/TOX8SmRdTDCg6u8kPVU=
-X-Received: by 2002:ac8:36ca:: with SMTP id b10mr3086320qtc.135.1601954550501; 
- Mon, 05 Oct 2020 20:22:30 -0700 (PDT)
+ bh=vVPvRXE5CRLSWV7myUGVbbxhTr2X6WdeR4tA6o158vw=;
+ b=plMaS2YJpRSggQnwpmQ69QJSHRMcu7G9A69PYtUVKZUvsmLhP7voWLelqmvRp7BrVI
+ SJtSeJI67Dhv5m+V7OzL0dnSxeopm3jpOtOETZ1/bfNdyShRiDwVZ7FgDg3+jEtr/Xxb
+ lQ84VFeqqqb/xdkDzh1Ihw6LEWP6cw1AEgs3X/YodFoegTcEqinzMF4IZNxl7/KOh07e
+ mtnM+YiZTmWqy0aqyw5l+biafzLvaLqBdnOjZjD8NJ5XaEjAjj6Zea6sSnNuQ2M6RbD5
+ /klpRMJlGKkRSC9QCongLcW8vcfRVZe3SzxYd9PBmaUO9hytYCuHCaGovLrr/j/Nwndn
+ Fvrw==
+X-Gm-Message-State: AOAM530RjJq/AsbD8g9GEsjrCJhkdDHS6+8VgsUH2se8E52jTo50xPJA
+ XVvYkiPoymiMHH4H7NN//MNnfQIDj6MimBp+T2Pt4Wg2
+X-Google-Smtp-Source: ABdhPJxtsU0LZPcFpk+UiPMzNC2Aw8cv1rbOadxD4oRLMokKVmnp8yNebWUmrPvGsnlZEaPNiuAZ+3iQHI2U2ujHjss=
+X-Received: by 2002:ac8:2612:: with SMTP id u18mr3409038qtu.363.1601956286077; 
+ Mon, 05 Oct 2020 20:51:26 -0700 (PDT)
 MIME-Version: 1.0
 References: <20201002063414.275161-1-andrew@aj.id.au>
- <20201002063414.275161-2-andrew@aj.id.au>
-In-Reply-To: <20201002063414.275161-2-andrew@aj.id.au>
+ <20201002063414.275161-3-andrew@aj.id.au>
+In-Reply-To: <20201002063414.275161-3-andrew@aj.id.au>
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 6 Oct 2020 03:22:18 +0000
-Message-ID: <CACPK8Xd-3e+6EO1dz7aQZqTpxamDcVPfqAgbneg2_W=vpto3Kw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ARM: dts: rainier: Add reserved memory for ramoops
+Date: Tue, 6 Oct 2020 03:51:12 +0000
+Message-ID: <CACPK8XfwMsxfJ01FbLDugJpKMHbeH7TZjc+Tb4eStYSH4qKrng@mail.gmail.com>
+Subject: Re: [PATCH 2/3] ARM: config: Enable PSTORE in aspeed_g5_defconfig
 To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -76,81 +76,31 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Fri, 2 Oct 2020 at 06:35, Andrew Jeffery <andrew@aj.id.au> wrote:
 >
-> Reserve a 1MiB region of memory to record kmsg dumps and console state
-> into 16kiB ring-buffer slots. The sizing allows for up to 32 dumps to be
-> captured and read out.
+> We're making use of it on IBM's Rainier system.
 >
 > Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
 > ---
->  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  arch/arm/configs/aspeed_g5_defconfig | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> index e6f422edf454..46a0e95049fd 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> @@ -47,6 +47,14 @@ reserved-memory {
->                 #size-cells = <1>;
->                 ranges;
->
-> +               ramoops@b7f00000 {
-> +                       compatible = "ramoops";
-> +                       reg = <0xb7f00000 0x100000>;
-> +                       record-size = <0x4000>;
-> +                       console-size = <0x4000>;
-
-This is conserative. We've got plenty of space, how about we make it bigger?
-
-$ git grep console-size *.dts* | grep -Po "0x([0-9]+)" | xargs printf
-"%x\n" | sort -n
-8000
-8000
-10000
-10000
-20000
-20000
-20000
-20000
-20000
-60000
-100000
-
-The median is 128KB, which sounds reasonable.
-
-$ git grep record-size *.dts* | grep -Po "0x([0-9]+)" | xargs printf "%x\n"
-20000
-400
-400
-20000
-20000
-20000
-10000
-10000
-10000
-10000
-20000
-
-64KB is the median record size.
-
-> +                       pmsg-size = <0x4000>;
-
-Do we want to add ftrace too?
-
-Should we also add max-reason = KMSG_DUMP_EMERG?
-
-Logging reboots and shutdowns is informative (you know if a reboot was
-intentional or due to a crash that wasn't recorded) and allows for
-testing.
-
-Cheers,
-
-Joel
-
-> +               };
-> +
->                 flash_memory: region@B8000000 {
->                         no-map;
->                         reg = <0xB8000000 0x04000000>; /* 64M */
+> diff --git a/arch/arm/configs/aspeed_g5_defconfig b/arch/arm/configs/aspeed_g5_defconfig
+> index 2bacd8c90f4b..c52db992b84e 100644
+> --- a/arch/arm/configs/aspeed_g5_defconfig
+> +++ b/arch/arm/configs/aspeed_g5_defconfig
+> @@ -274,6 +274,10 @@ CONFIG_UBIFS_FS=y
+>  CONFIG_SQUASHFS=y
+>  CONFIG_SQUASHFS_XZ=y
+>  CONFIG_SQUASHFS_ZSTD=y
+> +CONFIG_PSTORE=y
+> +CONFIG_PSTORE_CONSOLE=y
+> +CONFIG_PSTORE_PMSG=y
+> +CONFIG_PSTORE_RAM=y
+>  # CONFIG_NETWORK_FILESYSTEMS is not set
+>  CONFIG_HARDENED_USERCOPY=y
+>  CONFIG_FORTIFY_SOURCE=y
 > --
 > 2.25.1
 >
