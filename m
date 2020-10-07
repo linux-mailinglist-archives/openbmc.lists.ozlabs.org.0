@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BAB728565C
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 03:39:13 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A49C7285666
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 03:44:09 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5cSZ2L7mzDqGF
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 12:39:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5cZG73Y5zDqFh
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 12:44:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,75 +17,78 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=NfyoLPDY; 
+ header.s=fm3 header.b=UsNM6Vry; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=B394w/YH; 
+ header.a=rsa-sha256 header.s=fm1 header.b=eATi+Oak; 
  dkim-atps=neutral
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
  [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5cRs4T2vzDqC9
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 12:38:33 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5cYY4qTFzDqC7
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 12:43:29 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 99959CA7;
- Tue,  6 Oct 2020 21:38:30 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Tue, 06 Oct 2020 21:38:30 -0400
+ by mailout.west.internal (Postfix) with ESMTP id 6B210D42;
+ Tue,  6 Oct 2020 21:43:26 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute4.internal (MEProxy); Tue, 06 Oct 2020 21:43:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=vC7RorddrTtkl5XSu3EQ82emoF/
- 2EGkkHGpE5i/5kjs=; b=NfyoLPDYoa96bboRUPy1qa0UQqVr0FlpG+VuGahJNA1
- cI8Go3rYzeyK7q1dQsxRh+GdVTig9Y5CvKiqAaz/qkxyMADIDCAhrGlKFlFMUpot
- 22Cp4bc+n5QTDJdhoWlzsFq1dbBqxPHbpFmvz2sCJ6W3ribYjPQY2/1/6uR5lQ//
- JB02c7HCb6l+2Udju2V4Ii+s6177j4A3fdbNmU8FsVTGcR+mOoIshirnc/VeQQBz
- DMtDBtDVSsaLsBX0ayAqCZwFMEWYQo4ays43OFkUJXJYlPdZvXydj4IFRphrsUxp
- rlTAoNCfILoT2KevAxeCbwjS/+0RLBCGkM8/a03dpJA==
+ :content-type:in-reply-to; s=fm3; bh=QUaTvYO0oDwTq9cN7oOBGebQG/u
+ 7GjzHfxgAwqxLCfc=; b=UsNM6VryxMN++TLhqqyhDv+NuuwnjF1NN9N7IfOu6Pr
+ rcIdobg8ZagvXYpkUferYW9Wk+GMUHeScSK+ES/2tStR8fc2ijRejZDcfL59+eh9
+ LY8UcKRgrsEQix9OsQ1ZdXsDYNdSxRv8zuVOxLrqIAlLHifz8LlNKq/MDv9DYPi/
+ PmUCP2ms9vuyoXin/NbNvPj3qxaMQ2NJcBWABgxda1j1mdJF88m5Y9lsmsoZd3ve
+ QkZHzEqfIDa/bD7RsKSsfTeLvAgkxrqxd1rp8eMrwP4K+SsFu80cSOBIrt8vBlUd
+ NqJ/ij1nAIXWG9uMuXpl7pxBeMukmL2xgvtOcyIuibQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=vC7Ror
- ddrTtkl5XSu3EQ82emoF/2EGkkHGpE5i/5kjs=; b=B394w/YH++uV7RvrmQshj0
- 3mZkTBjA6iqCR3Kp72ZV9SeDwlpncHfZXrUrKmpkeoy41WnjjHAzInZGaRE2Dan3
- A4QYIAz/gW90lzVq2RyCkIxpJLanRZR5gAz3R2oS8TPYy5T+h5a0srVLbKDV9PYh
- 295DvUrt5Brs9in6MmwMfMhHO7YUW3dw47D09gdaMfS/3LhqIF241SEbOEE0S+QQ
- R3ibeW9dVDYDBiP3NhAwBqrCxTFTWwSg9b+HVqJDz8A1OvS0fcQ8Z/ptkV7/GnCa
- UIR6JeGdUHzQuFKNnclGYs6ioXqDzajBfhFob2XMC3OEdSaSo154jMYpwH6QbRfw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=QUaTvY
+ O0oDwTq9cN7oOBGebQG/u7GjzHfxgAwqxLCfc=; b=eATi+Oak+lNSYPkQbmfhVJ
+ cZzCh/bGvdBn4mxMjZAFFGjYJLEze8sDmZNeiFF4Zr48q26DVUL/r4Pm8Sk0wSds
+ CuHCFhbCmpwIWpPpQ05NdXyLnSpzqabJp4dYB5JP6CBl8p8f8WYGYRZj+PVce7MB
+ /t6JV9vBJorQO9Ene+b4XdDb1LWwTjIYDFF1bPuTNZpu3K55eav1hboQx628JQ8G
+ wNUqACvlOcLtJspgCM+F3Mg/psoB7/RaaBvtceQj9dMHcW5szF8BE+OxFpUYYuNc
+ yXKJ2IBcwqWRLwAx9BWw7IgnYJ7rCUgrhnw53ZzCPfv8NZwUCPA8rBF9StGT0UtA
  ==
-X-ME-Sender: <xms:Ehx9XzsAUvSPu_uVnJ4Bj4JKX1MPTu1Y7rWejebGvf9WdHzHFMX78w>
- <xme:Ehx9X0c3eVumqolnhmcRnSyKPA33SpasKigqcMn0yjZe-XStm1d_fCgrSOusjJcuh
- ORb8tMWrovptFqrX04>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeehgdegkecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:PR19X3TrKuAkIkAnZoFQTglSLvpkIpLlzXfhiIyLnuBsOK51hkiooA>
+ <xme:PR19X4yUtvBcDMUnLjJx7G0vYwsULmnHHmI8R595bM2WlrW5rPlPqk0YTgAvhN8L3
+ LEWPVLGnIEjh3w_Gpk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeehgdeglecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
  hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
  necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeeuieevgefgffdugefhvdffheetgfff
- ffettdeitddtkeevteffvdelgfegkeehhfenucffohhmrghinheptghlohhuughflhgrrh
- gvrdgtohhmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihii
- vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgi
- ihii
-X-ME-Proxy: <xmx:Ehx9X2yrGlmZbq-U4raeEyPM5zWtGJWLsfBHAyNJ5D-LMNQd1kKG8A>
- <xmx:Ehx9XyNx0dp_wmw01lZIcMDsaGSuoXStHmjj8_ZLj6hj4lvJgTadsQ>
- <xmx:Ehx9Xz9iWjnNIU2r5K42dPSb2r0AIAMVpaHaewsEn0sc96DQXAGohg>
- <xmx:Fhx9X9ldqnw38XjWRtwt5JkiPiIoBAuzU1UdbOH-zuEtm2ZG7HzLoA>
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduudefleeuhefhleehjeejgfeujeeh
+ hfdtledufeehkeduudevkeeiuddugfegkeenucffohhmrghinhepohhpvghnsghmtgdqph
+ hrohhjvggtthdrgiihiienucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushht
+ vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsth
+ iftgigrdighiii
+X-ME-Proxy: <xmx:PR19X81fo9dkIjriggvEbKadNfNcf6zb7ItUbrf7jn5cbq52PNpE5Q>
+ <xmx:PR19X3BkgfTeVJk_f6useVT-1Xctxn82VY77RYg5Z2_YPp5NU2hNQA>
+ <xmx:PR19Xwgo2E7UYkJl5KMhtwG6HFmvNiXTHu8S1YRB8nttVfCe1ktiuQ>
+ <xmx:Ph19X4LJfZitlXn1mxgkG1tH2IVIlLJAyG8_piNvOUi4Fuci5QbTYQ>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id CA3A1328005D;
- Tue,  6 Oct 2020 21:38:25 -0400 (EDT)
-Date: Tue, 6 Oct 2020 20:38:24 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 92577306467E;
+ Tue,  6 Oct 2020 21:43:25 -0400 (EDT)
+Date: Tue, 6 Oct 2020 20:43:24 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Richard Hanley <rhanley@google.com>
-Subject: Re: adding sync method in phosphor-time-manager
-Message-ID: <20201007013824.GF6152@heinlein>
-References: <PU1PR04MB2248961AEF87BA87C7749050A70D0@PU1PR04MB2248.apcprd04.prod.outlook.com>
- <CAH1kD+b=4NhQ=XUmtGXov2WErqLB1T=ZZBYgYBkuVLT=-hdfvw@mail.gmail.com>
+To: Sui Chen <suichen@google.com>
+Subject: Re: Request to create repository google-ipmi-bmc-health
+Message-ID: <20201007014324.GG6152@heinlein>
+References: <CAJOps0sd-YFr5P+_N0i78pd9akBJS6DP99wugKvUDOGpXw2pcA@mail.gmail.com>
+ <D355FA68-E163-4DA8-861E-7E9DB68F5EEB@fb.com>
+ <CAJOps0uX9K25NgXpi3M45F=pvvW5Am+9R=wYTLN0SZ2vPUcX-A@mail.gmail.com>
+ <EF663847-4E98-4AC2-8A8C-E37B853C131F@fb.com>
+ <CAJOps0tR5t4sJQX0-fhBJuKJSnQZJm12gWV9S0OYv4xWU7uzKQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="E0GIYtSzp7Op5bZW"
+ protocol="application/pgp-signature"; boundary="b83RC7qtkHpuKkAY"
 Content-Disposition: inline
-In-Reply-To: <CAH1kD+b=4NhQ=XUmtGXov2WErqLB1T=ZZBYgYBkuVLT=-hdfvw@mail.gmail.com>
+In-Reply-To: <CAJOps0tR5t4sJQX0-fhBJuKJSnQZJm12gWV9S0OYv4xWU7uzKQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,52 +100,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---E0GIYtSzp7Op5bZW
+--b83RC7qtkHpuKkAY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 06, 2020 at 02:41:29PM -0700, Richard Hanley wrote:
-> While we're on the subject, has anyone ever taken a look at using roughti=
-me
-> on a BMC? I imagine it could a really valuable extension to
-> phosphor-time-manager some time in the future.
-> https://blog.cloudflare.com/roughtime/
+On Tue, Oct 06, 2020 at 03:57:30PM -0700, Sui Chen wrote:
+> On Fri, Oct 2, 2020 at 1:54 PM Vijay Khemka <vijaykhemka@fb.com> wrote:
+> > If I understand correctly, protocol buffer will be used by daemon who
+> > Is responding to the IPMI request and connecting to this daemon via
+> > library call, then it is completely restricted for the use of protocol =
+buffer.
+> > If you are passing protocol buffer to this daemon then we have to define
+> > some policy here.
+>=20
+> The Protocol buffer is only for serializing the data to be sent
+> outside of the BMC. It is not used for communication inside
+> phosphor-health-monitor and will not be passed to the daemon.
 
-One of the problems I see is that there are a few different proposals
-for "next generation time" protocols beyond NTP.  Unless a project
-member has an explicit requirement for one of them, it doesn't seem like
-we should go out of our way to pick one of them.  If someone is
-especially interested in implementing one of them in their spare time
-though, they're more than welcome.
+Why isn't this part done from within an existing IPMI provider (ideally
+to me a google-ipmi-* repository at this time)?  I'm not especially keen
+on these details leaking out into other non-IPMI repositories.
+
+> >
+> >     Other than these two things I think adding new metrics to
+> >     phosphor-health-monitor should be manageable. I can start by trying=
+ to
+> >     add the IPMI blob handler to phosphor-health-monitor; my first atte=
+mpt
+> >     might not look very elegant, but if we find answers to the two
+> >     questions above, the merged result will look a lot better. Hopefully
+> >     we can find a solution that works well for everyone.
+> >
+> > I am looking forward to your patches
+>=20
+> Please check out this WIP:
+> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-health-monitor/+/37=
+092
+>=20
+> This WIP currently just adds the IPMI blob-based code to
+> phosphor-health-monitor almost as-is.
+> It also shows what we already have now.
+>=20
+> There will be some work to merge the daemon and the blob handler in an
+> organic way, and I am open to discussion with you how to do that. The
+> first step I think I can do is to put the code for extracting the
+> metrics (metrics.cpp, blob/metric.cpp) into a single file and share
+> that between the daemon and the IPMI blob handler.
+>=20
+> Another issue I found is I am not using the latest sdbusplus so I have
+> to comment out the usage of ValueIface::Unit::Percent for now.
+>=20
+> To build this requires 1) adding a pkgconfig file to
+> phosphor-ipmi-blobs (before
+> https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-ipmi-blobs/+/37133
+> gets merged) and 2) adding phosphor-ipmi-blobs and protobuf to DEPENDS
+> in phosphor-health-monitor's Bitbake recipe.
+>=20
+> Hope this WIP change illustrates our intention clearly.
+>=20
+> Thanks!
 
 --=20
 Patrick Williams
 
---E0GIYtSzp7Op5bZW
+--b83RC7qtkHpuKkAY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl99HBAACgkQqwNHzC0A
-wRnoKw//b8f/0znpPoxgTsS9DEMFbFFB8Aw+aKt/a5S3vGbWIiR5GiP+ZhIIElzb
-BcAD6kwO1AYKjfNaJQf3k6x4NdS62TuPtm8jfRHLQg7FkPDRio06256ie+CJTUPW
-3l7uCv+QxFhS4MWRugJrdxX09O0ORMXPteduNEHa82INYAHuhur1Vo7OyUR1httR
-eqSQsTcIaWiFFMgQXZZQyGNz5OgOuJk/26ffDgE4GEedyG+as6RP86t0VgU174us
-j8jY3v50V0Zjn3BfBBUruPk+dTm/9I8jk8UUtmwfOE6CHvwj5i/VYGkJhhzFL1G0
-UaOKoPDn4ebTk1Vp9mYNqD2E5RbgfLvbeayUs69W6xpMNpfLWIuUjsRYMwI7eVZr
-doBGz3X1DXSFiBKyF044mmd85UhAViyaNQUKHdX1L4C8SKLI/5dQCJFVhy+Y3S5X
-QD6NoRPiiPzIxN5KnVsk4jmOvVnbe+Mwo4CpRHwbuAJWFvgW9fXy4lP7XWUnjkJE
-dIR9t1zge7SRSeSL85cVBvtA4p9Wi8qrk2wDObP+5hXD93UKBkGO3iTXTZUoZHAD
-9ztPzuc3eNws6ZlHF//BTcjfY/LeCxKrFPndw9qUfAYQLXQKYKLesePq91UsAUZp
-x1mHBGiPYsw4d23E6eywv0gezCQcbpIPbL1Cl6R/uzCOBYJXQS0=
-=7ZfG
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl99HTwACgkQqwNHzC0A
+wRnzXQ/9F8kfyVzJdUmecP5VFEyAWup1xKbPPU3rGYZ1S+jeL3w0LPikQfguppHU
+wm02KsR7WkwtGG63SAyIC251sBXMSF8bJuwMwz2zm6x8aPlVjLKpQ/sH7qQ1sG99
+DWssAFZG6yQCHdxS/+4CN1Kt2AyF02E5cOGR/OsBfsG4FoWegVs+TKg3PyGij5ok
+BtTSxugNaWQ6IeQ+mZtsto68JgXmMSIulZhkka+kar5+B+KyXpapG0ODUgBXRdaN
+kyC/qx9MYWXqevgqK/MER6iMwrGaowIJzshykbYOLgZtP2CLUgdYzG2qP9qy+Skc
+oqm9N+PITQFLVbMhZp178z1HKFErkrbfH8MrkXot7Sz6HRt7MeDbmvhR4LzSz7AT
+mZr6/SvZcTbqZDHup0Hji9m6o4lmUoWpmwZLx5d7z3sQexbJKKOkyiJ4eUDXPvEh
+4EJ9j3PEaJ25WUo0p0JoOzNpowpp5UEmHOVOfSjBxVVJC32iSN2oJ62q7euF1GEc
+avyIYNT5EmEMhfWRy2rOy7uMCjMLZKhAD69w/HhI2aeA7c4kqrQSWmWNscNAXfm9
+FhCXI5GDFH9xgek8KynDgJS1V0qUmkMv9lUFe2fQhBD2xYjZKs/bVTYptH7Cucfq
+vIEPZz9tuv7U6UHeGc2pPUCwcbW4NNVqsAS6sh17mkVXIOYmPEk=
+=wylh
 -----END PGP SIGNATURE-----
 
---E0GIYtSzp7Op5bZW--
+--b83RC7qtkHpuKkAY--
