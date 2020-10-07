@@ -2,88 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03EB5285682
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 03:52:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AD6A28568B
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 04:01:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5clK49LKzDqGM
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 12:51:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5cyp4NTNzDqGh
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 13:01:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=qiPFrLOT; 
+ header.s=fm3 header.b=gc3HLM3s; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=aUrekmkM; 
+ header.a=rsa-sha256 header.s=fm1 header.b=LVzgcW4j; 
  dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5ckS4jHLzDqC7
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 12:51:12 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5cy839ZszDqCc
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 13:01:20 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 4D51D5C0095;
- Tue,  6 Oct 2020 21:51:09 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id 3AF24A1B;
+ Tue,  6 Oct 2020 22:01:17 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Tue, 06 Oct 2020 21:51:09 -0400
+ by compute4.internal (MEProxy); Tue, 06 Oct 2020 22:01:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=2BFFPIZBDEVQcRQ6h+DL2Zu7i/A
- wmDq1WfbGyIOtWV4=; b=qiPFrLOTI4VUFj13pKI26bQQwyeV8flH65nA8m6tcrk
- rhNTTvNJxbBf1sTO0bQ4hNGx+HaPqgh6LghDHNeHQlvLTvFKhYHjM6J9fyjJQw6w
- f50PadfHfIheqKh64FlI+rYUw0zRrhnK0zc/zuuxJqLKRl06YElhH+o9cWAMW6W9
- EBQbq8HBwZqDJ25/gpXaBCQrK9m8+9YLQVz1G9v4oPCg5TCoSyxpiLcksP44KOet
- pTVn/ySKTY+6JxoamBHrDPoxDFJJelxPnXRFunpYx/r1z2rxzGK2c32dz2TMMglB
- gRxnx4RiQkn29F6XDZAz8OD5w6ll4EGhZCASKdDGElQ==
+ :content-type:in-reply-to; s=fm3; bh=XGoewdv4KKtjMEWAYX9w9zZIVyS
+ ZiEwMFfJGQvcOtvA=; b=gc3HLM3sfKU6JfgOQRPJIC5ZdPlkZtc6fsbHQqSTPet
+ qE5QyN7OtS+w4kwAiD4MqLUumw3yADTOCj8eq+TAhIdtYksAQ21ZJHOepA5QFGCF
+ nvngGv5eo8ub7FeVF/izLpqCk30BPdqsIpfAo7pdd8ocJm4aQXWYLOLnf7Wb4l4+
+ KJMW5Ms7oLvV+N30bWb16beR978T0+6fZG1YS0yUUzDVQUj0Vj8Nn7TCA9TtEgMY
+ mojDWk2s0FzkHBBJBdvuCt/F6oGfYIlgeNbLrA8KBZbCEXNepZf5GqbUAfifyEvr
+ hM2UCxqbDNP+XWJQjoAthbO/97Q/a9y5EINZBGAgJMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=2BFFPI
- ZBDEVQcRQ6h+DL2Zu7i/AwmDq1WfbGyIOtWV4=; b=aUrekmkM2rhgPt9MB2vPSW
- 63UgRlWOX6hGiIeHHtdu49kaO1URkVOFe0QNBmKQ+g6Re/mtoloGVnl9LzLrRIGQ
- Xdyd4xzZxR7sTmZ6k0iAFKJ0iYa3ng0nPoH9YW4+hm/A+EL8QsJKlZBsrfaZGFas
- TReAmMPqJIY3IzHzQRZp9JltJn/7g4l8hY9ty0EhnBXVdLbp39pG8tKY0bj97p5v
- YfxLUErQmyB2Hsl5cJsmusGTQTpze7v8D2MSdobQqtTSUS/nT6LIoRqbXtXSpkda
- RoU18eBOKX4CtJgLlOltK05zpWud16nYAPuTwOIMKIY5Ox5NerQF3SR4Bb0HWb7g
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=XGoewd
+ v4KKtjMEWAYX9w9zZIVySZiEwMFfJGQvcOtvA=; b=LVzgcW4jTxJ5FekvalbBxe
+ HF/pUGRvNVSfCFCSqInqTxA1sc/IwT0ijO2ZjL1OMxBFrKcYl8VYrGGKXrDwogg2
+ kzAIqFFc5960avf7tNB1xZsx3s0vo/k+E9jZQTEyFW3Zi8LEAMnbQVng1uCa/Zsg
+ +g+yrgMQ2f6rT9sOpobn3lunMD3HMsFX7BJze90+zi1huZfO/bBDpFkuxQGyim6T
+ lwyxGP7iKPnV7IKmM60yTlfxnSAXepN4AiFizhLItR2Dhy88OLV6XaEYwLTAsJLs
+ b2h6NA7fh38iqtR97SSHQm2Os8pP5VBOF39uPWnH0O9AWmXoh/p7onkQV3OTwl7g
  ==
-X-ME-Sender: <xms:CR99X3QYL8EXkHK2BZ-au1_sM9PDiPR4gia7x-OCZDLtcGixu7jbaw>
- <xme:CR99X4y96_v4GdzQp9VEtdYQ7HFuBgrgEOjMI5IpYNxcpO4Npw6XqW0akQm_bxwZ9
- ZtXtww1P1Jnt0qY06A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeehgdehtdcutefuodetggdotefrodftvf
+X-ME-Sender: <xms:bCF9XxnEjRab1sCGonKO8PGO-MbsheQ4MAH_m28HKatpkTZa19EF-w>
+ <xme:bCF9X80QjbXgZW9qX90VzCjAttm19aImpE4yyC0ghnxP8umX_nlZhLEmrXfKImEf7
+ EZaFGm11OqZsi-S42o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeehgdehgecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ hrlhcuvffnffculdejtddmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttdej
  necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegheehfeffgeekveehtdfhgfduhfeg
- fefgtdehhfektdelffevkefgueffhedtieenucfkphepjeeirddvhedtrdekgedrvdefie
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekudeutdefiefhheefheefvdejueej
+ ieektdetheelvdfhleehkeegvdeiveekhfenucfkphepjeeirddvhedtrdekgedrvdefie
  enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
  rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:CR99X83UGywEdd2JYlkTc_hcXZoAHo6cq5ksc3Ntds3Np9e5mK6kxg>
- <xmx:CR99X3A16QAmgce6oY2zGgchGWUyal8IxmAtknFVgweaxSZrMVO9FA>
- <xmx:CR99Xwgl0ohhiEsQqCRRd81WWXqIa0ShIUFZZfu9m8WfVXqmAGtGXg>
- <xmx:DR99XzvLCTfoYx6wX3FPQH-ZC3z8V23RmaoFXeb3GZoldPITZOZANQ>
+X-ME-Proxy: <xmx:bCF9X3qthESQxVRoCftnpvDWVAtsO0dpSxLc8ss9dhP1gttYHpJw8g>
+ <xmx:bCF9XxnltF0BHALDdxN02WKAeuVbwhUx3C7jcO2tuXkjY5OINWo5XQ>
+ <xmx:bCF9X_3FKYl48H8XzSILqotKApF0scb7S-T4SuKIQBeXvB1M36G_0w>
+ <xmx:bCF9X0iwAzVBWvRxl6qlpSGjzfqm5jYV1xuzbyg6xdCQwxxt3clvcw>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 1633A3280065;
- Tue,  6 Oct 2020 21:51:04 -0400 (EDT)
-Date: Tue, 6 Oct 2020 20:51:03 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id C33983280059;
+ Tue,  6 Oct 2020 22:01:15 -0400 (EDT)
+Date: Tue, 6 Oct 2020 21:01:14 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: "P. Priyatharshan" <PriyatharshanP@hcl.com>
-Subject: Re: 12v slot AC Support  in x86-power-control
-Message-ID: <20201007015103.GH6152@heinlein>
-References: <TY2PR04MB3311FEF038529B122E1123DECA0D0@TY2PR04MB3311.apcprd04.prod.outlook.com>
+To: "Verdun, Jean-Marie" <jean-marie.verdun@hpe.com>
+Subject: Re: Injecting public key into openbmc image for CI integration
+Message-ID: <20201007020114.GI6152@heinlein>
+References: <FDDD3DE1-6228-4BFE-BAA2-96CC549D2CEB@hpe.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="3LDjyuwMyYgFmzqN"
+ protocol="application/pgp-signature"; boundary="ekVaZR3ysCuYLl6k"
 Content-Disposition: inline
-In-Reply-To: <TY2PR04MB3311FEF038529B122E1123DECA0D0@TY2PR04MB3311.apcprd04.prod.outlook.com>
+In-Reply-To: <FDDD3DE1-6228-4BFE-BAA2-96CC549D2CEB@hpe.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,62 +95,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "ed@tanous.net" <ed@tanous.net>, "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
- Vijay Khemka <vijaykhemka@fb.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---3LDjyuwMyYgFmzqN
-Content-Type: text/plain; charset=us-ascii
+--ekVaZR3ysCuYLl6k
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 06, 2020 at 04:43:27PM +0000, P. Priyatharshan wrote:
-> Hi Vijay,
->=20
-> I am working on a patch to support  12v slot AC cycle in x86-power-contro=
-l.This can be enabled by configuring slotACPowerName in json config file.Si=
-nce you are also working on similar kind of feature in x86-power-control, I=
- would like bring up this discussion on mailing list to understand how thes=
-e two features, and the design you proposed for chassis reset are intended =
-to work together.Kindly go through my design changes below and share your t=
-houghts.
+On Tue, Oct 06, 2020 at 05:45:07PM +0000, Verdun, Jean-Marie wrote:
+Hi JM,
 
-Can you expand on what a "12v slot AC cycle" means?  I can't decipher
-it.
+> I looked into openbmc and it doesn=E2=80=99t seem that there is any stand=
+ard recipes to create a test user and inject into the account a public key.=
+ Does I am wrong ? I wrote a very basic recipe to make it happens, and was =
+wondering if it could be relevant to upstream it ?
 
-Vijay was working on a complete power cycle of the entire server, as if
-it were unplugged and plugged back in.  This was done as a different
-object (chassis_system0) from the object representing the host (chassis0).
+Yocto already has the 'extrausers' bbclass, which is typically inherited
+by an image in order to add additional users.  What you are asking for
+is slightly more than that because you also want an SSH pubkey, but it
+doesn't seem to support that out of the box (it appears as if
+EXTRA_USERS_PARAMS is a variable containing a shell-snippet, but the
+bbclass explicitly prohibits arbitrary commands).  I think you could add
+a new package to add your SSH key though.
 
-The chassis0 typically models the power rails that drive the host
-processor.  The power cycle of those is already the primary feature of
-x86-power-control.  Can you expand on what the differences are with the
-system you're working on?
+What I would suggest you do is:
+
+    - Create a bbclass that:
+        1. leverages EXTRA_USERS_PARAMS to add your test user.
+        2. adds a package to the image RDEPENDS to include your test ssh ke=
+ys.
+
+    - Submit said bbclass upstream here.
+
+    - When you build your test images, append to conf/local.conf an
+      INHERIT +=3D "your-test-key.bbclass".
+
+This will give others a pattern to follow for other networks /
+configurations (by upstreaming it) and allow you to build special images
+for test that include what you want and mostly leverage existing Yocto
+hooks.
 
 --=20
 Patrick Williams
 
---3LDjyuwMyYgFmzqN
+--ekVaZR3ysCuYLl6k
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl99HwcACgkQqwNHzC0A
-wRnQFQ/7BK4Dfx1v4V4HnW89a1AEtdpSWlKpH4bFGEg9jU8UjguN7xq54MEzKJwA
-LzgOt4qPNBmOQ0Beq89wIkroinB4jnl70ZN7VQd0osK0tzbnM6ylRnJ5C2CqMSst
-v8xrMeE1Ty0cAEJ4nhH+Zs9SkcGjCWjjnHs5ZutF/BLbB7Y1V6EDqt71pHKnYl3j
-BeqIbE6kA8U+r4wUXzqrGE8nL/V8jrN5kMLzkKQkarV+uklLF+Z8UEH+y8mbkN4d
-2ooqyuepV/G5Ze3OI57/tDiwqKIQHK2CnQxjfa52POyo58NiVWqzduXvA6M05i8i
-GhT9icUieqiYxUtAPuhr9WfNgvbmcwQYaVFhAF2EpIBOFkIRJ2UP0yO6yd3KgZRw
-R+kdhwB0z1cZtr9gd6qfHua3dKsalxH9bxnRIAiuUA2sDksNJAOyVJS9BnRCZaLg
-vYuUNX5wDj4q+iAv8kwWdDLRLzeRqemQIb5gNSWjfyGZLZM+yKspXBuxYoYWAmrq
-hNwToA8IsZNModkX4OGg5s7shdLsvLHGo7/FDqDq12x/UELw7sUlBSELQ3zU1yIL
-V72lipDliGU2+RrUBO1J6BZuKo/D7VYGJ8g9ETHCjz6C20Ejq37pw88X5/KXnycn
-dcl5DRhwKnLo0X/UgA915xCwPnG58IdxYUaBLM4Va+VfFF4nPLU=
-=vN4t
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl99IWkACgkQqwNHzC0A
+wRkFgw//Ufqunwi/j/fuLM+eqGjLzIqDX3gO9eHBSPPsKSYjZnzP+1LlzS6xbbK0
+MfxsyNhhG4js5XX3RjVRy+gcz93RsSgzFqvu8/uLWRcBwlOd03w79xkO8j+q6kgv
+s8nO8OEe0wOZVecH5zOHvctNb5xKcgoSoOCu4w38y6a2c7C+rF6dDLkne1wKoN++
+hBbzSNehrMIuJZzpBH/RhuYCt8rCQgkyvPmOyxkp/ImtxRBehZ8qndFDOSkPFPnj
+T67Z6xb5BCE88BA2pwx4kxMxsTFFWXiTbpq6pP+cDp/VWbJGVVsFIzCnFuO+8/Vr
+gwtpOqNfLK0y0F4uBeyWeTFizsnnubYZtQXmtEqpei/hy73VXycDt/WNnqtoIfp4
+xh4TX4VdKaV5pQ8eREsNJOFM/NIIlF+351+QtXdwrwG+P2CDxECLnoT/03t6p/UH
+TgwxnlFKBUSwuyGbjDdKUESS6SVAvF0dq7rTM9en0GDzkHi0B5HwV9KBADKJIRmf
+dE+HAYOXofA1B1/xCeRdnPWHaliMBwneul9bQcg6HWh+Y7bB1q+nUPyTmn9wJKD5
+1RmnLLltcyJk1LNK5QvxsLC0uyym43KzXz/vO12zcpLzh8lxa1l+psiDb9Ir8oE4
+s2HNjMmfWXUFvz6tXCnVUBmc56UUjzowAuppiXD7T2pweO4uU0w=
+=GW/W
 -----END PGP SIGNATURE-----
 
---3LDjyuwMyYgFmzqN--
+--ekVaZR3ysCuYLl6k--
