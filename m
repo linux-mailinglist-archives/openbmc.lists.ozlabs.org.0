@@ -1,138 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A48FE285695
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 04:11:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB5F228582E
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 07:40:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5d9n03wszDqD5
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 13:11:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5jpr5dyWzDqN6
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 16:40:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::843;
+ helo=mail-qt1-x843.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com
- (client-ip=148.163.143.35; helo=mx0b-002e3701.pphosted.com;
- envelope-from=prvs=0549a6259d=jean-marie.verdun@hpe.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=hpe.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=hpe.com header.i=@hpe.com header.a=rsa-sha256
- header.s=pps0720 header.b=RaNMuIkq; dkim-atps=neutral
-Received: from mx0b-002e3701.pphosted.com (mx0b-002e3701.pphosted.com
- [148.163.143.35])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=deGgsi55; dkim-atps=neutral
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5d8v6K4QzDqCq
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 13:10:35 +1100 (AEDT)
-Received: from pps.filterd (m0150245.ppops.net [127.0.0.1])
- by mx0b-002e3701.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 09728jBT021674; Wed, 7 Oct 2020 02:10:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hpe.com;
- h=from : to : cc : subject
- : date : message-id : references : in-reply-to : content-type : content-id
- : content-transfer-encoding : mime-version; s=pps0720;
- bh=gn5m25v0/M6wl2BQ8cMAvFJK+QehHXq7RrNspES96z0=;
- b=RaNMuIkq6g2rj5MrsNsLX+xF49gqDbiarByaMzS5PA1zHtp2bC/HC39iyoS2SkPYJcKr
- ofLMC5TbvZQpUfYmBRUZ3pttgKFVXJY3Iigj6QkrXOe1Ml4F0G1Y7gWe4LewLdm12l8B
- TlHUhoAl4NM2hKdbj6oXCdG6Nd4GhN1JshSV/vOxzrlFpt2V5KynZCMz771SaU7KpTv1
- FQCAf0Z9entkWDQu5951kVFfdImOR6QlvTWOY33ppukTp/0G8FWx28fTjLgYaOzpTn06
- 3basmXvYY5wrwWQyhS3ORnVE3a3ZmtkHPvkUB/BUaTRdvWxwLNJa5Q6Fjqpq0ziXOJT1 ug== 
-Received: from g2t2352.austin.hpe.com (g2t2352.austin.hpe.com [15.233.44.25])
- by mx0b-002e3701.pphosted.com with ESMTP id 33xjge6nss-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 07 Oct 2020 02:10:31 +0000
-Received: from G1W8106.americas.hpqcorp.net (g1w8106.austin.hp.com
- [16.193.72.61])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by g2t2352.austin.hpe.com (Postfix) with ESMTPS id 85DC29C;
- Wed,  7 Oct 2020 02:10:30 +0000 (UTC)
-Received: from G9W8673.americas.hpqcorp.net (16.220.49.32) by
- G1W8106.americas.hpqcorp.net (16.193.72.61) with Microsoft SMTP Server (TLS)
- id 15.0.1497.2; Wed, 7 Oct 2020 02:09:56 +0000
-Received: from G9W9210.americas.hpqcorp.net (2002:10dc:429b::10dc:429b) by
- G9W8673.americas.hpqcorp.net (2002:10dc:3120::10dc:3120) with Microsoft SMTP
- Server (TLS) id 15.0.1497.2; Wed, 7 Oct 2020 02:09:56 +0000
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (15.241.52.12) by
- G9W9210.americas.hpqcorp.net (16.220.66.155) with Microsoft SMTP
- Server (TLS)
- id 15.0.1497.2 via Frontend Transport; Wed, 7 Oct 2020 02:09:56 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dmU1DVam3dGPTSBZ4tNGbHdx9ACmYAKKPxg6b5hbd2dci3eCN57o8NXvoeg+OQyGKpMiPOcwYxldUNNk611QA90lYcPnOVEiauHQjnrRhDcmkFE+4SH/imyiFbcuWhgHoJLIZ9WzYy3huuHepQ3TCqryLOanoF+0K72Qa1t/5Km49QpE1ggrf7zvuA6QFfw727L6O2WdjPO/ecLu3pfFra4lVdJjqpdLkPk9Jmrq4X9hnAKE3ZFwzOWbvhgXdazJ9zWlf5QLWkOrrxSfmEkKL7XgeFQuGQXGiM+WmUA4EYb3Hphj2aMoM4KJFC3a8t/T9yv7dSY71xQjWixKL2s20A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gn5m25v0/M6wl2BQ8cMAvFJK+QehHXq7RrNspES96z0=;
- b=aZxHtkMbR2YuOuL/72t69Sz9Rlm0kQ54hMqgtUl5bgN8PGsAiBOKF8DTR+QrBCa1ToIp6edOCYKJlxiUyfz9VqQURdY2ZoutSdlREkV2RAuaExrM05sOcqbAu1mbq003z8hnNyik1BC4Wn8XlrClu27ODcvE+TSszrrvKI/11TjEw5t4cvSqDC8r0g1+xhlhKC3To+W+uMNrAclhv/mV+x8i7dFglUxvAHaZXXvNzeAi/arOLOUgRCcr6EdUPbmmYgNaD6gI2+lJznRxJFX2mfPEij6infcok8R/ozl535eGuplHu4PDcJo+fwkrcGSGPlnXhIN2+mzo7C+epxirEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:7423::13) by AT5PR8401MB1252.NAMPRD84.PROD.OUTLOOK.COM
- (2a01:111:e400:742b::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3433.35; Wed, 7 Oct
- 2020 02:09:54 +0000
-Received: from AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::5cca:ec38:7520:111c]) by AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::5cca:ec38:7520:111c%11]) with mapi id 15.20.3433.045; Wed, 7 Oct 2020
- 02:09:54 +0000
-From: "Verdun, Jean-Marie" <jean-marie.verdun@hpe.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: Injecting public key into openbmc image for CI integration
-Thread-Topic: Injecting public key into openbmc image for CI integration
-Thread-Index: AQHWnAhtZcyfngjJ4EqLHQuK9jyaxKmLY2cA//+NEwA=
-Date: Wed, 7 Oct 2020 02:09:54 +0000
-Message-ID: <458993F9-8F63-47BD-AE80-111956BF8847@hpe.com>
-References: <FDDD3DE1-6228-4BFE-BAA2-96CC549D2CEB@hpe.com>
- <20201007020114.GI6152@heinlein>
-In-Reply-To: <20201007020114.GI6152@heinlein>
-Accept-Language: fr-FR, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Microsoft-MacOutlook/16.40.20081000
-authentication-results: stwcx.xyz; dkim=none (message not signed)
- header.d=none;stwcx.xyz; dmarc=none action=none header.from=hpe.com;
-x-originating-ip: [2601:646:8600:a:4c30:5992:dfc4:ad95]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-ht: Tenant
-x-ms-office365-filtering-correlation-id: 524f368b-da94-4cfb-7023-08d86a661539
-x-ms-traffictypediagnostic: AT5PR8401MB1252:
-x-microsoft-antispam-prvs: <AT5PR8401MB12524F381711242B2D804782A70A0@AT5PR8401MB1252.NAMPRD84.PROD.OUTLOOK.COM>
-x-ms-oob-tlc-oobclassifiers: OLM:10000;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: sYC/auphg/t+5paxep8t1/XO2GlT0vHFqsum8nFMvyJDxnDXeJRw9ccHluy9G8P6XgRnzgRSruP9QKaZbfBKcbOr+nL/w/9s9A6MGqmi0jW/ltrKu/DhMuzvDYDevjHQBpezzbExFUzHZDzFM0Mhozb6P8bq+VjoZmkpwTCPJ6UwxyfsCc+w8a9nunlySkSZDDyUy//9jKkPDmADQgXPokTVcPj4TaY402ZLnCCI4TwXqP42Y6m2rXSmnsCeWdIcVPwktUea7abrMG9a6vzEt0jxu9eFMYvLrSsxnG4eDhlR1wttQLoSaNE3jAP2ehBsRKb8QyaoQ7oFwyBCTnhndA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(346002)(366004)(39860400002)(136003)(376002)(396003)(478600001)(66946007)(4326008)(36756003)(71200400001)(316002)(6506007)(5660300002)(6486002)(6916009)(8676002)(186003)(6512007)(8936002)(86362001)(2616005)(66556008)(64756008)(66446008)(76116006)(66476007)(83380400001)(91956017)(33656002)(2906002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: 95qVyQubdqKjP/tcJQ7txVYAkBmA2uha2CWNmAICfSf79NOH/ieGmt9tNQOG1fWseY/Lp2+l/bLQj2yoCqN6SAMRLDR+2foBfNRYURLOptt4kPdi+R8TG1mC1xaMwJyx3+jIaKmcugkVwa6vUDjK1wLJvYXT2AxWNwK+aoTc/CXUeLWN8XGz+UcOzeywOXottNPMagWQXZV4Uw5ZsuWy+mQSfJzVOTicxz+lfinyOjVWeEbuP4Z5j/G5/HLbecaqUTRYnr7sNUYBmFYJoLIU7rCoyLGu8ftWKtnHeRtiNpbECAlEXWSgDGj4B+XfhHWfYZ0NwGsFjA1fennxEmvlGwbZIt+K5FyPlytcxCcBycId7W2VZLEghZx1K5StVBSzpbnFsLz5zxk++3srluRI19c5a2Pg1qFqw3nz4shJE8iZ0T3oQtM0gntX+tEDF1hGw2NJZjsRVhOkPJGvS0lQ69vn9t5yOd/nO7mR8KwKnEN5mByzSpOJwi8GO1h4LpWEER+MEFObNE6Xk2mYxzbwZjCq6Sy0pkd+4pKdiuKmREuW9rKsTsuqorvZO2gxlFmtOlUg7x/wLebzLrxDSRkQqZku3ziviTHZxYV+NN10QMkQy9XbKSmQOsqvYpSzlHn0Qkyg5MslUf/AOXwt2rM4EvkklKh4RxPzIhnPcernS7vNlOQm/QzuRMRoZsoIt8+tlpQXREydAqEHLGDRxkAXJA==
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6F75A0BA492586469B43F9A31275527D@NAMPRD84.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5jp61KhpzDqMT
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 16:39:38 +1100 (AEDT)
+Received: by mail-qt1-x843.google.com with SMTP id 19so713604qtp.1
+ for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 22:39:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=4h2e8q7kzJs7W2jisAwXwY3bk/4bjiYGeaykMr1P4xI=;
+ b=deGgsi55ah9dh6JM+RxJf2qP8hz2ROw/WEhhKODgGl9Nt1oPO8v07gcIalJzz7QL1G
+ w8hZQEvkEx5HabRDBweQ0EzaV9g3tJh8u9Ypafm6WIgbEN4tUs222eDnbM6WNeMMm93J
+ DbNc2HSRgWOOYhO+OzXi7uVtCxO9FvJwvj6/A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=4h2e8q7kzJs7W2jisAwXwY3bk/4bjiYGeaykMr1P4xI=;
+ b=a8HiQQGi+/ybF9S59FZRP0clHuYFA89+kMkfwDLWIuk12jMh7NYCOlcPYjhFi2dugp
+ zJrPd4yEOthDE5Y9pX6+oXZQIqjnvu0LhPej/sPDuqdTuKE3wb0+X2JeeMa/iFLRNYZd
+ e6A+v0GTcECX9IJVdR0DKmySVYIZfj98xYmzcO+sUKHood2pf3JbmyD6jc9H6D2BB7Ul
+ yRXS4nVjevkOTiGSewin/qMUu8qfzuo+iXQOfDwnpJKXGmUMLDl9mICrPLBodNYgBwMy
+ heUrvYh11ZLivYNi4WDkn1llQcEMHZ0J1u5gjEMMYSeSmZCVyWTCiPsO1Fi6VmVr48QK
+ BJhA==
+X-Gm-Message-State: AOAM532Mvhq6j3vNhkJFRipJyjD3MQUwuu4NtPpja4c0CW7fq3shwbzO
+ B9zyzNTcaY9jJuHJ41YsYc0rzVKRvwJV1xW0Nr0eKxND
+X-Google-Smtp-Source: ABdhPJzzJAGO8SCzgkEgnW4CSkeUd9k4hv/74ziMC146cWX+lX4kptgSws0nvysdwfzdcA5MJODqpXX2C6lVMIHELMU=
+X-Received: by 2002:ac8:48ca:: with SMTP id l10mr1607085qtr.385.1602049174200; 
+ Tue, 06 Oct 2020 22:39:34 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AT5PR8401MB0641.NAMPRD84.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 524f368b-da94-4cfb-7023-08d86a661539
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2020 02:09:54.6660 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GIMwGsZdsn5+ZnJLQrb9Vfya0mRLNGlVOZxHaWuGIodnIUbd+SFLuVm+lHMwHpyHae9Cf5ECdfUeEyW5bEQKDxq1GLaFegMp/y7qofC71H0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AT5PR8401MB1252
-X-OriginatorOrg: hpe.com
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-10-07_03:2020-10-06,
- 2020-10-07 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0
- clxscore=1011 lowpriorityscore=0 phishscore=0 priorityscore=1501
- adultscore=0 spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2006250000 definitions=main-2010070011
+References: <20200926212734.23836-1-zev@bewilderbeest.net>
+ <20200926212734.23836-3-zev@bewilderbeest.net>
+ <51512c43-ee82-17b5-71c4-35849b1f0922@linux.intel.com>
+ <20200928195423.3kftebgltdmpronq@hatter.bewilderbeest.net>
+ <28b289f1-0ef0-2432-f71b-0ca4420a39e2@linux.intel.com>
+ <20200928210917.idrpngkpduwxe2rf@hatter.bewilderbeest.net>
+ <b79f8dfb-8257-943b-3c2b-062840aa2515@linux.intel.com>
+ <20200928220124.k47kocdvi2ahgtc6@hatter.bewilderbeest.net>
+ <CACPK8XdzjEhxKHbajMXbMpktOAhm_xFqUW7rY67WdmQ4p8PXPg@mail.gmail.com>
+ <f4185310-6695-75ee-df3b-41b89b0baac3@linux.intel.com>
+In-Reply-To: <f4185310-6695-75ee-df3b-41b89b0baac3@linux.intel.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 7 Oct 2020 05:39:21 +0000
+Message-ID: <CACPK8XdbFmAZqwezOJRFffdVmCK9PHaXSTgYZfTTSU=t2RnYoA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] peci-cputemp: label CPU cores from zero instead of one
+To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,40 +78,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Jason M Biils <jason.m.bills@linux.intel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Zev Weiss <zev@bewilderbeest.net>,
+ James Feist <james.feist@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgUGF0cmljaywNCg0KVGhhbmtzIGZvciB0aGUgZmVlZGJhY2suIEkgd2lsbCBmb2xsb3cgeW91
-ciByZWNvbW1lbmRhdGlvbnMuIEkgZGlkIGltcGxlbWVudGVkIG15IGluaXRpYWwgcmVjaXBlcyBi
-eSB1c2luZyB0aGUgZXh0cmEgdXNlcnMgcGFyYW1zIHRvIGNyZWF0ZSB0aGUgdGVzdCB1c2VyLiBT
-byBJIHdpbGwgaW50ZWdyYXRlIHRoYXQgaW50byBhIGJiY2xhc3MgYW5kIHByb3Bvc2UgYSBzb2x1
-dGlvbiB0byB1cHN0cmVhbSB0aGlzIGNvZGUuDQoNCnZlam1hcmllDQoNCu+7v09uIDEwLzYvMjAs
-IDc6MDEgUE0sICJQYXRyaWNrIFdpbGxpYW1zIiA8cGF0cmlja0BzdHdjeC54eXo+IHdyb3RlOg0K
-DQogICAgT24gVHVlLCBPY3QgMDYsIDIwMjAgYXQgMDU6NDU6MDdQTSArMDAwMCwgVmVyZHVuLCBK
-ZWFuLU1hcmllIHdyb3RlOg0KICAgIEhpIEpNLA0KDQogICAgPiBJIGxvb2tlZCBpbnRvIG9wZW5i
-bWMgYW5kIGl0IGRvZXNu4oCZdCBzZWVtIHRoYXQgdGhlcmUgaXMgYW55IHN0YW5kYXJkIHJlY2lw
-ZXMgdG8gY3JlYXRlIGEgdGVzdCB1c2VyIGFuZCBpbmplY3QgaW50byB0aGUgYWNjb3VudCBhIHB1
-YmxpYyBrZXkuIERvZXMgSSBhbSB3cm9uZyA/IEkgd3JvdGUgYSB2ZXJ5IGJhc2ljIHJlY2lwZSB0
-byBtYWtlIGl0IGhhcHBlbnMsIGFuZCB3YXMgd29uZGVyaW5nIGlmIGl0IGNvdWxkIGJlIHJlbGV2
-YW50IHRvIHVwc3RyZWFtIGl0ID8NCg0KICAgIFlvY3RvIGFscmVhZHkgaGFzIHRoZSAnZXh0cmF1
-c2VycycgYmJjbGFzcywgd2hpY2ggaXMgdHlwaWNhbGx5IGluaGVyaXRlZA0KICAgIGJ5IGFuIGlt
-YWdlIGluIG9yZGVyIHRvIGFkZCBhZGRpdGlvbmFsIHVzZXJzLiAgV2hhdCB5b3UgYXJlIGFza2lu
-ZyBmb3INCiAgICBpcyBzbGlnaHRseSBtb3JlIHRoYW4gdGhhdCBiZWNhdXNlIHlvdSBhbHNvIHdh
-bnQgYW4gU1NIIHB1YmtleSwgYnV0IGl0DQogICAgZG9lc24ndCBzZWVtIHRvIHN1cHBvcnQgdGhh
-dCBvdXQgb2YgdGhlIGJveCAoaXQgYXBwZWFycyBhcyBpZg0KICAgIEVYVFJBX1VTRVJTX1BBUkFN
-UyBpcyBhIHZhcmlhYmxlIGNvbnRhaW5pbmcgYSBzaGVsbC1zbmlwcGV0LCBidXQgdGhlDQogICAg
-YmJjbGFzcyBleHBsaWNpdGx5IHByb2hpYml0cyBhcmJpdHJhcnkgY29tbWFuZHMpLiAgSSB0aGlu
-ayB5b3UgY291bGQgYWRkDQogICAgYSBuZXcgcGFja2FnZSB0byBhZGQgeW91ciBTU0gga2V5IHRo
-b3VnaC4NCg0KICAgIFdoYXQgSSB3b3VsZCBzdWdnZXN0IHlvdSBkbyBpczoNCg0KICAgICAgICAt
-IENyZWF0ZSBhIGJiY2xhc3MgdGhhdDoNCiAgICAgICAgICAgIDEuIGxldmVyYWdlcyBFWFRSQV9V
-U0VSU19QQVJBTVMgdG8gYWRkIHlvdXIgdGVzdCB1c2VyLg0KICAgICAgICAgICAgMi4gYWRkcyBh
-IHBhY2thZ2UgdG8gdGhlIGltYWdlIFJERVBFTkRTIHRvIGluY2x1ZGUgeW91ciB0ZXN0IHNzaCBr
-ZXlzLg0KDQogICAgICAgIC0gU3VibWl0IHNhaWQgYmJjbGFzcyB1cHN0cmVhbSBoZXJlLg0KDQog
-ICAgICAgIC0gV2hlbiB5b3UgYnVpbGQgeW91ciB0ZXN0IGltYWdlcywgYXBwZW5kIHRvIGNvbmYv
-bG9jYWwuY29uZiBhbg0KICAgICAgICAgIElOSEVSSVQgKz0gInlvdXItdGVzdC1rZXkuYmJjbGFz
-cyIuDQoNCiAgICBUaGlzIHdpbGwgZ2l2ZSBvdGhlcnMgYSBwYXR0ZXJuIHRvIGZvbGxvdyBmb3Ig
-b3RoZXIgbmV0d29ya3MgLw0KICAgIGNvbmZpZ3VyYXRpb25zIChieSB1cHN0cmVhbWluZyBpdCkg
-YW5kIGFsbG93IHlvdSB0byBidWlsZCBzcGVjaWFsIGltYWdlcw0KICAgIGZvciB0ZXN0IHRoYXQg
-aW5jbHVkZSB3aGF0IHlvdSB3YW50IGFuZCBtb3N0bHkgbGV2ZXJhZ2UgZXhpc3RpbmcgWW9jdG8N
-CiAgICBob29rcy4NCg0KICAgIC0tIA0KICAgIFBhdHJpY2sgV2lsbGlhbXMNCg0K
+On Tue, 6 Oct 2020 at 18:02, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+>
+> Hi Zev,
+>
+> On 9/28/2020 11:00 PM, Joel Stanley wrote:
+> > On Mon, 28 Sep 2020 at 22:02, Zev Weiss <zev@bewilderbeest.net> wrote:
+> >>
+> >> On Mon, Sep 28, 2020 at 04:32:31PM CDT, Jae Hyun Yoo wrote:
+> >>>> Oh I see -- I had thought you were referring to other existing hwmon
+> >>>> drivers in the kernel.
+> >>>>
+> >>>> As far as I can tell, all those instances appear to be numbering CPU
+> >>>> *sockets* though -- which as Jason mentioned in a call earlier today
+> >>>> I gather is done to line up with motherboard silkscreen labeling.
+> >>>> But in the code in question here we're labeling *cores* within a
+> >>>> given socket, which I don't see arising anywhere in any existing
+> >>>> entity-manager configs.  So I'm still unclear on why we want to use
+> >>>> one-based indexing here instead of zero-based -- I'd think we'd want
+> >>>> the PECI driver to match the PECI spec?
+> >>>
+> >>> PECI driver uses zero-based index for PECI command handling but label is
+> >>> user facing stuff which shouldn't make confusion to users. We can modify
+> >>> driver like you did in this patch and previous driver also used
+> >>> zero-based indexing but I changed it to natural number based indexing
+> >>> to avoid confusion between driver labels and dbus-sensors names.
+> >>> Any specific reason for the zero-based indexing? Any benefit?
+> >>>
+> >>
+> >> [Re-adding CCs...]
+> >
+> > Thanks. Please keep the discussion on the list.
+> >
+> >>
+> >> Well, as I see it basically just consistency with a larger set of
+> >> things.  Most other related numbering schemes I'm aware of are
+> >> zero-based -- userspace tools like 'taskset' and 'lscpu', system APIs
+> >> like the <sched.h> CPU_SET() routines, and the kernel's own numbering
+> >> (e.g. what's shown in /proc/cpuinfo) all number processors starting from
+> >> zero, so dbus-sensors seems kind of like the odd one out there.
+> >> (Personally I'd be fully in support of changing it to be zero-based as
+> >> well, though I have no idea offhand about how distruptive a change that
+> >> would be.)
+> >>
+> >> It also seems pretty OpenBMC-specific, whereas I'd expect we want to aim
+> >> for greater generality in things going into mainline.
+> >
+> > Agreed. The hwmon numbering varies; some attributes are zero indexed
+> > and some start at 1. More commonly we start counting from zero in the
+> > kernel, so I would expect PECI to do the same.
+> >
+> > If there's some userspace that depends on the behaviour of these out
+> > of tree PECI patches, then that userspace will need to change. This
+> > reminds us why the project prefers patches exposing userspace ABI are
+> > merged to mainline first.
+>
+> Okay. Not a big deal. The coretemp module for local CPU also uses zero
+> starting label index for core numbers so better match up. Thanks for
+> your patch.
+>
+> Reviewed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+
+Applied to dev-5.8.
+
+Cheers,
+
+Joel
