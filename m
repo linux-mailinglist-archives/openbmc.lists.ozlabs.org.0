@@ -2,65 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30C3F28682C
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 22330286848
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:27:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C640y3960zDqRr
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:20:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C649T15KJzDqQq
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:27:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::12a;
- helo=mail-il1-x12a.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2a;
+ helo=mail-io1-xd2a.google.com; envelope-from=gmouse@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=MSpHHAFy; dkim-atps=neutral
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com
- [IPv6:2607:f8b0:4864:20::12a])
+ header.s=20161025 header.b=iTMrK2/X; dkim-atps=neutral
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
+ [IPv6:2607:f8b0:4864:20::d2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C64060tKGzDqJY
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 06:19:31 +1100 (AEDT)
-Received: by mail-il1-x12a.google.com with SMTP id o9so3417425ilo.0
- for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 12:19:31 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C648m2wYlzDqML
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 06:27:00 +1100 (AEDT)
+Received: by mail-io1-xd2a.google.com with SMTP id q9so3655132iow.6
+ for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 12:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=7kB7dedxPUFxTFHVNq8XpO3tj6V+FGrYPxp7og40fl4=;
- b=MSpHHAFypOVJC3AhNniAhBcSOzSAS2meaN/Q0cxmgqQE0KzHCCp0Uhdd4Qu64fIe2h
- eriCQ5OZDolnZMdZR5j9x5dXCMBZnto72UcisqgITrCXqi8G8RdbGLfLkKauclWlKTBA
- d2LTu9QMbcj66ZgTPwOh7wNEEbUqb5iG0mcvti5xQDW6qRSZgpxVOnl8EQ8tn2GIx6z+
- BwFtz4o8bCUVmhkSf5azyfj8drMV++l5ILErwbA1Ci94GmhFcvibv0CWSjYWR++ZEuzN
- 218HCT/v/LjCajZJnVwZE+v0g+TCGpSrmzxqt2gII/1VxhEVkSX4Wc/0mT3uIqA2rmRq
- tJNw==
+ :cc; bh=SLvsyDixJ8QSAmvMcuiuAQNgjBCkcRGsNS0iwOdzBbY=;
+ b=iTMrK2/XQt15n8CE4P6lN8OI+ZekiL3X2G57OGaotK0CXv7dpnWlfbSZEiWy3RRSWj
+ G+/fbRFuSQEH14UE0J4cbHLEBm40xhJjsZJPZH2t2FvsfHpR6PDIq5k/io9kTUltu0YF
+ PMUW5oEsqqMwgEW+zjk2952K5u0T0yj5Y1H3cJLl7xaCTNdFcZ+dV+IDHLd+4jBxZSYT
+ c7FzFzMgYQNDaBxs2pqs508B++scODnEiYlMhP6lV4z8S+jwQP0KrjslasUjXzy+WzDY
+ 0IXvM5y337FMFBLJwZwVEqGZ/6JtWs82dphdfDUp0+CzTwoxWOa4r1LZ+3QKDD5bHbSQ
+ HBgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=7kB7dedxPUFxTFHVNq8XpO3tj6V+FGrYPxp7og40fl4=;
- b=ijlI0kEQDUpF9R6JllHZhq1tl27gVUKsL0waiFqale3gjd8DY3kscvv+mdtmZ+RKjp
- TW9ZvFTjTPZCUvY6L6dig0VnBMlrzdJUB1KuvKPS8h+16kUTCWW60F2FFz6+GFIJn9RN
- rMzkMMHTBYzio3eJQO6ea5bxx1SAHbPMjRieBKbKdZQj5eEgsMi2icTl3RFVjclLgDD4
- BnKXh/d6bI0bvRrUIhl5FotJMMvuXn7CP4tZJNRyS6r/EMg4Qfcl8QlDaschim6qn5uP
- 3yXP/mq0JS64G6nLfm87nMICDaV6ccEyEv2L31uEo4GfDGqxwUmh2TVY3zDp6ZZUxVmU
- GmZQ==
-X-Gm-Message-State: AOAM5317jJysHnhGGkiUNSbld/e+T5LQRjtZkgFWFIIWHjxThgKYnGv1
- tXbzuskqbm+3nQ5Q3JI9baqAo+Hyhhh4LbzpXe2MsnRdkRZcS2ca
-X-Google-Smtp-Source: ABdhPJwqotY7zApoDwWDniczuBs/3O1b/9x/qZxUHxWwmk0CbLribRKiKlIUWeXmNQeyQ3s+hHit0clCrAaL+B8qGMk=
-X-Received: by 2002:a92:9907:: with SMTP id p7mr4019487ili.200.1602098367467; 
- Wed, 07 Oct 2020 12:19:27 -0700 (PDT)
+ bh=SLvsyDixJ8QSAmvMcuiuAQNgjBCkcRGsNS0iwOdzBbY=;
+ b=cgvHYvO687k/hKH81egRjO/irivHvbQ4B/iqFzVwESvTg5bm/NWYIvQZnsf92efCic
+ cdgtkeX88HzOxdjdsNbcmeYZexCfpr8j7/Yfu7NKvMhNrn43s4xHzlHhGE0ypPoDcmlC
+ XBIZ47vOjvy10C8lIO0t0apPQFX+mU7u1Nh5Cof9dQY9GFnhKmqwccNZtYe8d8IIT3Jg
+ NmDG5FNqZSkEhy7sjxeGjnYN6xZ/MiZP/UYbbRQvMfCyx4WPpHLnVaFiXNvezKMGQbpJ
+ GibrYXJMqLrQQx1RIXttnXRlikpm3VuqqXiOT/DqLwIbGaygiQn+NeuGb49ddVWUdu+7
+ TZsg==
+X-Gm-Message-State: AOAM532mXVwGfi6+GIZGtpFRfxnZIfuaSe/R6hzUDNC56yn4qke2qhnm
+ Thk+R60iO7Ve1ehktXJK1fURdvU3c0nwUdIrU/sonA==
+X-Google-Smtp-Source: ABdhPJxHiZ6wdPLMYL+78zaq7HgjpRct+H47XwBBT7igsSIX3OUNmna/J6zTi3SKTm9QBfoc5CkZBpbC+XTJz7VgjAo=
+X-Received: by 2002:a05:6602:14c8:: with SMTP id
+ b8mr3447495iow.170.1602098815886; 
+ Wed, 07 Oct 2020 12:26:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <CY4PR04MB1033E4D796F88C0BA457B3AEB90D0@CY4PR04MB1033.namprd04.prod.outlook.com>
-In-Reply-To: <CY4PR04MB1033E4D796F88C0BA457B3AEB90D0@CY4PR04MB1033.namprd04.prod.outlook.com>
+References: <1ef07be4-6706-5071-f992-acbc43e2116f@gmail.com>
+ <OF234E95F2.B6028A9B-ON002585F7.0065286D-002585F7.00661484@notes.na.collabserv.com>
+In-Reply-To: <OF234E95F2.B6028A9B-ON002585F7.0065286D-002585F7.00661484@notes.na.collabserv.com>
 From: Anton Kachalov <rnouse@google.com>
-Date: Wed, 7 Oct 2020 21:19:15 +0200
-Message-ID: <CADVsX883MJzB9bP0xKNOqxv=uHs0OeH87BnFfejXHULW8coVNA@mail.gmail.com>
-Subject: Re: Redfish Virtual Media return InternalError
-To: Brad Chou <bradc@hyvedesignsolutions.com>
-Content-Type: multipart/alternative; boundary="00000000000016e9f505b119986e"
+Date: Wed, 7 Oct 2020 21:26:44 +0200
+Message-ID: <CADVsX8__+vVO4RuV8AH3_oDwBQRDWem9X8vr_uv98=v3ysWkHg@mail.gmail.com>
+Subject: Re: LED accessed via I2C
+To: Milton Miller II <miltonm@us.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000d1b44705b119b290"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,179 +74,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ "S.Nishikawa" <nishikawa.shun@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000016e9f505b119986e
+--000000000000d1b44705b119b290
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hey, Brad.
+In addition, you may try to start with the i2c-tools package. With
+*i2cdetect* and *i2cset* you may actually discover all available devices on
+specific i2c bus and then write to a specific i2c device by it's address.
+Once you get it work, you should try to find suitable kernel driver that
+may use your i2c device. For instance, if the i2c interface (with registers
+read/write) is just a specific register write, you may try to re-use i2c
+gpio driver and then use it as gpio led as described:
 
-Try to log into the bmc and check the bmcweb logs:
+https://www.kernel.org/doc/Documentation/devicetree/bindings/leds/leds-gpio.txt
 
-# systemctl status -n 100 bmcweb.status
+On Sun, 4 Oct 2020 at 20:35, Milton Miller II <miltonm@us.ibm.com> wrote:
 
-If it doesn't show anything meaningful, get the "Main PID" and try to
-*strace* it (you need to include strace into the builded image).
-
-On Tue, 6 Oct 2020 at 11:20, Brad Chou <bradc@hyvedesignsolutions.com>
-wrote:
-
-> Hi,
->
-> I enable the =E2=80=9CDBMCWEB_ENABLE_VM_NBDPROXY=E2=80=9D flag in bmcweb =
-by bbappend it :
->
-> EXTRA_OECMAKE_append =3D " \
->
->     -DBMCWEB_ENABLE_VM_NBDPROXY=3DON \
->
-> "
+> On October 4, 2020 around 4:05am in some timezone, S.Nishikawa wrote:
+> >Hi,
+> >
+> >In our hardware, the Alert LED is attached to the end of the CPLD and
+> >is
+> >accessed via I2C. I think phosphor-led-sysfs controls LEDs with GPIO,
+> >
+> >but how can I control the LED beyond I2C?
 >
 >
+> Actually phosphor-led-manager will control any device that has a
+> kernel driver exposing the LED interface.  For PCA i2c devices
+> we tend to expose all the pins as gpio then individual gpios as
+> gpio led devices because the led subsystem will change the led
+> instance number based on which pins of the package are LED.
 >
-> Then try to use redfish virtual media.
+> It sounds like your cpld has a custom interface.  If the leds
+> can be controlled via a separate i2c addressed endpoint I would
+> suggest a multi-function device binding using the mfd subsystem.
+> If it is directly controled by a register consider registering
+> a regmap like many voltage monitor and control devices.  One
+> advantage of regmap is it provides both locking and caching of
+> the values written, controllable on a per-register basis.
 >
-> But I got an error return when get into the collection :
+> You will need a kernel driver for the remaining function that
+> is accessible over the i2c interface.
 >
+> See https://www.kernel.org/doc/html/latest/leds/leds-class.html#
+> for information on the kernel LED subsystem.
 >
->
-> $  curl -k -H "X-Auth-Token: $token" https://
-> ${bmc}/redfish/v1/Managers/bmc/VirtualMedia
->
-> {
->
->   "@odata.id": "/redfish/v1/Managers/bmc/VirtualMedia/",
->
->   "@odata.type": "#VirtualMediaCollection.VirtualMediaCollection",
->
->   "Name": "Virtual Media Services",
->
->   "error": {
->
->     "@Message.ExtendedInfo": [
->
->       {
->
->         "@odata.type": "#Message.v1_0_0.Message",
->
->         "Message": "The request failed due to an internal service error.
-> The service is still operational.",
->
->         "MessageArgs": [],
->
->         "MessageId": "Base.1.4.0.InternalError",
->
->         "Resolution": "Resubmit the request.  If the problem persists,
-> consider resetting the service.",
->
->         "Severity": "Critical"
->
->       }
->
->     ],
->
->     "code": "Base.1.4.0.InternalError",
->
->     "message": "The request failed due to an internal service error.  The
-> service is still operational."
->
->   }
->
-> }
->
->
->
->
->
-> Any idea ?
->
->
->
+> I hope this gets you headed in a productive direction.
+> milton
 >
 >
 
---00000000000016e9f505b119986e
+--000000000000d1b44705b119b290
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hey, Brad.<div><br></div><div>Try to log into the bmc and =
-check the bmcweb logs:</div><div><br></div><div># systemctl status -n 100 b=
-mcweb.status<br></div><div><br></div><div>If it doesn&#39;t show anything m=
-eaningful, get the &quot;Main PID&quot; and try to <b>strace</b> it (you ne=
-ed to include strace into the builded image).</div></div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, 6 Oct 2020 at 11=
-:20, Brad Chou &lt;<a href=3D"mailto:bradc@hyvedesignsolutions.com">bradc@h=
-yvedesignsolutions.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"EN-US">
-<div class=3D"gmail-m_4678873044927031382WordSection1">
-<p class=3D"MsoNormal">Hi,<u></u><u></u></p>
-<p class=3D"MsoNormal">I enable the =E2=80=9CDBMCWEB_ENABLE_VM_NBDPROXY=E2=
-=80=9D flag in bmcweb by bbappend it :<u></u><u></u></p>
-<p class=3D"MsoNormal">EXTRA_OECMAKE_append =3D &quot; \<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 -DBMCWEB_ENABLE_VM_NBDPROXY=3DON =
-\<u></u><u></u></p>
-<p class=3D"MsoNormal">&quot;<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Then try to use redfish virtual media.<u></u><u></u>=
-</p>
-<p class=3D"MsoNormal">But I got an error return when get into the collecti=
-on :<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">$=C2=A0 curl -k -H &quot;X-Auth-Token: $token&quot; =
-https://${bmc}/redfish/v1/Managers/bmc/VirtualMedia<u></u><u></u></p>
-<p class=3D"MsoNormal">{<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0 &quot;@<a href=3D"http://odata.id" target=3D"=
-_blank">odata.id</a>&quot;: &quot;/redfish/v1/Managers/bmc/VirtualMedia/&qu=
-ot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0 &quot;@odata.type&quot;: &quot;#VirtualMediaC=
-ollection.VirtualMediaCollection&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0 &quot;Name&quot;: &quot;Virtual Media Service=
-s&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0 &quot;error&quot;: {<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 &quot;@Message.ExtendedInfo&quot;=
-: [<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;@od=
-ata.type&quot;: &quot;#Message.v1_0_0.Message&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;Mes=
-sage&quot;: &quot;The request failed due to an internal service error.=C2=
-=A0 The service is still operational.&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;Mes=
-sageArgs&quot;: [],<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;Mes=
-sageId&quot;: &quot;Base.1.4.0.InternalError&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;Res=
-olution&quot;: &quot;Resubmit the request.=C2=A0 If the problem persists, c=
-onsider resetting the service.&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;Sev=
-erity&quot;: &quot;Critical&quot;<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 ],<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 &quot;code&quot;: &quot;Base.1.4.=
-0.InternalError&quot;,<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0=C2=A0=C2=A0 &quot;message&quot;: &quot;The re=
-quest failed due to an internal service error.=C2=A0 The service is still o=
-perational.&quot;<u></u><u></u></p>
-<p class=3D"MsoNormal">=C2=A0 }<u></u><u></u></p>
-<p class=3D"MsoNormal">}<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Any idea ?<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-</div>
-
+<div dir=3D"ltr">In addition, you may try to start with the i2c-tools packa=
+ge. With <b>i2cdetect</b> and <b>i2cset</b>=C2=A0you may actually discover =
+all available devices on specific i2c bus and then write to a specific i2c =
+device by it&#39;s address. Once you get it work, you should try to find su=
+itable kernel driver that may use your i2c device. For instance, if the i2c=
+ interface (with registers read/write) is just a specific register write, y=
+ou may try to re-use i2c gpio driver and then use it as gpio led as describ=
+ed:<div><br></div><div><a href=3D"https://www.kernel.org/doc/Documentation/=
+devicetree/bindings/leds/leds-gpio.txt">https://www.kernel.org/doc/Document=
+ation/devicetree/bindings/leds/leds-gpio.txt</a><br></div></div><br><div cl=
+ass=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, 4 Oct 202=
+0 at 20:35, Milton Miller II &lt;<a href=3D"mailto:miltonm@us.ibm.com">milt=
+onm@us.ibm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">On October 4, 2020 around 4:05am in some timezone, S.Nishikaw=
+a wrote:<br>
+&gt;Hi,<br>
+&gt;<br>
+&gt;In our hardware, the Alert LED is attached to the end of the CPLD and<b=
+r>
+&gt;is <br>
+&gt;accessed via I2C. I think phosphor-led-sysfs controls LEDs with GPIO,<b=
+r>
+&gt;<br>
+&gt;but how can I control the LED beyond I2C?<br>
+<br>
+<br>
+Actually phosphor-led-manager will control any device that has a <br>
+kernel driver exposing the LED interface.=C2=A0 For PCA i2c devices <br>
+we tend to expose all the pins as gpio then individual gpios as<br>
+gpio led devices because the led subsystem will change the led <br>
+instance number based on which pins of the package are LED.<br>
+<br>
+It sounds like your cpld has a custom interface.=C2=A0 If the leds<br>
+can be controlled via a separate i2c addressed endpoint I would <br>
+suggest a multi-function device binding using the mfd subsystem.<br>
+If it is directly controled by a register consider registering <br>
+a regmap like many voltage monitor and control devices.=C2=A0 One <br>
+advantage of regmap is it provides both locking and caching of <br>
+the values written, controllable on a per-register basis.<br>
+<br>
+You will need a kernel driver for the remaining function that <br>
+is accessible over the i2c interface.<br>
+<br>
+See <a href=3D"https://www.kernel.org/doc/html/latest/leds/leds-class.html#=
+" rel=3D"noreferrer" target=3D"_blank">https://www.kernel.org/doc/html/late=
+st/leds/leds-class.html#</a><br>
+for information on the kernel LED subsystem.<br>
+<br>
+I hope this gets you headed in a productive direction.<br>
+milton<br>
+<br>
 </blockquote></div>
 
---00000000000016e9f505b119986e--
+--000000000000d1b44705b119b290--
