@@ -2,66 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D4B52868A0
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:53:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85A372868DA
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 22:13:23 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C64lK6p2JzDqQ6
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:53:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C65B84MsdzDqR0
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 07:13:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d30;
- helo=mail-io1-xd30.google.com; envelope-from=gmouse@google.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=Wmd8sOHn; dkim-atps=neutral
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
- [IPv6:2607:f8b0:4864:20::d30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=LfJIAOMC; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C64kN3s85zDqMx
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 06:52:40 +1100 (AEDT)
-Received: by mail-io1-xd30.google.com with SMTP id g7so3694517iov.13
- for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 12:52:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=x2TZdq+eVqU+/aY3hRkVaedMvSq93CZ/3/ms9az+LBA=;
- b=Wmd8sOHnlsjO4uHyJrbxcFYio8czSvcfWpa+6ajR2nMBjQGBi4IFQtz0b+viQk6xTo
- HLBCOmLwBMIZV+9x8pkJCLaT6sWDsQKkbyHhBPcXbnk3PHrednvLCVd2lMpcPEF9VkhH
- wRfbAhLJlWfc9Oo9hHpmd/gBWooPrNp1uUMFoQNPJ4U7Z/w6Jzw4jLKemJTXbPmRPWbJ
- sSLUZUKjGj9wtYh0/XbkUR2qXnvO4CrbSaHkzrNUpDa0BPDxGZ9J08GAASTV7WE+SGLL
- OqxjB6RFpYJyUCJjBIJsmm7h+QydOjkrRlk4vRqRTTizO67UKM95ubjw4qDY6/VtWvKj
- M2Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=x2TZdq+eVqU+/aY3hRkVaedMvSq93CZ/3/ms9az+LBA=;
- b=S7rOc3+7mFrcZ7uc9DTOY5Wxgbjgh5C6VS0W8xa0/CnYG1nwtMMjlrNSjuQVEK8T3U
- XNP24bf//QU9//4ViSulLXtEt1jbTmnuK3/GUdPZR9ELMakrOJNCCNR6lJgvimS2DGog
- AufiABNpfEckNPT8uyc7WJ9XzXSYXO69EYZJxZIIKnfHKmXR8YIKM37RjxAutvGL4RnL
- 1iL2v8V084AQWK+fB0BbWPxWzwis5KHi6fYHRBgkftCmtr8Oa/V8ReTDXfADOgrQgXec
- xP3dqFHCrIG+JPuGlY8kXIsQYFNwbXnsf/Cejy8bM7KJczRhL3q5iUxXmSfmEJWy/hB5
- I3qg==
-X-Gm-Message-State: AOAM533tR7vnXbr5HkPo4UuDnsqFBmtObs96AHRcLEP7HFTeLO00Cv8a
- ip6cqUfZQkSasgZRb93ML6+rK7/Vq/mnrET34Olz2A==
-X-Google-Smtp-Source: ABdhPJxwTeuw1wSqsQ9eQzgDBJdkpUaURQRH1ndMEQO8nhQXt0XmiPO5tpLgcJeLeDAQFTHMaW0Dlo5VJfs48ojNR3U=
-X-Received: by 2002:a05:6638:2395:: with SMTP id
- q21mr4095457jat.94.1602100356387; 
- Wed, 07 Oct 2020 12:52:36 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C659Q0VCJzDqQm
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 07:12:40 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 097K3YJ8114748; Wed, 7 Oct 2020 16:12:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=0siHGM/TcMyzQ56Sxr7uxo9Zsas6I+Flw6wWLA9wbiI=;
+ b=LfJIAOMC2E60A/S3VWxt0MJDNbVpDMOjxlm6ETQMmc74FMVwOqxC5W3jF15hig+FkECD
+ /e15sXaxt5CJSYL82c9T9vjeM7KjY6WfpFKTc90dCGbGmAGD4dd+yhsELwbT94N76xl1
+ 3D+p9lghe4jd/J5bwRz32SGp/UPvwF/296i7+223YRR+oFce4W04koHu+tVoH6wQ5OX0
+ QJEjIsvISK76s6L2gYYaPpyGlcPMiwcgDWvRB497SVsgDLn7mzMKrJVg7UA5mGLjyTo/
+ 3LhFo6hq4XsL2WtfyiunlggYbsTGFZEz57J4AYwWxWE4ma2yMQ6bKiWc0lb6kStlRXD8 tQ== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 341m848fky-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Oct 2020 16:12:37 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 097KBTtf019586;
+ Wed, 7 Oct 2020 20:12:36 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma01dal.us.ibm.com with ESMTP id 33xgx9t4w6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 07 Oct 2020 20:12:36 +0000
+Received: from b03ledav006.gho.boulder.ibm.com
+ (b03ledav006.gho.boulder.ibm.com [9.17.130.237])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 097KCV1044368286
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 7 Oct 2020 20:12:31 GMT
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5D207C6055;
+ Wed,  7 Oct 2020 20:12:35 +0000 (GMT)
+Received: from b03ledav006.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D602C6057;
+ Wed,  7 Oct 2020 20:12:34 +0000 (GMT)
+Received: from [9.206.182.230] (unknown [9.206.182.230])
+ by b03ledav006.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed,  7 Oct 2020 20:12:33 +0000 (GMT)
+Subject: Re: Heading out
+To: James Feist <james.feist@linux.intel.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <9ca9dd09-b381-d0e9-bd63-9a23496c97e1@linux.intel.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <eb06797a-ccfd-2d5c-f3c4-0d3c024eb127@linux.vnet.ibm.com>
+Date: Wed, 7 Oct 2020 14:12:31 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-References: <tencent_34CE0CBCEE22E9E6CF3069506723323E9B06@qq.com>
-In-Reply-To: <tencent_34CE0CBCEE22E9E6CF3069506723323E9B06@qq.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Wed, 7 Oct 2020 21:52:25 +0200
-Message-ID: <CADVsX8_9dCbBUdpaAtMpf59cmj9cTSn--mQLZaszFT_PeT-zLg@mail.gmail.com>
-Subject: Re: How to change the default output serial
-To: =?UTF-8?B?5YaJ6Zuq?= <869883681@qq.com>
-Content-Type: multipart/alternative; boundary="000000000000a38aaa05b11a0e0b"
+In-Reply-To: <9ca9dd09-b381-d0e9-bd63-9a23496c97e1@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-07_10:2020-10-07,
+ 2020-10-07 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=919
+ phishscore=0 bulkscore=0 clxscore=1031 suspectscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2006250000 definitions=main-2010070127
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,79 +100,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a38aaa05b11a0e0b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 10/7/2020 12:21 PM, James Feist wrote:
+> Hi everyone,
+> 
+> This will be my last week on the OpenBMC project. I'll be moving on to 
+> something unrelated to OpenBMC. It's been great working with you all. 
 
-Hello, sgc.
+Great working with you, James! Best of luck in your new position! The 
+project will miss you.
 
-You should also enable the uart2 in DTS:
+- Gunnar
 
-arch/arm/boot/dts/aspeed-bmc-opp-romulus.dts
+> All the repos I maintain have additional maintainers who will continue 
+> to maintain those projects. I'll begin removing myself from the 
+> maintainers lists shortly.
+> 
+> Best of luck with the project,
+> 
+> -James
+> 
 
-There is a code like:
-
-&uart5 {
-    status =3D "okay";
-};
-
-Change it to uart2 as well.
-
-About the u-boot changes, it might be better to set:
-
-#define CONFIG_CONS_INDEX 2
-and define CONFIG_SYS_NS16550_COM2 value instead.
-
-Which u-boot branch do you use? I've checked with v2016.05, there is only
-include/configs/ast-g5.h and no ast-common.h at all.
-
-On Mon, 21 Sep 2020 at 01:27, =E5=86=89=E9=9B=AA <869883681@qq.com> wrote:
-
-> Hello there
-> I am trying to use openbmc recently. The board uses uart2 as the output o=
-f
-> BMC. How can I change the default uart from uart5 to uart2?
-> The image I compiled on the basis of romulus, first I modified
-> aspeed-bmc-opp-romulus.dts, I opened the uart2 serial port in dts, and
-> modified stdout-path=3D&uart2,bootargs =3D "console =3D ttyS1" in chosen.
-> Then, I modified the include/config/ast-common.h file in uboot , #define
-> CONFIG_SYS_NS16550_COM1 AST_UART2_BASE(whice is AST_UART0_BASE).
-> Am I doing something wrong? Do you have any suggestion?
-> Thanks!!
-> sgc.
->
-
---000000000000a38aaa05b11a0e0b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello, sgc.<div><br></div><div>You should also enable the =
-uart2 in DTS:</div><div><br></div><div>arch/arm/boot/dts/aspeed-bmc-opp-rom=
-ulus.dts=C2=A0<br></div><div><br></div><div>There is a code like:</div><div=
-><br></div><div>&amp;uart5 {<br>=C2=A0 =C2=A0 status =3D &quot;okay&quot;;<=
-br>};<br></div><div><br></div><div>Change it to uart2 as well.</div><div><b=
-r></div><div>About the u-boot changes, it might be better to set:</div><div=
-><br></div><div>#define CONFIG_CONS_INDEX 2<br></div><div>and define=C2=A0C=
-ONFIG_SYS_NS16550_COM2 value instead.</div><div><br></div><div>Which u-boot=
- branch do you use? I&#39;ve checked with v2016.05, there is only include/c=
-onfigs/ast-g5.h and no ast-common.h at all.</div></div><br><div class=3D"gm=
-ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 21 Sep 2020 at 01:=
-27, =E5=86=89=E9=9B=AA &lt;<a href=3D"mailto:869883681@qq.com">869883681@qq=
-.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
-gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
-ex"><div><div>Hello there</div><div>I am trying to use openbmc recently. Th=
-e board uses uart2 as the output of BMC. How can I change the default uart =
-from uart5 to uart2?</div><div>The image I compiled on the basis of romulus=
-, first I modified aspeed-bmc-opp-romulus.dts, I opened the uart2 serial po=
-rt in dts, and modified stdout-path=3D&amp;uart2,bootargs =3D &quot;console=
- =3D ttyS1&quot; in chosen.</div><div>Then, I modified the include/config/a=
-st-common.h file in uboot , #define CONFIG_SYS_NS16550_COM1 AST_UART2_BASE(=
-whice is AST_UART0_BASE).</div><div>Am I doing something wrong? Do you have=
- any suggestion?</div><div>Thanks!!</div><div>sgc.</div></div></blockquote>=
-</div>
-
---000000000000a38aaa05b11a0e0b--
