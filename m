@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB3C4286803
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:04:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D372F286816
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:10:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C63g13s0czDqHx
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:04:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C63nY4kfRzDqML
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:10:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,51 +17,50 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=WJ9anvLZ; dkim-atps=neutral
+ header.s=20161025 header.b=OKZYhdro; dkim-atps=neutral
 Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com
  [IPv6:2607:f8b0:4864:20::d44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C63d73V13zDqC6
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 06:03:06 +1100 (AEDT)
-Received: by mail-io1-xd44.google.com with SMTP id k25so3571438ioh.7
- for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 12:03:06 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C63mp19YJzDqBV
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 06:09:45 +1100 (AEDT)
+Received: by mail-io1-xd44.google.com with SMTP id n6so3555061ioc.12
+ for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 12:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=8Q/uIwh5rMLtMl4IqEbkXB/aN4wZgdbdaxXEVShpUHU=;
- b=WJ9anvLZiiP7jtxnvFJmvweelMJAQV2CiCmCFxrhDQ1Q6GTfsP76L145Z1B5x8wGvX
- PSiwOluwnALL4beGR6V0Uhx/t6KVkz1i0PQZgk56wRqrCAlPsZKSSWxAX/ZsnnbohDSi
- 9fCm7T9f7g3hGv/NAFHX6B8naY2hbk3G7Y3lgI+CKZY++R0TSZpT6wnlrrmwL9Jbnqyl
- 8yiwwq0A16BQFybpEKc1UQHO9avMwpsAth3zRAac4JHZ1Za8XmIXdGi6kfRQN9GJkn1F
- XXa7//VM65RCvt/QF4SjrjCdXbM+m41FZ2nb8l4z/pGrublJBVVd+E4omKUI9O6HKsv6
- wicg==
+ :cc; bh=vODZXbzfsV83HJilqqI3F9wEore/3DNrqHdnDr8yz0w=;
+ b=OKZYhdronB/p25Geu7VmymrbvQEt8DGNFZJTGMVHvPqBYQu7GkbjtoiPUQ6P3Dy/Bc
+ VBahplL5xpyS8HNusko+05rdMhz/x/8hq9No0yBUIxeT07ngxgEmB2GnGXfGxh2pDlyg
+ cJ2CBezB4oUHgYsdXqDnWxZA9Qoxv7UEe5mKwc7l2pIgpZ/Gs/ODVzvApkylwwVEKB2i
+ iH2W4MCuQn/RXo20uqkegWQhR3dTnpnw1/rzhI7yC57GnFyTVtTfkfOZ03KcUPFcqS4A
+ pSndBO/4XTli2GPUmuyWxYL8hH51RlC1oR84Rt2ps9Z0Vb0MLEFWrySUkr9zQrR5Kw5+
+ t8nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=8Q/uIwh5rMLtMl4IqEbkXB/aN4wZgdbdaxXEVShpUHU=;
- b=opV1KCEDZI7XkTy8U6SuUijpet713bp96rqlJ76LIDVtzIY1flHhtqk5eENFY7XkKB
- j0wBOHe0lSMUgOfWL45ZKr2WFmv+tzWYTVPn+7R2IHGbLG7DW08C+RLAOuoa0Y/GVGIJ
- SG2cQirKO4IQ12AlHn/kaHBFMbHLqljOD2/sUCXUvhJgQXP3s2K08PA1+at5t9rGfpw4
- QeHj/rnTxWGmlOHpDbk6edljvwTYqVANQnwSdtQRkoz+hWj/P/x5cw/8+d1JOPoLJXhC
- aF9m11x45TxSaYlK2616IH5OXHgs8MEoP5vK3cqHB+sgVNBJLNhtRIdocxlN3UVQVN/G
- C82g==
-X-Gm-Message-State: AOAM531Yuq0F4pekudFpX9QZk1BuPhPNPg1N15ppr//ncqEJK3eXOXDb
- /io2Xi5Mm697aYT6GDKJS6javyNa7iqflsPhDMgHX5sH7uztu/91
-X-Google-Smtp-Source: ABdhPJyGEIeQsgB7NUKkEDHPsZR/GzYazF3H5jxeN1+d2Pl9S8ez8ftFrFR6iR5tu0ZpQC7nC9VyEnRDe4TUgFkFWOs=
-X-Received: by 2002:a02:7717:: with SMTP id g23mr4045297jac.97.1602097380953; 
- Wed, 07 Oct 2020 12:03:00 -0700 (PDT)
+ bh=vODZXbzfsV83HJilqqI3F9wEore/3DNrqHdnDr8yz0w=;
+ b=WVDg7PhMjTJ2iMqiihAx62yb7z3RFOy9EcgMrc/xWl7VsGcLEhJav5QFQBNgrFpecp
+ 1KkCFwG0mQPTkl9kpSiQqS3KPsJtMo4tTzI7YB+q8GixocwZMmqIYDZcpbc1ew35CCUJ
+ ABAaHTOfpnVbzPqLjCEM5kYdStG0ZkbvJuEHNp6buI0VeD5EJ4mRp6AtRFWi00RLDcPz
+ foVqGzuiKCXGuPJWdCUPXmn/beqm3/T4R88MigF+qqgFb3D62R45gG8B+v5QV7Df9RnA
+ +9ZJkh9YEcHMLBJ0DCZD6RaMrmlnHhdKRTAvTMdxMJFWsfmkvv1hA6N44nUNqhv8KTys
+ tNIg==
+X-Gm-Message-State: AOAM531NQAwtHHnYgxo46l4nG47yuRfNFoYXMVYlFJpqjJkDHgZQiwyw
+ ld2iyzmpwt6Lq3cDPQS7/mTr8h1obyZx+lu5cllJ3VDfO2HMrUJE
+X-Google-Smtp-Source: ABdhPJwv4u1AVbMKkwVeQ0HdGlXMgw03eI5u9Ddx93ye4xsU3ASPV+F9VpFzs3jGyT6BDCnbbUeJ2xV016Ng7GKn074=
+X-Received: by 2002:a02:887:: with SMTP id 129mr4224050jac.130.1602097783246; 
+ Wed, 07 Oct 2020 12:09:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAPGDkaHzu5UOES-irDLtu9jwLULyX9_BWAX7rgTPiaeXOT2ByA@mail.gmail.com>
- <20201007152428.GJ6152@heinlein>
-In-Reply-To: <20201007152428.GJ6152@heinlein>
+References: <HK0PR04MB2883FCE193E758A89410FF3DFE0A0@HK0PR04MB2883.apcprd04.prod.outlook.com>
+In-Reply-To: <HK0PR04MB2883FCE193E758A89410FF3DFE0A0@HK0PR04MB2883.apcprd04.prod.outlook.com>
 From: Anton Kachalov <rnouse@google.com>
-Date: Wed, 7 Oct 2020 21:02:49 +0200
-Message-ID: <CADVsX88d1PU5LomWa3xzGjnJf5OqJmjcCnQsZGfh94oPRXbn+g@mail.gmail.com>
-Subject: Re: [c++] [hwmon] std::ifstream read file with timeout so long
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="00000000000049e97105b1195d99"
+Date: Wed, 7 Oct 2020 21:09:32 +0200
+Message-ID: <CADVsX8_C8eg2u-XKzU7xWJ7AHGznLZcJKWBb0dKOWctcwh=cwg@mail.gmail.com>
+Subject: Re: About intel-ipmi-oem compilation error
+To: =?UTF-8?B?5ZGoIOi/nOa4hQ==?= <zhouyuanqing8@outlook.com>
+Content-Type: multipart/alternative; boundary="00000000000044757e05b119758d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,189 +72,346 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Nguyen Chanh <nguyenchanh2201@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "uperic@163.com" <uperic@163.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000049e97105b1195d99
+--00000000000044757e05b119758d
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Try to strace the process. Either attach strace or modify service file to
-run the strace from the beginning.
+Hello,
 
-To attach simply (replace $HWMON_PID with appropriate pid):
+How old is your openbmc checkout, especially the phosphor-host-ipmid?
 
-# strace -fv -tt -etrace=file -p $HWMON_PID -s 2048 -o /tmp/hwmon.log.$$
+The requested field "lun" has been added three months ago:
 
-You should include "strace" package in the image by either modifying the
-build/conf/local.conf and place / append the variable:
-======= cut =======
-IMAGE_INSTALL_append = " strace"
-======= cut =======
+https://github.com/openbmc/phosphor-host-ipmid/commit/c11cc5c06960d807bc0fe=
+b680346bf6f8e9f8adb
 
-Please note the space before the package name. It is required.
+From the build logs it seems like the existing headers doesn't include this
+field.
 
-To modify service file, simply edit either source file:
+On Wed, 7 Oct 2020 at 09:27, =E5=91=A8 =E8=BF=9C=E6=B8=85 <zhouyuanqing8@ou=
+tlook.com> wrote:
 
-https://github.com/openbmc/meta-phosphor/blob/a87fb2d1eb682ed0f04e0f269966b9ae4aafbb1e/recipes-phosphor/sensors/phosphor-hwmon/xyz.openbmc_project.Hwmon%40.service
-
-in your local build tree or edit service file after booting the image using
-"vi":
-
-# vi /lib/systemd/system/xyz.openbmc_project.Hwmon\@.service
-
-and change ExecStart param to:
-======== cut ========
-ExecParam=/usr/bin/strace -tt -etrace=file -fv -s 2048 -o /tmp/hwmon.log.$$
-/usr/bin/phosphor-hwmon-readd -o %I
-======== cut ========
-
-Then reload systemd and restart the service:
-
-# systemctl daemon-reload
-# systemctl restart xyz.openbmc_project.Hwmon\@.service
-
-And then check the /tmp/hwmon.log.* file.
-With the "-tt" option you will get a precise timestamp between each syscall.
-
-If there is nothing suspicious, try to remove the "-etrace=file" option.
-
-On Wed, 7 Oct 2020 at 17:25, Patrick Williams <patrick@stwcx.xyz> wrote:
-
-> On Tue, Oct 06, 2020 at 10:42:18PM +0700, Nguyen Chanh wrote:
-> > In https://github.com/openbmc/phosphor-hwmon => hwmonio.cpp , I saw we
-> use
-> > the std::ifstream to open and read a device sensor.
-> >
-> > But, I met an issue with it. In case the sensor was disabled (Ex: the Fan
-> > was unplugged), the std::ifstream read will take a long time . The
-> timeout
-> > in there is so long. It makes my system have a BIG delay in each checking
-> > sensor.
-> >
-> > Other observation : In case the sensor device is ready, the time for
-> sensor
-> > reading is expected.
-> >
-> > Measuring std::ifstream reading:
-> >
-> > In case unplugged sensor: 91385 microseconds
-> > In case plugged sensor. : 507 microseconds
+> Hello everyone,
 >
-> Do you know which device driver it is interacting with?  This sounds
-> like an issue with the underlying driver.  Perhaps it is attempting
-> too many retries.
+>       I downloaded intel-ipmi-oem from
+> https://github.com/openbmc/intel-ipmi-oem, and encountered the following
+> 2 problems when compiling. The first problem has been solved, but I think
+> the code downloaded from the community should be able to compile and pass=
+.
+> I would like to ask if there is something wrong with my project
+> configuration?
 >
-> >
-> > The patch to measure the std::ifstream reading, please see attachment !
-> >
-> > Unexpected behavior you saw
-> >
-> > The timeout in there is so long
-> >
-> > Expected behavior
-> >
-> > Do we have any better solution in this case? take less more timeout.
-> > [image: Screen Shot 2020-10-03 at 11.32.36 AM.png]
-> > --
-> > *Nguyen Minh Chanh *
-> > *Embedded Software Engineer *
+> Question1:
+> In file included from
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/include/ipmi_to_red=
+fish_hooks.hpp:20,
+>
+>                  from
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:20:
+>
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/include/storagecomm=
+ands.hpp:18:10:
+> fatal error: phosphor-ipmi-host/sensorhandler.hpp: No such file or direct=
+ory
+>    18 | #include <phosphor-ipmi-host/sensorhandler.hpp>
+>       |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> compilation terminated.
+>
+> Question2:
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/recipe-sysroot-native/u=
+sr/bin/arm-openbmc-linux-gnueabi/arm-openbmc-linux-gnueabi-g++
+>  -DBOOST_ALL_NO_LIB -DBOOST_ASIO_DISABLE_THREADS
+> -DBOOST_COROUTINES_NO_DEPRECATION_WARNING -DBOOST_ERROR_CODE_HEADER_ONLY
+> -DBOOST_NO_RTTI -DBOOST_NO_TYPEID -DBOOST_SYSTEM_NO_DEPRECATED
+> -DUSING_ENTITY_MANAGER_DECORATORS -Dzinteloemcmds_EXPORTS
+> -I/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linu=
+x-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/include
+> -isystem . -marm -mcpu=3Darm1176jz-s
+>  --sysroot=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-o=
+penbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/recipe-sys=
+root
+>  -O2 -pipe -g -feliminate-unused-debug-types
+> -fmacro-prefix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1=
+176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0=3D=
+/usr/src/debug/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0
+>
+>  -fdebug-prefix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm=
+1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0=
+=3D/usr/src/debug/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0
+>
+>  -fdebug-prefix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm=
+1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/r=
+ecipe-sysroot=3D
+>
+>  -fdebug-prefix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm=
+1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/r=
+ecipe-sysroot-native=3D
+>  -fvisibility-inlines-hidden  -marm -mcpu=3Darm1176jz-s
+>  --sysroot=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-o=
+penbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/recipe-sys=
+root
+> -fPIC   -Wno-psabi -std=3Dgnu++17 -MD -MT
+> CMakeFiles/zinteloemcmds.dir/src/sensorcommands.cpp.o -MF
+> CMakeFiles/zinteloemcmds.dir/src/sensorcommands.cpp.o.d -o
+> CMakeFiles/zinteloemcmds.dir/src/sensorcommands.cpp.o -c
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp
+>
+> In file included from
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:17:
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/include/sensorcomma=
+nds.hpp:
+> In function 'ipmi_ret_t ipmi::getSensorConnection(ipmi::Context::ptr,
+> uint8_t, std::string&, std::string&)':
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/include/sensorcomma=
+nds.hpp:138:42:
+> error: 'using element_type =3D struct ipmi::Context' {aka 'struct
+> ipmi::Context'} has no member named 'lun'
+>   138 |     path =3D getPathFromSensorNumber((ctx->lun << 8) | sensnum);
+>       |                                          ^~~
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:
+> In function 'ipmi::RspType<unsigned char, unsigned char, unsigned int>
+> ipmi::ipmiSensorGetDeviceSdrInfo(ipmi::Context::ptr, std::optional<unsign=
+ed
+> char>)':
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:1438:26:
+> error: 'using element_type =3D struct ipmi::Context' {aka 'struct
+> ipmi::Context'} has no member named 'lun'
+>  1438 |                 if (ctx->lun =3D=3D record->key.owner_lun)
+>       |                          ^~~
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:1448:19:
+> error: 'using element_type =3D struct ipmi::Context' {aka 'struct
+> ipmi::Context'} has no member named 'lun'
+>  1448 |         if ((ctx->lun =3D=3D 0) && (numSensors > 0))
+>       |                   ^~~
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:1453:24:
+> error: 'using element_type =3D struct ipmi::Context' {aka 'struct
+> ipmi::Context'} has no member named 'lun'
+>  1453 |         else if ((ctx->lun =3D=3D 1) && (numSensors >
+> maxSensorsPerLUN))
+>       |                        ^~~
+> /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-=
+gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.=
+cpp:1459:23:
+> error: 'using element_type =3D struct ipmi::Context' {aka 'struct
+> ipmi::Context'} has no member named 'lun'
+>  1459 |         else if (ctx->lun =3D=3D 3)
+>       |                       ^~~
 >
 >
->
-> --
-> Patrick Williams
 >
 
---00000000000049e97105b1195d99
+--00000000000044757e05b119758d
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Try to strace the process. Either attach strace or modify =
-service file to run the strace from the beginning.<div><br></div><div>To at=
-tach simply (replace $HWMON_PID with appropriate pid):</div><div><br></div>=
-<div># strace -fv -tt -etrace=3Dfile -p $HWMON_PID -s 2048 -o /tmp/hwmon.lo=
-g.$$</div><div><br></div><div>You should include &quot;strace&quot; package=
- in the image by either modifying the build/conf/local.conf and place / app=
-end the variable:</div><div>=3D=3D=3D=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=3D=3D=
-</div><div>IMAGE_INSTALL_append =3D &quot; strace&quot;</div><div>=3D=3D=3D=
-=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=3D=3D</div><div><br></div><div>Please note=
- the space before the package name. It is required.</div><div><br></div><di=
-v>To modify service file, simply edit either source file:</div><div><br></d=
-iv><div><a href=3D"https://github.com/openbmc/meta-phosphor/blob/a87fb2d1eb=
-682ed0f04e0f269966b9ae4aafbb1e/recipes-phosphor/sensors/phosphor-hwmon/xyz.=
-openbmc_project.Hwmon%40.service">https://github.com/openbmc/meta-phosphor/=
-blob/a87fb2d1eb682ed0f04e0f269966b9ae4aafbb1e/recipes-phosphor/sensors/phos=
-phor-hwmon/xyz.openbmc_project.Hwmon%40.service</a><br></div><div><br></div=
-><div>in your local build tree or edit service file after booting the image=
- using &quot;vi&quot;:</div><div><br></div><div># vi=C2=A0/lib/systemd/syst=
-em/xyz.openbmc_project.Hwmon\@.service</div><div><br></div><div>and change =
-ExecStart param to:</div><div>=3D=3D=3D=3D=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=
-=3D=3D=3D</div><div>ExecParam=3D/usr/bin/strace -tt -etrace=3Dfile -fv -s 2=
-048 -o /tmp/hwmon.log.$$ /usr/bin/phosphor-hwmon-readd -o %I</div><div><div=
->=3D=3D=3D=3D=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=3D=3D=3D</div><div><br></div>=
-<div><div>Then reload systemd and restart the service:</div><div><br></div>=
-<div># systemctl daemon-reload</div><div># systemctl restart xyz.openbmc_pr=
-oject.Hwmon\@.service</div><div><br></div><div>And then check the /tmp/hwmo=
-n.log.* file.</div><div>With the &quot;-tt&quot; option you will get a prec=
-ise timestamp between each syscall.</div><div><br></div><div>If there is no=
-thing suspicious, try to remove the &quot;-etrace=3Dfile&quot; option.</div=
-><div></div></div><div></div></div></div><br><div class=3D"gmail_quote"><di=
-v dir=3D"ltr" class=3D"gmail_attr">On Wed, 7 Oct 2020 at 17:25, Patrick Wil=
-liams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wr=
-ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Oct=
- 06, 2020 at 10:42:18PM +0700, Nguyen Chanh wrote:<br>
-&gt; In <a href=3D"https://github.com/openbmc/phosphor-hwmon" rel=3D"norefe=
-rrer" target=3D"_blank">https://github.com/openbmc/phosphor-hwmon</a> =3D&g=
-t; hwmonio.cpp , I saw we use<br>
-&gt; the std::ifstream to open and read a device sensor.<br>
-&gt; <br>
-&gt; But, I met an issue with it. In case the sensor was disabled (Ex: the =
-Fan<br>
-&gt; was unplugged), the std::ifstream read will take a long time . The tim=
-eout<br>
-&gt; in there is so long. It makes my system have a BIG delay in each check=
-ing<br>
-&gt; sensor.<br>
-&gt; <br>
-&gt; Other observation : In case the sensor device is ready, the time for s=
-ensor<br>
-&gt; reading is expected.<br>
-&gt; <br>
-&gt; Measuring std::ifstream reading:<br>
-&gt; <br>
-&gt; In case unplugged sensor: 91385 microseconds<br>
-&gt; In case plugged sensor. : 507 microseconds<br>
+<div dir=3D"ltr">Hello,<div><br></div><div>How old is your openbmc checkout=
+, especially the phosphor-host-ipmid?</div><div><br></div><div>The requeste=
+d field &quot;lun&quot; has been added three months ago:</div><div><br></di=
+v><div><a href=3D"https://github.com/openbmc/phosphor-host-ipmid/commit/c11=
+cc5c06960d807bc0feb680346bf6f8e9f8adb">https://github.com/openbmc/phosphor-=
+host-ipmid/commit/c11cc5c06960d807bc0feb680346bf6f8e9f8adb</a><br></div><di=
+v><br></div><div>From the build logs it seems like the existing headers doe=
+sn&#39;t include this field.</div></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Wed, 7 Oct 2020 at 09:27, =E5=91=A8 =
+=E8=BF=9C=E6=B8=85 &lt;<a href=3D"mailto:zhouyuanqing8@outlook.com">zhouyua=
+nqing8@outlook.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">
+
+
+
+
+<div dir=3D"ltr">
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
+Hello everyone,=C2=A0</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
 <br>
-Do you know which device driver it is interacting with?=C2=A0 This sounds<b=
-r>
-like an issue with the underlying driver.=C2=A0 Perhaps it is attempting<br=
->
-too many retries.<br>
+</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
+=C2=A0 =C2=A0 =C2=A0 I downloaded intel-ipmi-oem from <a href=3D"https://gi=
+thub.com/openbmc/intel-ipmi-oem" target=3D"_blank">https://github.com/openb=
+mc/intel-ipmi-oem</a>, and encountered the following 2 problems when compil=
+ing. The first problem has been solved, but I think the code downloaded fro=
+m the community should be able to compile and pass.
+ I would like to ask if there is something wrong with my project configurat=
+ion?<br>
+</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
 <br>
-&gt; <br>
-&gt; The patch to measure the std::ifstream reading, please see attachment =
-!<br>
-&gt; <br>
-&gt; Unexpected behavior you saw<br>
-&gt; <br>
-&gt; The timeout in there is so long<br>
-&gt; <br>
-&gt; Expected behavior<br>
-&gt; <br>
-&gt; Do we have any better solution in this case? take less more timeout.<b=
-r>
-&gt; [image: Screen Shot 2020-10-03 at 11.32.36 AM.png]<br>
-&gt; -- <br>
-&gt; *Nguyen Minh Chanh *<br>
-&gt; *Embedded Software Engineer *<br>
+</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
+Question1:</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
+In file included from /home/harleyzhou/openbmc/openbmc/build/tmp/work/arm11=
+76jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git=
+/include/ipmi_to_redfish_hooks.hpp:20,
+<div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from /ho=
+me/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnuea=
+bi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.cpp:2=
+0:</div>
+<div>/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-lin=
+ux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-<span style=3D"color:rg=
+b(81,167,249)">r0/git/include/storagecommands.hpp:18:10: fatal error: phosp=
+hor-ipmi-host/sensorhandler.hpp:
+ No such file or directory</span></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A018 | #include &lt;p=
+hosphor-ipmi-host/sensorhandler.hpp&gt;</span></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></d=
+iv>
+<div><span style=3D"color:rgb(81,167,249)">compilation terminated.</span></=
+div>
+<br>
+<span style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;background-co=
+lor:rgb(255,255,255);display:inline">Question2:</span><br>
+</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;font-size:12pt=
+;color:rgb(0,0,0)">
+<span style=3D"font-family:Calibri,Arial,Helvetica,sans-serif;background-co=
+lor:rgb(255,255,255);display:inline">/home/harleyzhou/openbmc/openbmc/build=
+/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d7=
+7489f18e-r0/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/arm-ope=
+nbmc-linux-gnueabi-g++
+ =C2=A0-DBOOST_ALL_NO_LIB -DBOOST_ASIO_DISABLE_THREADS -DBOOST_COROUTINES_N=
+O_DEPRECATION_WARNING -DBOOST_ERROR_CODE_HEADER_ONLY -DBOOST_NO_RTTI -DBOOS=
+T_NO_TYPEID -DBOOST_SYSTEM_NO_DEPRECATED -DUSING_ENTITY_MANAGER_DECORATORS =
+-Dzinteloemcmds_EXPORTS -I/home/harleyzhou/openbmc/openbmc/build/tmp/work/a=
+rm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0=
+/git/include
+ -isystem . -marm -mcpu=3Darm1176jz-s =C2=A0--sysroot=3D/home/harleyzhou/op=
+enbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oe=
+m/0.1+gitAUTOINC+d77489f18e-r0/recipe-sysroot =C2=A0-O2 -pipe -g -feliminat=
+e-unused-debug-types -fmacro-prefix-map=3D/home/harleyzhou/openbmc/openbmc/=
+build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOI=
+NC+d77489f18e-r0=3D/usr/src/debug/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-=
+r0
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0-fdebug-prefix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm=
+1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0=
+=3D/usr/src/debug/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-fdebug-pref=
+ix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc=
+-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/recipe-sysroot=
+=3D
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0-fdebug-prefix-map=3D/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm=
+1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/r=
+ecipe-sysroot-native=3D =C2=A0-fvisibility-inlines-hidden =C2=A0-marm -mcpu=
+=3Darm1176jz-s =C2=A0--sysroot=3D/home/harleyzhou/openbmc/openbmc/build/tmp=
+/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489=
+f18e-r0/recipe-sysroot
+ -fPIC =C2=A0 -Wno-psabi -std=3Dgnu++17 -MD -MT CMakeFiles/zinteloemcmds.di=
+r/src/sensorcommands.cpp.o -MF CMakeFiles/zinteloemcmds.dir/src/sensorcomma=
+nds.cpp.o.d -o CMakeFiles/zinteloemcmds.dir/src/sensorcommands.cpp.o -c /ho=
+me/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-linux-gnuea=
+bi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/src/sensorcommands.cpp
+<div>In file included from /home/harleyzhou/openbmc/openbmc/build/tmp/work/=
+arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r=
+0/git/src/sensorcommands.cpp:17:</div>
+<div>/home/harleyzhou/openbmc/openbmc/build/tmp/work/arm1176jzs-openbmc-lin=
+ux-gnueabi/intel-ipmi-oem/0.1+gitAUTOINC+d77489f18e-r0/git/include/sensorco=
+mmands.hpp: In function &#39;ipmi_ret_t ipmi::getSensorConnection(ipmi::Con=
+text::ptr, uint8_t, std::string&amp;, std::string&amp;)&#39;:</div>
+<div><span style=3D"color:rgb(81,167,249)">/home/harleyzhou/openbmc/openbmc=
+/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTO=
+INC+d77489f18e-r0/git/include/sensorcommands.hpp:138:42: error: &#39;using =
+element_type =3D struct ipmi::Context&#39;
+ {aka &#39;struct ipmi::Context&#39;} has no member named &#39;lun&#39;</sp=
+an></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 138 | =C2=A0 =C2=A0 path =
+=3D getPathFromSensorNumber((ctx-&gt;lun &lt;&lt; 8) | sensnum);</span></di=
+v>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~</span=
+></div>
+<div><span style=3D"color:rgb(81,167,249)">/home/harleyzhou/openbmc/openbmc=
+/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTO=
+INC+d77489f18e-r0/git/src/sensorcommands.cpp: In function &#39;ipmi::RspTyp=
+e&lt;unsigned char, unsigned char, unsigned
+ int&gt; ipmi::ipmiSensorGetDeviceSdrInfo(ipmi::Context::ptr, std::optional=
+&lt;unsigned char&gt;)&#39;:</span></div>
+<div><span style=3D"color:rgb(81,167,249)">/home/harleyzhou/openbmc/openbmc=
+/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTO=
+INC+d77489f18e-r0/git/src/sensorcommands.cpp:1438:26: error: &#39;using ele=
+ment_type =3D struct ipmi::Context&#39;
+ {aka &#39;struct ipmi::Context&#39;} has no member named &#39;lun&#39;</sp=
+an></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A01438 | =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ctx-&gt;lun =3D=3D record-&gt;ke=
+y.owner_lun)</span></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0^~~</span></div>
+<div><span style=3D"color:rgb(81,167,249)">/home/harleyzhou/openbmc/openbmc=
+/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTO=
+INC+d77489f18e-r0/git/src/sensorcommands.cpp:1448:19: error: &#39;using ele=
+ment_type =3D struct ipmi::Context&#39;
+ {aka &#39;struct ipmi::Context&#39;} has no member named &#39;lun&#39;</sp=
+an></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A01448 | =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 if ((ctx-&gt;lun =3D=3D 0) &amp;&amp; (numSensors &gt; 0))</span=
+></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~</span></div>
+<div><span style=3D"color:rgb(81,167,249)">/home/harleyzhou/openbmc/openbmc=
+/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTO=
+INC+d77489f18e-r0/git/src/sensorcommands.cpp:1453:24: error: &#39;using ele=
+ment_type =3D struct ipmi::Context&#39;
+ {aka &#39;struct ipmi::Context&#39;} has no member named &#39;lun&#39;</sp=
+an></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A01453 | =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 else if ((ctx-&gt;lun =3D=3D 1) &amp;&amp; (numSensors &gt; maxS=
+ensorsPerLUN))</span></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0^~~</span></div>
+<div><span style=3D"color:rgb(81,167,249)">/home/harleyzhou/openbmc/openbmc=
+/build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/intel-ipmi-oem/0.1+gitAUTO=
+INC+d77489f18e-r0/git/src/sensorcommands.cpp:1459:23: error: &#39;using ele=
+ment_type =3D struct ipmi::Context&#39;
+ {aka &#39;struct ipmi::Context&#39;} has no member named &#39;lun&#39;</sp=
+an></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A01459 | =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 else if (ctx-&gt;lun =3D=3D 3)</span></div>
+<div><span style=3D"color:rgb(81,167,249)">=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~</=
+span></div>
 <br>
 <br>
-<br>
--- <br>
-Patrick Williams<br>
+</span></div>
+</div>
+
 </blockquote></div>
 
---00000000000049e97105b1195d99--
+--00000000000044757e05b119758d--
