@@ -1,69 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D82EB2867F9
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:03:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB3C4286803
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 21:04:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C63dJ2TJ8zDqDd
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:03:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C63g13s0czDqHx
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 06:04:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2f;
- helo=mail-io1-xd2f.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d44;
+ helo=mail-io1-xd44.google.com; envelope-from=gmouse@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=DyQEp8rU; dkim-atps=neutral
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com
- [IPv6:2607:f8b0:4864:20::d2f])
+ header.s=20161025 header.b=WJ9anvLZ; dkim-atps=neutral
+Received: from mail-io1-xd44.google.com (mail-io1-xd44.google.com
+ [IPv6:2607:f8b0:4864:20::d44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C63N96Q0rzDqMF
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 05:51:52 +1100 (AEDT)
-Received: by mail-io1-xd2f.google.com with SMTP id k6so3542836ior.2
- for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 11:51:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C63d73V13zDqC6
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 06:03:06 +1100 (AEDT)
+Received: by mail-io1-xd44.google.com with SMTP id k25so3571438ioh.7
+ for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 12:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=9mwxYzUIfkyipRpe31WBWVKjk3n6OA1X3918894baPs=;
- b=DyQEp8rUq0a6qeDUNInU+w8t3g+0A49Ht54vLTeCzVu1DEKvXNhJ3th7RdflEUlVNC
- 5Q1w9rmSwI8r7Nu/Q74/LtnSa/PJaWYqAhyLZ0uR1LXZXTL4VlT/E6WykmYBYeYQqccA
- QYHHwIv807OJSriF8zTnOb95hgpZnFrXE0KvWUvNZLsMCJZgJ/dnG82jaJUdstCKiZXG
- BR8O6XeWfakmG4Z8EKUDxzZg1VZ6dMCISSBdjfgZtFmWCawdXnr567QQGDl24LCnj/JL
- X/UKaHWBOtHNt3HT617zC7QQ1TVOGQlpeM8f7VFEu7UYrI6GUHE+m+0eL0pVP6YIwcix
- BSKQ==
+ :cc; bh=8Q/uIwh5rMLtMl4IqEbkXB/aN4wZgdbdaxXEVShpUHU=;
+ b=WJ9anvLZiiP7jtxnvFJmvweelMJAQV2CiCmCFxrhDQ1Q6GTfsP76L145Z1B5x8wGvX
+ PSiwOluwnALL4beGR6V0Uhx/t6KVkz1i0PQZgk56wRqrCAlPsZKSSWxAX/ZsnnbohDSi
+ 9fCm7T9f7g3hGv/NAFHX6B8naY2hbk3G7Y3lgI+CKZY++R0TSZpT6wnlrrmwL9Jbnqyl
+ 8yiwwq0A16BQFybpEKc1UQHO9avMwpsAth3zRAac4JHZ1Za8XmIXdGi6kfRQN9GJkn1F
+ XXa7//VM65RCvt/QF4SjrjCdXbM+m41FZ2nb8l4z/pGrublJBVVd+E4omKUI9O6HKsv6
+ wicg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=9mwxYzUIfkyipRpe31WBWVKjk3n6OA1X3918894baPs=;
- b=PCwwVdlDr0EJg1Ls+BSlBDlevA3bbPSmIjW4Q2Zkoj8tc39dsazGPejOAAsLMZzmeQ
- uIqpl1tg6W9KUP0NwhHvnoZEU2Azt8VAU8uVAK18SD4UEGO8ZNwhNwcgT4CkpvSq/91v
- ReEdMvEXR692KeRFGzP11abrn2HNumNVf3pqJvCTbvwspy8MArXu7hJ3YE6K2C5oPLBb
- XVoQF8xB3+JZxwYtZYJnZEDRykRxohXriySHDjlEemRNege1IBgk4ZpvKJLHsMGpgQ6H
- 0VQGY3hJ9ekTY1hyuAW4kA0wABVgMDLRNCJyL6KAKqBgW+5Nz/lzfJxt6muSD7thp8jL
- JYcg==
-X-Gm-Message-State: AOAM531hb3I4tR5nwYtHIUMFbUnjjkxPKkqzFn67M+LfvhgzGWkt9xdp
- uC5B5dzoveEjn6Rn3wGMviKddsz9G5oOyhE3NDM4wA==
-X-Google-Smtp-Source: ABdhPJymaYtO8wPUC95RjimnGVaXaMArhqzNGUxn6MgsZ1E9nPdjg5EtdNxN1Ym5f2ovdH90LZEJjqX6bFiWlmE/q0Q=
-X-Received: by 2002:a02:6d4b:: with SMTP id e11mr4193809jaf.142.1602096709068; 
- Wed, 07 Oct 2020 11:51:49 -0700 (PDT)
+ bh=8Q/uIwh5rMLtMl4IqEbkXB/aN4wZgdbdaxXEVShpUHU=;
+ b=opV1KCEDZI7XkTy8U6SuUijpet713bp96rqlJ76LIDVtzIY1flHhtqk5eENFY7XkKB
+ j0wBOHe0lSMUgOfWL45ZKr2WFmv+tzWYTVPn+7R2IHGbLG7DW08C+RLAOuoa0Y/GVGIJ
+ SG2cQirKO4IQ12AlHn/kaHBFMbHLqljOD2/sUCXUvhJgQXP3s2K08PA1+at5t9rGfpw4
+ QeHj/rnTxWGmlOHpDbk6edljvwTYqVANQnwSdtQRkoz+hWj/P/x5cw/8+d1JOPoLJXhC
+ aF9m11x45TxSaYlK2616IH5OXHgs8MEoP5vK3cqHB+sgVNBJLNhtRIdocxlN3UVQVN/G
+ C82g==
+X-Gm-Message-State: AOAM531Yuq0F4pekudFpX9QZk1BuPhPNPg1N15ppr//ncqEJK3eXOXDb
+ /io2Xi5Mm697aYT6GDKJS6javyNa7iqflsPhDMgHX5sH7uztu/91
+X-Google-Smtp-Source: ABdhPJyGEIeQsgB7NUKkEDHPsZR/GzYazF3H5jxeN1+d2Pl9S8ez8ftFrFR6iR5tu0ZpQC7nC9VyEnRDe4TUgFkFWOs=
+X-Received: by 2002:a02:7717:: with SMTP id g23mr4045297jac.97.1602097380953; 
+ Wed, 07 Oct 2020 12:03:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAOW9pY0o7R4YSYX1WrOUQx-BJ0SG0BLs+NBCoHtgDOndXf4+Aw@mail.gmail.com>
- <c4ef651d-3589-1580-41dd-17959d00df11@amd.com>
- <CAOW9pY1hj4sDp_n2Uk87VEPicaoVZn5QuJcsCK_pS7o9ochb4w@mail.gmail.com>
- <ecc852ee-04ff-c27e-3fe0-fdeda6cb7f34@amd.com>
-In-Reply-To: <ecc852ee-04ff-c27e-3fe0-fdeda6cb7f34@amd.com>
+References: <CAPGDkaHzu5UOES-irDLtu9jwLULyX9_BWAX7rgTPiaeXOT2ByA@mail.gmail.com>
+ <20201007152428.GJ6152@heinlein>
+In-Reply-To: <20201007152428.GJ6152@heinlein>
 From: Anton Kachalov <rnouse@google.com>
-Date: Wed, 7 Oct 2020 20:51:37 +0200
-Message-ID: <CADVsX8-q58tiaPdthofa4rRgcQ6rS3qc9tEQXuzMgG6TpnbnCg@mail.gmail.com>
-Subject: Re: build error in AMD Ethanolx
-To: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000003dcde405b119353f"
+Date: Wed, 7 Oct 2020 21:02:49 +0200
+Message-ID: <CADVsX88d1PU5LomWa3xzGjnJf5OqJmjcCnQsZGfh94oPRXbn+g@mail.gmail.com>
+Subject: Re: [c++] [hwmon] std::ifstream read file with timeout so long
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="00000000000049e97105b1195d99"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,265 +73,189 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: J Dhanasekar <jdhanasekar@velankanigroup.com>,
+Cc: Nguyen Chanh <nguyenchanh2201@gmail.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003dcde405b119353f
+--00000000000049e97105b1195d99
 Content-Type: text/plain; charset="UTF-8"
 
-Hey,
+Try to strace the process. Either attach strace or modify service file to
+run the strace from the beginning.
 
-would you mind to find the *log.do_rootfs* file for obmc-phosphor-initramfs
-under build/tmp/work. This task has failed.
+To attach simply (replace $HWMON_PID with appropriate pid):
 
-For instance, on qemuarm target the path looks like this (for obmc-phosphor-
-*image* instead of obmc-phosphor-*initramfs*):
+# strace -fv -tt -etrace=file -p $HWMON_PID -s 2048 -o /tmp/hwmon.log.$$
 
-build/tmp/work/qemuarm-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_rootfs
+You should include "strace" package in the image by either modifying the
+build/conf/local.conf and place / append the variable:
+======= cut =======
+IMAGE_INSTALL_append = " strace"
+======= cut =======
 
-On Wed, 7 Oct 2020 at 20:35, Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-wrote:
+Please note the space before the package name. It is required.
 
-> On 10/7/20 10:11 AM, J Dhanasekar wrote:
-> > [CAUTION: External Email]
-> > Hi Supreeth,
+To modify service file, simply edit either source file:
+
+https://github.com/openbmc/meta-phosphor/blob/a87fb2d1eb682ed0f04e0f269966b9ae4aafbb1e/recipes-phosphor/sensors/phosphor-hwmon/xyz.openbmc_project.Hwmon%40.service
+
+in your local build tree or edit service file after booting the image using
+"vi":
+
+# vi /lib/systemd/system/xyz.openbmc_project.Hwmon\@.service
+
+and change ExecStart param to:
+======== cut ========
+ExecParam=/usr/bin/strace -tt -etrace=file -fv -s 2048 -o /tmp/hwmon.log.$$
+/usr/bin/phosphor-hwmon-readd -o %I
+======== cut ========
+
+Then reload systemd and restart the service:
+
+# systemctl daemon-reload
+# systemctl restart xyz.openbmc_project.Hwmon\@.service
+
+And then check the /tmp/hwmon.log.* file.
+With the "-tt" option you will get a precise timestamp between each syscall.
+
+If there is nothing suspicious, try to remove the "-etrace=file" option.
+
+On Wed, 7 Oct 2020 at 17:25, Patrick Williams <patrick@stwcx.xyz> wrote:
+
+> On Tue, Oct 06, 2020 at 10:42:18PM +0700, Nguyen Chanh wrote:
+> > In https://github.com/openbmc/phosphor-hwmon => hwmonio.cpp , I saw we
+> use
+> > the std::ifstream to open and read a device sensor.
 > >
-> > Thanks for the reply,
+> > But, I met an issue with it. In case the sensor was disabled (Ex: the Fan
+> > was unplugged), the std::ifstream read will take a long time . The
+> timeout
+> > in there is so long. It makes my system have a BIG delay in each checking
+> > sensor.
 > >
-> > I have attached the complete error log. Please view it.
+> > Other observation : In case the sensor device is ready, the time for
+> sensor
+> > reading is expected.
 > >
-> > I have removed the build folder and created a new one twice. Still I am
-> seeing the same error.
-> This may be environment issue in your setup.
-> I am not seeing this error in my environment with the latest master.
+> > Measuring std::ifstream reading:
+> >
+> > In case unplugged sensor: 91385 microseconds
+> > In case plugged sensor. : 507 microseconds
 >
-> . setup ethanolx
-> bitbake bitbake obmc-phosphor-image
+> Do you know which device driver it is interacting with?  This sounds
+> like an issue with the underlying driver.  Perhaps it is attempting
+> too many retries.
+>
+> >
+> > The patch to measure the std::ifstream reading, please see attachment !
+> >
+> > Unexpected behavior you saw
+> >
+> > The timeout in there is so long
+> >
+> > Expected behavior
+> >
+> > Do we have any better solution in this case? take less more timeout.
+> > [image: Screen Shot 2020-10-03 at 11.32.36 AM.png]
+> > --
+> > *Nguyen Minh Chanh *
+> > *Embedded Software Engineer *
 >
 >
-> "WARNING: Host distribution "ubuntu-18.04" has not been validated with
-> this version of the build system; you may possibly experience unexpected
-> failures. It is recommended that you use a tested distribution.
-> NOTE: Resolving any missing task queue dependencies
 >
-> Build Configuration:
-> BB_VERSION           = "1.47.0"
-> BUILD_SYS            = "x86_64-linux"
-> NATIVELSBSTRING      = "ubuntu-18.04"
-> TARGET_SYS           = "arm-openbmc-linux-gnueabi"
-> MACHINE              = "ethanolx"
-> DISTRO               = "openbmc-phosphor"
-> DISTRO_VERSION       = "0.1.0"
-> TUNE_FEATURES        = "arm thumb arm1176jzs"
-> TARGET_FPU           = "soft"
-> meta
-> meta-oe
-> meta-networking
-> meta-perl
-> meta-python
-> meta-phosphor
-> meta-aspeed
-> meta-amd
-> meta-ethanolx        = "master:c3d88e4d9fcc08e1aae7cc9d0337c0261e996c64""
->
-> ....
-> ....
-> ....
->
-> NOTE: Running task 4241 of 4243
-> (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
-> do_image_complete)
-> NOTE: recipe obmc-phosphor-image-1.0-r0: task do_image_complete: Started
-> NOTE: recipe obmc-phosphor-image-1.0-r0: task do_image_complete: Succeeded
-> NOTE: Running task 4242 of 4243
-> (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
-> do_populate_lic_deploy)
-> NOTE: recipe obmc-phosphor-image-1.0-r0: task do_populate_lic_deploy:
-> Started
-> NOTE: recipe obmc-phosphor-image-1.0-r0: task do_populate_lic_deploy:
-> Succeeded
-> NOTE: Running noexec task 4243 of 4243
-> (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
-> do_build)
-> NOTE: Tasks Summary: Attempted 4243 tasks of which 2 didn't need to be
-> rerun and all succeeded."
-> >
-> > Thanks,
-> > Dhanasekar
-> >
-> > On Wed, Oct 7, 2020 at 8:08 PM Supreeth Venkatesh <
-> supreeth.venkatesh@amd.com <mailto:supreeth.venkatesh@amd.com>> wrote:
-> >
-> >     On 10/7/20 5:44 AM, J Dhanasekar wrote:
-> >     > [CAUTION: External Email]
-> >     > Hi openBMC,
-> >     Hi Dhanasekar
-> >
-> >     >
-> >     > I am working to build BMC for AMD Ethanolx platform,
-> >     Nice to hear.
-> >     >
-> >     > After running  *bitbake u-boot-aspeed* and *bitbake
-> obmc-phosphor-image*,
-> >     > I am getting below error,
-> >     >
-> >     > ERROR: obmc-phosphor-initramfs-1.0-r0 do_rootfs: The postinstall
-> intercept hook 'update_gio_module_cache' failed, details in
-> /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs
-> >     > ERROR: Logfile of failure stored in:
-> /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs.14182
-> >     > ERROR: Task
-> (/home/user/dhanasekar/BMC/AMD/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-initramfs.bb:do_rootfs)
-> failed with exit code '1'
-> >     >
-> >     Can you send me the complete build logs?
-> >
-> >     > Please help me to fix the error,
-> >     rm the build folder and retry once.
-> >     I will build it once today as well and confirm. It may not been
-> tested with latest upstream changes.
-> >
-> >     >
-> >     > Thanks,
-> >     > Dhanasekar,
-> >
+> --
+> Patrick Williams
 >
 
---0000000000003dcde405b119353f
+--00000000000049e97105b1195d99
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hey,<div><br></div><div>would you mind to find the=C2=A0<b=
->log.do_rootfs</b> file for obmc-phosphor-initramfs under build/tmp/work. T=
-his task has failed.</div><div><br></div><div>For instance, on qemuarm targ=
-et the path looks like this (for obmc-phosphor-<b>image</b> instead of obmc=
--phosphor-<b>initramfs</b>):</div><div><br></div><div>build/tmp/work/qemuar=
-m-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_rootfs<br></=
-div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Wed, 7 Oct 2020 at 20:35, Supreeth Venkatesh &lt;<a href=3D"mailto:s=
-upreeth.venkatesh@amd.com">supreeth.venkatesh@amd.com</a>&gt; wrote:<br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">On 10/7/20 10:11 AM, J=
- Dhanasekar wrote:<br>
-&gt; [CAUTION: External Email]<br>
-&gt; Hi Supreeth,<br>
+<div dir=3D"ltr">Try to strace the process. Either attach strace or modify =
+service file to run the strace from the beginning.<div><br></div><div>To at=
+tach simply (replace $HWMON_PID with appropriate pid):</div><div><br></div>=
+<div># strace -fv -tt -etrace=3Dfile -p $HWMON_PID -s 2048 -o /tmp/hwmon.lo=
+g.$$</div><div><br></div><div>You should include &quot;strace&quot; package=
+ in the image by either modifying the build/conf/local.conf and place / app=
+end the variable:</div><div>=3D=3D=3D=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=3D=3D=
+</div><div>IMAGE_INSTALL_append =3D &quot; strace&quot;</div><div>=3D=3D=3D=
+=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=3D=3D</div><div><br></div><div>Please note=
+ the space before the package name. It is required.</div><div><br></div><di=
+v>To modify service file, simply edit either source file:</div><div><br></d=
+iv><div><a href=3D"https://github.com/openbmc/meta-phosphor/blob/a87fb2d1eb=
+682ed0f04e0f269966b9ae4aafbb1e/recipes-phosphor/sensors/phosphor-hwmon/xyz.=
+openbmc_project.Hwmon%40.service">https://github.com/openbmc/meta-phosphor/=
+blob/a87fb2d1eb682ed0f04e0f269966b9ae4aafbb1e/recipes-phosphor/sensors/phos=
+phor-hwmon/xyz.openbmc_project.Hwmon%40.service</a><br></div><div><br></div=
+><div>in your local build tree or edit service file after booting the image=
+ using &quot;vi&quot;:</div><div><br></div><div># vi=C2=A0/lib/systemd/syst=
+em/xyz.openbmc_project.Hwmon\@.service</div><div><br></div><div>and change =
+ExecStart param to:</div><div>=3D=3D=3D=3D=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=
+=3D=3D=3D</div><div>ExecParam=3D/usr/bin/strace -tt -etrace=3Dfile -fv -s 2=
+048 -o /tmp/hwmon.log.$$ /usr/bin/phosphor-hwmon-readd -o %I</div><div><div=
+>=3D=3D=3D=3D=3D=3D=3D=3D cut =3D=3D=3D=3D=3D=3D=3D=3D</div><div><br></div>=
+<div><div>Then reload systemd and restart the service:</div><div><br></div>=
+<div># systemctl daemon-reload</div><div># systemctl restart xyz.openbmc_pr=
+oject.Hwmon\@.service</div><div><br></div><div>And then check the /tmp/hwmo=
+n.log.* file.</div><div>With the &quot;-tt&quot; option you will get a prec=
+ise timestamp between each syscall.</div><div><br></div><div>If there is no=
+thing suspicious, try to remove the &quot;-etrace=3Dfile&quot; option.</div=
+><div></div></div><div></div></div></div><br><div class=3D"gmail_quote"><di=
+v dir=3D"ltr" class=3D"gmail_attr">On Wed, 7 Oct 2020 at 17:25, Patrick Wil=
+liams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Oct=
+ 06, 2020 at 10:42:18PM +0700, Nguyen Chanh wrote:<br>
+&gt; In <a href=3D"https://github.com/openbmc/phosphor-hwmon" rel=3D"norefe=
+rrer" target=3D"_blank">https://github.com/openbmc/phosphor-hwmon</a> =3D&g=
+t; hwmonio.cpp , I saw we use<br>
+&gt; the std::ifstream to open and read a device sensor.<br>
 &gt; <br>
-&gt; Thanks for the reply,<br>
+&gt; But, I met an issue with it. In case the sensor was disabled (Ex: the =
+Fan<br>
+&gt; was unplugged), the std::ifstream read will take a long time . The tim=
+eout<br>
+&gt; in there is so long. It makes my system have a BIG delay in each check=
+ing<br>
+&gt; sensor.<br>
 &gt; <br>
-&gt; I have attached the complete error log. Please view it.=C2=A0<br>
+&gt; Other observation : In case the sensor device is ready, the time for s=
+ensor<br>
+&gt; reading is expected.<br>
 &gt; <br>
-&gt; I have removed the build folder and created a new one twice. Still I a=
-m seeing the same error.<br>
-This may be environment issue in your setup.<br>
-I am not seeing this error in my environment with the latest master.<br>
+&gt; Measuring std::ifstream reading:<br>
+&gt; <br>
+&gt; In case unplugged sensor: 91385 microseconds<br>
+&gt; In case plugged sensor. : 507 microseconds<br>
 <br>
-. setup ethanolx<br>
-bitbake bitbake obmc-phosphor-image<br>
-<br>
-<br>
-&quot;WARNING: Host distribution &quot;ubuntu-18.04&quot; has not been vali=
-dated with this version of the build system; you may possibly experience un=
-expected failures. It is recommended that you use a tested distribution.<br=
->
-NOTE: Resolving any missing task queue dependencies<br>
-<br>
-Build Configuration:<br>
-BB_VERSION=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;1.47.0&quot;<b=
+Do you know which device driver it is interacting with?=C2=A0 This sounds<b=
 r>
-BUILD_SYS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;x86_64-linux&q=
-uot;<br>
-NATIVELSBSTRING=C2=A0 =C2=A0 =C2=A0 =3D &quot;ubuntu-18.04&quot;<br>
-TARGET_SYS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;arm-openbmc-li=
-nux-gnueabi&quot;<br>
-MACHINE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;ethanolx&=
-quot;<br>
-DISTRO=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;open=
-bmc-phosphor&quot;<br>
-DISTRO_VERSION=C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;0.1.0&quot;<br>
-TUNE_FEATURES=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;arm thumb arm1176jzs&quo=
-t;<br>
-TARGET_FPU=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;soft&quot;<br>
-meta=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
-meta-oe=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
-meta-networking=C2=A0 =C2=A0 =C2=A0 <br>
-meta-perl=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
-meta-python=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
-meta-phosphor=C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
-meta-aspeed=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>
-meta-amd=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
-meta-ethanolx=C2=A0 =C2=A0 =C2=A0 =C2=A0 =3D &quot;master:c3d88e4d9fcc08e1a=
-ae7cc9d0337c0261e996c64&quot;&quot;<br>
-<br>
-....<br>
-....<br>
-....<br>
-<br>
-NOTE: Running task 4241 of 4243 (/home/supvenka/work/openbmc_upstream/meta-=
-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_image_complete)<=
-br>
-NOTE: recipe obmc-phosphor-image-1.0-r0: task do_image_complete: Started<br=
+like an issue with the underlying driver.=C2=A0 Perhaps it is attempting<br=
 >
-NOTE: recipe obmc-phosphor-image-1.0-r0: task do_image_complete: Succeeded<=
-br>
-NOTE: Running task 4242 of 4243 (/home/supvenka/work/openbmc_upstream/meta-=
-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_populate_lic_dep=
-loy)<br>
-NOTE: recipe obmc-phosphor-image-1.0-r0: task do_populate_lic_deploy: Start=
-ed<br>
-NOTE: recipe obmc-phosphor-image-1.0-r0: task do_populate_lic_deploy: Succe=
-eded<br>
-NOTE: Running noexec task 4243 of 4243 (/home/supvenka/work/openbmc_upstrea=
-m/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:do_build)<br=
->
-NOTE: Tasks Summary: Attempted 4243 tasks of which 2 didn&#39;t need to be =
-rerun and all succeeded.&quot;<br>
+too many retries.<br>
+<br>
 &gt; <br>
-&gt; Thanks,<br>
-&gt; Dhanasekar<br>
+&gt; The patch to measure the std::ifstream reading, please see attachment =
+!<br>
 &gt; <br>
-&gt; On Wed, Oct 7, 2020 at 8:08 PM Supreeth Venkatesh &lt;<a href=3D"mailt=
-o:supreeth.venkatesh@amd.com" target=3D"_blank">supreeth.venkatesh@amd.com<=
-/a> &lt;mailto:<a href=3D"mailto:supreeth.venkatesh@amd.com" target=3D"_bla=
-nk">supreeth.venkatesh@amd.com</a>&gt;&gt; wrote:<br>
+&gt; Unexpected behavior you saw<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 10/7/20 5:44 AM, J Dhanasekar wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; [CAUTION: External Email]<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Hi openBMC,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Hi Dhanasekar<br>
+&gt; The timeout in there is so long<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; I am working to build BMC for AMD Ethanolx pla=
-tform,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Nice to hear.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; After running=C2=A0 *bitbake u-boot-aspeed* an=
-d *bitbake obmc-phosphor-image*,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; I am getting below error,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; ERROR: obmc-phosphor-initramfs-1.0-r0 do_rootf=
-s: The postinstall intercept hook &#39;update_gio_module_cache&#39; failed,=
- details in /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-o=
-penbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; ERROR: Logfile of failure stored in: /home/use=
-r/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/=
-obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs.14182<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; ERROR: Task (/home/user/dhanasekar/BMC/AMD/ope=
-nbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-initramfs.bb:do_ro=
-otfs) failed with exit code &#39;1&#39;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Can you send me the complete build logs?<br>
+&gt; Expected behavior<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Please help me to fix the error,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0rm the build folder and retry once.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0I will build it once today as well and confirm. It =
-may not been tested with latest upstream changes.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Thanks,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&gt; Dhanasekar,<br>
-&gt; <br>
+&gt; Do we have any better solution in this case? take less more timeout.<b=
+r>
+&gt; [image: Screen Shot 2020-10-03 at 11.32.36 AM.png]<br>
+&gt; -- <br>
+&gt; *Nguyen Minh Chanh *<br>
+&gt; *Embedded Software Engineer *<br>
+<br>
+<br>
+<br>
+-- <br>
+Patrick Williams<br>
 </blockquote></div>
 
---0000000000003dcde405b119353f--
+--00000000000049e97105b1195d99--
