@@ -1,65 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D35AA2858DA
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 08:54:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 958B028594C
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 09:22:18 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5lSN0S13zDqLl
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 17:54:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5m4R7348zDqNN
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 18:22:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
- helo=mail-qk1-x742.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::843;
+ helo=mail-qt1-x843.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=hV4vtNnf; dkim-atps=neutral
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
- [IPv6:2607:f8b0:4864:20::742])
+ header.s=google header.b=mlKNPJZ+; dkim-atps=neutral
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5lRT44nszDqF6
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 17:53:41 +1100 (AEDT)
-Received: by mail-qk1-x742.google.com with SMTP id y198so1424811qka.0
- for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 23:53:41 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5m3h5lKkzDqMh
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 18:21:33 +1100 (AEDT)
+Received: by mail-qt1-x843.google.com with SMTP id j22so856247qtj.8
+ for <openbmc@lists.ozlabs.org>; Wed, 07 Oct 2020 00:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=mi5a8JUWRdEOSIRItx4pFc8k92Hd1U7jNPTvKKEyEzA=;
- b=hV4vtNnfBGsBs+alXGR+syesmE3h77t7vgRtySrAIXjfjzVjr72EImIkikLydkUCVc
- 2NWswIS40+CRgUtuRlyo0YuolbK0poxoqqE4NgraprBn4QMINhshEjz5z+byDl+NN59i
- i6Jc45VicXzYbM1Ca1F1J7rEXm7u61LybXvEA=
+ :cc; bh=18+4iMGv+ayRO1cpfMpB+z0pIwAhQ8tIa3Sswu6C25g=;
+ b=mlKNPJZ+HwnUn32Q+mFxiOaEwA1BAC40JN/tblyxy6g3IgIOLQWjILv9QNKCxFPur2
+ Riu/YFils7TObf6u/5YIfD9HiqnnrsB5BM0yD5cdT92siMG7wJx4cc/iCrdkFMEI4Jb2
+ nqF1KX+vmtynvvQn09tnbYoFVD5s0XeOith78=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=mi5a8JUWRdEOSIRItx4pFc8k92Hd1U7jNPTvKKEyEzA=;
- b=kKTCYwO8l+uFtYAJ4/CvARnVO1TWNfkGhFGS8q5LJZuj6aetT5Uuejtbp+DU/OKg4B
- e0rcTD+8oMKfwpBcgwd0hh0p7k/3HTD85O0zx57aA2TYcPoXE7y3w4BRTGd30oDSo/2S
- UdcfJqVr/5f0rYAulT54fB/xOZ2OxL8zvMqiFw9OupFwFXmVS7A680Pvq4ZTSq6oLAtI
- KA3hdEeEX7oi+fcmI5MOAXOi8xH4hIUHIDzUA/7AJsMhOX6FBAGyRZooOvlhvvWfArkV
- PoGRwgFxSihVJmg6A071Szw0T0MUxC6bO8dghF1kTAhuwuq5kdtiAkl7q7eqTJonXqhJ
- rF1w==
-X-Gm-Message-State: AOAM531lxyw71Rp6NwpkoawUbS3zIbHOu0RpCCcsndWN+AzF+XmgmYmg
- g5AoQ3DyTm0fZ/zT9QeuZEgSb3TMJUJ1dRJIV/Ogkbs1o4U=
-X-Google-Smtp-Source: ABdhPJxcF4c37FW+o6AbUPz6Cgk0wtOlTVSSndLQOneK7me/YDYLjB/moFvVq90W+Q2Wdb+ZfFBrE0uE8x7/RmwfJSw=
-X-Received: by 2002:a37:48cc:: with SMTP id v195mr1498521qka.66.1602053619256; 
- Tue, 06 Oct 2020 23:53:39 -0700 (PDT)
+ bh=18+4iMGv+ayRO1cpfMpB+z0pIwAhQ8tIa3Sswu6C25g=;
+ b=s+rW/ZFbd06Iuy4ylvLFGtZa8KMQ1R9FV3e4UkK8ntZ2RzrSkAvY5IZf2SlnlpeEci
+ Yu26gdCBUIH9BUpra0xTj9ST1dIWwTl5uVnWwv+LkAeqZ06j67sO/RFQIpFwOmnyUpvr
+ uuDA1NnaJ66JERAIYFZBT2oMDzJ/PxnsBTfrCU16OwKKPHWpbcDO9N5Zc2J4pg+cwNE7
+ lg/4oKXCC40i6Zlri59PlhghcX346BSyVahMbD8IbulHMMXl9DuzHdqjAmlhnb6Ygxgn
+ qqlwhcUez1n0nDuecNfSplj3XM/x1hyn8rK9ojdz6yilAWwt+4F3O4PFqldnJAFMjeQS
+ b9+Q==
+X-Gm-Message-State: AOAM533KXGv8J49X6dX13O46QC+7BxDOS4A13xg6ZaZ6WpGlFE/T0z9e
+ ctgiwZYieSRHygWDyHIzo2hxX0lLgF9PDuI8NIztTfC0
+X-Google-Smtp-Source: ABdhPJwlnesVVCH9GQDFRAwGf+aBKIt+F8rWAHowSMNtW0vBHxHrFh5HRlSa+87YT3A69VDhP6pDgqVVSnlfqRfQ7K4=
+X-Received: by 2002:ac8:5b82:: with SMTP id a2mr1909477qta.176.1602055288758; 
+ Wed, 07 Oct 2020 00:21:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200929063955.1206-1-wangzhiqiang.bj@bytedance.com>
- <20200929063955.1206-2-wangzhiqiang.bj@bytedance.com>
- <CACPK8XdVSRQU92+hqYyVRe2QTgnKSFgn2QVf7P4VX4jyKvyYFw@mail.gmail.com>
-In-Reply-To: <CACPK8XdVSRQU92+hqYyVRe2QTgnKSFgn2QVf7P4VX4jyKvyYFw@mail.gmail.com>
+References: <20201002063414.275161-1-andrew@aj.id.au>
+In-Reply-To: <20201002063414.275161-1-andrew@aj.id.au>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 7 Oct 2020 06:53:27 +0000
-Message-ID: <CACPK8XeFfBQKnWnn-4Jmr9VMV0CxpERNsfPeHOVT610457pnvg@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8 v3 2/2] ARM: dts: aspeed: Add Bytedance
- g220a BMC machine
-To: John Wang <wangzhiqiang.bj@bytedance.com>
+Date: Wed, 7 Oct 2020 07:21:16 +0000
+Message-ID: <CACPK8Xd_kbuUVLomHhvkB4KXXuboiNY_HYMpSrJYdjjedjBu_Q@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Enable pstore for Rainier
+To: Andrew Jeffery <andrew@aj.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -72,53 +69,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?6YOB6Zu3?= <yulei.sh@bytedance.com>, xuxiaohan@bytedance.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 7 Oct 2020 at 06:38, Joel Stanley <joel@jms.id.au> wrote:
+On Fri, 2 Oct 2020 at 06:35, Andrew Jeffery <andrew@aj.id.au> wrote:
 >
-> On Tue, 29 Sep 2020 at 06:40, John Wang <wangzhiqiang.bj@bytedance.com> wrote:
-> >
-> > From: Lotus Xu <xuxiaohan@bytedance.com>
-> >
-> > The g220a is a server platform with an ASPEED AST2500 BMC.
-> >
-> > Signed-off-by: Lotus Xu <xuxiaohan@bytedance.com>
-> > Signed-off-by: John Wang <wangzhiqiang.bj@bytedance.com>
+> Hello,
 >
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> This series adds pstore support to the Rainier platform for recovery of oopses
+> and panics.
 >
-> Thanks, I've applied this to dev-5.8.
+> Patch 3/3 is a minor cleanup. Only patch 1/3 is a requirement as 2/3 is handled
+> by the config snippet in the bitbake metadata.
+
+I merged 2 and 3. lmk what you want to do with the configuration.
+
+I suggest we enable it for Tacoma too.
+
 >
-
-
-> +&kcs3 {
-> +       kcs_addr = <0xCA2>;
-> +       status = "okay";
-> +};
-> +
-> +&kcs4 {
-> +       kcs_addr = <0xCA4>;
-> +       status = "okay";
-> +};
-
-I booted your system in qemu and noticed the kcs driver failed to load:
-
-[    2.717595] ast-kcs-bmc: probe of 1e78902c.kcs failed with error -22
-[    2.719104] ast-kcs-bmc: probe of 1e789114.kcs failed with error -22
-
-You need to adjust your system to the v2 bindings, in the same way
-this patch did:
-
-https://patchwork.ozlabs.org/project/openbmc/patch/20200930075153.2115-1-aladyshev22@gmail.com/
-
-As I have already merged your patch, I did this for you.
-
-# ls /dev/ipmi-kcs*
-/dev/ipmi-kcs3  /dev/ipmi-kcs4
-
-Cheers,
-
-Joel
+> Please review!
+>
+> Andrew
+>
+> Andrew Jeffery (3):
+>   ARM: dts: rainier: Add reserved memory for ramoops
+>   ARM: config: Enable PSTORE in aspeed_g5_defconfig
+>   ARM: dts: rainier: Don't shout addresses
+>
+>  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 12 ++++++++++--
+>  arch/arm/configs/aspeed_g5_defconfig         |  4 ++++
+>  2 files changed, 14 insertions(+), 2 deletions(-)
+>
+> --
+> 2.25.1
+>
