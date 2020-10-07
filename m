@@ -2,88 +2,124 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEE21286210
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 17:25:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BA74286235
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 17:35:38 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5yp25rj7zDqP9
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 02:25:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5z1g1zhqzDqNx
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 02:35:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.100; helo=mga07.intel.com;
+ envelope-from=kent.thompson@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=CIpKs6qJ; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=GCJ2GQ05; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
+ header.b=LEdnCy2t; dkim-atps=neutral
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5yn03Dn2zDqH6
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 02:24:34 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id A27079D7;
- Wed,  7 Oct 2020 11:24:30 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Wed, 07 Oct 2020 11:24:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=2tafazyMlo2ocejNm3LRha+40L1
- l7ko/AZPHXsQBIac=; b=CIpKs6qJ2UcNLEwEx+mfPPHXspVR/98Eqmdv3PhR/wk
- 5xFUzwsoTdEpTIk91w6NBNqjIwX1Ci+Fxqz0e82B4CTMdEYxEeH9ytKFPgxW/nr2
- hFc9eE73Etk4TpRwRGlPF/EJec/dPq+8OMBWuaT5BrME0DDLy3IoDllPAMOlDoUs
- 4ncBNd//SvxZ8EEeALkKOipgP5YD/NACDyNFcQuP0AlyfTa02yRDJcdPg28DfVw/
- sQX2EWEqBp8lLnrByrGtYE6Vl8EnLtIr/V21vv6GpfwK3ewuvN4JviFDzbIWmIgy
- 0ZdrqWNd7cRmeNdPahETmB2BvkL4gdBvr1UxikI0Xmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=2tafaz
- yMlo2ocejNm3LRha+40L1l7ko/AZPHXsQBIac=; b=GCJ2GQ05h16c6UXivjHaOk
- WtW2J4owicJTIGTRQnb2QXIIBGcGDT0LK/CBksjuX7vIGT5iUfrexvEEtB8iUPpv
- 9HDh0z25D3XGiftGLO/75lAUaVHHqqkeTfXL6veMsrQ2DdMBQAtn4iO9u5Eq+mIq
- EQSA9W7NiM1exsc5Up6SQxJBur8rUmJ2BpVaLkv/O67jpnvYsf19zkma1qoYdhUt
- QokvI0C/zhoc9a3bMCiOEf7e5xsie9VS1CZVVS5upJLl+1T3xVAJEik4yT1/PTuY
- nr6KSfbo9CzB7DWMXSD8OWHYC5a8IpIpZGfjRnxVyYhcGNz/uV349yOmtVpfZp2w
- ==
-X-ME-Sender: <xms:rd19X0gHGWVWTMxGSirQEqdv8QqGYuXnpSt8VxYm4U84oXpSUlUv_g>
- <xme:rd19X9DliPbGlYm3VqHUPNFv8d0jZNglcTZDf5MTRh6s1DGrNgrG7vE54JA7-zIF1
- 11g7AWU_gnV1GQu0b4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeeigdeklecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeelhfejfeekteevffegteffudefheel
- feehvdfggfdvgffhjefhfeffkeeiieevjeenucffohhmrghinhepghhithhhuhgsrdgtoh
- hmnecukfhppeduieeirddujedvrdduvddtrdeijeenucevlhhushhtvghrufhiiigvpedt
- necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:rd19X8ER4yn6fVowoaf6Lgx3EsXwMMVRWzd1EjcEcqUNLDU6uEVPAw>
- <xmx:rd19X1RhcdhzaW7Ckk1f35VvDsrzJ1WhLcTqGpRvb8dIjXL6gTPODw>
- <xmx:rd19Xxyta9MUo6DTYuCnVJicK9QYrOXholGuFiXDHEbS_Gphd31JHg>
- <xmx:rt19X6sCNqWXLdBkrsBl0IEDIoTN-k8-ldFTt74UhJTOvBDQGtXJ_A>
-Received: from localhost (mobile-166-172-120-67.mycingular.net
- [166.172.120.67])
- by mail.messagingengine.com (Postfix) with ESMTPA id B0D4B3280059;
- Wed,  7 Oct 2020 11:24:29 -0400 (EDT)
-Date: Wed, 7 Oct 2020 10:24:28 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Nguyen Chanh <nguyenchanh2201@gmail.com>
-Subject: Re: [c++] [hwmon] std::ifstream read file with timeout so long
-Message-ID: <20201007152428.GJ6152@heinlein>
-References: <CAPGDkaHzu5UOES-irDLtu9jwLULyX9_BWAX7rgTPiaeXOT2ByA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5z0X0CKfzDqMK
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 02:34:33 +1100 (AEDT)
+IronPort-SDR: JdkhBfmVb8/GdC8cA4IIze99zSo5if7Db3Gw6vp4JX9wN5b5TxYMG5YZ01FhZsAj6DeND9VX+g
+ vz4dYhpmJYdQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9767"; a="229121967"
+X-IronPort-AV: E=Sophos;i="5.77,347,1596524400"; 
+ d="scan'208,217";a="229121967"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Oct 2020 08:34:31 -0700
+IronPort-SDR: Nz4dSG49RT7n3Vk9lq1p7IzCd6UeEYbyM7Aymn7bsDh5OQ7fxZSyQrl5OHW9X0UfRZiSwOXQx4
+ fc2xuXC2y/iA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.77,347,1596524400"; 
+ d="scan'208,217";a="344329422"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+ by orsmga008.jf.intel.com with ESMTP; 07 Oct 2020 08:34:31 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Wed, 7 Oct 2020 08:34:30 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Wed, 7 Oct 2020 08:34:30 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.106)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1713.5; Wed, 7 Oct 2020 08:34:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=N3L+shhCTpFgVXbA4x02sL6GijF867CwHXAcl/t/r0neOT7vB8/yY/g84qUvX9gQyWYfoRQxt6L1NQ/ujMmgNDDUs7G10rsoZCUN4IQudljyfI+3bfOIEembvNgR/ES/l02osjAKdFsynNuAYAn9JuP6Q/yvPRLPCajRxZIzY9/lN5Z0u5rRoDEKXRavrYzKxFCKvNzFgToekIHSV/wDoriSbBGi6e5Fbj99N1S0DhXj0jVDtyNXAdm71rxL47U10nssqZNj6pO+f1HWf4xx9RpR0nUQDL8DspqrqR0J4zm9XP/y0lOsCUKKYQOLUJGnb/cAjCaNyPiZ8B2BF+IgaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ONkl2ZQBJUK9w/piIuldHfEsZGM4StvNKZg/d0N9jEs=;
+ b=mS9GwSEGuRRUn3OXobZn4UiQwf4Q+ZTC3o0v/QZvK/jvo8dA4K87GcE1PRiTuqYe4PGzCcneddEjUU0h0HI8DH+zVaeLx45Qmjr4EbFJl4A8YmMYvVJNO1ophwV8yc+vfuSwkuQqoEMgPI7qpYmYqnIpPb3d53+47sQB7Z0cQCk8UcORwbQZwjzGyiob2EwXceWsr7jWNGp2PhCBWlF1jtIA88iv/Sk/OMCVFEXsQPTqFF9mRy2YUYJEt0kFlF9xN0b1oulH8jJRiBBh4uQdr/VgaV8c3jR+Um5TP2pxGTnbRXD4ryvpdUg3xTjEHpjfxpAWk8kMn3k10pFyBuvE/Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ONkl2ZQBJUK9w/piIuldHfEsZGM4StvNKZg/d0N9jEs=;
+ b=LEdnCy2tYcYwB9HzZbPwiWhD+MTgoHbQ+S/GkkpQN7NYk3zR6Jj0AyL0N049/gDwdgNCgnAT9xyeH36VOuJSgmKFPNKOMWHJpjhAx8QTpB5KmyeNYw4cwi47u8n4S6vKDaoUqS+t7dS4ytTP4/HkieyMHCnuwaEoMSfajogZPDg=
+Received: from BY5PR11MB3912.namprd11.prod.outlook.com (2603:10b6:a03:190::18)
+ by BYAPR11MB2600.namprd11.prod.outlook.com (2603:10b6:a02:c8::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3412.29; Wed, 7 Oct
+ 2020 15:34:28 +0000
+Received: from BY5PR11MB3912.namprd11.prod.outlook.com
+ ([fe80::b58d:df3c:e93c:bc41]) by BY5PR11MB3912.namprd11.prod.outlook.com
+ ([fe80::b58d:df3c:e93c:bc41%7]) with mapi id 15.20.3455.023; Wed, 7 Oct 2020
+ 15:34:28 +0000
+From: "Thompson, Kent" <kent.thompson@intel.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: unsubscribe
+Thread-Topic: unsubscribe
+Thread-Index: Adacv1cx4T83uLFbSASjYI18PccWjg==
+Date: Wed, 7 Oct 2020 15:34:28 +0000
+Message-ID: <BY5PR11MB391264E87A0BDB747A6BAC72E90A0@BY5PR11MB3912.namprd11.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.5.1.3
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none; lists.ozlabs.org; dmarc=none action=none header.from=intel.com; 
+x-originating-ip: [104.51.68.75]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 03b2bc52-1501-4615-3611-08d86ad67ab1
+x-ms-traffictypediagnostic: BYAPR11MB2600:
+x-microsoft-antispam-prvs: <BYAPR11MB260097F905BF0ABC53E54845E90A0@BYAPR11MB2600.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:1728;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: j3nqVxxQo8NOS1qUaBMuiW/Kdu41ihDyu8SmJVOq9Lm4myss5XqlOil15+yL4GLqJ9kV11r+nv8n0yG7XzfL8ZFCBtcBpWtlT3WD70bdjKARBBLigVkbDNbRQ1wxdPwrQmbIOcvCxqCQX9CaERd8BCIRZQ9g7r1rBjbvviwrEeb0kXkUNMEOAN1/dseqPmFfKqCq5BHyFcXvD7GFmWrcgN8mfbPQqv5lmKBjVhpy5ns+MCIDuJ/XpWtM9fKNtW529jUnGkMj4KHFjznZQIOutA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR11MB3912.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(136003)(396003)(376002)(366004)(39860400002)(33656002)(55016002)(2906002)(8936002)(71200400001)(316002)(3480700007)(66946007)(4270600006)(73894004)(52536014)(5660300002)(7116003)(76116006)(9686003)(186003)(66556008)(6506007)(7696005)(66476007)(64756008)(8676002)(66446008)(26005)(86362001)(6916009)(478600001)(166393002)(220243001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: kH/pck11cRr9cAuF97uHJhmUVQk+WWBBw4TByOBZctFtfokCjC2SkqConWfH6cMnUEqn/ElXFMLby6odQu/gxbTtdbRagRA80rOUngtytuU7OtOMVAFv+V9ENpXFKDLC3LVCNJZAEldzQiXFSN7MOpDW6CSDUoLU5Y+JxWHxHrpCrV1KVULiRA7ZQVm+KXLjnw7FKKUqDYtIUuzrVgAktaRwGg1b+Tz+K7B4DEuzlq4FQt6BdWop30qOPtOFOlcN43VMtCCe5bTn62lVCR2TLsgUxdpO/5I5bDANM4cCiWy7de4NhKeGks7fiNGKuxkJYU2/RE3chrCxZ5U7h8EkDQFZ6HwhYPqMTzUik/BVoCxrl6tNRZS8NrbUl8OFWvUYsU0k4pAf1Rjs5J08zFVCFNJhG4TeZgkYFk8p8np3zVeQ1D6SoPGW5qP1PyEDtjBh0uS54EAMBVf/BfUZJMS4d1rrbnmCb1gtDTMI3aDHf6HMcAI8EzaaMwK9pWNTsonzIpydglGhO8v8v3mp2k4fFcOcULMO51rinEyizb+wyDT34ltnM3fmBBT4NwO5Hg02z9/pu8yoPS/8rrcau6TqHwK6vViBET9QjNJbYNThGWm0jhaOB3ime939zPaYgOIMY7/2fC9W+7WA7uL1+oQfKg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_BY5PR11MB391264E87A0BDB747A6BAC72E90A0BY5PR11MB3912namp_"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="3r2sERxeG5twY2zu"
-Content-Disposition: inline
-In-Reply-To: <CAPGDkaHzu5UOES-irDLtu9jwLULyX9_BWAX7rgTPiaeXOT2ByA@mail.gmail.com>
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR11MB3912.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 03b2bc52-1501-4615-3611-08d86ad67ab1
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Oct 2020 15:34:28.5285 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: uSyLCeewC1UBsc1MwLzR8LHDqlfygOjRKdRqSIk+SyiSeaSO/oNLpeDharjo5IywXCsna9Jj59lcFU6rGOGmQQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB2600
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,77 +131,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---3r2sERxeG5twY2zu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--_000_BY5PR11MB391264E87A0BDB747A6BAC72E90A0BY5PR11MB3912namp_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 06, 2020 at 10:42:18PM +0700, Nguyen Chanh wrote:
-> In https://github.com/openbmc/phosphor-hwmon =3D> hwmonio.cpp , I saw we =
-use
-> the std::ifstream to open and read a device sensor.
->=20
-> But, I met an issue with it. In case the sensor was disabled (Ex: the Fan
-> was unplugged), the std::ifstream read will take a long time . The timeout
-> in there is so long. It makes my system have a BIG delay in each checking
-> sensor.
->=20
-> Other observation : In case the sensor device is ready, the time for sens=
-or
-> reading is expected.
->=20
-> Measuring std::ifstream reading:
->=20
-> In case unplugged sensor: 91385 microseconds
-> In case plugged sensor. : 507 microseconds
-
-Do you know which device driver it is interacting with?  This sounds
-like an issue with the underlying driver.  Perhaps it is attempting
-too many retries.
-
->=20
-> The patch to measure the std::ifstream reading, please see attachment !
->=20
-> Unexpected behavior you saw
->=20
-> The timeout in there is so long
->=20
-> Expected behavior
->=20
-> Do we have any better solution in this case? take less more timeout.
-> [image: Screen Shot 2020-10-03 at 11.32.36 AM.png]
-> --=20
-> *Nguyen Minh Chanh *
-> *Embedded Software Engineer *
 
 
+--_000_BY5PR11MB391264E87A0BDB747A6BAC72E90A0BY5PR11MB3912namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
---=20
-Patrick Williams
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
 
---3r2sERxeG5twY2zu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl993aoACgkQqwNHzC0A
-wRlPVg/+PMzLzKqhSZeJ1LYChuD/zMqBMj0ffkzlLhXmKscVIXZHQNHopbxZoqev
-uBd4qp/ZDZ3Xk4nWOucewS8h9P5LfbLseBTiQzcQgArJKTZ3C2INVE1cFZ0P6oI5
-x/QmAKzPcQGi/A19kW0enIn+fuaxldEVKfgGL+1dnNr8p1dyTqjsu2ZuZke5CgcU
-yPOxVu/nJGv1KHBVG4BqQDdGRWFBu+82mvWFJLyl4Vg/ZXlHZiMz06HchVJ4RJVJ
-xmgHuCnIigMR5uJXnVN8ug130JYrj7fx1KYescVhSO+TN05mzjfJsmMT38EUYz6w
-s/v85xjCDMZ6vJQXVfiehIGs+Ex8X2nDJPV6Uewp916aa6uTxpPv3UwgdXdvlzN5
-oHHo6x2NbUsd71pLNVBm/Hmc/mctbJ3UuGqLe0o4+uULpMiope3nDaEhZVEI2qQ8
-WBsf3RFSFmuMUlMawR7cjIrgSv3au8B4n62uvEOXYtCpUQEFXlzKD7NGPpjAFPbB
-RnYQ9KCen0QJPdFcOHHrwZCgJxKn4M/ezd6rB7IX1Vb3oyxvKrooV6+59rRmNDGg
-7R+0fDnQxJwX4jtPjHp1b73A9IxmpR3k2OC+FOx6OIcM+QQ6bFqRYptuIct+b9nZ
-8MoCHFI+QMbXIDt6HGfiBG6IwL23ZVY4pmn9MVIkiwAk7lLlTT4=
-=4Jg2
------END PGP SIGNATURE-----
-
---3r2sERxeG5twY2zu--
+--_000_BY5PR11MB391264E87A0BDB747A6BAC72E90A0BY5PR11MB3912namp_--
