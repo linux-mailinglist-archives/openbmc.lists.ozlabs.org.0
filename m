@@ -1,71 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB5F228582E
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 07:40:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A30328583A
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 07:48:40 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C5jpr5dyWzDqN6
-	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 16:40:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C5k0Q0fVGzDqNT
+	for <lists+openbmc@lfdr.de>; Wed,  7 Oct 2020 16:48:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::843;
- helo=mail-qt1-x843.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f43;
+ helo=mail-qv1-xf43.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=deGgsi55; dkim-atps=neutral
-Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
- [IPv6:2607:f8b0:4864:20::843])
+ header.s=google header.b=ACkkPlVe; dkim-atps=neutral
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com
+ [IPv6:2607:f8b0:4864:20::f43])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C5jp61KhpzDqMT
- for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 16:39:38 +1100 (AEDT)
-Received: by mail-qt1-x843.google.com with SMTP id 19so713604qtp.1
- for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 22:39:38 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C5jzj4GMBzDqMd
+ for <openbmc@lists.ozlabs.org>; Wed,  7 Oct 2020 16:47:59 +1100 (AEDT)
+Received: by mail-qv1-xf43.google.com with SMTP id s17so425753qvr.11
+ for <openbmc@lists.ozlabs.org>; Tue, 06 Oct 2020 22:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=4h2e8q7kzJs7W2jisAwXwY3bk/4bjiYGeaykMr1P4xI=;
- b=deGgsi55ah9dh6JM+RxJf2qP8hz2ROw/WEhhKODgGl9Nt1oPO8v07gcIalJzz7QL1G
- w8hZQEvkEx5HabRDBweQ0EzaV9g3tJh8u9Ypafm6WIgbEN4tUs222eDnbM6WNeMMm93J
- DbNc2HSRgWOOYhO+OzXi7uVtCxO9FvJwvj6/A=
+ :cc; bh=+AlB6T8PsOKQoiqsrG91br2C/iBhFxl5vjkMg5jDbGc=;
+ b=ACkkPlVedvA0yFO8gOas8D/T7gAa589JKSFclQjOillFQVXKGE9u5jw2UZTweFe/Fy
+ 7xaHUUTG3IDK6m8uAvOYsCyhVMIjh8JNcu/k7kloW5dTfLXi93tHtjz8FIilVOREiEXd
+ qkwMnGDUDGlOTixABcMEjmEXo6VHdzxO3kqis=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=4h2e8q7kzJs7W2jisAwXwY3bk/4bjiYGeaykMr1P4xI=;
- b=a8HiQQGi+/ybF9S59FZRP0clHuYFA89+kMkfwDLWIuk12jMh7NYCOlcPYjhFi2dugp
- zJrPd4yEOthDE5Y9pX6+oXZQIqjnvu0LhPej/sPDuqdTuKE3wb0+X2JeeMa/iFLRNYZd
- e6A+v0GTcECX9IJVdR0DKmySVYIZfj98xYmzcO+sUKHood2pf3JbmyD6jc9H6D2BB7Ul
- yRXS4nVjevkOTiGSewin/qMUu8qfzuo+iXQOfDwnpJKXGmUMLDl9mICrPLBodNYgBwMy
- heUrvYh11ZLivYNi4WDkn1llQcEMHZ0J1u5gjEMMYSeSmZCVyWTCiPsO1Fi6VmVr48QK
- BJhA==
-X-Gm-Message-State: AOAM532Mvhq6j3vNhkJFRipJyjD3MQUwuu4NtPpja4c0CW7fq3shwbzO
- B9zyzNTcaY9jJuHJ41YsYc0rzVKRvwJV1xW0Nr0eKxND
-X-Google-Smtp-Source: ABdhPJzzJAGO8SCzgkEgnW4CSkeUd9k4hv/74ziMC146cWX+lX4kptgSws0nvysdwfzdcA5MJODqpXX2C6lVMIHELMU=
-X-Received: by 2002:ac8:48ca:: with SMTP id l10mr1607085qtr.385.1602049174200; 
- Tue, 06 Oct 2020 22:39:34 -0700 (PDT)
+ bh=+AlB6T8PsOKQoiqsrG91br2C/iBhFxl5vjkMg5jDbGc=;
+ b=UgDzU2qDDQwJujMy2k44Bo2vQHb/Mu49aDlEU8YD4KwHi+WNAlgsOtBFiV/3JCWKLX
+ z7+lUPUSxbteDDIHhklZNqgtnIlT+gMPDYQvRuX7WHXdt3XWuDDLpAnNjNZlZtA1515b
+ ecOtT6mJXUyyf2Y3wUE4S4jeY6WaBqKBFYvz0O478H/wqIEB6H238cFKXmGz+hhx1nbG
+ 5pkeKYiWiLvgUhNARZLbtiNvU71maXuWzWew1C5xvNN86jTijVlVunpvCkJtFpAXBOlF
+ slz9JcTsllgmfExY8pr/1rbaBx4RJvpYpee35mmxHnS1fTBCgFZG/go2mXdTOOanEkET
+ zOJA==
+X-Gm-Message-State: AOAM531zhmDPo3vDDgK6B3Ct2hVl+L3oZWDC+7n23lCEUzXEIw9k67dl
+ vYGGVKuSpdEI6HeFL2mJRSDUdH84U1ukR6r7jK0=
+X-Google-Smtp-Source: ABdhPJzWAabbCsS1siHGPKwc60oFsGwDgeILJmw8TeetjhUVn01ugAI2EmewQh8avG2OGYqzr6Umfkrqt/EI1yGV3gk=
+X-Received: by 2002:a05:6214:11e4:: with SMTP id
+ e4mr1521832qvu.61.1602049675419; 
+ Tue, 06 Oct 2020 22:47:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200926212734.23836-1-zev@bewilderbeest.net>
- <20200926212734.23836-3-zev@bewilderbeest.net>
- <51512c43-ee82-17b5-71c4-35849b1f0922@linux.intel.com>
- <20200928195423.3kftebgltdmpronq@hatter.bewilderbeest.net>
- <28b289f1-0ef0-2432-f71b-0ca4420a39e2@linux.intel.com>
- <20200928210917.idrpngkpduwxe2rf@hatter.bewilderbeest.net>
- <b79f8dfb-8257-943b-3c2b-062840aa2515@linux.intel.com>
- <20200928220124.k47kocdvi2ahgtc6@hatter.bewilderbeest.net>
- <CACPK8XdzjEhxKHbajMXbMpktOAhm_xFqUW7rY67WdmQ4p8PXPg@mail.gmail.com>
- <f4185310-6695-75ee-df3b-41b89b0baac3@linux.intel.com>
-In-Reply-To: <f4185310-6695-75ee-df3b-41b89b0baac3@linux.intel.com>
+References: <20200929184916.33247-1-eajames@linux.ibm.com>
+ <OF73F51A22.F28011F5-ON002585F3.007BD2F6-002585F3.007C06F7@notes.na.collabserv.com>
+In-Reply-To: <OF73F51A22.F28011F5-ON002585F3.007BD2F6-002585F3.007C06F7@notes.na.collabserv.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 7 Oct 2020 05:39:21 +0000
-Message-ID: <CACPK8XdbFmAZqwezOJRFffdVmCK9PHaXSTgYZfTTSU=t2RnYoA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] peci-cputemp: label CPU cores from zero instead of one
-To: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Date: Wed, 7 Oct 2020 05:47:43 +0000
+Message-ID: <CACPK8Xd1z_KOk9OOsHcV=Nc53R==PR0QhQ0Mg-MDEQU8yUkbBg@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.8] fsi: Aspeed: Add mutex to protect HW access
+To: Milton Miller II <miltonm@us.ibm.com>, Eddie James <eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,74 +71,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jason M Biils <jason.m.bills@linux.intel.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Zev Weiss <zev@bewilderbeest.net>,
- James Feist <james.feist@linux.intel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 6 Oct 2020 at 18:02, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com> wrote:
+On Wed, 30 Sep 2020 at 22:34, Milton Miller II <miltonm@us.ibm.com> wrote:
 >
-> Hi Zev,
->
-> On 9/28/2020 11:00 PM, Joel Stanley wrote:
-> > On Mon, 28 Sep 2020 at 22:02, Zev Weiss <zev@bewilderbeest.net> wrote:
-> >>
-> >> On Mon, Sep 28, 2020 at 04:32:31PM CDT, Jae Hyun Yoo wrote:
-> >>>> Oh I see -- I had thought you were referring to other existing hwmon
-> >>>> drivers in the kernel.
-> >>>>
-> >>>> As far as I can tell, all those instances appear to be numbering CPU
-> >>>> *sockets* though -- which as Jason mentioned in a call earlier today
-> >>>> I gather is done to line up with motherboard silkscreen labeling.
-> >>>> But in the code in question here we're labeling *cores* within a
-> >>>> given socket, which I don't see arising anywhere in any existing
-> >>>> entity-manager configs.  So I'm still unclear on why we want to use
-> >>>> one-based indexing here instead of zero-based -- I'd think we'd want
-> >>>> the PECI driver to match the PECI spec?
-> >>>
-> >>> PECI driver uses zero-based index for PECI command handling but label is
-> >>> user facing stuff which shouldn't make confusion to users. We can modify
-> >>> driver like you did in this patch and previous driver also used
-> >>> zero-based indexing but I changed it to natural number based indexing
-> >>> to avoid confusion between driver labels and dbus-sensors names.
-> >>> Any specific reason for the zero-based indexing? Any benefit?
-> >>>
-> >>
-> >> [Re-adding CCs...]
+> On September 29, 2020 around 1:50PM in some timezone, Eddie James wrote:
 > >
-> > Thanks. Please keep the discussion on the list.
+> >There is nothing to prevent multiple commands being executed
+> >simultaneously. Add a mutex to prevent this.
 > >
-> >>
-> >> Well, as I see it basically just consistency with a larger set of
-> >> things.  Most other related numbering schemes I'm aware of are
-> >> zero-based -- userspace tools like 'taskset' and 'lscpu', system APIs
-> >> like the <sched.h> CPU_SET() routines, and the kernel's own numbering
-> >> (e.g. what's shown in /proc/cpuinfo) all number processors starting from
-> >> zero, so dbus-sensors seems kind of like the odd one out there.
-> >> (Personally I'd be fully in support of changing it to be zero-based as
-> >> well, though I have no idea offhand about how distruptive a change that
-> >> would be.)
-> >>
-> >> It also seems pretty OpenBMC-specific, whereas I'd expect we want to aim
-> >> for greater generality in things going into mainline.
-> >
-> > Agreed. The hwmon numbering varies; some attributes are zero indexed
-> > and some start at 1. More commonly we start counting from zero in the
-> > kernel, so I would expect PECI to do the same.
-> >
-> > If there's some userspace that depends on the behaviour of these out
-> > of tree PECI patches, then that userspace will need to change. This
-> > reminds us why the project prefers patches exposing userspace ABI are
-> > merged to mainline first.
->
-> Okay. Not a big deal. The coretemp module for local CPU also uses zero
-> starting label index for core numbers so better match up. Thanks for
-> your patch.
->
-> Reviewed-by: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+> >Signed-off-by: Eddie James <eajames@linux.ibm.com>
 
-Applied to dev-5.8.
+> >@@ -597,6 +608,7 @@ static int fsi_master_aspeed_probe(struct
+> >platform_device *pdev)
+> >
+> >       dev_set_drvdata(&pdev->dev, aspeed);
+> >
+> >+      mutex_init(&aspeed->lock);
+> >       aspeed_master_init(aspeed);
+>
+> So you initialize the lock here in the probe function before its
+> used, good.  I notice its not taken in aspeed_master_init nor over
+> the opb_read for the version register.  Both are called from the
+> probe function and presumably are therefore the sole context
+> available, but having it taken could be considered a good for
+> consistency.
+>
+> Are there any concerns that this is part of the fsi master
+> context if we wanted to use both fsi buses in the future?
+
+If we use the other FSI master, then it would have a second instance
+of the driver so we would be fine.
+
+If/when we add support for the second OPB bus the driver will need a
+overhaul, so reworking the locking will form part of that work.
+
+> Reviewed-by: Milton Miller <miltonm@us.ibm.com>
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Fixes: 606397d67f41 ("fsi: Add ast2600 master driver")
+
+I have merged this to the openbmc tree.
+
+Eddie, I know this was written to fix the sbe fifo usage. Did you have
+a (simplified) test workload that showed the bug that you could share?
+
+Please send this to the upstream lists with the r-b and fixes tags.
 
 Cheers,
 
