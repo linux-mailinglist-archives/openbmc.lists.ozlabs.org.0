@@ -1,69 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12F85287146
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 11:12:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3401287217
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 11:59:17 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C6QTS5S0yzDqFs
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 20:12:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C6RW64s2mzDqS4
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 20:59:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=VN1EDqil; dkim-atps=neutral
+ header.s=mta-01 header.b=kdzo3CuT; dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C6QSj0z0rzDqFS
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 20:12:04 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C6RTy5q0YzDqB3
+ for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 20:58:14 +1100 (AEDT)
 Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id E14B24138C;
- Thu,  8 Oct 2020 09:12:01 +0000 (UTC)
+ by mta-01.yadro.com (Postfix) with ESMTP id 88B284139D;
+ Thu,  8 Oct 2020 09:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:content-language:content-type
- :content-type:in-reply-to:mime-version:user-agent:date:date
- :message-id:from:from:references:subject:subject:received
- :received:received; s=mta-01; t=1602148320; x=1603962721; bh=o/I
- v5RvC3GhxAeIsvQB6vLocOaVy3PHPcX49IIySWFA=; b=VN1EDqiles8SnEh6272
- 1GJHiPtcV/UioVnFq+y/pk1h1RlvxEmANTQhFTvCNPPIZefCU6ZE2PdMCrbz+mrg
- 37mTtmsUYy7za86v+pf6FOzmhLVeNqxbXCqOmBsz7eUrWEidV905yBEQiCRCMLSR
- XnuWP+jKrEcixQg5csAjqT2Y=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1602151090; x=1603965491; bh=8JhqwVPxSsVuRfBCCGTiFsi5Q
+ 9KtFJ4KdaOQdpcNv6U=; b=kdzo3CuT4wOQ8PGGZ8Ve08CN9QoF9w8VVEYcp4MZZ
+ xswcKVBPLSBoyMQHgC+K79dex8B9cLjb5neHXfW/hcVGzRbMbiMdZgx8eKTo6MFh
+ lLcdQzYklM90JSMLnXyW3Gc9b8uQsonz1RNpxKrkGZMRMkaIpmt+8a1W+cemppy7
+ S0=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
  by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id PZBqHKqPYHCz; Thu,  8 Oct 2020 12:12:00 +0300 (MSK)
+ with ESMTP id VAHIR9V4S-Cy; Thu,  8 Oct 2020 12:58:10 +0300 (MSK)
 Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
  [172.17.100.104])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
  (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id D256F41323;
- Thu,  8 Oct 2020 12:12:00 +0300 (MSK)
-Received: from [10.199.2.134] (10.199.2.134) by T-EXCH-04.corp.yadro.com
+ by mta-01.yadro.com (Postfix) with ESMTPS id 12B434139A;
+ Thu,  8 Oct 2020 12:58:10 +0300 (MSK)
+Received: from [10.199.0.226] (10.199.0.226) by T-EXCH-04.corp.yadro.com
  (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 8 Oct
- 2020 12:12:00 +0300
-Subject: Re: Use usb-ctrl for USB gadget management
-To: Jeremy Kerr <jk@ozlabs.org>, OpenBMC MailList OZLabs
- <openbmc@lists.ozlabs.org>
-References: <127b55ea-175f-b60f-90e1-08465fb53592@yadro.com>
- <63f9af23051a75523589eb9b036bd8d9877594d4.camel@ozlabs.org>
-From: i.kononenko <i.kononenko@yadro.com>
-Message-ID: <5cc7e637-7c96-e019-2bad-4fa900b91d99@yadro.com>
-Date: Thu, 8 Oct 2020 12:11:59 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
+ 2020 12:58:09 +0300
+Message-ID: <28750e605f477d8901ae61da8b0753aba8b78b46.camel@yadro.com>
+Subject: Re: Get inventory FRU from inventory system path
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: <john.chung@mic.com.tw>, <openbmc@lists.ozlabs.org>
+Date: Thu, 8 Oct 2020 12:58:08 +0300
+In-Reply-To: <270220206437441ba7ba4eb39336f9e4@mic.com.tw>
+References: <270220206437441ba7ba4eb39336f9e4@mic.com.tw>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
 MIME-Version: 1.0
-In-Reply-To: <63f9af23051a75523589eb9b036bd8d9877594d4.camel@ozlabs.org>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.2.134]
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.0.226]
 X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
  T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -80,36 +77,63 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi John,
 
+What are you trying to achieve?
+The REST API do just a translation to dbus, so you expect to get
+exactly what EntityManager (or other inventory-related daemon) expose.
+And EM expose nothing to /xyz/openbmc_project/inventory/system
 
-On 08.10.2020 11:35, Jeremy Kerr wrote:
-> Hi Igor,
-> 
->> I've found the gerrits change[1] about including the usb-ctrl to the
->> state_hook of Virtual Media mounting. 
->> I'm working on improving Virtual Media functions to add media
->> interface type[2] which impacts state_hook. I'd like to take over me
->> the above described changes  to speed approve updates of [1].
->> Kindly may I ask to assign the task[1] to me? I'll like to suggest a
->> [2] together with [1], is it possible?
-> 
-> Sure, I'm fine if you want to take care of the state hook changes!
-> 
-> However, I'm not sure what you mean by assign the task to you. If you
-> want to work on this, feel free to take my changes and modify them, and
-> I'll abandon the original review request.
-> 
-> Cheers,
-> 
-> 
-> Jeremy
-> 
-
-Jeremy, thanks for the reply.
-I've just like to notify that I want to take this changes on itself.
-Ok, as soon as possible I'll suggest a patch set by another change.
-
+On Thu, 2020-10-08 at 08:53 +0000, john.chung@mic.com.tw wrote:
+> Hi,
+>  
+> I am trying to get the data from this path “
+> https://<bmcip>/xyz/openbmc_project/inventory/system”.
+> But only get the following data from this path.
+>  
+> "/xyz/openbmc_project/inventory/system": {
+> "AssetTag": ""
+> },
+>  
+> Here is an example for this path which I expected to get.
+>  
+>     "/xyz/openbmc_project/inventory/system": {
+>         "BuildDate": "",
+>         "Cached": 0,
+>         "FieldReplaceable": 0,
+>         "Manufacturer": "",
+>         "Model": "2",
+>         "PartNumber": "0000000000000000",
+>         "Present": 1,
+>         "PrettyName": "",
+>         "SerialNumber": "0000000000000000"
+>     },
+>  
+>  
+>  
+> Only using entity-manager in my project for inventory FRU.
+> I could get the FRU data from this path “
+> https://<bmcip>/xyz/openbmc_project/inventory/system/board/<name>”
+> But the inventory system path is null.
+>  
+> Any setting I should set for getting FRU from this path?
+>  
+> Regards,
+> John Chung
+>  
+> This email message and all attachments transmitted with it are
+> intended solely for the use of the intended recipient(s) and may
+> contain legally privileged and confidential information. If you are
+> not the intended recipient of this email, you are hereby notified
+> that any disclosure, dissemination, distribution, copying, or other
+> use of this message, its attachments or any information contained
+> therein is strictly prohibited. If you have received this email in
+> error, please contact the sender immediately and please delete it and
+> any attachments from your system. Computer viruses can be transmitted
+> via email. The sender accepts no liability for any damage caused by
+> any virus transmitted by this email. Thank you.
 -- 
 Best regards,
+Andrei Kartashev
 
-Igor Kononenko
+
