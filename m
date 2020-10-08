@@ -1,90 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0AD82879D6
-	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 18:19:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E6CD2879FE
+	for <lists+openbmc@lfdr.de>; Thu,  8 Oct 2020 18:32:46 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C6by36wjvzDqWp
-	for <lists+openbmc@lfdr.de>; Fri,  9 Oct 2020 03:19:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C6cF66WjWzDqX8
+	for <lists+openbmc@lfdr.de>; Fri,  9 Oct 2020 03:32:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24;
- helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=NVHt4wn3; 
+ header.s=fm3 header.b=a2L+2CXV; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=o0b70wTt; 
+ header.a=rsa-sha256 header.s=fm1 header.b=QBPack0v; 
  dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com
- [64.147.123.24])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C6bx75wvQzDqWm
- for <openbmc@lists.ozlabs.org>; Fri,  9 Oct 2020 03:18:49 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C6cDD2D1mzDqWm
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Oct 2020 03:31:55 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id B8D909D7
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 12:18:46 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id C3A1E5C004B;
+ Thu,  8 Oct 2020 12:31:51 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 08 Oct 2020 12:18:46 -0400
+ by compute4.internal (MEProxy); Thu, 08 Oct 2020 12:31:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=0ho8LTossTmw5kU36KA3n2z+B4F
- ARR3uSwPLomeModo=; b=NVHt4wn3iFu+WNjNKr+BBpPNouLuEJznTA8N3b3H12O
- pSMweptqV+jE4WYJ0r4WxPGo31JbLt2dqMteMYbGRDgfqIPbrCxnTuYlAaLGeyCU
- uqD2FWrJWVJEI66npqNJUJsTlRCpF32TL8txhgQHDQZYkVgR4Nn6nXxnenODhXp5
- IaSqqeGfoiQzcXJidfUeS688lUJA86d6DITCSX53hWW3mup8gCYfDMJnMUPIi1pn
- liZHqj3I9kbuG/joXSOJp8EgIjj9hlM+emXWZzZ2uj0UnW9PpHWELimN+XwalZ3C
- vL+rMem/I/kGlz7YkokVXjWXp3L2wDpyOPKn0GyRkIg==
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=1MFOe1Z6vw2Y/JLMad53eZpvlpx
+ p0rRxhXMqar5WuI4=; b=a2L+2CXVmaMbqJgk3iaBhRSOu1OwCzHOay1GkSNxFFw
+ g5uiX2aMcMfdS8YHQFz0gXx1taMCKHZWdvfnT19w8wTPgsMTyorztlOqSS/DYdE9
+ Pc7LnHY4yMfS0Dm+A1xdYvgXUtOw+KF9wgsZV9fC+CHkM1928wPMjxSkgMD/yHXJ
+ 7PZL9qJsaJy1xPD/MyyF643TcPSWCFYUO7bsglzCvp4cANdycnj/gmopjHRahWc2
+ wkhFkrGsxaig/NfeBkEv79XxMloQCvxwzddmNCHSm+Zb9LSriabsQwIzOp0aXa5I
+ 14sZOtyNz4j3gazmmEt69jZZWKTQxHLaOr5b6lK3pgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:in-reply-to
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0ho8LT
- ossTmw5kU36KA3n2z+B4FARR3uSwPLomeModo=; b=o0b70wTt3R/abIgzxrALRj
- PYQEyTd7/Z9kOsCy6fu1qT/SJjf6GYQt3ND5uIqiSl07iLWFCxUQTo5BbsO5fdnV
- 8kj7IO9NzoOvWOPX6XbTrB3u9XYQGKxSxaU9L+fHHftmiIhVvfDN5nQ1NZeS8hS5
- pTGZrVSM3B0Z6J38tZS9Go0RunoS6fBTnvj8cm4rTTOKwhxoCj7iv9B8vCdtuV1S
- GvHmBzSObeTsF4AFHkYv3mznb/vbzsKKy2rOJzWEbP4Va+IrLuzBcdA11EkCDOmU
- YIvTDq3nU6l/kWxDH6pk7J/C0BCTsU8Wkrvjta7qD4q3zgba7pTGFmrp4MmYUDvw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=1MFOe1
+ Z6vw2Y/JLMad53eZpvlpxp0rRxhXMqar5WuI4=; b=QBPack0vlPcHxeN236Rlp4
+ +PBhCPTZt6S09w0EsrRmeIyNV4Hq2gQ200yCEhD884VpM31lq1aNhoiOcULUYEdB
+ vMSaQmhwWIRceQMGIXG4EWC+jjnpLLFa6RYAUDuIfHkfHpzrR9SzwJCQ84J+uvNZ
+ ALlW2IDGaJQqFFXEoXzvhbhJ0Obo01mlFg8TuU3B8RJFEsCKSl3evtzYOzoy9jch
+ ejOg1IYxPgoua1xS3EBf+mNTvWYbkivSg3OYHOzciIWK5vUIYrqI7qj3Pmm2ElvY
+ +qL6Q/8dwfCYfehfvA2wiI+0U54cTh4L4HPufo/fdhm0TYcYx9O8JjTWvW9FpQQw
  ==
-X-ME-Sender: <xms:5jt_X5-wHEoLxLU0lhoaMkQJ76kfFVeFl4z-GCoga0hEEq2DGDEk0Q>
- <xme:5jt_X9spcFFSefqXPS8K8CRL7tmbt0H0Q2YZXu-iMhNAoO5nqaFOU79DxZ0x4CkJx
- oN_dlBNeYuczYF_t_U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeelgdejfecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:9j5_X8W17uQM4JZCuqFpplHCL6fW2Qb9_vrZoHsxzjlKt1CxD3Gg_Q>
+ <xme:9j5_Xwl_hKDHEAdbHvPD7YQrAnD_3-a03Or7jZOIX3C0F9GY967qi4I6Hb8rDlmX-
+ 5L1lHPH9dQ6pL0CS5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrgeelgdejiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
  hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
  necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpedvkeeuveeuudelgffgfeelteeffeeh
- jefhtdffudettedujedvhfeikefhhfeuheenucffohhmrghinhepghhithhhuhgsrdgtoh
- hmpdhophgvnhgsmhgtqdhprhhojhgvtghtrdighiiinecukfhppeejiedrvdehtddrkeeg
- rddvfeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- epphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:5jt_X3DsoOnLWPmujGHt5IYOtvm1BZfa4usGaWSoT7v4J_4BrSBl8w>
- <xmx:5jt_X9e3FGpKgi8CjFO7YW5cWJtHeSn5MNH2wVwa4wbybJo7UlERXw>
- <xmx:5jt_X-M0dfCaI5mHckqZMJX3LIEkqgjvBNeNR9sLxw9CiF3e9pNRBg>
- <xmx:5jt_X0bwsDPz4zgQAnvsaqs1Wu21ukaGAA14hzO5O9NAYWuk-Iyu9Q>
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpedvfeelkedtleejhfeitdduhfeviedu
+ jeelheektefgieefiedtjeegvdeggfffffenucffohhmrghinhepohiilhgrsghsrdhorh
+ hgnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihiivgeptden
+ ucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:9j5_XwaFOETODqS0SmOu1Q6b9p3SY-13IzeqlTgujQd-1VqBzPk2uQ>
+ <xmx:9j5_X7Vz_-1x6Ie9zDUXblD7gk5rfGK2Lq_vJ_gBnQalMneR5FGRzg>
+ <xmx:9j5_X2mm2LQimIhOydAtLVeTwAP0opjcFC9ywt_1DYYliuTTNW2W3Q>
+ <xmx:9z5_X7y3QOAnr4ohJl2PzuHXZTUaMbesZnrIKPfVPBMlyIAc64xwHw>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id CB0F63064610
- for <openbmc@lists.ozlabs.org>; Thu,  8 Oct 2020 12:18:45 -0400 (EDT)
-Date: Thu, 8 Oct 2020 11:18:44 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 8AD963064674;
+ Thu,  8 Oct 2020 12:31:50 -0400 (EDT)
+Date: Thu, 8 Oct 2020 11:31:49 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: sdbusplus: size/ssize types and 'object_path' type.
-Message-ID: <20201008161844.GK6152@heinlein>
-References: <20200915190230.GB6152@heinlein>
+To: "P. Priyatharshan" <PriyatharshanP@hcl.com>
+Subject: Re: 12v slot AC Support  in x86-power-control
+Message-ID: <20201008163149.GM6152@heinlein>
+References: <TY2PR04MB3311FEF038529B122E1123DECA0D0@TY2PR04MB3311.apcprd04.prod.outlook.com>
+ <EC03A9B2-FE8C-499C-B456-E76EE677E28D@fb.com>
+ <TY2PR04MB3311145637BFB1FAB1CFF2C4CA0B0@TY2PR04MB3311.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="InRyi6yyXSYzKD4c"
+ protocol="application/pgp-signature"; boundary="NqBeRcvybb6C9jMF"
 Content-Disposition: inline
-In-Reply-To: <20200915190230.GB6152@heinlein>
+In-Reply-To: <TY2PR04MB3311145637BFB1FAB1CFF2C4CA0B0@TY2PR04MB3311.apcprd04.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,56 +97,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "ed@tanous.net" <ed@tanous.net>, "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---InRyi6yyXSYzKD4c
+--NqBeRcvybb6C9jMF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 15, 2020 at 02:02:31PM -0500, Patrick Williams wrote:
-> For the sdbus++ interface YAML files we use in phosphor-dbus-interfaces,
-> I recently added support for 'size' and 'ssize' types[1].  I did this
-> because I've seen many cases where there was some discussion on
-> appropriate integer sizes for countable items (ex. uint8 vs uint32 vs
-> uint64).  Generally, in C++ we recommend size_t/ssize_t as the most
-> appropriate type for countable items (and anything else is likely a
-> premature optimization).  We should now take this same approach in PDI
-> interfaces.
+On Thu, Oct 08, 2020 at 01:13:49PM +0000, P. Priyatharshan wrote:
+> Out platform is multi host system and we  have the host as FRU and it can=
+ be plugged in to a slot. The slot has an option to control slot power and =
+this can be used for a AC cycle.
+
+Priyatharshan,
+
+I'm still very confused by the word "AC" here.  I know your server
+doesn't have a single joule of AC power on any voltage rail.  This
+server plugs into an OCP rack with a 12V DC bus-bar powering all the
+servers in the rack.
+
+Vijay implemented, for Tiogapass, the 12V system power cycle.  This,
+in hardware, uses the HSC* to remove the server from the bus-bar, which
+power cycles the entire server including the BMC.  This is as if someone
+physically pulled the server from the rack and then pushed it back in
+but implemented via the HSC.
+
+On the server you are working on, we should have that same design for
+the "full system power cycle" which interacts with the HSC.  This should
+be done the same way as what Vijay implemented.
+
+You also have power control to the multi-host cards which feed 12V to
+each of the compute cards in your chassis.  What I don't understand is
+why does this also need control of the full 12V and why is it separate
+=66rom the normal "power on the compute card" sequence?  This "power on
+the compute card" sequence is what is suppose to be modelled by the
+'chassisN' objects referenced by others.
+
+Can you expand on what the difference is and what functionality you are
+enabling by having two different slot-level power controls?
+
+> We proposed  a design to add the slot power control in the x86-power-cont=
+rol.The earlier discussion can be found in the below link.
 >=20
-> 1. https://github.com/openbmc/sdbusplus/commit/4ac7e56e8e18202fad3b273434=
-6c6d4c7a6957fc
+> https://lists.ozlabs.org/pipermail/openbmc/2020-August/022481.html
 
-It was mentioned to me in a code review for PDI that there was some
-problem taking advantage of 'size_t/ssize_t' type properties when the
-interface already had a 'uint32_t/int32_t' type property.  I've
-identified the underlying problem and fixed it with this commit:
-
-    https://gerrit.openbmc-project.xyz/c/openbmc/sdbusplus/+/37227
+* - HSC =3D Hot Swap Controller.
 
 --=20
 Patrick Williams
 
---InRyi6yyXSYzKD4c
+--NqBeRcvybb6C9jMF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9/O+IACgkQqwNHzC0A
-wRmz7RAAlu9vRBqoE7lkKipi05+vGbohALVjn0HRULXGkN+XKHzifAJ4GDOoi+8w
-COYmYvUwHZK3/fOttvb8ttA4VfrA+FsqTNJj5zi+Wb+aEu0w+HCq9LxOr74K6v0w
-3ybBHOriFIEGXbEPZ6irQhfHGFD1+o2NLBHG9gxs60HTX/Ss0nNooPQiXGy+ddBw
-fmPqTGOB5hRsxF6kWnz1KG8jE246yNvXAyx01kAov9HU0rVhY1HHwqH52CkIvIPT
-A19q1U14op3qnVnDwh4QgiG1v1KkFEeropDn5mKrR6hF7ln3VyHB2Kc1zHtma9eF
-ud2JjJxUDI8rJ17Ld4HCnPNs4TYovHZlDUO1uoz6Yg0/fOhVGFmVulEo+a8YrXvz
-F0yJeFc0axW48TZXv0gh5W2hk2+cqKSTrlFcaTQJrRhzV5ySl1dW+kD/ki89TrTs
-q6QkwfRt4ywmjTdg0a4cXqrBfu06Dr4eCSUHhvkQN7zt+9ou+Gq2npvjfxkChhkd
-2S89LOERpBRvXce88tSSVbP/qb+kmVwp/3z6qSvoDymP73tpGYvzSbgpij5aFTHy
-T39zzfWhnYOjYL9NOtwhgQShD0AGI6AaS+OGccGogoct9+sqfbd9nfE2HLP8mcEH
-/b84dRCifCifPUPdY/bBI2aewafGAnRw+Lp8KYUDXXhIxI60I5M=
-=W35C
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl9/PvQACgkQqwNHzC0A
+wRlKsA//SH1EDusLiZwm0u4ZfBp0u2u26fHPBPBs2QWJWV6Rrxh3taLJFEb9yM8L
+opezZcn7QUSp1CIZOuN/48S8nHLOrNM131e5OrnEC9khtFv00/hHMcUjudEpfi7n
+3TdElbAg0KlwfQq9sj1fBBeBfUv8TGeCwireRfxkAbB6hhGxg5SUc5/I7+GeEx8Q
+eBsZdH9wwXmHVBSA13owywr1NVBnrjVDsoKC6UByEZYNUZyRhP/wp1y03HRnE+/A
+tjB79ICariJGn/6lfIPfBias5AEOJWf2eZvxLbgEeo+gh+QKkZs6VsaVFba1TtXR
+b+AloAJb5ag/RNsPGc4L0b2SZ/bV/GspZQx/AQESP/ikgpba8sLTUuqGnObTDcUn
+2YiUFTSba8um5z5F49EmdraH3NCxnIgLnrXHpq88tsGZDTlyk9ikhrMKEW+xZ2yQ
+Fxc5dITihUAUlOSjUn1igpmavhHOWSBVylV/4PHt3q6RExh5V7Ujt15Wm0natb4d
+plWjjGHh2Xk72iIwIcIqmjSJPI8vUKkJB/rrCYNpeub5N0m40U7rs0xVJuLq4xVM
+DB3F0tMM/HUmAD/6q9U4uyLcA3DO+wzs7U+jkNJrWSe5BsxXshAHUxB45BmD7mss
+d/duFLaHs/kMEdpUUc/7b96Ot4YqPf+bn/Ap1+fBMvsElObWfUE=
+=EsfO
 -----END PGP SIGNATURE-----
 
---InRyi6yyXSYzKD4c--
+--NqBeRcvybb6C9jMF--
