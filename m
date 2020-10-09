@@ -2,64 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BAE22880D7
-	for <lists+openbmc@lfdr.de>; Fri,  9 Oct 2020 05:51:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7A132881A1
+	for <lists+openbmc@lfdr.de>; Fri,  9 Oct 2020 07:15:12 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C6vJ358THzDqGn
-	for <lists+openbmc@lfdr.de>; Fri,  9 Oct 2020 14:51:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C6x8t0gSdzDqXr
+	for <lists+openbmc@lfdr.de>; Fri,  9 Oct 2020 16:15:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f42;
- helo=mail-qv1-xf42.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=gFEXVnCX; dkim-atps=neutral
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com
- [IPv6:2607:f8b0:4864:20::f42])
+ spf=permerror (SPF Permanent Error: Two or more type
+ TXT spf records found.) smtp.mailfrom=velankanigroup.com
+ (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com;
+ envelope-from=jdhanasekar@velankanigroup.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=velankanigroup.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=velankanigroup-com.20150623.gappssmtp.com
+ header.i=@velankanigroup-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=ncBdYAzb; dkim-atps=neutral
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com
+ [IPv6:2a00:1450:4864:20::22d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C6vHD1vrSzDqMr
- for <openbmc@lists.ozlabs.org>; Fri,  9 Oct 2020 14:50:31 +1100 (AEDT)
-Received: by mail-qv1-xf42.google.com with SMTP id b10so1949305qvf.0
- for <openbmc@lists.ozlabs.org>; Thu, 08 Oct 2020 20:50:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C6x803fbczDqSf
+ for <openbmc@lists.ozlabs.org>; Fri,  9 Oct 2020 16:14:19 +1100 (AEDT)
+Received: by mail-lj1-x22d.google.com with SMTP id f21so8331909ljh.7
+ for <openbmc@lists.ozlabs.org>; Thu, 08 Oct 2020 22:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=velankanigroup-com.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=bSAzKzIYPC8oZqiK5Icy9ytUiXGhzLz3gESzI0UYcMc=;
- b=gFEXVnCXKj8/Qkz1tiTohn9Cd9s6O5BDvYMVnE8KFT8bqIRLyWNIJQMcQ3SbuZA5Yh
- +BE3uq8wfYeFiOlPGkwPJOJgkM3JnKD0wFwVy07dUpUSVcwWpDZAxZDQjAMcN5VEXPOD
- TYLW7WDste4EFTQJwTlpNmrZnc37H8pysdBC8=
+ :cc; bh=PlUBKTBQoNsxa4BKemZY8CROvE0Elic0daTDU3nf+nM=;
+ b=ncBdYAzbpPvj8RtUantVx1GXW/A0cg2dzwnf5UCGfIAbhXWMA1V+M+n6UyCi5kxumI
+ JyicmrzOx6pkSSHxp91N+3sh+MRx98ri8pR/9Iw0jauGQuZmm1GkHEJ8xEMs28+QEJGX
+ CoQLfDLo1syvEHOX+oR4ZJ6QAmgv8Qr1fwpIRe1eSsiiRYSxjbzSpwYn5a2zEDPQQqhD
+ emWQQ05RyA93ODA/tF/PEmKKpCETzU1VY5V4vmIklk5q7VSIyjeYlz13IzJ0p4W5aXg2
+ RPHzzRCQqK7gXE57yDxQrowS/27igcNTisZY+d0rVtbRJ9GcRcSDYrSctDsX/1gSEGCS
+ CzBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=bSAzKzIYPC8oZqiK5Icy9ytUiXGhzLz3gESzI0UYcMc=;
- b=EQkPBaJ1GQdu1BftKyaB8k3fveJEYmZLlCSvG1p5vcACxriQW/3Rj8QWr6+jSlJXMI
- KDGBFyr/lognScHHY8PK9w8ag4Xx2WNQ58X8qDzF7+Pyg018wpc8pCmOvnKaqwBCqxme
- AdrxQSjDE/It8C2Uo9HQFOWA86mM69owlQoxiePuqkd1UGQM+mPXS9yR2sVVgr5weGrt
- ZCShEuCHWGPpRFV4Risyt82laQDWL79mC62D+E3yPokvHiH/RdEdFTZbgwWZOey0/asS
- UZW+For0WN0HIjOpurHNE3Tfrj3Kal1luEg+MfQpe9o8q4SmRee+kna5fT11a8Ats3jL
- IPOQ==
-X-Gm-Message-State: AOAM5324aCeddimGo8jJVLt0Zk3YMDfbYGQHUYIFRovMp/Epu6iDufeo
- JoskN5DtGGM03pKaR2D3HcQ9PUD8CUPjGQdvFvk=
-X-Google-Smtp-Source: ABdhPJxLm5WxGf/+kQypQPtSut1oq0Rn74Kav1vG0HXaTem/vBzSrhVvwyeKxAkhrpOjIvoktLDw3btsZUAIfJo8FlM=
-X-Received: by 2002:a0c:b442:: with SMTP id e2mr1488558qvf.18.1602215426991;
- Thu, 08 Oct 2020 20:50:26 -0700 (PDT)
+ bh=PlUBKTBQoNsxa4BKemZY8CROvE0Elic0daTDU3nf+nM=;
+ b=sfaP1JIUqk9gecmVULKN4msfNayNeycLqnwHc5AfrwQYG4xwzvXauARA2vdO5dNFpu
+ sahQWx5zSKuM2mA4NILIFGNdbrj9gAkN5wwLEUJxfpawLrhnbSgj7fr/pSNFL9AB1/8A
+ mvuN4A7j9naW+xnsUI+Az5oWYQqi/9aWcl5WWA3ALctLYcfYkS1yBlXd6AGbl1y4ZD3p
+ 2GZvBHMqs9+NLvDtIAl5VISXyFKpU2HhzTUycH2g6umho8HBlvqY8WaTT6G9HV4ZdbRn
+ /znZMjtWciqDjAnnXDdqv5J81eNB9l1z+A51Wn5pAjjz7GtAG1B3xEr1HpQfgx61aCvD
+ Yopg==
+X-Gm-Message-State: AOAM530y0HbTNIFND2bW+dVhNhxCtcnCfgbZz5SkSkyBdCacWq5DioWx
+ VUHsEAct2WAzVT4kgi+p77QtGjKTayH7MFRoBedkPw==
+X-Google-Smtp-Source: ABdhPJyU7FBoUC9FIq9apk688tqB61kaz0mZvtlfrxQSHvdkpUMCh2vD5wVWJUnN2m0wx1bvjAzjAwWxeW9hAG1rjFU=
+X-Received: by 2002:a2e:b5d0:: with SMTP id g16mr4383927ljn.402.1602220452981; 
+ Thu, 08 Oct 2020 22:14:12 -0700 (PDT)
 MIME-Version: 1.0
-References: <20200928202753.58351-1-eajames@linux.ibm.com>
- <20200928202753.58351-4-eajames@linux.ibm.com>
-In-Reply-To: <20200928202753.58351-4-eajames@linux.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 9 Oct 2020 03:50:14 +0000
-Message-ID: <CACPK8Xe0qx75t8+mVfQ7gF-wzdxdSunyQ_NN2uZ_9S0E_bF6XA@mail.gmail.com>
-Subject: Re: [PATCH U-Boot v2019.04-aspeed-openbmc 3/3] configs: Add AST2600
- SPL eMMC configuration
-To: Eddie James <eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <CAOW9pY0o7R4YSYX1WrOUQx-BJ0SG0BLs+NBCoHtgDOndXf4+Aw@mail.gmail.com>
+ <c4ef651d-3589-1580-41dd-17959d00df11@amd.com>
+ <CAOW9pY1hj4sDp_n2Uk87VEPicaoVZn5QuJcsCK_pS7o9ochb4w@mail.gmail.com>
+ <ecc852ee-04ff-c27e-3fe0-fdeda6cb7f34@amd.com>
+ <CADVsX8-q58tiaPdthofa4rRgcQ6rS3qc9tEQXuzMgG6TpnbnCg@mail.gmail.com>
+ <CAOW9pY0YcQK3+68te6B=YEjzRFxvxtXYoewKGUWd3Jh6rgjKDg@mail.gmail.com>
+ <7186ff22-3515-fe72-e2fd-dbd8022e31b9@amd.com>
+ <CAOW9pY1YuXbA=nq+4U5ZLLjqELxZv-6ytxPYTFh1e96wD7faRA@mail.gmail.com>
+In-Reply-To: <CAOW9pY1YuXbA=nq+4U5ZLLjqELxZv-6ytxPYTFh1e96wD7faRA@mail.gmail.com>
+From: J Dhanasekar <jdhanasekar@velankanigroup.com>
+Date: Fri, 9 Oct 2020 10:43:37 +0530
+Message-ID: <CAOW9pY1JUmJj9vJ1XJVGjYfyyeQn85o7=7kxmpRsRLv0WdpUeQ@mail.gmail.com>
+Subject: Re: build error in AMD Ethanolx
+To: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000f3c92f05b1360439"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,70 +82,408 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ramakrishnan Kumaraswamy <ramakrishnan@bydesignindia.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 28 Sep 2020 at 20:28, Eddie James <eajames@linux.ibm.com> wrote:
+--000000000000f3c92f05b1360439
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Supreeth,
+
+If  the DTSs file for Daytona CRB is available, I will work parallel to
+enable openBMC for Daytona CRB.
+
+
+Thanks,
+Dhanasekar
+
+On Thu, Oct 8, 2020 at 7:51 PM J Dhanasekar <jdhanasekar@velankanigroup.com>
+wrote:
+
+> Supreeth,
 >
-> U-Boot and environment are to be loaded off the eMMC.
+> Thanks for the info.
+> Will OpenBMC on Daytona available end of this year?.
 >
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  configs/ast2600_openbmc_spl_emmc_defconfig | 130 +++++++++++++++++++++
->  include/configs/aspeed-common.h            |   6 +
->  2 files changed, 136 insertions(+)
->  create mode 100644 configs/ast2600_openbmc_spl_emmc_defconfig
+> Thanks,
+> Dhanasekar
 >
-> diff --git a/configs/ast2600_openbmc_spl_emmc_defconfig b/configs/ast2600_openbmc_spl_emmc_defconfig
+> On Thu, Oct 8, 2020 at 7:31 PM Supreeth Venkatesh <
+> supreeth.venkatesh@amd.com> wrote:
+>
+>> On 10/8/20 1:02 AM, J Dhanasekar wrote:
+>> > [CAUTION: External Email]
+>> > Hi Supreeth,
+>> >
+>> > I was able to build the AMD Ethanolx source successfully. I have
+>> executed your mentioned commands only,
+>> >
+>> > *. setup ethanolx
+>> > bitbake obmc-phosphor-image  *
+>> >
+>> > I built the code in normal user privilege, not root user.
+>> > Thanks for your support.
+>> Thanks for letting me know.
+>> >
+>> > Do you have a linux DTS  for BMC of DaytonaCRB ?.
+>> Unfortunately, we are not supporting Daytona CRB yet, but we are working
+>> towards enabling OpenBMC on Daytona soon. Stay tuned.
+>>
+>> >
+>> > -Dhanasekar
+>> >
+>> > On Thu, Oct 8, 2020 at 12:21 AM Anton Kachalov <rnouse@google.com
+>> <mailto:rnouse@google.com>> wrote:
+>> >
+>> >     Hey,
+>> >
+>> >     would you mind to find the *log.do_rootfs* file for
+>> obmc-phosphor-initramfs under build/tmp/work. This task has failed.
+>> >
+>> >     For instance, on qemuarm target the path looks like this (for
+>> obmc-phosphor-*image* instead of obmc-phosphor-*initramfs*):
+>> >
+>> >
+>>  build/tmp/work/qemuarm-openbmc-linux-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_rootfs
+>> >
+>> >     On Wed, 7 Oct 2020 at 20:35, Supreeth Venkatesh <
+>> supreeth.venkatesh@amd.com <mailto:supreeth.venkatesh@amd.com>> wrote:
+>> >
+>> >         On 10/7/20 10:11 AM, J Dhanasekar wrote:
+>> >         > [CAUTION: External Email]
+>> >         > Hi Supreeth,
+>> >         >
+>> >         > Thanks for the reply,
+>> >         >
+>> >         > I have attached the complete error log. Please view it.
+>> >         >
+>> >         > I have removed the build folder and created a new one twice.
+>> Still I am seeing the same error.
+>> >         This may be environment issue in your setup.
+>> >         I am not seeing this error in my environment with the latest
+>> master.
+>> >
+>> >         . setup ethanolx
+>> >         bitbake bitbake obmc-phosphor-image
+>> >
+>> >
+>> >         "WARNING: Host distribution "ubuntu-18.04" has not been
+>> validated with this version of the build system; you may possibly
+>> experience unexpected failures. It is recommended that you use a tested
+>> distribution.
+>> >         NOTE: Resolving any missing task queue dependencies
+>> >
+>> >         Build Configuration:
+>> >         BB_VERSION           = "1.47.0"
+>> >         BUILD_SYS            = "x86_64-linux"
+>> >         NATIVELSBSTRING      = "ubuntu-18.04"
+>> >         TARGET_SYS           = "arm-openbmc-linux-gnueabi"
+>> >         MACHINE              = "ethanolx"
+>> >         DISTRO               = "openbmc-phosphor"
+>> >         DISTRO_VERSION       = "0.1.0"
+>> >         TUNE_FEATURES        = "arm thumb arm1176jzs"
+>> >         TARGET_FPU           = "soft"
+>> >         meta
+>> >         meta-oe
+>> >         meta-networking
+>> >         meta-perl
+>> >         meta-python
+>> >         meta-phosphor
+>> >         meta-aspeed
+>> >         meta-amd
+>> >         meta-ethanolx        =
+>> "master:c3d88e4d9fcc08e1aae7cc9d0337c0261e996c64""
+>> >
+>> >         ....
+>> >         ....
+>> >         ....
+>> >
+>> >         NOTE: Running task 4241 of 4243
+>> (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
+>> do_image_complete)
+>> >         NOTE: recipe obmc-phosphor-image-1.0-r0: task
+>> do_image_complete: Started
+>> >         NOTE: recipe obmc-phosphor-image-1.0-r0: task
+>> do_image_complete: Succeeded
+>> >         NOTE: Running task 4242 of 4243
+>> (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
+>> do_populate_lic_deploy)
+>> >         NOTE: recipe obmc-phosphor-image-1.0-r0: task
+>> do_populate_lic_deploy: Started
+>> >         NOTE: recipe obmc-phosphor-image-1.0-r0: task
+>> do_populate_lic_deploy: Succeeded
+>> >         NOTE: Running noexec task 4243 of 4243
+>> (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-phosphor-image.bb:
+>> do_build)
+>> >         NOTE: Tasks Summary: Attempted 4243 tasks of which 2 didn't
+>> need to be rerun and all succeeded."
+>> >         >
+>> >         > Thanks,
+>> >         > Dhanasekar
+>> >         >
+>> >         > On Wed, Oct 7, 2020 at 8:08 PM Supreeth Venkatesh <
+>> supreeth.venkatesh@amd.com <mailto:supreeth.venkatesh@amd.com> <mailto:
+>> supreeth.venkatesh@amd.com <mailto:supreeth.venkatesh@amd.com>>> wrote:
+>> >         >
+>> >         >     On 10/7/20 5:44 AM, J Dhanasekar wrote:
+>> >         >     > [CAUTION: External Email]
+>> >         >     > Hi openBMC,
+>> >         >     Hi Dhanasekar
+>> >         >
+>> >         >     >
+>> >         >     > I am working to build BMC for AMD Ethanolx platform,
+>> >         >     Nice to hear.
+>> >         >     >
+>> >         >     > After running  *bitbake u-boot-aspeed* and *bitbake
+>> obmc-phosphor-image*,
+>> >         >     > I am getting below error,
+>> >         >     >
+>> >         >     > ERROR: obmc-phosphor-initramfs-1.0-r0 do_rootfs: The
+>> postinstall intercept hook 'update_gio_module_cache' failed, details in
+>> /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs
+>> >         >     > ERROR: Logfile of failure stored in:
+>> /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs.14182
+>> >         >     > ERROR: Task
+>> (/home/user/dhanasekar/BMC/AMD/openbmc/meta-phosphor/recipes-phosphor/images/obmc-phosphor-initramfs.bb:do_rootfs)
+>> failed with exit code '1'
+>> >         >     >
+>> >         >     Can you send me the complete build logs?
+>> >         >
+>> >         >     > Please help me to fix the error,
+>> >         >     rm the build folder and retry once.
+>> >         >     I will build it once today as well and confirm. It may
+>> not been tested with latest upstream changes.
+>> >         >
+>> >         >     >
+>> >         >     > Thanks,
+>> >         >     > Dhanasekar,
+>> >         >
+>> >
+>>
+>
 
-Here's the diff between the emmc and nor configs:
+--000000000000f3c92f05b1360439
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-$ diff -up configs/ast2600_openbmc_spl_defconfig
-configs/ast2600_openbmc_spl_emmc_defconfig
---- configs/ast2600_openbmc_spl_defconfig    2020-09-24 14:39:38.129075805 +0930
-+++ configs/ast2600_openbmc_spl_emmc_defconfig    2020-10-09
-14:16:35.786706472 +1030
-@@ -9,9 +9,10 @@ CONFIG_ARCH_ASPEED=y
- CONFIG_SYS_TEXT_BASE=0x10000
- CONFIG_ASPEED_AST2600=y
- CONFIG_ASPEED_UBOOT_SPI_BASE=0x10000
--CONFIG_ASPEED_UBOOT_SPI_SIZE=0xe0000
--CONFIG_ASPEED_UBOOT_MMC_BASE=0x000000
--CONFIG_ASPEED_UBOOT_MMC_SIZE=0x700
-+CONFIG_ASPEED_UBOOT_SPI_SIZE=0xd0000
+<div dir=3D"ltr">Hi Supreeth,<div><br></div><div>If=C2=A0 the DTSs file for=
+ Daytona CRB is available, I will work parallel to enable openBMC for Dayto=
+na CRB.</div><div><br></div><div><br></div><div>Thanks,</div><div>Dhanaseka=
+r</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail=
+_attr">On Thu, Oct 8, 2020 at 7:51 PM J Dhanasekar &lt;<a href=3D"mailto:jd=
+hanasekar@velankanigroup.com">jdhanasekar@velankanigroup.com</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8=
+ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr=
+">Supreeth,<div><br></div><div>Thanks for the info.</div><div>Will OpenBMC =
+on Daytona=C2=A0available=C2=A0end of this year?.</div><div><br></div><div>=
+Thanks,</div><div>Dhanasekar</div></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Thu, Oct 8, 2020 at 7:31 PM Supreeth V=
+enkatesh &lt;<a href=3D"mailto:supreeth.venkatesh@amd.com" target=3D"_blank=
+">supreeth.venkatesh@amd.com</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">On 10/8/20 1:02 AM, J Dhanasekar wrote:<br>
+&gt; [CAUTION: External Email]<br>
+&gt; Hi Supreeth,<br>
+&gt; <br>
+&gt; I was able to build the AMD Ethanolx source successfully. I have execu=
+ted your mentioned commands only,<br>
+&gt; <br>
+&gt; *. setup ethanolx<br>
+&gt; bitbake obmc-phosphor-image=C2=A0=C2=A0*<br>
+&gt; <br>
+&gt; I built the code in normal=C2=A0user privilege, not root user.=C2=A0<b=
+r>
+&gt; Thanks for your support.<br>
+Thanks for letting me know.<br>
+&gt; <br>
+&gt; Do you have a linux DTS=C2=A0 for BMC of DaytonaCRB ?.<br>
+Unfortunately, we are not supporting Daytona CRB yet, but we are working to=
+wards enabling OpenBMC on Daytona soon. Stay tuned.<br>
+<br>
+&gt; <br>
+&gt; -Dhanasekar<br>
+&gt; <br>
+&gt; On Thu, Oct 8, 2020 at 12:21 AM Anton Kachalov &lt;<a href=3D"mailto:r=
+nouse@google.com" target=3D"_blank">rnouse@google.com</a> &lt;mailto:<a hre=
+f=3D"mailto:rnouse@google.com" target=3D"_blank">rnouse@google.com</a>&gt;&=
+gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Hey,<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0would you mind to find the=C2=A0*log.do_rootfs* fil=
+e for obmc-phosphor-initramfs under build/tmp/work. This task has failed.<b=
+r>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0For instance, on qemuarm target the path looks like=
+ this (for obmc-phosphor-*image* instead of obmc-phosphor-*initramfs*):<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0build/tmp/work/qemuarm-openbmc-linux-gnueabi/obmc-p=
+hosphor-image/1.0-r0/temp/log.do_rootfs<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On Wed, 7 Oct 2020 at 20:35, Supreeth Venkatesh &lt=
+;<a href=3D"mailto:supreeth.venkatesh@amd.com" target=3D"_blank">supreeth.v=
+enkatesh@amd.com</a> &lt;mailto:<a href=3D"mailto:supreeth.venkatesh@amd.co=
+m" target=3D"_blank">supreeth.venkatesh@amd.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0On 10/7/20 10:11 AM, J Dhanasekar wro=
+te:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; [CAUTION: External Email]<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Hi Supreeth,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Thanks for the reply,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; I have attached the complete err=
+or log. Please view it.=C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; I have removed the build folder =
+and created a new one twice. Still I am seeing the same error.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0This may be environment issue in your=
+ setup.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0I am not seeing this error in my envi=
+ronment with the latest master.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0. setup ethanolx<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bitbake bitbake obmc-phosphor-image<b=
+r>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;WARNING: Host distribution &quo=
+t;ubuntu-18.04&quot; has not been validated with this version of the build =
+system; you may possibly experience unexpected failures. It is recommended =
+that you use a tested distribution.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Resolving any missing task queu=
+e dependencies<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Build Configuration:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BB_VERSION=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0=3D &quot;1.47.0&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BUILD_SYS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =3D &quot;x86_64-linux&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NATIVELSBSTRING=C2=A0 =C2=A0 =C2=A0 =
+=3D &quot;ubuntu-18.04&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TARGET_SYS=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0=3D &quot;arm-openbmc-linux-gnueabi&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MACHINE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =3D &quot;ethanolx&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DISTRO=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0=3D &quot;openbmc-phosphor&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DISTRO_VERSION=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0=3D &quot;0.1.0&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TUNE_FEATURES=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =3D &quot;arm thumb arm1176jzs&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TARGET_FPU=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0=3D &quot;soft&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-oe=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-networking=C2=A0 =C2=A0 =C2=A0<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-perl=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-python=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-phosphor=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-aspeed=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-amd=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-ethanolx=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =3D &quot;master:c3d88e4d9fcc08e1aae7cc9d0337c0261e996c64&quot;&quot;<b=
+r>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0....<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0....<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0....<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Running task 4241 of 4243 (/hom=
+e/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc=
+-phosphor-image.bb:do_image_complete)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-=
+r0: task do_image_complete: Started<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-=
+r0: task do_image_complete: Succeeded<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Running task 4242 of 4243 (/hom=
+e/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc=
+-phosphor-image.bb:do_populate_lic_deploy)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-=
+r0: task do_populate_lic_deploy: Started<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-=
+r0: task do_populate_lic_deploy: Succeeded<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Running noexec task 4243 of 424=
+3 (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/imag=
+es/obmc-phosphor-image.bb:do_build)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Tasks Summary: Attempted 4243 t=
+asks of which 2 didn&#39;t need to be rerun and all succeeded.&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Thanks,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Dhanasekar<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; On Wed, Oct 7, 2020 at 8:08 PM S=
+upreeth Venkatesh &lt;<a href=3D"mailto:supreeth.venkatesh@amd.com" target=
+=3D"_blank">supreeth.venkatesh@amd.com</a> &lt;mailto:<a href=3D"mailto:sup=
+reeth.venkatesh@amd.com" target=3D"_blank">supreeth.venkatesh@amd.com</a>&g=
+t; &lt;mailto:<a href=3D"mailto:supreeth.venkatesh@amd.com" target=3D"_blan=
+k">supreeth.venkatesh@amd.com</a> &lt;mailto:<a href=3D"mailto:supreeth.ven=
+katesh@amd.com" target=3D"_blank">supreeth.venkatesh@amd.com</a>&gt;&gt;&gt=
+; wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0On 10/7/20 5:=
+44 AM, J Dhanasekar wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; [CAUTION=
+: External Email]<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; Hi openB=
+MC,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Hi Dhanasekar=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; I am wor=
+king to build BMC for AMD Ethanolx platform,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Nice to hear.=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; After ru=
+nning=C2=A0 *bitbake u-boot-aspeed* and *bitbake obmc-phosphor-image*,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; I am get=
+ting below error,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; ERROR: o=
+bmc-phosphor-initramfs-1.0-r0 do_rootfs: The postinstall intercept hook &#3=
+9;update_gio_module_cache&#39; failed, details in /home/user/dhanasekar/BMC=
+/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-in=
+itramfs/1.0-r0/temp/log.do_rootfs<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; ERROR: L=
+ogfile of failure stored in: /home/user/dhanasekar/BMC/AMD/openbmc/build/tm=
+p/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/l=
+og.do_rootfs.14182<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; ERROR: T=
+ask (/home/user/dhanasekar/BMC/AMD/openbmc/meta-phosphor/recipes-phosphor/i=
+mages/obmc-phosphor-initramfs.bb:do_rootfs) failed with exit code &#39;1&#3=
+9;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Can you send =
+me the complete build logs?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; Please h=
+elp me to fix the error,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0rm the build =
+folder and retry once.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0I will build =
+it once today as well and confirm. It may not been tested with latest upstr=
+eam changes.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; Thanks,<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&gt; Dhanasek=
+ar,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt; <br>
+</blockquote></div>
+</blockquote></div>
 
-Can we remove this from the config?
-
-+CONFIG_ASPEED_UBOOT_MMC_BASE=0x80
-+CONFIG_ASPEED_UBOOT_MMC_PART=1
-+CONFIG_ASPEED_UBOOT_MMC_SIZE=0x680
- CONFIG_ASPEED_UBOOT_UART_SIZE=0xe0000
- CONFIG_ASPEED_UBOOT_DRAM_BASE=0x81000000
- CONFIG_ASPEED_KERNEL_FIT_SPI_BASE=0x20100000
-@@ -27,7 +28,7 @@ CONFIG_SPL_MMC_SUPPORT=y
- CONFIG_SPL_SERIAL_SUPPORT=y
- CONFIG_SPL_DRIVERS_MISC_SUPPORT=y
- CONFIG_ENV_SIZE=0x10000
--CONFIG_ENV_OFFSET=0xE0000
-+CONFIG_ENV_OFFSET=0x5000
-
-What's the 0x5000 here?
-
- CONFIG_SPL=y
- CONFIG_SPL_STACK_R_ADDR=0x90300000
- CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
-@@ -81,13 +82,7 @@ CONFIG_CMD_FS_GENERIC=y
- CONFIG_CMD_MTDPARTS=y
- # CONFIG_SPL_EFI_PARTITION is not set
- CONFIG_SPL_OF_CONTROL=y
--CONFIG_ENV_IS_IN_SPI_FLASH=y
--CONFIG_USE_ENV_SPI_BUS=y
--CONFIG_ENV_SPI_BUS=0
--CONFIG_USE_ENV_SPI_CS=y
--CONFIG_ENV_SPI_CS=0
--CONFIG_USE_ENV_SPI_MAX_HZ=y
--CONFIG_ENV_SPI_MAX_HZ=100000000
-+CONFIG_ENV_IS_IN_MMC=y
-
-This hunk makes sense.
+--000000000000f3c92f05b1360439--
