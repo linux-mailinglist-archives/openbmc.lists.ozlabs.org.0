@@ -2,86 +2,124 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FE6B289DAC
-	for <lists+openbmc@lfdr.de>; Sat, 10 Oct 2020 04:52:17 +0200 (CEST)
-Received: from bilbo.ozlabs.org (unknown [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C7TxV54QvzDqvN
-	for <lists+openbmc@lfdr.de>; Sat, 10 Oct 2020 13:52:14 +1100 (AEDT)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3B5628A07E
+	for <lists+openbmc@lfdr.de>; Sat, 10 Oct 2020 15:07:45 +0200 (CEST)
+Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C7lbf3NHtzDqw0
+	for <lists+openbmc@lfdr.de>; Sun, 11 Oct 2020 00:07:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=yong.b.li@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=AND8gAdV; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=pM23OV7j; 
- dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+ dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=intel.onmicrosoft.com header.i=@intel.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-intel-onmicrosoft-com
+ header.b=w+cMBlOI; dkim-atps=neutral
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C7TwT6WYdzDqrq
- for <openbmc@lists.ozlabs.org>; Sat, 10 Oct 2020 13:51:20 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 688335FD;
- Fri,  9 Oct 2020 22:51:16 -0400 (EDT)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Fri, 09 Oct 2020 22:51:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=Lw/aYPsLw8Dk15zboh30fEZ9+Lf42vt
- 2IN5Vt7wTKL8=; b=AND8gAdVys1FfW5/TObHznNK+/dQj3yLX4bGDO3gJ9K8vHs
- K9RxzNcY1mTS278/9CB6zUeT7xs6bTBG4Q1ZPX18g8NwEkimswND2jKVe/AArXVc
- EMtwDF45xiWdDiHNHl0se7EKObs3zDZxij/Ob6pNfE/z/MQhG2GD3WMhtrnmfDFH
- YqCWlZArNp+qE+UCFpB3kkFjUTWVBQKfS8UukLzeeKf+fdG/BL57qAofNATeUyNZ
- MXQFwu30wlhcU2YSFv0I8XOfLY0E5hTFVfFMcRkufOqTVHxTAPpu4GPbwhn5aOKE
- TXY3NoJ36PGZtDp/a6rdTYyKAJyaKU1HWCNdu9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=Lw/aYP
- sLw8Dk15zboh30fEZ9+Lf42vt2IN5Vt7wTKL8=; b=pM23OV7j5Gr2QkuvHcJUY0
- qLmD+r9UgwHAt6uB9F/phxWdXfyYoOAS33NE59mKlaaILHMk3toTKaYnk0ywHrhV
- 6glGzcMof0Aj3LudaGUd3gbWT1p5eskbNzXLm++mfHwmAoW7Vw+wZO5mDOPj1yO6
- 1n4B+cYxMOryb84E69DYPkqQdK9QTFOaNnXa/o7VNlhwP9qI6b681pZMPOV7dGyq
- Kn4v+/VyrXu67OcWvUJWhDjz5jyeNo5wTAC0o5PkfSwQmQzqS0cYZWF263PqOjGt
- ULPABZb5kz2ZhfKoXbpA190DKlXBYSdf84ziINFntqJGq59T+SlXIynW3Hor0fgg
- ==
-X-ME-Sender: <xms:oyGBX8Y7633Dv8g1rk-oNM7bRVQd55UCu6J707f5jQokVo8yHbzRWQ>
- <xme:oyGBX3ZzWgsMpUUYR__AUL5klDHKkebqnYDKmO6V8gRfjdqs2p2Fm1g9-TnDUe3-n
- lU6xIHi64l_DYdDrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrhedvgdeihecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
- veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
- grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:oyGBX2-FZ9UfkwZuJ9Iv98yQsr08-G9Ra959IYMihd6QPP-gfRjw0A>
- <xmx:oyGBX2r2LGiFNsY7liKewCV83kjyT5O9ksB9M91zMgoDtMSI5psq7A>
- <xmx:oyGBX3rrgxLI71wDt4O7zdWfCQvKeMXXrk3hdmfIXSKnusO-BC2EHQ>
- <xmx:pCGBXxFfMQ4JovP3c-2CZZLoeoX12oy-3uefLKeFcDRqU8jM6e8KvQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id F3E0FE00D8; Fri,  9 Oct 2020 22:51:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-407-g461656c-fm-20201004.001-g461656c6
-Mime-Version: 1.0
-Message-Id: <7da3c975-e8c0-474a-9ab2-97740c832d24@beta.fastmail.com>
-In-Reply-To: <CACPK8Xd_kbuUVLomHhvkB4KXXuboiNY_HYMpSrJYdjjedjBu_Q@mail.gmail.com>
-References: <20201002063414.275161-1-andrew@aj.id.au>
- <CACPK8Xd_kbuUVLomHhvkB4KXXuboiNY_HYMpSrJYdjjedjBu_Q@mail.gmail.com>
-Date: Sat, 10 Oct 2020 13:20:53 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>
-Subject: Re: [PATCH 0/3] Enable pstore for Rainier
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C7lZ829yQzDqlw
+ for <openbmc@lists.ozlabs.org>; Sun, 11 Oct 2020 00:06:14 +1100 (AEDT)
+IronPort-SDR: 1yHCQ1FSYZkpgG6v5CSIhj4eyyM3Bi6TRcqG/mjfWorDZEzduSiFGyzRgkg5ZDJuMmHVxhRyYL
+ SkHQIhJk1SVA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9769"; a="153411174"
+X-IronPort-AV: E=Sophos;i="5.77,358,1596524400"; 
+ d="scan'208,217";a="153411174"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Oct 2020 06:06:10 -0700
+IronPort-SDR: a6uCjOBDfZciOW66rfd/x5HuO/aUeB5FzflcAWwF/2nBQvaEFYtr1Qu/aWjfGu5hYj51jQvpxq
+ bQWYe9OUiCEA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.77,358,1596524400"; 
+ d="scan'208,217";a="312856095"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+ by orsmga003.jf.intel.com with ESMTP; 10 Oct 2020 06:06:10 -0700
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Sat, 10 Oct 2020 06:06:09 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1713.5
+ via Frontend Transport; Sat, 10 Oct 2020 06:06:09 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.176)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.1713.5; Sat, 10 Oct 2020 06:06:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=M4JGcnvQo4QFZVv/YyQN3JWJ+Kiw2yDDAcdD8gEv6Q28XY8hfjUztDJFqOt/eB2sE/PDX/gDaWqxSG+SSbI8Ub71qypNWcuSGg892ZX05NfHpScWTWegoHUzmjVazwy9qiwr4NS/eBJIFVm82mTCYDvC1r7Yw2eDyazV2ZBPdzII53WexxInsUMQxgTDWtofejexMSQD22+c6rXPneBENqnZKXBLi1XPHziqq5PhaLJs76QhHYN0T9JVxzjc6geaZT6IE31V1LHJz3S3mS5OWUHdyVjjaUrk/K1l15uvYFjZotq+amYa4xBpXmahdIJKsUTR1Qc71H3EROXcXDXiww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vr9mBhh7X2CTyN5OGNjZzEgPLNdpcvxVohRF6JrK0SY=;
+ b=cCmWb/X6e3rvV6k1NPZXwFAoBuJEb7uIA6V1iIYWVYkhARZH55L9xB0tzy93mEHfPxpiGc70JUPdgFRNXU0SiCf1foaCxYNjzDDLG+si9WLyJdvbyQ+exhZCHY7f2PbRx+gPrIFVq5Db5fv7+tL5JdO7S4Gf/2kybavY0H2shaYzzZsqDEGL+ri1SAJ66zjj07ph9Yn+BDvljuV0MEtycS9yPikNgZFjZdXkslrbvTOleY1Kx0cNFamg5jBOEI8fcWLA/oySFWFcY+cl6dmYt6edU2GcuPi+0AVX/4622Ou86LMO/Ns8IFcTso1cBwOqtr1LXuUOVWJjFT3FRo+ZXQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=intel.onmicrosoft.com; 
+ s=selector2-intel-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vr9mBhh7X2CTyN5OGNjZzEgPLNdpcvxVohRF6JrK0SY=;
+ b=w+cMBlOICB9fIsNSDIEKiEgvKbpzEMdbDj7Swo7a79UJYFqxCNwbXGzvnxhCNiKFnz3RhaQgNh8CxC49DZ0KyLhO2cuU1aTY94bjeJvppLpAEFSoGjm3p6z2HyOeWnQR0gpj1tro8WmpBtTDmN8y4TQLiLUACO8BgIAJBkwvw0A=
+Received: from SN6PR11MB2943.namprd11.prod.outlook.com (2603:10b6:805:d3::26)
+ by SA2PR11MB4891.namprd11.prod.outlook.com (2603:10b6:806:11e::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3433.34; Sat, 10 Oct
+ 2020 13:06:08 +0000
+Received: from SN6PR11MB2943.namprd11.prod.outlook.com
+ ([fe80::29d1:334c:98b3:4566]) by SN6PR11MB2943.namprd11.prod.outlook.com
+ ([fe80::29d1:334c:98b3:4566%5]) with mapi id 15.20.3455.028; Sat, 10 Oct 2020
+ 13:06:08 +0000
+From: "Li, Yong B" <yong.b.li@intel.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: How to list all sensors through redfish?
+Thread-Topic: How to list all sensors through redfish?
+Thread-Index: Adae5vuofLXC5NmxTy21mi+Xpir4ZQ==
+Date: Sat, 10 Oct 2020 13:06:08 +0000
+Message-ID: <SN6PR11MB29437D2F974612BD91DBCEC0B7090@SN6PR11MB2943.namprd11.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+dlp-product: dlpe-windows
+dlp-reaction: no-action
+dlp-version: 11.5.1.3
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none; lists.ozlabs.org; dmarc=none action=none header.from=intel.com; 
+x-originating-ip: [192.198.147.205]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: e01cd0d6-d6e7-4de1-7f7c-08d86d1d40f8
+x-ms-traffictypediagnostic: SA2PR11MB4891:
+x-microsoft-antispam-prvs: <SA2PR11MB4891A138BD37A2050D00BD13B7090@SA2PR11MB4891.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: RUKVPTP/PQH5k7mBus9w1gUE7FKam2coGNtO2OEyV4T+h9DGefF+uLra2jFYeIEFioDiRIibRSaTbMiLGhwfOC+fr1sXncajAe9CgjuF0F3MKe9kPVF5zSVY1laaQb0rsL51NWNoje8krhs8eQh33ofDSz1RglGBXEtJfsS8JrsI9kN3jUh/UFpogWQ2mAyLcggIsSO3MTXUJOeGlQhRNZoDZEfd1w8aiC/qbLZ78NB3FffzbQ6X27bMiyaithPtZeyi4A60msd3MxvcbbnVrJutWWmSWEd22X63EnvgMfXNVndcbc+syMT/UpiXBj53cnyV+qlS3G5qFiK+3zDdsUCxm6veTIu9unaHGpym+IGwdXAPRdkyi4T64gUM/IFaFKFIfaUR8X+FSpFTkhkt3w==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SN6PR11MB2943.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(346002)(396003)(39860400002)(366004)(136003)(7696005)(6506007)(6916009)(166002)(83080400001)(8676002)(186003)(33656002)(26005)(966005)(54906003)(76116006)(66446008)(66946007)(5660300002)(66556008)(64756008)(66476007)(316002)(9326002)(86362001)(8936002)(52536014)(478600001)(4326008)(71200400001)(2906002)(9686003)(4744005)(55016002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: IQXqS2YBWuFIsjdLi5oxchPBoSU54NedBLfzjyWO49YE0+uMb+ZXETBXnjJLKbNYNqnlAKIbIiwEe7xejFXODzl3GtZI+KvFr8SExXTwBRI43mMZlWOfAYRPDPI5QYUVWjjkQiCKGf2vAN9IS9ehg99slPp2G0dwgC9PgyFPBYl6vYvNYPXz/sKa2l6+sgHPPrsY/MnGNQH3nfUx7foxQ7ValVcy01GuF4DWVu/JI8IrBZmfFSUNSMjcHfpuNMWjaV1/2OM5F3HyfGKCvIY/yfc03sCkArhAYffKUITYpJj7XTcwcBVJmtczdZvax5BVUp3HV8RgI18dFz/NBx1Hnor1NdeOmKEznlDPoiUPz6ozUtN7Z0WhCbAqtTDNpVtybFdp4jFJjIywCPYx78KkeYXz6+MFwAMqM/hx/YCKpBkKmROf0u6AYMhRYRmUr2mi8o7/DoNRpZgOZqRbB83UKmYeTuC/+2CBcs65PvOYlANU3AQlhNJGRcWPlsKQfr82nC2FJlCsb5cz/N0IoPWe2+NdqZ56R56lA3DfvHuMVaeTqu7Lr/cpPQDODyGWhhd9pmNUarPFLUJAZXJ8hi8QnCr6AKFvK7x0SvrjwQY6LLLmr1he3yIPSFdSS8dEl1WuGSvtJzKlKESmPJLLnlI0+g==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_SN6PR11MB29437D2F974612BD91DBCEC0B7090SN6PR11MB2943namp_"
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SN6PR11MB2943.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e01cd0d6-d6e7-4de1-7f7c-08d86d1d40f8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Oct 2020 13:06:08.1433 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: S/G8w3yWpTuzECj0VWXyI8zl9a5Y/JU+z/RB53rL97YIodOT3cGJbgYB1+ozQ7uUB61u6XOj8IFGggzyap0nsA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB4891
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,45 +131,113 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "feistjj@gmail.com" <feistjj@gmail.com>,
+ =?iso-2022-jp?B?GyRCMGpNaxsoQg==?= <yulei.sh@bytedance.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_SN6PR11MB29437D2F974612BD91DBCEC0B7090SN6PR11MB2943namp_
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
 
+Hi All,
 
-On Wed, 7 Oct 2020, at 17:51, Joel Stanley wrote:
-> On Fri, 2 Oct 2020 at 06:35, Andrew Jeffery <andrew@aj.id.au> wrote:
-> >
-> > Hello,
-> >
-> > This series adds pstore support to the Rainier platform for recovery of oopses
-> > and panics.
-> >
-> > Patch 3/3 is a minor cleanup. Only patch 1/3 is a requirement as 2/3 is handled
-> > by the config snippet in the bitbake metadata.
-> 
-> I merged 2 and 3. lmk what you want to do with the configuration.
-> 
-> I suggest we enable it for Tacoma too.
+Based on the current bmcweb implementation:
+https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sensors.hpp#=
+L61
 
-Yeah I'll respond and enable it on Tacoma as well
+The below URL only list these power/current/utilization sensors:
+redfish/v1/Chassis/$chassis/Sensors
 
-> 
-> >
-> > Please review!
-> >
-> > Andrew
-> >
-> > Andrew Jeffery (3):
-> >   ARM: dts: rainier: Add reserved memory for ramoops
-> >   ARM: config: Enable PSTORE in aspeed_g5_defconfig
-> >   ARM: dts: rainier: Don't shout addresses
-> >
-> >  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 12 ++++++++++--
-> >  arch/arm/configs/aspeed_g5_defconfig         |  4 ++++
-> >  2 files changed, 14 insertions(+), 2 deletions(-)
-> >
-> > --
-> > 2.25.1
-> >
->
+Just want to know why not list all running sensors? Is it required by redfi=
+sh spec?
+
+Is there any way to  list all sensors through redfish interface? Like the =
+=1B$B!H=1B(Bipmitool sensor list=1B$B!I=1B(B command?
+
+Thanks,
+Yong
+
+--_000_SN6PR11MB29437D2F974612BD91DBCEC0B7090SN6PR11MB2943namp_
+Content-Type: text/html; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-2022-=
+jp">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"MS PGothic";
+	panose-1:2 11 6 0 7 2 5 8 2 4;}
+@font-face
+	{font-family:"\@MS PGothic";}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:JA;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle18
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi All, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Based on the current bmcweb implementation:<o:p></o:=
+p></p>
+<p class=3D"MsoNormal"><a href=3D"https://github.com/openbmc/bmcweb/blob/ma=
+ster/redfish-core/lib/sensors.hpp#L61">https://github.com/openbmc/bmcweb/bl=
+ob/master/redfish-core/lib/sensors.hpp#L61</a><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">The below URL only list these power/current/utilizat=
+ion sensors:<o:p></o:p></p>
+<p class=3D"MsoNormal">redfish/v1/Chassis/$chassis/Sensors<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Just want to know why not list all running sensors? =
+Is it required by redfish spec?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Is there any way to &nbsp;list all sensors through r=
+edfish interface? Like the =1B$B!H=1B(Bipmitool sensor list=1B$B!I=1B(B com=
+mand?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+<p class=3D"MsoNormal">Yong<o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_SN6PR11MB29437D2F974612BD91DBCEC0B7090SN6PR11MB2943namp_--
