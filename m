@@ -2,55 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id D517828AB59
-	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 03:19:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D30D928AD6A
+	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 06:56:43 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C8gnP2rQvzDqr6
-	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 12:19:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C8mc92kLWzDqKM
+	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 15:56:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=mic.com.tw (client-ip=220.130.36.7; helo=micmsefe01.mic.com.tw;
- envelope-from=john.chung@mic.com.tw; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=mic.com.tw
-Received: from MICMSEFE01.mic.com.tw (mail22.mic.com.tw [220.130.36.7])
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=billy_tsai@aspeedtech.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=aspeedtech.com
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C8gmV0BBVzDqfS
- for <openbmc@lists.ozlabs.org>; Mon, 12 Oct 2020 12:18:32 +1100 (AEDT)
-Received: from MICEXCH02.mitacad.com (micexch02.mitacad.com [10.88.25.250])
- by MICMSEFE01.mic.com.tw with ESMTP id 09C1IJpq080204;
- Mon, 12 Oct 2020 09:18:19 +0800 (GMT-8)
- (envelope-from john.chung@mic.com.tw)
-Received: from MICEXCH01.mitacad.com (10.88.25.249) by MICEXCH02.mitacad.com
- (10.88.25.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1913.5; Mon, 12 Oct
- 2020 09:18:20 +0800
-Received: from MICEXCH01.mitacad.com ([fe80::7512:93eb:1586:1977]) by
- MICEXCH01.mitacad.com ([fe80::7512:93eb:1586:1977%3]) with mapi id
- 15.01.1913.007; Mon, 12 Oct 2020 09:18:20 +0800
-From: <john.chung@mic.com.tw>
-To: <a.kartashev@yadro.com>, <openbmc@lists.ozlabs.org>
-Subject: RE: Get inventory FRU from inventory system path
-Thread-Topic: Get inventory FRU from inventory system path
-Thread-Index: AdadT8UT5a4aOJlKQ2qFUrwNl4Orxf//jWUA//95cRCAAIz2gP/5yl5Q
-Date: Mon, 12 Oct 2020 01:18:19 +0000
-Message-ID: <a0a8f7ccd6424cdf9a2a9cc20423ac8d@mic.com.tw>
-References: <270220206437441ba7ba4eb39336f9e4@mic.com.tw>
- <28750e605f477d8901ae61da8b0753aba8b78b46.camel@yadro.com>
- <51d45e4a6b29485397e4cb60a7aea907@mic.com.tw>
- <91aed88334a46dddc1c5dd5d7b9dc4f22057aef4.camel@yadro.com>
-In-Reply-To: <91aed88334a46dddc1c5dd5d7b9dc4f22057aef4.camel@yadro.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.88.25.29]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C8klh3h1NzDqpd;
+ Mon, 12 Oct 2020 14:33:01 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 09C3TpBf087375;
+ Mon, 12 Oct 2020 11:29:51 +0800 (GMT-8)
+ (envelope-from billy_tsai@aspeedtech.com)
+Received: from localhost.localdomain (192.168.10.9) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 12 Oct
+ 2020 11:32:00 +0800
+From: Billy Tsai <billy_tsai@aspeedtech.com>
+To: <robh+dt@kernel.org>, <joel@jms.id.au>, <andrew@aj.id.au>,
+ <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
+ <linus.walleij@linaro.org>, <bgolaszewski@baylibre.com>,
+ <linux-gpio@vger.kernel.org>, <openbmc@lists.ozlabs.org>
+Subject: [V2 PATCH 0/3] Fix the memory layout and add sgpio node for aspeed g6
+Date: Mon, 12 Oct 2020 11:31:47 +0800
+Message-ID: <20201012033150.21056-1-billy_tsai@aspeedtech.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-X-MAIL: MICMSEFE01.mic.com.tw 09C1IJpq080204
+Content-Type: text/plain
+X-Originating-IP: [192.168.10.9]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 09C3TpBf087375
+X-Mailman-Approved-At: Mon, 12 Oct 2020 15:54:36 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,92 +57,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: BMC-SW@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series is used to add sgpiom and sgpios nodes and add pinctrl 
+setting for sgpiom1
 
-SGkgQW5kcmVpLA0KDQpUaGFuayB5b3UgZm9yIHlvdXIgZ2VuZXJvdXMgaGVscC4NCkkgd291bGQg
-dHkgYW5vdGhlciBwYXRoIGZvciBteSBzeXN0ZW0uDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0t
-LS0tDQpGcm9tOiBBbmRyZWkgS2FydGFzaGV2IFttYWlsdG86YS5rYXJ0YXNoZXZAeWFkcm8uY29t
-XSANClNlbnQ6IFRodXJzZGF5LCBPY3RvYmVyIDgsIDIwMjAgNjoyMSBQTQ0KVG86IGpvaG4uY2h1
-bmcgKOmNvuS9s+iIqiAtIE1DVCkgPGpvaG4uY2h1bmdAbWljLmNvbS50dz47IG9wZW5ibWNAbGlz
-dHMub3psYWJzLm9yZw0KU3ViamVjdDogUmU6IEdldCBpbnZlbnRvcnkgRlJVIGZyb20gaW52ZW50
-b3J5IHN5c3RlbSBwYXRoDQoNCk9uIFRodSwgMjAyMC0xMC0wOCBhdCAxMDowOSArMDAwMCwgam9o
-bi5jaHVuZ0BtaWMuY29tLnR3IHdyb3RlOg0KPiBIaSBBbmRyZWksDQo+IA0KPiA+IFdoYXQgYXJl
-IHlvdSB0cnlpbmcgdG8gYWNoaWV2ZT8NCj4gSSBhbSB0cnlpbmcgdG8gZGlzcGxheSB0aGUgc3lz
-dGVtIGluZm9ybWF0aW9uIHNlY3Rpb24gaW4gcGhvc3Bob3ItIA0KPiB3ZWJ1aS4NCj4gVGhpcyBz
-ZWN0aW9uIHdvdWxkIGNhbGwgdGhlICdnZXRTZXJ2ZXJJbmZvJyBmdW5jdGlvbi4gDQo+IFRoZSBm
-dW5jdGlvbiB3b3VsZCBuZWVkIHRvIHVzaW5nIHRoZQ0KPiAiL3h5ei9vcGVuYm1jX3Byb2plY3Qv
-aW52ZW50b3J5L3N5c3RlbSIgcGF0aC4NCj4gDQo+ID4gVGhlIFJFU1QgQVBJIGRvIGp1c3QgYSB0
-cmFuc2xhdGlvbiB0byBkYnVzLCBzbyB5b3UgZXhwZWN0IHRvIGdldCANCj4gPiBleGFjdGx5IHdo
-YXQgRW50aXR5TWFuYWdlciAob3Igb3RoZXIgaW52ZW50b3J5LXJlbGF0ZWQgZGFlbW9uKSANCj4g
-PiBleHBvc2UuDQo+ID4gQW5kIEVNIGV4cG9zZSBub3RoaW5nIHRvIC94eXovb3BlbmJtY19wcm9q
-ZWN0L2ludmVudG9yeS9zeXN0ZW0NCj4gWWVzLCBJIHdhbnQgdG8gZ2V0IGV4YWN0bHkgd2hhdCBF
-bnRpdHlNYW5hZ2VyIChvciBvdGhlciBpbnZlbnRvcnktIA0KPiByZWxhdGVkIGRhZW1vbikgZXhw
-b3NlLg0KPiBCdXQgaXQncyBudWxsIGZvciB0aGlzIGRidXMgcGF0aCBub3cuDQoNClJpZ2h0LCB0
-aGVyZSBpcyBubyBpbmZvIHRoZXJlLCAveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lz
-dGVtIGlzIGtpbmQgb2YgcGFyZW50IG5vZGUsIGlkIGRvZXNuJ3Qgc3RvcmUgYW55IGluZm9ybWF0
-aW9uLiBUaGF0IGlzIGhvdyBFTSB3b3Jrcy4NCkluIG91ciBzeXN0ZW0gd2UgdXNlIG91ciBjdXN0
-b20gaW50ZXJmYWNlIGZvciBiYXNlYm9hcmQgdG8gcHJvdmlkZSB0aGlzIGtpbmQgb2YgaW5mb3Jt
-YXRpb24uDQoNCg0KDQo+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IEFuZHJl
-aSBLYXJ0YXNoZXYgW21haWx0bzphLmthcnRhc2hldkB5YWRyby5jb21dDQo+IFNlbnQ6IFRodXJz
-ZGF5LCBPY3RvYmVyIDgsIDIwMjAgNTo1OCBQTQ0KPiBUbzogam9obi5jaHVuZyAo6Y2+5L2z6Iiq
-IC0gTUNUKSA8am9obi5jaHVuZ0BtaWMuY29tLnR3PjsgDQo+IG9wZW5ibWNAbGlzdHMub3psYWJz
-Lm9yZw0KPiBTdWJqZWN0OiBSZTogR2V0IGludmVudG9yeSBGUlUgZnJvbSBpbnZlbnRvcnkgc3lz
-dGVtIHBhdGgNCj4gDQo+IEhpIEpvaG4sDQo+IA0KPiBXaGF0IGFyZSB5b3UgdHJ5aW5nIHRvIGFj
-aGlldmU/DQo+IFRoZSBSRVNUIEFQSSBkbyBqdXN0IGEgdHJhbnNsYXRpb24gdG8gZGJ1cywgc28g
-eW91IGV4cGVjdCB0byBnZXQgDQo+IGV4YWN0bHkgd2hhdCBFbnRpdHlNYW5hZ2VyIChvciBvdGhl
-ciBpbnZlbnRvcnktcmVsYXRlZCBkYWVtb24pIGV4cG9zZS4NCj4gQW5kIEVNIGV4cG9zZSBub3Ro
-aW5nIHRvIC94eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0NCj4gDQo+IE9uIFRo
-dSwgMjAyMC0xMC0wOCBhdCAwODo1MyArMDAwMCwgam9obi5jaHVuZ0BtaWMuY29tLnR3IHdyb3Rl
-Og0KPiA+IEhpLA0KPiA+ICANCj4gPiBJIGFtIHRyeWluZyB0byBnZXQgdGhlIGRhdGEgZnJvbSB0
-aGlzIHBhdGgg4oCcIA0KPiA+IGh0dHBzOi8vPGJtY2lwPi94eXovb3BlbmJtY19wcm9qZWN0L2lu
-dmVudG9yeS9zeXN0ZW3igJ0uDQo+ID4gQnV0IG9ubHkgZ2V0IHRoZSBmb2xsb3dpbmcgZGF0YSBm
-cm9tIHRoaXMgcGF0aC4NCj4gPiAgDQo+ID4gIi94eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9y
-eS9zeXN0ZW0iOiB7DQo+ID4gIkFzc2V0VGFnIjogIiINCj4gPiB9LA0KPiA+ICANCj4gPiBIZXJl
-IGlzIGFuIGV4YW1wbGUgZm9yIHRoaXMgcGF0aCB3aGljaCBJIGV4cGVjdGVkIHRvIGdldC4NCj4g
-PiAgDQo+ID4gICAgICIveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtIjogew0K
-PiA+ICAgICAgICAgIkJ1aWxkRGF0ZSI6ICIiLA0KPiA+ICAgICAgICAgIkNhY2hlZCI6IDAsDQo+
-ID4gICAgICAgICAiRmllbGRSZXBsYWNlYWJsZSI6IDAsDQo+ID4gICAgICAgICAiTWFudWZhY3R1
-cmVyIjogIiIsDQo+ID4gICAgICAgICAiTW9kZWwiOiAiMiIsDQo+ID4gICAgICAgICAiUGFydE51
-bWJlciI6ICIwMDAwMDAwMDAwMDAwMDAwIiwNCj4gPiAgICAgICAgICJQcmVzZW50IjogMSwNCj4g
-PiAgICAgICAgICJQcmV0dHlOYW1lIjogIiIsDQo+ID4gICAgICAgICAiU2VyaWFsTnVtYmVyIjog
-IjAwMDAwMDAwMDAwMDAwMDAiDQo+ID4gICAgIH0sDQo+ID4gIA0KPiA+ICANCj4gPiAgDQo+ID4g
-T25seSB1c2luZyBlbnRpdHktbWFuYWdlciBpbiBteSBwcm9qZWN0IGZvciBpbnZlbnRvcnkgRlJV
-Lg0KPiA+IEkgY291bGQgZ2V0IHRoZSBGUlUgZGF0YSBmcm9tIHRoaXMgcGF0aCDigJwgDQo+ID4g
-aHR0cHM6Ly88Ym1jaXA+L3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5L3N5c3RlbS9ib2Fy
-ZC88bmFtZT7igJ0NCj4gPiBCdXQgdGhlIGludmVudG9yeSBzeXN0ZW0gcGF0aCBpcyBudWxsLg0K
-PiA+ICANCj4gPiBBbnkgc2V0dGluZyBJIHNob3VsZCBzZXQgZm9yIGdldHRpbmcgRlJVIGZyb20g
-dGhpcyBwYXRoPw0KPiA+ICANCj4gPiBSZWdhcmRzLA0KPiA+IEpvaG4gQ2h1bmcNCj4gPiAgDQo+
-ID4gVGhpcyBlbWFpbCBtZXNzYWdlIGFuZCBhbGwgYXR0YWNobWVudHMgdHJhbnNtaXR0ZWQgd2l0
-aCBpdCBhcmUgDQo+ID4gaW50ZW5kZWQgc29sZWx5IGZvciB0aGUgdXNlIG9mIHRoZSBpbnRlbmRl
-ZCByZWNpcGllbnQocykgYW5kIG1heSANCj4gPiBjb250YWluIGxlZ2FsbHkgcHJpdmlsZWdlZCBh
-bmQgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uLiBJZiB5b3UgYXJlIA0KPiA+IG5vdCB0aGUgaW50
-ZW5kZWQgcmVjaXBpZW50IG9mIHRoaXMgZW1haWwsIHlvdSBhcmUgaGVyZWJ5IG5vdGlmaWVkIA0K
-PiA+IHRoYXQgYW55IGRpc2Nsb3N1cmUsIGRpc3NlbWluYXRpb24sIGRpc3RyaWJ1dGlvbiwgY29w
-eWluZywgb3Igb3RoZXIgDQo+ID4gdXNlIG9mIHRoaXMgbWVzc2FnZSwgaXRzIGF0dGFjaG1lbnRz
-IG9yIGFueSBpbmZvcm1hdGlvbiBjb250YWluZWQgDQo+ID4gdGhlcmVpbiBpcyBzdHJpY3RseSBw
-cm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0aGlzIGVtYWlsIGluIA0KPiA+IGVycm9y
-LCBwbGVhc2UgY29udGFjdCB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5IGFuZCBwbGVhc2UgZGVsZXRl
-IGl0IA0KPiA+IGFuZCBhbnkgYXR0YWNobWVudHMgZnJvbSB5b3VyIHN5c3RlbS4gQ29tcHV0ZXIg
-dmlydXNlcyBjYW4gYmUgDQo+ID4gdHJhbnNtaXR0ZWQgdmlhIGVtYWlsLiBUaGUgc2VuZGVyIGFj
-Y2VwdHMgbm8gbGlhYmlsaXR5IGZvciBhbnkgDQo+ID4gZGFtYWdlIGNhdXNlZCBieSBhbnkgdmly
-dXMgdHJhbnNtaXR0ZWQgYnkgdGhpcyBlbWFpbC4gVGhhbmsgeW91Lg0KPiAtLQ0KPiBCZXN0IHJl
-Z2FyZHMsDQo+IEFuZHJlaSBLYXJ0YXNoZXYNCj4gDQo+IA0KPiANCj4gDQo+ID09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PQ0KPiA9PT09PT09DQo+IFRoaXMgZW1haWwgbWVzc2FnZSBhbmQgYWxsIGF0dGFjaG1lbnRzIHRy
-YW5zbWl0dGVkIHdpdGggaXQgYXJlIA0KPiBpbnRlbmRlZCBzb2xlbHkgZm9yIHRoZSB1c2Ugb2Yg
-dGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBhbmQgbWF5IA0KPiBjb250YWluIGxlZ2FsbHkgcHJp
-dmlsZWdlZCBhbmQgY29uZmlkZW50aWFsIGluZm9ybWF0aW9uLiBJZiB5b3UgYXJlIA0KPiBub3Qg
-dGhlIGludGVuZGVkIHJlY2lwaWVudCBvZiB0aGlzIGVtYWlsLCB5b3UgYXJlIGhlcmVieSBub3Rp
-ZmllZCB0aGF0IA0KPiBhbnkgZGlzY2xvc3VyZSwgZGlzc2VtaW5hdGlvbiwgZGlzdHJpYnV0aW9u
-LCBjb3B5aW5nLCBvciBvdGhlciB1c2Ugb2YgDQo+IHRoaXMgbWVzc2FnZSwgaXRzIGF0dGFjaG1l
-bnRzIG9yIGFueSBpbmZvcm1hdGlvbiBjb250YWluZWQgdGhlcmVpbiBpcyANCj4gc3RyaWN0bHkg
-cHJvaGliaXRlZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhpcyBlbWFpbCBpbiBlcnJvciwgcGxl
-YXNlIA0KPiBjb250YWN0IHRoZSBzZW5kZXIgaW1tZWRpYXRlbHkgYW5kIHBsZWFzZSBkZWxldGUg
-aXQgYW5kIGFueSANCj4gYXR0YWNobWVudHMgZnJvbSB5b3VyIHN5c3RlbS4gQ29tcHV0ZXIgdmly
-dXNlcyBjYW4gYmUgdHJhbnNtaXR0ZWQgdmlhIA0KPiBlbWFpbC4gVGhlIHNlbmRlciBhY2NlcHRz
-IG5vIGxpYWJpbGl0eSBmb3IgYW55IGRhbWFnZSBjYXVzZWQgYnkgYW55IA0KPiB2aXJ1cyB0cmFu
-c21pdHRlZCBieSB0aGlzIGVtYWlsLiBUaGFuayB5b3UuDQotLQ0KQmVzdCByZWdhcmRzLA0KQW5k
-cmVpIEthcnRhc2hldg0KDQoNCg==
+v2:
+  - Split the change of dts and pinctrl to two commit.
+  - Add the compatible string for aspeed,ast2600-sgpiom. 
+    aspeed,ast2600-sgpios will implement in the future.
+
+Billy Tsai (3):
+  Arm: dts: aspeed-g6: Fix the register range of gpio
+  Arm: dts: aspeed-g6: Add sgpio node
+  pinctrl: aspeed-g6: Add sgpiom2 pinctrl setting
+
+ .../devicetree/bindings/gpio/sgpio-aspeed.txt |  8 +--
+ arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi      |  5 ++
+ arch/arm/boot/dts/aspeed-g6.dtsi              | 54 ++++++++++++++++++-
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c    | 30 +++++++++--
+ 4 files changed, 89 insertions(+), 8 deletions(-)
+
+-- 
+2.17.1
 
