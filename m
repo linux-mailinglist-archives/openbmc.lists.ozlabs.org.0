@@ -1,63 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A1DA28AD10
-	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 06:36:21 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53D4128AD14
+	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 06:37:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C8m8f38hBzDqjT
-	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 15:36:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C8mBF4pC9zDqjx
+	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 15:37:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f43;
- helo=mail-qv1-xf43.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f44;
+ helo=mail-qv1-xf44.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=SOWUjFcC; dkim-atps=neutral
-Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com
- [IPv6:2607:f8b0:4864:20::f43])
+ header.s=google header.b=B19LJQL9; dkim-atps=neutral
+Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com
+ [IPv6:2607:f8b0:4864:20::f44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C8m7g4h1ZzDqWk;
- Mon, 12 Oct 2020 15:35:25 +1100 (AEDT)
-Received: by mail-qv1-xf43.google.com with SMTP id cv1so7864941qvb.2;
- Sun, 11 Oct 2020 21:35:25 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C8m8y5ZCgzDqjx;
+ Mon, 12 Oct 2020 15:36:34 +1100 (AEDT)
+Received: by mail-qv1-xf44.google.com with SMTP id 13so7835613qvc.9;
+ Sun, 11 Oct 2020 21:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=nGaRgY5KXDnDzgTPGxT6g3wAgRB6O4Efwdc4BkmUcUQ=;
- b=SOWUjFcCQQ64YMoS0aewIWeR2JZr4N4UPekS7iGiL3qAfsUMJ4/CkpEiG+L1PmUcdy
- 0JknrUGXjVlQEGtpGwfJ+mL4W1w1sPyNaf9bo/oEwcTLRZ8fUId82aPbBnrpuUFSAW3y
- JR57zS7q5TJXMyJXE1U2e1e/AxudPhhcjIAbk=
+ :cc; bh=yXUPAN9Z/Rz81n54Jgt5lcjYMAq/GQtzgsE1D7f7Lqs=;
+ b=B19LJQL9gNGI+USiJENNYytqaiV5DjBYIqvpRcM4f0uuaRtEAJZVsqUgpPjQybYOqb
+ XS7fFa0UAHxfp+NmnpYipKQzuEdUOEvkthL2e+BCgzbqmRKfJkHkQkOxueWaAaaDbKR5
+ nGMTunzsNI2KBSjbEGykVgY1SJUZAgvCU+G7M=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=nGaRgY5KXDnDzgTPGxT6g3wAgRB6O4Efwdc4BkmUcUQ=;
- b=DNdOwiXqIrge7OGTdpfP3bMeyoR1zaarYlLn1JKjrM/nPmsVuGnvUdnOySfQMdoVXc
- tb4c7gaQEidUtGKo8Dapb7zOAbbh0wEhsSAzcW0Pns7/SDbxFlFnsEfxcWjR3kok62q+
- XSK9dFQVHaN4RbYBYDNivsed6TfZ4fLS46ILSJ9rM7/Ea5OCjD15uQdfHHxUVCerxwJA
- 24TCCo7drsxmLghSTWtFayC052zz7ke29MUP5JPrx0wMvMBdSH6pu3HMqnyOWE07Mdie
- UxpIQ9k2GHU+Ln07T40rL/pk3lIiXpUq4DYRh202DyZgooiSQpzXgUInIzgtzDsgknGP
- WCTQ==
-X-Gm-Message-State: AOAM530u26CBulrLWFujCww0AbOZbSg6lFiQeHLc6qwrF+Gweckh1obv
- 9M57vecswHkgDJrHbXAVMt9W868ft7T/WTHV4YE=
-X-Google-Smtp-Source: ABdhPJz7CL/VjmDDY37z1JG7gnOXApbbOdETG7sUFAFSF3cJkzGsH4f/RHqySKhCjPt72g6ojvIXvmBDeknLFRJYh3I=
-X-Received: by 2002:a0c:e308:: with SMTP id s8mr3269819qvl.10.1602477321232;
- Sun, 11 Oct 2020 21:35:21 -0700 (PDT)
+ bh=yXUPAN9Z/Rz81n54Jgt5lcjYMAq/GQtzgsE1D7f7Lqs=;
+ b=X43UXwaJumd5jPwKvlk6NwhvRJftOd47aZvY3D5ATjIW6O7p3fwtMNjQZ9AQhrZc1v
+ knMBi1A6hezFAhM15TcLBdBoobMpMMfsS3lDp5P2Zv1bCVgLL1blBL9yswQzzMyIm5Gx
+ f3pCXKvzK0qpOMdRC+OQ2nuX0wv5ZO8jD+PGPVjMIllg3er2wNL810RAoelekyApj12c
+ WCrU5Wb6dxb7AghaRrXefVI+2k3boe4jp1/7AE556VWTwQ0YRwBYhEzCNmsayRy8hVMz
+ HTzMqxVIntDwhk2kn90HTuwKG1RavTCz0Q8fiuzhpvkR/j4DBRDOaTGg/44yGeS2rKUq
+ 1fHA==
+X-Gm-Message-State: AOAM531ZDFpNJquDYDkTSCj71GstS5qIH6M1qdLkmsnUKpO7a9XskBAe
+ 3wJN15zAJo7OGm7qcdkEGLgCY/J7qStIYhu4eeQ=
+X-Google-Smtp-Source: ABdhPJxBhJAIvzG71POJdVwegvk4Xn31ZRbhnVpA7O9tP5UNzHH66QXopvBFonDa5shlTkdaW2qLchh321d18YE5Jok=
+X-Received: by 2002:ad4:54e9:: with SMTP id k9mr7674902qvx.18.1602477390583;
+ Sun, 11 Oct 2020 21:36:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20201012033150.21056-1-billy_tsai@aspeedtech.com>
- <20201012033150.21056-3-billy_tsai@aspeedtech.com>
-In-Reply-To: <20201012033150.21056-3-billy_tsai@aspeedtech.com>
+ <20201012033150.21056-4-billy_tsai@aspeedtech.com>
+In-Reply-To: <20201012033150.21056-4-billy_tsai@aspeedtech.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 12 Oct 2020 04:35:09 +0000
-Message-ID: <CACPK8XdYvSmwdAkBzAO3kC8_PYa3CtPkNb0VxcOhmb2UYz5zDA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] Arm: dts: aspeed-g6: Add sgpio node
-To: Billy Tsai <billy_tsai@aspeedtech.com>
+Date: Mon, 12 Oct 2020 04:36:18 +0000
+Message-ID: <CACPK8Xc2vo6cvDHBiLN+a+k+wLG2VCynVHZgq6EtZjnNVjNNxA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] pinctrl: aspeed-g6: Add sgpiom2 pinctrl setting
+To: Billy Tsai <billy_tsai@aspeedtech.com>,
+ Linus Walleij <linus.walleij@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,138 +74,131 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Cc: devicetree <devicetree@vger.kernel.org>,
  linux-aspeed <linux-aspeed@lists.ozlabs.org>,
  "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Andrew Jeffery <andrew@aj.id.au>, Linus Walleij <linus.walleij@linaro.org>,
+ Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
  Bartosz Golaszewski <bgolaszewski@baylibre.com>,
  Rob Herring <robh+dt@kernel.org>, BMC-SW <BMC-SW@aspeedtech.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Mon, 12 Oct 2020 at 03:32, Billy Tsai <billy_tsai@aspeedtech.com> wrote:
 >
-> This patch is used to add sgpiom and sgpios nodes and add compatiable
-> string for sgpiom.
-
-You also need to add sgpios documentation to the bindings docs.
-
-Whenever you add new device tree bindings to the kernel tree you
-should add documentation for them.
-
-When preparing patches for submission, use scripts/checkpatch.pl to
-check for common issues. It will warn you if you are adding strings
-that are not documented.
-
-Cheers,
-
-Joel
-
+> At ast2600a1 we change feature of master sgpio to 2 sets.
+> So this patch is used to add the pinctrl setting of the new sgpio.
 >
 > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
+Linus, can you take this through the pinctrl tree? The patch to the
+will be fine to come through your tree as we rarely update that file.
+
 > ---
->  .../devicetree/bindings/gpio/sgpio-aspeed.txt |  8 +--
->  arch/arm/boot/dts/aspeed-g6.dtsi              | 52 +++++++++++++++++++
->  2 files changed, 57 insertions(+), 3 deletions(-)
+>  arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi   |  5 ++++
+>  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 30 +++++++++++++++++++---
+>  2 files changed, 31 insertions(+), 4 deletions(-)
 >
-> diff --git a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
-> index d4d83916c09d..815d9b5167a5 100644
-> --- a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
-> +++ b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
-> @@ -1,8 +1,10 @@
->  Aspeed SGPIO controller Device Tree Bindings
->  --------------------------------------------
+> diff --git a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+> index 7028e21bdd98..a16ecf08e307 100644
+> --- a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+> +++ b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
+> @@ -862,6 +862,11 @@
+>                 groups = "SGPM1";
+>         };
 >
-> -This SGPIO controller is for ASPEED AST2500 SoC, it supports up to 80 full
-> -featured Serial GPIOs. Each of the Serial GPIO pins can be programmed to
-> +This SGPIO controller is for ASPEED AST2500/AST2600 SoC, it supports 2 master.
-> +One is up to 128 SGPIO input ports and 128 output ports concurrently(after AST2600A1)
-> +and Second one is up to 80.
-> +Each of the Serial GPIO pins can be programmed to
->  support the following options:
->  - Support interrupt option for each input port and various interrupt
->    sensitivity option (level-high, level-low, edge-high, edge-low)
-> @@ -14,7 +16,7 @@ support the following options:
->  Required properties:
+> +       pinctrl_sgpm2_default: sgpm2_default {
+> +               function = "SGPM2";
+> +               groups = "SGPM2";
+> +       };
+> +
+>         pinctrl_sgps1_default: sgps1_default {
+>                 function = "SGPS1";
+>                 groups = "SGPS1";
+> diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> index 34803a6c7664..b673a44ffa3b 100644
+> --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> @@ -46,8 +46,10 @@
+>  #define SCU620         0x620 /* Disable GPIO Internal Pull-Down #4 */
+>  #define SCU634         0x634 /* Disable GPIO Internal Pull-Down #5 */
+>  #define SCU638         0x638 /* Disable GPIO Internal Pull-Down #6 */
+> +#define SCU690         0x690 /* Multi-function Pin Control #24 */
+>  #define SCU694         0x694 /* Multi-function Pin Control #25 */
+>  #define SCU69C         0x69C /* Multi-function Pin Control #27 */
+> +#define SCU6D0         0x6D0 /* Multi-function Pin Control #28 */
+>  #define SCUC20         0xC20 /* PCIE configuration Setting Control */
 >
->  - compatible : Should be one of
-> -  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio"
-> +  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio", "aspeed,ast2600-sgpiom"
-
-I think we should add sgpiom strings for the ast2500 (and ast2400?)
-too, as this is how they should have been named in the first place:
-
->  - compatible : Should be one of
->    "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio"
->   "aspeed,ast2400-sgpiom", "aspeed,ast2500-sgpiom", "aspeed,ast2600-sgpiom"
-
-
->  - #gpio-cells : Should be 2, see gpio.txt
->  - reg : Address and length of the register set for the device
->  - gpio-controller : Marks the device node as a GPIO controller
-> diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-> index ad19dce038ea..cb053a996e87 100644
-> --- a/arch/arm/boot/dts/aspeed-g6.dtsi
-> +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-> @@ -366,6 +366,58 @@
->                                 #interrupt-cells = <2>;
->                         };
+>  #define ASPEED_G6_NR_PINS 256
+> @@ -81,13 +83,21 @@ FUNC_GROUP_DECL(I2C12, L26, K24);
+>  #define K26 4
+>  SIG_EXPR_LIST_DECL_SESG(K26, MACLINK1, MACLINK1, SIG_DESC_SET(SCU410, 4));
+>  SIG_EXPR_LIST_DECL_SESG(K26, SCL13, I2C13, SIG_DESC_SET(SCU4B0, 4));
+> -PIN_DECL_2(K26, GPIOA4, MACLINK1, SCL13);
+> +/*SGPM2 is A1 Only */
+> +SIG_EXPR_LIST_DECL_SESG(K26, SGPM2CLK, SGPM2, SIG_DESC_SET(SCU6D0, 4),
+> +                         SIG_DESC_CLEAR(SCU410, 4), SIG_DESC_CLEAR(SCU4B0, 4),
+> +                         SIG_DESC_CLEAR(SCU690, 4));
+> +PIN_DECL_3(K26, GPIOA4, SGPM2CLK, MACLINK1, SCL13);
+>  FUNC_GROUP_DECL(MACLINK1, K26);
 >
-> +                       sgpiom0: sgpiom@1e780500 {
-> +                               #gpio-cells = <2>;
-> +                               gpio-controller;
-> +                               compatible = "aspeed,ast2600-sgpiom";
-> +                               reg = <0x1e780500 0x100>;
-> +                               interrupts = <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;
-> +                               ngpios = <128>;
-> +                               clocks = <&syscon ASPEED_CLK_APB2>;
-> +                               interrupt-controller;
-> +                               bus-frequency = <12000000>;
-> +
-> +                               pinctrl-names = "default";
-> +                               pinctrl-0 = <&pinctrl_sgpm1_default>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       sgpiom1: sgpiom@1e780600 {
-> +                               #gpio-cells = <2>;
-> +                               gpio-controller;
-> +                               compatible = "aspeed,ast2600-sgpiom";
-> +                               reg = <0x1e780600 0x100>;
-> +                               interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-> +                               ngpios = <80>;
-> +                               clocks = <&syscon ASPEED_CLK_APB2>;
-> +                               interrupt-controller;
-> +                               bus-frequency = <12000000>;
-> +
-> +                               pinctrl-names = "default";
-> +                               pinctrl-0 = <&pinctrl_sgpm2_default>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       sgpios0: sgpios@1e780700 {
-> +                               #gpio-cells = <2>;
-> +                               gpio-controller;
-> +                               compatible = "aspeed,ast2600-sgpios";
-> +                               reg = <0x1e780700 0x40>;
-> +                               interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
-> +                               clocks = <&syscon ASPEED_CLK_APB2>;
-> +                               status = "disabled";
-> +                       };
-> +
-> +                       sgpios1: sgpios@1e780740 {
-> +                               #gpio-cells = <2>;
-> +                               gpio-controller;
-> +                               compatible = "aspeed,ast2600-sgpios";
-> +                               reg = <0x1e780740 0x40>;
-> +                               interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
-> +                               clocks = <&syscon ASPEED_CLK_APB2>;
-> +                               status = "disabled";
-> +                       };
-> +
->                         gpio1: gpio@1e780800 {
->                                 #gpio-cells = <2>;
->                                 gpio-controller;
+>  #define L24 5
+>  SIG_EXPR_LIST_DECL_SESG(L24, MACLINK2, MACLINK2, SIG_DESC_SET(SCU410, 5));
+>  SIG_EXPR_LIST_DECL_SESG(L24, SDA13, I2C13, SIG_DESC_SET(SCU4B0, 5));
+> -PIN_DECL_2(L24, GPIOA5, MACLINK2, SDA13);
+> +/*SGPM2 is A1 Only */
+> +SIG_EXPR_LIST_DECL_SESG(L24, SGPM2LD, SGPM2, SIG_DESC_SET(SCU6D0, 5),
+> +                         SIG_DESC_CLEAR(SCU410, 5), SIG_DESC_CLEAR(SCU4B0, 5),
+> +                         SIG_DESC_CLEAR(SCU690, 5));
+> +PIN_DECL_3(L24, GPIOA5, SGPM2LD, MACLINK2, SDA13);
+>  FUNC_GROUP_DECL(MACLINK2, L24);
+>
+>  FUNC_GROUP_DECL(I2C13, K26, L24);
+> @@ -95,16 +105,26 @@ FUNC_GROUP_DECL(I2C13, K26, L24);
+>  #define L23 6
+>  SIG_EXPR_LIST_DECL_SESG(L23, MACLINK3, MACLINK3, SIG_DESC_SET(SCU410, 6));
+>  SIG_EXPR_LIST_DECL_SESG(L23, SCL14, I2C14, SIG_DESC_SET(SCU4B0, 6));
+> -PIN_DECL_2(L23, GPIOA6, MACLINK3, SCL14);
+> +/*SGPM2 is A1 Only */
+> +SIG_EXPR_LIST_DECL_SESG(L23, SGPM2O, SGPM2, SIG_DESC_SET(SCU6D0, 6),
+> +                         SIG_DESC_CLEAR(SCU410, 6), SIG_DESC_CLEAR(SCU4B0, 6),
+> +                         SIG_DESC_CLEAR(SCU690, 6));
+> +PIN_DECL_3(L23, GPIOA6, SGPM2O, MACLINK3, SCL14);
+>  FUNC_GROUP_DECL(MACLINK3, L23);
+>
+>  #define K25 7
+>  SIG_EXPR_LIST_DECL_SESG(K25, MACLINK4, MACLINK4, SIG_DESC_SET(SCU410, 7));
+>  SIG_EXPR_LIST_DECL_SESG(K25, SDA14, I2C14, SIG_DESC_SET(SCU4B0, 7));
+> -PIN_DECL_2(K25, GPIOA7, MACLINK4, SDA14);
+> +/*SGPM2 is A1 Only */
+> +SIG_EXPR_LIST_DECL_SESG(K25, SGPM2I, SGPM2, SIG_DESC_SET(SCU6D0, 7),
+> +                         SIG_DESC_CLEAR(SCU410, 7), SIG_DESC_CLEAR(SCU4B0, 7),
+> +                         SIG_DESC_CLEAR(SCU690, 7));
+> +PIN_DECL_3(K25, GPIOA7, SGPM2I, MACLINK4, SDA14);
+>  FUNC_GROUP_DECL(MACLINK4, K25);
+>
+>  FUNC_GROUP_DECL(I2C14, L23, K25);
+> +/*SGPM2 is A1 Only */
+> +FUNC_GROUP_DECL(SGPM2, K26, L24, L23, K25);
+>
+>  #define J26 8
+>  SIG_EXPR_LIST_DECL_SESG(J26, SALT1, SALT1, SIG_DESC_SET(SCU410, 8));
+> @@ -2060,6 +2080,7 @@ static const struct aspeed_pin_group aspeed_g6_groups[] = {
+>         ASPEED_PINCTRL_GROUP(EMMCG4),
+>         ASPEED_PINCTRL_GROUP(EMMCG8),
+>         ASPEED_PINCTRL_GROUP(SGPM1),
+> +       ASPEED_PINCTRL_GROUP(SGPM2),
+>         ASPEED_PINCTRL_GROUP(SGPS1),
+>         ASPEED_PINCTRL_GROUP(SIOONCTRL),
+>         ASPEED_PINCTRL_GROUP(SIOPBI),
+> @@ -2276,6 +2297,7 @@ static const struct aspeed_pin_function aspeed_g6_functions[] = {
+>         ASPEED_PINCTRL_FUNC(SD1),
+>         ASPEED_PINCTRL_FUNC(SD2),
+>         ASPEED_PINCTRL_FUNC(SGPM1),
+> +       ASPEED_PINCTRL_FUNC(SGPM2),
+>         ASPEED_PINCTRL_FUNC(SGPS1),
+>         ASPEED_PINCTRL_FUNC(SIOONCTRL),
+>         ASPEED_PINCTRL_FUNC(SIOPBI),
 > --
 > 2.17.1
 >
