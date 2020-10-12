@@ -2,62 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8683428AD03
-	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 06:32:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A1DA28AD10
+	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 06:36:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C8m484jNdzDqkD
-	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 15:32:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C8m8f38hBzDqjT
+	for <lists+openbmc@lfdr.de>; Mon, 12 Oct 2020 15:36:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
- helo=mail-qk1-x742.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f43;
+ helo=mail-qv1-xf43.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Vi0Okto4; dkim-atps=neutral
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
- [IPv6:2607:f8b0:4864:20::742])
+ header.s=google header.b=SOWUjFcC; dkim-atps=neutral
+Received: from mail-qv1-xf43.google.com (mail-qv1-xf43.google.com
+ [IPv6:2607:f8b0:4864:20::f43])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C8m1m1Dw0zDqkX;
- Mon, 12 Oct 2020 15:30:18 +1100 (AEDT)
-Received: by mail-qk1-x742.google.com with SMTP id s4so16688385qkf.7;
- Sun, 11 Oct 2020 21:30:18 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C8m7g4h1ZzDqWk;
+ Mon, 12 Oct 2020 15:35:25 +1100 (AEDT)
+Received: by mail-qv1-xf43.google.com with SMTP id cv1so7864941qvb.2;
+ Sun, 11 Oct 2020 21:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=ix53B+4PxpD3FvNrquTS4wrFrQE1rmLNYwUdzsQBz70=;
- b=Vi0Okto4r2twCBe/iUIb9WvlHH1xO2X3Pgp/nljP/qcnaXwYhnCYzuh1+uReRXwRdx
- TPoGM9Rlp+ghbeEWUbk+eDkR+uz9q51GERSJbC0puwH+q4lKe8vhqMSjFp+Sge2IR07V
- Yz5TD89m4VosCu5dlVKyhk/N9QRS5LXdMkwaU=
+ :cc; bh=nGaRgY5KXDnDzgTPGxT6g3wAgRB6O4Efwdc4BkmUcUQ=;
+ b=SOWUjFcCQQ64YMoS0aewIWeR2JZr4N4UPekS7iGiL3qAfsUMJ4/CkpEiG+L1PmUcdy
+ 0JknrUGXjVlQEGtpGwfJ+mL4W1w1sPyNaf9bo/oEwcTLRZ8fUId82aPbBnrpuUFSAW3y
+ JR57zS7q5TJXMyJXE1U2e1e/AxudPhhcjIAbk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=ix53B+4PxpD3FvNrquTS4wrFrQE1rmLNYwUdzsQBz70=;
- b=jol1/tp7MjE8tyuqnqu/yeS/QmzTE6VlMlwXaMe0vvpueYK7r9KVHXSyv6y2BoYiJJ
- moCq1C/pyaloxHsHFXyKrpbfZcBzjuRPmLfC/sfSVctmZcIvlFZf1y8z6JxOBXFSUdTU
- cLIgZG7pW5qwQIrfCPW1pp/p8dYIMqVOcc1Uk72p4jGnUXCbs5/YpnHmRrarUvjVJ44X
- hnpFWEe08NYjjKSb0/sQ7qaVe4LM9l8PM9legrv9JKqhmkIyRbxx6ZKZQceHCbanJtaE
- 9Ru2dU6iOLvtr6H5oyCks1e0u3A3O6JE3tHGdeLxTEOLjPKxIdnKWSdYiOEFlNHLT3mj
- feIg==
-X-Gm-Message-State: AOAM530/3CLPGZZDocJ86fbi1rIQ6w4I7xFLV9CtqP2yLQazGEiinNWY
- AY3oEGf3hx4FuGNgGzxJZZ1bMmdJTaxyN1t+13s=
-X-Google-Smtp-Source: ABdhPJyNBsj3Xl5S6RY3Rvn00/GtfkhS8Ore3QHLa1prcwNZOO4RsI2temxvhrolGiYtx4NchxSTU3LmSRQ/3KhH1ts=
-X-Received: by 2002:a05:620a:16aa:: with SMTP id
- s10mr7987574qkj.273.1602477012120; 
- Sun, 11 Oct 2020 21:30:12 -0700 (PDT)
+ bh=nGaRgY5KXDnDzgTPGxT6g3wAgRB6O4Efwdc4BkmUcUQ=;
+ b=DNdOwiXqIrge7OGTdpfP3bMeyoR1zaarYlLn1JKjrM/nPmsVuGnvUdnOySfQMdoVXc
+ tb4c7gaQEidUtGKo8Dapb7zOAbbh0wEhsSAzcW0Pns7/SDbxFlFnsEfxcWjR3kok62q+
+ XSK9dFQVHaN4RbYBYDNivsed6TfZ4fLS46ILSJ9rM7/Ea5OCjD15uQdfHHxUVCerxwJA
+ 24TCCo7drsxmLghSTWtFayC052zz7ke29MUP5JPrx0wMvMBdSH6pu3HMqnyOWE07Mdie
+ UxpIQ9k2GHU+Ln07T40rL/pk3lIiXpUq4DYRh202DyZgooiSQpzXgUInIzgtzDsgknGP
+ WCTQ==
+X-Gm-Message-State: AOAM530u26CBulrLWFujCww0AbOZbSg6lFiQeHLc6qwrF+Gweckh1obv
+ 9M57vecswHkgDJrHbXAVMt9W868ft7T/WTHV4YE=
+X-Google-Smtp-Source: ABdhPJz7CL/VjmDDY37z1JG7gnOXApbbOdETG7sUFAFSF3cJkzGsH4f/RHqySKhCjPt72g6ojvIXvmBDeknLFRJYh3I=
+X-Received: by 2002:a0c:e308:: with SMTP id s8mr3269819qvl.10.1602477321232;
+ Sun, 11 Oct 2020 21:35:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20201012033150.21056-1-billy_tsai@aspeedtech.com>
- <20201012033150.21056-2-billy_tsai@aspeedtech.com>
-In-Reply-To: <20201012033150.21056-2-billy_tsai@aspeedtech.com>
+ <20201012033150.21056-3-billy_tsai@aspeedtech.com>
+In-Reply-To: <20201012033150.21056-3-billy_tsai@aspeedtech.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 12 Oct 2020 04:30:00 +0000
-Message-ID: <CACPK8XcQ+uodvYCyL7_RO9W2QF+AA2LidHhXi2tR3_uriQFccQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] Arm: dts: aspeed-g6: Fix the register range of gpio
+Date: Mon, 12 Oct 2020 04:35:09 +0000
+Message-ID: <CACPK8XdYvSmwdAkBzAO3kC8_PYa3CtPkNb0VxcOhmb2UYz5zDA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] Arm: dts: aspeed-g6: Add sgpio node
 To: Billy Tsai <billy_tsai@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -85,29 +84,127 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Mon, 12 Oct 2020 at 03:32, Billy Tsai <billy_tsai@aspeedtech.com> wrote:
 >
-> This patch is used to fix the memory range of gpio0
+> This patch is used to add sgpiom and sgpios nodes and add compatiable
+> string for sgpiom.
+
+You also need to add sgpios documentation to the bindings docs.
+
+Whenever you add new device tree bindings to the kernel tree you
+should add documentation for them.
+
+When preparing patches for submission, use scripts/checkpatch.pl to
+check for common issues. It will warn you if you are adding strings
+that are not documented.
+
+Cheers,
+
+Joel
+
 >
 > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-
 > ---
->  arch/arm/boot/dts/aspeed-g6.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  .../devicetree/bindings/gpio/sgpio-aspeed.txt |  8 +--
+>  arch/arm/boot/dts/aspeed-g6.dtsi              | 52 +++++++++++++++++++
+>  2 files changed, 57 insertions(+), 3 deletions(-)
 >
+> diff --git a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
+> index d4d83916c09d..815d9b5167a5 100644
+> --- a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
+> +++ b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
+> @@ -1,8 +1,10 @@
+>  Aspeed SGPIO controller Device Tree Bindings
+>  --------------------------------------------
+>
+> -This SGPIO controller is for ASPEED AST2500 SoC, it supports up to 80 full
+> -featured Serial GPIOs. Each of the Serial GPIO pins can be programmed to
+> +This SGPIO controller is for ASPEED AST2500/AST2600 SoC, it supports 2 master.
+> +One is up to 128 SGPIO input ports and 128 output ports concurrently(after AST2600A1)
+> +and Second one is up to 80.
+> +Each of the Serial GPIO pins can be programmed to
+>  support the following options:
+>  - Support interrupt option for each input port and various interrupt
+>    sensitivity option (level-high, level-low, edge-high, edge-low)
+> @@ -14,7 +16,7 @@ support the following options:
+>  Required properties:
+>
+>  - compatible : Should be one of
+> -  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio"
+> +  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio", "aspeed,ast2600-sgpiom"
+
+I think we should add sgpiom strings for the ast2500 (and ast2400?)
+too, as this is how they should have been named in the first place:
+
+>  - compatible : Should be one of
+>    "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio"
+>   "aspeed,ast2400-sgpiom", "aspeed,ast2500-sgpiom", "aspeed,ast2600-sgpiom"
+
+
+>  - #gpio-cells : Should be 2, see gpio.txt
+>  - reg : Address and length of the register set for the device
+>  - gpio-controller : Marks the device node as a GPIO controller
 > diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-> index 97ca743363d7..ad19dce038ea 100644
+> index ad19dce038ea..cb053a996e87 100644
 > --- a/arch/arm/boot/dts/aspeed-g6.dtsi
 > +++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-> @@ -357,7 +357,7 @@
+> @@ -366,6 +366,58 @@
+>                                 #interrupt-cells = <2>;
+>                         };
+>
+> +                       sgpiom0: sgpiom@1e780500 {
+> +                               #gpio-cells = <2>;
+> +                               gpio-controller;
+> +                               compatible = "aspeed,ast2600-sgpiom";
+> +                               reg = <0x1e780500 0x100>;
+> +                               interrupts = <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;
+> +                               ngpios = <128>;
+> +                               clocks = <&syscon ASPEED_CLK_APB2>;
+> +                               interrupt-controller;
+> +                               bus-frequency = <12000000>;
+> +
+> +                               pinctrl-names = "default";
+> +                               pinctrl-0 = <&pinctrl_sgpm1_default>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       sgpiom1: sgpiom@1e780600 {
+> +                               #gpio-cells = <2>;
+> +                               gpio-controller;
+> +                               compatible = "aspeed,ast2600-sgpiom";
+> +                               reg = <0x1e780600 0x100>;
+> +                               interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+> +                               ngpios = <80>;
+> +                               clocks = <&syscon ASPEED_CLK_APB2>;
+> +                               interrupt-controller;
+> +                               bus-frequency = <12000000>;
+> +
+> +                               pinctrl-names = "default";
+> +                               pinctrl-0 = <&pinctrl_sgpm2_default>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       sgpios0: sgpios@1e780700 {
+> +                               #gpio-cells = <2>;
+> +                               gpio-controller;
+> +                               compatible = "aspeed,ast2600-sgpios";
+> +                               reg = <0x1e780700 0x40>;
+> +                               interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
+> +                               clocks = <&syscon ASPEED_CLK_APB2>;
+> +                               status = "disabled";
+> +                       };
+> +
+> +                       sgpios1: sgpios@1e780740 {
+> +                               #gpio-cells = <2>;
+> +                               gpio-controller;
+> +                               compatible = "aspeed,ast2600-sgpios";
+> +                               reg = <0x1e780740 0x40>;
+> +                               interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
+> +                               clocks = <&syscon ASPEED_CLK_APB2>;
+> +                               status = "disabled";
+> +                       };
+> +
+>                         gpio1: gpio@1e780800 {
 >                                 #gpio-cells = <2>;
 >                                 gpio-controller;
->                                 compatible = "aspeed,ast2600-gpio";
-> -                               reg = <0x1e780000 0x800>;
-> +                               reg = <0x1e780000 0x400>;
->                                 interrupts = <GIC_SPI 40 IRQ_TYPE_LEVEL_HIGH>;
->                                 gpio-ranges = <&pinctrl 0 0 208>;
->                                 ngpios = <208>;
 > --
 > 2.17.1
 >
