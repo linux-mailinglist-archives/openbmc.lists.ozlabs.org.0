@@ -1,64 +1,43 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB5E228CB2E
-	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 11:48:59 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A03EF28CB60
+	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 12:05:56 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C9W2w6gYkzDqGC
-	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 20:48:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C9WQV16pgzDqf9
+	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 21:05:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1029;
- helo=mail-pj1-x1029.google.com; envelope-from=dhruvaraj@gmail.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=temperror (SPF Temporary Error: DNS The DNS
+ operation timed out after 21.1222882270813 seconds)
+ smtp.helo=herzl.nuvoton.co.il (client-ip=212.199.177.27;
+ helo=herzl.nuvoton.co.il; envelope-from=tali.perry@nuvoton.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Dx4JSa5H; dkim-atps=neutral
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
- [IPv6:2607:f8b0:4864:20::1029])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C9W2912QFzDqbh
- for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 20:48:12 +1100 (AEDT)
-Received: by mail-pj1-x1029.google.com with SMTP id gv6so389078pjb.4
- for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 02:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=VSZR+jKKnHHShSg0FRV+IqkAxuFgiDEROzXqT5tuvYU=;
- b=Dx4JSa5HVp0N5fB6NuuAn5kPApeMD5eBRyCFrors2+GfUcIfsII0vM03/Xtihp+4DW
- MoAIKhIFV69PmKG6AI3HKZJVjLMG3cPWSGiUZ8LW99111dxy2peVGWCt+WvSdNjL0ImW
- S/PGj1hSrz1aoonrDjgvoN4lDouGFhnYGJV1Rl8XutrqJzELaxacE2sQwLgxkHOlUbos
- Z8IlrWEkHRjEIRepl1Db2JL4B0RrWaGmoikCRfbgu4sbf7DrIdBGLG+WO0jXYnAP6DYs
- CcEp7zd9wG2FoAPvtK6yo0V6nZeHok9i4UQaK1JyD9sRkM+Z01aeooG5raFUmFlQ9jUH
- SngQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=VSZR+jKKnHHShSg0FRV+IqkAxuFgiDEROzXqT5tuvYU=;
- b=XYjvPvxbBrmbBYsSBOUTCDzm3WpIRlmFU9qqedpCbkZ2hs2W8qm7olu6Y7JuhuRO8s
- WR9wY7dxJfIDIqEHwovMAfKD+X1fE9egwXDuOwqsFB1FTtqFkNPoYvM0A440KbZgqovq
- aey+tz+893MiIbop5RTqxI6NOAhUu3xuKOPKQuSZh4/KtlWn9Db3lnmWFKfbpoMKc5+7
- yquPsElqc2CFGDcRns5ZzyKle9g9nuUQ8JIBn3iwarL149o+pxwNqBsLMpk+7bV8NMW5
- kPIe4eJbmxROEeInV9iGtO3zWsX4BzOzoB3cEL4VeDM/amMx5/H2iYy9h/e7+jTCdwQM
- lhEA==
-X-Gm-Message-State: AOAM5328XplkosxuEkoclXyFry5TzZADE24M7v/PDwVxauY9yMlkW1Im
- NuF+yeyXYucPboKO60ZhAgXzXNgIqGoPdYdCLfmcTNvwKKoOLQ==
-X-Google-Smtp-Source: ABdhPJzfp9kwEtS/DPOLYhVWfhLSRFvfqXBBbAKVXpZFKGHz8UKGzB3KBF3esX5QqXBV+2OIesGfdRVKD0H941ZEvjQ=
-X-Received: by 2002:a17:90a:ff06:: with SMTP id
- ce6mr24197449pjb.38.1602582487187; 
- Tue, 13 Oct 2020 02:48:07 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C9WPg040KzDqcY
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 21:04:48 +1100 (AEDT)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 09DA3P1A022735;
+ Tue, 13 Oct 2020 13:03:25 +0300
+Received: by taln60.nuvoton.co.il (Postfix, from userid 20088)
+ id 533D8639D6; Tue, 13 Oct 2020 13:03:25 +0300 (IDT)
+From: Tali Perry <tali.perry1@gmail.com>
+To: wsa@kernel.org, andriy.shevchenko@linux.intel.com, xqiu@google.com,
+ kunyi@google.com, benjaminfair@google.com, avifishman70@gmail.com,
+ joel@jms.id.au, tmaimon77@gmail.com
+Subject: [PATCH v2] i2c: npcm7xx: Support changing bus speed using debugfs.
+Date: Tue, 13 Oct 2020 13:03:14 +0300
+Message-Id: <20201013100314.216154-1-tali.perry1@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-From: dhruvaraj S <dhruvaraj@gmail.com>
-Date: Tue, 13 Oct 2020 15:17:56 +0530
-Message-ID: <CAK7WoshQO3XocueCAqsOS2CPG4cDz8UexzAVRYx=PVsk6f9jDg@mail.gmail.com>
-Subject: Update to the xyz.openbmc_project.Dump.Create
-To: openbmc <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,20 +49,84 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Tali Perry <tali.perry1@gmail.com>,
+ linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+Systems that can dynamically add and remove slave devices
+often need to change the bus speed in runtime.
+This patch expose the bus frequency to the user.
+This feature can also be used for test automation.
 
-The existing method CreateDump in xyz.openbmc_project.Dump.Create
-doesn't accept any parameters. A type of IBM host-specific dump
-requires additional parameters to create user-initiated dumps. To
-solve this problem extending the existing createDump method to accept
-additional parameters in Key, Value pair format. Details available in
-the review link
+--
+v2 -> v1:
+	- Fix typos.
+	- Remove casting to u64.
+	
+v1: initial version
 
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/37355
+Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+---
+ drivers/i2c/busses/i2c-npcm7xx.c | 35 ++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
 
-Please provide the feedback in case of any impact after changing this method.
----------
-Dhruvaraj S
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index 2ad166355ec9..633ac67153e2 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -2208,6 +2208,40 @@ static const struct i2c_algorithm npcm_i2c_algo = {
+ /* i2c debugfs directory: used to keep health monitor of i2c devices */
+ static struct dentry *npcm_i2c_debugfs_dir;
+ 
++static int i2c_speed_get(void *data, u64 *val)
++{
++	struct npcm_i2c *bus = data;
++
++	*val = bus->bus_freq;
++	return 0;
++}
++
++static int i2c_speed_set(void *data, u64 val)
++{
++	struct npcm_i2c *bus = data;
++	int ret;
++
++	if (val < I2C_FREQ_MIN_HZ || val > I2C_FREQ_MAX_HZ)
++		return -EINVAL;
++
++	if (val == bus->bus_freq)
++		return 0;
++
++	i2c_lock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
++
++	npcm_i2c_int_enable(bus, false);
++
++	ret = npcm_i2c_init_module(bus, I2C_MASTER, (u32)val);
++
++	i2c_unlock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
++
++	if (ret)
++		return -EAGAIN;
++
++	return 0;
++}
++DEFINE_DEBUGFS_ATTRIBUTE(i2c_clock_ops, i2c_speed_get, i2c_speed_set, "%llu\n");
++
+ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+ 				  struct npcm_i2c *bus)
+ {
+@@ -2223,6 +2257,7 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+ 	debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
+ 	debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
+ 	debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
++	debugfs_create_file("i2c_speed", 0644, d, bus, &i2c_clock_ops);
+ 
+ 	bus->debugfs = d;
+ }
+
+base-commit: 865c50e1d279671728c2936cb7680eb89355eeea
+-- 
+2.22.0
+
