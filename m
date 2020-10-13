@@ -1,66 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6154828D637
-	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 23:30:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CDF228D718
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 01:41:53 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C9pc54J4BzDqg9
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 08:30:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C9sWw3fYKzDqh3
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 10:41:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::341;
- helo=mail-ot1-x341.google.com; envelope-from=xqiu@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b43; helo=mail-yb1-xb43.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=nY30yW+W; dkim-atps=neutral
-Received: from mail-ot1-x341.google.com (mail-ot1-x341.google.com
- [IPv6:2607:f8b0:4864:20::341])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=b0IvGvZd; dkim-atps=neutral
+Received: from mail-yb1-xb43.google.com (mail-yb1-xb43.google.com
+ [IPv6:2607:f8b0:4864:20::b43])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C9pbD3D17zDqMl
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 08:29:26 +1100 (AEDT)
-Received: by mail-ot1-x341.google.com with SMTP id s66so1507259otb.2
- for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 14:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=BQVUP6sy3PX6Q3C2BLkQ+7wHeBtTeqDYnlZeUE9CcjA=;
- b=nY30yW+WJ9MyaUbcO1v/mKwFDXq94hxYfbWo/1L56jEnYbDaOUoYy9nIdcUT28q/3c
- Uq9y09kxs8N4qWd/Ff1kdavb8TyIc6oBlU3oviAsPjgw5zqHaKMjWs85k6EGx1lxqE03
- VQTguqayk1ztH//dzkEuTPpRd/rbKtMe5TYkZHhAmRaVfWU6khywIlm/eXZEB8R3YU/t
- RvblJocOk1w4YKITaedGGSW+l4IlsJxZKuoRhJl4WWr78Rm5iE0CXNAtN8R0QHvYHTcS
- E2nLmPwqNzyIxnEb9m2N39CFYlvmttezElfEknCVV0scF33M9yCSq3OfXIi84EC3hOJ5
- U74Q==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C9sW6594pzDqfq
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 10:41:05 +1100 (AEDT)
+Received: by mail-yb1-xb43.google.com with SMTP id n65so1085164ybg.10
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 16:41:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=n0aCH2A+QTkSpZ8rW3CeKzE75DNgKd4BBBtQWAT0hNM=;
+ b=b0IvGvZd6sPJ4wk2r5zK4brF0tw0iLMVOa0BVXxmTDEbAoSMT9kND3xTEi8Nz49G1q
+ n//ntkHgUt5xI75HEazkNP2Ea0G0/ZZANLFW72IHyV2frG5Wm6x3fHqBCNCXHkKyTLhL
+ gF4NMK3p3qQq0ZlJwJhafLLqiUMX0+Kz1ja5KgOxdAw0MCd04hTjqsKH8zAEWf3/JVWq
+ 1fDhnZ3bCepi3AJZTKs/0qIjvtmvf9PVaW9DwbFHR37LpXQEr1xFCAXtQ7VUYj74bUBc
+ 72rhT+914Y4Phkl/PFljQ8XwJL9S33jX+sQVzMJ+GgwHd9iU4EjekQMNaCECLuAnPHVU
+ /4Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=BQVUP6sy3PX6Q3C2BLkQ+7wHeBtTeqDYnlZeUE9CcjA=;
- b=fB5vHP4phenrD9BO7HddMFtOLXFndMVrHb+sanvDMAUhVLeP45VozM2XePqVtwPQVa
- sdlQ1ZH21MP64S4KoseGdffE2woDSvbyFVUekWQDVt7hzLuy2Cu77fzIyetkPUFRB6FW
- MeLyeJUHH3rEFGXPzxwIoyEzlJ08wiO1sdd2oxZUDobCoGkiWILratElalq5ylg470E6
- ArfnIcp+MgQMqnjoXHV8czoz6dapp2YcQ9258RL7fFJHWU5ejtIJTAFcTQB4rG1jYfxa
- At3/ke92JE1+lJAwqzMrvYOWs4ZAqGHLnsoh3LDJgY6XsM2ilqLuRdaQa+Ex8Swxfnd4
- GFiw==
-X-Gm-Message-State: AOAM533z6FrTUbH/FM5w+xbJdTQ3Te9wRvMBLAj4T8/mMNl/6hS6TLsx
- gxgvWBfX0Z3MhUgah2oTPhUKV75y79OQHk8yJUAQow==
-X-Google-Smtp-Source: ABdhPJyWjnabEyver0ZLJs3j3vpJ6dQJC3dFlcNQoNysjkLGxpSekou/SW+1ozZsc27Ff8tuKWkk2Jcm4I0Yp/Rrics=
-X-Received: by 2002:a9d:7b59:: with SMTP id f25mr1167062oto.306.1602624562402; 
- Tue, 13 Oct 2020 14:29:22 -0700 (PDT)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=n0aCH2A+QTkSpZ8rW3CeKzE75DNgKd4BBBtQWAT0hNM=;
+ b=O9Pg2mVrBRTKh8rTI8rqvB/hzRUudoUUp318Hy1Xjd4U2KoAMEpo+owl7LsTx1bwgO
+ tN22aCo7il873tVoxJNNrPsFe+VKSHRaHBZaKXcBtv/A+ZVpPfED37paoSa0W/qZCGpM
+ xnMft6iGGDeVn46wh5fMPmUEIt/cwx5LfIRTD6lf3EJ7+UpZfJMSEp6/+ZCU/pm9FOeQ
+ xaSW9wbH5IT9LadK1UXhjDI+iuJY/TJSnSz07ns8x6iLXLIjP9P7dOOKwgUPjA8SCdJT
+ FFLIT+QlSOKFuB5uBr2hSOF1gPLoj4DC8HmaejTiRBspu4teNNBLKqm/QrzYQ6uKBa3N
+ zEYg==
+X-Gm-Message-State: AOAM531cic7OjzlmFbnVQEOnVOhZ4Lc0KTaeLNOFkFKei2jhF2VvRege
+ UFdcV/g4UGlskj8Vw4jPNHazw0ygMfEymiyisg+rEcAxMCDfiCL4
+X-Google-Smtp-Source: ABdhPJzHc0NI6/WSoJJoh8tyembvzE85nyqSO9IxbMZ2JoltwNPUr/3Kf1ayhzR/fvHCQbwLBm/dxowyF7Ax4mfkxnE=
+X-Received: by 2002:a25:74d7:: with SMTP id p206mr3178611ybc.170.1602632460780; 
+ Tue, 13 Oct 2020 16:41:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201013100314.216154-1-tali.perry1@gmail.com>
- <20201013115023.GL4077@smile.fi.intel.com>
-In-Reply-To: <20201013115023.GL4077@smile.fi.intel.com>
-From: Alex Qiu <xqiu@google.com>
-Date: Tue, 13 Oct 2020 14:29:11 -0700
-Message-ID: <CAA_a9xKSYjjX47AT_XduA7WyrM5nCNu4vJLUsjwBEAyy7jn0BQ@mail.gmail.com>
-Subject: Re: [PATCH v2] i2c: npcm7xx: Support changing bus speed using debugfs.
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Tue, 13 Oct 2020 16:40:50 -0700
+Message-ID: <CACWQX83EqayoG=rW3kt1Ui-+d8KQLLc5kKsrvWLSyCSMEQ0sDA@mail.gmail.com>
+Subject: Why not phosphor-dbus-interfaces
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,116 +71,147 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>,
- Avi Fishman <avifishman70@gmail.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>, Wolfram Sang <wsa@kernel.org>,
- Linux I2C <linux-i2c@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Tested again, and the updated patch is still working.
+A week or so back, I got asked why a lot of daemons don't use
+phosphor-dbus-interfaces.
+https://gerrit.openbmc-project.xyz/c/openbmc/dbus-sensors/+/36579
 
-On Tue, Oct 13, 2020 at 4:49 AM Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> wrote:
->
-> On Tue, Oct 13, 2020 at 01:03:14PM +0300, Tali Perry wrote:
-> > Systems that can dynamically add and remove slave devices
-> > often need to change the bus speed in runtime.
-> > This patch expose the bus frequency to the user.
-> > This feature can also be used for test automation.
->
-> > --
-> > v2 -> v1:
-> >       - Fix typos.
-> >       - Remove casting to u64.
-> >
-> > v1: initial version
->
-> Above block should go after cutter '---' (see below) line...
->
-> > Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
-> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-Reviewed-by: Alex Qiu <xqiu@google.com>
-Tested-by: Alex Qiu <xqiu@google.com>
+This email attempts to answer that question in more detail, and widen
+the audience, as well as to set us up for some change in this area.
+It should be noted, I don't speak for every author, and I've only
+written a small subset of the daemons that don't use PDI.  Bear in
+mind, my information may be out of date, and some of these might have
+been solved, but what follows are the broad strokes.
 
-> > ---
->
-> ...here.
->
-> >  drivers/i2c/busses/i2c-npcm7xx.c | 35 ++++++++++++++++++++++++++++++++
-> >  1 file changed, 35 insertions(+)
->
-> As we discussed previously I'm not a fan of the functionality this gives and a
-> way it's done, but this is debugfs and not anyhow an ABI. Also it's localized
-> inside one driver. In the future we may come up with better approach.
->
-> That said, no objections from me.
->
-> > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-> > index 2ad166355ec9..633ac67153e2 100644
-> > --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > @@ -2208,6 +2208,40 @@ static const struct i2c_algorithm npcm_i2c_algo = {
-> >  /* i2c debugfs directory: used to keep health monitor of i2c devices */
-> >  static struct dentry *npcm_i2c_debugfs_dir;
-> >
-> > +static int i2c_speed_get(void *data, u64 *val)
-> > +{
-> > +     struct npcm_i2c *bus = data;
-> > +
-> > +     *val = bus->bus_freq;
-> > +     return 0;
-> > +}
-> > +
-> > +static int i2c_speed_set(void *data, u64 val)
-> > +{
-> > +     struct npcm_i2c *bus = data;
-> > +     int ret;
-> > +
-> > +     if (val < I2C_FREQ_MIN_HZ || val > I2C_FREQ_MAX_HZ)
-> > +             return -EINVAL;
-> > +
-> > +     if (val == bus->bus_freq)
-> > +             return 0;
-> > +
-> > +     i2c_lock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
-> > +
-> > +     npcm_i2c_int_enable(bus, false);
-> > +
-> > +     ret = npcm_i2c_init_module(bus, I2C_MASTER, (u32)val);
-> > +
-> > +     i2c_unlock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
-> > +
-> > +     if (ret)
-> > +             return -EAGAIN;
-> > +
-> > +     return 0;
-> > +}
-> > +DEFINE_DEBUGFS_ATTRIBUTE(i2c_clock_ops, i2c_speed_get, i2c_speed_set, "%llu\n");
-> > +
-> >  static void npcm_i2c_init_debugfs(struct platform_device *pdev,
-> >                                 struct npcm_i2c *bus)
-> >  {
-> > @@ -2223,6 +2257,7 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
-> >       debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
-> >       debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
-> >       debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
-> > +     debugfs_create_file("i2c_speed", 0644, d, bus, &i2c_clock_ops);
-> >
-> >       bus->debugfs = d;
-> >  }
-> >
-> > base-commit: 865c50e1d279671728c2936cb7680eb89355eeea
-> > --
-> > 2.22.0
-> >
->
-> --
-> With Best Regards,
-> Andy Shevchenko
->
->
+1. phosphor-dbus-interfaces doesn't support any sort of task model, or
+the separation of requests from replies.  This makes it very hard to
+write code that is robust against blocking hardware, or code that has
+the ability to handle multiple requests in parallel.  One degenerate
+example of this is ipmbbridge, which needs to query i2c before it'll
+have the data to return to the method call, and might have 5ish
+requests in-flight before the first one returns.  Moving everything to
+blocking calls significantly reduces (4X slower if I remember right)
+the performance of the bridge, especially in the case where the
+spec-required retries and holdoffs are executed.
 
-- Alex Qiu
+2. The current mechanisms require that objects publish their
+interfaces at compile time.  This  makes it very difficult for objects
+that need to support optional interfaces, and leads to duplication of
+code.  For example, some lm75 devices might have thresholds, others
+might not.  To implement the relatively simple example, Value,
+CriticalThreshold, and WarningThreshold interfaces would require 4
+different class instantiations, and some way to switch between them.
+An example of the fixed-interfaces pattern is below from
+phosphor-networkd.  Notice that object is a variadic template.  So far
+as I'm aware, there's no way to instantiate that at runtime.
+https://github.com/openbmc/phosphor-networkd/blob/ffcba341a893318588afe83e8d767d8c20fd9189/ethernet_interface.hpp#L21
+
+3. Reviews.  Having a single source for all dbus interfaces causes a
+bandwidth problem for reviewers.  Many people review the
+dbus-interfaces and don't review the reference implementation, which
+leads to many arguments that boil down to "See implementation here for
+why it's required".  This leaves maintainers hanging in the lurch
+getting to review the implementation for correctness.  Combining the
+interfaces and implementation tends to make reviews go faster, as more
+reviewers tend to look at them.
+
+4.  phosphor-dbus-interfaces has no provision for managing breaking
+API changes.  The idea that commit 1 is going to get everything
+correct and the interfaces wouldn't need to evolve is noble, but
+unfortunately has been proven to not work in the past.  As a
+consequence, this causes changes to take a long time to be merged.
+Changing the sensor values to Double took a few months to do
+mechanically, by merging the implementation changes in a backward
+compatible way in asio, but required 2 years before the
+phosphor-dbus-interface change was merged:
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-dbus-interfaces/+/11739
+This is certainly an extreme case, but smaller examples of this pop up a lot.
+
+5. Inheritance:  Utilizing phosphor-dbus-interfaces requires a
+relatively robust understanding of inheritance, as all implementations
+rely on overriding methods on a compile-time generated class.
+
+6. Property model: having a getter method for each property makes
+implementing pass through clients (clients that don't host their data
+themselves) harder, as it means that requests that would ordinarily be
+coalesced into a single call need to be separated.  Said another way,
+there's no way that I'm aware of to optimize a GetAll properties call
+differently than a Get call differently than a GetManagedObjects call.
+Having those operations exposed to the user encourages first order
+optimizations upfront, and makes inefficiencies very clear to the
+reviewer.
+
+6. Exceptions.  Error handling paths for phosphor-dbus-interfaces
+require the use of exceptions in non-exceptional cases for all error
+handling, which are foreign to a large percentage of embedded
+developers, and make it harder to coordinate adding new error
+conditions.  They can also generate larger binaries when compared to
+return codes (citation needed).  Even adding new exceptions to
+sdbusplus has caused numerous bugs over time because of developers
+inexperience in handling them or reviewing them.  New error types
+trend toward reusing the existing error classes because of the
+difficulty in making changes, which leads to less specific error codes
+over time.
+
+7. phosphor-dbus-interfaces is another compile-time dependency to add
+to each component, and pulls in several other required dependencies
+into the build-tree.  These long-tail dependencies make code harder to
+build outside the yocto tree, especially in cases where components are
+reused by other projects.  In cases where security review is required,
+it's also more code that has to be "trusted" and verified to be
+correct.  In the current yocto/gerrit review model, this also means
+every interface change requires a synchronized bump, which today is
+non-trivial.
+
+8. If I remember the build flow correctly, phosphor-dbus-interfaces
+uses a YAML file, which in turn uses a python script to fill in a mako
+template, which generates a templated c++ CRTP class that can be built
+against.  Said flow is much harder to read, debug, and understand than
+just using raw template instantiations in c++, as the current asio
+interfaces do.
+
+9. phosphor-dbus-interfaces provides false security in that developers
+test their code less than they otherwise would.  It's possible to add
+new enums, properties, error types, and other things with no review on
+the daemons that rely on those implementations or whether those
+implementations and errors have been handled.  Having each
+implementation declare the interfaces, even if it duplicates the dbus
+definitions makes a very clear contract about what that implementation
+expects and supports, and forces a reviewable commit when we need to
+adjust that.
+
+10. Enums.  So far as I'm aware, the idea of a dbus scoped "enum" is
+specific to phosphor-dbus-interfaces, not a generalized pattern for
+all dbus usage, which pushes us further away from using "stock"
+documented dbus.  I haven't seen a document on the theory behind the
+dbus enums (maybe it's documented somewhere I haven't seen yet?).
+This causes more developer friction when attempting to compare a YAML
+dbus interface to an implementation during development or debug, and
+means that any tooling we have is unaware of the enum types.
+
+Negatives of not using phosphor-dbus-interfaces that I'm aware of:
+
+1. Interfaces tend to be under documented, or only documented in the
+repo that uses their interfaces. phosphor-dbus-interfaces does a
+better job here at enforcing all implementations that are documented
+in YAML implement a dbus interface that looks correct.
+
+2. Enum, object, and class parsing code is very....very verbose to
+write.  I originally added 5 more "very"s to the beginning of that
+statement, but I thought that made the statement too verbose, and the
+irony nearly killed me.
+As an example, here's a 282 line function in bmcweb for parsing the
+dbus memory item/asset/metric interfaces into the equivalent Redfish
+struct.
+https://github.com/openbmc/bmcweb/blob/72d52d2511bfcb2bdd168a561d16ce2c0dd436aa/redfish-core/lib/cpudimm.hpp#L498
+
+3. There are occasionally functional bugs that could've been caught at
+compile time instead of runtime.
+
+4. Unit-test ability?  I put a question mark here because it looks
+like phosphor-dbus-interfaces classes were intended to be mocked, but
+I don't know of widespread adoption of that, nor any "complete"
+example with >90% test coverage.  Maybe a complete example exists
+these days?
