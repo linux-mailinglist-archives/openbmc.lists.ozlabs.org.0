@@ -2,77 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F17328D006
-	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 16:17:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E95928D248
+	for <lists+openbmc@lfdr.de>; Tue, 13 Oct 2020 18:31:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4C9d0p2jr3zDqcg
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 01:17:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4C9gzj3vJZzDqcD
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 03:31:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32b;
- helo=mail-ot1-x32b.google.com; envelope-from=kurt.r.taylor@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=rgpCO59S; dkim-atps=neutral
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
- [IPv6:2607:f8b0:4864:20::32b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=lZUWhQSU; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4C9cyf1sgxzDqY1
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 01:15:35 +1100 (AEDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 32so122811otm.3
- for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 07:15:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:references:to:from:message-id:date:user-agent:mime-version
- :in-reply-to:content-language:content-transfer-encoding;
- bh=pdxJqlkFG4bGbusJfimwY970bSfnYIe981BPHGlXFRo=;
- b=rgpCO59SvKv6h6akLb+fEs1HQ9wxD+rq9eM9oZPwlNAC6JUNRmGEdFIvdytH46UIgk
- XYTa0R+5EFDVCmUUkYrfNlwO7IwYeDZb0fGEeo5/jIVn1WVL6Cc/sTpdObOZq3PN5Znd
- hGmrlrCz681rfucl8Bh9squrVQTHS2/aFQYwnw4UwjeiarV+7I02MUkXHC3giGj9HrzH
- yEmBa/3FaK4zR7AyfzigqKmzNQDPUzcKsf1G1dELISEgAuM9i7fkm+jkazhndK0LXKkU
- VC2JjdN19Vsu9tCzKM5j8qXISA688qwWiG3rzSE8ItW4zgj6PWi+2gjdCb8hyVem8Hck
- 5z5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:references:to:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=pdxJqlkFG4bGbusJfimwY970bSfnYIe981BPHGlXFRo=;
- b=jZy1y75wwEEorWCky8gW0+teq9N7GNSUKBs+qYHMJln1YCTvbiJ4sILVHEBq82XVlL
- KdhgC85iXXo1LErnmWoK7oHENVUQ0IcgnmmO6AhegAQV+g75tUyzwZzIoA0GY8+U9aAs
- inXTxzwjX25HbOtfRVZWM53/vU5DabhbSRWLp3l3uf1hr2/eURzwyJc4GF+pGdlN5Sy2
- 1tTgQaDR1NzG6BpRWfxMMOfFMbwpinBPevtS6wOrI+2DASE9MANAw2b+dRuO6ws/khe6
- dRT/wFPAXYMw5rL5ENdSTTbpPxrpWxhZW2GhpId4SggbmY3YSy4cMi8Ircsl9EUjwUYK
- c1UA==
-X-Gm-Message-State: AOAM5326tMDomUNxm8I0zweC/uc9hL4AGk6R6JPZ8RUl0xMeEPMPmg57
- WCw/PgDZC+yVOZOVanCOELw=
-X-Google-Smtp-Source: ABdhPJx46Q5XkD4CBXzecaQRgKFHYnMYgSRc2wc6/wAZ277RHQb9mNUlMc0OUhqzJqlfOCfQboHCCw==
-X-Received: by 2002:a9d:4813:: with SMTP id c19mr22162996otf.320.1602598529639; 
- Tue, 13 Oct 2020 07:15:29 -0700 (PDT)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id b7sm2359161oic.36.2020.10.13.07.15.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Oct 2020 07:15:28 -0700 (PDT)
-Subject: Fwd: Fwd: CCLA for Gagar.IN
-References: <CALVHhedrNwVe=K0zyPQAnEgfyReSgx9BKsYMAseynHGOpx1iww@mail.gmail.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, fercerpav@gmail.com
-From: krtaylor <kurt.r.taylor@gmail.com>
-X-Forwarded-Message-Id: <CALVHhedrNwVe=K0zyPQAnEgfyReSgx9BKsYMAseynHGOpx1iww@mail.gmail.com>
-Message-ID: <9f2abb92-b5c2-6045-12e5-4549f8e75416@gmail.com>
-Date: Tue, 13 Oct 2020 09:15:28 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4C9gyf46yYzDqVr
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 03:30:49 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09DGORZO158487; Tue, 13 Oct 2020 12:30:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=dUfmXTrcr5yhiQEMjSaJP8wdxxQoSNxM9UTXwj4Vidk=;
+ b=lZUWhQSUKPwVk6L9cAIAtjGITH16U0Ga0QVWQDMzfnOeZJwAxq9W3Zd3WIYUYyfdAj4x
+ S/Yui2G9raW1e+KkGPz+7hUZ7TG/3R6i8nBXlyh47Ev4pdsCVhjE8f+hgobQ++4okszb
+ A32lv39EErytIYe5y937V+9CjK5KNrRnoMR2wHzCvlqnISh4SJcPnK2PYPUgp66i3AZs
+ Hq+bydiVBhX+7SBs2A5J2qCtVMJf4P/3AXhuEr1XZoV9+U9ApP/dzStArWeS8lF5GUr4
+ 9x+voLo6lIyn2su8rRi7pUEr9QVHIRP+epHl/z5A0oCO0D3t9mOx12fipXhAJAWb6zMl 2w== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 345fqwr424-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2020 12:30:42 -0400
+Received: from m0098394.ppops.net (m0098394.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09DGOfQp163217;
+ Tue, 13 Oct 2020 12:30:41 -0400
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 345fqwr41e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2020 12:30:41 -0400
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09DGR8RM032700;
+ Tue, 13 Oct 2020 16:30:40 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
+ [9.57.198.24]) by ppma01wdc.us.ibm.com with ESMTP id 3434k90ytm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 13 Oct 2020 16:30:40 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09DGUelB42926372
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 13 Oct 2020 16:30:40 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE984AC064;
+ Tue, 13 Oct 2020 16:30:39 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 82DA4AC062;
+ Tue, 13 Oct 2020 16:30:37 +0000 (GMT)
+Received: from [9.206.222.88] (unknown [9.206.222.88])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 13 Oct 2020 16:30:37 +0000 (GMT)
+Subject: Re: How to list all sensors through redfish?
+To: Lei Yu <yulei.sh@bytedance.com>, "Li, Yong B" <yong.b.li@intel.com>,
+ Ed Tanous <ed@tanous.net>
+References: <SN6PR11MB29437D2F974612BD91DBCEC0B7090@SN6PR11MB2943.namprd11.prod.outlook.com>
+ <CAGm54UFuP60G6-2BYerdK_+ssuWh0BYUBVdBCSaBHrHbHD0MFQ@mail.gmail.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <c9fc71c8-aa5a-d00d-81f7-40d8ca2d5e63@linux.vnet.ibm.com>
+Date: Tue, 13 Oct 2020 10:30:34 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-In-Reply-To: <CALVHhedrNwVe=K0zyPQAnEgfyReSgx9BKsYMAseynHGOpx1iww@mail.gmail.com>
+In-Reply-To: <CAGm54UFuP60G6-2BYerdK_+ssuWh0BYUBVdBCSaBHrHbHD0MFQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-13_08:2020-10-13,
+ 2020-10-13 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0
+ phishscore=0 mlxlogscore=999 priorityscore=1501 impostorscore=0
+ clxscore=1011 adultscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010130118
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,37 +107,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "feistjj@gmail.com" <feistjj@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Your CCLA has been accepted. Welcome Gagar.IN!
+On 10/12/2020 8:17 PM, Lei Yu wrote:
+> On Sat, Oct 10, 2020 at 9:06 PM Li, Yong B <yong.b.li@intel.com> wrote:
+>>
+>> Hi All,
+>>
+>> Based on the current bmcweb implementation:
+>>
+>> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/sensors.hpp#L61
+>>
+>> The below URL only list these power/current/utilization sensors:
+>>
+>> redfish/v1/Chassis/$chassis/Sensors
+>>
+>> Just want to know why not list all running sensors? Is it required by redfish spec?
 
-Kurt Taylor (krtaylor)
+We asked this question in the Redfish forum thread below and Redfish 
+said "for sensors that are not covered elsewhere in the model - meaning 
+don't duplicate Power and Thermal".
 
+>>
+>>
+>> Is there any way to  list all sensors through redfish interface? Like the “ipmitool sensor list” command?
+>>
 
--------- Forwarded Message --------
-Subject: 	Fwd: CCLA for Gagar.IN
-Date: 	Tue, 13 Oct 2020 09:13:11 -0400
-From: 	Mike Dolan <manager@lfprojects.org>
-To: 	krtaylor <kurt.r.taylor@gmail.com>, Bradley W Bishop 
-<bradleyb@us.ibm.com>
+Not in one command. You will have to call the Thermal, Power, and 
+Sensors schemas like the webui does: 
+https://github.com/openbmc/webui-vue/blob/e9a59c75670461a80156554a4dfa04bab5eaf42c/src/store/modules/Health/SensorsStore.js#L22
 
+In 2020.4, this changes and all sensors will be in one location. :)
 
+> 
+> I just saw some discussion in the IRC by GunnarM quoted as:
+> 
+>> /sensors is sensors that aren't in Power/Thermal https://redfishforum.com/thread/190/sensorcollection-contain-all-sensors-chassis
+>> For 2020.4 this changes, all sensors will be under /sensors with only a link to the Power/Thermal/Fan/Powersupply schemas
+> 
+> But from the Redfish spec it does not say /sensors should exclude the
+> ones in Power/Thermal, instead /sensors is "the link to the collection
+> of sensors located in the equipment and sub-components"
+Yeah the spec should have clarified. Probably isn't worth clarifying in 
+the spec now because this changes in 2020.4 and that would be the 
+release any updated spec is available.
 
-FYI on a new CCLA.
+> So I am expecting that it should contain all the sensors in the system.
+> In OpenBMC, this could be done by returning all the objects that
+> implement the xyz.openbmc_project.Sensor.Value interface.
+> 
 
+We implemented this way because of that thread. Feel free to reply on 
+that thread.
 
----------- Forwarded message ---------
-From: *Paul Fertser* <fercerpav@gmail.com <mailto:fercerpav@gmail.com>>
-Date: Fri, Oct 9, 2020 at 2:22 AM
-Subject: CCLA for Gagar.IN
-To: <manager@lfprojects.org <mailto:manager@lfprojects.org>>
-
-
-Hello,
-
-Please find attached a PDF with the signed CCLA.
-
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com <mailto:fercerpav@gmail.com>
+Thanks,
+Gunnar
