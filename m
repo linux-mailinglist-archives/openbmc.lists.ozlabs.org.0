@@ -2,89 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9262828DF06
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 12:39:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D119128DF03
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 12:37:54 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CB86t72ynzDqmh
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 21:39:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CB84w2ZdkzDqlr
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 21:37:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=vishwa@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=fy95Fbso; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CB84r1zvyzDqlJ
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 21:37:47 +1100 (AEDT)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 09EAXDSU069265
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 06:37:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : content-type :
- content-transfer-encoding : mime-version : subject : message-id : date :
- cc : to; s=pp1; bh=3rSRHLeOlroj9LNugJrOKksZBJw2EVBsnYDjCHBIfuI=;
- b=fy95FbsoL8sNZujFe0Ig5+blFXwkpvAw6gTjsmMcITp+KpXqy5BMR9vn/2pzCe0+LvF2
- iWqeXaQu9WoHsGkO9bikeafC8AX06CGf2lmadJ0M26K4ef9aIOiusLERrf5zfte6mrdY
- m+3BTlurJef0JFAuK5dqS6t8OrRk0IFMYzDvzj7gJuJXcMybyZ4higNuOLEPPiMxPNsu
- ZAzeBd9yGK2C9f7kaXP6m7J8Yx9O5YywtQaljExCTr/xq0VZ6S8ohb53gFsHqkcWaIo3
- 62MWvhOHb1LEJBD5JJKQO9NX0RSUwTq5/RABAIc3jbmLZDLupUQ2RXq0v+2J8AbwdZnP 9Q== 
-Received: from ppma01fra.de.ibm.com (46.49.7a9f.ip4.static.sl-reverse.com
- [159.122.73.70])
- by mx0b-001b2d01.pphosted.com with ESMTP id 345yeyrhwb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 06:37:45 -0400
-Received: from pps.filterd (ppma01fra.de.ibm.com [127.0.0.1])
- by ppma01fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09EAbZZk021206
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 10:37:43 GMT
-Received: from b06cxnps3075.portsmouth.uk.ibm.com
- (d06relay10.portsmouth.uk.ibm.com [9.149.109.195])
- by ppma01fra.de.ibm.com with ESMTP id 344558sf2g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 10:37:43 +0000
-Received: from d06av24.portsmouth.uk.ibm.com (d06av24.portsmouth.uk.ibm.com
- [9.149.105.60])
- by b06cxnps3075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 09EAbfCU31392172
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Oct 2020 10:37:41 GMT
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1DC2A42047;
- Wed, 14 Oct 2020 10:37:41 +0000 (GMT)
-Received: from d06av24.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C51342045;
- Wed, 14 Oct 2020 10:37:40 +0000 (GMT)
-Received: from [9.85.75.86] (unknown [9.85.75.86])
- by d06av24.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
- Wed, 14 Oct 2020 10:37:40 +0000 (GMT)
-From: vishwanatha subbanna <vishwa@linux.vnet.ibm.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Representing PCIE slots as Inventory Item in OpenBMC
-Message-Id: <5D5E39C1-7614-423E-B3CC-5434CAE8C900@linux.vnet.ibm.com>
-Date: Wed, 14 Oct 2020 16:05:28 +0530
-To: openbmc@lists.ozlabs.org
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
- definitions=2020-10-14_06:2020-10-14,
- 2020-10-14 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
- malwarescore=0 mlxlogscore=507 bulkscore=0 priorityscore=1501 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2010140072
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=quantatw.com (client-ip=219.87.191.90; helo=mx01.quantatw.com;
+ envelope-from=prvs=54939ef4a=spencer.ku@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+X-Greylist: delayed 68 seconds by postgrey-1.36 at bilbo;
+ Wed, 14 Oct 2020 21:37:15 AEDT
+Received: from mx01.quantatw.com (mx01.quantatw.com [219.87.191.90])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4CB84C03cVzDqVD
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 21:37:13 +1100 (AEDT)
+IronPort-SDR: jmn4J64j0aSStDb2Jhbi4FXcO2WOB2v9pbwHSPPnYpF1KugWcPzbwphJMoOrqInQN4yxAWbOq9
+ 4895to595lJw==
+Received: from unknown (HELO mailbx11.quanta.corp) ([10.243.91.108])
+ by mx01.quantatw.com with ESMTP; 14 Oct 2020 18:36:00 +0800
+Received: from mailbx11.quanta.corp (10.243.91.108) by mailbx11.quanta.corp
+ (10.243.91.108) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Wed, 14 Oct
+ 2020 18:35:58 +0800
+Received: from mailbx11.quanta.corp ([192.168.57.11]) by mailbx11.quanta.corp
+ ([192.168.57.11]) with mapi id 15.01.2044.004;
+ Wed, 14 Oct 2020 18:35:58 +0800
+From: =?big5?B?U3BlbmNlciBLdSAopWqlQLfsKQ==?= <Spencer.Ku@quantatw.com>
+To: Artem Senichev <artemsen@gmail.com>, OpenBMC Maillist
+ <openbmc@lists.ozlabs.org>
+Subject: Modify Timestamp of phosphor-hostlogger 
+Thread-Topic: Modify Timestamp of phosphor-hostlogger 
+Thread-Index: AdaiFYMxC9eQT4jmT3KA6ZOgpczIEw==
+Date: Wed, 14 Oct 2020 10:35:58 +0000
+Message-ID: <4b1c3d6cd2fb42a9b4ca166ac90f9ae9@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+Content-Type: multipart/alternative;
+ boundary="_000_4b1c3d6cd2fb42a9b4ca166ac90f9ae9quantatwcom_"
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,21 +60,137 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+--_000_4b1c3d6cd2fb42a9b4ca166ac90f9ae9quantatwcom_
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 
-IBM has a need to represent PCIE slots as Inventory Item and I have =
-pushed the interface commit:
-=
-https://gerrit.openbmc-project.xyz/#/c/openbmc/phosphor-dbus-interfaces/+/=
-37392/
+SGkgQWxsLA0KV2UgaGF2ZSB3b3JrZWQgb24gYSByZWRmaXNoIFVSSSB0aGF0IHByb3ZpZGVzIGhv
+c3QgbG9nIGluZm9ybWF0aW9uLCB3aGljaCBpcyBiYXNlZCBvbiBvYm1jLWNvbnNvbGUgYW5kIHBo
+b3NwaG9yLWhvc3Rsb2dnZXIuIE5vdyB3ZSBjYW4gZ2V0IGhvc3QgbG9nIGFuZCBmaWxsIGluZm9y
+bWF0aW9uIGludG8gaG9zdCBsb2cgZW50cnksIGJ1dCBoZXJlIHdlIGhhdmUgYSBwcm9ibGVtIGFi
+b3V0IHRpbWVzdGFtcC4NCg0KT25lIG9mIHRoZSBsb2cgZW50cnkgbGV2ZWwgoadjcmVhdGVkIHRp
+bWWhqCwgbmVlZCB0byBmb2xsb3cgdGhlIHRpbWUgZm9ybWF0IGxpa2UgUkZDMzMzOSwgYW5kIGZv
+ciBub3csIHRoZSBob3N0IGxvZyBvbmx5IHByb3ZpZGVzIGhvdXIsIG1pbnV0ZSwgYW5kIHNlY29u
+ZCB0aW1lIGluZm8uIFdlIHdhbnQgdG8gbW9kaWZ5IHRoZSB0aW1lc3RhbXAgdG8gUkZDMzMzOSBm
+b3JtYXQgdG8gZml0IHRoZSBsb2cgZW50cnkgdGltZSBmb3JtYXQuDQoNCkhlcmUgaXMgYSBzYW1w
+bGUgaG9zdCBsb2cgd2l0aCB0aW1lc3RhbXAgcHJvdmlkaW5nIGJ5IHBob3NwaG9yLWhvc3Rsb2dn
+ZXI6DQpbIDAwOjAwOjMxIF0gPj4+IExvZyBjb2xsZWN0aW9uIHN0YXJ0ZWQgYXQgMTk3MC0wMS0w
+MSAwMDowMDozMQ0KDQpBZnRlciBtb2RpZmllZCwgdGhlIG1lc3NhZ2Ugd2lsbCBiZSBsaWtlZDoN
+ClsgMTk3MC0wMS0wMVQwMDowMDozMSswMDowMCBdID4+PiBMb2cgY29sbGVjdGlvbiBzdGFydGVk
+IGF0IDE5NzAtMDEtMDEgMDA6MDA6MzENCg0KaWYgdGhlIGNoYW5nZXMgbWFrZSBzZW5zZSwgd2Ug
+d2lsbCBwdXNoIHRoZSBjaGFuZ2VzIHRvIHVwc3RyZWFtLg0KUGxlYXNlIGxldCB1cyBrbm93IGlm
+IHRoZXJlJ3MgYW55IGlzc3VlLCB0aGFuayB5b3UuDQoNClNpbmNlcmVseSwNClNwZW5jZXINCg==
 
-Our proposal is to represent each PCIE slot as : =
-/xyz/openbmc_project/inventory/<$board>/pcieslot/<$slot_number>
+--_000_4b1c3d6cd2fb42a9b4ca166ac90f9ae9quantatwcom_
+Content-Type: text/html; charset="big5"
+Content-Transfer-Encoding: quoted-printable
 
-To represent 'em in Redfish, we would use the PCIeSlot schema: =
-https://redfish.dmtf.org/schemas/v1/PCIeSlots.v1_4_0.yaml
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0cm;
+	mso-margin-bottom-alt:auto;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"=B7s=B2=D3=A9=FA=C5=E9",serif;}
+span.EmailStyle18
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi All,<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:24.0pt"><span lang=3D"EN-US">We=
+ have worked on a redfish URI that provides host log information, which is =
+based on obmc-console and phosphor-hostlogger. Now we can get host log and =
+fill information into host log entry,
+ but here we have a problem about timestamp. <o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal" style=3D"text-indent:24.0pt"><span lang=3D"EN-US">On=
+e of the log entry level =A1=A7created time=A1=A8, need to follow the time =
+format like RFC3339, and for now, the host log only provides hour, minute, =
+and second time info. We want to modify the timestamp
+ to RFC3339 format to fit the log entry time format.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Here is a sample host log with =
+timestamp providing by phosphor-hostlogger:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black;background=
+:silver;mso-highlight:silver">[ 00:00:31 ] &gt;&gt;&gt; Log collection star=
+ted at 1970-01-01 00:00:31</span><span lang=3D"EN-US" style=3D"color:black"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">After modified, the message wil=
+l be liked:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black;background=
+:silver;mso-highlight:silver">[ 1970-01-01T00:00:31&#43;00:00 ] &gt;&gt;&gt=
+; Log collection started at 1970-01-01 00:00:31</span><span lang=3D"EN-US" =
+style=3D"color:black"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">if the ch=
+anges make sense, we will push the changes to upstream.</span><span lang=3D=
+"EN-US"><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">Please le=
+t us know if there's any issue, thank you.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black"><o:p>&nbs=
+p;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">Sincerely=
+,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:black">Spencer<o=
+:p></o:p></span></p>
+</div>
+</body>
+</html>
 
-Would the community have any feedback ?
-
-Thank you,
-!! Vishwa !!=
+--_000_4b1c3d6cd2fb42a9b4ca166ac90f9ae9quantatwcom_--
