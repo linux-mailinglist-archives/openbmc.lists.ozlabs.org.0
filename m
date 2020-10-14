@@ -2,63 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCF6028D985
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 07:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58D1528D993
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 07:31:41 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CB17p6xvGzDqkV
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 16:24:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CB1HZ6MZqzDqkb
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 16:31:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
- helo=mail-qk1-x742.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
+ helo=mail-qt1-x841.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=diIpUdpO; dkim-atps=neutral
-Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
- [IPv6:2607:f8b0:4864:20::742])
+ header.s=google header.b=W1bbLqtM; dkim-atps=neutral
+Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
+ [IPv6:2607:f8b0:4864:20::841])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CB17120GPzDqd9
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 16:24:10 +1100 (AEDT)
-Received: by mail-qk1-x742.google.com with SMTP id z6so1815716qkz.4
- for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 22:24:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CB1Gn22gPzDqTs
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 16:30:55 +1100 (AEDT)
+Received: by mail-qt1-x841.google.com with SMTP id q26so1525612qtb.5
+ for <openbmc@lists.ozlabs.org>; Tue, 13 Oct 2020 22:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=FTyZGQt5KuUq5z9rLb8JACAK351D3dXLreYGG/tKXVU=;
- b=diIpUdpOtSV4sSvCBvKNWhs7ZVOX7jK4RnfEdeWAsCYaUrVPDszwPH83pDq7dic93M
- yZTvemAoQO0OeJ4cCOCzW9b9XnJWVTXMTzXR6syLi296zlxl5d5ISSHGiOH3LAq/e0wE
- A6tRFAlghW5ORpDgkkLGe73lZF3OEvkz6+OzI=
+ :cc; bh=74gtbcSoQxBU/Zm+4MVD4nGSWX1uGiDbcEQFSH2Vxhw=;
+ b=W1bbLqtMmSL+ANSOQe8P5DwLGGiKKtcj7T8ijYHZ+Cjn35VQJt1HwpuWShCRVQQHDr
+ IZc1oYF2nVGSp8zrVWaPHXXaqWNiWZROH7EvKmO4qSK7YfIWL8MGSNpN86/pjw/F1+Sx
+ Pbt1X2n0rA5hwuFs4X3TC/ar8/JQa4xo5EWLM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=FTyZGQt5KuUq5z9rLb8JACAK351D3dXLreYGG/tKXVU=;
- b=UyOMp9Mt4y29m6XeYchIIpOVJjS8bW+YLRgAWWXh+ml7vmPzAvnL5MX/PjL7MYferr
- UKqcXGlycvVeZ5vGyVgTWS07qYGwKnm4OaWpoLdkbQVxxop12P3YPobivTxkNxiUeCjv
- dYlNJmbtfX7poSTX89YI6r3KcZKsigGqdCU+dP8h3zcGYskUmz8BO9ArmpN1286fLeXh
- i9l3emw9+D5hhTIZCnAN7guplQkQfb9CRj0RdedczsuFNBuJSP76T483+G8olBchNfHr
- sfgciDsiDbmRNyRIvNttz8ewOpIQS2ifx82T82/ruaAgORE0M7Wr1cTTisszxhsKt9iD
- zN0g==
-X-Gm-Message-State: AOAM5327dzuu28vEDs4mxdHAdUNTwUf5l/Xw6D2+2+gWRGcRsiFGOOyC
- GULPSepuPG3RYLb5GptGWYNZEpw+uqgDtxYKA08=
-X-Google-Smtp-Source: ABdhPJysj5Reu8MnR7DVpnqtn6pSEkgSjtKEx/emy7+JdxFCEd4IAp6Iy3iA6zABlbBgCs7XqY/4pg0ZdaFQnK8vO7M=
-X-Received: by 2002:a37:4a4d:: with SMTP id x74mr3469230qka.55.1602653044494; 
- Tue, 13 Oct 2020 22:24:04 -0700 (PDT)
+ bh=74gtbcSoQxBU/Zm+4MVD4nGSWX1uGiDbcEQFSH2Vxhw=;
+ b=uMO8uMNyobV9ccVk7KmmvSQsfSaMslsk2iRPenk6+Q/QNFDDCdGiFoAQWUvYlKyi1+
+ utC2Q1Ix814dn7qw5pt0e3XRYJgXZIriB05filZTTqyh1pFt7n4axMliyC6S8ekTuOkn
+ 5MCIi5vakpM8TWt/2YHJVlpCiVN2bXXXtMyK7dH9O0Je4Pg5qcWgeifmWT3M5E11Nt/Z
+ /kTdeDQzOOcwvh0JQSRG8PF2aRw/fAMf4d4QgVEKFtleId8s0KWAJ1YkgyPZUBFxlVf1
+ uVEmkO4wX9nEfbMMoiKCdTw+t8Fu0sDr1Brgao3m1vTwhkP0aZ0H8ivq0GYL7rAm1sqT
+ TOvA==
+X-Gm-Message-State: AOAM5311jeLDZOTlkdJZumTAwaC1/1sFPqOzVKAeJL0ml8yedZU/Q8xh
+ tIdLRNBOTFV1u8Dexkor6AQugP9irsXBzVfBUMw=
+X-Google-Smtp-Source: ABdhPJwFSofO1DnV5P1Q+GhVV9xWH5KVbG2AZVq2YXBrwkOok/555qf+pK9DhGN6Re52aadNtaTeBFn/Zu46YqnpXHg=
+X-Received: by 2002:ac8:5b82:: with SMTP id a2mr3268208qta.176.1602653453244; 
+ Tue, 13 Oct 2020 22:30:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201013124014.2989-1-i.mikhaylov@yadro.com>
- <20201013124014.2989-2-i.mikhaylov@yadro.com>
-In-Reply-To: <20201013124014.2989-2-i.mikhaylov@yadro.com>
+References: <20201013100314.216154-1-tali.perry1@gmail.com>
+In-Reply-To: <20201013100314.216154-1-tali.perry1@gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 14 Oct 2020 05:23:52 +0000
-Message-ID: <CACPK8Xd_gCVjVm13O85+mnZ4VbhQorG4qiy+mVevrvyCbPg9XQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] net: ftgmac100: add handling of mdio/phy nodes for
- ast2400/2500
-To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+Date: Wed, 14 Oct 2020 05:30:41 +0000
+Message-ID: <CACPK8XfoBcQpxaMHWcMrcwU3KtKi8KLNXDP5Nu-5Feo8V+7VFw@mail.gmail.com>
+Subject: Re: [PATCH v2] i2c: npcm7xx: Support changing bus speed using debugfs.
+To: Tali Perry <tali.perry1@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,229 +69,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Po-Yu Chuang <ratbert@faraday-tech.com>, netdev@vger.kernel.org,
+Cc: xqiu@google.com, Benjamin Fair <benjaminfair@google.com>,
+ Avi Fishman <avifishman70@gmail.com>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, "David S . Miller" <davem@davemloft.net>
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, wsa@kernel.org,
+ linux-i2c@vger.kernel.org, andriy.shevchenko@linux.intel.com,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ivan,
-
-On Tue, 13 Oct 2020 at 12:38, Ivan Mikhaylov <i.mikhaylov@yadro.com> wrote:
+On Tue, 13 Oct 2020 at 10:03, Tali Perry <tali.perry1@gmail.com> wrote:
 >
-> phy-handle can't be handled well for ast2400/2500 which has an embedded
-> MDIO controller. Add ftgmac100_mdio_setup for ast2400/2500 and initialize
-> PHYs from mdio child node with of_mdiobus_register.
-
-Good idea. The driver has become a mess of different ways to connect
-the phy and it needs to be cleaned up. I have a patch that fixes
-rmmod, which is currently broken.
-
-
-
+> Systems that can dynamically add and remove slave devices
+> often need to change the bus speed in runtime.
+> This patch expose the bus frequency to the user.
+> This feature can also be used for test automation.
 >
-> Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+> --
+> v2 -> v1:
+>         - Fix typos.
+>         - Remove casting to u64.
+>
+> v1: initial version
+>
+> Fixes: 56a1485b102e (i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver)
+> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
+I'm not sure that the Fixes tag is quite correct, but it's no biggie.
+
+
 > ---
->  drivers/net/ethernet/faraday/ftgmac100.c | 114 ++++++++++++++---------
->  1 file changed, 69 insertions(+), 45 deletions(-)
+>  drivers/i2c/busses/i2c-npcm7xx.c | 35 ++++++++++++++++++++++++++++++++
+>  1 file changed, 35 insertions(+)
 >
-> diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
-> index 87236206366f..e32066519ec1 100644
-> --- a/drivers/net/ethernet/faraday/ftgmac100.c
-> +++ b/drivers/net/ethernet/faraday/ftgmac100.c
-> @@ -1044,11 +1044,47 @@ static void ftgmac100_adjust_link(struct net_device *netdev)
->         schedule_work(&priv->reset_task);
+> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+> index 2ad166355ec9..633ac67153e2 100644
+> --- a/drivers/i2c/busses/i2c-npcm7xx.c
+> +++ b/drivers/i2c/busses/i2c-npcm7xx.c
+> @@ -2208,6 +2208,40 @@ static const struct i2c_algorithm npcm_i2c_algo = {
+>  /* i2c debugfs directory: used to keep health monitor of i2c devices */
+>  static struct dentry *npcm_i2c_debugfs_dir;
+>
+> +static int i2c_speed_get(void *data, u64 *val)
+> +{
+> +       struct npcm_i2c *bus = data;
+> +
+> +       *val = bus->bus_freq;
+> +       return 0;
+> +}
+> +
+> +static int i2c_speed_set(void *data, u64 val)
+> +{
+> +       struct npcm_i2c *bus = data;
+> +       int ret;
+> +
+> +       if (val < I2C_FREQ_MIN_HZ || val > I2C_FREQ_MAX_HZ)
+> +               return -EINVAL;
+> +
+> +       if (val == bus->bus_freq)
+> +               return 0;
+> +
+> +       i2c_lock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
+> +
+> +       npcm_i2c_int_enable(bus, false);
+> +
+> +       ret = npcm_i2c_init_module(bus, I2C_MASTER, (u32)val);
+> +
+> +       i2c_unlock_bus(&bus->adap, I2C_LOCK_ROOT_ADAPTER);
+> +
+> +       if (ret)
+> +               return -EAGAIN;
+> +
+> +       return 0;
+> +}
+> +DEFINE_DEBUGFS_ATTRIBUTE(i2c_clock_ops, i2c_speed_get, i2c_speed_set, "%llu\n");
+> +
+>  static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+>                                   struct npcm_i2c *bus)
+>  {
+> @@ -2223,6 +2257,7 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+>         debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
+>         debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
+>         debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
+> +       debugfs_create_file("i2c_speed", 0644, d, bus, &i2c_clock_ops);
+>
+>         bus->debugfs = d;
 >  }
 >
-> -static int ftgmac100_mii_probe(struct ftgmac100 *priv, phy_interface_t intf)
-> +static int ftgmac100_mii_probe(struct net_device *netdev)
->  {
-> -       struct net_device *netdev = priv->netdev;
-> +       struct ftgmac100 *priv = netdev_priv(netdev);
-> +       struct platform_device *pdev = to_platform_device(priv->dev);
-> +       struct device_node *np = pdev->dev.of_node;
-> +       phy_interface_t phy_intf = PHY_INTERFACE_MODE_RGMII;
->         struct phy_device *phydev;
->
-> +       /* Get PHY mode from device-tree */
-> +       if (np) {
-> +               /* Default to RGMII. It's a gigabit part after all */
-> +               phy_intf = of_get_phy_mode(np, &phy_intf);
-> +               if (phy_intf < 0)
-> +                       phy_intf = PHY_INTERFACE_MODE_RGMII;
-> +
-> +               /* Aspeed only supports these. I don't know about other IP
-> +                * block vendors so I'm going to just let them through for
-> +                * now. Note that this is only a warning if for some obscure
-> +                * reason the DT really means to lie about it or it's a newer
-> +                * part we don't know about.
-> +                *
-> +                * On the Aspeed SoC there are additionally straps and SCU
-> +                * control bits that could tell us what the interface is
-> +                * (or allow us to configure it while the IP block is held
-> +                * in reset). For now I chose to keep this driver away from
-> +                * those SoC specific bits and assume the device-tree is
-> +                * right and the SCU has been configured properly by pinmux
-> +                * or the firmware.
-> +                */
-> +               if (priv->is_aspeed &&
-> +                   phy_intf != PHY_INTERFACE_MODE_RMII &&
-> +                   phy_intf != PHY_INTERFACE_MODE_RGMII &&
-> +                   phy_intf != PHY_INTERFACE_MODE_RGMII_ID &&
-> +                   phy_intf != PHY_INTERFACE_MODE_RGMII_RXID &&
-> +                   phy_intf != PHY_INTERFACE_MODE_RGMII_TXID) {
-> +                       netdev_warn(netdev,
-> +                                   "Unsupported PHY mode %s !\n",
-> +                                   phy_modes(phy_intf));
-> +               }
-
-Why do we move this?
-
-> +       }
-> +
->         phydev = phy_find_first(priv->mii_bus);
->         if (!phydev) {
->                 netdev_info(netdev, "%s: no PHY found\n", netdev->name);
-> @@ -1056,7 +1092,7 @@ static int ftgmac100_mii_probe(struct ftgmac100 *priv, phy_interface_t intf)
->         }
->
->         phydev = phy_connect(netdev, phydev_name(phydev),
-> -                            &ftgmac100_adjust_link, intf);
-> +                            &ftgmac100_adjust_link, phy_intf);
->
->         if (IS_ERR(phydev)) {
->                 netdev_err(netdev, "%s: Could not attach to PHY\n", netdev->name);
-> @@ -1601,8 +1637,8 @@ static int ftgmac100_setup_mdio(struct net_device *netdev)
->  {
->         struct ftgmac100 *priv = netdev_priv(netdev);
->         struct platform_device *pdev = to_platform_device(priv->dev);
-> -       phy_interface_t phy_intf = PHY_INTERFACE_MODE_RGMII;
->         struct device_node *np = pdev->dev.of_node;
-> +       struct device_node *mdio_np;
->         int i, err = 0;
->         u32 reg;
->
-> @@ -1623,39 +1659,6 @@ static int ftgmac100_setup_mdio(struct net_device *netdev)
->                 iowrite32(reg, priv->base + FTGMAC100_OFFSET_REVR);
->         }
->
-> -       /* Get PHY mode from device-tree */
-> -       if (np) {
-> -               /* Default to RGMII. It's a gigabit part after all */
-> -               err = of_get_phy_mode(np, &phy_intf);
-> -               if (err)
-> -                       phy_intf = PHY_INTERFACE_MODE_RGMII;
-> -
-> -               /* Aspeed only supports these. I don't know about other IP
-> -                * block vendors so I'm going to just let them through for
-> -                * now. Note that this is only a warning if for some obscure
-> -                * reason the DT really means to lie about it or it's a newer
-> -                * part we don't know about.
-> -                *
-> -                * On the Aspeed SoC there are additionally straps and SCU
-> -                * control bits that could tell us what the interface is
-> -                * (or allow us to configure it while the IP block is held
-> -                * in reset). For now I chose to keep this driver away from
-> -                * those SoC specific bits and assume the device-tree is
-> -                * right and the SCU has been configured properly by pinmux
-> -                * or the firmware.
-> -                */
-> -               if (priv->is_aspeed &&
-> -                   phy_intf != PHY_INTERFACE_MODE_RMII &&
-> -                   phy_intf != PHY_INTERFACE_MODE_RGMII &&
-> -                   phy_intf != PHY_INTERFACE_MODE_RGMII_ID &&
-> -                   phy_intf != PHY_INTERFACE_MODE_RGMII_RXID &&
-> -                   phy_intf != PHY_INTERFACE_MODE_RGMII_TXID) {
-> -                       netdev_warn(netdev,
-> -                                  "Unsupported PHY mode %s !\n",
-> -                                  phy_modes(phy_intf));
-> -               }
-> -       }
-> -
->         priv->mii_bus->name = "ftgmac100_mdio";
->         snprintf(priv->mii_bus->id, MII_BUS_ID_SIZE, "%s-%d",
->                  pdev->name, pdev->id);
-> @@ -1667,22 +1670,22 @@ static int ftgmac100_setup_mdio(struct net_device *netdev)
->         for (i = 0; i < PHY_MAX_ADDR; i++)
->                 priv->mii_bus->irq[i] = PHY_POLL;
->
-> -       err = mdiobus_register(priv->mii_bus);
-> +       mdio_np = of_get_child_by_name(np, "mdio");
-> +       if (mdio_np)
-> +               err = of_mdiobus_register(priv->mii_bus, mdio_np);
-> +       else
-> +               err = mdiobus_register(priv->mii_bus);
-> +
->         if (err) {
->                 dev_err(priv->dev, "Cannot register MDIO bus!\n");
->                 goto err_register_mdiobus;
->         }
->
-> -       err = ftgmac100_mii_probe(priv, phy_intf);
-> -       if (err) {
-> -               dev_err(priv->dev, "MII Probe failed!\n");
-> -               goto err_mii_probe;
-> -       }
-> +       if (mdio_np)
-> +               of_node_put(mdio_np);
-
-By the time I get down here I'm lost. Do you think you could split the
-change up into a few smaller patches?
-
-If not, try to explain what the various hunks of your change are trying to do.
-
-Cheers,
-
-Joel
-
->
->         return 0;
->
-> -err_mii_probe:
-> -       mdiobus_unregister(priv->mii_bus);
->  err_register_mdiobus:
->         mdiobus_free(priv->mii_bus);
->         return err;
-> @@ -1836,10 +1839,23 @@ static int ftgmac100_probe(struct platform_device *pdev)
->         } else if (np && of_get_property(np, "phy-handle", NULL)) {
->                 struct phy_device *phy;
->
-> +               /* Support "mdio"/"phy" child nodes for ast2400/2500 with
-> +                * an embedded MDIO controller. Automatically scan the DTS for
-> +                * available PHYs and register them.
-> +                */
-> +               if (of_device_is_compatible(np, "aspeed,ast2400-mac") ||
-> +                   of_device_is_compatible(np, "aspeed,ast2500-mac")) {
-> +                       err = ftgmac100_setup_mdio(netdev);
-> +                       if (err)
-> +                               goto err_setup_mdio;
-> +               }
-> +
->                 phy = of_phy_get_and_connect(priv->netdev, np,
->                                              &ftgmac100_adjust_link);
->                 if (!phy) {
->                         dev_err(&pdev->dev, "Failed to connect to phy\n");
-> +                       if (priv->mii_bus)
-> +                               mdiobus_unregister(priv->mii_bus);
->                         goto err_setup_mdio;
->                 }
->
-> @@ -1860,6 +1876,14 @@ static int ftgmac100_probe(struct platform_device *pdev)
->                 err = ftgmac100_setup_mdio(netdev);
->                 if (err)
->                         goto err_setup_mdio;
-> +
-> +               err = ftgmac100_mii_probe(netdev);
-> +               if (err) {
-> +                       dev_err(priv->dev, "MII probe failed!\n");
-> +                       mdiobus_unregister(priv->mii_bus);
-> +                       goto err_setup_mdio;
-> +               }
-> +
->         }
->
->         if (priv->is_aspeed) {
+> base-commit: 865c50e1d279671728c2936cb7680eb89355eeea
 > --
-> 2.21.1
+> 2.22.0
 >
