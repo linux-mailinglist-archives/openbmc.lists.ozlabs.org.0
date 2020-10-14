@@ -1,71 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF9B428E12F
-	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 15:22:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E4EF28E2BA
+	for <lists+openbmc@lfdr.de>; Wed, 14 Oct 2020 17:01:39 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CBCkF6cZDzDqpH
-	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 00:21:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CBFxD1mRhzDqth
+	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 02:01:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=W7EoTmJ+; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=ePmZRDFw; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CBCh634CFzDqYL
- for <openbmc@lists.ozlabs.org>; Thu, 15 Oct 2020 00:20:05 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 6B0A3412D0;
- Wed, 14 Oct 2020 13:20:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1602681599; x=1604496000; bh=1lgZHuX3krJKu7YHjDu7Ldjeb
- Om4rKtxnE0OhMoc3x4=; b=W7EoTmJ+mH4FzLN/ZfcPAXQa/vF1Kubvh/b8sknH4
- YGgOL0uiJ2Ks1TggQfyQ9kQngJtYtGE/a6uFzgFsJlkEQATuZOA7N8Eza8P76x26
- 9mt5U2Dxw/qTrVVqTol8Q+ghfrVKePlqQPf3zy2ynvrXaufhZ89Cu1QoNRJiBZ63
- To=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id M_K4M6XKhlYk; Wed, 14 Oct 2020 16:19:59 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id E539C412CA;
- Wed, 14 Oct 2020 16:19:57 +0300 (MSK)
-Received: from localhost.localdomain (10.199.3.118) by
- T-EXCH-04.corp.yadro.com (172.17.100.104) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Wed, 14 Oct 2020 16:19:57 +0300
-Message-ID: <b10f8b366e0971f8809ecfb3d80e00aa42aa4387.camel@yadro.com>
-Subject: Re: [PATCH 1/1] net: ftgmac100: add handling of mdio/phy nodes for
- ast2400/2500
-From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-To: Joel Stanley <joel@jms.id.au>
-Date: Wed, 14 Oct 2020 16:24:09 +0300
-In-Reply-To: <CACPK8Xd_gCVjVm13O85+mnZ4VbhQorG4qiy+mVevrvyCbPg9XQ@mail.gmail.com>
-References: <20201013124014.2989-1-i.mikhaylov@yadro.com>
- <20201013124014.2989-2-i.mikhaylov@yadro.com>
- <CACPK8Xd_gCVjVm13O85+mnZ4VbhQorG4qiy+mVevrvyCbPg9XQ@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CBFvk4CtczDqlZ
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Oct 2020 02:00:18 +1100 (AEDT)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09EEZAS5052534; Wed, 14 Oct 2020 11:00:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=/11SjfUeiuWT+NcVYaBoLYyVy7oCKcNX6Tc2e9RV9VA=;
+ b=ePmZRDFw532L8CKflvJ6yzDW2bYHcOJ1vVgtFSlNpFz5ZE0183rUGGtpue0Q5QbNuv2p
+ 8AWmjKeF0SEOhBy7ncnZa2jBjOa90b0gkBOibhgpnDNlU/3q028FDbfXxlYGQMTQwf87
+ dJ8Bl+fk1qvqUoK2tmOWHL4ajAAtHrvqs5JB36XZ8ycPlRFCeXEVt0mUns4lp6h1h1a1
+ djBFvDG3dG5TvNkFF1wlR/1TnqnH9KP5kQ/++0138CoKTPCQLRV4fO9pcbGZcMxfSFv2
+ WyUS0Z3CYhEGc2MbouJTNm4IoxSBjCQU/vSFD3lHlOMMTn3N4N67b3ddLSjMgbB7kDyh hw== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34633grujq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2020 11:00:12 -0400
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09EEvtE0013267;
+ Wed, 14 Oct 2020 15:00:07 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma01dal.us.ibm.com with ESMTP id 3434k9jhj7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Oct 2020 15:00:07 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09EF06p828049848
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Oct 2020 15:00:06 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4FCA4112065;
+ Wed, 14 Oct 2020 15:00:06 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E850D112066;
+ Wed, 14 Oct 2020 15:00:05 +0000 (GMT)
+Received: from [9.80.201.12] (unknown [9.80.201.12])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Wed, 14 Oct 2020 15:00:05 +0000 (GMT)
+Subject: Re: OpenBMC Learning Series - security
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <DDAFCC55-7CF7-469F-B3AA-F61459CCCCF3@fb.com>
+ <4d47eaf7-286e-b31e-acbc-d26f850b48f1@linux.ibm.com>
+ <20201009195121.GO6152@heinlein>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <5a3d62b1-3e8a-a4b1-8f68-d2efe2338d55@linux.ibm.com>
+Date: Wed, 14 Oct 2020 10:00:05 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.3.118]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+In-Reply-To: <20201009195121.GO6152@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-14_08:2020-10-14,
+ 2020-10-14 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 mlxscore=0 phishscore=0
+ clxscore=1015 mlxlogscore=843 adultscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010140101
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,195 +100,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Po-Yu Chuang <ratbert@faraday-tech.com>, netdev@vger.kernel.org,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux
- Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, "David S . Miller" <davem@davemloft.net>
+Cc: Openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2020-10-14 at 05:23 +0000, Joel Stanley wrote:
-> Hi Ivan,
-> 
-> On Tue, 13 Oct 2020 at 12:38, Ivan Mikhaylov <i.mikhaylov@yadro.com> wrote:
-> > phy-handle can't be handled well for ast2400/2500 which has an embedded
-> > MDIO controller. Add ftgmac100_mdio_setup for ast2400/2500 and initialize
-> > PHYs from mdio child node with of_mdiobus_register.
-> 
-> Good idea. The driver has become a mess of different ways to connect
-> the phy and it needs to be cleaned up. I have a patch that fixes
-> rmmod, which is currently broken.
-> 
-> 
-> 
-> > Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-> > ---
-> >  drivers/net/ethernet/faraday/ftgmac100.c | 114 ++++++++++++++---------
-> >  1 file changed, 69 insertions(+), 45 deletions(-)
-> > 
-> > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c
-> > b/drivers/net/ethernet/faraday/ftgmac100.c
-> > index 87236206366f..e32066519ec1 100644
-> > --- a/drivers/net/ethernet/faraday/ftgmac100.c
-> > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
-> > @@ -1044,11 +1044,47 @@ static void ftgmac100_adjust_link(struct net_device
-> > *netdev)
-> >         schedule_work(&priv->reset_task);
-> >  }
-> > 
-> > -static int ftgmac100_mii_probe(struct ftgmac100 *priv, phy_interface_t
-> > intf)
-> > +static int ftgmac100_mii_probe(struct net_device *netdev)
-> >  {
-> > -       struct net_device *netdev = priv->netdev;
-> > +       struct ftgmac100 *priv = netdev_priv(netdev);
-> > +       struct platform_device *pdev = to_platform_device(priv->dev);
-> > +       struct device_node *np = pdev->dev.of_node;
-> > +       phy_interface_t phy_intf = PHY_INTERFACE_MODE_RGMII;
-> >         struct phy_device *phydev;
-> > 
-> > +       /* Get PHY mode from device-tree */
-> > +       if (np) {
-> > +               /* Default to RGMII. It's a gigabit part after all */
-> > +               phy_intf = of_get_phy_mode(np, &phy_intf);
-> > +               if (phy_intf < 0)
-> > +                       phy_intf = PHY_INTERFACE_MODE_RGMII;
-> > +
-> > +               /* Aspeed only supports these. I don't know about other IP
-> > +                * block vendors so I'm going to just let them through for
-> > +                * now. Note that this is only a warning if for some obscure
-> > +                * reason the DT really means to lie about it or it's a
-> > newer
-> > +                * part we don't know about.
-> > +                *
-> > +                * On the Aspeed SoC there are additionally straps and SCU
-> > +                * control bits that could tell us what the interface is
-> > +                * (or allow us to configure it while the IP block is held
-> > +                * in reset). For now I chose to keep this driver away from
-> > +                * those SoC specific bits and assume the device-tree is
-> > +                * right and the SCU has been configured properly by pinmux
-> > +                * or the firmware.
-> > +                */
-> > +               if (priv->is_aspeed &&
-> > +                   phy_intf != PHY_INTERFACE_MODE_RMII &&
-> > +                   phy_intf != PHY_INTERFACE_MODE_RGMII &&
-> > +                   phy_intf != PHY_INTERFACE_MODE_RGMII_ID &&
-> > +                   phy_intf != PHY_INTERFACE_MODE_RGMII_RXID &&
-> > +                   phy_intf != PHY_INTERFACE_MODE_RGMII_TXID) {
-> > +                       netdev_warn(netdev,
-> > +                                   "Unsupported PHY mode %s !\n",
-> > +                                   phy_modes(phy_intf));
-> > +               }
-> 
-> Why do we move this?
 
-I've tried to detach PHY connect from ftgmac100_setup_mdio register function.
-Tried to decouple MDIO and PHY levels.
 
-> 
-> > +       }
-> > +
-> >         phydev = phy_find_first(priv->mii_bus);
-> >         if (!phydev) {
-> >                 netdev_info(netdev, "%s: no PHY found\n", netdev->name);
-> > @@ -1056,7 +1092,7 @@ static int ftgmac100_mii_probe(struct ftgmac100 *priv,
-> > phy_interface_t intf)
-> >         }
-> > 
-> >         phydev = phy_connect(netdev, phydev_name(phydev),
-> > -                            &ftgmac100_adjust_link, intf);
-> > +                            &ftgmac100_adjust_link, phy_intf);
-> > 
-> >         if (IS_ERR(phydev)) {
-> >                 netdev_err(netdev, "%s: Could not attach to PHY\n", netdev-
-> > >name);
-> > @@ -1601,8 +1637,8 @@ static int ftgmac100_setup_mdio(struct net_device
-> > *netdev)
-> >  {
-> >         struct ftgmac100 *priv = netdev_priv(netdev);
-> >         struct platform_device *pdev = to_platform_device(priv->dev);
-> > -       phy_interface_t phy_intf = PHY_INTERFACE_MODE_RGMII;
-> >         struct device_node *np = pdev->dev.of_node;
-> > +       struct device_node *mdio_np;
-> >         int i, err = 0;
-> >         u32 reg;
-> > 
-> > @@ -1623,39 +1659,6 @@ static int ftgmac100_setup_mdio(struct net_device
-> > *netdev)
-> >                 iowrite32(reg, priv->base + FTGMAC100_OFFSET_REVR);
-> >         }
-> > 
-> > -       /* Get PHY mode from device-tree */
-> > -       if (np) {
-> > -               /* Default to RGMII. It's a gigabit part after all */
-> > -               err = of_get_phy_mode(np, &phy_intf);
-> > -               if (err)
-> > -                       phy_intf = PHY_INTERFACE_MODE_RGMII;
-> > -
-> > -               /* Aspeed only supports these. I don't know about other IP
-> > -                * block vendors so I'm going to just let them through for
-> > -                * now. Note that this is only a warning if for some obscure
-> > -                * reason the DT really means to lie about it or it's a
-> > newer
-> > -                * part we don't know about.
-> > -                *
-> > -                * On the Aspeed SoC there are additionally straps and SCU
-> > -                * control bits that could tell us what the interface is
-> > -                * (or allow us to configure it while the IP block is held
-> > -                * in reset). For now I chose to keep this driver away from
-> > -                * those SoC specific bits and assume the device-tree is
-> > -                * right and the SCU has been configured properly by pinmux
-> > -                * or the firmware.
-> > -                */
-> > -               if (priv->is_aspeed &&
-> > -                   phy_intf != PHY_INTERFACE_MODE_RMII &&
-> > -                   phy_intf != PHY_INTERFACE_MODE_RGMII &&
-> > -                   phy_intf != PHY_INTERFACE_MODE_RGMII_ID &&
-> > -                   phy_intf != PHY_INTERFACE_MODE_RGMII_RXID &&
-> > -                   phy_intf != PHY_INTERFACE_MODE_RGMII_TXID) {
-> > -                       netdev_warn(netdev,
-> > -                                  "Unsupported PHY mode %s !\n",
-> > -                                  phy_modes(phy_intf));
-> > -               }
-> > -       }
-> > -
-> >         priv->mii_bus->name = "ftgmac100_mdio";
-> >         snprintf(priv->mii_bus->id, MII_BUS_ID_SIZE, "%s-%d",
-> >                  pdev->name, pdev->id);
-> > @@ -1667,22 +1670,22 @@ static int ftgmac100_setup_mdio(struct net_device
-> > *netdev)
-> >         for (i = 0; i < PHY_MAX_ADDR; i++)
-> >                 priv->mii_bus->irq[i] = PHY_POLL;
-> > 
-> > -       err = mdiobus_register(priv->mii_bus);
-> > +       mdio_np = of_get_child_by_name(np, "mdio");
-> > +       if (mdio_np)
-> > +               err = of_mdiobus_register(priv->mii_bus, mdio_np);
-> > +       else
-> > +               err = mdiobus_register(priv->mii_bus);
-> > +
-> >         if (err) {
-> >                 dev_err(priv->dev, "Cannot register MDIO bus!\n");
-> >                 goto err_register_mdiobus;
-> >         }
-> > 
-> > -       err = ftgmac100_mii_probe(priv, phy_intf);
-> > -       if (err) {
-> > -               dev_err(priv->dev, "MII Probe failed!\n");
-> > -               goto err_mii_probe;
-> > -       }
-> > +       if (mdio_np)
-> > +               of_node_put(mdio_np);
-> 
-> By the time I get down here I'm lost. Do you think you could split the
-> change up into a few smaller patches?
-> 
-> If not, try to explain what the various hunks of your change are trying to do.
-> 
+On 10/9/20 2:51 PM, Patrick Williams wrote:
+> On Fri, Oct 09, 2020 at 12:33:17PM -0500, Joseph Reynolds wrote:
+>> On 7/24/20 7:13 PM, Sai Dasari wrote:
+...snip...
+>>> Sai and the OpenBMC community,
+>>>
+>>> Here is my big-picture idea to organize OpenBMC's security effort. I
+>>> hope this material will guide the project's overall security effort,
+>>> including the learning series.
+>>>
+>>> I want to take this process one step at a time to help build consensus
+>>> for my approach.
+>>>
+>>> My big idea is to apply the world's best publicly available security
+>>> schemes to the OpenBMC project.  Schemes like Microsoft Security
+>>> Engineering, IBM Secure Engineering, and the Common Criteria evaluation
+>>> have been developed over decades of experience and give us the most
+>>> complete guidance for the OpenBMC project and its users.  We should use
+>>> them.
+>>>
+>>> Does this seem like the right approach?  See discussion in footnote 1.
+> Hi Joseph,
+>
+> What I can't tell is if you're describing the current state of affairs
+> or where you'd like to go.  My impression is that these education
+> sessions should be more current state of affairs with only a taste of
+> the future.  The education sessions are for people who have little-to-no
+> experience with OpenBMC already in order to make them more productive
+> quickly.
 
-Yes, you're right, I see two patches for now from your comments:
-1. phy connect detach from ftgmac100_setup_mdio
-2. add ast2400/2500 phy-handle support
+My email recommends a way to organize the security work.  Once we agree 
+[1], I think we should organize project documentation, presentations, 
+and working group activity in the same way.  The presentation would give 
+a simplified overview of project security and link to the project's 
+security documentation.  Does that make sense?
 
-Thanks.
+- Joseph
+
+[1]: We are discussing this in today's security working group meeting:
+https://github.com/openbmc/openbmc/wiki/Security-working-group
 
