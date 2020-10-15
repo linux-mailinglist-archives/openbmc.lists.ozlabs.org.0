@@ -2,67 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0836228FCB2
-	for <lists+openbmc@lfdr.de>; Fri, 16 Oct 2020 05:24:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 071C728FCB4
+	for <lists+openbmc@lfdr.de>; Fri, 16 Oct 2020 05:25:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CCBMR44JDzDqjR
-	for <lists+openbmc@lfdr.de>; Fri, 16 Oct 2020 14:24:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CCBPK3QP7zDqgj
+	for <lists+openbmc@lfdr.de>; Fri, 16 Oct 2020 14:25:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=byosoft.net (client-ip=211.157.147.135; helo=lucky1.263xmail.com;
- envelope-from=byomail@byosoft.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=byosoft.com.cn
+ (client-ip=58.240.74.242; helo=mail.byosoft.com.cn;
+ envelope-from=figo@byosoft.com.cn; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
  header.from=byosoft.com.cn
-X-Greylist: delayed 159 seconds by postgrey-1.36 at bilbo;
- Fri, 16 Oct 2020 03:02:14 AEDT
-Received: from lucky1.263xmail.com (lucky1.263xmail.com [211.157.147.135])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CBvDk6tkMzDqTT
- for <openbmc@lists.ozlabs.org>; Fri, 16 Oct 2020 03:02:14 +1100 (AEDT)
-Received: from localhost (unknown [192.168.167.8])
- by lucky1.263xmail.com (Postfix) with ESMTP id AA039A53A0
- for <openbmc@lists.ozlabs.org>; Thu, 15 Oct 2020 23:59:14 +0800 (CST)
-X-MAIL-GRAY: 1
-X-MAIL-DELIVERY: 0
-X-KSVirus-CHECKED: 0
-X-ADDR-CHECKED4: 1
-X-ANTISPAM-LEVEL: 2
-X-SKE-CHECKED: 1
-X-ABS-CHECKED: 1
+X-Greylist: delayed 561 seconds by postgrey-1.36 at bilbo;
+ Fri, 16 Oct 2020 03:08:28 AEDT
 Received: from mail.byosoft.com.cn (mail.byosoft.com.cn [58.240.74.242])
- by smtp.263.net (postfix) whith ESMTP id
- P2448T140206475671296S1602777553985696_; 
- Thu, 15 Oct 2020 23:59:16 +0800 (CST)
-X-IP-DOMAINF: 1
-X-UNIQUE-TAG: <a6be2708a8ebf518c2972d1fa7600451>
-X-RL-SENDER: byomail@byosoft.net
-X-SENDER: byomail@byosoft.net
-X-LOGIN-NAME: byomail@byosoft.net
-X-FST-TO: openbmc@lists.ozlabs.org
-X-SENDER-IP: 58.240.74.242
-X-ATTACHMENT-NUM: 1
-X-DNS-TYPE: 1
-X-System-Flag: 0
+ by lists.ozlabs.org (Postfix) with SMTP id 4CBvMw0TBJzDqSR
+ for <openbmc@lists.ozlabs.org>; Fri, 16 Oct 2020 03:08:27 +1100 (AEDT)
 Received: from LAPTOPJ7424IAT ([58.246.60.130])
  (envelope-sender <figo@byosoft.com.cn>) by 192.168.6.13 with ESMTP
- for <iasi@byosoft.com.cn>; Thu, 15 Oct 2020 23:58:46 +0800
+ for <iasi@byosoft.com.cn>; Fri, 16 Oct 2020 00:07:59 +0800
 X-WM-Sender: figo@byosoft.com.cn
 X-WM-AuthFlag: YES
 X-WM-AuthUser: figo@byosoft.com.cn
 From: <figo@byosoft.com.cn>
-To: <openbmc@lists.ozlabs.org>
-Subject: Byosoft OpenBMC CLA application
-Date: Thu, 15 Oct 2020 23:58:48 +0800
-Message-ID: <002501d6a30c$11a13180$34e39480$@byosoft.com.cn>
+To: <manager@lfprojects.org>
+References: 
+In-Reply-To: 
+Subject: =?gb2312?B?u9i4sjogQnlvc29mdCBPcGVuQk1DIENMQSBhcHBsaWNhdGlvbg==?=
+Date: Fri, 16 Oct 2020 00:08:01 +0800
+Message-ID: <002b01d6a30d$5b1d2f70$11578e50$@byosoft.com.cn>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="----=_NextPart_000_0026_01D6A34F.1FC5D110"
+ boundary="----=_NextPart_000_002C_01D6A350.6943CAD0"
 X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdajCSPItvGDa2EzRxCeCQP7jlpNKQ==
+Thread-Index: AdajCSPItvGDa2EzRxCeCQP7jlpNKQAA8xBw
 Content-Language: zh-tw
-X-Mailman-Approved-At: Fri, 16 Oct 2020 14:20:53 +1100
+X-Mailman-Approved-At: Fri, 16 Oct 2020 14:20:54 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,58 +51,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: iasi@byosoft.com.cn
+Cc: iasi@byosoft.com.cn, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 This is a multipart message in MIME format.
 
-------=_NextPart_000_0026_01D6A34F.1FC5D110
+------=_NextPart_000_002C_01D6A350.6943CAD0
 Content-Type: multipart/alternative;
-	boundary="----=_NextPart_001_0027_01D6A34F.1FC5D110"
+	boundary="----=_NextPart_001_002D_01D6A350.6943F1E0"
 
 
-------=_NextPart_001_0027_01D6A34F.1FC5D110
+------=_NextPart_001_002D_01D6A350.6943F1E0
 Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
 
-Dear OpenBMC maintainer,
+Add the manager@lfprojects.org <mailto:manager@lfprojects.org>  in the =
+mail
+loop.
 
- 
-
-This is the signed CCLA from Byosoft. Byosoft is a BMC solution company. 
-
-We would like to be the contributor of OpenBMC community. 
-
-Please assist in checking and approving the CCLA as shown in the attachment.
-
- 
+=20
 
 Thanks,
 
- 
+Figo
 
- 
+=20
+
+=BC=C4=BC=FE=D5=DF: figo@byosoft.com.cn <figo@byosoft.com.cn>=20
+=BC=C4=BC=FE=C8=D5=C6=DA: 2020=C4=EA10=D4=C215=C8=D5 =CF=C2=CE=E7 11:59
+=CA=D5=BC=FE=D5=DF: 'openbmc@lists.ozlabs.org' =
+<openbmc@lists.ozlabs.org>
+=B8=B1=B1=BE: 'iasi@byosoft.com.cn' <iasi@byosoft.com.cn>
+=D6=F7=D6=BC: Byosoft OpenBMC CLA application
+
+=20
+
+Dear OpenBMC maintainer,
+
+=20
+
+This is the signed CCLA from Byosoft. Byosoft is a BMC solution company. =
+
+
+We would like to be the contributor of OpenBMC community.=20
+
+Please assist in checking and approving the CCLA as shown in the =
+attachment.
+
+=20
+
+Thanks,
+
+=20
+
+=20
 
 Best Regards,
 
 Figo Chen
 
 
-------=_NextPart_001_0027_01D6A34F.1FC5D110
+------=_NextPart_001_002D_01D6A350.6943F1E0
 Content-Type: text/html;
-	charset="us-ascii"
+	charset="gb2312"
 Content-Transfer-Encoding: quoted-printable
 
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dgb2312">
 <html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
 xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
 xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
 xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; =
-charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
-(filtered medium)"><style><!--
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta name=3DGenerator =
+content=3D"Microsoft Word 15 (filtered medium)"><style><!--
 /* Font Definitions */
 @font-face
 	{font-family:PMingLiU;
@@ -139,19 +139,27 @@ charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
 @font-face
 	{font-family:"\@PMingLiU";
 	panose-1:2 1 6 1 0 1 1 1 1 1;}
+@font-face
+	{font-family:"Microsoft JhengHei";
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"\@Microsoft JhengHei";}
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal
 	{margin:0cm;
 	font-size:12.0pt;
 	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
 	font-family:"Calibri",sans-serif;
 	color:windowtext;}
 .MsoChpDefault
 	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-/* Page Definitions */
+	font-size:10.0pt;}
 @page WordSection1
 	{size:612.0pt 792.0pt;
 	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
@@ -165,8 +173,37 @@ div.WordSection1
 </o:shapelayout></xml><![endif]--></head><body lang=3DZH-TW =
 link=3D"#0563C1" vlink=3D"#954F72" =
 style=3D'word-wrap:break-word;text-justify-trim:punctuation'><div =
-class=3DWordSection1><p class=3DMsoNormal><span lang=3DEN-US>Dear =
-OpenBMC maintainer,<o:p></o:p></span></p><p class=3DMsoNormal><span =
+class=3DWordSection1><p class=3DMsoNormal><span lang=3DEN-US>Add the <a =
+href=3D"mailto:manager@lfprojects.org">manager@lfprojects.org</a> in the =
+mail loop.<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US>Thanks,<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US>Figo<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US><o:p>&nbsp;</o:p></span></p><div><div =
+style=3D'border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0cm =
+0cm 0cm'><p class=3DMsoNormal><b><span =
+style=3D'font-size:11.0pt;font-family:"Microsoft =
+JhengHei",sans-serif'>=BC=C4=BC=FE=D5=DF<span =
+lang=3DEN-US>:</span></span></b><span lang=3DEN-US =
+style=3D'font-size:11.0pt;font-family:"Microsoft JhengHei",sans-serif'> =
+figo@byosoft.com.cn &lt;figo@byosoft.com.cn&gt; <br></span><b><span =
+style=3D'font-size:11.0pt;font-family:"Microsoft =
+JhengHei",sans-serif'>=BC=C4=BC=FE=C8=D5=C6=DA<span =
+lang=3DEN-US>:</span></span></b><span lang=3DEN-US =
+style=3D'font-size:11.0pt;font-family:"Microsoft JhengHei",sans-serif'> =
+2020</span><span style=3D'font-size:11.0pt;font-family:"Microsoft =
+JhengHei",sans-serif'>=C4=EA<span lang=3DEN-US>10</span>=D4=C2<span =
+lang=3DEN-US>15</span>=C8=D5 =CF=C2=CE=E7<span lang=3DEN-US> =
+11:59<br></span><b>=CA=D5=BC=FE=D5=DF<span =
+lang=3DEN-US>:</span></b><span lang=3DEN-US> 'openbmc@lists.ozlabs.org' =
+&lt;openbmc@lists.ozlabs.org&gt;<br></span><b>=B8=B1=B1=BE<span =
+lang=3DEN-US>:</span></b><span lang=3DEN-US> 'iasi@byosoft.com.cn' =
+&lt;iasi@byosoft.com.cn&gt;<br></span><b>=D6=F7=D6=BC<span =
+lang=3DEN-US>:</span></b><span lang=3DEN-US> Byosoft OpenBMC CLA =
+application<o:p></o:p></span></span></p></div></div><p =
+class=3DMsoNormal><span lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p =
+class=3DMsoNormal><span lang=3DEN-US>Dear OpenBMC =
+maintainer,<o:p></o:p></span></p><p class=3DMsoNormal><span =
 lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
 lang=3DEN-US>This is the signed CCLA from Byosoft. Byosoft is a BMC =
 solution company. <o:p></o:p></span></p><p class=3DMsoNormal><span =
@@ -181,9 +218,9 @@ lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
 lang=3DEN-US>Best Regards,<o:p></o:p></span></p><p =
 class=3DMsoNormal><span lang=3DEN-US>Figo =
 Chen<o:p></o:p></span></p></div></body></html>
-------=_NextPart_001_0027_01D6A34F.1FC5D110--
+------=_NextPart_001_002D_01D6A350.6943F1E0--
 
-------=_NextPart_000_0026_01D6A34F.1FC5D110
+------=_NextPart_000_002C_01D6A350.6943CAD0
 Content-Type: application/pdf;
 	name="OpenBMC.CCLA.pdf"
 Content-Transfer-Encoding: base64
@@ -28146,8 +28183,6 @@ IAowMDAxNTkyNDU4IDAwMDAwIG4gCjAwMDE1OTI1NDYgMDAwMDAgbiAKMDAwMTU5MjYyNCAwMDAw
 MCBuIAp0cmFpbGVyCjw8L1NpemUgMjkKL0luZm8gMjggMCBSCi9Sb290IDI3IDAgUgo+PgpzdGFy
 dHhyZWYKMTU5MjczNgolJUVPRg==
 
-------=_NextPart_000_0026_01D6A34F.1FC5D110--
-
-
+------=_NextPart_000_002C_01D6A350.6943CAD0--
 
 
