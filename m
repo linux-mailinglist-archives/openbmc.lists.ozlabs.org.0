@@ -2,67 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AAE228EA8B
-	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 03:56:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2105228EB3B
+	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 04:33:08 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CBXTH4ZRGzDqWP
-	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 12:56:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CBYH525JkzDqVL
+	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 13:33:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::32b;
- helo=mail-ot1-x32b.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
+ helo=mail-qk1-x742.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=bFJ2UyVL; dkim-atps=neutral
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com
- [IPv6:2607:f8b0:4864:20::32b])
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=BINzPpqR; dkim-atps=neutral
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
+ [IPv6:2607:f8b0:4864:20::742])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CBXSc2vD1zDqTT
- for <openbmc@lists.ozlabs.org>; Thu, 15 Oct 2020 12:56:15 +1100 (AEDT)
-Received: by mail-ot1-x32b.google.com with SMTP id n61so1502415ota.10
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 18:56:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CBYGB0kLHzDqKJ;
+ Thu, 15 Oct 2020 13:32:17 +1100 (AEDT)
+Received: by mail-qk1-x742.google.com with SMTP id x20so1248877qkn.1;
+ Wed, 14 Oct 2020 19:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=HDwYcFHZ1d/moG4p6bsX7Tkrfy+nk8AQk3zcFSzC6Cc=;
- b=bFJ2UyVLFLnZEsVrqSvG8WbRSR7ypZPS5UdhG/MraujDxH+Lt9voimHYW2ZsEC9Dvl
- XfgG5hudyt1j5i3yuFrjNw7AHCyrg+LmFjP2GE9nYeAP+b9pypogNUgau6PEZiAsheUI
- vjm1xKNL2u2+XQzOtDYQ98Sr31AeGPGNfOxxCtbe8r1TlCPSixOUouZ+HFbrpxU3H2bF
- cK0vs91M+Qda9g7p4BPBuxGC3LFrUdd8dIs4cEhSvQ9airGMTpC3X1qQ9Tj+v7O5zDj2
- UNFY7lLdFKBiXqHcTC+d5kVGDJOtPHZQcQ2Qjznr1O7/wNkJA9QgkNIkB3LW9IBPV76B
- Xycg==
+ :cc; bh=CIr+KzzkGzxVzUKpACDGhDNN7lFkJAx5/cWwJGHb2V0=;
+ b=BINzPpqRkAE9sw37b5ly+SWHWjeebbr9Syrlvx7cZz6OluSviavis0kwpdZeRAZEte
+ 0gle+dtW+7ZulTpXIQWZW+4BqoUijrvRoMjsXM/sOEd/wPfxQwjvCza/T3YwZQAqo6KP
+ 3VoGPt95/VyALRh/odJXQRXyz7fq2JaAsDTlE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=HDwYcFHZ1d/moG4p6bsX7Tkrfy+nk8AQk3zcFSzC6Cc=;
- b=AWVA9XRdKHWXQTKHJiX9ZoIzqt+G1M7EEUm4qZVoAROp2HvrluPi5Ntsft4IoaHh1m
- RElRdkw3PI2Rz05CVkOHN2MbRLiCXM0ByU9LiTNGEZLztqI3bB+dSgoPwp8aqZz1aB4E
- nngtGpfarhjf+LbrX1yyknkEy3RZvKdnScWE1GDe1CC3A7LCCtGs4hNFrLcI8jYcW41c
- fBKJD2v8UPTniVsyKT1QnUT+6xeB/TyC5TPs9F3zMkqBX34HqxXeDH5XwQlpvJWYGeVw
- 1S1otd2tdlOgqdfX98HkOCbKgffWSUDyOfBF6DFHMcRE0CRJjORbIQXyO7fROA5YcjrS
- metg==
-X-Gm-Message-State: AOAM533zYC2+oOGZnnijGlrHvFonJ/CKXwbYKhh9jFF0LW7w7f+wS+Bo
- tC4mTj88iKqX5jWgAN/qw2MGn2Ay6+QDU4jO7P7bQQ==
-X-Google-Smtp-Source: ABdhPJx4dtdA30vj2uwsp36sYgWoVJQfXaEgVoKK4NC+pAb8IgK+kno+TgwPNYUiH2+KgPCV6c7rzZO7XitjJCHXtc4=
-X-Received: by 2002:a05:6830:1bce:: with SMTP id
- v14mr1033915ota.361.1602726972158; 
- Wed, 14 Oct 2020 18:56:12 -0700 (PDT)
+ bh=CIr+KzzkGzxVzUKpACDGhDNN7lFkJAx5/cWwJGHb2V0=;
+ b=J5n3Xx3CaCwqVVIrO3c0Kbm/0wNOWS2yB9jNKn/If5VzIxSvz4ik2wIwnuLyfXmftO
+ S1XV/PhbmJD9Gznl6ToA+rjj5iGS+8pFuoslc8Re2msBd8iZP45GNJ8wqux/DXLOJcDC
+ FuEETqyJnQc2JyS6j2+FuX+RGd0g+yeTjU0qBSwkGkoCgDK9FRHbbDeFnntlqDAW+AWr
+ 1OB2FEk9HPcIwPw5eLz8FQP0hSjgIShn2IG+D2W+5mRmPkI1kMeotLAVzhT2SgDP37fE
+ uTYkmAuwZUkTDTeHsPHJmwwiJahYvgG/uG8ntnwtd9oEfmRgkkDFHTAyYyk+FSBlUyy2
+ 7Vig==
+X-Gm-Message-State: AOAM532KY2rmxacoLxnyDmEi5uJw8yiv2rDqS/I4D0/dtB4TiZ+MtRhP
+ NIfGxgLbtNHX0V78+xV/mZQIxBB7AKwgmishsok=
+X-Google-Smtp-Source: ABdhPJw2ZXQ6BTTznI/MCwya60LRb1O3iWIUSvksi/jv8O1ajQsODW8OpsUs5R1pMDhFcxGeMKPzKqr4aKg8nCJAYhM=
+X-Received: by 2002:a37:46c4:: with SMTP id t187mr1977786qka.465.1602729133521; 
+ Wed, 14 Oct 2020 19:32:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <65961456-D5F6-41CC-AD10-93E716386953@nvidia.com>
-In-Reply-To: <65961456-D5F6-41CC-AD10-93E716386953@nvidia.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Thu, 15 Oct 2020 09:56:01 +0800
-Message-ID: <CAGm54UFhaViOLjWuGQXW3catJ62Y1gx5pA89VDZ06TtshXFbvA@mail.gmail.com>
-Subject: Re: Kernel panic when net booting OpenBMC
-To: Nirenjan Krishnan <nkrishnan@nvidia.com>
+References: <20201014060632.16085-1-dylan_hung@aspeedtech.com>
+ <20201014060632.16085-2-dylan_hung@aspeedtech.com>
+ <CACPK8Xe_O44BUaPCEm2j3ZN+d4q6JbjEttLsiCLbWF6GnaqSPg@mail.gmail.com>
+ <PS1PR0601MB1849DAC59EDA6A9DB62B4EE09C050@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+ <CACPK8Xd_DH+VeaPmXK2b5FXbrOpg_NmT_R4ENzY-=uNo=6HcyQ@mail.gmail.com>
+ <PS1PR0601MB184990423661220EACDBF4BB9C020@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+In-Reply-To: <PS1PR0601MB184990423661220EACDBF4BB9C020@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 15 Oct 2020 02:32:01 +0000
+Message-ID: <CACPK8XePVhxtV5EXGH8ycHrG03M1JBp4920Hi9EQQfw5mCxJxg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] net: ftgmac100: Fix Aspeed ast2600 TX hang issue
+To: Dylan Hung <dylan_hung@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,20 +74,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, Po-Yu Chuang <ratbert@faraday-tech.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 15, 2020 at 7:43 AM Nirenjan Krishnan <nkrishnan@nvidia.com> wrote:
-> Could you please suggest how I could go about debugging this? I've followed all the netboot suggestions from these threads on this mailing list:\
-> - https://lists.ozlabs.org/pipermail/openbmc/2018-June/012054.html
-> - https://lists.ozlabs.org/pipermail/openbmc/2015-October/000010.html
+On Thu, 15 Oct 2020 at 01:49, Dylan Hung <dylan_hung@aspeedtech.com> wrote:
+> > > I was encountering this issue when I was running the iperf TX test.  The
+> > symptom is the TX descriptors are consumed, but no complete packet is sent
+> > out.
+> >
+> > What parameters are you using for iperf? I did a lot of testing with
+> > iperf3 (and stress-ng running at the same time) and couldn't reproduce the
+> > error.
+> >
 >
+> I simply use "iperf -c <server ip>" on ast2600.  It is very easy to reproduce. I append the log below:
+> Noticed that this issue only happens when HW scatter-gather (NETIF_F_SG) is on.
 
-Probably you could follow this one
-https://lists.ozlabs.org/pipermail/openbmc/2017-December/010264.html,
-which successfully boots the BMC from TFTP + NFS rootfs.
+Ok. This appears to be on by default in the
+drivers/net/ethernet/faraday/ftgmac100.c:
 
--- 
-BRs,
-Lei YU
+        netdev->hw_features = NETIF_F_RXCSUM | NETIF_F_HW_CSUM |
+                NETIF_F_GRO | NETIF_F_SG | NETIF_F_HW_VLAN_CTAG_RX |
+                NETIF_F_HW_VLAN_CTAG_TX;
+
+> [AST /]$ iperf3 -c 192.168.100.89
+> Connecting to host 192.168.100.89, port 5201
+> [  4] local 192.168.100.45 port 45346 connected to 192.168.100.89 port 5201
+> [ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+> [  4]   0.00-1.00   sec  44.8 MBytes   375 Mbits/sec    2   1.43 KBytes
+> [  4]   1.00-2.00   sec  0.00 Bytes  0.00 bits/sec    2   1.43 KBytes
+> [  4]   2.00-3.00   sec  0.00 Bytes  0.00 bits/sec    0   1.43 KBytes
+> [  4]   3.00-4.00   sec  0.00 Bytes  0.00 bits/sec    1   1.43 KBytes
+> [  4]   4.00-5.00   sec  0.00 Bytes  0.00 bits/sec    0   1.43 KBytes
+> ^C[  4]   5.00-5.88   sec  0.00 Bytes  0.00 bits/sec    0   1.43 KBytes
+> - - - - - - - - - - - - - - - - - - - - - - - - -
+> [ ID] Interval           Transfer     Bandwidth       Retr
+> [  4]   0.00-5.88   sec  44.8 MBytes  64.0 Mbits/sec    5             sender
+> [  4]   0.00-5.88   sec  0.00 Bytes  0.00 bits/sec                  receiver
+> iperf3: interrupt - the client has terminated
+
+I just realised my test machine must be on a 100Mbit network. I will
+try testing on a gigabit network.
+
+> > We could only reproduce it when performing other functions, such as
+> > debugging/booting the host processor.
+> >
+> Could it be another issue?
+
+I hope not! We have deployed your patch on our systems and I will let
+you know if we see the bug again.
+
+> > > > > +/*
+> > > > > + * test mode control register
+> > > > > + */
+> > > > > +#define FTGMAC100_TM_RQ_TX_VALID_DIS (1 << 28) #define
+> > > > > +FTGMAC100_TM_RQ_RR_IDLE_PREV (1 << 27) #define
+> > > > > +FTGMAC100_TM_DEFAULT
+> > > > \
+> > > > > +       (FTGMAC100_TM_RQ_TX_VALID_DIS |
+> > > > FTGMAC100_TM_RQ_RR_IDLE_PREV)
+> > > >
+> > > > Will aspeed issue an updated datasheet with this register documented?
+> >
+> > Did you see this question?
+> >
+> Sorry, I missed this question.  Aspeed will update the datasheet accordingly.
+
+Thank you.
