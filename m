@@ -2,69 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC3EB28ECF3
-	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 08:12:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D464628ED2C
+	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 08:46:57 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CBf870D0BzDqT5
-	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 17:12:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CBfvy4h32zDqTy
+	for <lists+openbmc@lfdr.de>; Thu, 15 Oct 2020 17:46:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::241;
- helo=mail-oi1-x241.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2d;
+ helo=mail-io1-xd2d.google.com; envelope-from=artemsen@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=XZiIJira; dkim-atps=neutral
-Received: from mail-oi1-x241.google.com (mail-oi1-x241.google.com
- [IPv6:2607:f8b0:4864:20::241])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=SDIr5jeq; dkim-atps=neutral
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
+ [IPv6:2607:f8b0:4864:20::d2d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CBf6h1d6GzDqSZ
- for <openbmc@lists.ozlabs.org>; Thu, 15 Oct 2020 17:11:06 +1100 (AEDT)
-Received: by mail-oi1-x241.google.com with SMTP id w141so1941001oia.2
- for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 23:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CBfv76VxXzDqTR
+ for <openbmc@lists.ozlabs.org>; Thu, 15 Oct 2020 17:46:10 +1100 (AEDT)
+Received: by mail-io1-xd2d.google.com with SMTP id r4so3037523ioh.0
+ for <openbmc@lists.ozlabs.org>; Wed, 14 Oct 2020 23:46:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=SH6ouaCyOVHvBmu2xuCzBcEFHzlrmmomYa0iTCw0MNA=;
- b=XZiIJira2l8xSptJAAcNF3ekxLoZLuNDWFC/8zMwIZVjFQXibECtebu7wXx1Krxbj2
- JF7itGfEZLalHLgGVm/wCUl7EvuqEDet9QExOEKnBl93eXSMwLEOVJAmw/UcHhNTRdQr
- DXgh4wduqkHf2KsbvbFeIzeasGRK7ZU0zFT+v5jyeHVr8lsxThKnZduj2IJPj1kKj2pB
- nHrQLnihTNO5RNE+pqUuiOFglIeWx6icePqLMFLEFQzlATybHimOxSOoHkWE6kiUPtL8
- sWK5gZW2pViBH0z1TUqp/qe/nuZrlzF8htd6ybxyRkCOgeKVCRLW9bWTdc+pKn+38MvN
- nrkw==
+ :cc:content-transfer-encoding;
+ bh=XN5AovsJpQs63MzQyxZ+cuIQzt83lxuZcIgTj+QvK9A=;
+ b=SDIr5jeqmthgeYVBaEcgqbQyDT9YC211KusGFKmH426gJZVwZeqZ7gfhJQyZLC1MTz
+ NSrGPEt1upstLaATlCO4XWcoEurMa7OayzGeWu4avfAGbu/MLiTMHkuxujx3TjYRg5q0
+ 0x0okhfViUlKBnQ99jfJPv8KiDgiWuaULFs+ROgMGzXWUTXKpEWLgalN9s/m5EmiBrpx
+ 1sqj2H4rF5r4bE3YFVZERbIMC/J1ewaua2zf1iTTJo3IMdaNVcPastkWajt/0VkLdoXP
+ tD+/AUZuESsFYwtjrWWnqGoploSftOTN5svDCM+Uk/Z09TPzoYW84wNNhmGEe1ebZnhr
+ OGdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=SH6ouaCyOVHvBmu2xuCzBcEFHzlrmmomYa0iTCw0MNA=;
- b=CHUEjoAULfDR4ZP0g9quoUU9o3aLvEF4Ag9gzXdUUm2KqZyWivk0AeVzRTJQFS5r5t
- jEdkAjBitw6+o9aW4b80KaLA4frgCVuVJzdaofcaD+LwvkhmAd90F7OrUBZLia+Hacu6
- zN7MP0tx/4ATTc8y5FcoicBgjWmIjOWJBuaRzd1as0sDgSbdFtOwlNJ3PEaSyZBCGn3K
- thGQm7/7OJuTinM2iQB4IqgMZs2icC1mz0nDUlT+Q6tRWp3WW9l4HIQpXZiTfjGQL8A0
- JAV7uyY1WlCIKqAI0z2ZuepyPMOmvcTEdWsVrH6nQ8arv6UVEZjUl/2iNH27BQ/U9I2f
- t8GQ==
-X-Gm-Message-State: AOAM5331GqRM9ufs65oDkekoUnrLm3MFLf7TpnWAknNlA+oIiSy0q0z9
- GwbSbDyvr6GSuqXaUrltB0orXzcTbExRV8YA2Ts4kA==
-X-Google-Smtp-Source: ABdhPJxoTekNHfqt2ZTewi5DaPZJDOJOvLeLW69m0+AJ7OzMqKjsKIwqeaAhNzVksswA6+Y33Wwm8S5Q4ILr4vZuILI=
-X-Received: by 2002:aca:db42:: with SMTP id s63mr1111871oig.4.1602742262270;
- Wed, 14 Oct 2020 23:11:02 -0700 (PDT)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=XN5AovsJpQs63MzQyxZ+cuIQzt83lxuZcIgTj+QvK9A=;
+ b=F1CmIy0grcUDe+Pyc+2j5OFLERfpO6mnjULstmFcN6TgvhiUlGOlfEXKky0NMIgwhc
+ d910T7kCkjl+uB1dC+caQqs6R4D3ii+f8CFbkukgR3YcGTd4mOQDwtwj3/WzZPzzm73v
+ e6WvRma36FNOa9iJyDcgbsNNwrfziysOQmqBdVDLoadiVVXgr/4pSW+/DwfDJroEJIAm
+ iD0M4aArpi7yY2jb95A1JaWnilp0VFCEIVT+DZd+7DQV3xtMJsxnfWhuJbrH5hzhRKQH
+ QTbOD+g2LEha1AfyXFigvLVlIb/RkAUseXCheRUSpA5ytK85bOT5KK2VqqdVdRRgeqaI
+ BO2Q==
+X-Gm-Message-State: AOAM532pKPsOFT1xpHtWkyZwRX3LC0Fbp7KclVsmGlCTE3C7KbanF+Dr
+ eC5WCyIcVZ9xf4h84HyWxno1KV/eLgF4WxCrfDuKwhvdu40=
+X-Google-Smtp-Source: ABdhPJy2zDC1xTHTniLNb4EswmBKPuTeoH4GIQV56pbyf+/dNs2Fza06OfGYDVdlviVWbljiYJ+ReqYFIlVduUcHpPM=
+X-Received: by 2002:a02:a196:: with SMTP id n22mr2461013jah.104.1602744366130; 
+ Wed, 14 Oct 2020 23:46:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <65961456-D5F6-41CC-AD10-93E716386953@nvidia.com>
- <CAGm54UFhaViOLjWuGQXW3catJ62Y1gx5pA89VDZ06TtshXFbvA@mail.gmail.com>
- <3A6CDD61-FC1C-4698-BD88-856C4B677DF8@nvidia.com>
-In-Reply-To: <3A6CDD61-FC1C-4698-BD88-856C4B677DF8@nvidia.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Thu, 15 Oct 2020 14:10:51 +0800
-Message-ID: <CAGm54UG5SOv36pSz4sxe4Ubtx0zbX0wLr_J+7i6rFsQYGcd0cQ@mail.gmail.com>
-Subject: Re: Kernel panic when net booting OpenBMC
-To: Nirenjan Krishnan <nkrishnan@nvidia.com>
+References: <4b1c3d6cd2fb42a9b4ca166ac90f9ae9@quantatw.com>
+In-Reply-To: <4b1c3d6cd2fb42a9b4ca166ac90f9ae9@quantatw.com>
+From: Artem Senichev <artemsen@gmail.com>
+Date: Thu, 15 Oct 2020 09:45:54 +0300
+Message-ID: <CAHsrh9LOmMvT2Sgo2niSHbJ74b3yf_9UTiaqJxm9MhcXkpv8EA@mail.gmail.com>
+Subject: Re: Modify Timestamp of phosphor-hostlogger
+To: =?UTF-8?B?U3BlbmNlciBLdSAo5Y+k5LiW55GcKQ==?= <Spencer.Ku@quantatw.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,16 +74,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Oct 15, 2020 at 1:35 PM Nirenjan Krishnan <nkrishnan@nvidia.com> wrote:
->
-> I tried that too, same error. I also tried adding `debug-init-sh enable-initrd-debug-sh` to bootargs to try and debug this further, but it panics before it gets to the debug shell.
->
+Hi Spencer,
 
-I would suggest checking:
-1. If the kernel config really enables the NFS related configs, e.g.
-CONFIG_NFS_FS, CONFIG_ROOT_NFS, etc.
-2. If the NFS server is working correctly.
+I think it is a good idea.
+We didn't have a service to handle these logs, so the short format was
+due to the compact display output.
+
+--
+Best regards,
+Artem Senichev
+
+On Wed, Oct 14, 2020 at 1:36 PM Spencer Ku (=E5=8F=A4=E4=B8=96=E7=91=9C)
+<Spencer.Ku@quantatw.com> wrote:
+>
+> Hi All,
+>
+> We have worked on a redfish URI that provides host log information, which=
+ is based on obmc-console and phosphor-hostlogger. Now we can get host log =
+and fill information into host log entry, but here we have a problem about =
+timestamp.
+>
+>
+>
+> One of the log entry level =E2=80=9Ccreated time=E2=80=9D, need to follow=
+ the time format like RFC3339, and for now, the host log only provides hour=
+, minute, and second time info. We want to modify the timestamp to RFC3339 =
+format to fit the log entry time format.
+>
+>
+>
+> Here is a sample host log with timestamp providing by phosphor-hostlogger=
+:
+>
+> [ 00:00:31 ] >>> Log collection started at 1970-01-01 00:00:31
+>
+>
+>
+> After modified, the message will be liked:
+>
+> [ 1970-01-01T00:00:31+00:00 ] >>> Log collection started at 1970-01-01 00=
+:00:31
+>
+>
+>
+> if the changes make sense, we will push the changes to upstream.
+>
+> Please let us know if there's any issue, thank you.
+>
+>
+>
+> Sincerely,
+>
+> Spencer
