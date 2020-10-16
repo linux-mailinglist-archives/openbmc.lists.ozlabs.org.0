@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34BC2290C70
-	for <lists+openbmc@lfdr.de>; Fri, 16 Oct 2020 21:49:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 658FA290CB6
+	for <lists+openbmc@lfdr.de>; Fri, 16 Oct 2020 22:26:29 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CCcCs1XYHzDqNt
-	for <lists+openbmc@lfdr.de>; Sat, 17 Oct 2020 06:48:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CCd3635h2zDqwM
+	for <lists+openbmc@lfdr.de>; Sat, 17 Oct 2020 07:26:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,73 +17,73 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=pM5iiqYA; 
+ header.s=fm3 header.b=kUVGwLSJ; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=d9SnCCM3; 
+ header.a=rsa-sha256 header.s=fm1 header.b=Bu9x57Wg; 
  dkim-atps=neutral
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
  [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CCcBM0szwzDqY3
- for <openbmc@lists.ozlabs.org>; Sat, 17 Oct 2020 06:47:38 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CCd2M5bCyzDqvn
+ for <openbmc@lists.ozlabs.org>; Sat, 17 Oct 2020 07:25:46 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id A3F83DD5;
- Fri, 16 Oct 2020 15:47:34 -0400 (EDT)
+ by mailout.west.internal (Postfix) with ESMTP id A4E7AF90;
+ Fri, 16 Oct 2020 16:25:44 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Fri, 16 Oct 2020 15:47:34 -0400
+ by compute4.internal (MEProxy); Fri, 16 Oct 2020 16:25:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
  date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=60CBkCDJMq4yzKeZrkgktupYwbn
- yc3IFnvfxqYjVIYg=; b=pM5iiqYAJFE/0VQ8GChKYZS+u2puO0u4VMWMWgEVPEW
- XWmoVVGoDS8DjjpMnFOliqE0nI0lTQcmQGL5aQnnKW10K1OYcPZ+8cT41SkgvcP5
- s4YRVSvEeodY7erG0Jk/4x2fFXyDfZbpQIObZazgow8qog7kAJjuQtIPf/NIY7iN
- grTSiEkaJZwakdwbuFID96+GNTGcvIuYdk/0pviJGmMXuImIO8sBz6Je3sB+XLEa
- A+8jVmRDNcttNu1aL+C9uhT1oKQwVrOOFp44YW2hTAZB9I87DJt22m6K8AuPfDWJ
- ZzEcGYz+DyoWWyT4CCRKXoPE5KSsc5J+75JIRlORWpQ==
+ :content-type:in-reply-to; s=fm3; bh=0UxuU52w8fak+fZ5ncPfzzhdoQL
+ ybY/IY1hC6HNoo8I=; b=kUVGwLSJfYx9BoPGWWMTpYP+tAa3eN23ybQgZzf2D8/
+ saLFDEg6CYGzd23MEBiEp4dlwmu3X2qATpPQA0E/SX3/gFGFQFA05yGxbsONNkL0
+ UV5LN8DU0ZWSwr7K0puk3B9gGYIPksKRwWXK/TbCjS4r1Nedj/nfaqCY0KiISEhw
+ FHm4KsEMxcEvaXpujjwyy8aAxoJDfbWYnLWS2/I18uDMMcWmpljihq9IAA2P5DlH
+ N5V8AWZ+8lDFqcwPcFjPwA/LK5Dhrs2EjWqKC/feE9+dci+lG2R1N/fVGiHx1bJp
+ /H5yUh3V19+CtJCbL6GT3I1tfcQ02USy1dIhs0EDEPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=60CBkC
- DJMq4yzKeZrkgktupYwbnyc3IFnvfxqYjVIYg=; b=d9SnCCM3LutdxkitbHuFhn
- jouj08JrQnLeTzU6i6md2D/3MlggmFqPUIS/Dh2J3FSLRaDOHYh3i7mjIBBrKkS3
- h3GaQkRPtQXNxKF69IRXaz9mujmmKdyk7qW2z0QEFIyDPY4P4YZiU+A99CERprC6
- VlJDsC0VhE+C5VLwdmsmUWTbtCbW18gRXzikcTPaSJzA3X3yPmEQeqTiS3wmmHcF
- fur9zyJ7fiwUSAoxLkeq1XkMvegUE224dH00Vz0nlwtWE1P3s689mamvrft4qnR/
- 9zpn1gK52pBdMPHcf8lDLfJ1xnvJZusFOGLGvos4zJ4ZLDiIKhJ62hq4bPdtTpVQ
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0UxuU5
+ 2w8fak+fZ5ncPfzzhdoQLybY/IY1hC6HNoo8I=; b=Bu9x57WgAvaCPJnF6WM9wb
+ tlOAJUYJSPQbssG5LIft1fUy23X/f81AwZzi/TFZJcGrvMfN4MmmE5SPJjolcBTC
+ 8IK+1P1xJIf8bqKF9XzLLnSiVTN+6n6ekleVj4jpZwdcEFatnwX8MNTyOpbB5rxW
+ Zhb3wlToDrDyiXGH6tBueTta+HvdWjQz/EKbRsaR1oMPc2msyn/BJzwLvoR1z7ax
+ RZE7fT0E/eenn3a8WJMcRoKgYx3iOgzXe6jquuGmfN3GgAaj6HalRHfI2F0rqLDb
+ wayzQ2ImKazHdIgCLRMOZhArpp86M6ei4iqYhYhQJqIpsdlKGBY+VdDsUyksmZaw
  ==
-X-ME-Sender: <xms:1fiJX1F2YYcHh6LR9GQCrK1KjuX5bvfQ-nHbb7QzPpWiICbUjT67HA>
- <xme:1fiJX6VCbs3xRzohbqalCSY11jLnIEEgS1bwTG82AdsbNOP2b_rwX-P8-LnfcXM0G
- YBly7sV4CALzXVUSMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrieehgddugedvucetufdoteggodetrfdotf
+X-ME-Sender: <xms:xwGKXzSXRKWaSB0pvTnaocJpxhU3p05aR63rWHAYN9ilFsHdWDKm-A>
+ <xme:xwGKX0w188FGlDsfmLTdsnOC6TWDvSTLKpKv0MSdSIKpx-XYPsuCVeA8sxKN1qhFu
+ qVwRjw4u_KfiURTidk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrieehgddugeelucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- jeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepkeduuedtfeeihfehfeehfedvjeeu
- jeeikedtteehledvhfelheekgedvieevkefhnecukfhppeejiedrvdehtddrkeegrddvfe
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+ geefgfdthefhkedtleffveekgfeuffehtdeinecukfhppeejiedrvdehtddrkeegrddvfe
  einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
  thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:1fiJX3L2TgUOcpbS-8R0KrwSSvq8iT4sOQZ98rs-MdO3wxX-V7eRAA>
- <xmx:1fiJX7HGBIbZzTRxav6ZEsCuZrA7oSvMZxQpe1RnmOJhGRneGazMEA>
- <xmx:1fiJX7Vj-z9ICzEi_iPzpVZWXynikr9pBCP1HOEEsN3ZtB14PESN3w>
- <xmx:1viJXyBFOIOitNQAEOrloi39-JLVokocLqeZnS8BORPDrThUXoMsbg>
+X-ME-Proxy: <xmx:xwGKX41R4BcOqkQC54Jq_MhbKeQUYuSaShpBo_MpB1vXRRnlsUSNUA>
+ <xmx:xwGKXzDTpmyVm5s8NMfhWo8cNcxrbmj5ueRfEG-oqW7cXs2WZEgjEg>
+ <xmx:xwGKX8jPSLHJhOpzrds0Hb2G2pIkaORrAcoV6e6CPShjpwbNeDMGCA>
+ <xmx:yAGKX6dFNGaSJKrGQXJ-2DBgar-kFIaHS3SMl9bOTrrk74dWGFXlvw>
 Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
  [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 64A91328005D;
- Fri, 16 Oct 2020 15:47:33 -0400 (EDT)
-Date: Fri, 16 Oct 2020 14:47:30 -0500
+ by mail.messagingengine.com (Postfix) with ESMTPA id 808F1328005D;
+ Fri, 16 Oct 2020 16:25:43 -0400 (EDT)
+Date: Fri, 16 Oct 2020 15:25:42 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: James Hatt <james.hatt@sanmina.com>
-Subject: Re: I need to build an OpenBMC image for a Portwell Neptune card ...
-Message-ID: <20201016194730.GA3614@heinlein>
-References: <CAABA6JmNH=AfzCE4aE_NuYCv126fCXOcexSq6O1C8+DdT6K1Jg@mail.gmail.com>
+To: Anton Kachalov <rnouse@google.com>
+Subject: Re: /etc/migration.d
+Message-ID: <20201016202542.GB3614@heinlein>
+References: <CADVsX8_eYXAtGMgoe9LEKRtaf0ufdn0BJA+Fn8J9xpAKnTDStQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="KsGdsel6WgEHnImy"
+ protocol="application/pgp-signature"; boundary="ftEhullJWpWg/VHq"
 Content-Disposition: inline
-In-Reply-To: <CAABA6JmNH=AfzCE4aE_NuYCv126fCXOcexSq6O1C8+DdT6K1Jg@mail.gmail.com>
+In-Reply-To: <CADVsX8_eYXAtGMgoe9LEKRtaf0ufdn0BJA+Fn8J9xpAKnTDStQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,91 +95,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---KsGdsel6WgEHnImy
-Content-Type: text/plain; charset=utf-8
+--ftEhullJWpWg/VHq
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 15, 2020 at 08:00:14AM -0500, James Hatt wrote:
-> Dear OpenBMC,
-> I=E2=80=99ve been handed the *opportunity* of building OpenBMC for the Po=
-rtwell
-> Neptune circuit card. Of course, Portwell is no help whatever.
+On Wed, Oct 14, 2020 at 08:47:57PM +0200, Anton Kachalov wrote:
+> With moving from root-only environment to unprivileged users' space, we
+> need to ensure a smooth transition. To achieve that we need a mechanism f=
+or
+> one-shot per-package scripts that would take care of migration. That's not
+> only about groups & owners, but a general approach. It's similar to
+> firstboot, but has a different purpose.
 >=20
-> I am new to OpenBMC. I=E2=80=99ve built Yocto Petalinux machines before. =
-So I have
-> a little knowledge of Yocto. I=E2=80=99ve lots of experience with Linux a=
-nd
-> embedded systems.
+> I'm going to prototype a robust / naive solution to start a service before
+> everything else in the system with a condition (non-empty /etc/migration.=
+d)
+> and iterate through all files. Each script has to run at list with "set -=
+e"
+> to bail out on failures. If the script succeeded -- it will be removed.
 >=20
-> Where would I start?
->=20
-> BTW, I was able to clone the OpenBMC repository and build the phosphor
-> target without error. When I attempt to build meta-portwell/meta-neptune,=
- I
-> get errors early with bitbake. Since the Portwell literature boasts of
-> Facebook OpenBMC, I tried their branch and that failed to build also.
->=20
-> Help!
-> ---jjh
->=20
-> *James Hatt |* *Sr. Software Developer*
+> The tricky part is: what if the script fails? Keep it, ignore the failure
+> and proceed with others and then boot the system? Or proceed other scripts
+> as well and then enter some "failure state"?
 
-Hi James,
+Hi Anton,
 
-I'm probably the best to respond to this even though I know almost
-nothing about Portwell/Neptune.
+I have some high-level questions / ideas about this.
 
-Facebook OpenBMC is not a branch / fork of the Linux Foundation OpenBMC.
-They are entirely different code bases with almost no commonality.
-Facebook OpenBMC started first, but the community has coalesced around
-the LF-OpenBMC.
+* Would these migrations be restricted to just useradd/groupadd operations?=
+  Or
+  are you trying to create a general framework for "upgrade scripts"?
 
-It sounds like the Neptune port to facebook/openbmc was a project done
-by some engineers at Facebook with little involvement from Portwell.
-You'll see the initial commit was from a Facebook engineer and there has
-not been any further contributions beyond minor cleanups to keep it
-compiling by Facebook.  This work was done ~3 years ago and is not a
-fully formed product.
+* Have you looked at any existing support by Yocto or systemd to provide
+  what you need?  Yocto has USERADD_PACKAGES, postinst_intercept.
+  Systemd has firstboot.  There might be other mechanisms I'm not
+  remembering as well.  (I guess you mentioned firstboot).  There is
+  hacky override to install a "@reboot" directive in the crontab.
 
-The openbmc/openbmc meta-portwell was also done by a Facebook engineer
-about 2 years ago.  The content seems to be just the bare essentials to
-get a basic kernel and openbmc/openbmc image booting on the BMC.  There
-is really no support code beyond that.
+* How long would a "migration" be kept around for?  Are we expecting
+  that packages provide them forever?
 
-I think it would be good to understand what it is you're trying to
-accomplish with the device.  I could do some small amount of work to get
-either facebook/openbmc or openbmc/openbmc compiling for you.  If you'd
-like to get this integrated into a real project we should probably
-discuss what the needs are, but I likely you'll need to handle a
-significant part of the contribution there.
+* How do we handle downgrades?  Some systems are set up with a "golden
+  image" which is locked at manufacturing.  Maybe simple
+  useradd/groupadd calls are innately backwards compatible but I worry
+  about a general framework falling apart.
+
+* Is there some mechanism we should do to run the migrations as part of
+  the upgrade process instead of waiting to the next boot?  The
+  migrations could be included in the image tarball and thus be signed.
+  That would save time on reboots for checking if the migrations are
+  done.
+
+* Rather than have a single migration script that runs before everything
+  else (and is thus serial), you might create a template service
+  (phosphor-migration-@.service) that can be depended on by the services
+  needing the migration results.  (ie. service foo depends on
+  migration-foo).
+
+* In a follow up email you mentioned something about hashing.  I was
+  going to ask how you know when a particular migration has been
+  executed.  Maybe there are some tricks of recording hash values in
+  the RWFS could prevent multiple executions.
 
 --=20
 Patrick Williams
 
---KsGdsel6WgEHnImy
+--ftEhullJWpWg/VHq
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl+J+NAACgkQqwNHzC0A
-wRlAYxAAne/GBZRVsatDF6dG00issuFtSbRJOuR8Vr8hfpQYiaKdGh8sEWO6L/3s
-rgCQKNx3ktQd/dbYVEX695EYUYah3I7oLh8c1gbCPhAWV3/zxlCh5YGhN1FD9Liu
-wemZ/EN1LFbfVsdBWYlOqHVOIhm4jHCIws/QG+CPm8ja3ZPzos/Kzq+GedPcVF2B
-O7AdgazzB6Ubr3DptoAyRw674cuyXOK+f+7b2dSccELufIKt8N9IV6zUv/k6NSC7
-1EljlReRaluSsAyrajAGyDZMBypJUck1D7V2sDUnCM5dIyCCqoxYTwXHVEjw8VmR
-VYoCsvrIr11rA3Xp1WSvFMYHr1EaADud7Q/1sOixkXPqkVX+pXJuFSw1q0Zk6jtF
-sMcGwUoWBWrt3bLliJv2gYKsyVCU4w1cSWqtQAiAxf5BoXujSKP3NTH5fYwepos+
-f7Hd0BzC1G3w6xiMw7qL7M8PmV/NWxhj5gsZv6vjNI3FNkFUjnU5YQpLZ7Nv8Wd2
-TpkxU7bGyxrAPE+sTkwOPXUWBupsfHFgt5uHMwLLsf+Gb8A0xbT5B7oebp9B6+Pj
-TrND8f4GCt2V+5hkVF1bjI4pjQVWeCx0e73BRX7SMONxH8K4OWRATeHn407B5wWm
-1EnoU7uKlYq2p/K/1RnHPiwXxkdAgjgXs/hgJwjDNAwRQ4fS8U4=
-=huSZ
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl+KAcQACgkQqwNHzC0A
+wRmhkw//bidVn8L+g0GHcmp4JEcAvVWtjqZwxf8+9eFpepqEA0WJTCHvYSK3i0wh
+KrftIWR+Ffq4z+6d+bs3g7buKxip5StmJOpPlYvF1XxBe1SD0C+jLDjGNftA5uF3
+8qRFNaJjIEmwBTUqpM3hyj6anG1RJpeM0SGoNCGD1kcOLU0PAA+vAfPqQHSqMygj
+9HS7Wr84HQcU4Xz1tvWDqOHzW1lXTrqandiD/XwLnIPxpB9hk36SUJTGp0am9GfX
+2ML1jKhNrLAgap1l17f+ye1QfU5lwaa+I9ATZ7eBI8NnBKr0vogG2Rc6sqL9JjRx
+MlhGrj970fvL1K/MjyIiSw/DAqZmQzkETqwGthdJkgakfgpYUTc4qxLeO1/onNJR
+e0vScrl/jDGPkNgepL55WeqL+rkL5HtDTZX9+c1anEEpVCfc/do/IhqROvc6COQR
+EcMH1T+1PzifVEx+k95EKECotUfJO1+B5IUryE0ds3lzuRquSNxhUXC+b7hYbuC5
+wgJfM3U2vpp2LhsquXe/6fkrTsuH8aKOfMcc9H7fwV7YJeofFWxNFwnWDAevNj4O
+6oIL4a8VJLgZiZU9wya9FxpbODtwQ/IMb0fcvvVpqXDQRRI73CHmo4fOAt6ppxWN
+zeuukoCgx79dFMz6O8W79Xc0QYjZAoFOrMwQhygm2thp73ypm3U=
+=bknf
 -----END PGP SIGNATURE-----
 
---KsGdsel6WgEHnImy--
+--ftEhullJWpWg/VHq--
