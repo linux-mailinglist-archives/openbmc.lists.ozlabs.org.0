@@ -2,68 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A806B2924C4
-	for <lists+openbmc@lfdr.de>; Mon, 19 Oct 2020 11:40:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A2AF292919
+	for <lists+openbmc@lfdr.de>; Mon, 19 Oct 2020 16:16:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CFBZj4d0dzDqYq
-	for <lists+openbmc@lfdr.de>; Mon, 19 Oct 2020 20:40:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CFJjM0fbqzDqcm
+	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 01:16:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::336;
- helo=mail-ot1-x336.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=nqtBXPN0; dkim-atps=neutral
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com
- [IPv6:2607:f8b0:4864:20::336])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=l+No4hW/; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CFBYc1rV4zDqQ9
- for <openbmc@lists.ozlabs.org>; Mon, 19 Oct 2020 20:39:45 +1100 (AEDT)
-Received: by mail-ot1-x336.google.com with SMTP id i12so9865823ota.5
- for <openbmc@lists.ozlabs.org>; Mon, 19 Oct 2020 02:39:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=d6PfV+nK8KR56S/+0Hz+VJRwopEkc4FXo7y35QH4FcQ=;
- b=nqtBXPN01fXxbuI93EFN1NoZYU5iXI71D3F9FHrmF7MeHfO1jQDRsOQdRmJSjMzDns
- XOoE/AZtBHb+1E/jcPJBl0kkjrsAMGsrLE5akdcTpo0l7aA+IGdLmiLx8ETwy24Ao7ZV
- 4BBzMbUjzGdmj/yLvkZUH1VWxe2VnDa2UevcFjMbVpiQ6qedjhnAREgst7Cbcg0KufqD
- iK3kOzTDnTrIZlpxvNr4J9KSEGkbRjeLGSwIcESV8VrZhgvblxB5eK3muLBeqL/WFMJQ
- Phge3qyVCr6T3WOqsQ20oOHgqVtyR9Xaa7ejqcxheAY5EBtN2GVr7L5yy79/LwWdPPDJ
- FuQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=d6PfV+nK8KR56S/+0Hz+VJRwopEkc4FXo7y35QH4FcQ=;
- b=uNOumuz/Jv8+XF67/BacQ6MyrnlHd4oCDLuWA2/0mTR3wR09zLBuASQAeEzyTIPDNU
- 4xs6NpKcKVoUhGGUFfRZhrujPjUXij15WGr0nzX2R/Gh0fZDdVinWSx8ViTf06SX0MHY
- ZU+NW1oEinGm3nxijeJ1iVu9WJ1FQVn2Ayln4M3wO+Vh73Zo+GEPpwUX9Z4TB8IOjUiG
- AVyvhNOzfzSRzrXYoS4UydwBaGbP22/RunKNz0tZOMSPmZZXhPePD9LUdZzQnP8LLX4I
- qNQYi+78x2jdwppl5jisDQ0KBE6WDac0N57/1KNLkKwDKE7BZKbrzDNoEMujOOUNmaTJ
- QErg==
-X-Gm-Message-State: AOAM531i31IFUXF5z2Gn6yJ7inlfEaYzKzlxRDFceAbrOz2PA//ggF9O
- d1ezd28tp8P6dPwez5CBPeeslY59/blVbqFUyjw0q+cqTgDa34lB
-X-Google-Smtp-Source: ABdhPJwbohb+dkx+4jvXUtSgWMtp1o19eqgRAb3WsubSfCEOGYEboRIjgdt9w3aMaJ0PG346oCugkUpgMEcUOjN3Sno=
-X-Received: by 2002:a05:6830:1bce:: with SMTP id
- v14mr10565269ota.361.1603100381769; 
- Mon, 19 Oct 2020 02:39:41 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CFJhT1V0BzDqPw
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 01:16:05 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09JE7HwK116217
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Oct 2020 10:16:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=CW5MU18tXNHeHA7/lhUGxPZ7TRLUHvHG6KVFGkz2R7s=;
+ b=l+No4hW/gjmLPZU9fBpTB8JJYvc5hDLSa4lX9THSOtb1QEJShghb2vBo+XLXKb8dtSGH
+ +sch9ad8a9pFiZMYoepNY5cxVLG9ydbPTOWltyFZbUFues+vEs1bKRbwj0v8VfJlrhZM
+ JJ5VxGhyKXra41uqXgWMBsZV/L7CjbsCLgVGkI5xquwLw8wjKzJGlmAy/jVsLuktOuEQ
+ rBFdoE3EkDBQNL4nfM9WYBZ8Cto0NshjE3pvR1ABICJ0nvXIv7LM0aAn6Gg3GhXN2vP4
+ /n7hAhBrzBLGt2bGOJILBlvku3pMCdvNKj9GhflyH/eMIbVZEKHMlnncxcKMGb+6v4aL kA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 349c9d8brt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Oct 2020 10:16:02 -0400
+Received: from m0098404.ppops.net (m0098404.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09JE82EQ122111
+ for <openbmc@lists.ozlabs.org>; Mon, 19 Oct 2020 10:16:01 -0400
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 349c9d8bre-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Oct 2020 10:16:01 -0400
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09JEBsnM016957;
+ Mon, 19 Oct 2020 14:16:01 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma04dal.us.ibm.com with ESMTP id 347r88v99g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Oct 2020 14:16:00 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09JEFsip55574800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Oct 2020 14:15:54 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7A2EF6A05A;
+ Mon, 19 Oct 2020 14:15:59 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 16CA86A058;
+ Mon, 19 Oct 2020 14:15:58 +0000 (GMT)
+Received: from [9.160.22.41] (unknown [9.160.22.41])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon, 19 Oct 2020 14:15:58 +0000 (GMT)
+Subject: Re: Enable/Disable some sensors when Host On/Off
+To: Thu Ba Nguyen <tbnguyen1985@gmail.com>, openbmc@lists.ozlabs.org
+References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <4ff7b0cc-8e61-7fa7-19be-8427f281a0fc@linux.ibm.com>
+Date: Mon, 19 Oct 2020 09:16:03 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Mon, 19 Oct 2020 17:39:31 +0800
-Message-ID: <CAGm54UEiiuBbBbozu2xecjq3HHBvOJo+afqOkd+ppx00XFKTOA@mail.gmail.com>
-Subject: Moving phosphor-power/tools/i2c into a separated repo
-To: openbmc <openbmc@lists.ozlabs.org>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, 
- Matt Spinler <spinler@us.ibm.com>, Shawn McCarney <shawnmm@us.ibm.com>,
- Jet_JC_Lee@wistron.com
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-19_06:2020-10-16,
+ 2020-10-19 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 impostorscore=0
+ bulkscore=0 mlxscore=0 suspectscore=0 clxscore=1011 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010190094
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,26 +110,39 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This email is to propose to move the i2c library in phosphor-power to
-a separated repo.
 
-In OpenBMC, some repos need i2c/SMBus access to various devices.
-E.g.
-* phosphor-power implements a C++ wrapper of libi2c in tools/i2c to talk to PSU.
-* dbus-sensors is going to have a wrapper to send smbus commands.
-* We have an internal (probably will be upstreamed later) repo using
-i2c to communicate with a CPLD.
 
-The one in [phosphor-power][1] is a full C++ wrapper, that supports
-byte/word/block read/write, supports both I2C and SMBus
-communications, and provides a mocked interface for unit tests.
-It could be a good candidate for a separate repo so that it could be
-shared by other repos.
+On 10/18/2020 8:58 AM, Thu Ba Nguyen wrote:
+> Dear, I'm supporting the host sensors for Ampere Computing LLC 
+> platform. We are...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> Dear,
+>
+> I'm supporting the host sensors for Ampere Computing LLC platform.
+> We are using phosphor-hwmon to update values of sensors and monitoring 
+> sensors warning/errors base on threshold setting.
+>
+> There are some sensors which are turned off when host Off. It can be 
+> the sensors reported by host or voltage/temperature/power sensors 
+>  which use the same power source with host.
+>
+> I researched in openBmc sensor-architecture documents but can't find 
+> any option to enable/disable sensors base on one status or GPIO pins. 
+> I can't use REMOVERCS.
+>
+> Research in phosphor-hwmon code, I don't see the answer too.
+>
+> Do we have any options/solution to Enable/Disable some sensors when 
+> Host On/Off?
 
-What do you think?
+Hi,
+The phosphor-hwmon code doesn't support that yet.  It has been discussed 
+before but nobody
+has implemented it.
 
-[1]: https://github.com/openbmc/phosphor-power/tree/master/tools/i2c
+>
+> Thanks.
+> Thu Nguyen.
 
--- 
-BRs,
-Lei YU
