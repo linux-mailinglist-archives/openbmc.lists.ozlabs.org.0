@@ -1,68 +1,102 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14E8B293B0C
-	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 14:16:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32A60293D9C
+	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 15:48:35 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CFt0F22Q9zDqgl
-	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 23:16:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CFw261S4wzDqkJ
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 00:48:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d32;
- helo=mail-io1-xd32.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=a3Qji6H2; dkim-atps=neutral
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com
- [IPv6:2607:f8b0:4864:20::d32])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Mmne/inY; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CFrnz6h2HzDqWg
- for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 22:22:46 +1100 (AEDT)
-Received: by mail-io1-xd32.google.com with SMTP id z5so2634075iob.1
- for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 04:22:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=76dU5KOVF2KUV8Ib6mFw/SQgkjQxjnCFLr8RHRM3g74=;
- b=a3Qji6H2KjmYdOI9FHwbtVFlwkPFAkMrdnez/OoLoIIIGP3c6CKE65fIjAmP8tS2rH
- aiHLAndlv2P2TFObSwoq8pyIkWPSA7yRQDLuCjToLO7dCkUkcMKEOI2Zn5ZTfD/K9TSI
- xat3/VVexhksJ55/a9Ufa4WsgUyXKDL08/ZHX2jDoOedUKepszON2AxlnefNe90Ytyfz
- yYFf93WjeC9dQhuX/Lwr4wTmPlPWprXZnJMQwALMGB+lOUkIu/dIp8n6hS+I6ehERrhl
- n8nzXmFb3PniZ5IwLE8wPE9uTFCaYXLATm75MxdNHPfjuTdpHBjSAOobZmdZeRKaPQiM
- ge5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=76dU5KOVF2KUV8Ib6mFw/SQgkjQxjnCFLr8RHRM3g74=;
- b=L7jJ9B8A2RYE6nCBA9E0iQbOnqwyJEa9HTiFxgsmzTziHZLM6NFJqLizPg5Ul+als0
- qcWqqaICpWb7ORJGXIoIFrCHhuHqr+ZlrN/20G8HWus+j6TuBjNotzQ8JLZU5D/2hKGT
- GNJ1o+NqEQZCK57njIE18hzwKcCtD5nvFdq1OzTlLK2dtpZ2ywVxX2mM/Np3V6Jwngnb
- OdjHanSxQumGlPu6otSY2aqnDyFH4aMZy/cOTSDzfyYFBd72xAmsE0xIMyD32Jq+gs9J
- QcdeDIrrrOeZHM0dV6RnsJMtv/PnqN03KSWDwaQ7Ir0tr4dj8R7miJGVYLmi6p+EKVI0
- 9Vhw==
-X-Gm-Message-State: AOAM532nfjg3YM8SLOx/2WNukS1Zg6KNx3Ki6zomQepm4DR2rX658bT3
- T+ldeZdRvZseNp7Kr32hmS0ic3F5utB5+lOPrh8JUCIQB7j7Qqz5
-X-Google-Smtp-Source: ABdhPJz/LvHvnoIrxeX4ld5Lhetp6PqgxHnCI4wlF9e+WsW1SUP6sgq9DHn1nMF2Lk/7YW9NaC9sHqAslThD47In/Lg=
-X-Received: by 2002:a6b:9156:: with SMTP id t83mr1620571iod.91.1603192960131; 
- Tue, 20 Oct 2020 04:22:40 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CFvzw6TMtzDqhN
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 00:46:36 +1100 (AEDT)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09KDhw2A104035
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 09:46:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=sivvrTtGE0eN3danVOz1O+AaBtGsE8WhKN/alC5X4gU=;
+ b=Mmne/inYYTKGiaVV6sCOq/XtynC33ff81+iNSkFpkBiauEDRDOiFZ/DYmIJfDQ36nTX5
+ 7Fo8SeL7dS5rZHDm8scIgi0jNeKS0mGqLKtNpuENFjN5WehAoeLQqliL9lXFCO3vOhmx
+ ECVc4o/wz/BOPw5nI4grL/LxME7ki5SV5c5fulbsMq2F2riTHg9wE11xhwnjB/vKlhuM
+ B7nKhAAxumvAEMXQUU6RT5tnHRaCe5TesOPI4Rc31jiCp35VB4aLvHJsv0IGSqRkq3vE
+ ndPGT3o2Q32jYHT8FLjll+TTaSfuWvAqk+JZ69FQrAqfT/fiHPm2G2iE1K2DjaK4Vurm oQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34a11fr319-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 09:46:32 -0400
+Received: from m0098417.ppops.net (m0098417.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09KDi7Mr104583
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 09:46:32 -0400
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34a11fr30v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Oct 2020 09:46:32 -0400
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09KDaptb012324;
+ Tue, 20 Oct 2020 13:46:32 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
+ [9.57.198.24]) by ppma02wdc.us.ibm.com with ESMTP id 347r8905ky-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Oct 2020 13:46:32 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09KDkVxL51380600
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Oct 2020 13:46:31 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8BBC3124055;
+ Tue, 20 Oct 2020 13:46:31 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4237A124052;
+ Tue, 20 Oct 2020 13:46:31 +0000 (GMT)
+Received: from [9.160.87.233] (unknown [9.160.87.233])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Oct 2020 13:46:31 +0000 (GMT)
+Subject: Re: Enable/Disable some sensors when Host On/Off
+To: Thu Ba Nguyen <tbnguyen1985@gmail.com>
+References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+ <4ff7b0cc-8e61-7fa7-19be-8427f281a0fc@linux.ibm.com>
+ <CALioo37dj3UbSoi7nEb+N9uFjvB5iUxNF8evMQ4K9HYcaObsjg@mail.gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <2ac65a96-a447-e5b6-037d-2d785c16244b@linux.ibm.com>
+Date: Tue, 20 Oct 2020 08:46:30 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-References: <CADVsX8_eYXAtGMgoe9LEKRtaf0ufdn0BJA+Fn8J9xpAKnTDStQ@mail.gmail.com>
- <20201016202542.GB3614@heinlein>
- <CADVsX8_Z1GHkw0Z8-2jFGrFVVkMnMkK_rVdLJy8TQ=RiK13-dQ@mail.gmail.com>
-In-Reply-To: <CADVsX8_Z1GHkw0Z8-2jFGrFVVkMnMkK_rVdLJy8TQ=RiK13-dQ@mail.gmail.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Tue, 20 Oct 2020 13:22:28 +0200
-Message-ID: <CADVsX89sYGv6fKdDNTX7ER7hhSwJSidmQP9wWEqExs-K0CT7eg@mail.gmail.com>
-Subject: Re: /etc/migration.d
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="000000000000e57f6705b218721b"
+In-Reply-To: <CALioo37dj3UbSoi7nEb+N9uFjvB5iUxNF8evMQ4K9HYcaObsjg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.737
+ definitions=2020-10-20_06:2020-10-20,
+ 2020-10-20 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015
+ lowpriorityscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ phishscore=0 spamscore=0 impostorscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010200091
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,310 +108,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e57f6705b218721b
-Content-Type: text/plain; charset="UTF-8"
 
-Hello,
 
-so, I'm ending up at the moment with an idea for this specific case of
-migration from root "space" to unprivileged. The idea is simple: cover
-config files and compile-time chunks of code to be covered by distro
-feature flag. This flag should be enabled for qemuarm target and then
-iteratively enabled across other platforms once they are ready. The
-rollback from non-root permissions back to root is painless and easy to
-achieve. No actual migration scripts should be required, just config
-changes.
+On 10/19/2020 10:23 AM, Thu Ba Nguyen wrote:
+> Thanks for your reply Matt Spinler, Can you show me the discussion 
+> threads? I also...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> Thanks for your reply Matt Spinler,
+>
+> Can you show me the discussion threads?
 
-On Fri, 16 Oct 2020 at 23:01, Anton Kachalov <rnouse@google.com> wrote:
+Sure: https://lists.ozlabs.org/pipermail/openbmc/2019-October/018967.html
 
-> Hello, Patrick.
 >
-> On Fri, 16 Oct 2020 at 22:25, Patrick Williams <patrick@stwcx.xyz> wrote:
+> I also thought about the solution for that features:
+> In the current hwmon we support GPIOCHIP + GPIO option which used to 
+> enable sensors to read. In the hwmon code, we just set that pin and 
+> wait before reading.
+> I think we can support a similar option named GPIOENABLE + GPIOV. When 
+> the status of Gpio pin defind in GPIOEANBLE match with GPIOV.
+> That sensors will be read and update to Dbus.
+> If not it will be removed from DBus until the GPIO pin math GPIOV.
+> Maybe we can have many different solutions.
+
+As Ed mentioned, I think a good direction to start with is how 
+dbus-sensors handles it, so we  can have
+common behavior.  I believe they look at the host state D-Bus property 
+and still keep the sensor
+on D-Bus even when power is off.
+
 >
->> On Wed, Oct 14, 2020 at 08:47:57PM +0200, Anton Kachalov wrote:
->> > With moving from root-only environment to unprivileged users' space, we
->> > need to ensure a smooth transition. To achieve that we need a mechanism
->> for
->> > one-shot per-package scripts that would take care of migration. That's
->> not
->> > only about groups & owners, but a general approach. It's similar to
->> > firstboot, but has a different purpose.
->> >
->> > I'm going to prototype a robust / naive solution to start a service
->> before
->> > everything else in the system with a condition (non-empty
->> /etc/migration.d)
->> > and iterate through all files. Each script has to run at list with "set
->> -e"
->> > to bail out on failures. If the script succeeded -- it will be removed.
->> >
->> > The tricky part is: what if the script fails? Keep it, ignore the
->> failure
->> > and proceed with others and then boot the system? Or proceed other
->> scripts
->> > as well and then enter some "failure state"?
->>
->> Hi Anton,
->>
->> I have some high-level questions / ideas about this.
->>
->> * Would these migrations be restricted to just useradd/groupadd
->> operations?  Or
->>   are you trying to create a general framework for "upgrade scripts"?
->>
+> If you don't mind, can you tell me how IBM supports that features?
+
+We lucked out out in that the driver was only loaded when power was on.
+
 >
-> This might be a general framework.
+> Regards.
+> Thu Nguyen.
 >
->
->>
->> * Have you looked at any existing support by Yocto or systemd to provide
->>   what you need?  Yocto has USERADD_PACKAGES, postinst_intercept.
->>   Systemd has firstboot.  There might be other mechanisms I'm not
->>   remembering as well.  (I guess you mentioned firstboot).  There is
->>   hacky override to install a "@reboot" directive in the crontab.
->>
->
-> afaik, systemd's firstboot is only about to run special units right after
-> installation. Once the system is configured, the firstboot units wouldn't
-> be executed anymore.
-> This thread I've started to find possible solutions.
-> The postinst chunks executed during the image formation (as a part of rpm
-> / deb packages' scripts).
->
->
->>
->> * How long would a "migration" be kept around for?  Are we expecting
->>   that packages provide them forever?
->>
->
-> That is a good question because we don't know how old the firmware is
-> being upgraded. I suppose, that like one-two-whatever release cycles. Then
-> the update process should be either using an intermediate firmware version
-> or forcing the non-volatile storage to be wiped. Regardless of the
-> migration scripts, we might have some incompatibilities between two
-> releases that will require NV (overlayfs back partition) cleanup.
->
->
->>
->> * How do we handle downgrades?  Some systems are set up with a "golden
->>   image" which is locked at manufacturing.  Maybe simple
->>   useradd/groupadd calls are innately backwards compatible but I worry
->>   about a general framework falling apart.
->>
->
-> In general, that's an issue. Golden-image downgrades should be allowed
-> within a compatible release branch (without wiping data). As above,
-> golden-images might be incompatible and wouldn't allow downgrades.
->
-> The particular migration from root-only users to unprivileged users should
-> be one way without wiping data. If the downgrade is requested, then it will
-> be required to wipe the data.
->
->
->>
->> * Is there some mechanism we should do to run the migrations as part of
->>   the upgrade process instead of waiting to the next boot?  The
->>   migrations could be included in the image tarball and thus be signed.
->>   That would save time on reboots for checking if the migrations are
->>   done.
->>
->
-> Yes, it could be done as a set of scripts during the update process. That
-> is one of the possible approaches. This also could be an approach for
-> downgrades. I'm only worrying about the effort to support downgrades from
-> random version to random version. The least effort with incompatible
-> upgrades / downgrades is to keep special transition firmware allowing
-> downgrade from current Golden version to the previous Golden version from
-> incompatible branch. For upgrades the latest version of transition firmware
-> might not be golden. This will require a separate repo with an
-> auto-generated set of scripts to be used to build transition fws.
+> On Mon, Oct 19, 2020 at 9:16 PM Matt Spinler <mspinler@linux.ibm.com 
+> <mailto:mspinler@linux.ibm.com>> wrote:
 >
 >
 >
->>
->> * Rather than have a single migration script that runs before everything
->>   else (and is thus serial), you might create a template service
->>   (phosphor-migration-@.service) that can be depended on by the services
->>   needing the migration results.  (ie. service foo depends on
->>   migration-foo).
->>
+>     On 10/18/2020 8:58 AM, Thu Ba Nguyen wrote:
+>     > Dear, I'm supporting the host sensors for Ampere Computing LLC
+>     > platform. We are...
+>     > This Message Is From an External Sender
+>     > This message came from outside your organization.
+>     >
+>     > Dear,
+>     >
+>     > I'm supporting the host sensors for Ampere Computing LLC platform.
+>     > We are using phosphor-hwmon to update values of sensors and
+>     monitoring
+>     > sensors warning/errors base on threshold setting.
+>     >
+>     > There are some sensors which are turned off when host Off. It
+>     can be
+>     > the sensors reported by host or voltage/temperature/power sensors
+>     >  which use the same power source with host.
+>     >
+>     > I researched in openBmc sensor-architecture documents but can't
+>     find
+>     > any option to enable/disable sensors base on one status or GPIO
+>     pins.
+>     > I can't use REMOVERCS.
+>     >
+>     > Research in phosphor-hwmon code, I don't see the answer too.
+>     >
+>     > Do we have any options/solution to Enable/Disable some sensors when
+>     > Host On/Off?
 >
-> While migration is one-off, it might be safer to run serial one by one.
+>     Hi,
+>     The phosphor-hwmon code doesn't support that yet.  It has been
+>     discussed
+>     before but nobody
+>     has implemented it.
 >
->
->>
->> * In a follow up email you mentioned something about hashing.  I was
->>   going to ask how you know when a particular migration has been
->>   executed.  Maybe there are some tricks of recording hash values in
->>   the RWFS could prevent multiple executions.
->>
->
-> We can track the succeeded scripts by touching some file in a directory
-> like /var/lib/migration (e.g. create a file named as sha-sum of the runned
-> script).
->
->
->>
->> --
->> Patrick Williams
->>
+>     >
+>     > Thanks.
+>     > Thu Nguyen.
 >
 
---000000000000e57f6705b218721b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hello,<div><br></div><div>so, I&#39;m end=
-ing up at the moment with an idea for this specific case of migration from =
-root &quot;space&quot; to unprivileged. The idea is simple: cover config fi=
-les and compile-time chunks of code to be covered by distro feature flag. T=
-his flag should be enabled for qemuarm=C2=A0target and then iteratively ena=
-bled across other platforms once they are ready. The rollback from non-root=
- permissions back to root is painless and easy to achieve. No actual migrat=
-ion scripts should be required, just config changes.</div></div></div><br><=
-div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 16 =
-Oct 2020 at 23:01, Anton Kachalov &lt;<a href=3D"mailto:rnouse@google.com" =
-target=3D"_blank">rnouse@google.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div>Hello, Patrick.</d=
-iv><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On =
-Fri, 16 Oct 2020 at 22:25, Patrick Williams &lt;<a href=3D"mailto:patrick@s=
-twcx.xyz" target=3D"_blank">patrick@stwcx.xyz</a>&gt; wrote:<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">On Wed, Oct 14, 2020 at 08:47:=
-57PM +0200, Anton Kachalov wrote:<br>
-&gt; With moving from root-only environment to unprivileged users&#39; spac=
-e, we<br>
-&gt; need to ensure a smooth transition. To achieve that we need a mechanis=
-m for<br>
-&gt; one-shot per-package scripts that would take care of migration. That&#=
-39;s not<br>
-&gt; only about groups &amp; owners, but a general approach. It&#39;s simil=
-ar to<br>
-&gt; firstboot, but has a different purpose.<br>
-&gt; <br>
-&gt; I&#39;m going to prototype a robust / naive solution to start a servic=
-e before<br>
-&gt; everything else in the system with a condition (non-empty /etc/migrati=
-on.d)<br>
-&gt; and iterate through all files. Each script has to run at list with &qu=
-ot;set -e&quot;<br>
-&gt; to bail out on failures. If the script succeeded -- it will be removed=
-.<br>
-&gt; <br>
-&gt; The tricky part is: what if the script fails? Keep it, ignore the fail=
-ure<br>
-&gt; and proceed with others and then boot the system? Or proceed other scr=
-ipts<br>
-&gt; as well and then enter some &quot;failure state&quot;?<br>
-<br>
-Hi Anton,<br>
-<br>
-I have some high-level questions / ideas about this.<br>
-<br>
-* Would these migrations be restricted to just useradd/groupadd operations?=
-=C2=A0 Or<br>
-=C2=A0 are you trying to create a general framework for &quot;upgrade scrip=
-ts&quot;?<br></blockquote><div><br></div><div>This might be a general frame=
-work.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
-<br>
-* Have you looked at any existing support by Yocto or systemd to provide<br=
->
-=C2=A0 what you need?=C2=A0 Yocto has USERADD_PACKAGES, postinst_intercept.=
-<br>
-=C2=A0 Systemd has firstboot.=C2=A0 There might be other mechanisms I&#39;m=
- not<br>
-=C2=A0 remembering as well.=C2=A0 (I guess you mentioned firstboot).=C2=A0 =
-There is<br>
-=C2=A0 hacky override to install a &quot;@reboot&quot; directive in the cro=
-ntab.<br></blockquote><div><br></div><div>afaik, systemd&#39;s firstboot is=
- only about to run special units right after installation. Once the system =
-is configured, the firstboot units wouldn&#39;t be executed anymore.</div><=
-div>This thread I&#39;ve started to find possible solutions.</div><div>The =
-postinst chunks executed during the image formation (as a part of rpm / deb=
- packages&#39; scripts).</div><div>=C2=A0</div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
-<br>
-* How long would a &quot;migration&quot; be kept around for?=C2=A0 Are we e=
-xpecting<br>
-=C2=A0 that packages provide them forever?<br></blockquote><div><br></div><=
-div>That is a good question because we don&#39;t know how old the firmware =
-is being upgraded. I suppose, that like one-two-whatever release cycles. Th=
-en the update process should be either using an intermediate firmware versi=
-on or forcing the non-volatile storage to be wiped. Regardless of the migra=
-tion scripts, we might have some incompatibilities between two releases tha=
-t will require NV (overlayfs back partition) cleanup.</div><div>=C2=A0</div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-* How do we handle downgrades?=C2=A0 Some systems are set up with a &quot;g=
-olden<br>
-=C2=A0 image&quot; which is locked at manufacturing.=C2=A0 Maybe simple<br>
-=C2=A0 useradd/groupadd calls are innately backwards compatible but I worry=
-<br>
-=C2=A0 about a general framework falling apart.<br></blockquote><div><br></=
-div><div>In general, that&#39;s an issue. Golden-image downgrades should be=
- allowed within a compatible release branch (without wiping data). As above=
-, golden-images might be incompatible and wouldn&#39;t allow downgrades.</d=
-iv><div><br></div><div>The particular migration from root-only users to unp=
-rivileged users should be one way without wiping data. If the downgrade is =
-requested, then it will be required to wipe the data.</div><div>=C2=A0</div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-* Is there some mechanism we should do to run the migrations as part of<br>
-=C2=A0 the upgrade process instead of waiting to the next boot?=C2=A0 The<b=
-r>
-=C2=A0 migrations could be included in the image tarball and thus be signed=
-.<br>
-=C2=A0 That would save time on reboots for checking if the migrations are<b=
-r>
-=C2=A0 done.<br></blockquote><div><br></div><div>Yes, it could be done as a=
- set of scripts during the update process. That is one of the possible appr=
-oaches. This also could be an approach for downgrades. I&#39;m only worryin=
-g about the effort to support downgrades from random version to random vers=
-ion. The least effort with incompatible upgrades / downgrades is to keep sp=
-ecial transition firmware allowing downgrade from current Golden version to=
- the previous Golden version from incompatible branch. For upgrades the lat=
-est version of transition firmware might not be golden. This will require a=
- separate repo with an auto-generated set of scripts to be used to build tr=
-ansition fws.</div><div><br></div><div>=C2=A0</div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">
-<br>
-* Rather than have a single migration script that runs before everything<br=
->
-=C2=A0 else (and is thus serial), you might create a template service<br>
-=C2=A0 (phosphor-migration-@.service) that can be depended on by the servic=
-es<br>
-=C2=A0 needing the migration results.=C2=A0 (ie. service foo depends on<br>
-=C2=A0 migration-foo).<br></blockquote><div><br></div><div>While migration =
-is one-off, it might be safer to run serial one by one.</div><div>=C2=A0</d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-* In a follow up email you mentioned something about hashing.=C2=A0 I was<b=
-r>
-=C2=A0 going to ask how you know when a particular migration has been<br>
-=C2=A0 executed.=C2=A0 Maybe there are some tricks of recording hash values=
- in<br>
-=C2=A0 the RWFS could prevent multiple executions.<br></blockquote><div><br=
-></div><div>We can track the succeeded scripts by touching some file in a d=
-irectory like /var/lib/migration (e.g. create a file named as sha-sum of th=
-e runned script).</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
-ding-left:1ex">
-<br>
--- <br>
-Patrick Williams<br>
-</blockquote></div></div>
-</blockquote></div>
-
---000000000000e57f6705b218721b--
