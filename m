@@ -2,67 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B14ED29358C
-	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 09:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CCD44293951
+	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 12:44:44 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CFlHB462VzDqVl
-	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 18:14:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CFqy03W9rzDqXK
+	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 21:44:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f44;
- helo=mail-qv1-xf44.google.com; envelope-from=joel.stan@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=XzEidc1j; dkim-atps=neutral
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com
- [IPv6:2607:f8b0:4864:20::f44])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=mgANk1fm; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CFlGG4W7gzDqQt;
- Tue, 20 Oct 2020 18:13:22 +1100 (AEDT)
-Received: by mail-qv1-xf44.google.com with SMTP id bl9so416883qvb.10;
- Tue, 20 Oct 2020 00:13:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=PA9Wa1SiY6hyH8FIU50gSMSHYgRTDfYciP+5Dx8W34s=;
- b=XzEidc1j3N/4sD7YZjTcKaCT5N+dqpIimWd6+RnFSCNH5kdHm+AYT1mNcciLT7VlVJ
- POc6hqBRw1mP+KNalXcEdAgAZDdgQWBWLXL0zm1166LDpoVqYVJeAn3XstkYuvL3Qzge
- JEy+ZczvzwOxpLdKHGKpCVHWWvFgwoC/zPCrk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=PA9Wa1SiY6hyH8FIU50gSMSHYgRTDfYciP+5Dx8W34s=;
- b=bA8E58iZZ2uMsuJSqSXJuPEW96gukcGlIricJcViSs8Tb6Wff39YkpKGTbzPren+YO
- HATp6PHYDSKFou68wYsPQKOI4v6V0pajYwWshY+s27/H9JayKJbrhDLQvHATx97/3Ag3
- vblW58dpPp58Xae5JlCWeU0Oc/WUFAEh7Z9r5mFXa/j0679wLwVaSy0fGmzeue/sKpRa
- O1dUwE8wSaO5D5vqKkdSVzf4JQWlxtUlM5HsFO8WEeBejyka4+ZnufE/WV+znRknayA2
- 27KFNlK7MkH4GiyEhj1YXL5wvcE5ylGpnZ4tsvSEY3Nr3tv9wyViZtu2U2dm9CP5eaHG
- DLDA==
-X-Gm-Message-State: AOAM533oO78+uMaWO/f62pIQe5LYegOM7rt8MJQ0B1tG2ZOZrTuE9R++
- /leq2KliP5Xnru8RisKL/qavmTdZDAt4qkr+rYY=
-X-Google-Smtp-Source: ABdhPJw4XY9rW9EJ2taaPzlNLDZ3itQS/JkWnqB6+HKcVZOvGs56YafEB2G9/ugJ6/j5nkkwiDJQwWKU/EUOxf5hYE4=
-X-Received: by 2002:a05:6214:11e4:: with SMTP id
- e4mr1682340qvu.61.1603177997875; 
- Tue, 20 Oct 2020 00:13:17 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CFqxF2sppzDqS2
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 21:44:00 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09KAWbCK033749; Tue, 20 Oct 2020 06:43:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type; s=pp1; bh=/efPDl84KSoL19mS/uQoT+EhVcsyFtwLPusaFWWzvzU=;
+ b=mgANk1fmQvNYWVG7ZtUKTtj4M9H/hesmXbNC0DUwA8t1TOI51sFf3SUHPpP0iwxOnoBv
+ qkvTu1DMDXEZ+Ojcla/dKBOqRPGpFezb1ZxsblhWhdJFN54iVvm/cddCdVpqBWbFLkm1
+ NEAHnVOI3ezlb0WEriOy7Dk3Gpqe/vxif146WsG8lNd7DxjmJr+91cA9w+sYfIbgEvbN
+ GGs+lg7ffTLzGfs3fRNaPbL+5YBWadtfejMQr5mZL7eh/Zy2B8EL97fYNMqZI/a35ho5
+ g1/gbZ0azAQjBi8zri4I2n0bYrbWufQEK5SeLUp9TglOB1nDK6mvdZpyvEXO4qrONJJi 8w== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 349wrs9bje-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Oct 2020 06:43:56 -0400
+Received: from m0098399.ppops.net (m0098399.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09KAZgSe047386;
+ Tue, 20 Oct 2020 06:43:56 -0400
+Received: from ppma01fra.de.ibm.com (46.49.7a9f.ip4.static.sl-reverse.com
+ [159.122.73.70])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 349wrs9bhm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Oct 2020 06:43:55 -0400
+Received: from pps.filterd (ppma01fra.de.ibm.com [127.0.0.1])
+ by ppma01fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09KAg0oJ015946;
+ Tue, 20 Oct 2020 10:43:53 GMT
+Received: from b06avi18878370.portsmouth.uk.ibm.com
+ (b06avi18878370.portsmouth.uk.ibm.com [9.149.26.194])
+ by ppma01fra.de.ibm.com with ESMTP id 347r881kyq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 20 Oct 2020 10:43:53 +0000
+Received: from d06av26.portsmouth.uk.ibm.com (d06av26.portsmouth.uk.ibm.com
+ [9.149.105.62])
+ by b06avi18878370.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id 09KAhpJw35455486
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 20 Oct 2020 10:43:51 GMT
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C890AE05A;
+ Tue, 20 Oct 2020 10:43:51 +0000 (GMT)
+Received: from d06av26.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 11223AE053;
+ Tue, 20 Oct 2020 10:43:50 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.102.28.32])
+ by d06av26.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Tue, 20 Oct 2020 10:43:49 +0000 (GMT)
+Subject: Re: Using bios-settings-mgr for setting hypervisor network attributes
+To: manoj kiran <manojkiran.eda@gmail.com>, Ed Tanous <ed@tanous.net>,
+ patrick@stwcx.xyz
+References: <97d247f7-bd23-801d-2a5e-5820933a1282@linux.vnet.ibm.com>
+ <4B316236-8010-4FAF-AF42-5B2B764247FB@getmailspring.com>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Message-ID: <b2b4c23a-0be4-8b76-20a2-dc689161490c@linux.vnet.ibm.com>
+Date: Tue, 20 Oct 2020 16:13:49 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-References: <20201019085717.32413-1-dylan_hung@aspeedtech.com>
- <20201019085717.32413-2-dylan_hung@aspeedtech.com>
- <be7a978c48c9f1c6c29583350dee6168385c3039.camel@kernel.crashing.org>
- <CACPK8XdECaKwdQgWFQ=sRBiCjDLXHtMKo=o-xQZPmMZyevOukQ@mail.gmail.com>
- <d5c4682b3e049f7dac66b17e7a726b8c20ee5789.camel@kernel.crashing.org>
-In-Reply-To: <d5c4682b3e049f7dac66b17e7a726b8c20ee5789.camel@kernel.crashing.org>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 20 Oct 2020 07:13:05 +0000
-Message-ID: <CACPK8Xdyw7eSw6RqJcku_PHANviovmkbjNSONAB4_K+_+Tt1KQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] ftgmac100: Fix race issue on TX descriptor[0]
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <4B316236-8010-4FAF-AF42-5B2B764247FB@getmailspring.com>
+Content-Type: multipart/alternative;
+ boundary="------------696BC5CE9ACF1718D4C6A219"
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.687
+ definitions=2020-10-20_04:2020-10-20,
+ 2020-10-20 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0
+ suspectscore=0 clxscore=1011 lowpriorityscore=0 impostorscore=0
+ malwarescore=0 mlxscore=0 phishscore=0 mlxlogscore=999 spamscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010200065
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,201 +107,540 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Po-Yu Chuang <ratbert@faraday-tech.com>, netdev@vger.kernel.org,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, Dylan Hung <dylan_hung@aspeedtech.com>,
- "David S . Miller" <davem@davemloft.net>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 20 Oct 2020 at 06:23, Benjamin Herrenschmidt
-<benh@kernel.crashing.org> wrote:
->
-> On Tue, 2020-10-20 at 04:13 +0000, Joel Stanley wrote:
-> > On Mon, 19 Oct 2020 at 23:20, Benjamin Herrenschmidt
-> > <benh@kernel.crashing.org> wrote:
-> > >
-> > > On Mon, 2020-10-19 at 16:57 +0800, Dylan Hung wrote:
-> > > > These rules must be followed when accessing the TX descriptor:
-> > > >
-> > > > 1. A TX descriptor is "cleanable" only when its value is non-zero
-> > > > and the owner bit is set to "software"
-> > >
-> > > Can you elaborate ? What is the point of that change ? The owner
-> > > bit
-> > > should be sufficient, why do we need to check other fields ?
-> >
-> > I would like Dylan to clarify too. The datasheet has a footnote below
-> > the descriptor layout:
-> >
-> >  - TXDES#0: Bits 27 ~ 14 are valid only when FTS = 1
-> >  - TXDES#1: Bits 31 ~ 0 are valid only when FTS = 1
-> >
-> > So the ownership bit (31) is not valid unless FTS is set. However,
-> > this isn't what his patch does. It adds checks for EDOTR.
->
-> No I think it adds a check for everything except EDOTR which just marks
-> the end of ring and needs to be ignored in the comparison.
+This is a multi-part message in MIME format.
+--------------696BC5CE9ACF1718D4C6A219
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Of course. I missed the invert.
+Hi Ed,Pattrick
 
-I did some testing with just this patch (and "[4/4] ftgmac100: Restart
-MAC HW once") from Dylan. It seemed to resolve the hang, but there
-were occasional retries. Putting in some tracing I only hit the
-condition in ftgmac100_tx_complete_packet, never in
-ftgmac100_hard_start_xmit.
+Thanks for your suggestions,
 
-> That said, we do need a better explanation.
->
-> One potential bug I did find by looking at my code however is:
->
-> static bool ftgmac100_tx_complete_packet(struct ftgmac100 *priv)
-> {
->         struct net_device *netdev = priv->netdev;
->         struct ftgmac100_txdes *txdes;
->         struct sk_buff *skb;
->         unsigned int pointer;
->         u32 ctl_stat;
->
->         pointer = priv->tx_clean_pointer;
->         txdes = &priv->txdes[pointer];
->
->         ctl_stat = le32_to_cpu(txdes->txdes0);
->         if (ctl_stat & FTGMAC100_TXDES0_TXDMA_OWN)
->                 return false;
->
->         skb = priv->tx_skbs[pointer];
->         netdev->stats.tx_packets++;
->         netdev->stats.tx_bytes += skb->len;
->         ftgmac100_free_tx_packet(priv, pointer, skb, txdes, ctl_stat);
->         txdes->txdes0 = cpu_to_le32(ctl_stat & priv->txdes0_edotr_mask);
->
->   ^^^^ There should probably be an smp_wmb() here to ensure that all the above
-> stores are visible before the tx clean pointer is updated.
->
->         priv->tx_clean_pointer = ftgmac100_next_tx_pointer(priv, pointer);
->
->         return true;
-> }
->
-> Similarly we probablu should have one before setting tx_pointer in start_xmit().
+Any choice with the below two proposals?
 
-I added the two smp_wmb you suggested (with only 4/4 applied). This
-did the trick; iperf on a gigabit link is running well with no
-retries.
+1/
 
-diff --git a/drivers/net/ethernet/faraday/ftgmac100.c
-b/drivers/net/ethernet/faraday/ftgmac100.c
-index 331d4bdd4a67..15cdfeb135b0 100644
---- a/drivers/net/ethernet/faraday/ftgmac100.c
-+++ b/drivers/net/ethernet/faraday/ftgmac100.c
-@@ -653,6 +653,11 @@ static bool ftgmac100_tx_complete_packet(struct
-ftgmac100 *priv)
-     ftgmac100_free_tx_packet(priv, pointer, skb, txdes, ctl_stat);
-     txdes->txdes0 = cpu_to_le32(ctl_stat & priv->txdes0_edotr_mask);
+How about using the Redfish Bios schema for redfish data modeling and Bios-settings
+manager as backend to make the things simpler?
 
-+    /* Ensure the descriptor config is visible before setting the tx
-+     * pointer.
-+     */
-+    smp_wmb();
-+
-     priv->tx_clean_pointer = ftgmac100_next_tx_pointer(priv, pointer);
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29670
+https://gerrit.openbmc-project.xyz/c/openbmc/bios-settings-mgr/+/35563
 
-     return true;
-@@ -806,6 +811,11 @@ static netdev_tx_t
-ftgmac100_hard_start_xmit(struct sk_buff *skb,
-     dma_wmb();
-     first->txdes0 = cpu_to_le32(f_ctl_stat);
+                                   *or*
 
-+    /* Ensure the descriptor config is visible before setting the tx
-+     * pointer.
-+     */
-+    smp_wmb();
-+
-     /* Update next TX pointer */
-     priv->tx_pointer = pointer;
+2/
 
-I left the test running while writing this email and I did start to
-see some retries. I'm not sure if that's because my laptop is one of
-the test machines, or if we have another issue.
+Redfish EthernetSchema at redfish data modelling and phosphor-settings at backend(D-bus object)
+                                      +
 
-I will do some further testing over night.
+Some code which writes the data from settings Dbus object to bios-settings as PLDM is having infra to read from the BIOS-Settings table and send the bios table to Hypervisor.
 
-Cheers,
+NOTE: In the later case we don't have way in redfish to show the pending values.we can only show the configured values.
 
-Joel
+Ratan
 
+
+On 10/16/20 5:10 PM, manoj kiran wrote:
+> Hi Ed/Ratan,
 >
-> As for the read side of this, I'm not 100% sure, I'll have to think more about
-> it, it *think* the existing barriers are sufficient at first sight.
+> Just bumping this thread again to see if we can get to a conclusion on
+> this problem.
 >
-> Cheers,
-> Ben.
+> Thanks,
+> Manoj
 >
-> > >
-> > > > 2. A TX descriptor is "writable" only when its value is zero
-> > > > regardless the edotr mask.
-> > >
-> > > Again, why is that ? Can you elaborate ? What race are you trying
-> > > to
-> > > address here ?
-> > >
-> > > Cheers,
-> > > Ben.
-> > >
-> > > > Fixes: 52c0cae87465 ("ftgmac100: Remove tx descriptor accessors")
-> > > > Signed-off-by: Dylan Hung <dylan_hung@aspeedtech.com>
-> > > > Signed-off-by: Joel Stanley <joel@jms.id.au>
-> > > > ---
-> > > >  drivers/net/ethernet/faraday/ftgmac100.c | 10 ++++++++++
-> > > >  1 file changed, 10 insertions(+)
-> > > >
-> > > > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > b/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > index 00024dd41147..7cacbe4aecb7 100644
-> > > > --- a/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
-> > > > @@ -647,6 +647,9 @@ static bool
-> > > > ftgmac100_tx_complete_packet(struct
-> > > > ftgmac100 *priv)
-> > > >       if (ctl_stat & FTGMAC100_TXDES0_TXDMA_OWN)
-> > > >               return false;
-> > > >
-> > > > +     if ((ctl_stat & ~(priv->txdes0_edotr_mask)) == 0)
-> > > > +             return false;
-> > > > +
-> > > >       skb = priv->tx_skbs[pointer];
-> > > >       netdev->stats.tx_packets++;
-> > > >       netdev->stats.tx_bytes += skb->len;
-> > > > @@ -756,6 +759,9 @@ static netdev_tx_t
-> > > > ftgmac100_hard_start_xmit(struct sk_buff *skb,
-> > > >       pointer = priv->tx_pointer;
-> > > >       txdes = first = &priv->txdes[pointer];
-> > > >
-> > > > +     if (le32_to_cpu(txdes->txdes0) & ~priv->txdes0_edotr_mask)
-> > > > +             goto drop;
-> > > > +
-> > > >       /* Setup it up with the packet head. Don't write the head
-> > > > to
-> > > > the
-> > > >        * ring just yet
-> > > >        */
-> > > > @@ -787,6 +793,10 @@ static netdev_tx_t
-> > > > ftgmac100_hard_start_xmit(struct sk_buff *skb,
-> > > >               /* Setup descriptor */
-> > > >               priv->tx_skbs[pointer] = skb;
-> > > >               txdes = &priv->txdes[pointer];
-> > > > +
-> > > > +             if (le32_to_cpu(txdes->txdes0) & ~priv-
-> > > > > txdes0_edotr_mask)
-> > > >
-> > > > +                     goto dma_err;
-> > > > +
-> > > >               ctl_stat = ftgmac100_base_tx_ctlstat(priv,
-> > > > pointer);
-> > > >               ctl_stat |= FTGMAC100_TXDES0_TXDMA_OWN;
-> > > >               ctl_stat |= FTGMAC100_TXDES0_TXBUF_SIZE(len);
+> On Oct 1 2020, at 4:47 pm, Ratan Gupta <ratagupt@linux.vnet.ibm.com> wrote:
 >
+>> On 9/30/20 9:26 PM, Ed Tanous wrote:
+>>
+>>> On Wed, Sep 30, 2020 at 8:05 AM Ratan Gupta
+>>> <ratagupt@linux.vnet.ibm.com> wrote:
+>>>
+>>>
+>>>> Thanks all for providing the suggestions
+>>>>
+>>>> Currently Redfish Ethernet interface is not having the concept of
+>>>> pending and configured values,That means if we use the EthernetInterface
+>>>> schema, User can only see the configured values, There is no way through
+>>>> which user can see the pending value, We need to come up with some REST
+>>>> API to show the pending values.
+>>>>
+>>>> To solve this problem, Redfish has bios schema whch has the pending
+>>>> attributes as well as the configured attributes
+>>>>
+>>> Did not realize that about the Redfish schema.  Sounds like we need
+>>> both then.
+>> https://redfish.dmtf.org/schemas/v1/Bios.v1_1_1.json
+>>
+>> The Bios schema contains properties related to the BIOS attribute
+>> registry. The attribute registry describes the system-specific BIOS
+>> attributes and actions for changing to BIOS settings. Changes to the
+>> BIOS typically require a system reset before they take effect. It is
+>> likely that a client finds the `@Redfish.Settings` term in this
+>> resource, and if it is found, the client makes requests to change BIOS
+>> settings by modifying the resource identified by the
+>> `@Redfish.Settings` term."
+>>
+>>
+>>>
+>>>> How about using the Redfish Bios schema for front end and Bios-settings
+>>>> manager as backend to make the things simpler?
+>>>>
+>>> I'm not quite following.  Are you saying put the pending settings in
+>>> the webserver?
+>>>
+>> No, I was mentioning that instead of using the EthernetInterface
+>> schema , Can we use theBios schema for the network configuration and
+>> this bios schema is backed up with bios-settings manager D-bus Repo.
+>>
+>> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29670
+>>
+>> https://gerrit.openbmc-project.xyz/c/openbmc/bios-settings-mgr/+/35563
+>>
+>>
+>>>
+>>>> Ratan
+>>>>
+>>>> On 9/24/20 9:06 PM, Ed Tanous wrote:
+>>>>
+>>>>
+>>>>> On Wed, Sep 23, 2020 at 2:26 PM Patrick Williams
+>>>>> <patrick@stwcx.xyz> wrote:
+>>>>>
+>>>>>
+>>>>>> On Wed, Sep 23, 2020 at 01:51:33PM -0700, Ed Tanous wrote:
+>>>>>>
+>>>>>>
+>>>>>>> On Wed, Sep 23, 2020 at 12:24 PM Patrick Williams
+>>>>>>> <patrick@stwcx.xyz> wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>>> On Tue, Sep 22, 2020 at 02:39:04PM +0530, Ratan Gupta wrote:
+>>>>>>>>
+>>>>>>>> It is unfortunate that org.freedesktop.DBus.Properties doesn't
+>>>>>>>> have a
+>>>>>>>> way to set multiple properties as the analogous operation to 'GetAll'.
+>>>>>>>>
+>>>>>>> It was proposed we (OpenBMC) add one while back.  I think it muddies
+>>>>>>> the water of what it means to be a method call, and what it means to
+>>>>>>> be a property, especially for the use case that it was being proposed
+>>>>>>> to cover.
+>>>>>>>
+>>>>>> I'm not sure why it would be considered mudding the water.  All property
+>>>>>> Get/Set/GetAll operations really are just a method call under the covers
+>>>>>> anyhow to org.freedesktop.DBus.Properties.  I do think that
+>>>>>> ideally we'd
+>>>>>> get the method added directly to that interface because then the DBus
+>>>>>> bindings will support it natively.
+>>>>>>
+>>>>> Mudding the water of when to use a property, versus when to use a
+>>>>> method call (yes, properties are method calls underneath).  If there's
+>>>>> a method call, the dependency between the parameters is documented in
+>>>>> the interface, with a SetProperties method call, it isn't, and you
+>>>>> have to rely on just knowing, or it being implementation defined.  In
+>>>>> those cases, I'd much rather the itnerface make the jump straight
+>>>>> to a
+>>>>> method call, and skip properties entirely.
+>>>>>
+>>>>>
+>>>>>
+>>>>>> I forgot the mention this again, but another way to solve it is similar
+>>>>>> to xyz.openbmc_project.Inventory.Manager where you take a fully (or
+>>>>>> partially) formed object as a method parameter and the process which
+>>>>>> hosts Inventory.Manager hosts the object.  Settings could be done the
+>>>>>> same way.  The issue is, again, having other processes know when
+>>>>>> to use
+>>>>>> this new method and when to just update properties.
+>>>>>>
+>>>>> This tends to be the pattern we use.  My usual take on it when I
+>>>>> see a
+>>>>> new interface is, if the create method exists, use it.
+>>>>>
+>>>>>
+>>>>>
+>>>>>>>> When all of our DBus objects were serial we likely never had
+>>>>>>>> this issue
+>>>>>>>> because the request to read the properties (to send to the hypervisor)
+>>>>>>>> would come behind the signal and subsequent property updates.
+>>>>>>>> Now that
+>>>>>>>> we're moving towards more ASIO we likely will see this kind of issue
+>>>>>>>> more often.  I don't like it but we could certainly proposal a
+>>>>>>>> 'SetMultiple' extension to org.freedesktop or create our own interface.
+>>>>>>>>
+>>>>>>> If you have properties that need to be set in lockstep with one
+>>>>>>> another to be valid, I suspect that indicates that properties are not
+>>>>>>> the right tool.  Redfish hits this a lot, where each resource is
+>>>>>>> expected that any property is modifiable independently, and certain
+>>>>>>> implementations need an atomic "unit" of update.  bmcweb doesn't want
+>>>>>>> to have to cache properties that are collectively invalid right now,
+>>>>>>> but might become valid in the future, so there's an impasse.  Who
+>>>>>>> keeps the state while it's invalid?  Thus Far, that falls to the
+>>>>>>> dbus-daemons to store.
+>>>>>>>
+>>>>>> Agreed.  This has also been a general statement  we've made in reviews
+>>>>>> for new interfaces.  "If you need to update multiple properties, use
+>>>>>> a method; if you are just updating a single property, update the property."
+>>>>>>
+>>>>> +1
+>>>>>
+>>>>>
+>>>>>
+>>>>>>>> We could define an interface to implement something like
+>>>>>>>> Proposal #1,
+>>>>>>>> but we would need a new interface and not a property we tack onto
+>>>>>>>> existing interfaces.  We'd probably need to revisit a lot of our
+>>>>>>>> interface definitions and see which ones typicallly have multi-property
+>>>>>>>> updates and does an intermediate state leave us in a bad situation.
+>>>>>>>>
+>>>>>>>> Specifically for BIOS/Hypervisor settings, I mentioned before
+>>>>>>>> that it
+>>>>>>>> isn't clear to me what the proposal is for applying Pending to Current.
+>>>>>>>> Again, this isn't general, but we could define an interface
+>>>>>>>> specific for
+>>>>>>>> BIOS/Hypervisor settings which has a way to indicate 'Pending
+>>>>>>>> transaction is complete' (set by entities like Redfish) and 'Pending
+>>>>>>>> values applied to Current' (set by entities like PLDM).  For the current
+>>>>>>>> settings-style values though, this requires external interfaces to
+>>>>>>>> somehow know that the setting is associated with the Host in
+>>>>>>>> order to do
+>>>>>>>> the application, since BMC-owned properties won't have or need this.
+>>>>>>>>
+>>>>>>> Dumb question: Does anyone actually need to know the "current" value?
+>>>>>>> Redfish certainly would need to return  the "pending" value in all
+>>>>>>> cases, as it's required so the restful API emulates ACID-like
+>>>>>>> compliance to the user.  Could we just have an optional interface that
+>>>>>>> indicates "values might not be loaded yet" and simplify the dbus
+>>>>>>> API a
+>>>>>>> little?
+>>>>>>>
+>>>>>> I think this is generally for humans in the case of BIOS settings.
+>>>>>>     - "What is the setting my system is currently running with?"
+>>>>>>     - "What will happen next time I reboot?"
+>>>>>>
+>>>>> I wonder if we could make a logging API for humans to use, and keep
+>>>>> the "present" things off dbus.  It seems like it would simplify the
+>>>>> implementation quite a bit. <thinking out loud a little>
+>>>>>
+>>>>>
+>>>>>
+>>>>>> I don't know how this is modeled in Redfish.
+>>>>>>
+>>>>>> --
+>>>>>> Patrick Williams
+>>>>>>
+
+--------------696BC5CE9ACF1718D4C6A219
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <pre>Hi Ed,Pattrick</pre>
+    <pre>Thanks for your suggestions,</pre>
+    <pre>Any choice with the below two proposals?
+</pre>
+    <pre class="moz-quote-pre" wrap="">1/ 
+
+How about using the Redfish Bios schema for redfish data modeling and Bios-settings
+manager as backend to make the things simpler?
+
+<a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29670">https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29670</a>
+<a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/bios-settings-mgr/+/35563">https://gerrit.openbmc-project.xyz/c/openbmc/bios-settings-mgr/+/35563</a>
+
+                                  <b> or</b>
+
+2/
+
+Redfish EthernetSchema at redfish data modelling and phosphor-settings at backend(D-bus object) 
+                                     +
+
+Some code which writes the data from settings Dbus object to bios-settings as PLDM is having infra to read from the BIOS-Settings table and send the bios table to Hypervisor.
+
+NOTE: In the later case we don't have way in redfish to show the pending values.we can only show the configured values.
+
+Ratan
+
+
+</pre>
+    <div class="moz-cite-prefix">On 10/16/20 5:10 PM, manoj kiran wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:4B316236-8010-4FAF-AF42-5B2B764247FB@getmailspring.com">
+      <pre class="moz-quote-pre" wrap="">Hi Ed/Ratan, 
+
+Just bumping this thread again to see if we can get to a conclusion on
+this problem.
+
+Thanks,
+Manoj
+
+On Oct 1 2020, at 4:47 pm, Ratan Gupta <a class="moz-txt-link-rfc2396E" href="mailto:ratagupt@linux.vnet.ibm.com">&lt;ratagupt@linux.vnet.ibm.com&gt;</a> wrote:
+
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">On 9/30/20 9:26 PM, Ed Tanous wrote:
+
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">On Wed, Sep 30, 2020 at 8:05 AM Ratan Gupta
+<a class="moz-txt-link-rfc2396E" href="mailto:ratagupt@linux.vnet.ibm.com">&lt;ratagupt@linux.vnet.ibm.com&gt;</a> wrote:
+
+
+</pre>
+          <blockquote type="cite">
+            <pre class="moz-quote-pre" wrap="">Thanks all for providing the suggestions
+
+Currently Redfish Ethernet interface is not having the concept of
+pending and configured values,That means if we use the EthernetInterface
+schema, User can only see the configured values, There is no way through
+which user can see the pending value, We need to come up with some REST
+API to show the pending values.
+
+To solve this problem, Redfish has bios schema whch has the pending
+attributes as well as the configured attributes
+
+</pre>
+          </blockquote>
+          <pre class="moz-quote-pre" wrap="">Did not realize that about the Redfish schema.  Sounds like we need
+both then.
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap=""><a class="moz-txt-link-freetext" href="https://redfish.dmtf.org/schemas/v1/Bios.v1_1_1.json">https://redfish.dmtf.org/schemas/v1/Bios.v1_1_1.json</a>
+
+The Bios schema contains properties related to the BIOS attribute
+registry. The attribute registry describes the system-specific BIOS
+attributes and actions for changing to BIOS settings. Changes to the
+BIOS typically require a system reset before they take effect. It is
+likely that a client finds the `@Redfish.Settings` term in this
+resource, and if it is found, the client makes requests to change BIOS
+settings by modifying the resource identified by the
+`@Redfish.Settings` term."
+
+
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">
+
+</pre>
+          <blockquote type="cite">
+            <pre class="moz-quote-pre" wrap="">How about using the Redfish Bios schema for front end and Bios-settings
+manager as backend to make the things simpler?
+
+</pre>
+          </blockquote>
+          <pre class="moz-quote-pre" wrap="">I'm not quite following.  Are you saying put the pending settings in
+the webserver?
+
+</pre>
+        </blockquote>
+        <pre class="moz-quote-pre" wrap="">No, I was mentioning that instead of using the EthernetInterface
+schema , Can we use theBios schema for the network configuration and
+this bios schema is backed up with bios-settings manager D-bus Repo.
+
+<a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29670">https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/29670</a>
+
+<a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/bios-settings-mgr/+/35563">https://gerrit.openbmc-project.xyz/c/openbmc/bios-settings-mgr/+/35563</a>
+
+
+</pre>
+        <blockquote type="cite">
+          <pre class="moz-quote-pre" wrap="">
+
+</pre>
+          <blockquote type="cite">
+            <pre class="moz-quote-pre" wrap="">Ratan
+
+On 9/24/20 9:06 PM, Ed Tanous wrote:
+
+
+</pre>
+            <blockquote type="cite">
+              <pre class="moz-quote-pre" wrap="">On Wed, Sep 23, 2020 at 2:26 PM Patrick Williams
+<a class="moz-txt-link-rfc2396E" href="mailto:patrick@stwcx.xyz">&lt;patrick@stwcx.xyz&gt;</a> wrote:
+
+
+</pre>
+              <blockquote type="cite">
+                <pre class="moz-quote-pre" wrap="">On Wed, Sep 23, 2020 at 01:51:33PM -0700, Ed Tanous wrote:
+
+
+</pre>
+                <blockquote type="cite">
+                  <pre class="moz-quote-pre" wrap="">On Wed, Sep 23, 2020 at 12:24 PM Patrick Williams
+<a class="moz-txt-link-rfc2396E" href="mailto:patrick@stwcx.xyz">&lt;patrick@stwcx.xyz&gt;</a> wrote:
+
+
+</pre>
+                  <blockquote type="cite">
+                    <pre class="moz-quote-pre" wrap="">On Tue, Sep 22, 2020 at 02:39:04PM +0530, Ratan Gupta wrote:
+
+It is unfortunate that org.freedesktop.DBus.Properties doesn't
+have a
+way to set multiple properties as the analogous operation to 'GetAll'.
+
+</pre>
+                  </blockquote>
+                  <pre class="moz-quote-pre" wrap="">It was proposed we (OpenBMC) add one while back.  I think it muddies
+the water of what it means to be a method call, and what it means to
+be a property, especially for the use case that it was being proposed
+to cover.
+
+</pre>
+                </blockquote>
+                <pre class="moz-quote-pre" wrap="">I'm not sure why it would be considered mudding the water.  All property
+Get/Set/GetAll operations really are just a method call under the covers
+anyhow to org.freedesktop.DBus.Properties.  I do think that
+ideally we'd
+get the method added directly to that interface because then the DBus
+bindings will support it natively.
+
+</pre>
+              </blockquote>
+              <pre class="moz-quote-pre" wrap="">Mudding the water of when to use a property, versus when to use a
+method call (yes, properties are method calls underneath).  If there's
+a method call, the dependency between the parameters is documented in
+the interface, with a SetProperties method call, it isn't, and you
+have to rely on just knowing, or it being implementation defined.  In
+those cases, I'd much rather the itnerface make the jump straight
+to a
+method call, and skip properties entirely.
+
+
+
+</pre>
+              <blockquote type="cite">
+                <pre class="moz-quote-pre" wrap="">I forgot the mention this again, but another way to solve it is similar
+to xyz.openbmc_project.Inventory.Manager where you take a fully (or
+partially) formed object as a method parameter and the process which
+hosts Inventory.Manager hosts the object.  Settings could be done the
+same way.  The issue is, again, having other processes know when
+to use
+this new method and when to just update properties.
+
+</pre>
+              </blockquote>
+              <pre class="moz-quote-pre" wrap="">This tends to be the pattern we use.  My usual take on it when I
+see a
+new interface is, if the create method exists, use it.
+
+
+
+</pre>
+              <blockquote type="cite">
+                <pre class="moz-quote-pre" wrap="">
+</pre>
+                <blockquote type="cite">
+                  <pre class="moz-quote-pre" wrap="">
+</pre>
+                  <blockquote type="cite">
+                    <pre class="moz-quote-pre" wrap="">When all of our DBus objects were serial we likely never had
+this issue
+because the request to read the properties (to send to the hypervisor)
+would come behind the signal and subsequent property updates. 
+Now that
+we're moving towards more ASIO we likely will see this kind of issue
+more often.  I don't like it but we could certainly proposal a
+'SetMultiple' extension to org.freedesktop or create our own interface.
+
+</pre>
+                  </blockquote>
+                  <pre class="moz-quote-pre" wrap="">If you have properties that need to be set in lockstep with one
+another to be valid, I suspect that indicates that properties are not
+the right tool.  Redfish hits this a lot, where each resource is
+expected that any property is modifiable independently, and certain
+implementations need an atomic "unit" of update.  bmcweb doesn't want
+to have to cache properties that are collectively invalid right now,
+but might become valid in the future, so there's an impasse.  Who
+keeps the state while it's invalid?  Thus Far, that falls to the
+dbus-daemons to store.
+
+</pre>
+                </blockquote>
+                <pre class="moz-quote-pre" wrap="">Agreed.  This has also been a general statement  we've made in reviews
+for new interfaces.  "If you need to update multiple properties, use
+a method; if you are just updating a single property, update the property."
+
+</pre>
+              </blockquote>
+              <pre class="moz-quote-pre" wrap="">+1
+
+
+
+</pre>
+              <blockquote type="cite">
+                <pre class="moz-quote-pre" wrap="">
+</pre>
+                <blockquote type="cite">
+                  <pre class="moz-quote-pre" wrap="">
+</pre>
+                  <blockquote type="cite">
+                    <pre class="moz-quote-pre" wrap="">We could define an interface to implement something like
+Proposal #1,
+but we would need a new interface and not a property we tack onto
+existing interfaces.  We'd probably need to revisit a lot of our
+interface definitions and see which ones typicallly have multi-property
+updates and does an intermediate state leave us in a bad situation.
+
+Specifically for BIOS/Hypervisor settings, I mentioned before
+that it
+isn't clear to me what the proposal is for applying Pending to Current.
+Again, this isn't general, but we could define an interface
+specific for
+BIOS/Hypervisor settings which has a way to indicate 'Pending
+transaction is complete' (set by entities like Redfish) and 'Pending
+values applied to Current' (set by entities like PLDM).  For the current
+settings-style values though, this requires external interfaces to
+somehow know that the setting is associated with the Host in
+order to do
+the application, since BMC-owned properties won't have or need this.
+
+</pre>
+                  </blockquote>
+                  <pre class="moz-quote-pre" wrap="">Dumb question: Does anyone actually need to know the "current" value?
+Redfish certainly would need to return  the "pending" value in all
+cases, as it's required so the restful API emulates ACID-like
+compliance to the user.  Could we just have an optional interface that
+indicates "values might not be loaded yet" and simplify the dbus
+API a
+little?
+
+</pre>
+                </blockquote>
+                <pre class="moz-quote-pre" wrap="">I think this is generally for humans in the case of BIOS settings.
+   - "What is the setting my system is currently running with?"
+   - "What will happen next time I reboot?"
+
+</pre>
+              </blockquote>
+              <pre class="moz-quote-pre" wrap="">I wonder if we could make a logging API for humans to use, and keep
+the "present" things off dbus.  It seems like it would simplify the
+implementation quite a bit. &lt;thinking out loud a little&gt;
+
+
+
+</pre>
+              <blockquote type="cite">
+                <pre class="moz-quote-pre" wrap="">I don't know how this is modeled in Redfish.
+
+--
+Patrick Williams
+
+</pre>
+              </blockquote>
+            </blockquote>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
+
+--------------696BC5CE9ACF1718D4C6A219--
+
