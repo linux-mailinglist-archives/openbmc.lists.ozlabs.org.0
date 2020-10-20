@@ -1,88 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B0EE2946D8
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 05:07:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0E9E29470D
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 05:42:49 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CGFm04Ck9zDqdj
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 14:07:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CGGXk5RQSzDqRj
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 14:42:46 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=216.205.24.170;
- helo=us-smtp-delivery-170.mimecast.com; envelope-from=neil_bradley@phoenix.com;
+ smtp.mailfrom=aculab.com (client-ip=185.58.86.151;
+ helo=eu-smtp-delivery-151.mimecast.com; envelope-from=david.laight@aculab.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=tq0MRE6r; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=tq0MRE6r; 
- dkim-atps=neutral
-X-Greylist: delayed 106257 seconds by postgrey-1.36 at bilbo;
- Wed, 21 Oct 2020 14:06:52 AEDT
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [216.205.24.170])
+ dmarc=pass (p=none dis=none) header.from=ACULAB.COM
+X-Greylist: delayed 102 seconds by postgrey-1.36 at bilbo;
+ Wed, 21 Oct 2020 00:17:05 AEDT
+Received: from eu-smtp-delivery-151.mimecast.com
+ (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CGFlJ5l0bzDqNJ
- for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 14:06:50 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1603249606;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fOoVkCDJTiYHxCsJ+GGnjOLuKf0MCIDQihPIF8i/e3w=;
- b=tq0MRE6rT0igvAXtYEx1b/a7pRKGs9z17nYuqIy1RBP+5fK/RWLY0bA8xDXGb+cEXxMWci
- Z86NoUjobgy7EF4LmZwEJyoWHJB0jNgq/SHjws/d45HuWN6ABbyVlZPiv6brRs5yKU5dA1
- QHPl2J1tnI33OtnEYBaUtDCdMINz/OM=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1603249606;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fOoVkCDJTiYHxCsJ+GGnjOLuKf0MCIDQihPIF8i/e3w=;
- b=tq0MRE6rT0igvAXtYEx1b/a7pRKGs9z17nYuqIy1RBP+5fK/RWLY0bA8xDXGb+cEXxMWci
- Z86NoUjobgy7EF4LmZwEJyoWHJB0jNgq/SHjws/d45HuWN6ABbyVlZPiv6brRs5yKU5dA1
- QHPl2J1tnI33OtnEYBaUtDCdMINz/OM=
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-431-M_DnTNiXMxukaWFgQHCzMg-1; Tue, 20 Oct 2020 23:06:43 -0400
-X-MC-Unique: M_DnTNiXMxukaWFgQHCzMg-1
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Tue, 20 Oct 2020 20:06:41 -0700
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Tue, 20 Oct 2020 20:06:41 -0700
-From: Neil Bradley <Neil_Bradley@phoenix.com>
-To: Vijay Khemka <vijaykhemka@fb.com>, OpenBMC Maillist
- <openbmc@lists.ozlabs.org>
-Subject: RE: Tioga Pass OEM 0x30/0x38 commands
-Thread-Topic: Tioga Pass OEM 0x30/0x38 commands
-Thread-Index: AdanIx1RPqBBK5fVQxeI3zX+aS9ndP//8dkA//+KSeA=
-Date: Wed, 21 Oct 2020 03:06:41 +0000
-Message-ID: <ee35a01247f14be5a5bb444c2c35bc0e@SCL-EXCHMB-13.phoenix.com>
-References: <1b7930bda58f48a3ad7a5a7c18a707e0@SCL-EXCHMB-13.phoenix.com>
- <4A672CE3-550F-49E6-BBAB-F0EC97DBD2F6@fb.com>
-In-Reply-To: <4A672CE3-550F-49E6-BBAB-F0EC97DBD2F6@fb.com>
-Accept-Language: en-US
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CFvKs1PQwzDqdV
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 00:17:04 +1100 (AEDT)
+Received: from AcuMS.aculab.com (156.67.243.126 [156.67.243.126]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ uk-mta-91-WlibNx1BNMemSMrpm2jZzw-1; Tue, 20 Oct 2020 14:15:12 +0100
+X-MC-Unique: WlibNx1BNMemSMrpm2jZzw-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) with Microsoft SMTP
+ Server (TLS) id 15.0.1347.2; Tue, 20 Oct 2020 14:15:12 +0100
+Received: from AcuMS.Aculab.com ([fe80::43c:695e:880f:8750]) by
+ AcuMS.aculab.com ([fe80::43c:695e:880f:8750%12]) with mapi id 15.00.1347.000; 
+ Tue, 20 Oct 2020 14:15:12 +0100
+From: David Laight <David.Laight@ACULAB.COM>
+To: 'Dylan Hung' <dylan_hung@aspeedtech.com>, Jakub Kicinski
+ <kuba@kernel.org>, Joel Stanley <joel@jms.id.au>
+Subject: RE: [PATCH] net: ftgmac100: Fix missing TX-poll issue
+Thread-Topic: [PATCH] net: ftgmac100: Fix missing TX-poll issue
+Thread-Index: AQHWper5b6m5IMpmJk2Uyk3yAiWzCqmen8qAgACopgCAALYZ4IAAd6yw
+Date: Tue, 20 Oct 2020 13:15:11 +0000
+Message-ID: <f75555e09d47476a871669ffe017c4f8@AcuMS.aculab.com>
+References: <20201019073908.32262-1-dylan_hung@aspeedtech.com>
+ <CACPK8Xfn+Gn0PHCfhX-vgLTA6e2=RT+D+fnLF67_1j1iwqh7yg@mail.gmail.com>
+ <20201019120040.3152ea0b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+In-Reply-To: <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+Accept-Language: en-GB, en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
 x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [50.43.115.205]
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
 Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=neil_bradley@phoenix.com
+ auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
 X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
+X-Mimecast-Originator: aculab.com
 Content-Language: en-US
-Content-Type: multipart/alternative;
- boundary="_000_ee35a01247f14be5a5bb444c2c35bc0eSCLEXCHMB13phoenixcom_"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailman-Approved-At: Wed, 21 Oct 2020 14:42:11 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,130 +71,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, Po-Yu Chuang <ratbert@faraday-tech.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+ "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_ee35a01247f14be5a5bb444c2c35bc0eSCLEXCHMB13phoenixcom_
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+From: Dylan Hung
+> Sent: 20 October 2020 07:15
+>=20
+> > -----Original Message-----
+> > From: Jakub Kicinski [mailto:kuba@kernel.org]
+> >
+> > On Mon, 19 Oct 2020 08:57:03 +0000 Joel Stanley wrote:
+> > > > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c
+> > > > b/drivers/net/ethernet/faraday/ftgmac100.c
+> > > > index 00024dd41147..9a99a87f29f3 100644
+> > > > --- a/drivers/net/ethernet/faraday/ftgmac100.c
+> > > > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
+> > > > @@ -804,7 +804,8 @@ static netdev_tx_t
+> > ftgmac100_hard_start_xmit(struct sk_buff *skb,
+> > > >          * before setting the OWN bit on the first descriptor.
+> > > >          */
+> > > >         dma_wmb();
+> > > > -       first->txdes0 =3D cpu_to_le32(f_ctl_stat);
+> > > > +       WRITE_ONCE(first->txdes0, cpu_to_le32(f_ctl_stat));
+> > > > +       READ_ONCE(first->txdes0);
+> > >
+> > > I understand what you're trying to do here, but I'm not sure that thi=
+s
+> > > is the correct way to go about it.
+> > >
+> > > It does cause the compiler to produce a store and then a load.
+>=20
+> Yes, the load instruction here is to guarantee the previous store is inde=
+ed
+> pushed onto the physical memory.
 
-VGhhbmtzIFZpamF5ISBXZeKAmWxsIGxvb2sgYWdhaW4gY2xvc2VseS4NCg0KV2UgbGl0ZXJhbGx5
-IHRyaWVkIGFsbCBjb21tYW5kcyBpbiB0aGUgMHgzMCBhbmQgMHgzNiBncm91cCBhbmQgYWxsIGNh
-bWUgYmFjayBhcyAweGMxICh1bnNwZWNpZmllZCBlcnJvcikgYW5kIEdldCBGTEFTSCBpbmZvICgw
-eDU1KSBjYW1lIGJhY2sgd2l0aCAweGZmLiBCdXQgbm93IHRoYXQgd2Uga25vdyB3aGVyZSB0byBs
-b29rLCB3ZeKAmWxsIGRvdWJsZSBjaGVjayBvdXIgd29yay4NCg0KVGhhbmsgeW91IQ0KDQotLT5O
-ZWlsDQoNCkZyb206IFZpamF5IEtoZW1rYSA8dmlqYXlraGVta2FAZmIuY29tPg0KU2VudDogVHVl
-c2RheSwgT2N0b2JlciAyMCwgMjAyMCA4OjAzIFBNDQpUbzogTmVpbCBCcmFkbGV5IDxOZWlsX0Jy
-YWRsZXlAcGhvZW5peC5jb20+OyBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmc+DQpTdWJqZWN0OiBSZTogVGlvZ2EgUGFzcyBPRU0gMHgzMC8weDM4IGNvbW1hbmRzDQoN
-Ck9FTSBjb21tYW5kcyBhcmUgaW1wbGVtZW50ZWQgaW4gcmVwbyBmYi1pcG1pLW9lbSwgY2FuIHlv
-dSBwbGVhc2UgcG9pbnQgbWUgdG8gY29tbWFuZCB3aGljaCBhcmUgbm90IGltcGxlbWVudGVkLg0K
-DQpSZWdhcmRzDQotVmlqYXkNCg0KRnJvbTogb3BlbmJtYyA8b3BlbmJtYy1ib3VuY2VzK3ZpamF5
-a2hlbWthPWZiLmNvbUBsaXN0cy5vemxhYnMub3JnPG1haWx0bzpvcGVuYm1jLWJvdW5jZXMrdmlq
-YXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmc+PiBvbiBiZWhhbGYgb2YgTmVpbCBCcmFk
-bGV5IDxOZWlsX0JyYWRsZXlAcGhvZW5peC5jb208bWFpbHRvOk5laWxfQnJhZGxleUBwaG9lbml4
-LmNvbT4+DQpEYXRlOiBUdWVzZGF5LCBPY3RvYmVyIDIwLCAyMDIwIGF0IDE6NTcgUE0NClRvOiBP
-cGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8bWFpbHRvOm9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZz4+DQpTdWJqZWN0OiBUaW9nYSBQYXNzIE9FTSAweDMwLzB4MzggY29t
-bWFuZHMNCg0KR3JlZXRpbmdzIGZlbGxvdyBPcGVuQk1DZXJzIOKAkw0KDQpJIHdhcyBsb29raW5n
-IHRocm91Z2ggdGhlIFRpb2dhIFBhc3MgKFRQKSBwcm9kdWN0IHNwZWNpZmljYXRpb24gYW5kIHNl
-ZSB0aGVyZeKAmXMgYSB0YWJsZSBvZiBPRU0gY29tbWFuZHMgKDB4MzAvMHgzOCkgdGhhdCwgYWZ0
-ZXIgdGVzdGluZyB3aXRoIHRoZSBUUCBCTUMgb24gdGhlIGxhdGVzdCBPcGVuQk1DIHRyZWUsIGhh
-dmUgZm91bmQgdGhleSBhcmUgbm90IHRoZXJlLiBEb2VzIGFueW9uZSBrbm93IHdoZXJlIChvciBp
-ZikgdGhlc2UgY29tbWFuZHMgYXJlIGltcGxlbWVudGVkLCBhbmQgd2hlcmUgdGhleeKAmXJlIGxv
-Y2F0ZWQ/DQoNCkFkZGl0aW9uYWxseSwgaXQgc2VlbXMgbGlrZSBzb21lIG9mIHRoZSBjb21tYW5k
-cyBhcmUgc2VtaS1kdXBsaWNhdGVkIGZ1bmN0aW9uYWxpdHktd2lzZSB3aXRoIHB1c2hpbmcgdGhl
-IGVudGlyZSBTTUJJT1MgdGFibGUgZG93biB0byB0aGUgQk1DLCB3aGljaCB3ZSBhcmUgZG9pbmcg
-Zm9yIG9uZSBvZiBvdXIgY3VzdG9tZXJzLg0KDQpUaGFua3MhDQoNCi0tPk5laWwNCg==
---_000_ee35a01247f14be5a5bb444c2c35bc0eSCLEXCHMB13phoenixcom_
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+That rather depends where the data is 'stuck'.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-V2luZ2RpbmdzOw0KCXBhbm9zZS0xOjUgMCAwIDAgMCAwIDAgMCAwIDA7fQ0KQGZvbnQtZmFjZQ0K
-CXtmb250LWZhbWlseTpQTWluZ0xpVTsNCglwYW5vc2UtMToyIDIgNSAwIDAgMCAwIDAgMCAwO30N
-CkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0
-IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJ
-cGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWls
-eToiXEBQTWluZ0xpVSI7DQoJcGFub3NlLTE6MiAyIDUgMCAwIDAgMCAwIDAgMDt9DQovKiBTdHls
-ZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1h
-bA0KCXttYXJnaW46MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGli
-cmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXttc28tc3R5bGUt
-cHJpb3JpdHk6OTk7DQoJY29sb3I6IzA1NjNDMTsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5l
-O30NCnNwYW4uRW1haWxTdHlsZTIwDQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0K
-CWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRvd3RleHQ7fQ0K
-Lk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXpl
-OjEwLjBwdDt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFy
-Z2luOjEuMGluIDEuMGluIDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpX
-b3JkU2VjdGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNo
-YXBlZGVmYXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRp
-Zl0tLT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0
-Ij4NCjxvOmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0Pjwv
-eG1sPjwhW2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9IiMwNTYz
-QzEiIHZsaW5rPSIjOTU0RjcyIiBzdHlsZT0id29yZC13cmFwOmJyZWFrLXdvcmQiPg0KPGRpdiBj
-bGFzcz0iV29yZFNlY3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlRoYW5rcyBWaWpheSEg
-V2XigJlsbCBsb29rIGFnYWluIGNsb3NlbHkuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPldlIGxp
-dGVyYWxseSB0cmllZCBhbGwgY29tbWFuZHMgaW4gdGhlIDB4MzAgYW5kIDB4MzYgZ3JvdXAgYW5k
-IGFsbCBjYW1lIGJhY2sgYXMgMHhjMSAodW5zcGVjaWZpZWQgZXJyb3IpIGFuZCBHZXQgRkxBU0gg
-aW5mbyAoMHg1NSkgY2FtZSBiYWNrIHdpdGggMHhmZi4gQnV0IG5vdyB0aGF0IHdlIGtub3cgd2hl
-cmUgdG8gbG9vaywgd2XigJlsbCBkb3VibGUgY2hlY2sgb3VyIHdvcmsuPG86cD48L286cD48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPlRoYW5rIHlvdSE8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9
-ImZvbnQtZmFtaWx5OldpbmdkaW5ncyI+w6A8L3NwYW4+TmVpbDxvOnA+PC9vOnA+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2Pg0KPGRpdiBzdHls
-ZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLXRvcDpzb2xpZCAjRTFFMUUxIDEuMHB0O3BhZGRpbmc6My4w
-cHQgMGluIDBpbiAwaW4iPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+RnJvbTo8L2I+IFZpamF5
-IEtoZW1rYSAmbHQ7dmlqYXlraGVta2FAZmIuY29tJmd0OyA8YnI+DQo8Yj5TZW50OjwvYj4gVHVl
-c2RheSwgT2N0b2JlciAyMCwgMjAyMCA4OjAzIFBNPGJyPg0KPGI+VG86PC9iPiBOZWlsIEJyYWRs
-ZXkgJmx0O05laWxfQnJhZGxleUBwaG9lbml4LmNvbSZndDs7IE9wZW5CTUMgTWFpbGxpc3QgJmx0
-O29wZW5ibWNAbGlzdHMub3psYWJzLm9yZyZndDs8YnI+DQo8Yj5TdWJqZWN0OjwvYj4gUmU6IFRp
-b2dhIFBhc3MgT0VNIDB4MzAvMHgzOCBjb21tYW5kczxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8
-L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+T0VNIGNvbW1hbmRzIGFyZSBpbXBsZW1lbnRlZCBpbiByZXBvIGZiLWlw
-bWktb2VtLCBjYW4geW91IHBsZWFzZSBwb2ludCBtZSB0byBjb21tYW5kIHdoaWNoIGFyZSBub3Qg
-aW1wbGVtZW50ZWQuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZu
-YnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlJlZ2FyZHM8bzpwPjwvbzpwPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi1WaWpheTxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9u
-ZTtib3JkZXItdG9wOnNvbGlkICNCNUM0REYgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBp
-biI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEyLjBw
-dDtjb2xvcjpibGFjayI+RnJvbTogPC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEy
-LjBwdDtjb2xvcjpibGFjayI+b3BlbmJtYyAmbHQ7PGEgaHJlZj0ibWFpbHRvOm9wZW5ibWMtYm91
-bmNlcyYjNDM7dmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmciPm9wZW5ibWMtYm91
-bmNlcyYjNDM7dmlqYXlraGVta2E9ZmIuY29tQGxpc3RzLm96bGFicy5vcmc8L2E+Jmd0Ow0KIG9u
-IGJlaGFsZiBvZiBOZWlsIEJyYWRsZXkgJmx0OzxhIGhyZWY9Im1haWx0bzpOZWlsX0JyYWRsZXlA
-cGhvZW5peC5jb20iPk5laWxfQnJhZGxleUBwaG9lbml4LmNvbTwvYT4mZ3Q7PGJyPg0KPGI+RGF0
-ZTogPC9iPlR1ZXNkYXksIE9jdG9iZXIgMjAsIDIwMjAgYXQgMTo1NyBQTTxicj4NCjxiPlRvOiA8
-L2I+T3BlbkJNQyBNYWlsbGlzdCAmbHQ7PGEgaHJlZj0ibWFpbHRvOm9wZW5ibWNAbGlzdHMub3ps
-YWJzLm9yZyI+b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPC9hPiZndDs8YnI+DQo8Yj5TdWJqZWN0
-OiA8L2I+VGlvZ2EgUGFzcyBPRU0gMHgzMC8weDM4IGNvbW1hbmRzPG86cD48L286cD48L3NwYW4+
-PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286
-cD48L3A+DQo8L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkdyZWV0aW5ncyBmZWxsb3cgT3Bl
-bkJNQ2VycyDigJM8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOzxv
-OnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+SSB3YXMgbG9va2luZyB0aHJvdWdo
-IHRoZSBUaW9nYSBQYXNzIChUUCkgcHJvZHVjdCBzcGVjaWZpY2F0aW9uIGFuZCBzZWUgdGhlcmXi
-gJlzIGEgdGFibGUgb2YgT0VNIGNvbW1hbmRzICgweDMwLzB4MzgpIHRoYXQsIGFmdGVyIHRlc3Rp
-bmcgd2l0aCB0aGUgVFAgQk1DIG9uIHRoZSBsYXRlc3QgT3BlbkJNQyB0cmVlLCBoYXZlIGZvdW5k
-IHRoZXkgYXJlIG5vdCB0aGVyZS4gRG9lcyBhbnlvbmUga25vdyB3aGVyZSAob3INCiBpZikgdGhl
-c2UgY29tbWFuZHMgYXJlIGltcGxlbWVudGVkLCBhbmQgd2hlcmUgdGhleeKAmXJlIGxvY2F0ZWQ/
-PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkFkZGl0aW9uYWxseSwgaXQgc2VlbXMgbGlrZSBzb21l
-IG9mIHRoZSBjb21tYW5kcyBhcmUgc2VtaS1kdXBsaWNhdGVkIGZ1bmN0aW9uYWxpdHktd2lzZSB3
-aXRoIHB1c2hpbmcgdGhlIGVudGlyZSBTTUJJT1MgdGFibGUgZG93biB0byB0aGUgQk1DLCB3aGlj
-aCB3ZSBhcmUgZG9pbmcgZm9yIG9uZSBvZiBvdXIgY3VzdG9tZXJzLjxvOnA+PC9vOnA+PC9wPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj5UaGFua3MhPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJz
-cDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250
-LWZhbWlseTpXaW5nZGluZ3MiPsOgPC9zcGFuPk5laWw8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0K
-PC9ib2R5Pg0KPC9odG1sPg0K
---_000_ee35a01247f14be5a5bb444c2c35bc0eSCLEXCHMB13phoenixcom_--
+An old sparc cpu would flush the cpu store buffer before the read.
+But a modern x86 cpu will satisfy the read from the store buffer
+for cached data.
+
+If the write is 'posted' on a PCI(e) bus then the read can't overtake it.
+But that is a memory access so shouldn't be to a PCI(e) address.
+
+Shouldn't dma_wb() actually force your 'cpu to dram' queue be flushed?
+In which case you need one after writing the ring descriptor and
+before the poke of the mac engine.
+
+The barrier before the descriptor write only needs to guarantee
+ordering of the writes - it can probably be a lighter barrier?
+
+It might be that your dma_wmb() needs to do a write+read of
+an uncached DRAM location in order to empty the cpu to dram queue.
+
+=09David
+
+-
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
+PT, UK
+Registration No: 1397386 (Wales)
 
