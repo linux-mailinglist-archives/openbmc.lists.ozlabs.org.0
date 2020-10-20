@@ -1,64 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68FC9294383
-	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 21:51:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB511294421
+	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 22:56:58 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CG44Q4tllzDqgk
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 06:51:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CG5XR6jXbzDqgN
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 07:56:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com; envelope-from=neil_bradley@phoenix.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=82.165.159.6; helo=mout-xforward.kundenserver.de;
- envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=arndb.de
-Received: from mout-xforward.kundenserver.de (mout-xforward.kundenserver.de
- [82.165.159.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CG4305MjTzDqb1;
- Wed, 21 Oct 2020 06:49:41 +1100 (AEDT)
-Received: from mail-qt1-f172.google.com ([209.85.160.172]) by
- mrelayeu.kundenserver.de (mreue012 [212.227.15.129]) with ESMTPSA (Nemesis)
- id 1MEUaQ-1kfLdi2hdi-00Fxof; Tue, 20 Oct 2020 21:49:36 +0200
-Received: by mail-qt1-f172.google.com with SMTP id z33so2218067qth.8;
- Tue, 20 Oct 2020 12:49:35 -0700 (PDT)
-X-Gm-Message-State: AOAM531x4AGRMBw8NNpYX5/GUM9gAgleuHsJLvCnMsCbl2iLZUpKxexH
- j2yBbCZZEK4En4xSaypMNc9cgMWDy5T1fgYhq6M=
-X-Google-Smtp-Source: ABdhPJxahAeCCZ+8cSFCHPbztp1fC8i2fCEFCD3p12STG/2pilYb1GliyL1BTDC01y5E8TslQzleq/H6WGoO9R09SbE=
-X-Received: by 2002:ac8:1ba6:: with SMTP id z35mr3921572qtj.204.1603223374472; 
- Tue, 20 Oct 2020 12:49:34 -0700 (PDT)
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=edaeHAcw; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=C4k16KhO; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CG5Wf2PX6zDqfP
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 07:56:11 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1603227367;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=GzWQozOozElAK5ellgMH8/uQQFNnpa6o5+Lv7SuuBlE=;
+ b=edaeHAcwXzjiWsOsNl8QENZ4JQ5HK1ZfskOOKFQYUp+C5g3mxug734YcVsVbQvfThpmPMx
+ eDzwMQdsOogZ9yZI+CuYxAKUVRCE8lpAZR6xfs9JcjpiPeaArgrUkcbTrTGRKlJyIEQptm
+ MaXh+LcfBh5xJaJCvoKRR5ZtW8OeXdE=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1603227368;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=GzWQozOozElAK5ellgMH8/uQQFNnpa6o5+Lv7SuuBlE=;
+ b=C4k16KhOAFV70irxdDPvEWZ5A38LdXb4dxBKE7kkzCGU71uwwEmqiY1bYsh1pAPalfSJL2
+ tSPdms5JVgLTGW3jA1/RARapeWY4qFhz5BSSJZTUIfx42CdqcP4GVSf3cdFtjkALtc2OGm
+ jVcfWO9ZZhz9vE8JEYh5oChiVvoMFZA=
+Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-78-GyVt9yEVPyetAKBBIGR_iA-1; Tue, 20 Oct 2020 16:56:02 -0400
+X-MC-Unique: GyVt9yEVPyetAKBBIGR_iA-1
+X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
+Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
+ SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Tue, 20 Oct 2020 13:56:00 -0700
+Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
+ SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
+ 15.00.1156.000; Tue, 20 Oct 2020 13:56:00 -0700
+From: Neil Bradley <Neil_Bradley@phoenix.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Tioga Pass OEM 0x30/0x38 commands
+Thread-Topic: Tioga Pass OEM 0x30/0x38 commands
+Thread-Index: AdanIx1RPqBBK5fVQxeI3zX+aS9ndA==
+Date: Tue, 20 Oct 2020 20:55:59 +0000
+Message-ID: <1b7930bda58f48a3ad7a5a7c18a707e0@SCL-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [50.43.115.205]
 MIME-Version: 1.0
-References: <20201019073908.32262-1-dylan_hung@aspeedtech.com>
- <CACPK8Xfn+Gn0PHCfhX-vgLTA6e2=RT+D+fnLF67_1j1iwqh7yg@mail.gmail.com>
- <20201019120040.3152ea0b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
-In-Reply-To: <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Tue, 20 Oct 2020 21:49:17 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2pEfbLDWTppVHmGxXduOWPCwBw-8bMY9h3EbEecsVfTA@mail.gmail.com>
-Message-ID: <CAK8P3a2pEfbLDWTppVHmGxXduOWPCwBw-8bMY9h3EbEecsVfTA@mail.gmail.com>
-Subject: Re: [PATCH] net: ftgmac100: Fix missing TX-poll issue
-To: Dylan Hung <dylan_hung@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:Wuue8FptZxHkS6Ev8m9gZkZWRu7n7UIMCJ+tj2ddX1FXRYEC1sj
- JtXmwTeGskZLgImiZ6Hxq/aEfSa+VojOigMZce3hi0UARopv26NVJYOvttecQrshPq+TymH
- +YZR0HNNMP3pEc1mMaOtPdBF05RLhl3mAqjG/yeMqC7mpvw9usYKrFWIbiUBS9KuC5b7V63
- uewOKP3mksunayOCIkahw==
-X-Spam-Flag: YES
-X-UI-Out-Filterresults: junk:10;V03:K0:VnVq/uvd9NI=:Yd7Ykv8WoaeowXVl7zCXvHME
- Mmr3sbFa/roN/TmKYegsPRTKY32bFJRwTD2wA8nEDWXAchstCEdafotIFqMcv0cSjxkzc0tb+
- nKdIeJSkVR2EaAay0uHXrvNeFyCTvn/EoHRxYPOvq+PyOgZkSFenI5udz8elxQk8py5nC6CQa
- eFbPWqmGuVIiLABV3NtZd6jfJ+DdtUSemj5LLZBgoRLsYQ8jzgKOV/qnhPEiAdd9UPTJ9rCDC
- 31+kZhgJXDCs1NZEx9pJd8UtQu4av27TnIKIS9FrjsvvZj+E9ty4/LhRGSDeIn+GF55tw5BBJ
- 3o/+w99Gzu3cJYfs9Qf7KkT7SFIZ8NVwiSCu/hsvvXPIYiTcp0mx38MO0puu/m0alIy4hqFq6
- JXCaHzskndWTo2V57w+eCghvSF2OJRk8u0aTXGC6uL3rYUqif1jO0UHTffzuNoeSYvIAHFVrg
- qlf32Rj2A7/O9PFgOIFCVQudSddR3cWme2t4mSDs6ZAClyyTjFly35Kheu5dNl7VdJLT1cww=
- =
+X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=neil_bradley@phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Language: en-US
+Content-Type: multipart/alternative;
+ boundary="_000_1b7930bda58f48a3ad7a5a7c18a707e0SCLEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,50 +86,104 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Po-Yu Chuang <ratbert@faraday-tech.com>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 20, 2020 at 11:37 AM Dylan Hung <dylan_hung@aspeedtech.com> wrote:
-> > +1 @first is system memory from dma_alloc_coherent(), right?
-> >
-> > You shouldn't have to do this. Is coherent DMA memory broken on your
-> > platform?
+--_000_1b7930bda58f48a3ad7a5a7c18a707e0SCLEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+Greetings fellow OpenBMCers -
+
+I was looking through the Tioga Pass (TP) product specification and see the=
+re's a table of OEM commands (0x30/0x38) that, after testing with the TP BM=
+C on the latest OpenBMC tree, have found they are not there. Does anyone kn=
+ow where (or if) these commands are implemented, and where they're located?
+
+Additionally, it seems like some of the commands are semi-duplicated functi=
+onality-wise with pushing the entire SMBIOS table down to the BMC, which we=
+ are doing for one of our customers.
+
+Thanks!
+
+-->Neil
+
+--_000_1b7930bda58f48a3ad7a5a7c18a707e0SCLEXCHMB13phoenixcom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> It is about the arbitration on the DRAM controller.  There are two queues in the dram controller, one is for the CPU access and the other is for the HW engines.
-> When CPU issues a store command, the dram controller just acknowledges cpu's request and pushes the request into the queue.  Then CPU triggers the HW MAC engine, the HW engine starts to fetch the DMA memory.
-> But since the cpu's request may still stay in the queue, the HW engine may fetch the wrong data.
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:Wingdings;
+=09panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:"Cambria Math";
+=09panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+=09{font-family:"\@PMingLiU";
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09font-size:11.0pt;
+=09font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+=09{mso-style-type:personal-compose;
+=09font-family:"Calibri",sans-serif;
+=09color:windowtext;}
+.MsoChpDefault
+=09{mso-style-type:export-only;
+=09font-family:"Calibri",sans-serif;}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple" style=3D"word-wrap:brea=
+k-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Greetings fellow OpenBMCers &#8211;<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I was looking through the Tioga Pass (TP) product sp=
+ecification and see there&#8217;s a table of OEM commands (0x30/0x38) that,=
+ after testing with the TP BMC on the latest OpenBMC tree, have found they =
+are not there. Does anyone know where (or
+ if) these commands are implemented, and where they&#8217;re located?<o:p><=
+/o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Additionally, it seems like some of the commands are=
+ semi-duplicated functionality-wise with pushing the entire SMBIOS table do=
+wn to the BMC, which we are doing for one of our customers.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks!<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:Wingdings">&agrave;</span=
+>Neil<o:p></o:p></p>
+</div>
+</body>
+</html>
 
-There is still something missing in the explanation: The iowrite32()
-only tells the
-device that it should check the queue, but not where the data is. I would expect
-the device to either see the correct data that was marked valid by the
-'dma_wmb();first->txdes0 = cpu_to_le32(f_ctl_stat);' operation, or it would see
-the old f_ctl_stat value telling it that the data is not yet valid and
-not look at
-the rest of the descriptor. In the second case you would see the data
-not getting sent out until the next start_xmit(), but the device should not
-fetch wrong data.
+--_000_1b7930bda58f48a3ad7a5a7c18a707e0SCLEXCHMB13phoenixcom_--
 
-There are two possible scenarios in which your patch would still help:
-
-a) the dma_wmb() does not serialize the stores as seen by DMA the
-    way it is supposed to, so the device can observe the new value of txdec0
-    before it observes the correct data.
-
-b) The txdes0 field sometimes contains stale data that marks the
-    descriptor as valid before the correct data is written. This field
-    should have been set in ftgmac100_tx_complete_packet() earlier
-
-If either of the two is the case, then the READ_ONCE() would just
-introduce a long delay before the iowrite32() that makes it more likely
-that the data is there, but the inconsistent state would still be observable
-by the device if it is still working on previous frames.
-
-        Arnd
