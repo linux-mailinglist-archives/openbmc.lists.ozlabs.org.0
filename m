@@ -2,53 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CB50294164
-	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 19:25:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 06487294221
+	for <lists+openbmc@lfdr.de>; Tue, 20 Oct 2020 20:31:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CG0rD0RfqzDqTk
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 04:25:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CG2Jk2F68zDqfc
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 05:31:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=kuba@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=default header.b=kO017b/Y; dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CG0q92gFmzDqP9;
- Wed, 21 Oct 2020 04:24:21 +1100 (AEDT)
-Received: from kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com (unknown
- [163.114.132.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CG2Hs1s4MzDqY2
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 05:30:47 +1100 (AEDT)
+IronPort-SDR: cDXXcufNERfDka1Wdk8qLS9X6U0FymUimE4EgYm+3ypDz3H1GHQupM6e5TMyED0eH9fDCVWTW6
+ lTdBoFPhrEqw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9780"; a="163770387"
+X-IronPort-AV: E=Sophos;i="5.77,398,1596524400"; d="scan'208";a="163770387"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Oct 2020 11:30:44 -0700
+IronPort-SDR: Ugo5mpQUtoWEIXznmLIzwk15l+vEfkijXUaxRUIVYEGbm8HL/BSfhV8NeNBZwVXfwFDP/OGp0g
+ nxJZowXKYfvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.77,398,1596524400"; d="scan'208";a="353421814"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga002.fm.intel.com with ESMTP; 20 Oct 2020 11:30:44 -0700
+Received: from [10.212.202.43] (jmbills-MOBL.amr.corp.intel.com
+ [10.212.202.43])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
  (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 432CA22249;
- Tue, 20 Oct 2020 17:24:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1603214658;
- bh=DLOV96T1YAajXeFM85FxC+biug7p9KERA9RpgNy4x2s=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=kO017b/Y9Z0AmqHgHYhKHLA7oiilB8TKq0BuxXhnKqTDXHTVV9zbakmLO0ZlAsoj4
- Jl7JJ+drc5DUcbWyrGyDqZ4moB6gMhXZOtzvK1pzVX3h8GYTw7Q9GYk7PpSTAK6seP
- 15YPqupbXFS1HU7mu/y6I4524h19vfwpGwX6pd90=
-Date: Tue, 20 Oct 2020 10:24:15 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Subject: Re: [PATCH] net: ftgmac100: Fix missing TX-poll issue
-Message-ID: <20201020102415.52b51895@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <3ebaa814fe21eb7b4b25a2c9455a34434e0207d6.camel@kernel.crashing.org>
-References: <20201019073908.32262-1-dylan_hung@aspeedtech.com>
- <CACPK8Xfn+Gn0PHCfhX-vgLTA6e2=RT+D+fnLF67_1j1iwqh7yg@mail.gmail.com>
- <20201019120040.3152ea0b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <1a02e57b6b7d425a19dc59f84091c38ca4edcf47.camel@kernel.crashing.org>
- <20201019195723.41a5591f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <3ebaa814fe21eb7b4b25a2c9455a34434e0207d6.camel@kernel.crashing.org>
+ by linux.intel.com (Postfix) with ESMTPS id 0FEAC5804BB
+ for <openbmc@lists.ozlabs.org>; Tue, 20 Oct 2020 11:30:44 -0700 (PDT)
+Subject: Re: Critical BMC process failure recovery
+To: openbmc@lists.ozlabs.org
+References: <C270F145-2236-4CA1-8D57-A63AB622A47C@gmail.com>
+ <CAGm54UFr-4iUrd2gSu38gsEXG9cd0y83mi-mk8NOMKRvwHQTMg@mail.gmail.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <a54cbbd2-497e-4ace-b7b3-e290dc52c2e3@linux.intel.com>
+Date: Tue, 20 Oct 2020 11:30:43 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+In-Reply-To: <CAGm54UFr-4iUrd2gSu38gsEXG9cd0y83mi-mk8NOMKRvwHQTMg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -61,51 +66,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arch@vger.kernel.org, BMC-SW <BMC-SW@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Po-Yu Chuang <ratbert@faraday-tech.com>, paulmck@kernel.org,
- netdev@vger.kernel.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Arnd Bergmann <arnd@arndb.de>, Dylan Hung <dylan_hung@aspeedtech.com>,
- "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 20 Oct 2020 17:15:42 +1100 Benjamin Herrenschmidt wrote:
-> On Mon, 2020-10-19 at 19:57 -0700, Jakub Kicinski wrote:
-> > > I suspect the problem is that the HW (and yes this would be a HW bug)
-> > > doesn't order the CPU -> memory and the CPU -> MMIO path.
-> > > 
-> > > What I think happens is that the store to txde0 is potentially still in
-> > > a buffer somewhere on its way to memory, gets bypassed by the store to
-> > > MMIO, causing the MAC to try to read the descriptor, and getting the
-> > > "old" data from memory.  
-> > 
-> > I see, but in general this sort of a problem should be resolved by
-> > adding an appropriate memory barrier. And in fact such barrier should
-> > (these days) be implied by a writel (I'm not 100% clear on why this
-> > driver uses iowrite, and if it matters).  
-> 
-> No, a barrier won't solve this I think.
-> 
-> This is a coherency problem at the fabric/interconnect level. I has to
-> do with the way they implemented the DMA path from memory to the
-> ethernet controller using a different "port" of the memory controller
-> than the one used by the CPU, separately from the MMIO path, with no
-> proper ordering between those busses. Old school design .... and
-> broken.
-> 
-> By doing a read back, they probably force the previous write to memory
-> to get past the point where it will be visible to a subsequent DMA read
-> by the ethernet controller.
 
-Thanks for the explanation. How wonderful :/
 
-It'd still be highly, highly preferable if the platform was conforming
-to the Linux memory model. IO successors (iowrite32 / writel) must
-ensure previous DRAM writes had completed. For performance sensitive
-ops, which don't require ordering we have writel_relaxed etc.
+On 10/19/2020 7:58 PM, Lei Yu wrote:
+> Hi Andrew,
+> 
+> In Intel-BMC/openbmc, there are watchdog configs for every service
+> that in case it fails, it will reset the BMC using the watchdog. See
+> the below related configs and scripts.
+> 
+> https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/classes/systemd-watchdog.bbclass
+> https://github.com/Intel-BMC/openbmc/blob/intel/meta-openbmc-mods/meta-common/recipes-phosphor/watchdog/system-watchdog/watchdog-reset.sh
+> 
+> It probably meets most of the requirements.
+As an FYI - this approach has been very aggressive, so it is resetting 
+more often than we would like and doesn't seem to be recovering some of 
+the cases that it should.
 
-I assume the DRAM controller queue is a straight FIFO and we don't have
-to worry about hitting the same address, so how about we add a read
-of some known uncached address in iowrite32 / writel?
+We are considering disabling this watchdog reset in our platforms for 
+now, and will likely need to refine the approach before we would enable 
+it again.
+
+> 
+> 
+> On Tue, Oct 20, 2020 at 3:54 AM Andrew Geissler <geissonator@gmail.com> wrote:
+>>
+>> Greetings,
+>>
+>> I've started initial investigation into two IBM requirements:
+>>
+>> - Reboot the BMC if a "critical" process fails and can not recover
+>> - Limit the amount of times the BMC reboots for recovery
+>>    - Limit should be configurable, i.e. 3 resets within 5 minutes
+>>    - If limit reached, display error to panel (if one available) and halt
+>>      the BMC.
+>>
+>> The goal here is to have the BMC try and get itself back into a working state
+>> via a reboot of itself.
+>>
+>> This same reboot logic and limits would also apply to kernel panics and/or
+>> BMC hardware watchdog expirations.
+>>
+>> Some thoughts that have been thrown around internally:
+>>
+>> - Spend more time ensuring code doesn't fail vs. handling them failing
+>> - Put all BMC code into a single application so it's all or nothing (vs.
+>>    trying to pick and choose specific applications and dealing with all of
+>>    the intricacies of restarting individual ones)
+>> - Rebooting the BMC and getting the proper ordering of service starts is
+>>    sometimes easier then testing every individual service restart for recovery
+>>    paths
+>>
+>> "Critical" processes would be things like mapper or dbus-broker. There's
+>> definitely a grey area though with other services so we'd need some
+>> guidelines around defining them and allow the meta layers to have a way
+>> to deem whichever they want critical.
+>>
+>> So anyway, just throwing this out there to see if anyone has any input
+>> or is looking for something similar.
+>>
+>> High level, I'd probably start looking into utilizing systemd as much as
+>> possible. "FailureAction=reboot-force" in the critical services and something
+>> that monitors for these types of reboots and enforces the reboot limits.
+>>
+>> Andrew
+> 
+> 
+> 
