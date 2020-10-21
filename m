@@ -2,66 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA4402948C9
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 09:17:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B64A2948EF
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 09:33:21 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CGMJb6Y4yzDqgs
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 18:17:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CGMfk1R8VzDqXQ
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 18:33:18 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::433;
+ helo=mail-wr1-x433.google.com; envelope-from=tajudheenk@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=82.165.159.5; helo=mout-xforward.kundenserver.de;
- envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=arndb.de
-Received: from mout-xforward.kundenserver.de (mout-xforward.kundenserver.de
- [82.165.159.5])
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=rKhXha/y; dkim-atps=neutral
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
+ [IPv6:2a00:1450:4864:20::433])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CGMHn2CKVzDqRW;
- Wed, 21 Oct 2020 18:16:51 +1100 (AEDT)
-Received: from mail-qk1-f175.google.com ([209.85.222.175]) by
- mrelayeu.kundenserver.de (mreue010 [212.227.15.129]) with ESMTPSA (Nemesis)
- id 1Mdevh-1jvWd03Nsf-00Zj7U; Wed, 21 Oct 2020 09:16:44 +0200
-Received: by mail-qk1-f175.google.com with SMTP id i22so1395207qkn.9;
- Wed, 21 Oct 2020 00:16:43 -0700 (PDT)
-X-Gm-Message-State: AOAM533aUGqilSeXCQ9S9iFw0Sfu7XmJpTMf2NqC5s+2c38QYK+wiJLf
- Y9vpS5yYW/qG57PT5MgfYI3PhXWTt3C4QXonLDw=
-X-Google-Smtp-Source: ABdhPJzT+0BTAyszKuh8XWs6KTLmuxjDNAnEbLVPOhi1yCoom3K4THRtelNWH1r1LQF+OyafHzbZAYjAf9Vu2baZA14=
-X-Received: by 2002:a05:620a:74f:: with SMTP id
- i15mr2004909qki.352.1603264602117; 
- Wed, 21 Oct 2020 00:16:42 -0700 (PDT)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CGMdy2rjlzDqVT
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 18:32:29 +1100 (AEDT)
+Received: by mail-wr1-x433.google.com with SMTP id j7so1741241wrt.9
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 00:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=NpBfdgRNHt00G2jidhciRwpnjNAAaPp9oB0hGlwgnkk=;
+ b=rKhXha/y4RxOk6YQFA9bI4/9y/K+kuSm11UDv6Samu14in6TqHn1dJV/YUjU3RA0ZO
+ GfFb6wPm8eC9zOc657iOVHy8fiAosP6blkyoe789GoHGjnRcyZniH4cnEEPMwZhgytat
+ j4EPS0n/nIFoookkwedTGtY3b0rlomKy60N0W5/15wHHHJmXLkEXcNklv1EpV8NGaHrm
+ uEnFcctezKDBB0TDvo4DUjVRbbGRTNxtz2/0V3Oykt8nYR01XUvKVI5xX6BTitvxxCmf
+ usbrIcom+ugxI92XPqOv4x/G7foJVyqdmc9HLhhNFE4QvEVfEDLeJl7fj1X/lnH0blGd
+ 8yJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=NpBfdgRNHt00G2jidhciRwpnjNAAaPp9oB0hGlwgnkk=;
+ b=dFIWPwd0+B+M3mILx/QlZ2WuRcijtRXHYbZSUbYZNnnMTxgUniLphtjV2coTZdwdlR
+ nQ+rBjwZaElvxGWmg4fUd1ioq9a2wUYW6wMNvKfWjNDpVnaVvAsVnEYwsjXZbnDTqACQ
+ /XlIToCZrcW0uF1XBFS8dGTk/9SE0pQlRE7YGDGPLjy2gq7rqN5RtBzpeJ6T84k4ypdb
+ FMvABg0253//eTi500qNb7qMS/gAICABDalnAOLvJXymuiQ+LIFfePb6qDEv1t62iAZG
+ Q232QtB6f1o5nblnhtQg2tfHAWqD/rg+vix9hf8ObAS3Ai9ZV/NsJ477zCQyMwDTsLAp
+ KETQ==
+X-Gm-Message-State: AOAM531a6G489RVTQvNmzeKlQUurtEy+2aANsLG5ltMc/FzaBXm4xs/w
+ egrbRvPxAHIvqspQYhGJQAoLDNPTDk37alw7T+o=
+X-Google-Smtp-Source: ABdhPJwyCOtV/IzqDAPNhWxnZuGYPsV7TPj8PwOQE4wPAKoBaqm5OYpjImTMsKAAQH5Hz+VKeF3Fn6ueDg6d2iAgFck=
+X-Received: by 2002:adf:9c19:: with SMTP id f25mr2965028wrc.366.1603265544079; 
+ Wed, 21 Oct 2020 00:32:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201019073908.32262-1-dylan_hung@aspeedtech.com>
- <CACPK8Xfn+Gn0PHCfhX-vgLTA6e2=RT+D+fnLF67_1j1iwqh7yg@mail.gmail.com>
- <20201019120040.3152ea0b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
- <CAK8P3a2pEfbLDWTppVHmGxXduOWPCwBw-8bMY9h3EbEecsVfTA@mail.gmail.com>
- <32bfb619bbb3cd6f52f9e5da205673702fed228f.camel@kernel.crashing.org>
-In-Reply-To: <32bfb619bbb3cd6f52f9e5da205673702fed228f.camel@kernel.crashing.org>
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Wed, 21 Oct 2020 09:16:25 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2j7fV5EFmC8UvSyvXixU8=Nmp6hrJco-fdP2Z+w8bLnA@mail.gmail.com>
-Message-ID: <CAK8P3a2j7fV5EFmC8UvSyvXixU8=Nmp6hrJco-fdP2Z+w8bLnA@mail.gmail.com>
-Subject: Re: [PATCH] net: ftgmac100: Fix missing TX-poll issue
-To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:UGxHrAqRvOyIzdwEZJMSaHY/jNhBMFAR4Pxk7MRfnNm09YjlwwV
- RbvU4Nn3k23tSBdoBPWarnmDE6RJbwKQ700MI9F/bNBd9pTiMT/0hg5wPT0+QJh8c+gz2Fz
- zIf+Koo9RiMPP2VoDNT+x0Y2wlndFLlhR3VeN/OgDP5Y90umNx8e7//T6L4An9j3bnsFtWf
- hIgnIcyiYFtT82QVwYSIA==
-X-Spam-Flag: YES
-X-UI-Out-Filterresults: junk:10;V03:K0:VGDmNRbwDxc=:+xiwXJDl34cfzyXU7OWMUjme
- EIWop+MmoR59RcCHljHI+22mviYHiDnzFm80FvLkzbBh2NQYRd2cL+7D6dTulXeFNrGgT3tyG
- XKS6GCKvt3uJnfqJ9UJmdp9o02a53N6rkhZdJSyR/gYdcNAUXWyBTNuXGWHDVbN4SMD6C3LKk
- GmS+NW2oXK8h0rFt4Kc13MZ+CB4D8fPNk26uDekdgJ87kgAPuO+g1CcrobiGP9GdlehxhXYiY
- N2Uy/fXYpiEbz/MDwFzHh/p2PkMNLg7tP5YLRz3ZOrb8M25J3p/o8wS0IRBf1lJ5pUKQ2U8uy
- Du4H52PSvTWqeQVWr7y1ls7P3+g2WeT8Z3n3z6ZiTb26FwAsWdIaCfCPG8sjMFjgegbDTEXmk
- oD+xGngYhB9F5R3DC2U2RpwFWxz25VqrgGvo/Gz2joxiXSP+SoB/XB2xGOkO7Oqicm5XLSoBc
- 1GESi/VX0Sb9xxRnc9u3ksw44HYHKKCDJYCfHjGvFiXfW9bD4D26Hk6ogjGrJ4HaIue+Vl/Q=
- =
+References: <60926e52-9d00-2b20-e8ac-7fd515ddac78@yadro.com>
+In-Reply-To: <60926e52-9d00-2b20-e8ac-7fd515ddac78@yadro.com>
+From: Thaj <tajudheenk@gmail.com>
+Date: Wed, 21 Oct 2020 13:02:13 +0530
+Message-ID: <CAH2KKeaBMhU3XDADDE0ieqRRhNBiF57-9rUi+Go-SSJCGG-GBA@mail.gmail.com>
+Subject: Re: Installing Windows Server 2019 from a remotely mounted ISO
+To: Alexander Amelkin <a.amelkin@yadro.com>
+Content-Type: multipart/alternative; boundary="0000000000003c4c9605b2295941"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,110 +72,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Po-Yu Chuang <ratbert@faraday-tech.com>,
- "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, Dylan Hung <dylan_hung@aspeedtech.com>,
- "David S . Miller" <davem@davemloft.net>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 21, 2020 at 12:10 AM Benjamin Herrenschmidt
-<benh@kernel.crashing.org> wrote:
-> On Tue, 2020-10-20 at 21:49 +0200, Arnd Bergmann wrote:
-> > On Tue, Oct 20, 2020 at 11:37 AM Dylan Hung <dylan_hung@aspeedtech.com> wrote:
-> > > > +1 @first is system memory from dma_alloc_coherent(), right?
-> > > >
-> > > > You shouldn't have to do this. Is coherent DMA memory broken on your
-> > > > platform?
-> > >
-> > > It is about the arbitration on the DRAM controller.  There are two queues in the dram controller, one is for the CPU access and the other is for the HW engines.
-> > > When CPU issues a store command, the dram controller just acknowledges cpu's request and pushes the request into the queue.  Then CPU triggers the HW MAC engine, the HW engine starts to fetch the DMA memory.
-> > > But since the cpu's request may still stay in the queue, the HW engine may fetch the wrong data.
+--0000000000003c4c9605b2295941
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Alexander, I am also facing the same issue. Did you find any
+workaround for this ?
+
+On Mon, May 25, 2020 at 4:04 PM Alexander Amelkin <a.amelkin@yadro.com>
+wrote:
+
+> Hi all!
 >
-> Actually, I take back what I said earlier, the above seems to imply
-> this is more generic.
+> We're trying to install Windows Server 2019 from an ISO image mounted as
+> remote media via OpenBMC WebUI.
 >
-> Dylan, please confirm, does this affect *all* DMA capable devices ? If
-> yes, then it's a really really bad design bug in your chips
-> unfortunately and the proper fix is indeed to make dma_wmb() do a dummy
-> read of some sort (what address though ? would any dummy non-cachable
-> page do ?) to force the data out as *all* drivers will potentially be
-> affected.
+> The Windows installer boots, but then says that a media driver is missing.
 >
-> I was under the impression that it was a specific timing issue in the
-> vhub and ethernet parts, but if it's more generic then it needs to be
-> fixed globally.
-
-We have CONFIG_ARM_HEAVY_MB for SoCs with similar problems,
-it turns mb() and wmb() into a platform specific function call, though it
-doesn't do that for dma_wmb() and smp_wmb(), which should not
-be affected if the problem is only missing serialization between DMA
-and CPU writes.
-
-> > If either of the two is the case, then the READ_ONCE() would just
-> > introduce a long delay before the iowrite32() that makes it more likely
-> > that the data is there, but the inconsistent state would still be observable
-> > by the device if it is still working on previous frames.
+> Are there any hints on how to accomplish the task?
 >
-> I think it just get stuck until we try another packet, ie, it doesn't
-> see the new descriptor valid bit. But Dylan can elaborate.
+> Attached is the screenshot of the message we get with Windows Server 2019.
+>
+> With best regards,
+> Alexander.
+>
+> P.S. We're using Intel-BMC version of OpenBMC for the task, but it looks
+> like the remote media part is more or less the same.
+>
+>
 
-Ok, that would point to an insufficient barrier in iowrite32() as well,
-not in dma_wmb().
+--0000000000003c4c9605b2295941
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-At the moment, the only chips that need the heavy barrier are
-omap4 and mstar_v7, and early l2 cache controllers (not the one
-on Cortex-A7) have another synchronization callback that IIRC
-is used for streaming mappings.
+<div dir=3D"ltr">Hi Alexander, I am also facing the same issue. Did you fin=
+d any workaround=C2=A0for this ?</div><br><div class=3D"gmail_quote"><div d=
+ir=3D"ltr" class=3D"gmail_attr">On Mon, May 25, 2020 at 4:04 PM Alexander A=
+melkin &lt;<a href=3D"mailto:a.amelkin@yadro.com">a.amelkin@yadro.com</a>&g=
+t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi all=
+!<br>
+<br>
+We&#39;re trying to install Windows Server 2019 from an ISO image mounted a=
+s <br>
+remote media via OpenBMC WebUI.<br>
+<br>
+The Windows installer boots, but then says that a media driver is missing.<=
+br>
+<br>
+Are there any hints on how to accomplish the task?<br>
+<br>
+Attached is the screenshot of the message we get with Windows Server 2019.<=
+br>
+<br>
+With best regards,<br>
+Alexander.<br>
+<br>
+P.S. We&#39;re using Intel-BMC version of OpenBMC for the task, but it look=
+s <br>
+like the remote media part is more or less the same.<br>
+<br>
+</blockquote></div>
 
-These are the two implementations of soc_mb() we have:
-
-/*
- * This may need locking to deal with situations where an interrupt
- * happens while we are in here and mb() gets called by the interrupt handler.
- *
- * The vendor code did have a spin lock but it doesn't seem to be needed and
- * removing it hasn't caused any side effects so far.
-*
- * [writel|readl]_relaxed have to be used here because otherwise
- * we'd end up right back in here.
- */
-static void mstarv7_mb(void)
-{
-       /* toggle the flush miu pipe fire bit */
-       writel_relaxed(0, l3bridge + MSTARV7_L3BRIDGE_FLUSH);
-       writel_relaxed(MSTARV7_L3BRIDGE_FLUSH_TRIGGER, l3bridge
-                       + MSTARV7_L3BRIDGE_FLUSH);
-       while (!(readl_relaxed(l3bridge + MSTARV7_L3BRIDGE_STATUS)
-                       & MSTARV7_L3BRIDGE_STATUS_DONE)) {
-               /* wait for flush to complete */
-       }
-}
-/*
- * OMAP4 interconnect barrier which is called for each mb() and wmb().
- * This is to ensure that normal paths to DRAM (normal memory, cacheable
- * accesses) are properly synchronised with writes to DMA coherent memory
- * (normal memory, uncacheable) and device writes.
- *
- * The mb() and wmb() barriers only operate only on the MPU->MA->EMIF
- * path, as we need to ensure that data is visible to other system
- * masters prior to writes to those system masters being seen.
- *
- * Note: the SRAM path is not synchronised via mb() and wmb().
- */
-static void omap4_mb(void)
-{
-       if (dram_sync)
-               writel_relaxed(0, dram_sync);
-}
-
-Obviously, adding one of these for ast2600 would slow down every
-mb() and writel() a lot, but if it is a chip-wide problem rather than
-one isolated to the network device, it would be the correct solution,
-provided that a correct code sequence can be found.
-
-      Arnd
+--0000000000003c4c9605b2295941--
