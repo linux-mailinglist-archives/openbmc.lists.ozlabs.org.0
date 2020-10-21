@@ -2,65 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3456E294C8E
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 14:27:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ED834295128
+	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 18:55:27 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CGVB36DRzzDqXL
-	for <lists+openbmc@lfdr.de>; Wed, 21 Oct 2020 23:27:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CGc7H53vCzDqdx
+	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 03:55:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f36;
+ helo=mail-qv1-xf36.google.com; envelope-from=tbnguyen1985@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=ny498izy; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=BM4UdgVY; dkim-atps=neutral
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com
+ [IPv6:2607:f8b0:4864:20::f36])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CGV863196zDqXL
- for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 23:25:42 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id BC208412D8;
- Wed, 21 Oct 2020 12:25:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:date:date:from:from:subject:subject
- :message-id:received:received:received; s=mta-01; t=1603283133;
- x=1605097534; bh=pPJtAKSUqp8FtQFpZO0plycVNmV9eFUI3NDOaisQJro=; b=
- ny498izyAIqxwv3k3GZqlVYDX8pRrIqfQ9sbgf84KHz1NCmt2FIyr0ix4v8Ubu0D
- 5w3XVrKfLAVEUHKg7h+ZKyAxA6P/0p8sP7Cs4XabDXFpmMM5rroN9iqqg5Zvlmln
- QofDHQymowkG5wfJHMPlHWJt2RuOuJGtUnnawRkx43Q=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id RQLzsv-onsGc; Wed, 21 Oct 2020 15:25:33 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 1A71F41280;
- Wed, 21 Oct 2020 15:25:32 +0300 (MSK)
-Received: from [10.199.3.130] (10.199.3.130) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Wed, 21
- Oct 2020 15:25:32 +0300
-Message-ID: <e6f4ab29854ac58a878189c1edece4e8eed2e7fd.camel@yadro.com>
-Subject: [PATCH] peci: Set "Wake On PECI" mode when required
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Joel Stanley <joel@jms.id.au>, "Mihm,James" <james.mihm@intel.com>, "Jae
- Hyun Yoo" <jae.hyun.yoo@linux.intel.com>
-Date: Wed, 21 Oct 2020 15:25:26 +0300
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CGc6R6QCfzDq8M
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 03:54:39 +1100 (AEDT)
+Received: by mail-qv1-xf36.google.com with SMTP id s17so1435881qvr.11
+ for <openbmc@lists.ozlabs.org>; Wed, 21 Oct 2020 09:54:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=NGdkICfqtP5CGzkysKMvuMjvARCKxrqKKtDc6IGXHkk=;
+ b=BM4UdgVYPZgH3VfoXnSC/mAsb6nwJlDoLoNLmZYfO99iwpLyRsyL4h6FfQu6IytywK
+ iG19LLYBFscxvUoKW1V9KicntEfo/mNbnN0AiqFqUueba/UatLy2GVK5+u3Yj7l1CHo6
+ k5PRHTyIbBbcwrRsyNQ89QSqizO/0nC0hqFYcJsB+LiPu6sB8wt4Hx6nMD1S4hqJtS0u
+ PTR/3yUprjd2uTGUxrbG/Stf4ft+oOTXgeAmtH/TVb27qWHXrVLD2tkylq50EmNX+hgn
+ TpmEMbqlDYI09Da5rgsuIdRoHU46TOxNrBFH/U4A0n0cv7d9uNlVhCu6lbslYLphPkPm
+ ttlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=NGdkICfqtP5CGzkysKMvuMjvARCKxrqKKtDc6IGXHkk=;
+ b=S02VGoljL351xVVSry3N4FkGGjdmV5LblqoJ92jx8CILb+zP7kxw0MnC1I+MSzaDIJ
+ iGoiJLI9FwA2niP5E45CYiC+TuTNwWwjzvahj2EHRX88nGXTwYE0FJREE/la2cly2mMM
+ 174Ca+lgg93SizJ+FZIDJG52BeT5pcuP9XZwHdzIjhcHGHqxZEoSPQ+nyGTSZ22Q8G33
+ xYV2Z7MizNTSi8BcGu1NW6liiJM0HAhdTlPNGL4zRJvR6e+5mT5MPt/wY4uSRHZS6svz
+ UkU50s55VUT2KjUAThVcPAXypV0o8mW+I5ZMxyExQowbV0vXDGPVX95tIw0Soa4NfZgR
+ e+aA==
+X-Gm-Message-State: AOAM532w8wODIoueDOH/Gm61BuWrarx/cpzYrT7u6KdUuL/29YkP8RbZ
+ 4ofCxdbdYe+PoJuoCvDygT6qaR6ny2EbamNVDmA=
+X-Google-Smtp-Source: ABdhPJwjAI0x9x2Q1JIG8Aoo9J7aHauF1zn+55QBMyTSaBbTaGn5W9tSAIfPfu8EWtI3nqcAwndcLjNoy2kCCy72gtE=
+X-Received: by 2002:ad4:4105:: with SMTP id i5mr3720023qvp.47.1603299274798;
+ Wed, 21 Oct 2020 09:54:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.3.130]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+ <CACWQX833j+remiYr8qOdrZZ4z3L3D_GX0q6z4MPJDu8J4Nv+Pg@mail.gmail.com>
+ <CALioo36kortxuLPJQmc7xtDVN=jAxPNf481ovFkc2jQfYu8-rg@mail.gmail.com>
+ <90950FB3-E1B3-4ACE-97C5-CB9582A94456@fb.com>
+In-Reply-To: <90950FB3-E1B3-4ACE-97C5-CB9582A94456@fb.com>
+From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
+Date: Wed, 21 Oct 2020 23:54:23 +0700
+Message-ID: <CALioo37b-BjgUdfZz2Vm+=6K6VMYRO9auyuHHo7=AZBFpoBzdw@mail.gmail.com>
+Subject: Re: Enable/Disable some sensors when Host On/Off
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: multipart/alternative; boundary="000000000000be38c005b23133f2"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,153 +75,145 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-RdPCIConfigLocal(), WrPCIConfigLocal(), and RdPCIConfig() PECI commands
-can return "hardware resources are in a low power state". This case
-retrying likely will also fail since wakeup is required.
-Enable "Wake On PECI" mode before retry if processor in low power
-state.
+--000000000000be38c005b23133f2
+Content-Type: text/plain; charset="UTF-8"
 
-Tested: run RdPCIConfigLocal requests and control that there in no more
-timeouts when processor is in low power state. There is no measurable
-impact on request processing time between request succeeded from first
-try before patch and request with wakeup.
+Hi Vijay,
 
-Signed-off-by: Andrei Kartashev <a.kartashev@yadro.com>
----
- drivers/peci/peci-core.c | 88 ++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 85 insertions(+), 3 deletions(-)
+I took a look on entity-manager and openbmc source.
+Don't have many companies  using entity-manager model to support sensors.
 
-diff --git a/drivers/peci/peci-core.c b/drivers/peci/peci-core.c
-index ba561bf810f9..dbd33e0e3a1c 100644
---- a/drivers/peci/peci-core.c
-+++ b/drivers/peci/peci-core.c
-@@ -237,6 +237,10 @@ static int __peci_xfer(struct peci_adapter *adapter, struct peci_xfer_msg *msg,
- 		    PECI_DEV_CC_NEED_RETRY)
- 			break;
- 
-+		/* Wakeup is needed when completion code is 0x82 */
-+		if (msg->rx_buf[0] == PECI_DEV_CC_UNAVAIL_RESOURCE)
-+			break;
-+
- 		/* Set the retry bit to indicate a retry attempt */
- 		msg->tx_buf[1] |= PECI_DEV_RETRY_BIT;
- 
-@@ -285,6 +289,84 @@ static int peci_xfer_with_retries(struct peci_adapter *adapter,
- 	return __peci_xfer(adapter, msg, true, has_aw_fcs);
- }
- 
-+static int peci_xfer_with_wakeup(struct peci_adapter *adapter,
-+				  struct peci_xfer_msg *msg,
-+				  bool has_aw_fcs)
-+{
-+	struct peci_xfer_msg *wmsg = NULL;
-+	u8 aw_fcs;
-+	int ret;
-+	int ret_tmp;
-+
-+	ret = __peci_xfer(adapter, msg, true, has_aw_fcs);
-+
-+	/* Wakeup is needed when completion code is 0x82 */
-+	if (msg->rx_buf[0] == PECI_DEV_CC_UNAVAIL_RESOURCE) {
-+		wmsg = peci_get_xfer_msg(PECI_WRPKGCFG_WRITE_LEN_BASE + 4,
-+					PECI_WRPKGCFG_READ_LEN);
-+		if (!wmsg)
-+			return -ENOMEM;
-+
-+		wmsg->addr = msg->addr;
-+		wmsg->tx_buf[0] = PECI_WRPKGCFG_CMD;
-+		wmsg->tx_buf[1] = 0;  /* request byte for Host ID | Retry bit */
-+				      /* Host ID is 0 for PECI 3.0 */
-+		/* RdPkgConfig index */
-+		wmsg->tx_buf[2] = PECI_MBX_INDEX_WAKE_MODE_BIT;
-+		wmsg->tx_buf[3] = 1;  /* LSB - Config parameter */
-+		wmsg->tx_buf[4] = 0;  /* MSB - Config parameter */
-+		wmsg->tx_buf[5] = 0;  /* Data */
-+		wmsg->tx_buf[6] = 0;  /* Data */
-+		wmsg->tx_buf[7] = 0;  /* Data */
-+		wmsg->tx_buf[8] = 0;  /* Data */
-+
-+		/* Add an Assured Write Frame Check Sequence byte */
-+		ret_tmp = peci_aw_fcs(wmsg, 8 + 4, &aw_fcs);
-+		if (ret_tmp) {
-+			ret = ret_tmp;
-+			goto out;
-+		}
-+
-+		wmsg->tx_buf[9] = 0x80 ^ aw_fcs;
-+
-+		ret_tmp = __peci_xfer(adapter, wmsg, true, true);
-+		if (ret_tmp) {
-+			ret = ret_tmp;
-+			goto out;
-+		}
-+
-+		/* Resend command */
-+		ret = __peci_xfer(adapter, msg, true, has_aw_fcs);
-+
-+		/*
-+		 * Assume that if we got CC 0x82 then “Wake on PECI” mode
-+		 * bit was not set, so no need to read and remember it
-+		 */
-+		wmsg->tx_buf[3] = 0;    /* LSB - Config parameter */
-+		/* Recalculate an Assured Write Frame Check Sequence byte */
-+		ret_tmp = peci_aw_fcs(wmsg, 8 + 4, &aw_fcs);
-+		if (ret_tmp) {
-+			if (ret == 0)
-+				ret = ret_tmp;
-+			goto out;
-+		}
-+
-+		wmsg->tx_buf[9] = 0x80 ^ aw_fcs;
-+
-+		ret_tmp = __peci_xfer(adapter, wmsg, true, true);
-+		if (ret_tmp) {
-+			if (ret == 0)
-+				ret = ret_tmp;
-+			goto out;
-+		}
-+	}
-+
-+out:
-+	if (wmsg)
-+		peci_put_xfer_msg(wmsg);
-+	return ret;
-+}
-+
- static int peci_scan_cmd_mask(struct peci_adapter *adapter)
- {
- 	struct peci_xfer_msg *msg;
-@@ -658,7 +740,7 @@ static int peci_cmd_rd_pci_cfg(struct peci_adapter *adapter, void *vmsg)
- 	msg->tx_buf[4] = (u8)(address >> 16); /* PCI Config Address */
- 	msg->tx_buf[5] = (u8)(address >> 24); /* MSB - PCI Config Address */
- 
--	ret = peci_xfer_with_retries(adapter, msg, false);
-+	ret = peci_xfer_with_wakeup(adapter, msg, false);
- 	if (!ret)
- 		memcpy(umsg->pci_config, &msg->rx_buf[1], 4);
- 
-@@ -706,7 +788,7 @@ static int peci_cmd_rd_pci_cfg_local(struct peci_adapter *adapter, void *vmsg)
- 	msg->tx_buf[3] = (u8)(address >> 8);  /* PCI Configuration Address */
- 	msg->tx_buf[4] = (u8)(address >> 16); /* PCI Configuration Address */
- 
--	ret = peci_xfer_with_retries(adapter, msg, false);
-+	ret = peci_xfer_with_wakeup(adapter, msg, false);
- 	if (!ret)
- 		memcpy(umsg->pci_config, &msg->rx_buf[1], umsg->rx_len);
- 
-@@ -758,7 +840,7 @@ static int peci_cmd_wr_pci_cfg_local(struct peci_adapter *adapter, void *vmsg)
- 
- 	msg->tx_buf[5 + i] = 0x80 ^ aw_fcs;
- 
--	ret = peci_xfer_with_retries(adapter, msg, true);
-+	ret = peci_xfer_with_wakeup(adapter, msg, true);
- 
- out:
- 	umsg->cc = msg->rx_buf[0];
--- 
-2.26.2
+Regards
+Thu Nguyen.
 
+
+On Wed, Oct 21, 2020 at 7:15 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
+
+>
+>
+>
+>
+> *From: *openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> on
+> behalf of Thu Ba Nguyen <tbnguyen1985@gmail.com>
+> *Date: *Monday, October 19, 2020 at 11:23 AM
+> *To: *Ed Tanous <ed@tanous.net>
+> *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org>
+> *Subject: *Re: Enable/Disable some sensors when Host On/Off
+>
+>
+>
+> Hi Ed Tanous,
+>
+>
+>
+> > Thanks for your info,
+>
+> > But in your platform we are using phosphor-hwmon to manage sensors.
+>
+> > We don't use entity-manager.
+>
+> > As I knew we can't use both entity-manager and phosphor-hwmon for one
+> project.
+>
+>
+>
+> You can use both but for different sensors. You can decide what sensors to
+> configure
+>
+> via EM/dbus-sensors and which one for phosphor-hwmon.
+>
+>
+>
+> Regards
+>
+> Thu Nguyen.
+>
+
+--000000000000be38c005b23133f2
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Vijay,</div><div><br></div>I took a look on entity=
+-manager=C2=A0and openbmc source.<div>Don&#39;t have=C2=A0many companies =
+=C2=A0using entity-manager model to support sensors.</div><div><br></div><d=
+iv>Regards</div><div>Thu Nguyen.</div><div><br></div></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 21, 2020=
+ at 7:15 AM Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.com">vijaykhe=
+mka@fb.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;=
+border-left-color:rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"EN-US" style=3D"word-wrap:break-word">
+<div class=3D"gmail-m_-1371938094071620715WordSection1">
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div style=3D"border-style:solid none none;border-top-width:1pt;border-top-=
+color:rgb(181,196,223);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
+</span></b><span style=3D"font-size:12pt;color:black">openbmc &lt;openbmc-b=
+ounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_=
+blank">fb.com@lists.ozlabs.org</a>&gt; on behalf of Thu Ba Nguyen &lt;<a hr=
+ef=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.c=
+om</a>&gt;<br>
+<b>Date: </b>Monday, October 19, 2020 at 11:23 AM<br>
+<b>To: </b>Ed Tanous &lt;<a href=3D"mailto:ed@tanous.net" target=3D"_blank"=
+>ed@tanous.net</a>&gt;<br>
+<b>Cc: </b>OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org"=
+ target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
+<b>Subject: </b>Re: Enable/Disable some sensors when Host On/Off<u></u><u><=
+/u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<div>
+<p class=3D"MsoNormal">Hi Ed Tanous,<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt; Thanks for your info,=C2=A0<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt; But in your platform we are using phosphor-hwmo=
+n to manage sensors.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt; We don&#39;t use entity-manager.<u></u><u></u><=
+/p>
+</div>
+<div>
+<p class=3D"MsoNormal">&gt; As I knew we can&#39;t use both entity-manager =
+and phosphor-hwmon for one project.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">You can use both but for different sensors. You can =
+decide what sensors to configure<u></u><u></u></p>
+<p class=3D"MsoNormal">via EM/dbus-sensors and which one for phosphor-hwmon=
+.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Regards<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Thu Nguyen.<u></u><u></u></p>
+</div>
+</div>
+</div>
+</div>
+
+</blockquote></div>
+
+--000000000000be38c005b23133f2--
