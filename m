@@ -1,72 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C160F29611F
-	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 16:51:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86C872961D1
+	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 17:42:37 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CH9KR1gf9zDqpH
-	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 01:51:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CHBSp4M40zDqrn
+	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 02:42:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::836;
- helo=mail-qt1-x836.google.com; envelope-from=tbnguyen1985@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
+ helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=mwqsh1Ch; dkim-atps=neutral
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com
- [IPv6:2607:f8b0:4864:20::836])
+ header.s=20161025 header.b=DHf6co47; dkim-atps=neutral
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
+ [IPv6:2607:f8b0:4864:20::330])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CH9J90wz6zDqnv
- for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 01:49:58 +1100 (AEDT)
-Received: by mail-qt1-x836.google.com with SMTP id c15so1220327qtc.2
- for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 07:49:58 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CHBRy5SzPzDqqY
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 02:41:48 +1100 (AEDT)
+Received: by mail-ot1-x330.google.com with SMTP id n15so1863403otl.8
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 08:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=LUpfPsfVwCGNRGbACeAVlnhTd+ZsSf6csewsPSRWii8=;
- b=mwqsh1ChpPxzkIYw5SEYgFNEytbz0r8CbluSWnrsH6V+Hms+/2QoMhui5hDAtXRfUL
- Q6ymznjr0W6uS/OWNxOYY39SelJf5qTJvhQgNsJAyJXW5jSbgiwbqW1CyRRWMnyCCB35
- NgkvYFnFqVyivarQcb1gT6LAi44T/pDV+dkEXUiIO1JTsfmifcZYIQM3u3guC7hPYidc
- odc6ifwcAQKTVLNI0W13l3OkoLTsa9JEjYEQOlgma8U/2SPOcVfywyjdlbDWF+/PXZHN
- 7wbW5ZMVmUowSdKAiEnbn4AnrEl8GPKzs5hWn+R4B7Hsq7yMyQUBKjU+swllib68TtST
- NGYg==
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=kssMpkxNFCajXrYflVBIJfA+td9NboAVpALDOdDcPDk=;
+ b=DHf6co47tsVUIAtrft38NzzKOV8mKYZZLtC2bpr8wFjqQSW44sJrnCRKgbvwVvZxi7
+ 9RjUHAT1ylItLeaRMO7+2QJvh7rm6I4OHKcLdnv47KqWO7q55BQRVu+rucUHPgtna76E
+ rjKFUs13NOhsB+NFaxPH8bzK+blFBvPgM4MEyiPkg8DowVXNPPMyYSE9+oHm+jAj4Pww
+ 5LjwmWZyD1FQL2m6pyLHkEJMZhO8ne9dYynZSmYDMqd1+S14Jnids+o+b/NbKnsrhlb7
+ HoCjm8xb+U20r3tGqybO6nLjwaraXVDZuUQfIYRPAwFh/1AE7Gq9HNuUUbewWd0TQvrW
+ 01gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=LUpfPsfVwCGNRGbACeAVlnhTd+ZsSf6csewsPSRWii8=;
- b=IIF1lKtQphMqkBjPwoS3bKDGqK4AiVCXiKeeX60e6ZQ2i7AmJA0rK1WuZa19JnubCR
- FNdWh86GyBDnN7/0Sdvtq2fzIpqGZkBmmMd7LGVZtomzfQYJVZKDA1HWqBrTqf3MBhGn
- oxXxqjjs/9kaPZd0ivmS0yJS+LspM6SRWOKewRlSWBnOqtzXvxedZfvx7FNGUmdJO1QB
- j+hQALWwzdcKg2OGeG2bgXTLCJqyaVv9hYnDch7KsS8u8J5gIQLcE5moxCQEv4L77E8R
- jy5L8c1ReH7m6hVYoGoeDdEGTPP3yew7tlVG7veB1yXmthTjEY58WuSItcE9/Kwq+trW
- rusQ==
-X-Gm-Message-State: AOAM533uanqqEdzCZ5bdDeoHieKTlxwaA9e9Tj2mZmI+MqETnrhpd2nX
- rZG0dGlqqO1dCdCYgZg4fDKLyGh7aFIRpprP//w=
-X-Google-Smtp-Source: ABdhPJyo5WVXamIkTtzPeaxNQJBPkQTC80lbdDZoWPB8t4OVPKKO20JTNSpWe5vJMtTrXPafr42KW1ko1NZfXKDwT2g=
-X-Received: by 2002:a05:622a:316:: with SMTP id
- q22mr2210123qtw.335.1603378194176; 
- Thu, 22 Oct 2020 07:49:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
- <CACWQX833j+remiYr8qOdrZZ4z3L3D_GX0q6z4MPJDu8J4Nv+Pg@mail.gmail.com>
- <CALioo36kortxuLPJQmc7xtDVN=jAxPNf481ovFkc2jQfYu8-rg@mail.gmail.com>
- <90950FB3-E1B3-4ACE-97C5-CB9582A94456@fb.com>
- <CALioo37b-BjgUdfZz2Vm+=6K6VMYRO9auyuHHo7=AZBFpoBzdw@mail.gmail.com>
-In-Reply-To: <CALioo37b-BjgUdfZz2Vm+=6K6VMYRO9auyuHHo7=AZBFpoBzdw@mail.gmail.com>
-From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
-Date: Thu, 22 Oct 2020 21:49:42 +0700
-Message-ID: <CALioo37LBToJaMs9Zt4q4WcMYKT_rF9zG1ujxv3q8HOQvsE8-w@mail.gmail.com>
-Subject: Re: Enable/Disable some sensors when Host On/Off
-To: Vijay Khemka <vijaykhemka@fb.com>, Matt Spinler <mspinler@linux.ibm.com>, 
- Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="000000000000b4616005b24393c1"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=kssMpkxNFCajXrYflVBIJfA+td9NboAVpALDOdDcPDk=;
+ b=JUAlgD1m97VbeZn/vwrEDFw2c2mkS79xQJ8JLPmLP5uxxevn0zzd2WiLhT/ii2xy/J
+ t3F1WFIvbxDt87G5/l/s2WhR9vUpMcs09qKsT32bT0vMba9vSPfvPfDcEr9+Ck+kXDNR
+ zAatrXRGSJH2Hp9oJlSug5I97sM+5EgjIJNSyd+eMhwfm78mmJTE5TRH06TiIqbXIoF0
+ +4ft9Ta5JbxpKsKQEH2o58Z6omdijTKHPehwfyXhHdl3MZIfVcmwwxuqkCOZ6esAHQ9I
+ D9GJS4P+++OKLmEMYH47ishdIeiB5L1Ax3Xn2lyKdEW6PH0ZwxcYCqPZSWueL0G6YjGa
+ S7QA==
+X-Gm-Message-State: AOAM531Ujog9dhreS+mOz//b6zIisq9rx8SRF4HqU68m+3qw4ZXZBsYE
+ UfCDEglsERK50gFp2OP+hOgjLkdEVZRBYw==
+X-Google-Smtp-Source: ABdhPJwvKZ6buyoZrefMrpMfVG4YETACxnWaf/6RrN5jFXtobrBu3zwZLFyfsg8aFCyKO6BQ4QjXeA==
+X-Received: by 2002:a05:6830:1183:: with SMTP id
+ u3mr2139864otq.167.1603381304152; 
+ Thu, 22 Oct 2020 08:41:44 -0700 (PDT)
+Received: from andrews-mbp-2.attlocal.net
+ (45-18-127-186.lightspeed.austtx.sbcglobal.net. [45.18.127.186])
+ by smtp.gmail.com with ESMTPSA id b6sm493736otl.37.2020.10.22.08.41.34
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 22 Oct 2020 08:41:34 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: Re: Critical BMC process failure recovery
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <95ad99d7921c405e93b794463d702853@SCL-EXCHMB-13.phoenix.com>
+Date: Thu, 22 Oct 2020 10:41:33 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4D041666-3DC0-4C5A-892C-8155D9DA6971@gmail.com>
+References: <C270F145-2236-4CA1-8D57-A63AB622A47C@gmail.com>
+ <95ad99d7921c405e93b794463d702853@SCL-EXCHMB-13.phoenix.com>
+To: Neil Bradley <Neil_Bradley@phoenix.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,336 +87,117 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b4616005b24393c1
-Content-Type: text/plain; charset="UTF-8"
 
-I started on supporting enable/disable host sensors.
-Everythings is fine until I add code to monitor host status as below.
-bool MainLoop::isHostOn(void)
-{
-char buff[128];
 
-if (!powerMatch)
-{
-log<level::ERR>("Power Match Not Created");
-}
-sprintf(buff, "isHostOn powerStatusOn: %d\n",powerStatusOn);
-log<level::INFO>(buff);
-return powerStatusOn;
-}
-
-std::shared_ptr<sdbusplus::bus::match::match>
-MainLoop::startHostStateMonitor(void) {
-return std::make_shared<sdbusplus::bus::match::match>(
-*conn,
-"type='signal',interface='org.freedesktop.DBus.Properties',"
-"member='PropertiesChanged',arg0='xyz.openbmc_project.State.Host'",
-[](sdbusplus::message::message &msg) {
-std::string interfaceName;
-boost::container::flat_map<std::string, std::variant<std::string>>
-propertiesChanged;
-try {
-msg.read(interfaceName, propertiesChanged);
-} catch (std::exception &e) {
-log<level::ERR>("Unable to read host state\n");
-return;
-}
-// We only want to check for CurrentHostState
-if (propertiesChanged.begin()->first != "CurrentHostState") {
-return;
-}
-auto findState = propertiesChanged.find(powProperty);
-if (findState != propertiesChanged.end())
-{
-powerStatusOn = boost::ends_with(
-std::get<std::string>(findState->second), "Running");
-}
-powerMatch = true;
-});
-}
-
-void MainLoop::read()
-{
-// TODO: Issue#3 - Need to make calls to the dbus sensor cache here to
-// ensure the objects all exist?
-
-/* Host changed state from On to Off */
-if (!isHostOn() && (lastPowerState == HOST_ON ||
-lastPowerState == HOST_NA)) {
-removeHostSensors();
-lastPowerState = HOST_OFF;
-}
-
-/* Host changed state from Off to On */
-if (isHostOn() && lastPowerState == HOST_OFF) {
-addDroppedHostSensors();
-lastPowerState = HOST_ON;
-}
-
-When build openBMC I got error:
-tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthread.so.0:
-error adding symbols: DSO missing from command line
-| collect2: error: ld returned 1 exit status
-| make[2]: *** [Makefile:643: phosphor-hwmon-readd] Error 1
-
-It seems I need adding the threads lib to defend lib.
-Any suggestion to add threads lib to build configuration?
-
-Thanks.
-Thu.
-
-On Wed, Oct 21, 2020 at 11:54 PM Thu Ba Nguyen <tbnguyen1985@gmail.com>
+> On Oct 19, 2020, at 4:35 PM, Neil Bradley <Neil_Bradley@phoenix.com> =
 wrote:
+>=20
+> Hey Andrew!
+>=20
+> At least initially, the requirements don't really seem like =
+requirements - they seem like what someone's idea of what they think a =
+solution would be.  For example, why reset 3 times? Why not 10? Or 2? =
+Seems completely arbitrary.
 
-> Hi Vijay,
->
-> I took a look on entity-manager and openbmc source.
-> Don't have many companies  using entity-manager model to support sensors.
->
-> Regards
-> Thu Nguyen.
->
->
-> On Wed, Oct 21, 2020 at 7:15 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
->>
->>
->>
->>
->> *From: *openbmc <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org> on
->> behalf of Thu Ba Nguyen <tbnguyen1985@gmail.com>
->> *Date: *Monday, October 19, 2020 at 11:23 AM
->> *To: *Ed Tanous <ed@tanous.net>
->> *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org>
->> *Subject: *Re: Enable/Disable some sensors when Host On/Off
->>
->>
->>
->> Hi Ed Tanous,
->>
->>
->>
->> > Thanks for your info,
->>
->> > But in your platform we are using phosphor-hwmon to manage sensors.
->>
->> > We don't use entity-manager.
->>
->> > As I knew we can't use both entity-manager and phosphor-hwmon for one
->> project.
->>
->>
->>
->> You can use both but for different sensors. You can decide what sensors
->> to configure
->>
->> via EM/dbus-sensors and which one for phosphor-hwmon.
->>
->>
->>
->> Regards
->>
->> Thu Nguyen.
->>
->
+Hey Neil. I was starting with what our previous closed-source system
+requirements were. The processes that cause a reset and the amount
+of times we reset should definitely be configurable.
 
---000000000000b4616005b24393c1
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> If the BMC resets twice in a row, there's no reason to think it would =
+be OK the 3rd time. It's kinda like how people have been known do 4-5 =
+firmware updates to "fix" a problem and it "still doesn't work". =F0=9F=98=
+=89
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
-r=3D"ltr">I started on supporting enable/disable host sensors.<div>Everythi=
-ngs is fine until=C2=A0I add code to monitor host status as below.</div><di=
-v><div style=3D"color:rgb(0,0,0)"><div style=3D"color:rgb(212,212,212);back=
-ground-color:rgb(30,30,30);font-family:Menlo,Monaco,&quot;Courier New&quot;=
-,monospace;font-size:18px;line-height:27px;white-space:pre"><div><span styl=
-e=3D"color:rgb(86,156,214)">bool</span> <span style=3D"color:rgb(78,201,176=
-)">MainLoop</span>::<span style=3D"color:rgb(220,220,170)">isHostOn</span>(=
-<span style=3D"color:rgb(86,156,214)">void</span>)</div><div>{</div><div>  =
-  <span style=3D"color:rgb(86,156,214)">char</span> <span style=3D"color:rg=
-b(156,220,254)">buff</span>[<span style=3D"color:rgb(181,206,168)">128</spa=
-n>];</div><br><div>    <span style=3D"color:rgb(197,134,192)">if</span> (!p=
-owerMatch)</div><div>    {</div><div>        <span style=3D"color:rgb(220,2=
-20,170)">log</span>&lt;<span style=3D"color:rgb(78,201,176)">level</span>::=
-<span style=3D"color:rgb(78,201,176)">ERR</span>&gt;(<span style=3D"color:r=
-gb(206,145,120)">&quot;Power Match Not Created&quot;</span>);</div><div>   =
- }</div><div>    <span style=3D"color:rgb(220,220,170)">sprintf</span>(buff=
-, <span style=3D"color:rgb(206,145,120)">&quot;isHostOn powerStatusOn: %d</=
-span><span style=3D"color:rgb(215,186,125)">\n</span><span style=3D"color:r=
-gb(206,145,120)">&quot;</span>,powerStatusOn);</div><div>    <span style=3D=
-"color:rgb(220,220,170)">log</span>&lt;<span style=3D"color:rgb(78,201,176)=
-">level</span>::<span style=3D"color:rgb(78,201,176)">INFO</span>&gt;(buff)=
-;</div><div>    <span style=3D"color:rgb(197,134,192)">return</span> powerS=
-tatusOn;</div><div>}</div><br><div><span style=3D"color:rgb(78,201,176)">st=
-d</span>::shared_ptr&lt;<span style=3D"color:rgb(78,201,176)">sdbusplus</sp=
-an>::<span style=3D"color:rgb(78,201,176)">bus</span>::<span style=3D"color=
-:rgb(78,201,176)">match</span>::match&gt; </div><div>    <span style=3D"col=
-or:rgb(78,201,176)">MainLoop</span>::<span style=3D"color:rgb(220,220,170)"=
->startHostStateMonitor</span>(<span style=3D"color:rgb(86,156,214)">void</s=
-pan>) {</div><div>    <span style=3D"color:rgb(197,134,192)">return</span> =
-<span style=3D"color:rgb(78,201,176)">std</span>::<span style=3D"color:rgb(=
-220,220,170)">make_shared</span>&lt;<span style=3D"color:rgb(78,201,176)">s=
-dbusplus</span>::<span style=3D"color:rgb(78,201,176)">bus</span>::<span st=
-yle=3D"color:rgb(78,201,176)">match</span>::<span style=3D"color:rgb(78,201=
-,176)">match</span>&gt;(</div><div>    *conn,</div><div>    <span style=3D"=
-color:rgb(206,145,120)">&quot;type=3D&#39;signal&#39;,interface=3D&#39;org.=
-freedesktop.DBus.Properties&#39;,&quot;</span></div><div>    <span style=3D=
-"color:rgb(206,145,120)">&quot;member=3D&#39;PropertiesChanged&#39;,arg0=3D=
-&#39;xyz.openbmc_project.State.Host&#39;&quot;</span>,</div><div>    [](<sp=
-an style=3D"color:rgb(78,201,176)">sdbusplus</span>::<span style=3D"color:r=
-gb(78,201,176)">message</span>::<span style=3D"color:rgb(78,201,176)">messa=
-ge</span> <span style=3D"color:rgb(86,156,214)">&amp;</span><span style=3D"=
-color:rgb(156,220,254)">msg</span>) {</div><div>    <span style=3D"color:rg=
-b(78,201,176)">std</span>::string interfaceName;</div><div>    <span style=
-=3D"color:rgb(78,201,176)">boost</span>::<span style=3D"color:rgb(78,201,17=
-6)">container</span>::flat_map&lt;<span style=3D"color:rgb(78,201,176)">std=
-</span>::string, <span style=3D"color:rgb(78,201,176)">std</span>::variant&=
-lt;<span style=3D"color:rgb(78,201,176)">std</span>::string&gt;&gt;</div><d=
-iv>        propertiesChanged;</div><div>    <span style=3D"color:rgb(197,13=
-4,192)">try</span> {</div><div>        <span style=3D"color:rgb(156,220,254=
-)">msg</span>.<span style=3D"color:rgb(220,220,170)">read</span>(interfaceN=
-ame, propertiesChanged);</div><div>    } <span style=3D"color:rgb(197,134,1=
-92)">catch</span> (<span style=3D"color:rgb(78,201,176)">std</span>::except=
-ion &amp;e) {</div><div>        <span style=3D"color:rgb(220,220,170)">log<=
-/span>&lt;<span style=3D"color:rgb(78,201,176)">level</span>::<span style=
-=3D"color:rgb(78,201,176)">ERR</span>&gt;(<span style=3D"color:rgb(206,145,=
-120)">&quot;Unable to read host state</span><span style=3D"color:rgb(215,18=
-6,125)">\n</span><span style=3D"color:rgb(206,145,120)">&quot;</span>);</di=
-v><div>        <span style=3D"color:rgb(197,134,192)">return</span>;</div><=
-div>    }</div><div><span style=3D"color:rgb(106,153,85)">    // We only wa=
-nt to check for CurrentHostState</span></div><div>    <span style=3D"color:=
-rgb(197,134,192)">if</span> (<span style=3D"color:rgb(156,220,254)">propert=
-iesChanged</span>.<span style=3D"color:rgb(220,220,170)">begin</span>()-&gt=
-;<span style=3D"color:rgb(156,220,254)">first</span> !=3D <span style=3D"co=
-lor:rgb(206,145,120)">&quot;CurrentHostState&quot;</span>) {</div><div>    =
-    <span style=3D"color:rgb(197,134,192)">return</span>;</div><div>    }</=
-div><div>    <span style=3D"color:rgb(86,156,214)">auto</span> findState =
-=3D <span style=3D"color:rgb(156,220,254)">propertiesChanged</span>.<span s=
-tyle=3D"color:rgb(220,220,170)">find</span>(powProperty);</div><div>    <sp=
-an style=3D"color:rgb(197,134,192)">if</span> (findState !=3D <span style=
-=3D"color:rgb(156,220,254)">propertiesChanged</span>.<span style=3D"color:r=
-gb(220,220,170)">end</span>())</div><div>    {</div><div>        powerStatu=
-sOn =3D <span style=3D"color:rgb(78,201,176)">boost</span>::<span style=3D"=
-color:rgb(220,220,170)">ends_with</span>(</div><div>            <span style=
-=3D"color:rgb(78,201,176)">std</span>::<span style=3D"color:rgb(220,220,170=
-)">get</span>&lt;<span style=3D"color:rgb(78,201,176)">std</span>::<span st=
-yle=3D"color:rgb(78,201,176)">string</span>&gt;(<span style=3D"color:rgb(15=
-6,220,254)">findState</span>-&gt;<span style=3D"color:rgb(156,220,254)">sec=
-ond</span>), <span style=3D"color:rgb(206,145,120)">&quot;Running&quot;</sp=
-an>);</div><div>    }</div><div>    powerMatch =3D <span style=3D"color:rgb=
-(86,156,214)">true</span>;</div><div>    });</div><div>}</div><div><br></di=
-v></div></div><div style=3D"color:rgb(0,0,0)"><div style=3D"color:rgb(212,2=
-12,212);background-color:rgb(30,30,30);font-family:Menlo,Monaco,&quot;Couri=
-er New&quot;,monospace;font-size:18px;line-height:27px;white-space:pre-wrap=
-"><div><span style=3D"color:rgb(86,156,214)">void</span> <span style=3D"col=
-or:rgb(78,201,176)">MainLoop</span>::<span style=3D"color:rgb(220,220,170)"=
->read</span>()</div><div>{</div><div><span style=3D"color:rgb(106,153,85)">=
-    // TODO: Issue#3 - Need to make calls to the dbus sensor cache here to<=
-/span></div><div><span style=3D"color:rgb(106,153,85)">    //       ensure =
-the objects all exist?</span></div><br><div><span style=3D"color:rgb(106,15=
-3,85)">    /* Host changed state from On to Off */</span></div><div>    <sp=
-an style=3D"color:rgb(197,134,192)">if</span> (!<span style=3D"color:rgb(22=
-0,220,170)">isHostOn</span>() &amp;&amp; (lastPowerState =3D=3D HOST_ON ||<=
-/div><div>            lastPowerState =3D=3D HOST_NA)) {</div><div>        <=
-span style=3D"color:rgb(220,220,170)">removeHostSensors</span>();</div><div=
->        lastPowerState =3D HOST_OFF;</div><div>    }</div><br><div><span s=
-tyle=3D"color:rgb(106,153,85)">    /* Host changed state from Off to On */<=
-/span></div><div>    <span style=3D"color:rgb(197,134,192)">if</span> (<spa=
-n style=3D"color:rgb(220,220,170)">isHostOn</span>() &amp;&amp; lastPowerSt=
-ate =3D=3D HOST_OFF) {</div><div>        <span style=3D"color:rgb(220,220,1=
-70)">addDroppedHostSensors</span>();</div><div>        lastPowerState =3D H=
-OST_ON;</div><div>    }</div><div><br></div></div></div></div><div>When bui=
-ld openBMC I got error:</div><div><div>tmp/work/arm1176jzs-openbmc-linux-gn=
-ueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpth=
-read.so.0: error adding symbols: DSO missing from command line</div><div>| =
-collect2: error: ld returned 1 exit status</div><div>| make[2]: *** [Makefi=
-le:643: phosphor-hwmon-readd] Error 1</div></div><div><br></div><div>It see=
-ms I need adding the threads lib to defend lib.</div><div>Any suggestion to=
- add threads lib to build configuration?</div><div><br></div><div>Thanks.</=
-div><div>Thu.</div></div></div></div></div></div><br><div class=3D"gmail_qu=
-ote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 21, 2020 at 11:54 PM=
- Thu Ba Nguyen &lt;<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_bla=
-nk">tbnguyen1985@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-le=
-ft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"><div di=
-r=3D"ltr"><div>Hi Vijay,</div><div><br></div>I took a look on entity-manage=
-r=C2=A0and openbmc source.<div>Don&#39;t have=C2=A0many companies =C2=A0usi=
-ng entity-manager model to support sensors.</div><div><br></div><div>Regard=
-s</div><div>Thu Nguyen.</div><div><br></div></div><br><div class=3D"gmail_q=
-uote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Oct 21, 2020 at 7:15 AM=
- Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.com" target=3D"_blank">v=
-ijaykhemka@fb.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:=
-solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+Yeah, history has shown that if one reboot doesn=E2=80=99t fix it then =
+you=E2=80=99re
+probably out of of luck. But=E2=80=A6it is up to the system owner to
+configure whatever they like.
 
+>=20
+> If the ultimate goal is availability, then there's more nuance to the =
+discussion to be had. Let's assume the goal is "highest availability =
+possible".
+>=20
+> With that in mind, defining what "failure" is gets to be a bit more =
+convoluted. Back when we did the CMM code for the Intel modular server, =
+we had a several-pronged approach:
+>=20
+> 1) Run procmon - Look for any service that is supposed to be running =
+(but isn't) and restart it and/or its process dependency tree.
+> 2) Create a monitor (either a standalone program or a script) that =
+periodically connects to the various services available - IPMI, web, =
+KVM, etc.... - think of it like a functional "ping". A bit more =
+involved, as this master control program (Tron reference =F0=9F=98=89 ) =
+would have to speak sentiently to each service to gauge how alive it is. =
+There have been plenty of situations where a BMC is otherwise healthy =
+but one service wasn't working, and it's overkill to have a 30-45 second =
+outage while the BMC restarts.
 
+This sounds like it fits in with =
+https://github.com/openbmc/phosphor-health-monitor
+That to me is the next level of process health and recovery but =
+initially here
+I was just looking for a broad, =E2=80=9Cwhat do we do if our service is =
+restarted
+x amount of times, still in a fail state, and is critical to the basic
+functionality of the BMC=E2=80=9D. To me the only options are try a =
+reboot
+of the BMC or log an error and indicate the BMC is in a unstable
+state.
 
+>=20
+> -----Original Message-----
+> From: openbmc =
+<openbmc-bounces+neil_bradley=3Dphoenix.com@lists.ozlabs.org> On Behalf =
+Of Andrew Geissler
+> Sent: Monday, October 19, 2020 12:53 PM
+> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+> Subject: Critical BMC process failure recovery
+>=20
+> Greetings,
+>=20
+> I've started initial investigation into two IBM requirements:
+>=20
+> - Reboot the BMC if a "critical" process fails and can not recover
+> - Limit the amount of times the BMC reboots for recovery
+>  - Limit should be configurable, i.e. 3 resets within 5 minutes
+>  - If limit reached, display error to panel (if one available) and =
+halt
+>    the BMC.
+>=20
+> The goal here is to have the BMC try and get itself back into a =
+working state via a reboot of itself.
+>=20
+> This same reboot logic and limits would also apply to kernel panics =
+and/or BMC hardware watchdog expirations.
+>=20
+> Some thoughts that have been thrown around internally:
+>=20
+> - Spend more time ensuring code doesn't fail vs. handling them failing
+> - Put all BMC code into a single application so it's all or nothing =
+(vs.=20
+>  trying to pick and choose specific applications and dealing with all =
+of
+>  the intricacies of restarting individual ones)
+> - Rebooting the BMC and getting the proper ordering of service starts =
+is
+>  sometimes easier then testing every individual service restart for =
+recovery
+>  paths
+>=20
+> "Critical" processes would be things like mapper or dbus-broker. =
+There's definitely a grey area though with other services so we'd need =
+some guidelines around defining them and allow the meta layers to have a =
+way to deem whichever they want critical.
+>=20
+> So anyway, just throwing this out there to see if anyone has any input =
+or is looking for something similar.
+>=20
+> High level, I'd probably start looking into utilizing systemd as much =
+as possible. "FailureAction=3Dreboot-force" in the critical services and =
+something that monitors for these types of reboots and enforces the =
+reboot limits.
+>=20
+> Andrew
+>=20
 
-
-<div lang=3D"EN-US" style=3D"word-wrap:break-word">
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div style=3D"border-style:solid none none;border-top-width:1pt;border-top-=
-color:rgb(181,196,223);padding:3pt 0in 0in">
-<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
-</span></b><span style=3D"font-size:12pt;color:black">openbmc &lt;openbmc-b=
-ounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_=
-blank">fb.com@lists.ozlabs.org</a>&gt; on behalf of Thu Ba Nguyen &lt;<a hr=
-ef=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.c=
-om</a>&gt;<br>
-<b>Date: </b>Monday, October 19, 2020 at 11:23 AM<br>
-<b>To: </b>Ed Tanous &lt;<a href=3D"mailto:ed@tanous.net" target=3D"_blank"=
->ed@tanous.net</a>&gt;<br>
-<b>Cc: </b>OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org"=
- target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
-<b>Subject: </b>Re: Enable/Disable some sensors when Host On/Off<u></u><u><=
-/u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<div>
-<p class=3D"MsoNormal">Hi Ed Tanous,<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">&gt; Thanks for your info,=C2=A0<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">&gt; But in your platform we are using phosphor-hwmo=
-n to manage sensors.<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">&gt; We don&#39;t use entity-manager.<u></u><u></u><=
-/p>
-</div>
-<div>
-<p class=3D"MsoNormal">&gt; As I knew we can&#39;t use both entity-manager =
-and phosphor-hwmon for one project.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">You can use both but for different sensors. You can =
-decide what sensors to configure<u></u><u></u></p>
-<p class=3D"MsoNormal">via EM/dbus-sensors and which one for phosphor-hwmon=
-.<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Regards<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Thu Nguyen.<u></u><u></u></p>
-</div>
-</div>
-</div>
-</div>
-
-</blockquote></div>
-</blockquote></div>
-
---000000000000b4616005b24393c1--
