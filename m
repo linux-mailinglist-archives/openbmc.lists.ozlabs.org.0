@@ -1,72 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F6502959EB
-	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 10:11:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6A2B295A36
+	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 10:25:36 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CH0Rt2bgTzDqfW
-	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 19:11:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CH0mY45HgzDqFJ
+	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 19:25:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::442;
- helo=mail-pf1-x442.google.com; envelope-from=liuxiwei1013@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42e;
+ helo=mail-pf1-x42e.google.com; envelope-from=shaikkhaderbasha601@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XBAyohM/; dkim-atps=neutral
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com
- [IPv6:2607:f8b0:4864:20::442])
+ header.s=20161025 header.b=pUcs/PAa; dkim-atps=neutral
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com
+ [IPv6:2607:f8b0:4864:20::42e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CH0Qt0dGvzDqcy
- for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 19:10:10 +1100 (AEDT)
-Received: by mail-pf1-x442.google.com with SMTP id j18so672165pfa.0
- for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 01:10:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CH0ld2JwmzDqF5
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 19:24:40 +1100 (AEDT)
+Received: by mail-pf1-x42e.google.com with SMTP id w21so680677pfc.7
+ for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 01:24:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=7S4k5yVcaPNKEgbuN+FwAgT3Wa6YAs64vx6hY7de4w8=;
- b=XBAyohM/FN81mlQ4Qb+NWWMFq3pateluw3mTAWos8CtrdIKGtUJjPi7gpgfUpYAEsh
- RKfsp/npuUEkz5uwBNB7eLBHhjlzoputr5UL+HWZFUQI+4IGEUIEfG4F0alvjOicCxcW
- awWzgfUtemtMCl68/5N6L6Vl8RPgfv+wPCLptFpB0gjPfhLQk7SrTwdW0EPVG/CixZfn
- xik+5iFmCnybxUTjANbvkJjcE72KgrU7bio2QUgY5X/hohP6eKCmKSsinEeFOEfThBi3
- FE4RFcbAkYSoPRScLUGg9Gjx1sb+jYqOzK6/dOqdC/dnfwAZPoWnd6uVhtksDpGsG8cA
- e8SQ==
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Lh8lxM32QkEkuIveTpx/rUTPXEtJ4GmKMPsE6jyzgDI=;
+ b=pUcs/PAaUqTvG3oRHVAmgg+r3E3HQHyXwUVfBVIMoOxJ/6zlOwRe9j+Ni3JOvcHM/b
+ IYqHWsvERhZwjoG3w/HLc6dBP4L3c9uBFwYPKX4Ro5+ejWz15dnYv34ClIdXy/s+DUdt
+ RgouhQNTsuobA0yH3pa7CFfgbvk3zHu/2J4cOCC1qALS5h+SucXnIugnY5eUxIAJHaYD
+ MM9Vu4UrVrOKREuROQTAwViuNeMDWoi7xeEPsatlZdB4l3y9a2fkZBctUzsfea0HxTAZ
+ ZUGrDdM+Qtew17ZUVds1Sy7CJBbG3hH4Kbxqoz2EeigVdjIWCdJnwkrkosc+tMPYtwmS
+ APNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=7S4k5yVcaPNKEgbuN+FwAgT3Wa6YAs64vx6hY7de4w8=;
- b=UVTc9391bndHFXLzaGIBEcCPTDJRtL+9UlO/hN2pLA8q0+e2V2euns3C7ox9vkTFO5
- nxN/dSEhEyA1ZmxFfLqinkSRwsUEn1GiOBwj9C5w0ToS+cZnlxlP4phd+oGexlkH1mlZ
- 1AcigAr+PR3lDJF4kGGXXwhiUY/Z7aXqEKoY25tLGxC8x77sfC3gyjpPLpz1Zan4YdPz
- xV9LutVnTAB+yvLsISBXgfjjXnY/Dpu0QR73o0gvSytowJwRKOE+B156ZEjH/YDtcWCN
- rE8Mgb8WIk557v7GJ/pIbcY4I7c7Vyj7MMV6hjNWY2QqhXzigqcpTyAfF8HkYQlsX+mW
- AGlw==
-X-Gm-Message-State: AOAM532EVTeDyvr9ufy5FYyuZNPEDvltQO7BEA/Mi73LqKY7Dk3RaXmx
- R3z3d+lQJpcf3naofg8eLbjWemFJ+kmImh0n62M=
-X-Google-Smtp-Source: ABdhPJz8yTCWn2vmR2A8dJasDCOdCNsYtR+Rrn1xr56kmj/nZA3XVAz+JIf5KSNND80Aokv+GoVxrg==
-X-Received: by 2002:a65:4bcb:: with SMTP id p11mr1246806pgr.253.1603354206681; 
- Thu, 22 Oct 2020 01:10:06 -0700 (PDT)
-Received: from localhost (95.169.4.245.16clouds.com. [95.169.4.245])
- by smtp.gmail.com with ESMTPSA id v3sm1189291pjk.23.2020.10.22.01.10.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 22 Oct 2020 01:10:06 -0700 (PDT)
-From: George Liu <liuxiwei1013@gmail.com>
-X-Google-Original-From: George Liu <liuxiwei@inspur.com>
-To: joel@jms.id.au,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH] ARM: dts: Fix label address for 64MiB OpenBMC flash layout
-Date: Thu, 22 Oct 2020 16:10:02 +0800
-Message-Id: <20201022081002.2665132-1-liuxiwei@inspur.com>
-X-Mailer: git-send-email 2.25.1
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Lh8lxM32QkEkuIveTpx/rUTPXEtJ4GmKMPsE6jyzgDI=;
+ b=r5RDpFB4zo37A6d0s5EOXiMsg8s85oSD6mdPX+Gyz7o0PQ0OkWpKhbo0AC7MapXT1e
+ /Od6WVIhuBK/U+2eIMdkY+uCrf36sQA1P+YxsKS2sfrBs0FZlNFxcM8WKRYTr3mBmEL6
+ z+mDIkP75B54EXKNKf0oQPCHdtak3u6WN90Xb0Ebx2tiIopMGh7U8YzUJglUD0ePjVLW
+ 2yQwnVJgsWdB4tItwg2GXuSboVynWAcWJ/rT4o0dpJoIs3a9DrR2eyqymG+D1lgGxUrZ
+ +lozka1b5T9kwcKixOJQnAtcyd7WgaDki3I5wEyDxTD3WIefThgQQeRBe+QbJkbIBWAi
+ ItcA==
+X-Gm-Message-State: AOAM532JjSDhXMgIbwR/N/th84PznHZkmkyaNCA2w4aJyKtlNJ41+F2B
+ tVJOX/BKaImu05PqdBtLNImTEQg5HzSi9Ec/40YAAUGDMq4=
+X-Google-Smtp-Source: ABdhPJyGHaAAH7cORf5nqWcPkTHP3uON845FUWdxGJ4VGvqEyuPKCjz+0XLb/htGmd9gY0BdjyZ1EIVzmm2RxAxWo2s=
+X-Received: by 2002:a63:e354:: with SMTP id o20mr1378871pgj.317.1603355077238; 
+ Thu, 22 Oct 2020 01:24:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: khader basha shaik <shaikkhaderbasha601@gmail.com>
+Date: Thu, 22 Oct 2020 13:54:27 +0530
+Message-ID: <CAD+gp9CHnvDk+sU05DhMpuOshST-cAx2LoU+kZJjjEHeKzztMA@mail.gmail.com>
+Subject: openbmc:Error while running bitbake for raspberrypi-3
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000d3e42005b23e3192"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,42 +72,156 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Signed-off-by: George Liu <liuxiwei@inspur.com>
----
- arch/arm/boot/dts/openbmc-flash-layout-64.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+--000000000000d3e42005b23e3192
+Content-Type: text/plain; charset="UTF-8"
 
-diff --git a/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi b/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi
-index c8e0409d889e..91163867be34 100644
---- a/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi
-+++ b/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi
-@@ -13,22 +13,22 @@ u-boot@0 {
- 		label = "u-boot";
- 	};
- 
--	u-boot-env@e0000 {
-+	u-boot-env@60000 {
- 		reg = <0x60000 0x20000>; // 128KB
- 		label = "u-boot-env";
- 	};
- 
--	kernel@100000 {
-+	kernel@80000 {
- 		reg = <0x80000 0x500000>; // 5MB
- 		label = "kernel";
- 	};
- 
--	rofs@a00000 {
-+	rofs@580000 {
- 		reg = <0x580000 0x2a80000>; // 42.5MB
- 		label = "rofs";
- 	};
- 
--	rwfs@6000000 {
-+	rwfs@3000000 {
- 		reg = <0x3000000 0x1000000>; // 16MB
- 		label = "rwfs";
- 	};
--- 
-2.25.1
+Hi Team,
 
+I am getting errors while running the bitbake for raspberrypi-3.
+Following are the steps I have followed to run the bitbake:
+
+   1. Clonned the latest code from the master branch for openbmc repo.
+   2.TEMPLATECONF=meta-phosphor/conf . openbmc-env
+   2. open the conf/local.conf file in the editor and update to add the
+   raspberrypi3-64
+   -MACHINE ??= "qemuarm"
+   +MACHINE ??= "raspberrypi3-64"
+
+4.open the conf/bblayers.conf file in the editor and add the following line
+/home/basha/openbmc/meta-phosphor \
+
+   - /home/basha/openbmc/meta-raspberrypi \
+
+
+   1. bitbake obmc-phosphor-image
+
+After the bitbake I am getting following errors:
+
+|     /home/basha/openbmc/meta-raspberrypi/recipes-kernel/linux/files/
+| DEBUG: Executing shell function do_kernel_metadata
+| ERROR: Feature 'phosphor-gpio-keys' not found, this will cause
+configuration failures.
+| ERROR: Check the SRC_URI for meta-data repositories or directories
+that may be missing
+| ERROR: Set KERNEL_DANGLING_FEATURES_WARN_ONLY to ignore this issue
+| WARNING: exit code 1 from a shell command.
+| ERROR: Execution of
+'/home/basha/openbmc/build/tmp/work/raspberrypi3_64-openbmc-linux/linux-raspberrypi/1_5.4.69+gitAUTOINC+5d52d9eea9_31d364af25-r0/temp/run.do_kernel_metadata.118535'
+failed with exit code 1:
+| WARNING: exit code 1 from a shell command.
+|
+ERROR: Task (/home/basha/openbmc/meta-raspberrypi/recipes-kernel/linux/linux-raspberrypi_5.4.bb:do_kernel_metadata)
+failed with exit code '1'
+Waiting for 4 running tasks to finish:
+
+
+Also I have referred to the following issue "#2434
+<https://github.com/openbmc/openbmc/issues/2434>" and added
+KERNEL_FEATURES_remove = "phosphor-gpio-keys" to the local.conf file and
+recompiled using the above steps again.
+I did not get the above errors but the rpi-sdimg file was not generated in
+the following path.
+
+"build/tmp/deploy/images/raspberrypi3-64/obmc-phosphor-image-raspberrypi3-64-2020XXXXXXXXXX.rootfs.rpi-sdimg"
+
+Please let me know if there are any additional steps to be followed to run
+bitbake for raspberrypi-3 in order to generate the rpi-sdimg file.
+
+Thanks & Regards,
+Khader B Shaik
+
+--000000000000d3e42005b23e3192
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p style=3D"box-sizing:border-box;margin-bottom:16px;color=
+:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&=
+quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe =
+UI Emoji&quot;;font-size:14px;margin-top:0px">Hi Team,</p><p style=3D"box-s=
+izing:border-box;margin-top:0px;margin-bottom:16px;color:rgb(36,41,46);font=
+-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,Ari=
+al,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;font=
+-size:14px">I am getting errors while running the bitbake for raspberrypi-3=
+.<br style=3D"box-sizing:border-box">Following are the steps I have followe=
+d to run the bitbake:</p><ol style=3D"box-sizing:border-box;padding-left:2e=
+m;margin-top:0px;margin-bottom:16px;color:rgb(36,41,46);font-family:-apple-=
+system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&=
+quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px"><li=
+ style=3D"box-sizing:border-box">Clonned the latest code from the master br=
+anch for openbmc repo.<br style=3D"box-sizing:border-box">2.TEMPLATECONF=3D=
+meta-phosphor/conf . openbmc-env</li><li style=3D"box-sizing:border-box;mar=
+gin-top:0.25em">open the conf/local.conf file in the editor and update to a=
+dd the raspberrypi3-64<br style=3D"box-sizing:border-box">-MACHINE ??=3D &q=
+uot;qemuarm&quot;<br style=3D"box-sizing:border-box">+MACHINE ??=3D &quot;r=
+aspberrypi3-64&quot;</li></ol><p style=3D"box-sizing:border-box;margin-top:=
+0px;margin-bottom:16px;color:rgb(36,41,46);font-family:-apple-system,BlinkM=
+acSystemFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Co=
+lor Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px">4.open the conf/=
+bblayers.conf file in the editor and add the following line<br style=3D"box=
+-sizing:border-box">/home/basha/openbmc/meta-phosphor \</p><ul style=3D"box=
+-sizing:border-box;padding-left:2em;margin-top:0px;margin-bottom:16px;color=
+:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&=
+quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe =
+UI Emoji&quot;;font-size:14px"><li style=3D"box-sizing:border-box">/home/ba=
+sha/openbmc/meta-raspberrypi \</li></ul><ol start=3D"5" style=3D"box-sizing=
+:border-box;padding-left:2em;margin-top:0px;margin-bottom:16px;color:rgb(36=
+,41,46);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,H=
+elvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoj=
+i&quot;;font-size:14px"><li style=3D"box-sizing:border-box">bitbake obmc-ph=
+osphor-image</li></ol><p style=3D"box-sizing:border-box;margin-top:0px;marg=
+in-bottom:16px;color:rgb(36,41,46);font-family:-apple-system,BlinkMacSystem=
+Font,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoj=
+i&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px">After the bitbake I am g=
+etting following errors:</p><pre style=3D"box-sizing:border-box;font-family=
+:SFMono-Regular,Consolas,&quot;Liberation Mono&quot;,Menlo,monospace;font-s=
+ize:11.9px;margin-top:0px;margin-bottom:16px;padding:16px;overflow:auto;lin=
+e-height:1.45;border-radius:6px;color:rgb(36,41,46)"><code style=3D"box-siz=
+ing:border-box;font-family:SFMono-Regular,Consolas,&quot;Liberation Mono&qu=
+ot;,Menlo,monospace;padding:0px;margin:0px;background:initial;border-radius=
+:6px;word-break:normal;border:0px;display:inline;overflow:visible;line-heig=
+ht:inherit">|     /home/basha/openbmc/meta-raspberrypi/recipes-kernel/linux=
+/files/
+| DEBUG: Executing shell function do_kernel_metadata
+| ERROR: Feature &#39;phosphor-gpio-keys&#39; not found, this will cause co=
+nfiguration failures.
+| ERROR: Check the SRC_URI for meta-data repositories or directories that m=
+ay be missing
+| ERROR: Set KERNEL_DANGLING_FEATURES_WARN_ONLY to ignore this issue
+| WARNING: exit code 1 from a shell command.
+| ERROR: Execution of &#39;/home/basha/openbmc/build/tmp/work/raspberrypi3_=
+64-openbmc-linux/linux-raspberrypi/1_5.4.69+gitAUTOINC+5d52d9eea9_31d364af2=
+5-r0/temp/run.do_kernel_metadata.118535&#39; failed with exit code 1:
+| WARNING: exit code 1 from a shell command.
+|
+ERROR: Task (/home/basha/openbmc/meta-raspberrypi/recipes-kernel/linux/linu=
+x-raspberrypi_5.4.bb:do_kernel_metadata) failed with exit code &#39;1&#39;
+Waiting for 4 running tasks to finish:
+
+</code></pre><p style=3D"box-sizing:border-box;margin-top:0px;margin-bottom=
+:16px;color:rgb(36,41,46);font-family:-apple-system,BlinkMacSystemFont,&quo=
+t;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&=
+quot;Segoe UI Emoji&quot;;font-size:14px">Also I have referred to the follo=
+wing issue &quot;<a class=3D"gmail-issue-link gmail-js-issue-link" href=3D"=
+https://github.com/openbmc/openbmc/issues/2434" style=3D"box-sizing:border-=
+box;background-color:initial;text-decoration-line:none">#2434</a>&quot; and=
+ added KERNEL_FEATURES_remove =3D &quot;phosphor-gpio-keys&quot; to the loc=
+al.conf file and recompiled using the above steps again.<br style=3D"box-si=
+zing:border-box">I did not get the above errors but the rpi-sdimg file was =
+not generated in the following path.</p><p style=3D"box-sizing:border-box;m=
+argin-top:0px;margin-bottom:16px;color:rgb(36,41,46);font-family:-apple-sys=
+tem,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quo=
+t;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px">&quot;=
+build/tmp/deploy/images/raspberrypi3-64/obmc-phosphor-image-raspberrypi3-64=
+-2020XXXXXXXXXX.rootfs.rpi-sdimg&quot;</p><p style=3D"box-sizing:border-box=
+;margin-top:0px;margin-bottom:16px;color:rgb(36,41,46);font-family:-apple-s=
+ystem,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&q=
+uot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;font-size:14px">Plea=
+se let me know if there are any additional steps to be followed to run bitb=
+ake for raspberrypi-3 in order to generate the rpi-sdimg file.</p><p style=
+=3D"box-sizing:border-box;margin-top:0px;margin-bottom:16px;color:rgb(36,41=
+,46);font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helv=
+etica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&q=
+uot;;font-size:14px">Thanks &amp; Regards,<br style=3D"box-sizing:border-bo=
+x">Khader B Shaik</p></div>
+
+--000000000000d3e42005b23e3192--
