@@ -2,76 +2,104 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86C872961D1
-	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 17:42:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 242172961E9
+	for <lists+openbmc@lfdr.de>; Thu, 22 Oct 2020 17:52:06 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CHBSp4M40zDqrn
-	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 02:42:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CHBgl1scszDqtt
+	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 02:52:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
- helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=DHf6co47; dkim-atps=neutral
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
- [IPv6:2607:f8b0:4864:20::330])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=kpWQfr4K; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CHBRy5SzPzDqqY
- for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 02:41:48 +1100 (AEDT)
-Received: by mail-ot1-x330.google.com with SMTP id n15so1863403otl.8
- for <openbmc@lists.ozlabs.org>; Thu, 22 Oct 2020 08:41:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=kssMpkxNFCajXrYflVBIJfA+td9NboAVpALDOdDcPDk=;
- b=DHf6co47tsVUIAtrft38NzzKOV8mKYZZLtC2bpr8wFjqQSW44sJrnCRKgbvwVvZxi7
- 9RjUHAT1ylItLeaRMO7+2QJvh7rm6I4OHKcLdnv47KqWO7q55BQRVu+rucUHPgtna76E
- rjKFUs13NOhsB+NFaxPH8bzK+blFBvPgM4MEyiPkg8DowVXNPPMyYSE9+oHm+jAj4Pww
- 5LjwmWZyD1FQL2m6pyLHkEJMZhO8ne9dYynZSmYDMqd1+S14Jnids+o+b/NbKnsrhlb7
- HoCjm8xb+U20r3tGqybO6nLjwaraXVDZuUQfIYRPAwFh/1AE7Gq9HNuUUbewWd0TQvrW
- 01gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=kssMpkxNFCajXrYflVBIJfA+td9NboAVpALDOdDcPDk=;
- b=JUAlgD1m97VbeZn/vwrEDFw2c2mkS79xQJ8JLPmLP5uxxevn0zzd2WiLhT/ii2xy/J
- t3F1WFIvbxDt87G5/l/s2WhR9vUpMcs09qKsT32bT0vMba9vSPfvPfDcEr9+Ck+kXDNR
- zAatrXRGSJH2Hp9oJlSug5I97sM+5EgjIJNSyd+eMhwfm78mmJTE5TRH06TiIqbXIoF0
- +4ft9Ta5JbxpKsKQEH2o58Z6omdijTKHPehwfyXhHdl3MZIfVcmwwxuqkCOZ6esAHQ9I
- D9GJS4P+++OKLmEMYH47ishdIeiB5L1Ax3Xn2lyKdEW6PH0ZwxcYCqPZSWueL0G6YjGa
- S7QA==
-X-Gm-Message-State: AOAM531Ujog9dhreS+mOz//b6zIisq9rx8SRF4HqU68m+3qw4ZXZBsYE
- UfCDEglsERK50gFp2OP+hOgjLkdEVZRBYw==
-X-Google-Smtp-Source: ABdhPJwvKZ6buyoZrefMrpMfVG4YETACxnWaf/6RrN5jFXtobrBu3zwZLFyfsg8aFCyKO6BQ4QjXeA==
-X-Received: by 2002:a05:6830:1183:: with SMTP id
- u3mr2139864otq.167.1603381304152; 
- Thu, 22 Oct 2020 08:41:44 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- (45-18-127-186.lightspeed.austtx.sbcglobal.net. [45.18.127.186])
- by smtp.gmail.com with ESMTPSA id b6sm493736otl.37.2020.10.22.08.41.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 22 Oct 2020 08:41:34 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: Critical BMC process failure recovery
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <95ad99d7921c405e93b794463d702853@SCL-EXCHMB-13.phoenix.com>
-Date: Thu, 22 Oct 2020 10:41:33 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4D041666-3DC0-4C5A-892C-8155D9DA6971@gmail.com>
-References: <C270F145-2236-4CA1-8D57-A63AB622A47C@gmail.com>
- <95ad99d7921c405e93b794463d702853@SCL-EXCHMB-13.phoenix.com>
-To: Neil Bradley <Neil_Bradley@phoenix.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CHBfw14CJzDqgs
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 02:51:19 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09MFWeVg058993; Thu, 22 Oct 2020 11:51:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=/ESUtf9Ag3zYVq9lknQ07ZS4oq8A/DTDJ5kXyB4R61M=;
+ b=kpWQfr4KHODbJkzxnZ1ovAjXtr1/4Z/kwdDwHNP5S3mrqYfehmqXH6XTT4SC70SxFBYQ
+ yCYaOFVStsYNHqd/dLmdF+wqYpB3gjavhCMaaEbFueB9G5hrcJWPwkeLI8xh6HxoJFXG
+ KdCFCdLpv+bpfjMIs4E1r62ZiaKLUBVptp0/Hem77lwn+AEIrLPhSShqwLw75tVHI+Si
+ 5xRbGq62wEHLMNlbOxmkf4nZP3wBgs7nVdKMJzPp2IjpYJpO7mkUxupRatKPEP9UWCds
+ kvpNh6NB024D46ciL+2Azf2cFlcQPGgB4WQdZUkDlZYAUu5j9APitzN1FweXX87unmLT NQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34b73r3k5d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Oct 2020 11:51:14 -0400
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09MFZkPm071403;
+ Thu, 22 Oct 2020 11:51:14 -0400
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34b73r3k51-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Oct 2020 11:51:14 -0400
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09MFm9Y7002477;
+ Thu, 22 Oct 2020 15:51:13 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com
+ [9.57.198.28]) by ppma03dal.us.ibm.com with ESMTP id 347r89unmr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 22 Oct 2020 15:51:13 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09MFpDKS34079064
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 22 Oct 2020 15:51:13 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 03E9A28058;
+ Thu, 22 Oct 2020 15:51:13 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8115328059;
+ Thu, 22 Oct 2020 15:51:12 +0000 (GMT)
+Received: from [9.160.45.230] (unknown [9.160.45.230])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTP;
+ Thu, 22 Oct 2020 15:51:12 +0000 (GMT)
+Subject: Re: Enable/Disable some sensors when Host On/Off
+To: Thu Ba Nguyen <tbnguyen1985@gmail.com>, Vijay Khemka <vijaykhemka@fb.com>,
+ Patrick Williams <patrick@stwcx.xyz>
+References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+ <CACWQX833j+remiYr8qOdrZZ4z3L3D_GX0q6z4MPJDu8J4Nv+Pg@mail.gmail.com>
+ <CALioo36kortxuLPJQmc7xtDVN=jAxPNf481ovFkc2jQfYu8-rg@mail.gmail.com>
+ <90950FB3-E1B3-4ACE-97C5-CB9582A94456@fb.com>
+ <CALioo37b-BjgUdfZz2Vm+=6K6VMYRO9auyuHHo7=AZBFpoBzdw@mail.gmail.com>
+ <CALioo37LBToJaMs9Zt4q4WcMYKT_rF9zG1ujxv3q8HOQvsE8-w@mail.gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <26b02688-a8c8-3fb3-6cc9-50daabf4d01e@linux.ibm.com>
+Date: Thu, 22 Oct 2020 10:51:13 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
+MIME-Version: 1.0
+In-Reply-To: <CALioo37LBToJaMs9Zt4q4WcMYKT_rF9zG1ujxv3q8HOQvsE8-w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.737
+ definitions=2020-10-22_10:2020-10-20,
+ 2020-10-22 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1011 mlxscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 mlxlogscore=999 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010220103
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,115 +117,152 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-> On Oct 19, 2020, at 4:35 PM, Neil Bradley <Neil_Bradley@phoenix.com> =
-wrote:
->=20
-> Hey Andrew!
->=20
-> At least initially, the requirements don't really seem like =
-requirements - they seem like what someone's idea of what they think a =
-solution would be.  For example, why reset 3 times? Why not 10? Or 2? =
-Seems completely arbitrary.
+On 10/22/2020 9:49 AM, Thu Ba Nguyen wrote:
+> I started on supporting enable/disable host sensors. Everythings is 
+> fine until I...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> I started on supporting enable/disable host sensors.
+> Everythings is fine until I add code to monitor host status as below.
+> bool MainLoop::isHostOn(void)
+> {
+> char buff[128];
+> if (!powerMatch)
+> {
+> log<level::ERR>("Power Match Not Created");
+> }
+> sprintf(buff, "isHostOn powerStatusOn: %d\n",powerStatusOn);
+> log<level::INFO>(buff);
+> return powerStatusOn;
+> }
+> std::shared_ptr<sdbusplus::bus::match::match>
+> MainLoop::startHostStateMonitor(void) {
+> return std::make_shared<sdbusplus::bus::match::match>(
+> *conn,
+> "type='signal',interface='org.freedesktop.DBus.Properties',"
+> "member='PropertiesChanged',arg0='xyz.openbmc_project.State.Host'",
+> [](sdbusplus::message::message &msg) {
+> std::string interfaceName;
+> boost::container::flat_map<std::string, std::variant<std::string>>
+> propertiesChanged;
+> try {
+> msg.read(interfaceName, propertiesChanged);
+> } catch (std::exception &e) {
+> log<level::ERR>("Unable to read host state\n");
+> return;
+> }
+> // We only want to check for CurrentHostState
+> if (propertiesChanged.begin()->first != "CurrentHostState") {
+> return;
+> }
+> auto findState = propertiesChanged.find(powProperty);
+> if (findState != propertiesChanged.end())
+> {
+> powerStatusOn = boost::ends_with(
+> std::get<std::string>(findState->second), "Running");
+> }
+> powerMatch = true;
+> });
+> }
+> void MainLoop::read()
+> {
+> // TODO: Issue#3 - Need to make calls to the dbus sensor cache here to
+> // ensure the objects all exist?
+> /* Host changed state from On to Off */
+> if (!isHostOn() && (lastPowerState == HOST_ON ||
+> lastPowerState == HOST_NA)) {
+> removeHostSensors();
+> lastPowerState = HOST_OFF;
+> }
+> /* Host changed state from Off to On */
+> if (isHostOn() && lastPowerState == HOST_OFF) {
+> addDroppedHostSensors();
+> lastPowerState = HOST_ON;
+> }
+> When build openBMC I got error:
+> tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthread.so.0: 
+> error adding symbols: DSO missing from command line
+> | collect2: error: ld returned 1 exit status
+> | make[2]: *** [Makefile:643: phosphor-hwmon-readd] Error 1
+>
+> It seems I need adding the threads lib to defend lib.
+> Any suggestion to add threads lib to build configuration?
+>
 
-Hey Neil. I was starting with what our previous closed-source system
-requirements were. The processes that cause a reset and the amount
-of times we reset should definitely be configurable.
+That must be because you're using that single boost function?  While you 
+could add the dependency,
+the ideal thing to do since this repo already uses 
+phosphor-dbus-interfaces is to use the function:
 
-> If the BMC resets twice in a row, there's no reason to think it would =
-be OK the 3rd time. It's kinda like how people have been known do 4-5 =
-firmware updates to "fix" a problem and it "still doesn't work". =F0=9F=98=
-=89
+         /** @brief Convert a string to an appropriate enum value.
+          *  @param[in] s - The string to convert in the form of
+          *                 "xyz.openbmc_project.State.Host.<value name>"
+          *  @return - The enum value.
+          */
+         static HostState convertHostStateFromString(const std::string& s);
 
-Yeah, history has shown that if one reboot doesn=E2=80=99t fix it then =
-you=E2=80=99re
-probably out of of luck. But=E2=80=A6it is up to the system owner to
-configure whatever they like.
+to convert it to the actual HostState enum to check against:
 
->=20
-> If the ultimate goal is availability, then there's more nuance to the =
-discussion to be had. Let's assume the goal is "highest availability =
-possible".
->=20
-> With that in mind, defining what "failure" is gets to be a bit more =
-convoluted. Back when we did the CMM code for the Intel modular server, =
-we had a several-pronged approach:
->=20
-> 1) Run procmon - Look for any service that is supposed to be running =
-(but isn't) and restart it and/or its process dependency tree.
-> 2) Create a monitor (either a standalone program or a script) that =
-periodically connects to the various services available - IPMI, web, =
-KVM, etc.... - think of it like a functional "ping". A bit more =
-involved, as this master control program (Tron reference =F0=9F=98=89 ) =
-would have to speak sentiently to each service to gauge how alive it is. =
-There have been plenty of situations where a BMC is otherwise healthy =
-but one service wasn't working, and it's overkill to have a 30-45 second =
-outage while the BMC restarts.
+         enum class HostState
+         {
+             Off,
+             Running,
+             Quiesced,
+             DiagnosticMode,
+         };
 
-This sounds like it fits in with =
-https://github.com/openbmc/phosphor-health-monitor
-That to me is the next level of process health and recovery but =
-initially here
-I was just looking for a broad, =E2=80=9Cwhat do we do if our service is =
-restarted
-x amount of times, still in a fail state, and is critical to the basic
-functionality of the BMC=E2=80=9D. To me the only options are try a =
-reboot
-of the BMC or log an error and indicate the BMC is in a unstable
-state.
+This is all in xyz/openbmc_project/State/Host/server.hpp provided by 
+phosphor-dbus-interfaces.
 
->=20
-> -----Original Message-----
-> From: openbmc =
-<openbmc-bounces+neil_bradley=3Dphoenix.com@lists.ozlabs.org> On Behalf =
-Of Andrew Geissler
-> Sent: Monday, October 19, 2020 12:53 PM
-> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> Subject: Critical BMC process failure recovery
->=20
-> Greetings,
->=20
-> I've started initial investigation into two IBM requirements:
->=20
-> - Reboot the BMC if a "critical" process fails and can not recover
-> - Limit the amount of times the BMC reboots for recovery
->  - Limit should be configurable, i.e. 3 resets within 5 minutes
->  - If limit reached, display error to panel (if one available) and =
-halt
->    the BMC.
->=20
-> The goal here is to have the BMC try and get itself back into a =
-working state via a reboot of itself.
->=20
-> This same reboot logic and limits would also apply to kernel panics =
-and/or BMC hardware watchdog expirations.
->=20
-> Some thoughts that have been thrown around internally:
->=20
-> - Spend more time ensuring code doesn't fail vs. handling them failing
-> - Put all BMC code into a single application so it's all or nothing =
-(vs.=20
->  trying to pick and choose specific applications and dealing with all =
-of
->  the intricacies of restarting individual ones)
-> - Rebooting the BMC and getting the proper ordering of service starts =
-is
->  sometimes easier then testing every individual service restart for =
-recovery
->  paths
->=20
-> "Critical" processes would be things like mapper or dbus-broker. =
-There's definitely a grey area though with other services so we'd need =
-some guidelines around defining them and allow the meta layers to have a =
-way to deem whichever they want critical.
->=20
-> So anyway, just throwing this out there to see if anyone has any input =
-or is looking for something similar.
->=20
-> High level, I'd probably start looking into utilizing systemd as much =
-as possible. "FailureAction=3Dreboot-force" in the critical services and =
-something that monitors for these types of reboots and enforces the =
-reboot limits.
->=20
-> Andrew
->=20
+> Thanks.
+> Thu.
+>
+> On Wed, Oct 21, 2020 at 11:54 PM Thu Ba Nguyen <tbnguyen1985@gmail.com 
+> <mailto:tbnguyen1985@gmail.com>> wrote:
+>
+>     Hi Vijay,
+>
+>     I took a look on entity-manager and openbmc source.
+>     Don't have many companies  using entity-manager model to support
+>     sensors.
+>
+>     Regards
+>     Thu Nguyen.
+>
+>
+>     On Wed, Oct 21, 2020 at 7:15 AM Vijay Khemka <vijaykhemka@fb.com
+>     <mailto:vijaykhemka@fb.com>> wrote:
+>
+>         *From: *openbmc
+>         <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org
+>         <mailto:fb.com@lists.ozlabs.org>> on behalf of Thu Ba Nguyen
+>         <tbnguyen1985@gmail.com <mailto:tbnguyen1985@gmail.com>>
+>         *Date: *Monday, October 19, 2020 at 11:23 AM
+>         *To: *Ed Tanous <ed@tanous.net <mailto:ed@tanous.net>>
+>         *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org
+>         <mailto:openbmc@lists.ozlabs.org>>
+>         *Subject: *Re: Enable/Disable some sensors when Host On/Off
+>
+>         Hi Ed Tanous,
+>
+>         > Thanks for your info,
+>
+>         > But in your platform we are using phosphor-hwmon to manage
+>         sensors.
+>
+>         > We don't use entity-manager.
+>
+>         > As I knew we can't use both entity-manager and
+>         phosphor-hwmon for one project.
+>
+>         You can use both but for different sensors. You can decide
+>         what sensors to configure
+>
+>         via EM/dbus-sensors and which one for phosphor-hwmon.
+>
+>         Regards
+>
+>         Thu Nguyen.
+>
 
