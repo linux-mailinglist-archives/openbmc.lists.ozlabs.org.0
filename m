@@ -1,95 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC6BB29700B
-	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 15:11:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 710F62970C0
+	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 15:37:55 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CHl3X3kWMzDqsb
-	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 00:11:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CHlfS4Vr6zDqB5
+	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 00:37:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=40.107.132.137;
- helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=dylan_hung@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-eopbgr1320137.outbound.protection.outlook.com [40.107.132.137])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=lOBkgGC2; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CHl141tBnzDqsM;
- Sat, 24 Oct 2020 00:08:54 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S1RzJxw4qAFW9CMuMzXdHR5+sROhSLcxOdo2w1LnVV0BwkZS8VAleVBOdLFag8osBsaxb72x5ej8SBBhkq3bEhSgO60FOP0yuYkZFoCrZzmP3TGA2VZj7oYknXG8MTSLQIDB918AXxFOvlcZIIQaGyKrjYY0dyvpz3LWhrfo3kw0MpBfdxuMDBXv15MwSCtdGY/FGuL8GfgxMgjnw4S+5sumL1IOfGvc0cWU+GKMwvUnRCUVB+RX6JW3fpnFm6sshsL6+DXbZjwCZ/Y1xsh7IckbvBCzzfWlg5ha+h+yhH0S4CXHzVDIQ5djkSFBw+vp8DHgBWyy5cHvyyqzr0zHLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9tQVct3ha1NTNnrUrjRfTF0aXxq5Kkpy6owhkOj7Sbw=;
- b=W3MRZDAtLrJYxuNOVE+6D4oIt3AJbmsgCVQRoksazslv2XlemA7qa9NV/VVS4eKplWusvyL/LL6Te66r/F6mgndDyW/LafxBoDff7mApWsQEDiJG/NKguQR909pkyQJzOnJxKt7lF4bBY9FvkMBVLWWGW3lKMDGlusnnMelKkdOHCOAPzVPq1jFmNIPJ9VAh+ywufPwze6JvNAnWYwER5Ak4v8BQyxBWxdibZ7j6VCAICU+j5edHmD3UAmcBjL9CfPPOhvREeVKmOiPu1WYBa8cD7W/mtLxmTpq1AMKp3Ae4WYTPhUsPa1qw+G0IvlOOz7reqDa8z5DgL4J4rza5iA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-Received: from PS1PR0601MB1849.apcprd06.prod.outlook.com (2603:1096:803:6::17)
- by PU1PR06MB2183.apcprd06.prod.outlook.com (2603:1096:803:2c::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3477.21; Fri, 23 Oct
- 2020 13:08:30 +0000
-Received: from PS1PR0601MB1849.apcprd06.prod.outlook.com
- ([fe80::31d5:24c7:7ac6:a5cc]) by PS1PR0601MB1849.apcprd06.prod.outlook.com
- ([fe80::31d5:24c7:7ac6:a5cc%7]) with mapi id 15.20.3477.029; Fri, 23 Oct 2020
- 13:08:30 +0000
-From: Dylan Hung <dylan_hung@aspeedtech.com>
-To: Andrew Jeffery <andrew@aj.id.au>, Benjamin Herrenschmidt
- <benh@kernel.crashing.org>
-Subject: RE: [PATCH] net: ftgmac100: Fix missing TX-poll issue
-Thread-Topic: [PATCH] net: ftgmac100: Fix missing TX-poll issue
-Thread-Index: AQHWper5b6m5IMpmJk2Uyk3yAiWzCqmen8qAgACopgCAALYZ4IAA6dGAgAAnUwCAAAR0AIAD3tsw
-Date: Fri, 23 Oct 2020 13:08:30 +0000
-Message-ID: <PS1PR0601MB18498469F0263306A6E5183F9C1A0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
-References: <20201019073908.32262-1-dylan_hung@aspeedtech.com>
- <CACPK8Xfn+Gn0PHCfhX-vgLTA6e2=RT+D+fnLF67_1j1iwqh7yg@mail.gmail.com>
- <20201019120040.3152ea0b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
- <CAK8P3a2pEfbLDWTppVHmGxXduOWPCwBw-8bMY9h3EbEecsVfTA@mail.gmail.com>
- <32bfb619bbb3cd6f52f9e5da205673702fed228f.camel@kernel.crashing.org>
- <529612e1-c6c4-4d33-91df-2a30bf2e1675@www.fastmail.com>
-In-Reply-To: <529612e1-c6c4-4d33-91df-2a30bf2e1675@www.fastmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: aj.id.au; dkim=none (message not signed)
- header.d=none;aj.id.au; dmarc=none action=none header.from=aspeedtech.com;
-x-originating-ip: [211.20.114.70]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b32be31d-3683-4467-4cae-08d87754bd46
-x-ms-traffictypediagnostic: PU1PR06MB2183:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <PU1PR06MB2183C7B7914F11DD577B20629C1A0@PU1PR06MB2183.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 1udGjDiGm7sX6YKMBTNCt7JBbSYpEoxIEx2vwpBxVb0DXFbv9zS/TR7QEzX0qVywzL8wyjvY5sgvG0UEcS4a7aE7nRPyaieUpRkdsGF6/YEVBInQlll2i0ZDz99JHKJlcly91U3QK0y0Tu5GTtuUBYnXgqAsCYZ+AUdrn4N18rKfxf/qPfOmeHo47JKAiD0zySkWThM49S1Xuo7e60/A/xHTVnDgy03Gmyl2Uaar0ACFAtzDHOYmwec1fHvebraMMauzQqhTqGUbD4OcTQVZPRB9WMQwVTJewaf2rmocRpAlPJZSxlzrncKxXrBSA46KBUhJq1RRnBSK2W32jYdV/Q==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PS1PR0601MB1849.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(136003)(376002)(346002)(396003)(366004)(39830400003)(54906003)(66446008)(76116006)(66476007)(478600001)(52536014)(71200400001)(5660300002)(66556008)(66946007)(83380400001)(64756008)(2906002)(8676002)(9686003)(86362001)(4001150100001)(26005)(316002)(55236004)(33656002)(110136005)(6506007)(4326008)(7696005)(186003)(53546011)(55016002)(8936002);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: MDrRVD9aKN9xDv43RfZttNht+k3LtzXjMIGlAomC5KlryPd6z7YwGPx51buF5oI6T6PmGVLa6a0Ti2+hOTuuuXTY3ssb0iMyWrZI834bP3g8mbpmAv7tsYgXZJYEYdkTAU1eSfSoUE90bY8Kwh912wtSI2fbJbgAe098KfuAukPylinU/LDdv9h9oPhnWGRTJiD99MGvQXwleJXQ116Lzg782OelakTeKVF/cETdbuTArx9SGhcCnCBYUrKQCiReZxlpZWEJ4De5tdrCumKQuUYFE54OuC61pytAM6dU7NSIQOeTeP7jqRQ5JezwgT9Iy4RktYyyhPPg03uiP0x5suuNGvYa4O9rNkzedsNgTLaR70fwC09nxtGYgMSi6guwUkfqc8DhPvyr6QKaMTxH2m2YbLXB5mmQ+YWjxjfRJew5nxFWby/DSwpZsvCor/0WAaNEpL6GvmPOAK09oXCqdmrdH39jIVKQa+aahPIhRIn05kgXoZcqrgLyqbubnuCju7VcaHJ/moT6hIzPTZy3sI23Vs2u7khotxqiIoOdv2c+86jXo1FD4jx552EAwpUBrdc455JdcErL/yP/yCDDivMQYkui89U2M8qV2TlcnPAMzlmkH4Qs85aeP1RmXlndQYeUOtC6G+LbB5Q5DzJTyw==
-Content-Type: text/plain; charset="us-ascii"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CHlWc1Qn7zDr2w
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 00:31:54 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09NDIsj2062875
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 09:31:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : subject :
+ from : to : date : references : content-type : message-id :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=UT3JMu7NmRuSu9tR+7IoMJR968p23zWLvJ+dTChxfZ4=;
+ b=lOBkgGC2mHQY5AIiehhOo0zuRVYhnqQXWdeqfGpYj4sepzG79Kx8Q1ZivvQopcRAG7oL
+ fEA3TRJyp21WNMGfn5mESS16JgUYxh0BOINTZy8buLVlkSAgVGsO06Ys3jAyuRYq0O0/
+ Y6l8KVU3SwAtVhcd/kKBeLHqy+AdxRmnEKOJpFzo+Iukf5cgac/vuzuYDkSGvbvolfOo
+ y4L9/qMFiWe+Y/jjFXaixJQFls4hhFvgCLj1fhQZXG7zmyj5ld+5V5YOmUt44aQeJKfZ
+ EkMJOmWes0AJB/KSY7b8uwMMPnAZK3ggYmgdmA5F6I2eguPktnbDDK9g7zJFVULuGk8V 6Q== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.73])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34b73rv23c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 09:31:51 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Fri, 23 Oct 2020 13:31:50 -0000
+Received: from us1a3-smtp02.a3.dal06.isc4sb.com (10.106.154.159)
+ by smtp.notes.na.collabserv.com (10.106.227.90) with
+ smtp.notes.na.collabserv.com ESMTP; Fri, 23 Oct 2020 13:31:48 -0000
+Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
+ by us1a3-smtp02.a3.dal06.isc4sb.com
+ with ESMTP id 2020102313314791-395479 ;
+ Fri, 23 Oct 2020 13:31:47 +0000 
+In-Reply-To: 
+Subject: webui-vue GUI Documentation live on GitHub pages
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Fri, 23 Oct 2020 13:31:47 +0000
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: 
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 8967
+X-TNEFEvaluated: 1
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20102313-8877-0000-0000-000004C42D73
+X-IBM-SpamModules-Scores: BY=0; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.394815; ST=0; TS=0; UL=0; ISC=; MB=0.000009
+X-IBM-SpamModules-Versions: BY=3.00014062; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01453332; UDB=6.00781656; IPR=6.01236026; 
+ MB=3.00034670; MTD=3.00000008; XFM=3.00000015; UTC=2020-10-23 13:31:49
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-10-23 11:21:28 - 6.00011989
+x-cbparentid: 20102313-8878-0000-0000-0000F06B2ED5
+Message-Id: <OF7B64577B.2C000508-ON0025860A.004A170E-0025860A.004A527C@notes.na.collabserv.com>
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PS1PR0601MB1849.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b32be31d-3683-4467-4cae-08d87754bd46
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Oct 2020 13:08:30.8094 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Kuj5SeOHChTJMBnQjONABSUxatwgJhq514g4K69arsPEDUN06/ATaMT3o1Vi8xBDalOOFBwowKAS3DFO9H/05GLEa+pGH2CPQAywrQrU/d4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PU1PR06MB2183
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.737
+ definitions=2020-10-23_04:2020-10-23,
+ 2020-10-23 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,77 +97,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Po-Yu Chuang <ratbert@faraday-tech.com>, netdev <netdev@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Jakub Kicinski <kuba@kernel.org>, David Miller <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> -----Original Message-----
-> From: Andrew Jeffery [mailto:andrew@aj.id.au]
-> Sent: Wednesday, October 21, 2020 6:26 AM
-> To: Benjamin Herrenschmidt <benh@kernel.crashing.org>; Arnd Bergmann
-> <arnd@arndb.de>; Dylan Hung <dylan_hung@aspeedtech.com>
-> Cc: BMC-SW <BMC-SW@aspeedtech.com>; linux-aspeed
-> <linux-aspeed@lists.ozlabs.org>; Po-Yu Chuang <ratbert@faraday-tech.com>;
-> netdev <netdev@vger.kernel.org>; OpenBMC Maillist
-> <openbmc@lists.ozlabs.org>; Linux Kernel Mailing List
-> <linux-kernel@vger.kernel.org>; Jakub Kicinski <kuba@kernel.org>; David
-> Miller <davem@davemloft.net>
-> Subject: Re: [PATCH] net: ftgmac100: Fix missing TX-poll issue
->=20
->=20
->=20
-> On Wed, 21 Oct 2020, at 08:40, Benjamin Herrenschmidt wrote:
-> > On Tue, 2020-10-20 at 21:49 +0200, Arnd Bergmann wrote:
-> > > On Tue, Oct 20, 2020 at 11:37 AM Dylan Hung
-> <dylan_hung@aspeedtech.com> wrote:
-> > > > > +1 @first is system memory from dma_alloc_coherent(), right?
-> > > > >
-> > > > > You shouldn't have to do this. Is coherent DMA memory broken on
-> > > > > your platform?
-> > > >
-> > > > It is about the arbitration on the DRAM controller.  There are two
-> queues in the dram controller, one is for the CPU access and the other is=
- for
-> the HW engines.
-> > > > When CPU issues a store command, the dram controller just
-> acknowledges cpu's request and pushes the request into the queue.  Then
-> CPU triggers the HW MAC engine, the HW engine starts to fetch the DMA
-> memory.
-> > > > But since the cpu's request may still stay in the queue, the HW eng=
-ine
-> may fetch the wrong data.
-> >
-> > Actually, I take back what I said earlier, the above seems to imply
-> > this is more generic.
-> >
-> > Dylan, please confirm, does this affect *all* DMA capable devices ? If
-> > yes, then it's a really really bad design bug in your chips
-> > unfortunately and the proper fix is indeed to make dma_wmb() do a
-> > dummy read of some sort (what address though ? would any dummy
-> > non-cachable page do ?) to force the data out as *all* drivers will
-> > potentially be affected.
-> >
+Hello,
 
-The issue was found on our test chip (ast2600 version A0) which is just for=
- testing and won't be mass-produced.  This HW bug has been fixed on ast2600=
- A1 and later versions.
+We have some exciting news. After discussing at the previous GUI
+Design Work Group, and Dixsie Wolmer's OpenBMC Learning video on
+GUI development, we agreed that to deploy documentation to the
+GitHub pages. Thanks to Jason Bills for suggesting using GitHub
+actions, we have accomplished that goal.=20
 
-To verify the HW fix, I run overnight iperf and kvm tests on ast2600A1 with=
-out this patch, and get stable result without hanging.
-So I think we can discard this patch.
+For anyone interested in learning about the webui-vue client-side
+development best practices, how to customize the GUI theme for your
+own organization, or just learning a bit more about the libraries used,
+please take a look at:
 
-> > I was under the impression that it was a specific timing issue in the
-> > vhub and ethernet parts, but if it's more generic then it needs to be
-> > fixed globally.
-> >
->=20
-> We see a similar issue in the XDMA engine where it can transfer stale dat=
-a to
-> the host. I think the driver ended up using memcpy_toio() to work around =
-that
-> despite using a DMA reserved memory region.
+https://openbmc.github.io/webui-vue/
+
+Thank you!
+=20
+Derick Montague
+IBM Cognitive Systems User Experience
+
