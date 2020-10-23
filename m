@@ -2,76 +2,100 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1963297724
-	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 20:39:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EFDD729784E
+	for <lists+openbmc@lfdr.de>; Fri, 23 Oct 2020 22:37:02 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CHtKx5j7BzDr5b
-	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 05:39:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CHwy30x6JzDr0N
+	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 07:36:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
- helo=mail-oi1-x233.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=gEgojDVi; dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=j6M6Fsyg; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CHtK96X8RzDqvp
- for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 05:38:20 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id k65so2329691oih.8
- for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 11:38:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=CgJm0gWCCqCh1M4qUoa84DKKMOHYIM6ztU2e0B+IV8I=;
- b=gEgojDViIrHvW8xAk4m/uUoRM65dEOiR5cP+wtwBOZiw4FhqrEsncSiMAqJIHt40HZ
- CwmrH9NC4nnySgAM0P9wC/Lcn1ElDCqgy+EGlUsNwwsG2XWw43448nlczHZ+pB1R8sum
- VMi0AMU9s4DLsL3z4oS8ZRYP9oqIHIJmQB+BIZCQZGr9mSUjTTVNz0eTKQO5zJ8QtfGK
- rYux4FWTVvAJ0xFAx/NR5a03oX+E/90wL2U0yJu2/HxUAFyDBA96M/5V6vzz3cTlNvDc
- uW4gCO/USFHCHU3kkbtrHcslrkt2/jdPRz0vUiJEfcMKuv22KcTCqPFdnfbdhTtQdiQ7
- skTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=CgJm0gWCCqCh1M4qUoa84DKKMOHYIM6ztU2e0B+IV8I=;
- b=eqg8Wsn3xcA4MaeyBFTeBM5tJHKZYJfL2k7pgYnaWgXdNyTEz6bmy4gdRdFL2NsI2X
- A8wZcQU+5dkF3yCa8m+2PMMlUHnzrC29SKUXwLu3H+x9H9I9HuLibbmu7B+s2nHyAI4J
- qryz8r5Tc8mRwH5EQn+fNOrW2jIlan7+t37/RkPVGiMIF/g0h7DNnzbFFRf/nQf9dHuq
- GDwalJjYBmvFrxFBP7slwJ4AMB78J/R7N9ofFHKNslEzTR5MpPTXrlgg/jOVLraynFct
- RXNBJgLCeYa7JX/h0zVPC/bh9VZ9BOGILhAGwQv+AI/Ij4t27NBxKMmX73aZCGfPike/
- ik/A==
-X-Gm-Message-State: AOAM532oiZ0pkD17VcwSrAwoOgfZkIPm7xIcvEL6O5SwHbtTRuEFDL8E
- AE7rB2ZjoJvXzb/YXUrkk6+dhnVv6Sf1+A==
-X-Google-Smtp-Source: ABdhPJz4/sU3DCIoFeem6RNZUOuIC5fRMsrmtuDMhLW9Jv/EOWA7JtBaLQcWgvLxnVanQnNBeyr4cg==
-X-Received: by 2002:aca:dc44:: with SMTP id t65mr2836851oig.77.1603478296985; 
- Fri, 23 Oct 2020 11:38:16 -0700 (PDT)
-Received: from andrews-mbp-2.attlocal.net
- (45-18-127-186.lightspeed.austtx.sbcglobal.net. [45.18.127.186])
- by smtp.gmail.com with ESMTPSA id m7sm568348otk.74.2020.10.23.11.38.16
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 23 Oct 2020 11:38:16 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: openbmc:Error while running bitbake for raspberrypi-3
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <CAD+gp9CQeUk1tiFkq0kyzhZjXraacgYwCv232JqRdr+RGc-ABw@mail.gmail.com>
-Date: Fri, 23 Oct 2020 13:38:15 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1DCD1D9A-FF1C-4833-B525-4564C88352B8@gmail.com>
-References: <CAD+gp9CHnvDk+sU05DhMpuOshST-cAx2LoU+kZJjjEHeKzztMA@mail.gmail.com>
- <CAD+gp9A2OLcJsRtSUH_32G+8fNMx2_8FRBTZjjMuLc+eLZt11Q@mail.gmail.com>
- <CAD+gp9CQeUk1tiFkq0kyzhZjXraacgYwCv232JqRdr+RGc-ABw@mail.gmail.com>
-To: khader basha shaik <shaikkhaderbasha601@gmail.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CHwwr30KpzDqMt
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 07:35:55 +1100 (AEDT)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09NKWZJE116065
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 16:35:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=XemhxcR3CS+aVCbtsaoiGfanSZMU6nakTVW+t9pQxJM=;
+ b=j6M6FsygYQEt2ndnR/QZV/TTgsZHH/tXB3OvMyTlNWtBRdDRmb+1mgwKePCFDVTxjq2A
+ f6/MV8uFh4fKKJrjRjqWTrclbnf1DLU6qs3sGnng1Yk4KxvBdIEQBqybRAOWIkodCrJL
+ yKJhRlrM0WklNqTMXtrvOSRamMchnHWg2q8MC53NBNr0rPoIrhoD1jbrIyNG9Y7pl8uF
+ VoHvHWCnpTxoY9Yhypz10GasILjq+jkJnu3c1QeT0Q8fqYNcEFmdH8kkZLIrhu2Xs96x
+ dpZIAEnGj1hYKoNBcT1kYj0O5OqJRkD+3dz6cTzcjtUPYPpLzIe0LnEU+QXNtvbhxQU9 vw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34bd0sw45v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 16:35:51 -0400
+Received: from m0098416.ppops.net (m0098416.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09NKXGHb118090
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 16:35:50 -0400
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34bd0sw45r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 23 Oct 2020 16:35:50 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09NKWGIB009853;
+ Fri, 23 Oct 2020 20:35:50 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma02dal.us.ibm.com with ESMTP id 347r8a8cvb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 23 Oct 2020 20:35:49 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09NKZndT12059228
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 23 Oct 2020 20:35:49 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 475B7B2064;
+ Fri, 23 Oct 2020 20:35:49 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 09494B2066;
+ Fri, 23 Oct 2020 20:35:49 +0000 (GMT)
+Received: from [9.85.157.1] (unknown [9.85.157.1])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Fri, 23 Oct 2020 20:35:48 +0000 (GMT)
+Subject: Re: thoughts on livepatch?
+To: openbmc@lists.ozlabs.org, Nancy Yuen <yuenn@google.com>
+References: <CADfYTpGw9G0ACwhmiZU_v8HoT4nZy8a3wnCGbozM1QiNFaX9og@mail.gmail.com>
+ <CADfYTpGQo=N1QV-EgiZ3io6fmv84M4A8gs0oUY2+9_0qVmrM6Q@mail.gmail.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <969cdb64-ce3b-cb32-3f1c-c3304a9c20c6@linux.ibm.com>
+Date: Fri, 23 Oct 2020 15:35:48 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.1
+MIME-Version: 1.0
+In-Reply-To: <CADfYTpGQo=N1QV-EgiZ3io6fmv84M4A8gs0oUY2+9_0qVmrM6Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.235, 18.0.737
+ definitions=2020-10-23_14:2020-10-23,
+ 2020-10-23 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ mlxscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010230121
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,39 +107,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 10/22/20 8:00 PM, Nancy Yuen wrote:
+> And I was trigger happy. Meant to include...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> And I was trigger happy.  Meant to include 
+> https://www.kernel.org/doc/Documentation/livepatch/livepatch.txt
+>
+> On Thu, Oct 22, 2020 at 5:59 PM Nancy Yuen <yuenn@google.com 
+> <mailto:yuenn@google.com>> wrote:
+>
+>     Anyone tried it with OpenBMC?  Any thoughts?
+>
 
+What is the use case?  I assume this is to patch an OpenBMC-based 
+firmware image without having to rebuild and distribute the entire 
+image.  What is the benefit of using livepatching compared to creating a 
+new image that has the fix included, and rebooting the BMC to apply it?
 
-> On Oct 23, 2020, at 6:24 AM, khader basha shaik =
-<shaikkhaderbasha601@gmail.com> wrote:
->=20
-> Hi Team,
->=20
-> I tried with  =E2=80=9Cbitbake core-image-base=E2=80=9D  command but =
-still not working. Unable to generate   the rpi-sdimg file.
->=20
-> Thanks & Regards,
-> Khader B Shaik
-> On Fri, 23 Oct 2020 at 15:55, khader basha shaik =
-<shaikkhaderbasha601@gmail.com> wrote:
-> Hi Team,
->=20
-> Any suggestions or input on this please.
+Benefits?
+- Smaller patch requires less bandwidth to distribute.
+- Possible increased ability to apply patches sooner (compared to 
+installing entire image then rebooting the BMC).
+- Quicker apply times means less BMC downtime.
 
-Hi Khader, raspberry-pi is definitely looking for a maintainer in =
-OpenBMC.
+What is the cost?
+- More complicated infrastructure to train staff and to create, track  
+test, distribute, and apply patches.
+- You have to test the patched image and test the image that has the 
+permanent fix.
+- Does patching work and play nicely with secure boot and attestation 
+schemes?
 
-Your error reminded me of this, so may be as simply as doing something
-like this commit:=20
-https://gerrit.openbmc-project.xyz/c/openbmc/meta-phosphor/+/36144
+Kernel livepatching is similar to immediate PTFs on IBM i.  As 
+developers, we were encouraged to develop patches that could be applied 
+immediately (meaning no reboot required).  These sometimes took extra 
+time to develop, and it was not always possible to develop such a fix, 
+required additional testing, and sometimes caused customer problems.
 
-There are also some commits out there that I know helped raspberry pi at
-one point:
-=
-https://gerrit.openbmc-project.xyz/q/topic:%22raspberrypi%22+(status:open%=
-20OR%20status:merged)
+My 2 cents worth,
+- Joseph
 
-Andrew=
+>
+>     Nancy Yuen
+>
+>     	
+>
+>     •
+>
+>     	
+>
+>     Google Platforms
+>
+>     	
+>
+>     •
+>
+>     	
+>
+>     yuenn@google.com <mailto:yuenn@google.com>
+>
+>     	
+>
+>     •
+>
+>     	
+>
+>     Google LLC
+>
+>
+>
+> -- 
+>
+> Nancy Yuen
+>
+> 	
+>
+> •
+>
+> 	
+>
+> Google Platforms
+>
+> 	
+>
+> •
+>
+> 	
+>
+> yuenn@google.com <mailto:yuenn@google.com>
+>
+> 	
+>
+> •
+>
+> 	
+>
+> Google LLC
+>
+
