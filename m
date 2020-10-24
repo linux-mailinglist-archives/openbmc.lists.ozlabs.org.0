@@ -1,64 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 912F62979B3
-	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 01:33:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EF542979DD
+	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 02:13:48 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CJ0sw46RPzDr2J
-	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 10:33:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CJ1m92zgHzDr22
+	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 11:13:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22b;
- helo=mail-lj1-x22b.google.com; envelope-from=aladyshev22@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32a;
+ helo=mail-ot1-x32a.google.com; envelope-from=jasonling@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=IyjDD80F; dkim-atps=neutral
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com
- [IPv6:2a00:1450:4864:20::22b])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=fMGFAm+p; dkim-atps=neutral
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [IPv6:2607:f8b0:4864:20::32a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CJ0sD592FzDqZH
- for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 10:33:04 +1100 (AEDT)
-Received: by mail-lj1-x22b.google.com with SMTP id d24so3261294ljg.10
- for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 16:33:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=VqKYCCQm3Gz9rNCEaI+XfESKyZJnkZrN85X1T4GsqPU=;
- b=IyjDD80F12ahH8tRqeaxznUBp51fCkMjwW+kw6+x+5JkNL3n+K1nNiji0cJLkzbOib
- XgivE3WdvE2G/zWC5zWn5fezjoxczX+32ztvSxrzh8RWArg6UBdBNCGPiZTxUlB+2Ow4
- tj7pfT7vtxCufnsQo38GWg8UA5KMgxsxRaf2D/QB04ctrEuZjh1Eg972k7URvSfr+D+/
- B+lkY0hoA5wdvnvA5wT3OsVWVcOW6DmC2JizIG1BNL2Dj42QSietW4M9h4+HFxPHnf6r
- ceSyjIwZ50tE1n9dOX+5z3taBmwiTau96hhoH4UbUhV2MFYdgrE3lKHYwUvx/OGCfrEa
- nrYA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CJ1lG0hntzDr0f
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 11:12:47 +1100 (AEDT)
+Received: by mail-ot1-x32a.google.com with SMTP id t15so2988550otk.0
+ for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 17:12:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=UHsXDZUpmbJ2u12RblHS8mrtqqhUtnSf5uOOKZoTh2o=;
+ b=fMGFAm+pIvWxkiZi3Ftno0o8QUSB5SC+O/yJFadupWqXNoo5NiN9kd9DoUsVvjhiZ9
+ 1I/cMeT69mkXIlDjwD0YJVPILCSLR5RpUjpwgz4xwVsoXHdsJt7bUhDnXUc+eg+1slVs
+ QPnPNbPpZJI3xFBSCi0HJK1aGmzh18LD2jfRED4Uoy8CdCp4WLwgomQ+5XoT5TNcMjxe
+ 5vri3i/Us8V3UPyL4gKJklFiZcjouZSieM4qoAlRcv7RCviW+BTT5oOpX+pSJamFTp2b
+ HkcIrtdxkpXJSxTLplY/winZv4XkInv/z3GmnuqpskvBb6aDMJtqq1HrL6JGwANwYEz8
+ PkOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=VqKYCCQm3Gz9rNCEaI+XfESKyZJnkZrN85X1T4GsqPU=;
- b=L5yo7ZKgWynwN7MdrjDFZzIOoewGI0+iMHBSRy3Y65VuGusMrwJy3/YwGwyYlibGyW
- cX9OGturAWMU1rHaRrvQavC78Y36Y0nYG38jX0Pg02QeE7mwUhx66qzycvCileGYtV/e
- jT3eBEmcLjQlZJsbXJQqSPgo4DUW+sWSHky6vnsgi9d5Y0cTXFhGXQHKjzFmBOx6Lv4G
- oSxvhxTN0XTg4e0mpVGM1xuwqIkFL/r7Yg4hZLtAxuHiGZoSDCnHPNxCVlNl5o+abVr2
- kn6xcHWIvqZ23V3ENLqBXqf/GFzapxKDZOzIwMIg7Z3TYnxpf/b+hvvkzdqEarqQYXYf
- 3oFw==
-X-Gm-Message-State: AOAM531j0ZPfgrGIvEveogkjXammxRS2Gz6fLqRLqoAK4R88QyzyHs3Y
- khN5L1EwhjL2V9s/qdpkt74ZcdTxBh9bFtjGgckmvlLNavc=
-X-Google-Smtp-Source: ABdhPJzczDjOzkEFlUDteTBCfyo3nD1VyhSX1LB7B28Duvz+FvZ6v4j2g8LEBN9JFX0ZyO9S8EdNaHl7jyj+CKgjwyU=
-X-Received: by 2002:a2e:9a17:: with SMTP id o23mr1902434lji.242.1603495977905; 
- Fri, 23 Oct 2020 16:32:57 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=UHsXDZUpmbJ2u12RblHS8mrtqqhUtnSf5uOOKZoTh2o=;
+ b=KyQ2Z0aePx+JHVMbWQibs/MPhzLgGy8/ud0qVivMPwgWNKoWpUlPdcxBvXdKE3fEtP
+ rBctvQxida/2/lAiocQCw039w5quzsVNJKCEmb/EWQzH1zHRnJ7Y72RkhaV/yvnYG25J
+ dTBOLyqZZMvyfj+o1guiJsE5CufHzZ5Z6QwDC4LN43ZkiZoOTqEBHkpJyTnE+IqCBfYA
+ 0kYRoh9uki4Od1+hCw5ImU/kG/7RJQW5GrQ5VUQnfIIOm7SHZX08MbzppuJOQHJpblTO
+ wS78rLChudP6Ken3Lyq1panyZ4SkI8lU0hlZo9sqnH0wOkFv1WZ318wKz8dFfEwvBuIo
+ 0IDw==
+X-Gm-Message-State: AOAM532QMriNQrrzUu0VkfIYL309tFDl8eFUBt5MRKEV2a0jPj9wUXCg
+ IirquYIOQrXfTuJwzGhKITkFRUPfAslDwzotqdMycg==
+X-Google-Smtp-Source: ABdhPJxHPo8RMUunckn/YQ2dZkhmsy99M/xe1WjcRaOikd9P3erZiK7CY28+oL0ZxbsdhauWrCM0mLQ5UtNOiWFntyY=
+X-Received: by 2002:a9d:7cce:: with SMTP id r14mr1936322otn.204.1603498363250; 
+ Fri, 23 Oct 2020 17:12:43 -0700 (PDT)
 MIME-Version: 1.0
-From: Konstantin Aladyshev <aladyshev22@gmail.com>
-Date: Sat, 24 Oct 2020 02:32:46 +0300
-Message-ID: <CACSj6VWwa_YM6sHzc_LLO_7wbv8aBv3Tsaw4+3j92hkjfh_z6A@mail.gmail.com>
-Subject: "ipmi_kcs3" name is not respected by default "channel_config.json"
- file
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+References: <CAO=notx2=coTNs25BX1GjL-LV0fZyS8-+5D0FLpi8td2=G1jsw@mail.gmail.com>
+In-Reply-To: <CAO=notx2=coTNs25BX1GjL-LV0fZyS8-+5D0FLpi8td2=G1jsw@mail.gmail.com>
+From: Jason Ling <jasonling@google.com>
+Date: Fri, 23 Oct 2020 17:12:07 -0700
+Message-ID: <CAHBbfcW7JX+3VdwJXDReVLvKQMxAHqGjbfh+aUrayyhoGjB-Rw@mail.gmail.com>
+Subject: Re: failures in docker CI with libipmi
+To: Patrick Venture <venture@google.com>
+Content-Type: multipart/alternative; boundary="00000000000057604f05b25f8eec"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,48 +72,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The current code in kcsbridged creates a Dbus object
-"xyz.openbmc_project.Ipmi.Channel.ipmi_kcs3". And this name can't be
-handled in ipmid with the default "channel_config.json" file.
-Look at the code from the
-https://github.com/openbmc/phosphor-host-ipmid/blob/master/user_channel/channel_mgmt.cpp
-:
+--00000000000057604f05b25f8eec
+Content-Type: text/plain; charset="UTF-8"
 
-int ChannelConfig::convertToChannelNumberFromChannelName(
-    const std::string& chName)
-{
-    for (const auto& it : channelData)
-    {
-        if (it.chName == chName)
-        {
-            return it.chID;
-        }
-    }
+I'm also experiencing CI failures.
 
-This code compares "ipmi_kcs3" string to every channel name in the
-"channel_config.json" file. And by default the channel for the kcs
-interface is named 'SMS' in this file, so there would'n be any match
-(https://github.com/openbmc/meta-phosphor/blob/master/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_config.json).
-To use KCS interface I had to change the name for the channel 15 to
-"ipmi_kcs3" like this:
-  "15" : {
-    "name" : "ipmi_kcs3",
-    "is_valid" : true,
-    "active_sessions" : 0,
-    "channel_info" : {
-      "medium_type" : "system-interface",
-      "protocol_type" : "kcs",
-      "session_supported" : "session-less",
-      "is_ipmi" : true
-    }
+One is exactly the same that Patrick mentioned, when building on PPC I also
+see the
 
-Is the override for 'channel_config.json' a correct solution, or it
-should be dealt in another way?
-Does any board have a working KCS interface? How does others deal with
-this situation?
+mv: cannot stat 'libipmi20.so.0.0.0U': No such file or directory
 
-Best regards,
-Konstantin Aladyshev
+
+But another strange error I'm seeing is that phosphor-host-ipmid fails to
+build during the CI for phosphor-ipmi-flash but *succeeds* when
+building for the CI for phosphor-host-ipmid.
+
+*Trigger the CI for phosphor-ipmi-flash by pushing a trivial patch (fails
+building using the x86 container)*
+Review
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-ipmi-flash/+/37658
+Jenkins Log
+https://jenkins.openbmc.org/job/ci-repository/6823/consoleFull
+
+*Trigger the CI for phosphor-host-ipmi by pushing another trivial patch
+(succeeds building using the PPC container)*
+Review
+https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/37657
+Jenkins Log
+https://jenkins.openbmc.org/job/ci-repository/6822/consoleFull
+
+*Strangely enough the CI for phosphor-host-ipmi passes yet the CI for
+phosphor-ipmi-flash fails*
+
+--00000000000057604f05b25f8eec
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>I&#39;m also experiencing CI failures.=C2=A0</div><di=
+v><br></div><div>One is exactly the same that Patrick mentioned, when build=
+ing on PPC I also see the=C2=A0</div><div><br></div><div>mv: cannot stat &#=
+39;libipmi20.so.0.0.0U&#39;: No such file or directory</div><div><br></div>=
+<div><br></div><div>But another strange error I&#39;m seeing is that phosph=
+or-host-ipmid fails to build during the CI for phosphor-ipmi-flash but <b>s=
+ucceeds</b>=C2=A0when building=C2=A0for the CI for phosphor-host-ipmid.</di=
+v><div><br></div><div><b>Trigger the CI for phosphor-ipmi-flash by pushing =
+a trivial patch (fails building using the x86 container)</b></div><div>Revi=
+ew<br></div><div><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/ph=
+osphor-ipmi-flash/+/37658">https://gerrit.openbmc-project.xyz/c/openbmc/pho=
+sphor-ipmi-flash/+/37658</a><br></div><div>Jenkins Log</div><div><a href=3D=
+"https://jenkins.openbmc.org/job/ci-repository/6823/consoleFull">https://je=
+nkins.openbmc.org/job/ci-repository/6823/consoleFull</a><br></div><div><br>=
+</div><div><b>Trigger the CI for phosphor-host-ipmi by pushing another triv=
+ial patch (succeeds building using the PPC container)</b></div><div>Review<=
+/div><div><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-=
+host-ipmid/+/37657">https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-h=
+ost-ipmid/+/37657</a><br></div><div>Jenkins Log</div><div><a href=3D"https:=
+//jenkins.openbmc.org/job/ci-repository/6822/consoleFull">https://jenkins.o=
+penbmc.org/job/ci-repository/6822/consoleFull</a><br></div><div><br></div><=
+div><b><u>Strangely enough the CI for phosphor-host-ipmi passes yet the CI =
+for phosphor-ipmi-flash fails</u></b></div><div><b><u><br></u></b></div><di=
+v><br></div><div><br></div></div>
+
+--00000000000057604f05b25f8eec--
