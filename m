@@ -1,66 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EF542979DD
-	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 02:13:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5456297B9E
+	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 11:23:15 +0200 (CEST)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CJ1m92zgHzDr22
-	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 11:13:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CJFxy1tjPzDqwy
+	for <lists+openbmc@lfdr.de>; Sat, 24 Oct 2020 20:23:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::32a;
- helo=mail-ot1-x32a.google.com; envelope-from=jasonling@google.com;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::c44;
+ helo=mail-oo1-xc44.google.com; envelope-from=wangzhiqiang.bj@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=bytedance.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=fMGFAm+p; dkim-atps=neutral
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
- [IPv6:2607:f8b0:4864:20::32a])
+ unprotected) header.d=bytedance-com.20150623.gappssmtp.com
+ header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=KqWlI/1c; dkim-atps=neutral
+Received: from mail-oo1-xc44.google.com (mail-oo1-xc44.google.com
+ [IPv6:2607:f8b0:4864:20::c44])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CJ1lG0hntzDr0f
- for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 11:12:47 +1100 (AEDT)
-Received: by mail-ot1-x32a.google.com with SMTP id t15so2988550otk.0
- for <openbmc@lists.ozlabs.org>; Fri, 23 Oct 2020 17:12:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CJFx42xVXzDqwP
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 20:22:11 +1100 (AEDT)
+Received: by mail-oo1-xc44.google.com with SMTP id c25so1187806ooe.13
+ for <openbmc@lists.ozlabs.org>; Sat, 24 Oct 2020 02:22:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=UHsXDZUpmbJ2u12RblHS8mrtqqhUtnSf5uOOKZoTh2o=;
- b=fMGFAm+pIvWxkiZi3Ftno0o8QUSB5SC+O/yJFadupWqXNoo5NiN9kd9DoUsVvjhiZ9
- 1I/cMeT69mkXIlDjwD0YJVPILCSLR5RpUjpwgz4xwVsoXHdsJt7bUhDnXUc+eg+1slVs
- QPnPNbPpZJI3xFBSCi0HJK1aGmzh18LD2jfRED4Uoy8CdCp4WLwgomQ+5XoT5TNcMjxe
- 5vri3i/Us8V3UPyL4gKJklFiZcjouZSieM4qoAlRcv7RCviW+BTT5oOpX+pSJamFTp2b
- HkcIrtdxkpXJSxTLplY/winZv4XkInv/z3GmnuqpskvBb6aDMJtqq1HrL6JGwANwYEz8
- PkOA==
+ :cc; bh=5hGDeyu2JKNoOb3EJ0Ovni5Gl9hOI3by5lVnF3WgR3A=;
+ b=KqWlI/1cGRQIpGuZGiwP0EosZRZp/48bHztPuaY9LQE04QavL+tx8NSJEXZS7goH7r
+ wrp2XF7KMOPgYML4vPQNXNBN+MWXD/lrWaHxNK2KKtIFPNWYxZvifE++OJec+fu8UDJK
+ TpbgHca89wacAImGO/gbd+Y1ItDeSWsqfsoQfGi/vlG2VL+v0Cyz0+lo5pxh8XEPets5
+ SAhCh0R7WYXgNonAleRi5Rp192oUDk+Ydssa+478c8vfghTLjWB0ytAKNQsp2Izs27mK
+ K/F7k2O4L6H3/36fZiVRZiSu6sSn1k8VKUBGGi8TCSBhfRH3F9uBBm2/mSO90/SoIbb+
+ tLAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=UHsXDZUpmbJ2u12RblHS8mrtqqhUtnSf5uOOKZoTh2o=;
- b=KyQ2Z0aePx+JHVMbWQibs/MPhzLgGy8/ud0qVivMPwgWNKoWpUlPdcxBvXdKE3fEtP
- rBctvQxida/2/lAiocQCw039w5quzsVNJKCEmb/EWQzH1zHRnJ7Y72RkhaV/yvnYG25J
- dTBOLyqZZMvyfj+o1guiJsE5CufHzZ5Z6QwDC4LN43ZkiZoOTqEBHkpJyTnE+IqCBfYA
- 0kYRoh9uki4Od1+hCw5ImU/kG/7RJQW5GrQ5VUQnfIIOm7SHZX08MbzppuJOQHJpblTO
- wS78rLChudP6Ken3Lyq1panyZ4SkI8lU0hlZo9sqnH0wOkFv1WZ318wKz8dFfEwvBuIo
- 0IDw==
-X-Gm-Message-State: AOAM532QMriNQrrzUu0VkfIYL309tFDl8eFUBt5MRKEV2a0jPj9wUXCg
- IirquYIOQrXfTuJwzGhKITkFRUPfAslDwzotqdMycg==
-X-Google-Smtp-Source: ABdhPJxHPo8RMUunckn/YQ2dZkhmsy99M/xe1WjcRaOikd9P3erZiK7CY28+oL0ZxbsdhauWrCM0mLQ5UtNOiWFntyY=
-X-Received: by 2002:a9d:7cce:: with SMTP id r14mr1936322otn.204.1603498363250; 
- Fri, 23 Oct 2020 17:12:43 -0700 (PDT)
+ bh=5hGDeyu2JKNoOb3EJ0Ovni5Gl9hOI3by5lVnF3WgR3A=;
+ b=dpHE9F8mTRwApBTiT91rH+kBACuFLFYnKjpW5arxPWwnoauo9ws8EuKiWoj0ilmqpq
+ BDHyAVQvIzhWZ/1pk2fL4hRMsUEe2SERJhm940C1T7WWe03TueUYhVe5SBhcaAv83Dws
+ gM4uuar25LdhzxiLZqsUeW5mMuyWiJG1W3Kc9w9s2oJSb7XBpHtlkXvgrMBdcvfHwKKh
+ 8kZkVnxd26aNz9V1JooFYhvTxzgb+JF5TihienCSPk1r9PZOCE8C99kJIOqqHxM3uEwF
+ oZXchUTiBK94216tFd9Mb5z6exEFxmnRmp7gJPaXXNaC9dTkovrXd9lX1FmpnnBBx6T4
+ kDvw==
+X-Gm-Message-State: AOAM530q63z6cEXO0sNksX7O1m5hkBqfPJj6xlPb32RmS4Y03Qf/HxM/
+ PVaWrTLSk9PWJXba5uhzbTjreHImHjsG/AL/YDby9g==
+X-Google-Smtp-Source: ABdhPJx6c/j0fOjt2+d/5PDZ/g7eBNDKrcxbOAYtb00daIp9f++6gEjRsD1hPDPHoaSzkyGhU038aOHd7R8Pe0p4Bg4=
+X-Received: by 2002:a4a:c68d:: with SMTP id m13mr5357342ooq.64.1603531328361; 
+ Sat, 24 Oct 2020 02:22:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAO=notx2=coTNs25BX1GjL-LV0fZyS8-+5D0FLpi8td2=G1jsw@mail.gmail.com>
-In-Reply-To: <CAO=notx2=coTNs25BX1GjL-LV0fZyS8-+5D0FLpi8td2=G1jsw@mail.gmail.com>
-From: Jason Ling <jasonling@google.com>
-Date: Fri, 23 Oct 2020 17:12:07 -0700
-Message-ID: <CAHBbfcW7JX+3VdwJXDReVLvKQMxAHqGjbfh+aUrayyhoGjB-Rw@mail.gmail.com>
-Subject: Re: failures in docker CI with libipmi
-To: Patrick Venture <venture@google.com>
-Content-Type: multipart/alternative; boundary="00000000000057604f05b25f8eec"
+References: <20201022081002.2665132-1-liuxiwei@inspur.com>
+In-Reply-To: <20201022081002.2665132-1-liuxiwei@inspur.com>
+From: John Wang <wangzhiqiang.bj@bytedance.com>
+Date: Sat, 24 Oct 2020 17:21:59 +0800
+Message-ID: <CAH0XSJvPN18GZW0WmOmkJ8WH-stpeVP8pq0ZzWb0KpJ1kUnwyg@mail.gmail.com>
+Subject: Re: [External] [PATCH] ARM: dts: Fix label address for 64MiB OpenBMC
+ flash layout
+To: George Liu <liuxiwei1013@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,65 +79,47 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000057604f05b25f8eec
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Oct 22, 2020 at 4:10 PM George Liu <liuxiwei1013@gmail.com> wrote:
+>
+> Signed-off-by: George Liu <liuxiwei@inspur.com>
 
-I'm also experiencing CI failures.
+Reviewed-by: John Wang <wangzhiqiang.bj@bytedance.com>
 
-One is exactly the same that Patrick mentioned, when building on PPC I also
-see the
-
-mv: cannot stat 'libipmi20.so.0.0.0U': No such file or directory
-
-
-But another strange error I'm seeing is that phosphor-host-ipmid fails to
-build during the CI for phosphor-ipmi-flash but *succeeds* when
-building for the CI for phosphor-host-ipmid.
-
-*Trigger the CI for phosphor-ipmi-flash by pushing a trivial patch (fails
-building using the x86 container)*
-Review
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-ipmi-flash/+/37658
-Jenkins Log
-https://jenkins.openbmc.org/job/ci-repository/6823/consoleFull
-
-*Trigger the CI for phosphor-host-ipmi by pushing another trivial patch
-(succeeds building using the PPC container)*
-Review
-https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-host-ipmid/+/37657
-Jenkins Log
-https://jenkins.openbmc.org/job/ci-repository/6822/consoleFull
-
-*Strangely enough the CI for phosphor-host-ipmi passes yet the CI for
-phosphor-ipmi-flash fails*
-
---00000000000057604f05b25f8eec
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>I&#39;m also experiencing CI failures.=C2=A0</div><di=
-v><br></div><div>One is exactly the same that Patrick mentioned, when build=
-ing on PPC I also see the=C2=A0</div><div><br></div><div>mv: cannot stat &#=
-39;libipmi20.so.0.0.0U&#39;: No such file or directory</div><div><br></div>=
-<div><br></div><div>But another strange error I&#39;m seeing is that phosph=
-or-host-ipmid fails to build during the CI for phosphor-ipmi-flash but <b>s=
-ucceeds</b>=C2=A0when building=C2=A0for the CI for phosphor-host-ipmid.</di=
-v><div><br></div><div><b>Trigger the CI for phosphor-ipmi-flash by pushing =
-a trivial patch (fails building using the x86 container)</b></div><div>Revi=
-ew<br></div><div><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/ph=
-osphor-ipmi-flash/+/37658">https://gerrit.openbmc-project.xyz/c/openbmc/pho=
-sphor-ipmi-flash/+/37658</a><br></div><div>Jenkins Log</div><div><a href=3D=
-"https://jenkins.openbmc.org/job/ci-repository/6823/consoleFull">https://je=
-nkins.openbmc.org/job/ci-repository/6823/consoleFull</a><br></div><div><br>=
-</div><div><b>Trigger the CI for phosphor-host-ipmi by pushing another triv=
-ial patch (succeeds building using the PPC container)</b></div><div>Review<=
-/div><div><a href=3D"https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-=
-host-ipmid/+/37657">https://gerrit.openbmc-project.xyz/c/openbmc/phosphor-h=
-ost-ipmid/+/37657</a><br></div><div>Jenkins Log</div><div><a href=3D"https:=
-//jenkins.openbmc.org/job/ci-repository/6822/consoleFull">https://jenkins.o=
-penbmc.org/job/ci-repository/6822/consoleFull</a><br></div><div><br></div><=
-div><b><u>Strangely enough the CI for phosphor-host-ipmi passes yet the CI =
-for phosphor-ipmi-flash fails</u></b></div><div><b><u><br></u></b></div><di=
-v><br></div><div><br></div></div>
-
---00000000000057604f05b25f8eec--
+> ---
+>  arch/arm/boot/dts/openbmc-flash-layout-64.dtsi | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi b/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi
+> index c8e0409d889e..91163867be34 100644
+> --- a/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi
+> +++ b/arch/arm/boot/dts/openbmc-flash-layout-64.dtsi
+> @@ -13,22 +13,22 @@ u-boot@0 {
+>                 label = "u-boot";
+>         };
+>
+> -       u-boot-env@e0000 {
+> +       u-boot-env@60000 {
+>                 reg = <0x60000 0x20000>; // 128KB
+>                 label = "u-boot-env";
+>         };
+>
+> -       kernel@100000 {
+> +       kernel@80000 {
+>                 reg = <0x80000 0x500000>; // 5MB
+>                 label = "kernel";
+>         };
+>
+> -       rofs@a00000 {
+> +       rofs@580000 {
+>                 reg = <0x580000 0x2a80000>; // 42.5MB
+>                 label = "rofs";
+>         };
+>
+> -       rwfs@6000000 {
+> +       rwfs@3000000 {
+>                 reg = <0x3000000 0x1000000>; // 16MB
+>                 label = "rwfs";
+>         };
+> --
+> 2.25.1
+>
