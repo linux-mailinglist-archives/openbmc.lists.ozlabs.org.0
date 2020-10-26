@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4B0A298556
-	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 02:33:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 345B429855B
+	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 02:35:11 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CKHQw2sNgzDqLj
-	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 12:33:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CKHT830kTzDqLK
+	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 12:35:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,46 +17,46 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=KhWmSJ0k; 
+ header.s=fm1 header.b=A3zdjZnl; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=bEwo3usE; 
+ header.a=rsa-sha256 header.s=fm1 header.b=Qbp4D9e8; 
  dkim-atps=neutral
 Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
  [66.111.4.229])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CKHJF4r4rzDqN5;
- Mon, 26 Oct 2020 12:27:25 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CKHSB0mxYzDq63;
+ Mon, 26 Oct 2020 12:34:18 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id C49565801B5;
- Sun, 25 Oct 2020 21:27:21 -0400 (EDT)
+ by mailnew.nyi.internal (Postfix) with ESMTP id A6C4A580366;
+ Sun, 25 Oct 2020 21:34:15 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 25 Oct 2020 21:27:21 -0400
+ by compute3.internal (MEProxy); Sun, 25 Oct 2020 21:34:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=gaue3BiVVr+JMcjmKil+EpRgMuCh70g
- 7cL5x/wqNOWU=; b=KhWmSJ0kDjL5WNg8yAfql+Q9gaX/+QXyEaOhWNP36LusNLC
- byPwAOuzy78uWpm8v3Z2lyZE4W7zqbdg6l4j28bG8Ha3f7QglJ+ZSWGPkzjWSfLM
- xZQ+DWam4iFTa70hJVhODLY/A6j95Wqttjkz2Ip+Px83L7oROwPrelP1CBmbhyzt
- 2xAT72G9PowhkD41+8rceVM1fFOQS12ZTlR8GWqUfwIS01qzzdj1FeTU3yt9Yc5/
- 6qJCeIxgz22WrEAvPpy2TzBF6DzX+AqO6xzUBIlNQddIlvUzyfbR5jmp/UZe0RXF
- f/RTBbD5jI1yjY2PkISswFKbyjvthDYiswb7xKA==
+ :subject:content-type; s=fm1; bh=oLqCGkVxUyCN8ZI7GlPMtX4fYGxBLJX
+ KLhqMOJPqSkI=; b=A3zdjZnlvWtGcmly78TCkHioFlt12memCak2EVM1XUd5FMT
+ hlRX/0C9otvfWrApLGanyl1qMXOFNuOMbGWYuQ/pbHy9ops6ITSXxFjoPD/HalCY
+ nK6tal9qUwj6w7fIdIwgguTgaiSK8TLTduDifEhFcHIzaZQFH7dv7mgq2S18nPEb
+ 9d7aScM06TTfbWUWaD/zbsmPYW94+acZAx119ZFZUHOfmZMtB2GqW14DGQ/fEw6I
+ PaH94wImQGobxNNoJOWIhPbOmqYPWnQiBGHa1IrFgRdPiHKXSGWKmJXwwUK27vTX
+ O5tYpEPh/4YYhdyyKeaewslH1W0Pb8OB9yvpfqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=gaue3B
- iVVr+JMcjmKil+EpRgMuCh70g7cL5x/wqNOWU=; b=bEwo3usEhKgfDDVC0rO+Fc
- 2kr+3/Q9b8v9PtDzSfjQasw56j37pc9LySCoF/Z+u+lVgcJHU7zXqdOn+tv2nd3B
- 33wNHINWu1MwLeU7Xh47+7vm3jIhutFxlOmRE0cRrsGBMjhjNYCiLb20To7UKk1a
- IQysBxH/gjUlAaQx/2yJeZOqQA8t79yiKzpeyNVgVH9qL2CO0k0Ob4EPoJtrCNWZ
- CoQ04je+IjMwJVWgHaQ817ZEO/HajRSAQ8JjZJ3O/fOjwvA0otFLw8jmkbZLb9Yc
- ueh7Xm3gSbPTijiIghxJXxraOHSiIpW9X/3H6a78M7DYAJ07ozkMiNII7j+s3t0w
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=oLqCGk
+ VxUyCN8ZI7GlPMtX4fYGxBLJXKLhqMOJPqSkI=; b=Qbp4D9e8PrBdK4qvrCOe8S
+ zZ4r/IKlwvc3fADPsHqI7dzjrcUfURG/ZTZqJcWk+exY7xINUw+WccqSWE63GKyx
+ +Vei2axP3ghOI5YE8IN+r6QDra7mglRPqrWnbhghVKqrxOPVLBVUCjBaEOjCBZg5
+ 9nxXaP2ZSsO0aOAFC2vG4KxSZ3rF2ArhdK/XzWnn8oGBkOLrDRz50m33fghS+ENL
+ Wb87OYiDP3ouJzZJeVmP/efydGA/4IIzu1ay1TudZ0sRfD3qzlgXBRfV40KoU7Kl
+ lucv00TUxKwTtgFhcgjKRgU505fqPM8mtoLM8cDmAMpFvI5nMOPrA8tn7b/ln9dw
  ==
-X-ME-Sender: <xms:-CWWXxbzXuaJy7dKsy-Fwj8Oqwl01nHAQE3Mgl84bXmQehJBIDFkdw>
- <xme:-CWWX4ZgEdmlDXI_C08B8SIZKA8ma9d5uxaRHxV4rhCwM4DAXuye2OvrVcIGOD7Qs
- R82K_qpFd4xnG2d0g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeehgdefiecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:lyeWX8B9F2YgMB1REMJjuBXrUGGS6gtWrY8aNBI86PrA5DCma4zcCg>
+ <xme:lyeWX-gm8Uej4-sZPaCSdlYOu4YiSRBD5nW6HO5zTNVA7du8Ih7bVtUmFJ1hpZRL5
+ lxm3p1JXYPl9g1Ezw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeehgdefjecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
@@ -64,29 +64,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeehgdefiecutefuodetggdote
  htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
  veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
  grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:-CWWXz_VBjBCNMaGiRLBXwclTW08oFwnOseZ7D7z3RGuSUiGfR7FZA>
- <xmx:-CWWX_rRdhN0KsHpDN_Qe-0WwT1BaqdtZh8AA7S3UOAInl_1HNT4EA>
- <xmx:-CWWX8rH-aSR3ZBId5Pt5OKaxpsYtG5g-c2Fzq0uZ7RdgfWrpaAxkw>
- <xmx:-SWWXz1lLOF9QJlH8j-UxmDo-UaXLK-oBkNNEjshSUGbyIiOoZo2mg>
+X-ME-Proxy: <xmx:lyeWX_lY4k9Ll47gGsWGKrzGfhq_yuNqIKxEd13ehgdN1F0a-BAJ_Q>
+ <xmx:lyeWXywEv5dQ0GfRN9OwAnI_I7Zs-wEsrIxWFvIAE7NlVCJ0Q-qnhw>
+ <xmx:lyeWXxQT6HYlenMu9k3CAvrhS22IKf91lUe2f--iqsd81YjAqyzSCw>
+ <xmx:lyeWX--HjYYXKgsQ0OrGjp-BdPLLFy_iQb4jfJ2XofDAKiMKHTSRTA>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id E9D39E04F6; Sun, 25 Oct 2020 21:27:18 -0400 (EDT)
+ id 476B1E050B; Sun, 25 Oct 2020 21:34:13 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.3.0-529-g69105b1-fm-20201021.003-g69105b13
 Mime-Version: 1.0
-Message-Id: <ce3dce98-1daa-47bb-a688-0d5a743e45b2@www.fastmail.com>
-In-Reply-To: <20201012033150.21056-4-billy_tsai@aspeedtech.com>
+Message-Id: <8625b8b4-4b3b-49ce-b35c-5de3920dc5eb@www.fastmail.com>
+In-Reply-To: <CACPK8XdYvSmwdAkBzAO3kC8_PYa3CtPkNb0VxcOhmb2UYz5zDA@mail.gmail.com>
 References: <20201012033150.21056-1-billy_tsai@aspeedtech.com>
- <20201012033150.21056-4-billy_tsai@aspeedtech.com>
-Date: Mon, 26 Oct 2020 11:56:59 +1030
+ <20201012033150.21056-3-billy_tsai@aspeedtech.com>
+ <CACPK8XdYvSmwdAkBzAO3kC8_PYa3CtPkNb0VxcOhmb2UYz5zDA@mail.gmail.com>
+Date: Mon, 26 Oct 2020 12:03:54 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Billy Tsai" <billy_tsai@aspeedtech.com>,
- "Rob Herring" <robh+dt@kernel.org>, "Joel Stanley" <joel@jms.id.au>,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- "Linus Walleij" <linus.walleij@linaro.org>,
- "Bartosz Golaszewski" <bgolaszewski@baylibre.com>,
- linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH 3/3] pinctrl: aspeed-g6: Add sgpiom2 pinctrl setting
+To: "Joel Stanley" <joel@jms.id.au>, "Billy Tsai" <billy_tsai@aspeedtech.com>
+Subject: Re: [PATCH 2/3] Arm: dts: aspeed-g6: Add sgpio node
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -99,88 +94,76 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com
+Cc: devicetree <devicetree@vger.kernel.org>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+ Rob Herring <robh+dt@kernel.org>, BMC-SW <BMC-SW@aspeedtech.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Mon, 12 Oct 2020, at 14:01, Billy Tsai wrote:
-> At ast2600a1 we change feature of master sgpio to 2 sets.
-> So this patch is used to add the pinctrl setting of the new sgpio.
+On Mon, 12 Oct 2020, at 15:05, Joel Stanley wrote:
+> On Mon, 12 Oct 2020 at 03:32, Billy Tsai <billy_tsai@aspeedtech.com> wrote:
+> >
+> > This patch is used to add sgpiom and sgpios nodes and add compatiable
+> > string for sgpiom.
 > 
-> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-> ---
->  arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi   |  5 ++++
->  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 30 +++++++++++++++++++---
->  2 files changed, 31 insertions(+), 4 deletions(-)
+> You also need to add sgpios documentation to the bindings docs.
 > 
-> diff --git a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi 
-> b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
-> index 7028e21bdd98..a16ecf08e307 100644
-> --- a/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
-> +++ b/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi
-> @@ -862,6 +862,11 @@
->  		groups = "SGPM1";
->  	};
->  
-> +	pinctrl_sgpm2_default: sgpm2_default {
-> +		function = "SGPM2";
-> +		groups = "SGPM2";
-> +	};
-> +
->  	pinctrl_sgps1_default: sgps1_default {
->  		function = "SGPS1";
->  		groups = "SGPS1";
-> diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c 
-> b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> index 34803a6c7664..b673a44ffa3b 100644
-> --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> @@ -46,8 +46,10 @@
->  #define SCU620		0x620 /* Disable GPIO Internal Pull-Down #4 */
->  #define SCU634		0x634 /* Disable GPIO Internal Pull-Down #5 */
->  #define SCU638		0x638 /* Disable GPIO Internal Pull-Down #6 */
-> +#define SCU690		0x690 /* Multi-function Pin Control #24 */
->  #define SCU694		0x694 /* Multi-function Pin Control #25 */
->  #define SCU69C		0x69C /* Multi-function Pin Control #27 */
-> +#define SCU6D0		0x6D0 /* Multi-function Pin Control #28 */
->  #define SCUC20		0xC20 /* PCIE configuration Setting Control */
->  
->  #define ASPEED_G6_NR_PINS 256
-> @@ -81,13 +83,21 @@ FUNC_GROUP_DECL(I2C12, L26, K24);
->  #define K26 4
->  SIG_EXPR_LIST_DECL_SESG(K26, MACLINK1, MACLINK1, SIG_DESC_SET(SCU410, 4));
->  SIG_EXPR_LIST_DECL_SESG(K26, SCL13, I2C13, SIG_DESC_SET(SCU4B0, 4));
-> -PIN_DECL_2(K26, GPIOA4, MACLINK1, SCL13);
-> +/*SGPM2 is A1 Only */
-> +SIG_EXPR_LIST_DECL_SESG(K26, SGPM2CLK, SGPM2, SIG_DESC_SET(SCU6D0, 4),
-> +			  SIG_DESC_CLEAR(SCU410, 4), SIG_DESC_CLEAR(SCU4B0, 4),
-> +			  SIG_DESC_CLEAR(SCU690, 4));
-> +PIN_DECL_3(K26, GPIOA4, SGPM2CLK, MACLINK1, SCL13);
->  FUNC_GROUP_DECL(MACLINK1, K26);
->  
->  #define L24 5
->  SIG_EXPR_LIST_DECL_SESG(L24, MACLINK2, MACLINK2, SIG_DESC_SET(SCU410, 5));
->  SIG_EXPR_LIST_DECL_SESG(L24, SDA13, I2C13, SIG_DESC_SET(SCU4B0, 5));
-> -PIN_DECL_2(L24, GPIOA5, MACLINK2, SDA13);
-> +/*SGPM2 is A1 Only */
-> +SIG_EXPR_LIST_DECL_SESG(L24, SGPM2LD, SGPM2, SIG_DESC_SET(SCU6D0, 5),
-> +			  SIG_DESC_CLEAR(SCU410, 5), SIG_DESC_CLEAR(SCU4B0, 5),
-> +			  SIG_DESC_CLEAR(SCU690, 5));
+> Whenever you add new device tree bindings to the kernel tree you
+> should add documentation for them.
+> 
+> When preparing patches for submission, use scripts/checkpatch.pl to
+> check for common issues. It will warn you if you are adding strings
+> that are not documented.
+> 
+> Cheers,
+> 
+> Joel
+> 
+> >
+> > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+> > ---
+> >  .../devicetree/bindings/gpio/sgpio-aspeed.txt |  8 +--
+> >  arch/arm/boot/dts/aspeed-g6.dtsi              | 52 +++++++++++++++++++
+> >  2 files changed, 57 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
+> > index d4d83916c09d..815d9b5167a5 100644
+> > --- a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
+> > +++ b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
+> > @@ -1,8 +1,10 @@
+> >  Aspeed SGPIO controller Device Tree Bindings
+> >  --------------------------------------------
+> >
+> > -This SGPIO controller is for ASPEED AST2500 SoC, it supports up to 80 full
+> > -featured Serial GPIOs. Each of the Serial GPIO pins can be programmed to
+> > +This SGPIO controller is for ASPEED AST2500/AST2600 SoC, it supports 2 master.
+> > +One is up to 128 SGPIO input ports and 128 output ports concurrently(after AST2600A1)
+> > +and Second one is up to 80.
+> > +Each of the Serial GPIO pins can be programmed to
+> >  support the following options:
+> >  - Support interrupt option for each input port and various interrupt
+> >    sensitivity option (level-high, level-low, edge-high, edge-low)
+> > @@ -14,7 +16,7 @@ support the following options:
+> >  Required properties:
+> >
+> >  - compatible : Should be one of
+> > -  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio"
+> > +  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio", "aspeed,ast2600-sgpiom"
+> 
+> I think we should add sgpiom strings for the ast2500 (and ast2400?)
+> too, as this is how they should have been named in the first place:
 
-A few things:
-
-1. It looks like the Multi-function Pins Mapping and Control table in section 5.1 of the datasheet only tells part of the story. It lists SGPS2 on the pins you've modified in this patch but not SGPM2. However, the table in section 2.1 (Pin Description) does outline SGPM2 and SGPS2 are routed via the same pins, though this does not listed the associated registers and bit fields. Can we fix the table in 5.1 so it's easier to review this patch?
-
-2. We don't need to specify the _CLEAR() behaviour here as this is implied by the process to disable the higher priority mux configurations. It should be enough to do:
-
-SIG_EXPR_LIST_DECL_SESG(L24, SGPM2LD, SGPM2, SIG_DESC_SET(SCU6D0, 5));
-
-However, this requires that we also define the priorities correctly, so:
-
-3. Can we add both the SGPS2 and SGPM2 configurations so we have a complete definition for the pins?
-
-Cheers,
+Can we defer this discussion until someone adds support for the slave 
+interface? Maybe the existing compatible could have done with some more 
+thought, but it is what it is, and I don't think we need to muddy the waters 
+further right now?
 
 Andrew
