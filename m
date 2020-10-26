@@ -2,61 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 345B429855B
-	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 02:35:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AF1F29857C
+	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 03:04:20 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CKHT830kTzDqLK
-	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 12:35:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CKJ6X4HPSzDqMF
+	for <lists+openbmc@lfdr.de>; Mon, 26 Oct 2020 13:04:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.229;
- helo=new3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=A3zdjZnl; 
+ header.s=fm1 header.b=ULcEx9i5; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Qbp4D9e8; 
+ header.a=rsa-sha256 header.s=fm1 header.b=j5ECWjID; 
  dkim-atps=neutral
-Received: from new3-smtp.messagingengine.com (new3-smtp.messagingengine.com
- [66.111.4.229])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CKHSB0mxYzDq63;
- Mon, 26 Oct 2020 12:34:18 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CKJ586cCgzDqLv
+ for <openbmc@lists.ozlabs.org>; Mon, 26 Oct 2020 13:02:51 +1100 (AEDT)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id A6C4A580366;
- Sun, 25 Oct 2020 21:34:15 -0400 (EDT)
+ by mailout.nyi.internal (Postfix) with ESMTP id 9CF8D5C00D2;
+ Sun, 25 Oct 2020 22:02:48 -0400 (EDT)
 Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 25 Oct 2020 21:34:15 -0400
+ by compute3.internal (MEProxy); Sun, 25 Oct 2020 22:02:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
  mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=oLqCGkVxUyCN8ZI7GlPMtX4fYGxBLJX
- KLhqMOJPqSkI=; b=A3zdjZnlvWtGcmly78TCkHioFlt12memCak2EVM1XUd5FMT
- hlRX/0C9otvfWrApLGanyl1qMXOFNuOMbGWYuQ/pbHy9ops6ITSXxFjoPD/HalCY
- nK6tal9qUwj6w7fIdIwgguTgaiSK8TLTduDifEhFcHIzaZQFH7dv7mgq2S18nPEb
- 9d7aScM06TTfbWUWaD/zbsmPYW94+acZAx119ZFZUHOfmZMtB2GqW14DGQ/fEw6I
- PaH94wImQGobxNNoJOWIhPbOmqYPWnQiBGHa1IrFgRdPiHKXSGWKmJXwwUK27vTX
- O5tYpEPh/4YYhdyyKeaewslH1W0Pb8OB9yvpfqg==
+ :subject:content-type; s=fm1; bh=N0f8XP3fFTWeFcBHrIJeZixJ6aL39n6
+ ZABJ5dk8thaU=; b=ULcEx9i57YVtJY5G9ypDqmOcu1s+0uI4Ex//yajJ1OXlncP
+ DGDwUkapoSaVomTEfXlv1T1+3Fu2L6swGsPYd276e6AZvM0+kjNd5ADF3Oy54WHg
+ qLDmZzrqNWw+b6UoxYdJfRMyYvlKZXIVSmxstG1ANtkaxaB/vBAZUKEZ63CTWWMi
+ O7cpLuhXyEcERtiMsUPtBS5o/AvxiG9j9i8CjkZGJbuoxXj9bfqTQzdkGyQ0fYcx
+ Pm3sVhbwCgZ7bZ9p+R9vfZaIih6EhEHgGy8b8HaZgxcUDiwDjFNM4y0vj9HVYHeZ
+ HVF2O3HQzrQVMPytXTmbdPfjBM261CP+gwa6BgQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=oLqCGk
- VxUyCN8ZI7GlPMtX4fYGxBLJXKLhqMOJPqSkI=; b=Qbp4D9e8PrBdK4qvrCOe8S
- zZ4r/IKlwvc3fADPsHqI7dzjrcUfURG/ZTZqJcWk+exY7xINUw+WccqSWE63GKyx
- +Vei2axP3ghOI5YE8IN+r6QDra7mglRPqrWnbhghVKqrxOPVLBVUCjBaEOjCBZg5
- 9nxXaP2ZSsO0aOAFC2vG4KxSZ3rF2ArhdK/XzWnn8oGBkOLrDRz50m33fghS+ENL
- Wb87OYiDP3ouJzZJeVmP/efydGA/4IIzu1ay1TudZ0sRfD3qzlgXBRfV40KoU7Kl
- lucv00TUxKwTtgFhcgjKRgU505fqPM8mtoLM8cDmAMpFvI5nMOPrA8tn7b/ln9dw
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=N0f8XP
+ 3fFTWeFcBHrIJeZixJ6aL39n6ZABJ5dk8thaU=; b=j5ECWjIDdfCwr8VRIC5GtU
+ UQ7BudcVH7fjUv0twVM9pkJFMSgQjzll2qVZAmugqXaPp91lLlvMNIk8j7BJ1mVx
+ 1hfSSc6LP+YQo6fbWVRm92z3y2E3mURIc7Hwlf66ddisUyXt5vE7jdps/bNMXVno
+ Bzd7BdW+sKu5sRS+V8t+PAJLfSdMeqg3uyND7ik+jczkOa9zIlQgkwN/0MMdKoYL
+ QoN+yXkDiq3aKpzGWxVxQI/A/kbVX/0+CiS2TOSeiqD+aKiLT+fZXjli/1/Xyaaw
+ OP9C1kVKaq9FNlL9ppq+TBnX+uk+4uvqZicsi3wbGcAF9PFqHZqJ8dPDajO1dPxQ
  ==
-X-ME-Sender: <xms:lyeWX8B9F2YgMB1REMJjuBXrUGGS6gtWrY8aNBI86PrA5DCma4zcCg>
- <xme:lyeWX-gm8Uej4-sZPaCSdlYOu4YiSRBD5nW6HO5zTNVA7du8Ih7bVtUmFJ1hpZRL5
- lxm3p1JXYPl9g1Ezw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeehgdefjecutefuodetggdotefrodftvf
+X-ME-Sender: <xms:SC6WX1AVavqtKhUYmlnl-SCJvhzDLbZvsi_ow53AF8ZZfMQNgxymaQ>
+ <xme:SC6WXzgPBzyeYSR7d4w9QGUL1m5gUiY4UD0vU0WaZ5OS6npWEtIHBjgpkkxafAezc
+ s_0Biglz7cGegX-Dw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeehgdegfecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
@@ -64,24 +64,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrkeehgdefjecutefuodetggdote
  htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
  veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
  grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:lyeWX_lY4k9Ll47gGsWGKrzGfhq_yuNqIKxEd13ehgdN1F0a-BAJ_Q>
- <xmx:lyeWXywEv5dQ0GfRN9OwAnI_I7Zs-wEsrIxWFvIAE7NlVCJ0Q-qnhw>
- <xmx:lyeWXxQT6HYlenMu9k3CAvrhS22IKf91lUe2f--iqsd81YjAqyzSCw>
- <xmx:lyeWX--HjYYXKgsQ0OrGjp-BdPLLFy_iQb4jfJ2XofDAKiMKHTSRTA>
+X-ME-Proxy: <xmx:SC6WXwkjrnVxc6LDPbrVVNKaATFOVIHRMiIKBCUJiYLZBKD5QJcdLw>
+ <xmx:SC6WX_xszu1cyZRdjHEukFMehjZq6-EM8QND1ZKgpFZOh4l48e5i5Q>
+ <xmx:SC6WX6STYvMlzXXoLXABFd-Y_bMr-e_4syHM6k5ca_ovVk94GiaKuw>
+ <xmx:SC6WX1fx5ojQOZuh8prYh1KP6tCM3mbeYTY1j8grMpalHCLfOWsUbw>
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 476B1E050B; Sun, 25 Oct 2020 21:34:13 -0400 (EDT)
+ id 6424FE050C; Sun, 25 Oct 2020 22:02:46 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.3.0-529-g69105b1-fm-20201021.003-g69105b13
 Mime-Version: 1.0
-Message-Id: <8625b8b4-4b3b-49ce-b35c-5de3920dc5eb@www.fastmail.com>
-In-Reply-To: <CACPK8XdYvSmwdAkBzAO3kC8_PYa3CtPkNb0VxcOhmb2UYz5zDA@mail.gmail.com>
-References: <20201012033150.21056-1-billy_tsai@aspeedtech.com>
- <20201012033150.21056-3-billy_tsai@aspeedtech.com>
- <CACPK8XdYvSmwdAkBzAO3kC8_PYa3CtPkNb0VxcOhmb2UYz5zDA@mail.gmail.com>
-Date: Mon, 26 Oct 2020 12:03:54 +1030
+Message-Id: <5bc5676b-d00c-49e4-b1c6-70da0d81bc0a@www.fastmail.com>
+In-Reply-To: <CA+-TXo_C3pP=5zn+O7dtP4wHu9JwhubdUC6aqSMK_J742Cpkaw@mail.gmail.com>
+References: <CA+-TXo_C3pP=5zn+O7dtP4wHu9JwhubdUC6aqSMK_J742Cpkaw@mail.gmail.com>
+Date: Mon, 26 Oct 2020 12:32:27 +1030
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Joel Stanley" <joel@jms.id.au>, "Billy Tsai" <billy_tsai@aspeedtech.com>
-Subject: Re: [PATCH 2/3] Arm: dts: aspeed-g6: Add sgpio node
+To: "Pasha Ghabussi" <pashag@google.com>, openbmc@lists.ozlabs.org
+Subject: Re: BMC Performance Profiler
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -94,76 +92,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Bartosz Golaszewski <bgolaszewski@baylibre.com>,
- Rob Herring <robh+dt@kernel.org>, BMC-SW <BMC-SW@aspeedtech.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: Ed Tanous <edtanous@google.com>, Sui Chen <suichen@google.com>,
+ Ofer Yehielli <ofery@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+> Requirements and Scalability:
+> 
+>  * Should provide the adequate functionalities to filter, visualize the 
+> events timeline, and group the DBus traffic based on multiple criteria 
+> such as type, source, destination, path, interface, demon signatures, 
+> and more.
 
-On Mon, 12 Oct 2020, at 15:05, Joel Stanley wrote:
-> On Mon, 12 Oct 2020 at 03:32, Billy Tsai <billy_tsai@aspeedtech.com> wrote:
-> >
-> > This patch is used to add sgpiom and sgpios nodes and add compatiable
-> > string for sgpiom.
-> 
-> You also need to add sgpios documentation to the bindings docs.
-> 
-> Whenever you add new device tree bindings to the kernel tree you
-> should add documentation for them.
-> 
-> When preparing patches for submission, use scripts/checkpatch.pl to
-> check for common issues. It will warn you if you are adding strings
-> that are not documented.
-> 
-> Cheers,
-> 
-> Joel
-> 
-> >
-> > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-> > ---
-> >  .../devicetree/bindings/gpio/sgpio-aspeed.txt |  8 +--
-> >  arch/arm/boot/dts/aspeed-g6.dtsi              | 52 +++++++++++++++++++
-> >  2 files changed, 57 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
-> > index d4d83916c09d..815d9b5167a5 100644
-> > --- a/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
-> > +++ b/Documentation/devicetree/bindings/gpio/sgpio-aspeed.txt
-> > @@ -1,8 +1,10 @@
-> >  Aspeed SGPIO controller Device Tree Bindings
-> >  --------------------------------------------
-> >
-> > -This SGPIO controller is for ASPEED AST2500 SoC, it supports up to 80 full
-> > -featured Serial GPIOs. Each of the Serial GPIO pins can be programmed to
-> > +This SGPIO controller is for ASPEED AST2500/AST2600 SoC, it supports 2 master.
-> > +One is up to 128 SGPIO input ports and 128 output ports concurrently(after AST2600A1)
-> > +and Second one is up to 80.
-> > +Each of the Serial GPIO pins can be programmed to
-> >  support the following options:
-> >  - Support interrupt option for each input port and various interrupt
-> >    sensitivity option (level-high, level-low, edge-high, edge-low)
-> > @@ -14,7 +16,7 @@ support the following options:
-> >  Required properties:
-> >
-> >  - compatible : Should be one of
-> > -  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio"
-> > +  "aspeed,ast2400-sgpio", "aspeed,ast2500-sgpio", "aspeed,ast2600-sgpiom"
-> 
-> I think we should add sgpiom strings for the ast2500 (and ast2400?)
-> too, as this is how they should have been named in the first place:
+Probably the most common thing I've used dbus-pcap for is finding ugly latencies in long IPC call chains (i.e. more than one hop). This, among other insane ideas (boot process simulation via IPMI message replay), was the motivation for writing it.
 
-Can we defer this discussion until someone adds support for the slave 
-interface? Maybe the existing compatible could have done with some more 
-thought, but it is what it is, and I don't think we need to muddy the waters 
-further right now?
+Probably the most useful thing I've implemented in dbus-pcap (aside from the general filtering capabilities) was method call tracking. A harder problem is identifying complete call trees in the message timeline (filtering out unrelated messages). Generally this requires a bunch of manual work with getting the filters right in the dbus-pcap invocation, as it requires knowledge of the implementation of each daemon. Did you have any ideas for making this easier? My brief thought is to recursively identify the service targeted by a method call and to track calls from this service until it sends the reply message to the caller, though this gets messier with ASIO-based daemons.
 
 Andrew
