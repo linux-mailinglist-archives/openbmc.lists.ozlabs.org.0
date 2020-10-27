@@ -2,67 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BDF829C86F
-	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 20:12:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 376EE29C920
+	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 20:40:01 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CLLtM1MKBzDqPb
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 06:12:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CLMVP6BJbzDqLW
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 06:39:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32a;
- helo=mail-wm1-x32a.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=W68TDDU7; dkim-atps=neutral
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com
- [IPv6:2a00:1450:4864:20::32a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=tIHbQk0l; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CLLsM3FBnzDqNk
- for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 06:11:15 +1100 (AEDT)
-Received: by mail-wm1-x32a.google.com with SMTP id e2so2575864wme.1
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 12:11:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RhQQWAIeBdsv6BDa/LpSLnT6A+JCeKB7Bwxve7UvBug=;
- b=W68TDDU7AeABYt6ZeMtBHxgVf6/INy+qg+9uVJsKHyx/e2eRMsfBUKOjS5OtEMoSaW
- x1Bq/fTNDR0zArBn6tMHPqVmSMukrvdRR2vYN6eEkRoAT+FZGzA3UR7Pl+dYvV2hnjlJ
- DWEX28FzHc//p1G/4YIcjUTT2EGdsZcknfRTXd3fkq5DbrAvVyhEQCvBuVvOfuUUoziq
- D8s4g0ypGaSh6oV3lLIxbUnG3c1fv21i9/Uor2+brY6pURbpZM0IrQj3VuZRCjvtFo6/
- ZaXGhoj8TjKunN//ABmE13vlXE1DHy/SjKICnnnaoAHFRFIm2qQFCdQ1mQ9jXk+rmG+h
- NI1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RhQQWAIeBdsv6BDa/LpSLnT6A+JCeKB7Bwxve7UvBug=;
- b=Z9FPb9HUeTup47KTGAXAaZ/qj1e/rGBarnJi7E1paMjyRqesYNUQ+Hrk5eKZHXcCyG
- 6+NTBv4Nt4GfX1VAb6j7gKl72QD5F1ek4TQG5pxRyJieP3q7fgm9D35BwTHnBvzsqXY9
- iSZjUaadE8DaOJQD7YOcX+E0IUmeU5qAMWGRuF28eQBRy05utuo21hFD6JtPlaXnlZy+
- Sb+5ajTi0MFIRrG7ngboOyo9E0u94YoVEyxy0Jv99D52aY5c1wSjySrh4NnZsU3EyBXX
- WNTNiuWSSl+wS515vgq9xOlpRYMArUUA0DLxkAA9tqSKjVDUH2xiQC/67ZUmmocVKVsk
- hurw==
-X-Gm-Message-State: AOAM533pPXfpQwKftLQ/qcq9Fw1sR+SEqo7CW26P6ozl1TT5qVMDoaIt
- iA9ld5lMX8OSRGY5ip2jb1bX7mkIEhzasLh2P9lHnA==
-X-Google-Smtp-Source: ABdhPJyi0n/z0E72gnWzhSpesHSYWUDEakEAsle/KNMaP2iNnnKyR0yU9syK9Q1WKuFRJa84WAsKQ5BQKlAbP7QyIy4=
-X-Received: by 2002:a05:600c:2942:: with SMTP id
- n2mr188883wmd.101.1603825870530; 
- Tue, 27 Oct 2020 12:11:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CLMTY5D1kzDq7h
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 06:39:12 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09RJVtpp067915
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 15:39:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=to : from : subject :
+ message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=UkF0SqGYATt0bjZ0srgV5J4esKxxzPMGkp2m0ULLT8I=;
+ b=tIHbQk0lwqs/gKv1zaTUC8IAOInkBh3JSQD6CLRtwd4Osl+BVX8gLcY7Jv/WoX97UIv+
+ NDhMUk6TybJ5DykFdrqND3ak10YkIifFCzWkgvm7fYLpTMLG3nDdKjYKtg9Fj8rHjc3F
+ 7frdgOjAAByjCKpiAUcGY+mKG95dTKmd/BjUx96c4uHyUnCeHS3NsPsVoPmTX0LJUbbA
+ wJWYrHdKnx558Vcndz/4Iz+i1dzrkEUtyRnZb+BRzAO/5DlxpMOq4Gdzsuy1GzKZrUeB
+ 3F4pddAgOWTeu777PLN0AAA7eC8ZWYo8VmEBiu9vOYladVngHl36PCo6RN5yaBk1O45f zg== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34ejcn14ng-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 15:39:09 -0400
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09RJX9ea020213
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:09 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma02dal.us.ibm.com with ESMTP id 34e1gnm1hw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:09 +0000
+Received: from b03ledav002.gho.boulder.ibm.com
+ (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09RJd0V033161508
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:00 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BF227136051
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:07 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 826F613604F
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:07 +0000 (GMT)
+Received: from [9.85.157.1] (unknown [9.85.157.1])
+ by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:07 +0000 (GMT)
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Move from root to admin
+Message-ID: <cf77d751-6f4b-0889-f2c1-e6a62081845e@linux.ibm.com>
+Date: Tue, 27 Oct 2020 14:39:06 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
+ Gecko/20100101 Thunderbird/68.12.1
 MIME-Version: 1.0
-References: <CAH2-KxCDtq4TDhcENWB65neeqq2QW2TDTV4e7mudaram5EcWGg@mail.gmail.com>
- <E5370099-203B-4CA4-AD0E-671CD2303CE7@fb.com>
-In-Reply-To: <E5370099-203B-4CA4-AD0E-671CD2303CE7@fb.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Tue, 27 Oct 2020 12:10:59 -0700
-Message-ID: <CAH2-KxDbgY8kozOotA+qjzAP0cqTcK9Ooys9b05Szv4MRk8wrA@mail.gmail.com>
-Subject: Re: VR control from the BMC
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-10-27_10:2020-10-26,
+ 2020-10-27 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ mlxlogscore=499 bulkscore=0 malwarescore=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010270110
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,51 +98,14 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 27, 2020 at 11:55 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
->
-> On 10/26/20, 4:04 PM, "openbmc on behalf of Ed Tanous" <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org on behalf of edtanous@google.com> wrote:
->
->     In the near future, I'm going to have some needs for OpenBMC to be
->     able to control VRs.  These VRs might be on the baseboard itself, or
->     on detected PCIe add-in-cards, and controlled over PMBus.
->     Additionally, I will need a "hardware safe" way for the host to be
->     able to modify the behavior of these VRs (usually different voltage
->     settings), and to have that interface be constrained in such a way
->     that the host can never set a value that's outside of a predefined
->     range that's known to be safe for the hardware, which the BMC will own
->     the definition of for security purposes.
->
->     Does anyone else have similar needs?  I've been pointed to
->     phosphor-regulators which has some similar parallels;  As-is, that
->     solution won't work for me, because it's relying on fixed, platform
->     specific json scripting to accomplish its goals.  My hope would be for
->     a more generalized linux devicetree based solution,
->
-> Voltage limits can certainly be passed via DTS file to limit user
-> application configuration setting.
 
-Anything in the DTS would remove the possibility of controlling VRs
-that weren't part of the baseboard, and would be a problem for me.
-Also, these limits would likely need to be dynamic, and might rely on
-certain calibration constants in the chip.  I don't think a hardcoded
-DTS limit would meet my needs.
+Is OpenBMC ready to move from root to an admin account?
 
->
->     as well as a
->     representation on dbus that could be modified at runtime by
->     Redfish/IPMI in band.
->
->     Is there any other work I should look into that's similar?  Does
->     anyone have any strong opinions on how this should be organized or how
->     it could be built?
->
-> I would also like to add VR firmware upgrades as well in this.
+Looking for +1s.  See 
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/33847
 
-I don't have the need to upgrade VR firmware out of band today, but if
-you're interested in helping define interfaces that would work for
-firmware upgrade or make it easy to add in the future, I'd appreciate
-the help.
+- Joseph
+
