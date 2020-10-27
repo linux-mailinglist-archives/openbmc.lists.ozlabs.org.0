@@ -2,62 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 200FB29A29D
-	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 03:17:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8351B29A2A4
+	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 03:20:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CKwLy0ffzzDqTF
-	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 13:16:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CKwQs3Cb9zDqT3
+	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 13:20:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::744;
- helo=mail-qk1-x744.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::742;
+ helo=mail-qk1-x742.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=RcVYmZyH; dkim-atps=neutral
-Received: from mail-qk1-x744.google.com (mail-qk1-x744.google.com
- [IPv6:2607:f8b0:4864:20::744])
+ header.s=google header.b=emCTFPfb; dkim-atps=neutral
+Received: from mail-qk1-x742.google.com (mail-qk1-x742.google.com
+ [IPv6:2607:f8b0:4864:20::742])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CKwLC3F14zDqSd
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 13:16:19 +1100 (AEDT)
-Received: by mail-qk1-x744.google.com with SMTP id 188so10407312qkk.12
- for <openbmc@lists.ozlabs.org>; Mon, 26 Oct 2020 19:16:18 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CKwPF6SpbzDqCR;
+ Tue, 27 Oct 2020 13:18:56 +1100 (AEDT)
+Received: by mail-qk1-x742.google.com with SMTP id r7so10430098qkf.3;
+ Mon, 26 Oct 2020 19:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=NI2gPF81e+1G9PzdgJh4buyxLbXK9RGlFluAb4oAljs=;
- b=RcVYmZyHVS/n1B3goR06y+0IBTiovI8J2adIhaB4oCPTRf2sUOzcUZAaT5SsPUrqxz
- Q314Kknu8istA1p8qywn2bPWaq5UySuJ9YGflbmxBHCqFcaXEQ/G8oz2Pq5Vg3Qi9qvl
- oz+sIGSj0d/Zqatz0hY3zzvt02maVoQUN9DFw=
+ :cc; bh=Z7k2jFeuyFxR40oKjqp6f6jzB45rr1tSUQm9Sp7Fuu8=;
+ b=emCTFPfbMA8sqwapkNGv73E7/ekn1Du95YiS6OJf6VKhj83eNKepggO/2T4LRV4NO1
+ PkbCx2E+A5beMSWBNmgrliLMH6pDiIY1xkZqGjRmOjAoodhsLVTIOzxsGPre5zCjbbss
+ dPrY42iAFezg5u4Dt2arPi7ADacfYvJUbN2xU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=NI2gPF81e+1G9PzdgJh4buyxLbXK9RGlFluAb4oAljs=;
- b=tUBrYfbvXC2CQz7vaMyVzIy6dCGyNUMLwoD3MH2Fele3QaoQvjcEv3h6kxDDRXXNzW
- 7j1fvPTflLDwiGjfwpaYZAPmrU2Co26jly6nAUPzv8c/lwD9n2T4XxwFbcKj/04zVvB0
- qF8O9GWfg2GYrL5XStOz41Bk1pha8SgXWwM9nRmj7uKyJSo5rcYe21GUsHGX7YIk9Qmy
- Cg7wVJmpId7KaoomcJskvTJhJJCPdiOZAeySPACreKahIZ/HXQnQZseQq2vuZmlmxjc7
- 1EoAAIjiLuXAiPNbHWU+8rmXYO0BQAcYF06yfXCyzelhdFD1vxQWvIbwrAUpNBovHjh+
- laKQ==
-X-Gm-Message-State: AOAM531nlO9J8H3MTxXlQroKSHNNAMyiT5pcMJM7ghp+NsAqF/P1lK9q
- 1+r+ZBJaAvQzuLkQzMqfixaffJbjCbBmC1LS1hc=
-X-Google-Smtp-Source: ABdhPJwbocW+ldlAANgcbHUtiKQI8JtaXQJ/z/ZFCGWmZx3p7GfXZdjWYoGe8Q4LoUmx2I3j69IK5xn4vD5886EH9L4=
-X-Received: by 2002:a37:a81:: with SMTP id 123mr30932qkk.487.1603764974873;
- Mon, 26 Oct 2020 19:16:14 -0700 (PDT)
+ bh=Z7k2jFeuyFxR40oKjqp6f6jzB45rr1tSUQm9Sp7Fuu8=;
+ b=skBB0a3OnvS5SSesnG0eXqPiuSGH38IctkcG7Y49tRDKECggQN1+gbPaQ4rOP1YgXU
+ RAI4MOCTGszNC8m2mX2tbA6dObakwGaK1cWlHQU1vpNP+mRbN6QsXW9PhaLaQHlyFdb4
+ eiQ4dtA7TG7jQxAcxdKxyc75JdceOvMN1F+3Qi24KpTZeycRw1rpwqqPYzAt9fObVF30
+ r9tHPi9+FSuWvhIX733tURzINKFaHAr0vwti6aeyFDfvhHwfj0XF2tfXsVAMYEshJtfn
+ +W9CCiY1RTolclBytTQENh3PYUCTq3vZIGLRdrX3Gxf2NZr69mkP8RDnbRjCJcmdHcmQ
+ A5ag==
+X-Gm-Message-State: AOAM530aVrEtS2ogmFXe4z3xSyriKKE4flQaw7lga6kOGEv6YqcceiHR
+ KtYvBN6BYRY6SfdQ0ei9/wKS5Nl2viSjS4M4YXyDoW/1
+X-Google-Smtp-Source: ABdhPJwLM6M52ok+8DkCFDJBuR8rBAX3I0lJIGG88g+lugudrUqWAV3/suj2AD1bT6mETyOedwi0T/fgRJegAvl+rLk=
+X-Received: by 2002:a37:a81:: with SMTP id 123mr39228qkk.487.1603765133628;
+ Mon, 26 Oct 2020 19:18:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20201022081002.2665132-1-liuxiwei@inspur.com>
- <63aac251-77da-468c-911c-5e24b2a9e5fe@www.fastmail.com>
-In-Reply-To: <63aac251-77da-468c-911c-5e24b2a9e5fe@www.fastmail.com>
+References: <20201019073908.32262-1-dylan_hung@aspeedtech.com>
+ <CACPK8Xfn+Gn0PHCfhX-vgLTA6e2=RT+D+fnLF67_1j1iwqh7yg@mail.gmail.com>
+ <20201019120040.3152ea0b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <PS1PR0601MB1849166CBF6D1678E6E1210C9C1F0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+ <CAK8P3a2pEfbLDWTppVHmGxXduOWPCwBw-8bMY9h3EbEecsVfTA@mail.gmail.com>
+ <32bfb619bbb3cd6f52f9e5da205673702fed228f.camel@kernel.crashing.org>
+ <529612e1-c6c4-4d33-91df-2a30bf2e1675@www.fastmail.com>
+ <PS1PR0601MB18498469F0263306A6E5183F9C1A0@PS1PR0601MB1849.apcprd06.prod.outlook.com>
+ <e6c8e96bb26a5505e967e697946d359c22ac68c5.camel@kernel.crashing.org>
+In-Reply-To: <e6c8e96bb26a5505e967e697946d359c22ac68c5.camel@kernel.crashing.org>
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 27 Oct 2020 02:16:02 +0000
-Message-ID: <CACPK8XemeY32aejR=bq9YagRmYZQaC37t8ssXejgSZ+bATGOdg@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: Fix label address for 64MiB OpenBMC flash layout
-To: Andrew Jeffery <andrew@aj.id.au>
+Date: Tue, 27 Oct 2020 02:18:41 +0000
+Message-ID: <CACPK8XdPB0wnvuvwxO5BST7EzDuPqGcjHTkZm=7A0ZofzyXHag@mail.gmail.com>
+Subject: Re: [PATCH] net: ftgmac100: Fix missing TX-poll issue
+To: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,21 +77,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- George Liu <liuxiwei1013@gmail.com>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Po-Yu Chuang <ratbert@faraday-tech.com>, Andrew Jeffery <andrew@aj.id.au>,
+ netdev <netdev@vger.kernel.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, Dylan Hung <dylan_hung@aspeedtech.com>,
+ David Miller <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 26 Oct 2020 at 00:59, Andrew Jeffery <andrew@aj.id.au> wrote:
+On Mon, 26 Oct 2020 at 22:22, Benjamin Herrenschmidt
+<benh@kernel.crashing.org> wrote:
 >
+> On Fri, 2020-10-23 at 13:08 +0000, Dylan Hung wrote:
+> > The issue was found on our test chip (ast2600 version A0) which is
+> > just for testing and won't be mass-produced.  This HW bug has been
+> > fixed on ast2600 A1 and later versions.
+> >
+> > To verify the HW fix, I run overnight iperf and kvm tests on
+> > ast2600A1 without this patch, and get stable result without hanging.
+> > So I think we can discard this patch.
 >
->
-> On Thu, 22 Oct 2020, at 18:40, George Liu wrote:
-> > Signed-off-by: George Liu <liuxiwei@inspur.com>
->
-> Acked-by: Andrew Jeffery <andrew@aj.id.au>
->
-> Joel: Is there a reason the 64M layout isn't upstream? I don't see it in
-> aspeed/for-next.
+> This is great news. Thanks !
 
-Because it was sent after I sent the pull request for 5.10.
+That is excellent news. I agree; we do not need fixes for A0 issues to
+be kept in the mainline kernel. Thanks for updating us Dylan.
+
+Cheers,
+
+Joel
