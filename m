@@ -2,91 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 376EE29C920
-	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 20:40:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BE06229C95F
+	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 21:02:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CLMVP6BJbzDqLW
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 06:39:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CLN0g489TzDqMG
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 07:02:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=tIHbQk0l; dkim-atps=neutral
+ header.s=pp1 header.b=XRa0vM6v; dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
  [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CLMTY5D1kzDq7h
- for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 06:39:12 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CLMzx6PlgzDqLs
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 07:02:04 +1100 (AEDT)
+Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 09RJVtpp067915
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 15:39:10 -0400
+ 09RK212S007116
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 16:02:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=to : from : subject :
- message-id : date : mime-version : content-type :
- content-transfer-encoding; s=pp1;
- bh=UkF0SqGYATt0bjZ0srgV5J4esKxxzPMGkp2m0ULLT8I=;
- b=tIHbQk0lwqs/gKv1zaTUC8IAOInkBh3JSQD6CLRtwd4Osl+BVX8gLcY7Jv/WoX97UIv+
- NDhMUk6TybJ5DykFdrqND3ak10YkIifFCzWkgvm7fYLpTMLG3nDdKjYKtg9Fj8rHjc3F
- 7frdgOjAAByjCKpiAUcGY+mKG95dTKmd/BjUx96c4uHyUnCeHS3NsPsVoPmTX0LJUbbA
- wJWYrHdKnx558Vcndz/4Iz+i1dzrkEUtyRnZb+BRzAO/5DlxpMOq4Gdzsuy1GzKZrUeB
- 3F4pddAgOWTeu777PLN0AAA7eC8ZWYo8VmEBiu9vOYladVngHl36PCo6RN5yaBk1O45f zg== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34ejcn14ng-1
+ h=in-reply-to : subject :
+ from : to : date : references : content-type : message-id :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=fY/xZ8GVk8Yahv/gKpc1oqAUL5EyoDHTMFrH4tb2Wgk=;
+ b=XRa0vM6v79JksuLT/d5GP0wTx6Pto+g9+IS0rG6e4cLR9qQAvQ9pt9OYb2uXeSepym9Z
+ rz6ylrS0uKKoDYv9uAQtTcuri7Kmo/9/oXnfdD6FbDoOEdG3+k4mSn4KolwfYvP2UdKB
+ FqnjoLzaQFYtxVQIXtT1zBhZsCqXTiYqldvl9Vf1wMfe3q7R0/BM/scw5FvZK2nxZCgT
+ 2vJf4rgtmVQigUW+uB28+nOVY+vEO5tD+EgI0OpaygS235sUUt78Ueg6TzCUApvB9Joi
+ DvO6PZ/fLWPNBxb0nvX+ocbiji0N2Tj+ZTNPNfQ1vwRlss9Tuyt54cNKvS+51OCH7789 nA== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [192.155.248.67])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34esjk15k2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 15:39:09 -0400
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09RJX9ea020213
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:09 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma02dal.us.ibm.com with ESMTP id 34e1gnm1hw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:09 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 09RJd0V033161508
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:00 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BF227136051
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:07 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 826F613604F
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:07 +0000 (GMT)
-Received: from [9.85.157.1] (unknown [9.85.157.1])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:39:07 +0000 (GMT)
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Move from root to admin
-Message-ID: <cf77d751-6f4b-0889-f2c1-e6a62081845e@linux.ibm.com>
-Date: Tue, 27 Oct 2020 14:39:06 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.1
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 16:02:01 -0400
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 27 Oct 2020 20:01:48 -0000
+Received: from us1a3-smtp03.a3.dal06.isc4sb.com (10.106.154.98)
+ by smtp.notes.na.collabserv.com (10.106.227.16) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 27 Oct 2020 20:01:47 -0000
+Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
+ by us1a3-smtp03.a3.dal06.isc4sb.com
+ with ESMTP id 2020102720014649-733901 ;
+ Tue, 27 Oct 2020 20:01:46 +0000 
+In-Reply-To: 
+Subject: GUI Design Work Group - Wednesday,
+ 10/28/20 at 10:00 AM Central Daylight Time (CDT)
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: openbmc@lists.ozlabs.org
+Date: Tue, 27 Oct 2020 20:01:46 +0000
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: 
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 47775
+X-TNEFEvaluated: 1
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20102720-7279-0000-0000-000003F6358B
+X-IBM-SpamModules-Scores: BY=0.033574; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.415652; ST=0; TS=0; UL=0; ISC=; MB=0.000416
+X-IBM-SpamModules-Versions: BY=3.00014088; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01455348; UDB=6.00782853; IPR=6.01238036; 
+ MB=3.00034732; MTD=3.00000008; XFM=3.00000015; UTC=2020-10-27 20:01:48
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-10-27 13:42:33 - 6.00012005
+x-cbparentid: 20102720-7280-0000-0000-00009ABA35D2
+Message-Id: <OFBB827439.53103F3D-ON0025860E.006E06B7-0025860E.006E06BC@notes.na.collabserv.com>
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
  definitions=2020-10-27_10:2020-10-26,
  2020-10-27 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- mlxlogscore=499 bulkscore=0 malwarescore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2010270110
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,11 +101,26 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hello,
 
-Is OpenBMC ready to move from root to an admin account?
+At tomorrow's work group we are planning to review:
 
-Looking for +1s.  See 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/33847
 
-- Joseph
+- Mutual TLS - https://gerrit.openbmc-project.xyz/c/openbmc/webui-vue/+/369=
+18
+- Do we need to version the GUI?
+- Help Wanted stories - https://github.com/openbmc/webui-vue/projects/2
+- Design Review items - https://github.com/openbmc/webui-vue/projects/1
+
+If your organization is interested in these topics, please join us!
+
+
+How to join and agenda can be found on the wiki page:
+- https://github.com/openbmc/openbmc/wiki/GUI-Design-work-group
+
+
+Thank you!
+=20
+Derick Montague
+IBM Cognitive Systems User Experience
 
