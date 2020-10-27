@@ -1,73 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75F9E29CB89
-	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 22:52:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4125A29CBA6
+	for <lists+openbmc@lfdr.de>; Tue, 27 Oct 2020 22:58:26 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CLQQl31J6zDqP2
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 08:51:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CLQZ74BqWzDqPK
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 08:58:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
- helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32c;
+ helo=mail-ot1-x32c.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=PNVJzw5x; dkim-atps=neutral
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
- [IPv6:2607:f8b0:4864:20::330])
+ header.s=20161025 header.b=DaCpn3aC; dkim-atps=neutral
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com
+ [IPv6:2607:f8b0:4864:20::32c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CLQPf6VkDzDqM3
- for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 08:51:02 +1100 (AEDT)
-Received: by mail-ot1-x330.google.com with SMTP id m22so2511904ots.4
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 14:51:02 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CLQYL43hnzDq9l
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 08:57:41 +1100 (AEDT)
+Received: by mail-ot1-x32c.google.com with SMTP id n11so2531717ota.2
+ for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 14:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:content-transfer-encoding:mime-version:subject:message-id:date
- :to; bh=64QSk4nfT0TSsdmIWEX+G8flHeR3bRjD4IkHqfbc1H8=;
- b=PNVJzw5x2nyUcf4YQMP9ZI8qGiRzTqHT0yMgRIcdxCtZNj0h0hfK9CtfTERHzrQr4Q
- XUkYMCrQpFtU5SFJhMI3ZR6q5QSQaU6L2Iu1SI4XAkUtWlKQcULzK5LpLU2HRaOPi9cQ
- gv/JlXSDYbxjmJeqFQpMB7AEI1qfCiyJoRZh5EbCHlAlx41dBZgx6dQgxqKVtvDGkroc
- QBqkTuTaWk56lRXnkxC5hWfzbCcbPckqTXbw0pDWVmK7CAAT6h31E8lmaN0skqa6AV2x
- jJDiFwDo6UCfgU5hwdIPIVMxovtN5icljcj2rKSUiSVokQsdNce3FxuHIF7XDC8yIBse
- zI9g==
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=6LVpWeGX1PWscOOFvVfb0QmfR981CLlfdA8SnZbhEcs=;
+ b=DaCpn3aC695wU081PE+4UhWAHr/96alS3j4ljiRZZU261YKcqbm+XuCBXxkuQ3BgPy
+ dMaE753QNdCBTwEuPj73SsrIxf9fAD2ujlXRUECUGd//im002kB9g1jjlJi4ZT7mj2/c
+ etppoTleLQwfTZG6YV4X833Ye8Dzd1EQElY/HNK0LsS7pGwq5QpdJclO6GW1GpNeudnP
+ k7RsUE+qqFhgGKJ5WjOQ9ZKYdU17PDBdaafmWR0N4Hkixbd8jua284KKaRi7IhGdz9HF
+ X9p0ya6tNKBEdqsNNvLFpzBePPS+Xec+VW8T2T5GZzC5hidwejaKC+/XBf1aZGFYpUlI
+ 1WUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:content-transfer-encoding:mime-version
- :subject:message-id:date:to;
- bh=64QSk4nfT0TSsdmIWEX+G8flHeR3bRjD4IkHqfbc1H8=;
- b=TDzTBZoWyGxXEBvKXtnQaPhP2PicEdznVUDjbglLqTDHPXtcrMvgvcv9oz91I7+OaS
- uZzx8unNYBE0y4hUmyR8sNQkeHQSP2juoNq1ONJV/oGkQ7XYfxv8DurCLsgW9SAFfMpO
- USB9DG08NcgjCmIFVKCtXo7Nd+nIHd33CtzCU+DpB4vTGu+kwIp/wTdhqK2B42OcFkHD
- LqQtexC1I0oDXfjVbH5qnIrRkXWGjkDqXE6LjA8Cw74SsehEgWG/Eczra1XPTV7aUv08
- KxBtUQcZviZNhRggjuk+MO1Rpd5tBwP+CySi/krlmhFquSw5i09ppTFj1rbN/0SZHWKP
- nLdg==
-X-Gm-Message-State: AOAM530DysdWS/wfjZsHmJc1DpZU/mb5cbckegqGNvU5Rx6fkA4MFjdr
- FMUTzcZCsq78iFbzHOV6pJdSQ4PNNG2S8Q==
-X-Google-Smtp-Source: ABdhPJzrn1/QZEyexPGU2wXgs68NIEHW4Fm/hK9AAyiH9Z4j6woSfk70Xq2fms1FuUMCfco7/yHzLA==
-X-Received: by 2002:a05:6830:1009:: with SMTP id
- a9mr1363915otp.312.1603835457871; 
- Tue, 27 Oct 2020 14:50:57 -0700 (PDT)
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=6LVpWeGX1PWscOOFvVfb0QmfR981CLlfdA8SnZbhEcs=;
+ b=pL2lBDRXL7NRHi2N1VochSYH+WDsQcQ74wUQcRnjozz7f5IdDhebDJJ1eKgdA3GkU2
+ 9U0ci5aVjuOKBHRIbdF+5BWl8TgPvnMH65wI/UMChkky/TIdyj07Y3xyQWSTF1wbFM6K
+ LZn4f3zEOT51nbG7OqQPXlrdk7oAmyx1PeuyLySmp/DodhKgP5MM4yWLIN5jTC4vKrGY
+ EGwD0Rj/uDlDHElXdRv0fJUwDgOrrDHn2IC2yUdHQsf2vDQ3J6Xg5os2src60/x1qmCF
+ sel1nyZnKGWSZLoi9NvT7wnHTyx/LqoG+fIhmiFp/3o59NyLIfUCPZHbPZi+74NXP1UM
+ khEw==
+X-Gm-Message-State: AOAM532GUGilEFfTEEOwRGyEh45NLIDIq9c/piS85eSuCKZxyBUmHvFm
+ YNcyCROGJwzmmpieKvTXD9g=
+X-Google-Smtp-Source: ABdhPJzDfm8zeIDvtbuQKn3RY7MPWePB6Dk5pRXrSXLIuhWC+srd6TnM/9WSoESxVUczPJxBfm1LSQ==
+X-Received: by 2002:a05:6830:1651:: with SMTP id
+ h17mr3145341otr.23.1603835858040; 
+ Tue, 27 Oct 2020 14:57:38 -0700 (PDT)
 Received: from andrews-mbp-2.attlocal.net
  (45-18-127-186.lightspeed.austtx.sbcglobal.net. [45.18.127.186])
- by smtp.gmail.com with ESMTPSA id 9sm1581906otp.72.2020.10.27.14.50.56
- for <openbmc@lists.ozlabs.org>
+ by smtp.gmail.com with ESMTPSA id b92sm1708720otc.70.2020.10.27.14.57.37
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 27 Oct 2020 14:50:57 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
+ Tue, 27 Oct 2020 14:57:37 -0700 (PDT)
 Content-Type: text/plain;
 	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
 Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: soft power off via IPMI and PLDM
-Message-Id: <47DC719D-6D7C-4C06-8C57-E52C25F340BF@gmail.com>
-Date: Tue, 27 Oct 2020 16:50:56 -0500
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: Re: Critical BMC process failure recovery
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <CY4PR1101MB2311ABDFBA0EA222BB602B7686190@CY4PR1101MB2311.namprd11.prod.outlook.com>
+Date: Tue, 27 Oct 2020 16:57:36 -0500
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B24BCA12-F3B1-4DFF-B839-2184D34D0F73@gmail.com>
+References: <C270F145-2236-4CA1-8D57-A63AB622A47C@gmail.com>
+ <20201020142846.GB5030@patrickw3-mbp.lan.stwcx.xyz>
+ <A7171080-B143-42AD-B235-951A06B247A4@gmail.com>
+ <CY4PR1101MB2311ABDFBA0EA222BB602B7686190@CY4PR1101MB2311.namprd11.prod.outlook.com>
+To: "Matuszczak, Piotr" <piotr.matuszczak@intel.com>
 X-Mailer: Apple Mail (2.3608.120.23.2.4)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -80,34 +85,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The soft power off function is where the BMC tells the BIOS firmware =
-that
-a power off has been requested. The BMC then waits for the BIOS to =
-gracefully
-shut itself down, and then powers the system off.
 
-We have this implemented using the inband IPMI protocol via
-https://github.com/openbmc/phosphor-host-ipmid/tree/master/softoff
 
-We also have this same logic implemented using the PLDM protocol via
-https://github.com/openbmc/pldm/tree/master/softoff
+> On Oct 26, 2020, at 8:19 AM, Matuszczak, Piotr =
+<piotr.matuszczak@intel.com> wrote:
+>=20
+> Hi, It's quite interesting discussion. Have you considered some kind =
+of minimal set of features recovery image, to which BMC can switch after =
+N resets during defined amount of time? Such image could hold error log =
+and send periodic event about BMC failure.=20
 
-I'm wondering if anyone has plans to utilize both of these on a system? =
-For
-example scenarios where a system may support different BIOS's that
-support different inband protocols?
+That could definitely be useful. Some sort of safe mode. I believe =
+systemd
+has rescue/emergency mode options we could look at. I do think as =
+Patrick
+pointed out earlier though that most issues are some sort of BMC =
+hardware
+failure. Anything that needs the kernel running and even basic services =
+going
+is going to be difficult to get running in those scenarios.
 
-I'm thinking the easiest solution is a bitbake DISTRO_FEATURES option =
-that
-installs one or the other. If we support both, it gets more complicated
-because one way or another, they will need to know of each other. i.e. =
-if
-the BIOS responds to PLDM, then the PLDM service needs to kill the IPMI
-service. The design currently is that they sit in the =
-obmc-host-shutdown@.target
-and the power down does not continue until they exit.
+>=20
+> Piotr Matuszczak
+> ---------------------------------------------------------------------
+> Intel Technology Poland sp. z o.o.=20
+> ul. Slowackiego 173, 80-298 Gdansk
+> KRS 101882
+> NIP 957-07-52-316
+>=20
 
-Andrew=
