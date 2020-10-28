@@ -1,65 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5BD329CDED
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 06:14:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4061129CFE1
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 13:20:23 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CLcF04qbrzDqQq
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 16:14:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CLnhh25SlzDqTW
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 23:20:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f44;
- helo=mail-qv1-xf44.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=i.mikhaylov@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=pass (p=none dis=none) header.from=yadro.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=d7uJKM2k; dkim-atps=neutral
-Received: from mail-qv1-xf44.google.com (mail-qv1-xf44.google.com
- [IPv6:2607:f8b0:4864:20::f44])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=BY3DHkmq; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CLcCr5ThczDqPQ;
- Wed, 28 Oct 2020 16:13:10 +1100 (AEDT)
-Received: by mail-qv1-xf44.google.com with SMTP id w9so1864706qvj.0;
- Tue, 27 Oct 2020 22:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=RQ2kvUyYd4YE/aOcmy2TWcR3YaKz9JiRyVflCfdu5Ag=;
- b=d7uJKM2kvc8QuY02CcO5eBrxbPT8YUiaUU1yfWyy96kwPlqHgSJbuzyw5TzPhu6q1i
- Mx3BMKt0rJCXGELn+j98YQOuRL9N/PNF1OAh+5sMfmimXwb1nO1iOOgc1D9Z9NrdDut5
- 12Cjvu4k6cSwBpskqjLRgkmjbm/U3Vf2VSKf8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=RQ2kvUyYd4YE/aOcmy2TWcR3YaKz9JiRyVflCfdu5Ag=;
- b=PGOcu7ouTgeTKzs4s82ob8qTSh0FUOeKjXsAwWvr+6q14w7s+ensZhR0tBckUfDoVK
- vRRA/iiVdbhBQHrdoo0cMtC7cqQ74hAbfEC+88VNdppanqd8D3mRL74y3wkWk7Aawla4
- 4i8UqyR0MZYjLyjWWdEdVo+s1e1DilAgxVLHrhExu9dPKSRGPJZG93vfq/z6r7rfJLaz
- LjvNbKmv6Qeu1c0K5kcNjLnn9sWU9Kk1/uYdBnAiS6VINk7DRWcLz+iAiyD+40w16Kds
- ssbbQgL9uEzXKRvYjer11dCEVTsQpX7Zp/xhoj2MgwjWbjZlEcPJ6+PwuFK9rRjEOFhL
- 4eHw==
-X-Gm-Message-State: AOAM532NdE+Io52x3QyQNsFG7LiXdhEbIk3nNa1/0cDRREM8sHoXII2H
- 5LabA3xtCAFcVyflp3UA0rz7DuFVJwu7S+b1u+Y=
-X-Google-Smtp-Source: ABdhPJxQgUH7wxrvz7ZLyzad/HO2Oih626XOaAtn0H/+hBkJgVlw0Lkex5XUeHspPJHS77UwlY99ZTN9QT3BiEhy5OQ=
-X-Received: by 2002:ad4:5387:: with SMTP id i7mr5777139qvv.43.1603861987985;
- Tue, 27 Oct 2020 22:13:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20201012033150.21056-1-billy_tsai@aspeedtech.com>
- <20201012033150.21056-2-billy_tsai@aspeedtech.com>
- <49ef1445-ddb5-41fb-b9f5-f885a1784e77@www.fastmail.com>
-In-Reply-To: <49ef1445-ddb5-41fb-b9f5-f885a1784e77@www.fastmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 28 Oct 2020 05:12:56 +0000
-Message-ID: <CACPK8Xc-rFMkv6_VVizF0F8uqQQC=rko=P_LhC0CphJH+_VFYA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] Arm: dts: aspeed-g6: Fix the register range of gpio
-To: Andrew Jeffery <andrew@aj.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CLngf54wlzDqFM
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 23:19:26 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 5C39F4127F;
+ Wed, 28 Oct 2020 12:19:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1603887560; x=1605701961; bh=QaIukaOm1O2BfyvMfr5ntcCJE
+ QIdpZYe1CWCdr1kJJ4=; b=BY3DHkmq+w/+n5FlU/G9S+dRTWj+2hIJetYGFxKAI
+ egWa2uMEfx4e8aQBqNHBDEHvncqgjkP74NciUYmV57/Lsc0m/iVHR5uGVwcANIQf
+ y2WZC9ALzS3aPVYMMnhHtJCmPA/Q+H8mgu4hacc2xrrTsoXDHCNDKidxjLaIJ4jX
+ bc=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 8olSMjuAHbLX; Wed, 28 Oct 2020 15:19:20 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 66AF841370;
+ Wed, 28 Oct 2020 15:19:14 +0300 (MSK)
+Received: from localhost.localdomain (10.199.0.230) by
+ T-EXCH-04.corp.yadro.com (172.17.100.104) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Wed, 28 Oct 2020 15:19:13 +0300
+Message-ID: <6248c6b3557d679a64c01e6d23fd4cb18a3d1da4.camel@yadro.com>
+Subject: Re: [PATCH v2 2/2] net: ftgmac100: add handling of mdio/phy nodes
+ for ast2400/2500
+From: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+To: Andrew Lunn <andrew@lunn.ch>
+Date: Wed, 28 Oct 2020 15:23:38 +0300
+In-Reply-To: <20201027182354.GE904240@lunn.ch>
+References: <20201027144924.22183-1-i.mikhaylov@yadro.com>
+ <20201027144924.22183-3-i.mikhaylov@yadro.com>
+ <20201027182354.GE904240@lunn.ch>
+Organization: YADRO
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.32.5 (3.32.5-1.fc30) 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.230]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,34 +77,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Billy Tsai <billy_tsai@aspeedtech.com>,
- Bartosz Golaszewski <bgolaszewski@baylibre.com>,
- Rob Herring <robh+dt@kernel.org>, BMC-SW <BMC-SW@aspeedtech.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: Po-Yu Chuang <ratbert@faraday-tech.com>, netdev@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Jakub Kicinski <kuba@kernel.org>, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 26 Oct 2020 at 01:05, Andrew Jeffery <andrew@aj.id.au> wrote:
->
->
->
-> On Mon, 12 Oct 2020, at 14:01, Billy Tsai wrote:
-> > This patch is used to fix the memory range of gpio0
-> >
-> > Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
->
-> Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+On Tue, 2020-10-27 at 19:23 +0100, Andrew Lunn wrote:
+> On Tue, Oct 27, 2020 at 05:49:24PM +0300, Ivan Mikhaylov wrote:
+> > phy-handle can't be handled well for ast2400/2500 which has an embedded
+> > MDIO controller. Add ftgmac100_mdio_setup for ast2400/2500 and initialize
+> > PHYs from mdio child node with of_mdiobus_register.
+> > 
+> > Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
+> 
+> Please also update the binding documentation to indicate an MDIO node
+> can be used.
+> 
+>     Andrew
 
-I've applied this with:
+Sure, I'll check.
 
-Fixes: 8dbcb5b709b9 ("ARM: dts: aspeed-g6: Add gpio devices")
+Thanks.
 
-Cheers,
-
-Joel
