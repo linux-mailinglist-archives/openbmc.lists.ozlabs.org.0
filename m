@@ -2,65 +2,103 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F7E129CD7A
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 03:03:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8358929CD90
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 03:31:32 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CLX1M235VzDqNw
-	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 13:03:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CLXd66YPxzDqMX
+	for <lists+openbmc@lfdr.de>; Wed, 28 Oct 2020 13:31:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b29;
- helo=mail-yb1-xb29.google.com; envelope-from=james.mihm@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=uf2GZ7GS; dkim-atps=neutral
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
- [IPv6:2607:f8b0:4864:20::b29])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=microsoft.com (client-ip=40.107.220.124;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=rahulkapoor@microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=reject dis=none)
+ header.from=microsoft.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=microsoft.com header.i=@microsoft.com
+ header.a=rsa-sha256 header.s=selector2 header.b=Z2JG8pju; 
+ dkim-atps=neutral
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2124.outbound.protection.outlook.com [40.107.220.124])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CLX0T10cgzDqLl
- for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 13:02:58 +1100 (AEDT)
-Received: by mail-yb1-xb29.google.com with SMTP id c129so2951563yba.8
- for <openbmc@lists.ozlabs.org>; Tue, 27 Oct 2020 19:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=bYNGxdQGpQ/GcCcRCdBR2Q8cD+hPi35XzkhvfLRvYnk=;
- b=uf2GZ7GSRi0K4dgoqsRRN8+dGursWLuXwzlkGJYx25CDZSja0E/gsM2/jjVYVZGtjD
- NUTzCZ519q6v12SYjMzCtzgQlT3sClZf/LptYefik57ojjlixBAv0n46OXKSYVEmWx8y
- 4virXDsRCBD65ISH1QtY6NEnB5jCXdhE/97MgpAYIMfurSWV7TBCUIQGYQIAPbZNNqnJ
- Kp1rGBfeZLBOuIrU+FciMlto2j3evh7bBcdWbbQD8TSnTUmabX6MZpl527Q2d/GZkwFg
- Pe6u/rg9Qhb6D6BnU/iCl+1p2LqpPuEiis27zlV7ZTd447TZgETvh3DP+alTFR800ZV/
- 9Zaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=bYNGxdQGpQ/GcCcRCdBR2Q8cD+hPi35XzkhvfLRvYnk=;
- b=MOFCe7qX9ebx+SA6nlMMXtHd2jJkG9vTAafGr6nEcg0e6vVUjJr3N8JZma3gGWn6jl
- 8+8/+FtgVY6NlXHNrwReFF4BXE+8BjO+F7ZD7xmtW11j1iK1OpeakDkD9HPZHMQn8p4L
- 2L47CijE+tTiPej/XLlPZZ0Awy6xg+76fnrv2P8GCA2dUKOQ090qFvO90okoJrjXd++g
- t74xyiPVIjVnB2CIOjLI9TtcYm4BL3yxSkZgBnBPW7GpUNoyU9XLa2emwGCuuc2euGqA
- kyqjltc2/j9H6EBG7IQlZecL1Ggs7VKmsy9WYpShmTn9TkZSOy/n/Z3ZMW4KSVulSGfA
- eyJw==
-X-Gm-Message-State: AOAM5301BcgMpZmuV0jABpCPEeGjR/dr2e/ZnCglkVrFAmC6wGcRBvor
- t6xqPBXp3Rq5G1k3IBg2kGDMEBfUbOn4ZZWubwM=
-X-Google-Smtp-Source: ABdhPJy+vwITsWLOed3UbtYWGdmgpkci6Kl+LDVObCZmc4gSPd1INnru3Ytku2Ca3ErHkxxPERMAdm1n9kz0U6gaH5Y=
-X-Received: by 2002:a25:c6d0:: with SMTP id k199mr7750438ybf.469.1603850572083; 
- Tue, 27 Oct 2020 19:02:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CLXc41Z7jzDqLr
+ for <openbmc@lists.ozlabs.org>; Wed, 28 Oct 2020 13:30:26 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=S27nBVThe4rWyV+PSnl2CUgT28UYER0KOz0lYcQG1/Njh+ebEFP97DKob1NhDNQnKA7djAW9Hs5yFM+HyhveC9MOCLZ2y1hVcWq+lNcBwd76Qgg8JkZZokKVRDRzNStR69N7simMovKxAtHHOnhhaJ6s/k23sXD2XB9T41H5p13LYvRtFP1Vt7lHNNcowVqOaxyIU4sBHdV/PHMZHFfpeDJ9Y36MACrS5mxIzm7rimpU/6d+HDJKtrkHhVfSw6D5pPcT0YUYDm9l3eRZ4vSt7uJAxu8WZ57ZA5sbgDNOjpnLzWf7SUOxQm5vnOpQWVwk5GHSb0k59JUXfeeR0xVMog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FXCrbBVxb/LRDieeXFueSiF0yBEtB63Db/swyoixG/U=;
+ b=bBCJDHHYKYWrpCSIK78yDqYKoaWTX9kV7rU3nsdK7BPbBmZgEdULUobEdbdkyHlMQX1qdAyYqsvhENanEZx51BurgU3jAE1X5m9V9HRBf6LtTBAofj4+hScwa8Y6Z9nL+LfVhJgyvsNaAuPBT0M6pIQ0Y/0typ7VABf0UXybQKAmFMqaxXl2Wt3SI76PWJhdjdwm93B74969ENepuBRx8QISa57iiysvgXKvutf5yAYE4BGVKTMqs9UJ4yD31/6Rcoahx8fvRYRaiKeB1yoQZRRo98tO8NPg9Q+fA1cQdEVPFa56YLLVMsZZs9zN8TwLYf+7DlqJPXEFYicjdQSVbA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FXCrbBVxb/LRDieeXFueSiF0yBEtB63Db/swyoixG/U=;
+ b=Z2JG8pjuQv8a08X6DbaCgSHY2tObmTZkFuiUBs32EtTKAq0bvuM1jtksvW6TC6Tei3w/1JGY4TzHnGUntsj62Qg35WPaSa2hflONPyaSDHRSICY3tHZBGu3bvjr/JaNek8Ez6h3ajifwHSoUmAq0N7SzJ9ip7+GXqYPo8QOe+74=
+Received: from BN7PR21MB1681.namprd21.prod.outlook.com (2603:10b6:406:aa::27)
+ by BN6PR21MB0276.namprd21.prod.outlook.com (2603:10b6:404:9b::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.15; Wed, 28 Oct
+ 2020 02:30:20 +0000
+Received: from BN7PR21MB1681.namprd21.prod.outlook.com
+ ([fe80::3033:7727:4aff:6278]) by BN7PR21MB1681.namprd21.prod.outlook.com
+ ([fe80::3033:7727:4aff:6278%9]) with mapi id 15.20.3499.022; Wed, 28 Oct 2020
+ 02:30:20 +0000
+From: Rahul Kapoor <rahulkapoor@microsoft.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Entity Manager ReScan Functionality 
+Thread-Topic: Entity Manager ReScan Functionality 
+Thread-Index: Adasz33Rg2K7Puz5S/edboSEtgmf+g==
+Date: Wed, 28 Oct 2020 02:30:20 +0000
+Message-ID: <BN7PR21MB1681B468C469920E5E65F383AB170@BN7PR21MB1681.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=0f8178d8-a264-4858-87c5-8f954a9d222d;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2020-10-28T02:05:38Z;
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+authentication-results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=microsoft.com;
+x-originating-ip: [2601:600:8181:c90:e52a:6715:be61:138]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-ht: Tenant
+x-ms-office365-filtering-correlation-id: c27efb75-5888-4596-d245-08d87ae96aa3
+x-ms-traffictypediagnostic: BN6PR21MB0276:
+x-microsoft-antispam-prvs: <BN6PR21MB027626FC3AD1E790B90C1578AB170@BN6PR21MB0276.namprd21.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: 6W3QZz4g5Hv77cZ9PrWUB5Uqyp3eRD3Zc0xWHDo88grOhiU/iUWSjCovqRH2oZNU45YfqJ0R9TtztQQydtsAy5OqqgzN99lXbHMKI/Rk/B06Dzpuq3X2gARPcU9BPDuc88PdVNPSp6SjIzYIqjvv/1LQdS4XZremww3TDndjyyqnvk7m77u9vbOWra6qGrgVLb834jxNFBCnXkBwySSb9655PAbDOe54mur9iZ1CNzWQ4Le8Ff5W7f0yVroTNrqoYujVNhedVI+TJhm6mNmWfectuSKOPCd9FeVvf7pfiTlL2Yb/L0HfY9/ho6CtYOroLvMJ1X8zXDILy5ybWQOa0coNgwBU4JdsKixV+eLoTiDse6KTedi0TIU2R/8rcEov
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN7PR21MB1681.namprd21.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(6029001)(4636009)(376002)(366004)(39860400002)(136003)(396003)(346002)(8676002)(7696005)(8990500004)(6506007)(8936002)(86362001)(3480700007)(4743002)(82960400001)(82950400001)(71200400001)(5660300002)(66946007)(66476007)(66556008)(64756008)(66446008)(76116006)(10290500003)(316002)(2906002)(33656002)(4744005)(83380400001)(478600001)(9326002)(6916009)(186003)(55016002)(52536014)(9686003)(554374003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: ls42Nbxnpklg0P0EXp/zb6OMCoEWBuD0kCpHApNXbAKeVqN+QtY5on5/Y5PTd0Sex8P9ZPOk4jTvqxJpgmjhUkFA2xUz1GLnCYUgdLtJwz8d4VhG5ElmHpXulTuth/H1k6q2rc2lXomPQzrIqjMotqmQjVu7/VHJwQANP8asv4l7CJ3EW0CEAzvwuwZTMWXIeYfCiUp/2GBG3e7K01bwXYk/ZveO3Prurvn+uF852EZKwYduQpHkqhUBOGAYai/dplq+nNMvc0wHn3jj2YYsvcfo/5EpsJsKZSc+z0geYGigNqWBW+DR9JHLeWkk+SiiJUnm06eci4gHd+kUJwG0g0KyjJ/7dkvNpJDKzwMGKU7xp9qmzTanw1dYoLAyc0nPXmiFXDsBkihSCuO3PCZaPCRc/b1KFt4I0cwesF+7gmN2lv2lmvhLowGUaQ+k3uFQADsIhL0vkwz1MrHBpq3GvK7UyFaHV+bTIXiTy/wsJ0+bbnDTOFlthzk1KykFS0pMJgjedPWejiX9ISaKhoJjnbV0NqVyYiozTfsiwPiyiDDlMddaXZGxJ68AZyvgYaJV2RRZtkHY9YcALyUhlAvmRMRFRhtcc4gMprycy5TK6BpuAvSJ+VsCx6RbxqMBEvsirMF+kuKrhLY/B1djUBtRfw==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_BN7PR21MB1681B468C469920E5E65F383AB170BN7PR21MB1681namp_"
 MIME-Version: 1.0
-References: <8da567c0-b5a4-47c0-90d6-d2de96ae99e5.moyan.yyb@alibaba-inc.com>
-In-Reply-To: <8da567c0-b5a4-47c0-90d6-d2de96ae99e5.moyan.yyb@alibaba-inc.com>
-From: James Mihm <james.mihm@gmail.com>
-Date: Tue, 27 Oct 2020 19:02:15 -0700
-Message-ID: <CADy_Pt3ukjs64bRkuEBB699cuvNadzatsBmQ_prSWWTokB0uhQ@mail.gmail.com>
-Subject: Re: I just want to join the openbmc developer community
-To: =?UTF-8?B?5p2o5YuH5YW1KOacq+WyqSk=?= <moyan.yyb@alibaba-inc.com>
-Content-Type: multipart/alternative; boundary="0000000000009f34f605b2b18f1a"
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN7PR21MB1681.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c27efb75-5888-4596-d245-08d87ae96aa3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Oct 2020 02:30:20.6288 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6OHbx/D8Ckor4KOCVSxlPEQAca7JHDrQNTgGyOD33srrIHq7TUYVTC/FtTjVzFfUiFnAsWvg3X4nzwVudPcFlScgaFP03h7N82gXjliCdQ8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR21MB0276
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,185 +110,235 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?5bi455CzKOeJueedvyk=?= <terui.cl@alibaba-inc.com>,
- openbmc <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?5p2O576/KOS5ieWkqSk=?= <yitian.ly@alibaba-inc.com>,
- =?UTF-8?B?5p2O5b+X5YW1KOi+ueiNkik=?= <zhibing.lzb@alibaba-inc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000009f34f605b2b18f1a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-V2VsY29tZSBNb3lhbiwNCg0KSWYgeW91IHBsYW4gdG8gY29udHJpYnV0ZSBjb2RlLCBwbGVhc2Ug
-ZG93bmxvYWQgYW5kIGNvbXBsZXRlIHRoZSBDQ0xBIGF0DQpodHRwczovL2dpdGh1Yi5jb20vb3Bl
-bmJtYy9vcGVuYm1jL2ZpbGVzLzE4NjA3NDEvT3BlbkJNQy5DQ0xBLnBkZiwgYW5kIG1haWwNCnRv
-IHRoaXMgbWFpbGluZyBsaXN0Lg0KVGhlbiB0aG9zZSBkZXZlbG9wZXJzIGxpc3RlZCBpbiB0aGUg
-Q0xBIHdpbGwgYmUgYWJsZSB0byBzdWJtaXQgY29kZQ0KY2hhbmdlcy4gU2VlIGh0dHBzOi8vZ2l0
-aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvQ09OVFJJQlVUSU5HLm1kDQpmb3IgbW9y
-ZSBpbmZvcm1hdGlvbi4NCg0KVGhlcmUgYXJlIHNldmVyYWwgd29ya2dyb3VwcyBmb3IgdGhlIHBy
-b2plY3QgdGhhdCB5b3UgY2FuIHBhcnRpY2lwYXRlIHdpdGguDQpTZWUgaHR0cHM6Ly9naXRodWIu
-Y29tL29wZW5ibWMvb3BlbmJtYy93aWtpIGZvciBtb3JlIGluZm9ybWF0aW9uLg0KDQpKYW1lcy4N
-Cg0KDQpPbiBUdWUsIE9jdCAyNywgMjAyMCBhdCA2OjMxIFBNIOadqOWLh+WFtSjmnKvlsqkpIDxt
-b3lhbi55eWJAYWxpYmFiYS1pbmMuY29tPiB3cm90ZToNCg0KPiBIae+8jA0KPg0KPiAgICAgbXkg
-bmFtZSBpcyBtb3lhbix3aG8gaXMgIHdvcmtpbmlnIGZvciBhbGliYWJhIGNvbXBhbnkuICBNeSBj
-b21wYXkganVzdA0KPiB3YW50IHRvIGpvaW4gdGhlIG9wZW5ibWMgZGV2ZWxvcGVyIGNvbW11bml0
-eSwgYW5kIGkgaGF2ZSBzdWJzY3JpYmVkIHRvDQo+IG9wZW5ibWMgYnkgYWNjZXNzaW5nIHRoZSB3
-ZWJzaXRlIG9mICAiDQo+IGh0dHBzOi8vbGlzdHMub3psYWJzLm9yZy9saXN0aW5mby9vcGVuYm1j
-Ii4gU28sIHdoYXQgc2hvdWxkIGkgZG8gbmV4dD8NCj4NCj4gVGhhbmsgeW91Lg0KPg0KPg0KPg0K
-PiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+IOadqOWLh+WFte+8iOacq+Wyqe+8iQ0K
-PiDln7rnoYDmnrbmnoTkuovkuJrnvqQt6K6h566X5LiO5a2Y5YKo5LqL5Lia6YOoLeacjeWKoeWZ
-qOS6p+WTgQ0KPiDpgq7nrrHvvJptb3lhbi55eWJAYWxpYmFiYS1pbmMuY29tDQo+IE1vYmlsOjE4
-Mi02NzE3LTk1NDYNCj4g5Yqe5YWs5Zyw54K577ya5rWZ5rGfLeadreW3ni3kvZnmna0tRUZD6Iux
-5Zu95Lit5b+DMzTmpbwNCj4NCj4gLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPg0KPiDm
-nKzpgq7ku7blj4rlhbbpmYTku7blkKvmnInpmL/ph4zlt7Tlt7Tpm4blm6LnmoTllYbkuJrnp5jl
-r4bkv6Hmga/vvIzku4XpmZDkuo7lj5HpgIHnu5nkuIrpnaLlnLDlnYDkuK3liJflh7rnmoTkuKrk
-urrlkoznvqTnu4TvvIznpoHmraLku7vkvZXlhbbku5bkurrku6Xku7vkvZXlvaLlvI/kvb/nlKjv
-vIjljIXmi6zkvYbkuI3pmZDkuo7lhajpg6jmiJbpg6jliIblnLDms4TpnLLjgIHlpI3liLbmiJbm
-laPlj5HvvInmnKzpgq7ku7blj4rlhbbpmYTku7bkuK3nmoTkv6Hmga/vvIzlpoLmnpzmgqjplJnm
-lLbmnKzpgq7ku7bvvIzor7fmgqjnq4vljbPnlLXor53miJbpgq7ku7bpgJrnn6Xlj5Hku7bkurrl
-ubbliKDpmaTmnKzpgq7ku7bjgIINCj4NCj4gVGhpcyBlbWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRz
-IGNvbnRhaW4gY29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGZyb20gQWxpYmFiYSBHcm91cCwgd2hp
-Y2ggaXMgaW50ZW5kZWQgb25seSBmb3IgdGhlIHBlcnNvbiBvciBlbnRpdHkgd2hvc2UgYWRkcmVz
-cyBpcyBsaXN0ZWQgYWJvdmUuIEFueSB1c2Ugb2YgaW5mb3JtYXRpb24gY29udGFpbmVkIGhlcmVp
-biBpbiBhbnkgd2F5IChpbmNsdWRpbmcsIGJ1dCBub3QgbGltaXRlZCB0bywgdG90YWwgb3IgcGFy
-dGlhbCBkaXNjbG9zdXJlLCByZXByb2R1Y3Rpb24gb3IgZGlzc2VtaW5hdGlvbikgYnkgcGVyc29u
-cyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQocykgaXMgcHJvaGliaXRlZC4gSWYg
-eW91IHJlY2VpdmUgdGhpcyBlbWFpbCBpbiBlcnJvciwgcGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVy
-IGJ5IHBob25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUgaXQuDQo+DQo+DQo+DQo=
---0000000000009f34f605b2b18f1a
-Content-Type: text/html; charset="UTF-8"
+--_000_BN7PR21MB1681B468C469920E5E65F383AB170BN7PR21MB1681namp_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Welcome Moyan,=C2=A0</div><div><br></div><div dir=3D"=
-auto">If you plan to contribute code, please download and complete the CCLA=
- at <a href=3D"https://github.com/openbmc/openbmc/files/1860741/OpenBMC.CCL=
-A.pdf">https://github.com/openbmc/openbmc/files/1860741/OpenBMC.CCLA.pdf</a=
->, and mail to this mailing list.</div><div>Then those developers listed in=
- the CLA will be able to submit code changes. See=C2=A0<a href=3D"https://g=
-ithub.com/openbmc/docs/blob/master/CONTRIBUTING.md">https://github.com/open=
-bmc/docs/blob/master/CONTRIBUTING.md</a> for more information.</div><div><b=
-r></div><div>There are several workgroups for the project that you can part=
-icipate with. See <a href=3D"https://github.com/openbmc/openbmc/wiki">https=
-://github.com/openbmc/openbmc/wiki</a> for more information.</div><div><br>=
-</div><div>James.=C2=A0</div><div dir=3D"auto"><br></div></div><div><br><di=
-v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Oct 2=
-7, 2020 at 6:31 PM =E6=9D=A8=E5=8B=87=E5=85=B5(=E6=9C=AB=E5=B2=A9) &lt;<a h=
-ref=3D"mailto:moyan.yyb@alibaba-inc.com" target=3D"_blank">moyan.yyb@alibab=
-a-inc.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex"><div><div style=3D"line-height:1.7;font-family:Tahoma,Arial,STHe=
-iti,SimSun;font-size:14px;color:rgb(0,0,0)"><div style=3D"clear:both;font-f=
-amily:Tahoma,Arial,STHeiti,SimSun">Hi=EF=BC=8C</div><div style=3D"clear:bot=
-h;font-family:Tahoma,Arial,STHeiti,SimSun">=C2=A0=C2=A0=C2=A0=C2=A0</div><d=
-iv style=3D"clear:both;font-family:Tahoma,Arial,STHeiti,SimSun">=C2=A0=C2=
-=A0=C2=A0=C2=A0my name is moyan,who is=C2=A0 workinig for alibaba company.=
-=C2=A0 My compay just want to join the openbmc developer community, and=C2=
-=A0<span style=3D"font-family:Tahoma,Arial,STHeiti,SimSun;font-size:14px;fo=
-nt-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font=
--weight:400;text-align:start;text-indent:0px;text-transform:none;float:none=
-;display:inline;background-color:rgb(255,255,255);color:rgb(0,0,0)">i have =
-subscribed to openbmc by accessing the website of=C2=A0 &quot;</span><a hre=
-f=3D"https://lists.ozlabs.org/listinfo/openbmc" style=3D"font-family:Tahoma=
-,Arial,STHeiti,SimSun;font-size:14px;font-style:normal;font-variant-ligatur=
-es:normal;font-variant-caps:normal;font-weight:400;text-align:start;text-in=
-dent:0px;text-transform:none;background-color:rgb(255,255,255)" target=3D"_=
-blank">https://lists.ozlabs.org/listinfo/openbmc</a><span style=3D"font-fam=
-ily:Tahoma,Arial,STHeiti,SimSun;font-size:14px;font-style:normal;font-varia=
-nt-ligatures:normal;font-variant-caps:normal;font-weight:400;text-align:sta=
-rt;text-indent:0px;text-transform:none;float:none;display:inline;background=
--color:rgb(255,255,255);color:rgb(0,0,0)">&quot;.<span style=3D"font-family=
-:Tahoma,Arial,STHeiti,SimSun">=C2=A0</span></span>So, what should i do next=
-?<br></div><div style=3D"clear:both;font-family:Tahoma,Arial,STHeiti,SimSun=
-"><br></div><div style=3D"clear:both;font-family:Tahoma,Arial,STHeiti,SimSu=
-n">Thank you.</div><div style=3D"clear:both;font-family:Tahoma,Arial,STHeit=
-i,SimSun"><br></div><div style=3D"clear:both;font-family:Tahoma,Arial,STHei=
-ti,SimSun"><br></div><div style=3D"clear:both;font-family:Tahoma,Arial,STHe=
-iti,SimSun"><span style=3D"font-style:normal;font-variant-ligatures:normal;=
-font-variant-caps:normal;font-weight:400;text-align:left;text-indent:0px;te=
-xt-transform:none;font-size:13px;font-family:simsun,STSongti-SC-Regular;col=
-or:rgb(0,0,0)">------------------------------------------------------------=
--------------------------</span></div><div style=3D"clear:both;font-family:=
-Tahoma,Arial,STHeiti,SimSun"><span style=3D"font-style:normal;font-variant-=
-ligatures:normal;font-variant-caps:normal;font-weight:400;text-align:left;t=
-ext-indent:0px;text-transform:none;font-size:13px;font-family:simsun,STSong=
-ti-SC-Regular;color:rgb(0,0,0)">=E6=9D=A8=E5=8B=87=E5=85=B5=EF=BC=88=E6=9C=
-=AB=E5=B2=A9=EF=BC=89=C2=A0</span></div><div style=3D"clear:both;font-famil=
-y:Tahoma,Arial,STHeiti,SimSun"><span style=3D"font-style:normal;font-varian=
-t-ligatures:normal;font-variant-caps:normal;font-weight:400;text-align:left=
-;text-indent:0px;text-transform:none;font-size:13px;font-family:simsun,STSo=
-ngti-SC-Regular;color:rgb(0,0,0)">=E5=9F=BA=E7=A1=80=E6=9E=B6=E6=9E=84=E4=
-=BA=8B=E4=B8=9A=E7=BE=A4-=E8=AE=A1=E7=AE=97=E4=B8=8E=E5=AD=98=E5=82=A8=E4=
-=BA=8B=E4=B8=9A=E9=83=A8-=E6=9C=8D=E5=8A=A1=E5=99=A8=E4=BA=A7=E5=93=81</spa=
-n></div><div style=3D"clear:both;font-family:Tahoma,Arial,STHeiti,SimSun"><=
-span style=3D"font-style:normal;font-variant-ligatures:normal;font-variant-=
-caps:normal;font-weight:400;text-align:left;text-indent:0px;text-transform:=
-none;font-size:13px;font-family:simsun,STSongti-SC-Regular;color:rgb(0,0,0)=
-">=E9=82=AE=E7=AE=B1=EF=BC=9A<a href=3D"mailto:moyan.yyb@alibaba-inc.com" s=
-tyle=3D"font-family:simsun,STSongti-SC-Regular" target=3D"_blank">moyan.yyb=
-@alibaba-inc.com</a>=C2=A0</span></div><div style=3D"clear:both;font-family=
-:Tahoma,Arial,STHeiti,SimSun"><span style=3D"font-style:normal;font-variant=
--ligatures:normal;font-variant-caps:normal;font-weight:400;text-align:left;=
-text-indent:0px;text-transform:none;font-size:13px;font-family:simsun,STSon=
-gti-SC-Regular;color:rgb(0,0,0)">Mobil:182-6717-9546</span></div><div style=
-=3D"clear:both;font-family:Tahoma,Arial,STHeiti,SimSun"><span style=3D"font=
--style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-w=
-eight:400;text-align:left;text-indent:0px;text-transform:none;font-size:13p=
-x;font-family:simsun,STSongti-SC-Regular;color:rgb(0,0,0)">=E5=8A=9E=E5=85=
-=AC=E5=9C=B0=E7=82=B9=EF=BC=9A=E6=B5=99=E6=B1=9F-=E6=9D=AD=E5=B7=9E-=E4=BD=
-=99=E6=9D=AD-EFC=E8=8B=B1=E5=9B=BD=E4=B8=AD=E5=BF=8334=E6=A5=BC</span></div=
-><div style=3D"clear:both;font-family:Tahoma,Arial,STHeiti,SimSun"><span st=
-yle=3D"font-style:normal;font-variant-ligatures:normal;font-variant-caps:no=
-rmal;font-weight:400;text-align:left;text-indent:0px;text-transform:none;fo=
-nt-size:13px;font-family:simsun,STSongti-SC-Regular;color:rgb(0,0,0)">-----=
----------------------------------------------------------------------------=
------</span></div><div style=3D"clear:both;font-family:Tahoma,Arial,STHeiti=
-,SimSun"><div style=3D"font-family:Tahoma,Arial,STHeiti,SimSun"><span style=
-=3D"font-size:13px;font-family:simsun,STSongti-SC-Regular;color:rgb(0,0,0)"=
-><span style=3D"font-family:simsun,STSongti-SC-Regular;font-size:13px;font-=
-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-we=
-ight:400;text-align:start;text-indent:0px;text-transform:none;color:rgb(0,0=
-,0)">=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=8F=8A=E5=85=B6=E9=99=84=E4=BB=B6=E5=90=
-=AB=E6=9C=89=E9=98=BF=E9=87=8C=E5=B7=B4=E5=B7=B4=E9=9B=86=E5=9B=A2=E7=9A=84=
-=E5=95=86=E4=B8=9A=E7=A7=98=E5=AF=86=E4=BF=A1=E6=81=AF=EF=BC=8C=E4=BB=85=E9=
-=99=90=E4=BA=8E=E5=8F=91=E9=80=81=E7=BB=99=E4=B8=8A=E9=9D=A2=E5=9C=B0=E5=9D=
-=80=E4=B8=AD=E5=88=97=E5=87=BA=E7=9A=84=E4=B8=AA=E4=BA=BA=E5=92=8C=E7=BE=A4=
-=E7=BB=84=EF=BC=8C=E7=A6=81=E6=AD=A2=E4=BB=BB=E4=BD=95=E5=85=B6=E4=BB=96=E4=
-=BA=BA=E4=BB=A5=E4=BB=BB=E4=BD=95=E5=BD=A2=E5=BC=8F=E4=BD=BF=E7=94=A8=EF=BC=
-=88=E5=8C=85=E6=8B=AC=E4=BD=86=E4=B8=8D=E9=99=90=E4=BA=8E=E5=85=A8=E9=83=A8=
-=E6=88=96=E9=83=A8=E5=88=86=E5=9C=B0=E6=B3=84=E9=9C=B2=E3=80=81=E5=A4=8D=E5=
-=88=B6=E6=88=96=E6=95=A3=E5=8F=91=EF=BC=89=E6=9C=AC=E9=82=AE=E4=BB=B6=E5=8F=
-=8A=E5=85=B6=E9=99=84=E4=BB=B6=E4=B8=AD=E7=9A=84=E4=BF=A1=E6=81=AF=EF=BC=8C=
-=E5=A6=82=E6=9E=9C=E6=82=A8=E9=94=99=E6=94=B6=E6=9C=AC=E9=82=AE=E4=BB=B6=EF=
-=BC=8C=E8=AF=B7=E6=82=A8=E7=AB=8B=E5=8D=B3=E7=94=B5=E8=AF=9D=E6=88=96=E9=82=
-=AE=E4=BB=B6=E9=80=9A=E7=9F=A5=E5=8F=91=E4=BB=B6=E4=BA=BA=E5=B9=B6=E5=88=A0=
-=E9=99=A4=E6=9C=AC=E9=82=AE=E4=BB=B6=E3=80=82</span><br style=3D"font-style=
-:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:=
-400;letter-spacing:normal;text-align:start;text-indent:0px;text-transform:n=
-one;white-space:normal;word-spacing:0px"><span style=3D"font-family:simsun,=
-STSongti-SC-Regular;font-size:13px;font-style:normal;font-variant-ligatures=
-:normal;font-variant-caps:normal;font-weight:400;text-align:start;text-inde=
-nt:0px;text-transform:none;color:rgb(0,0,0)">This=C2=A0email=C2=A0and=C2=A0=
-its=C2=A0attachments=C2=A0contain=C2=A0confidential=C2=A0information=C2=A0f=
-rom=C2=A0Alibaba=C2=A0Group,=C2=A0which=C2=A0is=C2=A0intended=C2=A0only=C2=
-=A0for=C2=A0the=C2=A0person=C2=A0or=C2=A0entity=C2=A0whose=C2=A0address=C2=
-=A0is=C2=A0listed=C2=A0above.=C2=A0Any=C2=A0use=C2=A0of=C2=A0information=C2=
-=A0contained=C2=A0herein=C2=A0in=C2=A0any=C2=A0way=C2=A0(including,=C2=A0bu=
-t=C2=A0not=C2=A0limited=C2=A0to,=C2=A0total=C2=A0or=C2=A0partial=C2=A0discl=
-osure,=C2=A0reproduction=C2=A0or=C2=A0dissemination)=C2=A0by=C2=A0persons=
-=C2=A0other=C2=A0than=C2=A0the=C2=A0intended=C2=A0recipient(s)=C2=A0is=C2=
-=A0prohibited.=C2=A0If=C2=A0you=C2=A0receive=C2=A0this=C2=A0email=C2=A0in=
-=C2=A0error,=C2=A0please=C2=A0notify=C2=A0the=C2=A0sender=C2=A0by=C2=A0phon=
-e=C2=A0or=C2=A0email=C2=A0immediately=C2=A0and=C2=A0delete=C2=A0it.</span><=
-/span></div><span style=3D"font-family:Helvetica,Tahoma,Arial,&quot;PingFan=
-g SC&quot;,&quot;Hiragino Sans GB&quot;,&quot;WenQuanYi Micro Hei&quot;,&qu=
-ot;Microsoft YaHei&quot;,=E5=AE=8B=E4=BD=93,sans-serif;font-size:12px;font-=
-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-we=
-ight:400;text-align:left;text-indent:0px;text-transform:none;color:rgb(111,=
-112,114)"><br></span></div><div style=3D"clear:both;font-family:Tahoma,Aria=
-l,STHeiti,SimSun"><br></div></div></div></blockquote></div></div>
+Hi,
 
---0000000000009f34f605b2b18f1a--
+I have noticed that in its current state the entity manager ReScan function=
+ does not detect changes in the exposed configuration data unless the confi=
+guration name property in the JSON is changed. Is my understanding correct?
+I am currently working around this by updating the Name property along with=
+ each object within the exposed data since Redfish bmcweb interface only re=
+ports objects associated with latest configuration. But I am sure there is =
+a better way
+
+-Rahul
+
+--_000_BN7PR21MB1681B468C469920E5E65F383AB170BN7PR21MB1681namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+/* List Definitions */
+@list l0
+	{mso-list-id:92828885;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-672476224 1521222122 67698691 67698693 67698689 676=
+98691 67698693 67698689 67698691 67698693;}
+@list l0:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:-;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-font-family:Calibri;}
+@list l0:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l0:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l0:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l0:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l1
+	{mso-list-id:103231006;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1183409604 495327122 67698691 67698693 67698689 676=
+98691 67698693 67698689 67698691 67698693;}
+@list l1:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:-;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-font-family:Calibri;}
+@list l1:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l1:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l1:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l1:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l1:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l1:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l1:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:\F0A7;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I have noticed that in its current state the entity =
+manager ReScan function does not detect changes in the exposed configuratio=
+n data unless the configuration name property in the JSON is changed. Is my=
+ understanding correct?
+<o:p></o:p></p>
+<p class=3D"MsoNormal">I am currently working around this by updating the N=
+ame property along with each object within the exposed data since Redfish b=
+mcweb interface only reports objects associated with latest configuration. =
+But I am sure there is a better way<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">-Rahul<o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_BN7PR21MB1681B468C469920E5E65F383AB170BN7PR21MB1681namp_--
