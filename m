@@ -2,68 +2,91 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4B0C29E393
-	for <lists+openbmc@lfdr.de>; Thu, 29 Oct 2020 07:34:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D1BF29F065
+	for <lists+openbmc@lfdr.de>; Thu, 29 Oct 2020 16:48:10 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CMFz71fkhzDqVH
-	for <lists+openbmc@lfdr.de>; Thu, 29 Oct 2020 17:34:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CMVFz3vX1zDqVj
+	for <lists+openbmc@lfdr.de>; Fri, 30 Oct 2020 02:48:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=iGtZV/7e; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=ratagupt@linux.vnet.ibm.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=h+7b6HtV; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CMFyL4pylzDqXD
- for <openbmc@lists.ozlabs.org>; Thu, 29 Oct 2020 17:33:46 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 5CD364131F;
- Thu, 29 Oct 2020 06:33:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1603953218; x=1605767619; bh=cu/96m7OHLSnr8DK+zPoEtyaz
- knkft8aBRJtROpjGro=; b=iGtZV/7eU+dRWj8S+rWgYkSs4PKjHwB/q9YM4Mop3
- p0flLf2GUtj6KqzucIy6CNiswE7Pw+230ITCrzUZeiSX0BqDJPDlOw7bkirGeIC9
- TkjcCvMh7z4kpHCdG//uCb73GmgjXxIHWFttOhFsdkAqA+6SX+R7tRdOylpFnzTH
- 7k=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id UkBxtDMfg7IY; Thu, 29 Oct 2020 09:33:38 +0300 (MSK)
-Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
- [172.17.100.104])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 832434127F;
- Thu, 29 Oct 2020 09:33:38 +0300 (MSK)
-Received: from [10.199.0.66] (10.199.0.66) by T-EXCH-04.corp.yadro.com
- (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 29
- Oct 2020 09:33:37 +0300
-Message-ID: <43c29691e942590edb62f02757bf93e175537243.camel@yadro.com>
-Subject: Re: New fru bus interfaces
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: Ed Tanous <ed@tanous.net>, Vijay Khemka <vijaykhemka@fb.com>
-Date: Thu, 29 Oct 2020 09:33:37 +0300
-In-Reply-To: <CACWQX825kGcNJ9PfsuDZk1Bghdv9SRuZiu7FF2Fz+yiDqp_9xw@mail.gmail.com>
-References: <4D8141F3-33DC-48F5-99BA-9099044E6A60@fb.com>
- <CACWQX825kGcNJ9PfsuDZk1Bghdv9SRuZiu7FF2Fz+yiDqp_9xw@mail.gmail.com>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CMVDy1HGnzDqVj
+ for <openbmc@lists.ozlabs.org>; Fri, 30 Oct 2020 02:47:13 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09TFWMvu195617; Thu, 29 Oct 2020 11:47:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=to : from : subject :
+ message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=uDwFpqDoAT7G5E9hyfGzdIyxYy0O2DVqY7Gl8XM7Wt0=;
+ b=h+7b6HtVUelKrQhtP7mNQwDkqDBWk7SRT6J9Wg+QL2McxyzWeLyCv2hf7GfRfR/9YFPR
+ kW3F9rhMPAJChEks3MDaRsnG6NYKR2bpN8YLJ4qaTuYT8QdNvUc3t4md5+zIwbfxCX+H
+ dorLayOc4tG7tNTs7i0BqmhsQpFRahkqKfuKPfsDWQYs0ZvfGTTUqA81ytrpFU1xn1W/
+ Eezj50O3DU401Q+7Nm/B8svNZ/apnUa+6c97D2M/CctZvos7WMFfFdBpB8M5lw1fFuP5
+ uICtAzD8rwtFMzKNH8aINwtzreEu7kp6TgP1X9zGW2zJUUyW7oevWQrpLCaicnzdrCbg pw== 
+Received: from ppma03fra.de.ibm.com (6b.4a.5195.ip4.static.sl-reverse.com
+ [149.81.74.107])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34fyqrt20q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2020 11:47:10 -0400
+Received: from pps.filterd (ppma03fra.de.ibm.com [127.0.0.1])
+ by ppma03fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09TFiF4X011922;
+ Thu, 29 Oct 2020 15:47:08 GMT
+Received: from b06avi18626390.portsmouth.uk.ibm.com
+ (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
+ by ppma03fra.de.ibm.com with ESMTP id 34fpvrg9c1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 29 Oct 2020 15:47:08 +0000
+Received: from d06av23.portsmouth.uk.ibm.com (d06av23.portsmouth.uk.ibm.com
+ [9.149.105.59])
+ by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
+ id 09TFl6Ja34734370
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 29 Oct 2020 15:47:06 GMT
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC3DFA4051;
+ Thu, 29 Oct 2020 15:47:05 +0000 (GMT)
+Received: from d06av23.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 756AFA4053;
+ Thu, 29 Oct 2020 15:47:05 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.77.193.97])
+ by d06av23.portsmouth.uk.ibm.com (Postfix) with ESMTP;
+ Thu, 29 Oct 2020 15:47:05 +0000 (GMT)
+To: Ed Tanous <ed@tanous.net>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+From: Ratan Gupta <ratagupt@linux.vnet.ibm.com>
+Subject: bmcweb logging
+Message-ID: <1d95c6ac-7341-d7dd-5154-fa6457b4c97c@linux.vnet.ibm.com>
+Date: Thu, 29 Oct 2020 21:17:04 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.199.0.66]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-04.corp.yadro.com (172.17.100.104)
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-10-29_08:2020-10-29,
+ 2020-10-29 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0
+ adultscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ mlxlogscore=999 spamscore=0 impostorscore=0 phishscore=0 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2010290109
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,163 +98,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Ed,
 
-I don't think this commit related to this issue. On our system we have
-similar /xyz/openbmc_project/FruDevice/X_YY entries, but I didn't
-bother about. My work was about real FRUs with broken content.
-This entries are created by FruDevice for addresses is can't detect as
-EEPROM:
+I was having issues in getting the logs from bmcweb repo, If I don't 
+define the compiler flag(BMCWEB_ENABLE_LOGGING) then it doesn't get me 
+any logs in journal(not even error log) and if I define the compiler 
+flag then it gets too much debug info.
 
-# busctl tree xyz.openbmc_project.FruDevice
-└─/xyz
-  └─/xyz/openbmc_project
-    └─/xyz/openbmc_project/FruDevice
-      ├─/xyz/openbmc_project/FruDevice/12_81
-      ├─/xyz/openbmc_project/FruDevice/12_82
-      ├─/xyz/openbmc_project/FruDevice/12_83
-      ├─/xyz/openbmc_project/FruDevice/12_84
-[...]
-# i2cdetect -y 12
-     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-50: -- 51 52 53 54 -- -- -- -- -- -- -- -- -- -- -- 
-60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
-70: -- -- -- -- -- -- -- --                         
+Seems it happens because we have hardcoded the logelevel  and there is 
+no way through which we can change except making the change manually in 
+the following place.
 
-In this case, there are pmbus VRs on that addresses.
-Actually, now I see, it creates such nodes for some EEPROM nodes too:
+https://github.com/openbmc/bmcweb/blob/master/http/logging.hpp#L93
 
-# busctl tree xyz.openbmc_project.FruDevice
-[...]
-      ├─/xyz/openbmc_project/FruDevice/7_80
-      ├─/xyz/openbmc_project/FruDevice/7_82
-      ├─/xyz/openbmc_project/FruDevice/7_88
-      ├─/xyz/openbmc_project/FruDevice/7_90
-      ├─/xyz/openbmc_project/FruDevice/S_1100ADU00_201
-[...]
+Suggestion is we can define another compile time flag for log level and 
+use that log level at the above line for type of logging , by default 
+logging should be enabled with error log level.
 
-# busctl introspect xyz.openbmc_project.FruDevice
-/xyz/openbmc_project/FruDevice/S_1100ADU00_201
-NAME                                TYPE      SIGNATURE RESULT/VALUE      FLAGS
-[...]
-xyz.openbmc_project.FruDevice       interface -         -                 -
-.ADDRESS                            property  u         82                emits-change
-.BUS                                property  u         7                 emits-change
-[...]
+If there is a need user can play with new compiler flag for more verbose 
+logging.
 
-# busctl introspect xyz.openbmc_project.FruDevice /xyz/openbmc_project/FruDevice/7_82           
-NAME                                         TYPE      SIGNATURE RESULT/VALUE FLAGS
-org.freedesktop.DBus.Introspectable          interface -         -            -
-.Introspect                                  method    -         s            -
-org.freedesktop.DBus.Peer                    interface -         -            -
-.GetMachineId                                method    -         s            -
-.Ping                                        method    -         -            -
-org.freedesktop.DBus.Properties              interface -         -            -
-.Get                                         method    ss        v            -
-.GetAll                                      method    s         a{sv}        -
-.Set                                         method    ssv       -            -
-.PropertiesChanged                           signal    sa{sv}as  -            -
-xyz.openbmc_project.Inventory.Item.I2CDevice interface -         -            -
-.Address                                     property  u         82           emits-change
-.Bus                                         property  u         7            emits-change
+Am I missing something in usage of logging infra?
 
-But I didn't investigate this topic before.
+Ratan
 
 
-On Wed, 2020-10-28 at 15:26 -0700, Ed Tanous wrote:
-> On Wed, Oct 28, 2020 at 2:43 PM Vijay Khemka <vijaykhemka@fb.com>
-> wrote:
-> > Team,
-> > 
-> > I am seeing now new interfaces added to dbus for FRU devices which
-> > has no fru device. I am using EM/FruDevice application and it scans
-> > dynamically all i2c busses for Fru devices. And it used to list
-> > only devices with Fru data only to dbus but current image adds all
-> > i2c bus scanned as dbus interfaces. Please see below
-> > 
-> > 
-> > 
-> > root@tiogapass:~# busctl tree xyz.openbmc_project.FruDevice
-> > 
-> > └─/xyz
-> > 
-> >   └─/xyz/openbmc_project
-> > 
-> >     └─/xyz/openbmc_project/FruDevice
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/0_80
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/0_81
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/2_109
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/2_112
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/2_16
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/2_22
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/3_104
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/3_108
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/3_113
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/3_36
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/3_68
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/3_81
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/4_112
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/4_22
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/6_33
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/6_80
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/7_69
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/9_39
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/9_84
-> > 
-> >       ├─/xyz/openbmc_project/FruDevice/Ava_M_2_SSD_Adapter
-> > 
-> >       └─/xyz/openbmc_project/FruDevice/Tioga_Pass_Single_Side
-> 
-> Is that related to this commit?
-> 
-> https://github.com/openbmc/entity-manager/commit/d7b6659944c3527622d454526509a0a8697ada0f
-> 
-> > 
-> > 
-> > In above tree there are only last 2 interface represent real Fru
-> > device, rest others have no Fru data. I am not sure why this was
-> > added.
-> > 
-> > 
-> > 
-> > Please help me understand this feature if anything new added to the
-> > application.
-> > 
-> > 
-> > 
-> > Regards
-> > 
-> > -Vijay
--- 
-Best regards,
-Andrei Kartashev
+
+
 
 
