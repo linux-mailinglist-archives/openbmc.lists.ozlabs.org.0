@@ -1,83 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14FBD2A0FFC
-	for <lists+openbmc@lfdr.de>; Fri, 30 Oct 2020 22:07:20 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AEC12A0FFE
+	for <lists+openbmc@lfdr.de>; Fri, 30 Oct 2020 22:08:31 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CNFHn1CcBzDqwt
-	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 08:07:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CNFK827vLzDqx6
+	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 08:08:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=kvD2H0NZ; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ header.s=pp1 header.b=cop5xWZ7; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
  [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CNFGf6WqdzDqwB
- for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 08:06:17 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 09UL2wLB081046; Fri, 30 Oct 2020 17:06:13 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CNFJ52rjXzDqx9
+ for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 08:07:32 +1100 (AEDT)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 09UL1YAH052508; Fri, 30 Oct 2020 17:07:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=subject : to : cc :
  references : from : message-id : date : mime-version : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=Y7vl2YTTFkaxp17BXFv7No7bGETVTHHPvnyPtSQzWPU=;
- b=kvD2H0NZsLhC8K0TCDTXo+MypkO6iKZ+3VmVVtklo8hXL4MX9n2ZYY+YAU9SYZKxHgIw
- uIOMYe1B2r6g6KPcIeM8GxJaZCHAHfWTuAD+QKJ3CxezbCvIMS7CdyIj0HNrF+X8vCJ7
- Mwr7j2NkHj03Jq6TK2XtuMTpCj2Z64pAhLg5r9czPWF6TOho+pVsKHmdWVNeFcf6fMrj
- vKZs/k9fByPiCBsVHnbEbZcQizvfY9IYAPCrjsCAhgKvZSm/Y96OBCNLqQlAonGL3NRq
- sRE1OZslDcN17Nr4vEcVzrN6FV6Dw4+6hS9+SWNj5X+ZERPufb7IPH3RScgDsZtDnldV CQ== 
+ bh=k7+9bMJmbwb9m6ipsJHtQ8dRKaRkUq3ySMetNTFyxhY=;
+ b=cop5xWZ7E8SopEpL3DH8m8x9NZt9fRMQF3+UUk+IF0K4gDIFrvGsCBFAmn3JuF/VPujy
+ d6pPGUbAoTyTfQVHxluhdMrp1K392LilGu6juvZVh0UjXLsktq77/D9KEKN6XKf9PULw
+ uS4NXYJ6LetcR61t+fdAD8as+MTjGe79pejUk4NgPP+2nwEp0dKRlAsg44G+lbQrQjUk
+ QW4OfzXYde1Kaswkp70T+/vlqH5uBZlpxfNYqrDU+vByVMV96DCZiD2OvWKL+vOmYC5E
+ ggLMAF2157HtjnzBjj9kGvSbA+yU5oUlL1c+hFpdiw/VNye7o6ecVOOohJgJLOTSYjFE ww== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34gnqqrhy0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 30 Oct 2020 17:07:28 -0400
+Received: from m0098420.ppops.net (m0098420.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 09UL26KR054481;
+ Fri, 30 Oct 2020 17:07:27 -0400
 Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
  [169.62.189.10])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34grkck0nf-1
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34gnqqrhxt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Oct 2020 17:06:13 -0400
+ Fri, 30 Oct 2020 17:07:27 -0400
 Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09UL1GPV028431;
- Fri, 30 Oct 2020 21:06:12 GMT
-Received: from b03cxnp08028.gho.boulder.ibm.com
- (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
- by ppma02dal.us.ibm.com with ESMTP id 34e1gpn9b8-1
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 09UL7GJW006441;
+ Fri, 30 Oct 2020 21:07:27 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com
+ (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+ by ppma02dal.us.ibm.com with ESMTP id 34e1gpn9sw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 30 Oct 2020 21:06:12 +0000
+ Fri, 30 Oct 2020 21:07:27 +0000
 Received: from b03ledav001.gho.boulder.ibm.com
  (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
- by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 09UL6BBA60293414
+ by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 09UL7KQp48955882
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 30 Oct 2020 21:06:11 GMT
+ Fri, 30 Oct 2020 21:07:20 GMT
 Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DFC936E054;
- Fri, 30 Oct 2020 21:06:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A660C6E056;
+ Fri, 30 Oct 2020 21:07:25 +0000 (GMT)
 Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3582E6E04E;
- Fri, 30 Oct 2020 21:06:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B4C8F6E058;
+ Fri, 30 Oct 2020 21:07:24 +0000 (GMT)
 Received: from demeter.roc.mn.charter.com (unknown [9.85.156.122])
  by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Fri, 30 Oct 2020 21:06:09 +0000 (GMT)
-Subject: Re: bmcweb logging
-To: Ed Tanous <ed@tanous.net>, Ratan Gupta <ratagupt@linux.vnet.ibm.com>
-References: <1d95c6ac-7341-d7dd-5154-fa6457b4c97c@linux.vnet.ibm.com>
- <CACWQX83WMMWs2qFaYhtJm0r0XBTcdUdbgsiFL7h1GT0jhW1GEQ@mail.gmail.com>
- <36c2d0c1-b1a1-3ea9-01b4-34611dff4426@linux.vnet.ibm.com>
- <CACWQX81EusRC6faFN5uB6_qp+nHcsrXb9_8WLunMq+GuMK4vng@mail.gmail.com>
+ Fri, 30 Oct 2020 21:07:24 +0000 (GMT)
+Subject: Re: SELinux support question
+To: Artem Senichev <artemsen@gmail.com>, Ivan Li11 <rli11@lenovo.com>
+References: <HK2PR03MB45804A1D770024303FC50FCAD3140@HK2PR03MB4580.apcprd03.prod.outlook.com>
+ <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
 From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <e3f096eb-32fb-07a8-6b7b-8a489f38333d@linux.ibm.com>
-Date: Fri, 30 Oct 2020 16:06:08 -0500
+Message-ID: <4c13b632-c1ac-2908-4154-325f7c90a201@linux.ibm.com>
+Date: Fri, 30 Oct 2020 16:07:23 -0500
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:68.0)
  Gecko/20100101 Thunderbird/68.12.1
 MIME-Version: 1.0
-In-Reply-To: <CACWQX81EusRC6faFN5uB6_qp+nHcsrXb9_8WLunMq+GuMK4vng@mail.gmail.com>
+In-Reply-To: <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -86,10 +91,10 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
  definitions=2020-10-30_10:2020-10-30,
  2020-10-30 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 malwarescore=0
- bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
- lowpriorityscore=0 clxscore=1011 mlxscore=0 suspectscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ impostorscore=0
+ lowpriorityscore=0 mlxscore=0 clxscore=1011 priorityscore=1501
+ mlxlogscore=742 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
+ spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2009150000 definitions=main-2010300152
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -103,126 +108,48 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- a.kartashev@yadro.com
+ Manojkiran Eda <manojeda@in.ibm.com>, Anton Kachalov <rnouse@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 10/30/20 10:17 AM, Ed Tanous wrote:
-> On Fri, Oct 30, 2020 at 5:24 AM Ratan Gupta <ratagupt@linux.vnet.ibm.com> wrote:
->> On 10/29/20 9:52 PM, Ed Tanous wrote:
->>> On Thu, Oct 29, 2020 at 8:47 AM Ratan Gupta <ratagupt@linux.vnet.ibm.com> wrote:
->>>> Hi Ed,
->>>>
->>>> I was having issues in getting the logs from bmcweb repo, If I don't
->>>> define the compiler flag(BMCWEB_ENABLE_LOGGING) then it doesn't get me
->>>> any logs in journal(not even error log) and if I define the compiler
->>>> flag then it gets too much debug info.
->>> What's your limit for "too much"?
->> around 30+ traces for each Redfish request.If we enable the bmcweb
->> logging, with that  journal is full of bmcweb traces.
-> You've answered what bmcweb does today;  I asked you what the limit
-> should be.  5 per request?  10?.  Personally, 30 prints for a single
-> request is exactly what I would expect.  There are roughly 30 things
-> that happen for every request, any of which can go wrong, and when
-> stalls happen, it's good to know what the last thing was.  If you're
-> trying to debug new handler code that can assume the core is handling
-> things correctly and has no bugs, I could see that as being about 10
-> more than you'd need, but as someone that has to debug core
-> regressions quite a bit, having that information is quite helpful.
+On 10/30/20 12:55 AM, Artem Senichev wrote:
+> Hi Ivan,
 >
->>>> Seems it happens because we have hardcoded the logelevel  and there is
->>>> no way through which we can change except making the change manually in
->>>> the following place.
->>>>
->>>> https://github.com/openbmc/bmcweb/blob/master/http/logging.hpp#L93
->>>>
->>>> Suggestion is we can define another compile time flag for log level and
->>>> use that log level at the above line for type of logging , by default
->>>> logging should be enabled with error log level.
->>> Thusfar, we don't really have a definition of what kind of detail
->>> should be included at each log level, nor are we consistent about
->>> setting the log levels.  If it's important to you, and you want to put
->>> together some patches, we certainly could define the log verbosity,
->>> but we'd also have to come up with better definitions for what level
->>> each log needs to take, and be more consistent about it.
->> We have different log levels in bmcweb like error, critical, info,
->> debug, but what is missing is we don't have some compile time variable
->> to control it( currently it is either full or none.)
-> Error critical and info are used roughly interchangeably in code, and
-> we don't have a good definition of when to use each one.  It should be
-> noted, it's a 1 line fix to set a lower verbosity;  Have you tried
-> setting a lower one?  Did it give you the result you were looking for
-> on old code?
+> Yocto has a layer for SELinux
+> (http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux), you can try
+> it.
+> But the layer depends on Python for management tools, which does not
+> exist in the OpenBMC image anymore.
+> The problem is that Python significantly increases image size, it will
+> be more than 32MiB, which causes some troubles with qemu emulation.
 >
->>> IMO, that level of log granularity was never that valuable to debug,
->>> my thought being that if I'm enabling logging I don't care about
->>> performance, so the more logs the better.  When reproducing a failure,
->>> there doesn't tend to be a lot of logging present, and it's easy
->>> enough to find what you want, but maybe you had a different
->>> experience?
->> Yes, I had a different experience in the recent bug where the failure
->> was intermittent and it was happening only after running the regression,
->> when I look into the log, not a single trace was there.Hence I thought
->> that atleast the logs which is being marked as error(BMCWEB_LOG_ERROR)
->> should have been written to the journal.
+> --
+> Best regards,
+> Artem Senichev
+>
+> On Thu, Oct 29, 2020 at 7:48 PM Ivan Li11 <rli11@lenovo.com> wrote:
+>> Hi Team,
 >>
->> Say In production if we find some issue and we ask for the journal then
->> journal will not be useful as it will not be having any traces to debug.
-> Agreed, but that's not what the bmcweb logging framework is designed
-> for, nor is it really in any webservers that I'm aware of.  What it
-> sounds like you're looking for is an access log and an error log,
-> similar to nginx, which is capable of running all the time and logging
-> a minimal subset of a request.  bmcweb doesn't have that today.
+>>
+>>
+>> I would like to ask about SELinux support. It’s seems that there’s no SELinux related package in current OpenBMC.
+>>
+>> Therefore, is it not supported for now ?
+>>
+>> Please help to advise.
 
-+1 for the notion to separate the error logs and audit logs. <turns to a 
-slightly different direction>
+SELinux and alternatives such as AppArmor and KRSI (Kernel Runtime 
+Security Instrumentation) were discussed in various OpenBMC security 
+working group meetings including 2020-05-13, 2020-04-01, and earlier.  
+See the meeting minutes:
+https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI
 
-I believe OpenBMC should have an audit logging service per NIST SP 
-800-193 "Platform Firmware Resiliency Guidelines" > "Event Logging".  
-These are needed for platform and security administrators.  This log 
-would record specific high-level events such as:
-- Authentication attempts (requester, account, outcome, etc.).
-- Attempted access (such as REST API operations that require privilege 
-higher than ReadOnly and operations other than GET or HEAD).
-- BMC rebooted.
-- Host power state changes.
-- Etc. (many more).
-
-Many of these events are generated by BMCWeb, but others come from 
-various daemons.  So IMHO this is an OpenBMC-wide opportunity.
-
-Other folks need even more different logs.  For example, see 
-https://github.com/ibm-openbmc/dev/issues/2008
+I don't have any additional insight.
 
 - Joseph
 
-References:
-NIST.SP.800-193: 
-https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-193.pdf
-
->
->>> Long term, my intent was to just get rid of the various verbosities,
->>> and make logging ON or OFF in the code, and downgrade to a single
->>> macro, but if you see a need, we could certainly go the other
->>> direction.
->>>
->>>> If there is a need user can play with new compiler flag for more verbose
->>>> logging.
->>> I don't personally see the need, but if it would help you, I don't
->>> think it adds much complexity to do it, and I'd be happy to review
->>> your patches.
->> Sure, I would be pushing the patch for the same.
-> Cool.
->
->>>> Am I missing something in usage of logging infra?
->>>>
->>>> Ratan
->>>>
->>>>
->>> Just to be clear, you're using logging in a debug context, correct?
->>> If we're trying to use this to define an access log, that's a very
->>> different problem space, and the existing logging infrastructure would
->>> be poorly suited for it.
-> It'd be helpful if you had answered this, although I'm starting to get
-> a sense of what you're looking for.
+>>
+>>
+>>
+>> Thanks.
 
