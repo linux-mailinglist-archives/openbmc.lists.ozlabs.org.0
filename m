@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEE652A0F5E
-	for <lists+openbmc@lfdr.de>; Fri, 30 Oct 2020 21:23:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 932132A0F6C
+	for <lists+openbmc@lfdr.de>; Fri, 30 Oct 2020 21:26:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CNDJf3HLfzDqwL
-	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 07:22:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CNDP95VCyzDqwy
+	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 07:26:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,23 +19,23 @@ Received: from vps0.lunn.ch (vps0.lunn.ch [185.16.172.187])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CNDHs5hbyzDqnV
- for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 07:22:16 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CNDNQ5PHyzDqwB
+ for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 07:26:14 +1100 (AEDT)
 Received: from andrew by vps0.lunn.ch with local (Exim 4.94)
  (envelope-from <andrew@lunn.ch>)
- id 1kYauN-004PUq-Ho; Fri, 30 Oct 2020 21:21:59 +0100
-Date: Fri, 30 Oct 2020 21:21:59 +0100
+ id 1kYayJ-004PXA-HK; Fri, 30 Oct 2020 21:26:03 +0100
+Date: Fri, 30 Oct 2020 21:26:03 +0100
 From: Andrew Lunn <andrew@lunn.ch>
 To: Ivan Mikhaylov <i.mikhaylov@yadro.com>
-Subject: Re: [PATCH v3 3/3] dt-bindings: net: ftgmac100: describe phy-handle
- and MDIO
-Message-ID: <20201030202159.GG1042051@lunn.ch>
+Subject: Re: [PATCH v3 2/3] net: ftgmac100: add handling of mdio/phy nodes
+ for ast2400/2500
+Message-ID: <20201030202603.GH1042051@lunn.ch>
 References: <20201030133707.12099-1-i.mikhaylov@yadro.com>
- <20201030133707.12099-4-i.mikhaylov@yadro.com>
+ <20201030133707.12099-3-i.mikhaylov@yadro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20201030133707.12099-4-i.mikhaylov@yadro.com>
+In-Reply-To: <20201030133707.12099-3-i.mikhaylov@yadro.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,9 +53,10 @@ Cc: Po-Yu Chuang <ratbert@faraday-tech.com>, netdev@vger.kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 30, 2020 at 04:37:07PM +0300, Ivan Mikhaylov wrote:
-> Add the phy-handle and MDIO description and add the example with
-> PHY and MDIO nodes.
+On Fri, Oct 30, 2020 at 04:37:06PM +0300, Ivan Mikhaylov wrote:
+> phy-handle can't be handled well for ast2400/2500 which has an embedded
+> MDIO controller. Add ftgmac100_mdio_setup for ast2400/2500 and initialize
+> PHYs from mdio child node with of_mdiobus_register.
 > 
 > Signed-off-by: Ivan Mikhaylov <i.mikhaylov@yadro.com>
 
