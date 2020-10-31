@@ -2,67 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C018F2A11D9
-	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 01:07:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 83A9C2A12DA
+	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 03:32:39 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CNKHf4kxjzDqyS
-	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 11:07:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CNNW84XwXzDqw6
+	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 13:32:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2a;
- helo=mail-io1-xd2a.google.com; envelope-from=gmouse@google.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=outlook.com (client-ip=40.92.253.33;
+ helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=outlook.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=U8uTJ2S6; dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
- [IPv6:2607:f8b0:4864:20::d2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
+ header.s=selector1 header.b=C4psGafC; 
+ dkim-atps=neutral
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-oln040092253033.outbound.protection.outlook.com [40.92.253.33])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CNKGl4WRRzDqwW
- for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 11:06:38 +1100 (AEDT)
-Received: by mail-io1-xd2a.google.com with SMTP id u62so9247838iod.8
- for <openbmc@lists.ozlabs.org>; Fri, 30 Oct 2020 17:06:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=YPEEwK0lYgidezI25viX4bBysO0c73gPjaVGC4TLjM8=;
- b=U8uTJ2S6qU8oBOHiAlVLukI6y8Uq58xAf99FGaxpqb3rGXmqYVgzAyIKnFDxySvqYT
- PjGJ4H8eUEi8cA86kX/vk1UdCNmJlZzdk7L8ccQNSbNiP6jyU/QTgJ9kz6OuG843VUfW
- +EfSF759RriGKUOl4vwQY3Dl6XGvc03jPKQXCPK2a3FU2jyEOTtmqy49AUhdMGgXU0Ix
- fNRWAcRL2bzxq0LodnA4d0ygVqBRg678G6bMEJArNYCjQYnEIkr1Qplr4jzZP+37sWub
- 5FWQmeB/Jl56ZesArK03sC65wjxpkzBfW+oBtV886bsCC1FZFPZhG+79kqcBvbqXZ2iS
- NOVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=YPEEwK0lYgidezI25viX4bBysO0c73gPjaVGC4TLjM8=;
- b=Ikh8SLm/JUdw8geEvP4G606kIJCah7K0dpPrIDTj6Fh4N8Meir/IpecxaUGiSlIQIN
- yHzrY/+/LF19v8VRJwQvrJydMPgBSZW2E5ZFKWrOaST4SFt1m8k5Yl9NZshVL5P4taIC
- zMWxj0ipRpS7L8F/fP5yADLtbnsUDYFy0dW3ImqO4/QLkglrBf4E0cqMsT9qzoBfDB/h
- zRYxwCao84dx6bik3+Wc6pzfZR2rgkZ4Hb0jaioovM1VOWXD/aTzNdJie+8LTnd+iHVj
- z3YNfbi+j+woHuJ16CYcqejdpFa+QO/C+Ey/lwqtCRVFUZvBlFP3x96KwVYN5SuWB0en
- QM7A==
-X-Gm-Message-State: AOAM530eb6XLL2LBzKaPS1IsWLnUDrv/Cs1ElHwl4PQwoFTm9t6/qHKG
- n/X4XteuwQlel/GT65IqkthJBUzA0eFtSg8LbmihZA==
-X-Google-Smtp-Source: ABdhPJz0uDCIhsbvFIuzic2Etd7HtgsLOwB8Vo88B9r0qvYRfIv9Z0ZZQMNCcvnHKBQC6wu7RLnvERRjKoUdP3pRcvA=
-X-Received: by 2002:a6b:8d12:: with SMTP id p18mr2279422iod.139.1604102795376; 
- Fri, 30 Oct 2020 17:06:35 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CNNVP6SL3zDqsW
+ for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 13:31:55 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CugNJr8Fn0iWxqI+qD1Uf2PXqfovhNEIaVRwkVbzk8RKvb5OwTvUTlL27o7kI9UOpnPmZ/VWQMw7doUC98oN6jvF/sB1iMXSZDdOhf2DY0Nb02oQ9cY/GYtaqhd6XL3HFxxgAgNVOvvo7crLmtS8QXlAmzoUUzTVN6o4o9y70BEaLu7U96rWYCBQA28wVEtPvhiv+Hmmg8I6EPDOvXpDJy1mj9bXpf+ISY0n/tYbHrfYcx+hELuHJO8U+xZtL49C5t7PGsIBEas7zge9abxZ1/33ahcxz2pt8qYPGDm7G9vTD2ZGFqOJ8DjGWch2R2xTV4WCyAMH9ER0A/bvnFdhcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=y1JnCovxy++SPkS7IKYmjaKxu29tCL6D3FUI+KloV4w=;
+ b=Quzb5nkaN/ZF4CprWipRCaSc5jMb+Wxjq0JnVQ/dx66an0QwQ6g+YpQA/77481PuRDuuDqBSUeLeUR66OFLbQULy1STFwB44GPNZXQuTS6EAF2IbkzO73ePOjMy7z6cn6vKlt/0E9bZbQV8gMJDyqGH89XqNDueQnwg42EfanV+Mnok0v8dL/myX1m7ZKa0a+h+VMsDWWBq43U+Gspjb7GQtrf80tgxisJHPpDU5ZkOyhbW9F7zUN1WlE1zQNy8o4cnCVZEvCJQXg5Ls2KBO0hWROtDDCokPZHyNcBEZUzgHiwMqK1tISPfx4ov44wfDv7jn+cC+yHqtj/NUbcD36Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=y1JnCovxy++SPkS7IKYmjaKxu29tCL6D3FUI+KloV4w=;
+ b=C4psGafCmsDeL9ltTU7g2V5fNDtkJfhejkzjDNn7pErS9RqbEVOPDRMfnxo9eTmZVRRj0z8/jSl1Yk9yEyj4ZU1tBglaQ4alEM6bexvA5mRnVkNwptlbLS1DbCIefTyOeJuxuBiEufmc3lu1FnQiFuUSbSBNrqR0bShayyW/idUQ/6r5bKtrubJkfVXRhnnCzR9/9iUYhxPHKfGUPAvixGVGlSOo5fTfBGDG/WjERX3yEs9W21fNeu/aILF6E+gHhhHBs6KFq+awvWArsvhDRTYHOoHP0HCHjombUrlqeRG62WRI4xHs9h4f3ACNLepA4v85cWvIfBDb4wDzJrLqEw==
+Received: from SG2APC01FT057.eop-APC01.prod.protection.outlook.com
+ (2a01:111:e400:7ebd::4d) by
+ SG2APC01HT097.eop-APC01.prod.protection.outlook.com (2a01:111:e400:7ebd::456)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3520.15; Sat, 31 Oct
+ 2020 02:31:49 +0000
+Received: from MEAPR01MB3335.ausprd01.prod.outlook.com (10.152.250.58) by
+ SG2APC01FT057.mail.protection.outlook.com (10.152.251.133) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3520.15 via Frontend Transport; Sat, 31 Oct 2020 02:31:49 +0000
+Received: from MEAPR01MB3335.ausprd01.prod.outlook.com
+ ([fe80::48f:b699:9fb2:52d0]) by MEAPR01MB3335.ausprd01.prod.outlook.com
+ ([fe80::48f:b699:9fb2:52d0%6]) with mapi id 15.20.3477.035; Sat, 31 Oct 2020
+ 02:31:49 +0000
+From: =?gb2312?B?1twg1LbH5Q==?= <zhouyuanqing8@outlook.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: all discrete sensor shows na
+Thread-Topic: all discrete sensor shows na
+Thread-Index: AQHWryxt+3AP5Ft2cUyUGo53J0xAkQ==
+Date: Sat, 31 Oct 2020 02:31:49 +0000
+Message-ID: <MEAPR01MB3335EABEA5565F42170CB4F2FE120@MEAPR01MB3335.ausprd01.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:49884BAC3A19713068DF050D8AC61A33097CCE28A2AEDF8773974F6AF4E069C7;
+ UpperCasedChecksum:C60A48C9CD4A7BFA9198EAA4F18508A1BCB6DE7F65EE3AD0A6E6C62CB53BA10F;
+ SizeAsReceived:6659; Count:42
+x-tmn: [y6ymRFlkNnmFz9z+waAE0eyDIF2CzxAp]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: 340fd7a8-586c-4a1b-ae39-08d87d451ea4
+x-ms-traffictypediagnostic: SG2APC01HT097:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: NmNBVDPglDVUyl0EOFsJNtJpmVPy9USCYndRRn9UcMp2+VLBA/+Wcsmmn+u8cskUzCEx3crgOs2R4xMiUFPCa/8b5C5/W42pJaH+8FCUSDwVITynKWpgXj4C8dgiXE+kHK9JTQdL0xrURt1UlXzBFeo5lTpWGJvQGmfRCsJpMxS6tJOB3hxYmEvTdLzKT7SIjl+bUsyG6XctoL/JcWtX8Q==
+x-ms-exchange-antispam-messagedata: E+h0yATPCue3bv6hLOsoV7ox4b7u0936W1bF7ptZg1kHHXl6KkVTABNEAsW95SfDyTzw2evW6+ojUn/MSSiAei81PXPA7FBCdqZlJbj9lELvH8CaNisl1vDdmNEUlFAOxeas80+tyPWcWlA4PIOT6A==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_"
 MIME-Version: 1.0
-References: <HK2PR03MB45804A1D770024303FC50FCAD3140@HK2PR03MB4580.apcprd03.prod.outlook.com>
- <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
- <4c13b632-c1ac-2908-4154-325f7c90a201@linux.ibm.com>
-In-Reply-To: <4c13b632-c1ac-2908-4154-325f7c90a201@linux.ibm.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Sat, 31 Oct 2020 01:06:24 +0100
-Message-ID: <CADVsX8-FRMUKCWGqwn8cdJysK0a9Hf7uiCjth1ak_FUw4hNdkg@mail.gmail.com>
-Subject: Re: SELinux support question
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Content-Type: multipart/alternative; boundary="0000000000004d8fdd05b2ec49eb"
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT057.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 340fd7a8-586c-4a1b-ae39-08d87d451ea4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Oct 2020 02:31:49.2530 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2APC01HT097
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,135 +101,115 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Manojkiran Eda <manojeda@in.ibm.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Artem Senichev <artemsen@gmail.com>, Ivan Li11 <rli11@lenovo.com>
+Cc: "uperic@163.com" <uperic@163.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000004d8fdd05b2ec49eb
-Content-Type: text/plain; charset="UTF-8"
+--_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
+
+SGksDQoNCiAgIEkgYWRkZWQgc29tZSBkaXNjcmV0ZSBzZW5zb3JzIHRvIG9wZW5ibWMsIGJ1dCBJ
+IHVzZWQgdGhlIGlwbWl0b29sIGNvbW1hbmQgdG8gcXVlcnkgYW5kIGZvdW5kIHRoYXQgYWxsIGRp
+c2NyZXRlIHNlbnNvcnMgZGlzcGxheWVkIG5hLiBQbGVhc2UgaGVscCBhbmQgZ3VpZGUsIHRoYW5r
+IHlvdS4gRXhhbXBsZXMgYXJlIGFzIGZvbGxvd3MuDQoNCkY6XGlwbWl0b29sIHYxLjguMTg+aXBt
+aXRvb2wuZXhlIC1JIGxhbnBsdXMgLUMgMTcgLUggMTcyLjE2LjkwLjE3MiAtVSByb290IC1QIDBw
+ZW5CbWMgc2Vuc29yIGxpc3QNClBvd2VyRHJvcCAgICAgICAgfCBuYSAgICAgICAgIHwgZGlzY3Jl
+dGUgICB8IG5hICAgIHwgbmEgICAgICAgIHwgbmEgICAgICAgIHwgbmEgICAgICAgIHwgbmEgICAg
+ICAgIHwgbmEgICAgICAgIHwgbmENCg0KRjpcaXBtaXRvb2wgdjEuOC4xOD5pcG1pdG9vbC5leGUg
+LUkgbGFucGx1cyAtQyAxNyAtSCAxNzIuMTYuOTAuMTcyIC1VIHJvb3QgLVAgMHBlbkJtYyBzZW5z
+b3IgZ2V0IFBvd2VyRHJvcA0KTG9jYXRpbmcgc2Vuc29yIHJlY29yZC4uLg0KU2Vuc29yIElEICAg
+ICAgICAgICAgICA6IFBvd2VyRHJvcCAgKDB4MjgpDQogRW50aXR5IElEICAgICAgICAgICAgIDog
+Ny4xDQogU2Vuc29yIFR5cGUgKERpc2NyZXRlKTogUG93ZXIgU3VwcGx5DQogVW5hYmxlIHRvIHJl
+YWQgc2Vuc29yOiBEZXZpY2UgTm90IFByZXNlbnQNCg0KSSBoYXZlIGNoZWNrZWQgdGhlIGRidXMg
+aW50ZXJmYWNlIGNvcnJlc3BvbmRpbmcgdG8gUG93ZXJEcm9wLCBhbmQgaXQgY2FuIGJlIHNldCBh
+bmQgaW5xdWlyZWQgdGhyb3VnaCB0aGUgYnVzY3RsIGNvbW1hbmQ7DQoNClRoYW5reW91IQ0KDQpo
+YXJsZXkuDQo=
+
+--_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_
+Content-Type: text/html; charset="gb2312"
 Content-Transfer-Encoding: quoted-printable
 
-Hello, Ivan.
-
-Some OpenBMC hardening work is ongoing:
-https://github.com/openbmc/openbmc/issues/3383
-
-Do you have a specific use-cases for SELinux?
-
-On Fri, 30 Oct 2020 at 22:07, Joseph Reynolds <jrey@linux.ibm.com> wrote:
-
-> On 10/30/20 12:55 AM, Artem Senichev wrote:
-> > Hi Ivan,
-> >
-> > Yocto has a layer for SELinux
-> > (http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux), you can try
-> > it.
-> > But the layer depends on Python for management tools, which does not
-> > exist in the OpenBMC image anymore.
-> > The problem is that Python significantly increases image size, it will
-> > be more than 32MiB, which causes some troubles with qemu emulation.
-> >
-> > --
-> > Best regards,
-> > Artem Senichev
-> >
-> > On Thu, Oct 29, 2020 at 7:48 PM Ivan Li11 <rli11@lenovo.com> wrote:
-> >> Hi Team,
-> >>
-> >>
-> >>
-> >> I would like to ask about SELinux support. It=E2=80=99s seems that the=
-re=E2=80=99s no
-> SELinux related package in current OpenBMC.
-> >>
-> >> Therefore, is it not supported for now ?
-> >>
-> >> Please help to advise.
->
-> SELinux and alternatives such as AppArmor and KRSI (Kernel Runtime
-> Security Instrumentation) were discussed in various OpenBMC security
-> working group meetings including 2020-05-13, 2020-04-01, and earlier.
-> See the meeting minutes:
->
-> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsD=
-UWmAOI
->
-> I don't have any additional insight.
->
-> - Joseph
->
-> >>
-> >>
-> >>
-> >> Thanks.
->
->
-
---0000000000004d8fdd05b2ec49eb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hello, Ivan.<div><br></div><div>Some OpenBMC hardening wor=
-k is ongoing:</div><div><a href=3D"https://github.com/openbmc/openbmc/issue=
-s/3383">https://github.com/openbmc/openbmc/issues/3383</a><br></div><div><b=
-r></div><div>Do you have a specific use-cases for SELinux?</div></div><br><=
-div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 30 =
-Oct 2020 at 22:07, Joseph Reynolds &lt;<a href=3D"mailto:jrey@linux.ibm.com=
-">jrey@linux.ibm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">On 10/30/20 12:55 AM, Artem Senichev wrote:<br>
-&gt; Hi Ivan,<br>
-&gt;<br>
-&gt; Yocto has a layer for SELinux<br>
-&gt; (<a href=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux" re=
-l=3D"noreferrer" target=3D"_blank">http://git.yoctoproject.org/cgit/cgit.cg=
-i/meta-selinux</a>), you can try<br>
-&gt; it.<br>
-&gt; But the layer depends on Python for management tools, which does not<b=
-r>
-&gt; exist in the OpenBMC image anymore.<br>
-&gt; The problem is that Python significantly increases image size, it will=
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Hi,</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-&gt; be more than 32MiB, which causes some troubles with qemu emulation.<br=
->
-&gt;<br>
-&gt; --<br>
-&gt; Best regards,<br>
-&gt; Artem Senichev<br>
-&gt;<br>
-&gt; On Thu, Oct 29, 2020 at 7:48 PM Ivan Li11 &lt;<a href=3D"mailto:rli11@=
-lenovo.com" target=3D"_blank">rli11@lenovo.com</a>&gt; wrote:<br>
-&gt;&gt; Hi Team,<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; I would like to ask about SELinux support. It=E2=80=99s seems that=
- there=E2=80=99s no SELinux related package in current OpenBMC.<br>
-&gt;&gt;<br>
-&gt;&gt; Therefore, is it not supported for now ?<br>
-&gt;&gt;<br>
-&gt;&gt; Please help to advise.<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp;I added some discrete sensors to openbmc, but I used the ipmit=
+ool command to query and found that all discrete sensors displayed na. Plea=
+se help and guide, thank you. Examples are as follows.</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-SELinux and alternatives such as AppArmor and KRSI (Kernel Runtime <br>
-Security Instrumentation) were discussed in various OpenBMC security <br>
-working group meetings including 2020-05-13, 2020-04-01, and earlier.=C2=A0=
- <br>
-See the meeting minutes:<br>
-<a href=3D"https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xo=
-JRQvLxxsDUWmAOI" rel=3D"noreferrer" target=3D"_blank">https://docs.google.c=
-om/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI</a><br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<span style=3D"caret-color:rgb(0, 0, 0);background-color:rgb(255, 255, 255)=
+;display:inline !important">F:\ipmitool v1.8.18&gt;</span>ipmitool.exe -I l=
+anplus -C 17 -H 172.16.90.172 -U root -P 0penBmc sensor list</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+PowerDrop &nbsp; &nbsp; &nbsp; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp; | dis=
+crete &nbsp; | na &nbsp; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp;| na &nbsp; =
+&nbsp; &nbsp; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp;| na &nbsp; &nbsp; &nbs=
+p; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp;| na<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-I don&#39;t have any additional insight.<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+F:\ipmitool v1.8.18&gt;ipmitool.exe -I lanplus -C 17 -H 172.16.90.172 -U ro=
+ot -P 0penBmc sensor get
+<span style=3D"caret-color:rgb(0, 0, 0);background-color:rgb(255, 255, 255)=
+;display:inline !important">
+PowerDrop<span class=3D"Apple-converted-space">&nbsp;</span></span>
+<div>Locating sensor record...</div>
+<div>Sensor ID &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <span styl=
+e=3D"caret-color:rgb(0, 0, 0);background-color:rgb(255, 255, 255);display:i=
+nline !important">
+PowerDrop<span class=3D"Apple-converted-space">&nbsp;</span></span> (0x28)<=
+/div>
+<div>&nbsp;Entity ID &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 7.1</div>
+<div>&nbsp;Sensor Type (Discrete): Power Supply</div>
+&nbsp;Unable to read sensor: Device Not Present<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-- Joseph<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+I have checked the dbus interface corresponding to PowerDrop, and it can be=
+ set and inquired through the busctl command;<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; Thanks.<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Thankyou!</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
 <br>
-</blockquote></div>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+harley.</div>
+</body>
+</html>
 
---0000000000004d8fdd05b2ec49eb--
+--_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_--
