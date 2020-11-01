@@ -1,95 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83A9C2A12DA
-	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 03:32:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8F172A224C
+	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 00:15:48 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CNNW84XwXzDqw6
-	for <lists+openbmc@lfdr.de>; Sat, 31 Oct 2020 13:32:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CPX356Wn9zDqZW
+	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 10:15:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=outlook.com (client-ip=40.92.253.33;
- helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::844;
+ helo=mail-qt1-x844.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
- header.s=selector1 header.b=C4psGafC; 
- dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-oln040092253033.outbound.protection.outlook.com [40.92.253.33])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=lScH92/c; dkim-atps=neutral
+Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
+ [IPv6:2607:f8b0:4864:20::844])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CNNVP6SL3zDqsW
- for <openbmc@lists.ozlabs.org>; Sat, 31 Oct 2020 13:31:55 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CugNJr8Fn0iWxqI+qD1Uf2PXqfovhNEIaVRwkVbzk8RKvb5OwTvUTlL27o7kI9UOpnPmZ/VWQMw7doUC98oN6jvF/sB1iMXSZDdOhf2DY0Nb02oQ9cY/GYtaqhd6XL3HFxxgAgNVOvvo7crLmtS8QXlAmzoUUzTVN6o4o9y70BEaLu7U96rWYCBQA28wVEtPvhiv+Hmmg8I6EPDOvXpDJy1mj9bXpf+ISY0n/tYbHrfYcx+hELuHJO8U+xZtL49C5t7PGsIBEas7zge9abxZ1/33ahcxz2pt8qYPGDm7G9vTD2ZGFqOJ8DjGWch2R2xTV4WCyAMH9ER0A/bvnFdhcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y1JnCovxy++SPkS7IKYmjaKxu29tCL6D3FUI+KloV4w=;
- b=Quzb5nkaN/ZF4CprWipRCaSc5jMb+Wxjq0JnVQ/dx66an0QwQ6g+YpQA/77481PuRDuuDqBSUeLeUR66OFLbQULy1STFwB44GPNZXQuTS6EAF2IbkzO73ePOjMy7z6cn6vKlt/0E9bZbQV8gMJDyqGH89XqNDueQnwg42EfanV+Mnok0v8dL/myX1m7ZKa0a+h+VMsDWWBq43U+Gspjb7GQtrf80tgxisJHPpDU5ZkOyhbW9F7zUN1WlE1zQNy8o4cnCVZEvCJQXg5Ls2KBO0hWROtDDCokPZHyNcBEZUzgHiwMqK1tISPfx4ov44wfDv7jn+cC+yHqtj/NUbcD36Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=y1JnCovxy++SPkS7IKYmjaKxu29tCL6D3FUI+KloV4w=;
- b=C4psGafCmsDeL9ltTU7g2V5fNDtkJfhejkzjDNn7pErS9RqbEVOPDRMfnxo9eTmZVRRj0z8/jSl1Yk9yEyj4ZU1tBglaQ4alEM6bexvA5mRnVkNwptlbLS1DbCIefTyOeJuxuBiEufmc3lu1FnQiFuUSbSBNrqR0bShayyW/idUQ/6r5bKtrubJkfVXRhnnCzR9/9iUYhxPHKfGUPAvixGVGlSOo5fTfBGDG/WjERX3yEs9W21fNeu/aILF6E+gHhhHBs6KFq+awvWArsvhDRTYHOoHP0HCHjombUrlqeRG62WRI4xHs9h4f3ACNLepA4v85cWvIfBDb4wDzJrLqEw==
-Received: from SG2APC01FT057.eop-APC01.prod.protection.outlook.com
- (2a01:111:e400:7ebd::4d) by
- SG2APC01HT097.eop-APC01.prod.protection.outlook.com (2a01:111:e400:7ebd::456)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3520.15; Sat, 31 Oct
- 2020 02:31:49 +0000
-Received: from MEAPR01MB3335.ausprd01.prod.outlook.com (10.152.250.58) by
- SG2APC01FT057.mail.protection.outlook.com (10.152.251.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3520.15 via Frontend Transport; Sat, 31 Oct 2020 02:31:49 +0000
-Received: from MEAPR01MB3335.ausprd01.prod.outlook.com
- ([fe80::48f:b699:9fb2:52d0]) by MEAPR01MB3335.ausprd01.prod.outlook.com
- ([fe80::48f:b699:9fb2:52d0%6]) with mapi id 15.20.3477.035; Sat, 31 Oct 2020
- 02:31:49 +0000
-From: =?gb2312?B?1twg1LbH5Q==?= <zhouyuanqing8@outlook.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-Subject: all discrete sensor shows na
-Thread-Topic: all discrete sensor shows na
-Thread-Index: AQHWryxt+3AP5Ft2cUyUGo53J0xAkQ==
-Date: Sat, 31 Oct 2020 02:31:49 +0000
-Message-ID: <MEAPR01MB3335EABEA5565F42170CB4F2FE120@MEAPR01MB3335.ausprd01.prod.outlook.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-incomingtopheadermarker: OriginalChecksum:49884BAC3A19713068DF050D8AC61A33097CCE28A2AEDF8773974F6AF4E069C7;
- UpperCasedChecksum:C60A48C9CD4A7BFA9198EAA4F18508A1BCB6DE7F65EE3AD0A6E6C62CB53BA10F;
- SizeAsReceived:6659; Count:42
-x-tmn: [y6ymRFlkNnmFz9z+waAE0eyDIF2CzxAp]
-x-ms-publictraffictype: Email
-x-incomingheadercount: 42
-x-eopattributedmessage: 0
-x-ms-office365-filtering-correlation-id: 340fd7a8-586c-4a1b-ae39-08d87d451ea4
-x-ms-traffictypediagnostic: SG2APC01HT097:
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: NmNBVDPglDVUyl0EOFsJNtJpmVPy9USCYndRRn9UcMp2+VLBA/+Wcsmmn+u8cskUzCEx3crgOs2R4xMiUFPCa/8b5C5/W42pJaH+8FCUSDwVITynKWpgXj4C8dgiXE+kHK9JTQdL0xrURt1UlXzBFeo5lTpWGJvQGmfRCsJpMxS6tJOB3hxYmEvTdLzKT7SIjl+bUsyG6XctoL/JcWtX8Q==
-x-ms-exchange-antispam-messagedata: E+h0yATPCue3bv6hLOsoV7ox4b7u0936W1bF7ptZg1kHHXl6KkVTABNEAsW95SfDyTzw2evW6+ojUn/MSSiAei81PXPA7FBCdqZlJbj9lELvH8CaNisl1vDdmNEUlFAOxeas80+tyPWcWlA4PIOT6A==
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CPX2H2jpFzDqG8
+ for <openbmc@lists.ozlabs.org>; Mon,  2 Nov 2020 10:15:02 +1100 (AEDT)
+Received: by mail-qt1-x844.google.com with SMTP id p12so796453qtp.7
+ for <openbmc@lists.ozlabs.org>; Sun, 01 Nov 2020 15:15:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=KeaL4BqkA45Dbrs5cCkbrW9Oysm4Ne5i5QjrRcTbl4o=;
+ b=lScH92/cSh6+wAZPoUpiV+vC8ZR4SrhLhVA7DAK9jNcYBPqRw9ZHy9RpmdcYXOfkgw
+ BvBIafkOkLMjD97TtDmS0WOQbeMB0XkFxziAqfafTLrhWf5YlXGyuzlY2HodpzMlrv9n
+ XGE0yzpqDd/VM0JUWmFgAraDXaopsYjbjNR1E=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=KeaL4BqkA45Dbrs5cCkbrW9Oysm4Ne5i5QjrRcTbl4o=;
+ b=SzU6VHC4A/d6UJz+7XzWbeLCG5ZnqKUobthAG+SE7HcTl0A8SSEb1JRbJ0x8rUCQcp
+ UIxhUgqG2kRZRbvqajEhiXjcyyq0DGepYaEBSuHTveHpXjxzrM4f/mUcKSJK9Mdhwo+i
+ M7+YLPkQBBLyPaf0dKNHNIAo7IVV/oikCxAeMPAqO/FhaKaOLnU3qAmRCpQQm/kZVazz
+ TSNHHk2y3Ni9d5DD4tCvRIsW9o0JwQbSoK02wmj3iT7qgGC4QxzMK8EKPLVF/qCh6vcU
+ ATAuzQHrt+noL9nSJf35MSc+j8aN6J45qnO0Cuvtxb52369+wVcIx1k/S+tfTqTzJIop
+ DMbg==
+X-Gm-Message-State: AOAM531gX44qLyR4lSspWR8a9BkMfthyGUTNdbn0uB0yYT1BgWasF9gg
+ ijdSL9r0tGtBcKLnrVWdpf2vGDfBHuL+YNfLtnI=
+X-Google-Smtp-Source: ABdhPJxGuvCMgJjtLdQPJ2dYLzcuEW8wXPE03tCVs8UIY8bbFUvesiYo7o6z5LYz+gFYyU9QXcjY2F2R5L8V0YxK96g=
+X-Received: by 2002:aed:3325:: with SMTP id u34mr12307155qtd.263.1604272499082; 
+ Sun, 01 Nov 2020 15:14:59 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT057.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 340fd7a8-586c-4a1b-ae39-08d87d451ea4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Oct 2020 02:31:49.2530 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Internet
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2APC01HT097
+References: <20201028185647.14565-1-eajames@linux.ibm.com>
+ <CACPK8XfmYy3+Z3Mzn3s=AuWbOt9UwrQ6-BDKndq=rhUdn-UUzg@mail.gmail.com>
+ <5d230deb-8c8b-01b7-95b0-45e1f25dfd8e@linux.ibm.com>
+In-Reply-To: <5d230deb-8c8b-01b7-95b0-45e1f25dfd8e@linux.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Sun, 1 Nov 2020 23:14:46 +0000
+Message-ID: <CACPK8XfrGiJUctpr3MaX1t88oB52KznpbONtrJxWVrJoud2Tfw@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.8 v3] ARM: dts: Aspeed: Rainier: Add 4U
+ device-tree
+To: Eddie James <eajames@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,115 +72,170 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "uperic@163.com" <uperic@163.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+On Fri, 30 Oct 2020 at 13:51, Eddie James <eajames@linux.ibm.com> wrote:
+>
+>
+> On 10/29/20 11:14 PM, Joel Stanley wrote:
+> > Hi Eddie,
+> >
+> > On Wed, 28 Oct 2020 at 18:56, Eddie James <eajames@linux.ibm.com> wrote:
+> >> Add a device-tree for the Rainier 4U system. Change the model name
+> >> on the existing Rainier device-tree to 2U, and remove the two
+> >> extra power supplies that are only present on the 4U system. Also
+> >> add labels to the fan nodes for use in the 4U device-tree.
+> >>
+> >> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+> >> ---
+> >> Changes since v2:
+> >>   - Just reference individual fan nodes rather than the whole fan
+> >>     controller
+> >>
+> >> Changes since v1:
+> >>   - Don't rename the 2U dts
+> >>   - Include the 2U dts from the 4U and make the necessary Changes
+> >>
+> >>   arch/arm/boot/dts/Makefile                    |  1 +
+> >>   .../boot/dts/aspeed-bmc-ibm-rainier-4u.dts    | 37 +++++++++++++++++++
+> >>   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts  | 20 +++-------
+> >>   3 files changed, 43 insertions(+), 15 deletions(-)
+> >>   create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
+> >>
+> >> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> >> index 7e4d3600e16d..9a2ab5e6e924 100644
+> >> --- a/arch/arm/boot/dts/Makefile
+> >> +++ b/arch/arm/boot/dts/Makefile
+> >> @@ -1360,6 +1360,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+> >>          aspeed-bmc-facebook-yamp.dtb \
+> >>          aspeed-bmc-facebook-yosemitev2.dtb \
+> >>          aspeed-bmc-ibm-rainier.dtb \
+> >> +       aspeed-bmc-ibm-rainier-4u.dtb \
+> >>          aspeed-bmc-intel-s2600wf.dtb \
+> >>          aspeed-bmc-inspur-fp5280g2.dtb \
+> >>          aspeed-bmc-lenovo-hr630.dtb \
+> >> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
+> >> new file mode 100644
+> >> index 000000000000..9c35ac1d19a6
+> >> --- /dev/null
+> >> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
+> >> @@ -0,0 +1,37 @@
+> >> +// SPDX-License-Identifier: GPL-2.0-or-later
+> >> +// Copyright 2020 IBM Corp.
+> >> +/dts-v1/;
+> >> +
+> >> +#include "aspeed-bmc-ibm-rainier-4u.dts"
+> > Did you test this patch?
+>
+>
+> Yes, Rainier hardware BMC booted to Ready state. I suspect it wouldn't
+> power on properly due to bad fan configuration though, so I didn't try
+> that. DTS looked good under /sys/firmware though.
 
-SGksDQoNCiAgIEkgYWRkZWQgc29tZSBkaXNjcmV0ZSBzZW5zb3JzIHRvIG9wZW5ibWMsIGJ1dCBJ
-IHVzZWQgdGhlIGlwbWl0b29sIGNvbW1hbmQgdG8gcXVlcnkgYW5kIGZvdW5kIHRoYXQgYWxsIGRp
-c2NyZXRlIHNlbnNvcnMgZGlzcGxheWVkIG5hLiBQbGVhc2UgaGVscCBhbmQgZ3VpZGUsIHRoYW5r
-IHlvdS4gRXhhbXBsZXMgYXJlIGFzIGZvbGxvd3MuDQoNCkY6XGlwbWl0b29sIHYxLjguMTg+aXBt
-aXRvb2wuZXhlIC1JIGxhbnBsdXMgLUMgMTcgLUggMTcyLjE2LjkwLjE3MiAtVSByb290IC1QIDBw
-ZW5CbWMgc2Vuc29yIGxpc3QNClBvd2VyRHJvcCAgICAgICAgfCBuYSAgICAgICAgIHwgZGlzY3Jl
-dGUgICB8IG5hICAgIHwgbmEgICAgICAgIHwgbmEgICAgICAgIHwgbmEgICAgICAgIHwgbmEgICAg
-ICAgIHwgbmEgICAgICAgIHwgbmENCg0KRjpcaXBtaXRvb2wgdjEuOC4xOD5pcG1pdG9vbC5leGUg
-LUkgbGFucGx1cyAtQyAxNyAtSCAxNzIuMTYuOTAuMTcyIC1VIHJvb3QgLVAgMHBlbkJtYyBzZW5z
-b3IgZ2V0IFBvd2VyRHJvcA0KTG9jYXRpbmcgc2Vuc29yIHJlY29yZC4uLg0KU2Vuc29yIElEICAg
-ICAgICAgICAgICA6IFBvd2VyRHJvcCAgKDB4MjgpDQogRW50aXR5IElEICAgICAgICAgICAgIDog
-Ny4xDQogU2Vuc29yIFR5cGUgKERpc2NyZXRlKTogUG93ZXIgU3VwcGx5DQogVW5hYmxlIHRvIHJl
-YWQgc2Vuc29yOiBEZXZpY2UgTm90IFByZXNlbnQNCg0KSSBoYXZlIGNoZWNrZWQgdGhlIGRidXMg
-aW50ZXJmYWNlIGNvcnJlc3BvbmRpbmcgdG8gUG93ZXJEcm9wLCBhbmQgaXQgY2FuIGJlIHNldCBh
-bmQgaW5xdWlyZWQgdGhyb3VnaCB0aGUgYnVzY3RsIGNvbW1hbmQ7DQoNClRoYW5reW91IQ0KDQpo
-YXJsZXkuDQo=
+Are you sure? The version of the patch you posted here doesn't compile.
 
---_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_
-Content-Type: text/html; charset="gb2312"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Hi,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-&nbsp; &nbsp;I added some discrete sensors to openbmc, but I used the ipmit=
-ool command to query and found that all discrete sensors displayed na. Plea=
-se help and guide, thank you. Examples are as follows.</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<span style=3D"caret-color:rgb(0, 0, 0);background-color:rgb(255, 255, 255)=
-;display:inline !important">F:\ipmitool v1.8.18&gt;</span>ipmitool.exe -I l=
-anplus -C 17 -H 172.16.90.172 -U root -P 0penBmc sensor list</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-PowerDrop &nbsp; &nbsp; &nbsp; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp; | dis=
-crete &nbsp; | na &nbsp; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp;| na &nbsp; =
-&nbsp; &nbsp; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp;| na &nbsp; &nbsp; &nbs=
-p; &nbsp;| na &nbsp; &nbsp; &nbsp; &nbsp;| na<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-F:\ipmitool v1.8.18&gt;ipmitool.exe -I lanplus -C 17 -H 172.16.90.172 -U ro=
-ot -P 0penBmc sensor get
-<span style=3D"caret-color:rgb(0, 0, 0);background-color:rgb(255, 255, 255)=
-;display:inline !important">
-PowerDrop<span class=3D"Apple-converted-space">&nbsp;</span></span>
-<div>Locating sensor record...</div>
-<div>Sensor ID &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: <span styl=
-e=3D"caret-color:rgb(0, 0, 0);background-color:rgb(255, 255, 255);display:i=
-nline !important">
-PowerDrop<span class=3D"Apple-converted-space">&nbsp;</span></span> (0x28)<=
-/div>
-<div>&nbsp;Entity ID &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : 7.1</div>
-<div>&nbsp;Sensor Type (Discrete): Power Supply</div>
-&nbsp;Unable to read sensor: Device Not Present<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-I have checked the dbus interface corresponding to PowerDrop, and it can be=
- set and inquired through the busctl command;<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Thankyou!</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-harley.</div>
-</body>
-</html>
-
---_000_MEAPR01MB3335EABEA5565F42170CB4F2FE120MEAPR01MB3335ausp_--
+>
+>
+> Thanks,
+>
+> Eddie
+>
+>
+> >
+> >> +
+> >> +/ {
+> >> +       model = "Rainier 4U";
+> >> +};
+> >> +
+> >> +&i2c3 {
+> >> +       power-supply@6a {
+> >> +               compatible = "ibm,cffps";
+> >> +               reg = <0x6a>;
+> >> +       };
+> >> +
+> >> +       power-supply@6b {
+> >> +               compatible = "ibm,cffps";
+> >> +               reg = <0x6b>;
+> >> +       };
+> >> +};
+> >> +
+> >> +&fan0 {
+> >> +       tach-pulses = <4>;
+> >> +};
+> >> +
+> >> +&fan1 {
+> >> +       tach-pulses = <4>;
+> >> +};
+> >> +
+> >> +&fan2 {
+> >> +       tach-pulses = <4>;
+> >> +};
+> >> +
+> >> +&fan3 {
+> >> +       tach-pulses = <4>;
+> >> +};
+> >> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> >> index 183e1a4dcc65..676ae5602fb9 100644
+> >> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> >> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> >> @@ -8,7 +8,7 @@
+> >>   #include <dt-bindings/leds/leds-pca955x.h>
+> >>
+> >>   / {
+> >> -       model = "Rainier";
+> >> +       model = "Rainier 2U";
+> >>          compatible = "ibm,rainier-bmc", "aspeed,ast2600";
+> >>
+> >>          aliases {
+> >> @@ -646,16 +646,6 @@ power-supply@69 {
+> >>                  compatible = "ibm,cffps";
+> >>                  reg = <0x69>;
+> >>          };
+> >> -
+> >> -       power-supply@6a {
+> >> -               compatible = "ibm,cffps";
+> >> -               reg = <0x6a>;
+> >> -       };
+> >> -
+> >> -       power-supply@6b {
+> >> -               compatible = "ibm,cffps";
+> >> -               reg = <0x6b>;
+> >> -       };
+> >>   };
+> >>
+> >>   &i2c4 {
+> >> @@ -775,25 +765,25 @@ max31785@52 {
+> >>                  #address-cells = <1>;
+> >>                  #size-cells = <0>;
+> >>
+> >> -               fan@0 {
+> >> +               fan0: fan@0 {
+> >>                          compatible = "pmbus-fan";
+> >>                          reg = <0>;
+> >>                          tach-pulses = <2>;
+> >>                  };
+> >>
+> >> -               fan@1 {
+> >> +               fan1: fan@1 {
+> >>                          compatible = "pmbus-fan";
+> >>                          reg = <1>;
+> >>                          tach-pulses = <2>;
+> >>                  };
+> >>
+> >> -               fan@2 {
+> >> +               fan2: fan@2 {
+> >>                          compatible = "pmbus-fan";
+> >>                          reg = <2>;
+> >>                          tach-pulses = <2>;
+> >>                  };
+> >>
+> >> -               fan@3 {
+> >> +               fan3: fan@3 {
+> >>                          compatible = "pmbus-fan";
+> >>                          reg = <3>;
+> >>                          tach-pulses = <2>;
+> >> --
+> >> 2.26.2
+> >>
