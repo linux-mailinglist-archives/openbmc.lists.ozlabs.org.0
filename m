@@ -2,69 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DF0B2A348D
-	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 20:51:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1939F2A3688
+	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 23:29:17 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CQ3SW1W2DzDqN6
-	for <lists+openbmc@lfdr.de>; Tue,  3 Nov 2020 06:51:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CQ6yx4WB2zDq9b
+	for <lists+openbmc@lfdr.de>; Tue,  3 Nov 2020 09:29:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::12e;
- helo=mail-il1-x12e.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=TqIOwtDG; dkim-atps=neutral
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com
- [IPv6:2607:f8b0:4864:20::12e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=Jo9UhY5L; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=X+mhGNMM; 
+ dkim-atps=neutral
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CQ3RW18shzDqML
- for <openbmc@lists.ozlabs.org>; Tue,  3 Nov 2020 06:50:14 +1100 (AEDT)
-Received: by mail-il1-x12e.google.com with SMTP id v18so14076364ilg.1
- for <openbmc@lists.ozlabs.org>; Mon, 02 Nov 2020 11:50:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=TmMm3yMfaUn0BWjWo1kIIrbVeQA4Qvl9pWZTwJOsmd4=;
- b=TqIOwtDGQtmsJRorF9Qs6lGcm4oaPGf/PMrxvE43VJWI5L65t4w8I8w/20BCk/C+sN
- oBknh0u6T6HOu1/B2/szttqvvKg/hZ0NwVJaBVUUwg531RpftM2WBFyJS8PUQ15xJufX
- otTEjAcQgVXqhI8Nymw+jcCfeA5ZTphksJOW9mdMB3I9FjpmMJEqD5L4PkE0cjShaoLQ
- 9a6p1l+5JyUa6yT/kNGvB07u+jdRceQxBUXXvvTONdwpSmftTKu6nZbeAYBcRoCwshVj
- ADi0+0Cg5b/dfSVPQD08GbQdrbUDsVHel4a4E02Datx9MZs6PmDVubjtpvb9LWMMZZsR
- 2XOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=TmMm3yMfaUn0BWjWo1kIIrbVeQA4Qvl9pWZTwJOsmd4=;
- b=P+5REs2nEU/N7GyfY+D6vkb8m5MZ2x/NxXX/9c5lX9EIF9OEGVtvVjzreWuk9ZEmVN
- DN4g6kI4MoTKPnW69w2dm4QEXN4+uMl/c6MyH0dJnu0aC9lHWF2Y8ob7FF+A8EOyGVfT
- z4IoH2xmqQcfS+5RWYfX1PVqxRZ2YRI/SSbZu9HggHXzBsjmSFB26bG4/+NI0EFb+I+s
- L2aOSx1vewsirSttJKVD/POdhEN0xjpQWUawoXVqTKjERipq2os9PcjFDr14Zld/qLwh
- vPhUYk5+0zig61nUTOR0ztepubmsKSuXqPNjL1At6FgjD9XzhdrkwXmARPYnu5/7MIhB
- Bs3Q==
-X-Gm-Message-State: AOAM5308CWujSRg106vhZiU6q+NiDfXcYtzIPxZLNuwpJ7oj2bSSGSkx
- 3ol/fNMoG+yv9nKMoPGmLS7LawlnPKGTcfBP9fCf7A==
-X-Google-Smtp-Source: ABdhPJwSgsQjpFyTtIp/gqyGHvH6V/3YwqTtaifrpArg1o8CJaFlyTuztoVFYWxo/g0+zcsEQfpDsPutqGVkK3h726Y=
-X-Received: by 2002:a05:6e02:4aa:: with SMTP id
- e10mr11343883ils.58.1604346610866; 
- Mon, 02 Nov 2020 11:50:10 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CQ6xy74nWzDqRv
+ for <openbmc@lists.ozlabs.org>; Tue,  3 Nov 2020 09:28:21 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 0312C5C0248;
+ Mon,  2 Nov 2020 17:28:18 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Mon, 02 Nov 2020 17:28:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=318V6zeyxaoGtveMZQ/79PYdu12
+ 1rE4CJrV1Z5CG5lI=; b=Jo9UhY5LayhPXGnVwPsch6i+dPvS0usyAL4qALYfEng
+ eqnLSABIneDImWS/3ghMmdSj0FIFdTj334ga3JO9CufUAqxj1V87LlN82ptqFFye
+ ITm9kduYcfgWJIMduqmeBRgV4ZK0Pl47Bqp7ocAWPsHaWq0yUoWFRZaR8m1UhZ1Y
+ /wsXb63Eo18Gde0IWLQHyqkNAM4ib5POMsWysYQKTd3WVB8V2Iuc0Y96pgCsc3GU
+ C9DcODCPJFApv0/Bqb9aNbyFiHn5Ikw6JbInud3TLYjRYHopEF8BzbT3W8HWjdj/
+ uWzmfXPNUwrAKkDHyIrqJSFBY/W20MGeFbsdyDymN+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=318V6z
+ eyxaoGtveMZQ/79PYdu121rE4CJrV1Z5CG5lI=; b=X+mhGNMMA+1p1DJEVhJg5x
+ NWg8fK86LqwJyqpe6HmJXzuzaB5sBtOidGS0FoFlJPn7D1+4wt6ja/UCvmDnP3yc
+ oswKOisXfnM2+aSu3PaTgEGQPjETuyfVm/qd8wymmtwXdQCHEWae+jFuEgzlqn/p
+ P0ZM34ru2yXix7IDE+VtH+Pno0KoXQgB5QCi+REBMFdxaRT3nv0tsPM8D08h87Mk
+ it6mh8wA9yyazNPOYkjFymlmeVSNr3BybM8dAjGtsEFbJ4bCyk+oqrpRIh3qxLP4
+ zZAka++P7Pl/cpCE5rnHWqnoCxN8PaSCgH0buShp5iLjOitpSg6gZeVcfQQzkOYQ
+ ==
+X-ME-Sender: <xms:AYigX51V-OvmrP4hy5bGTkq9DWkSPGCc4dLvlXWcTVDlhK9hCd4c7g>
+ <xme:AYigXwGeWfAMdUnz0VCl_s0-Cz4GhSGwDC1jVqAjijT2Jkb2N8EX808iCHjMxjNxh
+ xRJPkh2C7F9_u_8hAI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddtuddgudeiudcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
+ tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpefgfedvkedtffejveffjedvgfei
+ hfffueeuheeiudekfeegjefgheefudehteektdenucffohhmrghinhepphgrshhtvggsih
+ hnrdgtohhmnecukfhppeejiedrvdehtddrkeegrddvfeeinecuvehluhhsthgvrhfuihii
+ vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgi
+ ihii
+X-ME-Proxy: <xmx:AYigX56EaVgmH-huLa060t6z9EDWyDd_LVChfYeTn71Ge--LrWldyw>
+ <xmx:AYigX23Xnvx6WGUwKAVmKLTjScbaq8XdPcYe4E7AVU7NS2KbGX3uJQ>
+ <xmx:AYigX8Fr7Z_DB1PM3WsZyvN7AiKPbKLL4_ywgZgSC110Q3-jtP05Ew>
+ <xmx:AYigX_wvmYltYtVKATOpvHRUXXM7eohCDBPc9gJ1kVZK6Xs8AnXdcQ>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 182B1328005D;
+ Mon,  2 Nov 2020 17:28:17 -0500 (EST)
+Date: Mon, 2 Nov 2020 16:28:15 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Anton Kachalov <rnouse@google.com>
+Subject: Re: Current master is broken
+Message-ID: <20201102222815.GG3614@heinlein>
+References: <CADVsX8_pFwe-Zef0fpNfZFL3s9fiJrvRFAfwjZNt911hUq341Q@mail.gmail.com>
+ <CADVsX88OzLv2dX4JfQ8+uuKON+hLC1qS6BvLUpwiJ241_N9S5g@mail.gmail.com>
 MIME-Version: 1.0
-References: <HK2PR03MB45804A1D770024303FC50FCAD3140@HK2PR03MB4580.apcprd03.prod.outlook.com>
- <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
- <ef502742-673b-4aeb-8614-f305a0f0053a@www.fastmail.com>
- <HK2PR03MB4580C4DF82B1089E34B97311D3100@HK2PR03MB4580.apcprd03.prod.outlook.com>
-In-Reply-To: <HK2PR03MB4580C4DF82B1089E34B97311D3100@HK2PR03MB4580.apcprd03.prod.outlook.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Mon, 2 Nov 2020 20:49:59 +0100
-Message-ID: <CADVsX8-9FMwUrjnNzKdEX2CRHRNr0nwFyy74U74OozQHWfXpVA@mail.gmail.com>
-Subject: Re: [External] Re: SELinux support question
-To: Ivan Li11 <rli11@lenovo.com>
-Content-Type: multipart/alternative; boundary="000000000000d6c0ac05b3250dc2"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="p7qwJlK53pWzbayA"
+Content-Disposition: inline
+In-Reply-To: <CADVsX88OzLv2dX4JfQ8+uuKON+hLC1qS6BvLUpwiJ241_N9S5g@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,144 +97,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Artem Senichev <artemsen@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d6c0ac05b3250dc2
-Content-Type: text/plain; charset="UTF-8"
 
-Hello, Ivan.
-
-Perhaps, you should enable selinux kernel configuration as well. The
-openbmc kernels, if I'm not mistaken, have different recipes.
-
-The default configuration relies on linux-yocto package:
-http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kernel/linux
-
-You should include this selinux.cfg in on of the openbmc kernel layers:
-
-SRC_URI += "file://selinux.cfg"
-
-and copy selinux.cfg to one of the local files location.
-
-On Mon, 2 Nov 2020 at 18:46, Ivan Li11 <rli11@lenovo.com> wrote:
-
->
-> > -----Original Message-----
-> > From: Andrew Jeffery <andrew@aj.id.au>
-> > Sent: Monday, November 2, 2020 8:54 AM
-> > To: Artem Senichev <artemsen@gmail.com>; Ivan Li11 <rli11@lenovo.com>
-> > Cc: openbmc@lists.ozlabs.org
-> > Subject: [External] Re: SELinux support question
-> >
-> >
-> >
-> > On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:
-> > > Hi Ivan,
-> > >
-> > > Yocto has a layer for SELinux
-> > > (http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux), you can try
-> > > it.
-> > > But the layer depends on Python for management tools, which does not
-> > > exist in the OpenBMC image anymore.
-> > > The problem is that Python significantly increases image size, it will
-> > > be more than 32MiB, which causes some troubles with qemu emulation.
-> >
-> > The problem is broader than qemu though, it would also be broken on any
-> > platform shipping a 32MiB flash part if the image exceeds 32MiB.
-> >
-> > That said, if there are systems that ship bigger parts and enabling
-> SELinux for
-> > those is feasible, we should add those platform models to qemu so
-> emulating
-> > them isn't constrained by the existing platform support.
-> >
-> > Andrew
->
-> Hi Andrew and Artem,
-> Per your suggestion, I try to enable SELinux with Yocto SELinux layer(
-> http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux) and 64MiB flash
-> part.
-> But encountered one problem which is when I use command "getenforce" to
-> check SELinux mode, it always returns "Disabled" even if SELinux mode in
-> config file '/etc/selinux/config' is permissive or enforcing by default.
->
-> Please help to advise it.
->
-
---000000000000d6c0ac05b3250dc2
-Content-Type: text/html; charset="UTF-8"
+--p7qwJlK53pWzbayA
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hello, Ivan.<div><br></div><div>Perhaps, you should enable=
- selinux kernel configuration as well. The openbmc kernels, if I&#39;m not =
-mistaken, have different recipes.</div><div><br></div><div>The default conf=
-iguration relies on linux-yocto package:</div><div><a href=3D"http://git.yo=
-ctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kernel/linux">http:/=
-/git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kernel/linux<=
-/a><br></div><div><br></div><div>You should include this selinux.cfg in on =
-of the openbmc kernel layers:</div><div><br></div><div>SRC_URI=C2=A0+=3D &q=
-uot;file://selinux.cfg&quot;</div><div><br></div><div>and copy selinux.cfg =
-to one of the local files location.</div></div><br><div class=3D"gmail_quot=
-e"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 2 Nov 2020 at 18:46, Ivan =
-Li11 &lt;<a href=3D"mailto:rli11@lenovo.com">rli11@lenovo.com</a>&gt; wrote=
-:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
-8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-&gt; -----Original Message-----<br>
-&gt; From: Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au" target=3D"=
-_blank">andrew@aj.id.au</a>&gt;<br>
-&gt; Sent: Monday, November 2, 2020 8:54 AM<br>
-&gt; To: Artem Senichev &lt;<a href=3D"mailto:artemsen@gmail.com" target=3D=
-"_blank">artemsen@gmail.com</a>&gt;; Ivan Li11 &lt;<a href=3D"mailto:rli11@=
-lenovo.com" target=3D"_blank">rli11@lenovo.com</a>&gt;<br>
-&gt; Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">open=
-bmc@lists.ozlabs.org</a><br>
-&gt; Subject: [External] Re: SELinux support question<br>
-&gt; <br>
-&gt; <br>
-&gt; <br>
-&gt; On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:<br>
-&gt; &gt; Hi Ivan,<br>
-&gt; &gt;<br>
-&gt; &gt; Yocto has a layer for SELinux<br>
-&gt; &gt; (<a href=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinu=
-x" rel=3D"noreferrer" target=3D"_blank">http://git.yoctoproject.org/cgit/cg=
-it.cgi/meta-selinux</a>), you can try<br>
-&gt; &gt; it.<br>
-&gt; &gt; But the layer depends on Python for management tools, which does =
-not<br>
-&gt; &gt; exist in the OpenBMC image anymore.<br>
-&gt; &gt; The problem is that Python significantly increases image size, it=
- will<br>
-&gt; &gt; be more than 32MiB, which causes some troubles with qemu emulatio=
-n.<br>
-&gt; <br>
-&gt; The problem is broader than qemu though, it would also be broken on an=
-y<br>
-&gt; platform shipping a 32MiB flash part if the image exceeds 32MiB.<br>
-&gt; <br>
-&gt; That said, if there are systems that ship bigger parts and enabling SE=
-Linux for<br>
-&gt; those is feasible, we should add those platform models to qemu so emul=
-ating<br>
-&gt; them isn&#39;t constrained by the existing platform support.<br>
-&gt; <br>
-&gt; Andrew<br>
-<br>
-Hi Andrew and Artem,<br>
-Per your suggestion, I try to enable SELinux with Yocto SELinux layer(<a hr=
-ef=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux" rel=3D"norefe=
-rrer" target=3D"_blank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-seli=
-nux</a>) and 64MiB flash part.<br>
-But encountered one problem which is when I use command &quot;getenforce&qu=
-ot; to check SELinux mode, it always returns &quot;Disabled&quot; even if S=
-ELinux mode in config file &#39;/etc/selinux/config&#39; is permissive or e=
-nforcing by default.<br>
-<br>
-Please help to advise it.=C2=A0 <br>
-</blockquote></div>
+On Fri, Oct 30, 2020 at 10:40:40PM +0100, Anton Kachalov wrote:
+> Raise it up.
+>=20
+> Even with the recent checkout it is still broken even for qemutarget.
+>=20
+> On Fri, 23 Oct 2020 at 20:22, Anton Kachalov <rnouse@google.com> wrote:
+>=20
+> > The recent commit af5e4ef732faedf66c6dc1756432e9de2ac72988 broke the bu=
+ild:
+> >
+> > https://pastebin.com/5tTYHd68
+> >
+> > The do_package() step tries to chown the base-files/3.0.14-r89/package/=
+usr
+> > directory to 0:0 uid/gid
+> >
+> > I've tried to remove build/tmp and re-run several times. Fails with the
+> > same error. If I use the previous commit
+> > (36fe5df200a94e3ce82ba2dcad16c0a4127f6d46) it builds without any issues.
+> >
 
---000000000000d6c0ac05b3250dc2--
+Hi Anton,
+
+I don't think anyone else is observing this so that's probably why no
+one responded.  I've been building pretty regularly Witherspoon and
+Tiogapass and never seen this.
+
+Is this something you're seeing with fresh builds or has your build tree
+been around for a while?  The commit you pointed to was a Yocto update,
+so it is certainly possible they've messed something up in certain
+conditions.
+
+Can you figure out who owns that file from your paste?  Is it your user?
+
+--=20
+Patrick Williams
+
+--p7qwJlK53pWzbayA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl+gh/0ACgkQqwNHzC0A
+wRm+DQ//ZRncZcoSIQMopmRK41Hma1lQCvWOknbposypaV/+IQMQl39lTZ+14u0b
+AAw1voBXzUjY7mSqHcTyx1Xxn/V9hjBuAexsW0zz6/ohEzbRKSYtrByourm1gtHG
+zfsbPTsfiyelQpted70bClRQSOdZ5jQtWFEE24az6btH/Xt3Wh8u40n18OjKdmFn
+Wp5QbCU9EPrQ4oJcacrZPx0qRLL5k+s/RySlpOvQWWynzOn6fG65fHT2yUIaKK78
+WotOHpo7Hzp9KK+QGj+umJ7HtAmSHoqflZkM/XU8o/mplbTvgHw4ZugFlztjxV0d
+Z8OF8qRgfvPF02PbAXUwQf1to6IMs7DJQqNIebwNb4CRZCAMFGnZ8/L/F7A90YEU
+sp3XcIMYpe6DXNljfETRqpy7rqAilE4Mh1x/7qbsM3DbjakmKOeH6ru1HoVZD4tZ
+5oGEHpVmHpKUF0HpY6ARN1b8V8YopQ8EMYidF2Jtcfd3ypP+8+hTbGPm5ROCnG3K
+Q3yg2t2A9psr9abMcppXGYu/5Y48sAHXqdZfcaGEsrjvSexIbgHd7Kdo9isFLNH6
+YhGO79p2HMt6Bk+0aU/Xs3LXP51XDH4y0jE011B1PZ9NZrcYElILXa2LESRLH1X3
+zzadHelTiURIBU6t8oiPrLwo1pIeOiO8jwTsDExiyPv5nMegSzk=
+=0kAk
+-----END PGP SIGNATURE-----
+
+--p7qwJlK53pWzbayA--
