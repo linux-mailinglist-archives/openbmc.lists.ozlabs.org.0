@@ -1,66 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8F172A224C
-	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 00:15:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DB222A229F
+	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 01:55:26 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CPX356Wn9zDqZW
-	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 10:15:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CPZG30q80zDqSm
+	for <lists+openbmc@lfdr.de>; Mon,  2 Nov 2020 11:55:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::844;
- helo=mail-qt1-x844.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=lScH92/c; dkim-atps=neutral
-Received: from mail-qt1-x844.google.com (mail-qt1-x844.google.com
- [IPv6:2607:f8b0:4864:20::844])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=none (p=none dis=none) header.from=aj.id.au
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=b1WVHrkg; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=emRxK5zs; 
+ dkim-atps=neutral
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CPX2H2jpFzDqG8
- for <openbmc@lists.ozlabs.org>; Mon,  2 Nov 2020 10:15:02 +1100 (AEDT)
-Received: by mail-qt1-x844.google.com with SMTP id p12so796453qtp.7
- for <openbmc@lists.ozlabs.org>; Sun, 01 Nov 2020 15:15:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=KeaL4BqkA45Dbrs5cCkbrW9Oysm4Ne5i5QjrRcTbl4o=;
- b=lScH92/cSh6+wAZPoUpiV+vC8ZR4SrhLhVA7DAK9jNcYBPqRw9ZHy9RpmdcYXOfkgw
- BvBIafkOkLMjD97TtDmS0WOQbeMB0XkFxziAqfafTLrhWf5YlXGyuzlY2HodpzMlrv9n
- XGE0yzpqDd/VM0JUWmFgAraDXaopsYjbjNR1E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=KeaL4BqkA45Dbrs5cCkbrW9Oysm4Ne5i5QjrRcTbl4o=;
- b=SzU6VHC4A/d6UJz+7XzWbeLCG5ZnqKUobthAG+SE7HcTl0A8SSEb1JRbJ0x8rUCQcp
- UIxhUgqG2kRZRbvqajEhiXjcyyq0DGepYaEBSuHTveHpXjxzrM4f/mUcKSJK9Mdhwo+i
- M7+YLPkQBBLyPaf0dKNHNIAo7IVV/oikCxAeMPAqO/FhaKaOLnU3qAmRCpQQm/kZVazz
- TSNHHk2y3Ni9d5DD4tCvRIsW9o0JwQbSoK02wmj3iT7qgGC4QxzMK8EKPLVF/qCh6vcU
- ATAuzQHrt+noL9nSJf35MSc+j8aN6J45qnO0Cuvtxb52369+wVcIx1k/S+tfTqTzJIop
- DMbg==
-X-Gm-Message-State: AOAM531gX44qLyR4lSspWR8a9BkMfthyGUTNdbn0uB0yYT1BgWasF9gg
- ijdSL9r0tGtBcKLnrVWdpf2vGDfBHuL+YNfLtnI=
-X-Google-Smtp-Source: ABdhPJxGuvCMgJjtLdQPJ2dYLzcuEW8wXPE03tCVs8UIY8bbFUvesiYo7o6z5LYz+gFYyU9QXcjY2F2R5L8V0YxK96g=
-X-Received: by 2002:aed:3325:: with SMTP id u34mr12307155qtd.263.1604272499082; 
- Sun, 01 Nov 2020 15:14:59 -0800 (PST)
-MIME-Version: 1.0
-References: <20201028185647.14565-1-eajames@linux.ibm.com>
- <CACPK8XfmYy3+Z3Mzn3s=AuWbOt9UwrQ6-BDKndq=rhUdn-UUzg@mail.gmail.com>
- <5d230deb-8c8b-01b7-95b0-45e1f25dfd8e@linux.ibm.com>
-In-Reply-To: <5d230deb-8c8b-01b7-95b0-45e1f25dfd8e@linux.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Sun, 1 Nov 2020 23:14:46 +0000
-Message-ID: <CACPK8XfrGiJUctpr3MaX1t88oB52KznpbONtrJxWVrJoud2Tfw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8 v3] ARM: dts: Aspeed: Rainier: Add 4U
- device-tree
-To: Eddie James <eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CPZFB3LT5zDqJY
+ for <openbmc@lists.ozlabs.org>; Mon,  2 Nov 2020 11:54:36 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id EA2E4DBD;
+ Sun,  1 Nov 2020 19:54:32 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Sun, 01 Nov 2020 19:54:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=19aGdT0jkcYsqwrGvqz8AQAFckB4jNp
+ X0KyUw0VX1cc=; b=b1WVHrkgjWA85c91zBSSKNy+mMmlnJ9CwQ8ikETa/CNEpLw
+ HCoNpfaF818RCY0d6ePL7K386L/UGSU+gTZTKSqVssx/XQFQl+NC5pzyl+qkNLiY
+ +I1RdFf95yXVolJmr8zy8p5Yn3wgrgHG2jmSV7lmgkdrgiCanw5irVdqEZ13wI6n
+ H60Y1IkcuAHHWpZW8Lqcwyxam3z0XiiWC9NP028kGlX97MjnEC2axyDPDiPaF7Er
+ qYpIf11BaYfvTFYi2SbJlXNGP3WZgygA5clM1Hz4g0oYWG3FKECcGl3H3718t3vE
+ l6VnXu1VYh/UP0sh5RGUFft7jUOBVbqUSsez6UQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=19aGdT
+ 0jkcYsqwrGvqz8AQAFckB4jNpX0KyUw0VX1cc=; b=emRxK5zs3n61DGsZjLdfIJ
+ sNvoKij5m8HJlvmO0LE/b8/tagNlOl3gNkNVGyeOES3YVFQ4CVQAeKNOw9LNkmD7
+ qYApIPE5sIu/U6mK1+lHQhiX0XZY83kNwrTnUk4UFSRF4ZllzC6Im8kvZRIy6FIv
+ J63Sgj+kr5TGwLP0O+r9r13omvHpoex/KBiibNc/Zbu22YIbFJbGnR1e5TZAxMZd
+ W2whmxoEfHdaS09LIjGYSRjuMYyHE7REORHeiTPux26IK9FMe5TZvTcbHvfaoLFz
+ yIV6QUUWkwfmA0LyKQsxe33xMFLAIkXGDYrSZJIK0yHMiXrHkGivZbBuEkYiBKXg
+ ==
+X-ME-Sender: <xms:yFifXzRa7pYhdCfvGiBz6p3V5y4eGU6uR2_ojaTlMUu51YPIZDCjEQ>
+ <xme:yFifX0w8bfCvjReA4HbLb02f-PiwniJdvbyYknVN2yX7r6SqQuk5zrydDcc9t5Uu1
+ --5p_FAgT6kQ6V3KQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddttddgvdeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepheegieelveeftedutdeiffekvddvffefhfeftdekheettdevveefkefh
+ iefhffevnecuffhomhgrihhnpeihohgtthhophhrohhjvggtthdrohhrghenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghj
+ rdhiugdrrghu
+X-ME-Proxy: <xmx:yFifX41MH_jejc8zIx3i9G5Fl0RiwSqxiO1LE8XQvgh7WrkQBMIqFA>
+ <xmx:yFifXzCy-eDh_WP08wlHeMtbwDIOimnNhx6dRl8t_KbTQnxPNefd0A>
+ <xmx:yFifX8jC60DKNfQ-c_ZMURNBkfJdnbLyMsQBELomK_OKkitSD__3Ow>
+ <xmx:yFifX0KOQjg4Dzgi5FaqBBei0dp-jUZOi8JQbkuQ_aq8Lwqm7c1g7A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 4B0E9E00A8; Sun,  1 Nov 2020 19:54:30 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-530-g8da6958-fm-20201021.003-g69105b13-v35
+Mime-Version: 1.0
+Message-Id: <ef502742-673b-4aeb-8614-f305a0f0053a@www.fastmail.com>
+In-Reply-To: <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
+References: <HK2PR03MB45804A1D770024303FC50FCAD3140@HK2PR03MB4580.apcprd03.prod.outlook.com>
+ <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
+Date: Mon, 02 Nov 2020 11:24:12 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Artem Senichev" <artemsen@gmail.com>, "Ivan Li11" <rli11@lenovo.com>
+Subject: Re: SELinux support question
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,170 +94,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 30 Oct 2020 at 13:51, Eddie James <eajames@linux.ibm.com> wrote:
->
->
-> On 10/29/20 11:14 PM, Joel Stanley wrote:
-> > Hi Eddie,
-> >
-> > On Wed, 28 Oct 2020 at 18:56, Eddie James <eajames@linux.ibm.com> wrote:
-> >> Add a device-tree for the Rainier 4U system. Change the model name
-> >> on the existing Rainier device-tree to 2U, and remove the two
-> >> extra power supplies that are only present on the 4U system. Also
-> >> add labels to the fan nodes for use in the 4U device-tree.
-> >>
-> >> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> >> ---
-> >> Changes since v2:
-> >>   - Just reference individual fan nodes rather than the whole fan
-> >>     controller
-> >>
-> >> Changes since v1:
-> >>   - Don't rename the 2U dts
-> >>   - Include the 2U dts from the 4U and make the necessary Changes
-> >>
-> >>   arch/arm/boot/dts/Makefile                    |  1 +
-> >>   .../boot/dts/aspeed-bmc-ibm-rainier-4u.dts    | 37 +++++++++++++++++++
-> >>   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts  | 20 +++-------
-> >>   3 files changed, 43 insertions(+), 15 deletions(-)
-> >>   create mode 100644 arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
-> >>
-> >> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> >> index 7e4d3600e16d..9a2ab5e6e924 100644
-> >> --- a/arch/arm/boot/dts/Makefile
-> >> +++ b/arch/arm/boot/dts/Makefile
-> >> @@ -1360,6 +1360,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
-> >>          aspeed-bmc-facebook-yamp.dtb \
-> >>          aspeed-bmc-facebook-yosemitev2.dtb \
-> >>          aspeed-bmc-ibm-rainier.dtb \
-> >> +       aspeed-bmc-ibm-rainier-4u.dtb \
-> >>          aspeed-bmc-intel-s2600wf.dtb \
-> >>          aspeed-bmc-inspur-fp5280g2.dtb \
-> >>          aspeed-bmc-lenovo-hr630.dtb \
-> >> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
-> >> new file mode 100644
-> >> index 000000000000..9c35ac1d19a6
-> >> --- /dev/null
-> >> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
-> >> @@ -0,0 +1,37 @@
-> >> +// SPDX-License-Identifier: GPL-2.0-or-later
-> >> +// Copyright 2020 IBM Corp.
-> >> +/dts-v1/;
-> >> +
-> >> +#include "aspeed-bmc-ibm-rainier-4u.dts"
-> > Did you test this patch?
->
->
-> Yes, Rainier hardware BMC booted to Ready state. I suspect it wouldn't
-> power on properly due to bad fan configuration though, so I didn't try
-> that. DTS looked good under /sys/firmware though.
 
-Are you sure? The version of the patch you posted here doesn't compile.
 
->
->
-> Thanks,
->
-> Eddie
->
->
-> >
-> >> +
-> >> +/ {
-> >> +       model = "Rainier 4U";
-> >> +};
-> >> +
-> >> +&i2c3 {
-> >> +       power-supply@6a {
-> >> +               compatible = "ibm,cffps";
-> >> +               reg = <0x6a>;
-> >> +       };
-> >> +
-> >> +       power-supply@6b {
-> >> +               compatible = "ibm,cffps";
-> >> +               reg = <0x6b>;
-> >> +       };
-> >> +};
-> >> +
-> >> +&fan0 {
-> >> +       tach-pulses = <4>;
-> >> +};
-> >> +
-> >> +&fan1 {
-> >> +       tach-pulses = <4>;
-> >> +};
-> >> +
-> >> +&fan2 {
-> >> +       tach-pulses = <4>;
-> >> +};
-> >> +
-> >> +&fan3 {
-> >> +       tach-pulses = <4>;
-> >> +};
-> >> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> >> index 183e1a4dcc65..676ae5602fb9 100644
-> >> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> >> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-> >> @@ -8,7 +8,7 @@
-> >>   #include <dt-bindings/leds/leds-pca955x.h>
-> >>
-> >>   / {
-> >> -       model = "Rainier";
-> >> +       model = "Rainier 2U";
-> >>          compatible = "ibm,rainier-bmc", "aspeed,ast2600";
-> >>
-> >>          aliases {
-> >> @@ -646,16 +646,6 @@ power-supply@69 {
-> >>                  compatible = "ibm,cffps";
-> >>                  reg = <0x69>;
-> >>          };
-> >> -
-> >> -       power-supply@6a {
-> >> -               compatible = "ibm,cffps";
-> >> -               reg = <0x6a>;
-> >> -       };
-> >> -
-> >> -       power-supply@6b {
-> >> -               compatible = "ibm,cffps";
-> >> -               reg = <0x6b>;
-> >> -       };
-> >>   };
-> >>
-> >>   &i2c4 {
-> >> @@ -775,25 +765,25 @@ max31785@52 {
-> >>                  #address-cells = <1>;
-> >>                  #size-cells = <0>;
-> >>
-> >> -               fan@0 {
-> >> +               fan0: fan@0 {
-> >>                          compatible = "pmbus-fan";
-> >>                          reg = <0>;
-> >>                          tach-pulses = <2>;
-> >>                  };
-> >>
-> >> -               fan@1 {
-> >> +               fan1: fan@1 {
-> >>                          compatible = "pmbus-fan";
-> >>                          reg = <1>;
-> >>                          tach-pulses = <2>;
-> >>                  };
-> >>
-> >> -               fan@2 {
-> >> +               fan2: fan@2 {
-> >>                          compatible = "pmbus-fan";
-> >>                          reg = <2>;
-> >>                          tach-pulses = <2>;
-> >>                  };
-> >>
-> >> -               fan@3 {
-> >> +               fan3: fan@3 {
-> >>                          compatible = "pmbus-fan";
-> >>                          reg = <3>;
-> >>                          tach-pulses = <2>;
-> >> --
-> >> 2.26.2
-> >>
+On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:
+> Hi Ivan,
+> 
+> Yocto has a layer for SELinux
+> (http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux), you can try
+> it.
+> But the layer depends on Python for management tools, which does not
+> exist in the OpenBMC image anymore.
+> The problem is that Python significantly increases image size, it will
+> be more than 32MiB, which causes some troubles with qemu emulation.
+
+The problem is broader than qemu though, it would also be broken on
+any platform shipping a 32MiB flash part if the image exceeds 32MiB.
+
+That said, if there are systems that ship bigger parts and enabling SELinux
+for those is feasible, we should add those platform models to qemu so
+emulating them isn't constrained by the existing platform support.
+
+Andrew
