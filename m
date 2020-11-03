@@ -1,92 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 826422A4BAF
-	for <lists+openbmc@lfdr.de>; Tue,  3 Nov 2020 17:36:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41A442A4C9C
+	for <lists+openbmc@lfdr.de>; Tue,  3 Nov 2020 18:21:09 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CQb5v3pHFzDqn5
-	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 03:36:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CQc4y31rHzDqM5
+	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 04:21:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=shawnmm@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2f;
+ helo=mail-vs1-xe2f.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=kitY2I9a; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=PUnKp+h0; dkim-atps=neutral
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com
+ [IPv6:2607:f8b0:4864:20::e2f])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CQb4p2zTYzDqXR
- for <openbmc@lists.ozlabs.org>; Wed,  4 Nov 2020 03:35:50 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0A3GVEIh120712
- for <openbmc@lists.ozlabs.org>; Tue, 3 Nov 2020 11:35:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=to : from : subject :
- message-id : date : mime-version : content-type :
- content-transfer-encoding; s=pp1;
- bh=GUIcclGfVMtXGTDmZkgTBrCrygmeUHAyIG2IJnwDxOk=;
- b=kitY2I9aKO2gtnJXZKecVKqGhElU0jW0NoavrKF3nZytDsi7OZ+9PnZTHZ4OKodEwnQ+
- vybLNkV21LwhTkLo4glslsXu6g6h1JuW6bVZZJvrYndOhetslryT5AMpsxgCtOJMU0lN
- hbvUOEEB5/OP9hSBuzMc7thWXvbc1tWIHwwVd1B3fuUEd3dZUhJOq5+L6T/sySwb6fkT
- B8dRxUSpMEvDPLC1KQcX1fy5TcVtnnviwewCTiOjBTeo7NKcn6IvV8AN8edDFOodJkg2
- B7oHfscehN6+AHoNyRmI4wyGXMxNg2wgF4HDSvW4/dQcybVh9U4JFT8+NOPV9LiVN9Kw wQ== 
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
- [169.55.91.170])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34k9bwmhws-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 03 Nov 2020 11:35:48 -0500
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
- by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0A3GWCnY000687
- for <openbmc@lists.ozlabs.org>; Tue, 3 Nov 2020 16:35:47 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma02wdc.us.ibm.com with ESMTP id 34h0evy5tv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 03 Nov 2020 16:35:47 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0A3GZk8X14615228
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 3 Nov 2020 16:35:46 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 44B0478067
- for <openbmc@lists.ozlabs.org>; Tue,  3 Nov 2020 16:35:46 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 241DB78063
- for <openbmc@lists.ozlabs.org>; Tue,  3 Nov 2020 16:35:46 +0000 (GMT)
-Received: from [9.211.76.180] (unknown [9.211.76.180])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Tue,  3 Nov 2020 16:35:45 +0000 (GMT)
-To: openbmc@lists.ozlabs.org
-From: Shawn McCarney <shawnmm@linux.vnet.ibm.com>
-Subject: Easier way to create error logs with FFDC
-Message-ID: <335508c6-a7be-a161-71fb-b0502418dd5b@linux.vnet.ibm.com>
-Date: Tue, 3 Nov 2020 10:35:46 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.8.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CQc4807RYzDqHY
+ for <openbmc@lists.ozlabs.org>; Wed,  4 Nov 2020 04:20:23 +1100 (AEDT)
+Received: by mail-vs1-xe2f.google.com with SMTP id h5so9888084vsp.3
+ for <openbmc@lists.ozlabs.org>; Tue, 03 Nov 2020 09:20:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=2kmVfDRdXyNEqEcMZsm57rJeM8KAsiQflBkNHo4MBXk=;
+ b=PUnKp+h0kRzcRsl5tmch4QmLxDfppk9R3QZe+s07n5F8w/bme5DwRdVQBJ3i02Ya+2
+ I/wMfxu3Cu1sNtTIxy3fQeCIyI4MRJXXXuYN9hlpPFFeWZ3x+fftUMu2Sae0fSwEDj04
+ g3v0I0wbtUSMM0mn/zS184WnXl+Kl1AbwxM9x4geRBIa25ZTMzzn8N1Ujy/IgdEzL3Yr
+ xp1F+fHSTCM7it91Zh+WNylkBq44aQp8/hqtSxHW7Rp3d/K6Brym5rSn1dofN/K4QPl4
+ Ai1dSp0muI6WnkmAi5nOucMiRRneRgts3igZty3sdt3DQz9Q74Y5C3o8FoIc1PT2zmZu
+ I0+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=2kmVfDRdXyNEqEcMZsm57rJeM8KAsiQflBkNHo4MBXk=;
+ b=ghJqV9358FrEdhK7Eicx8HAtFbyYvdQ8pwMTuOMp49+Le8VC2VMuaN/xrEycUdK2mM
+ Fi4lMmBYCtB44gSh3upKfXSYUulxGJFQJKxOA5/0YZ3e186RpkdLn7xMlJQ2uEZsvhws
+ NNiksMBYPI6vwlDjk4mcVUIoNKIOMMspO89iiYCag/sZNHJHRcJcHxsRlMQ6/L9lyY+i
+ ujQ6fGaps4QShCfdvTntxYya5B4uulIltDZ1SHWZeBuQ5ym8N4RVSM0wT3Jssfpv2SQk
+ q1YhhO3DHSpz8C0kqipTJL/93NbYtI2mDrwffV8A0PrVP/XonyQuLQY0Fe9UE5UTyrzZ
+ mZJQ==
+X-Gm-Message-State: AOAM533VJrHuDO8bayfFIFgG2Gym4ULeSNgEM6jsAaIQHMFZsIQv7eIn
+ MB7Id8+HWWo+qD2YgduJg0bPzdoSKNXqn6MBMcLdy2uw6k9DL0pO
+X-Google-Smtp-Source: ABdhPJzc81WtQvRoZKzerClDJGSAUqGd8wlUWunO2hVS8/yc1Ck6oOx3ypq7N15jxiRN3MU7qSRbZjyK5XcHai2djC8=
+X-Received: by 2002:a67:a603:: with SMTP id p3mr19958022vse.4.1604424019387;
+ Tue, 03 Nov 2020 09:20:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-03_08:2020-11-03,
- 2020-11-03 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1011
- bulkscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=883 mlxscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011030108
+From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
+Date: Tue, 3 Nov 2020 22:50:07 +0530
+Message-ID: <CAM=TmwWinuWjpNr+NeTXTmPv0wUCCzg5BUKhhR=Rp=mfmma_6Q@mail.gmail.com>
+Subject: Secure boot/signed images and GPL code
+To: openbmc@lists.ozlabs.org, cjengel@us.ibm.com, joel@jms.id.au, 
+ joseph-reynolds@charter.net
+Content-Type: multipart/alternative; boundary="000000000000beaa0c05b337130d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,31 +73,54 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000beaa0c05b337130d
+Content-Type: text/plain; charset="UTF-8"
+
 Hi,
 
-The D-Bus method CreateWithFFDCFiles can be used to create error log 
-entries with First Failure Data Capture (FFDC) information. See 
-https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/Logging/Create.interface.yaml#L32
+Does secure boot on the BMC (I think for my question it doesn't matter
+where the hardware root of trust is - it could be on the BMC or an external
+chip) or signed images deprive users of rights associated with code in
+OpenBMC that is GPL licensed? Meaning, GPL allows users to modify and
+distribute the GPL components. I'm not a legal expert, but I understand
+from the legal team in my company that these rights are not limited to
+making modifications to the GPL code and that they also imply being able to
+deploy/boot such modified code; and the problem is secure boot/signed
+images would prevent the same. It also looks like this isn't specific to
+GPLv3, but GPL in general (for eg GPLv2 clause 6).
 
-Using this D-Bus method is a bit tricky because you need to pass in file 
-descriptors to temporary files containing the FFDC data. So you need to 
-create the temporary files with sufficiently unique names, and after the 
-method is complete you need to close the file descriptors and delete the 
-temporary files.  Obviously cleanup needs to happen on both good paths 
-and error/exception paths.  If you have multiple FFDC files, you also 
-need safe move semantics to put the information in a standard collection 
-like vector.
-
-I wrote a C++ class named FFDCFile to make calling this D-Bus method 
-simpler.  It handles the problems above and has gtests to test it.  You 
-can see the code here: 
-https://github.com/openbmc/phosphor-power/blob/master/phosphor-regulators/src/ffdc_file.hpp 
-.  It uses TemporaryFile and FileDescriptor utility classes.
-
-Would there be interest it making this available in the phosphor-logging 
-repository so it could be used by others?
+How are others dealing with this:
+- By having an ability to disable secure boot (I see this as optional in
+https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/26169/)? What if this
+is not an option on a system?
+- Other options?
+- Do you (or your legal team) view this is only a GPLv3 problem, or not a
+problem at all?
 
 Thanks,
+Deepak
 
-Shawn
+--000000000000beaa0c05b337130d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div>Hi,</div><div><br></div><div>Does secure boot on the =
+BMC (I think for my question it doesn&#39;t matter where the hardware root =
+of trust is - it could be on the BMC or an external chip) or signed images =
+deprive users of rights associated with code in OpenBMC that is GPL license=
+d? Meaning, GPL allows users to modify and distribute the GPL components. I=
+&#39;m not a legal expert, but I understand from the legal team in my compa=
+ny that these rights are not limited to making modifications to the GPL cod=
+e and that they also imply being able to deploy/boot such modified code; an=
+d the problem is secure boot/signed images would prevent the same. It also =
+looks like this isn&#39;t specific to GPLv3, but GPL in general (for eg GPL=
+v2 clause 6).</div><div><br></div><div>How are others dealing with this:</d=
+iv><div>- By having an ability to disable secure boot (I see this as option=
+al in <a href=3D"https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/2616=
+9/">https://gerrit.openbmc-project.xyz/#/c/openbmc/docs/+/26169/</a>)? What=
+ if this is not an option on a system?</div><div>- Other options?<br></div>=
+<div>- Do you (or your legal team) view this is only a GPLv3 problem, or no=
+t a problem at all?</div><div><br></div><div>Thanks,</div><div>Deepak<br></=
+div></div>
+
+--000000000000beaa0c05b337130d--
