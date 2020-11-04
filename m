@@ -1,82 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 847C82A657C
-	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 14:47:09 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AB482A6679
+	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 15:36:06 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CR7HZ35w7zDqY5
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 00:47:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CR8N24CnrzDqbX
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 01:36:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::331;
- helo=mail-ot1-x331.google.com; envelope-from=kurt.r.taylor@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d30;
+ helo=mail-io1-xd30.google.com; envelope-from=gmouse@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=MirXHHcI; dkim-atps=neutral
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com
- [IPv6:2607:f8b0:4864:20::331])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=oEpyVxH7; dkim-atps=neutral
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
+ [IPv6:2607:f8b0:4864:20::d30])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CR7BZ6mZzzDqZw
- for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 00:42:45 +1100 (AEDT)
-Received: by mail-ot1-x331.google.com with SMTP id n15so19290572otl.8
- for <openbmc@lists.ozlabs.org>; Wed, 04 Nov 2020 05:42:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=nEw5gR0bWKGK6RPVmvB6RwKpnBTyTwn1aW8Gb3JRUjo=;
- b=MirXHHcI+HSgU62kJe7JRsLCzOnNvrfeqNsphH5IYaz8WozJMWz2KE3NbrsBXjBKvd
- XaIQXUexbd4x25vPbWCKwtNA8isuymEodUDDCw9i/b/mBSRa74kwO/bw9YFykQDXXEzj
- RLAdJ53TiuJmRtTGQ+/rdonlJJwHZCfqMbVc9cX8c8pVGpF0dEqVxFF1PYYIfaJIaPdX
- 3BrqTVDd7Gh8AMbHdVnK12otSkUrzpbd4EEYRnGDk+GXaLYnrX6xM/Gupy8tExaSCHM+
- iC0aat2aDyl5YMPYYBhkdjVCbVYjD3SHkSgLO/CpD7Hx19al8I5ufNgJZ1C7rqAqNQh2
- k9hw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CR8L60cfhzDqP9
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 01:34:20 +1100 (AEDT)
+Received: by mail-io1-xd30.google.com with SMTP id o11so11126612ioo.11
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Nov 2020 06:34:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=gczIEP56awYXiURipmfN85buL/RlcYUl78BUQH+5uk0=;
+ b=oEpyVxH75XrfuDiymfBOm6z8SsR+hUgFEkgEKUxOTGfFa09oUT8804NbcEXpKyl+YF
+ GVhMb/SUb4q6mY+UrWYokHPdkbEpIl+J5aOatNo8T9rkZRG1T6sH87KvuWduINhrdMnq
+ ddzIuLwVl3TW4thkbQy86b0Z96Jb6L6/Pq02KSZIPvM0+niKUVP1qjUFRR2AVWxoe5zn
+ A6A/Y6aeUgC39FaTZ71eCHcccvAvNr51DiqWafvgJOcM+WFKPn4oZQXoq9nIsMP3lHep
+ Cw8fYR7IYqAQayyMcmukkoCLK7JMq2SybOx0V+6SEixk5f5aFL+TxxV4asxGQLc5Jc6o
+ KanA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=nEw5gR0bWKGK6RPVmvB6RwKpnBTyTwn1aW8Gb3JRUjo=;
- b=WyKqhT4CjvlrxHmY0xVnTgyxsahNfPU5a8/wp3kQD44S7g3aPaDpj2QtVyvPRvgI9v
- v2PyiBQHy+GRWC3DpvvcbxpeCq8djxYjYGfXSZBFQlDGVJQgCK5CehHXM9khXItYSDIV
- Uy9zzmYFXP7Oa2Ef7T0ZHjRZinL6vWsOutdooaOuCSmVWr6km0qU59CRBYlgdnWOupVP
- 5BD99xItN4vcDJrTGPPg7cHe8L+Kb4OpkGFBjwSYQjqBLptadifIzXWKyyz2jT4hYmCG
- p82KbCGSZ6NbL4TXS0NnTXB+MGDRSo3WwM4xf2IHCrpMW/pY9+OL0WZ9l1gKA0dY9cex
- Wqhg==
-X-Gm-Message-State: AOAM533otzO4ricDUV9b4cnxgMg940s5i1YTnXQ5c8j7fYHjmYxDJCwE
- T34TK5K7gbxZA2hxrwRhPP8=
-X-Google-Smtp-Source: ABdhPJzu3xudaJ6AKUnyExnN3Pwf7Ek+QnvIOzisVik7E0ZSqqib4URtOldZEVDGFGsLLkxihmhprA==
-X-Received: by 2002:a05:6830:615:: with SMTP id
- w21mr10892045oti.126.1604497361751; 
- Wed, 04 Nov 2020 05:42:41 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id 4sm436830oij.40.2020.11.04.05.42.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Nov 2020 05:42:40 -0800 (PST)
-Subject: =?UTF-8?B?UmU6IOWbnuWkje+8mkkganVzdCB3YW50IHRvIGpvaW4gdGhlIG9wZW5i?=
- =?UTF-8?Q?mc_developer_community?=
-To: =?UTF-8?B?5p2o5YuH5YW1KOacq+WyqSk=?= <moyan.yyb@alibaba-inc.com>
-References: <8da567c0-b5a4-47c0-90d6-d2de96ae99e5.moyan.yyb@alibaba-inc.com>
- <CADy_Pt3ukjs64bRkuEBB699cuvNadzatsBmQ_prSWWTokB0uhQ@mail.gmail.com>
- <beb7063a-f3ff-1de0-130e-0f98c3f35729@gmail.com>
- <32fea865-04f1-4927-bb3e-77d650098d28.moyan.yyb@alibaba-inc.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <964928d9-3751-3a7e-7b06-fe35d238cb9f@gmail.com>
-Date: Wed, 4 Nov 2020 07:42:39 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=gczIEP56awYXiURipmfN85buL/RlcYUl78BUQH+5uk0=;
+ b=lPnMPwqLbuGWMC41uv7yTXoHyhN99Z733TPW2x8spc7ZbtqBAN3Ne49PYvrRNNp+jI
+ qVlJ66ld6KN3mh6Q8M7FljR4oiRVsrcOUk9YnP6Krku0Uh86pPX5DOVVZDsymnBw9WCY
+ wRmSO0XwR8W8IkJ502YH661ZGJupI+9pIJgpucCtEhLgxRakxhQbwvpa0amYwUmFAXsG
+ /evG7hLUsaf2n6kSIKFSCCVzrVc8ub7NMW8TMR/EZhWHGBMsX8pnOaSjt7nG3gYYLMRC
+ a5iTVH4KqCQsnhAjjLndZIhd+GtgrgDE114nodejAxC2ceIvdM63WGClbaBIy2SuMVAX
+ zfXA==
+X-Gm-Message-State: AOAM530GLALwbmcPUaUYm+vADRC2mjGtuVANzi4g6ZyEzMPutfkyPBRv
+ rlphiP8IykBJQosOFSM+0Cv/R2XWcoLEVH13WsH4nw==
+X-Google-Smtp-Source: ABdhPJyWZh8vmUUwNFQC2bHaVC+ObJlhnE1kG9NiAd6szGUxDHZW3G6WVOVNKsu6BUI5NxFnz9srDWhqf2V/rHE1Fmo=
+X-Received: by 2002:a05:6602:2d09:: with SMTP id
+ c9mr12232215iow.55.1604500455892; 
+ Wed, 04 Nov 2020 06:34:15 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <32fea865-04f1-4927-bb3e-77d650098d28.moyan.yyb@alibaba-inc.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <HK2PR03MB45804A1D770024303FC50FCAD3140@HK2PR03MB4580.apcprd03.prod.outlook.com>
+ <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
+ <ef502742-673b-4aeb-8614-f305a0f0053a@www.fastmail.com>
+ <HK2PR03MB4580C4DF82B1089E34B97311D3100@HK2PR03MB4580.apcprd03.prod.outlook.com>
+ <CADVsX8-9FMwUrjnNzKdEX2CRHRNr0nwFyy74U74OozQHWfXpVA@mail.gmail.com>
+ <HK2PR03MB4580DB8C2DD31082F2BEFB4DD3110@HK2PR03MB4580.apcprd03.prod.outlook.com>
+In-Reply-To: <HK2PR03MB4580DB8C2DD31082F2BEFB4DD3110@HK2PR03MB4580.apcprd03.prod.outlook.com>
+From: Anton Kachalov <rnouse@google.com>
+Date: Wed, 4 Nov 2020 15:34:04 +0100
+Message-ID: <CADVsX885665jhTuRVt5MjARNr_Ka7KUmkbN7J5vP7G+09qrYXQ@mail.gmail.com>
+Subject: Re: [External] Re: SELinux support question
+To: Ivan Li11 <rli11@lenovo.com>
+Content-Type: multipart/alternative; boundary="000000000000b7ce0705b348dfaa"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,88 +78,333 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?5bi455CzKOeJueedvyk=?= <terui.cl@alibaba-inc.com>,
- James Mihm <james.mihm@gmail.com>,
- =?UTF-8?B?5p2O5b+X5YW1KOi+ueiNkik=?= <zhibing.lzb@alibaba-inc.com>,
- openbmc <openbmc@lists.ozlabs.org>,
- =?UTF-8?B?5p2O576/KOS5ieWkqSk=?= <yitian.ly@alibaba-inc.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Artem Senichev <artemsen@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/4/20 3:21 AM, 杨勇兵(末岩) wrote:
-> Hi James & krtaylor，
->      Here is the CCLA, and please help to check。
-> Thanks.
+--000000000000b7ce0705b348dfaa
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Your CCLA has been accepted, welcome Alibaba!
+Hello, Ivan.
 
-Kurt Taylor (krtaylor)
+Please check if the systemd has been compiled with selinux feature enabled.
+It should be in charge of enforcing selinux rules at boot.
 
-> 
-> 
->     ------------------------------------------------------------------
->     发件人：krtaylor <kurt.r.taylor@gmail.com>
->     发送时间：2020年10月28日(星期三) 23:51
->     收件人：James Mihm <james.mihm@gmail.com>; 杨勇兵(末岩)
->     <moyan.yyb@alibaba-inc.com>
->     抄　送：常琳(特睿) <terui.cl@alibaba-inc.com>; openbmc
->     <openbmc@lists.ozlabs.org>; 李羿(义天) <yitian.ly@alibaba-inc.com>;
->     李志兵(边荒) <zhibing.lzb@alibaba-inc.com>
->     主　题：Re: I just want to join the openbmc developer community
-> 
->     On 10/27/20 9:02 PM, James Mihm wrote:
->      > Welcome Moyan,
->      >
->      > If you plan to contribute code, please download and complete the CCLA at
->      > https://github.com/openbmc/openbmc/files/1860741/OpenBMC.CCLA.pdf, and
->      > mail to this mailing list.
->      > Then those developers listed in the CLA will be able to submit code
->      > changes. See https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md
->      > for more information.
->      >
->      > There are several workgroups for the project that you can participate
->      > with. See https://github.com/openbmc/openbmc/wiki for more information.
->      >
->      > James.
->      >
-> 
->     Thanks James, my simplistic filters missed this email.
-> 
->     Moyan, feel free to contact me if you have any questions with the CCLA.
-> 
->     Kurt Taylor (krtaylor)
-> 
->      >
->      > On Tue, Oct 27, 2020 at 6:31 PM 杨勇兵(末岩) <moyan.yyb@alibaba-
->     inc.com
->      > <mailto:moyan.yyb@alibaba-inc.com>> wrote:
->      >
->      >     Hi，
->      >          my name is moyan,who is  workinig for alibaba company.  My
->      >     compay just want to join the openbmc developer community, and i have
->      >     subscribed to openbmc by accessing the website of
->      >     "https://lists.ozlabs.org/listinfo/openbmc".So, what should i do next?
->      >
->      >     Thank you.
->      >
->      >
->      >     -------------------------------------------------------------------------------------
->      >     杨勇兵（末岩）
->      >     基础架构事业群-计算与存储事业部-服务器产品
->      >     邮箱：moyan.yyb@alibaba-inc.com <mailto:moyan.yyb@alibaba-
->     inc.com>
->      >     Mobil:182-6717-9546
->      >     办公地点：浙江-杭州-余杭-EFC英国中心34楼
->      >     -------------------------------------------------------------------------------------
->      >     本邮件及其附件含有阿里巴巴集团的商业秘密信息，仅限于发送给上
->     面地址中
->      >     列出的个人和群组，禁止任何其他人以任何形式使用（包括但不限于
->     全部或部
->      >     分地泄露、复制或散发）本邮件及其附件中的信息，如果您错收本邮
->     件，请您
->      >     立即电话或邮件通知发件人并删除本邮件。
->      >     This email and its attachments contain confidential information from Alibaba Group, which is intended only for the person or entity whose address is listed above. Any use of information contained herein in any way (including, but not limited to, total or partial disclosure, reproduction or dissemination) by persons other than the intended recipient(s) is prohibited. If you receive this email in error, please notify the sender by phone or email immediately and delete it.
->      >
->      > 
-> 
+You should add "selinux" to PACKAGECONFIG over here:
+https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/s=
+ystemd/systemd_%25.bbappend#L4
 
+As well as adding "selinux" to the DISTRO_FEATURES variable in your
+build/conf/local.conf file.
+
+Do you have precompiled policies under /etc/selinux ?
+
+If it still doesn't work, please also attach a boot log.
+
+
+On Tue, 3 Nov 2020 at 18:52, Ivan Li11 <rli11@lenovo.com> wrote:
+
+> Hi Anton,
+>
+>
+>
+> Thanks your help and support.
+>
+> I=E2=80=99ve followed your suggestion to enable selinux kernel configurat=
+ion and
+> have seen kernel message =E2=80=9C[ 0.002268] SELinux:  Initializing.=E2=
+=80=9D during boot
+> time, but still returns =E2=80=9CDisabled=E2=80=9D after executing getenf=
+orce command.
+>
+> The selinux mode and type I set in /etc/selinux/config file is permissive
+> and minimum.  Could you help to advise me whether there=E2=80=99s some se=
+ttings
+> need to set to avoid this problem.
+>
+>
+>
+> Thanks,
+>
+> Ivan
+>
+> *From:* Anton Kachalov <rnouse@google.com>
+> *Sent:* Tuesday, November 3, 2020 3:50 AM
+> *To:* Ivan Li11 <rli11@lenovo.com>
+> *Cc:* Andrew Jeffery <andrew@aj.id.au>; Artem Senichev <artemsen@gmail.co=
+m>;
+> openbmc@lists.ozlabs.org
+> *Subject:* Re: [External] Re: SELinux support question
+>
+>
+>
+> Hello, Ivan.
+>
+>
+>
+> Perhaps, you should enable selinux kernel configuration as well. The
+> openbmc kernels, if I'm not mistaken, have different recipes.
+>
+>
+>
+> The default configuration relies on linux-yocto package:
+>
+>
+> http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kerne=
+l/linux
+>
+>
+>
+> You should include this selinux.cfg in on of the openbmc kernel layers:
+>
+>
+>
+> SRC_URI +=3D "file://selinux.cfg"
+>
+>
+>
+> and copy selinux.cfg to one of the local files location.
+>
+>
+>
+> On Mon, 2 Nov 2020 at 18:46, Ivan Li11 <rli11@lenovo.com> wrote:
+>
+>
+> > -----Original Message-----
+> > From: Andrew Jeffery <andrew@aj.id.au>
+> > Sent: Monday, November 2, 2020 8:54 AM
+> > To: Artem Senichev <artemsen@gmail.com>; Ivan Li11 <rli11@lenovo.com>
+> > Cc: openbmc@lists.ozlabs.org
+> > Subject: [External] Re: SELinux support question
+> >
+> >
+> >
+> > On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:
+> > > Hi Ivan,
+> > >
+> > > Yocto has a layer for SELinux
+> > > (http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux), you can try
+> > > it.
+> > > But the layer depends on Python for management tools, which does not
+> > > exist in the OpenBMC image anymore.
+> > > The problem is that Python significantly increases image size, it wil=
+l
+> > > be more than 32MiB, which causes some troubles with qemu emulation.
+> >
+> > The problem is broader than qemu though, it would also be broken on any
+> > platform shipping a 32MiB flash part if the image exceeds 32MiB.
+> >
+> > That said, if there are systems that ship bigger parts and enabling
+> SELinux for
+> > those is feasible, we should add those platform models to qemu so
+> emulating
+> > them isn't constrained by the existing platform support.
+> >
+> > Andrew
+>
+> Hi Andrew and Artem,
+> Per your suggestion, I try to enable SELinux with Yocto SELinux layer(
+> http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux) and 64MiB flash
+> part.
+> But encountered one problem which is when I use command "getenforce" to
+> check SELinux mode, it always returns "Disabled" even if SELinux mode in
+> config file '/etc/selinux/config' is permissive or enforcing by default.
+>
+> Please help to advise it.
+>
+>
+
+--000000000000b7ce0705b348dfaa
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello, Ivan.<div><br></div><div>Please check if the system=
+d has been compiled with selinux feature enabled. It should be in charge of=
+ enforcing selinux rules at boot.</div><div><br></div><div>You should add &=
+quot;selinux&quot; to PACKAGECONFIG over here:</div><div><a href=3D"https:/=
+/github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/systemd/=
+systemd_%25.bbappend#L4">https://github.com/openbmc/openbmc/blob/master/met=
+a-phosphor/recipes-core/systemd/systemd_%25.bbappend#L4</a><br></div><div><=
+br></div><div>As well as adding &quot;selinux&quot; to the DISTRO_FEATURES =
+variable in your build/conf/local.conf file.</div><div><br></div><div>Do yo=
+u have precompiled policies under /etc/selinux ?</div><div><br></div><div><=
+div>If it still=C2=A0doesn&#39;t work, please also attach a boot log.</div>=
+<div><br></div><div></div></div></div><br><div class=3D"gmail_quote"><div d=
+ir=3D"ltr" class=3D"gmail_attr">On Tue, 3 Nov 2020 at 18:52, Ivan Li11 &lt;=
+<a href=3D"mailto:rli11@lenovo.com">rli11@lenovo.com</a>&gt; wrote:<br></di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">
+
+
+
+
+
+<div lang=3D"ZH-TW">
+<div class=3D"gmail-m_1161811548598717125WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">Hi Anton,<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">Thanks your help and support.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">I=E2=80=99ve followed your suggestion to enable selinux kernel co=
+nfiguration and have seen kernel message =E2=80=9C[ 0.002268] SELinux:=C2=
+=A0 Initializing.=E2=80=9D during boot time, but still returns =E2=80=9CDis=
+abled=E2=80=9D
+ after executing getenforce command.<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">The selinux mode and type I set in /etc/selinux/config file is pe=
+rmissive and minimum.=C2=A0 Could you help to advise me whether there=E2=80=
+=99s some settings need to set to avoid this problem.<u></u><u></u></span><=
+/p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif"><u></u>=C2=A0<u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">Thanks,<u></u><u></u></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
+ns-serif">Ivan<u></u><u></u></span></p>
+<div style=3D"border-top:none;border-right:none;border-bottom:none;border-l=
+eft:1.5pt solid blue;padding:0cm 0cm 0cm 4pt">
+<div>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(225,225,225);padding:3pt 0cm 0cm">
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11pt;font=
+-family:Calibri,sans-serif">From:</span></b><span lang=3D"EN-US" style=3D"f=
+ont-size:11pt;font-family:Calibri,sans-serif"> Anton Kachalov &lt;<a href=
+=3D"mailto:rnouse@google.com" target=3D"_blank">rnouse@google.com</a>&gt;
+<br>
+<b>Sent:</b> Tuesday, November 3, 2020 3:50 AM<br>
+<b>To:</b> Ivan Li11 &lt;<a href=3D"mailto:rli11@lenovo.com" target=3D"_bla=
+nk">rli11@lenovo.com</a>&gt;<br>
+<b>Cc:</b> Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au" target=3D"=
+_blank">andrew@aj.id.au</a>&gt;; Artem Senichev &lt;<a href=3D"mailto:artem=
+sen@gmail.com" target=3D"_blank">artemsen@gmail.com</a>&gt;; <a href=3D"mai=
+lto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a=
+><br>
+<b>Subject:</b> Re: [External] Re: SELinux support question<u></u><u></u></=
+span></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hello, Ivan.<u></u><u></u></spa=
+n></p>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Perhaps, you should enable seli=
+nux kernel configuration as well. The openbmc kernels, if I&#39;m not mista=
+ken, have different recipes.<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">The default configuration relie=
+s on linux-yocto package:<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"http://git.yoctoproj=
+ect.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kernel/linux" target=3D"_bl=
+ank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-ke=
+rnel/linux</a><u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">You should include this selinux=
+.cfg in on of the openbmc kernel layers:<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">SRC_URI=C2=A0+=3D &quot;<a>file=
+://selinux.cfg</a>&quot;<u></u><u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">and copy selinux.cfg to one of =
+the local files location.<u></u><u></u></span></p>
+</div>
+</div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
+<div>
+<div>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">On Mon, 2 Nov 2020 at 18:46, Iv=
+an Li11 &lt;<a href=3D"mailto:rli11@lenovo.com" target=3D"_blank">rli11@len=
+ovo.com</a>&gt; wrote:<u></u><u></u></span></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin-left:4=
+.8pt;margin-right:0cm">
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><br>
+&gt; -----Original Message-----<br>
+&gt; From: Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au" target=3D"=
+_blank">andrew@aj.id.au</a>&gt;<br>
+&gt; Sent: Monday, November 2, 2020 8:54 AM<br>
+&gt; To: Artem Senichev &lt;<a href=3D"mailto:artemsen@gmail.com" target=3D=
+"_blank">artemsen@gmail.com</a>&gt;; Ivan Li11 &lt;<a href=3D"mailto:rli11@=
+lenovo.com" target=3D"_blank">rli11@lenovo.com</a>&gt;<br>
+&gt; Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">open=
+bmc@lists.ozlabs.org</a><br>
+&gt; Subject: [External] Re: SELinux support question<br>
+&gt; <br>
+&gt; <br>
+&gt; <br>
+&gt; On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:<br>
+&gt; &gt; Hi Ivan,<br>
+&gt; &gt;<br>
+&gt; &gt; Yocto has a layer for SELinux<br>
+&gt; &gt; (<a href=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinu=
+x" target=3D"_blank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux=
+</a>), you can try<br>
+&gt; &gt; it.<br>
+&gt; &gt; But the layer depends on Python for management tools, which does =
+not<br>
+&gt; &gt; exist in the OpenBMC image anymore.<br>
+&gt; &gt; The problem is that Python significantly increases image size, it=
+ will<br>
+&gt; &gt; be more than 32MiB, which causes some troubles with qemu emulatio=
+n.<br>
+&gt; <br>
+&gt; The problem is broader than qemu though, it would also be broken on an=
+y<br>
+&gt; platform shipping a 32MiB flash part if the image exceeds 32MiB.<br>
+&gt; <br>
+&gt; That said, if there are systems that ship bigger parts and enabling SE=
+Linux for<br>
+&gt; those is feasible, we should add those platform models to qemu so emul=
+ating<br>
+&gt; them isn&#39;t constrained by the existing platform support.<br>
+&gt; <br>
+&gt; Andrew<br>
+<br>
+Hi Andrew and Artem,<br>
+Per your suggestion, I try to enable SELinux with Yocto SELinux layer(<a hr=
+ef=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux" target=3D"_bl=
+ank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux</a>) and 64MiB =
+flash part.<br>
+But encountered one problem which is when I use command &quot;getenforce&qu=
+ot; to check SELinux mode, it always returns &quot;Disabled&quot; even if S=
+ELinux mode in config file &#39;/etc/selinux/config&#39; is permissive or e=
+nforcing by default.<br>
+<br>
+Please help to advise it.=C2=A0 <u></u><u></u></span></p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+
+</blockquote></div>
+
+--000000000000b7ce0705b348dfaa--
