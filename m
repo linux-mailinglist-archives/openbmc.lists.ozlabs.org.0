@@ -2,99 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 547192A6FB2
-	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 22:34:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70F2F2A704D
+	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 23:19:13 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CRKfK3PFXzDqfv
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 08:34:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CRLfQ2sw2zDqTn
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 09:19:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-usa.com (client-ip=40.107.236.69;
- helo=nam11-bn8-obe.outbound.protection.outlook.com;
- envelope-from=lancelot.kao@fii-usa.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::736;
+ helo=mail-qk1-x736.google.com; envelope-from=tbnguyen1985@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=fii-usa.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=FIIcorp.onmicrosoft.com
- header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=MjAxL895; 
- dkim-atps=neutral
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam11on2069.outbound.protection.outlook.com [40.107.236.69])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=L5aPvUmb; dkim-atps=neutral
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com
+ [IPv6:2607:f8b0:4864:20::736])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CRKcv5sb4zDqcc
- for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 08:32:46 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EKVJxDamqx3lWCPNFZ9P64jLRwwNJFtD/MYmBQge5QLLA6p5PqmC8HgsVe78ukhW8l6/KN7WL837Eja8p7ma2sEHeT/a2nR/GvMBwpMhGaY97xHa1tuPAKoaLRrpLkTO+h+Nrf9nhuM9//zwhBUmk+Bql7KoqUD324B3BgeW/SyK93YdVkm4G+ocGyGvR7k5pZo0A19fGDX/TOti9ea9Z7kr3L/n6uFDGe+9Z5GpWeovLbYZg/t5ND6aZl+cKYzZMc4v329yBth7Ml7Y0FS5nn+vgia7rvp8gxeIJkyRMKB1fyyaTIv+obciw5frvmQs1JXl2aYHEarMVwq8uAH30Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3Dqy4dUB0fx3wthbNLcN1dTwlTAR0JaZOcgeUPtBwtQ=;
- b=JI3em0QWT/12c6Xm3hUoNdi6r02PqNf9+BDl3ZfeaCwAUXJt6aA6MB/01LGRJc9XyfGlLr/bB++l/aMmMeGDK9MfC5gjA9NbzWExb3Z7nrFuegtqeqQV5pC5NQzG8vBnCR5mjapfTz5W91lveoSw2IkzuWiTOWknEDrogU3dUY1hG9OkcThoSfXYhnskjQkJQngSO/rvPX+nDB4cYmfzMgyEYx796lCZ0A0NQe1S3+58XOR7mtFyjSeMcRB6MNl1/H8cct5XJOwuk5iCiOyd8qxEo/6b2teJ1HRDDaU2StwxC6Npg8du1D+l2irLIf6KCX8US6lezNYH+AZIDz0UtA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fii-usa.com; dmarc=pass action=none header.from=fii-usa.com;
- dkim=pass header.d=fii-usa.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3Dqy4dUB0fx3wthbNLcN1dTwlTAR0JaZOcgeUPtBwtQ=;
- b=MjAxL8958dXPd5Tum+3mqgkBOxW9G1Ys1O6yIjIeO7EAqChQpokFGkzaEKQJ+LLpq7CNLm4RM+gnbTdxlKoaMYzyxoOqYYeWTsIhmf2jRGzKad5NYIUKE8C+xhNdnKSbp1R5IU1ix0gzP9zNmEnMgrDRadv0KOpB+5IUKFrFwnDOwqmQzfnFEFQ3OOAPxekaZm2p8TI8Fmi37+puYEtWxXSQ9yIgFAlHbMCpaqfmp9KD0jOeoaLr7L5TYq8csm2OrjJzoLKAj+j24lQxRCA6VlwL8F7Kq73abUy1FAz+F85oLjcoQ+5wpGjg3I9r0gu+01MHQJBigWFNrT6VrApASQ==
-Authentication-Results: fii-usa.com; dkim=none (message not signed)
- header.d=none;fii-usa.com; dmarc=none action=none header.from=fii-usa.com;
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com (2603:10b6:5:43::18) by
- DM6PR08MB6203.namprd08.prod.outlook.com (2603:10b6:5:1e3::23) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3499.18; Wed, 4 Nov 2020 21:32:40 +0000
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::1033:6c33:3328:bd4a]) by DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::1033:6c33:3328:bd4a%3]) with mapi id 15.20.3499.032; Wed, 4 Nov 2020
- 21:32:40 +0000
-From: Lancelot Kao <lancelot.kao@fii-usa.com>
-To: lancelot.kao@fii-usa.com, Joel Stanley <joel@jms.id.au>,
- openbmc@lists.ozlabs.org, Benjamin Fair <benjaminfair@google.com>,
- Vivekanand Veeracholan <vveerach@google.com>
-Subject: [PATCH linux dev-5.8]     Fii Kudo project device tree file
-Date: Wed,  4 Nov 2020 15:32:32 -0600
-Message-Id: <20201104213232.14846-1-lancelot.kao@fii-usa.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-Originating-IP: [216.63.87.86]
-X-ClientProxiedBy: DM5PR06CA0080.namprd06.prod.outlook.com (2603:10b6:3:4::18)
- To DM6PR08MB4890.namprd08.prod.outlook.com
- (2603:10b6:5:43::18)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CRLdW1qKbzDqf2
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 09:18:21 +1100 (AEDT)
+Received: by mail-qk1-x736.google.com with SMTP id 11so1355227qkd.5
+ for <openbmc@lists.ozlabs.org>; Wed, 04 Nov 2020 14:18:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=FZILVlG1RGBWSQB6FDvJKPoM9Ylp+0hYQuuoIDJEpn8=;
+ b=L5aPvUmbyQTkmEGZcaZoaZEhfK5noMc77o6hgR29HagO3tYB47K+1d5W/y0PptklJ7
+ 8++q1RDWDgMRrj7n/bzxPLWP+4nimsfvRga5cpYIr8Q3dZ/XHvNuIWYHjsuINlo1D0Bs
+ 35Eym7cFJ+OzSqpdk0jHW6oJ6Vyq+k6GSv6WSU09UwC//enhy/4tIgM63phyHdBMQI9X
+ 0LWVP5zdZjaKalcLvhslUZxW3A9xiZ6+5jmoeR4BTjqhldE3PaKqyPuPnEx0uVNG7BAC
+ vhyzVbWUAfW/RTjRIwzePQBNLYZ4ckGMLoZtmuU/aC6DNP6ETBJwzMRPQpOAFVrmMhv1
+ /fiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=FZILVlG1RGBWSQB6FDvJKPoM9Ylp+0hYQuuoIDJEpn8=;
+ b=oH6g+d4fzxBunCi8G1xkfbWnfU7Bi6FJARJhY2x0iikXDkGNexKAc3dMSJZfUUV/7F
+ ch1I2a1Y1oM229NM6x7DwPk32cX2/G9y7HTUWM5XO8wvAzuUOe6c1qiu20Jcenpiwg1M
+ K5dUtiaMNwOV66B3vzOd8XCNJY+fALBhP1E3QRa0VWmRUrABcY8bzTHCE+LOw7B4MYyz
+ MVOuzV2H9nf+x9otgXcxyQ+n3qNguQJ8wOnfSFWJZG7V13G5kSDbncQFcNOBvjORRxaF
+ 2rSZDsFjDqBXRsQ9iPDQhESlZAaYLCVdqYGXQe5WivqM5WU5LlVqSKu9cWkv7yQzDLbb
+ 46mw==
+X-Gm-Message-State: AOAM53114EryzTKUjUUDXu2Doj4w4OCJvdYZdZLXqARCVld7wxUKKaKm
+ idVU8gJy5pxK6dbFtinfoTw8FAVS5v2M8T7D2Yc=
+X-Google-Smtp-Source: ABdhPJxk3siKbzumNr861iBprcsJpgvCm+U31jolSRoRTOP6AP/zQgbDDkvJ7aCr+DWGWMoPtcfuZbVjQBO0AzLydZw=
+X-Received: by 2002:a37:474b:: with SMTP id u72mr348438qka.333.1604528297848; 
+ Wed, 04 Nov 2020 14:18:17 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from OpenSystem.houston.foxconn.com (216.63.87.86) by
- DM5PR06CA0080.namprd06.prod.outlook.com (2603:10b6:3:4::18) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3499.18 via Frontend Transport; Wed, 4 Nov 2020 21:32:39 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 779d96ba-9485-43d5-7168-08d881092823
-X-MS-TrafficTypeDiagnostic: DM6PR08MB6203:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <DM6PR08MB62038341F88CD2AF883DDEE1C0EF0@DM6PR08MB6203.namprd08.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:411;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: W3C21wZ+1x+UY8YHVDVzZrAIlJZHb9C1QxTBqkmD03onNsXr1DSkwSQYhd9CR4P3qFcm24NOmu+PALH+o8bqPBgcq49PBiAyxfvf+V8fCvZZq5jmgcZNqt+fOKeNH9J6/5lJm1StfYhLt+2Wcxpc81IPCuqLDqOPHZNpbB9zV10/NQ5+9Q1yOIQZPQv6+MFSL3Vn0rILnX67G0fmxuIhbuoyFovPPGBZuH3HayMRSwHVdN0eKzmM46j5Rx6ob015HYH1WlvoUYt5UMxx0btkjgRyYMfUJwZicQ9lLJjj3CEptoT8zaF4hEJD1aY5ajCV
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR08MB4890.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39860400002)(366004)(136003)(376002)(396003)(346002)(6506007)(5660300002)(478600001)(956004)(110136005)(83380400001)(316002)(30864003)(8676002)(2616005)(8936002)(2906002)(26005)(66946007)(6666004)(44832011)(1076003)(52116002)(66476007)(86362001)(36756003)(66556008)(6512007)(6486002)(16526019)(186003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData: I1RZMRMIB8X5C1s4lWcfa/vtAbYNvCg2ULUDfjACuWpDMQFkFprvmhRUckuQ59+U4wlzimjveamgTw9vA2h1oKmrjyw4bi0xrsq5Oksh2kaK24lt011qtvlIJbb9GzER/kPFFG+dOFCClpBuPg3bL/cRnIpH40Rlw3rxO/6X19knKw7q9fnYVrvTngRBulnc2P6u+9ZY3JU8/ZcTS/Ok4Cm/Pwi1hH8K0QL+cLFhMpN5qQAkVs3n1mW7/9W0vd0CLgHeHrsOlw9ogTGahkKAFNeLZke4C/bpLKqnPcD+Wekreb8ap3krc7ubEq3F4JYdhE91W7elVxXjNCaEZRZ9MxsJ7Df+BWCt5uz0slwOAbAKjeHNKtHBIskIAX7nFCE2qrKyqxznBKw3JPCTeGRDSfPMiQnOO4TGyPPTTsXg8hgWswr0VxbQyUnIcD8fiI3O2wK35XQrVWfbJEFpY5qqehkUZAE8zZ4vjJXDZz5IGRCGpgKAelg1rfo0IHM/Ly6oo/ZEeKq45bcEgtYr3TK4LXyHRieydFxa5O11Xy7WmCaQSb7om6OyGM0sxL52L4lwaOorJ4M1qqvxI7VuPsKEwMVTjmtrZ1nJx/Dg3S1J7DquieKG0p5ks/5KPacC3jn8N0skn9Be/koSdB2+M3C5Pw==
-X-OriginatorOrg: fii-usa.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 779d96ba-9485-43d5-7168-08d881092823
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB4890.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Nov 2020 21:32:40.4893 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jN8aSLr7eAdEpQ5VCpZjIBEfjrua7v7ikmgp051WVAx4/BFiNF/dMYDzGW3gyoFzWzHp5GfUJVRVa4M+0oUBE5vnMi3d8Ixkr7rigpMf424=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB6203
+References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+ <CACWQX833j+remiYr8qOdrZZ4z3L3D_GX0q6z4MPJDu8J4Nv+Pg@mail.gmail.com>
+ <CALioo36kortxuLPJQmc7xtDVN=jAxPNf481ovFkc2jQfYu8-rg@mail.gmail.com>
+ <90950FB3-E1B3-4ACE-97C5-CB9582A94456@fb.com>
+ <CALioo37b-BjgUdfZz2Vm+=6K6VMYRO9auyuHHo7=AZBFpoBzdw@mail.gmail.com>
+ <CALioo37LBToJaMs9Zt4q4WcMYKT_rF9zG1ujxv3q8HOQvsE8-w@mail.gmail.com>
+ <26b02688-a8c8-3fb3-6cc9-50daabf4d01e@linux.ibm.com>
+ <CALioo34WDkK6nVY0+rjKKObcpYVW5JmAZ7sitmXNHP-MM7zhAQ@mail.gmail.com>
+ <CALioo35QFf6n64pAJm8iiUNzas6-jtf9Xu8hDHmhLQGLSwXpDg@mail.gmail.com>
+ <14c0a498-498c-8447-685b-c97d04c699ab@linux.ibm.com>
+In-Reply-To: <14c0a498-498c-8447-685b-c97d04c699ab@linux.ibm.com>
+From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
+Date: Thu, 5 Nov 2020 05:18:06 +0700
+Message-ID: <CALioo347c8tYxeGqfhZyUAN-WCsph8a6Uqea-srvNh5OXVotKQ@mail.gmail.com>
+Subject: Re: Enable/Disable some sensors when Host On/Off
+To: Matt Spinler <mspinler@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="00000000000039b26905b34f5bab"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,997 +81,848 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-    1. Add Fii kudo project device tree dts and dtsi
-    files to the upstream.
+--00000000000039b26905b34f5bab
+Content-Type: text/plain; charset="UTF-8"
 
-    Signed-off-by: Lancelot Kao <lancelot.kao@fii-usa.com>
-    Signed-off-by: Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>
----
- .../boot/dts/nuvoton-npcm730-kudo-gpio.dtsi   | 288 ++++++++
- arch/arm/boot/dts/nuvoton-npcm730-kudo.dts    | 676 ++++++++++++++++++
- 2 files changed, 964 insertions(+)
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+Please see my comments below.
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi b/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
-new file mode 100644
-index 000000000000..0dc888dac73b
---- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
-@@ -0,0 +1,288 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2020 Fii USA Inc. Brandon Ong <Brandon.Ong@fii-na.com>
-+
-+
-+/ {
-+	pinctrl: pinctrl@f0800000 {
-+		gpio61oh_pins: gpio61oh-pins {
-+			pins = "GPO61/nDTR1_BOUT1/STRAP6";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio62oh_pins: gpio62oh-pins {
-+			pins = "GPO62/nRTST1/STRAP5";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio161ol_pins: gpio161ol-pins {
-+			pins = "GPIO161/nLFRAME/nESPICS";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio163i_pins: gpio163i-pins {
-+			pins = "GPIO163/LCLK/ESPICLK";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio167ol_pins: gpio167ol-pins {
-+			pins = "GPIO167/LAD3/ESPI_IO3";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio95i_pins: gpio95i-pins {
-+			pins = "GPIO95/nLRESET/nESPIRST";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio65ol_pins: gpio65ol-pins {
-+			pins = "GPIO65/FANIN1";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio66oh_pins: gpio66oh-pins {
-+			pins = "GPIO66/FANIN2";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio67oh_pins: gpio67oh-pins {
-+			pins = "GPIO67/FANIN3";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio68ol_pins: gpio68ol-pins {
-+			pins = "GPIO68/FANIN4";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio69i_pins: gpio69i-pins {
-+			pins = "GPIO69/FANIN5";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio70ol_pins: gpio70ol-pins {
-+			pins = "GPIO70/FANIN6";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio71i_pins: gpio71i-pins {
-+			pins = "GPIO71/FANIN7";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio72i_pins: gpio72i-pins {
-+			pins = "GPIO72/FANIN8";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio73i_pins: gpio73i-pins {
-+			pins = "GPIO73/FANIN9";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio74i_pins: gpio74i-pins {
-+			pins = "GPIO74/FANIN10";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio75i_pins: gpio75i-pins {
-+			pins = "GPIO75/FANIN11";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio76i_pins: gpio76i-pins {
-+			pins = "GPIO76/FANIN12";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio77i_pins: gpio77i-pins {
-+			pins = "GPIO77/FANIN13";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio78i_pins: gpio78i-pins {
-+			pins = "GPIO78/FANIN14";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio79ol_pins: gpio79ol-pins {
-+			pins = "GPIO79/FANIN15";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio80oh_pins: gpio80oh-pins {
-+			pins = "GPIO80/PWM0";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio81i_pins: gpio81i-pins {
-+			pins = "GPIO81/PWM1";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio82i_pins: gpio82i-pins {
-+			pins = "GPIO82/PWM2";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio83i_pins: gpio83i-pins {
-+			pins = "GPIO83/PWM3";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio144i_pins: gpio144i-pins {
-+			pins = "GPIO144/PWM4";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio145i_pins: gpio145i-pins {
-+			pins = "GPIO145/PWM5";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio146i_pins: gpio146i-pins {
-+			pins = "GPIO146/PWM6";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio147oh_pins: gpio147oh-pins {
-+			pins = "GPIO147/PWM7";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio168ol_pins: gpio168ol-pins {
-+			pins = "GPIO168/nCLKRUN/nESPIALERT";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio169oh_pins: gpio169oh-pins {
-+			pins = "GPIO169/nSCIPME";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio170ol_pins: gpio170ol-pins {
-+			pins = "GPIO170/nSMI";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio218oh_pins: gpio218oh-pins {
-+			pins = "GPIO218/nWDO1";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio37i_pins: gpio37i-pins {
-+			pins = "GPIO37/SMB3CSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio38i_pins: gpio38i-pins {
-+			pins = "GPIO38/SMB3CSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio39i_pins: gpio39i-pins {
-+			pins = "GPIO39/SMB3BSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio40i_pins: gpio40i-pins {
-+			pins = "GPIO40/SMB3BSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio121i_pins: gpio121i-pins {
-+			pins = "GPIO121/SMB2CSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio122i_pins: gpio122i-pins {
-+			pins = "GPIO122/SMB2BSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio123i_pins: gpio123i-pins {
-+			pins = "GPIO123/SMB2BSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio124i_pins: gpio124i-pins {
-+			pins = "GPIO124/SMB1CSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio125i_pins: gpio125i-pins {
-+			pins = "GPIO125/SMB1CSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio126i_pins: gpio126i-pins {
-+			pins = "GPIO126/SMB1BSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio127i_pins: gpio127i-pins {
-+			pins = "GPIO127/SMB1BSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio136i_pins: gpio136i-pins {
-+			pins = "GPIO136/SD1DT0";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio137oh_pins: gpio137oh-pins {
-+			pins = "GPIO137/SD1DT1";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio138i_pins: gpio138i-pins {
-+			pins = "GPIO138/SD1DT2";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio139i_pins: gpio139i-pins {
-+			pins = "GPIO139/SD1DT3";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio140i_pins: gpio140i-pins {
-+			pins = "GPIO140/SD1CLK";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio141i_pins: gpio141i-pins {
-+			pins = "GPIO141/SD1WP";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio190oh_pins: gpio190oh-pins {
-+			pins = "GPIO190/nPRD_SMI";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio191oh_pins: gpio191oh-pins {
-+			pins = "GPIO191";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio195ol_pins: gpio195ol-pins {
-+			pins = "GPIO195/SMB0BSDA";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio196ol_pins: gpio196ol-pins {
-+			pins = "GPIO196/SMB0CSCL";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio199i_pins: gpio199i-pins {
-+			pins = "GPIO199/SMB0DSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio202ol_pins: gpio202ol-pins {
-+			pins = "GPIO202/SMB0CSDA";
-+			bias-disable;
-+			output-low;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-new file mode 100644
-index 000000000000..76e0860763b0
---- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-@@ -0,0 +1,676 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2020 Fii USA Inc. Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>
-+
-+/dts-v1/;
-+#include "nuvoton-npcm730.dtsi"
-+#include "nuvoton-npcm730-kudo-gpio.dtsi"
-+
-+/ {
-+	model = "Fii Kudo Board (Device Tree v00.01)";
-+	compatible = "nuvoton,npcm730";
-+
-+	aliases {
-+		ethernet0 = &emc0;
-+		ethernet1 = &gmac0;
-+		serial0 = &serial0;
-+		serial1 = &serial1;
-+		serial2 = &serial2;
-+		serial3 = &serial3;
-+		udc0 = &udc0;
-+		udc1 = &udc1;
-+		udc2 = &udc2;
-+		udc3 = &udc3;
-+		udc4 = &udc4;
-+		udc5 = &udc5;
-+		udc6 = &udc6;
-+		udc7 = &udc7;
-+		udc8 = &udc8;
-+		udc9 = &udc9;
-+		emmc0 = &sdhci0;
-+		vdma = &vdma;
-+		i2c0 = &i2c0;
-+		i2c1 = &i2c1;
-+		i2c2 = &i2c2;
-+		i2c3 = &i2c3;
-+		i2c4 = &i2c4;
-+		i2c5 = &i2c5;
-+		i2c6 = &i2c6;
-+		i2c7 = &i2c7;
-+		i2c8 = &i2c8;
-+		i2c9 = &i2c9;
-+		i2c10 = &i2c10;
-+		i2c11 = &i2c11;
-+		i2c12 = &i2c12;
-+		i2c13 = &i2c13;
-+		spi0 = &spi0;
-+		spi1 = &spi1;
-+		fiu0 = &fiu0;
-+		fiu1 = &fiu3;
-+	};
-+
-+	chosen {
-+		stdout-path = &serial3;
-+	};
-+
-+	memory {
-+		reg = <0 0x40000000>;
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
-+	};
-+
-+	jtag_master {
-+		compatible = "nuvoton,npcm750-jtag-master";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+
-+		dev-num = <0>; /* /dev/jtag0 */
-+		mode = "pspi"; /* pspi or gpio */
-+
-+		pspi-controller = <2>; /* pspi2 */
-+		reg = <0xf0201000 0x1000>;
-+		interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
-+		clocks = <&clk NPCM7XX_CLK_APB5>;
-+
-+		jtag-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>, /* TCK */
-+				<&gpio0 18 GPIO_ACTIVE_HIGH>, /* TDI */
-+				<&gpio0 17 GPIO_ACTIVE_HIGH>, /* TDO */
-+				<&gpio0 16 GPIO_ACTIVE_HIGH>; /* TMS */
-+		status = "okay";
-+	};
-+
-+	ahb {
-+		gmac0: eth@f0802000 {
-+			phy-mode = "rgmii-id";
-+			snps,eee-force-disable;
-+			status = "okay";
-+		};
-+
-+		emc0: eth@f0825000 {
-+			status = "okay";
-+		};
-+
-+		ehci1: usb@f0806000 {
-+			status = "okay";
-+		};
-+
-+		ohci1: ohci@f0807000 {
-+			status = "okay";
-+		};
-+
-+		udc0: udc@f0830000 {
-+			status = "okay";
-+		};
-+
-+		udc1: udc@f0831000 {
-+			status = "okay";
-+		};
-+
-+		udc2: udc@f0832000 {
-+			status = "okay";
-+		};
-+
-+		udc3: udc@f0833000 {
-+			status = "okay";
-+		};
-+
-+		udc4: udc@f0834000 {
-+			status = "okay";
-+		};
-+
-+		udc5: udc@f0835000 {
-+			status = "okay";
-+		};
-+
-+		udc6: udc@f0836000 {
-+			status = "okay";
-+		};
-+
-+		udc7: udc@f0837000 {
-+			status = "okay";
-+		};
-+
-+		udc8: udc@f0838000 {
-+			status = "okay";
-+		};
-+
-+		udc9: udc@f0839000 {
-+			status = "okay";
-+		};
-+
-+		aes: aes@f0858000 {
-+			status = "okay";
-+		};
-+
-+		sha: sha@f085a000 {
-+			status = "okay";
-+		};
-+
-+		fiu0: spi@fb000000 {
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&spi0cs1_pins>;
-+			status = "okay";
-+			spi-nor@0 {
-+				compatible = "jedec,spi-nor";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				reg = <0>;
-+				spi-max-frequency = <5000000>;
-+				spi-rx-bus-width = <2>;
-+				partitions@80000000 {
-+					compatible = "fixed-partitions";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+					bmc@0{
-+						label = "bmc";
-+						reg = <0x000000 0x2000000>;
-+					};
-+					u-boot@0 {
-+						label = "u-boot";
-+						reg = <0x0000000 0xC0000>;
-+						read-only;
-+					};
-+					u-boot-env@100000{
-+						label = "u-boot-env";
-+						reg = <0x00100000 0x40000>;
-+					};
-+					kernel@200000 {
-+						label = "kernel";
-+						reg = <0x0200000 0x600000>;
-+					};
-+					rofs@800000 {
-+						label = "rofs";
-+						reg = <0x800000 0x3500000>;
-+					};
-+					rwfs@1d00000 {
-+						label = "rwfs";
-+						reg = <0x3d00000 0x300000>;
-+					};
-+				};
-+			};
-+			spi-nor@1 {
-+				compatible = "jedec,spi-nor";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				reg = <1>;
-+				spi-max-frequency = <5000000>;
-+				spi-rx-bus-width = <2>;
-+				partitions@88000000 {
-+					compatible = "fixed-partitions";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+					spare1@0 {
-+						label = "spi0-cs1-spare1";
-+						reg = <0x0 0x800000>;
-+					};
-+					spare2@800000 {
-+						label = "spi0-cs1-spare2";
-+						reg = <0x800000 0x0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		fiu3: spi@c0000000 {
-+			pinctrl-0 = <&spi3_pins>;
-+			status = "okay";
-+			spi-nor@0 {
-+				compatible = "jedec,spi-nor";
-+				#address-cells = <1>;
-+				#size-cells = <1>;
-+				reg = <0>;
-+				spi-max-frequency = <5000000>;
-+				spi-rx-bus-width = <2>;
-+				partitions@A0000000 {
-+					compatible = "fixed-partitions";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
-+					system1@0 {
-+						label = "bios";
-+						reg = <0x0 0x0>;
-+					};
-+					system2@800000 {
-+						label = "spi3-system2";
-+						reg = <0x800000 0x0>;
-+					};
-+				};
-+			};
-+		};
-+
-+		sdhci0: sdhci@f0842000 {
-+			status = "okay";
-+		};
-+
-+		vdma: vdma@e0800000 {
-+			status = "okay";
-+		};
-+
-+		pcimbox: pcimbox@f0848000 {
-+			status = "okay";
-+		};
-+
-+		vcd: vcd@f0810000 {
-+			status = "okay";
-+		};
-+
-+		ece: ece@f0820000 {
-+			status = "okay";
-+		};
-+
-+		apb {
-+
-+			watchdog1: watchdog@901C {
-+				status = "okay";
-+			};
-+
-+			rng: rng@b000 {
-+				status = "okay";
-+			};
-+
-+			serial0: serial@1000 {
-+				status = "okay";
-+			};
-+
-+			serial1: serial@2000 {
-+				status = "okay";
-+			};
-+
-+			serial2: serial@3000 {
-+				status = "okay";
-+			};
-+
-+			serial3: serial@4000 {
-+				status = "okay";
-+			};
-+
-+			adc: adc@c000 {
-+				#io-channel-cells = <1>;
-+				status = "okay";
-+			};
-+
-+			otp:otp@189000 {
-+				status = "okay";
-+			};
-+
-+			i2c0: i2c@80000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "disabled";
-+			};
-+
-+			i2c1: i2c@81000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+
-+				i2c-switch@75 {
-+					compatible = "nxp,pca9548";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x75>;
-+					i2c-mux-idle-disconnect;
-+
-+					i2c@2 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <2>;
-+
-+						max31790@58 {// Fan 
-+							compatible = "maxim,max31790";
-+							reg = <0x58>;
-+						};
-+					};
-+
-+					i2c@3 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <3>;
-+
-+						max31790@58 { // Fan 
-+							compatible = "maxim,max31790";
-+							reg = <0x58>;
-+						};
-+					};
-+
-+					i2c-bus@4 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <4>;
-+
-+						lm75@5c {//INLET1_T
-+							compatible = "ti,lm75";
-+							reg = <0x5c>;
-+						};
-+					};
-+
-+					i2c-bus@5 {//OUTLET1_T
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <5>;
-+
-+						lm75@5c {
-+							compatible = "ti,lm75";
-+							reg = <0x5c>;
-+						};
-+					};
-+
-+					i2c-bus@6 {//OUTLET2_T
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <6>;
-+
-+						lm75@5c {
-+							compatible = "ti,lm75";
-+							reg = <0x5c>;
-+						};
-+					};
-+
-+					i2c-bus@7 {//OUTLET3_T
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <7>;
-+
-+						lm75@5c {
-+							compatible = "ti,lm75";
-+							reg = <0x5c>;
-+						};
-+					};
-+				};
-+				i2c-switch@77 {
-+					compatible = "nxp,pca9548";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x77>;
-+					i2c-mux-idle-disconnect;
-+
-+					i2c-bus@2 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <2>;
-+
-+						pmbus@74 { // STB-T
-+							compatible = "pmbus";
-+							reg = <0x74>;
-+						};
-+					};
-+				};
-+			};
-+
-+			i2c2: i2c@82000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+				
-+				smpro@4f {
-+					compatible = "ampere,smpro";
-+					reg = <0x4f>;
-+				};
-+
-+				smpro@4e {
-+					compatible = "ampere,smpro";
-+					reg = <0x4e>;
-+				};
-+			};
-+
-+			i2c3: i2c@83000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c4: i2c@84000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+
-+				i2c-switch@77 {
-+					compatible = "nxp,pca9548";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x77>;
-+					i2c-mux-idle-disconnect;
-+
-+					i2c-bus@0 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <0>;
-+
-+						adm1266@40 { // ADC sensors
-+							compatible = "adi,adm1266";
-+							reg = <0x40>;
-+						};
-+					};
-+
-+					i2c-bus@1 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <1>;
-+
-+						adm1266@41 { // ADC sensors
-+							compatible = "adi,adm1266";
-+							reg = <0x41>;
-+						};
-+					};
-+				};
-+			};
-+
-+			i2c5: i2c@85000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c6: i2c@86000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c7: i2c@87000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c8: i2c@88000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c9: i2c@89000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c10: i2c@8a000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c11: i2c@8b000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+			};
-+
-+			i2c12: i2c@8c000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+
-+				ssif-bmc@10 {
-+					compatible = "ssif-bmc";
-+					reg = <0x10>;
-+					status = "okay";
-+				};
-+			};
-+
-+			i2c13: i2c@8d000 {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				bus-frequency = <100000>;
-+				status = "okay";
-+
-+				i2c-switch@77 {
-+					compatible = "nxp,pca9548";
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+					reg = <0x77>;
-+					i2c-mux-idle-disconnect;
-+
-+					i2c-bus@3 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <3>;
-+
-+						lm75@28 {//M2_ZONE_T
-+							compatible = "ti,lm75";
-+							reg = <0x28>;
-+						};
-+					};
-+
-+					i2c-bus@4 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <4>;
-+
-+						lm75@29 {//BATT_ZONE_T
-+							compatible = "ti,lm75";
-+							reg = <0x29>;
-+						};
-+					};
-+
-+					i2c-bus@5 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <5>;
-+
-+						lm75@28 {//NBM1_ZONE_T
-+							compatible = "ti,lm75";
-+							reg = <0x28>;
-+						};
-+					};
-+					i2c-bus@6 {
-+						#address-cells = <1>;
-+						#size-cells = <0>;
-+						reg = <6>;
-+
-+						lm75@29 {//NBM2_ZONE_T
-+							compatible = "ti,lm75";
-+							reg = <0x29>;
-+						};
-+					};
-+				};
-+			};
-+
-+			spi0: spi@200000 {
-+				cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
-+				status = "okay";
-+			};
-+
-+			spi1: spi@201000 {
-+				status = "disabled";
-+			};
-+		};
-+	};
-+
-+	pinctrl: pinctrl@f0800000 {
-+		pinctrl-names = "default";
-+		pinctrl-0 = <
-+				&gpio61oh_pins
-+				&gpio62oh_pins
-+				&gpio161ol_pins
-+				&gpio163i_pins
-+				&gpio167ol_pins
-+				&gpio95i_pins
-+				&gpio65ol_pins
-+				&gpio66oh_pins
-+				&gpio67oh_pins
-+				&gpio68ol_pins
-+				&gpio69i_pins
-+				&gpio70ol_pins
-+				&gpio71i_pins
-+				&gpio72i_pins
-+				&gpio73i_pins
-+				&gpio74i_pins
-+				&gpio75i_pins
-+				&gpio76i_pins
-+				&gpio77i_pins
-+				&gpio78i_pins
-+				&gpio79ol_pins
-+				&gpio80oh_pins
-+				&gpio81i_pins
-+				&gpio82i_pins
-+				&gpio83i_pins
-+				&gpio144i_pins
-+				&gpio145i_pins
-+				&gpio146i_pins
-+				&gpio147oh_pins
-+				&gpio168ol_pins
-+				&gpio169oh_pins
-+				&gpio170ol_pins
-+				&gpio218oh_pins
-+				&gpio37i_pins
-+				&gpio38i_pins
-+				&gpio39i_pins
-+				&gpio40i_pins
-+				&gpio121i_pins
-+				&gpio122i_pins
-+				&gpio123i_pins
-+				&gpio124i_pins
-+				&gpio125i_pins
-+				&gpio126i_pins
-+				&gpio127i_pins
-+				&gpio136i_pins
-+				&gpio137oh_pins
-+				&gpio138i_pins
-+				&gpio139i_pins
-+				&gpio140i_pins
-+				&gpio141i_pins
-+				&gpio190oh_pins
-+				&gpio191oh_pins
-+				&gpio195ol_pins
-+				&gpio196ol_pins
-+				&gpio199i_pins
-+				&gpio202ol_pins
-+				>;
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		heartbeat {
-+		label = "heartbeat";
-+			gpios = <&gpio0 14 1>;
-+		};
-+	};
-+
-+};
-+
-+&gcr {
-+	serial_port_mux: mux-controller {
-+	compatible = "mmio-mux";
-+	#mux-control-cells = <1>;
-+
-+	mux-reg-masks = <0x38 0x07>;
-+	idle-states = <6>;
-+	};
-+};
--- 
-2.17.1
+Thanks.
+Thu Nguyen.
 
+On Wed, Nov 4, 2020 at 11:31 PM Matt Spinler <mspinler@linux.ibm.com> wrote:
+
+>
+>
+> On 11/4/2020 3:15 AM, Thu Ba Nguyen wrote:
+> > Hi Matt, I implemented "Inactive the host sensors" in phosphor-hwmon
+> > use below...
+> > This Message Is From an External Sender
+> > This message came from outside your organization.
+> >
+> > Hi Matt,
+> >
+> > I implemented "Inactive the host sensors" in phosphor-hwmon use below
+> > approaching:
+> > 1. Add one option in Sensors configuration, phosphor-hwmon will parse
+> > this option and add host sensors to _hostSensors list.
+> > 2. In mainloop::read() before going to loop to read the sensors in the
+> > reading list. Query dbus to get CurrentHostState property.
+> > This property belongs to service "xyz.openbmc_project.State.Host".
+> > Based on the status of this property, identify host status.
+> > If the host is off, remove the host sensors from _state list and dbus.
+> > I expected the users wouldn't see the host sensors on the BMC Web when
+> > the host is off.
+> > If the host is on, add the host sensors back to _state list and also
+> dbus.
+> >
+> > The code is working. But I have two issues with this approaching:
+> >
+> > 1. Too many transactions to get dbus property CurrentHostState.
+> > In my case, I have 6 services to monitor the sensors which concern the
+> > host.
+> > With the current interval 1 second of phosphor-hwmon, I have 6
+> > transactions to get CurrentHostState per seconds.
+>
+> The better way to implement this would be to read CurrentHostState once
+> on startup, and then register for
+> propertiesChanged signals for it and provide a callback to update an
+> internal host state variable.
+>
+[Thu] Yes, This is what I'm planning to do. But don't know how to add a
+propertiesChanged signals
+to the current phosphor-hwmon framework.
+
+I usually use below code to add a signal to dbus.
+    boost::asio::io_service io;
+    ampere::host::conn =
+      std::make_shared<sdbusplus::asio::connection>(ampere::host::io);
+
+    std::vector<std::unique_ptr<sdbusplus::bus::match::match>> matches;
+    //Start tracking power state
+    std::unique_ptr<sdbusplus::bus::match::match> hostMonitor =
+        ampere::host::startHostStateMonitor();
+    matches.emplace_back(std::move(hostMonitor));
+
+    /* wait for the signal */
+    ampere::host::io.run();
+But when start io.run(), phosphor-hwmon will stop reading sensors.
+
+> 2. When I call "ipmitool power off" the host, there is a gap between
+> > the time I trigger GPIO to power off the chassis and the time Dbus
+> > property CurrentHostState is updated.
+> > In this gap, the phosphor-hwmon is still reading sensors. And this
+> > causes the threshold warnings or errors. I want to avoid this.
+> >
+> > Do you have any suggestions to avoid these issues?
+> >
+>
+> I can't think of anything at the moment.  Maybe someone else has an idea
+> here.
+>
+> > Others question:
+> > I saw that phosphor-hwmon is registering an event to smbus and trigger
+> > the event after each 1 second to read sensors.
+> > Can I change the phosphor-hwmon code to integrate one dbus signal event?
+> > Which will be triggered when there is changing in dbus property.
+>
+> I'm not sure I understand what you're asking for here.  Right now it
+> will do 1 second reads (the period is
+> configurable) and send a properties changed signal for each sensor on
+> D-Bus only when the value changes.
+>
+[Thu] I'm asking for how to add a signal to current phosphor-hwmon
+framework as comment 1.
+
+> >
+> > I knew how to create a service which adds the call back function when
+> > there is change in dbus property.
+> > But don't know how to intergrace it to hwmon.
+> >
+> > Regards.
+> > Thu Nguyen.
+> >
+> >
+> >
+> > On Fri, Oct 23, 2020 at 5:45 AM Thu Ba Nguyen <tbnguyen1985@gmail.com
+> > <mailto:tbnguyen1985@gmail.com>> wrote:
+> >
+> >     Just remove all of added code, rebase the phosphor-hwmon source to
+> >     commit
+> >     "5906173 (12 months ago) Brad Bishop: build: add support for
+> >     building with meson"
+> >
+> >     Add the include:
+> >     #include<sdbusplus/asio/connection.hpp>
+> >     I can see the error
+> >     |
+> >
+>  /openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/10.1.0/ld:
+> >     phosphor_hwmon_readd-readd.o: undefined reference to symbol
+> >     'pthread_key_delete@@GLIBC_2.4'
+> >     |
+> >
+>  /openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/10.1.0/ld:
+> >
+>  /openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthread.so.0:
+> >     error adding symbols: DSO missing from command line
+> >     | collect2: error: ld returned 1 exit status
+> >     | make[2]: *** [Makefile:643: phosphor-hwmon-readd] Error 1
+> >     | make[2]: Leaving directory
+> >
+>  '/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/build'
+> >     | make[1]: *** [Makefile:801: all-recursive] Error 1
+> >     | make[1]: Leaving directory
+> >
+>  '/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/build'
+> >     | make: *** [Makefile:524: all] Error 2
+> >     | ERROR: oe_runmake failed
+> >     | WARNING: exit code 1 from a shell command.
+> >     | ERROR: Execution of
+> >
+>  '/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/temp/run.do_compile.2045'
+> >     failed with exit code 1:
+> >     | Makefile:800: target 'check-valgrind-recursive' given more than
+> >     once in the same rule
+> >     | Makefile:800: target 'check-valgrind-memcheck-recursive' given
+> >     more than once in the same rule
+> >     | Makefile:800: target 'check-valgrind-helgrind-recursive' given
+> >     more than once in the same rule
+> >     | Makefile:800: target 'check-valgrind-drd-recursive' given more
+> >     than once in the same rule
+> >     | Makefile:800: target 'check-valgrind-sgcheck-recursive' given
+> >     more than once in the same rule
+> >     | make  all-recursive
+> >
+> >     I think we should add thread lib.
+> >
+> >     Regards.
+> >     Thu Nguyen.
+> >
+> >     On Thu, Oct 22, 2020 at 10:51 PM Matt Spinler
+> >     <mspinler@linux.ibm.com <mailto:mspinler@linux.ibm.com>> wrote:
+> >
+> >
+> >
+> >         On 10/22/2020 9:49 AM, Thu Ba Nguyen wrote:
+> >         > I started on supporting enable/disable host sensors.
+> >         Everythings is
+> >         > fine until I...
+> >         > This Message Is From an External Sender
+> >         > This message came from outside your organization.
+> >         >
+> >         > I started on supporting enable/disable host sensors.
+> >         > Everythings is fine until I add code to monitor host status
+> >         as below.
+> >         > bool MainLoop::isHostOn(void)
+> >         > {
+> >         > char buff[128];
+> >         > if (!powerMatch)
+> >         > {
+> >         > log<level::ERR>("Power Match Not Created");
+> >         > }
+> >         > sprintf(buff, "isHostOn powerStatusOn: %d\n",powerStatusOn);
+> >         > log<level::INFO>(buff);
+> >         > return powerStatusOn;
+> >         > }
+> >         > std::shared_ptr<sdbusplus::bus::match::match>
+> >         > MainLoop::startHostStateMonitor(void) {
+> >         > return std::make_shared<sdbusplus::bus::match::match>(
+> >         > *conn,
+> >         > "type='signal',interface='org.freedesktop.DBus.Properties',"
+> >         >
+> >
+>  "member='PropertiesChanged',arg0='xyz.openbmc_project.State.Host'",
+> >         > [](sdbusplus::message::message &msg) {
+> >         > std::string interfaceName;
+> >         > boost::container::flat_map<std::string,
+> >         std::variant<std::string>>
+> >         > propertiesChanged;
+> >         > try {
+> >         > msg.read(interfaceName, propertiesChanged);
+> >         > } catch (std::exception &e) {
+> >         > log<level::ERR>("Unable to read host state\n");
+> >         > return;
+> >         > }
+> >         > // We only want to check for CurrentHostState
+> >         > if (propertiesChanged.begin()->first != "CurrentHostState") {
+> >         > return;
+> >         > }
+> >         > auto findState = propertiesChanged.find(powProperty);
+> >         > if (findState != propertiesChanged.end())
+> >         > {
+> >         > powerStatusOn = boost::ends_with(
+> >         > std::get<std::string>(findState->second), "Running");
+> >         > }
+> >         > powerMatch = true;
+> >         > });
+> >         > }
+> >         > void MainLoop::read()
+> >         > {
+> >         > // TODO: Issue#3 - Need to make calls to the dbus sensor
+> >         cache here to
+> >         > // ensure the objects all exist?
+> >         > /* Host changed state from On to Off */
+> >         > if (!isHostOn() && (lastPowerState == HOST_ON ||
+> >         > lastPowerState == HOST_NA)) {
+> >         > removeHostSensors();
+> >         > lastPowerState = HOST_OFF;
+> >         > }
+> >         > /* Host changed state from Off to On */
+> >         > if (isHostOn() && lastPowerState == HOST_OFF) {
+> >         > addDroppedHostSensors();
+> >         > lastPowerState = HOST_ON;
+> >         > }
+> >         > When build openBMC I got error:
+> >         >
+> >
+>  tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthread.so.0:
+> >
+> >         > error adding symbols: DSO missing from command line
+> >         > | collect2: error: ld returned 1 exit status
+> >         > | make[2]: *** [Makefile:643: phosphor-hwmon-readd] Error 1
+> >         >
+> >         > It seems I need adding the threads lib to defend lib.
+> >         > Any suggestion to add threads lib to build configuration?
+> >         >
+> >
+> >         That must be because you're using that single boost function?
+> >         While you
+> >         could add the dependency,
+> >         the ideal thing to do since this repo already uses
+> >         phosphor-dbus-interfaces is to use the function:
+> >
+> >                  /** @brief Convert a string to an appropriate enum
+> value.
+> >                   *  @param[in] s - The string to convert in the form of
+> >                   * "xyz.openbmc_project.State.Host.<value name>"
+> >                   *  @return - The enum value.
+> >                   */
+> >                  static HostState convertHostStateFromString(const
+> >         std::string& s);
+> >
+> >         to convert it to the actual HostState enum to check against:
+> >
+> >                  enum class HostState
+> >                  {
+> >                      Off,
+> >                      Running,
+> >                      Quiesced,
+> >                      DiagnosticMode,
+> >                  };
+> >
+> >         This is all in xyz/openbmc_project/State/Host/server.hpp
+> >         provided by
+> >         phosphor-dbus-interfaces.
+> >
+> >         > Thanks.
+> >         > Thu.
+> >         >
+> >         > On Wed, Oct 21, 2020 at 11:54 PM Thu Ba Nguyen
+> >         <tbnguyen1985@gmail.com <mailto:tbnguyen1985@gmail.com>
+> >         > <mailto:tbnguyen1985@gmail.com
+> >         <mailto:tbnguyen1985@gmail.com>>> wrote:
+> >         >
+> >         >     Hi Vijay,
+> >         >
+> >         >     I took a look on entity-manager and openbmc source.
+> >         >     Don't have many companies  using entity-manager model to
+> >         support
+> >         >     sensors.
+> >         >
+> >         >     Regards
+> >         >     Thu Nguyen.
+> >         >
+> >         >
+> >         >     On Wed, Oct 21, 2020 at 7:15 AM Vijay Khemka
+> >         <vijaykhemka@fb.com <mailto:vijaykhemka@fb.com>
+> >         >     <mailto:vijaykhemka@fb.com <mailto:vijaykhemka@fb.com>>>
+> >         wrote:
+> >         >
+> >         >         *From: *openbmc
+> >         >         <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org
+> >         <mailto:fb.com@lists.ozlabs.org>
+> >         >         <mailto:fb.com@lists.ozlabs.org
+> >         <mailto:fb.com@lists.ozlabs.org>>> on behalf of Thu Ba Nguyen
+> >         >         <tbnguyen1985@gmail.com
+> >         <mailto:tbnguyen1985@gmail.com> <mailto:tbnguyen1985@gmail.com
+> >         <mailto:tbnguyen1985@gmail.com>>>
+> >         >         *Date: *Monday, October 19, 2020 at 11:23 AM
+> >         >         *To: *Ed Tanous <ed@tanous.net
+> >         <mailto:ed@tanous.net> <mailto:ed@tanous.net
+> >         <mailto:ed@tanous.net>>>
+> >         >         *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org
+> >         <mailto:openbmc@lists.ozlabs.org>
+> >         >         <mailto:openbmc@lists.ozlabs.org
+> >         <mailto:openbmc@lists.ozlabs.org>>>
+> >         >         *Subject: *Re: Enable/Disable some sensors when Host
+> >         On/Off
+> >         >
+> >         >         Hi Ed Tanous,
+> >         >
+> >         >         > Thanks for your info,
+> >         >
+> >         >         > But in your platform we are using phosphor-hwmon
+> >         to manage
+> >         >         sensors.
+> >         >
+> >         >         > We don't use entity-manager.
+> >         >
+> >         >         > As I knew we can't use both entity-manager and
+> >         >         phosphor-hwmon for one project.
+> >         >
+> >         >         You can use both but for different sensors. You can
+> >         decide
+> >         >         what sensors to configure
+> >         >
+> >         >         via EM/dbus-sensors and which one for phosphor-hwmon.
+> >         >
+> >         >         Regards
+> >         >
+> >         >         Thu Nguyen.
+> >         >
+> >
+>
+>
+
+--00000000000039b26905b34f5bab
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Please=C2=A0see my comments below.</=
+div><div><br></div><div>Thanks.</div><div>Thu Nguyen.</div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 4, 2020 =
+at 11:31 PM Matt Spinler &lt;<a href=3D"mailto:mspinler@linux.ibm.com">mspi=
+nler@linux.ibm.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style=
+:solid;border-left-color:rgb(204,204,204);padding-left:1ex"><br>
+<br>
+On 11/4/2020 3:15 AM, Thu Ba Nguyen wrote:<br>
+&gt; Hi=C2=A0Matt, I implemented &quot;Inactive the host sensors&quot; in p=
+hosphor-hwmon <br>
+&gt; use below...<br>
+&gt; This Message Is From an External Sender<br>
+&gt; This message came from outside your organization.<br>
+&gt;<br>
+&gt; Hi=C2=A0Matt,<br>
+&gt;<br>
+&gt; I implemented &quot;Inactive the host sensors&quot; in phosphor-hwmon =
+use below <br>
+&gt; approaching:<br>
+&gt; 1. Add one option in Sensors configuration, phosphor-hwmon will parse =
+<br>
+&gt; this option and add host sensors to _hostSensors list.<br>
+&gt; 2. In mainloop::read() before going to loop to read the sensors in the=
+ <br>
+&gt; reading list. Query dbus to get CurrentHostState property.<br>
+&gt; This property belongs to service &quot;xyz.openbmc_project.State.Host&=
+quot;.<br>
+&gt; Based on the status of this property, identify host status.<br>
+&gt; If the host is off, remove the host sensors from _state list and dbus.=
+ <br>
+&gt; I expected the users wouldn&#39;t see the host sensors on the BMC Web =
+when <br>
+&gt; the host is off.<br>
+&gt; If the host is on, add the host sensors back to _state list and also d=
+bus.<br>
+&gt;<br>
+&gt; The code is working. But I have two issues with this approaching:<br>
+&gt;<br>
+&gt; 1. Too many transactions to get dbus property CurrentHostState.<br>
+&gt; In my case, I have 6 services to monitor=C2=A0the sensors which concer=
+n the <br>
+&gt; host.<br>
+&gt; With the current interval 1 second of phosphor-hwmon, I have 6 <br>
+&gt; transactions to get CurrentHostState per seconds.<br>
+<br>
+The better way to implement this would be to read CurrentHostState once <br=
+>
+on startup, and then register for<br>
+propertiesChanged signals for it and provide a callback to update an <br>
+internal host state variable.<br></blockquote><div>[Thu] Yes, This is what =
+I&#39;m planning to do. But don&#39;t know how to add a propertiesChanged s=
+ignals</div><div>to the current phosphor-hwmon framework.</div><div><br></d=
+iv><div>I usually use below code to add a signal to dbus.</div><div><div>=
+=C2=A0 =C2=A0 boost::asio::io_service io;</div><div>=C2=A0 =C2=A0 ampere::h=
+ost::conn =3D</div><div>=C2=A0 =C2=A0 =C2=A0 std::make_shared&lt;sdbusplus:=
+:asio::connection&gt;(ampere::host::io);</div><div><br></div><div>=C2=A0 =
+=C2=A0 std::vector&lt;std::unique_ptr&lt;sdbusplus::bus::match::match&gt;&g=
+t; matches;</div><div>=C2=A0 =C2=A0 //Start tracking power state</div><div>=
+=C2=A0 =C2=A0 std::unique_ptr&lt;sdbusplus::bus::match::match&gt; hostMonit=
+or =3D</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 ampere::host::startHostStateMo=
+nitor();</div><div>=C2=A0 =C2=A0 matches.emplace_back(std::move(hostMonitor=
+));</div><div><br></div><div>=C2=A0 =C2=A0 /* wait for the signal */</div><=
+div>=C2=A0 =C2=A0 ampere::host::io.run();</div></div><div>But when start io=
+.run(), phosphor-hwmon will stop reading sensors.</div><div><br></div><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-=
+width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);paddin=
+g-left:1ex">
+&gt; 2. When I call &quot;ipmitool power off&quot; the host, there is a gap=
+ between <br>
+&gt; the time I trigger GPIO to power off the chassis and the time Dbus <br=
+>
+&gt; property CurrentHostState is updated.<br>
+&gt; In this gap, the phosphor-hwmon is still reading sensors. And this <br=
+>
+&gt; causes the threshold=C2=A0warnings or errors. I want to avoid this.<br=
+>
+&gt;<br>
+&gt; Do you have any suggestions to avoid these issues?<br>
+&gt;<br>
+<br>
+I can&#39;t think of anything at the moment.=C2=A0 Maybe someone else has a=
+n idea <br>
+here.<br>
+<br>
+&gt; Others question:<br>
+&gt; I saw that phosphor-hwmon is registering an event to smbus and trigger=
+ <br>
+&gt; the event after each 1 second to read sensors.<br>
+&gt; Can I change the phosphor-hwmon code to integrate=C2=A0one dbus signal=
+ event?<br>
+&gt; Which will be triggered when there is changing in dbus property.<br>
+<br>
+I&#39;m not sure I understand what you&#39;re asking for here.=C2=A0 Right =
+now it <br>
+will do 1 second reads (the period is<br>
+configurable) and send a properties changed signal for each sensor on <br>
+D-Bus only when the value changes.<br></blockquote><div>[Thu] I&#39;m askin=
+g for how to add a signal to current phosphor-hwmon framework as comment 1.=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(20=
+4,204,204);padding-left:1ex">
+&gt;<br>
+&gt; I knew how to create a service which adds the call back function when =
+<br>
+&gt; there is change in dbus property.<br>
+&gt; But don&#39;t know how to intergrace it to hwmon.<br>
+&gt;<br>
+&gt; Regards.<br>
+&gt; Thu Nguyen.<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt; On Fri, Oct 23, 2020 at 5:45 AM Thu Ba Nguyen &lt;<a href=3D"mailto:tb=
+nguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.com</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank"=
+>tbnguyen1985@gmail.com</a>&gt;&gt; wrote:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Just remove all of added code, rebase the phosphor-=
+hwmon source to<br>
+&gt;=C2=A0 =C2=A0 =C2=A0commit<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&quot;5906173 (12 months ago) Brad Bishop: build: a=
+dd support for<br>
+&gt;=C2=A0 =C2=A0 =C2=A0building with meson&quot;<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Add the include:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0#include&lt;sdbusplus/asio/connection.hpp&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0I can see the error<br>
+&gt;=C2=A0 =C2=A0 =C2=A0|<br>
+&gt;=C2=A0 =C2=A0 =C2=A0/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-lin=
+ux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot-nativ=
+e/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi=
+/gcc/arm-openbmc-linux-gnueabi/10.1.0/ld:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0phosphor_hwmon_readd-readd.o: undefined reference t=
+o symbol<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&#39;pthread_key_delete@@GLIBC_2.4&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0|<br>
+&gt;=C2=A0 =C2=A0 =C2=A0/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-lin=
+ux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot-nativ=
+e/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi=
+/gcc/arm-openbmc-linux-gnueabi/10.1.0/ld:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-lin=
+ux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/l=
+ibpthread.so.0:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0error adding symbols: DSO missing from command line=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| collect2: error: ld returned 1 exit status<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| make[2]: *** [Makefile:643: phosphor-hwmon-readd]=
+ Error 1<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| make[2]: Leaving directory<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&#39;/openbmc/jade_build/tmp/work/arm1176jzs-openbm=
+c-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/build&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| make[1]: *** [Makefile:801: all-recursive] Error =
+1<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| make[1]: Leaving directory<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&#39;/openbmc/jade_build/tmp/work/arm1176jzs-openbm=
+c-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/build&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| make: *** [Makefile:524: all] Error 2<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| ERROR: oe_runmake failed<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| WARNING: exit code 1 from a shell command.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| ERROR: Execution of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&#39;/openbmc/jade_build/tmp/work/arm1176jzs-openbm=
+c-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/temp/run.do_com=
+pile.2045&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0failed with exit code 1:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| Makefile:800: target &#39;check-valgrind-recursiv=
+e&#39; given more than<br>
+&gt;=C2=A0 =C2=A0 =C2=A0once in the same rule<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| Makefile:800: target &#39;check-valgrind-memcheck=
+-recursive&#39; given<br>
+&gt;=C2=A0 =C2=A0 =C2=A0more than once in the same rule<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| Makefile:800: target &#39;check-valgrind-helgrind=
+-recursive&#39; given<br>
+&gt;=C2=A0 =C2=A0 =C2=A0more than once in the same rule<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| Makefile:800: target &#39;check-valgrind-drd-recu=
+rsive&#39; given more<br>
+&gt;=C2=A0 =C2=A0 =C2=A0than once in the same rule<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| Makefile:800: target &#39;check-valgrind-sgcheck-=
+recursive&#39; given<br>
+&gt;=C2=A0 =C2=A0 =C2=A0more than once in the same rule<br>
+&gt;=C2=A0 =C2=A0 =C2=A0| make =C2=A0all-recursive<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0I think we should add thread lib.<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Regards.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Thu Nguyen.<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0On Thu, Oct 22, 2020 at 10:51 PM Matt Spinler<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;<a href=3D"mailto:mspinler@linux.ibm.com" targe=
+t=3D"_blank">mspinler@linux.ibm.com</a> &lt;mailto:<a href=3D"mailto:mspinl=
+er@linux.ibm.com" target=3D"_blank">mspinler@linux.ibm.com</a>&gt;&gt; wrot=
+e:<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0On 10/22/2020 9:49 AM, Thu Ba Nguyen =
+wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; I started on supporting enable/d=
+isable host sensors.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Everythings is<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; fine until=C2=A0I...<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; This Message Is From an External=
+ Sender<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; This message came from outside y=
+our organization.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; I started on supporting enable/d=
+isable host sensors.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Everythings is fine until=C2=A0I=
+ add code to monitor host status<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0as below.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; bool MainLoop::isHostOn(void)<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; char buff[128];<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; if (!powerMatch)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; log&lt;level::ERR&gt;(&quot;Powe=
+r Match Not Created&quot;);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; sprintf(buff, &quot;isHostOn pow=
+erStatusOn: %d\n&quot;,powerStatusOn);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; log&lt;level::INFO&gt;(buff);<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; return powerStatusOn;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; std::shared_ptr&lt;sdbusplus::bu=
+s::match::match&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; MainLoop::startHostStateMonitor(=
+void) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; return std::make_shared&lt;sdbus=
+plus::bus::match::match&gt;(<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; *conn,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; &quot;type=3D&#39;signal&#39;,in=
+terface=3D&#39;org.freedesktop.DBus.Properties&#39;,&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;member=3D&#39;PropertiesChanged=
+&#39;,arg0=3D&#39;xyz.openbmc_project.State.Host&#39;&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; [](sdbusplus::message::message &=
+amp;msg) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; std::string interfaceName;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; boost::container::flat_map&lt;st=
+d::string,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0std::variant&lt;std::string&gt;&gt;<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; propertiesChanged;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; try {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; msg.read(interfaceName, properti=
+esChanged);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; } catch (std::exception &amp;e) =
+{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; log&lt;level::ERR&gt;(&quot;Unab=
+le to read host state\n&quot;);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; // We only want to check for Cur=
+rentHostState<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; if (propertiesChanged.begin()-&g=
+t;first !=3D &quot;CurrentHostState&quot;) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; auto findState =3D propertiesCha=
+nged.find(powProperty);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; if (findState !=3D propertiesCha=
+nged.end())<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; powerStatusOn =3D boost::ends_wi=
+th(<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; std::get&lt;std::string&gt;(find=
+State-&gt;second), &quot;Running&quot;);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; powerMatch =3D true;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; });<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; void MainLoop::read()<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; // TODO: Issue#3 - Need to make =
+calls to the dbus sensor<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cache here to<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; // ensure the objects all exist?=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; /* Host changed state from On to=
+ Off */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; if (!isHostOn() &amp;&amp; (last=
+PowerState =3D=3D HOST_ON ||<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; lastPowerState =3D=3D HOST_NA)) =
+{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; removeHostSensors();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; lastPowerState =3D HOST_OFF;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; /* Host changed state from Off t=
+o On */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; if (isHostOn() &amp;&amp; lastPo=
+werState =3D=3D HOST_OFF) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; addDroppedHostSensors();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; lastPowerState =3D HOST_ON;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; When build openBMC I got error:<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tmp/work/arm1176jzs-openbmc-linux-gnu=
+eabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthr=
+ead.so.0:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; error adding symbols: DSO missin=
+g from command line<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; | collect2: error: ld returned 1=
+ exit status<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; | make[2]: *** [Makefile:643: ph=
+osphor-hwmon-readd] Error 1<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; It seems I need adding the threa=
+ds lib to defend lib.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Any suggestion to add threads li=
+b to build configuration?<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0That must be because you&#39;re using=
+ that single boost function?=C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0While you<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0could add the dependency,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0the ideal thing to do since this repo=
+ already uses<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0phosphor-dbus-interfaces is to use th=
+e function:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 /** @brief Convert a string to an appropriate enum value.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 *=C2=A0 @param[in] s - The string to convert in the form=
+ of<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 * &quot;xyz.openbmc_project.State.Host.&lt;value name&gt=
+;&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 *=C2=A0 @return - The enum value.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 static HostState convertHostStateFromString(const<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0std::string&amp; s);<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0to convert it to the actual HostState=
+ enum to check against:<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 enum class HostState<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Off,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Running,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Quiesced,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 DiagnosticMode,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 };<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0This is all in xyz/openbmc_project/St=
+ate/Host/server.hpp<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0provided by<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0phosphor-dbus-interfaces.<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Thanks.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; Thu.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; On Wed, Oct 21, 2020 at 11:54 PM=
+ Thu Ba Nguyen<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;<a href=3D"mailto:tbnguyen1985@gm=
+ail.com" target=3D"_blank">tbnguyen1985@gmail.com</a> &lt;mailto:<a href=3D=
+"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.com</a=
+>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt; &lt;mailto:<a href=3D"mailto:tbn=
+guyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:tbnguyen=
+1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.com</a>&gt;&gt;&gt; wr=
+ote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Hi Vijay,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0I took a look=
+ on entity-manager=C2=A0and openbmc source.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Don&#39;t hav=
+e=C2=A0many companies =C2=A0using entity-manager model to<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0support<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0sensors.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Regards<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0Thu Nguyen.<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0On Wed, Oct 2=
+1, 2020 at 7:15 AM Vijay Khemka<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;<a href=3D"mailto:vijaykhemka@fb.=
+com" target=3D"_blank">vijaykhemka@fb.com</a> &lt;mailto:<a href=3D"mailto:=
+vijaykhemka@fb.com" target=3D"_blank">vijaykhemka@fb.com</a>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a=
+ href=3D"mailto:vijaykhemka@fb.com" target=3D"_blank">vijaykhemka@fb.com</a=
+> &lt;mailto:<a href=3D"mailto:vijaykhemka@fb.com" target=3D"_blank">vijayk=
+hemka@fb.com</a>&gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0*From: *openbmc<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&lt;openbmc-bounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.=
+org" target=3D"_blank">fb.com@lists.ozlabs.org</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:fb.com@l=
+ists.ozlabs.org" target=3D"_blank">fb.com@lists.ozlabs.org</a>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&lt;mailto:<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_blank">=
+fb.com@lists.ozlabs.org</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:fb.com@l=
+ists.ozlabs.org" target=3D"_blank">fb.com@lists.ozlabs.org</a>&gt;&gt;&gt; =
+on behalf of Thu Ba Nguyen<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&lt;<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen=
+1985@gmail.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:tbnguyen=
+1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.com</a>&gt; &lt;mailto=
+:<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@g=
+mail.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:tbnguyen=
+1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.com</a>&gt;&gt;&gt;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0*Date: *Monday, October 19, 2020 at 11:23 AM<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0*To: *Ed Tanous &lt;<a href=3D"mailto:ed@tanous.net" target=3D"_blank">e=
+d@tanous.net</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:ed@tanou=
+s.net" target=3D"_blank">ed@tanous.net</a>&gt; &lt;mailto:<a href=3D"mailto=
+:ed@tanous.net" target=3D"_blank">ed@tanous.net</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:ed@tanou=
+s.net" target=3D"_blank">ed@tanous.net</a>&gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0*Cc: *OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" t=
+arget=3D"_blank">openbmc@lists.ozlabs.org</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:openbmc@=
+lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&lt;mailto:<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank"=
+>openbmc@lists.ozlabs.org</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:openbmc@=
+lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;&gt;&gt=
+;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0*Subject: *Re: Enable/Disable some sensors when Host<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0On/Off<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0Hi Ed Tanous,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&gt; Thanks for your info,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&gt; But in your platform we are using phosphor-hwmon<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0to manage<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0sensors.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&gt; We don&#39;t use entity-manager.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0&gt; As I knew we can&#39;t use both entity-manager and<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0phosphor-hwmon for one project.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0You can use both but for different sensors. You can<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0decide<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0what sensors to configure<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0via EM/dbus-sensors and which one for phosphor-hwmon.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0Regards<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0Thu Nguyen.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&gt;<br>
+&gt;<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000039b26905b34f5bab--
