@@ -1,72 +1,107 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AB482A6679
-	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 15:36:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 021542A69D2
+	for <lists+openbmc@lfdr.de>; Wed,  4 Nov 2020 17:32:20 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CR8N24CnrzDqbX
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 01:36:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CRBy91PgWzDqc7
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 03:32:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d30;
- helo=mail-io1-xd30.google.com; envelope-from=gmouse@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=oEpyVxH7; dkim-atps=neutral
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com
- [IPv6:2607:f8b0:4864:20::d30])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=N5MtZqIF; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CR8L60cfhzDqP9
- for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 01:34:20 +1100 (AEDT)
-Received: by mail-io1-xd30.google.com with SMTP id o11so11126612ioo.11
- for <openbmc@lists.ozlabs.org>; Wed, 04 Nov 2020 06:34:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=gczIEP56awYXiURipmfN85buL/RlcYUl78BUQH+5uk0=;
- b=oEpyVxH75XrfuDiymfBOm6z8SsR+hUgFEkgEKUxOTGfFa09oUT8804NbcEXpKyl+YF
- GVhMb/SUb4q6mY+UrWYokHPdkbEpIl+J5aOatNo8T9rkZRG1T6sH87KvuWduINhrdMnq
- ddzIuLwVl3TW4thkbQy86b0Z96Jb6L6/Pq02KSZIPvM0+niKUVP1qjUFRR2AVWxoe5zn
- A6A/Y6aeUgC39FaTZ71eCHcccvAvNr51DiqWafvgJOcM+WFKPn4oZQXoq9nIsMP3lHep
- Cw8fYR7IYqAQayyMcmukkoCLK7JMq2SybOx0V+6SEixk5f5aFL+TxxV4asxGQLc5Jc6o
- KanA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=gczIEP56awYXiURipmfN85buL/RlcYUl78BUQH+5uk0=;
- b=lPnMPwqLbuGWMC41uv7yTXoHyhN99Z733TPW2x8spc7ZbtqBAN3Ne49PYvrRNNp+jI
- qVlJ66ld6KN3mh6Q8M7FljR4oiRVsrcOUk9YnP6Krku0Uh86pPX5DOVVZDsymnBw9WCY
- wRmSO0XwR8W8IkJ502YH661ZGJupI+9pIJgpucCtEhLgxRakxhQbwvpa0amYwUmFAXsG
- /evG7hLUsaf2n6kSIKFSCCVzrVc8ub7NMW8TMR/EZhWHGBMsX8pnOaSjt7nG3gYYLMRC
- a5iTVH4KqCQsnhAjjLndZIhd+GtgrgDE114nodejAxC2ceIvdM63WGClbaBIy2SuMVAX
- zfXA==
-X-Gm-Message-State: AOAM530GLALwbmcPUaUYm+vADRC2mjGtuVANzi4g6ZyEzMPutfkyPBRv
- rlphiP8IykBJQosOFSM+0Cv/R2XWcoLEVH13WsH4nw==
-X-Google-Smtp-Source: ABdhPJyWZh8vmUUwNFQC2bHaVC+ObJlhnE1kG9NiAd6szGUxDHZW3G6WVOVNKsu6BUI5NxFnz9srDWhqf2V/rHE1Fmo=
-X-Received: by 2002:a05:6602:2d09:: with SMTP id
- c9mr12232215iow.55.1604500455892; 
- Wed, 04 Nov 2020 06:34:15 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CRBx66RQdzDqZS
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 03:31:21 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0A4GVDgh152077; Wed, 4 Nov 2020 11:31:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=JDvy5oJ3dyUPFBcnsRBI6T2YzVnjtXSAVBS+RSehqAE=;
+ b=N5MtZqIF1+wR2+jKJToRraAetZspC9Ce04xIp+fSw/0TADaKI6CV7KLdJP1BC+7DzS9Z
+ ZpQDmqn04DaeElLxuTeswsTSjNPWI7dMj4Pjsp/zsGv/+TZxfXTu9sOqjA1y+2P6YXoJ
+ jIgo22BphBIBIE6xxK0HWtIslAG4qhF3wX5vDgsDltJA1QYAUQoAwwxMQ14NaVA4FUMc
+ DSI8RxaZbAYdLFMdkuWaxg6uQsiADdP3owZPqP5aqpQP7JDDWUL8Tc6v3QCsfDmn07ES
+ TFtOOlD/ku0fX4Gm7NklXYJ2JaNHu/T1g0w3neDIcQXbs+lAZpgeWzaF7gkk2bSqUEki Mg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34kjv294pq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Nov 2020 11:31:14 -0500
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 0A4GVDw6152038;
+ Wed, 4 Nov 2020 11:31:13 -0500
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 34kjv294ma-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Nov 2020 11:31:13 -0500
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0A4GRlXp030819;
+ Wed, 4 Nov 2020 16:31:05 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma04wdc.us.ibm.com with ESMTP id 34h0ehyncn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Nov 2020 16:31:05 +0000
+Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com
+ [9.57.199.106])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0A4GV5bE10682924
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Nov 2020 16:31:05 GMT
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 51C992806E;
+ Wed,  4 Nov 2020 16:31:05 +0000 (GMT)
+Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D316B28072;
+ Wed,  4 Nov 2020 16:31:04 +0000 (GMT)
+Received: from [9.65.195.144] (unknown [9.65.195.144])
+ by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Nov 2020 16:31:04 +0000 (GMT)
+Subject: Re: Enable/Disable some sensors when Host On/Off
+To: Thu Ba Nguyen <tbnguyen1985@gmail.com>
+References: <CALioo35zJdqL7uAhvxAuqa7c16wAdtfc+JVSz6Tg5UG5Yp8L3w@mail.gmail.com>
+ <CACWQX833j+remiYr8qOdrZZ4z3L3D_GX0q6z4MPJDu8J4Nv+Pg@mail.gmail.com>
+ <CALioo36kortxuLPJQmc7xtDVN=jAxPNf481ovFkc2jQfYu8-rg@mail.gmail.com>
+ <90950FB3-E1B3-4ACE-97C5-CB9582A94456@fb.com>
+ <CALioo37b-BjgUdfZz2Vm+=6K6VMYRO9auyuHHo7=AZBFpoBzdw@mail.gmail.com>
+ <CALioo37LBToJaMs9Zt4q4WcMYKT_rF9zG1ujxv3q8HOQvsE8-w@mail.gmail.com>
+ <26b02688-a8c8-3fb3-6cc9-50daabf4d01e@linux.ibm.com>
+ <CALioo34WDkK6nVY0+rjKKObcpYVW5JmAZ7sitmXNHP-MM7zhAQ@mail.gmail.com>
+ <CALioo35QFf6n64pAJm8iiUNzas6-jtf9Xu8hDHmhLQGLSwXpDg@mail.gmail.com>
+From: Matt Spinler <mspinler@linux.ibm.com>
+Message-ID: <14c0a498-498c-8447-685b-c97d04c699ab@linux.ibm.com>
+Date: Wed, 4 Nov 2020 10:31:06 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.12.1
 MIME-Version: 1.0
-References: <HK2PR03MB45804A1D770024303FC50FCAD3140@HK2PR03MB4580.apcprd03.prod.outlook.com>
- <CAHsrh9KO6jxKY1Oi6=8Gk74gF+Rrhz+9HN3UgRpO16st0RmjRQ@mail.gmail.com>
- <ef502742-673b-4aeb-8614-f305a0f0053a@www.fastmail.com>
- <HK2PR03MB4580C4DF82B1089E34B97311D3100@HK2PR03MB4580.apcprd03.prod.outlook.com>
- <CADVsX8-9FMwUrjnNzKdEX2CRHRNr0nwFyy74U74OozQHWfXpVA@mail.gmail.com>
- <HK2PR03MB4580DB8C2DD31082F2BEFB4DD3110@HK2PR03MB4580.apcprd03.prod.outlook.com>
-In-Reply-To: <HK2PR03MB4580DB8C2DD31082F2BEFB4DD3110@HK2PR03MB4580.apcprd03.prod.outlook.com>
-From: Anton Kachalov <rnouse@google.com>
-Date: Wed, 4 Nov 2020 15:34:04 +0100
-Message-ID: <CADVsX885665jhTuRVt5MjARNr_Ka7KUmkbN7J5vP7G+09qrYXQ@mail.gmail.com>
-Subject: Re: [External] Re: SELinux support question
-To: Ivan Li11 <rli11@lenovo.com>
-Content-Type: multipart/alternative; boundary="000000000000b7ce0705b348dfaa"
+In-Reply-To: <CALioo35QFf6n64pAJm8iiUNzas6-jtf9Xu8hDHmhLQGLSwXpDg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-11-04_11:2020-11-04,
+ 2020-11-04 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ mlxlogscore=999 mlxscore=0 adultscore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 phishscore=0 suspectscore=0 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011040119
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,333 +113,307 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Artem Senichev <artemsen@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b7ce0705b348dfaa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hello, Ivan.
-
-Please check if the systemd has been compiled with selinux feature enabled.
-It should be in charge of enforcing selinux rules at boot.
-
-You should add "selinux" to PACKAGECONFIG over here:
-https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/s=
-ystemd/systemd_%25.bbappend#L4
-
-As well as adding "selinux" to the DISTRO_FEATURES variable in your
-build/conf/local.conf file.
-
-Do you have precompiled policies under /etc/selinux ?
-
-If it still doesn't work, please also attach a boot log.
 
 
-On Tue, 3 Nov 2020 at 18:52, Ivan Li11 <rli11@lenovo.com> wrote:
+On 11/4/2020 3:15 AM, Thu Ba Nguyen wrote:
+> Hi Matt, I implemented "Inactive the host sensors" in phosphor-hwmon 
+> use below...
+> This Message Is From an External Sender
+> This message came from outside your organization.
+>
+> Hi Matt,
+>
+> I implemented "Inactive the host sensors" in phosphor-hwmon use below 
+> approaching:
+> 1. Add one option in Sensors configuration, phosphor-hwmon will parse 
+> this option and add host sensors to _hostSensors list.
+> 2. In mainloop::read() before going to loop to read the sensors in the 
+> reading list. Query dbus to get CurrentHostState property.
+> This property belongs to service "xyz.openbmc_project.State.Host".
+> Based on the status of this property, identify host status.
+> If the host is off, remove the host sensors from _state list and dbus. 
+> I expected the users wouldn't see the host sensors on the BMC Web when 
+> the host is off.
+> If the host is on, add the host sensors back to _state list and also dbus.
+>
+> The code is working. But I have two issues with this approaching:
+>
+> 1. Too many transactions to get dbus property CurrentHostState.
+> In my case, I have 6 services to monitor the sensors which concern the 
+> host.
+> With the current interval 1 second of phosphor-hwmon, I have 6 
+> transactions to get CurrentHostState per seconds.
 
-> Hi Anton,
+The better way to implement this would be to read CurrentHostState once 
+on startup, and then register for
+propertiesChanged signals for it and provide a callback to update an 
+internal host state variable.
+
+> 2. When I call "ipmitool power off" the host, there is a gap between 
+> the time I trigger GPIO to power off the chassis and the time Dbus 
+> property CurrentHostState is updated.
+> In this gap, the phosphor-hwmon is still reading sensors. And this 
+> causes the threshold warnings or errors. I want to avoid this.
 >
->
->
-> Thanks your help and support.
->
-> I=E2=80=99ve followed your suggestion to enable selinux kernel configurat=
-ion and
-> have seen kernel message =E2=80=9C[ 0.002268] SELinux:  Initializing.=E2=
-=80=9D during boot
-> time, but still returns =E2=80=9CDisabled=E2=80=9D after executing getenf=
-orce command.
->
-> The selinux mode and type I set in /etc/selinux/config file is permissive
-> and minimum.  Could you help to advise me whether there=E2=80=99s some se=
-ttings
-> need to set to avoid this problem.
->
->
->
-> Thanks,
->
-> Ivan
->
-> *From:* Anton Kachalov <rnouse@google.com>
-> *Sent:* Tuesday, November 3, 2020 3:50 AM
-> *To:* Ivan Li11 <rli11@lenovo.com>
-> *Cc:* Andrew Jeffery <andrew@aj.id.au>; Artem Senichev <artemsen@gmail.co=
-m>;
-> openbmc@lists.ozlabs.org
-> *Subject:* Re: [External] Re: SELinux support question
->
->
->
-> Hello, Ivan.
->
->
->
-> Perhaps, you should enable selinux kernel configuration as well. The
-> openbmc kernels, if I'm not mistaken, have different recipes.
->
->
->
-> The default configuration relies on linux-yocto package:
->
->
-> http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kerne=
-l/linux
->
->
->
-> You should include this selinux.cfg in on of the openbmc kernel layers:
->
->
->
-> SRC_URI +=3D "file://selinux.cfg"
->
->
->
-> and copy selinux.cfg to one of the local files location.
->
->
->
-> On Mon, 2 Nov 2020 at 18:46, Ivan Li11 <rli11@lenovo.com> wrote:
->
->
-> > -----Original Message-----
-> > From: Andrew Jeffery <andrew@aj.id.au>
-> > Sent: Monday, November 2, 2020 8:54 AM
-> > To: Artem Senichev <artemsen@gmail.com>; Ivan Li11 <rli11@lenovo.com>
-> > Cc: openbmc@lists.ozlabs.org
-> > Subject: [External] Re: SELinux support question
-> >
-> >
-> >
-> > On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:
-> > > Hi Ivan,
-> > >
-> > > Yocto has a layer for SELinux
-> > > (http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux), you can try
-> > > it.
-> > > But the layer depends on Python for management tools, which does not
-> > > exist in the OpenBMC image anymore.
-> > > The problem is that Python significantly increases image size, it wil=
-l
-> > > be more than 32MiB, which causes some troubles with qemu emulation.
-> >
-> > The problem is broader than qemu though, it would also be broken on any
-> > platform shipping a 32MiB flash part if the image exceeds 32MiB.
-> >
-> > That said, if there are systems that ship bigger parts and enabling
-> SELinux for
-> > those is feasible, we should add those platform models to qemu so
-> emulating
-> > them isn't constrained by the existing platform support.
-> >
-> > Andrew
->
-> Hi Andrew and Artem,
-> Per your suggestion, I try to enable SELinux with Yocto SELinux layer(
-> http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux) and 64MiB flash
-> part.
-> But encountered one problem which is when I use command "getenforce" to
-> check SELinux mode, it always returns "Disabled" even if SELinux mode in
-> config file '/etc/selinux/config' is permissive or enforcing by default.
->
-> Please help to advise it.
->
+> Do you have any suggestions to avoid these issues?
 >
 
---000000000000b7ce0705b348dfaa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I can't think of anything at the moment.  Maybe someone else has an idea 
+here.
 
-<div dir=3D"ltr">Hello, Ivan.<div><br></div><div>Please check if the system=
-d has been compiled with selinux feature enabled. It should be in charge of=
- enforcing selinux rules at boot.</div><div><br></div><div>You should add &=
-quot;selinux&quot; to PACKAGECONFIG over here:</div><div><a href=3D"https:/=
-/github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/systemd/=
-systemd_%25.bbappend#L4">https://github.com/openbmc/openbmc/blob/master/met=
-a-phosphor/recipes-core/systemd/systemd_%25.bbappend#L4</a><br></div><div><=
-br></div><div>As well as adding &quot;selinux&quot; to the DISTRO_FEATURES =
-variable in your build/conf/local.conf file.</div><div><br></div><div>Do yo=
-u have precompiled policies under /etc/selinux ?</div><div><br></div><div><=
-div>If it still=C2=A0doesn&#39;t work, please also attach a boot log.</div>=
-<div><br></div><div></div></div></div><br><div class=3D"gmail_quote"><div d=
-ir=3D"ltr" class=3D"gmail_attr">On Tue, 3 Nov 2020 at 18:52, Ivan Li11 &lt;=
-<a href=3D"mailto:rli11@lenovo.com">rli11@lenovo.com</a>&gt; wrote:<br></di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
+> Others question:
+> I saw that phosphor-hwmon is registering an event to smbus and trigger 
+> the event after each 1 second to read sensors.
+> Can I change the phosphor-hwmon code to integrate one dbus signal event?
+> Which will be triggered when there is changing in dbus property.
 
+I'm not sure I understand what you're asking for here.  Right now it 
+will do 1 second reads (the period is
+configurable) and send a properties changed signal for each sensor on 
+D-Bus only when the value changes.
 
+>
+> I knew how to create a service which adds the call back function when 
+> there is change in dbus property.
+> But don't know how to intergrace it to hwmon.
+>
+> Regards.
+> Thu Nguyen.
+>
+>
+>
+> On Fri, Oct 23, 2020 at 5:45 AM Thu Ba Nguyen <tbnguyen1985@gmail.com 
+> <mailto:tbnguyen1985@gmail.com>> wrote:
+>
+>     Just remove all of added code, rebase the phosphor-hwmon source to
+>     commit
+>     "5906173 (12 months ago) Brad Bishop: build: add support for
+>     building with meson"
+>
+>     Add the include:
+>     #include<sdbusplus/asio/connection.hpp>
+>     I can see the error
+>     |
+>     /openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/10.1.0/ld:
+>     phosphor_hwmon_readd-readd.o: undefined reference to symbol
+>     'pthread_key_delete@@GLIBC_2.4'
+>     |
+>     /openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot-native/usr/bin/arm-openbmc-linux-gnueabi/../../libexec/arm-openbmc-linux-gnueabi/gcc/arm-openbmc-linux-gnueabi/10.1.0/ld:
+>     /openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthread.so.0:
+>     error adding symbols: DSO missing from command line
+>     | collect2: error: ld returned 1 exit status
+>     | make[2]: *** [Makefile:643: phosphor-hwmon-readd] Error 1
+>     | make[2]: Leaving directory
+>     '/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/build'
+>     | make[1]: *** [Makefile:801: all-recursive] Error 1
+>     | make[1]: Leaving directory
+>     '/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/build'
+>     | make: *** [Makefile:524: all] Error 2
+>     | ERROR: oe_runmake failed
+>     | WARNING: exit code 1 from a shell command.
+>     | ERROR: Execution of
+>     '/openbmc/jade_build/tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/temp/run.do_compile.2045'
+>     failed with exit code 1:
+>     | Makefile:800: target 'check-valgrind-recursive' given more than
+>     once in the same rule
+>     | Makefile:800: target 'check-valgrind-memcheck-recursive' given
+>     more than once in the same rule
+>     | Makefile:800: target 'check-valgrind-helgrind-recursive' given
+>     more than once in the same rule
+>     | Makefile:800: target 'check-valgrind-drd-recursive' given more
+>     than once in the same rule
+>     | Makefile:800: target 'check-valgrind-sgcheck-recursive' given
+>     more than once in the same rule
+>     | make  all-recursive
+>
+>     I think we should add thread lib.
+>
+>     Regards.
+>     Thu Nguyen.
+>
+>     On Thu, Oct 22, 2020 at 10:51 PM Matt Spinler
+>     <mspinler@linux.ibm.com <mailto:mspinler@linux.ibm.com>> wrote:
+>
+>
+>
+>         On 10/22/2020 9:49 AM, Thu Ba Nguyen wrote:
+>         > I started on supporting enable/disable host sensors.
+>         Everythings is
+>         > fine until I...
+>         > This Message Is From an External Sender
+>         > This message came from outside your organization.
+>         >
+>         > I started on supporting enable/disable host sensors.
+>         > Everythings is fine until I add code to monitor host status
+>         as below.
+>         > bool MainLoop::isHostOn(void)
+>         > {
+>         > char buff[128];
+>         > if (!powerMatch)
+>         > {
+>         > log<level::ERR>("Power Match Not Created");
+>         > }
+>         > sprintf(buff, "isHostOn powerStatusOn: %d\n",powerStatusOn);
+>         > log<level::INFO>(buff);
+>         > return powerStatusOn;
+>         > }
+>         > std::shared_ptr<sdbusplus::bus::match::match>
+>         > MainLoop::startHostStateMonitor(void) {
+>         > return std::make_shared<sdbusplus::bus::match::match>(
+>         > *conn,
+>         > "type='signal',interface='org.freedesktop.DBus.Properties',"
+>         >
+>         "member='PropertiesChanged',arg0='xyz.openbmc_project.State.Host'",
+>         > [](sdbusplus::message::message &msg) {
+>         > std::string interfaceName;
+>         > boost::container::flat_map<std::string,
+>         std::variant<std::string>>
+>         > propertiesChanged;
+>         > try {
+>         > msg.read(interfaceName, propertiesChanged);
+>         > } catch (std::exception &e) {
+>         > log<level::ERR>("Unable to read host state\n");
+>         > return;
+>         > }
+>         > // We only want to check for CurrentHostState
+>         > if (propertiesChanged.begin()->first != "CurrentHostState") {
+>         > return;
+>         > }
+>         > auto findState = propertiesChanged.find(powProperty);
+>         > if (findState != propertiesChanged.end())
+>         > {
+>         > powerStatusOn = boost::ends_with(
+>         > std::get<std::string>(findState->second), "Running");
+>         > }
+>         > powerMatch = true;
+>         > });
+>         > }
+>         > void MainLoop::read()
+>         > {
+>         > // TODO: Issue#3 - Need to make calls to the dbus sensor
+>         cache here to
+>         > // ensure the objects all exist?
+>         > /* Host changed state from On to Off */
+>         > if (!isHostOn() && (lastPowerState == HOST_ON ||
+>         > lastPowerState == HOST_NA)) {
+>         > removeHostSensors();
+>         > lastPowerState = HOST_OFF;
+>         > }
+>         > /* Host changed state from Off to On */
+>         > if (isHostOn() && lastPowerState == HOST_OFF) {
+>         > addDroppedHostSensors();
+>         > lastPowerState = HOST_ON;
+>         > }
+>         > When build openBMC I got error:
+>         >
+>         tmp/work/arm1176jzs-openbmc-linux-gnueabi/phosphor-hwmon/1.0+gitAUTOINC+5906173aec-r1/recipe-sysroot/lib/libpthread.so.0:
+>
+>         > error adding symbols: DSO missing from command line
+>         > | collect2: error: ld returned 1 exit status
+>         > | make[2]: *** [Makefile:643: phosphor-hwmon-readd] Error 1
+>         >
+>         > It seems I need adding the threads lib to defend lib.
+>         > Any suggestion to add threads lib to build configuration?
+>         >
+>
+>         That must be because you're using that single boost function? 
+>         While you
+>         could add the dependency,
+>         the ideal thing to do since this repo already uses
+>         phosphor-dbus-interfaces is to use the function:
+>
+>                  /** @brief Convert a string to an appropriate enum value.
+>                   *  @param[in] s - The string to convert in the form of
+>                   * "xyz.openbmc_project.State.Host.<value name>"
+>                   *  @return - The enum value.
+>                   */
+>                  static HostState convertHostStateFromString(const
+>         std::string& s);
+>
+>         to convert it to the actual HostState enum to check against:
+>
+>                  enum class HostState
+>                  {
+>                      Off,
+>                      Running,
+>                      Quiesced,
+>                      DiagnosticMode,
+>                  };
+>
+>         This is all in xyz/openbmc_project/State/Host/server.hpp
+>         provided by
+>         phosphor-dbus-interfaces.
+>
+>         > Thanks.
+>         > Thu.
+>         >
+>         > On Wed, Oct 21, 2020 at 11:54 PM Thu Ba Nguyen
+>         <tbnguyen1985@gmail.com <mailto:tbnguyen1985@gmail.com>
+>         > <mailto:tbnguyen1985@gmail.com
+>         <mailto:tbnguyen1985@gmail.com>>> wrote:
+>         >
+>         >     Hi Vijay,
+>         >
+>         >     I took a look on entity-manager and openbmc source.
+>         >     Don't have many companies  using entity-manager model to
+>         support
+>         >     sensors.
+>         >
+>         >     Regards
+>         >     Thu Nguyen.
+>         >
+>         >
+>         >     On Wed, Oct 21, 2020 at 7:15 AM Vijay Khemka
+>         <vijaykhemka@fb.com <mailto:vijaykhemka@fb.com>
+>         >     <mailto:vijaykhemka@fb.com <mailto:vijaykhemka@fb.com>>>
+>         wrote:
+>         >
+>         >         *From: *openbmc
+>         >         <openbmc-bounces+vijaykhemka=fb.com@lists.ozlabs.org
+>         <mailto:fb.com@lists.ozlabs.org>
+>         >         <mailto:fb.com@lists.ozlabs.org
+>         <mailto:fb.com@lists.ozlabs.org>>> on behalf of Thu Ba Nguyen
+>         >         <tbnguyen1985@gmail.com
+>         <mailto:tbnguyen1985@gmail.com> <mailto:tbnguyen1985@gmail.com
+>         <mailto:tbnguyen1985@gmail.com>>>
+>         >         *Date: *Monday, October 19, 2020 at 11:23 AM
+>         >         *To: *Ed Tanous <ed@tanous.net
+>         <mailto:ed@tanous.net> <mailto:ed@tanous.net
+>         <mailto:ed@tanous.net>>>
+>         >         *Cc: *OpenBMC Maillist <openbmc@lists.ozlabs.org
+>         <mailto:openbmc@lists.ozlabs.org>
+>         >         <mailto:openbmc@lists.ozlabs.org
+>         <mailto:openbmc@lists.ozlabs.org>>>
+>         >         *Subject: *Re: Enable/Disable some sensors when Host
+>         On/Off
+>         >
+>         >         Hi Ed Tanous,
+>         >
+>         >         > Thanks for your info,
+>         >
+>         >         > But in your platform we are using phosphor-hwmon
+>         to manage
+>         >         sensors.
+>         >
+>         >         > We don't use entity-manager.
+>         >
+>         >         > As I knew we can't use both entity-manager and
+>         >         phosphor-hwmon for one project.
+>         >
+>         >         You can use both but for different sensors. You can
+>         decide
+>         >         what sensors to configure
+>         >
+>         >         via EM/dbus-sensors and which one for phosphor-hwmon.
+>         >
+>         >         Regards
+>         >
+>         >         Thu Nguyen.
+>         >
+>
 
-
-
-<div lang=3D"ZH-TW">
-<div class=3D"gmail-m_1161811548598717125WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">Hi Anton,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">Thanks your help and support.<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">I=E2=80=99ve followed your suggestion to enable selinux kernel co=
-nfiguration and have seen kernel message =E2=80=9C[ 0.002268] SELinux:=C2=
-=A0 Initializing.=E2=80=9D during boot time, but still returns =E2=80=9CDis=
-abled=E2=80=9D
- after executing getenforce command.<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">The selinux mode and type I set in /etc/selinux/config file is pe=
-rmissive and minimum.=C2=A0 Could you help to advise me whether there=E2=80=
-=99s some settings need to set to avoid this problem.<u></u><u></u></span><=
-/p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif"><u></u>=C2=A0<u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">Thanks,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"font-family:Calibri,sa=
-ns-serif">Ivan<u></u><u></u></span></p>
-<div style=3D"border-top:none;border-right:none;border-bottom:none;border-l=
-eft:1.5pt solid blue;padding:0cm 0cm 0cm 4pt">
-<div>
-<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
-top:1pt solid rgb(225,225,225);padding:3pt 0cm 0cm">
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11pt;font=
--family:Calibri,sans-serif">From:</span></b><span lang=3D"EN-US" style=3D"f=
-ont-size:11pt;font-family:Calibri,sans-serif"> Anton Kachalov &lt;<a href=
-=3D"mailto:rnouse@google.com" target=3D"_blank">rnouse@google.com</a>&gt;
-<br>
-<b>Sent:</b> Tuesday, November 3, 2020 3:50 AM<br>
-<b>To:</b> Ivan Li11 &lt;<a href=3D"mailto:rli11@lenovo.com" target=3D"_bla=
-nk">rli11@lenovo.com</a>&gt;<br>
-<b>Cc:</b> Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au" target=3D"=
-_blank">andrew@aj.id.au</a>&gt;; Artem Senichev &lt;<a href=3D"mailto:artem=
-sen@gmail.com" target=3D"_blank">artemsen@gmail.com</a>&gt;; <a href=3D"mai=
-lto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a=
-><br>
-<b>Subject:</b> Re: [External] Re: SELinux support question<u></u><u></u></=
-span></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hello, Ivan.<u></u><u></u></spa=
-n></p>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Perhaps, you should enable seli=
-nux kernel configuration as well. The openbmc kernels, if I&#39;m not mista=
-ken, have different recipes.<u></u><u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">The default configuration relie=
-s on linux-yocto package:<u></u><u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"http://git.yoctoproj=
-ect.org/cgit/cgit.cgi/meta-selinux/tree/recipes-kernel/linux" target=3D"_bl=
-ank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux/tree/recipes-ke=
-rnel/linux</a><u></u><u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">You should include this selinux=
-.cfg in on of the openbmc kernel layers:<u></u><u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">SRC_URI=C2=A0+=3D &quot;<a>file=
-://selinux.cfg</a>&quot;<u></u><u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">and copy selinux.cfg to one of =
-the local files location.<u></u><u></u></span></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><u></u>=C2=A0<u></u></span></p>
-<div>
-<div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">On Mon, 2 Nov 2020 at 18:46, Iv=
-an Li11 &lt;<a href=3D"mailto:rli11@lenovo.com" target=3D"_blank">rli11@len=
-ovo.com</a>&gt; wrote:<u></u><u></u></span></p>
-</div>
-<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
-order-left:1pt solid rgb(204,204,204);padding:0cm 0cm 0cm 6pt;margin-left:4=
-.8pt;margin-right:0cm">
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><br>
-&gt; -----Original Message-----<br>
-&gt; From: Andrew Jeffery &lt;<a href=3D"mailto:andrew@aj.id.au" target=3D"=
-_blank">andrew@aj.id.au</a>&gt;<br>
-&gt; Sent: Monday, November 2, 2020 8:54 AM<br>
-&gt; To: Artem Senichev &lt;<a href=3D"mailto:artemsen@gmail.com" target=3D=
-"_blank">artemsen@gmail.com</a>&gt;; Ivan Li11 &lt;<a href=3D"mailto:rli11@=
-lenovo.com" target=3D"_blank">rli11@lenovo.com</a>&gt;<br>
-&gt; Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">open=
-bmc@lists.ozlabs.org</a><br>
-&gt; Subject: [External] Re: SELinux support question<br>
-&gt; <br>
-&gt; <br>
-&gt; <br>
-&gt; On Fri, 30 Oct 2020, at 16:25, Artem Senichev wrote:<br>
-&gt; &gt; Hi Ivan,<br>
-&gt; &gt;<br>
-&gt; &gt; Yocto has a layer for SELinux<br>
-&gt; &gt; (<a href=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinu=
-x" target=3D"_blank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux=
-</a>), you can try<br>
-&gt; &gt; it.<br>
-&gt; &gt; But the layer depends on Python for management tools, which does =
-not<br>
-&gt; &gt; exist in the OpenBMC image anymore.<br>
-&gt; &gt; The problem is that Python significantly increases image size, it=
- will<br>
-&gt; &gt; be more than 32MiB, which causes some troubles with qemu emulatio=
-n.<br>
-&gt; <br>
-&gt; The problem is broader than qemu though, it would also be broken on an=
-y<br>
-&gt; platform shipping a 32MiB flash part if the image exceeds 32MiB.<br>
-&gt; <br>
-&gt; That said, if there are systems that ship bigger parts and enabling SE=
-Linux for<br>
-&gt; those is feasible, we should add those platform models to qemu so emul=
-ating<br>
-&gt; them isn&#39;t constrained by the existing platform support.<br>
-&gt; <br>
-&gt; Andrew<br>
-<br>
-Hi Andrew and Artem,<br>
-Per your suggestion, I try to enable SELinux with Yocto SELinux layer(<a hr=
-ef=3D"http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux" target=3D"_bl=
-ank">http://git.yoctoproject.org/cgit/cgit.cgi/meta-selinux</a>) and 64MiB =
-flash part.<br>
-But encountered one problem which is when I use command &quot;getenforce&qu=
-ot; to check SELinux mode, it always returns &quot;Disabled&quot; even if S=
-ELinux mode in config file &#39;/etc/selinux/config&#39; is permissive or e=
-nforcing by default.<br>
-<br>
-Please help to advise it.=C2=A0 <u></u><u></u></span></p>
-</blockquote>
-</div>
-</div>
-</div>
-</div>
-
-</blockquote></div>
-
---000000000000b7ce0705b348dfaa--
