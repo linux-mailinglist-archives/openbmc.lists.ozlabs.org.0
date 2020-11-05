@@ -2,75 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 220B62A87BF
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 21:11:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D97622A87D1
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 21:14:25 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CRvn63Ph8zDr6l
-	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 07:11:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CRvqz29MbzDr4N
+	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 07:14:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=cPwO4ozR; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=JvjzAE8t; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CRvkM441gzDqlp
- for <openbmc@lists.ozlabs.org>; Fri,  6 Nov 2020 07:09:30 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0A5K6nlu050963; Thu, 5 Nov 2020 15:09:26 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CRvkN5ZMczDqpB
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Nov 2020 07:09:32 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0A5K6qmc062764; Thu, 5 Nov 2020 15:09:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
  : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=pp1;
- bh=0g2koY/vcTUcafuMPvgOSHLgxSloNAtPWF+RLRBYuJI=;
- b=cPwO4ozRYd6/YLmmV02PD9qUbr2AfTI9oi7NDX/P6UNwWsuoLqFtNXQP+NGTsCyL48vw
- S4vqkWAB8z4KobGdoXrEfe9nUfI3e1JFUpWG2DQDEvrVkWIMt9kRYzwHKjy26TxravJJ
- ieXjOtugywP1L2RFQUP+XrI265scpgDjS7+zIgzhca3ZXU0WRdt3qDAzehErJ/koTNsN
- MOKx0GQ9wevuBG+4rzsga8Gm5Z4SYn2LsdGJeCt2zn66fapfKtPFOpNfOBgGaSwuWKxh
- +SmmGrWMsLO7Wm/AAyJugTAlcSMiKHbg8BNJf8VsM65kAFFSCOKpfasg+2UChLpHNP1U dQ== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
- [169.55.85.253])
- by mx0b-001b2d01.pphosted.com with ESMTP id 34mnyhm36v-1
+ bh=0qfsrBIcYKc7Yjnf9/pW9LH41c6gFMnHru//QmW3GYI=;
+ b=JvjzAE8t8l8/iLr0ciubH8T+Tn11hd9djr1zY7zvqjs5vsS1zOrriHwIqx2Fz+2Xpd9z
+ DeD6sVE/XEn7V9Xisstc5pFyyBg4KJtM5MUzKaMbCeolJymsStlfLBif1K6ckiuvHq8Y
+ VFtLWxxFRlNXPEzBvhPcriuR3t8GcWZ4Fd3Ji8rkW2ByRcbwvT6rZY82GiePaV4sqa+D
+ RKqZcQlPoD4mZ53DQCSckR+h79dI4/q6AOdfe1EMgo9NzO3psh2tccP4paTzBUywLd0I
+ dW7idAwQMz+F4hxtNiTNcim46wDIHf89j5VPlnoiLKnNw4tH5XnNb5VkcGiGz4qP9Y65 ag== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34m5ftrqva-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Nov 2020 15:09:26 -0500
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
- by ppma01wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0A5K46xj031560;
+ Thu, 05 Nov 2020 15:09:28 -0500
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0A5K2kEW007330;
  Thu, 5 Nov 2020 20:09:26 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma01wdc.us.ibm.com with ESMTP id 34h02523ra-1
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma05wdc.us.ibm.com with ESMTP id 34h09nj0c2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
  Thu, 05 Nov 2020 20:09:26 +0000
 Received: from b03ledav002.gho.boulder.ibm.com
  (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0A5K9Je613042306
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0A5K9H8s61211110
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Nov 2020 20:09:19 GMT
+ Thu, 5 Nov 2020 20:09:17 GMT
 Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A201D136055;
- Thu,  5 Nov 2020 20:09:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8653F136055;
+ Thu,  5 Nov 2020 20:09:25 +0000 (GMT)
 Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01E62136053;
+ by IMSVA (Postfix) with ESMTP id DC824136053;
  Thu,  5 Nov 2020 20:09:24 +0000 (GMT)
 Received: from SHADE6A.ibmuc.com (unknown [9.160.108.47])
  by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTP;
- Thu,  5 Nov 2020 20:09:23 +0000 (GMT)
+ Thu,  5 Nov 2020 20:09:24 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 1/3] ARM: dts: Aspeed:
- Tacoma and Rainier: Add eMMC nodes and parameters
-Date: Thu,  5 Nov 2020 14:09:18 -0600
-Message-Id: <20201105200920.51226-2-eajames@linux.ibm.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 2/3] arch: ARM: Aspeed: Add
+ SPL eMMC partition boot support
+Date: Thu,  5 Nov 2020 14:09:19 -0600
+Message-Id: <20201105200920.51226-3-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.26.2
 In-Reply-To: <20201105200920.51226-1-eajames@linux.ibm.com>
 References: <20201105200920.51226-1-eajames@linux.ibm.com>
@@ -81,10 +81,10 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
  definitions=2020-11-05_14:2020-11-05,
  2020-11-05 signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- suspectscore=13 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=849 mlxscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ malwarescore=0 spamscore=0
+ mlxscore=0 phishscore=0 suspectscore=13 clxscore=1011 bulkscore=0
+ priorityscore=1501 mlxlogscore=943 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2009150000 definitions=main-2011050125
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -101,74 +101,65 @@ Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the necessary eMMC/SDHC nodes and information to use the eMMC
-from SPL and U-Boot.
+Support loading U-Boot from a specific partition on the eMMC
+device. Add a config option to specify the partition number in
+the eMMC device (not the user data partition) where the U-Boot
+image is located.
 
 Signed-off-by: Eddie James <eajames@linux.ibm.com>
 Reviewed-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/dts/ast2600-rainier.dts | 8 ++++++++
- arch/arm/dts/ast2600-tacoma.dts  | 8 ++++++++
- 2 files changed, 16 insertions(+)
+ arch/arm/mach-aspeed/Kconfig            | 8 ++++++++
+ arch/arm/mach-aspeed/ast2600/spl_boot.c | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-rainier.dts
-index ce530eb92b..67e177baf1 100755
---- a/arch/arm/dts/ast2600-rainier.dts
-+++ b/arch/arm/dts/ast2600-rainier.dts
-@@ -18,6 +18,7 @@
- 	};
+diff --git a/arch/arm/mach-aspeed/Kconfig b/arch/arm/mach-aspeed/Kconfig
+index 06f14f4f55..44d392a706 100644
+--- a/arch/arm/mach-aspeed/Kconfig
++++ b/arch/arm/mach-aspeed/Kconfig
+@@ -90,6 +90,14 @@ config ASPEED_UBOOT_MMC_BASE
+ 	  The base block number of the U-Boot
+ 	  image in the eMMC device
  
- 	aliases {
-+		mmc0 = &emmc_slot0;
- 		spi0 = &fmc;
- 		spi1 = &spi1;
- 	};
-@@ -89,9 +90,16 @@
- 	};
- };
- 
-+&emmc {
-+	u-boot,dm-pre-reloc;
-+	timing-phase = <0x700ff>;
-+};
++config ASPEED_UBOOT_MMC_PART
++	int "U-Boot eMMC partition"
++	default 0
++	help
++	  The partition number of the U-Boot
++	  image in the eMMC device. This is not
++          the user data partition number.
 +
- &emmc_slot0 {
-+	u-boot,dm-pre-reloc;
- 	status = "okay";
- 	bus-width = <4>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_emmc_default>;
-+	sdhci-drive-type = <1>;
- };
-diff --git a/arch/arm/dts/ast2600-tacoma.dts b/arch/arm/dts/ast2600-tacoma.dts
-index 22b9f39fa2..85d1e3902b 100755
---- a/arch/arm/dts/ast2600-tacoma.dts
-+++ b/arch/arm/dts/ast2600-tacoma.dts
-@@ -18,6 +18,7 @@
- 	};
+ config ASPEED_UBOOT_MMC_SIZE
+ 	hex "U-Boot eMMC size in blocks"
+ 	default 0x0
+diff --git a/arch/arm/mach-aspeed/ast2600/spl_boot.c b/arch/arm/mach-aspeed/ast2600/spl_boot.c
+index b08c49d204..58a22f646e 100644
+--- a/arch/arm/mach-aspeed/ast2600/spl_boot.c
++++ b/arch/arm/mach-aspeed/ast2600/spl_boot.c
+@@ -46,8 +46,8 @@ static int aspeed_spl_mmc_load_image(struct spl_image_info *spl_image,
+ 				      struct spl_boot_device *bootdev)
+ {
+ 	int err;
++	int part = CONFIG_ASPEED_UBOOT_MMC_PART;
+ 	u32 count;
+-
+ 	struct mmc *mmc = NULL;
+ 	struct udevice *dev;
+ 	struct blk_desc *bd;
+@@ -78,6 +78,13 @@ static int aspeed_spl_mmc_load_image(struct spl_image_info *spl_image,
  
- 	aliases {
-+		mmc0 = &emmc_slot0;
- 		spi0 = &fmc;
- 		spi1 = &spi1;
- 	};
-@@ -80,9 +81,16 @@
- 	};
- };
+ 	bd = mmc_get_blk_desc(mmc);
  
-+&emmc {
-+	u-boot,dm-pre-reloc;
-+	timing-phase = <0x700ff>;
-+};
++	if (part) {
++		if (CONFIG_IS_ENABLED(MMC_TINY))
++			err = mmc_switch_part(mmc, part);
++		else
++			err = blk_dselect_hwpart(bd, part);
++	}
 +
- &emmc_slot0 {
-+	u-boot,dm-pre-reloc;
- 	status = "okay";
- 	bus-width = <4>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_emmc_default>;
-+	sdhci-drive-type = <1>;
- };
+ 	count = blk_dread(bd, CONFIG_ASPEED_UBOOT_MMC_BASE, CONFIG_ASPEED_UBOOT_MMC_SIZE,
+ 			(void *)CONFIG_ASPEED_UBOOT_DRAM_BASE);
+ 	if (count != CONFIG_ASPEED_UBOOT_MMC_SIZE) {
 -- 
 2.26.2
 
