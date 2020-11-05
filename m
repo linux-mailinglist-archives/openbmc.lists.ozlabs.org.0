@@ -2,77 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8C1A2A8359
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 17:19:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 097EF2A83DD
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 17:47:12 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CRpcS1V30zDqpG
-	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 03:19:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CRqDs0KtDzDr6t
+	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 03:47:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32f;
- helo=mail-ot1-x32f.google.com; envelope-from=kurt.r.taylor@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b29; helo=mail-yb1-xb29.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=GmUPYvZt; dkim-atps=neutral
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com
- [IPv6:2607:f8b0:4864:20::32f])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=lP+1mvZA; dkim-atps=neutral
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
+ [IPv6:2607:f8b0:4864:20::b29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CRpXw4gWlzDr34
- for <openbmc@lists.ozlabs.org>; Fri,  6 Nov 2020 03:15:59 +1100 (AEDT)
-Received: by mail-ot1-x32f.google.com with SMTP id j14so1935780ots.1
- for <openbmc@lists.ozlabs.org>; Thu, 05 Nov 2020 08:15:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-language:content-transfer-encoding;
- bh=0pKoGXLXMbWnE5EpX2OW/pkKuskuD590EFnjL840kgk=;
- b=GmUPYvZt7g1bHYMKdvCsDXLdzu+Ft+7zSAbuMB1GRHsqErY6laFdTF1boJyuYci1lQ
- Qjcm6V1raGZtAAwSDYST6wbQ5VZAECe0UQV4GLclA6uPqov9cwQXb2athZZCwXIiopw0
- 9KeT0Drh5PC0WxD03VvxKVxE6JF9tWNdt3cFOr4ZAJeeEQUmo4EtUOVJxzUf2opCDNtd
- 2ra3L4DXkQVp8Tl3BJCNSBwGbs3U42QROGu/lmTU3cXu8biNexci+4eDX7rt5mNpKKZd
- X61XU7NIq2bgU0cSzOA1B2RZVeeo0wo8EVlZAJVKZZNv32zwJzYeUU78A9Rj/8nx0A6p
- 8OFg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CRqCq3ptzzDr4N
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Nov 2020 03:46:14 +1100 (AEDT)
+Received: by mail-yb1-xb29.google.com with SMTP id g15so1435587ybq.6
+ for <openbmc@lists.ozlabs.org>; Thu, 05 Nov 2020 08:46:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=zvB9XlJvonEkYuJne1mIHNJ4wH0jfCDREr5n4KIPT6I=;
+ b=lP+1mvZAkslKwHUoRT39S/g491StUfuZMOHsKQO0l+m6t/KtXmV3Ui/YoTQE9+Ilc0
+ 1t8TMixSlhSz2TndjWWDD3Wn01/e3aCSBHjwbKmxANGe7QCtEuluHXWE3AsjJUGQ7hGx
+ QsGcxIvuNworfdBP9qoC+RpNU0M7gwoJK47yXgJYhC1Y8lTlHmBTG1OW4K895AKdVbFZ
+ gIQh0361GY2A2gNJ/3NoWZW5yhjcKLm6bqJlpEVl7qwyQH6SEkV4wKxV9b2aALzYUhHJ
+ Xd/MByiuV/juBB/yxd1IHrgJaqq3j/Qm/yC95r3nFS65WkHbYugAkoSj6kr0jUZE7fXZ
+ GeKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-language
- :content-transfer-encoding;
- bh=0pKoGXLXMbWnE5EpX2OW/pkKuskuD590EFnjL840kgk=;
- b=cCNwpJ9ZdoI3EOYQg2envvJlqGITkVRLhUFEir0xC2khhjECqmn7dC+u1TpZ64IrOA
- CBjvYwLCmLqE1g7iZL6Jb/hEdnxby80ULjLi+VgSSV73t0Ip3FDyQJ3V6p9hdvj7REd5
- 7x9xLteygV+PiiJQXm4+f6ORE8zY2snyGsU4kqnO6GsZTO+ZXGFkJy7mC0Kwzfl/0WHY
- 14jhNqi3uY3gItcYrEbXmnkMCslWDIPp2OxHXNdbHcOZYq3dkcnXAQIMm7wWbQpDAUZx
- aFUdG58ikpgNFON2lV3FYs3BiT5Vl0796cfZcITUg0/22nkqLuf8f7BeWo0ciknzfWy+
- biMg==
-X-Gm-Message-State: AOAM531Q6o+dJsKpTg22L8V/7msZMrwpcBkU0fMqzoq74/0UbB9NM0Qe
- qsx5qUu9TlTxgbVhiQnPKF0=
-X-Google-Smtp-Source: ABdhPJx0vD24ToL08CXCnNcCsYtOZfByaBj10eIkr6g+LsmSS8yjy4/dnv6m4doS9GJmI2Q/HaoN+g==
-X-Received: by 2002:a9d:222f:: with SMTP id o44mr2226101ota.321.1604592956149; 
- Thu, 05 Nov 2020 08:15:56 -0800 (PST)
-Received: from krtaylors-MacBook-Pro.local (072-182-100-019.res.spectrum.com.
- [72.182.100.19])
- by smtp.gmail.com with ESMTPSA id b21sm400531ots.30.2020.11.05.08.15.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Nov 2020 08:15:55 -0800 (PST)
-Subject: Re: OpenBMC Project Contributor
-To: Michelle Liu <MichelleLiu@supermicro.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <df1a21b1e7164ed8a8a6b36d8a713c6e@EX2013-MBX3.supermicro.com>
-From: krtaylor <kurt.r.taylor@gmail.com>
-Message-ID: <3b7a2e0d-5c17-a63a-06f9-307404c7c316@gmail.com>
-Date: Thu, 5 Nov 2020 10:15:54 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.12.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=zvB9XlJvonEkYuJne1mIHNJ4wH0jfCDREr5n4KIPT6I=;
+ b=BjNA4S4vEMa5SVLH6fZB49apusnNRy5KRPv8L6Qv0YzfS9djUdZyRKO0/0O/yU3rJ3
+ TfLw9ZMTc5KFheg7/cqo6bng9M4Tz3HJJnjwqAiLTlXZjvMwzIzCfeELS6MT7NEuONXJ
+ u9fevZs9jtm+PhOLEF9gm4Olb2hN0jZWlvQx7NqbeSTJE+HN1Qy/47qftl2RcyTDWyOG
+ kVNGs+bwOq+jdBuSyFiwa5DrlcsKwiISsJunrxnVmlWaiaXA7+QLnihfJMuSYADtVDum
+ Pye2EQwIJnPmdeihv+zPZfhTEkoTlVvUuqMPOil/E2/B1bvSgSGIypeAPJ0LV9M4KZ9S
+ VOYA==
+X-Gm-Message-State: AOAM533SCU/bCbMWSzKHjJW1iwbbkNDN8VDtTdJbs2Q4COzoLucEG2sc
+ aiB+gIHdzvfxGmL4IJREcEA8Qd5pjsP9ej4Eg3Gt0w==
+X-Google-Smtp-Source: ABdhPJydlQWNTLGW4RfHoOnpsHZSCw5WqX3J0E4UIAxJC47w5rkz7De2CPEbfmboMp68nj54YvFjCmhFddaydJGGDvM=
+X-Received: by 2002:a25:e645:: with SMTP id d66mr4416021ybh.340.1604594770605; 
+ Thu, 05 Nov 2020 08:46:10 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <df1a21b1e7164ed8a8a6b36d8a713c6e@EX2013-MBX3.supermicro.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <CAD+gp9B3q6A4Hp4N7f_T8CJuw0n1sk=vkCHWebx0seyuxJjx_w@mail.gmail.com>
+In-Reply-To: <CAD+gp9B3q6A4Hp4N7f_T8CJuw0n1sk=vkCHWebx0seyuxJjx_w@mail.gmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Thu, 5 Nov 2020 08:45:59 -0800
+Message-ID: <CACWQX83iRY7g10aS2p6ioO0S9ubH+91e8tc+GhuWbFjo+NDCvQ@mail.gmail.com>
+Subject: Re: How to integrate new libraray in openbmc
+To: khader basha shaik <shaikkhaderbasha601@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000004f94f305b35ed56c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,41 +74,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Kevin Liu <Kevin_Liu@supermicro.com.tw>,
- Hancock Chang <HancockC@supermicro.com.tw>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/4/20 2:25 PM, Michelle Liu wrote:
-> To Who It May Concern,
-> 
-> Super Micro Computer likes to join the OpenBMC community as a 
-> contributor. A signed CLA is attached. Please provide us with guidance. 
-> Thank you.
+--0000000000004f94f305b35ed56c
+Content-Type: text/plain; charset="UTF-8"
 
-Your CCLA has been accepted. Welcome Super Micro Computer!
+On Thu, Nov 5, 2020 at 2:49 AM khader basha shaik <
+shaikkhaderbasha601@gmail.com> wrote:
 
-Re: guidance -> Lots of great info here:
-https://github.com/openbmc/openbmc/wiki
-and here:
-https://github.com/openbmc/docs
+> Hi Team,
+>
+> I have a custom library and need to integrate it with openbmc.The library
+> provides various output related to system information.
+> I need this information to show up in phosphor-webUI.
+>
+In my understanding we need to register it with dbus interface.
+> So I need to integrate my custom library with dbus.
+>
+> But I do not have much information about where to start?
+>
+>
+> Any help or information on this would be really helpful.
+>
+>
+>
+If you point us to the code for the library you're wanting to integrate, as
+well as what you're hoping to see as a result we can probably give you
+better advice.  As is, your request is quite vague, and I'm personally
+finding it very hard to answer with non-generic advice.  The openbmc
+documentation is a pretty good place to start in your case.  Once you have
+some handle on it, put the code up somewhere that we can see it, and we'll
+be able to give you more specific advice on where to go from there.
 
-Jump on IRC (#openbmc on freenode), there are a bunch of friendly folks 
-there willing to help.
+-Ed
 
-Kurt Taylor (krtaylor)
+--0000000000004f94f305b35ed56c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Best regard,
-> 
-> Michelle Liu
-> 
-> Director, Software Products
-> 
-> Super Micro Computer, Inc.
-> 
-> D: +1 (669) 284-1046
-> 
-> C: +1 (408) 420-6407
-> 
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Nov 5, 2020 at 2:49 AM khader=
+ basha shaik &lt;<a href=3D"mailto:shaikkhaderbasha601@gmail.com">shaikkhad=
+erbasha601@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex"><div dir=3D"ltr">Hi=C2=A0Team,<br><div><br></div><div> =
+                                                                           =
+                                                                       <div=
+><div><div><div><div id=3D"gmail-m_5892491771360959219gmail-show_issue"><di=
+v id=3D"gmail-m_5892491771360959219gmail-discussion_bucket"><div><div><div>=
+<div><div><div id=3D"gmail-m_5892491771360959219gmail-issue-731144798"><div=
+><div><span disabled><table><tbody><tr><td><p>I have a custom library and n=
+eed to integrate it with openbmc.The library provides various output relate=
+d to system information.<br> I need this information to show up in phosphor=
+-webUI.</p></td></tr></tbody></table></span></div></div></div></div></div><=
+/div></div></div></div></div></div></div></div></div></div></div></blockquo=
+te><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div>=
+<div><div><div><div><div id=3D"gmail-m_5892491771360959219gmail-show_issue"=
+><div id=3D"gmail-m_5892491771360959219gmail-discussion_bucket"><div><div><=
+div><div><div><div id=3D"gmail-m_5892491771360959219gmail-issue-731144798">=
+<div><div><span disabled><table><tbody><tr><td><p>In my understanding we ne=
+ed to register it with dbus interface.<br> So I need to integrate my custom=
+ library with dbus.=C2=A0</p><p>But I do not have much information about wh=
+ere to start?</p><p><br></p><p>Any help or information on this would be rea=
+lly helpful.</p><p></p></td></tr></tbody></table><br></span></div></div></d=
+iv></div></div></div></div></div></div></div></div></div></div></div></div>=
+</div></blockquote><div><br></div><div>If you point us to the code for the =
+library you&#39;re wanting to integrate, as well as what you&#39;re hoping =
+to see as a result we can probably give you better advice.=C2=A0 As is, you=
+r request is quite vague, and I&#39;m personally finding it very hard to an=
+swer with non-generic advice.=C2=A0 The openbmc documentation is a pretty g=
+ood place to start in your case.=C2=A0 Once you have some handle on it, put=
+ the code up somewhere that we can see it, and we&#39;ll be able to give yo=
+u more specific advice on where to go from there.</div><div><br></div><div>=
+-Ed</div></div></div>
 
+--0000000000004f94f305b35ed56c--
