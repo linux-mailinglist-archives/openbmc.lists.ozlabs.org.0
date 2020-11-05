@@ -2,63 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEF862A7C67
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 11:55:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 920E82A7D6B
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 12:44:35 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CRgRR6wqpzDqvd
-	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 21:55:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CRhWh3rdWzDqLx
+	for <lists+openbmc@lfdr.de>; Thu,  5 Nov 2020 22:44:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42b;
- helo=mail-pf1-x42b.google.com; envelope-from=shaikkhaderbasha601@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=pCnq0SL3; dkim-atps=neutral
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com
- [IPv6:2607:f8b0:4864:20::42b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CRgQT6jyPzDqVb
- for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 21:54:57 +1100 (AEDT)
-Received: by mail-pf1-x42b.google.com with SMTP id e7so1176666pfn.12
- for <openbmc@lists.ozlabs.org>; Thu, 05 Nov 2020 02:54:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to;
- bh=7lD/49ip4Exh7waSjixHsjgUABFlJriJ314mM1bUrcg=;
- b=pCnq0SL3H47gQ3D8yAgccVNEeg1+KpxuHsXFaV5mFSXfVDwhAr9p0I9P+Nlfs2Tbxv
- 8IUpjq4gogQfVHA25dnK3UkFqkft3MNDHwQYiDwxfYRz8nKhrygiz5b2XXaKuqArADCJ
- N6Uo4vtLjNgOuezLKNMz6KCCdpqJqOy+MgaNimAwIT2SA6untezSRcmD4wGFum/JlxsR
- 1UNqKqmwtem3RtAPoF9FUGJ82g4CKAcgMWyBQEZsi94krraKD/BxYGwXwAcZd1Cwuxwi
- abv720YQbI81qB8T/oebXsVxc8UEspS6CAsk+eitl6z4UGziGdJrc7nb9dcHLlqtWjks
- sBLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=7lD/49ip4Exh7waSjixHsjgUABFlJriJ314mM1bUrcg=;
- b=DaXC+Xog2yZZOdv4JU6evaS5EiAsZZw6gJbH7lE+U07jw0iuxuLmYZs6q3NhTrE9Y1
- esc+O4ESyMmx45sHDPHlojHPx9vQXyKK7JqYy5gniHdIBdTfdOTThnla11M4vueBxUD0
- yzJJryjiYkeEv3kviUOUHKnti/R4YFV1vVrQ2ieW9w9MxkNAwKXIblZasqvh7J1Pdkhi
- ZGgTR2dXc1CrBKSc8NbV1WQTOmOnnxFxwpDY+lk9ia9bLZ+G1znujVcCbFG3o442zND7
- 5BI7RpQAws8TP+2liyNz8NxDre260pWzg32/Ylw2U+6fnCVBxVDAT+mU2ADc5Cvb9QIC
- Ayig==
-X-Gm-Message-State: AOAM531R+4GMaV+MsVblueLqTWbbc9CnIKHB/A07PuCzu2NmN7byBZwI
- TUF3zZVQW4FzQ9JfMi4SNQ37JRAGQqdvLh2nU2/AHKADLJ3Iew==
-X-Google-Smtp-Source: ABdhPJy+efxIhmhqMo+17w81eI4ncgAUrcWjwBjHdIPYk7e9HQ2LWozz2wAZcEgPgTKB5LbjLiGSVmQ0vqL9fjAuwzA=
-X-Received: by 2002:a62:ddd4:0:b029:155:af54:3000 with SMTP id
- w203-20020a62ddd40000b0290155af543000mr2065831pff.64.1604573693706; Thu, 05
- Nov 2020 02:54:53 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CRhNb5BhkzDqvj
+ for <openbmc@lists.ozlabs.org>; Thu,  5 Nov 2020 22:38:19 +1100 (AEDT)
+IronPort-SDR: c8xezYlUfxjt6pCN0CAtImbhyHyET6vLZ8f908Ohbs/s33vZSq7yHeW3sD4YyaLEmXtD/kH0/P
+ ns+b//hnJWoA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9795"; a="157146031"
+X-IronPort-AV: E=Sophos;i="5.77,453,1596524400"; 
+ d="scan'208,217";a="157146031"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Nov 2020 03:38:14 -0800
+IronPort-SDR: ZbC8pUfEDTWoq/piQYkyQmzUJCbh4RjyDWrTXh7Y+zWsHrMbh2QB8U0TkY7g9UH4B7f7236JcM
+ rn/UnxV8JaIg==
+X-IronPort-AV: E=Sophos;i="5.77,453,1596524400"; 
+ d="scan'208,217";a="539365250"
+Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.251.64.231])
+ ([10.251.64.231])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Nov 2020 03:38:12 -0800
+Subject: Re: OpenBMC Learning Series
+To: Sai Dasari <sdasari@fb.com>, Openbmc <openbmc@lists.ozlabs.org>
+References: <C24D4BAF-B185-4640-BFEF-D391E51A0A35@fb.com>
+ <452FDC0B-2E4F-4AD9-97E6-DE9B2333D99B@fb.com>
+ <8EE0F70D-78CB-4CDB-A51C-53FC33A2AC87@fb.com>
+ <EFFBC9D1-BA53-4C61-8BC2-7F52320245F7@fb.com>
+ <51C18C28-4894-4BEF-AAA6-BACE5B934B5C@fb.com>
+ <AFA8029B-BBBC-41A5-9F66-671D41D0E624@fb.com>
+ <D4F1F4FA-E1E2-425C-B685-D0BAE3D5E596@fb.com>
+ <A6D2354C-DD02-4BCB-AAE2-2F6B16784DBD@fb.com>
+ <A5439E11-28B2-4476-9A9E-D8A8CA525A32@fb.com>
+ <179181C3-A497-4D36-8A73-F22DA7FF4D8B@fb.com>
+ <9EDCD78E-A095-48AA-93BC-BF73AD8BD533@fb.com>
+ <B765ACF5-8DD7-4995-8D62-8634F5A80243@fb.com>
+ <091D0CE7-1D69-448E-8C82-C2EBA1DABF27@fb.com>
+ <69F5B6C0-60A7-4D5D-A841-AB4CE7E9AD2D@fb.com>
+ <FF528567-512C-4401-BD64-85551288618E@fb.com>
+From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
+Message-ID: <896dd847-1155-9a51-37ed-6d52852387c5@linux.intel.com>
+Date: Thu, 5 Nov 2020 17:07:45 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.0
 MIME-Version: 1.0
-From: khader basha shaik <shaikkhaderbasha601@gmail.com>
-Date: Thu, 5 Nov 2020 16:24:42 +0530
-Message-ID: <CAD+gp9D8iP5ydF_a0fwXzy7FD-wO5-Pn-=QSKLxPncaB0LhpSA@mail.gmail.com>
-Subject: How to update static files in bmcweb(redfish/v1)
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000007853b05b359ed1b"
+In-Reply-To: <FF528567-512C-4401-BD64-85551288618E@fb.com>
+Content-Type: multipart/alternative;
+ boundary="------------670514FDD0F8F732111F5C53"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,91 +79,151 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000007853b05b359ed1b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is a multi-part message in MIME format.
+--------------670514FDD0F8F732111F5C53
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Team,
+All,
 
-how to update static files in bmcweb(redfish/v1) =C2=B7 Issue #160 =C2=B7
-openbmc/bmcweb =C2=B7 GitHub
+Due to unforeseen circumstances, SPDM Learning series by Vikram 
+Bodireddy has to be cancelled today. Vikram will work with Sai and 
+communicate the session details, later.
 
-I am new to openbmc and need to understand the integration of the bmcweb
-static files(redfish/v1) with dbus.
-My requirement is to update the static files in bmcweb with my custom
-sensor.
+Regards,
 
-For example, I have created a custom power sensor, which is reading through
-the hwmon entry.
-I can read the power metrics value using the "curl" command through the
-"/xyz/openbmc/" path but no value is updated in the path "/redfish/v1".
+Richard
 
-I  have the following queries:
+On 11/4/2020 11:03 PM, Sai Dasari wrote:
+>
+> Quick reminder about this week’s learning session about DMTF’s 
+> “Security Protocol and Data Model” aka “*SPDM*” by  Vikram Bodireddy 
+> on Thursday@10AM (*PST*). Following are the session details and also 
+> attached meeting invite.
+>
+> Topic: SPDM
+>
+> Time: Nov 5, 2020 10:00 AM Pacific Time (US and Canada)
+>
+> Join Zoom Meeting
+>
+> https://us02web.zoom.us/j/9396880476?pwd=a2gyYkVpRjhBZEthQUQzcEF2QjRXUT09
+>
+> Meeting ID: 939 688 0476
+>
+> Passcode: openbmc
+>
+> One tap mobile
+>
+> +16699009128,,9396880476#,,,,,,0#,,8592515# US (San Jose)
+>
+> +12532158782,,9396880476#,,,,,,0#,,8592515# US (Tacoma)
+>
+> Dial by your location
+>
+>         +1 669 900 9128 US (San Jose)
+>
+>         +1 253 215 8782 US (Tacoma)
+>
+>         +1 346 248 7799 US (Houston)
+>
+>         +1 301 715 8592 US (Germantown)
+>
+>         +1 312 626 6799 US (Chicago)
+>
+>         +1 646 558 8656 US (New York)
+>
+> Meeting ID: 939 688 0476
+>
+> Passcode: 8592515
+>
+> Find your local number: https://us02web.zoom.us/u/kddfSpAkEj
+>
 
-   1. What exactly is difference between the two paths, "/xyz/openbmc" &
-   "/redfish/v1"?
-   2. How can we update the custom sensor values to "/redfish/v1" path?
-   Where exactly the integration is required?
-   3. Does static means these files will not update through sys/hwmon
-   entry? If no,, and if we can update, which file we need to modify.
-   4. How to integrate hwmon sensor information in /redfish/v1/Chassis/ ?
+--------------670514FDD0F8F732111F5C53
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>All, <br>
+    </p>
+    <p>Due to unforeseen circumstances, SPDM Learning series by Vikram
+      Bodireddy has to be cancelled today. Vikram will work with Sai and
+      communicate the session details, later. <br>
+    </p>
+    <p>Regards,</p>
+    <p>Richard<br>
+    </p>
+    <div class="moz-cite-prefix">On 11/4/2020 11:03 PM, Sai Dasari
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:FF528567-512C-4401-BD64-85551288618E@fb.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle19
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}</style>
+      <div class="WordSection1">
+        <p class="MsoNormal">Quick reminder about this week’s learning
+          session about DMTF’s “Security Protocol and Data Model” aka “<b>SPDM</b>”
+          by  Vikram Bodireddy on Thursday@10AM (<b>PST</b>). Following
+          are the session details and also attached meeting invite.<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Topic: SPDM<o:p></o:p></p>
+        <p class="MsoNormal">Time: Nov 5, 2020 10:00 AM Pacific Time (US
+          and Canada)<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Join Zoom Meeting<o:p></o:p></p>
+        <p class="MsoNormal"><a class="moz-txt-link-freetext" href="https://us02web.zoom.us/j/9396880476?pwd=a2gyYkVpRjhBZEthQUQzcEF2QjRXUT09">https://us02web.zoom.us/j/9396880476?pwd=a2gyYkVpRjhBZEthQUQzcEF2QjRXUT09</a><o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Meeting ID: 939 688 0476<o:p></o:p></p>
+        <p class="MsoNormal">Passcode: openbmc<o:p></o:p></p>
+        <p class="MsoNormal">One tap mobile<o:p></o:p></p>
+        <p class="MsoNormal">+16699009128,,9396880476#,,,,,,0#,,8592515#
+          US (San Jose)<o:p></o:p></p>
+        <p class="MsoNormal">+12532158782,,9396880476#,,,,,,0#,,8592515#
+          US (Tacoma)<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Dial by your location<o:p></o:p></p>
+        <p class="MsoNormal">        +1 669 900 9128 US (San Jose)<o:p></o:p></p>
+        <p class="MsoNormal">        +1 253 215 8782 US (Tacoma)<o:p></o:p></p>
+        <p class="MsoNormal">        +1 346 248 7799 US (Houston)<o:p></o:p></p>
+        <p class="MsoNormal">        +1 301 715 8592 US (Germantown)<o:p></o:p></p>
+        <p class="MsoNormal">        +1 312 626 6799 US (Chicago)<o:p></o:p></p>
+        <p class="MsoNormal">        +1 646 558 8656 US (New York)<o:p></o:p></p>
+        <p class="MsoNormal">Meeting ID: 939 688 0476<o:p></o:p></p>
+        <p class="MsoNormal">Passcode: 8592515<o:p></o:p></p>
+        <p class="MsoNormal">Find your local number:
+          <a class="moz-txt-link-freetext" href="https://us02web.zoom.us/u/kddfSpAkEj">https://us02web.zoom.us/u/kddfSpAkEj</a><o:p></o:p></p>
+      </div>
+    </blockquote>
+  </body>
+</html>
 
-Any help or suggestions/reference on this would be really helpful.
-
-
-Thanks & Regards,
-Khader B Shaik
-
---00000000000007853b05b359ed1b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Team,<br><div><br></div><div>how to update static files=
- in bmcweb(redfish/v1) =C2=B7 Issue #160 =C2=B7 openbmc/bmcweb =C2=B7 GitHu=
-b                                                                          =
-                                                                         <d=
-iv class=3D"gmail-application-main"><div><div class=3D"gmail-container-xl g=
-mail-clearfix gmail-new-discussion-timeline gmail-px-3 gmail-px-md-4 gmail-=
-px-lg-5"><div class=3D"gmail-repository-content"><div class=3D"gmail-js-che=
-ck-all-container"><div class=3D"gmail-js-issues-results gmail-js-socket-cha=
-nnel gmail-js-updatable-content" id=3D"gmail-show_issue"><div id=3D"gmail-d=
-iscussion_bucket"><div class=3D"gmail-gutter-condensed gmail-gutter-lg gmai=
-l-flex-column gmail-flex-md-row gmail-d-flex"><div class=3D"gmail-flex-shri=
-nk-0 gmail-col-12 gmail-col-md-9 gmail-mb-4 gmail-mb-md-0"><div class=3D"gm=
-ail-js-quote-selection-container"><div class=3D"gmail-js-discussion gmail-m=
-l-0 gmail-pl-0 gmail-ml-md-6 gmail-pl-md-3"><div class=3D"gmail-TimelineIte=
-m gmail-pt-0 gmail-js-comment-container gmail-js-socket-channel gmail-js-up=
-datable-content"><div class=3D"gmail-timeline-comment-group gmail-js-minimi=
-zable-comment-group gmail-js-targetable-element gmail-TimelineItem-body gma=
-il-my-0" id=3D"gmail-issue-732010557"><div class=3D"gmail-ml-n3 gmail-timel=
-ine-comment gmail-unminimized-comment gmail-comment gmail-previewable-edit =
-gmail-js-task-list-container gmail-js-comment gmail-timeline-comment--caret=
-"><div class=3D"edit-comment-hide"><span disabled><table class=3D"gmail-d-b=
-lock"><tbody class=3D"gmail-d-block"><tr class=3D"gmail-d-block"><td class=
-=3D"gmail-d-block gmail-comment-body gmail-markdown-body gmail-js-comment-b=
-ody"><p>I am new to openbmc and need to understand the integration of the b=
-mcweb static files(redfish/v1) with dbus.<br> My requirement is to update t=
-he static files in bmcweb with my custom sensor.</p><p>For example, I have =
-created a custom power sensor, which is reading through the hwmon entry.<br=
-> I can read the power metrics value using the &quot;curl&quot; command thr=
-ough the &quot;/xyz/openbmc/&quot; path but no value is updated in the path=
- &quot;/redfish/v1&quot;.</p><p>I=C2=A0 have the following queries:</p><ol>=
-<li>What exactly is difference between the two paths, &quot;/xyz/openbmc&qu=
-ot; &amp; &quot;/redfish/v1&quot;?</li><li>How can we update the custom sen=
-sor values to &quot;/redfish/v1&quot; path? Where exactly the integration i=
-s required?</li><li><div style=3D"box-sizing:border-box;font-family:&quot;S=
-egoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&=
-quot;,sans-serif;font-size:14px">Does static means these files will not upd=
-ate through sys/hwmon entry? If no,, and if we can update, which file we ne=
-ed to modify.</div></li><li><div style=3D"box-sizing:border-box;font-family=
-:&quot;Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe U=
-I Emoji&quot;,sans-serif;font-size:14px"><div style=3D"box-sizing:border-bo=
-x">How to integrate hwmon sensor information in /redfish/v1/Chassis/ ?</div=
-></div></li></ol><div><br></div><div>Any help or suggestions/reference on t=
-his would be really helpful.</div><div><br></div><div><br></div><div>Thanks=
- &amp; Regards,</div><div>Khader B Shaik</div><div><br></div></td></tr></tb=
-ody></table></span></div></div></div></div></div></div></div></div></div></=
-div></div></div></div></div></div></div></div>
-
---00000000000007853b05b359ed1b--
+--------------670514FDD0F8F732111F5C53--
