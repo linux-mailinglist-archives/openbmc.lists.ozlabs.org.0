@@ -1,102 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E24192A8F03
-	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 06:46:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 352B72A902A
+	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 08:21:32 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CS8X86bX0zDrFY
-	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 16:46:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CSBdj2CP8zDrCN
+	for <lists+openbmc@lfdr.de>; Fri,  6 Nov 2020 18:21:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=tomjose@linux.vnet.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=RWYscYUd; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=compal.com (client-ip=59.120.207.196; helo=tpecef02.compal.com;
+ envelope-from=willie_thai@compal.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=compal.com
+X-Greylist: delayed 909 seconds by postgrey-1.36 at bilbo;
+ Fri, 06 Nov 2020 16:41:41 AEDT
+Received: from tpecef02.compal.com (exmail3.compal.com [59.120.207.196])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CS8W83RVczDrCG
- for <openbmc@lists.ozlabs.org>; Fri,  6 Nov 2020 16:45:38 +1100 (AEDT)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0A65WkDt084612
- for <openbmc@lists.ozlabs.org>; Fri, 6 Nov 2020 00:45:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type; s=pp1; bh=ZOASP8VA55UNQpdfbDwb8vr77k/jcF9m4AfIU3fdVzo=;
- b=RWYscYUdslERwpkFlS4k3rAktu7m2aVq+MZ0fPbniEaIDvJLorfLR6CBlZG9HcuHyGhi
- YV3t/Rd1bz4pEsbKSIWg92Na825Z9P+Bwg/lKItd4NwPzYC8exs3XBT6nxCfRRTi8Wp9
- r1/lCBXK4TV2vHjPUi/kE01zc2dzINB8pYCYg2LcDCdCBvXbuztEz6HSGi9hP//fvu1V
- BLkLfC1i3ma2IG1kLwIqLY7np2lIwgmsb4vWM/Z+pF7G+GfyUcWG8CMXCatBmm1qVJxm
- L/0bhjecSHArSiShpGwSREp5WdWr/gONAh6kDgsQa+0pDN/iaPlWjDQUUS3XIkMgQSPD vw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34mhxk4318-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Fri, 06 Nov 2020 00:45:35 -0500
-Received: from m0098410.ppops.net (m0098410.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 0A65Wpre088180
- for <openbmc@lists.ozlabs.org>; Fri, 6 Nov 2020 00:45:35 -0500
-Received: from ppma06ams.nl.ibm.com (66.31.33a9.ip4.static.sl-reverse.com
- [169.51.49.102])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34mhxk4305-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Nov 2020 00:45:35 -0500
-Received: from pps.filterd (ppma06ams.nl.ibm.com [127.0.0.1])
- by ppma06ams.nl.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0A65hFHt025019;
- Fri, 6 Nov 2020 05:45:32 GMT
-Received: from b06avi18626390.portsmouth.uk.ibm.com
- (b06avi18626390.portsmouth.uk.ibm.com [9.149.26.192])
- by ppma06ams.nl.ibm.com with ESMTP id 34h0fcx5qq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Nov 2020 05:45:32 +0000
-Received: from d06av25.portsmouth.uk.ibm.com (d06av25.portsmouth.uk.ibm.com
- [9.149.105.61])
- by b06avi18626390.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP
- id 0A65jUxH58130696
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Nov 2020 05:45:30 GMT
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 706A811C058;
- Fri,  6 Nov 2020 05:45:30 +0000 (GMT)
-Received: from d06av25.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E45A11C04C;
- Fri,  6 Nov 2020 05:45:28 +0000 (GMT)
-Received: from [9.206.169.84] (unknown [9.206.169.84])
- by d06av25.portsmouth.uk.ibm.com (Postfix) with ESMTPS;
- Fri,  6 Nov 2020 05:45:27 +0000 (GMT)
-Subject: Re: Firmware Version in ipmi mc info
-To: Shakeeb B K <shakeebbk@gmail.com>
-References: <CABYu0Wjn-YB4HO37nkxoJyq8EW6=bV4P5EZiHij0y3SxEYVEkw@mail.gmail.com>
- <b75f4c12-0d40-c529-40cd-3fb9ec1fc0ce@linux.vnet.ibm.com>
- <CABYu0WhSqhhxULpe+f9eq2e8Tv4uYzh2DaDRxfXe838pk4EP4Q@mail.gmail.com>
-From: TOM JOSEPH <tomjose@linux.vnet.ibm.com>
-Message-ID: <352ce958-186c-a26c-382f-d21ed26729ef@linux.vnet.ibm.com>
-Date: Fri, 6 Nov 2020 11:15:22 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.12.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CS8QY1DXQzDrCG
+ for <openbmc@lists.ozlabs.org>; Fri,  6 Nov 2020 16:41:40 +1100 (AEDT)
+X-UUID: e633e7cc566c4b199f1b68deaf13fe21-20201106
+Received: from tpembx01.compal.com [(10.110.15.26)] by tpecef02.compal.com
+ (envelope-from <willie_thai@compal.com>)
+ (Cellopoint E-mail Firewall v4.1.6 Build 0408 with TLS)
+ with ESMTP id 181888544; Fri, 06 Nov 2020 13:26:17 +0800
+Received: from TPEMBX05.compal.com (10.110.15.29) by TPEMBX01.compal.com
+ (10.110.15.26) with Microsoft SMTP Server (TLS) id 15.0.995.29; Fri, 6 Nov
+ 2020 13:26:16 +0800
+Received: from TPEMBX05.compal.com (10.110.15.29) by TPEMBX05.compal.com
+ (10.110.15.29) with Microsoft SMTP Server (TLS) id 15.0.995.29; Fri, 6 Nov
+ 2020 13:26:15 +0800
+Received: from TPEMBX05.compal.com ([fe80::cd2:6636:1e4d:4892]) by
+ TPEMBX05.compal.com ([fe80::cd2:6636:1e4d:4892%15]) with mapi id
+ 15.00.0995.028; Fri, 6 Nov 2020 13:26:15 +0800
+From: <Willie_Thai@compal.com>
+To: <joel@jms.id.au>, <openbmc@lists.ozlabs.org>
+Subject: [PATCH linux dev-5.8]ARM: dts: aspeed: Add Compal liwu2 BMC machine
+Thread-Topic: [PATCH linux dev-5.8]ARM: dts: aspeed: Add Compal liwu2 BMC
+ machine
+Thread-Index: Adaz/Ocz5oVIeWRPQSabxoqiA+/jMw==
+Date: Fri, 6 Nov 2020 05:26:14 +0000
+Message-ID: <6ce8b3c2e5bf49e8ae4c5668b02d4f08@TPEMBX05.compal.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.110.15.241]
+X-TM-SNTS-SMTP: 268B8B8E322EF2C72B5A2E633A3CA02F0A2C56BB9DFF85918B31FE4E593660A22000:8
+Content-Type: multipart/mixed;
+ boundary="_004_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_"
 MIME-Version: 1.0
-In-Reply-To: <CABYu0WhSqhhxULpe+f9eq2e8Tv4uYzh2DaDRxfXe838pk4EP4Q@mail.gmail.com>
-Content-Type: multipart/alternative;
- boundary="------------E0F01B8CA93ED9E96F4F25CC"
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-06_01:2020-11-05,
- 2020-11-06 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999
- clxscore=1015 adultscore=0 impostorscore=0 bulkscore=0 spamscore=0
- mlxscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011060038
+X-Mailman-Approved-At: Fri, 06 Nov 2020 18:19:39 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,490 +64,353 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------E0F01B8CA93ED9E96F4F25CC
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+--_004_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_
+Content-Type: multipart/alternative;
+	boundary="_000_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_"
 
-Hello Shakeeb,
+--_000_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Typically there is a D-Bus object for each version and that implements 
-the xyz.openbmc_project.Software.Version interface. 
-/xyz/openbmc_project/software doesn't implement the interface.
+The liwu2 is a server platform developed by Compal with an ASPEED AST2500 =
+BMC=2E
 
-busctl tree xyz.openbmc_project.Software.BMC.Updater
-└─/xyz
-   └─/xyz/openbmc_project
-     └─/xyz/openbmc_project/software
-       ├─/xyz/openbmc_project/software/6b6a7c53
-       └─/xyz/openbmc_project/software/76174d14
+Signed-off-by: Willie Thai <willie_thai@compal=2Ecom>
 
-I guess the upstream implementation of this command is broken with the 
-latest version format. We discussed this in the community, work is not 
-done yet. https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.html
+--_000_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Tom
-
-
-On 06-11-2020 09:38, Shakeeb B K wrote:
-> Hi Tom, Thanks for the reply. But it doesn't seem to work as expected. 
-> I'm looking at...
-> This Message Is From an External Sender
-> This message came from outside your organization.
->
-> Hi Tom,
->
-> Thanks for the reply.
-> But it doesn't seem to work as expected. I'm looking at the 
-> witherspoon-bmc on QEMU.
->
-> root@witherspoon:~# systemctl status 
-> xyz.openbmc_project.Software.BMC.Updater
-> * *xyz.openbmc_project.Software.BMC.Updater.service* - OpenBMC 
-> Software Update Manager
->      Loaded: loaded 
-> (/lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service; 
-> enabled; vendor preset: enabled)
->     Drop-In: 
-> /lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service.d
->              `-software-bmc-updater.conf
->      Active: *active (running)* since Thu 2020-11-05 14:10:57 UTC; 13h ago
->    Main PID: 387 (phosphor-image-)
->      CGroup: 
-> /system.slice/xyz.openbmc_project.Software.BMC.Updater.service
->              `-387 /usr/bin/phosphor-image-updater
->
-> Nov 05 14:10:53 witherspoon systemd[1]: Starting OpenBMC Software 
-> Update Manager...
-> Nov 05 14:10:57 witherspoon systemd[1]: Started OpenBMC Software 
-> Update Manager.
->
-> root@witherspoon:~# busctl get-property xyz.openbmc_project.State.BMC 
-> /xyz/openbmc_project/state/bmc0 xyz.openbmc_project.State.BMC 
-> CurrentBMCState
-> s "*xyz.openbmc_project.State.BMC.BMCState.Ready*"
->
-> *root@witherspoon:~# busctl get-property 
-> xyz.openbmc_project.Software.Version /xyz/openbmc_project/software 
-> xyz.openbmc_project.Software.Version Version
-> Failed to get property Version on interface 
-> xyz.openbmc_project.Software.Version: Unknown interface 
-> xyz.openbmc_project.Software.Version or property Version.*
->
-> root@witherspoon:~# busctl introspect --no-pager 
-> xyz.openbmc_project.Software.Version /xyz/openbmc_project/software
-> NAME                                TYPE      SIGNATURE  RESULT/VALUE 
->  FLAGS
-> org.freedesktop.DBus.Introspectable interface -          -           -
-> .Introspect                         method    -          s           -
-> org.freedesktop.DBus.ObjectManager  interface -          -           -
-> .GetManagedObjects                  method    -  a{oa{sa{sv}}} -
-> .InterfacesAdded                    signal    oa{sa{sv}} -           -
-> .InterfacesRemoved                  signal    oas        -           -
-> org.freedesktop.DBus.Peer           interface -          -           -
-> .GetMachineId                       method    -          s           -
-> .Ping                               method    -          -           -
-> org.freedesktop.DBus.Properties     interface -          -           -
-> .Get                                method    ss         v           -
-> .GetAll                             method    s  a{sv}         -
-> .Set                                method    ssv        -           -
-> .PropertiesChanged                  signal    sa{sv}as   -           -
->
->
-> Thanks,
-> Shakeeb
->
-> On Fri, Nov 6, 2020 at 8:37 AM TOM JOSEPH <tomjose@linux.vnet.ibm.com 
-> <mailto:tomjose@linux.vnet.ibm.com>> wrote:
->
->     Hey Shakeeb,
->
->     The service implementing the xyz.openbmc_project.Software.Version
->     should be running in the case of a normal boot as well. In our
->     systems the service is xyz.openbmc_project.Software.BMC.Updater
->     and the Version property is populated when the BMCState is Ready.
->
->     Regards,
->     Tom
->
->     On 05-11-2020 20:02, Shakeeb B K wrote:
->>     Hi All, Currently the ipmi handler for "mc info" command
->>     depends on the "Version"...
->>     This Message Is From an External Sender
->>     This message came from outside your organization.
->>
->>     Hi All,
->>
->>     Currently the ipmi handler for "mc info" command depends on the
->>     "Version" property on
->>     interface xyz.openbmc_project.Software.Version.
->>     But this is getting populated only on the image update path by
->>     phosphor-bmc-code-mgmt.
->>     Shouldn't the version be set on a normal boot as well? Is this a
->>     gap in current implementation?
->>
->>     Thanks,
->>     Shakeeb
->
-
---------------E0F01B8CA93ED9E96F4F25CC
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hello Shakeeb,<br>
-      <br>
-      Typically there is a D-Bus object for each version and that
-      implements the xyz.openbmc_project.Software.Version
-      interface. /xyz/openbmc_project/software doesn't implement the
-      interface.<br>
-      <br>
-      busctl tree xyz.openbmc_project.Software.BMC.Updater<br>
-      └─/xyz<br>
-        └─/xyz/openbmc_project<br>
-          └─/xyz/openbmc_project/software<br>
-            ├─/xyz/openbmc_project/software/6b6a7c53<br>
-            └─/xyz/openbmc_project/software/76174d14</p>
-    <p>I guess the upstream implementation of this command is broken
-      with the latest version format. We discussed this in the
-      community, work is not done yet.
-      <a class="moz-txt-link-freetext" href="https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.html">https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.html</a><br>
-    </p>
-    Regards,<br>
-    Tom
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 06-11-2020 09:38, Shakeeb B K wrote:<br>
-    </div>
-    <blockquote type="cite"
-cite="mid:CABYu0WhSqhhxULpe+f9eq2e8Tv4uYzh2DaDRxfXe838pk4EP4Q@mail.gmail.com">
-      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-      <!-- BaNnErBlUrFlE-HeAdEr-start -->
-      <meta name="viewport" content="width=device-width;
-        initial-scale=1.0; maximum-scale=1.0; user-scalable=no;">
-      <style>
-      /* Mobile */
-      @media screen and (max-width: 630px){
-        * {-webkit-text-size-adjust: none}
-        a[href^="x-apple-data-detectors:"] { color: inherit; text-decoration: none; }
-        .pfptTitle { font-size:22px !important; line-height:26px !important; text-align: center !important; }
-        .pfptSubtitle { font-size:14px !important; line-height:18px !important; text-align: center !important; }
-        
-        .pfptMainWrapper { margin-top: 0 !important; margin-right: 0 !important; margin-left: 0 !important; }
-        th[class="pfptTableColumnLeft"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
-        th[class="pfptTableColumnRight"] {width:100% !important; height:auto !important; display:block !important; text-align: center !important; }
-
-        .pfptButton { font-size:16px !important; line-height:16px !important; width: 50% !important; display:block !important; margin-right: auto!important; margin-left: auto!important; }   
-        .pfptButton a { font-size: 16px; } 
-        .pfptButton span { font-size: 16px; }     
-      }
-      /* Tablet, Laptop, Desktop */
-      @media screen and (min-width: 631px){
-        th[class="pfptTableColumnLeft"] { width: 50% !important; height:auto !important; }
-        th[class="pfptTableColumnRight"] { width: 50% !important; height:auto !important; text-align: right !important; } 
-      }
-      .pfptPreheader { display:none !important; visibility:hidden; mso-hide:all; font-size:1px; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; }
-    </style>
-      <!-- BaNnErBlUrFlE-HeAdEr-end -->
-      <!-- BaNnErBlUrFlE-BoDy-start -->
-      <!-- Preheader Text : BEGIN --> <span class="pfptPreheader"
-        style="display:none
-!important;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">
-        Hi Tom, Thanks for the reply. But it doesn't seem to work as
-        expected. I'm looking at... 
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-             
-              </span>
-      <!-- Preheader Text : END -->
-      <!-- Email Banner : BEGIN -->
-      <table style="width:100%;border-radius:4px;margin-bottom:16px;"
-        width="100%" cellspacing="0" cellpadding="16" border="0"
-        bgcolor="#9CA3A7">
-        <tbody>
-          <tr>
-            <td align="center">
-              <table class="pfptMainWrapper" style="width:100%;"
-                width="100%" cellspacing="0" cellpadding="0" border="0"
-                align="center">
-                <tbody>
-                  <tr>
-                    <td style="border-radius:4px;" valign="top"
-                      align="center">
-                      <table style="max-width:100%; width:100%;"
-                        width="100%" cellspacing="0" cellpadding="0"
-                        border="0" bgcolor="#9CA3A7" align="center">
-                        <tbody>
-                          <tr>
-                            <!-- Message : BEGIN --> <th
-                              class="pfptTableColumnLeft"
-style="font-weight:normal;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;width:100%;height:auto;"
-                              valign="top">
-                              <table
-                                style="width:100%;height:auto;text-align:left;vertical-align:middle;"
-                                width="100%" cellspacing="0"
-                                cellpadding="0">
-                                <tbody>
-                                  <tr>
-                                    <td> <span class="pfptTitle"
-style="font-family:'Roboto','Helvetica','Arial',sans-serif;font-weight:bold;font-size:18px;line-height:20px;display:block;margin-bottom:4px;word-wrap:normal;">This
-                                        Message Is From an External
-                                        Sender</span> </td>
-                                  </tr>
-                                  <tr>
-                                    <td> <span class="pfptSubtitle"
-style="font-weight:normal;font-family:'Roboto','Helvetica','Arial',sans-serif;font-size:13px;line-height:16px;display:block;word-wrap:normal;">This
-                                        message came from outside your
-                                        organization.</span> </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </th>
-                            <!-- Message : END --> </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- Email Banner : END -->
-      <!-- BaNnErBlUrFlE-BoDy-end -->
-      <div dir="ltr">Hi Tom,
-        <div><br>
-        </div>
-        <div>Thanks for the reply.</div>
-        <div>But it doesn't seem to work as expected. I'm looking at the
-          witherspoon-bmc on QEMU.</div>
-        <div><br>
-        </div>
-        <div><font face="monospace">root@witherspoon:~# systemctl status
-            xyz.openbmc_project.Software.BMC.Updater<br>
-            * <b>xyz.openbmc_project.Software.BMC.Updater.service</b> -
-            OpenBMC Software Update Manager<br>
-                 Loaded: loaded
-            (/lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service;
-            enabled; vendor preset: enabled)<br>
-                Drop-In:
-            /lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service.d<br>
-                         `-software-bmc-updater.conf<br>
-                 Active: <b>active (running)</b> since Thu 2020-11-05
-            14:10:57 UTC; 13h ago<br>
-               Main PID: 387 (phosphor-image-)<br>
-                 CGroup:
-            /system.slice/xyz.openbmc_project.Software.BMC.Updater.service<br>
-                         `-387 /usr/bin/phosphor-image-updater<br>
-            <br>
-            Nov 05 14:10:53 witherspoon systemd[1]: Starting OpenBMC
-            Software Update Manager...<br>
-            Nov 05 14:10:57 witherspoon systemd[1]: Started OpenBMC
-            Software Update Manager.</font></div>
-        <div><font face="monospace"><br>
-            root@witherspoon:~# busctl get-property
-            xyz.openbmc_project.State.BMC
-            /xyz/openbmc_project/state/bmc0
-            xyz.openbmc_project.State.BMC CurrentBMCState<br>
-            s "<b>xyz.openbmc_project.State.BMC.BMCState.Ready</b>"<br>
-            <br>
-          </font></div>
-        <div><font face="monospace"><b>root@witherspoon:~# busctl
-              get-property xyz.openbmc_project.Software.Version
-              /xyz/openbmc_project/software
-              xyz.openbmc_project.Software.Version Version<br>
-              Failed to get property Version on interface
-              xyz.openbmc_project.Software.Version: Unknown interface
-              xyz.openbmc_project.Software.Version or property Version.</b><br>
-            <br>
-          </font></div>
-        <div><font face="monospace">root@witherspoon:~# busctl
-            introspect --no-pager xyz.openbmc_project.Software.Version
-            /xyz/openbmc_project/software <br>
-            NAME                                TYPE      SIGNATURE
-             RESULT/VALUE  FLAGS<br>
-            org.freedesktop.DBus.Introspectable interface -          -  
-                      -<br>
-            .Introspect                         method    -          s  
-                      -<br>
-            org.freedesktop.DBus.ObjectManager  interface -          -  
-                      -<br>
-            .GetManagedObjects                  method    -        
-             a{oa{sa{sv}}} -<br>
-            .InterfacesAdded                    signal    oa{sa{sv}} -  
-                      -<br>
-            .InterfacesRemoved                  signal    oas        -  
-                      -<br>
-            org.freedesktop.DBus.Peer           interface -          -  
-                      -<br>
-            .GetMachineId                       method    -          s  
-                      -<br>
-            .Ping                               method    -          -  
-                      -<br>
-            org.freedesktop.DBus.Properties     interface -          -  
-                      -<br>
-            .Get                                method    ss         v  
-                      -<br>
-            .GetAll                             method    s        
-             a{sv}         -<br>
-            .Set                                method    ssv        -  
-                      -<br>
-            .PropertiesChanged                  signal    sa{sv}as   -  
-                      -</font><br>
-        </div>
-        <div><font face="monospace"><br>
-          </font></div>
-        <div>
-          <div><br>
-          </div>
-          <div>Thanks,</div>
-          <div>Shakeeb</div>
-        </div>
-      </div>
-      <br>
-      <div class="gmail_quote">
-        <div dir="ltr" class="gmail_attr">On Fri, Nov 6, 2020 at 8:37 AM
-          TOM JOSEPH &lt;<a href="mailto:tomjose@linux.vnet.ibm.com"
-            moz-do-not-send="true">tomjose@linux.vnet.ibm.com</a>&gt;
-          wrote:<br>
-        </div>
-        <blockquote class="gmail_quote" style="margin:0px 0px 0px
-          0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-          <div>
-            <p>Hey Shakeeb,<br>
-              <br>
-              The service implementing the
-              xyz.openbmc_project.Software.Version should be running in
-              the case of a normal boot as well. In our systems the
-              service is xyz.openbmc_project.Software.BMC.Updater and
-              the Version property is populated when the BMCState is
-              Ready.<br>
-            </p>
-            Regards,<br>
-            Tom<br>
-            <br>
-            <div>On 05-11-2020 20:02, Shakeeb B K wrote:<br>
-            </div>
-            <blockquote type="cite"> <span
-style="font-size:1px;color:rgb(255,255,255);line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;display:none">
-                Hi All, Currently the ipmi handler for "mc info" command
-                depends on the "Version"...                         
-                                                                     
-                                                                     
-                                                                </span>
-              <table
-                style="width:100%;border-radius:4px;margin-bottom:16px"
-                width="100%" cellspacing="0" cellpadding="16" border="0"
-                bgcolor="#9CA3A7">
-                <tbody>
-                  <tr>
-                    <td align="center">
-                      <table style="width:100%" width="100%"
-                        cellspacing="0" cellpadding="0" border="0"
-                        align="center">
-                        <tbody>
-                          <tr>
-                            <td style="border-radius:4px" valign="top"
-                              align="center">
-                              <table style="max-width:100%;width:100%"
-                                width="100%" cellspacing="0"
-                                cellpadding="0" border="0"
-                                bgcolor="#9CA3A7" align="center">
-                                <tbody>
-                                  <tr>
-                                    <th
-                                      style="font-weight:normal;padding:0px;width:100%;height:auto"
-                                      valign="top">
-                                      <table
-                                        style="width:100%;height:auto;text-align:left;vertical-align:middle"
-                                        width="100%" cellspacing="0"
-                                        cellpadding="0">
-                                        <tbody>
-                                          <tr>
-                                            <td> <span
-style="font-family:Roboto,Helvetica,Arial,sans-serif;font-weight:bold;font-size:18px;line-height:20px;display:block;margin-bottom:4px">This
-                                                Message Is From an
-                                                External Sender</span> </td>
-                                          </tr>
-                                          <tr>
-                                            <td> <span
-style="font-weight:normal;font-family:Roboto,Helvetica,Arial,sans-serif;font-size:13px;line-height:16px;display:block">This
-                                                message came from
-                                                outside your
-                                                organization.</span> </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </th>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div dir="ltr">Hi All,
-                <div><br>
-                </div>
-                <div>Currently the ipmi handler for "mc info" command
-                  depends on the "Version" property on
-                  interface xyz.openbmc_project.Software.Version. </div>
-                <div>But this is getting populated only on the image
-                  update path by phosphor-bmc-code-mgmt.</div>
-                <div>Shouldn't the version be set on a normal boot as
-                  well? Is this a gap in current implementation? </div>
-                <div><br>
-                </div>
-                <div>Thanks,</div>
-                <div>Shakeeb</div>
-              </div>
-            </blockquote>
-          </div>
-        </blockquote>
-      </div>
-    </blockquote>
-  </body>
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas=2Emicrosoft=2Ecom/office/2004/12/omml" =
+xmlns=3D"http://www=2Ew3=2Eorg/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dus-ascii">
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p=2EMsoNormal, li=2EMsoNormal, div=2EMsoNormal
+	{margin:0cm;
+	margin-bottom:=2E0001pt;
+	font-size:12=2E0pt;
+	font-family:"Calibri","sans-serif";}
+a:link, span=2EMsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span=2EMsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span=2EEmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri","sans-serif";
+	color:windowtext;}
+=2EMsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri","sans-serif";}
+/* Page Definitions */
+@page WordSection1
+	{size:612=2E0pt 792=2E0pt;
+	margin:72=2E0pt 90=2E0pt 72=2E0pt 90=2E0pt;}
+div=2EWordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" =
+style=3D"text-justify-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"VI">The liwu2 is a server platform =
+developed by Compal with an ASPEED AST2500 BMC=2E<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"VI"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"VI">Signed-off-by: Willie Thai =
+&lt;willie_thai@compal=2Ecom&gt;<o:p></o:p></span></p>
+</div>
+</body>
 </html>
+<!--type:html--><!--{-->=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+This message may contain information which is private, privileged or =
+confidential of Compal Electronics, Inc=2E<br>
+If you are not the intended recipient of this message, please notify the =
+sender and destroy/delete the message=2E<br>
+Any review, retransmission, dissemination or other use of, or taking of any=
+ action in reliance upon this information,<br>
+by persons or entities other than the intended recipient is =
+prohibited=2E<br>
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+<!--}-->
+--_000_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_--
 
---------------E0F01B8CA93ED9E96F4F25CC--
+--_004_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_
+Content-Type: application/octet-stream;
+	name="0001-Add-Compal-Liwu2-Platform.patch"
+Content-Description: 0001-Add-Compal-Liwu2-Platform.patch
+Content-Disposition: attachment;
+	filename="0001-Add-Compal-Liwu2-Platform.patch"; size=12994;
+	creation-date="Fri, 06 Nov 2020 02:08:57 GMT";
+	modification-date="Fri, 06 Nov 2020 02:11:33 GMT"
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL2FyY2gvYXJtL2Jvb3QvZHRzL01ha2VmaWxlIGIvYXJjaC9hcm0vYm9vdC9k
+dHMvTWFrZWZpbGUKaW5kZXggN2U0ZDM2MC4uMDQwZjM3YyAxMDA2NDQKLS0tIGEvYXJjaC9hcm0v
+Ym9vdC9kdHMvTWFrZWZpbGUKKysrIGIvYXJjaC9hcm0vYm9vdC9kdHMvTWFrZWZpbGUKQEAgLTEz
+NTIsNiArMTM1Miw3IEBAIGR0Yi0kKENPTkZJR19BUkNIX0FTUEVFRCkgKz0gXAogCWFzcGVlZC1i
+bWMtYXJtLWNlbnRyaXEyNDAwLXJlcC5kdGIgXAogCWFzcGVlZC1ibWMtYXJtLXN0YXJkcmFnb240
+ODAwLXJlcDIuZHRiIFwKIAlhc3BlZWQtYm1jLWJ5dGVkYW5jZS1nMjIwYS5kdGIgXAorCWFzcGVl
+ZC1ibWMtY29tcGFsLWxpd3UyLmR0YiBcCiAJYXNwZWVkLWJtYy1mYWNlYm9vay1jbW0uZHRiIFwK
+IAlhc3BlZWQtYm1jLWZhY2Vib29rLW1pbmlwYWNrLmR0YiBcCiAJYXNwZWVkLWJtYy1mYWNlYm9v
+ay10aW9nYXBhc3MuZHRiIFwKZGlmZiAtLWdpdCBhL2FyY2gvYXJtL2Jvb3QvZHRzL2FzcGVlZC1i
+bWMtY29tcGFsLWxpd3UyLmR0cyBiL2FyY2gvYXJtL2Jvb3QvZHRzL2FzcGVlZC1ibWMtY29tcGFs
+LWxpd3UyLmR0cwpuZXcgZmlsZSBtb2RlIDEwMDY0NAppbmRleCAwMDAwMDAwLi41ODgyYjQyCi0t
+LSAvZGV2L251bGwKKysrIGIvYXJjaC9hcm0vYm9vdC9kdHMvYXNwZWVkLWJtYy1jb21wYWwtbGl3
+dTIuZHRzCkBAIC0wLDAgKzEsNjA1IEBACisvLyBTUERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BM
+LTIuMCsKKy9kdHMtdjEvOworCisjaW5jbHVkZSAiYXNwZWVkLWc1LmR0c2kiCisjaW5jbHVkZSA8
+ZHQtYmluZGluZ3MvZ3Bpby9hc3BlZWQtZ3Bpby5oPgorCisvIHsKKwltb2RlbCA9ICJBU1QyNTAw
+IGxpd3UyIjsKKwljb21wYXRpYmxlID0gImFzcGVlZCxhc3QyNTAwIjsKKworCWFsaWFzZXMgewor
+CQlzZXJpYWw0ID0gJnVhcnQ1OworCX07CisKKwljaG9zZW4geworCQlzdGRvdXQtcGF0aCA9ICZ1
+YXJ0NTsKKwkJYm9vdGFyZ3MgPSAiY29uc29sZT10dHkwIGNvbnNvbGU9dHR5UzQsMTE1MjAwIGVh
+cmx5cHJpbnRrIjsKKwl9OworCisJbWVtb3J5QDgwMDAwMDAwIHsKKwkJcmVnID0gPDB4ODAwMDAw
+MDAgMHgyMDAwMDAwMD47CisJfTsKKworCXJlc2VydmVkLW1lbW9yeSB7CisJCSNhZGRyZXNzLWNl
+bGxzID0gPDE+OworCQkjc2l6ZS1jZWxscyA9IDwxPjsKKwkJcmFuZ2VzOworCisJCWdmeF9tZW1v
+cnk6IGZyYW1lYnVmZmVyIHsKKwkJCXNpemUgPSA8MHgwMTAwMDAwMD47CisJCQlhbGlnbm1lbnQg
+PSA8MHgwMTAwMDAwMD47CisJCQljb21wYXRpYmxlID0gInNoYXJlZC1kbWEtcG9vbCI7CisJCQly
+ZXVzYWJsZTsKKwkJfTsKKwl9OworCisJaWlvLWh3bW9uIHsKKwkJY29tcGF0aWJsZSA9ICJpaW8t
+aHdtb24iOworCQlpby1jaGFubmVscyA9IDwmYWRjIDA+LCA8JmFkYyAxPiwgPCZhZGMgMj4sIDwm
+YWRjIDM+LAorCQkJICAgICAgPCZhZGMgND4sIDwmYWRjIDU+LCA8JmFkYyA2PiwgPCZhZGMgNz4s
+CisJCQkgICAgICA8JmFkYyA4PiwgPCZhZGMgOT4sIDwmYWRjIDEwPiwgPCZhZGMgMTE+LAorCQkJ
+ICAgICAgPCZhZGMgMTI+LCA8JmFkYyAxMz4sIDwmYWRjIDE0PiwgPCZhZGMgMTU+OworCX07CisK
+KwlsZWRzIHsKKwkJY29tcGF0aWJsZSA9ICJncGlvLWxlZHMiOworCisJCUxFRF9GQU4wX0ZBVUxU
+IHsKKwkJCWxhYmVsID0gIkxFRF9GQU4wX0ZBVUxUIjsKKwkJCWdwaW9zID0gPCZncGlvIEFTUEVF
+RF9HUElPKEYsIDQpIEdQSU9fQUNUSVZFX0xPVz47CisJCX07CisKKwkJTEVEX0ZBTjFfRkFVTFQg
+eworCQkJbGFiZWwgPSAiTEVEX0ZBTjFfRkFVTFQiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVE
+X0dQSU8oRiwgNSkgR1BJT19BQ1RJVkVfTE9XPjsKKwkJfTsKKworCQlMRURfRkFOMl9GQVVMVCB7
+CisJCQlsYWJlbCA9ICJMRURfRkFOMl9GQVVMVCI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURf
+R1BJTyhILCAyKSBHUElPX0FDVElWRV9MT1c+OworCQl9OworCisJCUxFRF9GQU4zX0ZBVUxUIHsK
+KwkJCWxhYmVsID0gIkxFRF9GQU4zX0ZBVUxUIjsKKwkJCWdwaW9zID0gPCZncGlvIEFTUEVFRF9H
+UElPKEgsIDUpIEdQSU9fQUNUSVZFX0xPVz47CisJCX07CisKKwkJTEVEX0ZBTjRfRkFVTFQgewor
+CQkJbGFiZWwgPSAiTEVEX0ZBTjRfRkFVTFQiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQ
+SU8oSCwgNikgR1BJT19BQ1RJVkVfTE9XPjsKKwkJfTsKKworCQlMRURfRkFONV9GQVVMVCB7CisJ
+CQlsYWJlbCA9ICJMRURfRkFONV9GQVVMVCI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJ
+TyhILCA3KSBHUElPX0FDVElWRV9MT1c+OworCQl9OworCisJCUZQX0xFRF9TVEFUVVNfQU1CRVJf
+TiB7CisJCQlsYWJlbCA9ICJGUF9MRURfU1RBVFVTX0FNQkVSX04iOworCQkJZ3Bpb3MgPSA8Jmdw
+aW8gQVNQRUVEX0dQSU8oUywgNSkgR1BJT19BQ1RJVkVfTE9XPjsKKwkJfTsKKworCQlSRUFSX0lE
+X0xFRF9OIHsKKwkJCWxhYmVsID0gIlJFQVJfSURfTEVEX04iOworCQkJZ3Bpb3MgPSA8JmdwaW8g
+QVNQRUVEX0dQSU8oUywgNikgR1BJT19BQ1RJVkVfTE9XPjsKKwkJfTsKKwl9OworCisJZ3Bpby1r
+ZXlzLXBvbGxlZCB7CisJCWNvbXBhdGlibGUgPSAiZ3Bpby1rZXlzLXBvbGxlZCI7CisJCXBvbGwt
+aW50ZXJ2YWwgPSA8MTAwMD47CisKKwkJRk1fU1lTX0ZBTjBfUFJTTlRfRF9OIHsKKwkJCWxhYmVs
+ID0gIkZNX1NZU19GQU4wX1BSU05UX0RfTiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJ
+TyhNLCAwKSBHUElPX0FDVElWRV9MT1c+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhN
+LCAwKT47CisJCX07CisKKwkJRk1fU1lTX0ZBTjFfUFJTTlRfRF9OIHsKKwkJCWxhYmVsID0gIkZN
+X1NZU19GQU4xX1BSU05UX0RfTiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhNLCAx
+KSBHUElPX0FDVElWRV9MT1c+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhNLCAxKT47
+CisJCX07CisKKwkJRk1fU1lTX0ZBTjJfUFJTTlRfRF9OIHsKKwkJCWxhYmVsID0gIkZNX1NZU19G
+QU4yX1BSU05UX0RfTiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhNLCAyKSBHUElP
+X0FDVElWRV9MT1c+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhNLCAyKT47CisJCX07
+CisKKwkJRk1fU1lTX0ZBTjNfUFJTTlRfRF9OIHsKKwkJCWxhYmVsID0gIkZNX1NZU19GQU4zX1BS
+U05UX0RfTiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhNLCAzKSBHUElPX0FDVElW
+RV9MT1c+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhNLCAzKT47CisJCX07CisKKwkJ
+Rk1fU1lTX0ZBTjRfUFJTTlRfRF9OIHsKKwkJCWxhYmVsID0gIkZNX1NZU19GQU40X1BSU05UX0Rf
+TiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhNLCA0KSBHUElPX0FDVElWRV9MT1c+
+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhNLCA0KT47CisJCX07CisKKwkJRk1fU1lT
+X0ZBTjVfUFJTTlRfRF9OIHsKKwkJCWxhYmVsID0gIkZNX1NZU19GQU41X1BSU05UX0RfTiI7CisJ
+CQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhNLCA1KSBHUElPX0FDVElWRV9MT1c+OworCQkJ
+bGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhNLCA1KT47CisJCX07CisKKwkJRk1fU1lTX0ZBTjZf
+UFJTTlRfRF9OIHsKKwkJCWxhYmVsID0gIkZNX1NZU19GQU42X1BSU05UX0RfTiI7CisJCQlncGlv
+cyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhTLCA3KSBHUElPX0FDVElWRV9MT1c+OworCQkJbGludXgs
+Y29kZSA9IDxBU1BFRURfR1BJTyhTLCA3KT47CisJCX07CisKKwkJRk1fU1lTX0ZBTjdfUFJTTlRf
+RF9OIHsKKwkJCWxhYmVsID0gIkZNX1NZU19GQU43X1BSU05UX0RfTiI7CisJCQlncGlvcyA9IDwm
+Z3BpbyBBU1BFRURfR1BJTyhBQiwgMSkgR1BJT19BQ1RJVkVfTE9XPjsKKwkJCWxpbnV4LGNvZGUg
+PSA8QVNQRUVEX0dQSU8oQUIsIDEpPjsKKwkJfTsKKwl9OworCisJZ3Bpby1rZXlzIHsKKwkJY29t
+cGF0aWJsZSA9ICJncGlvLWtleXMiOworCQkvLyBBMC1BNworCQlCTUNfU0VMX00yX1NBVEFfUENJ
+RSB7CisJCQlsYWJlbCA9ICJCTUNfU0VMX00yX1NBVEFfUENJRSI7CisJCQlncGlvcyA9IDwmZ3Bp
+byBBU1BFRURfR1BJTyhBLCAwKSBHUElPX0FDVElWRV9ISUdIPjsKKwkJCWxpbnV4LGNvZGUgPSA8
+QVNQRUVEX0dQSU8oQSwgMCk+OworCQl9OworCisJCVBEX1JNSUlfQk1DX01EQyB7CisJCQlsYWJl
+bCA9ICJQRF9STUlJX0JNQ19NREMiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oQSwg
+NikgR1BJT19BQ1RJVkVfSElHSD47CisJCQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEEsIDYp
+PjsKKwkJfTsKKworCQlQRF9STUlJX0JNQ19NRElPIHsKKwkJCWxhYmVsID0gIlBEX1JNSUlfQk1D
+X01ESU8iOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oQSwgNykgR1BJT19BQ1RJVkVf
+SElHSD47CisJCQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEEsIDcpPjsKKwkJfTsKKwkJLy8g
+QjAtQjcKKwkJVlJfUFZDQ0lOX1BWQ0NTQV9DUFUxX0ZBVUxUX04geworCQkJbGFiZWwgPSAiVlJf
+UFZDQ0lOX1BWQ0NTQV9DUFUxX0ZBVUxUX04iOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQ
+SU8oQiwgMCkgR1BJT19BQ1RJVkVfTE9XPjsKKwkJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8o
+QiwgMCk+OworCQl9OworCisJCVZSX1BWQ0NJTl9QVkNDU0FfQ1BVMl9GQVVMVF9OIHsKKwkJCWxh
+YmVsID0gIlZSX1BWQ0NJTl9QVkNDU0FfQ1BVMl9GQVVMVF9OIjsKKwkJCWdwaW9zID0gPCZncGlv
+IEFTUEVFRF9HUElPKEIsIDEpIEdQSU9fQUNUSVZFX0xPVz47CisJCQlsaW51eCxjb2RlID0gPEFT
+UEVFRF9HUElPKEIsIDEpPjsKKwkJfTsKKworCQlWUl9QVkNDSU9fQ1BVMV9GQVVMVF9OIHsKKwkJ
+CWxhYmVsID0gIlZSX1BWQ0NJT19DUFUxX0ZBVUxUX04iOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQ
+RUVEX0dQSU8oQiwgMikgR1BJT19BQ1RJVkVfTE9XPjsKKwkJCWxpbnV4LGNvZGUgPSA8QVNQRUVE
+X0dQSU8oQiwgMik+OworCQl9OworCisJCVZSX1BWQ0NJT19DUFUyX0ZBVUxUX04geworCQkJbGFi
+ZWwgPSAiVlJfUFZDQ0lPX0NQVTJfRkFVTFRfTiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURf
+R1BJTyhCLCAzKSBHUElPX0FDVElWRV9MT1c+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJ
+TyhCLCAzKT47CisJCX07CisKKwkJTkNfQ0xLXzQ4TV9VU0JfTk1DX1IyIHsKKwkJCWxhYmVsID0g
+Ik5DX0NMS180OE1fVVNCX05NQ19SMiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhC
+LCA0KSBHUElPX0FDVElWRV9ISUdIPjsKKwkJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8oQiwg
+NCk+OworCQl9OworCisJCVBVX0JNQ19HUElPQjYgeworCQkJbGFiZWwgPSAiUFVfQk1DX0dQSU9C
+NiI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhCLCA2KSBHUElPX0FDVElWRV9ISUdI
+PjsKKwkJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8oQiwgNik+OworCQl9OworCisJCU5DX0JN
+Q19HUElPQjcgeworCQkJbGFiZWwgPSAiTkNfQk1DX0dQSU9CNyI7CisJCQlncGlvcyA9IDwmZ3Bp
+byBBU1BFRURfR1BJTyhCLCA3KSBHUElPX0FDVElWRV9ISUdIPjsKKwkJCWxpbnV4LGNvZGUgPSA8
+QVNQRUVEX0dQSU8oQiwgNyk+OworCQl9OworCQkvLyBDMC1DNworCQlQUk9KRUNUX1JFVl9JRDAg
+eworCQkJbGFiZWwgPSAiUFJPSkVDVF9SRVZfSUQwIjsKKwkJCWdwaW9zID0gPCZncGlvIEFTUEVF
+RF9HUElPKEMsIDApIEdQSU9fQUNUSVZFX0hJR0g+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURf
+R1BJTyhDLCAwKT47CisJCX07CisKKwkJUFJPSkVDVF9SRVZfSUQxIHsKKwkJCWxhYmVsID0gIlBS
+T0pFQ1RfUkVWX0lEMSI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhDLCAxKSBHUElP
+X0FDVElWRV9ISUdIPjsKKwkJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8oQywgMSk+OworCQl9
+OworCisJCVBST0pFQ1RfUkVWX0lEMiB7CisJCQlsYWJlbCA9ICJQUk9KRUNUX1JFVl9JRDIiOwor
+CQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oQywgMikgR1BJT19BQ1RJVkVfSElHSD47CisJ
+CQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEMsIDIpPjsKKwkJfTsKKworCQlQQ0JfUkVWX0lE
+MCB7CisJCQlsYWJlbCA9ICJQQ0JfUkVWX0lEMCI7CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURf
+R1BJTyhDLCAzKSBHUElPX0FDVElWRV9ISUdIPjsKKwkJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQ
+SU8oQywgMyk+OworCQl9OworCisJCVBDQl9SRVZfSUQxIHsKKwkJCWxhYmVsID0gIlBDQl9SRVZf
+SUQxIjsKKwkJCWdwaW9zID0gPCZncGlvIEFTUEVFRF9HUElPKEMsIDQpIEdQSU9fQUNUSVZFX0hJ
+R0g+OworCQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhDLCA0KT47CisJCX07CisKKwkJUENC
+X1JFVl9JRDIgeworCQkJbGFiZWwgPSAiUENCX1JFVl9JRDIiOworCQkJZ3Bpb3MgPSA8JmdwaW8g
+QVNQRUVEX0dQSU8oQywgNSkgR1BJT19BQ1RJVkVfSElHSD47CisJCQlsaW51eCxjb2RlID0gPEFT
+UEVFRF9HUElPKEMsIDUpPjsKKwkJfTsKKworCQlOQ19CTUNfR1BJT0M2IHsKKwkJCWxhYmVsID0g
+Ik5DX0JNQ19HUElPQzYiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oQywgNikgR1BJ
+T19BQ1RJVkVfSElHSD47CisJCQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEMsIDYpPjsKKwkJ
+fTsKKworCQlOQ19CTUNfR1BJT0M3IHsKKwkJCWxhYmVsID0gIk5DX0JNQ19HUElPQzciOworCQkJ
+Z3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oQywgNykgR1BJT19BQ1RJVkVfSElHSD47CisJCQls
+aW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEMsIDcpPjsKKwkJfTsKKwkJLy8gRDAtRDcKKwkJRk1f
+Rk9SQ0VfQk1DX1VQREFURV9OIHsKKwkJCWxhYmVsID0gIkZNX0ZPUkNFX0JNQ19VUERBVEVfTiI7
+CisJCQlncGlvcyA9IDwmZ3BpbyBBU1BFRURfR1BJTyhELCAwKSBHUElPX0FDVElWRV9MT1c+Owor
+CQkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhELCAwKT47CisJCX07CisKKwkJUlNUX1JTVEJf
+Qk1DX1JfTiB7CisJCQlsYWJlbCA9ICJSU1RfUlNUQl9CTUNfUl9OIjsKKwkJCWdwaW9zID0gPCZn
+cGlvIEFTUEVFRF9HUElPKEQsIDEpIEdQSU9fQUNUSVZFX0xPVz47CisJCQlsaW51eCxjb2RlID0g
+PEFTUEVFRF9HUElPKEQsIDEpPjsKKwkJfTsKKworCQlOQ19CTUNfR1BJT0QyIHsKKwkJCWxhYmVs
+ID0gIk5DX0JNQ19HUElPRDIiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oRCwgMikg
+R1BJT19BQ1RJVkVfSElHSD47CisJCQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEQsIDIpPjsK
+KwkJfTsKKworCQlOQ19CTUNfR1BJT0QzIHsKKwkJCWxhYmVsID0gIk5DX0JNQ19HUElPRDMiOwor
+CQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oRCwgMykgR1BJT19BQ1RJVkVfSElHSD47CisJ
+CQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEQsIDMpPjsKKwkJfTsKKworCQlOQ19CTUNfR1BJ
+T0Q0IHsKKwkJCWxhYmVsID0gIk5DX0JNQ19HUElPRDQiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQ
+RUVEX0dQSU8oRCwgNCkgR1BJT19BQ1RJVkVfSElHSD47CisJCQlsaW51eCxjb2RlID0gPEFTUEVF
+RF9HUElPKEQsIDQpPjsKKwkJfTsKKworCQlOQ19CTUNfR1BJT0Q1IHsKKwkJCWxhYmVsID0gIk5D
+X0JNQ19HUElPRDUiOworCQkJZ3Bpb3MgPSA8JmdwaW8gQVNQRUVEX0dQSU8oRCwgNSkgR1BJT19B
+Q1RJVkVfSElHSD47CisJCQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEQsIDUpPjsKKwkJfTsK
+Kwl9OworCit9OworCisKKyZncGlvIHsKKwkvLyBBMC1BNworCWZtX3NwZF9kZHJjcHVfbHZsc2hm
+dF9lbl9yIHsKKwkJZ3Bpby1ob2c7CisJCWxhYmVsID0gIkZNX1NQRF9ERFJDUFVfTFZMU0hGVF9F
+Tl9SIjsKKwkJZ3Bpb3MgPSA8QVNQRUVEX0dQSU8oQSwgMSkgR1BJT19BQ1RJVkVfSElHSD47CisJ
+CWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8oQSwgMSk+OworCQlvdXRwdXQtaGlnaDsKKwl9Owor
+CisJbWJfYm1jX2hic3BfcmVzZXRfbiB7CisJCWdwaW8taG9nOworCQlsYWJlbCA9ICJNQl9CTUNf
+SEJTUF9SRVNFVF9OIjsKKwkJZ3Bpb3MgPSA8QVNQRUVEX0dQSU8oQSwgMikgR1BJT19BQ1RJVkVf
+TE9XPjsKKwkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhBLCAyKT47CisJCW91dHB1dC1oaWdo
+OworCX07CisKKwltYl9ibWNfaGJzcF9pc3BfbiB7CisJCWdwaW8taG9nOworCQlsYWJlbCA9ICJN
+Ql9CTUNfSEJTUF9JU1BfTiI7CisJCWdwaW9zID0gPEFTUEVFRF9HUElPKEEsIDMpIEdQSU9fQUNU
+SVZFX0xPVz47CisJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8oQSwgMyk+OworCQlvdXRwdXQt
+aGlnaDsKKwl9OworCS8vIEQwLUQ3CisJanRhZ19wbGRfZW4geworCQlncGlvLWhvZzsKKwkJbGFi
+ZWwgPSAiSlRBR19QTERfRU4iOworCQlncGlvcyA9IDxBU1BFRURfR1BJTyhELCA2KSBHUElPX0FD
+VElWRV9ISUdIPjsKKwkJbGludXgsY29kZSA9IDxBU1BFRURfR1BJTyhELCA2KT47CisJCW91dHB1
+dC1sb3c7CisJfTsKKwlGTV9CTUNfREJQX1BSRVNFTlRfUl9OIHsKKwkJZ3Bpby1ob2c7CisJCWxh
+YmVsID0gIkZNX0JNQ19EQlBfUFJFU0VOVF9SX04iOworCQlncGlvcyA9IDxBU1BFRURfR1BJTyhF
+LCA1KSBHUElPX0FDVElWRV9MT1c+OworCQlsaW51eCxjb2RlID0gPEFTUEVFRF9HUElPKEUsIDUp
+PjsKKwkJb3V0cHV0LWhpZ2g7CisJfTsKKworCS8vIEYwLUY3CisJSVJRX0JNQ19QQ0hfTk1JX1Ig
+eworCQlncGlvLWhvZzsKKwkJbGFiZWwgPSAiSVJRX0JNQ19QQ0hfTk1JX1IiOworCQlncGlvcyA9
+IDxBU1BFRURfR1BJTyhGLCAwKSBHUElPX0FDVElWRV9ISUdIPjsKKwkJbGludXgsY29kZSA9IDxB
+U1BFRURfR1BJTyhGLCAwKT47CisJCW91dHB1dC1sb3c7CisJfTsKKworCUZNX0NQVTJfRElTQUJM
+RV9DT0RfTiB7CisJCWdwaW8taG9nOworCQlsYWJlbCA9ICJGTV9DUFUyX0RJU0FCTEVfQ09EX04i
+OworCQlncGlvcyA9IDxBU1BFRURfR1BJTyhGLCAxKSBHUElPX0FDVElWRV9MT1c+OworCQlsaW51
+eCxjb2RlID0gPEFTUEVFRF9HUElPKEYsIDEpPjsKKwkJb3V0cHV0LWhpZ2g7CisJfTsKKworCVNQ
+SV9TWVNCSU9TX0JNQ19TRUwgeworCQlncGlvLWhvZzsKKwkJbGFiZWwgPSAiU1BJX1NZU0JJT1Nf
+Qk1DX1NFTCI7CisJCWdwaW9zID0gPEFTUEVFRF9HUElPKEYsIDIpIEdQSU9fQUNUSVZFX0xPVz47
+CisJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8oRiwgMik+OworCQlvdXRwdXQtaGlnaDsKKwl9
+OworCS8vIFEwLVE3CisJRk1fQk1DX0NQVV9QV1JfREVCVUdfUl9OIHsKKwkJZ3Bpby1ob2c7CisJ
+CWxhYmVsID0gIkZNX0JNQ19DUFVfUFdSX0RFQlVHX1JfTiI7CisJCWdwaW9zID0gPEFTUEVFRF9H
+UElPKFEsIDcpIEdQSU9fQUNUSVZFX0xPVz47CisJCWxpbnV4LGNvZGUgPSA8QVNQRUVEX0dQSU8o
+USwgNyk+OworCQlvdXRwdXQtaGlnaDsKKwl9OworfTsKKworCismZm1jIHsKKwlzdGF0dXMgPSAi
+b2theSI7CisJZmxhc2hAMCB7CisJCXN0YXR1cyA9ICJva2F5IjsKKwkJbTI1cCxmYXN0LXJlYWQ7
+CisJCWxhYmVsID0gImJtYyI7CisJCXNwaS1tYXgtZnJlcXVlbmN5ID0gPDUwMDAwMDAwPjsKKyNp
+bmNsdWRlICJvcGVuYm1jLWZsYXNoLWxheW91dC5kdHNpIgorCX07Cit9OworCismc3BpMSB7CisJ
+c3RhdHVzID0gIm9rYXkiOworCWZsYXNoQDAgeworCQlzdGF0dXMgPSAib2theSI7CisJCW0yNXAs
+ZmFzdC1yZWFkOworCQlsYWJlbCA9ICJwbm9yIjsKKwkJc3BpLW1heC1mcmVxdWVuY3kgPSA8MTAw
+MDAwMDAwPjsKKwl9OworfTsKKworJnNwaTIgeworCXN0YXR1cyA9ICJva2F5IjsKK307CisKKyZ1
+YXJ0NSB7CisJc3RhdHVzID0gIm9rYXkiOworfTsKKworJm1hYzAgeworCXN0YXR1cyA9ICJva2F5
+IjsKKworCXBpbmN0cmwtbmFtZXMgPSAiZGVmYXVsdCI7CisJcGluY3RybC0wID0gPCZwaW5jdHJs
+X3JnbWlpMV9kZWZhdWx0ICZwaW5jdHJsX21kaW8xX2RlZmF1bHQ+OworfTsKKworJm1hYzEgewor
+CXN0YXR1cyA9ICJva2F5IjsKKworCXBpbmN0cmwtbmFtZXMgPSAiZGVmYXVsdCI7CisJcGluY3Ry
+bC0wID0gPCZwaW5jdHJsX3JnbWlpMl9kZWZhdWx0ICZwaW5jdHJsX21kaW8yX2RlZmF1bHQ+Owor
+fTsKKworJmFkYyB7CisJc3RhdHVzID0gIm9rYXkiOworfTsKKworJmkyYzAgeworCXN0YXR1cyA9
+ICJva2F5IjsKK307CisKKyZpMmMxIHsKKwlzdGF0dXMgPSAib2theSI7CisKKwllZXByb21ANTQg
+eworICAgICAgICBjb21wYXRpYmxlID0gImF0bWVsLDI0YzY0IjsKKyAgICAgICAgcmVnID0gPDB4
+NTQ+OworICAgICAgICBwYWdlc2l6ZSA9IDwzMj47CisgICAgfTsKK307CisKKyZpMmMyIHsKKwlz
+dGF0dXMgPSAib2theSI7Cit9OworCismaTJjMyB7CisJc3RhdHVzID0gIm9rYXkiOworCisJdG1w
+NzVANDggeworCQljb21wYXRpYmxlID0gInRpLHRtcDc1IjsKKwkJcmVnID0gPDB4NDg+OworCX07
+CisKKwl0bXA3NUA0YiB7CisJCWNvbXBhdGlibGUgPSAidGksdG1wNzUiOworCQlyZWcgPSA8MHg0
+Yj47CisJfTsKKworCXRtcDc1QDRjIHsKKwkJY29tcGF0aWJsZSA9ICJ0aSx0bXA3NSI7CisJCXJl
+ZyA9IDwweDRjPjsKKwl9OworCisJdG1wNzVANGQgeworCQljb21wYXRpYmxlID0gInRpLHRtcDc1
+IjsKKwkJcmVnID0gPDB4NGQ+OworCX07CisKKwl2ci1jb250cm9sbGVyQDVhIHsKKwkJY29tcGF0
+aWJsZSA9ICJ0aSx0cHM1MzY3OSI7CisJCXJlZyA9IDwweDVhPjsKKwl9OworCisJdnItY29udHJv
+bGxlckA1ZCB7CisJCWNvbXBhdGlibGUgPSAidGksdHBzNTM2NzkiOworCQlyZWcgPSA8MHg1ZD47
+CisJfTsKKworCXZyLWNvbnRyb2xsZXJANjggeworCQljb21wYXRpYmxlID0gInRpLHRwczUzNjc5
+IjsKKwkJcmVnID0gPDB4Njg+OworCX07CisKKwl2ci1jb250cm9sbGVyQDZhIHsKKwkJY29tcGF0
+aWJsZSA9ICJ0aSx0cHM1MzY3OSI7CisJCXJlZyA9IDwweDZhPjsKKwl9OworCQorCXZyLWNvbnRy
+b2xsZXJANmMgeworCQljb21wYXRpYmxlID0gInRpLHRwczUzNjc5IjsKKwkJcmVnID0gPDB4NmM+
+OworCX07CisJCisJdnItY29udHJvbGxlckA2ZSB7CisJCWNvbXBhdGlibGUgPSAidGksdHBzNTM2
+NzkiOworCQlyZWcgPSA8MHg2ZT47CisJfTsKKworfTsKKworJmkyYzQgeworCXN0YXR1cyA9ICJv
+a2F5IjsKKworCWVlcHJvbUA1MSB7CisgICAgICAgIGNvbXBhdGlibGUgPSAiYXRtZWwsMjRjNjQi
+OworICAgICAgICByZWcgPSA8MHg1MT47CisgICAgICAgIHBhZ2VzaXplID0gPDMyPjsKKyAgICB9
+OworfTsKKworJmkyYzUgeworCXN0YXR1cyA9ICJva2F5IjsKK307CisKKyZpMmM2IHsKKwlzdGF0
+dXMgPSAib2theSI7Cit9OworCismaTJjNyB7CisJc3RhdHVzID0gIm9rYXkiOworCisJcG93ZXIt
+c3VwcGx5QDU4IHsKKwkJY29tcGF0aWJsZSA9ICJwbWJ1cyI7CisJCXJlZyA9IDwweDU4PjsKKwl9
+OworCisJcG93ZXItc3VwcGx5QDU5IHsKKwkJY29tcGF0aWJsZSA9ICJwbWJ1cyI7CisJCXJlZyA9
+IDwweDU5PjsKKwl9OworfTsKKworCismc2RtbWMgeworCXN0YXR1cyA9ICJva2F5IjsKK307CisK
+KyZzZGhjaTAgeworCXN0YXR1cyA9ICJva2F5IjsKKworCXBpbmN0cmwtbmFtZXMgPSAiZGVmYXVs
+dCI7CisJcGluY3RybC0wID0gPCZwaW5jdHJsX3NkMV9kZWZhdWx0PjsKK307CisKKy8qCisgKiBF
+bmFibGUgcG9ydCBBIGFzIGRldmljZSAodmlhIHRoZSB2aXJ0dWFsIGh1YikgYW5kIHBvcnQgQiBh
+cworICogaG9zdCBieSBkZWZhdWx0IG9uIHRoZSBldmFsIGJvYXJkLiBUaGlzIGNhbiBiZSBlYXNp
+bHkgY2hhbmdlZAorICogYnkgcmVwbGFjaW5nIHRoZSBvdmVycmlkZSBiZWxvdyB3aXRoICZlaGNp
+MCB7IC4uLiB9IHRvIGVuYWJsZQorICogaG9zdCBvbiBib3RoIHBvcnRzLgorICovCismdmh1YiB7
+CisJc3RhdHVzID0gIm9rYXkiOworfTsKKworJmVoY2kxIHsKKwlzdGF0dXMgPSAib2theSI7Cit9
+OworCismdWhjaSB7CisJc3RhdHVzID0gIm9rYXkiOworfTsKKworJmdmeCB7CisgICAgIHN0YXR1
+cyA9ICJva2F5IjsKKyAgICAgbWVtb3J5LXJlZ2lvbiA9IDwmZ2Z4X21lbW9yeT47Cit9OworCism
+cHdtX3RhY2hvIHsKKwlzdGF0dXMgPSAib2theSI7CisJcGluY3RybC1uYW1lcyA9ICJkZWZhdWx0
+IjsKKwlwaW5jdHJsLTAgPSA8JnBpbmN0cmxfcHdtMF9kZWZhdWx0ICZwaW5jdHJsX3B3bTFfZGVm
+YXVsdAorCQkmcGluY3RybF9wd20yX2RlZmF1bHQgJnBpbmN0cmxfcHdtM19kZWZhdWx0CisJCSZw
+aW5jdHJsX3B3bTRfZGVmYXVsdCAmcGluY3RybF9wd201X2RlZmF1bHQKKwkJJnBpbmN0cmxfcHdt
+Nl9kZWZhdWx0ICZwaW5jdHJsX3B3bTdfZGVmYXVsdD47CisKKwlmYW5AMCB7CisJCXJlZyA9IDww
+eDAwPjsKKwkJYXNwZWVkLGZhbi10YWNoLWNoID0gL2JpdHMvIDggPDB4MDAgMHgwMT47CisJfTsK
+KworCWZhbkAxIHsKKwkJcmVnID0gPDB4MDE+OworCQlhc3BlZWQsZmFuLXRhY2gtY2ggPSAvYml0
+cy8gOCA8MHgwMiAweDAzPjsKKwl9OworCisJZmFuQDIgeworCQlyZWcgPSA8MHgwMj47CisJCWFz
+cGVlZCxmYW4tdGFjaC1jaCA9IC9iaXRzLyA4IDwweDA0IDB4MDU+OworCX07CisKKwlmYW5AMyB7
+CisJCXJlZyA9IDwweDAzPjsKKwkJYXNwZWVkLGZhbi10YWNoLWNoID0gL2JpdHMvIDggPDB4MDYg
+MHgwNz47CisJfTsKKworCWZhbkA0IHsKKwkJcmVnID0gPDB4MDQ+OworCQlhc3BlZWQsZmFuLXRh
+Y2gtY2ggPSAvYml0cy8gOCA8MHgwOCAweDA5PjsKKwl9OworCisJZmFuQDUgeworCQlyZWcgPSA8
+MHgwNT47CisJCWFzcGVlZCxmYW4tdGFjaC1jaCA9IC9iaXRzLyA4IDwweDBhIDB4MGI+OworCX07
+CisKKwlmYW5ANiB7CisJCXJlZyA9IDwweDA2PjsKKwkJYXNwZWVkLGZhbi10YWNoLWNoID0gL2Jp
+dHMvIDggPDB4MGMgMHgwZD47CisJfTsKKworCWZhbkA3IHsKKwkJcmVnID0gPDB4MDc+OworCQlh
+c3BlZWQsZmFuLXRhY2gtY2ggPSAvYml0cy8gOCA8MHgwZSAweDBmPjsKKwl9OworCit9OworCg==
+
+--_004_6ce8b3c2e5bf49e8ae4c5668b02d4f08TPEMBX05compalcom_--
 
