@@ -1,63 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 886672ACE8A
-	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 05:28:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id E66772ACED9
+	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 06:04:15 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CVZcd6c3xzDqf4
-	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 15:28:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CVbPT0gNbzDqcl
+	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 16:04:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72d;
+ helo=mail-qk1-x72d.google.com; envelope-from=tbnguyen1985@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
- envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=HSATgnet; dkim-atps=neutral
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
+ [IPv6:2607:f8b0:4864:20::72d])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CVZbm21qpzDqd3
- for <openbmc@lists.ozlabs.org>; Tue, 10 Nov 2020 15:27:59 +1100 (AEDT)
-IronPort-SDR: zKfAuByWF4Dn5ofaVZocOVbUdZ9F8CHgPmyI3Hwhj9aDxotb7lzkS+4cl5gjPckzoPTW97hc9p
- kYZU1ZtkLD9w==
-X-IronPort-AV: E=McAfee;i="6000,8403,9800"; a="170027745"
-X-IronPort-AV: E=Sophos;i="5.77,465,1596524400"; 
- d="scan'208,217";a="170027745"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Nov 2020 20:27:54 -0800
-IronPort-SDR: id9+Pu4DlrjTR7vXarwxEBnhyiqbUsvGkcgZ227/zZfaBi0p3ziw9bagScGN43n5r2KT84RMkR
- j0CMIvIDajBg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.77,465,1596524400"; 
- d="scan'208,217";a="338592654"
-Received: from linux.intel.com ([10.54.29.200])
- by orsmga002.jf.intel.com with ESMTP; 09 Nov 2020 20:27:53 -0800
-Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id D5850580418;
- Mon,  9 Nov 2020 20:27:52 -0800 (PST)
-Date: Tue, 10 Nov 2020 12:27:53 +0800
-From: "chunhui.jia" <chunhui.jia@linux.intel.com>
-To: "Thu Ba Nguyen" <tbnguyen1985@gmail.com>,
- "Ramesh I I1" <rameshi1@in.ibm.com>
-Subject: Re:  Re: phosphor-logging: entry() failed parse message.
-In-Reply-To: <CALioo37f6Katzcag-hgA=u_spHOdeQw5WbvSapAs=qMyiwOxYg@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CVbK930LNzDqg7
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Nov 2020 16:00:29 +1100 (AEDT)
+Received: by mail-qk1-x72d.google.com with SMTP id t191so9182765qka.4
+ for <openbmc@lists.ozlabs.org>; Mon, 09 Nov 2020 21:00:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=KhfKLL7SMUeBAfH0QEkMQoIgBsRJ4kOeOrW2qXnAV8g=;
+ b=HSATgnetQfuGysN3bEYkMT/g1kClY7MCoGnqyG7rn/LMVv7JfaScJN0vUrEXtmWxlq
+ frOUuJtDX3kr87QcZW8Orl5s2MK5SPPKLMK4FRKCfwRDPTy4je4kDTcQjjqzSn25WpiP
+ xoun1xekNB9nDOuCHkJMflDQJn3KeW58hHw++sj+EazMtMi2HSC0zEjDHR3K3uYNsPpc
+ p8FR/VVWzvolI3AvU4CQKKIMuvYdrLO2pdi5JH6LUqKOxf+ZHYy47AymUJ0NMqUeIOhd
+ w6vAjd5LIj/jnAuvloerHOaCzirfQm3NSyt60F3qSvbveZarIDhl2RTks/5Hgw0F/Qn1
+ xZ2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=KhfKLL7SMUeBAfH0QEkMQoIgBsRJ4kOeOrW2qXnAV8g=;
+ b=hQmD7bZC0P9awX5ATtxtnqPSBHovPU4KsspJ2mvupRk0VLRTxUKeXK5mymwTni86+1
+ Z3dhGS8APtcNK4sVUDu28gvPDTxG8JuiLJeKsQV10v7lNkPEEWt+i8cydY4oIZwe7ff+
+ kZzFmTGRD8gOxwvBBpxNr2aGRCx8gZeHbQFDhSUsieBEu7XshDHWtCIokvFQMHx+hiSW
+ Xpfpp/oZ07G5pFqc4jA9TYF+iuXSO2z06TUot6SeKn9ET5tP9vPk1C75omMrxxIuXoYD
+ zhCpzAVvwVnfrtKcjywnqmV8yNnJu2n9X6hqPhZRk90NGa7askrECqKnc/FM/L0BZU/8
+ l3HQ==
+X-Gm-Message-State: AOAM532LVQB0vPPZaj5eHhVGl8u/0gxEmGtO8xhy8vfC5U5sRO56DZkm
+ /WLn0haodWfJ68gfVFAouOCFbmGfrOm1f0KOqC0=
+X-Google-Smtp-Source: ABdhPJzsMcfoCL0jtSGBgQzpU5LSDgC5+G/52TFudA4M+1NCBEZ0AsnDKjGpKtWG5On7jaM+wH/QvAeOgiB6zpH56V0=
+X-Received: by 2002:a37:7f83:: with SMTP id
+ a125mr17180802qkd.423.1604984422837; 
+ Mon, 09 Nov 2020 21:00:22 -0800 (PST)
+MIME-Version: 1.0
 References: <CALioo35rFrsCcK+j8GW8DCAHqw_y_r8e9cMg-SmNLQ5ydMajNg@mail.gmail.com>
  <CALioo35DvdU8KsTJbB9RQiLQ+Md6gTW3TYeNy8qitVZLQzHK=A@mail.gmail.com>
  <OF8D57E4C0.929A4052-ON0025861B.00159DF0-0025861B.00165862@notes.na.collabserv.com>
  <CALioo37f6Katzcag-hgA=u_spHOdeQw5WbvSapAs=qMyiwOxYg@mail.gmail.com>
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
-MIME-Version: 1.0
-Message-ID: <5FAA16C5.3050103@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590"
+ <5FAA16C5.3050103@linux.intel.com>
+In-Reply-To: <5FAA16C5.3050103@linux.intel.com>
+From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
+Date: Tue, 10 Nov 2020 12:00:11 +0700
+Message-ID: <CALioo35HQx9uNKjr5HzG+AkHb0AdAk3sAQS=ZrfPJevUWgoJUA@mail.gmail.com>
+Subject: Re: Re: phosphor-logging: entry() failed parse message.
+To: "chunhui.jia" <chunhui.jia@linux.intel.com>
+Content-Type: multipart/alternative; boundary="00000000000064b25c05b3b98e38"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,223 +77,335 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ramesh I I1 <rameshi1@in.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--00000000000064b25c05b3b98e38
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-VGhlIGRhdGEgZW1iZWRkZWQgaW4geW91ciBlbnRyeSgpIGlzIG1ldGEtZGF0YS4gICBVc2UgJy1v
-dmVyYm9zZScgb3B0aW9uIGluIGpvdXJuYWxjdGwgY29tbWFuZCB0byBwcmludC4gDQoNCmpvdXJu
-YWxjdGwgLWVmIC1vdmVyYm9zZQ0KPj4NClR1ZSAyMDIwLTExLTEwIDEyOjI4OjQzLjQ3MjA2MyBV
-VEMgW3M9OTNkNjFiNjE4MGRiNDA3ZDhmMzI5MjQ4MzNhNjk1NGQ7aT0xMGM0O2I9MGJhMDYwM2E5
-NzgxNGMyYmIzZDIyZjQ4NTdiNWY5NjQ7bT0xM2U0YTM4NTVjO3Q9NWIzYmZkMWNiYzkxNTt4PWJh
-YzViYmM1MTk4ODBjZGZdDQogICAgX1VJRD0wDQogICAgX0dJRD0wDQogICAgX0NBUF9FRkZFQ1RJ
-VkU9M2ZmZmZmZmZmZg0KICAgIF9CT09UX0lEPTBiYTA2MDNhOTc4MTRjMmJiM2QyMmY0ODU3YjVm
-OTY0DQogICAgX01BQ0hJTkVfSUQ9YjFkMjc4OGZlMTc1NDFjMGJhMDM2M2NkMGYwYWE2OTkNCiAg
-ICBfSE9TVE5BTUU9aW50ZWwtb2JtYw0KICAgIF9TWVNURU1EX1NMSUNFPXN5c3RlbS5zbGljZQ0K
-ICAgIF9UUkFOU1BPUlQ9am91cm5hbA0KICAgIFBSSU9SSVRZPTMNCiAgICBDT0RFX0ZJTEU9L3Vz
-ci9zcmMvZGVidWcvaW50ZWwtaXBtaS1vZW0vMC4xK2dpdEFVVE9JTkMrMDRhMzhlZDEwZC1yMC9y
-ZWNpcGUtc3lzcm9vdC91c3IvaW5jbHVkZS9waG9zcGhvci1sb2dnaW5nL2xvZy5ocHANCiAgICBD
-T0RFX0xJTkU9NzYNCiAgICBDT0RFX0ZVTkM9aGVscGVyX2xvZw0KICAgIFRSQU5TQUNUSU9OX0lE
-PTQwOTE3MTAwMjMNCiAgICBTWVNMT0dfSURFTlRJRklFUj1pcG1pZA0KICAgIF9QSUQ9MjQ1DQog
-ICAgX0NPTU09aXBtaWQNCiAgICBfRVhFPS91c3IvYmluL2lwbWlkDQogICAgX0NNRExJTkU9aXBt
-aWQNCiAgICBfU1lTVEVNRF9DR1JPVVA9L3N5c3RlbS5zbGljZS9waG9zcGhvci1pcG1pLWhvc3Qu
-c2VydmljZQ0KICAgIF9TWVNURU1EX1VOSVQ9cGhvc3Bob3ItaXBtaS1ob3N0LnNlcnZpY2UNCiAg
-ICBfU1lTVEVNRF9JTlZPQ0FUSU9OX0lEPTYyZGYyYWU1NTkwYzQ4YTJiNzlmZmU2ODQzYzM2ODFj
-DQogICAgTUVTU0FHRT1GYWlsZWQgdG8gR2V0QWxsDQogICAgSU5URj14eXoub3BlbmJtY19wcm9q
-ZWN0LkludmVudG9yeS5EZWNvcmF0b3IuSXBtaQ0KICAgIFdIQVQ9c2RfYnVzX2NhbGw6IG9yZy5m
-cmVlZGVza3RvcC5EQnVzLkVycm9yLlVua25vd25JbnRlcmZhY2U6IFVua25vd24gaW50ZXJmYWNl
-ICd4eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5EZWNvcmF0b3IuSXBtaScuDQogICAgUEFU
-SD0veHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL3Bvd2Vyc3VwcGx5L1NPTFVN
-X0NPX0lTMTYyRjIyX1BTVTENCiAgICBfU09VUkNFX1JFQUxUSU1FX1RJTUVTVEFNUD0xNjA1MDEx
-MzIzNDcyMDYzDQoNCg0KMjAyMC0xMS0xMCANCg0KY2h1bmh1aS5qaWEgDQoNCg0KDQrlj5Hku7bk
-urrvvJpUaHUgQmEgTmd1eWVuIDx0Ym5ndXllbjE5ODVAZ21haWwuY29tPg0K5Y+R6YCB5pe26Ze0
-77yaMjAyMC0xMS0xMCAwNjozNQ0K5Li76aKY77yaUmU6IHBob3NwaG9yLWxvZ2dpbmc6IGVudHJ5
-KCkgZmFpbGVkIHBhcnNlIG1lc3NhZ2UuDQrmlLbku7bkurrvvJoiUmFtZXNoIEkgSTEiPHJhbWVz
-aGkxQGluLmlibS5jb20+DQrmioTpgIHvvJoiT3BlbkJNQyBNYWlsbGlzdCI8b3BlbmJtY0BsaXN0
-cy5vemxhYnMub3JnPg0KDQpUaGFua3MgUmFtZXNoLA0KDQoNCkJ1dCB5b3VyIGNvbW1hbmRzIGFy
-ZSBhcHBsaWVkIGZvciBzb21lIG1lc3NhZ2VzLg0KQW5kIGRvbid0IGFuc3dlciBteSBxdWVzdGlv
-bnMuDQoiRG8gSSBuZWVkIHRvIGFkZCBhbnkgb3B0aW9uIHdoZW4gYnVpbGRpbmc/IiB0byBtYWtl
-IHBob3NwaG9yLWxvZ2dpbmcgcHJpbnQgbWVzc2FnZSBpbiBlbnRyeSgpLg0KDQoNClJlZ2FyZHMu
-DQpUaHUgTmd1eWVuLg0KDQoNCg0KDQoNCg0KDQoNCk9uIE1vbiwgTm92IDksIDIwMjAgYXQgMTE6
-MDQgQU0gUmFtZXNoIEkgSTEgPHJhbWVzaGkxQGluLmlibS5jb20+IHdyb3RlOg0KDQpIaSBUaHUg
-Tmd1eWVuLA0KDQpCZWxvdyBsaW5rIG1heSBoZWxwIHlvdSB0byBnZXQgbW9yZSBkZXRhaWxlZCBs
-b2cgd2hpY2ggeW91IGFyZSByZWZlcnJpbmcuDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9v
-cGVuYm1jL3dpa2kvRGVidWdnaW5nLU9wZW5CTUMjam91cm5hbGN0bA0KDQpGb3IgZXhhbXBsZToN
-CmpvdXJuYWxjdGwgLW8ganNvbi1wcmV0dHkgTUVTU0FHRT0id2F0Y2hkb2c6IFRpbWVkIG91dCIN
-Cg0KUmVnYXJkcywNClJhbWVzaA0KLS0tLS0gT3JpZ2luYWwgbWVzc2FnZSAtLS0tLQ0KRnJvbTog
-VGh1IEJhIE5ndXllbiA8dGJuZ3V5ZW4xOTg1QGdtYWlsLmNvbT4NClNlbnQgYnk6ICJvcGVuYm1j
-IiA8b3BlbmJtYy1ib3VuY2VzK3JhbWVzaGkxPWluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZz4N
-ClRvOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpDYzoNClN1
-YmplY3Q6IFtFWFRFUk5BTF0gUmU6IHBob3NwaG9yLWxvZ2dpbmc6IGVudHJ5KCkgZmFpbGVkIHBh
-cnNlIG1lc3NhZ2UuDQpEYXRlOiBTYXQsIE5vdiA3LCAyMDIwIDY6MTEgUE0NCiANCg0KVGhlIG91
-dHB1dCBpbiBCTUMgY29uc29sZSB3aWxsIGJlOiANCnBob3NwaG9yLXdhdGNoZG9nWzUzNF06IHdh
-dGNoZG9nOiBUaW1lZCBvdXQNCg0KUmVnYXJkcy4NClRodSBOZ3V5ZW4NCiAgDQpPbiBTYXQsIE5v
-diA3LCAyMDIwIGF0IDc6MzggUE0gVGh1IEJhIE5ndXllbiA8dGJuZ3V5ZW4xOTg1QGdtYWlsLmNv
-bT4gd3JvdGU6DQpIaSwgDQoNCkluIG9wZW5CbWMsIFdlIGFyZSB1c2luZyBwaG9zcGhvci1sb2dn
-aW5nLg0KV2hlbiBJIGxvZzoNCmxvZzxsZXZlbDo6SU5GTz4oDQoid2F0Y2hkb2c6IFRpbWVkIG91
-dCIsDQplbnRyeSgiQUNUSU9OPSVzIiwgY29udmVydEZvck1lc3NhZ2UoYWN0aW9uKS5jX3N0cigp
-KSwNCmVudHJ5KCJUSU1FUl9VU0U9JXMiLCBjb252ZXJ0Rm9yTWVzc2FnZShleHBpcmVkVGltZXJV
-c2UoKSkuY19zdHIoKSksDQplbnRyeSgiVEFSR0VUPSVzIiwgdGFyZ2V0LT5zZWNvbmQuY19zdHIo
-KSkpOw0KVGhlIG1lc3NhZ2UgaW4gZW50cnkoKSBpcyBsb3N0ZWQuDQpEbyBJIG5lZWQgdG8gYWRk
-IGFueSBvcHRpb24gd2hlbiBidWlsZGluZz8NCg0KVGhhbmtzLg0KVGh1IE5ndXllbi4=
+Ok.
+It is clear now.
 
---NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Thanks Chunhui.
+Thu Nguyen.
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
-LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
-aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
-X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
-IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC4xMDU3MC4xMDAxIj48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
-PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
-IGFyaWFsOyBCT1JERVItUklHSFQtV0lEVEg6IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4
-OyBDT0xPUjogIzAwMDAwMDsgTUFSR0lOOiAxMnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVIt
-VE9QLVdJRFRIOiAwcHgiIA0KbWFyZ2luaGVpZ2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+DQo8RElW
-PlRoZSBkYXRhIGVtYmVkZGVkIGluIHlvdXIgZW50cnkoKSBpcyBtZXRhLWRhdGEuJm5ic3A7Jm5i
-c3A7IFVzZSAnLW92ZXJib3NlJyANCm9wdGlvbiBpbiBqb3VybmFsY3RsIGNvbW1hbmQgdG8gcHJp
-bnQuIDwvRElWPg0KPERJVj4mbmJzcDs8L0RJVj4NCjxESVY+am91cm5hbGN0bCAtZWYgLW92ZXJi
-b3NlPC9ESVY+DQo8RElWPiZndDsmZ3Q7PC9ESVY+DQo8RElWPlR1ZSAyMDIwLTExLTEwIDEyOjI4
-OjQzLjQ3MjA2MyBVVEMgDQpbcz05M2Q2MWI2MTgwZGI0MDdkOGYzMjkyNDgzM2E2OTU0ZDtpPTEw
-YzQ7Yj0wYmEwNjAzYTk3ODE0YzJiYjNkMjJmNDg1N2I1Zjk2NDttPTEzZTRhMzg1NWM7dD01YjNi
-ZmQxY2JjOTE1O3g9YmFjNWJiYzUxOTg4MGNkZl08QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KX1VJ
-RD0wPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyBfR0lEPTA8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0K
-X0NBUF9FRkZFQ1RJVkU9M2ZmZmZmZmZmZjxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpfQk9PVF9J
-RD0wYmEwNjAzYTk3ODE0YzJiYjNkMjJmNDg1N2I1Zjk2NDxCUj4mbmJzcDsmbmJzcDsmbmJzcDsg
-DQpfTUFDSElORV9JRD1iMWQyNzg4ZmUxNzU0MWMwYmEwMzYzY2QwZjBhYTY5OTxCUj4mbmJzcDsm
-bmJzcDsmbmJzcDsgDQpfSE9TVE5BTUU9aW50ZWwtb2JtYzxCUj4mbmJzcDsmbmJzcDsmbmJzcDsg
-DQpfU1lTVEVNRF9TTElDRT1zeXN0ZW0uc2xpY2U8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KX1RS
-QU5TUE9SVD1qb3VybmFsPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyBQUklPUklUWT0zPEJSPiZuYnNw
-OyZuYnNwOyZuYnNwOyANCkNPREVfRklMRT0vdXNyL3NyYy9kZWJ1Zy9pbnRlbC1pcG1pLW9lbS8w
-LjErZ2l0QVVUT0lOQyswNGEzOGVkMTBkLXIwL3JlY2lwZS1zeXNyb290L3Vzci9pbmNsdWRlL3Bo
-b3NwaG9yLWxvZ2dpbmcvbG9nLmhwcDxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpDT0RFX0xJTkU9
-NzY8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IENPREVfRlVOQz1oZWxwZXJfbG9nPEJSPiZuYnNwOyZu
-YnNwOyZuYnNwOyANClRSQU5TQUNUSU9OX0lEPTQwOTE3MTAwMjM8QlI+Jm5ic3A7Jm5ic3A7Jm5i
-c3A7IA0KU1lTTE9HX0lERU5USUZJRVI9aXBtaWQ8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IF9QSUQ9
-MjQ1PEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9DT01NPWlwbWlkPEJSPiZuYnNwOyZuYnNwOyZu
-YnNwOyBfRVhFPS91c3IvYmluL2lwbWlkPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9DTURMSU5F
-PWlwbWlkPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9TWVNURU1EX0NHUk9VUD0vc3lzdGVtLnNs
-aWNlL3Bob3NwaG9yLWlwbWktaG9zdC5zZXJ2aWNlPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9T
-WVNURU1EX1VOSVQ9cGhvc3Bob3ItaXBtaS1ob3N0LnNlcnZpY2U8QlI+Jm5ic3A7Jm5ic3A7Jm5i
-c3A7IA0KX1NZU1RFTURfSU5WT0NBVElPTl9JRD02MmRmMmFlNTU5MGM0OGEyYjc5ZmZlNjg0M2Mz
-NjgxYzxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpNRVNTQUdFPUZhaWxlZCB0byBHZXRBbGw8QlI+
-Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KSU5URj14eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5E
-ZWNvcmF0b3IuSXBtaTxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpXSEFUPXNkX2J1c19jYWxsOiBv
-cmcuZnJlZWRlc2t0b3AuREJ1cy5FcnJvci5Vbmtub3duSW50ZXJmYWNlOiBVbmtub3duIGludGVy
-ZmFjZSANCid4eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5EZWNvcmF0b3IuSXBtaScuPEJS
-PiZuYnNwOyZuYnNwOyZuYnNwOyANClBBVEg9L3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5
-L3N5c3RlbS9wb3dlcnN1cHBseS9TT0xVTV9DT19JUzE2MkYyMl9QU1UxPEJSPiZuYnNwOyZuYnNw
-OyZuYnNwOyANCl9TT1VSQ0VfUkVBTFRJTUVfVElNRVNUQU1QPTE2MDUwMTEzMjM0NzIwNjM8QlI+
-PC9ESVY+DQo8RElWPiZuYnNwOzwvRElWPg0KPERJViBzdHlsZT0iRk9OVC1TSVpFOiAxMHB0OyBG
-T05ULUZBTUlMWTogVmVyZGFuYTsgQ09MT1I6ICNjMGMwYzAiIA0KYWxpZ249bGVmdD4yMDIwLTEx
-LTEwIA0KPEhSIGlkPVNpZ25OYW1lSFIgDQpzdHlsZT0iQk9SREVSLVRPUDogI2MwYzBjMCAxcHgg
-c29saWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsgV0lEVEg6IDEyMnB4OyBCT1JE
-RVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiIA0KYWxpZ249bGVmdD4NCjxTUEFOIGlk
-PV9GbGFzaFNpZ25OYW1lPmNodW5odWkuamlhPC9TUEFOPiA8L0RJVj4NCjxIUiANCnN0eWxlPSJC
-T1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdIVDog
-MHB4OyBCT1JERVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiPg0KDQo8QkxPQ0tRVU9U
-RSBpZD1udGVzLWZsYXNobWFpbC1xdW90ZSANCnN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQt
-RkFNSUxZOiBWZXJkYW5hOyBQQURESU5HLUxFRlQ6IDBweDsgTUFSR0lOLUxFRlQ6IDBweCI+DQog
-IDxESVY+PFNUUk9ORz7lj5Hku7bkurrvvJo8L1NUUk9ORz5UaHUgQmEgTmd1eWVuICZsdDt0Ym5n
-dXllbjE5ODVAZ21haWwuY29tJmd0OzwvRElWPg0KICA8RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze0
-77yaPC9TVFJPTkc+MjAyMC0xMS0xMCZuYnNwOzA2OjM1PC9ESVY+DQogIDxESVY+PFNUUk9ORz7k
-uLvpopjvvJo8L1NUUk9ORz5SZTogcGhvc3Bob3ItbG9nZ2luZzogZW50cnkoKSBmYWlsZWQgcGFy
-c2UgDQogIG1lc3NhZ2UuPC9ESVY+DQogIDxESVY+PFNUUk9ORz7mlLbku7bkurrvvJo8L1NUUk9O
-Rz4iUmFtZXNoIEkgSTEiJmx0O3JhbWVzaGkxQGluLmlibS5jb20mZ3Q7PC9ESVY+DQogIDxESVY+
-PFNUUk9ORz7mioTpgIHvvJo8L1NUUk9ORz4iT3BlbkJNQyANCiAgTWFpbGxpc3QiJmx0O29wZW5i
-bWNAbGlzdHMub3psYWJzLm9yZyZndDs8L0RJVj4NCiAgPERJVj4mbmJzcDs8L0RJVj4NCiAgPERJ
-Vj4NCiAgPERJViBkaXI9bHRyPg0KICA8RElWIGRpcj1sdHI+VGhhbmtzIFJhbWVzaCwNCiAgPERJ
-Vj48QlI+PC9ESVY+DQogIDxESVY+QnV0IHlvdXIgY29tbWFuZHMgYXJlIGFwcGxpZWQgZm9yIHNv
-bWUgbWVzc2FnZXMuPC9ESVY+DQogIDxESVY+QW5kIGRvbid0IGFuc3dlciBteSBxdWVzdGlvbnMu
-PC9ESVY+DQogIDxESVY+IkRvIEkgbmVlZCB0byBhZGQgYW55IG9wdGlvbiB3aGVuIGJ1aWxkaW5n
-PyIgdG8gbWFrZSBwaG9zcGhvci1sb2dnaW5nIA0KICBwcmludCBtZXNzYWdlIGluIGVudHJ5KCku
-PC9ESVY+DQogIDxESVY+PEJSPjwvRElWPg0KICA8RElWPlJlZ2FyZHMuPC9ESVY+DQogIDxESVY+
-VGh1IE5ndXllbi48L0RJVj4NCiAgPERJVj48QlI+PC9ESVY+DQogIDxESVY+DQogIDxESVY+PEJS
-PjwvRElWPg0KICA8RElWPjxCUj48L0RJVj48L0RJVj48L0RJVj48L0RJVj48QlI+DQogIDxESVYg
-Y2xhc3M9Z21haWxfcXVvdGU+DQogIDxESVYgY2xhc3M9Z21haWxfYXR0ciBkaXI9bHRyPk9uIE1v
-biwgTm92IDksIDIwMjAgYXQgMTE6MDQgQU0gUmFtZXNoIEkgSTEgDQogICZsdDs8QSBocmVmPSJt
-YWlsdG86cmFtZXNoaTFAaW4uaWJtLmNvbSI+cmFtZXNoaTFAaW4uaWJtLmNvbTwvQT4mZ3Q7IA0K
-ICB3cm90ZTo8QlI+PC9ESVY+DQogIDxCTE9DS1FVT1RFIGNsYXNzPWdtYWlsX3F1b3RlIA0KICBz
-dHlsZT0iUEFERElORy1MRUZUOiAxZXg7IEJPUkRFUi1MRUZUOiByZ2IoMjA0LDIwNCwyMDQpIDFw
-eCBzb2xpZDsgTUFSR0lOOiAwcHggMHB4IDBweCAwLjhleCI+DQogICAgPERJViBzdHlsZT0iRk9O
-VC1TSVpFOiAxMHB0OyBGT05ULUZBTUlMWTogQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWYiIA0K
-ICAgIGRpcj1sdHI+DQogICAgPERJViBkaXI9bHRyPkhpJm5ic3A7VGh1IE5ndXllbiw8L0RJVj4N
-CiAgICA8RElWIGRpcj1sdHI+Jm5ic3A7PC9ESVY+DQogICAgPERJViBkaXI9bHRyPkJlbG93IGxp
-bmsmbmJzcDttYXkgaGVscCB5b3UmbmJzcDt0byBnZXQgbW9yZSBkZXRhaWxlZCBsb2cgDQogICAg
-d2hpY2ggeW91IGFyZSByZWZlcnJpbmcuPC9ESVY+DQogICAgPERJViBkaXI9bHRyPjxBIA0KICAg
-IGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMvd2lraS9EZWJ1Z2dpbmct
-T3BlbkJNQyNqb3VybmFsY3RsIiANCiAgICB0YXJnZXQ9X2JsYW5rPmh0dHBzOi8vZ2l0aHViLmNv
-bS9vcGVuYm1jL29wZW5ibWMvd2lraS9EZWJ1Z2dpbmctT3BlbkJNQyNqb3VybmFsY3RsPC9BPjwv
-RElWPg0KICAgIDxESVYgZGlyPWx0cj4mbmJzcDs8L0RJVj4NCiAgICA8RElWIGRpcj1sdHI+Rm9y
-IGV4YW1wbGU6PC9ESVY+DQogICAgPERJViBkaXI9bHRyPmpvdXJuYWxjdGwgLW8ganNvbi1wcmV0
-dHkgTUVTU0FHRT0id2F0Y2hkb2c6IFRpbWVkIG91dCI8L0RJVj4NCiAgICA8RElWIGRpcj1sdHI+
-Jm5ic3A7PC9ESVY+DQogICAgPERJViBkaXI9bHRyPlJlZ2FyZHMsPC9ESVY+DQogICAgPERJViBk
-aXI9bHRyPlJhbWVzaDwvRElWPg0KICAgIDxCTE9DS1FVT1RFIA0KICAgIHN0eWxlPSJESVJFQ1RJ
-T046IGx0cjsgUEFERElORy1MRUZUOiA1cHg7IE1BUkdJTi1MRUZUOiA1cHg7IEJPUkRFUi1MRUZU
-OiByZ2IoMTcwLDE3MCwxNzApIDJweCBzb2xpZDsgTUFSR0lOLVJJR0hUOiAwcHgiIA0KICAgIGRp
-cj1sdHI+LS0tLS0gT3JpZ2luYWwgbWVzc2FnZSAtLS0tLTxCUj5Gcm9tOiBUaHUgQmEgTmd1eWVu
-ICZsdDs8QSANCiAgICAgIGhyZWY9Im1haWx0bzp0Ym5ndXllbjE5ODVAZ21haWwuY29tIiANCiAg
-ICAgIHRhcmdldD1fYmxhbms+dGJuZ3V5ZW4xOTg1QGdtYWlsLmNvbTwvQT4mZ3Q7PEJSPlNlbnQg
-Ynk6ICJvcGVuYm1jIiANCiAgICAgICZsdDtvcGVuYm1jLWJvdW5jZXMrcmFtZXNoaTE9PEEgaHJl
-Zj0ibWFpbHRvOmluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZyIgDQogICAgICB0YXJnZXQ9X2Js
-YW5rPmluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZzwvQT4mZ3Q7PEJSPlRvOiBPcGVuQk1DIE1h
-aWxsaXN0IA0KICAgICAgJmx0OzxBIGhyZWY9Im1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5v
-cmciIA0KICAgICAgdGFyZ2V0PV9ibGFuaz5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L0E+Jmd0
-OzxCUj5DYzo8QlI+U3ViamVjdDogDQogICAgICBbRVhURVJOQUxdIFJlOiBwaG9zcGhvci1sb2dn
-aW5nOiBlbnRyeSgpIGZhaWxlZCBwYXJzZSBtZXNzYWdlLjxCUj5EYXRlOiANCiAgICAgIFNhdCwg
-Tm92IDcsIDIwMjAgNjoxMSBQTTxCUj4mbmJzcDs8QlI+DQogICAgICA8RElWIGRpcj1sdHI+DQog
-ICAgICA8RElWIGRpcj1sdHI+VGhlIG91dHB1dCBpbiBCTUMgY29uc29sZSB3aWxsIGJlOiANCiAg
-ICAgIDxESVY+cGhvc3Bob3Itd2F0Y2hkb2dbNTM0XTogd2F0Y2hkb2c6IFRpbWVkIG91dDwvRElW
-Pg0KICAgICAgPERJVj4mbmJzcDs8L0RJVj4NCiAgICAgIDxESVY+UmVnYXJkcy48L0RJVj4NCiAg
-ICAgIDxESVY+VGh1IE5ndXllbjwvRElWPjwvRElWPjwvRElWPiZuYnNwOyANCiAgICAgIDxESVY+
-DQogICAgICA8RElWIGRpcj1sdHI+T24gU2F0LCBOb3YgNywgMjAyMCBhdCA3OjM4IFBNIFRodSBC
-YSBOZ3V5ZW4gJmx0OzxBIA0KICAgICAgaHJlZj0ibWFpbHRvOnRibmd1eWVuMTk4NUBnbWFpbC5j
-b20iIA0KICAgICAgdGFyZ2V0PV9ibGFuaz50Ym5ndXllbjE5ODVAZ21haWwuY29tPC9BPiZndDsg
-d3JvdGU6PC9ESVY+DQogICAgICA8QkxPQ0tRVU9URSANCiAgICAgIHN0eWxlPSJQQURESU5HLUxF
-RlQ6IDFleDsgQk9SREVSLUxFRlQ6IHJnYigyMDQsMjA0LDIwNCkgMXB4IHNvbGlkOyBNQVJHSU46
-IDBweCAwcHggMHB4IDAuOGV4Ij4NCiAgICAgICAgPERJViBkaXI9bHRyPg0KICAgICAgICA8RElW
-IGRpcj1sdHI+SGksIA0KICAgICAgICA8RElWPiZuYnNwOzwvRElWPg0KICAgICAgICA8RElWPklu
-IG9wZW5CbWMsIFdlIGFyZSB1c2luZyBwaG9zcGhvci1sb2dnaW5nLjwvRElWPg0KICAgICAgICA8
-RElWPldoZW4gSSBsb2c6PC9ESVY+DQogICAgICAgIDxESVY+DQogICAgICAgIDxESVYgDQogICAg
-ICAgIHN0eWxlPSdGT05ULVNJWkU6IDE4cHg7IEZPTlQtRkFNSUxZOiBNZW5sbyxNb25hY28sIkNv
-dXJpZXIgTmV3Iixtb25vc3BhY2U7IFdISVRFLVNQQUNFOiBwcmUtd3JhcDsgQ09MT1I6IHJnYigy
-MTIsMjEyLDIxMik7IExJTkUtSEVJR0hUOiAyN3B4OyBCQUNLR1JPVU5ELUNPTE9SOiByZ2IoMzAs
-MzAsMzApJz4NCiAgICAgICAgPERJVj48U1BBTiBzdHlsZT0iQ09MT1I6IHJnYigyMjAsMjIwLDE3
-MCkiPmxvZzwvU1BBTj4mbHQ7PFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDc4LDIw
-MSwxNzYpIj5sZXZlbDwvU1BBTj46OjxTUEFOIA0KICAgICAgICBzdHlsZT0iQ09MT1I6IHJnYig3
-OCwyMDEsMTc2KSI+SU5GTzwvU1BBTj4mZ3Q7KDwvRElWPg0KICAgICAgICA8RElWPjxTUEFOIHN0
-eWxlPSJDT0xPUjogcmdiKDIwNiwxNDUsMTIwKSI+IndhdGNoZG9nOiBUaW1lZCANCiAgICAgICAg
-b3V0IjwvU1BBTj4sPC9ESVY+DQogICAgICAgIDxESVY+PFNQQU4gc3R5bGU9IkNPTE9SOiByZ2Io
-MjIwLDIyMCwxNzApIj5lbnRyeTwvU1BBTj4oPFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjog
-cmdiKDIwNiwxNDUsMTIwKSI+IkFDVElPTj0lcyI8L1NQQU4+LCA8U1BBTiANCiAgICAgICAgc3R5
-bGU9IkNPTE9SOiByZ2IoMjIwLDIyMCwxNzApIj5jb252ZXJ0Rm9yTWVzc2FnZTwvU1BBTj4oPFNQ
-QU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDE1NiwyMjAsMjU0KSI+YWN0aW9uPC9TUEFO
-PikuPFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDIyMCwyMjAsMTcwKSI+Y19zdHI8
-L1NQQU4+KCkpLDwvRElWPg0KICAgICAgICA8RElWPjxTUEFOIHN0eWxlPSJDT0xPUjogcmdiKDIy
-MCwyMjAsMTcwKSI+ZW50cnk8L1NQQU4+KDxTUEFOIA0KICAgICAgICBzdHlsZT0iQ09MT1I6IHJn
-YigyMDYsMTQ1LDEyMCkiPiJUSU1FUl9VU0U9JXMiPC9TUEFOPiwgPFNQQU4gDQogICAgICAgIHN0
-eWxlPSJDT0xPUjogcmdiKDIyMCwyMjAsMTcwKSI+Y29udmVydEZvck1lc3NhZ2U8L1NQQU4+KDxT
-UEFOIA0KICAgICAgICBzdHlsZT0iQ09MT1I6IHJnYigyMjAsMjIwLDE3MCkiPmV4cGlyZWRUaW1l
-clVzZTwvU1BBTj4oKSkuPFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDIyMCwyMjAs
-MTcwKSI+Y19zdHI8L1NQQU4+KCkpLDwvRElWPg0KICAgICAgICA8RElWPjxTUEFOIHN0eWxlPSJD
-T0xPUjogcmdiKDIyMCwyMjAsMTcwKSI+ZW50cnk8L1NQQU4+KDxTUEFOIA0KICAgICAgICBzdHls
-ZT0iQ09MT1I6IHJnYigyMDYsMTQ1LDEyMCkiPiJUQVJHRVQ9JXMiPC9TUEFOPiwgPFNQQU4gDQog
-ICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDE1NiwyMjAsMjU0KSI+dGFyZ2V0PC9TUEFOPi0mZ3Q7
-PFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDE1NiwyMjAsMjU0KSI+c2Vjb25kPC9T
-UEFOPi48U1BBTiANCiAgICAgICAgc3R5bGU9IkNPTE9SOiByZ2IoMjIwLDIyMCwxNzApIj5jX3N0
-cjwvU1BBTj4oKSkpOzwvRElWPjwvRElWPjwvRElWPg0KICAgICAgICA8RElWPlRoZSBtZXNzYWdl
-IGluIGVudHJ5KCkgaXMgbG9zdGVkLjwvRElWPg0KICAgICAgICA8RElWPkRvIEkgbmVlZCB0byBh
-ZGQgYW55IG9wdGlvbiB3aGVuIGJ1aWxkaW5nPzwvRElWPg0KICAgICAgICA8RElWPiZuYnNwOzwv
-RElWPg0KICAgICAgICA8RElWPlRoYW5rcy48L0RJVj4NCiAgICAgICAgPERJVj5UaHUgTmd1eWVu
-LjwvRElWPjwvRElWPjwvRElWPjwvQkxPQ0tRVU9URT48L0RJVj48L0JMT0NLUVVPVEU+DQogICAg
-PERJViANCmRpcj1sdHI+Jm5ic3A7PC9ESVY+PC9ESVY+PEJSPjwvQkxPQ0tRVU9URT48L0RJVj48
-L0RJVj48L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRNTD4=
+On Tue, Nov 10, 2020 at 11:27 AM chunhui.jia <chunhui.jia@linux.intel.com>
+wrote:
 
---NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590--
+> The data embedded in your entry() is meta-data.   Use '-overbose' option
+> in journalctl command to print.
+>
+> journalctl -ef -overbose
+> >>
+> Tue 2020-11-10 12:28:43.472063 UTC
+> [s=3D93d61b6180db407d8f32924833a6954d;i=3D10c4;b=3D0ba0603a97814c2bb3d22f=
+4857b5f964;m=3D13e4a3855c;t=3D5b3bfd1cbc915;x=3Dbac5bbc519880cdf]
+>     _UID=3D0
+>     _GID=3D0
+>     _CAP_EFFECTIVE=3D3fffffffff
+>     _BOOT_ID=3D0ba0603a97814c2bb3d22f4857b5f964
+>     _MACHINE_ID=3Db1d2788fe17541c0ba0363cd0f0aa699
+>     _HOSTNAME=3Dintel-obmc
+>     _SYSTEMD_SLICE=3Dsystem.slice
+>     _TRANSPORT=3Djournal
+>     PRIORITY=3D3
+>
+> CODE_FILE=3D/usr/src/debug/intel-ipmi-oem/0.1+gitAUTOINC+04a38ed10d-r0/re=
+cipe-sysroot/usr/include/phosphor-logging/log.hpp
+>     CODE_LINE=3D76
+>     CODE_FUNC=3Dhelper_log
+>     TRANSACTION_ID=3D4091710023
+>     SYSLOG_IDENTIFIER=3Dipmid
+>     _PID=3D245
+>     _COMM=3Dipmid
+>     _EXE=3D/usr/bin/ipmid
+>     _CMDLINE=3Dipmid
+>     _SYSTEMD_CGROUP=3D/system.slice/phosphor-ipmi-host.service
+>     _SYSTEMD_UNIT=3Dphosphor-ipmi-host.service
+>     _SYSTEMD_INVOCATION_ID=3D62df2ae5590c48a2b79ffe6843c3681c
+>     MESSAGE=3DFailed to GetAll
+>     INTF=3Dxyz.openbmc_project.Inventory.Decorator.Ipmi
+>     WHAT=3Dsd_bus_call: org.freedesktop.DBus.Error.UnknownInterface: Unkn=
+own
+> interface 'xyz.openbmc_project.Inventory.Decorator.Ipmi'.
+>
+> PATH=3D/xyz/openbmc_project/inventory/system/powersupply/SOLUM_CO_IS162F2=
+2_PSU1
+>     _SOURCE_REALTIME_TIMESTAMP=3D1605011323472063
+>
+> 2020-11-10
+> ------------------------------
+> chunhui.jia
+> ------------------------------
+>
+> *=E5=8F=91=E4=BB=B6=E4=BA=BA=EF=BC=9A*Thu Ba Nguyen <tbnguyen1985@gmail.c=
+om>
+> *=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4=EF=BC=9A*2020-11-10 06:35
+> *=E4=B8=BB=E9=A2=98=EF=BC=9A*Re: phosphor-logging: entry() failed parse m=
+essage.
+> *=E6=94=B6=E4=BB=B6=E4=BA=BA=EF=BC=9A*"Ramesh I I1"<rameshi1@in.ibm.com>
+> *=E6=8A=84=E9=80=81=EF=BC=9A*"OpenBMC Maillist"<openbmc@lists.ozlabs.org>
+>
+> Thanks Ramesh,
+>
+> But your commands are applied for some messages.
+> And don't answer my questions.
+> "Do I need to add any option when building?" to make phosphor-logging
+> print message in entry().
+>
+> Regards.
+> Thu Nguyen.
+>
+>
+>
+>
+> On Mon, Nov 9, 2020 at 11:04 AM Ramesh I I1 <rameshi1@in.ibm.com> wrote:
+>
+>> Hi Thu Nguyen,
+>>
+>> Below link may help you to get more detailed log which you are referring=
+.
+>> https://github.com/openbmc/openbmc/wiki/Debugging-OpenBMC#journalctl
+>>
+>> For example:
+>> journalctl -o json-pretty MESSAGE=3D"watchdog: Timed out"
+>>
+>> Regards,
+>> Ramesh
+>>
+>> ----- Original message -----
+>> From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
+>> Sent by: "openbmc" <openbmc-bounces+rameshi1=3Din.ibm.com@lists.ozlabs.o=
+rg>
+>> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+>> Cc:
+>> Subject: [EXTERNAL] Re: phosphor-logging: entry() failed parse message.
+>> Date: Sat, Nov 7, 2020 6:11 PM
+>>
+>> The output in BMC console will be:
+>> phosphor-watchdog[534]: watchdog: Timed out
+>>
+>> Regards.
+>> Thu Nguyen
+>>
+>> On Sat, Nov 7, 2020 at 7:38 PM Thu Ba Nguyen <tbnguyen1985@gmail.com>
+>> wrote:
+>>
+>> Hi,
+>>
+>> In openBmc, We are using phosphor-logging.
+>> When I log:
+>> log<level::INFO>(
+>> "watchdog: Timed out",
+>> entry("ACTION=3D%s", convertForMessage(action).c_str()),
+>> entry("TIMER_USE=3D%s", convertForMessage(expiredTimerUse()).c_str()),
+>> entry("TARGET=3D%s", target->second.c_str()));
+>> The message in entry() is losted.
+>> Do I need to add any option when building?
+>>
+>> Thanks.
+>> Thu Nguyen.
+>>
+>>
+>>
+>>
 
+--00000000000064b25c05b3b98e38
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Ok.<div>It is clear now.</div><div><br></div><div>Thanks C=
+hunhui.</div><div>Thu Nguyen.</div></div><br><div class=3D"gmail_quote"><di=
+v dir=3D"ltr" class=3D"gmail_attr">On Tue, Nov 10, 2020 at 11:27 AM chunhui=
+.jia &lt;<a href=3D"mailto:chunhui.jia@linux.intel.com">chunhui.jia@linux.i=
+ntel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;bor=
+der-left-color:rgb(204,204,204);padding-left:1ex"><u></u>
+
+
+
+
+
+<div style=3D"border-width:0px;font-size:10.5pt;font-family:arial;color:rgb=
+(0,0,0);margin:12px;line-height:1.5">
+<div>The data embedded in your entry() is meta-data.=C2=A0=C2=A0 Use &#39;-=
+overbose&#39;=20
+option in journalctl command to print. </div>
+<div>=C2=A0</div>
+<div>journalctl -ef -overbose</div>
+<div>&gt;&gt;</div>
+<div>Tue 2020-11-10 12:28:43.472063 UTC=20
+[s=3D93d61b6180db407d8f32924833a6954d;i=3D10c4;b=3D0ba0603a97814c2bb3d22f48=
+57b5f964;m=3D13e4a3855c;t=3D5b3bfd1cbc915;x=3Dbac5bbc519880cdf]<br>=C2=A0=
+=C2=A0=C2=A0=20
+_UID=3D0<br>=C2=A0=C2=A0=C2=A0 _GID=3D0<br>=C2=A0=C2=A0=C2=A0=20
+_CAP_EFFECTIVE=3D3fffffffff<br>=C2=A0=C2=A0=C2=A0=20
+_BOOT_ID=3D0ba0603a97814c2bb3d22f4857b5f964<br>=C2=A0=C2=A0=C2=A0=20
+_MACHINE_ID=3Db1d2788fe17541c0ba0363cd0f0aa699<br>=C2=A0=C2=A0=C2=A0=20
+_HOSTNAME=3Dintel-obmc<br>=C2=A0=C2=A0=C2=A0=20
+_SYSTEMD_SLICE=3Dsystem.slice<br>=C2=A0=C2=A0=C2=A0=20
+_TRANSPORT=3Djournal<br>=C2=A0=C2=A0=C2=A0 PRIORITY=3D3<br>=C2=A0=C2=A0=C2=
+=A0=20
+CODE_FILE=3D/usr/src/debug/intel-ipmi-oem/0.1+gitAUTOINC+04a38ed10d-r0/reci=
+pe-sysroot/usr/include/phosphor-logging/log.hpp<br>=C2=A0=C2=A0=C2=A0=20
+CODE_LINE=3D76<br>=C2=A0=C2=A0=C2=A0 CODE_FUNC=3Dhelper_log<br>=C2=A0=C2=A0=
+=C2=A0=20
+TRANSACTION_ID=3D4091710023<br>=C2=A0=C2=A0=C2=A0=20
+SYSLOG_IDENTIFIER=3Dipmid<br>=C2=A0=C2=A0=C2=A0 _PID=3D245<br>=C2=A0=C2=A0=
+=C2=A0=20
+_COMM=3Dipmid<br>=C2=A0=C2=A0=C2=A0 _EXE=3D/usr/bin/ipmid<br>=C2=A0=C2=A0=
+=C2=A0=20
+_CMDLINE=3Dipmid<br>=C2=A0=C2=A0=C2=A0=20
+_SYSTEMD_CGROUP=3D/system.slice/phosphor-ipmi-host.service<br>=C2=A0=C2=A0=
+=C2=A0=20
+_SYSTEMD_UNIT=3Dphosphor-ipmi-host.service<br>=C2=A0=C2=A0=C2=A0=20
+_SYSTEMD_INVOCATION_ID=3D62df2ae5590c48a2b79ffe6843c3681c<br>=C2=A0=C2=A0=
+=C2=A0=20
+MESSAGE=3DFailed to GetAll<br>=C2=A0=C2=A0=C2=A0=20
+INTF=3Dxyz.openbmc_project.Inventory.Decorator.Ipmi<br>=C2=A0=C2=A0=C2=A0=
+=20
+WHAT=3Dsd_bus_call: org.freedesktop.DBus.Error.UnknownInterface: Unknown in=
+terface=20
+&#39;xyz.openbmc_project.Inventory.Decorator.Ipmi&#39;.<br>=C2=A0=C2=A0=C2=
+=A0=20
+PATH=3D/xyz/openbmc_project/inventory/system/powersupply/SOLUM_CO_IS162F22_=
+PSU1<br>=C2=A0=C2=A0=C2=A0=20
+_SOURCE_REALTIME_TIMESTAMP=3D1605011323472063<br></div>
+<div>=C2=A0</div>
+<div style=3D"font-size:10pt;font-family:Verdana;color:rgb(192,192,192)" al=
+ign=3D"left">2020-11-10=20
+<hr id=3D"gmail-m_-7259127040050132605SignNameHR" style=3D"border-width:1px=
+ 0px 0px;border-top-style:solid;border-top-color:rgb(192,192,192);height:1p=
+x;width:122px" align=3D"left">
+<span id=3D"gmail-m_-7259127040050132605_FlashSignName">chunhui.jia</span> =
+</div>
+<hr style=3D"border-width:1px 0px 0px;border-top-style:solid;border-top-col=
+or:rgb(192,192,192);height:1px">
+
+<blockquote id=3D"gmail-m_-7259127040050132605ntes-flashmail-quote" style=
+=3D"font-size:10pt;font-family:Verdana;padding-left:0px;margin-left:0px">
+  <div><strong>=E5=8F=91=E4=BB=B6=E4=BA=BA=EF=BC=9A</strong>Thu Ba Nguyen &=
+lt;<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985=
+@gmail.com</a>&gt;</div>
+  <div><strong>=E5=8F=91=E9=80=81=E6=97=B6=E9=97=B4=EF=BC=9A</strong>2020-1=
+1-10=C2=A006:35</div>
+  <div><strong>=E4=B8=BB=E9=A2=98=EF=BC=9A</strong>Re: phosphor-logging: en=
+try() failed parse=20
+  message.</div>
+  <div><strong>=E6=94=B6=E4=BB=B6=E4=BA=BA=EF=BC=9A</strong>&quot;Ramesh I =
+I1&quot;&lt;<a href=3D"mailto:rameshi1@in.ibm.com" target=3D"_blank">ramesh=
+i1@in.ibm.com</a>&gt;</div>
+  <div><strong>=E6=8A=84=E9=80=81=EF=BC=9A</strong>&quot;OpenBMC=20
+  Maillist&quot;&lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_=
+blank">openbmc@lists.ozlabs.org</a>&gt;</div>
+  <div>=C2=A0</div>
+  <div>
+  <div dir=3D"ltr">
+  <div dir=3D"ltr">Thanks Ramesh,
+  <div><br></div>
+  <div>But your commands are applied for some messages.</div>
+  <div>And don&#39;t answer my questions.</div>
+  <div>&quot;Do I need to add any option when building?&quot; to make phosp=
+hor-logging=20
+  print message in entry().</div>
+  <div><br></div>
+  <div>Regards.</div>
+  <div>Thu Nguyen.</div>
+  <div><br></div>
+  <div>
+  <div><br></div>
+  <div><br></div></div></div></div><br>
+  <div class=3D"gmail_quote">
+  <div class=3D"gmail_attr" dir=3D"ltr">On Mon, Nov 9, 2020 at 11:04 AM Ram=
+esh I I1=20
+  &lt;<a href=3D"mailto:rameshi1@in.ibm.com" target=3D"_blank">rameshi1@in.=
+ibm.com</a>&gt;=20
+  wrote:<br></div>
+  <blockquote class=3D"gmail_quote" style=3D"padding-left:1ex;border-left-w=
+idth:1px;border-left-style:solid;border-left-color:rgb(204,204,204);margin:=
+0px 0px 0px 0.8ex">
+    <div style=3D"font-size:10pt;font-family:Arial,Helvetica,sans-serif" di=
+r=3D"ltr">
+    <div dir=3D"ltr">Hi=C2=A0Thu Nguyen,</div>
+    <div dir=3D"ltr">=C2=A0</div>
+    <div dir=3D"ltr">Below link=C2=A0may help you=C2=A0to get more detailed=
+ log=20
+    which you are referring.</div>
+    <div dir=3D"ltr"><a href=3D"https://github.com/openbmc/openbmc/wiki/Deb=
+ugging-OpenBMC#journalctl" target=3D"_blank">https://github.com/openbmc/ope=
+nbmc/wiki/Debugging-OpenBMC#journalctl</a></div>
+    <div dir=3D"ltr">=C2=A0</div>
+    <div dir=3D"ltr">For example:</div>
+    <div dir=3D"ltr">journalctl -o json-pretty MESSAGE=3D&quot;watchdog: Ti=
+med out&quot;</div>
+    <div dir=3D"ltr">=C2=A0</div>
+    <div dir=3D"ltr">Regards,</div>
+    <div dir=3D"ltr">Ramesh</div>
+    <blockquote style=3D"direction:ltr;padding-left:5px;margin-left:5px;bor=
+der-left-width:2px;border-left-style:solid;border-left-color:rgb(170,170,17=
+0);margin-right:0px" dir=3D"ltr">----- Original message -----<br>From: Thu =
+Ba Nguyen &lt;<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">t=
+bnguyen1985@gmail.com</a>&gt;<br>Sent by: &quot;openbmc&quot;=20
+      &lt;openbmc-bounces+rameshi1=3D<a href=3D"mailto:in.ibm.com@lists.ozl=
+abs.org" target=3D"_blank">in.ibm.com@lists.ozlabs.org</a>&gt;<br>To: OpenB=
+MC Maillist=20
+      &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">ope=
+nbmc@lists.ozlabs.org</a>&gt;<br>Cc:<br>Subject:=20
+      [EXTERNAL] Re: phosphor-logging: entry() failed parse message.<br>Dat=
+e:=20
+      Sat, Nov 7, 2020 6:11 PM<br>=C2=A0<br>
+      <div dir=3D"ltr">
+      <div dir=3D"ltr">The output in BMC console will be:=20
+      <div>phosphor-watchdog[534]: watchdog: Timed out</div>
+      <div>=C2=A0</div>
+      <div>Regards.</div>
+      <div>Thu Nguyen</div></div></div>=C2=A0=20
+      <div>
+      <div dir=3D"ltr">On Sat, Nov 7, 2020 at 7:38 PM Thu Ba Nguyen &lt;<a =
+href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail=
+.com</a>&gt; wrote:</div>
+      <blockquote style=3D"padding-left:1ex;border-left-width:1px;border-le=
+ft-style:solid;border-left-color:rgb(204,204,204);margin:0px 0px 0px 0.8ex"=
+>
+        <div dir=3D"ltr">
+        <div dir=3D"ltr">Hi,=20
+        <div>=C2=A0</div>
+        <div>In openBmc, We are using phosphor-logging.</div>
+        <div>When I log:</div>
+        <div>
+        <div style=3D"font-size:18px;font-family:Menlo,Monaco,&quot;Courier=
+ New&quot;,monospace;white-space:pre-wrap;color:rgb(212,212,212);line-heigh=
+t:27px;background-color:rgb(30,30,30)">
+        <div><span style=3D"color:rgb(220,220,170)">log</span>&lt;<span sty=
+le=3D"color:rgb(78,201,176)">level</span>::<span style=3D"color:rgb(78,201,=
+176)">INFO</span>&gt;(</div>
+        <div><span style=3D"color:rgb(206,145,120)">&quot;watchdog: Timed=
+=20
+        out&quot;</span>,</div>
+        <div><span style=3D"color:rgb(220,220,170)">entry</span>(<span styl=
+e=3D"color:rgb(206,145,120)">&quot;ACTION=3D%s&quot;</span>, <span style=3D=
+"color:rgb(220,220,170)">convertForMessage</span>(<span style=3D"color:rgb(=
+156,220,254)">action</span>).<span style=3D"color:rgb(220,220,170)">c_str</=
+span>()),</div>
+        <div><span style=3D"color:rgb(220,220,170)">entry</span>(<span styl=
+e=3D"color:rgb(206,145,120)">&quot;TIMER_USE=3D%s&quot;</span>, <span style=
+=3D"color:rgb(220,220,170)">convertForMessage</span>(<span style=3D"color:r=
+gb(220,220,170)">expiredTimerUse</span>()).<span style=3D"color:rgb(220,220=
+,170)">c_str</span>()),</div>
+        <div><span style=3D"color:rgb(220,220,170)">entry</span>(<span styl=
+e=3D"color:rgb(206,145,120)">&quot;TARGET=3D%s&quot;</span>, <span style=3D=
+"color:rgb(156,220,254)">target</span>-&gt;<span style=3D"color:rgb(156,220=
+,254)">second</span>.<span style=3D"color:rgb(220,220,170)">c_str</span>())=
+);</div></div></div>
+        <div>The message in entry() is losted.</div>
+        <div>Do I need to add any option when building?</div>
+        <div>=C2=A0</div>
+        <div>Thanks.</div>
+        <div>Thu Nguyen.</div></div></div></blockquote></div></blockquote>
+    <div dir=3D"ltr">=C2=A0</div></div><br></blockquote></div></div></block=
+quote></div></blockquote></div>
+
+--00000000000064b25c05b3b98e38--
