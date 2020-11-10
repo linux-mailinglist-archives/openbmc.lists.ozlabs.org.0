@@ -2,67 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 726432AC8B3
-	for <lists+openbmc@lfdr.de>; Mon,  9 Nov 2020 23:37:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 886672ACE8A
+	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 05:28:53 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CVQpp4WjQzDqhT
-	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 09:37:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CVZcd6c3xzDqf4
+	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 15:28:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f35;
- helo=mail-qv1-xf35.google.com; envelope-from=tbnguyen1985@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Vm+2lUZU; dkim-atps=neutral
-Received: from mail-qv1-xf35.google.com (mail-qv1-xf35.google.com
- [IPv6:2607:f8b0:4864:20::f35])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CVQnj6H63zDqTK
- for <openbmc@lists.ozlabs.org>; Tue, 10 Nov 2020 09:36:09 +1100 (AEDT)
-Received: by mail-qv1-xf35.google.com with SMTP id ed14so4938917qvb.4
- for <openbmc@lists.ozlabs.org>; Mon, 09 Nov 2020 14:36:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=OsuRlb2Smq88bUrrwZGlyZ4Vhy61DyW+ebG76ZS/vCQ=;
- b=Vm+2lUZUi6flHPCK/vjr8U4odBs4qfxkH7ZIdCXjt3KsgzoQMt7Kdbr3Z3hCXZMd4V
- M8V41YeYw36xwHWD39Yk9ifclIPRObpGjFiPmGVkLPuuVUaMNmj7KRIxUM9J31wpv+xc
- nupOu/L7ZtwN8Tv3vY9yvPY9HnD2ub6hDpQ0ueUfiwyr3/jC8zstW4GHSGlRR5utJLIc
- OtIzOLDxN+PXZP248a5gCanKk5s8BJZRoqry5R5APWb2v+S7vfhBaTSchM+Kan3Pejtn
- Rea6aJF27KA5ehGaG3FXVgINagGgX4QPOBw1soRH4nQiXa/K/PcArJVSpCq103ZCMgtc
- HZyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=OsuRlb2Smq88bUrrwZGlyZ4Vhy61DyW+ebG76ZS/vCQ=;
- b=jvIFdKb0JhgGWOioo+PyZrLWan0A9AMtapkySsdckL2dWkB0hHD4kg9oy8woS0PTee
- vT41nESEFV+/sBYi6lmH3UA9qw3cZO9h1/r44ttV0TZCMOwxFmMhYIKKH1pHEgv78w/5
- G8hM0YpeYMyGWW2u1fqKAetWpyZirBna9R08OhPhrPyTMDOTgHbVtsbVImT5ne6HOiIz
- NUBiZnaRHGXjJSG6Yk0HRQ2aZ/oaBOxK1yE9cvF204rIy/OUMAS8LV/GawrN0jH+HJ7G
- /EllJgL5qplVFIm2EHrn9rz3chnMY0Y2n86JYaIpcHfZaxJkXXlf7h+xOfKRRxnr46qw
- 5eiw==
-X-Gm-Message-State: AOAM530nDLNVN1bFYxDEHtvutBeevpVD0SmUN4ycEX64V2r/i/NHpk8P
- z0IXye3HDUol0SnZzDBoTpH8qinTipH+6AlAO5M=
-X-Google-Smtp-Source: ABdhPJyFoEpPi6/CDjf9yQAR4lrEDDCxNAAhK7RqEGcyVEQrkseYLQVA+M/HlOkog4Q3V7GcKwLqUtX565ARElLU76I=
-X-Received: by 2002:ad4:4e84:: with SMTP id dy4mr16899623qvb.47.1604961364992; 
- Mon, 09 Nov 2020 14:36:04 -0800 (PST)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CVZbm21qpzDqd3
+ for <openbmc@lists.ozlabs.org>; Tue, 10 Nov 2020 15:27:59 +1100 (AEDT)
+IronPort-SDR: zKfAuByWF4Dn5ofaVZocOVbUdZ9F8CHgPmyI3Hwhj9aDxotb7lzkS+4cl5gjPckzoPTW97hc9p
+ kYZU1ZtkLD9w==
+X-IronPort-AV: E=McAfee;i="6000,8403,9800"; a="170027745"
+X-IronPort-AV: E=Sophos;i="5.77,465,1596524400"; 
+ d="scan'208,217";a="170027745"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Nov 2020 20:27:54 -0800
+IronPort-SDR: id9+Pu4DlrjTR7vXarwxEBnhyiqbUsvGkcgZ227/zZfaBi0p3ziw9bagScGN43n5r2KT84RMkR
+ j0CMIvIDajBg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.77,465,1596524400"; 
+ d="scan'208,217";a="338592654"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga002.jf.intel.com with ESMTP; 09 Nov 2020 20:27:53 -0800
+Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id D5850580418;
+ Mon,  9 Nov 2020 20:27:52 -0800 (PST)
+Date: Tue, 10 Nov 2020 12:27:53 +0800
+From: "chunhui.jia" <chunhui.jia@linux.intel.com>
+To: "Thu Ba Nguyen" <tbnguyen1985@gmail.com>,
+ "Ramesh I I1" <rameshi1@in.ibm.com>
+Subject: Re:  Re: phosphor-logging: entry() failed parse message.
+In-Reply-To: <CALioo37f6Katzcag-hgA=u_spHOdeQw5WbvSapAs=qMyiwOxYg@mail.gmail.com>
 References: <CALioo35rFrsCcK+j8GW8DCAHqw_y_r8e9cMg-SmNLQ5ydMajNg@mail.gmail.com>
  <CALioo35DvdU8KsTJbB9RQiLQ+Md6gTW3TYeNy8qitVZLQzHK=A@mail.gmail.com>
  <OF8D57E4C0.929A4052-ON0025861B.00159DF0-0025861B.00165862@notes.na.collabserv.com>
-In-Reply-To: <OF8D57E4C0.929A4052-ON0025861B.00159DF0-0025861B.00165862@notes.na.collabserv.com>
-From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
-Date: Tue, 10 Nov 2020 05:35:51 +0700
-Message-ID: <CALioo37f6Katzcag-hgA=u_spHOdeQw5WbvSapAs=qMyiwOxYg@mail.gmail.com>
-Subject: Re: phosphor-logging: entry() failed parse message.
-To: Ramesh I I1 <rameshi1@in.ibm.com>
-Content-Type: multipart/alternative; boundary="00000000000009e6af05b3b43051"
+ <CALioo37f6Katzcag-hgA=u_spHOdeQw5WbvSapAs=qMyiwOxYg@mail.gmail.com>
+X-Mailer: NetEase FlashMail 2.4.1.32
+X-Priority: 3 (Normal)
+MIME-Version: 1.0
+Message-ID: <5FAA16C5.3050103@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,157 +73,219 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000009e6af05b3b43051
-Content-Type: text/plain; charset="UTF-8"
+--NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Thanks Ramesh,
+VGhlIGRhdGEgZW1iZWRkZWQgaW4geW91ciBlbnRyeSgpIGlzIG1ldGEtZGF0YS4gICBVc2UgJy1v
+dmVyYm9zZScgb3B0aW9uIGluIGpvdXJuYWxjdGwgY29tbWFuZCB0byBwcmludC4gDQoNCmpvdXJu
+YWxjdGwgLWVmIC1vdmVyYm9zZQ0KPj4NClR1ZSAyMDIwLTExLTEwIDEyOjI4OjQzLjQ3MjA2MyBV
+VEMgW3M9OTNkNjFiNjE4MGRiNDA3ZDhmMzI5MjQ4MzNhNjk1NGQ7aT0xMGM0O2I9MGJhMDYwM2E5
+NzgxNGMyYmIzZDIyZjQ4NTdiNWY5NjQ7bT0xM2U0YTM4NTVjO3Q9NWIzYmZkMWNiYzkxNTt4PWJh
+YzViYmM1MTk4ODBjZGZdDQogICAgX1VJRD0wDQogICAgX0dJRD0wDQogICAgX0NBUF9FRkZFQ1RJ
+VkU9M2ZmZmZmZmZmZg0KICAgIF9CT09UX0lEPTBiYTA2MDNhOTc4MTRjMmJiM2QyMmY0ODU3YjVm
+OTY0DQogICAgX01BQ0hJTkVfSUQ9YjFkMjc4OGZlMTc1NDFjMGJhMDM2M2NkMGYwYWE2OTkNCiAg
+ICBfSE9TVE5BTUU9aW50ZWwtb2JtYw0KICAgIF9TWVNURU1EX1NMSUNFPXN5c3RlbS5zbGljZQ0K
+ICAgIF9UUkFOU1BPUlQ9am91cm5hbA0KICAgIFBSSU9SSVRZPTMNCiAgICBDT0RFX0ZJTEU9L3Vz
+ci9zcmMvZGVidWcvaW50ZWwtaXBtaS1vZW0vMC4xK2dpdEFVVE9JTkMrMDRhMzhlZDEwZC1yMC9y
+ZWNpcGUtc3lzcm9vdC91c3IvaW5jbHVkZS9waG9zcGhvci1sb2dnaW5nL2xvZy5ocHANCiAgICBD
+T0RFX0xJTkU9NzYNCiAgICBDT0RFX0ZVTkM9aGVscGVyX2xvZw0KICAgIFRSQU5TQUNUSU9OX0lE
+PTQwOTE3MTAwMjMNCiAgICBTWVNMT0dfSURFTlRJRklFUj1pcG1pZA0KICAgIF9QSUQ9MjQ1DQog
+ICAgX0NPTU09aXBtaWQNCiAgICBfRVhFPS91c3IvYmluL2lwbWlkDQogICAgX0NNRExJTkU9aXBt
+aWQNCiAgICBfU1lTVEVNRF9DR1JPVVA9L3N5c3RlbS5zbGljZS9waG9zcGhvci1pcG1pLWhvc3Qu
+c2VydmljZQ0KICAgIF9TWVNURU1EX1VOSVQ9cGhvc3Bob3ItaXBtaS1ob3N0LnNlcnZpY2UNCiAg
+ICBfU1lTVEVNRF9JTlZPQ0FUSU9OX0lEPTYyZGYyYWU1NTkwYzQ4YTJiNzlmZmU2ODQzYzM2ODFj
+DQogICAgTUVTU0FHRT1GYWlsZWQgdG8gR2V0QWxsDQogICAgSU5URj14eXoub3BlbmJtY19wcm9q
+ZWN0LkludmVudG9yeS5EZWNvcmF0b3IuSXBtaQ0KICAgIFdIQVQ9c2RfYnVzX2NhbGw6IG9yZy5m
+cmVlZGVza3RvcC5EQnVzLkVycm9yLlVua25vd25JbnRlcmZhY2U6IFVua25vd24gaW50ZXJmYWNl
+ICd4eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5EZWNvcmF0b3IuSXBtaScuDQogICAgUEFU
+SD0veHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL3Bvd2Vyc3VwcGx5L1NPTFVN
+X0NPX0lTMTYyRjIyX1BTVTENCiAgICBfU09VUkNFX1JFQUxUSU1FX1RJTUVTVEFNUD0xNjA1MDEx
+MzIzNDcyMDYzDQoNCg0KMjAyMC0xMS0xMCANCg0KY2h1bmh1aS5qaWEgDQoNCg0KDQrlj5Hku7bk
+urrvvJpUaHUgQmEgTmd1eWVuIDx0Ym5ndXllbjE5ODVAZ21haWwuY29tPg0K5Y+R6YCB5pe26Ze0
+77yaMjAyMC0xMS0xMCAwNjozNQ0K5Li76aKY77yaUmU6IHBob3NwaG9yLWxvZ2dpbmc6IGVudHJ5
+KCkgZmFpbGVkIHBhcnNlIG1lc3NhZ2UuDQrmlLbku7bkurrvvJoiUmFtZXNoIEkgSTEiPHJhbWVz
+aGkxQGluLmlibS5jb20+DQrmioTpgIHvvJoiT3BlbkJNQyBNYWlsbGlzdCI8b3BlbmJtY0BsaXN0
+cy5vemxhYnMub3JnPg0KDQpUaGFua3MgUmFtZXNoLA0KDQoNCkJ1dCB5b3VyIGNvbW1hbmRzIGFy
+ZSBhcHBsaWVkIGZvciBzb21lIG1lc3NhZ2VzLg0KQW5kIGRvbid0IGFuc3dlciBteSBxdWVzdGlv
+bnMuDQoiRG8gSSBuZWVkIHRvIGFkZCBhbnkgb3B0aW9uIHdoZW4gYnVpbGRpbmc/IiB0byBtYWtl
+IHBob3NwaG9yLWxvZ2dpbmcgcHJpbnQgbWVzc2FnZSBpbiBlbnRyeSgpLg0KDQoNClJlZ2FyZHMu
+DQpUaHUgTmd1eWVuLg0KDQoNCg0KDQoNCg0KDQoNCk9uIE1vbiwgTm92IDksIDIwMjAgYXQgMTE6
+MDQgQU0gUmFtZXNoIEkgSTEgPHJhbWVzaGkxQGluLmlibS5jb20+IHdyb3RlOg0KDQpIaSBUaHUg
+Tmd1eWVuLA0KDQpCZWxvdyBsaW5rIG1heSBoZWxwIHlvdSB0byBnZXQgbW9yZSBkZXRhaWxlZCBs
+b2cgd2hpY2ggeW91IGFyZSByZWZlcnJpbmcuDQpodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9v
+cGVuYm1jL3dpa2kvRGVidWdnaW5nLU9wZW5CTUMjam91cm5hbGN0bA0KDQpGb3IgZXhhbXBsZToN
+CmpvdXJuYWxjdGwgLW8ganNvbi1wcmV0dHkgTUVTU0FHRT0id2F0Y2hkb2c6IFRpbWVkIG91dCIN
+Cg0KUmVnYXJkcywNClJhbWVzaA0KLS0tLS0gT3JpZ2luYWwgbWVzc2FnZSAtLS0tLQ0KRnJvbTog
+VGh1IEJhIE5ndXllbiA8dGJuZ3V5ZW4xOTg1QGdtYWlsLmNvbT4NClNlbnQgYnk6ICJvcGVuYm1j
+IiA8b3BlbmJtYy1ib3VuY2VzK3JhbWVzaGkxPWluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZz4N
+ClRvOiBPcGVuQk1DIE1haWxsaXN0IDxvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc+DQpDYzoNClN1
+YmplY3Q6IFtFWFRFUk5BTF0gUmU6IHBob3NwaG9yLWxvZ2dpbmc6IGVudHJ5KCkgZmFpbGVkIHBh
+cnNlIG1lc3NhZ2UuDQpEYXRlOiBTYXQsIE5vdiA3LCAyMDIwIDY6MTEgUE0NCiANCg0KVGhlIG91
+dHB1dCBpbiBCTUMgY29uc29sZSB3aWxsIGJlOiANCnBob3NwaG9yLXdhdGNoZG9nWzUzNF06IHdh
+dGNoZG9nOiBUaW1lZCBvdXQNCg0KUmVnYXJkcy4NClRodSBOZ3V5ZW4NCiAgDQpPbiBTYXQsIE5v
+diA3LCAyMDIwIGF0IDc6MzggUE0gVGh1IEJhIE5ndXllbiA8dGJuZ3V5ZW4xOTg1QGdtYWlsLmNv
+bT4gd3JvdGU6DQpIaSwgDQoNCkluIG9wZW5CbWMsIFdlIGFyZSB1c2luZyBwaG9zcGhvci1sb2dn
+aW5nLg0KV2hlbiBJIGxvZzoNCmxvZzxsZXZlbDo6SU5GTz4oDQoid2F0Y2hkb2c6IFRpbWVkIG91
+dCIsDQplbnRyeSgiQUNUSU9OPSVzIiwgY29udmVydEZvck1lc3NhZ2UoYWN0aW9uKS5jX3N0cigp
+KSwNCmVudHJ5KCJUSU1FUl9VU0U9JXMiLCBjb252ZXJ0Rm9yTWVzc2FnZShleHBpcmVkVGltZXJV
+c2UoKSkuY19zdHIoKSksDQplbnRyeSgiVEFSR0VUPSVzIiwgdGFyZ2V0LT5zZWNvbmQuY19zdHIo
+KSkpOw0KVGhlIG1lc3NhZ2UgaW4gZW50cnkoKSBpcyBsb3N0ZWQuDQpEbyBJIG5lZWQgdG8gYWRk
+IGFueSBvcHRpb24gd2hlbiBidWlsZGluZz8NCg0KVGhhbmtzLg0KVGh1IE5ndXllbi4=
 
-But your commands are applied for some messages.
-And don't answer my questions.
-"Do I need to add any option when building?" to make phosphor-logging print
-message in entry().
+--NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Regards.
-Thu Nguyen.
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
+L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
+Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
+LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
+aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
+X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
+IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC4xMDU3MC4xMDAxIj48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
+PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
+IGFyaWFsOyBCT1JERVItUklHSFQtV0lEVEg6IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4
+OyBDT0xPUjogIzAwMDAwMDsgTUFSR0lOOiAxMnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVIt
+VE9QLVdJRFRIOiAwcHgiIA0KbWFyZ2luaGVpZ2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+DQo8RElW
+PlRoZSBkYXRhIGVtYmVkZGVkIGluIHlvdXIgZW50cnkoKSBpcyBtZXRhLWRhdGEuJm5ic3A7Jm5i
+c3A7IFVzZSAnLW92ZXJib3NlJyANCm9wdGlvbiBpbiBqb3VybmFsY3RsIGNvbW1hbmQgdG8gcHJp
+bnQuIDwvRElWPg0KPERJVj4mbmJzcDs8L0RJVj4NCjxESVY+am91cm5hbGN0bCAtZWYgLW92ZXJi
+b3NlPC9ESVY+DQo8RElWPiZndDsmZ3Q7PC9ESVY+DQo8RElWPlR1ZSAyMDIwLTExLTEwIDEyOjI4
+OjQzLjQ3MjA2MyBVVEMgDQpbcz05M2Q2MWI2MTgwZGI0MDdkOGYzMjkyNDgzM2E2OTU0ZDtpPTEw
+YzQ7Yj0wYmEwNjAzYTk3ODE0YzJiYjNkMjJmNDg1N2I1Zjk2NDttPTEzZTRhMzg1NWM7dD01YjNi
+ZmQxY2JjOTE1O3g9YmFjNWJiYzUxOTg4MGNkZl08QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KX1VJ
+RD0wPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyBfR0lEPTA8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0K
+X0NBUF9FRkZFQ1RJVkU9M2ZmZmZmZmZmZjxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpfQk9PVF9J
+RD0wYmEwNjAzYTk3ODE0YzJiYjNkMjJmNDg1N2I1Zjk2NDxCUj4mbmJzcDsmbmJzcDsmbmJzcDsg
+DQpfTUFDSElORV9JRD1iMWQyNzg4ZmUxNzU0MWMwYmEwMzYzY2QwZjBhYTY5OTxCUj4mbmJzcDsm
+bmJzcDsmbmJzcDsgDQpfSE9TVE5BTUU9aW50ZWwtb2JtYzxCUj4mbmJzcDsmbmJzcDsmbmJzcDsg
+DQpfU1lTVEVNRF9TTElDRT1zeXN0ZW0uc2xpY2U8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KX1RS
+QU5TUE9SVD1qb3VybmFsPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyBQUklPUklUWT0zPEJSPiZuYnNw
+OyZuYnNwOyZuYnNwOyANCkNPREVfRklMRT0vdXNyL3NyYy9kZWJ1Zy9pbnRlbC1pcG1pLW9lbS8w
+LjErZ2l0QVVUT0lOQyswNGEzOGVkMTBkLXIwL3JlY2lwZS1zeXNyb290L3Vzci9pbmNsdWRlL3Bo
+b3NwaG9yLWxvZ2dpbmcvbG9nLmhwcDxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpDT0RFX0xJTkU9
+NzY8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IENPREVfRlVOQz1oZWxwZXJfbG9nPEJSPiZuYnNwOyZu
+YnNwOyZuYnNwOyANClRSQU5TQUNUSU9OX0lEPTQwOTE3MTAwMjM8QlI+Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IA0KU1lTTE9HX0lERU5USUZJRVI9aXBtaWQ8QlI+Jm5ic3A7Jm5ic3A7Jm5ic3A7IF9QSUQ9
+MjQ1PEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9DT01NPWlwbWlkPEJSPiZuYnNwOyZuYnNwOyZu
+YnNwOyBfRVhFPS91c3IvYmluL2lwbWlkPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9DTURMSU5F
+PWlwbWlkPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9TWVNURU1EX0NHUk9VUD0vc3lzdGVtLnNs
+aWNlL3Bob3NwaG9yLWlwbWktaG9zdC5zZXJ2aWNlPEJSPiZuYnNwOyZuYnNwOyZuYnNwOyANCl9T
+WVNURU1EX1VOSVQ9cGhvc3Bob3ItaXBtaS1ob3N0LnNlcnZpY2U8QlI+Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IA0KX1NZU1RFTURfSU5WT0NBVElPTl9JRD02MmRmMmFlNTU5MGM0OGEyYjc5ZmZlNjg0M2Mz
+NjgxYzxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpNRVNTQUdFPUZhaWxlZCB0byBHZXRBbGw8QlI+
+Jm5ic3A7Jm5ic3A7Jm5ic3A7IA0KSU5URj14eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5E
+ZWNvcmF0b3IuSXBtaTxCUj4mbmJzcDsmbmJzcDsmbmJzcDsgDQpXSEFUPXNkX2J1c19jYWxsOiBv
+cmcuZnJlZWRlc2t0b3AuREJ1cy5FcnJvci5Vbmtub3duSW50ZXJmYWNlOiBVbmtub3duIGludGVy
+ZmFjZSANCid4eXoub3BlbmJtY19wcm9qZWN0LkludmVudG9yeS5EZWNvcmF0b3IuSXBtaScuPEJS
+PiZuYnNwOyZuYnNwOyZuYnNwOyANClBBVEg9L3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5
+L3N5c3RlbS9wb3dlcnN1cHBseS9TT0xVTV9DT19JUzE2MkYyMl9QU1UxPEJSPiZuYnNwOyZuYnNw
+OyZuYnNwOyANCl9TT1VSQ0VfUkVBTFRJTUVfVElNRVNUQU1QPTE2MDUwMTEzMjM0NzIwNjM8QlI+
+PC9ESVY+DQo8RElWPiZuYnNwOzwvRElWPg0KPERJViBzdHlsZT0iRk9OVC1TSVpFOiAxMHB0OyBG
+T05ULUZBTUlMWTogVmVyZGFuYTsgQ09MT1I6ICNjMGMwYzAiIA0KYWxpZ249bGVmdD4yMDIwLTEx
+LTEwIA0KPEhSIGlkPVNpZ25OYW1lSFIgDQpzdHlsZT0iQk9SREVSLVRPUDogI2MwYzBjMCAxcHgg
+c29saWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsgV0lEVEg6IDEyMnB4OyBCT1JE
+RVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiIA0KYWxpZ249bGVmdD4NCjxTUEFOIGlk
+PV9GbGFzaFNpZ25OYW1lPmNodW5odWkuamlhPC9TUEFOPiA8L0RJVj4NCjxIUiANCnN0eWxlPSJC
+T1JERVItVE9QOiAjYzBjMGMwIDFweCBzb2xpZDsgSEVJR0hUOiAxcHg7IEJPUkRFUi1SSUdIVDog
+MHB4OyBCT1JERVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiPg0KDQo8QkxPQ0tRVU9U
+RSBpZD1udGVzLWZsYXNobWFpbC1xdW90ZSANCnN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZPTlQt
+RkFNSUxZOiBWZXJkYW5hOyBQQURESU5HLUxFRlQ6IDBweDsgTUFSR0lOLUxFRlQ6IDBweCI+DQog
+IDxESVY+PFNUUk9ORz7lj5Hku7bkurrvvJo8L1NUUk9ORz5UaHUgQmEgTmd1eWVuICZsdDt0Ym5n
+dXllbjE5ODVAZ21haWwuY29tJmd0OzwvRElWPg0KICA8RElWPjxTVFJPTkc+5Y+R6YCB5pe26Ze0
+77yaPC9TVFJPTkc+MjAyMC0xMS0xMCZuYnNwOzA2OjM1PC9ESVY+DQogIDxESVY+PFNUUk9ORz7k
+uLvpopjvvJo8L1NUUk9ORz5SZTogcGhvc3Bob3ItbG9nZ2luZzogZW50cnkoKSBmYWlsZWQgcGFy
+c2UgDQogIG1lc3NhZ2UuPC9ESVY+DQogIDxESVY+PFNUUk9ORz7mlLbku7bkurrvvJo8L1NUUk9O
+Rz4iUmFtZXNoIEkgSTEiJmx0O3JhbWVzaGkxQGluLmlibS5jb20mZ3Q7PC9ESVY+DQogIDxESVY+
+PFNUUk9ORz7mioTpgIHvvJo8L1NUUk9ORz4iT3BlbkJNQyANCiAgTWFpbGxpc3QiJmx0O29wZW5i
+bWNAbGlzdHMub3psYWJzLm9yZyZndDs8L0RJVj4NCiAgPERJVj4mbmJzcDs8L0RJVj4NCiAgPERJ
+Vj4NCiAgPERJViBkaXI9bHRyPg0KICA8RElWIGRpcj1sdHI+VGhhbmtzIFJhbWVzaCwNCiAgPERJ
+Vj48QlI+PC9ESVY+DQogIDxESVY+QnV0IHlvdXIgY29tbWFuZHMgYXJlIGFwcGxpZWQgZm9yIHNv
+bWUgbWVzc2FnZXMuPC9ESVY+DQogIDxESVY+QW5kIGRvbid0IGFuc3dlciBteSBxdWVzdGlvbnMu
+PC9ESVY+DQogIDxESVY+IkRvIEkgbmVlZCB0byBhZGQgYW55IG9wdGlvbiB3aGVuIGJ1aWxkaW5n
+PyIgdG8gbWFrZSBwaG9zcGhvci1sb2dnaW5nIA0KICBwcmludCBtZXNzYWdlIGluIGVudHJ5KCku
+PC9ESVY+DQogIDxESVY+PEJSPjwvRElWPg0KICA8RElWPlJlZ2FyZHMuPC9ESVY+DQogIDxESVY+
+VGh1IE5ndXllbi48L0RJVj4NCiAgPERJVj48QlI+PC9ESVY+DQogIDxESVY+DQogIDxESVY+PEJS
+PjwvRElWPg0KICA8RElWPjxCUj48L0RJVj48L0RJVj48L0RJVj48L0RJVj48QlI+DQogIDxESVYg
+Y2xhc3M9Z21haWxfcXVvdGU+DQogIDxESVYgY2xhc3M9Z21haWxfYXR0ciBkaXI9bHRyPk9uIE1v
+biwgTm92IDksIDIwMjAgYXQgMTE6MDQgQU0gUmFtZXNoIEkgSTEgDQogICZsdDs8QSBocmVmPSJt
+YWlsdG86cmFtZXNoaTFAaW4uaWJtLmNvbSI+cmFtZXNoaTFAaW4uaWJtLmNvbTwvQT4mZ3Q7IA0K
+ICB3cm90ZTo8QlI+PC9ESVY+DQogIDxCTE9DS1FVT1RFIGNsYXNzPWdtYWlsX3F1b3RlIA0KICBz
+dHlsZT0iUEFERElORy1MRUZUOiAxZXg7IEJPUkRFUi1MRUZUOiByZ2IoMjA0LDIwNCwyMDQpIDFw
+eCBzb2xpZDsgTUFSR0lOOiAwcHggMHB4IDBweCAwLjhleCI+DQogICAgPERJViBzdHlsZT0iRk9O
+VC1TSVpFOiAxMHB0OyBGT05ULUZBTUlMWTogQXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWYiIA0K
+ICAgIGRpcj1sdHI+DQogICAgPERJViBkaXI9bHRyPkhpJm5ic3A7VGh1IE5ndXllbiw8L0RJVj4N
+CiAgICA8RElWIGRpcj1sdHI+Jm5ic3A7PC9ESVY+DQogICAgPERJViBkaXI9bHRyPkJlbG93IGxp
+bmsmbmJzcDttYXkgaGVscCB5b3UmbmJzcDt0byBnZXQgbW9yZSBkZXRhaWxlZCBsb2cgDQogICAg
+d2hpY2ggeW91IGFyZSByZWZlcnJpbmcuPC9ESVY+DQogICAgPERJViBkaXI9bHRyPjxBIA0KICAg
+IGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL29wZW5ibWMvd2lraS9EZWJ1Z2dpbmct
+T3BlbkJNQyNqb3VybmFsY3RsIiANCiAgICB0YXJnZXQ9X2JsYW5rPmh0dHBzOi8vZ2l0aHViLmNv
+bS9vcGVuYm1jL29wZW5ibWMvd2lraS9EZWJ1Z2dpbmctT3BlbkJNQyNqb3VybmFsY3RsPC9BPjwv
+RElWPg0KICAgIDxESVYgZGlyPWx0cj4mbmJzcDs8L0RJVj4NCiAgICA8RElWIGRpcj1sdHI+Rm9y
+IGV4YW1wbGU6PC9ESVY+DQogICAgPERJViBkaXI9bHRyPmpvdXJuYWxjdGwgLW8ganNvbi1wcmV0
+dHkgTUVTU0FHRT0id2F0Y2hkb2c6IFRpbWVkIG91dCI8L0RJVj4NCiAgICA8RElWIGRpcj1sdHI+
+Jm5ic3A7PC9ESVY+DQogICAgPERJViBkaXI9bHRyPlJlZ2FyZHMsPC9ESVY+DQogICAgPERJViBk
+aXI9bHRyPlJhbWVzaDwvRElWPg0KICAgIDxCTE9DS1FVT1RFIA0KICAgIHN0eWxlPSJESVJFQ1RJ
+T046IGx0cjsgUEFERElORy1MRUZUOiA1cHg7IE1BUkdJTi1MRUZUOiA1cHg7IEJPUkRFUi1MRUZU
+OiByZ2IoMTcwLDE3MCwxNzApIDJweCBzb2xpZDsgTUFSR0lOLVJJR0hUOiAwcHgiIA0KICAgIGRp
+cj1sdHI+LS0tLS0gT3JpZ2luYWwgbWVzc2FnZSAtLS0tLTxCUj5Gcm9tOiBUaHUgQmEgTmd1eWVu
+ICZsdDs8QSANCiAgICAgIGhyZWY9Im1haWx0bzp0Ym5ndXllbjE5ODVAZ21haWwuY29tIiANCiAg
+ICAgIHRhcmdldD1fYmxhbms+dGJuZ3V5ZW4xOTg1QGdtYWlsLmNvbTwvQT4mZ3Q7PEJSPlNlbnQg
+Ynk6ICJvcGVuYm1jIiANCiAgICAgICZsdDtvcGVuYm1jLWJvdW5jZXMrcmFtZXNoaTE9PEEgaHJl
+Zj0ibWFpbHRvOmluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZyIgDQogICAgICB0YXJnZXQ9X2Js
+YW5rPmluLmlibS5jb21AbGlzdHMub3psYWJzLm9yZzwvQT4mZ3Q7PEJSPlRvOiBPcGVuQk1DIE1h
+aWxsaXN0IA0KICAgICAgJmx0OzxBIGhyZWY9Im1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmciIA0KICAgICAgdGFyZ2V0PV9ibGFuaz5vcGVuYm1jQGxpc3RzLm96bGFicy5vcmc8L0E+Jmd0
+OzxCUj5DYzo8QlI+U3ViamVjdDogDQogICAgICBbRVhURVJOQUxdIFJlOiBwaG9zcGhvci1sb2dn
+aW5nOiBlbnRyeSgpIGZhaWxlZCBwYXJzZSBtZXNzYWdlLjxCUj5EYXRlOiANCiAgICAgIFNhdCwg
+Tm92IDcsIDIwMjAgNjoxMSBQTTxCUj4mbmJzcDs8QlI+DQogICAgICA8RElWIGRpcj1sdHI+DQog
+ICAgICA8RElWIGRpcj1sdHI+VGhlIG91dHB1dCBpbiBCTUMgY29uc29sZSB3aWxsIGJlOiANCiAg
+ICAgIDxESVY+cGhvc3Bob3Itd2F0Y2hkb2dbNTM0XTogd2F0Y2hkb2c6IFRpbWVkIG91dDwvRElW
+Pg0KICAgICAgPERJVj4mbmJzcDs8L0RJVj4NCiAgICAgIDxESVY+UmVnYXJkcy48L0RJVj4NCiAg
+ICAgIDxESVY+VGh1IE5ndXllbjwvRElWPjwvRElWPjwvRElWPiZuYnNwOyANCiAgICAgIDxESVY+
+DQogICAgICA8RElWIGRpcj1sdHI+T24gU2F0LCBOb3YgNywgMjAyMCBhdCA3OjM4IFBNIFRodSBC
+YSBOZ3V5ZW4gJmx0OzxBIA0KICAgICAgaHJlZj0ibWFpbHRvOnRibmd1eWVuMTk4NUBnbWFpbC5j
+b20iIA0KICAgICAgdGFyZ2V0PV9ibGFuaz50Ym5ndXllbjE5ODVAZ21haWwuY29tPC9BPiZndDsg
+d3JvdGU6PC9ESVY+DQogICAgICA8QkxPQ0tRVU9URSANCiAgICAgIHN0eWxlPSJQQURESU5HLUxF
+RlQ6IDFleDsgQk9SREVSLUxFRlQ6IHJnYigyMDQsMjA0LDIwNCkgMXB4IHNvbGlkOyBNQVJHSU46
+IDBweCAwcHggMHB4IDAuOGV4Ij4NCiAgICAgICAgPERJViBkaXI9bHRyPg0KICAgICAgICA8RElW
+IGRpcj1sdHI+SGksIA0KICAgICAgICA8RElWPiZuYnNwOzwvRElWPg0KICAgICAgICA8RElWPklu
+IG9wZW5CbWMsIFdlIGFyZSB1c2luZyBwaG9zcGhvci1sb2dnaW5nLjwvRElWPg0KICAgICAgICA8
+RElWPldoZW4gSSBsb2c6PC9ESVY+DQogICAgICAgIDxESVY+DQogICAgICAgIDxESVYgDQogICAg
+ICAgIHN0eWxlPSdGT05ULVNJWkU6IDE4cHg7IEZPTlQtRkFNSUxZOiBNZW5sbyxNb25hY28sIkNv
+dXJpZXIgTmV3Iixtb25vc3BhY2U7IFdISVRFLVNQQUNFOiBwcmUtd3JhcDsgQ09MT1I6IHJnYigy
+MTIsMjEyLDIxMik7IExJTkUtSEVJR0hUOiAyN3B4OyBCQUNLR1JPVU5ELUNPTE9SOiByZ2IoMzAs
+MzAsMzApJz4NCiAgICAgICAgPERJVj48U1BBTiBzdHlsZT0iQ09MT1I6IHJnYigyMjAsMjIwLDE3
+MCkiPmxvZzwvU1BBTj4mbHQ7PFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDc4LDIw
+MSwxNzYpIj5sZXZlbDwvU1BBTj46OjxTUEFOIA0KICAgICAgICBzdHlsZT0iQ09MT1I6IHJnYig3
+OCwyMDEsMTc2KSI+SU5GTzwvU1BBTj4mZ3Q7KDwvRElWPg0KICAgICAgICA8RElWPjxTUEFOIHN0
+eWxlPSJDT0xPUjogcmdiKDIwNiwxNDUsMTIwKSI+IndhdGNoZG9nOiBUaW1lZCANCiAgICAgICAg
+b3V0IjwvU1BBTj4sPC9ESVY+DQogICAgICAgIDxESVY+PFNQQU4gc3R5bGU9IkNPTE9SOiByZ2Io
+MjIwLDIyMCwxNzApIj5lbnRyeTwvU1BBTj4oPFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjog
+cmdiKDIwNiwxNDUsMTIwKSI+IkFDVElPTj0lcyI8L1NQQU4+LCA8U1BBTiANCiAgICAgICAgc3R5
+bGU9IkNPTE9SOiByZ2IoMjIwLDIyMCwxNzApIj5jb252ZXJ0Rm9yTWVzc2FnZTwvU1BBTj4oPFNQ
+QU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDE1NiwyMjAsMjU0KSI+YWN0aW9uPC9TUEFO
+PikuPFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDIyMCwyMjAsMTcwKSI+Y19zdHI8
+L1NQQU4+KCkpLDwvRElWPg0KICAgICAgICA8RElWPjxTUEFOIHN0eWxlPSJDT0xPUjogcmdiKDIy
+MCwyMjAsMTcwKSI+ZW50cnk8L1NQQU4+KDxTUEFOIA0KICAgICAgICBzdHlsZT0iQ09MT1I6IHJn
+YigyMDYsMTQ1LDEyMCkiPiJUSU1FUl9VU0U9JXMiPC9TUEFOPiwgPFNQQU4gDQogICAgICAgIHN0
+eWxlPSJDT0xPUjogcmdiKDIyMCwyMjAsMTcwKSI+Y29udmVydEZvck1lc3NhZ2U8L1NQQU4+KDxT
+UEFOIA0KICAgICAgICBzdHlsZT0iQ09MT1I6IHJnYigyMjAsMjIwLDE3MCkiPmV4cGlyZWRUaW1l
+clVzZTwvU1BBTj4oKSkuPFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDIyMCwyMjAs
+MTcwKSI+Y19zdHI8L1NQQU4+KCkpLDwvRElWPg0KICAgICAgICA8RElWPjxTUEFOIHN0eWxlPSJD
+T0xPUjogcmdiKDIyMCwyMjAsMTcwKSI+ZW50cnk8L1NQQU4+KDxTUEFOIA0KICAgICAgICBzdHls
+ZT0iQ09MT1I6IHJnYigyMDYsMTQ1LDEyMCkiPiJUQVJHRVQ9JXMiPC9TUEFOPiwgPFNQQU4gDQog
+ICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDE1NiwyMjAsMjU0KSI+dGFyZ2V0PC9TUEFOPi0mZ3Q7
+PFNQQU4gDQogICAgICAgIHN0eWxlPSJDT0xPUjogcmdiKDE1NiwyMjAsMjU0KSI+c2Vjb25kPC9T
+UEFOPi48U1BBTiANCiAgICAgICAgc3R5bGU9IkNPTE9SOiByZ2IoMjIwLDIyMCwxNzApIj5jX3N0
+cjwvU1BBTj4oKSkpOzwvRElWPjwvRElWPjwvRElWPg0KICAgICAgICA8RElWPlRoZSBtZXNzYWdl
+IGluIGVudHJ5KCkgaXMgbG9zdGVkLjwvRElWPg0KICAgICAgICA8RElWPkRvIEkgbmVlZCB0byBh
+ZGQgYW55IG9wdGlvbiB3aGVuIGJ1aWxkaW5nPzwvRElWPg0KICAgICAgICA8RElWPiZuYnNwOzwv
+RElWPg0KICAgICAgICA8RElWPlRoYW5rcy48L0RJVj4NCiAgICAgICAgPERJVj5UaHUgTmd1eWVu
+LjwvRElWPjwvRElWPjwvRElWPjwvQkxPQ0tRVU9URT48L0RJVj48L0JMT0NLUVVPVEU+DQogICAg
+PERJViANCmRpcj1sdHI+Jm5ic3A7PC9ESVY+PC9ESVY+PEJSPjwvQkxPQ0tRVU9URT48L0RJVj48
+L0RJVj48L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRNTD4=
 
+--NetEase-FlashMail-003-681a8d31-0e4b-4d0b-aef3-ede2e33ad590--
 
-
-
-On Mon, Nov 9, 2020 at 11:04 AM Ramesh I I1 <rameshi1@in.ibm.com> wrote:
-
-> Hi Thu Nguyen,
->
-> Below link may help you to get more detailed log which you are referring.
-> https://github.com/openbmc/openbmc/wiki/Debugging-OpenBMC#journalctl
->
-> For example:
-> journalctl -o json-pretty MESSAGE="watchdog: Timed out"
->
-> Regards,
-> Ramesh
->
-> ----- Original message -----
-> From: Thu Ba Nguyen <tbnguyen1985@gmail.com>
-> Sent by: "openbmc" <openbmc-bounces+rameshi1=in.ibm.com@lists.ozlabs.org>
-> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-> Cc:
-> Subject: [EXTERNAL] Re: phosphor-logging: entry() failed parse message.
-> Date: Sat, Nov 7, 2020 6:11 PM
->
-> The output in BMC console will be:
-> phosphor-watchdog[534]: watchdog: Timed out
->
-> Regards.
-> Thu Nguyen
->
-> On Sat, Nov 7, 2020 at 7:38 PM Thu Ba Nguyen <tbnguyen1985@gmail.com>
-> wrote:
->
-> Hi,
->
-> In openBmc, We are using phosphor-logging.
-> When I log:
-> log<level::INFO>(
-> "watchdog: Timed out",
-> entry("ACTION=%s", convertForMessage(action).c_str()),
-> entry("TIMER_USE=%s", convertForMessage(expiredTimerUse()).c_str()),
-> entry("TARGET=%s", target->second.c_str()));
-> The message in entry() is losted.
-> Do I need to add any option when building?
->
-> Thanks.
-> Thu Nguyen.
->
->
->
->
-
---00000000000009e6af05b3b43051
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Thanks Ramesh,<div><br></div><div>But you=
-r commands are applied for some messages.</div><div>And don&#39;t answer my=
- questions.</div><div>&quot;Do I need to add any option when building?&quot=
-; to make phosphor-logging print message in entry().</div><div><br></div><d=
-iv>Regards.</div><div>Thu Nguyen.</div><div><br></div><div><div><br></div><=
-div><br></div></div></div></div><br><div class=3D"gmail_quote"><div dir=3D"=
-ltr" class=3D"gmail_attr">On Mon, Nov 9, 2020 at 11:04 AM Ramesh I I1 &lt;<=
-a href=3D"mailto:rameshi1@in.ibm.com">rameshi1@in.ibm.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left-width:1px;border-left-style:solid;border-left-color:rgb(204,204=
-,204);padding-left:1ex"><div dir=3D"ltr" style=3D"font-family:Arial,Helveti=
-ca,sans-serif;font-size:10pt"><div dir=3D"ltr">Hi=C2=A0Thu Nguyen,</div>
-<div dir=3D"ltr">=C2=A0</div>
-<div dir=3D"ltr">Below link=C2=A0may help you=C2=A0to get more detailed log=
- which you are referring.</div>
-<div dir=3D"ltr"><a href=3D"https://github.com/openbmc/openbmc/wiki/Debuggi=
-ng-OpenBMC#journalctl" target=3D"_blank">https://github.com/openbmc/openbmc=
-/wiki/Debugging-OpenBMC#journalctl</a></div>
-<div dir=3D"ltr">=C2=A0</div>
-<div dir=3D"ltr">For example:</div>
-<div dir=3D"ltr">journalctl -o json-pretty MESSAGE=3D&quot;watchdog: Timed =
-out&quot;</div>
-<div dir=3D"ltr">=C2=A0</div>
-<div dir=3D"ltr">Regards,</div>
-<div dir=3D"ltr">Ramesh</div>
-<blockquote dir=3D"ltr" style=3D"border-left-width:2px;border-left-style:so=
-lid;border-left-color:rgb(170,170,170);margin-left:5px;padding-left:5px;dir=
-ection:ltr;margin-right:0px">----- Original message -----<br>From: Thu Ba N=
-guyen &lt;<a href=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbngu=
-yen1985@gmail.com</a>&gt;<br>Sent by: &quot;openbmc&quot; &lt;openbmc-bounc=
-es+rameshi1=3D<a href=3D"mailto:in.ibm.com@lists.ozlabs.org" target=3D"_bla=
-nk">in.ibm.com@lists.ozlabs.org</a>&gt;<br>To: OpenBMC Maillist &lt;<a href=
-=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs=
-.org</a>&gt;<br>Cc:<br>Subject: [EXTERNAL] Re: phosphor-logging: entry() fa=
-iled parse message.<br>Date: Sat, Nov 7, 2020 6:11 PM<br>=C2=A0<br>     =20
-
-=20
-
-<div dir=3D"ltr"><div dir=3D"ltr">The output in BMC console will be:
-<div>phosphor-watchdog[534]: watchdog: Timed out</div>
-<div>=C2=A0</div>
-<div>Regards.</div>
-<div>Thu Nguyen</div></div></div>=C2=A0
-
-<div><div dir=3D"ltr">On Sat, Nov 7, 2020 at 7:38 PM Thu Ba Nguyen &lt;<a h=
-ref=3D"mailto:tbnguyen1985@gmail.com" target=3D"_blank">tbnguyen1985@gmail.=
-com</a>&gt; wrote:</div>
-<blockquote style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-=
-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"><div =
-dir=3D"ltr"><div dir=3D"ltr">Hi,
-<div>=C2=A0</div>
-<div>In openBmc, We are using phosphor-logging.</div>
-<div>When I log:</div>
-<div><div style=3D"color:rgb(212,212,212);background-color:rgb(30,30,30);fo=
-nt-family:Menlo,Monaco,&quot;Courier New&quot;,monospace;font-size:18px;lin=
-e-height:27px;white-space:pre-wrap"><div><span style=3D"color:rgb(220,220,1=
-70)">log</span>&lt;<span style=3D"color:rgb(78,201,176)">level</span>::<spa=
-n style=3D"color:rgb(78,201,176)">INFO</span>&gt;(</div>
-<div><span style=3D"color:rgb(206,145,120)">&quot;watchdog: Timed out&quot;=
-</span>,</div>
-<div><span style=3D"color:rgb(220,220,170)">entry</span>(<span style=3D"col=
-or:rgb(206,145,120)">&quot;ACTION=3D%s&quot;</span>, <span style=3D"color:r=
-gb(220,220,170)">convertForMessage</span>(<span style=3D"color:rgb(156,220,=
-254)">action</span>).<span style=3D"color:rgb(220,220,170)">c_str</span>())=
-,</div>
-<div><span style=3D"color:rgb(220,220,170)">entry</span>(<span style=3D"col=
-or:rgb(206,145,120)">&quot;TIMER_USE=3D%s&quot;</span>, <span style=3D"colo=
-r:rgb(220,220,170)">convertForMessage</span>(<span style=3D"color:rgb(220,2=
-20,170)">expiredTimerUse</span>()).<span style=3D"color:rgb(220,220,170)">c=
-_str</span>()),</div>
-<div><span style=3D"color:rgb(220,220,170)">entry</span>(<span style=3D"col=
-or:rgb(206,145,120)">&quot;TARGET=3D%s&quot;</span>, <span style=3D"color:r=
-gb(156,220,254)">target</span>-&gt;<span style=3D"color:rgb(156,220,254)">s=
-econd</span>.<span style=3D"color:rgb(220,220,170)">c_str</span>()));</div>=
-</div></div>
-<div>The message in entry() is losted.</div>
-<div>Do I need to add any option when building?</div>
-<div>=C2=A0</div>
-<div>Thanks.</div>
-<div>Thu Nguyen.</div></div></div></blockquote></div></blockquote>
-<div dir=3D"ltr">=C2=A0</div></div><br>
-
-</blockquote></div>
-
---00000000000009e6af05b3b43051--
