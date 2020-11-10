@@ -1,67 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A3892ADF1D
-	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 20:12:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACE4B2AE1F3
+	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 22:41:33 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CVyCk1sx0zDqXg
-	for <lists+openbmc@lfdr.de>; Wed, 11 Nov 2020 06:12:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CW1XB16z2zDqNV
+	for <lists+openbmc@lfdr.de>; Wed, 11 Nov 2020 08:41:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2d;
- helo=mail-io1-xd2d.google.com; envelope-from=benjaminfair@google.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=r80v3VWG; dkim-atps=neutral
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com
- [IPv6:2607:f8b0:4864:20::d2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=bUJ+IZPF; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CVyBy6RXZzDqQY
- for <openbmc@lists.ozlabs.org>; Wed, 11 Nov 2020 06:11:21 +1100 (AEDT)
-Received: by mail-io1-xd2d.google.com with SMTP id j12so15474631iow.0
- for <openbmc@lists.ozlabs.org>; Tue, 10 Nov 2020 11:11:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=uTSuDNDYSe81ijtHljKfmTmzyHVfo+VIhH7cQOIP0Ho=;
- b=r80v3VWG8SZX0J461hA8M8exnptTvCUMc9rB+P4O8YfW/lFuz1b5Ffw3P14o5e4pIT
- tJ9gJ4j2ljW24r4JjZzrllOfyH342yu1PbUioHsSoR8ZJ9EMBoZpyMBZO/Cy8G+vjJQZ
- AOvig7dQ4F/V0oWb5EnwnaRF1I2YDZwE9LPJWOlE/lzSVPHdhUiW90pu1oD02l27+qAX
- I1tC43k9WjSeE4e3N7XuJSwB8I+zico3gqXBF6a6xC21enJD14x73KI6ci6KtZSJsrki
- Y0/nmXjbVcq7/V3FTavprdNvME/wAPJ0bgkrB3hyaycelrRqbd3x+3b6QCC68rcaPm6Y
- SgHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=uTSuDNDYSe81ijtHljKfmTmzyHVfo+VIhH7cQOIP0Ho=;
- b=EtKTvZIGBdQi/CTjA5cBk2hvZulPAFHCohxEK6jhFBf8mmxb9+qkjLPbvF4pd8nhBW
- R+BXiKPBdB1bcD7/WoQlZUGf83YPifUZJZSAnqiwS5eOvU5Ib3oOg3TI2Tyz+roeUZQJ
- fDGnic5lkRaRQvEjnqxjyRlykP7eoIPMYuJ1TVeF3iXV8MWi2TTCGzIV8nTeIbJ4LbgJ
- crc712WYZ4ZmCUmGWGP4mXHc52TvAPF+QWOO5tTxQHKndwLPGlGYjP4Drx536KBBFsg5
- f2HsDhYkggh7U4q/2SqXTSVTUC0QBhbY7ahhHkWjiiadlPTjhMCq35CHH3m2kS122fhL
- Wvvg==
-X-Gm-Message-State: AOAM532v1V3LmzIV6Q0/ZF+5ug6CtpCAMO9RkfKPP34YgV48A/SSu6SU
- dB2qjxYUOEesJLiUtxCNFDUEoVmZbCHrVczxymfagA==
-X-Google-Smtp-Source: ABdhPJzCCuajijbnczUXCttS3+TwZyPbLFUjEY7v6ePFPUGD0oLpMKk8Dm2jVVqhh1xyjzbsEFvJnLReGmJD3NRrV/s=
-X-Received: by 2002:a5d:9a0e:: with SMTP id s14mr15698345iol.108.1605035474883; 
- Tue, 10 Nov 2020 11:11:14 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CW1Sy6l98zDqWN
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Nov 2020 08:38:42 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0AALVwre132256; Tue, 10 Nov 2020 16:38:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=9ZBkJkDaaDMKJMBZ60dhiXY/aTm9yY5E60g9bkLwyw8=;
+ b=bUJ+IZPFeWtZxSPBxRb6YxjbRae44W9tuyAc8v3g3z/2BeOM9R4M5HaWkwQYFpv8ptaP
+ JCUu1paH/ogpcCnepEiWXAjLVhtuQEDpS9Cqf7FFsRWFQkjgML34Q9s2g5Hx6trMp/ib
+ A1iAhXruz2/ac3or9mP4luD/P9l68r+wehXilujMHo7YlZg7hU+wZOsIcYMluG2qvNzu
+ mkBDyD8pC6C/uN2FS1I9zKZ9wsI0DAtfO6BAFLCJTi9JMkb9yRMTrk39pW2NxcxapLbS
+ bdi0y4XgHDVVMDawdNx58nr6U/8Tsrc7BmrBiKsFKXZ4+ol2bYaBzYsXzlh8WB7DpyOp Fg== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34qsbd41an-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Nov 2020 16:38:37 -0500
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AALW54F007881;
+ Tue, 10 Nov 2020 21:38:37 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma01dal.us.ibm.com with ESMTP id 34nk7ab2au-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Nov 2020 21:38:36 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0AALcZ5t8258172
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Nov 2020 21:38:35 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 766ED6A054;
+ Tue, 10 Nov 2020 21:38:35 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C51FE6A04D;
+ Tue, 10 Nov 2020 21:38:34 +0000 (GMT)
+Received: from SHADE6A.ibmuc.com (unknown [9.65.201.129])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Nov 2020 21:38:34 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.8] spi: fsi: Fix transfer returning without
+ finalizing message
+Date: Tue, 10 Nov 2020 15:38:32 -0600
+Message-Id: <20201110213832.24691-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <ded34fbeabec4b59a604726ca9669f6f@SCL-EXCHMB-13.phoenix.com>
-In-Reply-To: <ded34fbeabec4b59a604726ca9669f6f@SCL-EXCHMB-13.phoenix.com>
-From: Benjamin Fair <benjaminfair@google.com>
-Date: Tue, 10 Nov 2020 11:10:37 -0800
-Message-ID: <CADKL2t7cxMi1-batxpmL1nyHYrvAfW+k-z5DhLLZG=+ywAoyvQ@mail.gmail.com>
-Subject: Re: With phosphor-pid-control OEM-IPMI Commands to talk to
- Phosphor-pid-control Manual Mode
-To: Bruce Mitchell <Bruce_Mitchell@phoenix.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-11-10_08:2020-11-10,
+ 2020-11-10 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxlogscore=892
+ mlxscore=0 priorityscore=1501 bulkscore=0 suspectscore=1 impostorscore=0
+ spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
+ definitions=main-2011100143
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,27 +94,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Eddie James <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Bruce,
+In the case that the SPI mux isn't set, the transfer_one_message
+function returns without finalizing the message. This means that
+the transfer never completes, resulting in hung tasks and an
+eventual kernel panic. Fix it by finalizing the transfer in this
+case.
 
-You can add additional IPMI sensors to directly control the PWM values
-of the fans when manual mode is enabled.
+Fixes: 389874ec96e2 ("spi: fsi: Check mux status before transfers")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ drivers/spi/spi-fsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-There's an example configuration here:
-https://github.com/openbmc/meta-quanta/blob/529a8df55b2af8eed0d1eb0594a162cfff631aab/meta-q71l/recipes-phosphor/ipmi/q71l-ipmi-sensor-map/config.yaml#L100
+diff --git a/drivers/spi/spi-fsi.c b/drivers/spi/spi-fsi.c
+index fec8f479687f..56b96bc16b7f 100644
+--- a/drivers/spi/spi-fsi.c
++++ b/drivers/spi/spi-fsi.c
+@@ -477,7 +477,7 @@ static int fsi_spi_transfer_one_message(struct spi_controller *ctlr,
+ 
+ 	rc = fsi_spi_check_mux(ctx->fsi, ctx->dev);
+ 	if (rc)
+-		return rc;
++		goto error;
+ 
+ 	list_for_each_entry(transfer, &mesg->transfers, transfer_list) {
+ 		struct fsi_spi_sequence seq;
+-- 
+2.26.2
 
-Benjamin
-
-On Tue, 10 Nov 2020 at 09:24, Bruce Mitchell <Bruce_Mitchell@phoenix.com> wrote:
->
-> With phosphor-pid-control OEM-IPMI Commands to talk to Phosphor-pid-control Manual Mode
-> "that something will be controlling the fans via the other commands."
->
-> Do these "other commands" are available anywhere for Manual Mode?
->
-> --
-> Bruce
->
