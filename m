@@ -1,101 +1,138 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F5672AE288
-	for <lists+openbmc@lfdr.de>; Tue, 10 Nov 2020 23:07:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E08AD2AE91A
+	for <lists+openbmc@lfdr.de>; Wed, 11 Nov 2020 07:35:52 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CW26F453hzDqTw
-	for <lists+openbmc@lfdr.de>; Wed, 11 Nov 2020 09:07:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CWFNj3fBvzDqWm
+	for <lists+openbmc@lfdr.de>; Wed, 11 Nov 2020 17:35:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-usa.com (client-ip=40.107.92.85;
- helo=nam10-bn7-obe.outbound.protection.outlook.com;
- envelope-from=lancelot.kao@fii-usa.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=fii-usa.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=FIIcorp.onmicrosoft.com
- header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=V+cPjSnB; 
+ spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
+ (client-ip=67.231.145.42; helo=mx0a-00082601.pphosted.com;
+ envelope-from=prvs=8584dba45b=vijaykhemka@fb.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=reject dis=none) header.from=fb.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
+ header.s=facebook header.b=mKcZhFVG; 
+ dkim=fail reason="signature verification failed" (1024-bit key;
+ unprotected) header.d=fb.onmicrosoft.com header.i=@fb.onmicrosoft.com
+ header.a=rsa-sha256 header.s=selector2-fb-onmicrosoft-com header.b=QOO4Her1; 
  dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com
- (mail-bn7nam10on2085.outbound.protection.outlook.com [40.107.92.85])
+Received: from mx0a-00082601.pphosted.com (mx0a-00082601.pphosted.com
+ [67.231.145.42])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CW24j2fCJzDqWx
- for <openbmc@lists.ozlabs.org>; Wed, 11 Nov 2020 09:06:11 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CWFMs6xL7zDqTY
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Nov 2020 17:35:00 +1100 (AEDT)
+Received: from pps.filterd (m0148461.ppops.net [127.0.0.1])
+ by mx0a-00082601.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0AB6TkVw018299; Tue, 10 Nov 2020 22:34:54 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
+ h=from : to : cc : subject
+ : date : message-id : references : in-reply-to : content-type : content-id
+ : content-transfer-encoding : mime-version; s=facebook;
+ bh=9LKAUdROH2twEfs+ZeuSAtzyxpknhPODYamr3Slh5Ng=;
+ b=mKcZhFVG8wapFTLLTzxer+uym1H9BUhxGYUT4+Mu1XOW/q2nSzuRN4EFHtwSadqbaTqH
+ J7CzWztpKuZTzXlxPx6iE+xjCgH7jFjE6tgsMimHqskTuabahCjuotJtfAiwTwNxcVYg
+ iWlJtKMCBLvCYYhsjunTEkM7yI0SHVaMVUE= 
+Received: from mail.thefacebook.com ([163.114.132.120])
+ by mx0a-00082601.pphosted.com with ESMTP id 34pcqsfp3p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
+ Tue, 10 Nov 2020 22:34:54 -0800
+Received: from NAM02-CY1-obe.outbound.protection.outlook.com (100.104.98.9) by
+ o365-in.thefacebook.com (100.104.94.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1979.3; Tue, 10 Nov 2020 22:34:53 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=n8y7b8Ka8iASWG3IVReMY03xPAlSOEZpW3LbsCo3ULWJYB67qbzaVP2/yxBRyCvwS4NSU9I1QKdJj6LDLYehscNV9IpDjHPJj/CmVJ670whLfLzLi7zSHWsgO4kDm7DYAtKEleWZhmZ9T1g5fZXFup3kSTLsyB9m1iizBUDvP79k27armhrdUqk7qlfr344AYk0qFSMZTGDnlflLtBWOa4/4jTpjNxNzpxuWONsQP5UhsH1rGCIM97CVQEZHDqikool9AvFO3FqaEbYJcDA7SlrQ8HQBK9nuEv6FArK2h2CzlktrDaHtAyomQg9zFeNXutNLi6w4wL15qTIJrbA1CA==
+ b=OtcbzCMGEANVsBQv9td4UTP401m5LfhEzE6Y9r1kvkak5nuB2Ih4y3kcdINgGtGL8O73kPOjmnvcH48JRzM4duGfZcNPc36pqp87T1pcaIFVz2ZEW0xKSn0JUcYKIzWOYUfYlCJsKOg0tLqqT1r8nwXah0Kx7pFNbKpbxTpTtRlXDu7ZauroYGd3/ZNeZSgNCBpTyw/qduPLeV9xjxZHoazXh/nfTzIR6WS25lAp5ToP5Wa7sRYzr5qS0bicolJQSi61TIoCf2wsuITjnz+bTnpfs17qaubV+BH+i6+rv++7HNArQzxA9McgaZCDUjtM1jFMjIxRwBhWzf+xGO2x7Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NPowyDqW4V3Nc6ZriR3IfDxDlCNkhQTXqfi7oTiUfGs=;
- b=Xf0Ot37RVD0sAv1ekV4u4inhF/FgroW0/rK2EHkpIdoYPtoNbzfIhvgi6g8eChGI8N4Xu23h0xA97ZNPY6KFvgqrA88Ays8KZQ5qAwToMmxWi04sKZ9YG4mlGB9sLvDC/JAG/3UCX3HF9iMNOFoKfbN8/y6H1edzjEDGwIUfs+qlDLNtw84hEwOYEgdkiEDIGN/4EGi4TRp8aEpNOwz5AG58Ga7K1M7g5p5LaY8wGsactzys54cRhCnOstsK4UmcUkI9fCS8uK/TZwt7cH8p3W6gOe9zwJjhoDIgwUHyc/3ysbGb+yj261P4uyAzoh5txf3XU4104BZOUOeS0WRN1A==
+ bh=G54Cw1pO05qOfz04fnDdx3vv3GcfjBP9t9iLlrZ6Rs4=;
+ b=ERzLdjncFQIIoGf2Hd1JCva6KpXdw2Ah+iaL9JwH125npiTzfolwnP019taBzwHx/pGBSwlBK1lwlcyGSXuYQsIUoEmld3fl0gZQ4QK9mCtWqWApCQLx26MzZMI9rtF1GGrUPCrQ/DaFgzrRi/VkVgd89BFN4peFhXyoG1uxWDbcxNmQgSUHWgXHUZp8qrxxJ4qk8LyrIergjwXiWQO9bZ1nD4RBjaSze6bw4sG+o1qoHRcP4vxD/NJqsIAZYZ5o+dFKXf5AzwpmPaVr9ez9opkUjssRRZI5Zv7v/4o7R5MSy9QQi6KtK34lDH/8I7fHKNjoEJsPJkxYFisuj5vsJg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fii-usa.com; dmarc=pass action=none header.from=fii-usa.com;
- dkim=pass header.d=fii-usa.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
+ smtp.mailfrom=fb.com; dmarc=pass action=none header.from=fb.com; dkim=pass
+ header.d=fb.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.onmicrosoft.com;
+ s=selector2-fb-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NPowyDqW4V3Nc6ZriR3IfDxDlCNkhQTXqfi7oTiUfGs=;
- b=V+cPjSnBekdAETQwB84f8knbtEApcUb1NVQmXL7NKLYK8xmgjQf4CTSBJ0baatuYIxpufD2I8KnLplVv2fZ00YkSkf6rsSxKvIpCFI5RTYqTbSDBKJ3evXlLd2H9aCoLb2O7dreNidYOoDbEUZD/dIxo3lhF976KE2g75TQZRzUawoXUKeD0a5SDAlbydiRZ8jUfd0sROJ74xqWidf0yxDvlfwo7J/CYNeDq2Nz1JgWUmKMauuXWZ4+iBypIOR8ja+sk1VVpMjx1Jo8axHBuDBkBSQfR6I1Zi71ciJpef8j3ZV61eZp7UXcuCPKW+/e95DgeqJv1UnycyG0f6LgQ2Q==
-Authentication-Results: jms.id.au; dkim=none (message not signed)
- header.d=none;jms.id.au; dmarc=none action=none header.from=fii-usa.com;
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com (2603:10b6:5:43::18) by
- DM6PR08MB5226.namprd08.prod.outlook.com (2603:10b6:5:4e::28) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3499.19; Tue, 10 Nov 2020 22:06:01 +0000
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::40be:143a:73a2:b33e]) by DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::40be:143a:73a2:b33e%7]) with mapi id 15.20.3541.025; Tue, 10 Nov 2020
- 22:06:01 +0000
-From: Lancelot Kao <lancelot.kao@fii-usa.com>
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
- Benjamin Fair <benjaminfair@google.com>,
- Vivekanand Veeracholan <vveerach@google.com>,
- Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>
-Subject: [PATCH v2 linux dev-5.8] Fii Kudo project device tree file
-Date: Tue, 10 Nov 2020 16:05:50 -0600
-Message-Id: <20201110220550.31965-1-lancelot.kao@fii-usa.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-Originating-IP: [216.63.87.86]
-X-ClientProxiedBy: SA0PR11CA0077.namprd11.prod.outlook.com
- (2603:10b6:806:d2::22) To DM6PR08MB4890.namprd08.prod.outlook.com
- (2603:10b6:5:43::18)
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from OpenSystem.houston.foxconn.com (216.63.87.86) by
- SA0PR11CA0077.namprd11.prod.outlook.com (2603:10b6:806:d2::22) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3541.25 via Frontend Transport; Tue, 10 Nov 2020 22:06:01 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: eb9cb835-1f24-46b9-b890-08d885c4cf99
-X-MS-TrafficTypeDiagnostic: DM6PR08MB5226:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <DM6PR08MB52266D53504C83C0E9CF3248C0E90@DM6PR08MB5226.namprd08.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:568;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: SCP+Nl6FotXuofCCEMkoVKZR8717KBUScVaVSgbMm7/GDdL6xRFo8YV/qdGZ86G62rP1mSnOZDRd7/4IWf5JtP76QUsjdnKKgZqEWfyJcjIpOqmgVyf2zdwEQXgkASJwCLQl2zMw7ypUs8b0jTD9v+6IKFjos4MS0ZWLYTeRm/NfxADMDH9dVzKed8MNbvOweKO+a0ypLUfpmfXz0+xT3xhuzZfR/oGpRseL22HpUhEymLqhNioXqXga8SNauHrex1qwhWcp/R4XDefNsc0cECCDodsGC/SyIaxjEYHVqrXfBT+gXAiyhjwJwvqyd0L2
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR08MB4890.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39860400002)(136003)(366004)(396003)(376002)(346002)(83380400001)(6666004)(6512007)(107886003)(8676002)(8936002)(316002)(44832011)(186003)(4326008)(66556008)(66946007)(66476007)(5660300002)(6486002)(6506007)(52116002)(16526019)(36756003)(478600001)(956004)(26005)(110136005)(86362001)(2616005)(2906002)(30864003)(1076003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData: +i7gPTpIuhKS0qKeEdk7nYG7TIz+NPuGivWMjHyD/ljQRMALlEXTjXVqUn1iPVzB5r2esPWZCpb8y4FIdUINBjTzTPntQDnUT7vmNgl31YMgj9Zg0uHQicCnlU/X/3LcYYtVlJkuYcQWMj4YddD7jpIhIOxv37pC06eXX3bT55cCAygP/sLFjFTPkVUe90pOv7kPZ4Cht4VwCqNMWLXA/eiiXk+NdcYKuM9oadKE42HlqOMth45yJRn/kaLEMqHCdfG2bR83aN+JcMIzzGitWVg4Y0XfT7GsgUYk8gxettjpX/DBZLSR33X8EOcJ+kGenIRlriHojJrS23Ca2c61Lg+MIXJKXiNgfs3dXA9oK0pces8jkqWb9WbR+UN17skUcCDaZSX1JH9B6+vdnZFaCfr5KWWU2d3N0qsmJRg2MChgACPCrh7axzHInpDhH4rcKjMb07dVC+BpYRx9yFTtahm5/KmlcYtxzaoiqbOlnWeOuvW2D6vG0a6CSzRo1D0sR7t6GahwU1gb8uAFHjDXP8HR4hG5yKM3TnAF9xIxXIs7CP02JEkMYsRxZfzm+2OOE5fx0daVbTQq118WcwiAHYzpnMk4r4HuDKYAxrobvFRqo6rIjKBeKmushXLR2q7cscxL0T1bqfzBuGk7wmqgzw==
-X-OriginatorOrg: fii-usa.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb9cb835-1f24-46b9-b890-08d885c4cf99
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB4890.namprd08.prod.outlook.com
+ bh=G54Cw1pO05qOfz04fnDdx3vv3GcfjBP9t9iLlrZ6Rs4=;
+ b=QOO4Her1Nz5MFeKm4iRGmKpdHCEhcUgm39Liz9K5Z4lbx76WH2/n/H1b+AuNLTTycvPFQdeFLLx5fwkAHgwPAaeQCNDTAn75INHD5Kd+QG/1OALXDfaXjgQVgqUQca1KwtvP1JEYPeaTnaqAMjihrPgmVMyz8f3kLsVbz/V71S8=
+Received: from BY5PR15MB3537.namprd15.prod.outlook.com (2603:10b6:a03:1f5::20)
+ by SJ0PR15MB4169.namprd15.prod.outlook.com (2603:10b6:a03:2c8::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3499.27; Wed, 11 Nov
+ 2020 06:34:39 +0000
+Received: from BY5PR15MB3537.namprd15.prod.outlook.com
+ ([fe80::35ef:5d5d:6617:e58a]) by BY5PR15MB3537.namprd15.prod.outlook.com
+ ([fe80::35ef:5d5d:6617:e58a%6]) with mapi id 15.20.3541.025; Wed, 11 Nov 2020
+ 06:34:39 +0000
+From: Vijay Khemka <vijaykhemka@fb.com>
+To: Sui Chen <suichen@google.com>, Patrick Williams <patrick@stwcx.xyz>
+Subject: Re: Request to create repository google-ipmi-bmc-health
+Thread-Topic: Request to create repository google-ipmi-bmc-health
+Thread-Index: AQHWlz6Q/XqpUMkh00OhuoNUmWav8qmCp84AgADnEgCAAMmpAIAG4RwAgAAuWgCALweUgIAHxUeA
+Date: Wed, 11 Nov 2020 06:34:38 +0000
+Message-ID: <BC4115A9-0587-4135-981E-38C086DDD3F9@fb.com>
+References: <CAJOps0sd-YFr5P+_N0i78pd9akBJS6DP99wugKvUDOGpXw2pcA@mail.gmail.com>
+ <D355FA68-E163-4DA8-861E-7E9DB68F5EEB@fb.com>
+ <CAJOps0uX9K25NgXpi3M45F=pvvW5Am+9R=wYTLN0SZ2vPUcX-A@mail.gmail.com>
+ <EF663847-4E98-4AC2-8A8C-E37B853C131F@fb.com>
+ <CAJOps0tR5t4sJQX0-fhBJuKJSnQZJm12gWV9S0OYv4xWU7uzKQ@mail.gmail.com>
+ <20201007014324.GG6152@heinlein>
+ <CAJOps0tKN4ACB46hoNu1EeX4uaSZ_UeArzcZ=ehGA2sz0oT+aQ@mail.gmail.com>
+In-Reply-To: <CAJOps0tKN4ACB46hoNu1EeX4uaSZ_UeArzcZ=ehGA2sz0oT+aQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: google.com; dkim=none (message not signed)
+ header.d=none;google.com; dmarc=none action=none header.from=fb.com;
+x-originating-ip: [2620:10d:c090:400::5:3bcb]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: c8f6cc97-07f5-497a-0914-08d8860bdd6c
+x-ms-traffictypediagnostic: SJ0PR15MB4169:
+x-microsoft-antispam-prvs: <SJ0PR15MB416940192574052A4953D23EDDE80@SJ0PR15MB4169.namprd15.prod.outlook.com>
+x-fb-source: Internal
+x-ms-oob-tlc-oobclassifiers: OLM:10000;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: pc4w2Czn2X6eHR2Uz/qfBk7czpOwMqxPCEPOqYQEfsfc/28nhoCdBBTb0kLZwy+rklf8chFO4yM/M6kFT+c6MuqYfSh01pwqBRJnVuvWpQQN7svD4t2JbvTchlBqHLpG80c91P0F0MswoU8YfiVhgjvHzhCTn1ZH8MtZmTSYXr4j9V3Gy34mjcRaAMNmRnZW0Tpml/9fcRXFu/a6SyGV19DizN4nIz/J73RJXkkFGhuu1Y/HHTgKUh6hOsNBD0FjnIX4p4XPEynnOwhtf6zebLqzMPY/Jf3pIZGbginY5QX466XkIRLaSzhkzHlY++pUBqNshaB3Tkie0hu/z3YvgzmQTrjKgFTS43pX3VIj2Qd+K3qWrtS4a5/m+SwF4FWgD74zFNTtfpisdd8c6oc7+Q==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR15MB3537.namprd15.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(39860400002)(366004)(376002)(396003)(136003)(346002)(86362001)(66446008)(110136005)(36756003)(33656002)(8676002)(2616005)(966005)(8936002)(83380400001)(5660300002)(66476007)(478600001)(4326008)(6486002)(53546011)(6506007)(76116006)(91956017)(6512007)(71200400001)(186003)(66946007)(2906002)(316002)(64756008)(66556008);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: klXpjVEN292bXrQO/XNBsKGfTKkhLaXWG40Vqy9Dg9Pqqj3V80NnIFgLdm+UZwAhNpuXf1uzzPWvZVezSWB3duZsV9NpQgMz7LwiILhPvOwYiQVm3IHOkDkkd67OXVlCEhHnukMKcHsJC7L2VYB+cFaS6LJc7KJ4Jul2zQ44gNZJJO3XtzQ5tCTfXqzlQwzlJyMUQHTRyMqoIFexiPfRCtMx6M//SfnFo26WRnGdDmCZLfMzBPHe6Gv6VGTYw0UxblMpHrBSqE2pQYSXtKVdNhb5opGV07o2Kr35tXeP9Kt/LXLJh/GN/31PJYAmV4E3JYkGglwBtaETRJfyYdFvxc9Xbl9QSwmxmsTZ7hQ/EIYHUj8hrQ/VVgrkjf+DSdzqHrV9+o0j3bv8oCeVRZT8S8MOameJlcSuw+62nW9/DrCYkyW2NVbq1XVZZbSdVMauZL6aBuJtKICiU8HOA6I2KeZRHfS/LH1UY5HOPffdxibGdoRmghjzsE9jbpEigUfYbjfIfnIT6CCUIR6qSVxgZ3Nn/qAl5CY1iPPdyidYHF2tpsEXFZF6UhzsCHm7wQNPdWZ5pc0ZVFsWnUamjDk8hjGeCR4cJ28KaNQRv8SuMZl4HSlbq/jtH8Oke1xOsB/r0V+wAhen2eH5QgO86X6p/8qFKfZK4PNRfXr6SLIuNE4bXQVOuHQQNKofY67XW+JZ
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <A2C7EC25576B9746BC25375D7F940994@namprd15.prod.outlook.com>
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Nov 2020 22:06:01.8715 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 54NSEzyOTrkI8hfXMyX9kbnLsCDbgvmIdwVU4aEONpQZY2lvfIUaw30KIwVm32mJe8LcCkaU5EImUzyV+GanNyrSDwDnSMcWasXREgGyIrM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB5226
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR15MB3537.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8f6cc97-07f5-497a-0914-08d8860bdd6c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2020 06:34:38.5465 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 8ae927fe-1255-47a7-a2af-5f3a069daaa2
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hmI0Vf3dkMOOpARgodT8SAGR/dlen2xq/kpQ6JA6KnibBnzznZQhAOaKZljXvrJSY6h/3HHjG5+EzywgZUaiBw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR15MB4169
+X-OriginatorOrg: fb.com
+Content-Transfer-Encoding: base64
+X-Proofpoint-UnRewURL: 3 URL's were un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-11-11_02:2020-11-10,
+ 2020-11-11 signatures=0
+X-Proofpoint-Spam-Details: rule=fb_default_notspam policy=fb_default score=0
+ bulkscore=0 mlxscore=0
+ spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 malwarescore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011110034
+X-FB-Internal: deliver
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,956 +144,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Lancelot Kao <lancelot.kao@fii-usa.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-1. Add Fii kudo project device tree dts and dtsi
-files to the upstream.
-2. Remove the duplicate the full path and address
-of node.
-3. modified syntax
-
-Signed-off-by: Lancelot Kao <lancelot.kao@fii-usa.com>
-Signed-off-by: Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>
----
- .../boot/dts/nuvoton-npcm730-kudo-gpio.dtsi   | 288 ++++++++
- arch/arm/boot/dts/nuvoton-npcm730-kudo.dts    | 631 ++++++++++++++++++
- 2 files changed, 919 insertions(+)
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
- create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi b/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
-new file mode 100644
-index 000000000000..0dc888dac73b
---- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
-@@ -0,0 +1,288 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2020 Fii USA Inc. Brandon Ong <Brandon.Ong@fii-na.com>
-+
-+
-+/ {
-+	pinctrl: pinctrl@f0800000 {
-+		gpio61oh_pins: gpio61oh-pins {
-+			pins = "GPO61/nDTR1_BOUT1/STRAP6";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio62oh_pins: gpio62oh-pins {
-+			pins = "GPO62/nRTST1/STRAP5";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio161ol_pins: gpio161ol-pins {
-+			pins = "GPIO161/nLFRAME/nESPICS";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio163i_pins: gpio163i-pins {
-+			pins = "GPIO163/LCLK/ESPICLK";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio167ol_pins: gpio167ol-pins {
-+			pins = "GPIO167/LAD3/ESPI_IO3";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio95i_pins: gpio95i-pins {
-+			pins = "GPIO95/nLRESET/nESPIRST";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio65ol_pins: gpio65ol-pins {
-+			pins = "GPIO65/FANIN1";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio66oh_pins: gpio66oh-pins {
-+			pins = "GPIO66/FANIN2";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio67oh_pins: gpio67oh-pins {
-+			pins = "GPIO67/FANIN3";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio68ol_pins: gpio68ol-pins {
-+			pins = "GPIO68/FANIN4";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio69i_pins: gpio69i-pins {
-+			pins = "GPIO69/FANIN5";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio70ol_pins: gpio70ol-pins {
-+			pins = "GPIO70/FANIN6";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio71i_pins: gpio71i-pins {
-+			pins = "GPIO71/FANIN7";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio72i_pins: gpio72i-pins {
-+			pins = "GPIO72/FANIN8";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio73i_pins: gpio73i-pins {
-+			pins = "GPIO73/FANIN9";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio74i_pins: gpio74i-pins {
-+			pins = "GPIO74/FANIN10";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio75i_pins: gpio75i-pins {
-+			pins = "GPIO75/FANIN11";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio76i_pins: gpio76i-pins {
-+			pins = "GPIO76/FANIN12";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio77i_pins: gpio77i-pins {
-+			pins = "GPIO77/FANIN13";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio78i_pins: gpio78i-pins {
-+			pins = "GPIO78/FANIN14";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio79ol_pins: gpio79ol-pins {
-+			pins = "GPIO79/FANIN15";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio80oh_pins: gpio80oh-pins {
-+			pins = "GPIO80/PWM0";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio81i_pins: gpio81i-pins {
-+			pins = "GPIO81/PWM1";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio82i_pins: gpio82i-pins {
-+			pins = "GPIO82/PWM2";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio83i_pins: gpio83i-pins {
-+			pins = "GPIO83/PWM3";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio144i_pins: gpio144i-pins {
-+			pins = "GPIO144/PWM4";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio145i_pins: gpio145i-pins {
-+			pins = "GPIO145/PWM5";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio146i_pins: gpio146i-pins {
-+			pins = "GPIO146/PWM6";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio147oh_pins: gpio147oh-pins {
-+			pins = "GPIO147/PWM7";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio168ol_pins: gpio168ol-pins {
-+			pins = "GPIO168/nCLKRUN/nESPIALERT";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio169oh_pins: gpio169oh-pins {
-+			pins = "GPIO169/nSCIPME";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio170ol_pins: gpio170ol-pins {
-+			pins = "GPIO170/nSMI";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio218oh_pins: gpio218oh-pins {
-+			pins = "GPIO218/nWDO1";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio37i_pins: gpio37i-pins {
-+			pins = "GPIO37/SMB3CSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio38i_pins: gpio38i-pins {
-+			pins = "GPIO38/SMB3CSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio39i_pins: gpio39i-pins {
-+			pins = "GPIO39/SMB3BSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio40i_pins: gpio40i-pins {
-+			pins = "GPIO40/SMB3BSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio121i_pins: gpio121i-pins {
-+			pins = "GPIO121/SMB2CSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio122i_pins: gpio122i-pins {
-+			pins = "GPIO122/SMB2BSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio123i_pins: gpio123i-pins {
-+			pins = "GPIO123/SMB2BSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio124i_pins: gpio124i-pins {
-+			pins = "GPIO124/SMB1CSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio125i_pins: gpio125i-pins {
-+			pins = "GPIO125/SMB1CSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio126i_pins: gpio126i-pins {
-+			pins = "GPIO126/SMB1BSDA";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio127i_pins: gpio127i-pins {
-+			pins = "GPIO127/SMB1BSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio136i_pins: gpio136i-pins {
-+			pins = "GPIO136/SD1DT0";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio137oh_pins: gpio137oh-pins {
-+			pins = "GPIO137/SD1DT1";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio138i_pins: gpio138i-pins {
-+			pins = "GPIO138/SD1DT2";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio139i_pins: gpio139i-pins {
-+			pins = "GPIO139/SD1DT3";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio140i_pins: gpio140i-pins {
-+			pins = "GPIO140/SD1CLK";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio141i_pins: gpio141i-pins {
-+			pins = "GPIO141/SD1WP";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio190oh_pins: gpio190oh-pins {
-+			pins = "GPIO190/nPRD_SMI";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio191oh_pins: gpio191oh-pins {
-+			pins = "GPIO191";
-+			bias-disable;
-+			output-high;
-+		};
-+		gpio195ol_pins: gpio195ol-pins {
-+			pins = "GPIO195/SMB0BSDA";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio196ol_pins: gpio196ol-pins {
-+			pins = "GPIO196/SMB0CSCL";
-+			bias-disable;
-+			output-low;
-+		};
-+		gpio199i_pins: gpio199i-pins {
-+			pins = "GPIO199/SMB0DSCL";
-+			bias-disable;
-+			input-enable;
-+		};
-+		gpio202ol_pins: gpio202ol-pins {
-+			pins = "GPIO202/SMB0CSDA";
-+			bias-disable;
-+			output-low;
-+		};
-+	};
-+};
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-new file mode 100644
-index 000000000000..ab5cf1aea220
---- /dev/null
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-@@ -0,0 +1,631 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2020 Fii USA Inc. Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>
-+
-+/dts-v1/;
-+#include "nuvoton-npcm730.dtsi"
-+#include "nuvoton-npcm730-kudo-gpio.dtsi"
-+
-+/ {
-+	model = "Fii Kudo Board (Device Tree v00.01)";
-+	compatible = "nuvoton,npcm730";
-+
-+	aliases {
-+		ethernet0 = &emc0;
-+		ethernet1 = &gmac0;
-+		serial0 = &serial0;
-+		serial1 = &serial1;
-+		serial2 = &serial2;
-+		serial3 = &serial3;
-+		udc9 = &udc9;
-+		emmc0 = &sdhci0;
-+		vdma = &vdma;
-+		i2c0 = &i2c0;
-+		i2c1 = &i2c1;
-+		i2c2 = &i2c2;
-+		i2c3 = &i2c3;
-+		i2c4 = &i2c4;
-+		i2c5 = &i2c5;
-+		i2c6 = &i2c6;
-+		i2c7 = &i2c7;
-+		i2c8 = &i2c8;
-+		i2c9 = &i2c9;
-+		i2c10 = &i2c10;
-+		i2c11 = &i2c11;
-+		i2c12 = &i2c12;
-+		i2c13 = &i2c13;
-+		spi0 = &spi0;
-+		spi1 = &spi1;
-+		fiu0 = &fiu0;
-+		fiu1 = &fiu3;
-+	};
-+
-+	chosen {
-+		stdout-path = &serial3;
-+	};
-+
-+	memory {
-+		reg = <0 0x40000000>;
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+			<&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
-+	};
-+
-+	jtag_master {
-+		compatible = "nuvoton,npcm750-jtag-master";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+
-+		dev-num = <0>; /* /dev/jtag0 */
-+		mode = "pspi"; /* pspi or gpio */
-+
-+		pspi-controller = <2>; /* pspi2 */
-+		reg = <0xf0201000 0x1000>;
-+		interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
-+		clocks = <&clk NPCM7XX_CLK_APB5>;
-+
-+		jtag-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>, /* TCK */
-+				<&gpio0 18 GPIO_ACTIVE_HIGH>, /* TDI */
-+				<&gpio0 17 GPIO_ACTIVE_HIGH>, /* TDO */
-+				<&gpio0 16 GPIO_ACTIVE_HIGH>; /* TMS */
-+		status = "okay";
-+	};
-+	
-+	leds {
-+		compatible = "gpio-leds";
-+		heartbeat {
-+			label = "heartbeat";
-+			gpios = <&gpio0 14 1>;
-+		};
-+	};
-+};
-+
-+&gmac0 {
-+	phy-mode = "rgmii-id";
-+	snps,eee-force-disable;
-+	status = "okay";
-+};
-+
-+&emc0 {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&ohci1 {
-+	status = "okay";
-+};
-+
-+&udc9 {
-+	status = "okay";
-+};
-+
-+&aes {
-+	status = "okay";
-+};
-+
-+&sha {
-+	status = "okay";
-+};
-+
-+&fiu0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&spi0cs1_pins>;
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		spi-rx-bus-width = <2>;
-+		partitions@80000000 {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			bmc@0{
-+				label = "bmc";
-+				reg = <0x000000 0x2000000>;
-+			};
-+			u-boot@0 {
-+				label = "u-boot";
-+				reg = <0x0000000 0xf0000>;
-+			};
-+			image-descriptor@f0000 {
-+				label = "image-descriptor";
-+				reg = <0xf0000 0x10000>;
-+			};
-+			reserved-update@100000 {  	
-+				label = "reserved-update";
-+				reg = <0x100000 0x100000>;
-+			};
-+			kernel@200000 {
-+				label = "kernel";
-+				reg = <0x200000 0x500000>;
-+			};
-+			rofs@700000 {
-+				label = "rofs";
-+				reg = <0x700000 0x35f0000>;
-+			};
-+			rwfs@3cf0000 {
-+				label = "rwfs";
-+				reg = <0x3cf0000 0x300000>;
-+			};
-+			reserved-mailbox@3ff0000 { 
-+				label = "reserved-mailbox";
-+				reg = <0x3ff0000 0x10000>;
-+			};
-+		};
-+	};
-+	spi-nor@1 {
-+		compatible = "jedec,spi-nor";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		reg = <1>;
-+		spi-max-frequency = <5000000>;
-+		spi-rx-bus-width = <2>;
-+		partitions@88000000 {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			spare1@0 {
-+				label = "spi0-cs1-spare1";
-+				reg = <0x0 0x800000>;
-+			};
-+			spare2@800000 {
-+				label = "spi0-cs1-spare2";
-+				reg = <0x800000 0x0>;
-+			};
-+		};
-+	};
-+};
-+
-+&fiu3 {
-+	pinctrl-0 = <&spi3_pins>;
-+	status = "okay";
-+	spi-nor@0 {
-+		compatible = "jedec,spi-nor";
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		reg = <0>;
-+		spi-max-frequency = <5000000>;
-+		spi-rx-bus-width = <2>;
-+		partitions@A0000000 {
-+			compatible = "fixed-partitions";
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			system1@0 {
-+				label = "bios";
-+				reg = <0x0 0x0>;
-+			};
-+			system2@800000 {
-+				label = "spi3-system2";
-+				reg = <0x800000 0x0>;
-+			};
-+		};
-+	};
-+};
-+
-+&sdhci0 {
-+	status = "okay";
-+};
-+
-+&vdma {
-+	status = "okay";
-+};
-+
-+&pcimbox {
-+	status = "okay";
-+};
-+
-+&vcd {
-+	status = "okay";
-+};
-+
-+&ece {
-+	status = "okay";
-+};
-+
-+&watchdog1 {
-+	status = "okay";
-+};
-+
-+&rng {
-+	status = "okay";
-+};
-+
-+&serial0 {
-+	status = "okay";
-+};
-+
-+&serial1 {
-+	status = "okay";
-+};
-+
-+&serial2 {
-+	status = "okay";
-+};
-+
-+&serial3 {
-+	status = "okay";
-+};
-+
-+&adc {
-+	#io-channel-cells = <1>;
-+	status = "okay";
-+};
-+
-+&otp {
-+	status = "okay";
-+};
-+
-+&i2c0 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "disabled";
-+};
-+
-+&i2c1 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+
-+	i2c-switch@75 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x75>;
-+		i2c-mux-idle-disconnect;
-+
-+		i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+
-+			max31790@58 { // Fan 
-+				compatible = "maxim,max31790";
-+				reg = <0x58>;
-+			};
-+		};
-+
-+		i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+
-+			max31790@58 { // Fan 
-+				compatible = "maxim,max31790";
-+				reg = <0x58>;
-+			};
-+		};
-+
-+		i2c-bus@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+
-+			lm75@5c { // INLET1_T
-+				compatible = "ti,lm75";
-+				reg = <0x5c>;
-+			};
-+		};
-+
-+		i2c-bus@5 { // OUTLET1_T
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+
-+			lm75@5c {
-+				compatible = "ti,lm75";
-+				reg = <0x5c>;
-+			};
-+		};
-+
-+		i2c-bus@6 { // OUTLET2_T
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+
-+			lm75@5c {
-+				compatible = "ti,lm75";
-+				reg = <0x5c>;
-+			};
-+		};
-+
-+		i2c-bus@7 { // OUTLET3_T
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <7>;
-+
-+			lm75@5c {
-+				compatible = "ti,lm75";
-+				reg = <0x5c>;
-+			};
-+		};
-+	};
-+	i2c-switch@77 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x77>;
-+		i2c-mux-idle-disconnect;
-+
-+		i2c-bus@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+
-+			pmbus@74 { // STB-T
-+				compatible = "pmbus";
-+				reg = <0x74>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c2 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+	
-+	smpro@4f {
-+		compatible = "ampere,smpro";
-+		reg = <0x4f>;
-+	};
-+
-+	smpro@4e {
-+		compatible = "ampere,smpro";
-+		reg = <0x4e>;
-+	};
-+};
-+
-+&i2c3 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+
-+	i2c-switch@77 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x77>;
-+		i2c-mux-idle-disconnect;
-+
-+		i2c-bus@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+
-+			adm1266@40 { // ADC sensors
-+				compatible = "adi,adm1266";
-+				reg = <0x40>;
-+			};
-+		};
-+
-+		i2c-bus@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+
-+			adm1266@41 { // ADC sensors
-+				compatible = "adi,adm1266";
-+				reg = <0x41>;
-+			};
-+		};
-+	};
-+};
-+
-+&i2c5 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c9 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	#address-cells = <1>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+};
-+
-+&i2c12 {
-+	#address-cells = <1>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+
-+	ssif-bmc@10 {
-+		compatible = "ssif-bmc";
-+		reg = <0x10>;
-+		status = "okay";
-+	};
-+};
-+
-+&i2c13 {
-+	#address-cells = <1>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	bus-frequency = <100000>;
-+	status = "okay";
-+
-+	i2c-switch@77 {
-+		compatible = "nxp,pca9548";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		reg = <0x77>;
-+		i2c-mux-idle-disconnect;
-+
-+		i2c-bus@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+
-+			lm75@28 { // M2_ZONE_T
-+				compatible = "ti,lm75";
-+				reg = <0x28>;
-+			};
-+		};
-+
-+		i2c-bus@4 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <4>;
-+
-+			lm75@29 { // BATT_ZONE_T
-+				compatible = "ti,lm75";
-+				reg = <0x29>;
-+			};
-+		};
-+
-+		i2c-bus@5 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <5>;
-+
-+			lm75@28 { // NBM1_ZONE_T
-+				compatible = "ti,lm75";
-+				reg = <0x28>;
-+			};
-+		};
-+		i2c-bus@6 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <6>;
-+
-+			lm75@29 { // NBM2_ZONE_T
-+				compatible = "ti,lm75";
-+				reg = <0x29>;
-+			};
-+		};
-+	};
-+};
-+
-+&spi0 {
-+	cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
-+	status = "okay";
-+};
-+
-+&pinctrl {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <
-+			&gpio61oh_pins
-+			&gpio62oh_pins
-+			&gpio161ol_pins
-+			&gpio163i_pins
-+			&gpio167ol_pins
-+			&gpio95i_pins
-+			&gpio65ol_pins
-+			&gpio66oh_pins
-+			&gpio67oh_pins
-+			&gpio68ol_pins
-+			&gpio69i_pins
-+			&gpio70ol_pins
-+			&gpio71i_pins
-+			&gpio72i_pins
-+			&gpio73i_pins
-+			&gpio74i_pins
-+			&gpio75i_pins
-+			&gpio76i_pins
-+			&gpio77i_pins
-+			&gpio78i_pins
-+			&gpio79ol_pins
-+			&gpio80oh_pins
-+			&gpio81i_pins
-+			&gpio82i_pins
-+			&gpio83i_pins
-+			&gpio144i_pins
-+			&gpio145i_pins
-+			&gpio146i_pins
-+			&gpio147oh_pins
-+			&gpio168ol_pins
-+			&gpio169oh_pins
-+			&gpio170ol_pins
-+			&gpio218oh_pins
-+			&gpio37i_pins
-+			&gpio38i_pins
-+			&gpio39i_pins
-+			&gpio40i_pins
-+			&gpio121i_pins
-+			&gpio122i_pins
-+			&gpio123i_pins
-+			&gpio124i_pins
-+			&gpio125i_pins
-+			&gpio126i_pins
-+			&gpio127i_pins
-+			&gpio136i_pins
-+			&gpio137oh_pins
-+			&gpio138i_pins
-+			&gpio139i_pins
-+			&gpio140i_pins
-+			&gpio141i_pins
-+			&gpio190oh_pins
-+			&gpio191oh_pins
-+			&gpio195ol_pins
-+			&gpio196ol_pins
-+			&gpio199i_pins
-+			&gpio202ol_pins
-+			>;
-+};
-+
-+&gcr {
-+	serial_port_mux: mux-controller {
-+		compatible = "mmio-mux";
-+		#mux-control-cells = <1>;
-+
-+		mux-reg-masks = <0x38 0x07>;
-+		idle-states = <2>;
-+	};
-+};
--- 
-2.17.1
-
+DQoNCu+7v09uIDExLzUvMjAsIDM6NTUgUE0sICJTdWkgQ2hlbiIgPHN1aWNoZW5AZ29vZ2xlLmNv
+bT4gd3JvdGU6DQoNCiAgICBPbiBUdWUsIE9jdCA2LCAyMDIwIGF0IDY6NDMgUE0gUGF0cmljayBX
+aWxsaWFtcyA8cGF0cmlja0BzdHdjeC54eXo+IHdyb3RlOg0KICAgID4NCiAgICA+IE9uIFR1ZSwg
+T2N0IDA2LCAyMDIwIGF0IDAzOjU3OjMwUE0gLTA3MDAsIFN1aSBDaGVuIHdyb3RlOg0KICAgID4g
+PiBPbiBGcmksIE9jdCAyLCAyMDIwIGF0IDE6NTQgUE0gVmlqYXkgS2hlbWthIDx2aWpheWtoZW1r
+YUBmYi5jb20+IHdyb3RlOg0KICAgID4gPiA+IElmIEkgdW5kZXJzdGFuZCBjb3JyZWN0bHksIHBy
+b3RvY29sIGJ1ZmZlciB3aWxsIGJlIHVzZWQgYnkgZGFlbW9uIHdobw0KICAgID4gPiA+IElzIHJl
+c3BvbmRpbmcgdG8gdGhlIElQTUkgcmVxdWVzdCBhbmQgY29ubmVjdGluZyB0byB0aGlzIGRhZW1v
+biB2aWENCiAgICA+ID4gPiBsaWJyYXJ5IGNhbGwsIHRoZW4gaXQgaXMgY29tcGxldGVseSByZXN0
+cmljdGVkIGZvciB0aGUgdXNlIG9mIHByb3RvY29sIGJ1ZmZlci4NCiAgICA+ID4gPiBJZiB5b3Ug
+YXJlIHBhc3NpbmcgcHJvdG9jb2wgYnVmZmVyIHRvIHRoaXMgZGFlbW9uIHRoZW4gd2UgaGF2ZSB0
+byBkZWZpbmUNCiAgICA+ID4gPiBzb21lIHBvbGljeSBoZXJlLg0KICAgID4gPg0KICAgID4gPiBU
+aGUgUHJvdG9jb2wgYnVmZmVyIGlzIG9ubHkgZm9yIHNlcmlhbGl6aW5nIHRoZSBkYXRhIHRvIGJl
+IHNlbnQNCiAgICA+ID4gb3V0c2lkZSBvZiB0aGUgQk1DLiBJdCBpcyBub3QgdXNlZCBmb3IgY29t
+bXVuaWNhdGlvbiBpbnNpZGUNCiAgICA+ID4gcGhvc3Bob3ItaGVhbHRoLW1vbml0b3IgYW5kIHdp
+bGwgbm90IGJlIHBhc3NlZCB0byB0aGUgZGFlbW9uLg0KICAgID4NCiAgICA+IFdoeSBpc24ndCB0
+aGlzIHBhcnQgZG9uZSBmcm9tIHdpdGhpbiBhbiBleGlzdGluZyBJUE1JIHByb3ZpZGVyIChpZGVh
+bGx5DQogICAgPiB0byBtZSBhIGdvb2dsZS1pcG1pLSogcmVwb3NpdG9yeSBhdCB0aGlzIHRpbWUp
+PyAgSSdtIG5vdCBlc3BlY2lhbGx5IGtlZW4NCiAgICA+IG9uIHRoZXNlIGRldGFpbHMgbGVha2lu
+ZyBvdXQgaW50byBvdGhlciBub24tSVBNSSByZXBvc2l0b3JpZXMuDQogICAgPg0KICAgID4gPiA+
+DQogICAgPiA+ID4gICAgIE90aGVyIHRoYW4gdGhlc2UgdHdvIHRoaW5ncyBJIHRoaW5rIGFkZGlu
+ZyBuZXcgbWV0cmljcyB0bw0KICAgID4gPiA+ICAgICBwaG9zcGhvci1oZWFsdGgtbW9uaXRvciBz
+aG91bGQgYmUgbWFuYWdlYWJsZS4gSSBjYW4gc3RhcnQgYnkgdHJ5aW5nIHRvDQogICAgPiA+ID4g
+ICAgIGFkZCB0aGUgSVBNSSBibG9iIGhhbmRsZXIgdG8gcGhvc3Bob3ItaGVhbHRoLW1vbml0b3I7
+IG15IGZpcnN0IGF0dGVtcHQNCiAgICA+ID4gPiAgICAgbWlnaHQgbm90IGxvb2sgdmVyeSBlbGVn
+YW50LCBidXQgaWYgd2UgZmluZCBhbnN3ZXJzIHRvIHRoZSB0d28NCiAgICA+ID4gPiAgICAgcXVl
+c3Rpb25zIGFib3ZlLCB0aGUgbWVyZ2VkIHJlc3VsdCB3aWxsIGxvb2sgYSBsb3QgYmV0dGVyLiBI
+b3BlZnVsbHkNCiAgICA+ID4gPiAgICAgd2UgY2FuIGZpbmQgYSBzb2x1dGlvbiB0aGF0IHdvcmtz
+IHdlbGwgZm9yIGV2ZXJ5b25lLg0KICAgID4gPiA+DQogICAgPiA+ID4gSSBhbSBsb29raW5nIGZv
+cndhcmQgdG8geW91ciBwYXRjaGVzDQogICAgPiA+DQogICAgPiA+IFBsZWFzZSBjaGVjayBvdXQg
+dGhpcyBXSVA6DQogICAgPiA+IGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9v
+cGVuYm1jL3Bob3NwaG9yLWhlYWx0aC1tb25pdG9yLysvMzcwOTIgDQogICAgPiA+DQogICAgPiA+
+IFRoaXMgV0lQIGN1cnJlbnRseSBqdXN0IGFkZHMgdGhlIElQTUkgYmxvYi1iYXNlZCBjb2RlIHRv
+DQogICAgPiA+IHBob3NwaG9yLWhlYWx0aC1tb25pdG9yIGFsbW9zdCBhcy1pcy4NCiAgICA+ID4g
+SXQgYWxzbyBzaG93cyB3aGF0IHdlIGFscmVhZHkgaGF2ZSBub3cuDQogICAgPiA+DQogICAgPiA+
+IFRoZXJlIHdpbGwgYmUgc29tZSB3b3JrIHRvIG1lcmdlIHRoZSBkYWVtb24gYW5kIHRoZSBibG9i
+IGhhbmRsZXIgaW4gYW4NCiAgICA+ID4gb3JnYW5pYyB3YXksIGFuZCBJIGFtIG9wZW4gdG8gZGlz
+Y3Vzc2lvbiB3aXRoIHlvdSBob3cgdG8gZG8gdGhhdC4gVGhlDQogICAgPiA+IGZpcnN0IHN0ZXAg
+SSB0aGluayBJIGNhbiBkbyBpcyB0byBwdXQgdGhlIGNvZGUgZm9yIGV4dHJhY3RpbmcgdGhlDQog
+ICAgPiA+IG1ldHJpY3MgKG1ldHJpY3MuY3BwLCBibG9iL21ldHJpYy5jcHApIGludG8gYSBzaW5n
+bGUgZmlsZSBhbmQgc2hhcmUNCiAgICA+ID4gdGhhdCBiZXR3ZWVuIHRoZSBkYWVtb24gYW5kIHRo
+ZSBJUE1JIGJsb2IgaGFuZGxlci4NCiAgICA+ID4NCiAgICA+ID4gQW5vdGhlciBpc3N1ZSBJIGZv
+dW5kIGlzIEkgYW0gbm90IHVzaW5nIHRoZSBsYXRlc3Qgc2RidXNwbHVzIHNvIEkgaGF2ZQ0KICAg
+ID4gPiB0byBjb21tZW50IG91dCB0aGUgdXNhZ2Ugb2YgVmFsdWVJZmFjZTo6VW5pdDo6UGVyY2Vu
+dCBmb3Igbm93Lg0KICAgID4gPg0KICAgID4gPiBUbyBidWlsZCB0aGlzIHJlcXVpcmVzIDEpIGFk
+ZGluZyBhIHBrZ2NvbmZpZyBmaWxlIHRvDQogICAgPiA+IHBob3NwaG9yLWlwbWktYmxvYnMgKGJl
+Zm9yZQ0KICAgID4gPiBodHRwczovL2dlcnJpdC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJt
+Yy9waG9zcGhvci1pcG1pLWJsb2JzLysvMzcxMzMgDQogICAgPiA+IGdldHMgbWVyZ2VkKSBhbmQg
+MikgYWRkaW5nIHBob3NwaG9yLWlwbWktYmxvYnMgYW5kIHByb3RvYnVmIHRvIERFUEVORFMNCiAg
+ICA+ID4gaW4gcGhvc3Bob3ItaGVhbHRoLW1vbml0b3IncyBCaXRiYWtlIHJlY2lwZS4NCiAgICA+
+ID4NCiAgICA+ID4gSG9wZSB0aGlzIFdJUCBjaGFuZ2UgaWxsdXN0cmF0ZXMgb3VyIGludGVudGlv
+biBjbGVhcmx5Lg0KICAgID4gPg0KICAgID4gPiBUaGFua3MhDQogICAgPg0KICAgID4gLS0NCiAg
+ICA+IFBhdHJpY2sgV2lsbGlhbXMNCg0KDQogICAgSGVsbG8gUGF0cmljayBhbmQgVmlqYXksDQoN
+CiAgICBBcyBmYXIgYXMgSSBrbm93LCB0aGUgb25seSB0d28gImdvb2dsZS1pcG1pLSoiIHJlcG9z
+aXRvcmllcyBhcmUgMSkNCiAgICBnb29nbGUtaXBtaS1zeXMgYW5kIDIpIGdvb2dsZS1pcG1pLWky
+YywgYW5kIG5laXRoZXIgc2VlbSB0byBiZSByZWxhdGVkDQogICAgdG8gdGhlIGhlYWx0aCBtb25p
+dG9yaW5nIHRhc2sgd2UncmUgZG9pbmcgcmlnaHQgbm93Lg0KICAgIEluIG15IHVuZGVyc3RhbmRp
+bmcgb25lIHNpbWlsYXIgbGlicmFyeSBpcyBwaG9zcGhvci1waWQtY29udHJvbDsgaXRzDQogICAg
+SVBNSSBoYW5kbGVyIGlzIGFsc28gaW4gdGhlIHJlcG9zaXRvcnkgcmF0aGVyIHRoYW4gaW4gYSBz
+ZXBhcmF0ZQ0KICAgIHJlcG9zaXRvcnkuDQoNCiAgICBUaGUgImhlYWx0aCBtb25pdG9yaW5nIElQ
+TUkgQmxvYiBIYW5kbGVyIiAodGhhdCB0aGUgcmVxdWVzdCBpbiB0aGUNCiAgICBmaXJzdCBlbWFp
+bCBpbiB0aGlzIHRocmVhZCB3YXMgaW5kZW5kZWQgZm9yKSB3YXMgYSBtb25vbGl0aGljIElQTUkN
+CiAgICBibG9iIGhhbmRsZXI7IGl0IHVzZWQgdG8gYm90aCBnZW5lcmF0ZSBtZXRyaWNzIGFuZCBo
+YW5kbGUgSVBNSQ0KICAgIHJlcXVlc3RzLg0KICAgIEluIHRoZSBsYXN0IG1vbnRoLCBJIGhhZCBk
+ZS1jb3VwbGVkIHRoZXNlIHR3byBmdW5jdGlvbnMgc28gdGhlIElQTUkNCiAgICBibG9iIGhhbmRs
+ZXIgZG9lcyBub3QgZ2VuZXJhdGUgbWV0cmljcyBidXQgcmVhZHMgbWV0cmljcyBmcm9tIHRoZQ0K
+ICAgIGRhZW1vbiBpbiBwaG9zcGhvci1oZWFsdGgtbW9uaXRvciB2aWEgREJ1cy4gSW4gb3RoZXIg
+d29yZHMsIHRoZSAibW9ub2xpdGhpYyINCiAgICBoYW5kbGVyIGhhcyBub3cgYmVjb21lIGEgdGhp
+biBsYXllci4gT24gdGhlIG90aGVyIGhhbmQsDQogICAgcGhvc3Bob3ItaGVhbHRoLW1vbml0b3Ig
+d2lsbCBoYXZlIHRvIGJlIHNpZ25pZmljYW50bHkgbW9kaWZpZWQgdG8NCiAgICBnZW5lcmF0ZSB0
+aGUgbWV0cmljcyB0aGF0IGFyZSBpbiBhIGRpZmZlcmVudCBmb3JtYXQgZnJvbSB3aGF0IGl0J3MN
+CiAgICBnZW5lcmF0aW5nIHJpZ2h0IG5vdywgYW5kIFZpamF5IGFuZCBJIGFyZSB3b3JraW5nIG9u
+IHRoYXQuIEkgaGFkIGNyZWF0ZSBhIGNoYWluDQogICAgb2YgY2hhbmdlcyBodHRwczovL2dlcnJp
+dC5vcGVuYm1jLXByb2plY3QueHl6L2Mvb3BlbmJtYy9waG9zcGhvci1oZWFsdGgtbW9uaXRvci8r
+LzM3NjU5IA0KICAgIHRvIGlsbHVzdHJhdGUgd2hhdCBJIGludGVuZCB0byBkby4NCiAgICBBcyBh
+IHJlc3VsdCwgdGhlcmUgY29tZXMgdGhlIHF1ZXN0aW9uIG9mIHdoZXJlIHRoZSBJUE1JIGJsb2Ig
+aGFuZGxlcg0KICAgIHNob3VsZCBsaXZlLCBhbmQgaXQgYXBwZWFycyBJIGhhdmUgdGhlIGZvbGxv
+d2luZyBjaG9pY2VzOg0KICAgIDEuIGluIHBob3NwaG9yLWhlYWx0aC1tb25pdG9yLCBvcg0KICAg
+IDIuIHNvbWUgY2VudHJhbGl6ZWQgbG9jYXRpb24sIGFsb25nIHdpdGggbWFueSBvdGhlciBJUE1J
+IGJsb2IgaGFuZGxlcnMsIG9yDQogICAgMy4gYXMgYSBzZXBhcmF0ZSwgbmV3IHJlcG9zaXRvcnks
+IG9yDQogICAgNC4gc29tZXRoaW5nIGVsc2U/DQoNCiAgICBJIGFtIGZhY2luZyBhIGNvbmZ1c2lu
+ZyBzaXR1YXRpb24gYXMgdG8gd2hlcmUgSSBzaG91bGQgcHV0IHRoZSBJUE1JDQogICAgYmxvYiBo
+YW5kbGVyLCBkdWUgdG8gY29uZmxpY3Rpbmcgb3BpbmlvbnM6DQogICAgMS4gVGhlIG1haW50YWlu
+ZXJzIG9mIHBob3NwaG9yLWlwbWktYmxvYnMgdG9sZCBtZSBpdCdzIG5vdCBkZXNpcmFibGUNCiAg
+ICB0byBwdXQgYWxsIElQTUkgYmxvYiBoYW5kbGVycyBpbnRvIHRoZSBzYW1lIHBsYWNlLg0KICAg
+IDIuIEJ5IHJlYWRpbmcgdGhpcyBlbWFpbCB0aHJlYWQsIEkgaGFkIHRoZSBpbXByZXNzaW9uIHRo
+YXQgaXQncyBub3QgYQ0KICAgIGdvb2QgaWRlYSB0byBjcmVhdGUgdG9vIG1hbnkgcmVwb3NpdG9y
+aWVzIGVpdGhlci4NCiAgICAzLiBCZWNhdXNlIG9mICMxIGFuZCAjMiwgSSBmZWx0IHdlIHNob3Vs
+ZCBwdXQgdGhlIElQTUkgYmxvYiBoYW5kbGVyDQogICAgaW50byBwaG9zcGhvci1oZWFsdGgtbW9u
+aXRvciBpdHNlbGYsIGp1c3QgbGlrZSBwaG9zcGhvci1waWQtY29udHJvbA0KICAgIGRvZXMuDQog
+ICAgNC4gSW4gdGhlIGxhc3QgcmVwbHkgZnJvbSBQYXRyaWNrIGl0IHNvdW5kcyBpdCdzIGEgYmFk
+IGlkZWEgdG8gcHV0IHRoZQ0KICAgIElQTUkgYmxvYiBoYW5kbGVyIGludG8gcGhvc3Bob3ItaGVh
+bHRoLW1vbml0b3IgYmVjYXVzZSBvZiBJUE1JIGRldGFpbHMNCiAgICBsZWFraW5nIG91dCBpbnRv
+IG5vbi1JUE1JIHJlcG9zaXRvcmllcy4NCiAgICA1LiBWaWpheSBzZWVtZWQgdG8gcHJlZmVyIHRv
+IGhhdmUgYWxsIElQTUkgYmxvYiBoYW5kbGVycyBpbiBvbmUgcGxhY2UNCiAgICBiYXNlZCBvbiBv
+dXIgZGlzY3Vzc2lvbiBvbiBJUkMuIEhvd2V2ZXIsIGFjY29yZGluZyB0byAjMSB0aGlzIGlzIGdv
+aW5nDQogICAgdG8gZmFjZSBwdXNoYmFjay4gQXMgc3VjaCwgSSBjcmVhdGVkIGFsbCBteSBjaGFu
+Z2VzIGluDQogICAgcGhvc3Bob3ItaGVhbHRoLW1vbml0b3IgZm9yIHJldmlldyBhbmQgZm9yIHNo
+b3dpbmcgbXkgaW50ZW50IG9uIGhvdw0KICAgIHRoZSBJUE1JIGltcGxlbWVudGF0aW9uIGlzIGRv
+bmUuDQogICAgNi4gQmVjYXVzZSBvZiAjNCBhbmQgIzUsIGl0IHNvdW5kcyBsaWtlIEkgY2FuJ3Qg
+cHV0IHRoZSBJUE1JIGJsb2IgaGFuZGxlciBpbnRvDQogICAgcGhvc3Bob3ItaGVhbHRoLW1vbml0
+b3IgZWl0aGVyLg0KICAgIFNvIG5vdywgdGhlcmUgaXMgbm8gcGxhY2UgSSBjYW4gcGxhY2UgdGhp
+cyBoYW5kbGVyLCBhbmQgSSBhbSBub3cgYXQgYSBkZWFkIGVuZC4NCg0KSSBzdGlsbCBmZWVsIHRo
+YXQgdGhpcyBzaG91bGQgZ28gdG8gcGhvc3Bob3ItaXBtaS1ibG9icywgeW91IGNhbiBjcmVhdGUg
+YSBzZXBhcmF0ZQ0KZGlyZWN0b3J5IChoYW5kbGVyKSB1bmRlciB0aGUgc2FtZSByZXBvIGFuZCBp
+dCBjYW4gYmVjb21lIGhvbWUgZm9yIGFsbCB0aGUNCmZ1dHVyZXMgYmxvYiBoYW5kbGVyIGFzIHRo
+ZXNlIGFyZSBnb2luZyB0byBpbnRlcmFjdCB3aXRoIGlwbWkgYmxvYnMgYW55d2F5Lg0KDQogICAg
+SSBuZWVkIHRvIGZpbmQgYSB3YXkgb3V0IGFuZCB3b3VsZCBncmVhdGx5IGFwcHJlY2lhdGUgaXQg
+aWYgd2UgY2FuDQogICAgcmVhY2ggYSBjb25zZW5zdXMgaGVyZSBzbyB0aGF0IEJNQyBoZWFsdGgg
+bW9uaXRvcmluZyBjYW4gbW92ZSBmb3J3YXJkLg0KDQogICAgVGhhbmtzIQ0KDQo=
