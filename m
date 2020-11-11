@@ -1,62 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 012412AFBB4
-	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 00:35:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7F5E2AFBB6
+	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 00:46:54 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CWh0x5lbtzDqSK
-	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 10:35:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CWhGM6PGSzDqwV
+	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 10:46:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::841;
- helo=mail-qt1-x841.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::843;
+ helo=mail-qt1-x843.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=bSYQInO/; dkim-atps=neutral
-Received: from mail-qt1-x841.google.com (mail-qt1-x841.google.com
- [IPv6:2607:f8b0:4864:20::841])
+ header.s=google header.b=kpb3heQ9; dkim-atps=neutral
+Received: from mail-qt1-x843.google.com (mail-qt1-x843.google.com
+ [IPv6:2607:f8b0:4864:20::843])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CWh065xZ4zDqQr;
- Thu, 12 Nov 2020 10:34:27 +1100 (AEDT)
-Received: by mail-qt1-x841.google.com with SMTP id j31so2721284qtb.8;
- Wed, 11 Nov 2020 15:34:27 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CWhFk5nY1zDqpr
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 10:46:14 +1100 (AEDT)
+Received: by mail-qt1-x843.google.com with SMTP id g17so2761904qts.5
+ for <openbmc@lists.ozlabs.org>; Wed, 11 Nov 2020 15:46:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=KnLt8VXQwwM0iYUheRJOiNo0F+wh49CPTe2gDfhO7W8=;
- b=bSYQInO/99sJwYtrycfWh2p+Q1AZAdK+UIgIk/sTa62d96oToAujYSzo1mXEwXkD0x
- Or98pU873ZtbSXzDUetksAxIxA8zGSGCwDFCX0xOZXe4XlLkar/ov+O+MJUH0X/TYCwh
- TB+35Ly2xbXJ2r9425YbecqXgoDl2Saf2L13Q=
+ :cc; bh=irUn4gedpqTaDVWpWm4yGu3DsYV7KNDJO7t8HawhtaI=;
+ b=kpb3heQ9bbC2bVbDjevOC7/M4gud6i4G7VO7B8gy8PkwoQd10yH1yw9ifB2wEC/htC
+ apvISfwbNW6wq5MNG4bxcyV5yNdkLfzJikpJq13AOMXOkKQsukWLsQI6Ao6hkRaiZr9e
+ 080lUyPZ4pNI2QXATrBS+QVnERTpZ7I6LLtjo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=KnLt8VXQwwM0iYUheRJOiNo0F+wh49CPTe2gDfhO7W8=;
- b=fmv5cTDGbUudXx+NUZ6jWndUslaY8BouJbPtJzjnsVmGuiigWfXW6jrP0dDDN8g7uB
- Z5b8/XIB9BXDWCgHoaEBPEn6cXB4SAUd7JpKUuMGvCVUT7iH9uDX4kfY4RZaRAb7Lt84
- QOhMqYSBVJs2OwlL2dH7fEnAYJ8aq+S3v0Qd4YbJmjPhxWBziKRJNdrEtUWefrOSQkFW
- d4Pv2rdiM/q+DB7GNSsZKuy0bNFv4XPdq9SwCYJFI/shUBxe3y/0/rPY/EMUVKfiLyuD
- iylo022LZnJGe0C3iXHtP5HbdJ2QPg/bYrnW82Tynzl/tWw+JVKO7qCqn9147xig/uvH
- 9XlA==
-X-Gm-Message-State: AOAM532jrg0o3zu085VZpr7/DnH6IgU/gtJvgD9DAOBxKdBTXRQEx3ts
- Jy325fG5Mn8lkCKwJnMe8mN6LukB3gohLpXuwNA=
-X-Google-Smtp-Source: ABdhPJwcjoyijjlf9fwP/sU1FX6AbUsAS3hkkdBB32/dHqXA3RyjccEybxC7rChDrlK0oiWb72YIjY8nc0FZJRARCAg=
-X-Received: by 2002:ac8:5854:: with SMTP id h20mr25684587qth.176.1605137662938; 
- Wed, 11 Nov 2020 15:34:22 -0800 (PST)
+ bh=irUn4gedpqTaDVWpWm4yGu3DsYV7KNDJO7t8HawhtaI=;
+ b=tF+O/0JoT4tZ0unZLt3bNJQ7KVVgEoZEEYVdZKRpQOS72Izwehd+BnD69yXOqMeBvb
+ nlY9NvIL5t/rauQRzt0Lmb14QHP5gSPButszpNFWBAxSBquAA2cqB8uPWFYTYPH2s7Zn
+ kkTx15h5QQWReDbOlQPeQkksQXnydMHCPjQnLbkd2tflEJZvsmwGT23DdNh5FGMGwB0L
+ 2rWa20etyev5O1JLmB2Rwa46S7DmGY3kHl5fe4sdF+xD+BHmzJssHjMarlPzQMWTB8xa
+ Eoqh1s3RPlQl2bvg0ffj2dmVNgdJwTrzNmggj0NbKQ1Ol6m88QUSxoRh4upT+i6Xf5aP
+ S8FA==
+X-Gm-Message-State: AOAM533lhAzKGLddJ/FhjCYVQwClJtrI/PSckTngRA7SKR+npERRXEzr
+ 9qR9pREZVVqU0tSb7BbpyZLsNzW9EYEXKnpMpwt7wGgkXX0=
+X-Google-Smtp-Source: ABdhPJyixrKWHK4r1e4u9psigA9+sdhNEHqFUpnYfhOGavolo+E5PfTM2uIltauEaF6oovwuxquOu+JHQ7PG3eV4UjQ=
+X-Received: by 2002:aed:38c8:: with SMTP id k66mr25698392qte.385.1605138370407; 
+ Wed, 11 Nov 2020 15:46:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20201111232330.30843-1-rentao.bupt@gmail.com>
-In-Reply-To: <20201111232330.30843-1-rentao.bupt@gmail.com>
+References: <20201111134427.1579-1-aladyshev22@gmail.com>
+In-Reply-To: <20201111134427.1579-1-aladyshev22@gmail.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 11 Nov 2020 23:34:10 +0000
-Message-ID: <CACPK8XdC8FRKOLQ9e583gVuDrL5829MOfx5L=O68dou6mjW_6g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] ARM: dts: aspeed: Add Facebook Galaxy100 BMC
-To: Tao Ren <rentao.bupt@gmail.com>
+Date: Wed, 11 Nov 2020 23:45:57 +0000
+Message-ID: <CACPK8Xd5JiAL8Zf2Rd5KXkMAk6p9VouAC2oXbbuF37JEconLwQ@mail.gmail.com>
+Subject: Re: [PATCH linux dev-5.8 1/3] ARM: dts: aspeed: amd-ethanolx: Enable
+ KCS channel 3
+To: Konstantin Aladyshev <aladyshev22@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -69,56 +70,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Tao Ren <taoren@fb.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Rob Herring <robh+dt@kernel.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 11 Nov 2020 at 23:23, <rentao.bupt@gmail.com> wrote:
+On Wed, 11 Nov 2020 at 13:44, Konstantin Aladyshev
+<aladyshev22@gmail.com> wrote:
 >
-> From: Tao Ren <rentao.bupt@gmail.com>
+> The KCS interface on the LPC channel 3 in the controller
+> is used for the in-band BMC<->BIOS IPMI communication.
+> 0xCA2 is a default host CPU LPC IO address for this
+> interface.
 >
-> The patch series adds the initial version of device tree for Facebook
-> Galaxy100 (AST2400) BMC.
->
-> Patch #1 adds common dtsi to minimize duplicated device entries across
-> Facebook Network AST2400 BMC device trees.
->
-> Patch #2 simplfies Wedge40 device tree by using the common dtsi.
->
-> Patch #3 simplfies Wedge100 device tree by using the common dtsi.
->
-> Patch #4 adds the initial version of device tree for Facebook Galaxy100
-> BMC.
+> Signed-off-by: Konstantin Aladyshev <aladyshev22@gmail.com>
+> Reviewed-by: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> Link: https://lore.kernel.org/r/20201027123722.2935-2-aladyshev22@gmail.com
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-Nice. They look good to me.
+I've merged this series into dev-5.8.
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+Cheers,
 
-Is there another person familiar with the design you would like to
-review before I merge?
+Joel
 
-
+> ---
+>  arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> Tao Ren (4):
->   ARM: dts: aspeed: Common dtsi for Facebook AST2400 Network BMCs
->   ARM: dts: aspeed: wedge40: Use common dtsi
->   ARM: dts: aspeed: wedge100: Use common dtsi
->   ARM: dts: aspeed: Add Facebook Galaxy100 (AST2400) BMC
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+> index 89ddc3847222..2a86bda8afd8 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-amd-ethanolx.dts
+> @@ -147,6 +147,11 @@
+>         aspeed,lpc-io-reg = <0x62>;
+>  };
 >
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../dts/aspeed-bmc-facebook-galaxy100.dts     |  57 +++++++++
->  .../boot/dts/aspeed-bmc-facebook-wedge100.dts | 120 +++---------------
->  .../boot/dts/aspeed-bmc-facebook-wedge40.dts  | 112 +---------------
->  .../dts/ast2400-facebook-netbmc-common.dtsi   | 117 +++++++++++++++++
->  5 files changed, 191 insertions(+), 216 deletions(-)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-galaxy100.dts
->  create mode 100644 arch/arm/boot/dts/ast2400-facebook-netbmc-common.dtsi
->
+> +&kcs3 {
+> +       status = "okay";
+> +       aspeed,lpc-io-reg = <0xCA2>;
+> +};
+> +
+>  &kcs4 {
+>         status = "okay";
+>         aspeed,lpc-io-reg = <0x97DE>;
 > --
 > 2.17.1
 >
