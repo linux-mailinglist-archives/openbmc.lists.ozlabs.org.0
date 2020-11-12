@@ -2,86 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CFE92B07F6
-	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 15:58:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8FBC2B0849
+	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 16:20:13 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CX4Vk09qszDqpL
-	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 01:58:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CX4zG5W20zDqpJ
+	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 02:20:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::129;
+ helo=mail-il1-x129.google.com; envelope-from=shakeebbk@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=P+GeFBpa; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=VaHcMDXm; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=F3tJgSfv; dkim-atps=neutral
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com
+ [IPv6:2607:f8b0:4864:20::129])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CX4TR5htMzDqJH
- for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 01:57:46 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 1869A5C025D
- for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 09:57:42 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Thu, 12 Nov 2020 09:57:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:subject:message-id:mime-version:content-type; s=
- fm3; bh=HvXDB7gUTuXnFzwpTBPf05oTPkw8vmIAQUdBq6ufrXQ=; b=P+GeFBpa
- mNw4+MYKveVATS5+1PV1n5cTLML8HhwnSc2AqEPaMp9uaPGCTRFOm6z9s8YGPjqk
- wvT8PR5VbmghJjjfdzMVTxBRB7woW1XO8QpxIzP/kOKK0wd7kHrHzLY8cZ8yM4R6
- vHd9bD3wvwz7Yx3ompwrEhfZfsVsrsWeCdrCD6AZJIFb9El2+uxqOtxpAhMW8bz/
- QpUxus7O/mxb1RucYES8pn6+vW8T8YHgFL/33+EjcamnujfS8OkcubApN702i/O9
- 59H1llDDc7Xphv6MFOxvx8rcSYDJg482ZI6kbz3i6MY/L7km6T8/4g0zOSpOIT73
- zFMRt3xvCKvdpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=content-type:date:from:message-id
- :mime-version:subject:to:x-me-proxy:x-me-proxy:x-me-sender
- :x-me-sender:x-sasl-enc; s=fm1; bh=HvXDB7gUTuXnFzwpTBPf05oTPkw8v
- mIAQUdBq6ufrXQ=; b=VaHcMDXmxqMIuMuEhQ0M7z/PkRM4r4J+pG3MGKHlxFjO9
- 5wzFoihCQFnEMX45dLQE64q+l703rMF8XFjORvEVumAl8ihjSfCe4tkmyaXkT28V
- jmokpjwtJP7/kLp505+u2m/+fUimlQ/RiIosycXXqWn/98naCuLESEZ5y4LRO32X
- uzL4dKCW7Ky/eq8rvHo+EVmh9z0wV/0wlddUPJeUibXtJVhZ31y7DxFsGggGBKCj
- 7N58YQxUsfCT6fdhkmJ8M6pLjqCBs7QG14jaP3ELfAXZ0pDHikVCVxQdWBnTPfFY
- 4uzFdjh7xxsbLdsPbK4q06ZYsUQygr7G93A+bTlyg==
-X-ME-Sender: <xms:ZU2tXzZ9F1W0S9lM79a3ISj5swDFgIJ_DXNsggw5jwIrviym4P4rWQ>
- <xme:ZU2tXybwPN-lQXtepxouJ7f_csWdh53m4OQQ2rLbxw4jh-BWV1_BlUcfjAXKpQxvf
- MWPHD6NUCegz2nmS-E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddvfedggeehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdludejmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
- ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
- gtgidrgiihiieqnecuggftrfgrthhtvghrnhepgfduleeikeelgfeifeegtdegffffieek
- iedvhefgffettdekfedtveeuhfevveffnecuffhomhgrihhnpeguihhstghorhgurdhggh
- dpkhgvrhhnvghlrdhorhhgpdgurhhophhlrhdrtghomhdpughishgtohhrugdrtghomhen
- ucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedtnecurf
- grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:ZU2tX1-8HBt85mL-wc4nqBfZK4TMpRWZb6pwuzU5qD5J5zmbZnFu1Q>
- <xmx:ZU2tX5r68Krrq1gmCTshwMKhdqXx-JMTuPHBZreaiHTMMUzyK9qtjg>
- <xmx:ZU2tX-rT_BfuzAz-hIipMuBFM0FjhYGFVGRyzFT9qHSjm_y1QLsg8w>
- <xmx:Zk2tX70Y6r2kkqhontu-z_2aqYFZEawaUj3O6cxXqCmn-U__WcaRcA>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 4707530676F0
- for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 09:57:41 -0500 (EST)
-Date: Thu, 12 Nov 2020 08:57:40 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: [Announce] OpenBMC Discord Community
-Message-ID: <20201112145740.GB4495@heinlein>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CX4yH2XqdzDqnT
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 02:19:17 +1100 (AEDT)
+Received: by mail-il1-x129.google.com with SMTP id n5so5574302ile.7
+ for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 07:19:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=k0IiAr9YuHHMiV0//4H1ahkz/wi8OEs6IpNVFooO7mA=;
+ b=F3tJgSfvBfxrEaZyQO/mCHwRdXceN7povF8VrmtVenKTzB0VHwQEs1nCkTGPXFC0wg
+ B1Uw6W5JU/9x45D6n5rZjolIWh+yVBQTzDuJ+8M9Phox+vgfe1FO1hz3wtCXBB7FPcxw
+ 06hkgmbgYboY+gg5jTKyPOQyYp8F2qwo8Qu9lAToTb6kJtsPCoiXqLzm0xog6iSZnIzQ
+ O4j51y4HDFJK8gy1uHtL4DTU6GLiLO8LGS5kiTUtAHnTQcJKrDUEENmFKfZnUbda2Chx
+ HCz7Cq5J0E5VHmXezCKRg9tX2EIc9vwiBFd/o2OCYUJXhJmpjfWSEQW5M8HfsrIv0Aic
+ jq6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=k0IiAr9YuHHMiV0//4H1ahkz/wi8OEs6IpNVFooO7mA=;
+ b=fGg4EPJL5Vbz8DRp4KePGwdqBfPJouoFWnnSkm91Khgff/jZxbJ11bM3aHEVd+nNag
+ +GZnVnZWMYqdK2HIZZK71eK9UDfH7U4eVFn8sms+4U35JrMbD0WqVt0QP+9jAvac58nI
+ yzubJ/cRnCIyN7ItuhVIgQ5WoslaGvNA35Wcv9EBehehcqQUov+mVMww4ebHt+743hS+
+ uoYEWNX27ZhAEgSSwiWYFLzwV4xhfnnTmstxjYbjJ6DSS+tDlXKOnmmk2Wn+9xemcT0j
+ rr11AVj/m1pdLhaM874LsoOta0tDDAsfpnPuWIX75yg0rJmCi8QqAfvy2+QakyKiQpfS
+ kaxg==
+X-Gm-Message-State: AOAM5318Fh3/Boj+v1h8PIZfISGU4osXIoFSZ/g6j9yz/a23wDwH6+/6
+ mY1AXvdpUojfDZs1zXeFJX1NF4kBCi/teGvef8U=
+X-Google-Smtp-Source: ABdhPJwTZzh0rudsdDlVzP36WFBzGuwfpa0j2vPuusxxhSqqlqIUSJAZ1h9mGH/DuKPUhpxNvMumSWIEqqQY3GQ+hAg=
+X-Received: by 2002:a92:c529:: with SMTP id m9mr23134032ili.195.1605194352873; 
+ Thu, 12 Nov 2020 07:19:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="gatW/ieO32f1wygP"
-Content-Disposition: inline
+References: <CABYu0Wjn-YB4HO37nkxoJyq8EW6=bV4P5EZiHij0y3SxEYVEkw@mail.gmail.com>
+ <b75f4c12-0d40-c529-40cd-3fb9ec1fc0ce@linux.vnet.ibm.com>
+ <CABYu0WhSqhhxULpe+f9eq2e8Tv4uYzh2DaDRxfXe838pk4EP4Q@mail.gmail.com>
+ <352ce958-186c-a26c-382f-d21ed26729ef@linux.vnet.ibm.com>
+ <986DD922-0EB7-4776-A302-2BBA264018C2@fb.com>
+In-Reply-To: <986DD922-0EB7-4776-A302-2BBA264018C2@fb.com>
+From: Shakeeb B K <shakeebbk@gmail.com>
+Date: Thu, 12 Nov 2020 20:49:01 +0530
+Message-ID: <CABYu0WgL=OH3cW5jKBYAkP+A+_VkLWgEE5i1iddf+WLQdBua5g@mail.gmail.com>
+Subject: Re: Firmware Version in ipmi mc info
+To: Vijay Khemka <vijaykhemka@fb.com>
+Content-Type: multipart/alternative; boundary="00000000000032daba05b3ea6ffb"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,223 +76,626 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---gatW/ieO32f1wygP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--00000000000032daba05b3ea6ffb
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Greetings,
+Hi Vijay,
 
-TL;DR: I have created an OpenBMC Discord community as a modern alternative =
-to
-IRC.  Please join at https://discord.gg/69Km47zH98 .  I've included some FA=
-Qs
-below.
+Yes I was looking at the wrong object. Moreover with ipmi, since my tag was
+not conformant to the format "vX.Y.Z..", I was not seeing the version
+properly. I am good on this now.
 
----
+Thanks,
+Shakeeb
 
-Recently Kurt sent out a survey about messaging (IRC) and the results
-suggested that using IRC is an impediment to a large segment of our
-community[1].  75% of responders suggested "IRC is too confusing" and 65%
-responded they were unwilling to use IRC even if someone help them set it u=
-p.
-I was also told privately that there are some people who, due to corporate =
-or
-country network restrictions, are unable to access IRC.  It seems that
-exclusively using IRC is putting a constraint on the collaboration of the
-community and so I am willing to try something different.
+On Thu, Nov 12, 2020 at 6:56 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
 
-I did a simple investigation of the options available to us and usages of
-other similar communities and came to the conclusion that Discord would
-likely be a good fit for our needs.  A few of us have been experimenting wi=
-th
-it and there do not seem to be any pervasive issues, so I am hereby announc=
-ing
-it to the community at-large.
+> Hello Shakeeb and Tom,
+>
+>
+>
+> I don=E2=80=99t see any issues with version for BMC in upstream version a=
+s well.
+> Software versions are exposed in bmc updater object rather than version
+> object and see following command yields BMC version
+>
+> busctl get-property xyz.openbmc_project.Software.BMC.Updater  /xyz/openbm=
+c_project/software/1950470f
+> xyz.openbmc_project.Software.Version Version
+>
+> s "2.9.0-dev-1057-gfe5603705"
+>
+>
+>
+> Regards
+>
+> -Vijay
+>
+>
+>
+> *From: *openbmc <openbmc-bounces+vijaykhemka=3Dfb.com@lists.ozlabs.org> o=
+n
+> behalf of TOM JOSEPH <tomjose@linux.vnet.ibm.com>
+> *Date: *Thursday, November 5, 2020 at 9:46 PM
+> *To: *Shakeeb B K <shakeebbk@gmail.com>
+> *Cc: *"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+> *Subject: *Re: Firmware Version in ipmi mc info
+>
+>
+>
+> Hello Shakeeb,
+>
+> Typically there is a D-Bus object for each version and that implements th=
+e
+> xyz.openbmc_project.Software.Version interface.
+> /xyz/openbmc_project/software doesn't implement the interface.
+>
+> busctl tree xyz.openbmc_project.Software.BMC.Updater
+> =E2=94=94=E2=94=80/xyz
+>   =E2=94=94=E2=94=80/xyz/openbmc_project
+>     =E2=94=94=E2=94=80/xyz/openbmc_project/software
+>       =E2=94=9C=E2=94=80/xyz/openbmc_project/software/6b6a7c53
+>       =E2=94=94=E2=94=80/xyz/openbmc_project/software/76174d14
+>
+> I guess the upstream implementation of this command is broken with the
+> latest version format. We discussed this in the community, work is not do=
+ne
+> yet. https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.html
+>
+> Regards,
+> Tom
+>
+>
+>
+> On 06-11-2020 09:38, Shakeeb B K wrote:
+>
+> Hi Tom, Thanks for the reply. But it doesn't seem to work as expected. I'=
+m
+> looking at...
+>
+>
+>
+> *This Message Is From an External Sender*
+>
+> This message came from outside your organization.
+>
+> Hi Tom,
+>
+>
+>
+> Thanks for the reply.
+>
+> But it doesn't seem to work as expected. I'm looking at the
+> witherspoon-bmc on QEMU.
+>
+>
+>
+> root@witherspoon:~# systemctl status
+> xyz.openbmc_project.Software.BMC.Updater
+> * *xyz.openbmc_project.Software.BMC.Updater.service* - OpenBMC Software
+> Update Manager
+>      Loaded: loaded
+> (/lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service;
+> enabled; vendor preset: enabled)
+>     Drop-In:
+> /lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service.d
+>              `-software-bmc-updater.conf
+>      Active: *active (running)* since Thu 2020-11-05 14:10:57 UTC; 13h ag=
+o
+>    Main PID: 387 (phosphor-image-)
+>      CGroup: /system.slice/xyz.openbmc_project.Software.BMC.Updater.servi=
+ce
+>              `-387 /usr/bin/phosphor-image-updater
+>
+> Nov 05 14:10:53 witherspoon systemd[1]: Starting OpenBMC Software Update
+> Manager...
+> Nov 05 14:10:57 witherspoon systemd[1]: Started OpenBMC Software Update
+> Manager.
+>
+>
+> root@witherspoon:~# busctl get-property xyz.openbmc_project.State.BMC
+> /xyz/openbmc_project/state/bmc0 xyz.openbmc_project.State.BMC
+> CurrentBMCState
+> s "*xyz.openbmc_project.State.BMC.BMCState.Ready*"
+>
+>
+> *root@witherspoon:~# busctl get-property
+> xyz.openbmc_project.Software.Version /xyz/openbmc_project/software
+> xyz.openbmc_project.Software.Version Version Failed to get property Versi=
+on
+> on interface xyz.openbmc_project.Software.Version: Unknown interface
+> xyz.openbmc_project.Software.Version or property Version.*
+>
+> root@witherspoon:~# busctl introspect --no-pager
+> xyz.openbmc_project.Software.Version /xyz/openbmc_project/software
+> NAME                                TYPE      SIGNATURE  RESULT/VALUE
+>  FLAGS
+> org.freedesktop.DBus.Introspectable interface -          -             -
+> .Introspect                         method    -          s             -
+> org.freedesktop.DBus.ObjectManager  interface -          -             -
+> .GetManagedObjects                  method    -          a{oa{sa{sv}}} -
+> .InterfacesAdded                    signal    oa{sa{sv}} -             -
+> .InterfacesRemoved                  signal    oas        -             -
+> org.freedesktop.DBus.Peer           interface -          -             -
+> .GetMachineId                       method    -          s             -
+> .Ping                               method    -          -             -
+> org.freedesktop.DBus.Properties     interface -          -             -
+> .Get                                method    ss         v             -
+> .GetAll                             method    s          a{sv}         -
+> .Set                                method    ssv        -             -
+> .PropertiesChanged                  signal    sa{sv}as   -             -
+>
+>
+>
+>
+>
+> Thanks,
+>
+> Shakeeb
+>
+>
+>
+> On Fri, Nov 6, 2020 at 8:37 AM TOM JOSEPH <tomjose@linux.vnet.ibm.com>
+> wrote:
+>
+> Hey Shakeeb,
+>
+> The service implementing the xyz.openbmc_project.Software.Version should
+> be running in the case of a normal boot as well. In our systems the servi=
+ce
+> is xyz.openbmc_project.Software.BMC.Updater and the Version property is
+> populated when the BMCState is Ready.
+>
+> Regards,
+> Tom
+>
+> On 05-11-2020 20:02, Shakeeb B K wrote:
+>
+> Hi All, Currently the ipmi handler for "mc info" command depends on the
+> "Version"...
+>
+>
+>
+> *This Message Is From an External Sender*
+>
+> This message came from outside your organization.
+>
+> Hi All,
+>
+>
+>
+> Currently the ipmi handler for "mc info" command depends on the "Version"
+> property on interface xyz.openbmc_project.Software.Version.
+>
+> But this is getting populated only on the image update path by
+> phosphor-bmc-code-mgmt.
+>
+> Shouldn't the version be set on a normal boot as well? Is this a gap in
+> current implementation?
+>
+>
+>
+> Thanks,
+>
+> Shakeeb
+>
+>
 
-Discord is widely used in the video gaming community and by some other open
-source communities.  It has a modern Slack-like interface, but has much bet=
-ter
-Free-tier limits compared to similar alternatives.  Discord also has built-=
-in
-voice / video / screen sharing, which could be very beneficial for impromptu
-hands-on problem solving and hosting "Office Hours".  Like many alternative=
-s,
-there is a browser, stand-alone, and mobile app options and sign-up is a
-simple email-verification process.
+--00000000000032daba05b3ea6ffb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm pretty excited about the possibilities for our community and look forwa=
-rd
-to seeing many of you join!
-
----
-
-# Q&As
-
-## What are the rules?
-
-We've never explicitly stated the rules for IRC, but IRC was set up before =
-we
-had a Code of Conduct.  I have created a #rules channel in Discord and post=
-ed
-a link to our CoC; they should all be assumed to apply on Discord.
-
-Discord does support private messages, but they are set up in a different w=
-ay
-=66rom some alternatives.  With Discord, PMs take place outside of our comm=
-unity
-but within Discord itself and we have no direct way to directly monitor or
-police.  You can choose to block all private messages, allow all private
-messages, or accept PMs from a subset of people.  This is similar to what we
-have today with IRC, so I expect there to be no issues, but if anyone feels
-they are on the receiving end of unwanted behavior please report by followi=
-ng
-the procedures outlined in the CoC.
+<div dir=3D"ltr">Hi Vijay,<div><br></div><div>Yes I was looking at the wron=
+g object. Moreover with ipmi, since my tag was not conformant to the format=
+ &quot;vX.Y.Z..&quot;, I was not seeing the version properly. I am good on =
+this now.</div><div><br></div><div>Thanks,</div><div>Shakeeb</div></div><br=
+><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, N=
+ov 12, 2020 at 6:56 AM Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.co=
+m">vijaykhemka@fb.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">
 
 
-## Can I use my existing Discord account?
-
-Yes, but... since Discord is widely used in a less-professional setting
-(Gaming), I feel it is important to point something out.
-
-With Discord you have a Username for your account and a Nickname within the
-community.  Your Nickname is displayed in chats, but it is easy to see your
-Username within your profile.  If you do not everyone to know your alter-ego
-as F0rtN1ghtKing007, you may want to create a separate account or change yo=
-ur
-Username.  (If your existing Username might be construed as a CoC violation,
-please change it or create a separate account before joining.)
 
 
-## Won't this split the community into two messaging systems?  What happens
-with IRC?
 
-Hopefully not, but maybe.  Just like software, sometimes someone comes along
-and refactors the solution to make it better.  Sometimes the new solution
-loses a few features along the way.  Sometimes the new solution doesn't pan
-out and it isn't fully adopted.  I don't see this as any different; if it is
-better, people will adopt it, and if not so be it.
+<div lang=3D"EN-US" style=3D"overflow-wrap: break-word;">
+<div class=3D"gmail-m_-1410478744982165190WordSection1">
+<p class=3D"MsoNormal">Hello Shakeeb and Tom,<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">I don=E2=80=99t see any issues with version for BMC =
+in upstream version as well. Software versions are exposed in bmc updater o=
+bject rather than version object and see following command yields BMC versi=
+on<u></u><u></u></p>
+<p class=3D"gmail-m_-1410478744982165190p1"><span class=3D"gmail-m_-1410478=
+744982165190s1">busctl get-property xyz.openbmc_project.Software.BMC.Update=
+r</span><span class=3D"gmail-m_-1410478744982165190apple-converted-space">=
+=C2=A0
+</span><span class=3D"gmail-m_-1410478744982165190s1">/xyz/openbmc_project/=
+software/1950470f xyz.openbmc_project.Software.Version Version</span><u></u=
+><u></u></p>
+<p class=3D"gmail-m_-1410478744982165190p1"><span class=3D"gmail-m_-1410478=
+744982165190s1">s &quot;2.9.0-dev-1057-gfe5603705&quot;</span><u></u><u></u=
+></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Regards<u></u><u></u></p>
+<p class=3D"MsoNormal">-Vijay<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(181,196,223);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
+</span></b><span style=3D"font-size:12pt;color:black">openbmc &lt;openbmc-b=
+ounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_=
+blank">fb.com@lists.ozlabs.org</a>&gt; on behalf of TOM JOSEPH &lt;<a href=
+=3D"mailto:tomjose@linux.vnet.ibm.com" target=3D"_blank">tomjose@linux.vnet=
+.ibm.com</a>&gt;<br>
+<b>Date: </b>Thursday, November 5, 2020 at 9:46 PM<br>
+<b>To: </b>Shakeeb B K &lt;<a href=3D"mailto:shakeebbk@gmail.com" target=3D=
+"_blank">shakeebbk@gmail.com</a>&gt;<br>
+<b>Cc: </b>&quot;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_bla=
+nk">openbmc@lists.ozlabs.org</a>&quot; &lt;<a href=3D"mailto:openbmc@lists.=
+ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
+<b>Subject: </b>Re: Firmware Version in ipmi mc info<u></u><u></u></span></=
+p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<p>Hello Shakeeb,<br>
+<br>
+Typically there is a D-Bus object for each version and that implements the =
+xyz.openbmc_project.Software.Version interface. /xyz/openbmc_project/softwa=
+re doesn&#39;t implement the interface.<br>
+<br>
+busctl tree xyz.openbmc_project.Software.BMC.Updater<br>
+=E2=94=94=E2=94=80/xyz<br>
+=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project<br>
+=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/software<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <span style=3D"font-family:&quot;MS Gothic&q=
+uot;">=E2=94=9C</span>=E2=94=80/xyz/openbmc_project/software/6b6a7c53<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/softw=
+are/76174d14<u></u><u></u></p>
+<p>I guess the upstream implementation of this command is broken with the l=
+atest version format. We discussed this in the community, work is not done =
+yet.
+<a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.ht=
+ml" target=3D"_blank">https://lists.ozlabs.org/pipermail/openbmc/2020-Augus=
+t/022598.html</a><u></u><u></u></p>
+<p class=3D"MsoNormal">Regards,<br>
+Tom <u></u><u></u></p>
+<p><u></u>=C2=A0<u></u></p>
+<div>
+<p class=3D"MsoNormal">On 06-11-2020 09:38, Shakeeb B K wrote:<u></u><u></u=
+></p>
+</div>
+<blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
+<p class=3D"MsoNormal"><span class=3D"gmail-m_-1410478744982165190pfptprehe=
+ader1"><span style=3D"font-size:1pt;color:white">Hi Tom, Thanks for the rep=
+ly. But it doesn&#39;t seem to work as expected. I&#39;m looking at...=C2=
+=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0
+</span></span><u></u><u></u></p>
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%;background:rgb(156,163,167);border-radius:4px">
+<tbody>
+<tr>
+<td style=3D"padding:12pt;border-radius:4px">
+<div align=3D"center">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%;max-width:100%">
+<tbody>
+<tr>
+<td valign=3D"top" style=3D"padding:0in">
+<div align=3D"center">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%;background:rgb(156,163,167)">
+<tbody>
+<tr>
+<td width=3D"100%" valign=3D"top" style=3D"width:100%;padding:0in">
+<div align=3D"center">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%">
+<tbody>
+<tr>
+<td style=3D"padding:0in">
+<p class=3D"MsoNormal"><span class=3D"gmail-m_-1410478744982165190pfpttitle=
+"><b><span style=3D"font-size:13.5pt;font-family:Roboto">This Message Is Fr=
+om an External Sender</span></b></span>
+<u></u><u></u></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding:0in">
+<p class=3D"MsoNormal"><span class=3D"gmail-m_-1410478744982165190pfptsubti=
+tle"><span style=3D"font-size:10pt;font-family:Roboto">This message came fr=
+om outside your organization.</span></span>
+<u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div>
+<p class=3D"MsoNormal">Hi Tom, <u></u><u></u></p>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Thanks for the reply.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">But it doesn&#39;t seem to work as expected. I&#39;m=
+ looking at the witherspoon-bmc on QEMU.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Courier New&quot;">=
+root@witherspoon:~# systemctl status xyz.openbmc_project.Software.BMC.Updat=
+er<br>
+* <b>xyz.openbmc_project.Software.BMC.Updater.service</b> - OpenBMC Softwar=
+e Update Manager<br>
+=C2=A0 =C2=A0 =C2=A0Loaded: loaded (/lib/systemd/system/xyz.openbmc_project=
+.Software.BMC.Updater.service; enabled; vendor preset: enabled)<br>
+=C2=A0 =C2=A0 Drop-In: /lib/systemd/system/xyz.openbmc_project.Software.BMC=
+.Updater.service.d<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-software-bmc-updater.conf=
+<br>
+=C2=A0 =C2=A0 =C2=A0Active: <b>active (running)</b> since Thu 2020-11-05 14=
+:10:57 UTC; 13h ago<br>
+=C2=A0 =C2=A0Main PID: 387 (phosphor-image-)<br>
+=C2=A0 =C2=A0 =C2=A0CGroup: /system.slice/xyz.openbmc_project.Software.BMC.=
+Updater.service<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-387 /usr/bin/phosphor-ima=
+ge-updater<br>
+<br>
+Nov 05 14:10:53 witherspoon systemd[1]: Starting OpenBMC Software Update Ma=
+nager...<br>
+Nov 05 14:10:57 witherspoon systemd[1]: Started OpenBMC Software Update Man=
+ager.</span><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-bottom:12pt"><span style=3D"font-fam=
+ily:&quot;Courier New&quot;"><br>
+root@witherspoon:~# busctl get-property xyz.openbmc_project.State.BMC /xyz/=
+openbmc_project/state/bmc0 xyz.openbmc_project.State.BMC CurrentBMCState<br=
+>
+s &quot;<b>xyz.openbmc_project.State.BMC.BMCState.Ready</b>&quot;</span><u>=
+</u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal" style=3D"margin-bottom:12pt"><b><span style=3D"font-=
+family:&quot;Courier New&quot;">root@witherspoon:~# busctl get-property xyz=
+.openbmc_project.Software.Version /xyz/openbmc_project/software xyz.openbmc=
+_project.Software.Version Version<br>
+Failed to get property Version on interface xyz.openbmc_project.Software.Ve=
+rsion: Unknown interface xyz.openbmc_project.Software.Version or property V=
+ersion.</span></b><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Courier New&quot;">=
+root@witherspoon:~# busctl introspect --no-pager xyz.openbmc_project.Softwa=
+re.Version /xyz/openbmc_project/software
+<br>
+NAME =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TYPE =C2=A0 =C2=A0 =C2=A0SIGNATURE=
+ =C2=A0RESULT/VALUE =C2=A0FLAGS<br>
+org.freedesktop.DBus.Introspectable interface - =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.Introspect =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0s =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+org.freedesktop.DBus.ObjectManager =C2=A0interface - =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.GetManagedObjects =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0a{oa{sa{sv}}}=
+ -<br>
+.InterfacesAdded =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0signal =C2=A0 =C2=A0oa{sa{sv}} - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 -<br>
+.InterfacesRemoved =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0signal =C2=A0 =C2=A0oas =C2=A0 =C2=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+org.freedesktop.DBus.Peer =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 interface - =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 -<br>
+.GetMachineId =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.Ping =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+org.freedesktop.DBus.Properties =C2=A0 =C2=A0 interface - =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.Get =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0method =C2=A0 =C2=A0ss =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 v =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.GetAll =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0s =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0a{sv} =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.Set =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0method =C2=A0 =C2=A0ssv =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
+.PropertiesChanged =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0signal =C2=A0 =C2=A0sa{sv}as =C2=A0 - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 -</span><u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Thanks,<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Shakeeb<u></u><u></u></p>
+</div>
+</div>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Fri, Nov 6, 2020 at 8:37 AM TOM JOSEPH &lt;<a hre=
+f=3D"mailto:tomjose@linux.vnet.ibm.com" target=3D"_blank">tomjose@linux.vne=
+t.ibm.com</a>&gt; wrote:<u></u><u></u></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin-left:4=
+.8pt;margin-right:0in">
+<div>
+<p>Hey Shakeeb,<br>
+<br>
+The service implementing the xyz.openbmc_project.Software.Version should be=
+ running in the case of a normal boot as well. In our systems the service i=
+s xyz.openbmc_project.Software.BMC.Updater and the Version property is popu=
+lated when the BMCState is Ready.<u></u><u></u></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:12pt">Regards,<br>
+Tom<u></u><u></u></p>
+<div>
+<p class=3D"MsoNormal">On 05-11-2020 20:02, Shakeeb B K wrote:<u></u><u></u=
+></p>
+</div>
+<blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
+<p class=3D"MsoNormal"><span style=3D"font-size:1pt;color:white">Hi All, Cu=
+rrently the ipmi handler for &quot;mc info&quot; command depends=C2=A0on th=
+e &quot;Version&quot;...=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+ =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+</span><u></u><u></u></p>
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%;background:rgb(156,163,167);border-radius:4px">
+<tbody>
+<tr>
+<td style=3D"padding:12pt;border-radius:4px">
+<div align=3D"center">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%;border-radius:4px">
+<tbody>
+<tr>
+<td valign=3D"top" style=3D"padding:0in;max-width:100%">
+<div align=3D"center">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%;background:rgb(156,163,167)">
+<tbody>
+<tr>
+<td width=3D"100%" valign=3D"top" style=3D"width:100%;padding:0in">
+<div align=3D"center">
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"width:100%">
+<tbody>
+<tr>
+<td style=3D"padding:0in">
+<p class=3D"MsoNormal"><b><span style=3D"font-size:13.5pt;font-family:Robot=
+o">This Message Is From an External Sender</span></b>
+<u></u><u></u></p>
+</td>
+</tr>
+<tr>
+<td style=3D"padding:0in">
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:Roboto">Th=
+is message came from outside your organization.</span>
+<u></u><u></u></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div>
+<p class=3D"MsoNormal">Hi All, <u></u><u></u></p>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Currently the ipmi handler for &quot;mc info&quot; c=
+ommand depends=C2=A0on the &quot;Version&quot; property on interface=C2=A0x=
+yz.openbmc_project.Software.Version.=C2=A0<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">But this is getting populated only on the image upda=
+te path by phosphor-bmc-code-mgmt.<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Shouldn&#39;t the version be set on a normal boot as=
+ well? Is this a gap in current implementation?
+<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Thanks,<u></u><u></u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Shakeeb<u></u><u></u></p>
+</div>
+</div>
+</blockquote>
+</div>
+</blockquote>
+</div>
+</blockquote>
+</div>
+</div>
 
-The survey results and sentiment I have heard from some TSC members indicate
-to me that IRC might be an impediment to bettering the community.  So, this=
- is
-an option for us to try.
+</blockquote></div>
 
-For the time being, I personally will be on both IRC and Discord.  We can
-revisit in the future to decide if one should be deprecated.
-
-
-## Why didn't you choose Slack?
-
-Some companies have chosen Slack as their internal messaging solution as ha=
-ve
-some open source communities.  It is, overall, a good offering in many
-settings.
-
-For open source communities, the Free-tier of Slack has some limitations th=
-at
-I feel make it difficult to build a community around.  The biggest is a lim=
-it
-of 10,000 messages in the history.  After 10k messages, Slack starts deleti=
-ng
-older messages.  In one community I participate in less-active channels end=
- up
-losing their messages in only a few days, which means that meaningful
-conversations can only take place in the most active channels among the most
-active users.  That community has recently moved off Slack and onto Discord
-for this reason.
-
-The paid-tiers of Slack are pretty expensive for our community.  We typical=
-ly
-have ~75 active participants on IRC.  Assuming we grow this engagement and =
-we
-count transient users, we'd probably be looking at $10,000 per year for the
-lowest tier of Slack.  Not only do we not have a budget as a community but
-that does not, to me, seem like a very effective use of any funds we might
-have.
-
-Discord is as good or better than Slack, as best I can tell, in every way
-except one: threaded messages.  Hopefully, Discord will add that as a featu=
-re
-in the future.  I feel the elimination of Free-tier limits and voice/video
-features of Discord will make it a better choice for us.
-
-A reasonably objective article as a comparison between the two suggests that
-Discord is better for large open source communities[2].
-
-## Why didn't you choose <X>?
-
-Whatever option we pick some people will be pleased and some will not.
-Looking at the TSC member companies, I think each company has chosen a
-different product as their internal messaging solution.  Some of them have
-their own competitive offering to Slack.  I did not do an exhaustive
-feature-by-feature comparison of all competitive offerings.
-
-In terms of Open Source communities, and similar communities utilizing a fr=
-ee
-or low-priced option, Discord and Slack seem to have the most usage.  Many
-other large open source have Discord communities as well (some official and
-some unofficial).  Rust, Vue, Angular, Fedora, OpenSUSE, and Electron are a
-few I recognized on a list by Discord[3].  The Python Discord community has
-over 100,000 members.
-
-There are some fully open source alternatives to Discord.  The two most
-popular are Riot.IM and Mattermost.  Mattermost would require us to host the
-service, similar to what we do for Gerrit.  We have an existing Riot.IM bri=
-dge
-to IRC but we have had reliability issues with it.
-
-If something better comes along and/or Discord presents problems for us, I
-suspect the community will be nimble enough to move along to the next great
-thing.
-
-
-## Does this mean _you_ control the Discord community?
-
-I originally created the existing IRC set up and have given some of the oth=
-er
-long-time members administration on it.  The permissions I set up on Discord
-are identical and two other people currently have administrator-level
-permissions there as well.  If the TSC decides on a particular governance of
-our communities, such as IRC or Discord, I'll happily transfer ownership as
-requested.  Discord ownership can be transferred to another account very
-easily.
-
-As stated earlier, no one with admin-level access has the ability to read
-private messages either on IRC or Discord.
-
----
-
-1. https://lore.kernel.org/openbmc/bb565e15-f5a7-b0b2-d987-41b1a5e9acbb@gma=
-il.com/
-2. https://droplr.com/how-to/productivity-tools/slack-vs-discord/
-3. https://discord.com/open-source
-
---=20
-Patrick Williams
-
---gatW/ieO32f1wygP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl+tTWEACgkQqwNHzC0A
-wRnXJw/8DJ/5VqmmuEfwEOKcAVHgenCOr9qGBZne4+H3FsDYH82Vymdlt9gJRYSV
-CygnF8fA8bd3YGDTUoL5Vj/+EWB6kXCnnfqKb4pXuigTtijQpi3M+nGkrz4NDxTG
-v6YgbHvdsI1GaifC2IPThyKFprJHUldVY11V/TrxYOAu3MI4dzQfZsb3pg6NqB+z
-KKWn3Am04VOapUZeOcRUzwr6v6kn3lYWFFijYDt5kEp9uIWwOQDhlw/w3enGLWvn
-8hQ8Ym1FwcQH2/wD8QQfvVWgrWqV4kI5hjsSLis6/Tm8QI61SCDzkM8MsGcY6g1j
-5Mb/5KqzhdpGgwTLPtt5+buojm76Zpdx6nMVuSQ3wSaBCMG/f1KQu8GLM/jBg2V7
-zVJfwFsLNY8rednuthCbw3QVowW6lmpuaoHUV8jZYWgDtTZA8RuT6IJJmGaNn4f4
-0+jnQeO8NJoljWdbtJnj+J37PrvTwUmT5Z9vK3aKnN9AhwK4PaO5PNLdTHxvYqqc
-79kyRwaEm+p8BTbBkBpUBBy3yGpfMzM6EU5Nc4/hDxWWWF0Bw2mUUgbSkBb+Czmk
-888GhXruKbSJXavrsbgr+HGeTwvHGU+hWgOoddudyA3NCwIYYrbi5QzL24XirU4I
-zT0KG/Yu0BmUN602GTsPs3S76qIqu/O61yyDVeorhz6tNUbgEKo=
-=7jxU
------END PGP SIGNATURE-----
-
---gatW/ieO32f1wygP--
+--00000000000032daba05b3ea6ffb--
