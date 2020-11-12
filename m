@@ -2,66 +2,39 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13FC72B04C5
-	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 13:13:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D752D2B0656
+	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 14:22:41 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CX0rF2T2fzDqyx
-	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 23:13:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CX2Md5VRgzDqwN
+	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 00:22:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92a;
- helo=mail-ua1-x92a.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=173.167.31.197;
+ helo=bajor.fuzziesquirrel.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=j2jqccP1; dkim-atps=neutral
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com
- [IPv6:2607:f8b0:4864:20::92a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=fuzziesquirrel.com
+Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
+ [173.167.31.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CX0mX0RRVzDqwy
- for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 23:10:35 +1100 (AEDT)
-Received: by mail-ua1-x92a.google.com with SMTP id t15so1783707ual.6
- for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 04:10:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Rrw39jt9S4QbfKShGUlnilbzrWw5616yGWdUruxlbok=;
- b=j2jqccP1W7bTpHyNcHgS5UDt1qaM5YAErzWCxxCUuHM2jsbMrsywH8Rl/oQUAJ62VR
- OcRvEQK9+bGOwYqfkLLiuz2HjHb9WXfmBlPTZJtwKvyzZ0fjrAypxRoZMubaeRR07c6l
- ZaPkOhR6fAmAZKOJP5GppCX6yHRHzwMmeP8Gaen+Ufgkonkv8A4pnV0ZmOTL6gIWnyto
- eHxqaufIqD8W1Ag3+aW1ffadjcH0FjRe9XIb8bHO7Y9LU83uBLzjYEdp2tN94fPV1kv6
- IaIzQYswIuRoMNmnL7RgGMbtVjf9jikXgFTi0iY7wejZrYcw+V34J5l3SmZM98FDQEnk
- H8fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=Rrw39jt9S4QbfKShGUlnilbzrWw5616yGWdUruxlbok=;
- b=gQ1AfdeJZy9JtTecAg0WgCgmDXbM8N6SLGhKLu3VPnATOzsmPH3bMyx63uTKhZBHH8
- fLQlt5e4yIhy+2RuHO+vGi9QPkW+sPtBbs2XQfADRX7dYVs0aEjg3vyuA4CaLjNktqoZ
- jc+6zywepBNLl3FEhWl0unuCkOM0K0v6abi45GwyDZL6kbPXOZJQ7aJIv2Ymv9kqkxkV
- UMYwWdiNK3ZD6bDXyn/sqm+UMCpPVFKGIU3Q+ajSUOqT0GKmAW5Hi4avSJGJMNII5fOD
- VF/0SQMvNvJwzQdexEKTGLwTRmxFmu59g1Bqt0ODUd4lnWWhE0/MQjtf4UqxHhiyPYd2
- cBfw==
-X-Gm-Message-State: AOAM532twDUuVF+n/s/BX9X2mAf78KKK9/4uYl3cWD/P1FFHmf7Vxgtf
- C0piGh0dxuhfyNH7OMsRTGYvg5h1rwFFfuUD7hE=
-X-Google-Smtp-Source: ABdhPJyUJ98HNACA1Q9j5atQXvhMty/y8aJcnw71JQ554P+GtERiuKg6lQ38PEqe2C+DlNcu0qhfTOLVDSnjQlq3tp8=
-X-Received: by 2002:ab0:654a:: with SMTP id x10mr16289177uap.78.1605183031383; 
- Thu, 12 Nov 2020 04:10:31 -0800 (PST)
-MIME-Version: 1.0
-References: <OF51173777.BBAB38E9-ON0025861E.0014BEED-0025861E.0020A56A@notes.na.collabserv.com>
-In-Reply-To: <OF51173777.BBAB38E9-ON0025861E.0014BEED-0025861E.0020A56A@notes.na.collabserv.com>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Thu, 12 Nov 2020 17:40:20 +0530
-Message-ID: <CAM=TmwVX50x5zJk5gWCcGZhabYx_XhQEmZH_-KUkMHzBhwasHA@mail.gmail.com>
-Subject: Re: support NVMe drive health monitoring
-To: Jet Li <Jet.Li@ibm.com>, richard.marian.thomaiyar@linux.intel.com, 
- sumanth.bhat@intel.com
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CX2Kc5kY4zDqvp
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 00:20:50 +1100 (AEDT)
+X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
+Content-Type: text/plain;
+	charset=us-ascii;
+	delsp=yes;
+	format=flowed
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: Re: New meta-ampere request
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+In-Reply-To: <fbcb9c2f-553c-6ebe-d2d1-69dd072a25ad@os.amperecomputing.com>
+Date: Thu, 12 Nov 2020 08:20:43 -0500
+Content-Transfer-Encoding: 7bit
+Message-Id: <F47638BE-9654-4837-9FE3-1AB188CDB04C@fuzziesquirrel.com>
+References: <fbcb9c2f-553c-6ebe-d2d1-69dd072a25ad@os.amperecomputing.com>
+To: "Thang Q. Nguyen" <thang@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,20 +46,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, openbmc@lists.ozlabs.org, ed@tanous.net,
- rashmi.r.v@linux.intel.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+at 1:58 AM, Thang Q. Nguyen <thang@os.amperecomputing.com> wrote:
 
-> 8. Intel have forked libmctp (intel-bmc/libmctp) and implemented a further two bindings
->     a. SMBus (DSP0237)
->     b. PCIe VDM (DSP0238)
-> 9. Both the SMBus and PCIe VDM binding implementations in intel-bmc/libmctp require kernel patches that only exist in Intel's OpenBMC tree
+> Hi Brad,
+>
+> I am from Ampere Computing. We are using the OpenBMC to develop our BMC  
+> for our reference platform (with Ampere CPU and Aspeed AST2500).
+>
+> We need you to help create a new meta-ampere repository for us to start  
+> pushing our codes for review.
+>
+> Below is the information to create new meta-ampere layer:
+>
+> Maintainers:
+>
+>     thang@os.amperecomputing.com
+>
+>     tung@os.amperecomputing.com
+>
+> Let me know if I miss anything.
+>
+>
+> Best Regards,
+>
+> Thang Q. Nguyen
 
-On a different subject, is there a plan to submit this code to
-upstream OpenBMC libmctp and kernel?
+Hi Thang - meta-ampere created!
 
-Thanks,
-Deepak
+thx - brad
