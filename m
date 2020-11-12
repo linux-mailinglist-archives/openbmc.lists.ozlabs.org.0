@@ -1,70 +1,138 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8FBC2B0849
-	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 16:20:13 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF0192B08B8
+	for <lists+openbmc@lfdr.de>; Thu, 12 Nov 2020 16:45:04 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CX4zG5W20zDqpJ
-	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 02:20:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CX5Ww5sXhzDqsh
+	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 02:45:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::129;
- helo=mail-il1-x129.google.com; envelope-from=shakeebbk@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=F3tJgSfv; dkim-atps=neutral
-Received: from mail-il1-x129.google.com (mail-il1-x129.google.com
- [IPv6:2607:f8b0:4864:20::129])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.132.133; helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=thangavel.k@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=quarantine dis=none) header.from=hcl.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=f11ZLnnm; 
+ dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=f11ZLnnm; 
+ dkim-atps=neutral
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320133.outbound.protection.outlook.com [40.107.132.133])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CX4yH2XqdzDqnT
- for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 02:19:17 +1100 (AEDT)
-Received: by mail-il1-x129.google.com with SMTP id n5so5574302ile.7
- for <openbmc@lists.ozlabs.org>; Thu, 12 Nov 2020 07:19:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=k0IiAr9YuHHMiV0//4H1ahkz/wi8OEs6IpNVFooO7mA=;
- b=F3tJgSfvBfxrEaZyQO/mCHwRdXceN7povF8VrmtVenKTzB0VHwQEs1nCkTGPXFC0wg
- B1Uw6W5JU/9x45D6n5rZjolIWh+yVBQTzDuJ+8M9Phox+vgfe1FO1hz3wtCXBB7FPcxw
- 06hkgmbgYboY+gg5jTKyPOQyYp8F2qwo8Qu9lAToTb6kJtsPCoiXqLzm0xog6iSZnIzQ
- O4j51y4HDFJK8gy1uHtL4DTU6GLiLO8LGS5kiTUtAHnTQcJKrDUEENmFKfZnUbda2Chx
- HCz7Cq5J0E5VHmXezCKRg9tX2EIc9vwiBFd/o2OCYUJXhJmpjfWSEQW5M8HfsrIv0Aic
- jq6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=k0IiAr9YuHHMiV0//4H1ahkz/wi8OEs6IpNVFooO7mA=;
- b=fGg4EPJL5Vbz8DRp4KePGwdqBfPJouoFWnnSkm91Khgff/jZxbJ11bM3aHEVd+nNag
- +GZnVnZWMYqdK2HIZZK71eK9UDfH7U4eVFn8sms+4U35JrMbD0WqVt0QP+9jAvac58nI
- yzubJ/cRnCIyN7ItuhVIgQ5WoslaGvNA35Wcv9EBehehcqQUov+mVMww4ebHt+743hS+
- uoYEWNX27ZhAEgSSwiWYFLzwV4xhfnnTmstxjYbjJ6DSS+tDlXKOnmmk2Wn+9xemcT0j
- rr11AVj/m1pdLhaM874LsoOta0tDDAsfpnPuWIX75yg0rJmCi8QqAfvy2+QakyKiQpfS
- kaxg==
-X-Gm-Message-State: AOAM5318Fh3/Boj+v1h8PIZfISGU4osXIoFSZ/g6j9yz/a23wDwH6+/6
- mY1AXvdpUojfDZs1zXeFJX1NF4kBCi/teGvef8U=
-X-Google-Smtp-Source: ABdhPJwTZzh0rudsdDlVzP36WFBzGuwfpa0j2vPuusxxhSqqlqIUSJAZ1h9mGH/DuKPUhpxNvMumSWIEqqQY3GQ+hAg=
-X-Received: by 2002:a92:c529:: with SMTP id m9mr23134032ili.195.1605194352873; 
- Thu, 12 Nov 2020 07:19:12 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CX5Vk5gzDzDqsR
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 02:43:49 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=10C+hBuwqkCJcE8qmYNXHP78stg4mXiTIt83VL7PFu8=;
+ b=f11ZLnnmxhDGFVv4K2fgd7QIlORB57Q6U+3vFAUrY4CDeCCpp9djD3INwhpzh3+zoYYqwb4naXZs9AW54EB3iwc6RmBNa0u0NGGWQtGXrAA6loglZgtbRQnYnRy3NU5qFMre2ky7V0Zv3HHvkfrj3XSbZYHB8Z6srk3FD2+qZ00=
+Received: from SG2PR06CA0179.apcprd06.prod.outlook.com (2603:1096:1:1e::33) by
+ SG2PR04MB2331.apcprd04.prod.outlook.com (2603:1096:4:4::15) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3541.21; Thu, 12 Nov 2020 15:43:35 +0000
+Received: from SG2APC01FT059.eop-APC01.prod.protection.outlook.com
+ (2603:1096:1:1e:cafe::5) by SG2PR06CA0179.outlook.office365.com
+ (2603:1096:1:1e::33) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21 via Frontend
+ Transport; Thu, 12 Nov 2020 15:43:35 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.56)
+ smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
+ header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
+ header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.195.56 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.56; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.195.56) by
+ SG2APC01FT059.mail.protection.outlook.com (10.152.251.134) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3564.22 via Frontend Transport; Thu, 12 Nov 2020 15:43:34 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=F5cUWQ4Dbv1DTzEMJrfdXSa0A3wRuhs8gGeSGn/bvvJ0xn7m+q7LlXDcoqIRWsd6OtGOV3cFNZ+wc7nmGA3lBak3ra4oQqhLc0VpKzM1ExLVzyTxvwKmBUcpB1vkufwUVz6kKLmDHzutsiGJqyVeOvYWEW2jX0GZWHvsLzaHPmpgqEVRwrP5RofDcBTlygf4WXbsF+GJU1RV60F3ztpe+WiO1aCMIhtZgNVpnAPrucNZvkqNaNolR83FDPHPg3PZKQxifrCAooihNUlNeedlJH1tE3GDOtJZsFG/OaJUcpyuREJvVDKFie4Ak9aXuMCwWqojTZbLghpSvQnchvcIEA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=10C+hBuwqkCJcE8qmYNXHP78stg4mXiTIt83VL7PFu8=;
+ b=VCrjUssrus4g5GxtSomQh818O9yr6/Zdq3rUUdORSkDnC2gK/lwIAsejv7msfkCnwPXHw89Zwth+sc8DucK50DufaPTUrf7Ky7YacVF+DWsJi0jYswb8UTLAGrm3be3g+nuxFWbcX+kdLA3OCt/uM/NuY521W96muQ+cLigB0fCDOS9xA73AxzcCRgS6wj68lFdojA1bzHtXCIlqAbq1j/LuJ/2wF6lkRodfFKp2zPLQMTu8PvNtSkd8PTO+/ry6V80GjnIDRyD4RZ+cIBQfJzkAAP53G15qn9//F2OUNxe0+GlH5OvRT3yt28DmuibtMpELq+JYY7l82NZCsjg4fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=10C+hBuwqkCJcE8qmYNXHP78stg4mXiTIt83VL7PFu8=;
+ b=f11ZLnnmxhDGFVv4K2fgd7QIlORB57Q6U+3vFAUrY4CDeCCpp9djD3INwhpzh3+zoYYqwb4naXZs9AW54EB3iwc6RmBNa0u0NGGWQtGXrAA6loglZgtbRQnYnRy3NU5qFMre2ky7V0Zv3HHvkfrj3XSbZYHB8Z6srk3FD2+qZ00=
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com (2603:1096:203:5d::15)
+ by HK2PR04MB3618.apcprd04.prod.outlook.com (2603:1096:202:33::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21; Thu, 12 Nov
+ 2020 15:43:30 +0000
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::e52f:5fdf:e09d:fa29]) by HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::e52f:5fdf:e09d:fa29%6]) with mapi id 15.20.3541.025; Thu, 12 Nov 2020
+ 15:43:30 +0000
+From: Kumar Thangavel <thangavel.k@hcl.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Fan failures in phosphor-pid-control
+Thread-Topic: Fan failures in phosphor-pid-control
+Thread-Index: Ada47FMyELYHuvydRK+9g5wvavHZXQ==
+Date: Thu, 12 Nov 2020 15:43:29 +0000
+Message-ID: <HK0PR04MB2964AFE422A0019557CB1BA3FDE70@HK0PR04MB2964.apcprd04.prod.outlook.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-hclclassification: HCL_Cla5s_1nt3rnal
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNTE3MjIzMGQtNTlhMS00NGJhLWFkMjQtMTRlMDdiMGU2MWQ2IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzXzFudDNybmFsIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE4LjQuMTg0My4xMjMiLCJUcnVzdGVkTGFiZWxIYXNoIjoiWWx5WHBPd1dySkNBalg2ZU5GTFAwWVFWS2NcL2dnSkdHcmhkNXBiWjdXSUw5dFZnbzRVTUZFTmkwckpjT2xhbHUifQ==
+Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
+ signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=hcl.com;
+x-originating-ip: [2409:4072:620d:471a:90a5:3040:7d15:e82a]
+x-ms-publictraffictype: Email
+X-MS-Office365-Filtering-Correlation-Id: 51146abe-7007-4bce-f83c-08d88721b721
+x-ms-traffictypediagnostic: HK2PR04MB3618:|SG2PR04MB2331:
+x-ms-exchange-transport-forked: True
+X-Microsoft-Antispam-PRVS: <SG2PR04MB2331108BD0EAA8F53DA3CDE1FDE70@SG2PR04MB2331.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:10000;OLM:8273;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: hYrXOsDrH8ChOQEkEXtjNWLHszP5PR6bHUDZfS+j/a3gFqj5F45OqRSmbbVZPMXh4rpLLpN+iaO97FBxmtcpefXc9CDQAIDGTWQRrh//iv+FSRjXm2PeAMFVw8rRNZ+3+HP814u85mDbsB+XCrkOGIXbtySeLUBGEQ1HBjJB8HG9EOt56xixRqGxOwW0Kfd574LT9ExffZ7OmyeYOhhr7TTM1kldHCLxj9GvLrErvWhVMF4L1lArP900Rl/ipHpj45f7OUF/HrOkYyXd96kpT0S7Z0w2u0QS7TAUp7N+HeHzLCHo6HydfxY42BwSUWDn
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB2964.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(376002)(136003)(396003)(39860400002)(366004)(76116006)(86362001)(66476007)(66946007)(8676002)(66446008)(64756008)(5660300002)(66556008)(6916009)(52536014)(71200400001)(9686003)(8936002)(2906002)(33656002)(54906003)(4326008)(478600001)(83380400001)(6506007)(55016002)(7696005)(316002)(186003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: IAKQZFULXd/GI3AQRp066F0gm88394q1tNjkz1zJE94rsP0Qh/qcYpM6u364e0GTM1I7Wt/HIK5oKJM15NDdr2Vl9kzpHB2aWHO9sd/4wac408bw6sCiecCLNFvCAdl5oGVUpKKWgv67jZVVjIPFHLQPlHH1s/ZH6lX7FmzvyKUb0ECQzuYsYKr5hCnn+pse3lhu3F53ELlxiln5fqn5yB0b2nvOrHpY0iPpizvnQTUZo806OvTqSkdgGORCfCNHJbSKNr84ZCsThXTr/aapEfYVSozH9oBLT/6CTWCUnrx3ZY9o9uOKjC9ZkqMWMejU/VS3N2BnNDQjRr0TKv1cJZWFatcgTUS0yRCFebMA8lGeVCyQVW7SSqScGxJxEfO5job4R8QDIZk2DJAYxhobMVc4e8oXZtbrBojG+gaWhYKimd2uOBAL5xzxz2MhJUrPdQXVfVisSq28sPG+7gVzJyyl8UBjG7qbKAqFMy7Y7xlSFTgDXcSeUr1CpiT7tljCTAHl5u9MMP7ruuqUEAf7bfzyKGNqHCXl5VKWL7U3e69vaM+PVqvzglm0XgRGiSWiMOh23FzCpZhUA9NQ71uBLpuwWNe1WSX/8MEMmdJHQUgpLbDcPWU/AEA18PwlHjDVnMJHm8C5Or76xzE8F0LC+dhwd8kRtmQC6NeljCi/bimzHCK5MroDKDujznDryzBJ5AeUAGVLkiciOwSypuHJBg==
+Content-Type: multipart/alternative;
+ boundary="_000_HK0PR04MB2964AFE422A0019557CB1BA3FDE70HK0PR04MB2964apcp_"
 MIME-Version: 1.0
-References: <CABYu0Wjn-YB4HO37nkxoJyq8EW6=bV4P5EZiHij0y3SxEYVEkw@mail.gmail.com>
- <b75f4c12-0d40-c529-40cd-3fb9ec1fc0ce@linux.vnet.ibm.com>
- <CABYu0WhSqhhxULpe+f9eq2e8Tv4uYzh2DaDRxfXe838pk4EP4Q@mail.gmail.com>
- <352ce958-186c-a26c-382f-d21ed26729ef@linux.vnet.ibm.com>
- <986DD922-0EB7-4776-A302-2BBA264018C2@fb.com>
-In-Reply-To: <986DD922-0EB7-4776-A302-2BBA264018C2@fb.com>
-From: Shakeeb B K <shakeebbk@gmail.com>
-Date: Thu, 12 Nov 2020 20:49:01 +0530
-Message-ID: <CABYu0WgL=OH3cW5jKBYAkP+A+_VkLWgEE5i1iddf+WLQdBua5g@mail.gmail.com>
-Subject: Re: Firmware Version in ipmi mc info
-To: Vijay Khemka <vijaykhemka@fb.com>
-Content-Type: multipart/alternative; boundary="00000000000032daba05b3ea6ffb"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR04MB3618
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT059.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 5eede47a-ccac-4779-7904-08d88721b464
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: IXCjWMCYEGJ9hxqkFWF43N1UwhhI6G1CKehiYlvzdQglM6yyt73ejcirbHcnvLxTmLZ0uJQNJfBHMbShKJJ1tz7vgK3COyUwzy6zyJFn9eLugi3YV4/nJfZ191iuQUb0Ex7C+NeWK5H1rWT98X+zOqb6l8NLuOoWsI9T+S2MBcIlOQCoVB5So2M5shIC6K+WK9cAhU1+5e3bx5K7PLODI2uNUOpPaSVQMgiegDbQVrs0aEgVq246KX9Ym6afRJMfmCF4exM6Q2ke0klPkFCE+b/jZIrnwNiRmEeOMoh40zP376eF27aEEi3eqYuCbKgfkkd4FXzntO3uHdxd/ykXwUnEnFQ6C4AuZbYIzbCowQfehEwY0YRRSeC7FcLUeyrbllOLwue8vq14jpKeo2NFRQ==
+X-Forefront-Antispam-Report: CIP:192.8.195.56; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(136003)(396003)(39860400002)(346002)(376002)(46966005)(70586007)(6916009)(6506007)(47076004)(316002)(36906005)(9686003)(86362001)(33656002)(54906003)(82740400003)(336012)(26005)(356005)(186003)(8676002)(83380400001)(55016002)(8936002)(81166007)(7696005)(5660300002)(4326008)(52536014)(478600001)(82310400003)(70206006)(2906002);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Nov 2020 15:43:34.1686 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51146abe-7007-4bce-f83c-08d88721b721
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.56];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT059.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2331
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,626 +144,164 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Patrick Venture <venture@google.com>, Patrick Williams <patrickw3@fb.com>,
+ Josh Lehan <krellan@google.com>, "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ Vijay Khemka <vijaykhemka@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000032daba05b3ea6ffb
-Content-Type: text/plain; charset="UTF-8"
+--_000_HK0PR04MB2964AFE422A0019557CB1BA3FDE70HK0PR04MB2964apcp_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Vijay,
+Classification: Internal
+Hi All,
 
-Yes I was looking at the wrong object. Moreover with ipmi, since my tag was
-not conformant to the format "vX.Y.Z..", I was not seeing the version
-properly. I am good on this now.
+          I wanted to handle the fan failures. If all the fans failed in th=
+e system(0 rpm or < min rpm ). We have to reduce the power consumption of c=
+omponents in the system/hosts.
+          So that we can reduce the heat production. It would be more platf=
+orm specific.
+
+          I looked at phosphor-pid-control code, it looks like fan fail saf=
+e value was set as default and fan value 0 also ignores.
+
+          Could you please confirm if fan failure case already handled or n=
+ot ?  if not, How and where we can handled this, Since this implementation =
+would be platform specific ?
+          Any design thoughts/inputs on this.
+
 
 Thanks,
-Shakeeb
+Kumar.
 
-On Thu, Nov 12, 2020 at 6:56 AM Vijay Khemka <vijaykhemka@fb.com> wrote:
+::DISCLAIMER::
+________________________________
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
+smission. The e mail and its contents (with or without referred errors) sha=
+ll therefore not attach any liability on the originator or HCL or its affil=
+iates. Views or opinions, if any, presented in this email are solely those =
+of the author and may not necessarily reflect the views or opinions of HCL =
+or its affiliates. Any form of reproduction, dissemination, copying, disclo=
+sure, modification, distribution and / or publication of this message witho=
+ut the prior written consent of authorized representative of HCL is strictl=
+y prohibited. If you have received this email in error please delete it and=
+ notify the sender immediately. Before opening any email and/or attachments=
+, please check them for viruses and other defects.
+________________________________
 
-> Hello Shakeeb and Tom,
->
->
->
-> I don=E2=80=99t see any issues with version for BMC in upstream version a=
-s well.
-> Software versions are exposed in bmc updater object rather than version
-> object and see following command yields BMC version
->
-> busctl get-property xyz.openbmc_project.Software.BMC.Updater  /xyz/openbm=
-c_project/software/1950470f
-> xyz.openbmc_project.Software.Version Version
->
-> s "2.9.0-dev-1057-gfe5603705"
->
->
->
-> Regards
->
-> -Vijay
->
->
->
-> *From: *openbmc <openbmc-bounces+vijaykhemka=3Dfb.com@lists.ozlabs.org> o=
-n
-> behalf of TOM JOSEPH <tomjose@linux.vnet.ibm.com>
-> *Date: *Thursday, November 5, 2020 at 9:46 PM
-> *To: *Shakeeb B K <shakeebbk@gmail.com>
-> *Cc: *"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-> *Subject: *Re: Firmware Version in ipmi mc info
->
->
->
-> Hello Shakeeb,
->
-> Typically there is a D-Bus object for each version and that implements th=
-e
-> xyz.openbmc_project.Software.Version interface.
-> /xyz/openbmc_project/software doesn't implement the interface.
->
-> busctl tree xyz.openbmc_project.Software.BMC.Updater
-> =E2=94=94=E2=94=80/xyz
->   =E2=94=94=E2=94=80/xyz/openbmc_project
->     =E2=94=94=E2=94=80/xyz/openbmc_project/software
->       =E2=94=9C=E2=94=80/xyz/openbmc_project/software/6b6a7c53
->       =E2=94=94=E2=94=80/xyz/openbmc_project/software/76174d14
->
-> I guess the upstream implementation of this command is broken with the
-> latest version format. We discussed this in the community, work is not do=
-ne
-> yet. https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.html
->
-> Regards,
-> Tom
->
->
->
-> On 06-11-2020 09:38, Shakeeb B K wrote:
->
-> Hi Tom, Thanks for the reply. But it doesn't seem to work as expected. I'=
-m
-> looking at...
->
->
->
-> *This Message Is From an External Sender*
->
-> This message came from outside your organization.
->
-> Hi Tom,
->
->
->
-> Thanks for the reply.
->
-> But it doesn't seem to work as expected. I'm looking at the
-> witherspoon-bmc on QEMU.
->
->
->
-> root@witherspoon:~# systemctl status
-> xyz.openbmc_project.Software.BMC.Updater
-> * *xyz.openbmc_project.Software.BMC.Updater.service* - OpenBMC Software
-> Update Manager
->      Loaded: loaded
-> (/lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service;
-> enabled; vendor preset: enabled)
->     Drop-In:
-> /lib/systemd/system/xyz.openbmc_project.Software.BMC.Updater.service.d
->              `-software-bmc-updater.conf
->      Active: *active (running)* since Thu 2020-11-05 14:10:57 UTC; 13h ag=
-o
->    Main PID: 387 (phosphor-image-)
->      CGroup: /system.slice/xyz.openbmc_project.Software.BMC.Updater.servi=
-ce
->              `-387 /usr/bin/phosphor-image-updater
->
-> Nov 05 14:10:53 witherspoon systemd[1]: Starting OpenBMC Software Update
-> Manager...
-> Nov 05 14:10:57 witherspoon systemd[1]: Started OpenBMC Software Update
-> Manager.
->
->
-> root@witherspoon:~# busctl get-property xyz.openbmc_project.State.BMC
-> /xyz/openbmc_project/state/bmc0 xyz.openbmc_project.State.BMC
-> CurrentBMCState
-> s "*xyz.openbmc_project.State.BMC.BMCState.Ready*"
->
->
-> *root@witherspoon:~# busctl get-property
-> xyz.openbmc_project.Software.Version /xyz/openbmc_project/software
-> xyz.openbmc_project.Software.Version Version Failed to get property Versi=
-on
-> on interface xyz.openbmc_project.Software.Version: Unknown interface
-> xyz.openbmc_project.Software.Version or property Version.*
->
-> root@witherspoon:~# busctl introspect --no-pager
-> xyz.openbmc_project.Software.Version /xyz/openbmc_project/software
-> NAME                                TYPE      SIGNATURE  RESULT/VALUE
->  FLAGS
-> org.freedesktop.DBus.Introspectable interface -          -             -
-> .Introspect                         method    -          s             -
-> org.freedesktop.DBus.ObjectManager  interface -          -             -
-> .GetManagedObjects                  method    -          a{oa{sa{sv}}} -
-> .InterfacesAdded                    signal    oa{sa{sv}} -             -
-> .InterfacesRemoved                  signal    oas        -             -
-> org.freedesktop.DBus.Peer           interface -          -             -
-> .GetMachineId                       method    -          s             -
-> .Ping                               method    -          -             -
-> org.freedesktop.DBus.Properties     interface -          -             -
-> .Get                                method    ss         v             -
-> .GetAll                             method    s          a{sv}         -
-> .Set                                method    ssv        -             -
-> .PropertiesChanged                  signal    sa{sv}as   -             -
->
->
->
->
->
-> Thanks,
->
-> Shakeeb
->
->
->
-> On Fri, Nov 6, 2020 at 8:37 AM TOM JOSEPH <tomjose@linux.vnet.ibm.com>
-> wrote:
->
-> Hey Shakeeb,
->
-> The service implementing the xyz.openbmc_project.Software.Version should
-> be running in the case of a normal boot as well. In our systems the servi=
-ce
-> is xyz.openbmc_project.Software.BMC.Updater and the Version property is
-> populated when the BMCState is Ready.
->
-> Regards,
-> Tom
->
-> On 05-11-2020 20:02, Shakeeb B K wrote:
->
-> Hi All, Currently the ipmi handler for "mc info" command depends on the
-> "Version"...
->
->
->
-> *This Message Is From an External Sender*
->
-> This message came from outside your organization.
->
-> Hi All,
->
->
->
-> Currently the ipmi handler for "mc info" command depends on the "Version"
-> property on interface xyz.openbmc_project.Software.Version.
->
-> But this is getting populated only on the image update path by
-> phosphor-bmc-code-mgmt.
->
-> Shouldn't the version be set on a normal boot as well? Is this a gap in
-> current implementation?
->
->
->
-> Thanks,
->
-> Shakeeb
->
->
-
---00000000000032daba05b3ea6ffb
-Content-Type: text/html; charset="UTF-8"
+--_000_HK0PR04MB2964AFE422A0019557CB1BA3FDE70HK0PR04MB2964apcp_
+Content-Type: text/html; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Vijay,<div><br></div><div>Yes I was looking at the wron=
-g object. Moreover with ipmi, since my tag was not conformant to the format=
- &quot;vX.Y.Z..&quot;, I was not seeing the version properly. I am good on =
-this now.</div><div><br></div><div>Thanks,</div><div>Shakeeb</div></div><br=
-><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, N=
-ov 12, 2020 at 6:56 AM Vijay Khemka &lt;<a href=3D"mailto:vijaykhemka@fb.co=
-m">vijaykhemka@fb.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"EN-US" style=3D"overflow-wrap: break-word;">
-<div class=3D"gmail-m_-1410478744982165190WordSection1">
-<p class=3D"MsoNormal">Hello Shakeeb and Tom,<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">I don=E2=80=99t see any issues with version for BMC =
-in upstream version as well. Software versions are exposed in bmc updater o=
-bject rather than version object and see following command yields BMC versi=
-on<u></u><u></u></p>
-<p class=3D"gmail-m_-1410478744982165190p1"><span class=3D"gmail-m_-1410478=
-744982165190s1">busctl get-property xyz.openbmc_project.Software.BMC.Update=
-r</span><span class=3D"gmail-m_-1410478744982165190apple-converted-space">=
-=C2=A0
-</span><span class=3D"gmail-m_-1410478744982165190s1">/xyz/openbmc_project/=
-software/1950470f xyz.openbmc_project.Software.Version Version</span><u></u=
-><u></u></p>
-<p class=3D"gmail-m_-1410478744982165190p1"><span class=3D"gmail-m_-1410478=
-744982165190s1">s &quot;2.9.0-dev-1057-gfe5603705&quot;</span><u></u><u></u=
-></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Regards<u></u><u></u></p>
-<p class=3D"MsoNormal">-Vijay<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
-top:1pt solid rgb(181,196,223);padding:3pt 0in 0in">
-<p class=3D"MsoNormal"><b><span style=3D"font-size:12pt;color:black">From: =
-</span></b><span style=3D"font-size:12pt;color:black">openbmc &lt;openbmc-b=
-ounces+vijaykhemka=3D<a href=3D"mailto:fb.com@lists.ozlabs.org" target=3D"_=
-blank">fb.com@lists.ozlabs.org</a>&gt; on behalf of TOM JOSEPH &lt;<a href=
-=3D"mailto:tomjose@linux.vnet.ibm.com" target=3D"_blank">tomjose@linux.vnet=
-.ibm.com</a>&gt;<br>
-<b>Date: </b>Thursday, November 5, 2020 at 9:46 PM<br>
-<b>To: </b>Shakeeb B K &lt;<a href=3D"mailto:shakeebbk@gmail.com" target=3D=
-"_blank">shakeebbk@gmail.com</a>&gt;<br>
-<b>Cc: </b>&quot;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_bla=
-nk">openbmc@lists.ozlabs.org</a>&quot; &lt;<a href=3D"mailto:openbmc@lists.=
-ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;<br>
-<b>Subject: </b>Re: Firmware Version in ipmi mc info<u></u><u></u></span></=
-p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<p>Hello Shakeeb,<br>
-<br>
-Typically there is a D-Bus object for each version and that implements the =
-xyz.openbmc_project.Software.Version interface. /xyz/openbmc_project/softwa=
-re doesn&#39;t implement the interface.<br>
-<br>
-busctl tree xyz.openbmc_project.Software.BMC.Updater<br>
-=E2=94=94=E2=94=80/xyz<br>
-=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project<br>
-=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/software<br>
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <span style=3D"font-family:&quot;MS Gothic&q=
-uot;">=E2=94=9C</span>=E2=94=80/xyz/openbmc_project/software/6b6a7c53<br>
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/xyz/openbmc_project/softw=
-are/76174d14<u></u><u></u></p>
-<p>I guess the upstream implementation of this command is broken with the l=
-atest version format. We discussed this in the community, work is not done =
-yet.
-<a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2020-August/022598.ht=
-ml" target=3D"_blank">https://lists.ozlabs.org/pipermail/openbmc/2020-Augus=
-t/022598.html</a><u></u><u></u></p>
-<p class=3D"MsoNormal">Regards,<br>
-Tom <u></u><u></u></p>
-<p><u></u>=C2=A0<u></u></p>
-<div>
-<p class=3D"MsoNormal">On 06-11-2020 09:38, Shakeeb B K wrote:<u></u><u></u=
-></p>
-</div>
-<blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
-<p class=3D"MsoNormal"><span class=3D"gmail-m_-1410478744982165190pfptprehe=
-ader1"><span style=3D"font-size:1pt;color:white">Hi Tom, Thanks for the rep=
-ly. But it doesn&#39;t seem to work as expected. I&#39;m looking at...=C2=
-=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0
-</span></span><u></u><u></u></p>
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%;background:rgb(156,163,167);border-radius:4px">
-<tbody>
-<tr>
-<td style=3D"padding:12pt;border-radius:4px">
-<div align=3D"center">
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%;max-width:100%">
-<tbody>
-<tr>
-<td valign=3D"top" style=3D"padding:0in">
-<div align=3D"center">
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%;background:rgb(156,163,167)">
-<tbody>
-<tr>
-<td width=3D"100%" valign=3D"top" style=3D"width:100%;padding:0in">
-<div align=3D"center">
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%">
-<tbody>
-<tr>
-<td style=3D"padding:0in">
-<p class=3D"MsoNormal"><span class=3D"gmail-m_-1410478744982165190pfpttitle=
-"><b><span style=3D"font-size:13.5pt;font-family:Roboto">This Message Is Fr=
-om an External Sender</span></b></span>
-<u></u><u></u></p>
-</td>
-</tr>
-<tr>
-<td style=3D"padding:0in">
-<p class=3D"MsoNormal"><span class=3D"gmail-m_-1410478744982165190pfptsubti=
-tle"><span style=3D"font-size:10pt;font-family:Roboto">This message came fr=
-om outside your organization.</span></span>
-<u></u><u></u></p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<div>
-<p class=3D"MsoNormal">Hi Tom, <u></u><u></u></p>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Thanks for the reply.<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">But it doesn&#39;t seem to work as expected. I&#39;m=
- looking at the witherspoon-bmc on QEMU.<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Courier New&quot;">=
-root@witherspoon:~# systemctl status xyz.openbmc_project.Software.BMC.Updat=
-er<br>
-* <b>xyz.openbmc_project.Software.BMC.Updater.service</b> - OpenBMC Softwar=
-e Update Manager<br>
-=C2=A0 =C2=A0 =C2=A0Loaded: loaded (/lib/systemd/system/xyz.openbmc_project=
-.Software.BMC.Updater.service; enabled; vendor preset: enabled)<br>
-=C2=A0 =C2=A0 Drop-In: /lib/systemd/system/xyz.openbmc_project.Software.BMC=
-.Updater.service.d<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-software-bmc-updater.conf=
-<br>
-=C2=A0 =C2=A0 =C2=A0Active: <b>active (running)</b> since Thu 2020-11-05 14=
-:10:57 UTC; 13h ago<br>
-=C2=A0 =C2=A0Main PID: 387 (phosphor-image-)<br>
-=C2=A0 =C2=A0 =C2=A0CGroup: /system.slice/xyz.openbmc_project.Software.BMC.=
-Updater.service<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-387 /usr/bin/phosphor-ima=
-ge-updater<br>
-<br>
-Nov 05 14:10:53 witherspoon systemd[1]: Starting OpenBMC Software Update Ma=
-nager...<br>
-Nov 05 14:10:57 witherspoon systemd[1]: Started OpenBMC Software Update Man=
-ager.</span><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal" style=3D"margin-bottom:12pt"><span style=3D"font-fam=
-ily:&quot;Courier New&quot;"><br>
-root@witherspoon:~# busctl get-property xyz.openbmc_project.State.BMC /xyz/=
-openbmc_project/state/bmc0 xyz.openbmc_project.State.BMC CurrentBMCState<br=
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-s &quot;<b>xyz.openbmc_project.State.BMC.BMCState.Ready</b>&quot;</span><u>=
-</u><u></u></p>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
+pan style=3D"color:#08298A">Internal</span></b><span style=3D"font-size:12.=
+0pt"><o:p></o:p></span></p>
+<p class=3D"MsoNormal">Hi All,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; I wanted to handle the fan failures. If all the fans failed in the syste=
+m(0 rpm or &lt; min rpm ). We have to reduce the power consumption of compo=
+nents in the system/hosts.<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nb=
+sp;So that we can reduce the heat production. It would be more platform spe=
+cific.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;I looked at phosphor-pid-control code, it looks like fan fail safe value=
+ was set as default and fan value 0 also ignores.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; Could you please confirm if fan failure case already handled or not ? &n=
+bsp;if not, How and where we can handled this, Since this implementation wo=
+uld be platform specific ?
+<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;Any design thoughts/inputs on this. <o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+<p class=3D"MsoNormal">Kumar.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
 </div>
-<div>
-<p class=3D"MsoNormal" style=3D"margin-bottom:12pt"><b><span style=3D"font-=
-family:&quot;Courier New&quot;">root@witherspoon:~# busctl get-property xyz=
-.openbmc_project.Software.Version /xyz/openbmc_project/software xyz.openbmc=
-_project.Software.Version Version<br>
-Failed to get property Version on interface xyz.openbmc_project.Software.Ve=
-rsion: Unknown interface xyz.openbmc_project.Software.Version or property V=
-ersion.</span></b><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Courier New&quot;">=
-root@witherspoon:~# busctl introspect --no-pager xyz.openbmc_project.Softwa=
-re.Version /xyz/openbmc_project/software
-<br>
-NAME =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TYPE =C2=A0 =C2=A0 =C2=A0SIGNATURE=
- =C2=A0RESULT/VALUE =C2=A0FLAGS<br>
-org.freedesktop.DBus.Introspectable interface - =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.Introspect =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0s =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-org.freedesktop.DBus.ObjectManager =C2=A0interface - =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.GetManagedObjects =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0a{oa{sa{sv}}}=
- -<br>
-.InterfacesAdded =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0signal =C2=A0 =C2=A0oa{sa{sv}} - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 -<br>
-.InterfacesRemoved =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0signal =C2=A0 =C2=A0oas =C2=A0 =C2=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-org.freedesktop.DBus.Peer =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 interface - =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 -<br>
-.GetMachineId =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.Ping =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-org.freedesktop.DBus.Properties =C2=A0 =C2=A0 interface - =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.Get =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0method =C2=A0 =C2=A0ss =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 v =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.GetAll =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 method =C2=A0 =C2=A0s =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0a{sv} =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.Set =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0method =C2=A0 =C2=A0ssv =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 -<br>
-.PropertiesChanged =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0signal =C2=A0 =C2=A0sa{sv}as =C2=A0 - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 -</span><u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Thanks,<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Shakeeb<u></u><u></u></p>
-</div>
-</div>
-</div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<div>
-<div>
-<p class=3D"MsoNormal">On Fri, Nov 6, 2020 at 8:37 AM TOM JOSEPH &lt;<a hre=
-f=3D"mailto:tomjose@linux.vnet.ibm.com" target=3D"_blank">tomjose@linux.vne=
-t.ibm.com</a>&gt; wrote:<u></u><u></u></p>
-</div>
-<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
-order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin-left:4=
-.8pt;margin-right:0in">
-<div>
-<p>Hey Shakeeb,<br>
-<br>
-The service implementing the xyz.openbmc_project.Software.Version should be=
- running in the case of a normal boot as well. In our systems the service i=
-s xyz.openbmc_project.Software.BMC.Updater and the Version property is popu=
-lated when the BMCState is Ready.<u></u><u></u></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:12pt">Regards,<br>
-Tom<u></u><u></u></p>
-<div>
-<p class=3D"MsoNormal">On 05-11-2020 20:02, Shakeeb B K wrote:<u></u><u></u=
-></p>
-</div>
-<blockquote style=3D"margin-top:5pt;margin-bottom:5pt">
-<p class=3D"MsoNormal"><span style=3D"font-size:1pt;color:white">Hi All, Cu=
-rrently the ipmi handler for &quot;mc info&quot; command depends=C2=A0on th=
-e &quot;Version&quot;...=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
- =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-</span><u></u><u></u></p>
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%;background:rgb(156,163,167);border-radius:4px">
-<tbody>
-<tr>
-<td style=3D"padding:12pt;border-radius:4px">
-<div align=3D"center">
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%;border-radius:4px">
-<tbody>
-<tr>
-<td valign=3D"top" style=3D"padding:0in;max-width:100%">
-<div align=3D"center">
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%;background:rgb(156,163,167)">
-<tbody>
-<tr>
-<td width=3D"100%" valign=3D"top" style=3D"width:100%;padding:0in">
-<div align=3D"center">
-<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
-e=3D"width:100%">
-<tbody>
-<tr>
-<td style=3D"padding:0in">
-<p class=3D"MsoNormal"><b><span style=3D"font-size:13.5pt;font-family:Robot=
-o">This Message Is From an External Sender</span></b>
-<u></u><u></u></p>
-</td>
-</tr>
-<tr>
-<td style=3D"padding:0in">
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:Roboto">Th=
-is message came from outside your organization.</span>
-<u></u><u></u></p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-<div>
-<p class=3D"MsoNormal">Hi All, <u></u><u></u></p>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Currently the ipmi handler for &quot;mc info&quot; c=
-ommand depends=C2=A0on the &quot;Version&quot; property on interface=C2=A0x=
-yz.openbmc_project.Software.Version.=C2=A0<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">But this is getting populated only on the image upda=
-te path by phosphor-bmc-code-mgmt.<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Shouldn&#39;t the version be set on a normal boot as=
- well? Is this a gap in current implementation?
-<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Thanks,<u></u><u></u></p>
-</div>
-<div>
-<p class=3D"MsoNormal">Shakeeb<u></u><u></u></p>
-</div>
-</div>
-</blockquote>
-</div>
-</blockquote>
-</div>
-</blockquote>
-</div>
-</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</body>
+</html>
 
-</blockquote></div>
-
---00000000000032daba05b3ea6ffb--
+--_000_HK0PR04MB2964AFE422A0019557CB1BA3FDE70HK0PR04MB2964apcp_--
