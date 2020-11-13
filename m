@@ -1,138 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80C362B207D
-	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 17:32:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D4EE2B2359
+	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 19:08:54 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CXkWl5mNkzDr5h
-	for <lists+openbmc@lfdr.de>; Sat, 14 Nov 2020 03:32:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CXmgR27vdzDr8H
+	for <lists+openbmc@lfdr.de>; Sat, 14 Nov 2020 05:08:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::443;
+ helo=mail-wr1-x443.google.com; envelope-from=vveerach@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.130.90; helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=thangavel.k@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=hcl.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=ZRlrpsNB; 
- dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=ZRlrpsNB; 
- dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-eopbgr1300090.outbound.protection.outlook.com [40.107.130.90])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=pOoMchCR; dkim-atps=neutral
+Received: from mail-wr1-x443.google.com (mail-wr1-x443.google.com
+ [IPv6:2a00:1450:4864:20::443])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CXkVj61xPzDr0P
- for <openbmc@lists.ozlabs.org>; Sat, 14 Nov 2020 03:31:00 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B96BPt4L6k3zH7OIdtQnNRoPRivuDhKsDtZRbWOYMf4=;
- b=ZRlrpsNBzpCUaFtOYWXPJ4zIQouqoPJLU0JHdk4UiZ6heVXzd/OXT0HKQHdZGO6Mqrx342pV0whaNdOiREbMTLtsgpJd09gw0RRGG8LPq+6zBXZUxbBI+LFKA4wMQASGXFav+5MOYEkTCQZNABtDN4nwlamLI3u23qaHiV9CrU4=
-Received: from SG2PR02CA0018.apcprd02.prod.outlook.com (2603:1096:3:17::30) by
- TYZPR04MB4382.apcprd04.prod.outlook.com (2603:1096:400:6::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3541.21; Fri, 13 Nov 2020 16:30:54 +0000
-Received: from HK2APC01FT021.eop-APC01.prod.protection.outlook.com
- (2603:1096:3:17:cafe::9b) by SG2PR02CA0018.outlook.office365.com
- (2603:1096:3:17::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.21 via Frontend
- Transport; Fri, 13 Nov 2020 16:30:54 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.57)
- smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
- header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
- header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.195.57 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.195.57; helo=APC01-SG2-obe.outbound.protection.outlook.com;
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.195.57) by
- HK2APC01FT021.mail.protection.outlook.com (10.152.248.181) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3564.22 via Frontend Transport; Fri, 13 Nov 2020 16:30:52 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FyOrXzfzQBP3zon5WdDZmizeEFKF3j63rWub6gmYNzE/7rTEUCRxTlNi2k8Q3ZTaJkQFAhGIY7KX853EmMHv3PJKuXo7/wIrg9Ukul66Ng6UAYCX+8bbncWUhcX4kxWrGql6oTe5S7RyCgW/DS2xE9fezDH53XDBIiuJLf6IsIlgcCNWvAF98CQsr6guPi9yWzAJ8XHZL8A9DB4WWgwLqUkFSwh06cmGCjn0imt0iRgu/mh+5QZKXuXv8J0CG/3ox7Rdjt2oCzOww15ceaHAjU5OMumthcEMLRPUjZ0ExiO3mhRftM76R6C4NSurkdv97J48NEcUu2Ca37GisX/j9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B96BPt4L6k3zH7OIdtQnNRoPRivuDhKsDtZRbWOYMf4=;
- b=G+Dm253qv7iS4QMKJ53qGC/JSEZ3F/OmgZP0n/6gvTTUTmfNL51sK2c/iP769dujEbglgc1quqtogCfHirBj0GhaHsaiI3ceToEXojU09+G2gDe1d46O/rp6t0ZkjMuIi5u20X6dEiL463m22M/bAJ+rUKLyAKu6h2vaQ6lJII5oY6Mifb6JyjHAJHOTYzFogbAZtVuWa6V4sNaY1Y1CvzhbqhkqwZVCXpHyXfXKFrbT1DukjGVYPSqnITVqlNtFn8Lka2IrvnLrGg0zxlJ3rxGnawI1pX480ZkFYjBu3eJD4iNemtQvqNOyGj7DNpeSDGNjEYuqIeOSQTfg+sJBUA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=B96BPt4L6k3zH7OIdtQnNRoPRivuDhKsDtZRbWOYMf4=;
- b=ZRlrpsNBzpCUaFtOYWXPJ4zIQouqoPJLU0JHdk4UiZ6heVXzd/OXT0HKQHdZGO6Mqrx342pV0whaNdOiREbMTLtsgpJd09gw0RRGG8LPq+6zBXZUxbBI+LFKA4wMQASGXFav+5MOYEkTCQZNABtDN4nwlamLI3u23qaHiV9CrU4=
-Received: from HK0PR04MB2964.apcprd04.prod.outlook.com (2603:1096:203:5d::15)
- by HK0PR04MB3089.apcprd04.prod.outlook.com (2603:1096:203:86::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3541.24; Fri, 13 Nov
- 2020 16:30:43 +0000
-Received: from HK0PR04MB2964.apcprd04.prod.outlook.com
- ([fe80::e52f:5fdf:e09d:fa29]) by HK0PR04MB2964.apcprd04.prod.outlook.com
- ([fe80::e52f:5fdf:e09d:fa29%7]) with mapi id 15.20.3564.025; Fri, 13 Nov 2020
- 16:30:43 +0000
-From: Kumar Thangavel <thangavel.k@hcl.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Fault handling(Threshold exceeds/low) in Fan and NIC sensors
-Thread-Topic: Fault handling(Threshold exceeds/low) in Fan and NIC sensors
-Thread-Index: Ada5zVYwkmx4kfozTTWK3HwWcCL1fA==
-Date: Fri, 13 Nov 2020 16:30:43 +0000
-Message-ID: <HK0PR04MB2964AA77874471609F0B25BEFDE60@HK0PR04MB2964.apcprd04.prod.outlook.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-hclclassification: HCL_Cla5s_1nt3rnal
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNzhkNWI3ZWQtMWYxYi00ZTdiLThmOTEtZDAzM2Y5NDY2ZmNlIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzXzFudDNybmFsIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE4LjQuMTg0My4xMjMiLCJUcnVzdGVkTGFiZWxIYXNoIjoiTGNwVTRyNGFUOWE0ZHp0eFZIanlcL04rZE5nZ1h2a1pUOVpsdWJHTnBteUw3MmUrWVhETUE4ZFpZaEZka25rOFkifQ==
-Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
- signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=hcl.com;
-x-originating-ip: [2409:4072:620d:471a:589a:3511:edac:9e41]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 9b582f8c-61cd-44e3-666a-08d887f17d57
-x-ms-traffictypediagnostic: HK0PR04MB3089:|TYZPR04MB4382:
-x-ms-exchange-transport-forked: True
-X-Microsoft-Antispam-PRVS: <TYZPR04MB438275E4A0C924747FBCE233FDE60@TYZPR04MB4382.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;OLM:6108;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: iuAYcI5Q1DkOXAxFSe5TYFVyKveMYDHNptGBoxKtNG1WQ7E7/4Fyb6wik931DHNpV/kLz6yOqm8rhcxRXcvSJ4ZrJr0XGC/lUJZqpE0cKqY+d4krQBio+JzC8qJGKWTFGBYPBn5BWGag8hj1t77WbrCZOVl1zqZvvpPhWPyv3a3GQ3uMlJ3+6ZbdYlFPyh/AGqbmuSFCN1YueOoxbqOAjnkU8t+3rErN7BZyYwzMDpX4cgBNOKfk3NMkPw8YO/vF4nMe7iW4WaT+WSsE7c+lvRI7mFrpXHJLeqgb4JPCb8YKD2XlCH0ENM9a8C8pZCN4
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB2964.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(346002)(376002)(396003)(366004)(136003)(39860400002)(55016002)(83380400001)(7696005)(186003)(6506007)(66946007)(66476007)(71200400001)(4326008)(5660300002)(66556008)(76116006)(64756008)(66446008)(33656002)(52536014)(8936002)(86362001)(2906002)(54906003)(8676002)(9686003)(316002)(6916009)(478600001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: 8Pe2gWrD4z8jciAApGafYWhJ0wrTRUBRiw8bJuPwYiXpZ6oEDyKIJlXKXnwNXgwDgTbHNbdhZ8YbJyOoW9WXqx+XfAH0kZYR1pwzbQEqC+d5SuL2NmspWIPlKoJnz8Kd2ZNqwUuLu9DWKgtXidbl7mRNHztNBWyo4EOboWukzB2xZQ/Rbbbp3sAnbGXa0O+MBkGmHQ/gRvSRXd7JqD/cMdu+x6Z0UFYv2Tax6hDhaooPrVOQQP7rEf5GU6cC2vEXINTravnUC0JYykyxZWGdvk0JGigg5z676hOyiH/5Xzg0ObL0IjEkOTY1LUTO7TGI5TG2Jx+68ruXIZev5tA95S+V2Bcv2Kguhdwrm0UZj1e6t+jBBjyIidjbipXVYfRuCKs2z7xIrZurqGHLe4xty8Vr5U7DF6tyUIDguEPXm9aoHea/zy8JVkrCump4nS0LaLlbrKe+3zwfoPXAQzpp+bCg3cUeWGxWZ6za8zU25IQ4zH+EEpwMMDu2NER2m6BZd7O4ZrOHsUrIfcNQ7ywDTwiDBBEDKAdUahOExJ9ASnqOVj8xbgpqUn6zCPYA355Y82waMMhbQPV1s/F/g9ajfnrmyLsalEHYKZgCkjK5nRmfA/X2ikCVKHs8QvOWcXKb+R6uBzepYyfq/rIjNcr4Jd2DIrpWi/uAqWYlLD2r+VuWxZOLTUXWsLC8MSNbivdc/6J2myLW3d7SYgbzLzoj3g==
-Content-Type: multipart/alternative;
- boundary="_000_HK0PR04MB2964AA77874471609F0B25BEFDE60HK0PR04MB2964apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CXmfB6BvczDqVx
+ for <openbmc@lists.ozlabs.org>; Sat, 14 Nov 2020 05:07:43 +1100 (AEDT)
+Received: by mail-wr1-x443.google.com with SMTP id p8so10928200wrx.5
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 10:07:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=pyrxcjuQNJ5soo1CgWcV6zVmxa4Z21FeHWWgRlcXFNk=;
+ b=pOoMchCRvsWNqMlfFvLsRu3m5kxqAfl6s+vJ5TMnVjIIWKuRBS3EJxXlWQknHd/rBL
+ sVGeC+nYS/QnIdJAlmhJB80+8jpYTiaymlFtSLuOYhk0H1YHXDLuN6X9olrMCi9VCd62
+ GDDrcS926nrBWmoBdZvu+Fdq/T2jfnj/uWL92Lb7SVmFgGt/1QymhsS6fssvzuzziXZy
+ IS7cC/2kkudOSaZlWjQv2ktyfaGxtz3YhbpgO+1KDKw1KVpve2nBr/DfgAw6F101l3zb
+ hYsBqEZ6Eu0Skcbo6kgjvMgl2loYj204ibzUKvUgfmKEF6JvodxZOwX05v9/cdT1Z7Kr
+ sz9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=pyrxcjuQNJ5soo1CgWcV6zVmxa4Z21FeHWWgRlcXFNk=;
+ b=U4iXpqL9SQZyA9hc+ghzF3n8GYkyCiBeVHUoka4yJU/JLWe7D3EtE2yDAsKCIoJL/v
+ ljhuwZUSwysDgPmVFGmAENvrhk8m21y1sgMhiE58WJwkJcjKPuE7u4EC4sYXXqPCT2W3
+ y/57ysVtlOfjeWO0H/qcx/0hhYVhFrwKsgymGs4RawWZn/1OM1EO0QVHrGZK8D8oEQG3
+ OtTJUk+MRkHdUwtL4SqX9pfp1SA+6UTlWO2lUgI86umEVtItCyzvDB3HXibM6BWibFaq
+ sBvKT4ZeNl/y3Qv6FgBYgKcU9lHt+VOAksiT2XujoEofMmS8XuMoSVxEUFkOslL2upHl
+ iwhg==
+X-Gm-Message-State: AOAM531dRSOcPk9qLGtTPYrK22lwEsFKsMjcL6skBGvhXkKMSzVvSNrf
+ ADTvpSa4yV7wDlW68OzVxpiIjcdcOxCioxoci4DsHA==
+X-Google-Smtp-Source: ABdhPJxhCsRgflnTL1bGvY84mWC7eQyUK642UZNCB8PLS1/rqqQajocfMXrUzvDKHdFJJ8wevAwoXZjSzrWqpRgekCk=
+X-Received: by 2002:a5d:4c52:: with SMTP id n18mr5017307wrt.68.1605290855072; 
+ Fri, 13 Nov 2020 10:07:35 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR04MB3089
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT021.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: e58f4de4-3dc1-4383-b9fb-08d887f177a8
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: LNSsMuWaZTikmuCo4S4Qb4rfciQxOnXSIuDDykgBsHRQxsc7kwm6a+xOpAKAhavRecyE5yv1PndLI5wdqWKkj0NEcl4FN9qnWmOqy2dOelww1k8UgFkUTs6Ou1+LiMdE/FvC26G1Lbm21I3NM7kYChTcS9QzQiBevUA8Wzc3sMKPqOXk0i3DjHJx2onrNR7QKCn1MoKIzWCYFPHfiZGwamN+7NbKrWyr9mYwLwIEUq5g+gWIZ7UH/trdHqFSZNqoFuDAfjX+fu8sIurYGNhqV4OmKi7IvFvhnj4ZQSuE9b5r6pSP0OruMg1OsPcDFW1LZFAhHfpPuMO08gYkhB9aQB3KrXizk4MB6PJuJ76T6btcfjbljEEfaueXNmPVwWEGQ1fUSBz+GKD0I1YEx6h92A==
-X-Forefront-Antispam-Report: CIP:192.8.195.57; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(39860400002)(376002)(346002)(136003)(396003)(46966005)(6506007)(52536014)(9686003)(8936002)(36906005)(6916009)(55016002)(83380400001)(478600001)(186003)(82740400003)(82310400003)(54906003)(70586007)(7696005)(2906002)(86362001)(336012)(4326008)(26005)(47076004)(5660300002)(356005)(8676002)(316002)(70206006)(33656002)(81166007);
- DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Nov 2020 16:30:52.5535 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b582f8c-61cd-44e3-666a-08d887f17d57
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.57];
- Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT021.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB4382
+References: <20201110220550.31965-1-lancelot.kao@fii-usa.com>
+ <CACPK8Xf8=7dHS=gwHvdS37ZVq_rLJMmKseh-iAqG_BAk6b8tNg@mail.gmail.com>
+In-Reply-To: <CACPK8Xf8=7dHS=gwHvdS37ZVq_rLJMmKseh-iAqG_BAk6b8tNg@mail.gmail.com>
+From: Vivekanand Veeracholan <vveerach@google.com>
+Date: Fri, 13 Nov 2020 10:07:24 -0800
+Message-ID: <CAL4K88qhKuDXwen8EhOQkVtvmCxyAPLKuOtFh0-sPCBkFryMZg@mail.gmail.com>
+Subject: Re: [PATCH v2 linux dev-5.8] Fii Kudo project device tree file
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -144,164 +73,764 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zhikui Ren <zhikui.ren@intel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Patrick Venture <venture@google.com>, Ed Tanous <ed@tanous.net>,
- Vernon Mauery <vernon.mauery@linux.intel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>,
+ Lancelot Kao <lancelot.kao@fii-usa.com>,
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK0PR04MB2964AA77874471609F0B25BEFDE60HK0PR04MB2964apcp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Classification: Internal
-Hi All,
-
-         We wanted to power-off 12 V of the hosts/BMC, if the Fan and NIC s=
-ensors crossed the threshold level. It would be platform specific.
-
-        In dbus-sensors, most of the sensor handles the threshold checks an=
-d throws error if it crossed.
-
-         So, we are planning to add a new field in entity manager to identi=
-fy the particular sensors to handle this fault condition.  Planning to add =
-default script in the dbus-sensor to handle this fault condition and this w=
-ould be overwritten from the machine layer.
-
-         Could you please provide your suggestions on this.
-
-Thanks,
-Kumar.
-
-
-
-::DISCLAIMER::
-________________________________
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
-smission. The e mail and its contents (with or without referred errors) sha=
-ll therefore not attach any liability on the originator or HCL or its affil=
-iates. Views or opinions, if any, presented in this email are solely those =
-of the author and may not necessarily reflect the views or opinions of HCL =
-or its affiliates. Any form of reproduction, dissemination, copying, disclo=
-sure, modification, distribution and / or publication of this message witho=
-ut the prior written consent of authorized representative of HCL is strictl=
-y prohibited. If you have received this email in error please delete it and=
- notify the sender immediately. Before opening any email and/or attachments=
-, please check them for viruses and other defects.
-________________________________
-
---_000_HK0PR04MB2964AA77874471609F0B25BEFDE60HK0PR04MB2964apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Wed, Nov 11, 2020 at 2:29 PM Joel Stanley <joel@jms.id.au> wrote:
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
-pan style=3D"color:#08298A">Internal</span></b><span style=3D"font-size:12.=
-0pt"><o:p></o:p></span></p>
-<p class=3D"MsoNormal">Hi All,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We =
-wanted to power-off 12 V of the hosts/BMC, if the Fan and NIC sensors cross=
-ed the threshold level. It would be platform specific.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In d=
-bus-sensors, most of the sensor handles the threshold checks and throws err=
-or if it crossed.&nbsp;
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; So,=
- we are planning to add a new field in entity manager to identify the parti=
-cular sensors to handle this fault condition.&nbsp; Planning to add default=
- script in the dbus-sensor to handle this fault condition and this would be=
- overwritten
- from the machine layer.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Cou=
-ld you please provide your suggestions on this. <o:p>
-</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Kumar.<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; <o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
-<hr>
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or
- incomplete, or may contain viruses in transmission. The e mail and its con=
-tents (with or without referred errors) shall therefore not attach any liab=
-ility on the originator or HCL or its affiliates. Views or opinions, if any=
-, presented in this email are solely
- those of the author and may not necessarily reflect the views or opinions =
-of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
- disclosure, modification, distribution and / or publication of this messag=
-e without the prior written consent
- of authorized representative of HCL is strictly prohibited. If you have re=
-ceived this email in error please delete it and notify the sender immediate=
-ly. Before opening any email and/or attachments, please check them for viru=
-ses and other defects.<br>
-<hr>
-</font>
-</body>
-</html>
-
---_000_HK0PR04MB2964AA77874471609F0B25BEFDE60HK0PR04MB2964apcp_--
+> On Tue, 10 Nov 2020 at 22:06, Lancelot Kao <lancelot.kao@fii-usa.com> wrote:
+> >
+> > 1. Add Fii kudo project device tree dts and dtsi
+> > files to the upstream.
+>
+> This is your commit message. Have a look at what others have done to
+> add their machine; it often looks something like this:
+>
+> Add device tree for the Kuido BMC. Kuido is an x86 server platform
+> manufactured by Fii and is based on a Nuvoton NPCM730 SoC.
+>
+> I've made up the details there obviously.
+>
+> > 2. Remove the duplicate the full path and address
+> > of node.
+> > 3. modified syntax
+>
+> These two items are a good changelog between your v1 and v2. The way
+> we do changes between revisions is to put them below a ---, at the
+> bottom of your commit message (below the Signed-off-by). For example:
+>
+> >
+> > Signed-off-by: Lancelot Kao <lancelot.kao@fii-usa.com>
+> > Signed-off-by: Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>
+>
+> ---
+> v2:
+>  - Remove the duplicate the full path and address of node.
+>  - Modified syntax
+>
+> > ---
+> >  .../boot/dts/nuvoton-npcm730-kudo-gpio.dtsi   | 288 ++++++++
+> >  arch/arm/boot/dts/nuvoton-npcm730-kudo.dts    | 631 ++++++++++++++++++
+> >  2 files changed, 919 insertions(+)
+> >  create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
+> >  create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+> >
+> > diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi b/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
+> > new file mode 100644
+> > index 000000000000..0dc888dac73b
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo-gpio.dtsi
+> > @@ -0,0 +1,288 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +// Copyright (c) 2020 Fii USA Inc. Brandon Ong <Brandon.Ong@fii-na.com>
+>
+> Generally we have the copyright notice and rely on the git history to
+> know who authored the file. If you really want to have the author, put
+> it on the next line:
+>
+>  // Copyright (c) 2020 Fii USA Inc.
+>  //Brandon Ong <Brandon.Ong@fii-na.com>
+>
+> > +
+> > +/ {
+> > +       pinctrl: pinctrl@f0800000 {
+>
+> Consider putting the pinctrl description in the kudo dts. Given it's
+> not a huge number of nodes, I think it would be fine to have them all
+> in the one file.
+>
+> > +               gpio61oh_pins: gpio61oh-pins {
+> > +                       pins = "GPO61/nDTR1_BOUT1/STRAP6";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+>
+>
+> > diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+> > new file mode 100644
+> > index 000000000000..ab5cf1aea220
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+> > @@ -0,0 +1,631 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +// Copyright (c) 2020 Fii USA Inc. Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>
+> > +
+> > +/dts-v1/;
+> > +#include "nuvoton-npcm730.dtsi"
+> > +#include "nuvoton-npcm730-kudo-gpio.dtsi"
+> > +
+> > +/ {
+> > +       model = "Fii Kudo Board (Device Tree v00.01)";
+>
+> Do you need to have the "Device Tree v00.01" in the model string?
+>
+> > +       compatible = "nuvoton,npcm730";
+>
+> Add the machine too:
+>
+>  compatible = "fii,kudo", "nuvoton,npcm730"
+>
+> > +
+> > +       aliases {
+> > +               ethernet0 = &emc0;
+> > +               ethernet1 = &gmac0;
+> > +               serial0 = &serial0;
+> > +               serial1 = &serial1;
+> > +               serial2 = &serial2;
+> > +               serial3 = &serial3;
+> > +               udc9 = &udc9;
+> > +               emmc0 = &sdhci0;
+> > +               vdma = &vdma;
+> > +               i2c0 = &i2c0;
+> > +               i2c1 = &i2c1;
+> > +               i2c2 = &i2c2;
+> > +               i2c3 = &i2c3;
+> > +               i2c4 = &i2c4;
+> > +               i2c5 = &i2c5;
+> > +               i2c6 = &i2c6;
+> > +               i2c7 = &i2c7;
+> > +               i2c8 = &i2c8;
+> > +               i2c9 = &i2c9;
+> > +               i2c10 = &i2c10;
+> > +               i2c11 = &i2c11;
+> > +               i2c12 = &i2c12;
+> > +               i2c13 = &i2c13;
+> > +               spi0 = &spi0;
+> > +               spi1 = &spi1;
+> > +               fiu0 = &fiu0;
+> > +               fiu1 = &fiu3;
+> > +       };
+> > +
+> > +       chosen {
+> > +               stdout-path = &serial3;
+> > +       };
+> > +
+> > +       memory {
+> > +               reg = <0 0x40000000>;
+> > +       };
+> > +
+> > +       iio-hwmon {
+> > +               compatible = "iio-hwmon";
+> > +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
+> > +                       <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+> > +       };
+> > +
+> > +       jtag_master {
+>
+> This is a
+> > +               compatible = "nuvoton,npcm750-jtag-master";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +
+> > +               dev-num = <0>; /* /dev/jtag0 */
+> > +               mode = "pspi"; /* pspi or gpio */
+> > +
+> > +               pspi-controller = <2>; /* pspi2 */
+> > +               reg = <0xf0201000 0x1000>;
+> > +               interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
+> > +               clocks = <&clk NPCM7XX_CLK_APB5>;
+> > +
+> > +               jtag-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>, /* TCK */
+> > +                               <&gpio0 18 GPIO_ACTIVE_HIGH>, /* TDI */
+> > +                               <&gpio0 17 GPIO_ACTIVE_HIGH>, /* TDO */
+> > +                               <&gpio0 16 GPIO_ACTIVE_HIGH>; /* TMS */
+> > +               status = "okay";
+>
+> You don't need to include status=okay; it's enabled by default.
+>
+> > +       };
+> > +
+> > +       leds {
+> > +               compatible = "gpio-leds";
+> > +               heartbeat {
+> > +                       label = "heartbeat";
+> > +                       gpios = <&gpio0 14 1>;
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&gmac0 {
+> > +       phy-mode = "rgmii-id";
+> > +       snps,eee-force-disable;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&emc0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&ehci1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&ohci1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&udc9 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&aes {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&sha {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&fiu0 {
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <&spi0cs1_pins>;
+> > +       status = "okay";
+> > +       spi-nor@0 {
+> > +               compatible = "jedec,spi-nor";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +               reg = <0>;
+> > +               spi-max-frequency = <5000000>;
+> > +               spi-rx-bus-width = <2>;
+> > +               partitions@80000000 {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +                       bmc@0{
+> > +                               label = "bmc";
+> > +                               reg = <0x000000 0x2000000>;
+> > +                       };
+> > +                       u-boot@0 {
+> > +                               label = "u-boot";
+> > +                               reg = <0x0000000 0xf0000>;
+> > +                       };
+> > +                       image-descriptor@f0000 {
+> > +                               label = "image-descriptor";
+> > +                               reg = <0xf0000 0x10000>;
+> > +                       };
+> > +                       reserved-update@100000 {
+> > +                               label = "reserved-update";
+> > +                               reg = <0x100000 0x100000>;
+> > +                       };
+> > +                       kernel@200000 {
+> > +                               label = "kernel";
+> > +                               reg = <0x200000 0x500000>;
+> > +                       };
+> > +                       rofs@700000 {
+> > +                               label = "rofs";
+> > +                               reg = <0x700000 0x35f0000>;
+> > +                       };
+> > +                       rwfs@3cf0000 {
+> > +                               label = "rwfs";
+> > +                               reg = <0x3cf0000 0x300000>;
+> > +                       };
+> > +                       reserved-mailbox@3ff0000 {
+> > +                               label = "reserved-mailbox";
+> > +                               reg = <0x3ff0000 0x10000>;
+> > +                       };
+> > +               };
+> > +       };
+> > +       spi-nor@1 {
+> > +               compatible = "jedec,spi-nor";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +               reg = <1>;
+> > +               spi-max-frequency = <5000000>;
+> > +               spi-rx-bus-width = <2>;
+> > +               partitions@88000000 {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +                       spare1@0 {
+> > +                               label = "spi0-cs1-spare1";
+> > +                               reg = <0x0 0x800000>;
+> > +                       };
+> > +                       spare2@800000 {
+> > +                               label = "spi0-cs1-spare2";
+> > +                               reg = <0x800000 0x0>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&fiu3 {
+> > +       pinctrl-0 = <&spi3_pins>;
+> > +       status = "okay";
+> > +       spi-nor@0 {
+> > +               compatible = "jedec,spi-nor";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +               reg = <0>;
+> > +               spi-max-frequency = <5000000>;
+> > +               spi-rx-bus-width = <2>;
+> > +               partitions@A0000000 {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +                       system1@0 {
+> > +                               label = "bios";
+> > +                               reg = <0x0 0x0>;
+> > +                       };
+> > +                       system2@800000 {
+> > +                               label = "spi3-system2";
+> > +                               reg = <0x800000 0x0>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&sdhci0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&vdma {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&pcimbox {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&vcd {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&ece {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&watchdog1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&rng {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial2 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial3 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&adc {
+> > +       #io-channel-cells = <1>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&otp {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c0 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "disabled";
+>
+> Remove this node if it's disabled.
+>
+> > +};
+> > +
+> > +&i2c1 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+>
+> The node already has the address and size cell information in it. No
+> need to re-describe it here.
+>
+> > +       bus-frequency = <100000>;
+>
+> The default frequency is 100000, so if you're not changing it there's
+> no need to describe it here.
+>
+> > +       status = "okay";
+>
+> Unnecessary status=okay.
+> > +
+> > +       i2c-switch@75 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x75>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c@2 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <2>;
+> > +
+> > +                       max31790@58 { // Fan
+>
+> Put the comments on the line above the node.
+>
+> > +                               compatible = "maxim,max31790";
+> > +                               reg = <0x58>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c@3 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <3>;
+> > +
+> > +                       max31790@58 { // Fan
+> > +                               compatible = "maxim,max31790";
+> > +                               reg = <0x58>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@4 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <4>;
+> > +
+> > +                       lm75@5c { // INLET1_T
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@5 { // OUTLET1_T
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <5>;
+> > +
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@6 { // OUTLET2_T
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <6>;
+> > +
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@7 { // OUTLET3_T
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <7>;
+> > +
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +       };
+> > +       i2c-switch@77 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x77>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c-bus@2 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <2>;
+> > +
+> > +                       pmbus@74 { // STB-T
+> > +                               compatible = "pmbus";
+> > +                               reg = <0x74>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&i2c2 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+>
+> Unnecessary status=okay.
+i2c2 is explicitly disabled in the nuvoton-common-npcm7xx.dtsi
+(included in nuvoton-npcm730.dtsi)
+So status=okay is needed, right?
+>
+> > +
+> > +       smpro@4f {
+> > +               compatible = "ampere,smpro";
+> > +               reg = <0x4f>;
+> > +       };
+> > +
+> > +       smpro@4e {
+> > +               compatible = "ampere,smpro";
+> > +               reg = <0x4e>;
+> > +       };
+> > +};
+> > +
+> > +&i2c3 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c4 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +
+> > +       i2c-switch@77 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x77>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c-bus@0 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <0>;
+> > +
+> > +                       adm1266@40 { // ADC sensors
+> > +                               compatible = "adi,adm1266";
+> > +                               reg = <0x40>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@1 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <1>;
+> > +
+> > +                       adm1266@41 { // ADC sensors
+> > +                               compatible = "adi,adm1266";
+> > +                               reg = <0x41>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&i2c5 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+>
+> All of these can just be:
+>
+> &i2cN {
+>     status = "okay";
+> }
+>
+> As the cell and bus-freq information is already in the dtsi.
+>
+> > +};
+> > +
+> > +&i2c6 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c7 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c8 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c9 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c10 {
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c11 {
+> > +       #address-cells = <1>;
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c12 {
+> > +       #address-cells = <1>;
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +
+> > +       ssif-bmc@10 {
+> > +               compatible = "ssif-bmc";
+> > +               reg = <0x10>;
+> > +               status = "okay";
+> > +       };
+> > +};
+> > +
+> > +&i2c13 {
+> > +       #address-cells = <1>;
+> > +       #address-cells = <1>;
+> > +       #size-cells = <0>;
+> > +       bus-frequency = <100000>;
+> > +       status = "okay";
+> > +
+> > +       i2c-switch@77 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x77>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c-bus@3 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <3>;
+> > +
+> > +                       lm75@28 { // M2_ZONE_T
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x28>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@4 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <4>;
+> > +
+> > +                       lm75@29 { // BATT_ZONE_T
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x29>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@5 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <5>;
+> > +
+> > +                       lm75@28 { // NBM1_ZONE_T
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x28>;
+> > +                       };
+> > +               };
+> > +               i2c-bus@6 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <6>;
+> > +
+> > +                       lm75@29 { // NBM2_ZONE_T
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x29>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&spi0 {
+> > +       cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&pinctrl {
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <
+> > +                       &gpio61oh_pins
+> > +                       &gpio62oh_pins
+> > +                       &gpio161ol_pins
+> > +                       &gpio163i_pins
+> > +                       &gpio167ol_pins
+> > +                       &gpio95i_pins
+> > +                       &gpio65ol_pins
+> > +                       &gpio66oh_pins
+> > +                       &gpio67oh_pins
+> > +                       &gpio68ol_pins
+> > +                       &gpio69i_pins
+> > +                       &gpio70ol_pins
+> > +                       &gpio71i_pins
+> > +                       &gpio72i_pins
+> > +                       &gpio73i_pins
+> > +                       &gpio74i_pins
+> > +                       &gpio75i_pins
+> > +                       &gpio76i_pins
+> > +                       &gpio77i_pins
+> > +                       &gpio78i_pins
+> > +                       &gpio79ol_pins
+> > +                       &gpio80oh_pins
+> > +                       &gpio81i_pins
+> > +                       &gpio82i_pins
+> > +                       &gpio83i_pins
+> > +                       &gpio144i_pins
+> > +                       &gpio145i_pins
+> > +                       &gpio146i_pins
+> > +                       &gpio147oh_pins
+> > +                       &gpio168ol_pins
+> > +                       &gpio169oh_pins
+> > +                       &gpio170ol_pins
+> > +                       &gpio218oh_pins
+> > +                       &gpio37i_pins
+> > +                       &gpio38i_pins
+> > +                       &gpio39i_pins
+> > +                       &gpio40i_pins
+> > +                       &gpio121i_pins
+> > +                       &gpio122i_pins
+> > +                       &gpio123i_pins
+> > +                       &gpio124i_pins
+> > +                       &gpio125i_pins
+> > +                       &gpio126i_pins
+> > +                       &gpio127i_pins
+> > +                       &gpio136i_pins
+> > +                       &gpio137oh_pins
+> > +                       &gpio138i_pins
+> > +                       &gpio139i_pins
+> > +                       &gpio140i_pins
+> > +                       &gpio141i_pins
+> > +                       &gpio190oh_pins
+> > +                       &gpio191oh_pins
+> > +                       &gpio195ol_pins
+> > +                       &gpio196ol_pins
+> > +                       &gpio199i_pins
+> > +                       &gpio202ol_pins
+> > +                       >;
+> > +};
+> > +
+> > +&gcr {
+> > +       serial_port_mux: mux-controller {
+> > +               compatible = "mmio-mux";
+> > +               #mux-control-cells = <1>;
+> > +
+> > +               mux-reg-masks = <0x38 0x07>;
+> > +               idle-states = <2>;
+> > +       };
+> > +};
+> > --
+> > 2.17.1
+> >
