@@ -2,95 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE8412B13C7
-	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 02:19:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB3EB2B13D5
+	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 02:30:37 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CXLH61HCvzDr4g
-	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 12:19:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CXLWZ5JhrzDr55
+	for <lists+openbmc@lfdr.de>; Fri, 13 Nov 2020 12:30:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-usa.com (client-ip=40.107.93.50;
- helo=nam10-dm6-obe.outbound.protection.outlook.com;
- envelope-from=lancelot.kao@fii-usa.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.19;
+ helo=wout3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=fii-usa.com
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=FIIcorp.onmicrosoft.com
- header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=cUfvJIPj; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=jmvURHbu; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=KNVETwDQ; 
  dkim-atps=neutral
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam10on2050.outbound.protection.outlook.com [40.107.93.50])
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com
+ [64.147.123.19])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CXLGK19btzDr3h
- for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 12:19:02 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TkNv7ZFE3adMhfZxj6DAj+849eNPc3tU9Ko3YbmuYZf/FoIcexsM5iQdOcxqxFcp0LfzTsNkdIfzbwNpy3cep3tBGNv5JbtJ6anCTx3Wrpz4i/GV+U8ZJPhlUpsdVsOy4egx5q3hUIYhC4OrziheZfU1JnWNDBEzTM1GuTPB1UZN85jjI5z1ESQGNfOhSxCRdANnHlO1Gl3bt90wbQeQTbVLAzDfQgWSrlcvEWQdy3wbIz2lUuCPIDZ70qrcQhVNgXnCWvi+ASkhXP/1KWRFbTYVkP7LQUOyEX77Ig1VCId+jHBbdlWZ2PnFlvh6t+oQmVSrlVp7THSz6lRZZrVmYg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DB9l+GqIkUj6gT6TFZC/c8d2ITpaqwzAvmRyypXMz+U=;
- b=CM3unpjoF0UoHYxXJykF/yc9ODuFoKd3/znyMYqQpMERFt/gRKtaHx3+1agflEIkvKMrlob/cx/3On2s+5J4kYXO3dsKLkLMpcRHPIcqFSzURAcfF9oohuHxnKg2oJ3Kv8ME8DdAV8VWhwVFIKwKBIE+YJE5YkbogYJ+oTlvKl3jJhEn29Z2gqcOV45xrztHDrZpi2S5Lx0OvSdWNeWXa6MHlexsPuYwZO9LtcG555SaBCo+L8WB5auFMo3PgYzpnIh+1vd8HvDY1hmshZziCqID+2/bO9BIFsQWmUjm18SlvoIhM//qeO3mLoUEV0P329/C8Wz1VCeQqCPPZ3BjTA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fii-usa.com; dmarc=pass action=none header.from=fii-usa.com;
- dkim=pass header.d=fii-usa.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DB9l+GqIkUj6gT6TFZC/c8d2ITpaqwzAvmRyypXMz+U=;
- b=cUfvJIPjrEppIsNfRUFkxTVybSFSiVfRF6RHTmsnKbElMDf8GwJDY8SQ9DaRfo1Q+zSX/Y+NGIDRqUcDCopM2XsSnsqXzX/XqWbnQ+84WitO53PP27vnWR0p0kd8KYbbaTtjCFpA6FcLVocZRp2J4OGo6XiS0sLwv8KvYKLJ6aVkJOs4RZZUYNlGZQWRI8R6ee0xfev4454F1tkkbX4gPzHdFWQw5k0ybj2DyowWQ3IBJivfkwyjx7BVPWwrhzoDmZ9g6C3cpbch+JS4QHdBobzf5vSq/odeT5UP2xxEQagu4FzUmqn7hckFPoK17HajZZ3UYFOf3BymZyRFSfcEGQ==
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com (20.176.117.210) by
- DM6PR08MB4073.namprd08.prod.outlook.com (20.176.64.140) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3541.25; Fri, 13 Nov 2020 01:18:55 +0000
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::40be:143a:73a2:b33e]) by DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::40be:143a:73a2:b33e%7]) with mapi id 15.20.3541.025; Fri, 13 Nov 2020
- 01:18:55 +0000
-From: Lancelot Kao <Lancelot.Kao@fii-usa.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Please add meta-fii as a subtree
-Thread-Topic: Please add meta-fii as a subtree
-Thread-Index: AQHWuVr0Lfdt4OXU2Eq6f0o3g+w+EQ==
-Date: Fri, 13 Nov 2020 01:18:55 +0000
-Message-ID: <101AF305-0894-4AE9-8FD9-2FF0B4F09A81@fii-usa.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=fii-usa.com;
-x-originating-ip: [73.232.2.233]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c4c0b6c9-1bf9-48a7-3bb6-08d887721703
-x-ms-traffictypediagnostic: DM6PR08MB4073:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR08MB40736945898FB9CE51ABEA31C0E60@DM6PR08MB4073.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5236;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: S2ra37TyThK3K9i5Lk9iNdltzXF3iubBuXCngqVHEDjdczQpM1MEQiqvHAJBlo6e9ZL6qRgJtFnV/QK67D1L1J8xGSkJxLh0ZtjET8Evxa/d1XhXRqydaMa/0z0VXoar+rOEf1T2hOgGNjiNBFwZyTn/DD4UjTrSaQVAq3AGbCYOsL7Mr4lnIhvAGTMJOVEXwtkacuF3h5qSLXfY1khvn66xcp9Wq2flcN6D+imUc8YoC7JLmGzZc3L7eCq5ljS2ZvAGq/+MqUSvCcI+63Hly3/vwwO0InuITQIYaBia+GqHTxN3kxUji0NtMpEDxioDHH8/E0k7Y4HVNVXxw5bc7Q==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR08MB4890.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(366004)(136003)(396003)(39860400002)(346002)(376002)(26005)(6486002)(2906002)(33656002)(316002)(6916009)(186003)(107886003)(558084003)(86362001)(478600001)(2616005)(6506007)(54906003)(8676002)(66556008)(66446008)(64756008)(66476007)(91956017)(76116006)(5660300002)(8936002)(6512007)(9326002)(36756003)(71200400001)(66946007)(4326008);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: 2aA7OjywpsuHC/JvR9aQiN4ibneCpk9iMM9NOyM3M0/MVC97922PGCqRxmC3ArDgHxQWtFkmvV3A/rhUYw7OLkplGYc5EccFQ8lt41X7QfxqmFAHYDlVaO4wGA7ndcbIA9nukq+Soa7bQKbY20mRrsLEWJ3c4DX4MGQw4CFvPcOJrBqJ2ettGAtGvFT8HlWEiyVcaPX2ahkmTiw63f+AswFVACbz0o5n1YUYKO6sbqBa5x+4aW7ewl3mQRertREWBJ1QMTaQ8qR3cpiD+ERqVc8i60X3JLeNWUSPl4eStj91bmO4hXJIJS9WtHPU4B+rggfmCm+GewetuimIl0GYHJdZk+PEvPfU4pInXN0mPReKyTh4VGd79dNOgA8vNlLZ1QCrj85zRhLjHPEqPpSHyFUwS5SuAovqcj36E4AZA7e67JnVIBZ5mwn88PyIt/panaZIBY2EeHx5VC7doT8vpA7iCUnlrlr/L4yt5ud0Tb1+oLlJCdYxzUK00lqF/O8kXgKy++PL7UOCNYUTFonhJtf1k6Jj/ZLbmF3u9UV392b57BQZYj+ZJEUNMK4UD+dA0lzCsB45cyMAGGriTWxLCuHpAw/j/KLpfRxkmQ3OEhWDwCp0wXmMyTkEvNRuNphYIS72BNoOoV6TgK6Hm1+/yg==
-Content-Type: multipart/alternative;
- boundary="_000_101AF30508944AE98FD92FF0B4F09A81fiiusacom_"
-MIME-Version: 1.0
-X-OriginatorOrg: fii-usa.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB4890.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c4c0b6c9-1bf9-48a7-3bb6-08d887721703
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Nov 2020 01:18:55.3815 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: MqzW9f6ZzaK9VN7u7RMTMRTARSt9bzuRUQ3MDtyrC5S4LOTkoqFTJxYyc0PRlytKKFY5CVF/vD3jWjTwRXKBq50ZQgwW9mgrWbCTL2P2OGE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB4073
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CXLVV262LzDr3l
+ for <openbmc@lists.ozlabs.org>; Fri, 13 Nov 2020 12:29:37 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 9A821A7C;
+ Thu, 12 Nov 2020 20:29:31 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Thu, 12 Nov 2020 20:29:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to:cc
+ :subject:content-type; s=fm1; bh=UIMAxUZvmRaERYVZDjPNrYM+Jd4I0JR
+ al2Znz4H5Xq0=; b=jmvURHbuYVtgu0znIXB9vjh/OgzcHBtXqhglBMxqNClGvdT
+ NZRzXrKlYzTjkKv/FeJAaryY6Rq9K4YNF/TKAezU+2Exi8tkCFLTFitYIIg8vg2P
+ 65b5TbsQeRs6u6VW3/sNtPrBJpJrfwFm5Xt0RZ5tSptIbW4p+0TeUiQEJqCCoPms
+ R94hSAG07jDRpwnugkGVFPJAwH2ZjXf4g/vkGDkPDGbZfAbjG3YR790wHkAZcvKY
+ Lq/0Gmy3ssUJrnLql+9ksPXE8aeMUWsgoyFTrXUO8Ni44c003q6hPBcktstmsquP
+ w3lIT8cPwAX5sfoq0nBfb7GlILBq07AoiahFWWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=UIMAxU
+ ZvmRaERYVZDjPNrYM+Jd4I0JRal2Znz4H5Xq0=; b=KNVETwDQrI9VselPfZMRJK
+ tuskI/yMy0Vsj5JqHcHhc+mNSPKGaAgrO6+dQ3hZZ1vr06U7HVI95mANktbuegss
+ p4rWXEkKRlQsbjhMRgc7v7F2Sv1Rtm4lmnkwWRmcoTEq/N+LOeyfrXP9yZSBZFea
+ pQwmoBp1ocSOOROxiAa37ACqNUe0RsYhhGCf5fzTS7uzmy7AT0FrdLCcsn6TSW3Q
+ +pJOVRy5Qm5po0PyAe/XTsDpgE8qF9Pf926ntLrxqM02lNESyB9Ppv0P1Ae4sm15
+ tWFMd70nBINbxPf6ECSs1qq+FphXwbBoj7GFbT4wYymbqp84TaP2AlcGyrKsvR0g
+ ==
+X-ME-Sender: <xms:euGtX8wPiK1rnz4CoFyVyxiKayr7kOBI-GjWRlFx7-0_XRS-3_pj8A>
+ <xme:euGtXwQeJuFGn6GRePLyLSuQwnh0GDB-O_X_LpCkxr1aWXHvyO6vcU1ERg6YT7jwY
+ iTP4tUintXpiq-njg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedruddvgedgfeeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:euGtX-W3QjcNRHBDGFv8XJFAa68sFyRsDeYrQEu2YqKOfvzH7aM-eA>
+ <xmx:euGtX6h2n9r4rw0kW-wk38AKn5BopV_mJAgMP1P4KU0jWN_XZsO-nQ>
+ <xmx:euGtX-A5pKmM-9GoBgK7KhO-eCjIH6qqDFj5gCq1-kFWSEquKT99xg>
+ <xmx:e-GtX_6u39IrrXlrjvXBM-ArlCMW9kze4bfjh7aZ82weZTb1A4ZP3A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 59636E00C1; Thu, 12 Nov 2020 20:29:28 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.3.0-570-gba0a262-fm-20201106.001-gba0a2623
+Mime-Version: 1.0
+Message-Id: <32cf6ea5-6f1a-42ce-bbae-fb76adf61a89@www.fastmail.com>
+In-Reply-To: <CACWQX81TQfrM+c9f_K_Zx4ScJBKfKH3=Wzx7T-_AWpN=wYegxw@mail.gmail.com>
+References: <OF51173777.BBAB38E9-ON0025861E.0014BEED-0025861E.0020A56A@notes.na.collabserv.com>
+ <CACWQX82Ab4bXSrn2f+LQqbA3nVJ32UPVEOzQ97RXU+iLp9u0uw@mail.gmail.com>
+ <d10e39fa-b8e4-4517-9269-d67045912f54@www.fastmail.com>
+ <CACWQX81TQfrM+c9f_K_Zx4ScJBKfKH3=Wzx7T-_AWpN=wYegxw@mail.gmail.com>
+Date: Fri, 13 Nov 2020 11:59:08 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Ed Tanous" <ed@tanous.net>
+Subject: Re: support NVMe drive health monitoring
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,64 +95,165 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>,
- Vivekanand Veeracholan <vveerach@google.com>,
- Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>,
- Benjamin Fair <benjaminfair@google.com>, XP Chen <Xiao-Peng.Chen@fii-na.com>
+Cc: Jet Li <Jet.Li@ibm.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ rashmi.r.v@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_101AF30508944AE98FD92FF0B4F09A81fiiusacom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+> > > >
+> > > > So the direction we chose is to use entity-manager and dbus-sensors for NVMe drive monitoring, and
+> > > > implement support for the Basic Management Command over SMBus in the NVMeSensor application. To get there, as far as I have determined, we should do the following:
+> > > >
+> > > > 10. Make optional the dependency of NVMeSensor on the forked libmctp
+> > > > 11. Add a compile-time flag to {en,dis}able the MCTP NVMe-MI backend
+> > > > 12. Add a compile-time flag to {en,dis}able the Basic Management Command backend
+> > > > 13. Patch intel-bmc/openbmc to configure NVMeSensor with MCTP NVMe-MI enabled
+> > > > 14. Change the default build configuration of NVMeSensor use the Basic Management Command
+> > > > 15. Enable out-of-tree builds of NVMeSensor by default
+> > > > 16. Add NVMeSensor unit tests
+> > > > 17. Enable CI for dbus-sensors where we can / is necessary
+> > > >
+> > > >
+> > >
+> > > You've listed quite a few things here, but I'm not following "why" we
+> > > need two NVMe implementations.  MCTP NVMe-MI is more feature rich, and
+> > > is much better supported than its MI basic brethren, and generally
+> > > provides more information.  Considering we have patches to do it, why
+> > > don't we just work on getting the required patch upstreamed?
+> >
+> > As above, it's not just the one required patch to the kernel, we also have to
+> > get the libmctp SMBus binding implementation upstream. Putting on my libmctp
+> > maintainer hat, I'd like to see some effort from Intel on both of those fronts.
+> 
+> Fair point.  Considering I wrote the original libmctp smbus patch, I'm
+> far from blameless in this situation, despite my change in email
+> address.
 
-SGksDQogICAgICAgICAgICAgICAgTXkgbWV0YS1maWkgYXBwcm92ZWQgYW5kIG1lcmdlZC4gQ2Fu
-IGFueW9uZSBoZWxwIHRvIG1ha2UgdGhlIG1ldGEtZmlpIGFzIGEgc3VidHJlZSBvZiB0aGUgb3Bl
-bkJNQyBtYXN0ZXI/DQoNCg0KLS0NCkJlc3QgUmVnYXJkcy4NCg0KTGFuY2Vsb3QgS2FvDQoNCkNB
-QkcvRmlpDQpVUyA6ICsxLTI4MS02NTUtMjY2OA0KZS1tYWlsIDogbGFuY2Vsb3Qua2FvQGZpaS11
-c2EuY29tDQo=
+:)
 
---_000_101AF30508944AE98FD92FF0B4F09A81fiiusacom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <3AFE144977B16B4D88BE9C4E46B1EC5C@namprd08.prod.outlook.com>
-Content-Transfer-Encoding: base64
+> 
+> >
+> > >  On top
+> > > of that, the committee that writes the NVMe-MI spec keeps threatening
+> > > to deprecate it, so we might end up with code that's used for one
+> > > generation, then never again.  I really don't like the idea of having
+> > > a second NVMe subsystem just because one is _slightly_ easier to
+> > > write.
+> >
+> > I disagree with "_slightly_" if you account for the MCTP stack that goes with
+> > it, and the fact that the kernel and libmctp code is not yet upstream.
+> 
+> Let me rephrase, if we were to write this as a hwmon driver in
+> torvalds/linux, would this be more or less effort than trying to get
+> the mctp driver stack upstreamed along with the mslave device driver?
+> I had assumed more, but maybe not?
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseTpQTWluZ0xpVTsNCglwYW5vc2UtMToyIDIgNSAwIDAgMCAwIDAgMCAw
-O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6
-MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7
-DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZh
-bWlseToiXEBQTWluZ0xpVSI7DQoJcGFub3NlLTE6MiAxIDYgMSAwIDEgMSAxIDEgMTt9DQovKiBT
-dHlsZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05v
-cm1hbA0KCXttYXJnaW46MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNh
-bGlicmkiLHNhbnMtc2VyaWY7fQ0Kc3Bhbi5FbWFpbFN0eWxlMTcNCgl7bXNvLXN0eWxlLXR5cGU6
-cGVyc29uYWwtY29tcG9zZTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCglj
-b2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9y
-dC1vbmx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCkBwYWdlIFdvcmRT
-ZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4gMS4waW4g
-MS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0
-eWxlPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZsaW5rPSIj
-OTU0RjcyIiBzdHlsZT0id29yZC13cmFwOmJyZWFrLXdvcmQiPg0KPGRpdiBjbGFzcz0iV29yZFNl
-Y3Rpb24xIj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkhpLCA8bzpwPjwvbzpwPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBNeSBtZXRh
-LWZpaSBhcHByb3ZlZCBhbmQgbWVyZ2VkLiBDYW4gYW55b25lIGhlbHAgdG8gbWFrZSB0aGUgbWV0
-YS1maWkgYXMgYSBzdWJ0cmVlIG9mIHRoZSBvcGVuQk1DIG1hc3Rlcj88bzpwPjwvbzpwPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+LS08bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkJlc3QgUmVnYXJkcy48
-bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+TGFuY2Vsb3QgS2FvPG86cD48L286cD48L3A+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPkNBQkcvRmlpPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5VUyA6ICsx
-LTI4MS02NTUtMjY2ODxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+ZS1tYWls
-IDogbGFuY2Vsb3Qua2FvQGZpaS11c2EuY29tPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2
-Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+Probably the hardest bit of the i2c-slave-mqueue patch is the energy it 
+generally takes to argue for new userspace interfaces (answering the question 
+of whether it's the right abstraction). I imagine it's generally preferred to 
+implement slave behaviour in-kernel (which is why a userspace interface doesn't 
+already exist).
 
---_000_101AF30508944AE98FD92FF0B4F09A81fiiusacom_--
+This is the attraction of the in-kernel MCTP implementation: we'll have a much 
+easier time arguing for the abstraction because if you squint, MCTP was 
+designed at a high level to look like an IP network, and with this approach we 
+won't have incoherent per-device interfaces sticking out of the kernel to 
+support the binding implementations in libmctp.
+
+If the MI-basic data fits into the hwmon abstractions, I expect that might 
+almost be an easier route.
+
+> 
+> In re-reading my last email, it made me sound like I'm anti- MI-Basic.
+> To be clear, I really have no problem with adding MI-Basic support in
+> dbus-sensors.  I'd like to see it made an explicit and separate option
+> in the per-device configuration, as some devices don't support it, and
+> to clear the way for if we ever get the existing (or maybe a new)
+> nvme-sensor buildable by more than just my former teams fork.
+
+Okay.
+
+> 
+> >
+> > > If there's other good technical reasons why a user would
+> > > prefer MI-basic, and we can get those reasons written down, I'm happy
+> > > to hear them, but if the overall reason is "we don't want to upstream
+> > > code to the kernel" that doesn't seem like a good enough justification
+> > > to build out support for both;
+> >
+> > Implementing the SMBus MCTP binding around the i2c-slave-mqueue kernel
+> > interface is just a stop-gap solution in place of the (continually deferred)
+> > in-kernel socket-based MCTP implementation (no-one besides Jeremy has really
+> > put significant effort into collaborating with me on that concept). So if we're
+> > aiming for stop-gaps, why not implement support for the basic management
+> > command given the rest of the code is out-of-tree?
+> 
+> It should be noted, it's our intention to start working on an
+> upstreamable mctp socket kernel driver in the near (1-2 quarters)
+> future.
+
+Fantastic! This might even align with my (continually revised) timeline. Please 
+do get in touch when you start to look at the problem.
+
+>  That doesn't really change this discussion, but figured it
+> was worth pointing out.  If we land MI-basic, and have a little bit of
+> luck, maybe it doesn't have to live for long.
+
+Yep, I'd be happy to forget about MI-basic once we have appropriate MCTP 
+support.
+
+> 
+> >
+> > The trade-offs here seem to be the crux of the discussion.
+> >
+> > >  Especially considering the MI basic
+> > > functionality probably would best be done as a kernel driver.
+> >
+> > Right, that's an interesting idea.
+> 
+> This was just an idea;  A userspace-only nvme-mi setup would probably
+> be fine IMO as well, depending on what aligns with your schedule.
+> 
+> >
+> > >
+> > > It should also be noted if we end up doing this, I'd probably advocate
+> > > for it to be its own separate sensor, distinct from the MCTP one,
+> > > because from a BMC perspective, it has very little in common with the
+> > > existing NVMe sensor (different protocols, different IO loops, ect),
+> >
+> > The difference in IO loop does have an impact here - I hadn't completely
+> > appreciated how we'd make the synchronous call fit into the current code. The
+> > hack approach was to just not worry about it for the moment. However,
+> > implementing the basic command backend isn't actually that much of a change;
+> > it's a bit of a reorganisation of the NVMeContext class and a small encoder /
+> > decoder for the SMBus commands.
+> 
+> If we can fit it cleanly into the application that's there, great;  If
+> it makes more sense as another app, fine too.  I haven't looked at it
+> in depth.
+> 
+> >
+> > > and would probably be a good candidate for adding the hwmon.  Also, it
+> > > would need to be distinctly selectable from the entity-manager json,
+> > > as some drives don't possess support for NVMe-MI basic, and we need to
+> > > keep track of which protocol to use in which case.
+> >
+> > If both backends were built in, there's never a reason to use the basic
+> > management command. If only one of the backends is built in then you don't need
+> > to keep track unless the interface presented on DBus was different depending on
+> > the backend, but I was hoping we could avoid that.
+> 
+> See above.  I'd really prefer if this were a per-device setting, not a
+> per-build setting.
+
+Right, my sense in reading what you wrote was that you were pushing back on the 
+idea on the basis that we'd have to differentiate in the entity-manager config. 
+But it sounds like you're actually not fussed about that and even consider the 
+idea in a positive light given what you've written below:
+
+>  nvme-mi support is spotty at best, and buggy
+> nvme-mi mctp implementations are also common.  I'd rather we
+> explicitly select one that works well per-device type, rather making
+> it a build time option.
+
+Andrew
