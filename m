@@ -1,65 +1,103 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21FF22B3E6D
-	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 09:20:02 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B1862B3FD3
+	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 10:34:30 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CZMSZ5Dc8zDqRR
-	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 19:19:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CZP6W38sSzDqJ8
+	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 20:34:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=qwaveinc.in (client-ip=2a00:1450:4864:20::32b;
- helo=mail-wm1-x32b.google.com; envelope-from=radhika@qwaveinc.in;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=qwaveinc.in
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=qwaveinc-in.20150623.gappssmtp.com
- header.i=@qwaveinc-in.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=TznVqiH4; dkim-atps=neutral
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com
- [IPv6:2a00:1450:4864:20::32b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.223.112;
+ helo=nam11-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=os.amperecomputing.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=XSbocq8/; 
+ dkim-atps=neutral
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam11on2112.outbound.protection.outlook.com [40.107.223.112])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CZMRq5MVbzDqG9
- for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 19:19:12 +1100 (AEDT)
-Received: by mail-wm1-x32b.google.com with SMTP id s13so22744401wmh.4
- for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 00:19:12 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CZP5V0W4TzDqJ8
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 20:33:30 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IJ8uMC7W7VYFncpisANj3+jC3c/Bbd1U5OZLfEh7O+VSClDr3Gy9e2lD/MDxQyZrwESzAkW/X7EOTGKxz3VQzEiIIomZrRYkGWxBqviY3xJfYRjrd+go/lFWTeniw97j2fH6Pu3r2w6zzGUEClz0+54oYSSU0Blkn9mPJhdoIFNbE24YqkcxgtHVg63PvGXD17tMbIYe6XXIP+NSf9OImcqW21Uz2Vzr1GyZlV1W+GrkEgr22Eu1pcZIPPrw9qK7+xGPMTLC0FfTVEBrbrnx20oAXFIDJ79wCLCJhClWjz6ZktBqpfhVp+c7xDv0q9VNz4vPPHlt1xk2Z+v3extSPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tVZXR8YKH8annOQA9of7ORhxb8lvmfi5cYtj0CdPDcY=;
+ b=NmCDoXAYbGrSoWGqJ6oCkOxVtNVPAOvhNqYa3GbPg4vjgtVEr9oqN8V8/NgBGfriWzz79TgAhFhzWPRVojaA6MhNaK1MIQ/ZxKYk4/KAnV/+BOdWnCI8MeXHS0Rmq3Cp/dlaFvKLNxs7zD8QwgnPNs7Q4eqfhtfC9nFrsPQaqlO8L5Kul7qe+BPrdXZVTNM8sZDsP8LG21ph25JWzTK40+8kC+c7GggN0IWyOV8GEeAjXFX5PwB8cMTmkE5CBawg2ZqeBea3/9fE9fwsu8g5GlZzBJh4VA4Vr1OEyAfG4r5OLScvtoOLiUhE7zUKT/v/onTv0oDncFiC9gwQznicKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qwaveinc-in.20150623.gappssmtp.com; s=20150623;
- h=mime-version:from:date:message-id:subject:to;
- bh=NiEtC63tijdzFylXn1dAnJU5+HfWwtmIQmdock6vcPI=;
- b=TznVqiH4vWeycTRwA8+spPRbfricj8Crtzcp9uoWVCWHF5X0hsZs6s8dg8ruznyCnE
- Rqtn/2N9stWtdOdGg5FVagcVeE7qRh9iGnIsJHHGrJbQlC0NJnbnTLWjfmSXDbNTmaQK
- 9f5nbnrcC31X9ZG82d44nRBJvqFseNAULYR1EiMT2SExP9P6kowNuw34uz30Dmz6npzh
- wllGxe3JjyaI3AgbohddWcRG92xyxkW2ZRmY8OhwKR0L/zLV6qrULv07tfB56DO9Eo99
- 2KmOzXjYluH9P4T4Sovw8xTvf1jRocVwlz7bo7/6OtY17lep3XOWhKXUWOJ6CCqU0aYu
- Pn1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=NiEtC63tijdzFylXn1dAnJU5+HfWwtmIQmdock6vcPI=;
- b=qZt+NeFe8IM8rvamz8G2RhkHKP70OA3w/Yu31OBsju+7PG0ahCgDeKpppeT1VbE8fl
- rZTg/HEzEeqbHQdTYe02V96mYuriNLo/epEIbSB4gtoeE7xUKhWoytM20HAtrpWbGxwK
- UxSpWCDViGNzTgHFJ53YPfesP4mubVmgiqPlMHcc/RzzSdGU9PhTK5fzv3YJu+D+y/7A
- V+DnmzCPY2AK5kxlZpPAFsqSrKfNcskMrVxboyALHByyafeQj48M1IQxbG2+MISrhLmP
- FFo2HIxcei0xz8EycjyHPdtRHdAZoAc4VGegS4Sxek5P/0cNtxBqgtd0hgi2ohE4nEbh
- hVlQ==
-X-Gm-Message-State: AOAM532I5Gp3SmJvsspphcF3rbH0Gyj/Enomh+Ts+KQ3lVYuO4RNeRqa
- 4QO60uFDxt+VlvBheyZIfMpVAU483WopSUi2iGYWou+4uV+l7HxI
-X-Google-Smtp-Source: ABdhPJw3oAmIVX0s6eaZ1UVKUdiyXKrDecNplkea/fGc2febPFp0deO7mRn7VVRLEQ2HD/aUamyxYMm/HuVusH0NeKc=
-X-Received: by 2002:a1c:4b10:: with SMTP id y16mr13922794wma.10.1605514745124; 
- Mon, 16 Nov 2020 00:19:05 -0800 (PST)
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tVZXR8YKH8annOQA9of7ORhxb8lvmfi5cYtj0CdPDcY=;
+ b=XSbocq8/frErbUPo7gbK3oEmmFMnZITCXIAWqroKT0EwGMP2gVtLPR6oxlZxwMaDrNxcvIhi3JJ5GV3WrlBBvv0KwNQuKRbvCI0NMaEcG9N2M0ceBH5x6ztv8qjVi57wTSwGS7dL20FibexPjNBn24KsdBR43ZKbvRfAtQPCRno=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+Received: from CO2PR01MB2039.prod.exchangelabs.com (2603:10b6:102:7::6) by
+ MW2PR0102MB3403.prod.exchangelabs.com (2603:10b6:302:2::32) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3477.21; Mon, 16 Nov 2020 09:33:22 +0000
+Received: from CO2PR01MB2039.prod.exchangelabs.com
+ ([fe80::9406:896e:16e9:ed0]) by CO2PR01MB2039.prod.exchangelabs.com
+ ([fe80::9406:896e:16e9:ed0%2]) with mapi id 15.20.3541.028; Mon, 16 Nov 2020
+ 09:33:22 +0000
+Subject: Re: New meta-ampere request
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+References: <fbcb9c2f-553c-6ebe-d2d1-69dd072a25ad@os.amperecomputing.com>
+ <F47638BE-9654-4837-9FE3-1AB188CDB04C@fuzziesquirrel.com>
+From: "Thang Q. Nguyen" <thang@os.amperecomputing.com>
+Message-ID: <51c0cb92-49a7-41f4-b9c1-809af5388109@os.amperecomputing.com>
+Date: Mon, 16 Nov 2020 16:33:12 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.4.3
+In-Reply-To: <F47638BE-9654-4837-9FE3-1AB188CDB04C@fuzziesquirrel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Originating-IP: [118.69.219.201]
+X-ClientProxiedBy: HK2PR02CA0179.apcprd02.prod.outlook.com
+ (2603:1096:201:21::15) To CO2PR01MB2039.prod.exchangelabs.com
+ (2603:10b6:102:7::6)
 MIME-Version: 1.0
-From: Radhika Pradeep <radhika@qwaveinc.in>
-Date: Mon, 16 Nov 2020 13:48:53 +0530
-Message-ID: <CAFMA7evG_dq+GOOk+PCJxVdU7UxAi9FuY_=VOzO0WzuUn=DgcA@mail.gmail.com>
-Subject: SETTING UART2 AS DEFAULT SERIAL CONSOLE_AST2520 BMC BOARD
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000010ba8c05b43508d4"
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [10.38.33.219] (118.69.219.201) by
+ HK2PR02CA0179.apcprd02.prod.outlook.com (2603:1096:201:21::15) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3564.25 via Frontend Transport; Mon, 16 Nov 2020 09:33:20 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: ac5d8523-647f-4416-e782-08d88a12a8b0
+X-MS-TrafficTypeDiagnostic: MW2PR0102MB3403:
+X-Microsoft-Antispam-PRVS: <MW2PR0102MB34034B0F435E33F7ECFC327D8DE30@MW2PR0102MB3403.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8273;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: vsarCnlhnpUECELmGDwooJ8KQc+owAaIPUHIrCy9QF6qaXM40WpX1kgS4Sq0JaA4gK/ivv5DwcwBxVWDpGWCKTMAMe/m5ZDUakmGKwsE1ykpwYNloTJs5BdOBxu588IoTZdQje/0553UblpQpTy0wK1d17jNL5Hq8mNo7EwVCQdyNTrT32eNy2KtfCqMaJ/t3vkKg6ef9rjQQllR57vV8y0jrHRPXmJEL2eZjUk3thceLD9nTAw09X6M4nR4cIBfK9KVBy6ygB6uHPVuT+63lcsbAT7bJZ0TQTF3VJwlfvx6Dk5JOeG/SdYBJNk4LoMGf28Ras4l+13vQNOtBjVZwLKdgGWBSss3AfaQ9v4t1Q1aVaoqTXmAZ60O1rlXYwaaeDBjFivsfe/fbKeengde7A==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CO2PR01MB2039.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39840400004)(366004)(396003)(376002)(346002)(136003)(66476007)(66946007)(6486002)(66556008)(2906002)(8936002)(16526019)(26005)(186003)(52116002)(2616005)(31686004)(956004)(5660300002)(53546011)(6666004)(316002)(4744005)(83380400001)(16576012)(86362001)(8676002)(478600001)(4326008)(6916009)(3480700007)(31696002)(41852002)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: ysHPbd9s51KjhIEDinKPgTlTntXjJFUbJaKWThBtUO6gq10BDwUxUtLwoqf/WTiXeUAOBZyfXnkV5zcSCSnSokJ5lGqFtyXpb6YI3uMSaaDppw+uqW4bxLtt5rW1dylpSaddtYZfF5Efwwku05gCtXW9F+196tuIlaOkX3xsrFDHyumj4LY6jaNOMfZz1PIZio8GOYRsfabkBMN0zFHdE4J4yp8q4vTByMxHQqUdUQ40yl3iTgX3x3YlnwCzuUlUdKpB5/vxcF7s6wgK56lv6rzfIyNPkZRvph3WxqNxqwOT3Lpyl6Fp6Lzg4mSmImf0Sw5HiFxFiOG8qlQa3o94Lq0Gt5WMLs51psurTtO3Z3qqzcVLZeX38AspFQbCOitCc5sXMPxQF1+4fzkREcO7fQ2fUhPlEc2ArcdGjCCB5juSGkFdwddlSxlsxoTT9+m3mAQsMnN70nv/Q+yoZ+u4oAC9dOvp4VbRpYSOP+g3ZqG5qG0wtoUXzqSxLk+opiEGiAdCk3M6EZLJz8B3ohxWFEwjmZ960I5FHt1avmNB5zluI9beKnwZN+TZdAo5zOYpndlikPetMjYYmvuHMNV4ZdOFvZGMynuRWju3Y03nK8hXFdeg3sYlTwTntvK2tomNoTZ+1Xuq1aDDKjz136RINQ==
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ac5d8523-647f-4416-e782-08d88a12a8b0
+X-MS-Exchange-CrossTenant-AuthSource: CO2PR01MB2039.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Nov 2020 09:33:22.1673 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: uZQUNGAIwLYpe8a+ggOttCGlPehAWww/FAxG08PsqpuT1HwQFZbtXVRsc5p3Ng34ZXDu5KxHiQDTR1dq7DAmmtD4FbbFjP+TkwjHCEvSsyk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR0102MB3403
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,81 +109,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000010ba8c05b43508d4
-Content-Type: text/plain; charset="UTF-8"
 
-Hi ,
+On 11/12/20 20:20, Brad Bishop wrote:
+> at 1:58 AM, Thang Q. Nguyen <thang@os.amperecomputing.com> wrote:
+>
+>> Hi Brad,
+>>
+>> I am from Ampere Computing. We are using the OpenBMC to develop our 
+>> BMC for our reference platform (with Ampere CPU and Aspeed AST2500).
+>>
+>> We need you to help create a new meta-ampere repository for us to 
+>> start pushing our codes for review.
+>>
+>> Below is the information to create new meta-ampere layer:
+>>
+>> Maintainers:
+>>
+>>     thang@os.amperecomputing.com
+>>
+>>     tung@os.amperecomputing.com
+>>
+>> Let me know if I miss anything.
+>>
+>>
+>> Best Regards,
+>>
+>> Thang Q. Nguyen
+>
+> Hi Thang - meta-ampere created!
+>
+> thx - brad
 
-We have a BMC board based on the AST2520 with UART2 set as serial
-console.We are using the openbmc codebase based on ast2500 with aspeed-g5.
+Hi Brad,
 
-Since the default uart console is set to uart5 we are not able to get the
-serial console output.
+I am sorry for sending you the wrong email from maintainer list. Please 
+help update the email from Tung Nguyen as below:
 
-We just got a "mw" command used in uboot to change the register for UART5
-TO IO2 routing which can only be done temporarily.
-
-Because we have the console connected to UART2 only. So we need to get the
-console output at UART2 each time the board boots up.
-
-Could you please provide us with the information on how to change routing
-permanently or the information about  the file which can be modified to
-change the register values permanently to get the uart2 console output.?
+tungnguyen@os.amperecomputing.com (remove tung@os.amperecomputing.com 
+and use this one).
 
 
-Thanks and Regards,
+Best Regards,
 
-Radhika
+Thang Q. Nguyen
 
---00000000000010ba8c05b43508d4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p>Hi ,</p>
-<p><font size=3D"2"><span style=3D"font-family:verdana,sans-serif">We have =
-a BMC board based on the=20
-AST2520 with UART2 set as serial console.We are using the openbmc=20
-codebase based on ast2500 with aspeed-g5.</span></font></p><font size=3D"2"=
-><span style=3D"font-family:verdana,sans-serif">
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif">Since the default uart console is set to uart5 we are not able to get=
- the serial console output.</span></font></p><font size=3D"2"><span style=
-=3D"font-family:verdana,sans-serif">
-
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif">We just got a &quot;mw&quot; command used in uboot to change the regi=
-ster for UART5 TO IO2 routing which can only be done temporarily.</span></f=
-ont></p><font size=3D"2"><span style=3D"font-family:verdana,sans-serif">
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif"><span>Because we have the console connected to UART2 only. So we need=
- to get the console output at UART2 each time the board boots up.</span></s=
-pan></font></p><font size=3D"2"><span style=3D"font-family:verdana,sans-ser=
-if">
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif"><span>Could
- you please provide us with the information on how to change routing=20
-permanently or the information about=C2=A0 the file which can be modified t=
-o=20
-change the register values permanently to get the uart2 console output.?</s=
-pan></span></font></p><font size=3D"2"><span style=3D"font-family:verdana,s=
-ans-serif">
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif"><br></span></font>
-  <font size=3D"2"><span style=3D"font-family:verdana,sans-serif"><span></s=
-pan></span></font></p><font size=3D"2"><span style=3D"font-family:verdana,s=
-ans-serif">
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif"><span>Thanks and Regards,</span></span></font></p><font size=3D"2"><s=
-pan style=3D"font-family:verdana,sans-serif">
-</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
-erif"><span>Radhika</span></span></font><font face=3D"verdana, sans-serif">=
-<span style=3D"font-family:=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94,serif;font-=
-size:16px"><span style=3D"font-family:Calibri,sans-serif" lang=3D"EN-US"><s=
-pan style=3D"font-weight:bold"><br>
-        </span></span></span></font></p>
-</div>
-
---00000000000010ba8c05b43508d4--
