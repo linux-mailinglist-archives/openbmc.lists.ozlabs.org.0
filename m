@@ -1,69 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B614A2B4B61
-	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 17:37:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B870C2B4E73
+	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 18:49:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CZZVM5QNKzDqNy
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 03:37:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CZc600rgJzDqN3
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 04:49:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::444;
+ helo=mail-wr1-x444.google.com; envelope-from=vveerach@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b41; helo=mail-yb1-xb41.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=y/rt4Rgk; dkim-atps=neutral
-Received: from mail-yb1-xb41.google.com (mail-yb1-xb41.google.com
- [IPv6:2607:f8b0:4864:20::b41])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=RkR0wMVe; dkim-atps=neutral
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com
+ [IPv6:2a00:1450:4864:20::444])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CZZTK2wRXzDqFK
- for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 03:36:20 +1100 (AEDT)
-Received: by mail-yb1-xb41.google.com with SMTP id 2so16161366ybc.12
- for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 08:36:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CZc4n4XDfzDqMn
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 04:48:35 +1100 (AEDT)
+Received: by mail-wr1-x444.google.com with SMTP id j7so19695159wrp.3
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 09:48:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=4pRPUOuHI9yylcb4W488dda3bLzVyOZjSHfL9yQIqBY=;
- b=y/rt4RgkoH4FmdqadbD1ZzK5OLoZDOFxCicaWO9vMzj5BE7ZJ/pEjkC8RTQRxNs1Gj
- BlucCYtiuHyNHVImMCf7MJF7EH9XtWm6HMoryiAx7dK6kvLuLTKnC4Q1h7tQQuFhRldD
- G82ftG1fJxM+RFAMXphXpu9QZ82GCmt3shVAPHXahaHJRXojUcO7eiRtNC804+LZWk57
- Na73Kjrwk5mr7vGgrCFC8KApQOxU9W8oW3EI7su1GWwhHq/TXR3fOvfsto/d6K6axNBV
- MsiBCwZmwjNskgJIf1uxsuLc9lDB8Q1cUKS+jLjYz7c+5td1Lg6wYWvpqrNZ45RWtE41
- HcUw==
+ :cc; bh=QJtoYDemV+9xGnS9RUFF4pvxnt4l5sgVbnA4EORkkQA=;
+ b=RkR0wMVe14UdkQxokx84wY79XPbalf93CzT89Ne+JnX7+Fu9t0LAMbQWbEqIDbAUWE
+ VvGkUxloBnT9wkmbY4qYonHajzOPdBVGQi2yFgr6W4sEzvslCIxAYKneJLRuaG23t/8g
+ QBKgrKfZATz3sMuZjcCOHd1VOe69+QY+41Yq1qTh4HwKY8n0PeDj7Vfpgh8nNqq8CHXq
+ 5OwqyG/NSKgxfz1j7IAtHZoGrgw15rg8v+gRzIk8+1mAPbnMNwKtXvmeRQ89QFErNrV+
+ cKgH3TWiIEprQ3qBeqk8hhxhrJ1BXT+2zL9stxBh2md0mzZPwZSZxpfPwH1yIdhwgkqT
+ GUGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=4pRPUOuHI9yylcb4W488dda3bLzVyOZjSHfL9yQIqBY=;
- b=PffOt6PtgYnuGsnfWqsuCcsPRfpQM1jEkhqKwerHNxtZI5SpO5a6KARllkOHZ9iWhD
- cUB0QNPRzJECYSOrdzYyYdXJFGMQ4DyAR1EJJnLimMbjup+oUi9IK9TGzrv+T2j84m/d
- k6N9FPjCueDRF0SAs6dfQL1seBVZZYQ898biUCMqimPB1HYHbMjkkcIFz0y4RlV8cBZS
- 9erYT4HjiRNUDQm6okw/k1Q9IuwBttJqqzsjH1AT+eImitdO9I2CyF3Wiq5pqhXrU+Fo
- IXnnMpwcmgvx9qKNFgNX/6MvlIThvXroHzZDRbCk32ie+EBruqK9HT66IfI/0hWVAVbV
- HF5Q==
-X-Gm-Message-State: AOAM530OWLixmqwS/SDevm5oSV54IU0CnQq86Jsq4VRvHTIkg/+30id/
- 6tQJITR+nMunZQjENjAyHGvknggqT96kyT0G8tSDGg==
-X-Google-Smtp-Source: ABdhPJzyEztK/whnophZYyhxH29BcBrtjtnT6UHhHjn8ll7eZv0MlyBoZHkeyfXVUHhSIgBd0D7i+mUTcHyF5i1jroA=
-X-Received: by 2002:a25:340c:: with SMTP id b12mr19268825yba.417.1605544576951; 
- Mon, 16 Nov 2020 08:36:16 -0800 (PST)
+ bh=QJtoYDemV+9xGnS9RUFF4pvxnt4l5sgVbnA4EORkkQA=;
+ b=sq690b5AoYRB9SCEJ1vrvWFI7M1beT5YcBTF4dR972BlF1eqer6EzH+wHO0auSNrIt
+ x+B8mSBkypob0yULlHd/Uh6Er/dhK6Emev6u5rQ+vu6yHelz22/CsoVWfVhqCKsv+L+f
+ neHwKDQpqF5qWYlw6paqfEkOZcP5aJ0LlVbR1Mh0trgeeI/Kwqx9lb8DVDlGfFXMa1Tt
+ g9Kcgc1d07mp+MASoy9hOOSaxzyXubHlVi41ixJau4ANPs+ubzFt6YAtifpTUcJ0Wi7O
+ hNNWUFUNl3jQQS4MM6OOOMetXIuD0hULa4f/qQxEdabhninJZfOgrRNN6QOiya1IbwBc
+ 6l2w==
+X-Gm-Message-State: AOAM530G9uhHhuNxlnfyoTXrSORspb2TDsUbjVJJB7f4A6KtOHFbGyEq
+ 1Kzy9oLdI5om+dvP2eDXRy7z2gRVDydcTuAfDHmURw==
+X-Google-Smtp-Source: ABdhPJxC3yYBZuRGVsJ6H7iDFMRcRhmykVXnhVcqMPEsPwgJYX+aAbWMx+XePiPkG6A8785tWb3IqHl46fBW57OsspE=
+X-Received: by 2002:a5d:4c52:: with SMTP id n18mr20710937wrt.68.1605548907066; 
+ Mon, 16 Nov 2020 09:48:27 -0800 (PST)
 MIME-Version: 1.0
-References: <7d749dad-e4c0-0243-d701-4a6448fe3433@linux.intel.com>
- <eef808e1-34e1-096e-a335-5b6ebbff9964@linux.intel.com>
- <033645AC-B5C4-4FE9-A1DC-BE2030431613@gmail.com>
-In-Reply-To: <033645AC-B5C4-4FE9-A1DC-BE2030431613@gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 16 Nov 2020 08:36:06 -0800
-Message-ID: <CACWQX815h68gp-BFFMg+5aM-hM8WgyzFYo94cOXo7SXfqDWpuw@mail.gmail.com>
-Subject: Re: Add peci-pcie repo to CI
-To: Andrew Geissler <geissonator@gmail.com>
+References: <20201112205518.7624-1-lancelot.kao@fii-usa.com>
+ <20201112220510.14373-1-lancelot.kao@fii-usa.com>
+ <CACPK8XfeeySqSHKs+xMTi_mOPTGgxB2SNvwO7fU3t_8RPJm3DA@mail.gmail.com>
+In-Reply-To: <CACPK8XfeeySqSHKs+xMTi_mOPTGgxB2SNvwO7fU3t_8RPJm3DA@mail.gmail.com>
+From: Vivekanand Veeracholan <vveerach@google.com>
+Date: Mon, 16 Nov 2020 09:48:15 -0800
+Message-ID: <CAL4K88rF28=uZDyofEudsC=tz8An=JEiCVXhZw3Jow5NgwzZuw@mail.gmail.com>
+Subject: Re: [PATCH v4 linux dev-5.8] Fii Kudo project device tree file
+To: Joel Stanley <joel@jms.id.au>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -76,37 +74,931 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Wludzik,
- Jozef" <jozef.wludzik@linux.intel.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>,
+ Lancelot Kao <lancelot.kao@fii-usa.com>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Nov 16, 2020 at 8:20 AM Andrew Geissler <geissonator@gmail.com> wrote:
+On Sun, Nov 15, 2020 at 7:31 PM Joel Stanley <joel@jms.id.au> wrote:
 >
->
->
-> > On Nov 16, 2020, at 9:32 AM, Wludzik, Jozef <jozef.wludzik@linux.intel.com> wrote:
+> On Thu, 12 Nov 2020 at 22:05, Lancelot Kao <lancelot.kao@fii-usa.com> wrote:
 > >
-> > Hi OpenBMC,
-> > I am looking for guidance or advice how to enable CI jobs for telemetry repository (https://github.com/openbmc/telemetry <https://github.com/openbmc/telemetry>). Thanks in advance for response.
+> > Add device tree for the Kudo BMC. Kudo is an Ampere (Altra)
+> > server platform manufactured by Fii and is based on a Nuvoton
+> > NPCM730 SoC.
 > >
+> > Signed-off-by: Mustatfa Shehabi <Mustafa.Shehabi@fii-na.com>
+> > Signed-off-by: Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>
 >
-> I added the repo to our CI. I do see this error though:
+> Looks good! I'll give Ben a chance  to review before applying.
 >
-> meson.build:1:0: ERROR: Meson version is 0.54.3 but project requires >=0.55.0
-
-FYI, That package won't build and work until PECI is added back to the
-linux tree.  See discussion below for details as to why, and what you
-can do to help upstream it.
-
-https://lore.kernel.org/openbmc/CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com/
-
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
 >
-> If you need that level of meson then please submit a gerrit commit to openbmc-build-scripts
-> to update what CI uses:
-> https://github.com/openbmc/openbmc-build-scripts/blob/master/build-unit-test-docker.sh#L284
->
-> > Thanks,
-> > Jozef
 > >
->
+> > ---
+> > v2:
+> >  - Remove the duplicate the full path and address of node.
+> >  - modified syntax
+> >
+> > ---
+> > v3:
+> >  - Modify the platform description
+> >  - Merge uvoton-npcm730-kudo-gpio.dtsi to uvoton-npcm730-kudo.dts
+> >  - Removed re-describe statement
+> >  - move comment to above
+> >
+> > ---
+> > v4:
+> >  - correct mail title
+> > ---
+> >  arch/arm/boot/dts/nuvoton-npcm730-kudo.dts | 871 +++++++++++++++++++++
+> >  1 file changed, 871 insertions(+)
+> >  create mode 100644 arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+> >
+> > diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+> > new file mode 100644
+> > index 000000000000..077d815e84fc
+> > --- /dev/null
+> > +++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+> > @@ -0,0 +1,871 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +// Copyright (c) 2020 Fii USA Inc.
+> > +
+> > +/dts-v1/;
+> > +#include "nuvoton-npcm730.dtsi"
+> > +
+> > +/ {
+> > +       model = "Fii Kudo Board";
+> > +       compatible = "fii,kudo", "nuvoton,npcm730";
+> > +
+> > +       aliases {
+> > +               ethernet0 = &emc0;
+> > +               ethernet1 = &gmac0;
+> > +               serial0 = &serial0;
+> > +               serial1 = &serial1;
+> > +               serial2 = &serial2;
+> > +               serial3 = &serial3;
+> > +               udc9 = &udc9;
+> > +               emmc0 = &sdhci0;
+> > +               vdma = &vdma;
+> > +               i2c0 = &i2c0;
+> > +               i2c1 = &i2c1;
+> > +               i2c2 = &i2c2;
+> > +               i2c3 = &i2c3;
+> > +               i2c4 = &i2c4;
+> > +               i2c5 = &i2c5;
+> > +               i2c6 = &i2c6;
+> > +               i2c7 = &i2c7;
+> > +               i2c8 = &i2c8;
+> > +               i2c9 = &i2c9;
+> > +               i2c10 = &i2c10;
+> > +               i2c11 = &i2c11;
+> > +               i2c12 = &i2c12;
+> > +               i2c13 = &i2c13;
+> > +               i2c14 = &i2c14;
+> > +               i2c15 = &i2c15;
+> > +               spi0 = &spi0;
+> > +               spi1 = &spi1;
+> > +               fiu0 = &fiu0;
+> > +               fiu1 = &fiu3;
+> > +       };
+> > +
+> > +       chosen {
+> > +               stdout-path = &serial3;
+> > +       };
+> > +
+> > +       memory {
+> > +               reg = <0 0x40000000>;
+> > +       };
+> > +
+> > +       iio-hwmon {
+> > +               compatible = "iio-hwmon";
+> > +               io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
+> > +                       <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+> > +       };
+> > +
+> > +       jtag_master {
+> > +               compatible = "nuvoton,npcm750-jtag-master";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +
+> > +               // dev/jtag0
+> > +               dev-num = <0>;
+> > +               // pspi or gpio
+> > +               mode = "pspi";
+> > +
+> > +               // pspi2
+> > +               pspi-controller = <2>;
+> > +               reg = <0xf0201000 0x1000>;
+> > +               interrupts = <GIC_SPI 28 IRQ_TYPE_LEVEL_HIGH>;
+> > +               clocks = <&clk NPCM7XX_CLK_APB5>;
+> > +
+> > +               // TCK, TDI, TDO, TMS
+> > +               jtag-gpios = <&gpio0 19 GPIO_ACTIVE_HIGH>,
+> > +                               <&gpio0 18 GPIO_ACTIVE_HIGH>,
+> > +                               <&gpio0 17 GPIO_ACTIVE_HIGH>,
+> > +                               <&gpio0 16 GPIO_ACTIVE_HIGH>;
+> > +       };
+> > +
+> > +       leds {
+> > +               compatible = "gpio-leds";
+> > +               heartbeat {
+> > +                       label = "heartbeat";
+> > +                       gpios = <&gpio0 14 1>;
+> > +               };
+> > +       };
+> > +
+> > +       pinctrl: pinctrl@f0800000 {
+> > +               gpio61oh_pins: gpio61oh-pins {
+> > +                       pins = "GPO61/nDTR1_BOUT1/STRAP6";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio62oh_pins: gpio62oh-pins {
+> > +                       pins = "GPO62/nRTST1/STRAP5";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio161ol_pins: gpio161ol-pins {
+> > +                       pins = "GPIO161/nLFRAME/nESPICS";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio163i_pins: gpio163i-pins {
+> > +                       pins = "GPIO163/LCLK/ESPICLK";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio167ol_pins: gpio167ol-pins {
+> > +                       pins = "GPIO167/LAD3/ESPI_IO3";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio95i_pins: gpio95i-pins {
+> > +                       pins = "GPIO95/nLRESET/nESPIRST";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio65ol_pins: gpio65ol-pins {
+> > +                       pins = "GPIO65/FANIN1";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio66oh_pins: gpio66oh-pins {
+> > +                       pins = "GPIO66/FANIN2";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio67oh_pins: gpio67oh-pins {
+> > +                       pins = "GPIO67/FANIN3";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio68ol_pins: gpio68ol-pins {
+> > +                       pins = "GPIO68/FANIN4";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio69i_pins: gpio69i-pins {
+> > +                       pins = "GPIO69/FANIN5";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio70ol_pins: gpio70ol-pins {
+> > +                       pins = "GPIO70/FANIN6";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio71i_pins: gpio71i-pins {
+> > +                       pins = "GPIO71/FANIN7";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio72i_pins: gpio72i-pins {
+> > +                       pins = "GPIO72/FANIN8";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio73i_pins: gpio73i-pins {
+> > +                       pins = "GPIO73/FANIN9";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio74i_pins: gpio74i-pins {
+> > +                       pins = "GPIO74/FANIN10";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio75i_pins: gpio75i-pins {
+> > +                       pins = "GPIO75/FANIN11";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio76i_pins: gpio76i-pins {
+> > +                       pins = "GPIO76/FANIN12";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio77i_pins: gpio77i-pins {
+> > +                       pins = "GPIO77/FANIN13";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio78i_pins: gpio78i-pins {
+> > +                       pins = "GPIO78/FANIN14";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio79ol_pins: gpio79ol-pins {
+> > +                       pins = "GPIO79/FANIN15";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio80oh_pins: gpio80oh-pins {
+> > +                       pins = "GPIO80/PWM0";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio81i_pins: gpio81i-pins {
+> > +                       pins = "GPIO81/PWM1";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio82i_pins: gpio82i-pins {
+> > +                       pins = "GPIO82/PWM2";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio83i_pins: gpio83i-pins {
+> > +                       pins = "GPIO83/PWM3";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio144i_pins: gpio144i-pins {
+> > +                       pins = "GPIO144/PWM4";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio145i_pins: gpio145i-pins {
+> > +                       pins = "GPIO145/PWM5";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio146i_pins: gpio146i-pins {
+> > +                       pins = "GPIO146/PWM6";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio147oh_pins: gpio147oh-pins {
+> > +                       pins = "GPIO147/PWM7";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio168ol_pins: gpio168ol-pins {
+> > +                       pins = "GPIO168/nCLKRUN/nESPIALERT";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio169oh_pins: gpio169oh-pins {
+> > +                       pins = "GPIO169/nSCIPME";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio170ol_pins: gpio170ol-pins {
+> > +                       pins = "GPIO170/nSMI";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio218oh_pins: gpio218oh-pins {
+> > +                       pins = "GPIO218/nWDO1";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio37i_pins: gpio37i-pins {
+> > +                       pins = "GPIO37/SMB3CSDA";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio38i_pins: gpio38i-pins {
+> > +                       pins = "GPIO38/SMB3CSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio39i_pins: gpio39i-pins {
+> > +                       pins = "GPIO39/SMB3BSDA";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio40i_pins: gpio40i-pins {
+> > +                       pins = "GPIO40/SMB3BSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio121i_pins: gpio121i-pins {
+> > +                       pins = "GPIO121/SMB2CSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio122i_pins: gpio122i-pins {
+> > +                       pins = "GPIO122/SMB2BSDA";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio123i_pins: gpio123i-pins {
+> > +                       pins = "GPIO123/SMB2BSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio124i_pins: gpio124i-pins {
+> > +                       pins = "GPIO124/SMB1CSDA";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio125i_pins: gpio125i-pins {
+> > +                       pins = "GPIO125/SMB1CSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio126i_pins: gpio126i-pins {
+> > +                       pins = "GPIO126/SMB1BSDA";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio127i_pins: gpio127i-pins {
+> > +                       pins = "GPIO127/SMB1BSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio136i_pins: gpio136i-pins {
+> > +                       pins = "GPIO136/SD1DT0";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio137oh_pins: gpio137oh-pins {
+> > +                       pins = "GPIO137/SD1DT1";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio138i_pins: gpio138i-pins {
+> > +                       pins = "GPIO138/SD1DT2";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio139i_pins: gpio139i-pins {
+> > +                       pins = "GPIO139/SD1DT3";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio140i_pins: gpio140i-pins {
+> > +                       pins = "GPIO140/SD1CLK";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio141i_pins: gpio141i-pins {
+> > +                       pins = "GPIO141/SD1WP";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio190oh_pins: gpio190oh-pins {
+> > +                       pins = "GPIO190/nPRD_SMI";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio191oh_pins: gpio191oh-pins {
+> > +                       pins = "GPIO191";
+> > +                       bias-disable;
+> > +                       output-high;
+> > +               };
+> > +               gpio195ol_pins: gpio195ol-pins {
+> > +                       pins = "GPIO195/SMB0BSDA";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio196ol_pins: gpio196ol-pins {
+> > +                       pins = "GPIO196/SMB0CSCL";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +               gpio199i_pins: gpio199i-pins {
+> > +                       pins = "GPIO199/SMB0DSCL";
+> > +                       bias-disable;
+> > +                       input-enable;
+> > +               };
+> > +               gpio202ol_pins: gpio202ol-pins {
+> > +                       pins = "GPIO202/SMB0CSDA";
+> > +                       bias-disable;
+> > +                       output-low;
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&gmac0 {
+> > +       phy-mode = "rgmii-id";
+> > +       snps,eee-force-disable;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&emc0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&ehci1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&ohci1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&udc9 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&aes {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&sha {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&fiu0 {
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <&spi0cs1_pins>;
+> > +       status = "okay";
+> > +       spi-nor@0 {
+> > +               compatible = "jedec,spi-nor";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +               reg = <0>;
+> > +               spi-max-frequency = <5000000>;
+> > +               spi-rx-bus-width = <2>;
+> > +               partitions@80000000 {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +                       bmc@0{
+> > +                               label = "bmc";
+> > +                               reg = <0x000000 0x2000000>;
+> > +                       };
+> > +                       u-boot@0 {
+> > +                               label = "u-boot";
+> > +                               reg = <0x0000000 0xC0000>;
+> > +                               read-only;
+> > +                       };
+> > +                       u-boot-env@100000{
+> > +                               label = "u-boot-env";
+> > +                               reg = <0x00100000 0x40000>;
+> > +                       };
+> > +                       kernel@200000 {
+> > +                               label = "kernel";
+> > +                               reg = <0x0200000 0x600000>;
+> > +                       };
+> > +                       rofs@800000 {
+> > +                               label = "rofs";
+> > +                               reg = <0x800000 0x3500000>;
+> > +                       };
+> > +                       rwfs@1d00000 {
+> > +                               label = "rwfs";
+> > +                               reg = <0x3d00000 0x300000>;
+> > +                       };
+> > +               };
+> > +       };
+> > +       spi-nor@1 {
+> > +               compatible = "jedec,spi-nor";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +               reg = <1>;
+> > +               spi-max-frequency = <5000000>;
+> > +               spi-rx-bus-width = <2>;
+> > +               partitions@88000000 {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +                       spare1@0 {
+> > +                               label = "spi0-cs1-spare1";
+> > +                               reg = <0x0 0x800000>;
+> > +                       };
+> > +                       spare2@800000 {
+> > +                               label = "spi0-cs1-spare2";
+> > +                               reg = <0x800000 0x0>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&fiu3 {
+> > +       pinctrl-0 = <&spi3_pins>;
+> > +       spi-nor@0 {
+> > +               compatible = "jedec,spi-nor";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <1>;
+> > +               reg = <0>;
+> > +               spi-max-frequency = <5000000>;
+> > +               spi-rx-bus-width = <2>;
+> > +               partitions@A0000000 {
+> > +                       compatible = "fixed-partitions";
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <1>;
+> > +                       system1@0 {
+> > +                               label = "bios";
+> > +                               reg = <0x0 0x0>;
+> > +                       };
+> > +                       system2@800000 {
+> > +                               label = "spi3-system2";
+> > +                               reg = <0x800000 0x0>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&sdhci0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&vdma {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&pcimbox {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&vcd {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&ece {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&watchdog1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&rng {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial0 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial1 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial2 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&serial3 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&adc {
+> > +       #io-channel-cells = <1>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&otp {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c1 {
+> > +       i2c-switch@75 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x75>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c@2 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <2>;
+> > +
+> > +                       // Rear-Fan
+> > +                       max31790@58 {
+> > +                               compatible = "maxim,max31790";
+> > +                               reg = <0x58>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c@3 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <3>;
+> > +
+> > +                       // Mid-Fan
+> > +                       max31790@58 {
+> > +                               compatible = "maxim,max31790";
+> > +                               reg = <0x58>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@4 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <4>;
+> > +
+> > +                       // INLET1_T
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@5 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <5>;
+> > +
+> > +                       // OUTLET1_T
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@6 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <6>;
+> > +
+> > +                       // OUTLET2_T
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@7 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <7>;
+> > +
+> > +                       // OUTLET3_T
+> > +                       lm75@5c {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x5c>;
+> > +                       };
+> > +               };
+> > +       };
+> > +       i2c-switch@77 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x77>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c-bus@2 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <2>;
+> > +
+> > +                       // STB-T
+> > +                       pmbus@74 {
+> > +                               compatible = "pmbus";
+> > +                               reg = <0x74>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&i2c2 {
+> > +       smpro@4f {
+> > +               compatible = "ampere,smpro";
+> > +               reg = <0x4f>;
+> > +       };
+> > +
+> > +       smpro@4e {
+> > +               compatible = "ampere,smpro";
+> > +               reg = <0x4e>;
+> > +       };
+> > +};
+i2c2 is explicitly disabled in the nuvoton-common-npcm7xx.dtsi
+(included in nuvoton-npcm730.dtsi)
+Do we need status=okay here?
+Same for i2c4.
+> > +
+> > +&i2c3 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c4 {
+> > +       i2c-switch@77 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x77>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c-bus@0 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <0>;
+> > +
+> > +                       // ADC sensors
+> > +                       adm1266@40 {
+> > +                               compatible = "adi,adm1266";
+> > +                               reg = <0x40>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@1 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <1>;
+> > +
+> > +                       // ADC sensors
+> > +                       adm1266@41 {
+> > +                               compatible = "adi,adm1266";
+> > +                               reg = <0x41>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&i2c5 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c6 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c7 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c8 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c9 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c10 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c11 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c12 {
+> > +       ssif-bmc@10 {
+> > +               compatible = "ssif-bmc";
+> > +               reg = <0x10>;
+> > +       };
+> > +};
+> > +
+> > +&i2c13 {
+> > +       i2c-switch@77 {
+> > +               compatible = "nxp,pca9548";
+> > +               #address-cells = <1>;
+> > +               #size-cells = <0>;
+> > +               reg = <0x77>;
+> > +               i2c-mux-idle-disconnect;
+> > +
+> > +               i2c-bus@3 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <3>;
+> > +
+> > +                       // M2_ZONE_T
+> > +                       lm75@28 {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x28>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@4 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <4>;
+> > +
+> > +                       // BATT_ZONE_T
+> > +                       lm75@29 {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x29>;
+> > +                       };
+> > +               };
+> > +
+> > +               i2c-bus@5 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <5>;
+> > +
+> > +                       // NBM1_ZONE_T
+> > +                       lm75@28 {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x28>;
+> > +                       };
+> > +               };
+> > +               i2c-bus@6 {
+> > +                       #address-cells = <1>;
+> > +                       #size-cells = <0>;
+> > +                       reg = <6>;
+> > +
+> > +                       // NBM2_ZONE_T
+> > +                       lm75@29 {
+> > +                               compatible = "ti,lm75";
+> > +                               reg = <0x29>;
+> > +                       };
+> > +               };
+> > +       };
+> > +};
+> > +
+> > +&i2c14 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&i2c15 {
+> > +       status = "okay";
+> > +};
+> > +
+> > +&spi0 {
+> > +       cs-gpios = <&gpio6 11 GPIO_ACTIVE_LOW>;
+> > +       status = "okay";
+> > +};
+> > +
+> > +&pinctrl {
+> > +       pinctrl-names = "default";
+> > +       pinctrl-0 = <
+> > +                       &gpio61oh_pins
+> > +                       &gpio62oh_pins
+> > +                       &gpio161ol_pins
+> > +                       &gpio163i_pins
+> > +                       &gpio167ol_pins
+> > +                       &gpio95i_pins
+> > +                       &gpio65ol_pins
+> > +                       &gpio66oh_pins
+> > +                       &gpio67oh_pins
+> > +                       &gpio68ol_pins
+> > +                       &gpio69i_pins
+> > +                       &gpio70ol_pins
+> > +                       &gpio71i_pins
+> > +                       &gpio72i_pins
+> > +                       &gpio73i_pins
+> > +                       &gpio74i_pins
+> > +                       &gpio75i_pins
+> > +                       &gpio76i_pins
+> > +                       &gpio77i_pins
+> > +                       &gpio78i_pins
+> > +                       &gpio79ol_pins
+> > +                       &gpio80oh_pins
+> > +                       &gpio81i_pins
+> > +                       &gpio82i_pins
+> > +                       &gpio83i_pins
+> > +                       &gpio144i_pins
+> > +                       &gpio145i_pins
+> > +                       &gpio146i_pins
+> > +                       &gpio147oh_pins
+> > +                       &gpio168ol_pins
+> > +                       &gpio169oh_pins
+> > +                       &gpio170ol_pins
+> > +                       &gpio218oh_pins
+> > +                       &gpio37i_pins
+> > +                       &gpio38i_pins
+> > +                       &gpio39i_pins
+> > +                       &gpio40i_pins
+> > +                       &gpio121i_pins
+> > +                       &gpio122i_pins
+> > +                       &gpio123i_pins
+> > +                       &gpio124i_pins
+> > +                       &gpio125i_pins
+> > +                       &gpio126i_pins
+> > +                       &gpio127i_pins
+> > +                       &gpio136i_pins
+> > +                       &gpio137oh_pins
+> > +                       &gpio138i_pins
+> > +                       &gpio139i_pins
+> > +                       &gpio140i_pins
+> > +                       &gpio141i_pins
+> > +                       &gpio190oh_pins
+> > +                       &gpio191oh_pins
+> > +                       &gpio195ol_pins
+> > +                       &gpio196ol_pins
+> > +                       &gpio199i_pins
+> > +                       &gpio202ol_pins
+> > +                       >;
+> > +};
+> > +
+> > +&gcr {
+> > +       serial_port_mux: mux-controller {
+> > +               compatible = "mmio-mux";
+> > +               #mux-control-cells = <1>;
+> > +
+> > +               mux-reg-masks = <0x38 0x07>;
+> > +               idle-states = <2>;
+> > +       };
+> > +};
+> > --
+> > 2.17.1
+> >
