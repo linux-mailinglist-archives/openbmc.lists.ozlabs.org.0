@@ -1,90 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5282C2B3BF8
-	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 05:03:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21FF22B3E6D
+	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 09:20:02 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CZFn70NnhzDqPk
-	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 15:03:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CZMSZ5Dc8zDqRR
+	for <lists+openbmc@lfdr.de>; Mon, 16 Nov 2020 19:19:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
- helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=qwaveinc.in (client-ip=2a00:1450:4864:20::32b;
+ helo=mail-wm1-x32b.google.com; envelope-from=radhika@qwaveinc.in;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ dmarc=none (p=none dis=none) header.from=qwaveinc.in
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=GhroauiT; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=CzmEbkaI; 
- dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
- [66.111.4.28])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=qwaveinc-in.20150623.gappssmtp.com
+ header.i=@qwaveinc-in.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=TznVqiH4; dkim-atps=neutral
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com
+ [IPv6:2a00:1450:4864:20::32b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CZFmD0D4KzDqNF
- for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 15:03:07 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 151005C0054;
- Sun, 15 Nov 2020 23:03:04 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Sun, 15 Nov 2020 23:03:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=5NvUQcgwd+bNlx6UT6NqphKOKpbf6r3
- xzqjQH0N00w4=; b=GhroauiTGgkZuXB6U0ppyTSZ2xXqwfWclgFvYw0CqQcgOzR
- a4yYzUGAE4VwgAfHvSGGhOiWQv852CffXhKzEKZgQ9qy9njE2e0M3UnADEoxWrXB
- TEgz49Xk1q9q6pjTJ6DKWykt1YbxFf91IYJy7ov40d7AmDO1a6eJJKZcCAbeHS2k
- WbX5KOEMzoJMkMLS5nVkPS2UytruOY2Qa8NHIVO+wsFSAygD/mfwjO4uNBPlSLsV
- z8OQKcW9uqkqBWqxzPpx3BX/1VhJjaym8RgIEJbWK+tug8OoI+TRMWUdns6uc2sn
- Qvd1IlUHXPwBE8YBsfA5NtvUdLxN3tsRvlZcpVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=5NvUQc
- gwd+bNlx6UT6NqphKOKpbf6r3xzqjQH0N00w4=; b=CzmEbkaIoJz/JuEXVJpxvc
- nAfCK2b+Gg8xZ/w1Y1xtGOysIk5ptNny+0ybxf0LAA/tojPMGVjzKMVlWprpJuSQ
- gtS09OSbgEOWOFjLxu0XF+fjQpMArzS8WzPl0R8fIRXOnmZBsdgfjZiDJSss8UE0
- sffO5CsZKpK8TBoCOGKCE1Ofve/RYJZXbRJnbPlN1C2faVz2Lt7ugiJKBGSEDEr4
- gAUJKO34fqqvYrjSwP80B6ogf5sABYcqFtCkRrrUw6iM/lRn/rLQki96ZtvJOqSV
- 5jjitf8Yks1EjKPk8y7Y9gmrVNtDVP1c6OZjsbsU6R4g/fRT7EJkUHlW0M8E86dQ
- ==
-X-ME-Sender: <xms:9vmxX3yMt1KaNYXUgouB4t9vlZWET1MZnavF6EQVPY_rrQZKNCgIUQ>
- <xme:9vmxX_RUpHLBStSXgcrQUYBvlPqs4HGAtlrsihP0z0nCs8O_u9-jqtvydKK8yDFws
- PGd51LEQkv3yUbX3Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudeftddgieekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
- hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:9vmxXxW8m1QwgEOQD0hWKqWw5mtn0JUzB4M3EzpwVpFB8GUk72Hmpg>
- <xmx:9vmxXxhfic8zwMCe1vHGp414s2Wk-tqMPAn7tmfhRf3iaYvi0gxS9A>
- <xmx:9vmxX5DRUH_2aiPek_xAkDmo9o0vlHMXxi1mcrYP91LskZJjQqcrSg>
- <xmx:-PmxX241lNRMKgRVJ1HN7JMsVoHCyFYs0HaZgZOaokMwFqmuMSAVbg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 89CA8E00A6; Sun, 15 Nov 2020 23:03:00 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.0-570-gba0a262-fm-20201106.001-gba0a2623
-Mime-Version: 1.0
-Message-Id: <7f0c4e81-4b1e-4c64-9e25-07736b7838e6@www.fastmail.com>
-In-Reply-To: <32cf6ea5-6f1a-42ce-bbae-fb76adf61a89@www.fastmail.com>
-References: <OF51173777.BBAB38E9-ON0025861E.0014BEED-0025861E.0020A56A@notes.na.collabserv.com>
- <CACWQX82Ab4bXSrn2f+LQqbA3nVJ32UPVEOzQ97RXU+iLp9u0uw@mail.gmail.com>
- <d10e39fa-b8e4-4517-9269-d67045912f54@www.fastmail.com>
- <CACWQX81TQfrM+c9f_K_Zx4ScJBKfKH3=Wzx7T-_AWpN=wYegxw@mail.gmail.com>
- <32cf6ea5-6f1a-42ce-bbae-fb76adf61a89@www.fastmail.com>
-Date: Mon, 16 Nov 2020 14:32:42 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Ed Tanous" <ed@tanous.net>
-Subject: Re: support NVMe drive health monitoring
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CZMRq5MVbzDqG9
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 19:19:12 +1100 (AEDT)
+Received: by mail-wm1-x32b.google.com with SMTP id s13so22744401wmh.4
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 00:19:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=qwaveinc-in.20150623.gappssmtp.com; s=20150623;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=NiEtC63tijdzFylXn1dAnJU5+HfWwtmIQmdock6vcPI=;
+ b=TznVqiH4vWeycTRwA8+spPRbfricj8Crtzcp9uoWVCWHF5X0hsZs6s8dg8ruznyCnE
+ Rqtn/2N9stWtdOdGg5FVagcVeE7qRh9iGnIsJHHGrJbQlC0NJnbnTLWjfmSXDbNTmaQK
+ 9f5nbnrcC31X9ZG82d44nRBJvqFseNAULYR1EiMT2SExP9P6kowNuw34uz30Dmz6npzh
+ wllGxe3JjyaI3AgbohddWcRG92xyxkW2ZRmY8OhwKR0L/zLV6qrULv07tfB56DO9Eo99
+ 2KmOzXjYluH9P4T4Sovw8xTvf1jRocVwlz7bo7/6OtY17lep3XOWhKXUWOJ6CCqU0aYu
+ Pn1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=NiEtC63tijdzFylXn1dAnJU5+HfWwtmIQmdock6vcPI=;
+ b=qZt+NeFe8IM8rvamz8G2RhkHKP70OA3w/Yu31OBsju+7PG0ahCgDeKpppeT1VbE8fl
+ rZTg/HEzEeqbHQdTYe02V96mYuriNLo/epEIbSB4gtoeE7xUKhWoytM20HAtrpWbGxwK
+ UxSpWCDViGNzTgHFJ53YPfesP4mubVmgiqPlMHcc/RzzSdGU9PhTK5fzv3YJu+D+y/7A
+ V+DnmzCPY2AK5kxlZpPAFsqSrKfNcskMrVxboyALHByyafeQj48M1IQxbG2+MISrhLmP
+ FFo2HIxcei0xz8EycjyHPdtRHdAZoAc4VGegS4Sxek5P/0cNtxBqgtd0hgi2ohE4nEbh
+ hVlQ==
+X-Gm-Message-State: AOAM532I5Gp3SmJvsspphcF3rbH0Gyj/Enomh+Ts+KQ3lVYuO4RNeRqa
+ 4QO60uFDxt+VlvBheyZIfMpVAU483WopSUi2iGYWou+4uV+l7HxI
+X-Google-Smtp-Source: ABdhPJw3oAmIVX0s6eaZ1UVKUdiyXKrDecNplkea/fGc2febPFp0deO7mRn7VVRLEQ2HD/aUamyxYMm/HuVusH0NeKc=
+X-Received: by 2002:a1c:4b10:: with SMTP id y16mr13922794wma.10.1605514745124; 
+ Mon, 16 Nov 2020 00:19:05 -0800 (PST)
+MIME-Version: 1.0
+From: Radhika Pradeep <radhika@qwaveinc.in>
+Date: Mon, 16 Nov 2020 13:48:53 +0530
+Message-ID: <CAFMA7evG_dq+GOOk+PCJxVdU7UxAi9FuY_=VOzO0WzuUn=DgcA@mail.gmail.com>
+Subject: SETTING UART2 AS DEFAULT SERIAL CONSOLE_AST2520 BMC BOARD
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="00000000000010ba8c05b43508d4"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,78 +71,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jet Li <Jet.Li@ibm.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- rashmi.r.v@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--00000000000010ba8c05b43508d4
+Content-Type: text/plain; charset="UTF-8"
+
+Hi ,
+
+We have a BMC board based on the AST2520 with UART2 set as serial
+console.We are using the openbmc codebase based on ast2500 with aspeed-g5.
+
+Since the default uart console is set to uart5 we are not able to get the
+serial console output.
+
+We just got a "mw" command used in uboot to change the register for UART5
+TO IO2 routing which can only be done temporarily.
+
+Because we have the console connected to UART2 only. So we need to get the
+console output at UART2 each time the board boots up.
+
+Could you please provide us with the information on how to change routing
+permanently or the information about  the file which can be modified to
+change the register values permanently to get the uart2 console output.?
 
 
-On Fri, 13 Nov 2020, at 11:59, Andrew Jeffery wrote:
-> > > > It should also be noted if we end up doing this, I'd probably advocate
-> > > > for it to be its own separate sensor, distinct from the MCTP one,
-> > > > because from a BMC perspective, it has very little in common with the
-> > > > existing NVMe sensor (different protocols, different IO loops, ect),
-> > >
-> > > The difference in IO loop does have an impact here - I hadn't completely
-> > > appreciated how we'd make the synchronous call fit into the current code. The
-> > > hack approach was to just not worry about it for the moment. However,
-> > > implementing the basic command backend isn't actually that much of a change;
-> > > it's a bit of a reorganisation of the NVMeContext class and a small encoder /
-> > > decoder for the SMBus commands.
-> > 
-> > If we can fit it cleanly into the application that's there, great;  If
-> > it makes more sense as another app, fine too.  I haven't looked at it
-> > in depth.
-> > 
-> > >
-> > > > and would probably be a good candidate for adding the hwmon.  Also, it
-> > > > would need to be distinctly selectable from the entity-manager json,
-> > > > as some drives don't possess support for NVMe-MI basic, and we need to
-> > > > keep track of which protocol to use in which case.
-> > >
-> > > If both backends were built in, there's never a reason to use the basic
-> > > management command. If only one of the backends is built in then you don't need
-> > > to keep track unless the interface presented on DBus was different depending on
-> > > the backend, but I was hoping we could avoid that.
-> > 
-> > See above.  I'd really prefer if this were a per-device setting, not a
-> > per-build setting.
-> 
-> Right, my sense in reading what you wrote was that you were pushing back on the 
-> idea on the basis that we'd have to differentiate in the entity-manager config. 
-> But it sounds like you're actually not fussed about that and even consider the 
-> idea in a positive light given what you've written below:
-> 
-> >  nvme-mi support is spotty at best, and buggy
-> > nvme-mi mctp implementations are also common.  I'd rather we
-> > explicitly select one that works well per-device type, rather making
-> > it a build time option.
+Thanks and Regards,
 
-So I'm considering how we can wrap up this discussion. I think the following 
-points have been made:
+Radhika
 
-1. We have entity-manager indicate in its NVMe-MI configuration which interface 
-we'd like to use to fetch the MI data (MCTP vs basic). This is potentially 
-useful to avoid bugs in the drive's MCTP support.
+--00000000000010ba8c05b43508d4
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-2. Perhaps we should have distinct applications to handle fetching MI data via 
-MCTP vs basic if the differences in communication model are too difficult to 
-reconcile.
+<div dir=3D"ltr"><p>Hi ,</p>
+<p><font size=3D"2"><span style=3D"font-family:verdana,sans-serif">We have =
+a BMC board based on the=20
+AST2520 with UART2 set as serial console.We are using the openbmc=20
+codebase based on ast2500 with aspeed-g5.</span></font></p><font size=3D"2"=
+><span style=3D"font-family:verdana,sans-serif">
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif">Since the default uart console is set to uart5 we are not able to get=
+ the serial console output.</span></font></p><font size=3D"2"><span style=
+=3D"font-family:verdana,sans-serif">
 
-3. That (maybe) we rip out the existing NVMeSensor implementation from 
-dbus-sensors on the basis that the SMBus MCTP code stack is not in great shape.
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif">We just got a &quot;mw&quot; command used in uboot to change the regi=
+ster for UART5 TO IO2 routing which can only be done temporarily.</span></f=
+ont></p><font size=3D"2"><span style=3D"font-family:verdana,sans-serif">
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif"><span>Because we have the console connected to UART2 only. So we need=
+ to get the console output at UART2 each time the board boots up.</span></s=
+pan></font></p><font size=3D"2"><span style=3D"font-family:verdana,sans-ser=
+if">
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif"><span>Could
+ you please provide us with the information on how to change routing=20
+permanently or the information about=C2=A0 the file which can be modified t=
+o=20
+change the register values permanently to get the uart2 console output.?</s=
+pan></span></font></p><font size=3D"2"><span style=3D"font-family:verdana,s=
+ans-serif">
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif"><br></span></font>
+  <font size=3D"2"><span style=3D"font-family:verdana,sans-serif"><span></s=
+pan></span></font></p><font size=3D"2"><span style=3D"font-family:verdana,s=
+ans-serif">
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif"><span>Thanks and Regards,</span></span></font></p><font size=3D"2"><s=
+pan style=3D"font-family:verdana,sans-serif">
+</span></font><p><font size=3D"2"><span style=3D"font-family:verdana,sans-s=
+erif"><span>Radhika</span></span></font><font face=3D"verdana, sans-serif">=
+<span style=3D"font-family:=E6=96=B0=E7=B4=B0=E6=98=8E=E9=AB=94,serif;font-=
+size:16px"><span style=3D"font-family:Calibri,sans-serif" lang=3D"EN-US"><s=
+pan style=3D"font-weight:bold"><br>
+        </span></span></span></font></p>
+</div>
 
-We need to hash out what 1 would look like, but I don't think that discussion 
-should immediately get in the way of addressing 2 and 3. If 3 is on the cards 
-and we handwave over the appropriateness of the NVMeSensor app IO loop for the 
-moment, then it's indistinguishable from having a build-time switch to disable 
-the MCTP backend in the current implementation.
-
-So I think we can progress along the lines of the patches that Jet's proposing 
-(adding a flag to {en,dis}able MCTP support) until we consider the MCTP backend 
-mature enough to enable by default?
-
-Cheers,
-
-Andrew
+--00000000000010ba8c05b43508d4--
