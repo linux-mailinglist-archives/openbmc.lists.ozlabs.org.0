@@ -2,93 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B13142B5959
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 06:36:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 152162B5E2A
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 12:21:59 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CZvnr1kChzDqSZ
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 16:36:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cb3S40GNxzDqSV
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 22:21:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=softfail (domain owner discourages use of this
- host) smtp.mailfrom=roeck-us.net (client-ip=69.89.20.226;
- helo=gproxy10-pub.mail.unifiedlayer.com; envelope-from=linux@roeck-us.net;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256
- header.s=default header.b=3xPF2/Jm; dkim-atps=neutral
-X-Greylist: delayed 1317 seconds by postgrey-1.36 at bilbo;
- Tue, 17 Nov 2020 16:36:04 AEDT
-Received: from gproxy10-pub.mail.unifiedlayer.com
- (gproxy10-pub.mail.unifiedlayer.com [69.89.20.226])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=jozef.wludzik@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CZvn00CgFzDqQT
- for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 16:36:03 +1100 (AEDT)
-Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
- by gproxy10.mail.unifiedlayer.com (Postfix) with ESMTP id F1554140548
- for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 22:13:55 -0700 (MST)
-Received: from bh-25.webhostbox.net ([208.91.199.152]) by cmsmtp with ESMTP
- id etJTkqErewNNletJTk4Q99; Mon, 16 Nov 2020 22:13:55 -0700
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.3 cv=ftvymmwf c=1 sm=1 tr=0
- a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=kj9zAlcOel0A:10:nop_charset_1
- a=nNwsprhYR40A:10:nop_rcvd_month_year
- a=evQFzbml-YQA:10:endurance_base64_authed_username_1 a=pGLkceISAAAA:8
- a=FOH2dFAWAAAA:8 a=1ZlPNePYmRpBYS09ySgA:9 a=CjuIK1q_8ugA:10:nop_charset_2
- a=i3VuKzQdj-NEYjvDI-p3:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=roeck-us.net; s=default; h=In-Reply-To:Content-Type:MIME-Version:References
- :Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
- :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=VWJHoKdZasD/t6eHjRpsvDj7GkqNn8pFhbIZBUNigoY=; b=3xPF2/JmhDUnvMTYBDDGVqSCpP
- qEUF4aNPrWuUYUXTTKO8DKqNA7uBOKji/ODqktkzK5c9w2pJ/ayVe9jRY2vMw9lGEA6EeCy5wgLUz
- P8K/03YrWUDWlDrmEh666zc5tsCDbL7HFhAAbgTkLIt9etTq1cqOp8GdAt7iarAHJyZJplLlZyH75
- ibUdEmhp5J03cclN/mBj5A8LFYc2jFW8eV4kfB7ITZRYrmXs0QHicLnOMXoXKDh4esiIO9BJmFann
- vIQTi9zpRka5OTv5rBJyePbzhA+NaAWsVkW1HXQ85b+BrIB7KAQRHwTUcLmmCtPetWpTbKYvBtRwo
- XknQIAdQ==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net
- ([108.223.40.66]:47300 helo=localhost)
- by bh-25.webhostbox.net with esmtpa (Exim 4.93)
- (envelope-from <linux@roeck-us.net>)
- id 1ketJR-003pr2-H7; Tue, 17 Nov 2020 05:13:53 +0000
-Date: Mon, 16 Nov 2020 21:13:52 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: rentao.bupt@gmail.com
-Subject: Re: [PATCH 1/2] hwmon: (max127) Add Maxim MAX127 hardware monitoring
- driver
-Message-ID: <20201117051352.GA208504@roeck-us.net>
-References: <20201117010944.28457-1-rentao.bupt@gmail.com>
- <20201117010944.28457-2-rentao.bupt@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cb3PZ4HYhzDqRF
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 22:19:44 +1100 (AEDT)
+IronPort-SDR: +qlKz9vR0WJZhfm9prJgLBfy05V31kDz7EpS8Ua0vyTRlwKQhCBSUTbT3wxVqk2LHwpd/arvnw
+ 9poj42cSNHEg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9807"; a="157935164"
+X-IronPort-AV: E=Sophos;i="5.77,485,1596524400"; d="scan'208";a="157935164"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Nov 2020 03:19:41 -0800
+IronPort-SDR: A6N3J4/H30tVyuslnbVknndPmCMUApfOX52k2SV1q4kCJen1XCKEuel56AHAIADJ57qnqM0yZy
+ FezxyaphxA7Q==
+X-IronPort-AV: E=Sophos;i="5.77,485,1596524400"; d="scan'208";a="358856237"
+Received: from jwludzik-mobl.ger.corp.intel.com (HELO [10.213.1.209])
+ ([10.213.1.209])
+ by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Nov 2020 03:19:40 -0800
+Subject: Re: Add peci-pcie repo to CI
+To: openbmc@lists.ozlabs.org
+References: <7d749dad-e4c0-0243-d701-4a6448fe3433@linux.intel.com>
+ <eef808e1-34e1-096e-a335-5b6ebbff9964@linux.intel.com>
+ <033645AC-B5C4-4FE9-A1DC-BE2030431613@gmail.com>
+ <CACWQX815h68gp-BFFMg+5aM-hM8WgyzFYo94cOXo7SXfqDWpuw@mail.gmail.com>
+From: "Wludzik, Jozef" <jozef.wludzik@linux.intel.com>
+Message-ID: <5024f9ba-ef40-954f-1578-a9353532ff90@linux.intel.com>
+Date: Tue, 17 Nov 2020 12:19:33 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201117010944.28457-2-rentao.bupt@gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.ozlabs.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1ketJR-003pr2-H7
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net (localhost)
- [108.223.40.66]:47300
-X-Source-Auth: guenter@roeck-us.net
-X-Email-Count: 3
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
+In-Reply-To: <CACWQX815h68gp-BFFMg+5aM-hM8WgyzFYo94cOXo7SXfqDWpuw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,434 +63,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Jesper Dangaard Brouer <hawk@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
- netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
- linux-kernel@vger.kernel.org, taoren@fb.com, Jakub Kicinski <kuba@kernel.org>,
- bpf@vger.kernel.org, mikechoi@fb.com, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Nov 16, 2020 at 05:09:43PM -0800, rentao.bupt@gmail.com wrote:
-> From: Tao Ren <rentao.bupt@gmail.com>
-> 
-> Add hardware monitoring driver for the Maxim MAX127 chip.
-> 
-> MAX127 min/max range handling code is inspired by the max197 driver.
-> 
-> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> ---
->  drivers/hwmon/Kconfig  |   9 ++
->  drivers/hwmon/Makefile |   1 +
->  drivers/hwmon/max127.c | 286 +++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 296 insertions(+)
->  create mode 100644 drivers/hwmon/max127.c
-> 
-> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-> index 9d600e0c5584..716df51edc87 100644
-> --- a/drivers/hwmon/Kconfig
-> +++ b/drivers/hwmon/Kconfig
-> @@ -950,6 +950,15 @@ config SENSORS_MAX1111
->  	  This driver can also be built as a module. If so, the module
->  	  will be called max1111.
->  
-> +config SENSORS_MAX127
-> +	tristate "Maxim MAX127 12-bit 8-channel Data Acquisition System"
-> +	depends on I2C
-> +	help
-> +	  Say y here to support Maxim's MAX127 DAS chips.
-> +
-> +	  This driver can also be built as a module. If so, the module
-> +	  will be called max127.
-> +
->  config SENSORS_MAX16065
->  	tristate "Maxim MAX16065 System Manager and compatibles"
->  	depends on I2C
-> diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-> index 1083bbfac779..01ca5d3fbad4 100644
-> --- a/drivers/hwmon/Makefile
-> +++ b/drivers/hwmon/Makefile
-> @@ -127,6 +127,7 @@ obj-$(CONFIG_SENSORS_LTC4260)	+= ltc4260.o
->  obj-$(CONFIG_SENSORS_LTC4261)	+= ltc4261.o
->  obj-$(CONFIG_SENSORS_LTQ_CPUTEMP) += ltq-cputemp.o
->  obj-$(CONFIG_SENSORS_MAX1111)	+= max1111.o
-> +obj-$(CONFIG_SENSORS_MAX127)	+= max127.o
->  obj-$(CONFIG_SENSORS_MAX16065)	+= max16065.o
->  obj-$(CONFIG_SENSORS_MAX1619)	+= max1619.o
->  obj-$(CONFIG_SENSORS_MAX1668)	+= max1668.o
-> diff --git a/drivers/hwmon/max127.c b/drivers/hwmon/max127.c
-> new file mode 100644
-> index 000000000000..df74a95bcf28
-> --- /dev/null
-> +++ b/drivers/hwmon/max127.c
-> @@ -0,0 +1,286 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/*
-> + * Hardware monitoring driver for MAX127.
-> + *
-> + * Copyright (c) 2020 Facebook Inc.
-> + */
-> +
-> +#include <linux/err.h>
-> +#include <linux/hwmon.h>
-> +#include <linux/hwmon-sysfs.h>
-> +#include <linux/i2c.h>
-> +#include <linux/init.h>
-> +#include <linux/module.h>
-> +#include <linux/sysfs.h>
-> +
-> +/* MAX127 Control Byte. */
-> +#define MAX127_CTRL_START	BIT(7)
-> +#define MAX127_CTRL_SEL_OFFSET	4
+Sorry for subject, I forgot to change it. It should be "Add telemetry 
+report to CI jobs". Mail is not related to peci-pcie.
+Great, thanks for help with enabling it. I decreased meson version to 
+0.54.3, it is ok for telemetry project. Telemetry required to bump boost 
+to 1.74.0 in container to use CI in the latest patches ->
 
-That would better be named _SHIFT.
+https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/38323
 
-> +#define MAX127_CTRL_RNG		BIT(3)
-> +#define MAX127_CTRL_BIP		BIT(2)
-> +#define MAX127_CTRL_PD1		BIT(1)
-> +#define MAX127_CTRL_PD0		BIT(0)
-> +
-> +#define MAX127_NUM_CHANNELS	8
-> +#define MAX127_SET_CHANNEL(ch)	(((ch) & 7) << (MAX127_CTRL_SEL_OFFSET))
+Regards,
+Jozef
 
-() around MAX127_CTRL_SEL_OFFSET is unnecessary.
-
-> +
-> +#define MAX127_INPUT_LIMIT	10	/* 10V */
-> +
-> +/*
-> + * MAX127 returns 2 bytes at read:
-> + *   - the first byte contains data[11:4].
-> + *   - the second byte contains data[3:0] (MSB) and 4 dummy 0s (LSB).
-> + */
-> +#define MAX127_DATA1_SHIFT	4
-> +
-> +struct max127_data {
-> +	struct mutex lock;
-> +	struct i2c_client *client;
-> +	int input_limit;
-> +	u8 ctrl_byte[MAX127_NUM_CHANNELS];
-> +};
-> +
-> +static int max127_select_channel(struct max127_data *data, int channel)
-> +{
-> +	int status;
-> +	struct i2c_client *client = data->client;
-> +	struct i2c_msg msg = {
-> +		.addr = client->addr,
-> +		.flags = 0,
-> +		.len = 1,
-> +		.buf = &data->ctrl_byte[channel],
-> +	};
-> +
-> +	status = i2c_transfer(client->adapter, &msg, 1);
-> +	if (status != 1)
-> +		return status;
-> +
-
-Other drivers assume that this function can return 0. Please
-take that into account as well.
-
-> +	return 0;
-> +}
-> +
-> +static int max127_read_channel(struct max127_data *data, int channel, u16 *vin)
-> +{
-> +	int status;
-> +	u8 i2c_data[2];
-> +	struct i2c_client *client = data->client;
-> +	struct i2c_msg msg = {
-> +		.addr = client->addr,
-> +		.flags = I2C_M_RD,
-> +		.len = 2,
-> +		.buf = i2c_data,
-> +	};
-> +
-> +	status = i2c_transfer(client->adapter, &msg, 1);
-> +	if (status != 1)
-> +		return status;
-
-Same as above.
-
-> +
-> +	*vin = ((i2c_data[0] << 8) | i2c_data[1]) >> MAX127_DATA1_SHIFT;
-
-THis seems wrong. D4..D11 end up in but 8..15, and D0..D3 end up in bit
-0..3. Seems to me the upper byte should be left shifted 4 bit.
-The result then needs to be scaled to mV (see below).
-
-Also, for consistency I would suggest to either use () for both
-parts of the logical or operation or for none.
-
-> +	return 0;
-> +}
-> +
-> +static ssize_t max127_input_show(struct device *dev,
-> +				 struct device_attribute *dev_attr,
-> +				 char *buf)
-> +{
-> +	u16 vin;
-> +	int status;
-> +	struct max127_data *data = dev_get_drvdata(dev);
-> +	struct sensor_device_attribute *attr = to_sensor_dev_attr(dev_attr);
-> +
-> +	if (mutex_lock_interruptible(&data->lock))
-> +		return -ERESTARTSYS;
-
-I don't think the _interruptible is warranted in this driver.
-
-> +
-> +	status = max127_select_channel(data, attr->index);
-> +	if (status)
-> +		goto exit;
-> +
-> +	status = max127_read_channel(data, attr->index, &vin);
-> +	if (status)
-> +		goto exit;
-> +
-> +	status = sprintf(buf, "%u", vin);
-
-This is not correct. The ABI expects values in milli-Volt, and per datasheet
-the values need to be scaled depending on polarity and range settings (see
-table 3 in datasheet). Also, if the range includes negative numbers,
-the reported voltage can obviously be negative. That means %u (and u16)
-can not be correct. "Transfer Function" in the datasheet describes how to
-convert/scale the received data.
-
-> +
-> +exit:
-> +	mutex_unlock(&data->lock);
-> +	return status;
-> +}
-> +
-> +static ssize_t max127_range_show(struct device *dev,
-> +				 struct device_attribute *dev_attr,
-> +				 char *buf)
-> +{
-> +	u8 ctrl, rng_bip;
-> +	struct max127_data *data = dev_get_drvdata(dev);
-> +	struct sensor_device_attribute_2 *attr = to_sensor_dev_attr_2(dev_attr);
-> +	int rng_type = attr->nr;	/* 0 for min, 1 for max */
-> +	int channel = attr->index;
-> +	int full = data->input_limit;
-> +	int half = full / 2;
-> +	int range_table[4][2] = {
-> +		[0] = {0, half},	/* RNG=0, BIP=0 */
-> +		[1] = {-half, half},	/* RNG=0, BIP=1 */
-> +		[2] = {0, full},	/* RNG=1, BIP=0 */
-> +		[3] = {-full, full},	/* RNG=1, BIP=1 */
-> +	};
-
-This can be a static const table. The variables 'full' and 'half'
-are effectively constants and not really needed.
-
-> +
-> +	if (mutex_lock_interruptible(&data->lock))
-> +		return -ERESTARTSYS;
-> +	ctrl = data->ctrl_byte[channel];
-> +	mutex_unlock(&data->lock);
-
-This lock is only needed because "ctrl" is written piece by piece.
-I would suggest to rewrite the store function to write ctrl atomically.
-Then the lock here is no longer needed.
-
-> +
-> +	rng_bip = (ctrl >> 2) & 3;
-> +	return sprintf(buf, "%d", range_table[rng_bip][rng_type]);
-> +}
-> +
-> +static void max127_set_range(struct max127_data *data, int channel)
-> +{
-> +	data->ctrl_byte[channel] |= MAX127_CTRL_RNG;
-> +}
-> +
-> +static void max127_clear_range(struct max127_data *data, int channel)
-> +{
-> +	data->ctrl_byte[channel] &= ~MAX127_CTRL_RNG;
-> +}
-> +
-> +static void max127_set_polarity(struct max127_data *data, int channel)
-> +{
-> +	data->ctrl_byte[channel] |= MAX127_CTRL_BIP;
-> +}
-> +
-> +static void max127_clear_polarity(struct max127_data *data, int channel)
-> +{
-> +	data->ctrl_byte[channel] &= ~MAX127_CTRL_BIP;
-> +}
-> +
-> +static ssize_t max127_range_store(struct device *dev,
-> +				  struct device_attribute *devattr,
-> +				  const char *buf,
-> +				  size_t count)
-> +{
-> +	struct max127_data *data = dev_get_drvdata(dev);
-> +	struct sensor_device_attribute_2 *attr = to_sensor_dev_attr_2(devattr);
-> +	int rng_type = attr->nr;	/* 0 for min, 1 for max */
-> +	int channel = attr->index;
-> +	int full = data->input_limit;
-> +	int half = full / 2;
-> +	long input, output;
-> +
-> +	if (kstrtol(buf, 0, &input))
-> +		return -EINVAL;
-> +
-> +	if (rng_type == 0) {	/* min input */
-> +		if (input <= -full)
-> +			output = -full;
-> +		else if (input < 0)
-> +			output = -half;
-> +		else
-> +			output = 0;
-> +	} else {		/* max input */
-> +		output = (input >= full) ? full : half;
-> +	}
-> +
-
-With the _info API, I would suggest to separate min and max functions.
-This would both simplify the code and make it easier to read and
-review. 
-
-> +	if (mutex_lock_interruptible(&data->lock))
-> +		return -ERESTARTSYS;
-
-This should be rewritten to update "ctrl" in one step.
-Something like
-
-	u8 ctrl;
-	...
-	ctrl = data->ctrl_byte[channel];
-	if (output == -MAX127_INPUT_LIMIT)
-		ctrl |= MAX127_CTRL_RNG | MAX127_CTRL_BIP;
-	else if (output == -half)
-		ctrl |= MAX127_CTRL_BIP;
-		ctrl &= ~MAX127_CTRL_RNG;
-	else if (output == 0)
-		ctrl &= ~MAX127_CTRL_BIP;
-	else lf (output == half)
-		ctrl &= ~MAX127_CTRL_RNG;
-	else
-		ctrl |= MAX127_CTRL_RNG;
-
-	data->ctrl_byte[channel] = ctrl;
-
-I would suggest to separate the min and max functions, though.
-
-> +
-> +	if (output == -full) {
-> +		max127_set_polarity(data, channel);
-> +		max127_set_range(data, channel);
-> +	} else if (output == -half) {
-> +		max127_set_polarity(data, channel);
-> +		max127_clear_range(data, channel);
-> +	} else if (output == 0) {
-> +		max127_clear_polarity(data, channel);
-> +	} else if (output == half) {
-> +		max127_clear_range(data, channel);
-> +	} else {
-> +		max127_set_range(data, channel);
-> +	}
-> +
-> +	mutex_unlock(&data->lock);
-> +
-> +	return count;
-> +}
-> +
-> +#define MAX127_SENSOR_DEV_ATTR_DEF(ch)					   \
-> +	static SENSOR_DEVICE_ATTR_RO(in##ch##_input, max127_input, ch);	   \
-> +	static SENSOR_DEVICE_ATTR_2_RW(in##ch##_min, max127_range, 0, ch); \
-> +	static SENSOR_DEVICE_ATTR_2_RW(in##ch##_max, max127_range, 1, ch)
-> +
-> +MAX127_SENSOR_DEV_ATTR_DEF(0);
-> +MAX127_SENSOR_DEV_ATTR_DEF(1);
-> +MAX127_SENSOR_DEV_ATTR_DEF(2);
-> +MAX127_SENSOR_DEV_ATTR_DEF(3);
-> +MAX127_SENSOR_DEV_ATTR_DEF(4);
-> +MAX127_SENSOR_DEV_ATTR_DEF(5);
-> +MAX127_SENSOR_DEV_ATTR_DEF(6);
-> +MAX127_SENSOR_DEV_ATTR_DEF(7);
-> +
-> +#define MAX127_SENSOR_DEVICE_ATTR(ch)			\
-> +	&sensor_dev_attr_in##ch##_input.dev_attr.attr,	\
-> +	&sensor_dev_attr_in##ch##_min.dev_attr.attr,	\
-> +	&sensor_dev_attr_in##ch##_max.dev_attr.attr
-> +
-> +static struct attribute *max127_attrs[] = {
-> +	MAX127_SENSOR_DEVICE_ATTR(0),
-> +	MAX127_SENSOR_DEVICE_ATTR(1),
-> +	MAX127_SENSOR_DEVICE_ATTR(2),
-> +	MAX127_SENSOR_DEVICE_ATTR(3),
-> +	MAX127_SENSOR_DEVICE_ATTR(4),
-> +	MAX127_SENSOR_DEVICE_ATTR(5),
-> +	MAX127_SENSOR_DEVICE_ATTR(6),
-> +	MAX127_SENSOR_DEVICE_ATTR(7),
-> +	NULL,
-> +};
-> +
-> +ATTRIBUTE_GROUPS(max127);
-> +
-> +static const struct attribute_group max127_attr_groups = {
-> +	.attrs = max127_attrs,
-> +};
-> +
-> +static int max127_probe(struct i2c_client *client,
-> +			const struct i2c_device_id *id)
-> +{
-> +	int i;
-> +	struct device *hwmon_dev;
-> +	struct max127_data *data;
-> +	struct device *dev = &client->dev;
-> +
-> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> +	if (!data)
-> +		return -ENOMEM;
-> +
-> +	data->client = client;
-> +	mutex_init(&data->lock);
-> +	data->input_limit = MAX127_INPUT_LIMIT;
-
-What is the point of input_limit ? It is never modified.
-Why not use MAX127_INPUT_LIMIT directly where needed ?
-
-> +	for (i = 0; i < ARRAY_SIZE(data->ctrl_byte); i++)
-> +		data->ctrl_byte[i] = (MAX127_CTRL_START |
-> +				      MAX127_SET_CHANNEL(i));
-> +
-> +	hwmon_dev = devm_hwmon_device_register_with_groups(dev,
-> +				client->name, data, max127_groups);
-
-Please use the devm_hwmon_device_register_with_info() API.
-
-Thanks,
-Guenter
-
-> +
-> +	return PTR_ERR_OR_ZERO(hwmon_dev);
-> +}
-> +
-> +static const struct i2c_device_id max127_id[] = {
-> +	{ "max127", 0 },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(i2c, max127_id);
-> +
-> +static struct i2c_driver max127_driver = {
-> +	.class		= I2C_CLASS_HWMON,
-> +	.driver = {
-> +		.name	= "max127",
-> +	},
-> +	.probe		= max127_probe,
-> +	.id_table	= max127_id,
-> +};
-> +
-> +module_i2c_driver(max127_driver);
-> +
-> +MODULE_LICENSE("GPL");
-> +MODULE_AUTHOR("Mike Choi <mikechoi@fb.com>");
-> +MODULE_AUTHOR("Tao Ren <rentao.bupt@gmail.com>");
-> +MODULE_DESCRIPTION("MAX127 Hardware Monitoring driver");
-> -- 
-> 2.17.1
-> 
+On 11/16/2020 17:36 PM, Ed Tanous wrote:
+> On Mon, Nov 16, 2020 at 8:20 AM Andrew Geissler <geissonator@gmail.com> wrote:
+>>
+>>
+>>> On Nov 16, 2020, at 9:32 AM, Wludzik, Jozef <jozef.wludzik@linux.intel.com> wrote:
+>>>
+>>> Hi OpenBMC,
+>>> I am looking for guidance or advice how to enable CI jobs for telemetry repository (https://github.com/openbmc/telemetry <https://github.com/openbmc/telemetry>). Thanks in advance for response.
+>>>
+>> I added the repo to our CI. I do see this error though:
+>>
+>> meson.build:1:0: ERROR: Meson version is 0.54.3 but project requires >=0.55.0
+> FYI, That package won't build and work until PECI is added back to the
+> linux tree.  See discussion below for details as to why, and what you
+> can do to help upstream it.
+>
+> https://lore.kernel.org/openbmc/CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com/
+>
+>> If you need that level of meson then please submit a gerrit commit to openbmc-build-scripts
+>> to update what CI uses:
+>> https://github.com/openbmc/openbmc-build-scripts/blob/master/build-unit-test-docker.sh#L284
+>>
+>>> Thanks,
+>>> Jozef
+>>>
