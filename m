@@ -1,59 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A8C32B9DF3
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 00:10:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C4892BA206
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:47:38 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ccb4q57gszDqsR
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 10:10:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ccltv5nywzDqy1
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:47:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Ccb3m5YMlzDqnZ
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 10:09:38 +1100 (AEDT)
-IronPort-SDR: OOc/OZvDLd7ZvIktRsYijwHqNwlgRLGb8iz4ltQj8mSUuS6ZBuTm7KyeQIMHKKzmiPA61NtU6v
- C077KHMZpV0Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9810"; a="150648567"
-X-IronPort-AV: E=Sophos;i="5.78,354,1599548400"; d="scan'208";a="150648567"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2020 15:09:35 -0800
-IronPort-SDR: i28x18QHmKiIAGYHLCj9rpkNnWAP2407okhpnvUo9EjcacHmT2c+kCl5vMz1GPfHVeYnFtU3H0
- UO2POel9aUrw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,354,1599548400"; d="scan'208";a="534959769"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga005.fm.intel.com with ESMTP; 19 Nov 2020 15:09:34 -0800
-Received: from [10.251.21.62] (jmbills-MOBL.amr.corp.intel.com [10.251.21.62])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
- bits)) (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 32E8F580409;
- Thu, 19 Nov 2020 15:09:34 -0800 (PST)
-Subject: Re: [Announce] OpenBMC Discord Community
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <20201112145740.GB4495@heinlein>
- <5cf1d3c7-d871-103f-f518-9a88a5d0edd4@linux.intel.com>
- <20201119221032.GB1261035@heinlein>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <ceb778ef-9cdf-75a3-81af-de1e97e3d43b@linux.intel.com>
-Date: Thu, 19 Nov 2020 15:09:33 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=5833891c6=jun-lin.chen@quantatw.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4Cb2V000X3zDqR7
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 21:38:27 +1100 (AEDT)
+IronPort-SDR: Nd2iUQOIHhzm99L8NWhr0jgb663zYtnz6MdokuXRbt98pE0ak1zFf2qET+T2yhj9ZdZEwAXpBv
+ 2ancm5S4lgKQ==
+Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
+ by mx02.quantatw.com with ESMTP; 17 Nov 2020 18:38:25 +0800
+Received: from mailbx09.quanta.corp (10.243.91.106) by mailbx09.quanta.corp
+ (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Tue, 17 Nov
+ 2020 18:38:24 +0800
+Received: from mailbx09.quanta.corp ([192.168.57.9]) by mailbx09.quanta.corp
+ ([192.168.57.9]) with mapi id 15.01.2044.004; Tue, 17 Nov 2020 18:38:24 +0800
+From: =?big5?B?SnVuLUxpbiBDaGVuICizr6tUwE0p?= <Jun-Lin.Chen@quantatw.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: The Subscription will disappear and config of EventService restore
+ initial value after reboot
+Thread-Topic: The Subscription will disappear and config of EventService
+ restore initial value after reboot
+Thread-Index: Ada8zTtwo1eSvSPzTqi+6szJ11/xAA==
+Date: Tue, 17 Nov 2020 10:38:24 +0000
+Message-ID: <94a84c0d54f94193be2f21212e3749a7@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+Content-Type: multipart/alternative;
+ boundary="_000_94a84c0d54f94193be2f21212e3749a7quantatwcom_"
 MIME-Version: 1.0
-In-Reply-To: <20201119221032.GB1261035@heinlein>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Fri, 20 Nov 2020 16:41:40 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,50 +56,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_94a84c0d54f94193be2f21212e3749a7quantatwcom_
+Content-Type: text/plain; charset="big5"
+Content-Transfer-Encoding: base64
 
+SGksDQpJIGhhdmUgYW4gaXNzdWUgYWJvdXQgRXZlbnRTZXJ2aWNlOiBhZnRlciByZWJvb3QsIFN1
+YnNjcmlwdGlvbiBkaXNhcHBlYXIgYW5kIGNvbmZpZyBvZiBFdmVudFNlcnZpY2UgcmVzdG9yZSBp
+bml0aWFsIHZhbHVlLg0KSSBsb29rIHVwIHRoZSBjb2RlcyBpbiBldmVudF9zZXJ2aWNlX21hbmFn
+ZXIuaHBwIGFuZCBmb3VuZCBTdWJzY3JpcHRpb24gYW5kIEV2ZW50U2VydmljZSBjb25maWcgd2ls
+bCBzdG9yZSBpbiAvdmFyL2xpYi9ibWN3ZWIvZXZlbnRzZXJ2aWNlX2NvbmZpZy5qc29uLg0KQnV0
+IElmIEJNQyBoYXMgbm8gYm1jd2ViIGZvbGRlciBpbiAvdmFyL2xpYi8gLCBJdCBub3Qgc2F2ZSBl
+dmVudHNlcnZpY2VfY29uZmlnLmpzb24uDQoNCkkgdHJ5IGNyZWF0ZSBibWN3ZWIgZm9sZGVyIG1h
+bnVhbGx5IGFuZCBQT1NUIGEgbmV3IFN1YnNjcmlwdGlvbiB0aGVuIHJlYm9vdCwgdGhlIFN1YnNj
+cmlwdGlvbiB3aWxsIGJlIHNhdmVkIGFuZCBub3QgZGlzYXBwZWFyIHRoaXMgdGltZS4NClRoaXMg
+cGVyZm9ybWFuY2Ugc2VlbXMgdG8gYmUgaW5jb25zaXN0ZW50IHdpdGggdGhlIGRlc2lnbiBjb25j
+ZXB0IGlmIHRoZXJlIGlzIG5vIGJtY3dlYiBmb2xkZXIgYXQgdGhlIGJlZ2lubmluZy4gRG9lcyBu
+ZWVkIHRvIGFkZCB0byB0aGUgY29kZSB0aGF0IGRldGVjdCB0aGUgcGF0aCBpcyB2YWxpZD8NCg0K
+SmltDQoNCg==
 
-On 11/19/2020 2:10 PM, Patrick Williams wrote:
-> On Thu, Nov 19, 2020 at 12:51:05PM -0800, Bills, Jason M wrote:
->> On 11/12/2020 6:57 AM, Patrick Williams wrote:
->> However, I hit a situation today that was unexpected.  At its prompting,
->> I installed the desktop app and got connected there instead of through
->> the browser.  From there, I noticed that the app allows voice chatting
->> that appears to be always enabled, but my microphone was muted, so I
->> didn't think anything of it.
->>
->> I booted my system today and Discord started up and connected on its own
->> which I expected.  However, I was halfway through an internal meeting
->> when I realized that the microphone had defaulted to unmuted.  I don't
->> know if it was broadcasting.
->>
->> Looking through the settings, I don't see a way to disable audio by
->> default or an easy way to switch it on and off.  While looking for the
->> audio settings, I also found settings for screen capturing but no clear
->> way to disable it.
->>
->> Does anyone have recommendations on how to configure Discord to allow
->> the communication features we want but disable any background sharing or
->> broadcasting?  Maybe using only the browser would disable some of the
->> sharing features I see in the app?
-> 
-> Hi Jason,
-> 
-> I don't recall seeing you in any of the voice channels so I don't think
-> anything was broadcast.  A few suggestions:
-> 
->     - Make sure you are not joined to one of the Voice Channels, unless
->       you are explicitly wanting to.  The Voice Channels are the only
->       place where voice/video are shared.
-Thanks for confirming!
-> 
->     - Configure Voice Input Mode to 'Push to Talk' instead of 'Voice
->       Activity'.
->          - Settings -> Voice and Video -> Input Mode (Push to Talk).
->          - This will ensure you are not able to broadcast unless pressing
->            your push-to-talk key binding.  I have mine set to Right-Alt.
-Thanks! I'll make this change.
-> 
+--_000_94a84c0d54f94193be2f21212e3749a7quantatwcom_
+Content-Type: text/html; charset="big5"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dbig5">
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:=B7s=B2=D3=A9=FA=C5=E9;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"\@=B7s=B2=D3=A9=FA=C5=E9";
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I have an issue about EventServ=
+ice: after reboot, Subscription disappear and config of EventService restor=
+e initial value.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I look up the codes in event_se=
+rvice_manager.hpp and found Subscription and EventService config will store=
+ in /var/lib/bmcweb/eventservice_config.json.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">But If BMC has no bmcweb folder=
+ in /var/lib/ , It not save eventservice_config.json.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I try create bmcweb folder manu=
+ally and POST a new Subscription then reboot, the Subscription will be save=
+d and not disappear this time.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">This performance seems to be in=
+consistent with the design concept if there is no bmcweb folder at the begi=
+nning. Does need to add to the code that detect the path is valid?<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Jim</span><i><span lang=3D"EN-U=
+S" style=3D"font-family:&quot;Times New Roman&quot;,serif"><o:p></o:p></spa=
+n></i></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_94a84c0d54f94193be2f21212e3749a7quantatwcom_--
