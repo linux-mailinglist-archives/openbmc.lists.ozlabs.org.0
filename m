@@ -1,96 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8F7E2B6775
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 15:33:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36F502B68CC
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 16:35:03 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cb7jD1tM6zDqNv
-	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 01:33:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cb9442D1WzDqVR
+	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 02:35:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=nu7iix4Y; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=jozef.wludzik@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cb7g704HkzDqS7
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 01:31:45 +1100 (AEDT)
-Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0AHEUaQC036677; Tue, 17 Nov 2020 09:31:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=a/VO7wMiCxJMISngeYWV0+ZlNs1Je4nYp2zNT0mlhcc=;
- b=nu7iix4YF3e9f2/Aa6EPe8mBAgvfOfAQWutdEcRgvGCGXkwbmJ0Mfiax743XsYAaBe1L
- N7DJciDkxmkEz0FCnF3p1GvET1qgfIKZI0sZJCz9mDAOSyF1s7tsVnqgIkQlB722VZ4z
- ZHd8E94rorQjTAhxZkXweOIuYzhdDyo7O6w0ZdzBnty0FWU/92OW3i+Iao37w8GlqdHu
- ThiMBvDvE2YZYl7YRkKib9O0ao/r0PXdbje6SqLOskByyDb87DC9HvaumqAxFBOBJ3fS
- blhMLUHghistjDrUs2wXSUXYPd93Qh1LxrFQAuWyYZRmgcK18EbfKfMFjHvJdKCMkWWI KA== 
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com
- [169.63.121.186])
- by mx0b-001b2d01.pphosted.com with ESMTP id 34vd4py2bm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Nov 2020 09:31:39 -0500
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
- by ppma03wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AHERqL4015439;
- Tue, 17 Nov 2020 14:31:38 GMT
-Received: from b03cxnp08026.gho.boulder.ibm.com
- (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
- by ppma03wdc.us.ibm.com with ESMTP id 34t6v8y6c4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Nov 2020 14:31:38 +0000
-Received: from b03ledav002.gho.boulder.ibm.com
- (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
- by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0AHEVSw746399942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Nov 2020 14:31:28 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 961D713604F;
- Tue, 17 Nov 2020 14:31:37 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1BCEF13605E;
- Tue, 17 Nov 2020 14:31:37 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.85.139.110])
- by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS;
- Tue, 17 Nov 2020 14:31:36 +0000 (GMT)
-Subject: Re: STEPS FOR CHANGING THE DEFAULT SERIAL CONSOLE TO UART2
-To: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- Radhika Pradeep <radhika@qwaveinc.in>
-References: <CAFMA7evLWM5ER_KAms4may+PanjUeQPH6Wy2JoCjQkiXj84eSQ@mail.gmail.com>
- <7db605b2-2a22-7693-041d-7d85c60cadd3@linux.ibm.com>
- <66742cd3-7261-4839-b8fb-3da41f473758@www.fastmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Message-ID: <ab856254-2636-1440-13df-7a351a501742@linux.ibm.com>
-Date: Tue, 17 Nov 2020 08:31:35 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.4.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cb9393mnVzDq7F
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 02:34:12 +1100 (AEDT)
+IronPort-SDR: BFSPq6MgAjY2LRwUUYAmHhCxY6bD6sbGKk/jreAZN98t/+hCYnn4cHV1oofXt+U0cr6LwKFkI1
+ 3sD9EtR2XOeQ==
+X-IronPort-AV: E=McAfee;i="6000,8403,9808"; a="171114451"
+X-IronPort-AV: E=Sophos;i="5.77,485,1596524400"; 
+ d="scan'208,217";a="171114451"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Nov 2020 07:34:08 -0800
+IronPort-SDR: BURlkjyWgK90qwHqGGEb+aZOpWr9w11/KUZknQPbS0TlI612iHPL81tG4abJ81+pKyEX0GweXO
+ 5kJnzo+Ry0eA==
+X-IronPort-AV: E=Sophos;i="5.77,485,1596524400"; 
+ d="scan'208,217";a="544085840"
+Received: from jwludzik-mobl.ger.corp.intel.com (HELO [10.213.1.209])
+ ([10.213.1.209])
+ by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Nov 2020 07:34:07 -0800
+Subject: Re: Add peci-pcie repo to CI
+From: "Wludzik, Jozef" <jozef.wludzik@linux.intel.com>
+To: openbmc@lists.ozlabs.org, Andrew Geissler <geissonator@gmail.com>,
+ ed@tanous.net
+References: <7d749dad-e4c0-0243-d701-4a6448fe3433@linux.intel.com>
+ <eef808e1-34e1-096e-a335-5b6ebbff9964@linux.intel.com>
+ <033645AC-B5C4-4FE9-A1DC-BE2030431613@gmail.com>
+ <CACWQX815h68gp-BFFMg+5aM-hM8WgyzFYo94cOXo7SXfqDWpuw@mail.gmail.com>
+ <5024f9ba-ef40-954f-1578-a9353532ff90@linux.intel.com>
+Message-ID: <3ebe47bd-478a-5578-0a70-ce6bca743571@linux.intel.com>
+Date: Tue, 17 Nov 2020 16:34:04 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.4.3
 MIME-Version: 1.0
-In-Reply-To: <66742cd3-7261-4839-b8fb-3da41f473758@www.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <5024f9ba-ef40-954f-1578-a9353532ff90@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="------------0770D7CDC268181DB7E69999"
 Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-17_03:2020-11-17,
- 2020-11-17 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0
- clxscore=1011 phishscore=0 mlxlogscore=947 priorityscore=1501 mlxscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011170104
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,51 +70,232 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/16/20 5:29 PM, Andrew Jeffery wrote:
+This is a multi-part message in MIME format.
+--------------0770D7CDC268181DB7E69999
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Ok, now everything builds after bumping boost.
+
+I wonder how to read error log from test failure, for example from here
+https://jenkins.openbmc.org/job/ci-repository/7973/consoleFull 
+<https://jenkins.openbmc.org/job/ci-repository/7973/consoleFull>
+
+[29/29] Linking target tests/telemetry-ut
+*1/1 telemetry-ut FAIL 6.28s (exit status 1)*
+
+Ok:                 0
+Expected Fail:      0
+Fail:               1
+Unexpected Pass:    0
+Skipped:            0
+Timeout:            0
+
+Full log written to /home/jenkins-slave/workspace/ci-repository/openbmc/telemetry/build/meson-logs/testlog-ubasan.txt
+
+
+If testlog-ubasan.txt is not stored anywhere, I am going to add 
+--print-errorlogs to unit_test.py 
+(https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/unit-test.py#L888 
+<https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/unit-test.py#L888>) 
+. Hope you are ok with it
+
+Thanks,
+Jozef
+
+On 11/17/2020 12:19 PM, Wludzik, Jozef wrote:
+> Sorry for subject, I forgot to change it. It should be "Add telemetry 
+> report to CI jobs". Mail is not related to peci-pcie.
+> Great, thanks for help with enabling it. I decreased meson version to 
+> 0.54.3, it is ok for telemetry project. Telemetry required to bump 
+> boost to 1.74.0 in container to use CI in the latest patches ->
 >
-> On Tue, 17 Nov 2020, at 08:12, Joseph Reynolds wrote:
->> On 11/16/20 2:30 PM, Radhika Pradeep wrote:
->>> Hi , We have a BMC board based on the AST2520 with UART2 set as serial...
->>> This Message Is From an External Sender
->>> This message came from outside your organization.
+> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/38323 
+>
+>
+> Regards,
+> Jozef
+>
+> On 11/16/2020 17:36 PM, Ed Tanous wrote:
+>> On Mon, Nov 16, 2020 at 8:20 AM Andrew Geissler 
+>> <geissonator@gmail.com> wrote:
 >>>
->>> Hi ,
 >>>
->>> We have a BMC board based on the AST2520 with UART2 set as serial
->>> console.We are using the openbmc codebase based on ast2500 with aspeed-g5.
+>>>> On Nov 16, 2020, at 9:32 AM, Wludzik, Jozef 
+>>>> <jozef.wludzik@linux.intel.com> wrote:
+>>>>
+>>>> Hi OpenBMC,
+>>>> I am looking for guidance or advice how to enable CI jobs for 
+>>>> telemetry repository (https://github.com/openbmc/telemetry 
+>>>> <https://github.com/openbmc/telemetry>). Thanks in advance for 
+>>>> response.
+>>>>
+>>> I added the repo to our CI. I do see this error though:
 >>>
->>> Since the default uart console is set to uart5 we are not able to get
->>> the serial console output.
->>>
->>> We just got a "mw" command used in uboot to change the register for
->>> UART5 TO IO2 routing which can only be done temporarily.
->>>
->>> Because we have the console connected to UART2 only. So we need to get
->>> the console output at UART2 each time the board boots up.
->>>
->>> Could you please provide us with the information on how to change
->>> routing permanently or the information about  the file which can be
->>> modified to change the register values permanently to get the uart2
->>> console output.?
->>>
->> Did you see UARTs described here?
->> https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md
->> Which links to this?  https://github.com/openbmc/obmc-console
+>>> meson.build:1:0: ERROR: Meson version is 0.54.3 but project requires 
+>>> >=0.55.0
+>> FYI, That package won't build and work until PECI is added back to the
+>> linux tree.  See discussion below for details as to why, and what you
+>> can do to help upstream it.
 >>
-> The query is about the BMC console, not the host console, so obmc-console and
-> the related documentation is not relevant here.
+>> https://lore.kernel.org/openbmc/CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com/ 
+>>
+>>
+>>> If you need that level of meson then please submit a gerrit commit 
+>>> to openbmc-build-scripts
+>>> to update what CI uses:
+>>> https://github.com/openbmc/openbmc-build-scripts/blob/master/build-unit-test-docker.sh#L284 
+>>>
+>>>
+>>>> Thanks,
+>>>> Jozef
+>>>>
 
-Thanks for clarifying.  In that case, see 
-https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md#bmc-serial
-which unfortunately does not yet have any details.  :-(
+--------------0770D7CDC268181DB7E69999
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Is the BMC's console configured in the machine config file using the 
-Yocyo/poky SERIAL_CONSOLE or SERIAL_CONSOLES bitbake variable?
-For example, here 
-https://github.com/openbmc/openbmc/blob/master/meta-aspeed/conf/machine/evb-ast2500.conf
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Ok, now everything builds after bumping boost.</p>
+    <p>I wonder how to read error log from test failure, for example
+      from here<br>
+      <a moz-do-not-send="true"
+        href="https://jenkins.openbmc.org/job/ci-repository/7973/consoleFull">https://jenkins.openbmc.org/job/ci-repository/7973/consoleFull</a></p>
+    <pre>[29/29] Linking target tests/telemetry-ut
+<b style="box-sizing: inherit;"><span style="box-sizing: inherit; color: rgb(205, 0, 0);">1/1 telemetry-ut FAIL           6.28s (exit status 1)</span></b>
 
-- Joseph
+Ok:                 0   
+Expected Fail:      0   
+Fail:               1   
+Unexpected Pass:    0   
+Skipped:            0   
+Timeout:            0   
 
->
-> Andrew
+Full log written to /home/jenkins-slave/workspace/ci-repository/openbmc/telemetry/build/meson-logs/testlog-ubasan.txt</pre>
+    <p><br>
+    </p>
+    <p>If testlog-ubasan.txt is not stored anywhere, I am going to add <span
+        style="color: rgb(36, 41, 46); font-family: SFMono-Regular,
+        Consolas, &quot;Liberation Mono&quot;, Menlo, monospace;
+        font-size: 11.9px; font-style: normal; font-variant-ligatures:
+        normal; font-variant-caps: normal; font-weight: 400;
+        letter-spacing: normal; orphans: 2; text-align: start;
+        text-indent: 0px; text-transform: none; white-space: normal;
+        widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;
+        background-color: rgba(27, 31, 35, 0.05); text-decoration-style:
+        initial; text-decoration-color: initial; display: inline
+        !important; float: none;"><span></span>--print-errorlogs</span>
+      to unit_test.py (<a moz-do-not-send="true"
+href="https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/unit-test.py#L888">https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/unit-test.py#L888</a>)
+      . Hope you are ok with it<span style="color: rgb(36, 41, 46);
+        font-family: SFMono-Regular, Consolas, &quot;Liberation
+        Mono&quot;, Menlo, monospace; font-size: 11.9px; font-style:
+        normal; font-variant-ligatures: normal; font-variant-caps:
+        normal; font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; background-color: rgba(27, 31,
+        35, 0.05); text-decoration-style: initial;
+        text-decoration-color: initial; display: inline !important;
+        float: none;"><br>
+      </span></p>
+    <p>Thanks,<br>
+      Jozef <span style="color: rgb(36, 41, 46); font-family:
+        SFMono-Regular, Consolas, &quot;Liberation Mono&quot;, Menlo,
+        monospace; font-size: 11.9px; font-style: normal;
+        font-variant-ligatures: normal; font-variant-caps: normal;
+        font-weight: 400; letter-spacing: normal; orphans: 2;
+        text-align: start; text-indent: 0px; text-transform: none;
+        white-space: normal; widows: 2; word-spacing: 0px;
+        -webkit-text-stroke-width: 0px; background-color: rgba(27, 31,
+        35, 0.05); text-decoration-style: initial;
+        text-decoration-color: initial; display: inline !important;
+        float: none;"></span></p>
+    <div class="moz-cite-prefix">On 11/17/2020 12:19 PM, Wludzik, Jozef
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:5024f9ba-ef40-954f-1578-a9353532ff90@linux.intel.com">Sorry
+      for subject, I forgot to change it. It should be "Add telemetry
+      report to CI jobs". Mail is not related to peci-pcie.
+      <br>
+      Great, thanks for help with enabling it. I decreased meson version
+      to 0.54.3, it is ok for telemetry project. Telemetry required to
+      bump boost to 1.74.0 in container to use CI in the latest patches
+      -&gt;
+      <br>
+      <br>
+<a class="moz-txt-link-freetext" href="https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/38323">https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-build-scripts/+/38323</a>
+      <br>
+      <br>
+      Regards,
+      <br>
+      Jozef
+      <br>
+      <br>
+      On 11/16/2020 17:36 PM, Ed Tanous wrote:
+      <br>
+      <blockquote type="cite">On Mon, Nov 16, 2020 at 8:20 AM Andrew
+        Geissler <a class="moz-txt-link-rfc2396E" href="mailto:geissonator@gmail.com">&lt;geissonator@gmail.com&gt;</a> wrote:
+        <br>
+        <blockquote type="cite">
+          <br>
+          <br>
+          <blockquote type="cite">On Nov 16, 2020, at 9:32 AM, Wludzik,
+            Jozef <a class="moz-txt-link-rfc2396E" href="mailto:jozef.wludzik@linux.intel.com">&lt;jozef.wludzik@linux.intel.com&gt;</a> wrote:
+            <br>
+            <br>
+            Hi OpenBMC,
+            <br>
+            I am looking for guidance or advice how to enable CI jobs
+            for telemetry repository
+            (<a class="moz-txt-link-freetext" href="https://github.com/openbmc/telemetry">https://github.com/openbmc/telemetry</a>
+            <a class="moz-txt-link-rfc2396E" href="https://github.com/openbmc/telemetry">&lt;https://github.com/openbmc/telemetry&gt;</a>). Thanks in
+            advance for response.
+            <br>
+            <br>
+          </blockquote>
+          I added the repo to our CI. I do see this error though:
+          <br>
+          <br>
+          meson.build:1:0: ERROR: Meson version is 0.54.3 but project
+          requires &gt;=0.55.0
+          <br>
+        </blockquote>
+        FYI, That package won't build and work until PECI is added back
+        to the
+        <br>
+        linux tree.  See discussion below for details as to why, and
+        what you
+        <br>
+        can do to help upstream it.
+        <br>
+        <br>
+<a class="moz-txt-link-freetext" href="https://lore.kernel.org/openbmc/CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com/">https://lore.kernel.org/openbmc/CACPK8XddFvszC1daDKTtqwkE-XDfB7uYFP_H4HZXNUxvNHUaqw@mail.gmail.com/</a>
+        <br>
+        <br>
+        <blockquote type="cite">If you need that level of meson then
+          please submit a gerrit commit to openbmc-build-scripts
+          <br>
+          to update what CI uses:
+          <br>
+<a class="moz-txt-link-freetext" href="https://github.com/openbmc/openbmc-build-scripts/blob/master/build-unit-test-docker.sh#L284">https://github.com/openbmc/openbmc-build-scripts/blob/master/build-unit-test-docker.sh#L284</a>
+          <br>
+          <br>
+          <blockquote type="cite">Thanks,
+            <br>
+            Jozef
+            <br>
+            <br>
+          </blockquote>
+        </blockquote>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
 
+--------------0770D7CDC268181DB7E69999--
