@@ -2,72 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63D442B591A
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 06:24:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B13142B5959
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 06:36:50 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CZvX44n6kzDqQn
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 16:24:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CZvnr1kChzDqSZ
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 16:36:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::629;
- helo=mail-pl1-x629.google.com; envelope-from=joel.stan@gmail.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=softfail (domain owner discourages use of this
+ host) smtp.mailfrom=roeck-us.net (client-ip=69.89.20.226;
+ helo=gproxy10-pub.mail.unifiedlayer.com; envelope-from=linux@roeck-us.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=KVVX1oxU; dkim-atps=neutral
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com
- [IPv6:2607:f8b0:4864:20::629])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256
+ header.s=default header.b=3xPF2/Jm; dkim-atps=neutral
+X-Greylist: delayed 1317 seconds by postgrey-1.36 at bilbo;
+ Tue, 17 Nov 2020 16:36:04 AEDT
+Received: from gproxy10-pub.mail.unifiedlayer.com
+ (gproxy10-pub.mail.unifiedlayer.com [69.89.20.226])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CZvWF3MrtzDqQP
- for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 16:24:06 +1100 (AEDT)
-Received: by mail-pl1-x629.google.com with SMTP id 5so2829887plj.8
- for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 21:24:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=sender:from:to:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=4cBPPk0APDsAXh7hE4WgWec1IGA/wNTTOv/JbLmhkEM=;
- b=KVVX1oxUe9l8kd13n9jo0DuL0A3NomMIfnziKCVNXClimQOHhjncrNnMrrS2O9nIfl
- i+Q6dl91NMzbLfGLPZS5TxFaGmZNBtNSzcdu/wOhOTZW/DerhdxgHeBu+odOyt+gcAlD
- 39VXDP3RqEA+0v3YA23bUYKpQ0pwOmvsOJ5GzSkXgBpHlu7yQruW+fD0ZyDWNVP496PK
- NU1JU2sjSWn29MAx8xowZQ0Q0YySa2QrsfM3lB+9Rg772mRM6CypZqgjdkHtDNo/DMGo
- 2IiFxwQvaBLDCG/6aYUW1J/kDOw031hy1AIoImqgm5MVjaCb4sWTA5QEikwY9jGgmgxy
- 6Elg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=4cBPPk0APDsAXh7hE4WgWec1IGA/wNTTOv/JbLmhkEM=;
- b=Tx1ZuahmUF0dD06bdE+5wApLX0tCFTAhLzEriSkYjk0edgNInlin5DZbI4RrdpjOLK
- k0l3mzwBGaeFfSR0EQPXNr9LEdKJ3rWPhzpiDoZvIfzF0mHYS1gwnTSb5H2OWVTYd8fI
- BAVXg78HoxWfbvjZqz9K3qYSCFJ1WJwDT1p0/lJIhsas+wL8ey1/rScQPB0vyXTE5pyO
- rWqjPPdriw0G8hXv1rqgNX2+RMGpwE8piQYJPvqxJ+OIkCG7/QVi660laELbE1WZHazD
- rDBs0gKr3aEPBbeDnaM+w2Ih7I1JQyQCx75MBmjR6r2KrMs8KFbNV46Tb4SF4sMeKURc
- oZuQ==
-X-Gm-Message-State: AOAM530Uut+byIwTDup3OokfxXNyTyZkh/bWCgM3wB4iXFCovDvDNmd7
- sK6CkEl2KWk65lILN34QxxG1nVn5SXSnHw==
-X-Google-Smtp-Source: ABdhPJw/irPeixf+mSI1r1T9zA7CaR4uoFGlmTm8sJb4yD8cxw13VsTT2M7g5K0LLBcAENcgjfgAjA==
-X-Received: by 2002:a17:902:d34c:b029:d7:ca4a:3d83 with SMTP id
- l12-20020a170902d34cb02900d7ca4a3d83mr15971415plk.55.1605590640108; 
- Mon, 16 Nov 2020 21:24:00 -0800 (PST)
-Received: from voyager.ozlabs.ibm.com ([125.63.148.35])
- by smtp.gmail.com with ESMTPSA id e6sm19595206pfn.190.2020.11.16.21.23.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Nov 2020 21:23:59 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
-	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH linux dev-5.8] soc: aspeed: Remove misc control interface
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CZvn00CgFzDqQT
+ for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 16:36:03 +1100 (AEDT)
+Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
+ by gproxy10.mail.unifiedlayer.com (Postfix) with ESMTP id F1554140548
+ for <openbmc@lists.ozlabs.org>; Mon, 16 Nov 2020 22:13:55 -0700 (MST)
+Received: from bh-25.webhostbox.net ([208.91.199.152]) by cmsmtp with ESMTP
+ id etJTkqErewNNletJTk4Q99; Mon, 16 Nov 2020 22:13:55 -0700
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.3 cv=ftvymmwf c=1 sm=1 tr=0
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=kj9zAlcOel0A:10:nop_charset_1
+ a=nNwsprhYR40A:10:nop_rcvd_month_year
+ a=evQFzbml-YQA:10:endurance_base64_authed_username_1 a=pGLkceISAAAA:8
+ a=FOH2dFAWAAAA:8 a=1ZlPNePYmRpBYS09ySgA:9 a=CjuIK1q_8ugA:10:nop_charset_2
+ a=i3VuKzQdj-NEYjvDI-p3:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=roeck-us.net; s=default; h=In-Reply-To:Content-Type:MIME-Version:References
+ :Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+ :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=VWJHoKdZasD/t6eHjRpsvDj7GkqNn8pFhbIZBUNigoY=; b=3xPF2/JmhDUnvMTYBDDGVqSCpP
+ qEUF4aNPrWuUYUXTTKO8DKqNA7uBOKji/ODqktkzK5c9w2pJ/ayVe9jRY2vMw9lGEA6EeCy5wgLUz
+ P8K/03YrWUDWlDrmEh666zc5tsCDbL7HFhAAbgTkLIt9etTq1cqOp8GdAt7iarAHJyZJplLlZyH75
+ ibUdEmhp5J03cclN/mBj5A8LFYc2jFW8eV4kfB7ITZRYrmXs0QHicLnOMXoXKDh4esiIO9BJmFann
+ vIQTi9zpRka5OTv5rBJyePbzhA+NaAWsVkW1HXQ85b+BrIB7KAQRHwTUcLmmCtPetWpTbKYvBtRwo
+ XknQIAdQ==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net
+ ([108.223.40.66]:47300 helo=localhost)
+ by bh-25.webhostbox.net with esmtpa (Exim 4.93)
+ (envelope-from <linux@roeck-us.net>)
+ id 1ketJR-003pr2-H7; Tue, 17 Nov 2020 05:13:53 +0000
+Date: Mon, 16 Nov 2020 21:13:52 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: rentao.bupt@gmail.com
+Subject: Re: [PATCH 1/2] hwmon: (max127) Add Maxim MAX127 hardware monitoring
  driver
-Date: Tue, 17 Nov 2020 15:53:49 +1030
-Message-Id: <20201117052349.1222669-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.29.2
+Message-ID: <20201117051352.GA208504@roeck-us.net>
+References: <20201117010944.28457-1-rentao.bupt@gmail.com>
+ <20201117010944.28457-2-rentao.bupt@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201117010944.28457-2-rentao.bupt@gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.ozlabs.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1ketJR-003pr2-H7
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net (localhost)
+ [108.223.40.66]:47300
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 3
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,260 +100,434 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ Jesper Dangaard Brouer <hawk@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
+ linux-kernel@vger.kernel.org, taoren@fb.com, Jakub Kicinski <kuba@kernel.org>,
+ bpf@vger.kernel.org, mikechoi@fb.com, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This driver is no longer in use. There were two consumers in OpenBMC
-userspace:
+On Mon, Nov 16, 2020 at 05:09:43PM -0800, rentao.bupt@gmail.com wrote:
+> From: Tao Ren <rentao.bupt@gmail.com>
+> 
+> Add hardware monitoring driver for the Maxim MAX127 chip.
+> 
+> MAX127 min/max range handling code is inspired by the max197 driver.
+> 
+> Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
+> ---
+>  drivers/hwmon/Kconfig  |   9 ++
+>  drivers/hwmon/Makefile |   1 +
+>  drivers/hwmon/max127.c | 286 +++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 296 insertions(+)
+>  create mode 100644 drivers/hwmon/max127.c
+> 
+> diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+> index 9d600e0c5584..716df51edc87 100644
+> --- a/drivers/hwmon/Kconfig
+> +++ b/drivers/hwmon/Kconfig
+> @@ -950,6 +950,15 @@ config SENSORS_MAX1111
+>  	  This driver can also be built as a module. If so, the module
+>  	  will be called max1111.
+>  
+> +config SENSORS_MAX127
+> +	tristate "Maxim MAX127 12-bit 8-channel Data Acquisition System"
+> +	depends on I2C
+> +	help
+> +	  Say y here to support Maxim's MAX127 DAS chips.
+> +
+> +	  This driver can also be built as a module. If so, the module
+> +	  will be called max127.
+> +
+>  config SENSORS_MAX16065
+>  	tristate "Maxim MAX16065 System Manager and compatibles"
+>  	depends on I2C
+> diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
+> index 1083bbfac779..01ca5d3fbad4 100644
+> --- a/drivers/hwmon/Makefile
+> +++ b/drivers/hwmon/Makefile
+> @@ -127,6 +127,7 @@ obj-$(CONFIG_SENSORS_LTC4260)	+= ltc4260.o
+>  obj-$(CONFIG_SENSORS_LTC4261)	+= ltc4261.o
+>  obj-$(CONFIG_SENSORS_LTQ_CPUTEMP) += ltq-cputemp.o
+>  obj-$(CONFIG_SENSORS_MAX1111)	+= max1111.o
+> +obj-$(CONFIG_SENSORS_MAX127)	+= max127.o
+>  obj-$(CONFIG_SENSORS_MAX16065)	+= max16065.o
+>  obj-$(CONFIG_SENSORS_MAX1619)	+= max1619.o
+>  obj-$(CONFIG_SENSORS_MAX1668)	+= max1668.o
+> diff --git a/drivers/hwmon/max127.c b/drivers/hwmon/max127.c
+> new file mode 100644
+> index 000000000000..df74a95bcf28
+> --- /dev/null
+> +++ b/drivers/hwmon/max127.c
+> @@ -0,0 +1,286 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * Hardware monitoring driver for MAX127.
+> + *
+> + * Copyright (c) 2020 Facebook Inc.
+> + */
+> +
+> +#include <linux/err.h>
+> +#include <linux/hwmon.h>
+> +#include <linux/hwmon-sysfs.h>
+> +#include <linux/i2c.h>
+> +#include <linux/init.h>
+> +#include <linux/module.h>
+> +#include <linux/sysfs.h>
+> +
+> +/* MAX127 Control Byte. */
+> +#define MAX127_CTRL_START	BIT(7)
+> +#define MAX127_CTRL_SEL_OFFSET	4
 
- - hb_settings
+That would better be named _SHIFT.
 
-    This was used to set the ASPEED LPC scratch registers.
+> +#define MAX127_CTRL_RNG		BIT(3)
+> +#define MAX127_CTRL_BIP		BIT(2)
+> +#define MAX127_CTRL_PD1		BIT(1)
+> +#define MAX127_CTRL_PD0		BIT(0)
+> +
+> +#define MAX127_NUM_CHANNELS	8
+> +#define MAX127_SET_CHANNEL(ch)	(((ch) & 7) << (MAX127_CTRL_SEL_OFFSET))
 
-    The scratch registers are no longer used after the SuperIO controller
-    was disabled to mitigate the pantsdown issues.
+() around MAX127_CTRL_SEL_OFFSET is unnecessary.
 
- - uart-render-controller
+> +
+> +#define MAX127_INPUT_LIMIT	10	/* 10V */
+> +
+> +/*
+> + * MAX127 returns 2 bytes at read:
+> + *   - the first byte contains data[11:4].
+> + *   - the second byte contains data[3:0] (MSB) and 4 dummy 0s (LSB).
+> + */
+> +#define MAX127_DATA1_SHIFT	4
+> +
+> +struct max127_data {
+> +	struct mutex lock;
+> +	struct i2c_client *client;
+> +	int input_limit;
+> +	u8 ctrl_byte[MAX127_NUM_CHANNELS];
+> +};
+> +
+> +static int max127_select_channel(struct max127_data *data, int channel)
+> +{
+> +	int status;
+> +	struct i2c_client *client = data->client;
+> +	struct i2c_msg msg = {
+> +		.addr = client->addr,
+> +		.flags = 0,
+> +		.len = 1,
+> +		.buf = &data->ctrl_byte[channel],
+> +	};
+> +
+> +	status = i2c_transfer(client->adapter, &msg, 1);
+> +	if (status != 1)
+> +		return status;
+> +
 
-   This was used for controlling the ASPEED VGA mux, to switch between
-   the internal graphics device and the VGA device.
+Other drivers assume that this function can return 0. Please
+take that into account as well.
 
-   The mux now has an upstream sysfs control as part of the DRM driver
-   and userspace has been updated to use that.
+> +	return 0;
+> +}
+> +
+> +static int max127_read_channel(struct max127_data *data, int channel, u16 *vin)
+> +{
+> +	int status;
+> +	u8 i2c_data[2];
+> +	struct i2c_client *client = data->client;
+> +	struct i2c_msg msg = {
+> +		.addr = client->addr,
+> +		.flags = I2C_M_RD,
+> +		.len = 2,
+> +		.buf = i2c_data,
+> +	};
+> +
+> +	status = i2c_transfer(client->adapter, &msg, 1);
+> +	if (status != 1)
+> +		return status;
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- drivers/soc/aspeed/Kconfig           |   8 --
- drivers/soc/aspeed/Makefile          |   1 -
- drivers/soc/aspeed/aspeed-bmc-misc.c | 190 ---------------------------
- 3 files changed, 199 deletions(-)
- delete mode 100644 drivers/soc/aspeed/aspeed-bmc-misc.c
+Same as above.
 
-diff --git a/drivers/soc/aspeed/Kconfig b/drivers/soc/aspeed/Kconfig
-index 2665ca89bdf8..9bdd4cebc65d 100644
---- a/drivers/soc/aspeed/Kconfig
-+++ b/drivers/soc/aspeed/Kconfig
-@@ -5,14 +5,6 @@ config SOC_ASPEED
- 	def_bool y
- 	depends on ARCH_ASPEED || COMPILE_TEST
- 
--config ASPEED_BMC_MISC
--	bool "Miscellaneous ASPEED BMC interfaces"
--	depends on ARCH_ASPEED || COMPILE_TEST
--	default ARCH_ASPEED
--	help
--	  Say yes to expose VGA and LPC scratch registers, and other
--	  miscellaneous control interfaces specific to the ASPEED BMC SoCs
--
- config ASPEED_LPC_CTRL
- 	depends on SOC_ASPEED && REGMAP && MFD_SYSCON
- 	tristate "Aspeed ast2400/2500 HOST LPC to BMC bridge control"
-diff --git a/drivers/soc/aspeed/Makefile b/drivers/soc/aspeed/Makefile
-index 217d876fec25..977b046dfb73 100644
---- a/drivers/soc/aspeed/Makefile
-+++ b/drivers/soc/aspeed/Makefile
-@@ -1,5 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0-only
--obj-$(CONFIG_ASPEED_BMC_MISC)	+= aspeed-bmc-misc.o
- obj-$(CONFIG_ASPEED_LPC_CTRL)	+= aspeed-lpc-ctrl.o
- obj-$(CONFIG_ASPEED_LPC_SNOOP)	+= aspeed-lpc-snoop.o
- obj-$(CONFIG_ASPEED_P2A_CTRL)	+= aspeed-p2a-ctrl.o
-diff --git a/drivers/soc/aspeed/aspeed-bmc-misc.c b/drivers/soc/aspeed/aspeed-bmc-misc.c
-deleted file mode 100644
-index 314007bad74f..000000000000
---- a/drivers/soc/aspeed/aspeed-bmc-misc.c
-+++ /dev/null
-@@ -1,190 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0+
--// Copyright 2018 IBM Corp.
--
--#include <linux/kobject.h>
--#include <linux/module.h>
--#include <linux/of.h>
--#include <linux/platform_device.h>
--#include <linux/regmap.h>
--#include <linux/mfd/syscon.h>
--
--#define DEVICE_NAME "aspeed-bmc-misc"
--
--struct aspeed_bmc_ctrl {
--	const char *name;
--	u32 offset;
--	u32 mask;
--	u32 shift;
--	struct regmap *map;
--	struct kobj_attribute attr;
--};
--
--struct aspeed_bmc_misc {
--	struct device *dev;
--	struct regmap *map;
--	struct aspeed_bmc_ctrl *ctrls;
--	int nr_ctrls;
--};
--
--static int aspeed_bmc_misc_parse_dt_child(struct device_node *child,
--					  struct aspeed_bmc_ctrl *ctrl)
--{
--	int rc;
--
--	/* Example child:
--	 *
--	 * ilpc2ahb {
--	 *     offset = <0x80>;
--	 *     bit-mask = <0x1>;
--	 *     bit-shift = <6>;
--	 *     label = "foo";
--	 * }
--	 */
--	if (of_property_read_string(child, "label", &ctrl->name))
--		ctrl->name = child->name;
--
--	rc = of_property_read_u32(child, "offset", &ctrl->offset);
--	if (rc < 0)
--		return rc;
--
--	rc = of_property_read_u32(child, "bit-mask", &ctrl->mask);
--	if (rc < 0)
--		return rc;
--
--	rc = of_property_read_u32(child, "bit-shift", &ctrl->shift);
--	if (rc < 0)
--		return rc;
--
--	ctrl->mask <<= ctrl->shift;
--
--	return 0;
--}
--
--static int aspeed_bmc_misc_parse_dt(struct aspeed_bmc_misc *bmc,
--				    struct device_node *parent)
--{
--	struct aspeed_bmc_ctrl *ctrl;
--	struct device_node *child;
--	int rc;
--
--	bmc->nr_ctrls = of_get_child_count(parent);
--	bmc->ctrls = devm_kcalloc(bmc->dev, bmc->nr_ctrls, sizeof(*bmc->ctrls),
--				  GFP_KERNEL);
--	if (!bmc->ctrls)
--		return -ENOMEM;
--
--	ctrl = bmc->ctrls;
--	for_each_child_of_node(parent, child) {
--		rc = aspeed_bmc_misc_parse_dt_child(child, ctrl++);
--		if (rc < 0) {
--			of_node_put(child);
--			return rc;
--		}
--	}
--
--	return 0;
--}
--
--static ssize_t aspeed_bmc_misc_show(struct kobject *kobj,
--				    struct kobj_attribute *attr, char *buf)
--{
--	struct aspeed_bmc_ctrl *ctrl;
--	unsigned int val;
--	int rc;
--
--	ctrl = container_of(attr, struct aspeed_bmc_ctrl, attr);
--	rc = regmap_read(ctrl->map, ctrl->offset, &val);
--	if (rc)
--		return rc;
--
--	val &= ctrl->mask;
--	val >>= ctrl->shift;
--
--	return sprintf(buf, "%u\n", val);
--}
--
--static ssize_t aspeed_bmc_misc_store(struct kobject *kobj,
--				     struct kobj_attribute *attr,
--				     const char *buf, size_t count)
--{
--	struct aspeed_bmc_ctrl *ctrl;
--	long val;
--	int rc;
--
--	rc = kstrtol(buf, 0, &val);
--	if (rc)
--		return rc;
--
--	ctrl = container_of(attr, struct aspeed_bmc_ctrl, attr);
--	val <<= ctrl->shift;
--	rc = regmap_update_bits(ctrl->map, ctrl->offset, ctrl->mask, val);
--
--	return rc < 0 ? rc : count;
--}
--
--static int aspeed_bmc_misc_add_sysfs_attr(struct aspeed_bmc_misc *bmc,
--					  struct aspeed_bmc_ctrl *ctrl)
--{
--	ctrl->map = bmc->map;
--
--	sysfs_attr_init(&ctrl->attr.attr);
--	ctrl->attr.attr.name = ctrl->name;
--	ctrl->attr.attr.mode = 0664;
--	ctrl->attr.show = aspeed_bmc_misc_show;
--	ctrl->attr.store = aspeed_bmc_misc_store;
--
--	return sysfs_create_file(&bmc->dev->kobj, &ctrl->attr.attr);
--}
--
--static int aspeed_bmc_misc_populate_sysfs(struct aspeed_bmc_misc *bmc)
--{
--	int rc;
--	int i;
--
--	for (i = 0; i < bmc->nr_ctrls; i++) {
--		rc = aspeed_bmc_misc_add_sysfs_attr(bmc, &bmc->ctrls[i]);
--		if (rc < 0)
--			return rc;
--	}
--
--	return 0;
--}
--
--static int aspeed_bmc_misc_probe(struct platform_device *pdev)
--{
--	struct aspeed_bmc_misc *bmc;
--	int rc;
--
--	bmc = devm_kzalloc(&pdev->dev, sizeof(*bmc), GFP_KERNEL);
--	if (!bmc)
--		return -ENOMEM;
--
--	bmc->dev = &pdev->dev;
--	bmc->map = syscon_node_to_regmap(pdev->dev.parent->of_node);
--	if (IS_ERR(bmc->map))
--		return PTR_ERR(bmc->map);
--
--	rc = aspeed_bmc_misc_parse_dt(bmc, pdev->dev.of_node);
--	if (rc < 0)
--		return rc;
--
--	return aspeed_bmc_misc_populate_sysfs(bmc);
--}
--
--static const struct of_device_id aspeed_bmc_misc_match[] = {
--	{ .compatible = "aspeed,bmc-misc" },
--	{ },
--};
--
--static struct platform_driver aspeed_bmc_misc = {
--	.driver = {
--		.name		= DEVICE_NAME,
--		.of_match_table = aspeed_bmc_misc_match,
--	},
--	.probe = aspeed_bmc_misc_probe,
--};
--
--module_platform_driver(aspeed_bmc_misc);
--
--MODULE_LICENSE("GPL");
--MODULE_AUTHOR("Andrew Jeffery <andrew@aj.id.au>");
--- 
-2.29.2
+> +
+> +	*vin = ((i2c_data[0] << 8) | i2c_data[1]) >> MAX127_DATA1_SHIFT;
 
+THis seems wrong. D4..D11 end up in but 8..15, and D0..D3 end up in bit
+0..3. Seems to me the upper byte should be left shifted 4 bit.
+The result then needs to be scaled to mV (see below).
+
+Also, for consistency I would suggest to either use () for both
+parts of the logical or operation or for none.
+
+> +	return 0;
+> +}
+> +
+> +static ssize_t max127_input_show(struct device *dev,
+> +				 struct device_attribute *dev_attr,
+> +				 char *buf)
+> +{
+> +	u16 vin;
+> +	int status;
+> +	struct max127_data *data = dev_get_drvdata(dev);
+> +	struct sensor_device_attribute *attr = to_sensor_dev_attr(dev_attr);
+> +
+> +	if (mutex_lock_interruptible(&data->lock))
+> +		return -ERESTARTSYS;
+
+I don't think the _interruptible is warranted in this driver.
+
+> +
+> +	status = max127_select_channel(data, attr->index);
+> +	if (status)
+> +		goto exit;
+> +
+> +	status = max127_read_channel(data, attr->index, &vin);
+> +	if (status)
+> +		goto exit;
+> +
+> +	status = sprintf(buf, "%u", vin);
+
+This is not correct. The ABI expects values in milli-Volt, and per datasheet
+the values need to be scaled depending on polarity and range settings (see
+table 3 in datasheet). Also, if the range includes negative numbers,
+the reported voltage can obviously be negative. That means %u (and u16)
+can not be correct. "Transfer Function" in the datasheet describes how to
+convert/scale the received data.
+
+> +
+> +exit:
+> +	mutex_unlock(&data->lock);
+> +	return status;
+> +}
+> +
+> +static ssize_t max127_range_show(struct device *dev,
+> +				 struct device_attribute *dev_attr,
+> +				 char *buf)
+> +{
+> +	u8 ctrl, rng_bip;
+> +	struct max127_data *data = dev_get_drvdata(dev);
+> +	struct sensor_device_attribute_2 *attr = to_sensor_dev_attr_2(dev_attr);
+> +	int rng_type = attr->nr;	/* 0 for min, 1 for max */
+> +	int channel = attr->index;
+> +	int full = data->input_limit;
+> +	int half = full / 2;
+> +	int range_table[4][2] = {
+> +		[0] = {0, half},	/* RNG=0, BIP=0 */
+> +		[1] = {-half, half},	/* RNG=0, BIP=1 */
+> +		[2] = {0, full},	/* RNG=1, BIP=0 */
+> +		[3] = {-full, full},	/* RNG=1, BIP=1 */
+> +	};
+
+This can be a static const table. The variables 'full' and 'half'
+are effectively constants and not really needed.
+
+> +
+> +	if (mutex_lock_interruptible(&data->lock))
+> +		return -ERESTARTSYS;
+> +	ctrl = data->ctrl_byte[channel];
+> +	mutex_unlock(&data->lock);
+
+This lock is only needed because "ctrl" is written piece by piece.
+I would suggest to rewrite the store function to write ctrl atomically.
+Then the lock here is no longer needed.
+
+> +
+> +	rng_bip = (ctrl >> 2) & 3;
+> +	return sprintf(buf, "%d", range_table[rng_bip][rng_type]);
+> +}
+> +
+> +static void max127_set_range(struct max127_data *data, int channel)
+> +{
+> +	data->ctrl_byte[channel] |= MAX127_CTRL_RNG;
+> +}
+> +
+> +static void max127_clear_range(struct max127_data *data, int channel)
+> +{
+> +	data->ctrl_byte[channel] &= ~MAX127_CTRL_RNG;
+> +}
+> +
+> +static void max127_set_polarity(struct max127_data *data, int channel)
+> +{
+> +	data->ctrl_byte[channel] |= MAX127_CTRL_BIP;
+> +}
+> +
+> +static void max127_clear_polarity(struct max127_data *data, int channel)
+> +{
+> +	data->ctrl_byte[channel] &= ~MAX127_CTRL_BIP;
+> +}
+> +
+> +static ssize_t max127_range_store(struct device *dev,
+> +				  struct device_attribute *devattr,
+> +				  const char *buf,
+> +				  size_t count)
+> +{
+> +	struct max127_data *data = dev_get_drvdata(dev);
+> +	struct sensor_device_attribute_2 *attr = to_sensor_dev_attr_2(devattr);
+> +	int rng_type = attr->nr;	/* 0 for min, 1 for max */
+> +	int channel = attr->index;
+> +	int full = data->input_limit;
+> +	int half = full / 2;
+> +	long input, output;
+> +
+> +	if (kstrtol(buf, 0, &input))
+> +		return -EINVAL;
+> +
+> +	if (rng_type == 0) {	/* min input */
+> +		if (input <= -full)
+> +			output = -full;
+> +		else if (input < 0)
+> +			output = -half;
+> +		else
+> +			output = 0;
+> +	} else {		/* max input */
+> +		output = (input >= full) ? full : half;
+> +	}
+> +
+
+With the _info API, I would suggest to separate min and max functions.
+This would both simplify the code and make it easier to read and
+review. 
+
+> +	if (mutex_lock_interruptible(&data->lock))
+> +		return -ERESTARTSYS;
+
+This should be rewritten to update "ctrl" in one step.
+Something like
+
+	u8 ctrl;
+	...
+	ctrl = data->ctrl_byte[channel];
+	if (output == -MAX127_INPUT_LIMIT)
+		ctrl |= MAX127_CTRL_RNG | MAX127_CTRL_BIP;
+	else if (output == -half)
+		ctrl |= MAX127_CTRL_BIP;
+		ctrl &= ~MAX127_CTRL_RNG;
+	else if (output == 0)
+		ctrl &= ~MAX127_CTRL_BIP;
+	else lf (output == half)
+		ctrl &= ~MAX127_CTRL_RNG;
+	else
+		ctrl |= MAX127_CTRL_RNG;
+
+	data->ctrl_byte[channel] = ctrl;
+
+I would suggest to separate the min and max functions, though.
+
+> +
+> +	if (output == -full) {
+> +		max127_set_polarity(data, channel);
+> +		max127_set_range(data, channel);
+> +	} else if (output == -half) {
+> +		max127_set_polarity(data, channel);
+> +		max127_clear_range(data, channel);
+> +	} else if (output == 0) {
+> +		max127_clear_polarity(data, channel);
+> +	} else if (output == half) {
+> +		max127_clear_range(data, channel);
+> +	} else {
+> +		max127_set_range(data, channel);
+> +	}
+> +
+> +	mutex_unlock(&data->lock);
+> +
+> +	return count;
+> +}
+> +
+> +#define MAX127_SENSOR_DEV_ATTR_DEF(ch)					   \
+> +	static SENSOR_DEVICE_ATTR_RO(in##ch##_input, max127_input, ch);	   \
+> +	static SENSOR_DEVICE_ATTR_2_RW(in##ch##_min, max127_range, 0, ch); \
+> +	static SENSOR_DEVICE_ATTR_2_RW(in##ch##_max, max127_range, 1, ch)
+> +
+> +MAX127_SENSOR_DEV_ATTR_DEF(0);
+> +MAX127_SENSOR_DEV_ATTR_DEF(1);
+> +MAX127_SENSOR_DEV_ATTR_DEF(2);
+> +MAX127_SENSOR_DEV_ATTR_DEF(3);
+> +MAX127_SENSOR_DEV_ATTR_DEF(4);
+> +MAX127_SENSOR_DEV_ATTR_DEF(5);
+> +MAX127_SENSOR_DEV_ATTR_DEF(6);
+> +MAX127_SENSOR_DEV_ATTR_DEF(7);
+> +
+> +#define MAX127_SENSOR_DEVICE_ATTR(ch)			\
+> +	&sensor_dev_attr_in##ch##_input.dev_attr.attr,	\
+> +	&sensor_dev_attr_in##ch##_min.dev_attr.attr,	\
+> +	&sensor_dev_attr_in##ch##_max.dev_attr.attr
+> +
+> +static struct attribute *max127_attrs[] = {
+> +	MAX127_SENSOR_DEVICE_ATTR(0),
+> +	MAX127_SENSOR_DEVICE_ATTR(1),
+> +	MAX127_SENSOR_DEVICE_ATTR(2),
+> +	MAX127_SENSOR_DEVICE_ATTR(3),
+> +	MAX127_SENSOR_DEVICE_ATTR(4),
+> +	MAX127_SENSOR_DEVICE_ATTR(5),
+> +	MAX127_SENSOR_DEVICE_ATTR(6),
+> +	MAX127_SENSOR_DEVICE_ATTR(7),
+> +	NULL,
+> +};
+> +
+> +ATTRIBUTE_GROUPS(max127);
+> +
+> +static const struct attribute_group max127_attr_groups = {
+> +	.attrs = max127_attrs,
+> +};
+> +
+> +static int max127_probe(struct i2c_client *client,
+> +			const struct i2c_device_id *id)
+> +{
+> +	int i;
+> +	struct device *hwmon_dev;
+> +	struct max127_data *data;
+> +	struct device *dev = &client->dev;
+> +
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	data->client = client;
+> +	mutex_init(&data->lock);
+> +	data->input_limit = MAX127_INPUT_LIMIT;
+
+What is the point of input_limit ? It is never modified.
+Why not use MAX127_INPUT_LIMIT directly where needed ?
+
+> +	for (i = 0; i < ARRAY_SIZE(data->ctrl_byte); i++)
+> +		data->ctrl_byte[i] = (MAX127_CTRL_START |
+> +				      MAX127_SET_CHANNEL(i));
+> +
+> +	hwmon_dev = devm_hwmon_device_register_with_groups(dev,
+> +				client->name, data, max127_groups);
+
+Please use the devm_hwmon_device_register_with_info() API.
+
+Thanks,
+Guenter
+
+> +
+> +	return PTR_ERR_OR_ZERO(hwmon_dev);
+> +}
+> +
+> +static const struct i2c_device_id max127_id[] = {
+> +	{ "max127", 0 },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(i2c, max127_id);
+> +
+> +static struct i2c_driver max127_driver = {
+> +	.class		= I2C_CLASS_HWMON,
+> +	.driver = {
+> +		.name	= "max127",
+> +	},
+> +	.probe		= max127_probe,
+> +	.id_table	= max127_id,
+> +};
+> +
+> +module_i2c_driver(max127_driver);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_AUTHOR("Mike Choi <mikechoi@fb.com>");
+> +MODULE_AUTHOR("Tao Ren <rentao.bupt@gmail.com>");
+> +MODULE_DESCRIPTION("MAX127 Hardware Monitoring driver");
+> -- 
+> 2.17.1
+> 
