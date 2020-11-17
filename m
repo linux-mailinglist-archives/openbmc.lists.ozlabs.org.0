@@ -2,74 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 228152B6DA0
-	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 19:44:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 79DD92B6EBB
+	for <lists+openbmc@lfdr.de>; Tue, 17 Nov 2020 20:34:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CbFGt5z13zDqNZ
-	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 05:44:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CbGNF2YxPzDqLX
+	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 06:34:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2a;
- helo=mail-io1-xd2a.google.com; envelope-from=suichen6@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=QYi66cQg; dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com
- [IPv6:2607:f8b0:4864:20::d2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=pqrKAixB; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CbFG52bjjzDqN3
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 05:43:52 +1100 (AEDT)
-Received: by mail-io1-xd2a.google.com with SMTP id s24so22214967ioj.13
- for <openbmc@lists.ozlabs.org>; Tue, 17 Nov 2020 10:43:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=kaYqccmC01fPSICXtkgwyMI91KiA4JZVbROXYAK+kCo=;
- b=QYi66cQg/j2NvDLBkC5XikUXoY1kcrH20vL0mPoUJvZgXy0z8x0Dmlct4CfYei6Z3o
- kyp1JzKVzAzFkDEn5D/SrG577m6z5YIZrMjQMcpLNaqvR/e7v1UbCWxRMc3OmzH5hQRU
- ytvXwqE4FUnCHV5+BYHCoVk18SwOLd09sTKFvLliLK0AqKMLC4N44nbz62RJRjXz8dqM
- T5sBwYJnzPE7GQezk7rXW4sFJTr4PXK7LKFoJp++q4/Yl/CANxsdHuLXZNX2/RACWOs7
- RZKmf+CD2EpJPADZRMu10vSkgQXLo3QsNWyscbqq7OlDbZbPbzE0wIYZDNMVFRS4Cw8Q
- 0ELQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=kaYqccmC01fPSICXtkgwyMI91KiA4JZVbROXYAK+kCo=;
- b=tN4sjDIX9vJkIFbGxlW4pPLkSMaPBVgg8QBlV1toZx0rHfFpApN0e/VUv9m4hRyH0/
- oqn5gmvhomX0poaWbr8rMD2Xic8D1G3Ap5kaB9oJfNMjc0XINuMbSgHUUD/l84NFVRr0
- Wmf5LimoMGBhfaoxC5AqoUSBY2dy6j+I/DsnBEC4W3lTnZWzGmY4QGv07xW/+ZYl/fCe
- 7DtXh3//k1cCdWbUvkRHg5PBGFpGJLK/W0AKv3fXGIEb2heiCI8X0PGLlnmiR1rf8RsH
- KEf5WmXL6XUeUNH0+1QeSZ01Pm+R/P4y6EUYKwtSvprkuInhrU+vRhwXhA65NeivGWqv
- cHzg==
-X-Gm-Message-State: AOAM5329R/drXCykpXb2C3FepR+wNb9c69rGEnXqLSXV+ckYv14zJue/
- 6c5+ys/fgNFnnx8PDwJBG31mnQyd9LFtq3eVXBA=
-X-Google-Smtp-Source: ABdhPJygg5QnRb46qWRIw9n4GfKWU1UO5t7+IFOo7ITuUb71ef7OgAs4sbAg2N4Gfl0dDSUlUPt4uDyrVxAMJZUoBh4=
-X-Received: by 2002:a05:6602:5de:: with SMTP id
- w30mr12372723iox.64.1605638628737; 
- Tue, 17 Nov 2020 10:43:48 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CbG270LkgzDqX3
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 06:18:38 +1100 (AEDT)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0AHJ43qX041719; Tue, 17 Nov 2020 14:17:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=J4T88+adGbMLITRRMlGrPoy8M6SV69eikY8lZy2yFiI=;
+ b=pqrKAixBxWrmmr/LFGQ4TmYDFrxPg3bqk4917dI3RscGEpNSCx4Gy/fi2QP1HXQeZJoN
+ blsYBa0dQAOOVDVYdJiQs3F58Ug6Maxd1uFSo3GvzLOhAPV4W1ovhg5xXxTrAUNqV25p
+ ZOD5TV8bdxZDc6kI6vClZK2FNcVv8PM5fPWwmv92hpsZ1w4cgBxz1E5Nvc4TLFbhuMeW
+ W6SSX29Sl/U0dmTKGMbzCyvsbx/cyQMi9aMzgw4o+IZo/quMcVzDAWzONj6qm41CDjXN
+ pwcMigfl2PWfu9dy2RzA887AisMNiOnk4wnd1zF9BaC9TCQb4jL5C4+jPkpiWhIvTTGJ xw== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 34veevd6w2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Nov 2020 14:17:34 -0500
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AHJGds3030270;
+ Tue, 17 Nov 2020 19:17:34 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma01dal.us.ibm.com with ESMTP id 34uttrbq58-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Nov 2020 19:17:33 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0AHJHXQa23069288
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Nov 2020 19:17:33 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1DABFAE063;
+ Tue, 17 Nov 2020 19:17:33 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C4514AE05C;
+ Tue, 17 Nov 2020 19:17:32 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.85.139.110])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
+ Tue, 17 Nov 2020 19:17:32 +0000 (GMT)
+Subject: Re: User-manager default group roles
+To: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>,
+ openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>
+References: <8031d32c-9dd2-a72a-7751-8784fe9d2d99@linux.ibm.com>
+ <f22719fc-1851-eac9-50ee-fe95dace291a@linux.intel.com>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Message-ID: <77e2e674-23a9-1d2f-7cdd-88a3f5535e1c@linux.ibm.com>
+Date: Tue, 17 Nov 2020 13:17:32 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.4.1
 MIME-Version: 1.0
-References: <8da567c0-b5a4-47c0-90d6-d2de96ae99e5.moyan.yyb@alibaba-inc.com>
- <0647d5b3912534e4cb81d7e4953a26799851e857.camel@fuzziesquirrel.com>
- <cc0cc576-62d0-4c63-93d2-11d585b557a6.moyan.yyb@alibaba-inc.com>
- <F137C3AA-8FA4-4404-831F-C8BDA5B1465F@fuzziesquirrel.com>
- <196c13b1-92cd-48eb-83a3-8accdee838f6.moyan.yyb@alibaba-inc.com>
- <20201117131613.GE4495@heinlein>
-In-Reply-To: <20201117131613.GE4495@heinlein>
-From: Sui Chen <suichen6@gmail.com>
-Date: Tue, 17 Nov 2020 10:43:37 -0800
-Message-ID: <CAFaEeaEbHTVhN1LHzV2LZ140hRvYzDpGnb36f1H+BqPw+Czqvg@mail.gmail.com>
-Subject: =?UTF-8?Q?Re=3A_=E5=9B=9E=E5=A4=8D=EF=BC=9AI_just_want_to_join_the_openbmc_develop?=
- =?UTF-8?Q?er_community?=
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <f22719fc-1851-eac9-50ee-fe95dace291a@linux.intel.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-11-17_07:2020-11-17,
+ 2020-11-17 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 suspectscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 spamscore=0
+ phishscore=0 malwarescore=0 impostorscore=0 mlxlogscore=999 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011170133
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,86 +100,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?UTF-8?B?5p2o5YuH5YW1KOacq+WyqSk=?= <moyan.yyb@alibaba-inc.com>,
- =?UTF-8?B?5p2O5b+X5YW1KOi+ueiNkik=?= <zhibing.lzb@alibaba-inc.com>,
- openbmc <openbmc@lists.ozlabs.org>, Brad Bishop <bradleyb@fuzziesquirrel.com>,
- =?UTF-8?B?5bi455CzKOeJueedvyk=?= <terui.cl@alibaba-inc.com>,
- =?UTF-8?B?5p2O576/KOS5ieWkqSk=?= <yitian.ly@alibaba-inc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Moyan,
-
-If I understand correctly what you can do is to commit to the review
-branch, and as described you need to complete all the setup steps
-described in the link (
-https://github.com/openbmc/docs/blob/master/development/gerrit-setup.md
-)
-
-After you complete the setup steps you should able to run the command
-to commit a change to review:
-"git push gerrit HEAD:refs/for/master"
-Note that it's not just "git push" as is shown in your screenshot.
-
-If the command is successful, you will be given an URL like the following:
-https://gerrit.openbmc-project.xyz/c/openbmc/meta-alibaba/+/XXXXX
-In this URL, "XXXXX" is the change number.
-
-One example successful output is as follows (I'm using a different
-repo but it should be similar for meta-alibaba):
-
-suichen@suichen:~/Downloads/openbmc-tools/suichen/hwmon-bmk$ git push
-gerrit HEAD:refs/for/master
-Enumerating objects: 7, done.
-Counting objects: 100% (7/7), done.
-Delta compression using up to 12 threads
-Compressing objects: 100% (5/5), done.
-Writing objects: 100% (6/6), 10.69 KiB | 10.69 MiB/s, done.
-Total 6 (delta 1), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (1/1)
-remote: Processing changes: refs: 1, updated: 1, done
-remote: commit 94600f6: warning: subject >50 characters; use shorter
-first paragraph
-remote:
-remote: SUCCESS
-remote:
-remote: Updated Changes:
-remote:   https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-tools/+/3538=
-7
-hwmon-bmk: microbenchmark for file-based sensor-reading
-remote:
-To ssh://openbmc.gerrit/openbmc/openbmc-tools
- * [new reference]   HEAD -> refs/for/master
-suichen@suichen:~/Downloads/openbmc-tools/suichen/hwmon-bmk$
-
-
-Hope this might be useful.
-
-Thanks!
-suichen
-
-
-On Tue, Nov 17, 2020 at 5:22 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+On 11/17/20 11:21 AM, Thomaiyar, Richard Marian wrote:
+> Hi Joseph, For SSH to work fine, user must be part of priv-admin...
+> This Message Is From an External Sender
+> This message came from outside your organization.
 >
-> On Mon, Nov 16, 2020 at 03:46:09PM +0800, =E6=9D=A8=E5=8B=87=E5=85=B5(=E6=
-=9C=AB=E5=B2=A9) wrote:
-> > Hi Brad,
-> >     I see the meta-alibaba has been create, that's greats, thank you. B=
-ut while i send the file to the Repository,it has some question as below. I=
-f am i have no Authority=EF=BC=9F
-> > Thank.
+> Hi Joseph,
 >
-> Hello.
+> For SSH to work fine, user must be part of priv-admin and must have 
+> command/shell as /bin/sh under /etc/passwd file instead of 
+> /bin/nologin. Note: There is no direct group called ssh under 
+> /etc/group, instead it is just emulated one from phosphor-user-manager 
+> to add corresponding shell binary to the user.
+> usermod --shell /bin/sh -G priv-admin ${USER}
 >
-> Your issue is that you're trying to push directly to the branch and
-> bypassing review rather than pushing to a gerrit review branch.
+> If requirement is SSH to be allowed based on group and allowed for all 
+> user privileges, then user shell can be updated using usermod --shell 
+> /bin/sh itself, but need to remove EXTRA_ARGS from the 
+> dropbear.default 
+> <https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear/dropbear.default>
+
+Richard,
+
+Thanks for the info.  I do intend to separate the "ssh" group role from 
+the "priv-admin" privilege role.  My use case for the admin to NOT have 
+ssh privilege, but the service user account does have ssh privilege.  I 
+think this is cleaner and applicable to multiple use cases.
+
+For the OpenBMC project defaults, I propose that when a new user is 
+dynamically created with the "priv-admin" role, they also get the "ssh" 
+group role.  After the user account is created, I do not intend for 
+"priv-admin" and "ssh"  be be tied together, meaning you can change one 
+and not the other, and you will get the results you expect.
+
+I understand the full set of work for this includes:
+1. Create the "ssh" Linux group to represent the "ssh" group role.
+2. Change the dropbear.defaults to "-G ssh" (was "-G priv-admin"). There 
+may be forward compatibility concerns: for example, when this changes, 
+everyone in the priv-admin group should be added to the "ssh" group.
+3. Change phosphor-user-manager [6] to re-swizzle the login shell path 
+when a user is added or removed from the "ssh" group.
+4. Implement BMCWeb REST APIs [7], if desired.
+
+- Joseph
+
+P.S. I intend to repeat this exercise for the ipmi group role.
+
+[6]: 
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/User/Attributes.interface.yaml
+[7]: 
+https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/account_service.hpp
+
+> Regards,
 >
-> Please see this document and especially the "push code change to Gerrit"
-> section:
+> Richard
 >
->     https://github.com/openbmc/docs/blob/master/development/gerrit-setup.=
-md#push-code-change-to-gerrit
->
->
-> --
-> Patrick Williams
+> On 11/17/2020 3:49 AM, Joseph Reynolds wrote:
+>>
+>> What is the right way to assign default phosphor-user-manager "group 
+>> roles" to dynamically created users?
+>>
+>> Background: Currently, when a new local user is created via Redfish 
+>> API POST /redfish/v1/AccountService/Accounts you have to specify a 
+>> Redfish RoleId.  BMCWeb maps the RoleId to a phosphor user manager 
+>> "Privilege Role" [1] and assigns ALL of the "group roles" to the new 
+>> user [2].  Per [3] this is not intended, and I need to fix this for 
+>> my use case.
+>>
+> usermod --shell /bin/sh -G priv-admin ${USER} is the correct command 
+> for per[3].
+>> IMHO, the correct approach is for the project to define a mapping 
+>> from "role" to "privilege role" that can be used when dynamically 
+>> creating a new user.  For example, the admin role maps to "ssh ipmi 
+>> redfish web" whereas the readonly role maps to "ipmi redfish web" 
+>> (omits "ssh").  Then images can customize this as needed.
+>>
+>> But where should this mapping be applied?  Does it belong in BMCWeb 
+>> or in phosphor-user-manager [4]?  Should we have another D-Bus 
+>> property [5] to give this mapping?
+> As of today, we are not separating user groups. All users created in 
+> OpenBMC belongs to the build time configured groups.
+>>
+>> - Joseph
+>>
+>> [1]: 
+>> https://github.com/openbmc/docs/blob/master/architecture/user-management.md
+>> [2]: 
+>> https://github.com/openbmc/bmcweb/blob/929d4b57f10bc4200e16b71fbcf32521d8cc23c1/redfish-core/lib/account_service.hpp#L1435
+>> [3]: https://github.com/openbmc/openbmc/issues/3643
+>> [4]: 
+>> https://github.com/openbmc/phosphor-user-manager/blob/master/user_mgr.hpp
+>> [5]: 
+>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/User/Manager.interface.yaml
+>>
+
