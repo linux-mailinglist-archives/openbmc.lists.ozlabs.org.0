@@ -1,98 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 220622BA1FB
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:42:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8163B2BA1FC
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:43:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ccln11rG0zDqvp
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:42:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cclpf0XLVzDqfZ
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:43:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-na.com (client-ip=40.107.94.67;
- helo=nam10-mw2-obe.outbound.protection.outlook.com;
- envelope-from=mohaimen.alsamarai@fii-na.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=fii-na.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=FIIcorp.onmicrosoft.com
- header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=JBHWBTk/; 
+ smtp.mailfrom=alibaba-inc.com (client-ip=140.205.0.134;
+ helo=out0-134.mail.aliyun.com; envelope-from=moyan.yyb@alibaba-inc.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=alibaba-inc.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=alibaba-inc.com header.i=@alibaba-inc.com
+ header.a=rsa-sha256 header.s=default header.b=vRGl1VhN; 
  dkim-atps=neutral
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam10on2067.outbound.protection.outlook.com [40.107.94.67])
+Received: from out0-134.mail.aliyun.com (out0-134.mail.aliyun.com
+ [140.205.0.134])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CbJp35cZPzDqNB
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 08:23:21 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G3bz8/FlrQzex8W6ZZufoG5AiFSN4aFFl5HXfRRrbN9LuS3fbppaL7wZdQpZ+LpJmOPLISNz/pf6PYW0MEA4YTAya4wS0d0krqpt2Wz4/GooG6wuHkOodCcvT14ZfqFWsa7WUOorOPZN8ObLcCMjNByNQnnBIbiwNJBxKRjc8VHXGJwkQLrrC/3UQxKagLHJFUvSmMUzebb3ovxG0LZ/WPsvJoX/tsr5asZYzhNQBoaMN4GpRZLmEwJoqc6iIm7xLkEjhDTvdNLYhIxCAw3i4d2hDb5IqZjtKE9Zt/XuVZn7Pm5yrFL8IBwVEwHiCjUFQ4QIpTUSwVjFHupapPDSew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K7NCmmJLnKsn/lvq5duQ2XzgylWe+cGEekwSuhghgz0=;
- b=DIxGzF2l7uYoBCOdJtiHvSXsi0Tzs6nUehAtoK0GpGSprT1Gqd6Nkf2RCKrHN3SaE5IF86UwKVOsNfvYtqjE9l3QvA7bdw1cjVr0nXAIGhydVRWQmrc7jQVGzudXpJclVS68AOrDKadSRfzgfxOt+H5hhdF/fuBedRIAzLmb4xU5tdFskJVdFdvyQtBZa5N36zK7NEG1wi/xQm2HP86EK2jRNq6cEZyvftaTgDCHVhltAdi3YBl0pZKaqPY0RNJ4JhxvHyivXqhAacOF2g/KxFRF8joitcJ27qRMFOjn0X2LTZerZjjjIPsVJ+yAOU+ezIMI7IjXkyVqO5KcFn8OQw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fii-na.com; dmarc=pass action=none header.from=fii-na.com;
- dkim=pass header.d=fii-na.com; arc=none
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CbYvF5X3FzDqbx
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 18:13:43 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K7NCmmJLnKsn/lvq5duQ2XzgylWe+cGEekwSuhghgz0=;
- b=JBHWBTk/hkT99BaJFtm97tUP0tT5ujv6wnl5GiN3LT54i2Wkdsd8ZlqtUb2FUHro3YS2bGyc/CGr8EPhgPgdcka/NOMCCCQFxBzBoKhFtX5iblOwNSLYKUu7JkHV4tek8TnkXZHwQED/SAY1tzzgaigd19md8N9AZyrEmWR7DvCMGMAYd/2jPAnxSovoOuLoR+r/vbeyHHrhdu9ueJxe5VhvzeUulMTI+lq7AEhMaQurSPSYrVEv6w6HU4e64nte49me6hKdd0uOw/kgjVB+jcbHAaol/wlgBFk9D5y3H6ICmL9wOJNY9uTb1V7m6I6svVPvnSqJrRbXIybH1Tq87g==
-Received: from DM6PR08MB5883.namprd08.prod.outlook.com (2603:10b6:5:152::18)
- by DM6PR08MB6139.namprd08.prod.outlook.com (2603:10b6:5:103::30) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3564.25; Tue, 17 Nov
- 2020 21:23:15 +0000
-Received: from DM6PR08MB5883.namprd08.prod.outlook.com
- ([fe80::b0ec:23cd:3a5:4cb3]) by DM6PR08MB5883.namprd08.prod.outlook.com
- ([fe80::b0ec:23cd:3a5:4cb3%7]) with mapi id 15.20.3564.028; Tue, 17 Nov 2020
- 21:23:15 +0000
-From: Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: phosphor-ipmi-flash build error
-Thread-Topic: phosphor-ipmi-flash build error
-Thread-Index: Ada9JfK8weeOoKkOTu2JHZHbpAKwRw==
-Date: Tue, 17 Nov 2020 21:23:15 +0000
-Message-ID: <DM6PR08MB588362D381EC3603682F9B32B2E20@DM6PR08MB5883.namprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=fii-na.com;
-x-originating-ip: [65.205.114.151]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 9c6d256f-0ef3-4297-4771-08d88b3efef5
-x-ms-traffictypediagnostic: DM6PR08MB6139:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR08MB613934BB0D191731C83883C2B2E20@DM6PR08MB6139.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: PROiuWMEG6oDGk7jrIGwYnhaWOaBQ4w8NSbXMQxVQ7GjFjfe1mhtMWNNq22S9LUgEfflLum3xB2t8yxkXXKgSSPM3Gi47kKJnqlsJ9Ly6EzVzBs4+2UNEjA+aE6XR+BflzVixx5lW3xb/PmBSsM/Y8Rd4/CxcM30VhA5wzyIAZMrhaZ8CWFXP5sFYe3sqNWKolkHAPsGg+XfXvX+HheXB8t4/DimqyiE8SZjCTrGO5uz2YVgqfzttZvvU8PjLS9sAns7UOJ2OQZft9PYkrFJnEdTYxYVXXYb7iD7bpA8Nw6J5Slp/yuPuNG9rWRrswUUmDz5zQNsDdgYBLlU0Du9ts1cxz2OP9W+ZSUdnyEAvvXsAvZ+FDTNGjZN4yXvBHIUuWd0QjWcG8jSVhlpL3+mKQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR08MB5883.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(376002)(136003)(366004)(346002)(39850400004)(396003)(54906003)(316002)(66446008)(33656002)(5660300002)(8936002)(478600001)(7696005)(186003)(26005)(6506007)(6916009)(9326002)(55016002)(8676002)(9686003)(2906002)(4326008)(66556008)(64756008)(66476007)(66946007)(52536014)(166002)(83380400001)(3480700007)(86362001)(76116006)(71200400001);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: peR3U8TZALbiytZBWhH/+edvfsl9L+VjMgomkzEzdQBRT1ul5gsRPkJVpyrdsOPCzi7m1k/wh4QU0u04nAccp4CzZPFm9oxJeUqBXLRg7EA1BGNpaEhEFA9/48d63p+9VppadnC8twATEGlm1EGk7EhyKp0rRB7VOmsaIEwbJYNjXPYWyt/IpsUlaybS+w8OIItBzr6yFbKRjpJ8HM0vlvbX4pGGO36JhC4umygp6l7zMaQoQD07Eq1M8OM2YBdhOSco+lvRYEUehS2eG5VVacANGS2dlfHp/q7w1fFyzb1R5murzUdhHI4UAoB2B1v5I6jGLbPuHMc9thKkSBzmR5WkzDcIi9aHR4cYsM0gCu01Yt6x4fCTDLXAavlHFsTJHCCFTij5nChIOb8zC6DrGMHUBeWtOnGFaO2z2jM9GjblykqtWm9idWuqE9yLkQEDZK8JiNdJqgu+noWeSYL57jGH/8o/TyOk2Ei1Fghxn3sHNYAjiU1i71E6k1P5vWfig0g8kwzmzFwms8E2Ex37bBtBa3cediOAowkWQGeU39an3u20BR719KTCPsSsx0rvBAerp551pe34vXZtQlkWWxbJcBmxYSFSE6n6ao88DvKjSLAdHOtoOPL8Wgy3ros+zTqjqHcHJjccmMiz88M2vw==
-Content-Type: multipart/alternative;
- boundary="_000_DM6PR08MB588362D381EC3603682F9B32B2E20DM6PR08MB5883namp_"
+ d=alibaba-inc.com; s=default;
+ t=1605683618; h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type;
+ bh=Q8Mxa73heH3sw6HQVAWzLPnWTjqsyfxR9GmWHgnMb9Y=;
+ b=vRGl1VhN9w5wm1k3bnos6gB9lg6fSzPdEI9G1HCX/y3nGcgjS+jaio9bT9C9ofxuEyCfoW8hCCKFwF9G0LJzMT36ad5ytII359r0sZb/OYKha48kuOeFVpGbL5vLWAFgJefmqNvsyjU+Pg/nTw6Ws6yp+KfeIRFFRGlxHhGo2Xg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018047208;
+ MF=moyan.yyb@alibaba-inc.com; NM=1; PH=DW; RN=7; SR=0;
+ TI=W4_6037783_v5ForDing_0AC264DF_1605682625030_o7001c881j; 
+Received: from WS-web
+ (moyan.yyb@alibaba-inc.com[W4_6037783_v5ForDing_0AC264DF_1605682625030_o7001c881j])
+ by ay29a011140100202.et135 at Wed, 18 Nov 2020 15:13:36 +0800
+Date: Wed, 18 Nov 2020 15:13:36 +0800
+From: "=?UTF-8?B?5p2o5YuH5YW1KOacq+WyqSk=?=" <moyan.yyb@alibaba-inc.com>
+To: "Sui Chen" <suichen6@gmail.com>,
+  "Patrick Williams" <patrick@stwcx.xyz>
+Message-ID: <fe66963d-29af-4895-9667-ad2efa8e636b.moyan.yyb@alibaba-inc.com>
+Subject: =?UTF-8?B?5Zue5aSN77ya5Zue5aSN77yaSSBqdXN0IHdhbnQgdG8gam9pbiB0aGUgb3BlbmJtYyBkZXZl?=
+ =?UTF-8?B?bG9wZXIgY29tbXVuaXR5?=
+X-Mailer: [Alimail-Mailagent][W4_6037783][v5ForDing][Chrome]
 MIME-Version: 1.0
-X-OriginatorOrg: FII-NA.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB5883.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c6d256f-0ef3-4297-4771-08d88b3efef5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Nov 2020 21:23:15.3386 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: c7JezQItb92w8W31yQFGIh8bSWjJPOQAn6IGEzsgDUSCmfSxnAS5C500z0YYAGESbpWn/PZmA7y7IRjulopjq7XuYtQy1OtygbUmPEC2mmY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB6139
-X-Mailman-Approved-At: Fri, 20 Nov 2020 16:41:20 +1100
+References: <8da567c0-b5a4-47c0-90d6-d2de96ae99e5.moyan.yyb@alibaba-inc.com>
+ <0647d5b3912534e4cb81d7e4953a26799851e857.camel@fuzziesquirrel.com>
+ <cc0cc576-62d0-4c63-93d2-11d585b557a6.moyan.yyb@alibaba-inc.com>
+ <F137C3AA-8FA4-4404-831F-C8BDA5B1465F@fuzziesquirrel.com>
+ <196c13b1-92cd-48eb-83a3-8accdee838f6.moyan.yyb@alibaba-inc.com>
+ <20201117131613.GE4495@heinlein>,
+ <CAFaEeaEbHTVhN1LHzV2LZ140hRvYzDpGnb36f1H+BqPw+Czqvg@mail.gmail.com>
+x-aliyun-mail-creator: W4_6037783_v5ForDing_bGlTW96aWxsYS81LjAgKE1hY2ludG9zaDsgSW50ZWwgTWFjIE9TIFggMTBfMTJfNikgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzgzLjAuNDEwMy42MSBTYWZhcmkvNTM3LjM2IERpbmdUYWxrKDUuMy42LW1hY09TLTE5MTApIG53Cw
+In-Reply-To: <CAFaEeaEbHTVhN1LHzV2LZ140hRvYzDpGnb36f1H+BqPw+Czqvg@mail.gmail.com>
+Content-Type: multipart/alternative;
+ boundary="----=ALIBOUNDARY_105181_7fb694718700_5fb4c9a0_14a9d4e"
+X-Mailman-Approved-At: Fri, 20 Nov 2020 16:41:21 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,232 +69,211 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: XP Chen <Xiao-Peng.Chen@fii-na.com>,
- Lancelot Kao <lancelot.cy.kao@fii-na.com>,
- Benjamin Fair <benjaminfair@google.com>
+Reply-To: =?UTF-8?B?5p2o5YuH5YW1KOacq+WyqSk=?= <moyan.yyb@alibaba-inc.com>
+Cc: =?UTF-8?B?5bi455CzKOeJueedvyk=?= <terui.cl@alibaba-inc.com>,
+ openbmc <openbmc@lists.ozlabs.org>, Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ =?UTF-8?B?5p2O576/KOS5ieWkqSk=?= <yitian.ly@alibaba-inc.com>,
+ =?UTF-8?B?5p2O5b+X5YW1KOi+ueiNkik=?= <zhibing.lzb@alibaba-inc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_DM6PR08MB588362D381EC3603682F9B32B2E20DM6PR08MB5883namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+------=ALIBOUNDARY_105181_7fb694718700_5fb4c9a0_14a9d4e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-Hi All,
-                We are trying to build the phosphor-ipmi-flash<https://gith=
-ub.com/openbmc/phosphor-ipmi-flash> and we counter issue at the make step p=
-lease see below for the error message, can you advise us what we can do to =
-pass that error
+SGkgQnJhZCAmIFN1bkNoZW7vvIwKICAgIHdoaWxlIGkgY29tbXVuaWNhdGVkIHdpdGggb3RoZXJz
+LCBpIGp1c3QgIHVuZGVyc3Rvb2QgdGhhdCBpIGhhdmUgIHRoZSBhdXRob3JpdHkgIHRvIHB1c2gg
+IGNvZGUgdG8gcmVwb3NpdG9yeSBuYW1lZCBtZXRhLWFsaWJhYmEgZGlyZWN0bHkuQW5kIGFmdGVy
+IHJlYWRpbmcgdGhlIGRvY3VtZW50IEkgZm91bmQgIGl0J3Mgd3JvbmcsICBub3cgaSBzdWNjZXNz
+IHRvIHB1c3QgaXQuICAgVGhhbmsgeW91IHNvIG11Y2ggICgqXl9fXiopICAhISEhCkJlc3QgZ3Jh
+ZHMuCgoKCgoKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLQrlj5Hku7bkurrvvJpTdWkgQ2hlbiA8c3VpY2hlbjZAZ21haWwu
+Y29tPgrlj5HpgIHml7bpl7TvvJoyMDIw5bm0MTHmnIgxOOaXpSjmmJ/mnJ/kuIkpIDAyOjQzCuaU
+tuS7tuS6uu+8mlBhdHJpY2sgV2lsbGlhbXMgPHBhdHJpY2tAc3R3Y3gueHl6PgrmioTjgIDpgIHv
+vJrmnajli4flhbUo5pyr5bKpKSA8bW95YW4ueXliQGFsaWJhYmEtaW5jLmNvbT47IOW4uOeQsyjn
+ibnnnb8pIDx0ZXJ1aS5jbEBhbGliYWJhLWluYy5jb20+OyBvcGVuYm1jIDxvcGVuYm1jQGxpc3Rz
+Lm96bGFicy5vcmc+OyBCcmFkIEJpc2hvcCA8YnJhZGxleWJAZnV6emllc3F1aXJyZWwuY29tPjsg
+5p2O5b+X5YW1KOi+ueiNkikgPHpoaWJpbmcubHpiQGFsaWJhYmEtaW5jLmNvbT47IOadjue+vyjk
+uYnlpKkpIDx5aXRpYW4ubHlAYWxpYmFiYS1pbmMuY29tPgrkuLvjgIDpopjvvJpSZTog5Zue5aSN
+77yaSSBqdXN0IHdhbnQgdG8gam9pbiB0aGUgb3BlbmJtYyBkZXZlbG9wZXIgY29tbXVuaXR5CgpI
+ZWxsbyBNb3lhbiwKCklmIEkgdW5kZXJzdGFuZCBjb3JyZWN0bHkgd2hhdCB5b3UgY2FuIGRvIGlz
+IHRvIGNvbW1pdCB0byB0aGUgcmV2aWV3CmJyYW5jaCwgYW5kIGFzIGRlc2NyaWJlZCB5b3UgbmVl
+ZCB0byBjb21wbGV0ZSBhbGwgdGhlIHNldHVwIHN0ZXBzCmRlc2NyaWJlZCBpbiB0aGUgbGluayAo
+Cmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvZGV2ZWxvcG1lbnQv
+Z2Vycml0LXNldHVwLm1kCikKCkFmdGVyIHlvdSBjb21wbGV0ZSB0aGUgc2V0dXAgc3RlcHMgeW91
+IHNob3VsZCBhYmxlIHRvIHJ1biB0aGUgY29tbWFuZAp0byBjb21taXQgYSBjaGFuZ2UgdG8gcmV2
+aWV3OgoiZ2l0IHB1c2ggZ2Vycml0IEhFQUQ6cmVmcy9mb3IvbWFzdGVyIgpOb3RlIHRoYXQgaXQn
+cyBub3QganVzdCAiZ2l0IHB1c2giIGFzIGlzIHNob3duIGluIHlvdXIgc2NyZWVuc2hvdC4KCklm
+IHRoZSBjb21tYW5kIGlzIHN1Y2Nlc3NmdWwsIHlvdSB3aWxsIGJlIGdpdmVuIGFuIFVSTCBsaWtl
+IHRoZSBmb2xsb3dpbmc6Cmh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVu
+Ym1jL21ldGEtYWxpYmFiYS8rL1hYWFhYCkluIHRoaXMgVVJMLCAiWFhYWFgiIGlzIHRoZSBjaGFu
+Z2UgbnVtYmVyLgoKT25lIGV4YW1wbGUgc3VjY2Vzc2Z1bCBvdXRwdXQgaXMgYXMgZm9sbG93cyAo
+SSdtIHVzaW5nIGEgZGlmZmVyZW50CnJlcG8gYnV0IGl0IHNob3VsZCBiZSBzaW1pbGFyIGZvciBt
+ZXRhLWFsaWJhYmEpOgoKc3VpY2hlbkBzdWljaGVuOn4vRG93bmxvYWRzL29wZW5ibWMtdG9vbHMv
+c3VpY2hlbi9od21vbi1ibWskIGdpdCBwdXNoCmdlcnJpdCBIRUFEOnJlZnMvZm9yL21hc3RlcgpF
+bnVtZXJhdGluZyBvYmplY3RzOiA3LCBkb25lLgpDb3VudGluZyBvYmplY3RzOiAxMDAlICg3Lzcp
+LCBkb25lLgpEZWx0YSBjb21wcmVzc2lvbiB1c2luZyB1cCB0byAxMiB0aHJlYWRzCkNvbXByZXNz
+aW5nIG9iamVjdHM6IDEwMCUgKDUvNSksIGRvbmUuCldyaXRpbmcgb2JqZWN0czogMTAwJSAoNi82
+KSwgMTAuNjkgS2lCIHwgMTAuNjkgTWlCL3MsIGRvbmUuClRvdGFsIDYgKGRlbHRhIDEpLCByZXVz
+ZWQgMCAoZGVsdGEgMCksIHBhY2stcmV1c2VkIDAKcmVtb3RlOiBSZXNvbHZpbmcgZGVsdGFzOiAx
+MDAlICgxLzEpCnJlbW90ZTogUHJvY2Vzc2luZyBjaGFuZ2VzOiByZWZzOiAxLCB1cGRhdGVkOiAx
+LCBkb25lCnJlbW90ZTogY29tbWl0IDk0NjAwZjY6IHdhcm5pbmc6IHN1YmplY3QgPjUwIGNoYXJh
+Y3RlcnM7IHVzZSBzaG9ydGVyCmZpcnN0IHBhcmFncmFwaApyZW1vdGU6CnJlbW90ZTogU1VDQ0VT
+UwpyZW1vdGU6CnJlbW90ZTogVXBkYXRlZCBDaGFuZ2VzOgpyZW1vdGU6ICAgaHR0cHM6Ly9nZXJy
+aXQub3BlbmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvb3BlbmJtYy10b29scy8rLzM1Mzg3Cmh3
+bW9uLWJtazogbWljcm9iZW5jaG1hcmsgZm9yIGZpbGUtYmFzZWQgc2Vuc29yLXJlYWRpbmcKcmVt
+b3RlOgpUbyBzc2g6Ly9vcGVuYm1jLmdlcnJpdC9vcGVuYm1jL29wZW5ibWMtdG9vbHMKICogW25l
+dyByZWZlcmVuY2VdICAgSEVBRCAtPiByZWZzL2Zvci9tYXN0ZXIKc3VpY2hlbkBzdWljaGVuOn4v
+RG93bmxvYWRzL29wZW5ibWMtdG9vbHMvc3VpY2hlbi9od21vbi1ibWskCgoKSG9wZSB0aGlzIG1p
+Z2h0IGJlIHVzZWZ1bC4KClRoYW5rcyEKc3VpY2hlbgoKCk9uIFR1ZSwgTm92IDE3LCAyMDIwIGF0
+IDU6MjIgQU0gUGF0cmljayBXaWxsaWFtcyA8cGF0cmlja0BzdHdjeC54eXo+IHdyb3RlOgo+Cj4g
+T24gTW9uLCBOb3YgMTYsIDIwMjAgYXQgMDM6NDY6MDlQTSArMDgwMCwg5p2o5YuH5YW1KOacq+Wy
+qSkgd3JvdGU6Cj4gPiBIaSBCcmFkLAo+ID4gICAgIEkgc2VlIHRoZSBtZXRhLWFsaWJhYmEgaGFz
+IGJlZW4gY3JlYXRlLCB0aGF0J3MgZ3JlYXRzLCB0aGFuayB5b3UuIEJ1dCB3aGlsZSBpIHNlbmQg
+dGhlIGZpbGUgdG8gdGhlIFJlcG9zaXRvcnksaXQgaGFzIHNvbWUgcXVlc3Rpb24gYXMgYmVsb3cu
+IElmIGFtIGkgaGF2ZSBubyBBdXRob3JpdHnvvJ8KPiA+IFRoYW5rLgo+Cj4gSGVsbG8uCj4KPiBZ
+b3VyIGlzc3VlIGlzIHRoYXQgeW91J3JlIHRyeWluZyB0byBwdXNoIGRpcmVjdGx5IHRvIHRoZSBi
+cmFuY2ggYW5kCj4gYnlwYXNzaW5nIHJldmlldyByYXRoZXIgdGhhbiBwdXNoaW5nIHRvIGEgZ2Vy
+cml0IHJldmlldyBicmFuY2guCj4KPiBQbGVhc2Ugc2VlIHRoaXMgZG9jdW1lbnQgYW5kIGVzcGVj
+aWFsbHkgdGhlICJwdXNoIGNvZGUgY2hhbmdlIHRvIEdlcnJpdCIKPiBzZWN0aW9uOgo+Cj4gICAg
+IGh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIvZGV2ZWxvcG1lbnQv
+Z2Vycml0LXNldHVwLm1kI3B1c2gtY29kZS1jaGFuZ2UtdG8tZ2Vycml0Cj4KPgo+IC0tCj4gUGF0
+cmljayBXaWxsaWFtcwoK
+------=ALIBOUNDARY_105181_7fb694718700_5fb4c9a0_14a9d4e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
+PGRpdiBjbGFzcz0iX19hbGl5dW5fZW1haWxfYm9keV9ibG9jayI+PGRpdiAgc3R5bGU9ImxpbmUt
+aGVpZ2h0OjEuNztmb250LWZhbWlseTpUYWhvbWEsQXJpYWwsU1RIZWl0aSxTaW1TdW47Zm9udC1z
+aXplOjE0LjBweDtjb2xvcjojMDAwMDAwOyI+PGRpdiAgc3R5bGU9ImNsZWFyOmJvdGg7Ij5IaSBC
+cmFkICZhbXA7IFN1bkNoZW7vvIw8L2Rpdj48ZGl2ICBzdHlsZT0iY2xlYXI6Ym90aDsiPiZuYnNw
+OyAmbmJzcDsgd2hpbGUgaSZuYnNwOzxzcGFuID5jb21tdW5pY2F0ZWQgd2l0aCBvdGhlcnMsIGkg
+anVzdCZuYnNwOyB1bmRlcnN0b29kIHRoYXQgaSBoYXZlJm5ic3A7IHRoZSBhdXRob3JpdHkmbmJz
+cDsgdG8gcHVzaCZuYnNwOyBjb2RlIHRvIDxzcGFuICBzdHlsZT0iY29sb3I6IzI0MjkyZTtmb250
+LXNpemU6MTYuMHB4O2ZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtdmFyaWFudC1saWdhdHVyZXM6bm9y
+bWFsO2ZvbnQtdmFyaWFudC1jYXBzOm5vcm1hbDtmb250LXdlaWdodDo0MDA7dGV4dC1hbGlnbjpz
+dGFydDt0ZXh0LWluZGVudDouMHB4O3RleHQtdHJhbnNmb3JtOm5vbmU7YmFja2dyb3VuZC1jb2xv
+cjojZmZmZmZmO3RleHQtZGVjb3JhdGlvbi1zdHlsZTppbml0aWFsO3RleHQtZGVjb3JhdGlvbi1j
+b2xvcjppbml0aWFsO2Zsb2F0Om5vbmU7ZGlzcGxheTppbmxpbmU7Ij5yZXBvc2l0b3J5IG5hbWVk
+IG1ldGEtYWxpYmFiYSBkaXJlY3RseS5BbmQgYWZ0ZXIgcmVhZGluZyB0aGUmbmJzcDs8c3BhbiAg
+c3R5bGU9ImNvbG9yOiMwMDAwMDA7Zm9udC1mYW1pbHk6VGFob21hLEFyaWFsLFNUSGVpdGksU2lt
+U3VuO2ZvbnQtc2l6ZToxNC4wcHg7Zm9udC1zdHlsZTpub3JtYWw7Zm9udC12YXJpYW50LWxpZ2F0
+dXJlczpub3JtYWw7Zm9udC12YXJpYW50LWNhcHM6bm9ybWFsO2ZvbnQtd2VpZ2h0OjQwMDt0ZXh0
+LWFsaWduOnN0YXJ0O3RleHQtaW5kZW50Oi4wcHg7dGV4dC10cmFuc2Zvcm06bm9uZTtiYWNrZ3Jv
+dW5kLWNvbG9yOiNmZmZmZmY7dGV4dC1kZWNvcmF0aW9uLXN0eWxlOmluaXRpYWw7dGV4dC1kZWNv
+cmF0aW9uLWNvbG9yOmluaXRpYWw7ZmxvYXQ6bm9uZTtkaXNwbGF5OmlubGluZTsiPmRvY3VtZW50
+IEkgZm91bmQgPC9zcGFuPiZuYnNwO2l0J3Mgd3JvbmcsJm5ic3A7IG5vdyBpIHN1Y2Nlc3MgdG8g
+cHVzdCBpdC4mbmJzcDsgJm5ic3A7PC9zcGFuPjwvc3Bhbj5UaGFuayB5b3Ugc28gbXVjaCZuYnNw
+OyAoKl5fX14qKSZuYnNwOzxzcGFuICBzdHlsZT0iY29sb3I6IzAwMDAwMDtmb250LWZhbWlseTpU
+YWhvbWEsQXJpYWwsU1RIZWl0aSxTaW1TdW47Zm9udC1zaXplOjE0LjBweDtmb250LXN0eWxlOm5v
+cm1hbDtmb250LXZhcmlhbnQtbGlnYXR1cmVzOm5vcm1hbDtmb250LXZhcmlhbnQtY2Fwczpub3Jt
+YWw7Zm9udC13ZWlnaHQ6NDAwO3RleHQtYWxpZ246c3RhcnQ7dGV4dC1pbmRlbnQ6LjBweDt0ZXh0
+LXRyYW5zZm9ybTpub25lO2JhY2tncm91bmQtY29sb3I6I2ZmZmZmZjt0ZXh0LWRlY29yYXRpb24t
+c3R5bGU6aW5pdGlhbDt0ZXh0LWRlY29yYXRpb24tY29sb3I6aW5pdGlhbDtmbG9hdDpub25lO2Rp
+c3BsYXk6aW5saW5lOyI+PHNwYW4gPiZuYnNwOzwvc3Bhbj4hISEhPC9zcGFuPjwvZGl2PjxkaXYg
+IHN0eWxlPSJjbGVhcjpib3RoOyI+QmVzdCBncmFkcy48L2Rpdj48ZGl2ICBzdHlsZT0iY2xlYXI6
+Ym90aDsiPjxiciA+PC9kaXY+PGRpdiAgc3R5bGU9ImNsZWFyOmJvdGg7Ij48YnIgPjwvZGl2Pjxk
+aXYgIHN0eWxlPSJjbGVhcjpib3RoOyI+PGJyID48L2Rpdj48ZGl2ICBzdHlsZT0iY2xlYXI6Ym90
+aDsiPjxiciA+PC9kaXY+PGRpdiAgc3R5bGU9ImNsZWFyOmJvdGg7Ij48YnIgPjwvZGl2PjxibG9j
+a3F1b3RlICBfcXVvdGU9IjEiIHN0eWxlPSJtYXJnaW4tcmlnaHQ6LjBweDttYXJnaW4tdG9wOi4w
+cHg7bWFyZ2luLWJvdHRvbTouMHB4O2ZvbnQtZmFtaWx5OlRhaG9tYSxBcmlhbCxTVEhlaXRpLFNp
+bVN1bjtmb250LXNpemU6MTQuMHB4O2NvbG9yOiMwMDAwMDA7Ij48ZGl2ICBzdHlsZT0iY2xlYXI6
+Ym90aDsiPi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLTwvZGl2PjxkaXYgIHN0eWxlPSJjbGVhcjpib3RoOyI+5Y+R5Lu25Lq6
+77yaU3VpIENoZW4gJmx0O3N1aWNoZW42QGdtYWlsLmNvbSZndDs8L2Rpdj48ZGl2ICBzdHlsZT0i
+Y2xlYXI6Ym90aDsiPuWPkemAgeaXtumXtO+8mjIwMjDlubQxMeaciDE45pelKOaYn+acn+S4iSkg
+MDI6NDM8L2Rpdj48ZGl2ICBzdHlsZT0iY2xlYXI6Ym90aDsiPuaUtuS7tuS6uu+8mlBhdHJpY2sg
+V2lsbGlhbXMgJmx0O3BhdHJpY2tAc3R3Y3gueHl6Jmd0OzwvZGl2PjxkaXYgIHN0eWxlPSJjbGVh
+cjpib3RoOyI+5oqE44CA6YCB77ya5p2o5YuH5YW1KOacq+WyqSkgJmx0O21veWFuLnl5YkBhbGli
+YWJhLWluYy5jb20mZ3Q7OyDluLjnkLMo54m5552/KSAmbHQ7dGVydWkuY2xAYWxpYmFiYS1pbmMu
+Y29tJmd0Ozsgb3BlbmJtYyAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0OzsgQnJhZCBC
+aXNob3AgJmx0O2JyYWRsZXliQGZ1enppZXNxdWlycmVsLmNvbSZndDs7IOadjuW/l+WFtSjovrno
+jZIpICZsdDt6aGliaW5nLmx6YkBhbGliYWJhLWluYy5jb20mZ3Q7OyDmnY7nvr8o5LmJ5aSpKSAm
+bHQ7eWl0aWFuLmx5QGFsaWJhYmEtaW5jLmNvbSZndDs8L2Rpdj48ZGl2ICBzdHlsZT0iY2xlYXI6
+Ym90aDsiPuS4u+OAgOmimO+8mlJlOiDlm57lpI3vvJpJIGp1c3Qgd2FudCB0byBqb2luIHRoZSBv
+cGVuYm1jIGRldmVsb3BlciBjb21tdW5pdHk8L2Rpdj48ZGl2ICBzdHlsZT0iY2xlYXI6Ym90aDsi
+PjxiciA+PC9kaXY+SGVsbG8mbmJzcDtNb3lhbiw8YnIgPjxiciA+SWYmbmJzcDtJJm5ic3A7dW5k
+ZXJzdGFuZCZuYnNwO2NvcnJlY3RseSZuYnNwO3doYXQmbmJzcDt5b3UmbmJzcDtjYW4mbmJzcDtk
+byZuYnNwO2lzJm5ic3A7dG8mbmJzcDtjb21taXQmbmJzcDt0byZuYnNwO3RoZSZuYnNwO3Jldmll
+dzxiciA+YnJhbmNoLCZuYnNwO2FuZCZuYnNwO2FzJm5ic3A7ZGVzY3JpYmVkJm5ic3A7eW91Jm5i
+c3A7bmVlZCZuYnNwO3RvJm5ic3A7Y29tcGxldGUmbmJzcDthbGwmbmJzcDt0aGUmbmJzcDtzZXR1
+cCZuYnNwO3N0ZXBzPGJyID5kZXNjcmliZWQmbmJzcDtpbiZuYnNwO3RoZSZuYnNwO2xpbmsmbmJz
+cDsoPGJyID48YSAgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvZG9jcy9ibG9iL21h
+c3Rlci9kZXZlbG9wbWVudC9nZXJyaXQtc2V0dXAubWQiIHRhcmdldD0iX2JsYW5rIj5odHRwczov
+L2dpdGh1Yi5jb20vb3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVyL2RldmVsb3BtZW50L2dlcnJpdC1z
+ZXR1cC5tZDwvYT48YnIgPik8YnIgPjxiciA+QWZ0ZXImbmJzcDt5b3UmbmJzcDtjb21wbGV0ZSZu
+YnNwO3RoZSZuYnNwO3NldHVwJm5ic3A7c3RlcHMmbmJzcDt5b3UmbmJzcDtzaG91bGQmbmJzcDth
+YmxlJm5ic3A7dG8mbmJzcDtydW4mbmJzcDt0aGUmbmJzcDtjb21tYW5kPGJyID50byZuYnNwO2Nv
+bW1pdCZuYnNwO2EmbmJzcDtjaGFuZ2UmbmJzcDt0byZuYnNwO3Jldmlldzo8YnIgPiJnaXQmbmJz
+cDtwdXNoJm5ic3A7Z2Vycml0Jm5ic3A7SEVBRDpyZWZzL2Zvci9tYXN0ZXIiPGJyID5Ob3RlJm5i
+c3A7dGhhdCZuYnNwO2l0J3MmbmJzcDtub3QmbmJzcDtqdXN0Jm5ic3A7ImdpdCZuYnNwO3B1c2gi
+Jm5ic3A7YXMmbmJzcDtpcyZuYnNwO3Nob3duJm5ic3A7aW4mbmJzcDt5b3VyJm5ic3A7c2NyZWVu
+c2hvdC48YnIgPjxiciA+SWYmbmJzcDt0aGUmbmJzcDtjb21tYW5kJm5ic3A7aXMmbmJzcDtzdWNj
+ZXNzZnVsLCZuYnNwO3lvdSZuYnNwO3dpbGwmbmJzcDtiZSZuYnNwO2dpdmVuJm5ic3A7YW4mbmJz
+cDtVUkwmbmJzcDtsaWtlJm5ic3A7dGhlJm5ic3A7Zm9sbG93aW5nOjxiciA+PGEgIGhyZWY9Imh0
+dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL21ldGEtYWxpYmFiYS8r
+L1hYWFhYIiB0YXJnZXQ9Il9ibGFuayI+aHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5
+ei9jL29wZW5ibWMvbWV0YS1hbGliYWJhLysvWFhYWFg8L2E+PGJyID5JbiZuYnNwO3RoaXMmbmJz
+cDtVUkwsJm5ic3A7IlhYWFhYIiZuYnNwO2lzJm5ic3A7dGhlJm5ic3A7Y2hhbmdlJm5ic3A7bnVt
+YmVyLjxiciA+PGJyID5PbmUmbmJzcDtleGFtcGxlJm5ic3A7c3VjY2Vzc2Z1bCZuYnNwO291dHB1
+dCZuYnNwO2lzJm5ic3A7YXMmbmJzcDtmb2xsb3dzJm5ic3A7KEknbSZuYnNwO3VzaW5nJm5ic3A7
+YSZuYnNwO2RpZmZlcmVudDxiciA+cmVwbyZuYnNwO2J1dCZuYnNwO2l0Jm5ic3A7c2hvdWxkJm5i
+c3A7YmUmbmJzcDtzaW1pbGFyJm5ic3A7Zm9yJm5ic3A7bWV0YS1hbGliYWJhKTo8YnIgPjxiciA+
+c3VpY2hlbkBzdWljaGVuOn4vRG93bmxvYWRzL29wZW5ibWMtdG9vbHMvc3VpY2hlbi9od21vbi1i
+bWskJm5ic3A7Z2l0Jm5ic3A7cHVzaDxiciA+Z2Vycml0Jm5ic3A7SEVBRDpyZWZzL2Zvci9tYXN0
+ZXI8YnIgPkVudW1lcmF0aW5nJm5ic3A7b2JqZWN0czombmJzcDs3LCZuYnNwO2RvbmUuPGJyID5D
+b3VudGluZyZuYnNwO29iamVjdHM6Jm5ic3A7MTAwJSZuYnNwOyg3LzcpLCZuYnNwO2RvbmUuPGJy
+ID5EZWx0YSZuYnNwO2NvbXByZXNzaW9uJm5ic3A7dXNpbmcmbmJzcDt1cCZuYnNwO3RvJm5ic3A7
+MTImbmJzcDt0aHJlYWRzPGJyID5Db21wcmVzc2luZyZuYnNwO29iamVjdHM6Jm5ic3A7MTAwJSZu
+YnNwOyg1LzUpLCZuYnNwO2RvbmUuPGJyID5Xcml0aW5nJm5ic3A7b2JqZWN0czombmJzcDsxMDAl
+Jm5ic3A7KDYvNiksJm5ic3A7MTAuNjkmbmJzcDtLaUImbmJzcDt8Jm5ic3A7MTAuNjkmbmJzcDtN
+aUIvcywmbmJzcDtkb25lLjxiciA+VG90YWwmbmJzcDs2Jm5ic3A7KGRlbHRhJm5ic3A7MSksJm5i
+c3A7cmV1c2VkJm5ic3A7MCZuYnNwOyhkZWx0YSZuYnNwOzApLCZuYnNwO3BhY2stcmV1c2VkJm5i
+c3A7MDxiciA+cmVtb3RlOiZuYnNwO1Jlc29sdmluZyZuYnNwO2RlbHRhczombmJzcDsxMDAlJm5i
+c3A7KDEvMSk8YnIgPnJlbW90ZTombmJzcDtQcm9jZXNzaW5nJm5ic3A7Y2hhbmdlczombmJzcDty
+ZWZzOiZuYnNwOzEsJm5ic3A7dXBkYXRlZDombmJzcDsxLCZuYnNwO2RvbmU8YnIgPnJlbW90ZTom
+bmJzcDtjb21taXQmbmJzcDs5NDYwMGY2OiZuYnNwO3dhcm5pbmc6Jm5ic3A7c3ViamVjdCZuYnNw
+OyZndDs1MCZuYnNwO2NoYXJhY3RlcnM7Jm5ic3A7dXNlJm5ic3A7c2hvcnRlcjxiciA+Zmlyc3Qm
+bmJzcDtwYXJhZ3JhcGg8YnIgPnJlbW90ZTo8YnIgPnJlbW90ZTombmJzcDtTVUNDRVNTPGJyID5y
+ZW1vdGU6PGJyID5yZW1vdGU6Jm5ic3A7VXBkYXRlZCZuYnNwO0NoYW5nZXM6PGJyID5yZW1vdGU6
+Jm5ic3A7Jm5ic3A7Jm5ic3A7PGEgIGhyZWY9Imh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVj
+dC54eXovYy9vcGVuYm1jL29wZW5ibWMtdG9vbHMvKy8zNTM4NyIgdGFyZ2V0PSJfYmxhbmsiPmh0
+dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVuYm1jL29wZW5ibWMtdG9vbHMv
+Ky8zNTM4NzwvYT48YnIgPmh3bW9uLWJtazombmJzcDttaWNyb2JlbmNobWFyayZuYnNwO2ZvciZu
+YnNwO2ZpbGUtYmFzZWQmbmJzcDtzZW5zb3ItcmVhZGluZzxiciA+cmVtb3RlOjxiciA+VG8mbmJz
+cDtzc2g6Ly9vcGVuYm1jLmdlcnJpdC9vcGVuYm1jL29wZW5ibWMtdG9vbHM8YnIgPiZuYnNwOyom
+bmJzcDtbbmV3Jm5ic3A7cmVmZXJlbmNlXSZuYnNwOyZuYnNwOyZuYnNwO0hFQUQmbmJzcDstJmd0
+OyZuYnNwO3JlZnMvZm9yL21hc3RlcjxiciA+c3VpY2hlbkBzdWljaGVuOn4vRG93bmxvYWRzL29w
+ZW5ibWMtdG9vbHMvc3VpY2hlbi9od21vbi1ibWskPGJyID48YnIgPjxiciA+SG9wZSZuYnNwO3Ro
+aXMmbmJzcDttaWdodCZuYnNwO2JlJm5ic3A7dXNlZnVsLjxiciA+PGJyID5UaGFua3MhPGJyID5z
+dWljaGVuPGJyID48YnIgPjxiciA+T24mbmJzcDtUdWUsJm5ic3A7Tm92Jm5ic3A7MTcsJm5ic3A7
+MjAyMCZuYnNwO2F0Jm5ic3A7NToyMiZuYnNwO0FNJm5ic3A7UGF0cmljayZuYnNwO1dpbGxpYW1z
+Jm5ic3A7Jmx0O3BhdHJpY2tAc3R3Y3gueHl6Jmd0OyZuYnNwO3dyb3RlOjxiciA+Jmd0OzxiciA+
+Jmd0OyZuYnNwO09uJm5ic3A7TW9uLCZuYnNwO05vdiZuYnNwOzE2LCZuYnNwOzIwMjAmbmJzcDth
+dCZuYnNwOzAzOjQ2OjA5UE0mbmJzcDsrMDgwMCwmbmJzcDvmnajli4flhbUo5pyr5bKpKSZuYnNw
+O3dyb3RlOjxiciA+Jmd0OyZuYnNwOyZndDsmbmJzcDtIaSZuYnNwO0JyYWQsPGJyID4mZ3Q7Jm5i
+c3A7Jmd0OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0kmbmJzcDtzZWUmbmJzcDt0aGUm
+bmJzcDttZXRhLWFsaWJhYmEmbmJzcDtoYXMmbmJzcDtiZWVuJm5ic3A7Y3JlYXRlLCZuYnNwO3Ro
+YXQncyZuYnNwO2dyZWF0cywmbmJzcDt0aGFuayZuYnNwO3lvdS4mbmJzcDtCdXQmbmJzcDt3aGls
+ZSZuYnNwO2kmbmJzcDtzZW5kJm5ic3A7dGhlJm5ic3A7ZmlsZSZuYnNwO3RvJm5ic3A7dGhlJm5i
+c3A7UmVwb3NpdG9yeSxpdCZuYnNwO2hhcyZuYnNwO3NvbWUmbmJzcDtxdWVzdGlvbiZuYnNwO2Fz
+Jm5ic3A7YmVsb3cuJm5ic3A7SWYmbmJzcDthbSZuYnNwO2kmbmJzcDtoYXZlJm5ic3A7bm8mbmJz
+cDtBdXRob3JpdHnvvJ88YnIgPiZndDsmbmJzcDsmZ3Q7Jm5ic3A7VGhhbmsuPGJyID4mZ3Q7PGJy
+ID4mZ3Q7Jm5ic3A7SGVsbG8uPGJyID4mZ3Q7PGJyID4mZ3Q7Jm5ic3A7WW91ciZuYnNwO2lzc3Vl
+Jm5ic3A7aXMmbmJzcDt0aGF0Jm5ic3A7eW91J3JlJm5ic3A7dHJ5aW5nJm5ic3A7dG8mbmJzcDtw
+dXNoJm5ic3A7ZGlyZWN0bHkmbmJzcDt0byZuYnNwO3RoZSZuYnNwO2JyYW5jaCZuYnNwO2FuZDxi
+ciA+Jmd0OyZuYnNwO2J5cGFzc2luZyZuYnNwO3JldmlldyZuYnNwO3JhdGhlciZuYnNwO3RoYW4m
+bmJzcDtwdXNoaW5nJm5ic3A7dG8mbmJzcDthJm5ic3A7Z2Vycml0Jm5ic3A7cmV2aWV3Jm5ic3A7
+YnJhbmNoLjxiciA+Jmd0OzxiciA+Jmd0OyZuYnNwO1BsZWFzZSZuYnNwO3NlZSZuYnNwO3RoaXMm
+bmJzcDtkb2N1bWVudCZuYnNwO2FuZCZuYnNwO2VzcGVjaWFsbHkmbmJzcDt0aGUmbmJzcDsicHVz
+aCZuYnNwO2NvZGUmbmJzcDtjaGFuZ2UmbmJzcDt0byZuYnNwO0dlcnJpdCI8YnIgPiZndDsmbmJz
+cDtzZWN0aW9uOjxiciA+Jmd0OzxiciA+Jmd0OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OzxhICBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVyL2Rl
+dmVsb3BtZW50L2dlcnJpdC1zZXR1cC5tZCNwdXNoLWNvZGUtY2hhbmdlLXRvLWdlcnJpdCIgdGFy
+Z2V0PSJfYmxhbmsiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL2RvY3MvYmxvYi9tYXN0ZXIv
+ZGV2ZWxvcG1lbnQvZ2Vycml0LXNldHVwLm1kI3B1c2gtY29kZS1jaGFuZ2UtdG8tZ2Vycml0PC9h
+PjxiciA+Jmd0OzxiciA+Jmd0OzxiciA+Jmd0OyZuYnNwOy0tPGJyID4mZ3Q7Jm5ic3A7UGF0cmlj
+ayZuYnNwO1dpbGxpYW1zPC9ibG9ja3F1b3RlPjxkaXYgIHN0eWxlPSJsaW5lLWhlaWdodDoyMC4w
+cHg7Y2xlYXI6Ym90aDsiPjxiciA+PC9kaXY+PC9kaXY+PC9kaXY+
+------=ALIBOUNDARY_105181_7fb694718700_5fb4c9a0_14a9d4e--
 
-[root@localhost phosphor-ipmi-flash]# make
-make  all-recursive
-make[1]: Entering directory '/root/phosphor-ipmi-flash'
-Making all in .
-make[2]: Entering directory '/root/phosphor-ipmi-flash'
-make[2]: Leaving directory '/root/phosphor-ipmi-flash'
-Making all in tools
-make[2]: Entering directory '/root/phosphor-ipmi-flash/tools'
-Making all in .
-make[3]: Entering directory '/root/phosphor-ipmi-flash/tools'
-  CXX      burn_my_bmc-main.o
-In file included from p2a.hpp:5,
-                 from main.cpp:21:
-pci.hpp:40:39: error: 'span' in namespace 'stdplus' does not name a templat=
-e type
-     virtual void write(const stdplus::span<const std::uint8_t> data) =3D 0=
-;
-                                       ^~~~
-pci.hpp:40:43: error: expected ',' or '...' before '<' token
-     virtual void write(const stdplus::span<const std::uint8_t> data) =3D 0=
-;
-                                           ^
-pci.hpp:51:39: error: 'span' in namespace 'stdplus' does not name a templat=
-e type
-     virtual void write(const stdplus::span<const std::uint8_t> data) overr=
-ide;
-                                       ^~~~
-pci.hpp:51:43: error: expected ',' or '...' before '<' token
-     virtual void write(const stdplus::span<const std::uint8_t> data) overr=
-ide;
-                                           ^
-make[3]: *** [Makefile:699: burn_my_bmc-main.o] Error 1
-make[3]: Leaving directory '/root/phosphor-ipmi-flash/tools'
-make[2]: *** [Makefile:725: all-recursive] Error 1
-make[2]: Leaving directory '/root/phosphor-ipmi-flash/tools'
-make[1]: *** [Makefile:615: all-recursive] Error 1
-make[1]: Leaving directory '/root/phosphor-ipmi-flash'
-make: *** [Makefile:475: all] Error 2
-[root@localhost phosphor-ipmi-flash]#
-
-
-
-Thanks,
-Mohaimen Alsamarai
-BMC developer
-FII USA
-
-
-
---_000_DM6PR08MB588362D381EC3603682F9B32B2E20DM6PR08MB5883namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0in;
-	mso-margin-bottom-alt:auto;
-	margin-left:0in;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle19
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:#1F497D;}
-span.EmailStyle20
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi All,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We are trying to build the <a href=
-=3D"https://github.com/openbmc/phosphor-ipmi-flash">
-<span style=3D"color:windowtext;text-decoration:none">phosphor-ipmi-flash</=
-span></a> and we counter issue at the make step please see below for the er=
-ror message, can you advise us what we can do to pass that error &nbsp;<o:p=
-></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">[root@localhost phosphor-ipmi-flash]# make<o:p></o:p=
-></p>
-<p class=3D"MsoNormal">make&nbsp; all-recursive<o:p></o:p></p>
-<p class=3D"MsoNormal">make[1]: Entering directory '/root/phosphor-ipmi-fla=
-sh'<o:p></o:p></p>
-<p class=3D"MsoNormal">Making all in .<o:p></o:p></p>
-<p class=3D"MsoNormal">make[2]: Entering directory '/root/phosphor-ipmi-fla=
-sh'<o:p></o:p></p>
-<p class=3D"MsoNormal">make[2]: Leaving directory '/root/phosphor-ipmi-flas=
-h'<o:p></o:p></p>
-<p class=3D"MsoNormal">Making all in tools<o:p></o:p></p>
-<p class=3D"MsoNormal">make[2]: Entering directory '/root/phosphor-ipmi-fla=
-sh/tools'<o:p></o:p></p>
-<p class=3D"MsoNormal">Making all in .<o:p></o:p></p>
-<p class=3D"MsoNormal">make[3]: Entering directory '/root/phosphor-ipmi-fla=
-sh/tools'<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp; CXX&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; burn_my_bmc=
--main.o<o:p></o:p></p>
-<p class=3D"MsoNormal">In file included from p2a.hpp:5,<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; from main.cpp:21:<o:p></o:p></=
-p>
-<p class=3D"MsoNormal">pci.hpp:40:39: error: &#8216;span&#8217; in namespac=
-e &#8216;stdplus&#8217; does not name a template type<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; virtual void write(const st=
-dplus::span&lt;const std::uint8_t&gt; data) =3D 0;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;^~~~<o:p></o:p></p>
-<p class=3D"MsoNormal">pci.hpp:40:43: error: expected &#8216;,&#8217; or &#=
-8216;...&#8217; before &#8216;&lt;&#8217; token<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; virtual void write(const st=
-dplus::span&lt;const std::uint8_t&gt; data) =3D 0;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^<o:p></o:p></p>
-<p class=3D"MsoNormal">pci.hpp:51:39: error: &#8216;span&#8217; in namespac=
-e &#8216;stdplus&#8217; does not name a template type<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; virtual void write(const st=
-dplus::span&lt;const std::uint8_t&gt; data) override;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp; ^~~~<o:p></o:p></p>
-<p class=3D"MsoNormal">pci.hpp:51:43: error: expected &#8216;,&#8217; or &#=
-8216;...&#8217; before &#8216;&lt;&#8217; token<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; virtual void write(const st=
-dplus::span&lt;const std::uint8_t&gt; data) override;<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^<o:p></o:p></p>
-<p class=3D"MsoNormal">make[3]: *** [Makefile:699: burn_my_bmc-main.o] Erro=
-r 1<o:p></o:p></p>
-<p class=3D"MsoNormal">make[3]: Leaving directory '/root/phosphor-ipmi-flas=
-h/tools'<o:p></o:p></p>
-<p class=3D"MsoNormal">make[2]: *** [Makefile:725: all-recursive] Error 1<o=
-:p></o:p></p>
-<p class=3D"MsoNormal">make[2]: Leaving directory '/root/phosphor-ipmi-flas=
-h/tools'<o:p></o:p></p>
-<p class=3D"MsoNormal">make[1]: *** [Makefile:615: all-recursive] Error 1<o=
-:p></o:p></p>
-<p class=3D"MsoNormal">make[1]: Leaving directory '/root/phosphor-ipmi-flas=
-h'<o:p></o:p></p>
-<p class=3D"MsoNormal">make: *** [Makefile:475: all] Error 2<o:p></o:p></p>
-<p class=3D"MsoNormal">[root@localhost phosphor-ipmi-flash]#<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
-<p class=3D"MsoNormal">Mohaimen Alsamarai<o:p></o:p></p>
-<p class=3D"MsoNormal">BMC developer <o:p></o:p></p>
-<p class=3D"MsoNormal">FII USA<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
-
---_000_DM6PR08MB588362D381EC3603682F9B32B2E20DM6PR08MB5883namp_--
