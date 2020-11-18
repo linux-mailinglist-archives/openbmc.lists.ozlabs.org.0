@@ -1,57 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A53F2B76B0
-	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 08:12:17 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7E102B795A
+	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 09:49:58 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CbYsM2N2JzDqgN
-	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 18:12:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cbc2C3zsHzDqfX
+	for <lists+openbmc@lfdr.de>; Wed, 18 Nov 2020 19:49:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::233;
+ helo=mail-lj1-x233.google.com; envelope-from=vijaykhemkalinux@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
- envelope-from=richard.marian.thomaiyar@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=bC9V4b3o; dkim-atps=neutral
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com
+ [IPv6:2a00:1450:4864:20::233])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CbYrT4K6nzDqZX
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 18:11:20 +1100 (AEDT)
-IronPort-SDR: uZETwOt9ajc2z//z1L9RFeXavk1DCHlo2jviJUr5p+E2qFRjmKWuYV7sp2Z8YQJtwl6MPh4eLO
- 4Ack4lAJlF2Q==
-X-IronPort-AV: E=McAfee;i="6000,8403,9808"; a="168503882"
-X-IronPort-AV: E=Sophos;i="5.77,486,1596524400"; d="scan'208";a="168503882"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
- by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2020 23:11:16 -0800
-IronPort-SDR: /Gkt1pEsFGhKX1rQNWACmoz8jS9eEC5lj7JMkl6/B7H/rorsU3DT04cKHQRxlbOziAnOr9ZRGb
- nvNiuvisGixg==
-X-IronPort-AV: E=Sophos;i="5.77,486,1596524400"; d="scan'208";a="368364861"
-Received: from rthomaiy-mobl.gar.corp.intel.com (HELO [10.213.100.227])
- ([10.213.100.227])
- by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2020 23:11:14 -0800
-Subject: Re: User-manager default group roles
-To: Joseph Reynolds <jrey@linux.ibm.com>, openbmc <openbmc@lists.ozlabs.org>, 
- Ed Tanous <ed@tanous.net>
-References: <8031d32c-9dd2-a72a-7751-8784fe9d2d99@linux.ibm.com>
- <f22719fc-1851-eac9-50ee-fe95dace291a@linux.intel.com>
- <77e2e674-23a9-1d2f-7cdd-88a3f5535e1c@linux.ibm.com>
-From: "Thomaiyar, Richard Marian" <richard.marian.thomaiyar@linux.intel.com>
-Message-ID: <2a47d048-7b27-7aa6-f813-18e985976c0a@linux.intel.com>
-Date: Wed, 18 Nov 2020 12:41:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cbc0g4MtpzDqdk
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 19:48:30 +1100 (AEDT)
+Received: by mail-lj1-x233.google.com with SMTP id r17so1460077ljg.5
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 00:48:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=xiukDSLwwH2TDG6p/ZA4F24hzVU/qXhWZk7p/CFuwFA=;
+ b=bC9V4b3otsVoLolSYk1Wauuy7R8p5L9rI3KmAjbcTvyG+IvokRR5tcBLwEZg8lABc8
+ +rrYOogNoP+41Lt+/h4Yu5Q4keAykSZH6kh+mQibWlog18w3sI87N+X+lCS4Iqc0/Qyh
+ UU/zhCL/OHFeiBE658HCdP12tVjCl3y6pBjTwi9Jo0BizCRkQMrPGrt7v6qye9hzpMM1
+ 8h6iWFTpdtgyi8g+wiqsyrV+2Yq0Wsg04NC2cL1QV8hLYAQ2Lt7UjQg8VW/dnjXwLN3F
+ o/yNJ1dDzhO+93sjM+lHOD9tCVXU30s/TfKlHpwItG4G7/jbi2Y4LEvlwAG4lMjP4Zeg
+ jWvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=xiukDSLwwH2TDG6p/ZA4F24hzVU/qXhWZk7p/CFuwFA=;
+ b=RcvORwZZ0TAfZUC07tveXr/BrpkIzO1MfxsstDTHzV0r31Dg1AkwUutwWy0A/GiZIN
+ xRZGj9uoy/5uwFwUCSbvxMkLXvOeW4W443ywYq8TdyNHXeiLbOAvcuwtMGx5uDO34yb6
+ zmaSd1N5Sje3gy5LV8ZjMvr0GYGvYoZhZ6MUeezT5fvxY6mXHZV4vBeYt8SPRDdCueBD
+ URDnX6Sc0Jfqz7MSxrqhOXRqrFo6GejzEwYJSLseIRKmdu9nSrEpLvx/k2DEDr9jRVTH
+ J473r4130JdMyfz2yLpkTYRA2++y5YnKqJ9rdDWbe9wjgifx+aY2q0GpAejVpCCxNGSs
+ /OOg==
+X-Gm-Message-State: AOAM5315h8Z/99fG1a0d29FkC/Lwx9sdvHrj8wo9blqLLTPtyK/8+Y+Y
+ rKZjD2vxmBwGqAF3oV2cyxFyiMGHhCK9Wz3C4xE=
+X-Google-Smtp-Source: ABdhPJz/8UMWYYgpfScL+0o+XfLuEeVVotMUQuBwDBeUFJKZnKnTxnUMcGZR3pWv1tnBjM9bEJZsXV1OX3qDX2Y0MwM=
+X-Received: by 2002:a2e:300a:: with SMTP id w10mr3863670ljw.62.1605689305553; 
+ Wed, 18 Nov 2020 00:48:25 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <77e2e674-23a9-1d2f-7cdd-88a3f5535e1c@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <CAJOps0sd-YFr5P+_N0i78pd9akBJS6DP99wugKvUDOGpXw2pcA@mail.gmail.com>
+ <D355FA68-E163-4DA8-861E-7E9DB68F5EEB@fb.com>
+ <CAJOps0uX9K25NgXpi3M45F=pvvW5Am+9R=wYTLN0SZ2vPUcX-A@mail.gmail.com>
+ <EF663847-4E98-4AC2-8A8C-E37B853C131F@fb.com>
+ <CAJOps0tR5t4sJQX0-fhBJuKJSnQZJm12gWV9S0OYv4xWU7uzKQ@mail.gmail.com>
+ <20201007014324.GG6152@heinlein>
+ <CAJOps0tKN4ACB46hoNu1EeX4uaSZ_UeArzcZ=ehGA2sz0oT+aQ@mail.gmail.com>
+ <BC4115A9-0587-4135-981E-38C086DDD3F9@fb.com>
+ <CAPnigKn5cRVz3RuK-czkHVo2od1ZLpHCVgRu9q4OET-_nPwrWw@mail.gmail.com>
+ <20201111121431.GI3614@heinlein>
+ <CAJOps0vS6+eiZSdL=w6Trb2K_rTj3Rb2TTyp5_n2=_YrjUgH_w@mail.gmail.com>
+In-Reply-To: <CAJOps0vS6+eiZSdL=w6Trb2K_rTj3Rb2TTyp5_n2=_YrjUgH_w@mail.gmail.com>
+From: Vijay Khemka <vijaykhemkalinux@gmail.com>
+Date: Wed, 18 Nov 2020 00:48:14 -0800
+Message-ID: <CAJTGxZGOXb4bK9bvVcuKkv8ZBsaQaJor_gLTrrOW1WnQcPe0fw@mail.gmail.com>
+Subject: Re: Request to create repository google-ipmi-bmc-health
+To: Sui Chen <suichen@google.com>
+Content-Type: multipart/alternative; boundary="000000000000ad5f3605b45dace7"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,129 +82,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Vijay Khemka <vijaykhemka@fb.com>, William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On 11/18/2020 12:47 AM, Joseph Reynolds wrote:
-> On 11/17/20 11:21 AM, Thomaiyar, Richard Marian wrote:
->> Hi Joseph, For SSH to work fine, user must be part of priv-admin...
->> This Message Is From an External Sender
->> This message came from outside your organization.
->>
->> Hi Joseph,
->>
->> For SSH to work fine, user must be part of priv-admin and must have 
->> command/shell as /bin/sh under /etc/passwd file instead of 
->> /bin/nologin. Note: There is no direct group called ssh under 
->> /etc/group, instead it is just emulated one from 
->> phosphor-user-manager to add corresponding shell binary to the user.
->> usermod --shell /bin/sh -G priv-admin ${USER}
->>
->> If requirement is SSH to be allowed based on group and allowed for 
->> all user privileges, then user shell can be updated using usermod 
->> --shell /bin/sh itself, but need to remove EXTRA_ARGS from the 
->> dropbear.default 
->> <https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear/dropbear.default>
->
-> Richard,
->
-> Thanks for the info.  I do intend to separate the "ssh" group role 
-> from the "priv-admin" privilege role.  My use case for the admin to 
-> NOT have ssh privilege, but the service user account does have ssh 
-> privilege.  I think this is cleaner and applicable to multiple use cases.
-In this case, need to remove the -G priv-admin from dropbear.defaults 
-(but all users who have sh command/shell, will be able to login) and ssh 
-doesn't provide any authorization for commands based on privileges.
->
-> For the OpenBMC project defaults, I propose that when a new user is 
-> dynamically created with the "priv-admin" role, they also get the 
-> "ssh" group role.  After the user account is created, I do not intend 
-> for "priv-admin" and "ssh"  be be tied together, meaning you can 
-> change one and not the other, and you will get the results you expect.
->
-Yes, i see your use case and user must be able to ssh irrespective of 
-privilege role he is in.
-> I understand the full set of work for this includes:
-> 1. Create the "ssh" Linux group to represent the "ssh" group role.
-
-Not needed (unless we really require to support usermod command - 
-"usermod -G "ssh" ${USER}). Won't usermod --shell /bin/sh ${USER} won't 
-be enough for covering the same. Assuming this is not the way we are 
-going to ask end-user to create a user.
-
-> 2. Change the dropbear.defaults to "-G ssh" (was "-G priv-admin"). 
-> There may be forward compatibility concerns: for example, when this 
-> changes, everyone in the priv-admin group should be added to the "ssh" 
-> group.
-> 3. Change phosphor-user-manager [6] to re-swizzle the login shell path 
-> when a user is added or removed from the "ssh" group.
-> 4. Implement BMCWeb REST APIs [7], if desired.
-
-We don't require any change in bmweb rest API's for this, as these are 
-build time configurable (i.e. for ssh priv-admin). phosphor-user-manager 
-already provided D-Bus property to support different account groups, 
-i.e. for AccountTypes (Redfish,Ipmi etc.)(for the schema update you are 
-working with redfish forum). Once the schema is defined, we just need to 
-update the bmcweb to update the property accordingly.
-
-Let me know if you have any other reason / usecase, which will not work 
-with this approach. If needed, we can even discuss this in security WG.
-
-Regards,
-
-Richard
+--000000000000ad5f3605b45dace7
+Content-Type: text/plain; charset="UTF-8"
 
 >
-> - Joseph
+> Hello Patrick,
 >
-> P.S. I intend to repeat this exercise for the ipmi group role.
+> Thanks for your understanding for our request to create a new repository.
 >
-> [6]: 
-> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/User/Attributes.interface.yaml
-> [7]: 
-> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/account_service.hpp
+> Our team had also met last Friday for a discussion on where the
+> implementation of the blob handler should go, and we also agreed it is
+> preferable to create a new repository compared to putting its
+> implementation in phosphor-health-monitor or phosphor-ipmi-blobs.
 >
->> Regards,
->>
->> Richard
->>
->> On 11/17/2020 3:49 AM, Joseph Reynolds wrote:
->>>
->>> What is the right way to assign default phosphor-user-manager "group 
->>> roles" to dynamically created users?
->>>
->>> Background: Currently, when a new local user is created via Redfish 
->>> API POST /redfish/v1/AccountService/Accounts you have to specify a 
->>> Redfish RoleId.  BMCWeb maps the RoleId to a phosphor user manager 
->>> "Privilege Role" [1] and assigns ALL of the "group roles" to the new 
->>> user [2].  Per [3] this is not intended, and I need to fix this for 
->>> my use case.
->>>
->> usermod --shell /bin/sh -G priv-admin ${USER} is the correct command 
->> for per[3].
->>> IMHO, the correct approach is for the project to define a mapping 
->>> from "role" to "privilege role" that can be used when dynamically 
->>> creating a new user.  For example, the admin role maps to "ssh ipmi 
->>> redfish web" whereas the readonly role maps to "ipmi redfish web" 
->>> (omits "ssh"). Then images can customize this as needed.
->>>
->>> But where should this mapping be applied?  Does it belong in BMCWeb 
->>> or in phosphor-user-manager [4]?  Should we have another D-Bus 
->>> property [5] to give this mapping?
->> As of today, we are not separating user groups. All users created in 
->> OpenBMC belongs to the build time configured groups.
->>>
->>> - Joseph
->>>
->>> [1]: 
->>> https://github.com/openbmc/docs/blob/master/architecture/user-management.md
->>> [2]: 
->>> https://github.com/openbmc/bmcweb/blob/929d4b57f10bc4200e16b71fbcf32521d8cc23c1/redfish-core/lib/account_service.hpp#L1435
->>> [3]: https://github.com/openbmc/openbmc/issues/3643
->>> [4]: 
->>> https://github.com/openbmc/phosphor-user-manager/blob/master/user_mgr.hpp
->>> [5]: 
->>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/xyz/openbmc_project/User/Manager.interface.yaml
->>>
+> Now that the IPMI blob handler lives in its own separate repo, it
+> seems to me that the design does not have to be separated right now;
+> the new repo could, for now, hold the monolithic IPMI blob handler
+> where the metric implementation is entirely in the handler.
 >
+
+I completely disagree with this approach of having a platform specific
+implementation, I will still prefer to have a generic design in health
+monitor
+for metrics collection and blob handler can be in a separate repo.
+
+
+> In the meantime, we will continue to work on the separated design
+> where the blob handler does light-weight dbus operations against the
+> daemon, starting from addressing the comments. This might take some
+> time but we are invested in its design proposal and we are determined
+> to finish implementing it.
+>
+> If this plan sounds reasonable, can we request to create the
+> repository now? If the word "health" in the name is a concern, how
+> about "google-ipmi-bmc-metrics"?
+>
+> Thanks!
+> Sui
+>
+
+--000000000000ad5f3605b45dace7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex"><br><br>
+Hello Patrick,<br>
+<br>
+Thanks for your understanding for our request to create a new repository.<b=
+r>
+<br>
+Our team had also met last Friday for a discussion on where the<br>
+implementation of the blob handler should go, and we also agreed it is<br>
+preferable to create a new repository compared to putting its<br>
+implementation in phosphor-health-monitor or phosphor-ipmi-blobs.<br>
+<br>
+Now that the IPMI blob handler lives in its own separate repo, it<br>
+seems to me that the design does not have to be separated right now;<br>
+the new repo could, for now, hold the monolithic IPMI blob handler<br>
+where the metric implementation is entirely in the handler.<br></blockquote=
+><div><br></div><div>I completely disagree with this approach of having a p=
+latform specific=C2=A0</div><div>implementation, I will still prefer to hav=
+e a generic design in health monitor</div><div>for metrics collection and b=
+lob handler can be in a separate=C2=A0repo.</div><div><br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+<br>
+In the meantime, we will continue to work on the separated design<br>
+where the blob handler does light-weight dbus operations against the<br>
+daemon, starting from addressing the comments. This might take some<br>
+time but we are invested in its design proposal and we are determined<br>
+to finish implementing it.<br>
+<br>
+If this plan sounds reasonable, can we request to create the<br>
+repository now? If the word &quot;health&quot; in the name is a concern, ho=
+w<br>
+about &quot;google-ipmi-bmc-metrics&quot;?<br>
+<br>
+Thanks!<br>
+Sui<br>
+</blockquote></div></div>
+
+--000000000000ad5f3605b45dace7--
