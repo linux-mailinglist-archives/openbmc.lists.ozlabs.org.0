@@ -1,78 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF3652B883D
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 00:15:23 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AFF0E2B8837
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 00:11:06 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CbzDn1585zDqH6
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 10:15:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cbz7q6JH3zDqdf
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 10:11:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
- helo=mail-pf1-x443.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
+ helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=uMnzVzhm; dkim-atps=neutral
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
- [IPv6:2607:f8b0:4864:20::443])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=AYSjUvs1; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=Iugvallp; 
+ dkim-atps=neutral
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
+ [64.147.123.25])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cbz6Z33hvzDqW9
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 10:09:57 +1100 (AEDT)
-Received: by mail-pf1-x443.google.com with SMTP id w14so2580720pfd.7
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 15:09:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=S4SV7UWqaAO4+KNigQEQ+xlXa5i4hvXUtpTZN2jrHlA=;
- b=uMnzVzhmPlLPZ0/M2t6pQ+/a395zQleD37ySHopmwQHi4ghvFtsIYAuEEUi6scn2oE
- WjTuRb77VxCgNSlatY0O5bWDL2EiY+PXnJbPwJaluV4vC2qtJKuzyyJMxCW/ucs4NyKe
- D6UQC1mlWQe/JZJGxrieQSi4pgLDj+AeWS5cTJzd96Usyo+5jw+yzp2wMIDEU2Q9ZqsZ
- ICJCcPd5L9Du5QfGItxLs1Jhao0h5CbGZLyD+J5V3qIdveZ3hSKzNiEmBUhjBP8agbM6
- YzZytOLol+oTy2zCVuyaCvIhJkmTPA3GMplkkuDpFGzSVcWrWuWLHLy2h6EiPXUMw4ib
- rC0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references;
- bh=S4SV7UWqaAO4+KNigQEQ+xlXa5i4hvXUtpTZN2jrHlA=;
- b=U5GMeZwnXWBuVzymBt6Q+peVhFEJZnuG9cFNUDpoPC3E9wpdLYVISTDSAHFSkRYQyP
- uffcO4GDWsZVvqCuIPWhq9nqu0DYPmCxm5k1V7PR24zbTICB+8tOn0YGEDxhY5Zblx51
- SFBm78EcFQDQ3oxMj798w695Gf9OYE1auoJ8WAel/CQembYe68lbXkb0Y0L/krwS9TPi
- rRgXOy7TBYgeow5d1Oj5NWZtvdMDhUz7FD5n5HsLF2g7g6mwgqMVUuqzKtiUfAQrsV1o
- e5ki6rZnN2AWMyFENefFgdFt9CiVRukKtY29vFap8+4wWrg5xwg9yNpALYyPEx9YYRgG
- OZLw==
-X-Gm-Message-State: AOAM532GGF6JObdetDo96rwMl6jVgWtXXF/alSYUCv95KCbKA0RJDpqP
- gip1BPYprgBk8Brav+MWI1I=
-X-Google-Smtp-Source: ABdhPJzu9wrEysVlRm1/cjj7lif5xoT+FkSGrGUKs2fsSy8kVxEFM/1XL01MQtqHSGgEVT7zhSxWRg==
-X-Received: by 2002:a63:154e:: with SMTP id 14mr10380799pgv.49.1605740995078; 
- Wed, 18 Nov 2020 15:09:55 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91.thefacebook.com
- (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id b21sm2565304pji.24.2020.11.18.15.09.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Nov 2020 15:09:54 -0800 (PST)
-From: rentao.bupt@gmail.com
-To: Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
- Jonathan Corbet <corbet@lwn.net>, Alexei Starovoitov <ast@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>,
- "David S . Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
- Jesper Dangaard Brouer <hawk@kernel.org>,
- John Fastabend <john.fastabend@gmail.com>, linux-hwmon@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, bpf@vger.kernel.org, openbmc@lists.ozlabs.org,
- taoren@fb.com, mikechoi@fb.com
-Subject: [PATCH v2 2/2] docs: hwmon: Document max127 driver
-Date: Wed, 18 Nov 2020 15:09:29 -0800
-Message-Id: <20201118230929.18147-3-rentao.bupt@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201118230929.18147-1-rentao.bupt@gmail.com>
-References: <20201118230929.18147-1-rentao.bupt@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cbz6P1V8DzDqJH
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 10:09:48 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 86D674B0;
+ Wed, 18 Nov 2020 18:09:44 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Wed, 18 Nov 2020 18:09:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=uttPJGIm3wZevfB0pESGGUPA6ui
+ tC3D6V/xx/oQD3V4=; b=AYSjUvs1nU8ACHDbyEjIGnKIzxE5zvL4m6mgovC+PD+
+ zSzGdF/VWKzsOsBFoiDhiKX/lOXrV3cIoSqCGqFw6A7bVWnAAnAaS9PgtTX4u7UB
+ HDXDXIddenVrskUA8U3X8sDTVf4CuaU5fQk7hPMUWuTM14bHjpLplcmk08eQfIVU
+ 5N2tXJLhibjoK3LCfA2S1QDjxXME8kznhausULgq0Tje1r4YyMbc3ADOe8cs0CDA
+ uGGgsZa728SufR9dnBw0PvN/m30G9j7oxuoLxhtlFOlOpvCvV41K4Xr3849pVa4h
+ cq+qytYL6JzPgxQP0WCf5BmxV/lz7KSzuIlZQjuZTvg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=uttPJG
+ Im3wZevfB0pESGGUPA6uitC3D6V/xx/oQD3V4=; b=IugvallpOEeQgQKufdOX5y
+ wQbMknlNUvfKz0n373dlRqek+YoEcbEm5swC0r8DeZl8uh0wr917mwha3+Gdtp96
+ lDfusjY8r7NcGUTo4Gnoj/RVOr5iBizhOc7N9t24hGI0ETrJbz4cuah5iVDTT1lS
+ he/uP/H136yKUW/HvOA/VW3Q20a2gLFnavskPnvT05YxkHQ/gGBaUE93rTO1JO5B
+ dIpoKBWfpWUazqhhqrgvvF2jqOZp4/I6+yXirxJ6mjBW8veR1NjgJcUMBhaFsXAm
+ qlcu8pEvobQSMFE/Y9/whkCKZeY+zGHt6WUnuFGgK/lEX+TMZaK10XGlqFUu35wA
+ ==
+X-ME-Sender: <xms:t6m1X3S--rnTsbUqlAcD-gc08qq0JS9k609Mu_knbmcJZALXF_thCQ>
+ <xme:t6m1X4xrxelkCXcApbpuGltL2zV_zxCoiKHd3YBwoeUnnG8if5RJUGw7dexxDT0iN
+ D6La4pyj_LoK-IJNus>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudefiedgtdehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
+ leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:t6m1X83qHmxs2DxAzwQyb0aiFUNVUagdDCEpAIvOZVrHnGw15wGRRg>
+ <xmx:t6m1X3CT_U8n3gtS3bGKUo4vxvGehGExa33pTSJFC2sYgxQzKyzTng>
+ <xmx:t6m1Xwgr8ih2thSFrrO7-o1Ze45pRkWR55Sl3-z1S46req98dWWtTA>
+ <xmx:uKm1X-cDP69sfC_AvTUK8N0qopnx_Rxu1B6oFquGR2EHkMAUcxvzHw>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 9B48C3280060;
+ Wed, 18 Nov 2020 18:09:42 -0500 (EST)
+Date: Wed, 18 Nov 2020 17:09:38 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Patrick Venture <venture@google.com>
+Subject: Re: qemu for bmc
+Message-ID: <20201118230938.GA1261035@heinlein>
+References: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="G4iJoqBmSsgzjUCe"
+Content-Disposition: inline
+In-Reply-To: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,88 +95,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tao Ren <rentao.bupt@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tao Ren <rentao.bupt@gmail.com>
 
-Add documentation for the max127 hardware monitoring driver.
+--G4iJoqBmSsgzjUCe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
----
- Changes in v2:
-   - add more description for min/max sysfs nodes.
-   - convert values from volt to millivolt in the document.
+On Wed, Nov 18, 2020 at 01:11:42PM -0800, Patrick Venture wrote:
 
- Documentation/hwmon/index.rst  |  1 +
- Documentation/hwmon/max127.rst | 45 ++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
- create mode 100644 Documentation/hwmon/max127.rst
+Hi Patrick.
 
-diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index 408760d13813..0a07b6000c20 100644
---- a/Documentation/hwmon/index.rst
-+++ b/Documentation/hwmon/index.rst
-@@ -111,6 +111,7 @@ Hardware Monitoring Kernel Drivers
-    ltc4245
-    ltc4260
-    ltc4261
-+   max127
-    max16064
-    max16065
-    max1619
-diff --git a/Documentation/hwmon/max127.rst b/Documentation/hwmon/max127.rst
-new file mode 100644
-index 000000000000..dc192dd9c37c
---- /dev/null
-+++ b/Documentation/hwmon/max127.rst
-@@ -0,0 +1,45 @@
-+.. SPDX-License-Identifier: GPL-2.0-or-later
-+
-+Kernel driver max127
-+====================
-+
-+Author:
-+
-+  * Tao Ren <rentao.bupt@gmail.com>
-+
-+Supported chips:
-+
-+  * Maxim MAX127
-+
-+    Prefix: 'max127'
-+
-+    Datasheet: https://datasheets.maximintegrated.com/en/ds/MAX127-MAX128.pdf
-+
-+Description
-+-----------
-+
-+The MAX127 is a multirange, 12-bit data acquisition system (DAS) providing
-+8 analog input channels that are independently software programmable for
-+a variety of ranges. The available ranges are {0,5V}, {0,10V}, {-5,5V}
-+and {-10,10V}.
-+
-+The MAX127 features a 2-wire, I2C-compatible serial interface that allows
-+communication among multiple devices using SDA and SCL lines.
-+
-+Sysfs interface
-+---------------
-+
-+  ============== ==============================================================
-+  in[0-7]_input  The input voltage (in mV) of the corresponding channel.
-+		 RO
-+
-+  in[0-7]_min    The lower input limit (in mV) for the corresponding channel.
-+		 ADC range and LSB will be updated when the limit is changed.
-+		 For the MAX127, it will be adjusted to -10000, -5000, or 0.
-+		 RW
-+
-+  in[0-7]_max    The higher input limit (in mV) for the corresponding channel.
-+		 ADC range and LSB will be updated when the limit is changed.
-+		 For the MAX127, it will be adjusted to 0, 5000, or 10000.
-+		 RW
-+  ============== ==============================================================
--- 
-2.17.1
+> Patrick;
+>=20
+> I was looking at a patch series of yours that landed,
+> https://github.com/qemu/qemu/blob/master/hw/arm/aspeed.c#L517 <-- in
+> this line you're referencing a device that appears to be missing from
+> qemu - namely, the pca i2c mux.
+>=20
+> My question is to the community at large, and you also, is anyone
+> currently implementing this i2c-mux or a similar one?
 
+Timely question.
+
+I don't know of any current work going on in that space.
+
+Facebook has a hack-a-thon kind of event we are sponsoring at a local
+university this weekend and that was one of the projects I gave as a
+potential item.  So, maybe, if we're lucky, it'll be done by Monday.
+
+I'll keep you posted.
+
+--=20
+Patrick Williams
+
+--G4iJoqBmSsgzjUCe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl+1qbEACgkQqwNHzC0A
+wRkzsw/+NaLZSmO9TnxZacXnxwbe+Yp4zSPuJ83kiXdY18C6EUoxRHPfd86gL8YA
+f6rQ3fXXUmBNcq8frUVZfLt/MOaybqUKhmUnSqvdpeU5P3eSN9aCac3WLcSIcPn0
+zZ4+wht0n0G+4xB3lUPbG16gO+pAGFXMtX8rEfVcxhNFY4PiYn0uEtXd1oZ9+3TA
+hbR7NOC1GxGMT9zmlTynqafUjhtuLd26DC5lI/szGeiUv3kXPbN/APfFOyKgAbnG
+92S0O5AtwwsGudETLwpu/6LAM847NIGx/fbG+bjRapStAzyBHkfspU4zuAbAEkfj
+IYVvqk4l2Lc3mT4Q6TJ/vUQJmgeciajuaVZuH4WMvyaz6eJAKSdKSQ4VsvnjbGil
+WDynzrdq4qyGjl7xxcRh+YKWtbbplzgwgpjpMG/PoSiJd1opxMnUX1ArVCtIKrrD
+my09Lks8tRSAch97Gvwgu5iYZhdWRpPiBbDFQY99/oKjP7wgqgsKSMIra9+DVVGz
+E+9c0JMOYZHTG2s58/is0hDAshs79gWGwJ+BMd70rYGH6enf1PmGuW/PVEpQy/RO
+FknUxSpA0T50YDn0kKfH0hygS3KNcaC4cLqFBX1d4Vt41SZ8xGu1fVUBbLiiNHkW
+KYQXG2wC7Yb3ocTAQzTwBIPTBTfsWGEwlnhXihc/l5l5D6iZlwQ=
+=c2b8
+-----END PGP SIGNATURE-----
+
+--G4iJoqBmSsgzjUCe--
