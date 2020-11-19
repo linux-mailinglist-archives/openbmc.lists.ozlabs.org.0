@@ -1,60 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40BEA2BA204
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:45:07 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50D2B2BA205
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:46:26 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cclr021M7zDqxB
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:45:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CclsW2GBPzDqxg
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:46:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=178.32.125.2;
- helo=smtpout1.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
+ smtp.mailfrom=redhat.com (client-ip=216.205.24.124;
+ helo=us-smtp-delivery-124.mimecast.com; envelope-from=brouer@redhat.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=kaod.org
-Received: from smtpout1.mo529.mail-out.ovh.net
- (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
+ dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256
+ header.s=mimecast20190719 header.b=LGJcQBr5; 
+ dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com
+ header.a=rsa-sha256 header.s=mimecast20190719 header.b=LGJcQBr5; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [216.205.24.124])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcBT66mQgzDqfV
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 18:41:37 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.138.5])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id B04BA6D386B6;
- Thu, 19 Nov 2020 08:41:26 +0100 (CET)
-Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Thu, 19 Nov
- 2020 08:41:25 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G0064baacd70-7623-478f-986e-1c641961a797,
- E384B0115CE10CD8AABDB3449FE8426D60218A12) smtp.auth=clg@kaod.org
-Subject: Re: qemu for bmc
-To: Patrick Venture <venture@google.com>, Patrick Williams
- <patrick@stwcx.xyz>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, John Wang
- <wangzhiqiang.bj@bytedance.com>, Joel Stanley <joel@jms.id.au>, Andrew
- Jeffery <andrew@aj.id.au>
-References: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-Message-ID: <e605bae4-b17a-b383-62a9-7594b57f7245@kaod.org>
-Date: Thu, 19 Nov 2020 08:41:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CcQKb4ZX3zDqkq
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 03:35:56 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1605803753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rmz4vMCo9cJbvNaKXKHUnIBAy5VUu+3pBNzGePwX/CQ=;
+ b=LGJcQBr5v4/qtQY4U20Y3P1ZzzIIcmQAvmcArL7LT3uiqZN3xX3TnZkT04DCNyZZky7vhr
+ kEpWlxATej7TV53dtKKBvKtVvGJGA9JN+nDF/KKJk3lopuV67cXZ+r73FRG9zHqxP2pThZ
+ xuNJEkf7/yp3RmIIZxp28ZhWetj7pqc=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1605803753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rmz4vMCo9cJbvNaKXKHUnIBAy5VUu+3pBNzGePwX/CQ=;
+ b=LGJcQBr5v4/qtQY4U20Y3P1ZzzIIcmQAvmcArL7LT3uiqZN3xX3TnZkT04DCNyZZky7vhr
+ kEpWlxATej7TV53dtKKBvKtVvGJGA9JN+nDF/KKJk3lopuV67cXZ+r73FRG9zHqxP2pThZ
+ xuNJEkf7/yp3RmIIZxp28ZhWetj7pqc=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-361-5cgFMGosMYiOELAYXE56dw-1; Thu, 19 Nov 2020 11:35:48 -0500
+X-MC-Unique: 5cgFMGosMYiOELAYXE56dw-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com
+ [10.5.11.11])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id A21D91005D5F;
+ Thu, 19 Nov 2020 16:35:44 +0000 (UTC)
+Received: from carbon (unknown [10.36.110.8])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 8BD6B60636;
+ Thu, 19 Nov 2020 16:35:36 +0000 (UTC)
+Date: Thu, 19 Nov 2020 17:35:35 +0100
+From: Jesper Dangaard Brouer <brouer@redhat.com>
+To: Jakub Kicinski <kuba@kernel.org>, Joe Perches <joe@perches.com>
+Subject: XDP maintainer match (Was  [PATCH v2 0/2] hwmon: (max127) Add Maxim
+ MAX127 hardware monitoring)
+Message-ID: <20201119173535.1474743d@carbon>
+In-Reply-To: <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+References: <20201118230929.18147-1-rentao.bupt@gmail.com>
+ <20201118232719.GI1853236@lunn.ch>
+ <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
+ <20201119010119.GA248686@roeck-us.net>
+ <20201119012653.GA249502@roeck-us.net>
+ <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
 MIME-Version: 1.0
-In-Reply-To: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG7EX1.mxp5.local (172.16.2.61) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 9f10386f-d09e-416f-8886-adcea543640e
-X-Ovh-Tracer-Id: 2424625450738944806
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedujedrudefiedguddtlecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefuvfhfhffkffgfgggjtgfgihesthejredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpefggeehhfdtkefhteeghfeghefgudfhteevteeltefgffevhfeggeffhfevleelfeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpqdhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdprhgtphhtthhopehvvghnthhurhgvsehgohhoghhlvgdrtghomh
+X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
 X-Mailman-Approved-At: Fri, 20 Nov 2020 16:41:21 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -67,50 +89,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
+ Jean Delvare <jdelvare@suse.com>, Jesper Dangaard Brouer <hawk@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
+ linux-kernel@vger.kernel.org, taoren@fb.com, brouer@redhat.com,
+ Tao Ren <rentao.bupt@gmail.com>, bpf@vger.kernel.org, mikechoi@fb.com,
+ "David S .
+ Miller" <davem@davemloft.net>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+On Thu, 19 Nov 2020 07:46:34 -0800
+Jakub Kicinski <kuba@kernel.org> wrote:
 
-On 11/18/20 10:11 PM, Patrick Venture wrote:
-> Patrick;
+> On Wed, 18 Nov 2020 17:26:53 -0800 Guenter Roeck wrote:
+> > On Wed, Nov 18, 2020 at 05:01:19PM -0800, Guenter Roeck wrote:  
+> > > On Wed, Nov 18, 2020 at 03:42:53PM -0800, Tao Ren wrote:    
+> > > > On Thu, Nov 19, 2020 at 12:27:19AM +0100, Andrew Lunn wrote:    
+> > > > > On Wed, Nov 18, 2020 at 03:09:27PM -0800, rentao.bupt@gmail.com wrote:    
+> > > > > > From: Tao Ren <rentao.bupt@gmail.com>
+> > > > > > 
+> > > > > > The patch series adds hardware monitoring driver for the Maxim MAX127
+> > > > > > chip.    
+> > > > > 
+> > > > > Hi Tao
+> > > > > 
+> > > > > Why are using sending a hwmon driver to the networking mailing list?
+> > > > > 
+> > > > >     Andrew    
+> > > > 
+> > > > Hi Andrew,
+> > > > 
+> > > > I added netdev because the mailing list is included in "get_maintainer.pl
+> > > > Documentation/hwmon/index.rst" output. Is it the right command to find
+> > > > reviewers? Could you please suggest? Thank you.    
+> > > 
+> > > I have no idea why running get_maintainer.pl on
+> > > Documentation/hwmon/index.rst returns such a large list of mailing
+> > > lists and people. For some reason it includes everyone in the XDP
+> > > maintainer list. If anyone has an idea how that happens, please
+> > > let me know - we'll want to get this fixed to avoid the same problem
+> > > in the future.  
+> > 
+> > I found it. The XDP maintainer entry has:
+> > 
+> > K:    xdp
+> > 
+> > This matches Documentation/hwmon/index.rst.
+> > 
+> > $ grep xdp Documentation/hwmon/index.rst
+> >    xdpe12284
+> > 
+> > It seems to me that a context match such as "xdp" in MAINTAINERS isn't
+> > really appropriate. "xdp" matches a total of 348 files in the kernel.
+> > The large majority of those is not XDP related. The maintainers
+> > of XDP (and all the listed mailing lists) should not be surprised
+> > to get a large number of odd review requests if they want to review
+> > every single patch on files which include the term "xdp".  
 > 
-> I was looking at a patch series of yours that landed,
-> https://github.com/qemu/qemu/blob/master/hw/arm/aspeed.c#L517 <-- in
-> this line you're referencing a device that appears to be missing from
-> qemu - namely, the pca i2c mux.
+> Agreed, we should fix this. For maintainers with high patch volume life
+> would be so much easier if people CCed the right folks to get reviews,
+> so we should try our best to fix get_maintainer.
 > 
-> My question is to the community at large, and you also, is anyone
-> currently implementing this i2c-mux or a similar one?
+> XDP folks, any opposition to changing the keyword / filename to:
+> 
+> 	[^a-z0-9]xdp[^a-z0-9]
+> 
+> ?
 
-I haven't seen any patches for this device on the QEMU mailing 
-list.
+I think it is a good idea to change the keyword (K:), but I'm not sure
+this catch what we want, maybe it does.  The pattern match are meant to
+catch drivers containing XDP related bits.
 
-John Wang from Bytedance has started developing some new I2C 
-device models for their G220A board. We hope to get that merged 
-in 6.0.
+Previously Joe Perches <joe@perches.com> suggested this pattern match,
+which I don't fully understand... could you explain Joe?
 
-If you are interested, we maintain a brief TODO list here
+  (?:\b|_)xdp(?:\b|_)
 
-  https://github.com/openbmc/qemu/wiki
+For the filename (N:) regex match, I'm considering if we should remove
+it and list more files explicitly.  I think normal glob * pattern
+works, which should be sufficient.
 
-Feel free to update. 
+-- 
+Best regards,
+  Jesper Dangaard Brouer
+  MSc.CS, Principal Kernel Engineer at Red Hat
+  LinkedIn: http://www.linkedin.com/in/brouer
 
-
-In terms of priority, I think that the support to boot from eMMC 
-on the AST2600 is an important one. Reviewing the FSI patches 
-also but that's an IBM thing, so it might not interest the 
-community that much.
-
-There are quite a few I2C models missing. 
-
-All Aspeed models could be more precise. 
-
-
-Google and Nuvoton have merged their models for the npcm750-evb 
-and quanta-gsj boards. It would be good to have some interaction
-with them, on bus/device modeling but also on full system emulation.
-
-Cheers,
-
-C.
