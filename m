@@ -1,90 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2C662B9918
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 18:15:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4409C2B9A0E
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 18:54:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CcRBX521TzDqml
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 04:15:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CcS4M2mFwzDqpJ
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 04:54:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::443;
+ helo=mail-pf1-x443.google.com; envelope-from=rentao.bupt@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=m/nEh5V6; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=EUXaa1+d; dkim-atps=neutral
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com
+ [IPv6:2607:f8b0:4864:20::443])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcR9g0s2HzDqmh
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 04:14:14 +1100 (AEDT)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0AJH3O2W144198
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 12:14:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : subject :
- from : to : date : mime-version : references : content-transfer-encoding :
- content-type : message-id; s=pp1;
- bh=nSQj5aMbORFAoriv1LDa+6pY5NpP3hLKbM5bibhJ0HM=;
- b=m/nEh5V64oNqAYaqV9oj6ANztwG+uZQnBJsrm19EdjBsnNV7+Sk1MeqgVPmwcxFrhw5H
- JwWy54g4jY6BMgqFWA25H/5zwijcGlezSBzhpY0+Sz5VEODAfcL+2b89umpIlItytMkN
- qpDuPSu3tf8NmHMGlVfrrne3KarNDllH4mcUKbc2ehZfABo0ZqFxWCDi06XJn15NZ+uq
- wVgy2TCZGkygbojctpi+zj7fqNnr1x9tmbxHMap6sKYAoR/BP9jx35Ml52IPm/XA8kET
- n8RPo7GmHpUDFsPatlLkh6f7ZGJ4muAc5YINLMea6D2XOWb/23GulwX23ibzPumUG4W5 jw== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.114])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34wg136y73-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 12:14:10 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Thu, 19 Nov 2020 17:14:10 -0000
-Received: from us1b3-smtp05.a3dr.sjc01.isc4sb.com (10.122.203.183)
- by smtp.notes.na.collabserv.com (10.122.47.58) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 19 Nov 2020 17:14:09 -0000
-Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
- by us1b3-smtp05.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020111917140867-622832 ;
- Thu, 19 Nov 2020 17:14:08 +0000 
-In-Reply-To: 
-Subject: GUI Design Work Group - Wednesday11/25
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Date: Thu, 19 Nov 2020 17:14:08 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: 
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 15907
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20111917-1639-0000-0000-000003074357
-X-IBM-SpamModules-Scores: BY=0.000001; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.415652; ST=0; TS=0; UL=0; ISC=; MB=0.000011
-X-IBM-SpamModules-Versions: BY=3.00014217; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01466119; UDB=6.00789241; IPR=6.01248757; 
- MB=3.00035120; MTD=3.00000008; XFM=3.00000015; UTC=2020-11-19 17:14:09
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-11-19 08:37:28 - 6.00012071
-x-cbparentid: 20111917-1640-0000-0000-0000C7E14562
-Message-Id: <OF8B9C9502.B727E6AE-ON00258625.005EADD1-00258625.005EADD6@notes.na.collabserv.com>
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-19_09:2020-11-19,
- 2020-11-19 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CcS360FW6zDqcQ
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 04:53:37 +1100 (AEDT)
+Received: by mail-pf1-x443.google.com with SMTP id a18so5209722pfl.3
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 09:53:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id;
+ bh=Q5bokItvl+fmuIZW/0y8NwDSrtKawLhWKURQ2+FWucA=;
+ b=EUXaa1+dR5q61YJ40WibXLDQtMqjkX2z3HUPNxZCT4F0baHJnL4zDsSFOkfKHK7gEt
+ x9BUpxhQo3dAQ9WrWmssEC5Ntrgu8Eg1fudHqtbpRvgrfuE20rdjVHJtSQ3cXgPe/Ykm
+ A5W+9KONVdkO4ETFuaZDyE4DQCPQnhj7iM4EMMUzmXfLsSK1GCYA+JqJuCNV5Baydt3R
+ s0RkufpD308s5/h3HHxHG4Ly2Gy8m3qfzuKdhLmIFfFZmQkDgMRQ+P4OmtSw1LOmYZEv
+ t5EJuTzTDyQbelOQZs8gvgy2AsuMRaapOPwJPVLZzmpcGxiayd+bASsj7a3A9jSOX5Vp
+ WAlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=Q5bokItvl+fmuIZW/0y8NwDSrtKawLhWKURQ2+FWucA=;
+ b=S7xY0kVSzN/B3kZqJYbrj/N1tCoTCHw+wez32diAIW7DqUu+E8Cx3je29c3Z6Bhu9n
+ LPN+sR5lVS/68PN7UP00IX8/8zPebdhaf7qsFOVfS1FESW8vop4WBgGtvpyUlf6Z037k
+ qvxHZExdyAF3DDmIbAphORRgnOVOKs3CypYWSgnMMleJbQOkl2rhlpW/FgGfMG7/6DJJ
+ Md0KGhiDzcjf07uzNuo7Pi/ehukPFtK67MfmDRkixGdMGKeOgy4zcCPM6POgNtEBIdIi
+ 1EhUyYY25lrdQ6I9p3dhwFPhNYsnS1mq1mJPgOpOe7I1OQrHQHQykYcsAUxXj9XVKl01
+ TizA==
+X-Gm-Message-State: AOAM530bxApERmRXv40AM4rsVXOjLPdyH7C+bTwWqkv7GQvcBH62tbd5
+ 5AhvfBYsqy9OxTXTMBr8034=
+X-Google-Smtp-Source: ABdhPJzpp2pD+waX4s/GGGEVKwpsDvaGKkli/44tFNmwJvveZ6gIWvD46Y+t/gxjlnuxyxifYbo7hQ==
+X-Received: by 2002:aa7:9198:0:b029:18b:3835:3796 with SMTP id
+ x24-20020aa791980000b029018b38353796mr10893256pfa.9.1605808413518; 
+ Thu, 19 Nov 2020 09:53:33 -0800 (PST)
+Received: from taoren-ubuntu-R90MNF91.thefacebook.com
+ (c-73-252-146-110.hsd1.ca.comcast.net. [73.252.146.110])
+ by smtp.gmail.com with ESMTPSA id 144sm482858pfb.71.2020.11.19.09.53.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Nov 2020 09:53:32 -0800 (PST)
+From: rentao.bupt@gmail.com
+To: Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
+ Jonathan Corbet <corbet@lwn.net>, linux-hwmon@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, taoren@fb.com, mikechoi@fb.com
+Subject: [PATCH v3 0/2] hwmon: (max127) Add Maxim MAX127 hardware monitoring
+Date: Thu, 19 Nov 2020 09:53:22 -0800
+Message-Id: <20201119175324.22472-1-rentao.bupt@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,20 +77,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Tao Ren <rentao.bupt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello!
+From: Tao Ren <rentao.bupt@gmail.com>
 
-Next weeks work group falls the day before a U.S. holiday and there will be
-many people off this week from the IBM team, including myself. Is anyone
-opposed to cancelling this work group?
+The patch series adds hardware monitoring driver for the Maxim MAX127
+chip.
 
-If so, please let me know so we can decide on the host and what webex
-to use for the meeting.
+Patch #1 adds the max127 hardware monitoring driver, and patch #2 adds
+documentation for the driver.
 
-Thank you!
-=20
-Derick Montague
-IBM Cognitive Systems User Experience
+Resending the patch series (v3) with XDP maintainers removed from to/cc
+list to reduce noise.
+
+Tao Ren (2):
+  hwmon: (max127) Add Maxim MAX127 hardware monitoring driver
+  docs: hwmon: Document max127 driver
+
+ Documentation/hwmon/index.rst  |   1 +
+ Documentation/hwmon/max127.rst |  45 +++++
+ drivers/hwmon/Kconfig          |   9 +
+ drivers/hwmon/Makefile         |   1 +
+ drivers/hwmon/max127.c         | 346 +++++++++++++++++++++++++++++++++
+ 5 files changed, 402 insertions(+)
+ create mode 100644 Documentation/hwmon/max127.rst
+ create mode 100644 drivers/hwmon/max127.c
+
+-- 
+2.17.1
 
