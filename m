@@ -2,76 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3E9B2B888F
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 00:44:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B1CE2B8908
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 01:29:37 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cbzsq42JDzDqZl
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 10:43:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cc0tQ3CMDzDqdL
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 11:29:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::642;
- helo=mail-pl1-x642.google.com; envelope-from=rentao.bupt@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::835;
+ helo=mail-qt1-x835.google.com; envelope-from=venture@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=tnAh4sgF; dkim-atps=neutral
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com
- [IPv6:2607:f8b0:4864:20::642])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=XQGfd63C; dkim-atps=neutral
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com
+ [IPv6:2607:f8b0:4864:20::835])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cbzrq6BBTzDqDT
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 10:43:03 +1100 (AEDT)
-Received: by mail-pl1-x642.google.com with SMTP id l11so1920624plt.1
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 15:43:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:in-reply-to:user-agent;
- bh=my77lXxheR/soSpdh9NtnHrImMTbEyo5ey9OXT+ydGM=;
- b=tnAh4sgFOOfGkBrOhj0wq7o24G5C2JBdHz8gB2janp1zIdppJcfsfSo5ADiD9HzKDl
- ONZNEFStlL8hh76GqoHm/4CAwwl+HJt5VzZL8tDtMxOMT3LhJYcUsitgMWkCVRJ8yjEf
- 1jhUWZZHz+GDT67wqy6W60n91buKwZge4mA4GDkpOh0Djdxr56f+WihxbU/k3CJ+BiTY
- JWyLmz412BGJ4/B6LC7onGP7RBqLxTu4ZOBgzcH0NxQcdRJMFXPHFOw/C0viRZksJ/LJ
- d9chJReG3R7wSGiY4WBkAxjzwyS7X29/6eI7xxLoy0wJrmI/hBlilbvYsQZJfO0rk+tI
- hYNQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cc0sc5pHmzDqd7
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 11:28:49 +1100 (AEDT)
+Received: by mail-qt1-x835.google.com with SMTP id b16so3168185qtb.6
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 16:28:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=7Rj/3u61GwJewIt5QiSHLQ+sghdPXsVyvkkqIrW9how=;
+ b=XQGfd63Cr0bhSyDyvnNv2YgD8sLfJZcJpH3oZo5Q1rEEIzO0zDQRxrKE+k/wKNtcu0
+ jfSyGrgtE5Vogy1P7c3Q37wO+6kkgMtAqH3F0t8EazMJccDe3SZKGZ3nKyKR+znsQ1+E
+ YmAPkRvd2Ok/L52rcUPtMr95qh+EEYfnLwfsRczg5HfrC06R7enMzHShdMo1ZKrVJ0M7
+ T0S9PrO8Ir/9FIjpNW0ZZlDfNQHsVVSKeY9mbHS5w6xJkq/LavRCcIp2rBbKgdWdO0o1
+ 0AQU/WfQsm01MgbQf8xv8rbVMLupklcaOxxUE/+6uo0KkCACghQHroODE+BiqYysWO7p
+ Ch4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to:user-agent;
- bh=my77lXxheR/soSpdh9NtnHrImMTbEyo5ey9OXT+ydGM=;
- b=pMDKt9w+upSqeT/+K23Wc7OPE7TysYUtrnf6hdB8OFMCtkcy9V+RGJuDO8GOmGGLt+
- amtea9cUV1MwqCYwq9v9uXrPKkSspkM6QEmajw6vgQV8e2Zs75qCLVx3/cEHoZ/Fafoj
- shTsxb47zRre46w7OXXE4byC8pACaVMBixvqEE2mrMpMEyKhCe3hKKoegBfwkAfF7R41
- Qn3o5+/1w7/kvJj5ZTUCAZOD34iqcUyybDkYjgei+MtkstYBPcRc7d1p7Ti6E+goxT5s
- DtIgd+J0vpjLEfN2yscWZ1ShLt00uzauFNeEPyZUsdDDIyySK6M33ivuUpC2FvFMLq88
- /n1w==
-X-Gm-Message-State: AOAM531A35Jxtxu60+97i2qp5iaQ81tmZz42fSXp7NlMGLCpG0T0VTMS
- gD62JgdBNz2bTM9C3K2HzH4=
-X-Google-Smtp-Source: ABdhPJytJ5WdKQGVNxK7E32i8LxD6oXuriCVok63jK7EZZaQ2Zuy/LgRsVqR4sm4/WK/Gf/JM4D7nA==
-X-Received: by 2002:a17:902:b410:b029:d6:614b:679c with SMTP id
- x16-20020a170902b410b02900d6614b679cmr6512221plr.79.1605742981128; 
- Wed, 18 Nov 2020 15:43:01 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
- [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id g14sm28970005pfk.90.2020.11.18.15.42.59
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Wed, 18 Nov 2020 15:43:00 -0800 (PST)
-Date: Wed, 18 Nov 2020 15:42:53 -0800
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH v2 0/2] hwmon: (max127) Add Maxim MAX127 hardware
- monitoring
-Message-ID: <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
-References: <20201118230929.18147-1-rentao.bupt@gmail.com>
- <20201118232719.GI1853236@lunn.ch>
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=7Rj/3u61GwJewIt5QiSHLQ+sghdPXsVyvkkqIrW9how=;
+ b=Al8dMAx9eY4B2Rt7piKy4M5CrgX42B7KczXHB3ELDPLDaGIN1D9dtKYZoSUBp4Cd7L
+ FunQAgLb4lx6C3vRhJVjBLjgX/DIo6HqlSGQ29HWjCbjCPQsiKCYeHBzVOphXrpYlU8v
+ JZ3dX4eT9iDrBVY7fhSnZZ9ZSrr887FfNKCs3Udp92XQvOK3RB0EW6Mw4/UMtogeoHgv
+ 9YSfnZFvzU62cBBdpuzvaPeeY//FP4BZm/72vvn1fP8RPwmJ9ONFwINh+RlzBj6kh9Vn
+ A18X5yv+DoOn3UQ7J/8ZTR1i0AU26DCybVN1vL5SXvhAwWSxP5aTXGDwYyKvRHKJqU1G
+ m2Rg==
+X-Gm-Message-State: AOAM532B2FgXimauIgrdGlUrPPX8aymDGFOhQoFVUk/Ecmoj/COAyrWj
+ gs4EF34RvSliFfUlMSsSpIiHep3xP+mF/KRsAc9EVg==
+X-Google-Smtp-Source: ABdhPJyZ5lD+SC3WZ3ZZ2pkZF9SU07kMK06ZvV0rog9s2RPwgeKFteWZuJub8hkvOLwdSnHBXIaoZioMp63mqUG0ilw=
+X-Received: by 2002:ac8:36bc:: with SMTP id a57mr7849560qtc.193.1605745725718; 
+ Wed, 18 Nov 2020 16:28:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201118232719.GI1853236@lunn.ch>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <5af426cdbf754c2d898d37d7f591464d@SCL-EXCHMB-13.phoenix.com>
+In-Reply-To: <5af426cdbf754c2d898d37d7f591464d@SCL-EXCHMB-13.phoenix.com>
+From: Patrick Venture <venture@google.com>
+Date: Wed, 18 Nov 2020 16:28:34 -0800
+Message-ID: <CAO=notxPWFReD04Rmqgnitot6VP6aEKLRmKyM4gce1s4VgQ_nw@mail.gmail.com>
+Subject: Re: Failure building burn_my_bmc
+To: Patrick Voelker <Patrick_Voelker@phoenix.com>,
+ William Kennington <wak@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,37 +73,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- Jesper Dangaard Brouer <hawk@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
- netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
- linux-kernel@vger.kernel.org, taoren@fb.com, Jakub Kicinski <kuba@kernel.org>,
- bpf@vger.kernel.org, mikechoi@fb.com, "David S . Miller" <davem@davemloft.net>,
- Guenter Roeck <linux@roeck-us.net>
+Cc: "OpenBMC \(openbmc@lists.ozlabs.org\)" <openbmc@lists.ozlabs.org>,
+ "anoo@us.ibm.com" <anoo@us.ibm.com>,
+ "brandonkim@google.com" <brandonkim@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Nov 19, 2020 at 12:27:19AM +0100, Andrew Lunn wrote:
-> On Wed, Nov 18, 2020 at 03:09:27PM -0800, rentao.bupt@gmail.com wrote:
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > The patch series adds hardware monitoring driver for the Maxim MAX127
-> > chip.
-> 
-> Hi Tao
-> 
-> Why are using sending a hwmon driver to the networking mailing list?
-> 
->     Andrew
+On Wed, Nov 18, 2020 at 3:18 PM Patrick Voelker
+<Patrick_Voelker@phoenix.com> wrote:
+>
+> I'm having an issue building burn_my_bmc with the instructions listed on https://github.com/openbmc/phosphor-ipmi-flash . Got through building all the dependencies but I get the following errors when building
+pci.cpp.  Looks like maybe stdplus changed?
 
-Hi Andrew,
+William, PTAL, thanks!
 
-I added netdev because the mailing list is included in "get_maintainer.pl
-Documentation/hwmon/index.rst" output. Is it the right command to find
-reviewers? Could you please suggest? Thank you.
-
-
-Cheers,
-
-Tao
+>
+> pvoelker@bmc-dev:~/bmc/host-tool/phosphor-ipmi-flash$ make
+> make  all-recursive
+> make[1]: Entering directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> Making all in .
+> make[2]: Entering directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+>   CXX      internal/libfirmware_common_la-sys.lo
+>   CXXLD    libfirmware_common.la
+> ar: `u' modifier ignored since `D' is the default (see `U')
+> make[2]: Leaving directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> Making all in tools
+> make[2]: Entering directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> Making all in .
+> make[3]: Entering directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+>   CXX      libupdater_la-updater.lo
+>   CXX      libupdater_la-handler.lo
+>   CXX      libupdater_la-helper.lo
+>   CXX      libupdater_la-bt.lo
+>   CXX      libupdater_la-lpc.lo
+>   CXX      libupdater_la-io.lo
+>   CXX      libupdater_la-net.lo
+>   CXX      libupdater_la-pci.lo
+> In file included from pci.cpp:17:0:
+> pci.hpp:40:39: error: 'span' in namespace 'stdplus' does not name a template type
+>      virtual void write(const stdplus::span<const std::uint8_t> data) = 0;
+>                                        ^~~~
+> pci.hpp:40:43: error: expected ',' or '...' before '<' token
+>      virtual void write(const stdplus::span<const std::uint8_t> data) = 0;
+>                                            ^
+> pci.hpp:51:39: error: 'span' in namespace 'stdplus' does not name a template type
+>      virtual void write(const stdplus::span<const std::uint8_t> data) override;
+>                                        ^~~~
+> pci.hpp:51:43: error: expected ',' or '...' before '<' token
+>      virtual void write(const stdplus::span<const std::uint8_t> data) override;
+>                                            ^
+> pci.cpp:105:44: error: 'span' in namespace 'stdplus' does not name a template type
+>  void PciAccessBridge::write(const stdplus::span<const std::uint8_t> data)
+>                                             ^~~~
+> pci.cpp:105:48: error: expected ',' or '...' before '<' token
+>  void PciAccessBridge::write(const stdplus::span<const std::uint8_t> data)
+>                                                 ^
+> pci.cpp: In member function 'virtual void host_tool::PciAccessBridge::write(int)':
+> pci.cpp:107:9: error: 'data' was not declared in this scope
+>      if (data.size() > dataLength)
+>          ^~~~
+> pci.cpp:107:9: note: suggested alternatives:
+> In file included from /usr/include/c++/7/string:51:0,
+>                  from /usr/include/c++/7/stdexcept:39,
+>                  from /usr/include/c++/7/system_error:41,
+>                  from ../internal/sys.hpp:19,
+>                  from pci.hpp:20,
+>                  from pci.cpp:17:
+> /usr/include/c++/7/bits/range_access.h:318:5: note:   'std::data'
+>      data(initializer_list<_Tp> __il) noexcept
+>      ^~~~
+> In file included from pci.cpp:26:0:
+> /usr/local/include/fmt/format.h:952:8: note:   'fmt::v7::detail::data'
+>  struct data : basic_data<> {};
+>         ^~~~
+> pci.cpp:114:36: error: 'data' was not declared in this scope
+>      std::memcpy(addr + dataOffset, data.data(), data.size());
+>                                     ^~~~
+> pci.cpp:114:36: note: suggested alternatives:
+> In file included from /usr/include/c++/7/string:51:0,
+>                  from /usr/include/c++/7/stdexcept:39,
+>                  from /usr/include/c++/7/system_error:41,
+>                  from ../internal/sys.hpp:19,
+>                  from pci.hpp:20,
+>                  from pci.cpp:17:
+> /usr/include/c++/7/bits/range_access.h:318:5: note:   'std::data'
+>      data(initializer_list<_Tp> __il) noexcept
+>      ^~~~
+> In file included from pci.cpp:26:0:
+> /usr/local/include/fmt/format.h:952:8: note:   'fmt::v7::detail::data'
+>  struct data : basic_data<> {};
+>         ^~~~
+> Makefile:654: recipe for target 'libupdater_la-pci.lo' failed
+> make[3]: *** [libupdater_la-pci.lo] Error 1
+> make[3]: Leaving directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> Makefile:708: recipe for target 'all-recursive' failed
+> make[2]: *** [all-recursive] Error 1
+> make[2]: Leaving directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> Makefile:608: recipe for target 'all-recursive' failed
+> make[1]: *** [all-recursive] Error 1
+> make[1]: Leaving directory '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> Makefile:474: recipe for target 'all' failed
+> make: *** [all] Error 2
+>
