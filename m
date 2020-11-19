@@ -2,57 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3DA12B9A3C
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 19:00:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B93F12B9ACC
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 19:41:35 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CcSBy46zLzDqsl
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 05:00:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CcT6N3q5kzDqpG
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 05:41:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=kuba@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::142;
+ helo=mail-il1-x142.google.com; envelope-from=benjaminfair@google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=default header.b=v4ZtqpY2; dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=C6mhW7KC; dkim-atps=neutral
+Received: from mail-il1-x142.google.com (mail-il1-x142.google.com
+ [IPv6:2607:f8b0:4864:20::142])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcS9x28yFzDqsG
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 04:59:33 +1100 (AEDT)
-Received: from kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net (unknown
- [163.114.132.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 382EC2225B;
- Thu, 19 Nov 2020 17:59:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=default; t=1605808770;
- bh=Ta3tsz+YYOgNDaVSrDSReSog0hdPUxrDoz7tjhPgBp8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=v4ZtqpY2LAz/9Nfm6jgZ5XJMCJesqYR/Z4WxVWn3ygJvWBVacjqbC2MVHDaO5xuuV
- KHOQFQoHiIvHJ3UeOFKgiRAX5aVTwFGJ4B5NeinELaVuWGB3/aMAetQHqBghFvPb03
- xS+00bjvrJE6FVTSlRLcXq9sfIhkgFS9Elb6L0wg=
-Date: Thu, 19 Nov 2020 09:59:28 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Joe Perches <joe@perches.com>
-Subject: Re: XDP maintainer match (Was  [PATCH v2 0/2] hwmon: (max127) Add
- Maxim MAX127 hardware monitoring)
-Message-ID: <20201119095928.01fd10e0@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-In-Reply-To: <088057533a9feb330964bdab0b1b8d2f69b7a22c.camel@perches.com>
-References: <20201118230929.18147-1-rentao.bupt@gmail.com>
- <20201118232719.GI1853236@lunn.ch>
- <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
- <20201119010119.GA248686@roeck-us.net>
- <20201119012653.GA249502@roeck-us.net>
- <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
- <20201119173535.1474743d@carbon>
- <088057533a9feb330964bdab0b1b8d2f69b7a22c.camel@perches.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CcT5J5tsMzDqnR
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 05:40:31 +1100 (AEDT)
+Received: by mail-il1-x142.google.com with SMTP id l12so6305053ilo.1
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 10:40:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=PvBOcBzyg+eaLhpr35x3ip38QjdZlKmVc5mM+8taPHE=;
+ b=C6mhW7KCNFK2+hF2yTFbwgR4Hb2BSiSkENk1iQgAHCifiyZwkapsVC6SULC6UZ5/5Q
+ MuxYOBRSLZ2fOcfQyIMgYaJXGn+LgYjGrkIaQNPr6qyDRYr4ITWlcE0SLbBGZbhJXwwS
+ hWzTlYMWnMHUTXTprJASQTlPO6Pf0h6kpIYdVbDvAqCepDAl3g2S5TVAIoPWPB6wQcLw
+ QhD3yYh6J0USuXo7o3gIYzhPHFpc22mK0CNSwTGssQ405lzyGfS31oq5WZxKiTjJoc70
+ 02FuPV42opH7PSClyZSKhr+0bPC71r0TnddDkAKLNpk0xZvUhGR0PGCH13Q7WQBC6aJU
+ AHUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=PvBOcBzyg+eaLhpr35x3ip38QjdZlKmVc5mM+8taPHE=;
+ b=KU7niIP6U88jhVj+1R1t6NdY2Mn6C+mq6run1LAQnHO3YtgW6f+2EbAeoigjGhg0fU
+ vWrFx1atjq2qxsCt1bVEpcx9G8HpqIeN3dk+VXdLXm2pwxgZD9ypzAMCcmqTHYU0DdbU
+ HErFbCedVDJ7E693nzha6SXOXSPDiUDEBA0nU+nnF85IimuCuRl3kSZzRrb4Xy6pUGPF
+ 6gXrQ+D/CxQgMUooYCMEvH3xIuTe+tLEXplsrgAuj5DhLKqJJwv6BdlaKrlPJYVnXKWZ
+ Kev1vWJ0RK39upKIceY2hyxsmrROVgZfozqjntd8XB7L0TucdTIwcUoeo7ZN1+FPWsY5
+ tRVQ==
+X-Gm-Message-State: AOAM5316NJ6ObZmour6+C6jucpMVofwcvHVEkPsauTFZB//ZKLw08egy
+ X2EACNGQPjKSMQ3alhOvI9ndViqWk+Fs2OD5VlKSEA==
+X-Google-Smtp-Source: ABdhPJyxBFnoi5YnxmRXEWi3RyOT8zK9WD++uul35NAXdT0Y4CBYSq0+BgknePDAlzmhd8jRWTJRg0Pw5651ggprPVM=
+X-Received: by 2002:a05:6e02:1348:: with SMTP id
+ k8mr20739743ilr.154.1605811227390; 
+ Thu, 19 Nov 2020 10:40:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <20201119080002.100342-1-tmaimon77@gmail.com>
+In-Reply-To: <20201119080002.100342-1-tmaimon77@gmail.com>
+From: Benjamin Fair <benjaminfair@google.com>
+Date: Thu, 19 Nov 2020 10:39:48 -0800
+Message-ID: <CADKL2t45q907QGpq9rqjnGgMx=43Gz4RRGbyRLZUozYD0kt-DQ@mail.gmail.com>
+Subject: Re: [PATCH v1] ARM: dts: add Nuvoton NPCM730 device tree
+To: Tomer Maimon <tmaimon77@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,66 +73,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
- Jean Delvare <jdelvare@suse.com>, Jesper Dangaard Brouer <hawk@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
- netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
- linux-kernel@vger.kernel.org, taoren@fb.com,
- Jesper Dangaard Brouer <brouer@redhat.com>, Tao Ren <rentao.bupt@gmail.com>,
- bpf@vger.kernel.org, mikechoi@fb.com, "David S . Miller" <davem@davemloft.net>,
- Guenter Roeck <linux@roeck-us.net>
+Cc: mark.rutland@arm.com, devicetree@vger.kernel.org,
+ Arnd Bergmann <arnd@arndb.de>, avifishman70@gmail.com,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-kernel@vger.kernel.org,
+ Rob Herring <robh+dt@kernel.org>, soc@kernel.org, arm@kernel.org,
+ olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 19 Nov 2020 09:09:53 -0800 Joe Perches wrote:
-> On Thu, 2020-11-19 at 17:35 +0100, Jesper Dangaard Brouer wrote:
-> > On Thu, 19 Nov 2020 07:46:34 -0800 Jakub Kicinski <kuba@kernel.org> wro=
-te: =20
->=20
-> > I think it is a good idea to change the keyword (K:), but I'm not sure
-> > this catch what we want, maybe it does.  The pattern match are meant to
-> > catch drivers containing XDP related bits.
-> >=20
-> > Previously Joe Perches <joe@perches.com> suggested this pattern match,
-> > which I don't fully understand... could you explain Joe?
-> >=20
-> > =C2=A0=C2=A0(?:\b|_)xdp(?:\b|_) =20
->=20
-> This regex matches only:
->=20
-> 	xdp
-> 	xdp_<anything>
-> 	<anything>_xdp_<anything>
-> 	<anything>_xdp
->=20
-> > For the filename (N:) regex match, I'm considering if we should remove
-> > it and list more files explicitly.  I think normal glob * pattern
-> > works, which should be sufficient. =20
->=20
-> Lists are generally more specific than regex globs.
+On Thu, 19 Nov 2020 at 00:00, Tomer Maimon <tmaimon77@gmail.com> wrote:
+>
+> Add Nuvoton NPCM730 SoC device tree.
+>
+> The Nuvoton NPCN730 SoC is a part of the
+> Nuvoton NPCM7xx SoCs family.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
-Checking like Alexei did it seems Joe's version is faster and better:
+Reviewed-by: Benjamin Fair <benjaminfair@google.com>
 
-$ git grep -l -E "[^a-z0-9]xdp[^a-z0-9]" | wc -l
-295
-$ git grep -l -E '(\b|_)xdp(\b|_)' | wc -l
-297
-$ time git grep -l -E '(\b|_)xdp(\b|_)' > /tmp/a
-
-real	0m5.171s
-user	0m32.657s
-sys	0m0.664s
-$ time git grep -l -E "[^a-z0-9]xdp[^a-z0-9]" > /tmp/b
-
-real	0m16.627s
-user	1m48.149s
-sys	0m0.977s
-09:56 linux$ diff /tmp/a /tmp/b
-4d3
-< Documentation/networking/index.rst
-189d187
-< samples/bpf/.gitignore
-
-
-Joe would you like to send a patch, or should I?
+>
+> ---
+>  arch/arm/boot/dts/nuvoton-npcm730.dtsi | 44 ++++++++++++++++++++++++++
+>  1 file changed, 44 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/nuvoton-npcm730.dtsi
+>
+> diff --git a/arch/arm/boot/dts/nuvoton-npcm730.dtsi b/arch/arm/boot/dts/nuvoton-npcm730.dtsi
+> new file mode 100644
+> index 000000000000..86ec12ec2b50
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/nuvoton-npcm730.dtsi
+> @@ -0,0 +1,44 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +// Copyright (c) 2020 Nuvoton Technology
+> +
+> +#include "nuvoton-common-npcm7xx.dtsi"
+> +
+> +/ {
+> +       #address-cells = <1>;
+> +       #size-cells = <1>;
+> +       interrupt-parent = <&gic>;
+> +
+> +       cpus {
+> +               #address-cells = <1>;
+> +               #size-cells = <0>;
+> +               enable-method = "nuvoton,npcm750-smp";
+> +
+> +               cpu@0 {
+> +                       device_type = "cpu";
+> +                       compatible = "arm,cortex-a9";
+> +                       clocks = <&clk NPCM7XX_CLK_CPU>;
+> +                       clock-names = "clk_cpu";
+> +                       reg = <0>;
+> +                       next-level-cache = <&l2>;
+> +               };
+> +
+> +               cpu@1 {
+> +                       device_type = "cpu";
+> +                       compatible = "arm,cortex-a9";
+> +                       clocks = <&clk NPCM7XX_CLK_CPU>;
+> +                       clock-names = "clk_cpu";
+> +                       reg = <1>;
+> +                       next-level-cache = <&l2>;
+> +               };
+> +       };
+> +
+> +       soc {
+> +               timer@3fe600 {
+> +                       compatible = "arm,cortex-a9-twd-timer";
+> +                       reg = <0x3fe600 0x20>;
+> +                       interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(2) |
+> +                                                 IRQ_TYPE_LEVEL_HIGH)>;
+> +                       clocks = <&clk NPCM7XX_CLK_AHB>;
+> +               };
+> +       };
+> +};
+> --
+> 2.22.0
+>
