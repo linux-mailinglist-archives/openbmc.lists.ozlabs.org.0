@@ -2,68 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1FCE2B98AE
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 17:58:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 176382B991B
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 18:16:43 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CcQq34dvNzDqlL
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 03:58:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CcRDS3QzGzDqpg
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 04:16:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::829;
- helo=mail-qt1-x829.google.com; envelope-from=venture@google.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=vFI8Cxqn; dkim-atps=neutral
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com
- [IPv6:2607:f8b0:4864:20::829])
+ spf=none (no SPF record) smtp.mailfrom=perches.com
+ (client-ip=216.40.44.195; helo=smtprelay.hostedemail.com;
+ envelope-from=joe@perches.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=perches.com
+X-Greylist: delayed 349 seconds by postgrey-1.36 at bilbo;
+ Fri, 20 Nov 2020 04:15:55 AEDT
+Received: from smtprelay.hostedemail.com (smtprelay0195.hostedemail.com
+ [216.40.44.195])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcQp10k7ZzDql2
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 03:57:08 +1100 (AEDT)
-Received: by mail-qt1-x829.google.com with SMTP id m65so4822588qte.11
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 08:57:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=DgFuSE2DMZxNHBPsxh5+FG9j6n6sovfZK8g09b+rwdo=;
- b=vFI8Cxqn23gUHIdLQtIs9oHuHNacltBKJ1ajCD2X8yHh92ydRb5AH+uaO8owWpJlaf
- RgCSy2kDVi2PKtSgyDUo6M8Z6AElVKY8N7a3pRY2asPZdtcP4Hmz7F2e9Hsh4UL3ElMA
- 4DJErJUQJ2aQ0r3xivIVp7ADronZBsoJiDcLqjxkhOdDMOIObii2QtLc7CLaqHRK9x3q
- 3oAXy1J2TFkBCtlmF7yehbedanZ+e+d874ZhNi3rcsSsOmTuAdNHL+f+aw2dqVUnocyG
- ig8Y0w9u73HzDiY9HQnQNTf5jDKj3rlxd57Ww6bN7L3ioixV0bgUcdR5FYd/TGD2LYfx
- YT5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=DgFuSE2DMZxNHBPsxh5+FG9j6n6sovfZK8g09b+rwdo=;
- b=qOchiKg42UX4Y82kzqUwFQMK9AttQ0VLY9YAbNbE1YR/mtF1sqXL2udJk/6JRv6oee
- iC5/Xg2gj8ANIN2KP0VpJiI5iNYG2J6qGHwkhQh7KmAR3WS4Qi7t8ASihkgVvZvmf7Oe
- rTUr1cBAMKwRjC7OTBbFfRC9qUcdrcE/g678zsKXVI14GkNASgLeptZy40CzaNdJEZ4v
- pBCwZC7oNVp5Lmd180klZQqRi7AIvxCvjOAt4n6J5DbOkvmZN7Wbx4AFnXpkV33BryH2
- YeImjpl7mv16J+VZ6EkaveIpQHsAIn622S+EfhUKCr5Z1q23t6eaLGGWUhWpwDY7rtl3
- CPHQ==
-X-Gm-Message-State: AOAM533fAnXv8QdRcDa4lC4IltbPXkupm+yz7pd+FhcLy8NJ0XMlTXzx
- nTNWYQcGTjSbrJeiDlSJIPbX2M4Y7tcfbfxYVtkOkw==
-X-Google-Smtp-Source: ABdhPJw9l9qaGUIqVpsWhvpon5FCGZE3nvxsfmv4u+ISIAyK1hg3x9OMTJAsWw0HB7L1lxc8p/qGNsJeUMHdz3/C/9Y=
-X-Received: by 2002:ac8:5a04:: with SMTP id n4mr11395538qta.21.1605805022774; 
- Thu, 19 Nov 2020 08:57:02 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CcRCb3FDkzDqml
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 04:15:53 +1100 (AEDT)
+Received: from smtprelay.hostedemail.com (10.5.19.251.rfc1918.com
+ [10.5.19.251])
+ by smtpgrave06.hostedemail.com (Postfix) with ESMTP id 144F3800CDE9
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 17:10:07 +0000 (UTC)
+Received: from filter.hostedemail.com (clb03-v110.bra.tucows.net
+ [216.40.38.60])
+ by smtprelay03.hostedemail.com (Postfix) with ESMTP id B61D8837F24A;
+ Thu, 19 Nov 2020 17:09:58 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 2, 0, 0, , d41d8cd98f00b204, joe@perches.com, ,
+ RULES_HIT:41:355:379:599:800:960:968:973:988:989:1260:1277:1311:1313:1314:1345:1359:1431:1437:1515:1516:1518:1534:1540:1593:1594:1711:1730:1747:1777:1792:2393:2553:2559:2562:2610:2692:2828:3138:3139:3140:3141:3142:3352:3622:3865:3867:3868:3871:3872:3873:4250:4321:5007:6119:6120:6742:7901:8531:9010:10004:10400:10848:10967:11232:11658:11783:11914:12297:12663:12740:12895:13069:13172:13229:13255:13311:13357:13439:13894:14181:14659:14721:21080:21212:21627:21740:30054:30070:30090:30091,
+ 0, RBL:none, CacheIP:none, Bayesian:0.5, 0.5, 0.5, Netcheck:none,
+ DomainCache:0, MSF:not bulk, SPF:, MSBL:0, DNSBL:none, Custom_rules:0:0:0,
+ LFtime:2, LUA_SUMMARY:none
+X-HE-Tag: honey44_0e0784727344
+X-Filterd-Recvd-Size: 2491
+Received: from XPS-9350.home (unknown [47.151.133.149])
+ (Authenticated sender: joe@perches.com)
+ by omf02.hostedemail.com (Postfix) with ESMTPA;
+ Thu, 19 Nov 2020 17:09:55 +0000 (UTC)
+Message-ID: <088057533a9feb330964bdab0b1b8d2f69b7a22c.camel@perches.com>
+Subject: Re: XDP maintainer match (Was  [PATCH v2 0/2] hwmon: (max127) Add
+ Maxim MAX127 hardware monitoring)
+From: Joe Perches <joe@perches.com>
+To: Jesper Dangaard Brouer <brouer@redhat.com>, Jakub Kicinski
+ <kuba@kernel.org>
+Date: Thu, 19 Nov 2020 09:09:53 -0800
+In-Reply-To: <20201119173535.1474743d@carbon>
+References: <20201118230929.18147-1-rentao.bupt@gmail.com>
+ <20201118232719.GI1853236@lunn.ch>
+ <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
+ <20201119010119.GA248686@roeck-us.net>
+ <20201119012653.GA249502@roeck-us.net>
+ <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+ <20201119173535.1474743d@carbon>
+Content-Type: text/plain; charset="ISO-8859-1"
+User-Agent: Evolution 3.38.1-1 
 MIME-Version: 1.0
-References: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
- <e605bae4-b17a-b383-62a9-7594b57f7245@kaod.org>
-In-Reply-To: <e605bae4-b17a-b383-62a9-7594b57f7245@kaod.org>
-From: Patrick Venture <venture@google.com>
-Date: Thu, 19 Nov 2020 08:56:51 -0800
-Message-ID: <CAO=noty4NEETUhb2jXhODV9THigegMdpKcteofBdygzLD0PZdw@mail.gmail.com>
-Subject: Re: qemu for bmc
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,81 +74,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- John Wang <wangzhiqiang.bj@bytedance.com>
+Cc: linux-hwmon@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
+ Jean Delvare <jdelvare@suse.com>, Jesper Dangaard Brouer <hawk@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
+ linux-kernel@vger.kernel.org, taoren@fb.com, Tao Ren <rentao.bupt@gmail.com>,
+ bpf@vger.kernel.org, mikechoi@fb.com, "David S . Miller" <davem@davemloft.net>,
+ Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Nov 18, 2020 at 11:41 PM C=C3=A9dric Le Goater <clg@kaod.org> wrote=
-:
->
-> Hello,
->
-> On 11/18/20 10:11 PM, Patrick Venture wrote:
-> > Patrick;
-> >
-> > I was looking at a patch series of yours that landed,
-> > https://github.com/qemu/qemu/blob/master/hw/arm/aspeed.c#L517 <-- in
-> > this line you're referencing a device that appears to be missing from
-> > qemu - namely, the pca i2c mux.
-> >
-> > My question is to the community at large, and you also, is anyone
-> > currently implementing this i2c-mux or a similar one?
->
-> I haven't seen any patches for this device on the QEMU mailing
-> list.
->
-> John Wang from Bytedance has started developing some new I2C
-> device models for their G220A board. We hope to get that merged
-> in 6.0.
->
-> If you are interested, we maintain a brief TODO list here
->
->   https://github.com/openbmc/qemu/wiki
+On Thu, 2020-11-19 at 17:35 +0100, Jesper Dangaard Brouer wrote:
+> On Thu, 19 Nov 2020 07:46:34 -0800 Jakub Kicinski <kuba@kernel.org> wrote:
 
-Thanks, I'll take a look.
+> I think it is a good idea to change the keyword (K:), but I'm not sure
+> this catch what we want, maybe it does.  The pattern match are meant to
+> catch drivers containing XDP related bits.
+> 
+> Previously Joe Perches <joe@perches.com> suggested this pattern match,
+> which I don't fully understand... could you explain Joe?
+> 
+>   (?:\b|_)xdp(?:\b|_)
 
->
-> Feel free to update.
->
->
-> In terms of priority, I think that the support to boot from eMMC
-> on the AST2600 is an important one. Reviewing the FSI patches
-> also but that's an IBM thing, so it might not interest the
-> community that much.
->
-> There are quite a few I2C models missing.
+This regex matches only:
 
-Yes.
+	xdp
+	xdp_<anything>
+	<anything>_xdp_<anything>
+	<anything>_xdp
 
->
-> All Aspeed models could be more precise.
->
->
-> Google and Nuvoton have merged their models for the npcm750-evb
-> and quanta-gsj boards. It would be good to have some interaction
-> with them, on bus/device modeling but also on full system emulation.
+> For the filename (N:) regex match, I'm considering if we should remove
+> it and list more files explicitly.  I think normal glob * pattern
+> works, which should be sufficient.
 
-Yeah, I believe you've seen my team's patches adding nuvoton support
-to Qemu.  It's a WIP, but we're making a lot of headway and hope to
-have more Nuvoton 730/750 qemu devices sent to qemu over the coming
-days, weeks, etc.
+Lists are generally more specific than regex globs.
 
-One of the big gaps that I'm seeing is that we weren't yet looking at
-the rest of the board as closely, to see what other devices are
-missing, such as the i2c-muxes, etc.  This will be a really good
-community convergence point as there are only so many i2c-muxes,
-voltage regulators, temperature sensors, that are in common use.
 
-I'll go through some of our plans as stated and add them to the todo
-list.  My team currently isn't focused on aspeed support at present,
-but we're keeping an eye on it and are definitely excited to see
-others contributing in that space!
-
->
-> Cheers,
->
-> C.
-
-- Patrick
