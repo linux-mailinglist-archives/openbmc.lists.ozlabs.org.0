@@ -2,66 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8BE02B890F
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 01:31:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EBE22B89A4
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 02:37:10 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cc0wv4bkZzDqdh
-	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 11:31:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cc2NM3bWBzDqN8
+	for <lists+openbmc@lfdr.de>; Thu, 19 Nov 2020 12:37:07 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::82d;
- helo=mail-qt1-x82d.google.com; envelope-from=venture@google.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=softfail (domain owner discourages use of this
+ host) smtp.mailfrom=roeck-us.net (client-ip=67.222.33.93;
+ helo=gproxy8-pub.mail.unifiedlayer.com; envelope-from=linux@roeck-us.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=MLiD19XT; dkim-atps=neutral
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com
- [IPv6:2607:f8b0:4864:20::82d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256
+ header.s=default header.b=cnmT6i+A; dkim-atps=neutral
+X-Greylist: delayed 1486 seconds by postgrey-1.36 at bilbo;
+ Thu, 19 Nov 2020 12:31:08 AEDT
+Received: from gproxy8-pub.mail.unifiedlayer.com
+ (gproxy8-pub.mail.unifiedlayer.com [67.222.33.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cc0tZ4WTlzDqfB
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 11:29:42 +1100 (AEDT)
-Received: by mail-qt1-x82d.google.com with SMTP id f93so3128609qtb.10
- for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 16:29:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=QW8BCOov2TvpCNne5upIZlEktL2yGqsLuUGlV/247VI=;
- b=MLiD19XTcj/5f81r1y4Y+qhQaYaM1zxwoq4Ao9GD499HdTw74IgqMQp8kFZ+vzHnnh
- SlDsigC3QCVwhUBfeuHAtCOJojR3F/Mi2llzmOymEa3AB80uopuMn+mQ1eJDeP3m5kF6
- mkFqiXeksgxkA7tliwzhzUZjmwE1JWNck7y5FOIpDKiUNjQQuq+MfPloRPmrc+iVfunK
- s7RNr5TlMDPaoT6QZxhuZnAn6Q41m+TcAH3+D1YHkqhyTHI0B2FTwuX9nHdPEybg+0Ey
- b9LDK8itNvrK+Xj4cVm7N+22T232dfaYxetHFxmP3y+BbUrHxelXJvut6WSenKGzTL9+
- buyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=QW8BCOov2TvpCNne5upIZlEktL2yGqsLuUGlV/247VI=;
- b=bLCzwx/Ko+yciMiCfF66oRnuPkYEzYIrek7j28cl7ToZrnXyX8bVNPQoBI2WP/1XuM
- TeSMbQuvUtlv/wWAPzNHu9ilh39EfOW5BGIM8lPM+UFUJ6pcXT66RfCN9wHQrQbeggh+
- wOwwY3Hxib6B6OAl80E8zqYyQmdJ3T1bFUi3Nqj3Wn+Pm742L2ukCwGiTobMmsu76DUk
- Jrr+a36trIsEQ2DLa3knmajxlf7qmQWEg7hgRXkqLUFQv4E4+m8FhZPEMuizgVAopoVS
- 4v6N/nyMHozA+1em9PKyZ/0YZ3MeM+1lFbm+yV01srARyemrNY2/7lINZJZ48+W7JQ3A
- Q2xA==
-X-Gm-Message-State: AOAM530qyBsukv3XnGtWq8S3FsSjVz87HREtR6hYj3lw1fT7pzErLC1m
- 2XwRwt867undX0tVTcdVSDzl8M3L9ZyLDAe6zVX1heA3nME=
-X-Google-Smtp-Source: ABdhPJwAEY3KZkopclN8OXKjjYJOVOsCeMPFfqsrtSthoir4YcBHMHXNLBvboS33sXaiGq0gW/YvzLv9huEtc7e3mv4=
-X-Received: by 2002:ac8:5a04:: with SMTP id n4mr7810286qta.21.1605745779462;
- Wed, 18 Nov 2020 16:29:39 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cc2FS19gfzDqkB
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 12:31:07 +1100 (AEDT)
+Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
+ by gproxy8.mail.unifiedlayer.com (Postfix) with ESMTP id 291B81ABE59
+ for <openbmc@lists.ozlabs.org>; Wed, 18 Nov 2020 18:01:22 -0700 (MST)
+Received: from bh-25.webhostbox.net ([208.91.199.152]) by cmsmtp with ESMTP
+ id fYK9k6oErwNNlfYK9kKl4o; Wed, 18 Nov 2020 18:01:22 -0700
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.3 cv=CumRjEwD c=1 sm=1 tr=0
+ a=QNED+QcLUkoL9qulTODnwA==:117 a=2cfIYNtKkjgZNaOwnGXpGw==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=kj9zAlcOel0A:10:nop_charset_1
+ a=nNwsprhYR40A:10:nop_rcvd_month_year
+ a=evQFzbml-YQA:10:endurance_base64_authed_username_1 a=pGLkceISAAAA:8
+ a=Q3Wkuqm_2-rY-xIXcIMA:9 a=CjuIK1q_8ugA:10:nop_charset_2
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=roeck-us.net; s=default; h=In-Reply-To:Content-Type:MIME-Version:References
+ :Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding
+ :Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=OgnrqXLq5/S+DH9C+VfZjZgrwNPc+RbuiHFVXIWuaeY=; b=cnmT6i+A45udFmFlPPXcn3blKa
+ rUAHR/g8Y7jFBElyc1S7M59TmcZBFkQxZh9BcZPT8xKz/9hoCiOUyUjGks8tCdwSsacS44BNlO4mf
+ WbkQ387cMufUNADxp7tNpsRNwnNzrz5LAdxwewt93SJA9p3Heo8R4xUpIKFZRPoC31tQN0/kfAd9E
+ 81zmoa8RbNUjv0Hf91AG1ltKE2ipRKv9W+wDYyeQUZfAtBa90+ck/PqOwnEusn2/FXAfiuPueEn0K
+ N1FLQEEG1lNR5Elxw/vN7MKSdhx7kfU0oOrY4CQhf03Y6j0wrbzXK0oYGjTNIDPzFT+CE1fknh/PP
+ O202M12A==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net
+ ([108.223.40.66]:57080 helo=localhost)
+ by bh-25.webhostbox.net with esmtpa (Exim 4.93)
+ (envelope-from <linux@roeck-us.net>)
+ id 1kfYK8-000BCM-A4; Thu, 19 Nov 2020 01:01:20 +0000
+Date: Wed, 18 Nov 2020 17:01:19 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Tao Ren <rentao.bupt@gmail.com>
+Subject: Re: [PATCH v2 0/2] hwmon: (max127) Add Maxim MAX127 hardware
+ monitoring
+Message-ID: <20201119010119.GA248686@roeck-us.net>
+References: <20201118230929.18147-1-rentao.bupt@gmail.com>
+ <20201118232719.GI1853236@lunn.ch>
+ <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
 MIME-Version: 1.0
-References: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
- <20201118230938.GA1261035@heinlein>
-In-Reply-To: <20201118230938.GA1261035@heinlein>
-From: Patrick Venture <venture@google.com>
-Date: Wed, 18 Nov 2020 16:29:28 -0800
-Message-ID: <CAO=notwTKgDD20KKXE=5gF4QOeT3SEpuEwrzRRgEkxPYGzFFqw@mail.gmail.com>
-Subject: Re: qemu for bmc
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.ozlabs.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1kfYK8-000BCM-A4
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net (localhost)
+ [108.223.40.66]:57080
+X-Source-Auth: guenter@roeck-us.net
+X-Email-Count: 3
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,41 +100,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: linux-hwmon@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
+ Jean Delvare <jdelvare@suse.com>, Jesper Dangaard Brouer <hawk@kernel.org>,
+ Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
+ John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
+ linux-kernel@vger.kernel.org, taoren@fb.com, Jakub Kicinski <kuba@kernel.org>,
+ bpf@vger.kernel.org, mikechoi@fb.com, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Nov 18, 2020 at 3:09 PM Patrick Williams <patrick@stwcx.xyz> wrote:
->
-> On Wed, Nov 18, 2020 at 01:11:42PM -0800, Patrick Venture wrote:
->
-> Hi Patrick.
->
-> > Patrick;
-> >
-> > I was looking at a patch series of yours that landed,
-> > https://github.com/qemu/qemu/blob/master/hw/arm/aspeed.c#L517 <-- in
-> > this line you're referencing a device that appears to be missing from
-> > qemu - namely, the pca i2c mux.
-> >
-> > My question is to the community at large, and you also, is anyone
-> > currently implementing this i2c-mux or a similar one?
->
-> Timely question.
->
-> I don't know of any current work going on in that space.
->
-> Facebook has a hack-a-thon kind of event we are sponsoring at a local
-> university this weekend and that was one of the projects I gave as a
-> potential item.  So, maybe, if we're lucky, it'll be done by Monday.
->
-> I'll keep you posted.
+On Wed, Nov 18, 2020 at 03:42:53PM -0800, Tao Ren wrote:
+> On Thu, Nov 19, 2020 at 12:27:19AM +0100, Andrew Lunn wrote:
+> > On Wed, Nov 18, 2020 at 03:09:27PM -0800, rentao.bupt@gmail.com wrote:
+> > > From: Tao Ren <rentao.bupt@gmail.com>
+> > > 
+> > > The patch series adds hardware monitoring driver for the Maxim MAX127
+> > > chip.
+> > 
+> > Hi Tao
+> > 
+> > Why are using sending a hwmon driver to the networking mailing list?
+> > 
+> >     Andrew
+> 
+> Hi Andrew,
+> 
+> I added netdev because the mailing list is included in "get_maintainer.pl
+> Documentation/hwmon/index.rst" output. Is it the right command to find
+> reviewers? Could you please suggest? Thank you.
 
-Hahaha, thanks!  I'll keep an eye out for your update!  Seems like an
-excellent hack-a-thon project!
+I have no idea why running get_maintainer.pl on
+Documentation/hwmon/index.rst returns such a large list of mailing
+lists and people. For some reason it includes everyone in the XDP
+maintainer list. If anyone has an idea how that happens, please
+let me know - we'll want to get this fixed to avoid the same problem
+in the future.
 
-Patrick
-
->
-> --
-> Patrick Williams
+Guenter
