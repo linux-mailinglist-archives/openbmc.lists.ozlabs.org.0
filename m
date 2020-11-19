@@ -2,71 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC54E2BA207
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:48:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D0B62BA208
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:50:08 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CclwK6LjXzDqgk
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:48:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cclxn2cKKzDqwV
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:50:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::143;
- helo=mail-lf1-x143.google.com; envelope-from=alexei.starovoitov@gmail.com;
+ smtp.mailfrom=redhat.com (client-ip=63.128.21.124;
+ helo=us-smtp-delivery-124.mimecast.com; envelope-from=brouer@redhat.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ZjIHp4Xb; dkim-atps=neutral
-Received: from mail-lf1-x143.google.com (mail-lf1-x143.google.com
- [IPv6:2a00:1450:4864:20::143])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256
+ header.s=mimecast20190719 header.b=aFvwhHHD; 
+ dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com
+ header.a=rsa-sha256 header.s=mimecast20190719 header.b=aFvwhHHD; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-124.mimecast.com
+ (us-smtp-delivery-124.mimecast.com [63.128.21.124])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcQLJ67RJzDqkq
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 03:36:34 +1100 (AEDT)
-Received: by mail-lf1-x143.google.com with SMTP id r9so9135533lfn.11
- for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 08:36:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=+GL1geUz8ksyok3o+HModRJUNdxfeUOLSXkwVu2pzVw=;
- b=ZjIHp4XbVLR3mEdwG18h+SFeiMuVhrEnm1I+o4JxYe6xHL5cGGoXTKaqksF40qh8AV
- 2a15evGdxclpi/ZpK3Ojgi1SDjsiUalaB5XrqUBfjloVKgOnM1hLIsAlAyxTrZzPWMrQ
- p2Rpa9Q8r9pw/XLekQzHqIvCkjO+b6dNblaWQHeesD9xdO2t4KU1JbYUFndDC7ID7L1X
- CpbGZj+Q/Up26Jch8B7PWpmY/IWjeHqKISZiCEfyZ5Clq9X6mWAsqoZm3LwIkr919haZ
- S2B3+4g+z6fSO4nVDsNN8M3/frXb6a00DBqqUhskplPrNUbshRN9IyZhpdD/elrJmc0U
- AS1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=+GL1geUz8ksyok3o+HModRJUNdxfeUOLSXkwVu2pzVw=;
- b=Az0dOL54ZjbSanKAZqtU4nqgPpV0yi2wA6VtEsjXUVYD4H6Bef4mYMj4rJtEuI1UVU
- cgjTdS+n3oqm7TPeKmwlemCK12WHZoK/3weZz7IfwZq6TLOBln9T18Du3qAkhAakGm8H
- GZGn/2enruTxZS+CE3xPGP873KXmLQ+Q61qv+ykIVOpK29jgTaTWDUF+mOc6R+oC4d8z
- C7HeqmxBrTADhGmN0BPprcQItIeXvaHLGAIi+ctX+YpbDY290yQzGgZLkZoWsJPi4lob
- GQkSTWaJfto8vY+00qOR+bRlZmz5eHMplbqJMOay2pvJMC4XI+n4BfuPe2ZQ9LXBYcMj
- 4YQg==
-X-Gm-Message-State: AOAM530zn5sugpj0FkIfRNLx7zjPkBPqGZ9f+5mJp+9lkOjrYdX5P0Ch
- ocEOlKVVmpld0rFDN6NtxvUu5qRmylEj0uH9bS4=
-X-Google-Smtp-Source: ABdhPJxXfPjRWHEbwDGN5Oo7lGcgZBlLqA+m05kWlN7DzRDYiiWURZwOXfqHnCGxcIQDLNCmrccAvLKQJw5PMbW1Ys8=
-X-Received: by 2002:a19:48ca:: with SMTP id v193mr5856891lfa.263.1605803788474; 
- Thu, 19 Nov 2020 08:36:28 -0800 (PST)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CcWnk0RHdzDqpC
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 07:42:17 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1605818535;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pgYqjANhFZVw2xsV1NPryI63UVScbHN7GEpAwzgrcBA=;
+ b=aFvwhHHDXDLqbjYYG/3ApYiRDtSZEsAQaUufHsOZI8DJEANFGKf6vv7ptjdSBUpAujdOrE
+ uQ+02e0LZvJ0fyvxJeq1jexjMKilhzm87L5mvWOOFEuLRX0A+4GSdCXDOn53XmSzmJPBTz
+ d4o/YLkJVIUDX90Uqq1avnCu7l1Gk5U=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1605818535;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pgYqjANhFZVw2xsV1NPryI63UVScbHN7GEpAwzgrcBA=;
+ b=aFvwhHHDXDLqbjYYG/3ApYiRDtSZEsAQaUufHsOZI8DJEANFGKf6vv7ptjdSBUpAujdOrE
+ uQ+02e0LZvJ0fyvxJeq1jexjMKilhzm87L5mvWOOFEuLRX0A+4GSdCXDOn53XmSzmJPBTz
+ d4o/YLkJVIUDX90Uqq1avnCu7l1Gk5U=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-428-J2xKKEZ6OOWubPMcg1L6iQ-1; Thu, 19 Nov 2020 15:42:10 -0500
+X-MC-Unique: J2xKKEZ6OOWubPMcg1L6iQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
+ [10.5.11.22])
+ (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C76F11005D5C;
+ Thu, 19 Nov 2020 20:42:04 +0000 (UTC)
+Received: from carbon (unknown [10.36.110.8])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7DFF810016F4;
+ Thu, 19 Nov 2020 20:41:56 +0000 (UTC)
+Date: Thu, 19 Nov 2020 21:41:55 +0100
+From: Jesper Dangaard Brouer <brouer@redhat.com>
+To: Jakub Kicinski <kuba@kernel.org>
+Subject: Re: XDP maintainer match (Was  [PATCH v2 0/2] hwmon: (max127) Add
+ Maxim MAX127 hardware monitoring)
+Message-ID: <20201119214155.5285e2d2@carbon>
+In-Reply-To: <20201119095928.01fd10e0@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
 References: <20201118230929.18147-1-rentao.bupt@gmail.com>
  <20201118232719.GI1853236@lunn.ch>
  <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
  <20201119010119.GA248686@roeck-us.net>
  <20201119012653.GA249502@roeck-us.net>
  <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-In-Reply-To: <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-From: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Date: Thu, 19 Nov 2020 08:36:17 -0800
-Message-ID: <CAADnVQL86rs=bc+fg1EsHYZzYGC_WWOPtAVWWTqwmA_6SToGUA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] hwmon: (max127) Add Maxim MAX127 hardware
- monitoring
-To: Jakub Kicinski <kuba@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+ <20201119173535.1474743d@carbon>
+ <088057533a9feb330964bdab0b1b8d2f69b7a22c.camel@perches.com>
+ <20201119095928.01fd10e0@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
 X-Mailman-Approved-At: Fri, 20 Nov 2020 16:41:22 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -82,92 +95,65 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Cc: linux-hwmon@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
  Jean Delvare <jdelvare@suse.com>, Jesper Dangaard Brouer <hawk@kernel.org>,
  Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
- Network Development <netdev@vger.kernel.org>, openbmc@lists.ozlabs.org,
- "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+ netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
  John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
- LKML <linux-kernel@vger.kernel.org>, taoren@fb.com,
- Tao Ren <rentao.bupt@gmail.com>, bpf <bpf@vger.kernel.org>, mikechoi@fb.com,
- "David S . Miller" <davem@davemloft.net>, Guenter Roeck <linux@roeck-us.net>
+ linux-kernel@vger.kernel.org, brouer@redhat.com,
+ Tao Ren <rentao.bupt@gmail.com>, taoren@fb.com, Joe Perches <joe@perches.com>,
+ bpf@vger.kernel.org, mikechoi@fb.com, "David S .
+ Miller" <davem@davemloft.net>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Nov 19, 2020 at 7:46 AM Jakub Kicinski <kuba@kernel.org> wrote:
->
-> On Wed, 18 Nov 2020 17:26:53 -0800 Guenter Roeck wrote:
-> > On Wed, Nov 18, 2020 at 05:01:19PM -0800, Guenter Roeck wrote:
-> > > On Wed, Nov 18, 2020 at 03:42:53PM -0800, Tao Ren wrote:
-> > > > On Thu, Nov 19, 2020 at 12:27:19AM +0100, Andrew Lunn wrote:
-> > > > > On Wed, Nov 18, 2020 at 03:09:27PM -0800, rentao.bupt@gmail.com wrote:
-> > > > > > From: Tao Ren <rentao.bupt@gmail.com>
-> > > > > >
-> > > > > > The patch series adds hardware monitoring driver for the Maxim MAX127
-> > > > > > chip.
-> > > > >
-> > > > > Hi Tao
-> > > > >
-> > > > > Why are using sending a hwmon driver to the networking mailing list?
-> > > > >
-> > > > >     Andrew
-> > > >
-> > > > Hi Andrew,
-> > > >
-> > > > I added netdev because the mailing list is included in "get_maintainer.pl
-> > > > Documentation/hwmon/index.rst" output. Is it the right command to find
-> > > > reviewers? Could you please suggest? Thank you.
-> > >
-> > > I have no idea why running get_maintainer.pl on
-> > > Documentation/hwmon/index.rst returns such a large list of mailing
-> > > lists and people. For some reason it includes everyone in the XDP
-> > > maintainer list. If anyone has an idea how that happens, please
-> > > let me know - we'll want to get this fixed to avoid the same problem
-> > > in the future.
-> >
-> > I found it. The XDP maintainer entry has:
-> >
-> > K:    xdp
-> >
-> > This matches Documentation/hwmon/index.rst.
-> >
-> > $ grep xdp Documentation/hwmon/index.rst
-> >    xdpe12284
-> >
-> > It seems to me that a context match such as "xdp" in MAINTAINERS isn't
-> > really appropriate. "xdp" matches a total of 348 files in the kernel.
-> > The large majority of those is not XDP related. The maintainers
-> > of XDP (and all the listed mailing lists) should not be surprised
-> > to get a large number of odd review requests if they want to review
-> > every single patch on files which include the term "xdp".
->
-> Agreed, we should fix this. For maintainers with high patch volume life
-> would be so much easier if people CCed the right folks to get reviews,
-> so we should try our best to fix get_maintainer.
->
-> XDP folks, any opposition to changing the keyword / filename to:
->
->         [^a-z0-9]xdp[^a-z0-9]
+On Thu, 19 Nov 2020 09:59:28 -0800
+Jakub Kicinski <kuba@kernel.org> wrote:
 
-Reducing regex makes sense.
-git grep -l -E "xdp"|wc -l
-348
-git grep -l -E "[^a-z0-9]xdp[^a-z0-9]"|wc -l
-295
+> On Thu, 19 Nov 2020 09:09:53 -0800 Joe Perches wrote:
+> > On Thu, 2020-11-19 at 17:35 +0100, Jesper Dangaard Brouer wrote: =20
+> > > On Thu, 19 Nov 2020 07:46:34 -0800 Jakub Kicinski <kuba@kernel.org> w=
+rote:   =20
+> >  =20
+> > > I think it is a good idea to change the keyword (K:), but I'm not sure
+> > > this catch what we want, maybe it does.  The pattern match are meant =
+to
+> > > catch drivers containing XDP related bits.
+> > >=20
+> > > Previously Joe Perches <joe@perches.com> suggested this pattern match,
+> > > which I don't fully understand... could you explain Joe?
+> > >=20
+> > > =C2=A0=C2=A0(?:\b|_)xdp(?:\b|_)   =20
+> >=20
+> > This regex matches only:
+> >=20
+> > 	xdp
+> > 	xdp_<anything>
+> > 	<anything>_xdp_<anything>
+> > 	<anything>_xdp
+> >  =20
+> > > For the filename (N:) regex match, I'm considering if we should remove
+> > > it and list more files explicitly.  I think normal glob * pattern
+> > > works, which should be sufficient.   =20
+> >=20
+> > Lists are generally more specific than regex globs. =20
+>=20
+> Checking like Alexei did it seems Joe's version is faster and better:
+>=20
+> $ git grep -l -E "[^a-z0-9]xdp[^a-z0-9]" | wc -l
+> 295
+> $ git grep -l -E '(\b|_)xdp(\b|_)' | wc -l
+> 297
+> $ time git grep -l -E '(\b|_)xdp(\b|_)' > /tmp/a
 
-The false positive match was:
-+drivers/hwmon/pmbus/Kconfig
-+drivers/hwmon/pmbus/Makefile
-+drivers/hwmon/pmbus/xdpe12284.c
-+drivers/net/ethernet/natsemi/ns83820.c
-+drivers/net/ethernet/neterion/s2io.c
-+drivers/net/ethernet/neterion/s2io.h
-+drivers/net/ethernet/neterion/vxge/vxge-config.c
-+drivers/net/ethernet/neterion/vxge/vxge-config.h
-+drivers/net/ethernet/neterion/vxge/vxge-traffic.c
-+drivers/net/ethernet/sis/sis900.c
-+drivers/net/ethernet/sis/sis900.h
-+drivers/net/wireless/ath/ath5k/ath5k.h
-+drivers/net/wireless/ath/ath5k/base.c
-+drivers/net/wireless/ath/ath5k/debug.c
-+drivers/net/wireless/ath/ath5k/dma.c
+Okay, I guess this is the pattern you want: '(\b|_)xdp(\b|_)'
 
-so it's pretty much hwmon and few drivers.
-I agree that sparing xdp from hwmon patches is a good thing :)
+=20
+> Joe would you like to send a patch, or should I?
+
+As you noticed I already send out a patch, I can send a new with your
+pattern, as it seems to be faster.
+
+--=20
+Best regards,
+  Jesper Dangaard Brouer
+  MSc.CS, Principal Kernel Engineer at Red Hat
+  LinkedIn: http://www.linkedin.com/in/brouer
+
