@@ -2,68 +2,94 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DB642BA334
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 08:32:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 88CCF2BA451
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 09:09:01 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CcpCk5TlKzDqy1
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 18:32:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ccq222tFbzDqxD
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 19:08:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
- envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=outlook.com (client-ip=40.92.255.72;
+ helo=apc01-hk2-obe.outbound.protection.outlook.com;
+ envelope-from=zhouyuanqing8@outlook.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=yadro.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
- header.s=mta-01 header.b=Qcc+0F7K; dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256
+ header.s=selector1 header.b=HGrTHu0d; 
+ dkim-atps=neutral
+Received: from APC01-HK2-obe.outbound.protection.outlook.com
+ (mail-oln040092255072.outbound.protection.outlook.com [40.92.255.72])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcpBr1kyPzDqlh
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 18:31:32 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
- by mta-01.yadro.com (Postfix) with ESMTP id 00BCD41397
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 07:31:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
- content-transfer-encoding:mime-version:user-agent:content-type
- :content-type:organization:references:in-reply-to:date:date:from
- :from:subject:subject:message-id:received:received:received; s=
- mta-01; t=1605857485; x=1607671886; bh=sxo1G3gaveVlJ3ymVKxCZaWTk
- oP5fuXodqLF8vHJ/+U=; b=Qcc+0F7K3UT2FmqyBo4bXqFgnLAYINFHYwlhD413u
- i0CRXjxDO88h1KGsVb+SkNI+4h1Cpa60mmhIKgKklO9YHPjRIBYQuMHcwlk5ZvxV
- ft8lqZfo3fMR45Ati2CgmIPokBBwE7Uv6s0XwnJFiM/0ib5/hrtRKolsYPzVKG1s
- Nw=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
- by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
- with ESMTP id Qs3KgRwulsZ3 for <openbmc@lists.ozlabs.org>;
- Fri, 20 Nov 2020 10:31:25 +0300 (MSK)
-Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
- [172.17.100.103])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (No client certificate requested)
- by mta-01.yadro.com (Postfix) with ESMTPS id 078964136B
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 10:31:25 +0300 (MSK)
-Received: from [10.199.0.35] (10.199.0.35) by T-EXCH-03.corp.yadro.com
- (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Fri, 20
- Nov 2020 10:31:24 +0300
-Message-ID: <2efc5fa8a97e5aa17d8579cd414676bb842367d1.camel@yadro.com>
-Subject: Re: [Announce] OpenBMC Discord Community
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: <openbmc@lists.ozlabs.org>
-Date: Fri, 20 Nov 2020 10:31:23 +0300
-In-Reply-To: <20201112145740.GB4495@heinlein>
-References: <20201112145740.GB4495@heinlein>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.5 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Ccq186PZDzDqvj
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 19:08:11 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WaLCX+zGvodzkfFpZodBptnrl+Dc7YODL6/L2diMCzY+/t/CPyYVj5Nky1a1M87DJb2leIW/SnXO4oibhhc5Lev7WceZzL0ycXhTL5f4DRaycSVRFYc3VfPc0IrYlaebNwJpsPIw92TG9UrH13ymkElgAyrCqrvt0iS5Xrfdjz7YcZ7G5ChP6fXszRiu/LYkVXMh2roBR1JG9RvsPrbdTS85bMN/9bveueEIV8hbwq0AzJmWe3CxR1L9xF5/23zrKZwMQHF8fIOQGShB/xb1d4nkOf1FCn0QiWZZ6xn0yzf2RZto2N/P3K33+LMGuZMVJMAXlLc4STy3UtSN+ygEIQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=siKrDXYh8imwbQ8ZgXxpx/xjw6w7tHIYJua2FRViRfI=;
+ b=TQM2NDqyaxQ8kfr7mU3FfIbpOY8YM57LD+8XKcsFZTuLxuhXQ4jh3HK9hTgneZpl3iE2IcWJa57w3Dp7RdPhNImSvKBebm3jVrXgoOX+fGaqbpzOKWVzlo4cHS8eEm3jjKaxAjOp8ntlWearXKPcVKywFd2xWVuSZU6SGv3Gv0I9FSbw2tzEOwqwifsdvEpMePaLo+2wR9UJk57TMTh1ygRBrrfsKsq+iaz96+NGOZiZ36/TPSsCzoejLKQyamDtZngdoqEY2N9CpZrD5nVBZNqMZFBB+45SyZCxocJxSJA7x8mQ0/qEV3zgQVnLjVQqIBnrZa6ETvfI+1bJady+fA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=siKrDXYh8imwbQ8ZgXxpx/xjw6w7tHIYJua2FRViRfI=;
+ b=HGrTHu0dwiGOjXv8z+MyWm6XcaxJCy1bd3ZnbRkkGjJlZahnJrTV0gx3mQWecrnH1SdsMX5vBaFVNaxI+sVKm3iySoi/AEGaula6o+dtni+KkMsrnFp0MW3eNSOnDLh8FvT52MCAbpxK5qu45QHIqYfWumkWuDc7krbNltkFiQE2HHIbg+kC7t0wB0D0RHAQpK+iho57y4dk0hTK6pmlhqQcQBwOUZulXST3cxAOHVQu+FFjiDvi+gbStPR0GWqkRvui/po6SetfWThPJdWzy/m8gSs+VpLiAVl+qO2C8rWdGsKz+9tEXCGJWpu0jTqFzm96RBcZJmkE47Jg74au9A==
+Received: from HK2APC01FT054.eop-APC01.prod.protection.outlook.com
+ (2a01:111:e400:7ebc::51) by
+ HK2APC01HT022.eop-APC01.prod.protection.outlook.com (2a01:111:e400:7ebc::376)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3589.20; Fri, 20 Nov
+ 2020 08:08:05 +0000
+Received: from ME2PR01MB2675.ausprd01.prod.outlook.com (10.152.248.54) by
+ HK2APC01FT054.mail.protection.outlook.com (10.152.249.28) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3589.20 via Frontend Transport; Fri, 20 Nov 2020 08:08:05 +0000
+Received: from ME2PR01MB2675.ausprd01.prod.outlook.com
+ ([fe80::5d0e:df51:1d16:ea9a]) by ME2PR01MB2675.ausprd01.prod.outlook.com
+ ([fe80::5d0e:df51:1d16:ea9a%5]) with mapi id 15.20.3541.025; Fri, 20 Nov 2020
+ 08:08:04 +0000
+From: =?gb2312?B?1twg1LbH5Q==?= <zhouyuanqing8@outlook.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+Subject: about sensor and sel
+Thread-Topic: about sensor and sel
+Thread-Index: AQHWvxMcn+9lCX7lxk22jvupDt0oRA==
+Date: Fri, 20 Nov 2020 08:08:04 +0000
+Message-ID: <ME2PR01MB2675B102E59FEA8233F6436CFEFF0@ME2PR01MB2675.ausprd01.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-incomingtopheadermarker: OriginalChecksum:A1AB08312A38790DC16F98DBE9E3DEFE80CA9495359F3EBE0070F3EC3927B239;
+ UpperCasedChecksum:DC188E129E1B6FE08107133EB04CEFFE67018A8CB439FE7584690FCD291E0AC9;
+ SizeAsReceived:6620; Count:42
+x-tmn: [yrfSB7aX/49UqMBPCtmjEXPsjIehL5m5]
+x-ms-publictraffictype: Email
+x-incomingheadercount: 42
+x-eopattributedmessage: 0
+x-ms-office365-filtering-correlation-id: 614b0326-31aa-48ad-97fe-08d88d2b6886
+x-ms-traffictypediagnostic: HK2APC01HT022:
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: RLwjdiRy+r4NrTTsEqcli11volOffsNxDikdyxR5t1tkVMwgUmIuu4STw/rnumFzpgx+fV2Zb4mPIqU7kR6ajlG+m3RjcLxpV0VOTUlRbqOxeAxi/a9p1SXoTMkJXpKpCjUcCjcv+7ACeJneVc5j5CwY3XiKlLy4IzNyllqYVfGwwL+gE3D07BCSdFbrK5lJKZx/knHry7uTMYWVp4kxmA==
+x-ms-exchange-antispam-messagedata: woU+bKDSSZ9vo0vl8alMj69XfPGUOmgAM2zl7JFtPRP06pxHhw1/dq7LQ9brILxWbOcIuLil/YwXdWCwGDlkljEVJLdnVgdUpdgDsxG/15w0uSTCqWCF0+1TQQMJFlULVTsAuIJrUpPAkLN9TAD4Dg==
+x-ms-exchange-transport-forked: True
+Content-Type: multipart/alternative;
+ boundary="_000_ME2PR01MB2675B102E59FEA8233F6436CFEFF0ME2PR01MB2675ausp_"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.0.35]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-03.corp.yadro.com (172.17.100.103)
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT054.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 614b0326-31aa-48ad-97fe-08d88d2b6886
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2020 08:08:04.9396 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Internet
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2APC01HT022
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,261 +101,126 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "uperic@163.com" <uperic@163.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Patrick, 
+--_000_ME2PR01MB2675B102E59FEA8233F6436CFEFF0ME2PR01MB2675ausp_
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 
-Is there a Matrix (Riot.IM) to Discord bridge configured (
-https://matrix.org/docs/projects/bridge/matrix-appservice-discord)? Did
-you try it? Can we connect Discord channel with IRC channel via the
-bridge?
-BTW, what was the problem with Matrix-To-IRC? I use it connect the
-channel and it works fine to me.
+aGVsbG8gZXZlcnlvbmUsDQoNCiAgICAgSSBsb29rZWQgYXQgdGhlIHBob3NwaG9yLWhvc3QtaXBt
+aWQgY29kZSBhbmQgY29tYmluZWQgaXQgd2l0aCBpcG1pLWludmVudG9yeS1zZW5zb3JzLnlhbWwg
+Zm9yIGRlYnVnZ2luZy4gSSBmb3VuZCB0aGF0IGluIHRoZSBpcG1pLWludmVudG9yeS1zZW5zb3Jz
+LnlhbWwgZmlsZSwgb25lIGludmVudG9yeSBjYW4gb25seSBjb3JyZXNwb25kIHRvIG9uZSBvZmZz
+ZXQgb2Ygb25lIHNlbnNvci4NCiAgICAgSWYgbWluZSBBbiBpbnZlbnRvcnkgaGFzIG11bHRpcGxl
+IHNlbnNvcnMsIGFuZCBlYWNoIHNlbnNvciBoYXMgbXVsdGlwbGUgb2Zmc2V0cyB0byBiZSBwcm9j
+ZXNzZWQuIEhvdyB0byBkZWFsIHdpdGggaXQ/DQoNCmlwbWktaW52ZW50b3J5LXNlbnNvcnMueWFt
+bCBhcyBmb2xsb3c6DQoveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtOg0KICAg
+IGV2ZW50UmVhZGluZ1R5cGU6IDExMQ0KICAgIG9mZnNldDogMg0KICAgIHNlbnNvcklEOiAxNDQN
+CiAgICBzZW5zb3JUeXBlOiAxOA0KL3h5ei9vcGVuYm1jX3Byb2plY3QvaW52ZW50b3J5L3N5c3Rl
+bS9jaGFzc2lzL21vdGhlcmJvYXJkOg0KICAgIGV2ZW50UmVhZGluZ1R5cGU6IDMNCiAgICBvZmZz
+ZXQ6IDANCiAgICBzZW5zb3JJRDogMTQwDQogICAgc2Vuc29yVHlwZTogMTk5DQoveHl6L29wZW5i
+bWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNzaXMvbW90aGVyYm9hcmQvY3B1MDoNCiAg
+ICBldmVudFJlYWRpbmdUeXBlOiAxMTENCiAgICBvZmZzZXQ6IDgNCiAgICBzZW5zb3JJRDogOA0K
+ICAgIHNlbnNvclR5cGU6IDcNCi94eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0v
+Y2hhc3Npcy9tb3RoZXJib2FyZC9jcHUwL2NvcmUwOg0KICAgIGV2ZW50UmVhZGluZ1R5cGU6IDEx
+MQ0KICAgIG9mZnNldDogOA0KICAgIHNlbnNvcklEOiA0Mw0KICAgIHNlbnNvclR5cGU6IDcNCi94
+eXovb3BlbmJtY19wcm9qZWN0L2ludmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9j
+cHUwL2NvcmUxOg0KICAgIGV2ZW50UmVhZGluZ1R5cGU6IDExMQ0KICAgIG9mZnNldDogOA0KICAg
+IHNlbnNvcklEOiA0NA0KICAgIHNlbnNvclR5cGU6IDcNCi94eXovb3BlbmJtY19wcm9qZWN0L2lu
+dmVudG9yeS9zeXN0ZW0vY2hhc3Npcy9tb3RoZXJib2FyZC9jcHUwL2NvcmUxMDoNCiAgICBldmVu
+dFJlYWRpbmdUeXBlOiAxMTENCiAgICBvZmZzZXQ6IDgNCiAgICBzZW5zb3JJRDogNTMNCiAgICBz
+ZW5zb3JUeXBlOiA3DQoveHl6L29wZW5ibWNfcHJvamVjdC9pbnZlbnRvcnkvc3lzdGVtL2NoYXNz
+aXMvbW90aGVyYm9hcmQvY3B1MC9jb3JlMTE6DQogICAgZXZlbnRSZWFkaW5nVHlwZTogMTExDQog
+ICAgb2Zmc2V0OiA4DQogICAgc2Vuc29ySUQ6IDU0DQogICAgc2Vuc29yVHlwZTogNw0KDQpIYXJs
+ZXl6aG91DQo=
 
-PS: it may be also interesting option is gitter, which going to be
-merged with matrix:
-https://matrix.org/blog/2020/09/30/welcoming-gitter-to-matrix
+--_000_ME2PR01MB2675B102E59FEA8233F6436CFEFF0ME2PR01MB2675ausp_
+Content-Type: text/html; charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 2020-11-12 at 08:57 -0600, Patrick Williams wrote:
-> Greetings,
-> 
-> TL;DR: I have created an OpenBMC Discord community as a modern
-> alternative to
-> IRC.  Please join at https://discord.gg/69Km47zH98 .  I've included
-> some FAQs
-> below.
-> 
-> ---
-> 
-> Recently Kurt sent out a survey about messaging (IRC) and the results
-> suggested that using IRC is an impediment to a large segment of our
-> community[1].  75% of responders suggested "IRC is too confusing" and
-> 65%
-> responded they were unwilling to use IRC even if someone help them
-> set it up.
-> I was also told privately that there are some people who, due to
-> corporate or
-> country network restrictions, are unable to access IRC.  It seems
-> that
-> exclusively using IRC is putting a constraint on the collaboration of
-> the
-> community and so I am willing to try something different.
-> 
-> I did a simple investigation of the options available to us and
-> usages of
-> other similar communities and came to the conclusion that Discord
-> would
-> likely be a good fit for our needs.  A few of us have been
-> experimenting with
-> it and there do not seem to be any pervasive issues, so I am hereby
-> announcing
-> it to the community at-large.
-> 
-> Discord is widely used in the video gaming community and by some
-> other open
-> source communities.  It has a modern Slack-like interface, but has
-> much better
-> Free-tier limits compared to similar alternatives.  Discord also has
-> built-in
-> voice / video / screen sharing, which could be very beneficial for
-> impromptu
-> hands-on problem solving and hosting "Office Hours".  Like many
-> alternatives,
-> there is a browser, stand-alone, and mobile app options and sign-up
-> is a
-> simple email-verification process.
-> 
-> I'm pretty excited about the possibilities for our community and look
-> forward
-> to seeing many of you join!
-> 
-> ---
-> 
-> # Q&As
-> 
-> ## What are the rules?
-> 
-> We've never explicitly stated the rules for IRC, but IRC was set up
-> before we
-> had a Code of Conduct.  I have created a #rules channel in Discord
-> and posted
-> a link to our CoC; they should all be assumed to apply on Discord.
-> 
-> Discord does support private messages, but they are set up in a
-> different way
-> from some alternatives.  With Discord, PMs take place outside of our
-> community
-> but within Discord itself and we have no direct way to directly
-> monitor or
-> police.  You can choose to block all private messages, allow all
-> private
-> messages, or accept PMs from a subset of people.  This is similar to
-> what we
-> have today with IRC, so I expect there to be no issues, but if anyone
-> feels
-> they are on the receiving end of unwanted behavior please report by
-> following
-> the procedures outlined in the CoC.
-> 
-> 
-> ## Can I use my existing Discord account?
-> 
-> Yes, but... since Discord is widely used in a less-professional
-> setting
-> (Gaming), I feel it is important to point something out.
-> 
-> With Discord you have a Username for your account and a Nickname
-> within the
-> community.  Your Nickname is displayed in chats, but it is easy to
-> see your
-> Username within your profile.  If you do not everyone to know your
-> alter-ego
-> as F0rtN1ghtKing007, you may want to create a separate account or
-> change your
-> Username.  (If your existing Username might be construed as a CoC
-> violation,
-> please change it or create a separate account before joining.)
-> 
-> 
-> ## Won't this split the community into two messaging systems?  What
-> happens
-> with IRC?
-> 
-> Hopefully not, but maybe.  Just like software, sometimes someone
-> comes along
-> and refactors the solution to make it better.  Sometimes the new
-> solution
-> loses a few features along the way.  Sometimes the new solution
-> doesn't pan
-> out and it isn't fully adopted.  I don't see this as any different;
-> if it is
-> better, people will adopt it, and if not so be it.
-> 
-> The survey results and sentiment I have heard from some TSC members
-> indicate
-> to me that IRC might be an impediment to bettering the
-> community.  So, this is
-> an option for us to try.
-> 
-> For the time being, I personally will be on both IRC and Discord.  We
-> can
-> revisit in the future to decide if one should be deprecated.
-> 
-> 
-> ## Why didn't you choose Slack?
-> 
-> Some companies have chosen Slack as their internal messaging solution
-> as have
-> some open source communities.  It is, overall, a good offering in
-> many
-> settings.
-> 
-> For open source communities, the Free-tier of Slack has some
-> limitations that
-> I feel make it difficult to build a community around.  The biggest is
-> a limit
-> of 10,000 messages in the history.  After 10k messages, Slack starts
-> deleting
-> older messages.  In one community I participate in less-active
-> channels end up
-> losing their messages in only a few days, which means that meaningful
-> conversations can only take place in the most active channels among
-> the most
-> active users.  That community has recently moved off Slack and onto
-> Discord
-> for this reason.
-> 
-> The paid-tiers of Slack are pretty expensive for our community.  We
-> typically
-> have ~75 active participants on IRC.  Assuming we grow this
-> engagement and we
-> count transient users, we'd probably be looking at $10,000 per year
-> for the
-> lowest tier of Slack.  Not only do we not have a budget as a
-> community but
-> that does not, to me, seem like a very effective use of any funds we
-> might
-> have.
-> 
-> Discord is as good or better than Slack, as best I can tell, in every
-> way
-> except one: threaded messages.  Hopefully, Discord will add that as a
-> feature
-> in the future.  I feel the elimination of Free-tier limits and
-> voice/video
-> features of Discord will make it a better choice for us.
-> 
-> A reasonably objective article as a comparison between the two
-> suggests that
-> Discord is better for large open source communities[2].
-> 
-> ## Why didn't you choose <X>?
-> 
-> Whatever option we pick some people will be pleased and some will
-> not.
-> Looking at the TSC member companies, I think each company has chosen
-> a
-> different product as their internal messaging solution.  Some of them
-> have
-> their own competitive offering to Slack.  I did not do an exhaustive
-> feature-by-feature comparison of all competitive offerings.
-> 
-> In terms of Open Source communities, and similar communities
-> utilizing a free
-> or low-priced option, Discord and Slack seem to have the most
-> usage.  Many
-> other large open source have Discord communities as well (some
-> official and
-> some unofficial).  Rust, Vue, Angular, Fedora, OpenSUSE, and Electron
-> are a
-> few I recognized on a list by Discord[3].  The Python Discord
-> community has
-> over 100,000 members.
-> 
-> There are some fully open source alternatives to Discord.  The two
-> most
-> popular are Riot.IM and Mattermost.  Mattermost would require us to
-> host the
-> service, similar to what we do for Gerrit.  We have an existing
-> Riot.IM bridge
-> to IRC but we have had reliability issues with it.
-> 
-> If something better comes along and/or Discord presents problems for
-> us, I
-> suspect the community will be nimble enough to move along to the next
-> great
-> thing.
-> 
-> 
-> ## Does this mean _you_ control the Discord community?
-> 
-> I originally created the existing IRC set up and have given some of
-> the other
-> long-time members administration on it.  The permissions I set up on
-> Discord
-> are identical and two other people currently have administrator-level
-> permissions there as well.  If the TSC decides on a particular
-> governance of
-> our communities, such as IRC or Discord, I'll happily transfer
-> ownership as
-> requested.  Discord ownership can be transferred to another account
-> very
-> easily.
-> 
-> As stated earlier, no one with admin-level access has the ability to
-> read
-> private messages either on IRC or Discord.
-> 
-> ---
-> 
-> 1. 
-> https://lore.kernel.org/openbmc/bb565e15-f5a7-b0b2-d987-41b1a5e9acbb@gmail.com/
-> 2. https://droplr.com/how-to/productivity-tools/slack-vs-discord/
-> 3. https://discord.com/open-source
-> 
--- 
-Best regards,
-Andrei Kartashev
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dgb2312">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+hello everyone,</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp; &nbsp;I looked at the phosphor-host-ipmid code and combined i=
+t with ipmi-inventory-sensors.yaml for debugging. I found that in the ipmi-=
+inventory-sensors.yaml file, one inventory can only correspond to one offse=
+t of one sensor.&nbsp;</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+&nbsp; &nbsp; &nbsp;If mine An inventory has multiple sensors, and each sen=
+sor has multiple offsets to be processed. How to deal with it?</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+ipmi-inventory-sensors.yaml&nbsp;as follow:</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+/xyz/openbmc_project/inventory/system:
+<div>&nbsp; &nbsp; eventReadingType: 111</div>
+<div>&nbsp; &nbsp; offset: 2</div>
+<div>&nbsp; &nbsp; sensorID: 144</div>
+<div>&nbsp; &nbsp; sensorType: 18</div>
+<div>/xyz/openbmc_project/inventory/system/chassis/motherboard:</div>
+<div>&nbsp; &nbsp; eventReadingType: 3</div>
+<div>&nbsp; &nbsp; offset: 0</div>
+<div>&nbsp; &nbsp; sensorID: 140</div>
+<div>&nbsp; &nbsp; sensorType: 199</div>
+<div>/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu0:</div>
+<div>&nbsp; &nbsp; eventReadingType: 111</div>
+<div>&nbsp; &nbsp; offset: 8</div>
+<div>&nbsp; &nbsp; sensorID: 8</div>
+<div>&nbsp; &nbsp; sensorType: 7</div>
+<div>/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu0/core0:<=
+/div>
+<div>&nbsp; &nbsp; eventReadingType: 111</div>
+<div>&nbsp; &nbsp; offset: 8</div>
+<div>&nbsp; &nbsp; sensorID: 43</div>
+<div>&nbsp; &nbsp; sensorType: 7</div>
+<div>/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu0/core1:<=
+/div>
+<div>&nbsp; &nbsp; eventReadingType: 111</div>
+<div>&nbsp; &nbsp; offset: 8</div>
+<div>&nbsp; &nbsp; sensorID: 44</div>
+<div>&nbsp; &nbsp; sensorType: 7</div>
+<div>/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu0/core10:=
+</div>
+<div>&nbsp; &nbsp; eventReadingType: 111</div>
+<div>&nbsp; &nbsp; offset: 8</div>
+<div>&nbsp; &nbsp; sensorID: 53</div>
+<div>&nbsp; &nbsp; sensorType: 7</div>
+<div>/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu0/core11:=
+</div>
+<div>&nbsp; &nbsp; eventReadingType: 111</div>
+<div>&nbsp; &nbsp; offset: 8</div>
+<div>&nbsp; &nbsp; sensorID: 54</div>
+&nbsp; &nbsp; sensorType: 7<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Harleyzhou</div>
+</body>
+</html>
 
-
+--_000_ME2PR01MB2675B102E59FEA8233F6436CFEFF0ME2PR01MB2675ausp_--
