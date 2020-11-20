@@ -2,85 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D0B62BA208
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:50:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 389A12BA217
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 06:57:51 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cclxn2cKKzDqwV
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:50:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ccm6h2gdYzDqdM
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 16:57:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=redhat.com (client-ip=63.128.21.124;
- helo=us-smtp-delivery-124.mimecast.com; envelope-from=brouer@redhat.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12b;
+ helo=mail-lf1-x12b.google.com; envelope-from=wak@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256
- header.s=mimecast20190719 header.b=aFvwhHHD; 
- dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com
- header.a=rsa-sha256 header.s=mimecast20190719 header.b=aFvwhHHD; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-124.mimecast.com
- (us-smtp-delivery-124.mimecast.com [63.128.21.124])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=rnadXbX6; dkim-atps=neutral
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com
+ [IPv6:2a00:1450:4864:20::12b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CcWnk0RHdzDqpC
- for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 07:42:17 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1605818535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pgYqjANhFZVw2xsV1NPryI63UVScbHN7GEpAwzgrcBA=;
- b=aFvwhHHDXDLqbjYYG/3ApYiRDtSZEsAQaUufHsOZI8DJEANFGKf6vv7ptjdSBUpAujdOrE
- uQ+02e0LZvJ0fyvxJeq1jexjMKilhzm87L5mvWOOFEuLRX0A+4GSdCXDOn53XmSzmJPBTz
- d4o/YLkJVIUDX90Uqq1avnCu7l1Gk5U=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1605818535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pgYqjANhFZVw2xsV1NPryI63UVScbHN7GEpAwzgrcBA=;
- b=aFvwhHHDXDLqbjYYG/3ApYiRDtSZEsAQaUufHsOZI8DJEANFGKf6vv7ptjdSBUpAujdOrE
- uQ+02e0LZvJ0fyvxJeq1jexjMKilhzm87L5mvWOOFEuLRX0A+4GSdCXDOn53XmSzmJPBTz
- d4o/YLkJVIUDX90Uqq1avnCu7l1Gk5U=
-Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
- [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-428-J2xKKEZ6OOWubPMcg1L6iQ-1; Thu, 19 Nov 2020 15:42:10 -0500
-X-MC-Unique: J2xKKEZ6OOWubPMcg1L6iQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.phx2.redhat.com
- [10.5.11.22])
- (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by mimecast-mx01.redhat.com (Postfix) with ESMTPS id C76F11005D5C;
- Thu, 19 Nov 2020 20:42:04 +0000 (UTC)
-Received: from carbon (unknown [10.36.110.8])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7DFF810016F4;
- Thu, 19 Nov 2020 20:41:56 +0000 (UTC)
-Date: Thu, 19 Nov 2020 21:41:55 +0100
-From: Jesper Dangaard Brouer <brouer@redhat.com>
-To: Jakub Kicinski <kuba@kernel.org>
-Subject: Re: XDP maintainer match (Was  [PATCH v2 0/2] hwmon: (max127) Add
- Maxim MAX127 hardware monitoring)
-Message-ID: <20201119214155.5285e2d2@carbon>
-In-Reply-To: <20201119095928.01fd10e0@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
-References: <20201118230929.18147-1-rentao.bupt@gmail.com>
- <20201118232719.GI1853236@lunn.ch>
- <20201118234252.GA18681@taoren-ubuntu-R90MNF91>
- <20201119010119.GA248686@roeck-us.net>
- <20201119012653.GA249502@roeck-us.net>
- <20201119074634.2e9cb21b@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
- <20201119173535.1474743d@carbon>
- <088057533a9feb330964bdab0b1b8d2f69b7a22c.camel@perches.com>
- <20201119095928.01fd10e0@kicinski-fedora-PC1C0HJN.hsd1.ca.comcast.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Ccm5l25ZhzDqdS
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 16:56:54 +1100 (AEDT)
+Received: by mail-lf1-x12b.google.com with SMTP id u19so11791892lfr.7
+ for <openbmc@lists.ozlabs.org>; Thu, 19 Nov 2020 21:56:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=mgM6yrsOYHJbBurdKGkHMP6wD0m+SDWcc+1vtYEnt84=;
+ b=rnadXbX6gW95Mv3hNnqPvsJcoIzWL5syV9UEXFItpfsKS6O/4jqfEFjpGtsS1T1f2P
+ q8LPAq4sRK3w5TeOhMd7Z284/c2l++C/VrBwNdT7iH3EDrGiP8mNgcWrexXHHhx7wG0S
+ +BsQJMWFuim+Qfd4xjzf5WZpFEQQQAUdTAmfaJO8w1xnxw1BBT27ffAd0anPSoM7iINM
+ 8heIuLgIwKjD9gh9B6Prlm4ErE1t256G+7PskhfuStdf+l/rmm/2K5SxyfyfqEtlXyRV
+ aaQnKk6jghYunp6eCvDgz2ByepcBoNW0WRmIsAY+8hZM0FUS+KgsGLGalRXqaIcAZodw
+ ZHBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=mgM6yrsOYHJbBurdKGkHMP6wD0m+SDWcc+1vtYEnt84=;
+ b=kmBxwK5Zs81Qsp4yb5feYIxdWu5JUGC5yNqMBfhQ3JO+jtajo7yxlkdcnTa3+cdc8q
+ oOTBShFKuPlUFfJIKDoqKjOxzibddmC0uRmSaTnwUyLg5p+ibotuD+bfd+bh7nT5jvaF
+ y3ijzBf5O17/kPZw5NynyMtLUSCtMw+AgXtIHx4JWXw1renPIEnH2cFCuwaL44eiHniv
+ may7SKa0s/D406SXD2nY5bVOrVTK/FhyoZEZ46IiB+n3UuR6UDR72NfcQSo7pYRdH/wl
+ kNnHI9U7hZ5tkU8iH4NbgFMdVBFm/G9SGz4Onfd08TFyVr2KQ5f2wGIEJ/ChTG4qrtBk
+ M9Hw==
+X-Gm-Message-State: AOAM533C2oB9+kBVUs9OHUxuWJqt/zz/G+6TDRJ4MzJL4jcBrGpf9Ko1
+ 0q+dhyQBBIDwtGE/PGLl/RlhiKNZJ59gTQh1Ab0stQ==
+X-Google-Smtp-Source: ABdhPJygySvzbgEwVm3wKP6hWjTs+cbUfyDkwAJH4kG2qTXfNZheo04Y5dSRm02fprTJppowiFQGrmboykVgcGX9mWo=
+X-Received: by 2002:a19:4915:: with SMTP id w21mr7322033lfa.57.1605851809768; 
+ Thu, 19 Nov 2020 21:56:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.22
-X-Mailman-Approved-At: Fri, 20 Nov 2020 16:41:22 +1100
+References: <DM6PR08MB588362D381EC3603682F9B32B2E20@DM6PR08MB5883.namprd08.prod.outlook.com>
+In-Reply-To: <DM6PR08MB588362D381EC3603682F9B32B2E20@DM6PR08MB5883.namprd08.prod.outlook.com>
+From: William Kennington <wak@google.com>
+Date: Fri, 20 Nov 2020 00:56:38 -0500
+Message-ID: <CAPnigKmZ1FHWXjbhG_XnrgmsYPpjXQhTLwM0cW=6Mf00iQatXQ@mail.gmail.com>
+Subject: Re: phosphor-ipmi-flash build error
+To: Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
+Content-Type: multipart/alternative; boundary="000000000000af87f005b4838225"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,68 +72,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Andrew Lunn <andrew@lunn.ch>,
- Jean Delvare <jdelvare@suse.com>, Jesper Dangaard Brouer <hawk@kernel.org>,
- Daniel Borkmann <daniel@iogearbox.net>, Jonathan Corbet <corbet@lwn.net>,
- netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-doc@vger.kernel.org,
- John Fastabend <john.fastabend@gmail.com>, Alexei Starovoitov <ast@kernel.org>,
- linux-kernel@vger.kernel.org, brouer@redhat.com,
- Tao Ren <rentao.bupt@gmail.com>, taoren@fb.com, Joe Perches <joe@perches.com>,
- bpf@vger.kernel.org, mikechoi@fb.com, "David S .
- Miller" <davem@davemloft.net>, Guenter Roeck <linux@roeck-us.net>
+Cc: Lancelot Kao <lancelot.cy.kao@fii-na.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ XP Chen <Xiao-Peng.Chen@fii-na.com>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 19 Nov 2020 09:59:28 -0800
-Jakub Kicinski <kuba@kernel.org> wrote:
+--000000000000af87f005b4838225
+Content-Type: text/plain; charset="UTF-8"
 
-> On Thu, 19 Nov 2020 09:09:53 -0800 Joe Perches wrote:
-> > On Thu, 2020-11-19 at 17:35 +0100, Jesper Dangaard Brouer wrote: =20
-> > > On Thu, 19 Nov 2020 07:46:34 -0800 Jakub Kicinski <kuba@kernel.org> w=
-rote:   =20
-> >  =20
-> > > I think it is a good idea to change the keyword (K:), but I'm not sure
-> > > this catch what we want, maybe it does.  The pattern match are meant =
-to
-> > > catch drivers containing XDP related bits.
-> > >=20
-> > > Previously Joe Perches <joe@perches.com> suggested this pattern match,
-> > > which I don't fully understand... could you explain Joe?
-> > >=20
-> > > =C2=A0=C2=A0(?:\b|_)xdp(?:\b|_)   =20
-> >=20
-> > This regex matches only:
-> >=20
-> > 	xdp
-> > 	xdp_<anything>
-> > 	<anything>_xdp_<anything>
-> > 	<anything>_xdp
-> >  =20
-> > > For the filename (N:) regex match, I'm considering if we should remove
-> > > it and list more files explicitly.  I think normal glob * pattern
-> > > works, which should be sufficient.   =20
-> >=20
-> > Lists are generally more specific than regex globs. =20
->=20
-> Checking like Alexei did it seems Joe's version is faster and better:
->=20
-> $ git grep -l -E "[^a-z0-9]xdp[^a-z0-9]" | wc -l
-> 295
-> $ git grep -l -E '(\b|_)xdp(\b|_)' | wc -l
-> 297
-> $ time git grep -l -E '(\b|_)xdp(\b|_)' > /tmp/a
+If you are installing these manually, be sure to install
+https://github.com/martinmoene/span-lite before building and installing
+stdplus and phosphor-ipmi-flash.
 
-Okay, I guess this is the pattern you want: '(\b|_)xdp(\b|_)'
+>
 
-=20
-> Joe would you like to send a patch, or should I?
+--000000000000af87f005b4838225
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-As you noticed I already send out a patch, I can send a new with your
-pattern, as it seems to be faster.
+<div dir=3D"ltr"><div>If you are installing these manually, be sure to inst=
+all=C2=A0<a href=3D"https://github.com/martinmoene/span-lite">https://githu=
+b.com/martinmoene/span-lite</a> before=C2=A0building and installing stdplus=
+ and phosphor-ipmi-flash.</div><div class=3D"gmail_quote"><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex"><div lang=3D"EN-US"><div class=3D"gmail-m_=
+-5300371022549447207WordSection1">
+</div>
+</div>
 
---=20
-Best regards,
-  Jesper Dangaard Brouer
-  MSc.CS, Principal Kernel Engineer at Red Hat
-  LinkedIn: http://www.linkedin.com/in/brouer
+</blockquote></div></div>
 
+--000000000000af87f005b4838225--
