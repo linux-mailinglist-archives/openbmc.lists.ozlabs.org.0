@@ -2,102 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A9C52BB12F
-	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 18:11:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DF572BB59D
+	for <lists+openbmc@lfdr.de>; Fri, 20 Nov 2020 20:34:54 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cd3454r7VzDqyb
-	for <lists+openbmc@lfdr.de>; Sat, 21 Nov 2020 04:11:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cd6FR0tLnzDr1K
+	for <lists+openbmc@lfdr.de>; Sat, 21 Nov 2020 06:34:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::130;
+ helo=mail-lf1-x130.google.com; envelope-from=wak@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=i3cmMoLj; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=Lb8BgWAQ; dkim-atps=neutral
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com
+ [IPv6:2a00:1450:4864:20::130])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cd33126YNzDqyb
- for <openbmc@lists.ozlabs.org>; Sat, 21 Nov 2020 04:10:35 +1100 (AEDT)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0AKH1nFp062566; Fri, 20 Nov 2020 12:10:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=KXRUlIxeV6nsgJW5+Jzf0jofVXpjjvLrJ5MGg4ZA+Sc=;
- b=i3cmMoLjPL/i6YyFt0Hbzt0oYnaYiGeJi9kWNX9cIbrUnHV+5DOqEPXKI+NNVUsAOeLv
- eoMvgKDT9lxz297bs02kCQlUj100Ub8ojnCKT7yLWBfqjovpgV6D7sIMwjm+IiFZirL3
- mVVTm0xhpXSl+gKkZC/w4HMN9Fogr6EZemfLS+HTGL4rO8MWDVGpS/pRd9AFlr9SDN0P
- eA/9YdoEqCpaNnRs+5tRATFZ/SqP6ZbxJQrhX6NWJHVkDDBOjsiIdvdsyuRzJYF8EvlA
- TCH8R3EGKm81ON3pkqhiZCGGdQiDUvcBOW57auOpXsY7Tnge9U8qFqtF114shY1EP8tf Wg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34xd7xjpx1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Nov 2020 12:10:25 -0500
-Received: from m0098393.ppops.net (m0098393.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 0AKH2Wnt071311;
- Fri, 20 Nov 2020 12:10:24 -0500
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34xd7xjpwn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Nov 2020 12:10:24 -0500
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AKH7bFc001347;
- Fri, 20 Nov 2020 17:10:23 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma03dal.us.ibm.com with ESMTP id 34w263f3ur-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Nov 2020 17:10:23 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0AKHAMUq11535050
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Nov 2020 17:10:22 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF182B2064;
- Fri, 20 Nov 2020 17:10:22 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E36E6B205F;
- Fri, 20 Nov 2020 17:10:21 +0000 (GMT)
-Received: from [9.65.247.196] (unknown [9.65.247.196])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
- Fri, 20 Nov 2020 17:10:21 +0000 (GMT)
-Subject: Re: Fault handling(Threshold exceeds/low) in Fan and NIC sensors
-To: Kumar Thangavel <thangavel.k@hcl.com>, Ed Tanous <ed@tanous.net>
-References: <HK0PR04MB2964AA77874471609F0B25BEFDE60@HK0PR04MB2964.apcprd04.prod.outlook.com>
- <CACWQX81k6M6acw0VL3aYA_uqpNsEUjZ3DhiAQp_mXLbGJU87=g@mail.gmail.com>
- <HK0PR04MB2964EA39F0F9AD7ED1A03535FDE30@HK0PR04MB2964.apcprd04.prod.outlook.com>
- <CACWQX82oZiC0e6DJd=M10COJOqORy-ZJyB5biXyecFw26zpaLg@mail.gmail.com>
- <HK0PR04MB2964D64D0DB9F45F5757DF49FDE20@HK0PR04MB2964.apcprd04.prod.outlook.com>
-From: Matt Spinler <mspinler@linux.ibm.com>
-Message-ID: <d8116efd-678c-2450-1756-a0bacc470858@linux.ibm.com>
-Date: Fri, 20 Nov 2020 11:10:25 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.4.3
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cd6DP6hZRzDqsh
+ for <openbmc@lists.ozlabs.org>; Sat, 21 Nov 2020 06:33:54 +1100 (AEDT)
+Received: by mail-lf1-x130.google.com with SMTP id u19so15059932lfr.7
+ for <openbmc@lists.ozlabs.org>; Fri, 20 Nov 2020 11:33:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=27k7aG7DmMY9JFgMXEE7InBYh3/n3zZoOuxDok0DdYk=;
+ b=Lb8BgWAQfBtUSc0+ZRdbV1pd3a16DU8KIZ7KMrUKUIV8GU0BWRjyuv4cvEUSnnJaZs
+ 85kOZiDTHeh3WRn0ygIXGGlWkUIEbY4rQlWChywQCb5mw1Vgod0gdM8I812xjfc7Qexc
+ DW8DCU7mkD+OSpGXRHtfsDFiQTIoMSrcXHvKSomY90D51r/0GW1tqxEZEH4ghHLIyttZ
+ cx4f3OWRel/kh5nQ3RTAXJxEyji3Vec3RYVMYvViz7x6J00VuEYyO45wEqf9wO8gfZXL
+ l6ShMDPWh+kxY4MCaNCb1Z9ZNPE23z69yDVTM3GHzedHAbfrn9j5dsq4zHSDQ5uZZnjt
+ Yu/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=27k7aG7DmMY9JFgMXEE7InBYh3/n3zZoOuxDok0DdYk=;
+ b=lMvpAMBwAC55aP7JGVZEpYQzSYFOM7c1qjNtTRVk9b5mdTYQdV9AP2tOVRmxH7mfAl
+ gsyEYNB9tjY8LYwW6vV3xLzvunsLVxuasRNbR5RxXdmc+16iQwpZf3beYnpBWeeSKvUI
+ QKPf0rcYokm4U++9xDDMXmInWtCBtJ5LkhToagCQ79B9p0cHtcHoDx0xUUPDwvcV+CmK
+ hxTX41QbQXY/QreesDEBWg9L9EyRHgeMe2As5gLal7UI5Bbv9YHqHlqGL5pDOsSdIDYr
+ 7zo7Z8HnDguIZa9tzqISign8CEWTo4VFx/5J42LvdTC8c6YYwXGdXHG8BSErRHQFaz7W
+ UW6Q==
+X-Gm-Message-State: AOAM532LU/rGhm2v2zVij2V9T8fN9cfkW2/XPJW4mZUQ6t5oY8LVjRzo
+ z7pKZvbZI51FujxpPw+RbCwjtjpYH3j4MYHtU/xUpQ==
+X-Google-Smtp-Source: ABdhPJzTjo1Bj9/8xoAbMNINxOxcl/c7hI/UsjulX9Wbn8rrfG/D69VgAlOcaQoBkGFK5+ow6gcADjHG/Sw4FJ3kbX0=
+X-Received: by 2002:ac2:4ecd:: with SMTP id p13mr9080736lfr.430.1605900829272; 
+ Fri, 20 Nov 2020 11:33:49 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <HK0PR04MB2964D64D0DB9F45F5757DF49FDE20@HK0PR04MB2964.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-20_09:2020-11-20,
- 2020-11-20 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0
- mlxscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501
- malwarescore=0 suspectscore=0 clxscore=1011 mlxlogscore=999 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011200113
+References: <5af426cdbf754c2d898d37d7f591464d@SCL-EXCHMB-13.phoenix.com>
+ <CAO=notxPWFReD04Rmqgnitot6VP6aEKLRmKyM4gce1s4VgQ_nw@mail.gmail.com>
+In-Reply-To: <CAO=notxPWFReD04Rmqgnitot6VP6aEKLRmKyM4gce1s4VgQ_nw@mail.gmail.com>
+From: William Kennington <wak@google.com>
+Date: Fri, 20 Nov 2020 14:33:38 -0500
+Message-ID: <CAPnigK=gakwpicdz7ut-TN5ShQZ8HKBvZkObEJcO6qvNrs=9Xg@mail.gmail.com>
+Subject: Re: Failure building burn_my_bmc
+To: Patrick Venture <venture@google.com>
+Content-Type: multipart/alternative; boundary="00000000000079beb905b48eecdd"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,117 +73,308 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Zhikui Ren <zhikui.ren@intel.com>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Patrick Venture <venture@google.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Vernon Mauery <vernon.mauery@linux.intel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: Patrick Voelker <Patrick_Voelker@phoenix.com>,
+ "OpenBMC \(openbmc@lists.ozlabs.org\)" <openbmc@lists.ozlabs.org>,
+ "anoo@us.ibm.com" <anoo@us.ibm.com>,
+ "brandonkim@google.com" <brandonkim@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--00000000000079beb905b48eecdd
+Content-Type: text/plain; charset="UTF-8"
 
+Just make sure you have span-lite installed first if you are
+installing everything locally https://github.com/martinmoene/span-lite
 
-On 11/17/2020 5:59 AM, Kumar Thangavel wrote:
-> Classification: Internal
+On Wed, Nov 18, 2020 at 7:28 PM Patrick Venture <venture@google.com> wrote:
+
+> On Wed, Nov 18, 2020 at 3:18 PM Patrick Voelker
+> <Patrick_Voelker@phoenix.com> wrote:
+> >
+> > I'm having an issue building burn_my_bmc with the instructions listed on
+> https://github.com/openbmc/phosphor-ipmi-flash . Got through building all
+> the dependencies but I get the following errors when building
+> pci.cpp.  Looks like maybe stdplus changed?
 >
-> Hi Ed,
+> William, PTAL, thanks!
 >
->          Please find below my response inline.
+> >
+> > pvoelker@bmc-dev:~/bmc/host-tool/phosphor-ipmi-flash$ make
+> > make  all-recursive
+> > make[1]: Entering directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> > Making all in .
+> > make[2]: Entering directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> >   CXX      internal/libfirmware_common_la-sys.lo
+> >   CXXLD    libfirmware_common.la
+> > ar: `u' modifier ignored since `D' is the default (see `U')
+> > make[2]: Leaving directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> > Making all in tools
+> > make[2]: Entering directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> > Making all in .
+> > make[3]: Entering directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> >   CXX      libupdater_la-updater.lo
+> >   CXX      libupdater_la-handler.lo
+> >   CXX      libupdater_la-helper.lo
+> >   CXX      libupdater_la-bt.lo
+> >   CXX      libupdater_la-lpc.lo
+> >   CXX      libupdater_la-io.lo
+> >   CXX      libupdater_la-net.lo
+> >   CXX      libupdater_la-pci.lo
+> > In file included from pci.cpp:17:0:
+> > pci.hpp:40:39: error: 'span' in namespace 'stdplus' does not name a
+> template type
+> >      virtual void write(const stdplus::span<const std::uint8_t> data) =
+> 0;
+> >                                        ^~~~
+> > pci.hpp:40:43: error: expected ',' or '...' before '<' token
+> >      virtual void write(const stdplus::span<const std::uint8_t> data) =
+> 0;
+> >                                            ^
+> > pci.hpp:51:39: error: 'span' in namespace 'stdplus' does not name a
+> template type
+> >      virtual void write(const stdplus::span<const std::uint8_t> data)
+> override;
+> >                                        ^~~~
+> > pci.hpp:51:43: error: expected ',' or '...' before '<' token
+> >      virtual void write(const stdplus::span<const std::uint8_t> data)
+> override;
+> >                                            ^
+> > pci.cpp:105:44: error: 'span' in namespace 'stdplus' does not name a
+> template type
+> >  void PciAccessBridge::write(const stdplus::span<const std::uint8_t>
+> data)
+> >                                             ^~~~
+> > pci.cpp:105:48: error: expected ',' or '...' before '<' token
+> >  void PciAccessBridge::write(const stdplus::span<const std::uint8_t>
+> data)
+> >                                                 ^
+> > pci.cpp: In member function 'virtual void
+> host_tool::PciAccessBridge::write(int)':
+> > pci.cpp:107:9: error: 'data' was not declared in this scope
+> >      if (data.size() > dataLength)
+> >          ^~~~
+> > pci.cpp:107:9: note: suggested alternatives:
+> > In file included from /usr/include/c++/7/string:51:0,
+> >                  from /usr/include/c++/7/stdexcept:39,
+> >                  from /usr/include/c++/7/system_error:41,
+> >                  from ../internal/sys.hpp:19,
+> >                  from pci.hpp:20,
+> >                  from pci.cpp:17:
+> > /usr/include/c++/7/bits/range_access.h:318:5: note:   'std::data'
+> >      data(initializer_list<_Tp> __il) noexcept
+> >      ^~~~
+> > In file included from pci.cpp:26:0:
+> > /usr/local/include/fmt/format.h:952:8: note:   'fmt::v7::detail::data'
+> >  struct data : basic_data<> {};
+> >         ^~~~
+> > pci.cpp:114:36: error: 'data' was not declared in this scope
+> >      std::memcpy(addr + dataOffset, data.data(), data.size());
+> >                                     ^~~~
+> > pci.cpp:114:36: note: suggested alternatives:
+> > In file included from /usr/include/c++/7/string:51:0,
+> >                  from /usr/include/c++/7/stdexcept:39,
+> >                  from /usr/include/c++/7/system_error:41,
+> >                  from ../internal/sys.hpp:19,
+> >                  from pci.hpp:20,
+> >                  from pci.cpp:17:
+> > /usr/include/c++/7/bits/range_access.h:318:5: note:   'std::data'
+> >      data(initializer_list<_Tp> __il) noexcept
+> >      ^~~~
+> > In file included from pci.cpp:26:0:
+> > /usr/local/include/fmt/format.h:952:8: note:   'fmt::v7::detail::data'
+> >  struct data : basic_data<> {};
+> >         ^~~~
+> > Makefile:654: recipe for target 'libupdater_la-pci.lo' failed
+> > make[3]: *** [libupdater_la-pci.lo] Error 1
+> > make[3]: Leaving directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> > Makefile:708: recipe for target 'all-recursive' failed
+> > make[2]: *** [all-recursive] Error 1
+> > make[2]: Leaving directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash/tools'
+> > Makefile:608: recipe for target 'all-recursive' failed
+> > make[1]: *** [all-recursive] Error 1
+> > make[1]: Leaving directory
+> '/home/pvoelker/bmc/host-tool/phosphor-ipmi-flash'
+> > Makefile:474: recipe for target 'all' failed
+> > make: *** [all] Error 2
+> >
 >
-> Thanks,
-> Kumar.
+
+--00000000000079beb905b48eecdd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Just make sure you have span-lite installed first if you a=
+re installing=C2=A0everything locally=C2=A0<a href=3D"https://github.com/ma=
+rtinmoene/span-lite">https://github.com/martinmoene/span-lite</a></div><br>=
+<div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, No=
+v 18, 2020 at 7:28 PM Patrick Venture &lt;<a href=3D"mailto:venture@google.=
+com">venture@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">On Wed, Nov 18, 2020 at 3:18 PM Patrick Voelker<br>
+&lt;<a href=3D"mailto:Patrick_Voelker@phoenix.com" target=3D"_blank">Patric=
+k_Voelker@phoenix.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; I&#39;m having an issue building burn_my_bmc with the instructions lis=
+ted on <a href=3D"https://github.com/openbmc/phosphor-ipmi-flash" rel=3D"no=
+referrer" target=3D"_blank">https://github.com/openbmc/phosphor-ipmi-flash<=
+/a> . Got through building all the dependencies but I get the following err=
+ors when building<br>
+pci.cpp.=C2=A0 Looks like maybe stdplus changed?<br>
+<br>
+William, PTAL, thanks!<br>
+<br>
+&gt;<br>
+&gt; pvoelker@bmc-dev:~/bmc/host-tool/phosphor-ipmi-flash$ make<br>
+&gt; make=C2=A0 all-recursive<br>
+&gt; make[1]: Entering directory &#39;/home/pvoelker/bmc/host-tool/phosphor=
+-ipmi-flash&#39;<br>
+&gt; Making all in .<br>
+&gt; make[2]: Entering directory &#39;/home/pvoelker/bmc/host-tool/phosphor=
+-ipmi-flash&#39;<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 internal/libfirmware_common_la-sys=
+.lo<br>
+&gt;=C2=A0 =C2=A0CXXLD=C2=A0 =C2=A0 <a href=3D"http://libfirmware_common.la=
+" rel=3D"noreferrer" target=3D"_blank">libfirmware_common.la</a><br>
+&gt; ar: `u&#39; modifier ignored since `D&#39; is the default (see `U&#39;=
+)<br>
+&gt; make[2]: Leaving directory &#39;/home/pvoelker/bmc/host-tool/phosphor-=
+ipmi-flash&#39;<br>
+&gt; Making all in tools<br>
+&gt; make[2]: Entering directory &#39;/home/pvoelker/bmc/host-tool/phosphor=
+-ipmi-flash/tools&#39;<br>
+&gt; Making all in .<br>
+&gt; make[3]: Entering directory &#39;/home/pvoelker/bmc/host-tool/phosphor=
+-ipmi-flash/tools&#39;<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-updater.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-handler.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-helper.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-bt.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-lpc.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-io.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-net.lo<br>
+&gt;=C2=A0 =C2=A0CXX=C2=A0 =C2=A0 =C2=A0 libupdater_la-pci.lo<br>
+&gt; In file included from pci.cpp:17:0:<br>
+&gt; pci.hpp:40:39: error: &#39;span&#39; in namespace &#39;stdplus&#39; do=
+es not name a template type<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 virtual void write(const stdplus::span&lt;const st=
+d::uint8_t&gt; data) =3D 0;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~<=
+br>
+&gt; pci.hpp:40:43: error: expected &#39;,&#39; or &#39;...&#39; before &#3=
+9;&lt;&#39; token<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 virtual void write(const stdplus::span&lt;const st=
+d::uint8_t&gt; data) =3D 0;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ^<br>
+&gt; pci.hpp:51:39: error: &#39;span&#39; in namespace &#39;stdplus&#39; do=
+es not name a template type<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 virtual void write(const stdplus::span&lt;const st=
+d::uint8_t&gt; data) override;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~<=
+br>
+&gt; pci.hpp:51:43: error: expected &#39;,&#39; or &#39;...&#39; before &#3=
+9;&lt;&#39; token<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 virtual void write(const stdplus::span&lt;const st=
+d::uint8_t&gt; data) override;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 ^<br>
+&gt; pci.cpp:105:44: error: &#39;span&#39; in namespace &#39;stdplus&#39; d=
+oes not name a template type<br>
+&gt;=C2=A0 void PciAccessBridge::write(const stdplus::span&lt;const std::ui=
+nt8_t&gt; data)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0^~~~<br>
+&gt; pci.cpp:105:48: error: expected &#39;,&#39; or &#39;...&#39; before &#=
+39;&lt;&#39; token<br>
+&gt;=C2=A0 void PciAccessBridge::write(const stdplus::span&lt;const std::ui=
+nt8_t&gt; data)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^<br>
+&gt; pci.cpp: In member function &#39;virtual void host_tool::PciAccessBrid=
+ge::write(int)&#39;:<br>
+&gt; pci.cpp:107:9: error: &#39;data&#39; was not declared in this scope<br=
 >
-> -----Original Message-----
-> From: Ed Tanous <ed@tanous.net>
-> Sent: Monday, November 16, 2020 9:29 PM
-> To: Kumar Thangavel <thangavel.k@hcl.com>
-> Cc: openbmc@lists.ozlabs.org; Velumani T-ERS,HCLTech <velumanit@hcl.com=
->; sdasari@fb.com; Patrick Williams <patrickw3@fb.com>; Patrick Venture <=
-venture@google.com>; Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>; Vernon =
-Mauery <vernon.mauery@linux.intel.com>; Zhikui Ren <zhikui.ren@intel.com>=
-
-> Subject: Re: Fault handling(Threshold exceeds/low) in Fan and NIC senso=
-rs
+&gt;=C2=A0 =C2=A0 =C2=A0 if (data.size() &gt; dataLength)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~<br>
+&gt; pci.cpp:107:9: note: suggested alternatives:<br>
+&gt; In file included from /usr/include/c++/7/string:51:0,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from /us=
+r/include/c++/7/stdexcept:39,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from /us=
+r/include/c++/7/system_error:41,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from ../=
+internal/sys.hpp:19,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from pci=
+.hpp:20,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from pci=
+.cpp:17:<br>
+&gt; /usr/include/c++/7/bits/range_access.h:318:5: note:=C2=A0 =C2=A0&#39;s=
+td::data&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 data(initializer_list&lt;_Tp&gt; __il) noexcept<br=
 >
-> [CAUTION: This Email is from outside the Organization. Unless you trust=
- the sender, Don=E2=80=99t click links or open attachments as it may be a=
- Phishing email, which can steal your Information and compromise your Com=
-puter.]
+&gt;=C2=A0 =C2=A0 =C2=A0 ^~~~<br>
+&gt; In file included from pci.cpp:26:0:<br>
+&gt; /usr/local/include/fmt/format.h:952:8: note:=C2=A0 =C2=A0&#39;fmt::v7:=
+:detail::data&#39;<br>
+&gt;=C2=A0 struct data : basic_data&lt;&gt; {};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~<br>
+&gt; pci.cpp:114:36: error: &#39;data&#39; was not declared in this scope<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 std::memcpy(addr + dataOffset, data.data(), data.s=
+ize());<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~<br>
+&gt; pci.cpp:114:36: note: suggested alternatives:<br>
+&gt; In file included from /usr/include/c++/7/string:51:0,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from /us=
+r/include/c++/7/stdexcept:39,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from /us=
+r/include/c++/7/system_error:41,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from ../=
+internal/sys.hpp:19,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from pci=
+.hpp:20,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from pci=
+.cpp:17:<br>
+&gt; /usr/include/c++/7/bits/range_access.h:318:5: note:=C2=A0 =C2=A0&#39;s=
+td::data&#39;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 data(initializer_list&lt;_Tp&gt; __il) noexcept<br=
 >
-> On Mon, Nov 16, 2020 at 5:05 AM Kumar Thangavel <thangavel.k@hcl.com> w=
-rote:
->> Classification: Internal
->>
->> Hi Ed,
->>
->>          In short, Our requirement is to take the actions when the fan=
- fails. That action is platform specific.
->>
->>          Fan failure :  This is based on Fan sensors. If fan sensor's =
-tach values is less than 33%, will consider as a fan failure. So will tak=
-e the actions to reduce the heat production in the system.
-> dbus-sensors and phosphor-pid-control already have mechanisms for handl=
-ing fan failure in these ways.  Take a look at the existing config files,=
- and they'll guide you on what you need to do next.
->
->   Kumar :  Are you saying about dbus-sensor's checkThresholds function =
-?  In that function, high/low threshold levels are handled.  Please confi=
-rm once.
->                   In that function,  planning to add the service to han=
-dle the platform specific actions.
->                   Also, planning to add a new field in entity manager t=
-o identify the particular sensors to handle this fault condition.
+&gt;=C2=A0 =C2=A0 =C2=A0 ^~~~<br>
+&gt; In file included from pci.cpp:26:0:<br>
+&gt; /usr/local/include/fmt/format.h:952:8: note:=C2=A0 =C2=A0&#39;fmt::v7:=
+:detail::data&#39;<br>
+&gt;=C2=A0 struct data : basic_data&lt;&gt; {};<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~<br>
+&gt; Makefile:654: recipe for target &#39;libupdater_la-pci.lo&#39; failed<=
+br>
+&gt; make[3]: *** [libupdater_la-pci.lo] Error 1<br>
+&gt; make[3]: Leaving directory &#39;/home/pvoelker/bmc/host-tool/phosphor-=
+ipmi-flash/tools&#39;<br>
+&gt; Makefile:708: recipe for target &#39;all-recursive&#39; failed<br>
+&gt; make[2]: *** [all-recursive] Error 1<br>
+&gt; make[2]: Leaving directory &#39;/home/pvoelker/bmc/host-tool/phosphor-=
+ipmi-flash/tools&#39;<br>
+&gt; Makefile:608: recipe for target &#39;all-recursive&#39; failed<br>
+&gt; make[1]: *** [all-recursive] Error 1<br>
+&gt; make[1]: Leaving directory &#39;/home/pvoelker/bmc/host-tool/phosphor-=
+ipmi-flash&#39;<br>
+&gt; Makefile:474: recipe for target &#39;all&#39; failed<br>
+&gt; make: *** [all] Error 2<br>
+&gt;<br>
+</blockquote></div>
 
-I have a need to monitor some temperature sensor thresholds and take=20
-various actions, such as creating
-phosphor-logging event logs and doing soft and hard shutdowns after=20
-various delays.=C2=A0 In fact, not all sensors
-I need to monitor will be provided by D-Bus sensors, but I do need to=20
-use data provided by entity
-manager to tell me things like how long to delay, etc.
-
-I wouldn't think that dbus-sensors is probably the appropriate place to=20
-put this code, since it isn't putting
-any sensors on D-Bus and won't necessarily being monitoring sensors=20
-provided by that repo.
-
-Does anyone have a good idea of where a daemon like this could go? If=20
-nowhere else, I could put it
-in phosphor-fan, though not fan related, since our platforms will always =
-
-use the fan-monitor app
-provided there which already does similar things for fan errors.
-
->
->>                                  So that,  hosts, NIC and other power =
-consuming modules.
->>
->>          Dbus-sensor's already handles the threshold masking. We just =
-use that threshold masking to take the platform specific actions.
->>
->>          Please let us know if any clarifications needed.
->>
->> Thanks,
->> Kumar.
-> Ps, Please don't toppost.
-> ::DISCLAIMER::
-> ________________________________
-> The contents of this e-mail and any attachment(s) are confidential and =
-intended for the named recipient(s) only. E-mail transmission is not guar=
-anteed to be secure or error-free as information could be intercepted, co=
-rrupted, lost, destroyed, arrive late or incomplete, or may contain virus=
-es in transmission. The e mail and its contents (with or without referred=
- errors) shall therefore not attach any liability on the originator or HC=
-L or its affiliates. Views or opinions, if any, presented in this email a=
-re solely those of the author and may not necessarily reflect the views o=
-r opinions of HCL or its affiliates. Any form of reproduction, disseminat=
-ion, copying, disclosure, modification, distribution and / or publication=
- of this message without the prior written consent of authorized represen=
-tative of HCL is strictly prohibited. If you have received this email in =
-error please delete it and notify the sender immediately. Before opening =
-any email and/or attachments, please check them for viruses and other def=
-ects.
-> ________________________________
-
-
+--00000000000079beb905b48eecdd--
