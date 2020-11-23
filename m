@@ -2,79 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2649C2C00E4
-	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 08:55:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 539DC2C0164
+	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 09:26:27 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CffbW31X7zDqNm
-	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 18:55:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CfgGm2vj4zDqMb
+	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 19:26:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::442;
- helo=mail-pf1-x442.google.com; envelope-from=rentao.bupt@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=VjXYdY/g; dkim-atps=neutral
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com
- [IPv6:2607:f8b0:4864:20::442])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=chunhui.jia@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CffZb1vXCzDqGv
- for <openbmc@lists.ozlabs.org>; Mon, 23 Nov 2020 18:55:00 +1100 (AEDT)
-Received: by mail-pf1-x442.google.com with SMTP id w6so14178166pfu.1
- for <openbmc@lists.ozlabs.org>; Sun, 22 Nov 2020 23:55:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=date:from:to:cc:subject:message-id:references:mime-version
- :content-disposition:content-transfer-encoding:in-reply-to
- :user-agent; bh=FEPRuawzGeFbEAxn5b/G025cS+qLskgXUTpDyKPvCGM=;
- b=VjXYdY/gYR0EM527744Z58MYRJDUzxHDOK1ZBqTlPv7Lwnpw4+M4xzyQj8Weqs4LU4
- 3e/lIXN0ebSlpiBSa89jfEIjlrZBfDkDAmvYlu0p04TD19RvHqDftKpUJ6hB7bPiKy9q
- A0wRGLqq2kqylil2/o+eLuUNcrCJqfZ1uACA5jJj42qCTDsjn1OGnsh4HdUfwSx7WaDm
- ZdIVMy8Y1YzxhB3YIyhJsc4eCwb6ioagxwlxiME8KDv4GKOAj8BCfEE8zHDAKttocoZ3
- +fOz/dviJVAbHUJVdW5IbFRvF5ZnGddUO37YgY5m65uunie53kWaaIwiOoXg3L51GP8a
- 1CZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:content-transfer-encoding
- :in-reply-to:user-agent;
- bh=FEPRuawzGeFbEAxn5b/G025cS+qLskgXUTpDyKPvCGM=;
- b=WEZiYTbhlf93BKwCUjblWJmKTDJlB5RpZI0GUmAtomeYNsp922SK6IcyHsQ18n07Tn
- CUJPBTGv5ke+oikYsS2me6riSPR74TGNFK5MpsehQjNx/oVTGgzxdD9bQhlMSw0qNgrv
- jleCP01K1BoDBTnQ682Y4Gub7jKYSkUHDRBDBCjQv9tX2SQQetFyDswe1hR1iMRNbd0/
- YByJDuxO43zG4wABSYsqpaL6Vu9NXf1lPtiGSbQ2DHWNd8Hl5cheBKHSc2Nxhw2WGfDk
- 742sqoKOMPOEEOdvITpYMA/V2k5I+LFBM1ZzYdZqkzdSHwxIXmo0jIdH/0z8kKh24neg
- Zkag==
-X-Gm-Message-State: AOAM530VrfpSbpTrtj6KjXvABEDTXIjymoRJk3ttILdUNYvrzsxd4K9j
- XffGebl1y0zdcsOQxeOamc4=
-X-Google-Smtp-Source: ABdhPJxAhVKy3/soLxuN9uzn3hNiR33i0oAg52lrxPU1VRlfwcnjeP8cfkp1nog2TPu54+PK7fIkUg==
-X-Received: by 2002:aa7:868e:0:b029:197:cc73:6f15 with SMTP id
- d14-20020aa7868e0000b0290197cc736f15mr15583535pfo.18.1606118097630; 
- Sun, 22 Nov 2020 23:54:57 -0800 (PST)
-Received: from taoren-ubuntu-R90MNF91 (c-73-252-146-110.hsd1.ca.comcast.net.
- [73.252.146.110])
- by smtp.gmail.com with ESMTPSA id s21sm9583735pgk.52.2020.11.22.23.54.56
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Sun, 22 Nov 2020 23:54:57 -0800 (PST)
-Date: Sun, 22 Nov 2020 23:54:49 -0800
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v3 1/2] hwmon: (max127) Add Maxim MAX127 hardware
- monitoring driver
-Message-ID: <20201123075448.GA3563@taoren-ubuntu-R90MNF91>
-References: <20201119175324.22472-1-rentao.bupt@gmail.com>
- <20201119175324.22472-2-rentao.bupt@gmail.com>
- <20201122183342.GA69512@roeck-us.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CfgFw6PT6zDqMH
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Nov 2020 19:25:39 +1100 (AEDT)
+IronPort-SDR: fmMLIuX9mqTSEsRG0536O/DHxoL+le3VVDHehkfQfeGO2WMmXqm6A8+CmFLoDvmDFwgCuOm1RT
+ fHDH3OWUCQIg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9813"; a="170939624"
+X-IronPort-AV: E=Sophos;i="5.78,361,1599548400"; 
+ d="scan'208,217";a="170939624"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Nov 2020 00:25:35 -0800
+IronPort-SDR: yoFZHjMR0TgQPUoih1LpjEhgxbIGYT2+RyEzT71+ms5mYzQvTvLzqI8gx41/1JuZMIBFc2adGZ
+ RDpG6Ewm9RAw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,361,1599548400"; 
+ d="scan'208,217";a="364576681"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga002.fm.intel.com with ESMTP; 23 Nov 2020 00:25:35 -0800
+Received: from shwdeopenbmc (shwdeopenbmc.ccr.corp.intel.com [10.239.164.28])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 232AB5802B1;
+ Mon, 23 Nov 2020 00:25:33 -0800 (PST)
+Date: Mon, 23 Nov 2020 16:25:34 +0800
+From: "chunhui.jia" <chunhui.jia@linux.intel.com>
+To: "Jayashree D" <jayashree-d@hcl.com>,"Artem Senichev" <artemsen@gmail.com>
+Subject: Re:  RE: Boot Order in Redfish and DBUS
+In-Reply-To: <SG2PR04MB3093D18983E984C7B5A0B013E1FC0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+References: <SG2PR04MB309381BFAE06A3462E57E0C6E1FF0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <SG2PR04MB30934A3A567C8025C3F72F4FE1FE0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <CAHsrh9JsuPkWZvh13MYSVwCKFtctiMRxv1Sk0X0rx5Duc=AvMg@mail.gmail.com>
+ <SG2PR04MB3093D18983E984C7B5A0B013E1FC0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+X-Mailer: NetEase FlashMail 2.4.1.32
+X-Priority: 3 (Normal)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20201122183342.GA69512@roeck-us.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Message-ID: <5FBB71FC.4060904@linux.intel.com>
+Content-Type: multipart/alternative;
+ boundary="NetEase-FlashMail-003-a56b1e44-4c63-499a-8f2c-da705ba86014"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,466 +68,254 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- linux-doc@vger.kernel.org, taoren@fb.com, openbmc@lists.ozlabs.org,
- Jonathan Corbet <corbet@lwn.net>, linux-kernel@vger.kernel.org,
- mikechoi@fb.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, Nov 22, 2020 at 10:33:42AM -0800, Guenter Roeck wrote:
-> On Thu, Nov 19, 2020 at 09:53:23AM -0800, rentao.bupt@gmail.com wrote:
-> > From: Tao Ren <rentao.bupt@gmail.com>
-> > 
-> > Add hardware monitoring driver for the Maxim MAX127 chip.
-> > 
-> > MAX127 min/max range handling code is inspired by the max197 driver.
-> > 
-> > Signed-off-by: Tao Ren <rentao.bupt@gmail.com>
-> 
-> Nice cleanup. Couple of minor comments.
-> 
-> Thanks,
-> Guenter
-> 
-> > ---
-> >  Changes in v3:
-> >    - no code change. xdp maintainers were removed from to/cc list.
-> >  Changes in v2:
-> >    - replace devm_hwmon_device_register_with_groups() with
-> >      devm_hwmon_device_register_with_info() API.
-> >    - divide min/max read and write methods to separate functions.
-> >    - fix raw-to-vin conversion logic.
-> >    - refine ctrl_byte handling so mutex is not needed to protect the
-> >      byte.
-> >    - improve i2c_transfer() error handling.
-> >    - a few other improvements (comments, variable naming, and etc.).
-> > 
-> >  drivers/hwmon/Kconfig  |   9 ++
-> >  drivers/hwmon/Makefile |   1 +
-> >  drivers/hwmon/max127.c | 346 +++++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 356 insertions(+)
-> >  create mode 100644 drivers/hwmon/max127.c
-> > 
-> > diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-> > index 9d600e0c5584..716df51edc87 100644
-> > --- a/drivers/hwmon/Kconfig
-> > +++ b/drivers/hwmon/Kconfig
-> > @@ -950,6 +950,15 @@ config SENSORS_MAX1111
-> >  	  This driver can also be built as a module. If so, the module
-> >  	  will be called max1111.
-> >  
-> > +config SENSORS_MAX127
-> > +	tristate "Maxim MAX127 12-bit 8-channel Data Acquisition System"
-> > +	depends on I2C
-> > +	help
-> > +	  Say y here to support Maxim's MAX127 DAS chips.
-> > +
-> > +	  This driver can also be built as a module. If so, the module
-> > +	  will be called max127.
-> > +
-> >  config SENSORS_MAX16065
-> >  	tristate "Maxim MAX16065 System Manager and compatibles"
-> >  	depends on I2C
-> > diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-> > index 1083bbfac779..01ca5d3fbad4 100644
-> > --- a/drivers/hwmon/Makefile
-> > +++ b/drivers/hwmon/Makefile
-> > @@ -127,6 +127,7 @@ obj-$(CONFIG_SENSORS_LTC4260)	+= ltc4260.o
-> >  obj-$(CONFIG_SENSORS_LTC4261)	+= ltc4261.o
-> >  obj-$(CONFIG_SENSORS_LTQ_CPUTEMP) += ltq-cputemp.o
-> >  obj-$(CONFIG_SENSORS_MAX1111)	+= max1111.o
-> > +obj-$(CONFIG_SENSORS_MAX127)	+= max127.o
-> >  obj-$(CONFIG_SENSORS_MAX16065)	+= max16065.o
-> >  obj-$(CONFIG_SENSORS_MAX1619)	+= max1619.o
-> >  obj-$(CONFIG_SENSORS_MAX1668)	+= max1668.o
-> > diff --git a/drivers/hwmon/max127.c b/drivers/hwmon/max127.c
-> > new file mode 100644
-> > index 000000000000..3df4c225a6a2
-> > --- /dev/null
-> > +++ b/drivers/hwmon/max127.c
-> > @@ -0,0 +1,346 @@
-> > +// SPDX-License-Identifier: GPL-2.0+
-> > +/*
-> > + * Hardware monitoring driver for MAX127.
-> > + *
-> > + * Copyright (c) 2020 Facebook Inc.
-> > + */
-> > +
-> > +#include <linux/err.h>
-> > +#include <linux/hwmon.h>
-> > +#include <linux/hwmon-sysfs.h>
-> 
-> Not needed.
-> 
-> > +#include <linux/i2c.h>
-> > +#include <linux/init.h>
-> > +#include <linux/module.h>
-> > +#include <linux/sysfs.h>
-> 
-> Not needed.
+--NetEase-FlashMail-003-a56b1e44-4c63-499a-8f2c-da705ba86014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Thanks for pointing it out. Both includes are deleted in v4.
+Qm9vdCBvcmRlciBzZXF1ZW5jZSBpcyBwbGF0Zm9ybSBzcGVjaWZpYy4gIFlvdSBtYXkgbmVlZCB0
+byBjaGVjayB3aXRoIHlvdXIgQklPUyB0ZWFtIGZvciBjdXN0b21pemluZyBhIE9FTSBJUE1JIGNv
+bW1hbmQgb3Igb3RoZXIgQklPUy1CTUMgZGF0YSBleGNoYW5nZSB3YXkgZm9yIGl0LiANClRvIG15
+IGJlc3Qga25vd2xlZGdlLCBjdXJyZW50IG9wZW5ibWMgY29kZSBkb2VzIG5vdCBzdXBwb3J0IGl0
+LiAgDQoNCjIwMjAtMTEtMjMgDQoNCmNodW5odWkuamlhIA0KDQoNCg0K5Y+R5Lu25Lq677yaSmF5
+YXNocmVlIEQgPGpheWFzaHJlZS1kQGhjbC5jb20+DQrlj5HpgIHml7bpl7TvvJoyMDIwLTExLTIz
+IDE0OjU2DQrkuLvpopjvvJpSRTogQm9vdCBPcmRlciBpbiBSZWRmaXNoIGFuZCBEQlVTDQrmlLbk
+u7bkurrvvJoiQXJ0ZW0gU2VuaWNoZXYiPGFydGVtc2VuQGdtYWlsLmNvbT4NCuaKhOmAge+8miJv
+cGVuYm1jQGxpc3RzLm96bGFicy5vcmciPG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz4NCg0KQ2xh
+c3NpZmljYXRpb246IEludGVybmFsIA0KDQpIaSBBcnRlbSBTZW5pY2hldiwgDQoNClRoYW5rcyBm
+b3IgeW91ciByZXNwb25zZS4gDQoNCkluIHBob3NwaG9yLWhvc3QtaXBtaWQsIGJvb3QgbW9kZSBh
+bmQgYm9vdCBzb3VyY2UgZGJ1cyBpbnRlcmZhY2VzIGFyZSB1c2VkIHRvIGdldCBhbmQgc2V0IGJv
+b3Qgb3JkZXIuIA0KSSBuZWVkIHRvIGRpc3BsYXkgdGhlIGJvb3Qgb3JkZXIgc2VxdWVuY2VzICgg
+IlVTQl9ERVYiLCAiTkVUX0lQVjYiLCAiU0FUQV9IREQiLCAiU0FUQV9DRCIsICJPdGhlcnMiICkg
+dXNpbmcgZGJ1cyBpbnRlcmZhY2VzLiANCklzIHRoZXJlIGFueSBvcHRpb25zIHRvIGRpc3BsYXkg
+dGhlIGJvb3Qgb3JkZXIgc2VxdWVuY2VzPyANCg0KUmVnYXJkcywgDQpKYXlhc2hyZWUgDQoNCi0t
+LS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tIA0KRnJvbTogQXJ0ZW0gU2VuaWNoZXYgPGFydGVtc2Vu
+QGdtYWlsLmNvbT4gIA0KU2VudDogU3VuZGF5LCBOb3ZlbWJlciAyMiwgMjAyMCA2OjI4IFBNIA0K
+VG86IEpheWFzaHJlZSBEIDxqYXlhc2hyZWUtZEBoY2wuY29tPiANCkNjOiBvcGVuYm1jQGxpc3Rz
+Lm96bGFicy5vcmcgDQpTdWJqZWN0OiBSZTogQm9vdCBPcmRlciBpbiBSZWRmaXNoIGFuZCBEQlVT
+IA0KDQpbQ0FVVElPTjogVGhpcyBFbWFpbCBpcyBmcm9tIG91dHNpZGUgdGhlIE9yZ2FuaXphdGlv
+bi4gVW5sZXNzIHlvdSB0cnVzdCB0aGUgc2VuZGVyLCBEb27igJl0IGNsaWNrIGxpbmtzIG9yIG9w
+ZW4gYXR0YWNobWVudHMgYXMgaXQgbWF5IGJlIGEgUGhpc2hpbmcgZW1haWwsIHdoaWNoIGNhbiBz
+dGVhbCB5b3VyIEluZm9ybWF0aW9uIGFuZCBjb21wcm9taXNlIHlvdXIgQ29tcHV0ZXIuXSANCg0K
+SGkgSmF5YXNocmVlLCANCg0KQUZBSUssT3BlblBPV0VSIHN5c3RlbXMgdXNlIGRidXMgaW50ZXJm
+YWNlIA0KeHl6Lm9wZW5ibWNfcHJvamVjdC5Db250cm9sLkJvb3QuU291cmNlOiANCmh0dHBzOi8v
+YXBjMDEuc2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUy
+RmdpdGh1Yi5jb20lMkZvcGVuYm1jJTJGcGhvc3Bob3ItaG9zdC1pcG1pZCUyRmJsb2IlMkY1MTVi
+YzM3NWNiOGRhYWVlOTgxYmFlOTdmYTdhZTgwZTdiZjY1YzYyJTJGY2hhc3Npc2hhbmRsZXIuY3Bw
+JTIzTDE3MjAmYW1wO2RhdGE9MDQlN0MwMSU3Q2pheWFzaHJlZS1kJTQwaGNsLmNvbSU3QzA3OWI1
+YjViMDhlMDRmNjE0NWQxMDhkODhlZTYzZWU2JTdDMTg5ZGU3MzdjOTNhNGY1YThiNjg2ZjRjYTk5
+NDE5MTIlN0MwJTdDMCU3QzYzNzQxNjQ2NjkzNjYzNTc2OSU3Q1Vua25vd24lN0NUV0ZwYkdac2Iz
+ZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENK
+WFZDSTZNbjAlM0QlN0MxMDAwJmFtcDtzZGF0YT1aMWhjMlJiVEd5MDRWRTZHOWd3ZjBSME9LQWVQ
+MFZaZDV1M0RIS010blNFJTNEJmFtcDtyZXNlcnZlZD0wIA0KDQotLSANCkJlc3QgcmVnYXJkcywg
+DQpBcnRlbSBTZW5pY2hldiANCg0KT24gU2F0LCBOb3YgMjEsIDIwMjAgYXQgOTozNiBQTSBKYXlh
+c2hyZWUgRCA8amF5YXNocmVlLWRAaGNsLmNvbT4gd3JvdGU6IA0KPiANCj4gQ2xhc3NpZmljYXRp
+b246IEludGVybmFsIA0KPiANCj4gSGkgVGVhbSwgDQo+IA0KPiANCj4gDQo+IEkgYW0gd29ya2lu
+ZyBvbiBCSU9TIGJvb3Qgb3JkZXIgaW4gbXkgZW52aXJvbm1lbnQsIHRvIGdldCBhbmQgc2V0IHRo
+ZSBib290IG9yZGVyIHNlcXVlbmNlLiANCj4gDQo+IEhvdyB0aGUgYm9vdCBvcmRlciBzZXR0aW5n
+cyBpcyBoYW5kbGVkIHVzaW5nIGRidXMgaW50ZXJmYWNlcyBhbmQgYWxzbyBpbiByZWRmaXNoID8g
+DQo+IA0KPiBQbGVhc2UgcHJvdmlkZSB5b3VyIGlucHV0cy9zdWdnZXN0aW9ucyBvbiB0aGlzLiAN
+Cj4gDQo+IA0KPiANCj4gVGhhbmtzLCANCj4gDQo+IEpheWFzaHJlZSANCj4gDQo+IA0KPiANCj4g
+DQo+IA0KPiBGcm9tOiBKYXlhc2hyZWUgRCANCj4gU2VudDogRnJpZGF5LCBOb3ZlbWJlciAyMCwg
+MjAyMCAyOjA5IFBNIA0KPiBUbzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnIA0KPiBTdWJqZWN0
+OiBCb290IE9yZGVyIGluIFJlZGZpc2ggYW5kIERCVVMgDQo+IA0KPiANCj4gDQo+IENsYXNzaWZp
+Y2F0aW9uOiBJbnRlcm5hbCANCj4gDQo+IEhpIFRlYW0sIA0KPiANCj4gDQo+IA0KPiBJIGFtIHdv
+cmtpbmcgb24gQklPUyBib290IG9yZGVyIGluIG15IGVudmlyb25tZW50LCB0byBnZXQgYW5kIHNl
+dCB0aGUgYm9vdCBvcmRlciBzZXF1ZW5jZS4gDQo+IA0KPiBIb3cgdGhlIGJvb3Qgb3JkZXIgc2V0
+dGluZ3MgaXMgaGFuZGxlZCB1c2luZyBkYnVzIGludGVyZmFjZXMgYW5kIGFsc28gaW4gcmVkZmlz
+aCA/IA0KPiANCj4gUGxlYXNlIHByb3ZpZGUgeW91ciBpbnB1dHMvc3VnZ2VzdGlvbnMgb24gdGhp
+cy4gDQo+IA0KPiANCj4gDQo+IFRoYW5rcywgDQo+IA0KPiBKYXlhc2hyZWUgDQo+IA0KPiANCj4g
+DQo+IA0KPiANCj4gOjpESVNDTEFJTUVSOjogDQo+IF9fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX19fIA0KPiBUaGUgY29udGVudHMgb2YgdGhpcyBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50
+KHMpIGFyZSBjb25maWRlbnRpYWwgYW5kIGludGVuZGVkIGZvciB0aGUgbmFtZWQgcmVjaXBpZW50
+KHMpIG9ubHkuIEUtbWFpbCB0cmFuc21pc3Npb24gaXMgbm90IGd1YXJhbnRlZWQgdG8gYmUgc2Vj
+dXJlIG9yIGVycm9yLWZyZWUgYXMgaW5mb3JtYXRpb24gY291bGQgYmUgaW50ZXJjZXB0ZWQsIGNv
+cnJ1cHRlZCwgbG9zdCwgZGVzdHJveWVkLCBhcnJpdmUgbGF0ZSBvciBpbmNvbXBsZXRlLCBvciBt
+YXkgY29udGFpbiB2aXJ1c2VzIGluIHRyYW5zbWlzc2lvbi4gVGhlIGUgbWFpbCBhbmQgaXRzIGNv
+bnRlbnRzICh3aXRoIG9yIHdpdGhvdXQgcmVmZXJyZWQgZXJyb3JzKSBzaGFsbCB0aGVyZWZvcmUg
+bm90IGF0dGFjaCBhbnkgbGlhYmlsaXR5IG9uIHRoZSBvcmlnaW5hdG9yIG9yIEhDTCBvciBpdHMg
+YWZmaWxpYXRlcy4gVmlld3Mgb3Igb3BpbmlvbnMsIGlmIGFueSwgcHJlc2VudGVkIGluIHRoaXMg
+ZW1haWwgYXJlIHNvbGVseSB0aG9zZSBvZiB0aGUgYXV0aG9yIGFuZCBtYXkgbm90IG5lY2Vzc2Fy
+aWx5IHJlZmxlY3QgdGhlIHZpZXdzIG9yIG9waW5pb25zIG9mIEhDTCBvciBpdHMgYWZmaWxpYXRl
+cy4gQW55IGZvcm0gb2YgcmVwcm9kdWN0aW9uLCBkaXNzZW1pbmF0aW9uLCBjb3B5aW5nLCBkaXNj
+bG9zdXJlLCBtb2RpZmljYXRpb24sIGRpc3RyaWJ1dGlvbiBhbmQgLyBvciBwdWJsaWNhdGlvbiBv
+ZiB0aGlzIG1lc3NhZ2Ugd2l0aG91dCB0aGUgcHJpb3Igd3JpdHRlbiBjb25zZW50IG9mIGF1dGhv
+cml6ZWQgcmVwcmVzZW50YXRpdmUgb2YgSENMIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIElmIHlv
+dSBoYXZlIHJlY2VpdmVkIHRoaXMgZW1haWwgaW4gZXJyb3IgcGxlYXNlIGRlbGV0ZSBpdCBhbmQg
+bm90aWZ5IHRoZSBzZW5kZXIgaW1tZWRpYXRlbHkuIEJlZm9yZSBvcGVuaW5nIGFueSBlbWFpbCBh
+bmQvb3IgYXR0YWNobWVudHMsIHBsZWFzZSBjaGVjayB0aGVtIGZvciB2aXJ1c2VzIGFuZCBvdGhl
+ciBkZWZlY3RzLiANCj4gX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18g
 
-> 
-> > +
-> > +/*
-> > + * MAX127 Control Byte. Refer to MAX127 datasheet, Table 1 "Control-Byte
-> > + * Format" for details.
-> > + */
-> > +#define MAX127_CTRL_START	BIT(7)
-> > +#define MAX127_CTRL_SEL_SHIFT	4
-> > +#define MAX127_CTRL_RNG		BIT(3)
-> > +#define MAX127_CTRL_BIP		BIT(2)
-> > +#define MAX127_CTRL_PD1		BIT(1)
-> > +#define MAX127_CTRL_PD0		BIT(0)
-> > +
-> > +#define MAX127_NUM_CHANNELS	8
-> > +#define MAX127_SET_CHANNEL(ch)	(((ch) & 7) << MAX127_CTRL_SEL_SHIFT)
-> > +
-> > +/*
-> > + * MAX127 channel input ranges. Refer to MAX127 datasheet, Table 3 "Range
-> > + * and Polarity Selection" for details.
-> > + */
-> > +#define MAX127_FULL_RANGE	10000	/* 10V */
-> > +#define MAX127_HALF_RANGE	5000	/* 5V */
-> > +
-> > +/*
-> > + * MAX127 returns 2 bytes at read:
-> > + *   - the first byte contains data[11:4].
-> > + *   - the second byte contains data[3:0] (MSB) and 4 dummy 0s (LSB).
-> > + * Refer to MAX127 datasheet, "Read a Conversion (Read Cycle)" section
-> > + * for details.
-> > + */
-> > +#define MAX127_DATA_LEN		2
-> > +#define MAX127_DATA_SHIFT	4
-> > +
-> > +#define MAX127_SIGN_BIT		BIT(11)
-> > +
-> > +struct max127_data {
-> > +	struct mutex lock;
-> > +	struct i2c_client *client;
-> > +	u8 ctrl_byte[MAX127_NUM_CHANNELS];
-> > +};
-> > +
-> > +static int max127_select_channel(struct i2c_client *client, u8 ctrl_byte)
-> > +{
-> > +	int status;
-> > +	struct i2c_msg msg = {
-> > +		.addr = client->addr,
-> > +		.flags = 0,
-> > +		.len = sizeof(ctrl_byte),
-> > +		.buf = &ctrl_byte,
-> > +	};
-> > +
-> > +	status = i2c_transfer(client->adapter, &msg, 1);
-> > +	if (status < 0)
-> > +		return status;
-> > +	else if (status != 1)
-> 
-> else after return is not needed.
-> 
-> > +		return -EIO;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int max127_read_channel(struct i2c_client *client, long *val)
-> > +{
-> > +	int status;
-> > +	u8 i2c_data[MAX127_DATA_LEN];
-> > +	struct i2c_msg msg = {
-> > +		.addr = client->addr,
-> > +		.flags = I2C_M_RD,
-> > +		.len = sizeof(i2c_data),
-> > +		.buf = i2c_data,
-> > +	};
-> > +
-> > +	status = i2c_transfer(client->adapter, &msg, 1);
-> > +	if (status < 0)
-> > +		return status;
-> > +	else if (status != 1)
-> 
-> else after return is not needed.
+--NetEase-FlashMail-003-a56b1e44-4c63-499a-8f2c-da705ba86014
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-I'm not sure if I understand your suggestion correctly, and I added this
-branch to handle the case when i2c_transfer() returns 0, which means the
-message is not transferred. Perhaps it would never happen? but anyhow, I
-just simplified the check in v4; please kindly review and let me know if
-you have further suggestions.
+PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
+L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
+Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT48IS0tIGZsYXNobWFpbCBzdHlsZSBiZWdpbiAt
+LT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpib2R5IHtib3JkZXItd2lkdGg6MDttYXJnaW46MH0K
+aW1nIHtib3JkZXI6MDttYXJnaW46MDtwYWRkaW5nOjB9CjwvU1RZTEU+DQo8QkFTRSB0YXJnZXQ9
+X2JsYW5rPjwhLS0gZmxhc2htYWlsIHN0eWxlIGVuZCAtLT4NCjxNRVRBIG5hbWU9R0VORVJBVE9S
+IGNvbnRlbnQ9Ik1TSFRNTCAxMS4wMC4xMDU3MC4xMDAxIj48L0hFQUQ+DQo8Qk9EWSANCnN0eWxl
+PSJCT1JERVItTEVGVC1XSURUSDogMHB4OyBGT05ULVNJWkU6IDEwLjVwdDsgRk9OVC1GQU1JTFk6
+IGFyaWFsOyBCT1JERVItUklHSFQtV0lEVEg6IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4
+OyBDT0xPUjogIzAwMDAwMDsgTUFSR0lOOiAxMnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVIt
+VE9QLVdJRFRIOiAwcHgiIA0KbWFyZ2luaGVpZ2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+DQo8RElW
+PkJvb3Qgb3JkZXIgc2VxdWVuY2UgaXMgcGxhdGZvcm0gc3BlY2lmaWMuJm5ic3A7IFlvdSBtYXkg
+bmVlZCB0byBjaGVjayB3aXRoIA0KeW91ciBCSU9TIHRlYW0gZm9yIGN1c3RvbWl6aW5nIGEgT0VN
+IElQTUkgY29tbWFuZCBvciBvdGhlciBCSU9TLUJNQyBkYXRhIA0KZXhjaGFuZ2Ugd2F5IGZvciBp
+dC4gPC9ESVY+DQo8RElWPlRvIG15IGJlc3Qga25vd2xlZGdlLCBjdXJyZW50IG9wZW5ibWMgY29k
+ZSBkb2VzIG5vdCBzdXBwb3J0IGl0LiZuYnNwOyANCjwvRElWPg0KPERJVj4mbmJzcDs8L0RJVj4N
+CjxESVYgc3R5bGU9IkZPTlQtU0laRTogMTBwdDsgRk9OVC1GQU1JTFk6IFZlcmRhbmE7IENPTE9S
+OiAjYzBjMGMwIiANCmFsaWduPWxlZnQ+MjAyMC0xMS0yMyANCjxIUiBpZD1TaWduTmFtZUhSIA0K
+c3R5bGU9IkJPUkRFUi1UT1A6ICNjMGMwYzAgMXB4IHNvbGlkOyBIRUlHSFQ6IDFweDsgQk9SREVS
+LVJJR0hUOiAwcHg7IFdJRFRIOiAxMjJweDsgQk9SREVSLUJPVFRPTTogMHB4OyBCT1JERVItTEVG
+VDogMHB4IiANCmFsaWduPWxlZnQ+DQo8U1BBTiBpZD1fRmxhc2hTaWduTmFtZT5jaHVuaHVpLmpp
+YTwvU1BBTj4gPC9ESVY+DQo8SFIgDQpzdHlsZT0iQk9SREVSLVRPUDogI2MwYzBjMCAxcHggc29s
+aWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsgQk9SREVSLUJPVFRPTTogMHB4OyBC
+T1JERVItTEVGVDogMHB4Ij4NCg0KPEJMT0NLUVVPVEUgaWQ9bnRlcy1mbGFzaG1haWwtcXVvdGUg
+DQpzdHlsZT0iRk9OVC1TSVpFOiAxMHB0OyBGT05ULUZBTUlMWTogVmVyZGFuYTsgUEFERElORy1M
+RUZUOiAwcHg7IE1BUkdJTi1MRUZUOiAwcHgiPg0KICA8RElWPjxTVFJPTkc+5Y+R5Lu25Lq677ya
+PC9TVFJPTkc+SmF5YXNocmVlIEQgJmx0O2pheWFzaHJlZS1kQGhjbC5jb20mZ3Q7PC9ESVY+DQog
+IDxESVY+PFNUUk9ORz7lj5HpgIHml7bpl7TvvJo8L1NUUk9ORz4yMDIwLTExLTIzJm5ic3A7MTQ6
+NTY8L0RJVj4NCiAgPERJVj48U1RST05HPuS4u+mimO+8mjwvU1RST05HPlJFOiBCb290IE9yZGVy
+IGluIFJlZGZpc2ggYW5kIERCVVM8L0RJVj4NCiAgPERJVj48U1RST05HPuaUtuS7tuS6uu+8mjwv
+U1RST05HPiJBcnRlbSBTZW5pY2hldiImbHQ7YXJ0ZW1zZW5AZ21haWwuY29tJmd0OzwvRElWPg0K
+ICA8RElWPjxTVFJPTkc+5oqE6YCB77yaPC9TVFJPTkc+Im9wZW5ibWNAbGlzdHMub3psYWJzLm9y
+ZyImbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0OzwvRElWPg0KICA8RElWPiZuYnNwOzwv
+RElWPg0KICA8RElWPg0KICA8RElWPkNsYXNzaWZpY2F0aW9uOiZuYnNwO0ludGVybmFsJm5ic3A7
+PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+SGkmbmJzcDtBcnRlbSZuYnNwO1Nl
+bmljaGV2LCZuYnNwOzwvRElWPg0KICA8RElWPiZuYnNwOzwvRElWPg0KICA8RElWPlRoYW5rcyZu
+YnNwO2ZvciZuYnNwO3lvdXImbmJzcDtyZXNwb25zZS4mbmJzcDs8L0RJVj4NCiAgPERJVj4mbmJz
+cDs8L0RJVj4NCiAgPERJVj5JbiZuYnNwO3Bob3NwaG9yLWhvc3QtaXBtaWQsJm5ic3A7Ym9vdCZu
+YnNwO21vZGUmbmJzcDthbmQmbmJzcDtib290Jm5ic3A7c291cmNlJm5ic3A7ZGJ1cyZuYnNwO2lu
+dGVyZmFjZXMmbmJzcDthcmUmbmJzcDt1c2VkJm5ic3A7dG8mbmJzcDtnZXQmbmJzcDthbmQmbmJz
+cDtzZXQmbmJzcDtib290Jm5ic3A7b3JkZXIuJm5ic3A7PC9ESVY+DQogIDxESVY+SSZuYnNwO25l
+ZWQmbmJzcDt0byZuYnNwO2Rpc3BsYXkmbmJzcDt0aGUmbmJzcDtib290Jm5ic3A7b3JkZXImbmJz
+cDtzZXF1ZW5jZXMmbmJzcDsoJm5ic3A7IlVTQl9ERVYiLCZuYnNwOyJORVRfSVBWNiIsJm5ic3A7
+IlNBVEFfSEREIiwmbmJzcDsiU0FUQV9DRCIsJm5ic3A7Ik90aGVycyImbmJzcDspJm5ic3A7dXNp
+bmcmbmJzcDtkYnVzJm5ic3A7aW50ZXJmYWNlcy4mbmJzcDs8L0RJVj4NCiAgPERJVj5JcyZuYnNw
+O3RoZXJlJm5ic3A7YW55Jm5ic3A7b3B0aW9ucyZuYnNwO3RvJm5ic3A7ZGlzcGxheSZuYnNwO3Ro
+ZSZuYnNwO2Jvb3QmbmJzcDtvcmRlciZuYnNwO3NlcXVlbmNlcz8mbmJzcDs8L0RJVj4NCiAgPERJ
+Vj4mbmJzcDs8L0RJVj4NCiAgPERJVj5SZWdhcmRzLCZuYnNwOzwvRElWPg0KICA8RElWPkpheWFz
+aHJlZSZuYnNwOzwvRElWPg0KICA8RElWPiZuYnNwOzwvRElWPg0KICA8RElWPi0tLS0tT3JpZ2lu
+YWwmbmJzcDtNZXNzYWdlLS0tLS0mbmJzcDs8L0RJVj4NCiAgPERJVj5Gcm9tOiZuYnNwO0FydGVt
+Jm5ic3A7U2VuaWNoZXYmbmJzcDsmbHQ7YXJ0ZW1zZW5AZ21haWwuY29tJmd0OyZuYnNwOyZuYnNw
+OzwvRElWPg0KICA8RElWPlNlbnQ6Jm5ic3A7U3VuZGF5LCZuYnNwO05vdmVtYmVyJm5ic3A7MjIs
+Jm5ic3A7MjAyMCZuYnNwOzY6MjgmbmJzcDtQTSZuYnNwOzwvRElWPg0KICA8RElWPlRvOiZuYnNw
+O0pheWFzaHJlZSZuYnNwO0QmbmJzcDsmbHQ7amF5YXNocmVlLWRAaGNsLmNvbSZndDsmbmJzcDs8
+L0RJVj4NCiAgPERJVj5DYzombmJzcDtvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcmbmJzcDs8L0RJ
+Vj4NCiAgPERJVj5TdWJqZWN0OiZuYnNwO1JlOiZuYnNwO0Jvb3QmbmJzcDtPcmRlciZuYnNwO2lu
+Jm5ic3A7UmVkZmlzaCZuYnNwO2FuZCZuYnNwO0RCVVMmbmJzcDs8L0RJVj4NCiAgPERJVj4mbmJz
+cDs8L0RJVj4NCiAgPERJVj5bQ0FVVElPTjombmJzcDtUaGlzJm5ic3A7RW1haWwmbmJzcDtpcyZu
+YnNwO2Zyb20mbmJzcDtvdXRzaWRlJm5ic3A7dGhlJm5ic3A7T3JnYW5pemF0aW9uLiZuYnNwO1Vu
+bGVzcyZuYnNwO3lvdSZuYnNwO3RydXN0Jm5ic3A7dGhlJm5ic3A7c2VuZGVyLCZuYnNwO0RvbuKA
+mXQmbmJzcDtjbGljayZuYnNwO2xpbmtzJm5ic3A7b3ImbmJzcDtvcGVuJm5ic3A7YXR0YWNobWVu
+dHMmbmJzcDthcyZuYnNwO2l0Jm5ic3A7bWF5Jm5ic3A7YmUmbmJzcDthJm5ic3A7UGhpc2hpbmcm
+bmJzcDtlbWFpbCwmbmJzcDt3aGljaCZuYnNwO2NhbiZuYnNwO3N0ZWFsJm5ic3A7eW91ciZuYnNw
+O0luZm9ybWF0aW9uJm5ic3A7YW5kJm5ic3A7Y29tcHJvbWlzZSZuYnNwO3lvdXImbmJzcDtDb21w
+dXRlci5dJm5ic3A7PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+SGkmbmJzcDtK
+YXlhc2hyZWUsJm5ic3A7PC9ESVY+DQogIDxESVY+Jm5ic3A7PC9ESVY+DQogIDxESVY+QUZBSUss
+T3BlblBPV0VSJm5ic3A7c3lzdGVtcyZuYnNwO3VzZSZuYnNwO2RidXMmbmJzcDtpbnRlcmZhY2Um
+bmJzcDs8L0RJVj4NCiAgPERJVj54eXoub3BlbmJtY19wcm9qZWN0LkNvbnRyb2wuQm9vdC5Tb3Vy
+Y2U6Jm5ic3A7PC9ESVY+DQogIDxESVY+aHR0cHM6Ly9hcGMwMS5zYWZlbGlua3MucHJvdGVjdGlv
+bi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRm9wZW5ibWMlMkZw
+aG9zcGhvci1ob3N0LWlwbWlkJTJGYmxvYiUyRjUxNWJjMzc1Y2I4ZGFhZWU5ODFiYWU5N2ZhN2Fl
+ODBlN2JmNjVjNjIlMkZjaGFzc2lzaGFuZGxlci5jcHAlMjNMMTcyMCZhbXA7YW1wO2RhdGE9MDQl
+N0MwMSU3Q2pheWFzaHJlZS1kJTQwaGNsLmNvbSU3QzA3OWI1YjViMDhlMDRmNjE0NWQxMDhkODhl
+ZTYzZWU2JTdDMTg5ZGU3MzdjOTNhNGY1YThiNjg2ZjRjYTk5NDE5MTIlN0MwJTdDMCU3QzYzNzQx
+NjQ2NjkzNjYzNTc2OSU3Q1Vua25vd24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3TURB
+aUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0MxMDAwJmFt
+cDthbXA7c2RhdGE9WjFoYzJSYlRHeTA0VkU2Rzlnd2YwUjBPS0FlUDBWWmQ1dTNESEtNdG5TRSUz
+RCZhbXA7YW1wO3Jlc2VydmVkPTAmbmJzcDs8L0RJVj4NCiAgPERJVj4mbmJzcDs8L0RJVj4NCiAg
+PERJVj4tLSZuYnNwOzwvRElWPg0KICA8RElWPkJlc3QmbmJzcDtyZWdhcmRzLCZuYnNwOzwvRElW
+Pg0KICA8RElWPkFydGVtJm5ic3A7U2VuaWNoZXYmbmJzcDs8L0RJVj4NCiAgPERJVj4mbmJzcDs8
+L0RJVj4NCiAgPERJVj5PbiZuYnNwO1NhdCwmbmJzcDtOb3YmbmJzcDsyMSwmbmJzcDsyMDIwJm5i
+c3A7YXQmbmJzcDs5OjM2Jm5ic3A7UE0mbmJzcDtKYXlhc2hyZWUmbmJzcDtEJm5ic3A7Jmx0O2ph
+eWFzaHJlZS1kQGhjbC5jb20mZ3Q7Jm5ic3A7d3JvdGU6Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0
+OyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtDbGFzc2lmaWNhdGlvbjombmJzcDtJbnRl
+cm5hbCZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5i
+c3A7SGkmbmJzcDtUZWFtLCZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAg
+PERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwOzwvRElWPg0KICA8RElWPiZn
+dDsmbmJzcDtJJm5ic3A7YW0mbmJzcDt3b3JraW5nJm5ic3A7b24mbmJzcDtCSU9TJm5ic3A7Ym9v
+dCZuYnNwO29yZGVyJm5ic3A7aW4mbmJzcDtteSZuYnNwO2Vudmlyb25tZW50LCZuYnNwO3RvJm5i
+c3A7Z2V0Jm5ic3A7YW5kJm5ic3A7c2V0Jm5ic3A7dGhlJm5ic3A7Ym9vdCZuYnNwO29yZGVyJm5i
+c3A7c2VxdWVuY2UuJm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwOzwvRElWPg0KICA8RElW
+PiZndDsmbmJzcDtIb3cmbmJzcDt0aGUmbmJzcDtib290Jm5ic3A7b3JkZXImbmJzcDtzZXR0aW5n
+cyZuYnNwO2lzJm5ic3A7aGFuZGxlZCZuYnNwO3VzaW5nJm5ic3A7ZGJ1cyZuYnNwO2ludGVyZmFj
+ZXMmbmJzcDthbmQmbmJzcDthbHNvJm5ic3A7aW4mbmJzcDtyZWRmaXNoJm5ic3A7PyZuYnNwOzwv
+RElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7UGxlYXNlJm5i
+c3A7cHJvdmlkZSZuYnNwO3lvdXImbmJzcDtpbnB1dHMvc3VnZ2VzdGlvbnMmbmJzcDtvbiZuYnNw
+O3RoaXMuJm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsm
+bmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO1Ro
+YW5rcywmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZu
+YnNwO0pheWFzaHJlZSZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJ
+Vj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsm
+bmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO0Zy
+b206Jm5ic3A7SmF5YXNocmVlJm5ic3A7RCZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtT
+ZW50OiZuYnNwO0ZyaWRheSwmbmJzcDtOb3ZlbWJlciZuYnNwOzIwLCZuYnNwOzIwMjAmbmJzcDsy
+OjA5Jm5ic3A7UE0mbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7VG86Jm5ic3A7b3BlbmJt
+Y0BsaXN0cy5vemxhYnMub3JnJm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO1N1YmplY3Q6
+Jm5ic3A7Qm9vdCZuYnNwO09yZGVyJm5ic3A7aW4mbmJzcDtSZWRmaXNoJm5ic3A7YW5kJm5ic3A7
+REJVUyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5i
+c3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtDbGFz
+c2lmaWNhdGlvbjombmJzcDtJbnRlcm5hbCZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8
+L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7SGkmbmJzcDtUZWFtLCZuYnNwOzwvRElWPg0KICA8RElW
+PiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZu
+YnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtJJm5ic3A7YW0mbmJzcDt3b3JraW5nJm5ic3A7
+b24mbmJzcDtCSU9TJm5ic3A7Ym9vdCZuYnNwO29yZGVyJm5ic3A7aW4mbmJzcDtteSZuYnNwO2Vu
+dmlyb25tZW50LCZuYnNwO3RvJm5ic3A7Z2V0Jm5ic3A7YW5kJm5ic3A7c2V0Jm5ic3A7dGhlJm5i
+c3A7Ym9vdCZuYnNwO29yZGVyJm5ic3A7c2VxdWVuY2UuJm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0
+OyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDtIb3cmbmJzcDt0aGUmbmJzcDtib290Jm5i
+c3A7b3JkZXImbmJzcDtzZXR0aW5ncyZuYnNwO2lzJm5ic3A7aGFuZGxlZCZuYnNwO3VzaW5nJm5i
+c3A7ZGJ1cyZuYnNwO2ludGVyZmFjZXMmbmJzcDthbmQmbmJzcDthbHNvJm5ic3A7aW4mbmJzcDty
+ZWRmaXNoJm5ic3A7PyZuYnNwOzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJ
+Vj4mZ3Q7Jm5ic3A7UGxlYXNlJm5ic3A7cHJvdmlkZSZuYnNwO3lvdXImbmJzcDtpbnB1dHMvc3Vn
+Z2VzdGlvbnMmbmJzcDtvbiZuYnNwO3RoaXMuJm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNw
+OzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+
+DQogIDxESVY+Jmd0OyZuYnNwO1RoYW5rcywmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7
+PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNwO0pheWFzaHJlZSZuYnNwOzwvRElWPg0KICA8RElWPiZn
+dDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0OyZuYnNw
+OzwvRElWPg0KICA8RElWPiZndDsmbmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7PC9ESVY+
+DQogIDxESVY+Jmd0OyZuYnNwOzo6RElTQ0xBSU1FUjo6Jm5ic3A7PC9ESVY+DQogIDxESVY+Jmd0
+OyZuYnNwO19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fJm5ic3A7PC9ESVY+DQogIDxE
+SVY+Jmd0OyZuYnNwO1RoZSZuYnNwO2NvbnRlbnRzJm5ic3A7b2YmbmJzcDt0aGlzJm5ic3A7ZS1t
+YWlsJm5ic3A7YW5kJm5ic3A7YW55Jm5ic3A7YXR0YWNobWVudChzKSZuYnNwO2FyZSZuYnNwO2Nv
+bmZpZGVudGlhbCZuYnNwO2FuZCZuYnNwO2ludGVuZGVkJm5ic3A7Zm9yJm5ic3A7dGhlJm5ic3A7
+bmFtZWQmbmJzcDtyZWNpcGllbnQocykmbmJzcDtvbmx5LiZuYnNwO0UtbWFpbCZuYnNwO3RyYW5z
+bWlzc2lvbiZuYnNwO2lzJm5ic3A7bm90Jm5ic3A7Z3VhcmFudGVlZCZuYnNwO3RvJm5ic3A7YmUm
+bmJzcDtzZWN1cmUmbmJzcDtvciZuYnNwO2Vycm9yLWZyZWUmbmJzcDthcyZuYnNwO2luZm9ybWF0
+aW9uJm5ic3A7Y291bGQmbmJzcDtiZSZuYnNwO2ludGVyY2VwdGVkLCZuYnNwO2NvcnJ1cHRlZCwm
+bmJzcDtsb3N0LCZuYnNwO2Rlc3Ryb3llZCwmbmJzcDthcnJpdmUmbmJzcDtsYXRlJm5ic3A7b3Im
+bmJzcDtpbmNvbXBsZXRlLCZuYnNwO29yJm5ic3A7bWF5Jm5ic3A7Y29udGFpbiZuYnNwO3ZpcnVz
+ZXMmbmJzcDtpbiZuYnNwO3RyYW5zbWlzc2lvbi4mbmJzcDtUaGUmbmJzcDtlJm5ic3A7bWFpbCZu
+YnNwO2FuZCZuYnNwO2l0cyZuYnNwO2NvbnRlbnRzJm5ic3A7KHdpdGgmbmJzcDtvciZuYnNwO3dp
+dGhvdXQmbmJzcDtyZWZlcnJlZCZuYnNwO2Vycm9ycykmbmJzcDtzaGFsbCZuYnNwO3RoZXJlZm9y
+ZSZuYnNwO25vdCZuYnNwO2F0dGFjaCZuYnNwO2FueSZuYnNwO2xpYWJpbGl0eSZuYnNwO29uJm5i
+c3A7dGhlJm5ic3A7b3JpZ2luYXRvciZuYnNwO29yJm5ic3A7SENMJm5ic3A7b3ImbmJzcDtpdHMm
+bmJzcDthZmZpbGlhdGVzLiZuYnNwO1ZpZXdzJm5ic3A7b3ImbmJzcDtvcGluaW9ucywmbmJzcDtp
+ZiZuYnNwO2FueSwmbmJzcDtwcmVzZW50ZWQmbmJzcDtpbiZuYnNwO3RoaXMmbmJzcDtlbWFpbCZu
+YnNwO2FyZSZuYnNwO3NvbGVseSZuYnNwO3Rob3NlJm5ic3A7b2YmbmJzcDt0aGUmbmJzcDthdXRo
+b3ImbmJzcDthbmQmbmJzcDttYXkmbmJzcDtub3QmbmJzcDtuZWNlc3NhcmlseSZuYnNwO3JlZmxl
+Y3QmbmJzcDt0aGUmbmJzcDt2aWV3cyZuYnNwO29yJm5ic3A7b3BpbmlvbnMmbmJzcDtvZiZuYnNw
+O0hDTCZuYnNwO29yJm5ic3A7aXRzJm5ic3A7YWZmaWxpYXRlcy4mbmJzcDtBbnkmbmJzcDtmb3Jt
+Jm5ic3A7b2YmbmJzcDtyZXByb2R1Y3Rpb24sJm5ic3A7ZGlzc2VtaW5hdGlvbiwmbmJzcDtjb3B5
+aW5nLCZuYnNwO2Rpc2Nsb3N1cmUsJm5ic3A7bW9kaWZpY2F0aW9uLCZuYnNwO2Rpc3RyaWJ1dGlv
+biZuYnNwO2FuZCZuYnNwOy8mbmJzcDtvciZuYnNwO3B1YmxpY2F0aW9uJm5ic3A7b2YmbmJzcDt0
+aGlzJm5ic3A7bWVzc2FnZSZuYnNwO3dpdGhvdXQmbmJzcDt0aGUmbmJzcDtwcmlvciZuYnNwO3dy
+aXR0ZW4mbmJzcDtjb25zZW50Jm5ic3A7b2YmbmJzcDthdXRob3JpemVkJm5ic3A7cmVwcmVzZW50
+YXRpdmUmbmJzcDtvZiZuYnNwO0hDTCZuYnNwO2lzJm5ic3A7c3RyaWN0bHkmbmJzcDtwcm9oaWJp
+dGVkLiZuYnNwO0lmJm5ic3A7eW91Jm5ic3A7aGF2ZSZuYnNwO3JlY2VpdmVkJm5ic3A7dGhpcyZu
+YnNwO2VtYWlsJm5ic3A7aW4mbmJzcDtlcnJvciZuYnNwO3BsZWFzZSZuYnNwO2RlbGV0ZSZuYnNw
+O2l0Jm5ic3A7YW5kJm5ic3A7bm90aWZ5Jm5ic3A7dGhlJm5ic3A7c2VuZGVyJm5ic3A7aW1tZWRp
+YXRlbHkuJm5ic3A7QmVmb3JlJm5ic3A7b3BlbmluZyZuYnNwO2FueSZuYnNwO2VtYWlsJm5ic3A7
+YW5kL29yJm5ic3A7YXR0YWNobWVudHMsJm5ic3A7cGxlYXNlJm5ic3A7Y2hlY2smbmJzcDt0aGVt
+Jm5ic3A7Zm9yJm5ic3A7dmlydXNlcyZuYnNwO2FuZCZuYnNwO290aGVyJm5ic3A7ZGVmZWN0cy4m
+bmJzcDs8L0RJVj4NCiAgPERJVj4mZ3Q7Jm5ic3A7X19fX19fX19fX19fX19fX19fX19fX19fX19f
+X19fX18mbmJzcDs8L0RJVj48L0RJVj48L0JMT0NLUVVPVEU+PC9CT0RZPjwvSFRNTD4=
 
-> 
-> > +		return -EIO;
-> > +
-> > +	*val = (i2c_data[1] >> MAX127_DATA_SHIFT) |
-> > +		((u16)i2c_data[0] << MAX127_DATA_SHIFT);
-> > +	return 0;
-> > +}
-> > +
-> > +static long max127_process_raw(u8 ctrl_byte, long raw)
-> > +{
-> > +	long scale, weight;
-> > +
-> > +	/*
-> > +	 * MAX127's data coding is binary in unipolar mode with 1 LSB =
-> > +	 * (Full-Scale/4096) and two’s complement binary in bipolar mode
-> > +	 * with 1 LSB = [(2 x |FS|)/4096].
-> > +	 * Refer to MAX127 datasheet, "Transfer Function" section for
-> > +	 * details.
-> > +	 */
-> > +	scale = (ctrl_byte & MAX127_CTRL_RNG) ? MAX127_FULL_RANGE :
-> > +						MAX127_HALF_RANGE;
-> > +	if (ctrl_byte & MAX127_CTRL_BIP) {
-> > +		weight = (raw & MAX127_SIGN_BIT);
-> > +		raw &= ~MAX127_SIGN_BIT;
-> > +		raw -= weight;
-> > +		raw *= 2;
-> > +	}
-> > +
-> > +	return raw * scale / 4096;
-> > +}
-> > +
-> > +static int max127_read_input(struct max127_data *data, int channel, long *val)
-> > +{
-> > +	long raw;
-> > +	int status;
-> > +	struct i2c_client *client = data->client;
-> > +	u8 ctrl_byte = data->ctrl_byte[channel];
-> > +
-> > +	mutex_lock(&data->lock);
-> > +
-> > +	status = max127_select_channel(client, ctrl_byte);
-> > +	if (status)
-> > +		goto exit;
-> > +
-> > +	status = max127_read_channel(client, &raw);
-> > +	if (status)
-> > +		goto exit;
-> > +
-> > +	*val = max127_process_raw(ctrl_byte, raw);
-> > +
-> > +exit:
-> > +	mutex_unlock(&data->lock);
-> > +	return status;
-> > +}
-> > +
-> > +static int max127_read_min(struct max127_data *data, int channel, long *val)
-> > +{
-> > +	u8 rng_bip = (data->ctrl_byte[channel] >> 2) & 3;
-> > +	static const int min_input_map[4] = {
-> > +		0,			/* RNG=0, BIP=0 */
-> > +		-MAX127_HALF_RANGE,	/* RNG=0, BIP=1 */
-> > +		0,			/* RNG=1, BIP=0 */
-> > +		-MAX127_FULL_RANGE,	/* RNG=1, BIP=1 */
-> > +	};
-> > +
-> > +	*val = min_input_map[rng_bip];
-> > +	return 0;
-> > +}
-> > +
-> > +static int max127_read_max(struct max127_data *data, int channel, long *val)
-> > +{
-> > +	u8 rng_bip = (data->ctrl_byte[channel] >> 2) & 3;
-> > +	static const int max_input_map[4] = {
-> > +		MAX127_HALF_RANGE,	/* RNG=0, BIP=0 */
-> > +		MAX127_HALF_RANGE,	/* RNG=0, BIP=1 */
-> > +		MAX127_FULL_RANGE,	/* RNG=1, BIP=0 */
-> > +		MAX127_FULL_RANGE,	/* RNG=1, BIP=1 */
-> > +	};
-> > +
-> > +	*val = max_input_map[rng_bip];
-> > +	return 0;
-> > +}
-> > +
-> > +static int max127_write_min(struct max127_data *data, int channel, long val)
-> > +{
-> > +	u8 ctrl;
-> > +
-> > +	ctrl = data->ctrl_byte[channel];
-> > +	if (val <= -MAX127_FULL_RANGE) {
-> > +		ctrl |= (MAX127_CTRL_RNG | MAX127_CTRL_BIP);
-> > +	} else if (val < 0) {
-> > +		ctrl |= MAX127_CTRL_BIP;
-> > +		ctrl &= ~MAX127_CTRL_RNG;
-> > +	} else {
-> > +		ctrl &= ~MAX127_CTRL_BIP;
-> > +	}
-> > +	data->ctrl_byte[channel] = ctrl;
-> 
-> Needs mutex protection to avoid parallel writes (which might mess up
-> ctrl_byte[channel]).
-> 
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int max127_write_max(struct max127_data *data, int channel, long val)
-> > +{
-> > +	if (val >= MAX127_FULL_RANGE)
-> > +		data->ctrl_byte[channel] |= MAX127_CTRL_RNG;
-> > +	else
-> > +		data->ctrl_byte[channel] &= ~MAX127_CTRL_RNG;
-> > +
-> Same here, to avoid interaction with write_min (which might otherwise
-> read ctrl and modify it at the same time as this function).
+--NetEase-FlashMail-003-a56b1e44-4c63-499a-8f2c-da705ba86014--
 
-Thanks for pointing it out, and both functions are protected by mutex in
-v4.
-
-
-Cheers,
-
-Tao
-
-> 
-> > +	return 0;
-> > +}
-> > +
-> > +static umode_t max127_is_visible(const void *_data,
-> > +				 enum hwmon_sensor_types type,
-> > +				 u32 attr, int channel)
-> > +{
-> > +	if (type == hwmon_in) {
-> > +		switch (attr) {
-> > +		case hwmon_in_input:
-> > +			return 0444;
-> > +
-> > +		case hwmon_in_min:
-> > +		case hwmon_in_max:
-> > +			return 0644;
-> > +
-> > +		default:
-> > +			break;
-> > +		}
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int max127_read(struct device *dev, enum hwmon_sensor_types type,
-> > +			u32 attr, int channel, long *val)
-> > +{
-> > +	int status;
-> > +	struct max127_data *data = dev_get_drvdata(dev);
-> > +
-> > +	if (type != hwmon_in)
-> > +		return -EOPNOTSUPP;
-> > +
-> > +	switch (attr) {
-> > +	case hwmon_in_input:
-> > +		status = max127_read_input(data, channel, val);
-> > +		break;
-> > +
-> > +	case hwmon_in_min:
-> > +		status = max127_read_min(data, channel, val);
-> > +		break;
-> > +
-> > +	case hwmon_in_max:
-> > +		status = max127_read_max(data, channel, val);
-> > +		break;
-> > +
-> > +	default:
-> > +		status = -EOPNOTSUPP;
-> > +		break;
-> > +	}
-> > +
-> > +	return status;
-> > +}
-> > +
-> > +static int max127_write(struct device *dev, enum hwmon_sensor_types type,
-> > +			u32 attr, int channel, long val)
-> > +{
-> > +	int status;
-> > +	struct max127_data *data = dev_get_drvdata(dev);
-> > +
-> > +	if (type != hwmon_in)
-> > +		return -EOPNOTSUPP;
-> > +
-> > +	switch (attr) {
-> > +	case hwmon_in_min:
-> > +		status = max127_write_min(data, channel, val);
-> > +		break;
-> > +
-> > +	case hwmon_in_max:
-> > +		status = max127_write_max(data, channel, val);
-> > +		break;
-> > +
-> > +	default:
-> > +		status = -EOPNOTSUPP;
-> > +		break;
-> > +	}
-> > +
-> > +	return status;
-> > +}
-> > +
-> > +static const struct hwmon_ops max127_hwmon_ops = {
-> > +	.is_visible = max127_is_visible,
-> > +	.read = max127_read,
-> > +	.write = max127_write,
-> > +};
-> > +
-> > +static const struct hwmon_channel_info *max127_info[] = {
-> > +	HWMON_CHANNEL_INFO(in,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX,
-> > +			   HWMON_I_INPUT | HWMON_I_MIN | HWMON_I_MAX),
-> > +	NULL,
-> > +};
-> > +
-> > +static const struct hwmon_chip_info max127_chip_info = {
-> > +	.ops = &max127_hwmon_ops,
-> > +	.info = max127_info,
-> > +};
-> > +
-> > +static int max127_probe(struct i2c_client *client,
-> > +			const struct i2c_device_id *id)
-> > +{
-> > +	int i;
-> > +	struct device *hwmon_dev;
-> > +	struct max127_data *data;
-> > +	struct device *dev = &client->dev;
-> > +
-> > +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> > +	if (!data)
-> > +		return -ENOMEM;
-> > +
-> > +	data->client = client;
-> > +	mutex_init(&data->lock);
-> > +	for (i = 0; i < ARRAY_SIZE(data->ctrl_byte); i++)
-> > +		data->ctrl_byte[i] = (MAX127_CTRL_START |
-> > +				      MAX127_SET_CHANNEL(i));
-> > +
-> > +	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
-> > +							 data,
-> > +							 &max127_chip_info,
-> > +							 NULL);
-> > +
-> > +	return PTR_ERR_OR_ZERO(hwmon_dev);
-> > +}
-> > +
-> > +static const struct i2c_device_id max127_id[] = {
-> > +	{ "max127", 0 },
-> > +	{ }
-> > +};
-> > +MODULE_DEVICE_TABLE(i2c, max127_id);
-> > +
-> > +static struct i2c_driver max127_driver = {
-> > +	.class		= I2C_CLASS_HWMON,
-> > +	.driver = {
-> > +		.name	= "max127",
-> > +	},
-> > +	.probe		= max127_probe,
-> > +	.id_table	= max127_id,
-> > +};
-> > +
-> > +module_i2c_driver(max127_driver);
-> > +
-> > +MODULE_LICENSE("GPL");
-> > +MODULE_AUTHOR("Mike Choi <mikechoi@fb.com>");
-> > +MODULE_AUTHOR("Tao Ren <rentao.bupt@gmail.com>");
-> > +MODULE_DESCRIPTION("MAX127 Hardware Monitoring driver");
