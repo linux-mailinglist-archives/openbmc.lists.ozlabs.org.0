@@ -1,100 +1,161 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A88A72BFE20
-	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 03:17:19 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B785E2C0060
+	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 07:57:31 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CfW4r6FfvzDqP4
-	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 13:17:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CfdJ90Lc8zDqLT
+	for <lists+openbmc@lfdr.de>; Mon, 23 Nov 2020 17:57:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-na.com (client-ip=40.107.236.48;
- helo=nam11-bn8-obe.outbound.protection.outlook.com;
- envelope-from=mohaimen.alsamarai@fii-na.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=fii-na.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=FIIcorp.onmicrosoft.com
- header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=B+VvDIPR; 
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.131.92; helo=apc01-sg2-obe.outbound.protection.outlook.com;
+ envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=quarantine dis=none) header.from=hcl.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=CRYG9KPA; 
+ dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=CRYG9KPA; 
  dkim-atps=neutral
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam11on2048.outbound.protection.outlook.com [40.107.236.48])
+Received: from APC01-SG2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1310092.outbound.protection.outlook.com [40.107.131.92])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cd2gm4BTpzDqlY
- for <openbmc@lists.ozlabs.org>; Sat, 21 Nov 2020 03:53:53 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CfdH562HPzDqLM
+ for <openbmc@lists.ozlabs.org>; Mon, 23 Nov 2020 17:56:28 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qn0/b15kBg6z/eOeSW9adFlUkvEVEqPp2bSIUmpD1cE=;
+ b=CRYG9KPAhnpqQI3/PsA2J/8SpY3vx044nTafNCYLh7qfvIdmh+LDyt/4ZvcoAFKlIAgh+2b040V7/SC6ObwcwUli1tZKWGD1cIeE1ciRVJvI9gAaM9qTjgIYY3jzOx7DaLXu2G69h09r0xyiURTnAMW3sDI3FJmbgh4KN3rl1IA=
+Received: from SLXP216CA0050.KORP216.PROD.OUTLOOK.COM (2603:1096:100:5::12) by
+ PS1PR0401MB1977.apcprd04.prod.outlook.com (2603:1096:803:c::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3589.29; Mon, 23 Nov 2020 06:56:22 +0000
+Received: from PU1APC01FT019.eop-APC01.prod.protection.outlook.com
+ (2603:1096:100:5:cafe::2e) by SLXP216CA0050.outlook.office365.com
+ (2603:1096:100:5::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3589.20 via Frontend
+ Transport; Mon, 23 Nov 2020 06:56:22 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.59)
+ smtp.mailfrom=hcl.com; gmail.com; dkim=pass (signature was verified)
+ header.d=HCL.COM;gmail.com; dmarc=pass action=none header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.195.59 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.59; helo=APC01-SG2-obe.outbound.protection.outlook.com;
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.195.59) by
+ PU1APC01FT019.mail.protection.outlook.com (10.152.252.222) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3589.20 via Frontend Transport; Mon, 23 Nov 2020 06:56:21 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Mbse77OmpGyIZfaD4paJWQ5epd+jBabh4yINYyTNKgE8XOnMfyO4EDVMNyujEBMDTxJqqd8YLX9XA/G/vFlWYaQpQ5mBNWYaCemP2hvLNyPZPlwE95S8TF/L/QCp4FiziVWlb5+touQaDT5HtmzOnSrbQU7hDpk68Iz5uww9Wpi5MxwXHIOwkUmqFmGlucq36KkG1n08EoaiFLmxH3GN7tyJxgCasc+5xA9fOa0kw3w4tKhWNiukpnuD/Vr498ULaVfFEmQLq7SkxYE2vAuYJNvsqpnN48GEJTMeF2VHZ5Hw7hu77l34mRZeMlZlUi13bAo1MDCVF52/u383TNj6+g==
+ b=TvFxy0r5Si+7rBHUWVZKaTkC95p8HlJ8i2iF9j2tLktBV6SuZX0qBms9ApEjDmTo9zHP+BiTQiU73K8AJYtck7y39GqJvEYM2cS0W0HPcM2lMnNYBqyUUlVnYrOIZTRqBCMWwa0EPgdED3ekP7Vq+/mbW2hrEhWXTL/mLaa61S2F6KYnptHvaHMXlhBmXwOHwZwMXgKoP/qiwgFgpwEHu+qemMgHwpElQExJ9LQV+pGetkIKIJMOUgxNykbLhCk2skkj9cCGZ3T86UXHHts47zaxdwrraACB4QDjP/63fDni9zMsrLtMXCSHvmF8Wt4BJKLA9MtgvSlaUQ1B1SyPhw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2lLJbvtpoxEDj424hSVol7nhsDu86N0tMQd0CXNLOGM=;
- b=H2mJO+j73HCc6im4W8MV35uM1xSFCfRuvaxEw2b+HnhJZ5rH2E7Bc7zisdX/85oYtnlLcp8GwtYbJbRbkS8KbvM1eqpQwA/R+WqfwPxFlUn/MXf2+/3Y49EcR2UUd+5oBRXQwnZqysC/dS+8kfKI6D825mFevrnjOIBnv6/MBYYA6HSOfS+QhkHVUJNFnwG41MeBk7pTVofKhIqKgpCx+SDUjc34dhTsSLzNLtOG7SPkXLwR/rMbui9AfMFI3dyH7bsd6IHYNT9Yc+pGFhHJiIobC/i0kqXNGRA1xj719pAzkgaMAFjbNMX7D+QEtu7SPlsVLZ/KDh0XfBl7JIVi8Q==
+ bh=qn0/b15kBg6z/eOeSW9adFlUkvEVEqPp2bSIUmpD1cE=;
+ b=fKC/O4GRYzSd54CLq4eO7oLOVji4gW6HEF/FTwBFMz4WmD/o/VfzT348mDyNskIHEvwI9cGbh9nUhzBnps0m80iaifiQ4z7qBmTTDEEyGUkMioJJ+BBsyVW7Mk/u5kbQH1KiLDDFRAwB6VNKJqX4JsfMqh1Kxe2pkBj89BuOjgFaVBl04a+zKNY+UbGq+7hy0SobRbT1MoqxxnDiHOJQ1n32DfT221xxqsLeJX1DDo7CE4yHHqVPbRFyugKQocQ1+TGduwyysvp1ha/lcR0zErbL1/3m04P5KEBvA8MLXjJW+L/LACbI1f8T1qABhZghf7P2yf1gqLBAh04gM5rXrA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fii-na.com; dmarc=pass action=none header.from=fii-na.com;
- dkim=pass header.d=fii-na.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2lLJbvtpoxEDj424hSVol7nhsDu86N0tMQd0CXNLOGM=;
- b=B+VvDIPRZxTFZtPLTGlQbJfaBgsNUOZiScX9CVDsgZeeLHqPRv+nU7fbkX5hMXRtYIFXjtuiLxMPrMH0QNwuBbMOhMRekOR7y4abhUTHi9fMgvwHcTm0pfa6iW+8Bhyj7tvQ5808RtxRLjkWDpxiroT16eiM1SLNiXEoV/WOWo/eRCNg+rxWN1o2nDFY74fWcdpe1RX0wRaz0xudkj9PkKB9Bfr/nUTbTVfQtTWuh1FgZV1BfaKsfJkPnPNx7swSrMMDWXP4RL4pR/seZ/ocReNseKZqeQ7UKPY6tw5V1NKbAAtDB4elaBTra/HBkxSDqOS84sZ/5jeCKnxDVzPZbg==
-Received: from DM6PR08MB5883.namprd08.prod.outlook.com (2603:10b6:5:152::18)
- by DM6PR08MB3980.namprd08.prod.outlook.com (2603:10b6:5:8f::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3564.28; Fri, 20 Nov
- 2020 16:53:45 +0000
-Received: from DM6PR08MB5883.namprd08.prod.outlook.com
- ([fe80::b0ec:23cd:3a5:4cb3]) by DM6PR08MB5883.namprd08.prod.outlook.com
- ([fe80::b0ec:23cd:3a5:4cb3%7]) with mapi id 15.20.3589.022; Fri, 20 Nov 2020
- 16:53:44 +0000
-From: Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
-To: William Kennington <wak@google.com>
-Subject: Re: phosphor-ipmi-flash build error
-Thread-Topic: phosphor-ipmi-flash build error
-Thread-Index: Ada9JfK8weeOoKkOTu2JHZHbpAKwRwB2/ZQAABZ4CH8=
-Date: Fri, 20 Nov 2020 16:53:44 +0000
-Message-ID: <DM6PR08MB5883F020F59F625762BCE1EAB2FF0@DM6PR08MB5883.namprd08.prod.outlook.com>
-References: <DM6PR08MB588362D381EC3603682F9B32B2E20@DM6PR08MB5883.namprd08.prod.outlook.com>,
- <CAPnigKmZ1FHWXjbhG_XnrgmsYPpjXQhTLwM0cW=6Mf00iQatXQ@mail.gmail.com>
-In-Reply-To: <CAPnigKmZ1FHWXjbhG_XnrgmsYPpjXQhTLwM0cW=6Mf00iQatXQ@mail.gmail.com>
+ bh=qn0/b15kBg6z/eOeSW9adFlUkvEVEqPp2bSIUmpD1cE=;
+ b=CRYG9KPAhnpqQI3/PsA2J/8SpY3vx044nTafNCYLh7qfvIdmh+LDyt/4ZvcoAFKlIAgh+2b040V7/SC6ObwcwUli1tZKWGD1cIeE1ciRVJvI9gAaM9qTjgIYY3jzOx7DaLXu2G69h09r0xyiURTnAMW3sDI3FJmbgh4KN3rl1IA=
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
+ SG2PR04MB3772.apcprd04.prod.outlook.com (2603:1096:4:a1::15) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3589.22; Mon, 23 Nov 2020 06:56:14 +0000
+Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::600b:f294:3dde:ba29]) by SG2PR04MB3093.apcprd04.prod.outlook.com
+ ([fe80::600b:f294:3dde:ba29%4]) with mapi id 15.20.3589.024; Mon, 23 Nov 2020
+ 06:56:14 +0000
+From: Jayashree D <jayashree-d@hcl.com>
+To: Artem Senichev <artemsen@gmail.com>
+Subject: RE: Boot Order in Redfish and DBUS
+Thread-Topic: Boot Order in Redfish and DBUS
+Thread-Index: Ada/GHipV90cO13xRsGWrbeHoNjQ3gBDwNbgACnl/gAAJCrzkA==
+Date: Mon, 23 Nov 2020 06:56:13 +0000
+Message-ID: <SG2PR04MB3093D18983E984C7B5A0B013E1FC0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+References: <SG2PR04MB309381BFAE06A3462E57E0C6E1FF0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <SG2PR04MB30934A3A567C8025C3F72F4FE1FE0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+ <CAHsrh9JsuPkWZvh13MYSVwCKFtctiMRxv1Sk0X0rx5Duc=AvMg@mail.gmail.com>
+In-Reply-To: <CAHsrh9JsuPkWZvh13MYSVwCKFtctiMRxv1Sk0X0rx5Duc=AvMg@mail.gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=fii-na.com;
-x-originating-ip: [98.201.115.134]
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiNGU5NmI0OGEtMDI4Zi00ZjEwLTk5ZjItZmZjMzljNmVjZmZkIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzXzFudDNybmFsIn1dfV19LCJTdWJqZWN0TGFiZWxzIjpbXSwiVE1DVmVyc2lvbiI6IjE4LjQuMTg0My4xMjMiLCJUcnVzdGVkTGFiZWxIYXNoIjoiWm0rbmtteFc4RGpRRHJxTlZPVkY4OWUyb09wXC80RnV4VnRsZGJteDR5RWFaUkg0Q1lZeExZdkQyakd2czBmaEsifQ==
+x-hclclassification: HCL_Cla5s_1nt3rnal
+Authentication-Results-Original: gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=none action=none header.from=hcl.com;
+x-originating-ip: [2409:4072:50e:6b65:91ee:ba:e012:1822]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 2dfd3fdd-3a4d-4acc-a5e0-08d88d74d7ca
-x-ms-traffictypediagnostic: DM6PR08MB3980:
+X-MS-Office365-Filtering-Correlation-Id: d88f2b25-68a7-4474-e9a6-08d88f7ce337
+x-ms-traffictypediagnostic: SG2PR04MB3772:|PS1PR0401MB1977:
+X-Microsoft-Antispam-PRVS: <PS1PR0401MB19773359891E69DCCA7695FCE1FC0@PS1PR0401MB1977.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:8273;OLM:8273;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: ysIfl0pOu5ZZ5zEOS21jfVBj5Fu8oSw55Kws37fzIDf3gF2o41k/3YU8TdkMg2+ifs00kbviwCiumaKZAj4zyJt77ui8k6nYUt2vOkcX2RL2m3uu8rEussDGdrd8bW2Ux48bWW8fg0XPzJ9ANcZ4Yp3eA1za6o0zRQESM9YNJqSinJSR1CnsfHtqHOAmjvTTxjZXjGTi/yFx3+JmEWIuUpVpO2qy41zcjqDKj5Q5N9smaJVzghJNee8jLowt1fToWFgPKIeP2D4xMaGFIadYsVSiSOodtXBlljAsZU4oUl44GxrT2vGvaJ7C19IEZuEhWWw2oV+5Y9Gt9n5s6uwrRX0ZCz5bZd4fQ90V4O4i5v6a/sBC0iJClxdhvimXT023LhgEViWda36bt8ybf27IuQ==
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(366004)(396003)(39860400002)(346002)(136003)(376002)(66946007)(64756008)(66446008)(66476007)(83380400001)(53546011)(6916009)(55016002)(316002)(45080400002)(52536014)(76116006)(66556008)(478600001)(8936002)(33656002)(6506007)(5660300002)(7696005)(4326008)(2906002)(966005)(9686003)(71200400001)(186003)(86362001)(8676002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?N3VJa2p4blZ6QXhjTGhib24xR1lGZnE2d3I2K1BZRTIrNXlJV1pPZkdYTzY5?=
+ =?utf-8?B?eVdXdWkrZC9rZWFRdXA1N0VEaWRlRjJFWS94T01jMUdhVm1FUnhteFFQVnVG?=
+ =?utf-8?B?ZVF1OUNuOVN6YWlCV21GOWlyR3EvUDJ5K1Fjcno5L1oxSnJGOEsyQnRDUUIw?=
+ =?utf-8?B?Q1lhdzlub2xMalBSckFTN3VaZXlNNVpJRkJlYmZycExLTlE4NTNuUlZwYzFa?=
+ =?utf-8?B?cXgzSGRHd0dueWZhRlZueFpkSDNyNUl6RWcrMkdudHJITGV6OXM5dlI0Qzg0?=
+ =?utf-8?B?R2dEa0R2QmZYOGJLQndkdXR5MXViNGlMdVZxNUxCSzljVm8xRTF6WHoxWXJ5?=
+ =?utf-8?B?WDRrUmFTaUllWUQxK0YzaHNQM29yRXRYc3hBd25VV3RMKzRBMHRTSDZrQVRm?=
+ =?utf-8?B?NDV6OVZPajRxaExyMERKVGZRbDNBeDZqSVJmRmVzeFJNdTlra3ZWTWJ6Z0RC?=
+ =?utf-8?B?RktuT2I1ZlF2RFVwcHF3c0t6ZmhMajd2S2FFdzFaWnNrRHVQYno4djFpY2g4?=
+ =?utf-8?B?NWN6TnUvdDZxTHlWd1BPR2YwSHhtR1FiWEwvZy9yOG10dWgwbTM4Vi80U0xU?=
+ =?utf-8?B?QkdwL29qTzg1cG5OUnkxVGtSeHYyTzVwbU1VaTRVNUZlWXZzQkhxcHFlczdH?=
+ =?utf-8?B?bUo0TEZweC9LY0hDRG45cWN6ZWIzZCt0ZE13YzZtaVFabXREL0RGcHpqaUlD?=
+ =?utf-8?B?WTI3SnRzaHdtTFdJQWpEdHIzSWxNdC9BRkVZVndpUE5mdDh3QlNjakdiZ0xv?=
+ =?utf-8?B?Rm5DTjI4MjlhMDZ0U1U3cEpLTVR1dXJtMmVHS21yYUJxZ1U0QXdHS0tHK25P?=
+ =?utf-8?B?OUM3a2xuQWhPemhGam82RFdTUTNGYjMxdVJiUkJqbDVQUmxwTFkyNGFOY1Zw?=
+ =?utf-8?B?djNRalJQWUN5MytZK1NnaTFpWndLRlhzVlV1bkRNSXdOYUxiRkZEMkZwV1dG?=
+ =?utf-8?B?ZU1LRzhEN3hLNjNqdHp5UFh2NGdRblNYTXplZkM5Y0pKMmVxREFxTTZLRnYz?=
+ =?utf-8?B?aERMMkRVdEdDaStBakM4SkJXTUV3K1JEUk12YUVGcTFMMFhLN0RDRk1KeExn?=
+ =?utf-8?B?OGZpOTArdUJLa0xBVjRsQ3JVTk8wc0x2YThGdWlsbERESk5pVFRvVXROWHNh?=
+ =?utf-8?B?RWYvemlwSW1Hd2lEK2VHWnpwSG1DSkRsUTRjS3p0ZlBGcGZsUW5ZWW5DSmFE?=
+ =?utf-8?B?aFdjUldPdTk2OURVa0ZLMGpFUkRrZFprODBiY1UvZmkzbDVoamYwNmpDMW5W?=
+ =?utf-8?B?cUs1bTV2VDNRdXJyb0hKbU9yZ2VJUC9GV3YvTDdmOWNCczJiZz09?=
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <DM6PR08MB398092874C80CB8D04E9D8D2B2FF0@DM6PR08MB3980.namprd08.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:4125;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 47xr9ZXoPQR4dJF3vUP3R61nqOgdEiXC7n1kVlWCh3ezVk/c7t0L55EEmiImt34SFHB6gbHZHFS/mqayuTaeFitaSgcw07b21VU5N+N410njPLktcuil8al/1UIbzskrbP2gZ4LBAp33/QjRbYQgakjdkgcmP9RrQU3q9SaupFbpAsxtDg2JDxo+ZFXBdGq2g+LZ5c1Ih86eeHB5xPmXp0lrkKoaZpIoU4+oiY5oBPxzdU1IL49YhG6oBwYBTfX2sE7BXkzKS38cD6MkzqfFXeFoPz07CEJ2SodQAEwj1n2hDkKIEOEEDS3caa6CYea6t9B9NnPnpEdPlSBfZNjL6ffbY/q3YysaheRKkbEli9wVPJ/P+7zSxdSGetojK5FmYTQiOqV4+UsCK1evRngpVQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR08MB5883.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(346002)(39860400002)(136003)(396003)(376002)(366004)(5660300002)(66556008)(9686003)(6916009)(64756008)(26005)(53546011)(71200400001)(6506007)(316002)(7696005)(8676002)(52536014)(478600001)(966005)(54906003)(66476007)(55016002)(186003)(66446008)(3480700007)(19627405001)(8936002)(33656002)(86362001)(66946007)(2906002)(76116006)(4326008)(166002);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata: Nb2AMzF8fGZVpeVynnBC4f4YcUbwqETbuQy9hUnMu7MI0kZAMRxecLp/pVwipsw6lXDJ3lzILfQ3zQFM/m/pNdaLLxHWoD7UV0O8lhVnxOyaGLvY8W9bfjyq+c6yPayNDKCzJzQA57eIejdhmKdVb6M7kDOrn2i5yuNsqO/6P+kXQ/+TEyTADNWibXc/0f4bE9fj9lqx51g9st2qQHRBFcLwpuMkMQd5nQpBxJPceMCsufQJbpETLg2paX99P3ZK58mW1G4BTA1p/jbzuN555qJii7I6dbjgTMeq3qHgV4/8CXZyWn4WKvFs9VoYTiPkMhO9klQVowlJirc1MVaEWwyn08Ra40wS2edib4H5+VSp+Sk0VH8z+i1FKanAlvITsjdFqLYj8fA7pCXe9kbfse+NlqerzbLx0Doca1ZusmVnjFgjvdN45MsRVbbwIjRoK77ySGQZkeBIYK7QmGHuPUzsYDCVAx+O2Lf8ZV6o9aUk6zXxkA1WMqgtADzWZL36LMAkMaVzSIxXj1xRGyPmAydhJy++cCg/WB5U6322NAga8j8QFkg+v5qvSu+kYLns00FbvcSyKlb/p2YlOX/6i7Il29CUywd8NqJqhUNCJUs8OxUeU+zWmh7Q7xKF1eBiCssGddYeHvmQQZTrX9To5A==
-Content-Type: multipart/alternative;
- boundary="_000_DM6PR08MB5883F020F59F625762BCE1EAB2FF0DM6PR08MB5883namp_"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-OriginatorOrg: FII-NA.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB5883.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2dfd3fdd-3a4d-4acc-a5e0-08d88d74d7ca
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2020 16:53:44.6971 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 7De+XOtxpTXIU43Nvm7KS4Wzzf0hqNLU/gMUmanZ0jr9PUiCcUUih7+Cshx7pjc4/tY2O/qWSkeesQxDGAHi0+vkoKgsAVvYcKQ+vciaMN8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB3980
-X-Mailman-Approved-At: Mon, 23 Nov 2020 13:15:07 +1100
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3772
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: PU1APC01FT019.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 784a3c3b-b2ee-4c11-1acc-08d88f7cde4a
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: JPVn6bzo4fDF0nRNArIXN5EiU8rBMmIuWpZABl4QUvh7wixR3UahRoYzJuU0ib4PnNLRvv7n6sXfK8qbvg2Z1Cdu4IGwnqhiRRSGVkWZ43DagfcqdG9vWbzjagK5tmNWixipMMIwM0GQCsFCFR9siR5swmUtdv0KBwgSX4UalDHIeINMql1EKrDagGcg2FVJP5qg8mSu5Wa1yHVOqW6SiBblYtw/SWeo2NusnPX+b6DjdQ3eW0B1Fr15FDtZ/RaauhjUCe0phhCTmUtHbKTvLFmV+TcFmGXWGkfF1grLgQmQnnrMUxKxI66c0s8UEBDulwB8PewhyuSt7B4imw3uGUodrDyN9peArLV+3aF6g/bIHGqhiQGD3m8U2WMqlfV39G426lh0bB5t7q28nmv8Smp5Spf5sKliuxv35IbnU3Txo190EpwGbCfg1uC349rnT7LM9d40ESlZg0rFd3xOK87uQ6Hb3VizNtLDGs96hAk=
+X-Forefront-Antispam-Report: CIP:192.8.195.59; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(396003)(346002)(136003)(376002)(39860400002)(46966005)(52536014)(478600001)(36906005)(966005)(70206006)(70586007)(316002)(7696005)(55016002)(9686003)(33656002)(6506007)(4326008)(53546011)(186003)(2906002)(26005)(336012)(8676002)(6916009)(45080400002)(5660300002)(8936002)(47076004)(81166007)(86362001)(82740400003)(356005)(82310400003)(83380400001);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Nov 2020 06:56:21.0760 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d88f2b25-68a7-4474-e9a6-08d88f7ce337
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.59];
+ Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: PU1APC01FT019.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS1PR0401MB1977
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,251 +167,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Lancelot Kao <lancelot.cy.kao@fii-na.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- XP Chen <Xiao-Peng.Chen@fii-na.com>, Benjamin Fair <benjaminfair@google.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_DM6PR08MB5883F020F59F625762BCE1EAB2FF0DM6PR08MB5883namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Hi William,
-we were able to build successfully on x86-64 (ubuntu) but fails in aarch64 =
-(centOS8) see log below
-
-
-[root@localhost phosphor-ipmi-flash]# make
-make  all-recursive
-make[1]: Entering directory '/root/phosphor-ipmi-flash'
-Making all in .
-make[2]: Entering directory '/root/phosphor-ipmi-flash'
-make[2]: Leaving directory '/root/phosphor-ipmi-flash'
-Making all in tools
-make[2]: Entering directory '/root/phosphor-ipmi-flash/tools'
-Making all in .
-make[3]: Entering directory '/root/phosphor-ipmi-flash/tools'
-  CXXLDburn_my_bmc
-burn_my_bmc-main.o: In function `main':
-main.cpp:(.text+0x7e0): undefined reference to `internal::sys_impl'
-main.cpp:(.text+0x7e4): undefined reference to `internal::sys_impl'
-burn_my_bmc-main.o: In function `std::_MakeUniq<host_tool::BtDataHandler>::=
-__single_object std::make_unique<host_tool::BtDataHandler, ipmiblob::BlobHa=
-ndler*, ho   st_tool::ProgressStdoutIndicator*>(ipmiblob::BlobHandler*&&, h=
-ost_tool::ProgressStdoutIndicator*&&)':
-main.cpp:(.text._ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmiblob11=
-BlobHandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__single_ob=
-jectEDpOT0_[_ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmiblob11Blob=
-HandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__single_object=
-EDpOT0_]+0x40): undefined reference to `internal::sys_impl'
-main.cpp:(.text._ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmiblob11=
-BlobHandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__single_ob=
-jectEDpOT0_[_ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmiblob11Blob=
-HandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__single_object=
-EDpOT0_]+0x44): undefined reference to `internal::sys_impl'
-burn_my_bmc-main.o: In function `std::_MakeUniq<host_tool::NetDataHandler>:=
-:__single_object std::make_unique<host_tool::NetDataHandler, ipmiblob::Blob=
-Handler*,host_tool::ProgressStdoutIndicator*, std::__cxx11::basic_string<ch=
-ar, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_st=
-ring<char, std::char_traits<char>, std::allocator<char> >&>(ipmiblob::BlobH=
-andler*&&, host_tool::ProgressStdoutIndicator*&&, std::__cxx11::basic_strin=
-g<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basi=
-c_string<char, std::char_traits<char>, std::allocator<char> >&)':
-main.cpp:(.text._ZSt11make_uniqueIN9host_tool14NetDataHandlerEJPN8ipmiblob1=
-1BlobHandlerEPNS0_23ProgressStdoutIndicatorERNSt7__cxx1112basic_stringIcSt1=
-1char_traitsIcESaIcEEESD_EENSt9_MakeUniqIT_E15__single_objectEDpOT0_[_ZSt11=
-make_uniqueIN9host_tool14NetDataHandlerEJPN8ipmiblob11BlobHandlerEPNS0_23Pr=
-ogressStdoutIndicatorERNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE=
-SD_EENSt9_MakeUniqIT_E15__single_objectEDpOT0_]+0x64): undefined reference =
-to `internal::sys_impl'
-burn_my_bmc-main.o:main.cpp:(.text._ZSt11make_uniqueIN9host_tool14NetDataHa=
-ndlerEJPN8ipmiblob11BlobHandlerEPNS0_23ProgressStdoutIndicatorERNSt7__cxx11=
-12basic_stringIcSt11char_traitsIcESaIcEEESD_EENSt9_MakeUniqIT_E15__single_o=
-bjectEDpOT0_[_ZSt11make_uniqueIN9host_tool14NetDataHandlerEJPN8ipmiblob11Bl=
-obHandlerEPNS0_23ProgressStdoutIndicatorERNSt7__cxx1112basic_stringIcSt11ch=
-ar_traitsIcESaIcEEESD_EENSt9_MakeUniqIT_E15__single_objectEDpOT0_]+0x68): m=
-ore undefined references to `internal::sys_impl' follow
-collect2: error: ld returned 1 exit status
-make[3]: *** [Makefile:570: burn_my_bmc] Error 1
-make[3]: Leaving directory '/root/phosphor-ipmi-flash/tools'
-make[2]: *** [Makefile:725: all-recursive] Error 1
-make[2]: Leaving directory '/root/phosphor-ipmi-flash/tools'
-make[1]: *** [Makefile:615: all-recursive] Error 1
-make[1]: Leaving directory '/root/phosphor-ipmi-flash'
-make: *** [Makefile:475: all] Error 2
-[root@localhost phosphor-ipmi-flash]#
-
-
-
-Thanks,
-Mohaimen Alsamarai
-
-________________________________
-From: William Kennington <wak@google.com>
-Sent: Thursday, November 19, 2020 11:56 PM
-To: Mohaimen Alsamarai <Mohaimen.Alsamarai@fii-na.com>
-Cc: openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>; XP Chen <Xiao-Peng=
-.Chen@fii-na.com>; Lancelot Kao <lancelot.cy.kao@fii-na.com>; Benjamin Fair=
- <benjaminfair@google.com>
-Subject: Re: phosphor-ipmi-flash build error
-
-If you are installing these manually, be sure to install https://github.com=
-/martinmoene/span-lite before building and installing stdplus and phosphor-=
-ipmi-flash.
-
---_000_DM6PR08MB5883F020F59F625762BCE1EAB2FF0DM6PR08MB5883namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Hi William,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-we were able to build successfully on x86-64 (ubuntu) but fails in aarch64 =
-(centOS8) see log below&nbsp;</div>
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-<br>
-</div>
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-<br>
-</div>
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-[root@localhost phosphor-ipmi-flash]# make
-<div>make &nbsp;all-recursive</div>
-<div>make[1]: Entering directory '/root/phosphor-ipmi-flash'</div>
-<div>Making all in .</div>
-<div>make[2]: Entering directory '/root/phosphor-ipmi-flash'</div>
-<div>make[2]: Leaving directory '/root/phosphor-ipmi-flash'</div>
-<div>Making all in tools</div>
-<div>make[2]: Entering directory '/root/phosphor-ipmi-flash/tools'</div>
-<div>Making all in .</div>
-<div>make[3]: Entering directory '/root/phosphor-ipmi-flash/tools'</div>
-<div>&nbsp; CXXLDburn_my_bmc</div>
-<div>burn_my_bmc-main.o: In function `main':</div>
-<div>main.cpp:(.text+0x7e0): undefined reference to `internal::sys_impl'</d=
-iv>
-<div>main.cpp:(.text+0x7e4): undefined reference to `internal::sys_impl'</d=
-iv>
-<div>burn_my_bmc-main.o: In function `std::_MakeUniq&lt;host_tool::BtDataHa=
-ndler&gt;::__single_object std::make_unique&lt;host_tool::BtDataHandler, ip=
-miblob::BlobHandler*, ho &nbsp; st_tool::ProgressStdoutIndicator*&gt;(ipmib=
-lob::BlobHandler*&amp;&amp;, host_tool::ProgressStdoutIndicator*&amp;&amp;)=
-':</div>
-<div>main.cpp:(.text._ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmib=
-lob11BlobHandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__sing=
-le_objectEDpOT0_[_ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmiblob1=
-1BlobHandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__single_o=
-bjectEDpOT0_]+0x40):
- undefined reference to `internal::sys_impl'</div>
-<div>main.cpp:(.text._ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmib=
-lob11BlobHandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__sing=
-le_objectEDpOT0_[_ZSt11make_uniqueIN9host_tool13BtDataHandlerEJPN8ipmiblob1=
-1BlobHandlerEPNS0_23ProgressStdoutIndicatorEEENSt9_MakeUniqIT_E15__single_o=
-bjectEDpOT0_]+0x44):
- undefined reference to `internal::sys_impl'</div>
-<div>burn_my_bmc-main.o: In function `std::_MakeUniq&lt;host_tool::NetDataH=
-andler&gt;::__single_object std::make_unique&lt;host_tool::NetDataHandler, =
-ipmiblob::BlobHandler*,host_tool::ProgressStdoutIndicator*, std::__cxx11::b=
-asic_string&lt;char, std::char_traits&lt;char&gt;,
- std::allocator&lt;char&gt; &gt;&amp;, std::__cxx11::basic_string&lt;char, =
-std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;&amp;&gt;(ipmi=
-blob::BlobHandler*&amp;&amp;, host_tool::ProgressStdoutIndicator*&amp;&amp;=
-, std::__cxx11::basic_string&lt;char, std::char_traits&lt;char&gt;, std::al=
-locator&lt;char&gt; &gt;&amp;, std::__cxx11::basic_string&lt;char,
- std::char_traits&lt;char&gt;, std::allocator&lt;char&gt; &gt;&amp;)':</div=
->
-<div>main.cpp:(.text._ZSt11make_uniqueIN9host_tool14NetDataHandlerEJPN8ipmi=
-blob11BlobHandlerEPNS0_23ProgressStdoutIndicatorERNSt7__cxx1112basic_string=
-IcSt11char_traitsIcESaIcEEESD_EENSt9_MakeUniqIT_E15__single_objectEDpOT0_[_=
-ZSt11make_uniqueIN9host_tool14NetDataHandlerEJPN8ipmiblob11BlobHandlerEPNS0=
-_23ProgressStdoutIndicatorERNSt7__cxx1112basic_stringIcSt11char_traitsIcESa=
-IcEEESD_EENSt9_MakeUniqIT_E15__single_objectEDpOT0_]+0x64):
- undefined reference to `internal::sys_impl'</div>
-<div>burn_my_bmc-main.o:main.cpp:(.text._ZSt11make_uniqueIN9host_tool14NetD=
-ataHandlerEJPN8ipmiblob11BlobHandlerEPNS0_23ProgressStdoutIndicatorERNSt7__=
-cxx1112basic_stringIcSt11char_traitsIcESaIcEEESD_EENSt9_MakeUniqIT_E15__sin=
-gle_objectEDpOT0_[_ZSt11make_uniqueIN9host_tool14NetDataHandlerEJPN8ipmiblo=
-b11BlobHandlerEPNS0_23ProgressStdoutIndicatorERNSt7__cxx1112basic_stringIcS=
-t11char_traitsIcESaIcEEESD_EENSt9_MakeUniqIT_E15__single_objectEDpOT0_]+0x6=
-8):
- more undefined references to `internal::sys_impl' follow</div>
-<div>collect2: error: ld returned 1 exit status</div>
-<div>make[3]: *** [Makefile:570: burn_my_bmc] Error 1</div>
-<div>make[3]: Leaving directory '/root/phosphor-ipmi-flash/tools'</div>
-<div>make[2]: *** [Makefile:725: all-recursive] Error 1</div>
-<div>make[2]: Leaving directory '/root/phosphor-ipmi-flash/tools'</div>
-<div>make[1]: *** [Makefile:615: all-recursive] Error 1</div>
-<div>make[1]: Leaving directory '/root/phosphor-ipmi-flash'</div>
-<div>make: *** [Makefile:475: all] Error 2</div>
-<div>[root@localhost phosphor-ipmi-flash]#</div>
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-<br>
-</div>
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-<br>
-</div>
-<br>
-Thanks,</div>
-<div style=3D"box-sizing:border-box;font-family:&quot;Segoe UI&quot;, syste=
-m-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif=
-;font-size:14px">
-Mohaimen Alsamarai<br>
-<br>
-</div>
-</div>
-<div id=3D"appendonsend"></div>
-<hr style=3D"display:inline-block;width:98%" tabindex=3D"-1">
-<div id=3D"divRplyFwdMsg" dir=3D"ltr"><font face=3D"Calibri, sans-serif" st=
-yle=3D"font-size:11pt" color=3D"#000000"><b>From:</b> William Kennington &l=
-t;wak@google.com&gt;<br>
-<b>Sent:</b> Thursday, November 19, 2020 11:56 PM<br>
-<b>To:</b> Mohaimen Alsamarai &lt;Mohaimen.Alsamarai@fii-na.com&gt;<br>
-<b>Cc:</b> openbmc@lists.ozlabs.org &lt;openbmc@lists.ozlabs.org&gt;; XP Ch=
-en &lt;Xiao-Peng.Chen@fii-na.com&gt;; Lancelot Kao &lt;lancelot.cy.kao@fii-=
-na.com&gt;; Benjamin Fair &lt;benjaminfair@google.com&gt;<br>
-<b>Subject:</b> Re: phosphor-ipmi-flash build error</font>
-<div>&nbsp;</div>
-</div>
-<div>
-<div dir=3D"ltr">
-<div>If you are installing these manually, be sure to install&nbsp;<a href=
-=3D"https://github.com/martinmoene/span-lite">https://github.com/martinmoen=
-e/span-lite</a> before&nbsp;building and installing stdplus and phosphor-ip=
-mi-flash.</div>
-<div class=3D"x_gmail_quote">
-<blockquote class=3D"x_gmail_quote" style=3D"margin:0px 0px 0px 0.8ex; bord=
-er-left:1px solid rgb(204,204,204); padding-left:1ex">
-<div lang=3D"EN-US">
-<div class=3D"x_gmail-m_-5300371022549447207WordSection1"></div>
-</div>
-</blockquote>
-</div>
-</div>
-</div>
-</body>
-</html>
-
---_000_DM6PR08MB5883F020F59F625762BCE1EAB2FF0DM6PR08MB5883namp_--
+Q2xhc3NpZmljYXRpb246IEludGVybmFsDQoNCkhpIEFydGVtIFNlbmljaGV2LA0KDQpUaGFua3Mg
+Zm9yIHlvdXIgcmVzcG9uc2UuDQoNCkluIHBob3NwaG9yLWhvc3QtaXBtaWQsIGJvb3QgbW9kZSBh
+bmQgYm9vdCBzb3VyY2UgZGJ1cyBpbnRlcmZhY2VzIGFyZSB1c2VkIHRvIGdldCBhbmQgc2V0IGJv
+b3Qgb3JkZXIuDQpJIG5lZWQgdG8gZGlzcGxheSB0aGUgYm9vdCBvcmRlciBzZXF1ZW5jZXMgKCAi
+VVNCX0RFViIsICJORVRfSVBWNiIsICJTQVRBX0hERCIsICJTQVRBX0NEIiwgIk90aGVycyIgKSB1
+c2luZyBkYnVzIGludGVyZmFjZXMuDQpJcyB0aGVyZSBhbnkgb3B0aW9ucyB0byBkaXNwbGF5IHRo
+ZSBib290IG9yZGVyIHNlcXVlbmNlcz8NCg0KUmVnYXJkcywNCkpheWFzaHJlZQ0KDQotLS0tLU9y
+aWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogQXJ0ZW0gU2VuaWNoZXYgPGFydGVtc2VuQGdtYWls
+LmNvbT4gDQpTZW50OiBTdW5kYXksIE5vdmVtYmVyIDIyLCAyMDIwIDY6MjggUE0NClRvOiBKYXlh
+c2hyZWUgRCA8amF5YXNocmVlLWRAaGNsLmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5v
+cmcNClN1YmplY3Q6IFJlOiBCb290IE9yZGVyIGluIFJlZGZpc2ggYW5kIERCVVMNCg0KW0NBVVRJ
+T046IFRoaXMgRW1haWwgaXMgZnJvbSBvdXRzaWRlIHRoZSBPcmdhbml6YXRpb24uIFVubGVzcyB5
+b3UgdHJ1c3QgdGhlIHNlbmRlciwgRG9u4oCZdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1l
+bnRzIGFzIGl0IG1heSBiZSBhIFBoaXNoaW5nIGVtYWlsLCB3aGljaCBjYW4gc3RlYWwgeW91ciBJ
+bmZvcm1hdGlvbiBhbmQgY29tcHJvbWlzZSB5b3VyIENvbXB1dGVyLl0NCg0KSGkgSmF5YXNocmVl
+LA0KDQpBRkFJSyxPcGVuUE9XRVIgc3lzdGVtcyB1c2UgZGJ1cyBpbnRlcmZhY2UNCnh5ei5vcGVu
+Ym1jX3Byb2plY3QuQ29udHJvbC5Cb290LlNvdXJjZToNCmh0dHBzOi8vYXBjMDEuc2FmZWxpbmtz
+LnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZv
+cGVuYm1jJTJGcGhvc3Bob3ItaG9zdC1pcG1pZCUyRmJsb2IlMkY1MTViYzM3NWNiOGRhYWVlOTgx
+YmFlOTdmYTdhZTgwZTdiZjY1YzYyJTJGY2hhc3Npc2hhbmRsZXIuY3BwJTIzTDE3MjAmYW1wO2Rh
+dGE9MDQlN0MwMSU3Q2pheWFzaHJlZS1kJTQwaGNsLmNvbSU3QzA3OWI1YjViMDhlMDRmNjE0NWQx
+MDhkODhlZTYzZWU2JTdDMTg5ZGU3MzdjOTNhNGY1YThiNjg2ZjRjYTk5NDE5MTIlN0MwJTdDMCU3
+QzYzNzQxNjQ2NjkzNjYzNTc2OSU3Q1Vua25vd24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdM
+akF3TURBaUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0Mx
+MDAwJmFtcDtzZGF0YT1aMWhjMlJiVEd5MDRWRTZHOWd3ZjBSME9LQWVQMFZaZDV1M0RIS010blNF
+JTNEJmFtcDtyZXNlcnZlZD0wDQoNCi0tDQpCZXN0IHJlZ2FyZHMsDQpBcnRlbSBTZW5pY2hldg0K
+DQpPbiBTYXQsIE5vdiAyMSwgMjAyMCBhdCA5OjM2IFBNIEpheWFzaHJlZSBEIDxqYXlhc2hyZWUt
+ZEBoY2wuY29tPiB3cm90ZToNCj4NCj4gQ2xhc3NpZmljYXRpb246IEludGVybmFsDQo+DQo+IEhp
+IFRlYW0sDQo+DQo+DQo+DQo+IEkgYW0gd29ya2luZyBvbiBCSU9TIGJvb3Qgb3JkZXIgaW4gbXkg
+ZW52aXJvbm1lbnQsIHRvIGdldCBhbmQgc2V0IHRoZSBib290IG9yZGVyIHNlcXVlbmNlLg0KPg0K
+PiBIb3cgdGhlIGJvb3Qgb3JkZXIgc2V0dGluZ3MgaXMgaGFuZGxlZCB1c2luZyBkYnVzIGludGVy
+ZmFjZXMgYW5kIGFsc28gaW4gcmVkZmlzaCA/DQo+DQo+IFBsZWFzZSBwcm92aWRlIHlvdXIgaW5w
+dXRzL3N1Z2dlc3Rpb25zIG9uIHRoaXMuDQo+DQo+DQo+DQo+IFRoYW5rcywNCj4NCj4gSmF5YXNo
+cmVlDQo+DQo+DQo+DQo+DQo+DQo+IEZyb206IEpheWFzaHJlZSBEDQo+IFNlbnQ6IEZyaWRheSwg
+Tm92ZW1iZXIgMjAsIDIwMjAgMjowOSBQTQ0KPiBUbzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
+DQo+IFN1YmplY3Q6IEJvb3QgT3JkZXIgaW4gUmVkZmlzaCBhbmQgREJVUw0KPg0KPg0KPg0KPiBD
+bGFzc2lmaWNhdGlvbjogSW50ZXJuYWwNCj4NCj4gSGkgVGVhbSwNCj4NCj4NCj4NCj4gSSBhbSB3
+b3JraW5nIG9uIEJJT1MgYm9vdCBvcmRlciBpbiBteSBlbnZpcm9ubWVudCwgdG8gZ2V0IGFuZCBz
+ZXQgdGhlIGJvb3Qgb3JkZXIgc2VxdWVuY2UuDQo+DQo+IEhvdyB0aGUgYm9vdCBvcmRlciBzZXR0
+aW5ncyBpcyBoYW5kbGVkIHVzaW5nIGRidXMgaW50ZXJmYWNlcyBhbmQgYWxzbyBpbiByZWRmaXNo
+ID8NCj4NCj4gUGxlYXNlIHByb3ZpZGUgeW91ciBpbnB1dHMvc3VnZ2VzdGlvbnMgb24gdGhpcy4N
+Cj4NCj4NCj4NCj4gVGhhbmtzLA0KPg0KPiBKYXlhc2hyZWUNCj4NCj4NCj4NCj4NCj4NCj4gOjpE
+SVNDTEFJTUVSOjoNCj4gX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCj4gVGhlIGNv
+bnRlbnRzIG9mIHRoaXMgZS1tYWlsIGFuZCBhbnkgYXR0YWNobWVudChzKSBhcmUgY29uZmlkZW50
+aWFsIGFuZCBpbnRlbmRlZCBmb3IgdGhlIG5hbWVkIHJlY2lwaWVudChzKSBvbmx5LiBFLW1haWwg
+dHJhbnNtaXNzaW9uIGlzIG5vdCBndWFyYW50ZWVkIHRvIGJlIHNlY3VyZSBvciBlcnJvci1mcmVl
+IGFzIGluZm9ybWF0aW9uIGNvdWxkIGJlIGludGVyY2VwdGVkLCBjb3JydXB0ZWQsIGxvc3QsIGRl
+c3Ryb3llZCwgYXJyaXZlIGxhdGUgb3IgaW5jb21wbGV0ZSwgb3IgbWF5IGNvbnRhaW4gdmlydXNl
+cyBpbiB0cmFuc21pc3Npb24uIFRoZSBlIG1haWwgYW5kIGl0cyBjb250ZW50cyAod2l0aCBvciB3
+aXRob3V0IHJlZmVycmVkIGVycm9ycykgc2hhbGwgdGhlcmVmb3JlIG5vdCBhdHRhY2ggYW55IGxp
+YWJpbGl0eSBvbiB0aGUgb3JpZ2luYXRvciBvciBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIFZpZXdz
+IG9yIG9waW5pb25zLCBpZiBhbnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFyZSBzb2xlbHkg
+dGhvc2Ugb2YgdGhlIGF1dGhvciBhbmQgbWF5IG5vdCBuZWNlc3NhcmlseSByZWZsZWN0IHRoZSB2
+aWV3cyBvciBvcGluaW9ucyBvZiBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIEFueSBmb3JtIG9mIHJl
+cHJvZHVjdGlvbiwgZGlzc2VtaW5hdGlvbiwgY29weWluZywgZGlzY2xvc3VyZSwgbW9kaWZpY2F0
+aW9uLCBkaXN0cmlidXRpb24gYW5kIC8gb3IgcHVibGljYXRpb24gb2YgdGhpcyBtZXNzYWdlIHdp
+dGhvdXQgdGhlIHByaW9yIHdyaXR0ZW4gY29uc2VudCBvZiBhdXRob3JpemVkIHJlcHJlc2VudGF0
+aXZlIG9mIEhDTCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0
+aGlzIGVtYWlsIGluIGVycm9yIHBsZWFzZSBkZWxldGUgaXQgYW5kIG5vdGlmeSB0aGUgc2VuZGVy
+IGltbWVkaWF0ZWx5LiBCZWZvcmUgb3BlbmluZyBhbnkgZW1haWwgYW5kL29yIGF0dGFjaG1lbnRz
+LCBwbGVhc2UgY2hlY2sgdGhlbSBmb3IgdmlydXNlcyBhbmQgb3RoZXIgZGVmZWN0cy4NCj4gX19f
+X19fX19fX19fX19fX19fX19fX19fX19fX19fX18NCg==
