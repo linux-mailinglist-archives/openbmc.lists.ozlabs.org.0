@@ -2,89 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D1552C3088
-	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 20:12:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CEF642C30C2
+	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 20:32:37 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CgYZ04WjyzDqYP
-	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 06:12:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CgZ0z1XFzzDqVk
+	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 06:32:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=CMsPg69W; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ header.s=pp1 header.b=UPKcCSQF; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CgYY62WRmzDqVH
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 06:11:53 +1100 (AEDT)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0AOJ2SYt145448
- for <openbmc@lists.ozlabs.org>; Tue, 24 Nov 2020 14:11:48 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CgZ054rLYzDqRy
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 06:31:48 +1100 (AEDT)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0AOJVBe1073480; Tue, 24 Nov 2020 14:31:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : subject :
- from : to : date : mime-version : references : content-transfer-encoding :
- content-type : message-id; s=pp1;
- bh=f8DHOZ5Jz4+Q28FxcjmoATP2zMFIVTQjqwOniEv0l90=;
- b=CMsPg69WP/GdvAR78e8L2p1XVZvSokrKQTg4rai7RisD1XWv9PbHPVff1HY4ff5Lzrz0
- oKmGJq3KthjmBGw/GeToof1NOY0sqSIF59+nuc9T/Fc22TOad0AEghUTtKNot4GfUQwo
- CcR4ZJBzQrkAJInRmI4CbiKbSsuJ2CfCeYUGA5Mtj3kfjI07z83+1x+HRL93v68BDcVM
- w/oF/nfiga/AGcmndRpSCOPSXg7wjuUxtCPxD6iaqQNTXAnWSurz/CadypWu7wh5yB3M
- oKKJo9c12wiT0boCrG16PO3sdQOfG9ejKFNi0WPr/ShW18EmBIVRVXYvFI5MEp/DN6ns sQ== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.75])
- by mx0a-001b2d01.pphosted.com with ESMTP id 350rkpq8kb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 24 Nov 2020 14:11:48 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
- Tue, 24 Nov 2020 19:11:48 -0000
-Received: from us1a3-smtp06.a3.dal06.isc4sb.com (10.146.103.243)
- by smtp.notes.na.collabserv.com (10.106.227.123) with
- smtp.notes.na.collabserv.com ESMTP; Tue, 24 Nov 2020 19:11:45 -0000
-Received: from us1a3-mail158.a3.dal06.isc4sb.com ([10.146.71.209])
- by us1a3-smtp06.a3.dal06.isc4sb.com
- with ESMTP id 2020112419114454-683573 ;
- Tue, 24 Nov 2020 19:11:44 +0000 
-In-Reply-To: <OF8B9C9502.B727E6AE-ON00258625.005EADD1-00258625.005EADD6@notes.na.collabserv.com>
-Subject: Re: GUI Design Work Group - Wednesday11/25
-From: "Derick Montague" <Derick.Montague@ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Tue, 24 Nov 2020 19:11:45 +0000
-MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <OF8B9C9502.B727E6AE-ON00258625.005EADD1-00258625.005EADD6@notes.na.collabserv.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 60415
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-x-cbid: 20112419-6875-0000-0000-000003FE8660
-X-IBM-SpamModules-Scores: BY=0.000014; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.40962; ST=0; TS=0; UL=0; ISC=; MB=0.082140
-X-IBM-SpamModules-Versions: BY=3.00014248; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01468541; UDB=6.00790690; IPR=6.01251190; 
- MB=3.00035199; MTD=3.00000008; XFM=3.00000015; UTC=2020-11-24 19:11:46
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-11-24 10:14:06 - 6.00012084
-x-cbparentid: 20112419-6876-0000-0000-000025B58C37
-Message-Id: <OF25F63733.E25F0CF9-ON0025862A.006947E8-0025862A.0069722C@notes.na.collabserv.com>
+ h=message-id : subject :
+ from : to : date : in-reply-to : references : content-type : mime-version
+ : content-transfer-encoding; s=pp1;
+ bh=0Ca4DMbONLo8B+OG305shhB0EnqadcjMzAukF3IWjZE=;
+ b=UPKcCSQFs1d2++TAGuhzQr+w/Yf+fOoDO3juxz3Da4xsoTIdTiB/g1cspSTubuxcrzF4
+ oAHsxW5qR+L1B8LJPV++OcchI6TAvkfDE54v+TaHszQ3OJeVbimIAvJVtrtui8dyDMpx
+ CmPGNa/8GwLLx9nsqfY2aTVQLjFxfz+Kmxi0Ur1kq8s9n0z3ajhS0NDmi0KInlsGa939
+ KL4fhtfPEkGPPwx+IsJcsW+k74S44W6NPDsZ60TeSMvTIqo1ZN2cqrN3/PvkPznRPqAz
+ 88aCvf+fMz7VXkLOyx8QzIvEpGUWCXmWyW2dSs9go77JqgxgZWSjYLrqwXz/lpBD1uw9 ew== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com
+ [169.55.91.170])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3513uwhmfm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Nov 2020 14:31:45 -0500
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+ by ppma02wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AOJU94U023540;
+ Tue, 24 Nov 2020 19:31:44 GMT
+Received: from b03cxnp07028.gho.boulder.ibm.com
+ (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
+ by ppma02wdc.us.ibm.com with ESMTP id 34xth91v7b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Nov 2020 19:31:44 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0AOJVgIl44958072
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 24 Nov 2020 19:31:42 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F3336A051;
+ Tue, 24 Nov 2020 19:31:42 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 483966A04D;
+ Tue, 24 Nov 2020 19:31:42 +0000 (GMT)
+Received: from v0005c16 (unknown [9.211.93.247])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Tue, 24 Nov 2020 19:31:42 +0000 (GMT)
+Message-ID: <6830cad3b707763cdb89c126a1dd0674148ad3b2.camel@linux.ibm.com>
+Subject: Re: [PATCH linux dev-5.8] ARM: dts: aspeed: rainier: Set MAX31785
+ config
+From: Eddie James <eajames@linux.ibm.com>
+To: Matthew Barth <msbarth@linux.ibm.com>, openbmc@lists.ozlabs.org,
+ joel@jms.id.au
+Date: Tue, 24 Nov 2020 13:31:41 -0600
+In-Reply-To: <20201124044910.2006209-1-msbarth@linux.ibm.com>
+References: <20201124044910.2006209-1-msbarth@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-12.el8) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
  definitions=2020-11-24_05:2020-11-24,
  2020-11-24 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0
+ mlxscore=0 mlxlogscore=999 clxscore=1015 impostorscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011240112
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,13 +103,100 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> Next weeks work group falls the day before a U.S. holiday and there will =
-be
-> many people off this week from the IBM team, including myself. Is anyone
-> opposed to cancelling this work group?
+On Mon, 2020-11-23 at 22:49 -0600, Matthew Barth wrote:
+> Set the MAX31785 device configuration properties
 
-The GUI Design Work Group is cancelled this week. See in in two weeks. =20
-  =20
-Thank you! =20
-  =20
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
+
+> 
+> Signed-off-by: Matthew Barth <msbarth@linux.ibm.com>
+> ---
+>  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 54
+> ++++++++++++++++++++
+>  1 file changed, 54 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> index a4b77aec5424..4692c5e8f919 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+> @@ -732,24 +732,78 @@ fan0: fan@0 {
+>  			compatible = "pmbus-fan";
+>  			reg = <0>;
+>  			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-dual-tach;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+>  		};
+> 
+>  		fan1: fan@1 {
+>  			compatible = "pmbus-fan";
+>  			reg = <1>;
+>  			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-dual-tach;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+>  		};
+> 
+>  		fan2: fan@2 {
+>  			compatible = "pmbus-fan";
+>  			reg = <2>;
+>  			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-dual-tach;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+>  		};
+> 
+>  		fan3: fan@3 {
+>  			compatible = "pmbus-fan";
+>  			reg = <3>;
+>  			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-dual-tach;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +
+> +		fan4: fan@4 {
+> +			compatible = "pmbus-fan";
+> +			reg = <4>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-dual-tach;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+> +		};
+> +
+> +		fan5: fan@5 {
+> +			compatible = "pmbus-fan";
+> +			reg = <5>;
+> +			tach-pulses = <2>;
+> +			maxim,fan-rotor-input = "tach";
+> +			maxim,fan-pwm-freq = <25000>;
+> +			maxim,fan-dual-tach;
+> +			maxim,fan-no-watchdog;
+> +			maxim,fan-no-fault-ramp;
+> +			maxim,fan-ramp = <2>;
+> +			maxim,fan-fault-pin-mon;
+>  		};
+>  	};
+> 
 
