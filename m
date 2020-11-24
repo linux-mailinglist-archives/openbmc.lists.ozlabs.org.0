@@ -2,85 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6466C2C1D2A
-	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 05:56:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76C5C2C1D49
+	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 06:19:02 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CgBYZ1JYFzDqLc
-	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 15:56:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CgC4342MczDqLl
+	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 16:18:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=msbarth@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=ol2QXr2n; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=enymUa6h; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CgBXm2fhwzDqJ2
- for <openbmc@lists.ozlabs.org>; Tue, 24 Nov 2020 15:55:19 +1100 (AEDT)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0AO4WKTM103742; Mon, 23 Nov 2020 23:55:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=calfUZAkFZYWMOql5/FZsR6EY9PgrLoZPbDqWLHlzy0=;
- b=ol2QXr2nt4m1QnBVEaO1YHvUqZkk8/351y0tNH+hI5MFmHNSdtuqmNZ63EgMuzuDPJP/
- cUKUSu5lWrdlE8YSkdUwhxerJ1XvCsj9lo/iyyiWm9yh8G1t5oCMk/lhMg8OFxrQyzNc
- 7kZfzG7RIn5lVFJR+zpXlpUZHHajo2nG5N+a9t2Kj3JFb4UugErJlFXcA+1P0MJomZ1M
- vG19+pclx2g7KK5AT9UzFFkV0KlMXyS0IuBi3bKN4c3Z2jENKPf3hJ3lOaI9BBdYqawT
- DvZRJIfX5IM+TOX2SX2mQW8J0FO0syHjmb+R+w/55pJCo/EnQ4CteB1SMLcN92Ke+eaZ SA== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.27])
- by mx0a-001b2d01.pphosted.com with ESMTP id 34yghrrqe6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 23 Nov 2020 23:55:17 -0500
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
- by ppma05wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AO4bSbK022963;
- Tue, 24 Nov 2020 04:55:15 GMT
-Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
- [9.57.198.23]) by ppma05wdc.us.ibm.com with ESMTP id 34xth8vh5j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 24 Nov 2020 04:55:15 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
- [9.57.199.109])
- by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0AO4tFgc4129506
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 24 Nov 2020 04:55:15 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D0DA112062;
- Tue, 24 Nov 2020 04:55:15 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8C3FB112063;
- Tue, 24 Nov 2020 04:55:14 +0000 (GMT)
-Received: from MSBARTH-P50.lan (unknown [9.211.40.249])
- by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue, 24 Nov 2020 04:55:14 +0000 (GMT)
-From: Matthew Barth <msbarth@linux.ibm.com>
-To: openbmc@lists.ozlabs.org, joel@jms.id.au
-Subject: [PATCH linux dev-5.8] ARM: dts: aspeed: rainier-4u: Update fan config
-Date: Mon, 23 Nov 2020 22:55:12 -0600
-Message-Id: <20201124045512.2008095-1-msbarth@linux.ibm.com>
-X-Mailer: git-send-email 2.28.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CgC3F0ctkzDqKM
+ for <openbmc@lists.ozlabs.org>; Tue, 24 Nov 2020 16:18:16 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 48C9441276;
+ Tue, 24 Nov 2020 05:18:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1606195085; x=1608009486; bh=YeOcUedhePVYdJrQT0Ym1Ut29
+ UPOUa4GzrwBkN8kvj0=; b=enymUa6h7s3KFh+jpGnd7ip4z0qzWBr9Xd20DbN6/
+ YZ7cejeTC4u9im2Fb9H0iMELNl7Gi3BOTzlh0UpT56N58nGpkcOIYNZowCPllRC0
+ 9JGE6LsF1h6X7Sfwv/11SuYxfeMS3no1XRsbRSS+SynWnBV/JGAgab0pVXjPq4lc
+ ns=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id Ir2Ax7miCql9; Tue, 24 Nov 2020 08:18:05 +0300 (MSK)
+Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
+ [172.17.100.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 9CAAE41259;
+ Tue, 24 Nov 2020 08:18:05 +0300 (MSK)
+Received: from [10.199.0.34] (10.199.0.34) by T-EXCH-03.corp.yadro.com
+ (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Tue, 24
+ Nov 2020 08:18:05 +0300
+Message-ID: <6cc50da92b76ff7fbda5f43651bb32f6ff7b0c9e.camel@yadro.com>
+Subject: Re: Unresponsive BMC after booting into Ubuntu
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: Patrick Voelker <Patrick_Voelker@phoenix.com>, "OpenBMC
+ (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
+Date: Tue, 24 Nov 2020 08:17:59 +0300
+In-Reply-To: <f659f8a48f24404fbc5dda747000865d@SCL-EXCHMB-13.phoenix.com>
+References: <f659f8a48f24404fbc5dda747000865d@SCL-EXCHMB-13.phoenix.com>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-23_19:2020-11-23,
- 2020-11-23 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 malwarescore=0 clxscore=1015 phishscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011240022
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.34]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,48 +78,39 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Rainier 4U systems has single rotor fans with a tach pulse of 4.
+Hi,
+I had similar issue, but it was just "not loading some pages in webui
+and doesn't response on ipmi commands", ssh and serial console used to
+work. And yes, it appears after Linux boots on the host, but not with
+Windows.
+The root problem in my case was in PECI driver and power saving CPU
+modes.
+Here was the patch which solves the problem for me:
+https://patchwork.ozlabs.org/project/openbmc/patch/e6f4ab29854ac58a878189c1edece4e8eed2e7fd.camel@yadro.com/
 
-Signed-off-by: Matthew Barth <msbarth@linux.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+I'm not sure if it is your problem also, if you use dbus-sensors you
+can check by stopping CPUsensor: 
+	systemctl stop xyz.openbmc_project.cpusensor.service
+If the problem gone after this, you got it =)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
-index 291f7d6c9979..f7fd3b3c90d0 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier-4u.dts
-@@ -22,16 +22,30 @@ power-supply@6b {
- 
- &fan0 {
- 	tach-pulses = <4>;
-+	/delete-property/ maxim,fan-dual-tach;
- };
- 
- &fan1 {
- 	tach-pulses = <4>;
-+	/delete-property/ maxim,fan-dual-tach;
- };
- 
- &fan2 {
- 	tach-pulses = <4>;
-+	/delete-property/ maxim,fan-dual-tach;
- };
- 
- &fan3 {
- 	tach-pulses = <4>;
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan4 {
-+	tach-pulses = <4>;
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan5 {
-+	tach-pulses = <4>;
-+	/delete-property/ maxim,fan-dual-tach;
- };
+
+On Mon, 2020-11-23 at 22:49 +0000, Patrick Voelker wrote:
+> I have a situation where, while booting the host into Ubuntu desktop
+> 18.04, my OpenBMC ast2500 BMC stops responding on all interfaces
+> including its debug serial console.  It doesn't do this when the host
+> boots into Windows.
+> 
+> Nothing came up when I did an initial google search.  Also, nothing
+> unusual jumps out at me if I watch the BMC's 'journal -f' prior to
+> the issue.  No kernel panic or anything like that.
+> 
+> Are there any known issues like this?  If not, are there some
+> pointers to relevant debug strategies for when BMC is not
+> available?  I'd like to avoid JTAG debugging the kernel if
+> possible.  :-)
+> 
 -- 
-2.28.0
+Best regards,
+Andrei Kartashev
+
 
