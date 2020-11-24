@@ -2,87 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F095F2C1EF4
-	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 08:37:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E06D22C2909
+	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 15:09:42 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CgG7N3pt2zDqVK
-	for <lists+openbmc@lfdr.de>; Tue, 24 Nov 2020 18:37:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CgQrL5xgVzDqLJ
+	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 01:09:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=patrick_voelker@phoenix.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=b5/DWL97; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=nRmHZvbu; 
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=cRV2cpNl; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=Axn+34kc; 
  dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CgG6K0Dx5zDqV3
- for <openbmc@lists.ozlabs.org>; Tue, 24 Nov 2020 18:36:05 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1606203361;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YVDlZnAFJZbY8qDbCIZAsKQcSgogTgRSv/vwGiWpBLc=;
- b=b5/DWL97oNbl6yfHzgqha1vigG5DbPqMcMCAjwZr+qqi5F5cQx6wJVeCQ1zNReSE00+zNa
- Wzqbto6ItbU6azsxh6SRTi0Opg3dNAwRcSsLItGIu4bQlemZdhjZ69ivwa7haGjzFoWjre
- B+9A99r5DeJ+zLQjN3HNu8mwwHIeTHE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1606203362;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YVDlZnAFJZbY8qDbCIZAsKQcSgogTgRSv/vwGiWpBLc=;
- b=nRmHZvbuXap+GkG8jFCL5scCHjDipa/WpYuzEvnUqagUqGxfiqhe048LtnJOCZy1zNcBEy
- neiU0HpGi+k1vdxGm+VNETVoXATDYl1ixUfvrY52yAXGur1WHARRy+i7PHaPMY1ewWdfDJ
- /ibBjeDQsRvpmE1fbjs5X0BK8TQRLcA=
-Received: from SCL-EXCHMB-13.phoenix.com (67.51.239.50 [67.51.239.50])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-596-wtmFgjkNPtOI0cP_plcm7g-1; Tue, 24 Nov 2020 02:35:59 -0500
-X-MC-Unique: wtmFgjkNPtOI0cP_plcm7g-1
-X-CrossPremisesHeadersFilteredBySendConnector: SCL-EXCHMB-13.phoenix.com
-Received: from SCL-EXCHMB-13.phoenix.com (10.122.68.16) by
- SCL-EXCHMB-13.phoenix.com (10.122.68.16) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Mon, 23 Nov 2020 23:35:57 -0800
-Received: from SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b]) by
- SCL-EXCHMB-13.phoenix.com ([fe80::fd2e:a8f8:f740:cb3b%12]) with mapi id
- 15.00.1156.000; Mon, 23 Nov 2020 23:35:57 -0800
-From: Patrick Voelker <Patrick_Voelker@phoenix.com>
-To: Andrei Kartashev <a.kartashev@yadro.com>, "OpenBMC
- (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
-Subject: RE: Unresponsive BMC after booting into Ubuntu
-Thread-Topic: Unresponsive BMC after booting into Ubuntu
-Thread-Index: AdbB6IVyteZuFHQ2RRKT4gj4Gu4WPwAe7UuAAAv3iCA=
-Date: Tue, 24 Nov 2020 07:35:55 +0000
-Message-ID: <eaec79dfa2bc4d65acd2fdb8c93b02f9@SCL-EXCHMB-13.phoenix.com>
-References: <f659f8a48f24404fbc5dda747000865d@SCL-EXCHMB-13.phoenix.com>
- <6cc50da92b76ff7fbda5f43651bb32f6ff7b0c9e.camel@yadro.com>
-In-Reply-To: <6cc50da92b76ff7fbda5f43651bb32f6ff7b0c9e.camel@yadro.com>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [50.39.164.179]
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CgQnY35BszDqWg
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 01:07:10 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 96A5D12D4;
+ Tue, 24 Nov 2020 09:07:05 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Tue, 24 Nov 2020 09:07:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=742krtv7tWZzceVJ391ODculG6S
+ e+xL0ibNN7pITFo4=; b=cRV2cpNl2zzqrCGFiyjg5gb6eoY33vQaDpDVZLyu4As
+ LRV+sM0dZKijSx0lhSEO8lNhqDaM7d6psw21Sd2/ASmbNVSM3Zdf+fbQ88VwAKdM
+ ikDKzs7AdXdPDi5O5CFQy5LBBXGi+cJsV8hmFisJ9pjOYGeGNfGOGuLORfT2NXLn
+ HUKuCf/Xyn9cYdYhZTsi7SVTE81zJh0CbGroo671X2RegfFfDz4xXYGryEMzWAHb
+ Oa+I+S6XB1LpTT1mBskJeeh2thQJkqCwEhLy01GtCRBQZfZj1Psn5M07EFGnRudJ
+ /VTPk3esgWAZFL50HU/4k0W9/37r2U8VrtGe+21Y9lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=742krt
+ v7tWZzceVJ391ODculG6Se+xL0ibNN7pITFo4=; b=Axn+34kcI5vFprRRGYW6Rk
+ 9S3YfxAgE34gT7g+UxbYUYHyM3SxHTlIfkg4MRUbash1I2vg14wx8OYJ56jYl8bI
+ JSGehoF3BqVs/cdY+UJ+7C/7aSGI3ytlq/M9sRj7eRkbuvgH/yPgpV/AosD3rzWs
+ yr4lbkKcwZZW/sZkPyooScpAGkskuXfLICDDck3tQfaftSx82WB5MqP/jK3HH/x3
+ +nh2Qheij3HET84ytDQF90uyHcelRiaTaRm0gPL8r87exXoE+kvKKGyVEn/evcqB
+ WIotDbgF0bUKUThRzTuGdGhlgHm9XAv4AW++BUNyAERrIYUCiD57jkbPElIJw8gg
+ ==
+X-ME-Sender: <xms:hxO9X_wSF-1-dIIdu7sbgdph_wXV-18mOwugFuiYdx4Cik9DvhpN-g>
+ <xme:hxO9X3SZJ_6X6FhLKhR6PgBbs6twCx1qEjxSHZUOr89AT9MkS8CtFU6qjq7s_tuYG
+ 8siluWScAC6mNZjx1s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudegkedgieduucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheplefhjeefkeetveffgeetffdufeeh
+ leefhedvgffgvdfghfejhfefffekieeiveejnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhenucfkphepjeeirddvhedtrdekgedrvdefieenucevlhhushhtvghrufhiiigvpedt
+ necurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:iBO9X5XmCtFJMh0rPVCJxC5jIycHZjk9xdPm4tuup92789IzobHHLQ>
+ <xmx:iBO9X5h3DdlsjtzcJ_aEE5B4h8PC1mmysMZMPLj7rcgNWkSnECXxZw>
+ <xmx:iBO9XxBAktDcDLLOpKgEU2wVavILPtbk3pQbb3ji_zFvNGD1w2gtrg>
+ <xmx:iRO9X88G8gT_8dALmwPsoTdfGKqSscpJNBfMS5DhLuIcQmv3IOwimQ>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id 9D3703280059;
+ Tue, 24 Nov 2020 09:07:03 -0500 (EST)
+Date: Tue, 24 Nov 2020 08:07:01 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Patrick Venture <venture@google.com>
+Subject: Re: qemu for bmc
+Message-ID: <20201124140701.GD1261035@heinlein>
+References: <CAO=noty_ADQwzPXx8AneRRcXNr9B15PBBByP6TNDeDCoy2ug6Q@mail.gmail.com>
+ <20201118230938.GA1261035@heinlein>
+ <CAO=notwTKgDD20KKXE=5gF4QOeT3SEpuEwrzRRgEkxPYGzFFqw@mail.gmail.com>
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: SCL-EXCHMB-13.phoenix.com
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=patrick_voelker@phoenix.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="zbGR4y+acU1DwHSi"
+Content-Disposition: inline
+In-Reply-To: <CAO=notwTKgDD20KKXE=5gF4QOeT3SEpuEwrzRRgEkxPYGzFFqw@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,40 +97,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SG0uICBTb3VuZHMgbGlrZSBhIGRpZmZlcmVudCBpc3N1ZS4gSSBkb24ndCB0aGluayB0aGlzIHNv
-bHV0aW9uIHdpbGwgaGVscCBtZSBzaW5jZSBJIGNhbid0IGFjY2VzcyB0aGUgc2VyaWFsIGNvbnNv
-bGUuDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogQW5kcmVpIEthcnRh
-c2hldiBbbWFpbHRvOmEua2FydGFzaGV2QHlhZHJvLmNvbV0NCj4gU2VudDogTW9uZGF5LCBOb3Zl
-bWJlciAyMywgMjAyMCA5OjE4IFBNDQo+IFRvOiBQYXRyaWNrIFZvZWxrZXI7IE9wZW5CTUMgKG9w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZykNCj4gU3ViamVjdDogUmU6IFVucmVzcG9uc2l2ZSBCTUMg
-YWZ0ZXIgYm9vdGluZyBpbnRvIFVidW50dQ0KPiANCj4gSGksDQo+IEkgaGFkIHNpbWlsYXIgaXNz
-dWUsIGJ1dCBpdCB3YXMganVzdCAibm90IGxvYWRpbmcgc29tZSBwYWdlcyBpbiB3ZWJ1aQ0KPiBh
-bmQgZG9lc24ndCByZXNwb25zZSBvbiBpcG1pIGNvbW1hbmRzIiwgc3NoIGFuZCBzZXJpYWwgY29u
-c29sZSB1c2VkIHRvDQo+IHdvcmsuIEFuZCB5ZXMsIGl0IGFwcGVhcnMgYWZ0ZXIgTGludXggYm9v
-dHMgb24gdGhlIGhvc3QsIGJ1dCBub3Qgd2l0aA0KPiBXaW5kb3dzLg0KPiBUaGUgcm9vdCBwcm9i
-bGVtIGluIG15IGNhc2Ugd2FzIGluIFBFQ0kgZHJpdmVyIGFuZCBwb3dlciBzYXZpbmcgQ1BVDQo+
-IG1vZGVzLg0KPiBIZXJlIHdhcyB0aGUgcGF0Y2ggd2hpY2ggc29sdmVzIHRoZSBwcm9ibGVtIGZv
-ciBtZToNCj4gaHR0cHM6Ly9wYXRjaHdvcmsub3psYWJzLm9yZy9wcm9qZWN0L29wZW5ibWMvcGF0
-Y2gvZTZmNGFiMjk4NTRhYzU4YTg3DQo+IDgxODljMWVkZWNlNGU4ZWVkMmU3ZmQuY2FtZWxAeWFk
-cm8uY29tLw0KPiANCj4gSSdtIG5vdCBzdXJlIGlmIGl0IGlzIHlvdXIgcHJvYmxlbSBhbHNvLCBp
-ZiB5b3UgdXNlIGRidXMtc2Vuc29ycyB5b3UNCj4gY2FuIGNoZWNrIGJ5IHN0b3BwaW5nIENQVXNl
-bnNvcjoNCj4gCXN5c3RlbWN0bCBzdG9wIHh5ei5vcGVuYm1jX3Byb2plY3QuY3B1c2Vuc29yLnNl
-cnZpY2UNCj4gSWYgdGhlIHByb2JsZW0gZ29uZSBhZnRlciB0aGlzLCB5b3UgZ290IGl0ID0pDQo+
-IA0KPiANCj4gT24gTW9uLCAyMDIwLTExLTIzIGF0IDIyOjQ5ICswMDAwLCBQYXRyaWNrIFZvZWxr
-ZXIgd3JvdGU6DQo+ID4gSSBoYXZlIGEgc2l0dWF0aW9uIHdoZXJlLCB3aGlsZSBib290aW5nIHRo
-ZSBob3N0IGludG8gVWJ1bnR1IGRlc2t0b3ANCj4gPiAxOC4wNCwgbXkgT3BlbkJNQyBhc3QyNTAw
-IEJNQyBzdG9wcyByZXNwb25kaW5nIG9uIGFsbCBpbnRlcmZhY2VzDQo+ID4gaW5jbHVkaW5nIGl0
-cyBkZWJ1ZyBzZXJpYWwgY29uc29sZS4gIEl0IGRvZXNuJ3QgZG8gdGhpcyB3aGVuIHRoZSBob3N0
-DQo+ID4gYm9vdHMgaW50byBXaW5kb3dzLg0KPiA+DQo+ID4gTm90aGluZyBjYW1lIHVwIHdoZW4g
-SSBkaWQgYW4gaW5pdGlhbCBnb29nbGUgc2VhcmNoLiAgQWxzbywgbm90aGluZw0KPiA+IHVudXN1
-YWwganVtcHMgb3V0IGF0IG1lIGlmIEkgd2F0Y2ggdGhlIEJNQydzICdqb3VybmFsIC1mJyBwcmlv
-ciB0bw0KPiA+IHRoZSBpc3N1ZS4gIE5vIGtlcm5lbCBwYW5pYyBvciBhbnl0aGluZyBsaWtlIHRo
-YXQuDQo+ID4NCj4gPiBBcmUgdGhlcmUgYW55IGtub3duIGlzc3VlcyBsaWtlIHRoaXM/ICBJZiBu
-b3QsIGFyZSB0aGVyZSBzb21lDQo+ID4gcG9pbnRlcnMgdG8gcmVsZXZhbnQgZGVidWcgc3RyYXRl
-Z2llcyBmb3Igd2hlbiBCTUMgaXMgbm90DQo+ID4gYXZhaWxhYmxlPyAgSSdkIGxpa2UgdG8gYXZv
-aWQgSlRBRyBkZWJ1Z2dpbmcgdGhlIGtlcm5lbCBpZg0KPiA+IHBvc3NpYmxlLiAgOi0pDQo+ID4N
-Cj4gLS0NCj4gQmVzdCByZWdhcmRzLA0KPiBBbmRyZWkgS2FydGFzaGV2DQo+IA0KDQo=
 
+--zbGR4y+acU1DwHSi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Nov 18, 2020 at 04:29:28PM -0800, Patrick Venture wrote:
+> On Wed, Nov 18, 2020 at 3:09 PM Patrick Williams <patrick@stwcx.xyz> wrot=
+e:
+> >
+> > On Wed, Nov 18, 2020 at 01:11:42PM -0800, Patrick Venture wrote:
+> >
+> > Hi Patrick.
+> >
+> > > Patrick;
+> > >
+> > > I was looking at a patch series of yours that landed,
+> > > https://github.com/qemu/qemu/blob/master/hw/arm/aspeed.c#L517 <-- in
+> > > this line you're referencing a device that appears to be missing from
+> > > qemu - namely, the pca i2c mux.
+> > >
+> > > My question is to the community at large, and you also, is anyone
+> > > currently implementing this i2c-mux or a similar one?
+> >
+> > Timely question.
+> >
+> > I don't know of any current work going on in that space.
+> >
+> > Facebook has a hack-a-thon kind of event we are sponsoring at a local
+> > university this weekend and that was one of the projects I gave as a
+> > potential item.  So, maybe, if we're lucky, it'll be done by Monday.
+> >
+> > I'll keep you posted.
+>=20
+> Hahaha, thanks!  I'll keep an eye out for your update!  Seems like an
+> excellent hack-a-thon project!
+>=20
+> Patrick
+>=20
+> >
+> > --
+> > Patrick Williams
+
+Unfortunately, this was not one of the chosen projects.  Maybe next
+time.
+
+--=20
+Patrick Williams
+
+--zbGR4y+acU1DwHSi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl+9E4QACgkQqwNHzC0A
+wRnitA//UGOIHiFh9qRtAt++8sZAF6RDk9yFQm/8XeuOaiafyLuNhebwexS7wX2c
+y0so3Mzhs3oKgevVNp2rS4ZPnxBpUP3E0xlmNq79xGERY6dtlAkStlj6i7n+5Ycf
+W6716UycgLOKiERa8Eo5FM8ALXJkKeUExRspF9f57h7l6xByNivTO3eDvhLH/0vI
+C+V85rRp0x+cHkdtd78ibtcQLDpOU7I468tHEacGpGB071NzQJqRis7lbMb/XNAX
+PfOYuuIX0DvaW6myIgNLcrbqAZkJZatO+bVjL5OIdyBidPIESSzv8Sxhi9L9/K+W
+wBROeV8LAoFNLw3hzRRZgJ2IlU/PZD2L2gmSBxjO0xIujozQSdHT8Y6U4ZwbkFuE
+abgOvtKnxXqMzlriVhR8PG0Fqjo8cI9vVYHDA+aw+EUVQLV3ZwrfahLTU2HqXqPW
+UICg/wlTOuvMuLShA/qCU34DUEO58ML5RCwI4RbfhPMcQ0s780Hb4js/ONIafAUk
+H71/IaBaDAfTCq6qflKjPGn0l+95ymoGyFOwwqViGZINVYdMdeKZ5tZTFzbUnqIH
+8oNIXEK5zBQvi4zSJCxMBZVmewHK/X9Ss4nSZVU/OspqFhlVDV7E/GPsSepLU3RC
+eLNnZEVpYCE2ANaEXWDa2KnONxxGMfsDBqjfa5rxfnWBUV/epdM=
+=F+/l
+-----END PGP SIGNATURE-----
+
+--zbGR4y+acU1DwHSi--
