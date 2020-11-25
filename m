@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 585CD2C4332
-	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 16:38:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D54B32C4458
+	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 16:47:13 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ch4mP1sj9zDqpB
-	for <lists+openbmc@lfdr.de>; Thu, 26 Nov 2020 02:38:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ch4yQ6wmFzDqwW
+	for <lists+openbmc@lfdr.de>; Thu, 26 Nov 2020 02:47:10 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -19,18 +19,19 @@ Received: from bajor.fuzziesquirrel.com (mail.fuzziesquirrel.com
  [173.167.31.197])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Ch4k33gt7zDqr6
- for <openbmc@lists.ozlabs.org>; Thu, 26 Nov 2020 02:36:25 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Ch4w94z1rzDqq8
+ for <openbmc@lists.ozlabs.org>; Thu, 26 Nov 2020 02:45:13 +1100 (AEDT)
 X-Virus-Scanned: amavisd-new at fuzziesquirrel.com
-Message-ID: <4e839c2d6723f6b2d6c4a990869093c09988d6d4.camel@fuzziesquirrel.com>
-Subject: Re: Add size property of EEPROM device
+Message-ID: <cfc09cf0a0132458e02c016beb71dd24d38d4a47.camel@fuzziesquirrel.com>
+Subject: Re: NVIDIA's OpenBMC CCLA
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: "he.huang" <he.huang@linux.intel.com>, ed <ed@tanous.net>,
- "jae.hyun.yoo" <jae.hyun.yoo@linux.intel.com>, "vernon.mauery"
- <vernon.mauery@linux.intel.com>,  openbmc <openbmc@lists.ozlabs.org>
-Date: Wed, 25 Nov 2020 10:36:16 -0500
-In-Reply-To: <5FBCB6EB.3080609@linux.intel.com>
-References: <5FBCB6EB.3080609@linux.intel.com>
+To: Deepak Kodihalli <dkodihalli@nvidia.com>, "openbmc@lists.ozlabs.org"
+ <openbmc@lists.ozlabs.org>, "manager@lfprojects.org"
+ <manager@lfprojects.org>,  "kurt.r.taylor@gmail.com"
+ <kurt.r.taylor@gmail.com>
+Date: Wed, 25 Nov 2020 10:45:09 -0500
+In-Reply-To: <CH2PR12MB4069EC695F9AD2B008457503A5FA0@CH2PR12MB4069.namprd12.prod.outlook.com>
+References: <CH2PR12MB4069EC695F9AD2B008457503A5FA0@CH2PR12MB4069.namprd12.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -45,12 +46,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ramesh Munaga <rmunaga@nvidia.com>, Mahendra H N <mhn@nvidia.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2020-11-24 at 15:31 +0800, he.huang wrote:
-> The requirement comes from:
-> When we write to the EEPROM we need the size to ensure that we won't
-> write out of the range and return the correct complete code.
+On Wed, 2020-11-25 at 09:53 +0000, Deepak Kodihalli wrote:
+> Hi,
+> 
+> Please find attached the signed CCLA from NVIDIA for approval. We look
+> forward to working with the OpenBMC community!
+> 
+> Thanks,
+> Deepak Kodihalli
 
-Don't the eeprom drivers prevent this?
+Hi Deepak
+
+Welcome - your CCLA has been accepted.
+
+thx - brad
