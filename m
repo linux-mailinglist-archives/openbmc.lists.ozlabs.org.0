@@ -2,93 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 332FD2C4B28
-	for <lists+openbmc@lfdr.de>; Thu, 26 Nov 2020 00:02:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DC0212C4C61
+	for <lists+openbmc@lfdr.de>; Thu, 26 Nov 2020 02:06:30 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ChGcf4bgtzDr3h
-	for <lists+openbmc@lfdr.de>; Thu, 26 Nov 2020 10:02:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ChKMl5w9fzDqxB
+	for <lists+openbmc@lfdr.de>; Thu, 26 Nov 2020 12:06:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=220.128.79.91; helo=mx02.quantatw.com;
+ envelope-from=prvs=591725123=jun-lin.chen@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=linux.ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=tkEX3uYC; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4ChGbl3Z3WzDqxH
- for <openbmc@lists.ozlabs.org>; Thu, 26 Nov 2020 10:01:38 +1100 (AEDT)
-Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0APMWHXU053113
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 18:01:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to :
- references : message-id : date : mime-version : in-reply-to : content-type
- : content-transfer-encoding; s=pp1;
- bh=RsG5Y8UfzU+JADBMXK+AboZOlzXWno56nGZEOqyEw1s=;
- b=tkEX3uYC6snYxsfzPu5qYZXNylC8YkouHgIRao8QAp2FEbTtoAwxDsmQWje0Z10m9Ybu
- 0KIfQkJd3bHKabmOvld47vGJT1Jj7X6HjiiIaXmre2WHufCVDZMsCchyf0ujVnBOTN7Y
- w+MJrAfqWXRHTkMRkOTsbXpdPr0TppKBOqCEQKpv0M+hNlwVMX9GOL7gOdQ4Q6mw6W4i
- KT843YY1obgOSGUyT+WWWmJV5AIPGn0r3VgHuct+pYUGoiWW1msH6q6H4m4Kw/vea8Fc
- Ztth6/Bfv75+zLznIkbD8qLTyt6bG1fGIhlJN8fDqpB9M76AOFYgNohes2zzS/yjOd3b 5A== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com with ESMTP id 351vyvd7vs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 18:01:34 -0500
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0APMq8Yx019343
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 23:01:33 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com
- (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
- by ppma03dal.us.ibm.com with ESMTP id 34xth9um8u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 23:01:33 +0000
-Received: from b03ledav001.gho.boulder.ibm.com
- (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
- by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 0APN1Qpt22807168
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 23:01:26 GMT
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 502BA6E053
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 23:01:32 +0000 (GMT)
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 127696E04C
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 23:01:31 +0000 (GMT)
-Received: from demeter.roc.mn.charter.com (unknown [9.80.239.116])
- by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 23:01:31 +0000 (GMT)
-Subject: Re: Security Working Group - Wednesday November 25 - results
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <f02f2bfd-4a5f-a023-9add-cd6c4bb11914@linux.ibm.com>
-Message-ID: <ad96b0cd-6cb5-fac1-9fad-a8c523df8185@linux.ibm.com>
-Date: Wed, 25 Nov 2020 17:01:31 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.4.1
+ dmarc=none (p=none dis=none) header.from=quantatw.com
+Received: from mx02.quantatw.com (mx02.quantatw.com [220.128.79.91])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4CglTF0MX4zDqTm
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 13:39:11 +1100 (AEDT)
+IronPort-SDR: eqaLKL9Z1HVT+mXy0vKQQ4iubBguX9y1TJ+tX7enMBhtq+qHB2gBM2h0gy6NnXUa6zHIBTDyeD
+ UaTmlEfQRIwQ==
+Received: from unknown (HELO mailbx09.quanta.corp) ([10.243.91.106])
+ by mx02.quantatw.com with ESMTP; 25 Nov 2020 10:39:09 +0800
+Received: from mailbx09.quanta.corp (10.243.91.106) by mailbx09.quanta.corp
+ (10.243.91.106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2044.4; Wed, 25 Nov
+ 2020 10:39:08 +0800
+Received: from mailbx09.quanta.corp ([192.168.57.9]) by mailbx09.quanta.corp
+ ([192.168.57.9]) with mapi id 15.01.2044.004; Wed, 25 Nov 2020 10:39:08 +0800
+From: =?utf-8?B?SnVuLUxpbiBDaGVuICjpmbPkv4rpnJYp?= <Jun-Lin.Chen@quantatw.com>
+To: Milton Miller II <miltonm@us.ibm.com>
+Subject: RE:  The Subscription will disappear and config of EventService
+ restore initial value after reboot
+Thread-Topic: The Subscription will disappear and config of EventService
+ restore initial value after reboot
+Thread-Index: Ada8zTtwo1eSvSPzTqi+6szJ11/xAAB91RmAAQNOOOAAAHncsA==
+Date: Wed, 25 Nov 2020 02:39:07 +0000
+Message-ID: <cf8515fb323e4f28a961e9f20ca6ff92@quantatw.com>
+References: <94a84c0d54f94193be2f21212e3749a7@quantatw.com>
+ <OF6C0BDCD9.6939B3A4-ON00258626.00246422-00258626.0024642A@notes.na.collabserv.com>
+ <c86861793db64730b5959db71028d87e@quantatw.com>
+In-Reply-To: <c86861793db64730b5959db71028d87e@quantatw.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.243.91.252]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <f02f2bfd-4a5f-a023-9add-cd6c4bb11914@linux.ibm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-11-25_13:2020-11-25,
- 2020-11-25 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 lowpriorityscore=0
- phishscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501 bulkscore=0
- suspectscore=0 spamscore=0 clxscore=1015 adultscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2009150000
- definitions=main-2011250134
+X-Mailman-Approved-At: Thu, 26 Nov 2020 12:05:47 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,77 +60,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 11/24/20 4:53 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday November 25 at 10:00am PDT.
->
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
-> and anything else that comes up:
->
-> 1. Phosphor user manager - default group roles
-
-Richard and Joseph went through the email thread and agreed on the 
-solution for the ssh group.  This includes the use case where SSH is 
-enabled, but only special pre-created users are allowed to access it 
-(such as manufacturing and service accounts).
-
-
-We also discussed an image feature to disable SSH.  Is there such an 
-image feature in yocto/OpenEmbedded?  If so, use it; otherwise add an 
-option to openbmc.  Specifically, if SSH is not present, then remove the 
-“ssh” group privilege from the image (such as phosphor-user-manager).
-
-
-We discussed the concept of “image type” as an image feature.  A 
-“development” image would have features such as SSH enabled and is 
-intended for developers.  A “production” image would have fewer (or 
-different) features enabled and is intended for production servers.  
-This might simplify testing.  However, we did not discuss any specific 
-features (beyond SSH).
-
-
-Joseph mentioned that changing the SSH default was one of several 
-desired changes...
-
-
-Joseph is moving forward with a proof of concept (PoC) for a special 
-pre-created “service” account that has a custom OEM “ServiceAgent” role 
-that has the custom “PerformService” privilege.  I believe all agreed 
-that this privilege is needed to perform operations such as change a 
-permanent MAC address or a FRU serial number.
-
-
-(Joseph introduced the way we plan to authenticate the special-privilege 
-pre-created users.  Having a default password is problematic.  The 
-service user (person) will create a certificate pair, and work with the 
-BMC admin to install the “public” copy onto the BMC.  Details pending.)
-
-
-(Joseph mentioned the “service” account is “special” in several ways: 
-special authentication as mentioned above, and there are no APIs to 
-delete or modify the account.  The main idea is to prevent the admin 
-user from escalating into the special account.)
-
-
-We discussed if the OEM ServiceAgent role would be (A) a superset of the 
-Administrator role, or (B) if it should be a subset of Administrator 
-privileges plus the custom PerformService privilege.  Option A is the 
-use case currently needed.  Option B may be more difficult to design, 
-implement, document, test, and reason about.
-
-
-We discussed the idea of making all these changes in BMCWeb and 
-user-manager, and which would become image features.
-
->
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
->
-
+SGkgbWlsdG9uLA0KDQpJIGFkZCAnbWtkaXInIGNvbW1hbmQgdG8gYm1jd2ViLmJiYXBwZW5kIHRo
+ZW4gaXQgd2lsbCBjcmVhdGUgZGlyZWN0b3J5IHdoaWxlIGJ1aWxkaW5nIGltYWdlLiBJdCB3b3Jr
+cyBub3JtYWxseSBub3cuIFRoYW5rIHlvdSBmb3IgeW91ciBzdWdnZXN0aW9uLg0KDQpKaW0NCg0K
+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IE1pbHRvbiBNaWxsZXIgSUkgPG1pbHRv
+bm1AdXMuaWJtLmNvbT4NClNlbnQ6IEZyaWRheSwgTm92ZW1iZXIgMjAsIDIwMjAgMjozNyBQTQ0K
+VG86IEp1bi1MaW4gQ2hlbiAo6Zmz5L+K6ZyWKSA8SnVuLUxpbi5DaGVuQHF1YW50YXR3LmNvbT4N
+CkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNClN1YmplY3Q6IFJlOiBUaGUgU3Vic2NyaXB0
+aW9uIHdpbGwgZGlzYXBwZWFyIGFuZCBjb25maWcgb2YgRXZlbnRTZXJ2aWNlIHJlc3RvcmUgaW5p
+dGlhbCB2YWx1ZSBhZnRlciByZWJvb3QNCg0KT24gTm92ZW1iZXIgMTksIDIwMjAgYXJvdW5kIDEx
+OjQ3UE0gaW4gc29tZSB0aW1lem9uZSwgSnVuLUxpbiBDaGVuICjpmbPkv4rpnJYpIHdyb3RlOg0K
+DQo+IEhpLA0KPiBJIGhhdmUgYW4gaXNzdWUgYWJvdXQgRXZlbnRTZXJ2aWNlOiBhZnRlciByZWJv
+b3QsIFN1YnNjcmlwdGlvbiANCj5kaXNhcHBlYXIgYW5kIGNvbmZpZyBvZiBFdmVudFNlcnZpY2Ug
+cmVzdG9yZSBpbml0aWFsIHZhbHVlLg0KPiBJIGxvb2sgdXAgdGhlIGNvZGVzIGluIGV2ZW50X3Nl
+cnZpY2VfbWFuYWdlci5ocHAgYW5kIGZvdW5kIA0KPlN1YnNjcmlwdGlvbiBhbmQgRXZlbnRTZXJ2
+aWNlIGNvbmZpZyB3aWxsIHN0b3JlIGkgDQo+L3Zhci9saWIvYm1jd2ViL2V2ZW50c2VydmljZV9j
+b25maWcuanNvbi4NCj4gQnV0IElmIEJNQyBoYXMgbm8gYm1jd2ViIGZvbGRlciBpbiAvdmFyL2xp
+Yi8gLCBJdCBub3Qgc2F2ZSANCj5ldmVudHNlcnZpY2VfY29uZmlnLmpzb24uDQo+ICANCj4gSSB0
+cnkgY3JlYXRlIGJtY3dlYiBmb2xkZXIgbWFudWFsbHkgYW5kIFBPU1QgYSBuZXcgU3Vic2NyaXB0
+aW9uIHRoZW4gDQo+cmVib290LCB0aGUgU3Vic2NyaXB0aW9uIHdpbGwgYmUgc2F2ZWQgYW5kIG5v
+dCBkaXNhcHBlYXIgdGhpcyB0aW1lLg0KPiBUaGlzIHBlcmZvcm1hbmNlIHNlZW1zIHRvIGJlIGlu
+Y29uc2lzdGVudCB3aXRoIHRoZSBkZXNpZ24gY29uY2VwdCBpZiANCj50aGVyZSBpcyBubyBibWN3
+ZWIgZm9sZGVyIGF0IHRoZSBiZWdpbm5pbmcuIERvZXMgbmVlZCB0byBhZGQgdG8gdGhlIA0KPmNv
+ZGUgdGhhdCBkZXRlY3QgdGhlIHBhdGggaXMgdmFsaWQ/DQo+ICANCg0KUmF0aGVyIHRoYW4gYWRk
+IHRvIHRoZSBjb2RlIHRvIGRldGVjdCBpZiB0aGUgcGF0aCBpcyB2YWxpZCwgYWRkIHRvIHRoZSBz
+ZXJ2aWNlICBzY3JpcHQgYSBwcmVzZXR1cCBjb21tYW5kIHRoYXQgZG9lcyANCidta2RpciAtcCAv
+dmFyL2xpYi9ibWN3ZWIvJyB0byBjcmVhdGUgdGhlIGRpcmVjdG9yeS4gICBJZGVhbGx5IHRoaXMg
+DQp3b3VsZCBiZSB3cml0dGVuIHRvIGhhdmUgdGhlIHBhdGggaW4gYSBtZXNvbiB2YXJpYWJsZSB0
+aGF0IGlzIGJ1aWx0IGludG8gYSBjb25maWd1cmF0aW9uIC5oIGZpbGUgYW5kIGludG8gdGhlIHNl
+cnZpY2UgZmlsZSB1c2luZyB2YXJpYWJsZSBzdWJzdGl0aW9uIHRvIG1ha2Ugc3VyZSB0aGUgcGF0
+aCBpbiB0aGUgY29kZSBpcyB0aGUgc2FtZSBhcyB0aGUgZGlyZWN0b3J5IGluIHRoZSBzZXJ2aWNl
+IGZpbGUuDQoNCm1pbHRvbg0KDQoNCj4gSmltPiAgDQo+ICAgICANCg0K
