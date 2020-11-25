@@ -1,60 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A23CC2C354B
-	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 01:18:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D3D62C362C
+	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 02:17:50 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CghLp57nyzDqTm
-	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 11:18:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CgjgH2TSSzDqZT
+	for <lists+openbmc@lfdr.de>; Wed, 25 Nov 2020 12:17:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=msbarth@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=he.huang@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=IB7lsNBP; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CgG1h3yKvzDqTh
- for <openbmc@lists.ozlabs.org>; Tue, 24 Nov 2020 18:32:04 +1100 (AEDT)
-IronPort-SDR: qPvLFXbiBQGDKhQ8y5ZQzlQMOfgaHpfQ4aUmM1PR0TQa4dK+ahZYgIP9YSMb38nA9OLK4OmzS9
- xy4ztA6jLrtw==
-X-IronPort-AV: E=McAfee;i="6000,8403,9814"; a="171122913"
-X-IronPort-AV: E=Sophos;i="5.78,365,1599548400"; 
- d="scan'208,217";a="171122913"
-X-Amp-Result: SKIPPED(no attachment in message)
-X-Amp-File-Uploaded: False
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Nov 2020 23:32:00 -0800
-IronPort-SDR: onlKss62dxi6/1VWTS+cmaonPKiItifeMGiO5FwIxpERva3ns3VZMwVBo5OCBQQRfJPmxs5Gyo
- iZpuxxvn6k1A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.78,365,1599548400"; 
- d="scan'208,217";a="364925703"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga002.fm.intel.com with ESMTP; 23 Nov 2020 23:32:00 -0800
-Received: from huanghe-mobl (huanghe-mobl.ccr.corp.intel.com [10.239.16.21])
- (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id DF70F580867;
- Mon, 23 Nov 2020 23:31:58 -0800 (PST)
-Date: Tue, 24 Nov 2020 15:31:59 +0800
-From: "he.huang" <he.huang@linux.intel.com>
-To: "ed" <ed@tanous.net>, "jae.hyun.yoo" <jae.hyun.yoo@linux.intel.com>,
- "vernon.mauery" <vernon.mauery@linux.intel.com>,
- "openbmc" <openbmc@lists.ozlabs.org>
-Subject: Add size property of EEPROM device
-X-Mailer: NetEase FlashMail 2.4.1.32
-X-Priority: 3 (Normal)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CgjfH433JzDqWH
+ for <openbmc@lists.ozlabs.org>; Wed, 25 Nov 2020 12:16:54 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0AP1CRPF137490; Tue, 24 Nov 2020 20:16:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=OfSm/aYjjLERxibytk8x03BO6++LmDR2iXpOD/Q22+E=;
+ b=IB7lsNBPSf4KkWD3Yf7bXRGLJZvESDrLVFT3/y/YBITpWqJG5cJOOExm6DI4GEKODBiv
+ z3txDX+uKUeKBgYYcH9oVoKJMMN8Mh47q3nxSuOX7FdxZAaPBGJcJMxS4Z7YBf45NS0n
+ d4mpLYCCZVKUglLMYhEkNK/hykDJ2A9CuQFSiA8IVtMd7vkMKF3dWBXQe2up07dPA1VT
+ Rj/0WNiuLGvaFY32baLYgvx+RkplYns3ZNl8491FUNyUblNW3rotkBaWfyz+H163tHG3
+ 1xyBDI1mPv5zZHqn/MU0cl5LXJqz8KruCPvnuk+G7bsU/+yV8n4i/mvW6iLiuhfaRGJz 9w== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 351ddar2n5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Nov 2020 20:16:51 -0500
+Received: from m0098396.ppops.net (m0098396.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 0AP1Cckr138124;
+ Tue, 24 Nov 2020 20:16:50 -0500
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 351ddar2mq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 24 Nov 2020 20:16:50 -0500
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0AP19jCD018711;
+ Wed, 25 Nov 2020 01:16:49 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma01wdc.us.ibm.com with ESMTP id 34xth93n74-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 Nov 2020 01:16:49 +0000
+Received: from b03ledav004.gho.boulder.ibm.com
+ (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0AP1Gcer49086810
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 Nov 2020 01:16:38 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E86097805F;
+ Wed, 25 Nov 2020 01:16:47 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 776107805C;
+ Wed, 25 Nov 2020 01:16:47 +0000 (GMT)
+Received: from MSBARTH-P50.lan (unknown [9.211.40.249])
+ by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 25 Nov 2020 01:16:47 +0000 (GMT)
+From: Matthew Barth <msbarth@linux.ibm.com>
+To: bjwyman@gmail.com, eajames@linux.ibm.com, openbmc@lists.ozlabs.org,
+ joel@jms.id.au
+Subject: [PATCH linux dev-5.8] ARM: dts: aspeed: rainier: Add gpio-keys-polled
+ for fans
+Date: Tue, 24 Nov 2020 19:16:40 -0600
+Message-Id: <20201125011640.2346086-1-msbarth@linux.ibm.com>
+X-Mailer: git-send-email 2.28.0
 MIME-Version: 1.0
-Message-ID: <5FBCB6EB.3080609@linux.intel.com>
-Content-Type: multipart/alternative;
- boundary="NetEase-FlashMail-003-18ece246-6822-4817-86a2-48961b7dbd5c"
-X-Mailman-Approved-At: Wed, 25 Nov 2020 11:17:46 +1100
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-11-24_11:2020-11-24,
+ 2020-11-24 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=999 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ clxscore=1015 mlxscore=0 spamscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2011250003
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,62 +105,68 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---NetEase-FlashMail-003-18ece246-6822-4817-86a2-48961b7dbd5c
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Add a gpio-keys-polled section for the fan presence signals from the
+PCA9552 on i2c bus 7.
 
-SGkgQWxsLA0KSSdtIGdvaW5nIHRvIGFkZCB0aGUgInNpemUiIHByb3BlcnR5IHRvIHRoZSBmcnUg
-ZGV2aWNlIC5qc29uIGZpbGUgdW5kZXIgZW50aXR5LW1hbmFnZXIvY29uZmlndXJhdGlvbnMuDQoN
-ClRoZSByZXF1aXJlbWVudCBjb21lcyBmcm9tOg0KV2hlbiB3ZSB3cml0ZSB0byB0aGUgRUVQUk9N
-IHdlIG5lZWQgdGhlIHNpemUgdG8gZW5zdXJlIHRoYXQgd2Ugd29uJ3Qgd3JpdGUgb3V0IG9mIHRo
-ZSByYW5nZSBhbmQgcmV0dXJuIHRoZSBjb3JyZWN0IGNvbXBsZXRlIGNvZGUuDQoNCkhlcmUgaXMg
-YW4gZXhhbXBsZSBmb3IgcmV2aWV3Og0KaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0Lnh5
-ei9jL29wZW5ibWMvZW50aXR5LW1hbmFnZXIvKy8zODUzMg0KDQpJZiB0aGUgcHJvcG9zYWwgZ2V0
-cyBhcHByb3ZlZCBJIHdpbGwgYWRkIHRoZSAnc2l6ZScgcHJvcGVydHkgdG8gdGhlIG90aGVyIC5q
-c29uIGZpbGUgdW5kZXIgZW50aXR5LW1hbmFnZXIvY29uZmlndXJhdGlvbnMuDQoNCkNvdWxkIHlv
-dSBwbGVhc2UgaGVscCB0byByZXZpZXcgYW5kIGxldCBtZSBrbm93IGlmIHlvdSBoYXZlIGFueSBj
-b21tZW50cy4NClRoYW5rcyBhIGxvdC4NCg0KMjAyMC0xMS0yNA0KDQoNCkhlbGVuLmh1YW5nIA==
+Signed-off-by: Matthew Barth <msbarth@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 43 ++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
---NetEase-FlashMail-003-18ece246-6822-4817-86a2-48961b7dbd5c
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
-
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9XM0MvL0RURCBIVE1MIDQuMCBUcmFuc2l0aW9uYWwv
-L0VOIj4NCjxIVE1MPjxIRUFEPg0KPE1FVEEgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04IiBodHRwLWVxdWl2PUNvbnRlbnQtVHlwZT4NCjxTVFlMRSB0eXBlPXRleHQvY3NzPgpCTE9D
-S1FVT1RFe21hcmdpbi1Ub3A6IDBweDsgbWFyZ2luLUJvdHRvbTogMHB4OyBtYXJnaW4tTGVmdDog
-MmVtfQ0KPC9TVFlMRT4NCjwhLS0gZmxhc2htYWlsIHN0eWxlIGJlZ2luIC0tPg0KPFNUWUxFIHR5
-cGU9dGV4dC9jc3M+CmJvZHkge2JvcmRlci13aWR0aDowO21hcmdpbjowfQppbWcge2JvcmRlcjow
-O21hcmdpbjowO3BhZGRpbmc6MH0KPC9TVFlMRT4NCjxCQVNFIHRhcmdldD1fYmxhbms+PCEtLSBm
-bGFzaG1haWwgc3R5bGUgZW5kIC0tPg0KPE1FVEEgbmFtZT1HRU5FUkFUT1IgY29udGVudD0iTVNI
-VE1MIDExLjAwLjEwNTcwLjEwMDEiPjwvSEVBRD4NCjxCT0RZIA0Kc3R5bGU9IkJPUkRFUi1MRUZU
-LVdJRFRIOiAwcHg7IEZPTlQtU0laRTogMTAuNXB0OyBGT05ULUZBTUlMWTog77+977+977+977+9
-77+977+977+977+977+977+977+977+977+977+977+977+9OyBCT1JERVItUklHSFQtV0lEVEg6
-IDBweDsgQk9SREVSLUJPVFRPTS1XSURUSDogMHB4OyBDT0xPUjogIzAwMDAwMDsgTUFSR0lOOiAx
-MnB4OyBMSU5FLUhFSUdIVDogMS41OyBCT1JERVItVE9QLVdJRFRIOiAwcHgiIA0KbWFyZ2luaGVp
-Z2h0PSIwIiBtYXJnaW53aWR0aD0iMCI+PFNUQVRJT05FUlk+DQo8RElWPkhpIEFsbCw8L0RJVj4N
-CjxESVY+SSdtIGdvaW5nIHRvIGFkZCB0aGUgInNpemUiIHByb3BlcnR5IHRvIHRoZSBmcnUgZGV2
-aWNlIC5qc29uIGZpbGUgdW5kZXIgDQplbnRpdHktbWFuYWdlci9jb25maWd1cmF0aW9ucy48L0RJ
-Vj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8RElWPlRoZSZuYnNwO3JlcXVpcmVtZW50IGNvbWVzIGZy
-b206PC9ESVY+DQo8RElWPldoZW4gd2Ugd3JpdGUgdG8gdGhlIEVFUFJPTSZuYnNwO3dlIG5lZWQg
-dGhlIHNpemUgdG8gZW5zdXJlIA0KdGhhdCZuYnNwO3dlJm5ic3A7d29uJ3Qgd3JpdGUgb3V0IG9m
-IHRoZSByYW5nZSBhbmQmbmJzcDtyZXR1cm4gdGhlIGNvcnJlY3QgDQpjb21wbGV0ZSBjb2RlLjwv
-RElWPg0KPERJVj4mbmJzcDs8L0RJVj4NCjxESVY+SGVyZSBpcyBhbiBleGFtcGxlIGZvciByZXZp
-ZXc6PC9ESVY+DQo8RElWPjxBIA0KaHJlZj0iaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy1wcm9qZWN0
-Lnh5ei9jL29wZW5ibWMvZW50aXR5LW1hbmFnZXIvKy8zODUzMiI+aHR0cHM6Ly9nZXJyaXQub3Bl
-bmJtYy1wcm9qZWN0Lnh5ei9jL29wZW5ibWMvZW50aXR5LW1hbmFnZXIvKy8zODUzMjwvQT48L0RJ
-Vj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8RElWPklmIHRoZSBwcm9wb3NhbCBnZXRzIGFwcHJvdmVk
-IEkgd2lsbCBhZGQgdGhlICdzaXplJyBwcm9wZXJ0eSB0byB0aGUgb3RoZXIgDQouanNvbiBmaWxl
-IHVuZGVyIGVudGl0eS1tYW5hZ2VyL2NvbmZpZ3VyYXRpb25zLjwvRElWPg0KPERJVj4mbmJzcDs8
-L0RJVj4NCjxESVY+Q291bGQgeW91IHBsZWFzZSBoZWxwIHRvIHJldmlldyBhbmQgbGV0IG1lIGtu
-b3cgaWYgeW91IGhhdmUgYW55IA0KY29tbWVudHMuPC9ESVY+DQo8RElWPlRoYW5rcyBhIGxvdC48
-L0RJVj4NCjxESVY+Jm5ic3A7PC9ESVY+DQo8RElWIHN0eWxlPSJGT05ULVNJWkU6IDEwcHQ7IEZP
-TlQtRkFNSUxZOiBWZXJkYW5hOyBDT0xPUjogI2MwYzBjMCI+DQo8RElWIGFsaWduPWxlZnQ+MjAy
-MC0xMS0yNDwvRElWPg0KPEhSIGlkPVNpZ25OYW1lSFIgDQpzdHlsZT0iQk9SREVSLVRPUDogI2Mw
-YzBjMCAxcHggc29saWQ7IEhFSUdIVDogMXB4OyBCT1JERVItUklHSFQ6IDBweDsgV0lEVEg6IDEy
-MnB4OyBCT1JERVItQk9UVE9NOiAwcHg7IEJPUkRFUi1MRUZUOiAwcHgiIA0KYWxpZ249bGVmdD4N
-CjxTUEFOIGlkPV9GbGFzaFNpZ25OYW1lPkhlbGVuLmh1YW5nPC9TUEFOPiA8L0RJVj48L1NUQVRJ
-T05FUlk+PC9CT0RZPjwvSFRNTD4=
-
---NetEase-FlashMail-003-18ece246-6822-4817-86a2-48961b7dbd5c--
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 4692c5e8f919..e83355b8e13a 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -96,6 +96,49 @@ ps3-presence {
+ 		};
+ 	};
+ 
++	gpio-keys-polled {
++		compatible = "gpio-keys-polled";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		poll-interval = <1000>;
++
++		fan0-presence {
++			label = "fan0-presence";
++			gpios = <&pca0 6 GPIO_ACTIVE_LOW>;
++			linux,code = <6>;
++		};
++
++		fan1-presence {
++			label = "fan1-presence";
++			gpios = <&pca0 7 GPIO_ACTIVE_LOW>;
++			linux,code = <7>;
++		};
++
++		fan2-presence {
++			label = "fan2-presence";
++			gpios = <&pca0 8 GPIO_ACTIVE_LOW>;
++			linux,code = <8>;
++		};
++
++		fan3-presence {
++			label = "fan3-presence";
++			gpios = <&pca0 9 GPIO_ACTIVE_LOW>;
++			linux,code = <9>;
++		};
++
++		fan4-presence {
++			label = "fan4-presence";
++			gpios = <&pca0 10 GPIO_ACTIVE_LOW>;
++			linux,code = <10>;
++		};
++
++		fan5-presence {
++			label = "fan5-presence";
++			gpios = <&pca0 11 GPIO_ACTIVE_LOW>;
++			linux,code = <11>;
++		};
++	};
++
+ 	i2c2mux: i2cmux {
+ 		compatible = "i2c-mux-gpio";
+ 		#address-cells = <1>;
+-- 
+2.28.0
 
