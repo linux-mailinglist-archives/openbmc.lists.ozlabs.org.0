@@ -2,75 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EC8A2C8B40
-	for <lists+openbmc@lfdr.de>; Mon, 30 Nov 2020 18:38:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C1542C8B82
+	for <lists+openbmc@lfdr.de>; Mon, 30 Nov 2020 18:42:40 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ClCB12FlwzDqRs
-	for <lists+openbmc@lfdr.de>; Tue,  1 Dec 2020 04:38:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ClCHK4LkZzDqMG
+	for <lists+openbmc@lfdr.de>; Tue,  1 Dec 2020 04:42:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::330;
- helo=mail-ot1-x330.google.com; envelope-from=geissonator@gmail.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::72e;
+ helo=mail-qk1-x72e.google.com; envelope-from=kunyi@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=MzghW6sq; dkim-atps=neutral
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
- [IPv6:2607:f8b0:4864:20::330])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=CtgI+1on; dkim-atps=neutral
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com
+ [IPv6:2607:f8b0:4864:20::72e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4ClC8r6fQ9zDqLZ
- for <openbmc@lists.ozlabs.org>; Tue,  1 Dec 2020 04:37:00 +1100 (AEDT)
-Received: by mail-ot1-x330.google.com with SMTP id f12so12057906oto.10
- for <openbmc@lists.ozlabs.org>; Mon, 30 Nov 2020 09:37:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=oxayugG0s9Js++fZAaMkx89PwSdfudEwKHuG3IILSaU=;
- b=MzghW6sqoqqurWJ8/W9tStL7KfY5HLDjaYk+12GPp94WWjcZjp+dXHw6q6WqK4CAiD
- 75NlkVqY1R8YgGjg9KU1sMHLmRdvTL35PoFGAaCJinq1Bgwf6VWODAaqzHQ/flVOg9fs
- vUXs4kAr7JC4+HnoCbB0a9PRe8zLqAjQsUHbUwv23JbrWuGB1qq+csbqb6RYyAunvvFB
- W6U/q9Txk7oEFqr0PpmfwINO8rntg/bvINHJILwgDELQXfpKt72evW9DpKn+JRSWrpur
- sjD3tArYcuf05RiiUACshFMs/QGku3mj2FpLoOILrbI8rtNBA7KHl9DEVk7w8XsMNwXj
- 6UiA==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4ClCGC11n1zDqFJ
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Dec 2020 04:41:30 +1100 (AEDT)
+Received: by mail-qk1-x72e.google.com with SMTP id y18so11567627qki.11
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Nov 2020 09:41:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=qFtUC1abob0p3emf6sZlZHwN6N2AqEqrtKF6N/U3zu8=;
+ b=CtgI+1onOgIL3b9/vG2UFv7dtYDeiJ//XyTbQzyrcv0xGl10aijXMRWpLiVg72Xt66
+ BBkIHk9wWcEmiVcismw7tSuYK6scTKZynV1m3MWXSf6LckjL6yDiquW0lBu4DBmWdh86
+ vqupeCz1s0MfjCF0ZKkFF7b0pEv4aQj0WIsQyn6/HlYnhaTz2ArIMfyPoPxD2sBMl7Js
+ SZThgm6ejYgYumTtap/g+xDlLEIgUwgxQGG3XrMAXl9OwWaLVVhtPnjn4XfxHDwy4qoo
+ Skur3sviqn/WETRODfdPb6wzKrxqAVy5d7idguLkrIhCCt0+XdE15u89GOXLiWzV7YPd
+ bhTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=oxayugG0s9Js++fZAaMkx89PwSdfudEwKHuG3IILSaU=;
- b=rytpXl4bFjrt2yV/neVfr9AGy+fr4hP0Q8cdNFBtBlVQAd8hDL9h8wtaRpujhDjthl
- Gbo7QtUderqg0UYE7hOaH7r3l4Zr1XdnKNPfvSrmMxNvopoTnd4pauNKT3gsy8Baaork
- 0IXxkchQp/rypK1FVGTzkcxsgTNz2uIkW7c71vR3ajHDz+6L09TEzgRGP294WXPbcn0l
- EnpnFZtR1ZagiykHS6jmkVJNqZJel2t+I09zmnZGzMoMq2XKuYqhc/EV6VshbY0Zbtrx
- DtrRLEMpmkgC5Kjl2ENorXl49v4XxJ32iz5/UdFsI2xvZhEqN/zGk79T7O+Jfky2TRbh
- 7DAA==
-X-Gm-Message-State: AOAM533DAxSJcjEA1+1BcdXTgKvgx6ie12vrmVS4y+hdR4gt5WquMMAn
- 3My3g8fexvho7vyBbsiOXj4=
-X-Google-Smtp-Source: ABdhPJx4IheZh62+oaYNfG0KYqxZ8uTRmPACkdbzYmVzPYVqGZ9mm7aWDMWf2r4YNRv5TP9DZVtpkg==
-X-Received: by 2002:a9d:62cb:: with SMTP id z11mr17619553otk.191.1606757817470; 
- Mon, 30 Nov 2020 09:36:57 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:9c47:6075:1073:650a])
- by smtp.gmail.com with ESMTPSA id e5sm9002784otl.75.2020.11.30.09.36.56
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 30 Nov 2020 09:36:56 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
-Subject: Re: ipmi command implementation mismatch with the design document
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <20201124190606.GA45289@mauery.jf.intel.com>
-Date: Mon, 30 Nov 2020 11:36:56 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <73E4FC5B-45F9-436F-B6A5-D01BEB44A8B7@gmail.com>
-References: <BL0PR01MB515650923510989237151B70FFFC0@BL0PR01MB5156.prod.exchangelabs.com>
- <20201124190606.GA45289@mauery.jf.intel.com>
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-X-Mailer: Apple Mail (2.3608.120.23.2.4)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=qFtUC1abob0p3emf6sZlZHwN6N2AqEqrtKF6N/U3zu8=;
+ b=BCnkamgZl89PZ/EyZqly041imvzFgIDGqUYjqCPxyxBxOYkH51XRXMqGXKk/KB6kkS
+ X1Rb0etDuwXbMr2Jqr/fhLWErNvpP7yWV9XqwtqgPhpRCOs90FhqVxfSd07+qtuGtUB6
+ 8pJzd1/2vnwH9OCUNgHmdVJFQd6hrIOmlpPdCN3+jJg9y90xDkD+VcjkJP10UhHM5W6r
+ 6V9/7K3S8/Vp5YlQ19h4bSIutqURcsnoD8BzUYabVNSh23Lyv1Ocvv7d22c6Gz35/Dpn
+ +2BuR01K8RlTyLKKk1F7h1wXpudnd2tGnTErWvPGul87BKzPAUVUaR8VJnwQKEnSg54W
+ rEpw==
+X-Gm-Message-State: AOAM5321J+xRdC8HM7P9geyZuKEypGrPikKanMwwvcU/zbo6BgG4LIge
+ TbtCCYllETLJxM3sMgAvLATnI/hvu2Rj4i0cMq+Nng==
+X-Google-Smtp-Source: ABdhPJwFXwCT02fhiCPMOLFoitDlb1qd6q8/I1fK2j3dJCB2+se54am7D8/7KAfnJ93/so2W4nvBRtvL25GFnkokA0I=
+X-Received: by 2002:a37:8586:: with SMTP id
+ h128mr23837000qkd.241.1606758085356; 
+ Mon, 30 Nov 2020 09:41:25 -0800 (PST)
+MIME-Version: 1.0
+References: <3f94f822-0df2-e8ae-71db-2ecb512f93a9@amd.com>
+In-Reply-To: <3f94f822-0df2-e8ae-71db-2ecb512f93a9@amd.com>
+From: Kun Yi <kunyi@google.com>
+Date: Mon, 30 Nov 2020 09:41:13 -0800
+Message-ID: <CAGMNF6VEKOn-n2_HvpTwZTQ1PXdCgy9kUAGejid0DQybvOVQ2g@mail.gmail.com>
+Subject: Re: SB-TSI virtual hwmon driver
+To: Supreeth Venkatesh <Supreeth.Venkatesh@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000edf35205b556840e"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,58 +73,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tung Nguyen OS <tungnguyen@os.amperecomputing.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--000000000000edf35205b556840e
+Content-Type: text/plain; charset="UTF-8"
 
+Hey Supreeth,
 
-> On Nov 24, 2020, at 1:06 PM, Vernon Mauery =
-<vernon.mauery@linux.intel.com> wrote:
->=20
-> On 23-Nov-2020 06:39 AM, Tung Nguyen OS wrote:
->>=20
->> Although the indicate_no_softoff_needed() can prevent the host from =
-soft off, but it seems like a mismatch b/w the design document and the =
-IPMI implementation.
->>=20
->> So, my question: is it reasonable for IPMI command ?
->=20
-> This code has been in place for quite some time now, so I am not sure =
-if the original authors have the context at this point in time. But =
-nobody else has raised this question. git blame says that Andrew =
-Geissler added this feature, but we would have to see if he still knows =
-why.=20
-> commit a6e3a3080d532536e02e304c819c1e17214e038a
-> Author: Andrew Geissler <andrewg@us.ibm.com>
-> Date:   Wed May 31 19:34:00 2017 -0500
->=20
->   Create file to indicate host requested off/reboot
->=20
->   Create a file to ensure the soft power off service is
->   not run when the host is requesting a power off
->   or reboot.  There's no need to notify the host (i.e.
->   soft power off) when they are initiating it.
->=20
->   Change-Id: Ic9f8e7110d30f477ceae38bba9d684559d9503d3
->   Signed-off-by: Andrew Geissler <andrewg@us.ibm.com>
->=20
+Thanks for reaching out! Actually, I was sidetracked this year and didn't
+have a chance to address the latest comments from the upstream reviewers. I
+was hoping to get it landed upstream first.
 
-I=E2=80=99m wondering if this ties into the discussion in =
-https://github.com/openbmc/phosphor-host-ipmid/issues/158?
+Let me take a look again this week.
 
-Are you having the same issue Tung? May be time to just put up a commit
-that does this correctly and discuss via gerrit.
+On Mon, Nov 30, 2020, 8:27 AM Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+wrote:
 
->=20
-> --Vernon
->=20
->> Reference:
->> =
-https://github.com/openbmc/docs/blob/master/designs/state-management-and-e=
-xternal-interfaces.md
->>=20
->> Best regards,
->> Tung
+> Hi Kun/Joel,
+>
+> I am little late to SB-TSI virtual hwmon driver patch series:
+>
+> https://patchwork.ozlabs.org/project/openbmc/cover/20200405030118.191950-1-kunyi@google.com/
+>
+> I could not find this patch series included in OpenBMC Linux kernel fork.
+> What is the status on this? Any plans to include this driver in dev-5.8
+> branch?
+>
+> Thanks,
+> Supreeth
+>
 
+--000000000000edf35205b556840e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Hey Supreeth,<div dir=3D"auto"><br></div><div dir=3D"auto=
+">Thanks for=C2=A0reaching out! Actually, I was sidetracked this year and d=
+idn&#39;t have a chance to address the latest comments from the upstream re=
+viewers. I was hoping to get it landed upstream first.</div><div dir=3D"aut=
+o"><br></div><div dir=3D"auto">Let me take a look again this week.</div></d=
+iv><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On =
+Mon, Nov 30, 2020, 8:27 AM Supreeth Venkatesh &lt;<a href=3D"mailto:supreet=
+h.venkatesh@amd.com">supreeth.venkatesh@amd.com</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #=
+ccc solid;padding-left:1ex">Hi Kun/Joel,<br>
+<br>
+I am little late to SB-TSI virtual hwmon driver patch series:<br>
+<a href=3D"https://patchwork.ozlabs.org/project/openbmc/cover/2020040503011=
+8.191950-1-kunyi@google.com/" rel=3D"noreferrer noreferrer" target=3D"_blan=
+k">https://patchwork.ozlabs.org/project/openbmc/cover/20200405030118.191950=
+-1-kunyi@google.com/</a><br>
+<br>
+I could not find this patch series included in OpenBMC Linux kernel fork.<b=
+r>
+What is the status on this? Any plans to include this driver in dev-5.8 bra=
+nch?<br>
+<br>
+Thanks,<br>
+Supreeth <br>
+</blockquote></div>
+
+--000000000000edf35205b556840e--
