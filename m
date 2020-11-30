@@ -2,66 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1542C8B82
-	for <lists+openbmc@lfdr.de>; Mon, 30 Nov 2020 18:42:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D66092C8D17
+	for <lists+openbmc@lfdr.de>; Mon, 30 Nov 2020 19:42:40 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ClCHK4LkZzDqMG
-	for <lists+openbmc@lfdr.de>; Tue,  1 Dec 2020 04:42:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4ClDcY316qzDqBM
+	for <lists+openbmc@lfdr.de>; Tue,  1 Dec 2020 05:42:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::72e;
- helo=mail-qk1-x72e.google.com; envelope-from=kunyi@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22c;
+ helo=mail-oi1-x22c.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=reject dis=none) header.from=google.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=CtgI+1on; dkim-atps=neutral
-Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com
- [IPv6:2607:f8b0:4864:20::72e])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=TesRM55n; dkim-atps=neutral
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
+ [IPv6:2607:f8b0:4864:20::22c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4ClCGC11n1zDqFJ
- for <openbmc@lists.ozlabs.org>; Tue,  1 Dec 2020 04:41:30 +1100 (AEDT)
-Received: by mail-qk1-x72e.google.com with SMTP id y18so11567627qki.11
- for <openbmc@lists.ozlabs.org>; Mon, 30 Nov 2020 09:41:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qFtUC1abob0p3emf6sZlZHwN6N2AqEqrtKF6N/U3zu8=;
- b=CtgI+1onOgIL3b9/vG2UFv7dtYDeiJ//XyTbQzyrcv0xGl10aijXMRWpLiVg72Xt66
- BBkIHk9wWcEmiVcismw7tSuYK6scTKZynV1m3MWXSf6LckjL6yDiquW0lBu4DBmWdh86
- vqupeCz1s0MfjCF0ZKkFF7b0pEv4aQj0WIsQyn6/HlYnhaTz2ArIMfyPoPxD2sBMl7Js
- SZThgm6ejYgYumTtap/g+xDlLEIgUwgxQGG3XrMAXl9OwWaLVVhtPnjn4XfxHDwy4qoo
- Skur3sviqn/WETRODfdPb6wzKrxqAVy5d7idguLkrIhCCt0+XdE15u89GOXLiWzV7YPd
- bhTw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4ClDbT6FwXzDqTg
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Dec 2020 05:41:40 +1100 (AEDT)
+Received: by mail-oi1-x22c.google.com with SMTP id s18so15293125oih.1
+ for <openbmc@lists.ozlabs.org>; Mon, 30 Nov 2020 10:41:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=KLKaFKIOYkouPdo9TBcA8Sruvffr+CES/B1AIyMZVsI=;
+ b=TesRM55nKbj6F7xVkAYt5AZHheo0r7/gyDA1CEx0KwFHY32+CyhhkHkOFUCxwnO2FQ
+ YfxZX4eb3pFYWykKZC7wXf3afi3ylIsyfKNSrYHl4sbLaT0UuRVLcxyuzq4b59DZkX+D
+ u40Q4JpWcJmSfu98hoEo575ULVNUiG7Ng+9lQS+yGCdjcPfz8CEKMrMMhSKvzrh4qTtx
+ u5AMQH/c7QbiPoUTzYP9PFWLlOHlw36o5ZEQdhhu5AOgDvbSp56FOHk0sXz38GldUGoD
+ sZ46ZUakNKeEdEIhSJ/akz8r4rth9YcitoXJ41l9aykwzxZ1CijzbrWEY4DmW4z0E61h
+ 2f0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qFtUC1abob0p3emf6sZlZHwN6N2AqEqrtKF6N/U3zu8=;
- b=BCnkamgZl89PZ/EyZqly041imvzFgIDGqUYjqCPxyxBxOYkH51XRXMqGXKk/KB6kkS
- X1Rb0etDuwXbMr2Jqr/fhLWErNvpP7yWV9XqwtqgPhpRCOs90FhqVxfSd07+qtuGtUB6
- 8pJzd1/2vnwH9OCUNgHmdVJFQd6hrIOmlpPdCN3+jJg9y90xDkD+VcjkJP10UhHM5W6r
- 6V9/7K3S8/Vp5YlQ19h4bSIutqURcsnoD8BzUYabVNSh23Lyv1Ocvv7d22c6Gz35/Dpn
- +2BuR01K8RlTyLKKk1F7h1wXpudnd2tGnTErWvPGul87BKzPAUVUaR8VJnwQKEnSg54W
- rEpw==
-X-Gm-Message-State: AOAM5321J+xRdC8HM7P9geyZuKEypGrPikKanMwwvcU/zbo6BgG4LIge
- TbtCCYllETLJxM3sMgAvLATnI/hvu2Rj4i0cMq+Nng==
-X-Google-Smtp-Source: ABdhPJwFXwCT02fhiCPMOLFoitDlb1qd6q8/I1fK2j3dJCB2+se54am7D8/7KAfnJ93/so2W4nvBRtvL25GFnkokA0I=
-X-Received: by 2002:a37:8586:: with SMTP id
- h128mr23837000qkd.241.1606758085356; 
- Mon, 30 Nov 2020 09:41:25 -0800 (PST)
-MIME-Version: 1.0
-References: <3f94f822-0df2-e8ae-71db-2ecb512f93a9@amd.com>
-In-Reply-To: <3f94f822-0df2-e8ae-71db-2ecb512f93a9@amd.com>
-From: Kun Yi <kunyi@google.com>
-Date: Mon, 30 Nov 2020 09:41:13 -0800
-Message-ID: <CAGMNF6VEKOn-n2_HvpTwZTQ1PXdCgy9kUAGejid0DQybvOVQ2g@mail.gmail.com>
-Subject: Re: SB-TSI virtual hwmon driver
-To: Supreeth Venkatesh <Supreeth.Venkatesh@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000edf35205b556840e"
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=KLKaFKIOYkouPdo9TBcA8Sruvffr+CES/B1AIyMZVsI=;
+ b=Th1iobUDcTTcNtqy0XXQtMUjIdnw18Jsn0XLt7l8HMMetDexIM7VmrvHudhBjcy1iA
+ JFAyMHG8myguJQIhxdSH6SX1aGiMXNMM/FA9S1siyD0E1iOyyqdY53q17WYdrRU7yOat
+ 22TIQW/b54awQxT8x3qM3BHEEI7j96N+OG7GhoM4zEpsfcjPenxdWOYVgGfzfr67faX6
+ LaczVulfM5xD/B02gthDwJk260c9wSJypdZ9cPnFCiWfhyc3jqq1Bh6ECH12juhxIMQv
+ bLsyEr/j31sDpthJaZfovHj74kouYu9VYkQ7YQiokh3aWTWYm0b/UpPjK/5KaDBmAdZb
+ SVzA==
+X-Gm-Message-State: AOAM531v/pTyFZIZrfz9wv2KAh0YU4N30d2IuqPz2ByeIlmZhkgiZSwh
+ lwfOM7uRO4i7bV8MPqcXc8Y=
+X-Google-Smtp-Source: ABdhPJxXZtHPSU+PMNX5V3Mp9LU1QI3p2sI9s4B8m2YCCEUL9oTnjbWjwLpX7Yxf4pHz/Fm3tZfUAQ==
+X-Received: by 2002:aca:5110:: with SMTP id f16mr182117oib.94.1606761696866;
+ Mon, 30 Nov 2020 10:41:36 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:9c47:6075:1073:650a])
+ by smtp.gmail.com with ESMTPSA id g6sm10288054oov.19.2020.11.30.10.41.35
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 30 Nov 2020 10:41:36 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: Re: sync meta-hpe
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <AT5PR8401MB0626829664E197404ABEEE5F8FF50@AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM>
+Date: Mon, 30 Nov 2020 12:41:35 -0600
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E21D7292-0053-4C21-AD7E-7430DCB6931D@gmail.com>
+References: <AT5PR8401MB0626829664E197404ABEEE5F8FF50@AT5PR8401MB0626.NAMPRD84.PROD.OUTLOOK.COM>
+To: "Garrett, Mike (HPE Server Firmware)" <mike.garrett@hpe.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,66 +81,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Verdun,
+ Jean-Marie" <jean-marie.verdun@hpe.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000edf35205b556840e
-Content-Type: text/plain; charset="UTF-8"
 
-Hey Supreeth,
 
-Thanks for reaching out! Actually, I was sidetracked this year and didn't
-have a chance to address the latest comments from the upstream reviewers. I
-was hoping to get it landed upstream first.
+> On Nov 30, 2020, at 11:33 AM, Garrett, Mike (HPE Server Firmware) =
+<mike.garrett@hpe.com> wrote:
+>=20
+> Hi Patrick - after this change was merged =
+https://gerrit.openbmc-project.xyz/c/openbmc/meta-hpe/+/38464 I don't =
+see those changes in top of tree.  Is this sync normally automatic but =
+current disabled or do we need to request it each time?
 
-Let me take a look again this week.
+Hi Mike, I run a script at the end of business each day that synch=E2=80=99=
+s things into openbmc/openbmc so no need to ask for it.
 
-On Mon, Nov 30, 2020, 8:27 AM Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-wrote:
+I was out last week so just ran in this morning. Your change is up at =
+https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/38632 now.
 
-> Hi Kun/Joel,
->
-> I am little late to SB-TSI virtual hwmon driver patch series:
->
-> https://patchwork.ozlabs.org/project/openbmc/cover/20200405030118.191950-1-kunyi@google.com/
->
-> I could not find this patch series included in OpenBMC Linux kernel fork.
-> What is the status on this? Any plans to include this driver in dev-5.8
-> branch?
->
+Once it builds and goes through CI, I merge and then it=E2=80=99s =
+officially in the openbmc/openbmc tree.
+
+Andrew
+
+>=20
 > Thanks,
-> Supreeth
->
+>=20
+> Mike
 
---000000000000edf35205b556840e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Hey Supreeth,<div dir=3D"auto"><br></div><div dir=3D"auto=
-">Thanks for=C2=A0reaching out! Actually, I was sidetracked this year and d=
-idn&#39;t have a chance to address the latest comments from the upstream re=
-viewers. I was hoping to get it landed upstream first.</div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">Let me take a look again this week.</div></d=
-iv><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On =
-Mon, Nov 30, 2020, 8:27 AM Supreeth Venkatesh &lt;<a href=3D"mailto:supreet=
-h.venkatesh@amd.com">supreeth.venkatesh@amd.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #=
-ccc solid;padding-left:1ex">Hi Kun/Joel,<br>
-<br>
-I am little late to SB-TSI virtual hwmon driver patch series:<br>
-<a href=3D"https://patchwork.ozlabs.org/project/openbmc/cover/2020040503011=
-8.191950-1-kunyi@google.com/" rel=3D"noreferrer noreferrer" target=3D"_blan=
-k">https://patchwork.ozlabs.org/project/openbmc/cover/20200405030118.191950=
--1-kunyi@google.com/</a><br>
-<br>
-I could not find this patch series included in OpenBMC Linux kernel fork.<b=
-r>
-What is the status on this? Any plans to include this driver in dev-5.8 bra=
-nch?<br>
-<br>
-Thanks,<br>
-Supreeth <br>
-</blockquote></div>
-
---000000000000edf35205b556840e--
