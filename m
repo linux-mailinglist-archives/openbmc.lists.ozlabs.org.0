@@ -2,69 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65AF12CC21A
-	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 17:21:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E77602CC2E4
+	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 17:59:03 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CmPNs34mtzDr0X
-	for <lists+openbmc@lfdr.de>; Thu,  3 Dec 2020 03:21:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CmQD40kZyzDqNk
+	for <lists+openbmc@lfdr.de>; Thu,  3 Dec 2020 03:59:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=flex--kunyi.bounces.google.com
+ (client-ip=2607:f8b0:4864:20::74a; helo=mail-qk1-x74a.google.com;
+ envelope-from=3lcfhxwukb94kunyigoogle.comopenbmclists.ozlabs.org@flex--kunyi.bounces.google.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b2f; helo=mail-yb1-xb2f.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=voh//a8Q; dkim-atps=neutral
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com
- [IPv6:2607:f8b0:4864:20::b2f])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=LGWULYKL; dkim-atps=neutral
+Received: from mail-qk1-x74a.google.com (mail-qk1-x74a.google.com
+ [IPv6:2607:f8b0:4864:20::74a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CmPMt1w5bzDqmC
- for <openbmc@lists.ozlabs.org>; Thu,  3 Dec 2020 03:20:40 +1100 (AEDT)
-Received: by mail-yb1-xb2f.google.com with SMTP id k65so2120539ybk.5
- for <openbmc@lists.ozlabs.org>; Wed, 02 Dec 2020 08:20:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=zOZVRxVHMk1aYSOyo45mTjsZMuSpVZk+EBKMdvqves8=;
- b=voh//a8QkyS5+ICHtcfnOwM2rCUYNgJHAEWHz/283Ks/Akuq97AxXNvt4PMBeMueAi
- uuqRbTeGfcfI13nkbJ/MgIRa+sOMfP55K5y/2KZhFkuuAcFbLib+XLjTZIeQMnHDaD0r
- Md18T/6h7a5T30JYnOCWKqbhlB6fjW9eB6QOvOyEi4WSjizEFcXaRhBApudHo16McqTL
- VWrOdyY65yPWZUhSKdqM2vcycRgj9RokEUTz+ZjwV/97t73exbopno46x6BX8cltzjJ5
- qJH5mxz28VreDyyEYRFw4a9odh7PpPDBRKOinleqYoREQmGxr/VbXn0Sn9aQ6/bCnEnK
- ORjg==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CmQ974VqQzDr34
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Dec 2020 03:56:17 +1100 (AEDT)
+Received: by mail-qk1-x74a.google.com with SMTP id s29so1739348qkm.3
+ for <openbmc@lists.ozlabs.org>; Wed, 02 Dec 2020 08:56:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=sender:date:message-id:mime-version:subject:from:to:cc;
+ bh=H0Lx50SxnIIzq7vdxrU5tdSCLsBn1UooFpJpI+vmNx0=;
+ b=LGWULYKLmYseaGlBpFr0VLKT3quD+zRnAUWVKgLWK0z4+g7iRjme5rOGmC3FLCL9sf
+ 1gh5HghvmJy2Dj0dPz08xJBiWDYUsJkyfhexNtU8yEFFpuVOfMkpiFP9OCxUtMbSBctH
+ RLmES9P3LBxpnKkJfo5rxSjb/pc1vfwyjn5+EdeX8sWzvACAkpi7RRgXjd/bh2nZBtLG
+ BljQEy2G8HsVGEtOAbtUNdK/2w214g3N3nzYthEZ94M3IfxLYyI0cSJmxcZERKLCwN1F
+ 3bLP6W39o0Z84bj0AZYLr7Y5qDBthOOaTO4BkbApdoPK83XAFG0brnppFu3NspPRFrDK
+ moDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=zOZVRxVHMk1aYSOyo45mTjsZMuSpVZk+EBKMdvqves8=;
- b=syc5j8uffZPpJMFt0NmJZj4lln5UXLiY3cAQyZpn/Rrzbq1HCkyVMeMhNnvc1tRaHg
- C2apSDjUTFrfO7T+n15MeFPRtedTeAuMfzeBTlOUqBL46bQB9ix21UEd2XE5RDwcMtvn
- DDacP88PGILqCao3Tv620sN8aR1T42Mkg4op2XAfcK/LrNkZcfbczKwT+rspA5wwL8sZ
- NgCH0janQqZPyQiaYK1j1RQFh4tVKWR8ZpyiGbHN5glUEhPZHxelQlktwIg2aQ6/tMWq
- HtDsjph8RI/NMy8vILicwx/sZkWwNyCZ7qy/P8deQA69ydpwaz6c2QVpPDub+7EoLEkp
- 5C6Q==
-X-Gm-Message-State: AOAM530Nkq/AkO9GpKN069lyY8WOd2nrPRFKohdC02OxMVIdmY4/atSI
- onrMgDxQzxVxcc6UlN38E9TXJCcfkm7rkEkSHIFEQQ==
-X-Google-Smtp-Source: ABdhPJxdrmumIvQHpheZFFelwGO1MOKIXXf4Q80Jx8HMhuYks7lh6s2IGVCOO4cMHs3vXS+5/mNgGx4deQOgB+mF59Y=
-X-Received: by 2002:a25:5806:: with SMTP id m6mr5268562ybb.449.1606926035281; 
- Wed, 02 Dec 2020 08:20:35 -0800 (PST)
-MIME-Version: 1.0
-References: <HK0PR04MB29643B6D1550EC772A099250FDF30@HK0PR04MB2964.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB29643B6D1550EC772A099250FDF30@HK0PR04MB2964.apcprd04.prod.outlook.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 2 Dec 2020 08:20:24 -0800
-Message-ID: <CACWQX82=MG2kMPyBei7zp1P8jik0Ay4ZpjyxNkyi+U31nwNx-w@mail.gmail.com>
-Subject: Re: Add version info in the fan - json config
-To: Kumar Thangavel <thangavel.k@hcl.com>
+ h=x-gm-message-state:sender:date:message-id:mime-version:subject:from
+ :to:cc;
+ bh=H0Lx50SxnIIzq7vdxrU5tdSCLsBn1UooFpJpI+vmNx0=;
+ b=TGWPTyAmzY46eQ1KZcPRRQTdaGmjZ0F5XwYGFDIYauze0z6mvNSW0evSdJTQu06c/C
+ n+8bggqAGJVAgYjdCjXM36wuOv96bN/0pRfZ9cl1qZKwMZDcho9Cumd4HTDAZctfFeV/
+ MC5w65zA0i92HQ2B86FqzoAIpiqNBPieQmE5jD261jwKRQIXIAkXjq1SVnsJtBaKK8xo
+ J01KmLnFhTIqjDg/BPIZBZ867dMtR8BZ/ICc2+MRWTUFpyJllgc5nyuO6X8WK7krLSwu
+ +e/7zpXt6SVtAJiEmZ8BbEwPVZ9Qjch9Siix6AkAVCcHJasLkaD3Qe55G+b59Ur7C0lf
+ lj9g==
+X-Gm-Message-State: AOAM531nesen9qvXvkhpgAXCEEprmpBvwN5V6SU0Tgpn2aeGtmLn9Ux0
+ chZkXScpBxmNI6RdZ8nOPtVse2MPHw==
+X-Google-Smtp-Source: ABdhPJwSn/rOgK8TFtSRu2/m7GlbGrv95pPDs73+aOV6pufVL7iwq4wJYVgLy7E57bcSmSMQIqMtQMSTkQ==
+X-Received: from kunyi0.svl.corp.google.com
+ ([2620:15c:2c5:3:9657:a5ff:fef2:53bd])
+ (user=kunyi job=sendgmr) by 2002:a05:6214:a8a:: with SMTP id
+ ev10mr3649574qvb.41.1606928173217; Wed, 02 Dec 2020 08:56:13 -0800 (PST)
+Date: Wed,  2 Dec 2020 08:55:58 -0800
+Message-Id: <20201202165601.1532213-1-kunyi@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.29.2.454.gaff20da3a2-goog
+Subject: [PATCH linux hwmon-next v4 0/3] SB-TSI hwmon driver v4
+From: Kun Yi <kunyi@google.com>
+To: jdelvare@suse.com, linux@roeck-us.net, robh+dt@kernel.org, 
+ mark.rutland@arm.com, supreeth.venkatesh@amd.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,75 +75,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Vernon Mauery <vernon.mauery@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 1, 2020 at 10:08 PM Kumar Thangavel <thangavel.k@hcl.com> wrote=
-:
->
-> Classification: Public
->
-> Hi All,
->
->
->
->         Shall we have a new field =E2=80=9Cversion=E2=80=9D in the fan co=
-ntroller part in the Entity-Manager json file to identify the versions of t=
-he each fan controller updates.
->
->
->
->         This will give us the idea about which versions we are using and =
-fan config updates and tracking.
+v4: addressed comments in v3; converted DT binding to required schema
+v3: addressed comment in v2 and improved documentation
+v2: rewrote using devm_hwmon_device_register_with_info() API and addressed
+    comments received in v1
+v1: first version
 
-Generally this is better tracked using the version of OpenBMC being
-loaded than what version of the config files have been loaded.  While
-this makes it a little bit of a pain for debug when loading multiple
-copies of the same version, it helps us avoid having to track any
-per-file version information.
+Kun Yi (3):
+  hwmon: (sbtsi) Add basic support for SB-TSI sensors
+  hwmon: (sbtsi) Add documentation
+  dt-bindings: (hwmon/sbtsi_tmep) Add SB-TSI hwmon driver bindings
 
-With that said, how would you imagine the version information would be
-exposed to the user?  What value would it serve to a user that's
-unable to update the files (except through a firmware update).
+ .../devicetree/bindings/hwmon/amd,sbtsi.yaml  |  54 ++++
+ Documentation/hwmon/index.rst                 |   1 +
+ Documentation/hwmon/sbtsi_temp.rst            |  40 +++
+ drivers/hwmon/Kconfig                         |  10 +
+ drivers/hwmon/Makefile                        |   1 +
+ drivers/hwmon/sbtsi_temp.c                    | 265 ++++++++++++++++++
+ 6 files changed, 371 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/amd,sbtsi.yaml
+ create mode 100644 Documentation/hwmon/sbtsi_temp.rst
+ create mode 100644 drivers/hwmon/sbtsi_temp.c
 
->
->
->
->         So, dbus-sensors/FanMain.cpp code should be updated to handle thi=
-s version info for the fan.
->
->
->
->         Please let us know if any comments on this.
->
->
->
-> Thanks,
->
-> Kumar.
->
->
->
->
->
-> ::DISCLAIMER::
-> ________________________________
-> The contents of this e-mail and any attachment(s) are confidential and in=
-tended for the named recipient(s) only. E-mail transmission is not guarante=
-ed to be secure or error-free as information could be intercepted, corrupte=
-d, lost, destroyed, arrive late or incomplete, or may contain viruses in tr=
-ansmission. The e mail and its contents (with or without referred errors) s=
-hall therefore not attach any liability on the originator or HCL or its aff=
-iliates. Views or opinions, if any, presented in this email are solely thos=
-e of the author and may not necessarily reflect the views or opinions of HC=
-L or its affiliates. Any form of reproduction, dissemination, copying, disc=
-losure, modification, distribution and / or publication of this message wit=
-hout the prior written consent of authorized representative of HCL is stric=
-tly prohibited. If you have received this email in error please delete it a=
-nd notify the sender immediately. Before opening any email and/or attachmen=
-ts, please check them for viruses and other defects.
-> ________________________________
+-- 
+2.29.2.454.gaff20da3a2-goog
+
