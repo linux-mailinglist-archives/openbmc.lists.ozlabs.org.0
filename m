@@ -2,86 +2,128 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51E542CB154
-	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 01:11:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DA3A2CB4AC
+	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 06:48:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Clzsw1YfGzDqxX
-	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 11:11:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cm7LD6ZR1zDqg8
+	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 16:48:20 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=T9Od/shd; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ spf=permerror (SPF Permanent Error: Two or more type
+ TXT spf records found.) smtp.mailfrom=amperecomputing.com
+ (client-ip=40.107.243.98; helo=nam12-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=qnguyen@amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=amperecomputing.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=amperecomputing.com header.i=@amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=Ohbh7lv0; 
+ dkim-atps=neutral
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12on2098.outbound.protection.outlook.com [40.107.243.98])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Clzrk0n0FzDqgF
- for <openbmc@lists.ozlabs.org>; Wed,  2 Dec 2020 11:10:44 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0B202ifO105992
- for <openbmc@lists.ozlabs.org>; Tue, 1 Dec 2020 19:10:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=mime-version :
- in-reply-to : to : from : date : references : content-type : message-id :
- subject; s=pp1; bh=MtL95hA6ieTd2GwqzQ6J6FQwY9jN7MOuMtgSoaUC5dI=;
- b=T9Od/shdveCi4G32fwjMWXcA0PNVYYDusoaTlAJwpRatLrVxUINElXvmX3DauoM7BR+0
- TKKHLkvBRBJZ3z1ZDJW+3MiKwBfZQuGN0nYGcaqsvWCVVtXzHQZ3bavChMCv+fuNt0oW
- 9anE99Ic+t2KJn9TViColSPVaGryxnngfFqPZVjGBVwDJWQxsNUdbYa+QEVKiyZEBAkB
- TUz1PZF2hMusXcLnmTH+dm0hHhw5HhzOJzLmsAwSNngoZBWKncOE2j2YEVpJYg2w4dzR
- hmIUVqnEgbq1/Up5Hhh3khnb40WW4rOKMk4CDNjA/aD/n5/pG6Dh/l93am0R9Rmmd0tN ww== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.66])
- by mx0b-001b2d01.pphosted.com with ESMTP id 355j4fv9c9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 01 Dec 2020 19:10:39 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Bruce.Mitchell@ibm.com>;
- Wed, 2 Dec 2020 00:10:39 -0000
-Received: from us1a3-smtp01.a3.dal06.isc4sb.com (10.106.154.95)
- by smtp.notes.na.collabserv.com (10.106.227.127) with
- smtp.notes.na.collabserv.com ESMTP; Wed, 2 Dec 2020 00:10:37 -0000
-Received: from us1a3-mail31.a3.dal06.isc4sb.com ([10.146.6.26])
- by us1a3-smtp01.a3.dal06.isc4sb.com
- with ESMTP id 2020120200103632-870227 ;
- Wed, 2 Dec 2020 00:10:36 +0000 
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cm4mF5vTBzDqZT
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Dec 2020 14:52:10 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JcjGpaaq6PCng4UISBafoi/ydfS8I0Sv6KBn2EPA5gthrbyvTC1EGBlcmXqQKt3k277VPd83KszoL83SLvbaiqdaHK/QHWXsBNluzuyFWV8TYBzgD39jvak8oEhv2jUYbHi5mJxncjH4NzdJK0AwH31k6s5PjToFNZgUMQXcnxws1blmXHSg4/Pvhk/l10AwQQNT9kMAKSgtRvoBMOtDdCn9iYF5PNmn5i1NX1ogaX2Fq/U33JbjXXBEAEH2bTe/SxjaCGhYd/mHiuCW8iVT88leJ7X7bFq03bXcgV1KrsCin04kvR7ti7AVi6AYdwZR36qTai0MAtJ7JMqUSlFj6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EhinUq1qXMz3fekpQpfWTS4SBL2cBvHwaAejCvFBKm8=;
+ b=kW+W3H0XDdFQKmK4ZumU/XLiu+kSvK3iIecbAYgaWmbaBzrBiDNBOzziOT+BfDUA6Je3rB3YbZu6fOzgFdbgpG3tDzI7Q6bZRZxGfpEpyz2WXKX0keBi/PK36pKHHwoH9rhCIbZfPxe593+qRjQUaL7yxhCE4dwpcEdwzirXGyWF5yUwooDTQpCf5qHQMRof2LQsRLFWe087vo/nflSh87/fULhzus3qy9Ze3zVVJWa6z4j464BiRUkCHMA2tjpH5W7TAMe3KwH8Egpox+MmXVzNgAaNBuDpYlxMAbGkJgmrJ76w4BJocgzDq5ECKled6BPsxT1fvqRWy2dz4xviXA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amperecomputing.com; dmarc=pass action=none
+ header.from=amperecomputing.com; dkim=pass header.d=amperecomputing.com;
+ arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amperecomputing.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EhinUq1qXMz3fekpQpfWTS4SBL2cBvHwaAejCvFBKm8=;
+ b=Ohbh7lv0psfJkGoGYMJHTVWLCpd8vjw1Q5ZWpzRO+F9MVjBkvqoCTxjt/nbbzXvxsxlsuHSx0Ehdj/tgwA6CmKyZZQ11PlAtiyMAalK0otgbnrx9GMgsJ3dNDy8E7fmMZZq8QQOx5gvXV6D67l1WJLVlGQJZs5/w4BzqbbEPE0E=
+Received: from BYAPR01MB4853.prod.exchangelabs.com (2603:10b6:a03:91::15) by
+ BYAPR01MB4534.prod.exchangelabs.com (2603:10b6:a03:9a::28) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3611.31; Wed, 2 Dec 2020 03:52:00 +0000
+Received: from BYAPR01MB4853.prod.exchangelabs.com
+ ([fe80::41c8:874:e9e4:68e7]) by BYAPR01MB4853.prod.exchangelabs.com
+ ([fe80::41c8:874:e9e4:68e7%7]) with mapi id 15.20.3611.023; Wed, 2 Dec 2020
+ 03:52:00 +0000
+From: Quan Nguyen <qnguyen@amperecomputing.com>
+To: Andrew Jeffery <andrew@aj.id.au>, Quan Nguyen OS
+ <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: vendor-prefixes: Add an entry for
+ AmpereComputing.com
+Thread-Topic: [PATCH v2 1/2] dt-bindings: vendor-prefixes: Add an entry for
+ AmpereComputing.com
+Thread-Index: AQHWyF57dAQQITAM9E+ZFClDIgxyKg==
+Date: Wed, 2 Dec 2020 03:52:00 +0000
+Message-ID: <E5C4D818-B178-408F-8B48-641E11A75C47@amperecomputing.com>
+References: <20201130081733.18893-1-quan@os.amperecomputing.com>
+ <20201130081733.18893-2-quan@os.amperecomputing.com>
+ <6e28c009-dbf9-4d6e-bc98-ccaa5e0c9b02@www.fastmail.com>
+In-Reply-To: <6e28c009-dbf9-4d6e-bc98-ccaa5e0c9b02@www.fastmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: aj.id.au; dkim=none (message not signed)
+ header.d=none;aj.id.au; dmarc=none action=none
+ header.from=amperecomputing.com;
+x-originating-ip: [118.69.219.201]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 50475839-d3f6-482a-10c0-08d896759f96
+x-ms-traffictypediagnostic: BYAPR01MB4534:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR01MB4534CF9B4EBAAC92DB7DC6E9B4F30@BYAPR01MB4534.prod.exchangelabs.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: ShTa2XWju0hfFYl0Koku854pTLFo3CQZM1LnLFKvn6ufrOGGqTJ7q++kxmCeEWo5X/6bCDZmkrQDbr5yTtrQTRG7InD+FXSEzJ3s1t4VVLAf834R47c966KwnV99QFz9NdQdduSkXK4rovmDuAnV8/nnDeKk9c1v3zkIEQOBN0JcC3aUQaNNwQv2BJn39NhJ3uf8NZgB10BpxGXRmwohC98G7awgvCPQk5xhnucbsAShL9cLm1lWO1pkyA+LfYUm6dwFSLJfgEc9lkhfQfM8myKy0SFJFb/5++3yEp3MjtaOrxYPduZtghXvCCq9YgD0yTEovr1EGbSIuRkNa73hpA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BYAPR01MB4853.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(39840400004)(136003)(396003)(366004)(346002)(376002)(86362001)(8676002)(8936002)(6486002)(33656002)(186003)(26005)(5660300002)(4326008)(6512007)(107886003)(66476007)(6506007)(71200400001)(316002)(110136005)(83380400001)(54906003)(64756008)(66946007)(36756003)(76116006)(2616005)(66556008)(91956017)(478600001)(66446008)(2906002);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?SW1FS0NHUjJoaUhGb2xLM1lPQzA2VGNDcnpYMTlsTzJJYjNnK0pGTHNMRVRR?=
+ =?utf-8?B?WEpCUXRCTytKNmtyUXhrK29HSVNoREE2UE5FYndHdTg1cG9xMzYvTktvRTdR?=
+ =?utf-8?B?YmxvSGd3Vk1UTmJWOXF1SEJUdENGV2RaVERma3I5RERqYllPN2hHTmR0dTUx?=
+ =?utf-8?B?dStkL0ZRajRsd2FUZ3VFdjRaOXlNN2o4WmE5R1FlbkdQRzlLNTQ5RFhvTFVl?=
+ =?utf-8?B?R3E3TmxFVlhlanpMSU9JQ0NlQlp0SWlWUzlMdHUxdnQzM0RjTytqT05GS2t6?=
+ =?utf-8?B?dEVoWS9tdW9NWHFxNnlRbS9ISk5tdk5vbXVSNnFwV1RaWEVQQnJSaEJGbDNJ?=
+ =?utf-8?B?TGsrZFhJNFVpVjNadHpsdDhqc1E4OTg4a1BtN2lDcXVrOGZZOU9wUUU2NmxD?=
+ =?utf-8?B?Zk1EL1F2a0ZrR0JnLy9zTHZ0SFhVd0QraTBDaHMzN2k1V2lBT2NKenJIb05w?=
+ =?utf-8?B?STR3NnR6WlV5Sm50Q1diOURzSDU3MVJSemtVNW5yNUNEWEZDdjdXV2Z5VXVG?=
+ =?utf-8?B?a2h1ZXJNcHpmZVljb0RvSlB3R3poL2FJQ0JmYmhkWFgrYTNnODg1WVNsRTFv?=
+ =?utf-8?B?b0ZjNkNSbHdGVVpkQ3NsUzVra2xzQmVoSW1rLzYyVzFFdE1QakFXMjYwakxT?=
+ =?utf-8?B?T2JONWphY0lJdmxyY3NqdmhNQmp5eC81aUNrVk4rTmtzYzJXWWZIVkMxSkE1?=
+ =?utf-8?B?a3VRUFh0dWh3bjB6SThNWmhOS1pRWFdwdjdxNCtqcnFHM2REUFNJUkNJQzBm?=
+ =?utf-8?B?dFRvNGxzeGM5bVhBVlJmamRSTTNXN2ZSeDR1MHdBa1h0NThpYWlRWDFPanI2?=
+ =?utf-8?B?Tlp1M3NYT0gwLzZSMG5IQjA0cXY5TzlrRXdZV2YyWUVZRHB4TDlNMVdiaGdO?=
+ =?utf-8?B?b2pSUVlzbWlHMnQ2MDVOeHY5c2srV3BPK3A2bW9nQzI5QVJMVjdZL21vZEl0?=
+ =?utf-8?B?OXhSSVhzMHBVTlFEdDU5NkZBNnZxK211em9FUG9hc21qVEdCT3ZGaWVhZDEw?=
+ =?utf-8?B?OGVPRjRtLzNJd1ZrQUM2QkdoQWo1QTNCSkY2VHpZOWs5TFFnSFJRSWpWdU5r?=
+ =?utf-8?B?L1pwbzQ2R3UrTGc5bE40YVgrM28vVGo1NDVYQmFSenI5eTZjemNHWVpYaVN5?=
+ =?utf-8?B?OHlnMUduZnJGL1NxRTFrc3diYy9Rbm1JZmtub3hmNWExeXRHME5qV0MvVnhw?=
+ =?utf-8?B?dXRpUlFwT2gzc0k5RzU3NGsvbVJwTW1JVzNUVWNOZ2ZRdTY4bVJqenl6NThM?=
+ =?utf-8?B?RHE1dHgxc2VMZEVFZlpQWjE0OVYyOTViRG1UYjJsUDFUdWRVa2J2NlZERElq?=
+ =?utf-8?Q?k7kekpIwmkRfwqXtOXK89j5iGSwOZOAMPZ?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <36073CD72C119147A0B23FE6C8B7B905@prod.exchangelabs.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <OFD6833344.166C4341-ON00258631.007EBD09-88258631.007F0D6B@notes.na.collabserv.com>
-To: openbmc@lists.ozlabs.org
-From: "Bruce Mitchell" <Bruce.Mitchell@ibm.com>
-Date: Tue, 1 Dec 2020 16:10:36 -0800
-References: <OFD6833344.166C4341-ON00258631.007EBD09-88258631.007F0D6B@notes.na.collabserv.com>
-X-KeepSent: 8EC2E0B3:F804468E-00258632:0000C9CB;
- type=4; name=$KeepSent
-X-Mailer: IBM Notes Release 10.0.1FP5 April 28, 2020
-X-LLNOutbound: False
-X-Disclaimed: 20539
-X-TNEFEvaluated: 1
-Content-type: multipart/related; 
- Boundary="0__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B"
-x-cbid: 20120200-4409-0000-0000-0000042BDC0C
-X-IBM-SpamModules-Scores: BY=0.000359; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.373977; ST=0; TS=0; UL=0; ISC=; MB=0.270494
-X-IBM-SpamModules-Versions: BY=3.00014293; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01471987; UDB=6.00792741; IPR=6.01254634; 
- MB=3.00035309; MTD=3.00000008; XFM=3.00000015; UTC=2020-12-02 00:10:37
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-12-01 17:50:36 - 6.00012103
-x-cbparentid: 20120200-4410-0000-0000-0000A63BE53A
-Message-Id: <OF8EC2E0B3.F804468E-ON00258632.0000C9CB-88258632.0000F872@notes.na.collabserv.com>
-Subject: Re:  Seeking advice on building and using kdump with OpenBMC.
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-12-01_12:2020-11-30,
- 2020-12-01 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-OriginatorOrg: amperecomputing.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4853.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50475839-d3f6-482a-10c0-08d896759f96
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Dec 2020 03:52:00.4817 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: bu2AFK/F4c2u1SV9TNmC5SCnYMbqIYmDt3zBEA5/NN9DboAZvTsPU3Myfbml/7qQkJ9+xxLZQ1aHxsnTPM0hCKdi3b/Nqix0n+XxkSlnw/I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB4534
+X-Mailman-Approved-At: Wed, 02 Dec 2020 16:47:41 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,88 +135,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ Thang Nguyen OS <thang@os.amperecomputing.com>,
+ Phong Vo OS <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B
-Content-type: multipart/alternative; 
-	Boundary="1__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B"
-
-
---1__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B
-Content-Transfer-Encoding: quoted-printable
-Content-type: text/plain; charset=US-ASCII
-
-
-In addition both Yocto and OpenBMC have kexec / kdump in the
-poky/meta/recipes-kernel/kexec/kexec-tools directories and
-poky/meta/recipes-kernel/kexec/kexec-tools=5F2.0.20.bb .  So I  am looking
-for guidance on what the higher level perspective is beyond just pulling in
-kdump and building a BMC.  I assume there is configuration that both Yocto
-and OpenBMC have kexec / kdump in the
-poky/meta/recipes-kernel/kexec/kexec-tools directories and
-poky/meta/recipes-kernel/kexec/kexec-tools=5F2.0.20.bb .  So I  am looking
-for guidance on what the higher level perspective is beyond just pulling in
-kdump and building a BMC.  I assume there is configuration that are more
-useful for the OpenBMC community.
-
-
-
-
-Seeking advice on building and using kdump with OpenBMC.
-Are there any Best Known Methods?
-Any troubles and/or issues to lookout for?
-What should I avoid?
-
-Are there any security concerns?
-
-Thank you!
-
---
-Bruce
-
-
---1__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B
-Content-Transfer-Encoding: quoted-printable
-Content-type: text/html; charset=US-ASCII
-Content-Disposition: inline
-
-<html><body><p><font size=3D"2">In addition both Yocto and OpenBMC have kex=
-ec / kdump in the poky/meta/recipes-kernel/kexec/kexec-tools directories an=
-d poky/meta/recipes-kernel/kexec/kexec-tools=5F2.0.20.bb .  So I  am lookin=
-g for guidance on what the higher level perspective is beyond just pulling =
-in kdump and building a BMC.  I assume there is configuration that both Yoc=
-to and OpenBMC have kexec / kdump in the poky/meta/recipes-kernel/kexec/kex=
-ec-tools directories and poky/meta/recipes-kernel/kexec/kexec-tools=5F2.0.2=
-0.bb .  So I  am looking for guidance on what the higher level perspective =
-is beyond just pulling in kdump and building a BMC.  I assume there is conf=
-iguration that are more useful for the OpenBMC community.</font><br><br><im=
-g width=3D"16" height=3D"16" src=3D"cid:1=5F=5F=3D8FBB0CA1DF934F5B8f9e8a93d=
-f938690918c8FB@" border=3D"0" alt=3D"Inactive hide details for &quot;Bruce =
-Mitchell&quot; ---12/01/2020 15:08:38---Seeking advice on building and usin=
-g kdump with OpenBMC. Ar"><font size=3D"2" color=3D"#424282">&quot;Bruce Mi=
-tchell&quot; ---12/01/2020 15:08:38---Seeking advice on building and using =
-kdump with OpenBMC. Are there any Best Known Methods?</font><br><br><br><fo=
-nt size=3D"2">Seeking advice on building and using kdump with OpenBMC.<br>A=
-re there any Best Known Methods?<br>Any troubles and/or issues to lookout f=
-or?<br>What should I avoid?</font><br><font size=3D"2"><br>Are there any se=
-curity concerns?</font><br><font size=3D"2"><br>Thank you!</font><br><font =
-size=3D"2"><br>-- <br>Bruce</font><br><br><BR>
-</body></html>
-
---1__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B--
-
-
---0__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B
-Content-type: image/gif; 
-	name="graycol.gif"
-Content-Disposition: inline; filename="graycol.gif"
-Content-ID: <1__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FB@>
-Content-Transfer-Encoding: base64
-
-R0lGODlhEAAQAKECAMzMzAAAAP///wAAACH5BAEAAAIALAAAAAAQABAAAAIXlI+py+0PopwxUbpu
-ZRfKZ2zgSJbmSRYAIf4fT3B0aW1pemVkIGJ5IFVsZWFkIFNtYXJ0U2F2ZXIhAAA7
-
-
---0__=8FBB0CA1DF934F5B8f9e8a93df938690918c8FBB0CA1DF934F5B--
-
+VGhhbmtzIEFuZHJldywNCkkgd2lsbCBzZW50IHRoaXMgcGF0Y2ggdG8gdXBzdHJlYW0uDQoNCkFu
+ZCBJJ20gd29uZGVyIGlmIHlvdSBjb3VsZCBhY2snIGVkIGFuZCBtZXJnZWQgdGhlIERUUyBwYXRj
+aCBpbiB0aGlzIHNlcmllcyA/DQrvu79PciBpZiB5b3UgaGF2ZSBhbnkgY29tbWVudC4NCg0KVGhh
+bmsgeW91LA0KLVF1YW4NCg0KT24gTW9uLCAzMCBOb3YgMjAyMCwgYXQgMTg6NDcsIFF1YW4gTmd1
+eWVuIHdyb3RlOg0KPiBBZGQgImFtcGVyZSIgZW50cnkgZm9yIEFtcGVyZSBDb21wdXRpbmcgTExD
+OiBhbXBlcmVjb21wdXRpbmcuY29tDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBRdWFuIE5ndXllbiA8
+cXVhbkBvcy5hbXBlcmVjb21wdXRpbmcuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBQaG9uZyBWbyA8
+cGhvbmdAb3MuYW1wZXJlY29tcHV0aW5nLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogVGhhbmcgUS4g
+Tmd1eWVuIDx0aGFuZ0Bvcy5hbXBlcmVjb21wdXRpbmcuY29tPg0KPiAtLS0NCj4gIERvY3VtZW50
+YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy92ZW5kb3ItcHJlZml4ZXMueWFtbCB8IDIgKysNCj4g
+IDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKykNCj4gDQo+IGRpZmYgLS1naXQgYS9Eb2N1
+bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdmVuZG9yLXByZWZpeGVzLnlhbWwgDQo+IGIv
+RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3ZlbmRvci1wcmVmaXhlcy55YW1sDQo+
+IGluZGV4IDYwNDE2NmVjYWVmYi4uMTBmMTJlOTg3NjJmIDEwMDY0NA0KPiAtLS0gYS9Eb2N1bWVu
+dGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdmVuZG9yLXByZWZpeGVzLnlhbWwNCj4gKysrIGIv
+RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3ZlbmRvci1wcmVmaXhlcy55YW1sDQo+
+IEBAIC04NSw2ICs4NSw4IEBAIHBhdHRlcm5Qcm9wZXJ0aWVzOg0KPiAgICAgIGRlc2NyaXB0aW9u
+OiBTaGVuemhlbiBBbWVkaWF0ZWNoIFRlY2hub2xvZ3kgQ28uLCBMdGQNCj4gICAgIl5hbWxvZ2lj
+LC4qIjoNCj4gICAgICBkZXNjcmlwdGlvbjogQW1sb2dpYywgSW5jLg0KPiArICAiXmFtcGVyZSwu
+KiI6DQo+ICsgICAgZGVzY3JpcHRpb246IEFtcGVyZSBDb21wdXRpbmcgTExDDQoNClRoaXMgbG9v
+a3Mgb2theSB0byBtZSwgYnV0IGl0IHNob3VsZCBnbyB1cHN0cmVhbS4NCg0KUmV2aWV3ZWQtYnk6
+IEFuZHJldyBKZWZmZXJ5IDxhbmRyZXdAYWouaWQuYXU+DQoNCg==
