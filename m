@@ -2,128 +2,153 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DA3A2CB4AC
-	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 06:48:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA93D2CB4DD
+	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 07:09:55 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cm7LD6ZR1zDqg8
-	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 16:48:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cm7q30Kq1zDqnc
+	for <lists+openbmc@lfdr.de>; Wed,  2 Dec 2020 17:09:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Two or more type
- TXT spf records found.) smtp.mailfrom=amperecomputing.com
- (client-ip=40.107.243.98; helo=nam12-dm6-obe.outbound.protection.outlook.com;
- envelope-from=qnguyen@amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
- header.from=amperecomputing.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.129.98; helo=kor01-sl2-obe.outbound.protection.outlook.com;
+ envelope-from=thangavel.k@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=quarantine dis=none) header.from=hcl.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=amperecomputing.com header.i=@amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=Ohbh7lv0; 
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=MlxBq0GB; 
+ dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=MlxBq0GB; 
  dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam12on2098.outbound.protection.outlook.com [40.107.243.98])
+Received: from KOR01-SL2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1290098.outbound.protection.outlook.com [40.107.129.98])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cm4mF5vTBzDqZT
- for <openbmc@lists.ozlabs.org>; Wed,  2 Dec 2020 14:52:10 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cm7nw57M7zDqnT
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Dec 2020 17:08:48 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TFmKcyus8t3Pu14BW3D/v9kipmq5B+Hg/tSQyfFO+8w=;
+ b=MlxBq0GBL4eOI+tHOx9pfpH8Px/B21/a/hdX5GxpCX2HoL+XSWwI5D3ABbp3XDPNQDvVGC5/gEdom2ZZbC5+PSTBSswYXuek0mIetlP+OGMR8C38DiVKnesDTVDBPpOubF4WB+sDn/wiRyA3l16SYCv5ECTd0WViw8vd+VkpRIQ=
+Received: from SG2PR02CA0038.apcprd02.prod.outlook.com (2603:1096:3:18::26) by
+ PS2PR04MB3590.apcprd04.prod.outlook.com (2603:1096:300:6e::16) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3611.25; Wed, 2 Dec 2020 06:08:32 +0000
+Received: from SG2APC01FT033.eop-APC01.prod.protection.outlook.com
+ (2603:1096:3:18:cafe::ef) by SG2PR02CA0038.outlook.office365.com
+ (2603:1096:3:18::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3632.17 via Frontend
+ Transport; Wed, 2 Dec 2020 06:08:32 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.56)
+ smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
+ header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
+ header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.195.56 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.56; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.195.56) by
+ SG2APC01FT033.mail.protection.outlook.com (10.152.250.119) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3632.17 via Frontend Transport; Wed, 2 Dec 2020 06:08:31 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JcjGpaaq6PCng4UISBafoi/ydfS8I0Sv6KBn2EPA5gthrbyvTC1EGBlcmXqQKt3k277VPd83KszoL83SLvbaiqdaHK/QHWXsBNluzuyFWV8TYBzgD39jvak8oEhv2jUYbHi5mJxncjH4NzdJK0AwH31k6s5PjToFNZgUMQXcnxws1blmXHSg4/Pvhk/l10AwQQNT9kMAKSgtRvoBMOtDdCn9iYF5PNmn5i1NX1ogaX2Fq/U33JbjXXBEAEH2bTe/SxjaCGhYd/mHiuCW8iVT88leJ7X7bFq03bXcgV1KrsCin04kvR7ti7AVi6AYdwZR36qTai0MAtJ7JMqUSlFj6Q==
+ b=e6w8oB3SH+DxyJudmyLppAqExpJLkG+xgpx3C8zwmOUeHYILFKwkBMevjMXrCt9VLqSDsBffOT7zsD5ggzJWHmNEjO5SLLZb8nPIO1uDrh3/V1os07ItS6kaPyr3e+Gr0ryfHRctNRU56htmnQq/ouoHEV1VWzgpUF3GzodtaDf99Via9SbsUhbLGb6OyvIVt0H7LMA+iL75GZpBVTag9hw3Hg1Rq0q62fCQNBWuP96Tq05AcdMnPi2N9sR7cFDbJOGfJlOtB+xIZoZhCKe8dbxx6fXZ7FxmWj74hJ7Y/bG+8cUWKEUWIADB1WaKsCzPMTTRDPBTppgxVZ1jmOV38Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EhinUq1qXMz3fekpQpfWTS4SBL2cBvHwaAejCvFBKm8=;
- b=kW+W3H0XDdFQKmK4ZumU/XLiu+kSvK3iIecbAYgaWmbaBzrBiDNBOzziOT+BfDUA6Je3rB3YbZu6fOzgFdbgpG3tDzI7Q6bZRZxGfpEpyz2WXKX0keBi/PK36pKHHwoH9rhCIbZfPxe593+qRjQUaL7yxhCE4dwpcEdwzirXGyWF5yUwooDTQpCf5qHQMRof2LQsRLFWe087vo/nflSh87/fULhzus3qy9Ze3zVVJWa6z4j464BiRUkCHMA2tjpH5W7TAMe3KwH8Egpox+MmXVzNgAaNBuDpYlxMAbGkJgmrJ76w4BJocgzDq5ECKled6BPsxT1fvqRWy2dz4xviXA==
+ bh=TFmKcyus8t3Pu14BW3D/v9kipmq5B+Hg/tSQyfFO+8w=;
+ b=kNVHbsVj/GtFxqonC5iVsePyvDg5FB11q8MGR9XdcB4Vnu/GKD0JPRVX78SE4pWiOdqA9kQYHGlYNmbwsPb0dzEkD9wEEJTrtsDxHkdQZyYpVOsu+uf4SvLIswFnWlPYYw5s4C0lV/UEAf8mVtioJkrUInOFKCvty6985yKfBMpdhSze+L8IeJQ9x4iss6/MidT4hZFlKOYObFREl52HBiAz0rPJW1zmeocIrUyLli9d71OQ3us6GUROpoMl0mpJsNFDe0LyOATK5jPf+IQyNgmWgCg+Sr3GIAVw7iGI7Pk6Bg6qKVcm3rqRutFcTL4F5uS8abnHHcz+aq5hB/OSbA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amperecomputing.com; dmarc=pass action=none
- header.from=amperecomputing.com; dkim=pass header.d=amperecomputing.com;
- arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amperecomputing.com;
- s=selector2;
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EhinUq1qXMz3fekpQpfWTS4SBL2cBvHwaAejCvFBKm8=;
- b=Ohbh7lv0psfJkGoGYMJHTVWLCpd8vjw1Q5ZWpzRO+F9MVjBkvqoCTxjt/nbbzXvxsxlsuHSx0Ehdj/tgwA6CmKyZZQ11PlAtiyMAalK0otgbnrx9GMgsJ3dNDy8E7fmMZZq8QQOx5gvXV6D67l1WJLVlGQJZs5/w4BzqbbEPE0E=
-Received: from BYAPR01MB4853.prod.exchangelabs.com (2603:10b6:a03:91::15) by
- BYAPR01MB4534.prod.exchangelabs.com (2603:10b6:a03:9a::28) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3611.31; Wed, 2 Dec 2020 03:52:00 +0000
-Received: from BYAPR01MB4853.prod.exchangelabs.com
- ([fe80::41c8:874:e9e4:68e7]) by BYAPR01MB4853.prod.exchangelabs.com
- ([fe80::41c8:874:e9e4:68e7%7]) with mapi id 15.20.3611.023; Wed, 2 Dec 2020
- 03:52:00 +0000
-From: Quan Nguyen <qnguyen@amperecomputing.com>
-To: Andrew Jeffery <andrew@aj.id.au>, Quan Nguyen OS
- <quan@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: vendor-prefixes: Add an entry for
- AmpereComputing.com
-Thread-Topic: [PATCH v2 1/2] dt-bindings: vendor-prefixes: Add an entry for
- AmpereComputing.com
-Thread-Index: AQHWyF57dAQQITAM9E+ZFClDIgxyKg==
-Date: Wed, 2 Dec 2020 03:52:00 +0000
-Message-ID: <E5C4D818-B178-408F-8B48-641E11A75C47@amperecomputing.com>
-References: <20201130081733.18893-1-quan@os.amperecomputing.com>
- <20201130081733.18893-2-quan@os.amperecomputing.com>
- <6e28c009-dbf9-4d6e-bc98-ccaa5e0c9b02@www.fastmail.com>
-In-Reply-To: <6e28c009-dbf9-4d6e-bc98-ccaa5e0c9b02@www.fastmail.com>
-Accept-Language: en-US
+ bh=TFmKcyus8t3Pu14BW3D/v9kipmq5B+Hg/tSQyfFO+8w=;
+ b=MlxBq0GBL4eOI+tHOx9pfpH8Px/B21/a/hdX5GxpCX2HoL+XSWwI5D3ABbp3XDPNQDvVGC5/gEdom2ZZbC5+PSTBSswYXuek0mIetlP+OGMR8C38DiVKnesDTVDBPpOubF4WB+sDn/wiRyA3l16SYCv5ECTd0WViw8vd+VkpRIQ=
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com (2603:1096:203:5d::15)
+ by HKAPR04MB3972.apcprd04.prod.outlook.com (2603:1096:203:d9::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3611.22; Wed, 2 Dec
+ 2020 06:08:25 +0000
+Received: from HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::e52f:5fdf:e09d:fa29]) by HK0PR04MB2964.apcprd04.prod.outlook.com
+ ([fe80::e52f:5fdf:e09d:fa29%6]) with mapi id 15.20.3589.037; Wed, 2 Dec 2020
+ 06:08:24 +0000
+From: Kumar Thangavel <thangavel.k@hcl.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Add version info in the fan - json config
+Thread-Topic: Add version info in the fan - json config
+Thread-Index: AdbH8TNPc+j+bLH6SyW0u3W2Zi4qRQ==
+Date: Wed, 2 Dec 2020 06:08:24 +0000
+Message-ID: <HK0PR04MB29643B6D1550EC772A099250FDF30@HK0PR04MB2964.apcprd04.prod.outlook.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: aj.id.au; dkim=none (message not signed)
- header.d=none;aj.id.au; dmarc=none action=none
- header.from=amperecomputing.com;
-x-originating-ip: [118.69.219.201]
+x-hclclassification: HCL_Cla5s_Publ1c
+x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiODBmNmU5M2UtZjhhZS00Y2FhLWJkZTQtZTIyYjI5ODVlYTJmIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6Im9RYU9yamxPeWNhM1wvWEMxXC9HQ2Z1c2FwWmdlY2VKdUFXSHFadDJpdlwvV2Q3MHNBS3oraXVmdVY3YlF4XC9qeitDIn0=
+Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
+ signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=hcl.com;
+x-originating-ip: [157.46.84.102]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 50475839-d3f6-482a-10c0-08d896759f96
-x-ms-traffictypediagnostic: BYAPR01MB4534:
+X-MS-Office365-Filtering-Correlation-Id: 11b72a34-ec75-4567-bda2-08d89688b22a
+x-ms-traffictypediagnostic: HKAPR04MB3972:|PS2PR04MB3590:
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <BYAPR01MB4534CF9B4EBAAC92DB7DC6E9B4F30@BYAPR01MB4534.prod.exchangelabs.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: ShTa2XWju0hfFYl0Koku854pTLFo3CQZM1LnLFKvn6ufrOGGqTJ7q++kxmCeEWo5X/6bCDZmkrQDbr5yTtrQTRG7InD+FXSEzJ3s1t4VVLAf834R47c966KwnV99QFz9NdQdduSkXK4rovmDuAnV8/nnDeKk9c1v3zkIEQOBN0JcC3aUQaNNwQv2BJn39NhJ3uf8NZgB10BpxGXRmwohC98G7awgvCPQk5xhnucbsAShL9cLm1lWO1pkyA+LfYUm6dwFSLJfgEc9lkhfQfM8myKy0SFJFb/5++3yEp3MjtaOrxYPduZtghXvCCq9YgD0yTEovr1EGbSIuRkNa73hpA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BYAPR01MB4853.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(39840400004)(136003)(396003)(366004)(346002)(376002)(86362001)(8676002)(8936002)(6486002)(33656002)(186003)(26005)(5660300002)(4326008)(6512007)(107886003)(66476007)(6506007)(71200400001)(316002)(110136005)(83380400001)(54906003)(64756008)(66946007)(36756003)(76116006)(2616005)(66556008)(91956017)(478600001)(66446008)(2906002);
+X-Microsoft-Antispam-PRVS: <PS2PR04MB3590DEBC0AE716B166D1A158FDF30@PS2PR04MB3590.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:9508;OLM:6790;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: WVdtCfGseRHxuVUHDS0bWD9ycCRNkkl+wjCquIPe/QZFFvr3cI1fVGPVt1V50P6XkBNwsx+gpwEFJ6Ni1f9YOKT9uws2wJD4jxjZeFNXQuqVB+YR+pLLDHvPPniPDw86vTtfX8ZL2pl8f1PRx5R5F8R8bLLvC3OUt8MwzCs0O3QOkcwbsxSa/sM2l/OBMxuvTYgl7OV40WsctDhnqVp7OsEmb6C5KEEp+Kp2bezt0wb7egUorHUiI3YG09x3buYCkZwsmJs4RXSeFdOdU8eZRQuOhg06dAFmcKtXQhNMneLMD+5sKOVvcVZGeF6aqlXshzH1OxjwdNXwCoWrUs5qww==
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:HK0PR04MB2964.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(346002)(39860400002)(376002)(396003)(366004)(76116006)(7696005)(8936002)(66946007)(6506007)(26005)(54906003)(316002)(86362001)(33656002)(83380400001)(52536014)(66556008)(71200400001)(66476007)(64756008)(66446008)(5660300002)(186003)(9686003)(2906002)(478600001)(6916009)(8676002)(4326008)(55016002);
  DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?SW1FS0NHUjJoaUhGb2xLM1lPQzA2VGNDcnpYMTlsTzJJYjNnK0pGTHNMRVRR?=
- =?utf-8?B?WEpCUXRCTytKNmtyUXhrK29HSVNoREE2UE5FYndHdTg1cG9xMzYvTktvRTdR?=
- =?utf-8?B?YmxvSGd3Vk1UTmJWOXF1SEJUdENGV2RaVERma3I5RERqYllPN2hHTmR0dTUx?=
- =?utf-8?B?dStkL0ZRajRsd2FUZ3VFdjRaOXlNN2o4WmE5R1FlbkdQRzlLNTQ5RFhvTFVl?=
- =?utf-8?B?R3E3TmxFVlhlanpMSU9JQ0NlQlp0SWlWUzlMdHUxdnQzM0RjTytqT05GS2t6?=
- =?utf-8?B?dEVoWS9tdW9NWHFxNnlRbS9ISk5tdk5vbXVSNnFwV1RaWEVQQnJSaEJGbDNJ?=
- =?utf-8?B?TGsrZFhJNFVpVjNadHpsdDhqc1E4OTg4a1BtN2lDcXVrOGZZOU9wUUU2NmxD?=
- =?utf-8?B?Zk1EL1F2a0ZrR0JnLy9zTHZ0SFhVd0QraTBDaHMzN2k1V2lBT2NKenJIb05w?=
- =?utf-8?B?STR3NnR6WlV5Sm50Q1diOURzSDU3MVJSemtVNW5yNUNEWEZDdjdXV2Z5VXVG?=
- =?utf-8?B?a2h1ZXJNcHpmZVljb0RvSlB3R3poL2FJQ0JmYmhkWFgrYTNnODg1WVNsRTFv?=
- =?utf-8?B?b0ZjNkNSbHdGVVpkQ3NsUzVra2xzQmVoSW1rLzYyVzFFdE1QakFXMjYwakxT?=
- =?utf-8?B?T2JONWphY0lJdmxyY3NqdmhNQmp5eC81aUNrVk4rTmtzYzJXWWZIVkMxSkE1?=
- =?utf-8?B?a3VRUFh0dWh3bjB6SThNWmhOS1pRWFdwdjdxNCtqcnFHM2REUFNJUkNJQzBm?=
- =?utf-8?B?dFRvNGxzeGM5bVhBVlJmamRSTTNXN2ZSeDR1MHdBa1h0NThpYWlRWDFPanI2?=
- =?utf-8?B?Tlp1M3NYT0gwLzZSMG5IQjA0cXY5TzlrRXdZV2YyWUVZRHB4TDlNMVdiaGdO?=
- =?utf-8?B?b2pSUVlzbWlHMnQ2MDVOeHY5c2srV3BPK3A2bW9nQzI5QVJMVjdZL21vZEl0?=
- =?utf-8?B?OXhSSVhzMHBVTlFEdDU5NkZBNnZxK211em9FUG9hc21qVEdCT3ZGaWVhZDEw?=
- =?utf-8?B?OGVPRjRtLzNJd1ZrQUM2QkdoQWo1QTNCSkY2VHpZOWs5TFFnSFJRSWpWdU5r?=
- =?utf-8?B?L1pwbzQ2R3UrTGc5bE40YVgrM28vVGo1NDVYQmFSenI5eTZjemNHWVpYaVN5?=
- =?utf-8?B?OHlnMUduZnJGL1NxRTFrc3diYy9Rbm1JZmtub3hmNWExeXRHME5qV0MvVnhw?=
- =?utf-8?B?dXRpUlFwT2gzc0k5RzU3NGsvbVJwTW1JVzNUVWNOZ2ZRdTY4bVJqenl6NThM?=
- =?utf-8?B?RHE1dHgxc2VMZEVFZlpQWjE0OVYyOTViRG1UYjJsUDFUdWRVa2J2NlZERElq?=
- =?utf-8?Q?k7kekpIwmkRfwqXtOXK89j5iGSwOZOAMPZ?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <36073CD72C119147A0B23FE6C8B7B905@prod.exchangelabs.com>
-Content-Transfer-Encoding: base64
+x-ms-exchange-antispam-messagedata: =?us-ascii?Q?hkRCAv7vSHLqQiWyAiYxGjKaLC1cpgSlFmIJw2orOhC6UixOoDsvFugwGbYF?=
+ =?us-ascii?Q?qDd9DrVv1bWLiwNwQI6jZPJM2Rzuw6RiXm3Efok7l2EjWV11kMwA88On4eJW?=
+ =?us-ascii?Q?PKByNfbhqMWXxlwkZeQjCvc/oxjl4U1TFF4rWiQFQ0yE+J6mf9qkOS/SmbRd?=
+ =?us-ascii?Q?5QT3R+ulUsDINIxmuzzHrU3h3xhxYoUnpbfrRV/iFNcGx5CV+lOexmu7a4Nz?=
+ =?us-ascii?Q?zUqfct3NC6mPbxCXzMC51jC4sRZ+M1rPfhfZxn+Lk39bqNA3dy3yKtNJQzhU?=
+ =?us-ascii?Q?uJOVrYinNj2XF+qNQ82JMcoLrMVpXJGh9Sk3e0C3rc/SRTuZ8C1VVEiRNpU5?=
+ =?us-ascii?Q?UaKPk2c4F84k0a1mgrwnTWYlMxDEr5JcKwTpmoe/iyOStxnCksstVBKV2TMv?=
+ =?us-ascii?Q?gABSFv9TFy9wemjHW3zdp9oejVV9eiPdIN7k7mnmgkmjK5gMWfFLB2w9B2gD?=
+ =?us-ascii?Q?/c6f9tHbkmJMca0R4fSToJq1tUFQKGOz6n0zm0Z02ePFsC9F1C81ttRI/ccR?=
+ =?us-ascii?Q?IQQHKYCI6nrY1yd949rJhHjvgRiCMqQTfSg5w0g4iCeiJ2RBlYpXZAQDckgz?=
+ =?us-ascii?Q?uaiiwGB4UxV/O4LgniuQNBPecKysOLZuYWzrDjjQt/ovN3OqpnjWIgZq5jUJ?=
+ =?us-ascii?Q?v6bVRZZ9CaDN5Jw0xQj1uV2yZXoPjJHAd8uqRbHDwwvY3spYYrroPQ+CvYOu?=
+ =?us-ascii?Q?R1se+uY1u5aREpR8YoivedSSxP1LAS0Yb5vfjpUPdo1BoxwwrNQcrBl5UyiG?=
+ =?us-ascii?Q?JoQ6mm+uFcsEG6fKSClVRLitsXf6RrMp93+mxFsSzG25jVNjIfGYuk2rgZQO?=
+ =?us-ascii?Q?iSWC6iQm00fu5HrRmCT1oHKNOgpyN6I9BkzQR83k37wORcBDnHfVvHpucaHV?=
+ =?us-ascii?Q?CcKYfpr3qnshErOHw3lbWVhFy3UD+IyOSxOTTTBEm0jFmp91toFk24njcwjq?=
+ =?us-ascii?Q?Iy6/hieTcF0TsHvQuoX2EXaYhHgvLY7EMccvtte50cQ=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_HK0PR04MB29643B6D1550EC772A099250FDF30HK0PR04MB2964apcp_"
 MIME-Version: 1.0
-X-OriginatorOrg: amperecomputing.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4853.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50475839-d3f6-482a-10c0-08d896759f96
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Dec 2020 03:52:00.4817 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: bu2AFK/F4c2u1SV9TNmC5SCnYMbqIYmDt3zBEA5/NN9DboAZvTsPU3Myfbml/7qQkJ9+xxLZQ1aHxsnTPM0hCKdi3b/Nqix0n+XxkSlnw/I=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB4534
-X-Mailman-Approved-At: Wed, 02 Dec 2020 16:47:41 +1100
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HKAPR04MB3972
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT033.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: a6261f03-7286-485e-6acf-08d89688add3
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: bTmhBkEnUEceuv6310r/oBDeUoizuEmN03OP8d6PaGA3v2223OsjFOhreBpCyvxTjG1SxlCZFLMnEq8LL/5S0CV2+xJphuJkwBHHFlmhYDNGZ1rA4ykTUyabNWiXVxh+Yq4oC6v68khXmp9r+Au+DCB8vBEBPufWOIK1OdFvNPGHU/FJg+DY3rTZ2TBcRqnme1tixJ7Ask4pabbLjODalduig9cQZS2atphTP12Z0QNA3HXAlOXPBem1Hfb2TTr34RwthHNr39hrPDkTN+IUPyMoWmSjRl20pwdcaMfr8Lal2j7F629kN6/jc0uYQdzqJcsX81Ht56O8ZCKB64ORe6b7hfHUYOsYGk7FqYu3x9+DuvmHtTvXpMbhobav6ovN8fd1w6hM4X20AyPEXDi2tg==
+X-Forefront-Antispam-Report: CIP:192.8.195.56; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(396003)(136003)(376002)(346002)(39860400002)(46966005)(83380400001)(54906003)(2906002)(356005)(7696005)(316002)(82740400003)(82310400003)(36906005)(6506007)(47076004)(26005)(4326008)(8936002)(55016002)(186003)(9686003)(33656002)(5660300002)(70206006)(336012)(6916009)(52536014)(86362001)(8676002)(478600001)(81166007)(70586007);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2020 06:08:31.4312 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11b72a34-ec75-4567-bda2-08d89688b22a
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.56];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT033.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR04MB3590
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,31 +160,168 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>,
- Thang Nguyen OS <thang@os.amperecomputing.com>,
- Phong Vo OS <phong@os.amperecomputing.com>
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Vernon Mauery <vernon.mauery@linux.intel.com>, Ed Tanous <ed@tanous.net>,
+ "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ Patrick Williams <patrickw3@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-VGhhbmtzIEFuZHJldywNCkkgd2lsbCBzZW50IHRoaXMgcGF0Y2ggdG8gdXBzdHJlYW0uDQoNCkFu
-ZCBJJ20gd29uZGVyIGlmIHlvdSBjb3VsZCBhY2snIGVkIGFuZCBtZXJnZWQgdGhlIERUUyBwYXRj
-aCBpbiB0aGlzIHNlcmllcyA/DQrvu79PciBpZiB5b3UgaGF2ZSBhbnkgY29tbWVudC4NCg0KVGhh
-bmsgeW91LA0KLVF1YW4NCg0KT24gTW9uLCAzMCBOb3YgMjAyMCwgYXQgMTg6NDcsIFF1YW4gTmd1
-eWVuIHdyb3RlOg0KPiBBZGQgImFtcGVyZSIgZW50cnkgZm9yIEFtcGVyZSBDb21wdXRpbmcgTExD
-OiBhbXBlcmVjb21wdXRpbmcuY29tDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBRdWFuIE5ndXllbiA8
-cXVhbkBvcy5hbXBlcmVjb21wdXRpbmcuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBQaG9uZyBWbyA8
-cGhvbmdAb3MuYW1wZXJlY29tcHV0aW5nLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogVGhhbmcgUS4g
-Tmd1eWVuIDx0aGFuZ0Bvcy5hbXBlcmVjb21wdXRpbmcuY29tPg0KPiAtLS0NCj4gIERvY3VtZW50
-YXRpb24vZGV2aWNldHJlZS9iaW5kaW5ncy92ZW5kb3ItcHJlZml4ZXMueWFtbCB8IDIgKysNCj4g
-IDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKykNCj4gDQo+IGRpZmYgLS1naXQgYS9Eb2N1
-bWVudGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdmVuZG9yLXByZWZpeGVzLnlhbWwgDQo+IGIv
-RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3ZlbmRvci1wcmVmaXhlcy55YW1sDQo+
-IGluZGV4IDYwNDE2NmVjYWVmYi4uMTBmMTJlOTg3NjJmIDEwMDY0NA0KPiAtLS0gYS9Eb2N1bWVu
-dGF0aW9uL2RldmljZXRyZWUvYmluZGluZ3MvdmVuZG9yLXByZWZpeGVzLnlhbWwNCj4gKysrIGIv
-RG9jdW1lbnRhdGlvbi9kZXZpY2V0cmVlL2JpbmRpbmdzL3ZlbmRvci1wcmVmaXhlcy55YW1sDQo+
-IEBAIC04NSw2ICs4NSw4IEBAIHBhdHRlcm5Qcm9wZXJ0aWVzOg0KPiAgICAgIGRlc2NyaXB0aW9u
-OiBTaGVuemhlbiBBbWVkaWF0ZWNoIFRlY2hub2xvZ3kgQ28uLCBMdGQNCj4gICAgIl5hbWxvZ2lj
-LC4qIjoNCj4gICAgICBkZXNjcmlwdGlvbjogQW1sb2dpYywgSW5jLg0KPiArICAiXmFtcGVyZSwu
-KiI6DQo+ICsgICAgZGVzY3JpcHRpb246IEFtcGVyZSBDb21wdXRpbmcgTExDDQoNClRoaXMgbG9v
-a3Mgb2theSB0byBtZSwgYnV0IGl0IHNob3VsZCBnbyB1cHN0cmVhbS4NCg0KUmV2aWV3ZWQtYnk6
-IEFuZHJldyBKZWZmZXJ5IDxhbmRyZXdAYWouaWQuYXU+DQoNCg==
+--_000_HK0PR04MB29643B6D1550EC772A099250FDF30HK0PR04MB2964apcp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Classification: Public
+Hi All,
+
+        Shall we have a new field "version" in the fan controller part in t=
+he Entity-Manager json file to identify the versions of the each fan contro=
+ller updates.
+
+        This will give us the idea about which versions we are using and fa=
+n config updates and tracking.
+
+        So, dbus-sensors/FanMain.cpp code should be updated to handle this =
+version info for the fan.
+
+        Please let us know if any comments on this.
+
+Thanks,
+Kumar.
+
+
+::DISCLAIMER::
+________________________________
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
+smission. The e mail and its contents (with or without referred errors) sha=
+ll therefore not attach any liability on the originator or HCL or its affil=
+iates. Views or opinions, if any, presented in this email are solely those =
+of the author and may not necessarily reflect the views or opinions of HCL =
+or its affiliates. Any form of reproduction, dissemination, copying, disclo=
+sure, modification, distribution and / or publication of this message witho=
+ut the prior written consent of authorized representative of HCL is strictl=
+y prohibited. If you have received this email in error please delete it and=
+ notify the sender immediately. Before opening any email and/or attachments=
+, please check them for viruses and other defects.
+________________________________
+
+--_000_HK0PR04MB29643B6D1550EC772A099250FDF30HK0PR04MB2964apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+p.msonormal0, li.msonormal0, div.msonormal0
+	{mso-style-name:msonormal;
+	mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman",serif;}
+span.EmailStyle18
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt">Classification: <b><s=
+pan style=3D"color:green">Public</span></b><span style=3D"font-size:12.0pt"=
+><o:p></o:p></span></p>
+<p class=3D"MsoNormal">Hi All,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;Shall we =
+have a new field &#8220;version&#8221; in the fan controller part in the En=
+tity-Manager json file to identify the versions of the each fan controller =
+updates.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;This will=
+ give us the idea about which versions we are using and fan config updates =
+and tracking.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; So, dbus-=
+sensors/FanMain.cpp code should be updated to handle this version info for =
+the fan.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Please le=
+t us know if any comments on this. <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks,<o:p></o:p></p>
+<p class=3D"MsoNormal">Kumar.<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp; <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</body>
+</html>
+
+--_000_HK0PR04MB29643B6D1550EC772A099250FDF30HK0PR04MB2964apcp_--
