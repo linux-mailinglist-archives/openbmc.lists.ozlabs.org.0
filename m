@@ -2,80 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25A092CDEB4
-	for <lists+openbmc@lfdr.de>; Thu,  3 Dec 2020 20:24:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3DC92CE238
+	for <lists+openbmc@lfdr.de>; Thu,  3 Dec 2020 23:56:25 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cn5Nx0SHnzDrHF
-	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 06:24:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CnB5x5TnVzDrM8
+	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 09:56:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=venkata_chandrappa@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=vJnVed+J; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=uUX3edh7; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=o6mxMAqp; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cn5N36NJXzDr7M
- for <openbmc@lists.ozlabs.org>; Fri,  4 Dec 2020 06:23:11 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1607023388;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=LbTOSMZOvrp5dFrUMtQMtTWoNncJkUgj60pzhWzQF5o=;
- b=vJnVed+JnU/zB6rvYch6xWXU+nYuDND3y/ctrl45/X7kIVfDLbTx/dUtDf0H9Ns53elUQ4
- RGE+rJHGGmy3bYiTAWayLVQ1fEv2MJA9EYW2HfmyEu1n3ITa2lksg9pGin5598eda35epY
- Cnjqcl19hYG7Lco122SFdQ7rp75o6AE=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1607023389;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type;
- bh=LbTOSMZOvrp5dFrUMtQMtTWoNncJkUgj60pzhWzQF5o=;
- b=uUX3edh770JobKa4TYFuODtxl456DvvUIiB5SiHWLd6EjulAM+MetTKvf7/7i1DTQSjg30
- +E4JlmFpqXSAKoozj1+CUOdW+g/otlKIJCeQIfINEUOPQBo44aG2+7c9AYiWZJaRr+28+1
- EBxpz5UT7bProzcieopjG5gDwJAxVQY=
-Received: from TWN-EXCHMB-13.phoenix.com (123.51.168.5 [123.51.168.5])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-538-KmbfrtT2PWaLpiWqUOgVOg-1; Thu, 03 Dec 2020 10:20:35 -0500
-X-MC-Unique: KmbfrtT2PWaLpiWqUOgVOg-1
-X-CrossPremisesHeadersFilteredBySendConnector: TWN-EXCHMB-13.phoenix.com
-Received: from TWN-EXCHMB-13.phoenix.com
- (2607:f0dc:5001:ff01:3897:a901:3564:6014) by TWN-EXCHMB-13.phoenix.com
- (2607:f0dc:5001:ff01:3897:a901:3564:6014) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Thu, 3 Dec 2020 23:20:30 +0800
-Received: from TWN-EXCHMB-13.phoenix.com ([fe80::3897:a901:3564:6014]) by
- TWN-EXCHMB-13.phoenix.com ([fe80::3897:a901:3564:6014%12]) with mapi id
- 15.00.1156.000; Thu, 3 Dec 2020 23:20:30 +0800
-From: Venkata Chandrappa <Venkata_Chandrappa@phoenix.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: LDAP group privilege mapping does not exist
-Thread-Topic: LDAP group privilege mapping does not exist
-Thread-Index: AdbJh0jl6iWlKGvjRia6TgDbkOc06w==
-Date: Thu, 3 Dec 2020 15:20:29 +0000
-Message-ID: <664a67f7de0f4402a9ec217d8c49c7e9@TWN-EXCHMB-13.phoenix.com>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [49.159.160.82]
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CnB520lj0zDrHg
+ for <openbmc@lists.ozlabs.org>; Fri,  4 Dec 2020 09:55:32 +1100 (AEDT)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0B3MW9dC141563
+ for <openbmc@lists.ozlabs.org>; Thu, 3 Dec 2020 17:55:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : subject :
+ from : to : cc : date : references : content-type : message-id :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=HTk79Id4rmjTMHG/EorrMuhzSKlfXVxmeSiJGHTpfF8=;
+ b=o6mxMAqpk5m84rvdGnLUcFsHTItavW/AwP65IWp52kIa8m3Iy77jAt3PF1V7S7jW8abA
+ SFna+lHEehBd5j+Z3/m1nm47juNiG2vdloCTCqk+pxoVxPgw8nX+/FCf8y682ExHqArO
+ ojn4kgrJ6dgDq6DqxzcS6qHFp6zyNAijaHZ1AzDGZsbIhuEJ4GhI0OQFu/U4U1/dg493
+ JNW7rNI1X1A28fOrpPGNTN7PLUxiBMdt2ytyhOmcQ014SOhnMLSrQUmIHkCjDiuvt1es
+ 2CC0lOZtluPBvaPCq4y8TlC0zR7DVqwfmXNmiGzupiOUdkGNTRM1rJtm9AOUbaVk3sFD mA== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.112])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 357742k1uj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 03 Dec 2020 17:55:28 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Thu, 3 Dec 2020 22:55:27 -0000
+Received: from us1b3-smtp03.a3dr.sjc01.isc4sb.com (10.122.7.173)
+ by smtp.notes.na.collabserv.com (10.122.47.54) with
+ smtp.notes.na.collabserv.com ESMTP; Thu, 3 Dec 2020 22:55:26 -0000
+Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
+ by us1b3-smtp03.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2020120322552542-863531 ;
+ Thu, 3 Dec 2020 22:55:25 +0000 
+In-Reply-To: <664a67f7de0f4402a9ec217d8c49c7e9@TWN-EXCHMB-13.phoenix.com>
+Subject: Re: LDAP group privilege mapping does not exist
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: Venkata_Chandrappa@phoenix.com
+Date: Thu, 3 Dec 2020 22:55:25 +0000
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <664a67f7de0f4402a9ec217d8c49c7e9@TWN-EXCHMB-13.phoenix.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 16891
+X-TNEFEvaluated: 1
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20120322-4615-0000-0000-0000033070A6
+X-IBM-SpamModules-Scores: BY=0.00133; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.388783; ST=0; TS=0; UL=0; ISC=; MB=0.000622
+X-IBM-SpamModules-Versions: BY=3.00014305; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01472922; UDB=6.00793296; IPR=6.01255566; 
+ MB=3.00035344; MTD=3.00000008; XFM=3.00000015; UTC=2020-12-03 22:55:27
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-12-03 17:13:46 - 6.00012110
+x-cbparentid: 20120322-4616-0000-0000-000003FD7E68
+Message-Id: <OFB52E8381.D86531F6-ON00258633.007D8D31-00258633.007DECA8@notes.na.collabserv.com>
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-OrganizationHeadersPreserved: TWN-EXCHMB-13.phoenix.com
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=venkata_chandrappa@phoenix.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
-Content-Language: en-US
-Content-Type: multipart/alternative;
- boundary="_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_"
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
+ definitions=2020-12-03_12:2020-12-03,
+ 2020-12-03 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,129 +97,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-
-Hi Everyone,
-
-I'm looking for information regarding privilege mapping of LDAP users. I ha=
-ve a LDAP server running with a group set to "priv-admin" privileges and th=
-ere is one user added to this group. After setting the LDAP data in BMC web=
-, I've added a Role Group with the same name as the LDAP group name and ass=
-igned administrator privileges to it. The LDAP user is able to login to the=
- BMC web and redfish, however the user cannot perform any actions that an a=
-dministrator is allowed to perform, even viewing information in the overvie=
-w page is disallowed.
-
-Journal logs seem to indicate the mapping doesn't exist, so I'm wondering i=
-f the role groups added in BMC web have been setup correctly.
-phosphor-user-manager[257]: LDAP group privilege mapping does not exist
-One more thing to note is when I added the role group, there was a 404 resp=
-onse generated. However, on refreshing the page or navigating back to the p=
-age, the role group was added successfully.
-
-I'm hoping this is a LDAP configuration issue and appreciate if someone cou=
-ld provide some direction on this. Thanks.
-
-Best Regards,
-Venka
-
---_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_
-Content-Type: text/html; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
->
-<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-=09{font-family:PMingLiU;
-=09panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-=09{font-family:PMingLiU;
-=09panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-=09{font-family:Calibri;
-=09panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-=09{font-family:"\@PMingLiU";
-=09panose-1:2 2 5 0 0 0 0 0 0 0;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-=09{margin:0in;
-=09margin-bottom:.0001pt;
-=09font-size:11.0pt;
-=09font-family:"Calibri","sans-serif";}
-a:link, span.MsoHyperlink
-=09{mso-style-priority:99;
-=09color:blue;
-=09text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-=09{mso-style-priority:99;
-=09color:purple;
-=09text-decoration:underline;}
-span.EmailStyle17
-=09{mso-style-type:personal-compose;
-=09font-family:"Calibri","sans-serif";
-=09color:windowtext;}
-.MsoChpDefault
-=09{mso-style-type:export-only;}
-@page WordSection1
-=09{size:8.5in 11.0in;
-=09margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-=09{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi Everyone,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I&#8217;m looking for information regarding privileg=
-e mapping of LDAP users. I have a LDAP server running with a group set to &=
-#8220;priv-admin&#8221; privileges and there is one user added to this grou=
-p. After setting the LDAP data in BMC web, I&#8217;ve added
- a Role Group with the same name as the LDAP group name and assigned admini=
-strator privileges to it. The LDAP user is able to login to the BMC web and=
- redfish, however the user cannot perform any actions that an administrator=
- is allowed to perform, even viewing
- information in the overview page is disallowed. <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Journal logs seem to indicate the mapping doesn&#821=
-7;t exist, so I&#8217;m wondering if the role groups added in BMC web have =
-been setup correctly.
-<o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"margin-left:1.0in"><i>phosphor-user-manager=
-[257]: LDAP group privilege mapping does not exist</i><o:p></o:p></p>
-<p class=3D"MsoNormal">One more thing to note is when I added the role grou=
-p, there was a 404 response generated. However, on refreshing the page or n=
-avigating back to the page, the role group was added successfully.<o:p></o:=
-p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I&#8217;m hoping this is a LDAP configuration issue =
-and appreciate if someone could provide some direction on this. Thanks.<o:p=
-></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Best Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">Venka<o:p></o:p></p>
-</div>
-</body>
-</html>
-
---_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_--
+> Journal logs seem to indicate the mapping doesn=E2=80=99t exist, so I=E2=
+=80=99m wondering if
+> the role groups added in BMC web have been setup correctly.=20=20
+=20=20=20
+I can't speak to that, but we had tested role groups when the view was crea=
+ted
+and we were able to login and perform actions.=20=20
+=20=20=20
+> One more thing to note is when I added the role group, there was a 404 re=
+sponse
+> generated. However, on refreshing the page or navigating back to the page=
+, the role
+> group was added successfully.=20=20
+=20=20=20
+That was fixed in https://gerrit.openbmc-project.xyz/c/openbmc/webui-vue/+/=
+38618. It was
+a UI issue, but the API request was successful as you noticed by refreshing=
+ the page.
 
