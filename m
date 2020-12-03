@@ -1,91 +1,81 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F45D2CD9B0
-	for <lists+openbmc@lfdr.de>; Thu,  3 Dec 2020 15:58:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25A092CDEB4
+	for <lists+openbmc@lfdr.de>; Thu,  3 Dec 2020 20:24:04 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CmzVv0Zz5zDqV6
-	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 01:58:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cn5Nx0SHnzDrHF
+	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 06:24:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
+ helo=us-smtp-delivery-170.mimecast.com;
+ envelope-from=venkata_chandrappa@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
- (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com;
- envelope-from=bruce.mitchell@ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=ibm.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=EQoNocb+; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ dmarc=pass (p=none dis=none) header.from=phoenix.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
+ header.s=mimecast20170203 header.b=vJnVed+J; 
+ dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
+ header.a=rsa-sha256 header.s=mimecast20170203 header.b=uUX3edh7; 
+ dkim-atps=neutral
+Received: from us-smtp-delivery-170.mimecast.com
+ (us-smtp-delivery-170.mimecast.com [63.128.21.170])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CmzTf5gC5zDqHh
- for <openbmc@lists.ozlabs.org>; Fri,  4 Dec 2020 01:57:42 +1100 (AEDT)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 0B3EmqIq039113
- for <openbmc@lists.ozlabs.org>; Thu, 3 Dec 2020 09:57:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=in-reply-to : from : to
- : date : mime-version : references : content-transfer-encoding :
- content-type : message-id : subject; s=pp1;
- bh=u3v7YWRcQhofUvNjp6Cp7vaj8fIos5k2hrnqco1/k2M=;
- b=EQoNocb+2cM05jkoHZ5Mo/77l8yYNN0mtboHjpHQ0yhQMQCYz8Pu01NmkC0owLyT4DwO
- XpwDqsokbWzLXvoDGXAKWjUinEByPF8WKpSRvy2BApfG3ytneMpunajXD6Hsa1oCrr6j
- KtsELLGtx1oaY6rXUpF3ihPRh2ftY6K6azkOvw5hYEbjPvr9zt1KiYFr/PBqUq+NzVTf
- Qsw5PudUoyXTlB05SgUXJoNtbaR9Li0rxNWCkMEEjVhf7cCS+OGeFjEQFNObeM0JliPZ
- ICWivdJfPJMzchAKR1WOVF5KJDUU6IW5IrdLinVwFHA1Yzy4e0x0BrlfmFKs2PHK9ogs /A== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [158.85.210.111])
- by mx0a-001b2d01.pphosted.com with ESMTP id 3571ns99js-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 03 Dec 2020 09:57:39 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <Bruce.Mitchell@ibm.com>;
- Thu, 3 Dec 2020 14:57:38 -0000
-Received: from us1b3-smtp06.a3dr.sjc01.isc4sb.com (10.122.203.184)
- by smtp.notes.na.collabserv.com (10.122.47.52) with
- smtp.notes.na.collabserv.com ESMTP; Thu, 3 Dec 2020 14:57:37 -0000
-Received: from us1b3-mail31.a3dr.sjc01.isc4sb.com ([10.122.7.131])
- by us1b3-smtp06.a3dr.sjc01.isc4sb.com
- with ESMTP id 2020120314573680-483934 ;
- Thu, 3 Dec 2020 14:57:36 +0000 
-In-Reply-To: <OF8EC2E0B3.F804468E-ON00258632.0000C9CB-88258632.0000F872@LocalDomain>
-From: "Bruce Mitchell" <Bruce.Mitchell@ibm.com>
-To: openbmc@lists.ozlabs.org
-Date: Thu, 3 Dec 2020 14:57:36 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cn5N36NJXzDr7M
+ for <openbmc@lists.ozlabs.org>; Fri,  4 Dec 2020 06:23:11 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1607023388;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=LbTOSMZOvrp5dFrUMtQMtTWoNncJkUgj60pzhWzQF5o=;
+ b=vJnVed+JnU/zB6rvYch6xWXU+nYuDND3y/ctrl45/X7kIVfDLbTx/dUtDf0H9Ns53elUQ4
+ RGE+rJHGGmy3bYiTAWayLVQ1fEv2MJA9EYW2HfmyEu1n3ITa2lksg9pGin5598eda35epY
+ Cnjqcl19hYG7Lco122SFdQ7rp75o6AE=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
+ s=mimecast20170203; t=1607023389;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type;
+ bh=LbTOSMZOvrp5dFrUMtQMtTWoNncJkUgj60pzhWzQF5o=;
+ b=uUX3edh770JobKa4TYFuODtxl456DvvUIiB5SiHWLd6EjulAM+MetTKvf7/7i1DTQSjg30
+ +E4JlmFpqXSAKoozj1+CUOdW+g/otlKIJCeQIfINEUOPQBo44aG2+7c9AYiWZJaRr+28+1
+ EBxpz5UT7bProzcieopjG5gDwJAxVQY=
+Received: from TWN-EXCHMB-13.phoenix.com (123.51.168.5 [123.51.168.5])
+ (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-538-KmbfrtT2PWaLpiWqUOgVOg-1; Thu, 03 Dec 2020 10:20:35 -0500
+X-MC-Unique: KmbfrtT2PWaLpiWqUOgVOg-1
+X-CrossPremisesHeadersFilteredBySendConnector: TWN-EXCHMB-13.phoenix.com
+Received: from TWN-EXCHMB-13.phoenix.com
+ (2607:f0dc:5001:ff01:3897:a901:3564:6014) by TWN-EXCHMB-13.phoenix.com
+ (2607:f0dc:5001:ff01:3897:a901:3564:6014) with Microsoft SMTP Server (TLS) id
+ 15.0.1156.6; Thu, 3 Dec 2020 23:20:30 +0800
+Received: from TWN-EXCHMB-13.phoenix.com ([fe80::3897:a901:3564:6014]) by
+ TWN-EXCHMB-13.phoenix.com ([fe80::3897:a901:3564:6014%12]) with mapi id
+ 15.00.1156.000; Thu, 3 Dec 2020 23:20:30 +0800
+From: Venkata Chandrappa <Venkata_Chandrappa@phoenix.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: LDAP group privilege mapping does not exist
+Thread-Topic: LDAP group privilege mapping does not exist
+Thread-Index: AdbJh0jl6iWlKGvjRia6TgDbkOc06w==
+Date: Thu, 3 Dec 2020 15:20:29 +0000
+Message-ID: <664a67f7de0f4402a9ec217d8c49c7e9@TWN-EXCHMB-13.phoenix.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [49.159.160.82]
 MIME-Version: 1.0
-Sensitivity: 
-Importance: Normal
-X-Priority: 3 (Normal)
-References: <OF8EC2E0B3.F804468E-ON00258632.0000C9CB-88258632.0000F872@LocalDomain>,
- <OFD6833344.166C4341-ON00258631.007EBD09-88258631.007F0D6B@notes.na.collabserv.com>
-X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
- SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
-X-LLNOutbound: False
-X-Disclaimed: 30127
-X-TNEFEvaluated: 1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=UTF-8
-x-cbid: 20120314-3633-0000-0000-0000035A2A77
-X-IBM-SpamModules-Scores: BY=0.293977; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.410169; ST=0; TS=0; UL=0; ISC=; MB=0.148540
-X-IBM-SpamModules-Versions: BY=3.00014303; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01472762; UDB=6.00793202; IPR=6.01255407; 
- MB=3.00035339; MTD=3.00000008; XFM=3.00000015; UTC=2020-12-03 14:57:38
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2020-12-03 08:31:04 - 6.00012109
-x-cbparentid: 20120314-3634-0000-0000-00002BC62C6E
-Message-Id: <OF59E1D9D7.DE547428-ON00258633.00522DD1-00258633.00522DD4@notes.na.collabserv.com>
-Subject: Re:  Seeking advice on building and using kdump with OpenBMC.
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.312, 18.0.737
- definitions=2020-12-03_07:2020-12-03,
- 2020-12-03 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+X-OrganizationHeadersPreserved: TWN-EXCHMB-13.phoenix.com
+Authentication-Results: relay.mimecast.com;
+ auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=venkata_chandrappa@phoenix.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: phoenix.com
+Content-Language: en-US
+Content-Type: multipart/alternative;
+ boundary="_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,38 +90,126 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-<font face=3D"Default Sans Serif,Verdana,Arial,Helvetica,sans-serif" size=
-=3D"2"><div><font face=3D"Verdana, Arial, Helvetica, sans-serif"><br></font=
-></div><font face=3D"Verdana, Arial, Helvetica, sans-serif">I am assuming t=
-hat nobody in the general community has tried or has suggestions about kdum=
-p on OpenBMC and/or Yocto.</font><br><br><font color=3D"#990099" style=3D"f=
-ont-family: Verdana, Arial, Helvetica, sans-serif;">-----Bruce Mitchell/US/=
-IBM wrote: -----</font><div class=3D"iNotesHistory" style=3D"font-family: V=
-erdana, Arial, Helvetica, sans-serif; padding-left: 5px;"><div style=3D"pad=
-ding-right:0px;padding-left:5px;border-left:solid black 2px;">To: <a href=
-=3D"mailto:openbmc@lists.ozlabs.org" target=3D"=5Fblank">openbmc@lists.ozla=
-bs.org</a><br>From: Bruce Mitchell/US/IBM<br>Date: 12/01/2020 04:10PM<br>Su=
-bject: Re: [EXTERNAL] Seeking advice on building and using kdump with OpenB=
-MC.<br><br><font size=3D"2">In addition both Yocto and OpenBMC have kexec /=
- kdump in the poky/meta/recipes-kernel/kexec/kexec-tools directories and po=
-ky/meta/recipes-kernel/kexec/kexec-tools=5F2.0.20.bb . &nbsp;So I &nbsp;am =
-looking for guidance on what the higher level perspective is beyond just pu=
-lling in kdump and building a BMC. &nbsp;I assume there is configuration th=
-at both Yocto and OpenBMC have kexec / kdump in the poky/meta/recipes-kerne=
-l/kexec/kexec-tools directories and poky/meta/recipes-kernel/kexec/kexec-to=
-ols=5F2.0.20.bb . &nbsp;So I &nbsp;am looking for guidance on what the high=
-er level perspective is beyond just pulling in kdump and building a BMC. &n=
-bsp;I assume there is configuration that are more useful for the OpenBMC co=
-mmunity.</font><br><br><img width=3D"16" height=3D"16" src=3D"/icons/grayco=
-l.gif" border=3D"0" alt=3D"Inactive hide details for &quot;Bruce Mitchell&q=
-uot; ---12/01/2020 15:08:38---Seeking advice on building and using kdump wi=
-th OpenBMC. Ar"><font size=3D"2" color=3D"#424282">"Bruce Mitchell" ---12/0=
-1/2020 15:08:38---Seeking advice on building and using kdump with OpenBMC. =
-Are there any Best Known Methods?</font><br><br><br><font size=3D"2">Seekin=
-g advice on building and using kdump with OpenBMC.<br>Are there any Best Kn=
-own Methods?<br>Any troubles and/or issues to lookout for?<br>What should I=
- avoid?</font><font size=3D"3"><br></font><font size=3D"2"><br>Are there an=
-y security concerns?</font><font size=3D"3"><br></font><font size=3D"2"><br=
->Thank you!</font><font size=3D"3"><br></font><font size=3D"2"><br>-- <br>B=
-ruce</font><br></div></div></font><BR>
+--_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+Hi Everyone,
+
+I'm looking for information regarding privilege mapping of LDAP users. I ha=
+ve a LDAP server running with a group set to "priv-admin" privileges and th=
+ere is one user added to this group. After setting the LDAP data in BMC web=
+, I've added a Role Group with the same name as the LDAP group name and ass=
+igned administrator privileges to it. The LDAP user is able to login to the=
+ BMC web and redfish, however the user cannot perform any actions that an a=
+dministrator is allowed to perform, even viewing information in the overvie=
+w page is disallowed.
+
+Journal logs seem to indicate the mapping doesn't exist, so I'm wondering i=
+f the role groups added in BMC web have been setup correctly.
+phosphor-user-manager[257]: LDAP group privilege mapping does not exist
+One more thing to note is when I added the role group, there was a 404 resp=
+onse generated. However, on refreshing the page or navigating back to the p=
+age, the role group was added successfully.
+
+I'm hoping this is a LDAP configuration issue and appreciate if someone cou=
+ld provide some direction on this. Thanks.
+
+Best Regards,
+Venka
+
+--_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 14 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:PMingLiU;
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+=09{font-family:"\@PMingLiU";
+=09panose-1:2 2 5 0 0 0 0 0 0 0;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09margin-bottom:.0001pt;
+=09font-size:11.0pt;
+=09font-family:"Calibri","sans-serif";}
+a:link, span.MsoHyperlink
+=09{mso-style-priority:99;
+=09color:blue;
+=09text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+=09{mso-style-priority:99;
+=09color:purple;
+=09text-decoration:underline;}
+span.EmailStyle17
+=09{mso-style-type:personal-compose;
+=09font-family:"Calibri","sans-serif";
+=09color:windowtext;}
+.MsoChpDefault
+=09{mso-style-type:export-only;}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi Everyone,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I&#8217;m looking for information regarding privileg=
+e mapping of LDAP users. I have a LDAP server running with a group set to &=
+#8220;priv-admin&#8221; privileges and there is one user added to this grou=
+p. After setting the LDAP data in BMC web, I&#8217;ve added
+ a Role Group with the same name as the LDAP group name and assigned admini=
+strator privileges to it. The LDAP user is able to login to the BMC web and=
+ redfish, however the user cannot perform any actions that an administrator=
+ is allowed to perform, even viewing
+ information in the overview page is disallowed. <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Journal logs seem to indicate the mapping doesn&#821=
+7;t exist, so I&#8217;m wondering if the role groups added in BMC web have =
+been setup correctly.
+<o:p></o:p></p>
+<p class=3D"MsoNormal" style=3D"margin-left:1.0in"><i>phosphor-user-manager=
+[257]: LDAP group privilege mapping does not exist</i><o:p></o:p></p>
+<p class=3D"MsoNormal">One more thing to note is when I added the role grou=
+p, there was a 404 response generated. However, on refreshing the page or n=
+avigating back to the page, the role group was added successfully.<o:p></o:=
+p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I&#8217;m hoping this is a LDAP configuration issue =
+and appreciate if someone could provide some direction on this. Thanks.<o:p=
+></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Best Regards,<o:p></o:p></p>
+<p class=3D"MsoNormal">Venka<o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_664a67f7de0f4402a9ec217d8c49c7e9TWNEXCHMB13phoenixcom_--
 
