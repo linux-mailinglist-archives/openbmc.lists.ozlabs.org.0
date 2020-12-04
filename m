@@ -2,85 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EDC92CEB92
-	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 11:02:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2C952CEFBF
+	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 15:36:11 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CnStr2vTZzDr73
-	for <lists+openbmc@lfdr.de>; Fri,  4 Dec 2020 21:02:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CnZyG06J4zDrTH
+	for <lists+openbmc@lfdr.de>; Sat,  5 Dec 2020 01:36:05 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=phoenix.com (client-ip=63.128.21.170;
- helo=us-smtp-delivery-170.mimecast.com;
- envelope-from=venkata_chandrappa@phoenix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=phoenix.com
+ spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
+ (client-ip=183.3.255.84; helo=qq.com; envelope-from=1181052146@qq.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=qq.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=phoenix.com header.i=@phoenix.com header.a=rsa-sha256
- header.s=mimecast20170203 header.b=KYWswytE; 
- dkim=pass (1024-bit key) header.d=phoenix.com header.i=@phoenix.com
- header.a=rsa-sha256 header.s=mimecast20170203 header.b=FRsimo7P; 
- dkim-atps=neutral
-Received: from us-smtp-delivery-170.mimecast.com
- (us-smtp-delivery-170.mimecast.com [63.128.21.170])
+ unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
+ header.s=s201512 header.b=juhuV94B; dkim-atps=neutral
+X-Greylist: delayed 70 seconds by postgrey-1.36 at bilbo;
+ Sat, 05 Dec 2020 01:35:00 AEDT
+Received: from qq.com (smtpbg449.qq.com [183.3.255.84])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CnSsM46ndzDrPP
- for <openbmc@lists.ozlabs.org>; Fri,  4 Dec 2020 21:01:24 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1607076078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uVbA4ROwsu/v1Fdfzpx7PR8y4EU9h1+7a6EIxI3oPSE=;
- b=KYWswytEbov1PVgSA7zfK6PPH8gVhlUP6ayyDeI6ic9dkIizywekHVyUBOin628EzgV+8E
- SPTztr9s+XvPjjGGSqnB7297SAdSWd2orHUreu76eDvotTv0rtW+BJuMmhpeKVPMiVJK//
- /Eq0/5bfjAx/AG/PwR+Sf/ErD0BU/BI=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=phoenix.com;
- s=mimecast20170203; t=1607076079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uVbA4ROwsu/v1Fdfzpx7PR8y4EU9h1+7a6EIxI3oPSE=;
- b=FRsimo7PqmS+gjB2YWA/R+511/Uvlg5xxNCDZ1H01keE72AK48v0sDIw/cMf6+5Eq88BSr
- FpH8eoCRvIBioakr11rzHNTt87x0bvuH4csySphCxAUTvjIOJfRCI4LGFd45FxOwFCgjhn
- mfyjH4UTRv+hJM2LLH+zL8BM/0S2pBc=
-Received: from TWN-EXCHMB-13.phoenix.com (123.51.168.5 [123.51.168.5])
- (Using TLS) by relay.mimecast.com with ESMTP id
- us-mta-296-L7xrS1p7O_irMbvmseRDeQ-1; Fri, 04 Dec 2020 05:01:15 -0500
-X-MC-Unique: L7xrS1p7O_irMbvmseRDeQ-1
-X-CrossPremisesHeadersFilteredBySendConnector: TWN-EXCHMB-13.phoenix.com
-Received: from TWN-EXCHMB-13.phoenix.com
- (2607:f0dc:5001:ff01:3897:a901:3564:6014) by TWN-EXCHMB-13.phoenix.com
- (2607:f0dc:5001:ff01:3897:a901:3564:6014) with Microsoft SMTP Server (TLS) id
- 15.0.1156.6; Fri, 4 Dec 2020 18:01:10 +0800
-Received: from TWN-EXCHMB-13.phoenix.com ([fe80::3897:a901:3564:6014]) by
- TWN-EXCHMB-13.phoenix.com ([fe80::3897:a901:3564:6014%12]) with mapi id
- 15.00.1156.000; Fri, 4 Dec 2020 18:01:10 +0800
-From: Venkata Chandrappa <Venkata_Chandrappa@phoenix.com>
-To: Derick Montague <Derick.Montague@ibm.com>
-Subject: RE: LDAP group privilege mapping does not exist
-Thread-Topic: LDAP group privilege mapping does not exist
-Thread-Index: AdbJh0jl6iWlKGvjRia6TgDbkOc06///+heA//7CUhA=
-Date: Fri, 4 Dec 2020 10:01:09 +0000
-Message-ID: <30a0cdd8272d469b8207a2d4b41354db@TWN-EXCHMB-13.phoenix.com>
-References: <664a67f7de0f4402a9ec217d8c49c7e9@TWN-EXCHMB-13.phoenix.com>
- <OFB52E8381.D86531F6-ON00258633.007D8D31-00258633.007DECA8@notes.na.collabserv.com>
-In-Reply-To: <OFB52E8381.D86531F6-ON00258633.007D8D31-00258633.007DECA8@notes.na.collabserv.com>
-Accept-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.122.168.230]
-MIME-Version: 1.0
-X-OrganizationHeadersPreserved: TWN-EXCHMB-13.phoenix.com
-Authentication-Results: relay.mimecast.com;
- auth=pass smtp.auth=CUSA70A150 smtp.mailfrom=venkata_chandrappa@phoenix.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: phoenix.com
-Content-Language: en-US
-Content-Type: multipart/mixed;
- boundary="_002_30a0cdd8272d469b8207a2d4b41354dbTWNEXCHMB13phoenixcom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CnZx06WcjzDrQx
+ for <openbmc@lists.ozlabs.org>; Sat,  5 Dec 2020 01:35:00 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1607092311; bh=JTgW/wmcuRokhKR2WQkQpJl460aV8axEZD3yEzrrF0E=;
+ h=From:To:Subject:Mime-Version:Date:Message-ID;
+ b=juhuV94BSRASAGHMCYdR6L3rlRFq9UCOzxL6M89HhCGka/DDiqxGl0RhoKjdooGbX
+ ApRsEt+6BOJhdBORF0OYPPipsc1bgw96JzIqbbSgaIhN/v9vGx8RoeCyrKgHpSl0Zx
+ JFLuU3NnsqA7vIRt/ZOQhIM2SDwx8fqFzc2SZlSc=
+X-QQ-FEAT: cpxeTCD++sCK5tHE2+OG8Dup4zTRXAkPxrkiDn66+sRb1xCCInikcuKRRpBRG
+ LVeXclCTrObqfCJWz3PDyWwO0dkinzoRXNCFTUytlxDTIeVLfBQ8Ej0cngpsM9nl491cz4D
+ U5sGBHbn9auWXNaS1mT4bOFV5iBvzKhveq0qxafUMfEkaNrhnriAmQsCTZMNnv+qlf6Ud71
+ fHhS5MztAGNgUhtelUpn71vrM1bYA1i+uRnsfsjCwznGAG3tiiJjt6aYry/w9M93uW18BWC
+ wDSCD4J/+AaTlw4ksDOQ4hBxo=
+X-QQ-SSF: 00000000000000F000000000000000S
+X-QQ-XMAILINFO: N6FT8W9KeN0pcztbgh1keL5nHewN8JghaWyoQ6xZz1P2KBL2mfp8qIF5mZWmSI
+ 5jPJpb8LiIBLEBeVLwNQ0vTjl28TH4FhkXGcDlqPF1COyc6bv/OMAFCAFybXqZSk+tuQ2GXeEcgUQ
+ 0w0X5zW2kLDHuBsvJTt9WdWkhO2nCnUSkCq4EKyqozR7kBJXqjvZi7S6EDx3bTnsPzvF6AzUbXCOs
+ kSgAreN12RgZDxzYCunKBeRRRJtz7o3xwzTyOBUQh7u5Qjj1ZaUarm0jnV2DSw7Mkd6pIHIBcfjhL
+ FD5xfdELdMQ7Yd1IN3CndbOXBD0xKk9Ju3ijfthYT+N8JMdGjr2q/uzbzk5mep8pvmksxziKqdv+Z
+ 5P6LA046d9FK6IhVGx9RxTIOcRrQ2Ap+SO+BIKNQVrQCOHPuu0cBCPB9582Y2JtFmbY1JnnCLcevP
+ ZwQGyfjjsGQbeBnfn61wCYE8EKcPaDMORHTYB920K7OxOwcHsdVyXR41B0036Cr6fh/xOtkM3kVdX
+ IF0GYPYb6+kT9JfetK98h8i+UhXy76WsNWaWeF0lguiOPBx3gx3E5ZWLzkTYpHLKD/MB1iVbySd+K
+ NfWDFbze2r5N6kCdJClOm4RS8LkpzFyFCUyAMkabUDyyTrHTkVvqGD1VYdmTyf1CuuXeNQfWLNv9Y
+ M61ipTPmiZa/Ihjn1bggvFV5IigQCmVFjJnFjLVMf/V7u2fD56P8YSDPtE8nKzBlqTj1C9EPeK56K
+ p8Y+wdK7Tj8PBtN5lBJdsgDSiag7hW0NnTGhbCqXzcNhOzbx0y5HA/qKlilnvaevKLicQ6zvD8DTj
+ jA20v8qUBVop
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 255.24.189.15
+X-QQ-STYLE: 
+X-QQ-mid: webmail700t1607092309t50295
+From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
+To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
+Subject: How to use xdma-engine to read host server's memory in ast2400?
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_5FCA4855_0ED3D508_29B5E573"
+Content-Transfer-Encoding: 8Bit
+Date: Fri, 4 Dec 2020 22:31:49 +0800
+X-Priority: 3
+Message-ID: <tencent_38FDA7E411A6D04E141CC03FEAD467B37609@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+X-QQ-SENDSIZE: 520
+Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
+ id ; Fri, 04 Dec 2020 22:31:50 +0800 (CST)
+Feedback-ID: webmail:qq.com:bgforeign:bgforeign11
+X-QQ-Bgrelay: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,46 +83,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_002_30a0cdd8272d469b8207a2d4b41354dbTWNEXCHMB13phoenixcom_
-Content-Type: text/plain; charset=UTF-8
+This is a multi-part message in MIME format.
+
+------=_NextPart_5FCA4855_0ED3D508_29B5E573
+Content-Type: text/plain;
+	charset="gb18030"
 Content-Transfer-Encoding: base64
 
-VGhhbmtzIGZvciB0aGUgcmVzcG9uc2UuIA0KDQpDb3VsZCB5b3UgaGVscCB0byBzaGFyZSBhIGJh
-c2ljIExEQVAgc2VydmVyIExESUYgZmlsZSB3aXRoIGFuIHVzZXIgd2hvIGlzIGEgbWVtYmVyIG9m
-IGEgZ3JvdXAgd2l0aCB0aGUgcHJpdmlsZWdlcyBhc3NpZ25lZCwgc29tZXRoaW5ndGhhdCB5b3Un
-dmUgYWxyZWFkeSB0ZXN0ZWQuIEkndmUgYWxzbyBhdHRhY2hlZCB0aGUgTERJRiBmaWxlIHRoYXQg
-SSd2ZSB1c2VkIGZvciBteSB0ZXN0cy4gSSB3YW50IHRvIHJ1bGUgb3V0IExEQVAgY29uZmlndXJh
-dGlvbiBlcnJvcnMgdGhhdCBJIG1heSBiZSBvdmVybG9va2luZyBiZWZvcmUgSSBkd2VsdmUgaW50
-byB0aGUgQk1DIHNpZGUgaW52ZXN0aWdhdGlvbi4gDQoNCkJlc3QgUmVnYXJkcywNClZlbmthDQoN
-Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBEZXJpY2sgTW9udGFndWUgW21haWx0
-bzpEZXJpY2suTW9udGFndWVAaWJtLmNvbV0gDQpTZW50OiBGcmlkYXksIERlY2VtYmVyIDQsIDIw
-MjAgNjo1NSBBTQ0KVG86IFZlbmthdGEgQ2hhbmRyYXBwYQ0KQ2M6IG9wZW5ibWNAbGlzdHMub3ps
-YWJzLm9yZw0KU3ViamVjdDogUmU6IExEQVAgZ3JvdXAgcHJpdmlsZWdlIG1hcHBpbmcgZG9lcyBu
-b3QgZXhpc3QNCg0KPiBKb3VybmFsIGxvZ3Mgc2VlbSB0byBpbmRpY2F0ZSB0aGUgbWFwcGluZyBk
-b2VzbuKAmXQgZXhpc3QsIHNvIEnigJltIHdvbmRlcmluZyBpZg0KPiB0aGUgcm9sZSBncm91cHMg
-YWRkZWQgaW4gQk1DIHdlYiBoYXZlIGJlZW4gc2V0dXAgY29ycmVjdGx5LiAgDQogICANCkkgY2Fu
-J3Qgc3BlYWsgdG8gdGhhdCwgYnV0IHdlIGhhZCB0ZXN0ZWQgcm9sZSBncm91cHMgd2hlbiB0aGUg
-dmlldyB3YXMgY3JlYXRlZA0KYW5kIHdlIHdlcmUgYWJsZSB0byBsb2dpbiBhbmQgcGVyZm9ybSBh
-Y3Rpb25zLiAgDQogICANCj4gT25lIG1vcmUgdGhpbmcgdG8gbm90ZSBpcyB3aGVuIEkgYWRkZWQg
-dGhlIHJvbGUgZ3JvdXAsIHRoZXJlIHdhcyBhIDQwNCByZXNwb25zZQ0KPiBnZW5lcmF0ZWQuIEhv
-d2V2ZXIsIG9uIHJlZnJlc2hpbmcgdGhlIHBhZ2Ugb3IgbmF2aWdhdGluZyBiYWNrIHRvIHRoZSBw
-YWdlLCB0aGUgcm9sZQ0KPiBncm91cCB3YXMgYWRkZWQgc3VjY2Vzc2Z1bGx5LiAgDQogICANClRo
-YXQgd2FzIGZpeGVkIGluIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMtcHJvamVjdC54eXovYy9vcGVu
-Ym1jL3dlYnVpLXZ1ZS8rLzM4NjE4LiBJdCB3YXMNCmEgVUkgaXNzdWUsIGJ1dCB0aGUgQVBJIHJl
-cXVlc3Qgd2FzIHN1Y2Nlc3NmdWwgYXMgeW91IG5vdGljZWQgYnkgcmVmcmVzaGluZyB0aGUgcGFn
-ZS4NCg0K
---_002_30a0cdd8272d469b8207a2d4b41354dbTWNEXCHMB13phoenixcom_
-Content-Type: application/octet-stream; name="ldap_data.ldif"
-Content-Description: ldap_data.ldif
-Content-Disposition: attachment; filename="ldap_data.ldif";
-	creation-date="Fri, 04 Dec 2020 10:00:05 GMT";
-	modification-date="Fri, 04 Dec 2020 10:00:05 GMT"
+R3JlZXRpbmdzOg0KDQpJIGFtIHVzaW5nIGFzdDI0MDAncyB4ZG1hLWVuZ2luZSB0byByZWFk
+IGFuZCB3cml0ZSBob3N0IHNlcnZlcidzIG1lbW9yeS4gQnkgdXNpbmcgYXNwZWVkLXhkbWEg
+ZHJpdmVyIEkgY2FuIHdyaXRlIGRhdGEgdG8gaG9zdCBzZXJ2ZXIncyBtZW1vcnkuIEJ1dCBJ
+IGhhdmUgcHJvYmxlbSB3aGVuIHJlYWRpbmcgaG9zdCBzZXJ2ZXIncyBtZW1vcnkuIEFmdGVy
+IHB1dHRpbmcgdGhlIHJlYWQgY29tbWFuZCB0byB0aGUgY29tbWFuZCBxdWV1ZSwgdGhlIHhk
+bWEtZW5naW5lJ3Mgc3RhdHVzIHJlZ2lzdGVyIGNoYW5nZSB0byBibWMgY29tbWFuZCBub3Qg
+aWRsZSwgZG93biBzdHJlYW0gZW5naW5nIG5vdCBpZGxlLiBCdXQgdGhlIHhkbWEtZW5naW5l
+IGRvZXMgbm90IGNvbXBsZXRlIHRoZSByZWFkIGNvbW1hbmQgbmVpdGhlciBpdCBnZW5lcmF0
+ZSBhbnkgaW50ZXJydXB0Lg0KSG93IGNhbiBJIGRvPw0KDQpCZXN0IFJlZ2FyZHMhDQoNCkxp
+dSBIb25nd2Vp
+
+------=_NextPart_5FCA4855_0ED3D508_29B5E573
+Content-Type: text/html;
+	charset="gb18030"
 Content-Transfer-Encoding: base64
 
+R3JlZXRpbmdzOjxicj48YnI+SSBhbSB1c2luZyBhc3QyNDAwJ3MgeGRtYS1lbmdpbmUgdG8g
+cmVhZCBhbmQgd3JpdGUgaG9zdCBzZXJ2ZXIncyBtZW1vcnkuIEJ5IHVzaW5nIGFzcGVlZC14
+ZG1hIGRyaXZlciBJIGNhbiB3cml0ZSBkYXRhIHRvIGhvc3Qgc2VydmVyJ3MgbWVtb3J5LiBC
+dXQgSSBoYXZlIHByb2JsZW0gd2hlbiByZWFkaW5nIGhvc3Qgc2VydmVyJ3MgbWVtb3J5LiBB
+ZnRlciBwdXR0aW5nIHRoZSByZWFkIGNvbW1hbmQgdG8gdGhlIGNvbW1hbmQgcXVldWUsIHRo
+ZSB4ZG1hLWVuZ2luZSdzIHN0YXR1cyByZWdpc3RlciBjaGFuZ2UgdG8gYm1jIGNvbW1hbmQg
+bm90IGlkbGUsIGRvd24gc3RyZWFtIGVuZ2luZyBub3QgaWRsZS4gQnV0IHRoZSB4ZG1hLWVu
+Z2luZSBkb2VzIG5vdCBjb21wbGV0ZSB0aGUgcmVhZCBjb21tYW5kIG5laXRoZXIgaXQgZ2Vu
+ZXJhdGUgYW55IGludGVycnVwdC48YnI+SG93IGNhbiBJIGRvPzxicj48YnI+QmVzdCBSZWdh
+cmRzITxicj48YnI+TGl1IEhvbmd3ZWk8YnI+
 
---_002_30a0cdd8272d469b8207a2d4b41354dbTWNEXCHMB13phoenixcom_--
+------=_NextPart_5FCA4855_0ED3D508_29B5E573--
+
+
 
