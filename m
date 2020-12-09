@@ -2,67 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7842D2D48E3
-	for <lists+openbmc@lfdr.de>; Wed,  9 Dec 2020 19:26:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FFFB2D49A5
+	for <lists+openbmc@lfdr.de>; Wed,  9 Dec 2020 19:59:40 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Crlqs0wyRzDqv4
-	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 05:26:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CrmZ13rQ1zDqtt
+	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 05:59:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b32; helo=mail-yb1-xb32.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=tanous.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20150623.gappssmtp.com
- header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=GLyyK8tT; dkim-atps=neutral
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com
- [IPv6:2607:f8b0:4864:20::b32])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
+ envelope-from=jozef.wludzik@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CrlpZ1bNXzDqtK
- for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 05:25:21 +1100 (AEDT)
-Received: by mail-yb1-xb32.google.com with SMTP id g15so2196941ybq.6
- for <openbmc@lists.ozlabs.org>; Wed, 09 Dec 2020 10:25:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=iSZ0YV3z349wWs7aBVXiYCTcOx0SaoJDPMbspiNFvAA=;
- b=GLyyK8tTgnvJq2887ye+0YBeAyVWHH2g3Z2ZZKZDKheq/IiujqUk2ZnZSL1Js9WiGa
- EvvDvMcdmpKFkYOqARBpmKzEQFkrpFA/t1h/5z85/Z7RbxTEdQL99OlSmE1iLXYAtCDs
- ZhuLqxKWfW2zteZPsdTd9H6FMMpdXxoNOquTHH/arLbPWXbinDMniro7y6hlj8gJUZS/
- Vm71UojXHDt6mI+edGNHdCmfIJkLflh7KYPT/MLHj5li/YEfMsdCO6tHWuOIfVkIw+PW
- 3ZdkgxQDw6Xr4ezsEosg4ipUYLGoH70VBpuu6X771+x2Ssu4YhduUn6POJX8/oURxJQF
- WPSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=iSZ0YV3z349wWs7aBVXiYCTcOx0SaoJDPMbspiNFvAA=;
- b=mfD1zwWp2CeiggARPdir+AaW818tZZm3wk17Nyjn1eeI5AsKXYJbG34knQwfuhEmji
- jjoJQJKkuNL9UtXeIOVXJNihGDXqg03U1f5mdDZy3shhrbimahSf/10yuNeh6K2XQeXB
- ht5f3lpoQeeae/AYfdsi78n8KNvLmBvCR0lh+igSLrqAHE6KrmGKxySGXrl7VBpVbVpP
- HGqSza3HRx/NY6Tv9FyVMs2w9gXe/RTnqABcgzKRhdzmbDlmDYuuQic5S9SSqEc7CRej
- XGQZU+4+t0oLtkHcfoURvuFSA1puaxw4/EX39H6UdIQNUGggkSlm/Lylm4O49DlnTpYM
- 4jAA==
-X-Gm-Message-State: AOAM5303mcWWwwW3nkGTgJWNjZfCiRBFWtrr3gj+QOoM2GrkbbAd44Em
- AYox7YRuVMQh5l8kvAwWJD332ZDvvT6kkncM8NUjjUUD010=
-X-Google-Smtp-Source: ABdhPJzju0QvWannRacjdOo7o3CDbw6YF5khTUp/JCdFAP4aE31rTg99p9b7WddWy80V3tSqhbgxN5vuRy0UKv3OxMI=
-X-Received: by 2002:a25:1d46:: with SMTP id d67mr5006368ybd.480.1607538316501; 
- Wed, 09 Dec 2020 10:25:16 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CrmVj6cs7zDqtW
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 05:56:44 +1100 (AEDT)
+IronPort-SDR: NusVjgGsVuqvKplfs1dGNrF0yq1+ujzzP/TZ6udQ3xTjTbYBK+Xufp3oB9tDypQhYvBVkm4MYS
+ rJQfitRRjTbw==
+X-IronPort-AV: E=McAfee;i="6000,8403,9830"; a="174248115"
+X-IronPort-AV: E=Sophos;i="5.78,405,1599548400"; 
+ d="scan'208,217";a="174248115"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Dec 2020 10:56:38 -0800
+IronPort-SDR: siv+077/Dlz2tHuph9j+YQPXX31gpdB+yEtcDtw4Kc72D9cfAVGm6QA+ncv8kXak65FCyKGJGd
+ FgAtYGkG/3KQ==
+X-IronPort-AV: E=Sophos;i="5.78,405,1599548400"; 
+ d="scan'208,217";a="364263501"
+Received: from jwludzik-mobl.ger.corp.intel.com (HELO [10.213.12.69])
+ ([10.213.12.69])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Dec 2020 10:56:37 -0800
+Subject: Re: OpenBMC CI issue
+To: Jayashree D <jayashree-d@hcl.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <SG2PR04MB3093F18D320A5361E75D7EC5E1CC0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+From: "Wludzik, Jozef" <jozef.wludzik@linux.intel.com>
+Message-ID: <30aef9df-2a96-9b27-52ba-fcaa6628f1c2@linux.intel.com>
+Date: Wed, 9 Dec 2020 19:56:31 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.5.1
 MIME-Version: 1.0
-References: <1bfe87ea-9fc5-8664-d1de-d3138616a427@linux.ibm.com>
-In-Reply-To: <1bfe87ea-9fc5-8664-d1de-d3138616a427@linux.ibm.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 9 Dec 2020 10:25:05 -0800
-Message-ID: <CACWQX83Rc1pTmPbv9xhca-mMyGHenrVbj0a9oikOxHPy=XFxQA@mail.gmail.com>
-Subject: Re: Proposal add PerformService privilege
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <SG2PR04MB3093F18D320A5361E75D7EC5E1CC0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+Content-Type: multipart/alternative;
+ boundary="------------5C417EDF081B1601CB48F760"
+Content-Language: en-US
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,64 +61,187 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Dec 4, 2020 at 12:13 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+This is a multi-part message in MIME format.
+--------------5C417EDF081B1601CB48F760
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Yes, remove compilation flag '-fno-rtti' from you makefile or cmakefile. 
+If you use meson, then set cpp_rtti to true in default_options for project.
+It is known problem in boost 1.74.0
+https://github.com/openbmc/x86-power-control/issues/7
+Thanks,
+Jozef
+
+On 12/9/2020 17:00 PM, Jayashree D wrote:
 >
-> This is a proposal to add an OemOpenBMCPerformService privilege to BMCWeb.
+> Classification: *Public*
 >
-> See https://redfishforum.com/thread/397/redfish-direction-update-eeproms
-> As mentioned in the Redfish forum thread, the use case is that some
-> OpenBMC use cases require isolating manufacturing and service functions
-> away from the customer/admin (including updating FRU serial numbers, and
-> updating a permanent MAC address), and this is a Redfish compatible way
-> to do it.
+> Hi Team,
 >
-> The work items would be like:
-> - Add this OEM privilege to the base BMCWeb implementation.
-
-Can you talk through how you would do this mechanically?  Today, we
-rely on privilege registry (published from DMTF) to guide these roles
-and urls.  Now that you've invented a new role, how do you plan on
-fitting that in?  Will it be required for all systems?  Will it be
-optional?  Will it only apply to OEM schemas?
-
-> - Identify URIs that we need to be able to isolate away from
-> customer/admins.  Then modify the privilege mapping to require this
-> privilege to PUT to those URIs.
-
-What URLs have what privileges is already defined by DMTF in the base
-privilege registry.  What you're talking about would require a
-customizable privilege registry, which definitely needs some
-significant thought, as the current privileges mechanisms in bmcweb
-are very static today.  Just "customizable privileges registry" is
-probably a design on its own, and would likely need to land before
-adding OEM privilege levels.
-
-> - Add this privilege to the Administrator role (but not Operator or
-> ReadOnly).
-
-If we're adding this privilege to the Administrator role, how does it
-differ from ConfigureManager role?
-
-> - Document how to isolate these operations.  Specifically, remove this
-> privilege from Administrator, and create a custom OEM role that has this
-> privilege
+> I am getting the following error in Gerrit OpenBMC CI issues. Please 
+> provide some inputs/suggestions on this.
 >
-> What do you think?
-
-I think we've got a couple designs that would need to land ahead of
-this before we'd have the infrastructure and documentation to build
-something like this.
-
-
-The designs I see coming before this are:
-Static PrivilegeRegistry implementation
-modifiable/dynamic Per-URI privilege registry implementation
-modifiable/dynamic Per-property privilege registry implementation
-OemOpenBMCPerformService registry added.
-
-> - Joseph
+> /usr/local/include/boost/asio/execution/any_executor.hpp: In static 
+> member function â€˜static const std::type_info& 
+> boost::asio::execution::detail::any_executor_base::target_type_void()â€™:
 >
+> /usr/local/include/boost/asio/execution/any_executor.hpp:811:23: 
+> error: cannot use â€˜typeidâ€™ with â€˜-fno-rttiâ€™
+>
+>   811 |     return typeid(void);
+>
+>       |                       ^
+>
+> /usr/local/include/boost/asio/execution/any_executor.hpp: In static 
+> member function â€˜static const std::type_info& 
+> boost::asio::execution::detail::any_executor_base::target_type_ex()â€™:
+>
+> /usr/local/include/boost/asio/execution/any_executor.hpp:851:21: 
+> error: cannot use â€˜typeidâ€™ with â€˜-fno-rttiâ€™
+>
+>   851 |     return typeid(Ex);
+>
+> Regards,
+>
+> Jayashree
+>
+> ::DISCLAIMER::
+> ------------------------------------------------------------------------
+> The contents of this e-mail and any attachment(s) are confidential and 
+> intended for the named recipient(s) only. E-mail transmission is not 
+> guaranteed to be secure or error-free as information could be 
+> intercepted, corrupted, lost, destroyed, arrive late or incomplete, or 
+> may contain viruses in transmission. The e mail and its contents (with 
+> or without referred errors) shall therefore not attach any liability 
+> on the originator or HCL or its affiliates. Views or opinions, if any, 
+> presented in this email are solely those of the author and may not 
+> necessarily reflect the views or opinions of HCL or its affiliates. 
+> Any form of reproduction, dissemination, copying, disclosure, 
+> modification, distribution and / or publication of this message 
+> without the prior written consent of authorized representative of HCL 
+> is strictly prohibited. If you have received this email in error 
+> please delete it and notify the sender immediately. Before opening any 
+> email and/or attachments, please check them for viruses and other defects.
+> ------------------------------------------------------------------------
+
+--------------5C417EDF081B1601CB48F760
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Yes, remove compilation flag '-fno-rtti' from you makefile or
+      cmakefile. If you use meson, then set cpp_rtti to true in
+      default_options for project.<br>
+      It is known problem in boost 1.74.0<br>
+      <a class="moz-txt-link-freetext" href="https://github.com/openbmc/x86-power-control/issues/7">https://github.com/openbmc/x86-power-control/issues/7</a><br>
+      Thanks,<br>
+      Jozef<br>
+    </p>
+    <div class="moz-cite-prefix">On 12/9/2020 17:00 PM, Jayashree D
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:SG2PR04MB3093F18D320A5361E75D7EC5E1CC0@SG2PR04MB3093.apcprd04.prod.outlook.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}</style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p class="MsoNormal" style="margin-bottom:12.0pt">Classification:
+          <b><span style="color:green">Public</span></b><span
+            style="font-size:12.0pt"><o:p></o:p></span></p>
+        <p class="MsoNormal">Hi Team, <o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">I am getting the following error in Gerrit
+          OpenBMC CI issues. Please provide some inputs/suggestions on
+          this.<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">/usr/local/include/boost/asio/execution/any_executor.hpp:
+          In static member function â€˜static const std::type_info&amp;
+boost::asio::execution::detail::any_executor_base::target_type_void()â€™:<o:p></o:p></p>
+        <p class="MsoNormal">/usr/local/include/boost/asio/execution/any_executor.hpp:811:23:
+          error: cannot use â€˜typeidâ€™ with â€˜-fno-rttiâ€™<o:p></o:p></p>
+        <p class="MsoNormal">  811 |     return typeid(void);<o:p></o:p></p>
+        <p class="MsoNormal">      |                       ^<o:p></o:p></p>
+        <p class="MsoNormal">/usr/local/include/boost/asio/execution/any_executor.hpp:
+          In static member function â€˜static const std::type_info&amp;
+boost::asio::execution::detail::any_executor_base::target_type_ex()â€™:<o:p></o:p></p>
+        <p class="MsoNormal">/usr/local/include/boost/asio/execution/any_executor.hpp:851:21:
+          error: cannot use â€˜typeidâ€™ with â€˜-fno-rttiâ€™<o:p></o:p></p>
+        <p class="MsoNormal">  851 |     return typeid(Ex);<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal">Regards,<o:p></o:p></p>
+        <p class="MsoNormal">Jayashree<o:p></o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+        <p class="MsoNormal"><o:p> </o:p></p>
+      </div>
+      <font size="1" face="Arial" color="Gray">::DISCLAIMER::<br>
+        <hr>
+        The contents of this e-mail and any attachment(s) are
+        confidential and intended for the named recipient(s) only.
+        E-mail transmission is not guaranteed to be secure or error-free
+        as information could be intercepted, corrupted, lost, destroyed,
+        arrive late or incomplete, or may contain viruses in
+        transmission. The e mail and its contents (with or without
+        referred errors) shall therefore not attach any liability on the
+        originator or HCL or its affiliates. Views or opinions, if any,
+        presented in this email are solely those of the author and may
+        not necessarily reflect the views or opinions of HCL or its
+        affiliates. Any form of reproduction, dissemination, copying,
+        disclosure, modification, distribution and / or publication of
+        this message without the prior written consent of authorized
+        representative of HCL is strictly prohibited. If you have
+        received this email in error please delete it and notify the
+        sender immediately. Before opening any email and/or attachments,
+        please check them for viruses and other defects.<br>
+        <hr>
+      </font>
+    </blockquote>
+  </body>
+</html>
+
+--------------5C417EDF081B1601CB48F760--
