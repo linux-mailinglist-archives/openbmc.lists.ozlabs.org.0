@@ -2,68 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FB322D4691
-	for <lists+openbmc@lfdr.de>; Wed,  9 Dec 2020 17:18:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7842D2D48E3
+	for <lists+openbmc@lfdr.de>; Wed,  9 Dec 2020 19:26:36 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Crhzv2Xx7zDqkb
-	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 03:18:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Crlqs0wyRzDqv4
+	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 05:26:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e35;
- helo=mail-vs1-xe35.google.com; envelope-from=deepak.kodihalli.83@gmail.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b32; helo=mail-yb1-xb32.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=tanous.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=mf6f1j+X; dkim-atps=neutral
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com
- [IPv6:2607:f8b0:4864:20::e35])
+ unprotected) header.d=tanous-net.20150623.gappssmtp.com
+ header.i=@tanous-net.20150623.gappssmtp.com header.a=rsa-sha256
+ header.s=20150623 header.b=GLyyK8tT; dkim-atps=neutral
+Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com
+ [IPv6:2607:f8b0:4864:20::b32])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Crhyx6StDzDqjn
- for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 03:17:25 +1100 (AEDT)
-Received: by mail-vs1-xe35.google.com with SMTP id u7so1166808vsg.11
- for <openbmc@lists.ozlabs.org>; Wed, 09 Dec 2020 08:17:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CrlpZ1bNXzDqtK
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 05:25:21 +1100 (AEDT)
+Received: by mail-yb1-xb32.google.com with SMTP id g15so2196941ybq.6
+ for <openbmc@lists.ozlabs.org>; Wed, 09 Dec 2020 10:25:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20150623.gappssmtp.com; s=20150623;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=qNINjtTDdY3FpDwdEp6F6+gt17oT7SKt45JXZl9meUs=;
- b=mf6f1j+XcTdc4yNowQsjkVlIe7IAXMNa69MPCe9xTpI3mukFHrzzXnmWSolZStMs/F
- TuXvQmhqdkRqK1YI373Z4SOnye3CyyMKOs00u9OBJov+GY3qpW1brk61JbPyd+H59N3j
- c8ZKc82GNEuqCqsVlpJxb1zDQMW//7Ttc9wd9+Y81YzRnAo0eQdVjPiNS9fI1WhEwLvv
- 2BjZSXuOgabLvuC0OiSsuNY/H62eCsHK237/F3qAF/pR25t1yAXaxhRUncHop3xzErae
- FfhfZ5Z8UV0lauTSvzR9SSy5Ao5c+TflPdBfwOxVNBi0koNg3aMRaQUdrKuLi5OeIbJc
- zJ1Q==
+ :cc; bh=iSZ0YV3z349wWs7aBVXiYCTcOx0SaoJDPMbspiNFvAA=;
+ b=GLyyK8tTgnvJq2887ye+0YBeAyVWHH2g3Z2ZZKZDKheq/IiujqUk2ZnZSL1Js9WiGa
+ EvvDvMcdmpKFkYOqARBpmKzEQFkrpFA/t1h/5z85/Z7RbxTEdQL99OlSmE1iLXYAtCDs
+ ZhuLqxKWfW2zteZPsdTd9H6FMMpdXxoNOquTHH/arLbPWXbinDMniro7y6hlj8gJUZS/
+ Vm71UojXHDt6mI+edGNHdCmfIJkLflh7KYPT/MLHj5li/YEfMsdCO6tHWuOIfVkIw+PW
+ 3ZdkgxQDw6Xr4ezsEosg4ipUYLGoH70VBpuu6X771+x2Ssu4YhduUn6POJX8/oURxJQF
+ WPSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=qNINjtTDdY3FpDwdEp6F6+gt17oT7SKt45JXZl9meUs=;
- b=mMk8PIv2L+Dr/eHNm/4pfOsU0QD5abUo3faUDCqpxhYBCYvLx0R6LFFpC9yP70CWTz
- tiv7EiIt3/VbOhYbK1a/OSLfw5N4XFF64PYh07FrJQHuEPLQk7F/+kKCPNZbAoZ/AaEI
- NaVhwMmiZs0dbgEAKUKYF0XjKRAtCgXyyeGuH2B2s/zrbMCGxBIisQCGQERH5TukbHZH
- e8xNCW2s1AQM2VBTgXrXNVhgbuG2/dKjHHgnEEL/zh86e+S3P1Xf4NNa5CWGGsVPBpGk
- Y84ZxhDfb/L5hzp5szPE4hr4DiC4U1cnVTafD9l/VQr23K5bXVsNWUPEWT243zqL61QN
- w3Jw==
-X-Gm-Message-State: AOAM533+wbh0Chwu7hgOKtw0uCgelAiW8p50W9ITpfYw1K/g8C4sLZF2
- QAA7otiob5eG8FZItpz6iZcjWRhse4w360Izi04=
-X-Google-Smtp-Source: ABdhPJxPTlZFStVphW0F7QnmSap9stjyBkUjNqqV1qq/S3U2/0hJXcPiyMQ3SEXr8rw6pazoQEe9i4IMC0JUeaPA9JE=
-X-Received: by 2002:a67:dd95:: with SMTP id i21mr2655660vsk.33.1607530641154; 
- Wed, 09 Dec 2020 08:17:21 -0800 (PST)
+ :message-id:subject:to:cc;
+ bh=iSZ0YV3z349wWs7aBVXiYCTcOx0SaoJDPMbspiNFvAA=;
+ b=mfD1zwWp2CeiggARPdir+AaW818tZZm3wk17Nyjn1eeI5AsKXYJbG34knQwfuhEmji
+ jjoJQJKkuNL9UtXeIOVXJNihGDXqg03U1f5mdDZy3shhrbimahSf/10yuNeh6K2XQeXB
+ ht5f3lpoQeeae/AYfdsi78n8KNvLmBvCR0lh+igSLrqAHE6KrmGKxySGXrl7VBpVbVpP
+ HGqSza3HRx/NY6Tv9FyVMs2w9gXe/RTnqABcgzKRhdzmbDlmDYuuQic5S9SSqEc7CRej
+ XGQZU+4+t0oLtkHcfoURvuFSA1puaxw4/EX39H6UdIQNUGggkSlm/Lylm4O49DlnTpYM
+ 4jAA==
+X-Gm-Message-State: AOAM5303mcWWwwW3nkGTgJWNjZfCiRBFWtrr3gj+QOoM2GrkbbAd44Em
+ AYox7YRuVMQh5l8kvAwWJD332ZDvvT6kkncM8NUjjUUD010=
+X-Google-Smtp-Source: ABdhPJzju0QvWannRacjdOo7o3CDbw6YF5khTUp/JCdFAP4aE31rTg99p9b7WddWy80V3tSqhbgxN5vuRy0UKv3OxMI=
+X-Received: by 2002:a25:1d46:: with SMTP id d67mr5006368ybd.480.1607538316501; 
+ Wed, 09 Dec 2020 10:25:16 -0800 (PST)
 MIME-Version: 1.0
-References: <HK0PR04MB2964D0B4027D7B3AE80A3E9EFDCC0@HK0PR04MB2964.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB2964D0B4027D7B3AE80A3E9EFDCC0@HK0PR04MB2964.apcprd04.prod.outlook.com>
-From: Deepak Kodihalli <deepak.kodihalli.83@gmail.com>
-Date: Wed, 9 Dec 2020 21:47:10 +0530
-Message-ID: <CAM=TmwX79oj-KZ2mj1ENGcGnq37TCo-KijWENU3_3mWC2AtdAw@mail.gmail.com>
-Subject: Re: Add firmware implementation in pldm
-To: Kumar Thangavel <thangavel.k@hcl.com>,
- richard.marian.thomaiyar@linux.intel.com, sumanth.bhat@intel.com
+References: <1bfe87ea-9fc5-8664-d1de-d3138616a427@linux.ibm.com>
+In-Reply-To: <1bfe87ea-9fc5-8664-d1de-d3138616a427@linux.ibm.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 9 Dec 2020 10:25:05 -0800
+Message-ID: <CACWQX83Rc1pTmPbv9xhca-mMyGHenrVbj0a9oikOxHPy=XFxQA@mail.gmail.com>
+Subject: Re: Proposal add PerformService privilege
+To: Joseph Reynolds <jrey@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,88 +74,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>, Patrick Williams <patrickw3@fb.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Kumar,
+On Fri, Dec 4, 2020 at 12:13 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+>
+> This is a proposal to add an OemOpenBMCPerformService privilege to BMCWeb.
+>
+> See https://redfishforum.com/thread/397/redfish-direction-update-eeproms
+> As mentioned in the Redfish forum thread, the use case is that some
+> OpenBMC use cases require isolating manufacturing and service functions
+> away from the customer/admin (including updating FRU serial numbers, and
+> updating a permanent MAC address), and this is a Redfish compatible way
+> to do it.
+>
+> The work items would be like:
+> - Add this OEM privilege to the base BMCWeb implementation.
+
+Can you talk through how you would do this mechanically?  Today, we
+rely on privilege registry (published from DMTF) to guide these roles
+and urls.  Now that you've invented a new role, how do you plan on
+fitting that in?  Will it be required for all systems?  Will it be
+optional?  Will it only apply to OEM schemas?
+
+> - Identify URIs that we need to be able to isolate away from
+> customer/admins.  Then modify the privilege mapping to require this
+> privilege to PUT to those URIs.
+
+What URLs have what privileges is already defined by DMTF in the base
+privilege registry.  What you're talking about would require a
+customizable privilege registry, which definitely needs some
+significant thought, as the current privileges mechanisms in bmcweb
+are very static today.  Just "customizable privileges registry" is
+probably a design on its own, and would likely need to land before
+adding OEM privilege levels.
+
+> - Add this privilege to the Administrator role (but not Operator or
+> ReadOnly).
+
+If we're adding this privilege to the Administrator role, how does it
+differ from ConfigureManager role?
+
+> - Document how to isolate these operations.  Specifically, remove this
+> privilege from Administrator, and create a custom OEM role that has this
+> privilege
+>
+> What do you think?
+
+I think we've got a couple designs that would need to land ahead of
+this before we'd have the infrastructure and documentation to build
+something like this.
 
 
-On Wed, Dec 9, 2020 at 9:20 PM Kumar Thangavel <thangavel.k@hcl.com> wrote:
->
-> Classification: Internal
->
-> Hi All,
->
->
->
->          We planning to do NIC firmware update for our system pldm base.
+The designs I see coming before this are:
+Static PrivilegeRegistry implementation
+modifiable/dynamic Per-URI privilege registry implementation
+modifiable/dynamic Per-property privilege registry implementation
+OemOpenBMCPerformService registry added.
 
-Great!
-
+> - Joseph
 >
->          So, We would like to add implementation support for pldm base fi=
-rmware update. This should be generic for all to use firmware update for an=
-y devices.
->          Do we need to create files =E2=80=9Cfirmwareupdate.cpp/.hpp file=
-s=E2=80=9D under pldm deamon as generic to handle firmware base pldm comman=
-ds?
-
-Since there is a PLDM firmware update specification, a generic design
-and implementation is a definite possibility.
-
->          Also, please suggest to repo add the BMC applications to send an=
-d recv the command handling.
->
->          Could Please provide your comments/suggestions on this implement=
-ation.
-
-Will you be able to update
-https://github.com/openbmc/docs/blob/master/designs/pldm-stack.md with
-a design section on firmware update? Some of the things I would like
-to review via this doc update:
-- How does this integrate with the current OpenBMC firmware update
-architecture, and also with Redfish update service?
-- What will PLDM run on? RBT or MCTP? MCTP over what binding?
-- Do you anticipate changes to libmctp?
-- How does this fit into the existing https://github.com/openbmc/pldm
-design? What new components will you be adding? Will libpldm and pldmd
-be impacted, and how?
-- The 5.9 Linux Kernel has some APIs for PLDM based firmware update.
-Can we use those?
-- How do we plan to test this? Is hardware a must? Or are you planning
-on mocking a PLDM responder?
-
-I think a quick review of such a design doc will be beneficial before
-delving into code. Also, please note - Richard and Sumanth (copied
-them) are working on similar stuff as well. So there could be scope
-for collaboration and to avoid likely duplicate effort. We do talk
-about ongoing PLDM activities in OpenBMC in this meet -
-https://github.com/openbmc/openbmc/wiki/OpenBMC-PMCI-WG.
-
-Thanks,
-Deepak
-
->
-> Thanks,
->
-> Kumar.
->
-> ::DISCLAIMER::
-> ________________________________
-> The contents of this e-mail and any attachment(s) are confidential and in=
-tended for the named recipient(s) only. E-mail transmission is not guarante=
-ed to be secure or error-free as information could be intercepted, corrupte=
-d, lost, destroyed, arrive late or incomplete, or may contain viruses in tr=
-ansmission. The e mail and its contents (with or without referred errors) s=
-hall therefore not attach any liability on the originator or HCL or its aff=
-iliates. Views or opinions, if any, presented in this email are solely thos=
-e of the author and may not necessarily reflect the views or opinions of HC=
-L or its affiliates. Any form of reproduction, dissemination, copying, disc=
-losure, modification, distribution and / or publication of this message wit=
-hout the prior written consent of authorized representative of HCL is stric=
-tly prohibited. If you have received this email in error please delete it a=
-nd notify the sender immediately. Before opening any email and/or attachmen=
-ts, please check them for viruses and other defects.
-> ________________________________
