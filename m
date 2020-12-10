@@ -1,164 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 046842D5385
-	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 07:01:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B30652D5421
+	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 07:50:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Cs3G934bVzDqs1
-	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 17:01:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cs4Kh6NY8zDqpv
+	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 17:50:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::144;
+ helo=mail-il1-x144.google.com; envelope-from=alpu8007@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.132.124; helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=hcl.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=AJY8QfA0; 
- dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=AJY8QfA0; 
- dkim-atps=neutral
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-eopbgr1320124.outbound.protection.outlook.com [40.107.132.124])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=o71DZDHP; dkim-atps=neutral
+Received: from mail-il1-x144.google.com (mail-il1-x144.google.com
+ [IPv6:2607:f8b0:4864:20::144])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Cs3F46PXnzDqq8
- for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 17:00:52 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Kxmz7EUlVty8327blyJg15hkoBabNjBSVyd+7pBSMZM=;
- b=AJY8QfA0iBG4Dlsnf/PuVk9A1eOYZ3DzHZ29jO2ncdY69a5UABvK1UeGM0J2UKlAEtzz6pCNvQkDOEMmmgpVhE2oyRnymLjJVPcqepQSUKJPlz+6O0WM4ihfDbnLLcLi7sy2aalB3cbeU+lBKrL+183TJrveRNxMDcWO2gHDngE=
-Received: from HK2PR0401CA0010.apcprd04.prod.outlook.com (2603:1096:202:2::20)
- by SG2PR04MB3899.apcprd04.prod.outlook.com (2603:1096:4:94::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3611.21; Thu, 10 Dec
- 2020 06:00:39 +0000
-Received: from HK2APC01FT046.eop-APC01.prod.protection.outlook.com
- (2603:1096:202:2:cafe::91) by HK2PR0401CA0010.outlook.office365.com
- (2603:1096:202:2::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.12 via Frontend
- Transport; Thu, 10 Dec 2020 06:00:39 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.54)
- smtp.mailfrom=hcl.com; linux.intel.com; dkim=pass (signature was verified)
- header.d=HCL.COM; linux.intel.com; dmarc=pass action=none header.from=hcl.com; 
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.54 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.54; helo=APC01-SG2-obe.outbound.protection.outlook.com;
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (192.8.245.54) by
- HK2APC01FT046.mail.protection.outlook.com (10.152.249.180) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3654.12 via Frontend Transport; Thu, 10 Dec 2020 06:00:38 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CEUCJiTyuiOoO4/wcWBgJjrzPe5DaDqNUGUzOn6bsO0mZo5OmWYCdpa25qMkgEQmSkbp+0HzqvLRoXq8RtizKylfq+MAZ6wg5ziyZg1Ak0KHlXOG+K0ZjCrKdyuCmAIO0o2vx+wfFWNqikahIgZRcQFgk72bkNL9LVAlA5uzhT2pDUK7f7E/T1LFZEGtuHBUFniEq7KH7I7B1xJXsZfNKEvVGlTCZbWKWXU10zsYaly4GqcuwWohrefg7RttGamPqaahcB+MfHGByjwgbeGCU5xqi86m4+ROGWtO3Dbdb4enL5wb05cNMCHSjcV36/zF0tcvisgz18WU7iKZ9ocVkQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Kxmz7EUlVty8327blyJg15hkoBabNjBSVyd+7pBSMZM=;
- b=WgDNd2YtGwvx409GD1jV8cXPqAumA9uQ/rb2/tQbIrP3Lj3Yd3lcnMVx8NjfWjAfBgpwR4SLX0/d6kGAekboYkdYxw1lADzPq1QgTtgvb2dfX0qQHaO30YQXyUwP6nwl7ohKOm0ettWtwkukSM4LB3qzePplJ3yJ8IGoUsLsgfPtS9r0jjtdpZGFgev7ZOJbWK4cvG3fsccegk98syc2DjT2g9PdcDUphER7TWT3dAtTauPlIsW2VjNMjVvRsITkx5otpmdUK0mGpNxSo9y8SUPqyIWmArmqu73+1hmD6Vjv0pcIcgp3cqPD4QV8X09zOtB9ayPpWLDEV5Nii2fdzA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Kxmz7EUlVty8327blyJg15hkoBabNjBSVyd+7pBSMZM=;
- b=AJY8QfA0iBG4Dlsnf/PuVk9A1eOYZ3DzHZ29jO2ncdY69a5UABvK1UeGM0J2UKlAEtzz6pCNvQkDOEMmmgpVhE2oyRnymLjJVPcqepQSUKJPlz+6O0WM4ihfDbnLLcLi7sy2aalB3cbeU+lBKrL+183TJrveRNxMDcWO2gHDngE=
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB2378.apcprd04.prod.outlook.com (2603:1096:4:6::13) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3632.21; Thu, 10 Dec 2020 06:00:36 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::48c:6edc:45ad:ebe7]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::48c:6edc:45ad:ebe7%6]) with mapi id 15.20.3654.012; Thu, 10 Dec 2020
- 06:00:36 +0000
-From: Jayashree D <jayashree-d@hcl.com>
-To: "Wludzik, Jozef" <jozef.wludzik@linux.intel.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: RE: OpenBMC CI issue
-Thread-Topic: OpenBMC CI issue
-Thread-Index: AdbORDpRs9vGkIo8RZG4Z9F8b+GSWQAGMdmAABcbOGA=
-Date: Thu, 10 Dec 2020 06:00:36 +0000
-Message-ID: <SG2PR04MB3093122D52EC9467679DCF34E1CB0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-References: <SG2PR04MB3093F18D320A5361E75D7EC5E1CC0@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <30aef9df-2a96-9b27-52ba-fcaa6628f1c2@linux.intel.com>
-In-Reply-To: <30aef9df-2a96-9b27-52ba-fcaa6628f1c2@linux.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiZjdhNTZiNjktY2E0NC00NDUxLWJlYmItNzIxNTc1YWNmMThhIiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6IkljWldtckNmREVKWHIxNHM4RlhvQzBLRzNvVDhYWFRWMW5TXC9iSTF2OHVFOE1pMjBnWlwveTBDODVWbUNCK0ZnVCJ9
-x-hclclassification: HCL_Cla5s_Publ1c
-Authentication-Results-Original: linux.intel.com; dkim=none (message not
- signed) header.d=none;linux.intel.com; dmarc=none action=none
- header.from=hcl.com;
-x-originating-ip: [2409:4072:6e91:b9b6:c43c:b4e7:a18c:600f]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 535225d2-3ae2-428d-6094-08d89cd0eb7d
-x-ms-traffictypediagnostic: SG2PR04MB2378:|SG2PR04MB3899:
-X-Microsoft-Antispam-PRVS: <SG2PR04MB389939E6F70ECDE1F6730F3FE1CB0@SG2PR04MB3899.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:3826;OLM:3826;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: lTc7Z6yaXR75km22B1MdRYSM706aE02OijWONPGRyzrM5laNqj5qMD0qinIa6zDsPLlEytEAWWZHCsOn8ew7pTnsWSUmt2/+LQrLhQ+bsymZPcNf2/FqxZc3dPtSJzE5fXSj1aXNWOHruEPDzfxsBd6fVy1D6HYEN+bdX5hELHmCzJ47e4lIGd5amayqMCe4wl+YkOx93XCI61puqv2biEAD3dK6BCUkZyASfqyEeLWn04PypgwWmIaWqGz0OanDTudkbMusa3sXOQVETYMAtanYD54/mb1f6+FIQ2I1XvNlQklZvOFTC6TL48j6x+KhidWkYuuGlVxqmGds8kuMTB2jfmLNKqGadH06Y7I0ARE7dJh10IFjM1ozcRQJFGodgQnDH1AcrT7wbs28s3Rd3w==
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(376002)(366004)(346002)(136003)(110136005)(83380400001)(2906002)(66946007)(86362001)(6506007)(166002)(7696005)(53546011)(508600001)(33656002)(3480700007)(966005)(186003)(7116003)(9686003)(66446008)(55016002)(76116006)(5660300002)(66476007)(8676002)(64756008)(71200400001)(8936002)(52536014)(66556008);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?SkVBSS9TZ2RDZGxSMXFkVTdUUzdvaVlGcGxiSTRuYlBZaDZPd2h4VVQ3Zy9G?=
- =?utf-8?B?ZmpQZ3NpMlhuVkx4TFNEWHYvbnJJZm92UkJxdTRhTEphYk0vNC9PM3JXZEFi?=
- =?utf-8?B?bCtuNHRhM0lBZmRyYnMxT2ZNSHJweTYxYUNhM0lwT24xZXk1SzFmb3UwNTJl?=
- =?utf-8?B?T2tMakVQT2krbUUwK3VzV3dYYTI0dHNWYkhXQ3RObmwvdHNsNVVoZmdFa3VS?=
- =?utf-8?B?V2JzZkwwdHJtcVhXdnJVQWtjbWJoOUc1V042UlA0cVpyVEwzZEtiVXIvQVFP?=
- =?utf-8?B?N2FQTE1JY2EwVzRvSmovdCtvV1pBQkZaeXZFQUNUL082YXJpcnVrVVpRaC9K?=
- =?utf-8?B?UzFmS0ZBY1RiK0tvdFA1TDZXYS96emwvaXNHMlpGQ094dmQ1b2I0NExtWGRV?=
- =?utf-8?B?Rkc5RUhCT3hPVG44cFlEMWxJNHJYWmJ6cFg3dnhnWkZlR1VBSVorRVU5dzhG?=
- =?utf-8?B?eFZqWUlHeHByeWtnU1oyWHBwc1RKKzB6UTU3THlRM3BrTWgwa2hXOFpaaSs3?=
- =?utf-8?B?VHkwY2tvcHhqZmhpR3FPTU5HOHIvVlh1cXV2OVBxNEQwaVdQa2hPdEtienRU?=
- =?utf-8?B?TitlK05KNjA2SnFUcUpxK2l3a08wMHZyR3dBS3VZTHBSVnp5cE5RL2pNb3J5?=
- =?utf-8?B?eUtUTHZlZ1ZMNTZtcWtOVUxick45VG9yUzZkRysvbVVxS0x6YWtsK3MySFRR?=
- =?utf-8?B?MnJxUUJOdjhTQ01HdC9aa0pHWlp1dlltVkwxNkdJU2RvTUc1Rk8rRmp2NkpC?=
- =?utf-8?B?cVQwQ2V4WEkvNzg1UmJSRmVxR1ZDMWFBbjhxUDZhTWhhSDUzS0RJL2VGZGdp?=
- =?utf-8?B?NWVROGN5bU55UE13S2JXWGNwVFMya0UzRUlTRTExQ2tMRWtVUU9NNVVNTkF6?=
- =?utf-8?B?MHh4eEd5S3hJNHg3QXVOOUxTSGxiVEtuSFVNYjV3bm1ISUpZTjcydDRrVS9a?=
- =?utf-8?B?VGJHNGFlalExenI0akM3WE5kWktMZmtoWW1jcERHYitlakJrY3dOYmZZWUdj?=
- =?utf-8?B?cHZWcmlCOE4wRm1pYkpBUjhpck1zbE9BRGZhZ0VyNTBFOXBFWVVOcGhWVVRp?=
- =?utf-8?B?bkFHQkpyRzZ2YkdpTmtidUJ6ZUxlNE95REs0dU96cnVvTXZkUm02U2lZT2tr?=
- =?utf-8?B?bjF3OGIzMVNVRlJDbjBoSUQ0ZVhPL0ptRjNWWEwxc2dZdldaTy91NnZJVzZP?=
- =?utf-8?B?L3prRUsrb2Y3VmplU0JoOS9wNDcveVlVWFV4YTUxbmFmaFRITnQxNDVreity?=
- =?utf-8?B?REFWTXM3eTZOcksrR3dtNjR4aHg5cFAzT3F2UjI1dXc4RFlHMkpDLy9lR0tt?=
- =?utf-8?B?L2tGc3k2Rm1iVzVMNXArOG80WktZczU0U3c2NzhNTmlyUGk0RlFxWEVUenNt?=
- =?utf-8?Q?FERKeOqjop7RgYEjbmSwIZ41t/G5kJTs=3D?=
-x-ms-exchange-transport-forked: True
-Content-Type: multipart/alternative;
- boundary="_000_SG2PR04MB3093122D52EC9467679DCF34E1CB0SG2PR04MB3093apcp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cs4Jx2gg2zDqgV
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 17:49:16 +1100 (AEDT)
+Received: by mail-il1-x144.google.com with SMTP id p5so4118074iln.8
+ for <openbmc@lists.ozlabs.org>; Wed, 09 Dec 2020 22:49:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=OdCjumfptze5VIARG/OVO9XH7DZ9a8oeS8rGtPVCKh0=;
+ b=o71DZDHPRPU5+PXFYuBMUAPNR66BbXsgjN3UKTDxeWPVY81obcUh7js7XKtlufoXJ2
+ 29RFOoUJpcQRDS4pdCaFYczhOcHwpkwSPn7Ruui3Nrz6tFWvpfoDO+WplU9Tv+TA3Pom
+ 3FUs2dahosED0h72k7dfjieOG7lKbSQ4fwLMOU47aZv3bQpXepEb41JH9RHQqX+XqNBS
+ ZlhN+flxs0GmWRfUWGNlFsFvuXFPkEU2p8lC3GmeEpQoBbf6pOFcuMSkJDmtCzpqc6M0
+ LDlcEMcQ14mgA3PmN2yMl9QUA14HHFqas7BcGLwDqbWFuL3B4pTGXuDW1J1LMN6UScPM
+ 07YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=OdCjumfptze5VIARG/OVO9XH7DZ9a8oeS8rGtPVCKh0=;
+ b=rIJGLjY4SX78oOM/Hv3ewMMxEmxLxPrwws7Dgo+kYtUcyMdoSJVhuVgA2o0OL4crnd
+ FJAnkf2m98053U/KZXJj4+llScZRP9J0YuDmJT0ouDAoi8bC0l5v8h+jLFk4POX8YoYg
+ E2O5jC19PJ9DNKuNby6R+hswUaAk/5tsOk1WT+XKFHJB2mllXjqfyIEyyXbueNhmOUjb
+ H0Mx/tOd2TXE+krQmwENsvkEt9zar/BaGKXvevr/Wq+1XgcV3Dd4xJbW667SDdGGskPs
+ I2pr38bfZstn9rYXpAhN12cB79L5aMbKS+wNstYM8GBKEzXjjJciZudZaDvQEGeEP4TB
+ NyuQ==
+X-Gm-Message-State: AOAM530I4PyZQmZKxG754ShYDfpzh4fX88rBYJbfDFlw6TDpoiO6UDsr
+ USgvgNzbzA+RXBsQx7wgkAI4i7AZssuDinGDM5c5JZxDlaM=
+X-Google-Smtp-Source: ABdhPJxOJIkI/SaXeLVOYiphBSJ2biUlZNUY75Na8B5FfM9+ScmKrcdjgvQ1KQb0FAWgkkzmX/nGxrXX7ziBPJa5SN4=
+X-Received: by 2002:a92:c6d1:: with SMTP id v17mr8029429ilm.156.1607582951780; 
+ Wed, 09 Dec 2020 22:49:11 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB2378
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: HK2APC01FT046.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: dc8cde10-27e9-4434-f7a8-08d89cd0e9e4
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lH5Gdi6rVDlQI6mPV8DwoAFgEgXV2BBEdnils86UAjAWS79O+UAp1ZyurBFcgDRrva+nEXj6Z3RRSMa8kKb8ps+khWqxsdh/gajcJwetegr4nC39G2LXbBRXBLslRpzN1/wQr8qtyK29sg6DpHWiBRNRGajh870J4ZR4A+1s2Gm+0GmPnuGQwvzgBQ0lAx7TBmkBLDw+QDOC+8ny7y1xHTLfp2TkOeD/J2+Se/BGeCY+vWxB0cS0EwgaUO2imIrmME4jVox1wlMfywPgJcuNdSH1fG+zS9PF4ZDbUW1vwKhzdimx0SzRb4emvLzBG/jBreQT4+inaOQb7C4dNEeyzqJuB4yOBkVKjJ5MA0LfMb8VOkgy8GipxumYMt4Y3QCw8+42AJeUp9k1/FBzGYEioHifHjRLbdnSNE9PFK6r1ra23tX7GmAgiplfdMky/I8sutK150somtWWoGYN8nG0vlYrCQY5+x6eeylbJj5TsVw=
-X-Forefront-Antispam-Report: CIP:192.8.245.54; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-SG2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(396003)(136003)(39860400002)(376002)(346002)(46966005)(70586007)(7116003)(336012)(53546011)(81166007)(70206006)(7696005)(8936002)(33964004)(6506007)(110136005)(86362001)(9686003)(36906005)(33656002)(82310400003)(478600001)(26005)(966005)(166002)(186003)(45080400002)(47076004)(55016002)(316002)(83380400001)(52536014)(2906002)(82740400003)(5660300002)(356005)(8676002)(3480700007);
- DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2020 06:00:38.7200 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 535225d2-3ae2-428d-6094-08d89cd0eb7d
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.54];
- Helo=[APC01-SG2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: HK2APC01FT046.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3899
+From: Alpana Kumari <alpu8007@gmail.com>
+Date: Thu, 10 Dec 2020 12:19:00 +0530
+Message-ID: <CANkkLs54p6eyhaniCfD1K=+BHds1FGP6f2q-u47wzP+sEiXUQA@mail.gmail.com>
+Subject: [PATCH] Adding chips TCA9554 and PCA9552, to expose the presence
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000c9b4f405b6169297"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -173,213 +72,454 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR04MB3093122D52EC9467679DCF34E1CB0SG2PR04MB3093apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--000000000000c9b4f405b6169297
+Content-Type: text/plain; charset="UTF-8"
 
-Q2xhc3NpZmljYXRpb246IFB1YmxpYw0KVGhhbmtzIEpvemVmIGZvciB5b3VyIHJlc3BvbnNlLg0K
-DQpGcm9tOiBXbHVkemlrLCBKb3plZiA8am96ZWYud2x1ZHppa0BsaW51eC5pbnRlbC5jb20+DQpT
-ZW50OiBUaHVyc2RheSwgRGVjZW1iZXIgMTAsIDIwMjAgMTI6MjcgQU0NClRvOiBKYXlhc2hyZWUg
-RCA8amF5YXNocmVlLWRAaGNsLmNvbT47IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KU3ViamVj
-dDogUmU6IE9wZW5CTUMgQ0kgaXNzdWUNCg0KW0NBVVRJT046IFRoaXMgRW1haWwgaXMgZnJvbSBv
-dXRzaWRlIHRoZSBPcmdhbml6YXRpb24uIFVubGVzcyB5b3UgdHJ1c3QgdGhlIHNlbmRlciwgRG9u
-4oCZdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIGFzIGl0IG1heSBiZSBhIFBoaXNo
-aW5nIGVtYWlsLCB3aGljaCBjYW4gc3RlYWwgeW91ciBJbmZvcm1hdGlvbiBhbmQgY29tcHJvbWlz
-ZSB5b3VyIENvbXB1dGVyLl0NCg0KWWVzLCByZW1vdmUgY29tcGlsYXRpb24gZmxhZyAnLWZuby1y
-dHRpJyBmcm9tIHlvdSBtYWtlZmlsZSBvciBjbWFrZWZpbGUuIElmIHlvdSB1c2UgbWVzb24sIHRo
-ZW4gc2V0IGNwcF9ydHRpIHRvIHRydWUgaW4gZGVmYXVsdF9vcHRpb25zIGZvciBwcm9qZWN0Lg0K
-SXQgaXMga25vd24gcHJvYmxlbSBpbiBib29zdCAxLjc0LjANCmh0dHBzOi8vZ2l0aHViLmNvbS9v
-cGVuYm1jL3g4Ni1wb3dlci1jb250cm9sL2lzc3Vlcy83PGh0dHBzOi8vYXBjMDEuc2FmZWxpbmtz
-LnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD1odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZv
-cGVuYm1jJTJGeDg2LXBvd2VyLWNvbnRyb2wlMkZpc3N1ZXMlMkY3JmRhdGE9MDQlN0MwMSU3Q2ph
-eWFzaHJlZS1kJTQwaGNsLmNvbSU3QzYzMDEyNmNlMGRiMzRmYjljYTcxMDhkODljNzQyZGJiJTdD
-MTg5ZGU3MzdjOTNhNGY1YThiNjg2ZjRjYTk5NDE5MTIlN0MwJTdDMSU3QzYzNzQzMTM3MDUwNDg0
-NDY0NiU3Q1Vua25vd24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9p
-VjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0MxMDAwJnNkYXRhPXRvN3E0
-aWJGQVNoeG1zWWtKaEhVM1F6a3NpOURjZG42JTJGbENUOTZsa1BydyUzRCZyZXNlcnZlZD0wPg0K
-VGhhbmtzLA0KSm96ZWYNCk9uIDEyLzkvMjAyMCAxNzowMCBQTSwgSmF5YXNocmVlIEQgd3JvdGU6
-DQpDbGFzc2lmaWNhdGlvbjogUHVibGljDQpIaSBUZWFtLA0KDQpJIGFtIGdldHRpbmcgdGhlIGZv
-bGxvd2luZyBlcnJvciBpbiBHZXJyaXQgT3BlbkJNQyBDSSBpc3N1ZXMuIFBsZWFzZSBwcm92aWRl
-IHNvbWUgaW5wdXRzL3N1Z2dlc3Rpb25zIG9uIHRoaXMuDQoNCi91c3IvbG9jYWwvaW5jbHVkZS9i
-b29zdC9hc2lvL2V4ZWN1dGlvbi9hbnlfZXhlY3V0b3IuaHBwOiBJbiBzdGF0aWMgbWVtYmVyIGZ1
-bmN0aW9uIMOi4oKsy5xzdGF0aWMgY29uc3Qgc3RkOjp0eXBlX2luZm8mIGJvb3N0Ojphc2lvOjpl
-eGVjdXRpb246OmRldGFpbDo6YW55X2V4ZWN1dG9yX2Jhc2U6OnRhcmdldF90eXBlX3ZvaWQoKcOi
-4oKs4oSiOg0KL3Vzci9sb2NhbC9pbmNsdWRlL2Jvb3N0L2FzaW8vZXhlY3V0aW9uL2FueV9leGVj
-dXRvci5ocHA6ODExOjIzOiBlcnJvcjogY2Fubm90IHVzZSDDouKCrMucdHlwZWlkw6LigqzihKIg
-d2l0aCDDouKCrMucLWZuby1ydHRpw6LigqzihKINCiAgODExIHwgICAgIHJldHVybiB0eXBlaWQo
-dm9pZCk7DQogICAgICB8ICAgICAgICAgICAgICAgICAgICAgICBeDQovdXNyL2xvY2FsL2luY2x1
-ZGUvYm9vc3QvYXNpby9leGVjdXRpb24vYW55X2V4ZWN1dG9yLmhwcDogSW4gc3RhdGljIG1lbWJl
-ciBmdW5jdGlvbiDDouKCrMucc3RhdGljIGNvbnN0IHN0ZDo6dHlwZV9pbmZvJiBib29zdDo6YXNp
-bzo6ZXhlY3V0aW9uOjpkZXRhaWw6OmFueV9leGVjdXRvcl9iYXNlOjp0YXJnZXRfdHlwZV9leCgp
-w6LigqzihKI6DQovdXNyL2xvY2FsL2luY2x1ZGUvYm9vc3QvYXNpby9leGVjdXRpb24vYW55X2V4
-ZWN1dG9yLmhwcDo4NTE6MjE6IGVycm9yOiBjYW5ub3QgdXNlIMOi4oKsy5x0eXBlaWTDouKCrOKE
-oiB3aXRoIMOi4oKsy5wtZm5vLXJ0dGnDouKCrOKEog0KICA4NTEgfCAgICAgcmV0dXJuIHR5cGVp
-ZChFeCk7DQoNClJlZ2FyZHMsDQpKYXlhc2hyZWUNCg0KDQo6OkRJU0NMQUlNRVI6Og0KX19fX19f
-X19fX19fX19fX19fX19fX19fX19fX19fX18NClRoZSBjb250ZW50cyBvZiB0aGlzIGUtbWFpbCBh
-bmQgYW55IGF0dGFjaG1lbnQocykgYXJlIGNvbmZpZGVudGlhbCBhbmQgaW50ZW5kZWQgZm9yIHRo
-ZSBuYW1lZCByZWNpcGllbnQocykgb25seS4gRS1tYWlsIHRyYW5zbWlzc2lvbiBpcyBub3QgZ3Vh
-cmFudGVlZCB0byBiZSBzZWN1cmUgb3IgZXJyb3ItZnJlZSBhcyBpbmZvcm1hdGlvbiBjb3VsZCBi
-ZSBpbnRlcmNlcHRlZCwgY29ycnVwdGVkLCBsb3N0LCBkZXN0cm95ZWQsIGFycml2ZSBsYXRlIG9y
-IGluY29tcGxldGUsIG9yIG1heSBjb250YWluIHZpcnVzZXMgaW4gdHJhbnNtaXNzaW9uLiBUaGUg
-ZSBtYWlsIGFuZCBpdHMgY29udGVudHMgKHdpdGggb3Igd2l0aG91dCByZWZlcnJlZCBlcnJvcnMp
-IHNoYWxsIHRoZXJlZm9yZSBub3QgYXR0YWNoIGFueSBsaWFiaWxpdHkgb24gdGhlIG9yaWdpbmF0
-b3Igb3IgSENMIG9yIGl0cyBhZmZpbGlhdGVzLiBWaWV3cyBvciBvcGluaW9ucywgaWYgYW55LCBw
-cmVzZW50ZWQgaW4gdGhpcyBlbWFpbCBhcmUgc29sZWx5IHRob3NlIG9mIHRoZSBhdXRob3IgYW5k
-IG1heSBub3QgbmVjZXNzYXJpbHkgcmVmbGVjdCB0aGUgdmlld3Mgb3Igb3BpbmlvbnMgb2YgSENM
-IG9yIGl0cyBhZmZpbGlhdGVzLiBBbnkgZm9ybSBvZiByZXByb2R1Y3Rpb24sIGRpc3NlbWluYXRp
-b24sIGNvcHlpbmcsIGRpc2Nsb3N1cmUsIG1vZGlmaWNhdGlvbiwgZGlzdHJpYnV0aW9uIGFuZCAv
-IG9yIHB1YmxpY2F0aW9uIG9mIHRoaXMgbWVzc2FnZSB3aXRob3V0IHRoZSBwcmlvciB3cml0dGVu
-IGNvbnNlbnQgb2YgYXV0aG9yaXplZCByZXByZXNlbnRhdGl2ZSBvZiBIQ0wgaXMgc3RyaWN0bHkg
-cHJvaGliaXRlZC4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgdGhpcyBlbWFpbCBpbiBlcnJvciBwbGVh
-c2UgZGVsZXRlIGl0IGFuZCBub3RpZnkgdGhlIHNlbmRlciBpbW1lZGlhdGVseS4gQmVmb3JlIG9w
-ZW5pbmcgYW55IGVtYWlsIGFuZC9vciBhdHRhY2htZW50cywgcGxlYXNlIGNoZWNrIHRoZW0gZm9y
-IHZpcnVzZXMgYW5kIG90aGVyIGRlZmVjdHMuDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fXw0K
+Hi,
+I have added chips TCA9554 and PCA9552  which will be used for presence
+detect of FRUs, and line-names for miscellaneous GPIOs  .
 
---_000_SG2PR04MB3093122D52EC9467679DCF34E1CB0SG2PR04MB3093apcp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+From 38a17b3376c601a3796c1147b374d6aabfc8c12d Mon Sep 17 00:00:00 2001
+From: Alpana Kumari <alpankum@in.ibm.com>
+Date: Thu, 10 Dec 2020 00:04:55 -0600
+Subject: [PATCH] Adding chips TCA9554 and PCA9552, to expose the presence
+ detect lines for the op-panel, TPM, DASD planers, cable-cards, DCMs, VRMs.
+ And line-names for miscellaneous GPIOs.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtp
-ZiAhbXNvXT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kb1w6KiB7
-YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0
-I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwh
-W2VuZGlmXS0tPjxzdHlsZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNl
-DQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYg
-MyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIg
-MTUgNSAyIDIgMiA0IDMgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1h
-bCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47DQoJbWFyZ2luLWJv
-dHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmki
-LHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXttc28tc3R5bGUtcHJp
-b3JpdHk6OTk7DQoJY29sb3I6IzA1NjNDMTsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30N
-CmE6dmlzaXRlZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0KCXttc28tc3R5bGUtcHJpb3Jp
-dHk6OTk7DQoJY29sb3I6Izk1NEY3MjsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30NCnAN
-Cgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCW1zby1tYXJnaW4tdG9wLWFsdDphdXRvOw0KCW1h
-cmdpbi1yaWdodDowaW47DQoJbXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG87DQoJbWFyZ2luLWxl
-ZnQ6MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMt
-c2VyaWY7fQ0KcC5tc29ub3JtYWwwLCBsaS5tc29ub3JtYWwwLCBkaXYubXNvbm9ybWFsMA0KCXtt
-c28tc3R5bGUtbmFtZTptc29ub3JtYWw7DQoJbXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFy
-Z2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVm
-dDowaW47DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToiVGltZXMgTmV3IFJvbWFu
-IixzZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOQ0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbDsN
-Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30N
-CnNwYW4uRW1haWxTdHlsZTIwDQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLXJlcGx5Ow0KCWZv
-bnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOiMxRjQ5N0Q7fQ0KLk1zb0No
-cERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1zaXplOjEwLjBw
-dDt9DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo4LjVpbiAxMS4waW47DQoJbWFyZ2luOjEu
-MGluIDEuMGluIDEuMGluIDEuMGluO30NCmRpdi5Xb3JkU2VjdGlvbjENCgl7cGFnZTpXb3JkU2Vj
-dGlvbjE7fQ0KLS0+PC9zdHlsZT48IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlZGVm
-YXVsdHMgdjpleHQ9ImVkaXQiIHNwaWRtYXg9IjEwMjYiIC8+DQo8L3htbD48IVtlbmRpZl0tLT48
-IS0tW2lmIGd0ZSBtc28gOV0+PHhtbD4NCjxvOnNoYXBlbGF5b3V0IHY6ZXh0PSJlZGl0Ij4NCjxv
-OmlkbWFwIHY6ZXh0PSJlZGl0IiBkYXRhPSIxIiAvPg0KPC9vOnNoYXBlbGF5b3V0PjwveG1sPjwh
-W2VuZGlmXS0tPg0KPC9oZWFkPg0KPGJvZHkgbGFuZz0iRU4tVVMiIGxpbms9IiMwNTYzQzEiIHZs
-aW5rPSIjOTU0RjcyIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIiBzdHlsZT0ibWFyZ2luLWJvdHRvbToxMi4wcHQiPkNsYXNzaWZpY2F0aW9uOiA8Yj48
-c3BhbiBzdHlsZT0iY29sb3I6Z3JlZW4iPlB1YmxpYzwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZv
-bnQtc2l6ZToxMi4wcHQiPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxzcGFuIHN0eWxlPSJjb2xvcjojMUY0OTdEIj5UaGFua3MgSm96ZWYgZm9yIHlvdXIgcmVz
-cG9uc2UuPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
-c3R5bGU9ImNvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxkaXY+
-DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlkICNFMUUxRTEgMS4wcHQ7
-cGFkZGluZzozLjBwdCAwaW4gMGluIDBpbiI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48YSBuYW1l
-PSJfX19fX3JlcGx5c2VwYXJhdG9yIj48L2E+PGI+RnJvbTo8L2I+IFdsdWR6aWssIEpvemVmICZs
-dDtqb3plZi53bHVkemlrQGxpbnV4LmludGVsLmNvbSZndDsNCjxicj4NCjxiPlNlbnQ6PC9iPiBU
-aHVyc2RheSwgRGVjZW1iZXIgMTAsIDIwMjAgMTI6MjcgQU08YnI+DQo8Yj5Ubzo8L2I+IEpheWFz
-aHJlZSBEICZsdDtqYXlhc2hyZWUtZEBoY2wuY29tJmd0Ozsgb3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnPGJyPg0KPGI+U3ViamVjdDo8L2I+IFJlOiBPcGVuQk1DIENJIGlzc3VlPG86cD48L286cD48
-L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1
-dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG87bGluZS1oZWlnaHQ6MTIuMHB0O2JhY2tncm91
-bmQ6I0ZGRUI5QyI+DQo8c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtjb2xvcjpyZWQiPltD
-QVVUSU9OOiBUaGlzIEVtYWlsIGlzIGZyb20gb3V0c2lkZSB0aGUgT3JnYW5pemF0aW9uLiBVbmxl
-c3MgeW91IHRydXN0IHRoZSBzZW5kZXIsIERvbuKAmXQgY2xpY2sgbGlua3Mgb3Igb3BlbiBhdHRh
-Y2htZW50cyBhcyBpdCBtYXkgYmUgYSBQaGlzaGluZyBlbWFpbCwgd2hpY2ggY2FuIHN0ZWFsIHlv
-dXIgSW5mb3JtYXRpb24gYW5kIGNvbXByb21pc2UgeW91ciBDb21wdXRlci5dPC9zcGFuPjxzcGFu
-IHN0eWxlPSJmb250LXNpemU6MTIuMHB0Ij48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2Pg0K
-PHA+WWVzLCByZW1vdmUgY29tcGlsYXRpb24gZmxhZyAnLWZuby1ydHRpJyBmcm9tIHlvdSBtYWtl
-ZmlsZSBvciBjbWFrZWZpbGUuIElmIHlvdSB1c2UgbWVzb24sIHRoZW4gc2V0IGNwcF9ydHRpIHRv
-IHRydWUgaW4gZGVmYXVsdF9vcHRpb25zIGZvciBwcm9qZWN0Ljxicj4NCkl0IGlzIGtub3duIHBy
-b2JsZW0gaW4gYm9vc3QgMS43NC4wPGJyPg0KPGEgaHJlZj0iaHR0cHM6Ly9hcGMwMS5zYWZlbGlu
-a3MucHJvdGVjdGlvbi5vdXRsb29rLmNvbS8/dXJsPWh0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUy
-Rm9wZW5ibWMlMkZ4ODYtcG93ZXItY29udHJvbCUyRmlzc3VlcyUyRjcmYW1wO2RhdGE9MDQlN0Mw
-MSU3Q2pheWFzaHJlZS1kJTQwaGNsLmNvbSU3QzYzMDEyNmNlMGRiMzRmYjljYTcxMDhkODljNzQy
-ZGJiJTdDMTg5ZGU3MzdjOTNhNGY1YThiNjg2ZjRjYTk5NDE5MTIlN0MwJTdDMSU3QzYzNzQzMTM3
-MDUwNDg0NDY0NiU3Q1Vua25vd24lN0NUV0ZwYkdac2IzZDhleUpXSWpvaU1DNHdMakF3TURBaUxD
-SlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENKWFZDSTZNbjAlM0QlN0MxMDAwJmFtcDtz
-ZGF0YT10bzdxNGliRkFTaHhtc1lrSmhIVTNRemtzaTlEY2RuNiUyRmxDVDk2bGtQcnclM0QmYW1w
-O3Jlc2VydmVkPTAiPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3g4Ni1wb3dlci1jb250cm9s
-L2lzc3Vlcy83PC9hPjxicj4NClRoYW5rcyw8YnI+DQpKb3plZjxvOnA+PC9vOnA+PC9wPg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPk9uIDEyLzkvMjAyMCAxNzowMCBQTSwgSmF5YXNocmVl
-IEQgd3JvdGU6PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxibG9ja3F1b3RlIHN0eWxlPSJtYXJn
-aW4tdG9wOjUuMHB0O21hcmdpbi1ib3R0b206NS4wcHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-c3R5bGU9Im1hcmdpbi1ib3R0b206MTIuMHB0Ij5DbGFzc2lmaWNhdGlvbjogPGI+PHNwYW4gc3R5
-bGU9ImNvbG9yOmdyZWVuIj5QdWJsaWM8L3NwYW4+PC9iPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+SGkgVGVhbSwgPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkkgYW0gZ2V0
-dGluZyB0aGUgZm9sbG93aW5nIGVycm9yIGluIEdlcnJpdCBPcGVuQk1DIENJIGlzc3Vlcy4gUGxl
-YXNlIHByb3ZpZGUgc29tZSBpbnB1dHMvc3VnZ2VzdGlvbnMgb24gdGhpcy48bzpwPjwvbzpwPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9
-Ik1zb05vcm1hbCI+L3Vzci9sb2NhbC9pbmNsdWRlL2Jvb3N0L2FzaW8vZXhlY3V0aW9uL2FueV9l
-eGVjdXRvci5ocHA6IEluIHN0YXRpYyBtZW1iZXIgZnVuY3Rpb24gw6LigqzLnHN0YXRpYyBjb25z
-dCBzdGQ6OnR5cGVfaW5mbyZhbXA7IGJvb3N0Ojphc2lvOjpleGVjdXRpb246OmRldGFpbDo6YW55
-X2V4ZWN1dG9yX2Jhc2U6OnRhcmdldF90eXBlX3ZvaWQoKcOi4oKs4oSiOjxvOnA+PC9vOnA+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+L3Vzci9sb2NhbC9pbmNsdWRlL2Jvb3N0L2FzaW8vZXhl
-Y3V0aW9uL2FueV9leGVjdXRvci5ocHA6ODExOjIzOiBlcnJvcjogY2Fubm90IHVzZSDDouKCrMuc
-dHlwZWlkw6LigqzihKIgd2l0aCDDouKCrMucLWZuby1ydHRpw6LigqzihKI8bzpwPjwvbzpwPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNwOyA4MTEgfCZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyByZXR1cm4gdHlwZWlkKHZvaWQpOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHwmbmJzcDsmbmJzcDsmbmJzcDsm
-bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsg
-XjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+L3Vzci9sb2NhbC9pbmNsdWRl
-L2Jvb3N0L2FzaW8vZXhlY3V0aW9uL2FueV9leGVjdXRvci5ocHA6IEluIHN0YXRpYyBtZW1iZXIg
-ZnVuY3Rpb24gw6LigqzLnHN0YXRpYyBjb25zdCBzdGQ6OnR5cGVfaW5mbyZhbXA7IGJvb3N0Ojph
-c2lvOjpleGVjdXRpb246OmRldGFpbDo6YW55X2V4ZWN1dG9yX2Jhc2U6OnRhcmdldF90eXBlX2V4
-KCnDouKCrOKEojo8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPi91c3IvbG9j
-YWwvaW5jbHVkZS9ib29zdC9hc2lvL2V4ZWN1dGlvbi9hbnlfZXhlY3V0b3IuaHBwOjg1MToyMTog
-ZXJyb3I6IGNhbm5vdCB1c2Ugw6LigqzLnHR5cGVpZMOi4oKs4oSiIHdpdGggw6LigqzLnC1mbm8t
-cnR0acOi4oKs4oSiPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDsg
-ODUxIHwmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgcmV0dXJuIHR5cGVpZChFeCk7PG86cD48L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPlJlZ2FyZHMsPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj5KYXlhc2hyZWU8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPiZuYnNw
-OzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjcuNXB0O2Zv
-bnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6Z3JheSI+OjpESVND
-TEFJTUVSOjo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8ZGl2IGNsYXNzPSJNc29Ob3JtYWwiIGFs
-aWduPSJjZW50ZXIiIHN0eWxlPSJ0ZXh0LWFsaWduOmNlbnRlciI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZTo3LjVwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9y
-OmdyYXkiPg0KPGhyIHNpemU9IjIiIHdpZHRoPSIxMDAlIiBhbGlnbj0iY2VudGVyIj4NCjwvc3Bh
-bj48L2Rpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6Ny41
-cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpncmF5Ij5U
-aGUgY29udGVudHMgb2YgdGhpcyBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50KHMpIGFyZSBjb25m
-aWRlbnRpYWwgYW5kIGludGVuZGVkIGZvciB0aGUgbmFtZWQgcmVjaXBpZW50KHMpIG9ubHkuIEUt
-bWFpbCB0cmFuc21pc3Npb24gaXMgbm90IGd1YXJhbnRlZWQgdG8gYmUgc2VjdXJlDQogb3IgZXJy
-b3ItZnJlZSBhcyBpbmZvcm1hdGlvbiBjb3VsZCBiZSBpbnRlcmNlcHRlZCwgY29ycnVwdGVkLCBs
-b3N0LCBkZXN0cm95ZWQsIGFycml2ZSBsYXRlIG9yIGluY29tcGxldGUsIG9yIG1heSBjb250YWlu
-IHZpcnVzZXMgaW4gdHJhbnNtaXNzaW9uLiBUaGUgZSBtYWlsIGFuZCBpdHMgY29udGVudHMgKHdp
-dGggb3Igd2l0aG91dCByZWZlcnJlZCBlcnJvcnMpIHNoYWxsIHRoZXJlZm9yZSBub3QgYXR0YWNo
-IGFueSBsaWFiaWxpdHkgb24gdGhlDQogb3JpZ2luYXRvciBvciBIQ0wgb3IgaXRzIGFmZmlsaWF0
-ZXMuIFZpZXdzIG9yIG9waW5pb25zLCBpZiBhbnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFy
-ZSBzb2xlbHkgdGhvc2Ugb2YgdGhlIGF1dGhvciBhbmQgbWF5IG5vdCBuZWNlc3NhcmlseSByZWZs
-ZWN0IHRoZSB2aWV3cyBvciBvcGluaW9ucyBvZiBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIEFueSBm
-b3JtIG9mIHJlcHJvZHVjdGlvbiwgZGlzc2VtaW5hdGlvbiwgY29weWluZywgZGlzY2xvc3VyZSwN
-CiBtb2RpZmljYXRpb24sIGRpc3RyaWJ1dGlvbiBhbmQgLyBvciBwdWJsaWNhdGlvbiBvZiB0aGlz
-IG1lc3NhZ2Ugd2l0aG91dCB0aGUgcHJpb3Igd3JpdHRlbiBjb25zZW50IG9mIGF1dGhvcml6ZWQg
-cmVwcmVzZW50YXRpdmUgb2YgSENMIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIElmIHlvdSBoYXZl
-IHJlY2VpdmVkIHRoaXMgZW1haWwgaW4gZXJyb3IgcGxlYXNlIGRlbGV0ZSBpdCBhbmQgbm90aWZ5
-IHRoZSBzZW5kZXIgaW1tZWRpYXRlbHkuIEJlZm9yZQ0KIG9wZW5pbmcgYW55IGVtYWlsIGFuZC9v
-ciBhdHRhY2htZW50cywgcGxlYXNlIGNoZWNrIHRoZW0gZm9yIHZpcnVzZXMgYW5kIG90aGVyIGRl
-ZmVjdHMuPG86cD48L286cD48L3NwYW4+PC9wPg0KPGRpdiBjbGFzcz0iTXNvTm9ybWFsIiBhbGln
-bj0iY2VudGVyIiBzdHlsZT0idGV4dC1hbGlnbjpjZW50ZXIiPjxzcGFuIHN0eWxlPSJmb250LXNp
-emU6Ny41cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpn
-cmF5Ij4NCjxociBzaXplPSIyIiB3aWR0aD0iMTAwJSIgYWxpZ249ImNlbnRlciI+DQo8L3NwYW4+
-PC9kaXY+DQo8L2Jsb2NrcXVvdGU+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
+Change-Id: If4d7df8db5f30fb4c1155d39c50c560251fc9660
+Signed-off-by: Alpana Kumari <alpankum@in.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 176
+++++++++++++++++++++++++++-
+ 1 file changed, 171 insertions(+), 5 deletions(-)
 
---_000_SG2PR04MB3093122D52EC9467679DCF34E1CB0SG2PR04MB3093apcp_--
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index bcc4568..8f9f4cd 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -196,11 +196,11 @@
+ &gpio0 {
+    gpio-line-names =
+    /*A0-A7*/   "","","","","","","","",
+-   /*B0-B7*/   "","","","","","","checkstop","",
++   /*B0-B7*/   "USERSPACE_RSTIND_BUFF","","","","","","checkstop","",
+    /*C0-C7*/   "","","","","","","","",
+    /*D0-D7*/   "","","","","","","","",
+    /*E0-E7*/   "","","","","","","","",
+-   /*F0-F7*/   "","","","","","","","",
++   /*F0-F7*/
+"PIN_HOLE_RESET_IN_N","","","PIN_HOLE_RESET_OUT_N","","","","",
+    /*G0-G7*/   "","","","","","","","",
+    /*H0-H7*/
+"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
+    /*I0-I7*/   "","","","","","","","",
+@@ -212,12 +212,12 @@
+    /*O0-O7*/   "","","","usb-power","","","","",
+    /*P0-P7*/   "","","","","pcieslot-power","","","",
+    /*Q0-Q7*/   "cfam-reset","","","","","","","",
+-   /*R0-R7*/   "","","","","","","","",
++   /*R0-R7*/   "","","","","","I2C_FLASH_MICRO_N","","",
+    /*S0-S7*/   "presence-ps0","presence-ps1","presence-ps2","presence-ps3",
+                "","","","",
+    /*T0-T7*/   "","","","","","","","",
+    /*U0-U7*/   "","","","","","","","",
+-   /*V0-V7*/   "","","","","","","","",
++   /*V0-V7*/   "","BMC_3RESTART_ATTEMPT_P","","","","","","",
+    /*W0-W7*/   "","","","","","","","",
+    /*X0-X7*/   "","","","","","","","",
+    /*Y0-Y7*/   "","","","","","","","",
+@@ -629,6 +629,65 @@
+        reg = <0x51>;
+    };
+
++   tca_pres1: tca9554@20{
++       compatible = "ti,tca9554";
++       reg = <0x20>;
++       #address-cells = <1>;
++       #size-cells = <0>;
++
++       gpio-controller;
++       #gpio-cells = <2>;
++
++       gpio-line-names = "",
++           "RUSSEL_FW_I2C_ENABLE_N",
++           "RUSSEL_OPPANEL_PRESENCE_N",
++           "BLYTH_OPPANEL_PRESENCE_N",
++           "CPU_TPM_CARD_PRESENT_N",
++           "DASD_BP2_PRESENT_N",
++           "DASD_BP1_PRESENT_N",
++           "DASD_BP0_PRESENT_N";
++
++       gpio@0 {
++           reg = <0>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@1 {
++           reg = <1>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@2 {
++           reg = <2>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@3 {
++           reg = <3>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@4 {
++           reg = <4>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@5 {
++           reg = <5>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@6 {
++           reg = <6>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@7 {
++           reg = <7>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++   };
++
+
+@@ -665,6 +724,104 @@
+        compatible = "ibm,cffps";
+        reg = <0x69>;
+    };
++
++   pca_pres1: pca9552@61 {
++       compatible = "nxp,pca9552";
++       reg = <0x61>;
++       #address-cells = <1>;
++       #size-cells = <0>;
++
++       gpio-controller;
++       #gpio-cells = <2>;
++
++       gpio-line-names =
++           "SLOT0_PRSNT_EN_RSVD", "SLOT1_PRSNT_EN_RSVD",
++           "SLOT2_PRSNT_EN_RSVD", "SLOT3_PRSNT_EN_RSVD",
++           "SLOT4_PRSNT_EN_RSVD", "SLOT0_EXPANDER_PRSNT_N",
++           "SLOT1_EXPANDER_PRSNT_N", "SLOT2_EXPANDER_PRSNT_N",
++           "SLOT3_EXPANDER_PRSNT_N", "SLOT4_EXPANDER_PRSNT_N",
++           "", "", "", "", "", "";
++
++       gpio@0 {
++           reg = <0>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@1 {
++           reg = <1>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@2 {
++           reg = <2>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@3 {
++           reg = <3>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@4 {
++           reg = <4>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@5 {
++           reg = <5>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@6 {
++           reg = <6>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@7 {
++           reg = <7>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@8 {
++           reg = <8>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@9 {
++           reg = <9>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@10 {
++           reg = <10>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@11 {
++           reg = <11>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@12 {
++           reg = <12>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@13 {
++           reg = <13>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@14 {
++           reg = <14>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++
++       gpio@15 {
++           reg = <15>;
++           type = <PCA955X_TYPE_GPIO>;
++       };
++   };
+ };
+
+ &i2c4 {
+@@ -1004,7 +1161,7 @@
+        reg = <0x51>;
+    };
+
+-   pca1: pca9552@61 {
++   pca_pres3: pca9552@61 {
+        compatible = "nxp,pca9552";
+        reg = <0x61>;
+        #address-cells = <1>;
+@@ -1012,6 +1169,15 @@
+        gpio-controller;
+        #gpio-cells = <2>;
+
++       gpio-line-names =
++           "SLOT6_PRSNT_EN_RSVD", "SLOT7_PRSNT_EN_RSVD",
++           "SLOT8_PRSNT_EN_RSVD", "SLOT9_PRSNT_EN_RSVD",
++           "SLOT10_PRSNT_EN_RSVD", "SLOT11_PRSNT_EN_RSVD",
++           "SLOT6_EXPANDER_PRSNT_N", "SLOT7_EXPANDER_PRSNT_N",
++           "SLOT8_EXPANDER_PRSNT_N", "SLOT9_EXPANDER_PRSNT_N",
++           "SLOT10_EXPANDER_PRSNT_N", "SLOT11_EXPANDER_PRSNT_N",
++           "", "", "", "";
++
+        gpio@0 {
+            reg = <0>;
+            type = <PCA955X_TYPE_GPIO>;
+--
+1.8.3.1
+
+
+
+Thanks,
+Alpana
+
+--000000000000c9b4f405b6169297
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<br>I have added chips TCA9554 and PCA9552=C2=A0 which =
+will be used for presence detect of FRUs, and line-names for miscellaneous =
+GPIOs=C2=A0 .<br><div><br></div><div>From 38a17b3376c601a3796c1147b374d6aab=
+fc8c12d Mon Sep 17 00:00:00 2001<br>From: Alpana Kumari &lt;<a href=3D"mail=
+to:alpankum@in.ibm.com">alpankum@in.ibm.com</a>&gt;<br>Date: Thu, 10 Dec 20=
+20 00:04:55 -0600<br>Subject: [PATCH] Adding chips TCA9554 and PCA9552, to =
+expose the presence<br>=C2=A0detect lines for the op-panel, TPM, DASD plane=
+rs, cable-cards, DCMs, VRMs.<br>=C2=A0And line-names for miscellaneous GPIO=
+s.<br><br>Change-Id: If4d7df8db5f30fb4c1155d39c50c560251fc9660<br>Signed-of=
+f-by: Alpana Kumari &lt;<a href=3D"mailto:alpankum@in.ibm.com">alpankum@in.=
+ibm.com</a>&gt;<br>---<br>=C2=A0arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dt=
+s | 176 ++++++++++++++++++++++++++-<br>=C2=A01 file changed, 171 insertions=
+(+), 5 deletions(-)<br><br>diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-ra=
+inier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts<br>index bcc4568..=
+8f9f4cd 100644<br>--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts<br>+++=
+ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts<br>@@ -196,11 +196,11 @@<br=
+>=C2=A0&amp;gpio0 {<br>=C2=A0 =C2=A0 gpio-line-names =3D<br>=C2=A0 =C2=A0 /=
+*A0-A7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&=
+quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>- =C2=A0 /*B0-B7*/ =C2=A0 =
+&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quo=
+t;,&quot;checkstop&quot;,&quot;&quot;,<br>+ =C2=A0 /*B0-B7*/ =C2=A0 &quot;U=
+SERSPACE_RSTIND_BUFF&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&qu=
+ot;,&quot;&quot;,&quot;checkstop&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*C0-=
+C7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot=
+;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*D0-D7*/ =C2=A0=
+ &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&qu=
+ot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*E0-E7*/ =C2=A0 &quot;&quo=
+t;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&=
+quot;,&quot;&quot;,<br>- =C2=A0 /*F0-F7*/ =C2=A0 &quot;&quot;,&quot;&quot;,=
+&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quo=
+t;,<br>+ =C2=A0 /*F0-F7*/ =C2=A0 &quot;PIN_HOLE_RESET_IN_N&quot;,&quot;&quo=
+t;,&quot;&quot;,&quot;PIN_HOLE_RESET_OUT_N&quot;,&quot;&quot;,&quot;&quot;,=
+&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*G0-G7*/ =C2=A0 &quot;&quot;,&=
+quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot=
+;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*H0-H7*/ =C2=A0 &quot;&quot;,&quot;bmc-in=
+graham0&quot;,&quot;rear-enc-id0&quot;,&quot;rear-enc-fault0&quot;,&quot;&q=
+uot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*I0-I7*/ =C2=
+=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;=
+&quot;,&quot;&quot;,&quot;&quot;,<br>@@ -212,12 +212,12 @@<br>=C2=A0 =C2=A0=
+ /*O0-O7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;usb-power&qu=
+ot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /=
+*P0-P7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;p=
+cieslot-power&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=
+=A0 /*Q0-Q7*/ =C2=A0 &quot;cfam-reset&quot;,&quot;&quot;,&quot;&quot;,&quot=
+;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>- =C2=A0 /*=
+R0-R7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&q=
+uot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>+ =C2=A0 /*R0-R7*/ =C2=A0 &=
+quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;I2C_F=
+LASH_MICRO_N&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*S0-S7*/ =
+=C2=A0 &quot;presence-ps0&quot;,&quot;presence-ps1&quot;,&quot;presence-ps2=
+&quot;,&quot;presence-ps3&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=
+=C2=A0 =C2=A0 /*T0-T7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot=
+;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=
+=A0 /*U0-U7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&q=
+uot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br></div><div>- =C2=A0 /=
+*V0-V7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&=
+quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>+ =C2=A0 /*V0-V7*/ =C2=A0 =
+&quot;&quot;,&quot;BMC_3RESTART_ATTEMPT_P&quot;,&quot;&quot;,&quot;&quot;,&=
+quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*W0-W=
+7*/ =C2=A0 &quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;=
+,&quot;&quot;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*X0-X7*/ =C2=A0 =
+&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quo=
+t;,&quot;&quot;,&quot;&quot;,<br>=C2=A0 =C2=A0 /*Y0-Y7*/ =C2=A0 &quot;&quot=
+;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&q=
+uot;,&quot;&quot;,<br>@@ -629,6 +629,65 @@<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 r=
+eg =3D &lt;0x51&gt;;<br>=C2=A0 =C2=A0 };<br><br>+ =C2=A0 tca_pres1: tca9554=
+@20{<br>+ =C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;ti,tca9554&quot;;<br>+ =
+=C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0x20&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 #addre=
+ss-cells =3D &lt;1&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 #size-cells =3D &lt;0&gt;=
+;<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio-controller;<br>+ =C2=A0 =C2=A0 =C2=A0=
+ #gpio-cells =3D &lt;2&gt;;<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio-line-names =
+=3D &quot;&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;RUSSEL_FW_I=
+2C_ENABLE_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;RUSSEL_OPP=
+ANEL_PRESENCE_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;BLYTH_=
+OPPANEL_PRESENCE_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;CPU=
+_TPM_CARD_PRESENT_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;DA=
+SD_BP2_PRESENT_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;DASD_=
+BP1_PRESENT_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;DASD_BP0=
+_PRESENT_N&quot;;<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@0 {<br>+ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };=
+<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@1 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 reg =3D &lt;1&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D =
+&lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =
+=C2=A0 =C2=A0 gpio@2 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;=
+2&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GP=
+IO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };=C2=A0 =C2=A0 =C2=A0=C2=A0<br></div><di=
+v>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@3 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 reg =3D &lt;3&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt=
+;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=
+=A0 =C2=A0 gpio@4 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;4&g=
+t;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&=
+gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@5 {<b=
+r>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;5&gt;;<br>+ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =
+=C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@6 {<br>+ =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;6&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>=
++<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@7 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 reg =3D &lt;7&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt=
+;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+ =C2=A0 };<br>+<br=
+><br>@@ -665,6 +724,104 @@<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 compatible =3D &q=
+uot;ibm,cffps&quot;;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0x69&gt;;<b=
+r>=C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 pca_pres1: pca9552@61 {<br>+ =C2=A0 =C2=
+=A0 =C2=A0 compatible =3D &quot;nxp,pca9552&quot;;<br>+ =C2=A0 =C2=A0 =C2=
+=A0 reg =3D &lt;0x61&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 #address-cells =3D &lt;=
+1&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 #size-cells =3D &lt;0&gt;;<br>+<br></div><=
+div>+ =C2=A0 =C2=A0 =C2=A0 gpio-controller;<br>+ =C2=A0 =C2=A0 =C2=A0 #gpio=
+-cells =3D &lt;2&gt;;<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio-line-names =3D<br=
+>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT0_PRSNT_EN_RSVD&quot;, &quo=
+t;SLOT1_PRSNT_EN_RSVD&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=
+SLOT2_PRSNT_EN_RSVD&quot;, &quot;SLOT3_PRSNT_EN_RSVD&quot;,<br>+ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT4_PRSNT_EN_RSVD&quot;, &quot;SLOT0_EXPAN=
+DER_PRSNT_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT1_EXPA=
+NDER_PRSNT_N&quot;, &quot;SLOT2_EXPANDER_PRSNT_N&quot;,<br>+ =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 &quot;SLOT3_EXPANDER_PRSNT_N&quot;, &quot;SLOT4_EXPAND=
+ER_PRSNT_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;, &qu=
+ot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;;<br>+<br>=
++ =C2=A0 =C2=A0 =C2=A0 gpio@0 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg=
+ =3D &lt;0&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955=
+X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=
+=A0 gpio@1 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;1&gt;;<br>=
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br=
+>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@2 {<br>+ =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;2&gt;;<br>+ =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =
+=C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@3 {<br>+ =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 reg =3D &lt;3&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t=
+ype =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =
+=C2=A0 =C2=A0 =C2=A0 gpio@4 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =
+=3D &lt;4&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X=
+_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0=
+ gpio@5 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;5&gt;;<br>+ =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+=
+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br></div><div>+ =C2=A0 =C2=A0 =C2=A0 gpio@6 {=
+<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;6&gt;;<br>+ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =
+=C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@7 {<br>+ =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;7&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>=
++<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@8 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 reg =3D &lt;8&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt=
+;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=
+=A0 =C2=A0 gpio@9 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;9&g=
+t;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&=
+gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@10 {<=
+br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;10&gt;;<br>+ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =
+=C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@11 {<br>+ =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;11&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };=
+<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@12 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 reg =3D &lt;12&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D=
+ &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =
+=C2=A0 =C2=A0 gpio@13 {<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt=
+;13&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_=
+GPIO&gt;;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@=
+14 {<br></div><div>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;14&gt;;=
+<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;=
+;<br>+ =C2=A0 =C2=A0 =C2=A0 };<br>+<br>+ =C2=A0 =C2=A0 =C2=A0 gpio@15 {<br>=
++ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;15&gt;;<br>+ =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>+ =C2=A0 =C2=
+=A0 =C2=A0 };<br>+ =C2=A0 };<br>=C2=A0};<br><br>=C2=A0&amp;i2c4 {<br>@@ -10=
+04,7 +1161,7 @@<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0x51&gt;;<br>=C2=
+=A0 =C2=A0 };<br><br>- =C2=A0 pca1: pca9552@61 {<br>+ =C2=A0 pca_pres3: pca=
+9552@61 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 compatible =3D &quot;nxp,pca9552&q=
+uot;;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0x61&gt;;<br>=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 #address-cells =3D &lt;1&gt;;<br>@@ -1012,6 +1169,15 @@<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 gpio-controller;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ #gpio-cells =3D &lt;2&gt;;<br><br>+ =C2=A0 =C2=A0 =C2=A0 gpio-line-names =
+=3D<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT6_PRSNT_EN_RSVD&quot;=
+, &quot;SLOT7_PRSNT_EN_RSVD&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+&quot;SLOT8_PRSNT_EN_RSVD&quot;, &quot;SLOT9_PRSNT_EN_RSVD&quot;,<br>+ =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT10_PRSNT_EN_RSVD&quot;, &quot;SLO=
+T11_PRSNT_EN_RSVD&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT=
+6_EXPANDER_PRSNT_N&quot;, &quot;SLOT7_EXPANDER_PRSNT_N&quot;,<br>+ =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT8_EXPANDER_PRSNT_N&quot;, &quot;SLOT9=
+_EXPANDER_PRSNT_N&quot;,<br>+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;SLOT=
+10_EXPANDER_PRSNT_N&quot;, &quot;SLOT11_EXPANDER_PRSNT_N&quot;,<br>+ =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&quot;, &quot;&quot;, &quot;&quot;, &quo=
+t;&quot;;<br>+<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 gpio@0 {<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D &lt;0&gt;;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 type =3D &lt;PCA955X_TYPE_GPIO&gt;;<br>--<br>1.8.3.1<br><br><=
+/div><div><br></div><div><br></div><div>Thanks,</div><div>Alpana</div></div=
+>
+
+--000000000000c9b4f405b6169297--
