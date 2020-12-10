@@ -2,67 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7CC32D604F
-	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 16:48:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CB31E2D6071
+	for <lists+openbmc@lfdr.de>; Thu, 10 Dec 2020 16:51:20 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CsJH45PHYzDqSW
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 02:48:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CsJLF51PNzDqM5
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 02:51:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::436;
- helo=mail-pf1-x436.google.com; envelope-from=dhruvaraj@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Ogoi6UQW; dkim-atps=neutral
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com
- [IPv6:2607:f8b0:4864:20::436])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Ug+ibM4z; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CsH6J46dFzDr2m
- for <openbmc@lists.ozlabs.org>; Fri, 11 Dec 2020 01:55:45 +1100 (AEDT)
-Received: by mail-pf1-x436.google.com with SMTP id t7so4300380pfh.7
- for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 06:55:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:from:date:message-id:subject:to:cc
- :content-transfer-encoding;
- bh=5wLEhJ4/sPUGogPiczDRU1RIVaWltfi1JxprOJF6pF0=;
- b=Ogoi6UQWyi2uMh4W5uC5X8bUr9+6STD7yi0VFieoMnKj92mCVCuuMEdJQESh3HioLK
- NF+GM5EOTXG0TpPU+7cdnBAP301eNq1avzBbKoYZB+5o6mg6xKQdG9t5ERMGPaTcb9+M
- ynxnb3vIr/OD2uy5T6enmzzJcJZxP4Gh1OKqWxDhFV3YaR/ygsDhgVcf4G79HCamdC/l
- Cp2u9BmzC704aAjD9cGygpNoqHD7N06KDt1sAiLaeI+n48cd8tB+bNmaY6B+RUy7FO0R
- fi5rqUY0Zpk9Y73m0O3imEV1YmL9pyK0NT6IC2hUppsAQVyr0Py412JBKIzhs9iBvr4I
- fE+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
- :content-transfer-encoding;
- bh=5wLEhJ4/sPUGogPiczDRU1RIVaWltfi1JxprOJF6pF0=;
- b=AQgDl13bFKfZHcOZl6YLyxzwpDQbQJd99vR7INr4TxKLdQiYTi1Jzo6pdJ7NWpavNd
- gIB+fdQ9F4lB65VRwhqKbe4hEHraYf2kjkB5M0LBhx6iWDwcdhJ9KtK4q1rC9fhzwein
- wQWIbwOXvUrDEJNKTQQ7KlosCYulCISXub7pV13kmuaY4zxPPl+xE08kNScAsIK+ifyD
- 21lpSySBeIJTluLV1JBNwsq+C41RRl4vdRuJckHU53myXI31LeqwnJj4vSaMJnNnC8uv
- VyGWPi5sYwR51Rs6SM6dCeugLnB5z6vZtac5yahqoQNStjeTDr+xKMBkWdM8jWsOYxfw
- YLTQ==
-X-Gm-Message-State: AOAM533Vi4I5lhb677DV/DIZP3SUTdCGBYEStOEe8KVaYV/K9TvvDnQ1
- TNgF4QIqYCBlqJzvgdo94UWHx5K0wJMPtbk4sA9s2kRkyABd3A==
-X-Google-Smtp-Source: ABdhPJyglCb9x1Y2/ANgBbQhoI6Pm4ShkenHsnqwHe45nCSlNwZu76pmIUAF8lPkf01vUKvEMqM1mBiyNlQQyw1dMnM=
-X-Received: by 2002:a17:90b:d93:: with SMTP id
- bg19mr8090149pjb.46.1607612142736; 
- Thu, 10 Dec 2020 06:55:42 -0800 (PST)
-MIME-Version: 1.0
-From: dhruvaraj S <dhruvaraj@gmail.com>
-Date: Thu, 10 Dec 2020 20:25:31 +0530
-Message-ID: <CAK7WosgZtEj_fp_Jx8rqWKHJb7AF8cPHR-_33jo_5vQx645_Bg@mail.gmail.com>
-Subject: Proposal for operations on isolated hardware units using Redfish
- logging
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CsHRk5JDQzDq8v
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Dec 2020 02:10:53 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0BAF1hp3008237
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 10:10:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to :
+ references : message-id : date : mime-version : in-reply-to : content-type
+ : content-transfer-encoding; s=pp1;
+ bh=a81EJiLC6lixbbFKTb3sRSywfZPQF5YMK9C/rG/0gN4=;
+ b=Ug+ibM4zLoO3KSAhvY2Tr5Td03sLIKYUELE0m+yoh8EoiRzyjvPoJezMXJps8gVYOYT4
+ LXSef7DCVvpN8c77vVUm2z0PFw15KsW2S1DDX7JzMaVQi9uxoyI057dBmpCCj7KpUqdn
+ cm5Km/bSwTR46SYeVI5jXsZkSYM+JaYKYASOTo+OBufhQ9EiHyYXgwuDd0KGc241YqWE
+ JfrcQorVQD8l/eM1Wjl88t/3eB/MCZNwIEs657dx60wEZD+rNymz/vUcbgSqk10djJ/3
+ eor6QrvP0orvrHIkQzScnbkNTUFKDG4RE9D7QjnlHPHSwyZrA2OTLRxIvb3fPtmE5EE9 NA== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 35bj9m85x0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 10:10:43 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 0BAF6V5d006992
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 15:10:42 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma02dal.us.ibm.com with ESMTP id 3581uaahe4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 15:10:42 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 0BAFAfg526018256
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 15:10:41 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB9A9112069
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 15:10:40 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8ABE0112063
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 15:10:40 +0000 (GMT)
+Received: from demeter.roc.mn.charter.com (unknown [9.80.199.96])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTPS
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Dec 2020 15:10:40 +0000 (GMT)
+Subject: Re: Security Working Group meeting - Wednesday December 9 - results
+From: Joseph Reynolds <jrey@linux.ibm.com>
 To: openbmc <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <2cfae0a8-e691-fe24-835f-8254c6c93f19@linux.ibm.com>
+Message-ID: <3bb5e81c-4b3e-8e6d-28c7-6776c4968042@linux.ibm.com>
+Date: Thu, 10 Dec 2020 09:10:39 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.4.1
+MIME-Version: 1.0
+In-Reply-To: <2cfae0a8-e691-fe24-835f-8254c6c93f19@linux.ibm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2020-12-10_06:2020-12-09,
+ 2020-12-10 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999
+ malwarescore=0 phishscore=0 impostorscore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2012100092
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,98 +99,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: bradleyb@fuzziesquirrel.com, gmills@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
-Please find the option for operations on isolated hardware units using
-Redfisg logging
+On 12/8/20 10:01 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday December 9 at 10:00am PDT.
+>
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI/edit>, 
+> and anything else that comes up:
+>
+>
+> 1.
+>
+>    Discord discussion #webui: Dumps and logs may contain sensitive
+>    information as documented
+>    here 
+> https://github.com/ibm-openbmc/dev/issues/1531#issuecomment-642238544
+>    and https://github.com/openbmc/openbmc/wiki/Configuration-guide
+
+It is worthwhile to document sensitive info stored in dump and log 
+items.  Where are dumps stored?  Encrypted?  Who *should* have read 
+access to dumps and logs that may contain sensitive information?  Note 
+different use cases with different details in terms of what information 
+is present, how sensitive it is, if it needs to be encrypted as it sits 
+in the BMC, and who should have read access.
+
+The consensus was to keep these details in the wiki.
 
 
-Hardware Isolation
-On systems with multiple processor units and other redundant vital resource=
-s,
-the system downtime can be prevented by isolating the faulty hardware units=
-.
-Most of the actions required to isolate the parts will be dependent on
-the architecture and
-executed in the host. But the BMC needs to support a few steps like
-provide a method to users to query the units in isolation, clearing
-isolation, isolating a
-suspected part, or isolating when the host is down due to a fault in a
-critical unit.
-Since a user interface is needed for the above actions proposing a method t=
-o use
-Redfish log service to carry out these actions.
 
-Requirements
-When user requests, isolate a hardware unit.
-Getting the list of all isolated resources.
-Remove the isolation of a hardware unit.
-Remove all existing isolation
+> 2.
+>
+>    Joseph: Proposed PerformService privilege enhancement to BMCWeb
+> https://lore.kernel.org/openbmc/1bfe87ea-9fc5-8664-d1de-d3138616a427@linux.ibm.com/T/#u
 
-Isolating a hardware unit:
-redfish >> v1 >> Systems >> system >> LogServices >> IsolatedHardware
-{
-  "@odata.id": "/redfish/v1/Systems/system/LogServices/IsolatedHardware",
-  "@odata.type": "#LogService.v1_2_0.LogService",
-  "Actions": {
-    "#LogService.CollectDiagnosticData": {
-      "target":
-"/redfish/v1/Systems/system/LogServices/IsolatedHardware/Actions/LogService=
-.CollectDiagnosticData"
-    }
-  },
-  "Description": "Isolated Hardware",
-  "Entries": {
-    "@odata.id":
-"/redfish/v1/Systems/system/LogServices/IsolatedHardware/Entries"
-  },
-  "Id": "IsolatedHardware",
-  "Name": "Isolated Hardware LogService",
-  "OverWritePolicy": "WrapsWhenFull"
+The question is how to implement Redfish custom roles and Redfish OEM 
+privileges in BMCWeb.
+Use the email thread for discussion.  The direction is NOT to sprinkle 
+customizations throughout the code, instead to implement BMCWeb so we 
+can consume Redfish's published PrivilegeRegistry at BMCWeb compile 
+time.  Then downstream users can supply customized PrivilegeRegistry 
+files that have OEM privileges.  (Refer to the email thread for details, 
+corrections to the above, and evolving discussion.)
 
-Listing isolated hardware units.
-redfish >> v1 >> Systems >> system >> LogServices >> IsolatedHardware >> En=
-tries
-{
-  "@odata.id": "/redfish/v1/Systems/system/LogServices/IsolatedHardware/Ent=
-ries",
-  "@odata.type": "#LogEntryCollection.LogEntryCollection",
-  "Description": "Collection of Isolated Hardware Components",
-  "Members": [
-    {
-      "@odata.id":
-"/redfish/v1/Systems/system/LogServices/IsolatedHardware/Entries/1",
-      "@odata.type": "#LogEntry.v1_7_0.LogEntry",
-      "Created": "2020-10-15T10:30:08+00:00",
-      "EntryType": "Event",
-      "Id": "1",
-      "Resolved": "false",
-      "Name": "Processor 1",
-      "links":  {
-                 "OriginOfCondition": {
-                        "@odata.id":
-"/redfish/v1/Systems/system/Processors/cpu1"
-                    },
-      "Severity": "Critical",
-       "SensorType" : "Processor",
+Bonus topic: The December 23 meeting is cancelled,  Next meeting 
+scheduled for January 6.
 
- "AdditionalDataURI":
-=E2=80=9C/redfish/v1/Systems/system/LogServices/EventLog/attachement/111"
- =E2=80=9CAddionalDataSizeBytes": "1024"
+- Joseph
 
-  }
-  ],
-  "Members@odata.count": 1,
-  "Name": "Isolated Hardware Entries"
+>
+>
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
 
-Users will be able to delete any entry or all the entries, but if an
-isolated unit is serviced then that unit will be back in service, in
-such cases the "Resolved" property in the entries will be marked as
-"true"
-"AdditionalDataURI" : This is a link to the error log associated with
-this isolation action.
---------------
-Dhruvaraj S
