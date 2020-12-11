@@ -2,62 +2,111 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CBBE2D744E
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 11:56:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 846AB2D7469
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 12:01:55 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Csnlt5s9VzDqv9
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 21:56:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Csnsr2tS2zDqw6
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 22:01:52 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f42;
- helo=mail-qv1-xf42.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=H6Qt7rRq; dkim-atps=neutral
-Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com
- [IPv6:2607:f8b0:4864:20::f42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=aspeedtech.com (client-ip=40.107.132.128;
+ helo=apc01-pu1-obe.outbound.protection.outlook.com;
+ envelope-from=billy_tsai@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=aspeedtech.com
+Received: from APC01-PU1-obe.outbound.protection.outlook.com
+ (mail-eopbgr1320128.outbound.protection.outlook.com [40.107.132.128])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Csnkd1PyCzDqkq;
- Fri, 11 Dec 2020 21:55:36 +1100 (AEDT)
-Received: by mail-qv1-xf42.google.com with SMTP id s6so3957755qvn.6;
- Fri, 11 Dec 2020 02:55:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=QdoHrrkUrH8spW9hsEUvaf3pNxGmQYKrvERe+V2jfHg=;
- b=H6Qt7rRq8Fac2RnPo2pkZ1qhIcBIxMjQwW5Npu+JAavqN3A3YZtPNIl+OKFz1WjBSt
- 7+08A1Zl7oNG/REpAOqWpIIjwmRgbZOdSr623jO38G7Db/iCQzcq922mO6yaugojE+wG
- bM00Smh0iZ5ZTdxY/Oif228zNpjFuhYTfkO7M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=QdoHrrkUrH8spW9hsEUvaf3pNxGmQYKrvERe+V2jfHg=;
- b=FxZbtiS3leSzK7QhyDiMNZZ6CCQyUuNP2QiRUCGYQbt3ZIqlBAckuqtrdyoELFrRq5
- RDxmHMWdU8czo+lP/QzClND9sUj/9pN2Y61QGDmUQ17a6XVdSceHVJMQee40MkVLkdxn
- 284xhoVqCXwMr4AEBq9D/QLWfu2jP+V4gmb0e3bemC9sXfumrH3HtPDIHtF9V1UBlbX4
- bo35RoTxCogUFLtSPhblOielZFlNrfWyHd84m0EIkFY6ZhV1S8CuT48I0Yf+o06wFxMo
- e5z+SUIYRl00zKqx/P/44ijIihON9c60CbVAgHt3DeQ3J5qifNu7Qaz5g2IDxGfWFHCc
- BvUQ==
-X-Gm-Message-State: AOAM532GSMgJCDqcnGaA9mt4VB2qzffTAGhRaZavrJeo2AD13Upnm58R
- nYwCIPAbo8z9PNcXUuQLee2aUEkLc+zmmPOlSJA=
-X-Google-Smtp-Source: ABdhPJzZwGieUQ4L65aIz5AhrZ471LVCKHRMGZT2IlzX+vcQSL+UVzLS7K96G6okZZjsaSYt7Tj+OqqmRqZCEsS2UTw=
-X-Received: by 2002:a0c:aed4:: with SMTP id n20mr15146718qvd.16.1607684132584; 
- Fri, 11 Dec 2020 02:55:32 -0800 (PST)
-MIME-Version: 1.0
-References: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
-In-Reply-To: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 11 Dec 2020 10:55:21 +0000
-Message-ID: <CACPK8XdDn7GfGKAwZnoZrFc5wZW4p=xMuLmCcHvEyyNJZ8rGvw@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Csnrp3n7VzDq83;
+ Fri, 11 Dec 2020 22:00:57 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bP1JlbArtkkU5NLjLfI53jSdbmVBTijtPwxBHtJas5+X4zz4yg9DeBO1QlfIvo6bdFVTYOaLcHDAHZiIlfs+Ui90GkztjfAT9YBALV3gnFd9tq0paqXnLah1xzAWvL4QK/NDBAKYc7Vvb4Lt4cumQtCdAHI626UKUfnn0Ogi0GOQMuYGFuDiLrlmm44AlUkXD69Yd9XkQ/Is14JDj0EHtSn7+N5vH8fo2G1RSt40k3XDcAEOwePqjcf+NSElwBRV+yJI4tdRpvyZUPZSeILAUZKwWF38nubrS6MkzdALiZRtFvTl37AmaZ6IOsqnZ+BEwQ+PHhLgYseJpmCzV8vXHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=THlelBhT3hH8Flr6mh54KQAGrwhizbWxJo/7OHOxm9I=;
+ b=Uk0RRHYBgmYI9bLr2pZ0+iyGGNM0HV5CupOGGKYawg+yJqUAB34UMdIik3m0sMCcG9fvXVYt5wsY3t0Hy7KdvuwWR1rmmtm6+aCtnv/W5xyb4FTSKR7SFbhFz+8u8Nj0MlqUprQh45riCUtMGpLTUg7bxA2fRncAxGVnwBMTTQ0nWWTcTxV2JFE9Hr5IRYNXJVwYFByb6Uu1tATKyF2VUh8+jqWnr67LttBLXQ1MKabYoqvLNXhV/Aq38kj6gY0VXHXmMf1yhnn0dAzmTIl4X+w9xX48F6h69ROfn38j6KmAv0fQkSxUz+eK73Ehc/Hb8ovzgWF1zy6se/WBvLlc8g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+Received: from PU1PR06MB2167.apcprd06.prod.outlook.com (2603:1096:803:39::19)
+ by PSAPR06MB4072.apcprd06.prod.outlook.com (2603:1096:301:31::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.12; Fri, 11 Dec
+ 2020 11:00:49 +0000
+Received: from PU1PR06MB2167.apcprd06.prod.outlook.com
+ ([fe80::f1f9:3e07:1f9f:9d31]) by PU1PR06MB2167.apcprd06.prod.outlook.com
+ ([fe80::f1f9:3e07:1f9f:9d31%5]) with mapi id 15.20.3632.027; Fri, 11 Dec 2020
+ 11:00:48 +0000
+From: Billy Tsai <billy_tsai@aspeedtech.com>
+To: Joel Stanley <joel@jms.id.au>
 Subject: Re: [PATCH] driver: aspeed: g6: Fix PWMG0 pinctrl setting
-To: Billy Tsai <billy_tsai@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
+Thread-Topic: [PATCH] driver: aspeed: g6: Fix PWMG0 pinctrl setting
+Thread-Index: AQHWz2wy281n4pCZxkmLwBG4hQfTFKnxuWSAgACHmQA=
+Date: Fri, 11 Dec 2020 11:00:48 +0000
+Message-ID: <D9745FBC-BEA7-421E-B56C-21EA9AAE094E@aspeedtech.com>
+References: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
+ <CACPK8XdDn7GfGKAwZnoZrFc5wZW4p=xMuLmCcHvEyyNJZ8rGvw@mail.gmail.com>
+In-Reply-To: <CACPK8XdDn7GfGKAwZnoZrFc5wZW4p=xMuLmCcHvEyyNJZ8rGvw@mail.gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: jms.id.au; dkim=none (message not signed)
+ header.d=none;jms.id.au; dmarc=none action=none header.from=aspeedtech.com;
+x-originating-ip: [211.20.114.70]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: b4fbd20f-4565-478f-9a4c-08d89dc4049f
+x-ms-traffictypediagnostic: PSAPR06MB4072:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <PSAPR06MB4072080AA695C3B4628B97F68BCA0@PSAPR06MB4072.apcprd06.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:5797;
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: kt1Adk9tHbqmir61ysM8jzMzN+PAcgtkOu/yRvgK/C9EUm6A68GS1kDKi2NIxowh2Wb1tlb4Pj2/CSRW1c/f9GCDgBrOMSa7J+kQQKKDDLVMgJJTO5IeOyXCHJBA0GWX+NtPIQ91p3yaxK4D/YJf0BzKgO4EVhcrgxcSrpt6giGyBxbcpssv0E7yuYbQuxpUbK+leatMYGEkBpLJoLPM8Z4SdD9A6A8vE4snuEB4TLp4kqmpsnme1XLpknx6XikX2+c0ovQEn/e3So0Vc8k08BzpsKCLuiiPNsXZLSDgprgh0JaZnbTtnqwkjPx4Q34XLH85KXuw2Q90Lbsd39DHyMGUwpxmrSFk+i5HAIYgvPoUhLwIVlpj+J4dQUGKnnxB
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PU1PR06MB2167.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(39850400004)(396003)(376002)(346002)(366004)(136003)(26005)(478600001)(76116006)(316002)(86362001)(91956017)(6512007)(6486002)(66556008)(83380400001)(8936002)(8676002)(2906002)(54906003)(66476007)(66946007)(66446008)(33656002)(36756003)(55236004)(186003)(107886003)(71200400001)(64756008)(6916009)(5660300002)(2616005)(6506007)(4326008)(45980500001);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata: =?utf-8?B?Y0w0ZnZ0aXZnMWRzeXZZSUJ0VkRYRkNpTml2aTdhTEk2QU1WbklOWnFXVmxy?=
+ =?utf-8?B?VEhxZ084NXcyRUZabVdNV3RhVHRrZGpUdld2dElVSks3bDluVDRJY3NoRkxt?=
+ =?utf-8?B?UkxXK3pQZG5UbGp3bGFSRExvb2ZLM0RjUS9xUzFaVGwzU2JhZmtYNysvK21D?=
+ =?utf-8?B?QjZPS0ZScDdxSTFodkdSVDVDSVFERHppUDJ4Wk9ZbjYzMEUvQTFQWW9yTnRP?=
+ =?utf-8?B?Sjd5ajlRWjlHVnBkYW5WT1R3VUEyQncwZGpHbWVPZ1g4TmZjSzJicksxY0Qw?=
+ =?utf-8?B?R2F0QmVRdGp1dGhKS3UxeS95cEM5V3h5ZkdsaW9GeW9HTnQvRVhqb3JYQlFL?=
+ =?utf-8?B?MDhCM281UlRQMHc5MUJjNEhqY0d6LzlIWHdKcks0VmhSM2pTTmUxeHgzT0dL?=
+ =?utf-8?B?K1pXblIxR3Y0Nkw4WGxsQzNCc0szeUJXNjg5cGU5TFE3K25qQ0ZXamRmcGRV?=
+ =?utf-8?B?Zk1oNlpqcHNoVkJwYXdUTGNmUEt4TTA0QmtYQ0c2Z2R6dzA0R3hLWHNUQ2FC?=
+ =?utf-8?B?VkVjRmRTbTY2Z0FiUS9GYkxXM3VIN0Y3ZVhvUnpTUFkzNEJ6K1cyOW8wVzJ6?=
+ =?utf-8?B?aThUV3pqcEVWUlVuNWNDWVNQNUN5OSs3UlpUMUw3aGM1VUQrcTBoNktJb3JN?=
+ =?utf-8?B?UHFXTlFHUnZjNiszZmo2QmJIcXkyMU1QaDl6K1EzWU9JNVhNNmMzU09YeElN?=
+ =?utf-8?B?VDN3L1hPS216enlESEhvUVh5dGNaMk1yRGpYOTRtdEo4aHk3clRLRUNHYkpt?=
+ =?utf-8?B?RmJGT1djYUFCSVNab2l0T0dMTXppUHBCYzFEaCtOek03M1EyQitnanNUa2VY?=
+ =?utf-8?B?RjhsOVZFQWhLUXpyYVFjQmVPcmhYemtwSHpPdWo3TFJpZzlHcHp2WlMzaGtT?=
+ =?utf-8?B?emIyb0RxNHhvTVJNUDFQdHVBSFRqUWdhTGg4NFBhc2FSK0JCYWFkellnMFUv?=
+ =?utf-8?B?aWJkb0t6ZjlQMG9HSmlRdkw0bUE0bnBUYTdqWmNQbUZBdW42ZE1qMmZIMkU3?=
+ =?utf-8?B?S3lqZjYwMWFiTUlwWlJFKzBIT0Q3allZQjFkL1FuaXlhWTdVZG5YNGZ5OENm?=
+ =?utf-8?B?SUwyMXVkekN3UVNQbVArNE5FSGNML3pqQmd3YU05RDh3dkl5ZXNjN3pZNnV0?=
+ =?utf-8?B?Ty9icnB6NEJ6YUdrMW1NZkFoM3I5MDBWMzNhNzIrWDMyYnJyREp4R0JDTHVV?=
+ =?utf-8?B?YXdjNnBmYWNtNURWVjZxdlZ3R09XNFdrRE83eDhxMmJoYTdZa3hWZFcrdTNN?=
+ =?utf-8?B?MnRwb2ZwRUdNZjBGMlJTYWNpQ3JNajVHT2RHN1VhOW5YWGJPK3RVd1prUkR1?=
+ =?utf-8?Q?sj9OSKHbo0wDI2sOU6OxgV/v5guUbchgBd?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <A1A2014CC522844E85AC11528F88D24A@apcprd06.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PU1PR06MB2167.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b4fbd20f-4565-478f-9a4c-08d89dc4049f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2020 11:00:48.8525 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: kB1x0gl4p2UJuLGL/Bhallo56uvMPlfs9BXh/ZjyVlWA7Ucv1iQej1J5TxowEIDxWdSktsnq1/vj8o7kXI91rQ6u68IOgxpNG5HvRs04130=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB4072
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,33 +128,32 @@ Cc: BMC-SW <BMC-SW@aspeedtech.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 11 Dec 2020 at 03:18, Billy Tsai <billy_tsai@aspeedtech.com> wrote:
->
-> The SCU offset for signal PWM8 in group PWM8G0 is wrong, fix it from
-> SCU414 to SCU4B4.
-> Besides that, When PWM8~15 of PWMG0 set it needs to clear SCU414 bits at
-> the same time.
->
-> Fixes: 2eda1cdec49f ("pinctrl: aspeed: Add AST2600 pinmux support")
->
-> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
-> ---
->  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 26 ++++++++++++++--------
->  1 file changed, 17 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> index 34803a6c7664..6e61f045936f 100644
-> --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-> @@ -346,50 +346,58 @@ FUNC_GROUP_DECL(RGMII4, F24, E23, E24, E25, D26, D24, C25, C26, C24, B26, B25,
->  FUNC_GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
->
->  #define D22 40
-> -SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8));
-> -SIG_EXPR_LIST_DECL_SEMG(D22, PWM8, PWM8G0, PWM8, SIG_DESC_SET(SCU414, 8));
-> +SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8))
-
-Is this missing a semicolon?
-
-> +SIG_EXPR_LIST_DECL_SEMG(D22, PWM8, PWM8G0, PWM8, SIG_DESC_SET(SCU4B4, 8),
-> +                       SIG_DESC_CLEAR(SCU414, 8));
+SGkgSm9lbCwNCg0K77u/T24gMjAyMC8xMi8xMSwgNjo1NSBQTSwgSm9lbCBTdGFubGV5IHdyb3Rl
+Og0KDQogICAgT24gRnJpLCAxMSBEZWMgMjAyMCBhdCAwMzoxOCwgQmlsbHkgVHNhaSA8YmlsbHlf
+dHNhaUBhc3BlZWR0ZWNoLmNvbT4gd3JvdGU6DQogICAgPg0KICAgID4gVGhlIFNDVSBvZmZzZXQg
+Zm9yIHNpZ25hbCBQV004IGluIGdyb3VwIFBXTThHMCBpcyB3cm9uZywgZml4IGl0IGZyb20NCiAg
+ICA+IFNDVTQxNCB0byBTQ1U0QjQuDQogICAgPiBCZXNpZGVzIHRoYXQsIFdoZW4gUFdNOH4xNSBv
+ZiBQV01HMCBzZXQgaXQgbmVlZHMgdG8gY2xlYXIgU0NVNDE0IGJpdHMgYXQNCiAgICA+IHRoZSBz
+YW1lIHRpbWUuDQogICAgPg0KICAgID4gRml4ZXM6IDJlZGExY2RlYzQ5ZiAoInBpbmN0cmw6IGFz
+cGVlZDogQWRkIEFTVDI2MDAgcGlubXV4IHN1cHBvcnQiKQ0KICAgID4NCiAgICA+IFNpZ25lZC1v
+ZmYtYnk6IEJpbGx5IFRzYWkgPGJpbGx5X3RzYWlAYXNwZWVkdGVjaC5jb20+DQogICAgPiAtLS0N
+CiAgICA+ICBkcml2ZXJzL3BpbmN0cmwvYXNwZWVkL3BpbmN0cmwtYXNwZWVkLWc2LmMgfCAyNiAr
+KysrKysrKysrKysrKy0tLS0tLS0tDQogICAgPiAgMSBmaWxlIGNoYW5nZWQsIDE3IGluc2VydGlv
+bnMoKyksIDkgZGVsZXRpb25zKC0pDQogICAgPg0KICAgID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMv
+cGluY3RybC9hc3BlZWQvcGluY3RybC1hc3BlZWQtZzYuYyBiL2RyaXZlcnMvcGluY3RybC9hc3Bl
+ZWQvcGluY3RybC1hc3BlZWQtZzYuYw0KICAgID4gaW5kZXggMzQ4MDNhNmM3NjY0Li42ZTYxZjA0
+NTkzNmYgMTAwNjQ0DQogICAgPiAtLS0gYS9kcml2ZXJzL3BpbmN0cmwvYXNwZWVkL3BpbmN0cmwt
+YXNwZWVkLWc2LmMNCiAgICA+ICsrKyBiL2RyaXZlcnMvcGluY3RybC9hc3BlZWQvcGluY3RybC1h
+c3BlZWQtZzYuYw0KICAgID4gQEAgLTM0Niw1MCArMzQ2LDU4IEBAIEZVTkNfR1JPVVBfREVDTChS
+R01JSTQsIEYyNCwgRTIzLCBFMjQsIEUyNSwgRDI2LCBEMjQsIEMyNSwgQzI2LCBDMjQsIEIyNiwg
+QjI1LA0KICAgID4gIEZVTkNfR1JPVVBfREVDTChSTUlJNCwgRjI0LCBFMjMsIEUyNCwgRTI1LCBD
+MjUsIEMyNCwgQjI2LCBCMjUsIEIyNCk7DQogICAgPg0KICAgID4gICNkZWZpbmUgRDIyIDQwDQog
+ICAgPiAtU0lHX0VYUFJfTElTVF9ERUNMX1NFU0coRDIyLCBTRDFDTEssIFNEMSwgU0lHX0RFU0Nf
+U0VUKFNDVTQxNCwgOCkpOw0KICAgID4gLVNJR19FWFBSX0xJU1RfREVDTF9TRU1HKEQyMiwgUFdN
+OCwgUFdNOEcwLCBQV004LCBTSUdfREVTQ19TRVQoU0NVNDE0LCA4KSk7DQogICAgPiArU0lHX0VY
+UFJfTElTVF9ERUNMX1NFU0coRDIyLCBTRDFDTEssIFNEMSwgU0lHX0RFU0NfU0VUKFNDVTQxNCwg
+OCkpDQogICAgDQogICAgSXMgdGhpcyBtaXNzaW5nIGEgc2VtaWNvbG9uPw0KDQpZZXMsIHRoYW5r
+cyBmb3IgeW91ciBjaGVjay4gSSB3aWxsIHNlbmQgdjIgdG8gZml4IGl0Lg0KICAgIA0KICAgID4g
+K1NJR19FWFBSX0xJU1RfREVDTF9TRU1HKEQyMiwgUFdNOCwgUFdNOEcwLCBQV004LCBTSUdfREVT
+Q19TRVQoU0NVNEI0LCA4KSwNCiAgICA+ICsgICAgICAgICAgICAgICAgICAgICAgIFNJR19ERVND
+X0NMRUFSKFNDVTQxNCwgOCkpOw0KICAgIA0KDQo=
