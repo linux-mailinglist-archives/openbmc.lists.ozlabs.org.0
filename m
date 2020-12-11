@@ -1,78 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C2DA2D745B
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 11:58:22 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CBBE2D744E
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 11:56:45 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Csnnl3CWczDqTP
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 21:58:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Csnlt5s9VzDqv9
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 21:56:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=qq.com
- (client-ip=59.36.132.57; helo=qq.com; envelope-from=1181052146@qq.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f42;
+ helo=mail-qv1-xf42.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=qq.com
+ dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256
- header.s=s201512 header.b=Ref6PBgm; dkim-atps=neutral
-X-Greylist: delayed 229 seconds by postgrey-1.36 at bilbo;
- Fri, 11 Dec 2020 21:57:39 AEDT
-Received: from qq.com (smtpbg468.qq.com [59.36.132.57])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=H6Qt7rRq; dkim-atps=neutral
+Received: from mail-qv1-xf42.google.com (mail-qv1-xf42.google.com
+ [IPv6:2607:f8b0:4864:20::f42])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Csnmz03WZzDq83
- for <openbmc@lists.ozlabs.org>; Fri, 11 Dec 2020 21:57:38 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1607684001; bh=VHGFtMKS5XR6j4Rmm3yGvvu43ZClqAYYp60qPER9OeE=;
- h=From:To:Subject:Mime-Version:Date:Message-ID;
- b=Ref6PBgmsK3xZTbcQAfwHO2mna6wmyYSSjY06rIYXopnqGISIu/sOd63akxjpExUU
- vQ4P7MqVtr7NhJ6Ygg2yvn+RemTQYg9QNb3bqaHcQKaR5eDZ1cVZTcx28O9M1yP1T4
- lWxBXC74g3YK5/ZCUx0StgTPcPaNGEbndWO9ktFc=
-X-QQ-FEAT: RxUCDZI2pForhmYpd2gQwKDusLavSWVG45IPlm2u/4OkmIO6jeZJF8G3tenp2
- jwJ5mqwCGWl3mW++HwWj04mQOdRSaRUoHZBUUJtragWShfv6Gk3T9FHv+KVwUDxXkk1J1Y+
- hs65yzwalWozk2gNxiFwoqbBXrnnRxa5uZwkIVHXqS8layImRXAKBkrxr68zRueqmEqOlAS
- lWoDuUDcwE1RQz4MipnIAElsWs1HQ4lWXV5St1/eu5B0jpNuPO0sJooD8AbagNFXx5vvvnG
- vWEXVvBiCuEQVEwqVR/xL+Wtw=
-X-QQ-SSF: 00000000000000F000000000000000S
-X-QQ-XMAILINFO: N8q2imhmJf/OBCfI/PaeCcfBYhrbZSRQpbqdEdRyVeKEon+T/Ifsra6JcAK3cZ
- YeVX6dDPCEidfadWZM1HTrt4LjFxLV6pJrk3Nz6Maa4JsV9FuBt7n/bcBb5hxftpGY539eWSsiDHz
- csqi2AbXQ4agYbkMOZu4o3mcCdMvvs1EYJ7S5oOL9xLwgXGbE27RN2yYFRBPCmKTgwFwoAh78kIyx
- hy8tiNHbGn1U05xoZLKIxLUAg3BD8ETEF1V5eEV8A7ddc7sGwtSBbajdZ3w/3rRLNEWCFfvyMY8K/
- WowyMEomIfEZHGTzB3DKb6uxPujR/co0zIeVYh3/ORiYchDqSW5ZKw+kSi+xpHB0tD99MJ6SmpRle
- k0lO+NBfVeUCNl5PnYiF2ZZV16nPNIyAyZt0BZjzK/1EXE2yAGVJAIXntrbNMmmiFDHSkBFC4bGwW
- onDXgXQnN1THp/D/oYi0plaOIGYJ3ZalS/ZrpjzonoFAhhMrKxkQo7qcNBE8Of6yJqdc8L6e+YSf5
- JxJLcEdgyj0ppKfR1E0GTebmPdAHMSLIlFQ1oT0kHFB+6DteRmGPILPK7yRkHrJw4W9dmXQSfZH08
- Jl1RE+P8+xeep86ILPKho9n5c9PqIFk+OXbOg3YI15rDDiVv7sXSuMDSLlpAqMxJlbYLxDChhwMGF
- PerwGOBH26AJ2S9cjBdjSRLsri8UtLFc9Pbai4st/PgnN8ffRhWSgklqJdsTe/Q5QSlV76w/BN5NN
- 1wIuYmiXoyLT9Sse4z1V0jl+GB8Fqys5i+rujavkB2UlsGrgDBWnuBC+XU4XqvMiWTM25/J/LQDQC
- zw6sKBE+yj0hZMxRFsciF84=
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 255.5.109.125
-X-QQ-STYLE: 
-X-QQ-mid: webmail700t1607683999t5645544
-From: "=?gb18030?B?xM/SsKXgpeult6WopemltA==?=" <1181052146@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: Can AST2400 generate MSI to Host after xdma-engine complete a dma
- cycle?
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_5FD34F9E_1230FB50_5ABB0C46"
-Content-Transfer-Encoding: 8Bit
-Date: Fri, 11 Dec 2020 18:53:18 +0800
-X-Priority: 3
-Message-ID: <tencent_C899FE71F261535C27100E971F35EA485908@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
-X-QQ-SENDSIZE: 520
-Received: from qq.com (unknown [127.0.0.1]) by smtp.qq.com (ESMTP) with SMTP
- id ; Fri, 11 Dec 2020 18:53:20 +0800 (CST)
-Feedback-ID: webmail:qq.com:bgforeign:bgforeign11
-X-QQ-Bgrelay: 1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Csnkd1PyCzDqkq;
+ Fri, 11 Dec 2020 21:55:36 +1100 (AEDT)
+Received: by mail-qv1-xf42.google.com with SMTP id s6so3957755qvn.6;
+ Fri, 11 Dec 2020 02:55:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=QdoHrrkUrH8spW9hsEUvaf3pNxGmQYKrvERe+V2jfHg=;
+ b=H6Qt7rRq8Fac2RnPo2pkZ1qhIcBIxMjQwW5Npu+JAavqN3A3YZtPNIl+OKFz1WjBSt
+ 7+08A1Zl7oNG/REpAOqWpIIjwmRgbZOdSr623jO38G7Db/iCQzcq922mO6yaugojE+wG
+ bM00Smh0iZ5ZTdxY/Oif228zNpjFuhYTfkO7M=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=QdoHrrkUrH8spW9hsEUvaf3pNxGmQYKrvERe+V2jfHg=;
+ b=FxZbtiS3leSzK7QhyDiMNZZ6CCQyUuNP2QiRUCGYQbt3ZIqlBAckuqtrdyoELFrRq5
+ RDxmHMWdU8czo+lP/QzClND9sUj/9pN2Y61QGDmUQ17a6XVdSceHVJMQee40MkVLkdxn
+ 284xhoVqCXwMr4AEBq9D/QLWfu2jP+V4gmb0e3bemC9sXfumrH3HtPDIHtF9V1UBlbX4
+ bo35RoTxCogUFLtSPhblOielZFlNrfWyHd84m0EIkFY6ZhV1S8CuT48I0Yf+o06wFxMo
+ e5z+SUIYRl00zKqx/P/44ijIihON9c60CbVAgHt3DeQ3J5qifNu7Qaz5g2IDxGfWFHCc
+ BvUQ==
+X-Gm-Message-State: AOAM532GSMgJCDqcnGaA9mt4VB2qzffTAGhRaZavrJeo2AD13Upnm58R
+ nYwCIPAbo8z9PNcXUuQLee2aUEkLc+zmmPOlSJA=
+X-Google-Smtp-Source: ABdhPJzZwGieUQ4L65aIz5AhrZ471LVCKHRMGZT2IlzX+vcQSL+UVzLS7K96G6okZZjsaSYt7Tj+OqqmRqZCEsS2UTw=
+X-Received: by 2002:a0c:aed4:: with SMTP id n20mr15146718qvd.16.1607684132584; 
+ Fri, 11 Dec 2020 02:55:32 -0800 (PST)
+MIME-Version: 1.0
+References: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
+In-Reply-To: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 11 Dec 2020 10:55:21 +0000
+Message-ID: <CACPK8XdDn7GfGKAwZnoZrFc5wZW4p=xMuLmCcHvEyyNJZ8rGvw@mail.gmail.com>
+Subject: Re: [PATCH] driver: aspeed: g6: Fix PWMG0 pinctrl setting
+To: Billy Tsai <billy_tsai@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,39 +69,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+On Fri, 11 Dec 2020 at 03:18, Billy Tsai <billy_tsai@aspeedtech.com> wrote:
+>
+> The SCU offset for signal PWM8 in group PWM8G0 is wrong, fix it from
+> SCU414 to SCU4B4.
+> Besides that, When PWM8~15 of PWMG0 set it needs to clear SCU414 bits at
+> the same time.
+>
+> Fixes: 2eda1cdec49f ("pinctrl: aspeed: Add AST2600 pinmux support")
+>
+> Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
+> ---
+>  drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 26 ++++++++++++++--------
+>  1 file changed, 17 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> index 34803a6c7664..6e61f045936f 100644
+> --- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> +++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
+> @@ -346,50 +346,58 @@ FUNC_GROUP_DECL(RGMII4, F24, E23, E24, E25, D26, D24, C25, C26, C24, B26, B25,
+>  FUNC_GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
+>
+>  #define D22 40
+> -SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8));
+> -SIG_EXPR_LIST_DECL_SEMG(D22, PWM8, PWM8G0, PWM8, SIG_DESC_SET(SCU414, 8));
+> +SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8))
 
-------=_NextPart_5FD34F9E_1230FB50_5ABB0C46
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+Is this missing a semicolon?
 
-SGksIEdyZWV0aW5ncw0KSSBhbSB1c2luZyBBU1QyNDAwJ3MgeGRtYS1lbmdpbmUgdG8gcmVh
-ZCBhbmQgd3JpdGUgbWVtb3J5IG9mIGhvc3QuIEFzIHRoZSBkYXRhc2hlZXQgc2F5cywgeGRt
-YS1lbmdpbmUgY2FuIGdlbmVyYXRlIGEgbXNpIG9yIGludHggaW50ZXJydXB0IHRvIGJvdGgg
-Qk1DIGFuZCBob3N0IGFmdGVyIGNvbXBsZXRlIGEgZG1hIHJlYWQgb3Igd3JpdGUuIEhvd2V2
-ZXIgSSBjYW4gb25seSByZWNlaXZlIHRoZSBpbnRlcnJ1cHQgaW4gdGhlIEJNQyBzaWRlLCBh
-bmQgdGhlIGhvc3Qgc2lkZSBkb2VzIG5vdCByZWNlaXZlIGFueSBpbnRlcnJ1cHQuDQpDYW4g
-c29tZSBvbmUgaGVscCBtZT8NCg0KQmVzdCBSZWdhcmRzIQ0KTGl1IEhvbmd3ZWk=
-
-------=_NextPart_5FD34F9E_1230FB50_5ABB0C46
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
-
-SGksIEdyZWV0aW5nczxicj5JIGFtIHVzaW5nIEFTVDI0MDAncyB4ZG1hLWVuZ2luZSB0byBy
-ZWFkIGFuZCB3cml0ZSBtZW1vcnkgb2YgaG9zdC4gQXMgdGhlIGRhdGFzaGVldCBzYXlzLCB4
-ZG1hLWVuZ2luZSBjYW4gZ2VuZXJhdGUgYSBtc2kgb3IgaW50eCBpbnRlcnJ1cHQgdG8gYm90
-aCBCTUMgYW5kIGhvc3QgYWZ0ZXIgY29tcGxldGUgYSBkbWEgcmVhZCBvciB3cml0ZS4gSG93
-ZXZlciBJIGNhbiBvbmx5IHJlY2VpdmUgdGhlIGludGVycnVwdCBpbiB0aGUgQk1DIHNpZGUs
-IGFuZCB0aGUgaG9zdCBzaWRlIGRvZXMgbm90IHJlY2VpdmUgYW55IGludGVycnVwdC48YnI+
-Q2FuIHNvbWUgb25lIGhlbHAgbWU/PGJyPjxicj5CZXN0IFJlZ2FyZHMhPGJyPkxpdSBIb25n
-d2VpPGJyPg==
-
-------=_NextPart_5FD34F9E_1230FB50_5ABB0C46--
-
-
-
+> +SIG_EXPR_LIST_DECL_SEMG(D22, PWM8, PWM8G0, PWM8, SIG_DESC_SET(SCU4B4, 8),
+> +                       SIG_DESC_CLEAR(SCU414, 8));
