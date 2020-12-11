@@ -1,50 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E39232D6E6E
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 04:20:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5FA22D6E7F
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 04:27:05 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Csbd00nT8zDqrN
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 14:20:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Csbn30D34zDqwP
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 14:27:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=billy_tsai@aspeedtech.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.68; helo=mail-ot1-f68.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from mail-ot1-f68.google.com (mail-ot1-f68.google.com
+ [209.85.210.68])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Csbc85zH5zDqpr;
- Fri, 11 Dec 2020 14:19:14 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 0BB3EfHa057144;
- Fri, 11 Dec 2020 11:14:41 +0800 (GMT-8)
- (envelope-from billy_tsai@aspeedtech.com)
-Received: from BillyTsai-pc.aspeed.com (192.168.2.149) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 11 Dec
- 2020 11:17:39 +0800
-From: Billy Tsai <billy_tsai@aspeedtech.com>
-To: <andrew@aj.id.au>, <linus.walleij@linaro.org>, <joel@jms.id.au>,
- <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
- <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-kernel@vger.kernel.org>
-Subject: [PATCH] driver: aspeed: g6: Fix PWMG0 pinctrl setting
-Date: Fri, 11 Dec 2020 11:17:41 +0800
-Message-ID: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CsbmD2TTczDqsX;
+ Fri, 11 Dec 2020 14:26:17 +1100 (AEDT)
+Received: by mail-ot1-f68.google.com with SMTP id f16so7031931otl.11;
+ Thu, 10 Dec 2020 19:26:17 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=FQJ0xYZsg9VuDPNWynmVTQgQAdgxX+zz3aAN9OxOmEM=;
+ b=IS0m7MInW7+Trr41uIYVR6Za9fhSoBbXjjgjx53ii+9KKcWAUy0emAXjJGyNc9mAUe
+ GIg1lSfzbuWsfK6z0Jr7hI/u0nykKkznJl+Ajk8CvobMIOTQ5d5tV7KoF4O7irw9+wr5
+ NIksm91T9v59PAFPzdaR2k1qm9OChFNlqsnzhWJajibh/FXGkv6JtbEn3YocvtdxzVvA
+ 1YwH1xLwMtS0/793cXfSSe/mwbrNU6v15slmCqOb/FW2o8fVxCUjrqUW8MgHa90OWuFr
+ +dEkV9XChgDAJWkn82OlN5fFG4fhIhBMuyGpPLPH7DUcNtXUUJHsl+DLGSJmD4D9wlMZ
+ VXgg==
+X-Gm-Message-State: AOAM533R+USl595pwn7r99+c1rtiLv9AdOZI8EGi/razYeQfXxupZgzj
+ k38Kqc2EFvXVsXn9q3E4bvgXKXDN0A==
+X-Google-Smtp-Source: ABdhPJzKUGBasM7BAwLTxygGxXIuMZ4ml/wcGxyjJSYLcS6Bmb5p1q1zlC+Ak1f0+07k0olzZmbmgg==
+X-Received: by 2002:a9d:3a2:: with SMTP id f31mr8646104otf.216.1607657175132; 
+ Thu, 10 Dec 2020 19:26:15 -0800 (PST)
+Received: from xps15 (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id x66sm1498750oig.56.2020.12.10.19.26.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 10 Dec 2020 19:26:14 -0800 (PST)
+Received: (nullmailer pid 3574126 invoked by uid 1000);
+ Fri, 11 Dec 2020 03:26:12 -0000
+Date: Thu, 10 Dec 2020 21:26:12 -0600
+From: Rob Herring <robh@kernel.org>
+To: Troy Lee <troy_lee@aspeedtech.com>
+Subject: Re: [PATCH 1/4] dt-bindings: hwmon: Add Aspeed AST2600 PWM/Fan
+Message-ID: <20201211032612.GA3565720@robh.at.kernel.org>
+References: <20201209075921.26689-1-troy_lee@aspeedtech.com>
+ <20201209075921.26689-2-troy_lee@aspeedtech.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.149]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 0BB3EfHa057144
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201209075921.26689-2-troy_lee@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,94 +67,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com
+Cc: "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>, Jean Delvare <jdelvare@suse.com>,
+ ryan_chen@aspeedtech.com,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+ Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org,
+ "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>, billy_tsai@aspeedtech.com,
+ leetroy@gmail.com, Philipp Zabel <p.zabel@pengutronix.de>,
+ chiawei_wang@aspeedtech.com, Guenter Roeck <linux@roeck-us.net>,
+ "moderated list:ARM/ASPEED MACHINE SUPPORT"
+ <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The SCU offset for signal PWM8 in group PWM8G0 is wrong, fix it from
-SCU414 to SCU4B4.
-Besides that, When PWM8~15 of PWMG0 set it needs to clear SCU414 bits at
-the same time.
+On Wed, Dec 09, 2020 at 03:59:17PM +0800, Troy Lee wrote:
+> For supporting a new AST2600 PWM/Fan hwmon driver, we add a new binding.
+> 
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> ---
+>  .../bindings/hwmon/aspeed2600-pwm-tacho.txt   | 69 +++++++++++++++++++
 
-Fixes: 2eda1cdec49f ("pinctrl: aspeed: Add AST2600 pinmux support")
+Bindings are in DT schema format now.
 
-Signed-off-by: Billy Tsai <billy_tsai@aspeedtech.com>
----
- drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c | 26 ++++++++++++++--------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+>  1 file changed, 69 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwmon/aspeed2600-pwm-tacho.txt
+> 
+> diff --git a/Documentation/devicetree/bindings/hwmon/aspeed2600-pwm-tacho.txt b/Documentation/devicetree/bindings/hwmon/aspeed2600-pwm-tacho.txt
+> new file mode 100644
+> index 000000000000..61b11914352f
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/hwmon/aspeed2600-pwm-tacho.txt
+> @@ -0,0 +1,69 @@
+> +ASPEED AST2600 PWM and Fan Tacho controller device driver
+> +
+> +The ASPEED PWM controller can support upto 16 PWM outputs. The ASPEED Fan Tacho
+> +controller can support upto 16 Fan tachometer inputs.
+> +
+> +There can be upto 16 fans supported. Each fan can have one PWM output and
+> +one Fan tach inputs.
+> +
+> +Required properties for pwm-tacho node:
+> +- #address-cells : should be 1.
+> +
+> +- #size-cells : should be 0.
+> +
+> +- #cooling-cells: should be 2.
+> +
+> +- reg : address and length of the register set for the device.
+> +
+> +- pinctrl-names : a pinctrl state named "default" must be defined.
+> +
+> +- pinctrl-0 : phandle referencing pin configuration of the PWM ports.
+> +
+> +- compatible : should be "aspeed,ast2600-pwm-tachometer".
+> +
+> +- clocks : phandle to clock provider with the clock number in the second cell
+> +
+> +- resets : phandle to reset controller with the reset number in the second cell
+> +
+> +fan subnode format:
+> +===================
+> +Under fan subnode there can upto 16 child nodes, with each child node
+> +representing a fan. There are 16 fans each fan can have one PWM port and one
+> +Fan tach inputs.
+> +For PWM port can be configured cooling-levels to create cooling device.
+> +Cooling device could be bound to a thermal zone for the thermal control.
+> +
+> +Required properties for each child node:
+> +- reg : should specify PWM source port.
+> +	integer value in the range 0x00 to 0x0f with 0x00 indicating PWM port 0
+> +	and 0x0f indicating PWM port F.
+> +
+> +- cooling-levels: PWM duty cycle values in a range from 0 to 255
+> +                  which correspond to thermal cooling states.
+> +
+> +- aspeed,fan-tach-ch : should specify the Fan tach input channel.
+> +                integer value in the range 0 through 15, with 0 indicating
+> +		Fan tach channel 0 and 15 indicating Fan tach channel 15.
+> +		Atleast one Fan tach input channel is required.
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-index 34803a6c7664..6e61f045936f 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c
-@@ -346,50 +346,58 @@ FUNC_GROUP_DECL(RGMII4, F24, E23, E24, E25, D26, D24, C25, C26, C24, B26, B25,
- FUNC_GROUP_DECL(RMII4, F24, E23, E24, E25, C25, C24, B26, B25, B24);
- 
- #define D22 40
--SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8));
--SIG_EXPR_LIST_DECL_SEMG(D22, PWM8, PWM8G0, PWM8, SIG_DESC_SET(SCU414, 8));
-+SIG_EXPR_LIST_DECL_SESG(D22, SD1CLK, SD1, SIG_DESC_SET(SCU414, 8))
-+SIG_EXPR_LIST_DECL_SEMG(D22, PWM8, PWM8G0, PWM8, SIG_DESC_SET(SCU4B4, 8),
-+			SIG_DESC_CLEAR(SCU414, 8));
- PIN_DECL_2(D22, GPIOF0, SD1CLK, PWM8);
- GROUP_DECL(PWM8G0, D22);
- 
- #define E22 41
- SIG_EXPR_LIST_DECL_SESG(E22, SD1CMD, SD1, SIG_DESC_SET(SCU414, 9));
--SIG_EXPR_LIST_DECL_SEMG(E22, PWM9, PWM9G0, PWM9, SIG_DESC_SET(SCU4B4, 9));
-+SIG_EXPR_LIST_DECL_SEMG(E22, PWM9, PWM9G0, PWM9, SIG_DESC_SET(SCU4B4, 9),
-+			SIG_DESC_CLEAR(SCU414, 9));
- PIN_DECL_2(E22, GPIOF1, SD1CMD, PWM9);
- GROUP_DECL(PWM9G0, E22);
- 
- #define D23 42
- SIG_EXPR_LIST_DECL_SESG(D23, SD1DAT0, SD1, SIG_DESC_SET(SCU414, 10));
--SIG_EXPR_LIST_DECL_SEMG(D23, PWM10, PWM10G0, PWM10, SIG_DESC_SET(SCU4B4, 10));
-+SIG_EXPR_LIST_DECL_SEMG(D23, PWM10, PWM10G0, PWM10, SIG_DESC_SET(SCU4B4, 10),
-+			SIG_DESC_CLEAR(SCU414, 10));
- PIN_DECL_2(D23, GPIOF2, SD1DAT0, PWM10);
- GROUP_DECL(PWM10G0, D23);
- 
- #define C23 43
- SIG_EXPR_LIST_DECL_SESG(C23, SD1DAT1, SD1, SIG_DESC_SET(SCU414, 11));
--SIG_EXPR_LIST_DECL_SEMG(C23, PWM11, PWM11G0, PWM11, SIG_DESC_SET(SCU4B4, 11));
-+SIG_EXPR_LIST_DECL_SEMG(C23, PWM11, PWM11G0, PWM11, SIG_DESC_SET(SCU4B4, 11),
-+			SIG_DESC_CLEAR(SCU414, 11));
- PIN_DECL_2(C23, GPIOF3, SD1DAT1, PWM11);
- GROUP_DECL(PWM11G0, C23);
- 
- #define C22 44
- SIG_EXPR_LIST_DECL_SESG(C22, SD1DAT2, SD1, SIG_DESC_SET(SCU414, 12));
--SIG_EXPR_LIST_DECL_SEMG(C22, PWM12, PWM12G0, PWM12, SIG_DESC_SET(SCU4B4, 12));
-+SIG_EXPR_LIST_DECL_SEMG(C22, PWM12, PWM12G0, PWM12, SIG_DESC_SET(SCU4B4, 12),
-+			SIG_DESC_CLEAR(SCU414, 12));
- PIN_DECL_2(C22, GPIOF4, SD1DAT2, PWM12);
- GROUP_DECL(PWM12G0, C22);
- 
- #define A25 45
- SIG_EXPR_LIST_DECL_SESG(A25, SD1DAT3, SD1, SIG_DESC_SET(SCU414, 13));
--SIG_EXPR_LIST_DECL_SEMG(A25, PWM13, PWM13G0, PWM13, SIG_DESC_SET(SCU4B4, 13));
-+SIG_EXPR_LIST_DECL_SEMG(A25, PWM13, PWM13G0, PWM13, SIG_DESC_SET(SCU4B4, 13),
-+			SIG_DESC_CLEAR(SCU414, 13));
- PIN_DECL_2(A25, GPIOF5, SD1DAT3, PWM13);
- GROUP_DECL(PWM13G0, A25);
- 
- #define A24 46
- SIG_EXPR_LIST_DECL_SESG(A24, SD1CD, SD1, SIG_DESC_SET(SCU414, 14));
--SIG_EXPR_LIST_DECL_SEMG(A24, PWM14, PWM14G0, PWM14, SIG_DESC_SET(SCU4B4, 14));
-+SIG_EXPR_LIST_DECL_SEMG(A24, PWM14, PWM14G0, PWM14, SIG_DESC_SET(SCU4B4, 14),
-+			SIG_DESC_CLEAR(SCU414, 14));
- PIN_DECL_2(A24, GPIOF6, SD1CD, PWM14);
- GROUP_DECL(PWM14G0, A24);
- 
- #define A23 47
- SIG_EXPR_LIST_DECL_SESG(A23, SD1WP, SD1, SIG_DESC_SET(SCU414, 15));
--SIG_EXPR_LIST_DECL_SEMG(A23, PWM15, PWM15G0, PWM15, SIG_DESC_SET(SCU4B4, 15));
-+SIG_EXPR_LIST_DECL_SEMG(A23, PWM15, PWM15G0, PWM15, SIG_DESC_SET(SCU4B4, 15),
-+			SIG_DESC_CLEAR(SCU414, 15));
- PIN_DECL_2(A23, GPIOF7, SD1WP, PWM15);
- GROUP_DECL(PWM15G0, A23);
- 
--- 
-2.25.1
+Already has 'fan-tach-ch' in npcm750-pwm-fan.txt.
 
+> +
+> +- aspeed,target-pwm : Specify the frequency of PWM. The value range from 24 to
+> +		      780000. Default value will be set to 25000.
+> +
+> +- aspeed,pulse-pr : Specify tacho pulse per revolution of the fan. A general
+> +		    parameter of pulse-pr is 2.
+
+Already have 'pulses-per-revolution' property in pwm-fan.txt. Use that.
+
+Really, all these should be in a common fan schema that you reference.
+
+> +
+> +Examples:
+> +
+> +&pwm_tacho {
+> +	status = "okay";
+
+Don't show status in examples.
+
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_tach0_default>;
+> +
+> +	fan@0 {
+> +		reg = <0x00>;
+> +		aspeed,target-pwm = <25000>;
+> +		cooling-levels = /bits/ 8 <125 151 177 203 229 255>;
+> +		aspeed,fan-tach-ch = /bits/ 8 <0x00>;
+> +		aspeed,pulse-pr = <2>;
+> +	};
+> +};
+> -- 
+> 2.17.1
+> 
