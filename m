@@ -1,112 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 846AB2D7469
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 12:01:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E41F2D74B8
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 12:33:43 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Csnsr2tS2zDqw6
-	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 22:01:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CspZX2kWxzDqZL
+	for <lists+openbmc@lfdr.de>; Fri, 11 Dec 2020 22:33:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=40.107.132.128;
- helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=billy_tsai@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-eopbgr1320128.outbound.protection.outlook.com [40.107.132.128])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::531;
+ helo=mail-pg1-x531.google.com; envelope-from=dhruvaraj@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=HVXaYcoR; dkim-atps=neutral
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com
+ [IPv6:2607:f8b0:4864:20::531])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Csnrp3n7VzDq83;
- Fri, 11 Dec 2020 22:00:57 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bP1JlbArtkkU5NLjLfI53jSdbmVBTijtPwxBHtJas5+X4zz4yg9DeBO1QlfIvo6bdFVTYOaLcHDAHZiIlfs+Ui90GkztjfAT9YBALV3gnFd9tq0paqXnLah1xzAWvL4QK/NDBAKYc7Vvb4Lt4cumQtCdAHI626UKUfnn0Ogi0GOQMuYGFuDiLrlmm44AlUkXD69Yd9XkQ/Is14JDj0EHtSn7+N5vH8fo2G1RSt40k3XDcAEOwePqjcf+NSElwBRV+yJI4tdRpvyZUPZSeILAUZKwWF38nubrS6MkzdALiZRtFvTl37AmaZ6IOsqnZ+BEwQ+PHhLgYseJpmCzV8vXHg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=THlelBhT3hH8Flr6mh54KQAGrwhizbWxJo/7OHOxm9I=;
- b=Uk0RRHYBgmYI9bLr2pZ0+iyGGNM0HV5CupOGGKYawg+yJqUAB34UMdIik3m0sMCcG9fvXVYt5wsY3t0Hy7KdvuwWR1rmmtm6+aCtnv/W5xyb4FTSKR7SFbhFz+8u8Nj0MlqUprQh45riCUtMGpLTUg7bxA2fRncAxGVnwBMTTQ0nWWTcTxV2JFE9Hr5IRYNXJVwYFByb6Uu1tATKyF2VUh8+jqWnr67LttBLXQ1MKabYoqvLNXhV/Aq38kj6gY0VXHXmMf1yhnn0dAzmTIl4X+w9xX48F6h69ROfn38j6KmAv0fQkSxUz+eK73Ehc/Hb8ovzgWF1zy6se/WBvLlc8g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-Received: from PU1PR06MB2167.apcprd06.prod.outlook.com (2603:1096:803:39::19)
- by PSAPR06MB4072.apcprd06.prod.outlook.com (2603:1096:301:31::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.12; Fri, 11 Dec
- 2020 11:00:49 +0000
-Received: from PU1PR06MB2167.apcprd06.prod.outlook.com
- ([fe80::f1f9:3e07:1f9f:9d31]) by PU1PR06MB2167.apcprd06.prod.outlook.com
- ([fe80::f1f9:3e07:1f9f:9d31%5]) with mapi id 15.20.3632.027; Fri, 11 Dec 2020
- 11:00:48 +0000
-From: Billy Tsai <billy_tsai@aspeedtech.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH] driver: aspeed: g6: Fix PWMG0 pinctrl setting
-Thread-Topic: [PATCH] driver: aspeed: g6: Fix PWMG0 pinctrl setting
-Thread-Index: AQHWz2wy281n4pCZxkmLwBG4hQfTFKnxuWSAgACHmQA=
-Date: Fri, 11 Dec 2020 11:00:48 +0000
-Message-ID: <D9745FBC-BEA7-421E-B56C-21EA9AAE094E@aspeedtech.com>
-References: <20201211031741.23711-1-billy_tsai@aspeedtech.com>
- <CACPK8XdDn7GfGKAwZnoZrFc5wZW4p=xMuLmCcHvEyyNJZ8rGvw@mail.gmail.com>
-In-Reply-To: <CACPK8XdDn7GfGKAwZnoZrFc5wZW4p=xMuLmCcHvEyyNJZ8rGvw@mail.gmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: jms.id.au; dkim=none (message not signed)
- header.d=none;jms.id.au; dmarc=none action=none header.from=aspeedtech.com;
-x-originating-ip: [211.20.114.70]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: b4fbd20f-4565-478f-9a4c-08d89dc4049f
-x-ms-traffictypediagnostic: PSAPR06MB4072:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <PSAPR06MB4072080AA695C3B4628B97F68BCA0@PSAPR06MB4072.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: kt1Adk9tHbqmir61ysM8jzMzN+PAcgtkOu/yRvgK/C9EUm6A68GS1kDKi2NIxowh2Wb1tlb4Pj2/CSRW1c/f9GCDgBrOMSa7J+kQQKKDDLVMgJJTO5IeOyXCHJBA0GWX+NtPIQ91p3yaxK4D/YJf0BzKgO4EVhcrgxcSrpt6giGyBxbcpssv0E7yuYbQuxpUbK+leatMYGEkBpLJoLPM8Z4SdD9A6A8vE4snuEB4TLp4kqmpsnme1XLpknx6XikX2+c0ovQEn/e3So0Vc8k08BzpsKCLuiiPNsXZLSDgprgh0JaZnbTtnqwkjPx4Q34XLH85KXuw2Q90Lbsd39DHyMGUwpxmrSFk+i5HAIYgvPoUhLwIVlpj+J4dQUGKnnxB
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PU1PR06MB2167.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39850400004)(396003)(376002)(346002)(366004)(136003)(26005)(478600001)(76116006)(316002)(86362001)(91956017)(6512007)(6486002)(66556008)(83380400001)(8936002)(8676002)(2906002)(54906003)(66476007)(66946007)(66446008)(33656002)(36756003)(55236004)(186003)(107886003)(71200400001)(64756008)(6916009)(5660300002)(2616005)(6506007)(4326008)(45980500001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?Y0w0ZnZ0aXZnMWRzeXZZSUJ0VkRYRkNpTml2aTdhTEk2QU1WbklOWnFXVmxy?=
- =?utf-8?B?VEhxZ084NXcyRUZabVdNV3RhVHRrZGpUdld2dElVSks3bDluVDRJY3NoRkxt?=
- =?utf-8?B?UkxXK3pQZG5UbGp3bGFSRExvb2ZLM0RjUS9xUzFaVGwzU2JhZmtYNysvK21D?=
- =?utf-8?B?QjZPS0ZScDdxSTFodkdSVDVDSVFERHppUDJ4Wk9ZbjYzMEUvQTFQWW9yTnRP?=
- =?utf-8?B?Sjd5ajlRWjlHVnBkYW5WT1R3VUEyQncwZGpHbWVPZ1g4TmZjSzJicksxY0Qw?=
- =?utf-8?B?R2F0QmVRdGp1dGhKS3UxeS95cEM5V3h5ZkdsaW9GeW9HTnQvRVhqb3JYQlFL?=
- =?utf-8?B?MDhCM281UlRQMHc5MUJjNEhqY0d6LzlIWHdKcks0VmhSM2pTTmUxeHgzT0dL?=
- =?utf-8?B?K1pXblIxR3Y0Nkw4WGxsQzNCc0szeUJXNjg5cGU5TFE3K25qQ0ZXamRmcGRV?=
- =?utf-8?B?Zk1oNlpqcHNoVkJwYXdUTGNmUEt4TTA0QmtYQ0c2Z2R6dzA0R3hLWHNUQ2FC?=
- =?utf-8?B?VkVjRmRTbTY2Z0FiUS9GYkxXM3VIN0Y3ZVhvUnpTUFkzNEJ6K1cyOW8wVzJ6?=
- =?utf-8?B?aThUV3pqcEVWUlVuNWNDWVNQNUN5OSs3UlpUMUw3aGM1VUQrcTBoNktJb3JN?=
- =?utf-8?B?UHFXTlFHUnZjNiszZmo2QmJIcXkyMU1QaDl6K1EzWU9JNVhNNmMzU09YeElN?=
- =?utf-8?B?VDN3L1hPS216enlESEhvUVh5dGNaMk1yRGpYOTRtdEo4aHk3clRLRUNHYkpt?=
- =?utf-8?B?RmJGT1djYUFCSVNab2l0T0dMTXppUHBCYzFEaCtOek03M1EyQitnanNUa2VY?=
- =?utf-8?B?RjhsOVZFQWhLUXpyYVFjQmVPcmhYemtwSHpPdWo3TFJpZzlHcHp2WlMzaGtT?=
- =?utf-8?B?emIyb0RxNHhvTVJNUDFQdHVBSFRqUWdhTGg4NFBhc2FSK0JCYWFkellnMFUv?=
- =?utf-8?B?aWJkb0t6ZjlQMG9HSmlRdkw0bUE0bnBUYTdqWmNQbUZBdW42ZE1qMmZIMkU3?=
- =?utf-8?B?S3lqZjYwMWFiTUlwWlJFKzBIT0Q3allZQjFkL1FuaXlhWTdVZG5YNGZ5OENm?=
- =?utf-8?B?SUwyMXVkekN3UVNQbVArNE5FSGNML3pqQmd3YU05RDh3dkl5ZXNjN3pZNnV0?=
- =?utf-8?B?Ty9icnB6NEJ6YUdrMW1NZkFoM3I5MDBWMzNhNzIrWDMyYnJyREp4R0JDTHVV?=
- =?utf-8?B?YXdjNnBmYWNtNURWVjZxdlZ3R09XNFdrRE83eDhxMmJoYTdZa3hWZFcrdTNN?=
- =?utf-8?B?MnRwb2ZwRUdNZjBGMlJTYWNpQ3JNajVHT2RHN1VhOW5YWGJPK3RVd1prUkR1?=
- =?utf-8?Q?sj9OSKHbo0wDI2sOU6OxgV/v5guUbchgBd?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <A1A2014CC522844E85AC11528F88D24A@apcprd06.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CspRZ01zSzDqPc
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Dec 2020 22:27:36 +1100 (AEDT)
+Received: by mail-pg1-x531.google.com with SMTP id w4so6879187pgg.13
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Dec 2020 03:27:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=+YjZ2FikWpA+E42T0AQMSpKqg+p8z+6TybRT9EugS+g=;
+ b=HVXaYcoR8r44DwyOLQ2ljrkwG6n/cIA1lCUXcQUtMCHPephcdU5lPf9SU9oSEdyQk9
+ ilqROHh+PevXolSwSwSpwYZ3Uh2yid1nknrrggC3XjoXWEFV5bRfIZZU9UbMedUYnBT2
+ nL0Hn3qds0LTOle7Aw3yATvlONgLpHfu1PgoZOKVQgv+8gNfI25+eslsBvW+wMVB2AfD
+ bF8v0zllVUTTGdG3AtqIQiKe4g47B4TT4Pc0IhhbyD5YDjs8wMo/npxNLq2Mtt1gRsWt
+ e1AZAduY8NiDgxwIZBii9bUOUGIsUDU2mJhP8C6r08a8SrzkJy13jeNCuYHl8A3xpX1F
+ VdkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=+YjZ2FikWpA+E42T0AQMSpKqg+p8z+6TybRT9EugS+g=;
+ b=n7+zq/d+gfs+sWQ2e/HHOmIoJuJF5Sm9vfKXqcM8xPbwJ3NqMvvF35nwArvE35qDXQ
+ /RbFa9nFYPbjxGH74whXyHEvAS4Kh5v+dVAdu2xgfN+A3Ja7SvJFgTvbWXwVNtua6sO7
+ 0CSZpNcU7xHnPfNAF1OteRYPue+nsj8dMZ/6cYVjzGbIQVBgQemwMvcKSY1thxBAFqxV
+ tGKZdwdhR/Ea2fCpR1t+X+GXc2MVR7/EqNGbw22qGamuo3vnwrp0Wt6xvvIcr7nn0ARU
+ v5huaRsNhol+KdqyXxYxl37Pm3BKMBy5BKyfIiwpv3WsYN7R5TbHIp3PjdcFxdTZrkPG
+ DtnA==
+X-Gm-Message-State: AOAM533cTTMG2VELgjhxP6IgYRqVJeRaZWFgysEpPcsc+6oFWVsaWR91
+ Nz8e1Cx4UDsVTEVRt7AUqm0qYeULD80AyrCVV/E=
+X-Google-Smtp-Source: ABdhPJwEssTo8xstmsgsKtndsTdramyEqzC6mb4wt/J+6r+/kffyz4eGFkKJkXIatbze0ObOgkviG+NdoSUm9ONWMA0=
+X-Received: by 2002:a63:2944:: with SMTP id p65mr9784457pgp.283.1607686053164; 
+ Fri, 11 Dec 2020 03:27:33 -0800 (PST)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PU1PR06MB2167.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4fbd20f-4565-478f-9a4c-08d89dc4049f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2020 11:00:48.8525 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kB1x0gl4p2UJuLGL/Bhallo56uvMPlfs9BXh/ZjyVlWA7Ucv1iQej1J5TxowEIDxWdSktsnq1/vj8o7kXI91rQ6u68IOgxpNG5HvRs04130=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB4072
+References: <CAK7WosgZtEj_fp_Jx8rqWKHJb7AF8cPHR-_33jo_5vQx645_Bg@mail.gmail.com>
+ <CACWQX8050TCOT8z5efOWQ_q7b9Ucqv6+w1X1J1NRwba9AGKq8g@mail.gmail.com>
+In-Reply-To: <CACWQX8050TCOT8z5efOWQ_q7b9Ucqv6+w1X1J1NRwba9AGKq8g@mail.gmail.com>
+From: dhruvaraj S <dhruvaraj@gmail.com>
+Date: Fri, 11 Dec 2020 16:57:22 +0530
+Message-ID: <CAK7WosjKjLKu_1vvZak7kOry9aujxNdEJ7cuuFdbqPVTnUW5Mw@mail.gmail.com>
+Subject: Re: Proposal for operations on isolated hardware units using Redfish
+ logging
+To: Ed Tanous <ed@tanous.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,42 +76,160 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW <BMC-SW@aspeedtech.com>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- Linus Walleij <linus.walleij@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux ARM <linux-arm-kernel@lists.infradead.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ Gunnar Mills <gmills@linux.vnet.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGkgSm9lbCwNCg0K77u/T24gMjAyMC8xMi8xMSwgNjo1NSBQTSwgSm9lbCBTdGFubGV5IHdyb3Rl
-Og0KDQogICAgT24gRnJpLCAxMSBEZWMgMjAyMCBhdCAwMzoxOCwgQmlsbHkgVHNhaSA8YmlsbHlf
-dHNhaUBhc3BlZWR0ZWNoLmNvbT4gd3JvdGU6DQogICAgPg0KICAgID4gVGhlIFNDVSBvZmZzZXQg
-Zm9yIHNpZ25hbCBQV004IGluIGdyb3VwIFBXTThHMCBpcyB3cm9uZywgZml4IGl0IGZyb20NCiAg
-ICA+IFNDVTQxNCB0byBTQ1U0QjQuDQogICAgPiBCZXNpZGVzIHRoYXQsIFdoZW4gUFdNOH4xNSBv
-ZiBQV01HMCBzZXQgaXQgbmVlZHMgdG8gY2xlYXIgU0NVNDE0IGJpdHMgYXQNCiAgICA+IHRoZSBz
-YW1lIHRpbWUuDQogICAgPg0KICAgID4gRml4ZXM6IDJlZGExY2RlYzQ5ZiAoInBpbmN0cmw6IGFz
-cGVlZDogQWRkIEFTVDI2MDAgcGlubXV4IHN1cHBvcnQiKQ0KICAgID4NCiAgICA+IFNpZ25lZC1v
-ZmYtYnk6IEJpbGx5IFRzYWkgPGJpbGx5X3RzYWlAYXNwZWVkdGVjaC5jb20+DQogICAgPiAtLS0N
-CiAgICA+ICBkcml2ZXJzL3BpbmN0cmwvYXNwZWVkL3BpbmN0cmwtYXNwZWVkLWc2LmMgfCAyNiAr
-KysrKysrKysrKysrKy0tLS0tLS0tDQogICAgPiAgMSBmaWxlIGNoYW5nZWQsIDE3IGluc2VydGlv
-bnMoKyksIDkgZGVsZXRpb25zKC0pDQogICAgPg0KICAgID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMv
-cGluY3RybC9hc3BlZWQvcGluY3RybC1hc3BlZWQtZzYuYyBiL2RyaXZlcnMvcGluY3RybC9hc3Bl
-ZWQvcGluY3RybC1hc3BlZWQtZzYuYw0KICAgID4gaW5kZXggMzQ4MDNhNmM3NjY0Li42ZTYxZjA0
-NTkzNmYgMTAwNjQ0DQogICAgPiAtLS0gYS9kcml2ZXJzL3BpbmN0cmwvYXNwZWVkL3BpbmN0cmwt
-YXNwZWVkLWc2LmMNCiAgICA+ICsrKyBiL2RyaXZlcnMvcGluY3RybC9hc3BlZWQvcGluY3RybC1h
-c3BlZWQtZzYuYw0KICAgID4gQEAgLTM0Niw1MCArMzQ2LDU4IEBAIEZVTkNfR1JPVVBfREVDTChS
-R01JSTQsIEYyNCwgRTIzLCBFMjQsIEUyNSwgRDI2LCBEMjQsIEMyNSwgQzI2LCBDMjQsIEIyNiwg
-QjI1LA0KICAgID4gIEZVTkNfR1JPVVBfREVDTChSTUlJNCwgRjI0LCBFMjMsIEUyNCwgRTI1LCBD
-MjUsIEMyNCwgQjI2LCBCMjUsIEIyNCk7DQogICAgPg0KICAgID4gICNkZWZpbmUgRDIyIDQwDQog
-ICAgPiAtU0lHX0VYUFJfTElTVF9ERUNMX1NFU0coRDIyLCBTRDFDTEssIFNEMSwgU0lHX0RFU0Nf
-U0VUKFNDVTQxNCwgOCkpOw0KICAgID4gLVNJR19FWFBSX0xJU1RfREVDTF9TRU1HKEQyMiwgUFdN
-OCwgUFdNOEcwLCBQV004LCBTSUdfREVTQ19TRVQoU0NVNDE0LCA4KSk7DQogICAgPiArU0lHX0VY
-UFJfTElTVF9ERUNMX1NFU0coRDIyLCBTRDFDTEssIFNEMSwgU0lHX0RFU0NfU0VUKFNDVTQxNCwg
-OCkpDQogICAgDQogICAgSXMgdGhpcyBtaXNzaW5nIGEgc2VtaWNvbG9uPw0KDQpZZXMsIHRoYW5r
-cyBmb3IgeW91ciBjaGVjay4gSSB3aWxsIHNlbmQgdjIgdG8gZml4IGl0Lg0KICAgIA0KICAgID4g
-K1NJR19FWFBSX0xJU1RfREVDTF9TRU1HKEQyMiwgUFdNOCwgUFdNOEcwLCBQV004LCBTSUdfREVT
-Q19TRVQoU0NVNEI0LCA4KSwNCiAgICA+ICsgICAgICAgICAgICAgICAgICAgICAgIFNJR19ERVND
-X0NMRUFSKFNDVTQxNCwgOCkpOw0KICAgIA0KDQo=
+On Thu, Dec 10, 2020 at 10:59 PM Ed Tanous <ed@tanous.net> wrote:
+>
+> On Thu, Dec 10, 2020 at 7:49 AM dhruvaraj S <dhruvaraj@gmail.com> wrote:
+> >
+> > Hi,
+> > Please find the option for operations on isolated hardware units using
+> > Redfisg logging
+> >
+> >
+> > Hardware Isolation
+> > On systems with multiple processor units and other redundant vital reso=
+urces,
+> > the system downtime can be prevented by isolating the faulty hardware u=
+nits.
+> > Most of the actions required to isolate the parts will be dependent on
+> > the architecture and
+> > executed in the host. But the BMC needs to support a few steps like
+> > provide a method to users to query the units in isolation, clearing
+> > isolation, isolating a
+> > suspected part, or isolating when the host is down due to a fault in a
+> > critical unit.
+> > Since a user interface is needed for the above actions proposing a meth=
+od to use
+> > Redfish log service to carry out these actions.
+>
+> Right off the bat, LogServices seems like a strange choice for this.
+> In your requirements, you're taking actions on the unit itself, not
+> logging the actions that occurred, so I'm struggling to see the design
+> choice here.  Can you elaborate why LogService, something intended to
+> be for historical logging, would be appropriate for a design that
+> needs to accept user action?
+
+Apart from user-requested isolation of a hardware unit, usually, hardware u=
+nits
+get isolated due to a past action in the system. for example, if a
+processor core encountered
+an error while performing the activities and cannot continue in
+service, that will be listed
+as isolated. A method is needed to show the list of such units to the users=
+.
+Since log service is for showing such logs, I think log service is
+suitable for that.
+And after the repair, once the unit is back in service, this log
+service entry will be marked
+as resolved.
+
+>
+> >
+> > Requirements
+> > When user requests, isolate a hardware unit.
+> > Getting the list of all isolated resources.
+> > Remove the isolation of a hardware unit.
+> > Remove all existing isolation
+> >
+> > Isolating a hardware unit:
+> > redfish >> v1 >> Systems >> system >> LogServices >> IsolatedHardware
+> > {
+> >   "@odata.id": "/redfish/v1/Systems/system/LogServices/IsolatedHardware=
+",
+> >   "@odata.type": "#LogService.v1_2_0.LogService",
+> >   "Actions": {
+> >     "#LogService.CollectDiagnosticData": {
+> >       "target":
+> > "/redfish/v1/Systems/system/LogServices/IsolatedHardware/Actions/LogSer=
+vice.CollectDiagnosticData"
+>
+> What is this action intended to do?
+>
+> >     }
+> >   },
+> >   "Description": "Isolated Hardware",
+> >   "Entries": {
+> >     "@odata.id":
+> > "/redfish/v1/Systems/system/LogServices/IsolatedHardware/Entries"
+> >   },
+> >   "Id": "IsolatedHardware",
+> >   "Name": "Isolated Hardware LogService",
+> >   "OverWritePolicy": "WrapsWhenFull"
+> >
+> > Listing isolated hardware units.
+> > redfish >> v1 >> Systems >> system >> LogServices >> IsolatedHardware >=
+> Entries
+> > {
+> >   "@odata.id": "/redfish/v1/Systems/system/LogServices/IsolatedHardware=
+/Entries",
+> >   "@odata.type": "#LogEntryCollection.LogEntryCollection",
+> >   "Description": "Collection of Isolated Hardware Components",
+> >   "Members": [
+> >     {
+> >       "@odata.id":
+> > "/redfish/v1/Systems/system/LogServices/IsolatedHardware/Entries/1",
+> >       "@odata.type": "#LogEntry.v1_7_0.LogEntry",
+> >       "Created": "2020-10-15T10:30:08+00:00",
+> >       "EntryType": "Event",
+> >       "Id": "1",
+> >       "Resolved": "false",
+>
+> LogEntry doesn't have a "Resolved" field that I can see.
+>
+> >       "Name": "Processor 1",
+> >       "links":  {
+> >                  "OriginOfCondition": {
+> >                         "@odata.id":
+> > "/redfish/v1/Systems/system/Processors/cpu1"
+> >                     },
+> >       "Severity": "Critical",
+> >        "SensorType" : "Processor",
+>
+> SensorType doesn't really make sense in this case, as you're not
+> reporting errors from a sensor, but from a resource.
+>
+> >
+> >  "AdditionalDataURI":
+> > =E2=80=9C/redfish/v1/Systems/system/LogServices/EventLog/attachement/11=
+1"
+> >  =E2=80=9CAddionalDataSizeBytes": "1024"
+> >
+> >   }
+> >   ],
+> >   "Members@odata.count": 1,
+> >   "Name": "Isolated Hardware Entries"
+> >
+> > Users will be able to delete any entry or all the entries, but if an
+> > isolated unit is serviced then that unit will be back in service, in
+> > such cases the "Resolved" property in the entries will be marked as
+> > "true"
+> > "AdditionalDataURI" : This is a link to the error log associated with
+> > this isolation action.
+> > --------------
+> > Dhruvaraj S
+>
+>
+> I suspect overall you need to separate this into two different
+> resources.  One for logging things that have happened in the past,
+> under log service, and one for interacting directly with the system in
+> its current state.  The second one would likely take the form of being
+> able to set the Status property to something like "Disabled",
+> "UnavailableOffline", or something similar on your Processor
+> resources.
+
+The log service is already being used to generate the dump, which is a
+user-initiated
+ action in log service, I am thinking the user-initiated isolation
+also can be in the same place.
+But as you suggested setting the disabled/UnavailableOffline on the
+list of units also a good option,
+need to look more into that.
+
+--=20
+--------------
+Dhruvaraj S
