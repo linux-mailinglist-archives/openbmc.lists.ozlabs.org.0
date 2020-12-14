@@ -1,107 +1,153 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5185C2D91D1
-	for <lists+openbmc@lfdr.de>; Mon, 14 Dec 2020 03:46:09 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33FA32D9CD8
+	for <lists+openbmc@lfdr.de>; Mon, 14 Dec 2020 17:42:01 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CvQkQ25vgzDqL9
-	for <lists+openbmc@lfdr.de>; Mon, 14 Dec 2020 13:46:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CvnGt2JSCzDqQ8
+	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 03:41:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=40.107.132.108;
- helo=apc01-pu1-obe.outbound.protection.outlook.com;
- envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from APC01-PU1-obe.outbound.protection.outlook.com
- (mail-eopbgr1320108.outbound.protection.outlook.com [40.107.132.108])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
+ (client-ip=40.107.128.97; helo=kor01-ps2-obe.outbound.protection.outlook.com;
+ envelope-from=priyatharshanp@hcl.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=quarantine dis=none) header.from=hcl.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
+ header.s=selector2 header.b=Z320K670; 
+ dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
+ header.a=rsa-sha256 header.s=selector2 header.b=Z320K670; 
+ dkim-atps=neutral
+Received: from KOR01-PS2-obe.outbound.protection.outlook.com
+ (mail-eopbgr1280097.outbound.protection.outlook.com [40.107.128.97])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CvQj03wPPzDqRX;
- Mon, 14 Dec 2020 13:44:49 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CvnFt2YKwzDqN2
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Dec 2020 03:41:01 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oXadq3gVaBY/omRDlymMBX4r2+JSrnh7vjCJjktqb9c=;
+ b=Z320K670Nsszh39wL8QxRejKvczIus6gw5olm644RoDRcVtlChQkFqqqimMbPHuiudmcggIQ03ojc0l8RzShJV9X3zSxXB5o2IXf8qWn/sdmsW3XM1qkdTgSZLNqE/AXfQoo8HZFYDcut5kV5Z4+Lbbf1okFqXahehx1TPIsbEo=
+Received: from SGAP274CA0007.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b6::19) by
+ PS2PR04MB2696.apcprd04.prod.outlook.com (2603:1096:300:50::21) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3654.14; Mon, 14 Dec 2020 16:40:49 +0000
+Received: from SG2APC01FT062.eop-APC01.prod.protection.outlook.com
+ (2603:1096:4:b6:cafe::f2) by SGAP274CA0007.outlook.office365.com
+ (2603:1096:4:b6::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.12 via Frontend
+ Transport; Mon, 14 Dec 2020 16:40:48 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.195.59)
+ smtp.mailfrom=hcl.com; lists.ozlabs.org; dkim=pass (signature was verified)
+ header.d=HCL.COM;lists.ozlabs.org; dmarc=pass action=none
+ header.from=hcl.com;
+Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
+ 192.8.195.59 as permitted sender) receiver=protection.outlook.com;
+ client-ip=192.8.195.59; helo=APC01-PU1-obe.outbound.protection.outlook.com;
+Received: from APC01-PU1-obe.outbound.protection.outlook.com (192.8.195.59) by
+ SG2APC01FT062.mail.protection.outlook.com (10.152.251.161) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3654.12 via Frontend Transport; Mon, 14 Dec 2020 16:40:46 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G3T26FPDH0d5ud4aCcBgJuG4BiZy8yAqm/MZRB84Qd5mB5eQxn2NhnnhhsTF3/DB96y5nouTZeXObHguKGIeH46TzesmZTzjCyZxquP2A19Vt6jDAc886YOe0zc7WA+AMsqH6svqHpDmh5TbTwa8lPHUkGi94xf3Q0ZlCS0+OYo/WXHJqxEzwAqFwGVcaFMllW7VElgTNUMtBk7/BHMzeS0DZNOLvw+0syr4x86/KsqopHJl4xtAbRNC/F35LhEy5XVp7v9eSeK1TNxoQo2M2+L4jBlrD3xkNRysnCLH8cxO3/siYi2FBSRPgfpFrrkf0g+pcOvIij4ceW+H5zGazA==
+ b=YkGVxkM0vv88DaqEV+Na8p5c9D3N8b9CkTU2E9L0z0NEW3deON4j+Fhpkd2yMQjMszNdDp0Cge2n+VJDpawFF9FbJVTL143FU+WGNrn2h6IEbRcrNc7DW33zRjx6AS/UdlAweXYEtWYL0DKCIY+r3hssS4JFhdjaNYEMKeUp2tkyfZfRLQWa5ZVRDOCFTygue966d6IK4+lYUGU9cU4vTTcg5iV3KbFTayrUPtIvWM7aJqbHHgDSxIonl0dzpezwXiQj8JGLnzYTMAksuuIo5k33PVIck7q5996ERpQ4p+gUWPcWH1Fw8lY8Yp9gvYOOjfYLH9g63EzBWDes/wBewQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CMcTpZgmsnllOCRht/wkHVq8cHzvKRDv1CIdoXXoZ/I=;
- b=XJb48UtuMGnxuyAvomFiOBa38CrCERCIEzFCL2CNFJc/aeh0sD+fJdHBLrgtJRUC/LJ18PlOwKzGzCf5URPnCIX6L6PKUC+i3pAMXGwPjhxzHIeGTkaz1+M1tl7kFk/GoSRli8tgwCE/6FnZjlFyHjuzLsVpxKSD6dNVT8oXTFCXLsR72A9wJRLp+V2Azz3jUHZAVyKgDkPUkhRekmf89sMzBus8QIjegWWgHeMdsdsxZy4hxlaixldggoSDrNBMepNtb+qRiDecoaV+bzm1+wMk6EJ2e61x3CJwtgwZNOxWVDZwRAd568/D5jC7wav1sKqRynvYwtXA0vbh4UM8pA==
+ bh=oXadq3gVaBY/omRDlymMBX4r2+JSrnh7vjCJjktqb9c=;
+ b=DCSgiunMslhQKN8Fr3Ci+7RYJKSQf8NLx1Lcnb1gh+Sf6GAEjm36n7p5CmnCJHB8BBxzAQikR70+fw8FN6GsPqndvQ5HeCnLI1L/qk8WOaMlUnvWInmKbOUZw5Xpcc+TntNgw+Ksf2qGno29iB3sMr+/NG1eWzZxzY2Tj7nFz3koK7GR1gc9qev/e/1GegWEDhYUcqUnqFF9W5MYcedaLzFrq2a3qaMuDXh2IhvlD2ieD5jqZcAyfL9em7M2G5Yeef1dcQWV9MQ/ZARLZs88gbL/zVcjytFFiB5LibN4kXEhchRUyenTYWk11Ml7FRXqZjnaN3qqzwb/ASKlA8PWkw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-Received: from HK0PR06MB3779.apcprd06.prod.outlook.com (2603:1096:203:b8::10)
- by HK0PR06MB2274.apcprd06.prod.outlook.com (2603:1096:203:4d::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.17; Mon, 14 Dec
- 2020 02:44:23 +0000
-Received: from HK0PR06MB3779.apcprd06.prod.outlook.com
- ([fe80::7061:73d9:50ae:b35e]) by HK0PR06MB3779.apcprd06.prod.outlook.com
- ([fe80::7061:73d9:50ae:b35e%7]) with mapi id 15.20.3654.025; Mon, 14 Dec 2020
- 02:44:23 +0000
-From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
-To: Andrew Jeffery <andrew@aj.id.au>, Rob Herring <robh+dt@kernel.org>, Joel
- Stanley <joel@jms.id.au>
-Subject: RE: [PATCH v2 5/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Thread-Topic: [PATCH v2 5/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Thread-Index: AQHWq0XpiGvCIQ3se0K0W53Se1w+kan2LtDg
-Date: Mon, 14 Dec 2020 02:44:22 +0000
-Message-ID: <HK0PR06MB3779F5B4B9629909DDF441F091C70@HK0PR06MB3779.apcprd06.prod.outlook.com>
-References: <20201005082806.28899-1-chiawei_wang@aspeedtech.com>
- <20201005082806.28899-6-chiawei_wang@aspeedtech.com>
- <2e2d3a02-6677-4b0e-b538-d3130a3b20d1@www.fastmail.com>
-In-Reply-To: <2e2d3a02-6677-4b0e-b538-d3130a3b20d1@www.fastmail.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
+ smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
+ header.d=hcl.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oXadq3gVaBY/omRDlymMBX4r2+JSrnh7vjCJjktqb9c=;
+ b=Z320K670Nsszh39wL8QxRejKvczIus6gw5olm644RoDRcVtlChQkFqqqimMbPHuiudmcggIQ03ojc0l8RzShJV9X3zSxXB5o2IXf8qWn/sdmsW3XM1qkdTgSZLNqE/AXfQoo8HZFYDcut5kV5Z4+Lbbf1okFqXahehx1TPIsbEo=
+Received: from TY2PR04MB3311.apcprd04.prod.outlook.com (2603:1096:404:94::9)
+ by TY2PR04MB4077.apcprd04.prod.outlook.com (2603:1096:404:800f::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.14; Mon, 14 Dec
+ 2020 16:40:44 +0000
+Received: from TY2PR04MB3311.apcprd04.prod.outlook.com
+ ([fe80::9c14:2bd9:c4fb:d608]) by TY2PR04MB3311.apcprd04.prod.outlook.com
+ ([fe80::9c14:2bd9:c4fb:d608%7]) with mapi id 15.20.3654.024; Mon, 14 Dec 2020
+ 16:40:44 +0000
+From: "P. Priyatharshan" <PriyatharshanP@hcl.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Is there any way to initilize all the platform specific Gpio's
+Thread-Topic: Is there any way to initilize all the platform specific Gpio's
+Thread-Index: AQHW0jeouwAffi/GNEqA+AWPwJZfFg==
+Date: Mon, 14 Dec 2020 16:40:44 +0000
+Message-ID: <TY2PR04MB331168C49C1964E4D2B80E3BCAC70@TY2PR04MB3311.apcprd04.prod.outlook.com>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: aj.id.au; dkim=none (message not signed)
- header.d=none;aj.id.au; dmarc=none action=none header.from=aspeedtech.com;
-x-originating-ip: [211.20.114.70]
+Authentication-Results-Original: lists.ozlabs.org; dkim=none (message not
+ signed) header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=hcl.com;
+x-originating-ip: [117.241.156.116]
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 73e832f6-415f-4504-55f8-08d89fda2a25
-x-ms-traffictypediagnostic: HK0PR06MB2274:
+X-MS-Office365-Filtering-Correlation-Id: c7211e69-fb7a-45f1-623b-08d8a04f025e
+x-ms-traffictypediagnostic: TY2PR04MB4077:|PS2PR04MB2696:
 x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK0PR06MB22749012E518D78F834A8AF791C70@HK0PR06MB2274.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: SZs/mpw98cMoxQwsR9N9XJgchCe8fQ7UQjNH1hcxVmHWt/XspjY5FufHSITlpDXv1/mYwHkPpj9VUDynuzVqXzGhmwRdNK2yNDNP4eIYGXq4EE0GEgcmYKBYBAFwpLiRPgUT1Hn215qzmIapqHlD95NVg+lXJCH75+74kI65pFiKh2CaT+5dAi4ndufdfAm7vEt6LYibT385VNZRKS2CGrJOL+YqQakO0vT2nJbXfBL9+X/AaKdd2BX9Iq1wCWAfmCVobQPDVAoWSKrNYOlDOYub73VVKueRiQTVFrtkfJAL+Nff97h0jBGc7iJkxqLQjTvwhO2KYz6C78n60eLipkHTEI5IoO0Sb9MJ4OsmX38irzZUggIYAfnxFTaHVG2IzvjH9DYdOdRD5mLHPg7lhw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB3779.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(376002)(39830400003)(346002)(136003)(366004)(396003)(64756008)(66556008)(26005)(8936002)(66476007)(55236004)(9686003)(66946007)(4326008)(66446008)(966005)(71200400001)(86362001)(6506007)(110136005)(478600001)(53546011)(54906003)(5660300002)(55016002)(316002)(76116006)(83380400001)(2906002)(52536014)(7696005)(8676002)(186003)(7416002)(33656002);
+X-Microsoft-Antispam-PRVS: <PS2PR04MB2696C23D15D105F1008AC03ACAC70@PS2PR04MB2696.apcprd04.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6790;OLM:6790;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original: 73U0MVE4OGgz7yaBsQI82xBxrMcWWoDyA6mOICxXKMriUYrSG6c2fJiW7WISU3f3ZIWe3eQ2rQoZiPP7+u9i8zVx2BR63yNuRUW8OGL3BuTy3EiBW0s1LWpZbJgNu9dQ4iA9bp1OnAf9TVPMdjT9FVBhoGJzCXUVeK9G9xw74KNeC0gD46/UiKh6LFXpQGv9msIleBkTa4+c0EKMW6l4xGzhTnDHmYV7327R1fEvlibnF6uakAY+Ctg5v/prFXxf1hBKbQMuf44r3eTgk5FjIxu8Nl43mRIoH6dfEstDWVtXKPDnBSnKhJyjk4ZeNKM1QzN94p+jfNiYjwlad/vRqObXUEq8KkjkBZzRRyXh3vkArO++WiboM4fbTS1lR9Ev
+X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
+ SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:TY2PR04MB3311.apcprd04.prod.outlook.com;
+ PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(346002)(39860400002)(366004)(136003)(396003)(26005)(7696005)(19627405001)(8676002)(5660300002)(6506007)(66946007)(76116006)(52536014)(91956017)(66446008)(33656002)(186003)(4326008)(83380400001)(55016002)(86362001)(9686003)(2906002)(66476007)(66556008)(71200400001)(316002)(6916009)(8936002)(478600001)(64756008)(43043002);
  DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?mh9K1MRp/RHJ1IAzE3y7t1KXZohtaxGXMpemezDFIENwccDfRr2ZETjDJWu6?=
- =?us-ascii?Q?JrocWgtTMV9rq6+483pBf1aPOmTszvzmfT/LJHsFQVvp1pAtejhfMtzKpr/y?=
- =?us-ascii?Q?VwES7Y+1ab6XOqQMFI4dCKL/OMCHiMEFwezScevz2iFSy9uVB3nPQOeJTRn+?=
- =?us-ascii?Q?Kdx3qCAHyzISqBkifmy27YEBjJvgM6BpQs8quSPfLJEyW4rQ6P2L+yccl5uY?=
- =?us-ascii?Q?4LH6lrCO5yB71QMgf8rs1blZFSePreALam7zKfytTHtUpuOkjmNk3fElhtII?=
- =?us-ascii?Q?8/puTCF8hMZ2XkYfydDIhLv9arQc2ngtC6pGNSMl9yfdHSxS1FQFMZHh+FAK?=
- =?us-ascii?Q?X90XegCptbkWqJkqhalxa4mUKvGwm/RVavMWsGUeG4CTpASuF8odMn0pPxxx?=
- =?us-ascii?Q?uyYzpCsLimxnyuEDF5MqITNaCQmPlPl93fsc1O+tEm/72cSFgwz5Z28cpKra?=
- =?us-ascii?Q?5PoRLiF4/2LB6AR+9Do1JMESK8pCls00XT2fqLTj59JQ0EIBVHBOuMogGiUK?=
- =?us-ascii?Q?JJ/GbKUJ5a2/Zw2MtwA5hv4vFuTXwHIC8mg/plARnH1n6z56y0jQhBwpkKAn?=
- =?us-ascii?Q?qeX+E8WC+7F4XNdUkMmwwgu7npwCse9Oq/sf9Lf1M3SVXpdUhVveLTEYVLAe?=
- =?us-ascii?Q?Z/fnkPZcWdZ2bOXGBrDyWYqe6sXBm/MNFxYsygF3/CjwwjG+V+LObvYjQHs5?=
- =?us-ascii?Q?MCPb+7BM2FxTqRZQIl6hsI84ny2rrgfQVRFTov1lB/9ZibWkuP3TLnvuXjmo?=
- =?us-ascii?Q?EVhMeR/kYLH9YO1Btecl+2AUi+Xq/NwK5rHELgDfqNS5PNlwwZyNxNHaLBM+?=
- =?us-ascii?Q?DXGbqaFxwSbLTSKm+xC/nLQs5pkn+TgmlMnyGGGsF5yh4SlCgilpmNJSBppq?=
- =?us-ascii?Q?Hh6bMbE/EbPuh7O7ypW0e9Tt5TBGxixwkUOdaJQ3HfWte9Z+NKjQ0lZb6pNg?=
- =?us-ascii?Q?vnmh+8Im4Tu8Nko9TLYBgpPlPKdKDu9NlL4/Sh7ScZg=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+x-ms-exchange-antispam-messagedata: =?iso-8859-1?Q?/xd91FY2i3ZiR9bakhQS35uSd4nQ0d9Vua0lOpfCGyE0JGR23NUZr16OGj?=
+ =?iso-8859-1?Q?Cw/ki8Hj3ryR/iwMJDsJ8euD2/y9ZAA6PRs/kTDXbEhmBDMwSF+IvUbbF0?=
+ =?iso-8859-1?Q?JtxVUQ4/8YmODAiAFaScb5C8rsahWAJcO5BsT9Vhvj8a/R6piaKXLe837x?=
+ =?iso-8859-1?Q?4UWVzHqZwm8r2MfVZCGXSl/JMmEaSK/oVIViHgqbne+66bnsSKZOhPqrkp?=
+ =?iso-8859-1?Q?KqgNPxkKzIUBj2CkFIoMYOL9hKAprMGXkPOVuvqc2m8IpoVJOm5gO+gyGD?=
+ =?iso-8859-1?Q?/xx3sTkYeKt3WRCiqHAmm5MAcmbONrpGpP56x8Lf48F1Fjm2XEc3NuBR/O?=
+ =?iso-8859-1?Q?hnKHgPmMfKltjCFfjTQ0MYbIKbE+ySfpKYpqCft4A0d4Qfn1C5EUa9EL8V?=
+ =?iso-8859-1?Q?yHqYkoXuWhTU67nHky2Vycyqzms5Y/ABV/FbK40uTkGpRJMFutfysrqOBy?=
+ =?iso-8859-1?Q?FpWUf80Mfs1O/QfLdTy3TweE9z4Hd6JHLW2YV79LS9ia2wY55X49Jllbxu?=
+ =?iso-8859-1?Q?MJLkEuSUS76ZNzBuH3spys4M82ZkJaQOI/ODfFw5ZdEfjTJ1moI8kvyOPS?=
+ =?iso-8859-1?Q?dC7mX40G1biMj6rOmlldURybfJIAnwqzPRgSw/ee1qwQtLAfeLkh4/ppaY?=
+ =?iso-8859-1?Q?VPsBREjBwLkgvbY/n70T91gZ1arqTYEWqdwkzI/C5q0tOP6B/PrDNg2bNK?=
+ =?iso-8859-1?Q?t4GSS0VUbC7itGl1zSwWavbml+wCr+mCMToHzD12/JDrKx/NpggwNKDLjz?=
+ =?iso-8859-1?Q?OWrR1rk965v+Ldel8akYVuAcrdjuPRK6+fXpHNsx9SuBojrZbpgtcMFr1F?=
+ =?iso-8859-1?Q?aetO3M3eJX4+bIPfRC1N+ZdfHQJDTQmEWTkJfpDmJwKKMq42J6pjFeT2bt?=
+ =?iso-8859-1?Q?5aavsFoJ3FNBD2XGQ2+WNHhJoZXY9MPncpVuhp0HQRnSe891XsEAAbiW0F?=
+ =?iso-8859-1?Q?OCdtxoI+Dle5IiuAnC+kH0iKJpb77WNoEgMRzi4nXm9sQOLasDzB5ZgawM?=
+ =?iso-8859-1?Q?8KfTeSL6r/Ul+ZBOo=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_TY2PR04MB331168C49C1964E4D2B80E3BCAC70TY2PR04MB3311apcp_"
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3779.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 73e832f6-415f-4504-55f8-08d89fda2a25
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Dec 2020 02:44:23.0012 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ave/rWn2JZdRB2RPoW0EH7YaowV+SE0r+bq+j13QO4sGFEXboLxHvf4joZO4+sbUdmkzqNMajw1zqwrh6nSH1s5/VBTeOR6yVLGxSO4KQRQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2274
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR04MB4077
+X-DLP: MSGProcess
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT062.eop-APC01.prod.protection.outlook.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs: 1d2a54c7-82f4-4a96-f0e8-08d8a04f0084
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Vxm2FeynYzMwVho79nURQcRL5ZPNJgFkgTCEsaEPncBGuWIIt6wRszBRBPlFAM0xrQldSrBF4et0Jl0xJiDnXGJ0aM638LuIP0ahjmLdoWCHsWSjnmedqs5T876gwoiI79iXH6knXp4ZEkJKsDEeJCFUi9Y57JzO28oUF0ME7ACMpMp9H09f64iKhy6cU2pcpfnOUPIGHv4f/oHBB56sU+HRRSVbn9B8+lpzT5LNbOGvEs8QewbPzShk3z1I0WjtCBs0zXSmo5I4cCJfzeRfVyV0fjszuPYaqX7UiqZlNuBMIGzkCuKrgajG7FsjgptalL9zu3TzHKSNtvzRoSgvEsoQIbXMmnWwproQ1dZo5H5yaKcM/oMGIMui9zSnk7pywr+m5iMugEFMg74y6kbzMy2ECqKbgJ8Tu181qBwt4Rk=
+X-Forefront-Antispam-Report: CIP:192.8.195.59; CTRY:IN; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:APC01-PU1-obe.outbound.protection.outlook.com;
+ PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(4636009)(39860400002)(346002)(376002)(136003)(396003)(46966005)(70586007)(186003)(52536014)(83380400001)(336012)(86362001)(33656002)(2906002)(5660300002)(26005)(55016002)(478600001)(356005)(70206006)(6506007)(9686003)(7696005)(81166007)(19627405001)(6916009)(36906005)(4326008)(8936002)(316002)(47076004)(8676002)(82310400003)(82740400003)(43043002);
+ DIR:OUT; SFP:1102; 
+X-OriginatorOrg: HCL.COM
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Dec 2020 16:40:46.7539 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7211e69-fb7a-45f1-623b-08d8a04f025e
+X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.195.59];
+ Helo=[APC01-PU1-obe.outbound.protection.outlook.com]
+X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT062.eop-APC01.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PS2PR04MB2696
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,238 +159,105 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Corey Minyard <minyard@acm.org>,
- Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- Lee Jones <lee.jones@linaro.org>, Cyril Bur <cyrilbur@gmail.com>,
- Haiyue Wang <haiyue.wang@linux.intel.com>
+Cc: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew & Rob,
+--_000_TY2PR04MB331168C49C1964E4D2B80E3BCAC70TY2PR04MB3311apcp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-Do you have any suggestion on this patch?
-Or should I send a v3 patch with the commits reordering for the review?
-Thanks.
+Hi,
 
-Chiawei
+Is there any way or any application available to initilize all the platform=
+ specific Gpio's.
 
-> -----Original Message-----
-> From: Andrew Jeffery <andrew@aj.id.au>
-> Sent: Monday, October 26, 2020 11:12 AM
-> To: ChiaWei Wang <chiawei_wang@aspeedtech.com>; Rob Herring
-> <robh+dt@kernel.org>; Joel Stanley <joel@jms.id.au>
-> Cc: Ryan Chen <ryan_chen@aspeedtech.com>; Lee Jones
-> <lee.jones@linaro.org>; Corey Minyard <minyard@acm.org>; Arnd Bergmann
-> <arnd@arndb.de>; Greg Kroah-Hartman <gregkh@linuxfoundation.org>; Linus
-> Walleij <linus.walleij@linaro.org>; Haiyue Wang
-> <haiyue.wang@linux.intel.com>; Cyril Bur <cyrilbur@gmail.com>; Robert
-> Lippert <rlippert@google.com>; linux-arm-kernel@lists.infradead.org;
-> linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org;
-> openbmc@lists.ozlabs.org; linux-gpio@vger.kernel.org
-> Subject: Re: [PATCH v2 5/5] dt-bindings: aspeed-lpc: Remove LPC partition=
-ing
->=20
-> Hi Wang Chia-Wei,
->=20
-> On Mon, 5 Oct 2020, at 18:58, Chia-Wei, Wang wrote:
-> > The LPC controller has no concept of the BMC and the Host partitions.
-> > This patch fixes the documentation by removing the description on LPC
-> > partitions. The register offsets illustrated in the DTS node examples
-> > are also fixed to adapt to the LPC DTS change.
-> >
-> > Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
->=20
-> The documentation at [1] suggests this should probably be patch 1/5 rathe=
-r
-> than 5/5, so if you send the series again I'd probably rearrange it. Foll=
-owing the
-> steps outlined in [1] helps catch Rob's attention in the right way :)
->=20
-> [1]
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/D=
-ocume
-> ntation/devicetree/bindings/submitting-patches.rst?h=3Dv5.9
->=20
-> Rob:
->=20
-> The changes here go some way towards cleaning up mistakes I made in the
-> Aspeed LPC controller binding. The proposed change is very much not
-> backwards compatible, but Joel and I don't want to live with the resultin=
-g mess
-> in the drivers of catering to both layouts. Another way we could avoid th=
-e
-> driver mess is to rev all the bindings and immediately drop support for t=
-he old
-> compatibles in the drivers. This creates a bit more churn in the bindings=
-. What
-> are you willing to accommodate?
->=20
-> All consumers I'm aware of ship the Aspeed BMC dtb in FIT images alongsid=
-e
-> the kernel, so while backwards-incompatible changes are rightly frowned u=
-pon
-> I feel we probably wouldn't cause too much damage if we went that path.
->=20
-> Andrew
->=20
-> > ---
-> >  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 85 +++----------------
-> >  1 file changed, 14 insertions(+), 71 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > index a92acf1dd491..866f54a09e09 100644
-> > --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > @@ -9,13 +9,7 @@ primary use case of the Aspeed LPC controller is as a
-> > slave on the bus  conditions it can also take the role of bus master.
-> >
-> >  The LPC controller is represented as a multi-function device to
-> > account for the -mix of functionality it provides. The principle split
-> > is between the register -layout at the start of the I/O space which
-> > is, to quote the Aspeed datasheet, -"basically compatible with the
-> > [LPC registers from the] popular BMC controller -H8S/2168[1]", and
-> > everything else, where everything else is an eclectic -collection of
-> > functions with a esoteric register layout. "Everything else", -here
-> > labeled the "host" portion of the controller, includes, but is not
-> > limited
-> > -to:
-> > +mix of functionality, which includes, but is not limited to:
-> >
-> >  * An IPMI Block Transfer[2] Controller
-> >
-> > @@ -44,8 +38,8 @@ Required properties
-> >  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >  - compatible:	One of:
-> > -		"aspeed,ast2400-lpc", "simple-mfd"
-> > -		"aspeed,ast2500-lpc", "simple-mfd"
-> > +		"aspeed,ast2400-lpc", "simple-mfd", "syscon"
-> > +		"aspeed,ast2500-lpc", "simple-mfd", "syscon"
-> >
-> >  - reg:		contains the physical address and length values of the Aspeed
-> >                  LPC memory region.
-> > @@ -55,66 +49,17 @@ Required properties
-> >  - ranges: 	Maps 0 to the physical address and length of the LPC memory
-> >                  region
-> >
-> > -Required LPC Child nodes
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> > -
-> > -BMC Node
-> > ---------
-> > -
-> > -- compatible:	One of:
-> > -		"aspeed,ast2400-lpc-bmc"
-> > -		"aspeed,ast2500-lpc-bmc"
-> > -
-> > -- reg:		contains the physical address and length values of the
-> > -                H8S/2168-compatible LPC controller memory region
-> > -
-> > -Host Node
-> > ----------
-> > -
-> > -- compatible:   One of:
-> > -		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
-> > -		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
-> > -
-> > -- reg:		contains the address and length values of the host-related
-> > -                register space for the Aspeed LPC controller
-> > -
-> > -- #address-cells: <1>
-> > -- #size-cells:	<1>
-> > -- ranges: 	Maps 0 to the address and length of the host-related LPC
-> memory
-> > -                region
-> > -
-> >  Example:
-> >
-> >  lpc: lpc@1e789000 {
-> > -	compatible =3D "aspeed,ast2500-lpc", "simple-mfd";
-> > +	compatible =3D "aspeed,ast2500-lpc", "simple-mfd", "syscon";
-> >  	reg =3D <0x1e789000 0x1000>;
-> >
-> >  	#address-cells =3D <1>;
-> >  	#size-cells =3D <1>;
-> >  	ranges =3D <0x0 0x1e789000 0x1000>;
-> > -
-> > -	lpc_bmc: lpc-bmc@0 {
-> > -		compatible =3D "aspeed,ast2500-lpc-bmc";
-> > -		reg =3D <0x0 0x80>;
-> > -	};
-> > -
-> > -	lpc_host: lpc-host@80 {
-> > -		compatible =3D "aspeed,ast2500-lpc-host", "simple-mfd", "syscon";
-> > -		reg =3D <0x80 0x1e0>;
-> > -		reg-io-width =3D <4>;
-> > -
-> > -		#address-cells =3D <1>;
-> > -		#size-cells =3D <1>;
-> > -		ranges =3D <0x0 0x80 0x1e0>;
-> > -	};
-> >  };
-> >
-> > -BMC Node Children
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > -
-> > -
-> > -Host Node Children
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >  LPC Host Interface Controller
-> >  -------------------
-> > @@ -145,14 +90,12 @@ Optional properties:
-> >
-> >  Example:
-> >
-> > -lpc-host@80 {
-> > -	lpc_ctrl: lpc-ctrl@0 {
-> > -		compatible =3D "aspeed,ast2500-lpc-ctrl";
-> > -		reg =3D <0x0 0x80>;
-> > -		clocks =3D <&syscon ASPEED_CLK_GATE_LCLK>;
-> > -		memory-region =3D <&flash_memory>;
-> > -		flash =3D <&spi>;
-> > -	};
-> > +lpc_ctrl: lpc-ctrl@80 {
-> > +	compatible =3D "aspeed,ast2500-lpc-ctrl";
-> > +	reg =3D <0x80 0x80>;
-> > +	clocks =3D <&syscon ASPEED_CLK_GATE_LCLK>;
-> > +	memory-region =3D <&flash_memory>;
-> > +	flash =3D <&spi>;
-> >  };
-> >
-> >  LPC Host Controller
-> > @@ -174,9 +117,9 @@ Required properties:
-> >
-> >  Example:
-> >
-> > -lhc: lhc@20 {
-> > +lhc: lhc@a0 {
-> >  	compatible =3D "aspeed,ast2500-lhc";
-> > -	reg =3D <0x20 0x24 0x48 0x8>;
-> > +	reg =3D <0xa0 0x24 0xc8 0x8>;
-> >  };
-> >
-> >  LPC reset control
-> > @@ -194,8 +137,8 @@ Required properties:
-> >
-> >  Example:
-> >
-> > -lpc_reset: reset-controller@18 {
-> > +lpc_reset: reset-controller@98 {
-> >          compatible =3D "aspeed,ast2500-lpc-reset";
-> > -        reg =3D <0x18 0x4>;
-> > +        reg =3D <0x98 0x4>;
-> >          #reset-cells =3D <1>;
-> >  };
-> > --
-> > 2.17.1
-> >
-> >
+
+Thanks,
+Priyatharshan P
+::DISCLAIMER::
+________________________________
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or incomplete, or may contain viruses in tran=
+smission. The e mail and its contents (with or without referred errors) sha=
+ll therefore not attach any liability on the originator or HCL or its affil=
+iates. Views or opinions, if any, presented in this email are solely those =
+of the author and may not necessarily reflect the views or opinions of HCL =
+or its affiliates. Any form of reproduction, dissemination, copying, disclo=
+sure, modification, distribution and / or publication of this message witho=
+ut the prior written consent of authorized representative of HCL is strictl=
+y prohibited. If you have received this email in error please delete it and=
+ notify the sender immediately. Before opening any email and/or attachments=
+, please check them for viruses and other defects.
+________________________________
+
+--_000_TY2PR04MB331168C49C1964E4D2B80E3BCAC70TY2PR04MB3311apcp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Hi,</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+Is there any way or any application available to initilize all the platform=
+ specific Gpio's.<br>
+</div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div>
+<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
+: 12pt; color: rgb(0, 0, 0);">
+<br>
+</div>
+<div id=3D"Signature">
+<div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
+t; color:rgb(0,0,0)">
+Thanks,</div>
+<div style=3D"font-family:Calibri,Arial,Helvetica,sans-serif; font-size:12p=
+t; color:rgb(0,0,0)">
+Priyatharshan P</div>
+</div>
+</div>
+</div>
+<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
+<hr>
+The contents of this e-mail and any attachment(s) are confidential and inte=
+nded for the named recipient(s) only. E-mail transmission is not guaranteed=
+ to be secure or error-free as information could be intercepted, corrupted,=
+ lost, destroyed, arrive late or
+ incomplete, or may contain viruses in transmission. The e mail and its con=
+tents (with or without referred errors) shall therefore not attach any liab=
+ility on the originator or HCL or its affiliates. Views or opinions, if any=
+, presented in this email are solely
+ those of the author and may not necessarily reflect the views or opinions =
+of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
+ disclosure, modification, distribution and / or publication of this messag=
+e without the prior written consent
+ of authorized representative of HCL is strictly prohibited. If you have re=
+ceived this email in error please delete it and notify the sender immediate=
+ly. Before opening any email and/or attachments, please check them for viru=
+ses and other defects.<br>
+<hr>
+</font>
+</body>
+</html>
+
+--_000_TY2PR04MB331168C49C1964E4D2B80E3BCAC70TY2PR04MB3311apcp_--
