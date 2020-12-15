@@ -2,50 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F3082DAA64
-	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 10:48:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18A0E2DAF8A
+	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 15:58:47 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CwD341hR9zDqL0
-	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 20:48:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4CwLxJ1F0jzDqQx
+	for <lists+openbmc@lfdr.de>; Wed, 16 Dec 2020 01:58:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=troy_lee@aspeedtech.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=velankanigroup.com (client-ip=103.117.158.11;
+ helo=sender-op-o11.zoho.in; envelope-from=jdhanasekar@velankanigroup.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CwD1r1y9wzDqBy;
- Tue, 15 Dec 2020 20:47:09 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 0BF9gUfu077791;
- Tue, 15 Dec 2020 17:42:30 +0800 (GMT-8)
- (envelope-from troy_lee@aspeedtech.com)
-Received: from aspeedtech.com (192.168.100.253) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 15 Dec
- 2020 17:45:45 +0800
-Date: Tue, 15 Dec 2020 17:45:33 +0800
-From: Troy Lee <troy_lee@aspeedtech.com>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH 4/4] hwmon: Support Aspeed AST2600 PWM/Fan tachometer
-Message-ID: <20201215094532.GB24903@aspeedtech.com>
-References: <20201209075921.26689-1-troy_lee@aspeedtech.com>
- <20201209075921.26689-5-troy_lee@aspeedtech.com>
- <20201210161653.GA107395@roeck-us.net>
+ header.from=velankanigroup.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=velankanigroup.com
+ header.i=jdhanasekar@velankanigroup.com header.a=rsa-sha256 header.s=zoho
+ header.b=FhweHoMk; dkim-atps=neutral
+Received: from sender-op-o11.zoho.in (sender-op-o11.zoho.in [103.117.158.11])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4CwLwH1C9LzDqFD
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Dec 2020 01:57:49 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1608044260; cv=none; d=zohomail.in; s=zohoarc; 
+ b=awn+G6nQaeE2tD4hzmivkD+jWg5hpNG7SOP9vdX+mzXgkq7HyCLhUvNsROoQkUQMd4KlFkFk3yD9AYl0IjYK4xvcqx1sBW/ejOUlHiUJdT7LY/5APOkkvImMUuDYliXehXM1gnzW/YEEE91Yd8NtAzS+WDnAblPOjeUCRwICl4Q=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.in;
+ s=zohoarc; t=1608044260;
+ h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To;
+ bh=wB9KNQHD62ClgJcd5fIiO2n664Osjl5YWI1VfSlFNCo=; 
+ b=CyxVqI6ePkiEYZysjoWvGcX4cEBdmpkkxBt8AiPbVyjSdLN0I6h6X7aSthDLhUWuj3PWVmVpPa6PX8Du3r+BSbYH6Z456Z6+pplUM3GMA0OHxlXqTY5xMUubXjmP0hjn92IlwsVT7MM2M7SkYHuhEUXgbmerKrCKkPZJD9z2eZ0=
+ARC-Authentication-Results: i=1; mx.zohomail.in;
+ dkim=pass  header.i=velankanigroup.com;
+ spf=pass  smtp.mailfrom=jdhanasekar@velankanigroup.com;
+ dmarc=pass header.from=<jdhanasekar@velankanigroup.com>
+ header.from=<jdhanasekar@velankanigroup.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1608044260; 
+ s=zoho; d=velankanigroup.com; i=jdhanasekar@velankanigroup.com;
+ h=Date:From:To:Cc:Message-Id:In-Reply-To:References:Subject:MIME-Version:Content-Type;
+ bh=wB9KNQHD62ClgJcd5fIiO2n664Osjl5YWI1VfSlFNCo=;
+ b=FhweHoMk3tltDKl7KbXeve1Kk0mt0MGWaAQjx/Y3iyu2PZFSkoQ6/GX6W/K/SOCg
+ 1BS8++30nOLCnTXsAHyh+pS9itLVT1gDedKRTguiUH5mrGRG2DLHKwN842P5mOFNDoG
+ P0ZOa4Zq28LWMAv9YTycKKaKN8+MhjmeHLTuzkHE=
+Received: from mail.zoho.in by mx.zoho.in
+ with SMTP id 1608044258582608.0391630480004;
+ Tue, 15 Dec 2020 20:27:38 +0530 (IST)
+Date: Tue, 15 Dec 2020 20:27:38 +0530
+From: J Dhanasekar <jdhanasekar@velankanigroup.com>
+To: "J Dhanasekar" <jdhanasekar@velankanigroup.com>
+Message-Id: <17666e824f6.8676f91271414.6685735449492554122@velankanigroup.com>
+In-Reply-To: <17645c3875b.2c5baaee78626.1330147189989727125@velankanigroup.com>
+References: <CAOW9pY0o7R4YSYX1WrOUQx-BJ0SG0BLs+NBCoHtgDOndXf4+Aw@mail.gmail.com>
+ <c4ef651d-3589-1580-41dd-17959d00df11@amd.com>
+ <CAOW9pY1hj4sDp_n2Uk87VEPicaoVZn5QuJcsCK_pS7o9ochb4w@mail.gmail.com>
+ <ecc852ee-04ff-c27e-3fe0-fdeda6cb7f34@amd.com>
+ <CADVsX8-q58tiaPdthofa4rRgcQ6rS3qc9tEQXuzMgG6TpnbnCg@mail.gmail.com>
+ <CAOW9pY0YcQK3+68te6B=YEjzRFxvxtXYoewKGUWd3Jh6rgjKDg@mail.gmail.com>
+ <7186ff22-3515-fe72-e2fd-dbd8022e31b9@amd.com>
+ <CAOW9pY1YuXbA=nq+4U5ZLLjqELxZv-6ytxPYTFh1e96wD7faRA@mail.gmail.com>
+ <CAOW9pY1JUmJj9vJ1XJVGjYfyyeQn85o7=7kxmpRsRLv0WdpUeQ@mail.gmail.com>
+ <SN1PR12MB25422E6E38D7E09D0C35793596080@SN1PR12MB2542.namprd12.prod.outlook.com>
+ <CAOW9pY1WMKjq4V55szP8A56MMZY2QotswnuEibK3sVt8SdjvCw@mail.gmail.com>
+ <CAOW9pY1nyeawBBDYkPTt572pJ4KqiuCijbc4xz9N6dVgMhePvw@mail.gmail.com>
+ <DM5PR12MB2535AD6C85C82069C465921796EE0@DM5PR12MB2535.namprd12.prod.outlook.com>
+ <CAOW9pY0ZHtKu6n34j+5CzckQUo5A+ts23j+XrjmSrgMcfGXr9Q@mail.gmail.com>
+ <17645c3875b.2c5baaee78626.1330147189989727125@velankanigroup.com>
+Subject: Re: build error in AMD Ethanolx
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-In-Reply-To: <20201210161653.GA107395@roeck-us.net>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [192.168.100.253]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 0BF9gUfu077791
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_231044_1301564408.1608044258554"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+X-Zoho-Virus-Status: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,1220 +85,829 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:HARDWARE
- MONITORING" <linux-hwmon@vger.kernel.org>, "open list:OPEN FIRMWARE AND
- FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
- Jean Delvare <jdelvare@suse.com>, Ryan Chen <ryan_chen@aspeedtech.com>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
- Jonathan Corbet <corbet@lwn.net>, Andrew Jeffery <andrew@aj.id.au>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>,
- Billy Tsai <billy_tsai@aspeedtech.com>,
- "leetroy@gmail.com" <leetroy@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- ChiaWei Wang <chiawei_wang@aspeedtech.com>, "moderated
- list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>
+Cc: "Venkatesh, Supreeth" <Supreeth.Venkatesh@amd.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ramakrishnan Kumaraswamy <ramakrishnan@bydesignindia.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The 12/11/2020 00:16, Guenter Roeck wrote:
-> On Wed, Dec 09, 2020 at 03:59:20PM +0800, Troy Lee wrote:
-> > Add Aspeed AST2600 PWM/Fan tacho driver. AST2600 has 16 PWM channel and
-> > 16 FAN tacho channel.
-> > 
-> > Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-> > ---
-> >  drivers/hwmon/Kconfig                |   10 +
-> >  drivers/hwmon/Makefile               |    1 +
-> >  drivers/hwmon/aspeed2600-pwm-tacho.c | 1053 ++++++++++++++++++++++++++
-> >  3 files changed, 1064 insertions(+)
-> >  create mode 100644 drivers/hwmon/aspeed2600-pwm-tacho.c
-> > 
-> > diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-> > index 9aa89d7d4193..097c01430259 100644
-> > --- a/drivers/hwmon/Kconfig
-> > +++ b/drivers/hwmon/Kconfig
-> > @@ -400,6 +400,16 @@ config SENSORS_ASPEED
-> >  	  This driver can also be built as a module. If so, the module
-> >  	  will be called aspeed_pwm_tacho.
-> >  
-> > +config SENSORS_ASPEED2600_PWM_TACHO
-> > +        tristate "ASPEED AST2600 PWM and Fan Tachometer"
-> > +        depends on THERMAL || THERMAL=n
-> > +        help
-> > +          This driver provides support for ASPEED AST2600 PWM
-> > +          and Fan Tacho controllers.
-> > +
-> > +	  This driver can also be built as a module. If so, the module
-> > +	  will be called aspeed2600-pwm-tacho.
-> > +
-> >  config SENSORS_ATXP1
-> >  	tristate "Attansic ATXP1 VID controller"
-> >  	depends on I2C
-> > diff --git a/drivers/hwmon/Makefile b/drivers/hwmon/Makefile
-> > index ae41ee71a71b..10be45768d36 100644
-> > --- a/drivers/hwmon/Makefile
-> > +++ b/drivers/hwmon/Makefile
-> > @@ -52,6 +52,7 @@ obj-$(CONFIG_SENSORS_ARM_SCPI)	+= scpi-hwmon.o
-> >  obj-$(CONFIG_SENSORS_AS370)	+= as370-hwmon.o
-> >  obj-$(CONFIG_SENSORS_ASC7621)	+= asc7621.o
-> >  obj-$(CONFIG_SENSORS_ASPEED)	+= aspeed-pwm-tacho.o
-> > +obj-$(CONFIG_SENSORS_ASPEED2600_PWM_TACHO)      += aspeed2600-pwm-tacho.o
-> >  obj-$(CONFIG_SENSORS_ATXP1)	+= atxp1.o
-> >  obj-$(CONFIG_SENSORS_AXI_FAN_CONTROL) += axi-fan-control.o
-> >  obj-$(CONFIG_SENSORS_BT1_PVT)	+= bt1-pvt.o
-> > diff --git a/drivers/hwmon/aspeed2600-pwm-tacho.c b/drivers/hwmon/aspeed2600-pwm-tacho.c
-> > new file mode 100644
-> > index 000000000000..083eb3b253ff
-> > --- /dev/null
-> > +++ b/drivers/hwmon/aspeed2600-pwm-tacho.c
-> > @@ -0,0 +1,1053 @@
-> > +// SPDX-License-Identifier: GPL-2.0-or-later
-> > +/*
-> > + * Copyright (C) ASPEED Technology Inc.
-> > + *
-> > + * This program is free software; you can redistribute it and/or modify
-> > + * it under the terms of the GNU General Public License version 2 or later as
-> > + * published by the Free Software Foundation.
-> > + */
-> > +
-> > +#include <linux/clk.h>
-> > +#include <linux/errno.h>
-> > +#include <linux/gpio/consumer.h>
-> > +#include <linux/delay.h>
-> > +#include <linux/hwmon.h>
-> > +#include <linux/hwmon-sysfs.h>
-> > +#include <linux/io.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of_platform.h>
-> > +#include <linux/of_device.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/sysfs.h>
-> > +#include <linux/reset.h>
-> > +#include <linux/regmap.h>
-> > +#include <linux/thermal.h>
-> > +/**********************************************************
-> > + * PWM HW register offset define
-> > + *********************************************************/
-> > +//PWM Control Register
-> 
-> Please no C++ comments, and please use standard multi-line comments.
-> 
-Understood.
+------=_Part_231044_1301564408.1608044258554
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > +#define ASPEED_PWM_CTRL_CH(ch)			((ch * 0x10) + 0x00)
-> > +//PWM Duty Cycle Register
-> > +#define ASPEED_PWM_DUTY_CYCLE_CH(ch)		((ch * 0x10) + 0x04)
-> > +//TACH Control Register
-> > +#define ASPEED_TACHO_CTRL_CH(ch)		((ch * 0x10) + 0x08)
-> 
-> (ch)
-> 
-> > +//TACH Status Register
-> > +#define ASPEED_TACHO_STS_CH(x)			((x * 0x10) + 0x0C)
-> 
-> (x)
-> 
-Good catch.
+Hi Supreeth,
 
-> > +/**********************************************************
-> > + * PWM register Bit field
-> > + *********************************************************/
-> > +/*PWM_CTRL */
-> > +#define  PWM_LOAD_SEL_AS_WDT_BIT	(19)	//load selection as WDT
-> > +#define  PWM_DUTY_LOAD_AS_WDT_EN	BIT(18)	//enable PWM duty load as WDT
-> > +#define  PWM_DUTY_SYNC_DIS		BIT(17)	//disable PWM duty sync
-> > +#define	 PWM_CLK_ENABLE			BIT(16)	//enable PWM clock
-> > +#define  PWM_LEVEL_OUTPUT		BIT(15)	//output PWM level
-> > +#define  PWM_INVERSE			BIT(14) //inverse PWM pin
-> > +#define  PWM_OPEN_DRAIN_EN		BIT(13)	//enable open-drain
-> > +#define  PWM_PIN_EN			BIT(12) //enable PWM pin
-> > +#define  PWM_CLK_DIV_H_MASK		(0xf << 8) //PWM clock division H bit [3:0]
-> > +#define  PWM_CLK_DIV_L_MASK		(0xff)	//PWM clock division H bit [3:0]
-> > +/* [19] */
-> > +#define LOAD_SEL_FALLING 0
-> > +#define LOAD_SEL_RIGING  1
-> > +
-> > +/*PWM_DUTY_CYCLE */
-> > +#define  PWM_PERIOD_BIT					(24)	//pwm period bit [7:0]
-> > +#define  PWM_PERIOD_BIT_MASK			(0xff << 24)	//pwm period bit [7:0]
-> > +#define  PWM_RISING_FALLING_AS_WDT_BIT  (16)
-> > +#define  PWM_RISING_FALLING_AS_WDT_MASK (0xff << 16)	//pwm rising/falling point bit [7:0] as WDT
-> > +#define  PWM_RISING_FALLING_MASK		(0xffff)
-> > +#define  PWM_FALLING_POINT_BIT			(8)	//pwm falling point bit [7:0]
-> > +#define  PWM_RISING_POINT_BIT			(0)	//pwm rising point bit [7:0]
-> > +/* [31:24] */
-> > +#define  DEFAULT_PWM_PERIOD 0xff
-> > +
-> > +/*PWM_TACHO_CTRL */
-> > +#define  TACHO_IER						BIT(31)	//enable tacho interrupt
-> > +#define  TACHO_INVERS_LIMIT				BIT(30) //inverse tacho limit comparison
-> > +#define  TACHO_LOOPBACK					BIT(29) //tacho loopback
-> > +#define  TACHO_ENABLE					BIT(28)	//{enable tacho}
-> > +#define  TACHO_DEBOUNCE_MASK			(0x3 << 26) //{tacho de-bounce}
-> > +#define  TACHO_DEBOUNCE_BIT				(26) //{tacho de-bounce}
-> > +#define  TECHIO_EDGE_MASK				(0x3 << 24) //tacho edge}
-> > +#define  TECHIO_EDGE_BIT				(24) //tacho edge}
-> > +#define  TACHO_CLK_DIV_T_MASK			(0xf << 20)
-> > +#define  TACHO_CLK_DIV_BIT				(20)
-> > +#define  TACHO_THRESHOLD_MASK			(0xfffff)	//tacho threshold bit
-> > +/* [27:26] */
-> > +#define DEBOUNCE_3_CLK 0x00 /* 10b */
-> > +#define DEBOUNCE_2_CLK 0x01 /* 10b */
-> > +#define DEBOUNCE_1_CLK 0x02 /* 10b */
-> > +#define DEBOUNCE_0_CLK 0x03 /* 10b */
-> > +/* [25:24] */
-> > +#define F2F_EDGES 0x00 /* 10b */
-> > +#define R2R_EDGES 0x01 /* 10b */
-> > +#define BOTH_EDGES 0x02 /* 10b */
-> > +/* [23:20] */
-> > +/* Cover rpm range 5~5859375 */
-> > +#define  DEFAULT_TACHO_DIV 5
-> > +
-> > +/*PWM_TACHO_STS */
-> > +#define  TACHO_ISR			BIT(31)	//interrupt status and clear
-> > +#define  PWM_OUT			BIT(25)	//{pwm_out}
-> > +#define  PWM_OEN			BIT(24)	//{pwm_oeN}
-> > +#define  TACHO_DEB_INPUT	BIT(23)	//tacho deB input
-> > +#define  TACHO_RAW_INPUT	BIT(22) //tacho raw input}
-> > +#define  TACHO_VALUE_UPDATE	BIT(21)	//tacho value updated since the last read
-> > +#define  TACHO_FULL_MEASUREMENT	BIT(20) //{tacho full measurement}
-> > +#define  TACHO_VALUE_MASK	0xfffff	//tacho value bit [19:0]}
-> > +/**********************************************************
-> > + * Software setting
-> > + *********************************************************/
-> > +#define DEFAULT_TARGET_PWM_FREQ		25000
-> > +#define DEFAULT_FAN_PULSE_PR 2
-> > +#define MAX_CDEV_NAME_LEN 16
-> > +
-> > +struct aspeed_pwm_channel_params {
-> > +	int target_freq;
-> > +	int pwm_freq;
-> > +	int load_wdt_rising_falling_pt;
-> > +	int load_wdt_selection;		//0: rising , 1: falling
-> > +	int load_wdt_enable;
-> > +	int	duty_sync_enable;
-> > +	int invert_pin;
-> > +	u8	rising;
-> > +	u8	falling;
-> > +};
-> > +
-> > +static struct aspeed_pwm_channel_params default_pwm_params[] = {
-> > +	[0] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 1,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> 
-> I am in general very much opposed to include default configurations
-> in hwmon drivers. Configuration should be provided through devicetree,
-> or through platform data.
-> 
-I'll move most of these configurations into devicetree.
 
-> > +	[1] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[2] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[3] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[4] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[5] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[6] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[7] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[8] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[9] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[10] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[11] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[12] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[13] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[14] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +	[15] = {
-> > +		.target_freq = 25000,
-> > +		.load_wdt_rising_falling_pt = 0x10,
-> > +		.load_wdt_selection = LOAD_SEL_FALLING,
-> > +		.load_wdt_enable = 0,
-> > +		.duty_sync_enable = 0,
-> > +		.invert_pin = 0,
-> > +		.rising = 0x00,
-> > +		.falling = 0x0a,
-> > +	},
-> > +};
-> > +
-> > +struct aspeed_tacho_channel_params {
-> > +	int limited_inverse;
-> > +	u16 threshold;
-> > +	u8	tacho_edge;
-> > +	u8	tacho_debounce;
-> > +	u8  pulse_pr;
-> > +	u32	divide;
-> > +};
-> > +
-> > +
-> > +static struct aspeed_tacho_channel_params default_tacho_params[] = {
-> > +	[0] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> 
-> Same as above.
-> 
-> > +	},
-> > +	[1] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[2] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[3] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[4] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[5] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[6] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[7] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[8] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[9] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[10] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[11] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[12] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[13] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[14] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +	[15] = {
-> > +		.limited_inverse = 0,
-> > +		.threshold = 0,
-> > +		.tacho_edge = F2F_EDGES,
-> > +		.tacho_debounce = DEBOUNCE_3_CLK,
-> > +		.pulse_pr = DEFAULT_FAN_PULSE_PR,
-> > +		.divide = 8,
-> > +	},
-> > +};
-> > +
-> > +struct aspeed_pwm_tachometer_data {
-> > +	struct regmap *regmap;
-> > +	unsigned long clk_freq;
-> > +	struct reset_control *reset;
-> > +	bool pwm_present[16];
-> > +	bool fan_tach_present[16];
-> > +	struct aspeed_pwm_channel_params *pwm_channel;
-> > +	struct aspeed_tacho_channel_params *tacho_channel;
-> > +	/* for thermal */
-> > +	struct aspeed_cooling_device *cdev[8];
-> 
-> This makes me wonder if this should be a thermal driver instead.
-> Any thoughts ?
-> 
-> > +	/* for hwmon */
-> > +	const struct attribute_group *groups[3];
-> > +};
-> > +
-> > +struct aspeed_cooling_device {
-> > +	char name[16];
-> > +	struct aspeed_pwm_tachometer_data *priv;
-> > +	struct thermal_cooling_device *tcdev;
-> > +	int pwm_channel;
-> > +	u8 *cooling_levels;
-> > +	u8 max_state;
-> > +	u8 cur_state;
-> > +};
-> > +
-> > +static int regmap_aspeed_pwm_tachometer_reg_write(void *context, unsigned int reg,
-> > +					     unsigned int val)
-> > +{
-> > +	void __iomem *regs = (void __iomem *)context;
-> > +
-> > +	writel(val, regs + reg);
-> > +	return 0;
-> > +}
-> > +
-> > +static int regmap_aspeed_pwm_tachometer_reg_read(void *context, unsigned int reg,
-> > +					    unsigned int *val)
-> > +{
-> > +	void __iomem *regs = (void __iomem *)context;
-> > +
-> > +	*val = readl(regs + reg);
-> > +	return 0;
-> > +}
-> > +
-> > +static const struct regmap_config aspeed_pwm_tachometer_regmap_config = {
-> > +	.reg_bits = 32,
-> > +	.val_bits = 32,
-> > +	.reg_stride = 4,
-> > +	.max_register = 0x100,
-> > +	.reg_write = regmap_aspeed_pwm_tachometer_reg_write,
-> > +	.reg_read = regmap_aspeed_pwm_tachometer_reg_read,
-> > +	.fast_io = true,
-> > +};
-> > +
-> > +static void aspeed_set_pwm_channel_enable(struct regmap *regmap, u8 pwm_channel,
-> > +				       bool enable)
-> > +{
-> > +	regmap_update_bits(regmap, ASPEED_PWM_CTRL_CH(pwm_channel),
-> > +			   (PWM_CLK_ENABLE | PWM_PIN_EN),
-> > +			   enable ? (PWM_CLK_ENABLE | PWM_PIN_EN) : 0);
-> 
-> Unnecessary ()
-> 
-OK.
 
-> > +}
-> > +
-> > +static void aspeed_set_fan_tach_ch_enable(struct aspeed_pwm_tachometer_data *priv, u8 fan_tach_ch,
-> > +					  bool enable, u32 tacho_div)
-> 
-> This function is only called with enable == true. Please no unnecessary
-> complexity.
-> 
-> > +{
-> > +	u32 reg_value = 0;
-> 
-> Unnecessary initialization.
-> 
-> > +
-> > +	if (enable) {
-> > +		/* divide = 2^(tacho_div*2) */
-> > +		priv->tacho_channel[fan_tach_ch].divide = 1 << (tacho_div << 1);
-> > +
-> > +		reg_value = TACHO_ENABLE |
-> > +				(priv->tacho_channel[fan_tach_ch].tacho_edge << TECHIO_EDGE_BIT) |
-> > +				(tacho_div << TACHO_CLK_DIV_BIT) |
-> > +				(priv->tacho_channel[fan_tach_ch].tacho_debounce << TACHO_DEBOUNCE_BIT);
-> > +
-> > +		if (priv->tacho_channel[fan_tach_ch].limited_inverse)
-> > +			reg_value |= TACHO_INVERS_LIMIT;
-> > +
-> > +		if (priv->tacho_channel[fan_tach_ch].threshold)
-> > +			reg_value |= (TACHO_IER | priv->tacho_channel[fan_tach_ch].threshold);
-> > +
-> > +		regmap_write(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch), reg_value);
-> > +	} else
-> > +		regmap_update_bits(priv->regmap, ASPEED_TACHO_CTRL_CH(fan_tach_ch),  TACHO_ENABLE, 0);
-> > +}
-> > +
-> > +/*
-> > + * The PWM frequency = HCLK(200Mhz) / (clock division L bit *
-> > + * clock division H bit * (period bit + 1))
-> > + */
-> > +static void aspeed_set_pwm_channel_fan_ctrl(struct device *dev,
-> > +					    struct aspeed_pwm_tachometer_data *priv,
-> > +					    u8 index, u8 fan_ctrl)
-> > +{
-> > +	u32 duty_value,	ctrl_value;
-> > +	u32 div_h, div_l, cal_freq;
-> > +	u8 div_found;
-> 
-> div_found is used as boolean. Declaring it u8 makes the code more complex
-> on many architectures. Please use bool.
-> 
-> > +
-> > +	if (fan_ctrl == 0) {
-> > +		aspeed_set_pwm_channel_enable(priv->regmap, index, false);
-> 
-> Consider using return; here and drop else.
-> 
-> > +	} else {
-> > +		cal_freq = priv->clk_freq / (DEFAULT_PWM_PERIOD + 1);
-> > +		//calculate for target frequence
-> > +		div_found = 0;
-> > +		for (div_h = 0; div_h < 0x10; div_h++) {
-> > +			for (div_l = 0; div_l < 0x100; div_l++) {
-> > +				dev_dbg(dev, "div h %x, l : %x , freq %ld \n", div_h, div_l,
-> > +						(cal_freq / (BIT(div_h) * (div_l + 1))));
-> > +				if ((cal_freq / (BIT(div_h) * (div_l + 1))) < priv->pwm_channel[index].target_freq) {
-> > +					div_found = 1;
-> > +					break;
-> > +				}
-> > +			}
-> > +			if (div_found)
-> > +				break;
-> > +		}
-> 
-> This double loop is quite expensive. Are yu sure there is no better means to
-> determine the fan divider ? By using a binary search, maybe ?
-> 
-> Also, what happens if div_found is false at the end ? The code below suggests
-> that this would be problematic.
-> 
-I'll change the algorithm, so it would not be double loop and remote the need
-of div_found.
+When will be DTS file for Daytona CRB is available ?.
 
-> > +
-> > +		priv->pwm_channel[index].pwm_freq = cal_freq / (BIT(div_h) * (div_l + 1));
-> > +		dev_dbg(dev, "div h %x, l : %x pwm out clk %d \n", div_h, div_l,
-> > +				priv->pwm_channel[index].pwm_freq);
-> > +		dev_dbg(dev, "hclk %ld, target pwm freq %d, real pwm freq %d\n", priv->clk_freq,
-> > +				priv->pwm_channel[index].target_freq, priv->pwm_channel[index].pwm_freq);
-> > +
-> > +		ctrl_value = (div_h << 8) | div_l;
-> > +
-> > +		duty_value = (DEFAULT_PWM_PERIOD << PWM_PERIOD_BIT) |
-> > +					(0 << PWM_RISING_POINT_BIT) | (fan_ctrl << PWM_FALLING_POINT_BIT);
-> > +
-> > +		if (priv->pwm_channel[index].load_wdt_enable) {
-> > +			ctrl_value |= PWM_DUTY_LOAD_AS_WDT_EN;
-> > +			ctrl_value |= priv->pwm_channel[index].load_wdt_selection << PWM_LOAD_SEL_AS_WDT_BIT;
-> > +			duty_value |= (priv->pwm_channel[index].load_wdt_rising_falling_pt << PWM_RISING_FALLING_AS_WDT_BIT);
-> > +		}
-> > +
-> > +		regmap_write(priv->regmap, ASPEED_PWM_DUTY_CYCLE_CH(index), duty_value);
-> > +		regmap_write(priv->regmap, ASPEED_PWM_CTRL_CH(index), ctrl_value);
-> > +
-> > +		aspeed_set_pwm_channel_enable(priv->regmap, index, true);
-> > +	}
-> > +}
-> > +
-> > +static int aspeed_get_fan_tach_ch_rpm(struct device *dev, struct aspeed_pwm_tachometer_data *priv,
-> > +				      u8 fan_tach_ch)
-> > +{
-> > +	u32 raw_data, tach_div, clk_source, val;
-> > +	int i, retries = 3;
-> > +
-> > +	for (i = 0; i < retries; i++) {
-> > +		regmap_read(priv->regmap, ASPEED_TACHO_STS_CH(fan_tach_ch), &val);
-> > +		if (TACHO_FULL_MEASUREMENT & val)
-> 
-> No Yoda programming please.
-> 
-Understood.
 
-> > +			break;
-> > +	}
-> > +
-> > +	raw_data = val & TACHO_VALUE_MASK;
-> > +	if (raw_data == 0xfffff)
-> > +		return 0;
-> > +
-> > +	raw_data += 1;
-> > +
-> > +	/*
-> > +	 * We need the mode to determine if the raw_data is double (from
-> > +	 * counting both edges).
-> > +	 */
-> > +	tach_div = raw_data * (priv->tacho_channel[fan_tach_ch].divide) * (priv->tacho_channel[fan_tach_ch].pulse_pr);
-> > +
-> > +	dev_dbg(dev, "clk %ld, raw_data %d , tach_div %d  \n", priv->clk_freq, raw_data, tach_div);
-> > +	clk_source = priv->clk_freq;
-> > +
-> > +	if (raw_data == 0)
-> > +		return 0;
-> 
-> How would raw_data ever be 0 here ? And why check it after using it,
-> and not before ?
-> 
-No, it wouldn't be 0 here.
 
-> > +
-> > +	return ((clk_source / tach_div) * 60);
-> > +
-> > +}
-> > +
-> > +static ssize_t set_pwm(struct device *dev, struct device_attribute *attr,
-> > +		       const char *buf, size_t count)
-> > +{
-> > +	struct sensor_device_attribute *sensor_attr = to_sensor_dev_attr(attr);
-> > +	int index = sensor_attr->index;
-> > +	int ret;
-> > +	struct aspeed_pwm_tachometer_data *priv = dev_get_drvdata(dev);
-> > +	long fan_ctrl;
-> > +	u8 org_falling = priv->pwm_channel[index].falling;
-> > +
-> > +	ret = kstrtol(buf, 10, &fan_ctrl);
-> > +	if (ret != 0)
-> > +		return ret;
-> > +
-> > +	if (fan_ctrl < 0 || fan_ctrl > DEFAULT_PWM_PERIOD)
-> > +		return -EINVAL;
-> 
-> Please use kstrtoul().
-> 
-After change to use devm_device_hwmon_register_with_info, the kstrtoul doesn't
-require anymore, this it will be removed in v2.
+Thanks,
 
-> > +
-> > +	if (priv->pwm_channel[index].falling == fan_ctrl)
-> > +		return count;
-> > +
-> > +	priv->pwm_channel[index].falling = fan_ctrl;
-> > +
-> > +	if (fan_ctrl == 0)
-> > +		aspeed_set_pwm_channel_enable(priv->regmap, index, false);
-> > +	else {
-> > +		if (fan_ctrl == DEFAULT_PWM_PERIOD)
-> > +			regmap_update_bits(priv->regmap,
-> > +					   ASPEED_PWM_DUTY_CYCLE_CH(index),
-> > +					   GENMASK(15, 0), 0);
-> > +		else
-> > +			regmap_update_bits(priv->regmap,
-> > +					   ASPEED_PWM_DUTY_CYCLE_CH(index),
-> > +					   GENMASK(15, 8),
-> > +					   (fan_ctrl << PWM_FALLING_POINT_BIT));
-> > +	}
-> > +
-> > +	if (org_falling == 0)
-> > +		aspeed_set_pwm_channel_enable(priv->regmap, index, true);
-> > +
-> > +	return count;
-> > +}
-> > +
-> > +static ssize_t show_pwm(struct device *dev, struct device_attribute *attr,
-> > +			char *buf)
-> > +{
-> > +	struct sensor_device_attribute *sensor_attr = to_sensor_dev_attr(attr);
-> > +	int index = sensor_attr->index;
-> > +	struct aspeed_pwm_tachometer_data *priv = dev_get_drvdata(dev);
-> > +
-> > +	return sprintf(buf, "%u\n", priv->pwm_channel[index].falling);
-> > +}
-> > +
-> > +static ssize_t show_rpm(struct device *dev, struct device_attribute *attr,
-> > +			char *buf)
-> > +{
-> > +	struct sensor_device_attribute *sensor_attr = to_sensor_dev_attr(attr);
-> > +	int index = sensor_attr->index;
-> > +	int rpm;
-> > +	struct aspeed_pwm_tachometer_data *priv = dev_get_drvdata(dev);
-> > +
-> > +	rpm = aspeed_get_fan_tach_ch_rpm(dev, priv, index);
-> > +	if (rpm < 0)
-> > +		return rpm;
-> > +
-> > +	return sprintf(buf, "%d\n", rpm);
-> > +}
-> > +
-> > +static umode_t pwm_is_visible(struct kobject *kobj,
-> > +			      struct attribute *a, int index)
-> > +{
-> > +	struct device *dev = container_of(kobj, struct device, kobj);
-> > +	struct aspeed_pwm_tachometer_data *priv = dev_get_drvdata(dev);
-> > +
-> > +	if (!priv->pwm_present[index])
-> > +		return 0;
-> > +	return a->mode;
-> > +}
-> > +
-> > +static umode_t fan_dev_is_visible(struct kobject *kobj,
-> > +				  struct attribute *a, int index)
-> > +{
-> > +	struct device *dev = container_of(kobj, struct device, kobj);
-> > +	struct aspeed_pwm_tachometer_data *priv = dev_get_drvdata(dev);
-> > +
-> > +	if (!priv->fan_tach_present[index])
-> > +		return 0;
-> > +	return a->mode;
-> > +}
-> > +
-> > +static SENSOR_DEVICE_ATTR(pwm0, 0644,
-> > +			show_pwm, set_pwm, 0);
-> > +static SENSOR_DEVICE_ATTR(pwm1, 0644,
-> > +			show_pwm, set_pwm, 1);
-> > +static SENSOR_DEVICE_ATTR(pwm2, 0644,
-> > +			show_pwm, set_pwm, 2);
-> > +static SENSOR_DEVICE_ATTR(pwm3, 0644,
-> > +			show_pwm, set_pwm, 3);
-> > +static SENSOR_DEVICE_ATTR(pwm4, 0644,
-> > +			show_pwm, set_pwm, 4);
-> > +static SENSOR_DEVICE_ATTR(pwm5, 0644,
-> > +			show_pwm, set_pwm, 5);
-> > +static SENSOR_DEVICE_ATTR(pwm6, 0644,
-> > +			show_pwm, set_pwm, 6);
-> > +static SENSOR_DEVICE_ATTR(pwm7, 0644,
-> > +			show_pwm, set_pwm, 7);
-> > +static SENSOR_DEVICE_ATTR(pwm8, 0644,
-> > +			show_pwm, set_pwm, 8);
-> > +static SENSOR_DEVICE_ATTR(pwm9, 0644,
-> > +			show_pwm, set_pwm, 9);
-> > +static SENSOR_DEVICE_ATTR(pwm10, 0644,
-> > +			show_pwm, set_pwm, 10);
-> > +static SENSOR_DEVICE_ATTR(pwm11, 0644,
-> > +			show_pwm, set_pwm, 11);
-> > +static SENSOR_DEVICE_ATTR(pwm12, 0644,
-> > +			show_pwm, set_pwm, 12);
-> > +static SENSOR_DEVICE_ATTR(pwm13, 0644,
-> > +			show_pwm, set_pwm, 13);
-> > +static SENSOR_DEVICE_ATTR(pwm14, 0644,
-> > +			show_pwm, set_pwm, 14);
-> > +static SENSOR_DEVICE_ATTR(pwm15, 0644,
-> > +			show_pwm, set_pwm, 15);
-> > +static struct attribute *pwm_dev_attrs[] = {
-> > +	&sensor_dev_attr_pwm0.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm1.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm2.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm3.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm4.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm5.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm6.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm7.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm8.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm9.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm10.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm11.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm12.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm13.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm14.dev_attr.attr,
-> > +	&sensor_dev_attr_pwm15.dev_attr.attr,
-> > +	NULL,
-> > +};
-> > +
-> > +static const struct attribute_group pwm_dev_group = {
-> > +	.attrs = pwm_dev_attrs,
-> > +	.is_visible = pwm_is_visible,
-> > +};
-> > +
-> > +static SENSOR_DEVICE_ATTR(fan0_input, 0444,
-> > +		show_rpm, NULL, 0);
-> > +static SENSOR_DEVICE_ATTR(fan1_input, 0444,
-> > +		show_rpm, NULL, 1);
-> > +static SENSOR_DEVICE_ATTR(fan2_input, 0444,
-> > +		show_rpm, NULL, 2);
-> > +static SENSOR_DEVICE_ATTR(fan3_input, 0444,
-> > +		show_rpm, NULL, 3);
-> > +static SENSOR_DEVICE_ATTR(fan4_input, 0444,
-> > +		show_rpm, NULL, 4);
-> > +static SENSOR_DEVICE_ATTR(fan5_input, 0444,
-> > +		show_rpm, NULL, 5);
-> > +static SENSOR_DEVICE_ATTR(fan6_input, 0444,
-> > +		show_rpm, NULL, 6);
-> > +static SENSOR_DEVICE_ATTR(fan7_input, 0444,
-> > +		show_rpm, NULL, 7);
-> > +static SENSOR_DEVICE_ATTR(fan8_input, 0444,
-> > +		show_rpm, NULL, 8);
-> > +static SENSOR_DEVICE_ATTR(fan9_input, 0444,
-> > +		show_rpm, NULL, 9);
-> > +static SENSOR_DEVICE_ATTR(fan10_input, 0444,
-> > +		show_rpm, NULL, 10);
-> > +static SENSOR_DEVICE_ATTR(fan11_input, 0444,
-> > +		show_rpm, NULL, 11);
-> > +static SENSOR_DEVICE_ATTR(fan12_input, 0444,
-> > +		show_rpm, NULL, 12);
-> > +static SENSOR_DEVICE_ATTR(fan13_input, 0444,
-> > +		show_rpm, NULL, 13);
-> > +static SENSOR_DEVICE_ATTR(fan14_input, 0444,
-> > +		show_rpm, NULL, 14);
-> > +static SENSOR_DEVICE_ATTR(fan15_input, 0444,
-> > +		show_rpm, NULL, 15);
-> > +static struct attribute *fan_dev_attrs[] = {
-> > +	&sensor_dev_attr_fan0_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan1_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan2_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan3_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan4_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan5_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan6_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan7_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan8_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan9_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan10_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan11_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan12_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan13_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan14_input.dev_attr.attr,
-> > +	&sensor_dev_attr_fan15_input.dev_attr.attr,
-> > +	NULL
-> > +};
-> > +
-> > +static const struct attribute_group fan_dev_group = {
-> > +	.attrs = fan_dev_attrs,
-> > +	.is_visible = fan_dev_is_visible,
-> > +};
-> > +
-> > +static void aspeed_create_pwm_channel(struct device *dev, struct aspeed_pwm_tachometer_data *priv,
-> > +				   u8 pwm_channel, u32 target_pwm_freq)
-> > +{
-> > +	priv->pwm_present[pwm_channel] = true;
-> > +	priv->pwm_channel[pwm_channel].target_freq = target_pwm_freq;
-> > +
-> > +	//use default
-> > +	aspeed_set_pwm_channel_fan_ctrl(dev,
-> > +					priv,
-> > +					pwm_channel,
-> > +					priv->pwm_channel[pwm_channel].falling);
-> > +}
-> > +
-> > +static void aspeed_create_fan_tach_channel(struct aspeed_pwm_tachometer_data *priv,
-> > +					   u8 *fan_tach_ch, int count,
-> > +					   u32 fan_pulse_pr, u32 tacho_div)
-> > +{
-> > +	u8 val, index;
-> > +
-> > +	for (val = 0; val < count; val++) {
-> > +		index = fan_tach_ch[val];
-> > +		priv->fan_tach_present[index] = true;
-> > +		priv->tacho_channel[index].pulse_pr = fan_pulse_pr;
-> > +		aspeed_set_fan_tach_ch_enable(priv, index, true, tacho_div);
-> > +	}
-> > +}
-> > +
-> > +static int
-> > +aspeed_pwm_cz_get_max_state(struct thermal_cooling_device *tcdev,
-> > +			    unsigned long *state)
-> > +{
-> > +	struct aspeed_cooling_device *cdev = tcdev->devdata;
-> > +
-> > +	*state = cdev->max_state;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int
-> > +aspeed_pwm_cz_get_cur_state(struct thermal_cooling_device *tcdev,
-> > +			    unsigned long *state)
-> > +{
-> > +	struct aspeed_cooling_device *cdev = tcdev->devdata;
-> > +
-> > +	*state = cdev->cur_state;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int
-> > +aspeed_pwm_cz_set_cur_state(struct thermal_cooling_device *tcdev,
-> > +			    unsigned long state)
-> > +{
-> > +	struct aspeed_cooling_device *cdev = tcdev->devdata;
-> > +
-> > +	if (state > cdev->max_state)
-> > +		return -EINVAL;
-> > +
-> > +	cdev->cur_state = state;
-> > +	cdev->priv->pwm_channel[cdev->pwm_channel].falling =
-> > +					cdev->cooling_levels[cdev->cur_state];
-> > +	aspeed_set_pwm_channel_fan_ctrl(&tcdev->device, cdev->priv, cdev->pwm_channel,
-> > +				     cdev->cooling_levels[cdev->cur_state]);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static const struct thermal_cooling_device_ops aspeed_pwm_cool_ops = {
-> > +	.get_max_state = aspeed_pwm_cz_get_max_state,
-> > +	.get_cur_state = aspeed_pwm_cz_get_cur_state,
-> > +	.set_cur_state = aspeed_pwm_cz_set_cur_state,
-> > +};
-> > +
-> > +static int aspeed_create_pwm_cooling(struct device *dev,
-> > +				     struct device_node *child,
-> > +				     struct aspeed_pwm_tachometer_data *priv,
-> > +				     u32 pwm_channel, u8 num_levels)
-> > +{
-> > +	int ret;
-> > +	struct aspeed_cooling_device *cdev;
-> > +
-> > +	cdev = devm_kzalloc(dev, sizeof(*cdev), GFP_KERNEL);
-> > +	if (!cdev)
-> > +		return -ENOMEM;
-> > +
-> > +	cdev->cooling_levels = devm_kzalloc(dev, num_levels, GFP_KERNEL);
-> > +	if (!cdev->cooling_levels)
-> > +		return -ENOMEM;
-> > +
-> > +	cdev->max_state = num_levels - 1;
-> > +	ret = of_property_read_u8_array(child, "cooling-levels",
-> > +					cdev->cooling_levels,
-> > +					num_levels);
-> > +	if (ret) {
-> > +		dev_err(dev, "Property 'cooling-levels' cannot be read.\n");
-> > +		return ret;
-> > +	}
-> > +	snprintf(cdev->name, MAX_CDEV_NAME_LEN, "%s%d", child->name, pwm_channel);
-> > +
-> > +	cdev->tcdev = thermal_of_cooling_device_register(child,
-> > +							 cdev->name,
-> > +							 cdev,
-> > +							 &aspeed_pwm_cool_ops);
-> > +	if (IS_ERR(cdev->tcdev))
-> > +		return PTR_ERR(cdev->tcdev);
-> > +
-> > +	cdev->priv = priv;
-> > +	cdev->pwm_channel = pwm_channel;
-> > +
-> > +	priv->cdev[pwm_channel] = cdev;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int aspeed_pwm_create_fan(struct device *dev,
-> > +			     struct device_node *child,
-> > +			     struct aspeed_pwm_tachometer_data *priv)
-> > +{
-> > +	u8 *fan_tach_ch;
-> > +	u32 fan_pulse_pr;
-> > +	u32 tacho_div;
-> > +	u32 pwm_channel;
-> > +	u32 target_pwm_freq = 0;
-> > +	int ret, count;
-> > +
-> > +	ret = of_property_read_u32(child, "reg", &pwm_channel);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = of_property_read_u32(child, "aspeed,pwm-freq", &target_pwm_freq);
-> > +	if (ret)
-> > +		target_pwm_freq = DEFAULT_TARGET_PWM_FREQ;
-> > +
-> > +	aspeed_create_pwm_channel(dev, priv, (u8)pwm_channel, target_pwm_freq);
-> > +
-> > +	ret = of_property_count_u8_elems(child, "cooling-levels");
-> > +	if (ret > 0) {
-> > +		if (IS_ENABLED(CONFIG_THERMAL)) {
-> > +			ret = aspeed_create_pwm_cooling(dev, child, priv, pwm_channel,
-> > +							ret);
-> > +			if (ret)
-> > +				return ret;
-> > +		}
-> > +	}
-> > +
-> > +	count = of_property_count_u8_elems(child, "aspeed,fan-tach-ch");
-> > +	if (count < 1)
-> > +		return -EINVAL;
-> > +
-> > +	fan_tach_ch = devm_kzalloc(dev, sizeof(*fan_tach_ch) * count,
-> > +				   GFP_KERNEL);
-> > +	if (!fan_tach_ch)
-> > +		return -ENOMEM;
-> > +	ret = of_property_read_u8_array(child, "aspeed,fan-tach-ch",
-> > +					fan_tach_ch, count);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = of_property_read_u32(child, "aspeed,pulse-pr", &fan_pulse_pr);
-> > +	if (ret)
-> > +		fan_pulse_pr = DEFAULT_FAN_PULSE_PR;
-> 
-> Are those properties declared as optional ?
-> 
-I'll update the dt-bindings document and make it clearly.
+Dhanasekar
 
-> > +
-> > +	ret = of_property_read_u32(child, "aspeed,tacho-div", &tacho_div);
-> > +	if (ret)
-> > +		tacho_div = DEFAULT_TACHO_DIV;
-> > +
-> > +	aspeed_create_fan_tach_channel(priv, fan_tach_ch, count, fan_pulse_pr, tacho_div);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int aspeed_pwm_tachometer_probe(struct platform_device *pdev)
-> > +{
-> > +	struct device *dev = &pdev->dev;
-> > +	struct device_node *np, *child;
-> > +	struct aspeed_pwm_tachometer_data *priv;
-> > +	void __iomem *regs;
-> > +	struct resource *res;
-> > +	struct device *hwmon;
-> > +	struct clk *clk;
-> > +	int ret;
-> > +
-> > +	np = dev->of_node;
-> > +
-> > +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > +	if (!res)
-> > +		return -ENOENT;
-> 
-> Unnecessary error check. devm_ioremap_resource() does that (and
-> returns -EINVAL).
-> 
-Change these line-of-codes into devm_platform_ioremap_resource(pdev, 0).
 
-> > +	regs = devm_ioremap_resource(dev, res);
-> > +	if (IS_ERR(regs))
-> > +		return PTR_ERR(regs);
-> > +	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-> > +	if (!priv)
-> > +		return -ENOMEM;
-> > +
-> > +	priv->pwm_channel = default_pwm_params;
-> > +	priv->tacho_channel = default_tacho_params;
-> > +	priv->regmap = devm_regmap_init(dev, NULL, (__force void *)regs,
-> > +			&aspeed_pwm_tachometer_regmap_config);
-> > +	if (IS_ERR(priv->regmap))
-> > +		return PTR_ERR(priv->regmap);
-> > +
-> > +	clk = devm_clk_get(dev, NULL);
-> > +	if (IS_ERR(clk))
-> > +		return -ENODEV;
-> > +	priv->clk_freq = clk_get_rate(clk);
-> > +
-> > +	priv->reset = devm_reset_control_get(&pdev->dev, NULL);
-> > +	if (IS_ERR(priv->reset)) {
-> > +		dev_err(&pdev->dev, "can't get aspeed_pwm_tacho reset\n");
-> > +		return PTR_ERR(priv->reset);
-> > +	}
-> > +
-> > +	//scu init
-> > +	reset_control_assert(priv->reset);
-> > +	reset_control_deassert(priv->reset);
-> > +
-> > +	for_each_child_of_node(np, child) {
-> > +		ret = aspeed_pwm_create_fan(dev, child, priv);
-> > +		if (ret) {
-> > +			of_node_put(child);
-> > +			return ret;
-> > +		}
-> > +	}
-> > +
-> > +	priv->groups[0] = &pwm_dev_group;
-> > +	priv->groups[1] = &fan_dev_group;
-> > +	priv->groups[2] = NULL;
-> > +	dev_info(dev, "pwm tach probe done\n");
-> > +	hwmon = devm_hwmon_device_register_with_groups(dev,
-> > +						       "aspeed_pwm_tachometer",
-> > +						       priv, priv->groups);
-> 
-> New drivers must use devm_hwmon_device_register_with_info().
-> 
-I will change using it in v2.
 
-> > +
-> > +	return PTR_ERR_OR_ZERO(hwmon);
-> > +}
-> > +
-> > +static const struct of_device_id of_pwm_tachometer_match_table[] = {
-> > +	{ .compatible = "aspeed,ast2600-pwm-tachometer", },
-> > +	{},
-> > +};
-> > +MODULE_DEVICE_TABLE(of, of_pwm_tachometer_match_table);
-> > +
-> > +static struct platform_driver aspeed_pwm_tachometer_driver = {
-> > +	.probe		= aspeed_pwm_tachometer_probe,
-> > +	.driver		= {
-> > +		.name	= "aspeed_pwm_tachometer",
-> > +		.of_match_table = of_pwm_tachometer_match_table,
-> > +	},
-> > +};
-> > +
-> > +module_platform_driver(aspeed_pwm_tachometer_driver);
-> > +
-> > +MODULE_AUTHOR("Ryan Chen <ryan_chen@aspeedtech.com>");
-> > +MODULE_DESCRIPTION("ASPEED PWM and Fan Tachometer device driver");
-> > +MODULE_LICENSE("GPL");
-> > -- 
-> > 2.17.1
-> > 
 
-Thanks for you suggestion,
-Troy Lee
+
+
+---- On Wed, 09 Dec 2020 10:00:10 +0530 J Dhanasekar <jdhanasekar@velankani=
+group.com> wrote ----
+
+
+Hi Supreeth,
+
+
+
+Is the DTS file for Milan ready ?.=C2=A0
+
+If available, Please share with us.=C2=A0
+
+
+
+Thanks,
+
+Dhanasekar
+
+
+
+
+
+
+
+
+
+
+---- On Fri, 06 Nov 2020 19:14:12 +0530 J Dhanasekar <mailto:jdhanasekar@ve=
+lankanigroup.com> wrote ----
+
+
+
+Thanks for the update.
+
+We will be waiting for your update.=C2=A0
+
+
+
+Thanks,
+
+Dhanasekar
+
+
+
+
+On Fri, Nov 6, 2020 at 5:16 AM Venkatesh, Supreeth <mailto:Supreeth.Venkate=
+sh@amd.com> wrote:
+
+[AMD Public Use]
+
+=C2=A0
+
+We are delayed a few weeks, will let you know, once we have it ready.
+
+=C2=A0
+
+Thanks,
+
+Supreeth Venkatesh
+
+System Manageability Architect=C2=A0=C2=A0|=C2=A0=C2=A0AMD
+ Server Software
+
+
+
+=C2=A0
+
+From: J Dhanasekar <mailto:jdhanasekar@velankanigroup.com>=20
+ Sent: Tuesday, November 3, 2020 9:32 AM
+ To: Venkatesh, Supreeth <mailto:Supreeth.Venkatesh@amd.com>
+ Cc: OpenBMC Maillist <mailto:openbmc@lists.ozlabs.org>; Ramakrishnan Kumar=
+aswamy <mailto:ramakrishnan@bydesignindia.net>
+ Subject: Re: build error in AMD Ethanolx
+
+
+=C2=A0
+
+[CAUTION: External Email]=20
+
+Hi Supreeth,=20
+
+=C2=A0
+
+
+Is LDT for Daytona CRB ready ?.=C2=A0
+
+
+Please provide me, if it is available.=C2=A0
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+Thanks,
+
+
+Dhanasekar
+
+
+
+=C2=A0
+
+On Fri, Oct 9, 2020 at 6:59 PM J Dhanasekar <mailto:jdhanasekar@velankanigr=
+oup.com> wrote:
+
+
+Hi Supreeth,=20
+
+=C2=A0
+
+
+Nice=C2=A0to hear from you.=C2=A0
+
+
+Thanks for the info.=C2=A0
+
+
+=C2=A0
+
+
+-Dhanasekar
+
+
+
+=C2=A0
+
+On Fri, Oct 9, 2020 at 6:20 PM Venkatesh, Supreeth <mailto:Supreeth.Venkate=
+sh@amd.com> wrote:
+
+
+[AMD Public Use]
+
+=C2=A0
+
+Hi Dhanasekar,
+
+=C2=A0
+
+Thanks for helping out.
+
+We will make DT for Daytona CRB available latest by early next month =C2=A0=
+or end of this month.
+
+=C2=A0
+
+Thanks,
+
+Supreeth Venkatesh
+
+System Manageability Architect=C2=A0=C2=A0|=C2=A0=C2=A0AMD
+ Server Software
+
+
+
+=C2=A0
+
+From: J Dhanasekar <mailto:jdhanasekar@velankanigroup.com>=20
+ Sent: Friday, October 9, 2020 12:14 AM
+ To: Venkatesh, Supreeth <mailto:Supreeth.Venkatesh@amd.com>
+ Cc: OpenBMC Maillist <mailto:openbmc@lists.ozlabs.org>; Ramakrishnan Kumar=
+aswamy <mailto:ramakrishnan@bydesignindia.net>
+ Subject: Re: build error in AMD Ethanolx
+
+
+=C2=A0
+
+[CAUTION: External Email]=20
+
+Hi Supreeth,=20
+
+=C2=A0
+
+
+If=C2=A0 the DTSs file for Daytona CRB is available, I will work parallel t=
+o enable openBMC for Daytona CRB.
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+Thanks,
+
+
+Dhanasekar
+
+
+
+=C2=A0
+
+On Thu, Oct 8, 2020 at 7:51 PM J Dhanasekar <mailto:jdhanasekar@velankanigr=
+oup.com> wrote:
+
+
+Supreeth,=20
+
+=C2=A0
+
+
+Thanks for the info.
+
+
+Will OpenBMC on Daytona=C2=A0available=C2=A0end of this year?.
+
+
+=C2=A0
+
+
+Thanks,
+
+
+Dhanasekar
+
+
+
+=C2=A0
+
+On Thu, Oct 8, 2020 at 7:31 PM Supreeth Venkatesh <mailto:supreeth.venkates=
+h@amd.com> wrote:
+
+
+On 10/8/20 1:02 AM, J Dhanasekar wrote:
+ > [CAUTION: External Email]
+ > Hi Supreeth,
+ >=20
+ > I was able to build the AMD Ethanolx source successfully. I have execute=
+d your mentioned commands only,
+ >=20
+ > *. setup ethanolx
+ > bitbake obmc-phosphor-image=C2=A0=C2=A0*
+ >=20
+ > I built the code in normal=C2=A0user privilege, not root user.=C2=A0
+ > Thanks for your support.
+ Thanks for letting me know.
+ >=20
+ > Do you have a linux DTS=C2=A0 for BMC of DaytonaCRB ?.
+ Unfortunately, we are not supporting Daytona CRB yet, but we are working t=
+owards enabling OpenBMC on Daytona soon. Stay tuned.
+=20
+ >=20
+ > -Dhanasekar
+ >=20
+ > On Thu, Oct 8, 2020 at 12:21 AM Anton Kachalov <mailto:rnouse@google.com=
+ <mailto:mailto:rnouse@google.com>> wrote:
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0Hey,
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0would you mind to find the=C2=A0*log.do_rootfs* file =
+for obmc-phosphor-initramfs under build/tmp/work. This task has failed.
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0For instance, on qemuarm target the path looks like t=
+his (for obmc-phosphor-*image* instead of obmc-phosphor-*initramfs*):
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0build/tmp/work/qemuarm-openbmc-linux-gnueabi/obmc-pho=
+sphor-image/1.0-r0/temp/log.do_rootfs
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0On Wed, 7 Oct 2020 at 20:35, Supreeth Venkatesh <mail=
+to:supreeth.venkatesh@amd.com <mailto:mailto:supreeth.venkatesh@amd.com>> w=
+rote:
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0On 10/7/20 10:11 AM, J Dhanasekar wrote=
+:
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> [CAUTION: External Email]
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> Hi Supreeth,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> Thanks for the reply,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> I have attached the complete error lo=
+g. Please view it.=C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> I have removed the build folder and c=
+reated a new one twice. Still I am seeing the same error.
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0This may be environment issue in your s=
+etup.
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0I am not seeing this error in my enviro=
+nment with the latest master.
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0. setup ethanolx
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bitbake bitbake obmc-phosphor-image
+ >=20
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"WARNING: Host distribution "ubuntu-18.=
+04" has not been validated with this version of the build system; you may p=
+ossibly experience unexpected failures. It is recommended that you use a te=
+sted distribution.
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Resolving any missing task queue =
+dependencies
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Build Configuration:
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BB_VERSION=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0=3D "1.47.0"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BUILD_SYS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =3D "x86_64-linux"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NATIVELSBSTRING=C2=A0 =C2=A0 =C2=A0 =3D=
+ "ubuntu-18.04"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TARGET_SYS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0=3D "arm-openbmc-linux-gnueabi"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MACHINE=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =3D "ethanolx"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DISTRO=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0=3D "openbmc-phosphor"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DISTRO_VERSION=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0=3D "0.1.0"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TUNE_FEATURES=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =3D "arm thumb arm1176jzs"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0TARGET_FPU=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0=3D "soft"
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-oe=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-networking=C2=A0 =C2=A0 =C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-perl=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-python=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-phosphor=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-aspeed=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-amd=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0meta-ethanolx=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =3D "master:c3d88e4d9fcc08e1aae7cc9d0337c0261e996c64""
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0....
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0....
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0....
+ >=20
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Running task 4241 of 4243 (/home/=
+supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-p=
+hosphor-image.bb:do_image_complete)
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-r0=
+: task do_image_complete: Started
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-r0=
+: task do_image_complete: Succeeded
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Running task 4242 of 4243 (/home/=
+supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/obmc-p=
+hosphor-image.bb:do_populate_lic_deploy)
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-r0=
+: task do_populate_lic_deploy: Started
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: recipe obmc-phosphor-image-1.0-r0=
+: task do_populate_lic_deploy: Succeeded
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Running noexec task 4243 of 4243 =
+(/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images=
+/obmc-phosphor-image.bb:do_build)
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NOTE: Tasks Summary: Attempted 4243 tas=
+ks of which 2 didn't need to be rerun and all succeeded."
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> Thanks,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> Dhanasekar
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0> On Wed, Oct 7, 2020 at 8:08 PM Supree=
+th Venkatesh <mailto:supreeth.venkatesh@amd.com <mailto:mailto:supreeth.ven=
+katesh@amd.com> <mailto:mailto:supreeth.venkatesh@amd.com <mailto:mailto:su=
+preeth.venkatesh@amd.com>>> wrote:
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0On 10/7/20 5:44 AM=
+, J Dhanasekar wrote:
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> [CAUTION: Extern=
+al Email]
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> Hi openBMC,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0Hi Dhanasekar
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> I am working to =
+build BMC for AMD Ethanolx platform,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0Nice to hear.
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> After running=C2=
+=A0 *bitbake u-boot-aspeed* and *bitbake obmc-phosphor-image*,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> I am getting bel=
+ow error,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> ERROR: obmc-phos=
+phor-initramfs-1.0-r0 do_rootfs: The postinstall intercept hook 'update_gio=
+_module_cache' failed, details in /home/user/dhanasekar/BMC/AMD/openbmc/bui=
+ld/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/t=
+emp/log.do_rootfs
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> ERROR: Logfile o=
+f failure stored in: /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/e=
+thanolx-openbmc-linux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_ro=
+otfs.14182
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> ERROR: Task (/ho=
+me/user/dhanasekar/BMC/AMD/openbmc/meta-phosphor/recipes-phosphor/images/ob=
+mc-phosphor-initramfs.bb:do_rootfs) failed with exit code '1'
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0Can you send me th=
+e complete build logs?
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> Please help me t=
+o fix the error,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0rm the build folde=
+r and retry once.
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0I will build it on=
+ce today as well and confirm. It may not been tested with latest upstream c=
+hanges.
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0>
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> Thanks,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>=C2=A0 =C2=A0 =C2=A0> Dhanasekar,
+ >=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0>
+ >
+------=_Part_231044_1301564408.1608044258554
+Content-Type: multipart/related; 
+	boundary="----=_Part_231045_962931818.1608044258570"
+
+------=_Part_231045_962931818.1608044258570
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
+<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
+ead><body ><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
+; font-size: 10pt;"><div>Hi Supreeth,<br></div><div><br></div><div>When wil=
+l be DTS file for Daytona CRB is available ?.<br></div><div><br></div><div>=
+Thanks,<br></div><div>Dhanasekar</div><br><div data-zbluepencil-ignore=3D"t=
+rue" id=3D"Zm-_Id_-Sgn"><div><br></div></div><br><div style=3D"" data-zblue=
+pencil-ignore=3D"true" class=3D"zmail_extra"><br><div id=3D"Zm-_Id_-Sgn1">-=
+--- On Wed, 09 Dec 2020 10:00:10 +0530 <b>J Dhanasekar &lt;jdhanasekar@vela=
+nkanigroup.com&gt;</b> wrote ----<br></div><br><blockquote style=3D"border-=
+left: 1px solid rgb(204, 204, 204); padding-left: 6px; margin: 0px 0px 0px =
+5px;"><div><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
+;font-size: 10.0pt;"><div>Hi Supreeth,<br></div><div><br></div><div>Is the =
+DTS file for Milan ready ?.&nbsp;<br></div><div>If available, Please share =
+with us.&nbsp;<br></div><div><br></div><div>Thanks,<br></div><div>Dhanaseka=
+r<br></div><div><br></div><div><div><br></div></div><div><br></div><div cla=
+ss=3D"x_-189391286zmail_extra"><div><br></div><div>---- On Fri, 06 Nov 2020=
+ 19:14:12 +0530 <b>J Dhanasekar &lt;<a href=3D"mailto:jdhanasekar@velankani=
+group.com" target=3D"_blank">jdhanasekar@velankanigroup.com</a>&gt;</b> wro=
+te ----<br></div><div><br></div><blockquote style=3D"border-left: 1.0px sol=
+id rgb(204,204,204);padding-left: 6.0px;margin: 0.0px 0.0px 0.0px 5.0px;"><=
+div><div dir=3D"ltr"><div>Thanks for the update.<br></div><div>We will be w=
+aiting for your update.&nbsp;<br></div><div><br></div><div>Thanks,<br></div=
+><div>Dhanasekar<br></div></div><div><br></div><div class=3D"x_87606753gmai=
+l_quote"><div dir=3D"ltr" class=3D"x_87606753gmail_attr">On Fri, Nov 6, 202=
+0 at 5:16 AM Venkatesh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@a=
+md.com" target=3D"_blank">Supreeth.Venkatesh@amd.com</a>&gt; wrote:<br></di=
+v><blockquote class=3D"x_87606753gmail_quote" style=3D"margin: 0.0px 0.0px =
+0.0px 0.8ex;border-left: 1.0px solid rgb(204,204,204);padding-left: 1.0ex;"=
+><div><div class=3D"x_87606753gmail-m_-1851714550134129338WordSection1"><p =
+class=3D"x_87606753gmail-m_-1851714550134129338msipheader251902e5" style=3D=
+"margin: 0.0in;"><span class=3D"colour" style=3D"color:rgb(49, 113, 0)"><sp=
+an class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"si=
+ze" style=3D"font-size:10pt">[AMD Public Use]</span></span></span><u></u><u=
+></u><br></p><p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u></u><br=
+></p><p style=3D"margin: 0.0px;" class=3D"">We are delayed a few weeks, wil=
+l let you know, once we have it ready.<u></u><u></u><br></p><p style=3D"mar=
+gin: 0.0px;" class=3D""><u></u>&nbsp;<u></u><br></p><div><p style=3D"margin=
+: 0.0px;" class=3D""><span class=3D"colour" style=3D"color:black"><span cla=
+ss=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt">Thanks,<u></u><u></u></span></span></span><br></p><p=
+ style=3D"margin: 0.0px;" class=3D""><b><span class=3D"colour" style=3D"col=
+or:black"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><spa=
+n class=3D"size" style=3D"font-size:10pt">Supreeth Venkatesh</span></span><=
+/span></b><span class=3D"colour" style=3D"color:black"><span class=3D"font"=
+ style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"font=
+-size:10pt"><u></u><u></u></span></span></span><br></p><p style=3D"margin: =
+0.0px;" class=3D""><span class=3D"colour" style=3D"color:black"><span class=
+=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" styl=
+e=3D"font-size:9pt">System Manageability Architect&nbsp;&nbsp;|<b>&nbsp;&nb=
+sp;AMD</b><br> Server Software<u></u><u></u></span></span></span></p><p sty=
+le=3D"margin: 0.0px;" class=3D""><span class=3D"colour" style=3D"color:blac=
+k"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><img width=
+=3D"1.5625in" height=3D"0.3645in" style=3D"width: 1.5625in;height: 0.3645in=
+;" src=3D"cid:1759dcba5ad4cff311"></span></span><span class=3D"colour" styl=
+e=3D"color:black"><span class=3D"font" style=3D"font-family:Arial, sans-ser=
+if"><u></u><u></u></span></span><br></p></div><p style=3D"margin: 0.0px;" c=
+lass=3D""><u></u>&nbsp;<u></u><br></p><div><div style=3D"border-right: none=
+;border-bottom: none;border-left: none;border-top: 1.0pt solid rgb(225,225,=
+225);padding: 3.0pt 0.0in 0.0in;"><p style=3D"margin: 0.0px;" class=3D""><b=
+>From:</b> J Dhanasekar &lt;<a href=3D"mailto:jdhanasekar@velankanigroup.co=
+m" target=3D"_blank">jdhanasekar@velankanigroup.com</a>&gt; <br> <b>Sent:</=
+b> Tuesday, November 3, 2020 9:32 AM<br> <b>To:</b> Venkatesh, Supreeth &lt=
+;<a href=3D"mailto:Supreeth.Venkatesh@amd.com" target=3D"_blank">Supreeth.V=
+enkatesh@amd.com</a>&gt;<br> <b>Cc:</b> OpenBMC Maillist &lt;<a href=3D"mai=
+lto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a=
+>&gt;; Ramakrishnan Kumaraswamy &lt;<a href=3D"mailto:ramakrishnan@bydesign=
+india.net" target=3D"_blank">ramakrishnan@bydesignindia.net</a>&gt;<br> <b>=
+Subject:</b> Re: build error in AMD Ethanolx<u></u><u></u></p></div></div><=
+p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u></u><br></p><p style=
+=3D"margin: 0.0px;" class=3D"">[CAUTION: External Email] <u></u><u></u><br>=
+</p><div><div><p style=3D"margin: 0.0px;" class=3D"">Hi Supreeth, <u></u><u=
+></u><br></p><div><p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u></=
+u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Is LDT for Dayt=
+ona CRB ready ?.&nbsp;<u></u><u></u><br></p></div><div><p style=3D"margin: =
+0.0px;" class=3D"">Please provide me, if it is available.&nbsp;<u></u><u></=
+u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u=
+></u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp=
+;<u></u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Thanks,<u=
+></u><u></u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Dhana=
+sekar<u></u><u></u><br></p></div></div><p style=3D"margin: 0.0px;" class=3D=
+""><u></u>&nbsp;<u></u><br></p><div><div><p style=3D"margin: 0.0px;" class=
+=3D"">On Fri, Oct 9, 2020 at 6:59 PM J Dhanasekar &lt;<a href=3D"mailto:jdh=
+anasekar@velankanigroup.com" target=3D"_blank">jdhanasekar@velankanigroup.c=
+om</a>&gt; wrote:<u></u><u></u><br></p></div><blockquote style=3D"border-to=
+p: none;border-right: none;border-bottom: none;border-left: 1.0pt solid rgb=
+(204,204,204);padding: 0.0in 0.0in 0.0in 6.0pt;margin: 5.0pt 0.0in 5.0pt 4.=
+8pt;"><div><p style=3D"margin: 0.0px;" class=3D"">Hi Supreeth, <u></u><u></=
+u><br></p><div><p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u></u><=
+br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Nice&nbsp;to hear =
+from you.&nbsp;<u></u><u></u><br></p></div><div><p style=3D"margin: 0.0px;"=
+ class=3D"">Thanks for the info.&nbsp;<u></u><u></u><br></p></div><div><p s=
+tyle=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u></u><br></p></div><div><=
+p style=3D"margin: 0.0px;" class=3D"">-Dhanasekar<u></u><u></u><br></p></di=
+v></div><p style=3D"margin: 0.0px;" class=3D""><u></u>&nbsp;<u></u><br></p>=
+<div><div><p style=3D"margin: 0.0px;" class=3D"">On Fri, Oct 9, 2020 at 6:2=
+0 PM Venkatesh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.com" =
+target=3D"_blank">Supreeth.Venkatesh@amd.com</a>&gt; wrote:<u></u><u></u><b=
+r></p></div><blockquote style=3D"border-top: none;border-right: none;border=
+-bottom: none;border-left: 1.0pt solid rgb(204,204,204);padding: 0.0in 0.0i=
+n 0.0in 6.0pt;margin: 5.0pt 0.0in 5.0pt 4.8pt;"><div><div><p style=3D"margi=
+n: 0.0in;"><span class=3D"colour" style=3D"color:rgb(49, 113, 0)"><span cla=
+ss=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt">[AMD Public Use]</span></span></span><u></u><u></u><=
+br></p><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><br></p><=
+p style=3D"margin: 0.0px;" class=3D"">Hi Dhanasekar,<u></u><u></u><br></p><=
+p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><br></p><p style=
+=3D"margin: 0.0px;" class=3D"">Thanks for helping out.<u></u><u></u><br></p=
+><p style=3D"margin: 0.0px;" class=3D"">We will make DT for Daytona CRB ava=
+ilable latest by early next month &nbsp;or end of this month.<u></u><u></u>=
+<br></p><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><br></p>=
+<div><p style=3D"margin: 0.0px;" class=3D""><span class=3D"colour" style=3D=
+"color:black"><span class=3D"font" style=3D"font-family:Arial, sans-serif">=
+<span class=3D"size" style=3D"font-size:10pt">Thanks,</span></span></span><=
+u></u><u></u><br></p><p style=3D"margin: 0.0px;" class=3D""><b><span class=
+=3D"colour" style=3D"color:black"><span class=3D"font" style=3D"font-family=
+:Arial, sans-serif"><span class=3D"size" style=3D"font-size:10pt">Supreeth =
+Venkatesh</span></span></span></b><u></u><u></u><br></p><p style=3D"margin:=
+ 0.0px;" class=3D""><span class=3D"colour" style=3D"color:black"><span clas=
+s=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" sty=
+le=3D"font-size:9pt">System Manageability Architect&nbsp;&nbsp;|<b>&nbsp;&n=
+bsp;AMD</b><br> Server Software</span></span></span><u></u><u></u></p><p st=
+yle=3D"margin: 0.0px;" class=3D""><span class=3D"colour" style=3D"color:bla=
+ck"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><img borde=
+r=3D"0" width=3D"1.5625in" height=3D"0.3645in" style=3D"width: 1.5625in;hei=
+ght: 0.3645in;" src=3D"cid:1759dcba5ad4cff311"></span></span><u></u><u></u>=
+<br></p></div><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><b=
+r></p><div><div style=3D"border-right: none;border-bottom: none;border-left=
+: none;border-top: 1.0pt solid rgb(225,225,225);padding: 3.0pt 0.0in 0.0in;=
+"><p style=3D"margin: 0.0px;" class=3D""><b>From:</b> J Dhanasekar &lt;<a h=
+ref=3D"mailto:jdhanasekar@velankanigroup.com" target=3D"_blank">jdhanasekar=
+@velankanigroup.com</a>&gt; <br> <b>Sent:</b> Friday, October 9, 2020 12:14=
+ AM<br> <b>To:</b> Venkatesh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venka=
+tesh@amd.com" target=3D"_blank">Supreeth.Venkatesh@amd.com</a>&gt;<br> <b>C=
+c:</b> OpenBMC Maillist &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" tar=
+get=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;; Ramakrishnan Kumaraswamy &=
+lt;<a href=3D"mailto:ramakrishnan@bydesignindia.net" target=3D"_blank">rama=
+krishnan@bydesignindia.net</a>&gt;<br> <b>Subject:</b> Re: build error in A=
+MD Ethanolx<u></u><u></u></p></div></div><p style=3D"margin: 0.0px;" class=
+=3D"">&nbsp;<u></u><u></u><br></p><p style=3D"margin: 0.0px;" class=3D"">[C=
+AUTION: External Email] <u></u><u></u><br></p><div><div><p style=3D"margin:=
+ 0.0px;" class=3D"">Hi Supreeth, <u></u><u></u><br></p><div><p style=3D"mar=
+gin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><br></p></div><div><p style=3D"=
+margin: 0.0px;" class=3D"">If&nbsp; the DTSs file for Daytona CRB is availa=
+ble, I will work parallel to enable openBMC for Daytona CRB.<u></u><u></u><=
+br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></=
+u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u=
+></u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Thanks,<u></=
+u><u></u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Dhanasek=
+ar<u></u><u></u><br></p></div></div><p style=3D"margin: 0.0px;" class=3D"">=
+&nbsp;<u></u><u></u><br></p><div><div><p style=3D"margin: 0.0px;" class=3D"=
+">On Thu, Oct 8, 2020 at 7:51 PM J Dhanasekar &lt;<a href=3D"mailto:jdhanas=
+ekar@velankanigroup.com" target=3D"_blank">jdhanasekar@velankanigroup.com</=
+a>&gt; wrote:<u></u><u></u><br></p></div><blockquote style=3D"border-top: n=
+one;border-right: none;border-bottom: none;border-left: 1.0pt solid rgb(204=
+,204,204);padding: 0.0in 0.0in 0.0in 6.0pt;margin: 5.0pt 0.0in 5.0pt 4.8pt;=
+"><div><p style=3D"margin: 0.0px;" class=3D"">Supreeth, <u></u><u></u><br><=
+/p><div><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><br></p>=
+</div><div><p style=3D"margin: 0.0px;" class=3D"">Thanks for the info.<u></=
+u><u></u><br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Will Ope=
+nBMC on Daytona&nbsp;available&nbsp;end of this year?.<u></u><u></u><br></p=
+></div><div><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u></u><u></u><br>=
+</p></div><div><p style=3D"margin: 0.0px;" class=3D"">Thanks,<u></u><u></u>=
+<br></p></div><div><p style=3D"margin: 0.0px;" class=3D"">Dhanasekar<u></u>=
+<u></u><br></p></div></div><p style=3D"margin: 0.0px;" class=3D"">&nbsp;<u>=
+</u><u></u><br></p><div><div><p style=3D"margin: 0.0px;" class=3D"">On Thu,=
+ Oct 8, 2020 at 7:31 PM Supreeth Venkatesh &lt;<a href=3D"mailto:supreeth.v=
+enkatesh@amd.com" target=3D"_blank">supreeth.venkatesh@amd.com</a>&gt; wrot=
+e:<u></u><u></u><br></p></div><blockquote style=3D"border-top: none;border-=
+right: none;border-bottom: none;border-left: 1.0pt solid rgb(204,204,204);p=
+adding: 0.0in 0.0in 0.0in 6.0pt;margin: 5.0pt 0.0in 5.0pt 4.8pt;"><p style=
+=3D"margin: 0.0px;" class=3D"">On 10/8/20 1:02 AM, J Dhanasekar wrote:<br> =
+&gt; [CAUTION: External Email]<br> &gt; Hi Supreeth,<br> &gt; <br> &gt; I w=
+as able to build the AMD Ethanolx source successfully. I have executed your=
+ mentioned commands only,<br> &gt; <br> &gt; *. setup ethanolx<br> &gt; bit=
+bake obmc-phosphor-image&nbsp;&nbsp;*<br> &gt; <br> &gt; I built the code i=
+n normal&nbsp;user privilege, not root user.&nbsp;<br> &gt; Thanks for your=
+ support.<br> Thanks for letting me know.<br> &gt; <br> &gt; Do you have a =
+linux DTS&nbsp; for BMC of DaytonaCRB ?.<br> Unfortunately, we are not supp=
+orting Daytona CRB yet, but we are working towards enabling OpenBMC on Dayt=
+ona soon. Stay tuned.<br> <br> &gt; <br> &gt; -Dhanasekar<br> &gt; <br> &gt=
+; On Thu, Oct 8, 2020 at 12:21 AM Anton Kachalov &lt;<a href=3D"mailto:rnou=
+se@google.com" target=3D"_blank">rnouse@google.com</a> &lt;mailto:<a href=
+=3D"mailto:rnouse@google.com" target=3D"_blank">rnouse@google.com</a>&gt;&g=
+t; wrote:<br> &gt; <br> &gt;&nbsp; &nbsp; &nbsp;Hey,<br> &gt; <br> &gt;&nbs=
+p; &nbsp; &nbsp;would you mind to find the&nbsp;*log.do_rootfs* file for ob=
+mc-phosphor-initramfs under build/tmp/work. This task has failed.<br> &gt; =
+<br> &gt;&nbsp; &nbsp; &nbsp;For instance, on qemuarm target the path looks=
+ like this (for obmc-phosphor-*image* instead of obmc-phosphor-*initramfs*)=
+:<br> &gt; <br> &gt;&nbsp; &nbsp; &nbsp;build/tmp/work/qemuarm-openbmc-linu=
+x-gnueabi/obmc-phosphor-image/1.0-r0/temp/log.do_rootfs<br> &gt; <br> &gt;&=
+nbsp; &nbsp; &nbsp;On Wed, 7 Oct 2020 at 20:35, Supreeth Venkatesh &lt;<a h=
+ref=3D"mailto:supreeth.venkatesh@amd.com" target=3D"_blank">supreeth.venkat=
+esh@amd.com</a> &lt;mailto:<a href=3D"mailto:supreeth.venkatesh@amd.com" ta=
+rget=3D"_blank">supreeth.venkatesh@amd.com</a>&gt;&gt; wrote:<br> &gt; <br>=
+ &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;On 10/7/20 10:11 AM, J Dhanasekar wr=
+ote:<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; [CAUTION: External Emai=
+l]<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; Hi Supreeth,<br> &gt;&nbs=
+p; &nbsp; &nbsp; &nbsp; &nbsp;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;&gt; Thanks for the reply,<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;=
+<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; I have attached the complet=
+e error log. Please view it.&nbsp;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; I have removed the bu=
+ild folder and created a new one twice. Still I am seeing the same error.<b=
+r> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;This may be environment issue in y=
+our setup.<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;I am not seeing this e=
+rror in my environment with the latest master.<br> &gt; <br> &gt;&nbsp; &nb=
+sp; &nbsp; &nbsp; &nbsp;. setup ethanolx<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp=
+; &nbsp;bitbake bitbake obmc-phosphor-image<br> &gt; <br> &gt; <br> &gt;&nb=
+sp; &nbsp; &nbsp; &nbsp; &nbsp;"WARNING: Host distribution "ubuntu-18.04" h=
+as not been validated with this version of the build system; you may possib=
+ly experience unexpected failures. It is recommended that you use a tested =
+distribution.<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTE: Resolving any=
+ missing task queue dependencies<br> &gt; <br> &gt;&nbsp; &nbsp; &nbsp; &nb=
+sp; &nbsp;Build Configuration:<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BB=
+_VERSION&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=3D "1.47.0"<br> &gt;&nbsp=
+; &nbsp; &nbsp; &nbsp; &nbsp;BUILD_SYS&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &n=
+bsp; =3D "x86_64-linux"<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NATIVELSB=
+STRING&nbsp; &nbsp; &nbsp; =3D "ubuntu-18.04"<br> &gt;&nbsp; &nbsp; &nbsp; =
+&nbsp; &nbsp;TARGET_SYS&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=3D "arm-op=
+enbmc-linux-gnueabi"<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;MACHINE&nbsp=
+; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; =3D "ethanolx"<br> &gt;&nbsp; &=
+nbsp; &nbsp; &nbsp; &nbsp;DISTRO&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &=
+nbsp; &nbsp;=3D "openbmc-phosphor"<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;DISTRO_VERSION&nbsp; &nbsp; &nbsp; &nbsp;=3D "0.1.0"<br> &gt;&nbsp; &nbsp=
+; &nbsp; &nbsp; &nbsp;TUNE_FEATURES&nbsp; &nbsp; &nbsp; &nbsp; =3D "arm thu=
+mb arm1176jzs"<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;TARGET_FPU&nbsp; &=
+nbsp; &nbsp; &nbsp; &nbsp; &nbsp;=3D "soft"<br> &gt;&nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp;meta&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;meta-oe&nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;meta-ne=
+tworking&nbsp; &nbsp; &nbsp;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;meta=
+-perl&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br> &gt;&nbsp; &nbsp; &nbsp;=
+ &nbsp; &nbsp;meta-python&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br> &gt;&nbsp; =
+&nbsp; &nbsp; &nbsp; &nbsp;meta-phosphor&nbsp; &nbsp; &nbsp; &nbsp;<br> &gt=
+;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;meta-aspeed&nbsp; &nbsp; &nbsp; &nbsp; &=
+nbsp;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;meta-amd&nbsp; &nbsp; &nbsp=
+; &nbsp; &nbsp; &nbsp; &nbsp;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;met=
+a-ethanolx&nbsp; &nbsp; &nbsp; &nbsp; =3D "master:c3d88e4d9fcc08e1aae7cc9d0=
+337c0261e996c64""<br> &gt; <br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;....<=
+br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;....<br> &gt;&nbsp; &nbsp; &nbsp;=
+ &nbsp; &nbsp;....<br> &gt; <br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTE=
+: Running task 4241 of 4243 (/home/supvenka/work/openbmc_upstream/meta-phos=
+phor/recipes-phosphor/images/obmc-phosphor-image.bb:do_image_complete)<br> =
+&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTE: recipe obmc-phosphor-image-1.0-=
+r0: task do_image_complete: Started<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp;NOTE: recipe obmc-phosphor-image-1.0-r0: task do_image_complete: Succeed=
+ed<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTE: Running task 4242 of 424=
+3 (/home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/imag=
+es/obmc-phosphor-image.bb:do_populate_lic_deploy)<br> &gt;&nbsp; &nbsp; &nb=
+sp; &nbsp; &nbsp;NOTE: recipe obmc-phosphor-image-1.0-r0: task do_populate_=
+lic_deploy: Started<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTE: recipe =
+obmc-phosphor-image-1.0-r0: task do_populate_lic_deploy: Succeeded<br> &gt;=
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;NOTE: Running noexec task 4243 of 4243 (/=
+home/supvenka/work/openbmc_upstream/meta-phosphor/recipes-phosphor/images/o=
+bmc-phosphor-image.bb:do_build)<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;N=
+OTE: Tasks Summary: Attempted 4243 tasks of which 2 didn't need to be rerun=
+ and all succeeded."<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;<br> &gt=
+;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; Thanks,<br> &gt;&nbsp; &nbsp; &nbsp=
+; &nbsp; &nbsp;&gt; Dhanasekar<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&g=
+t;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt; On Wed, Oct 7, 2020 at 8:=
+08 PM Supreeth Venkatesh &lt;<a href=3D"mailto:supreeth.venkatesh@amd.com" =
+target=3D"_blank">supreeth.venkatesh@amd.com</a> &lt;mailto:<a href=3D"mail=
+to:supreeth.venkatesh@amd.com" target=3D"_blank">supreeth.venkatesh@amd.com=
+</a>&gt; &lt;mailto:<a href=3D"mailto:supreeth.venkatesh@amd.com" target=3D=
+"_blank">supreeth.venkatesh@amd.com</a> &lt;mailto:<a href=3D"mailto:supree=
+th.venkatesh@amd.com" target=3D"_blank">supreeth.venkatesh@amd.com</a>&gt;&=
+gt;&gt; wrote:<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;<br> &gt;&nbsp=
+; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;On 10/7/20 5:44 AM, J =
+Dhanasekar wrote:<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbs=
+p; &nbsp;&gt; [CAUTION: External Email]<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp;=
+ &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt; Hi openBMC,<br> &gt;&nbsp; &nbsp; &nbsp=
+; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;Hi Dhanasekar<br> &gt;&nbsp; &nbsp; =
+&nbsp; &nbsp; &nbsp;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbs=
+p; &nbsp; &nbsp;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &=
+nbsp; &nbsp;&gt; I am working to build BMC for AMD Ethanolx platform,<br> &=
+gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;Nice to hear.<=
+br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt;<br> =
+&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt; After ru=
+nning&nbsp; *bitbake u-boot-aspeed* and *bitbake obmc-phosphor-image*,<br> =
+&gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt; I am get=
+ting below error,<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbs=
+p; &nbsp;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &=
+nbsp;&gt; ERROR: obmc-phosphor-initramfs-1.0-r0 do_rootfs: The postinstall =
+intercept hook 'update_gio_module_cache' failed, details in /home/user/dhan=
+asekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-linux-gnueabi/obmc-p=
+hosphor-initramfs/1.0-r0/temp/log.do_rootfs<br> &gt;&nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt; ERROR: Logfile of failure stored in=
+: /home/user/dhanasekar/BMC/AMD/openbmc/build/tmp/work/ethanolx-openbmc-lin=
+ux-gnueabi/obmc-phosphor-initramfs/1.0-r0/temp/log.do_rootfs.14182<br> &gt;=
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt; ERROR: Task =
+(/home/user/dhanasekar/BMC/AMD/openbmc/meta-phosphor/recipes-phosphor/image=
+s/obmc-phosphor-initramfs.bb:do_rootfs) failed with exit code '1'<br> &gt;&=
+nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt;<br> &gt;&nbsp=
+; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;Can you send me the co=
+mplete build logs?<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;<br> &gt;&=
+nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;&gt; Please help m=
+e to fix the error,<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;&nbsp; &n=
+bsp; &nbsp;rm the build folder and retry once.<br> &gt;&nbsp; &nbsp; &nbsp;=
+ &nbsp; &nbsp;&gt;&nbsp; &nbsp; &nbsp;I will build it once today as well an=
+d confirm. It may not been tested with latest upstream changes.<br> &gt;&nb=
+sp; &nbsp; &nbsp; &nbsp; &nbsp;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp;&gt;&nbsp; &nbsp; &nbsp;&gt;<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&=
+gt;&nbsp; &nbsp; &nbsp;&gt; Thanks,<br> &gt;&nbsp; &nbsp; &nbsp; &nbsp; &nb=
+sp;&gt;&nbsp; &nbsp; &nbsp;&gt; Dhanasekar,<br> &gt;&nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp;&gt;<br> &gt; <u></u><u></u></p></blockquote></div></blockquote>=
+</div></div></div></div></blockquote></div></blockquote></div></div></div><=
+/div></blockquote></div></div></blockquote></div><div><br></div></div><br><=
+/div></blockquote></div><div><br></div></div><br></body></html>
+------=_Part_231045_962931818.1608044258570
+Content-Type: image/png; name=1.png
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename=1.png
+Content-ID: <1759dcba5ad4cff311>
+
+iVBORw0KGgoAAAANSUhEUgAAAJYAAAAjCAYAAAB2BvMkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAA0xpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
+bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
+eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2
+MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw
+dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEu
+MC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVz
+b3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1N
+OkRvY3VtZW50SUQ9InhtcC5kaWQ6Njg2Njg2MTAwRDEzMTFFOTg1OEREMTQ2NTU1Qjg5RTUiIHht
+cE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Njg2Njg2MEYwRDEzMTFFOTg1OEREMTQ2NTU1Qjg5RTUi
+IHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiPiA8
+eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9w
+OmRmOTM1NGYxLTFiODYtNDE0Zi1hYmE2LWIzZDg0OGUzYjMxYiIgc3RSZWY6ZG9jdW1lbnRJRD0i
+YWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOmRmOTM1NGYxLTFiODYtNDE0Zi1hYmE2LWIzZDg0OGUzYjMx
+YiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0
+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
+PP9xuG0AAAAASUVORK5CYII=
+------=_Part_231045_962931818.1608044258570--
+
+------=_Part_231044_1301564408.1608044258554--
+
