@@ -2,89 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D827C2DA48C
-	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 01:13:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BBA192DA57C
+	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 02:18:51 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CvzHd68j5zDqQJ
-	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 11:13:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cw0lD6h82zDqHK
+	for <lists+openbmc@lfdr.de>; Tue, 15 Dec 2020 12:18:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.221;
- helo=new1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=aj.id.au
+ spf=pass (sender SPF authorized) smtp.mailfrom=ibm.com
+ (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com;
+ envelope-from=derick.montague@ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm1 header.b=ewcTi76y; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=civb3tWt; 
- dkim-atps=neutral
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com
- [66.111.4.221])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=X916HTKZ; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CvzGg5sMczDqBK;
- Tue, 15 Dec 2020 11:12:27 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailnew.nyi.internal (Postfix) with ESMTP id 7131F5801AF;
- Mon, 14 Dec 2020 19:12:24 -0500 (EST)
-Received: from imap2 ([10.202.2.52])
- by compute3.internal (MEProxy); Mon, 14 Dec 2020 19:12:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
- mime-version:message-id:in-reply-to:references:date:from:to:cc
- :subject:content-type; s=fm1; bh=dllxipO8JT/5qcBD2+BfCaHxR11sVzk
- Jmb++D51EVso=; b=ewcTi76yr6ufVEf4Ui1plZqNsQbXiKjNqfw4fez/Oa5YN69
- WtH9wxbpHdswK24M2QyXtAHt0UtbYVGHomcel9r1oZtEQa9ZDJLgf+uZYdGtASjC
- Ia7wdzCur6+F3zWpJQHlEuOaP6oJA6dASZR48CL/aZtY1AOwohDBkPHHhnI4JfmQ
- dc/bhZaAoYrkGZ5tJ0YUrURweXivm7+/xAd1nwYkpFOknXClJ4YwqA8HeCyWIe6S
- mFW84IQmQLt395E4qoHVIQZ9Pl3CUnof6DYcjBUI8bHUH7I/6R6Spt6Y7ALFy6iX
- Qco9z2VRlJQse+Xq5+t9uVXr8m0CmOQpCUxUn7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=dllxip
- O8JT/5qcBD2+BfCaHxR11sVzkJmb++D51EVso=; b=civb3tWtoCoCXcgxgHpr76
- QO3YQHdQqdhQsajmuqMzNrKJE3BJuPgOs2g/5KgtMy0gYvNdZvRCvNQtmtpvegq3
- AE3kE1pHskTxXiQqo7C7SRATC1MqXQ0t1WHX1/y285yvtElfqZvVRnJpgcg/JdjP
- Llwdjg37/3gZuf6rqPvP9slN+d+D88tZ/ieJLcyL4Gj2+qkd16XALX76Ic6KeNR5
- 7IGmo/qvfVcAI5YXthK+NUgqTG6+uZmJ8gRBe/eMfTcCfB96tgEGE65HI+69/DAt
- WDFZ88HlDn72cwJmtLJ4HHpBRvfBBtY2eo3949kdUg1kVhqzgvelrnYY92eC6n8g
- ==
-X-ME-Sender: <xms:Zv_XX57alwmXvBr4PmGzFaQs5RRYXjI9A5j4CeBg9cqnxGA2I-E8wQ>
- <xme:Zv_XX24lsFkEEah4BVQe8dMW3VOF58F-ohlVQEPTMcxnDGztoVB82uf5cSFtxrgxT
- MhjqkUhvmYfQDcUxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrudekledgvddtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
- hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
- eprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:Zv_XXwccaU6qC8132oJZvS6VloKzQ4dj5ioWn5T2mZ1D_PpH1XREYA>
- <xmx:Zv_XXyKlRv8-WKBjV7B_OTLjt4IRms7qiSCScXkm-KF-cys-4S4ydA>
- <xmx:Zv_XX9KfDB2e1udMs2qVu0nMoKkMeVp8O6S_Mj6I8t1_KUs7PWDk9Q>
- <xmx:aP_XX3AW1lAtzdjKIVvaW1JaJFxebiuimlWurXr6eD-rGV0_NxbehA>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 2A6C0E010E; Mon, 14 Dec 2020 19:12:20 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.3.1-61-gb52c239-fm-20201210.001-gb52c2396
-Mime-Version: 1.0
-Message-Id: <d6f83615-c9d1-4906-81e7-10528e963c94@www.fastmail.com>
-In-Reply-To: <HK0PR06MB3779F5B4B9629909DDF441F091C70@HK0PR06MB3779.apcprd06.prod.outlook.com>
-References: <20201005082806.28899-1-chiawei_wang@aspeedtech.com>
- <20201005082806.28899-6-chiawei_wang@aspeedtech.com>
- <2e2d3a02-6677-4b0e-b538-d3130a3b20d1@www.fastmail.com>
- <HK0PR06MB3779F5B4B9629909DDF441F091C70@HK0PR06MB3779.apcprd06.prod.outlook.com>
-Date: Tue, 15 Dec 2020 10:42:01 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>,
- "Rob Herring" <robh+dt@kernel.org>, "Joel Stanley" <joel@jms.id.au>
-Subject: Re: [PATCH v2 5/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cw0kQ4Df8zDq9p
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Dec 2020 12:18:04 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 0BF12Vpk165759
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Dec 2020 20:18:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : subject :
+ from : to : cc : date : references : content-type : message-id :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=Gw6Aj7Hy334brYqgoylsTjDleFS/vVCmXbuPJHH0WWg=;
+ b=X916HTKZOZsv+YLVynVYGgN70JsKO/D2O24qyZyNqJxBlnN7cTcnvMmw2wxOyA/CbI2G
+ cPE4VwOk6Sdg5rqTLaVibQCo3em3ZZa6NedRSxVQnTkwy1KPwopSgdQQG8M9/K4HBLAV
+ 9B590tDbKkw5mKuFCetiVx8HxouxZnL8UpnCeCYbF7Zwa2EV9PNJK8jKIAFROLZiDqTP
+ VP+zxxy7LUhZh3bb7enH8APzv3G/yYIcUIiz0Zzb+6lunZfxkD/tY3Ei96rYnao7CyRe
+ 1UAGKtiL4QKQbiDRtnCAV6Gad6wbAAclvdBHUQfOKji9oKEvUR60E57GnkzL2v4KZBZM Bw== 
+Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
+ [158.85.210.112])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 35ejdfs5be-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Dec 2020 20:18:01 -0500
+Received: from localhost
+ by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
+ for <openbmc@lists.ozlabs.org> from <Derick.Montague@ibm.com>;
+ Tue, 15 Dec 2020 01:18:01 -0000
+Received: from us1b3-smtp06.a3dr.sjc01.isc4sb.com (10.122.203.184)
+ by smtp.notes.na.collabserv.com (10.122.47.54) with
+ smtp.notes.na.collabserv.com ESMTP; Tue, 15 Dec 2020 01:17:59 -0000
+Received: from us1b3-mail158.a3dr.sjc03.isc4sb.com ([10.160.174.218])
+ by us1b3-smtp06.a3dr.sjc01.isc4sb.com
+ with ESMTP id 2020121501175875-821027 ;
+ Tue, 15 Dec 2020 01:17:58 +0000 
+In-Reply-To: <0ad15fe63a1346c4a2c1f16b7f791b8a@SCL-EXCHMB-13.phoenix.com>
+Subject: Re: External interface for SNMP configuration
+From: "Derick Montague" <Derick.Montague@ibm.com>
+To: Patrick_Voelker@phoenix.com
+Date: Tue, 15 Dec 2020 01:17:58 +0000
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <0ad15fe63a1346c4a2c1f16b7f791b8a@SCL-EXCHMB-13.phoenix.com>
+X-Mailer: IBM iNotes ($HaikuForm 1054.1) | IBM Domino Build
+ SCN1812108_20180501T0841_FP65 April 15, 2020 at 09:48
+X-LLNOutbound: False
+X-Disclaimed: 17787
+X-TNEFEvaluated: 1
+Content-Type: text/plain; charset=UTF-8
+x-cbid: 20121501-4615-0000-0000-0000033C741A
+X-IBM-SpamModules-Scores: BY=0.001431; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
+ SC=0.388783; ST=0; TS=0; UL=0; ISC=; MB=0.088000
+X-IBM-SpamModules-Versions: BY=3.00014375; HX=3.00000242; KW=3.00000007;
+ PH=3.00000004; SC=3.00000295; SDB=6.01478223; UDB=6.00796440; IPR=6.01260830; 
+ MB=3.00035501; MTD=3.00000008; XFM=3.00000015; UTC=2020-12-15 01:17:59
+X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
+X-IBM-AV-VERSION: SAVI=2020-12-14 15:10:02 - 6.00012140
+x-cbparentid: 20121501-4616-0000-0000-000004167742
+Message-Id: <OF24498231.13A255A1-ON0025863F.0006D855-0025863F.000723B1@notes.na.collabserv.com>
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2020-12-14_13:2020-12-11,
+ 2020-12-14 signatures=0
+X-Proofpoint-Spam-Reason: orgsafe
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,58 +97,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Corey Minyard <minyard@acm.org>,
- Arnd Bergmann <arnd@arndb.de>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-gpio@vger.kernel.org" <linux-gpio@vger.kernel.org>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
- Lee Jones <lee.jones@linaro.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Haiyue Wang <haiyue.wang@linux.intel.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Chiawei,
+> I tried the old REST interface and am just getting "Not Found" in return.
+>
+> Is there any external interface that I can use in the meantime while wait=
+ing for the new support?
 
-On Mon, 14 Dec 2020, at 13:14, ChiaWei Wang wrote:
-> Hi Andrew & Rob,
-> 
-> Do you have any suggestion on this patch?
+I can't answer the question about the REST API response, but we are hoping =
+for this to be done soon.
+The Gerrit review is https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/=
+38599
+=20
+=20
 
-Rob hasn't responded, but I think it will be easier to get an Ack out of him if 
-we do a v2 of the binding so we're not breaking backwards-compatibility with 
-the current definition. Concretely:
-
-- compatible:   One of:                                                         
-                "aspeed,ast2400-lpc", "simple-mfd"
-                "aspeed,ast2500-lpc", "simple-mfd"
-
-Becomes something like:
-
-- compatible:   One of:                                                         
-                "aspeed,ast2400-lpc-v2", "simple-mfd"
-                "aspeed,ast2500-lpc-v2", "simple-mfd"
-
-We can convert the in-tree devicetrees, immediately drop support for the 
-current binding in the drivers, and _only_ support v2 of the binding going 
-forward. That way your patches stay largely the same, the binding isn't 
-hamstrung as it is currently, and we're not trying to maintain code to support 
-the current binding definition - but we're also not pretending that old 
-devicetrees will work with newer kernels that only support the new binding 
-definition (which is the problem with your current patch series).
-
-How does that sound?
-
-As to how to implement this, I think we'll need to add some 
-of_device_is_compatible() checks in the relevant drivers to make sure that 
-they're using the new LPC binding, such as in 
-drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c before we fetch the regmap on line 
-2657.
-
-Sorry that this is dragging out a bit (and for the mess I made).
-
-Cheers,
-
-Andrew
