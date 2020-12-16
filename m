@@ -1,125 +1,123 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EBC72DBC6D
-	for <lists+openbmc@lfdr.de>; Wed, 16 Dec 2020 09:03:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFF342DBE0D
+	for <lists+openbmc@lfdr.de>; Wed, 16 Dec 2020 10:55:30 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4CwnhC22RhzDqLH
-	for <lists+openbmc@lfdr.de>; Wed, 16 Dec 2020 19:03:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Cwr8w1TyMzDqMw
+	for <lists+openbmc@lfdr.de>; Wed, 16 Dec 2020 20:55:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.243.118;
- helo=nam12-dm6-obe.outbound.protection.outlook.com;
- envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=amperemail.onmicrosoft.com
-Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
- header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-amperemail-onmicrosoft-com header.b=y7agXZaj; 
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.102;
+ helo=nam12-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=os.amperecomputing.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=O93PpE0B; 
  dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam12on2118.outbound.protection.outlook.com [40.107.243.118])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12on2102.outbound.protection.outlook.com [40.107.244.102])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4CwngW10MGzDqCG
- for <openbmc@lists.ozlabs.org>; Wed, 16 Dec 2020 19:03:17 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Cwr8635X4zDqJV
+ for <openbmc@lists.ozlabs.org>; Wed, 16 Dec 2020 20:54:43 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XRxjq+JfNPeJlXjZtqNPiBB8TEk2/CzRW7B+kXfy+sAqkrmfi42KRqO9lM8sKjLSHfLKJofaKZ2rCytBUrQQvhUTOqanSW2lc3nhk/YL4HioI+yTo7IXv7N7JQPXk/NNqzOh7vZILGmwwpzfi/LYuHWtyZLmV8AvhhHCJXJWzNs7hLULPwzKJJ37awDQwrhLJ9jjqJzwk5eBdIW25nA0OqOGe9g6cpPf+3knQHAuxrK8LZRgYVzOG8JLsRJ4OQMgaogSW9TDI+VGFenW+xFOdOLp0O5RYJZiT8GaAzrIa/mbYDoSklsRzN75tVorls9D97kLRVwOjiAAg8qVoWwoyA==
+ b=fmo8X3xopfGnweJ0R6oc14I2jLHU177CxT2GHRoaRjgatJFWER2WmS8LduR0RBSDJQL0cQ2maw0OVvvTb1XfohCVn0aU+HzQOSpRPMs5ugLibKWkwKnSjIH0CsLMjwwLM3Y9WNknQxdi/yQT+PfsUHff1Fy+GJOyBDF+ZJ0PCXmToq7CK+sOYIrl1M13fmDNUf5mk8812eNpGI5uxepoV1WwBg87L29tXTR+idNL5w5VKxO2fFHX5FQKYvg95PbmXChR9YbIjwzrcnXuzwPcv7xgKboL/xAENB7ekJa3mFEWudo7dxOfrXDrWsWrJU1fIbrV3bGgHsofEO/DaQqrYQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uFb+5J/3mFKb8XdMLHKHxJTHp5UsIBHernZOO7ONi5o=;
- b=TK7u2LkYI8WqCi8iePt8qsSkViWXJjGYz++arPX1wpB0gKxPP9h54qW7oLItUOdZLtx886F1zXpJdxBK1IfaetnFi94C32KkN/CBvPxSv3xqtqNRiny6Hcd3Wt5ous5SflIGbUO4ln+WmUZqx1N483rSvGJ25tPMgorsukijbt9pJvTHK4NbVWjmMTEyUkm99SKfI2ktuTbSXkjz89t/63vaKAq8mrln+CHLfS7K7stmv7p+mF2iDhbircPEnGmwIWrjshD/IT+JxBK16dFiGytQsKp+YscWBPiT/oa/MOXtL9eTIC8iFQCO1FpLVcNXpn2JhryWaU9kPbUqHz1fKA==
+ bh=cyB5qWvQxO1EEYp9r3jE8hw+MP+D3btWOTIT5MQtU+g=;
+ b=ZxknWDV5uhUjCZy1mfFYy4Rs/RQ86r00Bc9LmQZdrNNFF0AAH+VH6jVQzZLjOq8xl8uTVGJIvjbmpp2D4rLxYLwKS2TDxB1SBCHFZqbQvzLoBbMB3kzBo3c0sOjOxuEqxN5WC7UCt5zkDxWND9ByGpoKyeN3ZrsXs2bMbtchSHhK4m0UoicH4qQSKEPlWAtHnteApbOV3y1Wzw+1mvypVu3rNI/RgE3KMK8/Ia/9M2YQE0QEAoV6m2cLl5wHvARm4j8aHJtS9E1ZOrCy1hLloODdOhFMX8iv5ny6OYsSEdrgKHfB27i9hXzcwl3dziW9IrgLrKwLefoMy4w0knXo8A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=amperemail.onmicrosoft.com; dkim=pass
- header.d=amperemail.onmicrosoft.com; arc=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uFb+5J/3mFKb8XdMLHKHxJTHp5UsIBHernZOO7ONi5o=;
- b=y7agXZajed9kKToVkUCkkdUduOi7MPrRxhdnVmnaNyUojnurMw1mJMeVIQ7eiR6W7tr2es6F8r3cR6LAxzMUfsOeR3fVdpV1HEL6l5iZb2wq9rlWdzahZQ/kthgknpxKaCwzYqd/Xvmj9Nf9F9GL0StYwrzLvp8U1qUZJpoxqqg=
+ bh=cyB5qWvQxO1EEYp9r3jE8hw+MP+D3btWOTIT5MQtU+g=;
+ b=O93PpE0BbFe0QqHoNHf6ST4vwGznZMp6d2cOGKYnjaiLCPTNHokC9lHfjtihISUC2bgd5fAxOfMdD66vMsXQBNTKbmt9WdEbVaftWrAqieJ+s6qTcqsNAwosGW0iFe9YxPgT7Ec+CxyiEx3ppehIsbn8DmSg3xDotoCOMFBJAZ4=
 Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
  header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=amperemail.onmicrosoft.com;
-Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
- DM5PR0102MB3349.prod.exchangelabs.com (2603:10b6:4:9f::12) with Microsoft
+ header.from=os.amperecomputing.com;
+Received: from CO2PR01MB2039.prod.exchangelabs.com (2603:10b6:102:7::6) by
+ MWHPR01MB2237.prod.exchangelabs.com (2603:10b6:300:23::21) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3654.12; Wed, 16 Dec 2020 08:03:08 +0000
-Received: from DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::c930:8fc9:847b:7f3e]) by DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::c930:8fc9:847b:7f3e%7]) with mapi id 15.20.3654.025; Wed, 16 Dec 2020
- 08:03:08 +0000
-To: openbmc@lists.ozlabs.org
-From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
-Subject: phosphor-hwmon + phosphor-fan: Fan functional properties are
- mismatched when unplug fan
-Message-ID: <117d107d-236d-d361-7188-42065baaa656@amperemail.onmicrosoft.com>
-Date: Wed, 16 Dec 2020 15:03:01 +0700
+ 15.20.3654.21; Wed, 16 Dec 2020 09:54:34 +0000
+Received: from CO2PR01MB2039.prod.exchangelabs.com
+ ([fe80::8077:5998:860:1210]) by CO2PR01MB2039.prod.exchangelabs.com
+ ([fe80::8077:5998:860:1210%11]) with mapi id 15.20.3654.025; Wed, 16 Dec 2020
+ 09:54:22 +0000
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+From: "Thang Q. Nguyen" <thang@os.amperecomputing.com>
+Subject: create meta-ampere folder in openbmc repo
+Message-ID: <d5302c4f-c0c4-0bde-2a60-e943a2f41788@os.amperecomputing.com>
+Date: Wed, 16 Dec 2020 16:54:14 +0700
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
  Gecko/20100101 Thunderbird/78.5.1
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 X-Originating-IP: [118.69.219.201]
-X-ClientProxiedBy: HK2PR0401CA0022.apcprd04.prod.outlook.com
- (2603:1096:202:2::32) To DM6PR01MB5145.prod.exchangelabs.com
- (2603:10b6:5:56::16)
+X-ClientProxiedBy: HK2PR02CA0205.apcprd02.prod.outlook.com
+ (2603:1096:201:20::17) To CO2PR01MB2039.prod.exchangelabs.com
+ (2603:10b6:102:7::6)
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [10.38.33.175] (118.69.219.201) by
- HK2PR0401CA0022.apcprd04.prod.outlook.com (2603:1096:202:2::32) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3654.12 via Frontend
- Transport; Wed, 16 Dec 2020 08:03:07 +0000
+Received: from [10.38.33.58] (118.69.219.201) by
+ HK2PR02CA0205.apcprd02.prod.outlook.com (2603:1096:201:20::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3654.12 via Frontend Transport; Wed, 16 Dec 2020 09:54:20 +0000
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 8ce6db61-8061-49d5-4b47-08d8a19906d1
-X-MS-TrafficTypeDiagnostic: DM5PR0102MB3349:
-X-Microsoft-Antispam-PRVS: <DM5PR0102MB334989D47AF9F2405F8264AF90C50@DM5PR0102MB3349.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Office365-Filtering-Correlation-Id: f06c3ebc-3d57-4c8d-c2f1-08d8a1a8904e
+X-MS-TrafficTypeDiagnostic: MWHPR01MB2237:
+X-Microsoft-Antispam-PRVS: <MWHPR01MB22371EBA05EE160E8FA6DF458DC50@MWHPR01MB2237.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:4303;
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: cQ1JUs1v7dD/4I3ZAZq9BxSvlrUlzCWlgJkPj9gdx6NUymqywCJe27LDlb5kwZmwQxePDjXEaqNklJmP4gbpwimE3C00V0ZjMPVhs2CMRxo5PAu+GYqWywEjLI6TP1gLjFNYXnY5zFrt0WL96HzwNlWs6Z0+4tg+1beKspU2GvZ9xlhNN32ZdPRivYpU+CTpnS61SCztk3jxqrZxaLd5z7JA0OLeAI+wqJEC9bkW1ugrN7HqnEgiNa2z5jqJtp8Gxu6PXNsj/bSNSGvcJ4EAsBs5jzju1mBhvyGsl3jd59Tue0hlfKaM5O9rF1XVbZ5BiWpVSBm+rhT0uOGA2a+pGspoO+AWYbuA5mKcvda5cfbPZRUaSu/TtvlAhO2OywnJLGaVzFQhZGcsBADYP7m2HOfzrkEX3b6hatfzHQBD3ys=
+X-Microsoft-Antispam-Message-Info: ohsJ3aOXmIv8GFlSAGt5Usjw1RrJKCYreJTGamfMns809BJO9RisFr7jAwowSzB0PuR6mNSFynbzP/jVGGZoKhRLtJeZ6cEikFBmM0Kt98Yexbj20fLxswl5es8Kk5ZshshPM8kkx+OuSMUSKfuqz5X3xQj36Oows1NN7L03uOAjsoJs7GtrEKRCIiCpChCe9rbfpBfURvF93MjdJloNWkvO6KBvGgJrmRfbxZRe0OJKjcXN4a9oU/vEtacdOI0FxUzK763u5c4mTMNfnYJsfl+IvwFAqRM9SvUrkRuAhU3UmZEdAIXuqQeVXK56vDc7zzY+sBZqA40bKqLmeKuYTJ8dvglxSoeXspOa0ywOsLNAtAJgKvKK+PtEUwjh2ew2mwu2yJnMzGUFCcC429No6BMrY5KCK8SY7i402vpEQTo7DANSrew+z6IBcegQPDw3
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(366004)(346002)(136003)(396003)(376002)(39850400004)(6666004)(186003)(83170400001)(83380400001)(5660300002)(31686004)(6916009)(26005)(19627235002)(66476007)(42882007)(956004)(2906002)(66556008)(66946007)(316002)(16576012)(6486002)(31696002)(2616005)(478600001)(52116002)(8936002)(8676002)(16526019)(43740500002)(45980500001);
+ IPV:NLI; SFV:NSPM; H:CO2PR01MB2039.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(376002)(366004)(346002)(396003)(39850400004)(6666004)(16576012)(52116002)(6486002)(316002)(478600001)(5660300002)(2906002)(956004)(8676002)(2616005)(8936002)(66946007)(558084003)(16526019)(26005)(110136005)(66556008)(86362001)(186003)(31696002)(66476007)(31686004)(41852002)(43740500002)(45980500001);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?RndWVGJkM3Fid1NoQ01MV0haYWhHMGFpVjdCTFZwYVhmeTg5RnM3SmdmU2Fw?=
- =?utf-8?B?aWp6U3dVbXZSakFSQ2VkaGxLOHFkcVdObFd4STBkcWtOK3AzSHlyZk5wN1hE?=
- =?utf-8?B?bzRicXlHdU9UcEkyZjdPUHltWDdOMnNuU1RtQXFJQ3pZZzV6ZW1GQm5sZWYz?=
- =?utf-8?B?MmErbU5NSW8yUTVKNk4wNEJZZDZwL0orOVB4dHdRaS9IV0J3aklCU0R3VFJ6?=
- =?utf-8?B?blBVU0IzdFNhcGxKWnd5V2Q0dkhHdkphbWt1dWRlL2Qxak5iN0c4Z3RHck4y?=
- =?utf-8?B?ZW8rODV3b1lrWG1jaG5IQ0JkdWpMRlhJVEpyTjBiMUNMOVpiMjQwQU9aeVJ4?=
- =?utf-8?B?YW1Ld2tVSyt0N0hIMGdTRTN4SmxGbyswOFhJOEo5OGVtekhMdEc5NVBrbWNU?=
- =?utf-8?B?SWhpT0thdDRTNGhwRVJPSzd4NVlZNFlubFcrRjVEREZrbjA3S2UwWEhwdElw?=
- =?utf-8?B?QmxSTTEwZFI1enY3NHI0M1lFUDVZaVhSejNjZkJ3SFd1R3FrK3NaNUl4Wm1r?=
- =?utf-8?B?NmlIVjN1KzI3R2dGaXcxMHorQmdZYk1hL01TUkFrSW13bWZkUXBiT05pRVVt?=
- =?utf-8?B?VGFkMXdnM2NDcksvV3M3RDNJNWF4NTZLU2NoYU9Mc3FDK2haV2xFSlQzNWdE?=
- =?utf-8?B?ekRBUi82L0Yyc3d0VmlvQXEyVlRzSU04YVIwOXY1R1RWaDdtM082WFBOZ00z?=
- =?utf-8?B?Ti94QXN3cWtKMjlPblRISHBsSEpPOVZLNkxFajh6bzJzWVFVVENybktHakZY?=
- =?utf-8?B?am9DalRwRWZGWEtVSzRHclpJMUFRb0dtRkx1N3pWbFoyMkE3clBtNTNvMnZB?=
- =?utf-8?B?SlJ2ZjJwMGNaUnExTzlIYU82VHRBdlBPc1ZKb0dnSDBCQWNQYmFpQ2dCNjdE?=
- =?utf-8?B?aDloeElQZXVmUEN6UXF2QTFHQXJJSUxkZ29wNHRkdzJWd0xZcmpNakhFSURD?=
- =?utf-8?B?OStDRWdESmtPWWdOaE5mOTFYNVNoKzdpUVlNc0R5UWw3SkJ4TzNTSUtpZGR0?=
- =?utf-8?B?bE05WkMzYWpiWXU2MXJHR1lHRGo4MUtmdUdUVHM1ZDFlTE05OWMrR1hHTi9V?=
- =?utf-8?B?V2FKNmZTTXBMQ0FLTkp1L3Q1Y1BmUlprcTZOL2o2VUV4Y0hIWnp0K25Hd3ph?=
- =?utf-8?B?eFhLcEJhYUxVMHBGSUFXMmlUTC9qei9ZekxETFlRcFdBTXZMY2FGaVpLdTJO?=
- =?utf-8?B?ZGJpN1VFQVAxS2wwMTFnM2hOS3EreUdJZzRCSDhSak9JVlpzSjNCc2tBZmVG?=
- =?utf-8?B?Qm81dnJtNFdSZmdkWUxZZ1had0hJY01kaVpUKzZyNkE5aTJ5R2k3R2NEY0I4?=
- =?utf-8?Q?kjhZsSiFRJWW3x6+WjjBzv513sKGCLlz40?=
-X-OriginatorOrg: amperemail.onmicrosoft.com
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?ekFYOTF4eVZ5MUFJOHpueS93WnlhWkFsbUM0VlI0ak52Q3Y1cUNBTVgyK2hF?=
+ =?utf-8?B?ditMZDdLQkFIRWZ6TWRpcUgrOStFUW0zdzMyeTRSUldmdkhCUTZCdndKVlBF?=
+ =?utf-8?B?cmNhSTAvdjQ0NjNZMWdLN3R6TkRiRS8rRW5IMnV4bnQ2b3pNcUZhdEM0bEJw?=
+ =?utf-8?B?NFB4Znh6WkhoWG1JOUdBRjJqNG9qUktpRHRYSEdFT3JlKy8ybms2WFZObkZ6?=
+ =?utf-8?B?bExZVEtIZ0hiYldiRndLb2ZUM2ZoRHpWN0V1OFpNNmwzNVoxcVRFNy9ZWWU0?=
+ =?utf-8?B?azVYQU1yY3pJM1czYmRTZlpzTVFIZGJ3YzRhVkl6M1U5d3BFeldhME1PSEkx?=
+ =?utf-8?B?aVNVbUgzdU5YeHd3c0ZDYkVzZ3dHMjdQUC9RMzJSVFlyRmQwQjZ3RmtXRG1U?=
+ =?utf-8?B?N0F2WGpHZ1VzRERoaFIvVTBlL1U2MmhBbW14SE5vSFlHYlNiMzVYeXJtUWJu?=
+ =?utf-8?B?ZG9SL3cxeWdEMTNVZjRxWXVmc1V2NGFBd1VMU0h4aVFoTlNFeHVZUFRuT2tw?=
+ =?utf-8?B?TXZFazEwQldvNDVLaDRsOHhwczkweEpReDd5NGdFZktVbEl4bEI0UWV4SzBj?=
+ =?utf-8?B?SExWVlNjYUFFeCtFYnV1dnpTU2IvSEdBTTF1dU00REZyOUd0bk5lVlBua0o5?=
+ =?utf-8?B?aGRPV1UzcEk5M1RaTVU1ZVFjcitFTjhwdFZQQW01eEZnNkdZYm5zZlVkZUxh?=
+ =?utf-8?B?OFdjWXVoWEp0cG14L2wxMWttYlFXNmFGcU04ZzUvSnF0bldmRnVSVW9DcGNl?=
+ =?utf-8?B?dlNmOU9QcVhtalNxUmZtbS9ua1A5QkRjc3JoaWhML0txQzZuQXFNeTZ3a01r?=
+ =?utf-8?B?MGVnQzRvaUZuVGZQdHh4Y25XZFpIL2NOaDlKUzE1ZXhTZDZyemNVZ0ZSc1Vp?=
+ =?utf-8?B?QmJWaHRhM3hnTmRMeHhhb0NwTFRnL3MxSk5JaTgvVm9zSXZuOXcxYy9sd25T?=
+ =?utf-8?B?azhuc0EyTmdnNFhJUmN2ZEF3ZWkwZER1eHRSN3FRdUZrRURuYzFlTndlNllz?=
+ =?utf-8?B?ZVJOOXpjRkhoUENoMXVRbno0b0N3TnMrdDlSb09DMlV4TUoraXVwWnBHUFg3?=
+ =?utf-8?B?WGRQSys0UWE5ZXVRa2JYeG9ScXp4SGFJNi9lUGhqVElicUtPQW84cTI1L29S?=
+ =?utf-8?B?eUdZa3BCVFdpT0pCZkhkV2tDZ1BxWHNaQXFaR1hDSy9oSktpQkE3Z3JQZjF3?=
+ =?utf-8?B?ekZybXZNeFc1RlNFazkvVXlMUU1HVWtDWEhuVFJMRTRaVTJBaTg2RXNZcVk0?=
+ =?utf-8?B?a0x1NlQ4VjZVNFY0blEzWFRPRkJDQ3pJRUU0UzNwL1g5MitOQkhIVUV4SlBO?=
+ =?utf-8?Q?BsdCPCp0oFtVa4M6fV885QE5LQ56vA6PCh?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-AuthSource: CO2PR01MB2039.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Dec 2020 08:03:08.8443 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Dec 2020 09:54:21.9544 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ce6db61-8061-49d5-4b47-08d8a19906d1
+X-MS-Exchange-CrossTenant-Network-Message-Id: f06c3ebc-3d57-4c8d-c2f1-08d8a1a8904e
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Mf0WI5kgt4pZcjrTdAhh0nV3pK97OF8q0kCMGeOsy5r7Gm3opVY2ScV67WUJI6oSMNFxJAW551WicTHc4fQYL+GKwGy4JZL8Z6nIt3+0B5g=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR0102MB3349
+X-MS-Exchange-CrossTenant-UserPrincipalName: npXuGDDnJ+9WlCRvdO4+02Ynp7DdsJpoPKwbevA1cKqJnq84xAmiyUJmr3ogcFZzny3RxAp3j4xqPOUEqQne3zxXMbCgU7pjFkjZSalblSE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR01MB2237
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -134,50 +132,11 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+Hi Brad,
 
+Please help add meta-ampere repository into openbmc as a subtree.
+The meta-ampere repository has been populated with basic bring up code.
 
-In the current code of phosphor-hwmon, when flag 
---enable-update-functional-on-fail is set. The fan functional DBus 
-property in sensors interface will be set to false when unplug fans 
-(FAN4_2).
-
-~# busctl get-property xyz.openbmc_project.Hwmon-1644477290.Hwmon1 
-/xyz/openbmc_project/sensors/fan_tach/FAN4_2 
-xyz.openbmc_project.State.Decorator.OperationalStatus Functional
-b false
-
-AND the fan Value properties will keep the latest reading value before 
-unplug.
-
-~# busctl get-property xyz.openbmc_project.Hwmon-1644477290.Hwmon1 
-/xyz/openbmc_project/sensors/fan_tach/FAN4_2 
-xyz.openbmc_project.Sensor.Value Value
-
-d 4794
-
-~# busctl get-property xyz.openbmc_project.Hwmon-1644477290.Hwmon1 
-/xyz/openbmc_project/sensors/fan_tach/FAN4_2 
-xyz.openbmc_project.Sensor.Value Value
-d 4794
-
-This cause phosphor-fan-monitor failed to detect the fan failure so the 
-fan functional are wrong.
-
-busctl get-property xyz.openbmc_project.Inventory.Manager 
-/xyz/openbmc_project/inventory/system/chassis/motherboard/FAN4_2 
-xyz.openbmc_project.State.Decorator.OperationalStatus Functional
-b true
-
-Should phosphor-hwmon keep updating the fan value Dbus properties with 
-error code when the fans is nonfunctional? Or phosphor-fan-monitor 
-should also check the fan functional in sensor interface to update fan 
-functional in inventory interface?
-
-
-Regards.
-
-Thu Nguyen.
-
-
+Thanks,
+Thang Q. Nguyen
 
