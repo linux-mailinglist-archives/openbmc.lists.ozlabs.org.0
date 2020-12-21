@@ -1,52 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED50B2E0256
-	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 23:10:58 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D94872E026C
+	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 23:22:37 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D0DFC5cvMzDqQw
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 09:10:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D0DVg0WY6zDqQL
+	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 09:22:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=kuba@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=BEoPU/Hm; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D0DDD6D3hzDqKW;
- Tue, 22 Dec 2020 09:10:04 +1100 (AEDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E28BE22A85;
- Mon, 21 Dec 2020 22:10:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1608588601;
- bh=uDT47mqlwZJogTvzDKTcNjDb5AtGGqiU+C0elNRtlUs=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=BEoPU/HmBBjQweFz6iJ5YNRI+fF9rXp8BVBPrL0gvz8h8Qp/q7n0hw358NiGxm94H
- mMdgMphnGCXZWZS8q2gfonobPE/pKTT30kH4dzjs/h8+b1e8Kw+UU0HSHEseDB3JWN
- nFGErKGVeBHOhKCNwVlo2h0SZ9t0rjmmvvmW2mpNuy6GXxlPexI4myc3F/2q3tOoI3
- 91je3V4hNVMIv1uHidqVt2Fzf17bJId4c0nPlpcij+0U9XnZxUu54rpd4odOxnEycU
- h43qYLu5R54xsdBi+0YYBYVLGuAQh23CHEMPgNP3ZUBfUiucktqCD5tsWKMrE+u3PA
- 4amqDED6SP1zw==
-Date: Mon, 21 Dec 2020 14:09:59 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Hongwei Zhang <hongweiz@ami.com>
-Subject: Re: [Aspeed,ncsi-rx, v2 1/1] net: ftgmac100: Fix AST2600 EVB NCSI
- RX issue
-Message-ID: <20201221140959.793449e8@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20201221194026.30715-2-hongweiz@ami.com>
-References: <20201215192323.24359-1-hongweiz@ami.com>
- <20201221194026.30715-2-hongweiz@ami.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D0DTr15JSzDqM6;
+ Tue, 22 Dec 2020 09:21:50 +1100 (AEDT)
+IronPort-SDR: 01kGvLFJMpcOM77eNb8uvdslOU0kcF/0mvRoGscK1OBLxYqgFex0/1FRu+g2feus/bjCtp+IKF
+ 3ihfoJxF0ezg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9842"; a="155004936"
+X-IronPort-AV: E=Sophos;i="5.78,437,1599548400"; d="scan'208";a="155004936"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Dec 2020 14:21:46 -0800
+IronPort-SDR: PS9v6jx1y4Zk2+CT4iwry61c5UoDxY0SjTCemykD8hVs6PLfnxgfHftbemXJiNYLxzqdOrImj9
+ MYZA6Z2eiSiQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.78,437,1599548400"; d="scan'208";a="372892687"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by orsmga008.jf.intel.com with ESMTP; 21 Dec 2020 14:21:45 -0800
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Eddie James <eajames@linux.ibm.com>, Stephen Boyd <sboyd@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH v2 0/1] Fix kernel panic issues caused by AST2500 Video Engine
+Date: Mon, 21 Dec 2020 14:32:24 -0800
+Message-Id: <20201221223225.14723-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,81 +53,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
- netdev <netdev@vger.kernel.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, David S Miller <davem@davemloft.net>
+Cc: openbmc@lists.ozlabs.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ linux-clk@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 21 Dec 2020 14:40:26 -0500 Hongwei Zhang wrote:
-> When FTGMAC100 driver is used on other NCSI Ethernet controllers, few
+Video engine uses eclk and vclk for its clock sources and its reset
+control is coupled with eclk so the current clock enabling sequence works
+like below.
 
-When you say NCSI Ethernet controller here you mean the main system
-NIC, right? The MAC on the NCSI side is FTGMAC100, correct?
+ Enable eclk
+ De-assert Video Engine reset
+ 10ms delay
+ Enable vclk
 
-In that case I'm not sure how user is supposed to control this setting
-at build time. The system NIC is often pluggable on the PCIe bus, and
-can be changed at will.
+It introduces improper reset on the Video Engine hardware and eventually
+the hardware generates unexpected DMA memory transfers that can corrupt
+memory region in random and sporadic patterns. This issue is observed
+very rarely on some specific AST2500 SoCs but it causes a critical
+kernel panic with making a various shape of signature so it's extremely
+hard to debug. Moreover, the issue is observed even when the video
+engine is not actively used because udevd turns on the video engine
+hardware for a short time to make a query in every boot.
 
-> controllers have compatible issue, removing FTGMAC100_RXDES0_RX_ERR bit
-> from RXDES0_ANY_ERROR can fix the issue.
-> 
-> Fixes: 7ee2d5b4d4340353 ("ARM: dts: nuvoton: Add Fii Kudo system")
+To fix this issue, this commit changes the clock handling logic to make
+the reset de-assertion triggered after enabling both eclk and vclk. Also,
+it adds clk_unprepare call for a case when probe fails.
 
-Please fix the commit hash, this hash does not exist upstream:
+In case of AST2600, the video engine reset setting should be coupled with
+eclk to match it with the setting for previous Aspeed SoCs which is defined
+in clk-aspeed.c since all Aspeed SoCs are sharing a single video engine
+driver. Also, reset bit 6 is defined as 'Video Engine' reset in datasheet
+so it should be de-asserted when eclk is enabled. This commit fixes the
+setting too.
 
-Commit: 8711d4ef64fa ("net: ftgmac100: Fix AST2600 EVB NCSI RX issue")
-	Fixes tag: Fixes: 7ee2d5b4d4340353 ("ARM: dts: nuvoton: Add Fii Kudo system")
-	Has these problem(s):
-		- Target SHA1 does not exist
+Please review this squashed patch.
 
-> Signed-off-by: Hongwei Zhang <hongweiz@ami.com>
-> ---
->  drivers/net/ethernet/faraday/Kconfig     | 9 +++++++++
->  drivers/net/ethernet/faraday/ftgmac100.h | 8 ++++++++
->  2 files changed, 17 insertions(+)
-> 
-> diff --git a/drivers/net/ethernet/faraday/Kconfig b/drivers/net/ethernet/faraday/Kconfig
-> index c2677ec0564d..ccd0c30be0db 100644
-> --- a/drivers/net/ethernet/faraday/Kconfig
-> +++ b/drivers/net/ethernet/faraday/Kconfig
-> @@ -38,4 +38,13 @@ config FTGMAC100
->  	  from Faraday. It is used on Faraday A369, Andes AG102 and some
->  	  other ARM/NDS32 SoC's.
->  
-> +config FTGMAC100_RXDES0_RX_ERR_CHK
-> +	bool "Include FTGMAC100_RXDES0_RX_ERR in RXDES0_ANY_ERROR"
-> +	default y
-> +	depends on FTGMAC100
-> +	help
-> +	  Say N here if the NCSI controller on your platform has compatible
-> +	  issue with FTGMAC100, thus always trigger RXDES0_RX_ERR. Exclude
-> +	  this bit can fix the issue.
-> +
->  endif # NET_VENDOR_FARADAY
-> diff --git a/drivers/net/ethernet/faraday/ftgmac100.h b/drivers/net/ethernet/faraday/ftgmac100.h
-> index 63b3e02fab16..59e1bd52d261 100644
-> --- a/drivers/net/ethernet/faraday/ftgmac100.h
-> +++ b/drivers/net/ethernet/faraday/ftgmac100.h
-> @@ -251,12 +251,20 @@ struct ftgmac100_rxdes {
->  #define FTGMAC100_RXDES0_RXPKT_RDY	(1 << 31)
->  
->  /* Errors we care about for dropping packets */
-> +#ifdef CONFIG_FTGMAC100_RXDES0_RX_ERR_CHK
->  #define RXDES0_ANY_ERROR		( \
->  	FTGMAC100_RXDES0_RX_ERR		| \
->  	FTGMAC100_RXDES0_CRC_ERR	| \
->  	FTGMAC100_RXDES0_FTL		| \
->  	FTGMAC100_RXDES0_RUNT		| \
->  	FTGMAC100_RXDES0_RX_ODD_NB)
-> +#else
-> +#define RXDES0_ANY_ERROR		( \
-> +	FTGMAC100_RXDES0_CRC_ERR	| \
-> +	FTGMAC100_RXDES0_FTL		| \
-> +	FTGMAC100_RXDES0_RUNT		| \
-> +	FTGMAC100_RXDES0_RX_ODD_NB)
-> +#endif
->  
->  #define FTGMAC100_RXDES1_VLANTAG_CI	0xffff
->  #define FTGMAC100_RXDES1_PROT_MASK	(0x3 << 20)
+Changes since v1:
+- Squashed two patches due to dependency.
+
+Jae Hyun Yoo (1):
+  media: aspeed: fix clock handling logic
+
+ drivers/clk/clk-ast2600.c             | 4 ++--
+ drivers/media/platform/aspeed-video.c | 9 ++++++---
+ 2 files changed, 8 insertions(+), 5 deletions(-)
+
+-- 
+2.17.1
 
