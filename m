@@ -1,58 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1BA62E0191
-	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 21:32:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BD3B2E01AA
+	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 21:53:07 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D0B406JSLzDqQc
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 07:32:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D0BWN5RHvzDqQG
+	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 07:53:04 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
- header.from=linux.intel.com
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ spf=pass (sender SPF authorized) smtp.mailfrom=ami.com
+ (client-ip=63.147.10.40; helo=atlmailgw1.ami.com;
+ envelope-from=hongweiz@ami.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=ami.com
+Received: from atlmailgw1.ami.com (atlmailgw1.ami.com [63.147.10.40])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D0B2y0YGRzDqNm;
- Tue, 22 Dec 2020 07:31:52 +1100 (AEDT)
-IronPort-SDR: x8ORFaoOsgEme3DsdqpNYvOlEX/QnaiGTrTOuozkp3X/Lta0pEA0O4BPtD/U7bKD8VdqkuyfCY
- DNH4KjFYLcXg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9842"; a="175927613"
-X-IronPort-AV: E=Sophos;i="5.78,437,1599548400"; d="scan'208";a="175927613"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Dec 2020 12:31:48 -0800
-IronPort-SDR: jbpk4wHi2BbEYcQvfiLDlQ0dffQ71lPrQNFpA2D+HPdRV/+ww2GY8CEgewuCh4WFAjhkuGpbOZ
- FzPmn1B6kvMw==
-X-IronPort-AV: E=Sophos;i="5.78,437,1599548400"; d="scan'208";a="456810261"
-Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.251.28.113])
- ([10.251.28.113])
- by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Dec 2020 12:31:47 -0800
-Subject: Re: [PATCH 2/2] media: aspeed: fix clock handling logic
-To: Stephen Boyd <sboyd@kernel.org>, Joel Stanley <joel@jms.id.au>
-References: <20201207164240.15436-1-jae.hyun.yoo@linux.intel.com>
- <20201207164240.15436-3-jae.hyun.yoo@linux.intel.com>
- <CACPK8Xd3dz1WLGNGqMiAZxhMEeGHbkPtvO2rYQ36Kbj=Uvy-jA@mail.gmail.com>
- <d3faea9e-e7d6-eba0-a6b2-c30bc9b6e147@linux.intel.com>
- <160820199393.1580929.9806429719720580479@swboyd.mtv.corp.google.com>
- <d3f2d76c-40d9-b167-7002-5a25ec81c73a@linux.intel.com>
- <160842289176.1580929.13125223155803124427@swboyd.mtv.corp.google.com>
-From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Message-ID: <4b67f62c-012b-d6e9-cf98-1093175793c4@linux.intel.com>
-Date: Mon, 21 Dec 2020 12:31:46 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D0BVN2njszDqQ1;
+ Tue, 22 Dec 2020 07:52:11 +1100 (AEDT)
+X-AuditID: ac1060b2-a93ff700000017ec-60-5fe10af76df7
+Received: from atlms1.us.megatrends.com (atlms1.us.megatrends.com
+ [172.16.96.144])
+ (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by atlmailgw1.ami.com (Symantec Messaging Gateway) with SMTP id
+ E7.8D.06124.7FA01EF5; Mon, 21 Dec 2020 15:52:07 -0500 (EST)
+Received: from ami-us-wk.us.megatrends.com (172.16.98.207) by
+ atlms1.us.megatrends.com (172.16.96.144) with Microsoft SMTP Server (TLS) id
+ 14.3.468.0; Mon, 21 Dec 2020 15:52:06 -0500
+From: Hongwei Zhang <hongweiz@ami.com>
+To: <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
+ <openbmc@lists.ozlabs.org>, Jakub Kicinski <kuba@kernel.org>, David S Miller
+ <davem@davemloft.net>
+Subject: [Aspeed,
+ v1 0/1] net: ftgmac100: Change the order of getting MAC address
+Date: Mon, 21 Dec 2020 15:51:56 -0500
+Message-ID: <20201221205157.31501-1-hongweiz@ami.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <160842289176.1580929.13125223155803124427@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [172.16.98.207]
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPLMWRmVeSWpSXmKPExsWyRiBhgu4ProfxBu/cLHZd5rCYc76FxeL3
+ +b/MFhe29bFaNK8+x2xxedccNotjC8QsTrW8YHHg8LjavovdY8vKm0weFz8eY/bYtKqTzeP8
+ jIWMHp83yQWwRXHZpKTmZJalFunbJXBlbDg4iaVgF3PFovWL2RoYHzB1MXJySAiYSOz58Ja5
+ i5GLQ0hgF5PErY7DMA6jxJTjN1hAqtgE1CT2bp7DBJIQEVjNKNGz4RcjiMMs0MEoMfXFV3aQ
+ KmGBQIkXLd2sXYwcHCwCqhIdzfwgYV4BU4lb334zQqyTl1i94QAzRFxQ4uTMJ2ALmAUkJA6+
+ eAEWFxKQlbh16DHUeYoSD359Z53AyDcLScssJC0LGJlWMQolluTkJmbmpJcb6iXmZuol5+du
+ YoQE6qYdjC0XzQ8xMnEwHmKU4GBWEuE1k7ofL8SbklhZlVqUH19UmpNafIhRmoNFSZx3lfvR
+ eCGB9MSS1OzU1ILUIpgsEwenVAMjH4Oo93OLX67mE+9zhEyc7MDMrOj5U7foTUKEiVKP5tR0
+ s4mrWr5Gn2EQcyptN1+hd7vl5ZlbohaL1nYzGwXdjvlyZFauX9I5h84lUVmrBRaelDloJ8K/
+ 4nHjgujU9qMsefn3XmzQVNB631ZoWKV73ki42//z2r5sIe/4KV/3yOYzN3Q85VFiKc5INNRi
+ LipOBADbenNbQgIAAA==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,33 +64,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>, Michael Turquette <mturquette@baylibre.com>,
- Eddie James <eajames@linux.ibm.com>, linux-clk@vger.kernel.org,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-media@vger.kernel.org
+Cc: Andrew Jeffery <andrew@aj.id.au>, netdev <netdev@vger.kernel.org>,
+ Hongwei Zhang <hongweiz@ami.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/19/2020 4:08 PM, Stephen Boyd wrote:
-> Quoting Jae Hyun Yoo (2020-12-17 11:54:15)
->> On 12/17/2020 2:46 AM, Stephen Boyd wrote:
->>> Quoting Jae Hyun Yoo (2020-12-08 09:16:29)
->>> So should the two patches be squashed together and go through the
->>> media tree?
->>>
->>
->> The first patch should go through clk tree, and the second one (this
->> patch) should go through media tree. Both patches should be applied at
->> the same time. Should I squash them in this case?
-> 
-> If one depends on the other, and having the first one breaks something
-> unless the second one is applied, then yes they should be squashed
-> together.
-> 
+Dear Reviewer,
 
-Okay. Will send a squashed commit as v2.
+Use native MAC address is preferred over other choices, thus change the order
+of reading MAC address, try to read it from MAC chip first, if it's not
+ availabe, then try to read it from device tree.
 
-Thanks,
-Jae
+Hongwei Zhang (1):
+  net: ftgmac100: Change the order of getting MAC address
+
+ drivers/net/ethernet/faraday/ftgmac100.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
+
+-- 
+2.17.1
+
