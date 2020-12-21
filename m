@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50D592DF91B
-	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 07:03:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 630F52DF918
+	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 07:01:44 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Czpmc35GqzDqMG
-	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 17:03:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Czpks6nBGzDqLs
+	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 17:01:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
@@ -19,11 +19,11 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Czpfg3gFhzDqL4;
- Mon, 21 Dec 2020 16:57:58 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Czpfg3hvTzDqL5;
+ Mon, 21 Dec 2020 16:57:59 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 0BL5qWvA013664;
- Mon, 21 Dec 2020 13:52:32 +0800 (GMT-8)
+ by twspam01.aspeedtech.com with ESMTP id 0BL5qWvB013664;
+ Mon, 21 Dec 2020 13:52:33 +0800 (GMT-8)
  (envelope-from chiawei_wang@aspeedtech.com)
 Received: from ChiaWeiWang-PC.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
@@ -34,17 +34,19 @@ To: <lee.jones@linaro.org>, <robh+dt@kernel.org>, <joel@jms.id.au>,
  <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
  <openbmc@lists.ozlabs.org>
-Subject: [PATCH v3 0/5] Remove LPC register partitioning
-Date: Mon, 21 Dec 2020 13:56:18 +0800
-Message-ID: <20201221055623.31463-1-chiawei_wang@aspeedtech.com>
+Subject: [PATCH v3 1/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
+Date: Mon, 21 Dec 2020 13:56:19 +0800
+Message-ID: <20201221055623.31463-2-chiawei_wang@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20201221055623.31463-1-chiawei_wang@aspeedtech.com>
+References: <20201221055623.31463-1-chiawei_wang@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Originating-IP: [192.168.2.66]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 0BL5qWvA013664
+X-MAIL: twspam01.aspeedtech.com 0BL5qWvB013664
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,46 +63,177 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 The LPC controller has no concept of the BMC and the Host partitions.
-The incorrect partitioning can impose unnecessary range restrictions
-on register access through the syscon regmap interface.
+This patch fixes the documentation by removing the description on LPC
+partitions. The register offsets illustrated in the DTS node examples
+are also fixed to adapt to the LPC DTS change.
 
-For instance, HICRB contains the I/O port address configuration
-of KCS channel 1/2. However, the KCS#1/#2 drivers cannot access
-HICRB as it is located at the other LPC partition.
+Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
+---
+ .../devicetree/bindings/mfd/aspeed-lpc.txt    | 99 ++++---------------
+ 1 file changed, 21 insertions(+), 78 deletions(-)
 
-In addition, to be backward compatible, the newly added HW control
-bits could be located at any reserved bits over the LPC addressing
-space.
-
-Thereby, this patch series aims to remove the LPC partitioning for
-better driver development and maintenance. This requires the change
-to both the device tree and the driver implementation. To ensure
-both sides are synchronously updated, a v2 binding check is added.
-
-Changes since v2:
-	- Add v2 binding check to ensure the synchronization between the
-	  device tree change and the driver register offset fix.
-
-Changes since v1:
-	- Add the fix to the aspeed-lpc binding documentation.
-
-Chia-Wei, Wang (5):
-  dt-bindings: aspeed-lpc: Remove LPC partitioning
-  ARM: dts: Remove LPC BMC and Host partitions
-  ipmi: kcs: aspeed: Adapt to new LPC DTS layout
-  pinctrl: aspeed-g5: Adapt to new LPC device tree layout
-  soc: aspeed: Adapt to new LPC device tree layout
-
- .../devicetree/bindings/mfd/aspeed-lpc.txt    |  99 +++----------
- arch/arm/boot/dts/aspeed-g4.dtsi              |  74 ++++------
- arch/arm/boot/dts/aspeed-g5.dtsi              | 135 ++++++++----------
- arch/arm/boot/dts/aspeed-g6.dtsi              | 135 ++++++++----------
- drivers/char/ipmi/kcs_bmc_aspeed.c            |  35 +++--
- drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c    |  19 ++-
- drivers/soc/aspeed/aspeed-lpc-ctrl.c          |  20 ++-
- drivers/soc/aspeed/aspeed-lpc-snoop.c         |  23 +--
- 8 files changed, 232 insertions(+), 308 deletions(-)
-
+diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+index d0a38ba8b9ce..90eb0ecc95d1 100644
+--- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
++++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+@@ -9,13 +9,7 @@ primary use case of the Aspeed LPC controller is as a slave on the bus
+ conditions it can also take the role of bus master.
+ 
+ The LPC controller is represented as a multi-function device to account for the
+-mix of functionality it provides. The principle split is between the register
+-layout at the start of the I/O space which is, to quote the Aspeed datasheet,
+-"basically compatible with the [LPC registers from the] popular BMC controller
+-H8S/2168[1]", and everything else, where everything else is an eclectic
+-collection of functions with a esoteric register layout. "Everything else",
+-here labeled the "host" portion of the controller, includes, but is not limited
+-to:
++mix of functionality, which includes, but is not limited to:
+ 
+ * An IPMI Block Transfer[2] Controller
+ 
+@@ -44,80 +38,29 @@ Required properties
+ ===================
+ 
+ - compatible:	One of:
+-		"aspeed,ast2400-lpc", "simple-mfd"
+-		"aspeed,ast2500-lpc", "simple-mfd"
+-		"aspeed,ast2600-lpc", "simple-mfd"
++		"aspeed,ast2400-lpc-v2", "simple-mfd", "syscon"
++		"aspeed,ast2500-lpc-v2", "simple-mfd", "syscon"
++		"aspeed,ast2600-lpc-v2", "simple-mfd", "syscon"
+ 
+ - reg:		contains the physical address and length values of the Aspeed
+                 LPC memory region.
+ 
+ - #address-cells: <1>
+ - #size-cells:	<1>
+-- ranges: 	Maps 0 to the physical address and length of the LPC memory
+-                region
+-
+-Required LPC Child nodes
+-========================
+-
+-BMC Node
+---------
+-
+-- compatible:	One of:
+-		"aspeed,ast2400-lpc-bmc"
+-		"aspeed,ast2500-lpc-bmc"
+-		"aspeed,ast2600-lpc-bmc"
+-
+-- reg:		contains the physical address and length values of the
+-                H8S/2168-compatible LPC controller memory region
+-
+-Host Node
+----------
+-
+-- compatible:   One of:
+-		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
+-		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
+-		"aspeed,ast2600-lpc-host", "simple-mfd", "syscon"
+-
+-- reg:		contains the address and length values of the host-related
+-                register space for the Aspeed LPC controller
+-
+-- #address-cells: <1>
+-- #size-cells:	<1>
+-- ranges: 	Maps 0 to the address and length of the host-related LPC memory
++- ranges:	Maps 0 to the physical address and length of the LPC memory
+                 region
+ 
+ Example:
+ 
+ lpc: lpc@1e789000 {
+-	compatible = "aspeed,ast2500-lpc", "simple-mfd";
++	compatible = "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon";
+ 	reg = <0x1e789000 0x1000>;
+ 
+ 	#address-cells = <1>;
+ 	#size-cells = <1>;
+ 	ranges = <0x0 0x1e789000 0x1000>;
+-
+-	lpc_bmc: lpc-bmc@0 {
+-		compatible = "aspeed,ast2500-lpc-bmc";
+-		reg = <0x0 0x80>;
+-	};
+-
+-	lpc_host: lpc-host@80 {
+-		compatible = "aspeed,ast2500-lpc-host", "simple-mfd", "syscon";
+-		reg = <0x80 0x1e0>;
+-		reg-io-width = <4>;
+-
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		ranges = <0x0 0x80 0x1e0>;
+-	};
+ };
+ 
+-BMC Node Children
+-==================
+-
+-
+-Host Node Children
+-==================
+ 
+ LPC Host Interface Controller
+ -------------------
+@@ -149,14 +92,12 @@ Optional properties:
+ 
+ Example:
+ 
+-lpc-host@80 {
+-	lpc_ctrl: lpc-ctrl@0 {
+-		compatible = "aspeed,ast2500-lpc-ctrl";
+-		reg = <0x0 0x80>;
+-		clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+-		memory-region = <&flash_memory>;
+-		flash = <&spi>;
+-	};
++lpc_ctrl: lpc-ctrl@80 {
++	compatible = "aspeed,ast2500-lpc-ctrl";
++	reg = <0x80 0x80>;
++	clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
++	memory-region = <&flash_memory>;
++	flash = <&spi>;
+ };
+ 
+ LPC Host Controller
+@@ -179,9 +120,9 @@ Required properties:
+ 
+ Example:
+ 
+-lhc: lhc@20 {
++lhc: lhc@a0 {
+ 	compatible = "aspeed,ast2500-lhc";
+-	reg = <0x20 0x24 0x48 0x8>;
++	reg = <0xa0 0x24 0xc8 0x8>;
+ };
+ 
+ LPC reset control
+@@ -192,16 +133,18 @@ state of the LPC bus. Some systems may chose to modify this configuration.
+ 
+ Required properties:
+ 
+- - compatible:		"aspeed,ast2600-lpc-reset" or
+-			"aspeed,ast2500-lpc-reset"
+-			"aspeed,ast2400-lpc-reset"
++ - compatible:		One of:
++			"aspeed,ast2600-lpc-reset";
++			"aspeed,ast2500-lpc-reset";
++			"aspeed,ast2400-lpc-reset";
++
+  - reg:			offset and length of the IP in the LHC memory region
+  - #reset-controller	indicates the number of reset cells expected
+ 
+ Example:
+ 
+-lpc_reset: reset-controller@18 {
++lpc_reset: reset-controller@98 {
+         compatible = "aspeed,ast2500-lpc-reset";
+-        reg = <0x18 0x4>;
++        reg = <0x98 0x4>;
+         #reset-cells = <1>;
+ };
 -- 
 2.17.1
 
