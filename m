@@ -2,59 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBE6A2E0136
-	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 20:43:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B1BA62E0191
+	for <lists+openbmc@lfdr.de>; Mon, 21 Dec 2020 21:32:51 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D08yh0HcrzDqQj
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 06:43:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D0B406JSLzDqQc
+	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 07:32:48 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ami.com
- (client-ip=63.147.10.42; helo=atlmailgw2.ami.com;
- envelope-from=hongweiz@ami.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=ami.com
-Received: from atlmailgw2.ami.com (atlmailgw2.ami.com [63.147.10.42])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D08w23sTQzDqQX;
- Tue, 22 Dec 2020 06:40:49 +1100 (AEDT)
-X-AuditID: ac10606f-231ff70000001934-53-5fe0fa3b97ea
-Received: from atlms1.us.megatrends.com (atlms1.us.megatrends.com
- [172.16.96.144])
- (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (Client did not present a certificate)
- by atlmailgw2.ami.com (Symantec Messaging Gateway) with SMTP id
- AE.EF.06452.B3AF0EF5; Mon, 21 Dec 2020 14:40:44 -0500 (EST)
-Received: from ami-us-wk.us.megatrends.com (172.16.98.207) by
- atlms1.us.megatrends.com (172.16.96.144) with Microsoft SMTP Server (TLS) id
- 14.3.468.0; Mon, 21 Dec 2020 14:40:43 -0500
-From: Hongwei Zhang <hongweiz@ami.com>
-To: <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, Jakub Kicinski <kuba@kernel.org>, David S Miller
- <davem@davemloft.net>
-Subject: [Aspeed, ncsi-rx,
- v2 1/1] net: ftgmac100: Fix AST2600 EVB NCSI RX issue
-Date: Mon, 21 Dec 2020 14:40:26 -0500
-Message-ID: <20201221194026.30715-2-hongweiz@ami.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201215192323.24359-1-hongweiz@ami.com>
-References: <20201215192323.24359-1-hongweiz@ami.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D0B2y0YGRzDqNm;
+ Tue, 22 Dec 2020 07:31:52 +1100 (AEDT)
+IronPort-SDR: x8ORFaoOsgEme3DsdqpNYvOlEX/QnaiGTrTOuozkp3X/Lta0pEA0O4BPtD/U7bKD8VdqkuyfCY
+ DNH4KjFYLcXg==
+X-IronPort-AV: E=McAfee;i="6000,8403,9842"; a="175927613"
+X-IronPort-AV: E=Sophos;i="5.78,437,1599548400"; d="scan'208";a="175927613"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Dec 2020 12:31:48 -0800
+IronPort-SDR: jbpk4wHi2BbEYcQvfiLDlQ0dffQ71lPrQNFpA2D+HPdRV/+ww2GY8CEgewuCh4WFAjhkuGpbOZ
+ FzPmn1B6kvMw==
+X-IronPort-AV: E=Sophos;i="5.78,437,1599548400"; d="scan'208";a="456810261"
+Received: from yoojae-mobl.amr.corp.intel.com (HELO [10.251.28.113])
+ ([10.251.28.113])
+ by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Dec 2020 12:31:47 -0800
+Subject: Re: [PATCH 2/2] media: aspeed: fix clock handling logic
+To: Stephen Boyd <sboyd@kernel.org>, Joel Stanley <joel@jms.id.au>
+References: <20201207164240.15436-1-jae.hyun.yoo@linux.intel.com>
+ <20201207164240.15436-3-jae.hyun.yoo@linux.intel.com>
+ <CACPK8Xd3dz1WLGNGqMiAZxhMEeGHbkPtvO2rYQ36Kbj=Uvy-jA@mail.gmail.com>
+ <d3faea9e-e7d6-eba0-a6b2-c30bc9b6e147@linux.intel.com>
+ <160820199393.1580929.9806429719720580479@swboyd.mtv.corp.google.com>
+ <d3f2d76c-40d9-b167-7002-5a25ec81c73a@linux.intel.com>
+ <160842289176.1580929.13125223155803124427@swboyd.mtv.corp.google.com>
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+Message-ID: <4b67f62c-012b-d6e9-cf98-1093175793c4@linux.intel.com>
+Date: Mon, 21 Dec 2020 12:31:46 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [172.16.98.207]
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrOLMWRmVeSWpSXmKPExsWyRiBhgq7NrwfxBr/Ps1nsusxhMed8C4vF
- 7/N/mS0ubOtjtWhefY7Z4vKuOWwWxxaIWZxqecHiwOFxtX0Xu8eWlTeZPC5+PMbssWlVJ5vH
- +RkLGT0+b5ILYIvisklJzcksSy3St0vgypg/W6egT6Biz/rdjA2MJ3m7GDk5JARMJI4daWfu
- YuTiEBLYxSRx4vUhViiHUeLzuQ0sIFVsAmoSezfPYQJJiAisZpTo2fCLEcRhFuhglJj64is7
- SJWwgL/Euu+TwDpYBFQl9u68wgRi8wqYSrxZ/JYJYp+8xOoNB4D2cXBwCphJ7DklBxIWAipp
- 3fcOqlxQ4uTMJ2BjmAUkJA6+eMEMUSMrcevQY6gxihIPfn1nncAoMAtJyywkLQsYmVYxCiWW
- 5OQmZuaklxvpJeZm6iXn525ihAR2/g7Gjx/NDzEycTAeYpTgYFYS4TWTuh8vxJuSWFmVWpQf
- X1Sak1p8iFGag0VJnHeV+9F4IYH0xJLU7NTUgtQimCwTB6dUA+NE76s2TWf3rrr3ffO8TQqz
- P5T9F03U9kphXT5PiOWt55ZndsnvNj1V/5EszP1tlq/ul+l3D5c/7PwaaREgOV056si5vzv1
- DtZLdRj5fD65480HJrP64j/PrJm3ZNfv+fEuvaB6vdnzhpQFntObtsrn7HfIO7ZfaO5jDZ8N
- YY7RjBpCM+5sSexXYinOSDTUYi4qTgQAMXQx8FoCAAA=
+In-Reply-To: <160842289176.1580929.13125223155803124427@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,65 +64,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, netdev <netdev@vger.kernel.org>,
- Hongwei Zhang <hongweiz@ami.com>
+Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
+ Andrew Jeffery <andrew@aj.id.au>, Michael Turquette <mturquette@baylibre.com>,
+ Eddie James <eajames@linux.ibm.com>, linux-clk@vger.kernel.org,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-When FTGMAC100 driver is used on other NCSI Ethernet controllers, few
-controllers have compatible issue, removing FTGMAC100_RXDES0_RX_ERR bit
-from RXDES0_ANY_ERROR can fix the issue.
+On 12/19/2020 4:08 PM, Stephen Boyd wrote:
+> Quoting Jae Hyun Yoo (2020-12-17 11:54:15)
+>> On 12/17/2020 2:46 AM, Stephen Boyd wrote:
+>>> Quoting Jae Hyun Yoo (2020-12-08 09:16:29)
+>>> So should the two patches be squashed together and go through the
+>>> media tree?
+>>>
+>>
+>> The first patch should go through clk tree, and the second one (this
+>> patch) should go through media tree. Both patches should be applied at
+>> the same time. Should I squash them in this case?
+> 
+> If one depends on the other, and having the first one breaks something
+> unless the second one is applied, then yes they should be squashed
+> together.
+> 
 
-Fixes: 7ee2d5b4d4340353 ("ARM: dts: nuvoton: Add Fii Kudo system")
-Signed-off-by: Hongwei Zhang <hongweiz@ami.com>
----
- drivers/net/ethernet/faraday/Kconfig     | 9 +++++++++
- drivers/net/ethernet/faraday/ftgmac100.h | 8 ++++++++
- 2 files changed, 17 insertions(+)
+Okay. Will send a squashed commit as v2.
 
-diff --git a/drivers/net/ethernet/faraday/Kconfig b/drivers/net/ethernet/faraday/Kconfig
-index c2677ec0564d..ccd0c30be0db 100644
---- a/drivers/net/ethernet/faraday/Kconfig
-+++ b/drivers/net/ethernet/faraday/Kconfig
-@@ -38,4 +38,13 @@ config FTGMAC100
- 	  from Faraday. It is used on Faraday A369, Andes AG102 and some
- 	  other ARM/NDS32 SoC's.
- 
-+config FTGMAC100_RXDES0_RX_ERR_CHK
-+	bool "Include FTGMAC100_RXDES0_RX_ERR in RXDES0_ANY_ERROR"
-+	default y
-+	depends on FTGMAC100
-+	help
-+	  Say N here if the NCSI controller on your platform has compatible
-+	  issue with FTGMAC100, thus always trigger RXDES0_RX_ERR. Exclude
-+	  this bit can fix the issue.
-+
- endif # NET_VENDOR_FARADAY
-diff --git a/drivers/net/ethernet/faraday/ftgmac100.h b/drivers/net/ethernet/faraday/ftgmac100.h
-index 63b3e02fab16..59e1bd52d261 100644
---- a/drivers/net/ethernet/faraday/ftgmac100.h
-+++ b/drivers/net/ethernet/faraday/ftgmac100.h
-@@ -251,12 +251,20 @@ struct ftgmac100_rxdes {
- #define FTGMAC100_RXDES0_RXPKT_RDY	(1 << 31)
- 
- /* Errors we care about for dropping packets */
-+#ifdef CONFIG_FTGMAC100_RXDES0_RX_ERR_CHK
- #define RXDES0_ANY_ERROR		( \
- 	FTGMAC100_RXDES0_RX_ERR		| \
- 	FTGMAC100_RXDES0_CRC_ERR	| \
- 	FTGMAC100_RXDES0_FTL		| \
- 	FTGMAC100_RXDES0_RUNT		| \
- 	FTGMAC100_RXDES0_RX_ODD_NB)
-+#else
-+#define RXDES0_ANY_ERROR		( \
-+	FTGMAC100_RXDES0_CRC_ERR	| \
-+	FTGMAC100_RXDES0_FTL		| \
-+	FTGMAC100_RXDES0_RUNT		| \
-+	FTGMAC100_RXDES0_RX_ODD_NB)
-+#endif
- 
- #define FTGMAC100_RXDES1_VLANTAG_CI	0xffff
- #define FTGMAC100_RXDES1_PROT_MASK	(0x3 << 20)
--- 
-2.17.1
-
+Thanks,
+Jae
