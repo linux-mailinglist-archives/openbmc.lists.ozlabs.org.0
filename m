@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9E222E0564
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 05:35:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C9742E057A
+	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 05:48:39 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D0Nn24zkNzDqQB
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 15:35:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D0P443sWZzDqQ1
+	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 15:48:36 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -17,51 +17,49 @@ Authentication-Results: lists.ozlabs.org;
  dmarc=none (p=none dis=none) header.from=jms.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=GrKyju7r; dkim-atps=neutral
+ header.s=google header.b=VklhxX/o; dkim-atps=neutral
 Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com
  [IPv6:2607:f8b0:4864:20::735])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D0Nm60XHgzDqDl;
- Tue, 22 Dec 2020 15:34:42 +1100 (AEDT)
-Received: by mail-qk1-x735.google.com with SMTP id z11so10935113qkj.7;
- Mon, 21 Dec 2020 20:34:42 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D0P3D04G3zDqQm;
+ Tue, 22 Dec 2020 15:47:51 +1100 (AEDT)
+Received: by mail-qk1-x735.google.com with SMTP id c7so10991102qke.1;
+ Mon, 21 Dec 2020 20:47:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=PmY1Zbvh4P5fvr7vf3dYvsRt7lpuDqOG99f8cRvMW2Y=;
- b=GrKyju7r5Q55J4AEUPA+SDTGZg+Q0Rl8bpjFEOY7Wf1W7lvAh+3vJzCVrUF51b8DOJ
- zMZtths6IEkGwaO9na4a4ouDj76WbiJDCdRm8q61C6r1Ubxb+5iNB2coHyViB+Gvs14J
- KggaDh8uAa9rgGhcc9pFidYBFp8jRHg8c2wBg=
+ :cc; bh=jhzT8c0zSzP0ywXe5TKHFtbJ3WCUgeB9D75CgQh7hjY=;
+ b=VklhxX/oiWTdbSURqiK31rNW6JMHcT6Ep31a432CZZQM0IvJFJX2k1+IATEO2ePMz7
+ xz/E+mLiY1Dm5reX4xJ1Xl+eVifZhfkDgdKLX1GnwL82vb5VwQxda/MUOU/imtaJDb21
+ JewxqSqvO27q/0USJ6ebhXPsW8ZQM1bWtpoS4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=PmY1Zbvh4P5fvr7vf3dYvsRt7lpuDqOG99f8cRvMW2Y=;
- b=NnknbJ0lrPTshxaxg5+7UN/Ko3Yq8lRgZOTn7If2NVArocEKMLOk39ODOzSq+16MeV
- /hL5M1YruGSBGYTLu6Jldva4GfK1E2uRKPNXOM1lYoZe8rngNgKebU8qFbJ4vYLvmc1B
- lY0rAHOcZau/NlbmEZApEv0InAPVUM2D/yCxampejK53PAHYMf7mQMqmAV+9/IWLPLIk
- w4n2110vmk4KNDYSCt3S6anmSgi6uRcEmORCAIrmzSHrL62MZ0VInjIKRzffcevo75NY
- ZHLUO/20kjQlgYD44SHljjXQjkEJeuSn8KKsIYe2jQKjeKN8VGuJloFGkeQdb4lMEY1y
- GXtw==
-X-Gm-Message-State: AOAM530p/Zn7O7EigkLE76WifZ7JVirJus0DrWE1wvSK+gEOowmFvV/E
- ous6YYxiy9vo93y4bt3aJ4jC4cbKFEfJ+AyBVXo=
-X-Google-Smtp-Source: ABdhPJwphoIU/ETccJ0+oBIrWPt5ewRHb2AZGa28DlUbwZupNShcyclpTxbkFNL6J4Za9zG8/A4dFQpfPCoTBgNIOyA=
+ bh=jhzT8c0zSzP0ywXe5TKHFtbJ3WCUgeB9D75CgQh7hjY=;
+ b=LTZOXXtrCseV6s759O9/x00BqugpAZG1f89j8vP7++RxgeDN0WhshseyATXMp9X/2G
+ 2KU0/0SUQWsue4ptGBHlCFqTkZh4HR2qO1j8ivjQtarBHwnl164AbdJokRwQmrbnDlgk
+ npOdLcwojeWbj7vQkiA+RAwcIqfPwnMkeGiIxUMczAYpTz++Vd3NgHNBnHf0FBVWRKpJ
+ FUc5XbnvZvhPTSa/E0MbT8/30BnC7qfda1RVkW+bD1/QGtx2Iax3ZwLUt/DBebBFCEal
+ Ebk0XBqz1tE/Bj74IvusIUonP/PhEAuS/pvf5uxyKM9Ypv0wHOLqXVduILuv6phpjGPh
+ sBqg==
+X-Gm-Message-State: AOAM531cOaPbX9Rqdw/BiBv9x0aCfgFtVSkrw6ANWp0G3cVZ8O+mL9jp
+ 3XV26eam3WZIQjiyMiW0beM/Ia9BlapAVMNe+V0=
+X-Google-Smtp-Source: ABdhPJzD0mDzK0fUtV/9AAtwg4ua0v3wjsKGJfAQ/B8NgTaVsPevS7zOz/Ys2pLUkzNHs67W6zSSHmAlRj/2PPj9vaY=
 X-Received: by 2002:a05:620a:4155:: with SMTP id
- k21mr20507246qko.55.1608611678607; 
- Mon, 21 Dec 2020 20:34:38 -0800 (PST)
+ k21mr20539624qko.55.1608612469458; 
+ Mon, 21 Dec 2020 20:47:49 -0800 (PST)
 MIME-Version: 1.0
 References: <20201215024542.18888-1-zev@bewilderbeest.net>
- <20201215024542.18888-2-zev@bewilderbeest.net>
-In-Reply-To: <20201215024542.18888-2-zev@bewilderbeest.net>
+ <20201215024542.18888-3-zev@bewilderbeest.net>
+In-Reply-To: <20201215024542.18888-3-zev@bewilderbeest.net>
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 22 Dec 2020 04:34:26 +0000
-Message-ID: <CACPK8XfPCjBbjM2V1oiD=di6MD6ewJs0NFewA0=kZfx_eL29gQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] aspeed-video: add error message for unhandled
- interrupts
-To: Zev Weiss <zev@bewilderbeest.net>,
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, 
- Ryan Chen <ryan_chen@aspeedtech.com>
+Date: Tue, 22 Dec 2020 04:47:37 +0000
+Message-ID: <CACPK8XczCUgqOENABoDbc-qwbMxOh=1OUyBtuHSmDG_Zo571Wg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] aspeed-video: clear spurious interrupt bits
+ unconditionally
+To: Zev Weiss <zev@bewilderbeest.net>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,8 +72,9 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Eddie James <eajames@linux.ibm.com>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
  Mauro Carvalho Chehab <mchehab@kernel.org>,
@@ -85,48 +84,64 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Tue, 15 Dec 2020 at 02:46, Zev Weiss <zev@bewilderbeest.net> wrote:
 >
-> This device seems to have a propensity for asserting interrupts that
-> aren't enabled -- in addition to the CAPTURE_COMPLETE and FRAME_COMPLETE
-> interrupts squashed in commit 65d270acb2d662c3346793663ac3a759eb4491b8,
-> COMP_READY has also been observed.  Adding a message diagnosing what
-> happened in the event of unhandled interrupt status bits should
-> hopefully make the debugging process simpler for any others that pop up
-> in the future.
-
-Ryan, is this a known issue with the video engine hardware?
-
+> Instead of testing and conditionally clearing them one by one, we can
+> instead just unconditionally clear them all at once.
 >
 > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+
+I had a poke at the assembly and it looks like GCC is clearing the
+bits unconditionally anyway, so removing the tests provides no change.
+
+Combining them is a good further optimization.
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
+A question unrelated to this patch: Do you know why the driver doesn't
+clear the status bits in the interrupt handler? I would expect it to
+write the value of sts back to the register to ack the pending
+interrupt.
+
 > ---
->  drivers/media/platform/aspeed-video.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>  drivers/media/platform/aspeed-video.c | 19 ++++++++++---------
+>  1 file changed, 10 insertions(+), 9 deletions(-)
 >
 > diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 7d98db1d9b52..eb02043532e3 100644
+> index eb02043532e3..218aae3be809 100644
 > --- a/drivers/media/platform/aspeed-video.c
 > +++ b/drivers/media/platform/aspeed-video.c
-> @@ -562,6 +562,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->  {
->         struct aspeed_video *video = arg;
->         u32 sts = aspeed_video_read(video, VE_INTERRUPT_STATUS);
-> +       u32 orig_sts = sts;
->
->         /*
->          * Resolution changed or signal was lost; reset the engine and
-> @@ -639,6 +640,10 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->         if (sts & VE_INTERRUPT_FRAME_COMPLETE)
->                 sts &= ~VE_INTERRUPT_FRAME_COMPLETE;
->
-> +       if (sts)
-> +               dev_err_ratelimited(video->dev, "unexpected interrupt asserted:"
-> +                                   " sts=%08x, orig_sts=%08x", sts, orig_sts);
-
-Do you want to do this before clearing the FRAME and CAPTURE bits?
-
-> +
->         return sts ? IRQ_NONE : IRQ_HANDLED;
+> @@ -558,6 +558,14 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
+>         schedule_delayed_work(&video->res_work, delay);
 >  }
 >
+> +/*
+> + * Interrupts that we don't use but have to explicitly ignore because the
+> + * hardware asserts them even when they're disabled in the VE_INTERRUPT_CTRL
+> + * register.
+> + */
+> +#define VE_SPURIOUS_IRQS \
+> +       (VE_INTERRUPT_CAPTURE_COMPLETE | VE_INTERRUPT_FRAME_COMPLETE)
+> +
+>  static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>  {
+>         struct aspeed_video *video = arg;
+> @@ -630,15 +638,8 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>                         aspeed_video_start_frame(video);
+>         }
+>
+> -       /*
+> -        * CAPTURE_COMPLETE and FRAME_COMPLETE interrupts come even when these
+> -        * are disabled in the VE_INTERRUPT_CTRL register so clear them to
+> -        * prevent unnecessary interrupt calls.
+> -        */
+> -       if (sts & VE_INTERRUPT_CAPTURE_COMPLETE)
+> -               sts &= ~VE_INTERRUPT_CAPTURE_COMPLETE;
+> -       if (sts & VE_INTERRUPT_FRAME_COMPLETE)
+> -               sts &= ~VE_INTERRUPT_FRAME_COMPLETE;
+> +       /* Squash known bogus interrupts */
+> +       sts &= ~VE_SPURIOUS_IRQS;
+>
+>         if (sts)
+>                 dev_err_ratelimited(video->dev, "unexpected interrupt asserted:"
 > --
 > 2.29.2
 >
