@@ -2,64 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF7692E057D
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 05:50:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A0D82E0E8F
+	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 20:12:33 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D0P6B5SP7zDqQy
-	for <lists+openbmc@lfdr.de>; Tue, 22 Dec 2020 15:50:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D0mDt0mLtzDqTW
+	for <lists+openbmc@lfdr.de>; Wed, 23 Dec 2020 06:12:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f2d;
- helo=mail-qv1-xf2d.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=jms.id.au
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=bewilderbeest.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=V/xri5jB; dkim-atps=neutral
-Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com
- [IPv6:2607:f8b0:4864:20::f2d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=Sk0oHyGo; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D0P4s0B7SzDqR0;
- Tue, 22 Dec 2020 15:49:16 +1100 (AEDT)
-Received: by mail-qv1-xf2d.google.com with SMTP id a4so5188821qvd.12;
- Mon, 21 Dec 2020 20:49:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=GWtT9dFNEqcjPHmXbiAmtOVLFIp1sJxP3GkNlraCet8=;
- b=V/xri5jBFHmYbWxVUSImNRGuyAQ0cgIJk2RwCYMPY4Csvdds8VDMvvCmmr+KpbP6PK
- NFtdxVjPR9kkM0wa9wl8we7P4z+SDfpxMwzltE9zqZ4lqCsAWyz7WAmdlWDBCHc2w6Hs
- ZbrtkK3LtVSlaxQiYQQoqafv+3fMqNFHhPa/w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=GWtT9dFNEqcjPHmXbiAmtOVLFIp1sJxP3GkNlraCet8=;
- b=iVZUx3FFNIbEWYVpB4B8E97pgWyeF9jzV36Q4rlQGL/V1b445LjsjMuhvIAlKC4c/i
- GBooBgo2kMdLqQfEvfalvdHExJXJetUrPeaJ5G/dVSKA+nblA1JgA7OjmXITFo25F+K0
- rb0kEozW/ITUeSREowM2BKe72CtSQo9twWzpEJDv5QfCahRdY1igQXwDZ4yPEsxq6ql6
- HXxQRz/y1aAKvaacRv4zCSvpyh2QAwrp7Z+4xbUoWlIWBNg83oasufyNomD2x48SSvO+
- WtDXW5pzl7lir1kOeGuMF64Rm12ThRE6NOJcr2eja5QlAHDa4ejGXIEprhkU4Crq1nHf
- +HMQ==
-X-Gm-Message-State: AOAM5339chb0zm+Y5wNGm2ZxzZztT6ppPGucWREfqO4VNAqyG9O/uMQM
- fj6Yi+ME6ShGQRj57ygI64hWZT7yh/TXpltPq8A=
-X-Google-Smtp-Source: ABdhPJzaVZU4oIKFfYRAkH3IRIleJXfQL+zGDPUA+rF5Cw9csSVMZYtEy8pQb4tpH5uLqJ2xelCA0hFc/0OlWNwvZYk=
-X-Received: by 2002:a0c:b990:: with SMTP id v16mr16780968qvf.16.1608612552612; 
- Mon, 21 Dec 2020 20:49:12 -0800 (PST)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D0mD05hCvzDqRC;
+ Wed, 23 Dec 2020 06:11:40 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (unknown
+ [IPv6:2600:6c44:7f:ba20:1c66:ab2d:5a3:5a9e])
+ (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 82E95806F7;
+ Tue, 22 Dec 2020 11:11:32 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 thorn.bewilderbeest.net 82E95806F7
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1608664293;
+ bh=Jb/eAFSraSSe36siZ7ttAXCaK7RraW2W9WezyRTcKok=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Sk0oHyGomWoDAgtkbg4sxv04aqH/T0JleemSI5w3FSx4IJ3NE5tXh5SFnGXLkVA6Q
+ AV0eQ4POcVPhHYLiYdk8F2e5IIJncPdXAQxiMOBJAGMykwiLq+dpDtmOVtKEnQRlLZ
+ iRLfUqQ8ezNnqoOc/QkWL3H8UR6VaAnBJkt1g19Q=
+Date: Tue, 22 Dec 2020 13:11:26 -0600
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH 1/3] aspeed-video: add error message for unhandled
+ interrupts
+Message-ID: <20201222191126.uh3psmc4l74dulwb@hatter.bewilderbeest.net>
 References: <20201215024542.18888-1-zev@bewilderbeest.net>
- <20201215024542.18888-4-zev@bewilderbeest.net>
-In-Reply-To: <20201215024542.18888-4-zev@bewilderbeest.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 22 Dec 2020 04:49:00 +0000
-Message-ID: <CACPK8XdAfYaAPeyDL4nsG+04xgr-u3+CQKNNdpHAQb4vG7=54g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] aspeed-video: add COMP_READY to VE_SPURIOUS_IRQS
-To: Zev Weiss <zev@bewilderbeest.net>, Ryan Chen <ryan_chen@aspeedtech.com>, 
- Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+ <20201215024542.18888-2-zev@bewilderbeest.net>
+ <CACPK8XfPCjBbjM2V1oiD=di6MD6ewJs0NFewA0=kZfx_eL29gQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CACPK8XfPCjBbjM2V1oiD=di6MD6ewJs0NFewA0=kZfx_eL29gQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,8 +63,10 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Ryan Chen <ryan_chen@aspeedtech.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
  Eddie James <eajames@linux.ibm.com>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
  Mauro Carvalho Chehab <mchehab@kernel.org>,
@@ -80,36 +74,53 @@ Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 15 Dec 2020 at 02:46, Zev Weiss <zev@bewilderbeest.net> wrote:
+On Mon, Dec 21, 2020 at 10:34:26PM CST, Joel Stanley wrote:
+>On Tue, 15 Dec 2020 at 02:46, Zev Weiss <zev@bewilderbeest.net> wrote:
+>>
+>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>> ---
+>>  drivers/media/platform/aspeed-video.c | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
+>> index 7d98db1d9b52..eb02043532e3 100644
+>> --- a/drivers/media/platform/aspeed-video.c
+>> +++ b/drivers/media/platform/aspeed-video.c
+>> @@ -562,6 +562,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>>  {
+>>         struct aspeed_video *video = arg;
+>>         u32 sts = aspeed_video_read(video, VE_INTERRUPT_STATUS);
+>> +       u32 orig_sts = sts;
+>>
+>>         /*
+>>          * Resolution changed or signal was lost; reset the engine and
+>> @@ -639,6 +640,10 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
+>>         if (sts & VE_INTERRUPT_FRAME_COMPLETE)
+>>                 sts &= ~VE_INTERRUPT_FRAME_COMPLETE;
+>>
+>> +       if (sts)
+>> +               dev_err_ratelimited(video->dev, "unexpected interrupt asserted:"
+>> +                                   " sts=%08x, orig_sts=%08x", sts, orig_sts);
 >
-> This joins CAPTURE_COMPLETE and FRAME_COMPLETE in the set of interrupts
-> that have been seen asserted by the hardware even when disabled, leading
-> to the interrupt eventually getting disabled as described in commit
-> 65d270acb2d662c3346793663ac3a759eb4491b8.
+>Do you want to do this before clearing the FRAME and CAPTURE bits?
 >
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 
-I have less experience with this part of the chip, so I defer to Jae
-or Ryan for an ack.
+My intent was to only issue the message for unexpectedly-asserted 
+interrupts that aren't among the ones already known to happen despite 
+being disabled -- basically just indicating that a new bit might need to 
+be added to the spurious-interrupt mask added in the second patch.  (I 
+included the orig_sts element in case there's any useful debugging 
+information to be gleaned from what other interrupts got asserted along 
+with it, which would also include FRAME, CAPTURE, and any others 
+explicitly cleared.)
 
-> ---
->  drivers/media/platform/aspeed-video.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed-video.c
-> index 218aae3be809..48c52bf91a1b 100644
-> --- a/drivers/media/platform/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed-video.c
-> @@ -564,7 +564,8 @@ static void aspeed_video_irq_res_change(struct aspeed_video *video, ulong delay)
->   * register.
->   */
->  #define VE_SPURIOUS_IRQS \
-> -       (VE_INTERRUPT_CAPTURE_COMPLETE | VE_INTERRUPT_FRAME_COMPLETE)
-> +       (VE_INTERRUPT_CAPTURE_COMPLETE | VE_INTERRUPT_FRAME_COMPLETE \
-> +        | VE_INTERRUPT_COMP_READY)
->
->  static irqreturn_t aspeed_video_irq(int irq, void *arg)
->  {
-> --
-> 2.29.2
->
+And incidentally, in the handful of instances I captured in which this 
+problem arose, it seemed to be "sticky" in that it continued occurring 
+on every frame until the device was reset, so it seems like it would be 
+likely to lead to a fair amount of log spam for a condition where it's 
+basically just "we're ignoring known misbehavior" and there's not much 
+else to do about it.
+
+
+Zev
+
