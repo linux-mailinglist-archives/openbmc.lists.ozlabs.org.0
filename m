@@ -1,127 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5AC42E1F09
-	for <lists+openbmc@lfdr.de>; Wed, 23 Dec 2020 16:59:06 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C81E82E1FA1
+	for <lists+openbmc@lfdr.de>; Wed, 23 Dec 2020 17:55:35 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D1HvD1tHczDqQT
-	for <lists+openbmc@lfdr.de>; Thu, 24 Dec 2020 02:59:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D1K8N3pvyzDqNH
+	for <lists+openbmc@lfdr.de>; Thu, 24 Dec 2020 03:55:32 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.120;
- helo=nam12-mw2-obe.outbound.protection.outlook.com;
- envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=amperemail.onmicrosoft.com
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c;
+ helo=mail-pj1-x102c.google.com; envelope-from=dhruvaraj@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
- header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-amperemail-onmicrosoft-com header.b=v3eL4drt; 
- dkim-atps=neutral
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com
- (mail-mw2nam12on2120.outbound.protection.outlook.com [40.107.244.120])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ViA0Px33; dkim-atps=neutral
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
+ [IPv6:2607:f8b0:4864:20::102c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D1HtQ2XJYzDq8x
- for <openbmc@lists.ozlabs.org>; Thu, 24 Dec 2020 02:58:19 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RlgkcJtIP9ufz26Z1Cc38APMRU4tp9kyspjeO7chT6ghdESUFCn+plKDm8f1upxMryVYki2JclYhAqenl8xhhHdPJW8RjN8asPYWjMVgFvbVNMhfLRmJnAy3QuLCPHKKcE4F57c3tBapFfli86Bl3uW3+RbdQkjss4v0vYjqBQ6UN6gsF2U2IF7h8mEoGX85zFUA7TgbCmvdfADhKaV6gNRFaxL092XeYo5hF2nhjQfTQ3BdB9s+LPziDUHVcczZIB0yJZghcAHl9U85dRU/X+BZz3PTTsmBz8ENiKlQV15x7OigIJjAgpThrVx0JKpnTBtyBAtAT1woPrr7maSaPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D4P1vlSQFF9uL9EM9did+lbl97YC9uugAUGZPJgVRUk=;
- b=CXXOB8WZG1YIBRpyfVOCWMDJKB+/Gs3Hz/A8JHRYUgidC4LBKI8F9sjauMA5opAQg5CDc5W21Ahr3kkBxT5GKkBa/IwxYvhmWj+uChfY4glKvzTTb7EkB+0B/G6d7bsx6PKfy8ubFKygOyMazpdb2+wwKrcwjQfnKBktkszlzvaQ5PO2r+tEKgb5go+KOWNwTOPdsbtNv+LmmpAsrHXXIaDDHHbJ9ZPFEEmCax9zW+WTgPp1FlHmh4vdH7AS4/dmyBklLfCuSXlqE/H//Oftg7YTIgigKU8B7wBiRRHKSY/wPYhfZUQU0enz9U1Pd+LBeA5On3JJMTq4yvFVcHqTqA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=amperemail.onmicrosoft.com; dkim=pass
- header.d=amperemail.onmicrosoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D4P1vlSQFF9uL9EM9did+lbl97YC9uugAUGZPJgVRUk=;
- b=v3eL4drto8y4dd0xmw95hbuKUWGZLjGMGtZCU2SQL78UQjbF/xiQ+EQ1XWyzYOYbikSchk1mLhSg6ZxDRcJM+iYozSj/Z7+jspd22pYlRl5vu3aM+OOfpWZOtkCU0C+sS54wjuhc0AMf1zrRw1Gk/7V/VDbLSRRjRVxrUgxelmQ=
-Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
- header.d=none;lists.ozlabs.org; dmarc=none action=none
- header.from=amperemail.onmicrosoft.com;
-Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
- DM6PR01MB3820.prod.exchangelabs.com (2603:10b6:5:91::11) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3676.33; Wed, 23 Dec 2020 15:58:12 +0000
-Received: from DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::c930:8fc9:847b:7f3e]) by DM6PR01MB5145.prod.exchangelabs.com
- ([fe80::c930:8fc9:847b:7f3e%6]) with mapi id 15.20.3676.033; Wed, 23 Dec 2020
- 15:58:12 +0000
-To: openbmc@lists.ozlabs.org
-From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
-Subject: Ipmid not work on eth1 when enable NCSI.
-Message-ID: <2cd25ea6-f957-1536-cfb5-ba9aa2a31611@amperemail.onmicrosoft.com>
-Date: Wed, 23 Dec 2020 22:58:04 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.5.1
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Originating-IP: [2402:800:6344:4074:6dc1:8edd:d928:e668]
-X-ClientProxiedBy: HK0PR01CA0068.apcprd01.prod.exchangelabs.com
- (2603:1096:203:a6::32) To DM6PR01MB5145.prod.exchangelabs.com
- (2603:10b6:5:56::16)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D1K7g2SNjzDqDd
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Dec 2020 03:54:51 +1100 (AEDT)
+Received: by mail-pj1-x102c.google.com with SMTP id l23so82531pjg.1
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Dec 2020 08:54:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=c4PpWyo32IpEBzau40djgzDQ9FsBe4bS8q2DUVvOE3E=;
+ b=ViA0Px33FIoiDeww6J0g9gvtEO2opdWUpBGMuWBbJ0OzjUtPYVjZLuERJChMKU6MMS
+ vdCEaSye0fTGgnV7jyt0h6posjp+9WEcpsheSv+501nKLt7HhlxT37UoWixRCoB03K+9
+ m6un0hYLuRTWksvrbcSkQfbDdeWjK4fpk+p8njGNi+2h+V1UQ5NKqFxnp+vgSY6zZ6s8
+ HsT4zcIFL/yqA+hD3UrSuc9Z7C1WUmFngcYwahvZFLtqa3JLd4AbsnE6zi7FVnyjdx1f
+ oHrjZenkdDUij9N+RbyH41qFJEnB5osR92WJ5tgdKt6nmuqLgtQnH1Tj1Pzkv5cAMue+
+ hTfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=c4PpWyo32IpEBzau40djgzDQ9FsBe4bS8q2DUVvOE3E=;
+ b=L0DjupqgGCs90WjtVDu+Up9JVzKSH4B0qsJfbfJmbnpdYSSrzcJrOwQfoq5arcGdvB
+ OtSqHhQmjbu6LCs/B/0MkohF3OScHLiQDaKCsfdoj9nckHADfXvKf2bAhl1v10NCT25m
+ gveSZ2+mqQYFUEV0yYOE0hpoI/znbilqMrHe71DOWr3yRsXZrqLw39MVDhIMfJe7kmfs
+ fZID/8Fney80ohcIl1MnM1Fp9M7Mp30pl+ZA8e39X/M5hO+7WMSKxG1peaTs1M1khg8i
+ Rl585FC0lYWUJOqdqYWhSlZd/uFJLrbeA/dY0WZiyTT3fO81B8v7gtSzbiW8FTJTQ4vL
+ 46Mw==
+X-Gm-Message-State: AOAM53113kqAm5kutzpslGxDEhpvwIlq8TiUQQxadIT0vFJ2PWMIR/Xb
+ j7qa6sWsbvTqMtA992u8Y6IKAx4CTNr8IDJpSJA=
+X-Google-Smtp-Source: ABdhPJxEmQpNeP3+GGwT49MLUt3dZGPKkoKu0WspB8umdWme7AOjVTv9BJHGuZhPbln7I/uPzWzkm7DmIXW2RUBIaLM=
+X-Received: by 2002:a17:90a:9f44:: with SMTP id
+ q4mr550475pjv.226.1608742487635; 
+ Wed, 23 Dec 2020 08:54:47 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from [IPv6:2402:800:6344:4074:6dc1:8edd:d928:e668]
- (2402:800:6344:4074:6dc1:8edd:d928:e668) by
- HK0PR01CA0068.apcprd01.prod.exchangelabs.com (2603:1096:203:a6::32) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3700.27 via Frontend
- Transport; Wed, 23 Dec 2020 15:58:11 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 13e5b0db-c61a-4583-1907-08d8a75b8d65
-X-MS-TrafficTypeDiagnostic: DM6PR01MB3820:
-X-Microsoft-Antispam-PRVS: <DM6PR01MB382005D2B589AB45A00FC60090DE0@DM6PR01MB3820.prod.exchangelabs.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:7219;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: L8zUJekI3uHfE/QYGdoPnrFbVXzW45DyM/vUCtgxHfpxPEivitNGdT8UWdHCecqvfXIlyVzPNXTnBEIKeA3HyEKQZktmXiJItBgafMIqeE/GtO0baaWK+vTdpeAO7jK37+62qcxRnjgyb/Od1zuC8CZCJ96V2vyY27jDmtm+9/3X3WJgHLY4lRPVMJLKXQ5iGlSj2JWeLXO4lvx5d3ktymwDSbKlmfRDIU/SnVPWVss66+5MVtyyoP0fnYhvCYjZmx9MuXZ13h3xcGDqn+ASNINJygtQ29bTSaYqkakQEBiB7FL/rZJYnjy2wP233YBaUnUrZr9Oq7Fu5JhtTjoiqkYTH/+CYddPGyXVOF4NFEpdlcjftc5nzOy+OxoCxM7BlfPynQ7jOoLTp1q/XJkcjJHX913SiwAD67uP4NDStEGuas38PDWMQ8Gx/R34cDw5
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(4636009)(39850400004)(346002)(376002)(366004)(396003)(136003)(31696002)(16526019)(66946007)(186003)(83380400001)(83170400001)(5660300002)(52116002)(8936002)(66476007)(6486002)(66556008)(42882007)(478600001)(2906002)(31686004)(6666004)(2616005)(316002)(6916009)(8676002)(43740500002);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?QnhydGorWDc3em90aDRUVFJkczZmSk5LcXBOMENCZjJCRmF4OUlQa3NpeS9Z?=
- =?utf-8?B?cS9MQnlJRW9xSGhjc21sQkxZSVN3R0dWZVU4T3ZpWEVCS2RHanBvQlY5bk5o?=
- =?utf-8?B?My9JaWoyVzBjYVF5bGQ2SW9ZdjE2M3N3Y2JvSnJ1WnRTbUtrUHQ4TTRSRXJ4?=
- =?utf-8?B?d3hhWEJESnNLNUx2STdYL1hoRHZFQ2RJRThQRklWTVlGU29mYkpoSWczQ1Ni?=
- =?utf-8?B?VnVWUFgzLzdyTHRLdkgwUjlQR0E0aDlpcXlVZlNrZkF2VlFEZ3BqcGhNOURa?=
- =?utf-8?B?MHdqSWFESlRMdkhUYjk2c2VnTWRuMmwxUG9SQzlSUHQ2Qy9JR0FnT2ZpZkZM?=
- =?utf-8?B?M0E4ZmVpVjFGVXJtbGxleCtqdWNzM0NOQVU0VCttOFNGRmVSUEJiNlRXYWsr?=
- =?utf-8?B?TEJhQTVXKzB2aHNqbG1DUlJYYzBSK1FzejBlODk4RjJTQzRYNDlwYmZIc3li?=
- =?utf-8?B?REpZMDUvQ04rbm15aThpZ0xFQWZ1VE9QaFBCeGZLZ3RzWkxMZm5QKzFHYk1z?=
- =?utf-8?B?TllwUHFYeWl5TXpEZk5CdUR4c2QwNW0rTHo4Sys2eXZjT0dKS3ZvRVZTWFRx?=
- =?utf-8?B?YWVxV0tvNUs1bzFSWjlFWkRFdGU1L29tTjd6T0pheUVaRmtVbUgxV25wdkE2?=
- =?utf-8?B?c25EVHdyd01qYmJtVWk3R0kvZUt3L2pLRE5KS2xLM3RWTlhydkJ1N3kwdXRQ?=
- =?utf-8?B?TUVGSmVZOEZZaTNNdklXTTBxY2NMZWE4ZHFrUGY2U2drQzNxMWdJajZTdUZj?=
- =?utf-8?B?L1JvQ3dsc0NjaVdKTEhuS3c3UWVUQUNJWFErMG95OXN6dmNhbkdVYjY0RzNz?=
- =?utf-8?B?MmVDS3dGeGFKeEJUNHJxcEszQWtZS0ViWTUyZW8yQS9NaXdCOUlOQ3dHdG9r?=
- =?utf-8?B?Z3duVFFxTWZ6ek9uV3NTQ3ZRUU1reDlzUWFKbmo5Y2tDUGFRRUlPUlkzTzJX?=
- =?utf-8?B?QzBlcTE1NXdleE11UThNV3JDTEs4T2NteHM0QXRtaC9MNHhGZDlBQk0rZXJX?=
- =?utf-8?B?dVZKbXlOcXhPYm9Wazl3TEpVbHMvV09UbUlPSEx2NjhOWmxxK1JIcmFaSTc3?=
- =?utf-8?B?eFFnZnRLTkdEV3I4SXpQc1U2YXY1QmF5c2QzVnhYL0Jvd1pLeXdaWlpHdVA1?=
- =?utf-8?B?RVgvc1VNdW1QYTVoQ0tLYzBjcVRWOEVhMnZFLzFwWEZuM0swQTVJSkpocFdG?=
- =?utf-8?B?c3crQjdSQTQ2S2JDWWYrTWxnaHBhWENvZFZlOHhNOEEvRmp5Tit6VFNaeGtE?=
- =?utf-8?B?Ry9rZUROY1ZYYnhGSThwUC9pQWR1TlpGZnNrVzZxbEVMTGx6NzFVcDBpRm5O?=
- =?utf-8?B?L05seERjQjYydTJhM2xaYmdhd3RId3JmeUEvMDdVUE9hbVRvd0Q5WWxiQ2NJ?=
- =?utf-8?B?a2NCRGowR3gyQUhsUzdVbnNCc01rZVNOTXkvSE81TjVSbVVZVThoc01RQldJ?=
- =?utf-8?Q?mn9+e8eW?=
-X-OriginatorOrg: amperemail.onmicrosoft.com
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Dec 2020 15:58:12.8271 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-Network-Message-Id: 13e5b0db-c61a-4583-1907-08d8a75b8d65
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: feP+AlMXT8gXifWoHl8QP3mUPjHBVPcXLNcAo8X6J+hRvicqHwLvwusHWnIPYEJgVGhHJ8i/RthGrodbmW6gC1hMzqfCJzBfJ/sAxUy/3OE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB3820
+References: <CAK7WosgZtEj_fp_Jx8rqWKHJb7AF8cPHR-_33jo_5vQx645_Bg@mail.gmail.com>
+ <CACWQX8050TCOT8z5efOWQ_q7b9Ucqv6+w1X1J1NRwba9AGKq8g@mail.gmail.com>
+ <e925631f-54db-ae7e-21c2-3d1600349299@linux.vnet.ibm.com>
+In-Reply-To: <e925631f-54db-ae7e-21c2-3d1600349299@linux.vnet.ibm.com>
+From: dhruvaraj S <dhruvaraj@gmail.com>
+Date: Wed, 23 Dec 2020 22:24:36 +0530
+Message-ID: <CAK7WosiXL8pW59CEvo2Xh0KCOJutrXq7rgOwA6p7eUvKowZXJQ@mail.gmail.com>
+Subject: Re: Proposal for operations on isolated hardware units using Redfish
+ logging
+To: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -133,77 +78,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+HI,
+
+Updated, instead of using LogService.CollectDiagnosticDatato manually
+isolate the hardware, new proposal is to  set the property
+ReadyToRemove to True"
+redfish =C2=BB v1 =C2=BB Systems =C2=BB system =C2=BB Processors =C2=BB CPU=
+1
+{
+  "@odata.type": "#Processor.v1_7_0.Processor",
+  "Id":view details "CPU1",
+  "Name": "Processor",
+   "Socket": "CPU 1",
+  "ProcessorType": "CPU",
+  "ProcessorId":
+   {
+       "VendorId": "XXXX",
+       "IdentificationRegisters": "XXXX",
+   } ,
+   "MaxSpeedMHz": 3700,
+   "TotalCores": 8,
+   "TotalThreads": 16,
+   "Status":
+   {
+        "State": "Enabled",
+        "Health": "OK"
+       "ReadyToRemove": "True" <---
+    } ,
+"@odata.id":view details "/redfish/v1/Systems/system/Processors/CPU1"
+}
+
+On Fri, Dec 11, 2020 at 9:42 PM Gunnar Mills <gmills@linux.vnet.ibm.com> wr=
+ote:
+>
+> On 12/10/2020 10:29 AM, Ed Tanous wrote:
+> > On Thu, Dec 10, 2020 at 7:49 AM dhruvaraj S <dhruvaraj@gmail.com> wrote=
+:
+> >>
+> >>
+> >> Listing isolated hardware units.
+> >> redfish >> v1 >> Systems >> system >> LogServices >> IsolatedHardware =
+>> Entries
+> >> {
+> >>    "@odata.id": "/redfish/v1/Systems/system/LogServices/IsolatedHardwa=
+re/Entries",
+> >>    "@odata.type": "#LogEntryCollection.LogEntryCollection",
+> >>    "Description": "Collection of Isolated Hardware Components",
+> >>    "Members": [
+> >>      {
+> >>        "@odata.id":
+> >> "/redfish/v1/Systems/system/LogServices/IsolatedHardware/Entries/1",
+> >>        "@odata.type": "#LogEntry.v1_7_0.LogEntry",
+> >>        "Created": "2020-10-15T10:30:08+00:00",
+> >>        "EntryType": "Event",
+> >>        "Id": "1",
+> >>        "Resolved": "false",
+> >
+> > LogEntry doesn't have a "Resolved" field that I can see.
+>
+> Part of Redfish's 2020.4. Matches OpenBMC's
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/05dd96872560bc6f=
+11616be48b1873f539904142/xyz/openbmc_project/Logging/Entry.interface.yaml#L=
+29
+>
+> >
+> >>        "Name": "Processor 1",
+> >>        "links":  {
+> >>                   "OriginOfCondition": {
+> >>                          "@odata.id":
+> >> "/redfish/v1/Systems/system/Processors/cpu1"
+> >>                      },
+> >>        "Severity": "Critical",
+> >>         "SensorType" : "Processor",
+> >
+>
+>
 
 
-I'm verifying NCSI with my Mt.Jade platform.
-
-In Mt.Jade platform, we have the shared NIC in eth0 interface and 
-dedicated RGMII in eth1 interface.
-
-I used below steps to enable NC-SI in Mt.Jade.
-
-1. Add definition in DTS for MAC0:
-
-&mac0 {
-       status = "disabled";
-       status = "okay";
-       pinctrl-names = "default";
-       pinctrl-0 = <&pinctrl_rmii1_default>;
-       clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-                <&syscon ASPEED_CLK_MAC1RCLK>;
-       clock-names = "MACCLK", "RCLK";
-       use-ncsi;
-};
-
-2. Add build configure to enable OEM Command to get MAC for NCSI.
-
-CONFIG_NCSI_OEM_CMD_GET_MAC=y
-
-After these steps, My system can detect OCP card, can get MACs and both 
-eth0 and eth1 interfaces are up.
-
-I can access BMC Web use both ip of eth0 or eth1. The same for Redfish.
-
-BUT I can only use ipmitool with eth0. Ipmitool command not work with 
-eth1 interface.
-
-
-Check the setting of phosphor-ipmid-net in
-
-meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_access.json
-
-meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_config.json
-
-I can see that ipmid is configured to listen on both interface eth0 and 
-eth1.
-
-Do I miss any configuration here?
-
-
-Check the journal log, I saw some errors and warning from NCSI:
-
-Dec 23 10:14:50 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: 
-Handler for packet type 0x82 returned -19
-
-Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: 
-'bad' packet ignored for type 0x8b
-Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: 
-'bad' packet ignored for type 0x8b
-Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: 
-'bad' packet ignored for type 0x8b
-Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: 
-'bad' packet ignored for type 0x8b
-
-Because NC-SI interface is up, so I just ignore these errors.
-
-
-Regards.
-
-Thu Nguyen.
-
-
-
+--=20
+--------------
+Dhruvaraj S
