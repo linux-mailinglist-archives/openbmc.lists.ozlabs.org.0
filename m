@@ -2,71 +2,124 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C81E82E1FA1
-	for <lists+openbmc@lfdr.de>; Wed, 23 Dec 2020 17:55:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CFDF62E2375
+	for <lists+openbmc@lfdr.de>; Thu, 24 Dec 2020 02:47:58 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D1K8N3pvyzDqNH
-	for <lists+openbmc@lfdr.de>; Thu, 24 Dec 2020 03:55:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D1Xyf4yYmzDqLv
+	for <lists+openbmc@lfdr.de>; Thu, 24 Dec 2020 12:47:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c;
- helo=mail-pj1-x102c.google.com; envelope-from=dhruvaraj@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=ViA0Px33; dkim-atps=neutral
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
- [IPv6:2607:f8b0:4864:20::102c])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.102.92;
+ helo=nam04-dm6-obe.outbound.protection.outlook.com;
+ envelope-from=thang@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=quarantine dis=none)
+ header.from=os.amperecomputing.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=EjHyOErU; 
+ dkim-atps=neutral
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam08on2092.outbound.protection.outlook.com [40.107.102.92])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D1K7g2SNjzDqDd
- for <openbmc@lists.ozlabs.org>; Thu, 24 Dec 2020 03:54:51 +1100 (AEDT)
-Received: by mail-pj1-x102c.google.com with SMTP id l23so82531pjg.1
- for <openbmc@lists.ozlabs.org>; Wed, 23 Dec 2020 08:54:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=c4PpWyo32IpEBzau40djgzDQ9FsBe4bS8q2DUVvOE3E=;
- b=ViA0Px33FIoiDeww6J0g9gvtEO2opdWUpBGMuWBbJ0OzjUtPYVjZLuERJChMKU6MMS
- vdCEaSye0fTGgnV7jyt0h6posjp+9WEcpsheSv+501nKLt7HhlxT37UoWixRCoB03K+9
- m6un0hYLuRTWksvrbcSkQfbDdeWjK4fpk+p8njGNi+2h+V1UQ5NKqFxnp+vgSY6zZ6s8
- HsT4zcIFL/yqA+hD3UrSuc9Z7C1WUmFngcYwahvZFLtqa3JLd4AbsnE6zi7FVnyjdx1f
- oHrjZenkdDUij9N+RbyH41qFJEnB5osR92WJ5tgdKt6nmuqLgtQnH1Tj1Pzkv5cAMue+
- hTfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=c4PpWyo32IpEBzau40djgzDQ9FsBe4bS8q2DUVvOE3E=;
- b=L0DjupqgGCs90WjtVDu+Up9JVzKSH4B0qsJfbfJmbnpdYSSrzcJrOwQfoq5arcGdvB
- OtSqHhQmjbu6LCs/B/0MkohF3OScHLiQDaKCsfdoj9nckHADfXvKf2bAhl1v10NCT25m
- gveSZ2+mqQYFUEV0yYOE0hpoI/znbilqMrHe71DOWr3yRsXZrqLw39MVDhIMfJe7kmfs
- fZID/8Fney80ohcIl1MnM1Fp9M7Mp30pl+ZA8e39X/M5hO+7WMSKxG1peaTs1M1khg8i
- Rl585FC0lYWUJOqdqYWhSlZd/uFJLrbeA/dY0WZiyTT3fO81B8v7gtSzbiW8FTJTQ4vL
- 46Mw==
-X-Gm-Message-State: AOAM53113kqAm5kutzpslGxDEhpvwIlq8TiUQQxadIT0vFJ2PWMIR/Xb
- j7qa6sWsbvTqMtA992u8Y6IKAx4CTNr8IDJpSJA=
-X-Google-Smtp-Source: ABdhPJxEmQpNeP3+GGwT49MLUt3dZGPKkoKu0WspB8umdWme7AOjVTv9BJHGuZhPbln7I/uPzWzkm7DmIXW2RUBIaLM=
-X-Received: by 2002:a17:90a:9f44:: with SMTP id
- q4mr550475pjv.226.1608742487635; 
- Wed, 23 Dec 2020 08:54:47 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D1Xxr0kb4zDqLh
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Dec 2020 12:47:09 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fv9T8rd1zCKlVL0mW6h4TwYmrJ1hNPsuqGH6GW8Se2vQW0RFjB1BzdB9kuBIZ8QiOG7CCSQXcdr25Bn2RuBwf/JFyYiIv15CyFfDiZGW3F1N0l30OxdCxDoDmfUGK083AzRKhfNXYJXiimGnszjUbae2jD2IJJ41tbg6F0mtNwvHHiawC1LJLrTvnwkZT2R+2/ILN0vN/xjkhqs3bMY0W69A9I9RKOOkhBuERRfi+/ncEPDZbx//MHnQi8W7W7A5u4mork83TAlCjbbcBQeNZAVw1CjIAmwChQl6F5NTDmyXwoyLRov9WYzw0fuTfVmUvdkGawZsGRTmNWV61KXM3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1eyu7rwE2p9jaTD6SnF/mc3ChggUxRTMJJJBHpUN4rU=;
+ b=bgAD2dTM8es3bA+w6Sjeg+8huCGmj5fi+3E6dfxQ3zA4BdyXLDp6IwbCALuMjIPe5FyUZobCEFP01FHl2nWwF694/pNU23D8hdystEykVoxPlrLiE5N2WWt6x9Nfh0KYg6e87mEkmSb+85d4IrCr6QFsc/3fKmBlP+Sn5P2CytDW6ZREvrDLBCUdjWxgxuWa7o76+NhphakfUOBexyHwZqpHKURnFYsUcxWdDc1L9xcWtDJT553AD9zzTvVMlaP3T9LLp/jk2o79Yv5cAAI87PHl5Uc0dRJ25xHMNgx7JRZIT0OqOvwetle8Ytaxp8X5jMLb8TICo4mWpoULfyaMkw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1eyu7rwE2p9jaTD6SnF/mc3ChggUxRTMJJJBHpUN4rU=;
+ b=EjHyOErUOP0D4yUVNUw+BrVCbRwnDRZd9XpouQ95bw66kvm9XfCVvUFlg9Gr267WJZmVig/kmciE0JZ1NsSQu+s9qK0RXG0KwH/3oSYA3VAE/ZeSUqA2CTGblyI4tV2y18vwDB3Uq2wkrbEhFeBImtJBDy6AkLWVPBUr2bT/Bxg=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=os.amperecomputing.com;
+Received: from CO2PR01MB2039.prod.exchangelabs.com (2603:10b6:102:7::6) by
+ MWHPR01MB2285.prod.exchangelabs.com (2603:10b6:300:28::20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3676.29; Thu, 24 Dec 2020 01:46:57 +0000
+Received: from CO2PR01MB2039.prod.exchangelabs.com
+ ([fe80::8077:5998:860:1210]) by CO2PR01MB2039.prod.exchangelabs.com
+ ([fe80::8077:5998:860:1210%11]) with mapi id 15.20.3676.033; Thu, 24 Dec 2020
+ 01:46:56 +0000
+Subject: Re: create meta-ampere folder in openbmc repo
+From: "Thang Q. Nguyen" <thang@os.amperecomputing.com>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <d5302c4f-c0c4-0bde-2a60-e943a2f41788@os.amperecomputing.com>
+Message-ID: <0e2507bc-f8c5-85c4-cd39-4c603a729f4c@os.amperecomputing.com>
+Date: Thu, 24 Dec 2020 08:46:47 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
+In-Reply-To: <d5302c4f-c0c4-0bde-2a60-e943a2f41788@os.amperecomputing.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [118.69.219.201]
+X-ClientProxiedBy: HK2P15301CA0003.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:202:1::13) To CO2PR01MB2039.prod.exchangelabs.com
+ (2603:10b6:102:7::6)
 MIME-Version: 1.0
-References: <CAK7WosgZtEj_fp_Jx8rqWKHJb7AF8cPHR-_33jo_5vQx645_Bg@mail.gmail.com>
- <CACWQX8050TCOT8z5efOWQ_q7b9Ucqv6+w1X1J1NRwba9AGKq8g@mail.gmail.com>
- <e925631f-54db-ae7e-21c2-3d1600349299@linux.vnet.ibm.com>
-In-Reply-To: <e925631f-54db-ae7e-21c2-3d1600349299@linux.vnet.ibm.com>
-From: dhruvaraj S <dhruvaraj@gmail.com>
-Date: Wed, 23 Dec 2020 22:24:36 +0530
-Message-ID: <CAK7WosiXL8pW59CEvo2Xh0KCOJutrXq7rgOwA6p7eUvKowZXJQ@mail.gmail.com>
-Subject: Re: Proposal for operations on isolated hardware units using Redfish
- logging
-To: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [10.38.32.175] (118.69.219.201) by
+ HK2P15301CA0003.APCP153.PROD.OUTLOOK.COM (2603:1096:202:1::13) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3721.8 via Frontend Transport; Thu, 24 Dec 2020 01:46:55 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: faa7f9ba-794d-46c3-fc33-08d8a7adcc23
+X-MS-TrafficTypeDiagnostic: MWHPR01MB2285:
+X-Microsoft-Antispam-PRVS: <MWHPR01MB2285A4082937C709ACB4E6598DDD0@MWHPR01MB2285.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7691;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: wzMkyY6/xLd1dZGIM+Fo+CrtkDzl3P7xpQsZCWe4/oppZJDiBE24cri/cdD3PI7rOoO+tRbDrkOv1qMJhtNjYCJUK3O8RyW1fv7CTrXbkSF4pI+jIC2MqDufMcC0GrK+ChfzDOjOQR6AkbEv/bbppzzfFpiUhESUvfBzr8ItJ2C4YaXOFIFDPdSDrUv8PR1O9JhUEiGiJZTupgftq5hfhmgDPO9scUF373cfBnnNQZApHu6FF6EwDHsj7c0qWICYRCaRYMMDusKsIrpSgQ0EgY/836xfrwQoNCMUh9bkU2DsoqVUMsPWQcf5pZLXjFEgIsmCvh6tiBizWtZOPT4OTbdaCvu43O4EM6JPC8MkjAT4I/Ve5hMiFdVNTsX2Nd4Hpb7GcCO8sGAs4xaS2r0PYlEb8uCURzQ6bPodqfDcIaV9wegCPea7dZ2qYJqk7hHWGCdt1WqGyJ6NH4iDW9ReKV1Ulf1IWLCXzayg4jlgvkgUc3JKFd4Or23One9vlBp2
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CO2PR01MB2039.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(396003)(346002)(376002)(366004)(39850400004)(136003)(316002)(6486002)(66556008)(66946007)(66476007)(16526019)(86362001)(110136005)(956004)(186003)(53546011)(16576012)(52116002)(2616005)(31696002)(26005)(5660300002)(2906002)(8936002)(4744005)(478600001)(6666004)(31686004)(8676002)(41852002)(45980500001)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?YXlGV1lOZkt2NFg5MzVGS1BUeHFBeEY2TjZ3QkZOUHBQNUdlYUhsTko4ZHBn?=
+ =?utf-8?B?R05Wa0Mxdk9KWFJ5NHBGSWdPdW00ZmxBMGFuYnRiU1ZFcXhSY1Fla3pjSkM5?=
+ =?utf-8?B?Wm05Y29TeWFMdGl4WGwxamJQQTZXYkZHeUlwL2MrWlR6TXdNdG9PWEsvQXhT?=
+ =?utf-8?B?bkMrZnFOVVJxMlNJRlBLVXFEYzhZQ3ZUSGV2VEJKMSt1NzZtZTFLMnV5UVlq?=
+ =?utf-8?B?Z3FZQTB1TnhlZEpQc05IUFdCb05ZR0c0c0xrVmxRMTY2bnR2a2dicjVFQ0pt?=
+ =?utf-8?B?QnhTY3ZRdHJGZ0psZFRxSzE3R1RTeHM3Q29nL09DTVVGR25XUXNTTWJKZmc2?=
+ =?utf-8?B?eW1zOXRnOHhJOTB5dGJCenhiVE4vYnFlMWFRQTlKM2JwNnF6aWdWWTBlQklH?=
+ =?utf-8?B?MzNUdTVYV3E5cjN5Y2pYanJoOTRLRDBGVkhwTmNhUzFKdFVENW9UYmN5cVVP?=
+ =?utf-8?B?V3FhUTRxOFJISUVsMUVVV0hsR3IySE5MUExHck9XdlVHaWFVczVScy9hTVZ4?=
+ =?utf-8?B?a0k5MzZJd2hWRjRFYlI4TWRUYXVuQ29UdXZiTlp3dS9KSmJ1Z1hIWE5Ea3Iw?=
+ =?utf-8?B?ZnJhTVhENks5RXIraE9FZjk3UzUxQXoxZWt1MkRRTkZlVE0yVXdqZGcrYjZV?=
+ =?utf-8?B?TFU3YUZyM3JMWllycVhockt2MURyTzZWMEVYWjdpTDdUWGtyN2cvWGlwRTNk?=
+ =?utf-8?B?UWVudFR3YVhVNTVSZ1ZJTUwwUlhyNEFxVnNmWGtmZ0czMkkyMFArd0NuRTlY?=
+ =?utf-8?B?enRVZ3hBdW9iVWtBNEJCcGMwcGFZY1M4cTJyZXYvanJyMDZnL2RNRU5CMTJr?=
+ =?utf-8?B?N2xFd0drZ2RFOW1lZnZvbUxiVk9Mb3N5Rkd2eHpBRkd2WVc1UUNCNnpyM3ov?=
+ =?utf-8?B?bWlRLzVjc3kxOUdPbC9xZXdtd21zbkszSWNnQ3IxM25QZTE0eXpNemoxdHZl?=
+ =?utf-8?B?aW9EUE9vSFBuOHZucXFHY3RoY0xQREk4ei9qV25pcXZKWHZJbUloVDdCT1dD?=
+ =?utf-8?B?UDVia1NSeHdZeWMvaUVNRVhxV0hSOE5TMmZuR1VsM1N2SnFaMjJJbGxLMUVS?=
+ =?utf-8?B?eldLNzhyN3c2NHZMbWJVWWpJT3lsbnFCY0ljZzVsQkdoNkw3QVJNbWZFMlpG?=
+ =?utf-8?B?cS8zcHZqbkM5WnhGdDVGUVdBLzdNWTE0QUZTRURsRFA4Yzlad2VFM0VMZ3B4?=
+ =?utf-8?B?aHJ1dFF6cjVqbFpCSGlEMy9NakkwanEyVlJXL2oyU1BtdnV1REhWRytKNG5r?=
+ =?utf-8?B?VnUvNEdHVkdXVW5uaVY0MStSZWIzOVJweWR0d3RxalZaMkF4cTl4a29vQUpD?=
+ =?utf-8?Q?P4PvcHGTdlBhTpDqoQTyz7TElbyOQRonfn?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-AuthSource: CO2PR01MB2039.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Dec 2020 01:46:56.5178 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-Network-Message-Id: faa7f9ba-794d-46c3-fc33-08d8a7adcc23
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TA87n7dMuDrnd9gpxugzHV2yfA3tIX8wqzDnQ4ZYIPvTjCZP+btc2B/05nWCWGosOE0gNkaHuib9B+Vgp3s7rlTiYT3bllTdBS+xu++xQZ0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR01MB2285
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,88 +131,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>,
- openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-HI,
+Hi Brad,
 
-Updated, instead of using LogService.CollectDiagnosticDatato manually
-isolate the hardware, new proposal is to  set the property
-ReadyToRemove to True"
-redfish =C2=BB v1 =C2=BB Systems =C2=BB system =C2=BB Processors =C2=BB CPU=
-1
-{
-  "@odata.type": "#Processor.v1_7_0.Processor",
-  "Id":view details "CPU1",
-  "Name": "Processor",
-   "Socket": "CPU 1",
-  "ProcessorType": "CPU",
-  "ProcessorId":
-   {
-       "VendorId": "XXXX",
-       "IdentificationRegisters": "XXXX",
-   } ,
-   "MaxSpeedMHz": 3700,
-   "TotalCores": 8,
-   "TotalThreads": 16,
-   "Status":
-   {
-        "State": "Enabled",
-        "Health": "OK"
-       "ReadyToRemove": "True" <---
-    } ,
-"@odata.id":view details "/redfish/v1/Systems/system/Processors/CPU1"
-}
-
-On Fri, Dec 11, 2020 at 9:42 PM Gunnar Mills <gmills@linux.vnet.ibm.com> wr=
-ote:
->
-> On 12/10/2020 10:29 AM, Ed Tanous wrote:
-> > On Thu, Dec 10, 2020 at 7:49 AM dhruvaraj S <dhruvaraj@gmail.com> wrote=
-:
-> >>
-> >>
-> >> Listing isolated hardware units.
-> >> redfish >> v1 >> Systems >> system >> LogServices >> IsolatedHardware =
->> Entries
-> >> {
-> >>    "@odata.id": "/redfish/v1/Systems/system/LogServices/IsolatedHardwa=
-re/Entries",
-> >>    "@odata.type": "#LogEntryCollection.LogEntryCollection",
-> >>    "Description": "Collection of Isolated Hardware Components",
-> >>    "Members": [
-> >>      {
-> >>        "@odata.id":
-> >> "/redfish/v1/Systems/system/LogServices/IsolatedHardware/Entries/1",
-> >>        "@odata.type": "#LogEntry.v1_7_0.LogEntry",
-> >>        "Created": "2020-10-15T10:30:08+00:00",
-> >>        "EntryType": "Event",
-> >>        "Id": "1",
-> >>        "Resolved": "false",
-> >
-> > LogEntry doesn't have a "Resolved" field that I can see.
->
-> Part of Redfish's 2020.4. Matches OpenBMC's
-> https://github.com/openbmc/phosphor-dbus-interfaces/blob/05dd96872560bc6f=
-11616be48b1873f539904142/xyz/openbmc_project/Logging/Entry.interface.yaml#L=
-29
->
-> >
-> >>        "Name": "Processor 1",
-> >>        "links":  {
-> >>                   "OriginOfCondition": {
-> >>                          "@odata.id":
-> >> "/redfish/v1/Systems/system/Processors/cpu1"
-> >>                      },
-> >>        "Severity": "Critical",
-> >>         "SensorType" : "Processor",
-> >
->
->
+Can you help create the meta-ampere folder inside the openbmc repository?
 
 
---=20
---------------
-Dhruvaraj S
+Best Regards,
+
+Thang Q. Nguyen -
+
+On 12/16/20 16:54, Thang Q. Nguyen wrote:
+> Hi Brad,
+>
+> Please help add meta-ampere repository into openbmc as a subtree.
+> The meta-ampere repository has been populated with basic bring up code.
+>
+> Thanks,
+> Thang Q. Nguyen
+>
