@@ -2,53 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A745F2E6B11
-	for <lists+openbmc@lfdr.de>; Mon, 28 Dec 2020 23:02:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 123DA2E6CDD
+	for <lists+openbmc@lfdr.de>; Tue, 29 Dec 2020 01:52:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D4Wjs6QT3zDqFs
-	for <lists+openbmc@lfdr.de>; Tue, 29 Dec 2020 09:02:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D4bVF3rL0zDqFw
+	for <lists+openbmc@lfdr.de>; Tue, 29 Dec 2020 11:52:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=kuba@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22b;
+ helo=mail-oi1-x22b.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=o2H5SkWK; 
- dkim-atps=neutral
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=kXy7COW4; dkim-atps=neutral
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [IPv6:2607:f8b0:4864:20::22b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D4Whv5gdyzDqC5;
- Tue, 29 Dec 2020 09:01:19 +1100 (AEDT)
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 44CBD22242;
- Mon, 28 Dec 2020 22:01:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1609192876;
- bh=wec/s1ZvNiaME84+G8xSzIgFQT3HelyHFMLRjeKLA2M=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=o2H5SkWKqEWuONe1tw7qjOrj9Q/Luk3LZobtjzgjtIHN7/kCc0enOEu2AyyWEJzIJ
- jf7YQM+/a+Yn9Dfloar8Gq2iQtkcve5vigwBRs4G4E/RtiUMCZzoxidlEUN9rcZl/a
- qqVmj1NtF7IMu6fALKWnQR/laXZWXR6QhY+iadpgewXKWkEu23EhvVvPFLTtW/mlmS
- 0pGhO780BtPKciKT76JX7FN7+Yre8ClPkCLU2YVcJ42Mm+XxSwOTpxGCXVhUBUgo1r
- /qCUrn969nJEbQduH/hCr5rAN24BV8cjXLCx89gISQxRL/08NNYcIB2BXmLdMu6gno
- AGUxiQsF8kzqw==
-Date: Mon, 28 Dec 2020 14:01:15 -0800
-From: Jakub Kicinski <kuba@kernel.org>
-To: Hongwei Zhang <hongweiz@ami.com>
-Subject: Re: [Aspeed, v2 2/2] net: ftgmac100: Change the order of getting
- MAC address
-Message-ID: <20201228140115.6af4d510@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20201222210034.GC3198262@lunn.ch>
-References: <20201221205157.31501-2-hongweiz@ami.com>
- <20201222201437.5588-3-hongweiz@ami.com>
- <96c355a2-ab7e-3cf0-57e7-16369da78035@gmail.com>
- <20201222210034.GC3198262@lunn.ch>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D4bTQ1f58zDqBx
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Dec 2020 11:51:34 +1100 (AEDT)
+Received: by mail-oi1-x22b.google.com with SMTP id 15so13201946oix.8
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Dec 2020 16:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:content-transfer-encoding:mime-version:subject:date:references
+ :to:in-reply-to:message-id;
+ bh=lVy3fO3ghoH5jyZQTLhBNPDixMZTFKT8pZjE4rSG9jc=;
+ b=kXy7COW4YoH33qoO7/yW1/N4MfzZyhQAzRFcu63KDwPonk6DIszYfZ8hbOodRglv3c
+ EpXR6qOXadxWlGkquPPv42XbEINJ6borIWL5NAnziEww7vJQ5IeEukBxc2BmQvR9rZaP
+ leModM1oKMXyqAAXTfUB8JygtVBl/koDlh/xdujcivspvgI7LaskraViyG+cxUvcnaVo
+ dgQ+1A1URdwRYKzWId2RP/E8pgPOCepMUAwBj91Mynq58uJEkLOXKdDullhJd2PaYh/k
+ 4E3kyNTbCOXuasVEuUihn2V01y8CBYv4nFNS265GjWuKGKQK1Evx6gbMG0hgxOSxXQ1Q
+ JdSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:content-transfer-encoding:mime-version
+ :subject:date:references:to:in-reply-to:message-id;
+ bh=lVy3fO3ghoH5jyZQTLhBNPDixMZTFKT8pZjE4rSG9jc=;
+ b=BiBCdExcB1cq+wov664xV9jznn/AdwAjXIMSG8Nl6bkW/dWMm8MnuoEfRJX1w0QnYg
+ 3VosvwEA3pq7ga5y/xRqu61k4XcJpYahbz1wPzUHPrT0eLAPvmj7QWBsmEYR65lfE95q
+ yuhlWp8Lx6fhF3zprbeos1MwjGfUuKO9CGG2KyI5ZHWKMdD5KFUOjWFx4kuEY0eNA1ig
+ V6O/1uaBWyNIvDoWCVR7fpWwoTdFQPEtWez0KpYi7t5zmIgNdZnK4993eRbLnlHjdX1z
+ zjGu/CQGbOQx0Zb+9M0LrKK1M+iAyHWUTFMsvlLtM0GnXoWVaZ3jKMNgUhINSxIBoMXx
+ tTnQ==
+X-Gm-Message-State: AOAM53148tn5+HLg1et4/riM2OVhDGMZYWWNeUJuUVbpQkKSiPiFx1iI
+ DOsN02IgCeGmJ12RrYhFrlrGcPccyXo=
+X-Google-Smtp-Source: ABdhPJyVYXoT/3bIbe38Us+YGan6LbImgHckH2PU9MSDIoyrs+/PxXaJvBYsPA5bmUVLS6E0KNlLUA==
+X-Received: by 2002:aca:75cc:: with SMTP id q195mr957396oic.173.1609203090784; 
+ Mon, 28 Dec 2020 16:51:30 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:4889:d9f6:19e6:d5ca])
+ by smtp.gmail.com with ESMTPSA id d10sm5802770ooh.32.2020.12.28.16.51.29
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 28 Dec 2020 16:51:30 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.4\))
+Subject: Re: openbmc gerrit and jenkins upgrade - Dec 28, 2020
+Date: Mon, 28 Dec 2020 18:51:29 -0600
+References: <C9C8DBC8-8747-452F-B4EF-4102B2A46A2C@gmail.com>
+ <F1C4CAC4-8AB0-4D6C-A793-C5D3FA72434F@gmail.com>
+To: openbMC Maillist <openbmc@lists.ozlabs.org>
+In-Reply-To: <F1C4CAC4-8AB0-4D6C-A793-C5D3FA72434F@gmail.com>
+Message-Id: <8A151D69-8467-407F-B7F6-183EB61F45B9@gmail.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.4)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,60 +83,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, linux-aspeed@lists.ozlabs.org,
- Andrew Jeffery <andrew@aj.id.au>, netdev <netdev@vger.kernel.org>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- David S Miller <davem@davemloft.net>, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 22 Dec 2020 22:00:34 +0100 Andrew Lunn wrote:
-> On Tue, Dec 22, 2020 at 09:46:52PM +0100, Heiner Kallweit wrote:
-> > On 22.12.2020 21:14, Hongwei Zhang wrote:  
-> > > Dear Reviewer,
-> > > 
-> > > Use native MAC address is preferred over other choices, thus change the order
-> > > of reading MAC address, try to read it from MAC chip first, if it's not
-> > >  availabe, then try to read it from device tree.
-> > > 
-> > > Hi Heiner,
-> > >   
-> > >> From:	Heiner Kallweit <hkallweit1@gmail.com>
-> > >> Sent:	Monday, December 21, 2020 4:37 PM  
-> > >>> Change the order of reading MAC address, try to read it from MAC chip 
-> > >>> first, if it's not availabe, then try to read it from device tree.
-> > >>>  
-> > >> This commit message leaves a number of questions. It seems the change isn't related at all to the 
-> > >> change that it's supposed to fix.
-> > >>
-> > >> - What is the issue that you're trying to fix?
-> > >> - And what is wrong with the original change?  
-> > > 
-> > > There is no bug or something wrong with the original code. This patch is for
-> > > improving the code. We thought if the native MAC address is available, then
-> > > it's preferred over MAC address from dts (assuming both sources are available).
-> > > 
-> > > One possible scenario, a MAC address is set in dts and the BMC image is 
-> > > compiled and loaded into more than one platform, then the platforms will
-> > > have network issue due to the same MAC address they read.
-> > >   
-> > 
-> > Typically the DTS MAC address is overwritten by the boot loader, e.g. uboot.
-> > And the boot loader can read it from chip registers. There are more drivers
-> > trying to read the MAC address from DTS first. Eventually, I think, the code
-> > here will read the same MAC address from chip registers as uboot did before.  
-> 
-> Do we need to worry about, the chip contains random junk, which passes
-> the validitiy test? Before this patch the value from DT would be used,
-> and the random junk is ignored. Is this change possibly going to cause
-> a regression?
+Upgrade is complete.=20
 
-Hongwei, please address Andrew's questions.
+We went from/to the following levels:
 
-Once the discussion is over please repost the patches as
-git-format-patch would generate them. The patch 2/2 of this 
-series is not really a patch, which confuses all patch handling 
-systems.
+Jenkins 2.235.3 -> 2.263.1
+Gerrit 2.16.9 -> 3.2.6
 
-It also appears that 35c54922dc97 ("ARM: dts: tacoma: Add reserved
-memory for ramoops") does not exist upstream.
+Let me know if you run into anything.
+Andrew
+
+> On Dec 27, 2020, at 5:23 PM, Andrew Geissler <geissonator@gmail.com> =
+wrote:
+>=20
+> Friendly reminder, upgrade is tomorrow.
+>=20
+>> Begin forwarded message:
+>>=20
+>> From: Andrew Geissler <geissonator@gmail.com>
+>> Subject: openbmc gerrit and jenkins upgrade - Dec 28, 2020
+>> Date: December 17, 2020 at 10:31:13 AM CST
+>> To: openbMC Maillist <openbmc@lists.ozlabs.org>
+>>=20
+>> Greetings,
+>>=20
+>> I=E2=80=99ve been putting a gerrit upgrade off for a while because:
+>>=20
+>> a) this current version has been running very stable
+>> b) my last upgrade experience was pretty rough
+>> c) we keep flirting with just going to github and getting rid of =
+gerrit
+>>=20
+>> But it seems like the quiet holiday season is going to be my
+>> best time to give it a go and a gerrit to github migration does
+>> not appear to be imminent.
+>>=20
+>> I know to get to the latest gerrit I=E2=80=99m going to have to do =
+some
+>> database migration work. I have no idea how long this is going
+>> to take so I=E2=80=99d say plan for no gerrit during the US day time =
+on
+>> Monday Dec 28 (8am-5pm).
+>>=20
+>> I=E2=80=99ll keep you posted in discord on the 28th.
+>>=20
+>> Wish me luck,
+>> Andrew
+>=20
+
