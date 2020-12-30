@@ -2,119 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FAFE2E7AC8
-	for <lists+openbmc@lfdr.de>; Wed, 30 Dec 2020 16:56:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3E962E7C51
+	for <lists+openbmc@lfdr.de>; Wed, 30 Dec 2020 21:49:06 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D5bVk6RgyzDqLd
-	for <lists+openbmc@lfdr.de>; Thu, 31 Dec 2020 02:56:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D5k0S5lfpzDqKT
+	for <lists+openbmc@lfdr.de>; Thu, 31 Dec 2020 07:48:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fii-usa.com (client-ip=40.107.220.62;
- helo=nam11-co1-obe.outbound.protection.outlook.com;
- envelope-from=lancelot.kao@fii-usa.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a;
+ helo=mail-lf1-x12a.google.com; envelope-from=vijaykhemkalinux@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=fii-usa.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=FIIcorp.onmicrosoft.com
- header.i=@FIIcorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector1-FIIcorp-onmicrosoft-com header.b=d6EbA6KZ; 
- dkim-atps=neutral
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com
- (mail-co1nam11on2062.outbound.protection.outlook.com [40.107.220.62])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=MqTXEQGV; dkim-atps=neutral
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [IPv6:2a00:1450:4864:20::12a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D5bTW0vwNzDqLG
- for <openbmc@lists.ozlabs.org>; Thu, 31 Dec 2020 02:55:08 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Xzhi4fCgPSmeDmBHwWqq5q2rgjff5jV0N+3VysQk+oynJQ7aTltXSnB9+JDg91XuzczzRCl9vXonTlT7zN0FF7Xb7suh2DCuZWbn1fNKHkIaDO1BSM1+Wda9gsHC5asXKcFCJaoNbI+aTA5VTpdZNcETIpaXtEsTp3LA3dwSJCsm9SqExoWKFI0Sq/udpHoIbOsl/zjXRnQT27HTgBFEbO2OQqgxnx0MtZZBhgbKgwL+vZwCGXFguaKhhJaARim0SoU6eghPVNeZddJfQiywMSKxdQLSre6x4KaqxyWuPHVc1lZeWgDUnj3SXvz95s9G9VBIpbAEWtYsgCZF4R77Jg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IChSwWKZybSwWrUYUN1IudzGL01dkz+ofDXRCzABzWY=;
- b=emPXk+LjFJSpZfyQ/kvHkhEnykVHE0rf9w2abZ2O8eb1Ed6mhLauHMW38HIWWFmWiLcMp3Phe3LNxEHZ840FP65cv7GuU4RSbHxUjhRy/hiiAD1rnvbXyf9DFR12N5djK6g9Dekh+XnvTHrQ0v4qBEK5GgK8d67J2tK0N/eOUq9OpConwAF8629yAbmdyKjWMkm6IZNtgtMocmgOGuzwDVsKVoVC5kBxvmWQKi+AaTvaRsiImc/ssPOsLl1qWgmrfxogiwtsC6gFlvZF4O2VYLtGqYghRdRjyOj1TzPwNc5KbOZ7SVgIi3b32q94PjaQzEQLNuoizKsACaxVqjuzjw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fii-usa.com; dmarc=pass action=none header.from=fii-usa.com;
- dkim=pass header.d=fii-usa.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=FIIcorp.onmicrosoft.com; s=selector1-FIIcorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IChSwWKZybSwWrUYUN1IudzGL01dkz+ofDXRCzABzWY=;
- b=d6EbA6KZu4tuozlILRozIB2rjQO1MIH9uKuiXsZmpGtWnTL3Y4oatzjNYsRLPjE3vtHHBlllxJgKapongrnQXCFwdOEUsjpo0jj6NXQu2xU/DV4YBfNZQ/pCsJ1yihypPMJ2DnI3P7Kf196hYojBYU+I2Ncv8Q1AchOx1PtMS7gBumAekzxZSUU5fLeOiT09uAaWYNKbkrv7nYXlYVWL6rsoD8IvwxCkuYllx2dbh90doqKXluySyWAFYWfVkxOrq65/DTMwe4hNJ7DD1+NTqq/u1VTaX1HJsGXNllGdHX1UTj5VbPkZQJQgPqY7lNXc+MDvRnYf12tQO8k798mLlA==
-Authentication-Results: jms.id.au; dkim=none (message not signed)
- header.d=none;jms.id.au; dmarc=none action=none header.from=fii-usa.com;
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com (2603:10b6:5:43::18) by
- DM6PR08MB6300.namprd08.prod.outlook.com (2603:10b6:5:1ed::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3700.27; Wed, 30 Dec 2020 15:55:01 +0000
-Received: from DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::40be:143a:73a2:b33e]) by DM6PR08MB4890.namprd08.prod.outlook.com
- ([fe80::40be:143a:73a2:b33e%7]) with mapi id 15.20.3700.031; Wed, 30 Dec 2020
- 15:55:01 +0000
-From: Lancelot Kao <lancelot.kao@fii-usa.com>
-To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
- Benjamin Fair <benjaminfair@google.com>,
- Vivekanand Veeracholan <vveerach@google.com>,
- Mohaimen alsmarai <Mohaimen.alsamarai@fii-na.com>,
- Mustafa Shehabi <Mustafa.shehabi@fii-na.com>,
- Alexandru Tachici <alexandru.tachici@analog.com>
-Subject: [PATCH linux dev-5.8] Support Hwmon ADM1266 Driver
-Date: Wed, 30 Dec 2020 09:54:40 -0600
-Message-Id: <20201230155440.15721-1-lancelot.kao@fii-usa.com>
-X-Mailer: git-send-email 2.17.1
-Content-Type: text/plain
-X-Originating-IP: [216.63.87.86]
-X-ClientProxiedBy: SN4PR0401CA0042.namprd04.prod.outlook.com
- (2603:10b6:803:2a::28) To DM6PR08MB4890.namprd08.prod.outlook.com
- (2603:10b6:5:43::18)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D5jzY54nSzDqKH
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Dec 2020 07:48:07 +1100 (AEDT)
+Received: by mail-lf1-x12a.google.com with SMTP id s26so40142397lfc.8
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Dec 2020 12:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=9cCSzFbkfz8m5CER8DawVW0OhNGNZzeo7RNHy4++9Jw=;
+ b=MqTXEQGVXFF89qdq38lkA8FWz/upLiHecJsIf/9bBYSbQ/DTwVVxwnFOpdAxYDNxye
+ ySKMwsZIx4O1TIyjmpb81dSH8sB2R70Ab/YqD6ERdmvUrvIXXbY1mGyPBhnCZjA5WaV3
+ fte7XqczBiTisYw+P7tI/gD1aFmcLoKoSuDDQjSZ49srA1RsasHlSGFV5jKNH4hztyAk
+ JSF4t4WxUBgCYz9/lyJLRCx1TyX2dgQHz9ck8h6HZlCMergwsac6EeCRcLKZLQtLsbJu
+ sCo4+pE2zeopaa2kRzWAfz69pAirZgDDKkWO9bsZfo/z43UKkqbnM3J7bg1jWqXq/CK/
+ 3uQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=9cCSzFbkfz8m5CER8DawVW0OhNGNZzeo7RNHy4++9Jw=;
+ b=F2iv2ghgMJ+8L8r1pkd3IpmT4J2JbwuMLAgGle4SJFEaYXYa1NI0+T5fQ48QZJ2rSK
+ tTqI9c1IX3QJoD7sXsxipwjC/XEDGrEjLs3HduaApYKtYbI/EeTkyY5ov/drYnaKHVBg
+ eUsMsV0V1vYI6iBxLZZfylM/osUDnH+EdVXaqsOymZTALy6eouK0k/+lt+W8LnAemWzq
+ mV8YYNl7LRSZPkP1gDmZrAwf2U/1wqoLvcBlvZhaGm6y33DwKWTDEe5vbZJzLgMv8Fs8
+ 61G/mUPdVzTnwXBYnB6mZmsxblACaDw76H1U98AF7ERqCAX0e9zsKkXCbDb0MReWIyz7
+ i22Q==
+X-Gm-Message-State: AOAM532EpHdJbS4A8fgcYDbEK3xJo3roQaOuhFicgEImjZp76VvkVEr8
+ NdsT9OTtiakTwAFI65Gp1gXvB2pYdj/tEXe37Qo=
+X-Google-Smtp-Source: ABdhPJzvInRhzcRCApBj6yRtMF7iDdySTdLflR+ag8mn6AQ6GRcAEJ1bPBzgcwbXxa8XHjgPOIoy8ZCPVNgtji/1fsY=
+X-Received: by 2002:a2e:92d6:: with SMTP id k22mr26030268ljh.219.1609361284213; 
+ Wed, 30 Dec 2020 12:48:04 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-Received: from OpenSystem.houston.foxconn.com (216.63.87.86) by
- SN4PR0401CA0042.namprd04.prod.outlook.com (2603:10b6:803:2a::28) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3721.19 via Frontend
- Transport; Wed, 30 Dec 2020 15:55:00 +0000
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 02a200a5-c9f7-466b-bbb9-08d8acdb43f9
-X-MS-TrafficTypeDiagnostic: DM6PR08MB6300:
-X-MS-Exchange-Transport-Forked: True
-X-Microsoft-Antispam-PRVS: <DM6PR08MB6300F528D029081E70A2CF14C0D70@DM6PR08MB6300.namprd08.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:569;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: xlvm2Gyq4/FcQIqul2y58/UzCs2O/sG+rcdOCQD5CfqheEUtGkdt+CH6KbO3bR5vfZWgT4SmS3TGm6umukQqBXuwadeLspS6qOK8FmeOFBXkfhXIspZLcZfDLi7g+pKzVwN1m9NAzZxqTeJXCMrj0cpf+v5ODxwbt8SSwUl4qxjbxLXwFabM4SEMuoqeGBZ4MBFoTh5G9OZ39oMqIWMP7aIJWX5IH2tnUaog9n2eE14aHuKLJrsiYDrFri0U1VheA6ER1uUTt5pZREGuxGTgCYYKw41DcPF2+DoBTzmO+6M6AwfCptJCqHgtqCbDY7FLbVKmRDfsRu86A1VoH6hSTfa1aqH9nM0zIOUpURhnjstiwK5XWOzE2dyYJeObsG4rLETO8sa5CbsajA1ef4pKTOMoaeR36I6N5V6Msw3tGFpYmnOtJW+CYem8dhiXeIUnjv6l5/IbXVAH2+M7TE4wBQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR08MB4890.namprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(39850400004)(396003)(366004)(346002)(376002)(136003)(66476007)(86362001)(966005)(36756003)(5660300002)(8936002)(107886003)(26005)(1076003)(66946007)(6512007)(6486002)(110136005)(66556008)(6506007)(6666004)(8676002)(2906002)(52116002)(956004)(83380400001)(186003)(4326008)(44832011)(2616005)(478600001)(16526019)(30864003)(316002);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData: =?us-ascii?Q?xsUmeH/MdY4X8umIdKKFmOLlhwhDSg87yTIpq9ypzjAWadrUBm66JwRVLK/y?=
- =?us-ascii?Q?RYZm0s9ETOyi8Z3t/hA0TZmYJ+0hRb1u06fU/Hvv7+KMRQTwBxAextVf4KGu?=
- =?us-ascii?Q?U23pYhJrweU81sOWcexJfQWXnANK/Yy1400EdJjAzJcL8oaH2svkuoANa4F6?=
- =?us-ascii?Q?9wUbV0N/bbBkih/WgHv1v0/M4CT4fatg4inDfd0OPg7/VdNBgTuJnhEhuvs2?=
- =?us-ascii?Q?hTj+Huhu40n+T6FP5wFzz7WAtJJPO0P84lqY3pcB0GW12tYsH9seQWzFYFSA?=
- =?us-ascii?Q?aKvbO09XhUZdkOMSv8nxB4HjOcittrdNboiakC4Lg4tXRnccPRzyQT5QE6vz?=
- =?us-ascii?Q?Uevuoi1NQoEUA32my+qw3amvs4jdVPX/2v/oshEeStBz6YUHX0Nu4auIgSNl?=
- =?us-ascii?Q?aCJDd8xRc4kj3eQ2h93TU5E5/dVFqmeV+MdATqHHC4ChWeaNVeIe8OWnWRQI?=
- =?us-ascii?Q?gESLeu/1PDWyqMcr9TMzNZW23dLqdUosrAiKYPUO167YD+eR72SxXVlhNMUw?=
- =?us-ascii?Q?yhbBl25++wfb1C5prCThMM2hiOEuyvNZTztaXG9LiIzDMy0eQjepri+juIl6?=
- =?us-ascii?Q?GwFQynjqXweBKbtCvWt0aMKs8LUaiXkoXjGqaM5qU6WCSAf+V4p8eBLm7A4y?=
- =?us-ascii?Q?udecaEzDYja3/f7y9BHYnSdhm2+DIUFYClNuX7ZJ0ZsPtRHs16A5yPt7SGdl?=
- =?us-ascii?Q?MBAT4tqsen4EvBNU4BIPfLlMrFnKGaHtoovbZLgh+KsfqBLNR8H2dZRr1+Ql?=
- =?us-ascii?Q?1jNIw/WjtTz0LSRUaz/W+3fWJhvofSthbadHuMrUH2Tt9gYlkJzYcJ39ghc+?=
- =?us-ascii?Q?+oZKxlehQ3y6b1jkOIT/jNe5z6D6jZfimRtghO93S7dqbiB55AL3vpvXaib1?=
- =?us-ascii?Q?yGinBPzWUwA5xnf0/JFy+yatjm5p7YuWlMlbqIFyTSvYSge/EXxHoJBTExOa?=
- =?us-ascii?Q?I5LYXRvZZvoF07TO2jpc57qTcW2xG5KyHJ5vFAb7cSY=3D?=
-X-OriginatorOrg: fii-usa.com
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR08MB4890.namprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Dec 2020 15:55:00.9361 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 2f78a81d-6abb-4840-a061-3fe5396c72f2
-X-MS-Exchange-CrossTenant-Network-Message-Id: 02a200a5-c9f7-466b-bbb9-08d8acdb43f9
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xd1nGbNdTHimgSydiuOalRM9HGyqkco1jcWE5/1TU5vwedx+XoyFGQR8Lg4gJ2DpgBlO2H4Hj4ZiKOWvZcKH89F81QkyILCVKPBhkHoKMXg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB6300
+References: <TY2PR04MB39331267ECA5147A09FF691495D70@TY2PR04MB3933.apcprd04.prod.outlook.com>
+ <CAGm54UH0kgwdmvSe7ZgmE6HV1fHzeJY7KOaFHcfYgNOAnPV-EQ@mail.gmail.com>
+ <TY2PR04MB39337E262BA43CA7378F2B6C95D70@TY2PR04MB3933.apcprd04.prod.outlook.com>
+ <CAJTGxZHhbRs7pedZ+Ag8v7WACzXYyg43ZKYNWB75VywzoaSbpA@mail.gmail.com>
+ <TY2PR04MB3933D20377D54FB7D1A3067695D70@TY2PR04MB3933.apcprd04.prod.outlook.com>
+In-Reply-To: <TY2PR04MB3933D20377D54FB7D1A3067695D70@TY2PR04MB3933.apcprd04.prod.outlook.com>
+From: Vijay Khemka <vijaykhemkalinux@gmail.com>
+Date: Wed, 30 Dec 2020 12:47:53 -0800
+Message-ID: <CAJTGxZEL5Ae4VcTkVzZrxoSV75Wni=e0W-dGtB5qNc5OrV5Org@mail.gmail.com>
+Subject: Re: [phosphor-virtual-sensor] Add new feature to get Warning or
+ Critical property
+To: =?UTF-8?B?SGFydmV5IFd1ICjlkLPltIfntq0p?= <Harvey.Wu@quantatw.com>
+Content-Type: multipart/alternative; boundary="000000000000a92eff05b7b49f8e"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -126,694 +77,251 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: mustafa <mustafa.shehabi@fii-na.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Lei Yu <yulei.sh@bytedance.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: mustafa <mustafa.shehabi@fii-na.com>
+--000000000000a92eff05b7b49f8e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This hwmon/pmbus driver supports ADM1266 device
-It modified from linux kernel 5.10 and Fii modified
-it to fit openbmc kernel 5.8
+On Tue, Dec 29, 2020 at 10:13 PM Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD) <H=
+arvey.Wu@quantatw.com>
+wrote:
 
-Signed-off-by: Mustafa Shehabi <Mustafa.shehabi@fii-na.com>
----
- .../bindings/hwmon/adi,adm1266.yaml           |  51 ++
- Documentation/hwmon/adm1266.rst               |  37 ++
- Documentation/hwmon/index.rst                 |   1 +
- drivers/hwmon/pmbus/Kconfig                   |  11 +
- drivers/hwmon/pmbus/Makefile                  |   1 +
- drivers/hwmon/pmbus/adm1266.c                 | 513 ++++++++++++++++++
- 6 files changed, 614 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/hwmon/adi,adm1266.yaml
- create mode 100644 Documentation/hwmon/adm1266.rst
- create mode 100644 drivers/hwmon/pmbus/adm1266.c
+> Hi Vijay,
+>
+>         Because I want to calculate the different value between
+> CriticalHigh and current sensor value in CPU sensor, and then there are
+> weighting and some const value to multiply or plus the different value.
+> But the CPU sensor critical high threshold temp is set as TjMax, and the
+> TjMax value will be different according the different CPU process type, n=
+ot
+> a Const. That's why I want to add this feature.
+>
 
-diff --git a/Documentation/devicetree/bindings/hwmon/adi,adm1266.yaml b/Documentation/devicetree/bindings/hwmon/adi,adm1266.yaml
-new file mode 100644
-index 000000000000..d088c744d53a
---- /dev/null
-+++ b/Documentation/devicetree/bindings/hwmon/adi,adm1266.yaml
-@@ -0,0 +1,51 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/hwmon/adi,adm1266.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Analog Devices ADM1266 Cascadable Super Sequencer with Margin
-+  Control and Fault Recording
-+
-+maintainers:
-+  - Alexandru Tachici <alexandru.tachici@analog.com>
-+
-+description: |
-+  Analog Devices ADM1266 Cascadable Super Sequencer with Margin
-+  Control and Fault Recording.
-+  https://www.analog.com/media/en/technical-documentation/d...
-+
-+properties:
-+  compatible:
-+    enum:
-+      - adi,adm1266
-+
-+  reg:
-+    description: |
-+      I2C address of slave device.
-+    items:
-+      minimum: 0x40
-+      maximum: 0x4F
-+
-+  avcc-supply:
-+    description: |
-+      Phandle to the Avcc power supply.
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    i2c0 {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        adm1266@40 {
-+                compatible = "adi,adm1266";
-+                reg = <0x40>;
-+        };
-+    };
-+...
-diff --git a/Documentation/hwmon/adm1266.rst b/Documentation/hwmon/adm1266.rst
-new file mode 100644
-index 000000000000..c7e5b0fab381
---- /dev/null
-+++ b/Documentation/hwmon/adm1266.rst
-@@ -0,0 +1,37 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+Kernel driver adm1266
-+=====================
-+
-+Supported chips:
-+  * Analog Devices ADM1266
-+    Prefix: 'adm1266'
-+    Datasheet: https://www.analog.com/media/en/technical-documentation/d...
-+
-+Author: Alexandru Tachici <alexandru.tachici@analog.com>
-+
-+
-+Description
-+-----------
-+
-+This driver supports hardware monitoring for Analog Devices ADM1266 sequencer.
-+
-+ADM1266 is a sequencer that features voltage readback from 17 channels via an
-+integrated 12 bit SAR ADC, accessed using a PMBus interface.
-+
-+The driver is a client driver to the core PMBus driver. Please see
-+Documentation/hwmon/pmbus for details on PMBus client drivers.
-+
-+
-+Sysfs entries
-+-------------
-+
-+The following attributes are supported. Limits are read-write, history reset
-+attributes are write-only, all other attributes are read-only.
-+
-+inX_label		"voutx"
-+inX_input		Measured voltage.
-+inX_min			Minimum Voltage.
-+inX_max			Maximum voltage.
-+inX_min_alarm		Voltage low alarm.
-+inX_max_alarm		Voltage high alarm.
-diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index 89e1a824021f..37e1925735c7 100644
---- a/Documentation/hwmon/index.rst
-+++ b/Documentation/hwmon/index.rst
-@@ -30,6 +30,7 @@ Hardware Monitoring Kernel Drivers
-    adm1026
-    adm1031
-    adm1177
-+   adm1266
-    adm1275
-    adm9240
-    ads7828
-diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-index ea516cec1d35..63b9d1ec200b 100644
---- a/drivers/hwmon/pmbus/Kconfig
-+++ b/drivers/hwmon/pmbus/Kconfig
-@@ -26,6 +26,17 @@ config SENSORS_PMBUS
- 	  This driver can also be built as a module. If so, the module will
- 	  be called pmbus.
- 
-+config SENSORS_ADM1266
-+	tristate "Analog Devices ADM1266 Sequencer"
-+	select CRC8
-+	depends on GPIOLIB
-+	help
-+	  If you say yes here you get hardware monitoring support for Analog
-+	  Devices ADM1266 Cascadable Super Sequencer.
-+
-+	  This driver can also be built as a module. If so, the module will
-+	  be called adm1266.
-+
- config SENSORS_ADM1275
- 	tristate "Analog Devices ADM1275 and compatibles"
- 	help
-diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-index c4b15db996ad..da41d22be1c9 100644
---- a/drivers/hwmon/pmbus/Makefile
-+++ b/drivers/hwmon/pmbus/Makefile
-@@ -5,6 +5,7 @@
- 
- obj-$(CONFIG_PMBUS)		+= pmbus_core.o
- obj-$(CONFIG_SENSORS_PMBUS)	+= pmbus.o
-+obj-$(CONFIG_SENSORS_ADM1266)	+= adm1266.o
- obj-$(CONFIG_SENSORS_ADM1275)	+= adm1275.o
- obj-$(CONFIG_SENSORS_BEL_PFE)	+= bel-pfe.o
- obj-$(CONFIG_SENSORS_IBM_CFFPS)	+= ibm-cffps.o
-diff --git a/drivers/hwmon/pmbus/adm1266.c b/drivers/hwmon/pmbus/adm1266.c
-new file mode 100644
-index 000000000000..1d83c4f42eaf
---- /dev/null
-+++ b/drivers/hwmon/pmbus/adm1266.c
-@@ -0,0 +1,513 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * ADM1266 - Cascadable Super Sequencer with Margin
-+ * Control and Fault Recording
-+ *
-+ * Copyright 2020 Analog Devices Inc.
-+ */
-+
-+#include <linux/bitfield.h>
-+#include <linux/crc8.h>
-+#include <linux/debugfs.h>
-+#include <linux/gpio/driver.h>
-+#include <linux/i2c.h>
-+#include <linux/i2c-smbus.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/nvmem-consumer.h>
-+#include <linux/nvmem-provider.h>
-+#include "pmbus.h"
-+#include <linux/slab.h>
-+#include <linux/timekeeping.h>
-+
-+#define ADM1266_BLACKBOX_CONFIG	0xD3
-+#define ADM1266_PDIO_CONFIG	0xD4
-+#define ADM1266_READ_STATE	0xD9
-+#define ADM1266_READ_BLACKBOX	0xDE
-+#define ADM1266_SET_RTC		0xDF
-+#define ADM1266_GPIO_CONFIG	0xE1
-+#define ADM1266_BLACKBOX_INFO	0xE6
-+#define ADM1266_PDIO_STATUS	0xE9
-+#define ADM1266_GPIO_STATUS	0xEA
-+
-+/* ADM1266 GPIO defines */
-+#define ADM1266_GPIO_NR			9
-+#define ADM1266_GPIO_FUNCTIONS(x)	FIELD_GET(BIT(0), x)
-+#define ADM1266_GPIO_INPUT_EN(x)	FIELD_GET(BIT(2), x)
-+#define ADM1266_GPIO_OUTPUT_EN(x)	FIELD_GET(BIT(3), x)
-+#define ADM1266_GPIO_OPEN_DRAIN(x)	FIELD_GET(BIT(4), x)
-+
-+/* ADM1266 PDIO defines */
-+#define ADM1266_PDIO_NR			16
-+#define ADM1266_PDIO_PIN_CFG(x)		FIELD_GET(GENMASK(15, 13), x)
-+#define ADM1266_PDIO_GLITCH_FILT(x)	FIELD_GET(GENMASK(12, 9), x)
-+#define ADM1266_PDIO_OUT_CFG(x)		FIELD_GET(GENMASK(2, 0), x)
-+
-+#define ADM1266_BLACKBOX_OFFSET		0
-+#define ADM1266_BLACKBOX_SIZE		64
-+
-+#define ADM1266_PMBUS_BLOCK_MAX		255
-+
-+struct adm1266_data {
-+	struct pmbus_driver_info info;
-+	struct gpio_chip gc;
-+	const char *gpio_names[ADM1266_GPIO_NR + ADM1266_PDIO_NR];
-+	struct i2c_client *client;
-+	struct dentry *debugfs_dir;
-+	struct nvmem_config nvmem_config;
-+	struct nvmem_device *nvmem;
-+	u8 *dev_mem;
-+	struct mutex buf_mutex;
-+	u8 write_buf[ADM1266_PMBUS_BLOCK_MAX + 1] ____cacheline_aligned;
-+	u8 read_buf[ADM1266_PMBUS_BLOCK_MAX + 1] ____cacheline_aligned;
-+};
-+
-+static const struct nvmem_cell_info adm1266_nvmem_cells[] = {
-+	{
-+		.name           = "blackbox",
-+		.offset         = ADM1266_BLACKBOX_OFFSET,
-+		.bytes          = 2048,
-+	},
-+};
-+
-+DECLARE_CRC8_TABLE(pmbus_crc_table);
-+
-+/*
-+ * Different from Block Read as it sends data and waits for the slave to
-+ * return a value dependent on that data. The protocol is simply a Write Block
-+ * followed by a Read Block without the Read-Block command field and the
-+ * Write-Block STOP bit.
-+ */
-+static int adm1266_pmbus_block_xfer(struct adm1266_data *data, u8 cmd, u8 w_len, u8 *data_w,
-+				    u8 *data_r)
-+{
-+	struct i2c_client *client = data->client;
-+	struct i2c_msg msgs[2] = {
-+		{
-+			.addr = client->addr,
-+			.flags = I2C_M_DMA_SAFE,
-+			.buf = data->write_buf,
-+			.len = w_len + 2,
-+		},
-+		{
-+			.addr = client->addr,
-+			.flags = I2C_M_RD | I2C_M_DMA_SAFE,
-+			.buf = data->read_buf,
-+			.len = ADM1266_PMBUS_BLOCK_MAX + 2,
-+		}
-+	};
-+	u8 addr;
-+	u8 crc;
-+	int ret;
-+
-+	mutex_lock(&data->buf_mutex);
-+
-+	msgs[0].buf[0] = cmd;
-+	msgs[0].buf[1] = w_len;
-+	memcpy(&msgs[0].buf[2], data_w, w_len);
-+
-+	ret = i2c_transfer(client->adapter, msgs, 2);
-+	if (ret != 2) {
-+		if (ret >= 0)
-+			ret = -EPROTO;
-+
-+		mutex_unlock(&data->buf_mutex);
-+
-+		return ret;
-+	}
-+
-+	if (client->flags & I2C_CLIENT_PEC) {
-+		addr = i2c_8bit_addr_from_msg(&msgs[0]);
-+		crc = crc8(pmbus_crc_table, &addr, 1, 0);
-+		crc = crc8(pmbus_crc_table, msgs[0].buf,  msgs[0].len, crc);
-+
-+		addr = i2c_8bit_addr_from_msg(&msgs[1]);
-+		crc = crc8(pmbus_crc_table, &addr, 1, crc);
-+		crc = crc8(pmbus_crc_table, msgs[1].buf,  msgs[1].buf[0] + 1, crc);
-+
-+		if (crc != msgs[1].buf[msgs[1].buf[0] + 1]) {
-+			mutex_unlock(&data->buf_mutex);
-+			return -EBADMSG;
-+		}
-+	}
-+
-+	memcpy(data_r, &msgs[1].buf[1], msgs[1].buf[0]);
-+
-+	ret = msgs[1].buf[0];
-+	mutex_unlock(&data->buf_mutex);
-+
-+	return ret;
-+}
-+
-+static const unsigned int adm1266_gpio_mapping[ADM1266_GPIO_NR][2] = {
-+	{1, 0},
-+	{2, 1},
-+	{3, 2},
-+	{4, 8},
-+	{5, 9},
-+	{6, 10},
-+	{7, 11},
-+	{8, 6},
-+	{9, 7},
-+};
-+
-+static const char *adm1266_names[ADM1266_GPIO_NR + ADM1266_PDIO_NR] = {
-+	"GPIO1", "GPIO2", "GPIO3", "GPIO4", "GPIO5", "GPIO6", "GPIO7", "GPIO8",
-+	"GPIO9", "PDIO1", "PDIO2", "PDIO3", "PDIO4", "PDIO5", "PDIO6",
-+	"PDIO7", "PDIO8", "PDIO9", "PDIO10", "PDIO11", "PDIO12", "PDIO13",
-+	"PDIO14", "PDIO15", "PDIO16",
-+};
-+
-+static int adm1266_gpio_get(struct gpio_chip *chip, unsigned int offset)
-+{
-+	struct adm1266_data *data = gpiochip_get_data(chip);
-+	u8 read_buf[I2C_SMBUS_BLOCK_MAX + 1];
-+	unsigned long pins_status;
-+	unsigned int pmbus_cmd;
-+	int ret;
-+
-+	if (offset < ADM1266_GPIO_NR)
-+		pmbus_cmd = ADM1266_GPIO_STATUS;
-+	else
-+		pmbus_cmd = ADM1266_PDIO_STATUS;
-+
-+	ret = i2c_smbus_read_block_data(data->client, pmbus_cmd, read_buf);
-+	if (ret < 0)
-+		return ret;
-+
-+	pins_status = read_buf[0] + (read_buf[1] << 8);
-+	if (offset < ADM1266_GPIO_NR)
-+		return test_bit(adm1266_gpio_mapping[offset][1], &pins_status);
-+
-+	return test_bit(offset - ADM1266_GPIO_NR, &pins_status);
-+}
-+
-+static int adm1266_gpio_get_multiple(struct gpio_chip *chip, unsigned long *mask,
-+				     unsigned long *bits)
-+{
-+	struct adm1266_data *data = gpiochip_get_data(chip);
-+	u8 read_buf[ADM1266_PMBUS_BLOCK_MAX + 1];
-+	unsigned long status;
-+	unsigned int gpio_nr;
-+	int ret;
-+
-+	ret = i2c_smbus_read_block_data(data->client, ADM1266_GPIO_STATUS, read_buf);
-+	if (ret < 0)
-+		return ret;
-+
-+	status = read_buf[0] + (read_buf[1] << 8);
-+
-+	*bits = 0;
-+	for_each_set_bit(gpio_nr, mask, ADM1266_GPIO_NR) {
-+		if (test_bit(adm1266_gpio_mapping[gpio_nr][1], &status))
-+			set_bit(gpio_nr, bits);
-+	}
-+
-+	ret = i2c_smbus_read_block_data(data->client, ADM1266_PDIO_STATUS, read_buf);
-+	if (ret < 0)
-+		return ret;
-+
-+	status = read_buf[0] + (read_buf[1] << 8);
-+
-+	*bits = 0;
-+	for_each_set_bit_from(gpio_nr, mask, ADM1266_GPIO_NR + ADM1266_PDIO_STATUS) {
-+		if (test_bit(gpio_nr - ADM1266_GPIO_NR, &status))
-+			set_bit(gpio_nr, bits);
-+	}
-+
-+	return 0;
-+}
-+
-+static void adm1266_gpio_dbg_show(struct seq_file *s, struct gpio_chip *chip)
-+{
-+	struct adm1266_data *data = gpiochip_get_data(chip);
-+	u8 read_buf[ADM1266_PMBUS_BLOCK_MAX + 1];
-+	unsigned long gpio_config;
-+	unsigned long pdio_config;
-+	unsigned long pin_cfg;
-+	u8 write_cmd;
-+	int ret;
-+	int i;
-+
-+	for (i = 0; i < ADM1266_GPIO_NR; i++) {
-+		write_cmd = adm1266_gpio_mapping[i][1];
-+		ret = adm1266_pmbus_block_xfer(data, ADM1266_GPIO_CONFIG, 1, &write_cmd, read_buf);
-+		if (ret != 2)
-+			return;
-+
-+		gpio_config = read_buf[0];
-+		seq_puts(s, adm1266_names[i]);
-+
-+		seq_puts(s, " ( ");
-+		if (!ADM1266_GPIO_FUNCTIONS(gpio_config)) {
-+			seq_puts(s, "high-Z )\n");
-+			continue;
-+		}
-+		if (ADM1266_GPIO_INPUT_EN(gpio_config))
-+			seq_puts(s, "input ");
-+		if (ADM1266_GPIO_OUTPUT_EN(gpio_config))
-+			seq_puts(s, "output ");
-+		if (ADM1266_GPIO_OPEN_DRAIN(gpio_config))
-+			seq_puts(s, "open-drain )\n");
-+		else
-+			seq_puts(s, "push-pull )\n");
-+	}
-+
-+	write_cmd = 0xFF;
-+	ret = adm1266_pmbus_block_xfer(data, ADM1266_PDIO_CONFIG, 1, &write_cmd, read_buf);
-+	if (ret != 32)
-+		return;
-+
-+	for (i = 0; i < ADM1266_PDIO_NR; i++) {
-+		seq_puts(s, adm1266_names[ADM1266_GPIO_NR + i]);
-+
-+		pdio_config = read_buf[2 * i];
-+		pdio_config += (read_buf[2 * i + 1] << 8);
-+		pin_cfg = ADM1266_PDIO_PIN_CFG(pdio_config);
-+
-+		seq_puts(s, " ( ");
-+		if (!pin_cfg || pin_cfg > 5) {
-+			seq_puts(s, "high-Z )\n");
-+			continue;
-+		}
-+
-+		if (pin_cfg & BIT(0))
-+			seq_puts(s, "output ");
-+
-+		if (pin_cfg & BIT(1))
-+			seq_puts(s, "input ");
-+
-+		seq_puts(s, ")\n");
-+	}
-+}
-+
-+static int adm1266_config_gpio(struct adm1266_data *data)
-+{
-+	const char *name = dev_name(&data->client->dev);
-+	char *gpio_name;
-+	int ret;
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(data->gpio_names); i++) {
-+		gpio_name = devm_kasprintf(&data->client->dev, GFP_KERNEL, "adm1266-%x-%s",
-+					   data->client->addr, adm1266_names[i]);
-+		if (!gpio_name)
-+			return -ENOMEM;
-+
-+		data->gpio_names[i] = gpio_name;
-+	}
-+
-+	data->gc.label = name;
-+	data->gc.parent = &data->client->dev;
-+	data->gc.owner = THIS_MODULE;
-+	data->gc.base = -1;
-+	data->gc.names = data->gpio_names;
-+	data->gc.ngpio = ARRAY_SIZE(data->gpio_names);
-+	data->gc.get = adm1266_gpio_get;
-+	data->gc.get_multiple = adm1266_gpio_get_multiple;
-+	data->gc.dbg_show = adm1266_gpio_dbg_show;
-+
-+	ret = devm_gpiochip_add_data(&data->client->dev, &data->gc, data);
-+	if (ret)
-+		dev_err(&data->client->dev, "GPIO registering failed (%d)\n", ret);
-+
-+	return ret;
-+}
-+
-+static int adm1266_state_read(struct seq_file *s, void *pdata)
-+{
-+	struct device *dev = s->private;
-+	struct i2c_client *client = to_i2c_client(dev);
-+	int ret;
-+
-+	ret = i2c_smbus_read_word_data(client, ADM1266_READ_STATE);
-+	if (ret < 0)
-+		return ret;
-+
-+	seq_printf(s, "%d\n", ret);
-+
-+	return 0;
-+}
-+
-+static void adm1266_init_debugfs(struct adm1266_data *data)
-+{
-+	struct dentry *root;
-+
-+	root = pmbus_get_debugfs_dir(data->client);
-+	if (!root)
-+		return;
-+
-+	data->debugfs_dir = debugfs_create_dir(data->client->name, root);
-+	if (!data->debugfs_dir)
-+		return;
-+
-+	debugfs_create_devm_seqfile(&data->client->dev, "sequencer_state", data->debugfs_dir,
-+				    adm1266_state_read);
-+}
-+
-+static int adm1266_nvmem_read_blackbox(struct adm1266_data *data, u8 *read_buff)
-+{
-+	int record_count;
-+	char index;
-+	u8 buf[5];
-+	int ret;
-+
-+	ret = i2c_smbus_read_block_data(data->client, ADM1266_BLACKBOX_INFO, buf);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (ret != 4)
-+		return -EIO;
-+
-+	record_count = buf[3];
-+
-+	for (index = 0; index < record_count; index++) {
-+		ret = adm1266_pmbus_block_xfer(data, ADM1266_READ_BLACKBOX, 1, &index, read_buff);
-+		if (ret < 0)
-+			return ret;
-+
-+		if (ret != ADM1266_BLACKBOX_SIZE)
-+			return -EIO;
-+
-+		read_buff += ADM1266_BLACKBOX_SIZE;
-+	}
-+
-+	return 0;
-+}
-+
-+static int adm1266_nvmem_read(void *priv, unsigned int offset, void *val, size_t bytes)
-+{
-+	struct adm1266_data *data = priv;
-+	int ret;
-+
-+	if (offset + bytes > data->nvmem_config.size)
-+		return -EINVAL;
-+
-+	if (offset == 0) {
-+		memset(data->dev_mem, 0, data->nvmem_config.size);
-+
-+		ret = adm1266_nvmem_read_blackbox(data, data->dev_mem);
-+		if (ret) {
-+			dev_err(&data->client->dev, "Could not read blackbox!");
-+			return ret;
-+		}
-+	}
-+
-+	memcpy(val, data->dev_mem + offset, bytes);
-+
-+	return 0;
-+}
-+
-+static int adm1266_config_nvmem(struct adm1266_data *data)
-+{
-+	data->nvmem_config.name = dev_name(&data->client->dev);
-+	data->nvmem_config.dev = &data->client->dev;
-+	data->nvmem_config.root_only = true;
-+	data->nvmem_config.read_only = true;
-+	data->nvmem_config.owner = THIS_MODULE;
-+	data->nvmem_config.reg_read = adm1266_nvmem_read;
-+	data->nvmem_config.cells = adm1266_nvmem_cells;
-+	data->nvmem_config.ncells = ARRAY_SIZE(adm1266_nvmem_cells);
-+	data->nvmem_config.priv = data;
-+	data->nvmem_config.stride = 1;
-+	data->nvmem_config.word_size = 1;
-+	data->nvmem_config.size = adm1266_nvmem_cells[0].bytes;
-+
-+	data->dev_mem = devm_kzalloc(&data->client->dev, data->nvmem_config.size, GFP_KERNEL);
-+	if (!data->dev_mem)
-+		return -ENOMEM;
-+
-+	data->nvmem = devm_nvmem_register(&data->client->dev, &data->nvmem_config);
-+	if (IS_ERR(data->nvmem)) {
-+		dev_err(&data->client->dev, "Could not register nvmem!");
-+		return PTR_ERR(data->nvmem);
-+	}
-+
-+	return 0;
-+}
-+
-+static int adm1266_set_rtc(struct adm1266_data *data)
-+{
-+	time64_t kt;
-+	char write_buf[6];
-+	int i;
-+
-+	kt = ktime_get_seconds();
-+
-+	memset(write_buf, 0, sizeof(write_buf));
-+
-+	for (i = 0; i < 4; i++)
-+		write_buf[2 + i] = (kt >> (i * 8)) & 0xFF;
-+
-+	return i2c_smbus_write_block_data(data->client, ADM1266_SET_RTC, sizeof(write_buf),
-+					  write_buf);
-+}
-+
-+static int adm1266_probe(struct i2c_client *client, const struct i2c_device_id *id)
-+{
-+	struct adm1266_data *data;
-+	int ret;
-+	int i;
-+
-+	data = devm_kzalloc(&client->dev, sizeof(struct adm1266_data), GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	data->client = client;
-+	data->info.pages = 17;
-+	data->info.format[PSC_VOLTAGE_OUT] = linear;
-+	for (i = 0; i < data->info.pages; i++)
-+		data->info.func[i] = PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT;
-+
-+	crc8_populate_msb(pmbus_crc_table, 0x7);
-+	mutex_init(&data->buf_mutex);
-+
-+	ret = adm1266_config_gpio(data);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = adm1266_set_rtc(data);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = adm1266_config_nvmem(data);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = pmbus_do_probe(client, id, &data->info);
-+	if (ret)
-+		return ret;
-+
-+	adm1266_init_debugfs(data);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id adm1266_of_match[] = {
-+	{ .compatible = "adi,adm1266" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, adm1266_of_match);
-+
-+static const struct i2c_device_id adm1266_id[] = {
-+	{ "adm1266", 0 },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(i2c, adm1266_id);
-+
-+static struct i2c_driver adm1266_driver = {
-+	.driver = {
-+		   .name = "adm1266",
-+		   .of_match_table = adm1266_of_match,
-+		  },
-+	.probe = adm1266_probe,
-+	.remove = pmbus_do_remove,
-+	.id_table = adm1266_id,
-+};
-+
-+module_i2c_driver(adm1266_driver);
-+
-+MODULE_AUTHOR("Alexandru Tachici <alexandru.tachici@analog.com>");
-+MODULE_DESCRIPTION("PMBus driver for Analog Devices ADM1266");
-+MODULE_LICENSE("GPL v2");
--- 
-2.17.1
+Yes I understand that critical values for cpus are received from CPUs and
+not a constant values.  But just for this specific sensor we should not add
+a new complex feature in a virtual sensor. Because every other sensor has
+constant threshold values defined by user so it won't be used anywhere else
+other than psu cpu sensor only.
 
+I would rather expose TjMax on dbus if you really want to use this.further.
+So exposing tjmax would be easy and straightforward rather than adding this
+complex logic for only this sensor in a generic virtual sensor.
+
+>
+> For example, according the Document below, if the processor is i7-3770K,
+> the TjMax is 105, and if the processor is U7500, the TjMax is 100.
+> https://www.kernel.org/doc/Documentation/hwmon/coretemp.rst
+>
+> If the Expression is "(TjMax - currentTemp) * scalar - Const", then it
+> will calculate different results between these two CPU processor.
+>
+>
+> Harvey Wu
+>
+> From: Vijay Khemka <vijaykhemkalinux@gmail.com>
+> Sent: Wednesday, December 30, 2020 1:02 PM
+> To: Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD) <Harvey.Wu@quantatw.com>
+> Cc: Lei Yu <yulei.sh@bytedance.com>; openbmc@lists.ozlabs.org
+> Subject: Re: [phosphor-virtual-sensor] Add new feature to get Warning or
+> Critical property
+>
+> I am not understanding why you want to use threshold values to calculate
+> new sensor values. We can certainly add this feature but it can not be
+> based on name rather we have to think differently to get. It would really
+> help to decide on design once we know it's actual usage. I can't think of
+> any situation here.
+>
+> Regards
+> -Vijay
+>
+> On Tue, Dec 29, 2020 at 6:49 PM Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD) <=
+mailto:
+> Harvey.Wu@quantatw.com> wrote:
+> > On Wed, Dec 30, 2020 at 10:19 AM Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD=
+)
+> > <mailto:Harvey.Wu@quantatw.com> wrote:
+> > >
+> > > Hi All,
+> > >
+> > >
+> > >
+> > >         The current phosphor-virtual-sensor DbusParam value is from
+> > DBus =E2=80=9CValue=E2=80=9D property which interface is
+> > =E2=80=9Cxyz.openbmc_project.Sensor.Value=E2=80=9D.
+> > >
+> > > Because I want to get the property =E2=80=9CCriticalHigh=E2=80=9D val=
+ue on DBus, could
+> I
+> > add a new feature =E2=80=9CInterface=E2=80=9D property in json file? Th=
+e property can be
+> > =E2=80=9CCriticalHigh=E2=80=9D , =E2=80=9CCriticalLow=E2=80=9D , =E2=80=
+=9CWarningHigh=E2=80=9D or =E2=80=9CWarningLow=E2=80=9D.
+> >
+> >
+> > According to
+> > https://apc01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgit=
+hub
+> .
+> > com%2Fopenbmc%2Fphosphor-virtual-sensor%2Fblob%2Fmaster%2Fvirtual_
+> > sensor_config.json%23L8-L14&amp;data=3D04%7C01%7CHarvey.Wu%40quantat
+> >
+> https://apc01.safelinks.protection.outlook.com/?url=3Dhttp%3A%2F%2Fw.com%=
+2F&data=3D04%7C01%7CHarvey.Wu%40quantatw.com%7Cf75707a7431e4dca712e08d8ac80=
+182b%7C179b032707fc4973ac738de7313561b2%7C1%7C0%7C637449013448979318%7CUnkn=
+own%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXV=
+CI6Mn0%3D%7C1000&sdata=3DkxT3i6moVPggqbY1zJiag18Cp9wGmyk1ctqrO8XlTUc%3D&res=
+erved=3D0%7C1479ebd5aedd4b8a7c3308d8ac6a4393%7C179b032707fc4973ac73
+> > 8de7313561b2%7C1%7C0%7C637448919693850853%7CUnknown%7CTWFpb
+> > GZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6
+> > Mn0%3D%7C1000&amp;sdata=3D0KyrnRkZKr9M59DEg%2BnyUruiege%2B3EDXb
+> > mxzR%2B6xeng%3D&amp;reserved=3D0,
+> > the threshold properties are already supported.
+>
+> The "Threshold" in json seems only can set the sensor critical or warning
+> value, but I want to use the critical or warning value in "Expression".
+> After check the newest commit, this function seems doesn't implement in
+> current source code.
+>
+> >
+> > --
+> > BRs,
+> > Lei YU
+>
+>
+> Harvey Wu
+>
+
+--000000000000a92eff05b7b49f8e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Dec 29, 2020=
+ at 10:13 PM Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD) &lt;<a href=3D"mailto:=
+Harvey.Wu@quantatw.com">Harvey.Wu@quantatw.com</a>&gt; wrote:<br></div><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
+:1px solid rgb(204,204,204);padding-left:1ex">Hi Vijay,<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 Because I want to calculate the different value=
+ between CriticalHigh and current sensor value in CPU sensor, and then ther=
+e are weighting and some const value to multiply or plus the different valu=
+e.<br>
+But the CPU sensor critical high threshold temp is set as TjMax, and the Tj=
+Max value will be different according the different CPU process type, not a=
+ Const. That&#39;s why I want to add this feature.<br></blockquote><div><br=
+></div><div>Yes I understand that critical values for cpus are received fro=
+m CPUs and not a constant values.=C2=A0 But just for this specific sensor w=
+e should not add a new complex feature in a virtual sensor. Because every o=
+ther sensor has constant threshold values defined by user so it won&#39;t b=
+e used anywhere else other than psu cpu sensor only.</div><div><br></div><d=
+iv>I would rather expose TjMax=C2=A0on dbus if you really want to use this.=
+further. So exposing tjmax=C2=A0would be easy and straightforward rather th=
+an adding this complex logic for only this sensor in a generic virtual sens=
+or.=C2=A0=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+For example, according the Document below, if the processor is i7-3770K, th=
+e TjMax is 105, and if the processor is U7500, the TjMax is 100.<br>
+<a href=3D"https://www.kernel.org/doc/Documentation/hwmon/coretemp.rst" rel=
+=3D"noreferrer" target=3D"_blank">https://www.kernel.org/doc/Documentation/=
+hwmon/coretemp.rst</a> <br>
+<br>
+If the Expression is &quot;(TjMax - currentTemp) * scalar - Const&quot;, th=
+en it will calculate different results between these two CPU processor.<br>
+<br>
+<br>
+Harvey Wu<br>
+<br>
+From: Vijay Khemka &lt;<a href=3D"mailto:vijaykhemkalinux@gmail.com" target=
+=3D"_blank">vijaykhemkalinux@gmail.com</a>&gt; <br>
+Sent: Wednesday, December 30, 2020 1:02 PM<br>
+To: Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD) &lt;<a href=3D"mailto:Harvey.Wu=
+@quantatw.com" target=3D"_blank">Harvey.Wu@quantatw.com</a>&gt;<br>
+Cc: Lei Yu &lt;<a href=3D"mailto:yulei.sh@bytedance.com" target=3D"_blank">=
+yulei.sh@bytedance.com</a>&gt;; <a href=3D"mailto:openbmc@lists.ozlabs.org"=
+ target=3D"_blank">openbmc@lists.ozlabs.org</a><br>
+Subject: Re: [phosphor-virtual-sensor] Add new feature to get Warning or Cr=
+itical property<br>
+<br>
+I am not understanding why you want to use threshold=C2=A0values to calcula=
+te new sensor values. We can certainly add this feature but it can not be b=
+ased on name rather we have to think differently to get. It would really he=
+lp to decide on design once we know it&#39;s actual usage. I can&#39;t thin=
+k of any situation here.<br>
+<br>
+Regards<br>
+-Vijay<br>
+<br>
+On Tue, Dec 29, 2020 at 6:49 PM Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=AD) &lt=
+;mailto:<a href=3D"mailto:Harvey.Wu@quantatw.com" target=3D"_blank">Harvey.=
+Wu@quantatw.com</a>&gt; wrote:<br>
+&gt; On Wed, Dec 30, 2020 at 10:19 AM Harvey Wu (=E5=90=B3=E5=B4=87=E7=B6=
+=AD)<br>
+&gt; &lt;mailto:<a href=3D"mailto:Harvey.Wu@quantatw.com" target=3D"_blank"=
+>Harvey.Wu@quantatw.com</a>&gt; wrote:<br>
+&gt; &gt;<br>
+&gt; &gt; Hi All,<br>
+&gt; &gt;<br>
+&gt; &gt;<br>
+&gt; &gt;<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0The current phosphor-virtual-sen=
+sor DbusParam value is from<br>
+&gt; DBus =E2=80=9CValue=E2=80=9D property which interface is<br>
+&gt; =E2=80=9Cxyz.openbmc_project.Sensor.Value=E2=80=9D.<br>
+&gt; &gt;<br>
+&gt; &gt; Because I want to get the property =E2=80=9CCriticalHigh=E2=80=9D=
+ value on DBus, could I<br>
+&gt; add a new feature =E2=80=9CInterface=E2=80=9D property in json file? T=
+he property can be<br>
+&gt; =E2=80=9CCriticalHigh=E2=80=9D , =E2=80=9CCriticalLow=E2=80=9D , =E2=
+=80=9CWarningHigh=E2=80=9D or =E2=80=9CWarningLow=E2=80=9D.<br>
+&gt; <br>
+&gt; <br>
+&gt; According to<br>
+&gt; <a href=3D"https://apc01.safelinks.protection.outlook.com/?url=3Dhttps=
+%3A%2F%2Fgithub" rel=3D"noreferrer" target=3D"_blank">https://apc01.safelin=
+ks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fgithub</a>.<br>
+&gt; com%2Fopenbmc%2Fphosphor-virtual-sensor%2Fblob%2Fmaster%2Fvirtual_<br>
+&gt; sensor_config.json%23L8-L14&amp;amp;data=3D04%7C01%7CHarvey.Wu%40quant=
+at<br>
+&gt; <a href=3D"https://apc01.safelinks.protection.outlook.com/?url=3Dhttp%=
+3A%2F%2Fw.com%2F&amp;data=3D04%7C01%7CHarvey.Wu%40quantatw.com%7Cf75707a743=
+1e4dca712e08d8ac80182b%7C179b032707fc4973ac738de7313561b2%7C1%7C0%7C6374490=
+13448979318%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJ=
+BTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&amp;sdata=3DkxT3i6moVPggqbY1zJiag18Cp9wG=
+myk1ctqrO8XlTUc%3D&amp;reserved=3D0%7C1479ebd5aedd4b8a7c3308d8ac6a4393%7C17=
+9b032707fc4973ac73" rel=3D"noreferrer" target=3D"_blank">https://apc01.safe=
+links.protection.outlook.com/?url=3Dhttp%3A%2F%2Fw.com%2F&amp;data=3D04%7C0=
+1%7CHarvey.Wu%40quantatw.com%7Cf75707a7431e4dca712e08d8ac80182b%7C179b03270=
+7fc4973ac738de7313561b2%7C1%7C0%7C637449013448979318%7CUnknown%7CTWFpbGZsb3=
+d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000=
+&amp;sdata=3DkxT3i6moVPggqbY1zJiag18Cp9wGmyk1ctqrO8XlTUc%3D&amp;reserved=3D=
+0%7C1479ebd5aedd4b8a7c3308d8ac6a4393%7C179b032707fc4973ac73</a><br>
+&gt; 8de7313561b2%7C1%7C0%7C637448919693850853%7CUnknown%7CTWFpb<br>
+&gt; GZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6<br=
+>
+&gt; Mn0%3D%7C1000&amp;amp;sdata=3D0KyrnRkZKr9M59DEg%2BnyUruiege%2B3EDXb<br=
+>
+&gt; mxzR%2B6xeng%3D&amp;amp;reserved=3D0,<br>
+&gt; the threshold properties are already supported.<br>
+<br>
+The &quot;Threshold&quot; in json seems only can set the sensor critical or=
+ warning value, but I want to use the critical or warning value in &quot;Ex=
+pression&quot;.<br>
+After check the newest commit, this function seems doesn&#39;t implement in=
+ current source code.<br>
+<br>
+&gt; <br>
+&gt; --<br>
+&gt; BRs,<br>
+&gt; Lei YU<br>
+<br>
+<br>
+Harvey Wu<br>
+</blockquote></div></div></div>
+
+--000000000000a92eff05b7b49f8e--
