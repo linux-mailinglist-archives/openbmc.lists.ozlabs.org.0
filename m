@@ -1,66 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E48D2E7624
-	for <lists+openbmc@lfdr.de>; Wed, 30 Dec 2020 06:06:21 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0ECE2E7625
+	for <lists+openbmc@lfdr.de>; Wed, 30 Dec 2020 06:10:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D5K4p5S1vzDqGq
-	for <lists+openbmc@lfdr.de>; Wed, 30 Dec 2020 16:06:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D5K9V0rt5zDqHP
+	for <lists+openbmc@lfdr.de>; Wed, 30 Dec 2020 16:10:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f;
- helo=mail-lf1-x12f.google.com; envelope-from=vijaykhemkalinux@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129;
+ helo=mail-lf1-x129.google.com; envelope-from=vijaykhemkalinux@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=XPFBcCrE; dkim-atps=neutral
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
- [IPv6:2a00:1450:4864:20::12f])
+ header.s=20161025 header.b=To1yDvzs; dkim-atps=neutral
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com
+ [IPv6:2a00:1450:4864:20::129])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D5K3n57jDzDqGX
- for <openbmc@lists.ozlabs.org>; Wed, 30 Dec 2020 16:05:23 +1100 (AEDT)
-Received: by mail-lf1-x12f.google.com with SMTP id h205so35270279lfd.5
- for <openbmc@lists.ozlabs.org>; Tue, 29 Dec 2020 21:05:23 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D5K8g6wcNzDqGY
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Dec 2020 16:09:39 +1100 (AEDT)
+Received: by mail-lf1-x129.google.com with SMTP id x20so35249637lfe.12
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Dec 2020 21:09:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=O7DMmuxqBW+v4vtcTOvA9Ea2RUGXk1k7S4CBkweiF1o=;
- b=XPFBcCrENujvbdBzGoFQCpb58Xu/cO++lc0KBapICx+lE0MbQcVbd1nTl8j8LdE3uy
- L6JsbI6pOVOac4Bm2BKNYmlBzutO57A5pfSrpNmVfeMGUTeimMzXAJcQ9etHj0t7bLe5
- y/QgXO41hgTXf2ErxLDn/5zTIQw2r3XK+9N/tInaXDn1qAl/5Y2xsXYNmQE/24qVEkvb
- +Ht3L0IpDdYyOFbso26BsiUYICthk25ju6fvfpWne82I0Ky9eOjqdQy/aKJuG2vQwRYg
- CQYfwMOTe/mfPO5ignINrm60Jye8bJYmn+Sj58VP6xgTL7yHfGPptsjUtW2jp5DULs6M
- 2Hjw==
+ :cc; bh=R0TGjIx0F7j27wn+li/YAAhAXy2ifJ3L0V4b5PtNuec=;
+ b=To1yDvzsOUVpHZIaK1lXCEScyGYnOdmtVudZP3tbAumkmKFq5DkyB2Td2jiLlAwb91
+ maca0cvw7IqnbiafqV49p8nFLc7htrxG4dV1esr0K79Dw1dD6XId+MsqsaY/x5Bl3obe
+ HYLLC11T60U3YZKM33bjimbq4uMuBQT4n3qgZ5rpmQsMxl08DHunOiSDdRsbELMvtmTc
+ 67lLGB/4ZV2Xx37jtQLFgw6DKCd78XhVSACvZ236QWy0Q56fau1onupsn2hBZipKKhNf
+ 8ZlqrAig6VnZ+2P3sawk5Cfr6bVH82y1wxNZIjZiZdTlJ5GVtVentJF+X8eoJbRkTnUD
+ h33w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=O7DMmuxqBW+v4vtcTOvA9Ea2RUGXk1k7S4CBkweiF1o=;
- b=dCK7qYZqwx5O+M2KUlAUT/CDWVqvfYkmfbTWAdflXnKIHDRz7uwXE0623ftzibNLLQ
- msbZZxuHKpXaaQM0/w7RMOugbWpnxSzomUwmYH1yQkuc3FZjvEW8xfx5oYVxIWVBOCa+
- SEfNuVbROIctMggePwoibSXOg5UBaBVxA9iz8Tu4bpScFP0RtgF7Qi2ApuM1k+xXT7cB
- 4CWqGU+mQYZvySXVWtpj8Kwx0WAvQq5tFnX0ewrZ9F6U4JZN8Xm86s+NJd+0GmblPXPh
- aAG/1HUNmTc1w8umEvLZyLm/RAnWr+p46sJQtGmxDCq935k/Ep1/3g+qPH364poWhIxj
- pXUg==
-X-Gm-Message-State: AOAM5330M91ph3/t7Stf8vLJWqWo+ZojecVO0PJzfaRe90aknBsI16Qa
- XSJrZnLYJpYt/eGm9SU0lFucaXalORHjl/GAHgVoe/3z
-X-Google-Smtp-Source: ABdhPJw77i/sLnNuYLrm+/NtKyaq9qpokxy5PUiHBIy8F08eag6ScKB9+8SjCOF5AI1Ao8NGojwnivoSw48EbB8B918=
-X-Received: by 2002:ac2:5bc2:: with SMTP id u2mr23103240lfn.565.1609304719151; 
- Tue, 29 Dec 2020 21:05:19 -0800 (PST)
+ bh=R0TGjIx0F7j27wn+li/YAAhAXy2ifJ3L0V4b5PtNuec=;
+ b=nfEQb4DtRHZJWOnDIlx9OJ2W4a1vuen5Hm8EISJPkqzXBcHGEdLLny8SG5bhZCNoom
+ f717taAtvmNmpu+S+pNoK6FGPDGSYhtuqzY3G/adQhxNdXawjG4aNLOwXxmArID6HdpT
+ 0uE5jBhIz5UZ+UEQU2JQR6CO7G3qYkCozzOomjBkkRRfv7nMBgK95l8zJmDD+G/1yQcZ
+ 4YEIIxKuKpV9Gnt8XX7sO5XYoi+MYtEN3IJ5VNc878sTwv+M63ylAj0Zgh6u/RsnSsf1
+ I6TZ7+G/E33geqgvOQlmzPqi6WW8tgf2Dr+Io7kOIP9y7qLmNS+lYgiHSXGYWpW0XPQr
+ fTSQ==
+X-Gm-Message-State: AOAM530/rIcKBU88U8SmyGDvYDbtWcoGhBqbXR4QHRxY1iMwuCGOrPA+
+ 8ZAcWX+EEeqDOqKXKU4ZGjW70hPtGV3OS9wsSsmKAtjZ
+X-Google-Smtp-Source: ABdhPJxaOLr8r7QJ/E4b9plqb1QEl6ZYHfLrQovv+/Sb5PmMYKPsE3oyVPrsjQSjyYxhjrmxwlFOtO2cNdiNgqf6Peg=
+X-Received: by 2002:a2e:5cc6:: with SMTP id
+ q189mr24780515ljb.316.1609304974672; 
+ Tue, 29 Dec 2020 21:09:34 -0800 (PST)
 MIME-Version: 1.0
-References: <SG2PR04MB30939AC2AE5E41555B8BBE08E1DD0@SG2PR04MB3093.apcprd04.prod.outlook.com>
-In-Reply-To: <SG2PR04MB30939AC2AE5E41555B8BBE08E1DD0@SG2PR04MB3093.apcprd04.prod.outlook.com>
+References: <2cd25ea6-f957-1536-cfb5-ba9aa2a31611@amperemail.onmicrosoft.com>
+In-Reply-To: <2cd25ea6-f957-1536-cfb5-ba9aa2a31611@amperemail.onmicrosoft.com>
 From: Vijay Khemka <vijaykhemkalinux@gmail.com>
-Date: Tue, 29 Dec 2020 21:05:07 -0800
-Message-ID: <CAJTGxZHVwf_Lr=5YF2q9Jt8W_p_BT62M12WOPNast4pMKht4DA@mail.gmail.com>
-Subject: Re: Sensor Details
-To: Jayashree D <jayashree-d@hcl.com>
-Content-Type: multipart/alternative; boundary="0000000000001ed61c05b7a77403"
+Date: Tue, 29 Dec 2020 21:09:23 -0800
+Message-ID: <CAJTGxZESn=fr4OxP70JNAM0hnmR5vE7xC11ScbfbdeNiwd5bgA@mail.gmail.com>
+Subject: Re: Ipmid not work on eth1 when enable NCSI.
+To: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Content-Type: multipart/alternative; boundary="00000000000059c75905b7a78346"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,121 +73,199 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000001ed61c05b7a77403
+--00000000000059c75905b7a78346
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Dec 24, 2020 at 7:55 AM Jayashree D <jayashree-d@hcl.com> wrote:
+On Wed, Dec 23, 2020 at 7:59 AM Thu Nguyen <thu@amperemail.onmicrosoft.com>
+wrote:
 
-> Classification: *Public*
->
-> Hi Team,
+> Hi All,
 >
 >
+> I'm verifying NCSI with my Mt.Jade platform.
 >
-> Is there a way to get the details of sensor events like crossed
-> threshold/fault etc from any other service running on bmc (ex.
-> phosphor-led-manager).
+> In Mt.Jade platform, we have the shared NIC in eth0 interface and
+> dedicated RGMII in eth1 interface.
 >
-This has been enabled in tiogapass, I don't remember which application but
-I see logs if there is any threshold hit.
+> I used below steps to enable NC-SI in Mt.Jade.
+>
+> 1. Add definition in DTS for MAC0:
+>
+> &mac0 {
+>        status = "disabled";
+>        status = "okay";
+>        pinctrl-names = "default";
+>        pinctrl-0 = <&pinctrl_rmii1_default>;
+>        clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
+>                 <&syscon ASPEED_CLK_MAC1RCLK>;
+>        clock-names = "MACCLK", "RCLK";
+>        use-ncsi;
+> };
+>
+> 2. Add build configure to enable OEM Command to get MAC for NCSI.
+>
+> CONFIG_NCSI_OEM_CMD_GET_MAC=y
+>
+> After these steps, My system can detect OCP card, can get MACs and both
+> eth0 and eth1 interfaces are up.
+>
+> I can access BMC Web use both ip of eth0 or eth1. The same for Redfish.
+>
+> BUT I can only use ipmitool with eth0. Ipmitool command not work with
+> eth1 interface.
+>
+>
+> Check the setting of phosphor-ipmid-net in
+>
+>
+> meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_access.json
+>
+>
+> meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_config.json
+>
+You have to configure in this file for eth1 as well.
+
+>
+> I can see that ipmid is configured to listen on both interface eth0 and
+> eth1.
+>
+How do you make sure it is listening on both interface
+
+>
+> Do I miss any configuration here?
+>
+>
+> Check the journal log, I saw some errors and warning from NCSI:
+>
+> Dec 23 10:14:50 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI:
+> Handler for packet type 0x82 returned -19
+>
+> Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI:
+> 'bad' packet ignored for type 0x8b
+> Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI:
+> 'bad' packet ignored for type 0x8b
+> Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI:
+> 'bad' packet ignored for type 0x8b
+> Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI:
+> 'bad' packet ignored for type 0x8b
+>
+> Because NC-SI interface is up, so I just ignore these errors.
+>
+
+These errors can be ignored, it doesn't harm in any communication. We need
+to fix this  into the kernel.
 
 >
 >
-> Please provide your inputs/suggestions on this.
+> Regards.
+>
+> Thu Nguyen.
 >
 >
 >
-> Regards,
->
-> Jayashree
->
->
-> ::DISCLAIMER::
-> ------------------------------
-> The contents of this e-mail and any attachment(s) are confidential and
-> intended for the named recipient(s) only. E-mail transmission is not
-> guaranteed to be secure or error-free as information could be intercepted,
-> corrupted, lost, destroyed, arrive late or incomplete, or may contain
-> viruses in transmission. The e mail and its contents (with or without
-> referred errors) shall therefore not attach any liability on the originator
-> or HCL or its affiliates. Views or opinions, if any, presented in this
-> email are solely those of the author and may not necessarily reflect the
-> views or opinions of HCL or its affiliates. Any form of reproduction,
-> dissemination, copying, disclosure, modification, distribution and / or
-> publication of this message without the prior written consent of authorized
-> representative of HCL is strictly prohibited. If you have received this
-> email in error please delete it and notify the sender immediately. Before
-> opening any email and/or attachments, please check them for viruses and
-> other defects.
-> ------------------------------
 >
 
---0000000000001ed61c05b7a77403
+--00000000000059c75905b7a78346
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 24, 2020 at 7:55 AM Jayas=
-hree D &lt;<a href=3D"mailto:jayashree-d@hcl.com">jayashree-d@hcl.com</a>&g=
-t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-
-
-
-
-
-<div lang=3D"EN-US">
-<div class=3D"gmail-m_5863433896934686407WordSection1">
-<p class=3D"MsoNormal" style=3D"margin-bottom:12pt">Classification: <b><spa=
-n style=3D"color:green">Public</span></b><span style=3D"font-size:12pt"><u>=
-</u><u></u></span></p>
-<p class=3D"MsoNormal">Hi Team,<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif">Is there a way to get the details of sensor events=
- like crossed threshold/fault etc from any other service running on bmc (ex=
-. phosphor-led-manager).</span></p></div></div></blockquote><div>This has b=
-een enabled in tiogapass, I don&#39;t remember which application but I see =
-logs if there is any threshold hit.=C2=A0</div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex"><div lang=3D"EN-US"><div class=3D"gmail-m_58634338969=
-34686407WordSection1"><p class=3D"MsoNormal"><span style=3D"font-size:10.5p=
-t;font-family:&quot;Segoe UI&quot;,sans-serif"><u></u><u></u></span></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10.5pt;font-family:&quot;Se=
-goe UI&quot;,sans-serif">Please provide your inputs/suggestions on this.<u>=
-</u><u></u></span></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Regards,<u></u><u></u></p>
-<p class=3D"MsoNormal">Jayashree<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-</div>
-<font face=3D"Arial" color=3D"Gray" size=3D"1">::DISCLAIMER::<br>
-<hr>
-The contents of this e-mail and any attachment(s) are confidential and inte=
-nded for the named recipient(s) only. E-mail transmission is not guaranteed=
- to be secure or error-free as information could be intercepted, corrupted,=
- lost, destroyed, arrive late or
- incomplete, or may contain viruses in transmission. The e mail and its con=
-tents (with or without referred errors) shall therefore not attach any liab=
-ility on the originator or HCL or its affiliates. Views or opinions, if any=
-, presented in this email are solely
- those of the author and may not necessarily reflect the views or opinions =
-of HCL or its affiliates. Any form of reproduction, dissemination, copying,=
- disclosure, modification, distribution and / or publication of this messag=
-e without the prior written consent
- of authorized representative of HCL is strictly prohibited. If you have re=
-ceived this email in error please delete it and notify the sender immediate=
-ly. Before opening any email and/or attachments, please check them for viru=
-ses and other defects.<br>
-<hr>
-</font>
-</div>
-
+<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Wed, Dec 23, 2020 at 7:59 AM Thu Nguye=
+n &lt;<a href=3D"mailto:thu@amperemail.onmicrosoft.com">thu@amperemail.onmi=
+crosoft.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Hi All,<br>
+<br>
+<br>
+I&#39;m verifying NCSI with my Mt.Jade platform.<br>
+<br>
+In Mt.Jade platform, we have the shared NIC in eth0 interface and <br>
+dedicated RGMII in eth1 interface.<br>
+<br>
+I used below steps to enable NC-SI in Mt.Jade.<br>
+<br>
+1. Add definition in DTS for MAC0:<br>
+<br>
+&amp;mac0 {<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 status =3D &quot;disabled&quot;;<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 status =3D &quot;okay&quot;;<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinctrl-names =3D &quot;default&quot;;=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinctrl-0 =3D &lt;&amp;pinctrl_rmii1_d=
+efault&gt;;<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clocks =3D &lt;&amp;syscon ASPEED_CLK_=
+GATE_MAC1CLK&gt;,<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 &lt;&amp;syscon ASPEED_CLK_MAC1RCLK&gt;;<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 clock-names =3D &quot;MACCLK&quot;, &q=
+uot;RCLK&quot;;<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 use-ncsi;<br>
+};<br>
+<br>
+2. Add build configure to enable OEM Command to get MAC for NCSI.<br>
+<br>
+CONFIG_NCSI_OEM_CMD_GET_MAC=3Dy<br>
+<br>
+After these steps, My system can detect OCP card, can get MACs and both <br=
+>
+eth0 and eth1 interfaces are up.<br>
+<br>
+I can access BMC Web use both ip of eth0 or eth1. The same for Redfish.<br>
+<br>
+BUT I can only use ipmitool with eth0. Ipmitool command not work with <br>
+eth1 interface.<br>
+<br>
+<br>
+Check the setting of phosphor-ipmid-net in<br>
+<br>
+meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_access.jso=
+n<br>
+<br>
+meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_config.jso=
+n<br></blockquote><div>You have to configure in this file for eth1 as well.=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+I can see that ipmid is configured to listen on both interface eth0 and <br=
+>
+eth1.<br></blockquote><div>How do you make sure it is listening on both int=
+erface=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+Do I miss any configuration here?<br>
+<br>
+<br>
+Check the journal log, I saw some errors and warning from NCSI:<br>
+<br>
+Dec 23 10:14:50 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: <br>
+Handler for packet type 0x82 returned -19<br>
+<br>
+Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: <br>
+&#39;bad&#39; packet ignored for type 0x8b<br>
+Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: <br>
+&#39;bad&#39; packet ignored for type 0x8b<br>
+Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: <br>
+&#39;bad&#39; packet ignored for type 0x8b<br>
+Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0: NCSI: <br>
+&#39;bad&#39; packet ignored for type 0x8b<br>
+<br>
+Because NC-SI interface is up, so I just ignore these errors.<br></blockquo=
+te><div><br></div><div>These errors can be ignored, it doesn&#39;t harm in =
+any communication. We need=C2=A0</div><div>to fix this=C2=A0 into the kerne=
+l.</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+<br>
+Regards.<br>
+<br>
+Thu Nguyen.<br>
+<br>
+<br>
+<br>
 </blockquote></div></div>
 
---0000000000001ed61c05b7a77403--
+--00000000000059c75905b7a78346--
