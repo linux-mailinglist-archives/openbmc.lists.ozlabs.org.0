@@ -1,162 +1,129 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 599382E7E7E
-	for <lists+openbmc@lfdr.de>; Thu, 31 Dec 2020 07:52:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E148B2E7E9D
+	for <lists+openbmc@lfdr.de>; Thu, 31 Dec 2020 08:40:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D5zP93D7czDqKb
-	for <lists+openbmc@lfdr.de>; Thu, 31 Dec 2020 17:52:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D60SX0cQJzDqLC
+	for <lists+openbmc@lfdr.de>; Thu, 31 Dec 2020 18:40:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.128;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=amperemail.onmicrosoft.com
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=hcl.com
- (client-ip=40.107.130.120; helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=jayashree-d@hcl.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=quarantine dis=none) header.from=hcl.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=HCL.COM header.i=@HCL.COM header.a=rsa-sha256
- header.s=selector2 header.b=iWk2IUK0; 
- dkim=pass (1024-bit key) header.d=HCL.COM header.i=@HCL.COM
- header.a=rsa-sha256 header.s=selector2 header.b=iWk2IUK0; 
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=ohK1Tmtc; 
  dkim-atps=neutral
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-eopbgr1300120.outbound.protection.outlook.com [40.107.130.120])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2128.outbound.protection.outlook.com [40.107.220.128])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D5zNB1T6RzDqKJ
- for <openbmc@lists.ozlabs.org>; Thu, 31 Dec 2020 17:51:49 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Els7LsMWEOf7PUrxg9ZBbPWygt3/zEKx4buBcBg5yD4=;
- b=iWk2IUK068lsrVUFDC3qljOoAQQX1bEdjO6fuOqyzhc/rLQucPbtMTDfVXQZYYhUOMUZui+J2Bfp9uR6/41nS4QSM5BWk9Jq5weX/QdfeJaqxas8I0zaXfMU3ZR6NtT7yxihz8I3Igae808PRkrpxjyjgFSCsA+i+hywZ8+F7HQ=
-Received: from SG2PR03CA0165.apcprd03.prod.outlook.com (2603:1096:4:c9::20) by
- PSAPR04MB4469.apcprd04.prod.outlook.com (2603:1096:301:29::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3721.20; Thu, 31 Dec 2020 06:51:37 +0000
-Received: from SG2APC01FT056.eop-APC01.prod.protection.outlook.com
- (2603:1096:4:c9:cafe::74) by SG2PR03CA0165.outlook.office365.com
- (2603:1096:4:c9::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3742.4 via Frontend
- Transport; Thu, 31 Dec 2020 06:51:37 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 192.8.245.54)
- smtp.mailfrom=hcl.com; gmail.com; dkim=pass (signature was verified)
- header.d=HCL.COM;gmail.com; dmarc=pass action=none header.from=hcl.com;
-Received-SPF: Pass (protection.outlook.com: domain of hcl.com designates
- 192.8.245.54 as permitted sender) receiver=protection.outlook.com;
- client-ip=192.8.245.54; helo=APC01-HK2-obe.outbound.protection.outlook.com;
-Received: from APC01-HK2-obe.outbound.protection.outlook.com (192.8.245.54) by
- SG2APC01FT056.mail.protection.outlook.com (10.152.251.13) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3721.20 via Frontend Transport; Thu, 31 Dec 2020 06:51:36 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D60RR5YS3zDqGp
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Dec 2020 18:39:45 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BJeLSC3Un8VADt3jEA8icos+may/llLi/I8840BiZyolEFwgXgcHvwNff1csjBxkGEUfY3I2/FBVRotysTWW+SEmKks8n8YRFmlYhuj9sCPeSJEjgA6zI6sB3hUDd9phcLu+cuF66JxhSFUb9vpncr8ngFqL8OdH6wWOig67OMsNYqfesHVCZ791MsSdz2Mmok1l1w0B+EdW5qjrssvYvTG2FIpsBSIHn3BL9NEpxsGtMrKB4a8zzuNXxmnt4yI4+UjlRXM1HTm1yXVIChlUAVCvNOFvFnF4zyt0dYexS7v1deFy+Y7WgU2KRKm0of2Q2H5dmWedWEITfkq1Jez/qQ==
+ b=bR73jamgCpM8TBmsVKiXn1HKwuqwmxHECCy/eTd/jRvNc/aeBmtdhjQZMalSf1Hwneb65yGZ61WBUcnByVRDkUAsYG0VsZrojRfjcQoUp2afQf20CvWd6j4jMrAgDVs49OCweYKYWeEBPUh6j/mmcdw5VnKxlJ67hj8NmkDFnwV8cITFZRFYjEJYKv1izn/OMeEcIeSbYmVOPPp6DDDgNTLXAYp+pLvzA9U6d/5Yy6RKNRuRY6lF+4LtRBB/alGPRbz6DpdClQyjDU+Dxlkp0o8zAynOOPAMVeJ0KVZ/O2DpYWDjFivxCQhDcxtKnnbJo8zRzI+EVfqWdybKSbEfQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Els7LsMWEOf7PUrxg9ZBbPWygt3/zEKx4buBcBg5yD4=;
- b=E6d6XPRpoch7kSuw+/iSrD1b2BrR35Avt6Dd6/nNEACdvAiH53sdmg758xYI90ntUVHCgyV4uETVMLe7g9RY9Xw1BYFeTicG0zvvOaldmlbSIp/rAzIsae4gnsAEdTV7i2LO1rxpmIYOQgQ+pyRMSrLZ+j/EzU8jKc3ArGjELexMVySewM8gtXRlfE4GzCwXLzNr56Naih+jbCNEwNUV8IvoAA0vEmpIV/imxNyXX1lLmBijGiyHWIPyMpgy6L74mt0hRzWOLDp9dsnzZRvvnM6PRLU+X4Qqp6ZxxaUheDaFtfF4y+x+aUDAtDWFQjytePNbY+vsYsMcMFNa2VzRPw==
+ bh=eOlz1gRJP/2EH9x2g3dBeLcUKoI2YU97oTO0h6b+qh8=;
+ b=Y9u3xG4Es85in7cOohRRvIa9WyvDBg7N3ZXpZbRhdOuBxSuIBfZb22vuX43MOef08B8et8/hsRfGX6qkYnoomyf2uC4qb4wBzTzrK6//BiUaqc9tfKH3xLKeXgT43TsUHuVv9npfToi5HUE3LYKr/9aK/2W+Gu1SvZ7o4vyVIgYOqNe34LAjruYRillZw2t5by4wk0y3+ofNBL32ZxjHH6Wafpk0sazXIKeeOegIMvNVmyxki3PufA+qk2wZh68bnLoP6ktxPjG+EssnShrsOWTof7pHFvFpsBC9J6i1iEmclm+Sm8jtpN+xP/a302ASOPJOO5GoNxUvlHzEMyRc9g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hcl.com; dmarc=pass action=none header.from=hcl.com; dkim=pass
- header.d=hcl.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=HCL.COM; s=selector2; 
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Els7LsMWEOf7PUrxg9ZBbPWygt3/zEKx4buBcBg5yD4=;
- b=iWk2IUK068lsrVUFDC3qljOoAQQX1bEdjO6fuOqyzhc/rLQucPbtMTDfVXQZYYhUOMUZui+J2Bfp9uR6/41nS4QSM5BWk9Jq5weX/QdfeJaqxas8I0zaXfMU3ZR6NtT7yxihz8I3Igae808PRkrpxjyjgFSCsA+i+hywZ8+F7HQ=
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com (2603:1096:4:6d::11) by
- SG2PR04MB3095.apcprd04.prod.outlook.com (2603:1096:4:6b::18) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.3721.20; Thu, 31 Dec 2020 06:51:34 +0000
-Received: from SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::48c:6edc:45ad:ebe7]) by SG2PR04MB3093.apcprd04.prod.outlook.com
- ([fe80::48c:6edc:45ad:ebe7%6]) with mapi id 15.20.3721.020; Thu, 31 Dec 2020
- 06:51:34 +0000
-From: Jayashree D <jayashree-d@hcl.com>
+ bh=eOlz1gRJP/2EH9x2g3dBeLcUKoI2YU97oTO0h6b+qh8=;
+ b=ohK1TmtcbG7rtAaEKyB40AxQlMsYcyP4PVIBuEu8A3yaF3UBtS3W9VTcjOBfbm3/rfqsvcMH1oMoshDJLg5OkoVDG/13m3utYt7v/7bs1qvz6U03uW49F81PNcsxEK6KRu0LikJYZOLu13Huj0k/kPAEmekLglb1/N2yQfIZ7/I=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB3817.prod.exchangelabs.com (2603:10b6:5:92::17) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3700.29; Thu, 31 Dec 2020 07:39:37 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::f0b8:2176:ea56:dc57]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::f0b8:2176:ea56:dc57%4]) with mapi id 15.20.3721.020; Thu, 31 Dec 2020
+ 07:39:37 +0000
+Subject: Re: Ipmid not work on eth1 when enable NCSI.
 To: Vijay Khemka <vijaykhemkalinux@gmail.com>
-Subject: RE: Sensor Details
-Thread-Topic: Sensor Details
-Thread-Index: AdbaDHxph6EtzkcRRh2+d9Mr6fB5HAEXNrKAADX0IUA=
-Date: Thu, 31 Dec 2020 06:51:34 +0000
-Message-ID: <SG2PR04MB3093757336D5EBBB5DEF4A52E1D60@SG2PR04MB3093.apcprd04.prod.outlook.com>
-References: <SG2PR04MB30939AC2AE5E41555B8BBE08E1DD0@SG2PR04MB3093.apcprd04.prod.outlook.com>
- <CAJTGxZHVwf_Lr=5YF2q9Jt8W_p_BT62M12WOPNast4pMKht4DA@mail.gmail.com>
-In-Reply-To: <CAJTGxZHVwf_Lr=5YF2q9Jt8W_p_BT62M12WOPNast4pMKht4DA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-titus-metadata-40: eyJDYXRlZ29yeUxhYmVscyI6IiIsIk1ldGFkYXRhIjp7Im5zIjoiaHR0cDpcL1wvd3d3LnRpdHVzLmNvbVwvbnNcL2hjbCIsImlkIjoiZDdkNGZhYjEtYmQ0ZS00NTUwLTk4MWYtOTkwNDU0Y2ExYTg0IiwicHJvcHMiOlt7Im4iOiJIQ0xDbGFzc2lmaWNhdGlvbiIsInZhbHMiOlt7InZhbHVlIjoiSENMX0NsYTVzX1B1YmwxYyJ9XX1dfSwiU3ViamVjdExhYmVscyI6W10sIlRNQ1ZlcnNpb24iOiIxOC40LjE4NDMuMTIzIiwiVHJ1c3RlZExhYmVsSGFzaCI6Ik44OXVrOUV4dFlYenZtcE56RlVJMENcL1kzVFpkMzZxSytiQkJPZ0hrSW95WFhycXVJMG45ck5VcjFQZzk1RndtIn0=
-x-hclclassification: HCL_Cla5s_Publ1c
-Authentication-Results-Original: gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=none action=none header.from=hcl.com;
-x-originating-ip: [2409:4072:490:e706:c92d:b4cc:7c4f:25d9]
-x-ms-publictraffictype: Email
-X-MS-Office365-Filtering-Correlation-Id: 76a39c7b-2046-4f20-cf04-08d8ad5884f7
-x-ms-traffictypediagnostic: SG2PR04MB3095:|PSAPR04MB4469:
-X-Microsoft-Antispam-PRVS: <PSAPR04MB4469C67685ADFAF1BF15917AE1D60@PSAPR04MB4469.apcprd04.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:5797;OLM:5797;
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam-Untrusted: BCL:0;
-X-Microsoft-Antispam-Message-Info-Original: 9DCRQr+B0OitkcVWQXzxsAouVR8SBJyj9S6WscmR5VxZlNv3PNevhHOZ8LIV5toH6vORE1MnwRCCkEirxLbLQgHwHPNKXv/8rMRW7bTJ6dzI7GtqxKUzitIuKl5mNFSzkdECQk/xJ9vU2dU6n68DxRgeDSVAYRQQNBTDmtf1CjYsmxwJBpRU5Oi0SZPzypz+o/LA0Vfd9KRcqSZV41XgUqba9k3vXB/iPRjrvAOvHh97/pJWPGhrv0bkQovZtDjeZpKNMMQWm/da6DBUroEI9Jln1RywXF68VKk2P7BXXYsgNcMV0Mm2RR3RI3rtYxTgSgacl6UxSqOQTpWjKIACiOXVMpWxQEehPQgBkGaBFpnLbY6M+wUQfvLdrkGkeetiKOX1AIuLZQtG991RWDI/bA==
-X-Forefront-Antispam-Report-Untrusted: CIP:255.255.255.255; CTRY:; LANG:en;
- SCL:1; SRV:; IPV:NLI; SFV:NSPM; H:SG2PR04MB3093.apcprd04.prod.outlook.com;
- PTR:; CAT:NONE;
- SFS:(4636009)(136003)(376002)(346002)(39860400002)(366004)(396003)(66476007)(66946007)(8676002)(86362001)(55016002)(66556008)(478600001)(2906002)(8936002)(76116006)(3480700007)(9686003)(316002)(64756008)(66446008)(6506007)(53546011)(33656002)(6916009)(4326008)(71200400001)(52536014)(83380400001)(5660300002)(186003)(7116003)(7696005);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?utf-8?B?ODM3NGlROG4yS0N5QXI1Z1VvSko4OXpESHBTTDRIemcrK2MzSWxoZWdva3VV?=
- =?utf-8?B?cGJJRU9tNUNHa3NMNVF1TSsxNS9tQnFQZFBOaGpCV3hWU2VoNE9aWVpEcjd5?=
- =?utf-8?B?bTNnQnRWY3QycmJmWjNBVTI5b1FuNzZJSXlmb2dZY2pzb0lEODJQR1E1WGIr?=
- =?utf-8?B?U3BSdXRoblJsUUt6ek9mM0IyV2VVeVpLSE50N3pSS2pzQjZFWTBMbHlLYW85?=
- =?utf-8?B?Ni9wdDZNNHY5TVNHc1ZoRUxDUWNkWXVqQnEyRHRZZGlQZHJYMk9zWHNpekIy?=
- =?utf-8?B?UEx6S0xkM2VyOUNlOE1MVktOZFZNQmhlTHRwVzNHY0FhWmxGMDdTUGxtM255?=
- =?utf-8?B?R1BTdGZtendma056Z01IQjk0cGRWWU84SHZkVnNNbUE0TGVrY0JyRndhN3pK?=
- =?utf-8?B?Nmd1dDRIY2hpUGdZbUYwZnVsM08rVHMvZUVUd3IyZlQ4ZmlTU09JVnIybGZS?=
- =?utf-8?B?d1MzcHFsSkt4UjJSRkwxTkdjV1lHRFpkUUF4QXAyRnZqN0VCb1MwTEp0ZWRF?=
- =?utf-8?B?WWNPYVJKM0Zmd08zaTM3b2M3TXRDaGtBZjcrbTFrRCsraEk1QlRjeVRjUkxW?=
- =?utf-8?B?b2JMd3NMZGRXb1k2Z3VBeXgwUU9ZVFdFelRLSlBPa0Y2NlRuTTk0TnNITm9J?=
- =?utf-8?B?eDJHRzVHb2cyamVGcXdqVkpZSUFOR25LaHI0R1AvWUVWdytzZFpudnpBZDYv?=
- =?utf-8?B?aGRqRUVFSjM4N0J4UU1WZlY1MCtwNW1nWjQ3aDEzVTdSYmZLWU40STlqOHVP?=
- =?utf-8?B?TkUxOU1pLzlueGMrbm9wY2d2RzNBNjVIZHRabWFjMC9kOFNiNStBMmtRVjRz?=
- =?utf-8?B?dE93TGUwYm5KVHJuVkFhUXg2cWowTkEwVSt3UlFtcmRGMXd4SDNoN3pQVzYy?=
- =?utf-8?B?SlBGUHdZWk5VSXpoKzFqZEcvK0k1ZHJwZGlwZUNFNDVZbVhFRjJUVmpzYy9E?=
- =?utf-8?B?MGtoZlgxREptWitSKzA4aXorMG1uZEcvUmw2VnpVdXpybjdUWEx5MkUvUFk1?=
- =?utf-8?B?T0dNN3FqdFFRQUZzUFRCbzhYam9uU3FkTHh6bDYwWGxjWnVETDdabnhobmRl?=
- =?utf-8?B?MEQveVd3R0k1YkhzcDJVaVhuK2dSTU9XazBidkNjVVZCU2pLQ2FCNm1HUHNz?=
- =?utf-8?B?dkNUb0pVNCtPeGdibk5vQ2FXSk9ORWRSamlTdXRBYzY4L09mdmt2bW9XdldB?=
- =?utf-8?B?U3FDTm80czNIODFOUHVpQ3JQNkU1SnByYUIrVHgrb0lFWUExb0dQZ2ZsRXlS?=
- =?utf-8?B?SWd1MzdZcFJSVFBlSU1PSXFqU2NLeHNCVEQ4ZTJJdFRpRCsvdzRXR1gxRE5F?=
- =?utf-8?B?MU1lTE5LbVY4S1dQSFpuVjc1QTF6RnJnd3RQYXFaRWVWczRINzJjSnVTZW96?=
- =?utf-8?Q?axvTFNu56Np1mWXkpQKf9sQXW3msXxuk=3D?=
-x-ms-exchange-transport-forked: True
+References: <2cd25ea6-f957-1536-cfb5-ba9aa2a31611@amperemail.onmicrosoft.com>
+ <CAJTGxZESn=fr4OxP70JNAM0hnmR5vE7xC11ScbfbdeNiwd5bgA@mail.gmail.com>
+From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Message-ID: <6bff103d-e665-80e8-3dfb-f5d6bee360d5@amperemail.onmicrosoft.com>
+Date: Thu, 31 Dec 2020 14:39:28 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
+In-Reply-To: <CAJTGxZESn=fr4OxP70JNAM0hnmR5vE7xC11ScbfbdeNiwd5bgA@mail.gmail.com>
 Content-Type: multipart/alternative;
- boundary="_000_SG2PR04MB3093757336D5EBBB5DEF4A52E1D60SG2PR04MB3093apcp_"
+ boundary="------------48180D954BE0BDEF80040400"
+Content-Language: en-US
+X-Originating-IP: [2402:800:6344:4074:c0f1:57f8:1af1:bc2a]
+X-ClientProxiedBy: HKAPR03CA0013.apcprd03.prod.outlook.com
+ (2603:1096:203:c8::18) To DM6PR01MB5145.prod.exchangelabs.com
+ (2603:10b6:5:56::16)
 MIME-Version: 1.0
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR04MB3095
-X-DLP: MSGProcess
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped: SG2APC01FT056.eop-APC01.prod.protection.outlook.com
-X-MS-Office365-Filtering-Correlation-Id-Prvs: 0e3bf40f-c865-4069-b51d-08d8ad588377
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2402:800:6344:4074:c0f1:57f8:1af1:bc2a]
+ (2402:800:6344:4074:c0f1:57f8:1af1:bc2a) by
+ HKAPR03CA0013.apcprd03.prod.outlook.com (2603:1096:203:c8::18) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3742.4 via Frontend Transport; Thu, 31 Dec 2020 07:39:36 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: adb562a7-d9ab-44ab-f4aa-08d8ad5f39d3
+X-MS-TrafficTypeDiagnostic: DM6PR01MB3817:
+X-Microsoft-Antispam-PRVS: <DM6PR01MB381733F1E85CF59B28687A3E90D60@DM6PR01MB3817.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:6790;
+X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 3S4vAfGk1AVAzjQ1y5MAaO1zGmY/iaHSI3fk2a8dLqaKliA8WKM9kx62CGo9Ac0wYj+ZbY29eFFhOUKNGhjXSVZWwOCofWtBRPLIxLlrbt1wwuw2Z3+0Cyxi4ci0rvpPGlaaU3OKtUBbXshXTPD7t8PTVx2Ti+hO4NkTHwyegbwwn5apkBe+jiIZ9IZO0H4AkK4Pruf1NgAlpzU17bmTdkK/vh2CiBh5OdWQJ8gNBzWbgRQQok9hvpmXYfnvvvckdKD2rX6DUG3YaJqaz2GOP9WHu23xQt7lslmC71y0lYAfmXnaG4zJq6MToe+nURdUVaP9Rq4rP29OIsWI9LckLvX27PfCAtxyXulv8SWF6VYlge2Zbw08hvgJESkZMP69K/4GhLPXIKtPxNuXkyvcp592nzhIrtTeLdJQg5DMuIfd7hP142srZTUojLUImttEw5zr64MAnM7ZnNU5s+kjwA==
-X-Forefront-Antispam-Report: CIP:192.8.245.54; CTRY:IN; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:APC01-HK2-obe.outbound.protection.outlook.com;
- PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(4636009)(396003)(376002)(39860400002)(136003)(346002)(46966006)(2906002)(316002)(4326008)(478600001)(36906005)(83380400001)(336012)(82310400003)(8676002)(356005)(7696005)(6916009)(7116003)(26005)(186003)(81166007)(53546011)(6506007)(33964004)(8936002)(3480700007)(52536014)(47076005)(82740400003)(5660300002)(9686003)(86362001)(55016002)(70206006)(33656002)(70586007);
+X-Microsoft-Antispam-Message-Info: +gFJ3wTJ89HozapxJAqH+LKiXfC9OHC8nsWMMElAWXBdQ9YcYAPRk85ouU3l0vlwwnjv1Oz2wEGUMIuXj2GLORgbXJ1pwfCcklsc7u3FJtu3gHQkf/J6kfQGOb4qtWr8qHa4v7L6rsEVqtSFl0X9lCPM64y8c+FZqUlO8rBx1nFrGelw+pd41cPI1B76i0APNUBviixEkrVF+nf2zCLoRpBZ9uCG3IxDlU13Miorh0EqcTrmLYyokDm1NsUiB6BOeNITdpl6yNQWvMU3e3/OU+1TbU0pWESLoMVhcvbzlghjh5tN8ed8gsHJmDnWtNOzlrgnl8rm6QM7Hsbsa4ux5SQFKuRWy4pKobAdv0Rie/+vXZprKodLc7BHwaGN8H76ZZ0A3Mg7a98fIQtfKtPgTnZ2FPPbmGGtB9tEmmuVnWEj/DBmo2Y5McrjiUQO8Py8lsogM3m4EUFPEd976TyKV5hFzfhIqRBSHlUSM5rBx3Y=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(346002)(376002)(366004)(396003)(39850400004)(136003)(83170400001)(83380400001)(66946007)(2616005)(66476007)(186003)(4326008)(2906002)(66556008)(33964004)(8676002)(31686004)(6486002)(52116002)(6666004)(5660300002)(53546011)(42882007)(8936002)(316002)(16526019)(31696002)(6916009)(478600001)(45980500001)(43740500002);
  DIR:OUT; SFP:1102; 
-X-OriginatorOrg: HCL.COM
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Dec 2020 06:51:36.8043 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76a39c7b-2046-4f20-cf04-08d8ad5884f7
-X-MS-Exchange-CrossTenant-Id: 189de737-c93a-4f5a-8b68-6f4ca9941912
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=189de737-c93a-4f5a-8b68-6f4ca9941912; Ip=[192.8.245.54];
- Helo=[APC01-HK2-obe.outbound.protection.outlook.com]
-X-MS-Exchange-CrossTenant-AuthSource: SG2APC01FT056.eop-APC01.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR04MB4469
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?ZGIwT2ZjODU3VHEwdjZKV2VhZ1QxTCtWcHVpeDJsOG9wYVdBK1lVTVZDcUJZ?=
+ =?utf-8?B?Y0tuVExOMnp3ZTBkZXFGWU1lQzM3OTFkQUNPK3QzdHJJOU5OOFZZTVdTOWlO?=
+ =?utf-8?B?amFPREVwVFJ6dUxoWmdyQTFBeXM1bG8ydnJLcEhWZFhTejEvcjZIRm5MVWxw?=
+ =?utf-8?B?VjZIcmp0Tk90N3hQdU1DUXc4MUowOUh1dlU5UER3Wmw0TkcrTGg2cDdiZ2VG?=
+ =?utf-8?B?c2ExNVNpYnA4aXAyVWRzV0MyVEJGWm43cHROWmgvYUtDenluVjJaOXFhazJq?=
+ =?utf-8?B?TXhTREx2d20zSUFucktwRHp6aGdtL1FESWZubEM1OHhoa3d5dmZVYjFHUjVE?=
+ =?utf-8?B?dDBmcEJ2WXI5NStNY1VCZ0RCVHJ5a2YzeVZZUWRMenFMN1huVFQ2WnNpcHND?=
+ =?utf-8?B?ZUJRcHRuTG8wWmkxZ1ZCa05VdCszNUJDL1U4YUgvL0d3VFc0R2lVUTFLYnJK?=
+ =?utf-8?B?dWVoL3pnQk5VR1Uvd3RtTHhMeEpBVmh3RzkyR2hzdy9oQXlZcHlIOWVLZkUz?=
+ =?utf-8?B?RDBSSFJaOVc1Q01nQkJyYWt2bmNLYUtNTGo3eVpLamVBZWxxZjYwK3kzMXlk?=
+ =?utf-8?B?SFAwQ1RxZkdFTXB0Z04vWlZ5RWxYR0tVU2tubzQxcUhERnVTOHN3RVd5T09K?=
+ =?utf-8?B?cy95SDhEMTA4VjJUVTV1Y3VQQXNibmlkbXhEVytPRDZLUnhYWTllRVc2VGEx?=
+ =?utf-8?B?UHpjR0dZRXExdjZqc0owWGZORm91RmorM2Y1ZzFTVU5ueCtuR291ZTZHTkpp?=
+ =?utf-8?B?REZQNGt3QmRtckprMkJhSm1uc1NqbHJhdlRRa2ZTRVZsQU82dXA1cFVYR3JB?=
+ =?utf-8?B?Uzl4Rm0wQkQxL2tBc3JNaElVZVF4RlFtUk5oblYydCtjMEZBQXhzNkNNSzMr?=
+ =?utf-8?B?MXk5V3lzMElpWG1XcndybW0vMjJ2c2t4RHB3dlZYei9pcUlHampwWG5pUjFw?=
+ =?utf-8?B?VkpiRWltS2dRY0gyUVJ0dXZCclRVU2tHem1Yb2MweWl4RmVUekFKWEVYam0z?=
+ =?utf-8?B?Ylp2bW1jRmlib1JZWlFDenNpeHk1Y1BhbVpMZnphZG9wQnJKR2xqNnZnVlZt?=
+ =?utf-8?B?dUNLc0YxQ1F2eXUzcWtyallFZWo2WFRUeXEwVmFyUlZzLzNaVjVjejhHenpI?=
+ =?utf-8?B?UStjbHBUblJGaDhRak01QTY4aWNQb2hjbWd3ZzgwcHJ4ZU1pdEQxbCtxcEF2?=
+ =?utf-8?B?eHZnK0MvOVAwSlo3RlpVR1huMmJ1ejh2c1JpMTN5clE4TFp6M2Z5Z3pMYTJa?=
+ =?utf-8?B?UWdmeVB0QWtOUTN6MkdGSWNrNXV2V2VuTnJIMENIazNyMWUyRnlEWUtKTkFT?=
+ =?utf-8?B?WnR0RVgxeUh0TFBxR0lZbktNYkRtME9UckI0aUphR3RTbjJ1b29EQWpOQnAy?=
+ =?utf-8?B?akQ4d0ExTllaUHp0VmZpMXVCTjcrMUFGSXZOcndnRCs3ZWpXNVQxaHU4TFhv?=
+ =?utf-8?Q?RrBS27sh?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Dec 2020 07:39:37.5396 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-Network-Message-Id: adb562a7-d9ab-44ab-f4aa-08d8ad5f39d3
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 7V1uVQx15dC9B4O/l8iZvkCSezABIZbW39ScxbRDRlnSN61zdfimiCZg2zwkefIqzL07YGCGrkGgGL9AJ6wRnWmE1GVFKj9ohqoDOQgd7Vw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB3817
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -168,192 +135,284 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_SG2PR04MB3093757336D5EBBB5DEF4A52E1D60SG2PR04MB3093apcp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--------------48180D954BE0BDEF80040400
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Q2xhc3NpZmljYXRpb246IFB1YmxpYw0KVGhhbmtzIFZpamF5LCBJ4oCZbGwgY2hlY2sgdGhpcy4N
-Cg0KDQpGcm9tOiBWaWpheSBLaGVta2EgPHZpamF5a2hlbWthbGludXhAZ21haWwuY29tPg0KU2Vu
-dDogV2VkbmVzZGF5LCBEZWNlbWJlciAzMCwgMjAyMCAxMDozNSBBTQ0KVG86IEpheWFzaHJlZSBE
-IDxqYXlhc2hyZWUtZEBoY2wuY29tPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KU3Vi
-amVjdDogUmU6IFNlbnNvciBEZXRhaWxzDQpbQ0FVVElPTjogVGhpcyBFbWFpbCBpcyBmcm9tIG91
-dHNpZGUgdGhlIE9yZ2FuaXphdGlvbi4gVW5sZXNzIHlvdSB0cnVzdCB0aGUgc2VuZGVyLCBEb27i
-gJl0IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgYXMgaXQgbWF5IGJlIGEgUGhpc2hp
-bmcgZW1haWwsIHdoaWNoIGNhbiBzdGVhbCB5b3VyIEluZm9ybWF0aW9uIGFuZCBjb21wcm9taXNl
-IHlvdXIgQ29tcHV0ZXIuXQ0KDQoNCk9uIFRodSwgRGVjIDI0LCAyMDIwIGF0IDc6NTUgQU0gSmF5
-YXNocmVlIEQgPGpheWFzaHJlZS1kQGhjbC5jb208bWFpbHRvOmpheWFzaHJlZS1kQGhjbC5jb20+
-PiB3cm90ZToNCkNsYXNzaWZpY2F0aW9uOiBQdWJsaWMNCkhpIFRlYW0sDQoNCklzIHRoZXJlIGEg
-d2F5IHRvIGdldCB0aGUgZGV0YWlscyBvZiBzZW5zb3IgZXZlbnRzIGxpa2UgY3Jvc3NlZCB0aHJl
-c2hvbGQvZmF1bHQgZXRjIGZyb20gYW55IG90aGVyIHNlcnZpY2UgcnVubmluZyBvbiBibWMgKGV4
-LiBwaG9zcGhvci1sZWQtbWFuYWdlcikuDQpUaGlzIGhhcyBiZWVuIGVuYWJsZWQgaW4gdGlvZ2Fw
-YXNzLCBJIGRvbid0IHJlbWVtYmVyIHdoaWNoIGFwcGxpY2F0aW9uIGJ1dCBJIHNlZSBsb2dzIGlm
-IHRoZXJlIGlzIGFueSB0aHJlc2hvbGQgaGl0Lg0KDQpQbGVhc2UgcHJvdmlkZSB5b3VyIGlucHV0
-cy9zdWdnZXN0aW9ucyBvbiB0aGlzLg0KDQpSZWdhcmRzLA0KSmF5YXNocmVlDQoNCjo6RElTQ0xB
-SU1FUjo6DQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KVGhlIGNvbnRlbnRzIG9m
-IHRoaXMgZS1tYWlsIGFuZCBhbnkgYXR0YWNobWVudChzKSBhcmUgY29uZmlkZW50aWFsIGFuZCBp
-bnRlbmRlZCBmb3IgdGhlIG5hbWVkIHJlY2lwaWVudChzKSBvbmx5LiBFLW1haWwgdHJhbnNtaXNz
-aW9uIGlzIG5vdCBndWFyYW50ZWVkIHRvIGJlIHNlY3VyZSBvciBlcnJvci1mcmVlIGFzIGluZm9y
-bWF0aW9uIGNvdWxkIGJlIGludGVyY2VwdGVkLCBjb3JydXB0ZWQsIGxvc3QsIGRlc3Ryb3llZCwg
-YXJyaXZlIGxhdGUgb3IgaW5jb21wbGV0ZSwgb3IgbWF5IGNvbnRhaW4gdmlydXNlcyBpbiB0cmFu
-c21pc3Npb24uIFRoZSBlIG1haWwgYW5kIGl0cyBjb250ZW50cyAod2l0aCBvciB3aXRob3V0IHJl
-ZmVycmVkIGVycm9ycykgc2hhbGwgdGhlcmVmb3JlIG5vdCBhdHRhY2ggYW55IGxpYWJpbGl0eSBv
-biB0aGUgb3JpZ2luYXRvciBvciBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIFZpZXdzIG9yIG9waW5p
-b25zLCBpZiBhbnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFyZSBzb2xlbHkgdGhvc2Ugb2Yg
-dGhlIGF1dGhvciBhbmQgbWF5IG5vdCBuZWNlc3NhcmlseSByZWZsZWN0IHRoZSB2aWV3cyBvciBv
-cGluaW9ucyBvZiBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIEFueSBmb3JtIG9mIHJlcHJvZHVjdGlv
-biwgZGlzc2VtaW5hdGlvbiwgY29weWluZywgZGlzY2xvc3VyZSwgbW9kaWZpY2F0aW9uLCBkaXN0
-cmlidXRpb24gYW5kIC8gb3IgcHVibGljYXRpb24gb2YgdGhpcyBtZXNzYWdlIHdpdGhvdXQgdGhl
-IHByaW9yIHdyaXR0ZW4gY29uc2VudCBvZiBhdXRob3JpemVkIHJlcHJlc2VudGF0aXZlIG9mIEhD
-TCBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0aGlzIGVtYWls
-IGluIGVycm9yIHBsZWFzZSBkZWxldGUgaXQgYW5kIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0
-ZWx5LiBCZWZvcmUgb3BlbmluZyBhbnkgZW1haWwgYW5kL29yIGF0dGFjaG1lbnRzLCBwbGVhc2Ug
-Y2hlY2sgdGhlbSBmb3IgdmlydXNlcyBhbmQgb3RoZXIgZGVmZWN0cy4NCl9fX19fX19fX19fX19f
-X19fX19fX19fX19fX19fX19fDQo=
+On 12/30/20 12:09, Vijay Khemka wrote:
+>
+> On Wed, Dec 23, 2020 at 7:59 AM Thu Nguyen 
+> <thu@amperemail.onmicrosoft.com 
+> <mailto:thu@amperemail.onmicrosoft.com>> wrote:
+>
+>     Hi All,
+>
+>
+>     I'm verifying NCSI with my Mt.Jade platform.
+>
+>     In Mt.Jade platform, we have the shared NIC in eth0 interface and
+>     dedicated RGMII in eth1 interface.
+>
+>     I used below steps to enable NC-SI in Mt.Jade.
+>
+>     1. Add definition in DTS for MAC0:
+>
+>     &mac0 {
+>            status = "disabled";
+>            status = "okay";
+>            pinctrl-names = "default";
+>            pinctrl-0 = <&pinctrl_rmii1_default>;
+>            clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
+>                     <&syscon ASPEED_CLK_MAC1RCLK>;
+>            clock-names = "MACCLK", "RCLK";
+>            use-ncsi;
+>     };
+>
+>     2. Add build configure to enable OEM Command to get MAC for NCSI.
+>
+>     CONFIG_NCSI_OEM_CMD_GET_MAC=y
+>
+>     After these steps, My system can detect OCP card, can get MACs and
+>     both
+>     eth0 and eth1 interfaces are up.
+>
+>     I can access BMC Web use both ip of eth0 or eth1. The same for
+>     Redfish.
+>
+>     BUT I can only use ipmitool with eth0. Ipmitool command not work with
+>     eth1 interface.
+>
+>
+>     Check the setting of phosphor-ipmid-net in
+>
+>     meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_access.json
+>
+>     meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_config.json
+>
+> You have to configure in this file for eth1 as well.
 
---_000_SG2PR04MB3093757336D5EBBB5DEF4A52E1D60SG2PR04MB3093apcp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+Because these files in 
+meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/ are already 
+configured for eth1.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtp
-ZiAhbXNvXT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kb1w6KiB7
-YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0
-I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwh
-W2VuZGlmXS0tPjxzdHlsZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNl
-DQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1IDMgNSA0IDYg
-MyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIg
-MTUgNSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IlNlZ29lIFVJ
-IjsNCglwYW5vc2UtMToyIDExIDUgMiA0IDIgNCAyIDIgMzt9DQovKiBTdHlsZSBEZWZpbml0aW9u
-cyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJnaW46
-MGluOw0KCW1hcmdpbi1ib3R0b206LjAwMDFwdDsNCglmb250LXNpemU6MTIuMHB0Ow0KCWZvbnQt
-ZmFtaWx5OiJUaW1lcyBOZXcgUm9tYW4iLHNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxp
-bmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0
-aW9uOnVuZGVybGluZTt9DQphOnZpc2l0ZWQsIHNwYW4uTXNvSHlwZXJsaW5rRm9sbG93ZWQNCgl7
-bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOnB1cnBsZTsNCgl0ZXh0LWRlY29yYXRpb246
-dW5kZXJsaW5lO30NCnANCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCW1zby1tYXJnaW4tdG9w
-LWFsdDphdXRvOw0KCW1hcmdpbi1yaWdodDowaW47DQoJbXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1
-dG87DQoJbWFyZ2luLWxlZnQ6MGluOw0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6
-IlRpbWVzIE5ldyBSb21hbiIsc2VyaWY7fQ0KcC5tc29ub3JtYWwwLCBsaS5tc29ub3JtYWwwLCBk
-aXYubXNvbm9ybWFsMA0KCXttc28tc3R5bGUtbmFtZTptc29ub3JtYWw7DQoJbXNvLW1hcmdpbi10
-b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFyZ2luLWJvdHRvbS1hbHQ6
-YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWls
-eToiVGltZXMgTmV3IFJvbWFuIixzZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOQ0KCXttc28tc3R5
-bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJp
-ZjsNCgljb2xvcjojMUY0OTdEO30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4
-cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3Np
-emU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYu
-V29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBn
-dGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIx
-MDI2IiAvPg0KPC94bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpz
-aGFwZWxheW91dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIg
-Lz4NCjwvbzpzaGFwZWxheW91dD48L3htbD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxh
-bmc9IkVOLVVTIiBsaW5rPSJibHVlIiB2bGluaz0icHVycGxlIj4NCjxkaXYgY2xhc3M9IldvcmRT
-ZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibWFyZ2luLWJvdHRvbToxMi4w
-cHQiPkNsYXNzaWZpY2F0aW9uOiA8Yj48c3BhbiBzdHlsZT0iY29sb3I6Z3JlZW4iPlB1YmxpYzwv
-c3Bhbj48L2I+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHls
-ZT0iY29sb3I6IzFGNDk3RCI+VGhhbmtzIFZpamF5LCBJ4oCZbGwgY2hlY2sgdGhpcy48L3NwYW4+
-PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1z
-aXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29s
-b3I6IzFGNDk3RCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2Fs
-aWJyaSZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiMxRjQ5N0QiPjxvOnA+Jm5ic3A7PC9vOnA+PC9z
-cGFuPjwvcD4NCjxkaXY+DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItdG9wOnNvbGlk
-ICNFMUUxRTEgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBpbiI+DQo8cCBjbGFzcz0iTXNv
-Tm9ybWFsIj48YSBuYW1lPSJfX19fX3JlcGx5c2VwYXJhdG9yIj48L2E+PGI+PHNwYW4gc3R5bGU9
-ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNl
-cmlmIj5Gcm9tOjwvc3Bhbj48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1m
-YW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNlcmlmIj4gVmlqYXkgS2hlbWthICZsdDt2
-aWpheWtoZW1rYWxpbnV4QGdtYWlsLmNvbSZndDsNCjxicj4NCjxiPlNlbnQ6PC9iPiBXZWRuZXNk
-YXksIERlY2VtYmVyIDMwLCAyMDIwIDEwOjM1IEFNPGJyPg0KPGI+VG86PC9iPiBKYXlhc2hyZWUg
-RCAmbHQ7amF5YXNocmVlLWRAaGNsLmNvbSZndDs8YnI+DQo8Yj5DYzo8L2I+IG9wZW5ibWNAbGlz
-dHMub3psYWJzLm9yZzxicj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogU2Vuc29yIERldGFpbHM8bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
-O2xpbmUtaGVpZ2h0OjEyLjBwdDtiYWNrZ3JvdW5kOiNGRkVCOUMiPg0KPHNwYW4gc3R5bGU9ImZv
-bnQtc2l6ZToxMC4wcHQ7Y29sb3I6cmVkIj5bQ0FVVElPTjogVGhpcyBFbWFpbCBpcyBmcm9tIG91
-dHNpZGUgdGhlIE9yZ2FuaXphdGlvbi4gVW5sZXNzIHlvdSB0cnVzdCB0aGUgc2VuZGVyLCBEb27i
-gJl0IGNsaWNrIGxpbmtzIG9yIG9wZW4gYXR0YWNobWVudHMgYXMgaXQgbWF5IGJlIGEgUGhpc2hp
-bmcgZW1haWwsIHdoaWNoIGNhbiBzdGVhbCB5b3VyIEluZm9ybWF0aW9uIGFuZCBjb21wcm9taXNl
-IHlvdXIgQ29tcHV0ZXIuXTwvc3Bhbj48bzpwPjwvbzpwPjwvcD4NCjxkaXY+DQo8ZGl2Pg0KPGRp
-dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8
-cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+T24gVGh1LCBEZWMgMjQsIDIwMjAgYXQgNzo1NSBBTSBKYXlh
-c2hyZWUgRCAmbHQ7PGEgaHJlZj0ibWFpbHRvOmpheWFzaHJlZS1kQGhjbC5jb20iPmpheWFzaHJl
-ZS1kQGhjbC5jb208L2E+Jmd0OyB3cm90ZTo8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGJsb2Nr
-cXVvdGUgc3R5bGU9ImJvcmRlcjpub25lO2JvcmRlci1sZWZ0OnNvbGlkICNDQ0NDQ0MgMS4wcHQ7
-cGFkZGluZzowaW4gMGluIDBpbiA2LjBwdDttYXJnaW4tbGVmdDo0LjhwdDttYXJnaW4tcmlnaHQ6
-MGluIj4NCjxkaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
-aW4tdG9wLWFsdDphdXRvO21hcmdpbi1ib3R0b206MTIuMHB0Ij5DbGFzc2lmaWNhdGlvbjoNCjxi
-PjxzcGFuIHN0eWxlPSJjb2xvcjpncmVlbiI+UHVibGljPC9zcGFuPjwvYj48bzpwPjwvbzpwPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bztt
-c28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+SGkgVGVhbSw8bzpwPjwvbzpwPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2lu
-LWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0
-OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuNXB0O2ZvbnQtZmFtaWx5OiZxdW90O1Nl
-Z29lIFVJJnF1b3Q7LHNhbnMtc2VyaWYiPklzIHRoZXJlIGEgd2F5IHRvIGdldCB0aGUgZGV0YWls
-cyBvZiBzZW5zb3IgZXZlbnRzIGxpa2UgY3Jvc3NlZCB0aHJlc2hvbGQvZmF1bHQgZXRjIGZyb20g
-YW55IG90aGVyIHNlcnZpY2UgcnVubmluZw0KIG9uIGJtYyAoZXguIHBob3NwaG9yLWxlZC1tYW5h
-Z2VyKS48L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ibG9ja3F1b3Rl
-Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPlRoaXMgaGFzIGJlZW4gZW5hYmxlZCBpbiB0
-aW9nYXBhc3MsIEkgZG9uJ3QgcmVtZW1iZXIgd2hpY2ggYXBwbGljYXRpb24gYnV0IEkgc2VlIGxv
-Z3MgaWYgdGhlcmUgaXMgYW55IHRocmVzaG9sZCBoaXQuJm5ic3A7PG86cD48L286cD48L3A+DQo8
-L2Rpdj4NCjxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItbGVmdDpzb2xpZCAj
-Q0NDQ0NDIDEuMHB0O3BhZGRpbmc6MGluIDBpbiAwaW4gNi4wcHQ7bWFyZ2luLWxlZnQ6NC44cHQ7
-bWFyZ2luLXJpZ2h0OjBpbiI+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0
-eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+
-Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1h
-cmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxl
-PSJmb250LXNpemU6MTAuNXB0O2ZvbnQtZmFtaWx5OiZxdW90O1NlZ29lIFVJJnF1b3Q7LHNhbnMt
-c2VyaWYiPlBsZWFzZSBwcm92aWRlIHlvdXIgaW5wdXRzL3N1Z2dlc3Rpb25zIG9uIHRoaXMuPC9z
-cGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
-aW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwv
-bzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6
-YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+UmVnYXJkcyw8bzpwPjwvbzpwPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28t
-bWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+SmF5YXNocmVlPG86cD48L286cD48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1i
-b3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjcuNXB0O2ZvbnQtZmFtaWx5OiZxdW90
-O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6Z3JheSI+OjpESVNDTEFJTUVSOjo8bzpwPjwv
-bzpwPjwvc3Bhbj48L3A+DQo8ZGl2IGNsYXNzPSJNc29Ob3JtYWwiIGFsaWduPSJjZW50ZXIiIHN0
-eWxlPSJ0ZXh0LWFsaWduOmNlbnRlciI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTo3LjVwdDtmb250
-LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOmdyYXkiPg0KPGhyIHNp
-emU9IjIiIHdpZHRoPSIxMDAlIiBhbGlnbj0iY2VudGVyIj4NCjwvc3Bhbj48L2Rpdj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6Ny41cHQ7Zm9udC1mYW1pbHk6
-JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpncmF5Ij5UaGUgY29udGVudHMgb2Yg
-dGhpcyBlLW1haWwgYW5kIGFueSBhdHRhY2htZW50KHMpIGFyZSBjb25maWRlbnRpYWwgYW5kIGlu
-dGVuZGVkIGZvciB0aGUgbmFtZWQgcmVjaXBpZW50KHMpIG9ubHkuIEUtbWFpbCB0cmFuc21pc3Np
-b24gaXMgbm90IGd1YXJhbnRlZWQgdG8gYmUgc2VjdXJlDQogb3IgZXJyb3ItZnJlZSBhcyBpbmZv
-cm1hdGlvbiBjb3VsZCBiZSBpbnRlcmNlcHRlZCwgY29ycnVwdGVkLCBsb3N0LCBkZXN0cm95ZWQs
-IGFycml2ZSBsYXRlIG9yIGluY29tcGxldGUsIG9yIG1heSBjb250YWluIHZpcnVzZXMgaW4gdHJh
-bnNtaXNzaW9uLiBUaGUgZSBtYWlsIGFuZCBpdHMgY29udGVudHMgKHdpdGggb3Igd2l0aG91dCBy
-ZWZlcnJlZCBlcnJvcnMpIHNoYWxsIHRoZXJlZm9yZSBub3QgYXR0YWNoIGFueSBsaWFiaWxpdHkg
-b24gdGhlDQogb3JpZ2luYXRvciBvciBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIFZpZXdzIG9yIG9w
-aW5pb25zLCBpZiBhbnksIHByZXNlbnRlZCBpbiB0aGlzIGVtYWlsIGFyZSBzb2xlbHkgdGhvc2Ug
-b2YgdGhlIGF1dGhvciBhbmQgbWF5IG5vdCBuZWNlc3NhcmlseSByZWZsZWN0IHRoZSB2aWV3cyBv
-ciBvcGluaW9ucyBvZiBIQ0wgb3IgaXRzIGFmZmlsaWF0ZXMuIEFueSBmb3JtIG9mIHJlcHJvZHVj
-dGlvbiwgZGlzc2VtaW5hdGlvbiwgY29weWluZywgZGlzY2xvc3VyZSwNCiBtb2RpZmljYXRpb24s
-IGRpc3RyaWJ1dGlvbiBhbmQgLyBvciBwdWJsaWNhdGlvbiBvZiB0aGlzIG1lc3NhZ2Ugd2l0aG91
-dCB0aGUgcHJpb3Igd3JpdHRlbiBjb25zZW50IG9mIGF1dGhvcml6ZWQgcmVwcmVzZW50YXRpdmUg
-b2YgSENMIGlzIHN0cmljdGx5IHByb2hpYml0ZWQuIElmIHlvdSBoYXZlIHJlY2VpdmVkIHRoaXMg
-ZW1haWwgaW4gZXJyb3IgcGxlYXNlIGRlbGV0ZSBpdCBhbmQgbm90aWZ5IHRoZSBzZW5kZXIgaW1t
-ZWRpYXRlbHkuIEJlZm9yZQ0KIG9wZW5pbmcgYW55IGVtYWlsIGFuZC9vciBhdHRhY2htZW50cywg
-cGxlYXNlIGNoZWNrIHRoZW0gZm9yIHZpcnVzZXMgYW5kIG90aGVyIGRlZmVjdHMuPG86cD48L286
-cD48L3NwYW4+PC9wPg0KPGRpdiBjbGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0iY2VudGVyIiBzdHls
-ZT0idGV4dC1hbGlnbjpjZW50ZXIiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6Ny41cHQ7Zm9udC1m
-YW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjpncmF5Ij4NCjxociBzaXpl
-PSIyIiB3aWR0aD0iMTAwJSIgYWxpZ249ImNlbnRlciI+DQo8L3NwYW4+PC9kaXY+DQo8L2Rpdj4N
-CjwvYmxvY2txdW90ZT4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0K
-PC9odG1sPg0K
+So I don't think I need configure "channel_config.json".
 
---_000_SG2PR04MB3093757336D5EBBB5DEF4A52E1D60SG2PR04MB3093apcp_--
+I missed below setting in phosphor-ipmi-net_%.bbappend
+
++ALT_RMCPP_IFACE = "eth1"
++SYSTEMD_SERVICE_${PN} += " \
++        ${PN}@${ALT_RMCPP_IFACE}.service \
++        ${PN}@${ALT_RMCPP_IFACE}.socket \
+
+This cause IPMId also listen in eth1.
+
+>
+>     I can see that ipmid is configured to listen on both interface
+>     eth0 and
+>     eth1.
+>
+> How do you make sure it is listening on both interface
+>
+>
+>     Do I miss any configuration here?
+>
+>
+>     Check the journal log, I saw some errors and warning from NCSI:
+>
+>     Dec 23 10:14:50 mtjade kernel: ftgmac100 1e660000.ethernet eth0:
+>     NCSI:
+>     Handler for packet type 0x82 returned -19
+>
+>     Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0:
+>     NCSI:
+>     'bad' packet ignored for type 0x8b
+>     Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0:
+>     NCSI:
+>     'bad' packet ignored for type 0x8b
+>     Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0:
+>     NCSI:
+>     'bad' packet ignored for type 0x8b
+>     Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet eth0:
+>     NCSI:
+>     'bad' packet ignored for type 0x8b
+>
+>     Because NC-SI interface is up, so I just ignore these errors.
+>
+>
+> These errors can be ignored, it doesn't harm in any communication. We 
+> need
+> to fix this  into the kernel.
+>
+>
+>
+>     Regards.
+>
+>     Thu Nguyen.
+>
+>
+>
+Regards.
+
+Thu Nguyen.
+
+
+
+--------------48180D954BE0BDEF80040400
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 12/30/20 12:09, Vijay Khemka wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:CAJTGxZESn=fr4OxP70JNAM0hnmR5vE7xC11ScbfbdeNiwd5bgA@mail.gmail.com">
+      
+      <div dir="ltr"><br>
+        <div class="gmail_quote">
+          <div dir="ltr" class="gmail_attr">On Wed, Dec 23, 2020 at 7:59
+            AM Thu Nguyen &lt;<a href="mailto:thu@amperemail.onmicrosoft.com" moz-do-not-send="true">thu@amperemail.onmicrosoft.com</a>&gt;
+            wrote:<br>
+          </div>
+          <blockquote class="gmail_quote" style="margin:0px 0px 0px
+            0.8ex;border-left:1px solid
+            rgb(204,204,204);padding-left:1ex">Hi All,<br>
+            <br>
+            <br>
+            I'm verifying NCSI with my Mt.Jade platform.<br>
+            <br>
+            In Mt.Jade platform, we have the shared NIC in eth0
+            interface and <br>
+            dedicated RGMII in eth1 interface.<br>
+            <br>
+            I used below steps to enable NC-SI in Mt.Jade.<br>
+            <br>
+            1. Add definition in DTS for MAC0:<br>
+            <br>
+            &amp;mac0 {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; status = &quot;disabled&quot;;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; status = &quot;okay&quot;;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pinctrl-names = &quot;default&quot;;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pinctrl-0 = &lt;&amp;pinctrl_rmii1_default&gt;;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clocks = &lt;&amp;syscon ASPEED_CLK_GATE_MAC1CLK&gt;,<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&amp;syscon ASPEED_CLK_MAC1RCLK&gt;;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; clock-names = &quot;MACCLK&quot;, &quot;RCLK&quot;;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; use-ncsi;<br>
+            };<br>
+            <br>
+            2. Add build configure to enable OEM Command to get MAC for
+            NCSI.<br>
+            <br>
+            CONFIG_NCSI_OEM_CMD_GET_MAC=y<br>
+            <br>
+            After these steps, My system can detect OCP card, can get
+            MACs and both <br>
+            eth0 and eth1 interfaces are up.<br>
+            <br>
+            I can access BMC Web use both ip of eth0 or eth1. The same
+            for Redfish.<br>
+            <br>
+            BUT I can only use ipmitool with eth0. Ipmitool command not
+            work with <br>
+            eth1 interface.<br>
+            <br>
+            <br>
+            Check the setting of phosphor-ipmid-net in<br>
+            <br>
+meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_access.json<br>
+            <br>
+meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/channel_config.json<br>
+          </blockquote>
+          <div>You have to configure in this file for eth1 as well. <br>
+          </div>
+        </div>
+      </div>
+    </blockquote>
+    <p>Because these files in
+      meta-phosphor/recipes-phosphor/ipmi/phosphor-ipmi-config/ are
+      already configured for eth1.</p>
+    <p>So I don't think I need configure &quot;channel_config.json&quot;.</p>
+    <p>I missed below setting in phosphor-ipmi-net_%.bbappend<br>
+    </p>
+    <p>+ALT_RMCPP_IFACE = &quot;eth1&quot;<br>
+      +SYSTEMD_SERVICE_${PN} += &quot; \<br>
+      +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${PN}@${ALT_RMCPP_IFACE}.service \<br>
+      +&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${PN}@${ALT_RMCPP_IFACE}.socket \</p>
+    <p>This cause IPMId also listen in eth1.<br>
+    </p>
+    <blockquote type="cite" cite="mid:CAJTGxZESn=fr4OxP70JNAM0hnmR5vE7xC11ScbfbdeNiwd5bgA@mail.gmail.com">
+      <div dir="ltr">
+        <div class="gmail_quote">
+          <blockquote class="gmail_quote" style="margin:0px 0px 0px
+            0.8ex;border-left:1px solid
+            rgb(204,204,204);padding-left:1ex">
+            <br>
+            I can see that ipmid is configured to listen on both
+            interface eth0 and <br>
+            eth1.<br>
+          </blockquote>
+          <div>How do you make sure it is listening on both interface&nbsp;</div>
+          <blockquote class="gmail_quote" style="margin:0px 0px 0px
+            0.8ex;border-left:1px solid
+            rgb(204,204,204);padding-left:1ex">
+            <br>
+            Do I miss any configuration here?<br>
+            <br>
+            <br>
+            Check the journal log, I saw some errors and warning from
+            NCSI:<br>
+            <br>
+            Dec 23 10:14:50 mtjade kernel: ftgmac100 1e660000.ethernet
+            eth0: NCSI: <br>
+            Handler for packet type 0x82 returned -19<br>
+            <br>
+            Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet
+            eth0: NCSI: <br>
+            'bad' packet ignored for type 0x8b<br>
+            Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet
+            eth0: NCSI: <br>
+            'bad' packet ignored for type 0x8b<br>
+            Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet
+            eth0: NCSI: <br>
+            'bad' packet ignored for type 0x8b<br>
+            Dec 23 10:15:05 mtjade kernel: ftgmac100 1e660000.ethernet
+            eth0: NCSI: <br>
+            'bad' packet ignored for type 0x8b<br>
+            <br>
+            Because NC-SI interface is up, so I just ignore these
+            errors.<br>
+          </blockquote>
+          <div><br>
+          </div>
+          <div>These errors can be ignored, it doesn't harm in any
+            communication. We need&nbsp;</div>
+          <div>to fix this&nbsp; into the kernel.</div>
+          <blockquote class="gmail_quote" style="margin:0px 0px 0px
+            0.8ex;border-left:1px solid
+            rgb(204,204,204);padding-left:1ex">
+            <br>
+            <br>
+            Regards.<br>
+            <br>
+            Thu Nguyen.<br>
+            <br>
+            <br>
+            <br>
+          </blockquote>
+        </div>
+      </div>
+    </blockquote>
+    <p>Regards.</p>
+    <p>Thu Nguyen.<br>
+    </p>
+    <p><br>
+    </p>
+  </body>
+</html>
+
+--------------48180D954BE0BDEF80040400--
