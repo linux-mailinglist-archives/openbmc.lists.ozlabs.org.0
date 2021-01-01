@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C84392E83BD
-	for <lists+openbmc@lfdr.de>; Fri,  1 Jan 2021 13:53:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 37C112E83C0
+	for <lists+openbmc@lfdr.de>; Fri,  1 Jan 2021 13:56:47 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D6lLR1zMRzDqNJ
-	for <lists+openbmc@lfdr.de>; Fri,  1 Jan 2021 23:53:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D6lQh2ClkzDqPm
+	for <lists+openbmc@lfdr.de>; Fri,  1 Jan 2021 23:56:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
@@ -19,19 +19,19 @@ Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
  [212.199.177.27])
  (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D6kxh1C7mzDqKl
- for <openbmc@lists.ozlabs.org>; Fri,  1 Jan 2021 23:35:03 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D6kxn4FlCzDqLC
+ for <openbmc@lists.ozlabs.org>; Fri,  1 Jan 2021 23:35:08 +1100 (AEDT)
 Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
- by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 101CNZLs027172;
- Fri, 1 Jan 2021 14:23:35 +0200
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 101CNbhY027177;
+ Fri, 1 Jan 2021 14:23:37 +0200
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
- id D6AA363A19; Fri,  1 Jan 2021 14:23:35 +0200 (IST)
+ id 1E20563A17; Fri,  1 Jan 2021 14:23:37 +0200 (IST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.8 v1 01/11] clk: npcm7xx: add read only flag to
- divider clocks
-Date: Fri,  1 Jan 2021 14:23:18 +0200
-Message-Id: <20210101122328.43510-2-tmaimon77@gmail.com>
+Subject: [PATCH linux dev-5.8 v1 02/11] iio: adc: add calibration support to
+ npcm ADC
+Date: Fri,  1 Jan 2021 14:23:19 +0200
+Message-Id: <20210101122328.43510-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.22.0
 In-Reply-To: <20210101122328.43510-1-tmaimon77@gmail.com>
 References: <20210101122328.43510-1-tmaimon77@gmail.com>
@@ -53,124 +53,253 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, Tomer Maimon <tmaimon77@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add read only flag to all divider clocks except
-SPI3 clock.
+Add calibration to improve accuracy measurement when using
+internal referance voltage.
+
+the calibration values taken from the FUSE module.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- drivers/clk/clk-npcm7xx.c | 70 +++++++++++++++++++++------------------
- 1 file changed, 38 insertions(+), 32 deletions(-)
+ drivers/iio/adc/npcm_adc.c | 191 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 191 insertions(+)
 
-diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
-index 27a86b7a34db..bf721ec2bbc6 100644
---- a/drivers/clk/clk-npcm7xx.c
-+++ b/drivers/clk/clk-npcm7xx.c
-@@ -370,67 +370,73 @@ static const struct npcm7xx_clk_div_fixed_data npcm7xx_divs_fx[] __initconst = {
+diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
+index 83bad2d5575d..02628b7eaca1 100644
+--- a/drivers/iio/adc/npcm_adc.c
++++ b/drivers/iio/adc/npcm_adc.c
+@@ -17,6 +17,8 @@
+ #include <linux/reset.h>
  
- /* configurable dividers: */
- static const struct npcm7xx_clk_div_data npcm7xx_divs[] __initconst = {
--	{NPCM7XX_CLKDIV1, 28, 3, NPCM7XX_CLK_S_ADC,
--	NPCM7XX_CLK_S_TIMER, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_ADC},
-+	{NPCM7XX_CLKDIV1, 28, 3, NPCM7XX_CLK_S_ADC, NPCM7XX_CLK_S_TIMER,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_ADC},
- 	/*30-28 ADCCKDIV*/
--	{NPCM7XX_CLKDIV1, 26, 2, NPCM7XX_CLK_S_AHB,
--	NPCM7XX_CLK_S_AXI, 0, CLK_IS_CRITICAL, NPCM7XX_CLK_AHB},
-+	{NPCM7XX_CLKDIV1, 26, 2, NPCM7XX_CLK_S_AHB, NPCM7XX_CLK_S_AXI,
-+		CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM7XX_CLK_AHB},
- 	/*27-26 CLK4DIV*/
- 	{NPCM7XX_CLKDIV1, 21, 5, NPCM7XX_CLK_S_TIMER,
--	NPCM7XX_CLK_S_TIM_MUX, 0, 0, NPCM7XX_CLK_TIMER},
-+	NPCM7XX_CLK_S_TIM_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_TIMER},
- 	/*25-21 TIMCKDIV*/
- 	{NPCM7XX_CLKDIV1, 16, 5, NPCM7XX_CLK_S_UART,
--	NPCM7XX_CLK_S_UART_MUX, 0, 0, NPCM7XX_CLK_UART},
-+	NPCM7XX_CLK_S_UART_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_UART},
- 	/*20-16 UARTDIV*/
- 	{NPCM7XX_CLKDIV1, 11, 5, NPCM7XX_CLK_S_MMC,
--	NPCM7XX_CLK_S_SD_MUX, 0, 0, NPCM7XX_CLK_MMC},
-+	NPCM7XX_CLK_S_SD_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_MMC},
- 	/*15-11 MMCCKDIV*/
- 	{NPCM7XX_CLKDIV1, 6, 5, NPCM7XX_CLK_S_SPI3,
- 	NPCM7XX_CLK_S_AHB, 0, 0, NPCM7XX_CLK_SPI3},
- 	/*10-6 AHB3CKDIV*/
- 	{NPCM7XX_CLKDIV1, 2, 4, NPCM7XX_CLK_S_PCI,
--	NPCM7XX_CLK_S_GFX_MUX, 0, 0, NPCM7XX_CLK_PCI},
-+	NPCM7XX_CLK_S_GFX_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_PCI},
- 	/*5-2 PCICKDIV*/
--	{NPCM7XX_CLKDIV1, 0, 1, NPCM7XX_CLK_S_AXI,
--	NPCM7XX_CLK_S_CPU_MUX, CLK_DIVIDER_POWER_OF_TWO, CLK_IS_CRITICAL,
--	NPCM7XX_CLK_AXI},/*0 CLK2DIV*/
-+	{NPCM7XX_CLKDIV1, 0, 1, NPCM7XX_CLK_S_AXI, NPCM7XX_CLK_S_CPU_MUX,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO,
-+		CLK_IS_CRITICAL, NPCM7XX_CLK_AXI},/*0 CLK2DIV*/
+ struct npcm_adc {
++	u32 R05;
++	u32 R15;
+ 	bool int_status;
+ 	u32 adc_sample_hz;
+ 	struct device *dev;
+@@ -51,6 +53,40 @@ struct npcm_adc {
+ #define NPCM_RESOLUTION_BITS		10
+ #define NPCM_INT_VREF_MV		2000
  
--	{NPCM7XX_CLKDIV2, 30, 2, NPCM7XX_CLK_S_APB4,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB4},
-+	{NPCM7XX_CLKDIV2, 30, 2, NPCM7XX_CLK_S_APB4, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY| CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB4},
- 	/*31-30 APB4CKDIV*/
--	{NPCM7XX_CLKDIV2, 28, 2, NPCM7XX_CLK_S_APB3,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB3},
-+	{NPCM7XX_CLKDIV2, 28, 2, NPCM7XX_CLK_S_APB3, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY| CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB3},
- 	/*29-28 APB3CKDIV*/
--	{NPCM7XX_CLKDIV2, 26, 2, NPCM7XX_CLK_S_APB2,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB2},
-+	{NPCM7XX_CLKDIV2, 26, 2, NPCM7XX_CLK_S_APB2, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB2},
- 	/*27-26 APB2CKDIV*/
--	{NPCM7XX_CLKDIV2, 24, 2, NPCM7XX_CLK_S_APB1,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB1},
-+	{NPCM7XX_CLKDIV2, 24, 2, NPCM7XX_CLK_S_APB1, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB1},
- 	/*25-24 APB1CKDIV*/
--	{NPCM7XX_CLKDIV2, 22, 2, NPCM7XX_CLK_S_APB5,
--	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_POWER_OF_TWO, 0, NPCM7XX_CLK_APB5},
-+	{NPCM7XX_CLKDIV2, 22, 2, NPCM7XX_CLK_S_APB5, NPCM7XX_CLK_S_AHB,
-+		CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0,
-+		NPCM7XX_CLK_APB5},
- 	/*23-22 APB5CKDIV*/
--	{NPCM7XX_CLKDIV2, 16, 5, NPCM7XX_CLK_S_CLKOUT,
--	NPCM7XX_CLK_S_CLKOUT_MUX, 0, 0, NPCM7XX_CLK_CLKOUT},
-+	{NPCM7XX_CLKDIV2, 16, 5, NPCM7XX_CLK_S_CLKOUT, NPCM7XX_CLK_S_CLKOUT_MUX,
-+		 CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_CLKOUT},
- 	/*20-16 CLKOUTDIV*/
--	{NPCM7XX_CLKDIV2, 13, 3, NPCM7XX_CLK_S_GFX,
--	NPCM7XX_CLK_S_GFX_MUX, 0, 0, NPCM7XX_CLK_GFX},
-+	{NPCM7XX_CLKDIV2, 13, 3, NPCM7XX_CLK_S_GFX, NPCM7XX_CLK_S_GFX_MUX,
-+		CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_GFX},
- 	/*15-13 GFXCKDIV*/
--	{NPCM7XX_CLKDIV2, 8, 5, NPCM7XX_CLK_S_USB_BRIDGE,
--	NPCM7XX_CLK_S_SU_MUX, 0, 0, NPCM7XX_CLK_SU},
-+	{NPCM7XX_CLKDIV2, 8, 5, NPCM7XX_CLK_S_USB_BRIDGE, NPCM7XX_CLK_S_SU_MUX,
-+		CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SU},
- 	/*12-8 SUCKDIV*/
--	{NPCM7XX_CLKDIV2, 4, 4, NPCM7XX_CLK_S_USB_HOST,
--	NPCM7XX_CLK_S_SU_MUX, 0, 0, NPCM7XX_CLK_SU48},
-+	{NPCM7XX_CLKDIV2, 4, 4, NPCM7XX_CLK_S_USB_HOST, NPCM7XX_CLK_S_SU_MUX,
-+		CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SU48},
- 	/*7-4 SU48CKDIV*/
- 	{NPCM7XX_CLKDIV2, 0, 4, NPCM7XX_CLK_S_SDHC,
--	NPCM7XX_CLK_S_SD_MUX, 0, 0, NPCM7XX_CLK_SDHC}
-+	NPCM7XX_CLK_S_SD_MUX, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SDHC}
- 	,/*3-0 SD1CKDIV*/
- 
- 	{NPCM7XX_CLKDIV3, 6, 5, NPCM7XX_CLK_S_SPI0,
--	NPCM7XX_CLK_S_AHB, 0, 0, NPCM7XX_CLK_SPI0},
-+	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SPI0},
- 	/*10-6 SPI0CKDV*/
- 	{NPCM7XX_CLKDIV3, 1, 5, NPCM7XX_CLK_S_SPIX,
--	NPCM7XX_CLK_S_AHB, 0, 0, NPCM7XX_CLK_SPIX},
-+	NPCM7XX_CLK_S_AHB, CLK_DIVIDER_READ_ONLY, 0, NPCM7XX_CLK_SPIX},
- 	/*5-1 SPIXCKDV*/
- 
++/* FUSE registers */
++#define NPCM7XX_FST		0x00
++#define NPCM7XX_FADDR		0x04
++#define NPCM7XX_FDATA		0x08
++#define NPCM7XX_FCFG		0x0C
++#define NPCM7XX_FCTL		0x14
++
++/* FST Register Bits */
++#define NPCM7XX_FST_RDY		BIT(0)
++#define NPCM7XX_FST_RDST	BIT(1)
++
++/* FADDR Register Bits */
++#define NPCM7XX_FADDR_BYTEADDR		BIT(0)
++#define NPCM7XX_FADDR_BYTEADDR_MASK	GENMASK(9, 0)
++
++/* FADDR Register Bits */
++#define NPCM7XX_FDATA_DATA		BIT(0)
++#define NPCM7XX_FDATA_CLEAN_VALUE	BIT(1)
++#define NPCM7XX_FDATA_DATA_MASK		GENMASK(7, 0)
++
++/* FCTL Register Bits */
++#define NPCM7XX_FCTL_RDST		BIT(1)
++
++/* ADC Calibration Definition */
++#define NPCM_INT_1500MV		768
++#define NPCM_INT_1000MV		512
++#define NPCM_ADC_MIN_VAL	0
++#define NPCM_ADC_MAX_VAL	1023
++
++#define FUSE_CALIB_ADDR		24
++#define FUSE_CALIB_SIZE		8
++#define DATA_CALIB_SIZE		4
++#define FUSE_READ_TIMEOUT	0xDEADBEEF
++
+ #define NPCM_ADC_CHAN(ch) {					\
+ 	.type = IIO_VOLTAGE,					\
+ 	.indexed = 1,						\
+@@ -71,6 +107,133 @@ static const struct iio_chan_spec npcm_adc_iio_channels[] = {
+ 	NPCM_ADC_CHAN(7),
  };
+ 
++static int npcm750_fuse_wait_for_ready(struct regmap *fuse_regmap, u32 timeout)
++{
++	u32 time = timeout;
++	u32 fstreg;
++
++	while (--time > 1) {
++		regmap_read(fuse_regmap, NPCM7XX_FST, &fstreg);
++		if (fstreg & NPCM7XX_FST_RDY) {
++			regmap_write_bits(fuse_regmap, NPCM7XX_FST,
++					  NPCM7XX_FST_RDST, NPCM7XX_FST_RDST);
++			return 0;
++		}
++	}
++
++	/* try to clear the status in case it was set */
++	regmap_write_bits(fuse_regmap, NPCM7XX_FST, NPCM7XX_FST_RDST,
++			  NPCM7XX_FST_RDST);
++
++	return -EINVAL;
++}
++
++static void npcm750_fuse_read(struct regmap *fuse_regmap, u32 addr, u8 *data)
++{
++	u32 val;
++
++	npcm750_fuse_wait_for_ready(fuse_regmap, FUSE_READ_TIMEOUT);
++
++	regmap_write_bits(fuse_regmap, NPCM7XX_FADDR,
++			  NPCM7XX_FADDR_BYTEADDR_MASK, addr);
++	regmap_read(fuse_regmap, NPCM7XX_FADDR, &val);
++	regmap_write(fuse_regmap, NPCM7XX_FCTL, NPCM7XX_FCTL_RDST);
++
++	npcm750_fuse_wait_for_ready(fuse_regmap, FUSE_READ_TIMEOUT);
++	regmap_read(fuse_regmap, NPCM7XX_FDATA, &val);
++	*data = (u8)val;
++
++	regmap_write_bits(fuse_regmap, NPCM7XX_FDATA, NPCM7XX_FDATA_DATA_MASK,
++			  NPCM7XX_FDATA_CLEAN_VALUE);
++}
++
++static int npcm750_ECC_to_nibble(u8 ECC, u8 nibble)
++{
++	u8 nibble_b0 = (nibble >> 0) & BIT(0);
++	u8 nibble_b1 = (nibble >> 1) & BIT(0);
++	u8 nibble_b2 = (nibble >> 2) & BIT(0);
++	u8 nibble_b3 = (nibble >> 3) & BIT(0);
++	u8 tmp_ECC = nibble;
++
++	tmp_ECC |= (nibble_b0 ^ nibble_b1) << 4 | (nibble_b2 ^ nibble_b3) << 5 |
++		(nibble_b0 ^ nibble_b2) << 6  | (nibble_b1 ^ nibble_b3) << 7;
++
++	if (tmp_ECC != ECC)
++		return -EINVAL;
++
++	return 0;
++}
++
++static int npcm750_ECC_to_byte(u16 ECC, u8 *Byte)
++{
++	u8 nibble_L, nibble_H;
++	u8 ECC_L, ECC_H;
++
++	ECC_H = ECC >> 8;
++	nibble_H = ECC_H & 0x0F;
++	ECC_L = ECC >> 0;
++	nibble_L = ECC_L & 0x0F;
++
++	if (npcm750_ECC_to_nibble(ECC_H, nibble_H) != 0 ||
++	    npcm750_ECC_to_nibble(ECC_L, nibble_L) != 0)
++		return -EINVAL;
++
++	*Byte = nibble_H << 4 | nibble_L << 0;
++
++	return 0;
++}
++
++static int npcm750_read_nibble_parity(u8 *block_ECC, u8 *ADC_calib)
++{
++	int i;
++	u16 ECC;
++
++	for (i = 0; i < DATA_CALIB_SIZE; i++) {
++		memcpy(&ECC, block_ECC + (i * 2), 2);
++		if (npcm750_ECC_to_byte(ECC, &ADC_calib[i]) != 0)
++			return -EINVAL;
++	}
++
++	return 0;
++}
++
++static int npcm750_fuse_calibration_read(struct platform_device *pdev,
++					struct npcm_adc *info)
++{
++	struct device_node *np = pdev->dev.of_node;
++	struct regmap *fuse_regmap;
++	ssize_t bytes_read = 0;
++	u8 read_buf[8];
++	u32 ADC_calib;
++	u32 addr = FUSE_CALIB_ADDR;
++
++	if (of_device_is_compatible(np, "nuvoton,npcm750-adc")) {
++		fuse_regmap = syscon_regmap_lookup_by_compatible
++			("nuvoton,npcm750-fuse");
++		if (IS_ERR(fuse_regmap)) {
++			dev_warn(&pdev->dev, "Failed to find nuvoton,npcm750-fuse\n");
++			return PTR_ERR(fuse_regmap);
++		}
++
++		while (bytes_read < FUSE_CALIB_SIZE) {
++			npcm750_fuse_read(fuse_regmap, addr,
++					  &read_buf[bytes_read]);
++			bytes_read++;
++			addr++;
++		}
++
++		if (npcm750_read_nibble_parity(read_buf, (u8 *)&ADC_calib)) {
++			dev_warn(info->dev, "FUSE Clibration read failed\n");
++			return -EINVAL;
++		}
++
++		info->R05 = ADC_calib & 0xFFFF;
++		info->R15 = ADC_calib >> 16;
++	}
++
++	return 0;
++}
++
+ static irqreturn_t npcm_adc_isr(int irq, void *data)
+ {
+ 	u32 regtemp;
+@@ -125,6 +288,29 @@ static int npcm_adc_read(struct npcm_adc *info, int *val, u8 channel)
+ 	return 0;
+ }
+ 
++static void npcm_adc_calibration(int *val, struct npcm_adc *info)
++{
++	int mul_val;
++	int offset_val;
++
++	mul_val = NPCM_INT_1000MV * (*val - info->R15);
++	if (mul_val < 0) {
++		mul_val = mul_val * -1;
++		offset_val = DIV_ROUND_CLOSEST(mul_val,
++					       (info->R15 - info->R05));
++		*val = NPCM_INT_1500MV - offset_val;
++	} else {
++		offset_val = DIV_ROUND_CLOSEST(mul_val,
++					       (info->R15 - info->R05));
++		*val = NPCM_INT_1500MV + offset_val;
++	}
++
++	if (*val < NPCM_ADC_MIN_VAL)
++		*val = NPCM_ADC_MIN_VAL;
++	if (*val > NPCM_ADC_MAX_VAL)
++		*val = NPCM_ADC_MAX_VAL;
++}
++
+ static int npcm_adc_read_raw(struct iio_dev *indio_dev,
+ 			     struct iio_chan_spec const *chan, int *val,
+ 			     int *val2, long mask)
+@@ -142,6 +328,10 @@ static int npcm_adc_read_raw(struct iio_dev *indio_dev,
+ 			dev_err(info->dev, "NPCM ADC read failed\n");
+ 			return ret;
+ 		}
++
++		if ((info->R05 || info->R15) && IS_ERR(info->vref))
++			npcm_adc_calibration(val, info);
++
+ 		return IIO_VAL_INT;
+ 	case IIO_CHAN_INFO_SCALE:
+ 		if (!IS_ERR(info->vref)) {
+@@ -248,6 +438,7 @@ static int npcm_adc_probe(struct platform_device *pdev)
+ 			  info->regs + NPCM_ADCCON);
+ 	}
+ 
++	npcm750_fuse_calibration_read(pdev, info);
+ 	init_waitqueue_head(&info->wq);
+ 
+ 	reg_con = ioread32(info->regs + NPCM_ADCCON);
 -- 
 2.22.0
 
