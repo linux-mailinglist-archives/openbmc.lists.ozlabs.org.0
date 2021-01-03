@@ -1,75 +1,127 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 418312E83CC
-	for <lists+openbmc@lfdr.de>; Fri,  1 Jan 2021 14:16:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DA3E2E8CAA
+	for <lists+openbmc@lfdr.de>; Sun,  3 Jan 2021 15:45:17 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D6lrw2r5VzDqQX
-	for <lists+openbmc@lfdr.de>; Sat,  2 Jan 2021 00:16:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D81ky5PvgzDqpk
+	for <lists+openbmc@lfdr.de>; Mon,  4 Jan 2021 01:45:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.220.122;
+ helo=nam11-co1-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=amperemail.onmicrosoft.com
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.19; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmx.net
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=XJhQKhz+; 
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=Mhjd96bM; 
  dkim-atps=neutral
-X-Greylist: delayed 322 seconds by postgrey-1.36 at bilbo;
- Sat, 02 Jan 2021 00:14:53 AEDT
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D6lqd0MnwzDqHH
- for <openbmc@lists.ozlabs.org>; Sat,  2 Jan 2021 00:14:51 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1609506888;
- bh=/A3UN9CKV54GgTD4e74sAhDA5fvuSZZTc4HOFwpvPiQ=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=XJhQKhz+NsDabWSKFjvqsuz8uLKVp9KxnmlcL9/+P4CnYAbEaMwKFs6P9fE6VN0Eu
- ZFmc8qHmkQvGFQIQw1+qncpbr5NfKDOJA5vgq721r4E4hJ7yxuwVFQDpiBqsEwJfyT
- sqqYOnjB/1rliPjddbzd4/UAbOqMo5107V0ndpG8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.57]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbRk3-1kJmV82BQX-00bp7I; Fri, 01
- Jan 2021 14:09:15 +0100
-Date: Fri, 1 Jan 2021 14:09:14 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH linux dev-5.8 v1 05/11] dt-binding: watchdog: Add DT
- restart priority and reset type
-Message-ID: <X+8e+jS+eeUDFS5/@latitude>
-References: <20210101122328.43510-1-tmaimon77@gmail.com>
- <20210101122328.43510-6-tmaimon77@gmail.com>
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam11on2122.outbound.protection.outlook.com [40.107.220.122])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D81jw1yYvzDqGN
+ for <openbmc@lists.ozlabs.org>; Mon,  4 Jan 2021 01:44:17 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mCJUUOa6TMBIb8jAbrUQpNNqJJNASSubEpbLXe6v1tLkWnF7bc31+Gc6sF2CXEuCkLEVv+L1tA6gJg3hH+LmOH0z8nXKAkCyu/JvKkK1OaQPlWK4xQHU3PKyG8ky5Z/jeM3iZk7PFfl/D7e6cREsqNwFjj9yru2P8D88HmUxvVjlEePgKq33gfkxoKcwy2NNhoOrH+Ztlg4P/tSW0gD+gyaOXp1txRaSFbiS4e2HIiEfgmJN9hIZ0uuyZNDWFgKT0AY/ruYqHLrX/lrn4VeexN7paYtKw9N1wyrxeq7miNt1Na2smffMEfgX3al/l7PHtYbqt/Tqu1QGo9w49vwq8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dY60hw3KldmdYINhpguh3qCuiSD+YjsLftvlseIePtg=;
+ b=CflFQcuIPcC9HhxhyKAm4uXRYM6i/3xPXONkMoueAtnoYaYNUBUNVt6dhAS6hxlLnGllkZOh/LbaRNaPlMeQEnbSG1AkZGSqF6lfXrX98k0Z8gNDbYYnocycJafFUt9VXM10XwhVGbDvqAOLBzE5dYZlWUiqdNn1+vl3lEgrQQ+p+Vn8Ql5LE53RgCkQ+Cef1KLPEoR2JhWVjOoVJUjp9Ar+07TKpmbJaevS5JNRKQVkvEvLGybSFQrwhyHLyeeeU8qvFBxDoyeM3kTNyf+jv+ENtZh3tjUsBeH18UcTufEgWGETu+A2LT/+ob6twiolCuKakmVENlhISYIn24PNMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dY60hw3KldmdYINhpguh3qCuiSD+YjsLftvlseIePtg=;
+ b=Mhjd96bM5190fpn07TyhktuBRVFR4Kub+BRFOlSxoVmCrJldNGOJRH1Dc7qgb0HNq3VKBBc7588doX3MOQbsYBvswtpYBCB8Lp6IsoBighsWsX1/89U7Gr7QAEraSBcvpQKwPIgufVqYhxXnFgoV/PSDpsisOGqDE5Ch2lN+5K4=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB5739.prod.exchangelabs.com (2603:10b6:5:202::27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3721.22; Sun, 3 Jan 2021 14:44:10 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::f0b8:2176:ea56:dc57]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::f0b8:2176:ea56:dc57%4]) with mapi id 15.20.3721.024; Sun, 3 Jan 2021
+ 14:44:09 +0000
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Subject: NC-SI driver: Detect OCP module power down!
+Message-ID: <e26b2a0e-3251-bf00-5055-7a09f0f57d4c@amperemail.onmicrosoft.com>
+Date: Sun, 3 Jan 2021 21:43:59 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [2402:800:6344:4074:c1a2:32a7:d88f:9d45]
+X-ClientProxiedBy: HK2PR0401CA0021.apcprd04.prod.outlook.com
+ (2603:1096:202:2::31) To DM6PR01MB5145.prod.exchangelabs.com
+ (2603:10b6:5:56::16)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Qru6yc8VtLosmXdP"
-Content-Disposition: inline
-In-Reply-To: <20210101122328.43510-6-tmaimon77@gmail.com>
-X-Provags-ID: V03:K1:vwoBAs0wPYp1IwxV8dAhhubn4E/Et1/njyFzOFJblSkcnXYeESy
- UNg+7+dqOgROjT17Wpi1btOVEl7buJOOuYwZwwCqvHPp17NRI+hkARTbDihMhsDHuyVuBH/
- Qk13zSmWZJu6fsIZR4AO3FWI7yHzl5qvJIzBMxiQRSIu+laglab/ol9SheXSeHC2d3+31fq
- Aanr5QiXaC9KT3z4zjgMg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:u6vgGn5j4X4=:XBJE1mUHkhcdEAgs7K02ds
- 34U5Z/ibX1dOYc0IzEvowYI1KHyTLQOo1tI12qbNiSSsiTvPeQeaait9IGsZ6zNUr8xDu8a1d
- IAN+641Iuy5D6MIL3+5QaApt0WKfPLgdjK0Qwy+OquhW9hpoxTYYx9TZpt2z3fhCdqPswbAwC
- RSNLUBhMLyhhbU1LsYpzNEp9PiLSBLkTHNWvv2bpvA81TC/tEAQPNXHbsYWMXsSMZJbEIpX7t
- LVCrWsVx7+le3ypaAPLf2zlvMjmNwk3Gc3up0eZSZtUjUbTMWe9QaABvIl88dw7mNFi81bpMx
- zVPuF7tbLevONqYU5ik/MDztjiUs2EtS3EYwt06jwpkM/L/i+R4qrSBLOXNsmXmbG6Upt1csH
- SMM3B4JVledAM0O46E0qRMh9o4XHVuoKiixt76cQnlgywEc46p0NcD1q/928Uea+GFZDj/6me
- Gc5Jjj5owmwrT8cPZBTva9yX0vQQDXyDkAIrY8q1XLBpLlU5+hFW2FwunDq98+i0RjdpglYC0
- vT6RboDE4QySFvdhoBe605Y5rLOmDYduougvMl+a+tVGzyR25jmrKusXDNQEl6/yMWsQVKH2d
- tl3d/vFa3EHEyJ/0TkCZmbgzcsR6krhupiQxzjRK/0ySUBsBRjAxis3aQRaxaK1npQcBiYUA9
- M5TNELF7lgR5vIfJDTRLWBkSRWYwJN3XNgVji4mX7+3AsjSoqDsKiUBGnFPhhKKwmuNYIY+Dc
- IVn18/ftvyBPWfBnWNWIh5uaTX13tfuPWuj3pGANKwYtphGOxB0mmlXP+fFPfYi2NWG1joRiS
- VuxH+IK+PueyLc/YL8W6tgcCsa/4Jqqk4jImRHwqwEv/9FHPf6XPFJ6FaS2gwnaGNcr6GlIxF
- vk4bt/MDQj6o9TjDxj9g==
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2402:800:6344:4074:c1a2:32a7:d88f:9d45]
+ (2402:800:6344:4074:c1a2:32a7:d88f:9d45) by
+ HK2PR0401CA0021.apcprd04.prod.outlook.com (2603:1096:202:2::31) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3721.19 via Frontend
+ Transport; Sun, 3 Jan 2021 14:44:08 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8bdfe98b-ab0e-476e-d350-08d8aff607a2
+X-MS-TrafficTypeDiagnostic: DM6PR01MB5739:
+X-Microsoft-Antispam-PRVS: <DM6PR01MB57391B37E91EA44490BBF5B890D30@DM6PR01MB5739.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:5516;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: FebCC2PiviWbrrhFBMl3HMXAyGFiSs+58vW2OfbueKOX/tk1oLigMRXCg+LlTFrX8CHwsoVNQ5enLYECrOJ6nTWom1xdC2P4UcGJy1greDXYWnQ0eKCQUrEhGSbNvaaavIC0cQKWulwwAj8CKZIeCBm9zuoELTJYK0af0e//CbvT2cJG7OuM2ItpD9Jfmxh1lsgZQD/+MiokLq1tTyXwYQK1vC9yPKQx3zLTT63bKEE8vOIlOdjdYSURwNkSS/1ceUmYOllilMKX2zzvVvzeTiMiLMwvQgi67kvXn6Vae416nV7ud5UsF0zOWlegg7aj8HcvhoxX8MqXVyMrXTr4ixvTOiznuz0CrnTZQBGDqVr8iNOT6A3nfUyiMODiWBf8JD4cTQoCFQBaOucte9kwUWFd8TQ+4hUqpVznjTLAfLcMgEeQ4vM+SWndy0J0Csn0eikSJFZJXCTa2r4lAGI8UZAzrWCz1BBlTC0t4Q5Ocm4=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(376002)(39830400003)(136003)(366004)(346002)(396003)(66476007)(66556008)(83170400001)(66946007)(6916009)(8676002)(2616005)(478600001)(16526019)(186003)(6486002)(42882007)(6666004)(2906002)(316002)(5660300002)(31696002)(31686004)(83380400001)(8936002)(52116002)(45980500001)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?RTNPZFdoZVBrOG9JRnBTUCtHVVpwbkRRRU5aNC9xVUlWaUoyNEkwWnZTbmcw?=
+ =?utf-8?B?TU9mbWlTNS9BcHVlNHY4U2QwTDlhVGtrWS9YMTlNN0Ftc3Y4UlhaNFR3dzBV?=
+ =?utf-8?B?Q2oydU9RYU9oU000R3M5b0pLRmNWb1o1L1JmckIyUEtHNWtVR2RkaGVvbTBJ?=
+ =?utf-8?B?ZjBnNkJUQ2k4bHVnWVBKZlcvY2tFRmxhUXVZeWdpbXdPOFhzOTVJTDNKZ1ZH?=
+ =?utf-8?B?UFQ5M1pUb2ZzOE1vcFFGaUFaVjQwbW8wcTVscHoreG5NamtXUUMxSzl1b25F?=
+ =?utf-8?B?T1k3ZXY4ZjhLZitBek1lV2NwRE1SQ2huZENtWExQbW1tY25OY1JJaHEvNVVK?=
+ =?utf-8?B?cVJFdWE0aGVFcVpWMXVyZC9BSjB1Q0puWjdpNjB6N3Y3elI2MEtORGkwbzMx?=
+ =?utf-8?B?TTl6blNNMVp0aVNoNDVVNDBBRnpsa0lOemhObHFudGVBSVBENmJrNTdDYlRF?=
+ =?utf-8?B?a3lxRTN0WkowRTBMM1JhUm93QXExN2xyNnNuN29ZNVV4eGFwcERYUU8vdzE4?=
+ =?utf-8?B?S0g1cmZsQkhjNWhZNm9wZGZuOERBdHhvTVoyL2xET3ZRdWtjRDBqL2FrTDZM?=
+ =?utf-8?B?bkJ2MkRoK3M2OFJzekJwcHhMaUZaSFM2UHp2Q2NGZW5UUXFhaU9VZm45NDA0?=
+ =?utf-8?B?WEsvL3FxQkNJWnJlbWs3OE9Qdkl1bk5Od3lOZ3BVVzladWlmdVJyOGhsRXZI?=
+ =?utf-8?B?ak9VeTFadjdjeWFwV2ZhVWZkNFhJODcvYU5jQ3VMdWdwLzljS3lZL1d1THBL?=
+ =?utf-8?B?Q25KeEV4TmdLOVJUWFhaQ0R0aVpxWXZXWHluQkV1bW1tNmVWaXRwMGliSkYy?=
+ =?utf-8?B?aVcybHExdHFDTVlGcllpZ0pVVktGVGF2M2w0L2hhWUxPTVBkNkdvOFkvM1g0?=
+ =?utf-8?B?K0hUWHVMQm5jYjF1MXdqbWJ2eWYxTWg2QStYaTdVSkJlcHRiSWIrcDNsNzRJ?=
+ =?utf-8?B?TEJYQmFjckN5bUpzeWdsNk1GUHowUENUZzVKSmwwWTRQNXYvUUR2bWZ0cUtQ?=
+ =?utf-8?B?bUxwQ29wQUhFSytCRTRVSzJTNENoSkJEK3FQZ1Q5c05yM1loME43L3FnV1gw?=
+ =?utf-8?B?Zlo4NVZYaGcwcXRKYnBLT0s0ODJkeVdIMXQybUw1QzVsb3BGak12L1FHUEVu?=
+ =?utf-8?B?dUpzTHhtT2hCMEYzRzQ4ZGgzRWhybWN5UWxUTTlPNXlUejc0M093SlJrR3Yz?=
+ =?utf-8?B?QkpHVnNESjFmZ3JSUDlINEM5RzdGcUh6TGZKSmw4VWM4N0RaUG9hd1RsMEpx?=
+ =?utf-8?B?djFncFpUN0VaM0gzSFRVTFppQUhuaXhCRXgxRUxZaTJuSXNNWVB2Wnh0cDZE?=
+ =?utf-8?B?eUVDL3JyT1FaYjRNZG5jM3RRb3hHRFJxN2pXVUx5ZExXRmhNTFdkSE13SlR3?=
+ =?utf-8?B?b3loeDR6NDRsenFNd0FGdXFjYWV6MmtvN25qdUVRbC9lSytpRTBQbCtubDcw?=
+ =?utf-8?Q?/EEupr3n?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jan 2021 14:44:09.4784 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8bdfe98b-ab0e-476e-d350-08d8aff607a2
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: an2+kvnidRnCNqy0mRaOSXht5VE0JindJwgdySTmE3Gopb0n+XlRjeuLv1LkjEhDDI/66HE94ddAcEpibkHBMVImpkKPGpEfJBBt80rCh5M=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5739
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,121 +133,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---Qru6yc8VtLosmXdP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hello,
-
-On Fri, Jan 01, 2021 at 02:23:22PM +0200, Tomer Maimon wrote:
-> Add device tree resrart priority documentation and
-                  resrart -> restart?
-
-> three reset types documentation.
->=20
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
->  .../bindings/watchdog/nuvoton,npcm-wdt.txt    | 32 +++++++++++++++++++
->  1 file changed, 32 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.=
-txt b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
-> index 6d593003c933..67ebf3386804 100644
-> --- a/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
-> +++ b/Documentation/devicetree/bindings/watchdog/nuvoton,npcm-wdt.txt
-> @@ -17,7 +17,35 @@ Required clocking property, have to be one of:
-> =20
->  Optional properties:
->  - timeout-sec : Contains the watchdog timeout in seconds
-> +- nuvoton,restart-priority - Contains the card restart priority.
-> +- nuvoton,card-reset-type =3D "porst|corst|wd0|wd1|wd2|sw1|sw2|sw3|sw4"
-> +  Contains the card reset type for checking and indicating=20
-> +  the last card reset status (WDIOF_CARDRESET)
-
-What does "card" mean in this context?
-
-> + =20
-> +  If 'nuvoton,card-reset-type' is not specified the default is porst
-> =20
-> +  Reset types:
-> +       - porst: Power reset
-> +       - corst: Core reset
-> +	   - wdX : Watchdog reset X (X represante 0-2)
-> +	   - swX : Software reset X (X represante 1-4)
-
-The indentation is inconsistent, here. The first two list items are
-indented with spaces, the second two with tabs.
-
-"represante" looks misspelled. Did you mean "represents"?
-
-> +
-> +- nuvoton,ext1-reset-type =3D "porst|corst|wd0|wd1|wd2|sw1|sw2|sw3|sw4"
-> +  Contains the external 2 reset type for checking and indicating=20
-> +  the last external 2 reset status (WDIOF_EXTERN1)
-              external 2 -> external 1
-
-> + =20
-> +  If 'nuvoton,card-reset-type' is not specified the default is wd0.
-                 card  ->  ext1
+Hi All,
 
 
-> + =20
-> +  Reset types are the same as in nuvoton,card-reset-type property.
-> +
-> +- nuvoton,ext2-reset-type =3D "porst|corst|wd0|wd1|wd2|sw1|sw2|sw3|sw4"
-> +  Contains the external 2 reset type for checking and indicating=20
-> +  the last external 2 reset status (WDIOF_EXTERN2)
-> +
-> +  If 'nuvoton,card-reset-type' is not specified the default is sw1.
-                 card  ->  ext2
+In our test platform, BMC boot up with NC-SI module is plugged and 
+powered. NC-SI interface (eth0) is up and worked well.
 
-> + =20
-> +  Reset types are the same as in nuvoton,card-reset-type property.
-> +	  =20
->  Example:
-> =20
->  timer@f000801c {
-> @@ -25,4 +53,8 @@ timer@f000801c {
->      interrupts =3D <GIC_SPI 47 IRQ_TYPE_LEVEL_HIGH>;
->      reg =3D <0xf000801c 0x4>;
->      clocks =3D <&clk NPCM7XX_CLK_TIMER>;
-> +	nuvoton,restart-priority =3D <155>;
-> +	nuvoton,card-reset-type =3D "porst";
-> +	nuvoton,ext1-reset-type =3D "wd1";
-> +	nuvoton,ext2-reset-type =3D "sw2";
+Then the power of NC-SI module is power off. NC-SI driver can't detect 
+this state.
 
-Inconsistent indentation
+BMC console keeps print:
+
+[ 1780.411126] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed out!
+
+[ 1785.579455] ftgmac100 1e660000.ethernet eth0: NCSI: No channel with 
+link found, configuring channel 0
+
+[ 1802.253375] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed out!
+
+[ 1807.501456] ftgmac100 1e660000.ethernet eth0: NCSI: No channel with 
+link found, configuring channel 0
+
+Look at the ncs-manager.c code, it seems if a channel of NC-SI module is 
+time out its' monitor_state will be disabled, the link will be down then 
+the driver will go to next channel.
+
+But if all of channels of NC-SI module are down. The driver will reset 
+the monitor_state of all channels and check their states again.
+
+Do we have any mechanism to detect power off state of NC-SI module?
+
+
+How about hot plug NC-SI module?
+
+
+Regards.
+
+Thu Nguyen.
 
 
 
-Best regards,
-Jonathan Neusch=C3=A4fer
 
---Qru6yc8VtLosmXdP
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAl/vHvMACgkQCDBEmo7z
-X9tjXw//YruL9hII9ga29EToUTtwKTGfUqb8zH3oA+DKpxyYMq0Mmhxg1sx9vbFI
-J31ZCPDl/wVpqVlHq4b/3nuJSOe4egGA5QwxTBmuLyCW2yRHuOA/OeZvuJKrpemW
-nMn3yZfK46vHpU2CemJh3pFzKcdAVdld8jKoaD1rXKtCJeWkFmBB2u2ucAy72zlM
-6CDhCNUyE/yK6SQhnnmYBta5lvnyrACCFD8LGkLIyFBlnjdE0b11HuPW0uNvbLA1
-WVVP2CxrnxM3C+WxLaIKaAjSr4v12iutHbquXRLJzzkHpONZlOAQ+7qKJ36g+QpJ
-jEh1upmQ61+2+CFvIB+z9UuWAdkZUlXi6ypIJIIpmHefbR5vlFlU7TYXWDlc/Uzs
-a+zqqE7Xlcv036Ye9KnyMUZj4LpX7pzmXeWlMfWBIrMie3vo1Lf0WHxv18MnBgvU
-oZqzKyXnL/9GO5xMKic8Y+6BiLefijMOnIFvUfJEmheKjNrnJY+Qn7YDaZugj4ve
-vt7Ehd6hmo3oCcCceUXx3ptQ8NcXpqyxmcwNEnHdAYcKoum7dZpQmMwSdvvivo1e
-hfquTV6F+kC8vqU6CSwq8XrtvAUsZLwAmP9kHvH07VgySBsF4HwpQPk6XSY8WwZQ
-ofk+9DD20/xc3cpK7yKcZ28wJQFQ1knNlISYjWtHaIU/qBcqYOM=
-=+OnA
------END PGP SIGNATURE-----
-
---Qru6yc8VtLosmXdP--
