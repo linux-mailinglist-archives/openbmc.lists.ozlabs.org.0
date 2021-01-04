@@ -2,89 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4CB42E8D48
-	for <lists+openbmc@lfdr.de>; Sun,  3 Jan 2021 17:45:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C8D92E8F2E
+	for <lists+openbmc@lfdr.de>; Mon,  4 Jan 2021 02:28:12 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D84Px3QkQzDqGh
-	for <lists+openbmc@lfdr.de>; Mon,  4 Jan 2021 03:45:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D8J0d4PLtzDqYB
+	for <lists+openbmc@lfdr.de>; Mon,  4 Jan 2021 12:28:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32a;
+ helo=mail-ot1-x32a.google.com; envelope-from=geissonator@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=us.ibm.com
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=UtLJ8SBQ; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=KWb04tid; dkim-atps=neutral
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com
+ [IPv6:2607:f8b0:4864:20::32a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D84Nx0kk3zDqGQ
- for <openbmc@lists.ozlabs.org>; Mon,  4 Jan 2021 03:44:47 +1100 (AEDT)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 103GUxHv183356
- for <openbmc@lists.ozlabs.org>; Sun, 3 Jan 2021 11:44:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=date : from : to :
- mime-version : content-type : message-id : subject; s=pp1;
- bh=z7ygxqeISqYpozQx9AFOvfIOeXv/ot0vnG9nd002r9w=;
- b=UtLJ8SBQbF5+RuGp4ckU1ZKyJ+0mzWz1BpW5oijSsD0tBwpU4+3JxhDYHtOUX059Xd1J
- H9dj+jl91eyN5bixfIJagC4Gb+mL2a9xRBGDX3uB6WV2nDbHBJEekMYVotzEV+PaSQxs
- D+GYaY4obr+Ep4qvma/aIULe0CoRbip8w/x1ccgRdSlcbu5TOnVJ6in4sx2ozh9QY0bU
- YwsRTGO/BUsMWpwOOP6+0rw+msYy/oCfLu8dDn3IyMMufjoihiDNywlT/Z+ftXkPBwg/
- oUNAK/4P0nnrXqKgh5fwvWtQ19DVDDkUgYFHeaw/YS6K5t1r0Kzj8pz1hKWSw+Ta8Zw3 GA== 
-Received: from smtp.notes.na.collabserv.com (smtp.notes.na.collabserv.com
- [192.155.248.93])
- by mx0b-001b2d01.pphosted.com with ESMTP id 35ug29h7ch-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Sun, 03 Jan 2021 11:44:43 -0500
-Received: from localhost
- by smtp.notes.na.collabserv.com with smtp.notes.na.collabserv.com ESMTP
- for <openbmc@lists.ozlabs.org> from <miltonm@us.ibm.com>;
- Sun, 3 Jan 2021 16:44:42 -0000
-Received: from us1a3-smtp07.a3.dal06.isc4sb.com (10.146.103.14)
- by smtp.notes.na.collabserv.com (10.106.227.39) with
- smtp.notes.na.collabserv.com ESMTP; Sun, 3 Jan 2021 16:44:40 -0000
-Received: from us1a3-mail228.a3.dal06.isc4sb.com ([10.146.103.71])
- by us1a3-smtp07.a3.dal06.isc4sb.com
- with ESMTP id 2021010316443953-204575 ;
- Sun, 3 Jan 2021 16:44:39 +0000 
-Date: Sun, 3 Jan 2021 16:44:40 +0000
-From: "Milton Miller II" <miltonm@us.ibm.com>
-To: "Thu Nguyen" <thu@amperemail.onmicrosoft.com>, "openbmc"
- <openbmc@lists.ozlabs.org>
-MIME-Version: 1.0
-X-Mailer: IBM Traveler 10.0.1.2 Build 202002141540_20 on behalf of device with
- id
- mdm...eb5, type 1300 (maas360android) and description MaaS360-MaaS360
- Mail-Android:MaaS360-MaaS360 Mail-Android/7.21 at 20210103164440415 by
- DS-7f64184a6700[SendMail]
-X-KeepSent: 1171F140:21EF2A71-00258652:005BFA8E;
- type=4; name=$KeepSent
-X-LLNOutbound: False
-X-Disclaimed: 40499
-X-TNEFEvaluated: 1
-Content-Type: multipart/mixed;
- boundary="--_com.fiberlink.maas360.email_2293627634267232"
-x-cbid: 21010316-8889-0000-0000-0000045510F7
-X-IBM-SpamModules-Scores: BY=0.000659; FL=0; FP=0; FZ=0; HX=0; KW=0; PH=0;
- SC=0.373977; ST=0; TS=0; UL=0; ISC=; MB=0.013059
-X-IBM-SpamModules-Versions: BY=3.00014487; HX=3.00000242; KW=3.00000007;
- PH=3.00000004; SC=3.00000295; SDB=6.01487640; UDB=6.00802050; IPR=6.01270211; 
- MB=3.00035727; MTD=3.00000008; XFM=3.00000015; UTC=2021-01-03 16:44:41
-X-IBM-AV-DETECTION: SAVI=unsuspicious REMOTE=unsuspicious XFE=unused
-X-IBM-AV-VERSION: SAVI=2021-01-03 16:00:40 - 6.00012192
-x-cbparentid: 21010316-8890-0000-0000-0000AE78116D
-Message-Id: <OF1171F140.21EF2A71-ON00258652.005BFA8E-1609692280165@notes.na.collabserv.com>
-Subject: Re:  NC-SI driver: Detect OCP module power down!
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
- definitions=2021-01-03_07:2020-12-31,
- 2021-01-03 signatures=0
-X-Proofpoint-Spam-Reason: orgsafe
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D8Hzh1f8QzDqXr
+ for <openbmc@lists.ozlabs.org>; Mon,  4 Jan 2021 12:27:11 +1100 (AEDT)
+Received: by mail-ot1-x32a.google.com with SMTP id j20so24703137otq.5
+ for <openbmc@lists.ozlabs.org>; Sun, 03 Jan 2021 17:27:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
+ :references; bh=2aAu8aP/Kfnt2UbuyWlrbxyEqeRKJUaUZW3Ptvla5Vg=;
+ b=KWb04tidzLvPRhGIN6jO0SkA1JBGSOXCsGM+H3SxlV2F3h0gWaNXv021KAM/NeIzjJ
+ qcg+UvJeBt4Sdh1mWRnWsqRHXAxdg2AS4uxrq0LGounaVSt08TjnkdELiy2wEpx9ZwmO
+ vJZVDB2n+QUjMNDtdgL+l/C44wJ52/5UlvIQJ4qb+VPHoradTYYOaIaqgjy/jCyu8Mdm
+ MIVQXqAZyxt2v5izAQJtmcZ986tOALWeem5DaRQWZ0CoGtIhJyEd7LVeK7hHC448OX3P
+ lKYegDqa/TReSlm3UUbLPTfCmuvR+66+Wh2t0mr1z6l07DhvZSYi2N9m59zFQ/P+UMit
+ Q6LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:message-id:mime-version:subject:date
+ :in-reply-to:cc:to:references;
+ bh=2aAu8aP/Kfnt2UbuyWlrbxyEqeRKJUaUZW3Ptvla5Vg=;
+ b=lEPIyUhak1uNwJpOEcb1E0L2ZMYeLBq5BYtPIEaQpTONUNZY8y/iMXt6y7dZVdld3n
+ n0Z9bLzIOFInZlSZ+YoKwT8WtpM6zU7sXDsFsCZZDvPGRolhqtKQgXqPm38JMk08irso
+ yvg8Yw/U8f9kxDSbBmEnChXAWQ9068+OwNewnYY/nYe4p9WCeUQOZ2Kh+BvTd/6lhT+y
+ mC1S46qXEzcb56d//fbMyA2L/JU173gg/Cf7M6w2icUyIN52TgvF+LdJo+CJhnDi7Ada
+ LJ5fI+rm9QB50yiiMLjUXLFnivjmamTNnRwYdcOzCtNnfrT7CHbzfrJjeX3QQLPMJxAq
+ t27Q==
+X-Gm-Message-State: AOAM531V1z7dTjEbPm+zxumlvL2wlZKJSvD/EYm8YCUtl0BjjlsMvqfB
+ aY8aV+JeFCxSdip6rCnqowY=
+X-Google-Smtp-Source: ABdhPJys41j4+QaoARZ0RzN2Ht43hwoF8MIUCIeyyPefx8Odau2uuo0Tpcmu1AjchoXualQxxhJVDA==
+X-Received: by 2002:a05:6830:22d3:: with SMTP id
+ q19mr49088287otc.115.1609723628725; 
+ Sun, 03 Jan 2021 17:27:08 -0800 (PST)
+Received: from andrews-mbp-2.attlocal.net
+ ([2600:1700:19e0:3310:311a:9a2d:f156:c779])
+ by smtp.gmail.com with ESMTPSA id k3sm12872644oor.19.2021.01.03.17.27.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Sun, 03 Jan 2021 17:27:07 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Message-Id: <4C410766-951F-4543-AE09-BC3F31197F5E@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_81A7E12E-F815-44B7-856B-BEC1014BED4B"
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
+Subject: Re: CI build for yosemitev2
+Date: Sun, 3 Jan 2021 19:27:06 -0600
+In-Reply-To: <PU1PR04MB224835088E75178D9AB64B85A7C00@PU1PR04MB2248.apcprd04.prod.outlook.com>
+To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+References: <PU1PR04MB224835088E75178D9AB64B85A7C00@PU1PR04MB2248.apcprd04.prod.outlook.com>
+X-Mailer: Apple Mail (2.3654.40.0.2.32)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,68 +80,113 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "bradleyb@fuzziesquirrel.com" <bradleyb@fuzziesquirrel.com>,
+ Patrick Williams <patrickw3@fb.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-----_com.fiberlink.maas360.email_2293627634267232
-Content-Type: multipart/alternative;
-	 boundary="--_com.fiberlink.maas360.email_2293627634931293"
-
-
-
-----_com.fiberlink.maas360.email_2293627634931293
+--Apple-Mail=_81A7E12E-F815-44B7-856B-BEC1014BED4B
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain;
+	charset=utf-8
 
-January 03, 2021 8:45 AM Thu Nguyen wrote and miltonm@us.ibm.com responded:=
-=0A=0AIn our test platform, BMC boot up with NC-SI module is plugged and =
-=0Apowered. NC-SI interface (eth0) is up and worked well.=0A=0AThen the pow=
-er of NC-SI module is power off. NC-SI driver can't detect =0Athis state.=
-=0A=0ABMC console keeps print:=0A=0A[ 1780.411126] ftgmac100 1e660000.ether=
-net eth0: NCSI Channel 0 timed out!=0A=0A[ 1785.579455] ftgmac100 1e660000.=
-ethernet eth0: NCSI: No channel with =0Alink found, configuring channel 0=
-=0A=0A[ 1802.253375] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed=
- out!=0A=0A[ 1807.501456] ftgmac100 1e660000.ethernet eth0: NCSI: No channe=
-l with =0Alink found, configuring channel 0=0A=0ALook at the ncs-manager.c =
-code, it seems if a channel of NC-SI module is =0Atime out its' monitor=5Fs=
-tate will be disabled, the link will be down then =0Athe driver will go to =
-next channel.=0A=0ABut if all of channels of NC-SI module are down. The dri=
-ver will reset =0Athe monitor=5Fstate of all channels and check their state=
-s again.=0A=0AMilton> The NCSI specification explicitly says that power to =
-the nics and the controller must be synchronized.=C2=A0 =C2=A0=0A=0A=0ADo w=
-e have any mechanism to detect power off state of NC-SI module?=0A=0AMilton=
-> No, but the state machines will reset if you ifconfig down the interface.=
-=0A=0AHow about hot plug NC-SI module?=0A=0A=0ARegards.=0A=0AThu Nguyen.=0A=
-=0A=0A=0A=0A=0A=0A
 
-----_com.fiberlink.maas360.email_2293627634931293
+
+> On Dec 21, 2020, at 9:32 AM, Velumani T-ERS,HCLTech =
+<velumanit@hcl.com> wrote:
+>=20
+> Classification: Public
+>=20
+> Hi Andrew Geissler,
+>=20
+> We have ported many features of openbmc to facebook/yosemitev2 machine =
+and the build is verified from the openbmc/master working fine. Could =
+you please help us to add the Yosemitev2 machine in the CI build =
+verification. This will help us to ensure there are no build break =
+during new patch push.
+
+Hi Velumani, glad to see a new system added to openbmc!
+
+Getting a new system into CI doesn=E2=80=99t have the most defined =
+process but
+I think in general it has to fall under one of these due to our =
+constraints
+in compute power for CI[1]:
+
+1) Propose an existing system in CI to replace (and the benefits of =
+that)
+2) Donate a jenkins compute node to openbmc CI
+3) Convince the community that your system provides additional meta-*
+    layer coverage (or some other critical benefit) that would be worth
+    the additional hit to the existing CI infrastructure.
+
+You could also look into hosting your own jenkins which builds
+and scores the gerrit reviews. See this wiki for more info:
+=
+https://github.com/openbmc/openbmc/wiki/Adding-a-System-to-Hardware-Contin=
+uous-Integration =
+<https://github.com/openbmc/openbmc/wiki/Adding-a-System-to-Hardware-Conti=
+nuous-Integration>=20
+
+[1]: =
+https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-Workgroup#c=
+urrent-infrastructure =
+<https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-Workgroup#=
+current-infrastructure>=20
+
+Andrew
+
+>=20
+> Regards,
+> Velu
+
+
+--Apple-Mail=_81A7E12E-F815-44B7-856B-BEC1014BED4B
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html; charset=utf-8
+Content-Type: text/html;
+	charset=utf-8
 
-January 03, 2021 8:45 AM Thu Nguyen wrote and <a href=3D"mailto:miltonm@us.=
-ibm.com">miltonm@us.ibm.com</a> responded:<br><br>In our test platform, BMC=
- boot up with NC-SI module is plugged and <br>powered. NC-SI interface (eth=
-0) is up and worked well.<br><br>Then the power of NC-SI module is power of=
-f. NC-SI driver can't detect <br>this state.<br><br>BMC console keeps print=
-:<br><br>[ 1780.411126] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 ti=
-med out!<br><br>[ 1785.579455] ftgmac100 1e660000.ethernet eth0: NCSI: No c=
-hannel with <br>link found, configuring channel 0<br><br>[ 1802.253375] ftg=
-mac100 1e660000.ethernet eth0: NCSI Channel 0 timed out!<br><br>[ 1807.5014=
-56] ftgmac100 1e660000.ethernet eth0: NCSI: No channel with <br>link found,=
- configuring channel 0<br><br>Look at the ncs-manager.c code, it seems if a=
- channel of NC-SI module is <br>time out its' monitor=5Fstate will be disab=
-led, the link will be down then <br>the driver will go to next channel.<br>=
-<br>But if all of channels of NC-SI module are down. The driver will reset =
-<br>the monitor=5Fstate of all channels and check their states again.<br><b=
-r>Milton> The NCSI specification explicitly says that power to the nics and=
- the controller must be synchronized.=C2=A0 =C2=A0<br><br><br>Do we have an=
-y mechanism to detect power off state of NC-SI module?<br><br>Milton> No, b=
-ut the state machines will reset if you ifconfig down the interface.<br><br=
->How about hot plug NC-SI module?<br><br><br>Regards.<br><br>Thu Nguyen.<br=
-><br><br><br><br><br><br><BR>
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
+class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
+class=3D"">On Dec 21, 2020, at 9:32 AM, Velumani T-ERS,HCLTech &lt;<a =
+href=3D"mailto:velumanit@hcl.com" class=3D"">velumanit@hcl.com</a>&gt; =
+wrote:</div><br class=3D"Apple-interchange-newline"><div class=3D""><div =
+class=3D"">Classification: Public<br class=3D""><br class=3D"">Hi Andrew =
+Geissler,<br class=3D""><br class=3D"">We have ported many features of =
+openbmc to facebook/yosemitev2 machine and the build is verified from =
+the openbmc/master working fine. Could you please help us to add the =
+Yosemitev2 machine in the CI build verification. This will help us to =
+ensure there are no build break during new patch push.<br =
+class=3D""></div></div></blockquote><div><br class=3D""></div><div>Hi =
+Velumani, glad to see a new system added to openbmc!</div><div><br =
+class=3D""></div><div>Getting a new system into CI doesn=E2=80=99t have =
+the most defined process but</div><div>I think in general it has to fall =
+under one of these due to our constraints</div><div>in compute power for =
+CI[1]:</div><div><br class=3D""></div><div>1) Propose an existing system =
+in CI to replace (and the benefits of that)</div><div>2) Donate a =
+jenkins compute node to openbmc CI</div><div>3) Convince the community =
+that your system provides additional meta-*</div><div>&nbsp; &nbsp; =
+layer coverage (or some other critical benefit) that would be =
+worth</div><div>&nbsp; &nbsp; the additional hit to the existing CI =
+infrastructure.</div><div><br class=3D""></div><div>You could also look =
+into hosting your own jenkins which builds</div><div>and scores the =
+gerrit reviews. See this wiki for more info:</div><div><a =
+href=3D"https://github.com/openbmc/openbmc/wiki/Adding-a-System-to-Hardwar=
+e-Continuous-Integration" =
+class=3D"">https://github.com/openbmc/openbmc/wiki/Adding-a-System-to-Hard=
+ware-Continuous-Integration</a>&nbsp;</div><div><br =
+class=3D""></div><div>[1]:&nbsp;<a =
+href=3D"https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-Wor=
+kgroup#current-infrastructure" =
+class=3D"">https://github.com/openbmc/openbmc/wiki/OpenBMC-Infrastructure-=
+Workgroup#current-infrastructure</a>&nbsp;</div><div><br =
+class=3D""></div><div>Andrew</div><br class=3D""><blockquote type=3D"cite"=
+ class=3D""><div class=3D""><div class=3D""><br class=3D"">Regards,<br =
+class=3D"">Velu<br class=3D""></div></div></blockquote></div><br =
+class=3D""></body></html>=
 
-----_com.fiberlink.maas360.email_2293627634931293--
-
-----_com.fiberlink.maas360.email_2293627634267232--
-
+--Apple-Mail=_81A7E12E-F815-44B7-856B-BEC1014BED4B--
