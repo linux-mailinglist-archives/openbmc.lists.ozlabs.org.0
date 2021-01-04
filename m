@@ -2,61 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3646C2E9C03
-	for <lists+openbmc@lfdr.de>; Mon,  4 Jan 2021 18:29:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 817002E9C58
+	for <lists+openbmc@lfdr.de>; Mon,  4 Jan 2021 18:49:26 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D8jKk3GXhzDqSt
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 04:29:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D8jmz5NLtzDqNb
+	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 04:49:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=ami.com
- (client-ip=63.147.10.40; helo=atlmailgw1.ami.com;
- envelope-from=hongweiz@ami.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=ami.com
-Received: from atlmailgw1.ami.com (atlmailgw1.ami.com [63.147.10.40])
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=HcjjFgNl; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D8jJl4lTCzDqP0;
- Tue,  5 Jan 2021 04:28:21 +1100 (AEDT)
-X-AuditID: ac1060b2-a93ff700000017ec-30-5ff35032d503
-Received: from atlms1.us.megatrends.com (atlms1.us.megatrends.com
- [172.16.96.144])
- (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
- (Client did not present a certificate)
- by atlmailgw1.ami.com (Symantec Messaging Gateway) with SMTP id
- AC.99.06124.23053FF5; Mon,  4 Jan 2021 12:28:18 -0500 (EST)
-Received: from ami-us-wk.us.megatrends.com (172.16.98.207) by
- atlms1.us.megatrends.com (172.16.96.144) with Microsoft SMTP Server (TLS) id
- 14.3.468.0; Mon, 4 Jan 2021 12:28:15 -0500
-From: Hongwei Zhang <hongweiz@ami.com>
-To: <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>, Jakub Kicinski <kuba@kernel.org>, David S Miller
- <davem@davemloft.net>, Heiner Kallweit <hkallweit1@gmail.com>, Andrew Lunn
- <andrew@lunn.ch>
-Subject: [Aspeed,
- v1 1/1] net: ftgmac100: Change the order of getting MAC address 
-Date: Mon, 4 Jan 2021 12:28:07 -0500
-Message-ID: <20210104172807.20986-1-hongweiz@ami.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20201221205157.31501-2-hongweiz@ami.com>
-References: <20201221205157.31501-2-hongweiz@ami.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D8jm74RJgzDqNH
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Jan 2021 04:48:36 +1100 (AEDT)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 104HWGLn125934
+ for <openbmc@lists.ozlabs.org>; Mon, 4 Jan 2021 12:48:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : subject : to :
+ message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=8sZOric8XLhM8p94NNuEJE4Xw+h7P1nceIxYR6laD/0=;
+ b=HcjjFgNlh8O0ac1qdjcawyiw0ivZf4AG8hi0vPQ8ZAqwh5WS+v2fdRalfI2fH0GvnlXS
+ D0yZMBU9YX+KSdXpBU26EXI3rSjhYgLl5Cukr19Q8UBAWdYQ+VS5ynTnSG1LQ5zVjTbC
+ tpM9BkXeGeFhfdnhrvaatx8mBCabiPIqwirAFV+bdyYo3zanqQYZeOjYN946N9jhQ2JQ
+ FUHRILLOqh9fcPRWUZmgv2eWZ/YEofbArMI+jNnbPP5MxMu5DnJIzgJGns4g2dxSy58h
+ FGBx8spuN9++CiaBms93ctBWTPhla8UFeokcHa65xN8ke/EuE6Si5mk+pxFhBnaohfpp oA== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.10])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 35v7ds0fg8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 04 Jan 2021 12:48:33 -0500
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+ by ppma02dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 104Hll3M023508
+ for <openbmc@lists.ozlabs.org>; Mon, 4 Jan 2021 17:48:33 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma02dal.us.ibm.com with ESMTP id 35tgf93rsv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Mon, 04 Jan 2021 17:48:33 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 104HmWb921037350
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Mon, 4 Jan 2021 17:48:32 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69E9EAC062
+ for <openbmc@lists.ozlabs.org>; Mon,  4 Jan 2021 17:48:32 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3838AAC05B
+ for <openbmc@lists.ozlabs.org>; Mon,  4 Jan 2021 17:48:32 +0000 (GMT)
+Received: from [9.160.44.189] (unknown [9.160.44.189])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Mon,  4 Jan 2021 17:48:32 +0000 (GMT)
+From: Matt Spinler <mspinler@linux.ibm.com>
+Subject: hardcoded median function in phosphor-virtual-sensor
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Message-ID: <7be00c72-db17-c751-470e-eb92f18f8bb3@linux.ibm.com>
+Date: Mon, 4 Jan 2021 11:48:31 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [172.16.98.207]
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrLLMWRmVeSWpSXmKPExsWyRiBhgq5RwOd4g71dmha7LnNYnL97iNli
- zvkWFotF72ewWvw+/5fZ4sK2PlaL5tXnmC0u75rDZnFsgZjFqZYXLA5cHlfbd7F7bFl5k8lj
- 56y77B4XPx5j9ti0qpPN4/yMhYweO3d8ZvL4vEkugCOKyyYlNSezLLVI3y6BK2PymZNMBc+k
- Krbsn8nawHhLpIuRk0NCwETi6+MvrF2MXBxCAruYJA7seMIE4exklJhy7xEjSBWbgJrE3s1z
- wBIiAp8ZJR6s2sgC4jALdDBKTH3xlR2kSlggSGJR6zpWEJtFQEVixu/fLCA2r4CpxPTtd1kh
- 9slLrN5wgBnE5hQwk7jQPQusRgioZsXfj8wQ9YISJ2c+AYszC0hIHHzxghmiRlbi1qHHTBBz
- FCUe/PrOOoFRYBaSlllIWhYwMq1iFEosyclNzMxJLzfUS8zN1EvOz93ECImCTTsYWy6aH2Jk
- 4mA8xCjBwawkwltx4UO8EG9KYmVValF+fFFpTmrxIUZpDhYlcd5V7kfjhQTSE0tSs1NTC1KL
- YLJMHJxSDYwnT03UCndZ4qrtLV4uxC/yrzS289bCL+v7grQmWhx/12v1t2mSlgzXwp9KHxdu
- ZVXfu2Lh4Q8nW/4Zm2rLVdbLMW3ds+asuFStr7e/doXykqnBbYUFE7ctjPGcv3wBv+ZzvTlR
- v3oOC4SF2F2+tjGp8sy1Ew+6Vp9lmHuur/LYCwfVQ9rSn38osRRnJBpqMRcVJwIA2rTk4nAC
- AAA=
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-04_11:2021-01-04,
+ 2021-01-04 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ lowpriorityscore=0 suspectscore=0 spamscore=0 mlxlogscore=741 mlxscore=0
+ clxscore=1011 malwarescore=0 adultscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101040111
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,92 +97,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, netdev <netdev@vger.kernel.org>,
- Hongwei Zhang <hongweiz@ami.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi,
 
-> From: Jakub Kicinski <kuba@kernel.org>
-> Sent: Monday, December 28, 2020 5:01 PM
->
-> On Tue, 22 Dec 2020 22:00:34 +0100 Andrew Lunn wrote:
-> > On Tue, Dec 22, 2020 at 09:46:52PM +0100, Heiner Kallweit wrote:
-> > > On 22.12.2020 21:14, Hongwei Zhang wrote:
-> > > > Dear Reviewer,
-> > > >
-> > > > Use native MAC address is preferred over other choices, thus change the order
-> > > > of reading MAC address, try to read it from MAC chip first, if it's not
-> > > >  availabe, then try to read it from device tree.
-> > > >
-> > > > Hi Heiner,
-> > > >
-> > > >> From:  Heiner Kallweit <hkallweit1@gmail.com>
-> > > >> Sent:  Monday, December 21, 2020 4:37 PM
-> > > >>> Change the order of reading MAC address, try to read it from MAC chip
-> > > >>> first, if it's not availabe, then try to read it from device tree.
-> > > >>>
-> > > >> This commit message leaves a number of questions. It seems the change isn't related at all to the
-> > > >> change that it's supposed to fix.
-> > > >>
-> > > >> - What is the issue that you're trying to fix?
-> > > >> - And what is wrong with the original change?
-> > > >
-> > > > There is no bug or something wrong with the original code. This patch is for
-> > > > improving the code. We thought if the native MAC address is available, then
-> > > > it's preferred over MAC address from dts (assuming both sources are available).
-> > > >
-> > > > One possible scenario, a MAC address is set in dts and the BMC image is
-> > > > compiled and loaded into more than one platform, then the platforms will
-> > > > have network issue due to the same MAC address they read.
-> > > >
-> > >
-> > > Typically the DTS MAC address is overwritten by the boot loader, e.g. uboot.
-> > > And the boot loader can read it from chip registers. There are more drivers
-> > > trying to read the MAC address from DTS first. Eventually, I think, the code
-> > > here will read the same MAC address from chip registers as uboot did before.
+Just putting on the list what was decided after some lengthy discussions 
+on discord.
 
-Thanks for your review, Heiner,
+I need a median of some sensor values, where this median sensor has 
+threshold interfaces
+whose values must be defined in entity-manager.  Since exprtk 
+expressions are not allowed in
+entity-manager, I cannot just port the PVS's JSON config into an 
+entity-manager config.
 
-I am working on a platform and want to use the method you said, reading from DTS
-is easy, but overwrite the MAC in DTS with chip MAC address, it will change the
-checksum of the image. Would you please provide an implementation example?
+Instead, I will make a new entity-manager config that will have the 
+component sensors
+along  with the thresholds to use, with a subtype of median, vaguely 
+something like:
 
-Thanks!
-> >
-> > Do we need to worry about, the chip contains random junk, which passes
-> > the validitiy test? Before this patch the value from DT would be used,
-> > and the random junk is ignored. Is this change possibly going to cause
-> > a regression?
+{
 
-Hi Andrew,
+Type: "VirtualSensor"
 
-Thanks for your review. Yes, yours is a good point, as my change relies on
-the driver's ability to read correct MAC from the chip, or the check of
-is_valid_ether_addr(), which only checking for zeros and multicasting MAC.
-On the other hand, your concern is still true if no MAC is defined in DTS
-file.
+Name: "MySensorName"
 
-Thanks!
->
-> Hongwei, please address Andrew's questions.
->
-> Once the discussion is over please repost the patches as
-> git-format-patch would generate them. The patch 2/2 of this
-> series is not really a patch, which confuses all patch handling
-> systems.
->
-> It also appears that 35c54922dc97 ("ARM: dts: tacoma: Add reserved
-> memory for ramoops") does not exist upstream.
->
+Subtype: "Median"
 
-Hi Jakub,
+Sensors: [ "Sensor1", "Sensor2", .... ]
 
-Thanks for your review; I am quite new to the contribution process. I will resubmit my
-patch with the SHA value issue fixed. Please see my response at above.
+ThresholdsWithHysteresis [ ]
 
---Hongwei
+minInput: 0
 
--- 
-2.17.1
+maxInput: 100
+
+}
+
+
+The minInput/maxInput are needed so we don't use garbage sensor readings 
+in the median
+algorithm.  PVS will look for this config to be provided on D-Bus by 
+entity-manager, and if
+it's there it will calculate the median (in C++, not exprtk) and use it 
+as the virtual sensor value.
+
+Thanks,
+Matt
 
