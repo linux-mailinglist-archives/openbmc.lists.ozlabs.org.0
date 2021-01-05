@@ -2,67 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 067A02EB166
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 18:31:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D2C42EB16C
+	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 18:32:30 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D9KKQ6RS7zDqd2
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 04:31:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D9KLz57PjzDqgB
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 04:32:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::331;
- helo=mail-wm1-x331.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32f;
+ helo=mail-wm1-x32f.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=mHv7cOXL; dkim-atps=neutral
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com
- [IPv6:2a00:1450:4864:20::331])
+ header.s=20161025 header.b=gQ/+izJO; dkim-atps=neutral
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com
+ [IPv6:2a00:1450:4864:20::32f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D9KGN6l7jzDqfr
- for <openbmc@lists.ozlabs.org>; Wed,  6 Jan 2021 04:28:21 +1100 (AEDT)
-Received: by mail-wm1-x331.google.com with SMTP id e25so299788wme.0
- for <openbmc@lists.ozlabs.org>; Tue, 05 Jan 2021 09:28:21 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D9KJw6dRCzDqfc
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Jan 2021 04:30:40 +1100 (AEDT)
+Received: by mail-wm1-x32f.google.com with SMTP id q75so295337wme.2
+ for <openbmc@lists.ozlabs.org>; Tue, 05 Jan 2021 09:30:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=89k0qb1zO7yej/csLMW0knj6mhK2RDf2AdE2atpkvns=;
- b=mHv7cOXLelUL0HNJCDkyCxllrB8zCszDqCpbLBuV4ruXhWT49KhLjQlJr3LDCsIgRB
- rlZia9+0OWyJPUy3kLL6YtgHj+wmpqCyCkepwkYUSsI3p91bBkCRh/h92PXlFUU/hsTU
- 0Zhz4TBg9e9ZDsjywAZBzzYxz4nsg62/07qpnhgzEoYk5gVOJCBifEMFXO/BjIcKHrJK
- FicmWnD9Rok8tCV7MKeAd2HI3KbqSw8wxobdt1TvcQoVRP5DrdqxVKY6XHrZ/hbSgO5h
- lEcj4QSYNVrNmH/lWY9ZSFFVLxCc5kvZ7kLrbPK28XF3r2ZvXm4Tz+zKAqy4astmLDmW
- F6Nw==
+ :cc; bh=xS3PnClZe302KjKl8khqeD+pU+KHbvjAhbYBNsGiXcY=;
+ b=gQ/+izJOIuYjMbR7WnaTLO1BTFy5sWkzXfv6IN1Rmey5cEbogx5fug0BBVQdG1md3d
+ 986Oc3uiyQZ60wv++ZNF8tdoV0kxz/5N3VsLTrIXvkUiXPF5yn/+f4buBys+buA6wKJu
+ DNkUXk+0CY1sdEWtMrGkcD00gemE/3gUSGAzSvKwhQfkeoaPrdgWpIqWlIpiDRtNesLI
+ s9w5+z75CaECfC0eV5nSzS+XI7AVrXBU1xTA0EBJ66pAGxDUDeE9pmn3tV+RX/zi/E5W
+ oBjvJVttlSmasX75URtpwzwPdWVwoqA44QiPsT0UEoNpTWRpVEIQ3S3srRFs8/u4F0LF
+ XcDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=89k0qb1zO7yej/csLMW0knj6mhK2RDf2AdE2atpkvns=;
- b=td/WarspJhCI/OZBQRP5ZmS9q6K3p8E6jqUa4AUxsWhv/eeljyqUQjYF9lFNw76an2
- 6cWQkTGDrV+XUUPCwrBlJHcwI4pS7uhlFOu8XOdfb6LIQcAzwCJAVJxxyUAL2C9/1j+a
- bxu/vv22oztB2BaouNlM0uD5Z3jKAGh9F062ybrK3kpQq0JGQHCXYcolUq1acJFzUN87
- SjBeaZSLiY/OmUR+IdtAtt47/kll8eHGcI/q5ywBsL3VrWTlnzCMksrQAq2LGBwQB8EO
- Hi+xcJpNQscXDrsmeZDcEuHtkicBwqvg9ANOvQZtzDMuPCZSnUtYB9jC7Nhy5F5yzJK/
- eUOA==
-X-Gm-Message-State: AOAM531CIDCj1Zz5k50VeUwWlYomuxYnB8Sh+oQEOo0XGmWcymcB4UK5
- vW969+R10bkBtIUaxo4TQXZ8/wziYfNVwqs9LGztCQ==
-X-Google-Smtp-Source: ABdhPJxjC2oxBvavkAEVk/0ttxNT5hl24zPG+TXk+wo59lDT8wJ45p5bHEuU0c2Xy8eL6kU6lytQMRPlVz0L+OS/3b8=
-X-Received: by 2002:a1c:220a:: with SMTP id i10mr159312wmi.93.1609867696619;
- Tue, 05 Jan 2021 09:28:16 -0800 (PST)
+ :message-id:subject:to:cc;
+ bh=xS3PnClZe302KjKl8khqeD+pU+KHbvjAhbYBNsGiXcY=;
+ b=VWWflOwjOeD6jHeq9fiqWQoDT5d9wU4J0ub/GcwLXk+83AUGRdZL+C+dpcfniF7mrH
+ Apo4eBtQ4Rbl3mLwMBHfLvzQYgBrxAg7dooZ73528oxOFCd5tq2edu6gZ4D92SUv5Z34
+ 7lz4RZ0P4ksITCdcxYemehAQcUn/uALSeBDgN4BLyuDHgJffr61nbUm9gOLA0LHt4CAa
+ l10eoyczUS/rTQSzOCMBYExVmBia8kBluGshR8xG1cFIYO3ZmNkWBh3geaFVveW7FEgU
+ xk1/3+Iv4d/bGMGWh7GKDU6W87JXpSqIuCnoC02InTQuwTl6iEyj3N9PZu3loyAvJUnK
+ ZKgA==
+X-Gm-Message-State: AOAM530Cxvi6tzp0EDQ13Hi/pM3GDH/Fd/QyElPlRsq3fptHf4WQBrWo
+ CGnVyK7mpSfvfRCUadrh2hUDOr1/vM/5pBCzpjtqpA==
+X-Google-Smtp-Source: ABdhPJz2tcQSiknKox6pR140zNO7l+VkM3f2fNoVKDxkGnN/b6urKXSWGW53MAXXnyTR8qbhC7BNEVsEI4ZGMOlVoqI=
+X-Received: by 2002:a1c:220a:: with SMTP id i10mr166878wmi.93.1609867834333;
+ Tue, 05 Jan 2021 09:30:34 -0800 (PST)
 MIME-Version: 1.0
-References: <SN6PR17MB255899EA5DB3A379ABEA68E996D20@SN6PR17MB2558.namprd17.prod.outlook.com>
-In-Reply-To: <SN6PR17MB255899EA5DB3A379ABEA68E996D20@SN6PR17MB2558.namprd17.prod.outlook.com>
+References: <7be00c72-db17-c751-470e-eb92f18f8bb3@linux.ibm.com>
+In-Reply-To: <7be00c72-db17-c751-470e-eb92f18f8bb3@linux.ibm.com>
 From: Ed Tanous <edtanous@google.com>
-Date: Tue, 5 Jan 2021 09:28:06 -0800
-Message-ID: <CAH2-KxBV9_0Dt79Quy0f4HkXXPdHfBw9FsG=4KwdWXBYNEA-ew@mail.gmail.com>
-Subject: Re: add a new yaml interface definition
-To: Mahesh Kurapati <mahesh.kurapati@keysight.com>
+Date: Tue, 5 Jan 2021 09:30:23 -0800
+Message-ID: <CAH2-KxDbY8cphQCwzoeVw-UNOYn8-FkDUsktdZicB5=yUxfrvg@mail.gmail.com>
+Subject: Re: hardcoded median function in phosphor-virtual-sensor
+To: Matt Spinler <mspinler@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,45 +72,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jan 4, 2021 at 1:42 PM Mahesh Kurapati
-<mahesh.kurapati@keysight.com> wrote:
+On Mon, Jan 4, 2021 at 9:49 AM Matt Spinler <mspinler@linux.ibm.com> wrote:
 >
-> Hello,
+> Hi,
 >
+> Just putting on the list what was decided after some lengthy discussions
+> on discord.
 >
+> I need a median of some sensor values, where this median sensor has
+> threshold interfaces
+> whose values must be defined in entity-manager.  Since exprtk
+> expressions are not allowed in
+> entity-manager, I cannot just port the PVS's JSON config into an
+> entity-manager config.
 >
-> Thank you for the video on the phosphor-dbus-interfaces architecture.  It=
- clarified the development flow.
+> Instead, I will make a new entity-manager config that will have the
+> component sensors
+> along  with the thresholds to use, with a subtype of median, vaguely
+> something like:
 >
+> {
 >
->
-> I am trying to expose some of the discrete GPIO signals,
+> Type: "VirtualSensor"
 
-We should think very carefully about if we want to expose raw GPIOs
-directly to dbus.  In practice, almost all GPIOs need some kind of
-filtering (debounce, power state filtering, minor state machine of
-other GPIOs) and that tends to be very difficult to model directly in
-a generic way.  In general, it's a much better idea to model your GPIO
-as a high level concept, like an LED, or a Power state controller,
-then expose a well defined API to dbus for that device.  That means
-that downstream clients can identify the GPIO interface reasonably and
-expose the appropriate APIs to the user.
+I'm kinda thinking we just go with Type: "MedianSensor".  Technically
+there are already other "virtual" sensors that have their own primary
+type, so let's be consistent with them, and just declare this as a
+primary type: "Median"
 
-> and methods to generate audio and visual alarms for our management softwa=
-re.  I will define two new yaml files describing these interfaces.  From th=
-e training video I understood that I should use the sbus++ to generate the =
-cpp boilerplate code and make it part of the library.  I will extend my dae=
-mon code to implement the actual functionality as explained in the video.  =
-Where I am stuck is on how do I add my yaml files to the phosphor-dbus-inte=
-rfaces infrastructure?  How to do this in my yocto environment?  Please hel=
-p.
+>
+> Name: "MySensorName"
+>
+> Subtype: "Median"
+>
+> Sensors: [ "Sensor1", "Sensor2", .... ]
+
+Just call this "Inputs" to be consistent in naming with the PID type
+and stewise type.
+
+>
+> ThresholdsWithHysteresis [ ]
+
+Should this just forward on thresholds from the sensors themselves to
+reduce the amount of configuration, and to be consistent?  I'm
+assuming this could be omitted, and we could just forward on the
+median sensors threshold state if we wanted to.
+
+If we really do need it, it should be called "Thresholds" to be
+consistent with the other sensors.
+
+>
+> minInput: 0
+>
+> maxInput: 100
+>
+> }
 >
 >
+> The minInput/maxInput are needed so we don't use garbage sensor readings
+> in the median
+> algorithm.
+
+Doesn't the median algorithm already give you that behavior without
+having to declare a new range?  If a sensor goes out of range, it's
+very unlikely to be the median, so pre-gating the sensors just seems
+like extra work.  Overall, this kind of config feels like something
+each sensor itself should own, as they already have more information
+than the median sensor.  If the sensor knows it has "garbage" values,
+it should post some form of NAN that the virtual sensor can see and
+act on.
+
+What is the behavior if all sensors go out of this range or are invalid?
+How will the MinOutput and MaxOutput for the sensor be calculated?  I
+would assume based on the max/min of the inputs, but it's probably
+worth calling out explicitly.
+Do we need to add a PowerState parameter so the thresholds don't trip
+on power cycles?
+
+
+>  PVS will look for this config to be provided on D-Bus by
+> entity-manager, and if
+> it's there it will calculate the median (in C++, not exprtk) and use it
+> as the virtual sensor value.
 >
-> Thank you,
+> Thanks,
+> Matt
 >
-> Mahesh
