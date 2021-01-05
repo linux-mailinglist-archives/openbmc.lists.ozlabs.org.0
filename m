@@ -1,91 +1,128 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id E70C22EAD5A
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 15:28:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AC662EAEB9
+	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 16:39:25 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D9FGx35b0zDqjM
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 01:28:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D9GrV4wKWzDqgx
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 02:39:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.94.128;
+ helo=nam10-mw2-obe.outbound.protection.outlook.com;
+ envelope-from=thu@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
+ header.from=amperemail.onmicrosoft.com
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=Yi83Vj1u; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=IFYIMeIC; 
+ dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com
+ header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector1-amperemail-onmicrosoft-com header.b=+ionTI2f; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com
+ (mail-mw2nam10on2128.outbound.protection.outlook.com [40.107.94.128])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D9FFt5G3WzDqM6
- for <openbmc@lists.ozlabs.org>; Wed,  6 Jan 2021 01:27:46 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 51A185C0105;
- Tue,  5 Jan 2021 09:27:44 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Tue, 05 Jan 2021 09:27:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=aKrFQ9Vp7Vz3V/kn0qU0ancV++0
- mkmzfRV85aQ5jT3s=; b=Yi83Vj1ub8vLcf3QXOP3zlHDiPFWwFFrmcNMt/bMGui
- mUcu4KH6YZR/YN+73gqFtLPuPSDUhh+iwN6aGnLx/8+h14Rr9DuZAhDUVgpkxoyY
- yoy5bglWAgANAGAEWffwMdiWvS51Cnezd9IpIW2shQ4Q2OQZkAoNpB63R2mScmZJ
- g0yMV1itXgUfOMriO5lqcmJGB31YnR0fEL6VRHS6eRC1tTIlOOxjnDA9T/VXqOGn
- Za6l1APy91XvDLiNd12QKplh9sN+Y59dhpTfpd/qqVV4KoZmmhe2n1tpy5Z4DgXf
- WaeOTqZyErEqdG+g0y2u1HPi6Bwi2OICQpCByBAMiJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=aKrFQ9
- Vp7Vz3V/kn0qU0ancV++0mkmzfRV85aQ5jT3s=; b=IFYIMeICXqfybs0YtL6NoU
- M/mVko+Mfzc3sicxEmGeC1LjspSvFYAmGN6Z3eOYz8E6gtO9NmE6He+w4UXXbc2X
- pQRyL96w673AN7oaxHV313/3Wk8wwc5E0DGH3oE0xYngisii/6RV057UvMwpreXw
- nJcMBHraalxq9ja8hCM1MgnQnuYuxtWk0PJ79kX6hGIHW8UIbRGIF0F3MWLo4CPN
- ND9vBLJI0z4HMCYTmvomPNyHx4VgM+6EcpPPzyohlrYZOufp8yt0YjXmRB433Hid
- dCgogMZLp1MVNjZxSz2kZzio36q9mRxswBe+74wauZHqOZZPAAUOn3L/QLQvEtIQ
- ==
-X-ME-Sender: <xms:X3f0XzPyEaTvc2QxHTTvt8jSXQvCjIL0fgBb3jXS1BXEqylPFVUn8g>
- <xme:X3f0X98NOMQ5WQ6ytqR6jutqUm0_mrJqp3BvZ_AkBlRK2hbbIrbInBU2PiY8gX4Xv
- K-DqWm29KE4EdXeTLc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdefjedgvdekucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheptdefjeetuedtfeelfeeiieevveek
- geeuvedtveefiedvhfeiueeugffhkeelvdfhnecukfhppeejiedrvdehtddrkeegrddvfe
- einecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
- thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:X3f0XySaSAt2UchF0h4p5yJyzLuukqWWKxSzChI7tctYbNEnq348gQ>
- <xmx:X3f0X3tleZ6QJn5DcS9thXzXSCtAzvCsB_f7x238sWcReq-9uNsqOQ>
- <xmx:X3f0X7d7hP5n3GXBxY7fRtGKx1_I_IU6AUN3HzpBL_za9wd64VOlXA>
- <xmx:YHf0X7lXmVdyL5EDKSon8s3sLp-XCSKO31LCfoW9g08Yerwu3SMR9Q>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 54D651080059;
- Tue,  5 Jan 2021 09:27:43 -0500 (EST)
-Date: Tue, 5 Jan 2021 08:27:41 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Matt Spinler <mspinler@linux.ibm.com>
-Subject: Re: hardcoded median function in phosphor-virtual-sensor
-Message-ID: <X/R3XZNHmYpz74mu@heinlein>
-References: <7be00c72-db17-c751-470e-eb92f18f8bb3@linux.ibm.com>
- <CAJTGxZG36whmooeOvMcwkhj5aQtvr=s8QFCGXYNSX6Up6WMJhg@mail.gmail.com>
- <c4ced4dd-0b20-9c22-6dfe-99b22e51d0ab@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D9Gqb2WLPzDqXS
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Jan 2021 02:38:32 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=iyqbKgwyQwbc8LPgUiUHMA2CpAIefgSvegGkrD9fuG5Q6zpmaPzR4RigTHeh4qw2OJN+kcyuyUlF5Ahg8pqDOF838AHt7FfzQYeKu+zHN7Eby0bBaCzkPrOEZemVTpZZwwnIOaZoGg3ef4tDXffWjfJMKXP/Kj+bBQerKS0deHgi7mIUvAztFxEGGht7JtFAL5e8TSWuKwwUl4upudi1wAJe2oaNKE6bzOz3mW0Fa7capEqZD/VV/kKRHXGi7wXk/3TGq/IQbSgGOc2PQzZg4kO5p4SGSTFLK0KtWtwAfAfw19dUuiFvRf2OhN2J3tQwgAdudCQQ2qwD7nGX22T+4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SraIh2PEI7tUxwsn3JveADDR0stNDvWk8DXRsFD0BOQ=;
+ b=W7V0KSuUl1o9WnXy/6sVuw+vRw/ZeT7vKD3jgXcu2qovjqwsDf+aUXlGQGkLFZRhd3IxprMX8UV2is7oKnweozUQiUTAPp5le9hawqK/OrWmloiHSsCTUEox4Ft15dtOXPJPlAdnkTgRoNCENzcQsNR5BbQzEz0UCg718+V22RxdNmK6vDmpr2iQk6Q561eogGag97tDWODFdnIoAWujeTviOvJinQmhWWeMxxigfioXwz0v1XknvSx6Ex/s+hpcUq1Vc5UEUBQLGo+PwRQUhr0fFagLuaA0H7I+crDSKQuhFp9xrEfUvVdLNK6Tpg2BiyERU+FhjeY/J7Od+nVz2g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SraIh2PEI7tUxwsn3JveADDR0stNDvWk8DXRsFD0BOQ=;
+ b=+ionTI2f93OFr0M3F7gJpTLymXlBMhEIVWTi3VPzi2P+FCHpR2irWc4YCxv10folxoWjmY9HISHzNNR2U3hR4QGNPB76xad2QPePlBFMXgZWJAQJnEc/Re2UjUkcK1Ygx0vbDyylewMm8JLFOwRvFOgHG7BCzHbD3pIlyKSWTeo=
+Authentication-Results: lists.ozlabs.org; dkim=none (message not signed)
+ header.d=none;lists.ozlabs.org; dmarc=none action=none
+ header.from=amperemail.onmicrosoft.com;
+Received: from DM6PR01MB5145.prod.exchangelabs.com (2603:10b6:5:56::16) by
+ DM6PR01MB5835.prod.exchangelabs.com (2603:10b6:5:14f::27) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3721.24; Tue, 5 Jan 2021 15:38:26 +0000
+Received: from DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::f0b8:2176:ea56:dc57]) by DM6PR01MB5145.prod.exchangelabs.com
+ ([fe80::f0b8:2176:ea56:dc57%5]) with mapi id 15.20.3742.006; Tue, 5 Jan 2021
+ 15:38:26 +0000
+Subject: Re: NC-SI driver: Detect OCP module power down!
+To: Milton Miller II <miltonm@us.ibm.com>, openbmc <openbmc@lists.ozlabs.org>
+References: <OF1171F140.21EF2A71-ON00258652.005BFA8E-1609692280165@notes.na.collabserv.com>
+From: Thu Nguyen <thu@amperemail.onmicrosoft.com>
+Message-ID: <24584f99-bbc8-8cb7-39e6-c49f5e35defb@amperemail.onmicrosoft.com>
+Date: Tue, 5 Jan 2021 22:38:13 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
+In-Reply-To: <OF1171F140.21EF2A71-ON00258652.005BFA8E-1609692280165@notes.na.collabserv.com>
+Content-Type: multipart/alternative;
+ boundary="------------DD1660D226521C98026F4B4F"
+Content-Language: en-US
+X-Originating-IP: [2402:800:6344:4074:9099:43f0:cd20:866b]
+X-ClientProxiedBy: SG2PR02CA0007.apcprd02.prod.outlook.com
+ (2603:1096:3:17::19) To DM6PR01MB5145.prod.exchangelabs.com
+ (2603:10b6:5:56::16)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="bACZCm7q3dUpFOdH"
-Content-Disposition: inline
-In-Reply-To: <c4ced4dd-0b20-9c22-6dfe-99b22e51d0ab@linux.ibm.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from [IPv6:2402:800:6344:4074:9099:43f0:cd20:866b]
+ (2402:800:6344:4074:9099:43f0:cd20:866b) by
+ SG2PR02CA0007.apcprd02.prod.outlook.com (2603:1096:3:17::19) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.3721.19 via Frontend Transport; Tue, 5 Jan 2021 15:38:24 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 3a337774-bccc-48fc-84f7-08d8b18ff1a8
+X-MS-TrafficTypeDiagnostic: DM6PR01MB5835:
+X-Microsoft-Antispam-PRVS: <DM6PR01MB5835454BA6BF7261BFF2EABB90D10@DM6PR01MB5835.prod.exchangelabs.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:8882;
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 96j6SLx4VNnWx/4M4Wz6n+rvA4BidGRW/0LeITDEpQR+IrZtL2w5KTdCs+tURq/RAv/IlQ/Nzy7EPemM92yr4TuQXY9T5rsoDJHZbXLx/FxlKr9fQdcd0sq5gNcV+6fZViaOmOEi40I+XEg+a7EVm5Jmz8BQ6UcXExHwkQs1NCKoMUEEvdonrlX/nSPsbPKwbAK/PitJ8hhSeYP0GnWUtVC+AMzNP+r55DP+f1gK1G0y9kihFaUPXWGCqGL37bsaSEXmMaxl5uDW2vXtjONFoUhvrSq62poKoohuCFo/rPNeENEf4327j8NuSBC1G0M+n/69eqpse7wmk7KR/LdbMgvnVW2XfErgv8mXprsKaG2IRtGzPBAqu9HGK2BcZjGPQMLLTWHDp0BEoyi3P0DT+m82tOthnel2jYZGghBWXw4cwMX2V7JNWofdcDsyE2koZaqFEkXTfB59x7eMqL7qpThZNd/Bnm/ihkiKWGndWHY=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR01MB5145.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(4636009)(136003)(396003)(376002)(39830400003)(346002)(366004)(186003)(66556008)(2906002)(16526019)(110136005)(33964004)(31696002)(31686004)(66946007)(6486002)(8676002)(8936002)(66476007)(316002)(6666004)(42882007)(83170400001)(52116002)(53546011)(83380400001)(2616005)(5660300002)(478600001)(45980500001)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData: =?utf-8?B?bm9nelR4ckFuMjEyMm1BbTVQbSthQzg2aWhZWVI2UzBMM2tYdUdIOFIwaFZZ?=
+ =?utf-8?B?VG56MFBQekRjT3FKcjErUTcxZ25xQlEvdkswdG9MbkxOMi9kYjh3RUNvbnQy?=
+ =?utf-8?B?QUE4ZGx1dHlSY29DejZCL2F5emF6aEIxNmVrSFN5RlI2L1VtVy9VYlZ0ZFI0?=
+ =?utf-8?B?cS9FVHpENTc1ZWxHNUxVbW8rTDJEQTBEWDQvL2tGRVY1Y1RTQ3NXb25BZFE5?=
+ =?utf-8?B?UkZ1NXM4WGIra0ZscnhDNENRbUllUjdZT200WkNBdmxJT252OExLcTAydDI3?=
+ =?utf-8?B?MnhhK2cyR01FTHE0Q0plTkxUeURONWE2SFB3NjJsaDhmY25raTNIWE5CR2pN?=
+ =?utf-8?B?RTkzZ3g5YnI5ZzFkRk9TdFZGRUpLQUV2VnRFOWVsVFh1Vm5JQTBDd1h0b2Vp?=
+ =?utf-8?B?cTV6dWZJVmwvaVAwNXA2TkxDaUdZR05Bc2p2M0EvMURDRFpUZ0hmZktxMXFK?=
+ =?utf-8?B?bitPck9FemFBZTQ3NVBaakRFZWJjNDJHaFVMbFNzUDllZHlIbk84TzNwSzk2?=
+ =?utf-8?B?SEUyV1RJVzVsbUxwTE84M25sdy9CeXR1K3I1bnFaN2pkTExodzZNdVhaYWN3?=
+ =?utf-8?B?RXBLazUxNWdXVFBsbmQ4T1pjcnhwblA4d2loRDJlMXo2NURteWhmNXdTd0Rt?=
+ =?utf-8?B?Q0JKWWczTlNCV2phSlhySmlOSEQ4K1BRK3lkRkZjVE1TWUo3WkZsbmhva2Iz?=
+ =?utf-8?B?NU9qQ1pkenNzRVVEU29RVlhDVGtiRzVqSURxUHo1ZmRrQXN1cVk3enpBd3dn?=
+ =?utf-8?B?L3FrdC95M3NERGNUbTZkbVZpdlc0eGI0WVRTc0N5N2hHb0llU1k3eDFtd1VU?=
+ =?utf-8?B?dXJzNHpwcWFQbXlUUnZKTEJpK1dSdzBmWnpOSVA1VnVhSmxuRlNNZkRhQlhC?=
+ =?utf-8?B?VFZrVUhpWUthZmIrVW43YW13ZjJ0OXhSQWdsZjUzNjd2OXVDcitBZzBsRCtZ?=
+ =?utf-8?B?K3c4VUtoMzhyTUd6eTB0enZvM2k1UmtuK2IzRHBEVmtxUVJBVEthZnBHMXRX?=
+ =?utf-8?B?V2NvWHkycHVHTGt2L0F1VFVzaXVNMzNyUWJ3eWgxUjhoSUt0ZDV4aHhhT2I3?=
+ =?utf-8?B?SjFNdjFRNkVEK1pWQ0EzTlBhdWs1R3dvQ3hKVklQMHRvM0IxVmhyY3RaWW55?=
+ =?utf-8?B?eDBPbDNYeithZU1YbVE0WEFFRjhPK1ZQdE1mRWdJWXRwRWlpb296OWQySDBK?=
+ =?utf-8?B?bnlxQ3pNdW5YaVQ0S2pKOWxZaG5uaXhkNDFXK0xEdXV3d1FyNUZHcmQweU9R?=
+ =?utf-8?B?TSt3d0wzSVVXVVREVlNPTVZaNkZ3TUFIdHluRDNIcHM5UUNkcnFJSlBiblA5?=
+ =?utf-8?B?RjloRVNheGJmTGtxTURHOXh3SWQ3THIxREFpdHJDNWVJQ1lRVjM3aXBOMjVj?=
+ =?utf-8?B?aW1pTnlvT2ZUNXZmbW9OVEFZR3h4MGJJcXBXbU5YU2ZGSW10Rkg4bTlyRGhv?=
+ =?utf-8?Q?tzjCXtnK?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR01MB5145.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jan 2021 15:38:26.4228 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3a337774-bccc-48fc-84f7-08d8b18ff1a8
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: GjmKLWQ7fuu+sWuVTyFlsVb89i5pGQRFuwY/Sp0K59xc5oAiHu4X05IJa1VhpK3pshTXFHHQ7xnngY/+bcctxYM9l/5ZX1d+n6vmxPa229o=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5835
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,119 +134,164 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemkalinux@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--------------DD1660D226521C98026F4B4F
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---bACZCm7q3dUpFOdH
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 1/3/21 23:44, Milton Miller II wrote:
+> January 03, 2021 8:45 AM Thu Nguyen wrote and miltonm@us.ibm.com 
+> <mailto:miltonm@us.ibm.com> responded:
+>
+> In our test platform, BMC boot up with NC-SI module is plugged and
+> powered. NC-SI interface (eth0) is up and worked well.
+>
+> Then the power of NC-SI module is power off. NC-SI driver can't detect
+> this state.
+>
+> BMC console keeps print:
+>
+> [ 1780.411126] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed out!
+>
+> [ 1785.579455] ftgmac100 1e660000.ethernet eth0: NCSI: No channel with
+> link found, configuring channel 0
+>
+> [ 1802.253375] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed out!
+>
+> [ 1807.501456] ftgmac100 1e660000.ethernet eth0: NCSI: No channel with
+> link found, configuring channel 0
+>
+> Look at the ncs-manager.c code, it seems if a channel of NC-SI module is
+> time out its' monitor_state will be disabled, the link will be down then
+> the driver will go to next channel.
+>
+> But if all of channels of NC-SI module are down. The driver will reset
+> the monitor_state of all channels and check their states again.
+>
+> Milton> The NCSI specification explicitly says that power to the nics 
+> and the controller must be synchronized.
+>
+>
+> Do we have any mechanism to detect power off state of NC-SI module?
+>
+> Milton> No, but the state machines will reset if you ifconfig down the 
+> interface.
 
-On Mon, Jan 04, 2021 at 04:57:51PM -0600, Matt Spinler wrote:
-> On 1/4/2021 2:54 PM, Vijay Khemka wrote:
-> > On Mon, Jan 4, 2021 at 9:49 AM Matt Spinler <mspinler@linux.ibm.com=20
-> > <mailto:mspinler@linux.ibm.com>> wrote:
-> >
-> >     I need a median of some sensor values, where this median sensor has
-> >     threshold interfaces
-> >     whose values must be defined in entity-manager.=A0 Since exprtk
-> >     expressions are not allowed in
-> >     entity-manager, I cannot just port the PVS's JSON config into an
-> >     entity-manager config.
-> >
-> > I missed this discussion but why can't we simply use virtual sensor as
-> > expertk provides median function and we have threshold support for
-> > each virtual sensor. Please help, if I am missing anything.
->=20
-> If you're asking why can't we just have PVS get its exprtk expression to
-> use from entity-manager, and encode the median there, it's because Ed
-> doesn't want exprtk in entity-manager config files (I'll defer to him on=
-=20
-> the reasons).
+[Thu] Thank for this info. It seem there are no ways to detect Power off 
+state of NC-SI module.
 
-As part of offline discussions on this I said that having a one-off EM
-config for median to allow you to make progress is reasonable, but I
-don't think having a bunch of one-offs is a viable long-term solution
-for phosphor-virtual-sensors.  Basically we're kicking the can down the
-road until we have a better understanding of what kinds of EM/PVS
-configs we're going to need.
+This case is similar with the case OCP is failure or Unplugged when hot 
+plug.
 
-> If you're asking now that the median function is hardcoded, why write it =
-in
-> C++ instead of exprtk, it's because the exprtk code would be so similar to
-> C++ code (skip the bad values, put the sensors in a vector,=A0 call=20
-> nth_element)
-> that writing it in exprtk doesn't really buy us anything, and using C++ l=
-ets
-> me skip making the symbol table.
+>
+> How about hot plug NC-SI module?
+>
+>
+> Regards.
+>
+> Thu Nguyen.
+>
+Regards.
 
-I would certainly prefer we use the exprtk code here.  You should be
-able to generate (at runtime) a exprtk expression from the EM config you
-specified below.
+Thu Nguyen.
 
-My rationale is:
-    * Ed suggested that a long-term answer might be a few lookup tables
-      / transformations from the EM configs to the PVS expressions.  I'm
-      not fully bought into this yet but it seems like a reasonable
-      direction to explore.
+>
+>
+>
+>
+>
+>
 
-    * You wrote "because the exprtk code would be so similar to the C++
-      code", which is why you *should* do it in exprtk.  The rest of the
-      PVS code is already this way so why something different and
-      require dual maintanence?  If the exprtk-based support code is
-      missing some of these features, lets add them because others will
-      likely need them as well.
 
-> >     Instead, I will make a new entity-manager config that will have the
-> >     component sensors
-> >     along=A0 with the thresholds to use, with a subtype of median, vagu=
-ely
-> >     something like:
-> >
-> >     {
-> >     Type: "VirtualSensor"
-> >     Name: "MySensorName"
-> >     Subtype: "Median"
-> >     Sensors: [ "Sensor1", "Sensor2", .... ]
-> >     ThresholdsWithHysteresis [ ]
-> >     minInput: 0
-> >     maxInput: 100
-> >     }
-> >
+--------------DD1660D226521C98026F4B4F
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-I would expect the 'exprtk' expression from your EM config to be
-something like "median(Sensor1, Sensor2...)".  You should be able to
-feed this into the existing virtual-sensor constructors and not have to
-make the symbol table yourself.
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 1/3/21 23:44, Milton Miller II
+      wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:OF1171F140.21EF2A71-ON00258652.005BFA8E-1609692280165@notes.na.collabserv.com">
+      
+      January 03, 2021 8:45 AM Thu Nguyen wrote and <a href="mailto:miltonm@us.ibm.com" moz-do-not-send="true">miltonm@us.ibm.com</a>
+      responded:<br>
+      <br>
+      In our test platform, BMC boot up with NC-SI module is plugged and
+      <br>
+      powered. NC-SI interface (eth0) is up and worked well.<br>
+      <br>
+      Then the power of NC-SI module is power off. NC-SI driver can't
+      detect <br>
+      this state.<br>
+      <br>
+      BMC console keeps print:<br>
+      <br>
+      [ 1780.411126] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0
+      timed out!<br>
+      <br>
+      [ 1785.579455] ftgmac100 1e660000.ethernet eth0: NCSI: No channel
+      with <br>
+      link found, configuring channel 0<br>
+      <br>
+      [ 1802.253375] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0
+      timed out!<br>
+      <br>
+      [ 1807.501456] ftgmac100 1e660000.ethernet eth0: NCSI: No channel
+      with <br>
+      link found, configuring channel 0<br>
+      <br>
+      Look at the ncs-manager.c code, it seems if a channel of NC-SI
+      module is <br>
+      time out its' monitor_state will be disabled, the link will be
+      down then <br>
+      the driver will go to next channel.<br>
+      <br>
+      But if all of channels of NC-SI module are down. The driver will
+      reset <br>
+      the monitor_state of all channels and check their states again.<br>
+      <br>
+      Milton&gt; The NCSI specification explicitly says that power to
+      the nics and the controller must be synchronized.&nbsp; &nbsp;<br>
+      <br>
+      <br>
+      Do we have any mechanism to detect power off state of NC-SI
+      module?<br>
+      <br>
+      Milton&gt; No, but the state machines will reset if you ifconfig
+      down the interface.<br>
+    </blockquote>
+    <p>[Thu] Thank for this info. It seem there are no ways to detect
+      Power off state of NC-SI module.</p>
+    <p>This case is similar with the case OCP is failure or Unplugged
+      when hot plug.<br>
+    </p>
+    <blockquote type="cite" cite="mid:OF1171F140.21EF2A71-ON00258652.005BFA8E-1609692280165@notes.na.collabserv.com"><br>
+      How about hot plug NC-SI module?<br>
+      <br>
+      <br>
+      Regards.<br>
+      <br>
+      Thu Nguyen.<br>
+      <br>
+    </blockquote>
+    <p>Regards.</p>
+    <p>Thu Nguyen.<br>
+    </p>
+    <blockquote type="cite" cite="mid:OF1171F140.21EF2A71-ON00258652.005BFA8E-1609692280165@notes.na.collabserv.com"><br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </blockquote>
+    <p><br>
+    </p>
+  </body>
+</html>
 
-Exprtk doesn't currently support a 'median' operator but it does support
-'avg'.  We should contribute this upstream and add as a patch in the
-meantime.
-
---=20
-Patrick Williams
-
---bACZCm7q3dUpFOdH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl/0d1wACgkQqwNHzC0A
-wRk1DhAApEahyOeZoL3Sn+n0XbibotinXygmbZYHniv0P12onNVlkIw67WtI26pe
-MH/YGr3I9o0FAJb+3CIiHr01zPOBD+wPWCi+/KN3RjJ2G1MP8//PMlWiUMnevqlP
-sA/mFyoCU0M0mAWDlY9X9iRcxjo4Fa2YXyzulKlEj1fT6g04cyX8VjUtTeYzz0Cw
-A2qQ3qEMMXiMHYHqPhNQ6idypehrLq/v2FlMS3a1VGGf0a1/wouUvJ72bxflzh4R
-33cqSCLmA9KOPyTlHBH9Xp2IBayJykzJ/qkg3HHPZBnvnxwNzcgkmpjWLML61c9k
-5oim+UpwbvockPEhViEoAxbu2RnDNCM3zS1kBoPw2xUsWtO+NEjVc40izWEi3bQo
-KbbnvEev8UtDb2sW00KsZ5q0INKdtC4Ew50Do+41ODYp42ViTUkgOYhtLc8vflQ+
-3XxLjTJrn29CV8jaEYS4II5n+3nGmoj3JVXUcm6/JJfLzLCk1nNwQoeFrvhOASyJ
-+QN9frhuEcJbFJzZEyBpD5MTmarXK3yJmbrUFOstIhwQBVfON32xk+K7IceJ3wuo
-H1pe2NqOQr6kivAr1TTKRscUvZNdyGGRt6YwPhUQNLGt8FhpS5y7944iXMjKzbZE
-f3CeFiQPbHg84S6o6IiJoJ6Ok+dRv86TaieQn1SP1m56rijucnw=
-=rlXa
------END PGP SIGNATURE-----
-
---bACZCm7q3dUpFOdH--
+--------------DD1660D226521C98026F4B4F--
