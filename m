@@ -1,70 +1,40 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 598EF2EA360
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 03:36:08 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id B54FA2EAC3F
+	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 14:49:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D8xSj4lZczDqWF
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jan 2021 13:36:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D9DQ90LFGzDqXg
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 00:49:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::330;
- helo=mail-ot1-x330.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=bytedance.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20150623.gappssmtp.com
- header.i=@bytedance-com.20150623.gappssmtp.com header.a=rsa-sha256
- header.s=20150623 header.b=SnnIXSRP; dkim-atps=neutral
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com
- [IPv6:2607:f8b0:4864:20::330])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=none (no SPF record) smtp.mailfrom=nuvoton.com
+ (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il;
+ envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=fail (p=none dis=none) header.from=gmail.com
+Received: from herzl.nuvoton.co.il (212.199.177.27.static.012.net.il
+ [212.199.177.27])
+ (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D8xRj3M7vzDqQW
- for <openbmc@lists.ozlabs.org>; Tue,  5 Jan 2021 13:35:08 +1100 (AEDT)
-Received: by mail-ot1-x330.google.com with SMTP id x13so27996381oto.8
- for <openbmc@lists.ozlabs.org>; Mon, 04 Jan 2021 18:35:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20150623.gappssmtp.com; s=20150623;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=TPYxOq3bXP50aA9aofA2atz7QQs7PcbiFm8VnGRLR+E=;
- b=SnnIXSRPoTf+gy5U3qi5PtBM+xLRP8dJ4Gom4abvZi0fFFdl/XALJihLr2R4yeAzFR
- NC6IdVZFXKiQa9nTde37v52tfW+f0RTnyqtOYgCTh4/S8JTHxxiMScKi3aELpUQc2tOr
- 6GzBZOo71bYQPLW4knlzxveYmwVq+cte47g7EDW2G+1o26oEQeys3Uny3RtbNrzWZywT
- mP6W95atlWtdvJ3F2LboEgYI88yoKTm6821xxNcPqdQZryHZGcBHOF53V/7uZFCn3rN8
- IwNfsoWOcIs79xT6yCkrkDBTxqa5Ip7uwX0yk0Wpb1HhvyA8R9vI0M1ibdw8m/9S4KuI
- YW9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=TPYxOq3bXP50aA9aofA2atz7QQs7PcbiFm8VnGRLR+E=;
- b=MwI37oaKfBsR9z+J1XfqpAKNyD3evTSZX0R7od2DCncXbX5YagXuo+Wxg3J/0xGGgP
- UP1JKJMNSY4vXL/+/nc0qxvsCRhaPjJQiPe/ZLID+tpALvn90UpkHECVanhQyh5HKqS/
- hR7RmKe7ReNdV8nsodwP4XWTJlohu9nzQ7i+yQAifDaAtigBEmnSLvesLXfV3K9+Yg/N
- a47buU2hsBrx9eCMXX8yE+AfPuWiVi+2ed8H+IY4D4MFzZIumHNjXc829m0D3oE+e9ux
- ftQTsvgqtu8kRQ/ivSFZ9KOHBg2C27TO5bPoyVFXLHCq/oy9D3M2QSWim9p2XD8iT6lb
- eySA==
-X-Gm-Message-State: AOAM532t8U+AmdwNiso69y1kRUIwbPut4p+PxCsHNr5DZRXWvCNQYat/
- UBjdmEeUzjX60nSR8Cs56nhoKioDZXDU4Jx/byUDDw==
-X-Google-Smtp-Source: ABdhPJysJBguwpQ7TdvfmIc4hl83oLguxeIhBpoy5jKiuv4TTB5S/lLebSdpS9sDAk3oYbiTkEGvesnthKrYnMcJcY4=
-X-Received: by 2002:a9d:620f:: with SMTP id g15mr52311071otj.361.1609814105037; 
- Mon, 04 Jan 2021 18:35:05 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D9DKH0BvFzDqVS
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Jan 2021 00:45:36 +1100 (AEDT)
+Received: from taln60.nuvoton.co.il (ntil-fw [212.199.177.25])
+ by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 105DjEp7005907;
+ Tue, 5 Jan 2021 15:45:14 +0200
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+ id 177C963A17; Tue,  5 Jan 2021 15:45:14 +0200 (IST)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.8 v2 00/11] Add NPCM7xx patches to dev-5.8
+Date: Tue,  5 Jan 2021 15:44:57 +0200
+Message-Id: <20210105134508.225702-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.22.0
 MIME-Version: 1.0
-References: <7be00c72-db17-c751-470e-eb92f18f8bb3@linux.ibm.com>
- <CAJTGxZG36whmooeOvMcwkhj5aQtvr=s8QFCGXYNSX6Up6WMJhg@mail.gmail.com>
- <c4ced4dd-0b20-9c22-6dfe-99b22e51d0ab@linux.ibm.com>
-In-Reply-To: <c4ced4dd-0b20-9c22-6dfe-99b22e51d0ab@linux.ibm.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Tue, 5 Jan 2021 10:34:54 +0800
-Message-ID: <CAGm54UFFJ5Rd=4v9X3LBP_Mp5LbkQrBFtT0-PeMGumzF8kdN0A@mail.gmail.com>
-Subject: Re: hardcoded median function in phosphor-virtual-sensor
-To: Matt Spinler <mspinler@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,29 +46,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Vijay Khemka <vijaykhemkalinux@gmail.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>, Tomer Maimon <tmaimon77@gmail.com>,
+ benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jan 5, 2021 at 6:58 AM Matt Spinler <mspinler@linux.ibm.com> wrote:
-> >     whose values must be defined in entity-manager.  Since exprtk
-> >     expressions are not allowed in
-> >     entity-manager, I cannot just port the PVS's JSON config into an
-> >     entity-manager config.
-> >
-> > I missed this discussion but why can't we simply use virtual sensor as
-> > expertk provides median function and we have threshold support for
-> > each virtual sensor. Please help, if I am missing anything.
+In this patch set we will like to align with relevant modifications
+in Nuvoton OpenBMC Linux kernel 5.4.
 
-I did not notice the discussion as well.
-From my understanding, the exprtk is defined in the json config
-(/usr/share/phosphor-virtual-sensor/virtual_sensor_config.json), and
-technically we could use any expression that exprtk supports.
-e.g. we use max() in our system (see below example), which is not
-upstreamed yet but it works well.
-    "Expression": "max(T0, T1, T2)"
+Linux upstream current status:
+	1. npcm7xx clock driver - adding read only 
+		flag to divider clocks, Will be sent to Linux community.
+	2. Adding NPCM ADC calibration - Will be sent to Linux vanilla,
+		but I am not sure it will be approved.
+	3. Add DT restart priority and reset type support - sent to Linux 
+		community la but havent approved yet.
+	4. persist configuration to the pin control driver - asked by a costumer,
+		didnt sent to Linux community.
+	5. Add HGPIO pin support to NPCM7xx pinctrl driver - will be sent
+		to Linux community
+	6. JTAG master driver - will be sent to Linux community once we will 
+		have BMC folder.
+
+Changes since version 1:
+- Address comments from Jonathan Neuschäfer: removing trailing whitespace
+	in NPCM watchdog documentation.
+- Adding Stanley Chu to NPCM JTAG master driver
+
+Tomer Maimon (11):
+  clk: npcm7xx: add read only flag to divider clocks
+  iio: adc: add calibration support to npcm ADC
+  dts: npcm750: add fuse regmap support node
+  watchdog: npcm: Add DT restart priority and reset type support
+  dt-binding: watchdog: Add DT restart priority and reset type
+  pinctrl: npcm7xx: Add HGPIO pin support to NPCM7xx pinctrl driver
+  pinctrl: pinconf: add pin persist configuration
+  pinctrl: npcm7xx: Add pin persist configuration support
+  spi: npcm-pspi: Add full duplex support
+  dt-binding: bmc: add NPCM7XX JTAG master documentation
+  misc: npcm7xx-jtag-master: add NPCM7xx JTAG master driver
+
+ .../bindings/bmc/npcm7xx-jtag-master.txt      |  38 +
+ .../bindings/watchdog/nuvoton,npcm-wdt.txt    |  32 +
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   6 +
+ drivers/clk/clk-npcm7xx.c                     |  70 +-
+ drivers/iio/adc/npcm_adc.c                    | 191 ++++
+ drivers/misc/Kconfig                          |   6 +
+ drivers/misc/Makefile                         |   1 +
+ drivers/misc/npcm7xx-jtag-master.c            | 840 ++++++++++++++++++
+ drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c     | 130 ++-
+ drivers/pinctrl/pinconf-generic.c             |   3 +
+ drivers/spi/spi-npcm-pspi.c                   |  75 +-
+ drivers/watchdog/npcm_wdt.c                   | 121 ++-
+ 12 files changed, 1418 insertions(+), 95 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/bmc/npcm7xx-jtag-master.txt
+ create mode 100644 drivers/misc/npcm7xx-jtag-master.c
 
 -- 
-BRs,
-Lei YU
+2.22.0
+
