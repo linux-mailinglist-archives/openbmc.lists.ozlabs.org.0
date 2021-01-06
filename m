@@ -2,11 +2,11 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 936322EB9C9
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 07:04:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E8B2EB9DA
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 07:08:28 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D9f3969q3zDqbr
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 17:04:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D9f7F085fzDqZD
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 17:08:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized)
@@ -19,10 +19,10 @@ Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
  [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D9dyH6RH4zDqbD;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D9dyH6P99zDqbB;
  Wed,  6 Jan 2021 17:00:35 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 1065sEQL004599;
+ by twspam01.aspeedtech.com with ESMTP id 1065sEQM004599;
  Wed, 6 Jan 2021 13:54:14 +0800 (GMT-8)
  (envelope-from chiawei_wang@aspeedtech.com)
 Received: from ChiaWeiWang-PC.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
@@ -34,9 +34,9 @@ To: <robh+dt@kernel.org>, <joel@jms.id.au>, <andrew@aj.id.au>,
  <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>,
  <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
  <linux-kernel@vger.kernel.org>
-Subject: [PATCH 2/6] MAINTAINER: Add ASPEED eSPI driver entry
-Date: Wed, 6 Jan 2021 13:59:35 +0800
-Message-ID: <20210106055939.19386-3-chiawei_wang@aspeedtech.com>
+Subject: [PATCH 3/6] clk: ast2600: Add eSPI reset bit
+Date: Wed, 6 Jan 2021 13:59:36 +0800
+Message-ID: <20210106055939.19386-4-chiawei_wang@aspeedtech.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210106055939.19386-1-chiawei_wang@aspeedtech.com>
 References: <20210106055939.19386-1-chiawei_wang@aspeedtech.com>
@@ -46,7 +46,7 @@ X-Originating-IP: [192.168.2.66]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 1065sEQL004599
+X-MAIL: twspam01.aspeedtech.com 1065sEQM004599
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,40 +62,25 @@ Cc: BMC-SW@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add myself and Ryan Chen as maintainer of the Aspeed eSPI
-driver and the associated eSPI interrupt controller.
-Joel Stanley is also added as the reviewer.
+Add bit field definition for the eSPI reset control.
 
 Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
 ---
- MAINTAINERS | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/dt-bindings/clock/ast2600-clock.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7c1e45c416b1..d5f9205a5439 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1639,6 +1639,20 @@ F:	drivers/crypto/axis
- F:	drivers/mmc/host/usdhi6rol0.c
- F:	drivers/pinctrl/pinctrl-artpec*
+diff --git a/include/dt-bindings/clock/ast2600-clock.h b/include/dt-bindings/clock/ast2600-clock.h
+index 62b9520a00fd..964934b1caef 100644
+--- a/include/dt-bindings/clock/ast2600-clock.h
++++ b/include/dt-bindings/clock/ast2600-clock.h
+@@ -89,6 +89,7 @@
+ #define ASPEED_CLK_MAC4RCLK		70
  
-+ARM/ASPEED ESPI DRIVER
-+M:	Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-+M:	Ryan Chen <ryan_chen@aspeedtech.com>
-+R:	Joel Stanley <joel@jms.id.au>
-+L:	linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
-+L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/soc/aspeed/espi.yaml
-+F:	drivers/irqchip/irq-aspeed-espi-ic.c
-+F:	drivers/soc/aspeed/aspeed-espi*
-+F:	include/dt-bindings/interrupt-controller/aspeed-espi-ic.h
-+F:	include/soc/aspeed/espi.h
-+F:	include/uapi/linux/aspeed-espi.h
-+
- ARM/ASPEED I2C DRIVER
- M:	Brendan Higgins <brendanhiggins@google.com>
- R:	Benjamin Herrenschmidt <benh@kernel.crashing.org>
+ /* Only list resets here that are not part of a gate */
++#define ASPEED_RESET_ESPI		57
+ #define ASPEED_RESET_ADC		55
+ #define ASPEED_RESET_JTAG_MASTER2	54
+ #define ASPEED_RESET_I3C_DMA		39
 -- 
 2.17.1
 
