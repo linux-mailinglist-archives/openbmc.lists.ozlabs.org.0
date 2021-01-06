@@ -2,57 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F35E12EC026
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 16:08:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC90A2EC06B
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jan 2021 16:32:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4D9t6t14w4zDqQW
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 02:08:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4D9tfZ0q41zDqjh
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 02:32:54 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.166.42; helo=mail-io1-f42.google.com;
+ smtp.mailfrom=gmail.com (client-ip=209.85.166.47; helo=mail-io1-f47.google.com;
  envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com
- [209.85.166.42])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com
+ [209.85.166.47])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4D9t5w2vVLzDqNB;
- Thu,  7 Jan 2021 02:08:00 +1100 (AEDT)
-Received: by mail-io1-f42.google.com with SMTP id 81so2982991ioc.13;
- Wed, 06 Jan 2021 07:08:00 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4D9tdk1vVmzDqfH;
+ Thu,  7 Jan 2021 02:32:09 +1100 (AEDT)
+Received: by mail-io1-f47.google.com with SMTP id z5so3065173iob.11;
+ Wed, 06 Jan 2021 07:32:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
- :message-id;
- bh=sDcxo2YF0ytDnnc725r7joapiGpKbCFaBKSVTNjyV08=;
- b=A2MRoZ+OiZAoRBn3zp6bPOm0NuAItS3sBwugfubPYLvRJX/l8vsA9bLtltyrRib8vU
- hML5KPKSjDKN+Yd84cSNRfKQInaIbesjvkeSnkOCw/OHzF7TOuYShTIsL/nRpJACnZVp
- Eh+oh+MRn60ONN11fm/SAR9uYlWxqmcPAtyq1yQVEwL2mYpNMLd1sGlW2QgIABWPa+Ve
- bkgImfjmXBTcjrXBbLsDs7mXn8ldBMzTpAB9s2st0iFlUAKGG8yWHe1B8yMSi4jg2BVq
- quZh3ls/5g87Yv2/RYCwevzuQFqsOjI8IV23rNI2bH51QdcFbrLb8ANmDAaeENxFZFJj
- g9sw==
-X-Gm-Message-State: AOAM532+poqN4lXtgDTH5UFNqqMafL+/qEUyTaW+Xe9N9H8Lt6KN6Zkn
- 7l7nQpLLU021ui/ZGdXvQA==
-X-Google-Smtp-Source: ABdhPJzcqFMgFW34fkmkOuo+dCdNB7WmoXOrBa8gSy2L1EIrTcOVy6xN9/O2/530ZQJPmTYHIe13/w==
-X-Received: by 2002:a5e:aa13:: with SMTP id s19mr3211317ioe.108.1609945678007; 
- Wed, 06 Jan 2021 07:07:58 -0800 (PST)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=t80RrQIP9pcWO65dqznFuyn9d1RG+MW1J0H6Xs08o5Q=;
+ b=bnfpJu+r47+oXtW69r8HlX6R3QUIDfrQXWvM12mkoB9+AVqXN+u5VCzJFX6kVAwspJ
+ rPLsv6ddSlkCebcxziDGneVY61Mtgbr+KvGt6chV/f9uFyed3iDdsszpYPHIAt2Y+awF
+ vhBgFenp85HERKDOYfl3aoLCjrzfSFx2Nq6+aBYIp6rMwjthoyy33rONVoIopT8EFTzu
+ kwhc/BI4ao8UB8JgbtO8u4HniIlPT4rV3P5rpuBn6n97nkOfm0a7w2MSWk9nn/NZxF75
+ roZb11OADaovHZFvVXCrPMaWDdYVFI04GmP7uHwcN2HFFSl1eHIvXyW6GhyJawiw0dmZ
+ 7Pog==
+X-Gm-Message-State: AOAM5313wx9mgpbNUmuTuewAy5ZD+mNl+0i7cbhjiBDbU1qdPWgFkSWI
+ C9nHJxonNxTkkRRpM7jCGA==
+X-Google-Smtp-Source: ABdhPJyz6kf7fccUgN42Q21kf9oT8emUqUG0qvmMQDGTyBYyMTKFCZbUVC4pPwY/vKQfpxrz6D+Cnw==
+X-Received: by 2002:a02:b709:: with SMTP id g9mr4250778jam.90.1609947126638;
+ Wed, 06 Jan 2021 07:32:06 -0800 (PST)
 Received: from robh.at.kernel.org ([64.188.179.253])
- by smtp.gmail.com with ESMTPSA id f20sm2260581ilr.85.2021.01.06.07.07.55
+ by smtp.gmail.com with ESMTPSA id n10sm2371751ila.69.2021.01.06.07.32.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 Jan 2021 07:07:56 -0800 (PST)
-Received: (nullmailer pid 2229519 invoked by uid 1000);
- Wed, 06 Jan 2021 15:07:55 -0000
+ Wed, 06 Jan 2021 07:32:05 -0800 (PST)
+Received: (nullmailer pid 2267272 invoked by uid 1000);
+ Wed, 06 Jan 2021 15:32:02 -0000
+Date: Wed, 6 Jan 2021 08:32:02 -0700
 From: Rob Herring <robh@kernel.org>
 To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
-In-Reply-To: <20210106055939.19386-2-chiawei_wang@aspeedtech.com>
+Subject: Re: [PATCH 5/6] soc: aspeed: Add eSPI driver
+Message-ID: <20210106153202.GA2258036@robh.at.kernel.org>
 References: <20210106055939.19386-1-chiawei_wang@aspeedtech.com>
- <20210106055939.19386-2-chiawei_wang@aspeedtech.com>
-Subject: Re: [PATCH 1/6] dt-bindings: aspeed: Add eSPI controller
-Date: Wed, 06 Jan 2021 08:07:55 -0700
-Message-Id: <1609945675.315536.2229518.nullmailer@robh.at.kernel.org>
+ <20210106055939.19386-6-chiawei_wang@aspeedtech.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210106055939.19386-6-chiawei_wang@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,44 +69,42 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
  BMC-SW@aspeedtech.com, andrew@aj.id.au, maz@kernel.org,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org,
- p.zabel@pengutronix.de, tglx@linutronix.de,
- linux-arm-kernel@lists.infradead.org
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, p.zabel@pengutronix.de,
+ tglx@linutronix.de, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 06 Jan 2021 13:59:34 +0800, Chia-Wei, Wang wrote:
-> Add dt-bindings and the inclusion header for Aspeed eSPI controller.
+On Wed, Jan 06, 2021 at 01:59:38PM +0800, Chia-Wei, Wang wrote:
+> The Aspeed eSPI controller is slave device to communicate with
+> the master through the Enhanced Serial Peripheral Interface (eSPI).
+> All of the four eSPI channels, namely peripheral, virtual wire,
+> out-of-band, and flash are supported.
 > 
 > Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
 > ---
->  .../devicetree/bindings/soc/aspeed/espi.yaml  | 252 ++++++++++++++++++
->  .../interrupt-controller/aspeed-espi-ic.h     |  15 ++
->  2 files changed, 267 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/aspeed/espi.yaml
->  create mode 100644 include/dt-bindings/interrupt-controller/aspeed-espi-ic.h
-> 
+>  drivers/soc/aspeed/Kconfig                  |  49 ++
+>  drivers/soc/aspeed/Makefile                 |   5 +
+>  drivers/soc/aspeed/aspeed-espi-ctrl.c       | 197 ++++++
+>  drivers/soc/aspeed/aspeed-espi-flash.c      | 490 ++++++++++++++
+>  drivers/soc/aspeed/aspeed-espi-oob.c        | 706 ++++++++++++++++++++
+>  drivers/soc/aspeed/aspeed-espi-peripheral.c | 613 +++++++++++++++++
+>  drivers/soc/aspeed/aspeed-espi-vw.c         | 211 ++++++
+>  include/uapi/linux/aspeed-espi.h            | 160 +++++
+>  8 files changed, 2431 insertions(+)
+>  create mode 100644 drivers/soc/aspeed/aspeed-espi-ctrl.c
+>  create mode 100644 drivers/soc/aspeed/aspeed-espi-flash.c
+>  create mode 100644 drivers/soc/aspeed/aspeed-espi-oob.c
+>  create mode 100644 drivers/soc/aspeed/aspeed-espi-peripheral.c
+>  create mode 100644 drivers/soc/aspeed/aspeed-espi-vw.c
 
-My bot found errors running 'make dt_binding_check' on your patch:
+drivers/spi/ is the correct location for a SPI controller.
 
-yamllint warnings/errors:
+>  create mode 100644 include/uapi/linux/aspeed-espi.h
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/soc/aspeed/espi.example.dts:45.35-36 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:344: Documentation/devicetree/bindings/soc/aspeed/espi.example.dt.yaml] Error 1
-make: *** [Makefile:1370: dt_binding_check] Error 2
+This userspace interface is not going to be accepted upstream.
 
-See https://patchwork.ozlabs.org/patch/1422809
+I'd suggest you look at similar SPI flash capable SPI controller drivers 
+upstream and model your driver after them. This looks like it needs 
+major reworking.
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Rob
