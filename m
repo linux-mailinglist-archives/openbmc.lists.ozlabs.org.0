@@ -2,59 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 809E62ECDA5
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 11:18:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 077A02ED3AE
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 16:43:51 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DBMdP5GjGzDr7F
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 21:18:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DBVrQ4BrbzDqZq
+	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 02:43:34 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=198.145.29.99; helo=mail.kernel.org;
- envelope-from=maz@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=mspinler@linux.ibm.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=kernel.org
-Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
+ dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=TQUwf90+; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DBMcR4l1yzDr6c;
- Thu,  7 Jan 2021 21:17:43 +1100 (AEDT)
-Received: from disco-boy.misterjones.org (disco-boy.misterjones.org
- [51.254.78.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mail.kernel.org (Postfix) with ESMTPSA id 36E2023138;
- Thu,  7 Jan 2021 10:17:40 +0000 (UTC)
-Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
- by disco-boy.misterjones.org with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94)
- (envelope-from <maz@kernel.org>)
- id 1kxSML-005oKv-V9; Thu, 07 Jan 2021 10:17:38 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DBVqc51gFzDqX9
+ for <openbmc@lists.ozlabs.org>; Fri,  8 Jan 2021 02:42:51 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 107FX56F035662
+ for <openbmc@lists.ozlabs.org>; Thu, 7 Jan 2021 10:42:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : subject : to :
+ message-id : date : mime-version : content-type :
+ content-transfer-encoding; s=pp1;
+ bh=ICnOiuAbmPkJVzGNbWrTO3uDoQp8mFkOxukeHnEUyyE=;
+ b=TQUwf90+pIDGPT183mLw5mT5/ziHDhyaI/aCbzpvPrB7w6jaycyicBavKCjX7nGAuleC
+ K8W2uqXZKzwVd6wjXroiP/KslChzUJ3B5KxU4IpxnU8Vqyl9BMm0U1wL9hP/uTuITXSK
+ NK7ZR6k8gb05bNdrmyVtyFau4Q/6yNwPYAxn1lLddlqtJud946z8NqKZPdBs2F7UZpJ/
+ 4XXwSbmggQgUx1Ij+qJdAzLmnhbFLXyYXp9MKS9Qs2M29JknpPzHErGfg6thNYXr4RE6
+ 1sAQ/9WumNiijbslEv9OoolCvhcPG98t6hw/gQsS+dyri3NefB95OX0crPgr35L6Qyf7 Sg== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 35x510r977-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 07 Jan 2021 10:42:47 -0500
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 107FVlaq030220
+ for <openbmc@lists.ozlabs.org>; Thu, 7 Jan 2021 15:42:47 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com
+ [9.57.198.23]) by ppma03dal.us.ibm.com with ESMTP id 35tgf9eufx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Thu, 07 Jan 2021 15:42:47 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 107FgkvI21889394
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Thu, 7 Jan 2021 15:42:46 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 48CD6AE05C
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 15:42:46 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 15708AE060
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 15:42:46 +0000 (GMT)
+Received: from [9.160.45.31] (unknown [9.160.45.31])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 15:42:45 +0000 (GMT)
+From: Matt Spinler <mspinler@linux.ibm.com>
+Subject: taking actions on thermal issues
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Message-ID: <1ffff04c-151a-eb75-08a1-51c3945e6294@linux.ibm.com>
+Date: Thu, 7 Jan 2021 09:42:46 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Thu, 07 Jan 2021 10:17:37 +0000
-From: Marc Zyngier <maz@kernel.org>
-To: ChiaWei Wang <chiawei_wang@aspeedtech.com>
-Subject: Re: [PATCH 4/6] irqchip/aspeed: Add Aspeed eSPI interrupt controller
-In-Reply-To: <HK0PR06MB377957C33FDD43C5A7F5EA1691AF0@HK0PR06MB3779.apcprd06.prod.outlook.com>
-References: <20210106055939.19386-1-chiawei_wang@aspeedtech.com>
- <20210106055939.19386-5-chiawei_wang@aspeedtech.com>
- <123bc25c72b3b17c0c4154d8bd8ce3b0@kernel.org>
- <HK0PR06MB377957C33FDD43C5A7F5EA1691AF0@HK0PR06MB3779.apcprd06.prod.outlook.com>
-User-Agent: Roundcube Webmail/1.4.9
-Message-ID: <beae3a8ba0a89ac6dff638df4e8b3211@kernel.org>
-X-Sender: maz@kernel.org
-X-SA-Exim-Connect-IP: 51.254.78.96
-X-SA-Exim-Rcpt-To: chiawei_wang@aspeedtech.com, robh+dt@kernel.org,
- joel@jms.id.au, andrew@aj.id.au, tglx@linutronix.de, p.zabel@pengutronix.de,
- linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, BMC-SW@aspeedtech.com
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
- SAEximRunCond expanded to false
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-07_07:2021-01-07,
+ 2021-01-07 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 mlxscore=0 suspectscore=0
+ bulkscore=0 impostorscore=0 mlxlogscore=999 spamscore=0 adultscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101070097
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,174 +97,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- BMC-SW <BMC-SW@aspeedtech.com>, andrew@aj.id.au, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org, p.zabel@pengutronix.de,
- tglx@linutronix.de, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2021-01-07 02:59, ChiaWei Wang wrote:
-> Hi Marc,
-> 
->> -----Original Message-----
->> From: Marc Zyngier <maz@kernel.org>
->> Sent: Wednesday, January 6, 2021 6:59 PM
->> To: ChiaWei Wang <chiawei_wang@aspeedtech.com>
->> Subject: Re: [PATCH 4/6] irqchip/aspeed: Add Aspeed eSPI interrupt 
->> controller
->> 
->> On 2021-01-06 05:59, Chia-Wei, Wang wrote:
->> > The eSPI interrupt controller acts as a SW IRQ number decoder to
->> > correctly control/dispatch interrupts of the eSPI peripheral, virtual
->> > wire, out-of-band, and flash channels.
->> >
->> > Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
->> > ---
->> >  drivers/irqchip/Makefile             |   2 +-
->> >  drivers/irqchip/irq-aspeed-espi-ic.c | 251 ++++++++++++++++++++++++
->> >  include/soc/aspeed/espi.h            | 279
->> +++++++++++++++++++++++++++
->> >  3 files changed, 531 insertions(+), 1 deletion(-)  create mode 100644
->> > drivers/irqchip/irq-aspeed-espi-ic.c
->> >  create mode 100644 include/soc/aspeed/espi.h
->> >
->> > diff --git a/drivers/irqchip/Makefile b/drivers/irqchip/Makefile index
->> > 0ac93bfaec61..56da4a3123f8 100644
->> > --- a/drivers/irqchip/Makefile
->> > +++ b/drivers/irqchip/Makefile
->> > @@ -86,7 +86,7 @@ obj-$(CONFIG_MVEBU_PIC)			+=
->> irq-mvebu-pic.o
->> >  obj-$(CONFIG_MVEBU_SEI)			+= irq-mvebu-sei.o
->> >  obj-$(CONFIG_LS_EXTIRQ)			+= irq-ls-extirq.o
->> >  obj-$(CONFIG_LS_SCFG_MSI)		+= irq-ls-scfg-msi.o
->> > -obj-$(CONFIG_ARCH_ASPEED)		+= irq-aspeed-vic.o irq-aspeed-i2c-ic.o
->> > irq-aspeed-scu-ic.o
->> > +obj-$(CONFIG_ARCH_ASPEED)		+= irq-aspeed-vic.o irq-aspeed-i2c-ic.o
->> > irq-aspeed-scu-ic.o irq-aspeed-espi-ic.o
->> >  obj-$(CONFIG_STM32_EXTI) 		+= irq-stm32-exti.o
->> >  obj-$(CONFIG_QCOM_IRQ_COMBINER)		+= qcom-irq-combiner.o
->> >  obj-$(CONFIG_IRQ_UNIPHIER_AIDET)	+= irq-uniphier-aidet.o
->> > diff --git a/drivers/irqchip/irq-aspeed-espi-ic.c
->> > b/drivers/irqchip/irq-aspeed-espi-ic.c
->> > new file mode 100644
->> > index 000000000000..8a5cc8fe3f0c
->> > --- /dev/null
->> > +++ b/drivers/irqchip/irq-aspeed-espi-ic.c
->> > @@ -0,0 +1,251 @@
->> > +// SPDX-License-Identifier: GPL-2.0-or-later
->> > +/*
->> > + * Copyright (c) 2020 Aspeed Technology Inc.
->> > + */
->> > +#include <linux/bitops.h>
->> > +#include <linux/module.h>
->> > +#include <linux/irq.h>
->> > +#include <linux/irqchip.h>
->> > +#include <linux/irqchip/chained_irq.h> #include <linux/irqdomain.h>
->> > +#include <linux/interrupt.h> #include <linux/mfd/syscon.h> #include
->> > +<linux/regmap.h> #include <linux/of.h> #include <linux/of_platform.h>
->> > +
->> > +#include <soc/aspeed/espi.h>
->> > +#include <dt-bindings/interrupt-controller/aspeed-espi-ic.h>
->> > +
->> > +#define DEVICE_NAME	"aspeed-espi-ic"
->> > +#define IRQCHIP_NAME	"eSPI-IC"
->> > +
->> > +#define ESPI_IC_IRQ_NUM	7
->> > +
->> > +struct aspeed_espi_ic {
->> > +	struct regmap *map;
->> > +	int irq;
->> > +	int gpio_irq;
->> > +	struct irq_domain *irq_domain;
->> > +};
->> > +
->> > +static void aspeed_espi_ic_gpio_isr(struct irq_desc *desc) {
->> > +	unsigned int irq;
->> > +	struct aspeed_espi_ic *espi_ic = irq_desc_get_handler_data(desc);
->> > +	struct irq_chip *chip = irq_desc_get_chip(desc);
->> > +
->> > +	chained_irq_enter(chip, desc);
->> > +
->> > +	irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				   ASPEED_ESPI_IC_CTRL_RESET);
->> > +	generic_handle_irq(irq);
->> > +
->> > +	irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				   ASPEED_ESPI_IC_CHAN_RESET);
->> > +	generic_handle_irq(irq);
->> 
->> So for each mux interrupt, you generate two endpoints interrupt, 
->> without even
->> checking whether they are pending? That's no good.
-> 
-> As the eSPI IC driver is chained to Aspeed GPIO IC, the pending is
-> checked in the gpio-aspeed.c
+Hi,
 
-That's not the place to do that.
+As I mentioned in 
+https://lore.kernel.org/openbmc/d8116efd-678c-2450-1756-a0bacc470858@linux.ibm.com/, 
+I need to take several different actions based on various sensor 
+thresholds (just temperature for now) in the system.  The actions are 
+things like:
 
-> 
->> > +
->> > +	chained_irq_exit(chip, desc);
->> > +}
->> > +
->> > +static void aspeed_espi_ic_isr(struct irq_desc *desc) {
->> > +	unsigned int sts;
->> > +	unsigned int irq;
->> > +	struct aspeed_espi_ic *espi_ic = irq_desc_get_handler_data(desc);
->> > +	struct irq_chip *chip = irq_desc_get_chip(desc);
->> > +
->> > +	chained_irq_enter(chip, desc);
->> > +
->> > +	regmap_read(espi_ic->map, ESPI_INT_STS, &sts);
->> > +
->> > +	if (sts & ESPI_INT_STS_PERIF_BITS) {
->> > +		irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				       ASPEED_ESPI_IC_PERIF_EVENT);
->> > +		generic_handle_irq(irq);
->> > +	}
->> > +
->> > +	if (sts & ESPI_INT_STS_VW_BITS) {
->> > +		irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				       ASPEED_ESPI_IC_VW_EVENT);
->> > +		generic_handle_irq(irq);
->> > +	}
->> > +
->> > +	if (sts & ESPI_INT_STS_OOB_BITS) {
->> > +		irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				       ASPEED_ESPI_IC_OOB_EVENT);
->> > +		generic_handle_irq(irq);
->> > +	}
->> > +
->> > +	if (sts & ESPI_INT_STS_FLASH_BITS) {
->> > +		irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				       ASPEED_ESPI_IC_FLASH_EVENT);
->> > +		generic_handle_irq(irq);
->> > +	}
->> > +
->> > +	if (sts & ESPI_INT_STS_HW_RST_DEASSERT) {
->> > +		irq = irq_find_mapping(espi_ic->irq_domain,
->> > +				       ASPEED_ESPI_IC_CTRL_EVENT);
->> > +		generic_handle_irq(irq);
->> > +	}
->> 
->> This is horrible. Why can't you just use fls() in a loop?
-> 
-> The bits in the interrupt status register for a eSPI channel are not
-> sequentially arranged.
-> Using fls() may invoke an eSPI channel ISR multiple times.
-> So I collected the bitmap for each channel, respectively, and call the
-> ISR at once.
+* a hard power off after staged delays based on threshold alarms
+* different phosphor-logging event logs based on which threshold alarm trips
+* possibly setting other D-Bus properties to alert of things like throttling
 
-And that's equally wrong. You need to handle interrupts individually,
-as they are different signal. If you are to implement an interrupt
-controller, please do it properly.
+I plan on putting this in a thermal-monitor app in the 
+phosphor-fan-presence repo (this hopefully-soon-to-be-renamed repo 
+already has multiple selectable applications and does more than fan 
+presence).
 
-Otherwise, get rid of it and move everything into your pet driver.
-There is no need to do a half-baked job.
+The actions it takes will be selectable somehow, and if other people 
+need to do other sorts of similar things, I think they could be added in 
+here as well.
 
-As it is, there is no way this code can be merged.
-
-         M.
--- 
-Jazz is not dead. It just smells funny...
+Thanks!
+Matt
