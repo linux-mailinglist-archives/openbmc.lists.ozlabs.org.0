@@ -2,62 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E70E2EC775
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 01:53:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A283D2EC7D6
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 02:50:55 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DB75c2K4fzDqmF
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 11:53:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DB8Mb6mjLzDqlg
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 12:50:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42e;
- helo=mail-wr1-x42e.google.com; envelope-from=maxims@google.com;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::22c;
+ helo=mail-oi1-x22c.google.com; envelope-from=brandonkim@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20161025 header.b=o3cye1lk; dkim-atps=neutral
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
- [IPv6:2a00:1450:4864:20::42e])
+ header.s=20161025 header.b=FZPPXfXW; dkim-atps=neutral
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com
+ [IPv6:2607:f8b0:4864:20::22c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DB74m3qgQzDqbp
- for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 11:52:48 +1100 (AEDT)
-Received: by mail-wr1-x42e.google.com with SMTP id d26so3975645wrb.12
- for <openbmc@lists.ozlabs.org>; Wed, 06 Jan 2021 16:52:48 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DB8LV6fy5zDqkT
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 12:49:47 +1100 (AEDT)
+Received: by mail-oi1-x22c.google.com with SMTP id p5so5708059oif.7
+ for <openbmc@lists.ozlabs.org>; Wed, 06 Jan 2021 17:49:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
  h=mime-version:from:date:message-id:subject:to;
- bh=jzPmx04reitqYtsYdlT02jCk3tDyFVYTOA850ys9RbM=;
- b=o3cye1lkxJkNrZBFDztxunyMmFxAfdnzPZhUE1XsJOg7UVe0RmzbNpNi/vNrsq5HYY
- V0mlnQUdiROCmMMyVijodTjeEXD5S6/ASS2FrTSt5dpN3AxiIlz0zf9LASFLUdZvzj7d
- gZiThm4eGrvuNaLyIEmC9Ezv8itLE0sAS0r/0WaMI8gJcR9OexXd1D6t8miGKuEhSWel
- 50i37Tp/Ie5TOHxeIQYWxkmozr0v3i6kZtDt+vd/Vzp3RlDyiZujdFQtEy8fmHqw1lMn
- F1VYTlO65Ghg6NkWSHM25wd89jQVkzVfZwQxDVHJjWhIcP/Z/jNT+mpWXiEmgozJKKGY
- Jl4Q==
+ bh=LVVK0C/AZwxOxGRMMNnxodiNPe7hsSevTclK5cimTqQ=;
+ b=FZPPXfXWmhICfwmX5mC+wN3OLyS0XZE0XWE1PlTfBzes/fz+ZxOke1fiC0KG8lhCPr
+ J1hDul8AZDWlsJRw7aMB+v099uq1MGvGJlkh3VMNkNCopTH7ktsYccdSb95tB2mQlINv
+ 4RI4PBl8uk0t/UujKklPVcNgtuy59sKLXJFZ8JSzLf19ilqE30yaYljTDOlnqZezMuwI
+ NM73/sFocv4Xxo4FiYAA0WeF5NoCTzPO1rCKyIIK2WyIz7Xx3L32WYpvsIsCjLAdQQN9
+ BsZicfu/bRe7tKsVRIPqcgj1j7J5Gz890TPz4sSjm1Y9VQJBugkQFYnf80tfz0Zebjlr
+ QhwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
  h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
- bh=jzPmx04reitqYtsYdlT02jCk3tDyFVYTOA850ys9RbM=;
- b=V9tsz2xcZ48uraTmLvkzbDTj6/IprHhSMibGSJIbKB7sl+YmHjgvYhVzcd+G8/77bI
- LcNZ8GfYHmMKdkyuFllCK3YHWPtFONYGl/2l1Ted13h3TeItzucB0fXcgCZwS9TD/+Xt
- IGURL2dNkviaQ7k6wFPUHFKGcIet/LAf2qzlmp0mZ1PWEAgRW3aEwlwykiHQJg140lMs
- VLtWXmz0Fv7BHF3kjS8QA27LSVwAZQA3sZWqvQFQT8U+bznMJTFl4JerlUNbuTunsTxQ
- OxfxpLD983Yy27K+ZSAhgIkDKS8hXYA1/aOtgn1Y09ftW+ztaHxjybbwft4Fay1ABLpj
- HddQ==
-X-Gm-Message-State: AOAM532SqpXn0cQn+0MsOgGjOU12lZx/0+M8zmoyL2JY/NkXIytk0Szz
- Sj3O/JzsQIpJIzUBophgqs/ISEK2IMJuryeurLcuhQeZpt4x5w==
-X-Google-Smtp-Source: ABdhPJyFx/vDZLw8EETvO43vZx6vZVPyxhq1i58K35kGwKJ6Q2C3f+sRorxVMDOn0roASbBz/buAjkIy3C8FiqGqBGs=
-X-Received: by 2002:a5d:67c3:: with SMTP id n3mr6431788wrw.297.1609980764195; 
- Wed, 06 Jan 2021 16:52:44 -0800 (PST)
+ bh=LVVK0C/AZwxOxGRMMNnxodiNPe7hsSevTclK5cimTqQ=;
+ b=GnzKPkSLsL+Rbyr7cwQytwxogxtaCmz3enj9nexaoLJ309dGJKNDbnNIFeFL9JCXRJ
+ 4RfUzYntfbsmiY6L2azNYeyVllYZ1VYP0mo3cQby1uKMg8AJh3UTh22bE4XmmEyHckB4
+ inwHDKx8W8BLVV6R/QiP27LE4mvhso0UzH5/hjaGOcUemPiVkmLdQMiOK9HPjEfINlU7
+ 4TRs9bK5NxauORHqAqetakMDs0iYIdOhwAX8NcJEK6UQ52zZLWzH7Rhw2dBWnWQ5E/zB
+ ty68itx/N/yw7yO3u4XvWVbwtyDHc+R8EbNOk3ZqH+qILL6IbblY32sVaARrPTX2bx89
+ OAGQ==
+X-Gm-Message-State: AOAM533MyZx91FvutxshBIWSPhXhZqDq5puqz5IwV2ysx2iQ8Pys1+OJ
+ lTgFE8ZwGk03HIqdPgyAiqQklrJE6utAxPH2MNqHaPU98+AC2w==
+X-Google-Smtp-Source: ABdhPJyaF/EELsvPdDnAjV82vCo5hDR9cjcSCn+kEXlus/+AFP0HRW8i9O4Wsy2YJCxA3B77QBdjzbavlIiQGdreCss=
+X-Received: by 2002:aca:1a09:: with SMTP id a9mr5010844oia.12.1609984183328;
+ Wed, 06 Jan 2021 17:49:43 -0800 (PST)
 MIME-Version: 1.0
-From: Maxim Sloyko <maxims@google.com>
-Date: Wed, 6 Jan 2021 16:52:32 -0800
-Message-ID: <CAFR_W8pjBgn=V9ye-R9ThvyvqwxqYnY94vAX0q1h4sVEaLWN2Q@mail.gmail.com>
-Subject: Changing LEDs status in response to Power Events
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000008bf8cb05b844db1a"
+From: Brandon Kim <brandonkim@google.com>
+Date: Wed, 6 Jan 2021 17:49:32 -0800
+Message-ID: <CALGRKGM0A9DHYuHrKrCLS8U0+YnbMCgVHWEXjbMW7Juhq+r=Zg@mail.gmail.com>
+Subject: Upstreaming downstream Google BMC repositories
+To: "OpenBMC (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000057c3e405b845a765"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,60 +72,43 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000008bf8cb05b844db1a
+--00000000000057c3e405b845a765
 Content-Type: text/plain; charset="UTF-8"
 
-Hi all,
+Hi everyone,
 
-We would like to change the state of some of the LEDs in response to some
-power events. For example, if the system goes from Standby to On, the LED
-needs to change from blinking fast to blinking slowly.  The way we are
-doing it right now is we have a script that runs every second, polls system
-state over D-Bus (xyz.openbmc_project.State.Chassis and
-xyz.openbmc_project.State.Host) and then, again over D-Bus, ask
-phosphor-led-manager to switch LED into a new state. This does not sound
-like a good solution to me, so I have a few questions:
+We're exploring ways of upstreaming some of the downstream repositories
+from Google to openbmc/* .
 
-0. Did I miss some existing way to do it in OpenBMC?
-1. If not, does anybody have the same problem and how do you solve this?
-2. If not, Is anybody working on a solution for this?
-3. If not, any thoughts on what's the best way to handle this? I can see at
-least two approaches:
-   a) Implement some callbacks in x86-power-control, so that one can
-register their services/targets to be notified of the event.
-   b) Implement this in phosphor-led-manager, so that it can listen to
-D-Bus events and respond to them.
+Half, if not most of the downstream repositories are C++ daemons that are
+specific to Google so we didn't want to create a bunch of new
+openbmc/<repo> that no one would use.
 
-Thoughts?
+An idea that Ed gave me was having something like openbmc/google-misc
+repository for all these repositories and if there are any that seem useful
+to others, we can break it out into a different, separate repository in
+openbmc/* layer.
 
-Thank you.
+Please let me know if this seems like a good idea and I'm open to other
+suggestions!
 
--- 
--MS
+Thanks,
+Brandon
 
---0000000000008bf8cb05b844db1a
+--00000000000057c3e405b845a765
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi all,<div><br></div><div>We would like to change the sta=
-te of some of the LEDs in response to some power events. For example, if th=
-e system goes from Standby to On, the LED needs to change from blinking fas=
-t to blinking slowly.=C2=A0 The way we are doing it right now is we have a =
-script that runs every second, polls system state over D-Bus (xyz.openbmc_p=
-roject.State.Chassis and xyz.openbmc_project.State.Host) and then, again ov=
-er D-Bus, ask phosphor-led-manager to switch LED into a new state. This doe=
-s not sound like a good solution to me, so I have a few questions:</div><di=
-v><br></div><div>0. Did I miss some existing way to do it in OpenBMC?</div>=
-<div>1. If not, does anybody have the same problem and how do you solve thi=
-s?</div><div>2. If not, Is anybody working on a solution for this?</div><di=
-v>3. If not, any thoughts on what&#39;s the best way to handle this? I can =
-see at least two approaches:</div><div>=C2=A0 =C2=A0a) Implement some callb=
-acks in x86-power-control, so that one can register their services/targets =
-to be notified of the event.</div><div>=C2=A0 =C2=A0b) Implement this in ph=
-osphor-led-manager, so that it can listen to D-Bus events and respond to th=
-em.</div><div><br></div><div>Thoughts?</div><div><br></div><div>Thank you.=
-=C2=A0=C2=A0</div><div><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmai=
-l_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">-MS</div><=
-/div></div></div>
+<div dir=3D"ltr">Hi everyone,<div><br></div><div>We&#39;re exploring ways o=
+f upstreaming some of the downstream repositories from Google to openbmc/* =
+.</div><div><br></div><div>Half, if not most of the downstream repositories=
+ are C++ daemons that are specific to Google so we didn&#39;t want to creat=
+e a bunch of new openbmc/&lt;repo&gt; that no one would use.</div><div><br>=
+</div><div>An idea that Ed gave me was having something like openbmc/google=
+-misc repository for all these repositories and if there are any that seem =
+useful to others, we can break it out into a different, separate repository=
+ in openbmc/* layer.</div><div><br>Please let me know if this seems like a =
+good idea and I&#39;m open to other suggestions!</div><div><br></div><div>T=
+hanks,</div><div>Brandon</div></div>
 
---0000000000008bf8cb05b844db1a--
+--00000000000057c3e405b845a765--
