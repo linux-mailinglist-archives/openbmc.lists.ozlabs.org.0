@@ -1,92 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 608002EC6EC
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 00:31:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E70E2EC775
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 01:53:43 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DB5H95BGQzDqlp
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 10:31:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DB75c2K4fzDqmF
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 11:53:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42e;
+ helo=mail-wr1-x42e.google.com; envelope-from=maxims@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+ dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=gdBQHqNb; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=CK8PaOi1; 
- dkim-atps=neutral
-X-Greylist: delayed 314 seconds by postgrey-1.36 at bilbo;
- Thu, 07 Jan 2021 10:30:57 AEDT
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20161025 header.b=o3cye1lk; dkim-atps=neutral
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com
+ [IPv6:2a00:1450:4864:20::42e])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DB5G94GLfzDqkf
- for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 10:30:57 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 98A51140D;
- Wed,  6 Jan 2021 18:25:38 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Wed, 06 Jan 2021 18:25:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=rfT2sgZWCks9fsmFF0GwoehLaMJ
- sAV9R3EJ161s8btE=; b=gdBQHqNb6VeF+jLdh16TJT0B+zQpAD5uzly94BvXrzy
- 2ulTRWj2Zn2nl25ZCl5ryFsjw17cRLBi46qWM7dVFCm/wr996lv4xKjdwwvTWHF+
- 14NdoyMz/RqTWtGV50Cu1jKqp8Kbnglc6jDP9Hi71qcthkf1APd/eto7CnaE4qIw
- 4KgXILdA+kvTrxAqK3E0yHx/CqyrkJy72z3j2oxrdoxcK1gqRe9HuWnp99tIK5y7
- O7sbFvTE/OF+HyaC3qCZgU6IveKvpHRWWMC6E7bz7YnjU4mV71QDqHQ3F2juiTSZ
- CPcejX0gCDyTV7kwccnECjBdXuL41ix3DB8FRAuIrww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=rfT2sg
- ZWCks9fsmFF0GwoehLaMJsAV9R3EJ161s8btE=; b=CK8PaOi1CJ1pCN1ATwPwfY
- lumdXWlZtMyU0DJ0QmpSil7yX8aCYKNJexDscvN1KloTAh+BGaXOGSLT6JXVBr7k
- Nr0Fs0iQX2rarfiN75k3CbeX86CDZRc2XH8pQiEVAd3XECLM9BP0IEo5dzDNEWhU
- XBHSmsyHo4yoloER6365e8Xg7GgzFqDolrA3NWxbgRfS2srxn9pV/9OI+tfVxcOl
- WTeTrmar13LpSLLuHvi7ye8ZPuxJwgahKHjTJDq2g38+PFpayfemwGxMVy/cE3f+
- 1Qhehflf4R8qHFp3ZpsxT2sw8uPkv/dlCtPM8BvZD8TrlABNZcMy8JgRv/qGmGXA
- ==
-X-ME-Sender: <xms:8Ub2X2aGDhOlVmRQKwBUBYzPwyvhkHE0_xqkt_nCB33_HTL6n_NAHA>
- <xme:8Ub2X5b57Mt7HNyWDk_dsUNqM10Kfr3_HPvnGIzAycNUSQX18YsVrk7ydp6fYPIfc
- XendmOqBxuzVSFHxyk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedujedrvdegtddgjeelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- udenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhephfevhfelieetkeevffefgfeffeeg
- kedvffejiedthfffudduhedvieevfedukedtnecuffhomhgrihhnpehprhhojhgvtghtrd
- hnvghtfihorhhkpdhgihhthhhusgdrtghomhenucfkphepjeeirddvhedtrdekgedrvdef
- ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprg
- htrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:8Ub2Xw9hy93ZAlpdzBaM2zZuWs9cpO1FEBmQCpLLJJNxITxuMHVglw>
- <xmx:8Ub2X4o5g-m9yCpZdB8KdOQuWIgXE5XlzZq9S6dV3RblMkOGQn2nOg>
- <xmx:8Ub2XxpADUYCXPYNLa0QOcFMUrt6s9yw_iybn5S1kVsSjFT1W-ud3Q>
- <xmx:8kb2XzGJAiXYBr0P7AfGhRZzfG1NS68bwoSyoT-E2s_ECRoKQnetZg>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id 9E80924005C;
- Wed,  6 Jan 2021 18:25:37 -0500 (EST)
-Date: Wed, 6 Jan 2021 17:25:36 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Johnathan Mantey <johnathanx.mantey@intel.com>
-Subject: Re: phosphor-dbus-interfaces ChannelAccess regression?
-Message-ID: <X/ZG8N5buQuCKVQw@heinlein>
-References: <778bd779-c6fd-0d77-a39a-b0da2ffafa0a@intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DB74m3qgQzDqbp
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 11:52:48 +1100 (AEDT)
+Received: by mail-wr1-x42e.google.com with SMTP id d26so3975645wrb.12
+ for <openbmc@lists.ozlabs.org>; Wed, 06 Jan 2021 16:52:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20161025;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=jzPmx04reitqYtsYdlT02jCk3tDyFVYTOA850ys9RbM=;
+ b=o3cye1lkxJkNrZBFDztxunyMmFxAfdnzPZhUE1XsJOg7UVe0RmzbNpNi/vNrsq5HYY
+ V0mlnQUdiROCmMMyVijodTjeEXD5S6/ASS2FrTSt5dpN3AxiIlz0zf9LASFLUdZvzj7d
+ gZiThm4eGrvuNaLyIEmC9Ezv8itLE0sAS0r/0WaMI8gJcR9OexXd1D6t8miGKuEhSWel
+ 50i37Tp/Ie5TOHxeIQYWxkmozr0v3i6kZtDt+vd/Vzp3RlDyiZujdFQtEy8fmHqw1lMn
+ F1VYTlO65Ghg6NkWSHM25wd89jQVkzVfZwQxDVHJjWhIcP/Z/jNT+mpWXiEmgozJKKGY
+ Jl4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=jzPmx04reitqYtsYdlT02jCk3tDyFVYTOA850ys9RbM=;
+ b=V9tsz2xcZ48uraTmLvkzbDTj6/IprHhSMibGSJIbKB7sl+YmHjgvYhVzcd+G8/77bI
+ LcNZ8GfYHmMKdkyuFllCK3YHWPtFONYGl/2l1Ted13h3TeItzucB0fXcgCZwS9TD/+Xt
+ IGURL2dNkviaQ7k6wFPUHFKGcIet/LAf2qzlmp0mZ1PWEAgRW3aEwlwykiHQJg140lMs
+ VLtWXmz0Fv7BHF3kjS8QA27LSVwAZQA3sZWqvQFQT8U+bznMJTFl4JerlUNbuTunsTxQ
+ OxfxpLD983Yy27K+ZSAhgIkDKS8hXYA1/aOtgn1Y09ftW+ztaHxjybbwft4Fay1ABLpj
+ HddQ==
+X-Gm-Message-State: AOAM532SqpXn0cQn+0MsOgGjOU12lZx/0+M8zmoyL2JY/NkXIytk0Szz
+ Sj3O/JzsQIpJIzUBophgqs/ISEK2IMJuryeurLcuhQeZpt4x5w==
+X-Google-Smtp-Source: ABdhPJyFx/vDZLw8EETvO43vZx6vZVPyxhq1i58K35kGwKJ6Q2C3f+sRorxVMDOn0roASbBz/buAjkIy3C8FiqGqBGs=
+X-Received: by 2002:a5d:67c3:: with SMTP id n3mr6431788wrw.297.1609980764195; 
+ Wed, 06 Jan 2021 16:52:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="iKUGIuw4brYYHWS+"
-Content-Disposition: inline
-In-Reply-To: <778bd779-c6fd-0d77-a39a-b0da2ffafa0a@intel.com>
+From: Maxim Sloyko <maxims@google.com>
+Date: Wed, 6 Jan 2021 16:52:32 -0800
+Message-ID: <CAFR_W8pjBgn=V9ye-R9ThvyvqwxqYnY94vAX0q1h4sVEaLWN2Q@mail.gmail.com>
+Subject: Changing LEDs status in response to Power Events
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000008bf8cb05b844db1a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,117 +69,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000008bf8cb05b844db1a
+Content-Type: text/plain; charset="UTF-8"
 
---iKUGIuw4brYYHWS+
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Hi all,
+
+We would like to change the state of some of the LEDs in response to some
+power events. For example, if the system goes from Standby to On, the LED
+needs to change from blinking fast to blinking slowly.  The way we are
+doing it right now is we have a script that runs every second, polls system
+state over D-Bus (xyz.openbmc_project.State.Chassis and
+xyz.openbmc_project.State.Host) and then, again over D-Bus, ask
+phosphor-led-manager to switch LED into a new state. This does not sound
+like a good solution to me, so I have a few questions:
+
+0. Did I miss some existing way to do it in OpenBMC?
+1. If not, does anybody have the same problem and how do you solve this?
+2. If not, Is anybody working on a solution for this?
+3. If not, any thoughts on what's the best way to handle this? I can see at
+least two approaches:
+   a) Implement some callbacks in x86-power-control, so that one can
+register their services/targets to be notified of the event.
+   b) Implement this in phosphor-led-manager, so that it can listen to
+D-Bus events and respond to them.
+
+Thoughts?
+
+Thank you.
+
+-- 
+-MS
+
+--0000000000008bf8cb05b844db1a
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 06, 2021 at 03:13:15PM -0800, Johnathan Mantey wrote:
-> It appears there has been a regression in phosphor-dbus-interfaces in
-> how it combines two different YAML files. My guess is the problem
-> occurred when the transition from CMake to Meson was performed. I'd
-> appreciate some guidance from someone more familiar with how Meson works.
+<div dir=3D"ltr">Hi all,<div><br></div><div>We would like to change the sta=
+te of some of the LEDs in response to some power events. For example, if th=
+e system goes from Standby to On, the LED needs to change from blinking fas=
+t to blinking slowly.=C2=A0 The way we are doing it right now is we have a =
+script that runs every second, polls system state over D-Bus (xyz.openbmc_p=
+roject.State.Chassis and xyz.openbmc_project.State.Host) and then, again ov=
+er D-Bus, ask phosphor-led-manager to switch LED into a new state. This doe=
+s not sound like a good solution to me, so I have a few questions:</div><di=
+v><br></div><div>0. Did I miss some existing way to do it in OpenBMC?</div>=
+<div>1. If not, does anybody have the same problem and how do you solve thi=
+s?</div><div>2. If not, Is anybody working on a solution for this?</div><di=
+v>3. If not, any thoughts on what&#39;s the best way to handle this? I can =
+see at least two approaches:</div><div>=C2=A0 =C2=A0a) Implement some callb=
+acks in x86-power-control, so that one can register their services/targets =
+to be notified of the event.</div><div>=C2=A0 =C2=A0b) Implement this in ph=
+osphor-led-manager, so that it can listen to D-Bus events and respond to th=
+em.</div><div><br></div><div>Thoughts?</div><div><br></div><div>Thank you.=
+=C2=A0=C2=A0</div><div><div><br></div>-- <br><div dir=3D"ltr" class=3D"gmai=
+l_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr">-MS</div><=
+/div></div></div>
 
-phosphor-dbus-interfaces doesn't do any combining of YAML files.
-They're all processed one at a time to create a C++/header pair which
-mostly just contains a single class to represent the dbus interface
-defined in the YAML.
-
-> Details:
-> In dunfell, and CMake when I issue this command from the BMC console:
-> busctl call -j=A0 xyz.openbmc_project.Network /xyz/openbmc_project/network
-> org.freedesktop.DBus.ObjectManager GetManagedObjects
->=20
-> I receive:
-> ...
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0 "/xyz/openbmc_project/network/eth0" : {
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 "org.freedesktop.DBus.Peer" : {},
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0
-> "org.freedesktop.DBus.Introspectable" : {},
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 "org.freedesktop.DBus.Properties" : {},
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0
-> *"xyz.openbmc_project.Channel.ChannelAccess" : {**
-> **=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 "MaxPrivile=
-ge" : {**
-> **=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0 "type" : "s",**
-> **=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0 "data" :
-> "priv-admin"**
-> **=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 }**
-> **=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 },*
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0
-> "xyz.openbmc_project.Collection.DeleteAll" : {},
->=20
-> ...
->=20
-> The same command issued from gatesgarth, and Meson, I receive:
-> ...
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0 "/xyz/openbmc_project/network/eth0" : {
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 "org.freedesktop.DBus.Peer" : {},
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0
-> "org.freedesktop.DBus.Introspectable" : {},
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 "org.freedesktop.DBus.Properties" : {},
-> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0
-> "xyz.openbmc_project.Collection.DeleteAll" : {},
-> ...
->=20
-> Any pointers on how to restore the missing D-Bus data?
->=20
-> --=20
-
-This would likely be a change in whatever daemon is presenting these
-interfaces for you.  Do you know where they're coming from?  I would
-have expected `phosphor-networkd` but I don't see anything in their code
-related to ChannelAccess.
-
-Doing a search on github I only see some IPMI-related code.  I don't
-know why eth0 would be represented by those.
-
-https://github.com/search?q=3Dorg%3Aopenbmc+ChannelAccess&type=3Dcode
-
---=20
-Patrick Williams
-
---iKUGIuw4brYYHWS+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl/2Ru4ACgkQqwNHzC0A
-wRl4tQ//dr92yYYLuOjdJzGvyUyMtjZlba/WuM0V4061lm1tyEG1f5INseWbryrl
-yBYydaIr+Fm05EUIuD3kiT/wk572c6BgrLrUHwzPYBZKnEbsxneZZbQuTOY5YF3P
-4Fr4S8/zIJ8U7uYfqZesAXpztKGQJ7+ykDI+JPfViTMJOTiFuMdxRac8jIhfszu7
-ozqLGcgkTtaAP992jqezf0js2dRVD8+AdguAtxVMPNPUH5/YNd9J8ciFeGIMhtBF
-G9xxo1f4wfB8pBpqViY5gPv2RBMV2gVmffxQIsZDeQ6StvjCod8w8BaXGTi6YhLQ
-XiMxduS/TJzgKH9g2zG1c3GDldQ/2nQi1V0Nr6nWf7xcn86zS/PJ2+YdhVf+nn+p
-b7OaEc8E/E3/GSrq408GlY7ZQBZMC/hutizKTc+xVONMRRbzIQmJtwR39Qw6NshN
-yKspXmO4tYmMqNdvaHUP4vL3WaZXFq6b/NB27SHOCf6oabCyHueqsbV6o4NKClsZ
-yoa9mpja563OkUiKA4GDYGye3fOkwZ57xt+mIB2voj2aE5T/rQ/aMInVWs9W+geW
-mSMja/KnLuHbS22xoFfu3i+xCadeNyJDTxzzsflPE2Xy2VoEkXXoMU0VVXiXDkmi
-emDd+dmPPLutm0LflIBN2KxEpL/cggSXVfLrPVSKbstyMyiSD2M=
-=R2yQ
------END PGP SIGNATURE-----
-
---iKUGIuw4brYYHWS+--
+--0000000000008bf8cb05b844db1a--
