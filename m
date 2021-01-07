@@ -2,44 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFAFA2ED6AF
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 19:26:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73E3F2EE759
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jan 2021 22:01:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DBZS10C9jzDqNW
-	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 05:26:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DBdvg2zsdzDqpp
+	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 08:01:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
- envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
+ header.from=linux.intel.com
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DBZR86c4czDqRm
- for <openbmc@lists.ozlabs.org>; Fri,  8 Jan 2021 05:25:23 +1100 (AEDT)
-Received: from [192.168.0.6] (ip5f5aed01.dynamic.kabel-deutschland.de
- [95.90.237.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id 06CEB20647DA0;
- Thu,  7 Jan 2021 19:25:17 +0100 (CET)
-Subject: Re: Upstreaming downstream Google BMC repositories
-To: Benjamin Fair <benjaminfair@google.com>
-References: <CALGRKGM0A9DHYuHrKrCLS8U0+YnbMCgVHWEXjbMW7Juhq+r=Zg@mail.gmail.com>
- <2e3f9acc-cc58-6f71-2e42-e046109dd5ec@molgen.mpg.de>
- <CADKL2t5ajasf9NzFbTwtT0=W7ZO2jcfD5V+tk5VVSrkZTuLNmw@mail.gmail.com>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-Message-ID: <711a5031-c774-4b03-6a6e-1f14d8699789@molgen.mpg.de>
-Date: Thu, 7 Jan 2021 19:25:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DBdtW4HlQzDqJ2
+ for <openbmc@lists.ozlabs.org>; Fri,  8 Jan 2021 08:00:50 +1100 (AEDT)
+IronPort-SDR: vy6NpvSh+Xvj/3NkOfqz9WR86AXV9d16JUYFyq4an6awMnV+IL9b/HG1/Lje7+D0mS0gfE2EKc
+ CM+HmRJYknRA==
+X-IronPort-AV: E=McAfee;i="6000,8403,9857"; a="174915291"
+X-IronPort-AV: E=Sophos;i="5.79,330,1602572400"; d="scan'208";a="174915291"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jan 2021 13:00:47 -0800
+IronPort-SDR: Os7tf5To9fAThMtj6bSJGeBku5V0er3zOCU8damB2cdZjCokeWGy9CLhD8CT0cfFtlxat1l0L7
+ pObujWmb0KLA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.79,330,1602572400"; d="scan'208";a="362100936"
+Received: from linux.intel.com ([10.54.29.200])
+ by orsmga002.jf.intel.com with ESMTP; 07 Jan 2021 13:00:46 -0800
+Received: from [10.209.27.59] (jmbills-MOBL.amr.corp.intel.com [10.209.27.59])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
+ bits)) (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id B5028580409
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Jan 2021 13:00:46 -0800 (PST)
+Subject: Re: Changing LEDs status in response to Power Events
+To: openbmc@lists.ozlabs.org
+References: <CAFR_W8pjBgn=V9ye-R9ThvyvqwxqYnY94vAX0q1h4sVEaLWN2Q@mail.gmail.com>
+ <X/c7dM7/uDIDTlFI@heinlein>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Message-ID: <4a31f202-e038-a9cd-687b-25b572dedae4@linux.intel.com>
+Date: Thu, 7 Jan 2021 13:00:45 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 MIME-Version: 1.0
-In-Reply-To: <CADKL2t5ajasf9NzFbTwtT0=W7ZO2jcfD5V+tk5VVSrkZTuLNmw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <X/c7dM7/uDIDTlFI@heinlein>
+Content-Type: text/plain; charset=windows-1252; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,68 +63,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Brandon Kim <brandonkim@google.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-Dear Benjamin,
 
-
-Am 07.01.21 um 18:33 schrieb Benjamin Fair:
-
-> On Thu, 7 Jan 2021 at 00:09, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
-
->> Am 07.01.21 um 02:49 schrieb Brandon Kim:
+On 1/7/2021 8:48 AM, Patrick Williams wrote:
+> On Wed, Jan 06, 2021 at 04:52:32PM -0800, Maxim Sloyko wrote:
+>> Hi all,
 >>
->>> We're exploring ways of upstreaming some of the downstream repositories
->>> from Google to openbmc/* .
->>>
->>> Half, if not most of the downstream repositories are C++ daemons that are
->>> specific to Google so we didn't want to create a bunch of new
->>> openbmc/<repo> that no one would use.
->>>
->>> An idea that Ed gave me was having something like openbmc/google-misc
->>> repository for all these repositories and if there are any that seem useful
->>> to others, we can break it out into a different, separate repository in
->>> openbmc/* layer.
->>>
->>> Please let me know if this seems like a good idea and I'm open to other
->>> suggestions!
+>> We would like to change the state of some of the LEDs in response to some
+>> power events. For example, if the system goes from Standby to On, the LED
+>> needs to change from blinking fast to blinking slowly.  The way we are
+>> doing it right now is we have a script that runs every second, polls system
+>> state over D-Bus (xyz.openbmc_project.State.Chassis and
+>> xyz.openbmc_project.State.Host) and then, again over D-Bus, ask
+>> phosphor-led-manager to switch LED into a new state. This does not sound
+>> like a good solution to me, so I have a few questions:
 >>
->> Thank you very much for putting in the effort to make these repositories
->> public.
->>
->> Using the openbmc/google-misc approach, how would the git history
->> (commit log) be handled?
->>
->> Personally, I would prefer having small repositories as git makes that
->> very easy to handle. Also it might save you time, as you do not have to
->> think about what to do with the git history, and do not have to merge it.
+>> 0. Did I miss some existing way to do it in OpenBMC?
+>> 1. If not, does anybody have the same problem and how do you solve this?
+>> 2. If not, Is anybody working on a solution for this?
+>> 3. If not, any thoughts on what's the best way to handle this? I can see at
+>> least two approaches:
+>>     a) Implement some callbacks in x86-power-control, so that one can
+>> register their services/targets to be notified of the event.
+>>     b) Implement this in phosphor-led-manager, so that it can listen to
+>> D-Bus events and respond to them.
 > 
-> We would most likely squash the history together, in case there's
-> something confidential or private in the earlier commits.
+> This usecase is one of the reasons phosphor-state-manager was
+> implemented using systemd targets (or at least one of the nice fallouts
+> of that design).  The intention was that system-specific things like
+> this could easily install themselves into dependencies on the state
+> transition targets.
+> 
+> Unfortunately, if you're using x86-power-control as your state-manager
+> I don't think you get this feature.
 
-Understood. If that could be avoided, and only the confidential stuff 
-removed, that would be great, as the git history gives a lot of insight 
-into design decisions.
+x86-power-control was built to solve a very specific problem to get some 
+of our power-up timing and error-handling issues solved that we couldn't 
+figure out how to do with systemd targets in phosphor-state-manager. 
+Because of that, it wasn't designed to be very flexible or extensible.
 
-> Many small repos would be easy to handle for us, but OpenBMC may not
-> want to have lots of small Google-specific repos in their org as this
-> may make it more cumbersome for others to find the relevant repos that
-> they're interested in.
+I've thought about how we might be able to improve that but don't want 
+to re-invent the wheel where phosphor-state-manager has already solved 
+the flexibility and extensibility problem.
 
-Understood. On the other, with small repositories, they can only use the 
-parts they need.
+I have wanted to get back and spend some more time to see if I can get 
+the same reliability, timing and error-handling using systemd targets 
+with phosphor-state-manager, but have not had a chance.
 
-> There's also overhead for the project maintainers to create the
-> relevant groups and permissions for each new repo.
-Please note, that Without knowing the contents of the repositories and 
-the size, this is all just my opinion. If the OpenBMC “admins“ can 
-easily create several repositories, I’d prefer that route. If it’s too 
-much work for them, their preference should be chosen.
+For this issue, another option instead of the polling script may be to 
+have a new daemon that matches on the Host state property changes and 
+updates the LED.
 
+We can consider adding callbacks to x86-power-control, but it may not be 
+worth it if phosphor-state-manager can already handle it or there is a 
+simpler alternative.
 
-Kind regards,
-
-Paul
+Thanks,
+-Jason
+> 
