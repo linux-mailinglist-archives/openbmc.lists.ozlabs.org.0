@@ -2,69 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D6AA42EF5C7
-	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 17:32:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E7D72EFB4C
+	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 23:44:22 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DC7tm6m5yzDr9L
-	for <lists+openbmc@lfdr.de>; Sat,  9 Jan 2021 03:32:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DCJ7R2VnlzDr88
+	for <lists+openbmc@lfdr.de>; Sat,  9 Jan 2021 09:44:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.20; helo=mout.gmx.net;
+ (client-ip=212.227.17.22; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmx.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=b59ioWr3; 
+ header.s=badeba3b8450 header.b=lGuKEA9i; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DC7sq3DD6zDqvg
- for <openbmc@lists.ozlabs.org>; Sat,  9 Jan 2021 03:31:56 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DCJ4s12TGzDqNw
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Jan 2021 09:42:03 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1610123410;
- bh=ABABhJ8gg5BskkIme0zJhOFkjtC3oPm+1iSMQmPnbPs=;
+ s=badeba3b8450; t=1610145619;
+ bh=NJp+hbPNk37tII+LPOXGY8ODHY3S8sdf4Zgnfzeqzds=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=b59ioWr32lP2YxWwcp0CrwfNm9voWN/R0PMUMygXSKWf3J3qozOUZ8BGz/t/eguyl
- C/SedCbWZNQpwd8bxLrwyWvxcvss34AnUjsgvI0QaPWHDWu4pJk3sRxKlJTHAGHtbX
- CInZLeGSi450inumpfwd07l6JdaUDnqDfI2Fz2Qs=
+ b=lGuKEA9ik4wVcmkHJe/9j3tiy12BzGRnn8WUZE/cig+A0NNMoyn6eF8LnCKLH6HNy
+ s09OJgbSjmBpIuLXnFDWDTReOAHoYeAqK00OUNEA01080JGvFrmQRYMFEvp9+idxZv
+ fLzm/B1e5Nz9Qea5FZvCsYFSBWjCPN8U+MZGcY70=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.57]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCsUC-1kp9E21VB2-008qab; Fri, 08
- Jan 2021 17:30:10 +0100
+Received: from longitude ([37.201.215.57]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sDq-1ku8XZ1EBu-0054Cb; Fri, 08
+ Jan 2021 23:40:19 +0100
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: devicetree@vger.kernel.org
-Subject: [PATCH v2] dt-bindings: timer: nuvoton: Clarify that interrupt of
- timer 0 should be specified
-Date: Fri,  8 Jan 2021 17:30:04 +0100
-Message-Id: <20210108163004.492649-1-j.neuschaefer@gmx.net>
+Subject: [PATCH 1/2] dt-bindings: arm: Convert nuvoton, npcm750 binding to YAML
+Date: Fri,  8 Jan 2021 23:40:06 +0100
+Message-Id: <20210108224008.705687-1-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ZUagBJ3y6lRGhVMX0qfEZglo9lmo1tL07iQMwbZgRlDDKqBI4Mg
- VuHEnE9oF/qREDlcMH+KfdOGUSAzbMWmoY8Hs6q+p+o/65XA+3kk5uYXw+T0dxnLlofdypp
- AKAEU02rvynvbTNAjZax0XjVaI5CEIEH5711Z91ixyTI5ugGeXxDvTXeTJcQHsOmu8hY/oB
- g5SlfQ5zCTCuwaxSVnuPQ==
+X-Provags-ID: V03:K1:WWz1zPPZWYzoDcE8qrMIoeq4BF0tEdmNQs+psVnXi/ZQ5uwWwM7
+ KwPuFz1+G7rvnQdbyQSaNZwugq77f481UJujPnBAIVhgB1S/TYpUMmdl9MOAgYFGEdrMEs/
+ 4T+m0C3D18rePH25Sy267SDxK2tizRc7XSZemYts+NI7pMf5jgZ9gWLV8G6lPnhPZMDkqco
+ sf11uyGfiMIuOwdNYq7PQ==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0X2iKvwzbzI=:3lOo2UlFWs2/bM+zkozVfd
- +RqObHgnKkyo1QHxVErMB+dBJJpRthKzbLtH1lD9S4wxbLPTb28DUDvHOoNEFBsOVPbJzxaXG
- 8MXWiYERGXMgLwy0kLjHuZF5rSiC4bwpAXB/SrmhtH8exSorEi9EhoxWfCCgtq5/cwJ9gI+PT
- d5GoMo0vagAy5CUMVtcqwGKX7Ur93+kZ7R49KrZMg+X+4DF5iswuwLUAoDYLk8HEVSGZwa1XM
- eNQAvyY/N9JhgGqYo7xswBKmxiHbobES/2F3M36zfVi28AnDMelpUs9DS++V0fGwLWUxhAu1Q
- Nqxgx1H0QO71I9cD7WQLMJh9SLNb8g5/scr/8nzMFHwDQAV8MeEnkl1kb7Dvk59G4QTpL4qKL
- Igfkzx7kaOQsVMbxWiTFq5ZH6FPUJ0hYT4xwkhtES5TNjafANWxiVE0Qcs5nCCmOKuRFs1Kge
- yuNCfXC3l7x3O7H/bJgwVTYZs7g60UXI4aPQvbv7phvO79NzZrK5tk/2DQouSvpStutMoV0Vw
- 8b2TPeW61qkaVgpS+oJAYGL809xlrWuX87ngTaqCUwNlzYIqdzyYjORMTYRVXP2qU52Cf4Nk3
- inmWkGXioKamLwn1wKzKBc1F2thWN4GEMcRHEtAE+wpVOYhjEnX4H8tqcbow5ynD4To9LhP7A
- QdHysaUS8Q9ZSX1iHhzO8CupGES2PQ3ZaOpV/CLlCMkeipnLORYqOy/MU/tLzZVjHxhLlWRwm
- XZwI0cajhPv7nr79kQUFGi0vxmtwzUFhBtUt8owIx34/Ft/eePzRU14AdBpYIkJSA3Kk5/bn7
- nYAGi9NuJQY8xUPPiIXG3Gtw8xQ9DAc1VISVIlumvwAQ/lomGztpbu7Dp7og5aK7WHNf1lMOY
- dUYwI55/AjSUZi37ZHuQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xr89JIx1Uqo=:LezS2WenVd1CcciZkzRgyt
+ GggwgryMBhsDN3/3AiwgzcMyMtE04dY203G92SX7lQ9SYPgQOKKxiYdF+9zQtjTWaABm5x9LY
+ ydumC6I8dgvL7Fby8oLREAiz+feoLTcsorCILF2tDe0d4Li3WN2dwp6GP0naRIeUM6ar53T5Q
+ +CHDW/7R+6AyFmrbZBWlPFWplbp1xUvSiHIa254EdyYjYj3OHBxIRUZuf3Ntck9U/3ha2yE/S
+ sp+yrT36kQdmbIrbp3AkvxASr5yfXdTOspGt1ypCLAEDJ3k1MfZWeIhNW4uw/ndKzT5tkXHd2
+ x07VZ8M8gjqD9vwdH0Go/fD+YF1yTMttzDyOSsL26W5maCdNHGJgUfzNeS8UEDGzMeWKeQ8cg
+ eXr2E1GwRfVA1N+yI7UesZjaRxdwbE7GY4imy8vDgKa1h5kEFHacO7zMmeexWGMVOG92lZxfJ
+ O+m4XejC/vc6l/xYlp4FaYuIMxfK2O2isFmx/+6XMNYa37L5DNDVQ4teMjkuyuQyYAC9pnEUg
+ pXHHCIlEtpTLE4JAmWL+woj84u9oWh0I3Bs+6aXe1ZdCD4knzTQjNA6j37Jja4VkbHNmXkpH6
+ krlr0wb0m93lbCy7q09S6IMhFfUWso3jtoo+wXMdo93W70aNqXhLrKoMPG7mN1PWf0kYkuolQ
+ tCOIMbiSfAGHi7/sjPBG2Nbtvn94PmupvVoEdq4qyvKWwztOWBFMhbSfX7Mp+XJP/4fyGnODl
+ c34uk0OVGpcyCIAO6hoYgpwgdkLzwAkGMOGVSXC9hP5+XUxNJZNBUnFOrrJSsUUPAc29S/cq9
+ fJyVvbaVMtVp0N/7t8Ki0WnJTgfnwawwKBwVViVkANDyHEIbTzdOInPIx1QBo2AjZEb6a0Exy
+ Qlz0XHM/HB+utJzi9jww==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,49 +77,76 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
  Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
  =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
  Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, linux-kernel@vger.kernel.org,
- Benjamin Fair <benjaminfair@google.com>
+ linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The NPCM750 Timer/Watchdog Controller has multiple interrupt lines,
-connected to multiple timers. The driver uses timer 0 for timer
-interrupts, so the interrupt line corresponding to timer 0 should be
-specified in DT.
+The general trend is to have devicetree bindings in YAML format, to
+allow automatic validation of bindings and devicetrees.
 
-I removed the mention of "flags for falling edge", because the timer
-controller uses high-level interrupts rather than falling-edge
-interrupts, and whether flags should be specified is up the interrupt
-controller's DT binding.
+Convert the NPCM SoC family's binding to YAML before it accumulates more
+entries.
+
+The nuvoton,npcm750-evb compatible string is introduced to keep the
+structure of the binding a little simpler.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
 
-v2:
-- Fix a typo in the word "watchdog"
+If someone else wants to be listed as the maintainer, please let me
+know.
 =2D--
- .../devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt        | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../devicetree/bindings/arm/npcm/npcm.txt     |  6 -----
+ .../devicetree/bindings/arm/npcm/npcm.yaml    | 23 +++++++++++++++++++
+ 2 files changed, 23 insertions(+), 6 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
 
-diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer=
-.txt b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-index ea22dfe485bee..97258f1a1505b 100644
-=2D-- a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-+++ b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-@@ -6,8 +6,7 @@ timer counters.
- Required properties:
- - compatible      : "nuvoton,npcm750-timer" for Poleg NPCM750.
- - reg             : Offset and length of the register set for the device.
-=2D- interrupts      : Contain the timer interrupt with flags for
--                    falling edge.
-+- interrupts      : Contain the timer interrupt of timer 0.
- - clocks          : phandle of timer reference clock (usually a 25 MHz cl=
-ock).
-
- Example:
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.txt b/Documen=
+tation/devicetree/bindings/arm/npcm/npcm.txt
+deleted file mode 100644
+index 2d87d9ecea85b..0000000000000
+=2D-- a/Documentation/devicetree/bindings/arm/npcm/npcm.txt
++++ /dev/null
+@@ -1,6 +0,0 @@
+-NPCM Platforms Device Tree Bindings
+=2D-----------------------------------
+-NPCM750 SoC
+-Required root node properties:
+-	- compatible =3D "nuvoton,npcm750";
+-
+diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.yaml b/Docume=
+ntation/devicetree/bindings/arm/npcm/npcm.yaml
+new file mode 100644
+index 0000000000000..e2cf790a2c63e
+=2D-- /dev/null
++++ b/Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+@@ -0,0 +1,23 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/npcm.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: NPCM Platforms Device Tree Bindings
++
++maintainers:
++  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
++
++properties:
++  $nodename:
++    const: '/'
++  compatible:
++    oneOf:
++      - description: NPCM750 based boards
++        items:
++          - enum:
++            - nuvoton,npcm750-evb           # NPCM750 evaluation board
++          - const: nuvoton,npcm750
++
++additionalProperties: true
 =2D-
 2.29.2
 
