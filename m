@@ -1,69 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E7D72EFB4C
-	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 23:44:22 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id D57832EFB4A
+	for <lists+openbmc@lfdr.de>; Fri,  8 Jan 2021 23:43:13 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DCJ7R2VnlzDr88
-	for <lists+openbmc@lfdr.de>; Sat,  9 Jan 2021 09:44:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DCJ5t0cz3zDr95
+	for <lists+openbmc@lfdr.de>; Sat,  9 Jan 2021 09:42:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.22; helo=mout.gmx.net;
+ (client-ip=212.227.15.15; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
  dmarc=pass (p=none dis=none) header.from=gmx.net
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=lGuKEA9i; 
+ header.s=badeba3b8450 header.b=UzFum2fG; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DCJ4s12TGzDqNw
- for <openbmc@lists.ozlabs.org>; Sat,  9 Jan 2021 09:42:03 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DCJ4s4NTWzDqRt
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Jan 2021 09:42:02 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1610145619;
- bh=NJp+hbPNk37tII+LPOXGY8ODHY3S8sdf4Zgnfzeqzds=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
- b=lGuKEA9ik4wVcmkHJe/9j3tiy12BzGRnn8WUZE/cig+A0NNMoyn6eF8LnCKLH6HNy
- s09OJgbSjmBpIuLXnFDWDTReOAHoYeAqK00OUNEA01080JGvFrmQRYMFEvp9+idxZv
- fLzm/B1e5Nz9Qea5FZvCsYFSBWjCPN8U+MZGcY70=
+ s=badeba3b8450; t=1610145621;
+ bh=zoPbxKl7/h63Lb9FVRa59Ce+siBolFFjisZwdmEdKTM=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=UzFum2fGUDHoGZoFso450mnTY/alpDyBq3w47ne4HC8CI825F6TSqT5UwpNeRygUL
+ 1XJ7IjQ9m282trM0VDWCzPpRe/ik8jvUJ6QXJ5LHoFMgmSSrifCrZd2NDOvA32zApo
+ yAuZc5i4+PwGsGF6vKcNfdktH+TM8oOi7S8ECqzQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.57]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sDq-1ku8XZ1EBu-0054Cb; Fri, 08
- Jan 2021 23:40:19 +0100
+Received: from longitude ([37.201.215.57]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MoO6M-1k9HTh0jKi-00okPe; Fri, 08
+ Jan 2021 23:40:21 +0100
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: devicetree@vger.kernel.org
-Subject: [PATCH 1/2] dt-bindings: arm: Convert nuvoton, npcm750 binding to YAML
-Date: Fri,  8 Jan 2021 23:40:06 +0100
-Message-Id: <20210108224008.705687-1-j.neuschaefer@gmx.net>
+Subject: [PATCH 2/2] ARM: dts: Add board-specific compatible string to
+ npcm750-evb devicetree
+Date: Fri,  8 Jan 2021 23:40:07 +0100
+Message-Id: <20210108224008.705687-2-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.29.2
+In-Reply-To: <20210108224008.705687-1-j.neuschaefer@gmx.net>
+References: <20210108224008.705687-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WWz1zPPZWYzoDcE8qrMIoeq4BF0tEdmNQs+psVnXi/ZQ5uwWwM7
- KwPuFz1+G7rvnQdbyQSaNZwugq77f481UJujPnBAIVhgB1S/TYpUMmdl9MOAgYFGEdrMEs/
- 4T+m0C3D18rePH25Sy267SDxK2tizRc7XSZemYts+NI7pMf5jgZ9gWLV8G6lPnhPZMDkqco
- sf11uyGfiMIuOwdNYq7PQ==
+X-Provags-ID: V03:K1:BhfwAak8K6CjNf+mZXSVTbn7VQ7sg+KrjOvjneGvzbDUST8rpwy
+ ICs1qJJHjO+5CopzxrfyT/AhGBBtjE8BTzm2GqBOt7Tvd6bgZ70Dx4nP6Wr+Epghln7fRI9
+ nLTLyKpdakNxCyAC7OBkJyjROdkv5lq+HQZ56hjN04caCEUNAHVwiaBVCEz2ND783Aqgn0g
+ vbS340YVp0ihxUpbhSpww==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xr89JIx1Uqo=:LezS2WenVd1CcciZkzRgyt
- GggwgryMBhsDN3/3AiwgzcMyMtE04dY203G92SX7lQ9SYPgQOKKxiYdF+9zQtjTWaABm5x9LY
- ydumC6I8dgvL7Fby8oLREAiz+feoLTcsorCILF2tDe0d4Li3WN2dwp6GP0naRIeUM6ar53T5Q
- +CHDW/7R+6AyFmrbZBWlPFWplbp1xUvSiHIa254EdyYjYj3OHBxIRUZuf3Ntck9U/3ha2yE/S
- sp+yrT36kQdmbIrbp3AkvxASr5yfXdTOspGt1ypCLAEDJ3k1MfZWeIhNW4uw/ndKzT5tkXHd2
- x07VZ8M8gjqD9vwdH0Go/fD+YF1yTMttzDyOSsL26W5maCdNHGJgUfzNeS8UEDGzMeWKeQ8cg
- eXr2E1GwRfVA1N+yI7UesZjaRxdwbE7GY4imy8vDgKa1h5kEFHacO7zMmeexWGMVOG92lZxfJ
- O+m4XejC/vc6l/xYlp4FaYuIMxfK2O2isFmx/+6XMNYa37L5DNDVQ4teMjkuyuQyYAC9pnEUg
- pXHHCIlEtpTLE4JAmWL+woj84u9oWh0I3Bs+6aXe1ZdCD4knzTQjNA6j37Jja4VkbHNmXkpH6
- krlr0wb0m93lbCy7q09S6IMhFfUWso3jtoo+wXMdo93W70aNqXhLrKoMPG7mN1PWf0kYkuolQ
- tCOIMbiSfAGHi7/sjPBG2Nbtvn94PmupvVoEdq4qyvKWwztOWBFMhbSfX7Mp+XJP/4fyGnODl
- c34uk0OVGpcyCIAO6hoYgpwgdkLzwAkGMOGVSXC9hP5+XUxNJZNBUnFOrrJSsUUPAc29S/cq9
- fJyVvbaVMtVp0N/7t8Ki0WnJTgfnwawwKBwVViVkANDyHEIbTzdOInPIx1QBo2AjZEb6a0Exy
- Qlz0XHM/HB+utJzi9jww==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NoMWTY70s50=:lHz2McS2sj8PnBtG1DnL7r
+ E13SqSfiCJ35zDFvTEd8sZG1Z1ruXBIz2LdJzVJEvHXGRt3njloPegEha1SncHuLfM5JC+rsk
+ jdd0brladGXztdECekFtaTPUdl6uIcFPluVtvKhbEjuo2HpB5SggC9XVH3KB7U9wZk9Og7z0n
+ uUln4oiT3pEQ0NIPJVXYTalMM4m3hb7CETQv+6Par1CxhYUfJb4VMEYL8evr/CTFtbKWKc9sD
+ 8E/PQyTGzV1cdTyra4oXn19b/t/dJEKmzifEIZkkJcqUIauZEhuAlwqA37A6ItaWWa/t6aaOD
+ 20PCQD39o/pZBnrOFrEHEAYP/d/NXxl4308n0Wm69KTKjxwPZsaJihiVzF02/9XrL08b14Xt8
+ jgiKerij3tkx8404FWC1eMsjsOTX5y05PHejMAgyvkWVBG1qhsIo0jWvLlJuOECjUl7kPN2nr
+ Z0kwFy4oyV836UjkvvRKLCpC8/cyj5hZpx5oPImIRje6AdvRifS67zpV4J27IvyFXEq9p54Tb
+ /TjwB45Wzjhy1VlOCmyuwDRuvKs07rqDSmVoOIh33RZS72zIMFYh7Yw1FpnLSMphbHxhGi7dK
+ lg6gF2FIpk96iAGP3jRkYjh4hD8pWx7dVK/KBp79Yvdu6ggnm1b1TQenXz5Ts37sMlQ1v1RXL
+ NCeRssIcYg7CKmqApcS50h0eAZdbjXopeIqZftIDpr0ytTcZJyPbvlv2n9a721u0KaSnYZ9jv
+ ZT5IHVggY1CuJmdt+E/tsdKflzbwoQioc2geFGA4j5TkBohhEx4BDDVz61jlR4eUnsTBb2NEy
+ x01qLHei3zaDe9TFLhQFZb+8l1t/Yhh06qGwOpYvNbLIxL9kpcQUTgBy7C3BHyaqM0DBqyQuh
+ K204ho3PGmagv2qq3y8w==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,70 +86,28 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The general trend is to have devicetree bindings in YAML format, to
-allow automatic validation of bindings and devicetrees.
-
-Convert the NPCM SoC family's binding to YAML before it accumulates more
-entries.
-
-The nuvoton,npcm750-evb compatible string is introduced to keep the
-structure of the binding a little simpler.
+According to the revised binding, the devicetree needs a board-specific
+compatible string.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-If someone else wants to be listed as the maintainer, please let me
-know.
-=2D--
- .../devicetree/bindings/arm/npcm/npcm.txt     |  6 -----
- .../devicetree/bindings/arm/npcm/npcm.yaml    | 23 +++++++++++++++++++
- 2 files changed, 23 insertions(+), 6 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
- create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts=
+/nuvoton-npcm750-evb.dts
+index 9f13d08f5804e..dea3dbc4a6a52 100644
+=2D-- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -9,7 +9,7 @@
 
-diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.txt b/Documen=
-tation/devicetree/bindings/arm/npcm/npcm.txt
-deleted file mode 100644
-index 2d87d9ecea85b..0000000000000
-=2D-- a/Documentation/devicetree/bindings/arm/npcm/npcm.txt
-+++ /dev/null
-@@ -1,6 +0,0 @@
--NPCM Platforms Device Tree Bindings
-=2D-----------------------------------
--NPCM750 SoC
--Required root node properties:
--	- compatible =3D "nuvoton,npcm750";
--
-diff --git a/Documentation/devicetree/bindings/arm/npcm/npcm.yaml b/Docume=
-ntation/devicetree/bindings/arm/npcm/npcm.yaml
-new file mode 100644
-index 0000000000000..e2cf790a2c63e
-=2D-- /dev/null
-+++ b/Documentation/devicetree/bindings/arm/npcm/npcm.yaml
-@@ -0,0 +1,23 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/arm/npcm.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: NPCM Platforms Device Tree Bindings
-+
-+maintainers:
-+  - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-+
-+properties:
-+  $nodename:
-+    const: '/'
-+  compatible:
-+    oneOf:
-+      - description: NPCM750 based boards
-+        items:
-+          - enum:
-+            - nuvoton,npcm750-evb           # NPCM750 evaluation board
-+          - const: nuvoton,npcm750
-+
-+additionalProperties: true
+ / {
+ 	model =3D "Nuvoton npcm750 Development Board (Device Tree)";
+-	compatible =3D "nuvoton,npcm750";
++	compatible =3D "nuvoton,npcm750-evb", "nuvoton,npcm750";
+
+ 	aliases {
+ 		ethernet2 =3D &gmac0;
 =2D-
 2.29.2
 
