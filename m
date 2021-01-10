@@ -2,68 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E6962F0664
-	for <lists+openbmc@lfdr.de>; Sun, 10 Jan 2021 11:21:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D60D2F089D
+	for <lists+openbmc@lfdr.de>; Sun, 10 Jan 2021 18:19:46 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DDCYm3lg3zDqNX
-	for <lists+openbmc@lfdr.de>; Sun, 10 Jan 2021 21:21:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DDNqz57L1zDqMw
+	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 04:19:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::131;
- helo=mail-il1-x131.google.com; envelope-from=avifishman70@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.171;
+ helo=mail-oi1-f171.google.com; envelope-from=robherring2@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=s0Q4jUgX; dkim-atps=neutral
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com
- [IPv6:2607:f8b0:4864:20::131])
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com
+ [209.85.167.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DDCXV4fJYzDqM4
- for <openbmc@lists.ozlabs.org>; Sun, 10 Jan 2021 21:20:35 +1100 (AEDT)
-Received: by mail-il1-x131.google.com with SMTP id q1so15194692ilt.6
- for <openbmc@lists.ozlabs.org>; Sun, 10 Jan 2021 02:20:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=s2e3i6ekxjqpU6/uYaJIRv9nQC6V3zhYxhm4oqeJjAM=;
- b=s0Q4jUgXrr7RDyOyccXZM+LpdpxQbPp7MO9SMPskkzLjtRZ+6vRpKUvhCGP5sn6V5n
- 9HRe/hfl9wuTN5lhB/ZbJZ7kZ0R888lcj7kbk5YQC/U43PhXDnaFzStaYKQWNNoULrx7
- X11SlQTD06dYe/cQaEs9PPWwZbiLWzctra8eIJZ5LVOkdWQntAT6fbMfGEE+hqueC3Pw
- ehBY5MuuVPHI4WEwAppDg7Hv/3kCZ4dEPYGsxoZDRnBHQbyIEnu4AtxTYSsEZkz8DOnZ
- /ZGzLVLZjDJ9/ppEVkfxR/kjRsTRB0XCtcO966+NS1Ig1aM59Ht/daTBbKyi2Jud6Oa4
- WAyw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DDNq310qBzDqLc
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 04:18:53 +1100 (AEDT)
+Received: by mail-oi1-f171.google.com with SMTP id d203so17758678oia.0
+ for <openbmc@lists.ozlabs.org>; Sun, 10 Jan 2021 09:18:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=s2e3i6ekxjqpU6/uYaJIRv9nQC6V3zhYxhm4oqeJjAM=;
- b=Qvac+a+e2+FCSGpioIcwOgPXzcR8JAGp6edZanX7aA5TqWoU0neTjNClIZvJRA3cnR
- cHq/X8ecKSuuxL9kkAEoNm0d3GJdqWKljn9epo/yz8EDXruDD7Nv+6gZlsQQOER03Q7e
- efcmX7/CApl0EbA/wRevfO1B6xXuTOKEmRcLxFCnD6XfgWuq1TjIplicYcTcdgTkDE+Z
- aoEQZEMHwoV7xhsDYkiaUxYI6QV4BDK7rM33kiQ9vWRXVxU9UEVrYSmynAxiMBM9Z5KE
- s58EU37w42Q0dR2mHh8qpBatTkqBJOaRM0LTTNvxXB3tuU6Rchlix28ArhPixwc8dlzK
- eV2A==
-X-Gm-Message-State: AOAM530AfJdhfb0IKsBw8sT40monE2uCTUmdgcVgP30ocS7Q6Xw+Az6j
- TGh8iiS9I6eyDLboP/13yaDJE/8+8XUOKPGbFw==
-X-Google-Smtp-Source: ABdhPJxpAMRH1U7W5ODkByqNOQv/TK3JjpYyqjXOM5f3V5yVKUAJYIiXwpbaDWICmirUML3j/AdxTIxbWpmsctpgzM0=
-X-Received: by 2002:a92:6512:: with SMTP id z18mr11172342ilb.220.1610274032127; 
- Sun, 10 Jan 2021 02:20:32 -0800 (PST)
-MIME-Version: 1.0
-References: <20210108163004.492649-1-j.neuschaefer@gmx.net>
-In-Reply-To: <20210108163004.492649-1-j.neuschaefer@gmx.net>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Sun, 10 Jan 2021 12:19:55 +0200
-Message-ID: <CAKKbWA7Zx-Jq8c=ExE5SY_H--vk5+TqhTRCJig=7xq1smnKS-Q@mail.gmail.com>
-Subject: Re: [PATCH v2] dt-bindings: timer: nuvoton: Clarify that interrupt of
- timer 0 should be specified
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+ :message-id;
+ bh=0atvGl4wyF8gi+A5MyTDj8dXxWkRMttxRAM1sDUE6l8=;
+ b=gl0PalHET2b3V9axWzjH4LJQ7aMG3aRIuQWCaMzE3aHk5kBoDMCKZt0oiLvEIw1dyA
+ w5VT7bu0/TiT5luaDxyKZpaATOSlE8yUZKwTIYXMH7NiZAMqqvrzJSv2ASXZ5hAa4Jgn
+ vLhC6SFvZMPZaWDFlV/Wr3E6NXobmgm4UvJ4qOVmBQCGhdrRChGO/ssmYBiZ66Tt+no5
+ +BgFbJEr15BkFDUF/2rHh/Y52VGCnN7dXu05l/Gu95H7q+FiJfQAo1NP5fjCf7TT3Qre
+ 9FH+1ACPopLoBUtT5FUpRYafU2jmHcDEJ3QEO5B64NpIXpDfI7BTgNQP/jNdnreX4q9R
+ Kg9g==
+X-Gm-Message-State: AOAM531Y+Ys9orOHbW6Wdf9rjXCdKSAXFMbW8Apb1n9OOhwrj6fHWGQJ
+ 1/i7HH79FMTVZ55lIYDlGA==
+X-Google-Smtp-Source: ABdhPJxNu1nnwAhVK/0IWOQRUYRUBa7d2NcHd/qwEnyubX3gyHaAdZejLXM3kxeqo9P6SAVOH57WwQ==
+X-Received: by 2002:a05:6808:b26:: with SMTP id
+ t6mr8361584oij.169.1610299130054; 
+ Sun, 10 Jan 2021 09:18:50 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id o135sm2827330ooo.38.2021.01.10.09.18.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 10 Jan 2021 09:18:49 -0800 (PST)
+Received: (nullmailer pid 785277 invoked by uid 1000);
+ Sun, 10 Jan 2021 17:18:46 -0000
+From: Rob Herring <robh@kernel.org>
+To: =?utf-8?q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+In-Reply-To: <20210108224008.705687-1-j.neuschaefer@gmx.net>
+References: <20210108224008.705687-1-j.neuschaefer@gmx.net>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: Convert nuvoton,
+ npcm750 binding to YAML
+Date: Sun, 10 Jan 2021 11:18:46 -0600
+Message-Id: <1610299126.020227.785276.nullmailer@robh.at.kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,61 +67,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- Benjamin Fair <benjaminfair@google.com>, Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
  Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, Tomer Maimon <tmaimon77@gmail.com>
+ Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jan 8, 2021 at 6:30 PM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
->
-> The NPCM750 Timer/Watchdog Controller has multiple interrupt lines,
-> connected to multiple timers. The driver uses timer 0 for timer
-> interrupts, so the interrupt line corresponding to timer 0 should be
-> specified in DT.
->
-> I removed the mention of "flags for falling edge", because the timer
-> controller uses high-level interrupts rather than falling-edge
-> interrupts, and whether flags should be specified is up the interrupt
-> controller's DT binding.
->
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by Avi Fishman <avifishman70@gmail.com>
+On Fri, 08 Jan 2021 23:40:06 +0100, Jonathan Neuschäfer wrote:
+> The general trend is to have devicetree bindings in YAML format, to
+> allow automatic validation of bindings and devicetrees.
+> 
+> Convert the NPCM SoC family's binding to YAML before it accumulates more
+> entries.
+> 
+> The nuvoton,npcm750-evb compatible string is introduced to keep the
+> structure of the binding a little simpler.
+> 
+> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 > ---
->
-> v2:
-> - Fix a typo in the word "watchdog"
+> 
+> If someone else wants to be listed as the maintainer, please let me
+> know.
 > ---
->  .../devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt        | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-time=
-r.txt b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-> index ea22dfe485bee..97258f1a1505b 100644
-> --- a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-> +++ b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.txt
-> @@ -6,8 +6,7 @@ timer counters.
->  Required properties:
->  - compatible      : "nuvoton,npcm750-timer" for Poleg NPCM750.
->  - reg             : Offset and length of the register set for the device=
-.
-> -- interrupts      : Contain the timer interrupt with flags for
-> -                    falling edge.
-> +- interrupts      : Contain the timer interrupt of timer 0.
->  - clocks          : phandle of timer reference clock (usually a 25 MHz c=
-lock).
->
->  Example:
-> --
-> 2.29.2
->
+>  .../devicetree/bindings/arm/npcm/npcm.txt     |  6 -----
+>  .../devicetree/bindings/arm/npcm/npcm.yaml    | 23 +++++++++++++++++++
+>  2 files changed, 23 insertions(+), 6 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.txt
+>  create mode 100644 Documentation/devicetree/bindings/arm/npcm/npcm.yaml
+> 
 
+My bot found errors running 'make dt_binding_check' on your patch:
 
---=20
-Regards,
-Avi
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/arm/npcm/npcm.yaml:20:13: [warning] wrong indentation: expected 14 but found 12 (indentation)
+
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/arm/npcm/npcm.yaml: $id: relative path/filename doesn't match actual path or filename
+	expected: http://devicetree.org/schemas/arm/npcm/npcm.yaml#
+
+See https://patchwork.ozlabs.org/patch/1423975
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
