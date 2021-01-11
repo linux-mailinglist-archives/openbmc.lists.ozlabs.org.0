@@ -1,62 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17C2A2F20FD
-	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 21:40:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 034982F2149
+	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 22:00:47 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DF5F82RR8zDqc1
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 07:40:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DF5hX0BwLzDqZH
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 08:00:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.210.41; helo=mail-ot1-f41.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=fail (p=none dis=none) header.from=kernel.org
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com
- [209.85.210.41])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ spf=pass (sender SPF authorized) smtp.mailfrom=ami.com
+ (client-ip=63.147.10.42; helo=atlmailgw2.ami.com;
+ envelope-from=hongweiz@ami.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=ami.com
+Received: from atlmailgw2.ami.com (atlmailgw2.ami.com [63.147.10.42])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DF5CT443NzDqNw;
- Tue, 12 Jan 2021 07:38:58 +1100 (AEDT)
-Received: by mail-ot1-f41.google.com with SMTP id x13so144658oto.8;
- Mon, 11 Jan 2021 12:38:58 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=CuduTLZlbG35ugDeNBQcYjINyRmKUeAkNe31I9bczWo=;
- b=W6W7Naoy5zkInCmPE25n2p4eFpW0YF0A/IRqDwqgDwxEdkQixfJJbTQo6x7xkLCtCv
- WgyhM6605Uy5XzN86NCtmg/h1k96Dv+4XHeTk391B4RBsZd1xbPGbRJmdqlEV+TpPLji
- jr+0aeE3ToRbo2i1TIgM52Ly1rkmpUExt8vmqK8zghskiwf3gysyYwKUUMJ51gyQNs46
- Szr5nubPmfxkX3gPXY3WFrTgUnZ0ayr0BSMFmNcqSvyXa2/mLU9FSHYhQrvKz9pGvyqS
- E5NWtkGlUlqv9ZpQT87c2vgtyLrYlbHN/5p7nieTVUTG/lGbhcgs1wyJArpgOYn/IVvs
- yScQ==
-X-Gm-Message-State: AOAM530fieROosZrxyOThVJM8SjUD91H4HMOHqMlRcz2nqJlDkLPUIuZ
- 1kegWTiov2b67FqGBlptPQ==
-X-Google-Smtp-Source: ABdhPJxTRSLja0Ho46/iFyMEhN0kc2ToJeDnvK9Ayi6Oy07tXCHtANqvw5CXVDBAtyMzqOaEojN1Mg==
-X-Received: by 2002:a9d:2a86:: with SMTP id e6mr611496otb.313.1610397532905;
- Mon, 11 Jan 2021 12:38:52 -0800 (PST)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
- [24.155.109.49])
- by smtp.gmail.com with ESMTPSA id p132sm182478oia.41.2021.01.11.12.38.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 11 Jan 2021 12:38:52 -0800 (PST)
-Received: (nullmailer pid 3026340 invoked by uid 1000);
- Mon, 11 Jan 2021 20:38:50 -0000
-Date: Mon, 11 Jan 2021 14:38:50 -0600
-From: Rob Herring <robh@kernel.org>
-To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
-Subject: Re: [PATCH v4 1/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Message-ID: <20210111203850.GA3022469@robh.at.kernel.org>
-References: <20201229063157.3587-1-chiawei_wang@aspeedtech.com>
- <20201229063157.3587-2-chiawei_wang@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DF5g61pLzzDqS2;
+ Tue, 12 Jan 2021 07:59:29 +1100 (AEDT)
+X-AuditID: ac10606f-231ff70000001934-0b-5ffcbc2de2f4
+Received: from atlms1.us.megatrends.com (atlms1.us.megatrends.com
+ [172.16.96.144])
+ (using TLS with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (Client did not present a certificate)
+ by atlmailgw2.ami.com (Symantec Messaging Gateway) with SMTP id
+ 29.08.06452.D2CBCFF5; Mon, 11 Jan 2021 15:59:25 -0500 (EST)
+Received: from ami-us-wk.us.megatrends.com (172.16.98.207) by
+ atlms1.us.megatrends.com (172.16.96.144) with Microsoft SMTP Server (TLS) id
+ 14.3.468.0; Mon, 11 Jan 2021 15:59:24 -0500
+From: Hongwei Zhang <hongweiz@ami.com>
+To: Dylan Hung <dylan_hung@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
+ <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
+ <openbmc@lists.ozlabs.org>, Jakub Kicinski <kuba@kernel.org>, David S Miller
+ <davem@davemloft.net>
+Subject: [Aspeed, ncsi-rx, v1 0/1] net: ftgmac100: Fix AST2600EVB NCSI RX issue
+Date: Mon, 11 Jan 2021 15:58:59 -0500
+Message-ID: <20210111205900.22589-1-hongweiz@ami.com>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20201215192323.24359-1-hongweiz@ami.com>
+References: <20201215192323.24359-1-hongweiz@ami.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20201229063157.3587-2-chiawei_wang@aspeedtech.com>
+Content-Type: text/plain
+X-Originating-IP: [172.16.98.207]
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrHLMWRmVeSWpSXmKPExsWyRiBhgq7unj/xBt0XTCx2XeawmHO+hcXi
+ 67WNrBa/z/9ltriwrY/Vonn1OWaLy7vmsFkcWyBmcarlBYsDp8fV9l3sHl1377N7bFl5k8nj
+ 4sdjzB6bVnWyeZyfsZDR4/MmuQD2KC6blNSczLLUIn27BK6MI68cClZIVqzauYitgfGHcBcj
+ J4eEgInEoe4VbF2MXBxCAruYJPZsfMIC5TBKXHywgwWkik1ATWLv5jlMILaIwBdGidePgkBs
+ ZoFMianHO9lBbGEBP4mTx46ydjFycLAIqEr0rikHCfMKmEp8ePGYGWKZvMTqDQeYQUo4Bcwk
+ 9pySAwkLAZW07nvHBFEuKHFy5hMWiOkSEgdfvGCGqJGVuHXoMRPEGEWJB7++s05gFJiFpGUW
+ kpYFjEyrGIUSS3JyEzNz0suN9BJzM/WS83M3MULCPH8H48eP5ocYmTgYDzFKcDArifB6bfgT
+ L8SbklhZlVqUH19UmpNafIhRmoNFSZx3lfvReCGB9MSS1OzU1ILUIpgsEwenVAOjpx3X4gZO
+ 24lXGp6oX14oXPbbfgW35X7vQyJ2dsvP3M4wvPqo7XX16v8/13/0O+pxbmnto9DErnu/X71d
+ v1XlZJMU58abZj1cfzhVXsQsio595PT3gVNllNiPOVe81/D1yPW7mCQUF+5j3dJdxyzCMXPv
+ hab9UuZV9WvcP773CGF9wvVcsdVHiaU4I9FQi7moOBEAUVm7GmECAAA=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,191 +66,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, haiyue.wang@linux.intel.com,
- linux-aspeed@lists.ozlabs.org, minyard@acm.org, BMC-SW@aspeedtech.com,
- andrew@aj.id.au, linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
- cyrilbur@gmail.com, lee.jones@linaro.org, openbmc@lists.ozlabs.org,
- linux-arm-kernel@lists.infradead.org
+Cc: Andrew Jeffery <andrew@aj.id.au>, netdev <netdev@vger.kernel.org>,
+ Hongwei Zhang <hongweiz@ami.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 29, 2020 at 02:31:53PM +0800, Chia-Wei, Wang wrote:
-> The LPC controller has no concept of the BMC and the Host partitions.
-> This patch fixes the documentation by removing the description on LPC
-> partitions. The register offsets illustrated in the DTS node examples
-> are also fixed to adapt to the LPC DTS change.
 > 
-> Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
-> ---
->  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 99 ++++---------------
->  1 file changed, 21 insertions(+), 78 deletions(-)
+> Hi Hongwei,
 > 
-> diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> index d0a38ba8b9ce..90eb0ecc95d1 100644
-> --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> @@ -9,13 +9,7 @@ primary use case of the Aspeed LPC controller is as a slave on the bus
->  conditions it can also take the role of bus master.
->  
->  The LPC controller is represented as a multi-function device to account for the
-> -mix of functionality it provides. The principle split is between the register
-> -layout at the start of the I/O space which is, to quote the Aspeed datasheet,
-> -"basically compatible with the [LPC registers from the] popular BMC controller
-> -H8S/2168[1]", and everything else, where everything else is an eclectic
-> -collection of functions with a esoteric register layout. "Everything else",
-> -here labeled the "host" portion of the controller, includes, but is not limited
-> -to:
-> +mix of functionality, which includes, but is not limited to:
->  
->  * An IPMI Block Transfer[2] Controller
->  
-> @@ -44,80 +38,29 @@ Required properties
->  ===================
->  
->  - compatible:	One of:
-> -		"aspeed,ast2400-lpc", "simple-mfd"
-> -		"aspeed,ast2500-lpc", "simple-mfd"
-> -		"aspeed,ast2600-lpc", "simple-mfd"
-> +		"aspeed,ast2400-lpc-v2", "simple-mfd", "syscon"
-> +		"aspeed,ast2500-lpc-v2", "simple-mfd", "syscon"
-> +		"aspeed,ast2600-lpc-v2", "simple-mfd", "syscon"
->  
->  - reg:		contains the physical address and length values of the Aspeed
->                  LPC memory region.
->  
->  - #address-cells: <1>
->  - #size-cells:	<1>
-> -- ranges: 	Maps 0 to the physical address and length of the LPC memory
-> -                region
-> -
-> -Required LPC Child nodes
-> -========================
-> -
-> -BMC Node
-> ---------
-> -
-> -- compatible:	One of:
-> -		"aspeed,ast2400-lpc-bmc"
-> -		"aspeed,ast2500-lpc-bmc"
-> -		"aspeed,ast2600-lpc-bmc"
-> -
-> -- reg:		contains the physical address and length values of the
-> -                H8S/2168-compatible LPC controller memory region
-> -
-> -Host Node
-> ----------
-> -
-> -- compatible:   One of:
-> -		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
-> -		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
-> -		"aspeed,ast2600-lpc-host", "simple-mfd", "syscon"
-> -
-> -- reg:		contains the address and length values of the host-related
-> -                register space for the Aspeed LPC controller
-> -
-> -- #address-cells: <1>
-> -- #size-cells:	<1>
-> -- ranges: 	Maps 0 to the address and length of the host-related LPC memory
-> +- ranges:	Maps 0 to the physical address and length of the LPC memory
->                  region
->  
->  Example:
->  
->  lpc: lpc@1e789000 {
-> -	compatible = "aspeed,ast2500-lpc", "simple-mfd";
-> +	compatible = "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon";
->  	reg = <0x1e789000 0x1000>;
->  
->  	#address-cells = <1>;
->  	#size-cells = <1>;
->  	ranges = <0x0 0x1e789000 0x1000>;
+> The NCSI should run on 3.3V RMII.  According your log, you enabled NCSI on 
+> ftgmac100@1e660000 which can only support 1.8V I/O voltage.
+> Did you observe the same error on ftgmac100@1e670000 (MAC3) or ftgmac100@1e690000 (MAC4)?
+> 
 
-No child nodes? Then you don't need 'ranges', '#size-cells', nor 
-'#address-cells'.
+Hi Dylan,
 
-> -
-> -	lpc_bmc: lpc-bmc@0 {
-> -		compatible = "aspeed,ast2500-lpc-bmc";
-> -		reg = <0x0 0x80>;
-> -	};
-> -
-> -	lpc_host: lpc-host@80 {
-> -		compatible = "aspeed,ast2500-lpc-host", "simple-mfd", "syscon";
-> -		reg = <0x80 0x1e0>;
-> -		reg-io-width = <4>;
-> -
-> -		#address-cells = <1>;
-> -		#size-cells = <1>;
-> -		ranges = <0x0 0x80 0x1e0>;
-> -	};
->  };
->  
-> -BMC Node Children
-> -==================
-> -
-> -
-> -Host Node Children
-> -==================
->  
->  LPC Host Interface Controller
->  -------------------
-> @@ -149,14 +92,12 @@ Optional properties:
->  
->  Example:
->  
-> -lpc-host@80 {
-> -	lpc_ctrl: lpc-ctrl@0 {
-> -		compatible = "aspeed,ast2500-lpc-ctrl";
-> -		reg = <0x0 0x80>;
-> -		clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
-> -		memory-region = <&flash_memory>;
-> -		flash = <&spi>;
-> -	};
-> +lpc_ctrl: lpc-ctrl@80 {
-> +	compatible = "aspeed,ast2500-lpc-ctrl";
-> +	reg = <0x80 0x80>;
-> +	clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
-> +	memory-region = <&flash_memory>;
-> +	flash = <&spi>;
->  };
->  
->  LPC Host Controller
-> @@ -179,9 +120,9 @@ Required properties:
->  
->  Example:
->  
-> -lhc: lhc@20 {
-> +lhc: lhc@a0 {
->  	compatible = "aspeed,ast2500-lhc";
-> -	reg = <0x20 0x24 0x48 0x8>;
-> +	reg = <0xa0 0x24 0xc8 0x8>;
->  };
->  
->  LPC reset control
-> @@ -192,16 +133,18 @@ state of the LPC bus. Some systems may chose to modify this configuration.
->  
->  Required properties:
->  
-> - - compatible:		"aspeed,ast2600-lpc-reset" or
-> -			"aspeed,ast2500-lpc-reset"
-> -			"aspeed,ast2400-lpc-reset"
-> + - compatible:		One of:
-> +			"aspeed,ast2600-lpc-reset";
-> +			"aspeed,ast2500-lpc-reset";
-> +			"aspeed,ast2400-lpc-reset";
-> +
->   - reg:			offset and length of the IP in the LHC memory region
->   - #reset-controller	indicates the number of reset cells expected
->  
->  Example:
->  
-> -lpc_reset: reset-controller@18 {
-> +lpc_reset: reset-controller@98 {
->          compatible = "aspeed,ast2500-lpc-reset";
-> -        reg = <0x18 0x4>;
-> +        reg = <0x98 0x4>;
->          #reset-cells = <1>;
->  };
-> -- 
-> 2.17.1
+Thanks for your review and input, you're correct, this issue is not observed on
+AST2600 MAC4 (ftgmac100@1e690000).
+
+Though this issue is caused by using NCSI incompatible MAC ftgmac100@1e660000,
+we thought this patch is still having value, by providing an extra option to
+user to be able to use ftgmac100@1e660000 for NCSI, and this is also true for
+AST2500.
+
+--Hongwei
+ 
+> > -----Original Message-----
+> > From: Linux-aspeed
+> > [mailto:linux-aspeed-bounces+dylan_hung=aspeedtech.com@lists.ozlabs.or
+> > g]
+> > On Behalf Of Joel Stanley
+> > Sent: 2020?12?22? 10:26 AM
+> > To: Hongwei Zhang <hongweiz@ami.com>; Ryan Chen 
+> > <ryan_chen@aspeedtech.com>
+> > Cc: linux-aspeed <linux-aspeed@lists.ozlabs.org>; netdev 
+> > <netdev@vger.kernel.org>; OpenBMC Maillist <openbmc@lists.ozlabs.org>; 
+> > Linux Kernel Mailing List <linux-kernel@vger.kernel.org>; Jakub 
+> > Kicinski <kuba@kernel.org>; David S Miller <davem@davemloft.net>
+> > Subject: Re: [Aspeed, ncsi-rx, v1 0/1] net: ftgmac100: Fix AST2600EVB 
+> > NCSI RX issue
+> > 
+> > On Mon, 21 Dec 2020 at 17:01, Hongwei Zhang <hongweiz@ami.com> wrote:
+> > >
+> > > Dear Reviewer,
+> > >
+> > > When FTGMAC100 driver is used on other NCSI Ethernet controllers, 
+> > > few controllers have compatible issue. One example is Intel I210 
+> > > Ethernet controller on AST2600 BMC, with FTGMAC100 driver, it always 
+> > > trigger RXDES0_RX_ERR error, cause NCSI initialization failure, 
+> > > removing FTGMAC100_RXDES0_RX_ERR bit from RXDES0_ANY_ERROR fix the issue.
+> > 
+> > I work with a few systems that use the i210 on the 2600. We haven't 
+> > seen this issue in our testing.
+> > 
+> > Is there something specific about the setup that you use to trigger this?
+> > 
+> > Ryan, is this an issue that Aspeed is aware of?
+> > 
+> > Cheers,
+> > 
+> > Joel
+
+Hello Joel,
+
+Thanks for your review, please see my response to Dylan, he pointed out
+the root cause of the issue.
+
+-- Hongwei
+
+> > 
+> > >
+> > > Here are part of the debug logs:
+> > > ......
+> > > [   35.075552] ftgmac100_hard_start_xmit TXDESO=b000003c
+> > > [   35.080843] ftgmac100 1e660000.ethernet eth0: tx_complete_packet 55
+> > > [   35.087141] ftgmac100 1e660000.ethernet eth0: rx_packet_error
+> > RXDES0=0xb0070040
+> > > [   37.067831] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+> > > ............
+> > >
+> > > This patch add a configurable flag, FTGMAC100_RXDES0_RX_ERR_CHK, in
+> > > FTGMAC100  driver, it is YES by default, so keep the orignal define 
+> > > of RXDES0_ANY_ERROR. If it is needed, user can set the flag to NO to 
+> > > remove the RXDES0_RX_ERR bit, to fix the issue.
+> > >
+> > > Hongwei Zhang (1):
+> > >   net: ftgmac100: Fix AST2600 EVB NCSI RX issue
+> > >
+> > >  drivers/net/ethernet/faraday/Kconfig     | 9 +++++++++
+> > >  drivers/net/ethernet/faraday/ftgmac100.h | 8 ++++++++
+> > >  2 files changed, 17 insertions(+)
+> > >
+> > > --
+> > > 2.17.1
+> > >
 > 
