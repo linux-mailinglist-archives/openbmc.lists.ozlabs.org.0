@@ -2,66 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B7662F1EC7
-	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 20:17:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 17C2A2F20FD
+	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 21:40:31 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DF3P560WxzDqVF
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 06:17:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DF5F82RR8zDqc1
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 07:40:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233;
- helo=mail-oi1-x233.google.com; envelope-from=tmaimon77@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=209.85.210.41; helo=mail-ot1-f41.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=DVqYkNLv; dkim-atps=neutral
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com
- [IPv6:2607:f8b0:4864:20::233])
+ dmarc=fail (p=none dis=none) header.from=kernel.org
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com
+ [209.85.210.41])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DF3NF5hxZzDqBY
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 06:16:26 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id q205so421372oig.13
- for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 11:16:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=hiXoCS0FhOUQ5pzj0QNoVACzOPXssJAY3qOw2iwbjpI=;
- b=DVqYkNLveqUG+E5L/EFO879TIpFxfXDrZeMME0gNEUAtAc6ET/wCI6aYh0Md+wQC79
- 7uN6jl8yszabD0Zvf60teVEHZpy284/9rjKfqgLzGEa3c2IP9aNqZe3hW4n4uy5YxhVT
- FRAnE2hPhYfQ2yJST628do04opLGO2JLK9kKvdKP0Yib7k7fyKf5WJJNCZi4BmL8eOBJ
- MHwwz0prVEaB1Dil5gUndlkLptyGzlO+Ff2BbiljbDOfz4db4i6qpYig2VydZJxbiQO1
- 1vdn8+muX2Y1K5bjjrcGchk8gQDdwTL3TaYcJQloarHP+5yfUYRIbvuC1wuOL2yK7wia
- Oeag==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DF5CT443NzDqNw;
+ Tue, 12 Jan 2021 07:38:58 +1100 (AEDT)
+Received: by mail-ot1-f41.google.com with SMTP id x13so144658oto.8;
+ Mon, 11 Jan 2021 12:38:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=hiXoCS0FhOUQ5pzj0QNoVACzOPXssJAY3qOw2iwbjpI=;
- b=OFQmFFNAL/vd+pJIjhY7Jj+sIIArlvSYn9xq0rfaFDb/zC8eT4JVHFsjDYOcUAnL5c
- dxjxMmHi7Di7h7g3r2OdFF40zg0rQK+tmte+wjas2goWV/bGfe/qmRQRlgnW4/nYdazd
- nBLudemJcNxbomHUY846YaVPe1gTvURSJYF6TWcOeLo1Vb/O31JtQNwOijOennCOGa5t
- oN2mqvfVEqIOnaTtmXc3PtILCey8JfhtijMIcns/E02rbFEMdTd87fWhnf8+acoYu2Ik
- fFKQHq8jOMr+zCEZByeF4f9rOXQ320svaA+Pfgj1jtD8YnG0o6XSL0ZYX970sqmmj9bm
- ZNlw==
-X-Gm-Message-State: AOAM530mR8kZP8MDXD+Df40Q3m/IA03HT6jimEzE/TVZVUUuNW2ZZRTn
- CiLnSIqf/zbjO0+oQaC2ahyNE0DQzbFJJGlpESA=
-X-Google-Smtp-Source: ABdhPJw4jnkVEzhsTioLCScZeOano+G0QZUR7HU2PznrH8jr1qIV/VhkkaVErJ9VVZGevPWshMD/LsR0k2Ov4iKdG+w=
-X-Received: by 2002:aca:1716:: with SMTP id j22mr224655oii.42.1610392582984;
- Mon, 11 Jan 2021 11:16:22 -0800 (PST)
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=CuduTLZlbG35ugDeNBQcYjINyRmKUeAkNe31I9bczWo=;
+ b=W6W7Naoy5zkInCmPE25n2p4eFpW0YF0A/IRqDwqgDwxEdkQixfJJbTQo6x7xkLCtCv
+ WgyhM6605Uy5XzN86NCtmg/h1k96Dv+4XHeTk391B4RBsZd1xbPGbRJmdqlEV+TpPLji
+ jr+0aeE3ToRbo2i1TIgM52Ly1rkmpUExt8vmqK8zghskiwf3gysyYwKUUMJ51gyQNs46
+ Szr5nubPmfxkX3gPXY3WFrTgUnZ0ayr0BSMFmNcqSvyXa2/mLU9FSHYhQrvKz9pGvyqS
+ E5NWtkGlUlqv9ZpQT87c2vgtyLrYlbHN/5p7nieTVUTG/lGbhcgs1wyJArpgOYn/IVvs
+ yScQ==
+X-Gm-Message-State: AOAM530fieROosZrxyOThVJM8SjUD91H4HMOHqMlRcz2nqJlDkLPUIuZ
+ 1kegWTiov2b67FqGBlptPQ==
+X-Google-Smtp-Source: ABdhPJxTRSLja0Ho46/iFyMEhN0kc2ToJeDnvK9Ayi6Oy07tXCHtANqvw5CXVDBAtyMzqOaEojN1Mg==
+X-Received: by 2002:a9d:2a86:: with SMTP id e6mr611496otb.313.1610397532905;
+ Mon, 11 Jan 2021 12:38:52 -0800 (PST)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net.
+ [24.155.109.49])
+ by smtp.gmail.com with ESMTPSA id p132sm182478oia.41.2021.01.11.12.38.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Jan 2021 12:38:52 -0800 (PST)
+Received: (nullmailer pid 3026340 invoked by uid 1000);
+ Mon, 11 Jan 2021 20:38:50 -0000
+Date: Mon, 11 Jan 2021 14:38:50 -0600
+From: Rob Herring <robh@kernel.org>
+To: "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
+Subject: Re: [PATCH v4 1/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
+Message-ID: <20210111203850.GA3022469@robh.at.kernel.org>
+References: <20201229063157.3587-1-chiawei_wang@aspeedtech.com>
+ <20201229063157.3587-2-chiawei_wang@aspeedtech.com>
 MIME-Version: 1.0
-References: <20210105134508.225702-1-tmaimon77@gmail.com>
- <CACPK8Xd9ryK=LpoT56+xE8wSp1frd3QbkoRuQukO4go5=NYkkA@mail.gmail.com>
-In-Reply-To: <CACPK8Xd9ryK=LpoT56+xE8wSp1frd3QbkoRuQukO4go5=NYkkA@mail.gmail.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Mon, 11 Jan 2021 21:30:01 +0200
-Message-ID: <CAP6Zq1jeEEf=Gjs5GG=gMfOf16s5Jyg3iT4Lpm+_WYBZ7_1K4Q@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8 v2 00/11] Add NPCM7xx patches to dev-5.8
-To: Joel Stanley <joel@jms.id.au>
-Content-Type: multipart/alternative; boundary="000000000000db982a05b8a4bda6"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20201229063157.3587-2-chiawei_wang@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,247 +68,191 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Benjamin Fair <benjaminfair@google.com>
+Cc: devicetree@vger.kernel.org, haiyue.wang@linux.intel.com,
+ linux-aspeed@lists.ozlabs.org, minyard@acm.org, BMC-SW@aspeedtech.com,
+ andrew@aj.id.au, linus.walleij@linaro.org, linux-kernel@vger.kernel.org,
+ cyrilbur@gmail.com, lee.jones@linaro.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000db982a05b8a4bda6
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Dec 29, 2020 at 02:31:53PM +0800, Chia-Wei, Wang wrote:
+> The LPC controller has no concept of the BMC and the Host partitions.
+> This patch fixes the documentation by removing the description on LPC
+> partitions. The register offsets illustrated in the DTS node examples
+> are also fixed to adapt to the LPC DTS change.
+> 
+> Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
+> ---
+>  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 99 ++++---------------
+>  1 file changed, 21 insertions(+), 78 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> index d0a38ba8b9ce..90eb0ecc95d1 100644
+> --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
+> @@ -9,13 +9,7 @@ primary use case of the Aspeed LPC controller is as a slave on the bus
+>  conditions it can also take the role of bus master.
+>  
+>  The LPC controller is represented as a multi-function device to account for the
+> -mix of functionality it provides. The principle split is between the register
+> -layout at the start of the I/O space which is, to quote the Aspeed datasheet,
+> -"basically compatible with the [LPC registers from the] popular BMC controller
+> -H8S/2168[1]", and everything else, where everything else is an eclectic
+> -collection of functions with a esoteric register layout. "Everything else",
+> -here labeled the "host" portion of the controller, includes, but is not limited
+> -to:
+> +mix of functionality, which includes, but is not limited to:
+>  
+>  * An IPMI Block Transfer[2] Controller
+>  
+> @@ -44,80 +38,29 @@ Required properties
+>  ===================
+>  
+>  - compatible:	One of:
+> -		"aspeed,ast2400-lpc", "simple-mfd"
+> -		"aspeed,ast2500-lpc", "simple-mfd"
+> -		"aspeed,ast2600-lpc", "simple-mfd"
+> +		"aspeed,ast2400-lpc-v2", "simple-mfd", "syscon"
+> +		"aspeed,ast2500-lpc-v2", "simple-mfd", "syscon"
+> +		"aspeed,ast2600-lpc-v2", "simple-mfd", "syscon"
+>  
+>  - reg:		contains the physical address and length values of the Aspeed
+>                  LPC memory region.
+>  
+>  - #address-cells: <1>
+>  - #size-cells:	<1>
+> -- ranges: 	Maps 0 to the physical address and length of the LPC memory
+> -                region
+> -
+> -Required LPC Child nodes
+> -========================
+> -
+> -BMC Node
+> ---------
+> -
+> -- compatible:	One of:
+> -		"aspeed,ast2400-lpc-bmc"
+> -		"aspeed,ast2500-lpc-bmc"
+> -		"aspeed,ast2600-lpc-bmc"
+> -
+> -- reg:		contains the physical address and length values of the
+> -                H8S/2168-compatible LPC controller memory region
+> -
+> -Host Node
+> ----------
+> -
+> -- compatible:   One of:
+> -		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
+> -		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
+> -		"aspeed,ast2600-lpc-host", "simple-mfd", "syscon"
+> -
+> -- reg:		contains the address and length values of the host-related
+> -                register space for the Aspeed LPC controller
+> -
+> -- #address-cells: <1>
+> -- #size-cells:	<1>
+> -- ranges: 	Maps 0 to the address and length of the host-related LPC memory
+> +- ranges:	Maps 0 to the physical address and length of the LPC memory
+>                  region
+>  
+>  Example:
+>  
+>  lpc: lpc@1e789000 {
+> -	compatible = "aspeed,ast2500-lpc", "simple-mfd";
+> +	compatible = "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon";
+>  	reg = <0x1e789000 0x1000>;
+>  
+>  	#address-cells = <1>;
+>  	#size-cells = <1>;
+>  	ranges = <0x0 0x1e789000 0x1000>;
 
-Hi Joel,
+No child nodes? Then you don't need 'ranges', '#size-cells', nor 
+'#address-cells'.
 
-First tahnks a lot for reviewing the patches.
-
-On Mon, 11 Jan 2021 at 02:37, Joel Stanley <joel@jms.id.au> wrote:
-
-> Hi Tomer,
->
-> On Tue, 5 Jan 2021 at 13:45, Tomer Maimon <tmaimon77@gmail.com> wrote:
-> >
-> > In this patch set we will like to align with relevant modifications
-> > in Nuvoton OpenBMC Linux kernel 5.4.
->
-> Thanks for sending the patches. I can merge them into 5.8, however I
-> have a v5.10 branch that I plan on moving to imminently.
->
-> >
-> > Linux upstream current status:
-> >         1. npcm7xx clock driver - adding read only
-> >                 flag to divider clocks, Will be sent to Linux community=
-.
-> >         2. Adding NPCM ADC calibration - Will be sent to Linux vanilla,
-> >                 but I am not sure it will be approved.
-> >         3. Add DT restart priority and reset type support - sent to Lin=
-ux
-> >                 community la but havent approved yet.
-> >         4. persist configuration to the pin control driver - asked by a
-> costumer,
-> >                 didnt sent to Linux community.
->
-> Do you plan on sending it?
->
-I need you advise on this one, I pretty sure that the pin
-cntroller maintainer will refuse to add it
-what do you think?
-
->
-> >         5. Add HGPIO pin support to NPCM7xx pinctrl driver - will be se=
-nt
-> >                 to Linux community
-> >         6. JTAG master driver - will be sent to Linux community once we
-> will
-> >                 have BMC folder.
->
-What about the JTAG driver? can you add it please? do I need to move it to
-soc folder or to leave it in
-misc?
-
->
-> As you've noted, I recommend you submit them to mainline ASAP to avoid
-> extra handling of patches in the openbmc tree.
->
-you right, I will do my best...
-
->
-> Cheers,
->
-> Joel
->
-> >
-> > Changes since version 1:
-> > - Address comments from Jonathan Neusch=C3=A4fer: removing trailing whi=
-tespace
-> >         in NPCM watchdog documentation.
-> > - Adding Stanley Chu to NPCM JTAG master driver
-> >
-> > Tomer Maimon (11):
-> >   clk: npcm7xx: add read only flag to divider clocks
-> >   iio: adc: add calibration support to npcm ADC
-> >   dts: npcm750: add fuse regmap support node
-> >   watchdog: npcm: Add DT restart priority and reset type support
-> >   dt-binding: watchdog: Add DT restart priority and reset type
-> >   pinctrl: npcm7xx: Add HGPIO pin support to NPCM7xx pinctrl driver
-> >   pinctrl: pinconf: add pin persist configuration
-> >   pinctrl: npcm7xx: Add pin persist configuration support
-> >   spi: npcm-pspi: Add full duplex support
-> >   dt-binding: bmc: add NPCM7XX JTAG master documentation
-> >   misc: npcm7xx-jtag-master: add NPCM7xx JTAG master driver
-> >
-> >  .../bindings/bmc/npcm7xx-jtag-master.txt      |  38 +
-> >  .../bindings/watchdog/nuvoton,npcm-wdt.txt    |  32 +
-> >  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   6 +
-> >  drivers/clk/clk-npcm7xx.c                     |  70 +-
-> >  drivers/iio/adc/npcm_adc.c                    | 191 ++++
-> >  drivers/misc/Kconfig                          |   6 +
-> >  drivers/misc/Makefile                         |   1 +
-> >  drivers/misc/npcm7xx-jtag-master.c            | 840 ++++++++++++++++++
-> >  drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c     | 130 ++-
-> >  drivers/pinctrl/pinconf-generic.c             |   3 +
-> >  drivers/spi/spi-npcm-pspi.c                   |  75 +-
-> >  drivers/watchdog/npcm_wdt.c                   | 121 ++-
-> >  12 files changed, 1418 insertions(+), 95 deletions(-)
-> >  create mode 100644
-> Documentation/devicetree/bindings/bmc/npcm7xx-jtag-master.txt
-> >  create mode 100644 drivers/misc/npcm7xx-jtag-master.c
-> >
-> > --
-> > 2.22.0
-> >
->
-
-cheers,
-
-Tomer
-
---000000000000db982a05b8a4bda6
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Joel,<div><br></div><div>First tahnks =
-a lot for reviewing the patches.</div></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, 11 Jan 2021 at 02:37, Joel St=
-anley &lt;<a href=3D"mailto:joel@jms.id.au">joel@jms.id.au</a>&gt; wrote:<b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Tomer,<br>
-<br>
-On Tue, 5 Jan 2021 at 13:45, Tomer Maimon &lt;<a href=3D"mailto:tmaimon77@g=
-mail.com" target=3D"_blank">tmaimon77@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; In this patch set we will like to align with relevant modifications<br=
->
-&gt; in Nuvoton OpenBMC Linux kernel 5.4.<br>
-<br>
-Thanks for sending the patches. I can merge them into 5.8, however I<br>
-have a v5.10 branch that I plan on moving to imminently.<br>
-<br>
-&gt;<br>
-&gt; Linux upstream current status:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A01. npcm7xx clock driver - adding read=
- only<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0flag to d=
-ivider clocks, Will be sent to Linux community.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A02. Adding NPCM ADC calibration - Will=
- be sent to Linux vanilla,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0but I am =
-not sure it will be approved.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A03. Add DT restart priority and reset =
-type support - sent to Linux<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0community=
- la but havent approved yet.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A04. persist configuration to the pin c=
-ontrol driver - asked by a costumer,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0didnt sen=
-t to Linux community.<br>
-<br>
-Do you plan on sending it?<br></blockquote><div>I need you advise on this o=
-ne, I pretty sure that the pin cntroller=C2=A0maintainer will refuse to add=
- it=C2=A0</div><div>what do you think?</div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A05. Add HGPIO pin support to NPCM7xx p=
-inctrl driver - will be sent<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0to Linux =
-community<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A06. JTAG master driver - will be sent =
-to Linux community once we will<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0have BMC =
-folder.<br></blockquote><div>What about the JTAG driver? can you add it ple=
-ase? do I need to move it to soc folder or to leave it in=C2=A0</div><div>m=
-isc?=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-As you&#39;ve noted, I recommend you submit them to mainline ASAP to avoid<=
-br>
-extra handling of patches in the openbmc tree.<br></blockquote><div>you rig=
-ht, I will do my best...=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-<br>
-Cheers,<br>
-<br>
-Joel<br>
-<br>
-&gt;<br>
-&gt; Changes since version 1:<br>
-&gt; - Address comments from Jonathan Neusch=C3=A4fer: removing trailing wh=
-itespace<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in NPCM watchdog documentation.<br>
-&gt; - Adding Stanley Chu to NPCM JTAG master driver<br>
-&gt;<br>
-&gt; Tomer Maimon (11):<br>
-&gt;=C2=A0 =C2=A0clk: npcm7xx: add read only flag to divider clocks<br>
-&gt;=C2=A0 =C2=A0iio: adc: add calibration support to npcm ADC<br>
-&gt;=C2=A0 =C2=A0dts: npcm750: add fuse regmap support node<br>
-&gt;=C2=A0 =C2=A0watchdog: npcm: Add DT restart priority and reset type sup=
-port<br>
-&gt;=C2=A0 =C2=A0dt-binding: watchdog: Add DT restart priority and reset ty=
-pe<br>
-&gt;=C2=A0 =C2=A0pinctrl: npcm7xx: Add HGPIO pin support to NPCM7xx pinctrl=
- driver<br>
-&gt;=C2=A0 =C2=A0pinctrl: pinconf: add pin persist configuration<br>
-&gt;=C2=A0 =C2=A0pinctrl: npcm7xx: Add pin persist configuration support<br=
->
-&gt;=C2=A0 =C2=A0spi: npcm-pspi: Add full duplex support<br>
-&gt;=C2=A0 =C2=A0dt-binding: bmc: add NPCM7XX JTAG master documentation<br>
-&gt;=C2=A0 =C2=A0misc: npcm7xx-jtag-master: add NPCM7xx JTAG master driver<=
-br>
-&gt;<br>
-&gt;=C2=A0 .../bindings/bmc/npcm7xx-jtag-master.txt=C2=A0 =C2=A0 =C2=A0 |=
-=C2=A0 38 +<br>
-&gt;=C2=A0 .../bindings/watchdog/nuvoton,npcm-wdt.txt=C2=A0 =C2=A0 |=C2=A0 =
-32 +<br>
-&gt;=C2=A0 arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |=C2=A0 =C2=A06 +<=
-br>
-&gt;=C2=A0 drivers/clk/clk-npcm7xx.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 70 +-<br>
-&gt;=C2=A0 drivers/iio/adc/npcm_adc.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 191 ++++<br>
-&gt;=C2=A0 drivers/misc/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A06 +<br>
-&gt;=C2=A0 drivers/misc/Makefile=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 drivers/misc/npcm7xx-jtag-master.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 | 840 ++++++++++++++++++<br>
-&gt;=C2=A0 drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c=C2=A0 =C2=A0 =C2=A0| 1=
-30 ++-<br>
-&gt;=C2=A0 drivers/pinctrl/pinconf-generic.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A03 +<br>
-&gt;=C2=A0 drivers/spi/spi-npcm-pspi.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 75 +-<br>
-&gt;=C2=A0 drivers/watchdog/npcm_wdt.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 121 ++-<br>
-&gt;=C2=A0 12 files changed, 1418 insertions(+), 95 deletions(-)<br>
-&gt;=C2=A0 create mode 100644 Documentation/devicetree/bindings/bmc/npcm7xx=
--jtag-master.txt<br>
-&gt;=C2=A0 create mode 100644 drivers/misc/npcm7xx-jtag-master.c<br>
-&gt;<br>
-&gt; --<br>
-&gt; 2.22.0<br>
-&gt;<br></blockquote><div><br></div><div>cheers,</div><div><br></div><div>T=
-omer=C2=A0</div></div></div>
-
---000000000000db982a05b8a4bda6--
+> -
+> -	lpc_bmc: lpc-bmc@0 {
+> -		compatible = "aspeed,ast2500-lpc-bmc";
+> -		reg = <0x0 0x80>;
+> -	};
+> -
+> -	lpc_host: lpc-host@80 {
+> -		compatible = "aspeed,ast2500-lpc-host", "simple-mfd", "syscon";
+> -		reg = <0x80 0x1e0>;
+> -		reg-io-width = <4>;
+> -
+> -		#address-cells = <1>;
+> -		#size-cells = <1>;
+> -		ranges = <0x0 0x80 0x1e0>;
+> -	};
+>  };
+>  
+> -BMC Node Children
+> -==================
+> -
+> -
+> -Host Node Children
+> -==================
+>  
+>  LPC Host Interface Controller
+>  -------------------
+> @@ -149,14 +92,12 @@ Optional properties:
+>  
+>  Example:
+>  
+> -lpc-host@80 {
+> -	lpc_ctrl: lpc-ctrl@0 {
+> -		compatible = "aspeed,ast2500-lpc-ctrl";
+> -		reg = <0x0 0x80>;
+> -		clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+> -		memory-region = <&flash_memory>;
+> -		flash = <&spi>;
+> -	};
+> +lpc_ctrl: lpc-ctrl@80 {
+> +	compatible = "aspeed,ast2500-lpc-ctrl";
+> +	reg = <0x80 0x80>;
+> +	clocks = <&syscon ASPEED_CLK_GATE_LCLK>;
+> +	memory-region = <&flash_memory>;
+> +	flash = <&spi>;
+>  };
+>  
+>  LPC Host Controller
+> @@ -179,9 +120,9 @@ Required properties:
+>  
+>  Example:
+>  
+> -lhc: lhc@20 {
+> +lhc: lhc@a0 {
+>  	compatible = "aspeed,ast2500-lhc";
+> -	reg = <0x20 0x24 0x48 0x8>;
+> +	reg = <0xa0 0x24 0xc8 0x8>;
+>  };
+>  
+>  LPC reset control
+> @@ -192,16 +133,18 @@ state of the LPC bus. Some systems may chose to modify this configuration.
+>  
+>  Required properties:
+>  
+> - - compatible:		"aspeed,ast2600-lpc-reset" or
+> -			"aspeed,ast2500-lpc-reset"
+> -			"aspeed,ast2400-lpc-reset"
+> + - compatible:		One of:
+> +			"aspeed,ast2600-lpc-reset";
+> +			"aspeed,ast2500-lpc-reset";
+> +			"aspeed,ast2400-lpc-reset";
+> +
+>   - reg:			offset and length of the IP in the LHC memory region
+>   - #reset-controller	indicates the number of reset cells expected
+>  
+>  Example:
+>  
+> -lpc_reset: reset-controller@18 {
+> +lpc_reset: reset-controller@98 {
+>          compatible = "aspeed,ast2500-lpc-reset";
+> -        reg = <0x18 0x4>;
+> +        reg = <0x98 0x4>;
+>          #reset-cells = <1>;
+>  };
+> -- 
+> 2.17.1
+> 
