@@ -1,106 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2C0A2F264D
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 03:33:30 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 865792F279D
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 06:18:01 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFF4S0w98zDqyJ
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 13:33:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFJkG56qLzDqQh
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 16:17:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=40.107.130.129;
- helo=apc01-hk2-obe.outbound.protection.outlook.com;
- envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=none (p=none dis=none)
- header.from=aspeedtech.com
-Received: from APC01-HK2-obe.outbound.protection.outlook.com
- (mail-eopbgr1300129.outbound.protection.outlook.com [40.107.130.129])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c;
+ helo=mail-pj1-x102c.google.com; envelope-from=williethaitu@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=c5l4pI8V; dkim-atps=neutral
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
+ [IPv6:2607:f8b0:4864:20::102c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFF3M2GMMzDqy6;
- Tue, 12 Jan 2021 13:32:30 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nEEwgv4Qw4FT45OUgnbkirsjcw/UYUsllDEwgxAckIrfReG16jaYOMYs2/Hf1Ihu7iNuzoZzxywFgCXuC46TidRgDnp1aVDfP7yyow+EmMisaQuix91t572EMqlmcqUB2F7tdghFb4TOzO/HApxWsiE+H2r6vcdCfnZkr6/iyxJ37gwx1h1df1LU/KJH+P2Qjo7C1+0LMNAyiR0YQNo0cXzSjS0pOCU0zaOkZOdxAVgpZhGdP6QuzC2xifysU1rsSCGmObzilpZKTOAax2YMFvq0n1ye/BtbtPxtFinW3pPLDytwPUvUtkj0PaA/sGn3VtYl6O5HHbzzakd187pjtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ly0vgqXQoxcgcmSG+8QBuugXbTb3wjJ1oPT5JtNMKjw=;
- b=FsLF2a+NqfLLmuqWHDpr9tPhaFBWA1n7YmZw2LrdDftCWH1Vss9vJ9YKGenW6kIHe/wM0FjwjVRawftg7XQU3v9QaTbH4qiM3OBeP7Gf04kAQWvEwqg6546e2sKyJvFZZh9qCIFlDT4pnEmI6S8ahuGk81jD3xheTwS/663It/1whGx+AKgx5+Hii1TvUuaXkT2sNytBPrGmGW+iLfwbz84Z+oCL8poiQxyWDJ9Kt67B4Nc9LIwUXvwlmUK5afIvSRAyRguSlM9LRmwaVUfMjnkWKAl/jU6AKtacXIW17N3DKe+ZObaOm9wB/gd7xvDO0zMrts2tDlhnin6Ft2z/zQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-Received: from HK0PR06MB3779.apcprd06.prod.outlook.com (2603:1096:203:b8::10)
- by HK0PR06MB2370.apcprd06.prod.outlook.com (2603:1096:203:42::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.3742.6; Tue, 12 Jan
- 2021 02:32:11 +0000
-Received: from HK0PR06MB3779.apcprd06.prod.outlook.com
- ([fe80::394c:29f2:cb4c:55ed]) by HK0PR06MB3779.apcprd06.prod.outlook.com
- ([fe80::394c:29f2:cb4c:55ed%3]) with mapi id 15.20.3742.012; Tue, 12 Jan 2021
- 02:32:11 +0000
-From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
-To: Rob Herring <robh@kernel.org>
-Subject: RE: [PATCH v4 1/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Thread-Topic: [PATCH v4 1/5] dt-bindings: aspeed-lpc: Remove LPC partitioning
-Thread-Index: AQHW3axE0G2IuF3DG06FbgGmQw41XKoi+DAAgABh3IA=
-Date: Tue, 12 Jan 2021 02:32:10 +0000
-Message-ID: <HK0PR06MB377970995D22F06259721AE091AA0@HK0PR06MB3779.apcprd06.prod.outlook.com>
-References: <20201229063157.3587-1-chiawei_wang@aspeedtech.com>
- <20201229063157.3587-2-chiawei_wang@aspeedtech.com>
- <20210111203850.GA3022469@robh.at.kernel.org>
-In-Reply-To: <20210111203850.GA3022469@robh.at.kernel.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: kernel.org; dkim=none (message not signed)
- header.d=none;kernel.org; dmarc=none action=none header.from=aspeedtech.com;
-x-originating-ip: [211.20.114.70]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c4e389c3-b0b5-4043-7dae-08d8b6a243cb
-x-ms-traffictypediagnostic: HK0PR06MB2370:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <HK0PR06MB2370C3692B8BB8A9A1347F0091AA0@HK0PR06MB2370.apcprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:7691;
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: CzoBIXKeaH5qN9xbQSFw749B0QKCtV/Dp4L7E4yt6tbXKQB6pSAkj5E6qrNuU/ZhO69wFP1n2tkUaIchoSFuqF3SNrF4h5Bk8dBeDFAIi9s4yYqr3onhPvHBsa8Ted1UHW429qdlf2TKPjDMZOZ9YV53657I1MxiuNVcl8n7WLNUsdW2/WFYT33HIWBSUTog1eOOxA5o+b9EpV6wMl0P+0lQ6FDJFGYoV9BwT/5lyvfGh5liZFhu/VV0tRNGTELxVQ0wklb1Mtr75BIy+OVBcdHAI2VhUZK7KNpnR4pX44wWFLzXAQoQ6fM3UW2btIt/BkcE5Hwot4FzdFlYJrctG3OqzJR7Px1k9+dOi8FO9Tm6ZU4uFdg5zIYwVTWEw8DY
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB3779.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(136003)(366004)(39840400004)(346002)(376002)(396003)(55016002)(5660300002)(7696005)(54906003)(66946007)(55236004)(71200400001)(8936002)(478600001)(9686003)(7416002)(4326008)(6916009)(6506007)(2906002)(83380400001)(76116006)(66446008)(26005)(64756008)(8676002)(66556008)(316002)(86362001)(186003)(66476007)(33656002)(52536014)(53546011);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata: =?us-ascii?Q?tqTg0Jxxpg9KRorvPQ+/A/W2x5iSGYf5ch/D6nfE7r8TZBW34j3Al58In1TI?=
- =?us-ascii?Q?Q/RFfwWJBLMRYssOg/gkS12UiO+T5f2B/iyZzRZ3w+oUWaVDUfUgHlmN3fSr?=
- =?us-ascii?Q?l1g7ARCeTDNpVMBoX6cgftb520w2b8WXhKEBobLko6HJwlMWGLTUJBgmM9cy?=
- =?us-ascii?Q?xvlvFvHMjRsmsxh31YblAiXHZpb9XEmJEGH3qG9Hy29BUt7ne301YBs+KFV9?=
- =?us-ascii?Q?N7+WNpFTiRCnHi6anOJcSgZRDBFylw2cr+Tu0tfZpq7nRA+IFQRcQsPhhTqH?=
- =?us-ascii?Q?372NvL37+fcuUGcxpqyf3AnwELWFvEO7N8Hf9Ydt44lcOZRMq/RAIN9pqaEd?=
- =?us-ascii?Q?PGQIb1IcbiJ+P2PFUgHz7hOE4pmI0ZWZ/Ere1TS5ZlGUhLX3YEWCjKVQrzhf?=
- =?us-ascii?Q?3ity9VtxaxHyxSO6k2FZKFl5PwTOnyZblcWfzN8cKr21/b/a06dv/8waL5wV?=
- =?us-ascii?Q?lC5m3qTtI5G4909w3x0Ch5H/XoiLi5ZELIF1trXRPaRJcGqQGj+l/KLP38oK?=
- =?us-ascii?Q?gZm19W+xwJgxwvoHrh/fdhJ+bOZfwoeRUX1SHOJF3v+52GnZOQewbTX9h8gy?=
- =?us-ascii?Q?uVQ6caCGsm3HtdMIFVCZNdka8fxSzve6BsNLNy78KIRqHFRwsJH4jviGeuNU?=
- =?us-ascii?Q?Pajt6EmPz+0Mj/Vy+J7shz7J8N6kAxfjvkXhdnr2M4qZUocrFkaTov7eem1a?=
- =?us-ascii?Q?yDT/oc5CGmuGpLLpdG+x1qYP7ZlYThWnhJ9bUAEOMmXPNfBZ+EBcJV2Nmymy?=
- =?us-ascii?Q?7CGPKKZIi0DgwfVPRar5k6ochLAe5OjckuQ0vFB6hePp+w24syzBQDrwq3C1?=
- =?us-ascii?Q?3tV/zfeKTOk4rajmgwx9ROVky3LYtIg7XDI5cZpQw4TyOgaSBnKVvIK/Dn1Q?=
- =?us-ascii?Q?62wxAafaMoYiAqkJKuLqmHou6L0FceceTiC8dlCdZYwFi2533ZmIigoBPemi?=
- =?us-ascii?Q?EDOGUp236r7vVDi/DxvVHnwZ8xu4KmOWKseiVeeAnFI=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB3779.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c4e389c3-b0b5-4043-7dae-08d8b6a243cb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Jan 2021 02:32:10.8553 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8ExuxESVPKnZFlxT9BXKUnxbpyFwdTXYtNOqcf4DR9G/50uDyyhXMEZXzOV3PR16GKSUvcq/wmIdIv4nsylt2yxY2XaZ58tOMqwM9zkhjn0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2370
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DDphr2plKzDqWX
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 20:45:00 +1100 (AEDT)
+Received: by mail-pj1-x102c.google.com with SMTP id v1so7479290pjr.2
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 01:44:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references;
+ bh=1DJvomsi+G6XyrgNkPIrN6UA+BkX9Q7yzJ8uEEJp9i0=;
+ b=c5l4pI8VgMd1wadw8yT/7O47fdmzhVkV3Aj5xjx8Wg4NePnjhiuQLAKzMfAgfPFjIK
+ ubClqxN8w1H5QApnWgLn77ghEr8IEr00AGQGg6e8TjKAH85AVN4nO2bjCzSuBvo7hUQL
+ l+AbBknadnfpuYoWx8++MFw1IGHSfDLo/32lTheCfBy4FyD0fUoiJRJb4aiwH+A3YF8F
+ +i4r6KF726+OdTSvGNdB7i+/VbqIbwrxxTLK18ZrUEieKSon8G+ZPiKYJELsb+zYCYbt
+ /g/KWfvaDB6zUaNR1heB+zOznn/PHK1BWfo63glLBLmsQo8tblVNFLyt2X57q6MShvWN
+ vW1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references;
+ bh=1DJvomsi+G6XyrgNkPIrN6UA+BkX9Q7yzJ8uEEJp9i0=;
+ b=tiF9UQzSUqo3UtpVlEEBwlUxNKlFxe+XAR5JrsJ1hCE3GfohhW6+2PEBapGwwFFSvT
+ RkpCaDvpPfgbtQvEd0kT9bNB7f+09nxfxchSAJVmGt87+mGMLGC36TJpc7ohH4r9JtQF
+ qFszateqcdQKSEBOdEJ0PkvEE/+NBf6183+hd4tBhdNElWCHfXAMXkkHja77JXQG71eu
+ IualCLBDYsHFbTCdno3wE/XkakL4LuO54099AFr4ZkKPiVfWXwrF3HpzK+erRZBFjWkh
+ D7B65iL6l496120YyBSmn3AhOKtQrsFEivQ4VPtjZUBzWcfzQ/CEVS2R7OzN8esppUrl
+ uyKg==
+X-Gm-Message-State: AOAM530J4bPruRNEgKihhDCIIcJuScoVLZKBo+TPqwchShI4XNGCQGcJ
+ DVWGUfqYuRF9KDYutvKBDTY=
+X-Google-Smtp-Source: ABdhPJyEIokzgmeAmZvvJQtnmgYzgWZkHVhEqlu9cLpbRJWBTHHv4Hbcn4b4s97MO/1Oa1NCJzzA9w==
+X-Received: by 2002:a17:90a:1050:: with SMTP id
+ y16mr17399403pjd.181.1610358296467; 
+ Mon, 11 Jan 2021 01:44:56 -0800 (PST)
+Received: from localhost.localdomain (125-227-158-249.HINET-IP.hinet.net.
+ [125.227.158.249])
+ by smtp.gmail.com with ESMTPSA id mw15sm13319311pjb.34.2021.01.11.01.44.54
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 11 Jan 2021 01:44:55 -0800 (PST)
+From: Willie Thai <williethaitu@gmail.com>
+X-Google-Original-From: Willie Thai <willie_thai@compal.com>
+To: joel@jms.id.au,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH] ARM: dts: aspeed: Add device tree for Liwu2 BMC
+Date: Mon, 11 Jan 2021 17:42:57 +0800
+Message-Id: <1610358177-3874-1-git-send-email-willie_thai@compal.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <CACPK8Xd0aMcXrUD4YLWHMSz9rb7p0KKQGVCHRxFWdajGXcgLZg@mail.gmail.com>
+References: <CACPK8Xd0aMcXrUD4YLWHMSz9rb7p0KKQGVCHRxFWdajGXcgLZg@mail.gmail.com>
+X-Mailman-Approved-At: Tue, 12 Jan 2021 16:17:18 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,218 +80,355 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "haiyue.wang@linux.intel.com" <haiyue.wang@linux.intel.com>,
- "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
- "minyard@acm.org" <minyard@acm.org>, BMC-SW <BMC-SW@aspeedtech.com>,
- "andrew@aj.id.au" <andrew@aj.id.au>,
- "linus.walleij@linaro.org" <linus.walleij@linaro.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "cyrilbur@gmail.com" <cyrilbur@gmail.com>,
- "lee.jones@linaro.org" <lee.jones@linaro.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
+Cc: Willie Thai <willie_thai@compal.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Rob,
+The Liwu2 is a server platform with an ASPEED AST2500 based BMC.
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts | 320 ++++++++++++++++++++++++++
+ 2 files changed, 321 insertions(+)
+ create mode 100755 arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
 
-> -----Original Message-----
-> From: Rob Herring <robh@kernel.org>
-> Sent: Tuesday, January 12, 2021 4:39 AM
-> To: ChiaWei Wang <chiawei_wang@aspeedtech.com>
-> cyrilbur@gmail.com; rlippert@google.com
-> Subject: Re: [PATCH v4 1/5] dt-bindings: aspeed-lpc: Remove LPC partition=
-ing
->=20
-> On Tue, Dec 29, 2020 at 02:31:53PM +0800, Chia-Wei, Wang wrote:
-> > The LPC controller has no concept of the BMC and the Host partitions.
-> > This patch fixes the documentation by removing the description on LPC
-> > partitions. The register offsets illustrated in the DTS node examples
-> > are also fixed to adapt to the LPC DTS change.
-> >
-> > Signed-off-by: Chia-Wei, Wang <chiawei_wang@aspeedtech.com>
-> > ---
-> >  .../devicetree/bindings/mfd/aspeed-lpc.txt    | 99 ++++---------------
-> >  1 file changed, 21 insertions(+), 78 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > index d0a38ba8b9ce..90eb0ecc95d1 100644
-> > --- a/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > +++ b/Documentation/devicetree/bindings/mfd/aspeed-lpc.txt
-> > @@ -9,13 +9,7 @@ primary use case of the Aspeed LPC controller is as a
-> > slave on the bus  conditions it can also take the role of bus master.
-> >
-> >  The LPC controller is represented as a multi-function device to
-> > account for the -mix of functionality it provides. The principle split
-> > is between the register -layout at the start of the I/O space which
-> > is, to quote the Aspeed datasheet, -"basically compatible with the
-> > [LPC registers from the] popular BMC controller -H8S/2168[1]", and
-> > everything else, where everything else is an eclectic -collection of
-> > functions with a esoteric register layout. "Everything else", -here
-> > labeled the "host" portion of the controller, includes, but is not
-> > limited
-> > -to:
-> > +mix of functionality, which includes, but is not limited to:
-> >
-> >  * An IPMI Block Transfer[2] Controller
-> >
-> > @@ -44,80 +38,29 @@ Required properties  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >  - compatible:	One of:
-> > -		"aspeed,ast2400-lpc", "simple-mfd"
-> > -		"aspeed,ast2500-lpc", "simple-mfd"
-> > -		"aspeed,ast2600-lpc", "simple-mfd"
-> > +		"aspeed,ast2400-lpc-v2", "simple-mfd", "syscon"
-> > +		"aspeed,ast2500-lpc-v2", "simple-mfd", "syscon"
-> > +		"aspeed,ast2600-lpc-v2", "simple-mfd", "syscon"
-> >
-> >  - reg:		contains the physical address and length values of the Aspeed
-> >                  LPC memory region.
-> >
-> >  - #address-cells: <1>
-> >  - #size-cells:	<1>
-> > -- ranges: 	Maps 0 to the physical address and length of the LPC memory
-> > -                region
-> > -
-> > -Required LPC Child nodes
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> > -
-> > -BMC Node
-> > ---------
-> > -
-> > -- compatible:	One of:
-> > -		"aspeed,ast2400-lpc-bmc"
-> > -		"aspeed,ast2500-lpc-bmc"
-> > -		"aspeed,ast2600-lpc-bmc"
-> > -
-> > -- reg:		contains the physical address and length values of the
-> > -                H8S/2168-compatible LPC controller memory region
-> > -
-> > -Host Node
-> > ----------
-> > -
-> > -- compatible:   One of:
-> > -		"aspeed,ast2400-lpc-host", "simple-mfd", "syscon"
-> > -		"aspeed,ast2500-lpc-host", "simple-mfd", "syscon"
-> > -		"aspeed,ast2600-lpc-host", "simple-mfd", "syscon"
-> > -
-> > -- reg:		contains the address and length values of the host-related
-> > -                register space for the Aspeed LPC controller
-> > -
-> > -- #address-cells: <1>
-> > -- #size-cells:	<1>
-> > -- ranges: 	Maps 0 to the address and length of the host-related LPC
-> memory
-> > +- ranges:	Maps 0 to the physical address and length of the LPC memory
-> >                  region
-> >
-> >  Example:
-> >
-> >  lpc: lpc@1e789000 {
-> > -	compatible =3D "aspeed,ast2500-lpc", "simple-mfd";
-> > +	compatible =3D "aspeed,ast2500-lpc-v2", "simple-mfd", "syscon";
-> >  	reg =3D <0x1e789000 0x1000>;
-> >
-> >  	#address-cells =3D <1>;
-> >  	#size-cells =3D <1>;
-> >  	ranges =3D <0x0 0x1e789000 0x1000>;
->=20
-> No child nodes? Then you don't need 'ranges', '#size-cells', nor '#addres=
-s-cells'.
->=20
-There are child nodes in LPC, should I list all of them or just few for the=
- example?
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 5a14adc..16fc64d 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1354,6 +1354,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-arm-centriq2400-rep.dtb \
+ 	aspeed-bmc-arm-stardragon4800-rep2.dtb \
+ 	aspeed-bmc-bytedance-g220a.dtb \
++	aspeed-bmc-compal-liwu2.dts \
+ 	aspeed-bmc-facebook-cmm.dtb \
+ 	aspeed-bmc-facebook-minipack.dtb \
+ 	aspeed-bmc-facebook-tiogapass.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts b/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
+new file mode 100755
+index 0000000..a93af32
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-compal-liwu2.dts
+@@ -0,0 +1,320 @@
++// SPDX-License-Identifier: GPL-2.0+
++/dts-v1/;
++
++#include "aspeed-g5.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++
++/ {
++	model = "AST2500 liwu2";
++	compatible = "aspeed,ast2500";
++
++	aliases {
++		serial4 = &uart5;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
++	};
++
++	memory@80000000 {
++		reg = <0x80000000 0x20000000>;
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		gfx_memory: framebuffer {
++			size = <0x01000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
++			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
++			      <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
++			      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		LED_FAN0_FAULT {
++			label = "LED_FAN0_FAULT";
++			gpios = <&gpio ASPEED_GPIO(F, 4) GPIO_ACTIVE_LOW>;
++		};
++
++		LED_FAN1_FAULT {
++			label = "LED_FAN1_FAULT";
++			gpios = <&gpio ASPEED_GPIO(F, 5) GPIO_ACTIVE_LOW>;
++		};
++
++		LED_FAN2_FAULT {
++			label = "LED_FAN2_FAULT";
++			gpios = <&gpio ASPEED_GPIO(H, 2) GPIO_ACTIVE_LOW>;
++		};
++
++		LED_FAN3_FAULT {
++			label = "LED_FAN3_FAULT";
++			gpios = <&gpio ASPEED_GPIO(H, 5) GPIO_ACTIVE_LOW>;
++		};
++
++		LED_FAN4_FAULT {
++			label = "LED_FAN4_FAULT";
++			gpios = <&gpio ASPEED_GPIO(H, 6) GPIO_ACTIVE_LOW>;
++		};
++
++		LED_FAN5_FAULT {
++			label = "LED_FAN5_FAULT";
++			gpios = <&gpio ASPEED_GPIO(H, 7) GPIO_ACTIVE_LOW>;
++		};
++
++		FP_LED_STATUS_AMBER_N {
++			label = "FP_LED_STATUS_AMBER_N";
++			gpios = <&gpio ASPEED_GPIO(S, 5) GPIO_ACTIVE_LOW>;
++		};
++
++		REAR_ID_LED_N {
++			label = "REAR_ID_LED_N";
++			gpios = <&gpio ASPEED_GPIO(S, 6) GPIO_ACTIVE_LOW>;
++		};
++	};
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "bmc";
++		spi-max-frequency = <50000000>;
++#include "openbmc-flash-layout.dtsi"
++	};
++};
++
++&spi1 {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "pnor";
++		spi-max-frequency = <100000000>;
++	};
++};
++
++&spi2 {
++	status = "okay";
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&mac0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii1_default &pinctrl_mdio1_default>;
++};
++
++&mac1 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
++};
++
++&adc {
++	status = "okay";
++};
++
++&i2c0 {
++	status = "okay";
++};
++
++&i2c1 {
++	status = "okay";
++
++	eeprom@54 {
++		compatible = "atmel,24c64";
++		reg = <0x54>;
++		pagesize = <32>;
++	};
++};
++
++&i2c2 {
++	status = "okay";
++};
++
++&i2c3 {
++	status = "okay";
++
++	tmp75@48 {
++		compatible = "ti,tmp75";
++		reg = <0x48>;
++	};	
++
++	tmp75@4b {
++		compatible = "ti,tmp75";
++		reg = <0x4b>;
++	};	
++
++	tmp75@4c {
++		compatible = "ti,tmp75";
++		reg = <0x4c>;
++	};
++
++	tmp75@4d {
++		compatible = "ti,tmp75";
++		reg = <0x4d>;
++	};
++
++	vr-controller@5a {
++		compatible = "ti,tps53679";
++		reg = <0x5a>;
++	};	
++
++	vr-controller@5d {
++		compatible = "ti,tps53679";
++		reg = <0x5d>;
++	};	
++
++	vr-controller@68 {
++		compatible = "ti,tps53679";
++		reg = <0x68>;
++	};	
++
++	vr-controller@6a {
++		compatible = "ti,tps53679";
++		reg = <0x6a>;
++	};	
++	
++	vr-controller@6c {
++		compatible = "ti,tps53679";
++		reg = <0x6c>;
++	};	
++	
++	vr-controller@6e {
++		compatible = "ti,tps53679";
++		reg = <0x6e>;
++	};	
++
++};
++
++&i2c4 {
++	status = "okay";
++
++	eeprom@51 {
++        compatible = "atmel,24c64";
++        reg = <0x51>;
++        pagesize = <32>;
++    };
++};
++
++&i2c5 {
++	status = "okay";
++};
++
++&i2c6 {
++	status = "okay";
++};
++
++&i2c7 {
++	status = "okay";
++	
++	power-supply@58 {
++		compatible = "pmbus";
++		reg = <0x58>;
++	};
++
++	power-supply@59 {
++		compatible = "pmbus";
++		reg = <0x59>;
++	};
++};
++
++
++&sdmmc {
++	status = "okay";
++};
++
++&sdhci0 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_sd1_default>;
++};
++
++&vhub {
++	status = "okay";
++};
++
++&ehci1 {
++	status = "okay";
++};
++
++&uhci {
++	status = "okay";
++};
++
++&gfx {
++     status = "okay";
++     memory-region = <&gfx_memory>;
++};
++
++&pwm_tacho {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_pwm0_default &pinctrl_pwm1_default
++		&pinctrl_pwm2_default &pinctrl_pwm3_default
++		&pinctrl_pwm4_default &pinctrl_pwm5_default
++		&pinctrl_pwm6_default &pinctrl_pwm7_default>;
++
++	fan@0 {
++		reg = <0x00>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x00 0x01>;
++	};
++
++	fan@1 {
++		reg = <0x01>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x02 0x03>;
++	};
++
++	fan@2 {
++		reg = <0x02>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x04 0x05>;
++	};
++
++	fan@3 {
++		reg = <0x03>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x06 0x07>;
++	};
++
++	fan@4 {
++		reg = <0x04>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x08 0x09>;
++	};
++
++	fan@5 {
++		reg = <0x05>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0a 0x0b>;
++	};
++
++	fan@6 {
++		reg = <0x06>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0c 0x0d>;
++	};
++
++	fan@7 {
++		reg = <0x07>;
++		aspeed,fan-tach-ch = /bits/ 8 <0x0e 0x0f>;
++	};
++
++};
++
+-- 
+2.7.4
 
-Chiawei
-
-> > -
-> > -	lpc_bmc: lpc-bmc@0 {
-> > -		compatible =3D "aspeed,ast2500-lpc-bmc";
-> > -		reg =3D <0x0 0x80>;
-> > -	};
-> > -
-> > -	lpc_host: lpc-host@80 {
-> > -		compatible =3D "aspeed,ast2500-lpc-host", "simple-mfd", "syscon";
-> > -		reg =3D <0x80 0x1e0>;
-> > -		reg-io-width =3D <4>;
-> > -
-> > -		#address-cells =3D <1>;
-> > -		#size-cells =3D <1>;
-> > -		ranges =3D <0x0 0x80 0x1e0>;
-> > -	};
-> >  };
-> >
-> > -BMC Node Children
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > -
-> > -
-> > -Host Node Children
-> > -=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> >
-> >  LPC Host Interface Controller
-> >  -------------------
-> > @@ -149,14 +92,12 @@ Optional properties:
-> >
-> >  Example:
-> >
-> > -lpc-host@80 {
-> > -	lpc_ctrl: lpc-ctrl@0 {
-> > -		compatible =3D "aspeed,ast2500-lpc-ctrl";
-> > -		reg =3D <0x0 0x80>;
-> > -		clocks =3D <&syscon ASPEED_CLK_GATE_LCLK>;
-> > -		memory-region =3D <&flash_memory>;
-> > -		flash =3D <&spi>;
-> > -	};
-> > +lpc_ctrl: lpc-ctrl@80 {
-> > +	compatible =3D "aspeed,ast2500-lpc-ctrl";
-> > +	reg =3D <0x80 0x80>;
-> > +	clocks =3D <&syscon ASPEED_CLK_GATE_LCLK>;
-> > +	memory-region =3D <&flash_memory>;
-> > +	flash =3D <&spi>;
-> >  };
-> >
-> >  LPC Host Controller
-> > @@ -179,9 +120,9 @@ Required properties:
-> >
-> >  Example:
-> >
-> > -lhc: lhc@20 {
-> > +lhc: lhc@a0 {
-> >  	compatible =3D "aspeed,ast2500-lhc";
-> > -	reg =3D <0x20 0x24 0x48 0x8>;
-> > +	reg =3D <0xa0 0x24 0xc8 0x8>;
-> >  };
-> >
-> >  LPC reset control
-> > @@ -192,16 +133,18 @@ state of the LPC bus. Some systems may chose to
-> modify this configuration.
-> >
-> >  Required properties:
-> >
-> > - - compatible:		"aspeed,ast2600-lpc-reset" or
-> > -			"aspeed,ast2500-lpc-reset"
-> > -			"aspeed,ast2400-lpc-reset"
-> > + - compatible:		One of:
-> > +			"aspeed,ast2600-lpc-reset";
-> > +			"aspeed,ast2500-lpc-reset";
-> > +			"aspeed,ast2400-lpc-reset";
-> > +
-> >   - reg:			offset and length of the IP in the LHC memory region
-> >   - #reset-controller	indicates the number of reset cells expected
-> >
-> >  Example:
-> >
-> > -lpc_reset: reset-controller@18 {
-> > +lpc_reset: reset-controller@98 {
-> >          compatible =3D "aspeed,ast2500-lpc-reset";
-> > -        reg =3D <0x18 0x4>;
-> > +        reg =3D <0x98 0x4>;
-> >          #reset-cells =3D <1>;
-> >  };
-> > --
-> > 2.17.1
-> >
