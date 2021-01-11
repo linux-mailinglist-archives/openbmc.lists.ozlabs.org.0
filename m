@@ -1,70 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C45102F10B9
-	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 12:00:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7419A2F188B
+	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 15:44:04 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DDrMS26gzzDqWk
-	for <lists+openbmc@lfdr.de>; Mon, 11 Jan 2021 22:00:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DDxKs4jVwzDqft
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 01:44:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2b;
- helo=mail-io1-xd2b.google.com; envelope-from=avifishman70@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=gy9HrkGM; dkim-atps=neutral
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com
- [IPv6:2607:f8b0:4864:20::d2b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ dmarc=pass (p=none dis=none) header.from=yadro.com
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=Uq3oQwQP; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DDrLW4rPWzDqWX
- for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 21:59:10 +1100 (AEDT)
-Received: by mail-io1-xd2b.google.com with SMTP id q1so2926860ion.8
- for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 02:59:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=I2wik1k8wO8Jyoif5d78A11nB/JTzooGqdkG0WG+ZVw=;
- b=gy9HrkGMIehrhbE9p6YUc2ea/bpZWfOAf9fzcbRi4U0/UVrE2g/n6SkrwltRdCLd9y
- G1aUkNDFy108nxvFNz1pYP/Y7DBzU8ro4/JZP9m+RSoD6Jit5IHjA5xHdvYK432UrpJF
- IgPk6hwBYpbbFS41HggvU0GgODPFQDobhQrJCy7TzgKb5Gthw+xg+nXITheSPR5zixmf
- PwCoMGD1ahmSfcff4Q+mcqxbi2IOy8bhi8hr0RBDssE6/KSllwvKQZF+M1/m0jWofZFv
- UslGO2ECkaWHdNm6MTZYX3tmlrZhOxtEwy40ElYfxjFiwhC0J7KApx79iwIcO5umRM4f
- atsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=I2wik1k8wO8Jyoif5d78A11nB/JTzooGqdkG0WG+ZVw=;
- b=tPOwek23O8VSPYnFt6uwXzTK1s0GPyGBK7n6YbMo3xrHkuO7fo9moi0f41ODl/YU5H
- XL7cRfxJPY9KL90dp/ZZNNXDE9t9s/OaxlEAD3TUgfzS3P1FT5WWo3ymUzF5oNjrJlIy
- tlUvCDBgYOmj8UIInyEYjxobusgAngygGJgOey5zMD0V1vnu8t2h7OOF2NMkSKHqKLqb
- cxMs0fNtAQGBDdmUywWDB9QmxmipNzh2yisVMR5he0pjEzblagqW2NAAscEJPMOqDbim
- xwXUPYfD/FAxJcVTu21dxOGm4F+pHld76dtqiWslctssP4UT6/PYc5/YbBwKz/HXMGJA
- JSxA==
-X-Gm-Message-State: AOAM530d3l3OTIYJDqwMvufC6WF9SCZqSfqjqspKwLEPP4H8JfXvLWV4
- M8JRPkRTkuSAZbhdaHBpOlzBVtqR4J88OmrpxA==
-X-Google-Smtp-Source: ABdhPJxl2NEdQMvWo83u+ctoQRm7cQJfbI57zV89ZOV2q6umb34TEhRmqH5Q0NVSuIRpmgBo2zWkkoN/OtxZk6WOa4A=
-X-Received: by 2002:a05:6602:59e:: with SMTP id
- v30mr13809541iox.37.1610362746462; 
- Mon, 11 Jan 2021 02:59:06 -0800 (PST)
-MIME-Version: 1.0
-References: <20210105134508.225702-1-tmaimon77@gmail.com>
- <20210105134508.225702-10-tmaimon77@gmail.com>
- <CACPK8Xero9SneESq6c0HUkZcg0Eg-OJtZMKM2TDtvL_hx+UrwQ@mail.gmail.com>
-In-Reply-To: <CACPK8Xero9SneESq6c0HUkZcg0Eg-OJtZMKM2TDtvL_hx+UrwQ@mail.gmail.com>
-From: Avi Fishman <avifishman70@gmail.com>
-Date: Mon, 11 Jan 2021 12:58:31 +0200
-Message-ID: <CAKKbWA58wLLot6Ed-9YC=YNwEecjkHNwZtOSPm9fwgACe3zxuQ@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.8 v2 09/11] spi: npcm-pspi: Add full duplex
- support
-To: Joel Stanley <joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DDxJm2NX4zDqdh
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 01:43:03 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id ECDCB41309
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 14:42:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ content-transfer-encoding:mime-version:user-agent:content-type
+ :content-type:organization:references:in-reply-to:date:date:from
+ :from:subject:subject:message-id:received:received:received; s=
+ mta-01; t=1610376177; x=1612190578; bh=OjGVCwjhdCmEOx8nVNo3crpoF
+ 5+9WTNqQMmPYJAIDlo=; b=Uq3oQwQPGCPyTP0277XXVNn3UoA3S+5al6AefX2Xr
+ Sba9ic7Xgnf7dwMv5Icjx4U23uy30UCa8E0vLgfWtaXAPpFTv5nV4AmOQecA1o2U
+ rfCgQhQqU5yIIOFxPP4kB5p/qwdYkuodUNCOGp67WrKiOovyS5ieFw6lm0/3L2yR
+ /Q=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id vnQ2r4YLODWB for <openbmc@lists.ozlabs.org>;
+ Mon, 11 Jan 2021 17:42:57 +0300 (MSK)
+Received: from T-EXCH-03.corp.yadro.com (t-exch-03.corp.yadro.com
+ [172.17.100.103])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id DD7884127E
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 17:42:57 +0300 (MSK)
+Received: from [10.199.0.194] (10.199.0.194) by T-EXCH-03.corp.yadro.com
+ (172.17.100.103) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Mon, 11
+ Jan 2021 17:42:57 +0300
+Message-ID: <63eac02f4bed7ae42c87a938d1457cd5ef1f8b03.camel@yadro.com>
+Subject: Re: Error Reporting and Decoding from Intel-based CPU (PECI daemon)
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: <openbmc@lists.ozlabs.org>
+Date: Mon, 11 Jan 2021 17:42:56 +0300
+In-Reply-To: <CALGRKGOb2jRTgVxpiH_36W6c5ft5faXPkATaXApXdNiQqd0knQ@mail.gmail.com>
+References: <CALGRKGOb2jRTgVxpiH_36W6c5ft5faXPkATaXApXdNiQqd0knQ@mail.gmail.com>
+Organization: YADRO
 Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.36.5 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.199.0.194]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-03.corp.yadro.com (172.17.100.103)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,164 +75,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Tomer Maimon <tmaimon77@gmail.com>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jan 11, 2021 at 3:05 AM Joel Stanley <joel@jms.id.au> wrote:
->
-> On Tue, 5 Jan 2021 at 13:45, Tomer Maimon <tmaimon77@gmail.com> wrote:
-> >
-> > Modify the IRQ handler in the NPCM PSPI
-> > driver to support SPI full duplex communication.
-> >
-> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> > ---
-> >  drivers/spi/spi-npcm-pspi.c | 75 +++++++++++++++----------------------
-> >  1 file changed, 30 insertions(+), 45 deletions(-)
-> >
-> > diff --git a/drivers/spi/spi-npcm-pspi.c b/drivers/spi/spi-npcm-pspi.c
-> > index 87cd0233c60b..92fae0b23eb1 100644
-> > --- a/drivers/spi/spi-npcm-pspi.c
-> > +++ b/drivers/spi/spi-npcm-pspi.c
-> > @@ -197,22 +197,22 @@ static void npcm_pspi_setup_transfer(struct spi_device *spi,
-> >  static void npcm_pspi_send(struct npcm_pspi *priv)
-> >  {
-> >         int wsize;
-> > -       u16 val;
-> > +       u16 val = 0;
-> >
-> >         wsize = min(bytes_per_word(priv->bits_per_word), priv->tx_bytes);
-> >         priv->tx_bytes -= wsize;
-> >
-> > -       if (!priv->tx_buf)
-> > -               return;
->
-> It looks like you're removing this check and instead doing it inside
-> each case. That seems like a waste, why not leave the single check in?
+Hi Brandon,
 
-Even if the tx_buf is NULL, I still need to do the write to
-NPCM_PSPI_DATA, since only this write triggers the clock and I need
-the clocks for the rx_buf.
-and this is why I initialized 'val = 0'
+PECI-PCIe only deal with PCI bus, it doesn't man to read any
+information regarding CPU. There are number of other daemons uses PECI:
+* cpusensor from dbus-sensors reads CPU/DIMM temperature and power
+using peci/hwmon
+* CPUinfo from smbiosmdrv2 reads CPU info using PECI
+* host-error-monitor reports CPU state using GPIO and PECI
 
->
-> > -
-> >         switch (wsize) {
-> >         case 1:
-> > -               val = *priv->tx_buf++;
-> > +               if (priv->tx_buf)
-> > +                       val = *priv->tx_buf++;
-> >                 iowrite8(val, NPCM_PSPI_DATA + priv->base);
-> >                 break;
-> >         case 2:
-> > -               val = *priv->tx_buf++;
-> > -               val = *priv->tx_buf++ | (val << 8);
-> > +               if (priv->tx_buf) {
-> > +                       val = *priv->tx_buf++;
-> > +                       val = *priv->tx_buf++ | (val << 8);
-> > +               }
-> >                 iowrite16(val, NPCM_PSPI_DATA + priv->base);
-> >                 break;
-> >         default:
-> > @@ -224,22 +224,24 @@ static void npcm_pspi_send(struct npcm_pspi *priv)
-> >  static void npcm_pspi_recv(struct npcm_pspi *priv)
-> >  {
-> >         int rsize;
-> > -       u16 val;
-> > +       u16 val_16;
-> > +       u8  val_8;
-> >
-> >         rsize = min(bytes_per_word(priv->bits_per_word), priv->rx_bytes);
-> >         priv->rx_bytes -= rsize;
-> >
-> > -       if (!priv->rx_buf)
-> > -               return;
-> > -
-> >         switch (rsize) {
-> >         case 1:
-> > -               *priv->rx_buf++ = ioread8(priv->base + NPCM_PSPI_DATA);
-> > +               val_8 = ioread8(priv->base + NPCM_PSPI_DATA);
-> > +               if (priv->rx_buf)
-> > +                       *priv->rx_buf++ = val_8;
-> >                 break;
-> >         case 2:
-> > -               val = ioread16(priv->base + NPCM_PSPI_DATA);
-> > -               *priv->rx_buf++ = (val >> 8);
-> > -               *priv->rx_buf++ = val & 0xff;
-> > +               val_16 = ioread16(priv->base + NPCM_PSPI_DATA);
-> > +               if (priv->rx_buf) {
-> > +                       *priv->rx_buf++ = (val_16 >> 8);
-> > +                       *priv->rx_buf++ = val_16 & 0xff;
-> > +               }
-> >                 break;
-> >         default:
-> >                 WARN_ON_ONCE(1);
-> > @@ -298,43 +300,26 @@ static irqreturn_t npcm_pspi_handler(int irq, void *dev_id)
-> >         struct npcm_pspi *priv = dev_id;
-> >         u8 stat;
-> >
-> > -       stat = ioread8(priv->base + NPCM_PSPI_STAT);
-> > -
-> >         if (!priv->tx_buf && !priv->rx_buf)
-> >                 return IRQ_NONE;
-> >
-> > -       if (priv->tx_buf) {
-> > -               if (stat & NPCM_PSPI_STAT_RBF) {
-> > -                       ioread8(NPCM_PSPI_DATA + priv->base);
-> > -                       if (priv->tx_bytes == 0) {
-> > -                               npcm_pspi_disable(priv);
-> > -                               complete(&priv->xfer_done);
-> > -                               return IRQ_HANDLED;
-> > -                       }
-> > -               }
-> > -
-> > -               if ((stat & NPCM_PSPI_STAT_BSY) == 0)
-> > -                       if (priv->tx_bytes)
-> > -                               npcm_pspi_send(priv);
-> > +       if (priv->tx_bytes == 0 && priv->rx_bytes == 0) {
-> > +               npcm_pspi_disable(priv);
-> > +               complete(&priv->xfer_done);
-> > +               return IRQ_HANDLED;
-> >         }
-> >
-> > -       if (priv->rx_buf) {
-> > -               if (stat & NPCM_PSPI_STAT_RBF) {
-> > -                       if (!priv->rx_bytes)
-> > -                               return IRQ_NONE;
-> > -
-> > -                       npcm_pspi_recv(priv);
-> > +       stat = ioread8(priv->base + NPCM_PSPI_STAT);
-> >
-> > -                       if (!priv->rx_bytes) {
-> > -                               npcm_pspi_disable(priv);
-> > -                               complete(&priv->xfer_done);
-> > -                               return IRQ_HANDLED;
-> > -                       }
-> > -               }
-> > +       /*
-> > +        * first we do the read since if we do the write we previous read might
-> > +        * be lost (indeed low chances)
-> > +        */
-> > +       if ((stat & NPCM_PSPI_STAT_RBF) && priv->rx_bytes)
-> > +               npcm_pspi_recv(priv);
-> >
-> > -               if (((stat & NPCM_PSPI_STAT_BSY) == 0) && !priv->tx_buf)
-> > -                       iowrite8(0x0, NPCM_PSPI_DATA + priv->base);
-> > -       }
-> > +       if (((stat & NPCM_PSPI_STAT_BSY) == 0) && priv->tx_bytes)
-> > +               npcm_pspi_send(priv);
-> >
-> >         return IRQ_HANDLED;
-> >  }
-> > --
-> > 2.22.0
-> >
+I believe, last one is what you are looking for.
 
-
-
+On Wed, 2021-01-06 at 18:02 -0800, Brandon Kim wrote:
+> Hi everyone,
+> 
+> I was wondering if there were any ongoing efforts for a daemon using
+> PECI for error reporting and decoding from the host CPU to the BMC
+> (possibly from Intel?).
+> 
+> I see openbmc/peci-pcie which seems to be only for using PECI for
+> PCIe devices.
+> 
+> Any pointers / updates would be greatly appreciated!
+> 
+> Thanks,
+> Brandon
 -- 
-Regards,
-Avi
+Best regards,
+Andrei Kartashev
+
+
