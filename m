@@ -1,91 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 664F62F32A5
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 15:08:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F29F2F332F
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 15:49:24 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFXV35sWmzDrQX
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 01:08:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFYPY5HVqzDrQh
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 01:49:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=jinujoy@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=none (p=none dis=none) header.from=stwcx.xyz
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm3 header.b=CWDCreci; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=JzerPZhl; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=lGvXrVea; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFW5d5hcqzDr4Q
- for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 00:05:23 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 14A4F1A5D;
- Tue, 12 Jan 2021 08:05:13 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Tue, 12 Jan 2021 08:05:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
- date:from:to:cc:subject:message-id:references:mime-version
- :content-type:in-reply-to; s=fm3; bh=ii1XQsVd5PzGa6b8TFoDd4yh1M5
- APCmjcLsaPNiLrQI=; b=CWDCreci34oeQBdGbZSmqSKc08fCKnm8C0RVYwSymci
- 0Y+XpdFrAtUfB6mAwtVZNjtHbFv9A2r6axGtzsxTfBtTFWjP7nbD84HR8ROOe3mG
- 2zesThPDZbkw9Mb43hnSrj8o4+Zm0W8uYZYDU+LJ7DE4thkYU/BSmLXXo0dNw291
- 4/DAA/9Nke+HMtX56uj+lP7t9pVbHiVgzHtjaXDJhbncjI0sS5ZvMhe+tNanAwI+
- D5uyGHM+qWBrZzr8UJ6LTLcSuwlrvhpCEsM9EV76C2JTiyJdS/L9ZlZSG7fe5eE8
- bwnEcUCA0XecL5ZEiywW0H1oA5e5Oekn+eWRmkzUjHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to:x-me-proxy
- :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ii1XQs
- Vd5PzGa6b8TFoDd4yh1M5APCmjcLsaPNiLrQI=; b=JzerPZhlapfpYAD1C7s1tj
- kSQnYmCFQjkSmpMU1Zvks36JfTIRP/mi9i99NZis0GzFFDFgAww/RIottg+l3O3a
- de+U/wygtvpewKszjjj/IrI/MXKjE73lPaYuF313Q3DzqJqHn0d/Er0irvzQQUpd
- xDnbeQf9eqXZXiJD+41LuD0w+UFpOXE9CRkfP7eEHdNlWH5M/z2Bb71QinfqgC5B
- YkimMP0mZBw9QGLFlXc22ooJyHI1Hwa9V8o+zUr657jP+fT4Ro2DBd0BgRIWhdAu
- YwSr9fHywmk37fRTEHxm/F309wUFzHucQkGn5vKfga9ocpmg+lbssf0EqQNjeNbA
- ==
-X-ME-Sender: <xms:iJ79X8NxBHDo4J2JcR_lmTm3dJCfom9ZyEgNNMIqPyj1ZwzHHuTRJg>
- <xme:iJ79Xy--0_EncMnCC1D1j0DE-5D-A-COyLyOQIUn7nIdAJr3NiyF4MQXUU-VSG1pP
- keqAF5AfcyOjzKLUKI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgdduhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
- hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
- necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
- iftgigrdighiiiqeenucggtffrrghtthgvrhhnpefgffehhfehteevvdeftddvkeehveei
- hefhffffleffledvleeggeelkefhteekvdenucffohhmrghinhepmhgrnhejrdhorhhgpd
- hfrhgvvgguvghskhhtohhprdhorhhgnecukfhppeejiedrvdehtddrkeegrddvfeeinecu
- vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
- gtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:iJ79XzSMukCQRLdZsGMUXTjPOX5KmsQakdXMTJd_lf8iZ6QVAARd_Q>
- <xmx:iJ79X0vWN8ZTuZlKdoISckQTt-CDMdQHgLBoavjcPmrgugBADjI3Eg>
- <xmx:iJ79X0dktWOYwOecSjNU2mDJBBL3r0b68Yyv5gASVbTtsvW2NEARog>
- <xmx:iJ79XwFAeeSW6X8XCEzTYt68ZypqmoUM6Tzbxi_Q1Zto_Y0KJDknaw>
-Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
- [76.250.84.236])
- by mail.messagingengine.com (Postfix) with ESMTPA id F00E524005D;
- Tue, 12 Jan 2021 08:05:11 -0500 (EST)
-Date: Tue, 12 Jan 2021 07:05:08 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Sunitha Harish <sunithaharish04@gmail.com>
-Subject: Re: pthreads at bmcweb
-Message-ID: <X/2ehAMgWkmUZoAr@heinlein>
-References: <5181a536-a026-2f91-7335-f6a75b4694ab@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFYN83FwdzDr7H
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 01:48:01 +1100 (AEDT)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10CE3sU1028248
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 09:47:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : from : to :
+ references : message-id : date : mime-version : in-reply-to : content-type
+ : content-transfer-encoding; s=pp1;
+ bh=HL50WmQfQ6wprDhx50F9n19qWCyXEJD9jZQlDJCFqlY=;
+ b=lGvXrVeaX6uU6nHLvRkUBPsIWdRpNyn9pB19ZSqIoH5AxDUFtL6OldtqcE2B3o+Xcp1d
+ vAkJWOlvuCYe7XithsZOd2VfRsAys2XqpxK23NUmPdSaPZ28t6JYtkt7r4OyMWYa6NCD
+ lshH3bcACiJaw9rYQc7kWsy3g7494KxCughw8+nc17bhmdiDmSUyhLEuUyacFaNe7V0V
+ VTx00jFvFgbJyutotFLQmreqAdOn6giOoK6GtuktwT67dg72gSvB6VyoFzBx6D88fXmh
+ 4QiP9jsrX9rveBqwAO7hJiTQPC4uHtaJEdkF+J9QT55UKIAOTNF+mchqttyQCUldjOzA eg== 
+Received: from ppma03fra.de.ibm.com (6b.4a.5195.ip4.static.sl-reverse.com
+ [149.81.74.107])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 361d2g2262-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 09:47:54 -0500
+Received: from pps.filterd (ppma03fra.de.ibm.com [127.0.0.1])
+ by ppma03fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10CEcHNF011315
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:52 GMT
+Received: from b06cxnps4075.portsmouth.uk.ibm.com
+ (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
+ by ppma03fra.de.ibm.com with ESMTP id 35y4489x29-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:51 +0000
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com
+ (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
+ by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 10CElndt26411504
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 GMT
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB0E3A4066
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 +0000 (GMT)
+Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 51CA4A4062
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 +0000 (GMT)
+Received: from Jinus-MacBook-Pro.local (unknown [9.79.216.98])
+ by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 +0000 (GMT)
+Subject: Re: Control / Operator panel support in systems
+From: Jinu Thomas <jinujoy@linux.vnet.ibm.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <8402e577-410a-cf27-9b3e-f2774f086d00@linux.vnet.ibm.com>
+Message-ID: <0745cd96-76d3-2075-4f04-afa4ae560689@linux.vnet.ibm.com>
+Date: Tue, 12 Jan 2021 20:17:48 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
+ Gecko/20100101 Thunderbird/78.6.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="mUOAws8mYi+Kp+XU"
-Content-Disposition: inline
-In-Reply-To: <5181a536-a026-2f91-7335-f6a75b4694ab@gmail.com>
+In-Reply-To: <8402e577-410a-cf27-9b3e-f2774f086d00@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-12_07:2021-01-12,
+ 2021-01-12 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 impostorscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
+ suspectscore=0 bulkscore=0 adultscore=0 clxscore=1011 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101120080
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,66 +100,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, apparao.puli@linux.intel.com, edtanous@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi All,
 
---mUOAws8mYi+Kp+XU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+  I have been working on the design and this is what i have zeroed at.
 
-On Wed, Jan 06, 2021 at 01:32:11PM +0530, Sunitha Harish wrote:
-> Ed's suggestion is not to use the pthreads, instead implement=20
-> alternatives to do the same job, so that the binary size is kept=20
-> minimum. He mentioned: /"//Considering that's a ~30% increase in binary=
-=20
-> size to support one line off code, and most systems are already at their=
-=20
-> binary size limit, no, that's not going to be acceptable. We can either=
-=20
-> patch boost to use this=20
-> //https://man7.org/linux/man-pages/man3/getaddrinfo_a.3.html=20
-> <https://man7.org/linux/man-pages/man3/getaddrinfo_a.3.html>//or we=20
-> could build our own resolver type that calls that underneath. This was=20
-> based on a quick lookthrough of solutions in Google. I'm open to other=20
-> ideas here". /
+ The design aims to accommodate a panel that provides buttons used for navigation and selection of functionality and a display used for visual interaction to the user.
 
-Since we're using systemd and we have the `resolved` feature turned on,
-why not just send an async dbus message to the resolved.service?
+ The design is divided into two parts.
 
-```
-$ busctl introspect org.freedesktop.resolve1 /org/freedesktop/resolve1 | gr=
-ep ResolveHostname
-=2EResolveHostname                    method    isit          a(iiay)st    =
-                            -
-```
+  - First part is to have a navigational user select-able section. This would mean the navigation coming from the hardware in terms of buttons. these will be used to perform the required functionality selected by the user.
 
-https://www.freedesktop.org/software/systemd/man/org.freedesktop.resolve1.h=
-tml
+  - Second part is to have a display section. The display side will be common for all BMC apps, it will be done via Dbus API hosted by this app. 
 
---=20
-Patrick Williams
+@brad
+ Need a Repository created.
+  
+   I don't think there is any hardware like this out there, so do not see or expect any overlap with the rest of the community, i will be thinking of using ibm_misc or ibm_oem as the repository. 
 
---mUOAws8mYi+Kp+XU
-Content-Type: application/pgp-signature; name="signature.asc"
+Thoughts and suggestions are welcome.
 
------BEGIN PGP SIGNATURE-----
+Regards,
+Jinu Joy
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl/9noMACgkQqwNHzC0A
-wRnl/g//U4pjZ8gay+/LYrke11YcgXsMRzfWgZGFpKXCVpmsEUpWdzFR1oo99XZ4
-kLEA+gj0UkG6Kt1xH58xC9Wm/cZZa7BuTx0pyHN+EDXRZGSFhiLlYYxtQ0b+xULn
-k9Sgf8w+OzczWpVCwRxrjRlbu6owUqkSsZRTSoP0spgpPYFI1+ZK+X9j28CNjjZX
-hEprZF8PswedSdIXR+a5bmESSUNtCVbw1htRbD7cOOw1H8HAOpLW54oLAagMyjxW
-qg22rKnzhrUlUdjfgtwN+PB+gmw5FXC1MgGO7omAsH+3hz5GgsHSroPtv5XAlGQR
-evm2vdC1qeahca/zzsjwh5qhhiMSd8yjychaXdiGei7RjSYATQ1CcJSpgQkwtWTS
-01Th8v0+o08OQY9RiSgBFmd92X5X72lK1cFEVSOa+IPHI7acbUzs/SRVW5BxuP97
-mxM97/NM+tUoYnzDKIMDFW9nHrWUXVx0W9OXsRiTZzdYcmQMhMjpOBTp3MD9viU6
-56AoKNEOpjQm8MvG2YCJBUfzKr9gHCICOlaXL7BjAjBnkw5HxVfKw9htvlg7BLt3
-r4WVJFYStcJHxlYT1UGebTL5oq+h8UGwB2+kZUwNZ8NmSPYQbbMg1C0kmg/u8q14
-fEP+nKa4vkmnzbmB3RP3F1l6jy+Ekv45w1en/MI/PcN9oqiweeY=
-=9dRe
------END PGP SIGNATURE-----
 
---mUOAws8mYi+Kp+XU--
+On 27/08/19 11:06 pm, Jinu Thomas wrote:
+> Hi All,
+> 
+>  I was starting to explore on the design for the operator panel seen on IBM systems, it is also called a control panel , which basically is a card unit which has an LCD and some buttons to navigate the display on the LCD. I wanted to check if there is any design or code out there, for such  kind of usage. The design/code can be checked to see if it can be made generic for use, even though the hardware is only used by IBM.
+> 
+> 
+> Thanks a lot
+> 
+> Jinu Joy
+> 
