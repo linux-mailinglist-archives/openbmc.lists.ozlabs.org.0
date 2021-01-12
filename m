@@ -1,60 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DD662F233E
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 01:09:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F088F2F235D
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 01:28:00 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DF9tD6cvfzDqfK
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 11:09:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFBHd2sy2zDqlD
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 11:27:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.100; helo=mga07.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=jae.hyun.yoo@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dmarc=fail (p=none dis=none)
  header.from=linux.intel.com
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+Received: from mga06.intel.com (mga06.intel.com [134.134.136.31])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DF9sJ0wnhzDqX9
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 11:08:34 +1100 (AEDT)
-IronPort-SDR: ECxnb4bOe1YcziuguuTFA3GBmECexVm4Gbs8Q1HEqtAsVRQiVRcs270Th+7qvuGxQACWy7SiCp
- ihVYmSNEFoKg==
-X-IronPort-AV: E=McAfee;i="6000,8403,9861"; a="242028210"
-X-IronPort-AV: E=Sophos;i="5.79,339,1602572400"; d="scan'208";a="242028210"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jan 2021 16:08:31 -0800
-IronPort-SDR: QwyGQYbmiyCQBLn1MVrulPo6uZqDxqycmtldsAUiwVcOLluhjbSKfGa4B6RgDSudfPlafp3Rgf
- PTSNEGTDJPtQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFBGR0FpjzDqYW;
+ Tue, 12 Jan 2021 11:26:53 +1100 (AEDT)
+IronPort-SDR: 8ZVblLiX0CvASgw0IVR0ZXSgBSRMivYMcWsYjXrVhqeZt6WwqgBlpQY6PawQQlBdQ6iTq2F7Ma
+ pPR9UPG29g3g==
+X-IronPort-AV: E=McAfee;i="6000,8403,9861"; a="239500145"
+X-IronPort-AV: E=Sophos;i="5.79,339,1602572400"; d="scan'208";a="239500145"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jan 2021 16:26:50 -0800
+IronPort-SDR: EJU6EsyN0GHXXDNCtpRUB5+w6QCkymJDvspVoFoGCcejFiK+Picwn2jeNT8pbmd0uAqO/YyYNp
+ 2EwLuPDqlxVA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.79,339,1602572400"; d="scan'208";a="399987622"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga002.fm.intel.com with ESMTP; 11 Jan 2021 16:08:31 -0800
-Received: from [10.209.69.170] (jmbills-MOBL.amr.corp.intel.com
- [10.209.69.170])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 103D3580910
- for <openbmc@lists.ozlabs.org>; Mon, 11 Jan 2021 16:08:29 -0800 (PST)
-Subject: Re: peci-pcie CI issues
-To: openbmc@lists.ozlabs.org
-References: <6c2c44435e704f6eee95b7e35cbc39ccfae32b62.camel@yadro.com>
- <EC305987-22B3-40D2-86A6-4FF95B395956@stwcx.xyz>
- <CACWQX82quUYK+r0BkDqT0ZABXgRPj797Wwr8Joov05w8tCLwuA@mail.gmail.com>
- <0759e6524c910c8d24f1453dbbe226bc3460e588.camel@yadro.com>
- <CACWQX80E873CA2_LH7kVXHoGjuAZGUM21rxA6nsk8gMG-Ocemg@mail.gmail.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-Message-ID: <50d6828a-3460-884e-c107-4b0fe5f1396d@linux.intel.com>
-Date: Mon, 11 Jan 2021 16:08:27 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
+X-IronPort-AV: E=Sophos;i="5.79,339,1602572400"; d="scan'208";a="348273482"
+Received: from maru.jf.intel.com ([10.54.51.77])
+ by orsmga003.jf.intel.com with ESMTP; 11 Jan 2021 16:26:50 -0800
+From: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>
+To: Brendan Higgins <brendanhiggins@google.com>,
+ Wolfram Sang <wsa@the-dreams.de>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
+ Mark Rutland <mark.rutland@arm.com>, Andrew Jeffery <andrew@aj.id.au>,
+ Tao Ren <taoren@fb.com>, Cedric Le Goater <clg@kaod.org>
+Subject: [PATCH v2 0/4] i2c: aspeed: Add buffer and DMA modes support
+Date: Mon, 11 Jan 2021 16:37:45 -0800
+Message-Id: <20210112003749.10565-1-jae.hyun.yoo@linux.intel.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-In-Reply-To: <CACWQX80E873CA2_LH7kVXHoGjuAZGUM21rxA6nsk8gMG-Ocemg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -67,96 +58,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-i2c@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series adds buffer mode and DMA mode transfer support for the
+Aspeed I2C driver. With this change, default transfer mode will be set to
+buffer mode for better performance, and DMA mode can be selectively used
+depends on platform configuration.
 
+* Buffer mode
+  AST2400:
+    It has 2 KBytes (256 Bytes x 8 pages) of I2C SRAM buffer pool from
+    0x1e78a800 to 0x1e78afff that can be used for all busses with
+    buffer pool manipulation. To simplify implementation for supporting
+    both AST2400 and AST2500, it assigns each 128 Bytes per bus without
+    using buffer pool manipulation so total 1792 Bytes of I2C SRAM
+    buffer will be used.
 
-On 12/24/2020 10:53 AM, Ed Tanous wrote:
-> On Thu, Dec 24, 2020 at 10:34 AM Andrei Kartashev <a.kartashev@yadro.com> wrote:
->>
->> Well, then probably we can wait.
->> How far this could happens?
-> 
-> Whenever the work gets done.  Someone needs to:
-> Send a patch to yocto upgrading the boost recipe.
-> Wait for the meta-layer bump to run (I think Andrew runs the job once a week).
-> Resolve any issues with the bump when it gets merged to OpenBMC.
-> 
-> There's no exact timelines on the above, but you can certainly
-> accelerate it by doing step 1, after which you're probably looking at
-> a couple weeks before we get it in OpenBMC.
+  AST2500:
+    It has 16 Bytes of individual I2C SRAM buffer per each bus and its
+    range is from 0x1e78a200 to 0x1e78a2df, so it doesn't have 'buffer
+    page selection' bit field in the Function control register, and
+    neither 'base address pointer' bit field in the Pool buffer control
+    register it has. To simplify implementation for supporting both
+    AST2400 and AST2500, it writes zeros on those register bit fields
+    but it's okay because it does nothing in AST2500.
 
-It looks like upstream Yocto picked up boost 1.75: 
-https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/recipes-support/boost.
+  AST2600:
+    It has 32 Bytes of individual I2C SRAM buffer per each bus and its
+    range is from 0x1e78ac00 to 0x1e78adff. Works just like AST2500
+    does.
 
-> 
->>
->> On Thu, 2020-12-24 at 10:23 -0800, Ed Tanous wrote:
->>> On Thu, Dec 24, 2020 at 10:07 AM Patrick Williams <patrick@stwcx.xyz>
->>> wrote:
->>>> We have had this issue with a number of repositories lately. The
->>>> most recent version of boost::asio does not allow -fno-rtti.  The
->>>> makefile needs to be changed to no longer force this option.
->>>
->>> Or, as another option, just wait until boost 1.75.0 lands in yocto
->>> master and subsequent openbmc bump.  It was released a couple weeks
->>> ago and fixes this issue.  We'll likely be adding the no-rtti flags
->>> back to most of the repos shortly after that.
->>>
->>>> Sent from my iPhone
->>>>
->>>>> On Dec 24, 2020, at 9:48 AM, Andrei Kartashev <
->>>>> a.kartashev@yadro.com> wrote:
->>>>>
->>>>> ﻿Hello Jason,
->>>>>
->>>>> I push several patches to peci-pcie repo, but looks like CI
->>>>> broken
->>>>> there. Could you take a look on how to fix CI?
->>>>>
->>>>> [ 90%] Building CXX object CMakeFiles/peci-
->>>>> pcie.dir/src/peci_pcie.cpp.o
->>>>> In file included from
->>>>> /usr/local/include/boost/asio/execution.hpp:19,
->>>>>                  from
->>>>> /usr/local/include/boost/asio/system_executor.hpp:20,
->>>>>                  from
->>>>> /usr/local/include/boost/asio/associated_executor.hpp:22,
->>>>>                  from
->>>>> /usr/local/include/boost/asio/detail/bind_handler.hpp:20,
->>>>>                  from
->>>>> /usr/local/include/boost/asio/detail/wrapped_handler.hpp:18,
->>>>>                  from
->>>>> /usr/local/include/boost/asio/io_context.hpp:23,
->>>>>                  from
->>>>> /usr/local/include/boost/asio/io_service.hpp:18,
->>>>>                  from /home/jenkins-op/workspace/ci-
->>>>> repository/openbmc/peci-pcie/src/peci_pcie.cpp:22:
->>>>> /usr/local/include/boost/asio/execution/any_executor.hpp: In
->>>>> static member function â€˜static const std::type_info&
->>>>> boost::asio::execution::detail::any_executor_base::target_type_vo
->>>>> id()â€™:
->>>>> /usr/local/include/boost/asio/execution/any_executor.hpp:811:23:
->>>>> error: cannot use â€˜typeidâ€™ with â€˜-fno-rttiâ€™
->>>>>   811 |     return typeid(void);
->>>>>       |                       ^
->>>>> /usr/local/include/boost/asio/execution/any_executor.hpp: In
->>>>> static member function â€˜static const std::type_info&
->>>>> boost::asio::execution::detail::any_executor_base::target_type_ex
->>>>> ()â€™:
->>>>> /usr/local/include/boost/asio/execution/any_executor.hpp:851:21:
->>>>> error: cannot use â€˜typeidâ€™ with â€˜-fno-rttiâ€™
->>>>>   851 |     return typeid(Ex);
->>>>>       |                     ^
->>>>>
->>>>> --
->>>>> Best regards,
->>>>> Andrei Kartashev
->>>>>
->>>>>
->> --
->> Best regards,
->> Andrei Kartashev
->>
->>
+* DMA mode
+  Only AST2500 and later versions support DMA mode under some limitations
+  in case of AST2500:
+    I2C is sharing the DMA H/W with UHCI host controller and MCTP
+    controller. Since those controllers operate with DMA mode only, I2C
+    has to use buffer mode or byte mode instead if one of those
+    controllers is enabled. Also make sure that if SD/eMMC or Port80
+    snoop uses DMA mode instead of PIO or FIFO respectively, I2C can't
+    use DMA mode.
+
+Please review it.
+
+Changes since v1:
+V1: https://lore.kernel.org/linux-arm-kernel/20191007231313.4700-1-jae.hyun.yoo@linux.intel.com/
+- Removed a bug fix patch which was merged already from this patch series. 
+- Removed buffer reg settings from default device tree and added the settings
+  into bindings document to show the predefined buffer range per each bus.
+- Updated commit message and comments.
+- Refined driver code using abstract functions.
+
+Jae Hyun Yoo (4):
+  dt-bindings: i2c: aspeed: add buffer and DMA mode transfer support
+  ARM: dts: aspeed: modify I2C node to support buffer mode
+  i2c: aspeed: add buffer mode transfer support
+  i2c: aspeed: add DMA mode transfer support
+
+ .../devicetree/bindings/i2c/i2c-aspeed.txt    | 126 +++-
+ arch/arm/boot/dts/aspeed-g4.dtsi              |  19 +-
+ arch/arm/boot/dts/aspeed-g5.dtsi              |  19 +-
+ drivers/i2c/busses/i2c-aspeed.c               | 553 ++++++++++++++++--
+ 4 files changed, 667 insertions(+), 50 deletions(-)
+
+-- 
+2.17.1
+
