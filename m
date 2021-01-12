@@ -1,100 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B04B22F3B6A
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 21:12:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C3C22F3C79
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 23:50:26 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFhZP6gkDzDr7m
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 07:12:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFm4Z1hy9zDqv5
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 09:50:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=64.147.123.20;
+ helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org;
+ dmarc=none (p=none dis=none) header.from=aj.id.au
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=Z5pSVKRV; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm1 header.b=qte6aZLv; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=Ko5KE5rY; 
+ dkim-atps=neutral
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
+ [64.147.123.20])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFhYM68RQzDr63
- for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 07:11:35 +1100 (AEDT)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 10CK35IX055731; Tue, 12 Jan 2021 15:11:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : to : cc :
- references : from : message-id : date : mime-version : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=WfUyEl0m411vG16J0DmemJIv+N3FGvLGfPhw2S02CEs=;
- b=Z5pSVKRVnY57PUeQ67J3/lbUu1rdoEpBiJRYD96Nkr7ahb+sWOIdRiWQQ+krkMEH7ofr
- aiJd7qlsfUf5LaFQJmGfteoqewCC1TEzjemr56OQASZPAcuKT9g1pExFsY3bExJl8cFK
- QBM9mpoUPR3YTUtTnXyXt/wngK5i981Lxx5+DRfc+BJaRrdivRXkjRsQGsUwwu4QeANP
- 0Eq61T9/it8JNCoj9mKNcU5xkPdFI9CwUk5TduOG0Oq3MN6tGKtSyfT3vEiCOdsmPRbM
- 4qGIbB42n+eUYQfNq6BVEaqx2Z5QvrCBT4xcoCtc78TAa7fW3FkAcmzp4rsu1Y0X8HMw 0A== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 361hqh9ckk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Jan 2021 15:11:29 -0500
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 10CK3Pvj057105;
- Tue, 12 Jan 2021 15:11:29 -0500
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
- [169.47.144.26])
- by mx0b-001b2d01.pphosted.com with ESMTP id 361hqh9ckd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Jan 2021 15:11:29 -0500
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
- by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10CK3GwO023419;
- Tue, 12 Jan 2021 20:11:28 GMT
-Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
- [9.57.198.29]) by ppma04wdc.us.ibm.com with ESMTP id 35y4490h4p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Jan 2021 20:11:28 +0000
-Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
- [9.57.199.111])
- by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 10CKBSKo43647280
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Jan 2021 20:11:28 GMT
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 603D0AC05B;
- Tue, 12 Jan 2021 20:11:28 +0000 (GMT)
-Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B3262AC05E;
- Tue, 12 Jan 2021 20:11:26 +0000 (GMT)
-Received: from [9.206.180.135] (unknown [9.206.180.135])
- by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
- Tue, 12 Jan 2021 20:11:26 +0000 (GMT)
-Subject: Re: Call for volunteers
-To: Ed Tanous <edtanous@google.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFm1S10mmzDqRs
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 09:47:39 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 1022F1980;
+ Tue, 12 Jan 2021 17:47:35 -0500 (EST)
+Received: from imap2 ([10.202.2.52])
+ by compute3.internal (MEProxy); Tue, 12 Jan 2021 17:47:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=
+ mime-version:message-id:in-reply-to:references:date:from:to
+ :subject:content-type; s=fm1; bh=MnX7tZ2SzyJR3vDll6fovQHwheStGwO
+ /wApp5YiZWXI=; b=qte6aZLvLhHjZ7W4vYud+blGxo8qOZdE0TRi6vLM5+1PWNr
+ mIpfD6Dj84hHCcoczztdyeCjEeTjZdnefe0b5tvvT901eB5CyVakh1eNFsIPkv9t
+ O8L3NAgy809fYUy/DlSDJkJ62HoJ+hTrHVd/L3XEW/zwTnmqAT0A7kEEgJrVwR1h
+ z305RV4RwyxpOdIMnDJKAuhDpycsPHwpv3kzy4rP/ff1if/YLhm6NtJwQrcKtIIS
+ mCfiF29lxRLKFQm9g6xsqV5HUu5Mw4DsAB6y6wChobqA56G8spiFRCtfHvjM/Hf+
+ 1ahtf4RvwPNrYYxdzL93jr/bDc8lXE8Bp/vFOsw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=MnX7tZ
+ 2SzyJR3vDll6fovQHwheStGwO/wApp5YiZWXI=; b=Ko5KE5rYuztHgdWf8DPX8B
+ pz/8Q6dJLdDVPEsBE4vErOj3pet5Rniy+xnNnfaIoyS9TduE8ykbuPq+MPGji8Im
+ zGZFWjoOMXUzXpAoKXGmJSf69azME0ZK8dtH2zjtnwo1c+L3TL0dF+oNQ1X24ppP
+ f7HIRELRNaKfBiMVgcoRARD7z4YKArUpDT+q667ZwLFPPJumriy2ur5oigUrljUp
+ 21YRIO3jqLwIIRRN3qoLsYHwLv4lpOe9HKRl9C56YNnvnhqi0f1ySKMxLTvY6WbO
+ 3Bc+vzIH6EQBCLxRL5gQPFLJIW7srJtLXg84+oQp8WeyQzrYQ8WPFgOnt4yngCrw
+ ==
+X-ME-Sender: <xms:Bif-X7W_PMNDmwnJJTOI-QCAF8OcLv-I6C1mYtoV0fOpLvr8w4xe7Q>
+ <xme:Bif-Xzla7K0OZhrpm-N5v5al6PQ35urkpL3hF5yoHBgYO6JjOj_aWAtjMgMNayZQR
+ CTN_JLdTjCJTcFmfA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddugddtfecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
+ dtreertdenucfhrhhomhepfdetnhgurhgvficulfgvfhhfvghrhidfuceorghnughrvgif
+ segrjhdrihgurdgruheqnecuggftrfgrthhtvghrnhepleekgfffkeetjefhtdffgfevje
+ evvddvveegudduffduudekhffhkeevgfeitdffnecuffhomhgrihhnpehgihhthhhusgdr
+ tghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ grnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:Bif-X3b4nfjz1pSouy-wc5bYPdgsJ8TkMSqYQ66tV4M7Ym9mpoJtyw>
+ <xmx:Bif-X2U6KG6rcBjS_E6twMzogQxikGNEw8K8XlDtvMbLFfiyhfBQVQ>
+ <xmx:Bif-X1lf97IK_D472KQozkUte7CzBlM4RdhFeqof2qBKPEM8mpR4yg>
+ <xmx:Byf-XzQ7ghgvpZb97uLalk-SGSO7611ygTvSMdvPn0IEFUydzFFT_A>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id B6416E00C7; Tue, 12 Jan 2021 17:47:34 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-45-g4839256-fm-20210104.001-g48392560
+Mime-Version: 1.0
+Message-Id: <e511b34f-c659-46cc-a219-105df9f3df8d@www.fastmail.com>
+In-Reply-To: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
 References: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
- <CAH2-KxC7=rNHJo2g=bO3nma9ViQ+hJsGEcRLtsJWs0QKUnqkVw@mail.gmail.com>
-From: Gunnar Mills <gmills@linux.vnet.ibm.com>
-Message-ID: <de92110c-e566-99c8-bc9d-cc45e9530a57@linux.vnet.ibm.com>
-Date: Tue, 12 Jan 2021 13:11:24 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
-MIME-Version: 1.0
-In-Reply-To: <CAH2-KxC7=rNHJo2g=bO3nma9ViQ+hJsGEcRLtsJWs0QKUnqkVw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
- definitions=2021-01-12_15:2021-01-12,
- 2021-01-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 bulkscore=0
- phishscore=0 priorityscore=1501 adultscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2101120114
+Date: Wed, 13 Jan 2021 09:17:14 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Brad Bishop" <bradleyb@fuzziesquirrel.com>, openbmc@lists.ozlabs.org
+Subject: Re: Call for volunteers
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,60 +93,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 1/12/2021 9:55 AM, Ed Tanous wrote:
-> On Mon, Jan 11, 2021 at 2:10 PM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
->>
->> Hello OpenBMC-ers!
->>
->> Your TSC has been aware of the problem of fragmentation in our project for some
->> time.  Fragmentation is a loose term - for the purposes of this note consider
->> it to be any time contributor efforts in the community are duplicated without
->> thought given to maintenance and/or compatibility.
->>
->> To begin to address this issue the TSC is looking for volunteers to serve on a
->> "repository review forum" to which the TSC will initially delegate its
->> authority in the areas of:
->> - new repository creation
->> - placement of contributed new function into existing repositories
->>
->> The TSC fully expects the scope of this forum to quickly grow into the role of
->> a traditional TSC providing frequent, technical oversight to project
->> contributors.  The current TSC will continue to serve the project in terms of
->> governance, advocacy and industry exposure - and likely get a rename (OpenBMC
->> Board? or OpenBMC Steering Committee?) in the process.
->>
->> The new forum would meet periodically or at the demand of other forum members
->> to:
->> - raise the forums combined awareness of new function under development
->>     (information exchange)
->> - build a consensus within the forum on where the function should exist
->> - inform the function contributor and the rest of the community of the decision
->>
->> A successful forum would be a forum that can simultaneously encourage the
->> contribution of new and innovative solutions to existing problems without
->> introducing complexity to the project as a whole.
->>
->> A successful forum member will have previously demonstrated a breadth of
->> understanding of the upstream OpenBMC codebase through:
->> - frequent participation in peer review, the mailing list, IRC, and Discord.
->> - submission of high quality designs and code to upstream OpenBMC
->>     (github.com/openbmc)
->> - a history of working with and guiding less experienced OpenBMC developers
->>     in a timely manner, enabling them to come up to speed quickly.
->>
->> If you are interested in serving the project in this manner, please reply to
->> submit yourself as a candidate.
+
+
+On Tue, 12 Jan 2021, at 08:39, Brad Bishop wrote:
+> Hello OpenBMC-ers!
 > 
-> I'll volunteer.
+> Your TSC has been aware of the problem of fragmentation in our project for some
+> time.  Fragmentation is a loose term - for the purposes of this note consider
+> it to be any time contributor efforts in the community are duplicated without
+> thought given to maintenance and/or compatibility.
+> 
+> To begin to address this issue the TSC is looking for volunteers to serve on a
+> "repository review forum" to which the TSC will initially delegate its
+> authority in the areas of:
+> - new repository creation
+> - placement of contributed new function into existing repositories
+> 
+> The TSC fully expects the scope of this forum to quickly grow into the role of
+> a traditional TSC providing frequent, technical oversight to project
+> contributors.  The current TSC will continue to serve the project in terms of
+> governance, advocacy and industry exposure - and likely get a rename (OpenBMC
+> Board? or OpenBMC Steering Committee?) in the process.
+> 
+> The new forum would meet periodically or at the demand of other forum members
+> to:
+> - raise the forums combined awareness of new function under development
+>    (information exchange)
+> - build a consensus within the forum on where the function should exist
+> - inform the function contributor and the rest of the community of the decision
+> 
+> A successful forum would be a forum that can simultaneously encourage the
+> contribution of new and innovative solutions to existing problems without
+> introducing complexity to the project as a whole.
+> 
+> A successful forum member will have previously demonstrated a breadth of
+> understanding of the upstream OpenBMC codebase through:
+> - frequent participation in peer review, the mailing list, IRC, and Discord.
+> - submission of high quality designs and code to upstream OpenBMC
+>    (github.com/openbmc)
+> - a history of working with and guiding less experienced OpenBMC developers
+>    in a timely manner, enabling them to come up to speed quickly.
+> 
+> If you are interested in serving the project in this manner, please reply to
+> submit yourself as a candidate.
 > 
 
-I would like to nominate Brad. ;)
+I'm interested.
 
-> 
->>
->> -brad, on the behalf of the OpenBMC TSC
-
+Andrew
