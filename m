@@ -2,79 +2,99 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 022D92F39BD
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 20:13:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B04B22F3B6A
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 21:12:32 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFgFj1T4tzDrQR
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 06:12:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFhZP6gkDzDr7m
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 07:12:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::229;
- helo=mail-oi1-x229.google.com; envelope-from=geissonator@gmail.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
+ header.from=linux.vnet.ibm.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=Iu3MW60U; dkim-atps=neutral
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com
- [IPv6:2607:f8b0:4864:20::229])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=Z5pSVKRV; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFgBV0JHmzDqlw
- for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 06:10:08 +1100 (AEDT)
-Received: by mail-oi1-x229.google.com with SMTP id l200so3457245oig.9
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 11:10:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=6Awm6oG/OI+TMOWeju62VYZY9wtfwvDa8EO/SaAfZQE=;
- b=Iu3MW60UouIqBkr9yQojvZGrFC8GQaL/aSyLkYnxkElrvk8FHln8+fnBHrlZ7aDro7
- otDsAn1TvQH1x3cwjTF9Jwy54p0lg6dv8Fth4c2ZF6tfZjGCoPpXzUU3YalRMJKFGRU4
- nnvzySgwoSSjqC9+HWgXPJoQqssq6rOyMWVHtBkA83bOEUQo82mSdpEE82ZfpNAFwrR6
- F6i3SHfSk6sQTTIUf70O+GFSjMY0deGuaKHnpGyUf9/ioORhBIhEEHeGIcWm+qyFhVkG
- nYogoFqQAqZMY+PCU5rFrQvUnNyMmIAjUAUGmB7I8Y+rm5s+C3Ao4Xg5teu6B9wYoYlj
- 0glQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
- :content-transfer-encoding:message-id:references:to;
- bh=6Awm6oG/OI+TMOWeju62VYZY9wtfwvDa8EO/SaAfZQE=;
- b=UhvHKFcjfOyCRXikovdDKstcc6XBIYDQD7eLM0cgxKlOFDYV5/jotEYyokOCJZO5pf
- f3vj6DKFIWsSIdbI5cS6VPVN3Y5wHoNemFMssZhtr5/mIQmyw9M0V88nM+QEPIPDSjoy
- iwOxmWMktgiMW8Jwo+2H3OLPL2ERd39fsTNGrPdfElqTI5CLasaWN7RhPht71r+54Mr0
- GWsi5SyWSINsb/+ubxmieXizJDD1fQhohpidGV+Oq9BLOBVrsoWrK9b5Am2mcJ/98Rty
- KOrljQlJpRzLl4hPYflwy3ih797dBP06ddc7qJbpJ1lRS9Y+7nfZC0ubsd2fui8g5oTF
- shdQ==
-X-Gm-Message-State: AOAM530P7UX8vO8j6l06iuPz+RhoS6xDA2bmLuRrPcrrMWUHbsoLnWNa
- Yu4RMwlUOHxLrctqhNcjfkuAHgDr+iy5cw==
-X-Google-Smtp-Source: ABdhPJzEEzQS7J+R/a70ZUz0zmtqLDYLjhaEPAPF1kn4R5vg1Q1dwGsYuUKWjo6iktzYk2Fav4fmmQ==
-X-Received: by 2002:aca:61d6:: with SMTP id v205mr401734oib.123.1610478604567; 
- Tue, 12 Jan 2021 11:10:04 -0800 (PST)
-Received: from andrews-mbp-2.attlocal.net
- ([2600:1700:19e0:3310:cdb6:1a20:c33f:bb72])
- by smtp.gmail.com with ESMTPSA id p25sm841684oip.14.2021.01.12.11.10.03
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 12 Jan 2021 11:10:03 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.40.0.2.32\))
-Subject: Re: peci-pcie CI issues
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <50d6828a-3460-884e-c107-4b0fe5f1396d@linux.intel.com>
-Date: Tue, 12 Jan 2021 13:10:03 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <5B9E4A2C-EBD0-485E-A234-3B8E73836166@gmail.com>
-References: <6c2c44435e704f6eee95b7e35cbc39ccfae32b62.camel@yadro.com>
- <EC305987-22B3-40D2-86A6-4FF95B395956@stwcx.xyz>
- <CACWQX82quUYK+r0BkDqT0ZABXgRPj797Wwr8Joov05w8tCLwuA@mail.gmail.com>
- <0759e6524c910c8d24f1453dbbe226bc3460e588.camel@yadro.com>
- <CACWQX80E873CA2_LH7kVXHoGjuAZGUM21rxA6nsk8gMG-Ocemg@mail.gmail.com>
- <50d6828a-3460-884e-c107-4b0fe5f1396d@linux.intel.com>
-To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-X-Mailer: Apple Mail (2.3654.40.0.2.32)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFhYM68RQzDr63
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 07:11:35 +1100 (AEDT)
+Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
+ 10CK35IX055731; Tue, 12 Jan 2021 15:11:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=WfUyEl0m411vG16J0DmemJIv+N3FGvLGfPhw2S02CEs=;
+ b=Z5pSVKRVnY57PUeQ67J3/lbUu1rdoEpBiJRYD96Nkr7ahb+sWOIdRiWQQ+krkMEH7ofr
+ aiJd7qlsfUf5LaFQJmGfteoqewCC1TEzjemr56OQASZPAcuKT9g1pExFsY3bExJl8cFK
+ QBM9mpoUPR3YTUtTnXyXt/wngK5i981Lxx5+DRfc+BJaRrdivRXkjRsQGsUwwu4QeANP
+ 0Eq61T9/it8JNCoj9mKNcU5xkPdFI9CwUk5TduOG0Oq3MN6tGKtSyfT3vEiCOdsmPRbM
+ 4qGIbB42n+eUYQfNq6BVEaqx2Z5QvrCBT4xcoCtc78TAa7fW3FkAcmzp4rsu1Y0X8HMw 0A== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 361hqh9ckk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Jan 2021 15:11:29 -0500
+Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.36/8.16.0.36) with SMTP id 10CK3Pvj057105;
+ Tue, 12 Jan 2021 15:11:29 -0500
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.26])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 361hqh9ckd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Jan 2021 15:11:29 -0500
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+ by ppma04wdc.us.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10CK3GwO023419;
+ Tue, 12 Jan 2021 20:11:28 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma04wdc.us.ibm.com with ESMTP id 35y4490h4p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Jan 2021 20:11:28 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com
+ [9.57.199.111])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 10CKBSKo43647280
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Jan 2021 20:11:28 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 603D0AC05B;
+ Tue, 12 Jan 2021 20:11:28 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B3262AC05E;
+ Tue, 12 Jan 2021 20:11:26 +0000 (GMT)
+Received: from [9.206.180.135] (unknown [9.206.180.135])
+ by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Jan 2021 20:11:26 +0000 (GMT)
+Subject: Re: Call for volunteers
+To: Ed Tanous <edtanous@google.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>
+References: <20210111220919.zwc727vbwc4itm7h@thinkpad.fuzziesquirrel.com>
+ <CAH2-KxC7=rNHJo2g=bO3nma9ViQ+hJsGEcRLtsJWs0QKUnqkVw@mail.gmail.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+Message-ID: <de92110c-e566-99c8-bc9d-cc45e9530a57@linux.vnet.ibm.com>
+Date: Tue, 12 Jan 2021 13:11:24 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
+MIME-Version: 1.0
+In-Reply-To: <CAH2-KxC7=rNHJo2g=bO3nma9ViQ+hJsGEcRLtsJWs0QKUnqkVw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
+ definitions=2021-01-12_15:2021-01-12,
+ 2021-01-12 signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 bulkscore=0
+ phishscore=0 priorityscore=1501 adultscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0 suspectscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2009150000 definitions=main-2101120114
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,116 +106,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 1/12/2021 9:55 AM, Ed Tanous wrote:
+> On Mon, Jan 11, 2021 at 2:10 PM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+>>
+>> Hello OpenBMC-ers!
+>>
+>> Your TSC has been aware of the problem of fragmentation in our project for some
+>> time.  Fragmentation is a loose term - for the purposes of this note consider
+>> it to be any time contributor efforts in the community are duplicated without
+>> thought given to maintenance and/or compatibility.
+>>
+>> To begin to address this issue the TSC is looking for volunteers to serve on a
+>> "repository review forum" to which the TSC will initially delegate its
+>> authority in the areas of:
+>> - new repository creation
+>> - placement of contributed new function into existing repositories
+>>
+>> The TSC fully expects the scope of this forum to quickly grow into the role of
+>> a traditional TSC providing frequent, technical oversight to project
+>> contributors.  The current TSC will continue to serve the project in terms of
+>> governance, advocacy and industry exposure - and likely get a rename (OpenBMC
+>> Board? or OpenBMC Steering Committee?) in the process.
+>>
+>> The new forum would meet periodically or at the demand of other forum members
+>> to:
+>> - raise the forums combined awareness of new function under development
+>>     (information exchange)
+>> - build a consensus within the forum on where the function should exist
+>> - inform the function contributor and the rest of the community of the decision
+>>
+>> A successful forum would be a forum that can simultaneously encourage the
+>> contribution of new and innovative solutions to existing problems without
+>> introducing complexity to the project as a whole.
+>>
+>> A successful forum member will have previously demonstrated a breadth of
+>> understanding of the upstream OpenBMC codebase through:
+>> - frequent participation in peer review, the mailing list, IRC, and Discord.
+>> - submission of high quality designs and code to upstream OpenBMC
+>>     (github.com/openbmc)
+>> - a history of working with and guiding less experienced OpenBMC developers
+>>     in a timely manner, enabling them to come up to speed quickly.
+>>
+>> If you are interested in serving the project in this manner, please reply to
+>> submit yourself as a candidate.
+> 
+> I'll volunteer.
+> 
 
+I would like to nominate Brad. ;)
 
-> On Jan 11, 2021, at 6:08 PM, Bills, Jason M =
-<jason.m.bills@linux.intel.com> wrote:
->=20
->=20
->=20
-> On 12/24/2020 10:53 AM, Ed Tanous wrote:
->> On Thu, Dec 24, 2020 at 10:34 AM Andrei Kartashev =
-<a.kartashev@yadro.com> wrote:
->>>=20
->>> Well, then probably we can wait.
->>> How far this could happens?
->> Whenever the work gets done.  Someone needs to:
->> Send a patch to yocto upgrading the boost recipe.
->> Wait for the meta-layer bump to run (I think Andrew runs the job once =
-a week).
->> Resolve any issues with the bump when it gets merged to OpenBMC.
->> There's no exact timelines on the above, but you can certainly
->> accelerate it by doing step 1, after which you're probably looking at
->> a couple weeks before we get it in OpenBMC.
->=20
-> It looks like upstream Yocto picked up boost 1.75: =
-https://git.yoctoproject.org/cgit/cgit.cgi/poky/tree/meta/recipes-support/=
-boost.
-
-Here=E2=80=99s our bump to try and pick it up: =
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/39533=20
-
-But we hit a build issue (unrelated to the boost aspect I believe).
-https://github.com/openbmc/openbmc/issues/3746=20
-
-Help appreciated on the fail.
->=20
->>>=20
->>> On Thu, 2020-12-24 at 10:23 -0800, Ed Tanous wrote:
->>>> On Thu, Dec 24, 2020 at 10:07 AM Patrick Williams =
-<patrick@stwcx.xyz>
->>>> wrote:
->>>>> We have had this issue with a number of repositories lately. The
->>>>> most recent version of boost::asio does not allow -fno-rtti.  The
->>>>> makefile needs to be changed to no longer force this option.
->>>>=20
->>>> Or, as another option, just wait until boost 1.75.0 lands in yocto
->>>> master and subsequent openbmc bump.  It was released a couple weeks
->>>> ago and fixes this issue.  We'll likely be adding the no-rtti flags
->>>> back to most of the repos shortly after that.
->>>>=20
->>>>> Sent from my iPhone
->>>>>=20
->>>>>> On Dec 24, 2020, at 9:48 AM, Andrei Kartashev <
->>>>>> a.kartashev@yadro.com> wrote:
->>>>>>=20
->>>>>> =EF=BB=BFHello Jason,
->>>>>>=20
->>>>>> I push several patches to peci-pcie repo, but looks like CI
->>>>>> broken
->>>>>> there. Could you take a look on how to fix CI?
->>>>>>=20
->>>>>> [ 90%] Building CXX object CMakeFiles/peci-
->>>>>> pcie.dir/src/peci_pcie.cpp.o
->>>>>> In file included from
->>>>>> /usr/local/include/boost/asio/execution.hpp:19,
->>>>>>                 from
->>>>>> /usr/local/include/boost/asio/system_executor.hpp:20,
->>>>>>                 from
->>>>>> /usr/local/include/boost/asio/associated_executor.hpp:22,
->>>>>>                 from
->>>>>> /usr/local/include/boost/asio/detail/bind_handler.hpp:20,
->>>>>>                 from
->>>>>> /usr/local/include/boost/asio/detail/wrapped_handler.hpp:18,
->>>>>>                 from
->>>>>> /usr/local/include/boost/asio/io_context.hpp:23,
->>>>>>                 from
->>>>>> /usr/local/include/boost/asio/io_service.hpp:18,
->>>>>>                 from /home/jenkins-op/workspace/ci-
->>>>>> repository/openbmc/peci-pcie/src/peci_pcie.cpp:22:
->>>>>> /usr/local/include/boost/asio/execution/any_executor.hpp: In
->>>>>> static member function =C3=A2=E2=82=AC=CB=9Cstatic const =
-std::type_info&
->>>>>> boost::asio::execution::detail::any_executor_base::target_type_vo
->>>>>> id()=C3=A2=E2=82=AC=E2=84=A2:
->>>>>> /usr/local/include/boost/asio/execution/any_executor.hpp:811:23:
->>>>>> error: cannot use =C3=A2=E2=82=AC=CB=9Ctypeid=C3=A2=E2=82=AC=E2=84=A2=
- with =C3=A2=E2=82=AC=CB=9C-fno-rtti=C3=A2=E2=82=AC=E2=84=A2
->>>>>>  811 |     return typeid(void);
->>>>>>      |                       ^
->>>>>> /usr/local/include/boost/asio/execution/any_executor.hpp: In
->>>>>> static member function =C3=A2=E2=82=AC=CB=9Cstatic const =
-std::type_info&
->>>>>> boost::asio::execution::detail::any_executor_base::target_type_ex
->>>>>> ()=C3=A2=E2=82=AC=E2=84=A2:
->>>>>> /usr/local/include/boost/asio/execution/any_executor.hpp:851:21:
->>>>>> error: cannot use =C3=A2=E2=82=AC=CB=9Ctypeid=C3=A2=E2=82=AC=E2=84=A2=
- with =C3=A2=E2=82=AC=CB=9C-fno-rtti=C3=A2=E2=82=AC=E2=84=A2
->>>>>>  851 |     return typeid(Ex);
->>>>>>      |                     ^
->>>>>>=20
->>>>>> --
->>>>>> Best regards,
->>>>>> Andrei Kartashev
->>>>>>=20
->>>>>>=20
->>> --
->>> Best regards,
->>> Andrei Kartashev
->>>=20
->>>=20
+> 
+>>
+>> -brad, on the behalf of the OpenBMC TSC
 
