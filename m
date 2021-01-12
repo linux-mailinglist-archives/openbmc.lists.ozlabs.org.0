@@ -1,94 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F29F2F332F
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 15:49:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CF312F3346
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 15:54:56 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFYPY5HVqzDrQh
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 01:49:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFYWx4xv8zDrQk
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 01:54:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
- smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jinujoy@linux.vnet.ibm.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::331;
+ helo=mail-ot1-x331.google.com; envelope-from=proclivis@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dmarc=pass (p=none dis=none)
- header.from=linux.vnet.ibm.com
+Authentication-Results: lists.ozlabs.org;
+ dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=lGvXrVea; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20161025 header.b=ggYH/oin; dkim-atps=neutral
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com
+ [IPv6:2607:f8b0:4864:20::331])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFYN83FwdzDr7H
- for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 01:48:01 +1100 (AEDT)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.16.0.42/8.16.0.42) with SMTP id
- 10CE3sU1028248
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 09:47:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=subject : from : to :
- references : message-id : date : mime-version : in-reply-to : content-type
- : content-transfer-encoding; s=pp1;
- bh=HL50WmQfQ6wprDhx50F9n19qWCyXEJD9jZQlDJCFqlY=;
- b=lGvXrVeaX6uU6nHLvRkUBPsIWdRpNyn9pB19ZSqIoH5AxDUFtL6OldtqcE2B3o+Xcp1d
- vAkJWOlvuCYe7XithsZOd2VfRsAys2XqpxK23NUmPdSaPZ28t6JYtkt7r4OyMWYa6NCD
- lshH3bcACiJaw9rYQc7kWsy3g7494KxCughw8+nc17bhmdiDmSUyhLEuUyacFaNe7V0V
- VTx00jFvFgbJyutotFLQmreqAdOn6giOoK6GtuktwT67dg72gSvB6VyoFzBx6D88fXmh
- 4QiP9jsrX9rveBqwAO7hJiTQPC4uHtaJEdkF+J9QT55UKIAOTNF+mchqttyQCUldjOzA eg== 
-Received: from ppma03fra.de.ibm.com (6b.4a.5195.ip4.static.sl-reverse.com
- [149.81.74.107])
- by mx0a-001b2d01.pphosted.com with ESMTP id 361d2g2262-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 09:47:54 -0500
-Received: from pps.filterd (ppma03fra.de.ibm.com [127.0.0.1])
- by ppma03fra.de.ibm.com (8.16.0.42/8.16.0.42) with SMTP id 10CEcHNF011315
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:52 GMT
-Received: from b06cxnps4075.portsmouth.uk.ibm.com
- (d06relay12.portsmouth.uk.ibm.com [9.149.109.197])
- by ppma03fra.de.ibm.com with ESMTP id 35y4489x29-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:51 +0000
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com
- (b06wcsmtp001.portsmouth.uk.ibm.com [9.149.105.160])
- by b06cxnps4075.portsmouth.uk.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 10CElndt26411504
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 GMT
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB0E3A4066
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 +0000 (GMT)
-Received: from b06wcsmtp001.portsmouth.uk.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 51CA4A4062
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 +0000 (GMT)
-Received: from Jinus-MacBook-Pro.local (unknown [9.79.216.98])
- by b06wcsmtp001.portsmouth.uk.ibm.com (Postfix) with ESMTP
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 14:47:49 +0000 (GMT)
-Subject: Re: Control / Operator panel support in systems
-From: Jinu Thomas <jinujoy@linux.vnet.ibm.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <8402e577-410a-cf27-9b3e-f2774f086d00@linux.vnet.ibm.com>
-Message-ID: <0745cd96-76d3-2075-4f04-afa4ae560689@linux.vnet.ibm.com>
-Date: Tue, 12 Jan 2021 20:17:48 +0530
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:78.0)
- Gecko/20100101 Thunderbird/78.6.0
-MIME-Version: 1.0
-In-Reply-To: <8402e577-410a-cf27-9b3e-f2774f086d00@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.343, 18.0.737
- definitions=2021-01-12_07:2021-01-12,
- 2021-01-12 signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 impostorscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0 clxscore=1011 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2101120080
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFYVv5cWCzDr7d
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 01:53:57 +1100 (AEDT)
+Received: by mail-ot1-x331.google.com with SMTP id j20so2488009otq.5
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 06:53:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
+ h=content-transfer-encoding:from:mime-version:subject:date:message-id
+ :references:cc:in-reply-to:to;
+ bh=E9zrLTcVZFEBe2lhkKO0J4vDLusT0OEl7LDKrSldHJE=;
+ b=ggYH/oinJqa3Ubc8DHDNQ0szCB9XnhatIO+SClpdgKNh9YhGBkm9wlJ3+yKBRIwNco
+ JeEu1FoktjkxQNQKotCISOEC2KiJTGH2qwoggK84Ad0kmUHG0w+bl+1NW147eb4mx4PT
+ RVMxPfn3ix9tJy6nrj5ViQokdoUYnQAV0NqFkKIAB6EUndDbz2sGoiJdILh2YrDj3k3e
+ rC/6fBeOofY4VIqONiW79bkBO+c+c+naVRiMBSKDdlYwwRwv6KMmADM6CilHgp7kle+/
+ QSOJ0YX+/Yu4Csqd3n1O+s5/yu4ALLfpZ7xC+ajDR3Q4Kn9TDWuje6UA/hxlCdvCmMcV
+ HCMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20161025;
+ h=x-gm-message-state:content-transfer-encoding:from:mime-version
+ :subject:date:message-id:references:cc:in-reply-to:to;
+ bh=E9zrLTcVZFEBe2lhkKO0J4vDLusT0OEl7LDKrSldHJE=;
+ b=ZwcQbR0dhBwIMGMmHnGqRpYPIiNjg+ZfgBLIKw9Qr6SNeuS7CncMsMhgg0Mj/TpGKo
+ p/KUY8K8TIgWV5f5n4KQzUm+A+eg7KFgbqoXZaJvOnhvDGHslVVMPz2+bof8FqOYDpeA
+ 8ChUlhKLYNhUPYZIB9M8lAKI36zac90x3G4FEI4LxUuwVUpibi/PFsZYuQLnVBckgghY
+ pkwzpdYDQNYHgt36YdzvIQ8LkPWfrnpD57I91lTy8yMJLY/pDGdtIqFR9vBLJ8jCjH21
+ ZmWe0+RShi00blIoOg4yZSnSXuTFQkWM5OxEO9t1ddAL+bf+HjjVOhojGtUv+vExuyi2
+ eGbA==
+X-Gm-Message-State: AOAM533T1UEbygF8aY8xVr3f0nRgGxGLXEKGTBY8RUnBQ25jmlAg8nsp
+ CvqEnKB+og3Oz3anPjxQ7O0fAgAY74Q=
+X-Google-Smtp-Source: ABdhPJxM7ZAC4PjFz0m8oCBYZImGNJJO213z+BcI8ccD/iuoXieXoaIZfKkhgdYgGiS/X43Jjygyig==
+X-Received: by 2002:a9d:7c82:: with SMTP id q2mr2997964otn.205.1610463233369; 
+ Tue, 12 Jan 2021 06:53:53 -0800 (PST)
+Received: from ?IPv6:2600:100e:b055:46ab:e0a4:8a40:c0f2:2eb?
+ ([2600:100e:b055:46ab:e0a4:8a40:c0f2:2eb])
+ by smtp.gmail.com with ESMTPSA id t24sm611507oou.4.2021.01.12.06.53.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Jan 2021 06:53:52 -0800 (PST)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+From: Mike Jones <proclivis@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: OpenBMC add sensor in IPMI interface
+Date: Tue, 12 Jan 2021 07:53:51 -0700
+Message-Id: <CD702A7F-2999-458F-A036-1CC12D5FDC03@gmail.com>
+References: <f44e378cef750f1bfa21a353a138ff8d635c5d7d.camel@yadro.com>
+In-Reply-To: <f44e378cef750f1bfa21a353a138ff8d635c5d7d.camel@yadro.com>
+To: Andrei Kartashev <a.kartashev@yadro.com>
+X-Mailer: iPad Mail (18B92)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,39 +80,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+Are current designs using the PMBus AVS bus of this device?
 
-  I have been working on the design and this is what i have zeroed at.
+Sent from my iPad
 
- The design aims to accommodate a panel that provides buttons used for navigation and selection of functionality and a display used for visual interaction to the user.
-
- The design is divided into two parts.
-
-  - First part is to have a navigational user select-able section. This would mean the navigation coming from the hardware in terms of buttons. these will be used to perform the required functionality selected by the user.
-
-  - Second part is to have a display section. The display side will be common for all BMC apps, it will be done via Dbus API hosted by this app. 
-
-@brad
- Need a Repository created.
-  
-   I don't think there is any hardware like this out there, so do not see or expect any overlap with the rest of the community, i will be thinking of using ibm_misc or ibm_oem as the repository. 
-
-Thoughts and suggestions are welcome.
-
-Regards,
-Jinu Joy
-
-
-On 27/08/19 11:06 pm, Jinu Thomas wrote:
-> Hi All,
-> 
->  I was starting to explore on the design for the operator panel seen on IBM systems, it is also called a control panel , which basically is a card unit which has an LCD and some buttons to navigate the display on the LCD. I wanted to check if there is any design or code out there, for such  kind of usage. The design/code can be checked to see if it can be made generic for use, even though the hardware is only used by IBM.
-> 
-> 
-> Thanks a lot
-> 
-> Jinu Joy
-> 
+> On Jan 12, 2021, at 12:10 AM, Andrei Kartashev <a.kartashev@yadro.com> wro=
+te:
+>=20
+> ISL68137
