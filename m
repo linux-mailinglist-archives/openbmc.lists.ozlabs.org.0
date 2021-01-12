@@ -1,78 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C74D2F2A4E
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 09:49:56 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [203.11.71.2])
+	by mail.lfdr.de (Postfix) with ESMTPS id 664F62F32A5
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 15:08:14 +0100 (CET)
 Received: from bilbo.ozlabs.org (lists.ozlabs.org [IPv6:2401:3900:2:1::3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4DFPQn3Bs5zDqx6
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jan 2021 19:49:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4DFXV35sWmzDrQX
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jan 2021 01:08:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62b;
- helo=mail-pl1-x62b.google.com; envelope-from=sunithaharish04@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
- dmarc=pass (p=none dis=none) header.from=gmail.com
+ dmarc=none (p=none dis=none) header.from=stwcx.xyz
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20161025 header.b=a8xIEmo5; dkim-atps=neutral
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com
- [IPv6:2607:f8b0:4864:20::62b])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm3 header.b=CWDCreci; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=JzerPZhl; 
+ dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4DFPPq2fGJzDqbW
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 19:49:01 +1100 (AEDT)
-Received: by mail-pl1-x62b.google.com with SMTP id x18so1038250pln.6
- for <openbmc@lists.ozlabs.org>; Tue, 12 Jan 2021 00:49:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20161025;
- h=subject:to:cc:references:from:message-id:date:user-agent
- :mime-version:in-reply-to:content-transfer-encoding:content-language;
- bh=wVvifCx7ffMCwywfaATxgty2BHr7LsioQdgC9F3E7nE=;
- b=a8xIEmo5VIBc1Fbpy5lNalcBUmzTOJ9DtBfs8VUogrOGVVJnX2jrTaPuHKk3bnnbqK
- c0aNrClq+zirEUU52hwqa2TUjFKBaltWHm7e2GP1s5QT+qukFbCrJyu8XtKtNlsEqoNs
- FRXF0Jkg0R2PZAnuPEbZLKAiLzfbm53kTfiSnvzetHjcBSiwiUCz2cvBhFVqjgmoTFUE
- opfvuskF6DXqJvEPhGav4gouIYIRhqKcLCmT5sER+XhGspu7dUFk4t87HmAVwILzWWz6
- hzYK/yMpCP5/L4V2qHQ4PeaOcOJv39SYjuxiyMJBFp6nuD94cfdd+9MwmQimdoOOVFXQ
- ijqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20161025;
- h=x-gm-message-state:subject:to:cc:references:from:message-id:date
- :user-agent:mime-version:in-reply-to:content-transfer-encoding
- :content-language;
- bh=wVvifCx7ffMCwywfaATxgty2BHr7LsioQdgC9F3E7nE=;
- b=HpNeD74ICiv/SpG9BG/Cdq/o7/DKZrVN6r17HI8QMEEd18fNUWRBKcHqz93FbEep9H
- 7KfysjgD7VFQmY9s9gDu/ixfotNJEkfgGkMVKEZt0z8V1A4ALHY0w+GO4LqbeVp4amtL
- sYQm+tVWJZwJzBfibTpHp9/Hi/77E3GJE5Kf2G87l2kK/f0BnhHP+LgrbKukUvU7TQUG
- onvZM96MBzqEjx8U2VGGrUk1dVaJFY4+rh6V3+tQNJDLHkevYsa1h0/2ovPNHD43tqnv
- HEx+xJufe7I62PDljo5EAyz/L2UBCBR2TrgJPkyR5t6QVWX+ShNLkZDq9XK44QUbMhmP
- bdvg==
-X-Gm-Message-State: AOAM530UvXP/Irxp3qrWBzQmxwSZVtW3AsONHIdY8fxTdQOrMw1K41de
- p3MlSa/SRob3en0BTJ9pUSg=
-X-Google-Smtp-Source: ABdhPJxvuYMQZH8wgrmT/342sE7snaNZehbLmEx0AVP7Li7Raz4aZ6K6kf3cjmWtvPLRM8CCGiE04w==
-X-Received: by 2002:a17:90a:73c5:: with SMTP id
- n5mr3477865pjk.118.1610441337372; 
- Tue, 12 Jan 2021 00:48:57 -0800 (PST)
-Received: from [192.168.0.102] ([124.123.104.226])
- by smtp.gmail.com with ESMTPSA id s7sm2124331pfh.207.2021.01.12.00.48.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Jan 2021 00:48:56 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4DFW5d5hcqzDr4Q
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Jan 2021 00:05:23 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.west.internal (Postfix) with ESMTP id 14A4F1A5D;
+ Tue, 12 Jan 2021 08:05:13 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Tue, 12 Jan 2021 08:05:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=
+ date:from:to:cc:subject:message-id:references:mime-version
+ :content-type:in-reply-to; s=fm3; bh=ii1XQsVd5PzGa6b8TFoDd4yh1M5
+ APCmjcLsaPNiLrQI=; b=CWDCreci34oeQBdGbZSmqSKc08fCKnm8C0RVYwSymci
+ 0Y+XpdFrAtUfB6mAwtVZNjtHbFv9A2r6axGtzsxTfBtTFWjP7nbD84HR8ROOe3mG
+ 2zesThPDZbkw9Mb43hnSrj8o4+Zm0W8uYZYDU+LJ7DE4thkYU/BSmLXXo0dNw291
+ 4/DAA/9Nke+HMtX56uj+lP7t9pVbHiVgzHtjaXDJhbncjI0sS5ZvMhe+tNanAwI+
+ D5uyGHM+qWBrZzr8UJ6LTLcSuwlrvhpCEsM9EV76C2JTiyJdS/L9ZlZSG7fe5eE8
+ bwnEcUCA0XecL5ZEiywW0H1oA5e5Oekn+eWRmkzUjHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to:x-me-proxy
+ :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=ii1XQs
+ Vd5PzGa6b8TFoDd4yh1M5APCmjcLsaPNiLrQI=; b=JzerPZhlapfpYAD1C7s1tj
+ kSQnYmCFQjkSmpMU1Zvks36JfTIRP/mi9i99NZis0GzFFDFgAww/RIottg+l3O3a
+ de+U/wygtvpewKszjjj/IrI/MXKjE73lPaYuF313Q3DzqJqHn0d/Er0irvzQQUpd
+ xDnbeQf9eqXZXiJD+41LuD0w+UFpOXE9CRkfP7eEHdNlWH5M/z2Bb71QinfqgC5B
+ YkimMP0mZBw9QGLFlXc22ooJyHI1Hwa9V8o+zUr657jP+fT4Ro2DBd0BgRIWhdAu
+ YwSr9fHywmk37fRTEHxm/F309wUFzHucQkGn5vKfga9ocpmg+lbssf0EqQNjeNbA
+ ==
+X-ME-Sender: <xms:iJ79X8NxBHDo4J2JcR_lmTm3dJCfom9ZyEgNNMIqPyj1ZwzHHuTRJg>
+ <xme:iJ79Xy--0_EncMnCC1D1j0DE-5D-A-COyLyOQIUn7nIdAJr3NiyF4MQXUU-VSG1pP
+ keqAF5AfcyOjzKLUKI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedukedrtddtgdduhecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculdefhedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredttddv
+ necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
+ iftgigrdighiiiqeenucggtffrrghtthgvrhhnpefgffehhfehteevvdeftddvkeehveei
+ hefhffffleffledvleeggeelkefhteekvdenucffohhmrghinhepmhgrnhejrdhorhhgpd
+ hfrhgvvgguvghskhhtohhprdhorhhgnecukfhppeejiedrvdehtddrkeegrddvfeeinecu
+ vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
+ gtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:iJ79XzSMukCQRLdZsGMUXTjPOX5KmsQakdXMTJd_lf8iZ6QVAARd_Q>
+ <xmx:iJ79X0vWN8ZTuZlKdoISckQTt-CDMdQHgLBoavjcPmrgugBADjI3Eg>
+ <xmx:iJ79X0dktWOYwOecSjNU2mDJBBL3r0b68Yyv5gASVbTtsvW2NEARog>
+ <xmx:iJ79XwFAeeSW6X8XCEzTYt68ZypqmoUM6Tzbxi_Q1Zto_Y0KJDknaw>
+Received: from localhost (76-250-84-236.lightspeed.austtx.sbcglobal.net
+ [76.250.84.236])
+ by mail.messagingengine.com (Postfix) with ESMTPA id F00E524005D;
+ Tue, 12 Jan 2021 08:05:11 -0500 (EST)
+Date: Tue, 12 Jan 2021 07:05:08 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Sunitha Harish <sunithaharish04@gmail.com>
 Subject: Re: pthreads at bmcweb
-To: Milton Miller II <miltonm@us.ibm.com>
+Message-ID: <X/2ehAMgWkmUZoAr@heinlein>
 References: <5181a536-a026-2f91-7335-f6a75b4694ab@gmail.com>
- <OF03EE7F69.B8367FEE-ON00258655.00640A4B-00258655.00640A53@notes.na.collabserv.com>
-From: Sunitha Harish <sunithaharish04@gmail.com>
-Message-ID: <f2ef1579-4850-5e72-9e22-ef2f6c07382f@gmail.com>
-Date: Tue, 12 Jan 2021 14:18:53 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <OF03EE7F69.B8367FEE-ON00258655.00640A4B-00258655.00640A53@notes.na.collabserv.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="mUOAws8mYi+Kp+XU"
+Content-Disposition: inline
+In-Reply-To: <5181a536-a026-2f91-7335-f6a75b4694ab@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,49 +101,62 @@ Cc: openbmc@lists.ozlabs.org, apparao.puli@linux.intel.com, edtanous@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Milton for sharing your views.
 
-Awaiting more inputs/feedbacks from the community.
+--mUOAws8mYi+Kp+XU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Sunitha
+On Wed, Jan 06, 2021 at 01:32:11PM +0530, Sunitha Harish wrote:
+> Ed's suggestion is not to use the pthreads, instead implement=20
+> alternatives to do the same job, so that the binary size is kept=20
+> minimum. He mentioned: /"//Considering that's a ~30% increase in binary=
+=20
+> size to support one line off code, and most systems are already at their=
+=20
+> binary size limit, no, that's not going to be acceptable. We can either=
+=20
+> patch boost to use this=20
+> //https://man7.org/linux/man-pages/man3/getaddrinfo_a.3.html=20
+> <https://man7.org/linux/man-pages/man3/getaddrinfo_a.3.html>//or we=20
+> could build our own resolver type that calls that underneath. This was=20
+> based on a quick lookthrough of solutions in Google. I'm open to other=20
+> ideas here". /
 
-On 06-01-2021 23:42, Milton Miller II wrote:
-> On Jan 6, 2021 Sunitha Harish wrote:
->>      Hi team,
->>      Reference commit
->> https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/31735 :
->>      In order to handle the multiple push-style event subscribers,
->> bmc       needs to support the async resolution of the subscribers
->> address.       The async_resolve() API crashes if there is no thread
->> support in       the binary.
->>      I created a bmcweb binary patch by pulling this commit and
->> including the pthread. This works fine for the use-cases, but
->> increased the bmcweb binary size by 220KB.
-> ?
->>      Ed's suggestion is not to use the pthreads, instead implement
->> alternatives to do the same job, so that the binary size is kept
->> minimum. He mentioned: "Considering that's a ~30% increase in binary
->> size to support one line off code, and most systems are already at
->> their binary size limit, no, that's not going to be acceptable. We
->> can either patch boost to use this
->> https://man7.org/linux/man-pages/man3/getaddrinfo_a.3.html or we
->> could build our own resolver type that calls that underneath.  This
->> was based on a quick lookthrough of solutions in Google.  I'm open to
->> other ideas here".
->>      I am looking for the community views about the increased bmcweb
->>      binary size v/s having a custom implementation for asyc_resolve.
->>       Please share your views & ideas to get to the best solution.
-> I agree with Ed that adding pthreads is a step that should be taken
-> with a lot of caution.   In addition to the binary size, a threaded
-> application also adds security audit concerns.
->
-> A quick search with the query of "dns lookup library embedded" found
-> a possible library with a probably compatible license (although last
-> update was 4 years ago), and the second link was a survey of other
-> client and server packages that could be investigated.
->
-> My personal opinion only.
->
-> milton
->
+Since we're using systemd and we have the `resolved` feature turned on,
+why not just send an async dbus message to the resolved.service?
+
+```
+$ busctl introspect org.freedesktop.resolve1 /org/freedesktop/resolve1 | gr=
+ep ResolveHostname
+=2EResolveHostname                    method    isit          a(iiay)st    =
+                            -
+```
+
+https://www.freedesktop.org/software/systemd/man/org.freedesktop.resolve1.h=
+tml
+
+--=20
+Patrick Williams
+
+--mUOAws8mYi+Kp+XU
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAl/9noMACgkQqwNHzC0A
+wRnl/g//U4pjZ8gay+/LYrke11YcgXsMRzfWgZGFpKXCVpmsEUpWdzFR1oo99XZ4
+kLEA+gj0UkG6Kt1xH58xC9Wm/cZZa7BuTx0pyHN+EDXRZGSFhiLlYYxtQ0b+xULn
+k9Sgf8w+OzczWpVCwRxrjRlbu6owUqkSsZRTSoP0spgpPYFI1+ZK+X9j28CNjjZX
+hEprZF8PswedSdIXR+a5bmESSUNtCVbw1htRbD7cOOw1H8HAOpLW54oLAagMyjxW
+qg22rKnzhrUlUdjfgtwN+PB+gmw5FXC1MgGO7omAsH+3hz5GgsHSroPtv5XAlGQR
+evm2vdC1qeahca/zzsjwh5qhhiMSd8yjychaXdiGei7RjSYATQ1CcJSpgQkwtWTS
+01Th8v0+o08OQY9RiSgBFmd92X5X72lK1cFEVSOa+IPHI7acbUzs/SRVW5BxuP97
+mxM97/NM+tUoYnzDKIMDFW9nHrWUXVx0W9OXsRiTZzdYcmQMhMjpOBTp3MD9viU6
+56AoKNEOpjQm8MvG2YCJBUfzKr9gHCICOlaXL7BjAjBnkw5HxVfKw9htvlg7BLt3
+r4WVJFYStcJHxlYT1UGebTL5oq+h8UGwB2+kZUwNZ8NmSPYQbbMg1C0kmg/u8q14
+fEP+nKa4vkmnzbmB3RP3F1l6jy+Ekv45w1en/MI/PcN9oqiweeY=
+=9dRe
+-----END PGP SIGNATURE-----
+
+--mUOAws8mYi+Kp+XU--
